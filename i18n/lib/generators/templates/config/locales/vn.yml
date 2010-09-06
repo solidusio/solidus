@@ -9,7 +9,7 @@ vn:
   account: Tài khoản
   account_updated: "Tải khoản được cập nhật!"
   action: Lệnh
-  actions:
+  actions: #
     cancel: Hủy
     create: Tạo
     destroy: Xóa
@@ -18,9 +18,9 @@ vn:
     new: Mới
     update: Cập nhật
   active: "Có hiệu lực"
-  activerecord:
-    attributes:
-      address:
+  activerecord: #
+    attributes: #
+      address: #
         address1: Địa chỉ
         address2: "Địa chỉ (tiếp)"
         city: Thành phố
@@ -32,8 +32,8 @@ vn:
         phone: Điện thoại
         state: "Bang"
         zipcode: "Mã bưu điện"
-      checkout:
-        bill_address:
+      checkout: #
+        bill_address: #
           address1: "Địa chỉ thanh toán"
           city: "Thành phố"
           firstname: "Tên"
@@ -41,7 +41,7 @@ vn:
           phone: "Điện thoại"
           state: "Bang"
           zipcode: "Mã bưu điện"
-        ship_address:
+        ship_address: #
           address1: "Địa chỉ"
           city: "Thành phố"
           firstname: "Tên"
@@ -49,24 +49,24 @@ vn:
           phone: "Điện thoại"
           state: "Bang"
           zipcode: "Mã bưu điện"
-      country:
-        iso: ISO
-        iso3: ISO3
+      country: #
+        iso: # ISO
+        iso3: # ISO3
         iso_name: "Tên ISO"
         name: Tên
         numcode: "Mã ISO"
-      creditcard:
+      creditcard: #
         cc_type: Loại
         month: Tháng
         number: Số
         verification_value: "Số chứng thực"
         year: Năm
-      inventory_unit:
+      inventory_unit: #
         state: Bang
-      line_item:
+      line_item: #
         price: Giá
         quantity: Số lượng
-      order:
+      order: #
         checkout_complete: "Hoàn tất thủ tục mua hàng"
         ip_address: "Địa chỉ IP"
         item_total: "Tổng số lượng"
@@ -74,7 +74,7 @@ vn:
         special_instructions: "Chỉ dẫn đặc biệt"
         state: Bang
         total: Tổng
-      product:
+      product: #
         available_on: "Có hàng vào"
         cost_price: "Giá"
         description: Miêu tả
@@ -83,128 +83,128 @@ vn:
         on_hand: "Có hàng"
         shipping_category: "Loại hình vận chuyển"
         tax_category: "Biểu thuế"
-      product_group:
+      product_group: #
         name: "Tên"
         product_count: "Số lượng sản phẩm"
         product_scopes: "Phạm vi sản phẩm"
         products: "Sản phẩm"
         url: "URL"
-      product_scope:
+      product_scope: #
         arguments: "Tham số"
         description: "Chú thích"
-      property:
+      property: #
         name: Tên
         presentation: Trình bày
-      prototype:
+      prototype: #
         name: Tên
-      return_authorization:
+      return_authorization: #
         amount: Số lượng
-      role:
+      role: #
         name: Tên
-      state:
+      state: #
         abbr: Từ khóa tắt
         name: Tên
-      tax_category:
+      tax_category: #
         description: Miêu tả
         name: Tên
-      tax_rate:
+      tax_rate: #
         amount: Lãi suất
-      taxon:
+      taxon: #
         name: Tên
-        permalink: Permalink
+        permalink: # Permalink
         position: Vị trí
-      taxonomy:
+      taxonomy: #
         name: Tên
-      user:
-        email: Email
-      variant:
+      user: #
+        email: # Email
+      variant: #
         cost_price: "Giá"
         depth: Sâu
         height: Cao
         price: Giá
-        sku: SKU
+        sku: # SKU
         weight: Khối lượng
         width: Rộng
-      zone:
+      zone: #
         description: Miêu tả
         name: Tên
-    models:
-      address:
+    models: #
+      address: #
         one: Địa chỉ
         other: Địa chỉ
-      cheque_payment:
+      cheque_payment: #
         one: Thanh toán bằng séc
         other: Thanh toán bằng séc
-      country:
+      country: #
         one: Quốc gia
         other: Quốc gia
-      creditcard:
+      creditcard: #
         one: "Thẻ tín dụng"
         other: "Thẻ tín dụng"
-      creditcard_payment:
+      creditcard_payment: #
         one: "Thanh toán bằng thẻ tín dụng"
         other: "Thanh toán bằng thẻ tín dụng"
-      creditcard_txn:
+      creditcard_txn: #
         one: "Giao dịch bằng thẻ tín dụng"
         other: "Giao dịch bằng thẻ tín dụng"
-      inventory_unit:
+      inventory_unit: #
         one: "Đơn vị hàng"
         other: "Đơn vị hàng"
-      line_item:
+      line_item: #
         one: "Dòng sản phẩm"
         other: "Đơn vị dòng sản phẩm"
-      order:
+      order: #
         one: Đơn đặt hàng
         other: Đơn đặt hàng
-      payment:
+      payment: #
         one: Thanh toán
         other: Thanh toán
-      product:
+      product: #
         one: Sản phẩm
         other: Sản phẩm
-      product_group:
+      product_group: #
         one: "Nhóm sản phẩm"
         other: "Nhóm sản phẩm"
-      property:
+      property: #
         one: Đặc tính
         other: Đặc tính
-      prototype:
+      prototype: #
         one: Nguyên mẫu
         other: Nguyên mẫu
-      return_authorization:
+      return_authorization: #
         one: Quyền trả hàng
         other: Quyền trả hàng
-      role:
+      role: #
         one: Vai trò
         other: Vai trò
-      shipment:
+      shipment: #
         one: Chuyển phát hàng
         other: Chuyển phát hàng
-      shipping_category:
+      shipping_category: #
         one: "Loại chuyển phát"
         other: "Loại chuyển phát"
-      state:
+      state: #
         one: Bang
         other: Bang
-      tax_category:
+      tax_category: #
         one: "Biểu thuế"
         other: "Biểu thuế"
-      tax_rate:
+      tax_rate: #
         one: "Lãi suất thuế"
         other: "Lãi suất thuế"
-      taxon:
+      taxon: #
         one: Nhóm thuộc tính
         other: Nhóm thuộc tính
-      taxonomy:
+      taxonomy: #
         one: Nhóm thuộc tính
         other: Nhóm thuộc tính
-      user:
+      user: #
         one: Người dùng
         other: Người dùng
-      variant:
+      variant: #
         one: Biến thể
         other: Biến thể
-      zone:
+      zone: #
         one: Vùng
         other: Vùng
   add: Thêm
@@ -235,7 +235,21 @@ vn:
   alt_text: Chú thích khác
   alternative_phone: Điện thoại khác
   amount: Giá trị
-  analytics_trackers: Analytics Trackers
+  analytics_trackers: # Analytics Trackers
+  api: #
+    access: # "API Access"
+    clear_key: # "Clear API key"
+    errors: #
+      invalid_event: # "Invalid event name, valid names are %{events}"
+      invalid_event_for_object: # "Valid event name but not allowed for this object, valid names are %{events}"
+      missing_event: # "No event name supplied"
+    generate_key: # "Generate API key"
+    key: # "API Key"
+    key_cleared: # "API key cleared"
+    key_generated: # "API key generated"
+    no_key: # "No key defined"
+    regenerate_key: # "Regenerate API key"
+  apply: # "Apply"
   are_you_sure: "Bạn có chắn chắn không?"
   are_you_sure_category: "Bạn có chắc bạn muốn xóa loại mặt hàng này không?"
   are_you_sure_delete: "Bạn có chắc bạn muốn xóa hồ sơ này không?"
@@ -250,7 +264,7 @@ vn:
   available_taxons: "Đơn vị phân loại hiện có"
   awaiting_return: Đang đợi trả về
   back: Quay lại
-  back_end: Back End
+  back_end: # Back End
   back_to_store: "Quay lại cửa hàng"
   backordered: Đã đặt hàng trước
   backordering_is_allowed: "Đã đặt hàng trước {{not}} được cho phép"
@@ -260,14 +274,16 @@ vn:
   bill_address: "Địa chỉ thanh toán"
   billing: Thanh Toán
   billing_address: "Địa chỉ thanh toán"
-  both: Both
+  both: # Both
   by_day: "bằng ngày"
   calculator: Máy tính
   calculator_settings_warning: "Nếu bạn đang thay đổi loại máy tính, bạn phải lưu trước khi thay đổi cấu hình máy tính"
   cancel: Hủy
+  cancel_my_account: # Cancel my account
+  cancel_my_account_description: # "Unhappy?"
   canceled: Đã hủy
   cannot_create_returns: Không thể trả hàng vì đơn hàng chưa được gửi.
-  cannot_destory_line_item_as_inventory_units_have_shipped: Cannot destory line item as some inventory units have shipped.
+  cannot_destory_line_item_as_inventory_units_have_shipped: # Cannot destory line item as some inventory units have shipped.
   capture: Lấy tiền
   card_code: "Mã thẻ"
   card_details: "Thông tin thẻ"
@@ -283,8 +299,8 @@ vn:
   charged: Đã lấy tiền
   charges: Thanh toán
   checkout: Thủ tục mua hàng
-  checkout_steps:
-    # keys correspond to Checkout state names:
+  checkout_steps: #
+    # keys correspond to Checkout state names: #
     address: Địa chỉ
     complete: Hoàn tất
     confirm: Xác nhận
@@ -312,12 +328,9 @@ vn:
   count_of_reduced_by: "số lượng của '{{name}}' giảm đi {{count}}"
   country: Quốc gia
   country_based: "Dựa trên quốc gia"
-  coupon: Vé khuyến mãi
-  coupon_code: Mã vé khuyến mãi
-  coupons: Vé khuyến mãi
-  coupons_description: Quản lý vé khuyến mãi
   create: Tạo
   create_a_new_account: "Tạo một tài khoản mới"
+  create_product_group_from_products: # Create a new product group from these products
   create_user_account: Tạo tài khoản người dùng
   created_successfully: "Tạo thành công"
   credit: Tín dụng
@@ -336,15 +349,17 @@ vn:
   date_created: Ngày tạo
   date_range: "Giới hạn ngày"
   debit: Nợ
+  default: # Default
   delete: Xóa
   depth: Sâu
   description: Miêu tả
   destroy: Hủy diệt
+  didnt_receive_confirmation_instructions: # "Didn't receive confirmation instructions?"
+  didnt_receive_unlock_instructions: # "Didn't receive unlock instructions?"
   display: Trưng bày
   edit: Sửa đổi
   editing_billing_integration: Sửa đổi các loại hình tích hợp thanh toán
   editing_category: "Sửa đổi loại mặt hàng"
-  editing_coupon: Sửa đổi vé khuyến mãi
   editing_option_type: "Sửa đổi Kiểu tùy chọn"
   editing_option_types: "Sửa đổi Kiểu tùy chọn"
   editing_payment_method: Sửa đổi Phương thức Thanh toán
@@ -354,22 +369,22 @@ vn:
   editing_prototype: "Sửa đổi nguyên mẫu"
   editing_shipping_category: "Sửa đổi loại chuyển phát"
   editing_shipping_method: "Sửa đổi phương pháp chuyển phát"
-  editing_shipping_rate: Sửa đổi giá cước vận chuyển
   editing_state: "Sửa đổi bang"
   editing_tax_category: "Sửa đổi Biểu thuế"
   editing_tax_rate: "Sửa đổi lãi suất thuế"
   editing_tracker: Sửa đổi Tracker
   editing_user: "Sửa đổi người dùng"
   editing_zone: "Sửa đổi vùng"
-  email: Email
+  email: # Email
   email_address: "Địa chỉ Email"
   email_server_settings_description: "Cài cấu hình máy chủ email"
+  empty: # "Empty"
   empty_cart: "Làm rỗng sọt"
   enable_login_via_login_password: "Sử dụng email và mật khẩu chuẩn"
   enable_login_via_openid: "Dùng OpenID"
   enable_mail_delivery: Cho phép vận chuyển thư
-  enable_mail_queue: "Cho phép thư đợi theo hàng"
   enter_exactly_as_shown_on_card: Nhập chính xác những gì ghi trên thẻ
+  enter_password_to_confirm: # "(we need your current password to confirm your changes)"
   environment: "Môi trường"
   error: lỗi
   event: Sự kiện
@@ -385,16 +400,16 @@ vn:
   finalized_payments: Thanh toán đã hoàn tất
   first_item: Món hàng đầu tiên giá
   first_name: "Tên"
-  first_name_begins_with: "First Name Begins With"
+  first_name_begins_with: # "First Name Begins With"
   flat_percent: "Định mức phần trăm"
   flat_rate_amount: Số lượng
   flat_rate_per_item: "Lãi suất sàn (cho từng món hàng)"
   flat_rate_per_order: "Lãi suất sàn (cho từng đơn hàng)"
   flexible_rate: "Lãi suất dao động"
   forgot_password: "Quên mật khẩu"
-  front_end: Front End
+  front_end: # Front End
   full_name: "Họ và tên"
-  gateway: Gateway
+  gateway: # Gateway
   gateway_configuration: "Sửa đổi Gateway"
   gateway_error: "Lỗi Gateway"
   gateway_setting_description: "Chọn một gateway thanh toán và Sửa đổi cấu hình nó."
@@ -402,20 +417,20 @@ vn:
   general: "Tổng quan"
   general_settings: "Cấu hình chung"
   general_settings_description: "Cài đặt cấu hình chung cho Spree."
-  google_analytics: "Google Analytics"
+  google_analytics: # "Google Analytics"
   google_analytics_active: "Đang hoạt động"
   google_analytics_create: "Tạo mới tài khoản Google Analytics"
-  google_analytics_id: "Analytics ID"
+  google_analytics_id: # "Analytics ID"
   google_analytics_new: "Tài khoản Google Analytics mới"
   google_analytics_setting_description: "Quản lý Google Analytics ID"
-  guest_checkout: Guest Checkout
+  guest_checkout: # Guest Checkout
   guest_user_account: Hoàn tất thanh toán với tài khoản khách
   has_no_shipped_units: không có hàng nào đã gửi đi
   height: Cao
   hello_user: "Chào người dùng"
   history: Lịch sử
   home: "Trang chủ"
-  icon: "Icon"
+  icon: # "Icon"
   icons_by: "Biểu tượng được thiết kế bởi"
   image: Hình ảnh
   images: Hình ảnh
@@ -442,8 +457,9 @@ vn:
   last_7_days: "7 ngày trước"
   last_month: "Tháng trước"
   last_name: "Họ"
-  last_name_begins_with: "Last Name Begins With"
+  last_name_begins_with: # "Last Name Begins With"
   last_year: "Năm ngoái"
+  leave_blank_to_not_change: # "(leave blank if you don't want to change it)"
   list: Liệt kê
   listing_categories: "Liệt kê Phân loại"
   listing_option_types: "Liệt kê Kiểu tùy chọn"
@@ -467,8 +483,6 @@ vn:
   maestro_or_solo_cards: Thẻ Maestro/Solo
   mail_delivery_enabled: "Chuyển Thư đã có hiệu lực"
   mail_delivery_not_enabled: "Chuyển Thư đã bị vô hiệu hóa"
-  mail_queue_enabled: "Mail Queue đã có hiệu lực"
-  mail_queue_not_enabled: "Mail Queue đã bị vô hiệu hóa (email đã được gửi tức khắc)"
   mail_server_preferences: Cấu hình Mail Server
   mail_server_settings: "Cấu hình Mail Server"
   make_refund: Thối tiền
@@ -477,7 +491,7 @@ vn:
   max_items: Số hàng tối đa
   meta_description: "Meta miểu tả"
   meta_keywords: "Meta danh sách từ khóa"
-  metadata: "Metadata"
+  metadata: # "Metadata"
   missing_required_information: "Thiếu thông tin yêu cầu"
   month: "Tháng"
   my_account: "Tài khoản của tôi"
@@ -488,7 +502,6 @@ vn:
   new_adjustment: "Thông số điều chỉnh mới"
   new_billing_integration: Tích hợp thanh toán mới
   new_category: "Loại mặt hàng mới"
-  new_coupon: Phiếu khuyến mãi mới
   new_customer: "Khách hàng mới"
   new_image: "Hình mới"
   new_option_type: "Kiểu tùy chọn mới"
@@ -505,7 +518,6 @@ vn:
   new_shipment: "Vận chuyển mới"
   new_shipping_category: "Loại hình vận chuyển mới"
   new_shipping_method: "Phương pháp vận chuyển mới"
-  new_shipping_rate: Cước vận chuyển mới
   new_state: "Bang mới"
   new_tax_category: "Biểu thuế mới"
   new_tax_rate: "Lãi suất mới"
@@ -520,13 +532,15 @@ vn:
   no_match_found: "Không thấy trùng"
   no_payment_methods_available: "Khônh thể thanh toán vì không có phương thức thanh toán cài cho môi trường này"
   no_products_found: "Không tìm thấy sản phẩm"
+  no_results: # "No results"
   no_shipping_methods_available: "Không có phương thức vận chuyển hiện hữu, xin thay đổi địa chỉ và thử lại."
   no_user_found: "Không tìm thấy người dùng có địa chỉ email đấy"
   none: Rỗng
   none_available: "Không có hàng nào"
   not: không
+  not_shown: # "Not Shown"
   note: Ghi chú
-  notice_messages:
+  notice_messages: #
     option_type_removed: "Xóa thành công kiểu tùy chọn."
     product_cloned: "Đã nhân bản sản phẩm"
     product_deleted: "Đã xóa sản phẩm"
@@ -534,7 +548,7 @@ vn:
     product_not_deleted: "Không thể xóa sản phẩm"
     track_me_in_GA: "Tìm tôi trong GA"
     variant_deleted: "Biến thể đã được xóa"
-    variant_not_deleted: "Không thể xóa biến thể"    
+    variant_not_deleted: "Không thể xóa biến thể"
   on_hand: "Có hàng"
   operation: Hoạt động
   option_Values: "Giá trị tùy chọn"
@@ -545,7 +559,7 @@ vn:
   ord_qty: "Số lượng"
   ord_total: "Giá trị"
   order: Đơn hàng
-  order_confirmation_note: ""
+  order_confirmation_note: # ""
   order_date: "Ngày đặt hàng"
   order_details: "Chi tiết đơn hàng"
   order_email_resent: "Đơn hàng đã được gửi email lại"
@@ -586,7 +600,7 @@ vn:
   payment_updated: Thanh toán đã được cập nhật
   payments: Thanh toán
   pending_payments: Thanh toán chưa giải quyết
-  permalink: Permalink
+  permalink: # Permalink
   phone: Điện thoại
   place_order: Đặt hàng
   please_create_user: "Xin tạo một tài khoản người dùng"
@@ -608,111 +622,117 @@ vn:
   product_groups: Nhóm sản phẩm
   product_has_no_description: Sản phẩm không có chú thích
   product_properties: "Đặc tính sản phẩm"
-  product_scopes:
-    groups:
-      price:
+  product_scopes: #
+    groups: #
+      price: #
         description: "Phạm vi lựa chọn sản phẩm dựa trên Giá"
         name: Giá
-      search:
+      search: #
         description: "Phạm vi lựa chọn sản phẩm dựa trên tên, từ khóa, chú thích"
         name: "Tìm chữ"
-      taxon:
+      taxon: #
         description: "Phạm vi lựa chọn sản phẩm dựa trên các đơn vị phân loại"
         name: Đơn vị phân loại
-      values:
+      values: #
         description: "Phạm vi lựa chọn sản phẩm dựa trên tùy chọn và giá trị đặc tính"
         name: Giá trị
-    scopes:
-      ascend_by_master_price:
+    scopes: #
+      ascend_by_master_price: #
         name: Xếp ngược thứ tự theo giá chủ của sản phẩm
-      ascend_by_name:
+      ascend_by_name: #
         name: Xếp ngược thứ tự theo tên sản phẩm
-      ascend_by_updated_at:
+      ascend_by_updated_at: #
         name: Xếp ngược thứ tự theo ngày thật
-      descend_by_master_price:
+      descend_by_master_price: #
         name: Xếp xuôi theo giá chủ của sản phẩm
-      descend_by_name:
+      descend_by_name: #
         name: Xếp xuôi theo tên sản phẩm
-      descend_by_popularity:
+      descend_by_popularity: #
         name: Sắp xếp theo tính phổ biến (phổ biến nhất trước)
-      descend_by_updated_at:
+      descend_by_updated_at: #
         name: Xếp xuôi theo ngày thật
-      in_name:
-        args:
+      in_name: #
+        args: #
           words: Từ
         description: "(cách ra với chỗ trống hoặc phẩy)"
         name: "Tên sản phẩm có"
         sentence: tên sản phẩm có chứa <em>%s</em>
-      in_name_or_description:
-        args:
+      in_name_or_description: #
+        args: #
           words: Từ
         description: "(cách ra với chỗ trống hoặc phẩy)"
         name: "Tên hay chú thích sản phẩm có"
         sentence: tên hay chú thích có chứa <em>%s</em>
-      in_name_or_keywords:
-        args:
+      in_name_or_keywords: #
+        args: #
           words: Từ
         description: "(cách ra với chỗ trống hoặc phẩy)"
         name: "Tên sản phẩm hay từ khóa có"
         sentence: tên hay từ khóa có chứa <em>%s</em>
-      in_taxons:
-        args:
+      in_taxons: #
+        args: #
           "taxon_names": "Tên phân loại"
         description: "Tên đơn vị phân loại phải được tách ra với dấu phẩy hoặc chỗ trống (vd: adidas,shoes)"
         name: "Trong các đơn vị phân loại và tất cả đơn vị phân loại con"
         sentence: trong <em>%s</em> và tất cả hậu duệ của chúng
-      master_price_gte:
-        args:
+      master_price_gte: #
+        args: #
           amount: Giá trị
-        description: ""
+        description: # ""
         name: "Giá chủ phải lớn hơn hoặc bằng"
         sentence: giá phải lớn hơn hoặc bằng <em>%.2f</em>
-      master_price_lte:
-        args:
+      master_price_lte: #
+        args: #
           amount: Giá trị
-        description: ""
+        description: # ""
         name: "Giá chủ phải nhỏ hơn hoặc bằng"
         sentence: giá phải nhỏ hơn hoặc bằng <em>%.2f</em>
-      price_between:
-        args:
+      price_between: #
+        args: #
           high: Cao
           low: Thấp
-        description: ""
+        description: # ""
         name: "Giá giữa"
         sentence: giá giữa <em>%.2f</em> và <em>%.2f</em>
-      taxons_name_eq:
-        args:
+      taxons_name_eq: #
+        args: #
           taxon_name: "Tên đơn vị phân loại"
         description: "Trong đơn vị phân loại nhất định - không có kế thừa"
         name: "Trong Đơn vị phân loại(không có kế thừa)"
         sentence: trong <em>%s</em>
-      with:
-        args:
+      with: #
+        args: #
           value: Giá trị
         description: "Chọn tất cả sản phẩm có ít nhất một biến thể mà có giá trị chỉ định là tùy chọn hay đặc tính (vd: đỏ)"
         name: Với giá trị
         sentence: với giá trị <em>%s</em>
-      with_option:
-        args:
+      with_ids: #
+        args: #
+          ids: # IDs
+        description: # "Select specific products"
+        name: # Products with IDs
+        sentence: # with IDs <em>%s</em>
+      with_option: #
+        args: #
           option: Tùy chọn
         description: "Chọn tất cả sản phẩm có theo tùy chọn được chỉ định (vd. màu sắc)"
-        name: "With option"
+        name: # "With option"
         sentence: với tùy chọn <em>%s</em>
-      with_option_value:
-        args:
+      with_option_value: #
+        args: #
           option: Tùy chọn
           value: Giá trị
         description: "Chọn tất cả sản phẩm có ít nhất một biến thể với tùy chọn và giá trị được chỉ định (vd: màu sắc: đỏ)"
         name: "Với Tùy chọn và giá trị"
         sentence: với tùy chọn <em>%s</em> và giá trị <em>%s</em>
-      with_property:
-        args:
+      with_property: #
+        args: #
           property: Đặc tính
         description: "Chọn tất cả sản phẩm có đặc tính chỉ định(vd. trọng lượng)"
         name: "Với đặc tính"
         sentence: với đặc tính <em>%s</em>
-      with_property_value:
-        args:
+      with_property_value: #
+        args: #
           property: Đặc tính
           value: Giá trị
         description: "Chọn tất cả sản phẩm có ít nhất một biến thể với đặc tính và giá trị được chỉ định (vd: trọng lượng:10kg)"
@@ -743,8 +763,10 @@ vn:
   reports: Báo cáo
   required_for_solo_and_maestro: Cần cho thẻ Solo và thẻ Maestro.
   resend: Gửi lại
+  resend_confirmation_instructions: # "Resend confirmation instructions"
+  resend_unlock_instructions: # "Resend unlock instructions"
   reset_password: "Khởi tạo lại mật khẩu"
-  resource_controller:
+  resource_controller: #
     member_object_not_found: "Đối tượng thành viên không tìm thấy."
     successfully_created: "Đã tạo thành công!"
     successfully_removed: "Đã xóa thành công!"
@@ -758,6 +780,7 @@ vn:
   return_authorizations: Ủy Quyền Trả Về
   return_quantity: Số lượng trả về
   returned: Đã trả về
+  rma_credit: # RMA Credit
   rma_number: Số RMA
   rma_value: Giá trị RMA
   roles: Vai trò
@@ -772,6 +795,7 @@ vn:
   scopes: Phạm vi
   search: Tìm kiếm
   search_results: "Kết quả tìm kiếm cho '{{keywords}}'"
+  searching: # Searching
   secure_connection_type: Kiệu kết nối bảo mật
   secure_creditcard: Thẻ tín dụng bảo mật cao
   select: Lựa chọn
@@ -780,8 +804,9 @@ vn:
   send_copy_of_all_mails_to: Gửi bản sao tất cả thư đến
   send_copy_of_orders_mails_to: Gửi bản sao thư đặt hàng đến
   send_mails_as: Gửi thư như
+  send_me_reset_password_instructions: # "Send me reset password instructions"
   send_order_mails_as: Gửi thư đặt hàng như
-  server: Server
+  server: # Server
   server_error: "Máy chủ bị lỗi"
   settings: Cấu hình
   ship: Gửi
@@ -803,8 +828,6 @@ vn:
   shipping_method: "Phương thức vận chuyển"
   shipping_methods: "Phương thức vận chuyển"
   shipping_methods_description: "Quản lý phương thức vận chuyển"
-  shipping_rates: "Phí vận chuyển"
-  shipping_rates_description: "Quản lý phí vận chuyển"
   shipping_total: "Tổng tiền vận chuyển"
   shop_by_taxonomy: "Mua theo {{taxonomy}}"
   shopping_cart: "Sọt mua sắm"
@@ -819,8 +842,8 @@ vn:
   sign_up: "Đăng ký"
   site_name: "Tên trang"
   site_url: "Địa chỉ URL"
-  sku: SKU
-  smtp: SMTP
+  sku: # SKU
+  smtp: # SMTP
   smtp_authentication_type: Loại chứng thực SMTP
   smtp_domain: Tên miền SMTP
   smtp_mail_host: Tên host SMTP Mail
@@ -833,7 +856,8 @@ vn:
   smtp_username: Tên đăng nhập SMTP
   sold: Đã bán
   sort_ordering: "Thứ tự sắp xếp"
-  spree:
+  special_instructions: # "Special Instructions"
+  spree: #
     date: Ngày
     time: Giờ
   ssl_will_be_used_in_development_and_test_modes: "SSL sẽ không được dùng trong môi trường kiểm tra nếu cần thiết."
@@ -888,12 +912,14 @@ vn:
   tree: Cây
   try_again: "Thử lại lần nữa"
   type: Loại
+  type_to_search: # Type to search
   unable_ship_method: "Không thề tạo ra phương thức vận chuyển do lỗi máy chủ."
   unable_to_authorize_credit_card: "Không thề ủy quyền thẻ tín dụng"
   unable_to_capture_credit_card: "Không thề nắm được thẻ tín dụng"
   unable_to_connect_to_gateway: "Không thề kết nối với gateway."
   unable_to_save_order: "Không thề lưu đơn đặt hàng"
   under_paid: "Trả thiếu"
+  units: # "Units"
   unrecognized_card_type: Không nhận ra được loại thẻ
   update: Cập nhật
   update_password: "Cập nhật mật khầu của tôi rồi tự động đăng nhập tôi"
@@ -909,14 +935,14 @@ vn:
   user_created_successfully: "Tạo người dùng thành công"
   user_details: "Thông tin người dùng"
   users: Người dùng
-  validation:
-    cannot_be_less_than_shipped_units: "cannot be less than the number of shipped units."
+  validation: #
+    cannot_be_less_than_shipped_units: # "cannot be less than the number of shipped units."
     is_too_large: "quá lớn -- số hàng hiện có không đủ đáp ứng!"
     must_be_int: "phải là số nguyên"
     must_be_non_negative: "phải là số dương"
   value: Giá trị
   variants: Biến thể
-  vat: "VAT"
+  vat: # "VAT"
   version: Phiên bản
   view_shipping_options: "Xem các lựa chọn dịch vụ chuyển phát"
   void: Vô hiệu hóa
