@@ -5,7 +5,7 @@ include Spree::I18nUtils
 namespace :spree do
   namespace :i18n do
 
-    language_root = File.dirname(__FILE__) + "/../generators/templates/config/locales"
+    language_root = File.dirname(__FILE__) + "/../../config/locales"
     default_dir = File.dirname(__FILE__) + "/../../default"
 
     desc "Update by retrieving the latest Spree locale fils"
