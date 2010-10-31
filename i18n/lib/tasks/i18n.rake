@@ -1,10 +1,16 @@
+require 'spree/i18n_utils'
+
+include Spree::I18nUtils
+
 namespace :spree do
   namespace :i18n do
 
     language_root = File.dirname(__FILE__) + "/../generators/templates/config/locales"
     default_dir = File.dirname(__FILE__) + "/../../default"
 
+    desc "Update by retrieving the latest Spree locale fils"
     task :update_default do
+
       puts "Fetching latest Spree locale file to #{language_root}"
       #TODO also pull the auth and dash locales once they exist
       exec %(
@@ -35,7 +41,8 @@ namespace :spree do
       end
 
       write_file "#{language_root}/#{ENV['LOCALE']}.yml", "#{ENV['LOCALE']}", '---', composite_keys
-      print "Also, download the rails translation from: http://github.com/svenfuchs/rails-i18n/tree/master/rails/locale\n"
+      print "New locale generated.\n"
+      print "Don't forget to also download the rails translation from: http://github.com/svenfuchs/rails-i18n/tree/master/rails/locale\n"
     end
 
     desc "Show translation status for all supported locales other than en."
@@ -70,46 +77,6 @@ end
 def get_translation_keys(gem_name)
   (dummy_comments, words) = read_file(File.dirname(__FILE__) + "/../../default/#{gem_name}.yml", "en")
   words
-end
-
-# #Retrieve comments, translation data in hash form
-def read_file(filename, basename)
-  (comments, data) = IO.read(filename).split(/\n#{basename}:\s*\n/)   #Add error checking for failed file read?
-  return comments, create_hash(data)
-end
-
-#Creates hash of translation data
-def create_hash(data)
-  words = Hash.new
-  return words if !data
-  parent = Array.new
-  previous_key = 'base'
-  data.split("\n").each do |w|
-    next if w.strip.blank?
-    (key, value) = w.split(':', 2)
-    value ||= ''
-    shift = (key =~ /\w/)/2 - parent.size                             #Determine level of current key in comparison to parent array
-    key = key.sub(/^\s+/,'')
-    parent << previous_key if shift > 0                               #If key is child of previous key, add previous key as parent
-    (shift*-1).times { parent.pop } if shift < 0                      #If key is not related to previous key, remove parent keys
-    previous_key = key                                                #Track key in case next key is child of this key
-    words[parent.join(':')+':'+key] = value
-  end
-  words
-end
-
-#Writes to file from translation data hash structure
-def write_file(filename,basename,comments,words,comment_values=true, fallback_values={})
-  File.open(filename, "w") do |log|
-    log.puts(comments+"\n"+basename+": \n")
-    words.sort.each do |k,v|
-      keys = k.split(':')
-      (keys.size-1).times { keys[keys.size-1] = '  ' + keys[keys.size-1] }   #Add indentation for children keys
-      value = v.strip
-      value = ("#" + value) if comment_values and not value.blank?
-      log.puts "#{keys[keys.size-1]}: #{value}\n"
-    end
-  end
 end
 
 # Returns a composite hash of all relevant translation keys from each of the gems
