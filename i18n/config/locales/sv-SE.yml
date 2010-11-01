@@ -1,5 +1,5 @@
 ---
-sv-SE: 
+sv-SE:
   'no': "Nej"
   'yes': "Ja"
   5_biggest_spenders: "5 Största Köpare"
@@ -9,7 +9,7 @@ sv-SE:
   account: Konto
   account_updated: "Konto sparat!"
   action: Åtgärd
-  actions: 
+  actions:
     cancel: Avbryt
     create: Skapa
     destroy: Ta bort
@@ -18,9 +18,9 @@ sv-SE:
     new: Ny
     update: Uppdatera
   active: "Aktiverad"
-  activerecord: 
-    attributes: 
-      address: 
+  activerecord:
+    attributes:
+      address:
         address1: Adress
         address2: "Adress (forts.)"
         city: Stad
@@ -32,8 +32,8 @@ sv-SE:
         phone: Telefon
         state: "Delstat"
         zipcode: "Postkod"
-      checkout: 
-        bill_address: 
+      checkout:
+        bill_address:
           address1: "Faktureringsadress gata"
           city: "Faktureringsadress stad"
           firstname: "Faktureringsadress förnamn"
@@ -41,7 +41,7 @@ sv-SE:
           phone: "Faktureringsadress telefon"
           state: "Faktureringsadress delstat"
           zipcode: "Faktureringsadress postkod"
-        ship_address: 
+        ship_address:
           address1: "Leveransadress gata"
           city: "Leveransadress stad"
           firstname: "Leveransadress förnamn"
@@ -49,24 +49,24 @@ sv-SE:
           phone: "Leveransadress telefon"
           state: "Leveransadress delstat"
           zipcode: "Leveransadress postkod"
-      country: 
+      country:
         iso: ISO
         iso3: ISO3
         iso_name: "ISO Namn"
         name: Namn
         numcode: "ISO Kod"
-      creditcard: 
+      creditcard:
         cc_type: Typ
         month: Månad
         number: Nummer
         verification_value: "Säkerhetskod"
         year: År
-      inventory_unit: 
+      inventory_unit:
         state: Delstat
-      line_item: 
+      line_item:
         price: Pris
         quantity: Antal
-      order: 
+      order:
         checkout_complete: "Betalningen genomförd"
         ip_address: "IP Address"
         item_total: "Nettopris"
@@ -74,7 +74,7 @@ sv-SE:
         special_instructions: "Speciella Anvisningar"
         state: Delstat
         total: "Summa att betala"
-      product: 
+      product:
         available_on: "Tillgänglig"
         cost_price: "Kostnadspris"
         description: Beskrivning
@@ -83,41 +83,41 @@ sv-SE:
         on_hand: "I Lager"
         shipping_category: "Fraktalternativ"
         tax_category: "Skattekategori"
-      product_group: 
+      product_group:
         name: Namn
         product_count: "Antal produkter"
         product_scopes: "Produktomfattning"
         products: "Produkter"
         url: URL
-      product_scope: 
+      product_scope:
         arguments: "Argument"
         description: "Beskrivning"
-      property: 
+      property:
         name: Namn
         presentation: Presentation
-      prototype: 
+      prototype:
         name: Namn
-      return_authorization: 
+      return_authorization:
         amount: Belopp
-      role: 
+      role:
         name: Namn
-      state: 
+      state:
         abbr: Förkortning
         name: Namn
-      tax_category: 
+      tax_category:
         description: Beskrivning
         name: Namn
-      tax_rate: 
+      tax_rate:
         amount: Sats
-      taxon: 
+      taxon:
         name: Namn
         permalink: Permalink
         position: Position
-      taxonomy: 
+      taxonomy:
         name: Namn
-      user: 
+      user:
         email: Epost
-      variant: 
+      variant:
         cost_price: "Kostnadspris"
         depth: Djup
         height: Höjd
@@ -125,86 +125,86 @@ sv-SE:
         sku: Lagerhållningsnummer
         weight: Vikt
         width: Bredd
-      zone: 
+      zone:
         description: Beskrivning
         name: Namn
-    models: 
-      address: 
+    models:
+      address:
         one: Adress
         other: Adresser
-      cheque_payment: 
+      cheque_payment:
         one: Checkbetalning
         other: Checkbetalningar
-      country: 
+      country:
         one: Land
         other: Länder
-      creditcard: 
+      creditcard:
         one: "Kreditkort"
         other: "Kreditkort"
-      creditcard_payment: 
+      creditcard_payment:
         one: "Kreditkortsbetalning"
         other: "Kreditkortsbetalningar"
-      creditcard_txn: 
+      creditcard_txn:
         one: "Kreditkortstransaktion"
         other: "Kreditkortstransaktioner"
-      inventory_unit: 
+      inventory_unit:
         one: "Inventeringspost"
         other: "Inventeringsposter"
-      line_item: 
+      line_item:
         one: "Artikel"
         other: "Artiklar"
-      order: 
+      order:
         one: Beställning
         other: Beställningar
-      payment: 
+      payment:
         one: Betalning
         other: Betalningar
-      product: 
+      product:
         one: Produkt
         other: Produkter
-      product_group: 
+      product_group:
         one: "Produktgrupp"
         other: "Produktgrupper"
-      property: 
+      property:
         one: Egenskap
         other: Egenskaper
-      prototype: 
+      prototype:
         one: Prototyp
         other: Prototyper
-      return_authorization: 
+      return_authorization:
         one: Return Authorization
         other: Return Authorizations
-      role: 
+      role:
         one: Roll
         other: Roller
-      shipment: 
+      shipment:
         one: Frakt
         other: Frakter
-      shipping_category: 
+      shipping_category:
         one: "Fraktalternativ"
         other: "Fraktalternativ"
-      state: 
+      state:
         one: Delstat
         other: Delstater
-      tax_category: 
+      tax_category:
         one: "Skattekategori"
         other: "Skattekategorier"
-      tax_rate: 
+      tax_rate:
         one: "Skattesats"
         other: "Skattesatser"
-      taxon: 
+      taxon:
         one: Taxon
         other: Taxons
-      taxonomy: 
+      taxonomy:
         one: Taxonomi
         other: Taxonomier
-      user: 
+      user:
         one: Användare
         other: Användare
-      variant: 
+      variant:
         one: Variant
         other: Varianter
-      zone: 
+      zone:
         one: Zon
         other: Zoner
   add: Lägg till
@@ -236,17 +236,6 @@ sv-SE:
   alternative_phone: "Alternativt Telefonnummer"
   amount: Belopp
   analytics_trackers: Analytics Trackers
-    access: # "API Access"
-    clear_key: # "Clear API key"
-      invalid_event: # "Invalid event name, valid names are %{events}"
-      invalid_event_for_object: # "Valid event name but not allowed for this object, valid names are %{events}"
-      missing_event: # "No event name supplied"
-    generate_key: # "Generate API key"
-    key: # "API Key"
-    key_cleared: # "API key cleared"
-    key_generated: # "API key generated"
-    no_key: # "No key defined"
-    regenerate_key: # "Regenerate API key"
   apply: # "Apply"
   are_you_sure: "Är du säker?"
   are_you_sure_category: "Är du säker på att du vill ta bort denna kategori?"
@@ -297,8 +286,8 @@ sv-SE:
   charged: Charged
   charges: Charges
   checkout: Kassa
-  checkout_steps: 
-    # keys correspond to Checkout state names: 
+  checkout_steps:
+    # keys correspond to Checkout state names:
     address: Adress
     complete: Slutför
     confirm: Bekräfta
@@ -538,7 +527,7 @@ sv-SE:
   not: not
   not_shown: # "Not Shown"
   note: Note
-  notice_messages: 
+  notice_messages:
     option_type_removed: "Succesfully removed option type."
     product_cloned: "Product has been cloned"
     product_deleted: "Product has been deleted"
@@ -620,86 +609,86 @@ sv-SE:
   product_groups: Product Groups
   product_has_no_description: This product has no description
   product_properties: "Product Properties"
-  product_scopes: 
-    groups: 
-      price: 
+  product_scopes:
+    groups:
+      price:
         description: "Scopes for selecting products based on Pris"
         name: Pris
-      search: 
+      search:
         description: "Scopes for selecting products based on name, keywords and description of product"
         name: "Text search"
-      taxon: 
+      taxon:
         description: "Scopes for selecting products based on Taxons"
         name: Taxon
-      values: 
+      values:
         description: "Scopes for selecting products based on option and property values"
         name: Values
-    scopes: 
-      ascend_by_master_price: 
+    scopes:
+      ascend_by_master_price:
         name: Ascend by product master price
-      ascend_by_name: 
+      ascend_by_name:
         name: Ascend by product name
-      ascend_by_updated_at: 
+      ascend_by_updated_at:
         name: Ascend by actualization date
-      descend_by_master_price: 
+      descend_by_master_price:
         name: Descend by product master price
-      descend_by_name: 
+      descend_by_name:
         name: Descend by product name
-      descend_by_popularity: 
+      descend_by_popularity:
         name: Sort by popularity(most popular first)
-      descend_by_updated_at: 
+      descend_by_updated_at:
         name: Descend by actualization date
-      in_name: 
-        args: 
+      in_name:
+        args:
           words: Words
         description: "(separated by space or comma)"
         name: "Product name have following"
         sentence: product name contain <em>%s</em>
-      in_name_or_description: 
-        args: 
+      in_name_or_description:
+        args:
           words: Words
         description: "(separated by space or comma)"
         name: "Product name or description have following"
         sentence: name or description contain <em>%s</em>
-      in_name_or_keywords: 
-        args: 
+      in_name_or_keywords:
+        args:
           words: Words
         description: "(separated by space or comma)"
         name: "Product name or meta keywords have following"
         sentence: name or keywords contain <em>%s</em>
-      in_taxons: 
-        args: 
+      in_taxons:
+        args:
           "taxon_names": "Taxon names"
         description: "Taxon names have to be separated by comma or space(eg. adidas,shoes)"
         name: "In taxons and all their descendants"
         sentence: in <em>%s</em> and all their descendants
-      master_price_gte: 
-        args: 
+      master_price_gte:
+        args:
           amount: Belopp
         description: ""
         name: "Master price greater or equal to"
         sentence: price greater or equal to <em>%.2f</em>
-      master_price_lte: 
-        args: 
+      master_price_lte:
+        args:
           amount: Belopp
         description: ""
         name: "Master price lesser or equal to"
         sentence: price less or equal to <em>%.2f</em>
-      price_between: 
-        args: 
+      price_between:
+        args:
           high: High
           low: Low
         description: ""
         name: "Pris mellan"
         sentence: price between <em>%.2f</em> and <em>%.2f</em>
-      taxons_name_eq: 
-        args: 
+      taxons_name_eq:
+        args:
           taxon_name: "Taxon name"
         description: "In specific taxon - without descendants"
         name: "In Taxon(without descendants)"
         sentence: in <em>%s</em>
-      with: 
-        args: 
+      with:
+        args:
           value: Value
         description: # "Select specific products"
         name: # Products with IDs
@@ -708,27 +697,27 @@ sv-SE:
         description: # "Select specific products"
         name: # Products with IDs
         sentence: # with IDs <em>%s</em>
-      with_option: 
-        args: 
+      with_option:
+        args:
           option: Option
         description: "Selects all products that have specified option(eg. color)"
         name: "With option"
         sentence: with option <em>%s</em>
-      with_option_value: 
-        args: 
+      with_option_value:
+        args:
           option: Option
           value: Value
         description: "Selects all products that have at least one variant with specified option and value(eg. color:red)"
         name: "With option and value"
         sentence: with option <em>%s</em> and value <em>%s</em>
-      with_property: 
-        args: 
+      with_property:
+        args:
           property: Property
         description: "Selects all products that have specified property(eg. weight)"
         name: "With property"
         sentence: with property <em>%s</em>
-      with_property_value: 
-        args: 
+      with_property_value:
+        args:
           property: Property
           value: Value
         description: "Selects all products that have at least one variant with specified property and value(eg. weight:10kg)"
@@ -762,7 +751,7 @@ sv-SE:
   resend_confirmation_instructions: # "Resend confirmation instructions"
   resend_unlock_instructions: # "Resend unlock instructions"
   reset_password: "Reset my password"
-  resource_controller: 
+  resource_controller:
     member_object_not_found: "Member object not found."
     successfully_created: "Successfully created!"
     successfully_removed: "Successfully removed!"
@@ -853,7 +842,7 @@ sv-SE:
   sold: Såld
   sort_ordering: "Sorteringsordning"
   special_instructions: # "Special Instructions"
-  spree: 
+  spree:
     date: Datum
     time: Tid
   ssl_will_be_used_in_development_and_test_modes: "SSL kommer att användas i utvecklings- och testläge om nödvändigt."
@@ -931,7 +920,7 @@ sv-SE:
   user_created_successfully: "Användare skapad"
   user_details: "Användardetaljer"
   users: Användare
-  validation: 
+  validation:
     cannot_be_less_than_shipped_units: # "cannot be less than the number of shipped units."
     is_too_large: "is too large -- stock on hand cannot cover requested quantity!"
     must_be_int: "måste vara ett heltal"
