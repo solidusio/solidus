@@ -26,7 +26,7 @@ namespace :spree_i18n do
     Dir["#{language_root}/*.yml"].each do |filename|
       basename = File.basename(filename, '.yml')
       (comments, other) = read_file(filename, basename)
-      words.each { |k,v| other[k] ||= "##{words[k]}" unless words[k].blank? }  #Initializing hash variable as en fallback if it does not exist
+      words.each { |k,v| other[k] ||= "#{words[k]}" }  #Initializing hash variable as en fallback if it does not exist
       other.delete_if { |k,v| !words[k] } #Remove if not defined in en locale
       write_file(filename, basename, comments, other, false)
     end
@@ -78,12 +78,12 @@ def get_translation_keys(gem_name)
 end
 
 # Returns a composite hash of all relevant translation keys from each of the gems
-def composite_keys
+def composite_keys 
   api_keys = get_translation_keys "spree_api"
-  auth_keys = get_translation_keys "spree_api"
+  auth_keys = get_translation_keys "spree_auth"
   core_keys = get_translation_keys "spree_core"
-  dash_keys = get_translation_keys "spree_api"
-  promo_keys = get_translation_keys "spree_api"
+  dash_keys = get_translation_keys "spree_dash"
+  promo_keys = get_translation_keys "spree_promo"
 
   api_keys.merge(auth_keys).merge(core_keys).merge(dash_keys).merge(promo_keys)
 end
