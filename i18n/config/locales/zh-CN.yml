@@ -9,7 +9,7 @@ zh-CN:
   account: "帐户"
   account_updated: "帐户更新完成!"
   action: "操作"
-  actions: #
+  actions: 
     cancel: "取消"
     create: "创建"
     destroy: "删除"
@@ -18,9 +18,9 @@ zh-CN:
     new: "新建"
     update: "更新"
   active: "激活"
-  activerecord: #
-    attributes: #
-      address: #
+  activerecord: 
+    attributes: 
+      address: 
         address1: "地址"
         address2: "地址(继续)"
         city: "城市"
@@ -32,8 +32,8 @@ zh-CN:
         phone: "电话"
         state: "省份"
         zipcode: "邮政编码"
-      checkout: #
-        bill_address: #
+      checkout: 
+        bill_address: 
           address1: "账单寄送地址"
           city: "账单寄送城市"
           firstname: "账单收件人名"
@@ -41,7 +41,7 @@ zh-CN:
           phone: "账单寄送联系电话"
           state: "账单寄送省份"
           zipcode: "账单寄送地址的邮政编码"
-        ship_address: #
+        ship_address: 
           address1: "收货地址"
           city: "收货所在城市"
           firstname: "收货名"
@@ -49,24 +49,24 @@ zh-CN:
           phone: "收货人联系电话"
           state: "收货所在省份"
           zipcode: "收货地址邮政编码"
-      country: #
-        iso: # ISO
-        iso3: # ISO3
+      country: 
+        iso: ISO
+        iso3: ISO3
         iso_name: "ISO名称"
         name: "国家名"
         numcode: "ISO代码"
-      creditcard: #
+      creditcard: 
         cc_type: "类型"
         month: "月份"
         number: "卡号"
         verification_value: "校验码"
         year: "年份"
-      inventory_unit: #
+      inventory_unit: 
         state: "状态"
-      line_item: #
+      line_item: 
         price: "价格"
         quantity: "数量"
-      order: #
+      order: 
         checkout_complete: "已结账"
         ip_address: "IP地址"
         item_total: "产品小记"
@@ -74,7 +74,7 @@ zh-CN:
         special_instructions: "特别指南"
         state: "状态"
         total: "总计"
-      product: #
+      product: 
         available_on: "可购买"
         cost_price: "进货价"
         description: "描述"
@@ -83,128 +83,128 @@ zh-CN:
         on_hand: "库存"
         shipping_category: "运送类型"
         tax_category: "缴税类型"
-      product_group: #
+      product_group: 
         name: "名称"
         product_count: "产品数量"
         product_scopes: "产品范围"
         products: "产品"
-        url: # URL
-      product_scope: #
+        url: URL
+      product_scope: 
         arguments: "参数"
         description: "描述"
-      property: #
+      property: 
         name: "名称"
         presentation: "表示"
-      prototype: #
+      prototype: 
         name: "名称"
-      return_authorization: #
+      return_authorization: 
         amount: "金额"
-      role: #
+      role: 
         name: "名称"
-      state: #
+      state: 
         abbr: "缩写"
         name: "名称"
-      tax_category: #
+      tax_category: 
         description: "描述"
         name: "名称"
-      tax_rate: #
+      tax_rate: 
         amount: "税率"
-      taxon: #
+      taxon: 
         name: "名称"
         permalink: "永久链接"
         position: "所在位置"
-      taxonomy: #
+      taxonomy: 
         name: "名称"
-      user: #
+      user: 
         email: "电子邮件"
-      variant: #
+      variant: 
         cost_price: "进货价"
         depth: "长"
         height: "高"
         price: "价格"
-        sku: # SKU
+        sku: SKU
         weight: "重量"
         width: "宽"
-      zone: #
+      zone: 
         description: "描述"
         name: "名称"
-    models: #
-      address: #
+    models: 
+      address: 
         one: "地址"
         other: "其他地址"
-      cheque_payment: #
+      cheque_payment: 
         one: "支票支付"
         other: "其他支票支付"
-      country: #
+      country: 
         one: "国家"
         other: "其他国家"
-      creditcard: #
+      creditcard: 
         one: "信用卡"
         other: "其他信用卡"
-      creditcard_payment: #
+      creditcard_payment: 
         one: "信用卡支付"
         other: "其他信用卡支付"
-      creditcard_txn: #
+      creditcard_txn: 
         one: "信用卡交易"
         other: "其他信用卡交易"
-      inventory_unit: #
+      inventory_unit: 
         one: "库存单元"
         other: "其他库存单元"
-      line_item: #
+      line_item: 
         one: "所列项目"
         other: "其他所列项目"
-      order: #
+      order: 
         one: "订单"
         other: "其他订单"
-      payment: #
+      payment: 
         one: "支付"
         other: "其他支付"
-      product: #
+      product: 
         one: "产品"
         other: "其他产品"
-      product_group: #
+      product_group: 
         one: "产品组"
         other: "其他产品组"
-      property: #
+      property: 
         one: "属性"
         other: "其他属性"
-      prototype: #
+      prototype: 
         one: "原型"
         other: "其他原型"
-      return_authorization: #
+      return_authorization: 
         one: "退款"
         other: "其他退款"
-      role: #
+      role: 
         one: "角色"
         other: "其他角色"
-      shipment: #
+      shipment: 
         one: "配送"
         other: "其他配送"
-      shipping_category: #
+      shipping_category: 
         one: "配送类型"
         other: "其他配送类型"
-      state: #
+      state: 
         one: "省份"
         other: "其他省份"
-      tax_category: #
+      tax_category: 
         one: "缴税类型"
         other: "其他缴税类型"
-      tax_rate: #
+      tax_rate: 
         one: "税率"
         other: "其他税率"
-      taxon: #
+      taxon: 
         one: "分类"
         other: "其他分类"
-      taxonomy: #
+      taxonomy: 
         one: "分类层级"
         other: "其他分类层级"
-      user: #
+      user: 
         one: "用户"
         other: "其他用户"
-      variant: #
+      variant: 
         one: "具体型号"
         other: "其他具体型号"
-      zone: #
+      zone: 
         one: "区域"
         other: "其他区域"
   add: "添加"
@@ -215,6 +215,7 @@ zh-CN:
   add_option_value: "添加选项值"
   add_product: "添加产品"
   add_product_properties: "添加产品属性"
+  add_rule_of_type: Add rule of type
   add_scope: "添加一个范围"
   add_state: "添加一个省份"
   add_to_cart: "加入购物车"
@@ -223,6 +224,7 @@ zh-CN:
   address: "地址"
   address_information: "地址信息"
   adjustment: "调整"
+  adjustment_total: Adjustment Total
   adjustments: "其他调整"
   administration: "管理"
   all: "全部"
@@ -236,20 +238,20 @@ zh-CN:
   alternative_phone: "其他电话"
   amount: "金额"
   analytics_trackers: "追踪分析"
-  api: #
-    access: # "API Access"
-    clear_key: # "Clear API key"
-    errors: #
-      invalid_event: # "Invalid event name, valid names are %{events}"
-      invalid_event_for_object: # "Valid event name but not allowed for this object, valid names are %{events}"
-      missing_event: # "No event name supplied"
-    generate_key: # "Generate API key"
-    key: # "API Key"
-    key_cleared: # "API key cleared"
-    key_generated: # "API key generated"
-    no_key: # "No key defined"
-    regenerate_key: # "Regenerate API key"
-  apply: # "Apply"
+  api: 
+    access: "API Access"
+    clear_key: "Clear API key"
+    errors: 
+      invalid_event: "Invalid event name, valid names are %{events}"
+      invalid_event_for_object: "Valid event name but not allowed for this object, valid names are %{events}"
+      missing_event: "No event name supplied"
+    generate_key: "Generate API key"
+    key: "API Key"
+    key_cleared: "API key cleared"
+    key_generated: "API key generated"
+    no_key: "No key defined"
+    regenerate_key: "Regenerate API key"
+  apply: "Apply"
   are_you_sure: "你确定么？"
   are_you_sure_category: "你确定你要删除这个分类么?"
   are_you_sure_delete: "你确定你要删除这条记录么?"
@@ -279,11 +281,12 @@ zh-CN:
   calculator: "计算器"
   calculator_settings_warning: "如果你正在修改计算方式，你必须在编辑计算器设置之前先保存"
   cancel: "取消"
-  cancel_my_account: # Cancel my account
-  cancel_my_account_description: # "Unhappy?"
+  cancel_my_account: Cancel my account
+  cancel_my_account_description: "Unhappy?"
   canceled: "已取消"
   cannot_create_returns: "没有配送的订单不能申请退货"
   cannot_destory_line_item_as_inventory_units_have_shipped: "由于有些库存单元已经配送，无法删除一些产品项"
+  cannot_perform_operation: "Cannot perform requested operation"
   capture: "付款"
   card_code: "卡验证码"
   card_details: "卡详细信息"
@@ -299,13 +302,6 @@ zh-CN:
   charged: "已找零??"
   charges: "费用"
   checkout: "结账"
-  checkout_steps: #
-    # keys correspond to Checkout state names: #
-    address: "地址"
-    complete: "完成"
-    confirm: "确认"
-    delivery: "配送"
-    payment: "支付"
   cheque: "支票"
   city: "城市"
   clone: "复制"
@@ -325,12 +321,14 @@ zh-CN:
   copy_all_mails_to: "将所有的邮件复制到"
   cost_price: "进货价"
   count: "总数"
-  count_of_reduced_by: # "count of '%{name}' reduced by %{count}"
+  count_of_reduced_by: "count of '%{name}' reduced by %{count}"
   country: "国家"
   country_based: "根据国家"
+  coupon: Coupon
+  coupon_code: Coupon code
   create: "创建"
   create_a_new_account: "创建一个新帐号"
-  create_product_group_from_products: # Create a new product group from these products
+  create_product_group_from_products: Create a new product group from these products
   create_user_account: "创建用户帐号"
   created_successfully: "创建成功"
   credit: "欠款??"
@@ -354,17 +352,20 @@ zh-CN:
   depth: "长"
   description: "描述"
   destroy: "删除"
-  didnt_receive_confirmation_instructions: # "Didn't receive confirmation instructions?"
-  didnt_receive_unlock_instructions: # "Didn't receive unlock instructions?"
+  didnt_receive_confirmation_instructions: "Didn't receive confirmation instructions?"
+  didnt_receive_unlock_instructions: "Didn't receive unlock instructions?"
+  discount_amount: "Discount Amount"
   display: "显示"
   edit: "编辑"
   editing_billing_integration: "编辑付款集成"
   editing_category: "编辑分类"
+  editing_mail_method: Editing Mail Method
   editing_option_type: "编辑类型选项"
   editing_option_types: "编辑类型选项"
   editing_payment_method: "编辑支付方式"
   editing_product: "编辑产品"
   editing_product_group: "编辑产品组"
+  editing_promotion: Editing Promotion
   editing_property: "编辑属性"
   editing_prototype: "编辑原型"
   editing_shipping_category: "编辑配送分类"
@@ -378,13 +379,13 @@ zh-CN:
   email: "电子邮件"
   email_address: "电子邮件地址"
   email_server_settings_description: "设置邮件服务器。"
-  empty: # "Empty"
+  empty: "Empty"
   empty_cart: "清空购物车"
   enable_login_via_login_password: "使用标准的电子邮件/密码"
   enable_login_via_openid: "使用OpenID代替"
   enable_mail_delivery: "开启邮件发送"
   enter_exactly_as_shown_on_card: "请严格按照卡面信息输入"
-  enter_password_to_confirm: # "(we need your current password to confirm your changes)"
+  enter_password_to_confirm: "(we need your current password to confirm your changes)"
   environment: "环境"
   error: "错误"
   event: "事件"
@@ -407,6 +408,7 @@ zh-CN:
   flat_rate_per_order: "固定费率 (每订单)"
   flexible_rate: "灵活费率"
   forgot_password: "忘记密码"
+  free_shipping: Free Shipping
   front_end: "前端"
   full_name: "全名"
   gateway: "网关"
@@ -417,10 +419,10 @@ zh-CN:
   general: "一般"
   general_settings: "一般设置"
   general_settings_description: "配置Spree的一般设置。"
-  google_analytics: # "Google Analytics"
+  google_analytics: "Google Analytics"
   google_analytics_active: "激活"
   google_analytics_create: "创建新的Google Analytics Account"
-  google_analytics_id: # "Analytics ID"
+  google_analytics_id: "Analytics ID"
   google_analytics_new: "新的Google Analytics帐号"
   google_analytics_setting_description: "管理Google Analytics ID"
   guest_checkout: "匿名用户结账"
@@ -430,17 +432,19 @@ zh-CN:
   hello_user: "用户你好"
   history: "历史"
   home: "首页"
-  icon: # "Icon"
-  icons_by: # "Icons by"
+  icon: "Icon"
+  icons_by: "Icons by"
   image: "图片"
   images: "图片"
-  images_for: # "Images for"
+  images_for: "Images for"
   in_progress: "处理中"
   include_in_shipment: "包含在配送中"
   included_in_other_shipment: "包含在其他配送中"
   included_in_this_shipment: "包含在本次配送中"
   instructions_to_reset_password: "请填写如下表格来重置你的密码，重置后的密码会通过电子邮件发送给您"
   integration_settings_warning: "如果您正在修改支付集成设置，您必须在编辑集成设置之前进行保存"
+  intercept_email_address: Intercept Email Address
+  intercept_email_instructions: "Override email recipient and replace with this address."
   invalid_search: "不合法的查询条件."
   inventory: "库存"
   inventory_adjustment: "库存调整"
@@ -451,6 +455,10 @@ zh-CN:
   item: "商品项"
   item_description: "商品项描述"
   item_total: "项目总计"
+  item_total_rule: 
+    operators: 
+      gt: greater than
+      gte: greater than or equal to
   items: "商品项"
   last_14_days: "过去14天"
   last_5_orders: "最近的5个订单"
@@ -459,7 +467,7 @@ zh-CN:
   last_name: "姓"
   last_name_begins_with: "姓的开始"
   last_year: "去年"
-  leave_blank_to_not_change: # "(leave blank if you don't want to change it)"
+  leave_blank_to_not_change: "(leave blank if you don't want to change it)"
   list: "列表"
   listing_categories: "分类列表"
   listing_option_types: "选项类型列表"
@@ -468,23 +476,24 @@ zh-CN:
   listing_reports: "报表列表"
   listing_tax_categories: "缴税分类列表"
   listing_users: "用户列表"
-  live: # "Live"
+  live: "Live"
   loading: "加载"
   locale_changed: "Locale已变更"
   log_in: "登陆"
   logged_in_as: "已登陆为"
   logged_in_succesfully: "登陆成功"
   logged_out: "您已经登出系统"
+  login: Login
   login_as_existing: "作为一个已有客户登陆"
   login_failed: "登陆认证失败。"
   login_name: "用户名"
   logout: "登出/注销"
   look_for_similar_items: "寻找类似的产品"
-  maestro_or_solo_cards: # Maestro/Solo cards
+  maestro_or_solo_cards: Maestro/Solo cards
   mail_delivery_enabled: "邮件发送功能已启用"
   mail_delivery_not_enabled: "邮件发送功能尚未启用"
+  mail_methods: Mail Methods
   mail_server_preferences: 邮件服务器首选项
-  mail_server_settings: "邮件服务器设置"
   make_refund: "进行退款??"
   mark_shipped: "标记为已配送"
   master_price: "默认价格"
@@ -492,6 +501,7 @@ zh-CN:
   meta_description: "元描述"
   meta_keywords: "关键字"
   metadata: "元数据"
+  minimal_amount: "Minimal Amount"
   missing_required_information: "缺少必须的信息"
   month: "月"
   my_account: "我的帐户"
@@ -504,6 +514,7 @@ zh-CN:
   new_category: "新建目录"
   new_customer: "新建客户"
   new_image: "新建图片"
+  new_mail_method: New Mail Method
   new_option_type: "新建选项类型"
   new_option_value: "新建选项值"
   new_order: "新建订单"
@@ -512,6 +523,7 @@ zh-CN:
   new_payment_method: "新建支付方式"
   new_product: "新建产品"
   new_product_group: "新建产品组"
+  new_promotion: New Promotion
   new_property: "新建属性"
   new_prototype: "新建原型"
   new_return_authorization: "新建退货"
@@ -523,7 +535,7 @@ zh-CN:
   new_tax_rate: "新建税率"
   new_taxon: "新建分类"
   new_taxonomy: "新建分类层级"
-  new_tracker: # New Tracker
+  new_tracker: New Tracker
   new_user: "新建用户"
   new_variant: "新建具体型号"
   new_zone: "新建区域"
@@ -532,21 +544,22 @@ zh-CN:
   no_match_found: "找不到匹配的内容"
   no_payment_methods_available: "由于该环境下没有配置支付方式，无法结账"
   no_products_found: "找不到产品"
-  no_results: # "No results"
+  no_results: "No results"
+  no_rules_added: No rules added
   no_shipping_methods_available: "没有可用的配送方式，请变更你的地址，再次进行尝试"
   no_user_found: "找不到使用该电子邮件的用户帐号"
   none: "没有"
   none_available: "没有可用的"
+  normal_amount: "Normal Amount"
   not: "不"
-  not_shown: # "Not Shown"
+  not_shown: "Not Shown"
   note: "备注"
-  notice_messages: #
+  notice_messages: 
     option_type_removed: "成功移出了选项类型"
     product_cloned: "产品已经被复制"
     product_deleted: "产品已经被删除"
     product_not_cloned: "产品无法被复制"
     product_not_deleted: "产品无法被删除"
-    track_me_in_GA: "在GA监控追踪我"
     variant_deleted: "具体型号已经被删除"
     variant_not_deleted: "具体型号不能被删除"
   on_hand: "库存"
@@ -568,6 +581,19 @@ zh-CN:
   order_operation_authorize: "认证"
   order_processed_but_following_items_are_out_of_stock: "您的订单已经被处理了，但是以下几样商品目前没有库存："
   order_processed_successfully: "您的订单已经被成功处理了"
+  order_state: # keys correspond to Checkout state names:
+    # keys correspond to Checkout state names: 
+    address: address
+    adjustments: adjustments
+    awaiting_return: awaiting return
+    canceled: canceled
+    cart: cart
+    complete: complete
+    confirm: confirm
+    delivery: delivery
+    payment: payment
+    resumed : resumed
+    returned: returned
   order_summary: "订单概述"
   order_sure_want_to: "您确定您想要%{event}这个订单么?"
   order_total: "订单总计"
@@ -577,7 +603,7 @@ zh-CN:
   other_payment_options: "其他支付选项"
   out_of_stock: "没有库存"
   out_of_stock_products: "没有库存的产品"
-  over_paid: # "Over Paid"
+  over_paid: "Over Paid"
   overview: "首页"
   overview_welcome: "欢迎来到商店首页，现在我们还没有足够的数据来显示仪表盘。<br/><br/> 当系统中有有限订单后，系统会自动生成统计数据，并显示在仪表盘中。"
   page_only_viewable_when_logged_in: "您试图访问一个只有登陆后才能访问的页面"
@@ -597,6 +623,12 @@ zh-CN:
   payment_method: "支付方式"
   payment_methods: "支付方式"
   payment_methods_setting_description: "配置消费者可以用于支付的方式"
+  payment_processing_failed: "Payment could not be processed, please check the details you entered"
+  payment_state: Payment State
+  payment_states: 
+    balance_due: balance due
+    credit_owed: credit owed
+    paid: paid
   payment_updated: "支付已更新"
   payments: "支付"
   pending_payments: "等待支付"
@@ -604,12 +636,13 @@ zh-CN:
   phone: "电话"
   place_order: "下单"
   please_create_user: "请创建一个用户帐号"
-  powered_by: # "Powered by"
+  powered_by: "Powered by"
   presentation: "描述"
   preview: "预览"
   previous: "上一页"
   price: "价格"
-  price_with_vat_included: # "%{price} (inc. VAT)"
+  price_bucket: Price Bucket
+  price_with_vat_included: "%{price} (inc. VAT)"
   problem_authorizing_card: "验证信用卡时遇到问题"
   problem_capturing_card: "获取信用卡时遇到问题"
   problems_processing_order: "我们在处理您的订单时遇到问题"
@@ -622,117 +655,125 @@ zh-CN:
   product_groups: "产品组"
   product_has_no_description: "该产品没有描述"
   product_properties: "产品属性"
-  product_scopes: #
-    groups: #
-      price: #
+  product_rule: 
+    choose_products: Choose products
+    label: "Order must contain {{select}} of these products"
+    match_all: all
+    match_any: at least one
+    product_source: 
+      group: From product group
+      manual: Manually choose
+  product_scopes: 
+    groups: 
+      price: 
         description: "根据价格选择产品的查询范围"
         name: "价格"
-      search: #
+      search: 
         description: "根据产品名称、关键字以及描述选择产品的查询范围"
         name: "文本搜索"
-      taxon: #
+      taxon: 
         description: "根据产品分类选择产品的查询范围"
         name: "分类"
-      values: #
+      values: 
         description: "根据产品的选项与属性值选择产品的查询范围"
         name: "值"
-    scopes: #
-      ascend_by_master_price: #
+    scopes: 
+      ascend_by_master_price: 
         name: "按产品默认价格升序"
-      ascend_by_name: #
+      ascend_by_name: 
         name: "按产品名称升序"
-      ascend_by_updated_at: #
+      ascend_by_updated_at: 
         name: "按最后更新事件升序"
-      descend_by_master_price: #
+      descend_by_master_price: 
         name: "按产品默认价格降序"
-      descend_by_name: #
+      descend_by_name: 
         name: "按产品名称降序"
-      descend_by_popularity: #
+      descend_by_popularity: 
         name: "按流行程序排序(最流行的排在最前)"
-      descend_by_updated_at: #
+      descend_by_updated_at: 
         name: "按最后更新事件降序"
-      in_name: #
-        args: #
+      in_name: 
+        args: 
           words: "单词"
         description: "(以空格或逗号分割)"
         name: "产品名称中有以下"
         sentence: "产品名称中包含 <em>%s</em>"
-      in_name_or_description: #
-        args: #
+      in_name_or_description: 
+        args: 
           words: "单词"
         description: "(以空格或逗号分割)"
         name: "产品名称或描述中有以下"
         sentence: "产品名称或描述中包含 <em>%s</em>"
-      in_name_or_keywords: #
-        args: #
+      in_name_or_keywords: 
+        args: 
           words: "单词"
         description: "(以空格或逗号分割)"
         name: "产品名称或关键字中有以下"
         sentence: "产品名称或关键字中包含 <em>%s</em>"
-      in_taxons: #
-        args: #
-          "taxon_names": # "Taxon names"
+      in_taxons: 
+        args: 
+          "taxon_names": "Taxon names"
         description: "分类名称必须以空格或逗号分割(例如： adidas,鞋子)"
         name: "在分类以及所有下级分类中"
         sentence: "在 <em>%s</em> 以及他们所有的下级分类中"
-      master_price_gte: #
-        args: #
+      master_price_gte: 
+        args: 
           amount: "金额"
-        description: # ""
+        description: ""
         name: "默认价格大于等于"
         sentence: "价格大于等于 <em>%.2f</em>"
-      master_price_lte: #
-        args: #
+      master_price_lte: 
+        args: 
           amount: "金额"
-        description: # ""
+        description: ""
         name: "默认价格小于等于"
         sentence: "价格小于等于 <em>%.2f</em>"
-      price_between: #
-        args: #
+      price_between: 
+        args: 
           high: "上限"
           low: "下限"
-        description: # ""
+        description: ""
         name: "价格在"
         sentence: "价格在 <em>%.2f</em> 到 <em>%.2f</em> 之内"
-      taxons_name_eq: #
-        args: #
+      taxons_name_eq: 
+        args: 
           taxon_name: "分类名称"
         description: "在指定的分类中 - 不包括下级分类"
         name: "在分类中(不包括下级分类)"
         sentence: "在 <em>%s</em> 中"
-      with: #
-        args: #
+      with: 
+        args: 
           value: "值"
-        description: "选择所有至少有一个型号拥有指定的选项或者属性值(例如. 红色)"
-        name: "拥有属性或选项"
-        sentence: "拥有属性或选项 <em>%s</em>"
-      with_ids: #
-        args: #
-          ids: # IDs
-        description: # "Select specific products"
-        name: # Products with IDs
-        sentence: # with IDs <em>%s</em>
-      with_option: #
-        args: #
+        description: "Select specific products"
+        name: Products with IDs
+        sentence: with IDs <em>%s</em>
+      with_ids: 
+        args: 
+          ids: IDs
+        description: "Select specific products"
+        name: Products with IDs
+        sentence: with IDs <em>%s</em>
+      with_option: 
+        args: 
           option: "选项"
         description: "选择所有拥有特定可选项的产品(例如. 颜色)"
         name: "拥有选项"
         sentence: "拥有选项 <em>%s</em>"
-      with_option_value: #
-        args: #
+      with_option_value: 
+        args: 
           option: "选项"
           value: "选项值"
         description: "选择所有至少有一个型号拥有指定选项及选项值的产品(例如. 颜色:红色)"
         name: "拥有选项及选项值"
         sentence: "拥有选项 <em>%s</em> 及选项值 <em>%s</em>"
-      with_property: #
-        args: #
+      with_property: 
+        args: 
           property: "属性"
         description: "选择所有拥有特定属性的产品(例如. 重量)"
         name: "拥有属性"
         sentence: "拥有属性 <em>%s</em>"
-      with_property_value: #
-        args: #
+      with_property_value: 
+        args: 
           property: "属性"
           value: "属性值"
         description: "选择所有至少有一个型号拥有指定属性或属性值的产品(例如. 重量:10kg)"
@@ -740,6 +781,25 @@ zh-CN:
         sentence: "拥有属性 <em>%s</em> 及属性值 <em>%s</em>"
   products: "产品"
   products_with_zero_inventory_display: "没有库存的产品是%{not}会被显示的"
+  promotion_form: 
+    match_policies: 
+      all: Match any of these rules
+      any: Match all of these rules
+  promotion_rule_types: 
+    first_order: 
+      description: Must be the customer's first order
+      name: First order
+    item_total: 
+      description: Order total meets these criteria
+      name: Item total
+    product: 
+      description: Order includes specified product(s)
+      name: Product(s)
+    user: 
+      description: Available only to the specified users
+      name: User
+  promotions: Promotions
+  promotions_description: Manage offers and coupons with promotions
   properties: "属性"
   property: "属性"
   prototype: "原型"
@@ -761,12 +821,12 @@ zh-CN:
   remember_me: "记住我"
   remove: "移出"
   reports: "报表"
-  required_for_solo_and_maestro: # Required for Solo and Maestro cards.
+  required_for_solo_and_maestro: Required for Solo and Maestro cards.
   resend: "重新发送"
-  resend_confirmation_instructions: # "Resend confirmation instructions"
-  resend_unlock_instructions: # "Resend unlock instructions"
+  resend_confirmation_instructions: "Resend confirmation instructions"
+  resend_unlock_instructions: "Resend unlock instructions"
   reset_password: "重置密码"
-  resource_controller: #
+  resource_controller: 
     member_object_not_found: "无法找到成员对象."
     successfully_created: "创建成功!"
     successfully_removed: "移除成功!"
@@ -780,7 +840,7 @@ zh-CN:
   return_authorizations: "退货审批"
   return_quantity: "退货数量"
   returned: "已退回"
-  rma_credit: # RMA Credit
+  rma_credit: RMA Credit
   rma_number: "退货单号"
   rma_value: "退货价值"
   roles: "角色"
@@ -795,7 +855,7 @@ zh-CN:
   scopes: "范围"
   search: "搜索"
   search_results: "搜索 '%{keywords}' 的结果"
-  searching: # Searching
+  searching: Searching
   secure_connection_type: "安全连接类型"
   secure_creditcard: "安全信用卡??"
   select: "选择"
@@ -804,7 +864,7 @@ zh-CN:
   send_copy_of_all_mails_to: "将所有邮件的副本发送至"
   send_copy_of_orders_mails_to: "将订单邮件的副本发送至"
   send_mails_as: "发送邮件作为"
-  send_me_reset_password_instructions: # "Send me reset password instructions"
+  send_me_reset_password_instructions: "Send me reset password instructions"
   send_order_mails_as: "发送订单邮件作为"
   server: "服务器"
   server_error: "服务器返回了一个错误"
@@ -814,6 +874,13 @@ zh-CN:
   shipment: "配送"
   shipment_details: "配送详情"
   shipment_number: "运单号 #"
+  shipment_state: Shipment State
+  shipment_states: 
+    backorder: backorder
+    partial: partial
+    pending: pending
+    ready: ready
+    shipped: shipped
   shipment_updated: "配送状态更新"
   shipments: "配送"
   shipped: "已发货"
@@ -842,22 +909,20 @@ zh-CN:
   sign_up: "注册"
   site_name: "站点名称"
   site_url: "站点URL"
-  sku: # SKU
-  smtp: # SMTP
+  sku: SKU
+  smtp: SMTP
   smtp_authentication_type: "SMTP认证类型"
   smtp_domain: "SMTP域名"
   smtp_mail_host: "SMTP邮件服务器"
   smtp_password: "SMTP密码"
   smtp_port: "SMTP端口"
   smtp_send_all_emails_as_from_following_address: "所有邮件都从以下地址发出."
-  smtp_send_copy_of_orders_to_this_addresses: "向如下地址发出一份所有订单邮件的副本。多个邮件地址之间以逗号隔开。"
   smtp_send_copy_to_this_addresses: "向如下地址发送一份所有发出邮件的副本。多个邮件地址之间以逗号隔开。"
-  smtp_send_order_mails_as_from_following_address: "所有订单邮件都从以下地址发出"
   smtp_username: "SMTP用户名"
   sold: "售出"
   sort_ordering: "排序订单??"
-  special_instructions: # "Special Instructions"
-  spree: #
+  special_instructions: "Special Instructions"
+  spree: 
     date: "日期"
     time: "时间"
   ssl_will_be_used_in_development_and_test_modes: "如果需要的话，开发和测试环境将会使用SSL。"
@@ -912,14 +977,14 @@ zh-CN:
   tree: "树"
   try_again: "再试一次"
   type: "类型"
-  type_to_search: # Type to search
+  type_to_search: Type to search
   unable_ship_method: "由于服务器错误，无法生成一种配送方式。"
   unable_to_authorize_credit_card: "无法验证信用卡"
   unable_to_capture_credit_card: "无法使用信用卡付款"
   unable_to_connect_to_gateway: "无法连接支付网关."
   unable_to_save_order: "无法保存订单"
-  under_paid: # "Under Paid"
-  units: # "Units"
+  under_paid: "Under Paid"
+  units: "Units"
   unrecognized_card_type: "无法辨识的支付卡种类"
   update: "更新"
   update_password: "更新我的密码并登陆"
@@ -934,15 +999,18 @@ zh-CN:
   user_account: "用户帐号"
   user_created_successfully: "用户创建成功"
   user_details: "用户详情"
+  user_rule: 
+    choose_users: Choose users
   users: "用户详情"
-  validation: #
+  validate_on_profile_create: Validate on profile create
+  validation: 
     cannot_be_less_than_shipped_units: "不能少于已配送的单位数。"
     is_too_large: "数量太多了 -- 现有库存无法满足您需要的数量!"
     must_be_int: "必须是整数"
     must_be_non_negative: "不能为负数"
   value: "价值"
   variants: "具体型号"
-  vat: # "VAT"
+  vat: "VAT"
   version: "版本"
   view_shipping_options: "显示配送选项"
   void: "作废"

@@ -1,5 +1,5 @@
---- 
-en-GB: 
+---
+en-AU: 
   'no': "No"
   'yes': "Yes"
   5_biggest_spenders: "5 Biggest Spenders"
@@ -252,7 +252,7 @@ en-GB:
     no_key: "No key defined"
     regenerate_key: "Regenerate API key"
   apply: "Apply"
-  are_you_sure: "Are you sure"
+  are_you_sure: "Are you sure?"
   are_you_sure_category: "Are you sure you want to delete this category?"
   are_you_sure_delete: "Are you sure you want to delete this record?"
   are_you_sure_delete_image: "Are you sure you want to delete this image?"
@@ -402,7 +402,7 @@ en-GB:
   first_item: First Item Cost
   first_name: "First Name"
   first_name_begins_with: "First Name Begins With"
-  flat_percent: Flat Percent
+  flat_percent: "Flat Percent"
   flat_rate_amount: Amount
   flat_rate_per_item: "Flat Rate (per item)"
   flat_rate_per_order: "Flat Rate (per order)"
@@ -642,7 +642,7 @@ en-GB:
   previous: Previous
   price: Price
   price_bucket: Price Bucket
-  price_with_vat_included: "{{price}} (inc. VAT)"
+  price_with_vat_included: "{{price}} (inc. GST)"
   problem_authorizing_card: "Problem authorizing credit card"
   problem_capturing_card: "Problem capturing credit card"
   problems_processing_order: "We had problems processing your order"
@@ -653,7 +653,7 @@ en-GB:
   product_group: Product Group
   product_group_invalid: Product Group has invalid scopes
   product_groups: Product Groups
-  product_has_no_description: This product has no description
+  product_has_no_description: Product has not description
   product_properties: "Product Properties"
   product_rule: 
     choose_products: Choose products
@@ -904,7 +904,7 @@ en-GB:
   show_incomplete_orders: "Show Incomplete Orders"
   show_only_complete_orders: "Only show complete orders"
   show_out_of_stock_products: "Show out-of-stock products"
-  show_price_inc_vat: "Show price including VAT"
+  show_price_inc_vat: "Show price including GST"
   showing_first_n: "Showing first {{n}}"
   sign_up: "Sign up"
   site_name: "Site Name"
@@ -931,10 +931,10 @@ en-GB:
   ssl_will_not_be_used_in_production_mode: "SSL will not be used in production mode"
   start: Start
   start_date: Valid from
-  state: County
+  state: State
   state_based: "State Based"
   state_setting_description: "Administer the list of states/provinces associated with each country."
-  states: Counties
+  states: States
   status: Status
   stop: Stop
   store: Store
@@ -949,7 +949,7 @@ en-GB:
   tax_category: "Tax Category"
   tax_rates: "Tax Rates"
   tax_rates_description: Tax rates setup and configuration.
-  tax_settings: "Tax settings"
+  tax_settings: "Tax Settings"
   tax_settings_description: Basic tax settings.
   tax_total: "Tax Total"
   tax_type: "Tax Type"
@@ -964,7 +964,7 @@ en-GB:
   test: "Test"
   test_mode: Test Mode
   thank_you_for_your_order: "Thank you for your business.  Please print out a copy of this confirmation page for your records."
-  this_file_language: "English (UK)"
+  this_file_language: "English (Australia)"
   this_month: "This Month"
   this_year: "This Year"
   thumbnail: "Thumbnail"
@@ -1010,7 +1010,7 @@ en-GB:
     must_be_non_negative: "must be a non-negative value"
   value: Value
   variants: Variants
-  vat: "VAT"
+  vat: "GST"
   version: Version
   view_shipping_options: "View shipping options"
   void: Void

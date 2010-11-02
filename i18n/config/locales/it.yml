@@ -1,963 +1,1031 @@
---- 
+---
 it: 
-  'no': # "No"
-  'yes': # "Yes"
-  5_biggest_spenders: # "5 Biggest Spenders"
-  a_copy_of_all_mail_will_be_sent_to_the_following_addresses: # A copy of all mail be sent to the following addresses
-  abbreviation: # Abbreviation
-  access_denied: "Access Denied"
-  account: Conto
-  account_updated: "Account updated!"
-  action: Azione
+  'no': "No"
+  'yes': "Si"
+  5_biggest_spenders: "I 5 migliori clienti"
+  a_copy_of_all_mail_will_be_sent_to_the_following_addresses: 'Una copia di tutte le mail da inviare ai seguenti indirizzi'
+  abbreviation: 'Abbreviazione'
+  access_denied: "Accesso non consentito"
+  account: 'Account'
+  account_updated: "Account aggiornato!"
+  action: 'Azione'
   actions: 
-    cancel: Cancelare
-    create: Inserire
-    destroy: Cancellare
-    list: Elenco
+    cancel: 'Cancelare'
+    create: 'Inserire'
+    destroy: 'Cancellare'
+    list: 'Elenco'
     listing: Inserzione
-    new: Nuova
-    update: Salva
-  active: # "Active"
+    new: 'Nuova'
+    update: 'Salva'
+  active: "Attivo"
   activerecord: 
     attributes: 
       address: 
-        address1: # Address
-        address2: # "Address (contd.)"
-        city: # City
-        country: # "Country"
-        first_name: # "First Name"
-        first_name_begins_with: # "First Name Begins With"
-        last_name: # "Last Name"
-        last_name_begins_with: # "Last Name Begins With"
-        phone: # Phone
-        state: # "State"
-        zipcode: # "Zip Code"
-      checkout: #
-        bill_address: #
-          address1: # "Billing address street"
-          city: # "Billing address city"
-          firstname: # "Billing address first name"
-          lastname: # "Billing address last name"
-          phone: # "Billing address phone"
-          state: # "Billing address state"
-          zipcode: # "Billing address zipcode"
-        ship_address: #
-          address1: # "Shipping address street"
-          city: # "Shipping address city"
-          firstname: # "Shipping address first name"
-          lastname: # "Shipping address last name"
-          phone: # "Shipping address phone"
-          state: # "Shipping address state"
-          zipcode: # "Shipping address zipcode"
+        address1: 'Indirizzo'
+        address2: "Indirizzo secondario"
+        city: 'Città'
+        country: "Paese"
+        first_name: "Nome"
+        first_name_begins_with: "Il Nome inizia con"
+        last_name: "Cognome"
+        last_name_begins_with: "Il Cognome inizia con"
+        phone: 'Telefono'
+        state: "Stato"
+        zipcode: "CAP"
+      checkout: 
+        bill_address: 
+          address1: "Indirizzo di fatturazione"
+          city: "Città"
+          firstname: "Nome"
+          lastname: "Cognome"
+          phone: "Telefono"
+          state: "Stato"
+          zipcode: "CAP"
+        ship_address: 
+          address1: "Indirizzo Spedizione"
+          city: "Città"
+          firstname: "Nome"
+          lastname: "Cognome"
+          phone: "Telefono"
+          state: "Stato"
+          zipcode: "CAP"
       country: 
-        iso: # ISO
-        iso3: # ISO3
-        iso_name: # "ISO Name"
-        name: # Name
-        numcode: # "ISO Code"
+        iso: 'ISO'
+        iso3: 'ISO3'
+        iso_name: "Nome ISO"
+        name: 'Nome'
+        numcode: "Codice ISO"
       creditcard: 
-        cc_type: # Type
-        month: # Month
-        number: # Number
-        verification_value: # "Verification Value"
-        year: # Year
+        cc_type: 'Tipo di carta di credito'
+        month: 'Mese'
+        number: 'Numero'
+        verification_value: "Codice di verifica"
+        year: 'Anno'
       inventory_unit: 
-        state: # State
+        state: 'Stato'
       line_item: 
-        price: # Price
-        quantity: # Quantity
+        price: 'Prezzo'
+        quantity: 'Quantità'
       order: 
-        checkout_complete: # "Checkout Complete"
-        ip_address: # "IP Address"
-        item_total: # "Item Total"
-        number: # Number
-        special_instructions: # "Special Instructions"
-        state: # State
-        total: # Total
+        checkout_complete: "Pagamento Completato"
+        ip_address: "Indirizzo IP"
+        item_total: "Oggetti Totali"
+        number: 'Numero'
+        special_instructions: "Istruzioni speciali"
+        state: 'Stato'
+        total: 'Totale'
       product: 
-        available_on: # "Available On"
-        cost_price: # "Cost Price"
-        description: # Description
-        master_price: # "Master Price"
-        name: # Name
-        on_hand: "On Hande"
-        shipping_category: # "Shipping Category"
-        tax_category: # "Tax Category"
-      product_group: #
-        name: "Name"
-        product_count: # "Product count"
-        product_scopes: # "Product scopes"
-        products: # "Products"
+        available_on: "Disponibile in"
+        cost_price: "Prezzo di costo"
+        description: 'Descrizione'
+        master_price: "Prezzo di vendita"
+        name: 'Nome'
+        on_hand: "In stock"
+        shipping_category: "Categoria di vendita"
+        tax_category: "Tasse della Categoria"
+      product_group: 
+        name: "Nome"
+        product_count: "Numero di prodotto"
+        product_scopes: "Gamma dei prodotti"
+        products: "Prodotti"
         url: "URL"
-      product_scope: #
-        arguments: # "Arguments"
-        description: # "Description"
+      product_scope: 
+        arguments: "Argomenti"
+        description: "Descrizione"
       property: 
-        name: # Name
-        presentation: # Presentation
+        name: 'Nome'
+        presentation: 'Presentazione'
       prototype: 
-        name: # Name
-      return_authorization: #
-        amount: # Amount
+        name: 'Nome'
+      return_authorization: 
+        amount: 'Importo'
       role: 
-        name: # Name
+        name: 'Nome'
       state: 
-        abbr: # Abbreviation
-        name: # Name
+        abbr: 'Abbreviazione'
+        name: 'Nome'
       tax_category: 
-        description: # Description
-        name: # Name
+        description: Descrizione
+        name: Nome
       tax_rate: 
-        amount: Rate
+        amount: Importo tasse
       taxon: 
-        name: # Name
-        permalink: # Permalink
-        position: # Position
+        name: Nome
+        permalink: Link permanente
+        position: Posizione
       taxonomy: 
-        name: # Name
+        name: Nome
       user: 
-        email: # Email
+        email: Email
       variant: 
-        cost_price: # "Cost Price"
-        depth: # Depth
-        height: # Height
-        price: # Price
-        sku: # SKU
-        weight: # Weight
-        width: # Width
+        cost_price: "Prezzo di costo"
+        depth: Profondità
+        height: Taglia
+        price: Prezzo
+        sku: SKU
+        weight: Peso
+        width: Larghezza
       zone: 
-        description: # Description
-        name: # Name
+        description: Descrizione
+        name: Nome
     models: 
       address: 
-        one: # Address
-        other: # Addresses
-      cheque_payment: #
-        one: # Cheque Payment
-        other: # Cheque Payments
+        one: Indirizzo
+        other: "Indirizzi"
+      cheque_payment: 
+        one: "Conferma il Pagamento "
+        other: "Conferma i Pagamenti"
       country: 
-        one: # Country
-        other: # Countries
+        one: Paese
+        other: Paesi
       creditcard: 
-        one: # "Credit Card"
-        other: # "Credit Cards"
+        one: "Carta di credito"
+        other: "Carte di credito"
       creditcard_payment: 
-        one: # "Credit Card Payment"
-        other: # "Credit Card Payments"
+        one: "Pagamento tramite carta di credito "
+        other: "Pagamenti tramite carta di credito"
       creditcard_txn: 
-        one: # "Credit Card Transaction"
-        other: # "Credit Card Transactions"
+        one: "Transazione tramite Carta di credito"
+        other: "Transazioni tramite Carta di credito"
       inventory_unit: 
-        one: # "Inventory Unit"
-        other: # "Inventory Units"
+        one: "Unità d'inventario"
+        other: "Unità d'inventario"
       line_item: 
-        one: # "Line Item"
-        other: # "Line Items"
+        one: "Gamma del prodotto"
+        other: "Gamma dei prodotti"
       order: 
-        one: # Order
-        other: # Orders
+        one: Ordine
+        other: Ordini
       payment: 
-        one: # Payment
-        other: # Payments
+        one: Pagamento
+        other: Pagamenti
       product: 
-        one: # Product
-        other: # Products
-      product_group: #
-        one: # "Product group"
-        other: # "Product groups"
+        one: Prodotto
+        other: Prodotti
+      product_group: 
+        one: "Gruppo di prodotti"
+        other: "Gruppi di prodotti"
       property: 
-        one: # Property
-        other: # Properties
+        one: Proprietà
+        other: Proprietà
       prototype: 
-        one: # Prototype
-        other: # Prototypes
-      return_authorization: #
-        one: # Return Authorization
-        other: # Return Authorizations
+        one: Prototipo
+        other: Prototipi
+      return_authorization: 
+        one: Autorizzazione alla restituzione
+        other: Autorizzazioni alla restituzione
       role: 
-        one: # Roles
-        other: # Roles
-      shipment: #
-        one: # Shipment
-        other: # Shipments
+        one: Ruolo
+        other: Ruoli
+      shipment: 
+        one: Spedizione
+        other: Spedizioni
       shipping_category: 
-        one: # "Shipping Category"
-        other: # "Shipping Categories"
+        one: "Consegna Categoria"
+        other: "Consegna Categorie"
       state: 
-        one: # State
-        other: # States
+        one: Regione
+        other: Regioni
       tax_category: 
-        one: # "Tax Category"
-        other: # "Tax Categories"
+        one: "Categoria delle tasse"
+        other: "Categorie delle tasse"
       tax_rate: 
-        one: # "Tax Rate"
-        other: "Tax Rates"
+        one: "Aliquota fiscale"
+        other: "Aliquote fiscali"
       taxon: 
-        one: # Taxon
-        other: # Taxons
+        one: Tasso
+        other: Tassi
       taxonomy: 
-        one: # Taxonomy
-        other: # Taxonomies
+        one: Tassonomia
+        other: Tassomie
       user: 
-        one: # User
-        other: # Users
+        one: Utente
+        other: Utentes
       variant: 
-        one: # Variant
-        other: # Variants
+        one: Versione
+        other: Versioni
       zone: 
-        one: # Zone
-        other: # Zones
-  add: # Add
+        one: Zona
+        other: Zone
+  add: Aggiungi
   add_category: "Aggiungi categoria"
-  add_country: # "Add Country"
+  add_country: "Aggiungi Paese"
   add_option_type: "Aggiungi opzione"
-  add_option_types: "Aggiungi opziones"
-  add_option_value: # "Add Option Value"
-  add_product: # "Add Product"
+  add_option_types: "Aggiungi opzioni"
+  add_option_value: "Aggiungi Valore Opzionale"
+  add_product: "Aggiungi Prodotto"
   add_product_properties: ""
-  add_scope: # "Add a scope"
-  add_state: # "Add State"
-  add_to_cart: "In carrello"
-  add_zone: # "Add Zone"
-  additional_item: # Additional Item Cost
-  address: # Address
-  address_information: "Informazione indirizzo"
-  adjustment: Adeguamento
-  adjustments: # Adjustments
+  add_rule_of_type: Add rule of type
+  add_scope: "Aggiungere un campo di applicazione"
+  add_state: "Aggiungi Regione"
+  add_to_cart: "Aggiungi al Carrello"
+  add_zone: "Aggiungi una zona"
+  additional_item: Costo oggetto aggiuntivo
+  address: Indirizzo
+  address_information: "Informazioni indirizzo"
+  adjustment: Rivalutazione
+  adjustment_total: Adjustment Total
+  adjustments: Rivalutazioni
   administration: Amministrazione
-  all: # "All"
-  all_departments: # All departments
-  allow_backorders: # "Allow Backorders"
-  allow_ssl_to_be_used_when_in_developement_and_test_modes: # Allow SSL to be used when in development and test modes
-  allow_ssl_to_be_used_when_in_production_mode: Allow SSL to be used in production mode
-  allowed_ssl_in_production_mode: "SSL will {{not}} be used in production"
-  already_registered: # Already Registered?
-  alt_text: # Alternative Text
-  alternative_phone: # Alternative Phone
+  all: "Tutti"
+  all_departments: Tutti i reparti
+  allow_backorders: "Lasciare fuori stock"
+  allow_ssl_to_be_used_when_in_developement_and_test_modes: Consentire l'uso di SSL durante le modalità di sviluppo e test
+  allow_ssl_to_be_used_when_in_production_mode: Consentire l'uso di SSL durante la modalità di Produzione
+  allowed_ssl_in_production_mode: "SSL può {{not}} essere utilizzato in produzione"
+  already_registered: Sei già iscritto?
+  alt_text: Testo Alternativo
+  alternative_phone: Telefono Alternativo
   amount: Totale
-  analytics_trackers: # Analytics Trackers
-  api: #
-    access: # "API Access"
-    clear_key: # "Clear API key"
-    errors: #
-      invalid_event: # "Invalid event name, valid names are %{events}"
-      invalid_event_for_object: # "Valid event name but not allowed for this object, valid names are %{events}"
-      missing_event: # "No event name supplied"
-    generate_key: # "Generate API key"
-    key: # "API Key"
-    key_cleared: # "API key cleared"
-    key_generated: # "API key generated"
-    no_key: # "No key defined"
-    regenerate_key: # "Regenerate API key"
-  apply: # "Apply"
-  are_you_sure: "Are you sure"
+  analytics_trackers: Analytics Trackers
+  api: 
+    access: "API Access"
+    clear_key: "Clear API key"
+    errors: 
+      invalid_event: "Invalid event name, valid names are %{events}"
+      invalid_event_for_object: "Valid event name but not allowed for this object, valid names are %{events}"
+      missing_event: "No event name supplied"
+    generate_key: "Generate API key"
+    key: "API Key"
+    key_cleared: "API key cleared"
+    key_generated: "API key generated"
+    no_key: "No key defined"
+    regenerate_key: "Regenerate API key"
+  apply: "Applicato"
+  are_you_sure: "Sei sicuro?"
   are_you_sure_category: "Sei sicuro di voler cancellare questa categoria?"
-  are_you_sure_delete: # "Are you sure you want to delete this record?"
-  are_you_sure_delete_image: "Sei sicuro di voler cancellare questa imagine?"
-  are_you_sure_option_type: "Sei sicuro di voler cancellare questa opzione?"
-  are_you_sure_you_want_to_capture: # "Are you sure you want to capture?"
-  assign_taxon: # "Assign Taxon"
-  assign_taxons: # "Assign Taxons"
-  authorization_failure: "Authorization Failure"
-  authorized: # Authorized
-  available_on: # "Available On"
-  available_taxons: # "Available Taxons"
-  awaiting_return: # Awaiting Return
+  are_you_sure_delete: "Sei sicuro di voler cancellare questo record?"
+  are_you_sure_delete_image: "Sei sicuro di voler cancellare quest'magine?"
+  are_you_sure_option_type: "Sei sicuro di voler cancellare quest'opzione?"
+  are_you_sure_you_want_to_capture: "Sei sicuro che lo vuoi predere?"
+  assign_taxon: "Assegna un Tasso"
+  assign_taxons: "Assegna dei Tassi"
+  authorization_failure: "Autorizzarione Fallita"
+  authorized: Autorizzato
+  available_on: "Disponibile"
+  available_taxons: "Tasso Disponibile"
+  awaiting_return: Torna in attesa
   back: Indietro
-  back_end: # Back End
-  back_to_store: "Indietro al shop"
-  backordered: # Backordered
-  backordering_is_allowed: "Backordering {{not}} allowed"
-  balance_due: # "Balance Due"
-  best_selling_products: # "Best Selling Products"
-  best_selling_taxons: # "Best Selling Taxons"
+  back_end: Back End
+  back_to_store: "Torna allo shop"
+  backordered: Inevasi
+  backordering_is_allowed: "Inevasi {{not}} Ammessi"
+  balance_due: "Saldo scaduto"
+  best_selling_products: "Prodotti più venduti"
+  best_selling_taxons: "Tassi più frequenti"
   bill_address: "Indirizzo di fatturazione"
-  billing: # Billing
+  billing: Fatturazione
   billing_address: "Indirizzo di fatturazione"
-  both: # Both
-  by_day: # "by day"
-  calculator: # Calculator
-  calculator_settings_warning: # "If you are changing the calculator type, you must save first before you can edit the calculator settings"
+  both: Both
+  by_day: "per giorno"
+  calculator: Calcolatore
+  calculator_settings_warning: "Se si cambia il tipo di computer, è necessario prima registrarsi prima di poter modificare le impostazioni del computer. "
   cancel: cancelare
-  cancel_my_account: # Cancel my account
-  cancel_my_account_description: # "Unhappy?"
-  canceled: # Canceled
-  cannot_create_returns: # Cannot create returns as this order has not shipped yet.
-  cannot_destory_line_item_as_inventory_units_have_shipped: # Cannot destory line item as some inventory units have shipped.
-  capture: capture
-  card_code: "CCC Code"
-  card_details: # "Card details"
-  card_number: "Nummero carta"
-  card_type_is: # Card type is
+  cancel_my_account: Cancella il mio account
+  cancel_my_account_description: "Non sei felice della scelta fatta?"
+  canceled: Annullato
+  cannot_create_returns: "Non è possibile tornare indietro fino all'invio dell'ordine."
+  cannot_destory_line_item_as_inventory_units_have_shipped: "Non posso eliminarel'oggetto poichè qualche unità è in fase di spedizione."
+  cannot_perform_operation: "Cannot perform requested operation"
+  capture: accettare
+  card_code: "Codice della carta"
+  card_details: "Dettagli Carta"
+  card_number: "Nummero della carta"
+  card_type_is: "Tipo della carta"
   cart: Carrello
   categories: Categorie
   category: Categoria
   change: cambia
   change_language: "Cambia lingua"
-  change_my_password: # "Change my password"
-  charge_total: # Charge Total
-  charged: # Charged
-  charges: # Charges
-  checkout: Acquista
-  checkout_steps: #
-    # keys correspond to Checkout state names: #
-    address: # Address
-    complete: # Complete
-    confirm: # Confirm
-    delivery: # Delivery
-    payment: # Payment
-  cheque: # Cheque
-  city: Città
-  clone: # Clone
-  code: # Code
-  combine: # Combine
-  complete: # complete
-  complete_list: # "Complete List"
-  configuration: Configurazione
-  configuration_options: # "Configuration Options"
-  configurations: # Configurations
-  configured: # Configured
-  confirm: Confermare
-  confirm_delete: # "Confirm Deletion"
-  confirm_password: "Confermare Password"
-  continue: # Continue
-  continue_shopping: "Continuare l'acquisto"
-  copy_all_mails_to: Copy All Mails To
-  cost_price: # "Cost Price"
-  count: # Count
-  count_of_reduced_by: "count of '{{name}}' reduced by {{count}}"
-  country: country
-  country_based: # "Country Based"
+  change_my_password: "Cambia la password"
+  charge_total: "Cambia il Totale"
+  charged: "Addebitato"
+  charges: "Spese"
+  checkout: "Procedura di pagamento"
+  cheque: "Assegno"
+  city: "Città"
+  clone: "Clona"
+  code: "Codice"
+  combine: "Combina"
+  complete: "completa"
+  complete_list: "Lista di Completamento"
+  configuration: "Configurazione"
+  configuration_options: "Optioni di Configurazione"
+  configurations: "Configurazioni"
+  configured: "Configurato"
+  confirm: "Conferma"
+  confirm_delete: "Conferma Cancellazione"
+  confirm_password: "Conferma Password"
+  continue: "Continua"
+  continue_shopping: "Continua l'acquisto"
+  copy_all_mails_to: "Invia una copia della mail ai seguenti indirizzi"
+  cost_price: "Costo"
+  count: "Count"
+  count_of_reduced_by: "completa per '{{name}}' riduci per {{count}}"
+  country: Paese
+  country_based: "sulla base di un paese"
+  coupon: Coupon
+  coupon_code: Coupon code
   create: Inserire
-  create_a_new_account: # "Create a new account"
-  create_product_group_from_products: # Create a new product group from these products
-  create_user_account: # Create User Account
-  created_successfully: # "Created Successfully"
-  credit: # Credit
-  credit_card: ""
-  credit_card_capture_complete: # "Credit Card Was Captured"
-  credit_card_payment: # "Credit Card Payment"
-  credit_owed: # "Credit Owed"
-  credit_total: # Credit Total
-  creditcard: # Creditcard
-  creditcards: # Creditcards
-  credits: # Credits
-  current: stato
-  customer: Cliente
-  customer_details: # "Customer Details"
-  customer_search: # "Customer Search"
-  date_created: # Date created
+  create_a_new_account: "Create un nuovo account"
+  create_product_group_from_products: "Crea un nuovo gruppo di prodotti"
+  create_user_account: "Crea un account"
+  created_successfully: "Creato con successo"
+  credit: "Credito"
+  credit_card: "Carta di Credito"
+  credit_card_capture_complete: "la Carta di credito è stata Verificata"
+  credit_card_payment: "Conferma la Carta di credito"
+  credit_owed: "Credito Restante"
+  credit_total: Credito Totale
+  creditcard: "Carta di credito"
+  creditcards: "Carte di credito"
+  credits: "Credito"
+  current: "stato"
+  customer: "Cliente"
+  customer_details: "Dettagli Cliente"
+  customer_search: "Cerca Cliente"
+  date_created: "Data creata"
   date_range: "data (da/a)"
-  debit: # Debit
-  default: # Default
-  delete: Cancellare
-  depth: # Depth
-  description: Descrizione
-  destroy: Cancellare
-  didnt_receive_confirmation_instructions: # "Didn't receive confirmation instructions?"
-  didnt_receive_unlock_instructions: # "Didn't receive unlock instructions?"
-  display: Visualizza
-  edit: editare
-  editing_billing_integration: # Editing Billing Integration
-  editing_category: "Edita la categoria"
-  editing_option_type: # "Editing Option Type"
-  editing_option_types: "Edita l'opzione"
-  editing_payment_method: # Editing Payment Method
-  editing_product: # "Editing Product"
-  editing_product_group: # "Editing Product Group"
-  editing_property: # "Editing Property"
-  editing_prototype: # "Editing Prototype"
-  editing_shipping_category: # "Editing Shipping Category"
-  editing_shipping_method: # "Editing Shipping Method"
-  editing_state: # "Editing State"
-  editing_tax_category: # "Editing Tax Category"
-  editing_tax_rate: # "Editing Tax Rate"
-  editing_tracker: # Editing Tracker
-  editing_user: "Edita l'utente"
-  editing_zone: # "Editing Zone"
-  email: # Email
+  debit: "Debito"
+  default: "Default"
+  delete: "Cancella"
+  depth: "Profondità"
+  description: "Descrizione"
+  destroy: "Elimina"
+  didnt_receive_confirmation_instructions: "Non sono state ricevute le istruzioni di conferma?"
+  didnt_receive_unlock_instructions: "Non sono state ricevute le istruzioni di sblocco?"
+  discount_amount: "Discount Amount"
+  display: "Visualizza"
+  edit: "Modifica"
+  editing_billing_integration: "Modifica il sistema di Fatturazione"
+  editing_category: "Modifica la categoria"
+  editing_mail_method: Editing Mail Method
+  editing_option_type: "Modifica il tipo di opzione"
+  editing_option_types: "Modifica i tipi di opzione"
+  editing_payment_method: "Modifica il metodo di pagamento"
+  editing_product: "Modifica il Prodotto"
+  editing_product_group: "Modifica il gruppo dei Prodotto"
+  editing_promotion: Editing Promotion
+  editing_property: "Modifica le Propertà"
+  editing_prototype: "Modifica i Prototipi"
+  editing_shipping_category: "Modifica le Categorie di spedizione"
+  editing_shipping_method: "Modifica di Metodi di spedizione"
+  editing_state: "Modifica lo Stato"
+  editing_tax_category: "Modifica le Categorie "
+  editing_tax_rate: "Modifica IVA"
+  editing_tracker: "Modifica Tracker"
+  editing_user: "Modifica l'utente"
+  editing_zone: "Modifica la Zona"
+  email: "Email"
   email_address: "Indirizzo email"
-  email_server_settings_description: # "Set email server settings."
-  empty: # "Empty"
-  empty_cart: "Cancella carrello"
-  enable_login_via_login_password: "Use standard email/password"
-  enable_login_via_openid: # "Use OpenID instead"
-  enable_mail_delivery: Enable Mail Delivery
-  enter_exactly_as_shown_on_card: # Please enter exactly as shown on the card
-  enter_password_to_confirm: # "(we need your current password to confirm your changes)"
-  environment: # "Environment"
-  error: errore
-  event: # Event
-  existing_customer: # "Existing Customer"
-  expiration: # "Expiration"
+  email_server_settings_description: "Imposta l'email del server."
+  empty: "Vuoto"
+  empty_cart: "Svuota carrello"
+  enable_login_via_login_password: "abilita email/password"
+  enable_login_via_openid: "usa l'istanza OpenID "
+  enable_mail_delivery: "abilita l'email di Consegna"
+  enter_exactly_as_shown_on_card: "Si prega di inserire esattamente come visualizzato sulla carta"
+  enter_password_to_confirm: "(Abbiamo bisogno della password corrente per confermare il cambio)"
+  environment: "Condizioni"
+  error: "errore"
+  event: "Evento"
+  existing_customer: "Il cliente esiste"
+  expiration: "Scadenza"
   expiration_month: "Valido fino (Mese)"
   expiration_year: "Valido fino (Anno)"
-  extension: estensione
-  extensions: estensioni
-  filename: file
+  extension: "estensione"
+  extensions: "estensioni"
+  filename: "nome del file"
   final_confirmation: "Conferma finale"
-  finalize: # Finalize
-  finalized_payments: # Finalized Payments
-  first_item: # First Item Cost
-  first_name: nome
-  first_name_begins_with: # "First Name Begins With"
-  flat_percent: Flat Percent
-  flat_rate_amount: # Amount
-  flat_rate_per_item: # "Flat Rate (per item)"
-  flat_rate_per_order: # "Flat Rate (per order)"
-  flexible_rate: # "Flexible Rate"
-  forgot_password: "Forgot Password"
-  front_end: # Front End
-  full_name: # "Full Name"
-  gateway: # Gateway
-  gateway_configuration: # "Gateway configuration"
-  gateway_error: # "Gateway Error"
-  gateway_setting_description: # "Select a payment gateway and configure its settings."
-  gateway_settings_warning: # "If you are changing the gateway type, you must save first before you can edit the gateway settings"
-  general: # "General"
-  general_settings: # "General Settings"
-  general_settings_description: # "Configure general Spree settings."
-  google_analytics: # "Google Analytics"
-  google_analytics_active: # "Active"
-  google_analytics_create: # "Create New Google Analytics Account"
-  google_analytics_id: # "Analytics ID"
-  google_analytics_new: # "New Google Analytics Account"
+  finalize: "Finalizza"
+  finalized_payments: "Pagamento effettuato"
+  first_item: "Costo primo oggetto"
+  first_name: "Nome"
+  first_name_begins_with: "il nome inizia con"
+  flat_percent: "Percentuale netta"
+  flat_rate_amount: "Importo"
+  flat_rate_per_item: "Tasso netto (per oggetto)"
+  flat_rate_per_order: "Tasso netto (per ordine)"
+  flexible_rate: "Tasso Flessibile"
+  forgot_password: "Password perduta"
+  free_shipping: Free Shipping
+  front_end: "Front End"
+  full_name: "Nome completo"
+  gateway: "Gateway"
+  gateway_configuration: "configurazione Gateway"
+  gateway_error: "Errore Gateway"
+  gateway_setting_description: "Selezionare un gateway di pagamento e configurare le impostazioni."
+  gateway_settings_warning: "Se si cambia il tipo di gateway, è necessario modificare le impostazioni del gateway"
+  general: "Generale"
+  general_settings: "Settaggi Generali"
+  general_settings_description: "Configura i Settaggi generali."
+  google_analytics: "Google Analytics"
+  google_analytics_active: "Attivo"
+  google_analytics_create: "Create Nuovo Google Analytics Account"
+  google_analytics_id: "Analytics ID"
+  google_analytics_new: "Nuovo Google Analytics Account"
   google_analytics_setting_description: "Manage Google Analytics ID"
-  guest_checkout: # Guest Checkout
-  guest_user_account: # Checkout as a Guest
-  has_no_shipped_units: # has no shipped units
-  height: # Height
-  hello_user: "Ciao User"
-  history: # History
-  home: # "Home"
-  icon: # "Icon"
-  icons_by: # "Icons by"
-  image: Imagine
-  images: Imagini
-  images_for: # "Images for"
-  in_progress: # "In Progress"
-  include_in_shipment: # Include in Shipment
-  included_in_other_shipment: # Included in another Shipment
-  included_in_this_shipment: # Included in this Shipment
-  instructions_to_reset_password: # "Fill out the form below and instructions to reset your password will be emailed to you:"
-  integration_settings_warning: # "If you are changing the billing integration, you must save first before you can edit the integration settings"
-  invalid_search: # "Invalid search criteria."
-  inventory: Magazzino
-  inventory_adjustment: "Edita magazzino"
-  inventory_setting_description: # "Inventory Configuration, Backordering, Zero-Stock Display"
-  inventory_settings: # "Inventory Settings"
-  is_not_available_to_shipment_address: # is not available to shipment address
-  issue_number: # Issue Number
-  item: Articolo
+  guest_checkout: "Guest Checkout"
+  guest_user_account: "Checkout come Guest"
+  has_no_shipped_units: "non c'è' l'unità venduta"
+  height: "Altezza"
+  hello_user: "Ciao Utente"
+  history: "Storia"
+  home: "Home"
+  icon: "Icona"
+  icons_by: "Icone by"
+  image: "Immagine"
+  images: "Immagini"
+  images_for: "Immagini per"
+  in_progress: "In Progresso"
+  include_in_shipment: "Inserisci nella Spedizione"
+  included_in_other_shipment: "Incluso in un altra Spedizione"
+  included_in_this_shipment: "Incluso in questa Spedizione"
+  instructions_to_reset_password: "Compila il modulo sottostante e la nuova password verrà inviata via e-mail:"
+  integration_settings_warning: "Se si cambia il sistema di fatturazione, è necessario innanzitutto salvare prima di poter cambiare i parametri"
+  intercept_email_address: Intercept Email Address
+  intercept_email_instructions: "Override email recipient and replace with this address."
+  invalid_search: "Criterio di ricerca non valido."
+  inventory: "Magazzino"
+  inventory_adjustment: "Modifica magazzino"
+  inventory_setting_description: "Configurazione del magazzino, la consegna posticipata, display esaurito"
+  inventory_settings: "Impostazioni del magazzino"
+  is_not_available_to_shipment_address: "non è possibile spedire all'indirizzo di consegna"
+  issue_number: "Numero dell'ordine"
+  item: "Articolo"
   item_description: "Descrizione articolo"
   item_total: "Articolo totale"
-  items: # "Items"
-  last_14_days: # "Last 14 Days"
-  last_5_orders: # "Last 5 Orders"
-  last_7_days: "Last 7 Days"
-  last_month: # "Last Month"
+  item_total_rule: 
+    operators: 
+      gt: greater than
+      gte: greater than or equal to
+  items: "Articoli"
+  last_14_days: "Ultimi 14 Giorni"
+  last_5_orders: "Ultimi 5 Ordini"
+  last_7_days: "Ultimi 7 Giorni"
+  last_month: "Ultimo Mese"
   last_name: Cognome
-  last_name_begins_with: # "Last Name Begins With"
-  last_year: # "Last Year"
-  leave_blank_to_not_change: # "(leave blank if you don't want to change it)"
-  list: # List
-  listing_categories: Categorie
+  last_name_begins_with: "il cognome inizia con"
+  last_year: "Ultimo Anno"
+  leave_blank_to_not_change: "(lascia in bianco se tu non vuoi cambiarlo)"
+  list: Lista
+  listing_categories: Categoria
   listing_option_types: Opzioni
   listing_orders: Ordini
-  listing_product_groups: # "Listing Product Groups"
+  listing_product_groups: "Gruppi dei Prodotto"
   listing_reports: Report
-  listing_tax_categories: # "Listing Tax Categories"
-  listing_users: Utente
-  live: # "Live"
-  loading: # Loading
-  locale_changed: # "Locale Changed"
+  listing_tax_categories: "Categoria Tasse"
+  listing_users: Utenti
+  live: "Live"
+  loading: Caricamento
+  locale_changed: "Cambio località"
   log_in: Login
-  logged_in_as: "Loggato con"
-  logged_in_succesfully: # "Logged in successfully"
-  logged_out: "You have been logged out."
-  login_as_existing: "Log In as Existing Customer"
-  login_failed: "Login authentication failed."
-  login_name: Utente
-  logout: # Logout
-  look_for_similar_items: # Look for similar items
-  maestro_or_solo_cards: # Maestro/Solo cards
-  mail_delivery_enabled: # "Mail delivery is enabled"
-  mail_delivery_not_enabled: # "Mail delivery is not enabled"
-  mail_server_preferences: # Mail Server Preferences
-  mail_server_settings: # "Mail Server Settings"
-  make_refund: # Make refund
-  mark_shipped: # "Mark Shipped"
+  logged_in_as: "Registrato come"
+  logged_in_succesfully: "Adesso sei connesso"
+  logged_out: "Effettato il logout"
+  login: Login
+  login_as_existing: "Entra come cliente registrato"
+  login_failed: "Autenticazione fallita."
+  login_name: "Nome utente"
+  logout: "Uscita"
+  look_for_similar_items: "Cerca ogetti simili"
+  maestro_or_solo_cards: "Solo carte Maestro"
+  mail_delivery_enabled: "Il recapito di posta elettronica è stato attivato"
+  mail_delivery_not_enabled: "Connetti come cliente esistenti"
+  mail_methods: Mail Methods
+  mail_server_preferences: "Preferenze del Mail Server"
+  make_refund: "Effettua un rimborso"
+  mark_shipped: "Contrassegnato come consegnata"
   master_price: "Prezzo base"
-  max_items: # Max Items
-  meta_description: # "Meta Description"
-  meta_keywords: # "Meta Keywords"
-  metadata: # "Metadata"
-  missing_required_information: # "Missing Required Information"
-  month: # "Month"
-  my_account: "Mio conto"
-  my_orders: # "My Orders"
-  name: # Name
-  name_or_sku: # "Name or SKU"
-  new: # New
-  new_adjustment: # "New Adjustment"
-  new_billing_integration: # New Billing Integration
+  max_items: "Max Articoli"
+  meta_description: "meta-descrizione"
+  meta_keywords: "meta-keywords"
+  metadata: "metadata"
+  minimal_amount: "Minimal Amount"
+  missing_required_information: "Manca l'informazione cercata"
+  month: "Mese"
+  my_account: "Il mio conto"
+  my_orders: "I miei Ordini"
+  name: "Nome"
+  name_or_sku: "Nome or SKU"
+  new: "Nuovo"
+  new_adjustment: "Nuovo cambiamento"
+  new_billing_integration: "Nuova integrazione alla fatturazione"
   new_category: "Nuova categoria"
-  new_customer: # "New Customer"
+  new_customer: "Nuovo Cliente"
   new_image: "Nuova immagine"
-  new_option_type: "Nuova opzione"
-  new_option_value: "Nuovo valore opzione"
-  new_order: # "New Order"
-  new_order_completed: # "New Order Completed"
-  new_payment: # "New Payment"
-  new_payment_method: # New Payment Method
-  new_product: # "New Product"
-  new_product_group: # New Product Group
-  new_property: # "New Property"
-  new_prototype: # "New Prototype"
-  new_return_authorization: # New Return Authorization
-  new_shipment: # "New Shipment"
-  new_shipping_category: # "New Shipping Category"
-  new_shipping_method: # "New Shipping Method"
-  new_state: # "New State"
-  new_tax_category: # "New Tax Category"
-  new_tax_rate: # "New Tax Rate"
-  new_taxon: # "New Taxon"
-  new_taxonomy: # "New Taxonomy"
-  new_tracker: # New Tracker
+  new_mail_method: New Mail Method
+  new_option_type: "Nuova tipo di opzione"
+  new_option_value: "Nuovo valore dell'opzione"
+  new_order: "Nuovo Ordine"
+  new_order_completed: "Nuovo Ordine Completato"
+  new_payment: "Nuovo Pagamento"
+  new_payment_method: Nuovo Metodo di pagamento
+  new_product: "Nuovo Prodotto"
+  new_product_group: "Nuovo Grouppo di prodotti"
+  new_promotion: New Promotion
+  new_property: "Nuova Proprietà"
+  new_prototype: "Nuovo Prototipo"
+  new_return_authorization: "Nuova autorizzazione di restituzione"
+  new_shipment: "Nuova spedizione"
+  new_shipping_category: "Nuova Categoria di acquisto"
+  new_shipping_method: "Nuovo Metodo di acquisto"
+  new_state: "Nuova Regione"
+  new_tax_category: "Nuovo categoria di tassazione"
+  new_tax_rate: "Nuova tassazione"
+  new_taxon: "Nuovo Tassonomia"
+  new_taxonomy: "Nuova Tassonomia"
+  new_tracker: Nuovo Tracker
   new_user: "Nuovo utente"
   new_variant: "Nuova variante"
-  new_zone: # "New Zone"
+  new_zone: "Nuova Zona"
   next: continua
   no_items_in_cart: "Carrello vuoto"
-  no_match_found: # "No Match Found"
-  no_payment_methods_available: # "Can't check out, no payment methods are configured for this environment"
-  no_products_found: # "No products found"
-  no_results: # "No results"
-  no_shipping_methods_available: # "No shipping methods available, please change your address and try again."
-  no_user_found: # "No user was found with that email address"
-  none: ""
-  none_available: # "None Available"
-  not: # not
-  not_shown: # "Not Shown"
-  note: # Note
-  notice_messages: #
-    option_type_removed: # "Succesfully removed option type."
-    product_cloned: # "Product has been cloned"
-    product_deleted: # "Product has been deleted"
-    product_not_cloned: # "Product could not be cloned"
-    product_not_deleted: # "Product could not be deleted"
-    track_me_in_GA: # "Track Me in GA"
-    variant_deleted: # "Variant has been deleted"
-    variant_not_deleted: "Variant could not be deleted"
-  on_hand: "In magazzino"
-  operation: Operazione
-  option_Values: "Valori opzioni"
-  option_types: Opzioni
-  option_values: # "Option Values"
-  options: Operazioni
-  or: o
-  ord_qty: # "Ord. Qty"
-  ord_total: # "Ord. Total"
-  order: Ordine
-  order_confirmation_note: "Nota ordina"
+  no_match_found: "Nessuna corrispondenza trovata"
+  no_payment_methods_available: "La convalida dell'ordine non è possibile, nessun metodo di pagamento è configurato in questo ambiente"
+  no_products_found: "Prodotti non trovati"
+  no_results: "Nessun resultato"
+  no_rules_added: No rules added
+  no_shipping_methods_available: "Nessun metodo di consegna disponibile, cambiate l'indirizzo e riprovate."
+  no_user_found: "Nessun utente trovato con questo indirizzo email"
+  none: "nessuno"
+  none_available: "non disponibile"
+  normal_amount: "Normal Amount"
+  not: "no"
+  not_shown: "non visibile"
+  note: "Note"
+  notice_messages: 
+    option_type_removed: "Tipo di Opzione rimossa con successo."
+    product_cloned: "Il Prodotto è stato clonato"
+    product_deleted: "Il Prodotto è stato cancellato"
+    product_not_cloned: "Il Prodotto non è clonabile"
+    product_not_deleted: "Il Prodotto non è eliminabile"
+    variant_deleted: "La Variante è stata eliminata"
+    variant_not_deleted: "La Variante non può essere eliminata"
+  on_hand: "Disponibile"
+  operation: "Operazione"
+  option_Values: "Valori opzionali"
+  option_types: "Opzioni"
+  option_values: "Valori opzionali"
+  options: "Operazioni"
+  or: "o"
+  ord_qty: "Ord. Qty"
+  ord_total: "Ord. Totale"
+  order: "Ordine"
+  order_confirmation_note: "Note di conferma"
   order_date: "Data ordine"
-  order_details: "Detagli ordine"
-  order_email_resent: # "Order Email Resent"
-  order_not_in_system: # That order number is not valid on this site.
-  order_number: "Ordine #"
-  order_operation_authorize: ""
-  order_processed_but_following_items_are_out_of_stock: # "Your order has been processed, but following items are out of stock:"
-  order_processed_successfully: "L'ordine è terminato con successo"
-  order_summary: # Order Summary
-  order_sure_want_to: "Are you sure you want to {{event}} this order?"
+  order_details: "Dettagli ordine"
+  order_email_resent: "Deferimento dell'ordine via e-mail"
+  order_not_in_system: "Numero d'ordine non valido."
+  order_number: "Ordine n°"
+  order_operation_authorize: "Autorizzazione"
+  order_processed_but_following_items_are_out_of_stock: "Il tuo ordine è stato processato, ma i seguenti Prodotti sono esauriti"
+  order_processed_successfully: "L'ordine è stato terminato con successo"
+  order_state: # keys correspond to Checkout state names:
+    # keys correspond to Checkout state names: 
+    address: address
+    adjustments: adjustments
+    awaiting_return: awaiting return
+    canceled: canceled
+    cart: cart
+    complete: complete
+    confirm: confirm
+    delivery: delivery
+    payment: payment
+    resumed : resumed
+    returned: returned
+  order_summary: "Riepilogo dell'Ordine"
+  order_sure_want_to: "Sei sicuro vuoi {{event}} questo ordine?"
   order_total: Totale
-  order_total_message: # "The total amount charged to your card will be"
-  order_updated: # "Order Updated"
+  order_total_message: "L'importo addebitato sulla tua carta di credito sarà"
+  order_updated: "Ordine Aggiornato"
   orders: Ordini
-  other_payment_options: # Other Payment Options
-  out_of_stock: # "Out of Stock"
-  out_of_stock_products: # "Out of Stock Products"
-  over_paid: # "Over Paid"
+  other_payment_options: Altre opzioni di pagamento
+  out_of_stock: "fuori Stock"
+  out_of_stock_products: "Prodotto fuori Stock"
+  over_paid: "Over Paid"
   overview: Panoramica
-  overview_welcome: # "Welcome to your store overview, currently we do not have enough data to display the Overiew Dashboard.<br/><br/> The dashboard will display automatically once the system has sufficent orders to allow generation of the statistics."
-  page_only_viewable_when_logged_in: # You attempted to visit a page which can only be viewed when you are logged in
-  page_only_viewable_when_logged_out: # You attempted to visit a page which can only be viewed when you are logged out
-  paid: # Paid
+  overview_welcome: "Benvenuti alla visione d'insieme del tuo negozio, ma non abbiamo dati sufficienti per visualizzare la Dashboard, visualizzato automaticamente quando il sistema avrà ordini sufficienti per generare statistiche."
+  page_only_viewable_when_logged_in: "Si è tentato di visitare una pagina che può essere vista solo da utenti registrati"
+  page_only_viewable_when_logged_out: "Si è tentato di visitare una pagina che può essere visto solo da utenti non registrati"
+  paid: "Pagato"
   parent_category: "Sottocategoria di"
-  password: # Password
-  password_reset_instructions: # "Password Reset Instructions"
-  password_reset_instructions_are_mailed: # "Instructions to reset your password have been emailed to you. Please check your email."
-  password_reset_token_not_found: "We're sorry, but we could not locate your account. If you are having issues try copying and pasting the URL from your email into your browser or restarting the reset password process."
-  password_updated: "Password successfully updated"
-  path: # Path
-  pay: # pay
-  payment: Pagamento
-  payment_gateway: # "Payment Gateway"
-  payment_information: # "Payment Information"
-  payment_method: # Payment Method
-  payment_methods: # Payment Methods
-  payment_methods_setting_description: # Configure methods customers can use to pay
-  payment_updated: # Payment Updated
-  payments: # Payments
-  pending_payments: # Pending Payments
-  permalink: # Permalink
-  phone: Telefono
-  place_order: Place Order
-  please_create_user: "Please create a user account"
-  powered_by: # "Powered by"
-  presentation: Presentazione
-  preview: # Preview
-  previous: Indietro
-  price: Prezzo
-  price_with_vat_included: "{{price}} (inc. VAT)"
-  problem_authorizing_card: # "Problem authorizing credit card"
-  problem_capturing_card: ""
-  problems_processing_order: "Suo ordine non è stato elaborato"
-  proceed_as_guest: # "No Thanks, Proceed as Guest"
-  process: Manda
+  password: "Password"
+  password_reset_instructions: "Istruzioni per la reimpostazione della password"
+  password_reset_instructions_are_mailed: "Istruzioni per reimpostare la password inviate. Controlla la tua email."
+  password_reset_token_not_found: "Siamo spiacenti, non possiamo trovare il tuo account. Se si hanno problemi, provarte a copiare e incollare l'URL nella tua e-mail nel tuo browser o riavviare il processo di reimpostazione della password."
+  password_updated: "Password aggiornata con successo"
+  path: "Percorso"
+  pay: "pagare"
+  payment: "Pagamento"
+  payment_gateway: "Gateway di Pagamento"
+  payment_information: "Conferma l'informazione"
+  payment_method: Conferma il Metodo di pagamento
+  payment_methods: Conferma i Metodi di pagamento
+  payment_methods_setting_description: "Configurazione dei metodi di pagamento utilizzati dai clienti"
+  payment_processing_failed: "Payment could not be processed, please check the details you entered"
+  payment_state: Payment State
+  payment_states: 
+    balance_due: balance due
+    credit_owed: credit owed
+    paid: paid
+  payment_updated: "Pagamento aggiornato"
+  payments: "Conferma i pagamenti"
+  pending_payments: "pagamento in sospeso"
+  permalink: "link permanente"
+  phone: "Telefono"
+  place_order: "Poni Ordine"
+  please_create_user: "Si prega di creare un account"
+  powered_by: "Powered by"
+  presentation: "Presentazione"
+  preview: "Anteprima"
+  previous: "Indietro"
+  price: "Prezzo"
+  price_bucket: Price Bucket
+  price_with_vat_included: "{{price}} (inc. IVA)"
+  problem_authorizing_card: "Problema di autorizzazione con la carta di credito"
+  problem_capturing_card: "Non posso usare la tua carta di credito"
+  problems_processing_order: "il Suo ordine non è stato elaborato"
+  proceed_as_guest: "Prego, procedere come Guest"
+  process: Processo
   product: Prodotto
-  product_details: # "Product Details"
-  product_group: # Product Group
-  product_group_invalid: # Product Group has invalid scopes
-  product_groups: # Product Groups
-  product_has_no_description: Product has not description
-  product_properties: ""
-  product_scopes: #
-    groups: #
-      price: #
-        description: # "Scopes for selecting products based on Price"
-        name: # Price
-      search: #
-        description: # "Scopes for selecting products based on name, keywords and description of product"
-        name: # "Text search"
-      taxon: #
-        description: # "Scopes for selecting products based on Taxons"
-        name: # Taxon
-      values: #
-        description: # "Scopes for selecting products based on option and property values"
-        name: # Values
-    scopes: #
-      ascend_by_master_price: #
-        name: # Ascend by product master price
-      ascend_by_name: #
-        name: # Ascend by product name
-      ascend_by_updated_at: #
-        name: # Ascend by actualization date
-      descend_by_master_price: #
-        name: # Descend by product master price
-      descend_by_name: #
-        name: # Descend by product name
-      descend_by_popularity: #
-        name: # Sort by popularity(most popular first)
-      descend_by_updated_at: #
-        name: # Descend by actualization date
-      in_name: #
-        args: #
-          words: # Words
-        description: # "(separated by space or comma)"
-        name: # "Product name have following"
-        sentence: # product name contain <em>%s</em>
-      in_name_or_description: #
-        args: #
-          words: # Words
-        description: # "(separated by space or comma)"
-        name: # "Product name or description have following"
-        sentence: # name or description contain <em>%s</em>
-      in_name_or_keywords: #
-        args: #
-          words: # Words
-        description: # "(separated by space or comma)"
-        name: # "Product name or meta keywords have following"
-        sentence: # name or keywords contain <em>%s</em>
-      in_taxons: #
-        args: #
-          "taxon_names": # "Taxon names"
-        description: # "Taxon names have to be separated by comma or space(eg. adidas,shoes)"
-        name: # "In taxons and all their descendants"
-        sentence: # in <em>%s</em> and all their descendants
-      master_price_gte: #
-        args: #
-          amount: # Amount
-        description: # ""
-        name: # "Master price greater or equal to"
-        sentence: # price greater or equal to <em>%.2f</em>
-      master_price_lte: #
-        args: #
-          amount: # Amount
-        description: # ""
-        name: # "Master price lesser or equal to"
-        sentence: # price less or equal to <em>%.2f</em>
-      price_between: #
-        args: #
-          high: # High
-          low: # Low
-        description: # ""
-        name: # "Price between"
-        sentence: # price between <em>%.2f</em> and <em>%.2f</em>
-      taxons_name_eq: #
-        args: #
-          taxon_name: # "Taxon name"
-        description: # "In specific taxon - without descendants"
-        name: # "In Taxon(without descendants)"
-        sentence: # in <em>%s</em>
-      with: #
-        args: #
-          value: # Value
-        description: # "Selects all products that have at least one variant that have specified value as either option or property (eg. red)"
-        name: # With value
-        sentence: # with value <em>%s</em>
-      with_ids: #
-        args: #
-          ids: # IDs
-        description: # "Select specific products"
-        name: # Products with IDs
-        sentence: # with IDs <em>%s</em>
-      with_option: #
-        args: #
-          option: # Option
-        description: # "Selects all products that have specified option(eg. color)"
-        name: # "With option"
-        sentence: # with option <em>%s</em>
-      with_option_value: #
-        args: #
-          option: # Option
-          value: # Value
-        description: # "Selects all products that have at least one variant with specified option and value(eg. color:red)"
-        name: # "With option and value"
-        sentence: # with option <em>%s</em> and value <em>%s</em>
-      with_property: #
-        args: #
-          property: # Property
-        description: # "Selects all products that have specified property(eg. weight)"
-        name: # "With property"
-        sentence: # with property <em>%s</em>
-      with_property_value: #
-        args: #
-          property: # Property
-          value: # Value
-        description: # "Selects all products that have at least one variant with specified property and value(eg. weight:10kg)"
-        name: # "With property value"
-        sentence: # with property <em>%s</em> and value <em>%s</em>
+  product_details: "Prodotto Dettagli"
+  product_group: "Gruppo di Prodotti"
+  product_group_invalid: "Gruppo di Prodotti non valido"
+  product_groups: "Gruppi di Prodotti"
+  product_has_no_description: "Il prodotto non ha una descrizione"
+  product_properties: "Proprietà del prodotto"
+  product_rule: 
+    choose_products: Choose products
+    label: "Order must contain {{select}} of these products"
+    match_all: all
+    match_any: at least one
+    product_source: 
+      group: From product group
+      manual: Manually choose
+  product_scopes: 
+    groups: 
+      price: 
+        description: "Estensione di scegliere i prodotti sulla base del prezzo"
+        name: Prezzo
+      search: 
+        description: "Estensione di scegliere i prodotti in base al nome, parole chiave e descrizioni"
+        name: "Testo search"
+      taxon: 
+        description: "Estensione di scegliere prodotti a base  Tassonomia"
+        name: 
+      values: 
+        description: "Estensione di scegliere i prodotti in base alle opzioni e le proprietà"
+        name: Valore
+    scopes: 
+      ascend_by_master_price: 
+        name: con l'aumento dei prezzi
+      ascend_by_name: 
+        name: Per nome in ordine crescente
+      ascend_by_updated_at: 
+        name: Crescende per la data di sconto
+      descend_by_master_price: 
+        name: Per prezzo decrescente
+      descend_by_name: 
+        name: Discendente per il nome dei prodotti
+      descend_by_popularity: 
+        name: Ordina per popolarità (più conosciuti prima)
+      descend_by_updated_at: 
+        name: Discendente per la data di sconto
+      in_name: 
+        args: 
+          words: Parole
+        description: "(Separati da uno spazio o una virgola)"
+        name: "Il nome del prodotto ha le seguenti parole"
+        sentence: il nome del prodotto contiene <em>%s</em>
+      in_name_or_description: 
+        args: 
+          words: Parole
+        description: "(Separati da uno spazio o una virgola)"
+        name: "Il nome o la descrizione del prodotto ha le seguenti parole"
+        sentence: il nome o la descrizione del prodotto contiene <em>%s</em>
+      in_name_or_keywords: 
+        args: 
+          words: Parole
+        description: "(Separati da uno spazio o una virgola)"
+        name: "Il nome o le parole chiave del prodotto sono le seguenti parole"
+        sentence: il nome  o le parole chiave del prodotto contiene <em>%s</em>
+      in_taxons: 
+        args: 
+          "taxon_names": "Taxon names"
+        description: "I nomi della Tassonomia devono essere separate da virgole o spazi (ex. sito,gtgames) "
+        name: "per tassonomia e tutti i loro discendenti"
+        sentence: "in <em>%s</em> e i suoi discendenti"
+      master_price_gte: 
+        args: 
+          amount: "Importo"
+        description: ""
+        name: "Prezzo iniziale più grande o uguale a "
+        sentence: prezzo più grande o uguale a <em>%.2f</em>
+      master_price_lte: 
+        args: 
+          amount: "Importo"
+        description: "Descrizione"
+        name: "Prezzo iniziale minore o uguale a "
+        sentence: "prezzo iniziale minore o uguale a <em>%.2f</em>"
+      price_between: 
+        args: 
+          high: "alto"
+          low: "basso"
+        description: ""
+        name: "Prezzo tra"
+        sentence: prezzo tra <em>%.2f</em> e <em>%.2f</em>
+      taxons_name_eq: 
+        args: 
+          taxon_name: "Nome Tassonomia"
+        description: "Nella specifica tassonomia - senza discendenti"
+        name: "Nella Tassonomia (senza discendenti)"
+        sentence: in <em>%s</em>
+      with: 
+        args: 
+          value: Valoer
+        description: "Seleziona tutti i prodotti che hanno almeno una variante che ha valore specifico di opzione o proprietà (es. rosso)"
+        name: Col valore
+        sentence: con valore <em>%s</em>
+      with_ids: 
+        args: 
+          ids: ID
+        description: "Seleziona prodotti specifici"
+        name: Prodotti con ID
+        sentence: con ID <em>%s</em>
+      with_option: 
+        args: 
+          option: Opzione
+        description: "Seleziona tutti i prodotti che hanno una opzione specifica (es. colore)"
+        name: "Con opzione"
+        sentence: con opzione <em>%s</em>
+      with_option_value: 
+        args: 
+          option: Opzione
+          value: Valore
+        description: "Seleziona tutti i prodotti che hanno almeno una variante con u8na opzione e valore specifico (es. colore:rosso)"
+        name: "Con opzione e valore"
+        sentence: con opzione <em>%s</em> e valore <em>%s</em>
+      with_property: 
+        args: 
+          property: Proprietà
+        description: "Seleziona tutti i prodotti che hanno una proprietà specifica (es. peso)"
+        name: "Peso Proprietà"
+        sentence: Peso Proprietà <em>%s</em>
+      with_property_value: 
+        args: 
+          property: Proprietà
+          value: Valore
+        description: "Seleziona tutti i prodotti con una proprietà e valore (es. peso:10kg)"
+        name: "Con proprietà e valore"
+        sentence: con proprietà <em>%s</em> e valore <em>%s</em>
   products: Prodotti
-  products_with_zero_inventory_display: "Products with a zero inventory will {{not}} be displayed"
-  properties: ""
-  property: ""
-  prototype: # Prototype
-  prototypes: ""
-  provider: # "Provider"
-  provider_settings_warning: # "If you are changing the provider type, you must save first before you can edit the provider settings"
-  qty: Qnt
-  quantity_shipped: # Quantity Shipped
-  range: # "Range"
-  rate: # Rate
-  reason: # Reason
-  recalculate_order_total: # "Recalculate order total"
-  receive: # receive
-  received: # Received
-  refund: # Refund
-  register: # Register as a New User
-  register_or_guest: # Checkout as Guest or Register
-  registration: Registration
+  products_with_zero_inventory_display: "I prodotti esauriti{{not}} sono visualizzati"
+  promotion_form: 
+    match_policies: 
+      all: Match any of these rules
+      any: Match all of these rules
+  promotion_rule_types: 
+    first_order: 
+      description: Must be the customer's first order
+      name: First order
+    item_total: 
+      description: Order total meets these criteria
+      name: Item total
+    product: 
+      description: Order includes specified product(s)
+      name: Product(s)
+    user: 
+      description: Available only to the specified users
+      name: User
+  promotions: Promotions
+  promotions_description: Manage offers and coupons with promotions
+  properties: "Proprietà"
+  property: "Proprietà"
+  prototype: Prototipo
+  prototypes: "Prototipi"
+  provider: "Provider"
+  provider_settings_warning: "Se si modifica il tipo di provider, è necessario innanzitutto salvare prima di poter modificare i parametri del fornitore"
+  qty: Qt
+  quantity_shipped: Quantità Spedita
+  range: "Intervallo"
+  rate: Tasse
+  reason: ragioni
+  recalculate_order_total: "Ricalcola il totale"
+  receive: ricevi
+  received: Recevuto
+  refund: Rimborsato
+  register: Registrato come un nuovo Utente
+  register_or_guest: Checkout come un ospite o utente
+  registration: Registrazione
   remember_me: "Salva i dettagli su questo computer"
   remove: ""
-  reports: # Reports
-  required_for_solo_and_maestro: # Required for Solo and Maestro cards.
-  resend: Riinvia
-  resend_confirmation_instructions: # "Resend confirmation instructions"
-  resend_unlock_instructions: # "Resend unlock instructions"
-  reset_password: # "Reset my password"
-  resource_controller: #
-    member_object_not_found: # "Member object not found."
-    successfully_created: # "Successfully created!"
-    successfully_removed: # "Successfully removed!"
-    successfully_updated: # "Successfully updated!"
-  response_code: # "Response Code"
-  resume: # "resume"
-  resumed: # Resumed
-  return: # return
-  return_authorization: # Return Authorization
-  return_authorization_updated: # Return authorization updated
-  return_authorizations: # Return Authorizations
-  return_quantity: # Return Quantity
-  returned: # Returned
-  rma_credit: # RMA Credit
-  rma_number: # RMA Number
-  rma_value: # RMA Value
-  roles: # Roles
-  sales_tax: # "Sales Tax"
-  sales_total: "Vendità totale"
-  sales_total_for_all_orders: # "Sales total for all orders"
+  reports: Report
+  required_for_solo_and_maestro: Richiesto per carte Solo e Maestro.
+  resend: Reinvia
+  resend_confirmation_instructions: "Reinvia istruzioni conferma"
+  resend_unlock_instructions: "Reinvia istruzioni di sblocco"
+  reset_password: "Resetta la mia password"
+  resource_controller: 
+    member_object_not_found: "Oggetto membro non trovato."
+    successfully_created: "creato con successo!"
+    successfully_removed: "rimosso con successo!"
+    successfully_updated: "aggiornato con successo!"
+  response_code: "Codice Responso"
+  resume: "riprendi"
+  resumed: Ripreso
+  return: restituisci
+  return_authorization: restituisci l'autorizzazione
+  return_authorization_updated: restituisci l'autorizzazione aggiorata
+  return_authorizations: restituisci le autorizzazioni
+  return_quantity: restituisci la Quantità
+  returned: restituito
+  rma_credit: Credito RMA
+  rma_number: Numero RMA
+  rma_value: Valore RMA
+  roles: regole
+  sales_tax: "Tasse"
+  sales_total: "Totale"
+  sales_total_for_all_orders: "Totale per ogni ordine"
   sales_totals: "Vendite totali"
-  sales_totals_description: # "Sales Total For All Orders"
-  save_and_continue: # Save and Continue
-  save_preferences: Save Preferences
-  scope: # Scope
-  scopes: # Scopes
+  sales_totals_description: "Vendite totali per ogni ordine"
+  save_and_continue: "Salva e Continua"
+  save_preferences: "Salva le preferenze"
+  scope: Campo
+  scopes: Campi
   search: Cerca
-  search_results: "Search results for '{{keywords}}'"
-  searching: # Searching
-  secure_connection_type: # Secure Connection Type
-  secure_creditcard: # Secure Creditcard
+  search_results: "Cerca risultati per '{{keywords}}'"
+  searching: Cercando
+  secure_connection_type: Connessione di tipo Sicuro
+  secure_creditcard: Carta di credito Sicura
   select: Seleziona
-  select_from_prototype: ""
-  select_preferred_shipping_option: # "Select preferred shipping option"
-  send_copy_of_all_mails_to: # Send Copy of All Mails To
-  send_copy_of_orders_mails_to: Send Copy of Order Mails To
-  send_mails_as: Send Mails As
-  send_me_reset_password_instructions: # "Send me reset password instructions"
-  send_order_mails_as: Send Order Mails As
-  server: # Server
-  server_error: # "The server returned an error"
-  settings: # Settings
-  ship: # ship
+  select_from_prototype: "Seleziona da prototipo"
+  select_preferred_shipping_option: "Seleziona il tipo di spedizione preferito"
+  send_copy_of_all_mails_to: Manda una copia a tutte le mail
+  send_copy_of_orders_mails_to: Manda una copia degli ordini a tutte le mail
+  send_mails_as: Manda la mail come
+  send_me_reset_password_instructions: "Mandami le istruzioni di reset della password"
+  send_order_mails_as: Manda le mail degli ordini come
+  server: Server
+  server_error: "Il server ha riportato un errore"
+  settings: Impostazioni
+  ship: spedisci
   ship_address: "Indirizzo di consegna"
-  shipment: # Shipment
-  shipment_details: # Shipment Details
-  shipment_number: # "Shipment #"
-  shipment_updated: # Shipment Updated
-  shipments: # "Shipments"
-  shipped: # Shipped
-  shipping: Consegna
+  shipment: Spedizione
+  shipment_details: Spedizione Dettagli
+  shipment_number: "Spedizione #"
+  shipment_state: Shipment State
+  shipment_states: 
+    backorder: backorder
+    partial: partial
+    pending: pending
+    ready: ready
+    shipped: shipped
+  shipment_updated: Spedizione aggiornata
+  shipments: "Spedizioni"
+  shipped: Spedita
+  shipping: In consegna
   shipping_address: "Indirizzo di consegna"
-  shipping_categories: # "Shipping Categories"
-  shipping_categories_description: # "Manage shipping categories to identify which products can be shipped via which method"
-  shipping_category: # Shipping Category
-  shipping_cost: # Cost
-  shipping_error: # "Shipping Error"
-  shipping_instructions: # "Shipping Instructions"
-  shipping_method: Method
-  shipping_methods: # "Shipping Methods"
-  shipping_methods_description: # "Manage shipping methods"
+  shipping_categories: "categoria di spedizione"
+  shipping_categories_description: "Modifica le categorie di spedizione da identificare con i prodotti"
+  shipping_category: Categoria di spedizione
+  shipping_cost: Costi di spedizione
+  shipping_error: "Errore di spedizione"
+  shipping_instructions: "Istruzioni di spedizione"
+  shipping_method: Metodo di spedizione
+  shipping_methods: "Metodi di spedizione"
+  shipping_methods_description: "Descrizione metodo di spedizione"
   shipping_total: "Totale costi di consegna"
-  shop_by_taxonomy: "Shop by {{taxonomy}}"
+  shop_by_taxonomy: "Ordina per {{taxonomy}}"
   shopping_cart: Carrello
-  show: # Show
-  show_active: # "Show Active"
-  show_deleted: # "Show Deleted"
-  show_incomplete_orders: # "Show Incomplete Orders"
-  show_only_complete_orders: # "Only show complete orders"
-  show_out_of_stock_products: # "Show out-of-stock products"
-  show_price_inc_vat: # "Show price including VAT"
-  showing_first_n: "Showing first {{n}}"
-  sign_up: # "Sign up"
-  site_name: # "Site Name"
-  site_url: # "Site URL"
-  sku: # SKU
-  smtp: # SMTP
-  smtp_authentication_type: SMTP Authentication Type
-  smtp_domain: # SMTP Domain
-  smtp_mail_host: SMTP Mail Host
-  smtp_password: # SMTP Password
-  smtp_port: SMTP Port
-  smtp_send_all_emails_as_from_following_address: # "Send all mails as from the following address."
-  smtp_send_copy_of_orders_to_this_addresses: # "Sends a copy of all order's mails to this address. For multiple addresses, separate with commas."
-  smtp_send_copy_to_this_addresses: "Sends a copy of all outgoing mails to this address. For multiple addresses, separate with commas."
-  smtp_send_order_mails_as_from_following_address: # "Send orders mails as from the following address."
-  smtp_username: SMTP Username
-  sold: # Sold
-  sort_ordering: # "Sort ordering"
-  special_instructions: # "Special Instructions"
-  spree: #
+  show: Guarda
+  show_active: "Guarda attivi"
+  show_deleted: "Giarda eliminati"
+  show_incomplete_orders: "Guarda gli Ordini Incompleti"
+  show_only_complete_orders: "Filtra gli ordini completati"
+  show_out_of_stock_products: "Guarda i prodotti terminati"
+  show_price_inc_vat: "Visualizza il price IVA inclusa"
+  showing_first_n: "Visualizza le prime {{n}}"
+  sign_up: "Registrati"
+  site_name: "Nome sito"
+  site_url: "URL"
+  sku: SKU # Stock Keeping Unit
+  smtp: SMTP
+  smtp_authentication_type: Tipo di autenticazione SMTP
+  smtp_domain: Dominio SMTP
+  smtp_mail_host: Host mail SMTP
+  smtp_password: Password SMTP
+  smtp_port: Porta SMTP
+  smtp_send_all_emails_as_from_following_address: "Manda tutte le mail a questo indirizzo."
+  smtp_send_copy_to_this_addresses: "Invia una copia di tutte le mail a questo indirizzo. Indirizzi separati da virgole."
+  smtp_username: Nome Utente SMTP
+  sold: Venduto
+  sort_ordering: "Ordinamento"
+  special_instructions: "Istruzioni Speciali"
+  spree: 
     date: Data
     time: Tempo
-  ssl_will_be_used_in_development_and_test_modes: # "SSL will be used in development and test mode if necessary."
-  ssl_will_be_used_in_production_mode: # "SSL will be used in production mode"
-  ssl_will_not_be_used_in_development_and_test_modes: # "SSL will not be used in development and test mode if necessary."
-  ssl_will_not_be_used_in_production_mode: # "SSL will not be used in production mode"
-  start: Di
-  start_date: # Valid from
-  state: state
-  state_based: # "State Based"
-  state_setting_description: # "Administer the list of states/provinces associated with each country."
-  states: # States
-  status: stato
-  stop: A
-  store: # Store
-  street_address: Via
-  street_address_2: "Via (Campo 2)"
+  ssl_will_be_used_in_development_and_test_modes: "SSL viene utilizzato in development e test mode se necessary."
+  ssl_will_be_used_in_production_mode: "SSL viene utilizzato in modalità di produzione"
+  ssl_will_not_be_used_in_development_and_test_modes: "SSL non viene utilizzato in development e test mode se necessary."
+  ssl_will_not_be_used_in_production_mode: "SSL non viene utilizzato in modalità di produzione"
+  start: a partire da
+  start_date: Valido da
+  state: stato
+  state_based: "Basato su una regione"
+  state_setting_description: "Dare l'elenco delle Regioni di ogni paese."
+  states: Regioni
+  status: Stato
+  stop: Fine
+  store: Salva
+  street_address: Indirizzo Primario
+  street_address_2: "Indirizzo Secondario"
   subtotal: Somma
-  subtract: # Subtract
-  system: # System
-  tax: Piva.
-  tax_categories: ""
-  tax_categories_setting_description: ""
-  tax_category: ""
-  tax_rates: # "Tax Rates"
-  tax_rates_description: # Tax rates setup and configuration.
-  tax_settings: "Tax settings"
-  tax_settings_description: # Basic tax settings.
-  tax_total: "Piva. Totale"
-  tax_type: # "Tax Type"
-  taxon: # Taxon
-  taxon_edit: # Edit Taxon
-  taxonomies: # Taxonomies
-  taxonomies_setting_description: # "Create and manage taxonomies"
-  taxonomy_edit: # "Edit taxonomy"
-  taxonomy_tree_error: # "The requested change has not been accepted and the tree has been returned to its previous state, please try again."
-  taxonomy_tree_instruction: # "* Right click a child in the tree to access the menu for adding, deleting or sorting a child."
-  taxons: # Taxons
-  test: # "Test"
-  test_mode: # Test Mode
-  thank_you_for_your_order: # "Thank you for your business.  Please print out a copy of this confirmation page for your records."
+  subtract: Sottrazione
+  system: Sistema
+  tax: IVA
+  tax_categories: "categoria di tasse"
+  tax_categories_setting_description: "Definire una categoria di tasse per identificare l'imponibile sui prodotti."
+  tax_category: "categoria delle tasse"
+  tax_rates: "aliquote fiscali"
+  tax_rates_description: Organizzare e configurare le aliquote fiscali.
+  tax_settings: "Parametri tasse"
+  tax_settings_description: Parametri base delle tasse.
+  tax_total: "IVA. Totale"
+  tax_type: "Tipo Tasse"
+  taxon: Tassonomia
+  taxon_edit: modifica la Tassonomia
+  taxonomies: Tassonomie
+  taxonomies_setting_description: "Crea e modifica Tassonomie"
+  taxonomy_edit: "Modifica la tassonomia"
+  taxonomy_tree_error: "La modifica richiesta non è stata accettata è stato mantenuto il suo stato, per favore riprova."
+  taxonomy_tree_instruction: "Fare clic destro per accedere al menu per l'aggiunta, l'eliminazione o l'ordinamento di un figlio.."
+  taxons: Tassonomie
+  test: "Test"
+  test_mode: Modalità Test
+  thank_you_for_your_order: "Grazie per L'acquisto."
   this_file_language: Italiano (IT)
-  this_month: # "This Month"
-  this_year: # "This Year"
-  thumbnail: # "Thumbnail"
-  to_add_variants_you_must_first_define: # "To add variants, you must first define"
-  top_grossing_products: # "Top Grossing Products"
+  this_month: "Questo mese"
+  this_year: "Quest'anno"
+  thumbnail: "Miniatura"
+  to_add_variants_you_must_first_define: "Per aggiungere campi, è necessario innanzitutto definire"
+  top_grossing_products: "I più venduti"
   total: Totale
-  tracking: # Tracking
+  tracking: Tracciamento
   transaction: Transazioni
-  transactions: # Transactions
-  tree: # Tree
-  try_again: Riprova
+  transactions: Transazioni
+  tree: Tree
+  try_again: Prova ancora
   type: Tipo
-  type_to_search: # Type to search
-  unable_ship_method: # "Unable to generate shipping methods due to a server error."
-  unable_to_authorize_credit_card: # "Unable to Authorize Credit Card"
-  unable_to_capture_credit_card: # "Unable to Capture Credit Card"
-  unable_to_connect_to_gateway: # "Unable to connect to gateway."
-  unable_to_save_order: # "Unable to Save Order"
-  under_paid: # "Under Paid"
-  units: # "Units"
-  unrecognized_card_type: # Unrecognized card type
+  type_to_search: Tipo da cercare
+  unable_ship_method: "Sono incapace di generare i metodi di consegna a causa di un errore del server."
+  unable_to_authorize_credit_card: "Non è possibile Autorizzare la Carta di credito"
+  unable_to_capture_credit_card: "Non è possibile Verificare la Carta di credito"
+  unable_to_connect_to_gateway: "Non è possibile connettersi al Gateway."
+  unable_to_save_order: "Non è possibile Salvare l'ordine"
+  under_paid: "Sottopagato"
+  units: "Unità"
+  unrecognized_card_type: Il tipo di scheda non viene riconosciuta
   update: Salva
-  update_password: "Update my password and log me in"
-  updated_successfully: # "Updated Successfully"
-  updating: # Updating
-  usage_limit: # Usage Limit
-  use_as_shipping_address: # Use as Shipping Address
-  use_billing_address: # Use Billing Address
+  update_password: "Aggiorna la mia password e login"
+  updated_successfully: "Aggiornato con successo"
+  updating: In aggiornamento
+  usage_limit: Limite d'uso
+  use_as_shipping_address: usa indirizzo di spedizione
+  use_billing_address: usa indirizzo di Fatturazione
   use_different_shipping_address: "Altro indirizzo di consegna"
-  use_new_cc: # "Use a new card"
+  use_new_cc: "usa una nuova carta"
   user: Utente
-  user_account: # User Account
-  user_created_successfully: # "User created successfully"
-  user_details: # "User Details"
+  user_account: Account
+  user_created_successfully: "Utente creato con successo"
+  user_details: "Dettagli dell'utente"
+  user_rule: 
+    choose_users: Choose users
   users: Utenti
+  validate_on_profile_create: Validate on profile create
   validation: 
-    cannot_be_less_than_shipped_units: # "cannot be less than the number of shipped units."
-    is_too_large: # "is too large -- stock on hand cannot cover requested quantity!"
-    must_be_int: # "must be an integer"
-    must_be_non_negative: # "must be a non-negative value"
-  value: ""
-  variants: Varianti
-  vat: "VAT"
+    cannot_be_less_than_shipped_units: "non può essere inferiore al numero di pezzi venduti."
+    is_too_large: "è troppo grande. Le scorte disponibili non possono coprire l'importo richiesto!!"
+    must_be_int: "deve essere un intero!"
+    must_be_non_negative: "deve essere un valore non negativo!"
+  value: "valore"
+  variants: Intervalli
+  vat: "IVA"
   version: Versione
-  view_shipping_options: # "View shipping options"
-  void: # Void
+  view_shipping_options: "Vedi le opzioni di spedizione"
+  void: Vuoto
   website: "Sito web"
-  weight: # Weight
-  welcome_to_sample_store: "Benvenuti nel sample store"
+  weight: Peso
+  welcome_to_sample_store: "Benvenuti nello store d'esempio"
   what_is_a_cvv: "Cos'è il (CCC) Codice Carta di credito?"
   what_is_this: Cos'è?
-  whats_this: # "What's this"
-  width: # Width
-  year: # "Year"
-  you_have_been_logged_out: # "You have been logged out."
-  your_cart_is_empty: # "Your cart is empty"
+  whats_this: "Che cos'è?"
+  width: Larghezza
+  year: "Anno"
+  you_have_been_logged_out: "Il logout è stato effetuato con successo."
+  your_cart_is_empty: "Il tuo carrello è vuoto"
   zip: CAP
-  zone: ""
-  zone_based: # "Zone Based"
-  zone_setting_description: ""
-  zones: ""
+  zone: "Zona"
+  zone_based: "Zone Based"
+  zone_setting_description: "Elenco di paesi, regioni utilizzati nei diversi calcoli."
+  zones: "Zone"
