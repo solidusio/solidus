@@ -26,9 +26,9 @@ ru-RU:
         city: "Город"
         country: "Страна"
         first_name: "Имя"
-        first_name_begins_with: "First Name Begins With"
+        first_name_begins_with: "Имя начинается с"
         last_name: "Фамилия"
-        last_name_begins_with: "Last Name Begins With"
+        last_name_begins_with: "Фамилия начинается с"
         phone: "Телефон"
         state: "Регион/Область"
         zipcode: "Индекс"
@@ -523,7 +523,7 @@ ru-RU:
   new_payment_method: "Новый способ оплаты"
   new_product: "Новый товар"
   new_product_group: "Новая группа товаров"
-  new_promotion: New Promotion
+  new_promotion: "Новая акция"
   new_property: "Новое свойство"
   new_prototype: "Новый прототип"
   new_return_authorization: "Новое разрешение возврата"
@@ -624,11 +624,12 @@ ru-RU:
   payment_methods: "Способы оплаты"
   payment_methods_setting_description: "Настройка способов оплаты, которые может использовать клиент"
   payment_processing_failed: "Payment could not be processed, please check the details you entered"
-  payment_state: Payment State
+  payment_state: Статус оплаты
   payment_states: 
-    balance_due: balance due
-    credit_owed: credit owed
-    paid: paid
+    balance_due: частично
+    credit_owed: в кредит
+    failed: ошибка
+    paid: оплачен
   payment_updated: "Платёж обновлён"
   payments: "Платежи"
   pending_payments: "Незавершённые платежи"
@@ -798,7 +799,7 @@ ru-RU:
     user: 
       description: Available only to the specified users
       name: User
-  promotions: Promotions
+  promotions: Акции
   promotions_description: Manage offers and coupons with promotions
   properties: "Свойства"
   property: "Свойство"
@@ -807,6 +808,7 @@ ru-RU:
   provider: "Провайдер"
   provider_settings_warning: "Если вы меняете провайдера, вы должны сохранить это изменение, прежде чем вы сможете изменить настройки провайдера."
   qty: "Кол-во"
+  quantity_returned: "Количество возврата"
   quantity_shipped: "Отправленное количество"
   range: "Диапазон"
   rate: "Ставка"
@@ -874,13 +876,13 @@ ru-RU:
   shipment: "Отправка"
   shipment_details: "Детали отправки"
   shipment_number: "Отправка №"
-  shipment_state: Shipment State
+  shipment_state: Статус отправки
   shipment_states: 
-    backorder: backorder
-    partial: partial
-    pending: pending
-    ready: ready
-    shipped: shipped
+    backorder: задерживается
+    partial: частично
+    pending: ожидает
+    ready: готов
+    shipped: отправлен
   shipment_updated: "Отправка обновлена"
   shipments: "Отправки"
   shipped: "Отправлено"
@@ -984,7 +986,7 @@ ru-RU:
   unable_to_connect_to_gateway: "Не удалось подключиться к платёжному шлюзу."
   unable_to_save_order: "Не удалось сохранить заказ."
   under_paid: "Частично оплачен"
-  units: "Units"
+  units: "Единиц"
   unrecognized_card_type: "Неизвестный тип карты"
   update: "Изменить"
   update_password: "Обновить мой пароль и войти"
