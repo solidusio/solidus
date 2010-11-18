@@ -1,0 +1,1031 @@
+---
+sl-SI: 
+  'no': "Ne"
+  'yes': "Da"
+  5_biggest_spenders: "5 Najboljših Strank"
+  a_copy_of_all_mail_will_be_sent_to_the_following_addresses: "Kopija vseh izhodnih emailov naj se pošlje na seledeče naslove"
+  abbreviation: "Okrajšava"
+  access_denied: "Dostop Zavrnjen"
+  account: "Uporabniški račun"
+  account_updated: "Uporabniški račun osvežen!"
+  action: Možnosti
+  actions: 
+    cancel: Prekini
+    create: Ustvari
+    destroy: "Izbriši"
+    list: Prikaz
+    listing: Prikazujem
+    new: Dodaj
+    update: Posodobi
+  active: "Objavljeno"
+  activerecord: 
+    attributes: 
+      address: 
+        address1: Naslov
+        address2: "Naslov dodatno"
+        city: Mesto
+        country: "Država"
+        first_name: "Ime"
+        first_name_begins_with: "Ime se začne z"
+        last_name: "Priimek"
+        last_name_begins_with: "Priimek se začne z"
+        phone: Telefon
+        state: "State"
+        zipcode: "Poštna številka"
+      checkout: 
+        bill_address: 
+          address1: "Naslov za račun"
+          city: "Mesto za račun"
+          firstname: "Ime za račun"
+          lastname: "Priimek za račun"
+          phone: "Telefon za račun"
+          state: "Billing address state"
+          zipcode: "Poštna številka za račun"
+        ship_address: 
+          address1: "Naslov za dostavo"
+          city: "Mesto za dostavo"
+          firstname: "Ime za dostavo"
+          lastname: "Shipping address last name"
+          phone: "Telefon za dostavo"
+          state: "Shipping address state"
+          zipcode: "Poštna številka za dostavo"
+      country: 
+        iso: ISO
+        iso3: ISO3
+        iso_name: "ISO ime"
+        name: Ime
+        numcode: "ISO koda"
+      creditcard: 
+        cc_type: Tip
+        month: Mesec
+        number: "Številka"
+        verification_value: "Potrditvena številka"
+        year: Leto
+      inventory_unit: 
+        state: State
+      line_item: 
+        price: Cena
+        quantity: Količina
+      order: 
+        checkout_complete: "Naročilo je končano"
+        ip_address: "IP naslov"
+        item_total: "Skupaj kosov"
+        number: "Številka"
+        special_instructions: "Dodatna navodila"
+        state: Stanje
+        total: Skupaj
+      product: 
+        available_on: "Na voljo na"
+        cost_price: "Nabavna cena"
+        description: Opis
+        master_price: "Osnovna cena"
+        name: Ime
+        on_hand: "Na zalogi"
+        shipping_category: "Kategorija poštnine"
+        tax_category: "Davčna stopnja"
+      product_group: 
+        name: Ime
+        product_count: "Število izdelkov"
+        product_scopes: "Product scopes"
+        products: "Izdelki"
+        url: URL
+      product_scope: 
+        arguments: "Arguments"
+        description: "Opis"
+      property: 
+        name: Ime
+        presentation: Prezentacija
+      prototype: 
+        name: Ime
+      return_authorization: 
+        amount: Količina
+      role: 
+        name: Ime
+      state: 
+        abbr: Okrajšava
+        name: Ime
+      tax_category: 
+        description: Opis
+        name: Ime
+      tax_rate: 
+        amount: Stopnja
+      taxon: 
+        name: Ime
+        permalink: Ime za URL
+        position: Pozicija
+      taxonomy: 
+        name: Ime
+      user: 
+        email: Email
+      variant: 
+        cost_price: "Cost Price"
+        depth: "Globina"
+        height: "Višina"
+        price: Price
+        sku: "Šifra"
+        weight: "Teža"
+        width: "Širina"
+      zone: 
+        description: Opis
+        name: Ime
+    models: 
+      address: 
+        one: Naslov
+        other: Naslovi
+      cheque_payment: 
+        one: Cheque Payment
+        other: Cheque Payments
+      country: 
+        one: "Država"
+        other: "Države"
+      creditcard: 
+        one: "Kreditna kartica"
+        other: "Kreditne kartice"
+      creditcard_payment: 
+        one: "Plačilo s kreditno kartico"
+        other: "Plačila s kreditno kartico"
+      creditcard_txn: 
+        one: "Transakcije s kreditno kartico"
+        other: "Transakcije s kreditnimi karticami"
+      inventory_unit: 
+        one: "Inventarna enota"
+        other: "Inventorne enote"
+      line_item: 
+        one: "Line Item"
+        other: "Line Items"
+      order: 
+        one: Naročilo
+        other: Naročila
+      payment: 
+        one: Plačilo
+        other: Plačila
+      product: 
+        one: Izdelek
+        other: Izdelki
+      product_group: 
+        one: "Skupina izdelkov"
+        other: "Skupine izdelkov"
+      property: 
+        one: Lastnost
+        other: Lastnosti
+      prototype: 
+        one: Prototip
+        other: Prototipi
+      return_authorization: 
+        one: Return Authorization
+        other: Return Authorizations
+      role: 
+        one: Roles
+        other: Roles
+      shipment: 
+        one: Pošiljka
+        other: Pošiljke
+      shipping_category: 
+        one: "Kategorija poštnine"
+        other: "Kategorije poštnine"
+      state: 
+        one: State
+        other: States
+      tax_category: 
+        one: "Davčna stopnja"
+        other: "Davčne stopnje"
+      tax_rate: 
+        one: "Tax Rate"
+        other: "Tax Rates"
+      taxon: 
+        one: Takson
+        other: Taksoni
+      taxonomy: 
+        one: Taksonomija
+        other: Taksonomije
+      user: 
+        one: Uporabnik
+        other: Uporabniki
+      variant: 
+        one: Varianta
+        other: Variante
+      zone: 
+        one: Območje
+        other: Območja
+  add: Dodaj
+  add_category: "Dodaj Kategorijo"
+  add_country: "Dodaj Državo"
+  add_option_type: "Dodaj možnost izbire"
+  add_option_types: "Dodaj možnosti izbire"
+  add_option_value: "Dodaj izbiro"
+  add_product: "Dodaj izdelek"
+  add_product_properties: "Dodaj lastnosti izdelka"
+  add_rule_of_type: "Dodaj tip pravila"
+  add_scope: "Dodaj pravilo"
+  add_state: "Dodaj pokraijno"
+  add_to_cart: "Dodaj v košarico"
+  add_zone: "Dodaj območje"
+  additional_item: Additional Item Cost
+  address: Naslov
+  address_information: "Podatki o naslovu"
+  adjustment: Prilagoditev
+  adjustment_total: Prilagoditev Skupaj
+  adjustments: Prilagoditve
+  administration: Administracija
+  all: "Vse"
+  all_departments: Vsi oddelki
+  allow_backorders: "Dovoli naročanje izdelkov, ki niso na zalogi"
+  allow_ssl_to_be_used_when_in_developement_and_test_modes: Allow SSL to be used when in development and test modes
+  allow_ssl_to_be_used_when_in_production_mode: Dovoli SSL v produkciji
+  allowed_ssl_in_production_mode: "SSL {{ne}} bo uporabljen v produkciji"
+  already_registered: Ste že registrirani?
+  alt_text: Alternativni tekst
+  alternative_phone: Drugi telefon
+  amount: Znesek
+  analytics_trackers: Statistike
+  api: 
+    access: "API Dostop"
+    clear_key: "Izbriši API ključ"
+    errors: 
+      invalid_event: "Neveljavno ime dogodka, veljavna imena so %{events}"
+      invalid_event_for_object: "Veljavno ime dogodka vendar ne za ta objekt, veljavna imena so %{events}"
+      missing_event: "Ime dogodka manjka"
+    generate_key: "Generiraj API ključ"
+    key: "API Ključ"
+    key_cleared: "API kjuč je izbrisan"
+    key_generated: "API kjuč je generiran"
+    no_key: "Ključ ni definiran"
+    regenerate_key: "Obnovi API ključ"
+  apply: "Uveljavi"
+  are_you_sure: "Ste prepričani?"
+  are_you_sure_category: "Ste prepričani, da želite izbrisati to kategorijo?"
+  are_you_sure_delete: "Ste prepričani, da želite izbrisati ta vnos?"
+  are_you_sure_delete_image: "Ste prepričani, da želite izbrisati to sliko?"
+  are_you_sure_option_type: "Ste prepričani, da želite izbrisati to možnost izbire?"
+  are_you_sure_you_want_to_capture: "Ste prepričani, da želite procesirati?"
+  assign_taxon: "Določi takson"
+  assign_taxons: "Določi taksone"
+  authorization_failure: "Napaka pri avtorizaciji"
+  authorized: Avtorizirano
+  available_on: "Na voljo"
+  available_taxons: "Razpoložljivi taksoni"
+  awaiting_return: "Čakamo vračilo"
+  back: Nazaj
+  back_end: Nazaj na Konec
+  back_to_store: "Nazaj v trgovino"
+  backordered: Naročeno prek zaloge
+  backordering_is_allowed: "Naročanje prek zaloge {{not}} dovoljeno"
+  balance_due: "Balance Due"
+  best_selling_products: "Najbolje prodajani izdelki"
+  best_selling_taxons: "Najbolje prodajani taksoni"
+  bill_address: "Naslov za Račun"
+  billing: Račun
+  billing_address: "Naslov za Račun"
+  both: Oboje
+  by_day: "tekom dneva"
+  calculator: Kalkulator
+  calculator_settings_warning: "Če spreminjate tip kalkulatorja, morate pred urejanjem nastavitev najprej shraniti."
+  cancel: prekini
+  cancel_my_account: Prekini moj račun
+  cancel_my_account_description: "Nezadovoljni?"
+  canceled: Prekinjeno
+  cannot_create_returns: "Ne morem generirati vračil, ker naročilo še ni bilo poslano."
+  cannot_destory_line_item_as_inventory_units_have_shipped: Cannot destory line item as some inventory units have shipped.
+  cannot_perform_operation: "Ni mogoče izvesti zahtevane operacije"
+  capture: zajemi
+  card_code: "Koda Kartice"
+  card_details: "Podrobnosti kartice"
+  card_number: "Številka Kartice"
+  card_type_is: Tip kartice je
+  cart: Košarica
+  categories: Kategorije
+  category: Kategorija
+  change: Spremeni
+  change_language: "Spremeni jezik"
+  change_my_password: "Spremeni geslo"
+  charge_total: Charge Total
+  charged: Charged
+  charges: Charges
+  checkout: Naročilo
+  cheque: Predračun
+  city: Mesto
+  clone: Kloniraj
+  code: Koda
+  combine: Združi
+  complete: complete
+  complete_list: "Seznam vseh nastavitev"
+  configuration: Nastavitev
+  configuration_options: "Možnosti Nastavitev"
+  configurations: Nastavitve
+  configured: Nastavljeno
+  confirm: Potrdi
+  confirm_delete: "Potrdi izbris?"
+  confirm_password: "Potrditev gesla"
+  continue: Nadaljuj
+  continue_shopping: "Nadaljuj z nakupovanjem"
+  copy_all_mails_to: Kopiraj Vse Emaile Na
+  cost_price: "Nabavna Cena"
+  count: Count
+  count_of_reduced_by: "število '{{name}}' zmanjšano {{count}}"
+  country: "Država"
+  country_based: "Glede na Države"
+  coupon: Kupon
+  coupon_code: Koda kupona
+  create: Ustvari
+  create_a_new_account: "Ustvari nov račun"
+  create_product_group_from_products: Ustvari novo skupino izdelkov iz teh izdelkov
+  create_user_account: "Ustvari uporabniški račun"
+  created_successfully: "Uspešno ustvarjeno"
+  credit: Kredit
+  credit_card: "Kreditna kartica"
+  credit_card_capture_complete: "Podatki o kreditni kartici so bili zajeti"
+  credit_card_payment: "Plačilo s kreditno kartico"
+  credit_owed: "Credit Owed"
+  credit_total: Credit Total
+  creditcard: Kreditna kartica
+  creditcards: Kreditne kartice
+  credits: Krediti
+  current: Trenutno
+  customer: Stranka
+  customer_details: "Podrobnosti stranke"
+  customer_search: "Iskanje strank"
+  date_created: Datum ustvarjen
+  date_range: "Obdobje"
+  debit: Debet
+  default: Privzeto
+  delete: Izbriši
+  depth: Globina
+  description: Opis
+  destroy: Izbriši
+  didnt_receive_confirmation_instructions: "Niste prejeli potrditvenih navodil?"
+  didnt_receive_unlock_instructions: "Niste prejeli navodil za odklenitev?"
+  discount_amount: "Znesek popusta"
+  display: Prikaži
+  edit: Uredi
+  editing_billing_integration: Urejanje plačilne integracije
+  editing_category: "Urejanje kategorije"
+  editing_mail_method: Urejanje kupona
+  editing_option_type: "Urejanje možnosti izbire"
+  editing_option_types: "Urejanje možnosti izbire"
+  editing_payment_method: Urejanje načina plačila
+  editing_product: "Urejanje izdelka"
+  editing_product_group: "Urejanje skupine izdelkov"
+  editing_promotion: Urejanje promocije
+  editing_property: "Urejanje lastnosti"
+  editing_prototype: "Urejanje prototipa"
+  editing_shipping_category: "Urejanje kategorije poštnine"
+  editing_shipping_method: "Urejanje načina dostave"
+  editing_state: "Urejanje pokrajine"
+  editing_tax_category: "Urejanje davčne kategorije"
+  editing_tax_rate: "Urejanje davčne stopnje"
+  editing_tracker: Urejanje statistik
+  editing_user: "Urejanje uporabnika"
+  editing_zone: "Urejanje območja"
+  email: Email
+  email_address: "Email naslov"
+  email_server_settings_description: "Urejanje nastavitev email strežnika."
+  empty: "Izprazni"
+  empty_cart: "Izprazni košarico"
+  enable_login_via_login_password: "Uporabi email in geslo"
+  enable_login_via_openid: "ali pa uporabi OpenID"
+  enable_mail_delivery: Vklopi pošiljanje emailov
+  enter_exactly_as_shown_on_card: Prosimo vnesite točno tako kot je prikazano na kartici
+  enter_password_to_confirm: "(za potrditev sprememb potrebujemo vaše trnutno geslo)"
+  environment: "Okolje"
+  error: napaka
+  event: Dogodek
+  existing_customer: "Obstoječi uporabnik"
+  expiration: "Velja do"
+  expiration_month: "Velja do meseca"
+  expiration_year: "Velja do leta"
+  extension: Razširitev
+  extensions: Razširitve
+  filename: Datoteka
+  final_confirmation: "Potrditev"
+  finalize: Zaključi
+  finalized_payments: Zaključena plačila
+  first_item: Strošek prvega izdelka
+  first_name: "Ime"
+  first_name_begins_with: "Ime se začne z"
+  flat_percent: "Fiksni odstotek"
+  flat_rate_amount: Vrednost
+  flat_rate_per_item: "Fiksna cena (na izdelek)"
+  flat_rate_per_order: "Fiksna cena (na naročilo)"
+  flexible_rate: "Fleksibilna cena"
+  forgot_password: "Ne spomnim se gesla"
+  free_shipping: Brezplačna dostava
+  front_end: Front End
+  full_name: "Ime in priimek"
+  gateway: Ponudnik
+  gateway_configuration: "Nastavitve ponudnika"
+  gateway_error: "Napaka ponudnika"
+  gateway_setting_description: "Izbira ponudnika plačevanja in nastavitve."
+  gateway_settings_warning: "Če spreminjate tip ponudnika, morate najprej shraniti, predno lahko uredite nastavitve ponudnika plačevnja."
+  general: "Splošno"
+  general_settings: "Splošne nastavitve"
+  general_settings_description: "Urejanje splošnih nastavitev."
+  google_analytics: "Google Analytics"
+  google_analytics_active: "Active"
+  google_analytics_create: "Ustvari nov Google Analytics račun"
+  google_analytics_id: "Analytics ID"
+  google_analytics_new: "Nov Google Analytics račun"
+  google_analytics_setting_description: "Uredi Google Analytics ID"
+  guest_checkout: Naročilo za goste
+  guest_user_account: Naroči kot gost
+  has_no_shipped_units: nima prodajnih enot
+  height: Višina
+  hello_user: "Pozdravljen uporabnik"
+  history: Zgodovina
+  home: "Domov"
+  icon: "Ikona"
+  icons_by: "Ikone od"
+  image: Slika
+  images: Slike
+  images_for: "Slike za"
+  in_progress: "V teku"
+  include_in_shipment: Vključi v pošiljko
+  included_in_other_shipment: Vključeno v drugi pošiljki
+  included_in_this_shipment: Vključeno v tej pošiljki
+  instructions_to_reset_password: "Izpolnite spodnji obrazec in navodila za ponastavitev gesla vam bomo poslali na email:"
+  integration_settings_warning: "Če spreminjate integracijo plačevanja, morate najpre shraniti, predno lahko uredite nastavitve integracije"
+  intercept_email_address: Prestrezi Email naslov
+  intercept_email_instructions: "Zamenjaj prejemnika email sporočila s tem naslovom"
+  invalid_search: "Neveljavni iskalni kriteriji."
+  inventory: Inventar
+  inventory_adjustment: "Prilagoditev inventarja"
+  inventory_setting_description: "Nastavitve inventarja, naročanje in prikazovanje izdelkov, ki niso na zalogi"
+  inventory_settings: "Nastavitve inventarja"
+  is_not_available_to_shipment_address: ni na voljo za ta naslov pošiljanja
+  issue_number: "Številka izdaje"
+  item: Izdelek
+  item_description: "Opis izdelka"
+  item_total: "Izdelki skupaj"
+  item_total_rule: 
+    operators: 
+      gt: večje
+      gte: večje ali enako
+  items: "Izdelki"
+  last_14_days: "Zadnjih 14 dni"
+  last_5_orders: "Zadnjih 5 naročil"
+  last_7_days: "Zadnjih 7 dni"
+  last_month: "Prejšnji mesec"
+  last_name: "Priimek"
+  last_name_begins_with: "Priimek se začne z"
+  last_year: "Lansko leto"
+  leave_blank_to_not_change: "(pustite prazno, če ne želite spreminjati)"
+  list: Seznam
+  listing_categories: "Kategorije"
+  listing_option_types: "Možnosti izbire"
+  listing_orders: "Naročila"
+  listing_product_groups: "Skupine izdelkov"
+  listing_reports: "Poročila"
+  listing_tax_categories: "Davčne kategorije"
+  listing_users: "Uporabniki"
+  live: "V živo"
+  loading: Nalagam
+  locale_changed: "Locale Changed"
+  log_in: "Prijava"
+  logged_in_as: "Prijavljeni ste kot"
+  logged_in_succesfully: "Prijava uspešna"
+  logged_out: "Uspešno ste se odjavili."
+  login: Prijava
+  login_as_existing: "Prijavite se kot obstoječa stranka"
+  login_failed: "Prijava ni uspela."
+  login_name: Uporabniško ime
+  logout: Odjava
+  look_for_similar_items: Poišči podobne izdelke
+  maestro_or_solo_cards: Maestro/Solo kartice
+  mail_delivery_enabled: "Pošiljanje pošte je omogočeno"
+  mail_delivery_not_enabled: "Pošiljanje pošte ni omogočeno"
+  mail_methods: Mail Methods
+  mail_server_preferences: Nastavitve email strežnika
+  make_refund: Make refund
+  mark_shipped: "Označi ko poslano"
+  master_price: "Osnovna cena"
+  max_items: Max Izdelkov
+  meta_description: "Meta opis"
+  meta_keywords: "Meta ključne besede"
+  metadata: "Metadata"
+  minimal_amount: "Minimalni znesek"
+  missing_required_information: "Manjkajo zahtevani podatki"
+  month: "Mesec"
+  my_account: "Moj račun"
+  my_orders: "Moja naročila"
+  name: Ime
+  name_or_sku: "Ime ali šifra"
+  new: Novo
+  new_adjustment: "Nova prilagoditev"
+  new_billing_integration: Nova integracija zaračunavanja
+  new_category: "Dodaj kategorijo"
+  new_customer: Nova stranka
+  new_image: "Dodaj sliko"
+  new_mail_method: New Mail Method
+  new_option_type: "Nova možnost izbire"
+  new_option_value: "Nova izbira"
+  new_order: "Novo naročilo"
+  new_order_completed: "Novo naročilo je zaključeno"
+  new_payment: "Novo plačilo"
+  new_payment_method: Nov način plačila
+  new_product: "Dodaj Izdelek"
+  new_product_group: "Dodaj skupino izdelkov"
+  new_promotion: Dodaj promocijo
+  new_property: "Dodaj lastnost"
+  new_prototype: "Dodaj prototip"
+  new_return_authorization: Nova avtorizacija vračila
+  new_shipment: "Nova pošiljka"
+  new_shipping_category: "Dodaj kategorijo poštnine"
+  new_shipping_method: "Dodaj tip dostave"
+  new_state: "Nova Zvezna Država"
+  new_tax_category: "Dodaj davčno stopnjo"
+  new_tax_rate: "Dodaj davčno stopnjo"
+  new_taxon: "Dodaj takson"
+  new_taxonomy: "Dodaj taksonomijo"
+  new_tracker: Nov Tracker
+  new_user: "Dodaj uporabnika"
+  new_variant: "Dodaj varianto"
+  new_zone: "Dodaj območje"
+  next: Naprej
+  no_items_in_cart: "Košarica je prazna."
+  no_match_found: "Ni rezultatov"
+  no_payment_methods_available: "Naročilo ni možno, ker ni nastavljena nobena plačilna metoda za to okolje."
+  no_products_found: "Ni izdelkov"
+  no_results: "Ni zadetkov"
+  no_rules_added: Ni dodanih pravil
+  no_shipping_methods_available: "Dostava ni mogoča, prosimo spremenite vaš naslov za dostavo in poizkusite ponovno."
+  no_user_found: "Uporabnik s tem email naslov ne obstaja"
+  none: Noben
+  none_available: "Ni na voljo"
+  normal_amount: "Normalna količina"
+  not: ne
+  not_shown: "Ni prikazan"
+  note: Opomba
+  notice_messages: 
+    option_type_removed: "Možnost izbire je bila uspešno odstranjena."
+    product_cloned: "Izdelek je bil podvojen"
+    product_deleted: "Izdelek je bil izbrisan"
+    product_not_cloned: "Izdelka ni mogoče klonirati"
+    product_not_deleted: "Izdelka ni mogoče izbrisati"
+    variant_deleted: "Varianta je bila izbrisana"
+    variant_not_deleted: "Variante ni mogoče izbrisati"
+  on_hand: "Na zalogi"
+  operation: Operation
+  option_Values: "Izbire"
+  option_types: "Možnosti izbire"
+  option_values: "Izbire"
+  options: Možnosti
+  or: ali
+  ord_qty: "Količina"
+  ord_total: "Skupaj"
+  order: "Naročilo"
+  order_confirmation_note: ""
+  order_date: "Datum naročila"
+  order_details: "Podrobnosti naročila"
+  order_email_resent: "Email z naročilom je bil ponovno poslan."
+  order_not_in_system: That order number is not valid on this site.
+  order_number: Naročilo
+  order_operation_authorize: Authorize
+  order_processed_but_following_items_are_out_of_stock: "Vaše naročilo je bilo uspešno obdelano, vendar naslednjih izdelkov ni na zalogi:"
+  order_processed_successfully: "Vaše naročilo je bilo uspešno obdelano"
+  order_state: # keys correspond to Checkout state names:
+    # keys correspond to Checkout state names: 
+    address: naslov
+    adjustments: prilagoditve
+    awaiting_return: "čakajo na vrnitev"
+    canceled: preklicana
+    cart: košarica
+    complete: končaj
+    confirm: potrdi
+    delivery: dostava
+    payment: plačilo
+    resumed : nadaljevati
+    returned: vračilo
+  order_summary: Povzetek naročila
+  order_sure_want_to: "Ali ste prepričani da želite {{event}} to naročio?"
+  order_total: "Naročilo skupaj"
+  order_total_message: "Skupni znesek, ki bo zaračunan vaši kartici je"
+  order_updated: "Naročilo osveženo"
+  orders: Naročila
+  other_payment_options: Druge možnosti plačila
+  out_of_stock: "Ni na zalogi"
+  out_of_stock_products: "Izdelki, ki niso na zalogi"
+  over_paid: "Plačano preveč"
+  overview: Pregled
+  overview_welcome: "Pozdravljeni v pregledu vaše trgovine. Trenutno ni dovolj podatkov za prikaz nadzorne plošče vaše trgovine.<br/><br/> Nadzorna plošča se bo prikazala samodejno ko bo v sistemu dovolj naročil iz katerih se potem generirajo statistike."
+  page_only_viewable_when_logged_in: Poizkušali ste obiskati stran, ki je dostopna samo ko ste prijavljeni
+  page_only_viewable_when_logged_out: Poizkušali ste obiskati stran, ki je dostopna samo ko niste prijavljeni
+  paid: Plačano
+  parent_category: "Kategorija višje"
+  password: Geslo
+  password_reset_instructions: "Navodila za ponastavitev gesla"
+  password_reset_instructions_are_mailed: "Navodila za ponastavitev gesla so bila poslana na vaš email naslov. Prosimo preverite email."
+  password_reset_token_not_found: "Se opravičujemo, vendar vašega računa nismo našli. Če imate težave poizkusite kopirati in prilepiti URL iz email spročila v brskalnik ali ponovite postopek ponastavitve gesla."
+  password_updated: "Geslo uspešno spremenjeno"
+  path: Pot
+  pay: plačaj
+  payment: Plačilo
+  payment_gateway: "Ponudnik plačilnega sistema"
+  payment_information: "Podatki o plačilu"
+  payment_method: "Način plačila"
+  payment_methods: "Načini plačila"
+  payment_methods_setting_description: Urejanje načinov plačila
+  payment_processing_failed: "Plačila ni možno izvesti, prosimo preverite vnešene podatke"
+  payment_state: Stanje plačila
+  payment_states: 
+    balance_due: balance due
+    credit_owed: credit owed
+    paid: plačano
+  payment_updated: Plačilo osveženo
+  payments: Plačila
+  pending_payments: "Čakajoča plačila"
+  permalink: Povezava
+  phone: Telefon
+  place_order: Oddaj naročilo
+  please_create_user: "Prosimi ustvarite uporabniški račun"
+  powered_by: "Poganja"
+  presentation: Prikazano ime
+  preview: Predogled
+  previous: Nazaj
+  price: Cena
+  price_bucket: Price Bucket
+  price_with_vat_included: "{{price}} (DDV vključen)"
+  problem_authorizing_card: "Problem pri avtorizaciji kreditne kartice"
+  problem_capturing_card: "Problem pri zajemu kreditne kartice"
+  problems_processing_order: "Med procesiranjem vašega naročila je prišlo do težav"
+  proceed_as_guest: "Ne hvala, nadaljuj kot gost"
+  process: Procesiraj
+  product: Izdelek
+  product_details: "Podrobnosti izdelka"
+  product_group: Skupina izdelkov
+  product_group_invalid: Skupina izdelkov ima neveljavna pravila
+  product_groups: Skupine izdelkov
+  product_has_no_description: Izdelek nima opisa
+  product_properties: "Lastnosti izdelka"
+  product_rule: 
+    choose_products: Izberite izdelke
+    label: "Naročilo mora vsebovati naslednje izdelke {{select}}"
+    match_all: vse
+    match_any: vsaj en
+    product_source: 
+      group: Iz skupine izdelkov
+      manual: Ročno izberi
+  product_scopes: 
+    groups: 
+      price: 
+        description: "Pravila za izbor izdelkov na podlagi cene"
+        name: Cena
+      search: 
+        description: "Pravila za izbor izdelkov  na podlagi imena, ključnih besed, in opisa izdelka"
+        name: "Tekstovno iskanje"
+      taxon: 
+        description: "Pravila za izbor izdelkov na podlagi taksonov"
+        name: Takson
+      values: 
+        description: "Pravila za izbor izdelkov na podlagi lastnosti in možnosti izbire"
+        name: Vrednosti
+    scopes: 
+      ascend_by_master_price: 
+        name: Naraščajoče po osnovni ceni izdelka
+      ascend_by_name: 
+        name: Naraščajoče po imenu izdelka
+      ascend_by_updated_at: 
+        name: Naraščajoče po datumu posodobitve
+      descend_by_master_price: 
+        name: Padajoče po osnovni ceni izdelka
+      descend_by_name: 
+        name: Padajoče po imenu izdelka
+      descend_by_popularity: 
+        name: Uredi po priljubljenosti(najprej bolj priljubljeni)
+      descend_by_updated_at: 
+        name: Padajoče po datumu posodobitve
+      in_name: 
+        args: 
+          words: Besede
+        description: "(ločene z presledkom ali vejico)"
+        name: "Ime izdelka vsebuje"
+        sentence: ime izdelka vsebuje <em>%s</em>
+      in_name_or_description: 
+        args: 
+          words: Besede
+        description: "(ločene z presledkom ali vejico)"
+        name: "Ime ali opis izdelka vsebuje"
+        sentence: Ime ali opis izdelka vsebuje <em>%s</em>
+      in_name_or_keywords: 
+        args: 
+          words: Besede
+        description: "(ločene z presledkom ali vejico)"
+        name: "Ime ali kjučne besede izdelka vsebuje"
+        sentence: Ime ali kjučne besede izdelka vsebuje <em>%s</em>
+      in_taxons: 
+        args: 
+          "taxon_names": "Imena taksonov"
+        description: "Imena moajo biti ločena s presledkom ali vejico"
+        name: "V taksonih in vseh njihovih potomcih"
+        sentence: v <em>%s</em> in vseh potomcih
+      master_price_gte: 
+        args: 
+          amount: Znesek
+        description: ""
+        name: "Osnovna cena višja ali enaka"
+        sentence: Osnovna cena višja ali enaka <em>%.2f</em>
+      master_price_lte: 
+        args: 
+          amount: Znesek
+        description: ""
+        name: "Osnovna cena nižja ali enaka"
+        sentence: osnovna cena nižja ali enaka <em>%.2f</em>
+      price_between: 
+        args: 
+          high: Zgornja meja
+          low: Spodnja meja
+        description: ""
+        name: "Cena med"
+        sentence: cena med <em>%.2f</em> in <em>%.2f</em>
+      taxons_name_eq: 
+        args: 
+          taxon_name: "Ime taksona"
+        description: "V določenem taksonu brez potomcev"
+        name: "V določenem taksonu brez potomcev"
+        sentence: v <em>%s</em>
+      with: 
+        args: 
+          value: Vrednost
+        description: "Izberite določene izdelke"
+        name: Izdelki z IDji
+        sentence: z IDji <em>%s</em>
+      with_ids: 
+        args: 
+          ids: IDji
+        description: "Izberite določene izdelke"
+        name: Izdelki z IDji
+        sentence: z IDji <em>%s</em>
+      with_option: 
+        args: 
+          option: Možnost
+        description: "Izberite vse izdelke, ki imajo določeno možnost(npr. barvo)"
+        name: "Z možnostjo"
+        sentence: z možnostjo <em>%s</em>
+      with_option_value: 
+        args: 
+          option: Možnost
+          value: Vrednost
+        description: "Izberite vse izdelke, ki imajo vsaj eno varianto z določeno možnostjo in vrednostjo(npr. barva:rdeča)"
+        name: "Z možnostjo in vrednostjo"
+        sentence: z možnostjo <em>%s</em> in vrednostjo <em>%s</em>
+      with_property: 
+        args: 
+          property: Lastnost
+        description: "Izberite vse izdelke, ki imajo določeno lastnost(npr. težo)"
+        name: "Z lastnostjo"
+        sentence: z lastnostjo <em>%s</em>
+      with_property_value: 
+        args: 
+          property: Lastnost
+          value: Vrednost
+        description: "Izberite vse izdelke, ki imajo vsaj eno varianto z določeno lastnosjo in vrednostjo(npr. teža:10kg)"
+        name: "Z lastnostjo in vrednostjo"
+        sentence: z lastnostjo <em>%s</em> in vrednostjo <em>%s</em>
+  products: Izdelki
+  products_with_zero_inventory_display: "Izdelki z nič iventarja {{not}} bodo prikazani"
+  promotion_form: 
+    match_policies: 
+      all: Ujemaj se s katerim koli izmed teh pravil
+      any: Ujemaj se z vsemi temi pravili
+  promotion_rule_types: 
+    first_order: 
+      description: Mora biti strankino prvo naročilo
+      name: Prvo naročilo
+    item_total: 
+      description: Naročilo skupaj izpolnjuje te kriterije
+      name: Izdelki skupaj
+    product: 
+      description: Naročilo vsebuje določene izdelke
+      name: Izdelek(i)
+    user: 
+      description: Na vojo samo za določene uporabnike
+      name: Uporabnik
+  promotions: Promocije
+  promotions_description: Urejanje ponudb in kuponov s promocijami
+  properties: Lastnosti
+  property: Lastnost
+  prototype: Prototip
+  prototypes: Prototipi
+  provider: "Ponudnik"
+  provider_settings_warning: "Če spreminjate tip ponudnika, morate najprej shraniti predno lahko urejate nastavitve ponudnika"
+  qty: Količina
+  quantity_shipped: Poslana količina
+  range: "Razpon"
+  rate: Stopnja
+  reason: Razlog
+  recalculate_order_total: "Ponovno preračunaj skupno vrednost naročila"
+  receive: prejmi
+  received: Prejeto
+  refund: Povračilo
+  register: Registriraj se kot nov uporabnik
+  register_or_guest: Naročite kot gost ali pa se registrirajte
+  registration: Registracija
+  remember_me: "Zapomni si me"
+  remove: Odstrani
+  reports: Poročila
+  required_for_solo_and_maestro: Zahtevano za Solo in Maestro kartice.
+  resend: "Pošlji ponovno"
+  resend_confirmation_instructions: "Ponovno pošlji potrditvena navodila"
+  resend_unlock_instructions: "Ponovno pošlji navodila za odklep"
+  reset_password: "Ponastavi moje geslo"
+  resource_controller: 
+    member_object_not_found: "Member object not found."
+    successfully_created: "Uspešno dodano!"
+    successfully_removed: "Uspešno odstranjeno!"
+    successfully_updated: "Uspešno spremenjeno!"
+  response_code: "Odzivna koda"
+  resume: "nadaljevati"
+  resumed: Nadaljevana
+  return: vračilo
+  return_authorization: Avtorizacija vračila
+  return_authorization_updated: Avtorizacija vračila spremenjena
+  return_authorizations: Avtorizacije vračil
+  return_quantity: Količina za vračilo
+  returned: Vrnjeno
+  rma_credit: RMA kredit
+  rma_number: RMA šifra
+  rma_value: RMA vrednost
+  roles: Vloge
+  sales_tax: "DDV"
+  sales_total: "Skupaj"
+  sales_total_for_all_orders: "Skupna vrednost vseh naročil"
+  sales_totals: "Prodaja skupaj"
+  sales_totals_description: "Skupni znesek vseh naročil"
+  save_and_continue: Shrani in nadaljuj
+  save_preferences: Shrani nastavitve
+  scope: Pravilo
+  scopes: Pravila
+  search: "Najdi"
+  search_results: "Iskalni razultati za '{{keywords}}'"
+  searching: Iskanje
+  secure_connection_type: Tip varne povezave
+  secure_creditcard: Varna kreditna kartica
+  select: Izberi
+  select_from_prototype: "Izberi iz prototipa"
+  select_preferred_shipping_option: "Izberite željeno možnost dostave"
+  send_copy_of_all_mails_to: Pošlji kopijo vseh emailov na
+  send_copy_of_orders_mails_to: Pošlji kopijo vseh emailov z naročili na
+  send_mails_as: Pošiljatelj izhodnih emailov
+  send_me_reset_password_instructions: "Pošlji mi navodila za ponastavitev gesla"
+  send_order_mails_as: Pošiljatelj emailov za naročila
+  server: Strežnik
+  server_error: "Strežnik je vrnil napako"
+  settings: Nastavitve
+  ship: pošlji
+  ship_address: "Naslov za dostavo"
+  shipment: Pošiljka
+  shipment_details: Podrobnosti pošiljke
+  shipment_number: "Šifra pošiljke"
+  shipment_state: Stanje pošiljke
+  shipment_states: 
+    backorder: backorder
+    partial: delno
+    pending: v teku
+    ready: pripravljeno
+    shipped: poslano
+  shipment_updated: Pošiljka spremenjena
+  shipments: "Pošiljke"
+  shipped: Poslano
+  shipping: Poštnina
+  shipping_address: "Naslov za dostavo"
+  shipping_categories: "Kategorije poštnine"
+  shipping_categories_description: "Urejanje kategorije poštnine za povezavo izdelkov z načini dostave"
+  shipping_category: Kategorija poštnine
+  shipping_cost: Strošek
+  shipping_error: "Napaka pri dostavi"
+  shipping_instructions: "Navodila za dostavo"
+  shipping_method: "Način dostave"
+  shipping_methods: "Načini dostave"
+  shipping_methods_description: "Uredi načine dostave"
+  shipping_total: "Cene dostave"
+  shop_by_taxonomy: "Preglej {{taxonomy}}"
+  shopping_cart: "Nakupovalna košarica"
+  show: Prikaži
+  show_active: "Prikaži objavljene"
+  show_deleted: "Prikaži izbrisane"
+  show_incomplete_orders: "Prikaži nedokončana naročila"
+  show_only_complete_orders: "Prikaži le dokončana naročila"
+  show_out_of_stock_products: "Prikaži razprodane izdelke"
+  show_price_inc_vat: "Prikaži ceno z DDV"
+  showing_first_n: "Prikazujem prvih {{n}}"
+  sign_up: "Registriraj se"
+  site_name: "Ime spletne trgovine"
+  site_url: "URL spletne trgovine"
+  sku: "šifra"
+  smtp: SMTP
+  smtp_authentication_type: SMTP način avtentikacije
+  smtp_domain: SMTP domena
+  smtp_mail_host: SMTP strežnik
+  smtp_password: SMTP geslo
+  smtp_port: SMTP port
+  smtp_send_all_emails_as_from_following_address: "Pošiljaj vse emaile s sledečega email naslova."
+  smtp_send_copy_to_this_addresses: "Pošlji kopijo emailov naročil na sledeče email naslove(ločene z vejico)."
+  smtp_username: SMTP Uporabniško ime
+  sold: Prodano
+  sort_ordering: "Vrstni red"
+  special_instructions: "Special Instructions"
+  spree: 
+    date: Datum
+    time: "Čas"
+  ssl_will_be_used_in_development_and_test_modes: "SSL bo uporabljen v razvojnem in testnem okolju."
+  ssl_will_be_used_in_production_mode: "SSL bo uporabljen v produkciji"
+  ssl_will_not_be_used_in_development_and_test_modes: "SSL ne bo uporabljen v razvojnem in testnem okolju."
+  ssl_will_not_be_used_in_production_mode: "SSL ne bo uporabljen v produkciji"
+  start: Od
+  start_date: Veljaven od
+  state: Pokrajina
+  state_based: "Na osnovi pokrajin"
+  state_setting_description: "Urejanje seznama pokrajin/provinc za posamezno državo."
+  states: Pokrajine
+  status: Status
+  stop: Do
+  store: Trgovina
+  street_address: "Ulica in hišna številka"
+  street_address_2: "Ulica dodatno"
+  subtotal: Skupaj
+  subtract: Odštej
+  system: Sistem
+  tax: DDV
+  tax_categories: "Davčne kategorije"
+  tax_categories_setting_description: "Urejanje davčnih kategorij za določitev obdavčitve izdelkov."
+  tax_category: "Davčna kategorija"
+  tax_rates: "Davčne stopnje"
+  tax_rates_description: "Urejanje davčnih stopenj in nastavitve"
+  tax_settings: "Nastavitve davkov"
+  tax_settings_description: Osnovne davčne nastavitve.
+  tax_total: "Davek skupaj"
+  tax_type: "Tip davka"
+  taxon: Takson
+  taxon_edit: Uredi takson
+  taxonomies: Taksonomije
+  taxonomies_setting_description: "Ustvari in uredi taksonomije"
+  taxonomy_edit: "Uredi taksonomijo"
+  taxonomy_tree_error: "Zahtevana sprememba ni bila sprejeta zato je bila drevesna struktura povrnjena v prejšnje stanje, prosimo poskusite znova."
+  taxonomy_tree_instruction: "* Ob desnem kliku na vejo v drevesni strukturi se odpre meni za dodajanje, sortiranje in brisanje elementov"
+  taxons: Taksoni
+  test: "Test"
+  test_mode: Testni način
+  thank_you_for_your_order: "Hvala za zaupanje. Prosimo natisnite si kopijo te potrditvene strani za lastno referenco."
+  this_file_language: "Slovenščina (SL)"
+  this_month: "Ta mesec"
+  this_year: "Letos"
+  thumbnail: "Mala slika"
+  to_add_variants_you_must_first_define: "Za dodajanje variant, morate najprej definirati"
+  top_grossing_products: "Izdelki z največ prometa"
+  total: Skupaj
+  tracking: Sledenje
+  transaction: Transakcija
+  transactions: Transakcije
+  tree: Drevo
+  try_again: "Poskusite ponovno"
+  type: Tip
+  type_to_search: Vrsta iskanja
+  unable_ship_method: "Zaradi napake na strežniku ne morem prikazati načinov dostave."
+  unable_to_authorize_credit_card: "Avtorizacija kreditne kartice ni uspela"
+  unable_to_capture_credit_card: "Zajem podatkov o kreditni kartici ni uspel"
+  unable_to_connect_to_gateway: "Povezava do ponudnika plačilnih storitev ni uspela"
+  unable_to_save_order: "Naročila ni mogoče shraniti"
+  under_paid: "Plačano premalo"
+  units: "Enote"
+  unrecognized_card_type: Neznan tip kartice
+  update: Spremeni
+  update_password: "Spremeni moje geslo in me prijavi"
+  updated_successfully: "Uspešno osveženo"
+  updating: Osvežujem
+  usage_limit: Omejitev uporabe
+  use_as_shipping_address: Uporabi kot naslov za dostavo
+  use_billing_address: Uporabi naslov za račun
+  use_different_shipping_address: "Uporabi drugačen naslov za dostavo"
+  use_new_cc: "Uporabi drugo kreditno karico"
+  user: Uporabnik
+  user_account: Uporabniški račun
+  user_created_successfully: "Uporabnik uspešno dodan"
+  user_details: "Podrobnosti uporabnika"
+  user_rule: 
+    choose_users: Izberite uporabnike
+  users: Uporabniki
+  validate_on_profile_create: Validiraj ob kreiranju novega profila
+  validation: 
+    cannot_be_less_than_shipped_units: "ne more biti manjše od števila prodanih enot."
+    is_too_large: "je prevelika -- na zalogi ni dovolj naročenih izdelkov!"
+    must_be_int: "mora biti celo število"
+    must_be_non_negative: "mora biti pozitivna vrednost"
+  value: Vrednost
+  variants: Variante
+  vat: "DDV"
+  version: Verzija
+  view_shipping_options: "Poglej možnosti dostave"
+  void: Neveljaven
+  website: Spletna stran
+  weight: Teža
+  welcome_to_sample_store: "Dobrodošli v demo trgovini"
+  what_is_a_cvv: "Kaj je CVV varnostna številka kreditne kartice?"
+  what_is_this: "Kaj je to?"
+  whats_this: "Kaj je to"
+  width: "Širina"
+  year: "Leto"
+  you_have_been_logged_out: "Uspešno ste se odjavili."
+  your_cart_is_empty: "Vaša nakupovalna košarica je prazna"
+  zip: "Poštna številka"
+  zone: Območje
+  zone_based: "Glede na območja"
+  zone_setting_description: "Zbirke držav, pokrajin ali drugih območij za uporabo v različnih izračunih."
+  zones: Območja
