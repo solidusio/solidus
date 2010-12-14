@@ -232,7 +232,7 @@ sk:
   allow_backorders: "Povoliť pohľadávky"
   allow_ssl_to_be_used_when_in_developement_and_test_modes: Povoliť používanie SSL vo vývojovom a testovacom móde
   allow_ssl_to_be_used_when_in_production_mode: Povoliť používanie SSL v produkčnom móde
-  allowed_ssl_in_production_mode: "používanie SSL v produkčnom móde: {{not}}"
+  allowed_ssl_in_production_mode: "používanie SSL v produkčnom móde: %{not}"
   already_registered: Už registrovaný?
   alt_text: Alternative Text
   alternative_phone: Iný telefónny kontakt
@@ -269,7 +269,7 @@ sk:
   back_end: Back End
   back_to_store: "Späť do obchodu"
   backordered: Backordered
-  backordering_is_allowed: "Pohľadávky {{not}} sú povolené"
+  backordering_is_allowed: "Pohľadávky %{not} sú povolené"
   balance_due: "Balance Due"
   best_selling_products: "Best Selling Products"
   best_selling_taxons: "Best Selling Taxons"
@@ -321,7 +321,7 @@ sk:
   copy_all_mails_to: Kopíruj všetky emaily do
   cost_price: "Cost Price"
   count: Count
-  count_of_reduced_by: "count of '{{name}}' reduced by {{count}}"
+  count_of_reduced_by: "count of '%{name}' reduced by %{count}"
   country: Krajina
   country_based: "Krajina"
   coupon: Coupon
@@ -595,7 +595,7 @@ sk:
     resumed : resumed
     returned: returned
   order_summary: Sumár objednávky
-  order_sure_want_to: "Are you sure you want to {{event}} this order?"
+  order_sure_want_to: "Are you sure you want to %{event} this order?"
   order_total: "Objednávka celkom"
   order_total_message: "Úplné množstvo účtované na Vašu kartu bude"
   order_updated: "Objednávka zmenená"
@@ -642,7 +642,7 @@ sk:
   previous: Predchádzajúci
   price: Cena
   price_bucket: Price Bucket
-  price_with_vat_included: "{{price}} (inc. VAT)"
+  price_with_vat_included: "%{price} (inc. VAT)"
   problem_authorizing_card: "Problém autorizácie kreditnou kartou"
   problem_capturing_card: "Problém zachytenia kreditnou kartou"
   problems_processing_order: "Mali sme problém so spracovaním Vašej objednávky"
@@ -657,7 +657,7 @@ sk:
   product_properties: "Vlastnosti produktu"
   product_rule: 
     choose_products: Choose products
-    label: "Order must contain {{select}} of these products"
+    label: "Order must contain %{select} of these products"
     match_all: all
     match_any: at least one
     product_source: 
@@ -780,7 +780,7 @@ sk:
         name: "With property value"
         sentence: with property <em>%s</em> and value <em>%s</em>
   products: Produkty
-  products_with_zero_inventory_display: "Produkty ktoré nie sú skladované {{not}} sú zobrazené."
+  products_with_zero_inventory_display: "Produkty ktoré nie sú skladované %{not} sú zobrazené."
   promotion_form: 
     match_policies: 
       all: Match any of these rules
@@ -854,7 +854,7 @@ sk:
   scope: Scope
   scopes: Scopes
   search: Hľadaj
-  search_results: "Search results for '{{keywords}}'"
+  search_results: "Search results for '%{keywords}'"
   searching: Searching
   secure_connection_type: Bezpečná konekcia
   secure_creditcard: Secure Creditcard
@@ -896,7 +896,7 @@ sk:
   shipping_methods: "Metódy doručenia"
   shipping_methods_description: "Riadenie metód doručenia"
   shipping_total: "Zásielka celkom"
-  shop_by_taxonomy: "{{taxonomy}}"
+  shop_by_taxonomy: "%{taxonomy}"
   shopping_cart: "Nákupný košík"
   show: Show
   show_active: "Show Active"
@@ -905,7 +905,7 @@ sk:
   show_only_complete_orders: "Zobraz iba úplné objednávky"
   show_out_of_stock_products: "Zobraz produkty s prázdnou zásobou"
   show_price_inc_vat: "Zobraz cenu s DPH"
-  showing_first_n: "Showing first {{n}}"
+  showing_first_n: "Showing first %{n}"
   sign_up: "Registrácia"
   site_name: "Názov stránky"
   site_url: "URL stránky"

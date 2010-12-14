@@ -232,7 +232,7 @@ nb-NO:
   allow_backorders: "Tillat restordre"
   allow_ssl_to_be_used_when_in_developement_and_test_modes: Tillat at SSL brukes i utviklings- og testmodus.
   allow_ssl_to_be_used_when_in_production_mode: Tillat at SSL brukes i produksjonsmodus.
-  allowed_ssl_in_production_mode: "SSL will {{not}} be used in production"
+  allowed_ssl_in_production_mode: "SSL will %{not} be used in production"
   already_registered: Already Registered?
   alt_text: Alternative Text
   alternative_phone: Alternative Phone
@@ -269,7 +269,7 @@ nb-NO:
   back_end: Back End
   back_to_store: "Tilbake til butikken"
   backordered: Backordered
-  backordering_is_allowed: "Backordering {{not}} allowed"
+  backordering_is_allowed: "Backordering %{not} allowed"
   balance_due: "Balance Due"
   best_selling_products: "Best Selling Products"
   best_selling_taxons: "Best Selling Taxons"
@@ -321,7 +321,7 @@ nb-NO:
   copy_all_mails_to: Kopier alle eposter til
   cost_price: "Cost Price"
   count: Count
-  count_of_reduced_by: "count of '{{name}}' reduced by {{count}}"
+  count_of_reduced_by: "count of '%{name}' reduced by %{count}"
   country: Land
   country_based: "Land"
   coupon: Coupon
@@ -595,7 +595,7 @@ nb-NO:
     resumed : resumed
     returned: returned
   order_summary: Order Summary
-  order_sure_want_to: "Are you sure you want to {{event}} this order?"
+  order_sure_want_to: "Are you sure you want to %{event} this order?"
   order_total: "Ordresum"
   order_total_message: "Beløpet som vil bli belastet ditt kort er"
   order_updated: "Ordre oppdatert"
@@ -642,7 +642,7 @@ nb-NO:
   previous: Forrige
   price: Pris
   price_bucket: Price Bucket
-  price_with_vat_included: "{{price}} (inc. VAT)"
+  price_with_vat_included: "%{price} (inc. VAT)"
   problem_authorizing_card: "Problem ved autorisering av kort"
   problem_capturing_card: "Problem ved lagring av kortopplysninger"
   problems_processing_order: "Problemer ved prosessering av ordre"
@@ -657,7 +657,7 @@ nb-NO:
   product_properties: "Produktegenskaper"
   product_rule: 
     choose_products: Choose products
-    label: "Order must contain {{select}} of these products"
+    label: "Order must contain %{select} of these products"
     match_all: all
     match_any: at least one
     product_source: 
@@ -780,7 +780,7 @@ nb-NO:
         name: "With property value"
         sentence: with property <em>%s</em> and value <em>%s</em>
   products: Produkter
-  products_with_zero_inventory_display: "Products with a zero inventory will {{not}} be displayed"
+  products_with_zero_inventory_display: "Products with a zero inventory will %{not} be displayed"
   promotion_form: 
     match_policies: 
       all: Match any of these rules
@@ -854,7 +854,7 @@ nb-NO:
   scope: Scope
   scopes: Scopes
   search: Søk
-  search_results: "Search results for '{{keywords}}'"
+  search_results: "Search results for '%{keywords}'"
   searching: Searching
   secure_connection_type: "Kryptert forbindelse"
   secure_creditcard: Secure Creditcard
@@ -896,7 +896,7 @@ nb-NO:
   shipping_methods: "Leveransemåter"
   shipping_methods_description: "Konfigurer leveransemåter."
   shipping_total: "Fraktkostnader"
-  shop_by_taxonomy: "Shop by {{taxonomy}}"
+  shop_by_taxonomy: "Shop by %{taxonomy}"
   shopping_cart: "Handlekurv"
   show: Show
   show_active: "Show Active"
@@ -905,7 +905,7 @@ nb-NO:
   show_only_complete_orders: "Vis bare ferdige ordrer"
   show_out_of_stock_products: "Vis produkter som ikke er på lager"
   show_price_inc_vat: "Show price including VAT"
-  showing_first_n: "Showing first {{n}}"
+  showing_first_n: "Showing first %{n}"
   sign_up: "Meld meg på"
   site_name: "Site Name"
   site_url: "Site URL"

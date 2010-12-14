@@ -232,7 +232,7 @@ fi:
   allow_backorders: "Salli jälkitoimitukset"
   allow_ssl_to_be_used_when_in_developement_and_test_modes: "Salli SSL:n käyttö kehitys- ja testiympäristöissä"
   allow_ssl_to_be_used_when_in_production_mode: "Salli SSL:n käyttö vain tuotantoympäristössä"
-  allowed_ssl_in_production_mode: "SSL:ää {{not}} käytetä/käytetään tuotannossa"
+  allowed_ssl_in_production_mode: "SSL:ää %{not} käytetä/käytetään tuotannossa"
   already_registered: "Jo rekisteröitynyt?"
   alt_text: Alternative Text
   alternative_phone: "Vaihtoehtoinen puhelin"
@@ -269,7 +269,7 @@ fi:
   back_end: Back End
   back_to_store: "Palaa kauppaan"
   backordered: Takaisintilattu
-  backordering_is_allowed: "Jälkitoimittaminen {{not}} sallittu"
+  backordering_is_allowed: "Jälkitoimittaminen %{not} sallittu"
   balance_due: "Erääntyvät"
   best_selling_products: "Parhaiten myyvät tuotteet"
   best_selling_taxons: "Parhaiten myyvät taksonit"
@@ -321,7 +321,7 @@ fi:
   copy_all_mails_to: "Kopioi kaikki viestit"
   cost_price: Kustannushinta
   count: Määrä
-  count_of_reduced_by: "'{{name}}':n määrää vähennetty {{count}}"
+  count_of_reduced_by: "'%{name}':n määrää vähennetty %{count}"
   country: Maa
   country_based: Sijaintimaa
   coupon: Coupon
@@ -595,7 +595,7 @@ fi:
     resumed : resumed
     returned: returned
   order_summary: Tilaustiivistelmä
-  order_sure_want_to: "Haluatko varmasti {{event}} tämän tilauksen?"
+  order_sure_want_to: "Haluatko varmasti %{event} tämän tilauksen?"
   order_total: "Tilaus yhteensä"
   order_total_message: "Kortiltanne veloitettava kokonaissumma"
   order_updated: "Tilaus päivitetty"
@@ -642,7 +642,7 @@ fi:
   previous: Edellinen
   price: Hinta
   price_bucket: Price Bucket
-  price_with_vat_included: "{{price}} (sisältää ALV:n)"
+  price_with_vat_included: "%{price} (sisältää ALV:n)"
   problem_authorizing_card: "Ongelma luottokortin tunnistamisessa"
   problem_capturing_card: "Ongelma luottokortin kaappaamisessa"
   problems_processing_order: "Ongelmia tilauksen käsittelyssä"
@@ -657,7 +657,7 @@ fi:
   product_properties: "Tuotteen ominaisuudet"
   product_rule: 
     choose_products: Choose products
-    label: "Order must contain {{select}} of these products"
+    label: "Order must contain %{select} of these products"
     match_all: all
     match_any: at least one
     product_source: 
@@ -780,7 +780,7 @@ fi:
         name: Ominaisuuden arvolla
         sentence: "ominaisuudella <em>%s</em> ja arvolla <em>%s</em>"
   products: Tuotteet
-  products_with_zero_inventory_display: "Tuotteita, joden varastosaldo 0 {{not}} näytetä(än)"
+  products_with_zero_inventory_display: "Tuotteita, joden varastosaldo 0 %{not} näytetä(än)"
   promotion_form: 
     match_policies: 
       all: Match any of these rules
@@ -854,7 +854,7 @@ fi:
   scope: Laajuus
   scopes: Laajuudet
   search: Etsi
-  search_results: "Etsi tuloksia avainsanoilla: '{{keywords}}'"
+  search_results: "Etsi tuloksia avainsanoilla: '%{keywords}'"
   searching: Searching
   secure_connection_type: "Turvallinen yhteystyyppi"
   secure_creditcard: Turvallinen luottokortti
@@ -896,7 +896,7 @@ fi:
   shipping_methods: Toimitustavat
   shipping_methods_description: "Hallinnoi toimitustapoja"
   shipping_total: "Toimitus yhteensä"
-  shop_by_taxonomy: "{{taxonomy}}"
+  shop_by_taxonomy: "%{taxonomy}"
   shopping_cart: Ostoskori
   show: Näytä
   show_active: "Show Active"
@@ -905,7 +905,7 @@ fi:
   show_only_complete_orders: "Näytä vain valmiit tilaukset"
   show_out_of_stock_products: "Näytä loppuneet tuotteet"
   show_price_inc_vat: "Näytä hinta sisältäen ALV:n"
-  showing_first_n: "Näytetään ensin {{n}}"
+  showing_first_n: "Näytetään ensin %{n}"
   sign_up: Kirjaudu
   site_name: "Sivun nimi"
   site_url: "Sivun URL"

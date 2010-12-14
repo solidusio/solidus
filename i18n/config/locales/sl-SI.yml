@@ -232,7 +232,7 @@ sl-SI:
   allow_backorders: "Dovoli naročanje izdelkov, ki niso na zalogi"
   allow_ssl_to_be_used_when_in_developement_and_test_modes: Allow SSL to be used when in development and test modes
   allow_ssl_to_be_used_when_in_production_mode: Dovoli SSL v produkciji
-  allowed_ssl_in_production_mode: "SSL {{ne}} bo uporabljen v produkciji"
+  allowed_ssl_in_production_mode: "SSL %{ne} bo uporabljen v produkciji"
   already_registered: Ste že registrirani?
   alt_text: Alternativni tekst
   alternative_phone: Drugi telefon
@@ -269,7 +269,7 @@ sl-SI:
   back_end: Nazaj na Konec
   back_to_store: "Nazaj v trgovino"
   backordered: Naročeno prek zaloge
-  backordering_is_allowed: "Naročanje prek zaloge {{not}} dovoljeno"
+  backordering_is_allowed: "Naročanje prek zaloge %{not} dovoljeno"
   balance_due: "Balance Due"
   best_selling_products: "Najbolje prodajani izdelki"
   best_selling_taxons: "Najbolje prodajani taksoni"
@@ -321,7 +321,7 @@ sl-SI:
   copy_all_mails_to: Kopiraj Vse Emaile Na
   cost_price: "Nabavna Cena"
   count: Count
-  count_of_reduced_by: "število '{{name}}' zmanjšano {{count}}"
+  count_of_reduced_by: "število '%{name}' zmanjšano %{count}"
   country: "Država"
   country_based: "Glede na Države"
   coupon: Kupon
@@ -595,7 +595,7 @@ sl-SI:
     resumed : nadaljevati
     returned: vračilo
   order_summary: Povzetek naročila
-  order_sure_want_to: "Ali ste prepričani da želite {{event}} to naročio?"
+  order_sure_want_to: "Ali ste prepričani da želite %{event} to naročio?"
   order_total: "Naročilo skupaj"
   order_total_message: "Skupni znesek, ki bo zaračunan vaši kartici je"
   order_updated: "Naročilo osveženo"
@@ -642,7 +642,7 @@ sl-SI:
   previous: Nazaj
   price: Cena
   price_bucket: Price Bucket
-  price_with_vat_included: "{{price}} (DDV vključen)"
+  price_with_vat_included: "%{price} (DDV vključen)"
   problem_authorizing_card: "Problem pri avtorizaciji kreditne kartice"
   problem_capturing_card: "Problem pri zajemu kreditne kartice"
   problems_processing_order: "Med procesiranjem vašega naročila je prišlo do težav"
@@ -657,7 +657,7 @@ sl-SI:
   product_properties: "Lastnosti izdelka"
   product_rule: 
     choose_products: Izberite izdelke
-    label: "Naročilo mora vsebovati naslednje izdelke {{select}}"
+    label: "Naročilo mora vsebovati naslednje izdelke %{select}"
     match_all: vse
     match_any: vsaj en
     product_source: 
@@ -780,7 +780,7 @@ sl-SI:
         name: "Z lastnostjo in vrednostjo"
         sentence: z lastnostjo <em>%s</em> in vrednostjo <em>%s</em>
   products: Izdelki
-  products_with_zero_inventory_display: "Izdelki z nič iventarja {{not}} bodo prikazani"
+  products_with_zero_inventory_display: "Izdelki z nič iventarja %{not} bodo prikazani"
   promotion_form: 
     match_policies: 
       all: Ujemaj se s katerim koli izmed teh pravil
@@ -854,7 +854,7 @@ sl-SI:
   scope: Pravilo
   scopes: Pravila
   search: "Najdi"
-  search_results: "Iskalni razultati za '{{keywords}}'"
+  search_results: "Iskalni razultati za '%{keywords}'"
   searching: Iskanje
   secure_connection_type: Tip varne povezave
   secure_creditcard: Varna kreditna kartica
@@ -896,7 +896,7 @@ sl-SI:
   shipping_methods: "Načini dostave"
   shipping_methods_description: "Uredi načine dostave"
   shipping_total: "Cene dostave"
-  shop_by_taxonomy: "Preglej {{taxonomy}}"
+  shop_by_taxonomy: "Preglej %{taxonomy}"
   shopping_cart: "Nakupovalna košarica"
   show: Prikaži
   show_active: "Prikaži objavljene"
@@ -905,7 +905,7 @@ sl-SI:
   show_only_complete_orders: "Prikaži le dokončana naročila"
   show_out_of_stock_products: "Prikaži razprodane izdelke"
   show_price_inc_vat: "Prikaži ceno z DDV"
-  showing_first_n: "Prikazujem prvih {{n}}"
+  showing_first_n: "Prikazujem prvih %{n}"
   sign_up: "Registriraj se"
   site_name: "Ime spletne trgovine"
   site_url: "URL spletne trgovine"

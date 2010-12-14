@@ -232,7 +232,7 @@ lv:
   allow_backorders: "Atļaut nokavētos sūtījumus"
   allow_ssl_to_be_used_when_in_developement_and_test_modes: Allow SSL to be used when in development and test modes
   allow_ssl_to_be_used_when_in_production_mode: Allow SSL to be used in production mode
-  allowed_ssl_in_production_mode: "SSL {{not}}tiks izmantots ražošanā"
+  allowed_ssl_in_production_mode: "SSL %{not}tiks izmantots ražošanā"
   already_registered: "Esi jau reģistrējies?"
   alt_text: "Cits teksts"
   alternative_phone: "Cits telefons"
@@ -269,7 +269,7 @@ lv:
   back_end: Back End
   back_to_store: "Atgriezties veikalā"
   backordered: "Nokavētie pasūtījumi"
-  backordering_is_allowed: "Nokavētie pasūtījumi {{not}} atļauti"
+  backordering_is_allowed: "Nokavētie pasūtījumi %{not} atļauti"
   balance_due: "Atlikums"
   best_selling_products: "Vislabāk pārdotie produkti"
   best_selling_taxons: "Best Selling Taxons"
@@ -321,7 +321,7 @@ lv:
   copy_all_mails_to: "Kopēt visas vēstules uz"
   cost_price: "Pašizmaksa"
   count: "Skaitīt"
-  count_of_reduced_by: "count of '{{name}}' reduced by {{count}}"
+  count_of_reduced_by: "count of '%{name}' reduced by %{count}"
   country: "Valsts"
   country_based: "Valsts"
   coupon: Coupon
@@ -595,7 +595,7 @@ lv:
     resumed : resumed
     returned: returned
   order_summary: "Pasūtījuma apkopojums"
-  order_sure_want_to: "Vai esiet pārliecināts, ka vēlaties {{event}} šo pasūtījumu?"
+  order_sure_want_to: "Vai esiet pārliecināts, ka vēlaties %{event} šo pasūtījumu?"
   order_total: "Kopējais pasūtījums"
   order_total_message: "Kopējais apjoms ņemts no jūsu kartes būs"
   order_updated: "Pasūtījums atjaunots"
@@ -642,7 +642,7 @@ lv:
   previous: "Iepriekšējais"
   price: "Cena"
   price_bucket: Price Bucket
-  price_with_vat_included: "{{price}} (ieskaitot PVN)"
+  price_with_vat_included: "%{price} (ieskaitot PVN)"
   problem_authorizing_card: "Problēma autorizēt kredīta karti"
   problem_capturing_card: "Problem capturing credit card"
   problems_processing_order: "Mums bija problēmas apstrādāt jūsu pasūtījumu"
@@ -657,7 +657,7 @@ lv:
   product_properties: "Produkta īpašības"
   product_rule: 
     choose_products: Choose products
-    label: "Order must contain {{select}} of these products"
+    label: "Order must contain %{select} of these products"
     match_all: all
     match_any: at least one
     product_source: 
@@ -780,7 +780,7 @@ lv:
         name: "Ar īpašības vērtību"
         sentence: with property <em>%s</em> and value <em>%s</em>
   products: "Produkti"
-  products_with_zero_inventory_display: "Produkti, kas nav noliktavā, {{not}} tiks rādīti"
+  products_with_zero_inventory_display: "Produkti, kas nav noliktavā, %{not} tiks rādīti"
   promotion_form: 
     match_policies: 
       all: Match any of these rules
@@ -854,7 +854,7 @@ lv:
   scope: Scope
   scopes: Scopes
   search: "Meklēšana"
-  search_results: "Meklēšanas rezultāti '{{keywords}}'"
+  search_results: "Meklēšanas rezultāti '%{keywords}'"
   searching: Searching
   secure_connection_type: Secure Connection Type
   secure_creditcard: Secure Creditcard
@@ -896,7 +896,7 @@ lv:
   shipping_methods: "Sūtīšanas metodes"
   shipping_methods_description: "Pārvaldīt sūtīšanas metodes"
   shipping_total: "Kopējais sūtīšanai"
-  shop_by_taxonomy: "Pirkt pēc {{taxonomy}}"
+  shop_by_taxonomy: "Pirkt pēc %{taxonomy}"
   shopping_cart: "Iepirkuma grozs"
   show: "Parādīt"
   show_active: "Parādīt aktīvos"
@@ -905,7 +905,7 @@ lv:
   show_only_complete_orders: "Parādīt tikai pabeigtos pasūtījumus"
   show_out_of_stock_products: "Parādīt izpārdotos produktus"
   show_price_inc_vat: "Parādīt cenu iekļaujot PVN"
-  showing_first_n: "Parādīt pirmos {{n}}"
+  showing_first_n: "Parādīt pirmos %{n}"
   sign_up: "Parakstīties"
   site_name: "Interneta adreses nosaukums"
   site_url: "Interneta adreses links"

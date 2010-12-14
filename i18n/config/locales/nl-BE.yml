@@ -232,7 +232,7 @@ nl-BE:
   allow_backorders: "Nabestellingen toelaten"
   allow_ssl_to_be_used_when_in_developement_and_test_modes: "SSL gebruik toestaan in ontwikkel- en testomgevingen"
   allow_ssl_to_be_used_when_in_production_mode: "SSL gebruik toestaan in productie-omgeving"
-  allowed_ssl_in_production_mode: "SSL zal {{niet}} gebruikt worden in productie-omgeving"
+  allowed_ssl_in_production_mode: "SSL zal %{niet} gebruikt worden in productie-omgeving"
   already_registered: Reeds geregistreerd?
   alt_text: Alternatieve tekst
   alternative_phone: Alternatief telefoonnr
@@ -269,7 +269,7 @@ nl-BE:
   back_end: Back End
   back_to_store: "Verder Winkelen"
   backordered: Backordered
-  backordering_is_allowed: "Backordering {{not}} allowed"
+  backordering_is_allowed: "Backordering %{not} allowed"
   balance_due: "Balance Due"
   best_selling_products: "Best verkopende producten"
   best_selling_taxons: "Best verkopende categorieën"
@@ -321,7 +321,7 @@ nl-BE:
   copy_all_mails_to: "Kopieer Alle Mails Naar"
   cost_price: "Kostprijs"
   count: Aantal
-  count_of_reduced_by: "Aantal van '{{name}}' verminderd met {{count}}"
+  count_of_reduced_by: "Aantal van '%{name}' verminderd met %{count}"
   country: Land
   country_based: "Gebaseerd op land"
   coupon: Coupon
@@ -595,7 +595,7 @@ nl-BE:
     resumed : resumed
     returned: returned
   order_summary: Order Summary
-  order_sure_want_to: "Are you sure you want to {{event}} this order?"
+  order_sure_want_to: "Are you sure you want to %{event} this order?"
   order_total: "Bestelling Totaal"
   order_total_message: "Het aan te rekenen totaalbedrag is"
   order_updated: "Bestelling gewijzigd"
@@ -642,7 +642,7 @@ nl-BE:
   previous: vorige
   price: Prijs
   price_bucket: Price Bucket
-  price_with_vat_included: "{{price}} (inc. BTW)"
+  price_with_vat_included: "%{price} (inc. BTW)"
   problem_authorizing_card: "Fout bij autorisatie betaling"
   problem_capturing_card: "Fout bij aanrekenen betaling"
   problems_processing_order: "Fout vastgesteld bij het verwerken van de bestelling"
@@ -657,7 +657,7 @@ nl-BE:
   product_properties: "Product Eigenschappen"
   product_rule: 
     choose_products: Choose products
-    label: "Order must contain {{select}} of these products"
+    label: "Order must contain %{select} of these products"
     match_all: all
     match_any: at least one
     product_source: 
@@ -780,7 +780,7 @@ nl-BE:
         name: "Met eigenschap"
         sentence: met eigenschap <em>%s</em> en waarde <em>%s</em>
   products: Producten
-  products_with_zero_inventory_display: "Producten die niet meer in voorraad zijn zullen {{niet}} getoond worden."
+  products_with_zero_inventory_display: "Producten die niet meer in voorraad zijn zullen %{niet} getoond worden."
   promotion_form: 
     match_policies: 
       all: Match any of these rules
@@ -854,7 +854,7 @@ nl-BE:
   scope: Scope
   scopes: Scopes
   search: Zoek
-  search_results: "Search results for '{{keywords}}'"
+  search_results: "Search results for '%{keywords}'"
   searching: Searching
   secure_connection_type: "Secure Connection Type"
   secure_creditcard: Secure Creditcard
@@ -896,7 +896,7 @@ nl-BE:
   shipping_methods: "Verzendingsmethodes"
   shipping_methods_description: "Verzendingsmethodes beheren"
   shipping_total: "Verzending"
-  shop_by_taxonomy: "Per {{taxonomy}}"
+  shop_by_taxonomy: "Per %{taxonomy}"
   shopping_cart: "Winkelmandje"
   show: Toon
   show_active: "Toon actieve"
@@ -905,7 +905,7 @@ nl-BE:
   show_only_complete_orders: "Toon enkel afgewerkte bestellingen"
   show_out_of_stock_products: "Toon producten die niet voorradig zijn"
   show_price_inc_vat: "Toon prijs inclusief BTW"
-  showing_first_n: "Eerste {{n}} worden getoond"
+  showing_first_n: "Eerste %{n} worden getoond"
   sign_up: "Registreer"
   site_name: "Site Naam"
   site_url: "Site URL"

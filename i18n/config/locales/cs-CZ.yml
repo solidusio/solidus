@@ -232,7 +232,7 @@ cs-CZ:
   allow_backorders: "Povolit zpoždění dodávky"
   allow_ssl_to_be_used_when_in_developement_and_test_modes: "Povolit používání SSL v módech development a test"
   allow_ssl_to_be_used_when_in_production_mode: "Povolit používání SSL v módu production"
-  allowed_ssl_in_production_mode: "SSL v módu production {{not}}bude používáno"
+  allowed_ssl_in_production_mode: "SSL v módu production %{not}bude používáno"
   already_registered: "Jste už redistrováni?"
   alt_text: Alternative Text
   alternative_phone: "Další telefonní číslo"
@@ -269,7 +269,7 @@ cs-CZ:
   back_end: Back End
   back_to_store: "Zpět na obchod"
   backordered: "Zpožděná dodávka"
-  backordering_is_allowed: "Zpoždění dodávky {{not}}povoleno"
+  backordering_is_allowed: "Zpoždění dodávky %{not}povoleno"
   balance_due: "Nezaplacený zůstatek"
   best_selling_products: "Nejlépe prodávané výrobky"
   best_selling_taxons: "Nejlépe prodávané taxony"
@@ -321,7 +321,7 @@ cs-CZ:
   copy_all_mails_to: "Posílat kopie všech emailů na"
   cost_price: "Náklady"
   count: "Počet"
-  count_of_reduced_by: "Počet '{{name}}' snížen o {{count}}"
+  count_of_reduced_by: "Počet '%{name}' snížen o %{count}"
   country: "Stát"
   country_based: "Založeno na zemi"
   coupon: Coupon
@@ -595,7 +595,7 @@ cs-CZ:
     resumed : resumed
     returned: returned
   order_summary: "Shrnutí objednávky"
-  order_sure_want_to: "Jste si jisti, že chcete {{event}} tuto objednávku?"
+  order_sure_want_to: "Jste si jisti, že chcete %{event} tuto objednávku?"
   order_total: "Celková cena objednávky"
   order_total_message: "Celková suma, která bude odečtena z Vaší karty"
   order_updated: "Objednávka byla aktualizována"
@@ -642,7 +642,7 @@ cs-CZ:
   previous: "Předchozí"
   price: Cena
   price_bucket: Price Bucket
-  price_with_vat_included: "{{price}} (s DPH)"
+  price_with_vat_included: "%{price} (s DPH)"
   problem_authorizing_card: "Problém s autorizací kreditní karty"
   problem_capturing_card: "Problém při strhávání částky z kreditní karty"
   problems_processing_order: "Došlo k problému při zpracování Vaší objednávky"
@@ -657,7 +657,7 @@ cs-CZ:
   product_properties: "Vlastnosti výrobku"
   product_rule: 
     choose_products: Choose products
-    label: "Order must contain {{select}} of these products"
+    label: "Order must contain %{select} of these products"
     match_all: all
     match_any: at least one
     product_source: 
@@ -780,7 +780,7 @@ cs-CZ:
         name: "S vlastností a hodnotou"
         sentence: "s vlastností <em>%s</em> a hodnotou <em>%s</em>"
   products: "Výrobky"
-  products_with_zero_inventory_display: "Výrobky, které nejsou na skladě, {{not}}budou zobrazeny"
+  products_with_zero_inventory_display: "Výrobky, které nejsou na skladě, %{not}budou zobrazeny"
   promotion_form: 
     match_policies: 
       all: Match any of these rules
@@ -854,7 +854,7 @@ cs-CZ:
   scope: Scope
   scopes: Scopes
   search: Hledat
-  search_results: "Výsledky vyhledávání pro '{{keywords}}'"
+  search_results: "Výsledky vyhledávání pro '%{keywords}'"
   searching: Searching
   secure_connection_type: "Typ bezpečného připojení"
   secure_creditcard: "Bezpečná kreditní karta"
@@ -896,7 +896,7 @@ cs-CZ:
   shipping_methods: "Způsoby dopravy"
   shipping_methods_description: "Spravovat způsoby dopravy"
   shipping_total: "Náklady na dopravu celkem"
-  shop_by_taxonomy: "Nakupovat podle {{taxonomy}}"
+  shop_by_taxonomy: "Nakupovat podle %{taxonomy}"
   shopping_cart: "Nákupní košík"
   show: "Ukázat"
   show_active: "Show Active"
@@ -905,7 +905,7 @@ cs-CZ:
   show_only_complete_orders: "Zobrazit pouze dokončené objednávky"
   show_out_of_stock_products: "Zobrazit zboží, které není skladem"
   show_price_inc_vat: "Zobrazit ceny včetně DPH"
-  showing_first_n: "Showing first {{n}}"
+  showing_first_n: "Showing first %{n}"
   sign_up: "Přihlásit se"
   site_name: "Název stránky"
   site_url: "Adresa stránky (URL)"

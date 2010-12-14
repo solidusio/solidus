@@ -232,7 +232,7 @@ vn:
   allow_backorders: "Cho phép đặt hàng trước"
   allow_ssl_to_be_used_when_in_developement_and_test_modes: Cho phép sử dụng SSL dưới môi trường phát triển và kiểm tra
   allow_ssl_to_be_used_when_in_production_mode: Cho phép sử dụng SSL dưới môi trường sản xuất
-  allowed_ssl_in_production_mode: "SSL sẽ {{not}} được dùng trong sản xuất"
+  allowed_ssl_in_production_mode: "SSL sẽ %{not} được dùng trong sản xuất"
   already_registered: Đã đăng kí?
   alt_text: Chú thích khác
   alternative_phone: Điện thoại khác
@@ -269,7 +269,7 @@ vn:
   back_end: Back End
   back_to_store: "Quay lại cửa hàng"
   backordered: Đã đặt hàng trước
-  backordering_is_allowed: "Đã đặt hàng trước {{not}} được cho phép"
+  backordering_is_allowed: "Đã đặt hàng trước %{not} được cho phép"
   balance_due: "Tiền cần thanh toán"
   best_selling_products: "Sản phẩm bán chạy nhất"
   best_selling_taxons: "Đơn vị phân loại hàng bán chạy nhất"
@@ -321,7 +321,7 @@ vn:
   copy_all_mails_to: Sao chép tất cả thư vào
   cost_price: "Giá"
   count: Số lượng
-  count_of_reduced_by: "số lượng của '{{name}}' giảm đi {{count}}"
+  count_of_reduced_by: "số lượng của '%{name}' giảm đi %{count}"
   country: Quốc gia
   country_based: "Dựa trên quốc gia"
   coupon: Coupon
@@ -595,7 +595,7 @@ vn:
     resumed : resumed
     returned: returned
   order_summary: Tóm tắt đơn đặt hàng
-  order_sure_want_to: "Bạn có chắc bạn muốn {{event}} đơn hàng này?"
+  order_sure_want_to: "Bạn có chắc bạn muốn %{event} đơn hàng này?"
   order_total: "Tổng giá sau thuế"
   order_total_message: "Tổng số tiền sẽ được rút từ thẻ của bạn là"
   order_updated: "Đơn hàng được cập nhật"
@@ -642,7 +642,7 @@ vn:
   previous: Trước
   price: Giá
   price_bucket: Price Bucket
-  price_with_vat_included: "{{price}} (bao gồm cả VAT)"
+  price_with_vat_included: "%{price} (bao gồm cả VAT)"
   problem_authorizing_card: "Có sự cố ủy quyền thẻ tín dụng"
   problem_capturing_card: "Có sự cố thu thập thẻ tín dụng"
   problems_processing_order: "Chúng tôi gặp sự cố xử lý thẻ của bạn"
@@ -657,7 +657,7 @@ vn:
   product_properties: "Đặc tính sản phẩm"
   product_rule: 
     choose_products: Choose products
-    label: "Order must contain {{select}} of these products"
+    label: "Order must contain %{select} of these products"
     match_all: all
     match_any: at least one
     product_source: 
@@ -780,7 +780,7 @@ vn:
         name: "Với Giá trị Đặc tính"
         sentence: với đặc tính <em>%s</em> và giá trị <em>%s</em>
   products: Sản phẩm
-  products_with_zero_inventory_display: "Sản phẩm không có hàng tồn sẽ {{not}} được hiển thị"
+  products_with_zero_inventory_display: "Sản phẩm không có hàng tồn sẽ %{not} được hiển thị"
   promotion_form: 
     match_policies: 
       all: Match any of these rules
@@ -854,7 +854,7 @@ vn:
   scope: Phạm vi
   scopes: Phạm vi
   search: Tìm kiếm
-  search_results: "Kết quả tìm kiếm cho '{{keywords}}'"
+  search_results: "Kết quả tìm kiếm cho '%{keywords}'"
   searching: Searching
   secure_connection_type: Kiệu kết nối bảo mật
   secure_creditcard: Thẻ tín dụng bảo mật cao
@@ -896,7 +896,7 @@ vn:
   shipping_methods: "Phương thức vận chuyển"
   shipping_methods_description: "Quản lý phương thức vận chuyển"
   shipping_total: "Tổng tiền vận chuyển"
-  shop_by_taxonomy: "Mua theo {{taxonomy}}"
+  shop_by_taxonomy: "Mua theo %{taxonomy}"
   shopping_cart: "Sọt mua sắm"
   show: Xem
   show_active: "Liệt kê đơn còn hiệu lực"
@@ -905,7 +905,7 @@ vn:
   show_only_complete_orders: "Chỉ hiện đơn hàng đã hoàn tất"
   show_out_of_stock_products: "Hiện sảm phẩm hết hàng"
   show_price_inc_vat: "Hiện giá bao gồm cả VAT"
-  showing_first_n: "Hiện thị {{n}} đầu tiên"
+  showing_first_n: "Hiện thị %{n} đầu tiên"
   sign_up: "Đăng ký"
   site_name: "Tên trang"
   site_url: "Địa chỉ URL"

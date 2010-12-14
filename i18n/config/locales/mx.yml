@@ -232,7 +232,7 @@ mx:
   allow_backorders: "Permitir devoluciones"
   allow_ssl_to_be_used_when_in_developement_and_test_modes: Permitir el uso de SSL en los modos de desarrollo y prueba
   allow_ssl_to_be_used_when_in_production_mode: Permitir el uso de SSL en produccion
-  allowed_ssl_in_production_mode: "Permitir {{not}} usar SSL en modo Producción"
+  allowed_ssl_in_production_mode: "Permitir %{not} usar SSL en modo Producción"
   already_registered: "¿Ya estas registrado?"
   alt_text: Alternative Text
   alternative_phone: "Teléfono alternativo"
@@ -269,7 +269,7 @@ mx:
   back_end: Back End
   back_to_store: "Volver a la tienda"
   backordered: Ordenado inverso
-  backordering_is_allowed: "Devoluciones {{not}} permitidas"
+  backordering_is_allowed: "Devoluciones %{not} permitidas"
   balance_due: "Balance de deuda"
   best_selling_products: "Productos mejor vendidos"
   best_selling_taxons: "Taxones Mejor Vendidos"
@@ -321,7 +321,7 @@ mx:
   copy_all_mails_to: Copiar todos los correos a
   cost_price: "Costo"
   count: Cantidad
-  count_of_reduced_by: "count of '{{name}}' reduced by {{count}}"
+  count_of_reduced_by: "count of '%{name}' reduced by %{count}"
   country: "País"
   country_based: "País base"
   coupon: Coupon
@@ -595,7 +595,7 @@ mx:
     resumed : resumed
     returned: returned
   order_summary: Parcial de la Orden
-  order_sure_want_to: "¿Esta seguro que quiere {{event}} esta orden?"
+  order_sure_want_to: "¿Esta seguro que quiere %{event} esta orden?"
   order_total: "Total del pedido"
   order_total_message: "El importe total cargado a su tarjeta de crédito será"
   order_updated: "Pedido actualizado"
@@ -642,7 +642,7 @@ mx:
   previous: Anterior
   price: Precio
   price_bucket: Price Bucket
-  price_with_vat_included: "{{price}} (inc. VAT)"
+  price_with_vat_included: "%{price} (inc. VAT)"
   problem_authorizing_card: "Problema autorizando la tarjeta"
   problem_capturing_card: "Problema al capturar la tarjeta"
   problems_processing_order: "Hemos tenido problemas al procesar su pedido"
@@ -657,7 +657,7 @@ mx:
   product_properties: "Propiedades del producto"
   product_rule: 
     choose_products: Choose products
-    label: "Order must contain {{select}} of these products"
+    label: "Order must contain %{select} of these products"
     match_all: all
     match_any: at least one
     product_source: 
@@ -780,7 +780,7 @@ mx:
         name: "With property value"
         sentence: with property <em>%s</em> and value <em>%s</em>
   products: Productos
-  products_with_zero_inventory_display: "Productos con cero en el inventario {{not}} serán mostrados"
+  products_with_zero_inventory_display: "Productos con cero en el inventario %{not} serán mostrados"
   promotion_form: 
     match_policies: 
       all: Match any of these rules
@@ -854,7 +854,7 @@ mx:
   scope: Scope
   scopes: Scopes
   search: Buscar
-  search_results: "Resultados de la busqueda de '{{keywords}}'"
+  search_results: "Resultados de la busqueda de '%{keywords}'"
   searching: Searching
   secure_connection_type: "Conexión segura"
   secure_creditcard: Tarjeta de Credito Segura
@@ -896,7 +896,7 @@ mx:
   shipping_methods: "Metodos de envío"
   shipping_methods_description: "Manejar metodos de envío"
   shipping_total: "Total del envío"
-  shop_by_taxonomy: "Comprar por {{taxonomy}}"
+  shop_by_taxonomy: "Comprar por %{taxonomy}"
   shopping_cart: "Carrito de compras"
   show: Show
   show_active: "Show Active"
@@ -905,7 +905,7 @@ mx:
   show_only_complete_orders: "Mostrar solo los pedidos completados"
   show_out_of_stock_products: "Mostrar productos sin existencía"
   show_price_inc_vat: "Ver precios incluyendo el VAT"
-  showing_first_n: "Mostrando primer {{n}}"
+  showing_first_n: "Mostrando primer %{n}"
   sign_up: Registrarme
   site_name: "Nombre del sitio"
   site_url: "URL del sitio"

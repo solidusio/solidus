@@ -232,7 +232,7 @@ fr-FR:
   allow_backorders: "Permettre la rupture de stock"
   allow_ssl_to_be_used_when_in_developement_and_test_modes: Permettre l'utilisation du SSL lors des modes développement et test
   allow_ssl_to_be_used_when_in_production_mode: Permettre l'utilisation du SSL lors du mode production
-  allowed_ssl_in_production_mode: "SSL sera {{not}} utilisé en production"
+  allowed_ssl_in_production_mode: "SSL sera %{not} utilisé en production"
   already_registered: "Déjà inscrit?"
   alt_text: Alternative Text
   alternative_phone: "Téléphone secondaire"
@@ -269,7 +269,7 @@ fr-FR:
   back_end: Back End
   back_to_store: "Retour sur les produits"
   backordered: Rupture de stock
-  backordering_is_allowed: "Rupture de stock {{not}} permise"
+  backordering_is_allowed: "Rupture de stock %{not} permise"
   balance_due: "Solde dû"
   best_selling_products: "Meilleurs quantités par produit"
   best_selling_taxons: "Meilleurs quantités par categories"
@@ -321,7 +321,7 @@ fr-FR:
   copy_all_mails_to: "Envoyer une copie des courriels aux adresses suivantes"
   cost_price: "Prix de revient"
   count: Quantité
-  count_of_reduced_by: "Compte de '{{name}}' diminuer de {{count}}"
+  count_of_reduced_by: "Compte de '%{name}' diminuer de %{count}"
   country: Pays
   country_based: "Basé sur un pays"
   coupon: Coupon
@@ -595,7 +595,7 @@ fr-FR:
     resumed : resumed
     returned: returned
   order_summary: "Résumé de la commande"
-  order_sure_want_to: "Êtes-vous certain de vouloir {{event}} cette commande ?"
+  order_sure_want_to: "Êtes-vous certain de vouloir %{event} cette commande ?"
   order_total: "Total de la commande"
   order_total_message: "Le total du montant débité sur votre carte va être de"
   order_updated: "Commande mise à jour"
@@ -642,7 +642,7 @@ fr-FR:
   previous: Précédent
   price: Prix
   price_bucket: Price Bucket
-  price_with_vat_included: "{{price}} (TVA inc.)"
+  price_with_vat_included: "%{price} (TVA inc.)"
   problem_authorizing_card: "Problème d'autorization de votre carte de crédit"
   problem_capturing_card: "Impossible d'utiliser votre carte de crédit"
   problems_processing_order: "Impossible de traiter votre commande"
@@ -657,7 +657,7 @@ fr-FR:
   product_properties: "Propriété du produit"
   product_rule: 
     choose_products: Choose products
-    label: "Order must contain {{select}} of these products"
+    label: "Order must contain %{select} of these products"
     match_all: all
     match_any: at least one
     product_source: 
@@ -780,7 +780,7 @@ fr-FR:
         name: "Avec propriété et valeur"
         sentence: avec propriété <em>%s</em> et valeur <em>%s</em>
   products: Produits
-  products_with_zero_inventory_display: "Les produits en rupture de stock seront {{not}} affichés"
+  products_with_zero_inventory_display: "Les produits en rupture de stock seront %{not} affichés"
   promotion_form: 
     match_policies: 
       all: Match any of these rules
@@ -854,7 +854,7 @@ fr-FR:
   scope: Scope
   scopes: Scopes
   search: Rechercher
-  search_results: "Résultats de la recherche pour '{{keywords}}'"
+  search_results: "Résultats de la recherche pour '%{keywords}'"
   searching: Searching
   secure_connection_type: Connection de type sécurisée
   secure_creditcard: Carte de crédit sécurisés
@@ -896,7 +896,7 @@ fr-FR:
   shipping_methods: "Méthodes de livraison "
   shipping_methods_description: "Gérer les méthodes de livraisons"
   shipping_total: "Total de la livraison"
-  shop_by_taxonomy: "Acheter par {{taxonomy}}"
+  shop_by_taxonomy: "Acheter par %{taxonomy}"
   shopping_cart: "Panier"
   show: Afficher
   show_active: "Show Active"
@@ -905,7 +905,7 @@ fr-FR:
   show_only_complete_orders: "Afficher seulement les commandes complètes"
   show_out_of_stock_products: "Afficher les produits en rupture de stock"
   show_price_inc_vat: "Affiché le prix incluant la TVA"
-  showing_first_n: "Les {{n}} premiers"
+  showing_first_n: "Les %{n} premiers"
   sign_up: "S'inscrire"
   site_name: "Nom du site"
   site_url: "URL du site"

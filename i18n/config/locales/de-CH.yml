@@ -232,7 +232,7 @@ de-CH:
   allow_backorders: "Lieferrückstand erlauben"
   allow_ssl_to_be_used_when_in_developement_and_test_modes: "SSL in den Modi 'development' und 'test' erlauben"
   allow_ssl_to_be_used_when_in_production_mode: "SSL im Modus 'production' erlauben"
-  allowed_ssl_in_production_mode: "SSL will {{not}} be used in production"
+  allowed_ssl_in_production_mode: "SSL will %{not} be used in production"
   already_registered: "Bereits registriert?"
   alt_text: Alternative Text
   alternative_phone: "Alternative Telefonnummer"
@@ -269,7 +269,7 @@ de-CH:
   back_end: Back End
   back_to_store: "Zurück zum Shop"
   backordered: Backordered
-  backordering_is_allowed: "Lieferrückstand ist {{not}} erlaubt"
+  backordering_is_allowed: "Lieferrückstand ist %{not} erlaubt"
   balance_due: "Balance Due"
   best_selling_products: "Best Selling Products"
   best_selling_taxons: "Best Selling Taxons"
@@ -321,7 +321,7 @@ de-CH:
   copy_all_mails_to: "Kopien aller E-Mails an"
   cost_price: "Cost Price"
   count: Count
-  count_of_reduced_by: "count of '{{name}}' reduced by {{count}}"
+  count_of_reduced_by: "count of '%{name}' reduced by %{count}"
   country: Land
   country_based: "Länderbasiert"
   coupon: Coupon
@@ -595,7 +595,7 @@ de-CH:
     resumed : resumed
     returned: returned
   order_summary: "Bestellübersicht"
-  order_sure_want_to: "Sind Sie sicher, dass Sie diese Bestellung {{event}} möchten?"
+  order_sure_want_to: "Sind Sie sicher, dass Sie diese Bestellung %{event} möchten?"
   order_total: Gesamtsumme
   order_total_message: "Die Gesamtsumme, mit der Ihre Kreditkarte belastet wird"
   order_updated: "Bestellung aktualisiert"
@@ -642,7 +642,7 @@ de-CH:
   previous: zurück
   price: Preis
   price_bucket: Price Bucket
-  price_with_vat_included: "{{price}} (inkl. MwSt.)"
+  price_with_vat_included: "%{price} (inkl. MwSt.)"
   problem_authorizing_card: "Es gab ein Problem ihre Kreditkarte zu identifizieren"
   problem_capturing_card: "Es gab ein Problem beim Belasten ihrer Kreditkarte"
   problems_processing_order: "Ihre Bestellung konnte nicht bearbeitet werden"
@@ -657,7 +657,7 @@ de-CH:
   product_properties: "Produkt-Eigenschaften"
   product_rule: 
     choose_products: Choose products
-    label: "Order must contain {{select}} of these products"
+    label: "Order must contain %{select} of these products"
     match_all: all
     match_any: at least one
     product_source: 
@@ -780,7 +780,7 @@ de-CH:
         name: "With property value"
         sentence: with property <em>%s</em> and value <em>%s</em>
   products: Produkte
-  products_with_zero_inventory_display: "Produkte mit einem Lagerbestand von Null werden {{not}} angezeigt"
+  products_with_zero_inventory_display: "Produkte mit einem Lagerbestand von Null werden %{not} angezeigt"
   promotion_form: 
     match_policies: 
       all: Match any of these rules
@@ -854,7 +854,7 @@ de-CH:
   scope: Scope
   scopes: Scopes
   search: Suchen
-  search_results: "Search results for '{{keywords}}'"
+  search_results: "Search results for '%{keywords}'"
   searching: Searching
   secure_connection_type: Secure Connection Type
   secure_creditcard: Secure Creditcard
@@ -896,7 +896,7 @@ de-CH:
   shipping_methods: "Versandarten"
   shipping_methods_description: "Versandarten verwalten"
   shipping_total: "Lieferkosten Gesamt"
-  shop_by_taxonomy: "{{taxonomy}} einkaufen"
+  shop_by_taxonomy: "%{taxonomy} einkaufen"
   shopping_cart: Warenkorb
   show: Zeigen
   show_active: "Show Active"
@@ -905,7 +905,7 @@ de-CH:
   show_only_complete_orders: "Nur komplette Bestellungen anzeigen"
   show_out_of_stock_products: "Ausverkaufte Produkte anzeigen"
   show_price_inc_vat: "Zeige Preis inkl. Steuer"
-  showing_first_n: "Showing first {{n}}"
+  showing_first_n: "Showing first %{n}"
   sign_up: "Anmelden"
   site_name: "Seitenname"
   site_url: "Seiten-URL"

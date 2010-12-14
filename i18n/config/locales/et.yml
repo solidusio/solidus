@@ -232,7 +232,7 @@ et:
   allow_backorders: Backorderid lubatud
   allow_ssl_to_be_used_when_in_developement_and_test_modes: Võimalda SSL’i arendus- ja testrežiimil
   allow_ssl_to_be_used_when_in_production_mode: Võimalda SSL’i tootmisrežiimil
-  allowed_ssl_in_production_mode: SSL will {{not}} be used in production
+  allowed_ssl_in_production_mode: SSL will %{not} be used in production
   already_registered: Juba registreeritud?
   alt_text: Alternatiivne tekst
   alternative_phone: Teine telefoninumber
@@ -269,7 +269,7 @@ et:
   back_end: Back End
   back_to_store: Mine tagasi poodi
   backordered: Tagasitellitud
-  backordering_is_allowed: Tagasitellimine {{ei ole}} lubatud
+  backordering_is_allowed: Tagasitellimine %{ei ole} lubatud
   balance_due: Tasuda jäänud
   best_selling_products: Suurima läbimüügiga tooted
   best_selling_taxons: Suurima läbimüügiga tootegrupid
@@ -321,7 +321,7 @@ et:
   copy_all_mails_to: Koopia kõikidest meilidest aadressile
   cost_price: Omahind
   count: Kogus
-  count_of_reduced_by: count of '{{name}}' reduced by {{count}}
+  count_of_reduced_by: count of '%{name}' reduced by %{count}
   country: Riik
   country_based: Riigipõhine
   coupon: Coupon
@@ -595,7 +595,7 @@ et:
     resumed : resumed
     returned: returned
   order_summary: Tellimuse kokkuvõte
-  order_sure_want_to: Kas olete kindel, et soovite {{event}} seda tellimust?
+  order_sure_want_to: Kas olete kindel, et soovite %{event} seda tellimust?
   order_total: Tellimus kokku
   order_total_message: Teie kaardilt maha laetav summa on
   order_updated: Tellimus uuendatud
@@ -657,7 +657,7 @@ et:
   product_properties: Toote omadused
   product_rule: 
     choose_products: Choose products
-    label: "Order must contain {{select}} of these products"
+    label: "Order must contain %{select} of these products"
     match_all: all
     match_any: at least one
     product_source: 
@@ -780,7 +780,7 @@ et:
         name: "With property value"
         sentence: with property <em>%s</em> and value <em>%s</em>
   products: Tooted
-  products_with_zero_inventory_display: Products with a zero inventory will {{not}} be displayed  TODO
+  products_with_zero_inventory_display: Products with a zero inventory will %{not} be displayed  TODO
   promotion_form: 
     match_policies: 
       all: Match any of these rules
@@ -854,7 +854,7 @@ et:
   scope: Käsitlusala
   scopes: Käsitlusalad
   search: Otsing
-  search_results: Otsingu '{{keywords}}' tulemused
+  search_results: Otsingu '%{keywords}' tulemused
   searching: Searching
   secure_connection_type: Turvalise ühenduse tüüp
   secure_creditcard: Kinnita krediitkaardiga
@@ -896,7 +896,7 @@ et:
   shipping_methods: Saatmisviisid
   shipping_methods_description: Halda saatmisviise
   shipping_total: Saadetised kokku
-  shop_by_taxonomy: "{{taxonomy}}:"
+  shop_by_taxonomy: "%{taxonomy}:"
   shopping_cart: Ostukorv
   show: Näita
   show_active: "Näita aktiivseid"

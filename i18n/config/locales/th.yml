@@ -232,7 +232,7 @@ th:
   allow_backorders: "อนุญาติการสั่งซื้อ เมื่อสินค้าหมด"
   allow_ssl_to_be_used_when_in_developement_and_test_modes: Allow SSL to be used when in development and test modes
   allow_ssl_to_be_used_when_in_production_mode: Allow SSL to be used in production mode
-  allowed_ssl_in_production_mode: "SSL will {{not}} be used in production"
+  allowed_ssl_in_production_mode: "SSL will %{not} be used in production"
   already_registered: Already Registered?
   alt_text: Alternative Text
   alternative_phone: เบอร์โทรอื่นๆ
@@ -269,7 +269,7 @@ th:
   back_end: Back End
   back_to_store: "กลับไปหน้าร้าน"
   backordered: Backordered
-  backordering_is_allowed: "({{not}} allowed) การซื้อเมื่อสินค้าหมด"
+  backordering_is_allowed: "(%{not} allowed) การซื้อเมื่อสินค้าหมด"
   balance_due: "Balance Due"
   best_selling_products: "Best Selling Products"
   best_selling_taxons: "Best Selling Taxons"
@@ -321,7 +321,7 @@ th:
   copy_all_mails_to: คัดลอกเมลทุกฉบับส่งไปที่
   cost_price: "Cost Price"
   count: Count
-  count_of_reduced_by: "count of '{{name}}' reduced by {{count}}"
+  count_of_reduced_by: "count of '%{name}' reduced by %{count}"
   country: ประเทศ
   country_based: ยืดประเทศเป็นหลัก
   coupon: Coupon
@@ -595,7 +595,7 @@ th:
     resumed : resumed
     returned: returned
   order_summary: Order Summary
-  order_sure_want_to: "Are you sure you want to {{event}} this order?"
+  order_sure_want_to: "Are you sure you want to %{event} this order?"
   order_total: ราคารวม
   order_total_message: "ยอดซื้อรวมจะเก็บจากบัตรเครดิตของคุณ"
   order_updated: "ปรับปรุงรายการสั่งซื้อ"
@@ -642,7 +642,7 @@ th:
   previous: ก่อนหน้า
   price: ราคา
   price_bucket: Price Bucket
-  price_with_vat_included: "{{price}} (inc. VAT)"
+  price_with_vat_included: "%{price} (inc. VAT)"
   problem_authorizing_card: "ปัญหาในการยืนยันบัตรเครดิต"
   problem_capturing_card: "ปัญหาในการตรวจสอบบัตรเครดิต"
   problems_processing_order: "เรามีปัญหาในการดำเนินการสั่งซื้อ"
@@ -657,7 +657,7 @@ th:
   product_properties: สรรพคุณของสินค้า
   product_rule: 
     choose_products: Choose products
-    label: "Order must contain {{select}} of these products"
+    label: "Order must contain %{select} of these products"
     match_all: all
     match_any: at least one
     product_source: 
@@ -780,7 +780,7 @@ th:
         name: "With property value"
         sentence: with property <em>%s</em> and value <em>%s</em>
   products: สินค้า
-  products_with_zero_inventory_display: "({{not}} Display) แสดงสินค้าที่หมดคลังสินค้า"
+  products_with_zero_inventory_display: "(%{not} Display) แสดงสินค้าที่หมดคลังสินค้า"
   promotion_form: 
     match_policies: 
       all: Match any of these rules
@@ -854,7 +854,7 @@ th:
   scope: Scope
   scopes: Scopes
   search: ค้นหา
-  search_results: "Search results for '{{keywords}}'"
+  search_results: "Search results for '%{keywords}'"
   searching: Searching
   secure_connection_type: การเชื่อมต่อแบบปลอดภัย
   secure_creditcard: Secure Creditcard
@@ -896,7 +896,7 @@ th:
   shipping_methods: "วิธีการจัดส่ง"
   shipping_methods_description: "จัดการ การจัดส่งสินค้า"
   shipping_total: "Shipping Total"
-  shop_by_taxonomy: "เลือกตาม {{taxonomy}}"
+  shop_by_taxonomy: "เลือกตาม %{taxonomy}"
   shopping_cart: สินค้าในตะกร้า
   show: Show
   show_active: "Show Active"
@@ -905,7 +905,7 @@ th:
   show_only_complete_orders: แสดงเฉพาะรายการที่เสร็จสมบูรณ์
   show_out_of_stock_products: แสดงสินค้าหมดคลัง
   show_price_inc_vat: "แสดงราคารวมภาษีแล้ว"
-  showing_first_n: "Showing first {{n}}"
+  showing_first_n: "Showing first %{n}"
   sign_up: "Sign up"
   site_name: ชื่อของเว็บ
   site_url: "URL ของเว็บ"
