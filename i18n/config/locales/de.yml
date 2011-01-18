@@ -628,6 +628,7 @@ de:
   payment_states: 
     balance_due: balance due
     credit_owed: credit owed
+    failed: failed
     paid: paid
   payment_updated: Payment Updated
   payments: Zahlungen
@@ -807,6 +808,7 @@ de:
   provider: "Provider"
   provider_settings_warning: "If you are changing the provider type, you must save first before you can edit the provider settings"
   qty: Anzahl
+  quantity_returned: Quantity Returned
   quantity_shipped: Quantity Shipped
   range: "Range"
   rate: Rate
@@ -925,6 +927,7 @@ de:
   spree: 
     date: Datum
     time: Uhrzeit
+  spree_gateway_error_flash_for_checkout: "There was a problem with your payment information. Please check your information and try again."
   ssl_will_be_used_in_development_and_test_modes: "SSL wird im Development- und Test-Modus benutzt, falls nötig."
   ssl_will_be_used_in_production_mode: "SSL wird im Production-Modus benutzt"
   ssl_will_not_be_used_in_development_and_test_modes: "SSL wird nicht im Development- und Test-Modus benutzt, falls nötig."

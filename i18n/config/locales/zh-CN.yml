@@ -628,6 +628,7 @@ zh-CN:
   payment_states: 
     balance_due: balance due
     credit_owed: credit owed
+    failed: failed
     paid: paid
   payment_updated: "支付已更新"
   payments: "支付"
@@ -807,6 +808,7 @@ zh-CN:
   provider: "提供者"
   provider_settings_warning: "如果您正在修改提供者类型，您需要在编辑提供者设置之前先保存。"
   qty: "数量"
+  quantity_returned: Quantity Returned
   quantity_shipped: "已发货数量"
   range: "范围"
   rate: "费率"
@@ -925,6 +927,7 @@ zh-CN:
   spree: 
     date: "日期"
     time: "时间"
+  spree_gateway_error_flash_for_checkout: "There was a problem with your payment information. Please check your information and try again."
   ssl_will_be_used_in_development_and_test_modes: "如果需要的话，开发和测试环境将会使用SSL。"
   ssl_will_be_used_in_production_mode: "生产环境下将会使用SSL"
   ssl_will_not_be_used_in_development_and_test_modes: "如果需要的话，开发和测试环境将不会使用SSL。"

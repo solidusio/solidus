@@ -628,6 +628,7 @@ cs-CZ:
   payment_states: 
     balance_due: balance due
     credit_owed: credit owed
+    failed: failed
     paid: paid
   payment_updated: Payment Updated
   payments: Platby
@@ -807,6 +808,7 @@ cs-CZ:
   provider: "Provider"
   provider_settings_warning: "If you are changing the provider type, you must save first before you can edit the provider settings"
   qty: "Množství"
+  quantity_returned: Quantity Returned
   quantity_shipped: "Odeslané množství"
   range: Rozsah
   rate: Sazba
@@ -925,6 +927,7 @@ cs-CZ:
   spree: 
     date: Datum
     time: "Čas"
+  spree_gateway_error_flash_for_checkout: "There was a problem with your payment information. Please check your information and try again."
   ssl_will_be_used_in_development_and_test_modes: "SSL bude použito v 'development' a 'test' módu, bude-li třeba."
   ssl_will_be_used_in_production_mode: "SSL bude použito v 'production' módu."
   ssl_will_not_be_used_in_development_and_test_modes: "SSL nebude použito v 'development' a 'test' módu."

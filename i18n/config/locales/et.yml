@@ -628,6 +628,7 @@ et:
   payment_states: 
     balance_due: balance due
     credit_owed: credit owed
+    failed: failed
     paid: paid
   payment_updated: Makse uuendatud
   payments: Maksed
@@ -807,6 +808,7 @@ et:
   provider: Varustaja
   provider_settings_warning: Varustaja sätete muutmiseks peab eelnevalt varustaja salvestama
   qty: Kogus
+  quantity_returned: Quantity Returned
   quantity_shipped: Postitatud kogus
   range: Ulatus
   rate: Hind
@@ -925,6 +927,7 @@ et:
   spree: 
     date: Kuupäev
     time: Aeg
+  spree_gateway_error_flash_for_checkout: "There was a problem with your payment information. Please check your information and try again."
   ssl_will_be_used_in_development_and_test_modes: SSL’i kasutatakse vajadusel arendus- ja testrežiimil
   ssl_will_be_used_in_production_mode: SSL’i kasutatakse tooterežiimil
   ssl_will_not_be_used_in_development_and_test_modes: SSL’i ei kasutata vajadusel arendus- ja testrežiimil

@@ -628,6 +628,7 @@ vn:
   payment_states: 
     balance_due: balance due
     credit_owed: credit owed
+    failed: failed
     paid: paid
   payment_updated: Thanh toán đã được cập nhật
   payments: Thanh toán
@@ -807,6 +808,7 @@ vn:
   provider: "Nhà cung cấp"
   provider_settings_warning: "Nếu thay đổi nhà cung cấp, bạn phải lưu trước khi sửa đổi cấu hình nhà cung cấp"
   qty: Số lượng
+  quantity_returned: Quantity Returned
   quantity_shipped: Tổng hàng đã chuyển
   range: "Mặt hàng"
   rate: Lãi suất
@@ -925,6 +927,7 @@ vn:
   spree: 
     date: Ngày
     time: Giờ
+  spree_gateway_error_flash_for_checkout: "There was a problem with your payment information. Please check your information and try again."
   ssl_will_be_used_in_development_and_test_modes: "SSL sẽ không được dùng trong môi trường kiểm tra nếu cần thiết."
   ssl_will_be_used_in_production_mode: "SSL sẽ được dùng trong môi trường sản xuất"
   ssl_will_not_be_used_in_development_and_test_modes: "SSL sẽ không được dùng trong môi trường phát triển nếu cần thiết"

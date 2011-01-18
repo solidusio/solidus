@@ -628,6 +628,7 @@ sl-SI:
   payment_states: 
     balance_due: balance due
     credit_owed: credit owed
+    failed: failed
     paid: plačano
   payment_updated: Plačilo osveženo
   payments: Plačila
@@ -807,6 +808,7 @@ sl-SI:
   provider: "Ponudnik"
   provider_settings_warning: "Če spreminjate tip ponudnika, morate najprej shraniti predno lahko urejate nastavitve ponudnika"
   qty: Količina
+  quantity_returned: Quantity Returned
   quantity_shipped: Poslana količina
   range: "Razpon"
   rate: Stopnja
@@ -925,6 +927,7 @@ sl-SI:
   spree: 
     date: Datum
     time: "Čas"
+  spree_gateway_error_flash_for_checkout: "There was a problem with your payment information. Please check your information and try again."
   ssl_will_be_used_in_development_and_test_modes: "SSL bo uporabljen v razvojnem in testnem okolju."
   ssl_will_be_used_in_production_mode: "SSL bo uporabljen v produkciji"
   ssl_will_not_be_used_in_development_and_test_modes: "SSL ne bo uporabljen v razvojnem in testnem okolju."

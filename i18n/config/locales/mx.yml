@@ -628,6 +628,7 @@ mx:
   payment_states: 
     balance_due: balance due
     credit_owed: credit owed
+    failed: failed
     paid: paid
   payment_updated: Payment Updated
   payments: Pagos
@@ -807,6 +808,7 @@ mx:
   provider: "Proveedor"
   provider_settings_warning: "Si cambias el tipo de proveedor, debes salvar primero antes de que puedas editar las opciones de proveedor"
   qty: Cant.
+  quantity_returned: Quantity Returned
   quantity_shipped: Cantidad Enviada
   range: "Rango"
   rate: proporción
@@ -925,6 +927,7 @@ mx:
   spree: 
     date: Fecha
     time: Hora
+  spree_gateway_error_flash_for_checkout: "There was a problem with your payment information. Please check your information and try again."
   ssl_will_be_used_in_development_and_test_modes: "SSL será utilizado en el ambiente de desarrollo y test si es que es necesario."
   ssl_will_be_used_in_production_mode: "SSL será utilizado en el ambiente de producción"
   ssl_will_not_be_used_in_development_and_test_modes: "SSL NO será utilizado en el ambiente de desarrollo y test si es que es necesario."

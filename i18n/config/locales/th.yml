@@ -628,6 +628,7 @@ th:
   payment_states: 
     balance_due: balance due
     credit_owed: credit owed
+    failed: failed
     paid: paid
   payment_updated: Payment Updated
   payments: รายการจ่าย
@@ -807,6 +808,7 @@ th:
   provider: "Provider"
   provider_settings_warning: "If you are changing the provider type, you must save first before you can edit the provider settings"
   qty: จำนวน
+  quantity_returned: Quantity Returned
   quantity_shipped: Quantity Shipped
   range: "Range"
   rate: "อัตรา(เปอร์เซ็น)"
@@ -925,6 +927,7 @@ th:
   spree: 
     date: วัน
     time: เวลา
+  spree_gateway_error_flash_for_checkout: "There was a problem with your payment information. Please check your information and try again."
   ssl_will_be_used_in_development_and_test_modes: "จะใช้ระบบ SSL ในการพัฒนา และ การทดสอบ (development and test mode) ถ้าจำเป็น"
   ssl_will_be_used_in_production_mode: "ระบบ SSL จะใช้ในการทำงานจริง (production mode)"
   ssl_will_not_be_used_in_development_and_test_modes: "ถ้าไม่จำเป็น จะไม่ใช้ระบบ SSL ในการพัฒนา และ การทดสอบ (development and test mode)"

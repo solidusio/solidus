@@ -628,7 +628,7 @@ it:
   payment_states: 
     balance_due: "saldo"
     credit_owed: "credito nei confronti"
-    failed: "fallito" 
+    failed: "fallito"
     paid: "pagato"
   payment_updated: "Pagamento aggiornato"
   payments: "Pagamenti"
@@ -927,6 +927,7 @@ it:
   spree: 
     date: "Data"
     time: "Ora"
+  spree_gateway_error_flash_for_checkout: "There was a problem with your payment information. Please check your information and try again."
   ssl_will_be_used_in_development_and_test_modes: "La certificazione SSL verrà utilizzata per gli ambienti di sviluppo e test."
   ssl_will_be_used_in_production_mode: "La certificazione SSL verrà utilizzata per l'ambiente di produzione."
   ssl_will_not_be_used_in_development_and_test_modes: "La certificazione SSL non verrà utilizzata per gli ambienti di sviluppo e test."
