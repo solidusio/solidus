@@ -1,5 +1,5 @@
 ---
-ru-RU: 
+ru: 
   'no': "Нет"
   'yes': "Да"
   5_biggest_spenders: "5 крупнейших покупателей"
@@ -215,7 +215,7 @@ ru-RU:
   add_option_value: "Добавить значение опции"
   add_product: "Добавить товар"
   add_product_properties: "Добавить свойства товара"
-  add_rule_of_type: "Добавить правило"
+  add_rule_of_type: "Добавить правило типа"
   add_scope: "Добавить фильтр"
   add_state: "Добавить регион/область"
   add_to_cart: "Добавить в корзину"
