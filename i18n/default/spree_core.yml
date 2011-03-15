@@ -68,6 +68,7 @@ en:
         quantity: Quantity
       order:
         checkout_complete: "Checkout Complete"
+        completed_at: "Completed At"
         ip_address: "IP Address"
         item_total: "Item Total"
         number: Number
@@ -333,6 +334,7 @@ en:
   debit: Debit
   default: Default
   delete: Delete
+  delivery: Delivery
   depth: Depth
   description: Description
   destroy: Destroy
@@ -368,9 +370,16 @@ en:
   enable_login_via_openid: "Use OpenID instead"
   enable_mail_delivery: Enable Mail Delivery
   enter_exactly_as_shown_on_card: Please enter exactly as shown on the card
+  enter_atleast_five_letters: Enter atleast five letters of customer name
   enter_password_to_confirm: "(we need your current password to confirm your changes)"
   environment: "Environment"
   error: error
+  errors:
+    messages:
+      no_shipping_methods_available: "No shipping methods available for selected location, please change your address and try again."
+  errors_prohibited_this_record_from_being_saved:
+    one: "1 error prohibited this record from being saved"
+    other: "%{count} errors prohibited this record from being saved"
   event: Event
   existing_customer: "Existing Customer"
   expiration: "Expiration"
@@ -391,15 +400,18 @@ en:
   flat_rate_per_order: "Flat Rate (per order)"
   flexible_rate: "Flexible Rate"
   forgot_password: "Forgot Password?"
+  from_state: From State
   front_end: Front End
   full_name: "Full Name"
   gateway: Gateway
   gateway_configuration: "Gateway configuration"
+  gateway_config_unavailable: "Gateway unavailable for environment"
   gateway_error: "Gateway Error"
   gateway_setting_description: "Select a payment gateway and configure its settings."
   gateway_settings_warning: "If you are changing the gateway type, you must save first before you can edit the gateway settings"
   general: "General"
   general_settings: "General Settings"
+  edit_general_settings: "Edit General Settings"
   general_settings_description: "Configure general Spree settings."
   google_analytics: "Google Analytics"
   google_analytics_active: "Active"
@@ -522,7 +534,6 @@ en:
   no_payment_methods_available: "Can't check out, no payment methods are configured for this environment"
   no_products_found: "No products found"
   no_results: "No results"
-  no_shipping_methods_available: "No shipping methods available, please change your address and try again."
   no_user_found: "No user was found with that email address"
   none: None
   none_available: "None Available"
@@ -540,8 +551,9 @@ en:
     variant_not_deleted: "Variant could not be deleted"
   on_hand: "On Hand"
   operation: Operation
-  option_Values: "Option Values"
+  option_type: "Option Type"
   option_types: "Option Types"
+  option_value: "Option Value"
   option_values: "Option Values"
   options: Options
   or: or
@@ -552,6 +564,11 @@ en:
   order_date: "Order Date"
   order_details: "Order Details"
   order_email_resent: "Order Email Resent"
+  order_mailer:
+    confirm_email:
+      subject:  "Order Confirmation"
+    cancel_email:
+      subject: "Cancellation of Order"
   order_not_in_system: That order number is not valid on this site.
   order_number: Order
   order_operation_authorize: Authorize
@@ -594,6 +611,7 @@ en:
   path: Path
   pay: pay
   payment: Payment
+  payment_actions: "Actions"
   payment_gateway: "Payment Gateway"
   payment_information: "Payment Information"
   payment_method: Payment Method
@@ -603,9 +621,14 @@ en:
   payment_state: Payment State
   payment_states:
     balance_due: balance due
+    completed: completed
+    checkout: checkout
     credit_owed: credit owed
     failed: failed
     paid: paid
+    pending: pending
+    processing: processing
+    void: void
   payment_updated: Payment Updated
   payments: Payments
   pending_payments: Pending Payments
@@ -824,6 +847,9 @@ en:
   ship_address: "Ship Address"
   shipment: Shipment
   shipment_details: Shipment Details
+  shipment_mailer:
+    shipped_email:
+      subject: "Shipment Notification"
   shipment_number: "Shipment #"
   shipment_state: Shipment State
   shipment_states:
@@ -916,11 +942,13 @@ en:
   test: "Test"
   test_mode: Test Mode
   thank_you_for_your_order: "Thank you for your business.  Please print out a copy of this confirmation page for your records."
+  there_were_problems_with_the_following_fields: "There were problems with the following fields"
   this_file_language: "English (US)"
   this_month: "This Month"
   this_year: "This Year"
   thumbnail: "Thumbnail"
   to_add_variants_you_must_first_define: "To add variants, you must first define"
+  to_state: "To State"
   top_grossing_products: "Top Grossing Products"
   total: Total
   tracking: Tracking
@@ -973,6 +1001,7 @@ en:
   width: Width
   year: "Year"
   you_have_been_logged_out: "You have been logged out."
+  you_have_no_orders_yet: "You have no orders yet."
   your_cart_is_empty: "Your cart is empty"
   zip: Zip
   zone: Zone

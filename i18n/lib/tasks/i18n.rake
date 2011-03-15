@@ -13,9 +13,9 @@ namespace :spree_i18n do
     puts "Fetching latest Spree locale file to #{language_root}"
     #TODO also pull the auth and dash locales once they exist
     exec %(
-      curl -Lo '#{default_dir}/spree_api.yml' http://github.com/railsdog/spree/raw/master/api/config/locales/en.yml
-      curl -Lo '#{default_dir}/spree_core.yml' http://github.com/railsdog/spree/raw/master/core/config/locales/en.yml
-      curl -Lo '#{default_dir}/spree_promo.yml' http://github.com/railsdog/spree/raw/master/promo/config/locales/en.yml
+      curl -Lo '#{default_dir}/spree_api.yml' http://github.com/spree/spree/raw/master/api/config/locales/en.yml
+      curl -Lo '#{default_dir}/spree_core.yml' http://github.com/spree/spree/raw/master/core/config/locales/en.yml
+      curl -Lo '#{default_dir}/spree_promo.yml' http://github.com/spree/spree/raw/master/promo/config/locales/en.yml
     )
   end
 
