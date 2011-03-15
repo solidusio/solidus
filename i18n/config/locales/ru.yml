@@ -131,7 +131,8 @@ ru:
     models: 
       address: 
         one: "Адрес"
-        other: "Адреса"
+        few: "Адреса"
+        other: "Адресов"
       cheque_payment: 
         one: "Оплата чеком"
         other: "Оплаты чеками"
@@ -624,9 +625,10 @@ ru:
   payment_methods: "Способы оплаты"
   payment_methods_setting_description: "Настройка способов оплаты, которые может использовать клиент"
   payment_processing_failed: "Payment could not be processed, please check the details you entered"
-  payment_state: Статус оплаты
+  payment_state: "Статус платежа"
   payment_states: 
     balance_due: частично
+    completed: завершен
     credit_owed: в кредит
     failed: ошибка
     paid: оплачен
