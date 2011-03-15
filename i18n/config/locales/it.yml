@@ -68,6 +68,7 @@ it:
         quantity: 'Quantità'
       order: 
         checkout_complete: "Pagamento Completato"
+        completed_at: "Completed At"
         ip_address: "Indirizzo IP"
         item_total: "Oggetti Totali"
         number: 'Numero'
@@ -349,6 +350,7 @@ it:
   debit: "Debito"
   default: "Predefinito"
   delete: "Cancella"
+  delivery: Delivery
   depth: "Profondità"
   description: "Descrizione"
   destroy: "Elimina"
@@ -357,6 +359,7 @@ it:
   discount_amount: "Sconto quantità"
   display: "Visualizza"
   edit: "Modifica"
+  edit_general_settings: "Edit General Settings"
   editing_billing_integration: "Modifica il sistema di Fatturazione"
   editing_category: "Modifica categoria"
   editing_mail_method: "Modifica metodi di spedizione email"
@@ -384,15 +387,23 @@ it:
   enable_login_via_login_password: "abilita l'autenticazione tramite email/password"
   enable_login_via_openid: "abilita l'autenticazione tramite OpenID "
   enable_mail_delivery: "abilita l'email di consegna"
+  enter_atleast_five_letters: Enter atleast five letters of customer name
   enter_exactly_as_shown_on_card: "Si prega di inserire esattamente come visualizzato sulla carta"
   enter_password_to_confirm: "(Abbiamo bisogno della password corrente per confermare il cambio)"
   environment: "Ambiente"
   error: "errore"
+  errors: 
+    messages: 
+      no_shipping_methods_available: "No shipping methods available for selected location, please change your address and try again."
+  errors_prohibited_this_record_from_being_saved: 
+    one: "1 error prohibited this record from being saved"
+    other: "%{count} errors prohibited this record from being saved"
   event: "Evento"
   existing_customer: "Il cliente esiste"
   expiration: "Scadenza"
   expiration_month: "Valido fino (Mese)"
   expiration_year: "Valido fino (Anno)"
+  expiry: Expiry
   extension: "estensione"
   extensions: "estensioni"
   filename: "nome del file"
@@ -409,9 +420,11 @@ it:
   flexible_rate: "Tasso Flessibile"
   forgot_password: "Password perduta"
   free_shipping: "Spedizione gratuita"
+  from_state: From State
   front_end: "Front End"
   full_name: "Nome completo"
   gateway: "Gateway"
+  gateway_config_unavailable: "Gateway unavailable for environment"
   gateway_configuration: "configurazione gateway"
   gateway_error: "Errore gateway"
   gateway_setting_description: "Seleziona e configura un gateway di pagamento."
@@ -498,6 +511,7 @@ it:
   mark_shipped: "Contrassegna come consegnata"
   master_price: "Prezzo base"
   max_items: "Max articoli"
+  may_be_combined_with_other_promotions: May be combined with other promotions
   meta_description: "descrizione (meta description)"
   meta_keywords: "parole chiave (meta keywords)"
   metadata: "metadata"
@@ -546,7 +560,6 @@ it:
   no_products_found: "Prodotti non trovati"
   no_results: "Nessun risultato"
   no_rules_added: "Nessuna regola aggiunta"
-  no_shipping_methods_available: "Nessun metodo di consegna disponibile, cambiare l'indirizzo e riprovare."
   no_user_found: "Nessun utente è stato trovato con questo indirizzo email"
   none: "nessuno"
   none_available: "non disponibile"
@@ -564,8 +577,9 @@ it:
     variant_not_deleted: "La variante non può essere eliminata"
   on_hand: "Disponibile"
   operation: "Operazione"
-  option_Values: "Valori opzionali"
+  option_type: "Option Type"
   option_types: "Opzioni"
+  option_value: "Option Value"
   option_values: "Valori opzionali"
   options: "Operazioni"
   or: "o"
@@ -576,6 +590,11 @@ it:
   order_date: "Data ordine"
   order_details: "Dettagli ordine"
   order_email_resent: " Email ordine reinviata"
+  order_mailer: 
+    cancel_email: 
+      subject: "Cancellation of Order"
+    confirm_email: 
+      subject: "Order Confirmation"
   order_not_in_system: "Numero d'ordine non valido."
   order_number: "Ordine n°"
   order_operation_authorize: "Autorizzazione"
@@ -618,6 +637,7 @@ it:
   path: "Percorso"
   pay: "pagare"
   payment: "Pagamento"
+  payment_actions: "Actions"
   payment_gateway: "Gateway di pagamento"
   payment_information: "Informazione pagamento"
   payment_method: "Metodo di pagamento"
@@ -627,9 +647,14 @@ it:
   payment_state: "Stato del pagamento"
   payment_states: 
     balance_due: "saldo"
+    checkout: checkout
+    completed: completed
     credit_owed: "credito nei confronti"
     failed: "fallito"
     paid: "pagato"
+    pending: pending
+    processing: processing
+    void: void
   payment_updated: "Pagamento aggiornato"
   payments: "Pagamenti"
   pending_payments: "pagamento in sospeso"
@@ -846,6 +871,7 @@ it:
   rma_number: "Numero RMA"
   rma_value: "Valore RMA"
   roles: "regole"
+  rules: Rules
   sales_tax: "Tasse"
   sales_total: "Totale"
   sales_total_for_all_orders: "Totale per ogni ordine"
@@ -875,6 +901,9 @@ it:
   ship_address: "Indirizzo di consegna"
   shipment: "Spedizione"
   shipment_details: "Dettagli spedizione"
+  shipment_mailer: 
+    shipped_email: 
+      subject: "Shipment Notification"
   shipment_number: "Spedizione #"
   shipment_state: "Stato della spedizione"
   shipment_states: 
@@ -967,11 +996,13 @@ it:
   test: "Test"
   test_mode: "Modalità test"
   thank_you_for_your_order: "Grazie per l'acquisto."
+  there_were_problems_with_the_following_fields: "There were problems with the following fields"
   this_file_language: "Italiano (IT)"
   this_month: "Questo mese"
   this_year: "Quest'anno"
   thumbnail: "Miniatura"
   to_add_variants_you_must_first_define: "Per aggiungere campi devi prima definire"
+  to_state: "To State"
   top_grossing_products: "I più venduti"
   total: "Totale"
   tracking: "Tracciamento"
@@ -1026,6 +1057,7 @@ it:
   width: "Larghezza"
   year: "Anno"
   you_have_been_logged_out: "Il logout è stato effetuato con successo."
+  you_have_no_orders_yet: "You have no orders yet."
   your_cart_is_empty: "Il tuo carrello è vuoto"
   zip: "CAP"
   zone: "Zona"

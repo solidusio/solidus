@@ -68,6 +68,7 @@ nb-NO:
         quantity: Antall
       order: 
         checkout_complete: "Fullført handel"
+        completed_at: "Completed At"
         ip_address: "IP-nummer"
         item_total: "Sum varer"
         number: Nummer
@@ -349,6 +350,7 @@ nb-NO:
   debit: Debit
   default: Default
   delete: Slett
+  delivery: Delivery
   depth: Dybde
   description: Beskrivelse
   destroy: Fjern
@@ -357,6 +359,7 @@ nb-NO:
   discount_amount: "Discount Amount"
   display: Vis
   edit: Endre
+  edit_general_settings: "Edit General Settings"
   editing_billing_integration: Editing Billing Integration
   editing_category: "Endre kategori"
   editing_mail_method: Editing Mail Method
@@ -384,15 +387,23 @@ nb-NO:
   enable_login_via_login_password: "Use standard email/password"
   enable_login_via_openid: "Use OpenID instead"
   enable_mail_delivery: "Skru på sending av epost"
+  enter_atleast_five_letters: Enter atleast five letters of customer name
   enter_exactly_as_shown_on_card: Please enter exactly as shown on the card
   enter_password_to_confirm: "(we need your current password to confirm your changes)"
   environment: "Environment"
   error: feil
+  errors: 
+    messages: 
+      no_shipping_methods_available: "No shipping methods available for selected location, please change your address and try again."
+  errors_prohibited_this_record_from_being_saved: 
+    one: "1 error prohibited this record from being saved"
+    other: "%{count} errors prohibited this record from being saved"
   event: Hendelse
   existing_customer: "Eksisterende kunde"
   expiration: "Utgår"
   expiration_month: "Utgår måned"
   expiration_year: "Utgår år"
+  expiry: Expiry
   extension: Utvidelse
   extensions: Utvidelser
   filename: Filnavn
@@ -409,9 +420,11 @@ nb-NO:
   flexible_rate: "Flexible Rate"
   forgot_password: "Forgot Password"
   free_shipping: Free Shipping
+  from_state: From State
   front_end: Front End
   full_name: "Full Name"
   gateway: "Tjeneste"
+  gateway_config_unavailable: "Gateway unavailable for environment"
   gateway_configuration: "Gateway configuration"
   gateway_error: "Feil oppstått i tjeneste"
   gateway_setting_description: "Velg en betalingstjeneste og konfigurer den."
@@ -498,6 +511,7 @@ nb-NO:
   mark_shipped: "Merk som levert"
   master_price: "Ordinær pris"
   max_items: Max Items
+  may_be_combined_with_other_promotions: May be combined with other promotions
   meta_description: "Meta Description"
   meta_keywords: "Meta Keywords"
   metadata: "Metadata"
@@ -546,7 +560,6 @@ nb-NO:
   no_products_found: "No products found"
   no_results: "No results"
   no_rules_added: No rules added
-  no_shipping_methods_available: "No shipping methods available, please change your address and try again."
   no_user_found: "No user was found with that email address"
   none: Ingen
   none_available: "Ingen tilgjengelig"
@@ -564,8 +577,9 @@ nb-NO:
     variant_not_deleted: "Variant could not be deleted"
   on_hand: "Tilgjengelig"
   operation: Operasjon
-  option_Values: "Variasjonsverdier"
+  option_type: "Option Type"
   option_types: "Variasjonstyper"
+  option_value: "Option Value"
   option_values: "Variasjonsverdier"
   options: Valg
   or: eller
@@ -576,6 +590,11 @@ nb-NO:
   order_date: "Ordredato"
   order_details: "Ordredetaljer"
   order_email_resent: "Ordre-epost sent på nytt"
+  order_mailer: 
+    cancel_email: 
+      subject: "Cancellation of Order"
+    confirm_email: 
+      subject: "Order Confirmation"
   order_not_in_system: That order number is not valid on this site.
   order_number: Ordrenummer
   order_operation_authorize: Autoriser
@@ -618,6 +637,7 @@ nb-NO:
   path: Sti
   pay: betal
   payment: Betaling
+  payment_actions: "Actions"
   payment_gateway: "Betalingstjeneste"
   payment_information: "Betalingsinformasjon"
   payment_method: Payment Method
@@ -627,9 +647,14 @@ nb-NO:
   payment_state: Payment State
   payment_states: 
     balance_due: balance due
+    checkout: checkout
+    completed: completed
     credit_owed: credit owed
     failed: failed
     paid: paid
+    pending: pending
+    processing: processing
+    void: void
   payment_updated: Payment Updated
   payments: Betalinger
   pending_payments: Pending Payments
@@ -846,6 +871,7 @@ nb-NO:
   rma_number: RMA Number
   rma_value: RMA Value
   roles: Roller
+  rules: Rules
   sales_tax: "Sales Tax"
   sales_total: "Brutto omsetning"
   sales_total_for_all_orders: "Totale salg for alle ordrer"
@@ -875,6 +901,9 @@ nb-NO:
   ship_address: "Leveringsadresse"
   shipment: Leveranse
   shipment_details: Shipment Details
+  shipment_mailer: 
+    shipped_email: 
+      subject: "Shipment Notification"
   shipment_number: "Leveransenummer"
   shipment_state: Shipment State
   shipment_states: 
@@ -967,11 +996,13 @@ nb-NO:
   test: "Test"
   test_mode: Test Mode
   thank_you_for_your_order: "Takk for bestillingen. Vennligst skriv ut og ta vare på denne bekreftelsen."
+  there_were_problems_with_the_following_fields: "There were problems with the following fields"
   this_file_language: "Norsk"
   this_month: "This Month"
   this_year: "This Year"
   thumbnail: "Thumbnail"
   to_add_variants_you_must_first_define: "To add variants, you must first define"
+  to_state: "To State"
   top_grossing_products: "Top Grossing Products"
   total: Total
   tracking: Sporing
@@ -1026,6 +1057,7 @@ nb-NO:
   width: Bredde
   year: "Year"
   you_have_been_logged_out: "Du har nå logget ut."
+  you_have_no_orders_yet: "You have no orders yet."
   your_cart_is_empty: "Din handlekurv er tom"
   zip: Postnummer
   zone: Sone

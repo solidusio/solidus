@@ -68,6 +68,7 @@ lv:
         quantity: "Daudzums"
       order: 
         checkout_complete: "Izrakstīšanās pabeigta"
+        completed_at: "Completed At"
         ip_address: "IP Adrese"
         item_total: "Kopējā vienība"
         number: "Skaitlis"
@@ -349,6 +350,7 @@ lv:
   debit: "Debits"
   default: Default
   delete: "Izdzēst"
+  delivery: Delivery
   depth: "Dziļums"
   description: Nosaukums
   destroy: "Izdzēst"
@@ -357,6 +359,7 @@ lv:
   discount_amount: "Discount Amount"
   display: "Rādīt"
   edit: "Rediģēt"
+  edit_general_settings: "Edit General Settings"
   editing_billing_integration: Editing Billing Integration
   editing_category: "Rediģēt kategoriju"
   editing_mail_method: Editing Mail Method
@@ -384,15 +387,23 @@ lv:
   enable_login_via_login_password: "Izmanto standarta e-pastu/paroli"
   enable_login_via_openid: "Tā vietā izmantot atvērto ID"
   enable_mail_delivery: "Atļaut pasta sūtīšanu"
+  enter_atleast_five_letters: Enter atleast five letters of customer name
   enter_exactly_as_shown_on_card: "Lūdzu ievadiet precīzi kā norādīts uz kartes"
   enter_password_to_confirm: "(we need your current password to confirm your changes)"
   environment: "Vide"
   error: "Kļūda"
+  errors: 
+    messages: 
+      no_shipping_methods_available: "No shipping methods available for selected location, please change your address and try again."
+  errors_prohibited_this_record_from_being_saved: 
+    one: "1 error prohibited this record from being saved"
+    other: "%{count} errors prohibited this record from being saved"
   event: "Notikums"
   existing_customer: "Esošais klients"
   expiration: "Izbeigšanās"
   expiration_month: "Beigu mēnesis"
   expiration_year: "Beigu gads"
+  expiry: Expiry
   extension: "Paplašinājums"
   extensions: "Paplašinājumi"
   filename: "Faila nosaukums"
@@ -409,9 +420,11 @@ lv:
   flexible_rate: "Elastīga likme"
   forgot_password: "Parole aizmirsta"
   free_shipping: Free Shipping
+  from_state: From State
   front_end: Front End
   full_name: "Pilns vārds"
   gateway: Gateway
+  gateway_config_unavailable: "Gateway unavailable for environment"
   gateway_configuration: "Gateway konfigurācija"
   gateway_error: "Gateway kļūda"
   gateway_setting_description: "Izvēlieties maksāšanas gateway un konfigurējiet tā iestatījumus."
@@ -498,6 +511,7 @@ lv:
   mark_shipped: "Atzīmēt aizsūtītos"
   master_price: "Master Price"
   max_items: Max Items
+  may_be_combined_with_other_promotions: May be combined with other promotions
   meta_description: "Meta apraksts"
   meta_keywords: "Meta atslēgas vārdi"
   metadata: "Metadata"
@@ -546,7 +560,6 @@ lv:
   no_products_found: "Nav atrasts nekāds produkts"
   no_results: "No results"
   no_rules_added: No rules added
-  no_shipping_methods_available: "Nekāda nosūtīšanas metode nav pieejam, lūdzū, izmainiet savu adresi un mēģiniet vēlreiz."
   no_user_found: "Neviens lietotājs netika atrasts ar šādu e-pasta adresi"
   none: "Nekas"
   none_available: "Nekas nav pieejams"
@@ -564,8 +577,9 @@ lv:
     variant_not_deleted: "Variants nav izdzēsts"
   on_hand: "Ir uz vietas"
   operation: Operation
-  option_Values: "Opciju vērtība"
+  option_type: "Option Type"
   option_types: "Opciju tips"
+  option_value: "Option Value"
   option_values: "Opciju vērtība"
   options: "Iespējas"
   or: "vai"
@@ -576,6 +590,11 @@ lv:
   order_date: "Pasūtījuma datums"
   order_details: "Pasūtījuma detaļas"
   order_email_resent: "Pasūtījuma e-pasts vēlreiz pārsūtīts"
+  order_mailer: 
+    cancel_email: 
+      subject: "Cancellation of Order"
+    confirm_email: 
+      subject: "Order Confirmation"
   order_not_in_system: "Šis pasūtījuma numurs nav derīgs šajā saitā."
   order_number: "Pasūtījums"
   order_operation_authorize: "Autorizēt"
@@ -618,6 +637,7 @@ lv:
   path: "Ceļš"
   pay: "maksā"
   payment: "Maksājums"
+  payment_actions: "Actions"
   payment_gateway: "Payment Gateway"
   payment_information: "Maksājumu informācija"
   payment_method: "Maksājuma metode"
@@ -627,9 +647,14 @@ lv:
   payment_state: Payment State
   payment_states: 
     balance_due: balance due
+    checkout: checkout
+    completed: completed
     credit_owed: credit owed
     failed: failed
     paid: paid
+    pending: pending
+    processing: processing
+    void: void
   payment_updated: "Maksājums atjaunots"
   payments: "Maksājumi"
   pending_payments: "Nenokārtoti maksājumi"
@@ -846,6 +871,7 @@ lv:
   rma_number: "RMA numurs"
   rma_value: "RMA vērtība"
   roles: Roles
+  rules: Rules
   sales_tax: "Pārdošanas nodoklis"
   sales_total: "Kopējā realizācija"
   sales_total_for_all_orders: "Kopējā realizācija visiem pasūtījumiem"
@@ -875,6 +901,9 @@ lv:
   ship_address: "Nosūtīšanas adrese"
   shipment: "Sūtījums"
   shipment_details: "Sūtījuma detaļas"
+  shipment_mailer: 
+    shipped_email: 
+      subject: "Shipment Notification"
   shipment_number: "Sūtījums #"
   shipment_state: Shipment State
   shipment_states: 
@@ -967,11 +996,13 @@ lv:
   test: "Tests"
   test_mode: "Testa Mode"
   thank_you_for_your_order: "Paldies par sadarbību. Lūdzu, izdrukājiet šo apstiprinājumu savai zināšanai."
+  there_were_problems_with_the_following_fields: "There were problems with the following fields"
   this_file_language: "Angliski (US)"
   this_month: "Šis mēnesis"
   this_year: "Šis gads"
   thumbnail: "Thumbnail"
   to_add_variants_you_must_first_define: "Lai pievienotu variantu, vispirms definējiet"
+  to_state: "To State"
   top_grossing_products: "Top Grossing Products"
   total: "Kopā"
   tracking: Tracking
@@ -1026,6 +1057,7 @@ lv:
   width: "Platums"
   year: "Gads"
   you_have_been_logged_out: "Jūs esat izgājis no sistēmas."
+  you_have_no_orders_yet: "You have no orders yet."
   your_cart_is_empty: "Jūsu iepirkuma grozs ir tukšs"
   zip: "Pasta kods"
   zone: "Zona"

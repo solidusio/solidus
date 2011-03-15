@@ -68,6 +68,7 @@ mx:
         quantity: Cantidad
       order: 
         checkout_complete: "Pedido completado"
+        completed_at: "Completed At"
         ip_address: "Direccion IP"
         item_total: "Total de artículos"
         number: Numero
@@ -349,6 +350,7 @@ mx:
   debit: "Débito"
   default: Default
   delete: Eliminar
+  delivery: Delivery
   depth: Profundidad
   description: "Descripción"
   destroy: Eliminar
@@ -357,6 +359,7 @@ mx:
   discount_amount: "Discount Amount"
   display: Mostrar
   edit: Editar
+  edit_general_settings: "Edit General Settings"
   editing_billing_integration: "Editar integración fiscal"
   editing_category: "Editando categoría"
   editing_mail_method: Editing Mail Method
@@ -384,15 +387,23 @@ mx:
   enable_login_via_login_password: "Use email/contraseña estándar"
   enable_login_via_openid: "Usar OpenID"
   enable_mail_delivery: "Habilitar envío por correo"
+  enter_atleast_five_letters: Enter atleast five letters of customer name
   enter_exactly_as_shown_on_card: "Por favor ingrese los numeros exactamente como se encuentran en la tarjeta"
   enter_password_to_confirm: "(we need your current password to confirm your changes)"
   environment: "Ambiente"
   error: error
+  errors: 
+    messages: 
+      no_shipping_methods_available: "No shipping methods available for selected location, please change your address and try again."
+  errors_prohibited_this_record_from_being_saved: 
+    one: "1 error prohibited this record from being saved"
+    other: "%{count} errors prohibited this record from being saved"
   event: Evento
   existing_customer: "Cliente existente"
   expiration: "Expiración"
   expiration_month: "Mes de vencimiento"
   expiration_year: "Año de vencimiento"
+  expiry: Expiry
   extension: "Extensión"
   extensions: Extensiones
   filename: "Nombre de archivo"
@@ -409,9 +420,11 @@ mx:
   flexible_rate: "Tasa flexible"
   forgot_password: "¿Olvidaste tu contraseña?"
   free_shipping: Free Shipping
+  from_state: From State
   front_end: Front End
   full_name: "Nombre Completo"
   gateway: "Medio de pago"
+  gateway_config_unavailable: "Gateway unavailable for environment"
   gateway_configuration: "Configuración del medio de pago"
   gateway_error: "Error en el medio de pago"
   gateway_setting_description: "Descripción de las características del medio de pago"
@@ -498,6 +511,7 @@ mx:
   mark_shipped: "Marcar como enviado"
   master_price: "Precio principal"
   max_items: Máximo numero de elementos
+  may_be_combined_with_other_promotions: May be combined with other promotions
   meta_description: "Meta descripción"
   meta_keywords: "Meta palabras clave"
   metadata: "Metadatos"
@@ -546,7 +560,6 @@ mx:
   no_products_found: "No se encontraron productos"
   no_results: "No results"
   no_rules_added: No rules added
-  no_shipping_methods_available: "No hay métodos de envío configurados, por favor cambie su dirección e intente de nuevo."
   no_user_found: "No se ha encontrado ningun usuario con esa dirección de correo"
   none: "Ninguno"
   none_available: "No hay nada que mostrar"
@@ -564,8 +577,9 @@ mx:
     variant_not_deleted: "La variante no ha podido ser eliminada"
   on_hand: "Disponible"
   operation: "Operación"
-  option_Values: "Valores de opción"
+  option_type: "Option Type"
   option_types: "Tipos de opción"
+  option_value: "Option Value"
   option_values: "valores de opción"
   options: Opciones
   or: o
@@ -576,6 +590,11 @@ mx:
   order_date: "Fecha de pedido"
   order_details: "Detalles del pedido"
   order_email_resent: "Email de pedido reenviado"
+  order_mailer: 
+    cancel_email: 
+      subject: "Cancellation of Order"
+    confirm_email: 
+      subject: "Order Confirmation"
   order_not_in_system: "Ese numero de orden no es válido"
   order_number: "Pedido No."
   order_operation_authorize: "Autorizar"
@@ -618,6 +637,7 @@ mx:
   path: Ruta
   pay: Pagar
   payment: Pago
+  payment_actions: "Actions"
   payment_gateway: "Medio de pago"
   payment_information: "Información del pago"
   payment_method: Payment Method
@@ -627,9 +647,14 @@ mx:
   payment_state: Payment State
   payment_states: 
     balance_due: balance due
+    checkout: checkout
+    completed: completed
     credit_owed: credit owed
     failed: failed
     paid: paid
+    pending: pending
+    processing: processing
+    void: void
   payment_updated: Payment Updated
   payments: Pagos
   pending_payments: Pending Payments
@@ -846,6 +871,7 @@ mx:
   rma_number: RMA Numero
   rma_value: RMA Valor
   roles: Funciones
+  rules: Rules
   sales_tax: "impuesto de ventas"
   sales_total: "Total de ventas"
   sales_total_for_all_orders: "Total de ventas para todos los pedidos"
@@ -875,6 +901,9 @@ mx:
   ship_address: "Dirección de envio"
   shipment: "Envío"
   shipment_details: Detalles del Envio
+  shipment_mailer: 
+    shipped_email: 
+      subject: "Shipment Notification"
   shipment_number: "Envío No."
   shipment_state: Shipment State
   shipment_states: 
@@ -967,11 +996,13 @@ mx:
   test: "Prueba"
   test_mode: Modo de Prueba
   thank_you_for_your_order: "Gracias por su pedido"
+  there_were_problems_with_the_following_fields: "There were problems with the following fields"
   this_file_language: "Español (México)"
   this_month: "Este mes"
   this_year: "Este año"
   thumbnail: "Miniatura"
   to_add_variants_you_must_first_define: "Para agregar variantes, primero debe definir"
+  to_state: "To State"
   top_grossing_products: "Productos con más Utilidad"
   total: Total
   tracking: Seguimiento
@@ -1026,6 +1057,7 @@ mx:
   width: Ancho
   year: "Año"
   you_have_been_logged_out: "Se ha cerrado la sesión."
+  you_have_no_orders_yet: "You have no orders yet."
   your_cart_is_empty: "Su carrito está vacío"
   zip: "Código postal"
   zone: Zona

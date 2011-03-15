@@ -68,6 +68,7 @@ et:
         quantity: Kogus
       order: 
         checkout_complete: Tellimus edastatud!
+        completed_at: "Completed At"
         ip_address: IP aadress
         item_total: Kogus
         number: Number
@@ -349,6 +350,7 @@ et:
   debit: Deebet
   default: Default
   delete: Kustuta
+  delivery: Delivery
   depth: Sügavus
   description: Kirjeldus
   destroy: Kustuta
@@ -357,6 +359,7 @@ et:
   discount_amount: "Discount Amount"
   display: Kuvatav väärtus
   edit: Muuda
+  edit_general_settings: "Edit General Settings"
   editing_billing_integration: Redigeeri Billing Integration-it
   editing_category: Redigeeri kategooriat
   editing_mail_method: Editing Mail Method
@@ -384,15 +387,23 @@ et:
   enable_login_via_login_password: Kasuta sisselogimiseks e-maili ja salasõna
   enable_login_via_openid: Logi sisse OpenID-d kasutades
   enable_mail_delivery: Luba e-mailide saatmine
+  enter_atleast_five_letters: Enter atleast five letters of customer name
   enter_exactly_as_shown_on_card: Palun sisestage täpselt nii, nagu kaardil näidatud
   enter_password_to_confirm: "(we need your current password to confirm your changes)"
   environment: Keskkond
   error: Viga
+  errors: 
+    messages: 
+      no_shipping_methods_available: "No shipping methods available for selected location, please change your address and try again."
+  errors_prohibited_this_record_from_being_saved: 
+    one: "1 error prohibited this record from being saved"
+    other: "%{count} errors prohibited this record from being saved"
   event: Sündmus
   existing_customer: Olemasolev klient
   expiration: Aegub
   expiration_month: Aegumise kuu
   expiration_year: Aegumise aasta
+  expiry: Expiry
   extension: Laiendus
   extensions: Laiendused
   filename: Faili nimi
@@ -409,9 +420,11 @@ et:
   flexible_rate: Paindlik summa
   forgot_password: Unustasid salasõna?
   free_shipping: Free Shipping
+  from_state: From State
   front_end: Front End
   full_name: Täisnimi
   gateway: Lüüs
+  gateway_config_unavailable: "Gateway unavailable for environment"
   gateway_configuration: Lüüsi konfiguratsioon
   gateway_error: Lüüsi viga
   gateway_setting_description: Select a payment gateway and configure its settings. Vali juurdepääs maksmisele ja konfigureeri sätteid.
@@ -498,6 +511,7 @@ et:
   mark_shipped: Märgi saadetuks
   master_price: Hind
   max_items: Maksimaalne toodete arv
+  may_be_combined_with_other_promotions: May be combined with other promotions
   meta_description: Kirjeldus
   meta_keywords: Märksõnad
   metadata: Metaandmed
@@ -546,7 +560,6 @@ et:
   no_products_found: tooteid ei leitud
   no_results: "No results"
   no_rules_added: No rules added
-  no_shipping_methods_available: Puuduvad võimalused kohaletoimetamiseks. Palun muutke aadressi ja proovige uuesti.
   no_user_found: Sellise e-mailiga kasutajat ei leitud.
   none: Puuduvad
   none_available: Puuduvad
@@ -564,8 +577,9 @@ et:
     variant_not_deleted: Variandi kustutamine ebaõnnestus
   on_hand: Laoseis
   operation: Operatsioon
-  option_Values: valiku väärtused
+  option_type: "Option Type"
   option_types: Variatsioonid
+  option_value: "Option Value"
   option_values: valiku väärtused
   options: Variatsioonid
   or: või
@@ -576,6 +590,11 @@ et:
   order_date: Tellimuse kuupäev
   order_details: Tellimuse info
   order_email_resent: E-mail tellimuse kohta uuesti saadetud
+  order_mailer: 
+    cancel_email: 
+      subject: "Cancellation of Order"
+    confirm_email: 
+      subject: "Order Confirmation"
   order_not_in_system: Tellimuse numbrit ei leitud sellelt saidilt
   order_number: Tellimuse number
   order_operation_authorize: tellimuse teostamine autoriseeritud
@@ -618,6 +637,7 @@ et:
   path: Teekond
   pay: Maksa
   payment: Makse
+  payment_actions: "Actions"
   payment_gateway: Makse lüüs
   payment_information: Makse informatsioon
   payment_method: Makseviis
@@ -627,9 +647,14 @@ et:
   payment_state: Payment State
   payment_states: 
     balance_due: balance due
+    checkout: checkout
+    completed: completed
     credit_owed: credit owed
     failed: failed
     paid: paid
+    pending: pending
+    processing: processing
+    void: void
   payment_updated: Makse uuendatud
   payments: Maksed
   pending_payments: Ootel olevad maksed
@@ -846,6 +871,7 @@ et:
   rma_number: Tagastatud toote number
   rma_value: Tagastatud toote väärtus
   roles: Rollid
+  rules: Rules
   sales_tax: Käibemaks
   sales_total: Kogumüük
   sales_total_for_all_orders: Tellimuste tulu kokku
@@ -875,6 +901,9 @@ et:
   ship_address: Kättetoimetamise aadress
   shipment: Saadetis
   shipment_details: Saadetise detailid
+  shipment_mailer: 
+    shipped_email: 
+      subject: "Shipment Notification"
   shipment_number: Saadetise number
   shipment_state: Shipment State
   shipment_states: 
@@ -967,11 +996,13 @@ et:
   test: Test
   test_mode: Testrežiim
   thank_you_for_your_order: Täname teid tellimuse eest
+  there_were_problems_with_the_following_fields: "There were problems with the following fields"
   this_file_language: Eesti keel
   this_month: Käesolev kuu
   this_year: Käesolev aasta
   thumbnail: Pisipilt
   to_add_variants_you_must_first_define: variantide lisamiseks pead esmalt defineerima TODO
+  to_state: "To State"
   top_grossing_products: Suurima käibega tooted
   total: Kokku
   tracking: Jälgimisnumber
@@ -1026,6 +1057,7 @@ et:
   width: Laius
   year: Aasta
   you_have_been_logged_out: Olete välja logitud
+  you_have_no_orders_yet: "You have no orders yet."
   your_cart_is_empty: Ostukorv on tühi
   zip: Postiindeks
   zone: Tsoon

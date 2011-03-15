@@ -68,6 +68,7 @@ sk:
         quantity: Množstvo
       order: 
         checkout_complete: "Potvrdenie"
+        completed_at: "Completed At"
         ip_address: "IP Adresa"
         item_total: "Položky celkom"
         number: Číslo
@@ -349,6 +350,7 @@ sk:
   debit: Debit
   default: Default
   delete: Vymaž
+  delivery: Delivery
   depth: Hĺbka
   description: Popis
   destroy: Zruš
@@ -357,6 +359,7 @@ sk:
   discount_amount: "Discount Amount"
   display: Zobraz
   edit: Edit
+  edit_general_settings: "Edit General Settings"
   editing_billing_integration: Editing Billing Integration
   editing_category: "Úprava kategórie"
   editing_mail_method: Editing Mail Method
@@ -384,15 +387,23 @@ sk:
   enable_login_via_login_password: "Use standard email/password"
   enable_login_via_openid: Prihlásenie sa cez OpenID
   enable_mail_delivery: Povolenie doručenie emailom
+  enter_atleast_five_letters: Enter atleast five letters of customer name
   enter_exactly_as_shown_on_card: Prosím zadajte presne podľa karty
   enter_password_to_confirm: "(we need your current password to confirm your changes)"
   environment: "Environment"
   error: chyba
+  errors: 
+    messages: 
+      no_shipping_methods_available: "No shipping methods available for selected location, please change your address and try again."
+  errors_prohibited_this_record_from_being_saved: 
+    one: "1 error prohibited this record from being saved"
+    other: "%{count} errors prohibited this record from being saved"
   event: Udalosť
   existing_customer: "Registrovaný zákazník"
   expiration: "Expirácia"
   expiration_month: "Mesiac expirácie"
   expiration_year: "Rok expirácie"
+  expiry: Expiry
   extension: Rozšírenie
   extensions: Rozšírenia
   filename: Názov súboru
@@ -409,9 +420,11 @@ sk:
   flexible_rate: "Flexibilná sadzba"
   forgot_password: "Zabudnuté heslo"
   free_shipping: Free Shipping
+  from_state: From State
   front_end: Front End
   full_name: "Celé meno"
   gateway: "Brány platieb"
+  gateway_config_unavailable: "Gateway unavailable for environment"
   gateway_configuration: "Konfigurácia brány"
   gateway_error: "Chyba brány"
   gateway_setting_description: "Výber a nastavenie brán platieb"
@@ -498,6 +511,7 @@ sk:
   mark_shipped: "Znak bol doručený"
   master_price: "Hlavná cena"
   max_items: Maximálny počet položiek
+  may_be_combined_with_other_promotions: May be combined with other promotions
   meta_description: "Meta-popis"
   meta_keywords: "Meta-kľúčové slová"
   metadata: "Metaúdaje"
@@ -546,7 +560,6 @@ sk:
   no_products_found: Nenašli sme žiadny produkt
   no_results: "No results"
   no_rules_added: No rules added
-  no_shipping_methods_available: "No shipping methods available, please change your address and try again."
   no_user_found: "Žiadny používateľ sa nenašiel s touto emailovou adresou"
   none: Žiadny
   none_available: "Žiadny nie je dispozícii"
@@ -564,8 +577,9 @@ sk:
     variant_not_deleted: "Variant could not be deleted"
   on_hand: "Na sklade"
   operation: Operácia
-  option_Values: "Hodnoty opcií"
+  option_type: "Option Type"
   option_types: "Typy opcií"
+  option_value: "Option Value"
   option_values: "Hodnoty opcií"
   options: Opcie
   or: alebo
@@ -576,6 +590,11 @@ sk:
   order_date: "Dátum objednávky"
   order_details: "Detaily objednávky"
   order_email_resent: "Email objednávky bol opäť poslaný"
+  order_mailer: 
+    cancel_email: 
+      subject: "Cancellation of Order"
+    confirm_email: 
+      subject: "Order Confirmation"
   order_not_in_system: Číslo tejto objednávky nie je správny na tejto stránke.
   order_number: Objednávka
   order_operation_authorize: Autorizuj
@@ -618,6 +637,7 @@ sk:
   path: Cesta
   pay: platba
   payment: Platba
+  payment_actions: "Actions"
   payment_gateway: "Brána platby"
   payment_information: "Informácia o platení"
   payment_method: Payment Method
@@ -627,9 +647,14 @@ sk:
   payment_state: Payment State
   payment_states: 
     balance_due: balance due
+    checkout: checkout
+    completed: completed
     credit_owed: credit owed
     failed: failed
     paid: paid
+    pending: pending
+    processing: processing
+    void: void
   payment_updated: Payment Updated
   payments: Platba
   pending_payments: Pending Payments
@@ -846,6 +871,7 @@ sk:
   rma_number: RMA Number
   rma_value: RMA Value
   roles: Roly
+  rules: Rules
   sales_tax: "Daň z predaja"
   sales_total: "Tržby spolu"
   sales_total_for_all_orders: "Tržby spolu za všetky objednávky"
@@ -875,6 +901,9 @@ sk:
   ship_address: "Adresa zásielky"
   shipment: Zásielka
   shipment_details: Shipment Details
+  shipment_mailer: 
+    shipped_email: 
+      subject: "Shipment Notification"
   shipment_number: "Číslo zásielky #"
   shipment_state: Shipment State
   shipment_states: 
@@ -967,11 +996,13 @@ sk:
   test: "Test"
   test_mode: Test Mode
   thank_you_for_your_order: "Ďakujeme za Vašu objednávku.  Prosím vytlačte kópiu toto potvrdenie pre Vaše položky objednávky."
+  there_were_problems_with_the_following_fields: "There were problems with the following fields"
   this_file_language: "Slovenčina"
   this_month: "This Month"
   this_year: "This Year"
   thumbnail: "Miniatúra"
   to_add_variants_you_must_first_define: "K pridaniu variánt, najprv musíte určiť"
+  to_state: "To State"
   top_grossing_products: "Top Grossing Products"
   total: Celkom
   tracking: Sledovanie
@@ -1026,6 +1057,7 @@ sk:
   width: Šírka
   year: "Rok"
   you_have_been_logged_out: "Odhlásili ste sa."
+  you_have_no_orders_yet: "You have no orders yet."
   your_cart_is_empty: "Váš košík je prázdny"
   zip: PSČ
   zone: Zóna

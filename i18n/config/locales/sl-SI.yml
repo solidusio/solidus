@@ -68,6 +68,7 @@ sl-SI:
         quantity: Količina
       order: 
         checkout_complete: "Naročilo je končano"
+        completed_at: "Completed At"
         ip_address: "IP naslov"
         item_total: "Skupaj kosov"
         number: "Številka"
@@ -349,6 +350,7 @@ sl-SI:
   debit: Debet
   default: Privzeto
   delete: Izbriši
+  delivery: Delivery
   depth: Globina
   description: Opis
   destroy: Izbriši
@@ -357,6 +359,7 @@ sl-SI:
   discount_amount: "Znesek popusta"
   display: Prikaži
   edit: Uredi
+  edit_general_settings: "Edit General Settings"
   editing_billing_integration: Urejanje plačilne integracije
   editing_category: "Urejanje kategorije"
   editing_mail_method: Urejanje kupona
@@ -384,15 +387,23 @@ sl-SI:
   enable_login_via_login_password: "Uporabi email in geslo"
   enable_login_via_openid: "ali pa uporabi OpenID"
   enable_mail_delivery: Vklopi pošiljanje emailov
+  enter_atleast_five_letters: Enter atleast five letters of customer name
   enter_exactly_as_shown_on_card: Prosimo vnesite točno tako kot je prikazano na kartici
   enter_password_to_confirm: "(za potrditev sprememb potrebujemo vaše trnutno geslo)"
   environment: "Okolje"
   error: napaka
+  errors: 
+    messages: 
+      no_shipping_methods_available: "No shipping methods available for selected location, please change your address and try again."
+  errors_prohibited_this_record_from_being_saved: 
+    one: "1 error prohibited this record from being saved"
+    other: "%{count} errors prohibited this record from being saved"
   event: Dogodek
   existing_customer: "Obstoječi uporabnik"
   expiration: "Velja do"
   expiration_month: "Velja do meseca"
   expiration_year: "Velja do leta"
+  expiry: Expiry
   extension: Razširitev
   extensions: Razširitve
   filename: Datoteka
@@ -409,9 +420,11 @@ sl-SI:
   flexible_rate: "Fleksibilna cena"
   forgot_password: "Ne spomnim se gesla"
   free_shipping: Brezplačna dostava
+  from_state: From State
   front_end: Front End
   full_name: "Ime in priimek"
   gateway: Ponudnik
+  gateway_config_unavailable: "Gateway unavailable for environment"
   gateway_configuration: "Nastavitve ponudnika"
   gateway_error: "Napaka ponudnika"
   gateway_setting_description: "Izbira ponudnika plačevanja in nastavitve."
@@ -498,6 +511,7 @@ sl-SI:
   mark_shipped: "Označi ko poslano"
   master_price: "Osnovna cena"
   max_items: Max Izdelkov
+  may_be_combined_with_other_promotions: May be combined with other promotions
   meta_description: "Meta opis"
   meta_keywords: "Meta ključne besede"
   metadata: "Metadata"
@@ -546,7 +560,6 @@ sl-SI:
   no_products_found: "Ni izdelkov"
   no_results: "Ni zadetkov"
   no_rules_added: Ni dodanih pravil
-  no_shipping_methods_available: "Dostava ni mogoča, prosimo spremenite vaš naslov za dostavo in poizkusite ponovno."
   no_user_found: "Uporabnik s tem email naslov ne obstaja"
   none: Noben
   none_available: "Ni na voljo"
@@ -564,8 +577,9 @@ sl-SI:
     variant_not_deleted: "Variante ni mogoče izbrisati"
   on_hand: "Na zalogi"
   operation: Operation
-  option_Values: "Izbire"
+  option_type: "Option Type"
   option_types: "Možnosti izbire"
+  option_value: "Option Value"
   option_values: "Izbire"
   options: Možnosti
   or: ali
@@ -576,6 +590,11 @@ sl-SI:
   order_date: "Datum naročila"
   order_details: "Podrobnosti naročila"
   order_email_resent: "Email z naročilom je bil ponovno poslan."
+  order_mailer: 
+    cancel_email: 
+      subject: "Cancellation of Order"
+    confirm_email: 
+      subject: "Order Confirmation"
   order_not_in_system: That order number is not valid on this site.
   order_number: Naročilo
   order_operation_authorize: Authorize
@@ -618,6 +637,7 @@ sl-SI:
   path: Pot
   pay: plačaj
   payment: Plačilo
+  payment_actions: "Actions"
   payment_gateway: "Ponudnik plačilnega sistema"
   payment_information: "Podatki o plačilu"
   payment_method: "Način plačila"
@@ -627,9 +647,14 @@ sl-SI:
   payment_state: Stanje plačila
   payment_states: 
     balance_due: balance due
+    checkout: checkout
+    completed: completed
     credit_owed: credit owed
     failed: failed
     paid: plačano
+    pending: pending
+    processing: processing
+    void: void
   payment_updated: Plačilo osveženo
   payments: Plačila
   pending_payments: "Čakajoča plačila"
@@ -846,6 +871,7 @@ sl-SI:
   rma_number: RMA šifra
   rma_value: RMA vrednost
   roles: Vloge
+  rules: Rules
   sales_tax: "DDV"
   sales_total: "Skupaj"
   sales_total_for_all_orders: "Skupna vrednost vseh naročil"
@@ -875,6 +901,9 @@ sl-SI:
   ship_address: "Naslov za dostavo"
   shipment: Pošiljka
   shipment_details: Podrobnosti pošiljke
+  shipment_mailer: 
+    shipped_email: 
+      subject: "Shipment Notification"
   shipment_number: "Šifra pošiljke"
   shipment_state: Stanje pošiljke
   shipment_states: 
@@ -967,11 +996,13 @@ sl-SI:
   test: "Test"
   test_mode: Testni način
   thank_you_for_your_order: "Hvala za zaupanje. Prosimo natisnite si kopijo te potrditvene strani za lastno referenco."
+  there_were_problems_with_the_following_fields: "There were problems with the following fields"
   this_file_language: "Slovenščina (SL)"
   this_month: "Ta mesec"
   this_year: "Letos"
   thumbnail: "Mala slika"
   to_add_variants_you_must_first_define: "Za dodajanje variant, morate najprej definirati"
+  to_state: "To State"
   top_grossing_products: "Izdelki z največ prometa"
   total: Skupaj
   tracking: Sledenje
@@ -1026,6 +1057,7 @@ sl-SI:
   width: "Širina"
   year: "Leto"
   you_have_been_logged_out: "Uspešno ste se odjavili."
+  you_have_no_orders_yet: "You have no orders yet."
   your_cart_is_empty: "Vaša nakupovalna košarica je prazna"
   zip: "Poštna številka"
   zone: Območje

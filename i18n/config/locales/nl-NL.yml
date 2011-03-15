@@ -68,6 +68,7 @@ nl-NL:
         quantity: Aantal
       order: 
         checkout_complete: "Bestelling afgerond"
+        completed_at: "Completed At"
         ip_address: "IP Adres"
         item_total: "Product Totaal"
         number: Nummer
@@ -349,6 +350,7 @@ nl-NL:
   debit: Debit
   default: Default
   delete: Verwijder
+  delivery: Delivery
   depth: Diepte
   description: Omschrijving
   destroy: Verwijder
@@ -357,6 +359,7 @@ nl-NL:
   discount_amount: "Discount Amount"
   display: Weergeven
   edit: Wijzig
+  edit_general_settings: "Edit General Settings"
   editing_billing_integration: Editing Billing Integration
   editing_category: "Wijzig Categorie"
   editing_mail_method: Editing Mail Method
@@ -384,15 +387,23 @@ nl-NL:
   enable_login_via_login_password: "Use standard email/password"
   enable_login_via_openid: "Use OpenID instead"
   enable_mail_delivery: "Mail aflevering aanzetten"
+  enter_atleast_five_letters: Enter atleast five letters of customer name
   enter_exactly_as_shown_on_card: Please enter exactly as shown on the card
   enter_password_to_confirm: "(we need your current password to confirm your changes)"
   environment: "Environment"
   error: fout
+  errors: 
+    messages: 
+      no_shipping_methods_available: "No shipping methods available for selected location, please change your address and try again."
+  errors_prohibited_this_record_from_being_saved: 
+    one: "1 error prohibited this record from being saved"
+    other: "%{count} errors prohibited this record from being saved"
   event: Gebeurtenis
   existing_customer: "Bestaande Klant"
   expiration: Verval
   expiration_month: "Vervalmaand"
   expiration_year: "Vervaljaar"
+  expiry: Expiry
   extension: Extensie
   extensions: Extensies
   filename: Bestandsnaam
@@ -409,9 +420,11 @@ nl-NL:
   flexible_rate: "Flexible Rate"
   forgot_password: "Forgot Password"
   free_shipping: Free Shipping
+  from_state: From State
   front_end: Front End
   full_name: "Full Name"
   gateway: Gateway
+  gateway_config_unavailable: "Gateway unavailable for environment"
   gateway_configuration: "Gateway configuration"
   gateway_error: "Gateway Fout"
   gateway_setting_description: "Selecteer een betalings-gateway en stel deze in."
@@ -498,6 +511,7 @@ nl-NL:
   mark_shipped: "Markeer verzonden"
   master_price: "Prijs"
   max_items: Max Items
+  may_be_combined_with_other_promotions: May be combined with other promotions
   meta_description: "Meta-beschrijving"
   meta_keywords: "Meta keywords"
   metadata: "Metadata"
@@ -546,7 +560,6 @@ nl-NL:
   no_products_found: "No products found"
   no_results: "No results"
   no_rules_added: No rules added
-  no_shipping_methods_available: "No shipping methods available, please change your address and try again."
   no_user_found: "No user was found with that email address"
   none: Geen
   none_available: "Niet op voorraad"
@@ -564,8 +577,9 @@ nl-NL:
     variant_not_deleted: "Variant could not be deleted"
   on_hand: "Op voorraad"
   operation: Operatie
-  option_Values: "Waarden Opties"
+  option_type: "Option Type"
   option_types: "Types Opties"
+  option_value: "Option Value"
   option_values: "Waarden Opties"
   options: Opties
   or: of
@@ -576,6 +590,11 @@ nl-NL:
   order_date: "Besteldatum"
   order_details: "Bestelling Details"
   order_email_resent: "Order Email Herverzending"
+  order_mailer: 
+    cancel_email: 
+      subject: "Cancellation of Order"
+    confirm_email: 
+      subject: "Order Confirmation"
   order_not_in_system: That order number is not valid on this site.
   order_number: "Nummer Bestelling"
   order_operation_authorize: Autoriseren
@@ -618,6 +637,7 @@ nl-NL:
   path: Pad
   pay: Betalen
   payment: Betaling
+  payment_actions: "Actions"
   payment_gateway: "Betalings-Gateway"
   payment_information: "Informatie Betaling"
   payment_method: Payment Method
@@ -627,9 +647,14 @@ nl-NL:
   payment_state: Payment State
   payment_states: 
     balance_due: balance due
+    checkout: checkout
+    completed: completed
     credit_owed: credit owed
     failed: failed
     paid: paid
+    pending: pending
+    processing: processing
+    void: void
   payment_updated: Payment Updated
   payments: Betalingen
   pending_payments: Pending Payments
@@ -846,6 +871,7 @@ nl-NL:
   rma_number: RMA Number
   rma_value: RMA Value
   roles: Rollen
+  rules: Rules
   sales_tax: "Sales Tax"
   sales_total: "Omzet"
   sales_total_for_all_orders: "Omzet voor alle bestellingen"
@@ -875,6 +901,9 @@ nl-NL:
   ship_address: "Afleveringssadres"
   shipment: Verzending
   shipment_details: Shipment Details
+  shipment_mailer: 
+    shipped_email: 
+      subject: "Shipment Notification"
   shipment_number: "Zending #"
   shipment_state: Shipment State
   shipment_states: 
@@ -967,11 +996,13 @@ nl-NL:
   test: "Test"
   test_mode: Test Mode
   thank_you_for_your_order: "Hartelijk dank voor uw bestelling. U kan deze pagina afdrukken als bewijs van bestelling."
+  there_were_problems_with_the_following_fields: "There were problems with the following fields"
   this_file_language: "Nederlands (NL)"
   this_month: "This Month"
   this_year: "This Year"
   thumbnail: "Thumbnail"
   to_add_variants_you_must_first_define: "To add variants, you must first define"
+  to_state: "To State"
   top_grossing_products: "Top Grossing Products"
   total: Totaal
   tracking: Tracking
@@ -1026,6 +1057,7 @@ nl-NL:
   width: Breedte
   year: "Year"
   you_have_been_logged_out: "U bent nu uitgelogd."
+  you_have_no_orders_yet: "You have no orders yet."
   your_cart_is_empty: "Uw winkelwagen is leeg"
   zip: Postcode
   zone: Zone

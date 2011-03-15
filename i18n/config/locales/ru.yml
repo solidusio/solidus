@@ -68,6 +68,7 @@ ru:
         quantity: "Количество"
       order: 
         checkout_complete: "Заказ завершен"
+        completed_at: "Completed At"
         ip_address: "IP адрес"
         item_total: "Всего товаров"
         number: "Номер"
@@ -350,6 +351,7 @@ ru:
   debit: "Дебет"
   default: "По умолчанию"
   delete: "Удалить"
+  delivery: Delivery
   depth: "Глубина"
   description: "Описание"
   destroy: "Удалить"
@@ -358,6 +360,7 @@ ru:
   discount_amount: "Сумма скидки"
   display: "Показать"
   edit: "Редактировать"
+  edit_general_settings: "Edit General Settings"
   editing_billing_integration: "Редактировать интеграцию с биллингом"
   editing_category: "Редактирование категории"
   editing_mail_method: "Редактирование метода отправки почты"
@@ -385,15 +388,23 @@ ru:
   enable_login_via_login_password: "Авторизоваться с помощью пары email/пароль"
   enable_login_via_openid: "Авторизоваться с помощью OpenID"
   enable_mail_delivery: "Включить доставку почты"
+  enter_atleast_five_letters: Enter atleast five letters of customer name
   enter_exactly_as_shown_on_card: "Пожалуйста, введите точно как показано на карте"
   enter_password_to_confirm: "(необходимо указать Ваш текущий пароль для подтверждения изменений)"
   environment: "Среда окружения"
   error: "ошибка"
+  errors: 
+    messages: 
+      no_shipping_methods_available: "No shipping methods available for selected location, please change your address and try again."
+  errors_prohibited_this_record_from_being_saved: 
+    one: "1 error prohibited this record from being saved"
+    other: "%{count} errors prohibited this record from being saved"
   event: "Событие"
   existing_customer: "Для зарегистрированных пользователей"
   expiration: "Окончание действия"
   expiration_month: "Месяц окончания действия"
   expiration_year: "Год окончания действия"
+  expiry: Expiry
   extension: "Расширение"
   extensions: "Расширения"
   filename: "Имя файла"
@@ -410,9 +421,11 @@ ru:
   flexible_rate: "Гибкая ставка"
   forgot_password: "Забыли пароль?"
   free_shipping: "Бесплатная доставка"
+  from_state: From State
   front_end: "в публичном интерфейсе"
   full_name: "Полное имя"
   gateway: "Платежный шлюз"
+  gateway_config_unavailable: "Gateway unavailable for environment"
   gateway_configuration: "Настройка платёжных шлюзов"
   gateway_error: "Ошибка платежного шлюза"
   gateway_setting_description: "Выберите платежный шлюз и настройте его."
@@ -499,6 +512,7 @@ ru:
   mark_shipped: "Отметить как отправленный"
   master_price: "Основная цена"
   max_items: "Максимальное число наименований по начальной ставке"
+  may_be_combined_with_other_promotions: May be combined with other promotions
   meta_description: "Описание"
   meta_keywords: "Ключевые слова"
   metadata: "Метаданные"
@@ -547,7 +561,6 @@ ru:
   no_products_found: "Не найдено ни одного товара"
   no_results: "Ничего не найдено"
   no_rules_added: "Ни одного правила не задано"
-  no_shipping_methods_available: "Нет доступных методов доставки, пожалуйста, смените ваш адрес доставки и попробуйте ещё раз."
   no_user_found: "Пользователь с таким адресом email у нас не числится."
   none: "Ни одного"
   none_available: "Нет в наличии"
@@ -565,8 +578,9 @@ ru:
     variant_not_deleted: "Вариант не может быть удален"
   on_hand: "В наличии"
   operation: "Операция"
-  option_Values: "Значения опции"
+  option_type: "Option Type"
   option_types: "Товарные опции"
+  option_value: "Option Value"
   option_values: "Возможные значения опции"
   options: "Опции"
   or: "или"
@@ -577,6 +591,11 @@ ru:
   order_date: "Дата заказа"
   order_details: "Детали заказа"
   order_email_resent: "Письмо с описанием заказа выслано повторно"
+  order_mailer: 
+    cancel_email: 
+      subject: "Cancellation of Order"
+    confirm_email: 
+      subject: "Order Confirmation"
   order_not_in_system: "Заказа с стаким номером у нас не существует."
   order_number: "Заказ"
   order_operation_authorize: "Авторизовать"
@@ -593,7 +612,7 @@ ru:
     confirm: "Подтверждение"
     delivery: "Доставка"
     payment: "Оплата"
-    resumed: "Возобновлён"
+    resumed : resumed
     returned: "Возвращён"
   order_summary: "Сводка по заказу"
   order_sure_want_to: "Вы уверены, что хотите %{event} этот заказ?"
@@ -619,6 +638,7 @@ ru:
   path: "Путь"
   pay: "оплатить"
   payment: "Платеж"
+  payment_actions: "Actions"
   payment_gateway: "Платежный шлюз"
   payment_information: "Информация о платеже"
   payment_method: "Способ оплаты"
@@ -628,10 +648,14 @@ ru:
   payment_state: "Статус платежа"
   payment_states: 
     balance_due: частично
+    checkout: checkout
     completed: завершен
     credit_owed: в кредит
     failed: ошибка
     paid: оплачен
+    pending: pending
+    processing: processing
+    void: void
   payment_updated: "Платёж обновлён"
   payments: "Платежи"
   pending_payments: "Незавершённые платежи"
@@ -848,6 +872,7 @@ ru:
   rma_number: "Номер RMA"
   rma_value: "Сумма RMA"
   roles: "Роли"
+  rules: Rules
   sales_tax: "Налог с продаж"
   sales_total: "Итого (продажи)"
   sales_total_for_all_orders: "Продажи итого по всем заказам"
@@ -877,6 +902,9 @@ ru:
   ship_address: "Адрес доставки"
   shipment: "Отправка"
   shipment_details: "Детали отправки"
+  shipment_mailer: 
+    shipped_email: 
+      subject: "Shipment Notification"
   shipment_number: "Отправка №"
   shipment_state: "Статус отправки"
   shipment_states: 
@@ -969,11 +997,13 @@ ru:
   test: "Test"
   test_mode: "Тестовый режим"
   thank_you_for_your_order: "Спасибо за покупку!"
+  there_were_problems_with_the_following_fields: "There were problems with the following fields"
   this_file_language: "Русский (RU)"
   this_month: "Этот месяц"
   this_year: "Этот год"
   thumbnail: "Миниатюра"
   to_add_variants_you_must_first_define: "Перед добавлением вариантов, вы должны определить"
+  to_state: "To State"
   top_grossing_products: "Самые доходные товары"
   total: "Итого"
   tracking: "Отслеживание"
@@ -1028,6 +1058,7 @@ ru:
   width: "Ширина"
   year: "Год"
   you_have_been_logged_out: "Вы вышли из системы. До свидания!"
+  you_have_no_orders_yet: "You have no orders yet."
   your_cart_is_empty: "Ваша корзина пуста"
   zip: "Индекс"
   zone: "Торговая зона"

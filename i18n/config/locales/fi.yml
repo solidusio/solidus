@@ -68,6 +68,7 @@ fi:
         quantity: Määrä
       order: 
         checkout_complete: Tilaus lähetetty
+        completed_at: "Completed At"
         ip_address: IP-osoite
         item_total: Tuotteita yhteensä
         number: Tilausnumero
@@ -349,6 +350,7 @@ fi:
   debit: Debit
   default: Default
   delete: Poista
+  delivery: Delivery
   depth: Syvyys
   description: Kuvaus
   destroy: Tuhoa
@@ -357,6 +359,7 @@ fi:
   discount_amount: "Discount Amount"
   display: Näytä
   edit: Muokkaa
+  edit_general_settings: "Edit General Settings"
   editing_billing_integration: "Muokataan laskutusintegrointia"
   editing_category: "Muokataan kategoriaa"
   editing_mail_method: Editing Mail Method
@@ -384,15 +387,23 @@ fi:
   enable_login_via_login_password: "Käytä standardimuotoista sähköpostia/salasanaa"
   enable_login_via_openid: "Käytä OpenID:tä sen sijaan"
   enable_mail_delivery: "Salli sähköpostin toimitus"
+  enter_atleast_five_letters: Enter atleast five letters of customer name
   enter_exactly_as_shown_on_card: "Kirjoita täsmälleen samoin kuin kortissa lukee"
   enter_password_to_confirm: "(we need your current password to confirm your changes)"
   environment: Ympäristö
   error: virhe
+  errors: 
+    messages: 
+      no_shipping_methods_available: "No shipping methods available for selected location, please change your address and try again."
+  errors_prohibited_this_record_from_being_saved: 
+    one: "1 error prohibited this record from being saved"
+    other: "%{count} errors prohibited this record from being saved"
   event: Tapahtuma
   existing_customer: "Olemassaoleva asiakas"
   expiration: Erääntyminen
   expiration_month: Erääntymiskuukausi
   expiration_year: Erääntymisvuosi
+  expiry: Expiry
   extension: Laajennus
   extensions: Laajennukset
   filename: Tiedostonimi
@@ -409,9 +420,11 @@ fi:
   flexible_rate: "Joustava hinta"
   forgot_password: "Salasanan unohtaminen"
   free_shipping: Free Shipping
+  from_state: From State
   front_end: Front End
   full_name: "Koko nimi"
   gateway: Yhdyskäytävä
+  gateway_config_unavailable: "Gateway unavailable for environment"
   gateway_configuration: "Yhdyskäytävän konfigurointi"
   gateway_error: "Virhe yhdyskäytävässä"
   gateway_setting_description: "Valitse ja konfiguroi maksuyhdyskäytävä."
@@ -498,6 +511,7 @@ fi:
   mark_shipped: "Merkitse toimitetuksi"
   master_price: Toimitushinta
   max_items: "Tuotteiden maksimimäärä"
+  may_be_combined_with_other_promotions: May be combined with other promotions
   meta_description: Meta-kuvaus
   meta_keywords: Meta-avainsanat
   metadata: Metadata
@@ -546,7 +560,6 @@ fi:
   no_products_found: "Ei löytynyt tuotteita"
   no_results: "No results"
   no_rules_added: No rules added
-  no_shipping_methods_available: Ei toimitustapoja saatavilla, muuta osoitettasi ja yritä uudelleen
   no_user_found: "Ei löytynyt käyttäjää kyseisellä sähköpostiosoitteella"
   none: "Ei yhtäkään"
   none_available: "Ei yhtäkään saatavilla"
@@ -564,8 +577,9 @@ fi:
     variant_not_deleted: Varianttia ei voitu poistaa
   on_hand: Saatavilla
   operation: Operaatio
-  option_Values: Valinta-arvot
+  option_type: "Option Type"
   option_types: Valintatyypit
+  option_value: "Option Value"
   option_values: Valinta-arvot
   options: Valinnat
   or: tai
@@ -576,6 +590,11 @@ fi:
   order_date: Tilauspäivämäärä
   order_details: Yksityiskohdat
   order_email_resent: "Tilausviesti uudelleenlähetetty"
+  order_mailer: 
+    cancel_email: 
+      subject: "Cancellation of Order"
+    confirm_email: 
+      subject: "Order Confirmation"
   order_not_in_system: "Kyseistä tilausnumeroa ei löytynyt järjestelmästä."
   order_number: Tilaus
   order_operation_authorize: Valtuuta
@@ -618,6 +637,7 @@ fi:
   path: Polku
   pay: maksa
   payment: Maksu
+  payment_actions: "Actions"
   payment_gateway: "Maksun yhdyskäytävä"
   payment_information: "Maksun tiedot"
   payment_method: Maksutapa
@@ -627,9 +647,14 @@ fi:
   payment_state: Payment State
   payment_states: 
     balance_due: balance due
+    checkout: checkout
+    completed: completed
     credit_owed: credit owed
     failed: failed
     paid: paid
+    pending: pending
+    processing: processing
+    void: void
   payment_updated: Maksu päivitetty
   payments: Maksut
   pending_payments: Maksua odottavat
@@ -846,6 +871,7 @@ fi:
   rma_number: Palautusnumero (RMA)
   rma_value: Palautusnumeron arvo
   roles: Roolit
+  rules: Rules
   sales_tax: Liikevaihtovero
   sales_total: Liikevaihto
   sales_total_for_all_orders: "Liikevaihto kaikilta tilauksilta"
@@ -875,6 +901,9 @@ fi:
   ship_address: Toimitusosoite
   shipment: Toimitus
   shipment_details: Tilaustiedot
+  shipment_mailer: 
+    shipped_email: 
+      subject: "Shipment Notification"
   shipment_number: Toimitusnumero
   shipment_state: Shipment State
   shipment_states: 
@@ -967,11 +996,13 @@ fi:
   test: Testaa
   test_mode: Testimoodi
   thank_you_for_your_order: "Kiitos kaupankäynnistä. Tulosta tarvittaessa kopio tästä vahvistuksesta."
+  there_were_problems_with_the_following_fields: "There were problems with the following fields"
   this_file_language: Suomi
   this_month: "Tässä kuussa"
   this_year: "Tänä vuonna"
   thumbnail: Näytekuva
   to_add_variants_you_must_first_define: "Lisättävä variantti täytyy ensin määritellä"
+  to_state: "To State"
   top_grossing_products: "Tuottoisimmat tuotteet"
   total: Loppusumma
   tracking: Seuranta
@@ -1026,6 +1057,7 @@ fi:
   width: Leveys
   year: Vuosi
   you_have_been_logged_out: "Olet kirjautunut ulos."
+  you_have_no_orders_yet: "You have no orders yet."
   your_cart_is_empty: "Ostoskorisi on tyhjä"
   zip: Postinumero
   zone: Alue
