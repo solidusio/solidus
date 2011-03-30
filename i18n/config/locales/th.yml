@@ -25,10 +25,10 @@ th:
         address2: "ที่อยู่ (เพิ่มเติม)"
         city: จังหวัด
         country: "Country"
-        first_name: "First Name"
         first_name_begins_with: "First Name Begins With"
-        last_name: "Last Name"
+        firstname: "First Name"
         last_name_begins_with: "Last Name Begins With"
+        lastname: "Last Name"
         phone: โทรศัพท์
         state: "State"
         zipcode: รหัสไปรษณีย์
@@ -69,6 +69,7 @@ th:
       order: 
         checkout_complete: รายการสั่งซื้อเสร็จสมบูรณ์
         completed_at: "Completed At"
+        coupon_code: "Coupon Code"
         ip_address: "IP Address"
         item_total: "จำนวนสินค้า"
         number: หมายเลข
@@ -611,7 +612,7 @@ th:
     confirm: confirm
     delivery: delivery
     payment: payment
-    resumed : resumed
+    resumed: resumed
     returned: returned
   order_summary: Order Summary
   order_sure_want_to: "Are you sure you want to %{event} this order?"
@@ -807,6 +808,7 @@ th:
         sentence: with property <em>%s</em> and value <em>%s</em>
   products: สินค้า
   products_with_zero_inventory_display: "(%{not} Display) แสดงสินค้าที่หมดคลังสินค้า"
+  promotion: Promotion
   promotion_form: 
     match_policies: 
       all: Match any of these rules
@@ -974,6 +976,9 @@ th:
   street_address_2: "ที่อยู่เพิ่มเติม"
   subtotal: รวมทั้งหมด
   subtract: หักออก
+  successfully_created: "%{resource} has been successfully created!"
+  successfully_removed: "%{resource} has been successfully removed!"
+  successfully_updated: "%{resource} has been successfully updated!"
   system: ระบบ
   tax: ภาษี
   tax_categories: แบบการคิดภาษี

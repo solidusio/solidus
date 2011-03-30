@@ -25,10 +25,10 @@ fr-FR:
         address2: "Adresse complémentaire"
         city: Ville
         country: "Pays"
-        first_name: "Prénom"
         first_name_begins_with: "First Name Begins With"
-        last_name: "Nom"
+        firstname: "First Name"
         last_name_begins_with: "Last Name Begins With"
+        lastname: "Last Name"
         phone: Téléphone
         state: "Etat"
         zipcode: "Code Postal"
@@ -69,6 +69,7 @@ fr-FR:
       order: 
         checkout_complete: "Paiement complet"
         completed_at: "Completed At"
+        coupon_code: "Coupon Code"
         ip_address: "Adresse IP"
         item_total: "Total d'articles"
         number: Nombre
@@ -611,7 +612,7 @@ fr-FR:
     confirm: confirm
     delivery: delivery
     payment: payment
-    resumed : resumed
+    resumed: resumed
     returned: returned
   order_summary: "Résumé de la commande"
   order_sure_want_to: "Êtes-vous certain de vouloir %{event} cette commande ?"
@@ -807,6 +808,7 @@ fr-FR:
         sentence: avec propriété <em>%s</em> et valeur <em>%s</em>
   products: Produits
   products_with_zero_inventory_display: "Les produits en rupture de stock seront %{not} affichés"
+  promotion: Promotion
   promotion_form: 
     match_policies: 
       all: Match any of these rules
@@ -974,6 +976,9 @@ fr-FR:
   street_address_2: "Rue (informations complémentaire)"
   subtotal: Sous-total
   subtract: Soustraire
+  successfully_created: "%{resource} has been successfully created!"
+  successfully_removed: "%{resource} has been successfully removed!"
+  successfully_updated: "%{resource} has been successfully updated!"
   system: Système
   tax: TVA
   tax_categories: "Catégories de taxes"

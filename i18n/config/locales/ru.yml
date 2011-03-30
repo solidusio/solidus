@@ -25,10 +25,10 @@ ru:
         address2: "Адрес (2я строка)"
         city: "Город"
         country: "Страна"
-        firstname: "Имя"
         first_name_begins_with: "Имя начинается с"
-        lastname: "Фамилия"
+        firstname: "Имя"
         last_name_begins_with: "Фамилия начинается с"
+        lastname: "Фамилия"
         phone: "Телефон"
         state: "Регион/Область"
         zipcode: "Индекс"
@@ -69,10 +69,10 @@ ru:
       order: 
         checkout_complete: "Заказ завершен"
         completed_at: "Дата завершения"
+        coupon_code: "Код купона"
         ip_address: "IP адрес"
         item_total: "Всего товаров"
         number: "Номер"
-        coupon_code: "Код купона"
         special_instructions: "Дополнительные инструкции"
         state: "Статус"
         total: "Итого"
@@ -94,13 +94,6 @@ ru:
       product_scope: 
         arguments: "Аргументы"
         description: "Описание"
-      promotion:
-        name: "Название"
-        description: "Описание"
-        code: "Код"
-        usage_limit: "Ограничения"
-        starts_at: "Начало"
-        expires_at: "Истекает"
       property: 
         name: "Наименование"
         presentation: "Отображать как"
@@ -140,7 +133,6 @@ ru:
     models: 
       address: 
         one: "Адрес"
-        few: "Адреса"
         other: "Адресов"
       cheque_payment: 
         one: "Оплата чеком"
@@ -406,8 +398,6 @@ ru:
       no_shipping_methods_available: "Для указанного местоположения отсутствуют способы доставки, пожалуйста, смените адрес и попробуйте снова."
   errors_prohibited_this_record_from_being_saved: 
     one: "1 ошибка не позволяет сохранить запись в базе"
-    few: "%{count} ошибки не позволяют сохранить запись в базе"
-    many: "%{count} ошибок не позволяют сохранить запись в базе"
     other: "%{count} ошибок не позволяют сохранить запись в базе"
   event: "Событие"
   existing_customer: "Для зарегистрированных пользователей"
@@ -818,6 +808,7 @@ ru:
         sentence: "есть свойство <em>%s</em> со значением <em>%s</em>"
   products: "Товары"
   products_with_zero_inventory_display: "Отсутсвующие товары %{not} будут отображаться"
+  promotion: "Промо-акция"
   promotion_form: 
     match_policies: 
       all: "Соответсвует всем этим правилам"

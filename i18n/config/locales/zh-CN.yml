@@ -25,10 +25,10 @@ zh-CN:
         address2: "地址(继续)"
         city: "城市"
         country: "国家"
-        first_name: "名"
         first_name_begins_with: "名的开始"
-        last_name: "姓"
+        firstname: "First Name"
         last_name_begins_with: "姓的开始"
+        lastname: "Last Name"
         phone: "电话"
         state: "省份"
         zipcode: "邮政编码"
@@ -69,6 +69,7 @@ zh-CN:
       order: 
         checkout_complete: "已结账"
         completed_at: "Completed At"
+        coupon_code: "Coupon Code"
         ip_address: "IP地址"
         item_total: "产品小记"
         number: "数量"
@@ -611,7 +612,7 @@ zh-CN:
     confirm: confirm
     delivery: delivery
     payment: payment
-    resumed : resumed
+    resumed: resumed
     returned: returned
   order_summary: "订单概述"
   order_sure_want_to: "您确定您想要%{event}这个订单么?"
@@ -807,6 +808,7 @@ zh-CN:
         sentence: "拥有属性 <em>%s</em> 及属性值 <em>%s</em>"
   products: "产品"
   products_with_zero_inventory_display: "没有库存的产品是%{not}会被显示的"
+  promotion: Promotion
   promotion_form: 
     match_policies: 
       all: Match any of these rules
@@ -974,6 +976,9 @@ zh-CN:
   street_address_2: "地址(继续输入)"
   subtotal: "小计"
   subtract: "减去"
+  successfully_created: "%{resource} has been successfully created!"
+  successfully_removed: "%{resource} has been successfully removed!"
+  successfully_updated: "%{resource} has been successfully updated!"
   system: "系统"
   tax: "税"
   tax_categories: "缴税分类"

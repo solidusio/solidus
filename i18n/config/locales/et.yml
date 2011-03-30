@@ -25,10 +25,10 @@ et:
         address2: Aadress2
         city: Linn
         country: Riik
-        first_name: Eesnimi
         first_name_begins_with: "Eesnimi algab ..."
-        last_name: Perekonnanimi
+        firstname: "First Name"
         last_name_begins_with: "Perekonnanimi algab ..."
+        lastname: "Last Name"
         phone: Telefon
         state: Maakond
         zipcode: Postiindeks
@@ -69,6 +69,7 @@ et:
       order: 
         checkout_complete: Tellimus edastatud!
         completed_at: "Completed At"
+        coupon_code: "Coupon Code"
         ip_address: IP aadress
         item_total: Kogus
         number: Number
@@ -611,7 +612,7 @@ et:
     confirm: confirm
     delivery: delivery
     payment: payment
-    resumed : resumed
+    resumed: resumed
     returned: returned
   order_summary: Tellimuse kokkuvõte
   order_sure_want_to: Kas olete kindel, et soovite %{event} seda tellimust?
@@ -807,6 +808,7 @@ et:
         sentence: with property <em>%s</em> and value <em>%s</em>
   products: Tooted
   products_with_zero_inventory_display: Products with a zero inventory will %{not} be displayed  TODO
+  promotion: Promotion
   promotion_form: 
     match_policies: 
       all: Match any of these rules
@@ -974,6 +976,9 @@ et:
   street_address_2: "&nbsp;"
   subtotal: Vahesumma
   subtract: Lahuta
+  successfully_created: "%{resource} has been successfully created!"
+  successfully_removed: "%{resource} has been successfully removed!"
+  successfully_updated: "%{resource} has been successfully updated!"
   system: Süsteem
   tax: Maksud
   tax_categories: Maksukategooriad

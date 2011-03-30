@@ -25,10 +25,10 @@ de-CH:
         address2: "Adresse (weiter)"
         city: Stadt
         country: "Land"
-        first_name: "Vorname"
         first_name_begins_with: "First Name Begins With"
-        last_name: "Nachname"
+        firstname: "First Name"
         last_name_begins_with: "Last Name Begins With"
+        lastname: "Last Name"
         phone: Telefonnummer
         state: "State"
         zipcode: PLZ
@@ -69,6 +69,7 @@ de-CH:
       order: 
         checkout_complete: "Bestellung abgeschlossen"
         completed_at: "Completed At"
+        coupon_code: "Coupon Code"
         ip_address: "IP-Adresse"
         item_total: "Artikel gesamt"
         number: Bestellnummer
@@ -611,7 +612,7 @@ de-CH:
     confirm: confirm
     delivery: delivery
     payment: payment
-    resumed : resumed
+    resumed: resumed
     returned: returned
   order_summary: "Bestellübersicht"
   order_sure_want_to: "Sind Sie sicher, dass Sie diese Bestellung %{event} möchten?"
@@ -807,6 +808,7 @@ de-CH:
         sentence: with property <em>%s</em> and value <em>%s</em>
   products: Produkte
   products_with_zero_inventory_display: "Produkte mit einem Lagerbestand von Null werden %{not} angezeigt"
+  promotion: Promotion
   promotion_form: 
     match_policies: 
       all: Match any of these rules
@@ -974,6 +976,9 @@ de-CH:
   street_address_2: "Strasse (Feld 2)"
   subtotal: Zwischensumme
   subtract: Subtrahieren
+  successfully_created: "%{resource} has been successfully created!"
+  successfully_removed: "%{resource} has been successfully removed!"
+  successfully_updated: "%{resource} has been successfully updated!"
   system: System
   tax: MwSt.
   tax_categories: "Steuerkategorien"

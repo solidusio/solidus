@@ -25,10 +25,10 @@ fi:
         address2: Osoite (jatkoa)
         city: Paikkakunta
         country: Maa
-        first_name: Etunimi
         first_name_begins_with: "First Name Begins With"
-        last_name: Sukunimi
+        firstname: "First Name"
         last_name_begins_with: "Last Name Begins With"
+        lastname: "Last Name"
         phone: Puhelin
         state: Lääni/osavaltio
         zipcode: Postinumero
@@ -69,6 +69,7 @@ fi:
       order: 
         checkout_complete: Tilaus lähetetty
         completed_at: "Completed At"
+        coupon_code: "Coupon Code"
         ip_address: IP-osoite
         item_total: Tuotteita yhteensä
         number: Tilausnumero
@@ -611,7 +612,7 @@ fi:
     confirm: confirm
     delivery: delivery
     payment: payment
-    resumed : resumed
+    resumed: resumed
     returned: returned
   order_summary: Tilaustiivistelmä
   order_sure_want_to: "Haluatko varmasti %{event} tämän tilauksen?"
@@ -807,6 +808,7 @@ fi:
         sentence: "ominaisuudella <em>%s</em> ja arvolla <em>%s</em>"
   products: Tuotteet
   products_with_zero_inventory_display: "Tuotteita, joden varastosaldo 0 %{not} näytetä(än)"
+  promotion: Promotion
   promotion_form: 
     match_policies: 
       all: Match any of these rules
@@ -974,6 +976,9 @@ fi:
   street_address_2: "Katuosoite (jatkoa)"
   subtotal: Välisumma
   subtract: Vähennä
+  successfully_created: "%{resource} has been successfully created!"
+  successfully_removed: "%{resource} has been successfully removed!"
+  successfully_updated: "%{resource} has been successfully updated!"
   system: Luokitus
   tax: Vero
   tax_categories: Verokategoriat

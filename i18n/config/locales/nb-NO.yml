@@ -25,10 +25,10 @@ nb-NO:
         address2: "Adresse (forts.)"
         city: Sted
         country: "Country"
-        first_name: "First Name"
         first_name_begins_with: "First Name Begins With"
-        last_name: "Last Name"
+        firstname: "First Name"
         last_name_begins_with: "Last Name Begins With"
+        lastname: "Last Name"
         phone: Telefon
         state: "State"
         zipcode: "Postnummer"
@@ -69,6 +69,7 @@ nb-NO:
       order: 
         checkout_complete: "Fullført handel"
         completed_at: "Completed At"
+        coupon_code: "Coupon Code"
         ip_address: "IP-nummer"
         item_total: "Sum varer"
         number: Nummer
@@ -611,7 +612,7 @@ nb-NO:
     confirm: confirm
     delivery: delivery
     payment: payment
-    resumed : resumed
+    resumed: resumed
     returned: returned
   order_summary: Order Summary
   order_sure_want_to: "Are you sure you want to %{event} this order?"
@@ -807,6 +808,7 @@ nb-NO:
         sentence: with property <em>%s</em> and value <em>%s</em>
   products: Produkter
   products_with_zero_inventory_display: "Products with a zero inventory will %{not} be displayed"
+  promotion: Promotion
   promotion_form: 
     match_policies: 
       all: Match any of these rules
@@ -974,6 +976,9 @@ nb-NO:
   street_address_2: "Gateadresse (forts.)"
   subtotal: "Sum"
   subtract: "Trekk fra"
+  successfully_created: "%{resource} has been successfully created!"
+  successfully_removed: "%{resource} has been successfully removed!"
+  successfully_updated: "%{resource} has been successfully updated!"
   system: System
   tax: Moms
   tax_categories: "Momskategorier"

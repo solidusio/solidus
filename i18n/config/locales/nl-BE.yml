@@ -25,10 +25,10 @@ nl-BE:
         address2: "Adres lijn 2"
         city: Gemeente
         country: "Land"
-        first_name: "Voornaam"
         first_name_begins_with: "Voornaam begint met"
-        last_name: "Familienaam"
+        firstname: "First Name"
         last_name_begins_with: "Familienaam begint met"
+        lastname: "Last Name"
         phone: Telefoon
         state: "Staat"
         zipcode: Postcode
@@ -69,6 +69,7 @@ nl-BE:
       order: 
         checkout_complete: "Bestelling afgerond"
         completed_at: "Completed At"
+        coupon_code: "Coupon Code"
         ip_address: "IP Adres"
         item_total: "Product Totaal"
         number: Nummer
@@ -611,7 +612,7 @@ nl-BE:
     confirm: confirm
     delivery: delivery
     payment: payment
-    resumed : resumed
+    resumed: resumed
     returned: returned
   order_summary: Order Summary
   order_sure_want_to: "Are you sure you want to %{event} this order?"
@@ -807,6 +808,7 @@ nl-BE:
         sentence: met eigenschap <em>%s</em> en waarde <em>%s</em>
   products: Producten
   products_with_zero_inventory_display: "Producten die niet meer in voorraad zijn zullen %{niet} getoond worden."
+  promotion: Promotion
   promotion_form: 
     match_policies: 
       all: Match any of these rules
@@ -974,6 +976,9 @@ nl-BE:
   street_address_2: "Adres lijn 2"
   subtotal: Subtotaal
   subtract: Verreken
+  successfully_created: "%{resource} has been successfully created!"
+  successfully_removed: "%{resource} has been successfully removed!"
+  successfully_updated: "%{resource} has been successfully updated!"
   system: Systeem
   tax: BTW
   tax_categories: "BTW Categorieën"

@@ -25,10 +25,10 @@ vn:
         address2: "Địa chỉ (tiếp)"
         city: Thành phố
         country: "Quốc gia"
-        first_name: "Tên"
         first_name_begins_with: "Tên bắt đầu với"
-        last_name: "Họ"
+        firstname: "First Name"
         last_name_begins_with: "Họ bắt đầu với"
+        lastname: "Last Name"
         phone: Điện thoại
         state: "Bang"
         zipcode: "Mã bưu điện"
@@ -69,6 +69,7 @@ vn:
       order: 
         checkout_complete: "Hoàn tất thủ tục mua hàng"
         completed_at: "Completed At"
+        coupon_code: "Coupon Code"
         ip_address: "Địa chỉ IP"
         item_total: "Tổng số lượng"
         number: Số
@@ -611,7 +612,7 @@ vn:
     confirm: confirm
     delivery: delivery
     payment: payment
-    resumed : resumed
+    resumed: resumed
     returned: returned
   order_summary: Tóm tắt đơn đặt hàng
   order_sure_want_to: "Bạn có chắc bạn muốn %{event} đơn hàng này?"
@@ -807,6 +808,7 @@ vn:
         sentence: với đặc tính <em>%s</em> và giá trị <em>%s</em>
   products: Sản phẩm
   products_with_zero_inventory_display: "Sản phẩm không có hàng tồn sẽ %{not} được hiển thị"
+  promotion: Promotion
   promotion_form: 
     match_policies: 
       all: Match any of these rules
@@ -974,6 +976,9 @@ vn:
   street_address_2: "Địa chỉ (tiếp)"
   subtotal: Tổng giá trước thuế
   subtract: Trừ đi
+  successfully_created: "%{resource} has been successfully created!"
+  successfully_removed: "%{resource} has been successfully removed!"
+  successfully_updated: "%{resource} has been successfully updated!"
   system: Hệ thống
   tax: Thuế
   tax_categories: "Loại thuế"
