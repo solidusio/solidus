@@ -25,10 +25,10 @@ cs-CZ:
         address2: "Adresa (pokračování)"
         city: "Město"
         country: "Country"
-        first_name: "First Name"
         first_name_begins_with: "First Name Begins With"
-        last_name: "Last Name"
+        firstname: "First Name"
         last_name_begins_with: "Last Name Begins With"
+        lastname: "Last Name"
         phone: Telefon
         state: "State"
         zipcode: "PSČ"
@@ -69,6 +69,7 @@ cs-CZ:
       order: 
         checkout_complete: "Dokončit nákup"
         completed_at: "Completed At"
+        coupon_code: "Coupon Code"
         ip_address: "IP adresa"
         item_total: "Celkem položek"
         number: "Číslo"
@@ -611,7 +612,7 @@ cs-CZ:
     confirm: confirm
     delivery: delivery
     payment: payment
-    resumed : resumed
+    resumed: resumed
     returned: returned
   order_summary: "Shrnutí objednávky"
   order_sure_want_to: "Jste si jisti, že chcete %{event} tuto objednávku?"
@@ -807,6 +808,7 @@ cs-CZ:
         sentence: "s vlastností <em>%s</em> a hodnotou <em>%s</em>"
   products: "Výrobky"
   products_with_zero_inventory_display: "Výrobky, které nejsou na skladě, %{not}budou zobrazeny"
+  promotion: Promotion
   promotion_form: 
     match_policies: 
       all: Match any of these rules
@@ -974,6 +976,9 @@ cs-CZ:
   street_address_2: "Ulice (pokračování)"
   subtotal: "Mezisoučet"
   subtract: "Odečet"
+  successfully_created: "%{resource} has been successfully created!"
+  successfully_removed: "%{resource} has been successfully removed!"
+  successfully_updated: "%{resource} has been successfully updated!"
   system: "Systém"
   tax: "Daň"
   tax_categories: "Daňové kategorie"

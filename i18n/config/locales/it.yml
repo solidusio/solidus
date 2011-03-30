@@ -25,10 +25,10 @@ it:
         address2: "Indirizzo secondario"
         city: 'Città'
         country: "Paese"
-        first_name: "Nome"
         first_name_begins_with: "Il Nome inizia con"
-        last_name: "Cognome"
+        firstname: "First Name"
         last_name_begins_with: "Il Cognome inizia con"
+        lastname: "Last Name"
         phone: 'Telefono'
         state: "Stato"
         zipcode: "CAP"
@@ -69,6 +69,7 @@ it:
       order: 
         checkout_complete: "Pagamento Completato"
         completed_at: "Completed At"
+        coupon_code: "Coupon Code"
         ip_address: "Indirizzo IP"
         item_total: "Oggetti Totali"
         number: 'Numero'
@@ -611,7 +612,7 @@ it:
     confirm: "conferma"
     delivery: "consegna"
     payment: "pagamento"
-    resumed : "ripreso"
+    resumed: resumed
     returned: "ritornato"
   order_summary: "Riepilogo dell'ordine"
   order_sure_want_to: "Sei sicuro di voler %{event} quest'ordine?"
@@ -807,6 +808,7 @@ it:
         sentence: "con proprietà <em>%s</em> e valore <em>%s</em>"
   products: "Prodotti"
   products_with_zero_inventory_display: "I prodotti esauriti%{not} sono visualizzati"
+  promotion: Promotion
   promotion_form: 
     match_policies: 
       all: "Una qualunque di queste regole"
@@ -974,6 +976,9 @@ it:
   street_address_2: "Indirizzo"
   subtotal: "Subtotale"
   subtract: "Sottrai"
+  successfully_created: "%{resource} has been successfully created!"
+  successfully_removed: "%{resource} has been successfully removed!"
+  successfully_updated: "%{resource} has been successfully updated!"
   system: "Sistema"
   tax: "IVA"
   tax_categories: "categorie di tassazione"

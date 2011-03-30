@@ -25,10 +25,10 @@ sl-SI:
         address2: "Naslov dodatno"
         city: Mesto
         country: "Država"
-        first_name: "Ime"
         first_name_begins_with: "Ime se začne z"
-        last_name: "Priimek"
+        firstname: "First Name"
         last_name_begins_with: "Priimek se začne z"
+        lastname: "Last Name"
         phone: Telefon
         state: "State"
         zipcode: "Poštna številka"
@@ -69,6 +69,7 @@ sl-SI:
       order: 
         checkout_complete: "Naročilo je končano"
         completed_at: "Completed At"
+        coupon_code: "Coupon Code"
         ip_address: "IP naslov"
         item_total: "Skupaj kosov"
         number: "Številka"
@@ -611,7 +612,7 @@ sl-SI:
     confirm: potrdi
     delivery: dostava
     payment: plačilo
-    resumed : nadaljevati
+    resumed: resumed
     returned: vračilo
   order_summary: Povzetek naročila
   order_sure_want_to: "Ali ste prepričani da želite %{event} to naročio?"
@@ -807,6 +808,7 @@ sl-SI:
         sentence: z lastnostjo <em>%s</em> in vrednostjo <em>%s</em>
   products: Izdelki
   products_with_zero_inventory_display: "Izdelki z nič iventarja %{not} bodo prikazani"
+  promotion: Promotion
   promotion_form: 
     match_policies: 
       all: Ujemaj se s katerim koli izmed teh pravil
@@ -974,6 +976,9 @@ sl-SI:
   street_address_2: "Ulica dodatno"
   subtotal: Skupaj
   subtract: Odštej
+  successfully_created: "%{resource} has been successfully created!"
+  successfully_removed: "%{resource} has been successfully removed!"
+  successfully_updated: "%{resource} has been successfully updated!"
   system: Sistem
   tax: DDV
   tax_categories: "Davčne kategorije"

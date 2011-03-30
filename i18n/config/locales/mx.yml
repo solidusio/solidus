@@ -25,10 +25,10 @@ mx:
         address2: "Dirección (continuación)"
         city: Ciudad
         country: "País"
-        first_name: "Nombre"
         first_name_begins_with: "First Name Begins With"
-        last_name: "Apellido"
+        firstname: "First Name"
         last_name_begins_with: "Last Name Begins With"
+        lastname: "Last Name"
         phone: Teléfono
         state: "Estado"
         zipcode: "Código postal"
@@ -69,6 +69,7 @@ mx:
       order: 
         checkout_complete: "Pedido completado"
         completed_at: "Completed At"
+        coupon_code: "Coupon Code"
         ip_address: "Direccion IP"
         item_total: "Total de artículos"
         number: Numero
@@ -611,7 +612,7 @@ mx:
     confirm: confirm
     delivery: delivery
     payment: payment
-    resumed : resumed
+    resumed: resumed
     returned: returned
   order_summary: Parcial de la Orden
   order_sure_want_to: "¿Esta seguro que quiere %{event} esta orden?"
@@ -807,6 +808,7 @@ mx:
         sentence: with property <em>%s</em> and value <em>%s</em>
   products: Productos
   products_with_zero_inventory_display: "Productos con cero en el inventario %{not} serán mostrados"
+  promotion: Promotion
   promotion_form: 
     match_policies: 
       all: Match any of these rules
@@ -974,6 +976,9 @@ mx:
   street_address_2: "Dirección (continuación)"
   subtotal: Subtotal
   subtract: Restar
+  successfully_created: "%{resource} has been successfully created!"
+  successfully_removed: "%{resource} has been successfully removed!"
+  successfully_updated: "%{resource} has been successfully updated!"
   system: Sistema
   tax: Impuestos
   tax_categories: "Impuestos"
