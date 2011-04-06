@@ -1,0 +1,1071 @@
+---
+ko: 
+  'no': "아니오"
+  'yes': "네"
+  5_biggest_spenders: "구매자 상위 5명"
+  a_copy_of_all_mail_will_be_sent_to_the_following_addresses: "모든 메일 사본을 다음 주소로 보냅니다"
+  abbreviation: 생략
+  access_denied: "잘못 된 접근입니다"
+  account: 계정
+  account_updated: "계정 정보가 수정되었음!"
+  action: 행동
+  actions: 
+    cancel: 취소
+    create: 생성
+    destroy: 삭제
+    list: 목록
+    listing: 목록
+    new: #New
+    update: 수정
+  active: "활성"
+  activerecord: 
+    attributes: 
+      address: 
+        address1: 주소
+        address2: "주소 (contd.)"
+        city: City
+        country: "국가"
+        first_name_begins_with: "이름으로 시작"
+        firstname: "이름"
+        last_name_begins_with: "성으로 시작"
+        lastname: "성"
+        phone: 전화번호
+        state: "주"
+        zipcode: "우편번호"
+      checkout: 
+        bill_address: 
+          address1: "청구서 주소 street"
+          city: "청구서 주소 city"
+          firstname: "청구서 주소 이름"
+          lastname: "청구서 주소 성"
+          phone: "청구서 주소 전화번호"
+          state: "청구서 주소  state"
+          zipcode: "청구서 주소 우편번호"
+        ship_address: 
+          address1: "배송 주소 street"
+          city: "배송 주소 city"
+          firstname: "배송 주소 이름"
+          lastname: "배송 주소 성"
+          phone: "배송 주소 전화번호"
+          state: "배송 주소 state"
+          zipcode: "배송 주소 우편번호"
+      country: 
+        iso: ISO
+        iso3: ISO3
+        iso_name: "ISO 이름"
+        name: 이름
+        numcode: "ISO 코드"
+      creditcard: 
+        cc_type: 종류
+        month: 월
+        number: 번호
+        verification_value: "확인 값"
+        year: 년
+      inventory_unit: 
+        state: 상태
+      line_item: 
+        price: 가격
+        quantity: 수량
+      order: 
+        checkout_complete: "결제 완료"
+        completed_at: "에 완료됨"
+        coupon_code: "Coupon Code"
+        ip_address: "IP 주소"
+        item_total: "아이템 합계"
+        number: 번호
+        special_instructions: "요청사항"
+        state: 상태
+        total: 합계
+      product: 
+        available_on: "시작일"
+        cost_price: "비용"
+        description: 설명
+        master_price: "기본 가격"
+        name: 이름
+        on_hand: 재고
+        shipping_category: "배송 Category"
+        tax_category: "세금 Category"
+      product_group: 
+        name: 이름
+        product_count: "상품 갯수"
+        product_scopes: "상품 스코프"
+        products: "상품"
+        url: URL
+      product_scope: 
+        arguments: "인수"
+        description: "설명"
+      property: 
+        name: 이름
+        presentation: 표시
+      prototype: 
+        name: 이름
+      return_authorization: 
+        amount: 양
+      role: 
+        name: 이름
+      state: 
+        abbr: 생략
+        name: 이름
+      tax_category: 
+        description: 설명
+        name: 이름
+      tax_rate: 
+        amount: 비율
+      taxon: 
+        name: 이름
+        permalink: 퍼마링크
+        position: 순서
+      taxonomy: 
+        name: 이름
+      user: 
+        email: 이메일
+      variant: 
+        cost_price: "비용"
+        depth: 높이
+        height: 세로
+        price: 가격
+        sku: SKU
+        weight: 무게
+        width: 가로
+      zone: 
+        description: 설명
+        name: 이름
+    models: 
+      address: 
+        one: 주소
+        other: 주소
+      cheque_payment: 
+        one: 수표 지불
+        other: 수표 지불
+      country: 
+        one: 국가
+        other: 국가
+      creditcard: 
+        one: 신용카드
+        other: 신용카드
+      creditcard_payment: 
+        one: 신용카드 지불
+        other: 신용카드 지불
+      creditcard_txn: 
+        one: "신용 카드 Transaction"
+        other: "신용 카드 Transactions"
+      inventory_unit: 
+        one: "인벤토리 유닛"
+        other: "인벤토리 유닛"
+      line_item: 
+        one: "라인 아이템"
+        other: "라인 아이템"
+      order: 
+        one: 주문
+        other: 주문
+      payment: 
+        one: 지불
+        other: 지불
+      product: 
+        one: 상품
+        other: 상품
+      product_group: 
+        one: 상품군
+        other: 상품군
+      property: 
+        one: 속성
+        other: 속성
+      prototype: 
+        one: 견본
+        other: 견본
+      return_authorization: 
+        one: #Return Authorization
+        other: #Return Authorizations
+      role: 
+        one: #Roles
+        other: #Roles
+      shipment: 
+        one: 배송
+        other: 배송
+      shipping_category: 
+        one: "배송 Category"
+        other: "배송 Categories"
+      state: 
+        one: 상태
+        other: 상태
+      tax_category: 
+        one: 세금 Category"
+        other: 세금 Categories"
+      tax_rate: 
+        one: "세율"
+        other: "세율"
+      taxon: 
+        one: 분류
+        other: 분류
+      taxonomy: 
+        one: 분류
+        other: 분류
+      user: 
+        one: 사용자
+        other: 사용자
+      variant: 
+        one: 배리언트
+        other: 배리언트
+      zone: 
+        one: 존
+        other: 존
+  add: 추가
+  add_category: "Category 추가"
+  add_country: "국가 추가"
+  add_option_type: "옵션 타입 추가"
+  add_option_types: "옵션 타입 추가"
+  add_option_value: "옵션 값 추가"
+  add_product: "상품 추가"
+  add_product_properties: "상품 속성 추가"
+  add_rule_of_type: #추가 rule of type
+  add_scope: "스코프 추가"
+  add_state: #"Add State"
+  add_to_cart: "장바구니에 추가"
+  add_zone: "존 추가"
+  additional_item: 추가 된 아이템 비용
+  address: 주소
+  address_information: "주소 정보"
+  adjustment: 정산
+  adjustment_total: 정산 합계
+  adjustments: 정산
+  administration: 운영
+  all: "전체"
+  all_departments: All departments
+  allow_backorders: "Allow Backorders"
+  allow_ssl_to_be_used_when_in_developement_and_test_modes: 개발과 테스트 모드에서 SSL을 사용하도록 허용
+  allow_ssl_to_be_used_when_in_production_mode: 프로덕션 모드에서 SSL을 사용하도록 허용
+  allowed_ssl_in_production_mode: "프로덕션 모드에서 SSL이 %{not} 사용 될 것입니다"
+  already_registered: 이미 등록되었습니까?
+  alt_text: 대체 텍스트
+  alternative_phone: 휴대폰 번호
+  amount: 액수
+  analytics_trackers: 애날리틱스 트래커
+  api: 
+    access: "API 접근"
+    clear_key: "API 키 삭제"
+    errors: 
+      invalid_event: "잘못 된 이벤트 이름입니다. 올바른 이름은 %{events} 입니다"
+      invalid_event_for_object: "올바른 이벤트 이름이지만 여기선 허용되지 않습니다. 올바른 이름은 %{events} 입니다."
+      missing_event: #"No event name supplied"
+    generate_key: "API 키 생성"
+    key: "API 키"
+    key_cleared: "API 키가 삭제되었음"
+    key_generated: "API 키가 생성되었음"
+    no_key: "키가 없음"
+    regenerate_key: "API 키 재생성"
+  apply: 적용
+  are_you_sure: "확실합니까?"
+  are_you_sure_category: "category를 삭제하겠습니까?"
+  are_you_sure_delete: "record를 삭제하겠습니까?"
+  are_you_sure_delete_image: "이미지를 삭제하겠습니까?"
+  are_you_sure_option_type: "옵션 타입을 삭제하겠습니까?"
+  are_you_sure_you_want_to_capture: #"Are you sure you want to capture?"
+  assign_taxon: "분류 지정"
+  assign_taxons: "분류 지정"
+  authorization_failure: "인증 실패"
+  authorized: 인증됨
+  available_on: 시작일
+  available_taxons: "쓸수 있는 분류"
+  awaiting_return: #Awaiting Return
+  back: 뒤로
+  back_end: #Back End
+  back_to_store: "스토어로 돌아가기"
+  backordered: 재주문됨
+  backordering_is_allowed: "재주문은 %{not} 허용됩니다"
+  balance_due: 부족
+  best_selling_products: "Best Selling 상품"
+  best_selling_taxons: "Best Selling 분류"
+  bill_address: "청구서 주소"
+  billing: 청구서
+  billing_address: "청구서 주소"
+  both: 양쪽 모두
+  by_day: "일별"
+  calculator: 계산기
+  calculator_settings_warning: #"계산기 종류를 바꾼다면, you must save first before you can edit the calculator settings"
+  cancel: 취소
+  cancel_my_account: #Cancel my account
+  cancel_my_account_description: #"Unhappy?"
+  canceled: 취소됨
+  cannot_create_returns: #Cannot create returns as this order no shipped units.
+  cannot_destory_line_item_as_inventory_units_have_shipped: 이미 배송 된 인벤토리 유닛이 있어서 라인 아이템을 삭제 할 수 없습니다.
+  cannot_perform_operation: "요청한 명령을 실핼 할 수 없습니다"
+  capture: 캡쳐
+  card_code: "카드 코드"
+  card_details: "카드 상세내용"
+  card_number: "카드 번호"
+  card_type_is: 카드 종료는 입니다
+  cart: 장바구니
+  categories: Categories
+  category: Category
+  change: 변경
+  change_language: "언어 변경"
+  change_my_password: "비밀번호 변경"
+  charge_total: #Charge 합계
+  charged: #Charged
+  charges: #Charges
+  checkout: #Checkout
+  cheque: #Cheque
+  city: City
+  clone: 복사
+  code: 코드
+  combine: #Combine
+  complete: 완료
+  complete_list: "전체 목록"
+  configuration: 설정
+  configuration_options: "옵션 설정"
+  configurations: 설정
+  configured: 설정됨
+  confirm: 확인
+  confirm_delete: #"Confirm Deletion"
+  confirm_password: "비밀번호 확인"
+  continue: 계속
+  continue_shopping: "계속 쇼핑"
+  copy_all_mails_to: 모든 메일을 복사
+  cost_price: "비용"
+  count: 횟수
+  count_of_reduced_by: #"count of '%{name}' reduced by %{count}"
+  country: 국가
+  country_based: "국가 기반"
+  coupon: 쿠폰
+  coupon_code: 쿠폰 코드
+  create: 생성
+  create_a_new_account: "새 계정 생성"
+  create_product_group_from_products: 이 상품들로 새로운 상품군 만들기
+  create_user_account: 사용자 계정 생성
+  created_successfully: "성공적으로 생성됨"
+  credit: #Credit
+  credit_card: "신용카드"
+  credit_card_capture_complete: "신용카드가 Captur 되었음"
+  credit_card_payment: "신용카드 지불"
+  credit_owed: #"Credit Owed"
+  credit_total: #Credit 합계
+  creditcard: 신용카드
+  creditcards: 신용카드
+  credits: #Credits
+  current: 현재
+  customer: 고객
+  customer_details: "고객 정보"
+  customer_search: "고객 검색"
+  date_created: 생성일
+  date_range: "날짜 범위"
+  debit: #Debit
+  default: 기본
+  delete: 삭제
+  delivery: #Delivery
+  depth: 높이
+  description: 설명
+  destroy: 삭제
+  didnt_receive_confirmation_instructions: #"Didn't receive confirmation instructions?"
+  didnt_receive_unlock_instructions: #"Didn't receive unlock instructions?"
+  discount_amount: "할인액"
+  display: 표시
+  edit: 편집
+  edit_general_settings: "일반 설정 편집"
+  editing_billing_integration: #Editing Billing Integration
+  editing_category: "Category 편집"
+  editing_mail_method: 메일 메소드 편잡
+  editing_option_type: "옵션 타입 편집"
+  editing_option_types: "옵션 타입 편집"
+  editing_payment_method: 결제 방법 편집
+  editing_product: "상품 편집"
+  editing_product_group: "상품군 편집"
+  editing_promotion: 프로모션 편집
+  editing_property: "속성 편집"
+  editing_prototype: 견본 편집
+  editing_shipping_category: "배송 Category 편집"
+  editing_shipping_method: #"Editing Shipping Method"
+  editing_state: #"Editing State"
+  editing_tax_category: "세금 Category 편집"
+  editing_tax_rate: "세율 편집"
+  editing_tracker: 트랙커 편집
+  editing_user: "사용자 편집"
+  editing_zone: "존 편집"
+  email: 이메일
+  email_address: "이메일 주소"
+  email_server_settings_description: "Set email server settings."
+  empty: #"Empty"
+  empty_cart: "장바구니 비우기"
+  enable_login_via_login_password: "기본 이멜/비밀번호 사용"
+  enable_login_via_openid: "대신해서 오픈ID 사용"
+  enable_mail_delivery: #Enable Mail Delivery
+  enter_atleast_five_letters: #Enter atleast five letters of customer name
+  enter_exactly_as_shown_on_card: #Please enter exactly as shown on the card
+  enter_password_to_confirm: #"(we need your current password to confirm your changes)"
+  environment: "환경"
+  error: 에러
+  errors: 
+    messages: 
+      no_shipping_methods_available: #"No shipping methods available for selected location, please change your address and try again."
+  errors_prohibited_this_record_from_being_saved: 
+    one: #"1 error prohibited this record from being saved"
+    other: #"%{count} errors prohibited this record from being saved"
+  event: 이벤트
+  existing_customer: #"Existing Customer"
+  expiration: "유효 기간"
+  expiration_month: "유효 달"
+  expiration_year: "유효 년"
+  expiry: #Expiry
+  extension: 확장
+  extensions: 확장
+  filename: 파일이름
+  final_confirmation: #"Final Confirmation"
+  finalize: #Finalize
+  finalized_payments: #Finalized Payments
+  first_item: 첫 아이템 비용
+  first_name: "이름"
+  first_name_begins_with: "이름으로 시작"
+  flat_percent: #"Flat Percent"
+  flat_rate_amount: 양
+  flat_rate_per_item: #"Flat Rate (per 아이템)"
+  flat_rate_per_order: #"Flat Rate (per order)"
+  flexible_rate: #"Flexible Rate"
+  forgot_password: #"Forgot Password?"
+  free_shipping: 무료 배송
+  from_state: #From State
+  front_end: #Front End
+  full_name: #"Full Name"
+  gateway: 게이트웨이
+  gateway_config_unavailable: #"Gateway unavailable for environment"
+  gateway_configuration: "게이트웨이 설정"
+  gateway_error: "게이트웨이 에러"
+  gateway_setting_description: #"Select a payment gateway and configure its settings."
+  gateway_settings_warning: #"If you are changing the gateway type, you must save first before you can edit the gateway settings"
+  general: #"General"
+  general_settings: "일반 설정"
+  general_settings_description: "Configure general Spree settings."
+  google_analytics: "구글 애날리스틱"
+  google_analytics_active: #"Active"
+  google_analytics_create: "구글 애날리스틱 계정 생성하기"
+  google_analytics_id: "애날리스틱 ID"
+  google_analytics_new: "새 구글 애날리스틱 계정"
+  google_analytics_setting_description: "Manage Google Analytics ID"
+  guest_checkout: 비회원 주문
+  guest_user_account: 비회원으로 결제
+  has_no_shipped_units: #has no shipped units
+  height: 세로
+  hello_user: "안녕하세요"
+  history: 이력
+  home: "Home"
+  icon: "아이콘"
+  icons_by: "아이콘 by"
+  image: 이미지
+  images: 이미지
+  images_for: #"Images for"
+  in_progress: #"In Progress"
+  include_in_shipment: 배송에 포함
+  included_in_other_shipment: 다른 배송에 포함됨
+  included_in_this_shipment: 배송에 포함됨
+  instructions_to_reset_password: #"Fill out the form below and instructions to reset your password will be emailed to you:"
+  integration_settings_warning: #"If you are changing the billing integration, you must save first before you can edit the integration settings"
+  intercept_email_address: #Intercept Email Address
+  intercept_email_instructions: #"Override email recipient and replace with this address."
+  invalid_search: "잘못된 검색 criteria."
+  inventory: 인벤토리
+  inventory_adjustment: "인벤토리 정산"
+  inventory_setting_description: "Inventory Configuration, Backordering, Zero-Stock Display"
+  inventory_settings: "인벤토리 설정"
+  is_not_available_to_shipment_address: #is not available to shipment address
+  issue_number: 이슈 번호
+  item: 아이템
+  item_description: "아이템 설명"
+  item_total: "아이템 합계"
+  item_total_rule: 
+    operators: 
+      gt: 보다 큰
+      gte: 보다 크거나 같은
+  items: "아이템"
+  last_14_days: "지난 14일"
+  last_5_orders: "최근 주문 5개"
+  last_7_days: "지난 7일"
+  last_month: "지난 달"
+  last_name: "성"
+  last_name_begins_with: "성으로 시작"
+  last_year: "작년"
+  leave_blank_to_not_change: #"(leave blank if you don't want to change it)"
+  list: 목록
+  listing_categories: "Categories 목록"
+  listing_option_types: "옵션 타입 목록"
+  listing_orders: "주문 목록"
+  listing_product_groups: "상품군 목록"
+  listing_reports: 리포트 목록
+  listing_tax_categories: "세금 Categories 목록"
+  listing_users: 사용자 목록
+  live: #"Live"
+  loading: 로딩
+  locale_changed: "지역이 변경됨"
+  log_in: "로그인"
+  logged_in_as: "Logged in as"
+  logged_in_succesfully: "로그인 성공"
+  logged_out: "로그아웃 되었습니다."
+  login: 로그인
+  login_as_existing: #"Log In as Existing Customer"
+  login_failed: #"Login authentication failed."
+  login_name: 로그인
+  logout: 로그아웃
+  look_for_similar_items: 비슷한 상품들
+  maestro_or_solo_cards: #Maestro/Solo cards
+  mail_delivery_enabled: #"Mail delivery is enabled"
+  mail_delivery_not_enabled: #"Mail delivery is not enabled"
+  mail_methods: 메일 발송 방법
+  mail_server_preferences: #Mail Server Preferences
+  make_refund: #Make refund
+  mark_shipped: #"Mark Shipped"
+  master_price: "기본 가격"
+  max_items: 최대 아이템
+  may_be_combined_with_other_promotions: #May be combined with other promotions
+  meta_description: "메타 설명"
+  meta_keywords: "메타 키워드"
+  metadata: 메타데이터
+  minimal_amount: "최소량"
+  missing_required_information: #"Missing Required Information"
+  month: #"Month"
+  my_account: "내 계정"
+  my_orders: "내 주문"
+  name: 이름
+  name_or_sku: "이름 또는 SKU"
+  new: #New
+  new_adjustment: "새 정산"
+  new_billing_integration: #New Billing Integration
+  new_category: "새 category"
+  new_customer: "새 고객"
+  new_image: "새 이미지"
+  new_mail_method: 새 메일 메소드
+  new_option_type: "새 옵션 타입"
+  new_option_value: "새 옵션 값"
+  new_order: "새 주문"
+  new_order_completed: #"New Order Completed"
+  new_payment: "새 결제"
+  new_payment_method: 새 결제 방법
+  new_product: "새 상품"
+  new_product_group: "새 상품군"
+  new_promotion: 새 프로모션
+  new_property: "새 속성"
+  new_prototype: "새 견본"
+  new_return_authorization: #New Return Authorization
+  new_shipment: "새 배송"
+  new_shipping_category: #"New Shipping Category"
+  new_shipping_method: #"New Shipping Method"
+  new_state: #"New State"
+  new_tax_category: "새 세금 Category"
+  new_tax_rate: "새로운 세율"
+  new_taxon: "새 분류"
+  new_taxonomy: #"New Taxonomy"
+  new_tracker: 새 트랙커
+  new_user: "새 사용자"
+  new_variant: "새 배리언트"
+  new_zone: "새 존"
+  next: 다음
+  no_items_in_cart: #""
+  no_match_found: "일치하는 것이 없음"
+  no_payment_methods_available: #"Can't check out, no payment methods are configured for this environment"
+  no_products_found: "찾는 상품이 없음"
+  no_results: "결과가 없음"
+  no_rules_added: 추가 된 룰이 없음
+  no_user_found: "이메일 주소로 찾는 사용자가 없음"
+  none: 없음
+  none_available: #"None Available"
+  normal_amount: "Normal Amount"
+  not: #not
+  not_shown: #"Not Shown"
+  note: 노트
+  notice_messages: 
+    option_type_removed: #"Succesfully removed option type."
+    product_cloned: #"Product has been cloned"
+    product_deleted: #"Product has been deleted"
+    product_not_cloned: #"Product could not be cloned"
+    product_not_deleted: #"Product could not be deleted"
+    variant_deleted: "배리언트는 삭제됐습니다"
+    variant_not_deleted: "배리언트를 삭제할 수 없습니다"
+  on_hand: "재고"
+  operation: #Operation
+  option_type: "옵션 타입"
+  option_types: "옵션 타입"
+  option_value: "옵션 값"
+  option_values: "옵션 값"
+  options: 옵션
+  or: 또는
+  ord_qty: "주문 수량"
+  ord_total: "주문 합계"
+  order: 주문
+  order_confirmation_note: #""
+  order_date: "주문 날짜"
+  order_details: "주문 상세"
+  order_email_resent: "주문 확인 메일 재발송"
+  order_mailer: 
+    cancel_email: 
+      subject: "주문 취소"
+    confirm_email: 
+      subject: "주문 확인"
+  order_not_in_system: #That order number is not valid on this site.
+  order_number: 주문
+  order_operation_authorize: #Authorize
+  order_processed_but_following_items_are_out_of_stock: "주문은 처리됐지만 다음 아이템들이 품절입니다:"
+  order_processed_successfully: #"Your order has been processed successfully"
+  order_state: 
+    # keys correspond to Checkout state names: 
+    address: 주소
+    adjustments: 정산
+    awaiting_return: #awaiting return
+    canceled: 취소됨
+    cart: 장바구니
+    complete: 완료
+    confirm: 확인
+    delivery: #delivery
+    payment: 지불
+    resumed: resumed
+    returned: #returned
+  order_summary: 주문 요약
+  order_sure_want_to: #"Are you sure you want to %{event} this order?"
+  order_total: "주문 합계"
+  order_total_message: #"The total amount charged to your card will be"
+  order_updated: "주문이 수정됨"
+  orders: 주문
+  other_payment_options: #Other Payment Options
+  out_of_stock: "품절"
+  out_of_stock_products: "품절 상품"
+  over_paid: "초과"
+  overview: Overiew
+  overview_welcome: #"Welcome to your store overview, currently we do not have enough data to display the Overiew Dashboard.<br/><br/> The dashboard will display automatically once the system has sufficent orders to allow generation of the statistics."
+  page_only_viewable_when_logged_in: #You attempted to visit a page which can only be viewed when you are logged in
+  page_only_viewable_when_logged_out: #You attempted to visit a page which can only be viewed when you are logged out
+  paid: #Paid
+  parent_category: #"Parent Category"
+  password: 비밀번호
+  password_reset_instructions: #"Password Reset Instructions"
+  password_reset_instructions_are_mailed: #"Instructions to reset your password have been emailed to you. Please check your email."
+  password_reset_token_not_found: #"We're sorry, but we could not locate your account. If you are having issues try copying and pasting the URL from your email into your browser or restarting the reset password process."
+  password_updated: #"Password successfully updated"
+  path: 경로
+  pay: #pay
+  payment: 지불
+  payment_actions: #"Actions"
+  payment_gateway: "Payment Gateway"
+  payment_information: "지불 정보"
+  payment_method: 결제 방법
+  payment_methods: 결제 방법
+  payment_methods_setting_description: Configure methods customers can use to pay
+  payment_processing_failed: "결제 중에 문제가 발생했습니다. 잠시 후에 다시 해보시기 바랍니다."
+  payment_state: 지불 상태
+  payment_states: 
+    balance_due: 부족
+    checkout: #checkout
+    completed: 완료
+    credit_owed: #credit owed
+    failed: #failed
+    paid: 지불
+    pending: 보류
+    processing: #processing
+    void: #void
+  payment_updated: #Payment Updated
+  payments: 지불
+  pending_payments: 보류 된 지불
+  permalink: 퍼마링크
+  phone: 전화번호
+  place_order: #Place Order
+  please_create_user: #"Please create a user account"
+  powered_by: "Powered by"
+  presentation: 표시
+  preview: 미리보기
+  previous: 이전
+  price: 가격
+  price_bucket: #Price Bucket
+  price_with_vat_included: #"%{price} (부가세 포함)"
+  problem_authorizing_card: #"Problem authorizing credit card"
+  problem_capturing_card: #"Problem capturing credit card"
+  problems_processing_order: #"We had problems processing your order"
+  proceed_as_guest: #"No Thanks, Proceed as Guest"
+  process: 과정
+  product: 상품
+  product_details: "상품 상세"
+  product_group: 상품군
+  product_group_invalid: #Product Group has invalid scopes
+  product_groups: 상품군
+  product_has_no_description: #This product has no description
+  product_properties: "상품 속성"
+  product_rule: 
+    choose_products: 상품 선택
+    label: #"Order must contain {{select}} of these products"
+    match_all: 모두
+    match_any: 최소 하나
+    product_source: 
+      group: 상품군에서
+      manual: #Manually choose
+  product_scopes: 
+    groups: 
+      price: 
+        description: "가격으로 상품을 선택하기 위한 스코프"
+        name: 가격
+      search: 
+        description: "이름, 키워드, 설명으로 상품을 선택하기 위한 스코프"
+        name: "텍스트 검색"
+      taxon: 
+        description: "분류로 상품을 선택하기 위한 스코프"
+        name: 분류
+      values: 
+        description: "옵션과 속성으로 상품을 선택하기 위한 스코프"
+        name: 값
+    scopes: 
+      ascend_by_master_price: 
+        name: 상품 master 가격으로 오름차순
+      ascend_by_name: 
+        name: 상품 이름으로 오름차순
+      ascend_by_updated_at: 
+        name: actualization 날짜로 오름차순
+      descend_by_master_price: 
+        name: 상품 master 가격으로 내림차순
+      descend_by_name: 
+        name: 상품 이름으로 내림차순
+      descend_by_popularity: 
+        name: 인기도로 정렬(most popular first)
+      descend_by_updated_at: 
+        name: actualization 날짜로 내림차순
+      in_name: 
+        args: 
+          words: 값
+        description: "(빈칸이나 콤마로 구분됨)"
+        name: "상품 이름"
+        sentence: "상품 이름에 <em>%s</em>가 포함"
+      in_name_or_description: 
+        args: 
+          words: 값
+        description: "(빈칸이나 콤마로 구분됨)"
+        name: "상품 이름 또는 설명"
+        sentence: "이름이나 설명에 <em>%s</em>가 포함"
+      in_name_or_keywords: 
+        args: 
+          words: 값
+        description: "(빈칸이나 콤마로 구분됨)"
+        name: "상품 이름 또는 메타 키워드"
+        sentence: "이름 또는 키워드에 <em>%s</em>가 포함"
+      in_taxons: 
+        args: 
+          "taxon_names": "분류 이름"
+        description: "빈칸이나 콤마로 구분 된 분류 이름(eg. adidas,shoes)"
+        name: "이 분류와 모든 하위 분류"
+        sentence: "<em>%s</em>과 그 하위 분류들"
+      master_price_gte: 
+        args: 
+          amount: 금액
+        description: #""
+        name: "Master 가격과 같거나 큰"
+        sentence: #가격이 <em>%.2f</em>과 같거나 큼
+      master_price_lte: 
+        args: 
+          amount: 금액
+        description: #""
+        name: "Master 가격과 같거나 작은"
+        sentence: #가격이 <em>%.2f</em>과 같거나 작음
+      price_between: 
+        args: 
+          high: 최고
+          low: 최소
+        description: #""
+        name: "가격 범위"
+        sentence: #가격이 <em>%.2f</em>에서 <em>%.2f</em> 사이
+      taxons_name_eq: 
+        args: 
+          taxon_name: 분류 이름
+        description: #"In specific taxon - without descendants"
+        name: "이 분류(하위 분류 제외)"
+        sentence: #in <em>%s</em>
+      with: 
+        args: 
+          value: 값
+        description: #"Selects all products that have at least one   that have specified value as either option or property (eg. red)"
+        name: #With value
+        sentence: #with value <em>%s</em>
+      with_ids: 
+        args: 
+          ids: IDs
+        description: #"Select specific products"
+        name: 상품 ID
+        sentence: #with IDs <em>%s</em>
+      with_option: 
+        args: 
+          option: 옵션
+        description: #"Selects all products that have specified option(eg. color)"
+        name: #"With option"
+        sentence: #with option <em>%s</em>
+      with_option_value: 
+        args: 
+          option: 옵션
+          value: 값
+        description: #"Selects all products that have at least one variant with specified option and value(eg. color:red)"
+        name: #"With option and value"
+        sentence: #with option <em>%s</em> and value <em>%s</em>
+      with_property: 
+        args: 
+          property: 속성
+        description: #"Selects all products that have specified property(eg. weight)"
+        name: #"With property"
+        sentence: #with property <em>%s</em>
+      with_property_value: 
+        args: 
+          property: 속성
+          value: 값
+        description: #"Selects all products that have at least one variant with specified property and value(eg. weight:10kg)"
+        name: #"With property value"
+        sentence: #with property <em>%s</em> and value <em>%s</em>
+  products: 상품
+  products_with_zero_inventory_display: #"Products with a zero inventory will %{not} be displayed"
+  promotion: Promotion
+  promotion_form: 
+    match_policies: 
+      all: 이 규칙에 하나라도 일치
+      any: 이 규칙에 모두 일치
+  promotion_rule_types: 
+    first_order: 
+      description: #Must be the customer's first order
+      name: 첫 주문
+    item_total: 
+      description: #Order total meets these criteria
+      name: #Item total
+    product: 
+      description: #Order includes specified product(s)
+      name: #Product(s)
+    user: 
+      description: #Available only to the specified users
+      name: #User
+  promotions: #Promotions
+  promotions_description: #Manage offers and coupons with promotions
+  properties: 속성
+  property: 속성
+  prototype: 견본
+  prototypes: 견본
+  provider: "제공자"
+  provider_settings_warning: #"If you are changing the provider type, you must save first before you can edit the provider settings"
+  qty: 수량
+  quantity_returned: #Quantity Returned
+  quantity_shipped: #Quantity Shipped
+  range: "범위"
+  rate: #Rate
+  reason: 이유
+  recalculate_order_total: "주문 합계 재계산"
+  receive: #receive
+  received: #Received
+  refund: #Refund
+  register: #Register as a New User
+  register_or_guest: #Checkout as Guest or Register
+  registration: 등록
+  remember_me: 이메일 저장
+  remove: 삭제
+  reports: 리포트
+  required_for_solo_and_maestro: #Required for Solo and Maestro cards.
+  resend: 재발송
+  resend_confirmation_instructions: #"Resend confirmation instructions"
+  resend_unlock_instructions: #"Resend unlock instructions"
+  reset_password: "비밀번호 재설정"
+  resource_controller: 
+    member_object_not_found: "Member object not found."
+    successfully_created: "성공적으로 생성됨!"
+    successfully_removed: "성공적으로 삭제됨!"
+    successfully_updated: "성공적으로 수정됨!"
+  response_code: "응답 코드"
+  resume: #"resume"
+  resumed: #Resumed
+  return: #return
+  return_authorization: #Return Authorization
+  return_authorization_updated: #Return authorization updated
+  return_authorizations: #Return Authorizations
+  return_quantity: #Return Quantity
+  returned: #Returned
+  rma_credit: RMA Credit
+  rma_number: RMA 번호
+  rma_value: RMA 값
+  roles: Roles
+  rules: 규칙
+  sales_tax: #"Sales 세금"
+  sales_total: #"Sales Total"
+  sales_total_for_all_orders: #"Sales total for all orders"
+  sales_totals: #"Sales Totals"
+  sales_totals_description: #"Sales Total For All Orders"
+  save_and_continue: 저장하고 계속
+  save_preferences: #Save Preferences
+  scope: 스코프
+  scopes: 스코프
+  search: 검색
+  search_results: "'%{keywords}'의 검색 결과"
+  searching: 검색중
+  secure_connection_type: #Secure Connection Type
+  secure_creditcard: #Secure Creditcard
+  select: 선택
+  select_from_prototype: "견본에서 선택"
+  select_preferred_shipping_option: #"Select preferred shipping option"
+  send_copy_of_all_mails_to: 모든 메일 사본을 다음 주소로 보냄
+  send_copy_of_orders_mails_to: 주문 확인 메일 사본을 다음 주소로 보냄
+  send_mails_as: #Send Mails As
+  send_me_reset_password_instructions: #"Send me reset password instructions"
+  send_order_mails_as: #Send Order Mails As
+  server: 서버
+  server_error: #"The server returned an error"
+  settings: 설정
+  ship: #ship
+  ship_address: "배송 주소"
+  shipment: 배송
+  shipment_details: 배송 상세정보
+  shipment_mailer: 
+    shipped_email: 
+      subject: "배송 알림"
+  shipment_number: "배송번호 #"
+  shipment_state: 배송 상태
+  shipment_states: 
+    backorder: #backorder
+    partial: #partial
+    pending: 보류
+    ready: 대기
+    shipped: #shipped
+  shipment_updated: #Shipment Updated
+  shipments: "배송"
+  shipped: 배송됨
+  shipping: 배송료
+  shipping_address: "배송 주소"
+  shipping_categories: "배송 Categories"
+  shipping_categories_description: "Manage shipping categories to identify which products can be shipped via which method"
+  shipping_category: 배송 Category
+  shipping_cost: 배송 비용
+  shipping_error: #"Shipping Error"
+  shipping_instructions: #"Shipping Instructions"
+  shipping_method: #"Delivery Method"
+  shipping_methods: # "Delivery Methods"
+  shipping_methods_description: "Manage shipping methods"
+  shipping_total: "배송료 합계"
+  shop_by_taxonomy: #"Shop by %{taxonomy}"
+  shopping_cart: "장바구니"
+  show: 보기
+  show_active: #"Show Active"
+  show_deleted: "삭제 된 상품까지 보기"
+  show_incomplete_orders: #"Show Incomplete Orders"
+  show_only_complete_orders: "완료 된 주문만 보기"
+  show_out_of_stock_products: "품절 상픔 보기"
+  show_price_inc_vat: "부가세 포함 가격으로 보기"
+  showing_first_n: #"Showing first %{n}"
+  sign_up: #"Sign up"
+  site_name: "사이트 이름"
+  site_url: "사이트 URL"
+  sku: SKU
+  smtp: SMTP
+  smtp_authentication_type: SMTP 인증 방법
+  smtp_domain: SMTP 도메인
+  smtp_mail_host: SMTP 메일 호스트
+  smtp_password: SMTP 비밀번호
+  smtp_port: SMTP 포트
+  smtp_send_all_emails_as_from_following_address: "다음 주소로 모든 메일을 보냅니다."
+  smtp_send_copy_to_this_addresses: #"Sends a copy of all outgoing mails to this address. For multiple addresses, separate with commas."
+  smtp_username: SMTP 사용자이름
+  sold: #Sold
+  sort_ordering: "순서 정렬"
+  special_instructions: #"Special Instructions"
+  spree: 
+    date: 날짜
+    time: 시간
+  spree_gateway_error_flash_for_checkout: #"There was a problem with your payment information. Please check your information and try again."
+  ssl_will_be_used_in_development_and_test_modes: #"SSL will be used in development and test mode if necessary."
+  ssl_will_be_used_in_production_mode: #"SSL will be used in production mode"
+  ssl_will_not_be_used_in_development_and_test_modes: #"SSL will not be used in development and test mode if necessary."
+  ssl_will_not_be_used_in_production_mode: #"SSL will not be used in production mode"
+  start: 시작
+  start_date: #Valid from
+  state: State
+  state_based: #"State Based"
+  state_setting_description: "Administer the list of states/provinces associated with each country."
+  states: States
+  status: 상태
+  stop: 끝
+  store: 상점
+  street_address: "Street 주소"
+  street_address_2: "Street 주소 (cont'd)"
+  subtotal: #Subtotal
+  subtract: #Subtract
+  successfully_created: "%{resource} has been successfully created!"
+  successfully_removed: "%{resource} has been successfully removed!"
+  successfully_updated: "%{resource} has been successfully updated!"
+  system: 시스템
+  tax: 세금
+  tax_categories: "세금 Categories"
+  tax_categories_setting_description: "Set up tax categories to identify which products should be taxable."
+  tax_category: "세금 Category"
+  tax_rates: "세율"
+  tax_rates_description: "세율 setup and configuration."
+  tax_settings: "세금 설정"
+  tax_settings_description: Basic tax settings.
+  tax_total: "세금 합계"
+  tax_type: "세금 Type"
+  taxon: 분류
+  taxon_edit: 분류 편집
+  taxonomies: 분류
+  taxonomies_setting_description: "Create and manage taxonomies"
+  taxonomy_edit: #"Edit taxonomy"
+  taxonomy_tree_error: #"The requested change has not been accepted and the tree has been returned to its previous state, please try again."
+  taxonomy_tree_instruction: #"* Right click a child in the tree to access the menu for adding, deleting or sorting a child."
+  taxons: 분류
+  test: "테스트"
+  test_mode: "테스트 모드"
+  thank_you_for_your_order: #"Thank you for your business.  Please print out a copy of this confirmation page for your records."
+  there_were_problems_with_the_following_fields: #"There were problems with the following fields"
+  this_file_language: #"English (US)"
+  this_month: "이번달"
+  this_year: "올해"
+  thumbnail: "썸네일"
+  to_add_variants_you_must_first_define: "배리언트를 추가하려면 먼저 정의해야 합니다"
+  to_state: #"To State"
+  top_grossing_products: "최고 수익율 상품"
+  total: 합계
+  tracking: #Tracking
+  transaction: #Transaction
+  transactions: #Transactions
+  tree: #Tree
+  try_again: "재시도"
+  type: #Type
+  type_to_search: #Type to search
+  unable_ship_method: #"Unable to generate shipping methods due to a server error."
+  unable_to_authorize_credit_card: #"Unable to Authorize Credit Card"
+  unable_to_capture_credit_card: #"Unable to Capture Credit Card"
+  unable_to_connect_to_gateway: #"Unable to connect to gateway."
+  unable_to_save_order: #"Unable to Save Order"
+  under_paid: #"Under Paid"
+  units: "유닛"
+  unrecognized_card_type: #Unrecognized card type
+  update: 수정
+  update_password: #"Update my password and log me in"
+  updated_successfully: #"Updated Successfully"
+  updating: #Updating
+  usage_limit: #Usage Limit
+  use_as_shipping_address: #Use as Shipping Address
+  use_billing_address: 청구서 주소 사용
+  use_different_shipping_address: #"Use Different Shipping Address"
+  use_new_cc: #"Use a new card"
+  user: 사용자
+  user_account: 사용자 계정
+  user_created_successfully: #"User created successfully"
+  user_details: #"User Details"
+  user_rule: 
+    choose_users: #Choose users
+  users: 사용자
+  validate_on_profile_create: #Validate on profile create
+  validation: 
+    cannot_be_less_than_shipped_units: #"cannot be less than the number of shipped units."
+    is_too_large: #"is too large -- stock on hand cannot cover requested quantity!"
+    must_be_int: #"must be an integer"
+    must_be_non_negative: #"must be a non-negative value"
+  value: 값
+  variants: 배리언트
+  vat: 부가세
+  version: 버전
+  view_shipping_options: #"View shipping options"
+  void: #Void
+  website: 웹사이트
+  weight: 무게
+  welcome_to_sample_store: #"Welcome to the sample store"
+  what_is_a_cvv: "신용카드 코드(CVV)란?"
+  what_is_this: "What's This?"
+  whats_this: "What's this"
+  width: 가로
+  year: "년"
+  you_have_been_logged_out: #"You have been logged out."
+  you_have_no_orders_yet: #"You have no orders yet."
+  your_cart_is_empty: "장바구니가 비었습니다"
+  zip: 우편번호
+  zone: 존
+  zone_based: 존 기반
+  zone_setting_description: "Collections of countries, states or other zones to be used in various calculations."
+  zones: 존
