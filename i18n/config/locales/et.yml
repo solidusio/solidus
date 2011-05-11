@@ -94,6 +94,13 @@ et:
       product_scope: 
         arguments: Argumendid
         description: Kirjeldus
+      promotion: 
+        code: "Code"
+        description: "Description"
+        expires_at: "Expires at"
+        name: "Name"
+        starts_at: "Starts at"
+        usage_limit: "Usage limit"
       property: 
         name: Nimi
         presentation: Kuvatav väärtus
@@ -395,6 +402,7 @@ et:
   error: Viga
   errors: 
     messages: 
+      could_not_create_taxon: "Could not create taxon"
       no_shipping_methods_available: "No shipping methods available for selected location, please change your address and try again."
   errors_prohibited_this_record_from_being_saved: 
     one: "1 error prohibited this record from being saved"
@@ -876,9 +884,7 @@ et:
   rules: Rules
   sales_tax: Käibemaks
   sales_total: Kogumüük
-  sales_total_for_all_orders: Tellimuste tulu kokku
-  sales_totals: Müük kokku
-  sales_totals_description: Kõikide tellimuste tulu kokku
+  sales_total_description: "Sales Total For All Orders"
   save_and_continue: Salvesta ja jätka
   save_preferences: Salvesta eelistused
   scope: Käsitlusala

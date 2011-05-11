@@ -94,6 +94,13 @@ pt-PT:
       product_scope: 
         arguments: "Arguments"
         description: "Description"
+      promotion: 
+        code: "Code"
+        description: "Description"
+        expires_at: "Expires at"
+        name: "Name"
+        starts_at: "Starts at"
+        usage_limit: "Usage limit"
       property: 
         name: Nome
         presentation: Apresentação
@@ -395,6 +402,7 @@ pt-PT:
   error: erro
   errors: 
     messages: 
+      could_not_create_taxon: "Could not create taxon"
       no_shipping_methods_available: "No shipping methods available for selected location, please change your address and try again."
   errors_prohibited_this_record_from_being_saved: 
     one: "1 error prohibited this record from being saved"
@@ -876,9 +884,7 @@ pt-PT:
   rules: Rules
   sales_tax: "Sales Tax"
   sales_total: "Total de Venda"
-  sales_total_for_all_orders: "Valor total de todas as encomendas"
-  sales_totals: "Total de Vendas"
-  sales_totals_description: "Total de Vendas para todos os Pedidos"
+  sales_total_description: "Sales Total For All Orders"
   save_and_continue: Save and Continue
   save_preferences: Save Preferences
   scope: Scope

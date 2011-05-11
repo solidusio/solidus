@@ -94,6 +94,13 @@ zh-CN:
       product_scope: 
         arguments: "参数"
         description: "描述"
+      promotion: 
+        code: "Code"
+        description: "Description"
+        expires_at: "Expires at"
+        name: "Name"
+        starts_at: "Starts at"
+        usage_limit: "Usage limit"
       property: 
         name: "名称"
         presentation: "表示"
@@ -395,6 +402,7 @@ zh-CN:
   error: "错误"
   errors: 
     messages: 
+      could_not_create_taxon: "Could not create taxon"
       no_shipping_methods_available: "No shipping methods available for selected location, please change your address and try again."
   errors_prohibited_this_record_from_being_saved: 
     one: "1 error prohibited this record from being saved"
@@ -876,9 +884,7 @@ zh-CN:
   rules: Rules
   sales_tax: "消费税"
   sales_total: "销售总计"
-  sales_total_for_all_orders: "所有订单销售总计"
-  sales_totals: "销售总计"
-  sales_totals_description: "所有订单销售总计"
+  sales_total_description: "Sales Total For All Orders"
   save_and_continue: "保存并继续"
   save_preferences: "保存首选项"
   scope: "范围"

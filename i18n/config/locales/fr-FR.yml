@@ -1,5 +1,5 @@
 ---
-fr-FR:
+fr-FR: 
   'no': "Non"
   'yes': "Oui"
   5_biggest_spenders: "Les 5 plus gros clients"
@@ -9,7 +9,7 @@ fr-FR:
   account: Compte
   account_updated: "Compte mis à jour!"
   action: Action
-  actions:
+  actions: 
     cancel: Annuler
     create: Créer
     destroy: Supprimer
@@ -18,9 +18,9 @@ fr-FR:
     new: Nouveau
     update: Mise à jour
   active: "Active"
-  activerecord:
-    attributes:
-      address:
+  activerecord: 
+    attributes: 
+      address: 
         address1: Adresse
         address2: "Adresse complémentaire"
         city: Ville
@@ -32,8 +32,8 @@ fr-FR:
         phone: Téléphone
         state: "Etat"
         zipcode: "Code Postal"
-      checkout:
-        bill_address:
+      checkout: 
+        bill_address: 
           address1: "Adresse de facturation"
           city: "Ville de facturation"
           firstname: "Prénom de facturation"
@@ -41,7 +41,7 @@ fr-FR:
           phone: "Téléphone de facturation"
           state: "Etat de facturation"
           zipcode: "Code postal de facturation"
-        ship_address:
+        ship_address: 
           address1: "Adresse de livraison"
           city: "Ville de livraison"
           firstname: "Prénom de livraison"
@@ -49,24 +49,24 @@ fr-FR:
           phone: "Téléphone de livraison"
           state: "Etat de livraison"
           zipcode: "Code postal de livraison"
-      country:
+      country: 
         iso: ISO
         iso3: ISO3
         iso_name: "Nom ISO"
         name: Nom
         numcode: "Code ISO"
-      creditcard:
+      creditcard: 
         cc_type: Type
         month: Mois
         number: Nombre
         verification_value: "Cryptogramme"
         year: Année
-      inventory_unit:
+      inventory_unit: 
         state: Région
-      line_item:
+      line_item: 
         price: Prix
         quantity: Quantité
-      order:
+      order: 
         checkout_complete: "Paiement complet"
         completed_at: "Completed At"
         coupon_code: "Coupon Code"
@@ -76,7 +76,7 @@ fr-FR:
         special_instructions: "Instructions spéciales"
         state: Région
         total: Total
-      product:
+      product: 
         available_on: "Disponible sur"
         cost_price: "Prix de revient"
         description: Description
@@ -85,41 +85,48 @@ fr-FR:
         on_hand: "En Stock"
         shipping_category: "Catégorie de livraison"
         tax_category: "Catégorie de taxe"
-      product_group:
+      product_group: 
         name: "Nom"
         product_count: "Nombre de produits"
         product_scopes: "Portée du produit"
         products: "Produits"
         url: "URL"
-      product_scope:
+      product_scope: 
         arguments: "Arguments"
         description: "Description"
-      property:
+      promotion: 
+        code: "Code"
+        description: "Description"
+        expires_at: "Expires at"
+        name: "Name"
+        starts_at: "Starts at"
+        usage_limit: "Usage limit"
+      property: 
         name: Nom
         presentation: "Présentation"
-      prototype:
+      prototype: 
         name: Nom
-      return_authorization:
+      return_authorization: 
         amount: Montant
-      role:
+      role: 
         name: Nom
-      state:
+      state: 
         abbr: Abréviation
         name: Nom
-      tax_category:
+      tax_category: 
         description: Description
         name: Name
-      tax_rate:
+      tax_rate: 
         amount: Taux
-      taxon:
+      taxon: 
         name: Nom
         permalink: Lien permanant
         position: Position
-      taxonomy:
+      taxonomy: 
         name: Nom
-      user:
+      user: 
         email: Email
-      variant:
+      variant: 
         cost_price: "Prix de revient"
         depth: Profondeur
         height: Taille
@@ -127,86 +134,86 @@ fr-FR:
         sku: SKU
         weight: Poids
         width: Largeur
-      zone:
+      zone: 
         description: Description
         name: Nom
-    models:
-      address:
+    models: 
+      address: 
         one: Adresse
         other: Adresses
-      cheque_payment:
+      cheque_payment: 
         one: Paiement par chèque
         other: Paiements par chèque
-      country:
+      country: 
         one: Pays
         other: Pays
-      creditcard:
+      creditcard: 
         one: "Carte de crédit"
         other: "Cartes de crédit"
-      creditcard_payment:
+      creditcard_payment: 
         one: "Paiement par carte de crédit"
         other: "Paiements par carte de crédit"
-      creditcard_txn:
+      creditcard_txn: 
         one: "Transaction par carte de crédit"
         other: "Transactions par carte de crédit"
-      inventory_unit:
+      inventory_unit: 
         one: "Stock"
         other: "Stocks"
-      line_item:
+      line_item: 
         one: "Gamme de produits"
         other: "Gammes de produits"
-      order:
+      order: 
         one: Commande
         other: Commandes
-      payment:
+      payment: 
         one: Paiement
         other: Paiements
-      product:
+      product: 
         one: Produit
         other: Produits
-      product_group:
+      product_group: 
         one: "Product group"
         other: "Product groups"
-      property:
+      property: 
         one: Proprieté
         other: Proprietés
-      prototype:
+      prototype: 
         one: Prototype
         other: Prototypes
-      return_authorization:
+      return_authorization: 
         one: Retour d'autorisation
         other: Retours d'autorisations
-      role:
+      role: 
         one: Rôles
         other: Rôles
-      shipment:
+      shipment: 
         one: Expedition
         other: Expeditions
-      shipping_category:
+      shipping_category: 
         one: Catégorie de livraison"
         other: "Catégories de livraison"
-      state:
+      state: 
         one: Région
         other: Régions
-      tax_category:
+      tax_category: 
         one: "Catégorie de taxe"
         other: "Catégories des taxes"
-      tax_rate:
+      tax_rate: 
         one: "Taux de la taxe"
         other: "Taux des taxes"
-      taxon:
+      taxon: 
         one: Chemin
         other: Chemins
-      taxonomy:
+      taxonomy: 
         one: Taxonomie
         other: Taxonomies
-      user:
+      user: 
         one: Utilisateur
         other: Utilisateurs
-      variant:
+      variant: 
         one: Version
         other: Versions
-      zone:
+      zone: 
         one: Zone
         other: Zones
   add: Ajouter
@@ -240,10 +247,10 @@ fr-FR:
   alternative_phone: "Téléphone secondaire"
   amount: Montant
   analytics_trackers: Analytics Trackers
-  api:
+  api: 
     access: "Accès API"
     clear_key: "Clear API key"
-    errors:
+    errors: 
       invalid_event: "Invalid event name, valid names are %{events}"
       invalid_event_for_object: "Valid event name but not allowed for this object, valid names are %{events}"
       missing_event: "No event name supplied"
@@ -393,10 +400,11 @@ fr-FR:
   enter_password_to_confirm: "(Nous avons besoin de votre mot de passe actuel pour confirmer le changement)"
   environment: "Environnement"
   error: erreur
-  errors:
-    messages:
+  errors: 
+    messages: 
+      could_not_create_taxon: "Could not create taxon"
       no_shipping_methods_available: "Pas de moyen de livraison disponible pour la destination choisie, changez l'adresse et re-essayez."
-  errors_prohibited_this_record_from_being_saved:
+  errors_prohibited_this_record_from_being_saved: 
     one: "1 erreur empêche l'enregistrement de cette entrée"
     other: "%{count} erreurs empêchent l'enregistrement de cette entrée"
   event: Événements
@@ -469,8 +477,8 @@ fr-FR:
   item: Article
   item_description: "Description de l'article"
   item_total: "Nombre total d'articles"
-  item_total_rule:
-    operators:
+  item_total_rule: 
+    operators: 
       gt: plus grand que
       gte: plus grand ou égal à
   items: "Articles"
@@ -568,7 +576,7 @@ fr-FR:
   not: pas
   not_shown: "Non affiché"
   note: Note
-  notice_messages:
+  notice_messages: 
     option_type_removed: "Type d'option supprimé avec succès"
     product_cloned: "Le produit a été cloné"
     product_deleted: "Le produit a été supprimé"
@@ -591,10 +599,10 @@ fr-FR:
   order_date: "Date de la commande"
   order_details: "Détails de la commande"
   order_email_resent: "Renvoi de la commande par email"
-  order_mailer:
-    cancel_email:
+  order_mailer: 
+    cancel_email: 
       subject: "Annulation de la commande"
-    confirm_email:
+    confirm_email: 
       subject: "Confirmation de commande"
   order_not_in_system: "Ce numéro de commande n'est pas valide sur ce site."
   order_number: Commande
@@ -602,7 +610,7 @@ fr-FR:
   order_processed_but_following_items_are_out_of_stock: "Votre commande à été traitée mais les articles suivant sont en rupture de stock:"
   order_processed_successfully: "Votre commande a été traitée avec succès"
   order_state: # keys correspond to Checkout state names:
-    # keys correspond to Checkout state names:
+    # keys correspond to Checkout state names: 
     address: addresse
     adjustments: adjustments
     awaiting_return: en attente du retour
@@ -646,7 +654,7 @@ fr-FR:
   payment_methods_setting_description: "Configuration des méthodes de paiement utilisables par les clients"
   payment_processing_failed: "Le paiemnent ne peut être accomplie, merci de vérifier les informations fournie"
   payment_state: Etat du paiement
-  payment_states:
+  payment_states: 
     balance_due: solde dû
     checkout: commander
     completed: complété
@@ -682,125 +690,125 @@ fr-FR:
   product_groups: Groupes de produits
   product_has_no_description: "La produit n'a aucune description"
   product_properties: "Propriété du produit"
-  product_rule:
+  product_rule: 
     choose_products: Choississez des produits
     label: "La commande doit contenir %{select} de ses produits"
     match_all: tout
     match_any: au moins un
-    product_source:
+    product_source: 
       group: Dans les groupes de produits
       manual: Choisir manuellement
-  product_scopes:
-    groups:
-      price:
+  product_scopes: 
+    groups: 
+      price: 
         description: "Etendue pour choisir des produits en fonction du prix"
         name: Prix
-      search:
+      search: 
         description: "Etendue pour choisir des produits en fonction du nom, des mots clés et des descriptions"
         name: "Recherche de texte"
-      taxon:
+      taxon: 
         description: "Etendue pour choisir des produits en fonction des taxons"
         name: Taxon
-      values:
+      values: 
         description: "Etendue pour choisir des produits en fonction des options et des propriétés"
         name: Valeurs
-    scopes:
-      ascend_by_master_price:
+    scopes: 
+      ascend_by_master_price: 
         name: Par prix croissant
-      ascend_by_name:
+      ascend_by_name: 
         name: Par nom croissant
-      ascend_by_updated_at:
+      ascend_by_updated_at: 
         name: Par date d'actualisation croissante
-      descend_by_master_price:
+      descend_by_master_price: 
         name: Par prix décroissant
-      descend_by_name:
+      descend_by_name: 
         name: Par nom décroissant
-      descend_by_popularity:
+      descend_by_popularity: 
         name: Sort by popularity(most popular first)
-      descend_by_updated_at:
+      descend_by_updated_at: 
         name: Par date d'actualisation décroissante
-      in_name:
-        args:
+      in_name: 
+        args: 
           words: Mots
         description: "(séparés par un espace ou une virgule)"
         name: "Le nom du produit a les mots suivants"
         sentence: le nom du produit contient <em>%s</em>
-      in_name_or_description:
-        args:
+      in_name_or_description: 
+        args: 
           words: Mots
         description: "(séparés par un espace ou une virgule)"
         name: "Le nom ou la description du produit a les mots suivants"
         sentence: le nom ou la description contient <em>%s</em>
-      in_name_or_keywords:
-        args:
+      in_name_or_keywords: 
+        args: 
           words: Mots
         description: "(séparés par un espace ou une virgule)"
         name: "Le nom ou les mots clés du produit ont les mots suivants"
         sentence: le nom ou les mots clés contiennent <em>%s</em>
-      in_taxons:
-        args:
+      in_taxons: 
+        args: 
           "taxon_names": "Noms taxon"
         description: "Les noms taxons doivent être séparés par des virgules ou par des espaces (ex. adidas,chaussures)"
         name: "Dans le taxon et tous leurs descendants"
         sentence: dans <em>%s</em> et tous ses descendants
-      master_price_gte:
-        args:
+      master_price_gte: 
+        args: 
           amount: Montant
         description: ""
         name: "Prix supérieur ou égal à"
         sentence: prix supérieur ou égal à <em>%.2f</em>
-      master_price_lte:
-        args:
+      master_price_lte: 
+        args: 
           amount: Montant
         description: ""
         name: "Prix inférieur ou égal à"
         sentence: prix inférieur ou égal à <em>%.2f</em>
-      price_between:
-        args:
+      price_between: 
+        args: 
           high: Haut
           low: Bas
         description: ""
         name: "Prix entre"
         sentence: prix entre <em>%.2f</em> et <em>%.2f</em>
-      taxons_name_eq:
-        args:
+      taxons_name_eq: 
+        args: 
           taxon_name: "Nom taxon"
         description: "Dans un taxon spécifique - sans descendants"
         name: "Dans Taxon(sans descendants)"
         sentence: dans <em>%s</em>
-      with:
-        args:
+      with: 
+        args: 
           value: Valeur
         description: "Selectionner des produits"
         name: Produits avec IDs
         sentence: avec IDs <em>%s</em>
-      with_ids:
-        args:
+      with_ids: 
+        args: 
           ids: IDs
         description: "Selectionner des produits"
         name: Produits avec IDs
         sentence: avec IDs <em>%s</em>
-      with_option:
-        args:
+      with_option: 
+        args: 
           option: Option
         description: "Choisit tous les produits qui ont l'option spécifiée (ex. couleur)"
         name: "Avec option"
         sentence: avec option <em>%s</em>
-      with_option_value:
-        args:
+      with_option_value: 
+        args: 
           option: Option
           value: Valeur
         description: "Choisit tous les produits qui ont au moins une variante avec l'option et la valeur spécifiées (ex. coleur:rouge)"
         name: "Avec option et valeur"
         sentence: avec option <em>%s</em> et valeur <em>%s</em>
-      with_property:
-        args:
+      with_property: 
+        args: 
           property: Propriété
         description: "Choisit tous les produits qui ont la propriété spécifiée (ex. poids)"
         name: "Avec propriété"
         sentence: avec propriété <em>%s</em>
-      with_property_value:
-        args:
+      with_property_value: 
+        args: 
           property: Propriété
           value: Valeur
         description: "Choisit tous les produits qui ont au moins une variante avec la propriété et la valeur spécifiées (ex. poids:10kg)"
@@ -809,21 +817,21 @@ fr-FR:
   products: Produits
   products_with_zero_inventory_display: "Les produits en rupture de stock seront %{not} affichés"
   promotion: Promotion
-  promotion_form:
-    match_policies:
+  promotion_form: 
+    match_policies: 
       all: Réponds à toutes ses règles
       any: Réponds à une des règles
-  promotion_rule_types:
-    first_order:
+  promotion_rule_types: 
+    first_order: 
       description: Doit être la première commande de l'utilisateur
       name: première commande
-    item_total:
+    item_total: 
       description: Le total de la commande réponds aux critaires suivants
       name: total de la commande
-    product:
+    product: 
       description: La commande comprends le ou les produit(s) spécifié(s)
       name: Produit(s)
-    user:
+    user: 
       description: Disponible uniquement pour l'utilisateur spécifié
       name: Utilisateur
   promotions: Promotions
@@ -855,7 +863,7 @@ fr-FR:
   resend_confirmation_instructions: "Recevoir les instructions de validation"
   resend_unlock_instructions: "Recevoir les instructions de dévérouillage"
   reset_password: "Réinitialiser mon mot de passe"
-  resource_controller:
+  resource_controller: 
     member_object_not_found: "Objet membre non trouvé."
     successfully_created: "Créer avec succès!"
     successfully_removed: "Supprimé avec succès!"
@@ -876,9 +884,7 @@ fr-FR:
   rules: Règles
   sales_tax: "Taxe de ventes"
   sales_total: "Total de ventes"
-  sales_total_for_all_orders: "Total des ventes pour toutes les commandes"
-  sales_totals: "Total des ventes"
-  sales_totals_description: "Total des ventes pour toutes les commandes"
+  sales_total_description: "Sales Total For All Orders"
   save_and_continue: Sauver et continuer
   save_preferences: Sauvegarder les préférences
   scope: Scope
@@ -903,12 +909,12 @@ fr-FR:
   ship_address: "Adresse de livraison"
   shipment: Livraison
   shipment_details: Détails de livraison
-  shipment_mailer:
-    shipped_email:
+  shipment_mailer: 
+    shipped_email: 
       subject: "Notification d'expédition"
   shipment_number: "Livraison #"
   shipment_state: Shipment State
-  shipment_states:
+  shipment_states: 
     backorder: backorder
     partial: partial
     pending: pending
@@ -955,7 +961,7 @@ fr-FR:
   sold: Vendu
   sort_ordering: "Ordre de tri"
   special_instructions: "Special Instructions"
-  spree:
+  spree: 
     date: Date
     time: Heure
   spree_gateway_error_flash_for_checkout: "There was a problem with your payment information. Please check your information and try again."
@@ -1038,11 +1044,11 @@ fr-FR:
   user_account: Compte utilisateur
   user_created_successfully: "Utilisateur créé avec succès"
   user_details: "Details de l'utilisateur"
-  user_rule:
+  user_rule: 
     choose_users: Selectionner un utilisateur
   users: Utilisateurs
   validate_on_profile_create: Valider à la création du profil
-  validation:
+  validation: 
     cannot_be_less_than_shipped_units: "ne peut pas être inférieur à la quantité livrée."
     is_too_large: "est trop importante -- le stock disponible ne peut pas couvrir la quantité demandée!"
     must_be_int: "doit être un entier"
@@ -1069,4 +1075,3 @@ fr-FR:
   zone_based: "Basé sur une zone"
   zone_setting_description: "Liste des pays, régions ou autre zone, utilisée dans plusieurs calculs."
   zones: Zones
-
