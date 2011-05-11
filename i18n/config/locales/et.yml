@@ -1002,7 +1002,7 @@ et:
   taxonomies_setting_description: Loo ja halda taksonoomiaid
   taxonomy_edit: Redigeeri taksonoomiaid
   taxonomy_tree_error: Soovitud muutuse tegemine ebaõnnestus ja puu muudeti tagasi endisele kujule. Palun proovige uuesti.
-  taxonomy_tree_instruction: * Elementide lisamiseks, muutmisek ja kustutamiseks kliki hiire parema nupuga mõnel puu elemendil
+  taxonomy_tree_instruction: "* Elementide lisamiseks, muutmisek ja kustutamiseks kliki hiire parema nupuga mõnel puu elemendil"
   taxons: Taksonid
   test: Test
   test_mode: Testrežiim
