@@ -95,12 +95,12 @@ ru:
         arguments: "Аргументы"
         description: "Описание"
       promotion: 
-        code: "Code"
-        description: "Description"
-        expires_at: "Expires at"
-        name: "Name"
-        starts_at: "Starts at"
-        usage_limit: "Usage limit"
+        code: "Код купона"
+        description: "Описание"
+        expires_at: "Дата завершения промо-акции"
+        name: "Название"
+        starts_at: "Дата начала промо-акции"
+        usage_limit: "Максимальное кол-во применений"
       property: 
         name: "Наименование"
         presentation: "Отображать как"
@@ -819,8 +819,8 @@ ru:
   promotion: "Промо-акция"
   promotion_form: 
     match_policies: 
-      all: "соответствует всем этим правилам"
-      any: "соответствует хотя бы одному правилу"
+      all: "Соответствует всем этим правилам"
+      any: "Соответствует хотя бы одному правилу"
   promotion_rule_types: 
     first_order: 
       description: "Должен быть первым заказом покупателя"
