@@ -819,14 +819,14 @@ ru:
   promotion: "Промо-акция"
   promotion_form: 
     match_policies: 
-      all: "Соответсвует всем этим правилам"
-      any: "Соответсвует хотя бы одному правилу"
+      all: "соответствует всем этим правилам"
+      any: "соответствует хотя бы одному правилу"
   promotion_rule_types: 
     first_order: 
       description: "Должен быть первым заказом покупателя"
       name: "Первый заказ"
     item_total: 
-      description: "Сумма заказа соответсвует следующим критериям"
+      description: "Сумма заказа соответствует следующим критериям"
       name: "Сумма заказа"
     product: 
       description: "Заказ включает указанные товары"
@@ -884,7 +884,7 @@ ru:
   rules: "Правила"
   sales_tax: "Налог с продаж"
   sales_total: "Итого (продажи)"
-  sales_total_description: "Sales Total For All Orders"
+  sales_total_description: "Выручка по всем заказам"
   save_and_continue: "Сохранить и продолжить"
   save_preferences: "Сохранить настройки"
   scope: "Фильтр"
