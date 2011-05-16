@@ -242,7 +242,7 @@ ko:
   allow_ssl_to_be_used_when_in_developement_and_test_modes: 개발과 테스트 모드에서 SSL을 사용하도록 허용
   allow_ssl_to_be_used_when_in_production_mode: 프로덕션 모드에서 SSL을 사용하도록 허용
   allowed_ssl_in_production_mode: "프로덕션 모드에서 SSL이 %{not} 사용 될 것입니다"
-  already_registered:   등록되었습니까?
+  already_registered: 등록되었습니까?
   alt_text: 대체 텍스트
   alternative_phone: 휴대폰 번호
   amount: 액수
