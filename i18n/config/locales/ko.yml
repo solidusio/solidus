@@ -402,6 +402,7 @@ ko:
   error: 에러
   errors: 
     messages: 
+      could_not_create_taxon: "Could not create taxon"
       no_shipping_methods_available: #"No shipping methods available for selected location, please change your address and try again."
   errors_prohibited_this_record_from_being_saved: 
     one: "저장하는 중에 문제가 발생했습니다."
@@ -883,9 +884,7 @@ ko:
   rules: 규칙
   sales_tax: #"Sales 세금"
   sales_total: #"Sales Total"
-  sales_total_for_all_orders: #"Sales total for all orders"
-  sales_totals: #"Sales Totals"
-  sales_totals_description: #"Sales Total For All Orders"
+  sales_total_description: "Sales Total For All Orders"
   save_and_continue: 저장하고 계속
   save_preferences: #Save Preferences
   scope: 스코프

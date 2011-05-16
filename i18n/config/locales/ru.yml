@@ -94,6 +94,13 @@ ru:
       product_scope: 
         arguments: "Аргументы"
         description: "Описание"
+      promotion: 
+        code: "Код купона"
+        description: "Описание"
+        expires_at: "Дата завершения промо-акции"
+        name: "Название"
+        starts_at: "Дата начала промо-акции"
+        usage_limit: "Максимальное кол-во применений"
       property: 
         name: "Наименование"
         presentation: "Отображать как"
@@ -395,6 +402,7 @@ ru:
   error: "ошибка"
   errors: 
     messages: 
+      could_not_create_taxon: "Could not create taxon"
       no_shipping_methods_available: "Для указанного местоположения отсутствуют способы доставки, пожалуйста, смените адрес и попробуйте снова."
   errors_prohibited_this_record_from_being_saved: 
     one: "1 ошибка не позволяет сохранить запись в базе"
@@ -811,14 +819,14 @@ ru:
   promotion: "Промо-акция"
   promotion_form: 
     match_policies: 
-      all: "Соответсвует всем этим правилам"
-      any: "Соответсвует хотя бы одному правилу"
+      all: "Соответствует всем этим правилам"
+      any: "Соответствует хотя бы одному правилу"
   promotion_rule_types: 
     first_order: 
       description: "Должен быть первым заказом покупателя"
       name: "Первый заказ"
     item_total: 
-      description: "Сумма заказа соответсвует следующим критериям"
+      description: "Сумма заказа соответствует следующим критериям"
       name: "Сумма заказа"
     product: 
       description: "Заказ включает указанные товары"
@@ -876,9 +884,7 @@ ru:
   rules: "Правила"
   sales_tax: "Налог с продаж"
   sales_total: "Итого (продажи)"
-  sales_total_for_all_orders: "Продажи итого по всем заказам"
-  sales_totals: "Итоги продаж"
-  sales_totals_description: "итоги продаж для всех заказов."
+  sales_total_description: "Выручка по всем заказам"
   save_and_continue: "Сохранить и продолжить"
   save_preferences: "Сохранить настройки"
   scope: "Фильтр"
