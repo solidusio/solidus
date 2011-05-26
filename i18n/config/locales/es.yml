@@ -1,13 +1,13 @@
 ---
 es: 
   'no': "No"
-  'yes': "Yes"
-  5_biggest_spenders: "5 Biggest Spenders"
+  'yes': "Sí"
+  5_biggest_spenders: Los 5 compradores principales
   a_copy_of_all_mail_will_be_sent_to_the_following_addresses: Una copia de todos los correos sera enviada a las siguientes direcciones
   abbreviation: Abreviatura
   access_denied: "Acceso denegado"
   account: Cuenta
-  account_updated: "Cuenta actualizada!"
+  account_updated: "¡Cuenta actualizada!"
   action: Acción
   actions: 
     cancel: Cancelar
@@ -17,49 +17,49 @@ es:
     listing: Listado
     new: Nueva
     update: Actualizar
-  active: "Active"
+  active: Activo
   activerecord: 
     attributes: 
       address: 
-        address1: Direccion
-        address2: "Direccion (continuación)"
+        address1: Dirección
+        address2: "Dirección (continuación)"
         city: Ciudad
-        country: "Country"
-        first_name_begins_with: "First Name Begins With"
-        firstname: "First Name"
-        last_name_begins_with: "Last Name Begins With"
-        lastname: "Last Name"
-        phone: Telefono
-        state: "State"
-        zipcode: "Codigo postal"
+        country: País
+        first_name_begins_with: "Nombre empieza por"
+        firstname: Nombre
+        last_name_begins_with: "Apellido empieza por"
+        lastname: Apellido
+        phone: Teléfono
+        state: Provincia
+        zipcode: "Código postal"
       checkout: 
         bill_address: 
-          address1: "Billing address street"
-          city: "Billing address city"
-          firstname: "Billing address first name"
-          lastname: "Billing address last name"
-          phone: "Billing address phone"
-          state: "Billing address state"
-          zipcode: "Billing address zipcode"
+          address1: "Dirección de factura, calle"
+          city: "Dirección de factura, ciudad"
+          firstname: "Dirección de factura, nombre"
+          lastname: "Dirección de factura, apellidos"
+          phone: "Dirección de factura, teléfono"
+          state: "Dirección de factura, provincia"
+          zipcode: "Dirección de factura, código postal"
         ship_address: 
-          address1: "Shipping address street"
-          city: "Shipping address city"
-          firstname: "Shipping address first name"
-          lastname: "Shipping address last name"
-          phone: "Shipping address phone"
-          state: "Shipping address state"
-          zipcode: "Shipping address zipcode"
+          address1: "Dirección de envío, calle"
+          city: "Dirección de envío, ciudad"
+          firstname: "Dirección de envío, nombre"
+          lastname: "Dirección de envío, apellidos"
+          phone: "Dirección de envío, teléfono"
+          state: "Dirección de envío, provincia"
+          zipcode: "Dirección de envío, código postal"
       country: 
         iso: ISO
         iso3: ISO3
         iso_name: "Nombre ISO"
         name: Nombre
-        numcode: "Codigo ISO"
+        numcode: "Código ISO"
       creditcard: 
         cc_type: Tipo
         month: Mes
-        number: Numero
-        verification_value: "Codigo de verificacion"
+        number: Número
+        verification_value: "Código de verificación"
         year: Año
       inventory_unit: 
         state: Provincia
@@ -68,100 +68,100 @@ es:
         quantity: Cantidad
       order: 
         checkout_complete: "Pedido completado"
-        completed_at: "Completed At"
-        coupon_code: "Coupon Code"
-        ip_address: "Direccion IP"
-        item_total: "Total articulos"
+        completed_at: "Completado el"
+        coupon_code: "Código de cupón"
+        ip_address: "Dirección IP"
+        item_total: "Total artículos"
         number: Numero
         special_instructions: "Instrucciones especiales"
         state: Provincia
         total: Total
       product: 
         available_on: "Disponible en"
-        cost_price: "Cost Price"
+        cost_price: "Precio de coste"
         description: Descripción
         master_price: "Precio principal"
         name: Nombre
         on_hand: "En mano"
-        shipping_category: "Categoria de envio"
-        tax_category: "Tax Category"
+        shipping_category: "Categoría de envio"
+        tax_category: "Categoría de impuestos"
       product_group: 
-        name: "Name"
-        product_count: "Product count"
-        product_scopes: "Product scopes"
-        products: "Products"
+        name: "Nombre"
+        product_count: "Número de productos"
+        product_scopes: "Alcances de productos"
+        products: "Productos"
         url: "URL"
       product_scope: 
-        arguments: "Arguments"
-        description: "Description"
+        arguments: "Argumentos"
+        description: "Descripción"
       promotion: 
         code: "Code"
-        description: "Description"
-        expires_at: "Expires at"
-        name: "Name"
-        starts_at: "Starts at"
-        usage_limit: "Usage limit"
+        description: "Descripción"
+        expires_at: "Caduca el"
+        name: "Nombre"
+        starts_at: "Comienza el"
+        usage_limit: "Límite de uso"
       property: 
         name: Nombre
-        presentation: Presentacion
+        presentation: Presentación
       prototype: 
         name: Nombre
       return_authorization: 
-        amount: Amount
+        amount: Cantidad
       role: 
         name: Nombre
       state: 
         abbr: Abreviatura
         name: Nombre
       tax_category: 
-        description: Description
-        name: Name
+        description: Descripción
+        name: Nombre
       tax_rate: 
-        amount: Rate
+        amount: Tasa
       taxon: 
         name: Nombre
         permalink: Enlace permanente
-        position: Posicion
+        position: Posición
       taxonomy: 
         name: Nombre
       user: 
         email: Email
       variant: 
-        cost_price: "Cost Price"
+        cost_price: "Precio de coste"
         depth: Profundidad
         height: Altura
         price: Precio
-        sku: SKU
+        sku: Código de producto
         weight: Peso
         width: Ancho
       zone: 
-        description: Descripcion
+        description: Descripción
         name: Nombre
     models: 
       address: 
-        one: Direccion
+        one: Dirección
         other: Direcciones
       cheque_payment: 
-        one: Cheque Payment
-        other: Cheque Payments
+        one: Pago con cheque
+        other: Pagos con cheque
       country: 
-        one: Pais
+        one: País
         other: Paises
       creditcard: 
-        one: "Tarjeta de credito"
-        other: "Tarjetas de credito"
+        one: "Tarjeta de crédito"
+        other: "Tarjetas de crédito"
       creditcard_payment: 
         one: "Pago con Tarjeta de Crédito"
         other: "Pagos con Tarjeta de Crédito"
       creditcard_txn: 
-        one: "Transaccion con Tarjeta de Crédito"
+        one: "Transacción con Tarjeta de Crédito"
         other: "Transacciones con Tarjeta de Crédito"
       inventory_unit: 
         one: "Unidad en inventario"
         other: "Unidades en inventario"
       line_item: 
-        one: "Articulo"
-        other: "Articulos"
+        one: "Artículo"
+        other: "Artículos"
       order: 
         one: Pedido
         other: Pedidos
@@ -172,8 +172,8 @@ es:
         one: Producto
         other: Productos
       product_group: 
-        one: "Product group"
-        other: "Product groups"
+        one: "Grupo de producto"
+        other: "Grupos de productos"
       property: 
         one: Propiedad
         other: Propiedades
