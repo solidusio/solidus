@@ -82,7 +82,7 @@ es:
         description: Descripción
         master_price: "Precio principal"
         name: Nombre
-        on_hand: "En mano"
+        on_hand: "Disponibles"
         shipping_category: "Categoría de envio"
         tax_category: "Categoría de impuestos"
       product_group: 
@@ -181,14 +181,14 @@ es:
         one: Prototipo
         other: Prototipos
       return_authorization: 
-        one: Return Authorization
-        other: Return Authorizations
+        one: Autorización de devolución
+        other: Autorizaciones de devolución
       role: 
-        one: Funcion
+        one: Función
         other: Funciones
       shipment: 
-        one: Shipment
-        other: Shipments
+        one: Envío
+        other: Envíos
       shipping_category: 
         one: "Categoría de envio"
         other: "Categorías de envio"
@@ -196,17 +196,17 @@ es:
         one: Provincia
         other: Provincias
       tax_category: 
-        one: "Tax Category"
-        other: "Tax Categories"
+        one: "Categoría de impuestos"
+        other: "Categorías de impuestos"
       tax_rate: 
-        one: "Tax Rate"
-        other: "Tax Rates"
+        one: "Tasa de impuestos"
+        other: "Tasas de impuestos"
       taxon: 
         one: Taxon
-        other: Taxons
+        other: Taxones
       taxonomy: 
-        one: Taxonomia
-        other: Taxonomias
+        one: Taxonomía
+        other: Taxonomías
       user: 
         one: Usuario
         other: Usuarios
@@ -218,226 +218,226 @@ es:
         other: Zonas
   add: Añadir
   add_category: "Añadir Categoría"
-  add_country: "Añadir Pais"
+  add_country: "Añadir País"
   add_option_type: "Añadir tipo de opción"
   add_option_types: "Añadir tipos de opciones"
   add_option_value: "Añadir valor de opcion"
-  add_product: "Add Product"
+  add_product: "Añadir producto"
   add_product_properties: "Añadir propiedades de producto"
-  add_rule_of_type: Add rule of type
-  add_scope: "Add a scope"
+  add_rule_of_type: Añadir regla de tipo
+  add_scope: "Añadir scope"
   add_state: "Añadir provincia"
   add_to_cart: "Añadir a la cesta"
   add_zone: "Añadir zona"
-  additional_item: Additional Item Cost
+  additional_item: Coste adicional por elemento
   address: Dirección
   address_information: "Información de la Dirección"
   adjustment: Ajuste
-  adjustment_total: Adjustment Total
-  adjustments: Adjustments
+  adjustment_total: Ajuste total
+  adjustments: Ajustes
   administration: Administración
-  all: "All"
-  all_departments: All departments
+  all: "Todos"
+  all_departments: Todos los departamentos
   allow_backorders: "Permitir devoluciones"
   allow_ssl_to_be_used_when_in_developement_and_test_modes: Permitir el uso de SSL en los modos de desarrollo y prueba
-  allow_ssl_to_be_used_when_in_production_mode: Permitir el uso de SSL en produccion
-  allowed_ssl_in_production_mode: "SSL will %{not} be used in production"
-  already_registered: Already Registered?
-  alt_text: Alternative Text
-  alternative_phone: Alternative Phone
+  allow_ssl_to_be_used_when_in_production_mode: Permitir el uso de SSL en producción
+  allowed_ssl_in_production_mode: "SSL %{not} se utilizará en producción"
+  already_registered: ¿Ya está registrado?
+  alt_text: Texto alternativo
+  alternative_phone: Teléfono alternativo
   amount: Cuantía
-  analytics_trackers: Analytics Trackers
+  analytics_trackers: Trackers de Google Analytics
   api: 
-    access: "API Access"
-    clear_key: "Clear API key"
+    access: "Acceso API"
+    clear_key: "Limpiar la clave de la API"
     errors: 
-      invalid_event: "Invalid event name, valid names are %{events}"
-      invalid_event_for_object: "Valid event name but not allowed for this object, valid names are %{events}"
-      missing_event: "No event name supplied"
-    generate_key: "Generate API key"
-    key: "API Key"
-    key_cleared: "API key cleared"
-    key_generated: "API key generated"
-    no_key: "No key defined"
-    regenerate_key: "Regenerate API key"
-  apply: "Apply"
+      invalid_event: "Nombre de evento no válido, los eventos válidos son: %{events}"
+      invalid_event_for_object: "Nombre de evento válido pero no permitido para éste objeto, los eventos válidos son: %{events}"
+      missing_event: "No se ha especificado un nombre de evento"
+    generate_key: "Generar clave API"
+    key: "Clave API"
+    key_cleared: "Clave API eliminada"
+    key_generated: "Clave API generada"
+    no_key: "Clave no definida"
+    regenerate_key: "Regenerar clave API"
+  apply: "Aplicar"
   are_you_sure: "¿Está seguro?"
   are_you_sure_category: "¿Está seguro de que quiere eliminar esta categoría?"
   are_you_sure_delete: "¿Está seguro de que quiere eliminar esta entrada?"
-  are_you_sure_delete_image: "¿Está seguro de que quiere eliminar esta imágen?"
+  are_you_sure_delete_image: "¿Está seguro de que quiere eliminar esta imagen?"
   are_you_sure_option_type: "¿Está seguro de que quiere eliminar este tipo de opción?"
-  are_you_sure_you_want_to_capture: "¿Estás seguro de que deseas capturar?"
+  are_you_sure_you_want_to_capture: "¿Está seguro de que desea capturar?"
   assign_taxon: "Asignar Taxon"
-  assign_taxons: "Asignar Taxons"
+  assign_taxons: "Asignar Taxones"
   authorization_failure: "Fallo de autorización"
   authorized: Autorizado
   available_on: "Disponible en"
-  available_taxons: "Taxons disponibles"
-  awaiting_return: Awaiting Return
+  available_taxons: "Taxones disponibles"
+  awaiting_return: Esperando respuesta
   back: Atrás
   back_end: Back End
   back_to_store: "Volver a la tienda"
-  backordered: Backordered
-  backordering_is_allowed: "Backordering %{not} allowed"
-  balance_due: "Balance Due"
-  best_selling_products: "Best Selling Products"
-  best_selling_taxons: "Best Selling Taxons"
+  backordered: Pedido pendiente de existencias
+  backordering_is_allowed: "Pedidos pendientes de existencias %{not} permitidos"
+  balance_due: "Saldo pendiente"
+  best_selling_products: "Productos más vendidos"
+  best_selling_taxons: "Categorías mejor vendidas"
   bill_address: "Dirección de facturación"
-  billing: Billing
+  billing: Facturación
   billing_address: "Dirección de facturación"
-  both: Both
-  by_day: "by day"
-  calculator: Calculator
-  calculator_settings_warning: "If you are changing the calculator type, you must save first before you can edit the calculator settings"
+  both: ambos
+  by_day: "hacia el día"
+  calculator: Calculadora
+  calculator_settings_warning: "Si está cambiando el tipo de calculadora, debe guardar su selección antes de editar su configuración"
   cancel: Cancelar
-  cancel_my_account: Cancel my account
-  cancel_my_account_description: "Unhappy?"
+  cancel_my_account: Cancelar mi cuenta
+  cancel_my_account_description: "¿No está contento?"
   canceled: Cancelado
-  cannot_create_returns: Cannot create returns as this order has not shipped yet.
+  cannot_create_returns: No puede crearse la devolución ya que éste pedido aún no ha sido enviado.
   cannot_destory_line_item_as_inventory_units_have_shipped: Cannot destory line item as some inventory units have shipped.
-  cannot_perform_operation: "Cannot perform requested operation"
+  cannot_perform_operation: "No puede realizarse la operación"
   capture: captura
   card_code: "Código de la tarjeta"
-  card_details: "Card details"
+  card_details: "Detalles de la tarjeta"
   card_number: "Número de tarjeta"
-  card_type_is: Card type is
+  card_type_is: Tipo de tarjeta
   cart: Cesta
   categories: Categorías
   category: Categoría
   change: Cambiar
   change_language: "Cambiar Idioma"
-  change_my_password: "Change my password"
-  charge_total: Charge Total
+  change_my_password: "Cambiar mi contraseña"
+  charge_total: Total cargo
   charged: Cargado
-  charges: Charges
+  charges: Cargos
   checkout: Pagar
   cheque: Cheque
   city: Ciudad
-  clone: Clone
-  code: Code
-  combine: Combine
-  complete: complete
-  complete_list: "Complete List"
-  configuration: Configuracion
-  configuration_options: "Opciones de configuracion"
+  clone: Clonar
+  code: Código
+  combine: Combinar
+  complete: completo
+  complete_list: "Lista completa"
+  configuration: Configuración
+  configuration_options: "Opciones de configuración"
   configurations: Configuraciones
-  configured: Configured
+  configured: Configurado
   confirm: Confirmar
-  confirm_delete: "Confirm Deletion"
+  confirm_delete: "Confirmar borrado"
   confirm_password: "Confirme la contraseña"
   continue: Continuar
   continue_shopping: "Seguir comprando"
   copy_all_mails_to: Copiar todos los correos a
-  cost_price: "Cost Price"
-  count: Count
-  count_of_reduced_by: "count of '%{name}' reduced by %{count}"
+  cost_price: "Precio de coste"
+  count: Cantidad
+  count_of_reduced_by: "cantidad de '%{name}' reducida en %{count}"
   country: País
-  country_based: "Pais base"
-  coupon: Coupon
-  coupon_code: Coupon code
+  country_based: "País base"
+  coupon: Cupón
+  coupon_code: Código de cupón
   create: Crear
   create_a_new_account: "Crear una nueva cuenta"
-  create_product_group_from_products: Create a new product group from these products
-  create_user_account: Create User Account
+  create_product_group_from_products: Crear un nuevo grupo de productos con éstos productos
+  create_user_account: Crear cuenta de usuario
   created_successfully: "Creado correctamente"
-  credit: Credit
+  credit: Crédito
   credit_card: "Tarjeta de credito"
   credit_card_capture_complete: "La tarjeta de credito ha sido registrada"
   credit_card_payment: "Pago con tarjeta de credito"
-  credit_owed: "Credit Owed"
-  credit_total: Credit Total
-  creditcard: "Tarjeta de credito"
-  creditcards: Creditcards
-  credits: Credits
+  credit_owed: "Crédito disponible"
+  credit_total: Crédito Total
+  creditcard: "Tarjeta de crédito"
+  creditcards: Tarjetas de crédito
+  credits: Créditos
   current: Actual
   customer: Cliente
-  customer_details: "Customer Details"
-  customer_search: "Customer Search"
-  date_created: Date created
+  customer_details: "Detalles del cliente"
+  customer_search: "Búsqueda de clientes"
+  date_created: Fecha creada
   date_range: "Rango de Fecha"
-  debit: Debit
-  default: Default
+  debit: Débito
+  default: Por omisión
   delete: Eliminar
-  delivery: Delivery
+  delivery: Envío
   depth: Profundidad
   description: Descripción
   destroy: Eliminar
-  didnt_receive_confirmation_instructions: "Didn't receive confirmation instructions?"
-  didnt_receive_unlock_instructions: "Didn't receive unlock instructions?"
-  discount_amount: "Discount Amount"
+  didnt_receive_confirmation_instructions: "¿No ha recibido instrucciones de confirmación?"
+  didnt_receive_unlock_instructions: "¿No ha recibido instrucciones de desbloqueo?"
+  discount_amount: "Importe del descuento"
   display: Mostrar
   edit: Editar
-  edit_general_settings: "Edit General Settings"
-  editing_billing_integration: Editing Billing Integration
+  edit_general_settings: "Editar configuración general"
+  editing_billing_integration: Editando integración de facturación
   editing_category: "Editando categoría"
-  editing_mail_method: Editing Mail Method
+  editing_mail_method: Editando método de email
   editing_option_type: "Editando tipo de opción"
   editing_option_types: "Editando tipos de opción"
-  editing_payment_method: Editing Payment Method
+  editing_payment_method: Editando forma de pago
   editing_product: "Editando Producto"
-  editing_product_group: "Editing Product Group"
-  editing_promotion: Editing Promotion
+  editing_product_group: "Editando grupo de productos"
+  editing_promotion: Editando promoción
   editing_property: "Editando Propiedad"
   editing_prototype: "Editando Prototipo"
   editing_shipping_category: "Editando Categoria de envío"
   editing_shipping_method: "Editando metodo de envío"
   editing_state: "Editando provincia"
   editing_tax_category: "Editando Categoría fiscal"
-  editing_tax_rate: "Editing Tax Rate"
-  editing_tracker: Editing Tracker
+  editing_tax_rate: "Editando tasa de impuestos"
+  editing_tracker: Editando Tracker
   editing_user: "Editando usuario"
   editing_zone: "Editando zona"
   email: "Correo Electrónico"
   email_address: "Dirección de Correo Electrónico"
   email_server_settings_description: "Configuración del servidor de correo electrónico"
-  empty: "Empty"
+  empty: "Vacío"
   empty_cart: "Vaciar Cesta"
-  enable_login_via_login_password: "Use standard email/password"
-  enable_login_via_openid: "Use OpenID instead"
+  enable_login_via_login_password: "Usar email/contraseña estándar"
+  enable_login_via_openid: "Usar OpenID en su lugar"
   enable_mail_delivery: Habilitar envio por correo
-  enter_atleast_five_letters: Enter atleast five letters of customer name
-  enter_exactly_as_shown_on_card: Please enter exactly as shown on the card
-  enter_password_to_confirm: "(we need your current password to confirm your changes)"
-  environment: "Environment"
+  enter_atleast_five_letters: Introduzca al menos cinco caracteres como nombre de cliente
+  enter_exactly_as_shown_on_card: Por favor, introdúzcalo tal como se ve en la tarjeta
+  enter_password_to_confirm: "(necesitamos su contraseña actual para confirmar los cambios)"
+  environment: "Entorno"
   error: error
   errors: 
     messages: 
-      could_not_create_taxon: "Could not create taxon"
-      no_shipping_methods_available: "No shipping methods available for selected location, please change your address and try again."
+      could_not_create_taxon: "no pudo crearse el taxon"
+      no_shipping_methods_available: "No hay métodos de envío disponibles para la localidad seleccionada. Por favor, cambie la dirección y vuelva a intentarlo."
   errors_prohibited_this_record_from_being_saved: 
-    one: "1 error prohibited this record from being saved"
-    other: "%{count} errors prohibited this record from being saved"
+    one: "1 error impidió que no pudiera guardarse el registro"
+    other: "%{count} errores impidieron que no pudiera guardarse el registro"
   event: Evento
   existing_customer: "Cliente existente"
-  expiration: "Expiracion"
+  expiration: "Caducidad"
   expiration_month: "Mes de vencimiento"
   expiration_year: "Año de vencimiento"
-  expiry: Expiry
+  expiry: Caducidad
   extension: Extensión
   extensions: Extensiones
   filename: "Nombre de archivo"
   final_confirmation: "Confirmación Final"
-  finalize: Finalize
-  finalized_payments: Finalized Payments
-  first_item: First Item Cost
+  finalize: Finalizar
+  finalized_payments: pagos finalizados
+  first_item: Coste del primer elemento
   first_name: Nombre
-  first_name_begins_with: "First Name Begins With"
-  flat_percent: Flat Percent
-  flat_rate_amount: Amount
-  flat_rate_per_item: "Flat Rate (per item)"
-  flat_rate_per_order: "Flat Rate (per order)"
-  flexible_rate: "Flexible Rate"
+  first_name_begins_with: "Nombre comienza por"
+  flat_percent: Porcentaje simple
+  flat_rate_amount: Cantidad
+  flat_rate_per_item: "Cantidad fija (por elemento)"
+  flat_rate_per_order: "Cantidad fija (por pedido)"
+  flexible_rate: "Cantidad variable"
   forgot_password: "¿Olvidaste tu contraseña?"
-  free_shipping: Free Shipping
-  from_state: From State
+  free_shipping: Gastos de envío gratuitos
+  from_state: Del estado
   front_end: Front End
-  full_name: "Full Name"
+  full_name: "Nombre completo"
   gateway: "pasarela"
-  gateway_config_unavailable: "Gateway unavailable for environment"
-  gateway_configuration: "Gateway configuration"
+  gateway_config_unavailable: "Pasarela no disponible por configuración"
+  gateway_configuration: "Configuración de pasarela"
   gateway_error: "Error en la pasarela"
-  gateway_setting_description: "Configuracion de la pasarela"
-  gateway_settings_warning: "If you are changing the gateway type, you must save first before you can edit the gateway settings"
+  gateway_setting_description: "Configuración de la pasarela"
+  gateway_settings_warning: "Si está modificando el tipo de pasarela, debe guardarla antes de editar su configuración"
   general: "General"
   general_settings: "Configuracion general"
   general_settings_description: "Configurar los ajustes generales de Spree."
@@ -447,30 +447,30 @@ es:
   google_analytics_id: "Analytics ID"
   google_analytics_new: "Nueva cuenta de Google Analytics"
   google_analytics_setting_description: "Gestionar Google Analytics ID"
-  guest_checkout: Guest Checkout
-  guest_user_account: Checkout as a Guest
-  has_no_shipped_units: has no shipped units
+  guest_checkout: Compra anónima
+  guest_user_account: Comprar sin registrarse
+  has_no_shipped_units: no tiene unidades enviadas
   height: Altura
   hello_user: "Hola usuario"
   history: Historia
   home: "Inicio"
   icon: "Icon"
   icons_by: "Icons by"
-  image: Imágen
-  images: Imagenes
-  images_for: "Images for"
+  image: Imagen
+  images: Imágenes
+  images_for: "Imágenes para"
   in_progress: "En progreso"
-  include_in_shipment: Include in Shipment
-  included_in_other_shipment: Included in another Shipment
-  included_in_this_shipment: Included in this Shipment
-  instructions_to_reset_password: "Fill out the form below and instructions to reset your password will be emailed to you:"
-  integration_settings_warning: "If you are changing the billing integration, you must save first before you can edit the integration settings"
-  intercept_email_address: Intercept Email Address
-  intercept_email_instructions: "Override email recipient and replace with this address."
-  invalid_search: "Busqueda invalida"
+  include_in_shipment: Incluir en envío
+  included_in_other_shipment: Incluido en otro envío
+  included_in_this_shipment: Incluido en éste envío
+  instructions_to_reset_password: "Rellene el formulario y recibirá por email instrucciones sobre cómo reiniciar su password:"
+  integration_settings_warning: "Si está modificando la integración de facturación, debe guardarlo antes de poder editar su configuración"
+  intercept_email_address: Interceptar dirección de Email
+  intercept_email_instructions: "Sustituir el receptor del email con ésta dirección."
+  invalid_search: "Busqueda inválida"
   inventory: Inventario
   inventory_adjustment: "Ajuste de inventario"
-  inventory_setting_description: "Configuracion del inventario, Devoluciones, mostrar articulos sin stock"
+  inventory_setting_description: "Configuracion del inventario, Devoluciones, mostrar artículos sin stock"
   inventory_settings: "Configuracion del inventario"
   is_not_available_to_shipment_address: is not available to shipment address
   issue_number: Issue Number
