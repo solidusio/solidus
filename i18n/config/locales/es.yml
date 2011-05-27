@@ -1036,8 +1036,8 @@ es:
   updated_successfully: "Actualizado correctamente"
   updating: Updating
   usage_limit: Usage Limit
-  use_as_shipping_address: Usar como direccion de envio
-  use_billing_address: Usar la direccion de facturacion
+  use_as_shipping_address: Usar como direccion de envío
+  use_billing_address: Usar la dirección de facturación
   use_different_shipping_address: "Usar una dirección de envío diferente"
   use_new_cc: "Use a new card"
   user: Usuario
