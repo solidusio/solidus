@@ -1,3 +1,4 @@
+"1.0.0" => { :branch => "spanish" }
 "0.60.x" => { :branch => "spanish" }
 "0.50.x" => { :branch => "spanish" }
 "0.40.x" => { :branch => "master" }
