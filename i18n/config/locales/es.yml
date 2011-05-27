@@ -976,7 +976,7 @@ es:
   state_setting_description: "Administrar la lista de estados o provincias asociados con cada país."
   states: Provincias
   status: Estado
-  stop: Parar
+  stop: Hasta
   store: Tienda
   street_address: Dirección
   street_address_2: "Dirección (continuación)"
