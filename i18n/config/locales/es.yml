@@ -72,7 +72,7 @@ es:
         coupon_code: "Código de cupón"
         ip_address: "Dirección IP"
         item_total: "Total artículos"
-        number: Numero
+        number: Número
         special_instructions: "Instrucciones especiales"
         state: Provincia
         total: Total
