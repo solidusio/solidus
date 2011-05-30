@@ -549,10 +549,10 @@ es:
   new_promotion: nueva promoción
   new_property: "Nueva propiedad"
   new_prototype: "Nuevo prototipo"
-  new_return_authorization: Nueva respuesta de autorización
+  new_return_authorization: Nueva autorización de devolución
   new_shipment: "Nuevo envio"
-  new_shipping_category: "Nueva categoria de envio"
-  new_shipping_method: "Nueva forma de envio"
+  new_shipping_category: "Nueva categoría de envío"
+  new_shipping_method: "Nueva forma de envío"
   new_state: "Nueva provincia"
   new_tax_category: "Nueva categoría"
   new_tax_rate: "Nuevo tipo impositivo"
@@ -872,9 +872,9 @@ es:
   resume: "Reanudar"
   resumed: Reanudado
   return: volver
-  return_authorization: Devolver autorización
+  return_authorization: Autorización para devolución
   return_authorization_updated: Devolver autorización actualizada
-  return_authorizations: Devolver autorizaciones
+  return_authorizations: Autorizaciones para devoluciones
   return_quantity: Devolver cantidad
   returned: regresó
   rma_credit: Crédito RMA
