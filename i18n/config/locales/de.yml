@@ -390,14 +390,14 @@ de:
   email: E-Mail
   email_address: "E-Mail Adresse"
   email_server_settings_description: "Mailserver-Einstellungen ändern"
-  empty: "Empty"
+  empty: "leer"
   empty_cart: "Warenkorb leeren"
   enable_login_via_login_password: "Use standard email/password"
   enable_login_via_openid: "Mit OpenID anmelden"
   enable_mail_delivery: Enable Mail Delivery
   enter_atleast_five_letters: Bitte geben Sie mindestens fünf Buchstaben an
-  enter_exactly_as_shown_on_card: Please enter exactly as shown on the card
-  enter_password_to_confirm: "(we need your current password to confirm your changes)"
+  enter_exactly_as_shown_on_card: Bitte geben Sie die Daten exakt wie auf der Kreditkarte ein
+  enter_password_to_confirm: "(Wir benötigen Ihr aktuelles Passwort um die Änderungen zu bestätigen.)"
   environment: "Umgebung"
   error: Fehler
   errors: 
@@ -405,8 +405,8 @@ de:
       could_not_create_taxon: "Could not create taxon"
       no_shipping_methods_available: "Für diese Region sind keine Liefermethoden verfügbar. Bitte wählen Sie eine anderen Region aus."
   errors_prohibited_this_record_from_being_saved: 
-    one: "1 Fehler ist aufgetreten"
-    other: "%{count} Fehler sind aufgetreten"
+    one: "1 Prüfung ist fehlgeschlagen"
+    other: "%{count} Prüfungen sind fehlgeschlagen"
   event: Ereignis
   existing_customer: "Anmeldung für bereits registrierte Kunden"
   expiration: "Verfallsdatum"
@@ -424,13 +424,13 @@ de:
   first_name_begins_with: "Vorname beginnt mit"
   flat_percent: Flat Percent
   flat_rate_amount: Amount
-  flat_rate_per_item: "Flat Rate (per item)"
-  flat_rate_per_order: "Flat Rate (per order)"
+  flat_rate_per_item: "Fester Preis (pro Artikel)"
+  flat_rate_per_order: "Fester Preis (pro Bestellung)"
   flexible_rate: "Flexible Rate"
   forgot_password: "Passwort vergessen?"
-  free_shipping: Free Shipping
+  free_shipping: Kostenloser Versand
   from_state: From State
-  front_end: "Frontend"
+  front_end: "Shop-Ansicht"
   full_name: "Vollständiger Name"
   gateway: "Gateway"
   gateway_config_unavailable: "Gateway unavailable for environment"
@@ -447,7 +447,7 @@ de:
   google_analytics_id: "Analytics ID"
   google_analytics_new: "Neuer Google Analytics-Account"
   google_analytics_setting_description: "Google Analytics ID verwalten"
-  guest_checkout: Guest Checkout
+  guest_checkout: Gast Checkout
   guest_user_account: "Ohne Registrierung bestellen"
   has_no_shipped_units: has no shipped units
   height: Höhe
@@ -463,7 +463,7 @@ de:
   include_in_shipment: Include in Shipment
   included_in_other_shipment: Included in another Shipment
   included_in_this_shipment: Included in this Shipment
-  instructions_to_reset_password: "Füllen Sie das untenstehende Formular aus und folgen Sie den Anweisungen um Ihr per E-Mail zu erhalten:"
+  instructions_to_reset_password: "Füllen Sie das untenstehende Formular aus und folgen Sie den Anweisungen um Ihr neues Passwort per E-Mail zu erhalten:"
   integration_settings_warning: "If you are changing the billing integration, you must save first before you can edit the integration settings"
   intercept_email_address: Intercept Email Address
   intercept_email_instructions: "Override email recipient and replace with this address."
@@ -479,8 +479,8 @@ de:
   item_total: "Artikel gesamt"
   item_total_rule: 
     operators: 
-      gt: greater than
-      gte: greater than or equal to
+      gt: größer als
+      gte: größer als oder gleich
   items: "Posten"
   last_14_days: "Letzte 14 Tage"
   last_5_orders: "Letzte 5 Bestellungen"
@@ -489,7 +489,7 @@ de:
   last_name: Nachname
   last_name_begins_with: "Nachname beginnt mit"
   last_year: "Letztes Jahr"
-  leave_blank_to_not_change: "(leave blank if you don't want to change it)"
+  leave_blank_to_not_change: "(leer lassen, wenn Sie es nicht ändern wollen)"
   list: Liste
   listing_categories: Kategorien
   listing_option_types: Optionen
@@ -677,7 +677,7 @@ de:
   previous: zurück
   price: Preis
   price_bucket: Price Bucket
-  price_with_vat_included: "%{price} (inkl. U-St.)"
+  price_with_vat_included: "%{price} (inkl. USt.)"
   problem_authorizing_card: "Es gab ein Problem ihre Kreditkarte zu identifizieren"
   problem_capturing_card: "Es gab ein Problem beim Belasten ihrer Kreditkarte"
   problems_processing_order: "Ihre Bestellung konnte nicht bearbeitet werden"
@@ -882,20 +882,20 @@ de:
   rma_value: RMA Value
   roles: Rollen
   rules: Rules
-  sales_tax: "Sales Tax"
+  sales_tax: "Umsatzsteuer"
   sales_total: "Gesamtumsatz"
   sales_total_description: "Sales Total For All Orders"
   save_and_continue: "Speichern und fortsetzen"
   save_preferences: "Einstellungen speichern"
-  scope: Scope
-  scopes: Scopes
+  scope: Bereich
+  scopes: Bereiche
   search: Suchen
   search_results: "Suchergebnisse für '%{keywords}'"
-  searching: Searching
+  searching: Suche
   secure_connection_type: "Sicherer Verbindungstyp"
   secure_creditcard: Secure Creditcard
   select: Auswählen
-  select_from_prototype: "Select from prototype"
+  select_from_prototype: "Von einem Prototypen"
   select_preferred_shipping_option: "Bevorzugte Versandoption auswählen"
   send_copy_of_all_mails_to: "Schicke eine Kopie aller E-Mails an"
   send_copy_of_orders_mails_to: "Schicke eine Kopie aller Bestell-E-Mails an"
@@ -908,20 +908,20 @@ de:
   ship: verschicken
   ship_address: Lieferadresse
   shipment: "Sendung"
-  shipment_details: Shipment Details
+  shipment_details: Lieferdetails
   shipment_mailer: 
     shipped_email: 
-      subject: "Shipment Notification"
+      subject: "Versand Benachrichtigung"
   shipment_number: "Sendungsnummer"
   shipment_state: Shipment State
   shipment_states: 
-    backorder: backorder
-    partial: partial
-    pending: pending
-    ready: ready
-    shipped: shipped
-  shipment_updated: Shipment Updated
-  shipments: "Shipments"
+    backorder: Nachlieferung
+    partial: Teillieferung
+    pending: Austehend
+    ready: Bereit
+    shipped: Ausgeliefert
+  shipment_updated: Versand aktualisiert
+  shipments: "Lieferungen"
   shipped: Ausgeliefert
   shipping: Lieferung
   shipping_address: Lieferadresse
@@ -929,8 +929,8 @@ de:
   shipping_categories_description: "Verwaltung von Versandkategorien, um festzustellen, welche Produkt mit welcher Methode versandt werden können"
   shipping_category: "Versandkategorie"
   shipping_cost: Kosten
-  shipping_error: "Shipping Error"
-  shipping_instructions: "Shipping Instructions"
+  shipping_error: "Lieferfehler"
+  shipping_instructions: "Lieferanweisungen"
   shipping_method: "Versandart"
   shipping_methods: "Versandarten"
   shipping_methods_description: "Versandarten verwalten"
@@ -948,7 +948,7 @@ de:
   sign_up: "Anmelden"
   site_name: "Seitenname"
   site_url: "Seiten-URL"
-  sku: Lagerhaltungsnummer
+  sku: Artikelnummer
   smtp: SMTP
   smtp_authentication_type: "Art der SMTP-Authentifizierung"
   smtp_domain: "SMTP-Domain"
@@ -958,7 +958,7 @@ de:
   smtp_send_all_emails_as_from_following_address: "Schicke alle E-Mail von der folgenden Adresse"
   smtp_send_copy_to_this_addresses: "Schicke eine Kopie aller ausgehenden E-Mail an diese Adresse. Mehrere Adressen durch Komma voneinander trennen."
   smtp_username: "SMTP-Benutzername"
-  sold: Sold
+  sold: Ausverkauft
   sort_ordering: "Sort ordering"
   special_instructions: "Special Instructions"
   spree: 
@@ -982,11 +982,11 @@ de:
   street_address_2: "Straße (Feld 2)"
   subtotal: Zwischensumme
   subtract: Subtrahieren
-  successfully_created: "%{resource} has been successfully created!"
-  successfully_removed: "%{resource} has been successfully removed!"
-  successfully_updated: "%{resource} has been successfully updated!"
+  successfully_created: "%{resource} wurde erfolgreich erstellt!"
+  successfully_removed: "%{resource} wurde erfolgreich gelöscht!"
+  successfully_updated: "%{resource} wurde erfolgreich aktualisiert!"
   system: System
-  tax: U-St.
+  tax: Steuer
   tax_categories: "Steuerkategorien"
   tax_categories_setting_description: "Steuerkategorien verwalten, um besteuerbare Produkte festzulegen"
   tax_category: "Steuerkategorie"
@@ -994,7 +994,7 @@ de:
   tax_rates_description: "Steuersätze einrichten und konfigurieren."
   tax_settings: "Einstellungen für Steuerklassen"
   tax_settings_description: "Grundlegende Steuer-Einstellungen."
-  tax_total: "U-St. Gesamt"
+  tax_total: "USt. Gesamt"
   tax_type: "Steuerart"
   taxon: "Klassifizierung"
   taxon_edit: "Klassifizierung bearbeiten"
@@ -1055,7 +1055,7 @@ de:
     must_be_non_negative: "must be a non-negative value"
   value: "Wert"
   variants: Varianten
-  vat: "VAT"
+  vat: "USt"
   version: Version
   view_shipping_options: "View shipping options"
   void: Void
