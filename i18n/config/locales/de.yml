@@ -890,7 +890,7 @@ de:
   scope: Scope
   scopes: Scopes
   search: Suchen
-  search_results: "Search results for '%{keywords}'"
+  search_results: "Suchergebnisse für '%{keywords}'"
   searching: Searching
   secure_connection_type: "Sicherer Verbindungstyp"
   secure_creditcard: Secure Creditcard
