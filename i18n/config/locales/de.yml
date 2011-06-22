@@ -913,7 +913,7 @@ de:
     shipped_email: 
       subject: "Versand Benachrichtigung"
   shipment_number: "Sendungsnummer"
-  shipment_state: Shipment State
+  shipment_state: Lieferstatus
   shipment_states: 
     backorder: Nachlieferung
     partial: Teillieferung
