@@ -321,18 +321,18 @@ de:
   configuration: Konfiguration
   configuration_options: "Konfigurations-Optionen"
   configurations: Konfigurationen
-  configured: Configured
+  configured: "konfiguriert"
   confirm: Bestätigen
   confirm_delete: "Löschen bestätigen"
   confirm_password: "Passwort bestätigen"
   continue: Weitermachen
   continue_shopping: "Weiter Einkaufen"
   copy_all_mails_to: "Kopien aller E-Mails an"
-  cost_price: "Cost Price"
+  cost_price: "Einkaufspreis"
   count: Anzahl
   count_of_reduced_by: "count of '%{name}' reduced by %{count}"
   country: Land
-  country_based: "Country Based"
+  country_based: "Länder basiert"
   coupon: Coupon
   coupon_code: Coupon code
   create: Erstellen
@@ -518,7 +518,7 @@ de:
   mail_server_preferences: Mail Server Preferences
   make_refund: Make refund
   mark_shipped: "Als versendet kennzeichnen"
-  master_price: Grundpreis
+  master_price: 'Verkaufspreis (netto)'
   max_items: Max Items
   may_be_combined_with_other_promotions: 'Darf mit anderen Aktionen kombiniert werden'
   meta_description: "Meta-Beschreibung"
@@ -1075,3 +1075,7 @@ de:
   zone_based: "Zonenbasiert"
   zone_setting_description: "Zonen-Einstellungen ändern"
   zones: "Zonen"
+  spree:
+    date_picker:
+      format: 'd-m-y'
+      divider: '.'
