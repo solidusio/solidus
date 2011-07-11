@@ -78,7 +78,7 @@ es:
         total: Total
       product: 
         available_on: "Disponible en"
-        cost_price: "Precio de coste"
+        cost_price: "Precio de costo"
         description: Descripción
         master_price: "Precio principal"
         name: Nombre
@@ -127,7 +127,7 @@ es:
       user: 
         email: Email
       variant: 
-        cost_price: "Precio de coste"
+        cost_price: "Precio de costo"
         depth: Profundidad
         height: Altura
         price: Precio
@@ -328,7 +328,7 @@ es:
   continue: Continuar
   continue_shopping: "Seguir comprando"
   copy_all_mails_to: Copiar todos los correos a
-  cost_price: "Precio de coste"
+  cost_price: "Precio de costo"
   count: Cantidad
   count_of_reduced_by: "cantidad de '%{name}' reducida en %{count}"
   country: País
@@ -421,7 +421,7 @@ es:
   finalized_payments: pagos finalizados
   first_item: Costo del primer elemento
   first_name: Nombre
-  first_name_begins_with: "Nombre comienza por"
+  first_name_begins_with: "Nombre empieza por"
   flat_percent: Porcentaje simple
   flat_rate_amount: Cantidad
   flat_rate_per_item: "Cantidad fija (por elemento)"
@@ -928,7 +928,7 @@ es:
   shipping_categories: "Categorias de envío"
   shipping_categories_description: "Gestionar las categorías de envío para determinar qué categorías de productos pueden ser transportados a través de qué método"
   shipping_category: Categoría de envío
-  shipping_cost: Costes de envío
+  shipping_cost: Costo de envío
   shipping_error: "Error de envío"
   shipping_instructions: "Instrucciones de envío"
   shipping_method: Método de envío
