@@ -30,7 +30,7 @@ es:
         last_name_begins_with: "Apellido empieza por"
         lastname: Apellido
         phone: Teléfono
-        state: Provincia
+        state: Estado
         zipcode: "Código postal"
       checkout: 
         bill_address: 
@@ -74,7 +74,7 @@ es:
         item_total: "Total artículos"
         number: Número
         special_instructions: "Instrucciones especiales"
-        state: Provincia
+        state: Estado
         total: Total
       product: 
         available_on: "Disponible en"
@@ -83,7 +83,7 @@ es:
         master_price: "Precio principal"
         name: Nombre
         on_hand: "Disponibles"
-        shipping_category: "Categoría de envio"
+        shipping_category: "Categoría de envío"
         tax_category: "Categoría de impuestos"
       product_group: 
         name: "Nombre"
@@ -95,7 +95,7 @@ es:
         arguments: "Argumentos"
         description: "Descripción"
       promotion: 
-        code: "Code"
+        code: "Codigo"
         description: "Descripción"
         expires_at: "Caduca el"
         name: "Nombre"
@@ -142,8 +142,8 @@ es:
         one: Dirección
         other: Direcciones
       cheque_payment: 
-        one: Pago con cheque
-        other: Pagos con cheque
+        one: Pago con efectivo
+        other: Pagos con efectivo
       country: 
         one: País
         other: Paises
@@ -193,8 +193,8 @@ es:
         one: "Categoría de envio"
         other: "Categorías de envio"
       state: 
-        one: Provincia
-        other: Provincias
+        one: Estado
+        other: Estados
       tax_category: 
         one: "Categoría de impuestos"
         other: "Categorías de impuestos"
@@ -202,11 +202,11 @@ es:
         one: "Tasa de impuestos"
         other: "Tasas de impuestos"
       taxon: 
-        one: Taxon
-        other: Taxones
+        one: Categoría
+        other: Categorías
       taxonomy: 
-        one: Taxonomía
-        other: Taxonomías
+        one: Propiedad
+        other: Propiedades
       user: 
         one: Usuario
         other: Usuarios
@@ -221,15 +221,15 @@ es:
   add_country: "Añadir País"
   add_option_type: "Añadir tipo de opción"
   add_option_types: "Añadir tipos de opciones"
-  add_option_value: "Añadir valor de opcion"
+  add_option_value: "Añadir valor de opción"
   add_product: "Añadir producto"
   add_product_properties: "Añadir propiedades de producto"
   add_rule_of_type: Añadir regla de tipo
-  add_scope: "Añadir scope"
+  add_scope: "Añadir alcance"
   add_state: "Añadir provincia"
-  add_to_cart: "Añadir a la cesta"
+  add_to_cart: "Añadir al carrito"
   add_zone: "Añadir zona"
-  additional_item: Coste adicional por elemento
+  additional_item: Costo adicional por elemento
   address: Dirección
   address_information: "Información de la Dirección"
   adjustment: Ajuste
@@ -267,15 +267,15 @@ es:
   are_you_sure_delete_image: "¿Está seguro de que quiere eliminar esta imagen?"
   are_you_sure_option_type: "¿Está seguro de que quiere eliminar este tipo de opción?"
   are_you_sure_you_want_to_capture: "¿Está seguro de que desea capturar?"
-  assign_taxon: "Asignar Taxon"
-  assign_taxons: "Asignar Taxones"
+  assign_taxon: "Asignar Categoría"
+  assign_taxons: "Asignar Categorías"
   authorization_failure: "Fallo de autorización"
   authorized: Autorizado
   available_on: "Disponible en"
   available_taxons: "Taxones disponibles"
   awaiting_return: Esperando respuesta
   back: Atrás
-  back_end: Back End
+  back_end: Parte Intera
   back_to_store: "Volver a la tienda"
   backordered: Pedido pendiente de existencias
   backordering_is_allowed: "Pedidos pendientes de existencias %{not} permitidos"
@@ -291,17 +291,17 @@ es:
   calculator_settings_warning: "Si está cambiando el tipo de calculadora, debe guardar su selección antes de editar su configuración"
   cancel: Cancelar
   cancel_my_account: Cancelar mi cuenta
-  cancel_my_account_description: "¿No está contento?"
+  cancel_my_account_description: "¿No está satisfecho?"
   canceled: Cancelado
   cannot_create_returns: No puede crearse la devolución ya que éste pedido aún no ha sido enviado.
-  cannot_destory_line_item_as_inventory_units_have_shipped: Cannot destory line item as some inventory units have shipped.
+  cannot_destory_line_item_as_inventory_units_have_shipped: No se puede eliminar la linea de articulos ya que algunos de ellos han sido enviados.
   cannot_perform_operation: "No puede realizarse la operación"
   capture: captura
   card_code: "Código de la tarjeta"
   card_details: "Detalles de la tarjeta"
   card_number: "Número de tarjeta"
   card_type_is: Tipo de tarjeta
-  cart: Cesta
+  cart: Carrito
   categories: Categorías
   category: Categoría
   change: Cambiar
@@ -328,7 +328,7 @@ es:
   continue: Continuar
   continue_shopping: "Seguir comprando"
   copy_all_mails_to: Copiar todos los correos a
-  cost_price: "Precio de coste"
+  cost_price: "Precio del Costo"
   count: Cantidad
   count_of_reduced_by: "cantidad de '%{name}' reducida en %{count}"
   country: País
@@ -391,7 +391,7 @@ es:
   email_address: "Dirección de Correo Electrónico"
   email_server_settings_description: "Configuración del servidor de correo electrónico"
   empty: "Vacío"
-  empty_cart: "Vaciar Cesta"
+  empty_cart: "Vaciar carrito"
   enable_login_via_login_password: "Usar email/contraseña estándar"
   enable_login_via_openid: "Usar OpenID en su lugar"
   enable_mail_delivery: Habilitar envio por correo
@@ -402,7 +402,7 @@ es:
   error: error
   errors: 
     messages: 
-      could_not_create_taxon: "no pudo crearse el taxon"
+      could_not_create_taxon: "no pudo crearse la categoría"
       no_shipping_methods_available: "No hay métodos de envío disponibles para la localidad seleccionada. Por favor, cambie la dirección y vuelva a intentarlo."
   errors_prohibited_this_record_from_being_saved: 
     one: "1 error impidió que no pudiera guardarse el registro"
@@ -419,7 +419,7 @@ es:
   final_confirmation: "Confirmación Final"
   finalize: Finalizar
   finalized_payments: pagos finalizados
-  first_item: Coste del primer elemento
+  first_item: Costo del primer elemento
   first_name: Nombre
   first_name_begins_with: "Nombre comienza por"
   flat_percent: Porcentaje simple
@@ -430,14 +430,14 @@ es:
   forgot_password: "¿Olvidaste tu contraseña?"
   free_shipping: Gastos de envío gratuitos
   from_state: Del estado
-  front_end: Front End
+  front_end: Sistema Interno
   full_name: "Nombre completo"
-  gateway: "pasarela"
+  gateway: "medio"
   gateway_config_unavailable: "Pasarela no disponible por configuración"
-  gateway_configuration: "Configuración de pasarela"
-  gateway_error: "Error en la pasarela"
-  gateway_setting_description: "Configuración de la pasarela"
-  gateway_settings_warning: "Si está modificando el tipo de pasarela, debe guardarla antes de editar su configuración"
+  gateway_configuration: "Configuración del medio"
+  gateway_error: "Error en el medio"
+  gateway_setting_description: "Configuración del medio"
+  gateway_settings_warning: "Si está modificando el tipo de medio de pago, debe guardarla antes de editar su configuración"
   general: "General"
   general_settings: "Configuracion general"
   general_settings_description: "Configurar los ajustes generales de Spree."
@@ -454,8 +454,8 @@ es:
   hello_user: "Hola usuario"
   history: Historia
   home: "Inicio"
-  icon: "Icon"
-  icons_by: "Icons by"
+  icon: "Icono"
+  icons_by: "Iconos por"
   image: Imagen
   images: Imágenes
   images_for: "Imágenes para"
@@ -472,8 +472,8 @@ es:
   inventory_adjustment: "Ajuste de inventario"
   inventory_setting_description: "Configuracion del inventario, Devoluciones, mostrar artículos sin stock"
   inventory_settings: "Configuracion del inventario"
-  is_not_available_to_shipment_address: is not available to shipment address
-  issue_number: Issue Number
+  is_not_available_to_shipment_address: "No se encuentra disponible para la dirección de envío"
+  issue_number: Numero de Control
   item: artículo
   item_description: "Descripción del artículo"
   item_total: "Total de artículos"
@@ -556,14 +556,14 @@ es:
   new_state: "Nueva provincia"
   new_tax_category: "Nueva categoría"
   new_tax_rate: "Nuevo tipo impositivo"
-  new_taxon: "Nuevo Taxon"
-  new_taxonomy: "Nueva Taxonomía"
+  new_taxon: "Nueva Categoría"
+  new_taxonomy: "Nueva Propiedad"
   new_tracker: Nuevo Tracker
   new_user: "Nuevo usuario"
   new_variant: "Nueva Variante"
   new_zone: "Nueva zona"
   next: siguiente
-  no_items_in_cart: "La cesta está vacía"
+  no_items_in_cart: "El carrito está vacío"
   no_match_found: "No se ha encontrado"
   no_payment_methods_available: "No puede continuarse con el pago; no hay métodos de pago configurados para éste entorno"
   no_products_found: "No se han encontrado productos"
@@ -631,7 +631,7 @@ es:
   other_payment_options: Otras opciones de pago
   out_of_stock: "Sin stock"
   out_of_stock_products: "Productos sin stock"
-  over_paid: "Pago en exceso"
+  over_paid: "Pago sobre pasado"
   overview: General
   overview_welcome: "Bienvenido al resumen de la tienda, de momento no hay datos suficientes para mostrar el panel de resumen.<br/><br/> Se mostrará automáticamente una vez que el sistema disponga de suficientes pedidos para generar estadísticas."
   page_only_viewable_when_logged_in: Ha intentado acceder a una página que sólo es accesible como usuario validado. Debe iniciar sesión.
@@ -671,12 +671,12 @@ es:
   phone: Teléfono
   place_order: Hacer pedido
   please_create_user: "Por favor, regístrese como cliente"
-  powered_by: "Powered by"
+  powered_by: "Soportado por"
   presentation: Presentación
   preview: Vista previa
   previous: Anterior
   price: Precio
-  price_bucket: Price Bucket
+  price_bucket: Precio Definido
   price_with_vat_included: "%{price} (inc. IVA)"
   problem_authorizing_card: "Problema autorizando la tarjeta"
   problem_capturing_card: "Problema capturando la tarjeta"
@@ -998,17 +998,17 @@ es:
   tax_type: "Tipo de impuesto"
   taxon: Categoría
   taxon_edit: Editar categoría
-  taxonomies: Taxonomías
+  taxonomies: "Categorías"
   taxonomies_setting_description: "Crear y manejar taxonomías"
-  taxonomy_edit: "Editar taxonomías"
+  taxonomy_edit: "Editar categorías"
   taxonomy_tree_error: "El cambio solicitado no ha sido aceptado y el árbol ha vuelto a su estado anterior. Por favor, inténtelo de nuevo."
   taxonomy_tree_instruction: "* Click derecho en uno de los nodos para acceder al menu para añadir, eliminar u ordenar nodos"
   taxons: Categorías
   test: "Test"
-  test_mode: Modo Test
+  test_mode: Modo Prueba
   thank_you_for_your_order: "Gracias por su pedido"
   there_were_problems_with_the_following_fields: "Han habido problemas con los siguientes campos: "
-  this_file_language: "Español (España)"
+  this_file_language: "Español"
   this_month: "Éste mes"
   this_year: "Éste año"
   thumbnail: "Miniatura"
