@@ -25,29 +25,29 @@ es-MX:
         address2: "Dirección (continuación)"
         city: Ciudad
         country: País
-        first_name_begins_with: "Nombre empieza con"
+        first_name_begins_with: "Nombre empieza por"
         firstname: Nombre
-        last_name_begins_with: "Apellido empieza con"
+        last_name_begins_with: "Apellido empieza por"
         lastname: Apellido
         phone: Teléfono
         state: Estado
         zipcode: "Código postal"
       checkout: 
         bill_address: 
-          address1: "Dirección de facturación, calle"
-          city: "Dirección de facturación, ciudad"
-          firstname: "Dirección de facturación, nombre"
-          lastname: "Dirección de facturación, apellidos"
-          phone: "Dirección de facturación, teléfono"
-          state: "Dirección de facturación, estado"
-          zipcode: "Dirección de facturación, código postal"
+          address1: "Dirección de factura, calle"
+          city: "Dirección de factura, ciudad"
+          firstname: "Dirección de factura, nombre"
+          lastname: "Dirección de factura, apellidos"
+          phone: "Dirección de factura, teléfono"
+          state: "Dirección de factura, provincia"
+          zipcode: "Dirección de factura, código postal"
         ship_address: 
           address1: "Dirección de envío, calle"
           city: "Dirección de envío, ciudad"
           firstname: "Dirección de envío, nombre"
           lastname: "Dirección de envío, apellidos"
           phone: "Dirección de envío, teléfono"
-          state: "Dirección de envío, estado"
+          state: "Dirección de envío, provincia"
           zipcode: "Dirección de envío, código postal"
       country: 
         iso: ISO
@@ -59,10 +59,10 @@ es-MX:
         cc_type: Tipo
         month: Mes
         number: Número
-        verification_value: "Código de seguridad"
+        verification_value: "Código de verificación"
         year: Año
       inventory_unit: 
-        state: Estado
+        state: Provincia
       line_item: 
         price: Precio
         quantity: Cantidad
@@ -78,12 +78,12 @@ es-MX:
         total: Total
       product: 
         available_on: "Disponible en"
-        cost_price: "Precio de costo"
+        cost_price: "Precio de coste"
         description: Descripción
         master_price: "Precio principal"
         name: Nombre
         on_hand: "Disponibles"
-        shipping_category: "Categoría de envio"
+        shipping_category: "Categoría de envío"
         tax_category: "Categoría de impuestos"
       product_group: 
         name: "Nombre"
@@ -95,11 +95,11 @@ es-MX:
         arguments: "Argumentos"
         description: "Descripción"
       promotion: 
-        code: "Code"
+        code: "Codigo"
         description: "Descripción"
-        expires_at: "Expira el"
+        expires_at: "Caduca el"
         name: "Nombre"
-        starts_at: "Inicia el"
+        starts_at: "Comienza el"
         usage_limit: "Límite de uso"
       property: 
         name: Nombre
@@ -127,7 +127,7 @@ es-MX:
       user: 
         email: Email
       variant: 
-        cost_price: "Precio de costo"
+        cost_price: "Precio de coste"
         depth: Profundidad
         height: Altura
         price: Precio
@@ -142,8 +142,8 @@ es-MX:
         one: Dirección
         other: Direcciones
       cheque_payment: 
-        one: Pago con cheque
-        other: Pagos con cheque
+        one: Pago con efectivo
+        other: Pagos con efectivo
       country: 
         one: País
         other: Paises
@@ -202,11 +202,11 @@ es-MX:
         one: "Tasa de impuestos"
         other: "Tasas de impuestos"
       taxon: 
-        one: Taxon
-        other: Taxones
+        one: Categoría
+        other: Categorías
       taxonomy: 
-        one: Taxonomía
-        other: Taxonomías
+        one: Propiedad
+        other: Propiedades
       user: 
         one: Usuario
         other: Usuarios
@@ -221,13 +221,13 @@ es-MX:
   add_country: "Añadir País"
   add_option_type: "Añadir tipo de opción"
   add_option_types: "Añadir tipos de opciones"
-  add_option_value: "Añadir valor de opcion"
+  add_option_value: "Añadir valor de opción"
   add_product: "Añadir producto"
   add_product_properties: "Añadir propiedades de producto"
   add_rule_of_type: Añadir regla de tipo
-  add_scope: "Añadir scope"
-  add_state: "Añadir estado"
-  add_to_cart: "Añadir a la carrito"
+  add_scope: "Añadir alcance"
+  add_state: "Añadir provincia"
+  add_to_cart: "Añadir al carrito"
   add_zone: "Añadir zona"
   additional_item: Costo adicional por elemento
   address: Dirección
@@ -267,21 +267,21 @@ es-MX:
   are_you_sure_delete_image: "¿Está seguro de que quiere eliminar esta imagen?"
   are_you_sure_option_type: "¿Está seguro de que quiere eliminar este tipo de opción?"
   are_you_sure_you_want_to_capture: "¿Está seguro de que desea capturar?"
-  assign_taxon: "Asignar Taxon"
-  assign_taxons: "Asignar Taxones"
+  assign_taxon: "Asignar Categoría"
+  assign_taxons: "Asignar Categorías"
   authorization_failure: "Fallo de autorización"
   authorized: Autorizado
   available_on: "Disponible en"
   available_taxons: "Taxones disponibles"
   awaiting_return: Esperando respuesta
   back: Atrás
-  back_end: Back End
+  back_end: Parte Intera
   back_to_store: "Volver a la tienda"
   backordered: Pedido pendiente de existencias
   backordering_is_allowed: "Pedidos pendientes de existencias %{not} permitidos"
   balance_due: "Saldo pendiente"
   best_selling_products: "Productos más vendidos"
-  best_selling_taxons: "Categorías más vendidas"
+  best_selling_taxons: "Categorías mejor vendidas"
   bill_address: "Dirección de facturación"
   billing: Facturación
   billing_address: "Dirección de facturación"
@@ -294,7 +294,7 @@ es-MX:
   cancel_my_account_description: "¿No está satisfecho?"
   canceled: Cancelado
   cannot_create_returns: No puede crearse la devolución ya que éste pedido aún no ha sido enviado.
-  cannot_destory_line_item_as_inventory_units_have_shipped: Cannot destory line item as some inventory units have shipped.
+  cannot_destory_line_item_as_inventory_units_have_shipped: No se puede eliminar la linea de articulos ya que algunos de ellos han sido enviados.
   cannot_perform_operation: "No puede realizarse la operación"
   capture: captura
   card_code: "Código de la tarjeta"
@@ -328,7 +328,7 @@ es-MX:
   continue: Continuar
   continue_shopping: "Seguir comprando"
   copy_all_mails_to: Copiar todos los correos a
-  cost_price: "Precio de costo"
+  cost_price: "Precio del Costo"
   count: Cantidad
   count_of_reduced_by: "cantidad de '%{name}' reducida en %{count}"
   country: País
@@ -381,7 +381,7 @@ es-MX:
   editing_prototype: "Editando Prototipo"
   editing_shipping_category: "Editando Categoria de envío"
   editing_shipping_method: "Editando metodo de envío"
-  editing_state: "Editando estado"
+  editing_state: "Editando provincia"
   editing_tax_category: "Editando Categoría fiscal"
   editing_tax_rate: "Editando tasa de impuestos"
   editing_tracker: Editando Tracker
@@ -391,7 +391,7 @@ es-MX:
   email_address: "Dirección de Correo Electrónico"
   email_server_settings_description: "Configuración del servidor de correo electrónico"
   empty: "Vacío"
-  empty_cart: "Vaciar Carrito"
+  empty_cart: "Vaciar carrito"
   enable_login_via_login_password: "Usar email/contraseña estándar"
   enable_login_via_openid: "Usar OpenID en su lugar"
   enable_mail_delivery: Habilitar envio por correo
@@ -402,17 +402,17 @@ es-MX:
   error: error
   errors: 
     messages: 
-      could_not_create_taxon: "no pudo crearse el taxon"
+      could_not_create_taxon: "no pudo crearse la categoría"
       no_shipping_methods_available: "No hay métodos de envío disponibles para la localidad seleccionada. Por favor, cambie la dirección y vuelva a intentarlo."
   errors_prohibited_this_record_from_being_saved: 
     one: "1 error impidió que no pudiera guardarse el registro"
     other: "%{count} errores impidieron que no pudiera guardarse el registro"
   event: Evento
   existing_customer: "Cliente existente"
-  expiration: "Expiración"
+  expiration: "Caducidad"
   expiration_month: "Mes de vencimiento"
   expiration_year: "Año de vencimiento"
-  expiry: Expiración
+  expiry: Caducidad
   extension: Extensión
   extensions: Extensiones
   filename: "Nombre de archivo"
@@ -421,7 +421,7 @@ es-MX:
   finalized_payments: pagos finalizados
   first_item: Costo del primer elemento
   first_name: Nombre
-  first_name_begins_with: "Nombre empieza por"
+  first_name_begins_with: "Nombre comienza por"
   flat_percent: Porcentaje simple
   flat_rate_amount: Cantidad
   flat_rate_per_item: "Cantidad fija (por elemento)"
@@ -430,14 +430,14 @@ es-MX:
   forgot_password: "¿Olvidaste tu contraseña?"
   free_shipping: Gastos de envío gratuitos
   from_state: Del estado
-  front_end: Front End
+  front_end: Sistema Interno
   full_name: "Nombre completo"
-  gateway: "pasarela"
+  gateway: "medio"
   gateway_config_unavailable: "Pasarela no disponible por configuración"
-  gateway_configuration: "Configuración de pasarela"
-  gateway_error: "Error en la pasarela"
-  gateway_setting_description: "Configuración de la pasarela"
-  gateway_settings_warning: "Si está modificando el tipo de pasarela, debe guardarla antes de editar su configuración"
+  gateway_configuration: "Configuración del medio"
+  gateway_error: "Error en el medio"
+  gateway_setting_description: "Configuración del medio"
+  gateway_settings_warning: "Si está modificando el tipo de medio de pago, debe guardarla antes de editar su configuración"
   general: "General"
   general_settings: "Configuracion general"
   general_settings_description: "Configurar los ajustes generales de Spree."
@@ -454,8 +454,8 @@ es-MX:
   hello_user: "Hola usuario"
   history: Historia
   home: "Inicio"
-  icon: "Icon"
-  icons_by: "Icons by"
+  icon: "Icono"
+  icons_by: "Iconos por"
   image: Imagen
   images: Imágenes
   images_for: "Imágenes para"
@@ -463,7 +463,7 @@ es-MX:
   include_in_shipment: Incluir en envío
   included_in_other_shipment: Incluido en otro envío
   included_in_this_shipment: Incluido en éste envío
-  instructions_to_reset_password: "Llene el formulario y recibirá por email instrucciones sobre cómo reiniciar su password:"
+  instructions_to_reset_password: "Rellene el formulario y recibirá por email instrucciones sobre cómo reiniciar su password:"
   integration_settings_warning: "Si está modificando la integración de facturación, debe guardarlo antes de poder editar su configuración"
   intercept_email_address: Interceptar dirección de Email
   intercept_email_instructions: "Sustituir el receptor del email con ésta dirección."
@@ -472,8 +472,8 @@ es-MX:
   inventory_adjustment: "Ajuste de inventario"
   inventory_setting_description: "Configuracion del inventario, Devoluciones, mostrar artículos sin stock"
   inventory_settings: "Configuracion del inventario"
-  is_not_available_to_shipment_address: No está disponible para la dirección especificada
-  issue_number: Issue Number
+  is_not_available_to_shipment_address: "No se encuentra disponible para la dirección de envío"
+  issue_number: Numero de Control
   item: artículo
   item_description: "Descripción del artículo"
   item_total: "Total de artículos"
@@ -487,7 +487,7 @@ es-MX:
   last_7_days: "Últimos 7 días"
   last_month: "Último mes"
   last_name: Apellidos
-  last_name_begins_with: "Apellido empieza con"
+  last_name_begins_with: "Apellido comienza por"
   last_year: "Último año"
   leave_blank_to_not_change: "(dejar en blanco si no quiere cambiar su valor)"
   list: Lista
@@ -553,11 +553,11 @@ es-MX:
   new_shipment: "Nuevo envio"
   new_shipping_category: "Nueva categoría de envío"
   new_shipping_method: "Nueva forma de envío"
-  new_state: "Nuevo Estado"
+  new_state: "Nueva provincia"
   new_tax_category: "Nueva categoría"
   new_tax_rate: "Nuevo tipo impositivo"
-  new_taxon: "Nuevo Taxon"
-  new_taxonomy: "Nueva Taxonomía"
+  new_taxon: "Nueva Categoría"
+  new_taxonomy: "Nueva Propiedad"
   new_tracker: Nuevo Tracker
   new_user: "Nuevo usuario"
   new_variant: "Nueva Variante"
@@ -631,7 +631,7 @@ es-MX:
   other_payment_options: Otras opciones de pago
   out_of_stock: "Sin stock"
   out_of_stock_products: "Productos sin stock"
-  over_paid: "Pago en exceso"
+  over_paid: "Pago sobre pasado"
   overview: General
   overview_welcome: "Bienvenido al resumen de la tienda, de momento no hay datos suficientes para mostrar el panel de resumen.<br/><br/> Se mostrará automáticamente una vez que el sistema disponga de suficientes pedidos para generar estadísticas."
   page_only_viewable_when_logged_in: Ha intentado acceder a una página que sólo es accesible como usuario validado. Debe iniciar sesión.
@@ -671,12 +671,12 @@ es-MX:
   phone: Teléfono
   place_order: Hacer pedido
   please_create_user: "Por favor, regístrese como cliente"
-  powered_by: "Powered by"
+  powered_by: "Soportado por"
   presentation: Presentación
   preview: Vista previa
   previous: Anterior
   price: Precio
-  price_bucket: Price Bucket
+  price_bucket: Precio Definido
   price_with_vat_included: "%{price} (inc. IVA)"
   problem_authorizing_card: "Problema autorizando la tarjeta"
   problem_capturing_card: "Problema capturando la tarjeta"
@@ -928,7 +928,7 @@ es-MX:
   shipping_categories: "Categorias de envío"
   shipping_categories_description: "Gestionar las categorías de envío para determinar qué categorías de productos pueden ser transportados a través de qué método"
   shipping_category: Categoría de envío
-  shipping_cost: Costo de envío
+  shipping_cost: Costes de envío
   shipping_error: "Error de envío"
   shipping_instructions: "Instrucciones de envío"
   shipping_method: Método de envío
@@ -936,7 +936,7 @@ es-MX:
   shipping_methods_description: "Manejar métodos de envío"
   shipping_total: "Total de envío"
   shop_by_taxonomy: "Comprar por %{taxonomy}"
-  shopping_cart: "Carrito de compras"
+  shopping_cart: "Cesta de compras"
   show: Mostrar
   show_active: "mostrar activos"
   show_deleted: "Mostrar borrados"
@@ -971,10 +971,10 @@ es-MX:
   ssl_will_not_be_used_in_production_mode: "No se utilizará SSL en modo producción"
   start: Inicio
   start_date: Válido desde
-  state: Estado
-  state_based: "Estado"
-  state_setting_description: "Administrar la lista de estados asociados con cada país."
-  states: Estados
+  state: Provincia
+  state_based: "Provincia"
+  state_setting_description: "Administrar la lista de estados o provincias asociados con cada país."
+  states: Provincias
   status: Estado
   stop: Hasta
   store: Tienda
@@ -998,17 +998,17 @@ es-MX:
   tax_type: "Tipo de impuesto"
   taxon: Categoría
   taxon_edit: Editar categoría
-  taxonomies: Taxonomías
+  taxonomies: "Categorías"
   taxonomies_setting_description: "Crear y manejar taxonomías"
-  taxonomy_edit: "Editar taxonomías"
+  taxonomy_edit: "Editar categorías"
   taxonomy_tree_error: "El cambio solicitado no ha sido aceptado y el árbol ha vuelto a su estado anterior. Por favor, inténtelo de nuevo."
   taxonomy_tree_instruction: "* Click derecho en uno de los nodos para acceder al menu para añadir, eliminar u ordenar nodos"
   taxons: Categorías
   test: "Test"
-  test_mode: Modo Test
+  test_mode: Modo Prueba
   thank_you_for_your_order: "Gracias por su pedido"
   there_were_problems_with_the_following_fields: "Han habido problemas con los siguientes campos: "
-  this_file_language: "Español (España)"
+  this_file_language: "Español (México)"
   this_month: "Éste mes"
   this_year: "Éste año"
   thumbnail: "Miniatura"
@@ -1069,7 +1069,7 @@ es-MX:
   year: "Año"
   you_have_been_logged_out: "Se ha cerrado la sesión."
   you_have_no_orders_yet: "Aún no tiene ningún pedido."
-  your_cart_is_empty: "Su carrito está vacío"
+  your_cart_is_empty: "Su cesta está vacía"
   zip: "Código postal"
   zone: Zona
   zone_based: "Zona"
