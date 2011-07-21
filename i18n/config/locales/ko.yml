@@ -242,7 +242,7 @@ ko:
   allow_ssl_to_be_used_when_in_developement_and_test_modes: 개발과 테스트 모드에서 SSL을 사용하도록 허용
   allow_ssl_to_be_used_when_in_production_mode: 프로덕션 모드에서 SSL을 사용하도록 허용
   allowed_ssl_in_production_mode: "프로덕션 모드에서 SSL이 %{not} 사용 될 것입니다"
-  already_registered: 이미 등록되었습니까?
+  already_registered: 등록되었습니까?
   alt_text: 대체 텍스트
   alternative_phone: 휴대폰 번호
   amount: 액수
@@ -390,7 +390,7 @@ ko:
   email: 이메일
   email_address: "이메일 주소"
   email_server_settings_description: "Set email server settings."
-  empty: #"Empty"
+  empty: #"비었음"
   empty_cart: "장바구니 비우기"
   enable_login_via_login_password: "기본 이멜/비밀번호 사용"
   enable_login_via_openid: "대신해서 오픈ID 사용"
@@ -402,10 +402,11 @@ ko:
   error: 에러
   errors: 
     messages: 
+      could_not_create_taxon: "Could not create taxon"
       no_shipping_methods_available: #"No shipping methods available for selected location, please change your address and try again."
   errors_prohibited_this_record_from_being_saved: 
-    one: #"1 error prohibited this record from being saved"
-    other: #"%{count} errors prohibited this record from being saved"
+    one: "저장하는 중에 문제가 발생했습니다."
+    other: "저장하는 중에 문제 %{count}개가 발생했습니다."
   event: 이벤트
   existing_customer: #"Existing Customer"
   expiration: "유효 기간"
@@ -883,9 +884,7 @@ ko:
   rules: 규칙
   sales_tax: #"Sales 세금"
   sales_total: #"Sales Total"
-  sales_total_for_all_orders: #"Sales total for all orders"
-  sales_totals: #"Sales Totals"
-  sales_totals_description: #"Sales Total For All Orders"
+  sales_total_description: "Sales Total For All Orders"
   save_and_continue: 저장하고 계속
   save_preferences: #Save Preferences
   scope: 스코프
@@ -1008,7 +1007,7 @@ ko:
   test: "테스트"
   test_mode: "테스트 모드"
   thank_you_for_your_order: #"Thank you for your business.  Please print out a copy of this confirmation page for your records."
-  there_were_problems_with_the_following_fields: #"There were problems with the following fields"
+  there_were_problems_with_the_following_fields: "다음 값들에 문제가 있습니다"
   this_file_language: #"English (US)"
   this_month: "이번달"
   this_year: "올해"
@@ -1038,7 +1037,7 @@ ko:
   updating: #Updating
   usage_limit: #Usage Limit
   use_as_shipping_address: #Use as Shipping Address
-  use_billing_address: 청구서 주소 사용
+  use_billing_address: "배송받으실 분이 주문자와 동일합니다."
   use_different_shipping_address: #"Use Different Shipping Address"
   use_new_cc: #"Use a new card"
   user: 사용자

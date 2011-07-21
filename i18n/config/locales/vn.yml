@@ -94,6 +94,13 @@ vn:
       product_scope: 
         arguments: "Tham số"
         description: "Chú thích"
+      promotion: 
+        code: "Code"
+        description: "Description"
+        expires_at: "Expires at"
+        name: "Name"
+        starts_at: "Starts at"
+        usage_limit: "Usage limit"
       property: 
         name: Tên
         presentation: Trình bày
@@ -395,6 +402,7 @@ vn:
   error: lỗi
   errors: 
     messages: 
+      could_not_create_taxon: "Could not create taxon"
       no_shipping_methods_available: "No shipping methods available for selected location, please change your address and try again."
   errors_prohibited_this_record_from_being_saved: 
     one: "1 error prohibited this record from being saved"
@@ -876,9 +884,7 @@ vn:
   rules: Rules
   sales_tax: "Thuế"
   sales_total: "Tổng giá trị"
-  sales_total_for_all_orders: "Tổng giá trị cho tất cả đơn hàng"
-  sales_totals: "Tổng giá trị"
-  sales_totals_description: "Tổng giá trị cho tất cả đơn hàng"
+  sales_total_description: "Sales Total For All Orders"
   save_and_continue: Lưu và tiếp tục
   save_preferences: Lưu cấu hình
   scope: Phạm vi
