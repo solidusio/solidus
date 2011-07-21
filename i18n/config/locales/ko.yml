@@ -94,6 +94,13 @@ ko:
       product_scope: 
         arguments: "인수"
         description: "설명"
+      promotion: 
+        code: "Code"
+        description: "Description"
+        expires_at: "Expires at"
+        name: "Name"
+        starts_at: "Starts at"
+        usage_limit: "Usage limit"
       property: 
         name: 이름
         presentation: 표시
