@@ -1,8 +1,12 @@
 ---
-"sv-SE":
+# Comments in the form of "# Eng ..." indicate things that are not properly translated.
+# How should "Taxon" be translated?
+# Am I using the Swedish words "debiter*" correctly?
+# How to translate "return authorization"?
+sv-SE:
   'no': "Nej"
   'yes': "Ja"
-  5_biggest_spenders: "5 Största Köpare"
+  5_biggest_spenders: "5 största köpare"
   a_copy_of_all_mail_will_be_sent_to_the_following_addresses: "En kopia på alla meddelanden kommer att skickas till följande adresser"
   abbreviation: Förkortning
   access_denied: "Åtkomst nekad"
@@ -27,9 +31,9 @@
         city: Stad
         country: "Land"
         first_name: "Förnamn"
-        first_name_begins_with: "Förnamn Börjar Med"
+        first_name_begins_with: "Förnamn börjar med"
         last_name: "Efternamn"
-        last_name_begins_with: "Efternamn Börjar Med"
+        last_name_begins_with: "Efternamn börjar med"
         phone: Telefon
         state: "Delstat"
         zipcode: "Postkod"
@@ -53,9 +57,9 @@
       country:
         iso: ISO
         iso3: ISO3
-        iso_name: "ISO Namn"
+        iso_name: "ISO-namn"
         name: Namn
-        numcode: "ISO Kod"
+        numcode: "ISO-kod"
       creditcard:
         cc_type: Typ
         month: Månad
@@ -69,10 +73,10 @@
         quantity: Antal
       order:
         checkout_complete: "Betalningen genomförd"
-        ip_address: "IP Address"
+        ip_address: "IP-adress"
         item_total: "Nettopris"
         number: Nummer
-        special_instructions: "Speciella Anvisningar"
+        special_instructions: "Speciella anvisningar"
         state: Delstat
         total: "Summa att betala"
       product:
@@ -81,7 +85,7 @@
         description: Beskrivning
         master_price: "Huvudpris"
         name: Namn
-        on_hand: "I Lager"
+        on_hand: "I lager"
         shipping_category: "Fraktalternativ"
         tax_category: "Skattekategori"
       product_group:
@@ -93,6 +97,13 @@
       product_scope:
         arguments: "Argument"
         description: "Beskrivning"
+      promotion: 
+        code: "Kod"
+        description: "Beskrivning"
+        expires_at: "Utlöper"
+        name: "Namn"
+        starts_at: "Startar"
+        usage_limit: "Användningsbegränsning"
       property:
         name: Namn
         presentation: Presentation
@@ -173,8 +184,8 @@
         one: Prototyp
         other: Prototyper
       return_authorization:
-        one: Return Authorization
-        other: Return Authorizations
+        one: Return Authorization # Eng
+        other: Return Authorizations # Eng
       role:
         one: Roll
         other: Roller
@@ -209,18 +220,18 @@
         one: Zon
         other: Zoner
   add: Lägg till
-  add_category: "Lägg till Kategori"
-  add_country: "Lägg till Land"
-  add_option_type: "Lägg till val typ"
-  add_option_types: "Lägg till val typer"
-  add_option_value: "Lägg till val värde"
-  add_product: "Lägg till Produkt"
-  add_product_properties: "Lägg till Produktegenskaper"
+  add_category: "Lägg till kategori"
+  add_country: "Lägg till land"
+  add_option_type: "Lägg till alternativtyp"
+  add_option_types: "Lägg till alternativtyper"
+  add_option_value: "Lägg till alternativsvärde"
+  add_product: "Lägg till produkt"
+  add_product_properties: "Lägg till produktegenskaper"
   add_scope: "Lägg till omfång"
-  add_state: "Lägg till Delstat"
+  add_state: "Lägg till delstat"
   add_to_cart: "Lägg i varukorgen"
-  add_zone: "Lägg till Zon"
-  additional_item: "Ytterligare Artikelkostnad"
+  add_zone: "Lägg till zon"
+  additional_item: "Ytterligare artikelkostnad"
   address: Adress
   address_information: "Adressinformation"
   adjustment: Justering
@@ -235,22 +246,22 @@
   already_registered: "Redan Registrerad?"
   alternative_phone: "Alternativt Telefonnummer"
   amount: Belopp
-  analytics_trackers: Analytics Trackers
+  analytics_trackers: Statistikspårare
   are_you_sure: "Är du säker?"
   are_you_sure_category: "Är du säker på att du vill ta bort denna kategori?"
   are_you_sure_delete: "Är du säker på att du vill ta bort denna post?"
   are_you_sure_delete_image: "Är du säker på att du vill ta bort denna bild?"
-  are_you_sure_option_type: "Är du säker på att du vill ta bort denna val typ?"
-  are_you_sure_you_want_to_capture: "Are you sure you want to capture?"
-  assign_taxon: "Tilldela Taxon"
-  assign_taxons: "Tilldela Taxons"
-  authorization_failure: "Authorization Failure"
-  authorized: Authorized
-  available_on: "Available On"
-  available_taxons: "Available Taxons"
-  awaiting_return: Awaiting Return
+  are_you_sure_option_type: "Är du säker på att du vill ta bort denna alternativtyp?"
+  are_you_sure_you_want_to_capture: "Are you sure you want to capture?" # Eng
+  assign_taxon: "Tilldela taxon"
+  assign_taxons: "Tilldela taxons"
+  authorization_failure: "Misslyckades att auktorisera"
+  authorized: Auktoriserad
+  available_on: "Available On" # Eng
+  available_taxons: "Tillgängliga taxoner"
+  awaiting_return: Awaiting Return # Eng
   back: Tillbaka
-  back_end: Back End
+  back_end: Administrationsgränssnitt
   back_to_store: "Tillbaka till butiken"
   backordered: Restnoterad
   backordering_is_allowed: "Restnotering %{not} tillåten"
@@ -261,13 +272,13 @@
   bill_address: "Faktureringsadress"
   billing: Fakturering
   billing_address: "Faktureringsadress"
-  by_day: "by day"
-  calculator: Calculator
-  calculator_settings_warning: "If you are changing the calculator type, you must save first before you can edit the calculator settings"
+  by_day: "by day" # Eng
+  calculator: Kalkylator # Eng Is this a good translation?
+  calculator_settings_warning: "Om du ändra kalkylatortypen, måste du först spara innan du kan ändra kalkylatorinställningar"
   cancel: avbryt
   canceled: Avbruten
-  cannot_create_returns: Cannot create returns as this order has not shipped yet.
-  capture: Capture
+  cannot_create_returns: Kan inte returnera ordern eftersom den inte har levererats än.
+  capture: Capture # Eng
   card_code: "Säkerhetskod"
   card_details: "Kortdetaljer"
   card_number: "Kortnummer"
@@ -278,9 +289,9 @@
   change: Ändra
   change_language: "Ändra Språk"
   change_my_password: "Ändra mitt lösenord"
-  charge_total: Charge Total
-  charged: Charged
-  charges: Charges
+  charge_total: Charge Total # Eng
+  charged: Charged # Eng
+  charges: Charges # Eng
   checkout: Kassa
   checkout_steps:
     # keys correspond to Checkout state names:
@@ -295,20 +306,20 @@
   code: Kod
   combine: Kombinera
   complete: komplett
-  complete_list: "Complete List"
-  configuration: Configuration
-  configuration_options: "Configuration Options"
-  configurations: Configurations
-  configured: Configured
+  complete_list: "Komplett lista"
+  configuration: Konfiguration
+  configuration_options: "Konfigurationsalternativ"
+  configurations: Konfigurationer
+  configured: Konfigurerad
   confirm: Bekräfta
   confirm_delete: "Bekräfta borttagning"
   confirm_password: "Bekräfta lösenord"
   continue: Fortsätt
   continue_shopping: "Fortsätt handla"
   copy_all_mails_to: Kopiera all e-post till
-  cost_price: "Cost Pris"
-  count: Count
-  count_of_reduced_by: "count of '%{name}' reduced by %{count}"
+  cost_price: "Kostnadspris" # Eng ?
+  count: Count # Eng
+  count_of_reduced_by: "count of '%{name}' reduced by %{count}" # Eng
   country: Land
   country_based: "Landbaserat"
   coupon: Värdekupong
@@ -321,135 +332,136 @@
   created_successfully: "Skapad"
   credit: Kredit
   credit_card: "Kreditkort"
-  credit_card_capture_complete: "Credit Card Was Captured"
-  credit_card_payment: "Credit Card Payment"
-  credit_owed: "Credit Owed"
-  credit_total: Credit Total
+  credit_card_capture_complete: "Credit Card Was Captured" # Eng
+  credit_card_payment: "Kreditskortsbetalning"
+  credit_owed: "Credit Owed" # Eng
+  credit_total: Credit Total # Eng
   creditcard: Kreditkort
   creditcards: Kreditkort
-  credits: Credits
+  credits: Krediter
   current: Nuvarande
   customer: Kund
   customer_details: "Detaljer om kund"
-  customer_search: "Customer Search"
-  date_created: Date created
-  date_range: "Date Range"
-  debit: Debit
-  delete: Delete
-  depth: Depth
+  customer_search: "Kundsök"
+  date_created: Date created # Eng
+  date_range: "Datumomfång" # Eng ?
+  debit: Debitera # Eng ?
+  delete: Ta bort
+  depth: Djup
   description: Beskrivning
-  destroy: Destroy
-  display: Display
-  edit: Edit
-  editing_billing_integration: Editing Billing Integration
-  editing_category: "Editing Category"
-  editing_coupon: Editing Coupon
-  editing_option_type: "Editing Option Type"
-  editing_option_types: "Editing Option Types"
-  editing_payment_method: Editing Payment Method
-  editing_product: "Editing Product"
-  editing_product_group: "Editing Product Group"
-  editing_property: "Editing Property"
-  editing_prototype: "Editing Prototype"
-  editing_shipping_category: "Editing Fraktalternativ"
-  editing_shipping_method: "Editing Shipping Method"
-  editing_shipping_rate: Editing Shipping Rate
-  editing_state: "Editing Delstat"
-  editing_tax_category: "Editing Momssats"
-  editing_tax_rate: "Editing Tax Rate"
-  editing_tracker: Editing Tracker
-  editing_user: "Ändra Användare"
-  editing_zone: "Ändra Zon"
+  destroy: Destroy # Eng
+  display: Visa
+  edit: Redigera
+  editing_billing_integration: Redigerar faktureringsintegration
+  editing_category: "Redigerar kategori"
+  editing_coupon: Redigerar kupong
+  editing_option_type: "Redigerar alternativtyp"
+  editing_option_types: "Redigerar alternativtyper"
+  editing_payment_method: Redigerar betalningssätt
+  editing_product: "Redigerar produkt"
+  editing_product_group: "Redigerar produktgrupp"
+  editing_promotion: Redigerar kampanj
+  editing_property: "Redigerar egenskap"
+  editing_prototype: "Redigerar prototyp"
+  editing_shipping_category: "Redigerar fraktalternativ"
+  editing_shipping_method: "Redigerar fraktsätt"
+  editing_shipping_rate: Redigerar fraktkostnad
+  editing_state: "Redigerar delstat"
+  editing_tax_category: "Redigerar momssats"
+  editing_tax_rate: "Redigerar skattesats"
+  editing_tracker: Redigerar statistikspårare
+  editing_user: "Ändra användare"
+  editing_zone: "Ändra zon"
   email: Email
   email_address: "E-postadress"
-  email_server_settings_description: "Set email server settings."
-  empty_cart: "Töm Varukorgen"
+  email_server_settings_description: "Ställ in email-server-inställningar"
+  empty_cart: "Töm varukorgen"
   enable_login_via_login_password: "Använd epost/lösenord"
   enable_login_via_openid: "Använd OpenID istället"
-  enable_mail_delivery: Enable Mail Delivery
-  enable_mail_queue: "Enable Mail Queue"
-  enter_exactly_as_shown_on_card: Please enter exactly as shown on the card
-  environment: "Environment"
+  enable_mail_delivery: Aktivera skickning av mail
+  enable_mail_queue: "Aktivera mailkö"
+  enter_exactly_as_shown_on_card: Var god skriv in exakt som det står på kortet
+  environment: "Miljö"
   error: fel
-  event: Event
-  existing_customer: "Existerande Kund"
+  event: Händelse
+  existing_customer: "Existerande kund"
   expiration: "Utgångsdatum"
-  expiration_month: "Utgångsdatum Månad"
-  expiration_year: "Utgångsdatum År"
-  extension: Extension
-  extensions: Extensions
-  front_end: Front End
-  filename: Filename
-  final_confirmation: "Final Confirmation"
-  finalize: Finalize
-  finalized_payments: Finalized Payments
-  first_item: First Item Cost
+  expiration_month: "Utgångsdatum månad"
+  expiration_year: "Utgångsdatum år"
+  extension: Utökning
+  extensions: Utökningar
+  front_end: Affärsgränssnitt
+  filename: Filnamn
+  final_confirmation: "Slutgiltig bekräftelse"
+  finalize: Fastställ
+  finalized_payments: Fastställda betalningar
+  first_item: Första artikelns kostnad # Eng ?
   first_name: "Förnamn"
   first_name_begins_with: "Förnamn Börjar Med"
-  flat_percent: "Flat Percent"
+  flat_percent: "Fast procentsats"
   flat_rate_amount: Belopp
-  flat_rate_per_item: "Flat Rate (per item)"
-  flat_rate_per_order: "Flat Rate (per order)"
-  flexible_rate: "Flexible Rate"
+  flat_rate_per_item: "Fast pris (per artikel)"
+  flat_rate_per_order: "Fast pris (per order)"
+  flexible_rate: "Flexibelt pris"
   forgot_password: "Glömt Lösenord?"
   full_name: "Namn"
   gateway: Gateway
-  gateway_configuration: "Gateway configuration"
-  gateway_error: "Gateway Fel"
-  gateway_setting_description: "Select a payment gateway and configure its settings."
-  gateway_settings_warning: "If you are changing the gateway type, you must save first before you can edit the gateway settings"
+  gateway_configuration: "Gateway-konfiguration"
+  gateway_error: "Gateway-fel"
+  gateway_setting_description: "Välj en betalningsgateway och konfigurera dess inställningar."
+  gateway_settings_warning: "Om du ändrar gatewaytypen, måste du först spara innan du kan ändra gateway-inställningarna"
   general: "Allmänt"
   general_settings: "Allmänna inställningar"
-  general_settings_description: "Configure general Spree settings."
+  general_settings_description: "Konfigurera generella Spree-inställningar"
   google_analytics: "Google Analytics"
-  google_analytics_active: "Active"
-  google_analytics_create: "Create New Google Analytics Account"
-  google_analytics_id: "Analytics ID"
-  google_analytics_new: "New Google Analytics Account"
-  google_analytics_setting_description: "Manage Google Analytics ID"
-  guest_checkout: Guest Checkout
-  guest_user_account: "Betala som gäst"
+  google_analytics_active: "Aktiv"
+  google_analytics_create: "Skapa nytt Google Analytics-konto"
+  google_analytics_id: "Analytics-ID"
+  google_analytics_new: "Nytt Google Analytics-konto"
+  google_analytics_setting_description: "Hantera Google Analytics-ID"
+  guest_checkout: Gästkassa
+  guest_user_account: "Gå till kassan som gäst"
   has_no_shipped_units: has no shipped units
-  height: Height
-  hello_user: "Hej Användare"
-  history: History
+  height: Höjd
+  hello_user: "Hej användare"
+  history: Historia
   home: "Hem"
-  icons_by: "Icons by"
-  image: Image
-  images: Images
-  images_for: "Images for"
-  in_progress: "In Progress"
+  icons_by: "Ikoner av"
+  image: Bild
+  images: Bilder
+  images_for: "Bilder för"
+  in_progress: "In Progress" # Eng
   include_in_shipment: Inkludera i leverans
-  included_in_other_shipment: Included in another Shipment
-  included_in_this_shipment: Included in this Shipment
-  instructions_to_reset_password: "Fill out the form below and instructions to reset your password will be emailed to you:"
-  integration_settings_warning: "If you are changing the billing integration, you must save first before you can edit the integration settings"
-  invalid_search: "Invalid search criteria."
-  inventory: Inventory
-  inventory_adjustment: "Inventory Adjustment"
-  inventory_setting_description: "Inventory Configuration, Backordering, Zero-Stock Display"
-  inventory_settings: "Inventory Settings"
-  is_not_available_to_shipment_address: is not available to shipment address
-  issue_number: Issue Nummer
+  included_in_other_shipment: Inkluderad i en annan leverans
+  included_in_this_shipment: Inkluderad i denna leverans
+  instructions_to_reset_password: "Fyll i formuläret nedan så skickar vi instruktioner för att byta ditt lösenord till dig:"
+  integration_settings_warning: "Om du ändrar faktureringsintegrationen, måste du först spara innan du kan ändra integrationsinställningar"
+  invalid_search: "Ogiltigt sökkriterium."
+  inventory: Inventarium
+  inventory_adjustment: "Inventariejustering"
+  inventory_setting_description: "Inventarieinställningar, restnotering, slut-på-lager-visning"
+  inventory_settings: "Inventarieinställningar"
+  is_not_available_to_shipment_address: är inte tillgänglig till fraktadress
+  issue_number: Issue Nummer # Eng
   item: Artikel
   item_description: "Artikelbeskrivning"
   item_total: "Nettopris"
-  items: "Items"
+  items: "Artiklar"
   last_14_days: "Senaste 14 dagarna"
   last_5_orders: "Senaste 5 beställningarna"
-  last_7_days: "Last 7 Days"
-  last_month: "Last Månad"
+  last_7_days: "Senaste 7 dagarna"
+  last_month: "Senaste månaden"
   last_name: "Efternamn"
-  last_name_begins_with: "Efternamn Börjar Med"
-  last_year: "Förra Året"
+  last_name_begins_with: "Efternamn börjar med"
+  last_year: "Förra året"
   list: List
-  listing_categories: "Visa Kategorier"
-  listing_option_types: "Visa Option Types"
-  listing_orders: "Visa Orders"
-  listing_product_groups: "Visa Product Groups"
-  listing_reports: "Visa alla Rapporter"
-  listing_tax_categories: "Visa alla Momssatser"
-  listing_users: "Visa alla Användare"
+  listing_categories: "Visa kategorier"
+  listing_option_types: "Visa alternativtyper"
+  listing_orders: "Visa ordrar"
+  listing_product_groups: "Visa produktgrupper"
+  listing_reports: "Visa alla rapporter"
+  listing_tax_categories: "Visa alla momssatser"
+  listing_users: "Visa alla användare"
   live: "Live"
   loading: Laddar
   locale_changed: "Språket har ändrats"
@@ -462,321 +474,344 @@
   login_name: Login
   logout: "Logga ut"
   look_for_similar_items: "Liknande produkter"
-  maestro_or_solo_cards: Maestro/Solo cards
-  mail_delivery_enabled: "Mail delivery is enabled"
-  mail_delivery_not_enabled: "Mail delivery is not enabled"
-  mail_queue_enabled: "Mail queue is enabled"
-  mail_queue_not_enabled: "Mail queue is not enabled (emails are delivered immediately)"
-  mail_server_preferences: Mail Server Preferences
-  mail_server_settings: "Mail Server Settings"
-  make_refund: Make refund
-  mark_shipped: "Mark Shipped"
-  master_price: "Master Pris"
-  max_items: Max Items
+  maestro_or_solo_cards: Maestro- eller Solo-kort
+  mail_delivery_enabled: "Mailutskick är aktiverat"
+  mail_delivery_not_enabled: "Mailutskick är avaktiverat"
+  mail_methods: Mailmetoder
+  mail_queue_enabled: "Mailkö är aktiverad"
+  mail_queue_not_enabled: "Mailkö är inte aktiverad (mail skickas direkt)"
+  mail_server_preferences: Mailserveralternativ
+  mail_server_settings: "Mailserverinställningar"
+  make_refund: Gör återbetalning
+  mark_shipped: "Markera som levererad"
+  master_price: "Masterpris"
+  max_items: Max Items # Eng
+  may_be_combined_with_other_promotions: Kan kombineras med andra erbjudanden
   meta_description: "Metabeskrivning"
   meta_keywords: "Metanyckelord"
   metadata: "Metadata"
-  missing_required_information: "Missing Required Information"
+  missing_required_information: "Saknar nödvändig information"
   month: "Månad"
-  my_account: "Mitt Konto"
-  my_orders: "Mina Beställningar"
+  my_account: "Mitt konto"
+  my_orders: "Mina beställningar"
   name: Namn
-  name_or_sku: "Namn or SKU"
+  name_or_sku: "Namn eller SKU"
   new: New
-  new_adjustment: "New Adjustment"
-  new_billing_integration: New Billing Integration
-  new_category: "New category"
-  new_coupon: New Coupon
-  new_customer: "Ny Kund"
-  new_image: "New Image"
-  new_option_type: "New Option Type"
-  new_option_value: "New Option Value"
-  new_order: "New Order"
-  new_order_completed: "New Order Completed"
-  new_payment: "New Payment"
-  new_payment_method: New Payment Method
-  new_product: "New Product"
-  new_product_group: New Product Group
-  new_property: "New Property"
-  new_prototype: "New Prototype"
-  new_return_authorization: New Return Authorization
-  new_shipment: "New Shipment"
-  new_shipping_category: "New Fraktalternativ"
-  new_shipping_method: "New Shipping Method"
-  new_shipping_rate: New Shipping Rate
-  new_state: "New Delstat"
-  new_tax_category: "New Momssats"
-  new_tax_rate: "New Tax Rate"
-  new_taxon: "New Taxon"
-  new_taxonomy: "Ny Taxonomi"
-  new_tracker: New Tracker
-  new_user: "Ny Användare"
-  new_variant: "New Variant"
-  new_zone: "New Zon"
+  new_adjustment: "Ny justering"
+  new_billing_integration: Ny faktureringsintegration
+  new_category: "Ny kategori"
+  new_coupon: Ny kupong
+  new_customer: "Ny kund"
+  new_image: "Ny bild"
+  new_option_type: "Ny alternativtyp"
+  new_option_value: "Nytt alternativsvärde"
+  new_order: "Ny order"
+  new_order_completed: "Ny order slutförd"
+  new_payment: "Ny betalning"
+  new_payment_method: Ny betalningsmetod
+  new_product: "Ny produkt"
+  new_product_group: Ny produktgrupp
+  new_promotion: Ny kampanj
+  new_property: "Ny egenskap"
+  new_prototype: "Ny prototyp"
+  new_return_authorization: New Return Authorization # Eng
+  new_shipment: "Ny leverans"
+  new_shipping_category: "Nytt fraktalternativ"
+  new_shipping_method: "Nytt fraktsätt"
+  new_shipping_rate: Ny fraktkostnad
+  new_state: "Ny delstat"
+  new_tax_category: "Ny momssats"
+  new_tax_rate: "Ny skattesats"
+  new_taxon: "Ny taxon"
+  new_taxonomy: "Ny taxonomi"
+  new_tracker: Ny statistikspårare
+  new_user: "Ny användare"
+  new_variant: "Ny variant"
+  new_zone: "Ny zon"
   next: Nästa
   no_items_in_cart: ""
-  no_match_found: "No Match Found"
-  no_payment_methods_available: "Can't check out, no payment methods are configured for this environment"
-  no_products_found: "No products found"
-  no_shipping_methods_available: "No shipping methods available, please change your address and try again."
+  no_match_found: "Ingen träff hittades"
+  no_payment_methods_available: "Kan inte checka ut, ingen betalningsmetod är inställd för den här miljön"
+  no_products_found: "Inga produkter hittades"
+  no_shipping_methods_available: "Inget fraktsätt tillgängligt. Var god ändra din adress och försök igen."
   no_user_found: "Hittade ingen användare med denna e-postadress"
-  none: None
-  none_available: "None Available"
-  not: not
-  note: Note
+  none: None # Eng
+  none_available: "None Available" # Eng
+  not: inte
+  note: not
   notice_messages:
-    option_type_removed: "Succesfully removed option type."
-    product_cloned: "Product has been cloned"
-    product_deleted: "Product has been deleted"
-    product_not_cloned: "Product could not be cloned"
-    product_not_deleted: "Product could not be deleted"
-    track_me_in_GA: "Track Me in GA"
-    variant_deleted: "Variant has been deleted"
-    variant_not_deleted: "Variant could not be deleted"
+    option_type_removed: "Tog bort alternativtyp."
+    product_cloned: "Produkten har klonats"
+    product_deleted: "Produkten har tagits bort"
+    product_not_cloned: "Produkten kunde inte bli klonad"
+    product_not_deleted: "Produkten kunde inte tas bort"
+    track_me_in_GA: "Track Me in GA" # Eng
+    variant_deleted: "Varianten har tagits bort"
+    variant_not_deleted: "Varianten kunde inte tas bort"
   on_hand: "On Hand"
   operation: Operation
-  option_Values: "Option Values"
-  option_types: "Option Types"
-  option_values: "Option Values"
-  options: Options
-  or: or
-  ord_qty: "Ord. Qty"
-  ord_total: "Ord. Total"
+  option_Values: "Alternativsvärden"
+  option_types: "Alternativtyper"
+  option_values: "Alternativsvärden"
+  options: Alternativ
+  or: elle
+  ord_qty: "Ord. kvantitet"
+  ord_total: "Ord. total"
   order: Order
   order_confirmation_note: ""
-  order_date: "Order Date"
-  order_details: "Order Details"
-  order_email_resent: "Order Email Resent"
-  order_not_in_system: That order nummer is not valid on this site.
+  order_date: "Orderdatum"
+  order_details: "Orderdetaljer"
+  order_email_resent: "Order Email Resent" # Eng
+  order_not_in_system: Det ordernumret är inte giltigt.
   order_number: Order
-  order_operation_authorize: Authorize
-  order_processed_but_following_items_are_out_of_stock: "Your order has been processed, but following items are out of stock:"
-  order_processed_successfully: "Your order has been processed successfully"
+  order_operation_authorize: Auktorisera
+  order_processed_but_following_items_are_out_of_stock: "Din order har tagits emot, men följande produkter är inte i lager:"
+  order_processed_successfully: "Din order har tagits emot."
   order_summary: Ordersammanfattning
-  order_sure_want_to: "Are you sure you want to %{event} this order?"
+  order_sure_want_to: "Är du säker på att du vill %{event} denna order?"
   order_total: "Summa att betala"
-  order_total_message: "The total amount charged to your card will be"
+  order_total_message: "Den totala summan som kommer att debiteras från ditt kort kommer att vara"
   order_updated: "Beställningen uppdaterad"
-  orders: Orders
-  other_payment_options: Other Payment Options
-  out_of_stock: "Out of Stock"
+  orders: Ordrar
+  other_payment_options: Andra betalningsalternativ
+  out_of_stock: "Ej i lager"
   out_of_stock_products: "Produkter ej i lager"
-  over_paid: "Over Paid"
-  overview: Overview
-  overview_welcome: "Welcome to your store overview, currently we do not have enough data to display the Overiew Dashboard.<br/><br/> The dashboard will display automatically once the system has sufficent orders to allow generation of the statistics."
-  page_only_viewable_when_logged_in: You attempted to visit a page which can only be viewed when you are logged in
-  page_only_viewable_when_logged_out: You attempted to visit a page which can only be viewed when you are logged out
-  paid: Paid
-  parent_category: "Parent Category"
-  password: Password
-  password_reset_instructions: "Password Reset Instructions"
-  password_reset_instructions_are_mailed: "Instructions to reset your password have been emailed to you. Please check your email."
-  password_reset_token_not_found: "We're sorry, but we could not locate your account. If you are having issues try copying and pasting the URL from your email into your browser or restarting the reset password process."
-  password_updated: "Password successfully updated"
-  path: Path
+  over_paid: "Överbetald"
+  overview: Översikt
+  overview_welcome: "Välkommen till din affärs översikt. Vi har inte just nu tillräckligt med data för att kunna visa översikten.<br/><br/>Översikten kommer att visas automatiskt när systemet har tillräckligt många ordrar för att kunna beräkna statistiken."
+  page_only_viewable_when_logged_in: Du försöker visa en sida som bara kan visas när du är inloggad
+  page_only_viewable_when_logged_out: Du försöker visa en sida som bara kan visas när du är utloggad
+  paid: Betald
+  parent_category: "Överkategori"
+  password: Lösenord
+  password_reset_instructions: "Instruktioner för att återställa lösenord"
+  password_reset_instructions_are_mailed: "Instruktioner för att återställa lösenord har mailats till dig."
+  password_reset_token_not_found: "Vi kunde tyvärr inte hitta ditt konto. Om du har problem, försök att kopiera och klistra in URLen från ditt email in i din webbläsare eller att starta om processen för att återskapa lösenordet."
+  password_updated: "Lösenordet ändrat"
+  path: Path # Eng
   pay: betala
   payment: Betalning
-  payment_gateway: "Payment Gateway"
+  payment_gateway: "Betalnings-gateway"
   payment_information: "Betalningsinformation"
-  payment_method: Payment Method
-  payment_methods: Payment Methods
-  payment_methods_setting_description: Configure methods customers can use to pay
-  payment_updated: Payment Updated
-  payments: Payments
-  pending_payments: Pending Payments
+  payment_method: Betalningsmetod
+  payment_methods: Betalningsmetoder
+  payment_methods_setting_description: Ställ in metoder som kunder kan kan använda för att betala
+  payment_updated: Betalning uppdaterad
+  payments: Betalningar
+  pending_payments: Pending Payments # Eng
   permalink: Permalink
   phone: Telefon
-  place_order: Place Order
+  place_order: Placera order
   please_create_user: "Var god skapa ett användarkonto"
   powered_by: "Powered by"
   presentation: Presentation
   preview: Förhandsvisning
   previous: Föregående
   price: Pris
-  price_with_vat_included: "%{price} (inkl. Moms)"
-  problem_authorizing_card: "Problem authorizing credit card"
-  problem_capturing_card: "Problem capturing credit card"
-  problems_processing_order: "We had problems processing your order"
-  proceed_as_guest: "No Thanks, Proceed as Guest"
-  process: Process
-  product: Product
-  product_details: "Product Details"
-  product_group: Product Group
-  product_group_invalid: Product Group has invalid scopes
-  product_groups: Product Groups
-  product_has_no_description: This product has no description
-  product_properties: "Product Properties"
+  price_with_vat_included: "%{price} (inkl. moms)"
+  problem_authorizing_card: "Kunde inte autentisera kreditkortet"
+  problem_capturing_card: "Kunde inte debitera kreditkortet"
+  problems_processing_order: "Vi kunde inte hantera din order"
+  proceed_as_guest: "Nej tack, fortsätt som gäst"
+  process: Hantera
+  product: Produkt
+  product_details: "Produktdetaljer"
+  product_group: Produktgrupp
+  product_group_invalid: Produkgruppen har ogiltiga omfång
+  product_groups: Produktgrupper
+  product_has_no_description: Den här produkten har ingen beskrivning
+  product_properties: "Produktegenskaper"
   product_scopes:
     groups:
       price:
-        description: "Scopes for selecting products based on Pris"
+        description: "Omfång för att välja produkter baserat på pris"
         name: Pris
       search:
-        description: "Scopes for selecting products based on name, keywords and description of product"
-        name: "Text search"
+        description: "Omfång för att välja produkter baserat på namn, nyckelord och produktbeskrivning"
+        name: Textsök
       taxon:
-        description: "Scopes for selecting products based on Taxons"
+        description: "Omfång för att välja produkter baserat på Taxons"
         name: Taxon
       values:
-        description: "Scopes for selecting products based on option and property values"
-        name: Values
+        description: "Omfång för att välja produkter baserat på alternativ och egenskapsvärden"
+        name: Värden
     scopes:
       ascend_by_master_price:
-        name: Ascend by product master price
+        name: Sortera efter pris i ökande ordning
       ascend_by_name:
-        name: Ascend by product name
+        name: Sortera efter namn i ökande ordning
       ascend_by_updated_at:
-        name: Ascend by actualization date
+        name: Sortera efter publiceringsdatum i ökande ordning
       descend_by_master_price:
-        name: Descend by product master price
+        name: Sortera efter pris i minskande ordning
       descend_by_name:
-        name: Descend by product name
+        name: Sortera efter namn i minskande ordning
       descend_by_popularity:
-        name: Sort by popularity(most popular first)
+        name: Sortera efter popularitet (mest populär först)
       descend_by_updated_at:
-        name: Descend by actualization date
+        name: Sortera efter publiceringsdatum i minskande ordning
       in_name:
         args:
-          words: Words
-        description: "(separated by space or comma)"
-        name: "Product name have following"
-        sentence: product name contain <em>%s</em>
+          words: Ord
+        description: "(åtskilda med mellanslag eller komma)"
+        name: "Produktnamn innehåller"
+        sentence: namn eller nyckelord innehåller <em>%s</em>
       in_name_or_description:
         args:
-          words: Words
-        description: "(separated by space or comma)"
-        name: "Product name or description have following"
-        sentence: name or description contain <em>%s</em>
+          words: Ord
+        description: "(åtskilda med mellanslag eller komma)"
+        name: "Produktnamn eller -beskrivning innehåller"
+        sentence: namn eller nyckelord innehåller <em>%s</em>
       in_name_or_keywords:
         args:
-          words: Words
-        description: "(separated by space or comma)"
-        name: "Product name or meta keywords have following"
-        sentence: name or keywords contain <em>%s</em>
+          words: Ord
+        description: "(åtskilda med mellanslag eller komma)"
+        name: "Produktnamn eller nyckelord innehåller"
+        sentence: namn eller nyckelord innehåller <em>%s</em>
       in_taxons:
         args:
-          "taxon_names": "Taxon names"
-        description: "Taxon names have to be separated by comma or space(eg. adidas,shoes)"
-        name: "In taxons and all their descendants"
-        sentence: in <em>%s</em> and all their descendants
+          "taxon_names": "Taxon-namn"
+        description: "Taxon-namn måste vara åtskilda av komma eller mellanslag (tex adidas,shoes)"
+        name: "I taxoner och undertaxoner"
+        sentence: in <em>%s</em> och alla deras undertaxoner
       master_price_gte:
         args:
-          amount: Belopp
+          amount: Pris
         description: ""
-        name: "Master price greater or equal to"
-        sentence: price greater or equal to <em>%.2f</em>
+        name: "Pris större än eller lika med"
+        sentence: pris större än eller lika med <em>%.2f</em>
       master_price_lte:
         args:
-          amount: Belopp
+          amount: Pris
         description: ""
-        name: "Master price lesser or equal to"
-        sentence: price less or equal to <em>%.2f</em>
+        name: "Pris mindre än eller lika med"
+        sentence: Pris mindre än eller lika med <em>%.2f</em>
       price_between:
         args:
-          high: High
-          low: Low
+          high: Max
+          low: Min
         description: ""
         name: "Pris mellan"
-        sentence: price between <em>%.2f</em> and <em>%.2f</em>
+        sentence: pris mellan <em>%.2f</em> och <em>%.2f</em>
       taxons_name_eq:
         args:
-          taxon_name: "Taxon name"
-        description: "In specific taxon - without descendants"
-        name: "In Taxon(without descendants)"
-        sentence: in <em>%s</em>
+          taxon_name: "Taxon-namn"
+        description: "In en särskild taxon" # without descendants
+        name: "I taxon" # (without descendants)
+        sentence: i <em>%s</em>
       with:
         args:
-          value: Value
-        description: "Selects all products that have at least one variant that have specified value as either option or property (eg. red)"
-        name: With value
-        sentence: with value <em>%s</em>
+          value: Värde
+        description: "Väljer alla produkter som har åtminstone en variant som har värdet som antingen alternativ eller egenskap (tex röd)"
+        name: Med värde
+        sentence: med värde <em>%s</em>
       with_option:
         args:
-          option: Option
-        description: "Selects all products that have specified option(eg. color)"
-        name: "With option"
-        sentence: with option <em>%s</em>
+          option: Alternativ
+        description: "Väljer alla produkter med ett visst alternativ (tex färg)"
+        name: "Med alternativ"
+        sentence: med alternativ <em>%s</em>
       with_option_value:
         args:
-          option: Option
-          value: Value
-        description: "Selects all products that have at least one variant with specified option and value(eg. color:red)"
-        name: "With option and value"
-        sentence: with option <em>%s</em> and value <em>%s</em>
+          option: Alternativ
+          value: Värde
+        description: "Väljer alla produkter som har åtminstone en variant med det specifierade alternativet (tex färg: röd)"
+        name: "Med alternativ och värde"
+        sentence: med alternativ <em>%s</em> och värde <em>%s</em>
       with_property:
         args:
-          property: Property
-        description: "Selects all products that have specified property(eg. weight)"
-        name: "With property"
-        sentence: with property <em>%s</em>
+          property: Egenskap
+        description: "Väljer alla produkter med en viss egenskap (tex vikt)"
+        name: "Med egenskap"
+        sentence: med egenskap <em>%s</em>
       with_property_value:
         args:
-          property: Property
-          value: Value
-        description: "Selects all products that have at least one variant with specified property and value(eg. weight:10kg)"
-        name: "With property value"
-        sentence: with property <em>%s</em> and value <em>%s</em>
+          property: Egenskap
+          value: Värde
+        description: "Väljer alla produkter som har åtminstone en variant med den specifierade egenskapen (tex vikt: 10kg)"
+        name: "Med egenskapsvärde"
+        sentence: med egenskap <em>%s</em> och värde <em>%s</em>
   products: Produkter
   products_with_zero_inventory_display: "Produkter som ej finns i lager kommer %{not} att visas"
-  properties: Properties
-  property: Property
-  prototype: Prototype
-  prototypes: Prototypes
-  provider: "Provider"
-  provider_settings_warning: "If you are changing the provider type, you must save first before you can edit the provider settings"
+  promotion: Kampanj
+  promotion_form: 
+    match_policies: 
+      all: Matcha någon av dessa regler
+      any: Matcha alla dessa regler
+  promotion_rule_types: 
+    first_order: 
+      description: Måste vara kundens första order
+      name: Första order
+    item_total: 
+      description: Totalpriset möter dessa kriterium
+      name: Totalpris
+    product: 
+      description: Order inkluderar angivna produkt(er)
+      name: Produkt(er)
+    user: 
+      description: Tillgänglig bara för de angivna användarna
+      name: Användare
+  promotions: Kampanjer
+  promotions_description: Hantera erbjudanden och kuponger med kampanjer
+  properties: Egenskaper
+  property: Egenskap
+  prototype: Prototyp
+  prototypes: Prototyper
+  provider: "Leverantör"
+  provider_settings_warning: "Om du ändrar leverantörstypen, måste du först spara innan du kan ändra leverantörens inställningar"
   qty: Antal
-  quantity_shipped: Antal Shipped
-  range: "Range"
-  rate: Rate
-  reason: Reason
-  recalculate_order_total: "Recalculate order total"
-  receive: receive
-  received: Received
-  refund: Refund
-  register: Registrera dig som Ny Användare
-  register_or_guest: Checkout as Guest or Register
+  quantity_shipped: Antal levererade
+  range: "Range" # Eng
+  rate: Kurs
+  reason: Anledning
+  recalculate_order_total: "Omberäkna summan att betala"
+  receive: ta emot
+  received: Mottaget
+  refund: Återbetala
+  register: Registrera dig som ny användare
+  register_or_guest: Gå till kassan som gäst eller registrera dig som kund
   registration: "Registrering"
   remember_me: "Kom ihåg mig"
-  remove: Remove
-  reports: Reports
-  required_for_solo_and_maestro: Required for Solo and Maestro cards.
-  resend: Resend
-  reset_password: "Reset my password"
+  remove: Ta bort
+  reports: Rapporter
+  required_for_solo_and_maestro: Krävs för Solo- och Maestro-kort.
+  resend: Skicka igen
+  reset_password: "Återställ mitt lösenord"
   resource_controller:
-    member_object_not_found: "Member object not found."
-    successfully_created: "Successfully created!"
-    successfully_removed: "Successfully removed!"
-    successfully_updated: "Successfully updated!"
-  response_code: "Response Code"
-  resume: "resume"
-  resumed: Resumed
+    member_object_not_found: "Medlemsobjekt kunde inte hittas."
+    successfully_created: "Skapat!"
+    successfully_removed: "Borttaget!"
+    successfully_updated: "Uppdaterat!"
+  response_code: "Svarskod"
+  resume: "återuppta"
+  resumed: Återupptagen
   return: return
-  return_authorization: Return Authorization
-  return_authorization_updated: Return authorization updated
-  return_authorizations: Return Authorizations
-  return_quantity: Retur Antal
-  returned: Returned
+  return_authorization: Return Authorization # Eng
+  return_authorization_updated: Return authorization updated # Eng
+  return_authorizations: Return Authorizations # Eng
+  return_quantity: Returantal
+  returned: Returnerad
   rma_number: RMA-nummer
   rma_value: RMA-värde
-  roles: Roler
-  sales_tax: "Sales Tax"
-  sales_total: "Sales Total"
-  sales_total_for_all_orders: "Sales total for all orders"
-  sales_totals: "Sales Totals"
-  sales_totals_description: "Sales Total For All Orders"
+  roles: Roller
+  sales_tax: "Sales Tax" # Eng
+  sales_total: "Sales Total" # Eng
+  sales_total_for_all_orders: "Sales total for all orders" # Eng
+  sales_totals: "Sales Totals" # Eng
+  sales_totals_description: "Sales Total For All Orders" # Eng
   save_and_continue: "Spara och Fortsätt"
   save_preferences: "Spara Inställningarna"
-  scope: Scope
-  scopes: Scopes
+  scope: Omfång
+  scopes: Omfång
   search: Sök
-  search_results: "Search results for '%{keywords}'"
-  secure_connection_type: Secure Connection Type
-  secure_creditcard: Säkert Kreditkort
-  select: Select
+  search_results: "Sökresultat för '%{keywords}'"
+  secure_connection_type: Säker anslutningstyp
+  secure_creditcard: Säkert kreditkort
+  select: Välj
   select_from_prototype: "Välj från prototyp"
-  select_preferred_shipping_option: "Select preferred shipping option"
-  send_copy_of_all_mails_to: Send Copy of All Mails To
-  send_copy_of_orders_mails_to: Send Copy of Order Mails To
+  select_preferred_shipping_option: "Välj föredraget fraktsätt"
+  send_copy_of_all_mails_to: Skicka kopia av alla mail till
+  send_copy_of_orders_mails_to: Skicka kopia av ordermail till
   send_mails_as: Skicka e-post som
   send_order_mails_as: Skicka beställningspost som
   server: Server
@@ -786,24 +821,24 @@
   ship_address: "Leveransadress"
   shipment: Leverans
   shipment_details: Leveransdetaljer
-  shipment_number: "Leverans #"
+  shipment_number: "Leveransnummer"
   shipment_updated: Leverans uppdaterad
   shipments: "Leveranser"
   shipped: Levererad
-  shipping: Sända
+  shipping: Leverans
   shipping_address: "Leveransadress"
   shipping_categories: "Leveranskategorier"
-  shipping_categories_description: "Manage shipping categories to identify which products can be shipped via which method"
+  shipping_categories_description: "Hantera leveranskategorier för att bestämma vilka produkter som kan skickas med vilken metod"
   shipping_category: Leveranskategori
   shipping_cost: Kostnad
   shipping_error: "Leveransfel"
   shipping_instructions: "Leveransinstruktioner"
   shipping_method: "Leveransmetod"
   shipping_methods: "Leveransmetoder"
-  shipping_methods_description: "Manage shipping methods"
+  shipping_methods_description: "Hantera leveransmetoder"
   shipping_rates: "Fraktavgifter"
   shipping_rates_description: "Hantera fraktavgifter"
-  shipping_total: "Shipping Total"
+  shipping_total: "Fraktkostnad"
   shop_by_taxonomy: "Köp via %{taxonomy}"
   shopping_cart: "Varukorg"
   show: Visa
@@ -811,24 +846,24 @@
   show_deleted: "Visa borttagna"
   show_incomplete_orders: "Visa ej genomförda beställningar"
   show_only_complete_orders: "Visa endast genomförda beställningar"
-  show_out_of_stock_products: "Show out-of-stock products"
-  show_price_inc_vat: "Visa priser inklusive MOMS"
+  show_out_of_stock_products: "Visa produkter som inte finns i lager"
+  show_price_inc_vat: "Visa priser inklusive moms"
   showing_first_n: "Visar första %{n}"
   sign_up: "Bli medlem"
-  site_name: "Site Namn"
-  site_url: "Site URL"
+  site_name: "Webbsidans namn"
+  site_url: "Webbsidans URL"
   sku: SKU
   smtp: SMTP
-  smtp_authentication_type: SMTP Authentication Type
-  smtp_domain: SMTP Domän
-  smtp_mail_host: SMTP Mail Host
-  smtp_password: SMTP Lösenord
-  smtp_port: SMTP Port
+  smtp_authentication_type: SMTP-autentiseringstyp
+  smtp_domain: SMTP-domän
+  smtp_mail_host: SMTP-server
+  smtp_password: SMTP-lösenord
+  smtp_port: SMTP-port
   smtp_send_all_emails_as_from_following_address: "Skicka all e-post från följande adress."
   smtp_send_copy_of_orders_to_this_addresses: "Skicka en kopia av all beställningspost till denna adress. För flera adresser, separera med komma."
   smtp_send_copy_to_this_addresses: "Skicka en kopia av all utgående e-post till denna adress. För flera adresser, separera med komma."
   smtp_send_order_mails_as_from_following_address: "Skicka beställningspost från denna adress."
-  smtp_username: SMTP Användarnamn
+  smtp_username: SMTP-användarnamn
   sold: Såld
   sort_ordering: "Sorteringsordning"
   spree:
@@ -838,28 +873,28 @@
   ssl_will_be_used_in_production_mode: "SSL kommer att användas i produktionsläge"
   ssl_will_not_be_used_in_development_and_test_modes: "SSL kommer inte att användas i utvecklings- och testläge om nödvändigt."
   ssl_will_not_be_used_in_production_mode: "SSL kommer inte att användas i produktionsläge"
-  start: Start
-  start_date: Valid from
+  start: Starta
+  start_date: Giltig från
   state: Delstat
-  state_based: "Delstat Based"
-  state_setting_description: "Administer the list of states/provinces associated with each country."
-  states: States
+  state_based: "Delstat-baserad"
+  state_setting_description: "Hantera listan av stater/regioner som ska höra till varje land"
+  states: Stater
   status: Status
-  stop: Stop
-  store: Store
+  stop: Stopp
+  store: Affär
   street_address: "Gata"
   street_address_2: "Gata (forts.)"
   subtotal: Delsumma
-  subtract: Subtract
+  subtract: Subtrahera
   system: System
   tax: Moms
   tax_categories: "Momssatser"
-  tax_categories_setting_description: "Set up tax categories to identify which products should be taxable."
+  tax_categories_setting_description: "Sätt upp momssatser för att bestämma vilka produkter som ska vara beskattade"
   tax_category: "Momssats"
-  tax_rates: "Tax Rates"
-  tax_rates_description: Tax rates setup and configuration.
-  tax_settings: "Tax Settings"
-  tax_settings_description: Basic tax settings.
+  tax_rates: "Skattesatser"
+  tax_rates_description: Sätt upp och konfigurera skattesatser
+  tax_settings: "Skatte-inställningar"
+  tax_settings_description: Grundläggande skatte-inställningar
   tax_total: "Tax Total"
   tax_type: "Tax Type"
   taxon: Taxon
@@ -867,39 +902,39 @@
   taxonomies: Taxonomier
   taxonomies_setting_description: "Skapa och sköta taxonomier"
   taxonomy_edit: "Ändra taxonomi"
-  taxonomy_tree_error: "The requested change has not been accepted and the tree has been returned to its previous state, please try again."
-  taxonomy_tree_instruction: "* Right click a child in the tree to access the menu for adding, deleting or sorting a child."
+  taxonomy_tree_error: "Ändringen har inte accepterats och trädet har återställts till sitt tidigare tillstånd. Var god försök igen."
+  taxonomy_tree_instruction: "* Högerklicka på en taxonomi för att komma åt menyn för att lägga till, ta bort eller sortera undertaxonomier."
   taxons: Taxons
   test: "Test"
   test_mode: Testläge
   thank_you_for_your_order: "Tack för din beställning. Var god skriv ut denna sida för framtida korrespondens."
   this_file_language: "Svenska (SE)"
-  this_month: "Denna Månad"
-  this_year: "Detta År"
+  this_month: "Denna månad"
+  this_year: "Detta år"
   thumbnail: "Miniatyrbild"
   to_add_variants_you_must_first_define: "För att lägga till varianter måste du först definiera"
-  top_grossing_products: "Storsäljande Produkter"
+  top_grossing_products: "Storsäljande produkter"
   total: Deltotal
-  tracking: Tracking
-  transaction: Transaction
-  transactions: Transactions
-  tree: Tree
+  tracking: Spårning
+  transaction: Transaktion
+  transactions: Transaktioner
+  tree: Träd
   try_again: "Försök igen"
   type: Typ
   unable_ship_method: "Kan inte skapa leveranssätt på grund av serverfel."
-  unable_to_authorize_credit_card: "Unable to Authorize Credit Card"
-  unable_to_capture_credit_card: "Unable to Capture Credit Card"
-  unable_to_connect_to_gateway: "Unable to connect to gateway."
-  unable_to_save_order: "Unable to Save Order"
-  under_paid: "Under Paid"
+  unable_to_authorize_credit_card: "Kunde inte auktorisera kreditkortet"
+  unable_to_capture_credit_card: "Kunde inte debitera kreditkortet"
+  unable_to_connect_to_gateway: "Kunde inte ansluta till betalningsleverantör."
+  unable_to_save_order: "Kunde inte spara order"
+  under_paid: "Underbetald"
   unrecognized_card_type: Okänd korttyp
   update: Uppdatera
   update_password: "Uppdatera mitt lösenord och logga in mig"
-  updated_successfully: "Updated Successfully"
+  updated_successfully: "Uppdaterades"
   updating: Uppdaterar
   usage_limit: Usage Limit
   use_as_shipping_address: Använd som leveransadress
-  use_billing_address: "Använd Faktureringsadress"
+  use_billing_address: "Använd faktureringsadress"
   use_different_shipping_address: "Använd annan leveransadress"
   use_new_cc: "Använd ett nytt kort"
   user: Användare
@@ -908,19 +943,19 @@
   user_details: "Användardetaljer"
   users: Användare
   validation:
-    is_too_large: "is too large -- stock on hand cannot cover requested quantity!"
+    is_too_large: "är för stor – vi har inte så mycket i lager!"
     must_be_int: "måste vara ett heltal"
     must_be_non_negative: "måste vara ett positivt tal"
   value: Värde
   variants: Varianter
-  vat: "MOMS"
+  vat: "moms"
   version: Version
   view_shipping_options: "Visa leveransalternativ"
   void: Tom
-  website: Website
+  website: Webbsida
   weight: Vikt
-  welcome_to_sample_store: "Welcome to the sample store"
-  what_is_a_cvv: "Vad är en (CVV) Säkerthetskod?"
+  welcome_to_sample_store: "Välkommen till exempel-affären"
+  what_is_a_cvv: "Vad är en säkerthetskod (CVV)?"
   what_is_this: "Vad är det här?"
   whats_this: "Vad är det här?"
   width: Bredd
@@ -930,1082 +965,8 @@
   zip: Postkod
   zone: Område
   zone_based: "Områdesbaserad"
-  zone_setting_description: "Collections of countries, states or other zones to be used in various calculations."
+  zone_setting_description: "Samlingar av länder, stater eller andra zoner som används i olika beräkningar"
   zones: Områden
 
-sv-SE: 
-  'no': "No"
-  'yes': "Yes"
-  5_biggest_spenders: "5 Biggest Spenders"
-  a_copy_of_all_mail_will_be_sent_to_the_following_addresses: A copy of all mail be sent to the following addresses
-  abbreviation: Abbreviation
-  access_denied: "Access Denied"
-  account: Account
-  account_updated: "Account updated!"
-  action: Action
-  actions: 
-    cancel: Cancel
-    create: Create
-    destroy: Destroy
-    list: List
-    listing: Listing
-    new: New
-    update: Update
-  active: "Active"
-  activerecord: 
-    attributes: 
-      address: 
-        address1: Address
-        address2: "Address (contd.)"
-        city: City
-        country: "Country"
-        first_name_begins_with: "First Name Begins With"
-        firstname: "First Name"
-        last_name_begins_with: "Last Name Begins With"
-        lastname: "Last Name"
-        phone: Phone
-        state: "State"
-        zipcode: "Zip Code"
-      checkout: 
-        bill_address: 
-          address1: "Billing address street"
-          city: "Billing address city"
-          firstname: "Billing address first name"
-          lastname: "Billing address last name"
-          phone: "Billing address phone"
-          state: "Billing address state"
-          zipcode: "Billing address zipcode"
-        ship_address: 
-          address1: "Shipping address street"
-          city: "Shipping address city"
-          firstname: "Shipping address first name"
-          lastname: "Shipping address last name"
-          phone: "Shipping address phone"
-          state: "Shipping address state"
-          zipcode: "Shipping address zipcode"
-      country: 
-        iso: ISO
-        iso3: ISO3
-        iso_name: "ISO Name"
-        name: Name
-        numcode: "ISO Code"
-      creditcard: 
-        cc_type: Type
-        month: Month
-        number: Number
-        verification_value: "Verification Value"
-        year: Year
-      inventory_unit: 
-        state: State
-      line_item: 
-        price: Price
-        quantity: Quantity
-      order: 
-        checkout_complete: "Checkout Complete"
-        completed_at: "Completed At"
-        coupon_code: "Coupon Code"
-        ip_address: "IP Address"
-        item_total: "Item Total"
-        number: Number
-        special_instructions: "Special Instructions"
-        state: State
-        total: Total
-      product: 
-        available_on: "Available On"
-        cost_price: "Cost Price"
-        description: Description
-        master_price: "Master Price"
-        name: Name
-        on_hand: "On Hand"
-        shipping_category: "Shipping Category"
-        tax_category: "Tax Category"
-      product_group: 
-        name: Name
-        product_count: "Product count"
-        product_scopes: "Product scopes"
-        products: "Products"
-        url: URL
-      product_scope: 
-        arguments: "Arguments"
-        description: "Description"
-      promotion: 
-        code: "Code"
-        description: "Description"
-        expires_at: "Expires at"
-        name: "Name"
-        starts_at: "Starts at"
-        usage_limit: "Usage limit"
-      property: 
-        name: Name
-        presentation: Presentation
-      prototype: 
-        name: Name
-      return_authorization: 
-        amount: Amount
-      role: 
-        name: Name
-      state: 
-        abbr: Abbreviation
-        name: Name
-      tax_category: 
-        description: Description
-        name: Name
-      tax_rate: 
-        amount: Rate
-      taxon: 
-        name: Name
-        permalink: Permalink
-        position: Position
-      taxonomy: 
-        name: Name
-      user: 
-        email: Email
-      variant: 
-        cost_price: "Cost Price"
-        depth: Depth
-        height: Height
-        price: Price
-        sku: SKU
-        weight: Weight
-        width: Width
-      zone: 
-        description: Description
-        name: Name
-    models: 
-      address: 
-        one: Address
-        other: Addresses
-      cheque_payment: 
-        one: Cheque Payment
-        other: Cheque Payments
-      country: 
-        one: Country
-        other: Countries
-      creditcard: 
-        one: "Credit Card"
-        other: "Credit Cards"
-      creditcard_payment: 
-        one: "Credit Card Payment"
-        other: "Credit Card Payments"
-      creditcard_txn: 
-        one: "Credit Card Transaction"
-        other: "Credit Card Transactions"
-      inventory_unit: 
-        one: "Inventory Unit"
-        other: "Inventory Units"
-      line_item: 
-        one: "Line Item"
-        other: "Line Items"
-      order: 
-        one: Order
-        other: Orders
-      payment: 
-        one: Payment
-        other: Payments
-      product: 
-        one: Product
-        other: Products
-      product_group: 
-        one: "Product group"
-        other: "Product groups"
-      property: 
-        one: Property
-        other: Properties
-      prototype: 
-        one: Prototype
-        other: Prototypes
-      return_authorization: 
-        one: Return Authorization
-        other: Return Authorizations
-      role: 
-        one: Roles
-        other: Roles
-      shipment: 
-        one: Shipment
-        other: Shipments
-      shipping_category: 
-        one: "Shipping Category"
-        other: "Shipping Categories"
-      state: 
-        one: State
-        other: States
-      tax_category: 
-        one: "Tax Category"
-        other: "Tax Categories"
-      tax_rate: 
-        one: "Tax Rate"
-        other: "Tax Rates"
-      taxon: 
-        one: Taxon
-        other: Taxons
-      taxonomy: 
-        one: Taxonomy
-        other: Taxonomies
-      user: 
-        one: User
-        other: Users
-      variant: 
-        one: Variant
-        other: Variants
-      zone: 
-        one: Zone
-        other: Zones
-  add: Add
-  add_category: "Add Category"
-  add_country: "Add Country"
-  add_option_type: "Add Option Type"
-  add_option_types: "Add Option Types"
-  add_option_value: "Add Option Value"
-  add_product: "Add Product"
-  add_product_properties: "Add Product Properties"
-  add_rule_of_type: Add rule of type
-  add_scope: "Add a scope"
-  add_state: "Add State"
-  add_to_cart: "Add To Cart"
-  add_zone: "Add Zone"
-  additional_item: Additional Item Cost
-  address: Address
-  address_information: "Address Information"
-  adjustment: Adjustment
-  adjustment_total: Adjustment Total
-  adjustments: Adjustments
-  administration: Administration
-  all: "All"
-  all_departments: All departments
-  allow_backorders: "Allow Backorders"
-  allow_ssl_to_be_used_when_in_developement_and_test_modes: Allow SSL to be used when in development and test modes
-  allow_ssl_to_be_used_when_in_production_mode: Allow SSL to be used in production mode
-  allowed_ssl_in_production_mode: "SSL will %{not} be used in production"
-  already_registered: Already Registered?
-  alt_text: Alternative Text
-  alternative_phone: Alternative Phone
-  amount: Amount
-  analytics_trackers: Analytics Trackers
-  api: 
-    access: "API Access"
-    clear_key: "Clear API key"
-    errors: 
-      invalid_event: "Invalid event name, valid names are %{events}"
-      invalid_event_for_object: "Valid event name but not allowed for this object, valid names are %{events}"
-      missing_event: "No event name supplied"
-    generate_key: "Generate API key"
-    key: "API Key"
-    key_cleared: "API key cleared"
-    key_generated: "API key generated"
-    no_key: "No key defined"
-    regenerate_key: "Regenerate API key"
-  apply: "Apply"
-  are_you_sure: "Are you sure?"
-  are_you_sure_category: "Are you sure you want to delete this category?"
-  are_you_sure_delete: "Are you sure you want to delete this record?"
-  are_you_sure_delete_image: "Are you sure you want to delete this image?"
-  are_you_sure_option_type: "Are you sure you want to delete this option type?"
-  are_you_sure_you_want_to_capture: "Are you sure you want to capture?"
-  assign_taxon: "Assign Taxon"
-  assign_taxons: "Assign Taxons"
-  authorization_failure: "Authorization Failure"
-  authorized: Authorized
-  available_on: "Available On"
-  available_taxons: "Available Taxons"
-  awaiting_return: Awaiting Return
-  back: Back
-  back_end: Back End
-  back_to_store: "Go Back To Store"
-  backordered: Backordered
-  backordering_is_allowed: "Backordering %{not} allowed"
-  balance_due: "Balance Due"
-  best_selling_products: "Best Selling Products"
-  best_selling_taxons: "Best Selling Taxons"
-  bill_address: "Bill Address"
-  billing: Billing
-  billing_address: "Billing Address"
-  both: Both
-  by_day: "by day"
-  calculator: Calculator
-  calculator_settings_warning: "If you are changing the calculator type, you must save first before you can edit the calculator settings"
-  cancel: cancel
-  cancel_my_account: Cancel my account
-  cancel_my_account_description: "Unhappy?"
-  canceled: Canceled
-  cannot_create_returns: Cannot create returns as this order has not shipped yet.
-  cannot_destory_line_item_as_inventory_units_have_shipped: Cannot destory line item as some inventory units have shipped.
-  cannot_perform_operation: "Cannot perform requested operation"
-  capture: Capture
-  card_code: "Card Code"
-  card_details: "Card details"
-  card_number: "Card Number"
-  card_type_is: Card type is
-  cart: Cart
-  categories: Categories
-  category: Category
-  change: Change
-  change_language: "Change Language"
-  change_my_password: "Change my password"
-  charge_total: Charge Total
-  charged: Charged
-  charges: Charges
-  checkout: Checkout
-  cheque: Cheque
-  city: City
-  clone: Clone
-  code: Code
-  combine: Combine
-  complete: complete
-  complete_list: "Complete List"
-  configuration: Configuration
-  configuration_options: "Configuration Options"
-  configurations: Configurations
-  configured: Configured
-  confirm: Confirm
-  confirm_delete: "Confirm Deletion"
-  confirm_password: "Password Confirmation"
-  continue: Continue
-  continue_shopping: "Continue shopping"
-  copy_all_mails_to: Copy All Mails To
-  cost_price: "Cost Price"
-  count: Count
-  count_of_reduced_by: "count of '%{name}' reduced by %{count}"
-  country: Country
-  country_based: "Country Based"
-  coupon: Coupon
-  coupon_code: Coupon code
-  create: Create
-  create_a_new_account: "Create a new account"
-  create_product_group_from_products: Create a new product group from these products
-  create_user_account: Create User Account
-  created_successfully: "Created Successfully"
-  credit: Credit
-  credit_card: "Credit Card"
-  credit_card_capture_complete: "Credit Card Was Captured"
-  credit_card_payment: "Credit Card Payment"
-  credit_owed: "Credit Owed"
-  credit_total: Credit Total
-  creditcard: Creditcard
-  creditcards: Creditcards
-  credits: Credits
-  current: Current
-  customer: Customer
-  customer_details: "Customer Details"
-  customer_search: "Customer Search"
-  date_created: Date created
-  date_range: "Date Range"
-  debit: Debit
-  default: Default
-  delete: Delete
-  delivery: Delivery
-  depth: Depth
-  description: Description
-  destroy: Destroy
-  didnt_receive_confirmation_instructions: "Didn't receive confirmation instructions?"
-  didnt_receive_unlock_instructions: "Didn't receive unlock instructions?"
-  discount_amount: "Discount Amount"
-  display: Display
-  edit: Edit
-  edit_general_settings: "Edit General Settings"
-  editing_billing_integration: Editing Billing Integration
-  editing_category: "Editing Category"
-  editing_mail_method: Editing Mail Method
-  editing_option_type: "Editing Option Type"
-  editing_option_types: "Editing Option Types"
-  editing_payment_method: Editing Payment Method
-  editing_product: "Editing Product"
-  editing_product_group: "Editing Product Group"
-  editing_promotion: Editing Promotion
-  editing_property: "Editing Property"
-  editing_prototype: "Editing Prototype"
-  editing_shipping_category: "Editing Shipping Category"
-  editing_shipping_method: "Editing Shipping Method"
-  editing_state: "Editing State"
-  editing_tax_category: "Editing Tax Category"
-  editing_tax_rate: "Editing Tax Rate"
-  editing_tracker: Editing Tracker
-  editing_user: "Editing User"
-  editing_zone: "Editing Zone"
-  email: Email
-  email_address: "Email Address"
-  email_server_settings_description: "Set email server settings."
-  empty: "Empty"
-  empty_cart: "Empty Cart"
-  enable_login_via_login_password: "Use standard email/password"
-  enable_login_via_openid: "Use OpenID instead"
-  enable_mail_delivery: Enable Mail Delivery
-  enter_atleast_five_letters: Enter atleast five letters of customer name
-  enter_exactly_as_shown_on_card: Please enter exactly as shown on the card
-  enter_password_to_confirm: "(we need your current password to confirm your changes)"
-  environment: "Environment"
-  error: error
-  errors: 
-    messages: 
-      could_not_create_taxon: "Could not create taxon"
-      no_shipping_methods_available: "No shipping methods available for selected location, please change your address and try again."
-  errors_prohibited_this_record_from_being_saved: 
-    one: "1 error prohibited this record from being saved"
-    other: "%{count} errors prohibited this record from being saved"
-  event: Event
-  existing_customer: "Existing Customer"
-  expiration: "Expiration"
-  expiration_month: "Expiration Month"
-  expiration_year: "Expiration Year"
-  expiry: Expiry
-  extension: Extension
-  extensions: Extensions
-  filename: Filename
-  final_confirmation: "Final Confirmation"
-  finalize: Finalize
-  finalized_payments: Finalized Payments
-  first_item: First Item Cost
-  first_name: "First Name"
-  first_name_begins_with: "First Name Begins With"
-  flat_percent: "Flat Percent"
-  flat_rate_amount: Amount
-  flat_rate_per_item: "Flat Rate (per item)"
-  flat_rate_per_order: "Flat Rate (per order)"
-  flexible_rate: "Flexible Rate"
-  forgot_password: "Forgot Password?"
-  free_shipping: Free Shipping
-  from_state: From State
-  front_end: Front End
-  full_name: "Full Name"
-  gateway: Gateway
-  gateway_config_unavailable: "Gateway unavailable for environment"
-  gateway_configuration: "Gateway configuration"
-  gateway_error: "Gateway Error"
-  gateway_setting_description: "Select a payment gateway and configure its settings."
-  gateway_settings_warning: "If you are changing the gateway type, you must save first before you can edit the gateway settings"
-  general: "General"
-  general_settings: "General Settings"
-  general_settings_description: "Configure general Spree settings."
-  google_analytics: "Google Analytics"
-  google_analytics_active: "Active"
-  google_analytics_create: "Create New Google Analytics Account"
-  google_analytics_id: "Analytics ID"
-  google_analytics_new: "New Google Analytics Account"
-  google_analytics_setting_description: "Manage Google Analytics ID"
-  guest_checkout: Guest Checkout
-  guest_user_account: Checkout as a Guest
-  has_no_shipped_units: has no shipped units
-  height: Height
-  hello_user: "Hello User"
-  history: History
-  home: "Home"
-  icon: "Icon"
-  icons_by: "Icons by"
-  image: Image
-  images: Images
-  images_for: "Images for"
-  in_progress: "In Progress"
-  include_in_shipment: Include in Shipment
-  included_in_other_shipment: Included in another Shipment
-  included_in_this_shipment: Included in this Shipment
-  instructions_to_reset_password: "Fill out the form below and instructions to reset your password will be emailed to you:"
-  integration_settings_warning: "If you are changing the billing integration, you must save first before you can edit the integration settings"
-  intercept_email_address: Intercept Email Address
-  intercept_email_instructions: "Override email recipient and replace with this address."
-  invalid_search: "Invalid search criteria."
-  inventory: Inventory
-  inventory_adjustment: "Inventory Adjustment"
-  inventory_setting_description: "Inventory Configuration, Backordering, Zero-Stock Display"
-  inventory_settings: "Inventory Settings"
-  is_not_available_to_shipment_address: is not available to shipment address
-  issue_number: Issue Number
-  item: Item
-  item_description: "Item Description"
-  item_total: "Item Total"
-  item_total_rule: 
-    operators: 
-      gt: greater than
-      gte: greater than or equal to
-  items: "Items"
-  last_14_days: "Last 14 Days"
-  last_5_orders: "Last 5 Orders"
-  last_7_days: "Last 7 Days"
-  last_month: "Last Month"
-  last_name: "Last Name"
-  last_name_begins_with: "Last Name Begins With"
-  last_year: "Last Year"
-  leave_blank_to_not_change: "(leave blank if you don't want to change it)"
-  list: List
-  listing_categories: "Listing Categories"
-  listing_option_types: "Listing Option Types"
-  listing_orders: "Listing Orders"
-  listing_product_groups: "Listing Product Groups"
-  listing_reports: "Listing Reports"
-  listing_tax_categories: "Listing Tax Categories"
-  listing_users: "Listing Users"
-  live: "Live"
-  loading: Loading
-  locale_changed: "Locale Changed"
-  log_in: "Log In"
-  logged_in_as: "Logged in as"
-  logged_in_succesfully: "Logged in successfully"
-  logged_out: "You have been logged out."
-  login: Login
-  login_as_existing: "Log In as Existing Customer"
-  login_failed: "Login authentication failed."
-  login_name: Login
-  logout: Logout
-  look_for_similar_items: Look for similar items
-  maestro_or_solo_cards: Maestro/Solo cards
-  mail_delivery_enabled: "Mail delivery is enabled"
-  mail_delivery_not_enabled: "Mail delivery is not enabled"
-  mail_methods: Mail Methods
-  mail_server_preferences: Mail Server Preferences
-  make_refund: Make refund
-  mark_shipped: "Mark Shipped"
-  master_price: "Master Price"
-  max_items: Max Items
-  may_be_combined_with_other_promotions: May be combined with other promotions
-  meta_description: "Meta Description"
-  meta_keywords: "Meta Keywords"
-  metadata: "Metadata"
-  minimal_amount: "Minimal Amount"
-  missing_required_information: "Missing Required Information"
-  month: "Month"
-  my_account: "My Account"
-  my_orders: "My Orders"
-  name: Name
-  name_or_sku: "Name or SKU"
-  new: New
-  new_adjustment: "New Adjustment"
-  new_billing_integration: New Billing Integration
-  new_category: "New category"
-  new_customer: "New Customer"
-  new_image: "New Image"
-  new_mail_method: New Mail Method
-  new_option_type: "New Option Type"
-  new_option_value: "New Option Value"
-  new_order: "New Order"
-  new_order_completed: "New Order Completed"
-  new_payment: "New Payment"
-  new_payment_method: New Payment Method
-  new_product: "New Product"
-  new_product_group: New Product Group
-  new_promotion: New Promotion
-  new_property: "New Property"
-  new_prototype: "New Prototype"
-  new_return_authorization: New Return Authorization
-  new_shipment: "New Shipment"
-  new_shipping_category: "New Shipping Category"
-  new_shipping_method: "New Shipping Method"
-  new_state: "New State"
-  new_tax_category: "New Tax Category"
-  new_tax_rate: "New Tax Rate"
-  new_taxon: "New Taxon"
-  new_taxonomy: "New Taxonomy"
-  new_tracker: New Tracker
-  new_user: "New User"
-  new_variant: "New Variant"
-  new_zone: "New Zone"
-  next: Next
-  no_items_in_cart: ""
-  no_match_found: "No Match Found"
-  no_payment_methods_available: "Can't check out, no payment methods are configured for this environment"
-  no_products_found: "No products found"
-  no_results: "No results"
-  no_rules_added: No rules added
-  no_user_found: "No user was found with that email address"
-  none: None
-  none_available: "None Available"
-  normal_amount: "Normal Amount"
-  not: not
-  not_shown: "Not Shown"
-  note: Note
-  notice_messages: 
-    option_type_removed: "Succesfully removed option type."
-    product_cloned: "Product has been cloned"
-    product_deleted: "Product has been deleted"
-    product_not_cloned: "Product could not be cloned"
-    product_not_deleted: "Product could not be deleted"
-    variant_deleted: "Variant has been deleted"
-    variant_not_deleted: "Variant could not be deleted"
-  on_hand: "On Hand"
-  operation: Operation
-  option_type: "Option Type"
-  option_types: "Option Types"
-  option_value: "Option Value"
-  option_values: "Option Values"
-  options: Options
-  or: or
-  ord_qty: "Ord. Qty"
-  ord_total: "Ord. Total"
-  order: Order
-  order_confirmation_note: ""
-  order_date: "Order Date"
-  order_details: "Order Details"
-  order_email_resent: "Order Email Resent"
-  order_mailer: 
-    cancel_email: 
-      subject: "Cancellation of Order"
-    confirm_email: 
-      subject: "Order Confirmation"
-  order_not_in_system: That order number is not valid on this site.
-  order_number: Order
-  order_operation_authorize: Authorize
-  order_processed_but_following_items_are_out_of_stock: "Your order has been processed, but following items are out of stock:"
-  order_processed_successfully: "Your order has been processed successfully"
-  order_state: 
-    # keys correspond to Checkout state names: 
-    address: address
-    adjustments: adjustments
-    awaiting_return: awaiting return
-    canceled: canceled
-    cart: cart
-    complete: complete
-    confirm: confirm
-    delivery: delivery
-    payment: payment
-    resumed: resumed
-    returned: returned
-  order_summary: Order Summary
-  order_sure_want_to: "Are you sure you want to %{event} this order?"
-  order_total: "Order Total"
-  order_total_message: "The total amount charged to your card will be"
-  order_updated: "Order Updated"
-  orders: Orders
-  other_payment_options: Other Payment Options
-  out_of_stock: "Out of Stock"
-  out_of_stock_products: "Out of Stock Products"
-  over_paid: "Over Paid"
-  overview: Overview
-  overview_welcome: "Welcome to your store overview, currently we do not have enough data to display the Overiew Dashboard.<br/><br/> The dashboard will display automatically once the system has sufficent orders to allow generation of the statistics."
-  page_only_viewable_when_logged_in: You attempted to visit a page which can only be viewed when you are logged in
-  page_only_viewable_when_logged_out: You attempted to visit a page which can only be viewed when you are logged out
-  paid: Paid
-  parent_category: "Parent Category"
-  password: Password
-  password_reset_instructions: "Password Reset Instructions"
-  password_reset_instructions_are_mailed: "Instructions to reset your password have been emailed to you. Please check your email."
-  password_reset_token_not_found: "We're sorry, but we could not locate your account. If you are having issues try copying and pasting the URL from your email into your browser or restarting the reset password process."
-  password_updated: "Password successfully updated"
-  path: Path
-  pay: pay
-  payment: Payment
-  payment_actions: "Actions"
-  payment_gateway: "Payment Gateway"
-  payment_information: "Payment Information"
-  payment_method: Payment Method
-  payment_methods: Payment Methods
-  payment_methods_setting_description: Configure methods customers can use to pay
-  payment_processing_failed: "Payment could not be processed, please check the details you entered"
-  payment_state: Payment State
-  payment_states: 
-    balance_due: balance due
-    checkout: checkout
-    completed: completed
-    credit_owed: credit owed
-    failed: failed
-    paid: paid
-    pending: pending
-    processing: processing
-    void: void
-  payment_updated: Payment Updated
-  payments: Payments
-  pending_payments: Pending Payments
-  permalink: Permalink
-  phone: Phone
-  place_order: Place Order
-  please_create_user: "Please create a user account"
-  powered_by: "Powered by"
-  presentation: Presentation
-  preview: Preview
-  previous: Previous
-  price: Price
-  price_bucket: Price Bucket
-  price_with_vat_included: "%{price} (inc. VAT)"
-  problem_authorizing_card: "Problem authorizing credit card"
-  problem_capturing_card: "Problem capturing credit card"
-  problems_processing_order: "We had problems processing your order"
-  proceed_as_guest: "No Thanks, Proceed as Guest"
-  process: Process
-  product: Product
-  product_details: "Product Details"
-  product_group: Product Group
-  product_group_invalid: Product Group has invalid scopes
-  product_groups: Product Groups
-  product_has_no_description: This product has no description
-  product_properties: "Product Properties"
-  product_rule: 
-    choose_products: Choose products
-    label: "Order must contain %{select} of these products"
-    match_all: all
-    match_any: at least one
-    product_source: 
-      group: From product group
-      manual: Manually choose
-  product_scopes: 
-    groups: 
-      price: 
-        description: "Scopes for selecting products based on Price"
-        name: Price
-      search: 
-        description: "Scopes for selecting products based on name, keywords and description of product"
-        name: "Text search"
-      taxon: 
-        description: "Scopes for selecting products based on Taxons"
-        name: Taxon
-      values: 
-        description: "Scopes for selecting products based on option and property values"
-        name: Values
-    scopes: 
-      ascend_by_master_price: 
-        name: Ascend by product master price
-      ascend_by_name: 
-        name: Ascend by product name
-      ascend_by_updated_at: 
-        name: Ascend by actualization date
-      descend_by_master_price: 
-        name: Descend by product master price
-      descend_by_name: 
-        name: Descend by product name
-      descend_by_popularity: 
-        name: Sort by popularity(most popular first)
-      descend_by_updated_at: 
-        name: Descend by actualization date
-      in_name: 
-        args: 
-          words: Words
-        description: "(separated by space or comma)"
-        name: "Product name have following"
-        sentence: product name contain <em>%s</em>
-      in_name_or_description: 
-        args: 
-          words: Words
-        description: "(separated by space or comma)"
-        name: "Product name or description have following"
-        sentence: name or description contain <em>%s</em>
-      in_name_or_keywords: 
-        args: 
-          words: Words
-        description: "(separated by space or comma)"
-        name: "Product name or meta keywords have following"
-        sentence: name or keywords contain <em>%s</em>
-      in_taxons: 
-        args: 
-          "taxon_names": "Taxon names"
-        description: "Taxon names have to be separated by comma or space(eg. adidas,shoes)"
-        name: "In taxons and all their descendants"
-        sentence: in <em>%s</em> and all their descendants
-      master_price_gte: 
-        args: 
-          amount: Amount
-        description: ""
-        name: "Master price greater or equal to"
-        sentence: price greater or equal to <em>%.2f</em>
-      master_price_lte: 
-        args: 
-          amount: Amount
-        description: ""
-        name: "Master price lesser or equal to"
-        sentence: price less or equal to <em>%.2f</em>
-      price_between: 
-        args: 
-          high: High
-          low: Low
-        description: ""
-        name: "Price between"
-        sentence: price between <em>%.2f</em> and <em>%.2f</em>
-      taxons_name_eq: 
-        args: 
-          taxon_name: "Taxon name"
-        description: "In specific taxon - without descendants"
-        name: "In Taxon(without descendants)"
-        sentence: in <em>%s</em>
-      with: 
-        args: 
-          value: Value
-        description: "Selects all products that have at least one variant that have specified value as either option or property (eg. red)"
-        name: With value
-        sentence: with value <em>%s</em>
-      with_ids: 
-        args: 
-          ids: IDs
-        description: "Select specific products"
-        name: Products with IDs
-        sentence: with IDs <em>%s</em>
-      with_option: 
-        args: 
-          option: Option
-        description: "Selects all products that have specified option(eg. color)"
-        name: "With option"
-        sentence: with option <em>%s</em>
-      with_option_value: 
-        args: 
-          option: Option
-          value: Value
-        description: "Selects all products that have at least one variant with specified option and value(eg. color:red)"
-        name: "With option and value"
-        sentence: with option <em>%s</em> and value <em>%s</em>
-      with_property: 
-        args: 
-          property: Property
-        description: "Selects all products that have specified property(eg. weight)"
-        name: "With property"
-        sentence: with property <em>%s</em>
-      with_property_value: 
-        args: 
-          property: Property
-          value: Value
-        description: "Selects all products that have at least one variant with specified property and value(eg. weight:10kg)"
-        name: "With property value"
-        sentence: with property <em>%s</em> and value <em>%s</em>
-  products: Products
-  products_with_zero_inventory_display: "Products with a zero inventory will %{not} be displayed"
-  promotion: Promotion
-  promotion_form: 
-    match_policies: 
-      all: Match any of these rules
-      any: Match all of these rules
-  promotion_rule_types: 
-    first_order: 
-      description: Must be the customer's first order
-      name: First order
-    item_total: 
-      description: Order total meets these criteria
-      name: Item total
-    product: 
-      description: Order includes specified product(s)
-      name: Product(s)
-    user: 
-      description: Available only to the specified users
-      name: User
-  promotions: Promotions
-  promotions_description: Manage offers and coupons with promotions
-  properties: Properties
-  property: Property
-  prototype: Prototype
-  prototypes: Prototypes
-  provider: "Provider"
-  provider_settings_warning: "If you are changing the provider type, you must save first before you can edit the provider settings"
-  qty: Qty
-  quantity_returned: Quantity Returned
-  quantity_shipped: Quantity Shipped
-  range: "Range"
-  rate: Rate
-  reason: Reason
-  recalculate_order_total: "Recalculate order total"
-  receive: receive
-  received: Received
-  refund: Refund
-  register: Register as a New User
-  register_or_guest: Checkout as Guest or Register
-  registration: Registration
-  remember_me: "Remember me"
-  remove: Remove
-  reports: Reports
-  required_for_solo_and_maestro: Required for Solo and Maestro cards.
-  resend: Resend
-  resend_confirmation_instructions: "Resend confirmation instructions"
-  resend_unlock_instructions: "Resend unlock instructions"
-  reset_password: "Reset my password"
-  resource_controller: 
-    member_object_not_found: "Member object not found."
-    successfully_created: "Successfully created!"
-    successfully_removed: "Successfully removed!"
-    successfully_updated: "Successfully updated!"
-  response_code: "Response Code"
-  resume: "resume"
-  resumed: Resumed
-  return: return
-  return_authorization: Return Authorization
-  return_authorization_updated: Return authorization updated
-  return_authorizations: Return Authorizations
-  return_quantity: Return Quantity
-  returned: Returned
-  rma_credit: RMA Credit
-  rma_number: RMA Number
-  rma_value: RMA Value
-  roles: Roles
-  rules: Rules
-  sales_tax: "Sales Tax"
-  sales_total: "Sales Total"
-  sales_total_description: "Sales Total For All Orders"
-  save_and_continue: Save and Continue
-  save_preferences: Save Preferences
-  scope: Scope
-  scopes: Scopes
-  search: Search
-  search_results: "Search results for '%{keywords}'"
-  searching: Searching
-  secure_connection_type: Secure Connection Type
-  secure_creditcard: Secure Creditcard
-  select: Select
-  select_from_prototype: "Select From Prototype"
-  select_preferred_shipping_option: "Select preferred shipping option"
-  send_copy_of_all_mails_to: Send Copy of All Mails To
-  send_copy_of_orders_mails_to: Send Copy of Order Mails To
-  send_mails_as: Send Mails As
-  send_me_reset_password_instructions: "Send me reset password instructions"
-  send_order_mails_as: Send Order Mails As
-  server: Server
-  server_error: "The server returned an error"
-  settings: Settings
-  ship: ship
-  ship_address: "Ship Address"
-  shipment: Shipment
-  shipment_details: Shipment Details
-  shipment_mailer: 
-    shipped_email: 
-      subject: "Shipment Notification"
-  shipment_number: "Shipment #"
-  shipment_state: Shipment State
-  shipment_states: 
-    backorder: backorder
-    partial: partial
-    pending: pending
-    ready: ready
-    shipped: shipped
-  shipment_updated: Shipment Updated
-  shipments: "Shipments"
-  shipped: Shipped
-  shipping: Shipping
-  shipping_address: "Shipping Address"
-  shipping_categories: "Shipping Categories"
-  shipping_categories_description: "Manage shipping categories to identify which products can be shipped via which method"
-  shipping_category: Shipping Category
-  shipping_cost: Cost
-  shipping_error: "Shipping Error"
-  shipping_instructions: "Shipping Instructions"
-  shipping_method: "Shipping Method"
-  shipping_methods: "Shipping Methods"
-  shipping_methods_description: "Manage shipping methods"
-  shipping_total: "Shipping Total"
-  shop_by_taxonomy: "Shop by %{taxonomy}"
-  shopping_cart: "Shopping Cart"
-  show: Show
-  show_active: "Show Active"
-  show_deleted: "Show Deleted"
-  show_incomplete_orders: "Show Incomplete Orders"
-  show_only_complete_orders: "Only show complete orders"
-  show_out_of_stock_products: "Show out-of-stock products"
-  show_price_inc_vat: "Show price including VAT"
-  showing_first_n: "Showing first %{n}"
-  sign_up: "Sign up"
-  site_name: "Site Name"
-  site_url: "Site URL"
-  sku: SKU
-  smtp: SMTP
-  smtp_authentication_type: SMTP Authentication Type
-  smtp_domain: SMTP Domain
-  smtp_mail_host: SMTP Mail Host
-  smtp_password: SMTP Password
-  smtp_port: SMTP Port
-  smtp_send_all_emails_as_from_following_address: "Send all mails as from the following address."
-  smtp_send_copy_to_this_addresses: "Sends a copy of all outgoing mails to this address. For multiple addresses, separate with commas."
-  smtp_username: SMTP Username
-  sold: Sold
-  sort_ordering: "Sort ordering"
-  special_instructions: "Special Instructions"
-  spree: 
-    date: Date
-    time: Time
-  spree_gateway_error_flash_for_checkout: "There was a problem with your payment information. Please check your information and try again."
-  ssl_will_be_used_in_development_and_test_modes: "SSL will be used in development and test mode if necessary."
-  ssl_will_be_used_in_production_mode: "SSL will be used in production mode"
-  ssl_will_not_be_used_in_development_and_test_modes: "SSL will not be used in development and test mode if necessary."
-  ssl_will_not_be_used_in_production_mode: "SSL will not be used in production mode"
-  start: Start
-  start_date: Valid from
-  state: State
-  state_based: "State Based"
-  state_setting_description: "Administer the list of states/provinces associated with each country."
-  states: States
-  status: Status
-  stop: Stop
-  store: Store
-  street_address: "Street Address"
-  street_address_2: "Street Address (cont'd)"
-  subtotal: Subtotal
-  subtract: Subtract
-  successfully_created: "%{resource} has been successfully created!"
-  successfully_removed: "%{resource} has been successfully removed!"
-  successfully_updated: "%{resource} has been successfully updated!"
-  system: System
-  tax: Tax
-  tax_categories: "Tax Categories"
-  tax_categories_setting_description: "Set up tax categories to identify which products should be taxable."
-  tax_category: "Tax Category"
-  tax_rates: "Tax Rates"
-  tax_rates_description: Tax rates setup and configuration.
-  tax_settings: "Tax Settings"
-  tax_settings_description: Basic tax settings.
-  tax_total: "Tax Total"
-  tax_type: "Tax Type"
-  taxon: Taxon
-  taxon_edit: Edit Taxon
-  taxonomies: Taxonomies
-  taxonomies_setting_description: "Create and manage taxonomies"
-  taxonomy_edit: "Edit taxonomy"
-  taxonomy_tree_error: "The requested change has not been accepted and the tree has been returned to its previous state, please try again."
-  taxonomy_tree_instruction: "* Right click a child in the tree to access the menu for adding, deleting or sorting a child."
-  taxons: Taxons
-  test: "Test"
-  test_mode: Test Mode
-  thank_you_for_your_order: "Thank you for your business.  Please print out a copy of this confirmation page for your records."
-  there_were_problems_with_the_following_fields: "There were problems with the following fields"
-  this_file_language: "English (US)"
-  this_month: "This Month"
-  this_year: "This Year"
-  thumbnail: "Thumbnail"
-  to_add_variants_you_must_first_define: "To add variants, you must first define"
-  to_state: "To State"
-  top_grossing_products: "Top Grossing Products"
-  total: Total
-  tracking: Tracking
-  transaction: Transaction
-  transactions: Transactions
-  tree: Tree
-  try_again: "Try Again"
-  type: Type
-  type_to_search: Type to search
-  unable_ship_method: "Unable to generate shipping methods due to a server error."
-  unable_to_authorize_credit_card: "Unable to Authorize Credit Card"
-  unable_to_capture_credit_card: "Unable to Capture Credit Card"
-  unable_to_connect_to_gateway: "Unable to connect to gateway."
-  unable_to_save_order: "Unable to Save Order"
-  under_paid: "Under Paid"
-  units: "Units"
-  unrecognized_card_type: Unrecognized card type
-  update: Update
-  update_password: "Update my password and log me in"
-  updated_successfully: "Updated Successfully"
-  updating: Updating
-  usage_limit: Usage Limit
-  use_as_shipping_address: Use as Shipping Address
-  use_billing_address: Use Billing Address
-  use_different_shipping_address: "Use Different Shipping Address"
-  use_new_cc: "Use a new card"
-  user: User
-  user_account: User Account
-  user_created_successfully: "User created successfully"
-  user_details: "User Details"
-  user_rule: 
-    choose_users: Choose users
-  users: Users
-  validate_on_profile_create: Validate on profile create
-  validation: 
-    cannot_be_less_than_shipped_units: "cannot be less than the number of shipped units."
-    is_too_large: "is too large -- stock on hand cannot cover requested quantity!"
-    must_be_int: "must be an integer"
-    must_be_non_negative: "must be a non-negative value"
-  value: Value
-  variants: Variants
-  vat: "VAT"
-  version: Version
-  view_shipping_options: "View shipping options"
-  void: Void
-  website: Website
-  weight: Weight
-  welcome_to_sample_store: "Welcome to the sample store"
-  what_is_a_cvv: "What is a (CVV) Credit Card Code?"
-  what_is_this: "What's This?"
-  whats_this: "What's this"
-  width: Width
-  year: "Year"
-  you_have_been_logged_out: "You have been logged out."
-  you_have_no_orders_yet: "You have no orders yet."
-  your_cart_is_empty: "Your cart is empty"
-  zip: Zip
-  zone: Zone
-  zone_based: "Zone Based"
-  zone_setting_description: "Collections of countries, states or other zones to be used in various calculations."
-  zones: Zones
+
+  empty: "Varukorgen är tom"
