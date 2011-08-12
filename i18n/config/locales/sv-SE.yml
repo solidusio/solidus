@@ -317,7 +317,7 @@ sv-SE:
   checkout: Kassa
   cheque: Check
   city: Stad
-  clone: Kopiera
+  clone: Klona
   code: Kod
   combine: Kombinera
   complete: komplett
@@ -389,8 +389,8 @@ sv-SE:
   editing_tax_category: "Redigerar momssats"
   editing_tax_rate: "Redigerar skattesats"
   editing_tracker: Redigerar statistikspårare
-  editing_user: "Ändra användare"
-  editing_zone: "Ändra zon"
+  editing_user: "Redigerar användare"
+  editing_zone: "Redigerar zon"
   email: Email
   email_address: "E-postadress"
   email_server_settings_description: "Ställ in email-server-inställningar"
@@ -595,7 +595,7 @@ sv-SE:
   option_value: "Alternativsvärde"
   option_values: "Alternativsvärden"
   options: Alternativ
-  or: elle
+  or: eller
   ord_qty: "Ord. kvantitet"
   ord_total: "Ord. total"
   order: Order
