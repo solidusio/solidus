@@ -404,7 +404,7 @@ ja:
   enter_atleast_five_letters: Enter atleast five letters of customer name
   enter_exactly_as_shown_on_card: Please enter exactly as shown on the card
   enter_password_to_confirm: "(we need your current password to confirm your changes)"
-  environment: "Environment"
+  environment: "環境"
   error: "エラー"
   errors: 
     messages: 
@@ -548,13 +548,13 @@ ja:
   new_option_value: 新規オプション値
   new_order: "新規注文"
   new_order_completed: "New Order Completed"
-  new_payment: "New Payment"
-  new_payment_method: New Payment Method
-  new_product: 新規商品
-  new_product_group: New Product Group
+  new_payment: "新規の支払い"
+  new_payment_method: "支払い方法を追加"
+  new_product: "新規商品"
+  new_product_group: "新規商品グループ"
   new_promotion: New Promotion
   new_property: 新規属性
-  new_prototype: 新規プロトタイプ
+  new_prototype: "新規プロトタイプ"
   new_return_authorization: New Return Authorization
   new_shipment: 新規配送
   new_shipping_category: 新規配送カテゴリー
@@ -846,7 +846,7 @@ ja:
   property: "属性"
   prototype: "プロトタイプ"
   prototypes: "プロトタイプ"
-  provider: "Provider"
+  provider: "プロバイダー"
   provider_settings_warning: "If you are changing the provider type, you must save first before you can edit the provider settings"
   qty: "個数"
   quantity_returned: "返送された数"
