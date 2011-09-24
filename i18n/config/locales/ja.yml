@@ -1,37 +1,43 @@
+# Translation revised/completed by Rei Kagetsuki of Phanotom Creation Inc.
+# If you find any errors or problems please report them to zero@genshin.org
+#   and I will fix them immediately.
+# この翻訳は幻信創造株式会社の影月零により修正・完成されたものです。
+# 問題や改善すべきな所を見付けた場合はzero@genshin.orgにて連絡すれば直します。
+
 ---
 ja: 
-  'no': "No"
-  'yes': "Yes"
-  5_biggest_spenders: "5 Biggest Spenders"
-  a_copy_of_all_mail_will_be_sent_to_the_following_addresses: A copy of all mail be sent to the following addresses
-  abbreviation: 略語
-  access_denied: "Access Denied"
-  account: アカウント
-  account_updated: "Account updated!"
-  action: アクション
+  'no': "いいえ"
+  'yes': "はい"
+  5_biggest_spenders: "5人の最大のお客さん"
+  a_copy_of_all_mail_will_be_sent_to_the_following_addresses: "以下のアドレスにメールが送信されます。"
+  abbreviation: "略"
+  access_denied: "アクセス拒否"
+  account: "アカウント"
+  account_updated: "アカウントが更新されました。"
+  action: "アクション"
   actions: 
-    cancel: キャンセル
-    create: 作成
-    destroy: 削除
-    list: リスト
-    listing: 一覧
-    new: 新規
-    update: 更新
-  active: "Active"
+    cancel: "キャンセル"
+    create: "作成"
+    destroy: "削除"
+    list: "リスト"
+    listing: "一覧"
+    new: "新規"
+    update: "更新"
+  active: "有効"
   activerecord: 
     attributes: 
       address: 
-        address1: 住所
-        address2: "Address (contd.)"
-        city: 都市名
-        country: "Country"
-        first_name_begins_with: "First Name Begins With"
-        firstname: "First Name"
-        last_name_begins_with: "Last Name Begins With"
-        lastname: "Last Name"
-        phone: 電話番号
-        state: "State"
-        zipcode: 郵便番号
+        address1: "住所(県・市・町・丁目・番地)"
+        address2: "住所(ビル名・号・室・部署)"
+        city: "市名"
+        country: "国"
+        first_name_begins_with: "名が何から始まる"
+        firstname: "名"
+        last_name_begins_with: "性が何から始まる"
+        lastname: "姓"
+        phone: "電話番号"
+        state: "県・州"
+        zipcode: "郵便番号"
       checkout: 
         bill_address: 
           address1: "Billing address street"
@@ -50,106 +56,106 @@ ja:
           state: "Shipping address state"
           zipcode: "Shipping address zipcode"
       country: 
-        iso: ISO
-        iso3: ISO3
-        iso_name: "ISO Name"
-        name: Name
-        numcode: "ISO Code"
+        iso: "ISO"
+        iso3: "ISO3"
+        iso_name: "ISO名"
+        name: "名"
+        numcode: "ISOコード"
       creditcard: 
-        cc_type: Type
-        month: Month
-        number: Number
-        verification_value: "Verification Value"
-        year: Year
+        cc_type: "カード類"
+        month: "月"
+        number: "カード番号"
+        verification_value: "照合コード"
+        year: "年"
       inventory_unit: 
-        state: 都道府県（州）
+        state: "都道府県（州）"
       line_item: 
-        price: 価格
-        quantity: 個数
+        price: "価格"
+        quantity: "個数"
       order: 
-        checkout_complete: "Checkout Complete"
-        completed_at: "Completed At"
-        coupon_code: "Coupon Code"
-        ip_address: "IP Address"
-        item_total: "Item Total"
-        number: Number
-        special_instructions: "Special Instructions"
-        state: 都道府県（州）
-        total: 合計
+        checkout_complete: "注文の受け付けを完了しました"
+        completed_at: "注文受付時刻"
+        coupon_code: "クーポン・コード"
+        ip_address: "IPアドレス"
+        item_total: "合計"
+        number: "数"
+        special_instructions: "詳細・説明・コメント"
+        state: "都道府県（州）"
+        total: "合計"
       product: 
-        available_on: "Available On"
-        cost_price: "Cost Price"
-        description: 説明
-        master_price: "Master Price"
-        name: 氏名
-        on_hand: 入荷日
-        shipping_category: "Shipping Category"
-        tax_category: "Tax Category"
+        available_on: "販売開始日"
+        cost_price: "原価"
+        description: "説明"
+        master_price: "値段"
+        name: "商品名"
+        on_hand: "入荷日"
+        shipping_category: "配達区間"
+        tax_category: "税区"
       product_group: 
-        name: "Name"
-        product_count: "Product count"
-        product_scopes: "Product scopes"
-        products: "Products"
+        name: "カテゴリ"
+        product_count: "商品の数"
+        product_scopes: "商品の範囲"
+        products: "商品"
         url: "URL"
       product_scope: 
         arguments: "Arguments"
         description: "Description"
       promotion: 
-        code: "Code"
-        description: "Description"
-        expires_at: "Expires at"
-        name: "Name"
-        starts_at: "Starts at"
-        usage_limit: "Usage limit"
+        code: "コード"
+        description: "説明"
+        expires_at: "有効期限"
+        name: "タイトル"
+        starts_at: "開始日"
+        usage_limit: "使用可能回数"
       property: 
-        name: 名称
-        presentation: Presentation
+        name: "名称"
+        presentation: "表示"
       prototype: 
-        name: 名称
+        name: "名称"
       return_authorization: 
-        amount: Amount
+        amount: "合計"
       role: 
-        name: 名称
+        name: "名称"
       state: 
-        abbr: 略語
-        name: 名称
+        abbr: "略語"
+        name: "名称"
       tax_category: 
-        description: Description
-        name: Name
+        description: "説明"
+        name: "名称"
       tax_rate: 
-        amount: Rate
+        amount: "率"
       taxon: 
-        name: 名称
+        name: "名称"
         permalink: Permalink
         position: Position
       taxonomy: 
-        name: 名称
+        name: "名称"
       user: 
-        email: Eメール
+        email: "Eメール"
       variant: 
         cost_price: "Cost Price"
-        depth: 奥行き
-        height: 高さ
-        price: 価格
-        sku: SKU
-        weight: 重量
-        width: 幅
+        depth: "奥行き"
+        height: "高さ"
+        price: "価格"
+        sku: "品番"
+        weight: "重量"
+        width: "幅"
       zone: 
-        description: 説明
-        name: 名前
+        description: "説明"
+        name: "名前"
     models: 
       address: 
         one: Address
         other: Addresses
       cheque_payment: 
-        one: Cheque Payment
-        other: Cheque Payments
+        one: "小切手による支払い"
+        other: "小切手による支払い"
       country: 
-        one: 国名
-        other: 国名
+        one: "国名"
+        other: "国名"
       creditcard: 
-        one: クレジットカード
-        other: "Credit Cards"
+        one: "クレジットカード"
+        other: "クレジットカード"
       creditcard_payment: 
         one: "Credit Card Payment"
         other: "Credit Card Payments"
@@ -193,14 +199,14 @@ ja:
         one: "Shipping Category"
         other: "Shipping Categories"
       state: 
-        one: 都道府県（州）
-        other: 都道府県（州）
+        one: "都道府県（州）"
+        other: "都道府県（州）"
       tax_category: 
-        one: "Tax Category"
-        other: "Tax Categories"
+        one: "税区分"
+        other: "税区分"
       tax_rate: 
-        one: "Tax Rate"
-        other: "Tax Rates"
+        one: "税率"
+        other: "税率"
       taxon: 
         one: Taxon
         other: Taxons
@@ -208,17 +214,17 @@ ja:
         one: Taxonomy
         other: Taxonomies
       user: 
-        one: User
-        other: Users
+        one: "ユーザ"
+        other: "ユーザ"
       variant: 
         one: Variant
         other: Variants
       zone: 
         one: Zone
         other: Zones
-  add: 追加
-  add_category: カテゴリーの追加
-  add_country: 国の追加
+  add: "追加"
+  add_category: "カテゴリーの追加"
+  add_country: "国の追加"
   add_option_type: "Add Option Type"
   add_option_types: "Add Option Types"
   add_option_value: "Add Option Value"
@@ -226,26 +232,26 @@ ja:
   add_product_properties: "Add Product Properties"
   add_rule_of_type: Add rule of type
   add_scope: "Add a scope"
-  add_state: 都道府県（州）の追加
-  add_to_cart: カートに追加
+  add_state: "都道府県（州）の追加"
+  add_to_cart: "カートに追加"
   add_zone: "Add Zone"
   additional_item: Additional Item Cost
-  address: 住所
-  address_information: 住所情報
-  adjustment: 調整
+  address: "住所"
+  address_information: "住所情報"
+  adjustment: "調整"
   adjustment_total: Adjustment Total
   adjustments: Adjustments
-  administration: 管理
-  all: "All"
+  administration: "管理"
+  all: "全て"
   all_departments: All departments
-  allow_backorders: 取り寄せ注文を許可する
+  allow_backorders: "取り寄せ注文を許可する"
   allow_ssl_to_be_used_when_in_developement_and_test_modes: Allow SSL to be used when in development and test modes
   allow_ssl_to_be_used_when_in_production_mode: Allow SSL to be used in production mode
   allowed_ssl_in_production_mode: "SSL will %{not} be used in production"
   already_registered: Already Registered?
   alt_text: Alternative Text
   alternative_phone: Alternative Phone
-  amount: 個数
+  amount: "個数"
   analytics_trackers: Analytics Trackers
   api: 
     access: "API Access"
@@ -261,11 +267,11 @@ ja:
     no_key: "No key defined"
     regenerate_key: "Regenerate API key"
   apply: "Apply"
-  are_you_sure: よろしいでしょうか
-  are_you_sure_category: "Are you sure you want to delete this category?"
+  are_you_sure: "これで宜しいでしょうか?"
+  are_you_sure_category: "本当にこのカテゴリを削除しますか?"
   are_you_sure_delete: "Are you sure you want to delete this record?"
-  are_you_sure_delete_image: "Are you sure you want to delete this image?"
-  are_you_sure_option_type: "Are you sure you want to delete this option type?"
+  are_you_sure_delete_image: "本当にこの画像を削除しますか?"
+  are_you_sure_option_type: "本当にこのオプションを削除しますか?"
   are_you_sure_you_want_to_capture: "Are you sure you want to capture?"
   assign_taxon: "Assign Taxon"
   assign_taxons: "Assign Taxons"
@@ -274,111 +280,111 @@ ja:
   available_on: "Available On"
   available_taxons: 使用可能な分類
   awaiting_return: Awaiting Return
-  back: 戻る
+  back: "戻る"
   back_end: Back End
-  back_to_store: "Go Back To Store"
+  back_to_store: "ショップに戻る"
   backordered: Backordered
   backordering_is_allowed: "Backordering %{not} allowed"
   balance_due: "Balance Due"
   best_selling_products: "Best Selling Products"
   best_selling_taxons: "Best Selling Taxons"
-  bill_address: 請求先住所
+  bill_address: "請求先住所"
   billing: Billing
-  billing_address: 請求先住所
+  billing_address: "請求先住所"
   both: Both
   by_day: "by day"
   calculator: Calculator
   calculator_settings_warning: "If you are changing the calculator type, you must save first before you can edit the calculator settings"
-  cancel: キャンセル
+  cancel: "キャンセル"
   cancel_my_account: Cancel my account
   cancel_my_account_description: "Unhappy?"
-  canceled: キャンセル済み
+  canceled: "キャンセル済み"
   cannot_create_returns: Cannot create returns as this order has not shipped yet.
   cannot_destory_line_item_as_inventory_units_have_shipped: Cannot destory line item as some inventory units have shipped.
   cannot_perform_operation: "Cannot perform requested operation"
   capture: capture
   card_code: "Card Code"
   card_details: "Card details"
-  card_number: カード番号
-  card_type_is: Card type is
-  cart: カート
-  categories: カテゴリー
-  category: カテゴリー
-  change: 変更
-  change_language: 言語の変更
-  change_my_password: "Change my password"
-  charge_total: Charge Total
-  charged: 課金
+  card_number: "カード番号"
+  card_type_is: "カード類"
+  cart: "カート"
+  categories: "カテゴリー"
+  category: "カテゴリー"
+  change: "変更"
+  change_language: "言語の変更"
+  change_my_password: "パスワードを変更"
+  charge_total: "合計金額"
+  charged: "課金されました"
   charges: Charges
-  checkout: 精算
-  cheque: Cheque
-  city: 都市名
+  checkout: "精算"
+  cheque: "小切手"
+  city: "都市名"
   clone: Clone
   code: Code
   combine: Combine
   complete: complete
   complete_list: "Complete List"
-  configuration: 設定
-  configuration_options: 設定オプション
-  configurations: 設定
-  configured: Configured
-  confirm: 確認
-  confirm_delete: "Confirm Deletion"
+  configuration: "設定"
+  configuration_options: "設定オプション"
+  configurations: "設定"
+  configured: "設定されました"
+  confirm: "確認する"
+  confirm_delete: "削除を確認"
   confirm_password: "Password Confirmation"
-  continue: 続ける
-  continue_shopping: ショッピングを続ける
+  continue: "続ける"
+  continue_shopping: "ショッピングを続ける"
   copy_all_mails_to: Copy All Mails To
-  cost_price: "Cost Price"
-  count: Count
+  cost_price: "原価"
+  count: "数"
   count_of_reduced_by: "count of '%{name}' reduced by %{count}"
-  country: 国名
+  country: "国名"
   country_based: "Country Based"
-  coupon: Coupon
-  coupon_code: Coupon code
-  create: 作成
-  create_a_new_account: 新規アカウント作成
+  coupon: "クーポン"
+  coupon_code: "クーポンコード"
+  create: "作成"
+  create_a_new_account: "新規アカウント作成"
   create_product_group_from_products: Create a new product group from these products
-  create_user_account: ユーザアカウント作成
-  created_successfully: 作成されました
-  credit: Credit
-  credit_card: クレジットカード
+  create_user_account: "ユーザアカウント作成"
+  created_successfully: "作成されました"
+  credit: "クレジット"
+  credit_card: "クレジットカード"
   credit_card_capture_complete: "Credit Card Was Captured"
   credit_card_payment: "Credit Card Payment"
   credit_owed: "Credit Owed"
   credit_total: Credit Total
-  creditcard: クレジットカード
-  creditcards: Creditcards
-  credits: Credits
+  creditcard: "クレジットカード"
+  creditcards: "クレジットカード"
+  credits: "クレジット"
   current: Current
-  customer: 顧客
+  customer: "顧客"
   customer_details: "Customer Details"
   customer_search: "Customer Search"
-  date_created: Date created
-  date_range: 日範囲
+  date_created: "作成日"
+  date_range: "日範囲"
   debit: Debit
-  default: Default
-  delete: 削除
+  default: "初期設定"
+  delete: "削除"
   delivery: Delivery
-  depth: 奥行き
-  description: 説明
-  destroy: 破壊する
+  depth: "奥行き"
+  description: "説明"
+  destroy: "破壊する"
   didnt_receive_confirmation_instructions: "Didn't receive confirmation instructions?"
   didnt_receive_unlock_instructions: "Didn't receive unlock instructions?"
   discount_amount: "Discount Amount"
-  display: 表示
-  edit: 編集
+  display: "表示"
+  edit: "編集"
   edit_general_settings: "Edit General Settings"
   editing_billing_integration: Editing Billing Integration
-  editing_category: カテゴリーの編集
+  editing_category: "カテゴリーの編集"
   editing_mail_method: Editing Mail Method
   editing_option_type: "Editing Option Type"
   editing_option_types: "Editing Option Types"
   editing_payment_method: Editing Payment Method
-  editing_product: 商品の編集
+  editing_product: "商品の編集"
   editing_product_group: "Editing Product Group"
   editing_promotion: Editing Promotion
-  editing_property: 属性の編集
-  editing_prototype: プロトタイプの編集
+  editing_property: "属性の編集"
+  editing_prototype: "プロトタイプの編集"
   editing_shipping_category: 配送カテゴリー編集
   editing_shipping_method: 配送方法編集
   editing_state: 都道府県（州）編集
@@ -566,7 +572,7 @@ ja:
   no_items_in_cart: ""
   no_match_found: "No Match Found"
   no_payment_methods_available: "Can't check out, no payment methods are configured for this environment"
-  no_products_found: "No products found"
+  no_products_found: "商品が見付かりませんでした。"
   no_results: "No results"
   no_rules_added: No rules added
   no_user_found: "No user was found with that email address"
@@ -624,31 +630,31 @@ ja:
     returned: returned
   order_summary: Order Summary
   order_sure_want_to: "Are you sure you want to %{event} this order?"
-  order_total: 合計
+  order_total: "合計"
   order_total_message: "The total amount charged to your card will be"
   order_updated: "Order Updated"
-  orders: 注文
+  orders: "注文"
   other_payment_options: Other Payment Options
-  out_of_stock: 在庫切りです
+  out_of_stock: "在庫が品切れです"
   out_of_stock_products: "Out of Stock Products"
   over_paid: "Over Paid"
-  overview: 概要
+  overview: "概要"
   overview_welcome: "Welcome to your store overview, currently we do not have enough data to display the Overiew Dashboard.<br/><br/> The dashboard will display automatically once the system has sufficent orders to allow generation of the statistics."
   page_only_viewable_when_logged_in: You attempted to visit a page which can only be viewed when you are logged in
   page_only_viewable_when_logged_out: You attempted to visit a page which can only be viewed when you are logged out
-  paid: 支払い済み
+  paid: "支払い済み"
   parent_category: "Parent Category"
-  password: パスワード
+  password: "パスワード"
   password_reset_instructions: "Password Reset Instructions"
   password_reset_instructions_are_mailed: "Instructions to reset your password have been emailed to you. Please check your email."
   password_reset_token_not_found: "We're sorry, but we could not locate your account. If you are having issues try copying and pasting the URL from your email into your browser or restarting the reset password process."
   password_updated: "Password successfully updated"
   path: パス
-  pay: 支払い
-  payment: 支払い方法
+  pay: "支払い"
+  payment: "支払い方法"
   payment_actions: "Actions"
   payment_gateway: "Payment Gateway"
-  payment_information: 支払い情報
+  payment_information: "支払い情報"
   payment_method: Payment Method
   payment_methods: Payment Methods
   payment_methods_setting_description: Configure methods customers can use to pay
@@ -665,7 +671,7 @@ ja:
     processing: processing
     void: void
   payment_updated: Payment Updated
-  payments: 支払い方法
+  payments: "支払い方法"
   pending_payments: Pending Payments
   permalink: Permalink
   phone: 電話番号
