@@ -243,30 +243,30 @@ ja:
   adjustments: Adjustments
   administration: "管理"
   all: "全て"
-  all_departments: All departments
+  all_departments: "全てのカテゴリ"
   allow_backorders: "取り寄せ注文を許可する"
-  allow_ssl_to_be_used_when_in_developement_and_test_modes: Allow SSL to be used when in development and test modes
-  allow_ssl_to_be_used_when_in_production_mode: Allow SSL to be used in production mode
-  allowed_ssl_in_production_mode: "SSL will %{not} be used in production"
-  already_registered: Already Registered?
+  allow_ssl_to_be_used_when_in_developement_and_test_modes: "開発モードとテストモードでもSSLを利用する"
+  allow_ssl_to_be_used_when_in_production_mode: "プロダクションモードでSSLを利用する"
+  allowed_ssl_in_production_mode: "プロダクションモードでSSLは使用%{wont}"
+  already_registered: "もう登録済み?"
   alt_text: Alternative Text
   alternative_phone: Alternative Phone
   amount: "個数"
   analytics_trackers: Analytics Trackers
   api: 
-    access: "API Access"
-    clear_key: "Clear API key"
+    access: "APIアクセス"
+    clear_key: "API鍵を解除する"
     errors: 
       invalid_event: "Invalid event name, valid names are %{events}"
       invalid_event_for_object: "Valid event name but not allowed for this object, valid names are %{events}"
       missing_event: "No event name supplied"
-    generate_key: "Generate API key"
-    key: "API Key"
-    key_cleared: "API key cleared"
-    key_generated: "API key generated"
-    no_key: "No key defined"
-    regenerate_key: "Regenerate API key"
-  apply: "Apply"
+    generate_key: "API鍵を作成する"
+    key: "API鍵"
+    key_cleared: "API鍵が解除されました。"
+    key_generated: "API鍵を作成しました。"
+    no_key: "鍵が見付かりません"
+    regenerate_key: "API鍵を再作成"
+  apply: "確定"
   are_you_sure: "これで宜しいでしょうか?"
   are_you_sure_category: "本当にこのカテゴリを削除しますか?"
   are_you_sure_delete: "Are you sure you want to delete this record?"
@@ -385,19 +385,19 @@ ja:
   editing_promotion: Editing Promotion
   editing_property: "属性の編集"
   editing_prototype: "プロトタイプの編集"
-  editing_shipping_category: 配送カテゴリー編集
-  editing_shipping_method: 配送方法編集
-  editing_state: 都道府県（州）編集
-  editing_tax_category: 税カテゴリー編集
+  editing_shipping_category: "配送カテゴリー編集"
+  editing_shipping_method: "配送方法編集"
+  editing_state: "都道府県（州）編集"
+  editing_tax_category: "税カテゴリー編集"
   editing_tax_rate: "Editing Tax Rate"
   editing_tracker: Editing Tracker
-  editing_user: ユーザー編集
-  editing_zone: ゾーン編集
-  email: Eメール
-  email_address: Eメールアドレス
-  email_server_settings_description: メールサーバの設定をします。
-  empty: "Empty"
-  empty_cart: カートを空にする
+  editing_user: "ユーザー編集"
+  editing_zone: "ゾーン編集"
+  email: "Eメール"
+  email_address: "Eメールアドレス"
+  email_server_settings_description: "メールサーバの設定"
+  empty: "空です"
+  empty_cart: "カートを空にする"
   enable_login_via_login_password: "Use standard email/password"
   enable_login_via_openid: "Use OpenID instead"
   enable_mail_delivery: Enable Mail Delivery
@@ -405,7 +405,7 @@ ja:
   enter_exactly_as_shown_on_card: Please enter exactly as shown on the card
   enter_password_to_confirm: "(we need your current password to confirm your changes)"
   environment: "Environment"
-  error: エラー
+  error: "エラー"
   errors: 
     messages: 
       could_not_create_taxon: "Could not create taxon"
@@ -413,21 +413,21 @@ ja:
   errors_prohibited_this_record_from_being_saved: 
     one: "1 error prohibited this record from being saved"
     other: "%{count} errors prohibited this record from being saved"
-  event: イベント
+  event: "イベント"
   existing_customer: "Existing Customer"
-  expiration: 有効期限
-  expiration_month: 有効期限(月)
-  expiration_year: 有効期限(年)
-  expiry: Expiry
-  extension: Extension
-  extensions: Extensions
-  filename: ファイル名
-  final_confirmation: 最終確認
-  finalize: Finalize
+  expiration: "有効期限"
+  expiration_month: "有効期限(月)"
+  expiration_year: "有効期限(年)"
+  expiry: "期限"
+  extension: "拡張"
+  extensions: "拡張"
+  filename: "ファイル名"
+  final_confirmation: "最終確認"
+  finalize: "確定"
   finalized_payments: Finalized Payments
   first_item: First Item Cost
   first_name: 名前
-  first_name_begins_with: "First Name Begins With"
+  first_name_begins_with: "名の始まりが"
   flat_percent: Flat Percent
   flat_rate_amount: Amount
   flat_rate_per_item: "Flat Rate (per item)"
@@ -437,16 +437,16 @@ ja:
   free_shipping: Free Shipping
   from_state: From State
   front_end: Front End
-  full_name: "Full Name"
-  gateway: ゲートウェー
+  full_name: "名前"
+  gateway: "ゲートウェー"
   gateway_config_unavailable: "Gateway unavailable for environment"
   gateway_configuration: "Gateway configuration"
-  gateway_error: ゲートウェーエラー
+  gateway_error: "ゲートウェーエラー"
   gateway_setting_description: "Select a payment gateway and configure its settings."
   gateway_settings_warning: "If you are changing the gateway type, you must save first before you can edit the gateway settings"
-  general: 一般
-  general_settings: 一般設定
-  general_settings_description: Spreeの一般的な設定をします。
+  general: "一般"
+  general_settings: "一般設定"
+  general_settings_description: "Spreeの一般的な設定"
   google_analytics: "Google Analytics"
   google_analytics_active: "Active"
   google_analytics_create: "Create New Google Analytics Account"
@@ -474,70 +474,70 @@ ja:
   intercept_email_address: Intercept Email Address
   intercept_email_instructions: "Override email recipient and replace with this address."
   invalid_search: "Invalid search criteria."
-  inventory: 在庫
-  inventory_adjustment: 在庫調整
+  inventory: "在庫"
+  inventory_adjustment: "在庫調整"
   inventory_setting_description: "Inventory Configuration, Backordering, Zero-Stock Display"
-  inventory_settings: 在庫設定
+  inventory_settings: "在庫設定"
   is_not_available_to_shipment_address: is not available to shipment address
   issue_number: Issue Number
-  item: 品目
-  item_description: 品目説明
-  item_total: 合計
+  item: "アイテム"
+  item_description: "アイテム説明"
+  item_total: "合計"
   item_total_rule: 
     operators: 
-      gt: greater than
-      gte: greater than or equal to
-  items: "Items"
-  last_14_days: "Last 14 Days"
-  last_5_orders: "Last 5 Orders"
-  last_7_days: "Last 7 Days"
-  last_month: "Last Month"
-  last_name: 名字
-  last_name_begins_with: "Last Name Begins With"
-  last_year: "Last Year"
-  leave_blank_to_not_change: "(leave blank if you don't want to change it)"
-  list: リスト
-  listing_categories: カテゴリー一覧
+      gt: "より大きい"
+      gte: "以上"
+  items: "アイテム"
+  last_14_days: "過去2週間分"
+  last_5_orders: "最後の5件の注文"
+  last_7_days: "先週"
+  last_month: "先月"
+  last_name: "名字"
+  last_name_begins_with: "姓の始まりが"
+  last_year: "去年"
+  leave_blank_to_not_change: "(変更したくない場合は何も入力しないで下さい)"
+  list: "リスト"
+  listing_categories: "カテゴリー一覧"
   listing_option_types: "Listing Option Types"
-  listing_orders: 注文一覧
+  listing_orders: "注文一覧"
   listing_product_groups: "Listing Product Groups"
-  listing_reports: リポート一覧
+  listing_reports: "リポート一覧"
   listing_tax_categories: "Listing Tax Categories"
-  listing_users: ユーザ一覧
+  listing_users: "ユーザ一覧"
   live: "Live"
-  loading: Loading
+  loading: "読み込み中"
   locale_changed: "Locale Changed"
   log_in: ログイン
   logged_in_as: ログイン
   logged_in_succesfully: ログインに成功しました
   logged_out: ログアウトしました。
-  login: Login
+  login: "ログイン"
   login_as_existing: "Log In as Existing Customer"
   login_failed: "Login authentication failed."
-  login_name: ログイン
-  logout: ログアウト
-  look_for_similar_items: Look for similar items
+  login_name: "ログイン名"
+  logout: "ログアウト"
+  look_for_similar_items: "似た商品を探す"
   maestro_or_solo_cards: Maestro/Solo cards
   mail_delivery_enabled: "Mail delivery is enabled"
   mail_delivery_not_enabled: "Mail delivery is not enabled"
-  mail_methods: Mail Methods
-  mail_server_preferences: Mail Server Preferences
-  make_refund: Make refund
-  mark_shipped: "Mark Shipped"
-  master_price: 定価
+  mail_methods: "メールシステムの設定"
+  mail_server_preferences: "メールサーバの設定"
+  make_refund: "返金する"
+  mark_shipped: "発送済みとしてマーくする"
+  master_price: "定価"
   max_items: Max Items
   may_be_combined_with_other_promotions: May be combined with other promotions
-  meta_description: メタ情報説明
-  meta_keywords: メタキーワード
-  metadata: メタデータ
+  meta_description: "メタ情報説明"
+  meta_keywords: "メタキーワード"
+  metadata: "メタデータ"
   minimal_amount: "Minimal Amount"
   missing_required_information: "Missing Required Information"
-  month: "Month"
-  my_account: アカウント情報
-  my_orders: 注文情報
-  name: 名称
-  name_or_sku: "Name or SKU"
-  new: 新規
+  month: "月"
+  my_account: "アカウント情報"
+  my_orders: "注文情報"
+  name: "名称"
+  name_or_sku: "品名もしくは品番"
+  new: "新規"
   new_adjustment: "New Adjustment"
   new_billing_integration: New Billing Integration
   new_category: 新規カテゴリー
@@ -546,7 +546,7 @@ ja:
   new_mail_method: New Mail Method
   new_option_type: 新規オプションタイプ
   new_option_value: 新規オプション値
-  new_order: "New Order"
+  new_order: "新規注文"
   new_order_completed: "New Order Completed"
   new_payment: "New Payment"
   new_payment_method: New Payment Method
@@ -579,7 +579,7 @@ ja:
   none: 空です
   none_available: "None Available"
   normal_amount: "Normal Amount"
-  not: not
+  not: "されていない"
   not_shown: "Not Shown"
   note: Note
   notice_messages: 
@@ -639,9 +639,9 @@ ja:
   out_of_stock_products: "Out of Stock Products"
   over_paid: "Over Paid"
   overview: "概要"
-  overview_welcome: "Welcome to your store overview, currently we do not have enough data to display the Overiew Dashboard.<br/><br/> The dashboard will display automatically once the system has sufficent orders to allow generation of the statistics."
-  page_only_viewable_when_logged_in: You attempted to visit a page which can only be viewed when you are logged in
-  page_only_viewable_when_logged_out: You attempted to visit a page which can only be viewed when you are logged out
+  overview_welcome: "シップの概要[ダッシュボード]にようこそ。現在ダッシュボードに表示する情報が足りないです。<br/><br/> 商品を登録し、注文などが入って分析が出来る様になる状態になってからダッシュボードに情報が表示されます。"
+  page_only_viewable_when_logged_in: "ログインされていない状態でこのページが見れません。ログインしてから再びアクセスしてみて下さい。"
+  page_only_viewable_when_logged_out: "ログインされている状態でこのページが見れません。ログアウトしてから再びアクセスしてみて下さい。"
   paid: "支払い済み"
   parent_category: "Parent Category"
   password: "パスワード"
@@ -649,39 +649,39 @@ ja:
   password_reset_instructions_are_mailed: "Instructions to reset your password have been emailed to you. Please check your email."
   password_reset_token_not_found: "We're sorry, but we could not locate your account. If you are having issues try copying and pasting the URL from your email into your browser or restarting the reset password process."
   password_updated: "Password successfully updated"
-  path: パス
+  path: "パス"
   pay: "支払い"
   payment: "支払い方法"
   payment_actions: "Actions"
   payment_gateway: "Payment Gateway"
   payment_information: "支払い情報"
-  payment_method: Payment Method
-  payment_methods: Payment Methods
-  payment_methods_setting_description: Configure methods customers can use to pay
-  payment_processing_failed: "Payment could not be processed, please check the details you entered"
-  payment_state: Payment State
+  payment_method: "支払い方法"
+  payment_methods: "支払い方法"
+  payment_methods_setting_description: "支払い方法を設定する"
+  payment_processing_failed: "決済が失敗しました。入力した情報を確認してから再び決済を行ってみて下さい。"
+  payment_state: "支払い状況"
   payment_states: 
     balance_due: balance due
-    checkout: checkout
-    completed: completed
+    checkout: "決算"
+    completed: "完了"
     credit_owed: credit owed
-    failed: failed
-    paid: paid
-    pending: pending
-    processing: processing
-    void: void
+    failed: "失敗しました"
+    paid: "支払い済み"
+    pending: "支払い待ち"
+    processing: "処理中"
+    void: "無効"
   payment_updated: Payment Updated
   payments: "支払い方法"
   pending_payments: Pending Payments
   permalink: Permalink
-  phone: 電話番号
-  place_order: Place Order
-  please_create_user: "Please create a user account"
-  powered_by: "Powered by"
-  presentation: 表示名
+  phone: "電話番号"
+  place_order: "注文を送信する"
+  please_create_user: "アカウントを登録して下さい"
+  powered_by: "このサイトの原動力が"
+  presentation: "表示名"
   preview: Preview
-  previous: 前へ
-  price: 価格
+  previous: "前へ"
+  price: "価格"
   price_bucket: Price Bucket
   price_with_vat_included: "%{price} (inc. VAT)"
   problem_authorizing_card: "Problem authorizing credit card"
@@ -689,18 +689,18 @@ ja:
   problems_processing_order: "We had problems processing your order"
   proceed_as_guest: "No Thanks, Proceed as Guest"
   process: Process
-  product: 商品
-  product_details: 商品詳細
-  product_group: Product Group
-  product_group_invalid: Product Group has invalid scopes
-  product_groups: Product Groups
-  product_has_no_description: Product has not description
-  product_properties: 商品情報
+  product: "商品"
+  product_details: "商品詳細"
+  product_group: "商品グループ"
+  product_group_invalid: "商品グループの範囲が不正です"
+  product_groups: "商品グループ"
+  product_has_no_description: "この商品に詳細がありません。"
+  product_properties: "商品情報"
   product_rule: 
     choose_products: Choose products
     label: "Order must contain %{select} of these products"
-    match_all: all
-    match_any: at least one
+    match_all: "全て"
+    match_any: "一つ以上"
     product_source: 
       group: From product group
       manual: Manually choose
@@ -708,7 +708,7 @@ ja:
     groups: 
       price: 
         description: "Scopes for selecting products based on Price"
-        name: Price
+        name: "値段"
       search: 
         description: "Scopes for selecting products based on name, keywords and description of product"
         name: "Text search"
@@ -842,30 +842,30 @@ ja:
       name: User
   promotions: Promotions
   promotions_description: Manage offers and coupons with promotions
-  properties: 属性
-  property: 属性
-  prototype: プロトタイプ
-  prototypes: プロトタイプ
+  properties: "属性"
+  property: "属性"
+  prototype: "プロトタイプ"
+  prototypes: "プロトタイプ"
   provider: "Provider"
   provider_settings_warning: "If you are changing the provider type, you must save first before you can edit the provider settings"
-  qty: 個数
+  qty: "個数"
   quantity_returned: Quantity Returned
   quantity_shipped: Quantity Shipped
-  range: "Range"
-  rate: 比率
-  reason: Reason
-  recalculate_order_total: "Recalculate order total"
+  range: "範囲"
+  rate: "比率"
+  reason: "理由"
+  recalculate_order_total: "合計を再計算"
   receive: receive
   received: Received
-  refund: Refund
-  register: 新規ユーザとして登録
-  register_or_guest: Checkout as Guest or Register
-  registration: 登録
-  remember_me: 記録する
-  remove: 削除
-  reports: リポート
+  refund: "払い戻し"
+  register: "新規ユーザとして登録"
+  register_or_guest: "ゲストとして決済するか登録するか"
+  registration: "登録"
+  remember_me: "記録する"
+  remove: "削除"
+  reports: "リポート"
   required_for_solo_and_maestro: Required for Solo and Maestro cards.
-  resend: 再送
+  resend: "再送信"
   resend_confirmation_instructions: "Resend confirmation instructions"
   resend_unlock_instructions: "Resend unlock instructions"
   reset_password: "Reset my password"
@@ -886,21 +886,21 @@ ja:
   rma_credit: RMA Credit
   rma_number: RMA Number
   rma_value: RMA Value
-  roles: 役割
-  rules: Rules
-  sales_tax: "Sales Tax"
-  sales_total: 売上げ合計
-  sales_total_description: "Sales Total For All Orders"
+  roles: "役割"
+  rules: "ルール"
+  sales_tax: "消費税"
+  sales_total: "売上げ合計"
+  sales_total_description: "全注文の売上合計"
   save_and_continue: Save and Continue
   save_preferences: Save Preferences
   scope: Scope
   scopes: Scopes
-  search: 検索
+  search: "検索"
   search_results: "Search results for '%{keywords}'"
   searching: Searching
   secure_connection_type: Secure Connection Type
   secure_creditcard: Secure Creditcard
-  select: 選択
+  select: "選択"
   select_from_prototype: "Select From Prototype"
   select_preferred_shipping_option: "Select preferred shipping option"
   send_copy_of_all_mails_to: Send Copy of All Mails To
@@ -908,42 +908,42 @@ ja:
   send_mails_as: Send Mails As
   send_me_reset_password_instructions: "Send me reset password instructions"
   send_order_mails_as: Send Order Mails As
-  server: Server
+  server: "サーバ"
   server_error: "The server returned an error"
-  settings: Settings
-  ship: 配送
-  ship_address: 配送先住所
-  shipment: 発送
+  settings: "設定"
+  ship: "配送"
+  ship_address: "配送先住所"
+  shipment: "発送"
   shipment_details: Shipment Details
   shipment_mailer: 
     shipped_email: 
-      subject: "Shipment Notification"
+      subject: "発送の通知"
   shipment_number: "発送 #"
-  shipment_state: Shipment State
+  shipment_state: "配送状況"
   shipment_states: 
     backorder: backorder
     partial: partial
     pending: pending
     ready: ready
-    shipped: shipped
+    shipped: "発送済み"
   shipment_updated: Shipment Updated
-  shipments: "Shipments"
-  shipped: 発送済
-  shipping: 送料
-  shipping_address: 配送先
-  shipping_categories: 配送カテゴリー
+  shipments: "配送"
+  shipped: "発送済"
+  shipping: "送料"
+  shipping_address: "配送先"
+  shipping_categories: "配送カテゴリー"
   shipping_categories_description: "Manage shipping categories to identify which products can be shipped via which method"
   shipping_category: Shipping Category
   shipping_cost: Cost
   shipping_error: "Shipping Error"
   shipping_instructions: "Shipping Instructions"
-  shipping_method: 配送方法
-  shipping_methods: 配送方法
-  shipping_methods_description: 配送方法を管理します。
-  shipping_total: 配送料合計
+  shipping_method: "配送方法"
+  shipping_methods: "配送方法"
+  shipping_methods_description: "配送方法を管理"
+  shipping_total: "配送料合計"
   shop_by_taxonomy: "%{taxonomy}"
-  shopping_cart: ショッピングカート
-  show: Show
+  shopping_cart: "ショッピングカート"
+  show: "表示"
   show_active: "Show Active"
   show_deleted: 削除済みも表示
   show_incomplete_orders: 未処理の注文も表示
@@ -954,22 +954,22 @@ ja:
   sign_up: サインアップ
   site_name: サイト名
   site_url: サイトURL
-  sku: SKU
+  sku: "品番[SKU]"
   smtp: SMTP
-  smtp_authentication_type: SMTP Authentication Type
-  smtp_domain: SMTPドメイン
-  smtp_mail_host: SMTPサーバ
-  smtp_password: SMTPパスワード
-  smtp_port: SMTPポート
+  smtp_authentication_type: "SMTP認証の種類"
+  smtp_domain: "SMTPドメイン"
+  smtp_mail_host: "SMTPサーバ"
+  smtp_password: "SMTPパスワード"
+  smtp_port: "SMTPポート"
   smtp_send_all_emails_as_from_following_address: "Send all mails as from the following address."
   smtp_send_copy_to_this_addresses: "Sends a copy of all outgoing mails to this address. For multiple addresses, separate with commas."
-  smtp_username: SMTPユーザ名
+  smtp_username: "SMTPユーザ名"
   sold: Sold
   sort_ordering: "Sort ordering"
   special_instructions: "Special Instructions"
   spree: 
-    date: 日付
-    time: 時間
+    date: "日付"
+    time: "時間"
   spree_gateway_error_flash_for_checkout: "There was a problem with your payment information. Please check your information and try again."
   ssl_will_be_used_in_development_and_test_modes: "SSL will be used in development and test mode if necessary."
   ssl_will_be_used_in_production_mode: "SSL will be used in production mode"
@@ -1004,12 +1004,12 @@ ja:
   tax_type: 税種別
   taxon: 分類単位
   taxon_edit: Edit Taxon
-  taxonomies: 分類単位
+  taxonomies: "分類単位"
   taxonomies_setting_description: "Create and manage taxonomies"
   taxonomy_edit: "Edit taxonomy"
   taxonomy_tree_error: "The requested change has not been accepted and the tree has been returned to its previous state, please try again."
   taxonomy_tree_instruction: "* Right click a child in the tree to access the menu for adding, deleting or sorting a child."
-  taxons: 分類
+  taxons: "分類"
   test: "Test"
   test_mode: Test Mode
   thank_you_for_your_order: "Thank you for your business.  Please print out a copy of this confirmation page for your records."
@@ -1021,7 +1021,7 @@ ja:
   to_add_variants_you_must_first_define: "To add variants, you must first define"
   to_state: "To State"
   top_grossing_products: "Top Grossing Products"
-  total: 小計
+  total: "合計"
   tracking: Tracking
   transaction: Transaction
   transactions: Transactions
@@ -1072,6 +1072,7 @@ ja:
   what_is_this: "What's This?"
   whats_this: "What's this"
   width: 横幅
+  wont: "されない"
   year: "Year"
   you_have_been_logged_out: "You have been logged out."
   you_have_no_orders_yet: "You have no orders yet."
