@@ -319,10 +319,10 @@ ja:
   checkout: "精算"
   cheque: "小切手"
   city: "都市名"
-  clone: Clone
-  code: Code
+  clone: "複製"
+  code: "コード"
   combine: Combine
-  complete: complete
+  complete: "完了"
   complete_list: "Complete List"
   configuration: "設定"
   configuration_options: "設定オプション"
@@ -333,7 +333,7 @@ ja:
   confirm_password: "Password Confirmation"
   continue: "続ける"
   continue_shopping: "ショッピングを続ける"
-  copy_all_mails_to: Copy All Mails To
+  copy_all_mails_to: "全てのメールのコピーをここに送る"
   cost_price: "原価"
   count: "数"
   count_of_reduced_by: "count of '%{name}' reduced by %{count}"
@@ -388,7 +388,7 @@ ja:
   editing_shipping_category: "配送カテゴリー編集"
   editing_shipping_method: "配送方法編集"
   editing_state: "都道府県（州）編集"
-  editing_tax_category: "税カテゴリー編集"
+  editing_tax_category: "税金カテゴリー編集"
   editing_tax_rate: "Editing Tax Rate"
   editing_tracker: Editing Tracker
   editing_user: "ユーザー編集"
@@ -559,24 +559,24 @@ ja:
   new_shipment: 新規配送
   new_shipping_category: 新規配送カテゴリー
   new_shipping_method: 新規配送方法
-  new_state: 新規都道府県（州）
-  new_tax_category: 新規税カテゴリー
-  new_tax_rate: 新規税率
+  new_state: "新規都道府県（州）"
+  new_tax_category: "新規税金カテゴリー"
+  new_tax_rate: "新規税率"
   new_taxon: "New Taxon"
   new_taxonomy: "新規分類"
   new_tracker: New Tracker
   new_user: 新規ユーザ
   new_variant: 新規形式
   new_zone: 新規ゾーン
-  next: 次へ
-  no_items_in_cart: ""
+  next: "次へ"
+  no_items_in_cart: "カートにアイテムがありません"
   no_match_found: "No Match Found"
   no_payment_methods_available: "Can't check out, no payment methods are configured for this environment"
   no_products_found: "商品が見付かりませんでした。"
   no_results: "No results"
   no_rules_added: No rules added
   no_user_found: "No user was found with that email address"
-  none: 空です
+  none: "空です"
   none_available: "None Available"
   normal_amount: "Normal Amount"
   not: "されていない"
@@ -590,20 +590,20 @@ ja:
     product_not_deleted: "Product could not be deleted"
     variant_deleted: "Variant has been deleted"
     variant_not_deleted: "Variant could not be deleted"
-  on_hand: 入荷日
+  on_hand: "入荷日"
   operation: Operation
-  option_type: "Option Type"
-  option_types: オプションタイプ
-  option_value: "Option Value"
-  option_values: オプション値
-  options: オプション
-  or: or
+  option_type: "オプションタイプ"
+  option_types: "オプションタイプ"
+  option_value: "オプション価格"
+  option_values: "オプション価格"
+  options: "オプション"
+  or: "もしくは"
   ord_qty: "Ord. Qty"
   ord_total: "Ord. Total"
-  order: 注文
+  order: "注文"
   order_confirmation_note: ""
-  order_date: 注文日
-  order_details: 注文詳細
+  order_date: "注文日"
+  order_details: "注文詳細"
   order_email_resent: "Order Email Resent"
   order_mailer: 
     cancel_email: 
@@ -611,7 +611,7 @@ ja:
     confirm_email: 
       subject: "Order Confirmation"
   order_not_in_system: That order number is not valid on this site.
-  order_number: 注文
+  order_number: "注文"
   order_operation_authorize: Authorize
   order_processed_but_following_items_are_out_of_stock: "Your order has been processed, but following items are out of stock:"
   order_processed_successfully: "Your order has been processed successfully"
@@ -643,7 +643,7 @@ ja:
   page_only_viewable_when_logged_in: "ログインされていない状態でこのページが見れません。ログインしてから再びアクセスしてみて下さい。"
   page_only_viewable_when_logged_out: "ログインされている状態でこのページが見れません。ログアウトしてから再びアクセスしてみて下さい。"
   paid: "支払い済み"
-  parent_category: "Parent Category"
+  parent_category: "親のカテゴリ"
   password: "パスワード"
   password_reset_instructions: "Password Reset Instructions"
   password_reset_instructions_are_mailed: "Instructions to reset your password have been emailed to you. Please check your email."
@@ -657,7 +657,7 @@ ja:
   payment_information: "支払い情報"
   payment_method: "支払い方法"
   payment_methods: "支払い方法"
-  payment_methods_setting_description: "支払い方法を設定する"
+  payment_methods_setting_description: "支払い方法を管理"
   payment_processing_failed: "決済が失敗しました。入力した情報を確認してから再び決済を行ってみて下さい。"
   payment_state: "支払い状況"
   payment_states: 
@@ -679,7 +679,7 @@ ja:
   please_create_user: "アカウントを登録して下さい"
   powered_by: "このサイトの原動力が"
   presentation: "表示名"
-  preview: Preview
+  preview: "プレビュー"
   previous: "前へ"
   price: "価格"
   price_bucket: Price Bucket
@@ -820,7 +820,7 @@ ja:
         description: "Selects all products that have at least one variant with specified property and value(eg. weight:10kg)"
         name: "With property value"
         sentence: with property <em>%s</em> and value <em>%s</em>
-  products: 商品
+  products: "商品"
   products_with_zero_inventory_display: "Products with a zero inventory will %{not} be displayed"
   promotion: Promotion
   promotion_form: 
@@ -839,9 +839,9 @@ ja:
       name: Product(s)
     user: 
       description: Available only to the specified users
-      name: User
-  promotions: Promotions
-  promotions_description: Manage offers and coupons with promotions
+      name: "ユーザ名"
+  promotions: "スペシャル"
+  promotions_description: "スペシャルオファーやクーポンなどの商売促進を管理する"
   properties: "属性"
   property: "属性"
   prototype: "プロトタイプ"
@@ -849,8 +849,8 @@ ja:
   provider: "Provider"
   provider_settings_warning: "If you are changing the provider type, you must save first before you can edit the provider settings"
   qty: "個数"
-  quantity_returned: Quantity Returned
-  quantity_shipped: Quantity Shipped
+  quantity_returned: "返送された数"
+  quantity_shipped: "発送された数"
   range: "範囲"
   rate: "比率"
   reason: "理由"
@@ -864,16 +864,16 @@ ja:
   remember_me: "記録する"
   remove: "削除"
   reports: "リポート"
-  required_for_solo_and_maestro: Required for Solo and Maestro cards.
+  required_for_solo_and_maestro: "SoloとMaestroカードに必要です"
   resend: "再送信"
   resend_confirmation_instructions: "Resend confirmation instructions"
   resend_unlock_instructions: "Resend unlock instructions"
-  reset_password: "Reset my password"
+  reset_password: "パスワードを再設定する"
   resource_controller: 
     member_object_not_found: "Member object not found."
-    successfully_created: "Successfully created!"
-    successfully_removed: "Successfully removed!"
-    successfully_updated: "Successfully updated!"
+    successfully_created: "作成完了"
+    successfully_removed: "削除完了"
+    successfully_updated: "更新完了"
   response_code: "Response Code"
   resume: "resume"
   resumed: Resumed
@@ -945,17 +945,17 @@ ja:
   shopping_cart: "ショッピングカート"
   show: "表示"
   show_active: "Show Active"
-  show_deleted: 削除済みも表示
-  show_incomplete_orders: 未処理の注文も表示
-  show_only_complete_orders: 処理済みの注文のみを表示
-  show_out_of_stock_products: 在庫切れの商品を表示
-  show_price_inc_vat: "Show price including VAT"
-  showing_first_n: "Showing first %{n}"
-  sign_up: サインアップ
-  site_name: サイト名
-  site_url: サイトURL
+  show_deleted: "削除済みのも表示"
+  show_incomplete_orders: "未処理の注文も表示"
+  show_only_complete_orders: "処理済みの注文のみを表示"
+  show_out_of_stock_products: "在庫切れの商品を表示"
+  show_price_inc_vat: "VAT込みの値段を表示"
+  showing_first_n: "最初の%{n}件を表示"
+  sign_up: "ユーザ登録"
+  site_name: "サイト名"
+  site_url: "サイトURL"
   sku: "品番[SKU]"
-  smtp: SMTP
+  smtp: "SMTP"
   smtp_authentication_type: "SMTP認証の種類"
   smtp_domain: "SMTPドメイン"
   smtp_mail_host: "SMTPサーバ"
@@ -971,53 +971,53 @@ ja:
     date: "日付"
     time: "時間"
   spree_gateway_error_flash_for_checkout: "There was a problem with your payment information. Please check your information and try again."
-  ssl_will_be_used_in_development_and_test_modes: "SSL will be used in development and test mode if necessary."
-  ssl_will_be_used_in_production_mode: "SSL will be used in production mode"
-  ssl_will_not_be_used_in_development_and_test_modes: "SSL will not be used in development and test mode if necessary."
-  ssl_will_not_be_used_in_production_mode: "SSL will not be used in production mode"
-  start: 始め
-  start_date: Valid from
-  state: 都道府県（州）
+  ssl_will_be_used_in_development_and_test_modes: "必要に応じて開発モードとテストモードにSSLが使用されます"
+  ssl_will_be_used_in_production_mode: "プロダクションモードではSSLが使用されます"
+  ssl_will_not_be_used_in_development_and_test_modes: "必要性がない限り開発モードとテストモードにSSLが使用されません"
+  ssl_will_not_be_used_in_production_mode: "プロダクションモードではSSLが使用されません"
+  start: "始め"
+  start_date: "有効開始日付"
+  state: "都道府県（州）"
   state_based: "State Based"
   state_setting_description: "Administer the list of states/provinces associated with each country."
-  states: 都道府県（州）
-  status: 状況
-  stop: 終わり
-  store: ストアー
-  street_address: 住所
-  street_address_2: 住所2
-  subtotal: 合計
-  subtract: Subtract
-  successfully_created: "%{resource} has been successfully created!"
-  successfully_removed: "%{resource} has been successfully removed!"
-  successfully_updated: "%{resource} has been successfully updated!"
-  system: システム
-  tax: 税
-  tax_categories: 税カテゴリー
+  states: "都道府県（州）"
+  status: "状況"
+  stop: "終わり"
+  store: "ストア"
+  street_address: "住所"
+  street_address_2: "住所の続き"
+  subtotal: "合計"
+  subtract: "引く"
+  successfully_created: "%{resource}が作成されました!"
+  successfully_removed: "%{resource}が削除されました!"
+  successfully_updated: "%{resource}が更新されました!"
+  system: "システム"
+  tax: "税金"
+  tax_categories: "税金カテゴリー"
   tax_categories_setting_description: "Set up tax categories to identify which products should be taxable."
-  tax_category: 税カテゴリー
-  tax_rates: "Tax Rates"
-  tax_rates_description: Tax rates setup and configuration.
-  tax_settings: "Tax settings"
-  tax_settings_description: Basic tax settings.
-  tax_total: 税合計
-  tax_type: 税種別
-  taxon: 分類単位
-  taxon_edit: Edit Taxon
+  tax_category: "税金カテゴリー"
+  tax_rates: "税率"
+  tax_rates_description: "税率を管理"
+  tax_settings: "税金設定"
+  tax_settings_description: "一般的な税金設定"
+  tax_total: "税合計"
+  tax_type: "税種別"
+  taxon: "分類単位"
+  taxon_edit: "分類単位を編集"
   taxonomies: "分類単位"
   taxonomies_setting_description: "Create and manage taxonomies"
   taxonomy_edit: "Edit taxonomy"
   taxonomy_tree_error: "The requested change has not been accepted and the tree has been returned to its previous state, please try again."
   taxonomy_tree_instruction: "* Right click a child in the tree to access the menu for adding, deleting or sorting a child."
   taxons: "分類"
-  test: "Test"
-  test_mode: Test Mode
+  test: "テスト"
+  test_mode: "テストモード"
   thank_you_for_your_order: "Thank you for your business.  Please print out a copy of this confirmation page for your records."
   there_were_problems_with_the_following_fields: "There were problems with the following fields"
-  this_file_language: "日本語 (JP)"
-  this_month: "This Month"
-  this_year: "This Year"
-  thumbnail: "Thumbnail"
+  this_file_language: "日本語 (ja-JP)"
+  this_month: "今月"
+  this_year: "今年"
+  thumbnail: "サムネール"
   to_add_variants_you_must_first_define: "To add variants, you must first define"
   to_state: "To State"
   top_grossing_products: "Top Grossing Products"
