@@ -1,4 +1,4 @@
-require 'lib/spree/i18n_utils'
+require 'spree/i18n_utils'
 
 include Spree::I18nUtils
 
