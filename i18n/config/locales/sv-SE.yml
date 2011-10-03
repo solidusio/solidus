@@ -206,11 +206,11 @@ sv-SE:
         one: "Skattesats"
         other: "Skattesatser"
       taxon: 
-        one: Taxon
-        other: Taxons
+        one: Underkategori
+        other: Underkategorier
       taxonomy: 
-        one: Taxonomi
-        other: Taxonomier
+        one: Kategori
+        other: Kategorier
       user: 
         one: Användare
         other: Användare
@@ -271,12 +271,12 @@ sv-SE:
   are_you_sure_delete_image: "Är du säker på att du vill ta bort denna bild?"
   are_you_sure_option_type: "Är du säker på att du vill ta bort denna alternativtyp?"
   are_you_sure_you_want_to_capture: "Are you sure you want to capture?" # Eng
-  assign_taxon: "Tilldela taxon"
-  assign_taxons: "Tilldela taxons"
-  authorization_failure: "Misslyckades att auktorisera"
+  assign_taxon: "Tilldela underkategori"
+  assign_taxons: "Tilldela underkategorier"
+  authorization_failure: "Du är inte auktoriserad att utföra denna åtgärd"
   authorized: Auktoriserad
   available_on: "Available On" # Eng
-  available_taxons: "Tillgängliga taxoner"
+  available_taxons: "Tillgängliga underkategorier"
   awaiting_return: Väntar på retur # Eng
   back: Tillbaka
   back_end: Administrationsgränssnitt
@@ -284,8 +284,8 @@ sv-SE:
   backordered: Restnoterad
   backordering_is_allowed: "Restnotering %{not} tillåten"
   balance_due: "Summa att Betala"
-  best_selling_products: "Storsäljande Produkter"
-  best_selling_taxons: "Storsäljande Taxons"
+  best_selling_products: "Storsäljande produkter"
+  best_selling_taxons: "Storsäljande underkategorier"
   bill_address: "Faktureringsadress"
   billing: Fakturering
   billing_address: "Faktureringsadress"
@@ -394,7 +394,7 @@ sv-SE:
   email: Email
   email_address: "E-postadress"
   email_server_settings_description: "Ställ in email-server-inställningar"
-  empty: "Varukorgen är tom"
+  empty: "tom"
   empty_cart: "Töm varukorgen"
   enable_login_via_login_password: "Använd epost/lösenord"
   enable_login_via_openid: "Använd OpenID istället"
@@ -406,7 +406,7 @@ sv-SE:
   error: fel
   errors: 
     messages: 
-      could_not_create_taxon: "Kunde inte skapa taxon"
+      could_not_create_taxon: "Kunde inte skapa underkategori"
       no_shipping_methods_available: "Inget fraktsätt är tillgängligt för den valda platsen. Var god ändra din adress och försök igen."
   errors_prohibited_this_record_from_being_saved: 
     one: "1 fel hindrade detta inlägg att sparas"
@@ -560,8 +560,8 @@ sv-SE:
   new_state: "Ny delstat"
   new_tax_category: "Ny momssats"
   new_tax_rate: "Ny skattesats"
-  new_taxon: "Ny taxon"
-  new_taxonomy: "Ny taxonomi"
+  new_taxon: "Ny underkategori"
+  new_taxonomy: "Ny kategori"
   new_tracker: Ny statistikspårare
   new_user: "Ny användare"
   new_variant: "Ny variant"
@@ -711,8 +711,8 @@ sv-SE:
         description: "Omfång för att välja produkter baserat på namn, nyckelord och produktbeskrivning"
         name: Textsök
       taxon: 
-        description: "Omfång för att välja produkter baserat på Taxons"
-        name: Taxon
+        description: "Omfång för att välja produkter baserat på underkategorier"
+        name: Underkategori
       values: 
         description: "Omfång för att välja produkter baserat på alternativ och egenskapsvärden"
         name: Värden
@@ -751,10 +751,10 @@ sv-SE:
         sentence: namn eller nyckelord innehåller <em>%s</em>
       in_taxons: 
         args: 
-          "taxon_names": "Taxon-namn"
-        description: "Taxon-namn måste vara åtskilda av komma eller mellanslag (tex adidas,shoes)"
-        name: "I taxoner och undertaxoner"
-        sentence: in <em>%s</em> och alla deras undertaxoner
+          "taxon_names": "Underkategori-namn"
+        description: "Underkategori-namn måste vara åtskilda av komma eller mellanslag (tex adidas,shoes)"
+        name: "I underkategorier och under-underkategorier"
+        sentence: in <em>%s</em> och alla deras under-underkategorier
       master_price_gte: 
         args: 
           amount: Pris
@@ -776,9 +776,9 @@ sv-SE:
         sentence: pris mellan <em>%.2f</em> och <em>%.2f</em>
       taxons_name_eq: 
         args: 
-          taxon_name: "Taxon-namn"
-        description: "In en särskild taxon" # without descendants
-        name: "I taxon" # (without descendants)
+          taxon_name: "Underkategori-namn"
+        description: "In en särskild underkategori" # without descendants
+        name: "I underkategori" # (without descendants)
         sentence: i <em>%s</em>
       with: 
         args: 
@@ -887,8 +887,8 @@ sv-SE:
   roles: Roller
   rules: Regler
   sales_tax: "Sales Tax" # Eng
-  sales_total: "Sales Total" # Eng
-  sales_total_description: "Sales Total For All Orders" # Eng
+  sales_total: "Total försäljning"
+  sales_total_description: "Total försäljning på alla ordrar"
   save_and_continue: "Spara och Fortsätt"
   save_preferences: "Spara Inställningarna"
   scope: Omfång
@@ -982,8 +982,8 @@ sv-SE:
   status: Status
   stop: Stopp
   store: Affär
-  street_address: "Gata"
-  street_address_2: "Gata (forts.)"
+  street_address: "Adress"
+  street_address_2: "Adress (forts.)"
   subtotal: Delsumma
   subtract: Subtrahera
   successfully_created: "%{resource} är skapad!"
@@ -1000,14 +1000,14 @@ sv-SE:
   tax_settings_description: Grundläggande skatte-inställningar
   tax_total: "Tax Total"
   tax_type: "Tax Type"
-  taxon: Taxon
-  taxon_edit: Edit Taxon
-  taxonomies: Taxonomier
-  taxonomies_setting_description: "Skapa och sköta taxonomier"
-  taxonomy_edit: "Ändra taxonomi"
+  taxon: Underkategori
+  taxon_edit: Redigera underkategori
+  taxonomies: Kategorier
+  taxonomies_setting_description: "Skapa och hantera kategorier"
+  taxonomy_edit: "Ändra kategori"
   taxonomy_tree_error: "Ändringen har inte accepterats och trädet har återställts till sitt tidigare tillstånd. Var god försök igen."
-  taxonomy_tree_instruction: "* Högerklicka på en taxonomi för att komma åt menyn för att lägga till, ta bort eller sortera undertaxonomier."
-  taxons: Taxons
+  taxonomy_tree_instruction: "* Högerklicka på en kategori för att komma åt menyn för att lägga till, ta bort eller sortera underkategorier."
+  taxons: Underkategorier
   test: "Test"
   test_mode: Testläge
   thank_you_for_your_order: "Tack för din beställning. Var god skriv ut denna sida för framtida korrespondens."
