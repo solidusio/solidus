@@ -157,11 +157,11 @@ ja:
         one: "クレジットカード"
         other: "クレジットカード"
       creditcard_payment: 
-        one: "Credit Card Payment"
-        other: "Credit Card Payments"
+        one: "クレジットカードでの支払い"
+        other: "クレジットカードでの支払い"
       creditcard_txn: 
-        one: "Credit Card Transaction"
-        other: "Credit Card Transactions"
+        one: "クレジットカード決済"
+        other: "クレジットカード決済"
       inventory_unit: 
         one: "Inventory Unit"
         other: "Inventory Units"
@@ -285,7 +285,7 @@ ja:
   back_to_store: "ショップに戻る"
   backordered: Backordered
   backordering_is_allowed: "Backordering %{not} allowed"
-  balance_due: "Balance Due"
+  balance_due: "未払額"
   best_selling_products: "Best Selling Products"
   best_selling_taxons: "良く売れている分類群"
   bill_address: "請求先住所"
@@ -461,7 +461,7 @@ ja:
   history: "履歴"
   home: "ホーム"
   icon: "アイコン"
-  icons_by: "アイコンの作成者が"
+  icons_by: "アイコンの作成者:"
   image: "画像"
   images: "画像"
   images_for: "Images for"
@@ -622,7 +622,7 @@ ja:
     awaiting_return: awaiting return
     canceled: canceled
     cart: cart
-    complete: complete
+    complete: "完了"
     confirm: confirm
     delivery: delivery
     payment: payment
@@ -661,10 +661,10 @@ ja:
   payment_processing_failed: "決済が失敗しました。入力した情報を確認してから再び決済を行ってみて下さい。"
   payment_state: "支払い状況"
   payment_states: 
-    balance_due: balance due
-    checkout: "決算"
+    balance_due: "未支払い"
+    checkout: "決算中"
     completed: "完了"
-    credit_owed: credit owed
+    credit_owed: "一部未払"
     failed: "失敗しました"
     paid: "支払い済み"
     pending: "支払い待ち"
@@ -672,7 +672,7 @@ ja:
     void: "無効"
   payment_updated: Payment Updated
   payments: "支払い方法"
-  pending_payments: Pending Payments
+  pending_payments: "未支払い注文"
   permalink: Permalink
   phone: "電話番号"
   place_order: "注文を送信する"
@@ -921,20 +921,20 @@ ja:
   shipment_number: "発送 #"
   shipment_state: "配送状況"
   shipment_states: 
-    backorder: backorder
-    partial: partial
-    pending: pending
-    ready: ready
-    shipped: "発送済み"
-  shipment_updated: Shipment Updated
+    backorder: "入荷待ち"
+    partial: "一部配送"
+    pending: "配送準備中"
+    ready: "配送可能"
+    shipped: "配送済み"
+  shipment_updated: "配送状況が更新されました"
   shipments: "配送"
   shipped: "発送済"
   shipping: "送料"
   shipping_address: "配送先"
   shipping_categories: "配送カテゴリー"
   shipping_categories_description: "Manage shipping categories to identify which products can be shipped via which method"
-  shipping_category: Shipping Category
-  shipping_cost: Cost
+  shipping_category: "配送カテゴリー"
+  shipping_cost: "配送料"
   shipping_error: "Shipping Error"
   shipping_instructions: "Shipping Instructions"
   shipping_method: "配送方法"
@@ -944,8 +944,8 @@ ja:
   shop_by_taxonomy: "%{taxonomy}"
   shopping_cart: "ショッピングカート"
   show: "表示"
-  show_active: "Show Active"
-  show_deleted: "削除済みのも表示"
+  show_active: "有効のを表示する"
+  show_deleted: "削除済みのを表示"
   show_incomplete_orders: "未処理の注文も表示"
   show_only_complete_orders: "処理済みの注文のみを表示"
   show_out_of_stock_products: "在庫切れの商品を表示"
