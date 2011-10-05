@@ -1035,7 +1035,7 @@ ja:
   unable_to_connect_to_gateway: "Unable to connect to gateway."
   unable_to_save_order: "Unable to Save Order"
   under_paid: "Under Paid"
-  units: "単位"
+  units: "ユニット"
   unrecognized_card_type: Unrecognized card type
   update: "更新"
   update_password: "Update my password and log me in"
