@@ -286,7 +286,7 @@ ja:
   backordered: Backordered
   backordering_is_allowed: "Backordering %{not} allowed"
   balance_due: "未払額"
-  best_selling_products: "Best Selling Products"
+  best_selling_products: "良く売れている商品"
   best_selling_taxons: "良く売れている分類群"
   bill_address: "請求先住所"
   billing: Billing
@@ -1020,14 +1020,14 @@ ja:
   thumbnail: "サムネール"
   to_add_variants_you_must_first_define: "To add variants, you must first define"
   to_state: "To State"
-  top_grossing_products: "Top Grossing Products"
+  top_grossing_products: "収益を上げている商品"
   total: "合計"
   tracking: Tracking
   transaction: Transaction
   transactions: Transactions
-  tree: Tree
-  try_again: "Try Again"
-  type: 支払い方法
+  tree: "ツリー"
+  try_again: "もう一度試して下さい"
+  type: "支払い方法"
   type_to_search: Type to search
   unable_ship_method: "Unable to generate shipping methods due to a server error."
   unable_to_authorize_credit_card: "Unable to Authorize Credit Card"
@@ -1035,24 +1035,24 @@ ja:
   unable_to_connect_to_gateway: "Unable to connect to gateway."
   unable_to_save_order: "Unable to Save Order"
   under_paid: "Under Paid"
-  units: "Units"
+  units: "単位"
   unrecognized_card_type: Unrecognized card type
-  update: 更新
+  update: "更新"
   update_password: "Update my password and log me in"
-  updated_successfully: 更新しました
+  updated_successfully: "更新しました"
   updating: Updating
   usage_limit: Usage Limit
   use_as_shipping_address: Use as Shipping Address
   use_billing_address: Use Billing Address
   use_different_shipping_address: "Use Different Shipping Address"
   use_new_cc: "Use a new card"
-  user: ユーザ
-  user_account: ユーザアカウント
-  user_created_successfully: "User created successfully"
-  user_details: ユーザ詳細
+  user: "ユーザ"
+  user_account: "ユーザアカウント"
+  user_created_successfully: "新規ユーザが作成されました"
+  user_details: "ユーザ詳細"
   user_rule: 
-    choose_users: Choose users
-  users: ユーザ
+    choose_users: "ユーザを選択"
+  users: "ユーザ"
   validate_on_profile_create: Validate on profile create
   validation: 
     cannot_be_less_than_shipped_units: "cannot be less than the number of shipped units."
@@ -1065,20 +1065,20 @@ ja:
   version: バージョン
   view_shipping_options: "View shipping options"
   void: Void
-  website: ウェブサイト
-  weight: 重量
+  website: "ウェブサイト"
+  weight: "重量"
   welcome_to_sample_store: "Welcome to the sample store"
   what_is_a_cvv: "What is a (CVV) Credit Card Code?"
   what_is_this: "What's This?"
   whats_this: "What's this"
-  width: 横幅
+  width: "横幅"
   wont: "されない"
   year: "年"
   you_have_been_logged_out: "You have been logged out."
   you_have_no_orders_yet: "You have no orders yet."
-  your_cart_is_empty: カートは空です
-  zip: 郵便番号
-  zone: ゾーン
+  your_cart_is_empty: "カートは空です"
+  zip: "郵便番号"
+  zone: "ゾーン"
   zone_based: "Zone Based"
   zone_setting_description: "Collections of countries, states or other zones to be used in various calculations."
-  zones: ゾーン
+  zones: "ゾーン"
