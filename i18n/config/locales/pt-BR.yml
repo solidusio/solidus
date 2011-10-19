@@ -25,10 +25,10 @@ pt-BR:
         address2: endereço
         city: Cidade
         country: País
-        first_name_begins_with: Nome inicia-se com
-        firstname: "First Name"
-        last_name_begins_with: Sobrenome inicia-se com
-        lastname: "Last Name"
+        first_name_begins_with: "Nome começa com"
+        firstname: "Primeiro nome"
+        last_name_begins_with: "Sobrenome começa com"
+        lastname: "Sobrenome"
         phone: Telefone
         state: Estado
         zipcode: CEP
@@ -68,7 +68,7 @@ pt-BR:
         quantity: Quantidade
       order: 
         checkout_complete: "Compra finalizada"
-        completed_at: "Completed At"
+        completed_at: "Completo em"
         coupon_code: "Coupon Code"
         ip_address: "Endereço IP"
         item_total: "Total"
@@ -82,7 +82,7 @@ pt-BR:
         description: Descrição
         master_price: "Preço principal"
         name: Nome
-        on_hand: "On Hand"
+        on_hand: "Em mãos"
         shipping_category: "Categoria de entrega"
         tax_category: "Categoria de imposto"
       product_group: 
@@ -96,11 +96,11 @@ pt-BR:
         description: "Descrição"
       promotion: 
         code: "Code"
-        description: "Description"
-        expires_at: "Expires at"
+        description: "Descrição"
+        expires_at: "Expira em"
         name: "Name"
-        starts_at: "Starts at"
-        usage_limit: "Usage limit"
+        starts_at: "Começa em"
+        usage_limit: "Limite de utilização"
       property: 
         name: Nome
         presentation: Apresentação
@@ -205,8 +205,8 @@ pt-BR:
         one: Táxon
         other: Táxons
       taxonomy: 
-        one: Táxonomia
-        other: Táxonomias
+        one: Taxonomia
+        other: Taxonomias
       user: 
         one: Usuario
         other: Usuários
@@ -300,8 +300,8 @@ pt-BR:
   card_code: "Código do cartão"
   card_details: "Detalhes do cartão"
   card_number: "Número do cartão"
-  card_type_is: A bandeira do cartão é
-  cart: Carrrinho
+  card_type_is: "A bandeira do cartão é"
+  cart: Carrinho
   categories: Categorias
   category: Categoria
   change: Alterar
@@ -325,7 +325,7 @@ pt-BR:
   confirm: Confirme
   confirm_delete: "Confirmar Deleção"
   confirm_password: "Confirmação da senha"
-  continue: Continuars
+  continue: Continuar
   continue_shopping: "Continuar comprando"
   copy_all_mails_to: "Copiar todos emails para"
   cost_price: "Preço de custo"
@@ -344,8 +344,8 @@ pt-BR:
   credit_card: "Cartão de Crédito"
   credit_card_capture_complete: "Cartão de Crédito Capturado"
   credit_card_payment: "Pagamento com Cartão de Crédito"
-  credit_owed: "Credit Owed"
-  credit_total: "Credit Total"
+  credit_owed: "Crédito Devedor"
+  credit_total: "Crédito Total"
   creditcard: "Cartão de crédito"
   creditcards: "Cartões de crédito"
   credits: "Créditos"
@@ -412,7 +412,7 @@ pt-BR:
   expiration: "Expiração"
   expiration_month: "Mês de Expiração"
   expiration_year: "Ano de Expiração"
-  expiry: Expiry
+  expiry: Expiração
   extension: Extensão
   extensions: Extensões
   filename: "Nome do arquivo"
@@ -605,23 +605,23 @@ pt-BR:
     confirm_email: 
       subject: "Order Confirmation"
   order_not_in_system: "Este número de pedido não é válido"
-  order_number: "Nr. Pedido"
+  order_number: "N. Pedido"
   order_operation_authorize: Autorizar
   order_processed_but_following_items_are_out_of_stock: "Seu pedido foi processado, mas os seguintes itens estão esgotados:"
   order_processed_successfully: "Seu pedido foi processado com sucesso."
   order_state: # keys correspond to Checkout state names:
     # keys correspond to Checkout state names: 
     address: endereço
-    adjustments: adjustes
+    adjustments: ajustes
     awaiting_return: aguardando retorno
     canceled: cancelado
     cart: carrinho
-    complete: completado
+    complete: completo
     confirm: confirmação
     delivery: entrega
     payment: pagamento
-    resumed: resumed
-    returned: retornado
+    resumed: resumido
+    returned: devolvido
   order_summary: "Resumo do Pedido"
   order_sure_want_to: "Você tem certeza que deseja %{event} este pedido?"
   order_total: "Total do Pedido"
@@ -655,15 +655,15 @@ pt-BR:
   payment_processing_failed: "Pagamento não foi processado, por favor verifique os detalhes informados."
   payment_state: "Estado do Pagamento"
   payment_states: 
-    balance_due: "Creedor"
+    balance_due: "Saldo devedor"
     checkout: checkout
-    completed: completed
-    credit_owed: "Devedor"
-    failed: failed
+    completed: Completo
+    credit_owed: "Crédito devido"
+    failed: Falhou
     paid: "Pago"
-    pending: pending
-    processing: processing
-    void: void
+    pending: Pendente
+    processing: Processando
+    void: nulo
   payment_updated: "Pagamento Atualizado"
   payments: Pagamentos
   pending_payments: "Pagamentos Pendentes"
@@ -843,7 +843,7 @@ pt-BR:
   provider: "Provedor"
   provider_settings_warning: "Se estás mudando o tipo de provedor, deves salvar antes de editar as configurações"
   qty: Qtde.
-  quantity_returned: Quantity Returned
+  quantity_returned: "Quantidade retornada"
   quantity_shipped: "Quantidade enviada"
   range: "Intervalo"
   rate: Taxa
@@ -883,8 +883,8 @@ pt-BR:
   roles: Funções
   rules: Rules
   sales_tax: "Imposto de venda"
-  sales_total: "Total de Venda"
-  sales_total_description: "Sales Total For All Orders"
+  sales_total: "Total de Vendas"
+  sales_total_description: "Total de vendas por todos os pedidos"
   save_and_continue: "Salvar e Continuar"
   save_preferences: "Salvar Preferências"
   scope: Scopo
