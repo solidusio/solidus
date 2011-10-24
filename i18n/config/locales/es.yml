@@ -862,7 +862,7 @@ es:
   resend: "Volver a enviar"
   resend_confirmation_instructions: "Reenviar instrucciones de confirmación"
   resend_unlock_instructions: "Reenviar instrucciones de desbloqueo"
-  reset_password: "Reiniciar my contraseña"
+  reset_password: "Reiniciar mi contraseña"
   resource_controller: 
     member_object_not_found: "Miembro no encontrado."
     successfully_created: "Creado con éxito"
