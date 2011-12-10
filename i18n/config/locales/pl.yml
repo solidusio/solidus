@@ -1,8 +1,5 @@
 ---
 pl:
-  'no': "Nie"
-  'yes': "Tak"
-  5_biggest_spenders: "5 Biggest Spenders"
   a_copy_of_all_mail_will_be_sent_to_the_following_addresses: A copy of all mail be sent to the following addresses
   abbreviation: Skrót
   access_denied: "Access Denied"
@@ -18,21 +15,44 @@ pl:
     new: Nowa
     update: Aktualizuj
   active: "Active"
+  activemodel:
+    attributes:
+      promotion:
+        code: Code
+        description: Description
+        expires_at: Expires at
+        name: Name
+        starts_at: Starts at
+        usage_limit: Usage limit
   activerecord:
     attributes:
-      address:
-        address1: Adres
-        address2: "Adres (c.d.)"
-        city: Miasto
-        country: "Kraj"
+      spree/address:
+        address1: Address
+        address2: "Address (contd.)"
+        city: City
+        country: "Country"
         first_name_begins_with: "First Name Begins With"
-        firstname: "Imię"
+        firstname: "First Name"
         last_name_begins_with: "Last Name Begins With"
-        lastname: "Nazwisko"
-        phone: Telefon
+        lastname: "Last Name"
+        phone: Phone
         state: "State"
-        zipcode: "Kod pocztowy"
-      checkout:
+        zipcode: "Zip Code"
+      spree/country:
+        iso: ISO
+        iso3: ISO3
+        iso_name: "ISO Name"
+        name: Name
+        numcode: "ISO Code"
+      spree/inventory_unit:
+        state: State
+      spree/line_item:
+        price: Price
+        quantity: Quantity
+      spree/option_type:
+        name: Name
+        presentation: Presentation
+      spree/order:
         bill_address:
           address1: "Billing address street"
           city: "Billing address city"
@@ -41,6 +61,11 @@ pl:
           phone: "Billing address phone"
           state: "Billing address state"
           zipcode: "Billing address zipcode"
+        checkout_complete: "Checkout Complete"
+        completed_at: "Completed At"
+        ip_address: "IP Address"
+        item_total: "Item Total"
+        number: Number
         ship_address:
           address1: "Shipping address street"
           city: "Shipping address city"
@@ -49,84 +74,57 @@ pl:
           phone: "Shipping address phone"
           state: "Shipping address state"
           zipcode: "Shipping address zipcode"
-      country:
-        iso: ISO
-        iso3: ISO3
-        iso_name: "ISO Name"
-        name: Nazwa
-        numcode: "ISO Code"
-      creditcard:
-        cc_type: Typ
-        month: Miesiąc
-        number: Numer
-        verification_value: "Verification Value"
-        year: Rok
-      inventory_unit:
-        state: Stan
-      line_item:
-        price: Cena
-        quantity: Ilość
-      order:
-        checkout_complete: "Checkout Complete"
-        completed_at: "Completed At"
-        coupon_code: "Coupon Code"
-        ip_address: "IP Address"
-        item_total: "Item Total"
-        number: Numer
         special_instructions: "Special Instructions"
         state: State
         total: Total
-      product:
+      spree/payment_method:
+        name: Name
+      spree/product:
         available_on: "Available On"
         cost_price: "Cost Price"
-        description: Opis
+        description: Description
         master_price: "Master Price"
-        name: Nazwa
-        on_hand: "On Hande"
+        name: Name
+        on_hand: "On Hand"
         shipping_category: "Shipping Category"
         tax_category: "Tax Category"
-      product_group:
-        name: "Nazwa"
+      spree/product_group:
+        name: Name
         product_count: "Product count"
         product_scopes: "Product scopes"
-        products: "Produkty"
-        url: "URL"
-      product_scope:
+        products: "Products"
+        url: URL
+      spree/product_scope:
         arguments: "Arguments"
         description: "Description"
-      promotion:
-        code: "Kod"
-        description: "Description"
-        expires_at: "Expires at"
-        name: "Name"
-        starts_at: "Starts at"
-        usage_limit: "Usage limit"
-      property:
-        name: Nazwa
+      spree/property:
+        name: Name
         presentation: Presentation
-      prototype:
-        name: Nazwa
-      return_authorization:
-        amount: Ilość
-      role:
-        name: Nazwa
-      state:
-        abbr: Skrót
-        name: Nazwa
-      tax_category:
-        description: Opis
-        name: Nazwa
-      tax_rate:
+      spree/prototype:
+        name: Name
+      spree/return_authorization:
+        amount: Amount
+      spree/role:
+        name: Name
+      spree/state:
+        abbr: Abbreviation
+        name: Name
+      spree/tax_category:
+        description: Description
+        name: Name
+      spree/tax_rate:
         amount: Rate
-      taxon:
-        name: Nazwa
+      spree/taxon:
+        name: Name
         permalink: Permalink
-        position: Pozycja
-      taxonomy:
-        name: Nazwa
-      user:
+        position: Position
+      spree/taxonomy:
+        name: Name
+      spree/user:
         email: Email
-      variant:
+        password: "Password"
+        password_confirmation: "Password Confirmation"
+      spree/variant:
         cost_price: "Cost Price"
         depth: Depth
         height: Height
@@ -134,89 +132,96 @@ pl:
         sku: SKU
         weight: Weight
         width: Width
-      zone:
-        description: Opis
-        name: Nazwa
+      spree/zone:
+        description: Description
+        name: Name
+      spreee/creditcard:
+        cc_type: Type
+        month: Month
+        number: Number
+        verification_value: "Verification Value"
+        year: Year
     models:
-      address:
+      spree/address:
         one: Address
         other: Addresses
-      cheque_payment:
+      spree/cheque_payment:
         one: Cheque Payment
         other: Cheque Payments
-      country:
+      spree/country:
         one: Country
         other: Countries
-      creditcard:
+      spree/creditcard:
         one: "Credit Card"
         other: "Credit Cards"
-      creditcard_payment:
+      spree/creditcard_payment:
         one: "Credit Card Payment"
         other: "Credit Card Payments"
-      creditcard_txn:
+      spree/creditcard_txn:
         one: "Credit Card Transaction"
         other: "Credit Card Transactions"
-      inventory_unit:
+      spree/inventory_unit:
         one: "Inventory Unit"
         other: "Inventory Units"
-      line_item:
+      spree/line_item:
         one: "Line Item"
         other: "Line Items"
-      order:
+      spree/order:
         one: Order
         other: Orders
-      payment:
+      spree/payment:
         one: Payment
         other: Payments
-      product:
+      spree/product:
         one: Product
         other: Products
-      product_group:
+      spree/product_group:
         one: "Product group"
         other: "Product groups"
-      property:
+      spree/property:
         one: Property
         other: Properties
-      prototype:
+      spree/prototype:
         one: Prototype
         other: Prototypes
-      return_authorization:
+      spree/return_authorization:
         one: Return Authorization
         other: Return Authorizations
-      role:
+      spree/role:
         one: Roles
         other: Roles
-      shipment:
+      spree/shipment:
         one: Shipment
         other: Shipments
-      shipping_category:
+      spree/shipping_category:
         one: "Shipping Category"
         other: "Shipping Categories"
-      state:
+      spree/state:
         one: State
         other: States
-      tax_category:
+      spree/tax_category:
         one: "Tax Category"
         other: "Tax Categories"
-      tax_rate:
+      spree/tax_rate:
         one: "Tax Rate"
         other: "Tax Rates"
-      taxon:
+      spree/taxon:
         one: Taxon
         other: Taxons
-      taxonomy:
+      spree/taxonomy:
         one: Taxonomy
         other: Taxonomies
-      user:
+      spree/user:
         one: User
         other: Users
-      variant:
+      spree/variant:
         one: Variant
         other: Variants
-      zone:
+      spree/zone:
         one: Zone
         other: Zones
   add: Add
+  add_action_of_type: Add action of type
   add_category: "Dodaj kategorię"
   add_country: "Add Country"
   add_option_type: "Dodaj typ opcji"
@@ -235,12 +240,21 @@ pl:
   adjustment: Dostosowanie
   adjustment_total: Adjustment Total
   adjustments: Adjustments
+  admin:
+    mail_methods:
+      send_testmail: 'Send Testmail'
+      testmail:
+        delivery_error: 'Testmail delivery error'
+        delivery_success: 'Testmail sent successfully'
+        error: 'Testmail error: %{e}'
   administration: Administracja
+  advertise: Advertise
   all: "All"
   all_departments: All departments
   allow_backorders: "Allow Backorders"
-  allow_ssl_to_be_used_when_in_developement_and_test_modes: Allow SSL to be used when in development and test modes
-  allow_ssl_to_be_used_when_in_production_mode: Allow SSL to be used in production mode
+  allow_ssl_in_development_and_test: Allow SSL to be used when in development and test modes
+  allow_ssl_in_production: Allow SSL to be used in production mode
+  allow_ssl_in_staging: Allow SSL to be used in staging mode
   allowed_ssl_in_production_mode: "SSL will %{not} be used in production"
   already_registered: Already Registered?
   alt_text: Alternative Text
@@ -280,13 +294,10 @@ pl:
   backordered: Backordered
   backordering_is_allowed: "Backordering %{not} allowed"
   balance_due: "Balance Due"
-  best_selling_products: "Best Selling Products"
-  best_selling_taxons: "Best Selling Taxons"
   bill_address: "Adres billingowy"
   billing: Billing
   billing_address: "Adres billingowy"
   both: Both
-  by_day: "by day"
   calculator: Calculator
   calculator_settings_warning: "If you are changing the calculator type, you must save first before you can edit the calculator settings"
   cancel: anuluj
@@ -294,7 +305,6 @@ pl:
   cancel_my_account_description: "Unhappy?"
   canceled: Canceled
   cannot_create_returns: Cannot create returns as this order has not shipped yet.
-  cannot_destory_line_item_as_inventory_units_have_shipped: Cannot destory line item as some inventory units have shipped.
   cannot_perform_operation: "Cannot perform requested operation"
   capture: przechwyć
   card_code: "Kod Karty"
@@ -329,7 +339,6 @@ pl:
   continue_shopping: "Kontynuuj zakupy"
   copy_all_mails_to: Copy All Mails To
   cost_price: "Cost Price"
-  count: Count
   count_of_reduced_by: "count of '%{name}' reduced by %{count}"
   country: Kraj
   country_based: "Country Based"
@@ -352,11 +361,15 @@ pl:
   current: Biężący
   customer: Klient
   customer_details: "Customer Details"
+  customer_details_updated: "The customer's details have been updated."
   customer_search: "Customer Search"
   date_created: Date created
   date_range: "Zakres czasu"
   debit: Debit
   default: Default
+  default_meta_description: Default Meta Description
+  default_meta_keywords: Default Meta Keywords
+  default_seo_title: Default Seo Title
   delete: Skasuj
   delivery: Delivery
   depth: Depth
@@ -395,7 +408,7 @@ pl:
   enable_login_via_login_password: "Use standard email/password"
   enable_login_via_openid: "Use OpenID instead"
   enable_mail_delivery: Enable Mail Delivery
-  enter_atleast_five_letters: Enter atleast five letters of customer name
+  enter_at_least_five_letters: Enter at least five letters of customer name
   enter_exactly_as_shown_on_card: Please enter exactly as shown on the card
   enter_password_to_confirm: "(we need your current password to confirm your changes)"
   environment: "Environment"
@@ -403,11 +416,23 @@ pl:
   errors:
     messages:
       could_not_create_taxon: "Could not create taxon"
+      no_payment_methods_available: "No payment methods are configured for this environment"
       no_shipping_methods_available: "No shipping methods available for selected location, please change your address and try again."
   errors_prohibited_this_record_from_being_saved:
     one: "1 error prohibited this record from being saved"
     other: "%{count} errors prohibited this record from being saved"
   event: Event
+  events:
+    spree:
+      cart:
+        add: 'Add to cart'
+      checkout:
+        coupon_code_added: Coupon code added
+      order:
+        contents_changed: "Order contents changed"
+      page_view: "Static page viewed"
+      user:
+        signup: 'User signup'
   existing_customer: "Existing Customer"
   expiration: "Expiration"
   expiration_month: "Miesiąc wygaśnięcia"
@@ -464,6 +489,7 @@ pl:
   included_in_other_shipment: Included in another Shipment
   included_in_this_shipment: Included in this Shipment
   instructions_to_reset_password: "Fill out the form below and instructions to reset your password will be emailed to you:"
+  insufficient_stock: "Insufficient stock available, only %{on_hand} remaining"
   integration_settings_warning: "If you are changing the billing integration, you must save first before you can edit the integration settings"
   intercept_email_address: Intercept Email Address
   intercept_email_instructions: "Override email recipient and replace with this address."
@@ -481,20 +507,17 @@ pl:
     operators:
       gt: greater than
       gte: greater than or equal to
-  items: "Items"
-  last_14_days: "Last 14 Days"
-  last_5_orders: "Last 5 Orders"
-  last_7_days: "Last 7 Days"
-  last_month: "Last Month"
+  landing_page_rule:
+    path: Path
   last_name: Nazwisko
   last_name_begins_with: "Last Name Begins With"
-  last_year: "Last Year"
   leave_blank_to_not_change: "(leave blank if you don't want to change it)"
   list: List
   listing_categories: "Lista kategorii"
   listing_option_types: "Lista typów opcji"
   listing_orders: "Lista zamówień"
   listing_product_groups: "Listing Product Groups"
+  listing_products: "Listing Products"
   listing_reports: "Lista raportów"
   listing_tax_categories: "Listing Tax Categories"
   listing_users: "Lista użytkowników"
@@ -520,7 +543,6 @@ pl:
   mark_shipped: "Mark Shipped"
   master_price: "Cena główna"
   max_items: Max Items
-  may_be_combined_with_other_promotions: May be combined with other promotions
   meta_description: "Meta Description"
   meta_keywords: "Meta Keywords"
   metadata: "Metadata"
@@ -536,6 +558,7 @@ pl:
   new_billing_integration: New Billing Integration
   new_category: "Nowa kategoria"
   new_customer: "New Customer"
+  new_group: New Group
   new_image: "Nowy obrazek"
   new_mail_method: New Mail Method
   new_option_type: "Nowy typ opcji"
@@ -563,9 +586,9 @@ pl:
   new_variant: "Nowy wariant"
   new_zone: "Nowa Strefa"
   next: Następne
+  no: "Nie"
   no_items_in_cart: "Koszyk jest pusty"
   no_match_found: "No Match Found"
-  no_payment_methods_available: "Can't check out, no payment methods are configured for this environment"
   no_products_found: "No products found"
   no_results: "No results"
   no_rules_added: No rules added
@@ -574,6 +597,7 @@ pl:
   none_available: Niedostępne
   normal_amount: "Normal Amount"
   not: not
+  not_found: "%{resource} is not found"
   not_shown: "Not Shown"
   note: Note
   notice_messages:
@@ -585,6 +609,7 @@ pl:
     variant_deleted: "Variant has been deleted"
     variant_not_deleted: "Variant could not be deleted"
   on_hand: "On Hand"
+  one_default_category_with_default_tax_rate: "You should configure exactly one default category with your countries default tax rate"
   operation: Operacja
   option_type: "Option Type"
   option_types: "Typy Opcji"
@@ -592,8 +617,6 @@ pl:
   option_values: "Option Values"
   options: Opcje
   or: lub
-  ord_qty: "Ord. Qty"
-  ord_total: "Ord. Total"
   order: Zamówienie
   order_confirmation_note: ""
   order_date: "Data zamówienia"
@@ -627,13 +650,9 @@ pl:
   order_total: "Zamówienie łącznie"
   order_total_message: "The total amount charged to your card will be"
   order_updated: "Zamówienie uaktualnione"
-  orders: Zamówienia
   other_payment_options: Other Payment Options
   out_of_stock: "Out of Stock"
-  out_of_stock_products: "Out of Stock Products"
   over_paid: "Over Paid"
-  overview: Przegląd
-  overview_welcome: "Welcome to your store overview, currently we do not have enough data to display the Overiew Dashboard.<br/><br/> The dashboard will display automatically once the system has sufficent orders to allow generation of the statistics."
   page_only_viewable_when_logged_in: You attempted to visit a page which can only be viewed when you are logged in
   page_only_viewable_when_logged_out: You attempted to visit a page which can only be viewed when you are logged out
   paid: Paid
@@ -817,10 +836,24 @@ pl:
   products: Produkty
   products_with_zero_inventory_display: "Products with a zero inventory will %{not} be displayed"
   promotion: Promotion
+  promotion_action: Promotion Action
+  promotion_action_types:
+    create_adjustment:
+      description: Creates a promotion credit adjustment on the order
+      name: Create adjustment
+    create_line_items:
+      description: Populates the cart with the specified variants and quantities
+      name: Create line items
+    give_store_credit:
+      description: Gives the user store credit of the amount specified
+      name: Give store credit
+  promotion_actions: Actions
   promotion_form:
     match_policies:
       all: Match any of these rules
       any: Match all of these rules
+  promotion_not_found: The coupon code you entered doesn't exist. Please try again.
+  promotion_rule: Promotion Rule
   promotion_rule_types:
     first_order:
       description: Must be the customer's first order
@@ -828,12 +861,18 @@ pl:
     item_total:
       description: Order total meets these criteria
       name: Item total
+    landing_page:
+      description: Customer must have visited the specified page
+      name: Landing Page
     product:
       description: Order includes specified product(s)
       name: Product(s)
     user:
       description: Available only to the specified users
       name: User
+    user_logged_in:
+      description: Available only to logged in users
+      name: User Logged In
   promotions: Promotions
   promotions_description: Manage offers and coupons with promotions
   properties: Właściwości
@@ -909,6 +948,7 @@ pl:
   ship_address: "Adres Dostawy"
   shipment: Shipment
   shipment_details: Shipment Details
+  shipment_inc_vat: "Shipment including VAT"
   shipment_mailer:
     shipped_email:
       subject: "Shipment Notification"
@@ -962,13 +1002,20 @@ pl:
   sort_ordering: "Sort ordering"
   special_instructions: "Special Instructions"
   spree:
+  spree/order:
+    coupon_code: Coupon Code
     date: Data
     time: Czas
+  spree_alert_checking: "Check for Spree security and release alerts"
+  spree_alert_not_checking: "Not checking for Spree security and release alerts"
   spree_gateway_error_flash_for_checkout: "There was a problem with your payment information. Please check your information and try again."
+  spree_inventory_error_flash_for_insufficient_quantity: "An item in your cart has become unavailable."
   ssl_will_be_used_in_development_and_test_modes: "SSL will be used in development and test mode if necessary."
   ssl_will_be_used_in_production_mode: "SSL will be used in production mode"
+  ssl_will_be_used_in_staging_mode: "SSL will be used in staging mode"
   ssl_will_not_be_used_in_development_and_test_modes: "SSL will not be used in development and test mode if necessary."
   ssl_will_not_be_used_in_production_mode: "SSL will not be used in production mode"
+  ssl_will_not_be_used_in_staging_mode: "SSL will not be used in staging mode"
   start: Start
   start_date: Valid from
   state: Stan
@@ -1000,21 +1047,24 @@ pl:
   taxon_edit: Edit Taxon
   taxonomies: Taxonomies
   taxonomies_setting_description: "Create and manage taxonomies"
+  taxonomy: Taxonomy
   taxonomy_edit: "Edit taxonomy"
   taxonomy_tree_error: "The requested change has not been accepted and the tree has been returned to its previous state, please try again."
   taxonomy_tree_instruction: "* Right click a child in the tree to access the menu for adding, deleting or sorting a child."
   taxons: Taxons
   test: "Test"
+  test_mailer:
+    test_email:
+      greeting: 'Congratulations!'
+      message: 'If you have received this email, then your email settings are correct.'
+      subject: 'Testmail'
   test_mode: Test Mode
   thank_you_for_your_order: "Thank you for your business.  Please print out a copy of this confirmation page for your records."
   there_were_problems_with_the_following_fields: "There were problems with the following fields"
   this_file_language: Polski (PL)
-  this_month: "This Month"
-  this_year: "This Year"
   thumbnail: "Thumbnail"
   to_add_variants_you_must_first_define: "To add variants, you must first define"
   to_state: "To State"
-  top_grossing_products: "Top Grossing Products"
   total: Łącznie
   tracking: Tracking
   transaction: Transakcja
@@ -1029,7 +1079,6 @@ pl:
   unable_to_connect_to_gateway: "Unable to connect to gateway."
   unable_to_save_order: "Unable to Save Order"
   under_paid: "Under Paid"
-  units: "Units"
   unrecognized_card_type: Unrecognized card type
   update: Aktualizuj
   update_password: "Update my password and log me in"
@@ -1043,17 +1092,19 @@ pl:
   user: Użytkownik
   user_account: User Account
   user_created_successfully: "User created successfully"
-  user_details: "User Details"
   user_rule:
     choose_users: Choose users
   users: Użytkownicy
   validate_on_profile_create: Validate on profile create
   validation:
+    cannot_be_greater_than_available_stock: "cannot be greater than available stock."
     cannot_be_less_than_shipped_units: "cannot be less than the number of shipped units."
+    cannot_destory_line_item_as_inventory_units_have_shipped: "Cannot destory line item as some inventory units have shipped."
     is_too_large: "is too large -- stock on hand cannot cover requested quantity!"
     must_be_int: "must be an integer"
     must_be_non_negative: "must be a non-negative value"
   value: Wartość
+  variant: Variant
   variants: Warianty
   vat: "VAT"
   version: Wersja
@@ -1067,6 +1118,7 @@ pl:
   whats_this: "Co to jest"
   width: Szerokość
   year: "Year"
+  yes: "Tak"
   you_have_been_logged_out: "You have been logged out."
   you_have_no_orders_yet: "You have no orders yet."
   your_cart_is_empty: "Twój koszyk jest pusty"
