@@ -1,29 +1,29 @@
 --- 
 pl: 
-  'no': "No"
-  'yes': "Yes"
+  'no': "Nie"
+  'yes': "Tak"
   5_biggest_spenders: "5 Biggest Spenders"
   a_copy_of_all_mail_will_be_sent_to_the_following_addresses: A copy of all mail be sent to the following addresses
   abbreviation: Skrót
   access_denied: "Access Denied"
-  account: Konto
+  account: "Konto"
   account_updated: "Account updated!"
-  action: Akcja
+  action: "Akcja"
   actions: 
-    cancel: Anuluj
-    create: Utwórz
+    cancel: "Anuluj"
+    create: "Utwórz"
     destroy: Usuń
     list: Lista
     listing: Aukcja
     new: Nowa
     update: Aktualizuj
-  active: "Active"
+  active: "Aktywny"
   activerecord: 
     attributes: 
       address: 
-        address1: Address
-        address2: "Address (contd.)"
-        city: City
+        address1: Adress
+        address2: "Adress (kont.)"
+        city: Miasto
         country: "Country"
         first_name_begins_with: "First Name Begins With"
         firstname: "First Name"
@@ -52,20 +52,20 @@ pl:
       country: 
         iso: ISO
         iso3: ISO3
-        iso_name: "ISO Name"
-        name: Name
-        numcode: "ISO Code"
+        iso_name: "Nazwa ISO"
+        name: Nazwa
+        numcode: "Kod ISO"
       creditcard: 
-        cc_type: Type
-        month: Month
-        number: Number
+        cc_type: Typ
+        month: Miesiąc
+        number: Numer
         verification_value: "Verification Value"
-        year: Year
+        year: Rok
       inventory_unit: 
-        state: State
+        state: Stan
       line_item: 
-        price: Price
-        quantity: Quantity
+        price: Cena
+        quantity: Ilość
       order: 
         checkout_complete: "Checkout Complete"
         completed_at: "Completed At"
