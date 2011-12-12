@@ -3,33 +3,24 @@ pl:
   a_copy_of_all_mail_will_be_sent_to_the_following_addresses: A copy of all mail be sent to the following addresses
   abbreviation: Skrót
   access_denied: "Access Denied"
-  account: Konto
+  account: "Konto"
   account_updated: "Account updated!"
-  action: Akcja
-  actions:
-    cancel: Anuluj
-    create: Utwórz
+  action: "Akcja"
+  actions: 
+    cancel: "Anuluj"
+    create: "Utwórz"
     destroy: Usuń
     list: Lista
     listing: Aukcja
     new: Nowa
     update: Aktualizuj
-  active: "Active"
-  activemodel:
-    attributes:
-      promotion:
-        code: Code
-        description: Description
-        expires_at: Expires at
-        name: Name
-        starts_at: Starts at
-        usage_limit: Usage limit
+  active: "Aktywny"
   activerecord:
     attributes:
       spree/address:
         address1: Address
-        address2: "Address (contd.)"
-        city: City
+        address2: "Address (kont.)"
+        city: Miasto
         country: "Country"
         first_name_begins_with: "First Name Begins With"
         firstname: "First Name"
@@ -41,14 +32,20 @@ pl:
       spree/country:
         iso: ISO
         iso3: ISO3
-        iso_name: "ISO Name"
-        name: Name
-        numcode: "ISO Code"
+        iso_name: "Nazwa ISO"
+        name: Nazwa
+        numcode: "Kod ISO"
+      spree/creditcard: 
+        cc_type: Typ
+        month: Miesiąc
+        number: Numer
+        verification_value: "Verification Value"
+        year: Rok
       spree/inventory_unit:
-        state: State
+        state: Stan
       spree/line_item:
-        price: Price
-        quantity: Quantity
+        price: Cena
+        quantity: Ilość
       spree/option_type:
         name: Name
         presentation: Presentation
