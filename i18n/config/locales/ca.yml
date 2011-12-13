@@ -164,8 +164,8 @@ ca:
         one: "Article"
         other: "Articles"
       order: 
-        one: Demanat
-        other: Demanats
+        one: Comanda
+        other: Comandes
       payment: 
         one: Pagament
         other: Pagaments
