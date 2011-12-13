@@ -3,7 +3,7 @@ es:
   'no': "No"
   'yes': "Sí"
   5_biggest_spenders: Los 5 compradores principales
-  a_copy_of_all_mail_will_be_sent_to_the_following_addresses: Una copia de todos los correos sera enviada a las siguientes direcciones
+  a_copy_of_all_mail_will_be_sent_to_the_following_addresses: Una copia de todos los correos será enviada a las siguientes direcciones
   abbreviation: Abreviatura
   access_denied: "Acceso denegado"
   account: Cuenta
@@ -275,7 +275,7 @@ es:
   available_taxons: "Taxones disponibles"
   awaiting_return: Esperando respuesta
   back: Atrás
-  back_end: Parte Intera
+  back_end: Parte Interna
   back_to_store: "Volver a la tienda"
   backordered: Pedido pendiente de existencias
   backordering_is_allowed: "Pedidos pendientes de existencias %{not} permitidos"
@@ -294,7 +294,7 @@ es:
   cancel_my_account_description: "¿No está satisfecho?"
   canceled: Cancelado
   cannot_create_returns: No puede crearse la devolución ya que éste pedido aún no ha sido enviado.
-  cannot_destory_line_item_as_inventory_units_have_shipped: No se puede eliminar la linea de articulos ya que algunos de ellos han sido enviados.
+  cannot_destory_line_item_as_inventory_units_have_shipped: No se puede eliminar la línea de artículos ya que algunos de ellos han sido enviados.
   cannot_perform_operation: "No puede realizarse la operación"
   capture: captura
   card_code: "Código de la tarjeta"
@@ -341,7 +341,7 @@ es:
   create_user_account: Crear cuenta de usuario
   created_successfully: "Creado correctamente"
   credit: Crédito
-  credit_card: "Tarjeta de credito"
+  credit_card: "Tarjeta de crédito"
   credit_card_capture_complete: "La tarjeta de credito ha sido registrada"
   credit_card_payment: "Pago con tarjeta de credito"
   credit_owed: "Crédito disponible"
@@ -379,7 +379,7 @@ es:
   editing_promotion: Editando promoción
   editing_property: "Editando Propiedad"
   editing_prototype: "Editando Prototipo"
-  editing_shipping_category: "Editando Categoria de envío"
+  editing_shipping_category: "Editando Categoría de envío"
   editing_shipping_method: "Editando metodo de envío"
   editing_state: "Editando provincia"
   editing_tax_category: "Editando Categoría fiscal"
@@ -394,7 +394,7 @@ es:
   empty_cart: "Vaciar carrito"
   enable_login_via_login_password: "Usar email/contraseña estándar"
   enable_login_via_openid: "Usar OpenID en su lugar"
-  enable_mail_delivery: Habilitar envio por correo
+  enable_mail_delivery: Habilitar envío por correo
   enter_atleast_five_letters: Introduzca al menos cinco caracteres como nombre de cliente
   enter_exactly_as_shown_on_card: Por favor, introdúzcalo tal como se ve en la tarjeta
   enter_password_to_confirm: "(necesitamos su contraseña actual para confirmar los cambios)"
@@ -439,7 +439,7 @@ es:
   gateway_setting_description: "Configuración del medio"
   gateway_settings_warning: "Si está modificando el tipo de medio de pago, debe guardarla antes de editar su configuración"
   general: "General"
-  general_settings: "Configuracion general"
+  general_settings: "Configuración general"
   general_settings_description: "Configurar los ajustes generales de Spree."
   google_analytics: "Google Analytics"
   google_analytics_active: "Activo"
@@ -467,11 +467,11 @@ es:
   integration_settings_warning: "Si está modificando la integración de facturación, debe guardarlo antes de poder editar su configuración"
   intercept_email_address: Interceptar dirección de Email
   intercept_email_instructions: "Sustituir el receptor del email con ésta dirección."
-  invalid_search: "Busqueda inválida"
+  invalid_search: "Búsqueda inválida"
   inventory: Inventario
   inventory_adjustment: "Ajuste de inventario"
-  inventory_setting_description: "Configuracion del inventario, Devoluciones, mostrar artículos sin stock"
-  inventory_settings: "Configuracion del inventario"
+  inventory_setting_description: "Configuración del inventario, Devoluciones, mostrar artículos sin stock"
+  inventory_settings: "Configuración del inventario"
   is_not_available_to_shipment_address: "No se encuentra disponible para la dirección de envío"
   issue_number: Numero de Control
   item: artículo
@@ -550,7 +550,7 @@ es:
   new_property: "Nueva propiedad"
   new_prototype: "Nuevo prototipo"
   new_return_authorization: Nueva autorización de devolución
-  new_shipment: "Nuevo envio"
+  new_shipment: "Nuevo envío"
   new_shipping_category: "Nueva categoría de envío"
   new_shipping_method: "Nueva forma de envío"
   new_state: "Nueva provincia"
@@ -906,7 +906,7 @@ es:
   server_error: "El servidor ha devuelto un error"
   settings: Configuración
   ship: enviar
-  ship_address: "Direccion de envío"
+  ship_address: "Dirección de envío"
   shipment: Envío
   shipment_details: Detalles del envío
   shipment_mailer: 
@@ -925,7 +925,7 @@ es:
   shipped: Enviado
   shipping: Envío
   shipping_address: "Dirección de envío"
-  shipping_categories: "Categorias de envío"
+  shipping_categories: "Categorías de envío"
   shipping_categories_description: "Gestionar las categorías de envío para determinar qué categorías de productos pueden ser transportados a través de qué método"
   shipping_category: Categoría de envío
   shipping_cost: Costes de envío
@@ -943,7 +943,7 @@ es:
   show_incomplete_orders: "Mostrar los pedidos incompletos"
   show_only_complete_orders: "Mostrar sólo los pedidos completados"
   show_out_of_stock_products: "Mostrar productos sin stock"
-  show_price_inc_vat: "Mostrar precios con IVA incluído"
+  show_price_inc_vat: "Mostrar precios con IVA incluido"
   showing_first_n: "Mostrando los primeros: %{n}"
   sign_up: Registrarme
   site_name: "Nombre del sitio"
@@ -989,7 +989,7 @@ es:
   tax: Impuestos
   tax_categories: "Categorías fiscales"
   tax_categories_setting_description: "Establecer categorías fiscales para determinar qué productos deben estar sujetos a que categorías"
-  tax_category: "Categoria fiscal"
+  tax_category: "Categoría fiscal"
   tax_rates: "Tasas de impuestos"
   tax_rates_description: Configuración de tasas de impuestos.
   tax_settings: "Configuración de impuestos"
@@ -1022,7 +1022,7 @@ es:
   tree: Árbol
   try_again: "Volver a intentar"
   type: Tipo
-  type_to_search: Typo a buscar
+  type_to_search: Tipo a buscar
   unable_ship_method: "No ha sido posible generar métodos de envío debido a un error del servidor."
   unable_to_authorize_credit_card: "No ha sido posible autorizar la tarjeta de crédito"
   unable_to_capture_credit_card: "No ha sido posible capturar la tarjeta de crédito"
@@ -1032,14 +1032,14 @@ es:
   units: "Unidades"
   unrecognized_card_type: Tipo de tarjeta desconocido
   update: Actualizar
-  update_password: "Actualiza mi contraseña y dejame entrar"
+  update_password: "Actualiza mi contraseña y déjame entrar"
   updated_successfully: "Actualizado correctamente"
   updating: Actualizando
   usage_limit: Límite de uso
   use_as_shipping_address: Usar como dirección de envío
   use_billing_address: Usar la dirección de facturación
   use_different_shipping_address: "Usar una dirección de envío diferente"
-  use_new_cc: "Usar uan tarjeta diferente"
+  use_new_cc: "Usar una tarjeta diferente"
   user: Usuario
   user_account: Cuenta de cliente
   user_created_successfully: "Cliente creado"
@@ -1062,7 +1062,7 @@ es:
   website: "Página web"
   weight: Peso
   welcome_to_sample_store: "Bienvenido a la tienda de ejemplo"
-  what_is_a_cvv: "¿Qué es el codigo de verificación (CVV)?"
+  what_is_a_cvv: "¿Qué es el código de verificación (CVV)?"
   what_is_this: "¿Qué es esto?"
   whats_this: "¿Qué es esto?"
   width: Ancho
