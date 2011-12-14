@@ -2,19 +2,28 @@
 pl:
   a_copy_of_all_mail_will_be_sent_to_the_following_addresses: A copy of all mail be sent to the following addresses
   abbreviation: Skrót
-  access_denied: "Access Denied"
-  account: "Konto"
-  account_updated: "Account updated!"
-  action: "Akcja"
-  actions: 
-    cancel: "Anuluj"
-    create: "Utwórz"
+  access_denied: "Dostęp Wzbroniony"
+  account: Konto
+  account_updated: "Konto zaktualizowane!"
+  action: Akcja
+  actions:
+    cancel: Anuluj
+    create: Utwórz
     destroy: Usuń
     list: Lista
     listing: Aukcja
     new: Nowa
     update: Aktualizuj
   active: "Aktywne"
+  activemodel:
+    attributes:
+      promotion:
+        code: Kod
+        description: Opis
+        expires_at: Wygasa o
+        name: Nazwa
+        starts_at: Rozpoczyna się od
+        usage_limit: Usage limit
   activerecord:
     attributes:
       spree/address:
@@ -22,20 +31,20 @@ pl:
         address2: "Adres (c.d.)"
         city: Miasto
         country: "Kraj"
-        first_name_begins_with: "First Name Begins With"
-        firstname: "First Name"
-        last_name_begins_with: "Last Name Begins With"
-        lastname: "Last Name"
+        first_name_begins_with: "Imię Zaczyna Się Od"
+        firstname: "Imię"
+        last_name_begins_with: "Nazwisko Zaczyna Się Od"
+        lastname: "Nazwisko"
         phone: Telefon
-        state: "State"
-        zipcode: "Zip Code"
+        state: "Stan"
+        zipcode: "Kod Pocztowy"
       spree/country:
         iso: ISO
         iso3: ISO3
         iso_name: "Nazwa ISO"
         name: Nazwa
         numcode: "Kod ISO"
-      spree/creditcard: 
+      spree/creditcard:
         cc_type: Typ
         month: Miesiąc
         number: Numer
@@ -48,7 +57,7 @@ pl:
         quantity: Ilość
       spree/option_type:
         name: Nazwa
-        presentation: Presentation
+        presentation: Prezentacja
       spree/order:
         bill_address:
           address1: "Billing address street"
@@ -59,7 +68,7 @@ pl:
           state: "Billing address state"
           zipcode: "Billing address zipcode"
         checkout_complete: "Checkout Complete"
-        completed_at: "Completed At"
+        completed_at: "Skompletowane O"
         ip_address: "Adres IP"
         item_total: "Item Total"
         number: Numer
@@ -71,36 +80,36 @@ pl:
           phone: "Shipping address phone"
           state: "Shipping address state"
           zipcode: "Shipping address zipcode"
-        special_instructions: "Special Instructions"
-        state: State
-        total: Total
+        special_instructions: "Specjalne Instrukcje"
+        state: Stan
+        total: Łącznie
       spree/payment_method:
         name: Nazwa
       spree/product:
-        available_on: "Available On"
+        available_on: "Dostępny Od"
         cost_price: "Cost Price"
         description: Opis
         master_price: "Master Price"
         name: Nazwa
         on_hand: "On Hand"
         shipping_category: "Shipping Category"
-        tax_category: "Tax Category"
+        tax_category: "Kategoria Podatkowa"
       spree/product_group:
         name: Nazwa
         product_count: "Product count"
         product_scopes: "Product scopes"
-        products: "Products"
+        products: "Produkty"
         url: URL
       spree/product_scope:
         arguments: "Arguments"
         description: "Opis"
       spree/property:
         name: Nazwa
-        presentation: Presentation
+        presentation: Prezentacja
       spree/prototype:
         name: Nazwa
       spree/return_authorization:
-        amount: Amount
+        amount: Ilość
       spree/role:
         name: Nazwa
       spree/state:
@@ -114,7 +123,7 @@ pl:
       spree/taxon:
         name: Nazwa
         permalink: Permalink
-        position: Position
+        position: Pozycja
       spree/taxonomy:
         name: Nazwa
       spree/user:
@@ -123,9 +132,9 @@ pl:
         password_confirmation: "Potwierdzenie Hasła"
       spree/variant:
         cost_price: "Cost Price"
-        depth: Depth
+        depth: Głębokość
         height: Wysokość
-        price: Price
+        price: Cena
         sku: SKU
         weight: Waga
         width: Szerokość
@@ -143,26 +152,26 @@ pl:
         one: Adres
         other: Adresy
       spree/cheque_payment:
-        one: Cheque Payment
-        other: Cheque Payments
+        one: Płatność Czekiem
+        other: Płatności Czekiem
       spree/country:
         one: Kraj
         other: Kraje
       spree/creditcard:
-        one: "Credit Card"
-        other: "Credit Cards"
+        one: "Karta Kredytowa"
+        other: "Karty Kredytowe"
       spree/creditcard_payment:
-        one: "Credit Card Payment"
-        other: "Credit Card Payments"
+        one: "Płatność Kartą Kredytową"
+        other: "Płatności Kartą Kredytową"
       spree/creditcard_txn:
-        one: "Credit Card Transaction"
-        other: "Credit Card Transactions"
+        one: "Tranzakcja Kartą Kredytową"
+        other: "Tranzakcje Kartą Kredytową"
       spree/inventory_unit:
         one: "Inventory Unit"
         other: "Inventory Units"
       spree/line_item:
-        one: "Line Item"
-        other: "Line Items"
+        one: "Pozycja"
+        other: "Pozycje"
       spree/order:
         one: Zamówienie
         other: Zamówienia
@@ -173,8 +182,8 @@ pl:
         one: Produkt
         other: Produkty
       spree/product_group:
-        one: "Product group"
-        other: "Product groups"
+        one: "Grupa produktów"
+        other: "Grupy produktów"
       spree/property:
         one: Własność
         other: Własności
@@ -185,29 +194,29 @@ pl:
         one: Return Authorization
         other: Return Authorizations
       spree/role:
-        one: Role
+        one: Rola
         other: Role
       spree/shipment:
-        one: Shipment
-        other: Shipments
+        one: Wysyłka
+        other: Wysyłki
       spree/shipping_category:
-        one: "Shipping Category"
-        other: "Shipping Categories"
+        one: "Kategoria Wysyłki"
+        other: "Kategorie Wysyłki"
       spree/state:
-        one: State
-        other: States
+        one: Stan
+        other: Stany
       spree/tax_category:
-        one: "Tax Category"
-        other: "Tax Categories"
+        one: "Kategoria Podatkowa"
+        other: "Kategorie Podatkowe"
       spree/tax_rate:
         one: "Tax Rate"
         other: "Tax Rates"
       spree/taxon:
-        one: Taxon
-        other: Taxons
+        one: Takson
+        other: Taksony
       spree/taxonomy:
-        one: Taxonomy
-        other: Taxonomies
+        one: Taksonomia
+        other: Taksonomie
       spree/user:
         one: Użytkownik
         other: Użytkownicy
@@ -215,8 +224,8 @@ pl:
         one: Wariant
         other: Warianty
       spree/zone:
-        one: Zone
-        other: Zones
+        one: Strefa
+        other: Strefy
   add: Dodaj
   add_action_of_type: Dodaj akcję o typie
   add_category: "Dodaj kategorię"
@@ -228,9 +237,9 @@ pl:
   add_product_properties: "Dodaj właściwości produktu"
   add_rule_of_type: Dodaj rolę o typie
   add_scope: "Add a scope"
-  add_state: "Add State"
+  add_state: "Dodaj Stan"
   add_to_cart: "Dodaj do koszyka"
-  add_zone: "Add Zone"
+  add_zone: "Dodaj Strefę"
   additional_item: Additional Item Cost
   address: Adres
   address_information: "Address Information"
@@ -239,23 +248,23 @@ pl:
   adjustments: Adjustments
   admin:
     mail_methods:
-      send_testmail: 'Send Testmail'
+      send_testmail: 'Wyślij list testowy'
       testmail:
-        delivery_error: 'Testmail delivery error'
-        delivery_success: 'Testmail sent successfully'
-        error: 'Testmail error: %{e}'
+        delivery_error: 'Błąd w dostarczaniu listu testowego'
+        delivery_success: 'List testowy dostarczony pomyślnie'
+        error: 'Błąd w liście testowym: %{e}'
   administration: Administracja
-  advertise: Advertise
+  advertise: Reklamuj
   all: "Wszystkie"
   all_departments: Wszystkie departamenty
   allow_backorders: "Allow Backorders"
-  allow_ssl_in_development_and_test: Allow SSL to be used when in development and test modes
-  allow_ssl_in_production: Allow SSL to be used in production mode
-  allow_ssl_in_staging: Allow SSL to be used in staging mode
-  allowed_ssl_in_production_mode: "SSL will %{not} be used in production"
+  allow_ssl_in_development_and_test: Użyj SSL w środowisku deweloperskim i testowym
+  allow_ssl_in_production: Użyj SSL w środowisku produkcyjnym
+  allow_ssl_in_staging: Użyj SSL w środowisku staging
+  allowed_ssl_in_production_mode: "SSL %{nie} będzie użyty w środowisku produkcyjnym"
   already_registered: Już Zarejestrowany?
   alt_text: Tekst Alternatywny
-  alternative_phone: Alternative Phone
+  alternative_phone: Alternatywny Numer Telefonu
   amount: Suma
   analytics_trackers: Analytics Trackers
   api:
@@ -264,7 +273,7 @@ pl:
     errors:
       invalid_event: "Invalid event name, valid names are %{events}"
       invalid_event_for_object: "Valid event name but not allowed for this object, valid names are %{events}"
-      missing_event: "No event name supplied"
+      missing_event: "Brak podanej nazwy wydarzenia"
     generate_key: "Wygeneruj klucz API"
     key: "Klucz API"
     key_cleared: "Klucz API wyczyszczony"
@@ -278,12 +287,12 @@ pl:
   are_you_sure_delete_image: "Czy napewno usunąć ten obrazek?"
   are_you_sure_option_type: "Czy napewno usunąć ten typ opcji?"
   are_you_sure_you_want_to_capture: "Are you sure you want to capture?"
-  assign_taxon: "Assign Taxon"
-  assign_taxons: "Assign Taxons"
-  authorization_failure: "Authorization Failure"
+  assign_taxon: "Przypisz Takson"
+  assign_taxons: "Przypisz Taksony"
+  authorization_failure: "Błąd Autoryzacji"
   authorized: Autoryzowany
   available_on: "Dostępny od"
-  available_taxons: "Available Taxons"
+  available_taxons: "Dostępne Taksony"
   awaiting_return: Awaiting Return
   back: Wstecz
   back_end: Back End
@@ -291,10 +300,10 @@ pl:
   backordered: Backordered
   backordering_is_allowed: "Backordering %{not} allowed"
   balance_due: "Balance Due"
-  bill_address: "Adres billingowy"
+  bill_address: "Adres Płatniczy"
   billing: Billing
-  billing_address: "Adres billingowy"
-  both: Both
+  billing_address: "Adres Płatniczy"
+  both: Obydwa
   calculator: Kalkulator
   calculator_settings_warning: "If you are changing the calculator type, you must save first before you can edit the calculator settings"
   cancel: Anuluj
@@ -307,7 +316,7 @@ pl:
   card_code: "Kod Karty"
   card_details: "Card details"
   card_number: "Numer Karty"
-  card_type_is: Card type is
+  card_type_is: Typ karty to
   cart: Koszyk
   categories: Kategorie
   category: Kategoria
@@ -339,8 +348,8 @@ pl:
   count_of_reduced_by: "count of '%{name}' reduced by %{count}"
   country: Kraj
   country_based: "Country Based"
-  coupon: Coupon
-  coupon_code: Coupon code
+  coupon: Kupon
+  coupon_code: Kod kuponu
   create: Utwórz
   create_a_new_account: "Utwórz nowe konto"
   create_product_group_from_products: Create a new product group from these products
@@ -418,7 +427,7 @@ pl:
   errors_prohibited_this_record_from_being_saved:
     one: "1 błąd zapobiegł zapisowi tego rekordu"
     other: "%{count} błedy(ów) zapobiegły(o) zapisowani tego rekordu"
-  event: Event
+  event: Wydarzenie
   events:
     spree:
       cart:
@@ -475,7 +484,7 @@ pl:
   height: Wysokość
   hello_user: "Witaj użytkowniku"
   history: Historia
-  home: "Home"
+  home: "Strona Główna"
   icon: "Ikona"
   icons_by: "Ikony wg"
   image: Obrazek
@@ -505,11 +514,11 @@ pl:
       gt: greater than
       gte: greater than or equal to
   landing_page_rule:
-    path: Path
+    path: Ścieżka
   last_name: Nazwisko
   last_name_begins_with: "Nazwisko Zaczyna Się Od"
   leave_blank_to_not_change: "(leave blank if you don't want to change it)"
-  list: List
+  list: Lista
   listing_categories: "Lista kategorii"
   listing_option_types: "Lista typów opcji"
   listing_orders: "Lista zamówień"
@@ -523,9 +532,9 @@ pl:
   locale_changed: "Locale Changed"
   log_in: Zaloguj
   logged_in_as: "Zalogowany jako"
-  logged_in_succesfully: "Logged in successfully"
-  logged_out: "You have been logged out."
-  login: Login
+  logged_in_succesfully: "Zalogowany pomyślnie"
+  logged_out: "Zostałeś(aś) wylogowany(a)."
+  login: Zaloguj
   login_as_existing: "Zaloguj się jako istniejący klient"
   login_failed: "Login authentication failed."
   login_name: Login
@@ -545,12 +554,12 @@ pl:
   metadata: "Metadata"
   minimal_amount: "Minimal Amount"
   missing_required_information: "Missing Required Information"
-  month: "Month"
+  month: "Miesiąc"
   my_account: "Moje konto"
   my_orders: "Moje zamówienia"
   name: Nazwa
-  name_or_sku: "Name or SKU"
-  new: New
+  name_or_sku: "Nazwa lub SKU"
+  new: Nowy
   new_adjustment: "New Adjustment"
   new_billing_integration: New Billing Integration
   new_category: "Nowa kategoria"
@@ -688,8 +697,8 @@ pl:
   place_order: Place Order
   please_create_user: "Please create a user account"
   powered_by: "Powered by"
-  presentation: Presentacja
-  preview: Preview
+  presentation: Pre`entacja
+  preview: Podgląd
   previous: Poprzednie
   price: Cena
   price_bucket: Price Bucket
@@ -697,7 +706,7 @@ pl:
   problem_authorizing_card: "Wystąpił problem przy autoryzacji karty"
   problem_capturing_card: "Wystąpił problem z przechwyceniem karty"
   problems_processing_order: "Wystąpiły problemy podczas przetwarzania zamówienia"
-  proceed_as_guest: "No Thanks, Proceed as Guest"
+  proceed_as_guest: "Nie, dziękuję, kontynuuj jako Gość"
   process: Przetwarzaj
   product: Produkt
   product_details: "Product Details"
@@ -707,7 +716,7 @@ pl:
   product_has_no_description: Product has not description
   product_properties: "Właściwości produktu"
   product_rule:
-    choose_products: Choose products
+    choose_products: Wybierz produkty
     label: "Order must contain %{select} of these products"
     match_all: all
     match_any: at least one
