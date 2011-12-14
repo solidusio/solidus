@@ -10,15 +10,15 @@ da:
         precision: 2
         separator: ','
         delimiter: '.'
-  5_biggest_spenders: "5 største forbrugerer"
-  a_copy_of_all_mail_will_be_sent_to_the_following_addresses:  En kopi af alle emails vil blive sent til følgende addresse
+  5_biggest_spenders: "5 største forbrugere"
+  a_copy_of_all_mail_will_be_sent_to_the_following_addresses:  "En kopi af alle emails vil blive sent til følgende addresse"
   abbreviation: Forkortelse
-  access_denied: "Adgang nægted"
+  access_denied: "Adgang nægtet"
   account: Konto
   account_updated: "Konto opdateret!"
   action: Handling
   actions: 
-    cancel: Annuler
+    cancel: Annuller
     create: Opret
     destroy: Slet
     list: Liste
@@ -35,7 +35,7 @@ da:
         country: "Land"
         first_name_begins_with: "Fornavn begynder med"
         firstname: "Fornavn"
-        last_name_begins_with: "Efternavn begynder ,ed"
+        last_name_begins_with: "Efternavn begynder med"
         lastname: "Efternavn"
         phone: Telefonnummer
         state: "Delstat"
@@ -61,13 +61,13 @@ da:
         iso: ISO
         iso3: ISO3
         iso_name: "ISO navn"
-        name: Nanavnme
+        name: Navn
         numcode: "ISO Code"
       creditcard: 
         cc_type: Type
         month: Måned
         number: Nummer
-        verification_value: "Verifications Kode"
+        verification_value: "Verifikationskode"
         year: År
       inventory_unit: 
         state: Delstat
@@ -91,7 +91,7 @@ da:
         master_price: "Original pris"
         name: Navn
         on_hand: "På lager"
-        shipping_category: "Leverings kategori"
+        shipping_category: "Leveringskategori"
         tax_category: "Momskategori"
       product_group: 
         name: "Navn"
@@ -108,7 +108,7 @@ da:
         expires_at: "Udløber"
         name: "Navn"
         starts_at: "Starter"
-        usage_limit: "Anvendings begrænsning"
+        usage_limit: "Anvendelsesbegrænsning"
       property: 
         name: Navn
         presentation: Præsentation
@@ -139,7 +139,7 @@ da:
         depth: Dybde
         height: Højde
         price: Pris
-        sku: Lagerholdnings Nummer
+        sku: "Varenummer"
         weight: Vægt
         width: Bredde
       zone: 
@@ -225,7 +225,7 @@ da:
         one: Zone
         other: Zoner
   add: Tilføj
-  add_category: "Tilføj kategoru"
+  add_category: "Tilføj kategori"
   add_country: "Tilføj land"
   add_option_type: "Tilføj alternative udgave"
   add_option_types: "Tilføj alternative udgaver"
@@ -237,7 +237,7 @@ da:
   add_state: "Tilføj delstat"
   add_to_cart: "Tilføj til indkøbskurv"
   add_zone: "Tilføj zone"
-  additional_item: Ydeligere varepris
+  additional_item: Yderligere varepris
   address: Adresse
   address_information: "Adresse information"
   adjustment: Justering
@@ -251,7 +251,7 @@ da:
   allow_ssl_to_be_used_when_in_production_mode: Anvend SSL i produktionstilstand
   allowed_ssl_in_production_mode: "SSL bliver %{not} brugt i produktion"
   already_registered: Allerede registreret?
-  alt_text: Alternative text
+  alt_text: Alternativ tekst
   alternative_phone: Alternative telefonnummer
   amount: Beløb
   analytics_trackers: Statestiksporer
@@ -295,26 +295,26 @@ da:
   billing_address: "Faktureringsadresse"
   both: Begge
   by_day: "om dagen"
-  calculator: Kalkulator #Is this a good translation?
-  calculator_settings_warning: "Hvis du ændrer kalkulatortypen, må du først gemme inden du kan ændre kalkulatorindstillingerne"
+  calculator: Beregner
+  calculator_settings_warning: "Hvis du ændrer beregnertypen, må du først gemme inden du kan ændre beregnerindstillingerne"
   cancel: annuler
   cancel_my_account: Annuler min konto
   cancel_my_account_description: "Utilfreds?"
   canceled: Annuleret
-  cannot_create_returns: "Kan ikke returnerer orderen, eftersom at den endnu ikke er leveret."
-  cannot_destory_line_item_as_inventory_units_have_shipped: "Kan ikke slette vare, da nogen artikler er blevet sendt"
-  cannot_perform_operation: "Kan ikke udfører ønskede operation"
+  cannot_create_returns: "Kan ikke returnere ordren, eftersom den endnu ikke er leveret."
+  cannot_destory_line_item_as_inventory_units_have_shipped: "Kan ikke slette vare, da nogle artikler er blevet sendt"
+  cannot_perform_operation: "Kan ikke udføre ønskede operation"
   capture: hævning
   card_code: "Kortkode"
   card_details: "Kortdetaljer"
   card_number: "Kortnummer"
-  card_type_is: Kortypen er
+  card_type_is: Korttypen er
   cart: Indkøbskurv
   categories: Kategorier
   category: Kategori
   change: Skift
   change_language: "Skift sprog"
-  change_my_password: "Skift mit adgangskode"
+  change_my_password: "Skift min adgangskode"
   charge_total: Regning total
   charged: Regning
   charges: Regninger
@@ -332,11 +332,11 @@ da:
   configured: Konfigureret
   confirm: Bekræft
   confirm_delete: "Bekræft sletning"
-  confirm_password: "Bekræft Kodeord"
+  confirm_password: "Bekræft adgangskode"
   continue: Fortsæt
   continue_shopping: "Fortsæt indkøb"
   copy_all_mails_to: Kopier alle emails til
-  cost_price: "Kost pric"
+  cost_price: "Kostpris"
   count: Optælling
   count_of_reduced_by: "optælling af '%{name}' reduceret ved %{count}"
   country: Land
@@ -349,7 +349,7 @@ da:
   create_user_account: Opret bruger konto
   created_successfully: "Oprettet"
   credit: Kredit
-  credit_card: "KreKreditkortditkard"
+  credit_card: "Kreditkort"
   credit_card_capture_complete: "Kreditkort blev hævet"
   credit_card_payment: "Kreditkort betaling"
   credit_owed: "Kredit beskyldt"
@@ -370,8 +370,8 @@ da:
   depth: Dypde
   description: Beskrivelse
   destroy: Slet
-  didnt_receive_confirmation_instructions: "Modtog du ingen bekræftelses instruktioner?"
-  didnt_receive_unlock_instructions: "Modtog du ingen oplåsnings instruktioner?"
+  didnt_receive_confirmation_instructions: "Modtog du ingen bekræftelsesinstruktioner?"
+  didnt_receive_unlock_instructions: "Modtog du ingen oplåsningsinstruktioner?"
   discount_amount: "Rabat beløb"
   display: Visning
   edit: Rediger
@@ -408,7 +408,7 @@ da:
   enter_password_to_confirm: "(vi mangler dit nuværende adgangskode for at bekræfte ændringerne)"
   environment: "Miljø"
   error: fejl
-  errors: 
+  errors:
     messages: 
       could_not_create_taxon: "Kunne ikke oprette taksonomisk gruppe"
       no_shipping_methods_available: "Ingen leveringsmetoder er tilgængelige for den valgte lokalitet. Skift din adresse og prøv igen."
@@ -472,7 +472,7 @@ da:
   included_in_other_shipment: Inkluder i en anden forsendelse
   included_in_this_shipment: Inkluder i denne forsendelse
   instructions_to_reset_password: "Udfyld formen nedenfor og vi vil sende dig instruktionerne til at nulstille din adgangskode:"
-  integration_settings_warning: "Hvis du ændrer faktureringsintegrationen, må du først gemme før du kan redigerer integrationsindstillingerne"
+  integration_settings_warning: "Hvis du ændrer faktureringsintegrationen, må du først gemme før du kan redigere integrationsindstillingerne"
   intercept_email_address: Opsnap email adresse
   intercept_email_instructions: "Overskriv email-modtagerens adresse med denne adresse."
   invalid_search: "Ugyldigt søgekriterie."
@@ -490,7 +490,7 @@ da:
       gt: større end
       gte: større end eller lig med
   items: "Artikler"
-  last_14_days: "Sidste 14 dagae"
+  last_14_days: "Sidste 14 dage"
   last_5_orders: "Sidste 5 ordre"
   last_7_days: "Sidste 7 dage"
   last_month: "Sidste måned"
@@ -538,7 +538,7 @@ da:
   my_account: "Min konto"
   my_orders: "Mine ordrer"
   name: Navn
-  name_or_sku: "navn eller SKU"
+  name_or_sku: "navn eller varenummer"
   new: Ny
   new_adjustment: "Ny justering"
   new_billing_integration: Ny fakturerings integration
@@ -572,7 +572,7 @@ da:
   new_zone: "Ny zone"
   next: Næste
   no_items_in_cart: "Indkøbskurv er tom."
-  no_match_found: "No match er fundet"
+  no_match_found: "Ingen match blev fundet"
   no_payment_methods_available: "Kan ikke checke ud, der er ikke indstillet nogen betalingsmetode for dette miljø"
   no_products_found: "Ingen produkter fundet"
   no_results: "Ingen resultater"
@@ -590,7 +590,7 @@ da:
     product_deleted: "Product er blevet slettet"
     product_not_cloned: "Product kunne ikke duplikeres"
     product_not_deleted: "Product kunne ikke slettes"
-    variant_deleted: "Varianten er blevet slettet"
+    variant_deleted: "Variant er blevet slettet"
     variant_not_deleted: "Variant kunne ikke slettes"
   on_hand: "På lager"
   operation: Operation
@@ -621,7 +621,7 @@ da:
     address: adresse
     adjustments: justeringer
     awaiting_return: afventer returnering
-    canceled: annuleret
+    canceled: annulleret
     cart: indkøbskurv
     complete: afslut
     confirm: bekræft
@@ -647,7 +647,7 @@ da:
   parent_category: "Overkategori"
   password: Adgangskode
   password_reset_instructions: "Instruktioner til at nulstille adgangskoden"
-  password_reset_instructions_are_mailed: "Instruktioner til at nulstille adgangskoden er blevet emailet til dig. Vær venlig at checke din email."
+  password_reset_instructions_are_mailed: "Instruktioner til at nulstille adgangskoden er blevet emailet til dig. Vær venlig at tjekke din email."
   password_reset_token_not_found: "Vi kunne ikke finde din konto. Hvis du har problemer, så prøv at kopiere og indsætte URL'en fra din e-mail i din browser eller genstarte processen for at nulstille adgangskoden."
   password_updated: "Adgangskoden er opdateret"
   path: Sti
@@ -677,7 +677,7 @@ da:
   permalink: Permalink
   phone: Telefonnummer
   place_order: Afgiv ordre
-  please_create_user: "Hver venlig at opret en bruger konto"
+  please_create_user: "Vær venlig at opret en bruger konto"
   powered_by: "Leveret af"
   presentation: præsentation
   preview: Forhåndsvisning
@@ -744,18 +744,18 @@ da:
         args: 
           words: Ord
         description: "(adskilt af mellemrum eller komma)"
-        name: "Produkt navn eller beskrivelse indeholder"
+        name: "Produktnavn eller beskrivelse indeholder"
         sentence: navn eller beskrivelse indeholder <em>%s</em>
       in_name_or_keywords: 
         args: 
           words: Ord
         description: "(adskilt af mellemrum eller komma)"
-        name: "Produkt navn eller metanøgleord indeholder"
+        name: "Produktnavn eller metanøgleord indeholder"
         sentence: navn eller nøgleord indeholder <em>%s</em>
       in_taxons: 
         args: 
           "taxon_names": "taksonomisk gruppenavn"
-        description: "Taksonomiske grupper skal være adskilt af et mellemrum eller (f.eks. adidas,sko)"
+        description: "Taksonomiske grupper skal være adskilt af et mellemrum eller (f.eks. adidas, sko)"
         name: "I taksonomiske grupper og alle deres undergrupper"
         sentence: i <em>%s</em> og alle deres undergrupper
       master_price_gte: 
@@ -772,8 +772,8 @@ da:
         sentence: "pris mindre eller lig med <em>%,2f</em>"
       price_between: 
         args: 
-          high: High
-          low: Low
+          high: Høj
+          low: Lav
         description: ""
         name: "Hovedpris imellem"
         sentence: "pris imellem <em>%,2f</em> og <em>%,2f</em>"
@@ -791,10 +791,10 @@ da:
         sentence: med værdi <em>%s</em>
       with_ids: 
         args: 
-          ids: ID
+          ids: "ID'er"
         description: "Vælg særskilte produkter"
-        name: Produkter med IDs
-        sentence: med IDs <em>%s</em>
+        name: "Produkter med ID'er"
+        sentence: "med ID'er <em>%s</em>"
       with_option: 
         args: 
           option: Alternativer
@@ -833,7 +833,7 @@ da:
       description: Skal være kundens første ordre
       name: Første ordre
     item_total: 
-      description: Ordre sum møder disse kriterier
+      description: Ordre som møder disse kriterier
       name: Totalpris
     product: 
       description: Ordrer inkluderer angivne produkt(er)
@@ -849,7 +849,7 @@ da:
   prototypes: Prototyper
   provider: "Leverandør"
   provider_settings_warning: "Hvis du ændrer leverandør typen, må du først gemme før du kan redigerer leverandør indstillingerne"
-  qty: Ant.
+  qty: Antal
   quantity_returned: Antal returneret
   quantity_shipped: Antal leveret
   range: "Interval"
@@ -955,7 +955,7 @@ da:
   sign_up: "Bliv medlem"
   site_name: "Hjemmesidens navn"
   site_url: "Hjemmesidens URL"
-  sku: SKU
+  sku: Varenummer
   smtp: SMTP
   smtp_authentication_type: SMTP autoriseringstype
   smtp_domain: SMTP-domæne
@@ -1019,7 +1019,7 @@ da:
   this_month: "Denne måned"
   this_year: "Dette år"
   thumbnail: "Thumbnail"
-  to_add_variants_you_must_first_define: "For at tilføje varianter, må du først definerer"
+  to_add_variants_you_must_first_define: "For at tilføje varianter, må du først definere"
   to_state: "To status"
   top_grossing_products: "Topsælgende produkter"
   total: Total
@@ -1068,7 +1068,7 @@ da:
   void: Tom
   website: Hjemmeside
   weight: Vægt
-  welcome_to_sample_store: "Velkommen til prøve butikken"
+  welcome_to_sample_store: "Velkommen til prøvebutikken"
   what_is_a_cvv: "Hvad er en sikkerhedskode (CVV)?"
   what_is_this: "Hvad er dette?"
   whats_this: "Hvad er dette?"
