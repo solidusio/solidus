@@ -1,15 +1,14 @@
-require 'rails'
-
 module Spree
   module I18nUtils
 
-    # #Retrieve comments, translation data in hash form
+    # Retrieve comments, translation data in hash form
     def read_file(filename, basename)
       (comments, data) = IO.read(filename).split(/\n#{basename}:\s*\n/)   #Add error checking for failed file read?
       return comments, create_hash(data)
     end
+    module_function :read_file
 
-    #Creates hash of translation data
+    # Creates hash of translation data
     def create_hash(data)
       words = Hash.new
       return words if !data
@@ -28,8 +27,9 @@ module Spree
       end
       words
     end
+    module_function :create_hash
 
-    #Writes to file from translation data hash structure
+    # Writes to file from translation data hash structure
     def write_file(filename,basename,comments,words,comment_values=true, fallback_values={})
       File.open(filename, "w") do |log|
         log.puts(comments+"\n"+basename+": \n")
@@ -42,6 +42,7 @@ module Spree
         end
       end
     end
+    module_function :write_file
 
   end
 end
