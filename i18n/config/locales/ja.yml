@@ -88,7 +88,7 @@ ja:
         description: "説明"
         master_price: "値段"
         name: "商品名"
-        on_hand: "入荷日"
+        on_hand: "入荷数"
         shipping_category: "配達区間"
         tax_category: "税区"
       product_group: 
@@ -591,7 +591,7 @@ ja:
     product_not_deleted: "商品を削除することが出来ませんでした"
     variant_deleted: "種類を削除しました"
     variant_not_deleted: "種類を削除することが出来ませんでした"
-  on_hand: "入荷日"
+  on_hand: "入荷数"
   operation: Operation
   option_type: "オプションタイプ"
   option_types: "オプションタイプ"
