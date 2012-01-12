@@ -235,7 +235,7 @@ zh-TW:
   adjustment: 其他項目 #Adjustment
   adjustment_total: 其他項目總計 #Adjustment Total
   adjustments: 其他項目 #Adjustments
-  administration: 管理員 #Administration
+  administration: 管理介面  #Administration
   all: 全部 #"All"
   all_departments: All departments
   allow_backorders: 准許預購 #"Allow Backorders"
@@ -279,13 +279,13 @@ zh-TW:
   back_to_store: 回商店 #"Go Back To Store"
   backordered: 預購 #Backordered
   backordering_is_allowed: "%{not}允許預購" #"Backordering %{not} allowed"
-  balance_due: #"Balance Due"
+  balance_due: 未入帳 #"Balance Due"
   best_selling_products: 熱銷商品 #"Best Selling Products"
   best_selling_taxons: 熱銷分類 #"Best Selling Taxons"
   bill_address: 帳單地址 #"Bill Address"
   billing: 帳單 #Billing
   billing_address: 帳單地址 #"Billing Address"
-  both: 都 #Both
+  both: Both
   by_day: 依天數 #"by day"
   calculator: 計算規則 #Calculator
   calculator_settings_warning: 如果你更改了計算規則, 需要先儲存才能進行修改  #"If you are changing the calculator type, you must save first before you can edit the calculator settings"
@@ -367,99 +367,99 @@ zh-TW:
   discount_amount: 折扣金額 #"Discount Amount"
   display: 顯示 #Display
   edit: 編輯 #Edit
-  edit_general_settings: #"Edit General Settings"
-  editing_billing_integration: #Editing Billing Integration
-  editing_category: #"Editing Category"
-  editing_mail_method: #Editing Mail Method
-  editing_option_type: #"Editing Option Type"
-  editing_option_types: #"Editing Option Types"
-  editing_payment_method: #Editing Payment Method
-  editing_product: #"Editing Product"
-  editing_product_group: #"Editing Product Group"
-  editing_promotion: #Editing Promotion
-  editing_property: #"Editing Property"
-  editing_prototype: #"Editing Prototype"
-  editing_shipping_category: #"Editing Shipping Category"
-  editing_shipping_method: #"Editing Shipping Method"
-  editing_state: #"Editing State"
-  editing_tax_category: #"Editing Tax Category"
-  editing_tax_rate: #"Editing Tax Rate"
-  editing_tracker: #Editing Tracker
-  editing_user: #"Editing User"
-  editing_zone: #"Editing Zone"
-  email: #Email
-  email_address: #"Email Address"
-  email_server_settings_description: #"Set email server settings."
-  empty: #"Empty"
-  empty_cart: #"Empty Cart"
-  enable_login_via_login_password: #"Use standard email/password"
-  enable_login_via_openid: #"Use OpenID instead"
-  enable_mail_delivery: #Enable Mail Delivery
-  enter_atleast_five_letters: #Enter atleast five letters of customer name
-  enter_exactly_as_shown_on_card: #Please enter exactly as shown on the card
-  enter_password_to_confirm: #"(we need your current password to confirm your changes)"
-  environment: #"Environment"
-  error: #error
+  edit_general_settings: 編輯一般設定 #"Edit General Settings"
+  editing_billing_integration: Editing Billing Integration
+  editing_category: 編輯分類 #"Editing Category"
+  editing_mail_method: 編輯 Email 寄送設定 #Editing Mail Method
+  editing_option_type: 編輯選項類型 #"Editing Option Type"
+  editing_option_types: 編輯選項類型 #"Editing Option Types"
+  editing_payment_method: 編輯付費方式 #Editing Payment Method
+  editing_product: 編輯商品 #"Editing Product"
+  editing_product_group: 編輯商品集 #"Editing Product Group"
+  editing_promotion: 編輯促銷方案 #Editing Promotion
+  editing_property: 編輯屬性 #"Editing Property"
+  editing_prototype: 編輯原型 #"Editing Prototype"
+  editing_shipping_category: 編輯運送類型 #"Editing Shipping Category"
+  editing_shipping_method: 編輯運送方式 #"Editing Shipping Method"
+  editing_state: 州, 省, 日本県, 台灣縣市 #"Editing State"
+  editing_tax_category: 編輯課稅類型 #"Editing Tax Category"
+  editing_tax_rate: 編輯稅率 #"Editing Tax Rate"
+  editing_tracker: Editing Tracker
+  editing_user: 編輯使用者 #"Editing User"
+  editing_zone: 編輯區域 #"Editing Zone"
+  email: Email
+  email_address: Email #"Email Address"
+  email_server_settings_description: 設定郵件伺服器 #"Set email server settings."
+  empty: 清空 #"Empty"
+  empty_cart: 清空購物車 #"Empty Cart"
+  enable_login_via_login_password: 使用Email與密碼 #"Use standard email/password"
+  enable_login_via_openid: 使用 OpenID #"Use OpenID instead"
+  enable_mail_delivery: 啟用 Email 寄送功能 #Enable Mail Delivery
+  enter_atleast_five_letters: Enter atleast five letters of customer name
+  enter_exactly_as_shown_on_card: Please enter exactly as shown on the card
+  enter_password_to_confirm: "(we need your current password to confirm your changes)"
+  environment: 環境 #"Environment"
+  error: 錯誤 #error
   errors: 
     messages: 
-      could_not_create_taxon: #"Could not create taxon"
-      no_shipping_methods_available: #"No shipping methods available for selected location, please change your address and try again."
+      could_not_create_taxon: 無法建立類型 #"Could not create taxon"
+      no_shipping_methods_available: 沒有可用的運送方式, 請修改地址後再試一次 #"No shipping methods available for selected location, please change your address and try again."
   errors_prohibited_this_record_from_being_saved: 
-    one: #"1 error prohibited this record from being saved"
-    other: #"%{count} errors prohibited this record from being saved"
+    one: "1 error prohibited this record from being saved"
+    other: "%{count} errors prohibited this record from being saved"
   event: #Event
-  existing_customer: #"Existing Customer"
-  expiration: #"Expiration"
-  expiration_month: #"Expiration Month"
-  expiration_year: #"Expiration Year"
-  expiry: #Expiry
-  extension: #Extension
-  extensions: #Extensions
-  filename: #Filename
-  final_confirmation: #"Final Confirmation"
-  finalize: #Finalize
-  finalized_payments: #Finalized Payments
-  first_item: #First Item Cost
-  first_name: #"First Name"
-  first_name_begins_with: #"First Name Begins With"
-  flat_percent: #"Flat Percent"
-  flat_rate_amount: #Amount
-  flat_rate_per_item: #"Flat Rate (per item)"
-  flat_rate_per_order: #"Flat Rate (per order)"
-  flexible_rate: #"Flexible Rate"
-  forgot_password: #"Forgot Password?"
-  free_shipping: #Free Shipping
-  from_state: #From State
-  front_end: #Front End
-  full_name: #"Full Name"
-  gateway: #Gateway
-  gateway_config_unavailable: #"Gateway unavailable for environment"
-  gateway_configuration: #"Gateway configuration"
-  gateway_error: #"Gateway Error"
-  gateway_setting_description: #"Select a payment gateway and configure its settings."
-  gateway_settings_warning: #"If you are changing the gateway type, you must save first before you can edit the gateway settings"
-  general: #"General"
-  general_settings: #"General Settings"
-  general_settings_description: #"Configure general Spree settings."
-  google_analytics: #"Google Analytics"
-  google_analytics_active: #"Active"
-  google_analytics_create: #"Create New Google Analytics Account"
-  google_analytics_id: #"Analytics ID"
-  google_analytics_new: #"New Google Analytics Account"
-  google_analytics_setting_description: #"Manage Google Analytics ID."
-  guest_checkout: #Guest Checkout
-  guest_user_account: #Checkout as a Guest
-  has_no_shipped_units: #has no shipped units
-  height: #Height
-  hello_user: #"Hello User"
-  history: #History
-  home: #"Home"
-  icon: #"Icon"
-  icons_by: #"Icons by"
-  image: #Image
-  images: #Images
-  images_for: #"Images for"
-  in_progress: #"In Progress"
+  existing_customer: 既有的客戶 #"Existing Customer"
+  expiration: "Expiration"
+  expiration_month: "Expiration Month"
+  expiration_year: "Expiration Year"
+  expiry: Expiry
+  extension: Extension
+  extensions: Extensions
+  filename: 檔案名稱 #Filename
+  final_confirmation: 最後確認 #"Final Confirmation"
+  finalize: Finalize
+  finalized_payments: Finalized Payments
+  first_item: 第一項商品價格 #First Item Cost
+  first_name: 名 #"First Name"
+  first_name_begins_with: "First Name Begins With"
+  flat_percent: 固定比例 #"Flat Percent"
+  flat_rate_amount: 金額 #Amount
+  flat_rate_per_item: 固定金額(每商品) #"Flat Rate (per item)"
+  flat_rate_per_order: 固定金額(單一訂單) #"Flat Rate (per order)"
+  flexible_rate: 變動金額 #"Flexible Rate"
+  forgot_password: 忘記密碼 #"Forgot Password?"
+  free_shipping: 免運費 #Free Shipping
+  from_state: From State
+  front_end: Front End
+  full_name: 全名 #"Full Name"
+  gateway: Gateway
+  gateway_config_unavailable: "Gateway unavailable for environment"
+  gateway_configuration: "Gateway configuration"
+  gateway_error: "Gateway Error"
+  gateway_setting_description: "Select a payment gateway and configure its settings."
+  gateway_settings_warning: "If you are changing the gateway type, you must save first before you can edit the gateway settings"
+  general: 一般 #"General"
+  general_settings: 一般設定 #"General Settings"
+  general_settings_description: 設定購物車的一般設定 #"Configure general Spree settings."
+  google_analytics: "Google Analytics"
+  google_analytics_active: 啟用 #"Active"
+  google_analytics_create: 建立新的 Google Analytics 帳號 #"Create New Google Analytics Account"
+  google_analytics_id: "Analytics ID"
+  google_analytics_new: 新 Google Analytics 帳號 #"New Google Analytics Account"
+  google_analytics_setting_description: 管理 Google Analytics ID #"Manage Google Analytics ID."
+  guest_checkout: 訪客結帳 #Guest Checkout
+  guest_user_account: 訪客帳戶 #Checkout as a Guest
+  has_no_shipped_units: 不需運送 #has no shipped units
+  height: 高 #Height
+  hello_user: "Hello User"
+  history: 歷程 #History
+  home: 家 #"Home"
+  icon: "Icon"
+  icons_by: "Icons by"
+  image: 圖片 #Image
+  images: 圖片 #Images
+  images_for: "Images for"
+  in_progress: 處以中 #"In Progress"
   include_in_shipment: #Include in Shipment
   included_in_other_shipment: #Included in another Shipment
   included_in_this_shipment: #Included in this Shipment
@@ -472,85 +472,86 @@ zh-TW:
   inventory_adjustment: #"Inventory Adjustment"
   inventory_setting_description: #"Inventory Configuration, Backordering, Zero-Stock Display."
   inventory_settings: #"Inventory Settings"
-  is_not_available_to_shipment_address: #is not available to shipment address
+  is_not_available_to_shipment_address: 沒有可用的運送地址 #is not available to shipment address
   issue_number: #Issue Number
-  item: #Item
-  item_description: #"Item Description"
-  item_total: #"Item Total"
+  item: 商品 #Item
+  item_description: 商品描述 #"Item Description"
+  item_total: 商品總價 #"Item Total"
   item_total_rule: 
     operators: 
-      gt: #greater than
-      gte: #greater than or equal to
-  items: #"Items"
-  last_14_days: #"Last 14 Days"
-  last_5_orders: #"Last 5 Orders"
-  last_7_days: #"Last 7 Days"
-  last_month: #"Last Month"
-  last_name: #"Last Name"
+      gt: 大於 #greater than
+      gte: 大於等於 #greater than or equal to
+  items: 商品 #"Items"
+  last_14_days: 最近2周 #"Last 14 Days"
+  last_5_orders: 最新5筆訂單 #"Last 5 Orders"
+  last_7_days: 最近1周 #"Last 7 Days"
+  last_month: 最近一個月 #"Last Month"
+  last_name: 姓 #"Last Name"
   last_name_begins_with: #"Last Name Begins With"
-  last_year: #"Last Year"
+  last_year: 最近一年 #"Last Year"
   leave_blank_to_not_change: #"(leave blank if you don't want to change it)"
   list: #List
-  listing_categories: #"Listing Categories"
-  listing_option_types: #"Listing Option Types"
-  listing_orders: #"Listing Orders"
+  listing_categories: 類型列表 #"Listing Categories"
+  listing_option_types: 商品選項類型列表 #"Listing Option Types"
+  listing_orders: 訂單列表 #"Listing Orders"
   listing_product_groups: #"Listing Product Groups"
-  listing_reports: #"Listing Reports"
+  listing_products: 商品列表
+  listing_reports: 報告列表 #"Listing Reports"
   listing_tax_categories: #"Listing Tax Categories"
-  listing_users: #"Listing Users"
+  listing_users: 使用者列表 #"Listing Users"
   live: #"Live"
-  loading: #Loading
-  locale_changed: #"Locale Changed"
-  log_in: #"Log In"
-  logged_in_as: #"Logged in as"
-  logged_in_succesfully: #"Logged in successfully"
-  logged_out: #"You have been logged out."
-  login: #Login
-  login_as_existing: #"Log In as Existing Customer"
-  login_failed: #"Login authentication failed."
-  login_name: #Login
-  logout: #Logout
-  look_for_similar_items: #Look for similar items
-  maestro_or_solo_cards: #Maestro/Solo cards
-  mail_delivery_enabled: #"Mail delivery is enabled"
-  mail_delivery_not_enabled: #"Mail delivery is not enabled"
+  loading: 載入中 #Loading
+  locale_changed: 語系已變更 #"Locale Changed"
+  log_in: 登入 #"Log In"
+  logged_in_as: 目前帳號 #"Logged in as"
+  logged_in_succesfully: 登入成功 #"Logged in successfully"
+  logged_out: 你已經完成登出 #"You have been logged out."
+  login: 登入 #Login
+  login_as_existing: 用戶登入 #"Log In as Existing Customer"
+  login_failed: 登入認証失敗 #"Login authentication failed."
+  login_name: 使用者名稱 #Login
+  logout: 登出 #Logout
+  look_for_similar_items: 瀏覽相似的商品 #Look for similar items
+  maestro_or_solo_cards: Maestro/Solo cards
+  mail_delivery_enabled: 郵件寄送功能已啟用 #"Mail delivery is enabled"
+  mail_delivery_not_enabled: 郵件寄送功能已關閉 #"Mail delivery is not enabled"
   mail_methods: #Mail Methods
-  mail_server_preferences: #Mail Server Preferences
+  mail_server_preferences: 郵件伺服器設定 #Mail Server Preferences
   make_refund: #Make refund
   mark_shipped: #"Mark Shipped"
-  master_price: #"Master Price"
+  master_price: 主要定價 #"Master Price"
   max_items: #Max Items
   may_be_combined_with_other_promotions: #May be combined with other promotions
   meta_description: #"Meta Description"
   meta_keywords: #"Meta Keywords"
   metadata: #"Metadata"
   minimal_amount: #"Minimal Amount"
-  missing_required_information: #"Missing Required Information"
-  month: #"Month"
-  my_account: #"My Account"
-  my_orders: #"My Orders"
-  name: #Name
-  name_or_sku: #"Name or SKU"
-  new: #New
-  new_adjustment: #"New Adjustment"
+  missing_required_information: 缺少必須的資訊  #"Missing Required Information"
+  month: 月 #"Month"
+  my_account: 我的帳戶 #"My Account"
+  my_orders: 我的訂單 #"My Orders"
+  name: 名稱 #Name
+  name_or_sku: 商品名稱或編號 #"Name or SKU"
+  new: 新增 #New
+  new_adjustment: 新增訂單項目  #"New Adjustment"
   new_billing_integration: #New Billing Integration
-  new_category: #"New category"
-  new_customer: #"New Customer"
+  new_category: 新增分類 #"New category"
+  new_customer: 新增客戶 #"New Customer"
   new_image: #"New Image"
   new_mail_method: #New Mail Method
   new_option_type: #"New Option Type"
   new_option_value: #"New Option Value"
-  new_order: #"New Order"
-  new_order_completed: #"New Order Completed"
+  new_order: 新增定單 #"New Order"
+  new_order_completed: 新增訂單完成 #"New Order Completed"
   new_payment: #"New Payment"
   new_payment_method: #New Payment Method
-  new_product: #"New Product"
+  new_product: 新增商品 #"New Product"
   new_product_group: #New Product Group
-  new_promotion: #New Promotion
-  new_property: #"New Property"
-  new_prototype: #"New Prototype"
+  new_promotion: 新增促銷方案 #New Promotion
+  new_property: 新增商品屬性 #"New Property"
+  new_prototype: 新增商品原型 #"New Prototype"
   new_return_authorization: #New Return Authorization
-  new_shipment: #"New Shipment"
+  new_shipment: 新增運送 #"New Shipment"
   new_shipping_category: #"New Shipping Category"
   new_shipping_method: #"New Shipping Method"
   new_state: #"New State"
@@ -593,11 +594,11 @@ zh-TW:
   options: #Options
   or: #or
   ord_qty: #"Ord. Qty"
-  ord_total: #"Ord. Total"
-  order: #Order
+  ord_total: 訂單總金額 #"Ord. Total"
+  order: 訂單 #Order
   order_confirmation_note: #""
   order_date: #"Order Date"
-  order_details: #"Order Details"
+  order_details: 訂單細節  #"Order Details"
   order_email_resent: #"Order Email Resent"
   order_mailer: 
     cancel_email: 
@@ -605,20 +606,20 @@ zh-TW:
     confirm_email: 
       subject: #"Order Confirmation"
   order_not_in_system: #That order number is not valid on this site.
-  order_number: #Order
+  order_number: 訂單編號 #Order
   order_operation_authorize: #Authorize
   order_processed_but_following_items_are_out_of_stock: #"Your order has been processed, but following items are out of stock:"
   order_processed_successfully: #"Your order has been processed successfully"
   order_state: 
-    address: #address
+    address: 地址 #address
     adjustments: #adjustments
     awaiting_return: #awaiting return
     canceled: #canceled
-    cart: #cart
-    complete: #complete
-    confirm: #confirm
-    delivery: #delivery
-    payment: #payment
+    cart: 購物車 #cart
+    complete: 完成 #complete
+    confirm: 確認 #confirm
+    delivery: 寄送方式 #delivery
+    payment: 付款 #payment
     resumed: #resumed
     returned: #returned
   order_summary: #Order Summary
@@ -626,7 +627,7 @@ zh-TW:
   order_total: #"Order Total"
   order_total_message: #"The total amount charged to your card will be"
   order_updated: #"Order Updated"
-  orders: #Orders
+  orders: 訂單 #Orders
   other_payment_options: #Other Payment Options
   out_of_stock: #"Out of Stock"
   out_of_stock_products: #"Out of Stock Products"
@@ -643,8 +644,8 @@ zh-TW:
   password_reset_token_not_found: #"We're sorry, but we could not locate your account. If you are having issues try copying and pasting the URL from your email into your browser or restarting the reset password process."
   password_updated: #"Password successfully updated"
   path: #Path
-  pay: #pay
-  payment: #Payment
+  pay: 付款 #pay
+  payment: 付款 #Payment
   payment_actions: #"Actions"
   payment_gateway: #"Payment Gateway"
   payment_information: #"Payment Information"
@@ -652,29 +653,29 @@ zh-TW:
   payment_methods: #Payment Methods
   payment_methods_setting_description: #Configure methods customers can use to pay.
   payment_processing_failed: #"Payment could not be processed, please check the details you entered"
-  payment_state: #Payment State
+  payment_state: 付費狀態 #Payment State
   payment_states: 
-    balance_due: #balance due
+    balance_due: 未入帳 #balance due
     checkout: #checkout
-    completed: #completed
+    completed: 已完成 #completed
     credit_owed: #credit owed
-    failed: #failed
-    paid: #paid
-    pending: #pending
-    processing: #processing
-    void: #void
+    failed: 失敗 #failed
+    paid: 已付費 #paid
+    pending: 擱置 #pending
+    processing: 處理中 #processing
+    void: 無效 #void
   payment_updated: #Payment Updated
   payments: #Payments
   pending_payments: #Pending Payments
   permalink: #Permalink
-  phone: #Phone
+  phone: 電話 #Phone
   place_order: #Place Order
   please_create_user: #"Please create a user account"
-  powered_by: #"Powered by"
+  powered_by: "Powered by"
   presentation: #Presentation
-  preview: #Preview
+  preview: 預覽 #Preview
   previous: #Previous
-  price: #Price
+  price: 價格 #Price
   price_bucket: #Price Bucket
   price_with_vat_included: #"%{price} (inc. VAT)"
   problem_authorizing_card: #"Problem authorizing credit card"
@@ -683,7 +684,7 @@ zh-TW:
   proceed_as_guest: #"No Thanks, Proceed as Guest"
   process: #Process
   product: #Product
-  product_details: #"Product Details"
+  product_details: 商品細節 #"Product Details"
   product_group: #Product Group
   product_group_invalid: #Product Group has invalid scopes
   product_groups: #Product Groups
@@ -692,8 +693,8 @@ zh-TW:
   product_rule: 
     choose_products: #Choose products
     label: #"Order must contain %{select} of these products"
-    match_all: #all
-    match_any: #at least one
+    match_all: 全部 #all
+    match_any: 最新一個 #at least one
     product_source: 
       group: #From product group
       manual: #Manually choose
@@ -841,32 +842,32 @@ zh-TW:
   prototypes: #Prototypes
   provider: #"Provider"
   provider_settings_warning: #"If you are changing the provider type, you must save first before you can edit the provider settings"
-  qty: #Qty
-  quantity_returned: #Quantity Returned
-  quantity_shipped: #Quantity Shipped
+  qty: 數量 #Qty
+  quantity_returned: 退貨數量 #Quantity Returned
+  quantity_shipped: 出貨數量 #Quantity Shipped
   range: #"Range"
   rate: #Rate
   reason: #Reason
   recalculate_order_total: #"Recalculate order total"
   receive: #receive
   received: #Received
-  refund: #Refund
-  register: #Register as a New User
+  refund: 退款 #Refund
+  register: 註冊新用戶 #Register as a New User
   register_or_guest: #Checkout as Guest or Register
   registration: #Registration
   remember_me: #"Remember me"
-  remove: #Remove
-  reports: #Reports
+  remove: 移除 #Remove
+  reports: 報告 #Reports
   required_for_solo_and_maestro: #Required for Solo and Maestro cards.
-  resend: #Resend
+  resend: 重寄 #Resend
   resend_confirmation_instructions: #"Resend confirmation instructions"
   resend_unlock_instructions: #"Resend unlock instructions"
-  reset_password: #"Reset my password"
+  reset_password: 重設密碼 #"Reset my password"
   resource_controller: 
     member_object_not_found: #"Member object not found."
-    successfully_created: #"Successfully created!"
-    successfully_removed: #"Successfully removed!"
-    successfully_updated: #"Successfully updated!"
+    successfully_created: "建立成功!" #"Successfully created!"
+    successfully_removed: "移除成功!" #"Successfully removed!"
+    successfully_updated: "更新成功!" #"Successfully updated!"
   response_code: #"Response Code"
   resume: #"resume"
   resumed: #Resumed
@@ -884,13 +885,13 @@ zh-TW:
   sales_tax: #"Sales Tax"
   sales_total: #"Sales Total"
   sales_total_description: #"Sales Total For All Orders"
-  save_and_continue: #Save and Continue
-  save_preferences: #Save Preferences
+  save_and_continue: 儲存後繼續 #Save and Continue
+  save_preferences: 儲存設定 #Save Preferences
   scope: #Scope
   scopes: #Scopes
-  search: #Search
-  search_results: #"Search results for '%{keywords}'"
-  searching: #Searching
+  search: 搜尋 #Search
+  search_results: "'#{keywords}' 的搜尋結果" #"Search results for '%{keywords}'"
+  searching: 搜尋中 #Searching
   secure_connection_type: #Secure Connection Type
   secure_creditcard: #Secure Creditcard
   select: #Select
@@ -906,22 +907,22 @@ zh-TW:
   settings: #Settings
   ship: #ship
   ship_address: #"Ship Address"
-  shipment: #Shipment
-  shipment_details: #Shipment Details
+  shipment: 運送 #Shipment
+  shipment_details: 出貨細節  #Shipment Details
   shipment_mailer: 
     shipped_email: 
       subject: #"Shipment Notification"
   shipment_number: #"Shipment #"
-  shipment_state: #Shipment State
+  shipment_state: 出貨狀態 #Shipment State
   shipment_states: 
-    backorder: #backorder
-    partial: #partial
-    pending: #pending
-    ready: #ready
-    shipped: #shipped
+    backorder: 預購 #backorder
+    partial: 部份寄出 #partial
+    pending: 擱置 #pending
+    ready: 寄送準備完成 #ready
+    shipped: 已寄出 #shipped
   shipment_updated: #Shipment Updated
-  shipments: #"Shipments"
-  shipped: #Shipped
+  shipments: 運送 #"Shipments"
+  shipped: 已寄出 #Shipped
   shipping: #Shipping
   shipping_address: #"Shipping Address"
   shipping_categories: #"Shipping Categories"
@@ -934,11 +935,11 @@ zh-TW:
   shipping_methods: #"Shipping Methods"
   shipping_methods_description: #"Manage shipping methods."
   shipping_total: #"Shipping Total"
-  shop_by_taxonomy: #"Shop by %{taxonomy}"
+  shop_by_taxonomy: "依照%{taxonomy}排序" #"Shop by %{taxonomy}"
   shopping_cart: #"Shopping Cart"
   show: #Show
   show_active: #"Show Active"
-  show_deleted: #"Show Deleted"
+  show_deleted: 顯示被刪除的資料 #"Show Deleted"
   show_incomplete_orders: #"Show Incomplete Orders"
   show_only_complete_orders: #"Only show complete orders"
   show_out_of_stock_products: #"Show out-of-stock products"
@@ -947,7 +948,7 @@ zh-TW:
   sign_up: #"Sign up"
   site_name: #"Site Name"
   site_url: #"Site URL"
-  sku: #SKU
+  sku: 商品編號 #SKU
   smtp: #SMTP
   smtp_authentication_type: #SMTP Authentication Type
   smtp_domain: #SMTP Domain
@@ -968,23 +969,23 @@ zh-TW:
   ssl_will_be_used_in_production_mode: #"SSL will be used in production mode"
   ssl_will_not_be_used_in_development_and_test_modes: #"SSL will not be used in development and test mode if necessary."
   ssl_will_not_be_used_in_production_mode: #"SSL will not be used in production mode"
-  start: #Start
+  start: 開始 #Start
   start_date: #Valid from
   state: #State
   state_based: #"State Based"
   state_setting_description: #"Administer the list of states/provinces associated with each country."
   states: #States
-  status: #Status
-  stop: #Stop
-  store: #Store
-  street_address: #"Street Address"
-  street_address_2: #"Street Address (cont'd)"
+  status: 狀態 #Status
+  stop: 停止 #Stop
+  store: 商店 #Store
+  street_address: 地址 #"Street Address"
+  street_address_2: 地址(繼續) #"Street Address (cont'd)"
   subtotal: #Subtotal
   subtract: #Subtract
   successfully_created: #"%{resource} has been successfully created!"
   successfully_removed: #"%{resource} has been successfully removed!"
   successfully_updated: #"%{resource} has been successfully updated!"
-  system: #System
+  system: 系統 #System
   tax: #Tax
   tax_categories: #"Tax Categories"
   tax_categories_setting_description: #"Set up tax categories to identify which products should be taxable."
@@ -1014,7 +1015,7 @@ zh-TW:
   to_add_variants_you_must_first_define: #"To add variants, you must first define"
   to_state: #"To State"
   top_grossing_products: #"Top Grossing Products"
-  total: #Total
+  total: 總金額 #Total
   tracking: #Tracking
   transaction: #Transaction
   transactions: #Transactions
@@ -1045,7 +1046,7 @@ zh-TW:
   user_details: #"User Details"
   user_rule: 
     choose_users: #Choose users
-  users: #Users
+  users: 使用者 #Users
   validate_on_profile_create: #Validate on profile create
   validation: 
     cannot_be_less_than_shipped_units: #"cannot be less than the number of shipped units."
@@ -1057,20 +1058,20 @@ zh-TW:
   vat: #"VAT"
   version: #Version
   view_shipping_options: #"View shipping options"
-  void: #Void
-  website: #Website
-  weight: #Weight
+  void: 無效 #Void
+  website: 網站 #Website
+  weight: 重 #Weight
   welcome_to_sample_store: #"Welcome to the sample store"
   what_is_a_cvv: #"What is a (CVV) Credit Card Code?"
   what_is_this: #"What's This?"
   whats_this: #"What's this"
-  width: #Width
-  year: #"Year"
+  width: 寬 #Width
+  year: 年 #"Year"
   you_have_been_logged_out: #"You have been logged out."
   you_have_no_orders_yet: #"You have no orders yet."
   your_cart_is_empty: #"Your cart is empty"
   zip: #Zip
-  zone: #Zone
+  zone: 區域 #Zone
   zone_based: #"Zone Based"
   zone_setting_description: #"Collections of countries, states or other zones to be used in various calculations."
-  zones: #Zones
+  zones: 區域 #Zones
