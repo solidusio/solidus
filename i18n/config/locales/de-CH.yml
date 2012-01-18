@@ -505,7 +505,7 @@ de-CH:
   locale_changed: "Sprache geändert"
   log_in: Anmelden
   logged_in_as: "Angemeldet als"
-  logged_in_succesfully: "Erfolgreich angemeledet"
+  logged_in_succesfully: "Erfolgreich angemeldet"
   logged_out: "Sie sind nun ausgeloggt."
   login: Login
   login_as_existing: "Als bestehender Kunde einloggen"
