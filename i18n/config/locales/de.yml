@@ -1006,6 +1006,11 @@ de:
   taxons: "Klassifizierungen"
   test: "Test"
   test_mode: "Test-Modus"
+  test_mailer:
+    test_email:
+      greeting: 'Glückwunch!'
+      message: 'Wenn Sie diese Email empfangen, sind Ihre Email-Einstellungen korrekt'
+      subject: 'Testmail'
   thank_you_for_your_order: "Vielen Dank für ihre Bestellung"
   there_were_problems_with_the_following_fields: "Folgende Felder sind betroffen"
   this_file_language: "Deutsch (DE)"
