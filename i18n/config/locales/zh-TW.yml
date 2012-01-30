@@ -459,7 +459,7 @@ zh-TW:
   image: 圖片 #Image
   images: 圖片 #Images
   images_for: "Images for"
-  in_progress: 處以中 #"In Progress"
+  in_progress: 處理中 #"In Progress"
   include_in_shipment: #Include in Shipment
   included_in_other_shipment: #Included in another Shipment
   included_in_this_shipment: #Included in this Shipment
@@ -593,7 +593,7 @@ zh-TW:
   option_values: 商品選項 #"Option Values"
   options: 選項 #Options
   or: 或 #or
-  ord_qty: #"Ord. Qty"
+  ord_qty: 訂單數量 #"Ord. Qty"
   ord_total: 訂單總金額 #"Ord. Total"
   order: 訂單 #Order
   order_confirmation_note: #""
