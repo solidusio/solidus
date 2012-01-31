@@ -3,7 +3,7 @@ zh-TW:
   'no': "No"
   'yes': "Yes"
   5_biggest_spenders: "5 Biggest Spenders"
-  a_copy_of_all_mail_will_be_sent_to_the_following_addresses: A copy of all mail be sent to the following addresses
+  a_copy_of_all_mail_will_be_sent_to_the_following_addresses: 全部郵件皆有副本送至以下信箱
   abbreviation: 縮寫 #Abbreviation
   access_denied: 權限不足 #"Access Denied"
   account: 帳戶 #Account
@@ -390,7 +390,7 @@ zh-TW:
   email: Email
   email_address: Email #"Email Address"
   email_server_settings_description: 設定郵件伺服器 #"Set email server settings."
-  empty: 清空 #"Empty"
+  empty: 空 #"Empty"
   empty_cart: 清空購物車 #"Empty Cart"
   enable_login_via_login_password: 使用Email與密碼 #"Use standard email/password"
   enable_login_via_openid: 使用 OpenID #"Use OpenID instead"
@@ -490,14 +490,14 @@ zh-TW:
   last_name_begins_with: #"Last Name Begins With"
   last_year: 最近一年 #"Last Year"
   leave_blank_to_not_change: #"(leave blank if you don't want to change it)"
-  list: #List
+  list: 列表
   listing_categories: 類型列表 #"Listing Categories"
   listing_option_types: 商品選項類型列表 #"Listing Option Types"
   listing_orders: 訂單列表 #"Listing Orders"
-  listing_product_groups: #"Listing Product Groups"
+  listing_product_groups: 商品群組列表
   listing_products: 商品列表
   listing_reports: 報告列表 #"Listing Reports"
-  listing_tax_categories: #"Listing Tax Categories"
+  listing_tax_categories: 稅別列表
   listing_users: 使用者列表 #"Listing Users"
   live: #"Live"
   loading: 載入中 #Loading
@@ -632,7 +632,7 @@ zh-TW:
   out_of_stock: 缺貨中 #"Out of Stock"
   out_of_stock_products: 缺貨商品 #"Out of Stock Products"
   over_paid: #"Over Paid"
-  overview: #Overview
+  overview: 總覽
   overview_welcome: #"Welcome to your store overview, currently we do not have enough data to display the Overiew Dashboard.<br/><br/> The dashboard will display automatically once the system has sufficent orders to allow generation of the statistics."
   page_only_viewable_when_logged_in: #You attempted to visit a page which can only be viewed when you are logged in
   page_only_viewable_when_logged_out: #You attempted to visit a page which can only be viewed when you are logged out
@@ -854,8 +854,8 @@ zh-TW:
   refund: 退款 #Refund
   register: 註冊新用戶 #Register as a New User
   register_or_guest: #Checkout as Guest or Register
-  registration: #Registration
-  remember_me: #"Remember me"
+  registration: 註冊 #Registration
+  remember_me: 記住我 #"Remember me"
   remove: 移除 #Remove
   reports: 報告 #Reports
   required_for_solo_and_maestro: #Required for Solo and Maestro cards.
@@ -902,8 +902,8 @@ zh-TW:
   send_mails_as: #Send Mails As
   send_me_reset_password_instructions: #"Send me reset password instructions"
   send_order_mails_as: #Send Order Mails As
-  server: #Server
-  server_error: #"The server returned an error"
+  server: 伺服器 #Server
+  server_error: 伺服器回傳了錯誤訊息 #"The server returned an error"
   settings: 設定 #Settings
   ship: 出貨 #ship
   ship_address: 出貨地址 #"Ship Address"
@@ -936,13 +936,13 @@ zh-TW:
   shipping_methods_description: 管理出貨方式 #"Manage shipping methods."
   shipping_total: 運費 #"Shipping Total"
   shop_by_taxonomy: "依照%{taxonomy}排序" #"Shop by %{taxonomy}"
-  shopping_cart: #"Shopping Cart"
-  show: #Show
-  show_active: #"Show Active"
+  shopping_cart: 購物車
+  show: 顯示
+  show_active: 顯示使用中的資料
   show_deleted: 顯示被刪除的資料 #"Show Deleted"
-  show_incomplete_orders: #"Show Incomplete Orders"
-  show_only_complete_orders: #"Only show complete orders"
-  show_out_of_stock_products: #"Show out-of-stock products"
+  show_incomplete_orders: 顯示未完成的訂單
+  show_only_complete_orders: 顯示已完成的訂單
+  show_out_of_stock_products: 顯示缺貨商品
   show_price_inc_vat: #"Show price including VAT"
   showing_first_n: #"Showing first %{n}"
   sign_up: 註冊 #"Sign up"
@@ -1045,7 +1045,7 @@ zh-TW:
   user_created_successfully: 建立使用者成功 #"User created successfully"
   user_details: 使用者資料 #"User Details"
   user_rule: 
-    choose_users: #Choose users
+    choose_users: 選擇使用者
   users: 使用者 #Users
   validate_on_profile_create: #Validate on profile create
   validation: 
@@ -1053,7 +1053,7 @@ zh-TW:
     is_too_large: #"is too large -- stock on hand cannot cover requested quantity!"
     must_be_int: #"must be an integer"
     must_be_non_negative: #"must be a non-negative value"
-  value: #Value
+  value: 值
   variants: 系列型號 #Variants
   vat: #"VAT"
   version: 版本 #Version
@@ -1063,14 +1063,14 @@ zh-TW:
   weight: 重 #Weight
   welcome_to_sample_store: #"Welcome to the sample store"
   what_is_a_cvv: #"What is a (CVV) Credit Card Code?"
-  what_is_this: #"What's This?"
-  whats_this: #"What's this"
+  what_is_this: 這是什麼？
+  whats_this: 這是什麼？
   width: 寬 #Width
   year: 年 #"Year"
   you_have_been_logged_out: #"You have been logged out."
-  you_have_no_orders_yet: #"You have no orders yet."
-  your_cart_is_empty: #"Your cart is empty"
-  zip: #Zip
+  you_have_no_orders_yet: 您還沒有任何訂單
+  your_cart_is_empty: 購物車是空的
+  zip: 郵遞區號
   zone: 區域 #Zone
   zone_based: #"Zone Based"
   zone_setting_description: #"Collections of countries, states or other zones to be used in various calculations."
