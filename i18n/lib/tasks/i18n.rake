@@ -88,6 +88,11 @@ namespace :spree_i18n do
     end
   end
 
+  def get_translation_keys(gem_name)
+    (dummy_comments, words) = read_file(File.dirname(__FILE__) + "/../../default/#{gem_name}.yml", "en")
+      words
+  end
+
   def locales_dir
     File.join File.dirname(__FILE__), "/../../config/locales"
   end
