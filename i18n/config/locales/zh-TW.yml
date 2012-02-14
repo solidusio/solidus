@@ -916,14 +916,14 @@ zh-TW:
   shipment_state: 出貨狀態 #Shipment State
   shipment_states: 
     backorder: 預購 #backorder
-    partial: 部份寄出 #partial
+    partial: 部份出貨 #partial
     pending: 擱置 #pending
-    ready: 寄送準備完成 #ready
-    shipped: 已寄出 #shipped
+    ready: 準備出貨 #ready
+    shipped: 已出貨 #shipped
   shipment_updated: 出貨資料已更新 #Shipment Updated
   shipments: 出貨資料 #"Shipments"
   shipped: 已寄出 #Shipped
-  shipping: 出貨 #Shipping
+  shipping: 運費 #Shipping
   shipping_address: 出貨地址 #"Shipping Address"
   shipping_categories: 出貨分類 #"Shipping Categories"
   shipping_categories_description: #"Manage shipping categories to identify which products can be shipped via which method."
@@ -1075,3 +1075,4 @@ zh-TW:
   zone_based: #"Zone Based"
   zone_setting_description: #"Collections of countries, states or other zones to be used in various calculations."
   zones: 區域 #Zones
+  customer_details_updated: 客戶資料更新完成
