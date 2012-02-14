@@ -546,7 +546,7 @@ zh-TW:
   new_payment: 新增付費紀錄 #"New Payment"
   new_payment_method: 新增付費方式 #New Payment Method
   new_product: 新增商品 #"New Product"
-  new_product_group: #New Product Group
+  new_product_group: 新增商品集 #New Product Group
   new_promotion: 新增促銷方案 #New Promotion
   new_property: 新增商品屬性 #"New Property"
   new_prototype: 新增商品原型 #"New Prototype"
@@ -686,11 +686,11 @@ zh-TW:
   process: #Process
   product: #Product
   product_details: 商品資料 #"Product Details"
-  product_group: #Product Group
+  product_group: 商品集 #Product Group
   product_group_invalid: #Product Group has invalid scopes
-  product_groups: #Product Groups
+  product_groups: 商品集 #Product Groups
   product_has_no_description: #This product has no description
-  product_properties: #"Product Properties"
+  product_properties: 商品屬性 #"Product Properties"
   product_rule: 
     choose_products: #Choose products
     label: #"Order must contain %{select} of these products"
@@ -702,119 +702,120 @@ zh-TW:
   product_scopes: 
     groups: 
       price: 
-        description: #"Scopes for selecting products based on Price"
-        name: #Price
+        description: "Scopes for selecting products based on Price"
+        name: Price
       search: 
-        description: #"Scopes for selecting products based on name, keywords and description of product"
-        name: #"Text search"
+        description: "Scopes for selecting products based on name, keywords and description of product"
+        name: "Text search"
       taxon: 
-        description: #"Scopes for selecting products based on Taxons"
-        name: #Taxon
+        description: "Scopes for selecting products based on Taxons"
+        name: Taxon
       values: 
-        description: #"Scopes for selecting products based on option and property values"
-        name: #Values
+        description: "Scopes for selecting products based on option and property values"
+        name: Values
     scopes: 
       ascend_by_master_price: 
-        name: #Ascend by product master price
+        name: 價格低的優先  #Ascend by product master price
       ascend_by_name: 
-        name: #Ascend by product name
+        name: 商品名稱(順排 A->Z) #Ascend by product name
       ascend_by_updated_at: 
-        name: #Ascend by actualization date
+        name: 商品更新時間(舊->新) #Ascend by actualization date
       descend_by_master_price: 
-        name: #Descend by product master price
+        name: 價格高的優先  #Descend by product master price
       descend_by_name: 
-        name: #Descend by product name
+        name: 商品名稱(逆排 Z->A) #Descend by product name
       descend_by_popularity: 
-        name: #Sort by popularity(most popular first)
+        name: 依照熱門程度 #Sort by popularity(most popular first)
       descend_by_updated_at: 
-        name: #Descend by actualization date
+        name: 商品更新時間(新->舊) #Descend by actualization date
       in_name: 
         args: 
-          words: #Words
-        description: #"(separated by space or comma)"
-        name: #"Product name have following"
-        sentence: #product name contain <em>%s</em>
+          words: Words
+        description: 用逗號或是空格分開 #"(separated by space or comma)"
+        name: "Product name have following"
+        sentence: product name contain <em>%s</em>
       in_name_or_description: 
         args: 
-          words: #Words
-        description: #"(separated by space or comma)"
-        name: #"Product name or description have following"
-        sentence: #name or description contain <em>%s</em>
+          words: Words
+        description: 用逗號或是空格分開 #"(separated by space or comma)"
+        name: "Product name or description have following"
+        sentence: name or description contain <em>%s</em>
       in_name_or_keywords: 
         args: 
-          words: #Words
-        description: #"(separated by space or comma)"
-        name: #"Product name or meta keywords have following"
-        sentence: #name or keywords contain <em>%s</em>
+          words: Words
+        description: 用逗號或是空格分開 #"(separated by space or comma)"
+        name: "Product name or meta keywords have following"
+        sentence: name or keywords contain <em>%s</em>
       in_taxons: 
         args: 
-          "taxon_names": #"Taxon names"
-        description: #"Taxon names have to be separated by comma or space(eg. adidas,shoes)"
-        name: #"In taxons and all their descendants"
-        sentence: #in <em>%s</em> and all their descendants
+          "taxon_names": "Taxon names"
+        description: "Taxon names have to be separated by comma or space(eg. adidas,shoes)"
+        description: "用逗號或是空格分開, 例如: adidas,shoes" #"(separated by space or comma)"
+        name: "In taxons and all their descendants"
+        sentence: in <em>%s</em> and all their descendants
       master_price_gte: 
         args: 
-          amount: #Amount
-        description: #""
-        name: #"Master price greater or equal to"
-        sentence: #price greater or equal to <em>%.2f</em>
+          amount: Amount
+        description: ""
+        name: "Master price greater or equal to"
+        sentence: price greater or equal to <em>%.2f</em>
       master_price_lte: 
         args: 
-          amount: #Amount
-        description: #""
-        name: #"Master price lesser or equal to"
-        sentence: #price less or equal to <em>%.2f</em>
+          amount: Amount
+        description: ""
+        name: "Master price lesser or equal to"
+        sentence: price less or equal to <em>%.2f</em>
       price_between: 
         args: 
-          high: 高  #High
+          high: 高 #High
           low: 低 #Low
-        description: #""
+        description: ""
         name: 價格範圍 #"Price between"
-        sentence: #price between <em>%.2f</em> and <em>%.2f</em>
+        sentence: price between <em>%.2f</em> and <em>%.2f</em>
       taxons_name_eq: 
         args: 
-          taxon_name: #"Taxon name"
-        description: #"In specific taxon - without descendants"
-        name: #"In Taxon(without descendants)"
-        sentence: #in <em>%s</em>
+          taxon_name: "Taxon name"
+        description: "In specific taxon - without descendants"
+        name: "In Taxon(without descendants)"
+        sentence: in <em>%s</em>
       with: 
         args: 
-          value: #Value
-        description: #"Selects all products that have at least one variant that have specified value as either option or property (eg. red)"
-        name: #With value
-        sentence: #with value <em>%s</em>
+          value: Value
+        description: "Selects all products that have at least one variant that have specified value as either option or property (eg. red)"
+        name: With value
+        sentence: with value <em>%s</em>
       with_ids: 
         args: 
-          ids: #IDs
-        description: #"Select specific products"
-        name: #Products with IDs
-        sentence: #with IDs <em>%s</em>
+          ids: IDs
+        description: "Select specific products"
+        name: Products with IDs
+        sentence: with IDs <em>%s</em>
       with_option: 
         args: 
-          option: #Option
-        description: #"Selects all products that have specified option(eg. color)"
-        name: #"With option"
-        sentence: #with option <em>%s</em>
+          option: Option
+        description: "Selects all products that have specified option(eg. color)"
+        name: "With option"
+        sentence: with option <em>%s</em>
       with_option_value: 
         args: 
-          option: #Option
-          value: #Value
-        description: #"Selects all products that have at least one variant with specified option and value(eg. color:red)"
-        name: #"With option and value"
-        sentence: #with option <em>%s</em> and value <em>%s</em>
+          option: Option
+          value: Value
+        description: "Selects all products that have at least one variant with specified option and value(eg. color:red)"
+        name: "With option and value"
+        sentence: with option <em>%s</em> and value <em>%s</em>
       with_property: 
         args: 
-          property: #Property
-        description: #"Selects all products that have specified property(eg. weight)"
-        name: #"With property"
-        sentence: #with property <em>%s</em>
+          property: Property
+        description: "Selects all products that have specified property(eg. weight)"
+        name: "With property"
+        sentence: with property <em>%s</em>
       with_property_value: 
         args: 
-          property: #Property
-          value: #Value
-        description: #"Selects all products that have at least one variant with specified property and value(eg. weight:10kg)"
-        name: #"With property value"
-        sentence: #with property <em>%s</em> and value <em>%s</em>
+          property: Property
+          value: Value
+        description: "Selects all products that have at least one variant with specified property and value(eg. weight:10kg)"
+        name: "With property value"
+        sentence: with property <em>%s</em> and value <em>%s</em>
   products: 商品 #Products
   products_with_zero_inventory_display: #"Products with a zero inventory will %{not} be displayed"
   promotion: 促銷方案 #Promotion
@@ -824,17 +825,17 @@ zh-TW:
       any: 符合任一條件 #Match all of these rules
   promotion_rule_types: 
     first_order: 
-      description: #Must be the customer's first order
-      name: #First order
+      description: Must be the customer's first order
+      name: First order
     item_total: 
-      description: #Order total meets these criteria
-      name: #Item total
+      description: Order total meets these criteria
+      name: Item total
     product: 
-      description: #Order includes specified product(s)
-      name: #Product(s)
+      description: Order includes specified product(s)
+      name: Product(s)
     user: 
-      description: #Available only to the specified users
-      name: #User
+      description: Available only to the specified users
+      name: User
   promotions: 促銷方案 #Promotions
   promotions_description: #Manage offers and coupons with promotions
   properties: 屬性 #Properties
@@ -895,8 +896,8 @@ zh-TW:
   searching: 搜尋中 #Searching
   secure_connection_type: #Secure Connection Type
   secure_creditcard: #Secure Creditcard
-  select: #Select
-  select_from_prototype: #"Select From Prototype"
+  select: 選擇 #Select
+  select_from_prototype: 從商品原型選擇 #"Select From Prototype"
   select_preferred_shipping_option: #"Select preferred shipping option"
   send_copy_of_all_mails_to: #Send Copy of All Mails To
   send_copy_of_orders_mails_to: #Send Copy of Order Mails To
@@ -960,7 +961,7 @@ zh-TW:
   smtp_send_copy_to_this_addresses: #"Sends a copy of all outgoing mails to this address. For multiple addresses, separate with commas."
   smtp_username: #SMTP Username
   sold: #Sold
-  sort_ordering: #"Sort ordering"
+  sort_ordering: 排序規則 #"Sort ordering"
   special_instructions: #"Special Instructions"
   spree: 
     date: 日期 #Date
