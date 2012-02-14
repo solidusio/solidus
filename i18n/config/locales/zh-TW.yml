@@ -823,19 +823,6 @@ zh-TW:
     match_policies: 
       all: 符合所有條件 #Match any of these rules
       any: 符合任一條件 #Match all of these rules
-  promotion_rule_types: 
-    first_order: 
-      description: Must be the customer's first order
-      name: First order
-    item_total: 
-      description: Order total meets these criteria
-      name: Item total
-    product: 
-      description: Order includes specified product(s)
-      name: Product(s)
-    user: 
-      description: Available only to the specified users
-      name: User
   promotions: 促銷方案 #Promotions
   promotions_description: #Manage offers and coupons with promotions
   properties: 屬性 #Properties
@@ -1081,3 +1068,56 @@ zh-TW:
   receive: 收到
   state_names:
     shipped: 已寄出
+  activemodel:
+    attributes:
+      promotion:
+        name: 名稱
+        description: 描述
+        code: 促銷代碼
+        usage_limit: 使用次數限制
+        starts_at: 啟用時間
+        expires_at: 截止時間
+  add_action_of_type: 增加促銷優惠
+  add_rule_of_type: 增加條件
+  advertise: 廣告
+  coupon: 促銷代碼
+  coupon_code: 促銷代碼
+  editing_promotion: 編輯促銷方案
+  events:
+    spree:
+      checkout:
+        coupon_code_added: Coupon code added
+      content:
+        visited: Visit static content page
+  expiry: 限制條件
+  free_shipping: 免運費
+  no_rules_added: No rules added
+  promotion_not_found: The coupon code you entered doesn't exist. Please try again.
+  promotions_description: Manage offers and coupons with promotions
+  promotion_action_types:
+    create_adjustment:
+      name: 增加價格調整
+      description: 增加一筆促銷用的價格調整
+    create_line_items:
+      name: 增加訂單商品
+      description: 增加特定商品到訂單中
+    give_store_credit:
+      name: Give store credit
+      description: Gives the user store credit of the amount specified
+  promotion_rule_types:
+    user_logged_in:
+      name: 已註冊使用者登入
+      description: 網站已註冊的使用者
+    user:
+      name: 使用者
+      description: 符合特定使用者
+    product:
+      name: 商品
+      description: 訂單中包含特定商品
+    first_order: 
+      description: 使用者的第1筆訂單
+      name: 第1筆訂單 
+    item_total: 
+      description: 商品總價符合條件
+      name: 商品總價
+
