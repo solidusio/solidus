@@ -494,7 +494,7 @@ zh-TW:
   listing_categories: 類型列表 #"Listing Categories"
   listing_option_types: 商品選項類型列表 #"Listing Option Types"
   listing_orders: 訂單列表 #"Listing Orders"
-  listing_product_groups: 商品群組列表
+  listing_product_groups: 商品集列表
   listing_products: 商品列表
   listing_reports: 報告列表 #"Listing Reports"
   listing_tax_categories: 稅別列表
