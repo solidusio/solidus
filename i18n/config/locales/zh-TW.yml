@@ -468,10 +468,10 @@ zh-TW:
   intercept_email_address: #Intercept Email Address
   intercept_email_instructions: #"Override email recipient and replace with this address."
   invalid_search: #"Invalid search criteria."
-  inventory: #Inventory
+  inventory: 庫存 #Inventory
   inventory_adjustment: #"Inventory Adjustment"
-  inventory_setting_description: #"Inventory Configuration, Backordering, Zero-Stock Display."
-  inventory_settings: #"Inventory Settings"
+  inventory_setting_description: 庫存設定, 預購, 是否顯示沒有庫存的商品.. #"Inventory Configuration, Backordering, Zero-Stock Display."
+  inventory_settings: 庫存設定 #"Inventory Settings"
   is_not_available_to_shipment_address: 沒有可用的出貨地址 #is not available to shipment address
   issue_number: #Issue Number
   item: 商品 #Item
@@ -515,7 +515,7 @@ zh-TW:
   maestro_or_solo_cards: Maestro/Solo cards
   mail_delivery_enabled: 郵件寄送功能已啟用 #"Mail delivery is enabled"
   mail_delivery_not_enabled: 郵件寄送功能已關閉 #"Mail delivery is not enabled"
-  mail_methods: #Mail Methods
+  mail_methods: EMail 寄送方式 #Mail Methods
   mail_server_preferences: 郵件伺服器設定 #Mail Server Preferences
   make_refund: #Make refund
   mark_shipped: #"Mark Shipped"
@@ -574,7 +574,7 @@ zh-TW:
   none: #None
   none_available: #"None Available"
   normal_amount: #"Normal Amount"
-  not: #not
+  not: 不 #not
   not_shown: #"Not Shown"
   note: 附註 #Note
   notice_messages: 
@@ -817,7 +817,7 @@ zh-TW:
         name: "With property value"
         sentence: with property <em>%s</em> and value <em>%s</em>
   products: 商品 #Products
-  products_with_zero_inventory_display: #"Products with a zero inventory will %{not} be displayed"
+  products_with_zero_inventory_display: "無庫存商品%{not}顯示" #"Products with a zero inventory will %{not} be displayed"
   promotion: 促銷方案 #Promotion
   promotion_form: 
     match_policies: 
@@ -993,7 +993,7 @@ zh-TW:
   tax_categories_setting_description: #"Set up tax categories to identify which products should be taxable."
   tax_category: 課稅類別 #"Tax Category"
   tax_rates: 稅率 #"Tax Rates"
-  tax_rates_description: #Tax rates setup and configuration.
+  tax_rates_description: Tax rates setup and configuration.
   tax_settings: #"Tax Settings"
   tax_settings_description: #Basic tax settings.
   tax_total: #"Tax Total"
@@ -1075,7 +1075,7 @@ zh-TW:
   zip: 郵遞區號
   zone: 區域 #Zone
   zone_based: #"Zone Based"
-  zone_setting_description: #"Collections of countries, states or other zones to be used in various calculations."
+  zone_setting_description: "Collections of countries, states or other zones to be used in various calculations."
   zones: 區域 #Zones
   customer_details_updated: 客戶資料更新完成
   receive: 收到
