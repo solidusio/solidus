@@ -1076,3 +1076,5 @@ zh-TW:
   zone_setting_description: #"Collections of countries, states or other zones to be used in various calculations."
   zones: 區域 #Zones
   customer_details_updated: 客戶資料更新完成
+  state_names:
+    shipped: 已寄出
