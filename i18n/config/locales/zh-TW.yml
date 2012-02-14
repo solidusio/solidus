@@ -620,8 +620,9 @@ zh-TW:
     confirm: 確認 #confirm
     delivery: 寄送方式 #delivery
     payment: 付款 #payment
-    resumed: #resumed
-    returned: #returned
+    resumed: Resumed #resumed
+    returned: 己寄回 #Returned
+    awaiting_return: 等待寄回
   order_summary: #Order Summary
   order_sure_want_to: #"Are you sure you want to %{event} this order?"
   order_total: 總金額 #"Order Total"
@@ -1076,5 +1077,6 @@ zh-TW:
   zone_setting_description: #"Collections of countries, states or other zones to be used in various calculations."
   zones: 區域 #Zones
   customer_details_updated: 客戶資料更新完成
+  receive: 收到
   state_names:
     shipped: 已寄出
