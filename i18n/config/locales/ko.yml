@@ -1008,7 +1008,7 @@ ko:
   test_mode: "테스트 모드"
   thank_you_for_your_order: #"Thank you for your business.  Please print out a copy of this confirmation page for your records."
   there_were_problems_with_the_following_fields: "다음 값들에 문제가 있습니다"
-  this_file_language: #"English (US)"
+  this_file_language: "한국의 (KO)"
   this_month: "이번달"
   this_year: "올해"
   thumbnail: "썸네일"
