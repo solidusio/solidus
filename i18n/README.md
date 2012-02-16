@@ -1,13 +1,15 @@
-This is an extension for the Spree e-commerce project.  It provides a "unified" locale file for each of the so-called "core" gems that make up Spree.
+#Spree Internationalization
 
-  * spree_api
-  * spree_auth
-  * spree_core
-  * spree_dash
-  * spree_promo
+This is the Internationalization project for [Spree Commerce](http://spreecommerce.com/)
 
-You can get a list of helpful Rake tasks by running
 
-    rake -T
+See the [official Internationalization documentation](http://guides.spreecommerce.com/i18n.html) for more details.
 
-See the [official documentation](http://spreecommerce.com/documentation) for more details.
+To install, simply add the Gem to your Gemfile
+
+
+1. Add the following to your Gemfile
+<pre>
+  gem 'spree_i18n', :git => 'git://github.com/spree/spree_i18n.git'
+</pre>
+2. Run `bundle install`
