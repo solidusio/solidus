@@ -608,8 +608,8 @@ zh-TW:
   order_not_in_system: #That order number is not valid on this site.
   order_number: 訂單編號 #Order
   order_operation_authorize: #Authorize
-  order_processed_but_following_items_are_out_of_stock: #"Your order has been processed, but following items are out of stock:"
-  order_processed_successfully: #"Your order has been processed successfully"
+  order_processed_but_following_items_are_out_of_stock: 您的訂單已被接收，但以下幾項商品已經缺貨
+  order_processed_successfully: 您的訂單已被接收
   order_state: 
     address: 地址 #address
     adjustments: #adjustments
