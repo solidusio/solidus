@@ -15,15 +15,6 @@ de:
     update: aktualisieren
     cancel: abbrechen
   active: "Aktiv"
-  activemodel: 
-    attributes: 
-      spree/promotion: 
-        code: Code
-        description: Description
-        expires_at: Expires at
-        name: Name
-        starts_at: Starts at
-        usage_limit: Usage limit
   activerecord: 
     attributes: 
       spree/address: 
