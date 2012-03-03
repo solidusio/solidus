@@ -1,5 +1,5 @@
 ---
-it: 
+it:
   'no': "No"
   'yes': "Si"
   5_biggest_spenders: "I 5 migliori clienti"
@@ -18,7 +18,13 @@ it:
     new: 'Nuova'
     update: 'Salva'
   active: "Attivo"
-  activerecord: 
+  activerecord:
+    errors:
+      template:
+        header:
+          one: "Non posso salvare questo %{model}: 1 errore"
+          other: "Non posso salvare questo %{model}: %{count} errori."
+        body: "Per favore ricontrolla i seguenti campi:"
     attributes: 
       address: 
         address1: 'Indirizzo'
@@ -26,9 +32,9 @@ it:
         city: 'Città'
         country: "Paese"
         first_name_begins_with: "Il Nome inizia con"
-        firstname: "First Name"
+        firstname: "Nome"
         last_name_begins_with: "Il Cognome inizia con"
-        lastname: "Last Name"
+        lastname: "Cognome"
         phone: 'Telefono'
         state: "Stato"
         zipcode: "CAP"
@@ -66,9 +72,9 @@ it:
       line_item: 
         price: 'Prezzo'
         quantity: 'Quantità'
-      order: 
+      spree/order:
         checkout_complete: "Pagamento Completato"
-        completed_at: "Completed At"
+        completed_at: "Concluso il"
         coupon_code: "Coupon Code"
         ip_address: "Indirizzo IP"
         item_total: "Oggetti Totali"
@@ -97,9 +103,9 @@ it:
       promotion: 
         code: "Code"
         description: "Description"
-        expires_at: "Expires at"
+        expires_at: "Termina il"
         name: "Name"
-        starts_at: "Starts at"
+        starts_at: "Inizia il"
         usage_limit: "Usage limit"
       property: 
         name: 'Nome'
@@ -288,14 +294,14 @@ it:
   both: "Entrambi"
   by_day: "per giorno"
   calculator: "Calcolatore"
-  calculator_settings_warning: "È necessario registrarsi prima di poter modificare le impostazioni del computer."
+  calculator_settings_warning: "È necessario salvare prima di poter modificare le impostazioni del calcolatore."
   cancel: "Annulla"
   cancel_my_account: "Cancella il mio account"
   cancel_my_account_description: "Non sei felice della scelta fatta?"
   canceled: "Annullato"
   cannot_create_returns: "Non è possibile tornare indietro fino all'invio dell'ordine."
-  cannot_destory_line_item_as_inventory_units_have_shipped: "Non posso eliminarel'oggetto poichè qualche unità è in fase di spedizione."
-  cannot_perform_operation: "Cannot perform requested operation"
+  cannot_destory_line_item_as_inventory_units_have_shipped: "Non posso eliminare l'oggetto in quanto è stato spedito almeno parzialmente."
+  cannot_perform_operation: "Impossibile eseguire l'operazione richiesta"
   capture: "accettare"
   card_code: "Codice della carta"
   card_details: "Dettagli Carta"
@@ -317,7 +323,7 @@ it:
   code: "Codice"
   combine: "Combina"
   complete: "completa"
-  complete_list: "Lista di Completamento"
+  complete_list: "Lista completa"
   configuration: "Configurazione"
   configuration_options: "Optioni di Configurazione"
   configurations: "Configurazioni"
@@ -357,8 +363,9 @@ it:
   date_range: "data (da/a)"
   debit: "Debito"
   default: "Predefinito"
+  default_tax: "Tassazione Predefinita"
   delete: "Cancella"
-  delivery: Delivery
+  delivery: Spedizione
   depth: "Profondità"
   description: "Descrizione"
   destroy: "Elimina"
@@ -367,8 +374,8 @@ it:
   discount_amount: "Sconto quantità"
   display: "Visualizza"
   edit: "Modifica"
-  edit_general_settings: "Edit General Settings"
-  editing_billing_integration: "Modifica il sistema di Fatturazione"
+  edit_general_settings: "Modifica impostazioni generali"
+  editing_billing_integration: "Modifica il sistema di fatturazione"
   editing_category: "Modifica categoria"
   editing_mail_method: "Modifica metodi di spedizione email"
   editing_option_type: "Modifica il tipo di opzione"
@@ -395,18 +402,19 @@ it:
   enable_login_via_login_password: "abilita l'autenticazione tramite email/password"
   enable_login_via_openid: "abilita l'autenticazione tramite OpenID "
   enable_mail_delivery: "abilita l'email di consegna"
-  enter_atleast_five_letters: Enter atleast five letters of customer name
+  enter_atleast_five_letters: "Inserisci almeno cinque lettere del nome del cliente"
   enter_exactly_as_shown_on_card: "Si prega di inserire esattamente come visualizzato sulla carta"
   enter_password_to_confirm: "(Abbiamo bisogno della password corrente per confermare il cambio)"
   environment: "Ambiente"
   error: "errore"
   errors: 
     messages: 
-      could_not_create_taxon: "Could not create taxon"
-      no_shipping_methods_available: "No shipping methods available for selected location, please change your address and try again."
+      could_not_create_taxon: "Impossibile creare la tassonomia"
+      no_shipping_methods_available: "Nessun metodo di consegna disponibile per l'indirizzo selezionato. Modifica il tuo indirizzo e riprova."
+      no_payment_methods_available: "Nessun metodo di pagamento disponibile."
   errors_prohibited_this_record_from_being_saved: 
-    one: "1 error prohibited this record from being saved"
-    other: "%{count} errors prohibited this record from being saved"
+    one: "1 errore ha impedito di proseguire"
+    other: "%{count} errori hanno impedito di proseguire"
   event: "Evento"
   existing_customer: "Il cliente esiste"
   expiration: "Scadenza"
@@ -424,9 +432,9 @@ it:
   first_name_begins_with: "il nome inizia con"
   flat_percent: "Percentuale netta"
   flat_rate_amount: "Importo"
-  flat_rate_per_item: "Tasso netto (per oggetto)"
-  flat_rate_per_order: "Tasso netto (per ordine)"
-  flexible_rate: "Tasso Flessibile"
+  flat_rate_per_item: "Prezzo fisso (per oggetto)"
+  flat_rate_per_order: "Prezzo fisso (per ordine)"
+  flexible_rate: "Prezzo variabile"
   forgot_password: "Password perduta"
   free_shipping: "Spedizione gratuita"
   from_state: From State
@@ -460,6 +468,7 @@ it:
   images: "Immagini"
   images_for: "Immagini per"
   in_progress: "In avanzamento"
+  included_in_price: "Inclusa nel prezzo"
   include_in_shipment: "Inserisci nella spedizione"
   included_in_other_shipment: "Incluso in un'altra spedizione"
   included_in_this_shipment: "Incluso in questa Spedizione"
@@ -494,6 +503,7 @@ it:
   listing_categories: "Elenco categorie"
   listing_option_types: "Elenco ipologia opzioni"
   listing_orders: "Elenco ordini"
+  listing_products: "Elenco prodotti"
   listing_product_groups: "Elenco gruppi prodotto"
   listing_reports: "Elenco report"
   listing_tax_categories: "Elenco categorie di tassazione"
@@ -519,6 +529,11 @@ it:
   make_refund: "Effettua un rimborso"
   mark_shipped: "Contrassegna come consegnata"
   master_price: "Prezzo base"
+  match_choices:
+    none: "Nessuna"
+    one: "Una"
+    all: "Tutte"
+  match_rule: "Il prodotto fa parte di:"
   max_items: "Max articoli"
   may_be_combined_with_other_promotions: May be combined with other promotions
   meta_description: "descrizione (meta description)"
@@ -527,8 +542,8 @@ it:
   minimal_amount: "Importo minimo"
   missing_required_information: "Informazione richiesta mancante"
   month: "Mese"
-  my_account: "Il mio conto"
-  my_orders: "I miei Ordini"
+  my_account: "Il mio account"
+  my_orders: "I miei ordini"
   name: "Nome"
   name_or_sku: "Nome/SKU"
   new: "Nuovo"
@@ -574,6 +589,7 @@ it:
   none_available: "non disponibile"
   normal_amount: "Importo normale"
   not: "no"
+  not_found: "%{resource} non è stata trovata"
   not_shown: "non visibile"
   note: "Note"
   notice_messages: 
@@ -676,7 +692,8 @@ it:
   preview: "Anteprima"
   previous: "Indietro"
   price: "Prezzo"
-  price_bucket: "Prezzo totale"
+  price_sack: "Prezzo totale"
+  price_range: Fasce di prezzo
   price_with_vat_included: "%{price} (inc. IVA)"
   problem_authorizing_card: "Problema di autorizzazione con la carta di credito"
   problem_capturing_card: "Problema di acquisizione della carta di credito"
@@ -891,7 +908,7 @@ it:
   scopes: "Campi"
   search: "Cerca"
   search_results: "Cerca risultati per '%{keywords}'"
-  searching: "RIcerca in corso"
+  searching: "Ricerca in corso"
   secure_connection_type: "Connessione sicura"
   secure_creditcard: "Carta di credito sicura"
   select: "Seleziona"
@@ -925,9 +942,10 @@ it:
   shipped: "Spedita"
   shipping: "In consegna"
   shipping_address: "Indirizzo di consegna"
-  shipping_categories: "categoria di spedizione"
+  shipping_categories: "Categoria di spedizione"
   shipping_categories_description: "Modifica le categorie di spedizione deii prodotti"
   shipping_category: "Categoria di spedizione"
+  shipping_category_choose: "Categoria di spedizione"
   shipping_cost: "Costi di spedizione"
   shipping_error: "Errore di spedizione"
   shipping_instructions: "Istruzioni di spedizione"
@@ -982,15 +1000,15 @@ it:
   street_address_2: "Indirizzo"
   subtotal: "Subtotale"
   subtract: "Sottrai"
-  successfully_created: "%{resource} has been successfully created!"
-  successfully_removed: "%{resource} has been successfully removed!"
-  successfully_updated: "%{resource} has been successfully updated!"
+  successfully_created: "%{resource} creato con successo!"
+  successfully_removed: "%{resource} rimosso con successo!"
+  successfully_updated: "%{resource} aggiornato con successo!"
   system: "Sistema"
   tax: "IVA"
-  tax_categories: "categorie di tassazione"
+  tax_categories: "Categorie di tassazione"
   tax_categories_setting_description: "Definire una categoria di tasse per identificare l'imponibile sui prodotti."
-  tax_category: "categoria di tassazione"
-  tax_rates: "tassazioni"
+  tax_category: "Categoria di tassazione"
+  tax_rates: "Tassazioni"
   tax_rates_description: "Amministra e configura la tassazione prodotti."
   tax_settings: "Parametri tassazione prodotti"
   tax_settings_description: "Parametri base per la tassazione dei prodotti."
@@ -1007,7 +1025,7 @@ it:
   test: "Test"
   test_mode: "Modalità test"
   thank_you_for_your_order: "Grazie per l'acquisto."
-  there_were_problems_with_the_following_fields: "There were problems with the following fields"
+  there_were_problems_with_the_following_fields: "Ci sono stati dei problemi con i seguenti campi"
   this_file_language: "Italiano (IT)"
   this_month: "Questo mese"
   this_year: "Quest'anno"
@@ -1030,7 +1048,7 @@ it:
   unable_to_save_order: "Non è possibile salvare l'ordine"
   under_paid: "Sottopagato"
   units: "Unità"
-  unrecognized_card_type: "Il tipo di scheda non è stata riconosciuta"
+  unrecognized_card_type: "Il tipo di scheda non è stato riconosciuta"
   update: "Salva"
   update_password: "Aggiorna la mia password e login"
   updated_successfully: "Aggiornato con successo"
@@ -1050,7 +1068,7 @@ it:
   validate_on_profile_create: "Utilizza le validazioni alla creazione di un nuovo utente"
   validation: 
     cannot_be_less_than_shipped_units: "non può essere inferiore al numero di pezzi venduti."
-    is_too_large: "è troppo grande. Le scorte disponibili non possono coprire l'importo richiesto!!"
+    is_too_large: "è troppo grande. Le scorte disponibili comprono l'importo richiesto!"
     must_be_int: "deve essere un intero!"
     must_be_non_negative: "deve essere un valore positivo!"
   value: "valore"
@@ -1068,7 +1086,7 @@ it:
   width: "Larghezza"
   year: "Anno"
   you_have_been_logged_out: "Il logout è stato effetuato con successo."
-  you_have_no_orders_yet: "You have no orders yet."
+  you_have_no_orders_yet: "Non hai ancora nessun ordine."
   your_cart_is_empty: "Il tuo carrello è vuoto"
   zip: "CAP"
   zone: "Zona"
