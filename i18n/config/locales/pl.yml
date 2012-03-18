@@ -48,7 +48,7 @@ pl:
         cc_type: Typ
         month: Miesiąc
         number: Numer
-        verification_value: "Verification Value"
+        verification_value: "Kod weryfikujący"
         year: Rok
       spree/inventory_unit:
         state: Stan
@@ -60,26 +60,26 @@ pl:
         presentation: Prezentacja
       spree/order:
         bill_address:
-          address1: "Billing address street"
-          city: "Billing address city"
-          firstname: "Billing address first name"
-          lastname: "Billing address last name"
-          phone: "Billing address phone"
-          state: "Billing address state"
-          zipcode: "Billing address zipcode"
-        checkout_complete: "Checkout Complete"
+          address1: "Adres płatniczy - ulica"
+          city: "Adres płatniczy - miasto"
+          firstname: "Adres płatniczy - imię"
+          lastname: "Adres płatniczy - nazwisko"
+          phone: "Adres płatniczy - telefon"
+          state: "Adres płatniczy - województwo"
+          zipcode: "Adres płatniczy - kod pocztowy"
+        checkout_complete: "Zamówienie ukończone"
         completed_at: "Skompletowane O"
         ip_address: "Adres IP"
-        item_total: "Item Total"
+        item_total: "Całkowita kwota"
         number: Numer
         ship_address:
-          address1: "Shipping address street"
-          city: "Shipping address city"
-          firstname: "Shipping address first name"
-          lastname: "Shipping address last name"
-          phone: "Shipping address phone"
-          state: "Shipping address state"
-          zipcode: "Shipping address zipcode"
+          address1: "Adres wysyłki - ulica"
+          city: "Adres wysyłki - miasto"
+          firstname: "Adres wysyłki - imię"
+          lastname: "Adres wysyłki - nazwisko"
+          phone: "Adres wysyłki - telefon"
+          state: "wysyłki - województwo"
+          zipcode: "Adres wysyłki - kod pocztowy"
         special_instructions: "Specjalne Instrukcje"
         state: Stan
         total: Łącznie
@@ -96,8 +96,8 @@ pl:
         tax_category: "Kategoria Podatkowa"
       spree/product_group:
         name: Nazwa
-        product_count: "Product count"
-        product_scopes: "Product scopes"
+        product_count: "Liczba produktów"
+        product_scopes: "Zakres produktów"
         products: "Produkty"
         url: URL
       spree/product_scope:
@@ -145,11 +145,12 @@ pl:
         cc_type: Typ
         month: Miesiąc
         number: Numer
-        verification_value: "Verification Value"
+        verification_value: "Kod weryfikacyjny"
         year: Rok
     models:
       spree/address:
         one: Adres
+        few: Adresy
         other: Adresy
       spree/cheque_payment:
         one: Płatność Czekiem
