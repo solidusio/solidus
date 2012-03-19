@@ -523,7 +523,7 @@ ja:
   mail_methods: "メールシステムの設定"
   mail_server_preferences: "メールサーバの設定"
   make_refund: "返金する"
-  mark_shipped: "発送済みとしてマーくする"
+  mark_shipped: "発送済みとしてマークする"
   master_price: "定価"
   max_items: "商品の数の最大限"
   may_be_combined_with_other_promotions: "他のキャンペーン/クーポンと併用出来ます"
