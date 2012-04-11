@@ -270,7 +270,7 @@ en-AU:
   assign_taxon: "Assign Taxon"
   assign_taxons: "Assign Taxons"
   authorization_failure: "Authorization Failure"
-  authorized: Authorized
+  authorized: Authorised
   available_on: "Available On"
   available_taxons: "Available Taxons"
   awaiting_return: Awaiting Return
@@ -417,8 +417,8 @@ en-AU:
   extensions: Extensions
   filename: Filename
   final_confirmation: "Final Confirmation"
-  finalize: Finalize
-  finalized_payments: Finalized Payments
+  finalize: Finalise
+  finalized_payments: Finalised Payments
   first_item: First Item Cost
   first_name: "First Name"
   first_name_begins_with: "First Name Begins With"
@@ -606,7 +606,7 @@ en-AU:
       subject: "Order Confirmation"
   order_not_in_system: That order number is not valid on this site.
   order_number: Order
-  order_operation_authorize: Authorize
+  order_operation_authorize: Authorise
   order_processed_but_following_items_are_out_of_stock: "Your order has been processed, but following items are out of stock:"
   order_processed_successfully: "Your order has been processed successfully"
   order_state: # keys correspond to Checkout state names:
@@ -1024,13 +1024,13 @@ en-AU:
   type: Type
   type_to_search: Type to search
   unable_ship_method: "Unable to generate delivery methods due to a server error."
-  unable_to_authorize_credit_card: "Unable to Authorize Credit Card"
+  unable_to_authorize_credit_card: "Unable to Authorise Credit Card"
   unable_to_capture_credit_card: "Unable to Capture Credit Card"
   unable_to_connect_to_gateway: "Unable to connect to gateway."
   unable_to_save_order: "Unable to Save Order"
   under_paid: "Under Paid"
   units: "Units"
-  unrecognized_card_type: Unrecognized card type
+  unrecognized_card_type: Unrecognised card type
   update: Update
   update_password: "Update my password and log me in"
   updated_successfully: "Updated Successfully"
