@@ -178,8 +178,8 @@ en-NZ:
         one: Prototype
         other: Prototypes
       spree/return_authorization:
-        one: "Return Authorization"
-        other: "Return Authorizations"
+        one: "Return Authorisation"
+        other: "Return Authorisations"
       spree/role:
         one: Roles
         other: Roles
@@ -268,7 +268,7 @@ en-NZ:
   attachment_default_url: "Attachments URL"
   attachment_path: "Attachments Path"
   attachment_styles: "Paperclip Styles"
-  authorization_failure: "Authorization Failure"
+  authorization_failure: "Authorisation Failure"
   authorized: Authorised
   availability: Availability
   available_on: "Available On"
@@ -577,7 +577,7 @@ en-NZ:
   new_promotion: "New Promotion"
   new_property: "New Property"
   new_prototype: "New Prototype"
-  new_return_authorization: "New Return Authorization"
+  new_return_authorization: "New Return Authorisation"
   new_shipment: "New Shipment"
   new_shipping_category: "New Shipping Category"
   new_shipping_method: "New Delivery Method"
@@ -749,11 +749,11 @@ en-NZ:
       ascend_by_name:
         name: "Ascend by product name"
       ascend_by_updated_at:
-        name: "Ascend by actualization date"
+        name: "Ascend by actualisation date"
       descend_by_name:
         name: "Descend by product name"
       descend_by_updated_at:
-        name: "Descend by actualization date"
+        name: "Descend by actualisation date"
       in_name:
         args:
           words: Words
@@ -919,9 +919,9 @@ en-NZ:
   resume: resume
   resumed: Resumed
   return: return
-  return_authorization: "Return Authorization"
-  return_authorization_updated: "Return authorization updated"
-  return_authorizations: "Return Authorizations"
+  return_authorization: "Return Authorisation"
+  return_authorization_updated: "Return authorisation updated"
+  return_authorizations: "Return Authorisations"
   return_quantity: "Return Quantity"
   returned: Returned
   rma_credit: "RMA Credit"

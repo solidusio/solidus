@@ -181,8 +181,8 @@ en-GB:
         one: Prototype
         other: Prototypes
       return_authorization: 
-        one: Return Authorization
-        other: Return Authorizations
+        one: "Return Authorisation"
+        other: "Return Authorisations"
       role: 
         one: Roles
         other: Roles
@@ -269,7 +269,7 @@ en-GB:
   are_you_sure_you_want_to_capture: "Are you sure you want to capture?"
   assign_taxon: "Assign Taxon"
   assign_taxons: "Assign Taxons"
-  authorization_failure: "Authorization Failure"
+  authorization_failure: "Authorisation Failure"
   authorized: Authorised
   available_on: "Available On"
   available_taxons: "Available Taxons"
@@ -549,7 +549,7 @@ en-GB:
   new_promotion: New Promotion
   new_property: "New Property"
   new_prototype: "New Prototype"
-  new_return_authorization: New Return Authorization
+  new_return_authorization: "New Return Authorisation"
   new_shipment: "New Shipment"
   new_shipping_category: "New Shipping Category"
   new_shipping_method: "New Shipping Method"
@@ -718,7 +718,7 @@ en-GB:
       ascend_by_name: 
         name: Ascend by product name
       ascend_by_updated_at: 
-        name: Ascend by actualization date
+        name: Ascend by actualisation date
       descend_by_master_price: 
         name: Descend by product master price
       descend_by_name: 
@@ -726,7 +726,7 @@ en-GB:
       descend_by_popularity: 
         name: Sort by popularity(most popular first)
       descend_by_updated_at: 
-        name: Descend by actualization date
+        name: Descend by actualisation date
       in_name: 
         args: 
           words: Words
@@ -872,9 +872,9 @@ en-GB:
   resume: "resume"
   resumed: Resumed
   return: return
-  return_authorization: Return Authorization
-  return_authorization_updated: Return authorization updated
-  return_authorizations: Return Authorizations
+  return_authorization: Return Authorisation
+  return_authorization_updated: Return authorisation updated
+  return_authorizations: Return Authorisations
   return_quantity: Return Quantity
   returned: Returned
   rma_credit: RMA Credit
