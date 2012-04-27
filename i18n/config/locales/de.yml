@@ -1018,6 +1018,8 @@ de:
     coupon_code: Aktions-Code
     date: Datum
     time: Uhrzeit
+    date_picker:
+      format: 'dd.mm.yy'
   spree_alert_checking: "Überprüfe auf Spree Sicherheits- und Veröffentlichungshinweise"
   spree_alert_not_checking: "Überprüfe nicht auf Spree Sicherheits- und Veröffentlichungshinweise"
   spree_gateway_error_flash_for_checkout: "Es gab Probleme mit Ihren Zahlungsinformationen. Bitte überprüfen Sie Ihre Angaben und probieren Sie es erneut."
