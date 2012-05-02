@@ -309,7 +309,7 @@ de:
   canceled: Verworfen
   cannot_create_returns: "Sie können diese Bestellung nicht zurückgeben, da sie noch nicht versendet wurde."
   cannot_perform_operation: "Kann diese Operation nicht durchführen."
-  capture: stornieren
+  capture: erfassen
   card_code: "Kartenprüfnummer"
   card_details: "Karten Details"
   card_number: "Kartennummer"
