@@ -1,9 +1,22 @@
-#!/usr/bin/env rake
-
-require "rubygems"
-require "bundler/setup"
 require 'rake'
-require 'rails'
+require 'rake/testtask'
+require 'rbconfig'
 
-# Load any custom rakefiles for extension
-Dir[ File.expand_path('lib/tasks/*.rake', File.dirname(__FILE__)) ].sort.each { |f| load f }
+require 'rspec/core'
+require 'rspec/core/rake_task'
+RSpec::Core::RakeTask.new(:spec) do |spec|
+  spec.pattern = FileList['spec/**/*_spec.rb']
+end
+
+RSpec::Core::RakeTask.new("spec:translations") do |spec|
+  spec.pattern = 'spec/unit/**/*_spec.rb'
+end
+
+RSpec::Core::RakeTask.new(:rcov) do |spec|
+  spec.pattern = 'spec/**/*_spec.rb'
+  spec.rcov = true
+end
+
+require 'i18n-spec/tasks' # needs to be loaded after rspec
+
+task :default => :spec

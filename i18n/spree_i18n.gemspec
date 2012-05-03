@@ -15,5 +15,11 @@ Gem::Specification.new do |s|
   s.require_path = 'lib'
   s.requirements << 'none'
 
-  s.add_dependency('spree_core',  '>=0.30.0')
+  s.add_dependency('spree',  '>= 1.1.0.rc2')
+  s.add_dependency('i18n', '~> 0.5')
+  s.add_development_dependency "rails", ">= 3.0.0"
+  s.add_development_dependency "rspec-rails", ">= 2.7.0"
+  s.add_development_dependency "i18n-spec", ">= 0.2"
+  s.add_development_dependency "spork", "~> 1.0rc"
+  s.add_development_dependency "sqlite3", "~> 1.3.6"
 end
