@@ -9,6 +9,7 @@ en:
   account_updated: "Account updated!"
   action: Action
   actions:
+    cancel: Cancel
     create: Create
     destroy: Destroy
     list: List
@@ -16,6 +17,7 @@ en:
     new: New
     update: Update
   active: "Active"
+  activate: "Activate"
   activerecord:
     attributes:
       spree/address:
@@ -24,9 +26,9 @@ en:
         city: City
         country: "Country"
         firstname: "First Name"
-        first_name_begins_with: "First Name Begins With"
+        first_name_start: "First Name Begins With"
         lastname: "Last Name"
-        last_name_begins_with: "Last Name Begins With"
+        last_name_start: "Last Name Begins With"
         phone: Phone
         state: "State"
         zipcode: "Zip Code"
@@ -56,6 +58,10 @@ en:
         special_instructions: "Special Instructions"
         state: State
         total: Total
+        created_at: Order Date
+        payment_state: Payment State
+        shipment_state: Shipment State
+        email: Customer E-Mail
       spree/order/bill_address:
           address1: "Billing address street"
           city: "Billing address city"
@@ -86,15 +92,6 @@ en:
         on_hand: "On Hand"
         shipping_category: "Shipping Category"
         tax_category: "Tax Category"
-      spree/product_group:
-        name: Name
-        product_count: "Product count"
-        product_scopes: "Product scopes"
-        products: "Products"
-        url: URL
-      spree/product_scope:
-        arguments: "Arguments"
-        description: "Description"
       spree/property:
         name: Name
         presentation: Presentation
@@ -168,9 +165,6 @@ en:
       spree/product:
         one: Product
         other: Products
-      spree/product_group:
-        one: "Product group"
-        other: "Product groups"
       spree/property:
         one: Property
         other: Properties
@@ -216,6 +210,8 @@ en:
   add: Add
   add_category: "Add Category"
   add_country: "Add Country"
+  add_new_header: "Add New Header"
+  add_new_style: "Add New Style"
   add_option_type: "Add Option Type"
   add_option_types: "Add Option Types"
   add_option_value: "Add Option Value"
@@ -261,6 +257,10 @@ en:
   are_you_sure_you_want_to_capture: "Are you sure you want to capture?"
   assign_taxon: "Assign Taxon"
   assign_taxons: "Assign Taxons"
+  attachment_default_style: "Attachments Style"
+  attachment_default_url: "Attachments URL"
+  attachment_path: "Attachments Path"
+  attachment_styles: "Paperclip Styles"
   authorization_failure: "Authorization Failure"
   authorized: Authorized
   availability: "Availability"
@@ -283,7 +283,8 @@ en:
   cancel_my_account: Cancel my account
   cancel_my_account_description: "Unhappy?"
   canceled: Canceled
-  cannot_create_returns: Cannot create returns as this order no shipped units.
+  cannot_create_payment_without_payment_methods: You cannot create a payment for an order without any payment methods defined.
+  cannot_create_returns: Cannot create returns as this order has no shipped units.
   cannot_perform_operation: "Cannot perform requested operation"
   capture: Capture
   card_code: "Card Code"
@@ -299,6 +300,7 @@ en:
   charge_total: Charge Total
   charged: Charged
   charges: Charges
+  check_for_spree_alerts: "Check for Spree alerts"
   checkout: Checkout
   cheque: Cheque
   city: City
@@ -323,7 +325,6 @@ en:
   country_based: "Country Based"
   create: Create
   create_a_new_account: "Create a new account"
-  create_product_group_from_products: Create a new product group from these products
   create_user_account: Create User Account
   created_successfully: "Created Successfully"
   credit: Credit
@@ -349,6 +350,7 @@ en:
   default_seo_title: Default Seo Title
   default_tax: Default Tax
   default_tax_zone: Default Tax Zone
+  defined_paperclip_styles: Defined Paperclip Styles
   delete: Delete
   delivery: Delivery
   depth: Depth
@@ -390,6 +392,7 @@ en:
   enter_exactly_as_shown_on_card: Please enter exactly as shown on the card
   enter_at_least_five_letters: Enter at least five letters of customer name
   enter_password_to_confirm: "(we need your current password to confirm your changes)"
+  enter_token: Enter Token
   environment: "Environment"
   error: error
   errors:
@@ -424,6 +427,7 @@ en:
   first_item: First Item Cost
   first_name: "First Name"
   first_name_begins_with: "First Name Begins With"
+  first_name_start: "First Name Begins With"
   flat_percent: "Flat Percent"
   flat_rate_amount: Amount
   flat_rate_per_item: "Flat Rate (per item)"
@@ -461,6 +465,10 @@ en:
   image: Image
   images: Images
   images_for: "Images for"
+  image_settings: "Image Settings"
+  image_settings_description: "Image Settings Description"
+  image_settings_updated: "Image Settings successfully updated."
+  image_settings_warning: "You will need to regenerate thumbnails if you update the paperclip styles. Use rake paperclip:refresh:thumbnails to do this."
   in_progress: "In Progress"
   include_in_shipment: Include in Shipment
   included_in_other_shipment: Included in another Shipment
@@ -484,6 +492,8 @@ en:
   item_total: "Item Total"
   last_name: "Last Name"
   last_name_begins_with: "Last Name Begins With"
+  last_name_start: "Last Name Begins With"
+  learn_more: Learn More
   leave_blank_to_not_change: "(leave blank if you don't want to change it)"
   list: List
   listing_categories: "Listing Categories"
@@ -591,6 +601,7 @@ en:
   option_values: "Option Values"
   options: Options
   or: or
+  or_over_price: "%{price} or over"
   order: Order
   order_confirmation_note: ""
   order_date: "Order Date"
@@ -673,6 +684,7 @@ en:
   phone: Phone
   place_order: Place Order
   please_create_user: "Please create a user account"
+  please_define_payment_methods: "Please define some payment methods first."
   powered_by: "Powered by"
   presentation: Presentation
   preview: Preview
@@ -707,18 +719,12 @@ en:
         description: "Scopes for selecting products based on option and property values"
         name: Values
     scopes:
-      ascend_by_master_price:
-        name: Ascend by product master price
       ascend_by_name:
         name: Ascend by product name
       ascend_by_updated_at:
         name: Ascend by actualization date
-      descend_by_master_price:
-        name: Descend by product master price
       descend_by_name:
         name: Descend by product name
-      descend_by_popularity:
-        name: Sort by popularity(most popular first)
       descend_by_updated_at:
         name: Descend by actualization date
       in_name:
@@ -851,10 +857,17 @@ en:
   return_authorizations: Return Authorizations
   return_quantity: Return Quantity
   returned: Returned
+  review: Review
   rma_credit: RMA Credit
   rma_number: RMA Number
   rma_value: RMA Value
   roles: Roles
+  s3_access_key: "Access Key"
+  s3_bucket: "Bucket"
+  s3_headers: "S3 Headers"
+  s3_secret: "Secret Key"
+  s3_used_for_product_images: "S3 is being used for product images"
+  s3_not_used_for_product_images: "S3 is not being used for product images"
   sales_tax: "Sales Tax"
   sales_total: "Sales Total"
   sales_total_description: "Sales Total For All Orders"
@@ -912,6 +925,7 @@ en:
   shipping_total: "Shipping Total"
   shop_by_taxonomy: "Shop by %{taxonomy}"
   shopping_cart: "Shopping Cart"
+  short_description: "Short description"
   show: Show
   show_active: "Show Active"
   show_deleted: "Show Deleted"
@@ -937,6 +951,8 @@ en:
   special_instructions: "Special Instructions"
   spree:
     date: Date
+    date_picker:
+      format: 'yy/mm/dd'
     time: Time
   spree_gateway_error_flash_for_checkout: "There was a problem with your payment information. Please check your information and try again."
   spree_inventory_error_flash_for_insufficient_quantity: "An item in your cart has become unavailable."
@@ -1010,6 +1026,7 @@ en:
   unable_to_capture_credit_card: "Unable to Capture Credit Card"
   unable_to_connect_to_gateway: "Unable to connect to gateway."
   unable_to_save_order: "Unable to Save Order"
+  under_price: "Under %{price}"
   under_paid: "Under Paid"
   unrecognized_card_type: Unrecognized card type
   update: Update
@@ -1021,6 +1038,7 @@ en:
   use_billing_address: Use Billing Address
   use_different_shipping_address: "Use Different Shipping Address"
   use_new_cc: "Use a new card"
+  use_s3: "Use Amazon S3 For Images"
   user: User
   user_account: User Account
   user_created_successfully: "User created successfully"
