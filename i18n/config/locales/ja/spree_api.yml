@@ -1,0 +1,14 @@
+ja:
+  spree:
+    api:
+      must_specify_api_key: "APIキーを指定してください。"
+      invalid_api_key: "指定されたAPIキー(%{key})が正しくありません。"
+      unauthorized: "このアクションを実行する権限がありません。"
+      invalid_resource: "不正なリソースです。エラーを修正して再度お試しください。"
+      resource_not_found: "お探しのリソースが見つかりませんでした。"
+      gateway_error: "支払いゲートウェイで以下の問題が発生しました: %{text}"
+      credit_over_limit: "%{limit}までお支払い可能です。これ以下の金額を指定してください。"
+
+      order:
+        could_not_transition: "注文手続きを進められませんでした。エラーを修正して再度お試しください。"
+        invalid_shipping_method: "不正な配送方法が指定されました。"

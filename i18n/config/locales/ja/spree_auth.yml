@@ -1,0 +1,46 @@
+ja:
+  errors:
+    messages:
+      not_found: 'は見つかりません。'
+      already_confirmed: 'はすでに確認済みです。'
+      not_locked: 'は凍結されていません。'
+      not_saved:
+        one: '1個のエラーにより%{resource}を保存できませんでした:'
+        other: '%{count}個のエラーにより%{resource}を保存できませんでした:'
+  devise:
+    failure:
+      unauthenticated: ログインしてください。
+      unconfirmed: 本登録を行ってください。
+      locked: あなたのアカウントは凍結されています。
+      invalid: メールアドレスかパスワードが違います。
+      invalid_token: 認証キーが不正です。
+      timeout: セッションがタイムアウトしました。もう一度ログインしてください。
+      inactive: アカウントがアクティベートされていません。
+    user_passwords:
+      user:
+        send_instructions: 'パスワードのリセット方法を数分以内にメールでご連絡します。'
+        updated: 'パスワードを変更しました。現在ログイン中です。'
+    confirmations:
+      confirmed: アカウントを登録しました。
+      send_instructions: 登録方法を数分以内にメールでご連絡します。
+    user_registrations:
+      signed_up: 'ようこそ！アカウント登録を受け付けました。'
+      inactive_signed_up: 'アカウント登録を受け付けました。しかし、以下の理由によりログインできません：%{reason}'
+      updated: 'アカウントを更新しました。'
+      destroyed: 'アカウントを削除しました。またのご利用をお待ちしております。'
+    user_sessions:
+      signed_in: 'ログインしました。'
+      signed_out: 'ログアウトしました。'
+    unlocks:
+      send_instructions: 'アカウントの凍結解除方法を数分以内にメールでご連絡します。'
+      unlocked: 'アカウントを凍結解除しました。ログイン可能です。'
+    oauth_callbacks:
+      success: '%{kind}アカウントによる認証に成功しました。'
+      failure: '%{kind}アカウントによる認証に失敗しました。理由は以下の通りです：%{reason}'
+    mailer:
+      confirmation_instructions:
+        subject: 'アカウントの登録方法'
+      reset_password_instructions:
+        subject: 'パスワードの再設定'
+      unlock_instructions:
+        subject: 'アカウントの凍結解除'
