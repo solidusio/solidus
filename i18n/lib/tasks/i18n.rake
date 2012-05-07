@@ -5,7 +5,7 @@ namespace :spree_i18n do
 
   SPREE_MODULES = [ 'api', 'core', 'auth', 'dash', 'promo' ].freeze
 
-  desc "Update by retrieving the latest Spree locale fils"
+  desc "Update by retrieving the latest Spree locale files"
   task :update_default do
     puts "Fetching latest Spree locale file to #{locales_dir}"
     require "uri"; require "net/https"
