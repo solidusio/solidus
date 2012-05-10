@@ -353,6 +353,9 @@ es:
   customer: Cliente
   customer_details: "Detalles del cliente"
   customer_search: "Búsqueda de clientes"
+  date:
+    formats:
+      default: "%d-%m-%Y %H:%M:%S %Z"
   date_created: Fecha creada
   date_range: "Rango de Fecha"
   debit: Débito
