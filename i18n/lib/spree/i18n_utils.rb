@@ -1,3 +1,5 @@
+require 'active_support/core_ext'
+
 module Spree
   module I18nUtils
 
