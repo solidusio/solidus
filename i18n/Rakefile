@@ -19,4 +19,7 @@ end
 
 require 'i18n-spec/tasks' # needs to be loaded after rspec
 
+# Load any custom rakefiles for extension
+Dir[ File.expand_path('lib/tasks/*.rake', File.dirname(__FILE__)) ].sort.each { |f| load f }
+
 task :default => :spec
