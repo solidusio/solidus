@@ -20,7 +20,7 @@ fr:
   active: "Active"
   activerecord: 
     attributes: 
-      address: 
+      spree/address: 
         address1: Adresse
         address2: "Adresse complémentaire"
         city: Ville
@@ -32,7 +32,7 @@ fr:
         phone: Téléphone
         state: "Etat"
         zipcode: "Code Postal"
-      checkout: 
+      spree/checkout: 
         bill_address: 
           address1: "Adresse de facturation"
           city: "Ville de facturation"
@@ -49,24 +49,24 @@ fr:
           phone: "Téléphone de livraison"
           state: "Etat de livraison"
           zipcode: "Code postal de livraison"
-      country: 
+      spree/country: 
         iso: ISO
         iso3: ISO3
         iso_name: "Nom ISO"
         name: Nom
         numcode: "Code ISO"
-      creditcard: 
+      spree/creditcard: 
         cc_type: Type
         month: Mois
         number: Nombre
         verification_value: "Cryptogramme"
         year: Année
-      inventory_unit: 
+      spree/inventory_unit: 
         state: Région
-      line_item: 
+      spree/line_item: 
         price: Prix
         quantity: Quantité
-      order: 
+      spree/order: 
         checkout_complete: "Paiement complet"
         completed_at: "Completed At"
         coupon_code: "Coupon Code"
@@ -76,7 +76,7 @@ fr:
         special_instructions: "Instructions spéciales"
         state: Région
         total: Total
-      product: 
+      spree/product: 
         available_on: "Disponible sur"
         cost_price: "Prix de revient"
         description: Description
@@ -85,48 +85,49 @@ fr:
         on_hand: "En Stock"
         shipping_category: "Catégorie de livraison"
         tax_category: "Catégorie de taxe"
-      product_group: 
+      spree/product_group: 
         name: "Nom"
         product_count: "Nombre de produits"
         product_scopes: "Portée du produit"
         products: "Produits"
         url: "URL"
-      product_scope: 
+      spree/product_scope: 
         arguments: "Arguments"
         description: "Description"
-      promotion: 
+      spree/promotion: 
         code: "Code"
         description: "Description"
         expires_at: "Expires at"
         name: "Name"
         starts_at: "Starts at"
         usage_limit: "Usage limit"
-      property: 
+      spree/property: 
         name: Nom
         presentation: "Présentation"
-      prototype: 
+      spree/prototype: 
         name: Nom
-      return_authorization: 
+      spree/return_authorization: 
         amount: Montant
-      role: 
+      spree/role: 
         name: Nom
-      state: 
+      spree/state: 
         abbr: Abréviation
         name: Nom
-      tax_category: 
+      spree/tax_category: 
         description: Description
         name: Name
-      tax_rate: 
+      spree/tax_rate: 
         amount: Taux
-      taxon: 
+      spree/taxon: 
         name: Nom
         permalink: Lien permanant
         position: Position
-      taxonomy: 
+      spree/taxonomy: 
         name: Nom
-      user: 
-        email: Email
-      variant: 
+      spree/user: 
+        email: Courriel
+        password: Mot de passe
+      spree/variant: 
         cost_price: "Prix de revient"
         depth: Profondeur
         height: Taille
@@ -134,80 +135,80 @@ fr:
         sku: SKU
         weight: Poids
         width: Largeur
-      zone: 
+      spree/zone: 
         description: Description
         name: Nom
     models: 
-      address: 
+      spree/address: 
         one: Adresse
         other: Adresses
-      cheque_payment: 
+      spree/cheque_payment: 
         one: Paiement par chèque
         other: Paiements par chèque
-      country: 
+      spree/country: 
         one: Pays
         other: Pays
-      creditcard: 
+      spree/creditcard: 
         one: "Carte de crédit"
         other: "Cartes de crédit"
-      inventory_unit: 
+      spree/inventory_unit: 
         one: "Stock"
         other: "Stocks"
-      line_item: 
+      spree/line_item: 
         one: "Gamme de produits"
         other: "Gammes de produits"
-      order: 
+      spree/order: 
         one: Commande
         other: Commandes
-      payment: 
+      spree/payment: 
         one: Paiement
         other: Paiements
-      product: 
+      spree/product: 
         one: Produit
         other: Produits
-      product_group: 
+      spree/product_group: 
         one: "Product group"
         other: "Product groups"
-      property: 
+      spree/property: 
         one: Proprieté
         other: Proprietés
-      prototype: 
+      spree/prototype: 
         one: Prototype
         other: Prototypes
-      return_authorization: 
+      spree/return_authorization: 
         one: Retour d'autorisation
         other: Retours d'autorisations
-      role: 
+      spree/role: 
         one: Rôles
         other: Rôles
-      shipment: 
+      spree/shipment: 
         one: Expedition
         other: Expeditions
-      shipping_category: 
+      spree/shipping_category: 
         one: Catégorie de livraison"
         other: "Catégories de livraison"
-      state: 
+      spree/state: 
         one: Région
         other: Régions
-      tax_category: 
+      spree/tax_category: 
         one: "Catégorie de taxe"
         other: "Catégories des taxes"
-      tax_rate: 
+      spree/tax_rate: 
         one: "Taux de la taxe"
         other: "Taux des taxes"
-      taxon: 
+      spree/taxon: 
         one: Chemin
         other: Chemins
-      taxonomy: 
+      spree/taxonomy: 
         one: Taxonomie
         other: Taxonomies
-      user: 
+      spree/user: 
         one: Utilisateur
         other: Utilisateurs
-      variant: 
+      spree/variant: 
         one: Version
         other: Versions
-      zone: 
+      spree/zone: 
         one: Zone
         other: Zones
   add: Ajouter
@@ -304,7 +305,7 @@ fr:
   charge_total: Charge Totale
   charged: Débité
   charges: Charges
-  checkout: Procéder au paiement
+  checkout: Paiement
   cheque: Chèque
   city: Ville
   clone: Clone
@@ -321,7 +322,7 @@ fr:
   confirm_password: "Confirmation du mot de passe"
   continue: Continuer
   continue_shopping: "Continuer vos achats"
-  copy_all_mails_to: "Envoyer une copie des emails aux adresses suivantes"
+  copy_all_mails_to: "Envoyer une copie des courriels aux adresses suivantes"
   cost_price: "Prix de revient"
   count: Quantité
   count_of_reduced_by: "Compte de '%{name}' diminué de %{count}"
@@ -362,7 +363,7 @@ fr:
   edit_general_settings: "Edition de la configuration générale"
   editing_billing_integration: "Edition du système de facturation"
   editing_category: "Edition de la catégorie"
-  editing_mail_method: "Edition de la méthod d'email"
+  editing_mail_method: "Edition de la méthod de courriel"
   editing_option_type: "Edition du type d'option"
   editing_option_types: "Edition des types d'options"
   editing_payment_method: "Edition du moyen de paiement"
@@ -379,14 +380,14 @@ fr:
   editing_tracker: "Edition du tracker"
   editing_user: "Edition d'un utilisateur"
   editing_zone: "Edition d'une zone"
-  email: Email
-  email_address: "Adresse email"
-  email_server_settings_description: "Définir les paramètres email du serveur."
+  email: Courriel
+  email_address: "Adresse courriel"
+  email_server_settings_description: "Définir les paramètres courriel du serveur."
   empty: "Vide"
   empty_cart: "Vider le panier"
-  enable_login_via_login_password: "Utiliser un email et mot de passe standard"
+  enable_login_via_login_password: "Utiliser un courriel et mot de passe standard"
   enable_login_via_openid: "Utiliser un OpenId à la place"
-  enable_mail_delivery: Activation de la distribution des emails
+  enable_mail_delivery: Activation de la distribution des courriels
   enter_atleast_five_letters: Saisissez au moins cinq lettres du nom du client
   enter_exactly_as_shown_on_card: "Prière d'entrer exactement comme affiché sur la carte"
   enter_password_to_confirm: "(Nous avons besoin de votre mot de passe actuel pour confirmer le changement)"
@@ -455,10 +456,10 @@ fr:
   include_in_shipment: Inclus dans la livraison
   included_in_other_shipment: Inclus dans une autre livraison
   included_in_this_shipment: Inclus dans cette livraison
-  instructions_to_reset_password: "Remplissez le formulaire ci-après et les instuctions pour réinitialiser votre mot de passe vous seront envoyées par email:"
+  instructions_to_reset_password: "Remplissez le formulaire ci-après et les instuctions pour réinitialiser votre mot de passe vous seront envoyées par courriel:"
   integration_settings_warning: "Si vous changer de système de facturation, vous devez d'abord sauvegarder avant de pouvoir modifier les parmètres"
-  intercept_email_address: Intercepter l'adresse email
-  intercept_email_instructions: "Remplacer l'adresse email de destination par cette adresse"
+  intercept_email_address: Intercepter l'adresse courriel
+  intercept_email_instructions: "Remplacer l'adresse courriel de destination par cette adresse"
   invalid_search: "Critère de recherche invalide."
   inventory: Inventaire
   inventory_adjustment: "Ajustement de l'inventaire"
@@ -468,7 +469,7 @@ fr:
   issue_number: "Numéro de problème"
   item: Article
   item_description: "Description de l'article"
-  item_total: "Nombre total d'articles"
+  item_total: "Sous-total"
   item_total_rule: 
     operators: 
       gt: plus grand que
@@ -497,16 +498,16 @@ fr:
   logged_in_as: "Identifié en tant que"
   logged_in_succesfully: "Connexion réussie"
   logged_out: "Vous avez été déconnecté"
-  login: Login
+  login: "Connexion"
   login_as_existing: "Connecter en tant que client existant"
   login_failed: "L'authentification a échoué"
   login_name: Identifiant
   logout: Se déconnecter
   look_for_similar_items: Chercher des articles similaires
   maestro_or_solo_cards: Cartes Maestro/Solo
-  mail_delivery_enabled: "La distribution des emails est activée"
-  mail_delivery_not_enabled: "La distribution des emails est désactivée"
-  mail_methods: Méthods d'email
+  mail_delivery_enabled: "La distribution des courriels est activée"
+  mail_delivery_not_enabled: "La distribution des courriels est désactivée"
+  mail_methods: Méthods de courriel
   mail_server_preferences: Préférence du serveur de messagerie
   make_refund: Effectuer un remboursement
   mark_shipped: "Marqué en tant que livré"
@@ -561,7 +562,7 @@ fr:
   no_products_found: "Aucun article trouvé"
   no_results: "Pas de résultats"
   no_rules_added: Pas de règles ajouté
-  no_user_found: "Aucun utilisateur n'a été trouvé avec cette adresse email"
+  no_user_found: "Aucun utilisateur n'a été trouvé avec cette adresse courriel"
   none: Aucun
   none_available: "Aucun de disponible"
   normal_amount: "Montant normal"
@@ -590,7 +591,7 @@ fr:
   order_confirmation_note: ""
   order_date: "Date de la commande"
   order_details: "Détails de la commande"
-  order_email_resent: "Renvoi de la commande par email"
+  order_email_resent: "Renvoi de la commande par courriel"
   order_mailer: 
     cancel_email: 
       subject: "Annulation de la commande"
@@ -624,6 +625,8 @@ fr:
   out_of_stock: "En rupture de stock"
   out_of_stock_products: "Produits en rupture de stock"
   over_paid: "Over Paid"
+  or: "ou"
+  or_over_price: "%{price} ou plus"
   overview: Vue d'ensemble
   overview_welcome: "Bienvenue sur la vue d'ensemble de votre boutique, pour le moment nous n'avons pas assez de données pour afficher le tableau de bord.<br/><br/> Le tableau de bord sera affiché automatiquement dès que le système aura suffisamment de commandes pour générer des statistiques."
   page_only_viewable_when_logged_in: "Vous avez tenté de visiter une page qui ne peut être vue qu'en étant connecté"
@@ -632,8 +635,8 @@ fr:
   parent_category: "Catégorie racine"
   password: Mot de passe
   password_reset_instructions: "Instructions de réinitialisation du mot de passe"
-  password_reset_instructions_are_mailed: "Les instructions pour réinitialiser votre mot de passe vous ont été envoyées.  Merci de vérifier vos emails."
-  password_reset_token_not_found: "Nous sommes désolé, on ne peut pas trouver votre compte.  Si vous avez des problèmes, essayer de copier et coller l'URL de votre email dans votre navigateur ou recommencer le processus de réinitialisation de votre mot de passe."
+  password_reset_instructions_are_mailed: "Les instructions pour réinitialiser votre mot de passe vous ont été envoyées.  Merci de vérifier vos courriels."
+  password_reset_token_not_found: "Nous sommes désolé, on ne peut pas trouver votre compte.  Si vous avez des problèmes, essayer de copier et coller l'URL de votre courriel dans votre navigateur ou recommencer le processus de réinitialisation de votre mot de passe."
   password_updated: "Mot de passe mis à jour avec succès"
   path: Chemin
   pay: payé
@@ -877,7 +880,7 @@ fr:
   sales_tax: "Taxe de ventes"
   sales_total: "Total de ventes"
   sales_total_description: "Sales Total For All Orders"
-  save_and_continue: Sauver et continuer
+  save_and_continue: Continuer
   save_preferences: Sauvegarder les préférences
   scope: Scope
   scopes: Scopes
@@ -888,11 +891,11 @@ fr:
   select: Selectionner
   select_from_prototype: "Sélectionner d'après le prototype"
   select_preferred_shipping_option: "Choisir l'option de livraison souhaitée"
-  send_copy_of_all_mails_to: Envoyer une copie de tous les emails à
-  send_copy_of_orders_mails_to: Envoyer une copie des emails de commandes à
-  send_mails_as: Envoyer les emails en tant que
+  send_copy_of_all_mails_to: Envoyer une copie de tous les courriels à
+  send_copy_of_orders_mails_to: Envoyer une copie des courriels de commandes à
+  send_mails_as: Envoyer les courriels en tant que
   send_me_reset_password_instructions: "Recevoir les instructions de récupération de mot de passe"
-  send_order_mails_as: Envoyer les emails de commandes en tant que
+  send_order_mails_as: Envoyer les courriels de commandes en tant que
   server: Serveur
   server_error: "Le serveur a retourné un erreur"
   settings: Paramètres
@@ -906,11 +909,11 @@ fr:
   shipment_number: "Livraison #"
   shipment_state: Shipment State
   shipment_states: 
-    backorder: backorder
-    partial: partial
-    pending: pending
-    ready: ready
-    shipped: shipped
+    backorder: rupture de stock
+    partial: partiel
+    pending: en attente
+    ready: prêt
+    shipped: expédié
   shipment_updated: Livraison mis à jour
   shipments: "Livraisons"
   shipped: Livré
@@ -946,8 +949,8 @@ fr:
   smtp_mail_host: Serveur de messagerie
   smtp_password: Mot de passe SMTP
   smtp_port: Port SMTP
-  smtp_send_all_emails_as_from_following_address: "Envoyer tous les emails en utilisant comme provenant de cette adresse."
-  smtp_send_copy_to_this_addresses: "Envoyer une copie de tous les emails à cette adresse.  Pour plusieurs adresses, séparer par une virgule."
+  smtp_send_all_emails_as_from_following_address: "Envoyer tous les courriels en utilisant comme provenant de cette adresse."
+  smtp_send_copy_to_this_addresses: "Envoyer une copie de tous les courriels à cette adresse.  Pour plusieurs adresses, séparer par une virgule."
   smtp_username: Identifiant SMTP
   sold: Vendu
   sort_ordering: "Ordre de tri"
@@ -1019,6 +1022,7 @@ fr:
   unable_to_capture_credit_card: "Impossible de récupérer votre carte de crédit"
   unable_to_connect_to_gateway: "N'arrive pas à se connecter à la passerelle."
   unable_to_save_order: "Impossible d'enregistrer la commande"
+  under_price: "Moins de %{price}"
   under_paid: "Sous-payé"
   units: "Unités"
   unrecognized_card_type: "Le type de la carte n'est pas reconnu"
@@ -1066,3 +1070,44 @@ fr:
   zone_based: "Basé sur une zone"
   zone_setting_description: "Liste des pays, régions ou autre zone, utilisée dans plusieurs calculs."
   zones: Zones
+  devise:
+    failure:
+      already_authenticated: "Vous êtes déjà connecté !"
+      unauthenticated: "Vous devez vous connecter ou vous inscrire pour continuer."
+      unconfirmed: "Vous devez valider votre compte pour continuer."
+      locked: "Votre compte est verrouillé."
+      invalid: "Courriel ou mot de passe incorrect."
+      invalid_token: "Jeton d'authentification incorrect."
+      timeout: "Votre session est expirée, veuillez vous reconnecter pour continuer."
+      inactive: "Votre compte n'est pas encore activé."
+    user_passwords:
+      user:
+        send_instructions: 'Vous allez recevoir les instructions de réinitialisation du mot de passe dans quelques instants'
+        updated: 'Votre mot de passe a été édité avec succès, vous êtes maintenant connecté'
+        updated_not_active: 'Votre mot de passe a été changé avec succès.'
+        send_paranoid_instructions: "Si votre e-mail existe dans notre base de données, vous allez recevoir un lien de réinitialisation par e-mail"
+    confirmations:
+      send_instructions: 'Vous allez recevoir les instructions nécessaires à la confirmation de votre compte dans quelques minutes'
+      send_paranoid_instructions: 'Si votre e-mail existe dans notre base de données, vous allez bientôt recevoir un e-mail contenant les instructions de confirmation de votre compte.'
+      confirmed: 'Votre compte a été validé, vous êtes maintenant connecté'
+    user_registrations:
+      signed_up: 'Bienvenue, vous êtes connecté'
+      inactive_signed_up: "Vous êtes bien enregistré. Vous ne pouvez cependant pas vous connecter car votre compte n'est pas encore activé."
+      updated: 'Votre compte a été modifié avec succès.'
+      destroyed: 'Votre compte a été supprimé avec succès. Nous espérons vous revoir bientôt.'
+    user_sessions:
+      signed_in: "Connecté."
+      signed_out: "Déconnecté."
+    unlocks:
+      send_instructions: 'Vous allez recevoir les instructions nécessaires au déverrouillage de votre compte dans quelques instants'
+      unlocked: 'Votre compte a été déverrouillé avec succès, vous êtes maintenant connecté.'
+    oauth_callbacks:
+      success: 'Authentifié avec succès via %{kind}.'
+      failure: "Nous n'avons pas pu vous authentifier via %{kind} : '%{reason}'."
+    mailer:
+      confirmation_instructions:
+        subject: "Instructions de confirmation"
+      reset_password_instructions:
+        subject: "Instructions pour changer le mot de passe"
+      unlock_instructions:
+        subject: "Instructions pour déverrouiller le compte"
