@@ -153,12 +153,6 @@ fa:
       creditcard: 
         one: "کارت اعتباری"
         other: "دیگر کارت های اعتباری"
-      creditcard_payment: 
-        one: "پرداخت با کارت اعتباری"
-        other: "دیگر پرداخت های با کارت اعتباری"
-      creditcard_txn: 
-        one: "تراکنش کارت اعتباری"
-        other: "دیگر تراکنش های کارت اعتباری"
       inventory_unit: 
         one: "واحد موجودی"
         other: "دیگر واحد های موجودی"
@@ -349,8 +343,6 @@ fa:
   credit_card_payment: "پرداخت با کارت اعتباری"
   credit_owed: "اعتبار مقروض"
   credit_total: کل اعتبار
-  creditcard: کارت اعتباری
-  creditcards: کارت های اعتباری
   credits: اعتبارات
   current: جاری
   customer: مشتری
@@ -895,7 +887,6 @@ fa:
   search_results: "Search results for '%{keywords}'"
   searching: در حال جستجو
   secure_connection_type: نوع اتصال امن
-  secure_creditcard: کارت اعتباری امن
   select: انتخاب
   select_from_prototype: "از نمونه اولیه انتخاب کن"
   select_preferred_shipping_option: "روش ارسال دلخواه خود را انتخاب کنید"

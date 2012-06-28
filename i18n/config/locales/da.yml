@@ -158,12 +158,6 @@ da:
       creditcard: 
         one: "Kreditkort"
         other: "Kreditkort"
-      creditcard_payment: 
-        one: "Kreditkort betaling"
-        other: "Kreditkort betalinger"
-      creditcard_txn: 
-        one: "Kreditkort transaktion"
-        other: "Kreditkort transaktioner"
       inventory_unit: 
         one: "Lagerenhed"
         other: "Lagerenheder"
@@ -354,8 +348,6 @@ da:
   credit_card_payment: "Kreditkort betaling"
   credit_owed: "Kredit beskyldt"
   credit_total: Kredit totalt
-  creditcard: Kreditkort
-  creditcards: Kreditkort
   credits: Kredit
   current: Nuværende
   customer: Kunde
@@ -900,7 +892,6 @@ da:
   search_results: "Søgeresultater for '%{keywords}'"
   searching: Søger
   secure_connection_type: Sikker forbindelsestype
-  secure_creditcard: Sikkert kreditkort
   select: Vælg
   select_from_prototype: "Vægl fra prototype"
   select_preferred_shipping_option: "Vælg foretrukne leverings mulighed"

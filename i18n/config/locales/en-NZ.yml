@@ -34,7 +34,7 @@ en-NZ:
         iso_name: "ISO Name"
         name: Name
         numcode: "ISO Code"
-      spree/creditcard:
+      spree/credit_card:
         cc_type: Type
         month: Month
         number: Number
@@ -150,12 +150,6 @@ en-NZ:
       spree/creditcard:
         one: "Credit Card"
         other: "Credit Cards"
-      spree/creditcard_payment:
-        one: "Credit Card Payment"
-        other: "Credit Card Payments"
-      spree/creditcard_txn:
-        one: "Credit Card Transaction"
-        other: "Credit Card Transactions"
       spree/inventory_unit:
         one: "Inventory Unit"
         other: "Inventory Units"
@@ -341,8 +335,6 @@ en-NZ:
   credit_card_payment: "Credit Card Payment"
   credit_owed: "Credit Owed"
   credit_total: "Credit Total"
-  creditcard: Creditcard
-  creditcards: Creditcards
   credits: Credits
   current: Current
   customer: Customer
@@ -946,7 +938,6 @@ en-NZ:
   search_results: "Search results for '%{keywords}'"
   searching: Searching
   secure_connection_type: "Secure Connection Type"
-  secure_creditcard: "Secure Creditcard"
   select: Select
   select_from_prototype: "Select From Prototype"
   select_preferred_shipping_option: "Select preferred delivery option"

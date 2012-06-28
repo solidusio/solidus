@@ -150,12 +150,6 @@ zh-TW:
       creditcard: 
         one: 信用卡 #"Credit Card"
         other: 信用卡 #"Credit Cards"
-      creditcard_payment: 
-        one: 信用卡付款 #"Credit Card Payment"
-        other: 信用卡付款 #"Credit Card Payments"
-      creditcard_txn: 
-        one: 信用卡交易 #"Credit Card Transaction"
-        other: 信用卡交易 #"Credit Card Transactions"
       inventory_unit: 
         one: 庫存單位 #"Inventory Unit"
         other: 庫存單位 #"Inventory Units"
@@ -346,8 +340,6 @@ zh-TW:
   credit_card_payment: 信用卡付款 #"Credit Card Payment"
   credit_owed: "Credit Owed"
   credit_total: Credit Total
-  creditcard: 信用卡 #Creditcard
-  creditcards: 信用卡 #Creditcards
   credits: 額度 #Credits
   current: 目前的 #Current
   customer: 客戶 #Customer
@@ -882,7 +874,6 @@ zh-TW:
   search_results: "'#{keywords}' 的搜尋結果" #"Search results for '%{keywords}'"
   searching: 搜尋中 #Searching
   secure_connection_type: #Secure Connection Type
-  secure_creditcard: #Secure Creditcard
   select: 選擇 #Select
   select_from_prototype: 從商品原型選擇 #"Select From Prototype"
   select_preferred_shipping_option: #"Select preferred shipping option"

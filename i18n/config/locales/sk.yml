@@ -150,12 +150,6 @@ sk:
       creditcard: 
         one: "Kreditná karta"
         other: "Kreditné karty"
-      creditcard_payment: 
-        one: "Platba kreditnou kartou"
-        other: "Platby kreditnou kartou"
-      creditcard_txn: 
-        one: "Tranzakcia s kreditnou kartou"
-        other: "Tranzakcie s kreditnou kartou"
       inventory_unit: 
         one: "Skladovaný tovar"
         other: "Skladované tovary"
@@ -346,8 +340,6 @@ sk:
   credit_card_payment: "Platba kreditnou kartou"
   credit_owed: "Credit Owed"
   credit_total: Kredit celkom
-  creditcard: Kreditnákarta
-  creditcards: Creditcards
   credits: Credits
   current: Aktuálny
   customer: Zákazník
@@ -893,7 +885,6 @@ sk:
   search_results: "Search results for '%{keywords}'"
   searching: Searching
   secure_connection_type: Bezpečná konekcia
-  secure_creditcard: Secure Creditcard
   select: Vyber
   select_from_prototype: "Vyber z prototypov"
   select_preferred_shipping_option: "Vyber preferovanú metódu doručenia"

@@ -150,12 +150,6 @@ zh-CN:
       creditcard: 
         one: "信用卡"
         other: "其他信用卡"
-      creditcard_payment: 
-        one: "信用卡支付"
-        other: "其他信用卡支付"
-      creditcard_txn: 
-        one: "信用卡交易"
-        other: "其他信用卡交易"
       inventory_unit: 
         one: "库存单元"
         other: "其他库存单元"
@@ -346,8 +340,6 @@ zh-CN:
   credit_card_payment: "信用卡支付"
   credit_owed: "应予退款"
   credit_total: "欠款总计??"
-  creditcard: "信用卡"
-  creditcards: "信用卡"
   credits: "欠款??"
   current: "现在的"
   customer: "顾客"
@@ -893,7 +885,6 @@ zh-CN:
   search_results: "搜索 '%{keywords}' 的结果"
   searching: Searching
   secure_connection_type: "安全连接类型"
-  secure_creditcard: "安全信用卡??"
   select: "选择"
   select_from_prototype: "从原型中选择"
   select_preferred_shipping_option: "选择期望的配送选项"

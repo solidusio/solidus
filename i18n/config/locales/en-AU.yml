@@ -150,12 +150,6 @@ en-AU:
       creditcard: 
         one: "Credit Card"
         other: "Credit Cards"
-      creditcard_payment: 
-        one: "Credit Card Payment"
-        other: "Credit Card Payments"
-      creditcard_txn: 
-        one: "Credit Card Transaction"
-        other: "Credit Card Transactions"
       inventory_unit: 
         one: "Inventory Unit"
         other: "Inventory Units"
@@ -346,8 +340,6 @@ en-AU:
   credit_card_payment: "Credit Card Payment"
   credit_owed: "Credit Owed"
   credit_total: Credit Total
-  creditcard: Creditcard
-  creditcards: Creditcards
   credits: Credits
   current: Current
   customer: Customer
@@ -893,7 +885,6 @@ en-AU:
   search_results: "Search results for '%{keywords}'"
   searching: Searching
   secure_connection_type: Secure Connection Type
-  secure_creditcard: Secure Creditcard
   select: Select
   select_from_prototype: "Select From Prototype"
   select_preferred_shipping_option: "Select preferred delivery option"

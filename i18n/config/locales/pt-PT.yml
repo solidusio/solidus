@@ -150,12 +150,6 @@ pt-PT:
       creditcard: 
         one: "Cartão de Credito"
         other: "Cartões de Credito"
-      creditcard_payment: 
-        one: "Pagamento por Cartão de Credito"
-        other: "Pagamentos por Cartão de Credito"
-      creditcard_txn: 
-        one: "Transacção com Cartão de Credito"
-        other: "Transacções com Cartão de Credito"
       inventory_unit: 
         one: "Unidade de Inventario"
         other: "Unidades de Inventario"
@@ -346,8 +340,6 @@ pt-PT:
   credit_card_payment: "Pagamento com Cartão de Crédito"
   credit_owed: "Credit Owed"
   credit_total: Credit Total
-  creditcard: Creditcard
-  creditcards: Creditcards
   credits: Credits
   current: Actual
   customer: Cliente
@@ -893,7 +885,6 @@ pt-PT:
   search_results: "Search results for '%{keywords}'"
   searching: Searching
   secure_connection_type: Secure Connection Type
-  secure_creditcard: Secure Creditcard
   select: Selecionar
   select_from_prototype: "Selecionar a partir de Protótipo"
   select_preferred_shipping_option: "Select preferred shipping option"

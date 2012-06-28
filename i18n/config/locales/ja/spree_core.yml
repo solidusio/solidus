@@ -57,7 +57,7 @@ ja:
         iso_name: "ISO名"
         name: "名"
         numcode: "ISOコード"
-      spree/creditcard:
+      spree/credit_card:
         cc_type: "カード類"
         month: "月"
         number: "カード番号"
@@ -141,15 +141,9 @@ ja:
       spree/country:
         one: "国名"
         other: "国名"
-      spree/creditcard:
+      spree/credit_card:
         one: "クレジットカード"
         other: "クレジットカード"
-      spree/creditcard_payment:
-        one: "クレジットカードでの支払い"
-        other: "クレジットカードでの支払い"
-      spree/creditcard_txn:
-        one: "クレジットカード決済"
-        other: "クレジットカード決済"
       spree/inventory_unit:
         one: "在庫品単位"
         other: "在庫品単位"
@@ -332,8 +326,6 @@ ja:
   credit_card_payment: "クレジットによる支払い"
   credit_owed: "過払い額"
   credit_total: "債権合計"
-  creditcard: "クレジットカード"
-  creditcards: "クレジットカード"
   credits: "債権"
   current: "現在"
   customer: "お客様"
@@ -877,7 +869,6 @@ ja:
   search_results: "'%{keywords}' の検索結果"
   searching: "検索中"
   secure_connection_type: "接続保護のタイプ"
-  secure_creditcard: "セキュアなクレジットカード"
   select: "選択"
   select_from_prototype: "プロトタイプから選択"
   select_preferred_shipping_option: "優先される配送オプションを選択してください"

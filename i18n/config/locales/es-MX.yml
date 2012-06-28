@@ -150,12 +150,6 @@ es-MX:
       creditcard: 
         one: "Tarjeta de crédito"
         other: "Tarjetas de crédito"
-      creditcard_payment: 
-        one: "Pago con Tarjeta de Crédito"
-        other: "Pagos con Tarjeta de Crédito"
-      creditcard_txn: 
-        one: "Transacción con Tarjeta de Crédito"
-        other: "Transacciones con Tarjeta de Crédito"
       inventory_unit: 
         one: "Unidad en inventario"
         other: "Unidades en inventario"
@@ -346,8 +340,6 @@ es-MX:
   credit_card_payment: "Pago con tarjeta de credito"
   credit_owed: "Crédito disponible"
   credit_total: Crédito Total
-  creditcard: "Tarjeta de crédito"
-  creditcards: Tarjetas de crédito
   credits: Créditos
   current: Actual
   customer: Cliente
@@ -893,7 +885,6 @@ es-MX:
   search_results: "Buscar resultados para '%{keywords}'"
   searching: Buscando
   secure_connection_type: Tipo de conexión segura
-  secure_creditcard: Tarjeta de crédito segura
   select: Seleccionar
   select_from_prototype: "Seleccionar desde prototipo"
   select_preferred_shipping_option: "Seleccionar la opción de envío preferida"

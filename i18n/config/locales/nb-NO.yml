@@ -150,12 +150,6 @@ nb-NO:
       creditcard: 
         one: "Kredittkort"
         other: "Kredittkort"
-      creditcard_payment: 
-        one: "Betaling med kort"
-        other: "Betalinger med kort"
-      creditcard_txn: 
-        one: "Korttransaksjon"
-        other: "Korttransaksjoner"
       inventory_unit: 
         one: "Lagervare"
         other: "Lagervarer"
@@ -346,8 +340,6 @@ nb-NO:
   credit_card_payment: "Betaling med kort"
   credit_owed: "Credit Owed"
   credit_total: Credit Total
-  creditcard: Kredittkort
-  creditcards: Creditcards
   credits: Credits
   current: "Nå"
   customer: Kunde
@@ -893,7 +885,6 @@ nb-NO:
   search_results: "Search results for '%{keywords}'"
   searching: Searching
   secure_connection_type: "Kryptert forbindelse"
-  secure_creditcard: Secure Creditcard
   select: Velg
   select_from_prototype: "Velg fra prototype"
   select_preferred_shipping_option: "Velg ønsket leveransemåte"

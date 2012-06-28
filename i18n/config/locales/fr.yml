@@ -150,12 +150,6 @@ fr:
       creditcard: 
         one: "Carte de crédit"
         other: "Cartes de crédit"
-      creditcard_payment: 
-        one: "Paiement par carte de crédit"
-        other: "Paiements par carte de crédit"
-      creditcard_txn: 
-        one: "Transaction par carte de crédit"
-        other: "Transactions par carte de crédit"
       inventory_unit: 
         one: "Stock"
         other: "Stocks"
@@ -346,8 +340,6 @@ fr:
   credit_card_payment: "Paiement par carte de crédit"
   credit_owed: "Crédit restant dû"
   credit_total: Crédit Total
-  creditcard: Carte de crédit
-  creditcards: Cartes de crédit
   credits: Crédits
   current: Actuellement
   customer: Client
@@ -893,7 +885,6 @@ fr:
   search_results: "Résultats de la recherche pour '%{keywords}'"
   searching: Recherche
   secure_connection_type: Connection de type sécurisée
-  secure_creditcard: Carte de crédit sécurisées
   select: Selectionner
   select_from_prototype: "Sélectionner d'après le prototype"
   select_preferred_shipping_option: "Choisir l'option de livraison souhaitée"

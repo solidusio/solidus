@@ -154,12 +154,6 @@ sv-SE:
       creditcard: 
         one: "Kreditkort"
         other: "Kreditkort"
-      creditcard_payment: 
-        one: "Kreditkortsbetalning"
-        other: "Kreditkortsbetalningar"
-      creditcard_txn: 
-        one: "Kreditkortstransaktion"
-        other: "Kreditkortstransaktioner"
       inventory_unit: 
         one: "Inventeringspost"
         other: "Inventeringsposter"
@@ -350,8 +344,6 @@ sv-SE:
   credit_card_payment: "Kreditskortsbetalning"
   credit_owed: "Credit Owed" # Eng
   credit_total: Credit Total # Eng
-  creditcard: Kreditkort
-  creditcards: Kreditkort
   credits: Krediter
   current: Nuvarande
   customer: Kund
@@ -897,7 +889,6 @@ sv-SE:
   search_results: "Sökresultat för '%{keywords}'"
   searching: Söker
   secure_connection_type: Säker anslutningstyp
-  secure_creditcard: Säkert kreditkort
   select: Välj
   select_from_prototype: "Välj från prototyp"
   select_preferred_shipping_option: "Välj föredraget fraktsätt"

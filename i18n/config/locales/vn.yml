@@ -150,12 +150,6 @@ vn:
       creditcard: 
         one: "Thẻ tín dụng"
         other: "Thẻ tín dụng"
-      creditcard_payment: 
-        one: "Thanh toán bằng thẻ tín dụng"
-        other: "Thanh toán bằng thẻ tín dụng"
-      creditcard_txn: 
-        one: "Giao dịch bằng thẻ tín dụng"
-        other: "Giao dịch bằng thẻ tín dụng"
       inventory_unit: 
         one: "Đơn vị hàng"
         other: "Đơn vị hàng"
@@ -346,8 +340,6 @@ vn:
   credit_card_payment: "Thanh toán bằng thẻ tín dụng"
   credit_owed: "Nợ tín dụng"
   credit_total: Tổng tín dụng
-  creditcard: Thẻ tín dụng
-  creditcards: Thẻ tín dụng
   credits: Tín dụng
   current: Hiện thời
   customer: Khách hàng
@@ -893,7 +885,6 @@ vn:
   search_results: "Kết quả tìm kiếm cho '%{keywords}'"
   searching: Searching
   secure_connection_type: Kiệu kết nối bảo mật
-  secure_creditcard: Thẻ tín dụng bảo mật cao
   select: Lựa chọn
   select_from_prototype: "Lựa chọn từ nguyên mẫu"
   select_preferred_shipping_option: "Lựa chọn các phương thức vận chuyển yêu thích"

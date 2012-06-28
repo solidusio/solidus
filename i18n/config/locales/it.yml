@@ -60,7 +60,7 @@ it:
         iso_name: "Nome ISO"
         name: 'Nome'
         numcode: "Codice ISO"
-      spree/creditcard:
+      spree/credit_card:
         cc_type: 'Tipo di carta di credito'
         month: 'Mese'
         number: 'Numero'
@@ -156,15 +156,9 @@ it:
       spree/country:
         one: 'Paese'
         other: 'Paesi'
-      spree/creditcard:
+      spree/credit_card:
         one: "Carta di credito"
         other: "Carte di credito"
-      spree/creditcard_payment:
-        one: "Pagamento tramite carta di credito "
-        other: "Pagamenti tramite carta di credito"
-      spree/creditcard_txn:
-        one: "Transazione tramite Carta di credito"
-        other: "Transazioni tramite Carta di credito"
       spree/inventory_unit:
         one: "Unità d'inventario"
         other: "Unità d'inventario"
@@ -359,8 +353,6 @@ it:
   credit_card_payment: "Conferma la Carta di credito"
   credit_owed: "Credito Restante"
   credit_total: "Credito Totale"
-  creditcard: "Carta di credito"
-  creditcards: "Carte di credito"
   credits: "Credito"
   current: "stato"
   customer: "Cliente"
@@ -1005,7 +997,6 @@ it:
   search_results: "Cerca risultati per '%{keywords}'"
   searching: "Ricerca in corso"
   secure_connection_type: "Connessione sicura"
-  secure_creditcard: "Carta di credito sicura"
   select: "Seleziona"
   select_from_prototype: "Seleziona da prototipo"
   select_preferred_shipping_option: "Seleziona il tipo di spedizione preferito"

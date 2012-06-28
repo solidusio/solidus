@@ -44,7 +44,7 @@ pl:
         iso_name: "Nazwa ISO"
         name: Nazwa
         numcode: "Kod ISO"
-      spree/creditcard:
+      spree/credit_card:
         cc_type: Typ
         month: Miesiąc
         number: Numer
@@ -141,12 +141,6 @@ pl:
       spree/zone:
         description: Opis
         name: Nazwa
-      spreee/creditcard:
-        cc_type: Typ
-        month: Miesiąc
-        number: Numer
-        verification_value: "Kod weryfikacyjny"
-        year: Rok
     models:
       spree/address:
         one: Adres
@@ -158,15 +152,9 @@ pl:
       spree/country:
         one: Kraj
         other: Kraje
-      spree/creditcard:
+      spree/credit_card:
         one: "Karta Kredytowa"
         other: "Karty Kredytowe"
-      spree/creditcard_payment:
-        one: "Płatność Kartą Kredytową"
-        other: "Płatności Kartą Kredytową"
-      spree/creditcard_txn:
-        one: "Tranzakcja Kartą Kredytową"
-        other: "Tranzakcje Kartą Kredytową"
       spree/inventory_unit:
         one: "Inventory Unit"
         other: "Inventory Units"
@@ -362,8 +350,6 @@ pl:
   credit_card_payment: "Płatność Kartą Kredytową"
   credit_owed: "Credit Owed"
   credit_total: Credit Total
-  creditcard: Creditcard
-  creditcards: Creditcards
   credits: Credits
   current: Biężący
   customer: Klient
@@ -939,7 +925,6 @@ pl:
   search_results: "Wyniki wyszukiwania dla frazy '%{keywords}'"
   searching: Wyszukiwanie
   secure_connection_type: Secure Connection Type
-  secure_creditcard: Secure Creditcard
   select: Wybierz
   select_from_prototype: "Wybierz z prototypu"
   select_preferred_shipping_option: "Select preferred shipping option"

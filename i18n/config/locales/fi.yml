@@ -150,12 +150,6 @@ fi:
       creditcard: 
         one: Luottokortti
         other: Luottokortit
-      creditcard_payment: 
-        one: Korttimaksu
-        other: Korttimaksut
-      creditcard_txn: 
-        one: Korttitapahtuma
-        other: Korttitapahtumat
       inventory_unit: 
         one: Varastoyksikkö
         other: Varastoyksiköt
@@ -346,8 +340,6 @@ fi:
   credit_card_payment: Luottokorttimaksu
   credit_owed: Veloittamatta
   credit_total: "Veloittamatta yhteensä"
-  creditcard: Luottokortti
-  creditcards: Luottokortit
   credits: Luotot
   current: Nykyinen
   customer: Asiakas
@@ -894,7 +886,6 @@ fi:
   search_results: "Etsi tuloksia avainsanoilla: '%{keywords}'"
   searching: Etsii
   secure_connection_type: "Turvallinen yhteystyyppi"
-  secure_creditcard: Turvallinen luottokortti
   select: Valitse
   select_from_prototype: "Valitse prototyypistä"
   select_preferred_shipping_option: "Valitse haluamasi toimitustapa"

@@ -150,12 +150,6 @@ nl-NL:
       creditcard: 
         one: "Creditcard"
         other: "Creditcards"
-      creditcard_payment: 
-        one: "Creditcard betaling"
-        other: "Creditcard betalingen"
-      creditcard_txn: 
-        one: "Creditcard verrichting"
-        other: "Creditcard verrichtingen"
       inventory_unit: 
         one: "Voorraad eenheid"
         other: "Voorraad eenheden"
@@ -346,8 +340,6 @@ nl-NL:
   credit_card_payment: "Creditcard Betaling"
   credit_owed: "Credit Owed"
   credit_total: Credit Total
-  creditcard: Creditcard
-  creditcards: Creditcards
   credits: Credits
   current: Huidige
   customer: Klant
@@ -893,7 +885,6 @@ nl-NL:
   search_results: "Search results for '%{keywords}'"
   searching: Searching
   secure_connection_type: "Secure Connection Type"
-  secure_creditcard: Secure Creditcard
   select: Selecteer
   select_from_prototype: "Selecteer vanuit Prototype"
   select_preferred_shipping_option: "Selecteer verzendvoorkeursoptie"

@@ -35,7 +35,7 @@ de:
         iso_name: "ISO-Name"
         name: Name
         numcode: "ISO-Nummer"
-      spree/creditcard: 
+      spree/credit_card: 
         cc_type: Typ
         month: Monat
         number: Nummer
@@ -152,15 +152,9 @@ de:
       spree/country: 
         one: Land
         other: Länder
-      spree/creditcard: 
+      spree/credit_card: 
         one: Kreditkarte
         other: Kreditkarten
-      spree/creditcard_payment: 
-        one: Kreditkartenzahlung
-        other: Kreditkartenzahlungen
-      spree/creditcard_txn: 
-        one: Kreditkartentransaktion
-        other: Kreditkartentransaktionen
       spree/inventory_unit: 
         one: Inventarnummer
         other: Inventarnummern
@@ -358,8 +352,7 @@ de:
   credit_card_payment: Kreditkartenzahlung
   credit_owed: "Betrag schuldig"
   credit_total: Gesamtbetrag
-  creditcard: Kreditkarte
-  creditcards: Kreditkarten
+  credit_card: Kreditkarte
   credits: Haben
   current: Stand
   customer: Kunde
@@ -956,7 +949,6 @@ de:
   search_results: "Suchergebnisse für '%{keywords}'"
   searching: Suche
   secure_connection_type: "Sicherer Verbindungstyp"
-  secure_creditcard: Sichere Kreditkarte
   select: Auswählen
   select_from_prototype: "Von einem Prototypen"
   select_preferred_shipping_option: "Bevorzugte Versandoption auswählen"

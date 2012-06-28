@@ -137,7 +137,7 @@ et:
       spree/zone: 
         description: Kirjeldus
         name: Nimetus
-      spreee/creditcard: 
+      spreee/credit_card: 
         cc_type: Type
         month: Kuu
         number: Number
@@ -153,15 +153,9 @@ et:
       spree/country: 
         one: Riik
         other: Riigid
-      spree/creditcard: 
+      spree/credit_card: 
         one: "Credit Card"
         other: "Credit Cards"
-      spree/creditcard_payment: 
-        one: "Credit Card Payment"
-        other: "Credit Card Payments"
-      spree/creditcard_txn: 
-        one: "Credit Card Transaction"
-        other: "Credit Card Transactions"
       spree/inventory_unit: 
         one: "Inventory Unit"
         other: "Inventory Units"
@@ -357,8 +351,6 @@ et:
   credit_card_payment: Krediitkaardimakse
   credit_owed: Krediit võlgu
   credit_total: Krediit kokku
-  creditcard: krediitkaart
-  creditcards: krediitkaardid
   credits: Krediit
   current: Praegune
   customer: Klient
@@ -933,7 +925,6 @@ et:
   search_results: Otsingu '%{keywords}' tulemused
   searching: Searching
   secure_connection_type: Turvalise ühenduse tüüp
-  secure_creditcard: Kinnita krediitkaardiga
   select: Vali
   select_from_prototype: Vali prototüüpide hulgast
   select_preferred_shipping_option: Vali eelistatud saatmismeetod

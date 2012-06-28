@@ -150,12 +150,6 @@ sl-SI:
       creditcard: 
         one: "Kreditna kartica"
         other: "Kreditne kartice"
-      creditcard_payment: 
-        one: "Plačilo s kreditno kartico"
-        other: "Plačila s kreditno kartico"
-      creditcard_txn: 
-        one: "Transakcije s kreditno kartico"
-        other: "Transakcije s kreditnimi karticami"
       inventory_unit: 
         one: "Inventarna enota"
         other: "Inventorne enote"
@@ -346,8 +340,6 @@ sl-SI:
   credit_card_payment: "Plačilo s kreditno kartico"
   credit_owed: "Credit Owed"
   credit_total: Credit Total
-  creditcard: Kreditna kartica
-  creditcards: Kreditne kartice
   credits: Krediti
   current: Trenutno
   customer: Stranka
@@ -893,7 +885,6 @@ sl-SI:
   search_results: "Iskalni razultati za '%{keywords}'"
   searching: Iskanje
   secure_connection_type: Tip varne povezave
-  secure_creditcard: Varna kreditna kartica
   select: Izberi
   select_from_prototype: "Izberi iz prototipa"
   select_preferred_shipping_option: "Izberite željeno možnost dostave"

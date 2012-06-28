@@ -150,12 +150,6 @@ cs-CZ:
       creditcard: 
         one: "Kreditní karta"
         other: "Kreditní karty"
-      creditcard_payment: 
-        one: "Platba kreditní kartou"
-        other: "Platby kreditní kartou"
-      creditcard_txn: 
-        one: "Transakce provedená kreditní kartou"
-        other: "Transakce provedené kreditní kartou"
       inventory_unit: 
         one: "Inventární jednotka"
         other: "Inventární jednotky"
@@ -346,8 +340,6 @@ cs-CZ:
   credit_card_payment: "Platba kreditní kartou"
   credit_owed: "Dlužná částka (kredit)"
   credit_total: "Kredit celkem"
-  creditcard: "Kreditní karta"
-  creditcards: "Kreditní karty"
   credits: "Kredity"
   current: "Měna"
   customer: "Zákazník"
@@ -893,7 +885,6 @@ cs-CZ:
   search_results: "Výsledky vyhledávání pro '%{keywords}'"
   searching: Searching
   secure_connection_type: "Typ bezpečného připojení"
-  secure_creditcard: "Bezpečná kreditní karta"
   select: "Výběr"
   select_from_prototype: "Výběr ze šablon"
   select_preferred_shipping_option: "Výběr upřednostněné dopravy"

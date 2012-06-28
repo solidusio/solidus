@@ -157,12 +157,6 @@ ru:
       creditcard: 
         one: "Кредитная карта"
         other: "Кредитные карты"
-      creditcard_payment: 
-        one: "Платеж кредитной картой"
-        other: "Платежи кредитной картой"
-      creditcard_txn: 
-        one: "Транзакция по кредитной карте"
-        other: "Транзакции по кредитным картам"
       inventory_unit: 
         one: "Единица учета"
         other: "Единицы учета"
@@ -353,8 +347,6 @@ ru:
   credit_card_payment: "Платёж кредитной картой"
   credit_owed: "Кредитная задолженность"
   credit_total: "Итого по кредитным картам"
-  creditcard: "Кредитная карта"
-  creditcards: "Кредитнык карты"
   credits: "Кредиты"
   current: "Текущий"
   customer: "Клиент"
@@ -903,7 +895,6 @@ ru:
   search_results: "Результаты поиска по запросу '%{keywords}'"
   searching: "Идёт поиск..."
   secure_connection_type: "Тип защищенного соединения"
-  secure_creditcard: "Безопасная кредитная карта"
   select: "Выбрать"
   select_from_prototype: "Выбрать из прототипов"
   select_preferred_shipping_option: "Выберите предпочитаемый способ доставки"

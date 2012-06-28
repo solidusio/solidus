@@ -150,12 +150,6 @@ de-CH:
       creditcard: 
         one: Kreditkarte
         other: Kreditkarten
-      creditcard_payment: 
-        one: Kreditkartenzahlung
-        other: Kreditkartenzahlungen
-      creditcard_txn: 
-        one: Kreditkarten-Transaktion
-        other: Kreditkarten-Transaktionen
       inventory_unit: 
         one: Inventarnummer
         other: Inventarnummern
@@ -346,8 +340,6 @@ de-CH:
   credit_card_payment: Kreditkartenzahlung
   credit_owed: "Credit Owed"
   credit_total: Credit Total
-  creditcard: Kreditkarte
-  creditcards: Creditcards
   credits: Credits
   current: Stand
   customer: Kunde
@@ -895,7 +887,6 @@ de-CH:
   search_results: "Search results for '%{keywords}'"
   searching: Searching
   secure_connection_type: Secure Connection Type
-  secure_creditcard: Secure Creditcard
   select: Auswählen
   select_from_prototype: "Vom Prototypen auswählen"
   select_preferred_shipping_option: "Bevorzugte Versandoption auswählen"

@@ -150,12 +150,6 @@ ko:
       creditcard: 
         one: 신용카드
         other: 신용카드
-      creditcard_payment: 
-        one: 신용카드 지불
-        other: 신용카드 지불
-      creditcard_txn: 
-        one: "신용 카드 Transaction"
-        other: "신용 카드 Transactions"
       inventory_unit: 
         one: "인벤토리 유닛"
         other: "인벤토리 유닛"
@@ -346,8 +340,6 @@ ko:
   credit_card_payment: "신용카드 지불"
   credit_owed: #"Credit Owed"
   credit_total: #Credit 합계
-  creditcard: 신용카드
-  creditcards: 신용카드
   credits: #Credits
   current: 현재
   customer: 고객
@@ -893,7 +885,6 @@ ko:
   search_results: "'%{keywords}'의 검색 결과"
   searching: 검색중
   secure_connection_type: #Secure Connection Type
-  secure_creditcard: #Secure Creditcard
   select: 선택
   select_from_prototype: "견본에서 선택"
   select_preferred_shipping_option: #"Select preferred shipping option"

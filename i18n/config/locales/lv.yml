@@ -151,12 +151,6 @@ lv:
       spree/creditcard:
         one: "Kredītkarte"
         other: "Kredītkartes"
-      spree/creditcard_payment:
-        one: "Kredītkartes maksājums"
-        other: "Kredītkartes maksājums"
-      spree/creditcard_txn:
-        one: "Kredītkartes transakcija"
-        other: "Kredītkartes transakcijas"
       spree/inventory_unit:
         one: "Krājuma vienība"
         other: "Krājuma vienības"
@@ -347,8 +341,6 @@ lv:
   credit_card_payment: "Kredītkartes maksājums"
   credit_owed: "Kredīta parāds"
   credit_total: "Kopējais kredīts"
-  creditcard: "Kredītkarte"
-  creditcards: "Kredītkartes"
   credits: "Kredīti"
   current: "Tagadējais"
   customer: "Klients"
@@ -895,7 +887,6 @@ lv:
   search_results: "Meklēšanas rezultāti '%{keywords}'"
   searching: Searching
   secure_connection_type: Secure Connection Type
-  secure_creditcard: Secure Creditcard
   select: "Izvēlēties"
   select_from_prototype: "Izvēlēties no prototipiem"
   select_preferred_shipping_option: "Izvēlēties vēlamo sūtīšanas metodi"
