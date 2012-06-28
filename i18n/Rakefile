@@ -12,11 +12,6 @@ RSpec::Core::RakeTask.new("spec:translations") do |spec|
   spec.pattern = 'spec/unit/**/*_spec.rb'
 end
 
-RSpec::Core::RakeTask.new(:rcov) do |spec|
-  spec.pattern = 'spec/**/*_spec.rb'
-  spec.rcov = true
-end
-
 require 'i18n-spec/tasks' # needs to be loaded after rspec
 
 # Load any custom rakefiles for extension
