@@ -332,8 +332,8 @@ en:
   credit_card_payment: "Credit Card Payment"
   credit_owed: "Credit Owed"
   credit_total: Credit Total
-  creditcard: Creditcard
-  creditcards: Creditcards
+  credit_card: Credit Card
+  credit_cards: Credit Cards
   credits: Credits
   current: Current
   customer: Customer
