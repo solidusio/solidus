@@ -488,7 +488,6 @@ en:
   item_total: "Item Total"
   last_name: "Last Name"
   last_name_begins_with: "Last Name Begins With"
-  last_name_start: "Last Name Begins With"
   learn_more: Learn More
   leave_blank_to_not_change: "(leave blank if you don't want to change it)"
   list: List
@@ -875,7 +874,7 @@ en:
   search_results: "Search results for '%{keywords}'"
   searching: Searching
   secure_connection_type: Secure Connection Type
-  secure_creditcard: Secure Creditcard
+  secure_credit_card: Secure Credit Card
   select: Select
   select_from_prototype: "Select From Prototype"
   select_preferred_shipping_option: "Select preferred shipping option"
