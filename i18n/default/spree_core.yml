@@ -9,13 +9,13 @@ en:
   account_updated: "Account updated!"
   action: Action
   actions:
-    cancel: Cancel
     create: Create
     destroy: Destroy
     list: List
     listing: Listing
     new: New
     update: Update
+    cancel: Cancel
   active: "Active"
   activate: "Activate"
   activerecord:
