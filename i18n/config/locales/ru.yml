@@ -130,7 +130,7 @@ ru:
       taxonomy: 
         name: "Наименование"
       user: 
-        email: "Email"
+        email: "е-мейл"
         password: "Пароль"
         password_confirmation: "Подтверждение пароля"
       variant: 
