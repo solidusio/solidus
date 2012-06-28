@@ -21,7 +21,7 @@ ca:
   active: Actiu
   activerecord: 
     attributes: 
-      address: 
+      spree/address: 
         address1: Adreça
         address2: "Adreça (continuació)"
         city: Ciutat
@@ -33,41 +33,24 @@ ca:
         phone: Telèfon
         state: Estat
         zipcode: "Codi postal"
-      checkout: 
-        bill_address: 
-          address1: "Adreça de factura, carrer"
-          city: "Adreça de factura, ciutat"
-          firstname: "Adreça de factura, nom"
-          lastname: "Adreça de factura, cognoms"
-          phone: "Adreça de factura, telèfon"
-          state: "Adreça de factura, província"
-          zipcode: "Adreça de factura, codi postal"
-        ship_address: 
-          address1: "Adreça d'enviament, carrer"
-          city: "Adreça d'enviament, ciutat"
-          firstname: "Adreça d'enviament, nom"
-          lastname: "Adreça d'enviament, cognoms"
-          phone: "Adreça d'enviament, telèfon"
-          state: "Adreça d'enviament, província"
-          zipcode: "Adreça d'enviament, codi postal"
-      country: 
+      spree/country: 
         iso: ISO
         iso3: ISO3
         iso_name: "Nomeni ISO"
         name: Nom
         numcode: "Codi ISO"
-      creditcard: 
+      spree/credit_card: 
         cc_type: Tipus
         month: Mes
         number: Nombre
         verification_value: "Codi de verificació"
         year: Any
-      inventory_unit: 
+      spree/inventory_unit: 
         state: Província
-      line_item: 
+      spree/line_item: 
         price: Preu
         quantity: Quantitat
-      order: 
+      spree/order: 
         checkout_complete: "Comanda completada"
         completed_at: "Completat el"
         coupon_code: "Codi de cupó"
@@ -77,7 +60,24 @@ ca:
         special_instructions: "Instruccions especials"
         state: Estat
         total: Total
-      product: 
+      spree/order/bill_address: 
+        address1: "Adreça de factura, carrer"
+        city: "Adreça de factura, ciutat"
+        firstname: "Adreça de factura, nom"
+        lastname: "Adreça de factura, cognoms"
+        phone: "Adreça de factura, telèfon"
+        state: "Adreça de factura, província"
+        zipcode: "Adreça de factura, codi postal"
+      spree/order/ship_address: 
+        address1: "Adreça d'enviament, carrer"
+        city: "Adreça d'enviament, ciutat"
+        firstname: "Adreça d'enviament, nom"
+        lastname: "Adreça d'enviament, cognoms"
+        phone: "Adreça d'enviament, telèfon"
+        state: "Adreça d'enviament, província"
+        zipcode: "Adreça d'enviament, codi postal"
+
+      spree/product: 
         available_on: "Disponible en"
         cost_price: "Preu de cost"
         description: Descripció
@@ -86,48 +86,48 @@ ca:
         on_hand: "Disponibles"
         shipping_category: "Categoria d'enviament"
         tax_category: "Categoria d'impostos"
-      product_group: 
+      spree/product_group: 
         name: "Nom"
         product_count: "Nombre de productes"
         product_scopes: "Abastos de productes"
         products: "Productes"
         url: "URL"
-      product_scope: 
+      spree/product_scope: 
         arguments: "Arguments"
         description: "Descripció"
-      promotion: 
+      spree/promotion: 
         code: "Codi"
         description: "Descripció"
         expires_at: "Caduca el"
         name: "Nom"
         starts_at: "Comença el"
         usage_limit: "Límit d'ús"
-      property: 
+      spree/property: 
         name: Nom
         presentation: Presentació
-      prototype: 
+      spree/prototype: 
         name: Nom
-      return_authorization: 
+      spree/return_authorization: 
         amount: Quantitat
-      role: 
+      spree/role: 
         name: Nom
-      state: 
+      spree/state: 
         abbr: Abreviatura
         name: Nom
-      tax_category: 
+      spree/tax_category: 
         description: Descripció
         name: Nom
-      tax_rate: 
+      spree/tax_rate: 
         amount: Taxa
-      taxon: 
+      spree/taxon: 
         name: Nom
         permalink: Enllaç permanent
         position: Posició
-      taxonomy: 
+      spree/taxonomy: 
         name: Nom
-      user: 
+      spree/user: 
         email: Email
-      variant: 
+      spree/variant: 
         cost_price: "Preu de cost"
         depth: Profunditat
         height: Altura
@@ -135,86 +135,77 @@ ca:
         sku: Codi de producte
         weight: Pes
         width: Ample
-      zone: 
+      spree/zone: 
         description: Descripció
         name: Nom
     models: 
-      address: 
+      spree/address: 
         one: Adreça
         other: Adreces
-      cheque_payment: 
-        one: Pagament amb efectiu
-        other: Pagaments amb efectiu
-      country: 
+      spree/country: 
         one: País
         other: Països
-      creditcard: 
+      spree/credit_card: 
         one: "Targeta de crèdit"
         other: "Targetes de crèdit"
-      creditcard_payment: 
-        one: "Pagament amb Targeta de Crèdit"
-        other: "Pagaments amb Targeta de Crèdit"
-      creditcard_txn: 
-        one: "Transacció amb Targeta de Crèdit"
-        other: "Transaccions amb Targeta de Crèdit"
-      inventory_unit: 
+      spree/inventory_unit: 
         one: "Unitat en inventari"
         other: "Unitats en inventari"
-      line_item: 
+      spree/line_item: 
         one: "Article"
         other: "Articles"
-      order: 
+      spree/order: 
         one: Comanda
         other: Comandes
-      payment: 
+      spree/payment: 
         one: Pagament
         other: Pagaments
-      product: 
+      spree/product: 
         one: Producte
         other: Productes
-      product_group: 
+      spree/product_group: 
         one: "Grup de producte"
         other: "Grups de productes"
-      property: 
+      spree/property: 
         one: Propietat
         other: Propietats
-      prototype: 
+      spree/prototype: 
         one: Prototip
         other: Prototips
-      return_authorization: 
+      spree/return_authorization: 
         one: Autorització de devolució
         other: Autoritzacions de devolució
-      role: 
+      spree/role: 
         one: Funció
         other: Funcions
-      shipment: 
+      spree/shipment: 
         one: Enviament
         other: Enviaments
-      shipping_category: 
+      spree/shipping_category: 
         one: "Categoria d'enviament"
         other: "Categories de enviament"
-      state: 
+      spree/state: 
         one: Estat
         other: Estats
-      tax_category: 
+      spree/tax_category: 
         one: "Categoria d'impostos"
         other: "Categories d'impostos"
-      tax_rate: 
+      spree/tax_rate: 
         one: "Taxa d'impostos"
         other: "Taxes d'impostos"
-      taxon: 
+      spree/taxon: 
         one: Categoria
         other: Categories
-      taxonomy: 
+      spree/taxonomy: 
         one: Propietat
         other: Propietats
-      user: 
+      spree/user: 
         one: Usuari
         other: Usuaris
-      variant: 
+      spree/variant: 
         one: Variant
         other: Variants
-      zone: 
+      spree/zone: 
         one: Zona
         other: Zones
   add: Afegir
@@ -347,8 +338,6 @@ ca:
   credit_card_payment: "Pagament amb targeta de crèdit"
   credit_owed: "Crèdit disponible"
   credit_total: Crèdit Total
-  creditcard: "Targeta de crèdit"
-  creditcards: Targetes de crèdit
   credits: Crèdits
   current: Actual
   customer: Client
@@ -894,7 +883,6 @@ ca:
   search_results: "Buscar resultats per '%{keywords}'"
   searching: Buscant
   secure_connection_type: Tipus de connexió segura
-  secure_creditcard: Targeta de crèdit segura
   select: Seleccionar
   select_from_prototype: "Seleccionar des de prototip"
   select_preferred_shipping_option: "Seleccionar l'opció d'enviament preferida"
