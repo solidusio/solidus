@@ -7,14 +7,23 @@ de:
   account_updated: "Konto aktualisiert!"
   action: Aktion
   actions: 
+    cancel: abbrechen
     create: erstellen
     destroy: löschen
     list: auflisten
     listing: Liste
     new: neu
     update: aktualisieren
-    cancel: abbrechen
   active: "Aktiv"
+  activemodel: 
+    attributes: 
+      promotion: 
+        code: Code
+        description: Description
+        expires_at: Expires at
+        name: Name
+        starts_at: Starts at
+        usage_limit: Usage limit
   activerecord: 
     attributes: 
       spree/address: 
@@ -49,19 +58,8 @@ de:
       spree/option_type: 
         name: Name
         presentation: Angezeigter Wert
-      spree/order:
-        checkout_complete: "Checkout Erfolgreich"
-        completed_at: "Abgeschlossen am"
-        ip_address: "IP Adresse"
-        item_total: "Summe"
-        number: Bestellnummer
-        special_instructions: "Zusätzliche Angaben"
-        state: Status
-        total: Gesamtsumme
-        email: Kunden E-Mail Adresse
-        payment_state: Zahlungsstatus
-        shipment_state: Lieferstatus
-      spree/order/bill_address: 
+      spree/order: 
+        bill_address: 
           address1: "Rechnungsadresse Straße"
           city: "Rechnungsadresse Ort"
           firstname: "Rechnungsadresse Vorname"
@@ -69,7 +67,12 @@ de:
           phone: "Rechnungsadresse Telefon"
           state: "Rechnungsadresse Bundesland"
           zipcode: "Rechnungsadresse Postleitzahl"
-      spree/order/ship_address: 
+        checkout_complete: "Checkout Erfolgreich"
+        completed_at: "Abgeschlossen am"
+        ip_address: "IP Adresse"
+        item_total: "Summe"
+        number: Bestellnummer
+        ship_address: 
           address1: "Lieferadresse Straße"
           city: "Lieferadresse Ort"
           firstname: "Lieferadresse Vorname"
@@ -77,8 +80,9 @@ de:
           phone: "Lieferadresse Telefon"
           state: "Lieferadresse Bundesland"
           zipcode: "Lieferadresse Postleitzahl"
-      spree/payment:
-        amount: Summe
+        special_instructions: "Zusätzliche Angaben"
+        state: Status
+        total: Gesamtsumme
       spree/payment_method: 
         name: Name
       spree/product: 
@@ -99,10 +103,6 @@ de:
       spree/product_scope: 
         arguments: "Argumente"
         description: "Beschreibung"
-      spree/promotion:
-        description: Beschreibung
-        starts_at: Beginnt am
-        expires_at: Endet am
       spree/property: 
         name: Name
         presentation: Angezeigter Wert
@@ -301,6 +301,7 @@ de:
   cancel_my_account: Mein Profil löschen
   cancel_my_account_description: "Sind Sie über etwas unglücklich?"
   canceled: Verworfen
+  cannot_create_payment_without_payment_methods: Sie können keine Zahlung für eine Bestellung anlegen, ohne vorher eine Zahlungsmethode definiert zu haben.
   cannot_create_returns: "Sie können diese Bestellung nicht zurückgeben, da sie noch nicht versendet wurde."
   cannot_perform_operation: "Kann diese Operation nicht durchführen."
   capture: erfassen
@@ -659,17 +660,11 @@ de:
   order_total: Gesamtsumme
   order_total_message: "Die Gesamtsumme mit der Ihre Kreditkarte belastet wird"
   order_updated: "Bestellung aktualisiert"
-  orders: Bestellungen
   other_payment_options: Andere Zahlungsmethoden
   out_of_stock: "Ausverkauft"
   over_paid: "zuviel bezahlt"
-  overview: Übersicht
   page_only_viewable_when_logged_in: "Sie haben versucht eine Seite zu besuchen, die man nur sehen kann, wenn man eingeloggt ist."
   page_only_viewable_when_logged_out: "Sie haben versucht eine Seite zu besuchen, die man nur sehen kann, wenn man ausgeloggt ist."
-  pagination:
-    previous_page: "&laquo; vorherige Seite"
-    next_page: "nächste Seite &raquo;"
-    truncate: "&hellip;"
   paid: Bezahlt
   parent_category: "Unterkategorie von"
   password: Passwort
@@ -707,6 +702,7 @@ de:
   phone: Telefon
   place_order: "Bestellung ausführen"
   please_create_user: "Bitte legen Sie ein Benutzerkonto an"
+  please_define_payment_methods: "Bitte definieren Sie zuerst mindestens eine Zahlungsmethode."
   powered_by: "Powered by"
   presentation: Angezeigter Wert
   preview: "Vorschau"
@@ -1018,6 +1014,8 @@ de:
   sort_ordering: "Sortierung"
   special_instructions: "Spezielle Anweisungen"
   spree: 
+  spree/order: 
+    coupon_code: Aktions-Code
     date: Datum
     time: Uhrzeit
   spree_alert_checking: "Überprüfe auf Spree Sicherheits- und Veröffentlichungshinweise"
