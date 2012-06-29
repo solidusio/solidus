@@ -1,11 +1,9 @@
 ---
 en:
-  activerecord:
+  activemodel:
     attributes:
       spree/promotion:
-        advertise: Advertise
         code: Code
-        description: Description
         event_name: Event Name
         expires_at: Expires At
         name: Name
