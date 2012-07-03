@@ -1052,6 +1052,13 @@ fr:
   variants: Gammes
   vat: "TVA"
   version: Version
+  views:
+    pagination:
+      first: "&laquo; Premier"
+      last: "Dernier &raquo;"
+      previous: "&lsaquo; Précédent"
+      next: "Suivant &rsaquo;"
+      truncate: "..."
   view_shipping_options: "Options de la vue livraison"
   void: Annule
   website: Site Web
