@@ -130,7 +130,7 @@ ru:
       taxonomy: 
         name: "Наименование"
       user: 
-        email: "е-мейл"
+        email: "Электронная почта"
         password: "Пароль"
         password_confirmation: "Подтверждение пароля"
       variant: 
@@ -387,9 +387,9 @@ ru:
   editing_tracker: "Редактирование трекера"
   editing_user: "Редактирование пользователя"
   editing_zone: "Редактирование зоны"
-  email: "е-мейл"
-  email_address: "Email адрес"
-  email_server_settings_description: "Настройки сервера email."
+  email: "Электронная почта"
+  email_address: "Адрес электронной почты"
+  email_server_settings_description: "Настройки сервера электронной почты."
   empty: "пусто"
   empty_cart: "Очистить корзину"
   enable_login_via_login_password: "Авторизоваться с помощью пары email/пароль"
