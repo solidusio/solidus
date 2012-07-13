@@ -1,5 +1,8 @@
 --- 
 en-GB: 
+  date:
+    formats:
+      default: "%d-%m-%Y"
   'no': "No"
   'yes': "Yes"
   5_biggest_spenders: "5 Biggest Spenders"
