@@ -671,6 +671,7 @@ fr:
   preview: Aperçu
   previous: Précédent
   price: Prix
+  price_range: "Prix"
   price_bucket: Price Bucket # Prix du seau ?
   price_with_vat_included: "%{price} (TTC)"
   problem_authorizing_card: "Problème d'autorisation de votre carte de crédit"
