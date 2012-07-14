@@ -3,6 +3,14 @@ en-GB:
   date:
     formats:
       default: "%d-%m-%Y"
+  devise:
+    user_sessions:
+      user:
+        signed_out: "Logged out successfully"
+  price_sack: Price Sack
+  price_range: Price Range
+  under_price: "Under %{price}"  
+  or_over_price: "%{price} or over"  
   'no': "No"
   'yes': "Yes"
   5_biggest_spenders: "5 Biggest Spenders"
@@ -244,19 +252,6 @@ en-GB:
   alternative_phone: Alternative Phone
   amount: Amount
   analytics_trackers: Analytics Trackers
-  api: 
-    access: "API Access"
-    clear_key: "Clear API key"
-    errors: 
-      invalid_event: "Invalid event name, valid names are %{events}"
-      invalid_event_for_object: "Valid event name but not allowed for this object, valid names are %{events}"
-      missing_event: "No event name supplied"
-    generate_key: "Generate API key"
-    key: "API Key"
-    key_cleared: "API key cleared"
-    key_generated: "API key generated"
-    no_key: "No key defined"
-    regenerate_key: "Regenerate API key"
   apply: "Apply"
   are_you_sure: "Are you sure"
   are_you_sure_category: "Are you sure you want to delete this category?"
@@ -1071,3 +1066,17 @@ en-GB:
   zone_based: "Zone Based"
   zone_setting_description: "Collections of countries, states or other zones to be used in various calculations."
   zones: Zones
+  spree:
+    api: 
+      access: "API Access"
+      clear_key: "Clear API key"
+      errors: 
+        invalid_event: "Invalid event name, valid names are %{events}"
+        invalid_event_for_object: "Valid event name but not allowed for this object, valid names are %{events}"
+        missing_event: "No event name supplied"
+      generate_key: "Generate API key"
+      key: "API Key"
+      key_cleared: "API key cleared"
+      key_generated: "API key generated"
+      no_key: "No key defined"
+      regenerate_key: "Regenerate API key"
