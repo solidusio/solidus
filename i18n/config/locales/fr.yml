@@ -1103,8 +1103,8 @@ fr:
       updated: 'Votre compte a été modifié avec succès.'
       destroyed: 'Votre compte a été supprimé avec succès. Nous espérons vous revoir bientôt.'
     user_sessions:
-      signed_in: "Connecté."
-      signed_out: "Déconnecté."
+      signed_in: "Connexion réussie."
+      signed_out: "Vous avez été déconnecté."
     unlocks:
       send_instructions: 'Vous allez recevoir les instructions nécessaires au déverrouillage de votre compte dans quelques instants'
       unlocked: 'Votre compte a été déverrouillé avec succès, vous êtes maintenant connecté.'
