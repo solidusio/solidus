@@ -251,7 +251,7 @@ zh-TW:
     generate_key: 產生 API Key
     key: "API Key"
     key_cleared: 已清除 API key
-    key_generated: "已產生 API key
+    key_generated: 已產生 API key
     no_key: 沒有定義 Key
     regenerate_key: 重新產生 API key
   apply: 套用 #"Apply"
@@ -740,8 +740,8 @@ zh-TW:
         sentence: "產品名稱或關鍵字中包含 <em>%s</em>"
       in_taxons: 
         args: 
-          "taxon_names": "Taxon names"
-        description: 分類名稱必須以空格或逗號分開(例如: adidas,鞋子)
+          taxon_names: "Taxon names"
+        description: "分類名稱必須以空格或逗號分開(例如: adidas,鞋子)"
         name: 在分類以及所有下級分類中
         sentence: "在 <em>%s</em> 以及他們所有的下級分類中"
       master_price_gte: 
@@ -980,8 +980,8 @@ zh-TW:
   taxonomies: 分類 #Taxonomies
   taxonomies_setting_description: 管理分類 #"Create and manage taxonomies."
   taxonomy_edit: 編輯分類 #"Edit taxonomy"
-  taxonomy_tree_error: 請求的變更沒有被接受，樹會恢復到之前的狀態，請重新嘗試。
-  taxonomy_tree_instruction: * 右鍵單擊一個樹的子結點以訪問添加、刪除或排序字節點的菜單。
+  taxonomy_tree_error: "請求的變更沒有被接受，樹會恢復到之前的狀態，請重新嘗試。"
+  taxonomy_tree_instruction: "* 右鍵單擊一個樹的子結點以訪問添加、刪除或排序字節點的菜單。"
   taxons: 分類 #Taxons
   test: 測試 #"Test"
   test_mode: 測試模式 #Test Mode
