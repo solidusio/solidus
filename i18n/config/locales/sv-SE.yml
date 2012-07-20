@@ -639,7 +639,7 @@ sv-SE:
   password_reset_instructions_are_mailed: "Instruktioner för att återställa lösenord har mailats till dig."
   password_reset_token_not_found: "Vi kunde tyvärr inte hitta ditt konto. Om du har problem, försök att kopiera och klistra in URLen från ditt email in i din webbläsare eller att starta om processen för att återskapa lösenordet."
   password_updated: "Lösenordet ändrat"
-  path: Sökväg # Eng översatt
+  path: Sökväg
   pay: betala
   payment: Betalning
   payment_actions: "Åtgärder"
@@ -662,12 +662,12 @@ sv-SE:
     void: annulerad
   payment_updated: Betalning uppdaterad
   payments: Betalningar
-  pending_payments: Väntande betalningar  # Eng översatt
+  pending_payments: Väntande betalningar
   permalink: Permalink
   phone: Telefon
   place_order: Placera order
   please_create_user: "Var god skapa ett användarkonto"
-  powered_by: "Drivs av"
+  powered_by: "Drivs med"
   presentation: Presentation
   preview: Förhandsvisning
   previous: Föregående
@@ -841,7 +841,7 @@ sv-SE:
   qty: Antal
   quantity_returned: Antal returnerade
   quantity_shipped: Antal levererade
-  range: "Intervall" # Eng
+  range: "Intervall"
   rate: Kurs
   reason: Anledning
   recalculate_order_total: "Omberäkna summan att betala"
@@ -878,7 +878,7 @@ sv-SE:
   rma_value: RMA-värde
   roles: Roller
   rules: Regler
-  sales_tax: "moms" # Eng översatt
+  sales_tax: "moms"
   sales_total: "Total försäljning"
   sales_total_description: "Total försäljning på alla ordrar"
   save_and_continue: "Spara och Fortsätt"
@@ -989,8 +989,8 @@ sv-SE:
   tax_rates_description: Sätt upp och konfigurera skattesatser
   tax_settings: "Skatte-inställningar"
   tax_settings_description: Grundläggande skatte-inställningar
-  tax_total: "Tax Total"
-  tax_type: "Tax Type"
+  tax_total: "Total skatt"
+  tax_type: "Skatte typ"
   taxon: Underkategori
   taxon_edit: Redigera underkategori
   taxonomies: Kategorier
@@ -1008,7 +1008,7 @@ sv-SE:
   this_year: "Detta år"
   thumbnail: "Miniatyrbild"
   to_add_variants_you_must_first_define: "För att lägga till varianter måste du först definiera"
-  to_state: "Till status" # Eng status? Or is stat what they mean?
+  to_state: "Till stat"
   top_grossing_products: "Storsäljande produkter"
   total: Deltotal
   tracking: Spårning
@@ -1030,7 +1030,7 @@ sv-SE:
   update_password: "Uppdatera mitt lösenord och logga in mig"
   updated_successfully: "Uppdaterades"
   updating: Uppdaterar
-  usage_limit: Usage Limit
+  usage_limit: Användar gräns
   use_as_shipping_address: Använd som leveransadress
   use_billing_address: "Använd faktureringsadress"
   use_different_shipping_address: "Använd annan leveransadress"
