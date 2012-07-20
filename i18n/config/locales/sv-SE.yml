@@ -4,6 +4,17 @@
 # Am I using the Swedish words "debiter*" correctly?
 # How to translate "return authorization"?
 sv-SE:
+  date:
+    formats:
+      default: "%d-%m-%Y"
+  number:
+    currency:
+      format:
+        format: "%n %u"
+        unit: "kr."
+        precision: 2
+        separator: ','
+        delimiter: '.'
   'no': "Nej"
   'yes': "Ja"
   5_biggest_spenders: "5 största köpare"
@@ -34,7 +45,7 @@ sv-SE:
         last_name_begins_with: "Efternamn börjar med"
         lastname: "Efternamn"
         phone: Telefon
-        state: "Delstat"
+        state: "Län"
         zipcode: "Postkod"
       checkout:
         bill_address:
@@ -43,7 +54,7 @@ sv-SE:
           firstname: "Faktureringsadress förnamn"
           lastname: "Faktureringsadress efternamn"
           phone: "Faktureringsadress telefon"
-          state: "Faktureringsadress delstat"
+          state: "Faktureringsadress län"
           zipcode: "Faktureringsadress postkod"
         ship_address:
           address1: "Leveransadress gata"
@@ -51,7 +62,7 @@ sv-SE:
           firstname: "Leveransadress förnamn"
           lastname: "Leveransadress efternamn"
           phone: "Leveransadress telefon"
-          state: "Leveransadress delstat"
+          state: "Leveransadress län"
           zipcode: "Leveransadress postkod"
       country:
         iso: ISO
@@ -66,7 +77,7 @@ sv-SE:
         verification_value: "Säkerhetskod"
         year: År
       inventory_unit:
-        state: Delstat
+        state: Län
       line_item:
         price: Pris
         quantity: Antal
@@ -78,7 +89,7 @@ sv-SE:
         item_total: "Nettopris"
         number: Nummer
         special_instructions: "Speciella anvisningar"
-        state: Delstat
+        state: Län
         total: "Summa att betala"
       product:
         available_on: "Tillgänglig"
@@ -191,8 +202,8 @@ sv-SE:
         one: "Fraktalternativ"
         other: "Fraktalternativ"
       state:
-        one: Delstat
-        other: Delstater
+        one: Län
+        other: Län
       tax_category:
         one: "Skattekategori"
         other: "Skattekategorier"
@@ -224,7 +235,7 @@ sv-SE:
   add_product_properties: "Lägg till produktegenskaper"
   add_rule_of_type: Lägg till regel av typ
   add_scope: "Lägg till omfång"
-  add_state: "Lägg till delstat"
+  add_state: "Lägg till län"
   add_to_cart: "Lägg i varukorgen"
   add_zone: "Lägg till zon"
   additional_item: "Ytterligare artikelkostnad"
@@ -350,7 +361,7 @@ sv-SE:
   customer_details: "Detaljer om kund"
   customer_search: "Kundsök"
   date_created: Skapad
-  date_range: "Datum intervall"
+  date_range: "Datums intervall"
   debit: Debitera # Eng ?
   default: Standard
   delete: Ta bort
@@ -377,7 +388,7 @@ sv-SE:
   editing_prototype: "Redigerar prototyp"
   editing_shipping_category: "Redigerar fraktalternativ"
   editing_shipping_method: "Redigerar fraktsätt"
-  editing_state: "Redigerar delstat"
+  editing_state: "Redigerar län"
   editing_tax_category: "Redigerar momssats"
   editing_tax_rate: "Redigerar skattesats"
   editing_tracker: Redigerar statistikspårare
@@ -425,7 +436,7 @@ sv-SE:
   flexible_rate: "Flexibelt pris"
   forgot_password: "Glömt Lösenord?"
   free_shipping: Gratis frakt
-  from_state: Från staten
+  from_state: Från tillstånd
   front_end: Affärsgränssnitt
   full_name: "Namn"
   gateway: Gateway
@@ -454,6 +465,8 @@ sv-SE:
   icons_by: "Ikoner av"
   image: Bild
   images: Bilder
+  image_settings: Bild inställningar
+  image_settings_description: Grundläggande bild inställningar
   images_for: "Bilder för"
   in_progress: "In Progress" # Eng
   include_in_shipment: Inkludera i leverans
@@ -549,7 +562,7 @@ sv-SE:
   new_shipment: "Ny leverans"
   new_shipping_category: "Nytt fraktalternativ"
   new_shipping_method: "Nytt fraktsätt"
-  new_state: "Ny delstat"
+  new_state: "Nytt län"
   new_tax_category: "Ny momssats"
   new_tax_rate: "Ny skattesats"
   new_taxon: "Ny underkategori"
@@ -591,6 +604,7 @@ sv-SE:
   ord_qty: "Ord. kvantitet"
   ord_total: "Ord. total"
   order: Order
+  shipment_state: "Leveransstatus"
   order_confirmation_note: ""
   order_date: "Orderdatum"
   order_details: "Orderdetaljer"
@@ -607,17 +621,18 @@ sv-SE:
   order_processed_successfully: "Din order har tagits emot."
   order_state:
     # keys correspond to Checkout state names:
-    address: adress
-    adjustments: justeringar
-    awaiting_return: väntar på retur
-    canceled: annulerad
-    cart: kundvagn
-    complete: färdig
-    confirm: bekräfta
-    delivery: frakt
-    payment: betalning
-    resumed: fortsatt
-    returned: returnerad
+    address: Adress
+    adjustments: Justeringar
+    awaiting_return: Väntar på retur
+    canceled: Annulerad
+    cart: Kundvagn
+    complete: Färdig
+    confirm: Bekräfta
+    delivery: Frakt
+    payment: Betalning
+    resumed: Fortsatt
+    returned: Returnerad
+  order_payment_state: "Betalningsstatus"
   order_summary: Ordersammanfattning
   order_sure_want_to: "Är du säker på att du vill %{event} denna order?"
   order_total: "Summa att betala"
@@ -650,16 +665,17 @@ sv-SE:
   payment_methods_setting_description: Ställ in metoder som kunder kan kan använda för att betala
   payment_processing_failed: "Betalningen kunde inte behandlas, var god kolla att uppgifterna som du skrev in är korrekta"
   payment_state: Betalningsstatus
+  payment_amount: Pris
   payment_states:
     balance_due: balance due # Eng
-    checkout: kassa
-    completed: slutförd
+    checkout: Kassa
+    completed: Slutförd
     credit_owed: credit owed # Eng
-    failed: misslyckades
-    paid: betald
-    pending: förestående
-    processing: hanteras
-    void: annulerad
+    failed: Misslyckades
+    paid: Betald
+    pending: Avvaktande
+    processing: Hanteras
+    void: Annulerad
   payment_updated: Betalning uppdaterad
   payments: Betalningar
   pending_payments: Väntande betalningar
@@ -879,6 +895,7 @@ sv-SE:
   roles: Roller
   rules: Regler
   sales_tax: "moms"
+  sales_totals: "Total försäljning"
   sales_total: "Total försäljning"
   sales_total_description: "Total försäljning på alla ordrar"
   save_and_continue: "Spara och Fortsätt"
@@ -910,11 +927,11 @@ sv-SE:
   shipment_number: "Leveransnummer"
   shipment_state: Frakt-status
   shipment_states:
-    backorder: restnoterad
-    partial: partiell
-    pending: förestående
-    ready: redo
-    shipped: levererad
+    backorder: Restnoterad
+    partial: Partiell
+    pending: Avvaktande
+    ready: Redo
+    shipped: Levererad
   shipment_updated: Leverans uppdaterad
   shipments: "Leveranser"
   shipped: Levererad
@@ -966,8 +983,8 @@ sv-SE:
   ssl_will_not_be_used_in_production_mode: "SSL kommer inte att användas i produktionsläge"
   start: Starta
   start_date: Giltig från
-  state: Delstat
-  state_based: "Delstat-baserad"
+  state: Län
+  state_based: "Län-baserad"
   state_setting_description: "Hantera listan av stater/regioner som ska höra till varje land"
   states: Stater
   status: Status
@@ -1008,7 +1025,7 @@ sv-SE:
   this_year: "Detta år"
   thumbnail: "Miniatyrbild"
   to_add_variants_you_must_first_define: "För att lägga till varianter måste du först definiera"
-  to_state: "Till stat"
+  to_state: "Till tillstånd"
   top_grossing_products: "Storsäljande produkter"
   total: Deltotal
   tracking: Spårning
@@ -1070,4 +1087,10 @@ sv-SE:
   zone_based: "Områdesbaserad"
   zone_setting_description: "Samlingar av länder, stater eller andra zoner som används i olika beräkningar"
   zones: Områden
-
+  views:
+    pagination:
+      truncate: "Trunkera"
+      first: "Första"
+      last: "Sista"
+      next: "Nästa"
+      previous: "Föregående"
