@@ -4,17 +4,6 @@
 # Am I using the Swedish words "debiter*" correctly?
 # How to translate "return authorization"?
 sv-SE:
-  date:
-    formats:
-      default: "%d-%m-%Y"
-  number:
-    currency:
-      format:
-        format: "%n %u"
-        unit: "kr."
-        precision: 2
-        separator: ','
-        delimiter: '.'
   'no': "Nej"
   'yes': "Ja"
   5_biggest_spenders: "5 största köpare"
