@@ -1,7 +1,7 @@
 ---
 ja:
-  no: "いいえ"
-  yes: "はい"
+  'no': "いいえ"
+  'yes': "はい"
   a_copy_of_all_mail_will_be_sent_to_the_following_addresses: "以下のアドレスにメールが送信されます。"
   abbreviation: "省略"
   access_denied: "アクセスが拒否されました"

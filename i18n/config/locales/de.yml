@@ -596,7 +596,7 @@ de:
   new_variant: "Neue Variante"
   new_zone: "Neues Gebiet"
   next: weiter
-  no: "Nein"
+  'no': "Nein"
   no_items_in_cart: "Keine Artikel im Warenkorb"
   no_match_found: "Kein Treffer"
   no_products_found: "Keine Produkte gefunden"
@@ -1132,7 +1132,7 @@ de:
   whats_this: "Was ist das"
   width: Breite
   year: "Jahr"
-  yes: "Yes"
+  'yes': "Yes"
   you_have_been_logged_out: "Sie haben sich ausgeloggt"
   you_have_no_orders_yet: "Sie haben noch keine Bestellungen."
   your_cart_is_empty: "Ihr Warenkorb ist leer"

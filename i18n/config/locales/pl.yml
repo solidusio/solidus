@@ -579,7 +579,7 @@ pl:
   new_variant: "Nowy Wariant"
   new_zone: "Nowa Strefa"
   next: Następne
-  no: "Nie"
+  'no': "Nie"
   no_items_in_cart: "Koszyk jest pusty"
   no_match_found: "No Match Found"
   no_products_found: "Nie znaleziono produktów"
@@ -1110,7 +1110,7 @@ pl:
   whats_this: "Co to jest"
   width: Szerokość
   year: "Rok"
-  yes: "Tak"
+  'yes': "Tak"
   you_have_been_logged_out: "Zostałeś(aś) wylogowany(a)."
   you_have_no_orders_yet: "Nie masz jeszcze żadnych zamówień."
   your_cart_is_empty: "Twój koszyk jest pusty"
