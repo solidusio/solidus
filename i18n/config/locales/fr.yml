@@ -648,7 +648,7 @@ fr:
   payment_methods: Méthodes de paiement
   payment_methods_setting_description: "Configuration des méthodes de paiement utilisables par les clients"
   payment_processing_failed: "Le paiemnent ne peut être accomplie, merci de vérifier les informations fournie"
-  payment_state: Etat du paiement
+  payment_state: État du paiement
   payment_states: 
     balance_due: solde dû
     checkout: commander
@@ -908,7 +908,7 @@ fr:
     shipped_email: 
       subject: "Notification d'expédition"
   shipment_number: "Livraison #"
-  shipment_state: Shipment State
+  shipment_state: État de livraison
   shipment_states: 
     backorder: rupture de stock
     partial: partiel
