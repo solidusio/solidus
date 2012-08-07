@@ -271,7 +271,7 @@ fr:
   awaiting_return: Retour en attente
   back: Arrière
   back_end: Back End
-  back_to_store: "Retour sur les produits"
+  back_to_store: "Boutique"
   backordered: Rupture de stock
   backordering_is_allowed: "Rupture de stock %{not} permise"
   balance_due: "Solde dû"
