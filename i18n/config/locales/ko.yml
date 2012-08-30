@@ -684,7 +684,7 @@ ko:
   product_properties: "상품 속성"
   product_rule: 
     choose_products: 상품 선택
-    label: #"Order must contain {{select}} of these products"
+    label: #"Order must contain %{select} of these products"
     match_all: 모두
     match_any: 최소 하나
     product_source: 
