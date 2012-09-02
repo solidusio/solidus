@@ -359,7 +359,7 @@ pt-BR:
   discount_amount: "Desconto"
   display: Mostrar
   edit: Editar
-  edit_general_settings: "Edit General Settings"
+  edit_general_settings: "Editar Configurações Gerais"
   editing_billing_integration: "Editar integração de nota"
   editing_category: "Editando Categoria"
   editing_mail_method: "Editando Método de Correio"
@@ -387,15 +387,15 @@ pt-BR:
   enable_login_via_login_password: "Usar email/senha padrão"
   enable_login_via_openid: "Usar OpenID"
   enable_mail_delivery: "Habilitar envio de email"
-  enter_atleast_five_letters: Enter atleast five letters of customer name
+  enter_atleast_five_letters: "Preencha pelo menos 5 letras do nome do cliente"
   enter_exactly_as_shown_on_card: "Por favor, informe exatamente como está no cartão"
   enter_password_to_confirm: "(precisamos da sua senha atual para atualizar)"
   environment: "Ambiente"
   error: erro
   errors: 
     messages: 
-      could_not_create_taxon: "Could not create taxon"
-      no_shipping_methods_available: "No shipping methods available for selected location, please change your address and try again."
+      could_not_create_taxon: "Não foi possível criar o táxon"
+      no_shipping_methods_available: "Não existem métodos de entrega para o local selecionado, por favor troque seu endereço e tente novamente."
   errors_prohibited_this_record_from_being_saved: 
     one: "1 error prohibited this record from being saved"
     other: "%{count} errors prohibited this record from being saved"
@@ -425,7 +425,7 @@ pt-BR:
   front_end: Front End
   full_name: "Nome completo"
   gateway: Gateway
-  gateway_config_unavailable: "Gateway unavailable for environment"
+  gateway_config_unavailable: "Gateway não disponível para este ambiente"
   gateway_configuration: "Configuração de gateway"
   gateway_error: "Erro na Gateway"
   gateway_setting_description: "Selecionar um gateway de pagamento e ajustar suas configurações."
@@ -506,7 +506,7 @@ pt-BR:
   maestro_or_solo_cards: "Maestro/Solo"
   mail_delivery_enabled: "Envio de email permitido"
   mail_delivery_not_enabled: "Envio de email não permitido"
-  mail_methods: "Métodos de correio"
+  mail_methods: "Configurações de email"
   mail_server_preferences: "Preferências do servidor de correio"
   make_refund: "Extornar"
   mark_shipped: "Marcar como enviado"
@@ -623,7 +623,7 @@ pt-BR:
   other_payment_options: "Outras opções de pagamento"
   out_of_stock: "Esgotado"
   out_of_stock_products: "Produtos Esgotados"
-  over_paid: "Over Paid"
+  over_paid: "Pago em excesso"
   overview: Resumo
   overview_welcome: "Bem-vindo ao resumo da loja, não existem dados suficientes para o relatório.<br/><br/> O Painel será mostrado uma vez que o sistema tenha pedidos que permitam a geração de estatísticas."
   page_only_viewable_when_logged_in: "Você tentou ver uma página que precisa estar logado"
@@ -902,7 +902,7 @@ pt-BR:
   shipment_details: "Detalhes de entrega"
   shipment_mailer: 
     shipped_email: 
-      subject: "Shipment Notification"
+      subject: "Notificação de envio"
   shipment_number: "Entrega nr."
   shipment_state: "Estado da entrega"
   shipment_states: 
@@ -955,11 +955,11 @@ pt-BR:
   spree: 
     date: Data
     time: Horário
-  spree_gateway_error_flash_for_checkout: "There was a problem with your payment information. Please check your information and try again."
-  ssl_will_be_used_in_development_and_test_modes: "SSL will be used in development and test mode if necessary."
-  ssl_will_be_used_in_production_mode: "SSL will be used in production mode"
-  ssl_will_not_be_used_in_development_and_test_modes: "SSL will not be used in development and test mode if necessary."
-  ssl_will_not_be_used_in_production_mode: "SSL will not be used in production mode"
+  spree_gateway_error_flash_for_checkout: "Existe um problema com seus dados de pagamento. Por favor, verifique seus dados e tente novamente."
+  ssl_will_be_used_in_development_and_test_modes: "SSL será usado em desenvolvimento e teste se necessário"
+  ssl_will_be_used_in_production_mode: "SSL será usado em produção"
+  ssl_will_not_be_used_in_development_and_test_modes: "SSL não será usado em desenvolvimento e teste se necessário"
+  ssl_will_not_be_used_in_production_mode: "SSL não será usado em produção"
   start: Início
   start_date: "Válido a partir de"
   state: Estado
@@ -973,9 +973,9 @@ pt-BR:
   street_address_2: "Endereço (compl.)"
   subtotal: Sub-total
   subtract: Subtrair
-  successfully_created: "%{resource} has been successfully created!"
-  successfully_removed: "%{resource} has been successfully removed!"
-  successfully_updated: "%{resource} has been successfully updated!"
+  successfully_created: "%{resource} foi criado com sucesso!"
+  successfully_removed: "%{resource} foi removido com sucesso!"
+  successfully_updated: "%{resource} foi atualizado com sucesso!"
   system: Sistema
   tax: Imposto
   tax_categories: "Categorias de Imposto"
@@ -998,7 +998,7 @@ pt-BR:
   test: "Teste"
   test_mode: "Modo de Teste"
   thank_you_for_your_order: "Obrigado por sua compra. Por favor, imprima uma cópia desta página de confirmação para seu controle."
-  there_were_problems_with_the_following_fields: "There were problems with the following fields"
+  there_were_problems_with_the_following_fields: "Existem problemas com os seguintes campos"
   this_file_language: "Português"
   this_month: "Este Mês"
   this_year: "Este Ano"
