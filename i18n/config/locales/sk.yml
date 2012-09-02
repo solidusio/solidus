@@ -366,7 +366,7 @@ sk:
   editing_option_type: "Úprava typu opcie"
   editing_option_types: "Úprava typu opcií"
   editing_payment_method: Editing Payment Method
-  editing_product: "Úprva produktu"
+  editing_product: "Úprava produktu"
   editing_product_group: "Editing Product Group"
   editing_promotion: Editing Promotion
   editing_property: "Úprava vlastnosti"
@@ -382,7 +382,7 @@ sk:
   email: Email
   email_address: "Emailová adresa"
   email_server_settings_description: "Nastavenie emailového servera"
-  empty: "Empty"
+  empty: "Prázdny"
   empty_cart: "Prázdny košík"
   enable_login_via_login_password: "Use standard email/password"
   enable_login_via_openid: Prihlásenie sa cez OpenID
