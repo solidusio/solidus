@@ -279,7 +279,7 @@ de:
   are_you_sure_you_want_to_capture: "Sind Sie sicher, dass Sie das erfassen wollen?"
   assign_taxon: "Produktklasse zuweisen"
   assign_taxons: "Produktklassen zuweisen"
-  authorization_failure: "Bitte authentifizieren Sie Sich."
+  authorization_failure: "Bitte authentifizieren Sie sich."
   authorized: Angemeldet
   availability: "Verfügbarkeit"
   available_on: "erhältlich ab"
