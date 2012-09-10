@@ -5,7 +5,7 @@ module SpreeI18n
         pattern = pattern_from app.config.i18n.available_locales
 
         add("config/locales/#{pattern}/*.{rb,yml}")
-        add("config/locales/*.{rb,yml}")
+        add("config/locales/#{pattern}.{rb,yml}")
       end
     end
 
