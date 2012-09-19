@@ -673,6 +673,9 @@ es:
   price: Precio
   price_bucket: Precio Definido
   price_with_vat_included: "%{price} (inc. IVA)"
+  price_range:          "Rango de precios"
+  under_price:          "Menos de %{price}"
+  or_over_price:        "%{price} o más"
   problem_authorizing_card: "Problema autorizando la tarjeta"
   problem_capturing_card: "Problema capturando la tarjeta"
   problems_processing_order: "Hemos tenido problemas al procesar su pedido"
