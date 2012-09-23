@@ -584,7 +584,7 @@ sk:
   option_values: "Hodnoty opcií"
   options: Opcie
   or: alebo
-  or_over_price: ${price} alebo viac
+  or_over_price: %{price} alebo viac
   ord_qty: "Ord. Qty"
   ord_total: "Ord. Total"
   order: Objednávka
