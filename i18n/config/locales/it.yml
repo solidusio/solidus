@@ -90,6 +90,16 @@ it:
         on_hand: "In stock"
         shipping_category: "Categoria di vendita"
         tax_category: "Tasse della Categoria"
+      spree/promotion: 
+        advertise: "Pubblica"
+        code: "Codice"
+        description: "Descrizione"
+        event_name: "Nome dell'evento"
+        expires_at: "Scade il"
+        name: "Nome"
+        path: "Percorso"
+        starts_at: "Comincia il"
+        usage_limit: "Limiti di utilizzo"
       spree/property:
         name: 'Nome'
         presentation: 'Presentazione'
@@ -156,6 +166,7 @@ it:
         other: "Gamma dei prodotti"
       spree/order:
         one: 'Ordine'
+        coupon_code: 'Codice Coupon'
         other: 'Ordini'
       spree/payment:
         one: 'Pagamento'
@@ -206,6 +217,7 @@ it:
         one: 'Zona'
         other: 'Zone'
   add: 'Aggiungi'
+  add_action_of_type: "Aggiungi azione del tipo"
   add_category: "Aggiungi categoria"
   add_country: "Aggiungi Paese"
   add_new_header: "Aggiungi nuova testata"
@@ -215,6 +227,7 @@ it:
   add_option_value: "Aggiungi opzione"
   add_product: "Aggiungi Prodotto"
   add_product_properties: "Aggiungi proprietà prodotto"
+  add_rule_of_type: "Aggiungi regola del tipo"
   add_scope: "Aggiungere un campo di applicazione"
   add_state: "Aggiungi Regione"
   add_to_cart: "Aggiungi al carrello"
@@ -320,6 +333,9 @@ it:
   count_of_reduced_by: "completa per '%{name}' riduci per %{count}"
   country: "Paese"
   country_based: "sulla base di un paese"
+  coupon: "Coupon"
+  coupon_code: "Codice coupon"
+  coupon_code_applied: "Il codice coupon è stato applicato al tuo ordine con successo."
   create: "Salva"
   create_a_new_account: "Crea un nuovo account"
   create_user_account: "Crea un account"
@@ -371,6 +387,7 @@ it:
   editing_payment_method: "Modifica il metodo di pagamento"
   editing_product: "Modifica prodotto"
   editing_product_group: "Modifica il gruppo dei prodotti"
+  editing_promotion: "Modifica la promozione"
   editing_property: "Modifica le propietà"
   editing_prototype: "Modifica prototipo"
   editing_shipping_category: "Modifica le categorie di spedizione"
@@ -410,6 +427,10 @@ it:
     spree:
       cart:
         add: 'Si aggiunge al carrello'
+      checkout:
+        coupon_code_added: 'Aggiunto codice coupon'
+      content:
+        visited: 'Visitato'
       order:
         contents_changed: "Il contenuto dell'ordine cambia"
       user:
@@ -419,6 +440,7 @@ it:
   expiration: "Scadenza"
   expiration_month: "Valido fino (Mese)"
   expiration_year: "Valido fino (Anno)"
+  expiry: "Validità"
   extension: "estensione"
   extensions: "estensioni"
   filename: "nome del file"
@@ -434,6 +456,7 @@ it:
   flat_rate_per_order: "Prezzo fisso (per ordine)"
   flexible_rate: "Prezzo variabile"
   forgot_password: "Password perduta"
+  free_shipping: "Spedizione gratuita"
   from_state: "dallo stato"
   front_end: "Front End"
   full_name: "Nome completo"
@@ -489,6 +512,12 @@ it:
   item: "Articolo"
   item_description: "Descrizione articolo"
   item_total: "Totale articoli"
+  item_total_rule:
+    operators:
+      gt: "maggiore di"
+      gte: "maggiore o uguale a"
+  landing_page_rule:
+    path: "Percorso"
   last_name: "Cognome"
   last_name_begins_with: "il cognome inizia con"
   learn_more: Scopri
@@ -554,6 +583,7 @@ it:
   new_payment_method: "Nuovo metodo di pagamento"
   new_product: "Nuovo prodotto"
   new_product_group: "Nuovo gruppo di prodotti"
+  new_promotion: "Nuova promozione"
   new_property: "Nuova proprietà"
   new_prototype: "Nuovo prototipo"
   new_return_authorization: "Autorizza nuova restituzione"
@@ -574,6 +604,7 @@ it:
   no_match_found: "Nessuna corrispondenza trovata"
   no_products_found: "Prodotti non trovati"
   no_results: "Nessun risultato"
+  no_rules_added: "Nessuna regola aggiunta"
   no_user_found: "Nessun utente è stato trovato con questo indirizzo email"
   none: "nessuno"
   none_available: "non disponibile"
@@ -653,10 +684,6 @@ it:
   overview: "Panoramica"
   page_only_viewable_when_logged_in: "La pagina può essere visualizzata solamente da utenti registrati"
   page_only_viewable_when_logged_out: "La pagina può essere visualizzata solamente da utenti che non hanno effettuato l'accesso"
-  pagination:
-    previous_page: "&laquo; pagina precedente"
-    next_page: "prossima pagina &raquo;"
-    truncate: "&hellip;"
   paid: "Pagato"
   parent_category: "Categoria padre"
   password: "Password"
@@ -690,6 +717,7 @@ it:
   payment_updated: "Pagamento aggiornato"
   payments: "Pagamenti"
   pending_payments: "pagamento in sospeso"
+  percent_per_item: "Percentuale Per Articolo"
   permalink: "permalink"
   phone: "Telefono"
   place_order: "Invia ordine"
@@ -714,6 +742,14 @@ it:
   product_groups: "Gruppi prodotti"
   product_has_no_description: "Il prodotto non ha una descrizione"
   product_properties: "Proprietà del prodotto"
+  product_rule:
+    choose_products: "Scegli prodotti"
+    label: "L'ordine deve contenere %{select} questi prodotti"
+    match_any: "almeno uno di"
+    match_all: "tutti"
+    product_source:
+      group: "Da gruppo di prodotti"
+      manual: "Scegli manualmente"
   product_scopes:
     groups:
       price:
@@ -826,6 +862,46 @@ it:
         sentence: "con proprietà <em>%s</em> e valore <em>%s</em>"
   products: "Prodotti"
   products_with_zero_inventory_display: "I prodotti esauriti%{not} sono visualizzati"
+  promotion: "Promozione"
+  promotion_action: "Azione promozione"
+  promotion_action_types: 
+    create_adjustment:
+      name: "Crea adattamento"
+      description: "Crea un adattamento di credito sul prezzo finale"
+    create_line_items:
+      name: "Crea articoli del carrello"
+      description: "Aggiunge al carrello gli articoli e le quantità specificate"
+    give_store_credit:
+      name: "Consegna credito"
+      description: "Consegna all'utente del negozio la quantità di credito specificato"
+  promotion_actions: "Azioni promozione"
+  promotion_form:
+    match_policies:
+      all: "Tutte"
+      any: "Una"
+  promotion_not_found: "Il codice coupon inserito non è stato trovato. Per favore riprova."
+  promotions: "Promozioni"
+  promotions_description: "Gestisci offerte e coupon tramite le promozioni"
+  promotion_rule: "Regola Promozione"
+  promotion_rule_types:
+    first_order:
+      name: "Primo ordine"
+      description: "Deve essere il primo ordine dell'utente"
+    item_total:
+      name: "Totale ordine"
+      description: "Il totale dell'ordine deve avere le seguenti caratteristiche"
+    landing_page:
+      name: "Landing Page"
+      description: "Il cliente deve aver visitato la pagina specificata"
+    product:
+      name: "Prodotti"
+      description: "L'ordine include i prodotti specificati"
+    user:
+      name: "Utente"
+      description: "Disponibile solo per gli utenti specificati"
+    user_logged_in:
+      name: "Utente loggato"
+      description: "Dispobile solo per gli utenti loggati"
   properties: "Proprietà"
   property: "Proprietà"
   prototype: "Prototipo"
@@ -872,6 +948,7 @@ it:
   rma_number: "Numero RMA"
   rma_value: "Valore RMA"
   roles: "Ruoli"
+  rules: "Regole"
   s3_access_key: "Access Key"
   s3_bucket: "Bucket"
   s3_headers: "S3 Headers"
@@ -1059,6 +1136,8 @@ it:
   user: "Utente"
   user_account: "Account"
   user_created_successfully: "Utente creato con successo"
+  user_rule:
+    choose_users: "Scegli utenti"
   users: "Utenti"
   validate_on_profile_create: "Utilizza le validazioni alla creazione di un nuovo utente"
   validation:
@@ -1074,6 +1153,13 @@ it:
   vat: "IVA"
   version: "Versione"
   view_shipping_options: "Vedi le opzioni di spedizione"
+  views:
+    pagination:
+      first: "&laquo; Prima"
+      last: "Ultima &raquo;"
+      previous: "&lsaquo; Precedente"
+      next: "Prossima &rsaquo;"
+      truncate: "..."
   void: "Annulla"
   website: "Sito web"
   weight: "Peso"
