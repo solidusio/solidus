@@ -653,13 +653,6 @@ it:
   overview: "Panoramica"
   page_only_viewable_when_logged_in: "La pagina può essere visualizzata solamente da utenti registrati"
   page_only_viewable_when_logged_out: "La pagina può essere visualizzata solamente da utenti che non hanno effettuato l'accesso"
-  views:
-    pagination:
-      first: "&laquo; Prima"
-      last: "Ultima &raquo;"
-      previous: "&lsaquo; Precedente"
-      next: "Prossima &rsaquo;"
-      truncate: "..."
   paid: "Pagato"
   parent_category: "Categoria padre"
   password: "Password"
@@ -1077,6 +1070,13 @@ it:
   vat: "IVA"
   version: "Versione"
   view_shipping_options: "Vedi le opzioni di spedizione"
+  views:
+    pagination:
+      first: "&laquo; Prima"
+      last: "Ultima &raquo;"
+      previous: "&lsaquo; Precedente"
+      next: "Prossima &rsaquo;"
+      truncate: "..."
   void: "Annulla"
   website: "Sito web"
   weight: "Peso"
