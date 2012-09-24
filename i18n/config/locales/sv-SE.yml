@@ -3,7 +3,7 @@
 # How should "Taxon" be translated?
 # Am I using the Swedish words "debiter*" correctly?
 # How to translate "return authorization"?
-sv-SE: 
+sv-SE:
   'no': "Nej"
   'yes': "Ja"
   5_biggest_spenders: "5 största köpare"
@@ -13,7 +13,7 @@ sv-SE:
   account: Konto
   account_updated: "Konto sparat!"
   action: Åtgärd
-  actions: 
+  actions:
     cancel: Avbryt
     create: Skapa
     destroy: Ta bort
@@ -22,9 +22,9 @@ sv-SE:
     new: Ny
     update: Uppdatera
   active: "Aktiverad"
-  activerecord: 
-    attributes: 
-      address: 
+  activerecord:
+    attributes:
+      address:
         address1: Adress
         address2: "Adress (forts.)"
         city: Stad
@@ -34,43 +34,43 @@ sv-SE:
         last_name_begins_with: "Efternamn börjar med"
         lastname: "Efternamn"
         phone: Telefon
-        state: "Delstat"
+        state: "Län"
         zipcode: "Postkod"
-      checkout: 
-        bill_address: 
+      checkout:
+        bill_address:
           address1: "Faktureringsadress gata"
           city: "Faktureringsadress stad"
           firstname: "Faktureringsadress förnamn"
           lastname: "Faktureringsadress efternamn"
           phone: "Faktureringsadress telefon"
-          state: "Faktureringsadress delstat"
+          state: "Faktureringsadress län"
           zipcode: "Faktureringsadress postkod"
-        ship_address: 
+        ship_address:
           address1: "Leveransadress gata"
           city: "Leveransadress stad"
           firstname: "Leveransadress förnamn"
           lastname: "Leveransadress efternamn"
           phone: "Leveransadress telefon"
-          state: "Leveransadress delstat"
+          state: "Leveransadress län"
           zipcode: "Leveransadress postkod"
-      country: 
+      country:
         iso: ISO
         iso3: ISO3
         iso_name: "ISO-namn"
         name: Namn
         numcode: "ISO-kod"
-      creditcard: 
+      creditcard:
         cc_type: Typ
         month: Månad
         number: Nummer
         verification_value: "Säkerhetskod"
         year: År
-      inventory_unit: 
-        state: Delstat
-      line_item: 
+      inventory_unit:
+        state: Län
+      line_item:
         price: Pris
         quantity: Antal
-      order: 
+      order:
         checkout_complete: "Betalningen genomförd"
         completed_at: "Slutförd"
         coupon_code: "Kupongkod"
@@ -78,9 +78,9 @@ sv-SE:
         item_total: "Nettopris"
         number: Nummer
         special_instructions: "Speciella anvisningar"
-        state: Delstat
+        state: Län
         total: "Summa att betala"
-      product: 
+      product:
         available_on: "Tillgänglig"
         cost_price: "Kostnadspris"
         description: Beskrivning
@@ -89,48 +89,48 @@ sv-SE:
         on_hand: "I lager"
         shipping_category: "Fraktalternativ"
         tax_category: "Skattekategori"
-      product_group: 
+      product_group:
         name: Namn
         product_count: "Antal produkter"
         product_scopes: "Produktomfattning"
         products: "Produkter"
         url: URL
-      product_scope: 
+      product_scope:
         arguments: "Argument"
         description: "Beskrivning"
-      promotion: 
+      promotion:
         code: "Kod"
         description: "Beskrivning"
         expires_at: "Utlöper"
         name: "Namn"
         starts_at: "Startar"
         usage_limit: "Användningsbegränsning"
-      property: 
+      property:
         name: Namn
         presentation: Presentation
-      prototype: 
+      prototype:
         name: Namn
-      return_authorization: 
+      return_authorization:
         amount: Belopp
-      role: 
+      role:
         name: Namn
-      state: 
+      state:
         abbr: Förkortning
         name: Namn
-      tax_category: 
+      tax_category:
         description: Beskrivning
         name: Namn
-      tax_rate: 
+      tax_rate:
         amount: Sats
-      taxon: 
+      taxon:
         name: Namn
         permalink: Permalink
         position: Position
-      taxonomy: 
+      taxonomy:
         name: Namn
-      user: 
+      user:
         email: Epost
-      variant: 
+      variant:
         cost_price: "Kostnadspris"
         depth: Djup
         height: Höjd
@@ -138,80 +138,80 @@ sv-SE:
         sku: Lagerhållningsnummer
         weight: Vikt
         width: Bredd
-      zone: 
+      zone:
         description: Beskrivning
         name: Namn
-    models: 
-      address: 
+    models:
+      address:
         one: Adress
         other: Adresser
-      cheque_payment: 
+      cheque_payment:
         one: Checkbetalning
         other: Checkbetalningar
-      country: 
+      country:
         one: Land
         other: Länder
-      creditcard: 
+      creditcard:
         one: "Kreditkort"
         other: "Kreditkort"
-      inventory_unit: 
+      inventory_unit:
         one: "Inventeringspost"
         other: "Inventeringsposter"
-      line_item: 
+      line_item:
         one: "Artikel"
         other: "Artiklar"
-      order: 
+      order:
         one: Beställning
         other: Beställningar
-      payment: 
+      payment:
         one: Betalning
         other: Betalningar
-      product: 
+      product:
         one: Produkt
         other: Produkter
-      product_group: 
+      product_group:
         one: "Produktgrupp"
         other: "Produktgrupper"
-      property: 
+      property:
         one: Egenskap
         other: Egenskaper
-      prototype: 
+      prototype:
         one: Prototyp
         other: Prototyper
-      return_authorization: 
+      return_authorization:
         one: Return Authorization # Eng
         other: Return Authorizations # Eng
-      role: 
+      role:
         one: Roll
         other: Roller
-      shipment: 
+      shipment:
         one: Frakt
         other: Frakter
-      shipping_category: 
+      shipping_category:
         one: "Fraktalternativ"
         other: "Fraktalternativ"
-      state: 
-        one: Delstat
-        other: Delstater
-      tax_category: 
+      state:
+        one: Län
+        other: Län
+      tax_category:
         one: "Skattekategori"
         other: "Skattekategorier"
-      tax_rate: 
+      tax_rate:
         one: "Skattesats"
         other: "Skattesatser"
-      taxon: 
+      taxon:
         one: Underkategori
         other: Underkategorier
-      taxonomy: 
+      taxonomy:
         one: Kategori
         other: Kategorier
-      user: 
+      user:
         one: Användare
         other: Användare
-      variant: 
+      variant:
         one: Variant
         other: Varianter
-      zone: 
+      zone:
         one: Zon
         other: Zoner
   add: Lägg till
@@ -224,7 +224,7 @@ sv-SE:
   add_product_properties: "Lägg till produktegenskaper"
   add_rule_of_type: Lägg till regel av typ
   add_scope: "Lägg till omfång"
-  add_state: "Lägg till delstat"
+  add_state: "Lägg till län"
   add_to_cart: "Lägg i varukorgen"
   add_zone: "Lägg till zon"
   additional_item: "Ytterligare artikelkostnad"
@@ -245,10 +245,10 @@ sv-SE:
   alternative_phone: "Alternativt Telefonnummer"
   amount: Belopp
   analytics_trackers: Statistikspårare
-  api: 
+  api:
     access: "API-tillgång"
     clear_key: "Rensa API-nyckel"
-    errors: 
+    errors:
       invalid_event: "Ogiltigt händelsenamn, giltiga namn är %{events}"
       invalid_event_for_object: "Giltigt händelsenamn, men inte tillåtet för detta objekt, giltiga namn är %{events}"
       missing_event: "Inget händelsenamn erhållet"
@@ -269,7 +269,7 @@ sv-SE:
   assign_taxons: "Tilldela underkategorier"
   authorization_failure: "Du är inte auktoriserad att utföra denna åtgärd"
   authorized: Auktoriserad
-  available_on: "Available On" # Eng
+  available_on: "Tillgänglig från"
   available_taxons: "Tillgängliga underkategorier"
   awaiting_return: Väntar på retur # Eng
   back: Tillbaka
@@ -299,7 +299,7 @@ sv-SE:
   card_details: "Kortdetaljer"
   card_number: "Kortnummer"
   card_type_is: "Typ av kort är"
-  cart: Varukorg
+  cart: "Varukorg"
   categories: Kategorier
   category: Kategori
   change: Ändra
@@ -326,8 +326,8 @@ sv-SE:
   continue: Fortsätt
   continue_shopping: "Fortsätt handla"
   copy_all_mails_to: Kopiera all e-post till
-  cost_price: "Kostnadspris" # Eng ?
-  count: Count # Eng
+  cost_price: "Inköpspris"
+  count: "Räkna"
   count_of_reduced_by: "count of '%{name}' reduced by %{count}" # Eng
   country: Land
   country_based: "Landbaserat"
@@ -343,21 +343,21 @@ sv-SE:
   credit_card_capture_complete: "Credit Card Was Captured" # Eng
   credit_card_payment: "Kreditskortsbetalning"
   credit_owed: "Credit Owed" # Eng
-  credit_total: Credit Total # Eng
+  credit_total: Total Kredit
   credits: Krediter
   current: Nuvarande
   customer: Kund
   customer_details: "Detaljer om kund"
   customer_search: "Kundsök"
-  date_created: Date created # Eng
-  date_range: "Datumomfång" # Eng ?
+  date_created: Skapad
+  date_range: "Datums intervall"
   debit: Debitera # Eng ?
   default: Standard
   delete: Ta bort
   delivery: Utskick
   depth: Djup
   description: Beskrivning
-  destroy: Destroy # Eng
+  destroy: Förstöra
   didnt_receive_confirmation_instructions: "Fick du inga bekräftelse-instruktioner?"
   didnt_receive_unlock_instructions: "Fick du inga upplåsnings-instruktioner?"
   discount_amount: "Rabatt"
@@ -377,13 +377,13 @@ sv-SE:
   editing_prototype: "Redigerar prototyp"
   editing_shipping_category: "Redigerar fraktalternativ"
   editing_shipping_method: "Redigerar fraktsätt"
-  editing_state: "Redigerar delstat"
+  editing_state: "Redigerar län"
   editing_tax_category: "Redigerar momssats"
   editing_tax_rate: "Redigerar skattesats"
   editing_tracker: Redigerar statistikspårare
   editing_user: "Redigerar användare"
   editing_zone: "Redigerar zon"
-  email: Email
+  email: Epost
   email_address: "E-postadress"
   email_server_settings_description: "Ställ in email-server-inställningar"
   empty: "tom"
@@ -396,11 +396,11 @@ sv-SE:
   enter_password_to_confirm: "(vi behöver ditt nuvarande lösenord för att bekräfta dina ändringar)"
   environment: "Miljö"
   error: fel
-  errors: 
-    messages: 
+  errors:
+    messages:
       could_not_create_taxon: "Kunde inte skapa underkategori"
       no_shipping_methods_available: "Inget fraktsätt är tillgängligt för den valda platsen. Var god ändra din adress och försök igen."
-  errors_prohibited_this_record_from_being_saved: 
+  errors_prohibited_this_record_from_being_saved:
     one: "1 fel hindrade detta inlägg att sparas"
     other: "%{count} fel hindrade detta inlägg att sparas"
   event: Händelse
@@ -425,7 +425,7 @@ sv-SE:
   flexible_rate: "Flexibelt pris"
   forgot_password: "Glömt Lösenord?"
   free_shipping: Gratis frakt
-  from_state: Från staten
+  from_state: Från tillstånd
   front_end: Affärsgränssnitt
   full_name: "Namn"
   gateway: Gateway
@@ -454,6 +454,8 @@ sv-SE:
   icons_by: "Ikoner av"
   image: Bild
   images: Bilder
+  image_settings: Bild inställningar
+  image_settings_description: Grundläggande bild inställningar
   images_for: "Bilder för"
   in_progress: "In Progress" # Eng
   include_in_shipment: Inkludera i leverans
@@ -473,8 +475,8 @@ sv-SE:
   item: Artikel
   item_description: "Artikelbeskrivning"
   item_total: "Nettopris"
-  item_total_rule: 
-    operators: 
+  item_total_rule:
+    operators:
       gt: större än
       gte: större än eller lika med
   items: "Artiklar"
@@ -514,8 +516,8 @@ sv-SE:
   mail_server_preferences: Mailserveralternativ
   make_refund: Gör återbetalning
   mark_shipped: "Markera som levererad"
-  master_price: "Masterpris"
-  max_items: Max Items # Eng
+  master_price: "Försäljnings pris"
+  max_items: Max antal varor
   may_be_combined_with_other_promotions: Kan kombineras med andra erbjudanden
   meta_description: "Metabeskrivning"
   meta_keywords: "Metanyckelord"
@@ -527,7 +529,7 @@ sv-SE:
   my_orders: "Mina beställningar"
   name: Namn
   name_or_sku: "Namn eller SKU"
-  new: New
+  new: Ny
   new_adjustment: "Ny justering"
   new_billing_integration: Ny faktureringsintegration
   new_category: "Ny kategori"
@@ -549,7 +551,7 @@ sv-SE:
   new_shipment: "Ny leverans"
   new_shipping_category: "Nytt fraktalternativ"
   new_shipping_method: "Nytt fraktsätt"
-  new_state: "Ny delstat"
+  new_state: "Nytt län"
   new_tax_category: "Ny momssats"
   new_tax_rate: "Ny skattesats"
   new_taxon: "Ny underkategori"
@@ -566,13 +568,13 @@ sv-SE:
   no_results: "Inga resultat"
   no_rules_added: Inga regler tillagda
   no_user_found: "Hittade ingen användare med denna e-postadress"
-  none: None # Eng
+  none: Ingen
   none_available: "Inget tillgängligt"
   normal_amount: "Normal mängd"
   not: inte
   not_shown: "Visas inte"
   note: not
-  notice_messages: 
+  notice_messages:
     option_type_removed: "Tog bort alternativtyp."
     product_cloned: "Produkten har klonats"
     product_deleted: "Produkten har tagits bort"
@@ -580,7 +582,7 @@ sv-SE:
     product_not_deleted: "Produkten kunde inte tas bort"
     variant_deleted: "Varianten har tagits bort"
     variant_not_deleted: "Varianten kunde inte tas bort"
-  on_hand: "On Hand"
+  on_hand: "I lager"
   operation: Operation
   option_type: "Alternativtyp"
   option_types: "Alternativtyper"
@@ -591,33 +593,35 @@ sv-SE:
   ord_qty: "Ord. kvantitet"
   ord_total: "Ord. total"
   order: Order
+  shipment_state: "Leveransstatus"
   order_confirmation_note: ""
   order_date: "Orderdatum"
   order_details: "Orderdetaljer"
-  order_email_resent: "Order Email Resent" # Eng
-  order_mailer: 
-    cancel_email: 
+  order_email_resent: "Order mail har skickats igen"
+  order_mailer:
+    cancel_email:
       subject: "Annullering av order"
-    confirm_email: 
+    confirm_email:
       subject: "Orderbekräftelse"
   order_not_in_system: Det ordernumret är inte giltigt.
   order_number: Order
   order_operation_authorize: Auktorisera
   order_processed_but_following_items_are_out_of_stock: "Din order har tagits emot, men följande produkter är inte i lager:"
   order_processed_successfully: "Din order har tagits emot."
-  order_state: 
-    # keys correspond to Checkout state names: 
-    address: adress
-    adjustments: justeringar
-    awaiting_return: väntar på retur
-    canceled: annulerad
-    cart: kundvagn
-    complete: färdig
-    confirm: bekräfta
-    delivery: frakt
-    payment: betalning
-    resumed: fortsatt
-    returned: returnerad
+  order_state:
+    # keys correspond to Checkout state names:
+    address: Adress
+    adjustments: Justeringar
+    awaiting_return: Väntar på retur
+    canceled: Annulerad
+    cart: Kundvagn
+    complete: Färdig
+    confirm: Bekräfta
+    delivery: Frakt
+    payment: Betalning
+    resumed: Fortsatt
+    returned: Returnerad
+  order_payment_state: "Betalningsstatus"
   order_summary: Ordersammanfattning
   order_sure_want_to: "Är du säker på att du vill %{event} denna order?"
   order_total: "Summa att betala"
@@ -639,7 +643,7 @@ sv-SE:
   password_reset_instructions_are_mailed: "Instruktioner för att återställa lösenord har mailats till dig."
   password_reset_token_not_found: "Vi kunde tyvärr inte hitta ditt konto. Om du har problem, försök att kopiera och klistra in URLen från ditt email in i din webbläsare eller att starta om processen för att återskapa lösenordet."
   password_updated: "Lösenordet ändrat"
-  path: Path # Eng
+  path: Sökväg
   pay: betala
   payment: Betalning
   payment_actions: "Åtgärder"
@@ -650,24 +654,25 @@ sv-SE:
   payment_methods_setting_description: Ställ in metoder som kunder kan kan använda för att betala
   payment_processing_failed: "Betalningen kunde inte behandlas, var god kolla att uppgifterna som du skrev in är korrekta"
   payment_state: Betalningsstatus
-  payment_states: 
+  payment_amount: Pris
+  payment_states:
     balance_due: balance due # Eng
-    checkout: kassa
-    completed: slutförd
+    checkout: Kassa
+    completed: Slutförd
     credit_owed: credit owed # Eng
-    failed: misslyckades
-    paid: betald
-    pending: förestående
-    processing: hanteras
-    void: annulerad
+    failed: Misslyckades
+    paid: Betald
+    pending: Avvaktande
+    processing: Hanteras
+    void: Annulerad
   payment_updated: Betalning uppdaterad
   payments: Betalningar
-  pending_payments: Pending Payments # Eng
+  pending_payments: Väntande betalningar
   permalink: Permalink
   phone: Telefon
   place_order: Placera order
   please_create_user: "Var god skapa ett användarkonto"
-  powered_by: "Powered by"
+  powered_by: "Drivs med"
   presentation: Presentation
   preview: Förhandsvisning
   previous: Föregående
@@ -686,125 +691,125 @@ sv-SE:
   product_groups: Produktgrupper
   product_has_no_description: Den här produkten har ingen beskrivning
   product_properties: "Produktegenskaper"
-  product_rule: 
+  product_rule:
     choose_products: Välj produkter
     label: "Ordern måste innehålla %{select} dessa produkter"
     match_all: alla
     match_any: åtminstone en av
-    product_source: 
+    product_source:
       group: Från produktgrupp
       manual: Välj manuellt
-  product_scopes: 
-    groups: 
-      price: 
+  product_scopes:
+    groups:
+      price:
         description: "Omfång för att välja produkter baserat på pris"
         name: Pris
-      search: 
+      search:
         description: "Omfång för att välja produkter baserat på namn, nyckelord och produktbeskrivning"
         name: Textsök
-      taxon: 
+      taxon:
         description: "Omfång för att välja produkter baserat på underkategorier"
         name: Underkategori
-      values: 
+      values:
         description: "Omfång för att välja produkter baserat på alternativ och egenskapsvärden"
         name: Värden
-    scopes: 
-      ascend_by_master_price: 
+    scopes:
+      ascend_by_master_price:
         name: Sortera efter pris i ökande ordning
-      ascend_by_name: 
+      ascend_by_name:
         name: Sortera efter namn i ökande ordning
-      ascend_by_updated_at: 
+      ascend_by_updated_at:
         name: Sortera efter publiceringsdatum i ökande ordning
-      descend_by_master_price: 
+      descend_by_master_price:
         name: Sortera efter pris i minskande ordning
-      descend_by_name: 
+      descend_by_name:
         name: Sortera efter namn i minskande ordning
-      descend_by_popularity: 
+      descend_by_popularity:
         name: Sortera efter popularitet (mest populär först)
-      descend_by_updated_at: 
+      descend_by_updated_at:
         name: Sortera efter publiceringsdatum i minskande ordning
-      in_name: 
-        args: 
+      in_name:
+        args:
           words: Ord
         description: "(åtskilda med mellanslag eller komma)"
         name: "Produktnamn innehåller"
         sentence: namn eller nyckelord innehåller <em>%s</em>
-      in_name_or_description: 
-        args: 
+      in_name_or_description:
+        args:
           words: Ord
         description: "(åtskilda med mellanslag eller komma)"
         name: "Produktnamn eller -beskrivning innehåller"
         sentence: namn eller nyckelord innehåller <em>%s</em>
-      in_name_or_keywords: 
-        args: 
+      in_name_or_keywords:
+        args:
           words: Ord
         description: "(åtskilda med mellanslag eller komma)"
         name: "Produktnamn eller nyckelord innehåller"
         sentence: namn eller nyckelord innehåller <em>%s</em>
-      in_taxons: 
-        args: 
+      in_taxons:
+        args:
           "taxon_names": "Underkategori-namn"
         description: "Underkategori-namn måste vara åtskilda av komma eller mellanslag (tex adidas,shoes)"
         name: "I underkategorier och under-underkategorier"
         sentence: in <em>%s</em> och alla deras under-underkategorier
-      master_price_gte: 
-        args: 
+      master_price_gte:
+        args:
           amount: Pris
         description: ""
         name: "Pris större än eller lika med"
         sentence: pris större än eller lika med <em>%.2f</em>
-      master_price_lte: 
-        args: 
+      master_price_lte:
+        args:
           amount: Pris
         description: ""
         name: "Pris mindre än eller lika med"
         sentence: Pris mindre än eller lika med <em>%.2f</em>
-      price_between: 
-        args: 
+      price_between:
+        args:
           high: Max
           low: Min
         description: ""
         name: "Pris mellan"
         sentence: pris mellan <em>%.2f</em> och <em>%.2f</em>
-      taxons_name_eq: 
-        args: 
+      taxons_name_eq:
+        args:
           taxon_name: "Underkategori-namn"
         description: "In en särskild underkategori" # without descendants
         name: "I underkategori" # (without descendants)
         sentence: i <em>%s</em>
-      with: 
-        args: 
+      with:
+        args:
           value: Värde
         description: "Väljer alla produkter som har åtminstone en variant som har värdet som antingen alternativ eller egenskap (tex röd)"
         name: Med värde
         sentence: med värde <em>%s</em>
-      with_ids: 
-        args: 
+      with_ids:
+        args:
           ids: ID
         description: "Välj särskilda produkter"
         name: Produkter med ID
         sentence: med ID <em>%s</em>
-      with_option: 
-        args: 
+      with_option:
+        args:
           option: Alternativ
         description: "Väljer alla produkter med ett visst alternativ (tex färg)"
         name: "Med alternativ"
         sentence: med alternativ <em>%s</em>
-      with_option_value: 
-        args: 
+      with_option_value:
+        args:
           option: Alternativ
           value: Värde
         description: "Väljer alla produkter som har åtminstone en variant med det specifierade alternativet (tex färg: röd)"
         name: "Med alternativ och värde"
         sentence: med alternativ <em>%s</em> och värde <em>%s</em>
-      with_property: 
-        args: 
+      with_property:
+        args:
           property: Egenskap
         description: "Väljer alla produkter med en viss egenskap (tex vikt)"
         name: "Med egenskap"
         sentence: med egenskap <em>%s</em>
-      with_property_value: 
-        args: 
+      with_property_value:
+        args:
           property: Egenskap
           value: Värde
         description: "Väljer alla produkter som har åtminstone en variant med den specifierade egenskapen (tex vikt: 10kg)"
@@ -813,21 +818,21 @@ sv-SE:
   products: Produkter
   products_with_zero_inventory_display: "Produkter som ej finns i lager kommer %{not} att visas"
   promotion: Kampanj
-  promotion_form: 
-    match_policies: 
+  promotion_form:
+    match_policies:
       all: Matcha någon av dessa regler
       any: Matcha alla dessa regler
-  promotion_rule_types: 
-    first_order: 
+  promotion_rule_types:
+    first_order:
       description: Måste vara kundens första order
       name: Första order
-    item_total: 
+    item_total:
       description: Totalpriset möter dessa kriterium
       name: Totalpris
-    product: 
+    product:
       description: Order inkluderar angivna produkt(er)
       name: Produkt(er)
-    user: 
+    user:
       description: Tillgänglig bara för de angivna användarna
       name: Användare
   promotions: Kampanjer
@@ -841,7 +846,7 @@ sv-SE:
   qty: Antal
   quantity_returned: Antal returnerade
   quantity_shipped: Antal levererade
-  range: "Range" # Eng
+  range: "Intervall"
   rate: Kurs
   reason: Anledning
   recalculate_order_total: "Omberäkna summan att betala"
@@ -859,7 +864,7 @@ sv-SE:
   resend_confirmation_instructions: "Återskicka bekräftelseinstruktioner"
   resend_unlock_instructions: "Återskicka upplåsningsinstruktioner"
   reset_password: "Återställ mitt lösenord"
-  resource_controller: 
+  resource_controller:
     member_object_not_found: "Medlemsobjekt kunde inte hittas."
     successfully_created: "Skapat!"
     successfully_removed: "Borttaget!"
@@ -878,7 +883,8 @@ sv-SE:
   rma_value: RMA-värde
   roles: Roller
   rules: Regler
-  sales_tax: "Sales Tax" # Eng
+  sales_tax: "moms"
+  sales_totals: "Total försäljning"
   sales_total: "Total försäljning"
   sales_total_description: "Total försäljning på alla ordrar"
   save_and_continue: "Spara och Fortsätt"
@@ -904,17 +910,17 @@ sv-SE:
   ship_address: "Leveransadress"
   shipment: Leverans
   shipment_details: Leveransdetaljer
-  shipment_mailer: 
-    shipped_email: 
+  shipment_mailer:
+    shipped_email:
       subject: "Fraktbesked"
   shipment_number: "Leveransnummer"
   shipment_state: Frakt-status
-  shipment_states: 
-    backorder: restnoterad
-    partial: partiell
-    pending: förestående
-    ready: redo
-    shipped: levererad
+  shipment_states:
+    backorder: Restnoterad
+    partial: Partiell
+    pending: Avvaktande
+    ready: Redo
+    shipped: Levererad
   shipment_updated: Leverans uppdaterad
   shipments: "Leveranser"
   shipped: Levererad
@@ -956,7 +962,7 @@ sv-SE:
   sold: Såld
   sort_ordering: "Sorteringsordning"
   special_instructions: "Särskilda instruktioner"
-  spree: 
+  spree:
     date: Datum
     time: Tid
   spree_gateway_error_flash_for_checkout: "Det var ett problem med din betalningsinformation. Se över din information och försök igen."
@@ -966,8 +972,8 @@ sv-SE:
   ssl_will_not_be_used_in_production_mode: "SSL kommer inte att användas i produktionsläge"
   start: Starta
   start_date: Giltig från
-  state: Delstat
-  state_based: "Delstat-baserad"
+  state: Län
+  state_based: "Län-baserad"
   state_setting_description: "Hantera listan av stater/regioner som ska höra till varje land"
   states: Stater
   status: Status
@@ -989,8 +995,8 @@ sv-SE:
   tax_rates_description: Sätt upp och konfigurera skattesatser
   tax_settings: "Skatte-inställningar"
   tax_settings_description: Grundläggande skatte-inställningar
-  tax_total: "Tax Total"
-  tax_type: "Tax Type"
+  tax_total: "Total skatt"
+  tax_type: "Skatte typ"
   taxon: Underkategori
   taxon_edit: Redigera underkategori
   taxonomies: Kategorier
@@ -1008,7 +1014,7 @@ sv-SE:
   this_year: "Detta år"
   thumbnail: "Miniatyrbild"
   to_add_variants_you_must_first_define: "För att lägga till varianter måste du först definiera"
-  to_state: "Till status" # Eng status? Or is stat what they mean?
+  to_state: "Till tillstånd"
   top_grossing_products: "Storsäljande produkter"
   total: Deltotal
   tracking: Spårning
@@ -1030,7 +1036,7 @@ sv-SE:
   update_password: "Uppdatera mitt lösenord och logga in mig"
   updated_successfully: "Uppdaterades"
   updating: Uppdaterar
-  usage_limit: Usage Limit
+  usage_limit: Användar gräns
   use_as_shipping_address: Använd som leveransadress
   use_billing_address: "Använd faktureringsadress"
   use_different_shipping_address: "Använd annan leveransadress"
@@ -1039,11 +1045,11 @@ sv-SE:
   user_account: Användarkonto
   user_created_successfully: "Användare skapad"
   user_details: "Användardetaljer"
-  user_rule: 
+  user_rule:
     choose_users: Välj användare
   users: Användare
   validate_on_profile_create: Validera när profilen skapas
-  validation: 
+  validation:
     cannot_be_less_than_shipped_units: "får inte vara mindre än antalet levererade enheter."
     is_too_large: "är för stor – vi har inte så mycket i lager!"
     must_be_int: "måste vara ett heltal"
@@ -1070,3 +1076,10 @@ sv-SE:
   zone_based: "Områdesbaserad"
   zone_setting_description: "Samlingar av länder, stater eller andra zoner som används i olika beräkningar"
   zones: Områden
+  views:
+    pagination:
+      truncate: "Trunkera"
+      first: "Första"
+      last: "Sista"
+      next: "Nästa"
+      previous: "Föregående"
