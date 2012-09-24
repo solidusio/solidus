@@ -1,5 +1,5 @@
 ---
-nl-NL: 
+nl: 
   'no': "No"
   'yes': "Yes"
   5_biggest_spenders: "5 Biggest Spenders"
@@ -187,14 +187,14 @@ nl-NL:
         one: "Verzend-categorie"
         other: "Verzend-categorieën"
       state: 
-        one: Status
-        other: Statussen
+        one: Provincie
+        other: Provincies
       tax_category: 
-        one: "Tax Category"
-        other: "Tax Categories"
+        one: "Belasting Categorie"
+        other: "Belasting Categorieën"
       tax_rate: 
-        one: "Tax Rate"
-        other: "Tax Rates"
+        one: "Belasting Tarief"
+        other: "Belasting Tarieven"
       taxon: 
         one: Taxon
         other: Taxons
