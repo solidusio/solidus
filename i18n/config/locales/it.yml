@@ -744,12 +744,12 @@ it:
   product_properties: "Proprietà del prodotto"
   product_rule:
     choose_products: "Scegli prodotti"
-      label: "L'ordine deve contenere %{select} questi prodotti"
-      match_any: "almeno uno di"
-      match_all: "tutti"
-      product_source:
-        group: "Da gruppo di prodotti"
-        manual: "Scegli manualmente"
+    label: "L'ordine deve contenere %{select} questi prodotti"
+    match_any: "almeno uno di"
+    match_all: "tutti"
+    product_source:
+      group: "Da gruppo di prodotti"
+      manual: "Scegli manualmente"
   product_scopes:
     groups:
       price:
