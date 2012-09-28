@@ -1,9 +1,11 @@
 ---
 en:
-  activemodel:
+  activerecord:
     attributes:
       spree/promotion:
+        advertise: Advertise
         code: Code
+        description: Description
         event_name: Event Name
         expires_at: Expires At
         name: Name
@@ -14,6 +16,7 @@ en:
   add_rule_of_type: Add rule of type
   coupon: Coupon
   coupon_code: Coupon code
+  coupon_code_applied: The coupon code was successfully applied to your order.
   editing_promotion: Editing Promotion
   events:
     spree:
@@ -31,6 +34,7 @@ en:
     path: Path
   new_promotion: New Promotion
   no_rules_added: No rules added
+  percent_per_item: Percent Per Item
   product_rule:
     choose_products: Choose products
     label: "Order must contain %{select} of these products"
