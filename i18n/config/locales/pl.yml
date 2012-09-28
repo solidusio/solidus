@@ -68,10 +68,11 @@ pl:
           state: "Adres płatniczy - województwo"
           zipcode: "Adres płatniczy - kod pocztowy"
         checkout_complete: "Zamówienie ukończone"
-        completed_at: "Skompletowane O"
+        completed_at: "Skompletowane o"
         ip_address: "Adres IP"
         item_total: "Całkowita kwota"
         number: Numer
+        payment_state: "Stan Płatności"
         ship_address:
           address1: "Adres wysyłki - ulica"
           city: "Adres wysyłki - miasto"
@@ -80,6 +81,7 @@ pl:
           phone: "Adres wysyłki - telefon"
           state: "wysyłki - województwo"
           zipcode: "Adres wysyłki - kod pocztowy"
+        shipment_state: "Stan wysyłki"
         special_instructions: "Specjalne Instrukcje"
         state: Stan
         total: Łącznie
@@ -255,7 +257,7 @@ pl:
   alt_text: Tekst Alternatywny
   alternative_phone: Alternatywny Numer Telefonu
   amount: Suma
-  analytics_trackers: Analytics Trackers
+  analytics_trackers: "Lokalizatory analityki"
   api:
     access: "Dostęp API"
     clear_key: "Wyczyść klucz API"
@@ -475,6 +477,8 @@ pl:
   icon: "Ikona"
   icons_by: "Ikony wg"
   image: Obraz
+  image_settings: "Ustawienia obrazu"
+  image_settings_description: "Opis ustawienia obrazu"
   images: Obrazy
   images_for: "Obrazy dla"
   in_progress: "W trakcie..."
@@ -489,7 +493,7 @@ pl:
   invalid_search: "Invalid search criteria."
   inventory: Zapasy
   inventory_adjustment: "Dostosowanie zapasów"
-  inventory_setting_description: "Inventory Configuration, Backordering, Zero-Stock Display"
+  inventory_setting_description: "Konfigurowanie inwentarza, zamówienia oczekujące i wyświetlanie Zero-Stock"
   inventory_settings: "Ustawienia Inwentarza"
   is_not_available_to_shipment_address: is not available to shipment address
   issue_number: Numer Wydania
@@ -611,6 +615,7 @@ pl:
   options: Opcje
   or: lub
   order: Zamówienie
+  orders: Zamówienia
   order_confirmation_note: ""
   order_date: "Data zamówienia"
   order_details: "Szczegóły zamówienia"
@@ -646,6 +651,7 @@ pl:
   other_payment_options: Other Payment Options
   out_of_stock: "Out of Stock"
   over_paid: "Over Paid"
+  overview: "Przegląd"
   page_only_viewable_when_logged_in: You attempted to visit a page which can only be viewed when you are logged in
   page_only_viewable_when_logged_out: You attempted to visit a page which can only be viewed when you are logged out
   paid: Zapłacono
@@ -665,7 +671,7 @@ pl:
   payment_methods: Metody Płatności
   payment_methods_setting_description: "Konfiguruj metody, którymi klienci mogą płacić"
   payment_processing_failed: "Payment could not be processed, please check the details you entered"
-  payment_state: Stan Płatności
+  payment_state: "Stan Płatności"
   payment_states:
     balance_due: do opłacenia
     checkout: checkout
@@ -974,6 +980,7 @@ pl:
   show_deleted: "Pokaż Usunięte"
   show_incomplete_orders: "Pokaż Niekompletne Zamówienia"
   show_only_complete_orders: "Pokaż tylko kompletne zamówienia"
+  show_only_unfulfilled_orders: "Pokaż tylko niespełnione zamówienia"
   show_out_of_stock_products: "Show out-of-stock products"
   show_price_inc_vat: "Show price including VAT"
   showing_first_n: "Showing first %{n}"
@@ -1029,16 +1036,16 @@ pl:
   tax_categories: "Kategorie Podatkowe"
   tax_categories_setting_description: "Ustaw kategorie podatkow aby ustalić, które produkty powinny być opodatkowane."
   tax_category: "Kategoria Podatkowa"
-  tax_rates: "Tax Rates"
-  tax_rates_description: Tax rates setup and configuration.
-  tax_settings: "Tax settings"
-  tax_settings_description: Basic tax settings.
+  tax_rates: "Stawki podatkowe"
+  tax_rates_description: "Instalacja i konfiguracja stawek podatkowych"
+  tax_settings: "Ustawienia podatku"
+  tax_settings_description: "Podstawowe ustawienia podatku"
   tax_total: "Podatek łącznie"
   tax_type: "Tax Type"
   taxon: Taxon
   taxon_edit: Edit Taxon
-  taxonomies: Taxonomies
-  taxonomies_setting_description: "Create and manage taxonomies"
+  taxonomies: "Taksonomie"
+  taxonomies_setting_description: "Twórz i zarządzaj taksonomią"
   taxonomy: Taxonomy
   taxonomy_edit: "Edit taxonomy"
   taxonomy_tree_error: "The requested change has not been accepted and the tree has been returned to its previous state, please try again."
@@ -1076,7 +1083,7 @@ pl:
   update_password: "Update my password and log me in"
   updated_successfully: "Updated Successfully"
   updating: Updating
-  usage_limit: Usage Limit
+  usage_limit: "Wykorzystany limit"
   use_as_shipping_address: Use as Shipping Address
   use_billing_address: Użyj adresu billingowego
   use_different_shipping_address: "Użyj innego adresu dostawy"
