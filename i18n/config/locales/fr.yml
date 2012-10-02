@@ -30,7 +30,7 @@ fr:
         last_name_begins_with: Nom commence par
         lastname: Nom
         phone: Téléphone
-        state: "Etat"
+        state: "Province / Région / État"
         zipcode: "Code Postal"
       spree/checkout: 
         bill_address: 
@@ -39,7 +39,7 @@ fr:
           firstname: "Prénom de facturation"
           lastname: "Nom du facturation"
           phone: "Téléphone de facturation"
-          state: "Etat de facturation"
+          state: "Province / Région / État de facturation"
           zipcode: "Code postal de facturation"
         ship_address: 
           address1: "Adresse de livraison"
@@ -47,7 +47,7 @@ fr:
           firstname: "Prénom de livraison"
           lastname: "Nom de livraison"
           phone: "Téléphone de livraison"
-          state: "Etat de livraison"
+          state: "Province / Région / État de livraison"
           zipcode: "Code postal de livraison"
       spree/country: 
         iso: ISO
@@ -966,15 +966,15 @@ fr:
   ssl_will_not_be_used_in_production_mode: "SSL ne sera pas utilisé en mode production"
   start: Départ
   start_date: "Valide à partir de"
-  state: Etat
+  state: "Province / Région / État"
   state_based: "Basé sur une région"
   state_setting_description: "Administrer la liste des Régions/Départements associée à chaque pays."
   states: Régions
   status: Statut
   stop: Fin
   store: Enregistrer
-  street_address: "Rue"
-  street_address_2: "Rue (complément)"
+  street_address: "Adresse"
+  street_address_2: "Adresse (suite)"
   subtotal: Sous-total
   subtract: Soustraire
   successfully_created: "%{resource} a été crée avec succès!"
