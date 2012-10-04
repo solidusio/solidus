@@ -347,6 +347,10 @@ nl:
   customer_search: "Customer Search"
   date_created: Date created
   date_range: "Datum Bereik"
+  date:
+    month_names: [~, januari, februari, maart, april, mei, juni, juli, augustus, september, oktober, november, december]
+    formats:
+      default: '%d-%m-%Y'
   debit: Debit
   default: Default
   delete: Verwijder
@@ -381,7 +385,7 @@ nl:
   editing_zone: "Zone Wijzigen"
   email: E-mail
   email_address: "E-mail Adres"
-  email_server_settings_description: "E-mail server installen."
+  email_server_settings_description: "E-mail server instellen."
   empty: "Empty"
   empty_cart: "Winkelwagen leegmaken"
   enable_login_via_login_password: "Use standard email/password"
@@ -584,6 +588,7 @@ nl:
   option_values: "Waarden Opties"
   options: Opties
   or: of
+  or_over_price: "Of meer dan %{price}"
   ord_qty: "Ord. Qty"
   ord_total: "Ord. Total"
   order: Bestelling
@@ -668,6 +673,7 @@ nl:
   preview: Preview
   previous: vorige
   price: Prijs
+  price_range: "Prijs"
   price_bucket: Price Bucket
   price_with_vat_included: "%{price} (inc. VAT)"
   problem_authorizing_card: "Fout bij autorisatie betaling"
@@ -997,6 +1003,9 @@ nl:
   taxons: Taxons
   test: "Test"
   test_mode: Test Mode
+  time:
+    formats:
+      default: "%d-%m-%Y %H:%M:%S"
   thank_you_for_your_order: "Hartelijk dank voor uw bestelling. U kan deze pagina afdrukken als bewijs van bestelling."
   there_were_problems_with_the_following_fields: "There were problems with the following fields"
   this_file_language: "Nederlands (NL)"
@@ -1020,6 +1029,7 @@ nl:
   unable_to_connect_to_gateway: "Unable to connect to gateway."
   unable_to_save_order: "Bestelling opslaan is mislukt"
   under_paid: "Under Paid"
+  under_price: "Minder dan %{price}"
   units: "Units"
   unrecognized_card_type: Unrecognized card type
   update: Updaten
