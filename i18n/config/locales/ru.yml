@@ -816,7 +816,7 @@ ru:
         name: "Имеет свойство с указанным значением  "
         sentence: "есть свойство <em>%s</em> со значением <em>%s</em>"
   products: "Товары"
-  products_with_zero_inventory_display: "Отсутсвующие товары %{not} будут отображаться"
+  products_with_zero_inventory_display: "Отсутствующие товары %{not} будут отображаться"
   promotion: "Промо-акция"
   promotion_form: 
     match_policies: 
