@@ -1,5 +1,7 @@
 ---
-ru: 
+ru:
+  activate: Активировать                                                                                                                                                             
+  learn_more: Узнать больше 
   'no': "Нет"
   'yes': "Да"
   5_biggest_spenders: "5 крупнейших покупателей"
