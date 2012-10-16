@@ -14,8 +14,16 @@ de:
     listing: Liste
     new: neu
     update: aktualisieren
-  activate: "Aktivieren"
   active: "Aktiv"
+  activemodel: 
+    attributes: 
+      promotion: 
+        code: Code
+        description: Description
+        expires_at: Expires at
+        name: Name
+        starts_at: Starts at
+        usage_limit: Usage limit
   activerecord: 
     attributes: 
       spree/address: 
@@ -23,7 +31,9 @@ de:
         address2: "Adresse (Fortsetzung)"
         city: Stadt
         country: "Land"
+        first_name_begins_with: "Vorname beginnt mit"
         firstname: "Vorname"
+        last_name_begins_with: "Nachname beginnt mit"
         lastname: "Nachname"
         phone: Telefonnummer
         state: "Bundesland"
@@ -49,31 +59,27 @@ de:
         name: Name
         presentation: Angezeigter Wert
       spree/order: 
-      spree/order/bill_address: 
-        address1: "Rechnungsadresse Straße"
+        bill_address: 
+          address1: "Rechnungsadresse Straße"
           city: "Rechnungsadresse Ort"
           firstname: "Rechnungsadresse Vorname"
           lastname: "Rechnungsadresse Nachname"
           phone: "Rechnungsadresse Telefon"
           state: "Rechnungsadresse Bundesland"
-          zipcode: "Rechnungsadresse PLZ"
-      spree/order/ship_address: 
-        address1: "Lieferadresse Straße"
+          zipcode: "Rechnungsadresse Postleitzahl"
+        checkout_complete: "Checkout Erfolgreich"
+        completed_at: "Abgeschlossen am"
+        ip_address: "IP Adresse"
+        item_total: "Summe"
+        number: Bestellnummer
+        ship_address: 
+          address1: "Lieferadresse Straße"
           city: "Lieferadresse Ort"
           firstname: "Lieferadresse Vorname"
           lastname: "Lieferadresse Nachname"
           phone: "Lieferadresse Telefon"
           state: "Lieferadresse Bundesland"
-          zipcode: "Lieferadresse PLZ"
-        checkout_complete: "Checkout Erfolgreich"
-        completed_at: "Abgeschlossen am"
-        created_at: Bestelldatum
-        email: Kunden E-Mail
-        ip_address: "IP Adresse"
-        item_total: "Summe"
-        number: Bestellnummer
-        payment_state: Zahlungsstatus
-        shipment_state: Versandstatuse
+          zipcode: "Lieferadresse Postleitzahl"
         special_instructions: "Zusätzliche Angaben"
         state: Status
         total: Gesamtsumme
@@ -88,16 +94,15 @@ de:
         on_hand: verfügbar
         shipping_category: "Versandkategorie"
         tax_category: "Steuerkategorie"
-      spree/promotion: 
-        advertise: Bewerben
-        code: Code
-        description: Beschreibung
-        event_name: Ereignis-Name
-        expires_at: Verfallsdatum
-        name: Name
-        path: Pfad
-        starts_at: Beginndatum
-        usage_limit: Nutzungsbeschränkung
+      spree/product_group: 
+        name: "Name"
+        product_count: "Produktanzahl"
+        product_scopes: "Produktkriterien"
+        products: "Produkte"
+        url: "URL"
+      spree/product_scope: 
+        arguments: "Argumente"
+        description: "Beschreibung"
       spree/property: 
         name: Name
         presentation: Angezeigter Wert
@@ -116,7 +121,6 @@ de:
       spree/tax_rate: 
         amount: Satz
         included_in_price: Im Preis enthalten
-        show_rate_in_label: Satz in Beschriftung anzeigen
       spree/taxon: 
         name: Name
         permalink: Permalink
@@ -151,12 +155,6 @@ de:
       spree/credit_card: 
         one: Kreditkarte
         other: Kreditkarten
-      spree/creditcard_payment: 
-        one: "Kreditkarten-Zahlung"
-        other: "Kreditkarten-Zahlungen"
-      spree/creditcard_txn: 
-        one: "Kreditkarten-Transaktion"
-        other: "Kreditkarten-Transaktionen"
       spree/inventory_unit: 
         one: Inventarnummer
         other: Inventarnummern
@@ -172,6 +170,9 @@ de:
       spree/product: 
         one: Produkt
         other: Produkte
+      spree/product_group: 
+        one: "Produktgruppe"
+        other: "Produktgruppen"
       spree/property: 
         one: Eigenschaft
         other: Eigenschaften
@@ -190,16 +191,16 @@ de:
       spree/shipping_category: 
         one: "Versandkategorie"
         other: "Versandkategorien"
-      spree/state: 
+      spree/state:
         one: Bundesland
         other: Bundesländer
-      spree/tax_category: 
+      spree/tax_category:
         one: "Steuerkategorie"
         other: "Steuerkategorien"
-      spree/tax_rate: 
+      spree/tax_rate:
         one: "Steuersatz"
         other: "Steuersätze"
-      spree/taxon: 
+      spree/taxon:
         one: "Produktklasse"
         other: "Produktklassen"
       spree/taxonomy: 
@@ -215,11 +216,9 @@ de:
         one: Gebiet
         other: Gebiete
   add: "Hinzufügen"
-  add_action_of_type: "Aktion hinzufügen"
+  add_action_of_type: Add action of type
   add_category: "Kategorie hinzufügen"
   add_country: "Land hinzufügen"
-  add_new_header: "Header hinzufügen"
-  add_new_style: "Style hinzufügen"
   add_option_type: "Option hinzufügen"
   add_option_types: "Optionen hinzufügen"
   add_option_value: "Optionswert hinzufügen"
@@ -244,6 +243,7 @@ de:
         delivery_success: 'Test E-Mail wurde erfolgreich versendet'
         error: 'Test E-Mail Fehler: %{e}'
   administration: Verwaltung
+  advertise: Bewerben
   all: "Alles"
   all_departments: "Alle Bereiche"
   allow_backorders: "Lieferrückstand erlauben"
@@ -257,6 +257,19 @@ de:
   amount: Summe
   analytics_trackers: "Zugriffsstatistik Tracker"
   and: und
+  api: 
+    access: "API Zugriff"
+    clear_key: "Lösche API Schlüssel"
+    errors: 
+      invalid_event: "Ungültiger Ereignisname, gültige Namen sind %{events}"
+      invalid_event_for_object: "Gültiger Ereignisname, aber nicht für dieses Objekt zugelassen, gültige Namen sind %{events}"
+      missing_event: "Kein Ereignisname übergeben"
+    generate_key: "API Schlüssel erstellen"
+    key: "API Schlüssel"
+    key_cleared: "API Schlüssel gelöscht"
+    key_generated: "API Schlüssel erstellt"
+    no_key: "Kein Schlüssel definiert"
+    regenerate_key: "Neuen API Schlüssel erstellen"
   apply: "Übernehmen"
   are_you_sure: "Sind Sie sicher"
   are_you_sure_category: "Sind sie sicher, dass Sie diese Kategorie löschen möchten?"
@@ -266,10 +279,6 @@ de:
   are_you_sure_you_want_to_capture: "Sind Sie sicher, dass Sie das erfassen wollen?"
   assign_taxon: "Produktklasse zuweisen"
   assign_taxons: "Produktklassen zuweisen"
-  attachment_default_style: "Attachments Style"
-  attachment_default_url: "Attachments URL"
-  attachment_path: "Attachments Pfad"
-  attachment_styles: "Paperclip-Styles"
   authorization_failure: "Bitte authentifizieren Sie sich."
   authorized: Angemeldet
   availability: "Verfügbarkeit"
@@ -333,27 +342,24 @@ de:
   country_based: "Länder basiert"
   coupon: Gutschein
   coupon_code: Gutschein-Code
-  coupon_code_applied: Der Gutschein-Code wurde auf Ihre Bestellung angerechnet.
   create: Erstellen
   create_a_new_account: "Neues Konto erstellen"
+  create_product_group_from_products: "Eine neue Produktgruppe aus diesen Produkten erstellen"
   create_user_account: "Neues Benutzerkonto anlegen"
   created_successfully: "Erfolgreich erstellt"
   credit: Credit
   credit_card: Kreditkarte
   credit_card_capture_complete: "Kreditkarte wurde belastet"
   credit_card_payment: Kreditkartenzahlung
-  credit_cards: Kreditkarten
   credit_owed: "Betrag schuldig"
   credit_total: Gesamtbetrag
+  credit_card: Kreditkarte
   credits: Haben
-  currency: Währung
-  currency_symbol_position: "Währungssymbol vor oder nach Betrag anzeigen?"
   current: Stand
   customer: Kunde
   customer_details: "Kundendetails"
   customer_details_updated: "Die Kundendaten wurden aktualisiert."
   customer_search: "Kunden Suche"
-  date_completed: Abschluss-Datum
   date_created: Erstellungsdatum
   date_range: "Datum (von/bis)"
   debit: Lastschrift
@@ -363,7 +369,6 @@ de:
   default_seo_title: Standard SEO Titel
   default_tax: Standard Steuer
   default_tax_zone: Standard Steuergebiet
-  defined_paperclip_styles: Paperclip-Style definieren
   delete: Löschen
   delivery: Liefermethode
   depth: Tiefe
@@ -374,8 +379,6 @@ de:
   discount_amount: "Skonto"
   dismiss_banner: "Nein. Danke! Ich bin nicht interessiert, bitte diese Nachricht nicht erneut anzeigen."
   display: Angezeigter Wert
-  display_currency: "Angezeigte Währung"
-  dollar_amounts_displayed_as: "Dollar-Beträge werden dargestellt als %{example}"
   edit: Bearbeiten
   edit_general_settings: "Allgemeine Einstellungen bearbeiten"
   editing_billing_integration: "Rechnungs Integration bearbeiten"
@@ -405,18 +408,17 @@ de:
   enable_login_via_login_password: "Standard E-Mail/Passwort Anmeldung aktivieren"
   enable_login_via_openid: "Mit OpenID anmelden"
   enable_mail_delivery: "E-Mail Versand aktivieren"
-  ending_in: "endet mit"
-  enter_at_least_five_letters: Geben Sie mindestens füf Buchstaben des Kundennamens ein
+  ending_in: "Ending in"
+  enter_at_least_five_letters: Enter at least five letters of customer name
   enter_exactly_as_shown_on_card: "Bitte geben Sie die Daten exakt wie auf der Kreditkarte ein"
   enter_password_to_confirm: "(Wir benötigen Ihr aktuelles Passwort um die Änderungen zu bestätigen.)"
-  enter_token: Token eingeben
   environment: "Umgebung"
   error: Fehler
-  error_user_destroy_with_orders: "Benutzer mit abgeschlossenen Bestellungen können nicht gelöscht werden"
+  error_user_destroy_with_orders: "Users with completed orders may not be deleted"
   errors: 
     messages: 
       could_not_create_taxon: "Konnte die Produktklasse nicht erstellen"
-      no_payment_methods_available: "Für diese Region sind keine Zahlungsmethoden verfügbar"
+      no_payment_methods_available: "No payment methods are configured for this environment"
       no_shipping_methods_available: "Für diese Region sind keine Liefermethoden verfügbar. Bitte wählen Sie eine anderen Region aus."
   errors_prohibited_this_record_from_being_saved: 
     one: "1 Prüfung ist fehlgeschlagen"
@@ -425,16 +427,16 @@ de:
   events: 
     spree: 
       cart: 
-        add: 'Dem Einkaufswagen hinzufügen'
+        add: 'Add to cart'
       checkout: 
         coupon_code_added: "Aktions-Code wurde hinzugefügt"
       content: 
-        visited: Statische Seite besucht
+        visited: Visit static content page
       order: 
-        contents_changed: "Warenkorb geändert"
-      page_view: "Statische Seite besucht"
+        contents_changed: "Order contents changed"
+      page_view: "Static page viewed"
       user: 
-        signup: 'Registrierung'
+        signup: 'User signup'
   existing_customer: "Anmeldung für bereits registrierte Kunden"
   expiration: "Verfallsdatum"
   expiration_month: "Gültig bis (Monat)"
@@ -449,8 +451,8 @@ de:
   first_item: "Kosten für das erste Produkt"
   first_name: Vorname
   first_name_begins_with: "Vorname beginnt mit"
-  flat_percent: Fester Prozentsatz
-  flat_rate_amount: Betrag
+  flat_percent: Flat Percent
+  flat_rate_amount: Amount
   flat_rate_per_item: "Fester Preis (pro Artikel)"
   flat_rate_per_order: "Fester Preis (pro Bestellung)"
   flexible_rate: "Flexible Rate"
@@ -484,10 +486,6 @@ de:
   icon: "Symbol"
   icons_by: "Symbole von"
   image: Bild
-  image_settings: "Bild-Einstellungen"
-  image_settings_description: "Einstellungen zu Bildern"
-  image_settings_updated: "Bild-Einstellungen wurden geändert."
-  image_settings_warning: "Sie müssen die Thumbnails neue generieren lassen wenn sie die Bild-Einstellungen ändern. Rufen Sie rake paperclip:refresh:thumbnails auf um das zu tun."
   images: Bilder
   images_for: "Bilder für"
   in_progress: "In Bearbeitung"
@@ -516,10 +514,9 @@ de:
       gt: "größer als"
       gte: "größer oder gleich als"
   landing_page_rule: 
-    path: Pfad
+    path: Path
   last_name: Nachname
   last_name_begins_with: "Nachname beginnt mit"
-  learn_more: Mehr dazu
   leave_blank_to_not_change: "(leer lassen, wenn Sie es nicht ändern wollen)"
   list: Liste
   listing_categories: Kategorien
@@ -551,9 +548,9 @@ de:
   mark_shipped: "Als versendet kennzeichnen"
   master_price: 'Verkaufspreis (netto)'
   match_choices: 
-    all: "Alle"
-    none: "Keine"
-    one: "Eine"
+    all: "All"
+    none: "None"
+    one: "One"
   match_rule: "Produkte müssen entsprechen:"
   max_items: Maximale Einheiten
   meta_description: "Meta-Beschreibung"
@@ -599,7 +596,7 @@ de:
   new_variant: "Neue Variante"
   new_zone: "Neues Gebiet"
   next: weiter
-  no: "Nein"
+  'no': "Nein"
   no_items_in_cart: "Keine Artikel im Warenkorb"
   no_match_found: "Kein Treffer"
   no_products_found: "Keine Produkte gefunden"
@@ -610,7 +607,6 @@ de:
   none_available: "keine verfügbar"
   normal_amount: "Normale Anzahl"
   not: nicht
-  not_available: "N/A"
   not_found: "%{resource} wurde nicht gefunden"
   not_shown: "Nicht angezeigt"
   note: Notiz
@@ -631,7 +627,6 @@ de:
   option_values: "Optionswerte"
   options: Optionen
   or: oder
-  or_over_price: "%{price} oder mehr"
   order: Bestellung
   order_confirmation_note: "Bestellbestätigungsnotiz"
   order_date: Bestelldatum
@@ -639,20 +634,9 @@ de:
   order_email_resent: "Bestellbestätigung erneut versendet"
   order_mailer: 
     cancel_email: 
-      dear_customer: "Sehr geehrte/r Kunde/in,"
-      instructions: "Ihre Bestellung wurde STORNIERT. Bitte bewahren Sie diese Stornierungsnachricht auf."
-      order_summary_canceled: "Bestellungs-Zusammenfassung [STORNIERT]"
       subject: "Bestellung storniert"
-      subtotal: "Zwischensumme:"
-      total: "Gesamtsumme:"
     confirm_email: 
-      dear_customer: "Sehr geehrte/r Kunde/in,"
-      instructions: "Bitte überprüfen Sie Ihre Bestellung und bewahren Sie diese Bestellbestätigung auf."
-      order_summary: "Bestellungs-Zusammenfassung"
       subject: "Bestellbestätigung"
-      subtotal: "Zwischensumme:"
-      thanks: "Vielen Dank für Ihre Bestellung."
-      total: "Gesamtsumme:"
   order_not_in_system: "Diese Bestellnummer ist auf diesem System nicht gültig."
   order_number: "Bestellnummer"
   order_operation_authorize: ""
@@ -676,17 +660,11 @@ de:
   order_total: Gesamtsumme
   order_total_message: "Die Gesamtsumme mit der Ihre Kreditkarte belastet wird"
   order_updated: "Bestellung aktualisiert"
-  orders: Bestellungen
   other_payment_options: Andere Zahlungsmethoden
   out_of_stock: "Ausverkauft"
   over_paid: "zuviel bezahlt"
-  overview: Übersicht
   page_only_viewable_when_logged_in: "Sie haben versucht eine Seite zu besuchen, die man nur sehen kann, wenn man eingeloggt ist."
   page_only_viewable_when_logged_out: "Sie haben versucht eine Seite zu besuchen, die man nur sehen kann, wenn man ausgeloggt ist."
-  pagination: 
-    next_page: "weiter &raquo;"
-    previous_page: "&laquo; zurück"
-    truncate: "&hellip;"
   paid: Bezahlt
   parent_category: "Unterkategorie von"
   password: Passwort
@@ -720,13 +698,11 @@ de:
   payment_updated: "Zahlung aktualisiert"
   payments: Zahlungen
   pending_payments: "offene Beträge"
-  percent_per_item: Prozent pro Produkt
   permalink: Permalink
   phone: Telefon
   place_order: "Bestellung ausführen"
   please_create_user: "Bitte legen Sie ein Benutzerkonto an"
   please_define_payment_methods: "Bitte definieren Sie zuerst mindestens eine Zahlungsmethode."
-  populate_get_error: "Ein Fehler ist aufgetreten. Versuchen Sie, das Produkt erneut hinzuzufügen."
   powered_by: "Powered by"
   presentation: Angezeigter Wert
   preview: "Vorschau"
@@ -769,12 +745,18 @@ de:
         description: "Bereiche für das Auswählen von Produkten an Hand von Optionen und Eigenschaftswerten"
         name: Werte
     scopes: 
+      ascend_by_master_price: 
+        name: "Aufsteigend nach Grundpreis"
       ascend_by_name: 
         name: "Aufsteigend nach Produktname"
       ascend_by_updated_at: 
         name: "Aufsteigend nach Bearbeitungsdatum"
+      descend_by_master_price: 
+        name: "Absteigend nach Grundpreis"
       descend_by_name: 
         name: "Absteigend nach Produktname"
+      descend_by_popularity: 
+        name: "Nach Beliebtheit sortieren (beliebteste zuerst)"
       descend_by_updated_at: 
         name: "Absteigend nach Bearbeitungsdatum"
       in_name: 
@@ -947,19 +929,11 @@ de:
   return_authorizations: Rückgabebewilligungen
   return_quantity: Rückgabemenge
   returned: Zurückgegeben
-  review: Review
   rma_credit: RMA Kredit
   rma_number: RMA Nummer
   rma_value: RMA Wert
   roles: Rollen
   rules: Regeln
-  s3_access_key: "Access Key"
-  s3_bucket: "Bucket"
-  s3_headers: "S3 Headers"
-  s3_not_used_for_product_images: "S3 wird nicht für Produkt-Bilder verwendet"
-  s3_protocol: "S3 Protocol"
-  s3_secret: "Secret Key"
-  s3_used_for_product_images: "S3 wird für Produkt-Bilder verwendet"
   sales_tax: "Umsatzsteuer"
   sales_total: "Gesamtumsatz"
   sales_total_description: "Gesamtsumme aller Bestellungen"
@@ -971,7 +945,6 @@ de:
   search_results: "Suchergebnisse für '%{keywords}'"
   searching: Suche
   secure_connection_type: "Sicherer Verbindungstyp"
-  secure_credit_card: Secure Credit Card
   select: Auswählen
   select_from_prototype: "Von einem Prototypen"
   select_preferred_shipping_option: "Bevorzugte Versandoption auswählen"
@@ -987,15 +960,10 @@ de:
   ship_address: Lieferadresse
   shipment: "Sendung"
   shipment_details: Lieferdetails
-  shipment_inc_vat: "Versandkosten inkl. USt."
+  shipment_inc_vat: "Versandkosten inkl. U-St."
   shipment_mailer: 
     shipped_email: 
-      dear_customer: "Sehr geehrte/r Kunde/in,"
-      instructions: "Ihre Bestellung wurde versendet"
-      shipment_summary: "Versand-Zusammenfassung"
       subject: "Versand Benachrichtigung"
-      thanks: "Vielen Dank für Ihre Bestellung!"
-      track_information: "Tracking Information: %{tracking}"
   shipment_number: "Sendungsnummer"
   shipment_state: Lieferstatus
   shipment_states: 
@@ -1020,15 +988,13 @@ de:
   shipping_methods: "Versandarten"
   shipping_methods_description: "Versandarten verwalten"
   shipping_total: "Lieferkosten Gesamt"
-  shop_by_taxonomy: "Nach %{taxonomy}"
+  shop_by_taxonomy: "%{taxonomy} kaufen"
   shopping_cart: Warenkorb
-  short_description: "Kurzbeschreibung"
   show: Anzeigen
   show_active: "Aktive anzeigen"
   show_deleted: "Gelöschte anzeigen"
   show_incomplete_orders: "Zeige unvollständige Bestellungen"
   show_only_complete_orders: "Nur abgeschlossene Bestellungen anzeigen"
-  show_only_unfulfilled_orders: "Nur unerfüllte Bestellungen anzeigen"
   show_out_of_stock_products: "Ausverkaufte Produkte anzeigen"
   showing_first_n: "Zeige die ersten %{n}"
   sign_up: "Anmelden"
@@ -1051,9 +1017,9 @@ de:
   spree/order: 
     coupon_code: Aktions-Code
     date: Datum
-    date_picker: 
-      format: 'yy/mm/dd'
-    time: Zeit
+    time: Uhrzeit
+    date_picker:
+      format: 'dd.mm.yy'
   spree_alert_checking: "Überprüfe auf Spree Sicherheits- und Veröffentlichungshinweise"
   spree_alert_not_checking: "Überprüfe nicht auf Spree Sicherheits- und Veröffentlichungshinweise"
   spree_gateway_error_flash_for_checkout: "Es gab Probleme mit Ihren Zahlungsinformationen. Bitte überprüfen Sie Ihre Angaben und probieren Sie es erneut."
@@ -1127,7 +1093,6 @@ de:
   unable_to_connect_to_gateway: "Konnte nicht zur Schnitstelle verbinden."
   unable_to_save_order: "Bestellung konnte nicht gespeichert werden"
   under_paid: "Unterbezahlt"
-  under_price: "Unter %{price}"
   unrecognized_card_type: 'Unbekannter Kartentyp'
   update: Aktualisieren
   update_password: "Passwort aktualisieren und einloggen"
@@ -1138,7 +1103,6 @@ de:
   use_billing_address: "Rechnungsadresse verwenden"
   use_different_shipping_address: "Andere Lieferaddresse verwenden"
   use_new_cc: "Eine neue Karte verwenden"
-  use_s3: "Amazon S3 für Bilder verwenden"
   user: Benutzer
   user_account: "Benutzerkonto"
   user_created_successfully: "Benutzer erfolgreich angelegt"
@@ -1168,7 +1132,7 @@ de:
   whats_this: "Was ist das"
   width: Breite
   year: "Jahr"
-  yes: "Ja"
+  'yes': "Yes"
   you_have_been_logged_out: "Sie haben sich ausgeloggt"
   you_have_no_orders_yet: "Sie haben noch keine Bestellungen."
   your_cart_is_empty: "Ihr Warenkorb ist leer"
