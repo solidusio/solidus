@@ -886,6 +886,7 @@ ru:
   rules: "Правила"
   sales_tax: "Налог с продаж"
   sales_total: "Итого (продажи)"
+  sales_totals: "Итого (продажи)"
   sales_total_description: "Общий объём продаж по всем заказам"
   save_and_continue: "Сохранить и продолжить"
   save_preferences: "Сохранить настройки"
