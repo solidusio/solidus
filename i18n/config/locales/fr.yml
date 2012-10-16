@@ -30,7 +30,7 @@ fr:
         last_name_begins_with: Nom commence par
         lastname: Nom
         phone: Téléphone
-        state: "Etat"
+        state: "Province / Région / État"
         zipcode: "Code Postal"
       spree/checkout: 
         bill_address: 
@@ -39,7 +39,7 @@ fr:
           firstname: "Prénom de facturation"
           lastname: "Nom du facturation"
           phone: "Téléphone de facturation"
-          state: "Etat de facturation"
+          state: "Province / Région / État de facturation"
           zipcode: "Code postal de facturation"
         ship_address: 
           address1: "Adresse de livraison"
@@ -47,7 +47,7 @@ fr:
           firstname: "Prénom de livraison"
           lastname: "Nom de livraison"
           phone: "Téléphone de livraison"
-          state: "Etat de livraison"
+          state: "Province / Région / État de livraison"
           zipcode: "Code postal de livraison"
       spree/country: 
         iso: ISO
@@ -271,7 +271,7 @@ fr:
   awaiting_return: Retour en attente
   back: Arrière
   back_end: Back End
-  back_to_store: "Retour sur les produits"
+  back_to_store: "Boutique"
   backordered: Rupture de stock
   backordering_is_allowed: "Rupture de stock %{not} permise"
   balance_due: "Solde dû"
@@ -305,7 +305,7 @@ fr:
   charge_total: Charge Totale
   charged: Débité
   charges: Charges
-  checkout: Paiement
+  checkout: "Passer la commande"
   cheque: Chèque
   city: Ville
   clone: Clone
@@ -648,7 +648,7 @@ fr:
   payment_methods: Méthodes de paiement
   payment_methods_setting_description: "Configuration des méthodes de paiement utilisables par les clients"
   payment_processing_failed: "Le paiemnent ne peut être accomplie, merci de vérifier les informations fournie"
-  payment_state: Etat du paiement
+  payment_state: État du paiement
   payment_states: 
     balance_due: solde dû
     checkout: commander
@@ -908,7 +908,7 @@ fr:
     shipped_email: 
       subject: "Notification d'expédition"
   shipment_number: "Livraison #"
-  shipment_state: Shipment State
+  shipment_state: État de livraison
   shipment_states: 
     backorder: rupture de stock
     partial: partiel
@@ -966,15 +966,15 @@ fr:
   ssl_will_not_be_used_in_production_mode: "SSL ne sera pas utilisé en mode production"
   start: Départ
   start_date: "Valide à partir de"
-  state: Etat
+  state: "Province / Région / État"
   state_based: "Basé sur une région"
   state_setting_description: "Administrer la liste des Régions/Départements associée à chaque pays."
   states: Régions
   status: Statut
   stop: Fin
   store: Enregistrer
-  street_address: "Rue"
-  street_address_2: "Rue (complément)"
+  street_address: "Adresse"
+  street_address_2: "Adresse (suite)"
   subtotal: Sous-total
   subtract: Soustraire
   successfully_created: "%{resource} a été crée avec succès!"
