@@ -588,6 +588,7 @@ fr:
   ord_qty: "Cde. Qté"
   ord_total: "Cde. Total"
   order: Commande
+  order_adjustments: "Ajustement de la commande"
   order_confirmation_note: ""
   order_date: "Date de la commande"
   order_details: "Détails de la commande"
