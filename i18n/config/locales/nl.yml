@@ -329,6 +329,7 @@ nl:
   country_based: "Gebaseerd op land"
   coupon: Coupon
   coupon_code: Coupon code
+  coupon_code_applied: "De coupon is toegepast op je winkelwagen"
   create: Aanmaken
   create_a_new_account: "Maak een nieuwe account aan"
   create_product_group_from_products: Create a new product group from these products
@@ -358,6 +359,10 @@ nl:
   depth: Diepte
   description: Omschrijving
   destroy: Verwijder
+  devise:
+    user_sessions:
+      user:
+        signed_out: "Je bent succesvol uitgelogd"
   didnt_receive_confirmation_instructions: "Didn't receive confirmation instructions?"
   didnt_receive_unlock_instructions: "Didn't receive unlock instructions?"
   discount_amount: "Discount Amount"
@@ -401,8 +406,8 @@ nl:
       could_not_create_taxon: "Could not create taxon"
       no_shipping_methods_available: "No shipping methods available for selected location, please change your address and try again."
   errors_prohibited_this_record_from_being_saved:
-    one: "1 error prohibited this record from being saved"
-    other: "%{count} errors prohibited this record from being saved"
+    one: "Corrigeer de fout voordat je het formulier kunt opslaan"
+    other: "Corrigeer de %{count} fouten voordat je het formulier kunt opslaan"
   event: Gebeurtenis
   existing_customer: "Bestaande Klant"
   expiration: Verval
@@ -499,7 +504,7 @@ nl:
   locale_changed: "Regionale Instellingen Gewijzigd"
   log_in: "Inloggen"
   logged_in_as: "Ingelogd als"
-  logged_in_succesfully: "Inloggen gelukt"
+  logged_in_succesfully: "Je bent ingelogd"
   logged_out: "U bent nu uitgelogd."
   login: Login
   login_as_existing: "Log in als bestaande klant"
@@ -608,18 +613,18 @@ nl:
   order_processed_successfully: "Uw bestelling is succesvol verwerkt"
   order_state: # keys correspond to Checkout state names:
     # keys correspond to Checkout state names:
-    address: address
-    adjustments: adjustments
-    awaiting_return: awaiting return
-    canceled: canceled
-    cart: cart
-    complete: complete
-    confirm: confirm
-    delivery: delivery
-    payment: payment
-    resumed: resumed
-    returned: returned
-  order_summary: Order Summary
+    address: adres
+    adjustments: aanpassingen
+    awaiting_return: wachten op retour
+    canceled: geannuleerd
+    cart: winkelwagen
+    complete: afronden
+    confirm: bevestigen
+    delivery: verzendmethode
+    payment: betalen
+    resumed: hervatte
+    returned: geretourneerd
+  order_summary: Samenvatting van je bestelling
   order_sure_want_to: "Are you sure you want to %{event} this order?"
   order_total: "Bestelling Totaal"
   order_total_message: "Het aan te rekenen totaalbedrag is"
@@ -814,7 +819,7 @@ nl:
         sentence: with property <em>%s</em> and value <em>%s</em>
   products: Producten
   products_with_zero_inventory_display: "Products with a zero inventory will %{not} be displayed"
-  promotion: Promotion
+  promotion: "Aktie"
   promotion_form:
     match_policies:
       all: Match any of these rules
@@ -832,6 +837,7 @@ nl:
     user:
       description: Available only to the specified users
       name: User
+  promotion_not_found: "Deze coupon is bij ons niet bekend"
   promotions: Promotions
   promotions_description: Manage offers and coupons with promotions
   properties: Eigenschappen
@@ -883,7 +889,7 @@ nl:
   sales_tax: "Sales Tax"
   sales_total: "Omzet"
   sales_total_description: "Sales Total For All Orders"
-  save_and_continue: Save and Continue
+  save_and_continue: Opslaan en doorgaan
   save_preferences: "Instellingen Opslaan"
   scope: Scope
   scopes: Scopes
@@ -898,17 +904,17 @@ nl:
   send_copy_of_orders_mails_to: "Zend kopie van bestelmails naar"
   send_mails_as: "Zend mail als"
   send_me_reset_password_instructions: "Send me reset password instructions"
-  send_order_mails_as: "Zend bestelmaild als"
+  send_order_mails_as: "Verstuurd bestel email als"
   server: Server
   server_error: "The server returned an error"
   settings: Settings
   ship: Verzenden
-  ship_address: "Afleveringssadres"
+  ship_address: "Afleveradres"
   shipment: Verzending
   shipment_details: Shipment Details
   shipment_mailer:
     shipped_email:
-      subject: "Shipment Notification"
+      subject: "Verzend notificatie"
   shipment_number: "Zending #"
   shipment_state: Shipment State
   shipment_states:
@@ -1007,7 +1013,7 @@ nl:
     formats:
       default: "%d-%m-%Y %H:%M:%S"
   thank_you_for_your_order: "Hartelijk dank voor uw bestelling. U kan deze pagina afdrukken als bewijs van bestelling."
-  there_were_problems_with_the_following_fields: "There were problems with the following fields"
+  there_were_problems_with_the_following_fields: "Er zijn problemen met de volgende velden"
   this_file_language: "Nederlands (NL)"
   this_month: "This Month"
   this_year: "This Year"
