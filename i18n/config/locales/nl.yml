@@ -1,8 +1,8 @@
 ---
 nl:
-  'no': "No"
-  'yes': "Yes"
-  5_biggest_spenders: "5 Biggest Spenders"
+  'no': "Nee"
+  'yes': "Ja"
+  5_biggest_spenders: "5 grootste klanten"
   a_copy_of_all_mail_will_be_sent_to_the_following_addresses: "Een kopie van alle mail wordt verzonden naar de volgende adressen"
   abbreviation: Afkorting
   access_denied: "Toegang geweigerd"
@@ -17,20 +17,20 @@ nl:
     listing: Lijst
     new: Nieuw
     update: Update
-  active: "Active"
+  active: "Actief"
   activerecord:
     attributes:
       address:
-        address1: "Adres lijn 1"
-        address2: "Adres lijn 2"
+        address1: "Adres"
+        address2: "Adres 2"
         city: Woonplaats
-        country: "Country"
-        first_name_begins_with: "First Name Begins With"
-        firstname: "First Name"
-        last_name_begins_with: "Last Name Begins With"
-        lastname: "Last Name"
+        country: "Land"
+        first_name_begins_with: "Voornaam begint met"
+        firstname: "Voornaam"
+        last_name_begins_with: "Achternaam begint met"
+        lastname: "Achternaam"
         phone: Telefoon
-        state: "State"
+        state: "Provincie"
         zipcode: Postcode
       checkout:
         bill_address:
@@ -838,7 +838,7 @@ nl:
       description: Available only to the specified users
       name: User
   promotion_not_found: "Deze coupon is bij ons niet bekend"
-  promotions: Promotions
+  promotions: "Akties"
   promotions_description: Manage offers and coupons with promotions
   properties: Eigenschappen
   property: Eigenschap
@@ -894,7 +894,7 @@ nl:
   scope: Scope
   scopes: Scopes
   search: Zoek
-  search_results: "Search results for '%{keywords}'"
+  search_results: "Zoekresulaten voor '%{keywords}'"
   searching: Searching
   secure_connection_type: "Secure Connection Type"
   select: Selecteer

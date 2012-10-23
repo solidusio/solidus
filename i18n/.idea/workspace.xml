@@ -22,7 +22,7 @@
       <file leaf-file-name="nl.yml" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/config/locales/nl.yml">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="961" column="75" selection-start="33961" selection-end="33961" vertical-scroll-proportion="0.3507014">
+            <state line="1073" column="42" selection-start="38666" selection-end="38666" vertical-scroll-proportion="0.7274549">
               <folding />
             </state>
           </provider>
@@ -211,7 +211,7 @@
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/config/locales/nl.yml">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="961" column="75" selection-start="33961" selection-end="33961" vertical-scroll-proportion="0.3507014">
+        <state line="1073" column="42" selection-start="38666" selection-end="38666" vertical-scroll-proportion="0.7274549">
           <folding />
         </state>
       </provider>
