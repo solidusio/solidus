@@ -406,7 +406,7 @@ ru:
   error: "ошибка"
   errors: 
     messages: 
-      could_not_create_taxon: "Could not create taxon"
+      could_not_create_taxon: "Невозможно создать таксон"
       no_shipping_methods_available: "Для указанного местоположения отсутствуют способы доставки, пожалуйста, смените адрес и попробуйте снова."
   errors_prohibited_this_record_from_being_saved:
     one: "1 ошибка не позволяет сохранить запись в базе"
@@ -624,7 +624,7 @@ ru:
       subject: "Аннулирование заказа"
     confirm_email: 
       subject: "Подтверждение заказа"
-  order_not_in_system: "Заказа с стаким номером у нас не существует."
+  order_not_in_system: "Заказа с таким номером у нас не существует."
   order_number: "Заказ"
   order_operation_authorize: "Авторизовать"
   order_processed_but_following_items_are_out_of_stock: "Ваш заказ был обработан, но нижеуказанные товары закончились на складе:"
