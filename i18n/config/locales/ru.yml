@@ -1081,6 +1081,12 @@ ru:
   variants: "Варианты"
   vat: "НДС"
   version: "Версия"
+  views:
+    pagination:
+      first: "Первая"
+      last: "Последняя"
+      next: "Следующая"
+      previous: "Предыдущая"
   view_shipping_options: "Посмотреть настройки отправки"
   void: "Анулировать"
   website: "Сайт"
