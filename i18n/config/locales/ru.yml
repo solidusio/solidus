@@ -412,7 +412,7 @@ ru:
   error: "ошибка"
   errors: 
     messages: 
-      could_not_create_taxon: "Could not create taxon"
+      could_not_create_taxon: "Невозможно создать таксон"
       no_shipping_methods_available: "Для указанного местоположения отсутствуют способы доставки, пожалуйста, смените адрес и попробуйте снова."
   errors_prohibited_this_record_from_being_saved:
     one: "1 ошибка не позволяет сохранить запись в базе"
@@ -470,6 +470,8 @@ ru:
   image: "Изображение"
   images: "Изображения"
   images_for: "Изображения для"
+  image_settings: "Настройки изображений"                                                                                                                                            
+  image_settings_description: "Параметры настройки изображений"
   in_progress: "В процессе"
   include_in_shipment: "Включить в отправку"
   included_in_other_shipment: "Включено в другую отправку"
@@ -506,6 +508,7 @@ ru:
   listing_categories: "Список категорий"
   listing_option_types: "Список опций"
   listing_orders: "Список заказов"
+  listing_products: "Список товаров"
   listing_product_groups: "Список групп товаров"
   listing_reports: "Список отчетов"
   listing_tax_categories: "Список категорий налогов"
@@ -536,6 +539,11 @@ ru:
   make_refund: "Сделать возврат"
   mark_shipped: "Отметить как отправленный"
   master_price: "Основная цена"
+  match_choices:
+    none: "Ни одному"
+    one: "Одному"
+    all: "Всем"
+  match_rule: "Соответствие правилам"
   max_items: "Максимальное число наименований по начальной ставке"
   may_be_combined_with_other_promotions: "Может быть совмещена с другими рекламными акциями"
   meta_description: "Описание"
@@ -609,6 +617,7 @@ ru:
   option_values: "Возможные значения опции"
   options: "Опции"
   or: "или"
+  or_over_price: "Или дороже"
   ord_qty: "Кол-во заказов"
   ord_total: "Сумма заказа"
   order: "Заказ"
@@ -621,7 +630,7 @@ ru:
       subject: "Аннулирование заказа"
     confirm_email: 
       subject: "Подтверждение заказа"
-  order_not_in_system: "Заказа с стаким номером у нас не существует."
+  order_not_in_system: "Заказа с таким номером у нас не существует."
   order_number: "Заказ"
   order_operation_authorize: "Авторизовать"
   order_processed_but_following_items_are_out_of_stock: "Ваш заказ был обработан, но нижеуказанные товары закончились на складе:"
@@ -694,6 +703,7 @@ ru:
   previous: "пред."
   price: "Цена"
   price_bucket: "Комбинированная цена"
+  price_range: "Ценовой диапазон"
   price_with_vat_included: "%{price} (вкл. НДС)"
   problem_authorizing_card: "Проблема при авторизации Вашей кредитной карты"
   problem_capturing_card: "Проблема при capture Вашей кредитной карты"
@@ -1049,6 +1059,7 @@ ru:
   unable_to_connect_to_gateway: "Не удалось подключиться к платёжному шлюзу."
   unable_to_save_order: "Не удалось сохранить заказ."
   under_paid: "Частично оплачен"
+  under_price: "Дешевле"
   units: "шт."
   unrecognized_card_type: "Неизвестный тип карты"
   update: "Изменить"
@@ -1077,6 +1088,12 @@ ru:
   variants: "Варианты"
   vat: "НДС"
   version: "Версия"
+  views:
+    pagination:
+      first: "Первая"
+      last: "Последняя"
+      next: "Следующая"
+      previous: "Предыдущая"
   view_shipping_options: "Посмотреть настройки отправки"
   void: "Анулировать"
   website: "Сайт"
