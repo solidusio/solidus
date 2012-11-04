@@ -2,6 +2,8 @@
 ru:
   'no': "Нет"
   'yes': "Да"
+  activate: Активировать
+  learn_more: Узнать больше
   5_biggest_spenders: "5 крупнейших покупателей"
   a_copy_of_all_mail_will_be_sent_to_the_following_addresses: "Копии всех писем будут отосланы на следующие адреса"
   abbreviation: "Аббревиатура"
@@ -271,6 +273,9 @@ ru:
   are_you_sure_you_want_to_capture: "Вы уверены, что хотите провести платёж?"
   assign_taxon: "Прикрепить к таксону"
   assign_taxons: "прикрепить к таксонам"
+  attachment_path: "Путь к прикреплённому файлу"
+  attachment_default_url: "Стандартный url прикреплённого файла"
+  attachment_default_style: "Стандартный стиль прикреплённого файла"
   authorization_failure: "Ошибка авторизации"
   authorized: "Авторизован"
   availability: "Доступность"
@@ -359,6 +364,7 @@ ru:
   debit: "Дебет"
   default: "По умолчанию"
   default_seo_title: "SEO-заголовок по умолчанию"
+  defined_paperclip_styles: "Стили Paperclip"
   default_tax: "Стандартный налог"
   default_tax_zone: "Стандартный налоговый регион"
   delete: "Удалить"
@@ -894,6 +900,7 @@ ru:
   rma_value: "Сумма RMA"
   roles: "Роли"
   rules: "Правила"
+  s3_not_used_for_product_images: "s3 Не Используется Для Изображений Товаров"
   sales_tax: "Налог с продаж"
   sales_total: "Итого (продажи)"
   sales_totals: "Итого (продажи)"
