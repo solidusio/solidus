@@ -1,53 +1,69 @@
 ---
-en-NZ:
+en-NZ: 
   a_copy_of_all_mail_will_be_sent_to_the_following_addresses: "A copy of all mail be sent to the following addresses"
   abbreviation: Abbreviation
   access_denied: "Access Denied"
   account: Account
   account_updated: "Account updated!"
   action: Action
-  actions:
+  actions: 
+    cancel: Cancel
     create: Create
     destroy: Destroy
     list: List
     listing: Listing
     new: New
     update: Update
+  activate: "Activate"
   active: Active
-  activerecord:
-    attributes:
-      spree/address:
+  activerecord: 
+    attributes: 
+      spree/address: 
         address1: Address
         address2: "Address (contd.)"
         city: "Town / City"
         country: Country
-        first_name_begins_with: "First Name Begins With"
         firstname: "First Name"
-        last_name_begins_with: "Last Name Begins With"
         lastname: "Last Name"
         phone: Phone
         state: Region
         zipcode: Postcode
-      spree/country:
+      spree/country: 
         iso: ISO
         iso3: ISO3
         iso_name: "ISO Name"
         name: Name
         numcode: "ISO Code"
-      spree/credit_card:
+      spree/credit_card: 
         cc_type: Type
         month: Month
         number: Number
         verification_value: "Verification Value"
         year: Year
-      spree/inventory_unit:
+      spree/inventory_unit: 
         state: State
-      spree/line_item:
+      spree/line_item: 
         price: Price
         quantity: Quantity
-      spree/option_type:
+      spree/option_type: 
         name: Name
         presentation: Presentation
+      spree/order/bill_address:
+          address1: "Billing address street"
+          city: "Billing address city"
+          firstname: "Billing address first name"
+          lastname: "Billing address last name"
+          phone: "Billing address phone"
+          state: "Billing address state"
+          zipcode: "Billing address zipcode"
+      spree/order/ship_address:
+          address1: "Shipping address street"
+          city: "Shipping address city"
+          firstname: "Shipping address first name"
+          lastname: "Shipping address last name"
+          phone: "Shipping address phone"
+          state: "Shipping address state"
+          zipcode: "Shipping address zipcode"
       spree/order:
         checkout_complete: "Checkout Complete"
         completed_at: "Completed At"
@@ -61,34 +77,19 @@ en-NZ:
         special_instructions: "Special Instructions"
         state: State
         total: Total
-      spree/order/bill_address:
-        address1: "Billing address street"
-        city: "Billing address city"
-        firstname: "Billing address first name"
-        lastname: "Billing address last name"
-        phone: "Billing address phone"
-        state: "Billing address region"
-        zipcode: "Billing address postcode"
-      spree/order/ship_address:
-        address1: "Delivery address street"
-        city: "Delivery address city"
-        firstname: "Delivery address first name"
-        lastname: "Delivery address last name"
-        phone: "Delivery address phone"
-        state: "Delivery address region"
-        zipcode: "Delivery address postcode"
-      spree/payment_method:
+      spree/payment_method: 
         name: Name
-      spree/product:
+      spree/product: 
         available_on: "Available On"
         cost_price: "Cost Price"
         description: Description
         master_price: "Master Price"
         name: Name
+        on_demand: "On Demand"
         on_hand: "On Hand"
         shipping_category: "Shipping Category"
         tax_category: "Tax Category"
-      spree/promotion:
+      spree/promotion: 
         advertise: Advertise
         code: Code
         description: Description
@@ -98,35 +99,36 @@ en-NZ:
         path: Path
         starts_at: "Starts At"
         usage_limit: "Usage Limit"
-      spree/property:
+      spree/property: 
         name: Name
         presentation: Presentation
-      spree/prototype:
+      spree/prototype: 
         name: Name
-      spree/return_authorization:
+      spree/return_authorization: 
         amount: Amount
-      spree/role:
+      spree/role: 
         name: Name
-      spree/state:
+      spree/state: 
         abbr: Abbreviation
         name: Name
-      spree/tax_category:
+      spree/tax_category: 
         description: Description
         name: Name
-      spree/tax_rate:
+      spree/tax_rate: 
         amount: Rate
         included_in_price: "Included in Price"
-      spree/taxon:
+        show_rate_in_label: Show rate in label
+      spree/taxon: 
         name: Name
         permalink: Permalink
         position: Position
-      spree/taxonomy:
+      spree/taxonomy: 
         name: Name
-      spree/user:
+      spree/user: 
         email: Email
         password: Password
         password_confirmation: "Password Confirmation"
-      spree/variant:
+      spree/variant: 
         cost_price: "Cost Price"
         depth: Depth
         height: Height
@@ -134,77 +136,83 @@ en-NZ:
         sku: SKU
         weight: Weight
         width: Width
-      spree/zone:
+      spree/zone: 
         description: Description
         name: Name
-    models:
-      spree/address:
+    models: 
+      spree/address: 
         one: Address
         other: Addresses
-      spree/cheque_payment:
+      spree/cheque_payment: 
         one: "Cheque Payment"
         other: "Cheque Payments"
-      spree/country:
+      spree/country: 
         one: Country
         other: Countries
-      spree/creditcard:
+      spree/credit_card: 
         one: "Credit Card"
         other: "Credit Cards"
-      spree/inventory_unit:
+      spree/creditcard_payment: 
+        one: "Credit Card Payment"
+        other: "Credit Card Payments"
+      spree/creditcard_txn: 
+        one: "Credit Card Transaction"
+        other: "Credit Card Transactions"
+      spree/inventory_unit: 
         one: "Inventory Unit"
         other: "Inventory Units"
-      spree/line_item:
+      spree/line_item: 
         one: "Line Item"
         other: "Line Items"
-      spree/order:
+      spree/order: 
         one: Order
         other: Orders
-      spree/payment:
+      spree/payment: 
         one: Payment
         other: Payments
-      spree/product:
+      spree/product: 
         one: Product
         other: Products
-      spree/property:
+      spree/property: 
         one: Property
         other: Properties
-      spree/prototype:
+      spree/prototype: 
         one: Prototype
         other: Prototypes
-      spree/return_authorization:
+      spree/return_authorization: 
         one: "Return Authorisation"
         other: "Return Authorisations"
-      spree/role:
+      spree/role: 
         one: Roles
         other: Roles
-      spree/shipment:
+      spree/shipment: 
         one: Shipment
         other: Shipments
-      spree/shipping_category:
+      spree/shipping_category: 
         one: "Shipping Category"
         other: "Shipping Categories"
-      spree/state:
+      spree/state: 
         one: State
         other: States
-      spree/tax_category:
+      spree/tax_category: 
         one: "Tax Category"
         other: "Tax Categories"
-      spree/tax_rate:
+      spree/tax_rate: 
         one: "Tax Rate"
         other: "Tax Rates"
-      spree/taxon:
+      spree/taxon: 
         one: Taxon
         other: Taxons
-      spree/taxonomy:
+      spree/taxonomy: 
         one: Taxonomy
         other: Taxonomies
-      spree/user:
+      spree/user: 
         one: User
         other: Users
-      spree/variant:
+      spree/variant: 
         one: Variant
         other: Variants
-      spree/zone:
+      spree/zone: 
         one: Zone
         other: Zones
   add: Add
@@ -229,10 +237,10 @@ en-NZ:
   adjustment: Adjustment
   adjustment_total: "Adjustment Total"
   adjustments: Adjustments
-  admin:
-    mail_methods:
+  admin: 
+    mail_methods: 
       send_testmail: "Send Testmail"
-      testmail:
+      testmail: 
         delivery_error: "Testmail delivery error"
         delivery_success: "Testmail sent successfully"
         error: "Testmail error: %{e}"
@@ -259,6 +267,7 @@ en-NZ:
   are_you_sure_you_want_to_capture: "Are you sure you want to capture?"
   assign_taxon: "Assign Taxon"
   assign_taxons: "Assign Taxons"
+  attachment_default_style: "Attachments Style"
   attachment_default_url: "Attachments URL"
   attachment_path: "Attachments Path"
   attachment_styles: "Paperclip Styles"
@@ -270,7 +279,25 @@ en-NZ:
   awaiting_return: "Awaiting Return"
   back: Back
   back_end: "Back End"
+  back_to_adjustments_list: "Back To Adjustments List"
+  back_to_images_list: "Back To Images List"
+  back_to_mail_methods_list: "Back To Mail Methods List"
+  back_to_option_tyles_list: "Back To Option Types List"
+  back_to_payment_methods_list: "Back To Payment Methods List"
+  back_to_payments_list: "Back To Payments List"
+  back_to_products_list: "Back To Products List"
+  back_to_promotions_list: "Back To Promotions List"
+  back_to_properties_list: "Back To Products List"
+  back_to_prototypes_list: "Back To Prototypes List"
+  back_to_reports_list: "Back To Reports List"
+  back_to_shipping_categories: "Back To Shipping Categories"
+  back_to_shipping_methods_list: "Back To Shipping Methods List"
+  back_to_states_list: "Back To States List"
   back_to_store: "Go Back To Store"
+  back_to_tax_categories_list: "Back To Tax Categories List"
+  back_to_taxonomies_list: "Back To Taxonomies List"
+  back_to_trackers_list: "Back To Trackers List"
+  back_to_zones_list: "Back To Zones List"
   backordered: Backordered
   backordering_is_allowed: "Backordering %{not} allowed"
   balance_due: "Balance Due"
@@ -312,6 +339,7 @@ en-NZ:
   configuration: Configuration
   configuration_options: "Configuration Options"
   configurations: Configurations
+  configure_s3: "Configure S3"
   configured: Configured
   confirm: Confirm
   confirm_delete: "Confirm Deletion"
@@ -325,6 +353,7 @@ en-NZ:
   country_based: "Country Based"
   coupon: Coupon
   coupon_code: "Coupon code"
+  coupon_code_applied: The coupon code was successfully applied to your order.
   create: Create
   create_a_new_account: "Create a new account"
   create_user_account: "Create User Account"
@@ -333,14 +362,20 @@ en-NZ:
   credit_card: "Credit Card"
   credit_card_capture_complete: "Credit Card Was Captured"
   credit_card_payment: "Credit Card Payment"
+  credit_cards: Credit Cards
   credit_owed: "Credit Owed"
   credit_total: "Credit Total"
   credits: Credits
+  currency: Currency
+  currency_settings: "Currency Settings"
+  currency_symbol_position: "Put currency symbol before or after dollar amount?"
   current: Current
   customer: Customer
   customer_details: "Customer Details"
   customer_details_updated: "The customer's details have been updated."
   customer_search: "Customer Search"
+  cut: Cut
+  date_completed: Date Completed
   date_created: "Date created"
   date_range: "Date Range"
   debit: Debit
@@ -350,6 +385,7 @@ en-NZ:
   default_seo_title: "Default Seo Title"
   default_tax: "Default Tax"
   default_tax_zone: "Default Tax Zone"
+  defined_paperclip_styles: Defined Paperclip Styles
   delete: Delete
   delivery: Delivery
   depth: Depth
@@ -360,6 +396,8 @@ en-NZ:
   discount_amount: "Discount Amount"
   dismiss_banner: "No. Thanks! I'm not interested, do not display this message again"
   display: Display
+  display_currency: "Display currency"
+  dollar_amounts_displayed_as: "Dollar amounts displayed as %{example}"
   edit: Edit
   edit_general_settings: "Edit General Settings"
   editing_billing_integration: "Editing Billing Integration"
@@ -397,27 +435,27 @@ en-NZ:
   environment: Environment
   error: error
   error_user_destroy_with_orders: "Users with completed orders may not be deleted"
-  errors:
-    messages:
+  errors: 
+    messages: 
       could_not_create_taxon: "Could not create taxon"
       no_payment_methods_available: "No payment methods are configured for this environment"
       no_shipping_methods_available: "No delivery methods available for selected location, please change your address and try again."
-  errors_prohibited_this_record_from_being_saved:
+  errors_prohibited_this_record_from_being_saved: 
     one: "1 error prohibited this record from being saved"
     other: "%{count} errors prohibited this record from being saved"
   event: Event
-  events:
-    spree:
-      cart:
+  events: 
+    spree: 
+      cart: 
         add: "Add to cart"
-      checkout:
+      checkout: 
         coupon_code_added: "Coupon code added"
-      content:
+      content: 
         visited: "Visit static content page"
-      order:
+      order: 
         contents_changed: "Order contents changed"
       page_view: "Static page viewed"
-      user:
+      user: 
         signup: "User signup"
   existing_customer: "Existing Customer"
   expiration: Expiration
@@ -426,7 +464,6 @@ en-NZ:
   expiry: Expiry
   extension: Extension
   extensions: Extensions
-  false: "No"
   filename: Filename
   final_confirmation: "Final Confirmation"
   finalize: Finalise
@@ -470,6 +507,7 @@ en-NZ:
   icons_by: "Icons by"
   image: Image
   image_settings: "Image Settings"
+  image_settings_description: "Image Settings Description"
   image_settings_updated: "Image Settings successfully updated."
   image_settings_warning: "You will need to regenerate thumbnails if you update the paperclip styles. Use rake paperclip:refresh:thumbnails to do this."
   images: Images
@@ -495,11 +533,11 @@ en-NZ:
   item: Item
   item_description: "Item Description"
   item_total: "Item Total"
-  item_total_rule:
-    operators:
+  item_total_rule: 
+    operators: 
       gt: "greater than"
       gte: "greater than or equal to"
-  landing_page_rule:
+  landing_page_rule: 
     path: Path
   last_name: "Last Name"
   last_name_begins_with: "Last Name Begins With"
@@ -534,7 +572,7 @@ en-NZ:
   make_refund: "Make refund"
   mark_shipped: "Mark Shipped"
   master_price: "Master Price"
-  match_choices:
+  match_choices: 
     all: All
     none: None
     one: One
@@ -546,6 +584,7 @@ en-NZ:
   minimal_amount: "Minimal Amount"
   missing_required_information: "Missing Required Information"
   month: Month
+  more: More
   my_account: "My Account"
   my_orders: "My Orders"
   name: Name
@@ -583,6 +622,7 @@ en-NZ:
   new_variant: "New Variant"
   new_zone: "New Zone"
   next: Next
+  no: "No"
   no_items_in_cart: ""
   no_match_found: "No Match Found"
   no_products_found: "No products found"
@@ -593,10 +633,11 @@ en-NZ:
   none_available: "None Available"
   normal_amount: "Normal Amount"
   not: not
+  not_available: "N/A"
   not_found: "%{resource} is not found"
   not_shown: "Not Shown"
   note: Note
-  notice_messages:
+  notice_messages: 
     option_type_removed: "Succesfully removed option type."
     product_cloned: "Product has been cloned"
     product_deleted: "Product has been deleted"
@@ -615,21 +656,33 @@ en-NZ:
   or: or
   or_over_price: "%{price} or over"
   order: Order
+  order_adjustments: "Order adjustments"
   order_confirmation_note: ""
   order_date: "Order Date"
   order_details: "Order Details"
   order_email_resent: "Order Email Resent"
-  order_mailer:
-    cancel_email:
+  order_mailer: 
+    cancel_email: 
+      dear_customer: "Dear Customer,"
+      instructions: "Your order has been CANCELED.  Please retain this cancellation information for your records."
+      order_summary_canceled: "Order Summary [CANCELED]"
       subject: "Cancellation of Order"
-    confirm_email:
+      subtotal: "Subtotal:"
+      total: "Order Total:"
+    confirm_email: 
+      dear_customer: "Dear Customer,"
+      instructions: "Please review and retain the following order information for your records."
+      order_summary: "Order Summary"
       subject: "Order Confirmation"
+      subtotal: "Subtotal:"
+      thanks: "Thank you for your business."
+      total: "Order Total:"
   order_not_in_system: "That order number is not valid on this site."
   order_number: Order
   order_operation_authorize: Authorise
   order_processed_but_following_items_are_out_of_stock: "Your order has been processed, but following items are out of stock:"
   order_processed_successfully: "Your order has been processed successfully"
-  order_state:
+  order_state: 
     address: address
     adjustments: adjustments
     awaiting_return: "awaiting return"
@@ -654,7 +707,7 @@ en-NZ:
   overview: Overview
   page_only_viewable_when_logged_in: "You attempted to visit a page which can only be viewed when you are logged in"
   page_only_viewable_when_logged_out: "You attempted to visit a page which can only be viewed when you are logged out"
-  pagination:
+  pagination: 
     next_page: "next page »"
     previous_page: "« previous page"
     truncate: "…"
@@ -665,6 +718,7 @@ en-NZ:
   password_reset_instructions_are_mailed: "Instructions to reset your password have been emailed to you. Please check your email."
   password_reset_token_not_found: "We're sorry, but we could not locate your account. If you are having issues try copying and pasting the URL from your email into your browser or restarting the reset password process."
   password_updated: "Password successfully updated"
+  paste: Paste
   path: Path
   pay: pay
   payment: Payment
@@ -678,7 +732,7 @@ en-NZ:
   payment_processor_choose_banner_text: "If you need help choosing a payment processor, please visit"
   payment_processor_choose_link: "our payments page"
   payment_state: "Payment State"
-  payment_states:
+  payment_states: 
     balance_due: "balance due"
     checkout: checkout
     completed: completed
@@ -691,11 +745,13 @@ en-NZ:
   payment_updated: "Payment Updated"
   payments: Payments
   pending_payments: "Pending Payments"
+  percent_per_item: Percent Per Item
   permalink: Permalink
   phone: Phone
   place_order: "Place Order"
   please_create_user: "Please create a user account"
   please_define_payment_methods: "Please define some payment methods first."
+  populate_get_error: "Something went wrong. Please try adding the item again."
   powered_by: "Powered by"
   presentation: Presentation
   preview: Preview
@@ -715,119 +771,119 @@ en-NZ:
   product_groups: "Product Groups"
   product_has_no_description: "This product has no description"
   product_properties: "Product Properties"
-  product_rule:
+  product_rule: 
     choose_products: "Choose products"
     label: "Order must contain %{select} of these products"
     match_all: all
     match_any: "at least one"
-    product_source:
+    product_source: 
       group: "From product group"
       manual: "Manually choose"
-  product_scopes:
-    groups:
-      price:
+  product_scopes: 
+    groups: 
+      price: 
         description: "Scopes for selecting products based on Price"
         name: Price
-      search:
+      search: 
         description: "Scopes for selecting products based on name, keywords and description of product"
         name: "Text search"
-      taxon:
+      taxon: 
         description: "Scopes for selecting products based on Taxons"
         name: Taxon
-      values:
+      values: 
         description: "Scopes for selecting products based on option and property values"
         name: Values
-    scopes:
-      ascend_by_name:
+    scopes: 
+      ascend_by_name: 
         name: "Ascend by product name"
-      ascend_by_updated_at:
+      ascend_by_updated_at: 
         name: "Ascend by actualisation date"
-      descend_by_name:
+      descend_by_name: 
         name: "Descend by product name"
-      descend_by_updated_at:
+      descend_by_updated_at: 
         name: "Descend by actualisation date"
-      in_name:
-        args:
+      in_name: 
+        args: 
           words: Words
         description: "(separated by space or comma)"
         name: "Product name have following"
         sentence: "product name contain <em>%s</em>"
-      in_name_or_description:
-        args:
+      in_name_or_description: 
+        args: 
           words: Words
         description: "(separated by space or comma)"
         name: "Product name or description have following"
         sentence: "name or description contain <em>%s</em>"
-      in_name_or_keywords:
-        args:
+      in_name_or_keywords: 
+        args: 
           words: Words
         description: "(separated by space or comma)"
         name: "Product name or meta keywords have following"
         sentence: "name or keywords contain <em>%s</em>"
-      in_taxons:
-        args:
-          taxon_names: "Taxon names"
+      in_taxons: 
+        args: 
+          "taxon_names": "Taxon names"
         description: "Taxon names have to be separated by comma or space(eg. adidas,shoes)"
         name: "In taxons and all their descendants"
         sentence: "in <em>%s</em> and all their descendants"
-      master_price_gte:
-        args:
+      master_price_gte: 
+        args: 
           amount: Amount
         description: ""
         name: "Master price greater or equal to"
         sentence: "price greater or equal to <em>%.2f</em>"
-      master_price_lte:
-        args:
+      master_price_lte: 
+        args: 
           amount: Amount
         description: ""
         name: "Master price lesser or equal to"
         sentence: "price less or equal to <em>%.2f</em>"
-      price_between:
-        args:
+      price_between: 
+        args: 
           high: High
           low: Low
         description: ""
         name: "Price between"
         sentence: "price between <em>%.2f</em> and <em>%.2f</em>"
-      taxons_name_eq:
-        args:
+      taxons_name_eq: 
+        args: 
           taxon_name: "Taxon name"
         description: "In specific taxon - without descendants"
         name: "In Taxon(without descendants)"
         sentence: "in <em>%s</em>"
-      with:
-        args:
+      with: 
+        args: 
           value: Value
         description: "Selects all products that have at least one variant that have specified value as either option or property (eg. red)"
         name: "With value"
         sentence: "with value <em>%s</em>"
-      with_ids:
-        args:
+      with_ids: 
+        args: 
           ids: IDs
         description: "Select specific products"
         name: "Products with IDs"
         sentence: "with IDs <em>%s</em>"
-      with_option:
-        args:
+      with_option: 
+        args: 
           option: Option
         description: "Selects all products that have specified option(eg. color)"
         name: "With option"
         sentence: "with option <em>%s</em>"
-      with_option_value:
-        args:
+      with_option_value: 
+        args: 
           option: Option
           value: Value
         description: "Selects all products that have at least one variant with specified option and value(eg. color:red)"
         name: "With option and value"
         sentence: "with option <em>%s</em> and value <em>%s</em>"
-      with_property:
-        args:
+      with_property: 
+        args: 
           property: Property
         description: "Selects all products that have specified property(eg. weight)"
         name: "With property"
         sentence: "with property <em>%s</em>"
-      with_property_value:
-        args:
+      with_property_value: 
+        args: 
           property: Property
           value: Value
         description: "Selects all products that have at least one variant with specified property and value(eg. weight:10kg)"
@@ -837,40 +893,40 @@ en-NZ:
   products_with_zero_inventory_display: "Products with a zero inventory will %{not} be displayed"
   promotion: Promotion
   promotion_action: "Promotion Action"
-  promotion_action_types:
-    create_adjustment:
+  promotion_action_types: 
+    create_adjustment: 
       description: "Creates a promotion credit adjustment on the order"
       name: "Create adjustment"
-    create_line_items:
+    create_line_items: 
       description: "Populates the cart with the specified variants and quantities"
       name: "Create line items"
-    give_store_credit:
+    give_store_credit: 
       description: "Gives the user store credit of the amount specified"
       name: "Give store credit"
   promotion_actions: Actions
-  promotion_form:
-    match_policies:
+  promotion_form: 
+    match_policies: 
       all: "Match all of these rules"
       any: "Match any of these rules"
   promotion_not_found: "The coupon code you entered doesn't exist. Please try again."
   promotion_rule: "Promotion Rule"
-  promotion_rule_types:
-    first_order:
+  promotion_rule_types: 
+    first_order: 
       description: "Must be the customer's first order"
       name: "First order"
-    item_total:
+    item_total: 
       description: "Order total meets these criteria"
       name: "Item total"
-    landing_page:
+    landing_page: 
       description: "Customer must have visited the specified page"
       name: "Landing Page"
-    product:
+    product: 
       description: "Order includes specified product(s)"
       name: Product(s)
-    user:
+    user: 
       description: "Available only to the specified users"
       name: User
-    user_logged_in:
+    user_logged_in: 
       description: "Available only to logged in users"
       name: "User Logged In"
   promotions: Promotions
@@ -896,13 +952,14 @@ en-NZ:
   registration: Registration
   remember_me: "Remember me"
   remove: Remove
+  rename: Rename
   reports: Reports
   required_for_solo_and_maestro: "Required for Solo and Maestro cards."
   resend: Resend
   resend_confirmation_instructions: "Resend confirmation instructions"
   resend_unlock_instructions: "Resend unlock instructions"
   reset_password: "Reset my password"
-  resource_controller:
+  resource_controller: 
     member_object_not_found: "Member object not found."
     successfully_created: "Successfully created!"
     successfully_removed: "Successfully removed!"
@@ -916,6 +973,7 @@ en-NZ:
   return_authorizations: "Return Authorisations"
   return_quantity: "Return Quantity"
   returned: Returned
+  review: Review
   rma_credit: "RMA Credit"
   rma_number: "RMA Number"
   rma_value: "RMA Value"
@@ -925,6 +983,7 @@ en-NZ:
   s3_bucket: Bucket
   s3_headers: "S3 Headers"
   s3_not_used_for_product_images: "S3 is not being used for product images"
+  s3_protocol: "S3 Protocol"
   s3_secret: "Secret Key"
   s3_used_for_product_images: "S3 is being used for product images"
   sales_tax: "Sales Tax"
@@ -938,6 +997,8 @@ en-NZ:
   search_results: "Search results for '%{keywords}'"
   searching: Searching
   secure_connection_type: "Secure Connection Type"
+  secure_credit_card: Secure Credit Card
+  security_settings: "Security Settings"
   select: Select
   select_from_prototype: "Select From Prototype"
   select_preferred_shipping_option: "Select preferred delivery option"
@@ -954,12 +1015,17 @@ en-NZ:
   shipment: Shipment
   shipment_details: "Shipment Details"
   shipment_inc_vat: "Shipment including GST"
-  shipment_mailer:
-    shipped_email:
+  shipment_mailer: 
+    shipped_email: 
+      dear_customer: "Dear Customer,"
+      instructions: "Your order has been shipped"
+      shipment_summary: "Shipment Summary"
       subject: "Shipment Notification"
+      thanks: "Thank you for your business."
+      track_information: "Tracking Information: %{tracking}"
   shipment_number: "Shipment #"
   shipment_state: "Shipment State"
-  shipment_states:
+  shipment_states: 
     backorder: backorder
     partial: partial
     pending: pending
@@ -989,6 +1055,7 @@ en-NZ:
   show_deleted: "Show Deleted"
   show_incomplete_orders: "Show Incomplete Orders"
   show_only_complete_orders: "Only show complete orders"
+  show_only_unfulfilled_orders: "Show only unfulfilled orders"
   show_out_of_stock_products: "Show out-of-stock products"
   showing_first_n: "Showing first %{n}"
   sign_up: "Sign up"
@@ -1008,9 +1075,11 @@ en-NZ:
   sort_ordering: "Sort ordering"
   special_instructions: "Special Instructions"
   spree: ~
-  spree/order:
+  spree/order: 
     coupon_code: "Coupon Code"
     date: Date
+    date_picker: 
+      format: 'yy/mm/dd'
     time: Time
   spree_alert_checking: "Check for Spree security and release alerts"
   spree_alert_not_checking: "Not checking for Spree security and release alerts"
@@ -1059,8 +1128,8 @@ en-NZ:
   taxonomy_tree_instruction: "* Right click a child in the tree to access the menu for adding, deleting or sorting a child."
   taxons: Taxons
   test: Test
-  test_mailer:
-    test_email:
+  test_mailer: 
+    test_email: 
       greeting: Congratulations!
       message: "If you have received this email, then your email settings are correct."
       subject: Testmail
@@ -1076,7 +1145,6 @@ en-NZ:
   transaction: Transaction
   transactions: Transactions
   tree: Tree
-  true: "Yes"
   try_again: "Try Again"
   type: Type
   type_to_search: "Type to search"
@@ -1101,11 +1169,11 @@ en-NZ:
   user: User
   user_account: "User Account"
   user_created_successfully: "User created successfully"
-  user_rule:
+  user_rule: 
     choose_users: "Choose users"
   users: Users
   validate_on_profile_create: "Validate on profile create"
-  validation:
+  validation: 
     cannot_be_greater_than_available_stock: "cannot be greater than available stock."
     cannot_be_less_than_shipped_units: "cannot be less than the number of shipped units."
     cannot_destory_line_item_as_inventory_units_have_shipped: "Cannot destroy line item as some inventory units have shipped."
@@ -1127,6 +1195,7 @@ en-NZ:
   whats_this: "What's this"
   width: Width
   year: Year
+  yes: "Yes"
   you_have_been_logged_out: "You have been logged out."
   you_have_no_orders_yet: "You have no orders yet."
   your_cart_is_empty: "Your cart is empty"
