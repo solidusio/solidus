@@ -19,15 +19,15 @@ ru:
   activerecord:
     attributes:
       spree/address:
-        address1: Address
-        address2: "Address (contd.)"
-        city: City
-        country: "Country"
-        firstname: "First Name"
-        lastname: "Last Name"
-        phone: Phone
-        state: "State"
-        zipcode: "Zip Code"
+        address1: Адрес
+        address2: "доп. адрес)"
+        city: Населённый пункт
+        country: "Страна"
+        firstname: "Имя"
+        lastname: "Фамилия"
+        phone: Телефон
+        state: "Область/Регион"
+        zipcode: "Почтовый индекс"
       spree/country:
         iso: ISO
         iso3: ISO3
@@ -35,186 +35,186 @@ ru:
         name: Name
         numcode: "ISO Code"
       spree/credit_card:
-        cc_type: Type
-        month: Month
-        number: Number
-        verification_value: "Verification Value"
-        year: Year
+        cc_type: Тип
+        month: Месяц
+        number: Номер
+        verification_value: "Значение проверки"
+        year: Год
       spree/inventory_unit:
         state: State
       spree/line_item:
-        price: Price
-        quantity: Quantity
+        price: Цена
+        quantity: Кол-во
       spree/option_type:
-        name: Name
-        presentation: Presentation
+        name: Название
+        presentation: Представление
       spree/order:
-        checkout_complete: "Checkout Complete"
-        completed_at: "Completed At"
-        created_at: Order Date
-        email: Customer E-Mail
-        ip_address: "IP Address"
-        item_total: "Item Total"
-        number: Number
-        payment_state: Payment State
-        shipment_state: Shipment State
-        special_instructions: "Special Instructions"
-        state: State
-        total: Total
+        checkout_complete: "Оформление заказа завершено"
+        completed_at: "Завершено"
+        created_at: Дата заказа
+        email: E-mail покупателя
+        ip_address: "IP-адрес"
+        item_total: "Итого по товарам"
+        number: Номер
+        payment_state: Состояние оплаты
+        shipment_state: Состояние доставки
+        special_instructions: "Специальные инструкции"
+        state: Состояние
+        total: Итого по заказу
       spree/order/bill_address:
-          address1: "Billing address street"
-          city: "Billing address city"
-          firstname: "Billing address first name"
-          lastname: "Billing address last name"
-          phone: "Billing address phone"
-          state: "Billing address state"
-          zipcode: "Billing address zipcode"
+          address1: "Улица"
+          city: "Населённый пункт"
+          firstname: "Имя"
+          lastname: "Фамилия"
+          phone: "Телефон"
+          state: "Область/Регион"
+          zipcode: "Почтовый индекс"
       spree/order/ship_address:
-          address1: "Shipping address street"
-          city: "Shipping address city"
-          firstname: "Shipping address first name"
-          lastname: "Shipping address last name"
-          phone: "Shipping address phone"
-          state: "Shipping address state"
-          zipcode: "Shipping address zipcode"
+          address1: "Улица"
+          city: "Населённый пункт"
+          firstname: "Имя"
+          lastname: "Фамилия"
+          phone: "Телефон"
+          state: "Область/Регион"
+          zipcode: "Почтовый индекс"
       spree/payment_method:
-        name: Name
+        name: Название
       spree/product:
-        available_on: "Available On"
-        cost_price: "Cost Price"
-        description: Description
-        master_price: "Master Price"
-        name: Name
+        available_on: "Доступен с"
+        cost_price: "Себестоимость"
+        description: Описание
+        master_price: "Цена"
+        name: Название
         on_demand: "On Demand"
-        on_hand: "On Hand"
-        shipping_category: "Shipping Category"
-        tax_category: "Tax Category"
+        on_hand: "На складе"
+        shipping_category: "Категория доставки"
+        tax_category: "Категория налогов"
       spree/promotion:
-        advertise: Advertise
-        code: Code
-        description: Description
-        event_name: Event Name
-        expires_at: Expires At
-        name: Name
-        path: Path
-        starts_at: Starts At
-        usage_limit: Usage Limit
+        advertise: Рекламировать
+        code: Код
+        description: Описание
+        event_name: Название события
+        expires_at: Истекает в
+        name: Название
+        path: Путь
+        starts_at: Начинается
+        usage_limit: Лимит использования
       spree/property:
-        name: Name
-        presentation: Presentation
+        name: Название
+        presentation: Представление
       spree/prototype:
-        name: Name
+        name: Название
       spree/return_authorization:
         amount: Amount
       spree/role:
-        name: Name
+        name: Название
       spree/state:
-        abbr: Abbreviation
-        name: Name
+        abbr: Аббревиатура
+        name: Название
       spree/tax_category:
-        description: Description
-        name: Name
+        description: Описание
+        name: Название
       spree/tax_rate:
-        amount: Rate
-        included_in_price: Included in Price
-        show_rate_in_label: Show rate in label
+        amount: Ставка
+        included_in_price: Включено в прайс
+        show_rate_in_label: Показывать ставку в метке
       spree/taxon:
-        name: Name
-        permalink: Permalink
-        position: Position
+        name: Название
+        permalink: Пермалинк
+        position: Позиция
       spree/taxonomy:
-        name: Name
+        name: Название
       spree/user:
         email: Email
-        password: "Password"
-        password_confirmation: "Password Confirmation"
+        password: "Пароль"
+        password_confirmation: "Подтверждение пароля"
       spree/variant:
-        cost_price: "Cost Price"
-        depth: Depth
-        height: Height
-        price: Price
-        sku: SKU
-        weight: Weight
-        width: Width
+        cost_price: "Себестоимость"
+        depth: Глубина
+        height: Высота
+        price: Цена
+        sku: Артикул
+        weight: Вес
+        width: Ширина
       spree/zone:
-        description: Description
-        name: Name
+        description: Описание
+        name: Название
     models:
       spree/address:
-        one: Address
-        other: Addresses
+        one: Адрес
+        other: Адреса
       spree/cheque_payment:
-        one: Cheque Payment
-        other: Cheque Payments
+        one: Оплата чеком
+        other: Платежи чеком
       spree/country:
-        one: Country
-        other: Countries
+        one: Страна
+        other: Страны
       spree/credit_card:
-        one: "Credit Card"
-        other: "Credit Cards"
+        one: "Кредитная карта"
+        other: "Кредитные карты"
       spree/creditcard_payment:
-        one: "Credit Card Payment"
-        other: "Credit Card Payments"
+        one: "Платёж кредитной картой"
+        other: "Платёжи кредитной картой"
       spree/creditcard_txn:
-        one: "Credit Card Transaction"
-        other: "Credit Card Transactions"
+        one: "Транзакция кредитной картой"
+        other: "Транзакции кредитной картой"
       spree/inventory_unit:
         one: "Inventory Unit"
         other: "Inventory Units"
       spree/line_item:
-        one: "Line Item"
-        other: "Line Items"
+        one: "Позиция"
+        other: "Позиции"
       spree/order:
-        one: Order
-        other: Orders
+        one: Заказ
+        other: Заказы
       spree/payment:
-        one: Payment
-        other: Payments
+        one: Платёж
+        other: Платежи
       spree/product:
-        one: Product
-        other: Products
+        one: Товар
+        other: Товары
       spree/property:
-        one: Property
-        other: Properties
+        one: Свойство
+        other: Свойства
       spree/prototype:
-        one: Prototype
-        other: Prototypes
+        one: Прототип
+        other: Прототипы
       spree/return_authorization:
         one: Return Authorization
         other: Return Authorizations
       spree/role:
-        one: Roles
-        other: Roles
+        one: Роль
+        other: Роли
       spree/shipment:
-        one: Shipment
-        other: Shipments
+        one: Доставка
+        other: Доставки
       spree/shipping_category:
-        one: "Shipping Category"
-        other: "Shipping Categories"
+        one: "Категория доставки"
+        other: "Категории доставки"
       spree/state:
-        one: State
-        other: States
+        one: Область/Регион
+        other: Области/Регионы
       spree/tax_category:
-        one: "Tax Category"
-        other: "Tax Categories"
+        one: "Категория налогов"
+        other: "Категории налогов"
       spree/tax_rate:
-        one: "Tax Rate"
-        other: "Tax Rates"
+        one: "Ставка налога"
+        other: "Ставки налога"
       spree/taxon:
-        one: Taxon
-        other: Taxons
+        one: Рубрика
+        other: Рубрики
       spree/taxonomy:
-        one: Taxonomy
-        other: Taxonomies
+        one: Категория
+        other: Категории
       spree/user:
-        one: User
-        other: Users
+        one: Пользователь
+        other: Пользователи
       spree/variant:
-        one: Variant
-        other: Variants
+        one: Вариант
+        other: Варианты
       spree/zone:
-        one: Zone
-        other: Zones
+        one: Зона
+        other: Зоны
   add: "Добавить"
   add_action_of_type: Add action of type
   add_category: "Добавить категорию"
@@ -667,16 +667,16 @@ ru:
       instructions: "Your order has been CANCELED.  Please retain this cancellation information for your records."
       order_summary_canceled: "Order Summary [CANCELED]"
       subject: "Аннулирование заказа"
-      subtotal: "Subtotal:"
-      total: "Order Total:"
+      subtotal: "Подитог:"
+      total: "Итого по заказу:"
     confirm_email:
       dear_customer: "Dear Customer,"
       instructions: "Please review and retain the following order information for your records."
       order_summary: "Order Summary"
       subject: "Подтверждение заказа"
-      subtotal: "Subtotal:"
+      subtotal: "Подитог:"
       thanks: "Thank you for your business."
-      total: "Order Total:"
+      total: "Итого по заказу:"
   order_not_in_system: "Заказа с таким номером у нас не существует."
   order_number: "Заказ"
   order_operation_authorize: "Авторизовать"
