@@ -363,6 +363,8 @@ nl:
     user_sessions:
       user:
         signed_out: "Je bent succesvol uitgelogd"
+    failure:
+      invalid: "Gebruikersnaam of wachtwoord ongeldig"
   didnt_receive_confirmation_instructions: "Didn't receive confirmation instructions?"
   didnt_receive_unlock_instructions: "Didn't receive unlock instructions?"
   discount_amount: "Discount Amount"
@@ -567,8 +569,8 @@ nl:
   no_items_in_cart: "Geen producten in Winkelwagen"
   no_match_found: "Geen gelijke gevonden"
   no_payment_methods_available: "Can't check out, no payment methods are configured for this environment"
-  no_products_found: "No products found"
-  no_results: "No results"
+  no_products_found: "Geen producten gevonden"
+  no_results: "Geen resultaten"
   no_rules_added: No rules added
   no_user_found: "No user was found with that email address"
   none: Geen
