@@ -443,7 +443,7 @@ nl:
   flat_rate_per_item: "Flat Rate (per item)"
   flat_rate_per_order: "Flat Rate (per order)"
   flexible_rate: "Flexible Rate"
-  forgot_password: "Forgot Password"
+  forgot_password: "Wachtwoord vergeten"
   free_shipping: Free Shipping
   from_state: From State
   front_end: Front End
@@ -479,7 +479,7 @@ nl:
   include_in_shipment: Include in Shipment
   included_in_other_shipment: Included in another Shipment
   included_in_this_shipment: Included in this Shipment
-  instructions_to_reset_password: "Fill out the form below and instructions to reset your password will be emailed to you:"
+  instructions_to_reset_password: "Vul je e-mailadres in. De instructies om je wachtwoord te resetten worden naar je verstuurd:"
   integration_settings_warning: "If you are changing the billing integration, you must save first before you can edit the integration settings"
   intercept_email_address: Intercept Email Address
   intercept_email_instructions: "Override email recipient and replace with this address."
@@ -656,7 +656,7 @@ nl:
   paid: Betaald
   parent_category: "Bovenliggende categorie"
   password: Wachtwoord
-  password_reset_instructions: "Password Reset Instructions"
+  password_reset_instructions: "Wachtwoord resetten"
   password_reset_instructions_are_mailed: "Instructions to reset your password have been emailed to you. Please check your email."
   password_reset_token_not_found: "We're sorry, but we could not locate your account. If you are having issues try copying and pasting the URL from your email into your browser or restarting the reset password process."
   password_updated: "Password successfully updated"
@@ -881,7 +881,7 @@ nl:
   resend: "Opnieuw verzenden"
   resend_confirmation_instructions: "Resend confirmation instructions"
   resend_unlock_instructions: "Resend unlock instructions"
-  reset_password: "Reset my password"
+  reset_password: "Reset mijn wachtwoord"
   resource_controller:
     member_object_not_found: "Member object not found."
     successfully_created: "Successfully created!"
