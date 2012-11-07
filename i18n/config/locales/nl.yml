@@ -313,7 +313,7 @@ nl:
   category: Categorie
   change: Wijzig
   change_language: "Taalkeuze"
-  change_my_password: "Change my password"
+  change_my_password: "Je wachtwoord veranderen"
   charge_total: Charge Total
   charged: Afgeboekt
   charges: Charges
@@ -660,6 +660,7 @@ nl:
   password_reset_instructions_are_mailed: "Instructions to reset your password have been emailed to you. Please check your email."
   password_reset_token_not_found: "We're sorry, but we could not locate your account. If you are having issues try copying and pasting the URL from your email into your browser or restarting the reset password process."
   password_updated: "Password successfully updated"
+  password_confirmation: "Herhaal wachtwoord"
   path: Pad
   pay: Betalen
   payment: Betaling
@@ -1067,7 +1068,7 @@ nl:
   units: "Units"
   unrecognized_card_type: Unrecognized card type
   update: Updaten
-  update_password: "Update mijn wachtwoord en log mij in"
+  update_password: "Aanpassen en inloggen"
   updated_successfully: "Update gelukt"
   updating: Updating
   usage_limit: Usage Limit
