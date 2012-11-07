@@ -1,5 +1,13 @@
+\#*
+*~
+.#*
 .DS_Store
-*.swp
+.idea
+.project
+coverage
 Gemfile.lock
-/log
-
+tmp
+nbproject
+pkg
+*.sw?
+spec/dummy
