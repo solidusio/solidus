@@ -267,19 +267,6 @@ nl:
   alternative_phone: Alternative Phone
   amount: Bedrag
   analytics_trackers: Analytics Trackers
-  api:
-    access: "API Access"
-    clear_key: "Clear API key"
-    errors:
-      invalid_event: "Invalid event name, valid names are %{events}"
-      invalid_event_for_object: "Valid event name but not allowed for this object, valid names are %{events}"
-      missing_event: "No event name supplied"
-    generate_key: "Generate API key"
-    key: "API Key"
-    key_cleared: "API key cleared"
-    key_generated: "API key generated"
-    no_key: "No key defined"
-    regenerate_key: "Regenerate API key"
   apply: "Apply"
   are_you_sure: "Weet u het zeker"
   are_you_sure_category: "Wilt u deze categorie echt verwijderen?"
@@ -543,7 +530,7 @@ nl:
   maestro_or_solo_cards: Maestro/Solo cards
   mail_delivery_enabled: "Mail aflevering aangezet"
   mail_delivery_not_enabled: "Mail aflevering afgezet"
-  mail_methods: Mail Methods
+  mail_methods: "E-mail methodes"
   mail_server_preferences: "Mail server Instellingen"
   make_refund: Make refund
   mark_shipped: "Markeer verzonden"
@@ -955,7 +942,7 @@ nl:
   shipments: "Shipments"
   shipped: Verzonden
   shipping: "Verzenden"
-  shipping_address: "Afleveringsadres"
+  shipping_address: "Afleveradres"
   shipping_categories: "Verzend-categorieën"
   shipping_categories_description: "Beheer verzend-categorieën om duidelijk te maken op welke wijze producten verzonden kunnen worden"
   shipping_category: Shipping Category
@@ -995,6 +982,19 @@ nl:
   spree:
     date: Datum
     time: Tijd
+    api:
+        access: "API Access"
+        clear_key: "Clear API key"
+        errors:
+          invalid_event: "Invalid event name, valid names are %{events}"
+          invalid_event_for_object: "Valid event name but not allowed for this object, valid names are %{events}"
+          missing_event: "No event name supplied"
+        generate_key: "Generate API key"
+        key: "API Key"
+        key_cleared: "API key cleared"
+        key_generated: "API key generated"
+        no_key: "No key defined"
+        regenerate_key: "Regenerate API key"
   spree_gateway_error_flash_for_checkout: "There was a problem with your payment information. Please check your information and try again."
   ssl_will_be_used_in_development_and_test_modes: "SSL will be used in development and test mode if necessary."
   ssl_will_be_used_in_production_mode: "SSL will be used in production mode"
@@ -1071,14 +1071,14 @@ nl:
   updated_successfully: "Update gelukt"
   updating: Updating
   usage_limit: Usage Limit
-  use_as_shipping_address: "Gebruik als afleveringsadres"
-  use_billing_address: "Gebruik als factuuradres"
-  use_different_shipping_address: "Ander afleveringsadres gebruiken"
+  use_as_shipping_address: "Gebruik als afleveradres"
+  use_billing_address: "Gebruik factuuradres"
+  use_different_shipping_address: "Ander afleveradres gebruiken"
   use_new_cc: "Use a new card"
   user: Gebruiker
-  user_account: "Account Gebruiker"
-  user_created_successfully: "User created successfully"
-  user_details: "Details Gebruiker"
+  user_account: "Gebruikers account"
+  user_created_successfully: "Account succesvol aangemaakt"
+  user_details: "Details gebruiker"
   user_rule:
     choose_users: Choose users
   users: Gebruikers
