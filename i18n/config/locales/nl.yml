@@ -954,7 +954,7 @@ nl:
   shipment_updated: Shipment Updated
   shipments: "Shipments"
   shipped: Verzonden
-  shipping: Aflevering
+  shipping: "Verzenden"
   shipping_address: "Afleveringsadres"
   shipping_categories: "Verzend-categorieën"
   shipping_categories_description: "Beheer verzend-categorieën om duidelijk te maken op welke wijze producten verzonden kunnen worden"
@@ -1009,8 +1009,8 @@ nl:
   status: Status
   stop: Stop
   store: Winkel
-  street_address: "Adres lijn 1"
-  street_address_2: "Adres lijn 2"
+  street_address: "Adres"
+  street_address_2: "Adres 2"
   subtotal: Subtotaal
   subtract: Verreken
   successfully_created: "%{resource} has been successfully created!"
