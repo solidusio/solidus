@@ -331,7 +331,7 @@ nl:
   configured: Configured
   confirm: Bevestig
   confirm_delete: "Confirm Deletion"
-  confirm_password: "Wachtwoord bevestiging"
+  confirm_password: "Wachtwoord bevestigen"
   continue: "Ga Verder"
   continue_shopping: "Verder Winkelen"
   copy_all_mails_to: "Kopieer Alle Mails Naar"
@@ -659,36 +659,36 @@ nl:
   password_reset_instructions: "Wachtwoord resetten"
   password_reset_instructions_are_mailed: "Instructions to reset your password have been emailed to you. Please check your email."
   password_reset_token_not_found: "We're sorry, but we could not locate your account. If you are having issues try copying and pasting the URL from your email into your browser or restarting the reset password process."
-  password_updated: "Password successfully updated"
+  password_updated: "Wachtwoord succesvol gewijzigd"
   password_confirmation: "Herhaal wachtwoord"
   path: Pad
   pay: Betalen
   payment: Betaling
   payment_actions: "Actions"
   payment_gateway: "Betalings-Gateway"
-  payment_information: "Informatie Betaling"
-  payment_method: Payment Method
-  payment_methods: Payment Methods
+  payment_information: "Betaalmethode"
+  payment_method: "Betaalmethode"
+  payment_methods: "Betaalmethoden"
   payment_methods_setting_description: Configure methods customers can use to pay
   payment_processing_failed: "Payment could not be processed, please check the details you entered"
-  payment_state: Payment State
+  payment_state: "Betaling"
   payment_states:
-    balance_due: balance due
-    checkout: checkout
-    completed: completed
-    credit_owed: credit owed
-    failed: failed
-    paid: paid
-    pending: pending
-    processing: processing
-    void: void
-  payment_updated: Payment Updated
+    balance_due: "Debetsaldo"
+    checkout: "Afrekenen"
+    completed: "Voltooid"
+    credit_owed: "Bedrag verschuldigd"
+    failed: "Mislukt"
+    paid: "Betaald"
+    pending: "In afwachting"
+    processing: "In verwerking"
+    void: "Ongeldig"
+  payment_updated: "Betaling geupdate"
   payments: Betalingen
-  pending_payments: Pending Payments
+  pending_payments: "Afwachtende betaling"
   permalink: Permalink
   phone: Telefoon
   place_order: Bestellen
-  please_create_user: "Please create a user account"
+  please_create_user: "Maak een gebruikersaccount aan"
   powered_by: "Powered by"
   presentation: Presentatie
   preview: Preview
@@ -696,7 +696,7 @@ nl:
   price: Prijs
   price_range: "Prijs"
   price_bucket: Price Bucket
-  price_with_vat_included: "%{price} (inc. VAT)"
+  price_with_vat_included: "%{price} (inc. BTW)"
   problem_authorizing_card: "Fout bij autorisatie betaling"
   problem_capturing_card: "Fout bij afboeken betaling"
   problems_processing_order: "Fout vastgesteld bij het verwerken van de bestelling"
@@ -875,6 +875,7 @@ nl:
   register: Register as a New User
   register_or_guest: Checkout as Guest or Register
   registration: Registration
+  rename: "Hernoemen"
   remember_me: "Onthouden"
   remove: Verwijderen
   reports: Rapporten
@@ -932,7 +933,7 @@ nl:
     shipped_email:
       subject: "Verzend notificatie"
   shipment_number: "Zending #"
-  shipment_state: Shipment State
+  shipment_state: "Verzend status"
   shipment_states:
     backorder: backorder
     partial: partial
