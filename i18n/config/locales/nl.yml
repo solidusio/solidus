@@ -389,6 +389,9 @@ nl:
     user_sessions:
       user:
         signed_out: "Je bent succesvol uitgelogd"
+    user_registrations:
+      user:
+        signed_up: "Je account is succesvol aangemaakt"
     failure:
       invalid: "Gebruikersnaam of wachtwoord ongeldig"
   didnt_receive_confirmation_instructions: "Didn't receive confirmation instructions?"
@@ -432,12 +435,12 @@ nl:
   errors:
     messages:
       could_not_create_taxon: "Could not create taxon"
-      no_shipping_methods_available: "No shipping methods available for selected location, please change your address and try again."
+      no_shipping_methods_available: "Voor dit adres zijn geen verzendmethode beschikbaar, verander uw adres en probeer het opnieuw."
   errors_prohibited_this_record_from_being_saved:
     one: "Corrigeer de fout voordat je het formulier kunt opslaan"
     other: "Corrigeer de %{count} fouten voordat je het formulier kunt opslaan"
   event: Gebeurtenis
-  existing_customer: "Bestaande Klant"
+  existing_customer: "Bestaande klant"
   expiration: Verval
   expiration_month: "Vervalmaand"
   expiration_year: "Vervaljaar"
