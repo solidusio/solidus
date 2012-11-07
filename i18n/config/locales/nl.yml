@@ -389,9 +389,6 @@ nl:
     user_sessions:
       user:
         signed_out: "Je bent succesvol uitgelogd"
-    user_registrations:
-      user:
-        signed_up: "Je account is succesvol aangemaakt"
     failure:
       invalid: "Gebruikersnaam of wachtwoord ongeldig"
   didnt_receive_confirmation_instructions: "Didn't receive confirmation instructions?"
