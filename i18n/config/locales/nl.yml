@@ -1097,6 +1097,22 @@ nl:
   vat: "VAT"
   version: Versie
   view_shipping_options: "View shipping options"
+  views:
+    pagination:
+      first: "&laquo; Eerste"
+      last: "Laatste &raquo;"
+      previous: "&lsaquo; Vorige"
+      next: "Volgende &rsaquo;"
+      truncate: "&hellip;"
+  helpers:
+    page_entries_info:
+      one_page:
+        display_entries:
+          zero: "Geen %{entry_name} gevonden"
+          one: "Toont <b>1</b> %{entry_name}"
+          other: "Toon <b>alle %{count}</b> %{entry_name}"
+      more_pages:
+        display_entries: "Toont %{entry_name} <b>%{first}&nbsp;-&nbsp;%{last}</b> van <b>%{total}</b> in totaal"
   void: Void
   website: Website
   weight: Gewicht
