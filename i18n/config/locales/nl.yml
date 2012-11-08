@@ -937,14 +937,14 @@ nl:
   shipment_number: "Zending #"
   shipment_state: "Verzend status"
   shipment_states:
-    backorder: backorder
-    partial: partial
-    pending: pending
-    ready: ready
-    shipped: shipped
+    backorder: "backorder"
+    partial: "gedeeltelijk"
+    pending: "in afwachting"
+    ready: "voltooid"
+    shipped: "verzonden"
   shipment_updated: Shipment Updated
   shipments: "Shipments"
-  shipped: Verzonden
+  shipped: "verzonden"
   shipping: "Verzenden"
   shipping_address: "Afleveradres"
   shipping_categories: "Verzend-categorieën"
@@ -959,7 +959,7 @@ nl:
   shipping_total: "Verzending"
   shop_by_taxonomy: "Winkelen op %{taxonomy}"
   shopping_cart: "Winkelwagen"
-  show: Show
+  show: "Toon"
   show_active: "Show Active"
   show_deleted: "Toon verwijderde bestellingen"
   show_incomplete_orders: "Toon niet afgewerkte bestellingen"
@@ -980,7 +980,7 @@ nl:
   smtp_send_all_emails_as_from_following_address: "Send all mails as from the following address."
   smtp_send_copy_to_this_addresses: "Sends a copy of all outgoing mails to this address. For multiple addresses, separate with commas."
   smtp_username: "SMTP Gebruikersnaam"
-  sold: Sold
+  sold: "verkocht"
   sort_ordering: "Sort ordering"
   special_instructions: "Special Instructions"
   spree:
