@@ -319,6 +319,7 @@ nl:
   charges: Charges
   checkout: Bestelling
   cheque: Cheque
+  cut: "Knippen"
   city: Stad
   clone: Clone
   code: Code
@@ -662,6 +663,7 @@ nl:
   password_updated: "Wachtwoord succesvol gewijzigd"
   password_confirmation: "Herhaal wachtwoord"
   path: Pad
+  paste: "Plakken"
   pay: Betalen
   payment: Betaling
   payment_actions: "Actions"
