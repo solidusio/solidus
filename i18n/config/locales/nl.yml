@@ -324,7 +324,7 @@ nl:
   clone: Clone
   code: Code
   combine: Combine
-  complete: complete
+  complete: "voltooid"
   complete_list: "Complete lijst"
   configuration: Configuratie
   configuration_options: "Configuratie Opties"
@@ -367,9 +367,9 @@ nl:
     formats:
       default: '%d-%m-%Y'
   debit: Debit
-  default: Default
+  default: "Standaard"
   delete: Verwijder
-  delivery: Delivery
+  delivery: "Bezorging"
   depth: Diepte
   description: Omschrijving
   destroy: Verwijder
@@ -384,7 +384,7 @@ nl:
   discount_amount: "Discount Amount"
   display: Weergeven
   edit: Wijzig
-  edit_general_settings: "Edit General Settings"
+  edit_general_settings: "Algemene instellingen bewerken"
   editing_billing_integration: Editing Billing Integration
   editing_category: "Wijzig Categorie"
   editing_mail_method: Editing Mail Method
@@ -634,7 +634,7 @@ nl:
     awaiting_return: wachten op retour
     canceled: geannuleerd
     cart: winkelwagen
-    complete: afronden
+    complete: "voltooid"
     confirm: bevestigen
     delivery: verzendmethode
     payment: betalen
@@ -675,19 +675,20 @@ nl:
   payment_processing_failed: "Payment could not be processed, please check the details you entered"
   payment_state: "Betaling"
   payment_states:
-    balance_due: "Debetsaldo"
+    balance_due: "In afwachting"
     checkout: "Afrekenen"
     completed: "Voltooid"
     credit_owed: "Bedrag verschuldigd"
     failed: "Mislukt"
     paid: "Betaald"
-    pending: "In afwachting"
+    pending: "in afwachting"
     processing: "In verwerking"
     void: "Ongeldig"
   payment_updated: "Betaling geupdate"
   payments: Betalingen
   pending_payments: "Afwachtende betaling"
   permalink: Permalink
+  pending: "in afwachting"
   phone: Telefoon
   place_order: Bestellen
   please_create_user: "Maak een gebruikersaccount aan"
