@@ -88,11 +88,11 @@ nl:
       product_group:
         name: "Naam"
         product_count: "Product aantal"
-        product_scopes: "TODOProduct scopes"
+        product_scopes: "Product bereik"
         products: "Producten"
         url: "URL"
       product_scope:
-        arguments: "TODOArguments"
+        arguments: "Eigenschappen"
         description: "Omschrijving"
       promotion:
         code: "Code"
@@ -697,8 +697,8 @@ nl:
   preview: "Voorbeeld"
   previous: "vorige"
   price: "Prijs"
-  price_range: "TODOPrijs"
-  price_bucket: "TODOPrice Bucket"
+  price_range: "Prijsklasse"
+  price_bucket: "Prijsgroep"
   price_with_vat_included: "%{price} (inc. BTW)"
   problem_authorizing_card: "Fout bij autorisatie betaling"
   problem_capturing_card: "Fout bij afboeken betaling"
