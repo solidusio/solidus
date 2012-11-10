@@ -88,7 +88,7 @@ nl:
       product_group:
         name: "Naam"
         product_count: "Product aantal"
-        product_scopes: "Product bereik"
+        product_scopes: "Product scopes"
         products: "Producten"
         url: "URL"
       product_scope:
@@ -245,7 +245,7 @@ nl:
   add_product: "Add Product"
   add_product_properties: "Add product properties"
   add_rule_of_type: "Regel type toevoegen"
-  add_scope: "TODOAdd a scope"
+  add_scope: "Een scope toevoegen"
   add_state: "Status Toevoegen"
   add_to_cart: "Toevoegen aan Winkelwagen"
   add_zone: "Zone toevoegen"
@@ -286,7 +286,7 @@ nl:
   back_to_store: "Verder Winkelen"
   backordered: "Nabestelled"
   backordering_is_allowed: "Backorders %{not} toegestaan"
-  balance_due: "TODODebet"
+  balance_due: "Te betalen"
   best_selling_products: "Best verkopende producten"
   best_selling_taxons: "Beste verkopende taxonomieën"
   bill_address: "Factuuradres"
@@ -385,7 +385,7 @@ nl:
   display: "Weergeven"
   edit: "Wijzig"
   edit_general_settings: "Algemene instellingen bewerken"
-  editing_billing_integration: "TODOEditing Billing Integration"
+  editing_billing_integration: "Bewerken van betaal integratie"
   editing_category: "Wijzig Categorie"
   editing_mail_method: "Bewerk e-mail instelling"
   editing_option_type: "Optie type wijzigen"
@@ -566,7 +566,7 @@ nl:
   new_promotion: "Nieuwe promotie"
   new_property: "Nieuwe eigenschap"
   new_prototype: "Nieuw prototype"
-  new_return_authorization: "TODONew Return Authorization"
+  new_return_authorization: "Nieuwe autorisatie terugsturen"
   new_shipment: "Nieuwe verzending"
   new_shipping_category: "Nieuwe verzend categorie"
   new_shipping_method: "Nieuwe verzendwijze"
@@ -723,16 +723,16 @@ nl:
   product_scopes:
     groups:
       price:
-        description: "TODOScopes for selecting products based on Price"
+        description: "Scopes voor het selecteren van producten op basis van prijs"
         name: "Prijs"
       search:
-        description: "TODOScopes for selecting products based on name, keywords and description of product"
+        description: "Scopes voor het selecteren van producten op basis van naam, keywords en omschrijving van het product"
         name: "Zoeken op tekst"
       taxon:
-        description: "TODOScopes for selecting products based on Taxons"
+        description: "copes voor het selecteren van producten op basis van taxonomie"
         name: "Taxonomie"
       values:
-        description: "#Scopes for selecting products based on option and property values"
+        description: "Scopes voor het selecteren van producten op basis van opties en eigenschappen"
         name: "Eigenschappen"
     scopes:
       ascend_by_master_price:
