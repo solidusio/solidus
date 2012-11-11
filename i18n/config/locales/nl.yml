@@ -1007,17 +1007,17 @@ nl:
   ssl_will_not_be_used_in_production_mode: "SSL will not be used in production mode"
   start: Start
   start_date: Valid from
-  state: Status
-  state_based: "Status Gebaseerd"
+  state: "Staat/provincie"
+  state_based: "Staat/provincie basis"
   state_setting_description: "Beheer de lijst van staten/provincies die geassocieerd zijn met elk land."
-  states: Statussen
-  status: Status
-  stop: Stop
-  store: Winkel
+  states: "Staten/provinciën"
+  status: "Status"
+  stop: "Stop"
+  store: "Winkel"
   street_address: "Adres"
   street_address_2: "Adres 2"
-  subtotal: Subtotaal
-  subtract: Verreken
+  subtotal: "Subtotaal"
+  subtract: "Verreken"
   successfully_created: "%{resource} has been successfully created!"
   successfully_removed: "%{resource} has been successfully removed!"
   successfully_updated: "%{resource} has been successfully updated!"
