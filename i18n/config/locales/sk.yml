@@ -654,7 +654,7 @@ sk:
   option_values: "Hodnoty opcií"
   options: Opcie
   or: alebo
-  or_over_price: "%{price} or over"
+  or_over_price: %{price} alebo viac
   order: Objednávka
   order_adjustments: "Order adjustments"
   order_confirmation_note: ""
@@ -757,7 +757,7 @@ sk:
   preview: Preview
   previous: Predchádzajúci
   price: Cena
-  price_range: Price Range
+  price_range: Cenové rozpätie
   price_sack: Price Sack
   problem_authorizing_card: "Problém autorizácie kreditnou kartou"
   problem_capturing_card: "Problém zachytenia kreditnou kartou"
@@ -1154,7 +1154,7 @@ sk:
   unable_to_connect_to_gateway: "Unable to connect to gateway."
   unable_to_save_order: "Nevedeli sme uložit objednávku"
   under_paid: "Under Paid"
-  under_price: "Under %{price}"
+  under_price: "Menej ako %{price}"
   unrecognized_card_type: Neznámy typ kreditnej karty
   update: Zmeň
   update_password: "Obnov moje heslo a prihlás ma"
