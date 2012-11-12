@@ -634,7 +634,7 @@ nl:
     awaiting_return: "wachten op retour"
     canceled: "geannuleerd"
     cart: "winkelwagen"
-    complete: "voltooid"
+    complete: "voltooien"
     confirm: "bevestigen"
     delivery: "verzendmethode"
     payment: "betalen"
