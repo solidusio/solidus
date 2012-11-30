@@ -77,8 +77,6 @@ id:
         special_instructions: "Instruksi Tambahan"
         state: "Status"
         total: "Total"
-      spree/payment:
-        amount: "Jumlah"
       spree/payment_method:
         name: "Nama"
       spree/product:
@@ -146,8 +144,8 @@ id:
         one: "Alamat"
         other: "Alamat lainnya"
       spree/cheque_payment:
-        one: "Pembayaran Dengan Check"
-        other: "Pembayaran lainnya Dengan Check"
+        one: "Pembayaran Dengan Cek"
+        other: "Pembayaran lainnya Dengan Cek"
       spree/country:
         one: "Negara"
         other: "Negara lainnya"
@@ -239,7 +237,7 @@ id:
   address_information: "Informasi Alamat"
   adjustment: "Penyesuaian"
   adjustment_total: "Total Penyesuaian"
-  adjustments: "Penyesuaian-penyesuaian"
+  adjustments: "Penambahan"
   admin:
     mail_methods:
       send_testmail: "Kirim Testmail"
@@ -267,13 +265,14 @@ id:
   are_you_sure_delete: "Anda yakin mau menghilangkan record berikut?"
   are_you_sure_delete_image: "Anda yakin mau menghilangkan gambar berikut?"
   are_you_sure_option_type: "Anda yakin mau menghilangkan tipe pilihan berikut?"
-  are_you_sure_you_want_to_capture: "Anda yakin mau mengcapture?"
+  are_you_sure_you_want_to_capture: "Anda yakin ingin meng-capture?"
   assign_taxon: "Berikan Takson"
   assign_taxons: "Berikan Takson-takson"
   attachment_default_style: "Tipe-nya Lampiran"
-  attachment_default_url: "URL-nya Lampiran"
+  attachment_default_url: "URL default Lampiran"
   attachment_path:  "Path-nya Lampiran"
   attachment_styles: "Paperclip Styles"
+  attachment_url: "URL Lampiran"
   authorization_failure: "Gagal Otorisasi"
   authorized: "Sudah Terotorisasi"
   availability: "Tersedianya"
@@ -299,12 +298,13 @@ id:
   back_to_states_list: "Kembali ke Daftar Status"
   back_to_store: "Kembali ke Toko"
   back_to_tax_categories_list: "Kembali ke Daftar Kategori Pajak"
+  back_to_tax_rates_list: "Kembali ke Daftar Tingkat Pajak"
   back_to_taxonomies_list: "Kembali ke Daftar Taksonomi"
   back_to_trackers_list: "Kembali ke Daftar Pelacakan"
   back_to_users_list: "Kembali ke Daftar User"
   back_to_zones_list: "Kembali ke Daftar Wilayah"
   backordered: "Backorder"
-  backordering_is_allowed: "Backorder %{tidak} dapat dilakukan"
+  backordering_is_allowed: "Backorder %{not} dapat dilakukan"
   balance_due: "Sisa Pelunasan"
   bill_address: "Alamat Tagihan"
   billing: "Penagihan"
@@ -336,7 +336,6 @@ id:
   check_for_spree_alerts: "Cek peringatan Spree"
   checkout: "Checkout"
   cheque: "Cek"
-  choose_a_customer: "Pilih pelanggan"
   choose_currency: "Pilih Mata Uang"
   choose_dashboard_locale: "Pilih Bahasa Dashboard"
   city: "Kota"
@@ -347,7 +346,7 @@ id:
   complete_list: "Complete List"
   configuration: "Konfigurasi"
   configuration_options: "Pilihan Konfigurasi"
-  configurations: "Kofigurasi"
+  configurations: "Konfigurasi"
   configure_s3: "Atur S3"
   configured: "Teratur"
   confirm: "Yakin"
@@ -356,9 +355,10 @@ id:
   continue: "Lanjut"
   continue_shopping: "Lanjutkan belanja"
   copy_all_mails_to: "Salin pesan ke"
+  cost_currency: "Biaya Mata Uang"
   cost_price: "Harga Pokok"
   count_of_reduced_by: "Jumlah '%{name}' berkurang %{count} buah"
-  countries: "Countries"
+  countries: "Negara"
   country: "Negara"
   country_based: "Berdasarkan negara"
   coupon: "Kupon"
@@ -386,15 +386,10 @@ id:
   customer_details_updated: "Detail pelanggan telah diubah"
   customer_search: "Pencarian pelanggan"
   cut: "Potong"
-  date:
-    formats:
-      default: ! '%d %b %Y'
-      long: ! '%A, %d %B %Y'
-      short: ! '%d.%m.%Y'
   date_completed: "Tanggal Selesai"
   date_created: "Tanggal terbuat"
   date_range: "Rentang Tanggal"
-  debit: "Debet"
+  debit: "Debit"
   default: "Nilai Awal"
   default_meta_description: "Dekripsi Meta Awal"
   default_meta_keywords: "Keyword Meta Awal"
@@ -443,6 +438,7 @@ id:
   enable_login_via_login_password: "Gunakan email dan kata sandi yang standar"
   enable_login_via_openid: "Dapat menggunakan OpenID"
   enable_mail_delivery: "Aktifkan Pengiriman Pesan"
+  end: "Akhir"
   ending_in: "Berakhir pada"
   enter_at_least_five_letters: "Inputkan minimal lima karakter pada nama pelanggan"
   enter_exactly_as_shown_on_card: "Tolong, inputkan secara tepat apa yang ada pada kartu"
@@ -502,7 +498,7 @@ id:
   gateway_config_unavailable: "Gateway tidak tersedia untuk lingkungan"
   gateway_configuration: "Konfigurasi Gateway"
   gateway_error: "Kesalahan Gateway"
-  gateway_setting_description: "Pilih gateway pembayaran dan konifgurasi pengaturan"
+  gateway_setting_description: "Pilih gateway pembayaran dan konfigurasi pengaturan"
   gateway_settings_warning: "Jika anda mengganti tipe gateway, anda harus menyimpan terlebih dahulu sebelum anda dapat mengubah pengaturan gateway"
   general: "Umum"
   general_settings: "Pengaturan Umum"
@@ -513,11 +509,12 @@ id:
   google_analytics_id: "Analytics ID"
   google_analytics_new: "Akun Google Analytics Baru"
   google_analytics_setting_description: "Atur Google Analytics ID."
-  guest_checkout: "Guest Checkout"
+  guest_checkout: "Checkout sebagai Tamu"
   guest_user_account: "Bayar sebagai Tamu"
-  has_no_shipped_units: "tidak memiliki unit yang dikirimkan"
+  has_no_shipped_units: "tidak memiliki unit untuk dikirimkan"
   height: "Tinggi"
   hello_user: "Halo Pengguna"
+  hide_cents: "Sembunyikan nilai sen"
   history: "Riwayat"
   home: "Beranda"
   icon: "Ikon"
@@ -525,7 +522,7 @@ id:
   image: "Gambar"
   image_settings: "Pengaturan Gambar"
   image_settings_description: "Pengaturan Deskripsi Gambar"
-  image_settings_updated: "Pengturan Gambar telah diubah"
+  image_settings_updated: "Pengaturan Gambar telah diubah"
   image_settings_warning: "Anda akan membutuhkan regenerasi thumbnail jika anda mengubah style paperclip. Gunakan rake paperclip:refresh:thumbnails untuk melakukan regenerasi"
   images: "Gambar"
   images_for: "Gambar untuk"
@@ -542,7 +539,7 @@ id:
   intercept_email_instructions: "Ganti email penerima dengan email ini"
   invalid_search: "Kriteria pencarian tidak dapat ditemukan."
   inventory: "Inventori"
-  inventory_adjustment: "Penyesuaian Inevntori"
+  inventory_adjustment: "Penyesuaian Inventori"
   inventory_setting_description: "Konfigurasi Inventori, Pengembalian, Penampilan Barang Kosong"
   inventory_settings: "Pengaturan Inventori"
   is_not_available_to_shipment_address: "tidak tersedia untuk alamat tujuan"
@@ -555,6 +552,7 @@ id:
     operators:
       gt: "lebih besar dari"
       gte: "lebih besar dari atau sama dengan"
+  jirafe: "Jirafe"
   landing_page_rule:
     path: "Path"
   last_name: "Nama Belakang"
@@ -627,7 +625,7 @@ id:
   new_promotion: "Promosi baru"
   new_property: "Properti baru"
   new_prototype: "Prototipe baru"
-  new_return_authorization: "Pengembalian hak baru"
+  new_return_authorization: "Pengembalian baru"
   new_shipment: "Pengiriman baru"
   new_shipping_category: "Kategori pengiriman baru"
   new_shipping_method: "Metode pengiriman baru"
@@ -641,10 +639,10 @@ id:
   new_variant: "Variasi Baru"
   new_zone: "Daerah baru"
   next: "Lanjut"
-  say_no: "Tidak"
+  "no": "Tidak"
   no_items_in_cart: "Tidak ada barang di keranjang belanja"
   no_mail_methods_defined: "Tidak ada metode pesan yang didefinisikan"
-  no_match_found: "Tidak ditemukan"
+  no_match_found: "Tidak diketemukan"
   no_products_found: "Produk tidak ditemukan"
   no_promotions_found: "Promosi tidak ditemukan"
   no_results: "Tidak ada hasil"
@@ -667,6 +665,7 @@ id:
     product_not_deleted: "Produk tidak dapat dihapus"
     variant_deleted: "Varian dapat dihapus"
     variant_not_deleted: "Varian tidak dapat dihapus"
+  on_demand: "On Demand"
   on_hand: "Stok yang tersedia"
   one_default_category_with_default_tax_rate: "Anda harus mengkonfigurasi satu kategori dengan tarif pajak anda"
   operation: "Pengerjaan"
@@ -729,7 +728,7 @@ id:
   over_paid: "Kelebihan pembayaran"
   overview: "Keseluruhan"
   page_only_viewable_when_logged_in: "Anda mengunjungi halaman yang hanya dapat dilihat saat anda login"
-  page_only_viewable_when_logged_out: "Anda mengunjungi halaman yang hanya dapat dilihat saat anda login"
+  page_only_viewable_when_logged_out: "Anda mengunjungi halaman yang hanya dapat dilihat saat anda logout"
   pagination:
     next_page: "halaman selanjutnya &raquo;"
     previous_page: "&laquo; halaman sebelumnya"
@@ -756,7 +755,7 @@ id:
   payment_processor_choose_link: "halaman pembayaran kami"
   payment_state: "Status pembayaran"
   payment_states:
-    balance_due: "Sisa Pelunasan"
+    balance_due: "Saldo"
     checkout: "checkout"
     completed: "Selesai"
     credit_owed: "Kredit yang dimiliki"
@@ -777,7 +776,7 @@ id:
   populate_get_error: "Sesuatu ada yang salah. Silahkan mencoba ulang untuk menambahkan barang."
   powered_by: "Didukung oleh"
   presentation: "Presentasi"
-  preview: "Penijauan"
+  preview: "Peninjauan"
   previous: "Sebelumnya"
   price: "Harga"
   price_range: "Batasan Harga"
@@ -809,7 +808,7 @@ id:
         name: "Harga"
       search:
         description: "Cakupan untuk memilih produk berdasarkan nama, kata kunci, deskrisi dari produk"
-        name: "Pencarian text"
+        name: "Pencarian teks"
       taxon:
         description: "Cakupan untuk memilih produk berdasakan takson"
         name: "Takson"
@@ -877,7 +876,7 @@ id:
       with:
         args:
           value: "Nilai"
-        description: "Pilih semua produk yang memiliki minimal satu variasi yang ditentukan nilai baik sebagai properti atau pilihan (contoh. merah)"
+        description: "Pilih semua produk yang memiliki minimal satu variasi yang ditentukan nilai baik sebagai properti atau pilihan (contoh: merah)"
         name: "Dengan nilai"
         sentence: "dengan nilai <em>%s</em>"
       with_ids:
@@ -889,27 +888,27 @@ id:
       with_option:
         args:
           option: "Pilihan"
-        description: "Pilih semua produk yang memiliki opsi tertentu(contoh. warna)"
+        description: "Pilih semua produk yang memiliki opsi tertentu(contoh: warna)"
         name: "Dengan opsi"
         sentence: "dengan opsi <em>%s</em>"
       with_option_value:
         args:
           option: "Pilihan"
           value: "Nilai"
-        description: "Pilih semua produk yang memiliki minimal satu variasi ditentukan dengan nilai dan opsi tertentu(contoh. warna:merah)"
+        description: "Pilih semua produk yang memiliki minimal satu variasi ditentukan dengan nilai dan opsi tertentu(contoh => warna:merah)"
         name: "Dengan nilai dan opsi"
         sentence: "dengan opsi <em>%s</em> dan nilai <em>%s</em>"
       with_property:
         args:
           property: "Properti"
-        description: "Pilih semua produk yang memiliki properti tertentu(contoh. berat)"
+        description: "Pilih semua produk yang memiliki properti tertentu(contoh: berat)"
         name: "Dengan properti"
         sentence: "dengan properti <em>%s</em>"
       with_property_value:
         args:
           property: "Properti"
           value: "Nilai"
-        description: "Pilih semua produk yang memiliki minimal satu variasi ditentukan dengan nilai dan properti (contoh. berat:10kg)"
+        description: "Pilih semua produk yang memiliki minimal satu variasi ditentukan dengan nilai dan properti (contoh => berat:10kg)"
         name: "Dengan nilai properti"
         sentence: "dengan properti <em>%s</em> dan nilai <em>%s</em>"
   products: "Produk"
@@ -1005,12 +1004,13 @@ id:
   s3_access_key: "Access Key"
   s3_bucket: "Bucket"
   s3_headers: "S3 Headers"
-  s3_not_used_for_product_images: "S3 is not being used for product images"
+  s3_not_used_for_product_images: "S3 tidak digunakan untuk gambar produk"
   s3_protocol: "S3 Protocol"
   s3_secret: "Secret Key"
   s3_used_for_product_images: "S3 telah digunakan untuk gambar produk"
   sales_tax: "Pajak Penjualan"
   sales_total: "Total Penjualan"
+  sales_totals: "Total Penjualan"
   sales_total_description: "Total Penjualan untuk semua Pesanan"
   save_and_continue: "Simpan dan Lanjutkan"
   save_preferences: "Simpan Preferensi"
@@ -1100,7 +1100,16 @@ id:
   sort_ordering: "Kelompokkan Pesanan"
   special_instructions: "Instruksi Spesial"
   spree:
+    api:
+      access: "Akses"
+      clear_key: "Hapus akses"
+      generate_key: "Buat akses"
+      key: "Kunci akses"
+      key_generated: "Kunci akses berhasil dibuat."
+      no_key: "Tidak ada kunci akses"
+      regenerate_key: "Buat kunci baru"
     dash:
+      jirafe_settings_updated: "Pengaturan Jirafe berhasil diperbaharui."
       jirafe:
         app_id: "App ID"
         app_token: "App Token"
@@ -1110,11 +1119,14 @@ id:
         token: "Token"
     date: "Tanggal"
     date_picker:
-      format: ! '%Y/%m/%d'
-      js_format: 'yy/mm/dd'
+      format: "Format"
     time: "Waktu"
   spree/order:
     coupon_code: "Kode Kupon"
+    date: "Tanggal"
+    date_picker:
+      format: 'yy/mm/dd'
+    time: "Waktu"
   spree_alert_checking: "Cek keamanan Spree dan peringatan release"
   spree_alert_not_checking: "Tidak melakukan Cek keamanan Spree dan peringatan release"
   spree_gateway_error_flash_for_checkout: "Terdapat suatu masalah dengan informasi pembayaran anda. Cek informasi anda lagi dan coba lagi."
@@ -1135,8 +1147,8 @@ id:
   status: "Status"
   stop: "Berakhir"
   store: "Toko"
-  street_address: "Alamat"
-  street_address_2: "Alamat (lanjutan)"
+  street_address: "Alamat Jalan"
+  street_address_2: "Alamat Jalan (cont'd)"
   subtotal: "Subtotal"
   subtract: "Kurangi"
   successfully_created: "%{resource} telah Berhasil Dibuat!"
@@ -1155,6 +1167,7 @@ id:
   tax_type: "Tipe Pajak"
   taxon: "Takson"
   taxon_edit: "Ubah Takson"
+  taxon_placeholder: "Placeholder Takson"
   taxonomies: "Taksonomi"
   taxonomies_setting_description: "Buat dan kelola taksonomi."
   taxonomy:
@@ -1200,7 +1213,7 @@ id:
   use_billing_address: "Alamat Penagihan"
   use_different_shipping_address: "Gunakan Alamat Pengiriman yang Berbeda"
   use_new_cc: "Gunakan kartu baru"
-  use_s3: "Pakai Amazon S3 For Images"
+  use_s3: "Pakai Amazon S3 untuk gambar"
   user: "Pengguna"
   user_account: "Akun Pengguna"
   user_created_successfully: "Pengguna Berhasil Dibuat"
@@ -1237,7 +1250,7 @@ id:
   whats_this: "Petunjuk"
   width: "Lebar"
   year: "Tahun"
-  say_yes: "Ya"
+  "yes": "Ya"
   you_have_been_logged_out: "Anda telah keluar."
   you_have_no_orders_yet: "Anda belum mempunyai pesanan."
   your_cart_is_empty: "Keranjang Belanja anda kosong"
