@@ -81,7 +81,8 @@ da:
         name: Navn
       spree/product:
         available_on: "Available On"
-        cost_price: "Cost Price"
+        cost_price: "Kostpris"
+        cost_currency: "Kostvaluta"
         description: Description
         master_price: "Master Price"
         name: Navn
@@ -130,6 +131,7 @@ da:
         password_confirmation: "Bekræft adgangskode"
       spree/variant:
         cost_price: "Kostpris"
+        cost_currency: "Kostvaluta"
         depth: Dybte
         height: Højde
         price: Pris
@@ -282,7 +284,7 @@ da:
   back_to_adjustments_list: "Back To Adjustments List"
   back_to_images_list: "Back To Images List"
   back_to_mail_methods_list: "Back To Mail Methods List"
-  back_to_option_tyles_list: "Back To Option Types List"
+  back_to_option_types_list: "Back To Option Types List"
   back_to_payment_methods_list: "Back To Payment Methods List"
   back_to_payments_list: "Back To Payments List"
   back_to_products_list: "Back To Products List"
@@ -348,6 +350,7 @@ da:
   continue_shopping: "Fortsæt indkøb"
   copy_all_mails_to: Kopier alle emails til
   cost_price: "Kostpris"
+  cost_currency: "Kostvaluta"
   count_of_reduced_by: "optælling af '%{name}' reduceret ved %{count}"
   country: Land
   country_based: "Landbaseret"
@@ -501,6 +504,7 @@ da:
   has_no_shipped_units: har ingen leverede enheder
   height: Højde
   hello_user: "Hallo bruger"
+  hide_cents: Skjul øre
   history: Historie
   home: "Forside"
   icon: "Ikon"
@@ -1075,6 +1079,11 @@ da:
   sort_ordering: "Sorteringsrækkefølge"
   special_instructions: "Specielle instrukser"
   spree:
+    date: Dato
+    date_picker:
+      format: 'yy/mm/dd'
+      js_format: 'yy/mm/dd'
+    time: Tid
   spree/order:
     coupon_code: Coupon Code
     date: Dato
