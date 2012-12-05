@@ -218,7 +218,7 @@ da:
         one: Zone
         other: Zoner
   add: Tilføj
-  add_action_of_type: Add action of type
+  add_action_of_type: Tilføj handling
   add_category: "Tilføj kategori"
   add_country: "Tilføj land"
   add_new_header: "Tilføj nyt hovede"
@@ -896,7 +896,7 @@ da:
   products: Produkter
   products_with_zero_inventory_display: "Produkter som ikke findes i lageret vil %{not} blive vist"
   promotion: Kampagne
-  promotion_action: Promotion Action
+  promotion_action: Kampagnehandling
   promotion_action_types:
     create_adjustment:
       description: Creates a promotion credit adjustment on the order
@@ -907,7 +907,7 @@ da:
     give_store_credit:
       description: Gives the user store credit of the amount specified
       name: Give store credit
-  promotion_actions: Actions
+  promotion_actions: Handlinger
   promotion_form:
     match_policies:
       all: Match enhver af disse regler
@@ -1010,7 +1010,7 @@ da:
   send_copy_of_orders_mails_to: Send kopi af ordre emails til
   send_mails_as: Send emails som
   send_me_reset_password_instructions: "Send mig instruktioner til nulstilling af adgangskode"
-  send_order_mails_as: Send ordre emails som
+  send_order_mails_as: Send ordre-e-mails som
   server: Server
   server_error: "Serveren returnerede en fejl"
   settings: Indstillinger
