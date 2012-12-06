@@ -395,6 +395,12 @@ es:
   depth: Profundidad
   description: Descripción
   destroy: Eliminar
+  devise:
+    user_sessions:
+      user:
+        signed_out: "Ha cerrado la sesión"
+    failure:
+      invalid: "Nombre de usuario o contraseña no válidos"
   didnt_receive_confirmation_instructions: "¿No ha recibido instrucciones de confirmación?"
   didnt_receive_unlock_instructions: "¿No ha recibido instrucciones de desbloqueo?"
   discount_amount: "Importe del descuento"
