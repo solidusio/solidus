@@ -378,6 +378,10 @@ es:
   date_completed: Date Completed
   date_created: Fecha creada
   date_range: "Rango de Fecha"
+  date:
+    month_names: [~, enero, febrero, marzo, abril, mayo, junio, julio, agosto, septiembre, octubre, noviembre, diciembre]
+    formats:
+      default: '%d-%m-%Y'
   debit: Débito
   default: Por omisión
   default_meta_description: Default Meta Description
