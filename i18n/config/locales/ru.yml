@@ -41,7 +41,7 @@ ru:
         verification_value: "Значение проверки"
         year: Год
       spree/inventory_unit:
-        state: State
+        state: Состояние
       spree/line_item:
         price: Цена
         quantity: Кол-во
@@ -85,7 +85,7 @@ ru:
         description: Описание
         master_price: "Цена"
         name: Название
-        on_demand: "On Demand"
+        on_demand: "По требованию"
         on_hand: "На складе"
         shipping_category: "Категория доставки"
         tax_category: "Категория налогов"
@@ -105,7 +105,7 @@ ru:
       spree/prototype:
         name: Название
       spree/return_authorization:
-        amount: Amount
+        amount: Сумма
       spree/role:
         name: Название
       spree/state:
@@ -216,7 +216,7 @@ ru:
         one: Зона
         other: Зоны
   add: "Добавить"
-  add_action_of_type: Add action of type
+  add_action_of_type: "Добавить действие типа"
   add_category: "Добавить категорию"
   add_country: "Добавить страну"
   add_new_header: "Add New Header"
@@ -239,18 +239,18 @@ ru:
   adjustments: "Надбавки"
   admin:
     mail_methods:
-      send_testmail: 'Send Testmail'
+      send_testmail: 'Отправить тестовое письмо'
       testmail:
-        delivery_error: 'Testmail delivery error'
-        delivery_success: 'Testmail sent successfully'
-        error: 'Testmail error: %{e}'
+        delivery_error: 'Ошибка отправки тестового письма'
+        delivery_success: 'Тестовое письмо успешно отправлено'
+        error: 'Ошибка отправки тестового письма: %{e}'
   administration: "Администрирование"
   all: "все"
   all_departments: "Все разделы"
   allow_backorders: "Разрешить предварительные заказы"
-  allow_ssl_in_development_and_test: Allow SSL to be used when in development and test modes
-  allow_ssl_in_production: Allow SSL to be used in production mode
-  allow_ssl_in_staging: Allow SSL to be used in staging mode
+  allow_ssl_in_development_and_test: Разрешить SSL для development и test режимов
+  allow_ssl_in_production: Разрешить SSL для production режима
+  allow_ssl_in_staging: Разрешить SSL для staging режима
   allowed_ssl_in_production_mode: "SSL %{not} будет использован в режиме production"
   already_registered: "Уже зарегистрированы"
   alt_text: "Альтернативный текст"
@@ -311,7 +311,7 @@ ru:
   cancel_my_account: "Удалить мой аккаунт"
   cancel_my_account_description: "Недоволен?"
   canceled: "Отменен"
-  cannot_create_payment_without_payment_methods: You cannot create a payment for an order without any payment methods defined.
+  cannot_create_payment_without_payment_methods: Нельзя создать платеж для заказа, если не настроен ни один из способов оплаты.
   cannot_create_returns: "Невозможно оформить возврат, т.к. этот заказ ещё не отправлен."
   cannot_perform_operation: "Невозможно выполнить требуемую операцию"
   capture: "Провести платёж"
@@ -353,7 +353,7 @@ ru:
   country_based: "Страна"
   coupon: "Купон"
   coupon_code: "Код купона"
-  coupon_code_applied: The coupon code was successfully applied to your order.
+  coupon_code_applied: "Купон успешно применен к Вашему заказу."
   create: "Создать"
   create_a_new_account: "Создать новую учетную запись"
   create_user_account: "Создать нового пользователя"
@@ -362,26 +362,26 @@ ru:
   credit_card: "Кредитная карта"
   credit_card_capture_complete: "Платёж по кредитной карте завершён"
   credit_card_payment: "Платёж кредитной картой"
-  credit_cards: Credit Cards
+  credit_cards: "Кредитные карты"
   credit_owed: "Кредитная задолженность"
   credit_total: "Итого по кредитным картам"
   credits: "Кредиты"
-  currency: Currency
-  currency_settings: "Currency Settings"
-  currency_symbol_position: "Put currency symbol before or after dollar amount?"
+  currency: "Валюта"
+  currency_settings: "Настройки валюты"
+  currency_symbol_position: "Положение символа валюты относительно суммы"
   current: "Текущий"
   customer: "Клиент"
   customer_details: "Реквизиты клиента"
-  customer_details_updated: "The customer's details have been updated."
+  customer_details_updated: "Данные клиента были обновлены."
   customer_search: "Поиск клиента"
   cut: Cut
-  date_completed: Date Completed
+  date_completed: "Дата завершения"
   date_created: "Дата создания"
   date_range: "Период времени"
   debit: "Дебет"
   default: "По умолчанию"
-  default_meta_description: Default Meta Description
-  default_meta_keywords: Default Meta Keywords
+  default_meta_description: "Meta-описание по умолчанию"
+  default_meta_keywords: "Meta ключевые слова по умолчанию"
   default_seo_title: "SEO-заголовок по умолчанию"
   default_tax: "Стандартный налог"
   default_tax_zone: "Стандартный налоговый регион"
@@ -394,10 +394,10 @@ ru:
   didnt_receive_confirmation_instructions: "Не получили инструкций по подтверждению?"
   didnt_receive_unlock_instructions: "Не получили инструкций по разблокированию?"
   discount_amount: "Сумма скидки"
-  dismiss_banner: "No. Thanks! I'm not interested, do not display this message again"
+  dismiss_banner: "Нет, спасибо! Я не заинтересован. Не показывайте мне больше это сообщение."
   display: "Показать"
   display_currency: "Display currency"
-  dollar_amounts_displayed_as: "Dollar amounts displayed as %{example}"
+  dollar_amounts_displayed_as: "Цены будут отображаться как %{example}"
   edit: "Редактировать"
   edit_general_settings: "Редактировать общие настройки"
   editing_billing_integration: "Редактировать интеграцию с биллингом"
@@ -428,35 +428,35 @@ ru:
   enable_login_via_openid: "Авторизоваться с помощью OpenID"
   enable_mail_delivery: "Включить доставку почты"
   ending_in: "Ending in"
-  enter_at_least_five_letters: Enter at least five letters of customer name
+  enter_at_least_five_letters: "Введите хотя бы пять символов имени клиента"
   enter_exactly_as_shown_on_card: "Пожалуйста, введите точно как показано на карте"
   enter_password_to_confirm: "(необходимо указать Ваш текущий пароль для подтверждения изменений)"
   enter_token: Enter Token
   environment: "Среда окружения"
   error: "ошибка"
-  error_user_destroy_with_orders: "Users with completed orders may not be deleted"
+  error_user_destroy_with_orders: "Пользователи с завершенными заказами могут не быть удалены."
   errors:
     messages:
       could_not_create_taxon: "Невозможно создать таксон"
-      no_payment_methods_available: "No payment methods are configured for this environment"
+      no_payment_methods_available: "Для этого окружения не настроено ни одного способа оплаты"
       no_shipping_methods_available: "Для указанного местоположения отсутствуют способы доставки, пожалуйста, смените адрес и попробуйте снова."
   errors_prohibited_this_record_from_being_saved:
     one: "1 ошибка не позволяет сохранить запись в базе"
-    other: "%{count} errors prohibited this record from being saved"
+    other: "%{count} ошибок не позволяют сохранить запись в базе"
   event: "Событие"
   events:
     spree:
       cart:
-        add: 'Add to cart'
+        add: 'Добавление в корзину'
       checkout:
-        coupon_code_added: Coupon code added
+        coupon_code_added: Добавлен купон
       content:
-        visited: Visit static content page
+        visited: Посещение статической страницы
       order:
-        contents_changed: "Order contents changed"
-      page_view: "Static page viewed"
+        contents_changed: "Содержимое заказа изменилось"
+      page_view: "Просмотр статической страницы"
       user:
-        signup: 'User signup'
+        signup: 'Новый пользователь'
   existing_customer: "Для зарегистрированных пользователей"
   expiration: "Окончание действия"
   expiration_month: "Месяц окончания действия"
@@ -508,18 +508,18 @@ ru:
   image: "Изображение"
   image_settings: "Настройки изображений"
   image_settings_description: "Параметры настройки изображений"
-  image_settings_updated: "Image Settings successfully updated."
-  image_settings_warning: "You will need to regenerate thumbnails if you update the paperclip styles. Use rake paperclip:refresh:thumbnails to do this."
+  image_settings_updated: "Настройки изображений успешно обновлены"
+  image_settings_warning: "Вам нужно будет пересоздать миниатюры картинок, если вы изменили стили Paperclip. Воспользуйтесь командой rake paperclip:refresh:thumbnails."
   images: "Изображения"
   images_for: "Изображения для"
   in_progress: "В процессе"
   include_in_shipment: "Включить в отправку"
   included_in_other_shipment: "Включено в другую отправку"
-  included_in_price: Included in Price
+  included_in_price: "Включено в цену"
   included_in_this_shipment: "Включено в эту отправку"
-  included_price_validation: "cannot be selected unless you have set a Default Tax Zone"
+  included_price_validation: "не может быть выбрано, если только вы настроили зону налогообложения по умолчанию"
   instructions_to_reset_password: "Чтобы сбросить пароль, заполните форму ниже. Новый пароль будет отправлен вам по указанному email"
-  insufficient_stock: "Insufficient stock available, only %{on_hand} remaining"
+  insufficient_stock: "Недостаточно единиц товара, только %{on_hand} есть в наличии"
   integration_settings_warning: "Если вы меняете платежную систему, то необходимо сохранить данное изменение, только после этого вы сможете редактировать параметры интеграции"
   intercept_email_address: "Перехват писем"
   intercept_email_instructions: "Заменить email получателя на этот адрес."
@@ -622,7 +622,7 @@ ru:
   new_variant: "Новый вариант"
   new_zone: "Новая зона"
   next: "след."
-  no: "No"
+  no: "Нет"
   no_items_in_cart: "нет товаров к корзине"
   no_match_found: "Совпадений не найдено"
   no_products_found: "Не найдено ни одного товара"
@@ -663,19 +663,19 @@ ru:
   order_email_resent: "Письмо с описанием заказа выслано повторно"
   order_mailer:
     cancel_email:
-      dear_customer: "Dear Customer,"
-      instructions: "Your order has been CANCELED.  Please retain this cancellation information for your records."
-      order_summary_canceled: "Order Summary [CANCELED]"
+      dear_customer: "Дорогой покупатель,"
+      instructions: "Ваш заказ был отменен. Сохраните эту информацию для истории."
+      order_summary_canceled: "Детали заказа [ОТМЕНЕНО]"
       subject: "Аннулирование заказа"
       subtotal: "Подитог:"
       total: "Итого по заказу:"
     confirm_email:
-      dear_customer: "Dear Customer,"
-      instructions: "Please review and retain the following order information for your records."
-      order_summary: "Order Summary"
+      dear_customer: "Дорогой покупатель,"
+      instructions: "Пожалуйста, проверьте детали заказа."
+      order_summary: "Детали заказа"
       subject: "Подтверждение заказа"
       subtotal: "Подитог:"
-      thanks: "Thank you for your business."
+      thanks: "Спасибо, что выбрали нас."
       total: "Итого по заказу:"
   order_not_in_system: "Заказа с таким номером у нас не существует."
   order_number: "Заказ"
@@ -708,8 +708,8 @@ ru:
   page_only_viewable_when_logged_in: "Запрошенную страницу могут посещать только авторизованные пользователи."
   page_only_viewable_when_logged_out: "Запрошенную страницу могут посещать только неавторизованные пользователи."
   pagination:
-    next_page: "next page &raquo;"
-    previous_page: "&laquo; previous page"
+    next_page: "следующая страница &raquo;"
+    previous_page: "&laquo; предыдущая страница"
     truncate: "&hellip;"
   paid: "Оплачен"
   parent_category: "Родительская категория"
@@ -729,8 +729,8 @@ ru:
   payment_methods: "Способы оплаты"
   payment_methods_setting_description: "Настройка способов оплаты, которые может использовать клиент"
   payment_processing_failed: "Невозможно произвести платёж, пожалуйста, проверьте введённую информацию"
-  payment_processor_choose_banner_text: "If you need help choosing a payment processor, please visit"
-  payment_processor_choose_link: "our payments page"
+  payment_processor_choose_banner_text: "Если Вам нужна помощь в выборе способа оплаты, пожалуйста, зайдите на "
+  payment_processor_choose_link: "наша страница оплаты"
   payment_state: "Статус платежа"
   payment_states:
     balance_due: частично
@@ -745,13 +745,13 @@ ru:
   payment_updated: "Платёж обновлён"
   payments: "Платежи"
   pending_payments: "Незавершённые платежи"
-  percent_per_item: Percent Per Item
+  percent_per_item: "Процент с каждой единицы товара"
   permalink: "Постоянная ссылка"
   phone: "Телефон"
   place_order: "Разместить заказ"
   please_create_user: "Пожалуйста, создайте учётную запись."
-  please_define_payment_methods: "Please define some payment methods first."
-  populate_get_error: "Something went wrong. Please try adding the item again."
+  please_define_payment_methods: "Сначала определите способ оплаты."
+  populate_get_error: "Что-то пошло не так. Попробуйте добавить товар еще раз."
   powered_by: "Работает на"
   presentation: "Отображать как"
   preview: "Предпросмотр"
@@ -892,7 +892,7 @@ ru:
   products: "Товары"
   products_with_zero_inventory_display: "Отсутствующие товары %{not} будут отображаться"
   promotion: "Промо-акция"
-  promotion_action: Promotion Action
+  promotion_action: "Промо-акция"
   promotion_action_types:
     create_adjustment:
       description: Creates a promotion credit adjustment on the order
@@ -903,12 +903,12 @@ ru:
     give_store_credit:
       description: Gives the user store credit of the amount specified
       name: Give store credit
-  promotion_actions: Actions
+  promotion_actions: Акции
   promotion_form:
     match_policies:
       all: "Соответствует всем этим правилам"
       any: "Соответствует хотя бы одному правилу"
-  promotion_not_found: The coupon code you entered doesn't exist. Please try again.
+  promotion_not_found: Купон, который Вы ввели, не существует.
   promotion_rule: "Правило"
   promotion_rule_types:
     first_order:
@@ -918,8 +918,8 @@ ru:
       description: "Сумма заказа соответствует следующим критериям"
       name: "Сумма заказа"
     landing_page:
-      description: Customer must have visited the specified page
-      name: Landing Page
+      description: Покупатель должен был попасть на указанную страницу
+      name: Страница
     product:
       description: "Заказ включает указанные товары"
       name: "Товары"
@@ -927,8 +927,8 @@ ru:
       description: "Доступно только для указанных пользователей"
       name: "Пользователи"
     user_logged_in:
-      description: Available only to logged in users
-      name: User Logged In
+      description: Доступно только зарегистрированным пользователям
+      name: Пользователь авторизовался
   promotions: "Промо-акции"
   promotions_description: "Управление предложениями и купонами с помощью промо-акций"
   properties: "Свойства"
@@ -952,7 +952,7 @@ ru:
   registration: "Регистрация"
   remember_me: "Запомнить меня"
   remove: "Убрать"
-  rename: Rename
+  rename: "Переименовать"
   reports: "Отчеты"
   required_for_solo_and_maestro: "Обязательно для кредитных карт Solo и Maestro."
   resend: "Отправить повторно"
@@ -973,7 +973,7 @@ ru:
   return_authorizations: "Разрешения на возврат"
   return_quantity: "возвращенное количество"
   returned: "Возвращенные"
-  review: Review
+  review: "Проверить"
   rma_credit: RMA Credit
   rma_number: "Номер RMA"
   rma_value: "Сумма RMA"
@@ -1014,15 +1014,15 @@ ru:
   ship_address: "Адрес доставки"
   shipment: "Отправка"
   shipment_details: "Детали отправки"
-  shipment_inc_vat: "Shipment including VAT"
+  shipment_inc_vat: "Сумма включает НДС"
   shipment_mailer:
     shipped_email:
-      dear_customer: "Dear Customer,"
-      instructions: "Your order has been shipped"
-      shipment_summary: "Shipment Summary"
+      dear_customer: "Дорогой покупатель,"
+      instructions: "Ваш заказ был успешно отправлен."
+      shipment_summary: "Детали доставки"
       subject: "Уведомление о доставке"
-      thanks: "Thank you for your business."
-      track_information: "Tracking Information: %{tracking}"
+      thanks: "Спасибо, что выбрали нас."
+      track_information: "Детали отслеживания доставки: %{tracking}"
   shipment_number: "Отправка №"
   shipment_state: "Статус отправки"
   shipment_states:
@@ -1055,7 +1055,7 @@ ru:
   show_deleted: "Показать удаленные"
   show_incomplete_orders: "Показать необработанные заказы"
   show_only_complete_orders: "Показывать только завершённые заказы"
-  show_only_unfulfilled_orders: "Show only unfulfilled orders"
+  show_only_unfulfilled_orders: "Показывать только незавершённые заказы"
   show_out_of_stock_products: "Показать товары, которых нет в наличии"
   showing_first_n: "Показаны первые %{n}"
   sign_up: "Регистрация"
@@ -1076,21 +1076,21 @@ ru:
   special_instructions: "Дополнительные инструкции"
   spree:
   spree/order:
-    coupon_code: Coupon Code
+    coupon_code: Код купона
     date: "Дата"
     date_picker:
       format: 'yy/mm/dd'
     time: "Время"
-  spree_alert_checking: "Check for Spree security and release alerts"
-  spree_alert_not_checking: "Not checking for Spree security and release alerts"
+  spree_alert_checking: "Проверять обновления новых версий и безопасности Spree"
+  spree_alert_not_checking: "Обновления новых версий и безопасности Spree не проверяются"
   spree_gateway_error_flash_for_checkout: "Возникли проблемы с Вашими реквизитами. Пожалуйста, проверьте их и попробуйте ещё раз."
-  spree_inventory_error_flash_for_insufficient_quantity: "An item in your cart has become unavailable."
+  spree_inventory_error_flash_for_insufficient_quantity: "Один из товаров в Вашей корзине на данный момент недоступен."
   ssl_will_be_used_in_development_and_test_modes: "SSL шифрование будет включено в режимах development и test."
   ssl_will_be_used_in_production_mode: "SSL шифрование будет включено в режиме production."
-  ssl_will_be_used_in_staging_mode: "SSL will be used in staging mode"
+  ssl_will_be_used_in_staging_mode: "SSL шифрование будет включено в режиме staging"
   ssl_will_not_be_used_in_development_and_test_modes: "SSL шифрование НЕ будет включено в режимах development и test."
   ssl_will_not_be_used_in_production_mode: "SSL шифрование НЕ будет включено в режиме production."
-  ssl_will_not_be_used_in_staging_mode: "SSL will not be used in staging mode"
+  ssl_will_not_be_used_in_staging_mode: "SSL шифрование НЕ будет включено в режиме staging."
   start: "Начало"
   start_date: "Действительно с"
   state: "Регион/Область"
@@ -1130,9 +1130,9 @@ ru:
   test: "Test"
   test_mailer:
     test_email:
-      greeting: 'Congratulations!'
-      message: 'If you have received this email, then your email settings are correct.'
-      subject: 'Testmail'
+      greeting: 'Поздравляем!'
+      message: 'Если Вы читаете это сообщение, значит почтовые настройки Spree верны.'
+      subject: 'Тестовое сообщение'
   test_mode: "Тестовый режим"
   thank_you_for_your_order: "Спасибо за покупку!"
   there_were_problems_with_the_following_fields: "Возникли некоторые проблемы со следующими полями"
@@ -1174,9 +1174,9 @@ ru:
   users: "Пользователи"
   validate_on_profile_create: "Проверять при создании профиля"
   validation:
-    cannot_be_greater_than_available_stock: "cannot be greater than available stock."
+    cannot_be_greater_than_available_stock: "не может быть больше, чем количество доступных единиц"
     cannot_be_less_than_shipped_units: "не может быть меньше, чем количество отгруженных единиц"
-    cannot_destory_line_item_as_inventory_units_have_shipped: "Cannot destory line item as some inventory units have shipped."
+    cannot_destory_line_item_as_inventory_units_have_shipped: "Не могу удалить позицию так как некоторые товары уже были отправлены."
     is_too_large: "слишком много - количество на складе меньше запрошенного количества!"
     must_be_int: "должно быть целым числом"
     must_be_non_negative: "должно быть неотрицательным числом"
