@@ -379,7 +379,7 @@ fr:
   date_created: Date de création
   date_range: "Sélection de dates"
   date:
-      month_names: [~, janvier, février, mars, avril, mai, juin, juiller, aôut, septembre, octobre, novemvre, decembre]
+      month_names: [~, janvier, février, mars, avril, mai, juin, juiller, aôut, septembre, octobre, novembre, decembre]
       formats:
             default: '%d-%m-%Y'
   debit: Débit
