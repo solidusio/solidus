@@ -14,7 +14,7 @@ zh-CN:
     listing: "正在列出"
     new: "新建"
     update: "更新"
-  activate: "Activate"
+  activate: "激活"
   active: "激活"
   activerecord: 
     attributes: 
@@ -49,18 +49,18 @@ zh-CN:
         name: Name
         presentation: Presentation
       spree/order: 
-        checkout_complete: "Checkout Complete"
-        completed_at: "Completed At"
-        created_at: Order Date
-        email: Customer E-Mail
-        ip_address: "IP Address"
-        item_total: "Item Total"
-        number: Number
-        payment_state: Payment State
-        shipment_state: Shipment State
-        special_instructions: "Special Instructions"
-        state: State
-        total: Total
+        checkout_complete: "支付完成"
+        completed_at: "完成时间"
+        created_at: 订单时间
+        email: 顾客邮件
+        ip_address: "IP 地址"
+        item_total: "总量"
+        number: 序号
+        payment_state: 支付状态
+        shipment_state: 发货状态
+        special_instructions: "备注说明"
+        state: 状态
+        total: 总计
       spree/order/bill_address:
           address1: "Billing address street"
           city: "Billing address city"
@@ -396,19 +396,19 @@ zh-CN:
   discount_amount: "Discount Amount"
   dismiss_banner: "No. Thanks! I'm not interested, do not display this message again"
   display: "显示"
-  display_currency: "Display currency"
+  display_currency: "显示货币符号"
   dollar_amounts_displayed_as: "Dollar amounts displayed as %{example}"
   edit: "编辑"
-  edit_general_settings: "Edit General Settings"
+  edit_general_settings: "通用设置"
   editing_billing_integration: "编辑付款集成"
   editing_category: "编辑分类"
-  editing_mail_method: Editing Mail Method
+  editing_mail_method: "邮件服务器设置"
   editing_option_type: "编辑类型选项"
   editing_option_types: "编辑类型选项"
   editing_payment_method: "编辑支付方式"
   editing_product: "编辑产品"
   editing_product_group: "编辑产品组"
-  editing_promotion: Editing Promotion
+  editing_promotion: "促销编辑"
   editing_property: "编辑属性"
   editing_prototype: "编辑原型"
   editing_shipping_category: "编辑配送分类"
@@ -541,14 +541,14 @@ zh-CN:
     path: Path
   last_name: "姓"
   last_name_begins_with: "姓的开始"
-  learn_more: Learn More
+  learn_more: "更多"
   leave_blank_to_not_change: "(leave blank if you don't want to change it)"
   list: "列表"
   listing_categories: "分类列表"
   listing_option_types: "选项类型列表"
   listing_orders: "订单列表"
   listing_product_groups: "产品组列表"
-  listing_products: "Listing Products"
+  listing_products: "产品列表"
   listing_reports: "报表列表"
   listing_tax_categories: "缴税分类列表"
   listing_users: "用户列表"
@@ -558,7 +558,7 @@ zh-CN:
   logged_in_as: "已登陆为"
   logged_in_succesfully: "登陆成功"
   logged_out: "您已经登出系统"
-  login: Login
+  login: "登录"
   login_as_existing: "作为一个已有客户登陆"
   login_failed: "登陆认证失败。"
   login_name: "用户名"
@@ -683,18 +683,18 @@ zh-CN:
   order_processed_but_following_items_are_out_of_stock: "您的订单已经被处理了，但是以下几样商品目前没有库存："
   order_processed_successfully: "您的订单已经被成功处理了"
   order_state: # keys correspond to Checkout state names:
-    address: address
-    adjustments: adjustments
+    address: 地址
+    adjustments: 调整
     awaiting_return: awaiting return
-    canceled: canceled
-    cart: cart
-    complete: complete
-    confirm: confirm
-    delivery: delivery
-    payment: payment
-    resumed: resumed
-    returned: returned
-    skrill: skrill
+    canceled: 取消
+    cart: 购物车
+    complete: 完成
+    confirm: 确认
+    delivery: 配送
+    payment: 支付
+    resumed: 重新开始
+    returned: 返回
+    skrill: 昵称
   order_summary: "订单概述"
   order_sure_want_to: "您确定您想要%{event}这个订单么?"
   order_total: "订单总计"
@@ -854,15 +854,15 @@ zh-CN:
       with: 
         args: 
           value: "值"
-        description: "Select specific products"
-        name: Products with IDs
-        sentence: with IDs <em>%s</em>
+        description: "选择特定的产品"
+        name: 产品 IDs
+        sentence: 带有 IDs <em>%s</em>
       with_ids: 
         args: 
           ids: IDs
-        description: "Select specific products"
-        name: Products with IDs
-        sentence: with IDs <em>%s</em>
+        description: "选择特定的产品"
+        name: 产品 IDs
+        sentence: 带有 IDs <em>%s</em>
       with_option: 
         args: 
           option: "选项"
@@ -1024,13 +1024,13 @@ zh-CN:
       thanks: "Thank you for your business."
       track_information: "Tracking Information: %{tracking}"
   shipment_number: "运单号 #"
-  shipment_state: Shipment State
+  shipment_state: 配送状态
   shipment_states: 
-    backorder: backorder
-    partial: partial
-    pending: pending
-    ready: ready
-    shipped: shipped
+    backorder: 延期未交定货
+    partial: 部分
+    pending: 等待中
+    ready: 就绪
+    shipped: 已经发货
   shipment_updated: "配送状态更新"
   shipments: "配送"
   shipped: "已发货"
