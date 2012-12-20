@@ -49,23 +49,23 @@ da:
         name: Navn
         presentation: Præsentation
       spree/order/bill_address:
-          address1: "Billing address street"
-          city: "Billing address city"
-          firstname: "Billing address first name"
-          lastname: "Billing address last name"
-          phone: "Billing address phone"
-          state: "Billing address state"
-          zipcode: "Billing address zipcode"
+          address1: "Faktureringsadresse gade"
+          city: "Faktureringsadresse by"
+          firstname: "Faktureringsadresse fornavn"
+          lastname: "Faktureringsadresse efternavn"
+          phone: "Faktureringsadresse telefon"
+          state: "Faktureringsadresse delstat"
+          zipcode: "Faktureringsadresse postnummer"
       spree/order/ship_address:
-          address1: "Shipping address street"
-          city: "Shipping address city"
-          firstname: "Shipping address first name"
-          lastname: "Shipping address last name"
-          phone: "Shipping address phone"
-          state: "Shipping address state"
-          zipcode: "Shipping address zipcode"
+          address1: "Leveringsadresse gade"
+          city: "Leveringsadresse by"
+          firstname: "Leveringsadresse fornavn"
+          lastname: "Leveringsadresse efternavn"
+          phone: "Leveringsadresse telefon"
+          state: "Leveringsadresse delstat"
+          zipcode: "Leveringsadresse postnummer"
       spree/order:
-        checkout_complete: "Checkout Complete"
+        checkout_complete: "Købsforløb afsluttet"
         completed_at: "Afsluttet"
         created_at: Ordredato
         email: Kundens e-mail-adresse
@@ -75,7 +75,7 @@ da:
         payment_state: Status på betaling
         shipment_state: Status på forsendelse
         special_instructions: "Specialinstrukser"
-        state: Delstat
+        state: Tilstand
         total: Total
       spree/payment_method:
         name: Navn
@@ -332,6 +332,7 @@ da:
   charges: Regninger
   checkout: Til kassen
   cheque: Check
+  choose_a_customer: Vælg en kunde
   city: By
   clone: Dupliker
   code: Kode
@@ -500,7 +501,7 @@ da:
   google_analytics_id: "Analytics-ID"
   google_analytics_new: "Ny Google Analytics konto"
   google_analytics_setting_description: "Håndter Google Analytics ID"
-  guest_checkout: Gæstekasse
+  guest_checkout: Gæstekøbsforløb
   guest_user_account: Gå til kassen som gæst
   has_no_shipped_units: har ingen leverede enheder
   height: Højde
@@ -537,7 +538,7 @@ da:
   issue_number: Anmeldelses nummer
   item: Artikel
   item_description: "Artikelbeskrivelse"
-  item_total: Vis samlet pris"
+  item_total: Vis samlet pris
   item_total_rule:
     operators:
       gt: større end
@@ -757,27 +758,28 @@ da:
   phone: Telefonnummer
   place_order: Afgiv ordre
   please_create_user: "Vær venlig at opret en bruger konto"
-  please_define_payment_methods: "Please define some payment methods first."
-  populate_get_error: "Something went wrong. Please try adding the item again."
+  please_define_payment_methods: "Vær venlig at opret nogle betalingsmuligheder først."
+  populate_get_error: "Der gik noget galt. Forsøg at tilføje artiklen igen."
   powered_by: "Leveret af"
   presentation: præsentation
   preview: Forhåndsvisning
   previous: Foregående
   price: Pris
-  price_range: Price Range
-  price_sack: Price Sack
+  price_range: Prisklasse
+  price_sack: Prisgruppe
   problem_authorizing_card: "Kunne ikke autoriserer kreditkort"
   problem_capturing_card: "Kunne ikke debiterer kreditkort"
   problems_processing_order: "Der opstod problemer ved behandlingen af din ordre"
   proceed_as_guest: "Nej tak, forsæt som gæst"
   process: Process
   product: Produkt
-  product_details: "Produkt detaljer"
+  product_details: "Produktdetaljer"
   product_group: Produktgruppe
   product_group_invalid: Produktgruppe har ugyldig område
   product_groups: Produktgrupper
   product_has_no_description: Dette produkt har ingen beskrivelse
-  product_properties: "Produkt egenskaber"
+  product_not_available_in_this_currency: Dette produkt er ikke tilgængelig i denne valuta
+  product_properties: "Produktegenskaber"
   product_rule:
     choose_products: Vælg produkter
     label: "Ordre må indeholde %{select} af disse produkter"
@@ -975,10 +977,10 @@ da:
   resume: "genoptag"
   resumed: Genoptaget
   return: vend tilbage
-  return_authorization: Retur godkendelse
-  return_authorization_updated: Retur godkendelse opdateret
-  return_authorizations: Retur godkendelse
-  return_quantity: Retur antal
+  return_authorization: Retur-godkendelse
+  return_authorization_updated: Retur-godkendelse opdateret
+  return_authorizations: Retur-godkendelser
+  return_quantity: Retur-antal
   returned: Returneret
   review: Review
   rma_credit: RMA-kredit
@@ -1005,7 +1007,7 @@ da:
   searching: Søger
   secure_connection_type: Sikker forbindelsestype
   secure_credit_card: Secure Credit Card
-  security_settings: "Security Settings"
+  security_settings: Sikkerhedsindstillinger
   select: Vælg
   select_from_prototype: "Vægl fra prototype"
   select_preferred_shipping_option: "Vælg foretrukne leverings mulighed"
@@ -1046,7 +1048,7 @@ da:
   shipping_categories: "Leveringskategori"
   shipping_categories_description: "Håndter leveringskategorier for at identificerer hvilke produkter der kan leveres med hvilke metoder"
   shipping_category: Leveringskategori
-  shipping_category_choose: "Shipping Category"
+  shipping_category_choose: Leveringskategori
   shipping_cost: Pris
   shipping_error: "Leveringsfejl"
   shipping_instructions: "Leveringsinstruktioner"
@@ -1056,7 +1058,7 @@ da:
   shipping_total: "Fraktomkostninger"
   shop_by_taxonomy: "Køb via %{taxonomy}"
   shopping_cart: "Indkøbskurv"
-  short_description: "Short description"
+  short_description: Kort beskrivelse
   show: Vis
   show_active: "Vis aktive"
   show_deleted: "Vis slettede"
@@ -1070,7 +1072,7 @@ da:
   site_url: "Hjemmesidens URL"
   sku: Varenummer
   smtp: SMTP
-  smtp_authentication_type: SMTP autoriseringstype
+  smtp_authentication_type: SMTP-autoriseringstype
   smtp_domain: SMTP-domæne
   smtp_mail_host: SMTP-server
   smtp_password: SMTP-adgangskode
@@ -1132,6 +1134,7 @@ da:
   tax_type: "Momstype"
   taxon: Taksonomisk gruppe
   taxon_edit: Rediger taksonomisk gruppe
+  taxon_placeholder: Tilføj en taksonomisk gruppe
   taxonomies: Taksonomier
   taxonomies_setting_description: "Opret og administrer taksonomier"
   taxonomy: Taxonomy
@@ -1188,10 +1191,11 @@ da:
   validation:
     cannot_be_greater_than_available_stock: "kan ikke være mere end antallet på lager."
     cannot_be_less_than_shipped_units: "kan ikke være mindre end antallet af leverede enheder."
-    cannot_destory_line_item_as_inventory_units_have_shipped: "Cannot destory line item as some inventory units have shipped."
+    cannot_destroy_line_item_as_inventory_units_have_shipped: "Cannot destory line item as some inventory units have shipped."
     is_too_large: "er for stor – der er ikke nok på lager!"
     must_be_int: "skal være et heltal"
     must_be_non_negative: "skal være et positivt tal"
+    exceeds_available_stock: overskrider lagerbeholdning
   value: Værdi
   variant: Variant
   variants: Varianter
