@@ -72,41 +72,41 @@ da:
         ip_address: "IP-adresse"
         item_total: "Item Total"
         number: Nummer
-        payment_state: Payment State
-        shipment_state: Shipment State
-        special_instructions: "Special Instructions"
+        payment_state: Status på betaling
+        shipment_state: Status på forsendelse
+        special_instructions: "Specialinstrukser"
         state: Delstat
         total: Total
       spree/payment_method:
         name: Navn
       spree/product:
-        available_on: "Available On"
+        available_on: "Kan købes fra"
         cost_price: "Kostpris"
         cost_currency: "Kostvaluta"
-        description: Description
-        master_price: "Master Price"
+        description: Beskrivelse
+        master_price: "Master pris"
         name: Navn
         on_demand: "On Demand"
-        on_hand: "On Hand"
-        shipping_category: "Shipping Category"
+        on_hand: "På lager"
+        shipping_category: "Forsendelseskategori"
         tax_category: "Momskategori"
       spree/promotion:
-        advertise: Advertise
-        code: Code
+        advertise: Reklamér
+        code: Kode
         description: Beskrivelse
-        event_name: Event Name
-        expires_at: Expires At
+        event_name: Eventnavn
+        expires_at: Udløber
         name: Navn
-        path: Path
-        starts_at: Starts At
-        usage_limit: Usage Limit
+        path: Sti
+        starts_at: Starter
+        usage_limit: Brugsbegrænsning
       spree/property:
         name: Navn
         presentation: Præsentation
       spree/prototype:
         name: Navn
       spree/return_authorization:
-        amount: Amount
+        amount: Antal
       spree/role:
         name: Navn
       spree/state:
@@ -258,7 +258,7 @@ da:
   alt_text: Alternativ tekst
   alternative_phone: Alternative telefonnummer
   amount: Beløb
-  analytics_trackers: Statestiksporer
+  analytics_trackers: Statestik-tracker
   and: og
   apply: "Tilføj"
   are_you_sure: "Er du sikker?"
@@ -270,8 +270,8 @@ da:
   assign_taxon: "Tildel taksonomisk gruppe"
   assign_taxons: "Tildel taksonomisk gruppe"
   attachment_default_style: "Attachments Style"
-  attachment_default_url: "Attachments URL"
-  attachment_path: "Attachments Path"
+  attachment_default_url: "Url til vedhæftede filer"
+  attachment_path: "Sti til vedhæftede filer"
   attachment_styles: "Paperclip Styles"
   authorization_failure: "Autorisation fejlede"
   authorized: Autoriseret
@@ -309,10 +309,10 @@ da:
   both: Begge
   calculator: Beregner
   calculator_settings_warning: "Hvis du ændrer beregnertypen, må du først gemme inden du kan ændre beregnerindstillingerne"
-  cancel: annuler
-  cancel_my_account: Annuler min konto
+  cancel: annuller
+  cancel_my_account: Annuller min konto
   cancel_my_account_description: "Utilfreds?"
-  canceled: Annuleret
+  canceled: Annulleret
   cannot_create_payment_without_payment_methods: You cannot create a payment for an order without any payment methods defined.
   cannot_create_returns: "Kan ikke returnere ordren, eftersom den endnu ikke er leveret."
   cannot_perform_operation: "Kan ikke udføre ønskede operation"
@@ -352,6 +352,7 @@ da:
   cost_price: "Kostpris"
   cost_currency: "Kostvaluta"
   count_of_reduced_by: "optælling af '%{name}' reduceret ved %{count}"
+  countries: Lande
   country: Land
   country_based: "Landbaseret"
   coupon: Rabat
@@ -377,7 +378,7 @@ da:
   customer_details: "Kunde detaljer"
   customer_details_updated: "The customer's details have been updated."
   customer_search: "Kunde søgning"
-  cut: Cut
+  cut: Klip
   date_completed: Date Completed
   date_created: Dato oprettet
   date_range: "Dato interval"
@@ -419,7 +420,7 @@ da:
   editing_state: "Redigering af delstat"
   editing_tax_category: "Redigering af momskategori"
   editing_tax_rate: "Redigering af momssats"
-  editing_tracker: Redigering af statistiksporer
+  editing_tracker: Redigering af statistik-trackere
   editing_user: "Redigering af bruger"
   editing_zone: "Redigering af zone"
   email: E-mail
@@ -541,6 +542,7 @@ da:
     operators:
       gt: større end
       gte: større end eller lig med
+  jirafe: Jirafe
   landing_page_rule:
     path: Path
   last_name: "Efternavn"
@@ -555,7 +557,7 @@ da:
   listing_products: "Listing Products"
   listing_reports: "Viser rapporter"
   listing_tax_categories: "Viser momskategorier"
-  listing_users: "Viser brugerer"
+  listing_users: "Viser brugere"
   live: "Live"
   loading: Indlæser
   locale_changed: "Sproget er ændret"
@@ -621,17 +623,18 @@ da:
   new_tax_rate: "Ny momssats"
   new_taxon: "Ny taksonomisk gruppe"
   new_taxonomy: "Ny taksonomi"
-  new_tracker: Ny statistiksporer
+  new_tracker: Ny statistik-tracker
   new_user: "Ny bruger"
   new_variant: "Ny variant"
   new_zone: "Ny zone"
   next: Næste
-  no: "No"
+  no: "Nej"
   no_items_in_cart: "Indkøbskurv er tom."
   no_match_found: "Ingen match blev fundet"
   no_products_found: "Ingen produkter fundet"
   no_results: "Ingen resultater"
   no_rules_added: Ingen regler tilføjet
+  no_trackers_found: Ingen statistik-trackere fundet
   no_user_found: "Der blev ikke fundet nogen bruger med denne emailadresse"
   none: Ingen
   none_available: "Ingen tilgængelige"
@@ -659,28 +662,28 @@ da:
   options: Indstillinger
   or: eller
   or_over_price: "%{price} or over"
-  order: Ordre
-  order_adjustments: "Order adjustments"
+  order: Ordrer
+  order_adjustments: "Ordrejusteringer"
   order_confirmation_note: ""
   order_date: "Ordredato"
   order_details: "Ordredetaljer"
   order_email_resent: "Send ordre email igen"
   order_mailer:
     cancel_email:
-      dear_customer: "Dear Customer,"
-      instructions: "Your order has been CANCELED.  Please retain this cancellation information for your records."
-      order_summary_canceled: "Order Summary [CANCELED]"
-      subject: "Annulering af ordre"
+      dear_customer: "Kære kunde,"
+      instructions: "Din ordre er blevet annulleret. Gem venligst denne annullering"
+      order_summary_canceled: "Sammendrag af ordre [Annulleret]"
+      subject: "Annullering af ordre"
       subtotal: "Subtotal:"
       total: "Order Total:"
     confirm_email:
-      dear_customer: "Dear Customer,"
-      instructions: "Please review and retain the following order information for your records."
-      order_summary: "Order Summary"
+      dear_customer: "Kære kunde,"
+      instructions: "Gennemlæs og gem venligst følgende orderinformation."
+      order_summary: "Sammendrag af ordre"
       subject: "Ordrebekræftelse"
       subtotal: "Subtotal:"
-      thanks: "Thank you for your business."
-      total: "Order Total:"
+      thanks: "Tak for handelen."
+      total: "Ordre total:"
   order_not_in_system: Dette ordrenummer er ikke gyldigt på denne side.
   order_number: Ordre
   order_operation_authorize: Autorisering
@@ -722,7 +725,7 @@ da:
   password_reset_instructions_are_mailed: "Instruktioner til at nulstille adgangskoden er blevet emailet til dig. Vær venlig at tjekke din email."
   password_reset_token_not_found: "Vi kunne ikke finde din konto. Hvis du har problemer, så prøv at kopiere og indsætte URL'en fra din e-mail i din browser eller genstarte processen for at nulstille adgangskoden."
   password_updated: "Adgangskoden er opdateret"
-  paste: Paste
+  paste: Sæt ind
   path: Sti
   pay: betal
   payment: Betaling
@@ -745,7 +748,7 @@ da:
     paid: betalt
     pending: forestående
     processing: behandles
-    void: annuleret
+    void: annulleret
   payment_updated: Betaling er opdater
   payments: Betalinger
   pending_payments: Afventende betalinger
@@ -956,7 +959,7 @@ da:
   registration: Registrering
   remember_me: "Husk mig"
   remove: Fjern
-  rename: Rename
+  rename: Omdøb
   reports: Rapporter
   required_for_solo_and_maestro: Krævet for solo og maestro kort.
   resend: Gensend
@@ -986,10 +989,10 @@ da:
   s3_access_key: "Access Key"
   s3_bucket: "Bucket"
   s3_headers: "S3 Headers"
-  s3_not_used_for_product_images: "S3 is not being used for product images"
+  s3_not_used_for_product_images: "S3 er ikke i brug til produktbilleder"
   s3_protocol: "S3 Protocol"
   s3_secret: "Secret Key"
-  s3_used_for_product_images: "S3 is being used for product images"
+  s3_used_for_product_images: "S3 er i brug til produktbilleder"
   sales_tax: "Salgsmoms"
   sales_total: "Samlet salg"
   sales_total_description: "Samlet salg af alle ordre"
@@ -1081,7 +1084,7 @@ da:
   spree:
     date: Dato
     date_picker:
-      format: 'yy/mm/dd'
+      format: ! '%Y/%m/%d'
       js_format: 'yy/mm/dd'
     time: Tid
   spree/order:
@@ -1174,13 +1177,13 @@ da:
   use_billing_address: Brug som faktureringsadresse
   use_different_shipping_address: "Brug anden leveringsadresse"
   use_new_cc: "Brug et nyt kort"
-  use_s3: "Use Amazon S3 For Images"
-  user: Bruer
+  use_s3: "Brug Amazon S3 til produktbilleder"
+  user: Bruger
   user_account: Brugerkonto
   user_created_successfully: "Bruger oprettet"
   user_rule:
     choose_users: Vælg bruger
-  users: Brugerer
+  users: Brugere
   validate_on_profile_create: Validerer når profile oprettes
   validation:
     cannot_be_greater_than_available_stock: "kan ikke være mere end antallet på lager."
@@ -1199,12 +1202,12 @@ da:
   website: Hjemmeside
   weight: Vægt
   welcome_to_sample_store: "Velkommen til prøvebutikken"
-  what_is_a_cvv: "Hvad er en sikkerhedskode (CVV)?"
+  what_is_a_cvv: "Hvad er en sikkerhedskode (CVC)?"
   what_is_this: "Hvad er dette?"
   whats_this: "Hvad er dette?"
   width: Bredde
   year: "År"
-  yes: "Yes"
+  yes: "Ja"
   you_have_been_logged_out: "Du er blevet logget ud."
   you_have_no_orders_yet: "Du har endnu ingen ordre."
   your_cart_is_empty: "Din indkøbskurv er tom"
