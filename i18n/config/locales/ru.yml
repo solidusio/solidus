@@ -1075,6 +1075,10 @@ ru:
   sort_ordering: "Порядок сортировки"
   special_instructions: "Дополнительные инструкции"
   spree:
+     date: "Дата"
+     date_picker:
+       format: 'yy/mm/dd'
+     time: "Время"
   spree/order:
     coupon_code: Код купона
     date: "Дата"
