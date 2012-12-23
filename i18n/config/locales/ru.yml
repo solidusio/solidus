@@ -1077,7 +1077,7 @@ ru:
   spree:
      date: "Дата"
      date_picker:
-       format: 'yy/mm/dd'
+       format: '%Y/%m/%d'
      time: "Время"
   spree/order:
     coupon_code: Код купона
@@ -1123,6 +1123,7 @@ ru:
   tax_total: "Налоги"
   tax_type: "Тип налога"
   taxon: "Таксон"
+  taxon_placeholder: "Добавить таксон"
   taxon_edit: "Редактировать таксон"
   taxonomies: "Таксономии"
   taxonomies_setting_description: "Создание и редактирование таксономий"
