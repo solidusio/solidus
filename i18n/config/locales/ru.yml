@@ -330,6 +330,7 @@ ru:
   charges: "Сборы"
   checkout: "Оформление заказа"
   cheque: "Чек"
+  choose_currency: 'Выбрать валюту'
   city: "Город"
   clone: "Клонировать"
   code: "Кодовое слово"
@@ -396,7 +397,7 @@ ru:
   discount_amount: "Сумма скидки"
   dismiss_banner: "Нет, спасибо! Я не заинтересован. Не показывайте мне больше это сообщение."
   display: "Показать"
-  display_currency: "Display currency"
+  display_currency: "Показывать валюту"
   dollar_amounts_displayed_as: "Цены будут отображаться как %{example}"
   edit: "Редактировать"
   edit_general_settings: "Редактировать общие настройки"
@@ -501,6 +502,7 @@ ru:
   has_no_shipped_units: "не имеет отправленных единиц учёта"
   height: "Высота"
   hello_user: "Добро пожаловать"
+  hide_cents: 'Отображать копейки'
   history: "История"
   home: "Домой"
   icon: "Иконка"
