@@ -1123,6 +1123,7 @@ ru:
   tax_total: "Налоги"
   tax_type: "Тип налога"
   taxon: "Таксон"
+  taxon_placeholder: "Добавить таксон"
   taxon_edit: "Редактировать таксон"
   taxonomies: "Таксономии"
   taxonomies_setting_description: "Создание и редактирование таксономий"
