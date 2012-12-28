@@ -48,7 +48,7 @@ es:
       spree/option_type: 
         name: Name
         presentation: Presentation
-      spree/order: 
+      spree/order:
         checkout_complete: "Checkout Complete"
         completed_at: "Completed At"
         created_at: Order Date
@@ -61,23 +61,23 @@ es:
         special_instructions: "Special Instructions"
         state: State
         total: Total
-      spree/order/bill_address:
-          address1: "Billing address street"
-          city: "Billing address city"
-          firstname: "Billing address first name"
-          lastname: "Billing address last name"
-          phone: "Billing address phone"
-          state: "Billing address state"
-          zipcode: "Billing address zipcode"
-      spree/order/ship_address:
-          address1: "Shipping address street"
-          city: "Shipping address city"
-          firstname: "Shipping address first name"
-          lastname: "Shipping address last name"
-          phone: "Shipping address phone"
-          state: "Shipping address state"
-          zipcode: "Shipping address zipcode"
-      spree/payment_method: 
+      spree/order/bill_address: 
+        address1: "Billing address street"
+        city: "Billing address city"
+        firstname: "Billing address first name"
+        lastname: "Billing address last name"
+        phone: "Billing address phone"
+        state: "Billing address state"
+        zipcode: "Billing address zipcode"
+      spree/order/ship_address: 
+        address1: "Shipping address street"
+        city: "Shipping address city"
+        firstname: "Shipping address first name"
+        lastname: "Shipping address last name"
+        phone: "Shipping address phone"
+        state: "Shipping address state"
+        zipcode: "Shipping address zipcode"
+      spree/payment_method:
         name: Name
       spree/product: 
         available_on: "Available On"
@@ -378,10 +378,6 @@ es:
   date_completed: Date Completed
   date_created: Fecha creada
   date_range: "Rango de Fecha"
-  date:
-    month_names: [~, enero, febrero, marzo, abril, mayo, junio, julio, agosto, septiembre, octubre, noviembre, diciembre]
-    formats:
-      default: '%d-%m-%Y'
   debit: Débito
   default: Por omisión
   default_meta_description: Default Meta Description
@@ -395,12 +391,6 @@ es:
   depth: Profundidad
   description: Descripción
   destroy: Eliminar
-  devise:
-    user_sessions:
-      user:
-        signed_out: "Ha cerrado la sesión"
-    failure:
-      invalid: "Nombre de usuario o contraseña no válidos"
   didnt_receive_confirmation_instructions: "¿No ha recibido instrucciones de confirmación?"
   didnt_receive_unlock_instructions: "¿No ha recibido instrucciones de desbloqueo?"
   discount_amount: "Importe del descuento"
@@ -1087,10 +1077,10 @@ es:
   spree: 
   spree/order: 
     coupon_code: Coupon Code
-    date: Fecha
+    date: Date
     date_picker: 
       format: 'yy/mm/dd'
-    time: Hora
+    time: Time
   spree_alert_checking: "Check for Spree security and release alerts"
   spree_alert_not_checking: "Not checking for Spree security and release alerts"
   spree_gateway_error_flash_for_checkout: "hubo un problema con su información de pago. Por favor, revísela e inténtelo de nuevo."

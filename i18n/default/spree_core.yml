@@ -83,6 +83,7 @@ en:
         name: Name
       spree/product:
         available_on: "Available On"
+        cost_currency: "Cost Currency"
         cost_price: "Cost Price"
         description: Description
         master_price: "Master Price"
@@ -121,6 +122,7 @@ en:
         password: "Password"
         password_confirmation: "Password Confirmation"
       spree/variant:
+        cost_currency: "Cost Currency"
         cost_price: "Cost Price"
         depth: Depth
         height: Height
@@ -272,7 +274,7 @@ en:
   back_to_adjustments_list: "Back To Adjustments List"
   back_to_images_list: "Back To Images List"
   back_to_mail_methods_list: "Back To Mail Methods List"
-  back_to_option_tyles_list: "Back To Option Types List"
+  back_to_option_types_list: "Back To Option Types List"
   back_to_payment_methods_list: "Back To Payment Methods List"
   back_to_payments_list: "Back To Payments List"
   back_to_products_list: "Back To Products List"
@@ -280,13 +282,13 @@ en:
   back_to_prototypes_list: "Back To Prototypes List"
   back_to_reports_list: "Back To Reports List"
   back_to_shipping_categories: "Back To Shipping Categories"
-  back_to_shipping_methods_list: "Back To Shipping Methods List"  
+  back_to_shipping_methods_list: "Back To Shipping Methods List"
   back_to_states_list: "Back To States List"
   back_to_store: "Go Back To Store"
   back_to_tax_categories_list: "Back To Tax Categories List"
   back_to_taxonomies_list: "Back To Taxonomies List"
   back_to_trackers_list: "Back To Trackers List"
-  back_to_zones_list: "Back To Zones List"  
+  back_to_zones_list: "Back To Zones List"
   backordered: Backordered
   backordering_is_allowed: "Backordering %{not} allowed"
   balance_due: "Balance Due"
@@ -319,6 +321,7 @@ en:
   charges: Charges
   checkout: Checkout
   cheque: Cheque
+  choose_a_customer: "Choose a customer"
   city: City
   clone: Clone
   code: Code
@@ -336,6 +339,7 @@ en:
   continue: Continue
   continue_shopping: "Continue shopping"
   copy_all_mails_to: Copy All Mails To
+  cost_currency: "Cost Currency"
   cost_price: "Cost Price"
   count_of_reduced_by: "count of '%{name}' reduced by %{count}"
   country: Country
@@ -481,6 +485,7 @@ en:
   has_no_shipped_units: has no shipped units
   height: Height
   hello_user: "Hello User"
+  hide_cents: "Hide cents"
   history: History
   home: "Home"
   icon: "Icon"
@@ -638,16 +643,16 @@ en:
       dear_customer: "Dear Customer,"
       instructions: "Please review and retain the following order information for your records."
       order_summary: "Order Summary"
-      subtotal: "Subtotal:"
-      total: "Order Total:"
+      subtotal: "Subtotal: %{subtotal}"
+      total: "Order Total: %{total}"
       thanks: "Thank you for your business."
     cancel_email:
       subject: "Cancellation of Order"
       dear_customer: "Dear Customer,"
       instructions: "Your order has been CANCELED.  Please retain this cancellation information for your records."
       order_summary_canceled: "Order Summary [CANCELED]"
-      subtotal: "Subtotal:"
-      total: "Order Total:"
+      subtotal: "Subtotal: %{subtotal}"
+      total: "Order Total: %{total}"
   order_not_in_system: That order number is not valid on this site.
   order_number: Order
   order_operation_authorize: Authorize
@@ -854,6 +859,7 @@ en:
         sentence: with property <em>%s</em> and value <em>%s</em>
   products: Products
   products_with_zero_inventory_display: "Products with a zero inventory will %{not} be displayed"
+  product_not_available_in_this_currency: "This product is not available in the selected currency."
   properties: Properties
   property: Property
   prototype: Prototype
@@ -999,7 +1005,8 @@ en:
   spree:
     date: Date
     date_picker:
-      format: 'yy/mm/dd'
+      format: ! '%Y/%m/%d'
+      js_format: 'yy/mm/dd'
     time: Time
   spree_gateway_error_flash_for_checkout: "There was a problem with your payment information. Please check your information and try again."
   spree_inventory_error_flash_for_insufficient_quantity: "An item in your cart has become unavailable."
@@ -1040,6 +1047,7 @@ en:
   tax_type: "Tax Type"
   taxon: Taxon
   taxon_edit: Edit Taxon
+  taxon_placeholder: "Add a Taxon"
   taxonomy: Taxonomy
   taxonomies: Taxonomies
   taxonomies_setting_description: "Create and manage taxonomies."
@@ -1056,7 +1064,6 @@ en:
   test_mode: Test Mode
   thank_you_for_your_order: "Thank you for your business.  Please print out a copy of this confirmation page for your records."
   there_were_problems_with_the_following_fields: "There were problems with the following fields"
-  this_file_language: "English (US)"
   thumbnail: "Thumbnail"
   to_add_variants_you_must_first_define: "To add variants, you must first define"
   to_state: "To State"
@@ -1092,12 +1099,12 @@ en:
   users: Users
   validate_on_profile_create: Validate on profile create
   validation:
-    cannot_be_greater_than_available_stock: "cannot be greater than available stock."
     cannot_be_less_than_shipped_units: "cannot be less than the number of shipped units."
     cannot_destory_line_item_as_inventory_units_have_shipped: "Cannot destory line item as some inventory units have shipped."
     is_too_large: "is too large -- stock on hand cannot cover requested quantity!"
     must_be_int: "must be an integer"
     must_be_non_negative: "must be a non-negative value"
+    exceeds_available_stock: "exceeds available stock. Please ensure line items have a valid quantity."
   value: Value
   variant: Variant
   variants: Variants

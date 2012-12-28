@@ -1,12 +1,12 @@
 ---
-da:
+da: 
   a_copy_of_all_mail_will_be_sent_to_the_following_addresses: "En kopi af alle emails vil blive sent til følgende addresse"
   abbreviation: Forkortelse
   access_denied: "Adgang nægtet"
   account: Konto
   account_updated: "Konto opdateret!"
   action: Handling
-  actions:
+  actions: 
     cancel: Annuller
     create: Opret
     destroy: Slet
@@ -16,9 +16,9 @@ da:
     update: Opdater
   activate: "Aktivér"
   active: "Aktiv"
-  activerecord:
-    attributes:
-      spree/address:
+  activerecord: 
+    attributes: 
+      spree/address: 
         address1: Adresse
         address2: "Adresse (forts.)"
         city: By
@@ -28,43 +28,43 @@ da:
         phone: Telefon
         state: "Delstat"
         zipcode: "Postnummer"
-      spree/country:
+      spree/country: 
         iso: ISO
         iso3: ISO3
         iso_name: "ISO-navn"
         name: Navn
         numcode: "ISO-kode"
-      spree/credit_card:
+      spree/credit_card: 
         cc_type: Type
         month: Måned
         number: Nummer
         verification_value: "CVV-kode"
         year: År
-      spree/inventory_unit:
+      spree/inventory_unit: 
         state: Delstat
-      spree/line_item:
+      spree/line_item: 
         price: Pris
         quantity: Antal
-      spree/option_type:
+      spree/option_type: 
         name: Navn
         presentation: Præsentation
-      spree/order/bill_address:
-          address1: "Faktureringsadresse gade"
-          city: "Faktureringsadresse by"
-          firstname: "Faktureringsadresse fornavn"
-          lastname: "Faktureringsadresse efternavn"
-          phone: "Faktureringsadresse telefon"
-          state: "Faktureringsadresse delstat"
-          zipcode: "Faktureringsadresse postnummer"
-      spree/order/ship_address:
-          address1: "Leveringsadresse gade"
-          city: "Leveringsadresse by"
-          firstname: "Leveringsadresse fornavn"
-          lastname: "Leveringsadresse efternavn"
-          phone: "Leveringsadresse telefon"
-          state: "Leveringsadresse delstat"
-          zipcode: "Leveringsadresse postnummer"
-      spree/order:
+      spree/order: 
+      spree/order/bill_address: 
+        address1: "Billing address street"
+        city: "Faktureringsadresse by"
+        firstname: "Faktureringsadresse fornavn"
+        lastname: "Faktureringsadresse efternavn"
+        phone: "Faktureringsadresse telefon"
+        state: "Faktureringsadresse delstat"
+        zipcode: "Faktureringsadresse postnummer"
+      spree/order/ship_address: 
+        address1: "Shipping address street"
+        city: "Leveringsadresse by"
+        firstname: "Leveringsadresse fornavn"
+        lastname: "Leveringsadresse efternavn"
+        phone: "Leveringsadresse telefon"
+        state: "Leveringsadresse delstat"
+        zipcode: "Leveringsadresse postnummer"
         checkout_complete: "Købsforløb afsluttet"
         completed_at: "Afsluttet"
         created_at: Ordredato
@@ -77,12 +77,11 @@ da:
         special_instructions: "Specialinstrukser"
         state: Tilstand
         total: Total
-      spree/payment_method:
+      spree/payment_method: 
         name: Navn
-      spree/product:
+      spree/product: 
         available_on: "Kan købes fra"
         cost_price: "Kostpris"
-        cost_currency: "Kostvaluta"
         description: Beskrivelse
         master_price: "Master pris"
         name: Navn
@@ -90,7 +89,7 @@ da:
         on_hand: "På lager"
         shipping_category: "Forsendelseskategori"
         tax_category: "Momskategori"
-      spree/promotion:
+      spree/promotion: 
         advertise: Reklamér
         code: Kode
         description: Beskrivelse
@@ -100,121 +99,120 @@ da:
         path: Sti
         starts_at: Starter
         usage_limit: Brugsbegrænsning
-      spree/property:
+      spree/property: 
         name: Navn
         presentation: Præsentation
-      spree/prototype:
+      spree/prototype: 
         name: Navn
-      spree/return_authorization:
+      spree/return_authorization: 
         amount: Antal
-      spree/role:
+      spree/role: 
         name: Navn
-      spree/state:
+      spree/state: 
         abbr: Forkortelse
         name: Navn
-      spree/tax_category:
+      spree/tax_category: 
         description: Beskrivelse
         name: Navn
-      spree/tax_rate:
+      spree/tax_rate: 
         amount: Sats
         included_in_price: Inkluderet i prisen
         show_rate_in_label: Vis stas i label
-      spree/taxon:
+      spree/taxon: 
         name: Navn
         permalink: Permalink
         position: Position
-      spree/taxonomy:
+      spree/taxonomy: 
         name: Navn
-      spree/user:
+      spree/user: 
         email: E-mail-adresse
         password: "Adgangskode"
         password_confirmation: "Bekræft adgangskode"
-      spree/variant:
+      spree/variant: 
         cost_price: "Kostpris"
-        cost_currency: "Kostvaluta"
         depth: Dybte
         height: Højde
         price: Pris
         sku: SKU
         weight: Vægt
         width: Bredde
-      spree/zone:
+      spree/zone: 
         description: Beskrivelse
         name: Navn
-    models:
-      spree/address:
+    models: 
+      spree/address: 
         one: Adresse
         other: Adresser
-      spree/cheque_payment:
+      spree/cheque_payment: 
         one: Betaling med check
         other: Betaling med check
-      spree/country:
+      spree/country: 
         one: Land
         other: Lande
-      spree/credit_card:
+      spree/credit_card: 
         one: "Betalingskort"
         other: "Betalingskort"
-      spree/creditcard_payment:
+      spree/creditcard_payment: 
         one: "Betaling med kort"
         other: "Betaling med kort"
-      spree/creditcard_txn:
+      spree/creditcard_txn: 
         one: "Betalingskort-transaktion"
         other: "Betalingskort-transaktioner"
-      spree/inventory_unit:
+      spree/inventory_unit: 
         one: "Inventory Unit"
         other: "Inventory Units"
-      spree/line_item:
+      spree/line_item: 
         one: "Ordrelinje"
         other: "Ordrelinjer"
-      spree/order:
+      spree/order: 
         one: Ordre
         other: Ordrer
-      spree/payment:
+      spree/payment: 
         one: Betaling
         other: Betalinger
-      spree/product:
+      spree/product: 
         one: Produkt
         other: Produkter
-      spree/property:
+      spree/property: 
         one: Egenskab
         other: Egenskaber
-      spree/prototype:
+      spree/prototype: 
         one: Prototype
         other: Prototyper
-      spree/return_authorization:
+      spree/return_authorization: 
         one: Return Authorization
         other: Return Authorizations
-      spree/role:
+      spree/role: 
         one: Rolle
         other: Roller
-      spree/shipment:
+      spree/shipment: 
         one: Levering
         other: Leveringer
-      spree/shipping_category:
+      spree/shipping_category: 
         one: "Leveringskategori"
         other: "Leveringskategorier"
-      spree/state:
+      spree/state: 
         one: Delstat
         other: Delstater
-      spree/tax_category:
+      spree/tax_category: 
         one: "Momskategori"
         other: "Momskategorier"
-      spree/tax_rate:
+      spree/tax_rate: 
         one: "Momssats"
         other: "Momssatser"
-      spree/taxon:
+      spree/taxon: 
         one: Takson
         other: Taksoner
-      spree/taxonomy:
+      spree/taxonomy: 
         one: Taksonomi
         other: Taksonomier
-      spree/user:
+      spree/user: 
         one: Bruger
         other: Brugere
-      spree/variant:
+      spree/variant: 
         one: Variant
         other: Varianter
-      spree/zone:
+      spree/zone: 
         one: Zone
         other: Zoner
   add: Tilføj
@@ -239,10 +237,10 @@ da:
   adjustment: Justering
   adjustment_total: Samlet justering
   adjustments: Justeringer
-  admin:
-    mail_methods:
+  admin: 
+    mail_methods: 
       send_testmail: 'Send Testmail'
-      testmail:
+      testmail: 
         delivery_error: 'Testmail delivery error'
         delivery_success: 'Testmail sent successfully'
         error: 'Testmail error: %{e}'
@@ -284,7 +282,7 @@ da:
   back_to_adjustments_list: "Back To Adjustments List"
   back_to_images_list: "Back To Images List"
   back_to_mail_methods_list: "Back To Mail Methods List"
-  back_to_option_types_list: "Back To Option Types List"
+  back_to_option_tyles_list: "Back To Option Types List"
   back_to_payment_methods_list: "Back To Payment Methods List"
   back_to_payments_list: "Back To Payments List"
   back_to_products_list: "Back To Products List"
@@ -332,7 +330,6 @@ da:
   charges: Regninger
   checkout: Til kassen
   cheque: Check
-  choose_a_customer: Vælg en kunde
   city: By
   clone: Dupliker
   code: Kode
@@ -351,9 +348,7 @@ da:
   continue_shopping: "Fortsæt indkøb"
   copy_all_mails_to: Kopier alle emails til
   cost_price: "Kostpris"
-  cost_currency: "Kostvaluta"
   count_of_reduced_by: "optælling af '%{name}' reduceret ved %{count}"
-  countries: Lande
   country: Land
   country_based: "Landbaseret"
   coupon: Rabat
@@ -440,27 +435,27 @@ da:
   environment: "Miljø"
   error: fejl
   error_user_destroy_with_orders: "Brugere med afsluttede ordrer kan ikke slettes"
-  errors:
-    messages:
+  errors: 
+    messages: 
       could_not_create_taxon: "Kunne ikke oprette taksonomisk gruppe"
       no_payment_methods_available: "No payment methods are configured for this environment"
       no_shipping_methods_available: "Ingen leveringsmetoder er tilgængelige for den valgte lokalitet. Skift din adresse og prøv igen."
-  errors_prohibited_this_record_from_being_saved:
+  errors_prohibited_this_record_from_being_saved: 
     one: "1 fejl forhindrede dette indlæg i at blive gemt"
     other: "%{count} fejl forhindrede dette indlæg i at blive gemt"
   event: Hændelse
-  events:
-    spree:
-      cart:
+  events: 
+    spree: 
+      cart: 
         add: 'Tilføj til indkøbskurv'
-      checkout:
+      checkout: 
         coupon_code_added: Rabat fratrukket
-      content:
+      content: 
         visited: Visit static content page
-      order:
+      order: 
         contents_changed: "Order contents changed"
       page_view: "Static page viewed"
-      user:
+      user: 
         signup: 'User signup'
   existing_customer: "Eksisterende kunde"
   expiration: "Udløbsdato"
@@ -506,7 +501,6 @@ da:
   has_no_shipped_units: har ingen leverede enheder
   height: Højde
   hello_user: "Hallo bruger"
-  hide_cents: Skjul øre
   history: Historie
   home: "Forside"
   icon: "Ikon"
@@ -539,12 +533,11 @@ da:
   item: Artikel
   item_description: "Artikelbeskrivelse"
   item_total: Vis samlet pris
-  item_total_rule:
-    operators:
+  item_total_rule: 
+    operators: 
       gt: større end
       gte: større end eller lig med
-  jirafe: Jirafe
-  landing_page_rule:
+  landing_page_rule: 
     path: Path
   last_name: "Efternavn"
   last_name_begins_with: "Efternavn begynder med"
@@ -579,7 +572,7 @@ da:
   make_refund: Foretage tilbagebetaling
   mark_shipped: "Marker som leveret"
   master_price: "Hovedpris"
-  match_choices:
+  match_choices: 
     all: "All"
     none: "None"
     one: "One"
@@ -635,7 +628,6 @@ da:
   no_products_found: "Ingen produkter fundet"
   no_results: "Ingen resultater"
   no_rules_added: Ingen regler tilføjet
-  no_trackers_found: Ingen statistik-trackere fundet
   no_user_found: "Der blev ikke fundet nogen bruger med denne emailadresse"
   none: Ingen
   none_available: "Ingen tilgængelige"
@@ -645,7 +637,7 @@ da:
   not_found: "%{resource} is not found"
   not_shown: "Ikke vist"
   note: Note
-  notice_messages:
+  notice_messages: 
     option_type_removed: "Fjernet alternativ udgave."
     product_cloned: "Produktet er blevet duplikeret"
     product_deleted: "Product er blevet slettet"
@@ -669,15 +661,15 @@ da:
   order_date: "Ordredato"
   order_details: "Ordredetaljer"
   order_email_resent: "Send ordre email igen"
-  order_mailer:
-    cancel_email:
+  order_mailer: 
+    cancel_email: 
       dear_customer: "Kære kunde,"
       instructions: "Din ordre er blevet annulleret. Gem venligst denne annullering"
       order_summary_canceled: "Sammendrag af ordre [Annulleret]"
       subject: "Annullering af ordre"
       subtotal: "Subtotal:"
       total: "Order Total:"
-    confirm_email:
+    confirm_email: 
       dear_customer: "Kære kunde,"
       instructions: "Gennemlæs og gem venligst følgende orderinformation."
       order_summary: "Sammendrag af ordre"
@@ -715,7 +707,7 @@ da:
   overview: Oversigt
   page_only_viewable_when_logged_in: "Du forsøgte at vise en side der kun er tilgængelig når du er logget ind"
   page_only_viewable_when_logged_out: "Du forsøgte at vise en side der kun er tilgængelig når du er logget ud"
-  pagination:
+  pagination: 
     next_page: "next page &raquo;"
     previous_page: "&laquo; previous page"
     truncate: "&hellip;"
@@ -740,7 +732,7 @@ da:
   payment_processor_choose_banner_text: "If you need help choosing a payment processor, please visit"
   payment_processor_choose_link: "our payments page"
   payment_state: Betalingsstatus
-  payment_states:
+  payment_states: 
     balance_due: forfalden saldo
     checkout: check ud
     completed: afsluttet
@@ -778,121 +770,120 @@ da:
   product_group_invalid: Produktgruppe har ugyldig område
   product_groups: Produktgrupper
   product_has_no_description: Dette produkt har ingen beskrivelse
-  product_not_available_in_this_currency: Dette produkt er ikke tilgængelig i denne valuta
   product_properties: "Produktegenskaber"
-  product_rule:
+  product_rule: 
     choose_products: Vælg produkter
     label: "Ordre må indeholde %{select} af disse produkter"
     match_all: alle
     match_any: mindst en
-    product_source:
+    product_source: 
       group: Fra produktgruppe
       manual: Vælg manuelt
-  product_scopes:
-    groups:
-      price:
+  product_scopes: 
+    groups: 
+      price: 
         description: "Område for at vælge produkter baseret på pris"
         name: Pris
-      search:
+      search: 
         description: "Område for at vælge produkter baseret på navn, nøgleord og beskrivelse"
         name: "Tekst søgning"
-      taxon:
+      taxon: 
         description: "Område for at vælge produkter baseret på taksonomiske grupper"
         name: Taksonomisk gruppe
-      values:
+      values: 
         description: "Område for at vælge produkter baseret på alternative og egenskabsværdier"
         name: Værdier
-    scopes:
-      ascend_by_name:
+    scopes: 
+      ascend_by_name: 
         name: Sorter efter navn i stigende rækkefølge
-      ascend_by_updated_at:
+      ascend_by_updated_at: 
         name: Sorter efter publiceringsdato i stigende rækkefølge
-      descend_by_name:
+      descend_by_name: 
         name: Sorter efter navn i faldende rækkefølge
-      descend_by_updated_at:
+      descend_by_updated_at: 
         name: Sorter efter publiceringsdato i faldende rækkefølge
-      in_name:
-        args:
+      in_name: 
+        args: 
           words: Ord
         description: "(adskilt af mellemrum eller komma)"
         name: "Produkt navn indeholder"
         sentence: navn indeholder <em>%s</em>
-      in_name_or_description:
-        args:
+      in_name_or_description: 
+        args: 
           words: Ord
         description: "(adskilt af mellemrum eller komma)"
         name: "Produktnavn eller beskrivelse indeholder"
         sentence: navn eller beskrivelse indeholder <em>%s</em>
-      in_name_or_keywords:
-        args:
+      in_name_or_keywords: 
+        args: 
           words: Ord
         description: "(adskilt af mellemrum eller komma)"
         name: "Produktnavn eller metanøgleord indeholder"
         sentence: navn eller nøgleord indeholder <em>%s</em>
-      in_taxons:
-        args:
+      in_taxons: 
+        args: 
           "taxon_names": "taksonomisk gruppenavn"
         description: "Taksonomiske grupper skal være adskilt af et mellemrum eller (f.eks. adidas, sko)"
         name: "I taksonomiske grupper og alle deres undergrupper"
         sentence: i <em>%s</em> og alle deres undergrupper
-      master_price_gte:
-        args:
+      master_price_gte: 
+        args: 
           amount: Beløb
         description: ""
         name: "Hovedpris større eller lig med"
         sentence: "pris større eller lig med <em>%,2f</em>"
-      master_price_lte:
-        args:
+      master_price_lte: 
+        args: 
           amount: Beløb
         description: ""
         name: "Hovedpris mindre eller lig med "
         sentence: "pris mindre eller lig med <em>%,2f</em>"
-      price_between:
-        args:
+      price_between: 
+        args: 
           high: Høj
           low: Lav
         description: ""
         name: "Hovedpris imellem"
         sentence: "pris imellem <em>%,2f</em> og <em>%,2f</em>"
-      taxons_name_eq:
-        args:
+      taxons_name_eq: 
+        args: 
           taxon_name: "Taksonomisk gruppenavn"
         description: "I en særskilt taksonomisk gruppe - uden undergrupper"
         name: "I taksonomisk gruppe (uden undergrupper)"
         sentence: i <em>%s</em>
-      with:
-        args:
+      with: 
+        args: 
           value: Værdi
         description: "Vælg særskilte produkter med værdi"
         name: Produkter med værdi
         sentence: med værdi <em>%s</em>
-      with_ids:
-        args:
+      with_ids: 
+        args: 
           ids: "ID'er"
         description: "Vælg særskilte produkter"
         name: "Produkter med ID'er"
         sentence: "med ID'er <em>%s</em>"
-      with_option:
-        args:
+      with_option: 
+        args: 
           option: Alternativer
         description: "Vælg alle produkter der har en særskilt alternativ type (f.eks. farve)"
         name: "Med alternativ"
         sentence: med alternativ <em>%s</em>
-      with_option_value:
-        args:
+      with_option_value: 
+        args: 
           option: Alternativ
           value: Værdi
         description: "Vælg alle produkter der har mindst en variant med særskilte alternativer og værdier (f.eks. farve:rød)"
         name: "Med alternativ og værdi"
         sentence: med alternativ <em>%s</em> og værdi <em>%s</em>
-      with_property:
-        args:
+      with_property: 
+        args: 
           property: Egenskab
         description: "Vælg alle produkter der har særskilte egenskaber (f.eks. vægt)"
         name: "Med egenskaber"
         sentence: med egenskaber <em>%s</em>
-      with_property_value:
-        args:
+      with_property_value: 
+        args: 
           property: Egenskab
           value: Værdi
         description: "Vælg alle produkter der har mindst en variant med særskilte egenskaber og værdi (f.eks. vægt:10kg)"
@@ -902,40 +893,40 @@ da:
   products_with_zero_inventory_display: "Produkter som ikke findes i lageret vil %{not} blive vist"
   promotion: Kampagne
   promotion_action: Kampagnehandling
-  promotion_action_types:
-    create_adjustment:
+  promotion_action_types: 
+    create_adjustment: 
       description: Creates a promotion credit adjustment on the order
       name: Create adjustment
-    create_line_items:
+    create_line_items: 
       description: Populates the cart with the specified quantity of variant
       name: Create line items
-    give_store_credit:
+    give_store_credit: 
       description: Gives the user store credit of the amount specified
       name: Give store credit
   promotion_actions: Handlinger
-  promotion_form:
-    match_policies:
+  promotion_form: 
+    match_policies: 
       all: Match enhver af disse regler
       any: Match alle disse regler
   promotion_not_found: The coupon code you entered doesn't exist. Please try again.
   promotion_rule: Promotion Rule
-  promotion_rule_types:
-    first_order:
+  promotion_rule_types: 
+    first_order: 
       description: Skal være kundens første ordre
       name: Første ordre
-    item_total:
+    item_total: 
       description: Ordre som møder disse kriterier
       name: Totalpris
-    landing_page:
+    landing_page: 
       description: Customer must have visited the specified page
       name: Landing Page
-    product:
+    product: 
       description: Ordrer inkluderer angivne produkt(er)
       name: Produkt(er)
-    user:
+    user: 
       description: Kun tilgængelig for de angivne bruger
       name: Bruger
-    user_logged_in:
+    user_logged_in: 
       description: Available only to logged in users
       name: User Logged In
   promotions: Kampagne
@@ -968,7 +959,7 @@ da:
   resend_confirmation_instructions: "Gensend bekræftelsesinstruktioner"
   resend_unlock_instructions: "Gensend oplåsningsinstruktioner"
   reset_password: "Nulstil min adgangskode"
-  resource_controller:
+  resource_controller: 
     member_object_not_found: "Medlemsobjekt blev ikke fundet."
     successfully_created: "Oprettet!"
     successfully_removed: "Slettet!"
@@ -1024,8 +1015,8 @@ da:
   shipment: Levering
   shipment_details: Leveringsdetaljer
   shipment_inc_vat: "Shipment including VAT"
-  shipment_mailer:
-    shipped_email:
+  shipment_mailer: 
+    shipped_email: 
       dear_customer: "Dear Customer,"
       instructions: "Your order has been shipped"
       shipment_summary: "Shipment Summary"
@@ -1034,7 +1025,7 @@ da:
       track_information: "Tracking Information: %{tracking}"
   shipment_number: "Levering #"
   shipment_state: Leveringsstatus
-  shipment_states:
+  shipment_states: 
     backorder: restnoter
     partial: delvis
     pending: afventende
@@ -1083,17 +1074,12 @@ da:
   sold: Solgt
   sort_ordering: "Sorteringsrækkefølge"
   special_instructions: "Specielle instrukser"
-  spree:
-    date: Dato
-    date_picker:
-      format: ! '%Y/%m/%d'
-      js_format: 'yy/mm/dd'
-    time: Tid
-  spree/order:
+  spree: 
+  spree/order: 
     coupon_code: Coupon Code
     date: Dato
-    date_picker:
-      format: 'yy/mm/dd'
+    date_picker: 
+      format: ! '%Y/%m/%d'
     time: Tid
   spree_alert_checking: "Check for Spree security and release alerts"
   spree_alert_not_checking: "Not checking for Spree security and release alerts"
@@ -1134,7 +1120,6 @@ da:
   tax_type: "Momstype"
   taxon: Taksonomisk gruppe
   taxon_edit: Rediger taksonomisk gruppe
-  taxon_placeholder: Tilføj en taksonomisk gruppe
   taxonomies: Taksonomier
   taxonomies_setting_description: "Opret og administrer taksonomier"
   taxonomy: Taxonomy
@@ -1143,8 +1128,8 @@ da:
   taxonomy_tree_instruction: "* Højreklik på en taksonomisk gruppe for at få adgang til menuen for at tilføje, slette eller organisere undergrupper."
   taxons: Taksonomisk gruppe
   test: "Test"
-  test_mailer:
-    test_email:
+  test_mailer: 
+    test_email: 
       greeting: 'Congratulations!'
       message: 'If you have received this email, then your email settings are correct.'
       subject: 'Testmail'
@@ -1184,18 +1169,17 @@ da:
   user: Bruger
   user_account: Brugerkonto
   user_created_successfully: "Bruger oprettet"
-  user_rule:
+  user_rule: 
     choose_users: Vælg bruger
   users: Brugere
   validate_on_profile_create: Validerer når profile oprettes
-  validation:
+  validation: 
     cannot_be_greater_than_available_stock: "kan ikke være mere end antallet på lager."
     cannot_be_less_than_shipped_units: "kan ikke være mindre end antallet af leverede enheder."
-    cannot_destroy_line_item_as_inventory_units_have_shipped: "Cannot destory line item as some inventory units have shipped."
+    cannot_destory_line_item_as_inventory_units_have_shipped: "Cannot destory line item as some inventory units have shipped."
     is_too_large: "er for stor – der er ikke nok på lager!"
     must_be_int: "skal være et heltal"
     must_be_non_negative: "skal være et positivt tal"
-    exceeds_available_stock: overskrider lagerbeholdning
   value: Værdi
   variant: Variant
   variants: Varianter

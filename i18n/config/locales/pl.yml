@@ -48,22 +48,6 @@ pl:
       spree/option_type: 
         name: Nazwa
         presentation: Prezentacja
-      spree/order/bill_address:
-          address1: "Billing address street"
-          city: "Billing address city"
-          firstname: "Billing address first name"
-          lastname: "Billing address last name"
-          phone: "Billing address phone"
-          state: "Billing address state"
-          zipcode: "Billing address zipcode"
-      spree/order/ship_address:
-          address1: "Shipping address street"
-          city: "Shipping address city"
-          firstname: "Shipping address first name"
-          lastname: "Shipping address last name"
-          phone: "Shipping address phone"
-          state: "Shipping address state"
-          zipcode: "Shipping address zipcode"
       spree/order:
         checkout_complete: "Zamówienie ukończone"
         completed_at: "Skompletowane o"
@@ -77,7 +61,23 @@ pl:
         special_instructions: "Specjalne Instrukcje"
         state: Stan
         total: Łącznie
-      spree/payment_method: 
+      spree/order/bill_address: 
+        address1: "Billing address street"
+        city: "Billing address city"
+        firstname: "Billing address first name"
+        lastname: "Billing address last name"
+        phone: "Billing address phone"
+        state: "Billing address state"
+        zipcode: "Billing address zipcode"
+      spree/order/ship_address: 
+        address1: "Shipping address street"
+        city: "Shipping address city"
+        firstname: "Shipping address first name"
+        lastname: "Shipping address last name"
+        phone: "Shipping address phone"
+        state: "Shipping address state"
+        zipcode: "Shipping address zipcode"
+      spree/payment_method:
         name: Nazwa
       spree/product: 
         available_on: "Dostępny Od"

@@ -11,3 +11,4 @@ nbproject
 pkg
 *.sw?
 spec/dummy
+.rvmrc

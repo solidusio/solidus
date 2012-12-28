@@ -1,12 +1,12 @@
 ---
-ru:
+ru: 
   a_copy_of_all_mail_will_be_sent_to_the_following_addresses: "Копии всех писем будут отосланы на следующие адреса"
   abbreviation: "Аббревиатура"
   access_denied: "Доступ запрещен"
   account: "Учетная запись"
   account_updated: "Учетная запись обновлена!"
   action: "Действие"
-  actions:
+  actions: 
     cancel: "Отменить"
     create: "Создать"
     destroy: "Удалить"
@@ -16,11 +16,11 @@ ru:
     update: "Изменить"
   activate: Активировать
   active: "Активен"
-  activerecord:
-    attributes:
-      spree/address:
+  activerecord: 
+    attributes: 
+      spree/address: 
         address1: Адрес
-        address2: "доп. адрес)"
+        address2: "доп. адрес"
         city: Населённый пункт
         country: "Страна"
         firstname: "Имя"
@@ -28,24 +28,24 @@ ru:
         phone: Телефон
         state: "Область/Регион"
         zipcode: "Почтовый индекс"
-      spree/country:
+      spree/country: 
         iso: ISO
         iso3: ISO3
-        iso_name: "ISO Name"
+        iso_name: "ISO-имя"
         name: Name
-        numcode: "ISO Code"
-      spree/credit_card:
+        numcode: "ISO-код"
+      spree/credit_card: 
         cc_type: Тип
         month: Месяц
         number: Номер
         verification_value: "Значение проверки"
         year: Год
-      spree/inventory_unit:
+      spree/inventory_unit: 
         state: Состояние
-      spree/line_item:
+      spree/line_item: 
         price: Цена
         quantity: Кол-во
-      spree/option_type:
+      spree/option_type: 
         name: Название
         presentation: Представление
       spree/order:
@@ -61,25 +61,25 @@ ru:
         special_instructions: "Специальные инструкции"
         state: Состояние
         total: Итого по заказу
-      spree/order/bill_address:
-          address1: "Улица"
-          city: "Населённый пункт"
-          firstname: "Имя"
-          lastname: "Фамилия"
-          phone: "Телефон"
-          state: "Область/Регион"
-          zipcode: "Почтовый индекс"
-      spree/order/ship_address:
-          address1: "Улица"
-          city: "Населённый пункт"
-          firstname: "Имя"
-          lastname: "Фамилия"
-          phone: "Телефон"
-          state: "Область/Регион"
-          zipcode: "Почтовый индекс"
+      spree/order/bill_address: 
+        address1: "Улица"
+        city: "Населённый пункт"
+        firstname: "Имя"
+        lastname: "Фамилия"
+        phone: "Телефон"
+        state: "Область/Регион"
+        zipcode: "Почтовый индекс"
+      spree/order/ship_address: 
+        address1: "Улица"
+        city: "Населённый пункт"
+        firstname: "Имя"
+        lastname: "Фамилия"
+        phone: "Телефон"
+        state: "Область/Регион"
+        zipcode: "Почтовый индекс"
       spree/payment_method:
         name: Название
-      spree/product:
+      spree/product: 
         available_on: "Доступен с"
         cost_price: "Себестоимость"
         description: Описание
@@ -89,7 +89,7 @@ ru:
         on_hand: "На складе"
         shipping_category: "Категория доставки"
         tax_category: "Категория налогов"
-      spree/promotion:
+      spree/promotion: 
         advertise: Рекламировать
         code: Код
         description: Описание
@@ -99,36 +99,36 @@ ru:
         path: Путь
         starts_at: Начинается
         usage_limit: Лимит использования
-      spree/property:
+      spree/property: 
         name: Название
         presentation: Представление
-      spree/prototype:
+      spree/prototype: 
         name: Название
-      spree/return_authorization:
+      spree/return_authorization: 
         amount: Сумма
-      spree/role:
+      spree/role: 
         name: Название
-      spree/state:
+      spree/state: 
         abbr: Аббревиатура
         name: Название
-      spree/tax_category:
+      spree/tax_category: 
         description: Описание
         name: Название
-      spree/tax_rate:
+      spree/tax_rate: 
         amount: Ставка
         included_in_price: Включено в прайс
         show_rate_in_label: Показывать ставку в метке
-      spree/taxon:
+      spree/taxon: 
         name: Название
         permalink: Пермалинк
         position: Позиция
-      spree/taxonomy:
+      spree/taxonomy: 
         name: Название
-      spree/user:
+      spree/user: 
         email: Email
         password: "Пароль"
         password_confirmation: "Подтверждение пароля"
-      spree/variant:
+      spree/variant: 
         cost_price: "Себестоимость"
         depth: Глубина
         height: Высота
@@ -136,83 +136,83 @@ ru:
         sku: Артикул
         weight: Вес
         width: Ширина
-      spree/zone:
+      spree/zone: 
         description: Описание
         name: Название
-    models:
-      spree/address:
+    models: 
+      spree/address: 
         one: Адрес
         other: Адреса
-      spree/cheque_payment:
+      spree/cheque_payment: 
         one: Оплата чеком
         other: Платежи чеком
-      spree/country:
+      spree/country: 
         one: Страна
         other: Страны
-      spree/credit_card:
+      spree/credit_card: 
         one: "Кредитная карта"
         other: "Кредитные карты"
-      spree/creditcard_payment:
+      spree/creditcard_payment: 
         one: "Платёж кредитной картой"
         other: "Платёжи кредитной картой"
-      spree/creditcard_txn:
+      spree/creditcard_txn: 
         one: "Транзакция кредитной картой"
         other: "Транзакции кредитной картой"
-      spree/inventory_unit:
+      spree/inventory_unit: 
         one: "Inventory Unit"
         other: "Inventory Units"
-      spree/line_item:
+      spree/line_item: 
         one: "Позиция"
         other: "Позиции"
-      spree/order:
+      spree/order: 
         one: Заказ
         other: Заказы
-      spree/payment:
+      spree/payment: 
         one: Платёж
         other: Платежи
-      spree/product:
+      spree/product: 
         one: Товар
         other: Товары
-      spree/property:
+      spree/property: 
         one: Свойство
         other: Свойства
-      spree/prototype:
+      spree/prototype: 
         one: Прототип
         other: Прототипы
-      spree/return_authorization:
+      spree/return_authorization: 
         one: Return Authorization
         other: Return Authorizations
-      spree/role:
+      spree/role: 
         one: Роль
         other: Роли
-      spree/shipment:
+      spree/shipment: 
         one: Доставка
         other: Доставки
-      spree/shipping_category:
+      spree/shipping_category: 
         one: "Категория доставки"
         other: "Категории доставки"
-      spree/state:
+      spree/state: 
         one: Область/Регион
         other: Области/Регионы
-      spree/tax_category:
+      spree/tax_category: 
         one: "Категория налогов"
         other: "Категории налогов"
-      spree/tax_rate:
+      spree/tax_rate: 
         one: "Ставка налога"
         other: "Ставки налога"
-      spree/taxon:
+      spree/taxon: 
         one: Рубрика
         other: Рубрики
-      spree/taxonomy:
+      spree/taxonomy: 
         one: Категория
         other: Категории
-      spree/user:
+      spree/user: 
         one: Пользователь
         other: Пользователи
-      spree/variant:
+      spree/variant: 
         one: Вариант
         other: Варианты
-      spree/zone:
+      spree/zone: 
         one: Зона
         other: Зоны
   add: "Добавить"
@@ -237,10 +237,10 @@ ru:
   adjustment: "Надбавка"
   adjustment_total: "Итого (надбавки)"
   adjustments: "Надбавки"
-  admin:
-    mail_methods:
+  admin: 
+    mail_methods: 
       send_testmail: 'Отправить тестовое письмо'
-      testmail:
+      testmail: 
         delivery_error: 'Ошибка отправки тестового письма'
         delivery_success: 'Тестовое письмо успешно отправлено'
         error: 'Ошибка отправки тестового письма: %{e}'
@@ -280,15 +280,13 @@ ru:
   back: "Назад"
   back_end: "в администраторском интерфейсе"
   back_to_adjustments_list: "Back To Adjustments List"
-  back_to_countries_list: "Вернуться к списку стран"
   back_to_images_list: "Вернуться к списку изображений"
   back_to_mail_methods_list: "Вернуться к методам списку методов отправки почты"
   back_to_option_types_list: "Вернуться к списку товарных опций"
-  back_to_payment_methods_list: "Вернуться к списку способов оплаты"
-  back_to_payments_list: "Back To Payments List"
+  back_to_payments_list: "Вернуться к списку способов оплаты"
   back_to_products_list: "Вернуться к списку товаров"
   back_to_promotions_list: "Вернуться к списку промо акций"
-  back_to_properties_list: "Back To Products List"
+  back_to_properties_list: "Вернуться к списку свойств товаров"
   back_to_prototypes_list: "Вернуться к списку прототипов"
   back_to_reports_list: "Вернуться к списку отчетов"
   back_to_shipping_categories: "Вернуться к списку категорий доставки"
@@ -331,7 +329,6 @@ ru:
   charges: "Сборы"
   checkout: "Оформление заказа"
   cheque: "Чек"
-  choose_currency: 'Выбрать валюту'
   city: "Город"
   clone: "Клонировать"
   code: "Кодовое слово"
@@ -341,7 +338,7 @@ ru:
   configuration: "Конфигурация"
   configuration_options: "Опции конфигурации"
   configurations: "Конфигурация"
-  configure_s3: "Configure S3"
+  configure_s3: "Настроить S3"
   configured: "Сконфигурировано"
   confirm: "Подтвердить"
   confirm_delete: "Подтверждение удаления"
@@ -352,7 +349,6 @@ ru:
   cost_price: "Себестоимость"
   count_of_reduced_by: "количество '%{name}' уменьшено на %{count}"
   country: "Страна"
-  countries: "Страны"
   country_based: "Страна"
   coupon: "Купон"
   coupon_code: "Код купона"
@@ -405,7 +401,6 @@ ru:
   edit_general_settings: "Редактировать общие настройки"
   editing_billing_integration: "Редактировать интеграцию с биллингом"
   editing_category: "Редактирование категории"
-  editing_country: "Редактирование страны"
   editing_mail_method: "Редактирование метода отправки почты"
   editing_option_type: "Редактирование опции"
   editing_option_types: "Редактирование опций"
@@ -431,37 +426,35 @@ ru:
   enable_login_via_login_password: "Авторизоваться с помощью пары email/пароль"
   enable_login_via_openid: "Авторизоваться с помощью OpenID"
   enable_mail_delivery: "Включить доставку почты"
-  ending_in: "Ending in"
+  ending_in: "Оканчивается"
   enter_at_least_five_letters: "Введите хотя бы пять символов имени клиента"
   enter_exactly_as_shown_on_card: "Пожалуйста, введите точно как показано на карте"
   enter_password_to_confirm: "(необходимо указать Ваш текущий пароль для подтверждения изменений)"
-  enter_token: Enter Token
+  enter_token: Токен
   environment: "Среда окружения"
   error: "ошибка"
   error_user_destroy_with_orders: "Пользователи с завершенными заказами могут не быть удалены."
-  errors:
-    messages:
+  errors: 
+    messages: 
       could_not_create_taxon: "Невозможно создать таксон"
       no_payment_methods_available: "Для этого окружения не настроено ни одного способа оплаты"
       no_shipping_methods_available: "Для указанного местоположения отсутствуют способы доставки, пожалуйста, смените адрес и попробуйте снова."
-  errors_prohibited_this_record_from_being_saved:
+  errors_prohibited_this_record_from_being_saved: 
     one: "1 ошибка не позволяет сохранить запись в базе"
-    few: "%{count} ошибки не позволяют сохранить запись в базе"
-    many: "%{count} ошибок не позволяют сохранить запись в базе"
     other: "%{count} ошибок не позволяют сохранить запись в базе"
   event: "Событие"
-  events:
-    spree:
-      cart:
+  events: 
+    spree: 
+      cart: 
         add: 'Добавление в корзину'
-      checkout:
+      checkout: 
         coupon_code_added: Добавлен купон
-      content:
+      content: 
         visited: Посещение статической страницы
-      order:
+      order: 
         contents_changed: "Содержимое заказа изменилось"
       page_view: "Просмотр статической страницы"
-      user:
+      user: 
         signup: 'Новый пользователь'
   existing_customer: "Для зарегистрированных пользователей"
   expiration: "Окончание действия"
@@ -507,7 +500,6 @@ ru:
   has_no_shipped_units: "не имеет отправленных единиц учёта"
   height: "Высота"
   hello_user: "Добро пожаловать"
-  hide_cents: 'Отображать копейки'
   history: "История"
   home: "Домой"
   icon: "Иконка"
@@ -540,11 +532,11 @@ ru:
   item: "Наименование"
   item_description: "Описание товара"
   item_total: "Итого (товары)"
-  item_total_rule:
-    operators:
+  item_total_rule: 
+    operators: 
       gt: "больше"
       gte: "больше или равно"
-  landing_page_rule:
+  landing_page_rule: 
     path: Путь
   last_name: "Фамилия"
   last_name_begins_with: "Фамилия начинается с"
@@ -552,7 +544,6 @@ ru:
   leave_blank_to_not_change: "(оставьте пустым, если не хотите менять его)"
   list: "Список"
   listing_categories: "Список категорий"
-  listing_countries: "Список стран"
   listing_option_types: "Список опций"
   listing_orders: "Список заказов"
   listing_product_groups: "Список групп товаров"
@@ -580,7 +571,7 @@ ru:
   make_refund: "Сделать возврат"
   mark_shipped: "Отметить как отправленный"
   master_price: "Основная цена"
-  match_choices:
+  match_choices: 
     all: "Всем"
     none: "Ни одному"
     one: "Одному"
@@ -592,7 +583,7 @@ ru:
   minimal_amount: "Минимальная сумма"
   missing_required_information: "Пропущена необходимая информация"
   month: "Месяц"
-  more: More
+  more: Больше
   my_account: "Моя учетная запись"
   my_orders: "Мои заказы"
   name: "Наименование"
@@ -602,7 +593,7 @@ ru:
   new_billing_integration: "Новая интеграция с биллингом"
   new_category: "Новая категория"
   new_customer: "Для новых пользователей"
-  new_group: New Group
+  new_group: Новая группа
   new_image: "Новое изображение"
   new_mail_method: "Новый метод отправки почты"
   new_option_type: "Новая опция"
@@ -641,11 +632,11 @@ ru:
   none_available: "Нет в наличии"
   normal_amount: "Обычная сумма"
   not: "не"
-  not_available: "N/A"
-  not_found: "%{resource} is not found"
+  not_available: "Не доступен"
+  not_found: "%{resource} не найден"
   not_shown: "не показано"
   note: "Примечание"
-  notice_messages:
+  notice_messages: 
     option_type_removed: "Товарная опция успешно убрана."
     product_cloned: "Копия товара создана"
     product_deleted: "Товар успешно удалён"
@@ -664,20 +655,20 @@ ru:
   or: "или"
   or_over_price: "Или дороже"
   order: "Заказ"
-  order_adjustments: "Order adjustments"
+  order_adjustments: "Корректировки заказа"
   order_confirmation_note: ""
   order_date: "Дата заказа"
   order_details: "Детали заказа"
   order_email_resent: "Письмо с описанием заказа выслано повторно"
-  order_mailer:
-    cancel_email:
+  order_mailer: 
+    cancel_email: 
       dear_customer: "Дорогой покупатель,"
       instructions: "Ваш заказ был отменен. Сохраните эту информацию для истории."
       order_summary_canceled: "Детали заказа [ОТМЕНЕНО]"
       subject: "Аннулирование заказа"
       subtotal: "Подитог:"
       total: "Итого по заказу:"
-    confirm_email:
+    confirm_email: 
       dear_customer: "Дорогой покупатель,"
       instructions: "Пожалуйста, проверьте детали заказа."
       order_summary: "Детали заказа"
@@ -690,7 +681,7 @@ ru:
   order_operation_authorize: "Авторизовать"
   order_processed_but_following_items_are_out_of_stock: "Ваш заказ был обработан, но нижеуказанные товары закончились на складе:"
   order_processed_successfully: "Ваш заказ был успешно обработан"
-  order_state:
+  order_state: 
     address: "Адрес"
     adjustments: "Надбавки"
     awaiting_return: "Ожидает возврата"
@@ -715,7 +706,7 @@ ru:
   overview: "Обзор"
   page_only_viewable_when_logged_in: "Запрошенную страницу могут посещать только авторизованные пользователи."
   page_only_viewable_when_logged_out: "Запрошенную страницу могут посещать только неавторизованные пользователи."
-  pagination:
+  pagination: 
     next_page: "следующая страница &raquo;"
     previous_page: "&laquo; предыдущая страница"
     truncate: "&hellip;"
@@ -740,7 +731,7 @@ ru:
   payment_processor_choose_banner_text: "Если Вам нужна помощь в выборе способа оплаты, пожалуйста, зайдите на "
   payment_processor_choose_link: "наша страница оплаты"
   payment_state: "Статус платежа"
-  payment_states:
+  payment_states: 
     balance_due: частично
     checkout: оформляется
     completed: завершен
@@ -779,119 +770,119 @@ ru:
   product_groups: "Группы товаров"
   product_has_no_description: "У данного товара нет описания."
   product_properties: "Свойства товара"
-  product_rule:
+  product_rule: 
     choose_products: "Выбранные товары"
     label: "Заказ должен включать %{select} из этих товаров"
     match_all: "все"
     match_any: "хотя бы один"
-    product_source:
+    product_source: 
       group: "Из группы товаров"
       manual: "Выбрать вручную"
-  product_scopes:
-    groups:
-      price:
+  product_scopes: 
+    groups: 
+      price: 
         description: "Фильтры для выбора товаров на основе цены"
         name: "Цена"
-      search:
+      search: 
         description: "Фильтры для выбора товаров на основе названия товара, его описания и ключевых слов"
         name: "Тестовый поиск"
-      taxon:
+      taxon: 
         description: "Фильтры для выбора товаров на основе принадлежности к таксонам"
         name: "Таксоны"
-      values:
+      values: 
         description: "Фильтры для выбора товаров на основе значений свойств и товарных опций товара"
         name: "Значения"
-    scopes:
-      ascend_by_name:
+    scopes: 
+      ascend_by_name: 
         name: "по названию товара (по алфавиту)"
-      ascend_by_updated_at:
+      ascend_by_updated_at: 
         name: "по дате обновления информации о товаре (прямой порядок)"
-      descend_by_name:
+      descend_by_name: 
         name: "по названию товара (по алфавиту в обратном порядке)"
-      descend_by_updated_at:
+      descend_by_updated_at: 
         name: "по дате обновления информации о товаре (обратный порядок)"
-      in_name:
-        args:
+      in_name: 
+        args: 
           words: ""
         description: "(разделённые пробелом или запятой)"
         name: "Название товара содержит следующие слова"
         sentence: "Название товара содержит '<em>%s</em>'"
-      in_name_or_description:
-        args:
+      in_name_or_description: 
+        args: 
           words: ""
         description: "(разделённые пробелом или запятой)"
         name: "Название товара или его описание содержит следующие слова"
         sentence: "Название товара или его описание содержит '<em>%s</em>'"
-      in_name_or_keywords:
-        args:
+      in_name_or_keywords: 
+        args: 
           words: ""
         description: "(разделённые пробелом или запятой)"
         name: "Название товара или его ключевые слова содержат следующие слова"
         sentence: "Название товара или его ключевые слова содержат '<em>%s</em>'"
-      in_taxons:
-        args:
+      in_taxons: 
+        args: 
           "taxon_names": "названия таксонов"
         description: "(разделённые пробелом или запятой)"
         name: "Принадлежит следующим таксонам или их наследникам,"
         sentence: "принадлежит таксону <em>%s</em> или его наследнику"
-      master_price_gte:
-        args:
+      master_price_gte: 
+        args: 
           amount: ""
         description: ""
         name: "Основная цена больше или равна"
         sentence: "цена больше или равна <em>%.2f</em>"
-      master_price_lte:
-        args:
+      master_price_lte: 
+        args: 
           amount: ""
         description: ""
         name: "Основная цена меньше или равна"
         sentence: "цена меньше или равна <em>%.2f</em>"
-      price_between:
-        args:
+      price_between: 
+        args: 
           high: "до"
           low: "от"
         description: ""
         name: "Основная цена находится в диапазоне"
         sentence: "цена в диапазоне от <em>%.2f</em> до <em>%.2f</em>"
-      taxons_name_eq:
-        args:
+      taxons_name_eq: 
+        args: 
           taxon_name: "название таксона"
         description: "принадлежит указанному таксону - без наследников"
         name: "Принадлежит таксону (без наследников)"
         sentence: "принадлежит таксону <em>%s</em>"
-      with:
-        args:
+      with: 
+        args: 
           value: ""
         description: "(выберите товары, которые будут входить в группу)"
         name: "Выбранные товары"
         sentence: "c ID <em>%s</em>"
-      with_ids:
-        args:
+      with_ids: 
+        args: 
           ids: ""
         description: "(выберите товары, которые будут входить в группу)"
         name: "Выбранные товары"
         sentence: "c ID <em>%s</em>"
-      with_option:
-        args:
+      with_option: 
+        args: 
           option: ""
         description: "Выбирает все товары, которые имеют указанную опцию (например, цвет)"
         name: "Имеет следующую товарную опцию"
         sentence: "с опцией <em>%s</em>"
-      with_option_value:
-        args:
+      with_option_value: 
+        args: 
           option: "Товарная опция"
           value: "Значение"
         description: "Выбирает все товары, у которых есть хотя бы один вариант, для которого указанная опция имеет указанное значение(например, цвет:красный)"
         name: "Имеет опцию с указанным значением"
         sentence: "есть опция <em>%s</em> со значением <em>%s</em>"
-      with_property:
-        args:
+      with_property: 
+        args: 
           property: ""
         description: "Выбирает все товары, которые имеют указанное свойство (например, вес)"
         name: "Имеет следующее свойство"
         sentence: "со свойством <em>%s</em>"
-      with_property_value:
-        args:
+      with_property_value: 
+        args: 
           property: "Свойство товара"
           value: "Значение"
         description: "Выбирает все товары, у которых есть хотя бы один вариант, для которого указанное свойство имеет указанное значение(например, вес:10)"
@@ -901,40 +892,40 @@ ru:
   products_with_zero_inventory_display: "Отсутствующие товары %{not} будут отображаться"
   promotion: "Промо-акция"
   promotion_action: "Промо-акция"
-  promotion_action_types:
-    create_adjustment:
-      description: Creates a promotion credit adjustment on the order
-      name: Create adjustment
-    create_line_items:
-      description: Populates the cart with the specified quantity of variant
-      name: Create line items
-    give_store_credit:
+  promotion_action_types: 
+    create_adjustment: 
+      description: Создаёт промо-корректировки для заказа
+      name: Создать корректировку
+    create_line_items: 
+      description: Заполняет корзину указанным количеством вариантов
+      name: Создать элемент заказа
+    give_store_credit: 
       description: Gives the user store credit of the amount specified
       name: Give store credit
   promotion_actions: Акции
-  promotion_form:
-    match_policies:
+  promotion_form: 
+    match_policies: 
       all: "Соответствует всем этим правилам"
       any: "Соответствует хотя бы одному правилу"
   promotion_not_found: Купон, который Вы ввели, не существует.
   promotion_rule: "Правило"
-  promotion_rule_types:
-    first_order:
+  promotion_rule_types: 
+    first_order: 
       description: "Должен быть первым заказом покупателя"
       name: "Первый заказ"
-    item_total:
+    item_total: 
       description: "Сумма заказа соответствует следующим критериям"
       name: "Сумма заказа"
-    landing_page:
+    landing_page: 
       description: Покупатель должен был попасть на указанную страницу
       name: Страница
-    product:
+    product: 
       description: "Заказ включает указанные товары"
       name: "Товары"
-    user:
+    user: 
       description: "Доступно только для указанных пользователей"
       name: "Пользователи"
-    user_logged_in:
+    user_logged_in: 
       description: Доступно только зарегистрированным пользователям
       name: Пользователь авторизовался
   promotions: "Промо-акции"
@@ -967,7 +958,7 @@ ru:
   resend_confirmation_instructions: "Отправить повторно инструкции по подтверждению"
   resend_unlock_instructions: "Отправить повторно инструкции по разблокированию"
   reset_password: "Сбросить мой пароль"
-  resource_controller:
+  resource_controller: 
     member_object_not_found: "Запрашиваемая запись не найдена."
     successfully_created: "Запись успешно создана!"
     successfully_removed: "Запись успешно удалена!"
@@ -987,12 +978,12 @@ ru:
   rma_value: "Сумма RMA"
   roles: "Роли"
   rules: "Правила"
-  s3_access_key: "Access Key"
-  s3_bucket: "Bucket"
-  s3_headers: "S3 Headers"
+  s3_access_key: "Код доступа"
+  s3_bucket: "Корзина"
+  s3_headers: "S3 заголовки"
   s3_not_used_for_product_images: "s3 Не Используется Для Изображений Товаров"
-  s3_protocol: "S3 Protocol"
-  s3_secret: "Secret Key"
+  s3_protocol: "S3 протокол"
+  s3_secret: "Секретный ключ"
   s3_used_for_product_images: "S3 is being used for product images"
   sales_tax: "Налог с продаж"
   sales_total: "Итого (продажи)"
@@ -1005,8 +996,8 @@ ru:
   search_results: "Результаты поиска по запросу '%{keywords}'"
   searching: "Идёт поиск..."
   secure_connection_type: "Тип защищенного соединения"
-  secure_credit_card: Secure Credit Card
-  security_settings: "Security Settings"
+  secure_credit_card: Безопасность кредитной карты
+  security_settings: "Настройки безопасности"
   select: "Выбрать"
   select_from_prototype: "Выбрать из прототипов"
   select_preferred_shipping_option: "Выберите предпочитаемый способ доставки"
@@ -1023,8 +1014,8 @@ ru:
   shipment: "Отправка"
   shipment_details: "Детали отправки"
   shipment_inc_vat: "Сумма включает НДС"
-  shipment_mailer:
-    shipped_email:
+  shipment_mailer: 
+    shipped_email: 
       dear_customer: "Дорогой покупатель,"
       instructions: "Ваш заказ был успешно отправлен."
       shipment_summary: "Детали доставки"
@@ -1033,7 +1024,7 @@ ru:
       track_information: "Детали отслеживания доставки: %{tracking}"
   shipment_number: "Отправка №"
   shipment_state: "Статус отправки"
-  shipment_states:
+  shipment_states: 
     backorder: задерживается
     partial: частично
     pending: ожидает
@@ -1082,16 +1073,12 @@ ru:
   sold: "Продано"
   sort_ordering: "Порядок сортировки"
   special_instructions: "Дополнительные инструкции"
-  spree:
-     date: "Дата"
-     date_picker:
-       format: '%Y/%m/%d'
-     time: "Время"
-  spree/order:
+  spree: 
+  spree/order: 
     coupon_code: Код купона
     date: "Дата"
-    date_picker:
-      format: 'yy/mm/dd'
+    date_picker: 
+      format: '%Y/%m/%d'
     time: "Время"
   spree_alert_checking: "Проверять обновления новых версий и безопасности Spree"
   spree_alert_not_checking: "Обновления новых версий и безопасности Spree не проверяются"
@@ -1109,7 +1096,6 @@ ru:
   state_based: "Есть области"
   state_setting_description: "Управление списком областей и регионов, входящих в страны."
   states: "Регионы/Области"
-  states_required: "Обязательно регион/область"
   status: "Статус"
   stop: "Конец"
   store: "В магазин"
@@ -1132,7 +1118,6 @@ ru:
   tax_total: "Налоги"
   tax_type: "Тип налога"
   taxon: "Таксон"
-  taxon_placeholder: "Добавить таксон"
   taxon_edit: "Редактировать таксон"
   taxonomies: "Таксономии"
   taxonomies_setting_description: "Создание и редактирование таксономий"
@@ -1142,8 +1127,8 @@ ru:
   taxonomy_tree_instruction: "* Щёлкните правой кнопкой мыши на элеменете дерева для добавления, удаления или сортировки таксонов."
   taxons: "Таксоны"
   test: "Test"
-  test_mailer:
-    test_email:
+  test_mailer: 
+    test_email: 
       greeting: 'Поздравляем!'
       message: 'Если Вы читаете это сообщение, значит почтовые настройки Spree верны.'
       subject: 'Тестовое сообщение'
@@ -1183,11 +1168,11 @@ ru:
   user: "Пользователь"
   user_account: "Учетная запись пользователя"
   user_created_successfully: "Учётная запись успешно создана"
-  user_rule:
+  user_rule: 
     choose_users: "Выбрать пользователей"
   users: "Пользователи"
   validate_on_profile_create: "Проверять при создании профиля"
-  validation:
+  validation: 
     cannot_be_greater_than_available_stock: "не может быть больше, чем количество доступных единиц"
     cannot_be_less_than_shipped_units: "не может быть меньше, чем количество отгруженных единиц"
     cannot_destory_line_item_as_inventory_units_have_shipped: "Не могу удалить позицию так как некоторые товары уже были отправлены."

@@ -48,22 +48,6 @@ lv:
       spree/option_type: 
         name: Name
         presentation: Presentation
-      spree/order/bill_address:
-          address1: "Billing address street"
-          city: "Billing address city"
-          firstname: "Billing address first name"
-          lastname: "Billing address last name"
-          phone: "Billing address phone"
-          state: "Billing address state"
-          zipcode: "Billing address zipcode"
-      spree/order/ship_address:
-          address1: "Shipping address street"
-          city: "Shipping address city"
-          firstname: "Shipping address first name"
-          lastname: "Shipping address last name"
-          phone: "Shipping address phone"
-          state: "Shipping address state"
-          zipcode: "Shipping address zipcode"
       spree/order:
         checkout_complete: "Izrakstīšanās pabeigta"
         completed_at: "Completed At"
@@ -77,7 +61,23 @@ lv:
         special_instructions: "Īpašas norādes"
         state: "Apgabals"
         total: "Kopā"
-      spree/payment_method: 
+      spree/order/bill_address: 
+        address1: "Billing address street"
+        city: "Billing address city"
+        firstname: "Billing address first name"
+        lastname: "Billing address last name"
+        phone: "Billing address phone"
+        state: "Billing address state"
+        zipcode: "Billing address zipcode"
+      spree/order/ship_address: 
+        address1: "Shipping address street"
+        city: "Shipping address city"
+        firstname: "Shipping address first name"
+        lastname: "Shipping address last name"
+        phone: "Shipping address phone"
+        state: "Shipping address state"
+        zipcode: "Shipping address zipcode"
+      spree/payment_method:
         name: Name
       spree/product: 
         available_on: "Pieejams pēc"
@@ -1077,10 +1077,10 @@ lv:
   spree: 
   spree/order: 
     coupon_code: Coupon Code
-    date: "Datums"
+    date: Date
     date_picker: 
       format: 'yy/mm/dd'
-    time: "Laiks"
+    time: Time
   spree_alert_checking: "Check for Spree security and release alerts"
   spree_alert_not_checking: "Not checking for Spree security and release alerts"
   spree_gateway_error_flash_for_checkout: "There was a problem with your payment information. Please check your information and try again."
