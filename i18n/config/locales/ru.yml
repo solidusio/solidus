@@ -16,6 +16,13 @@ ru:
     update: "Изменить"
   activate: Активировать
   active: "Активен"
+  views:
+    pagination:
+      first: "&laquo;&laquo; первая"
+      last: "последняя &raquo;&raquo;"
+      previous: "&laquo; назад"
+      next: "вперёд &raquo;"
+      truncate: "..."
   activerecord: 
     attributes: 
       spree/address: 
@@ -726,10 +733,6 @@ ru:
   overview: "Обзор"
   page_only_viewable_when_logged_in: "Запрошенную страницу могут посещать только авторизованные пользователи."
   page_only_viewable_when_logged_out: "Запрошенную страницу могут посещать только неавторизованные пользователи."
-  pagination: 
-    next_page: "следующая страница &raquo;"
-    previous_page: "&laquo; предыдущая страница"
-    truncate: "&hellip;"
   paid: "Оплачен"
   parent_category: "Родительская категория"
   password: "Пароль"
