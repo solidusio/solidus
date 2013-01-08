@@ -48,6 +48,19 @@ ja:
       spree/option_type:
         name: 名称
         presentation: 表示
+      spree/order:
+        checkout_complete: "注文の受け付けを完了しました"
+        completed_at: "完了日時"
+        created_at: "注文日"
+        email: "メールアドレス"
+        ip_address: "IPアドレス"
+        item_total: "合計個数"
+        number: "注文番号"
+        payment_state: "支払い状態"
+        shipment_state: "配送状態"
+        special_instructions: "特記事項"
+        state: "状態"
+        total: "合計"
       spree/order/bill_address:
         address1: "請求先の住所"
         city: "請求先の住所・市"
@@ -64,19 +77,6 @@ ja:
         phone: "配送先の電話番号"
         state: "配送先の都道府県(州)"
         zipcode: "配送先の郵便番号"
-      spree/order:
-        checkout_complete: "注文の受け付けを完了しました"
-        completed_at: "完了日時"
-        created_at: "注文日"
-        email: "メールアドレス"
-        ip_address: "IPアドレス"
-        item_total: "合計個数"
-        number: "注文番号"
-        payment_state: "支払い状態"
-        shipment_state: "配送状態"
-        special_instructions: "特記事項"
-        state: "状態"
-        total: "合計"
       spree/payment_method:
         name: "名称"
       spree/product:
@@ -891,7 +891,7 @@ ja:
         sentence: "プロパティ <em>%s</em> と値 <em>%s</em>"
   products: "商品"
   products_with_zero_inventory_display: "Products with a zero inventory will %{not} be displayed"
-  promotion: Promotion
+  promotion: プロモーション
   promotion_action: Promotion Action
   promotion_action_types: 
     create_adjustment: 
@@ -929,7 +929,7 @@ ja:
     user_logged_in: 
       description: Available only to logged in users
       name: User Logged In
-  promotions: Promotions
+  promotions: プロモーション
   promotions_description: Manage offers and coupons with promotions
   properties: "属性"
   property: "属性"
