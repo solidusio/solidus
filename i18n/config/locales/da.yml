@@ -70,7 +70,7 @@ da:
         state: Delstat
         zipcode: Postnummer
       spree/order/ship_address:
-        address1: "Shipping address street"
+        address1: Adresse
         city: By
         firstname: Fornavn
         lastname: Efternavn
@@ -84,7 +84,7 @@ da:
         cost_currency: Kostvaluta
         cost_price: "Kostpris"
         description: Beskrivelse
-        master_price: "Master pris"
+        master_price: Hovedpris
         name: Navn
         on_demand: "On Demand"
         on_hand: "På lager"
@@ -243,11 +243,11 @@ da:
   adjustments: Justeringer
   admin:
     mail_methods:
-      send_testmail: 'Send test e-mail'
+      send_testmail: 'Send test-e-mail'
       testmail:
-        delivery_error: 'Fejl ved aflevering af test email'
-        delivery_success: 'Test email afsendt'
-        error: 'Test email fejl: %{e}'
+        delivery_error: 'Fejl ved aflevering af test-e-mail'
+        delivery_success: 'Test-e-mail afsendt'
+        error: 'Test-e-mail fejl: %{e}'
   administration: Administration
   all: "Alle"
   all_adjustments_closed: Alle justeringer lukkede
@@ -273,7 +273,7 @@ da:
   assign_taxon: "Tildel taksonomisk gruppe"
   assign_taxons: "Tildel taksonomisk gruppe"
   attachment_default_style: "Attachments Style"
-  attachment_default_url: "Url til vedhæftede filer"
+  attachment_default_url: "URL til vedhæftede filer"
   attachment_path: "Sti til vedhæftede filer"
   attachment_styles: "Paperclip Styles"
   attachment_url: Adresse for vedhæftede filer
@@ -398,9 +398,9 @@ da:
   date_range: "Datointerval"
   debit: Debit
   default: Standard
-  default_meta_description: Standard metadata beskrivelse
-  default_meta_keywords: Standard metadata nøgleord
-  default_seo_title: Standard SEO titel
+  default_meta_description: Standard metadata-beskrivelse
+  default_meta_keywords: Standard metadata-nøgleord
+  default_seo_title: Standard SEO-titel
   default_tax: Standardmoms
   default_tax_zone: Standardmomszone
   defined_paperclip_styles: Definerede 'paperclip' udseender
@@ -1096,8 +1096,6 @@ da:
   sort_ordering: "Sorteringsrækkefølge"
   special_instructions: "Specielle instrukser"
   spree:
-  spree/order:
-    coupon_code: Coupon Code
     date: Dato
     date_picker:
       format: ! '%Y/%m/%d'
@@ -1198,7 +1196,7 @@ da:
   validate_on_profile_create: Validerer når profile oprettes
   validation:
     cannot_be_less_than_shipped_units: "kan ikke være mindre end antallet af leverede enheder."
-    cannot_destory_line_item_as_inventory_units_have_shipped: "Cannot destory line item as some inventory units have shipped."
+    cannot_destroy_line_item_as_inventory_units_have_shipped: "Cannot destory line item as some inventory units have shipped."
     exceeds_available_stock: Overskrider tilgængelig beholdning. Du bør sikre dig varer har et gyldigt antal
     is_too_large: "er for stor – der er ikke nok på lager!"
     must_be_int: "skal være et heltal"
