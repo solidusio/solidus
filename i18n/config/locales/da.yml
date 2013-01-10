@@ -1185,7 +1185,7 @@ da:
   updating: Opdaterer
   usage_limit: Brugsgrænse
   use_as_shipping_address: Brug som leveringsadresse
-  use_billing_address: Brug som faktureringsadresse
+  use_billing_address: Brug faktureringsadresse
   use_different_shipping_address: "Brug anden leveringsadresse"
   use_new_cc: "Brug et nyt kort"
   use_s3: "Brug Amazon S3 til varebilleder"
