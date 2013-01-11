@@ -641,7 +641,7 @@ da:
   new_variant: "Ny variant"
   new_zone: "Ny zone"
   next: Næste
-  no: "Nej"
+  'no': "Nej"
   no_items_in_cart: "Indkøbskurv er tom."
   no_match_found: "Ingen match blev fundet"
   no_products_found: "Ingen varer fundet"
@@ -1216,7 +1216,7 @@ da:
   whats_this: "Hvad er dette?"
   width: Bredde
   year: "År"
-  yes: "Ja"
+  'yes': "Ja"
   you_have_been_logged_out: "Du er blevet logget ud."
   you_have_no_orders_yet: "Du har endnu ingen ordre."
   your_cart_is_empty: "Din indkøbskurv er tom"
