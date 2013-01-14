@@ -1,20 +1,15 @@
-require 'rake'
-require 'rake/testtask'
-require 'rbconfig'
+require 'bundler'
+Bundler::GemHelper.install_tasks
 
-require 'rspec/core'
 require 'rspec/core/rake_task'
-RSpec::Core::RakeTask.new(:spec) do |spec|
-  spec.pattern = FileList['spec/**/*_spec.rb']
+require 'spree/core/testing_support/common_rake'
+
+RSpec::Core::RakeTask.new
+
+task :default => [:spec]
+
+desc 'Generates a dummy app for testing'
+task :test_app do
+  ENV['LIB_NAME'] = 'spree_i18n'
+  Rake::Task['common:test_app'].invoke
 end
-
-RSpec::Core::RakeTask.new("spec:translations") do |spec|
-  spec.pattern = 'spec/unit/**/*_spec.rb'
-end
-
-require 'i18n-spec/tasks' # needs to be loaded after rspec
-
-# Load any custom rakefiles for extension
-Dir[ File.expand_path('lib/tasks/*.rake', File.dirname(__FILE__)) ].sort.each { |f| load f }
-
-task :default => :spec
