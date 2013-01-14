@@ -21,13 +21,4 @@ describe "Translation" do
       translation.should == "PLZ"
     end
   end
-
-  # Japanese is chosen as an example of language whose translations are splitted into
-  # several files in a separated directory.
-  context "when default locale is Japanese" do
-    it "translation is available" do
-      I18n.locale = :ja
-      translation.should == "郵便番号"
-    end
-  end
 end
