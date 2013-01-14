@@ -3,13 +3,8 @@
 require 'spec_helper'
 
 describe "Translation" do
-
-  let(:app) do
-    SpreeI18n::Spec::FakeApp
-  end
-  
-  let(:translation) do
-    SpreeI18n::Spec::FakeApp.run lambda { I18n.t("activerecord.attributes.spree/address.zipcode") }
+  def translation
+    I18n.t("activerecord.attributes.spree/address.zipcode")
   end
 
   context "when current locale is en" do
@@ -33,19 +28,6 @@ describe "Translation" do
     it "translation is available" do
       I18n.locale = :ja
       translation.should == "郵便番号"
-    end
-  end
-  
-  context "when current locale is Japanese, but it is not included in available_locales" do
-    let(:translation) do
-      SpreeI18n::Spec::FakeApp.run lambda { I18n.t("activerecord.attributes.spree/address.zipcode") } do |config|
-        config.i18n.available_locales = [ :de, :en, :fr ]
-      end
-    end
-
-    it "translation is not available" do
-      I18n.locale = :ja
-      translation.should == "translation missing: ja.activerecord.attributes.spree/address.zipcode"
     end
   end
 end
