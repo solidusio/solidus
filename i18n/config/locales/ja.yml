@@ -299,7 +299,10 @@ ja:
   back_to_trackers_list: "Back To Trackers List"
   back_to_zones_list: "Back To Zones List"
   backordered: "入荷待ち"
-  backordering_is_allowed: "Backordering %{not} allowed"
+
+  # This translation is defined within ja.rb
+  #backordering_is_allowed: "Backordering %{not} allowed"
+  #
   balance_due: "未払額"
   bill_address: "請求先住所"
   billing: "決済"
@@ -890,7 +893,10 @@ ja:
         name: "プロパティと値"
         sentence: "プロパティ <em>%s</em> と値 <em>%s</em>"
   products: "商品"
-  products_with_zero_inventory_display: "Products with a zero inventory will %{not} be displayed"
+
+  # This translation is defined within ja.rb
+  #products_with_zero_inventory_display: "Products with a zero inventory will %{not} be displayed"
+
   promotion: プロモーション
   promotion_action: Promotion Action
   promotion_action_types: 
