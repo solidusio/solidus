@@ -622,7 +622,7 @@ nb-NO:
   new_variant: "Ny variant"
   new_zone: "Ny sone"
   next: Neste
-  no: "No"
+  say_no: "No"
   no_items_in_cart: "Ingen artikler i handlekurven"
   no_match_found: "Ingen treff"
   no_products_found: "No products found"
@@ -1195,7 +1195,7 @@ nb-NO:
   whats_this: "Hva er dette?"
   width: Bredde
   year: "Year"
-  yes: "Yes"
+  say_yes: "Yes"
   you_have_been_logged_out: "Du har nå logget ut."
   you_have_no_orders_yet: "You have no orders yet."
   your_cart_is_empty: "Din handlekurv er tom"

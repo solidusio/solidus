@@ -626,7 +626,7 @@ sv-SE:
   new_variant: "Ny variant"
   new_zone: "Ny zon"
   next: Nästa
-  no: "No"
+  say_no: "No"
   no_items_in_cart: ""
   no_match_found: "Ingen träff hittades"
   no_products_found: "Inga produkter hittades"
@@ -1199,7 +1199,7 @@ sv-SE:
   whats_this: "Vad är det här?"
   width: Bredd
   year: "År"
-  yes: "Yes"
+  say_yes: "Yes"
   you_have_been_logged_out: "Du har nu loggats ut."
   you_have_no_orders_yet: "Du har inga ordrar än."
   your_cart_is_empty: "Varukorgen är tom"

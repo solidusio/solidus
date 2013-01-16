@@ -622,7 +622,7 @@ fr:
   new_variant: "Nouvelle variante"
   new_zone: "Nouvelle zone"
   next: Suivant
-  no: "No"
+  say_no: "No"
   no_items_in_cart: "Pas d'article dans le panier"
   no_match_found: "Aucune correspondance trouvée"
   no_products_found: "Aucun article trouvé"
@@ -1195,7 +1195,7 @@ fr:
   whats_this: "Qu'est-ce que"
   width: Largeur
   year: "Année"
-  yes: "Yes"
+  say_yes: "Yes"
   you_have_been_logged_out: "Vous avez été déconnecté"
   you_have_no_orders_yet: "Vous n'avez pas encore commandé."
   your_cart_is_empty: "Votre panier est vide"

@@ -622,7 +622,7 @@ fi:
   new_variant: "Uusi variantti"
   new_zone: "Uusi alue"
   next: Seuraava
-  no: "No"
+  say_no: "No"
   no_items_in_cart: ""
   no_match_found: "Ei löytynyt vastaavia"
   no_products_found: "Ei löytynyt tuotteita"
@@ -1195,7 +1195,7 @@ fi:
   whats_this: "Mikä tämä on"
   width: Leveys
   year: Vuosi
-  yes: "Yes"
+  say_yes: "Yes"
   you_have_been_logged_out: "Olet kirjautunut ulos."
   you_have_no_orders_yet: "Sinulla ei ole vielä tilauksia."
   your_cart_is_empty: "Ostoskorisi on tyhjä"

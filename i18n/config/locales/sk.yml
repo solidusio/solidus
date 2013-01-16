@@ -622,7 +622,7 @@ sk:
   new_variant: "Nový variant"
   new_zone: "Nová zóna"
   next: Ďaľšie
-  no: "No"
+  say_no: "No"
   no_items_in_cart: ""
   no_match_found: "Žiadny zodpovedajúci výsledok"
   no_products_found: Nenašli sme žiadny produkt
@@ -1195,7 +1195,7 @@ sk:
   whats_this: "Čo to je"
   width: Šírka
   year: "Rok"
-  yes: "Yes"
+  say_yes: "Yes"
   you_have_been_logged_out: "Odhlásili ste sa."
   you_have_no_orders_yet: "You have no orders yet."
   your_cart_is_empty: "Váš košík je prázdny"

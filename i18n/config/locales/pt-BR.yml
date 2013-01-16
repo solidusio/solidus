@@ -622,7 +622,7 @@ pt-BR:
   new_variant: "Nova Variante"
   new_zone: "Nova Zona"
   next: Próximo
-  no: "Não"
+  say_no: "Não"
   no_items_in_cart: "Quantidade de Itens no Carrinho"
   no_match_found: "Não Encontrado"
   no_products_found: "Não Existem Produtos"
@@ -1195,7 +1195,7 @@ pt-BR:
   whats_this: "O que é isto?"
   width: "Largura"
   year: "Ano"
-  yes: "Sim"
+  say_yes: "Sim"
   you_have_been_logged_out: "Você foi Desconectado."
   you_have_no_orders_yet: "Você Não Possui Pedidos Ainda."
   your_cart_is_empty: "O Carrinho Está Vazio"

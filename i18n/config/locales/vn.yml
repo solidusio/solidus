@@ -622,7 +622,7 @@ vn:
   new_variant: "Biến thể mới"
   new_zone: "Vùng mới"
   next: Tiếp
-  no: "No"
+  say_no: "No"
   no_items_in_cart: "Sọt rỗng"
   no_match_found: "Không thấy trùng"
   no_products_found: "Không tìm thấy sản phẩm"
@@ -1195,7 +1195,7 @@ vn:
   whats_this: "Cái gì đây?"
   width: Rộng
   year: "Năm"
-  yes: "Yes"
+  say_yes: "Yes"
   you_have_been_logged_out: "Bạn vừa đăng xuất."
   you_have_no_orders_yet: "You have no orders yet."
   your_cart_is_empty: "Sọt hàng rỗng"

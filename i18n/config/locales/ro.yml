@@ -36,8 +36,8 @@ ro:
   price_range: Gamă preț
   under_price: "Sub %{price}"  
   or_over_price: "%{price} sau peste"  
-  'no': "Nu"
-  'yes': "Da"
+  say_no: "Nu"
+  say_yes: "Da"
   5_biggest_spenders: "Cei mai mari 5 cumpărători"
   a_copy_of_all_mail_will_be_sent_to_the_following_addresses: O copie a tuturor e-mailurilor să fie trimisă la următoarele adrese 
   abbreviation: Prescurtare

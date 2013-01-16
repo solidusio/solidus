@@ -622,7 +622,7 @@ es:
   new_variant: "Nueva Variante"
   new_zone: "Nueva zona"
   next: siguiente
-  no: "No"
+  say_no: "No"
   no_items_in_cart: "El carrito está vacío"
   no_match_found: "No se ha encontrado"
   no_products_found: "No se han encontrado productos"
@@ -1195,7 +1195,7 @@ es:
   whats_this: "¿Qué es esto?"
   width: Ancho
   year: "Año"
-  yes: "Yes"
+  say_yes: "Yes"
   you_have_been_logged_out: "Se ha cerrado la sesión."
   you_have_no_orders_yet: "Aún no tiene ningún pedido."
   your_cart_is_empty: "Su cesta está vacía"

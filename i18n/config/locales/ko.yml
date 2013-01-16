@@ -622,7 +622,7 @@ ko:
   new_variant: "새 배리언트"
   new_zone: "새 존"
   next: 다음
-  no: "No"
+  say_no: "No"
   no_items_in_cart: #""
   no_match_found: "일치하는 것이 없음"
   no_products_found: "찾는 상품이 없음"
@@ -1195,7 +1195,7 @@ ko:
   whats_this: "What's this"
   width: 가로
   year: "년"
-  yes: "Yes"
+  say_yes: "Yes"
   you_have_been_logged_out: #"You have been logged out."
   you_have_no_orders_yet: #"You have no orders yet."
   your_cart_is_empty: "장바구니가 비었습니다"

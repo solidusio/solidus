@@ -623,7 +623,7 @@ ca:
   new_variant: "Nova Variant"
   new_zone: "Nova zona"
   next: següent
-  no: "No"
+  say_no: "No"
   no_items_in_cart: "El carret està buit"
   no_match_found: "No s'ha trobat"
   no_products_found: "No s'han trobat productes"
@@ -1196,7 +1196,7 @@ ca:
   whats_this: "Què és això?"
   width: Ample
   year: "Any"
-  yes: "Yes"
+  say_yes: "Yes"
   you_have_been_logged_out: "S'ha tancat la sessió."
   you_have_no_orders_yet: "Encara no té cap comanda."
   your_cart_is_empty: "La seva cistella està buida"

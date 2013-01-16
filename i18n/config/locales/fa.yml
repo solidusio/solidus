@@ -625,7 +625,7 @@ fa:
   new_variant: "New Variant"
   new_zone: "ناحیه جدید"
   next: بعدی
-  no: "No"
+  say_no: "No"
   no_items_in_cart: "سبد خرید خالی است"
   no_match_found: "هیچ موردی یافت نشد"
   no_products_found: "هیچ محصولی یافت نشد"
@@ -1198,7 +1198,7 @@ fa:
   whats_this: "چیه؟"
   width: پهنا
   year: "سال"
-  yes: "Yes"
+  say_yes: "Yes"
   you_have_been_logged_out: "شما خارج شدید"
   you_have_no_orders_yet: "شما هنوز سفارشی ثبت نکرده اید"
   your_cart_is_empty: "سبد خرید شما خالی است"

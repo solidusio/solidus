@@ -622,7 +622,7 @@ th:
   new_variant: "New Variant"
   new_zone: เพิ่มเขตใหม่
   next: หน้าถัดไป
-  no: "No"
+  say_no: "No"
   no_items_in_cart: ""
   no_match_found: "No Match Found"
   no_products_found: "No products found"
@@ -1195,7 +1195,7 @@ th:
   whats_this: "นี่คืออะไร"
   width: ความกว้าง
   year: "ปี"
-  yes: "Yes"
+  say_yes: "Yes"
   you_have_been_logged_out: "คุณออกจากระบบแล้ว"
   you_have_no_orders_yet: "You have no orders yet."
   your_cart_is_empty: "ตะกร้าสินค้าของคุณว่างเปล่า"

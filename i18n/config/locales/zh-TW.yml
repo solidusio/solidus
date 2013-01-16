@@ -622,7 +622,7 @@ zh-TW:
   new_variant: 新增系列型號 #"New Variant"
   new_zone: 新增區域 #"New Zone"
   next: 下一頁 #Next
-  no: "No"
+  say_no: "No"
   no_items_in_cart: 購物車中沒有商品
   no_match_found: 找不到匹配的內容 #"No Match Found"
   no_products_found: 找不到商品 #"No products found"
@@ -1195,7 +1195,7 @@ zh-TW:
   whats_this: 這是什麼？
   width: 寬 #Width
   year: 年 #"Year"
-  yes: "Yes"
+  say_yes: "Yes"
   you_have_been_logged_out: 你已登出 #"You have been logged out."
   you_have_no_orders_yet: 您還沒有任何訂單
   your_cart_is_empty: 購物車是空的

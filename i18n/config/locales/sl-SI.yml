@@ -622,7 +622,7 @@ sl-SI:
   new_variant: "Dodaj varianto"
   new_zone: "Dodaj območje"
   next: Naprej
-  no: "No"
+  say_no: "No"
   no_items_in_cart: "Košarica je prazna."
   no_match_found: "Ni rezultatov"
   no_products_found: "Ni izdelkov"
@@ -1195,7 +1195,7 @@ sl-SI:
   whats_this: "Kaj je to"
   width: "Širina"
   year: "Leto"
-  yes: "Yes"
+  say_yes: "Yes"
   you_have_been_logged_out: "Uspešno ste se odjavili."
   you_have_no_orders_yet: "You have no orders yet."
   your_cart_is_empty: "Vaša nakupovalna košarica je prazna"
