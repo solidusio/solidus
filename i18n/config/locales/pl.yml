@@ -1204,3 +1204,12 @@ pl:
   zone_based: "Zone Based"
   zone_setting_description: "Zbiory krajów, stanów i innych stref używane w różnych przeliczeniach."
   zones: Strefy
+
+  views:
+    pagination:
+      first: "&laquo; Pierwsza"
+      last: "Ostatnia &raquo;"
+      previous: "&lsaquo; Poprzednia"
+      next: "Następna &rsaquo;"
+      truncate: "&hellip;"
+
