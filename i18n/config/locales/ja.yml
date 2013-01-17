@@ -1210,3 +1210,10 @@ ja:
   zone_based: "ゾーンによる分割"
   zone_setting_description: "国、都道府県(州)による分割(配送や税率などに使用される)"
   zones: "ゾーン"
+  views:
+    pagination:
+      first: "&laquo; 最初"
+      last: "最後 &raquo;"
+      previous: "&lsaquo; 前"
+      next: "次 &rsaquo;"
+      truncate: "&hellip;"
