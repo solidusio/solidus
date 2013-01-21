@@ -303,6 +303,7 @@ da:
   back_to_states_list: "Tilbage til delstater"
   back_to_store: "Gå tilbage til butikken"
   back_to_tax_categories_list: "Tilbage til momskategorier"
+  back_to_tax_rates_list: "Tilbage til momssatser"
   back_to_taxonomies_list: "Tilbage til taksonomier"
   back_to_trackers_list: "Tilbage til statistik-trackere"
   back_to_zones_list: "Tilbage til zoner"
@@ -556,7 +557,7 @@ da:
   issue_number: Anmeldelses nummer
   item: Artikel
   item_description: "Artikelbeskrivelse"
-  item_total: Vis samlet pris
+  item_total: Samlet pris
   item_total_rule:
     operators:
       gt: større end
