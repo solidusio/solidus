@@ -1074,12 +1074,13 @@ de:
   sold: Ausverkauft
   sort_ordering: "Sortierung"
   special_instructions: "Spezielle Anweisungen"
-  spree: 
   spree/order: 
     coupon_code: "Aktions-Code"
+  spree: 
     date: Date
     date_picker: 
-      format: 'yy/mm/dd'
+      format: ! '%Y/%m/%d'
+      js_format: 'yy/mm/dd'
     time: Time
   spree_alert_checking: "Überprüfe auf Spree Sicherheits- und Veröffentlichungshinweise"
   spree_alert_not_checking: "Überprüfe nicht auf Spree Sicherheits- und Veröffentlichungshinweise"

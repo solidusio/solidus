@@ -1075,12 +1075,13 @@ ca:
   sold: Venut
   sort_ordering: "Ordenació"
   special_instructions: "Instruccions especials"
-  spree: 
   spree/order: 
     coupon_code: Coupon Code
+  spree: 
     date: Date
     date_picker: 
-      format: 'yy/mm/dd'
+      format: ! '%Y/%m/%d'
+      js_format: 'yy/mm/dd'
     time: Time
   spree_alert_checking: "Check for Spree security and release alerts"
   spree_alert_not_checking: "Not checking for Spree security and release alerts"

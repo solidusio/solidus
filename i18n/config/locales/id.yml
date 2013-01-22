@@ -1109,13 +1109,12 @@ id:
         site_id: "Site ID"
         token: "Token"
     date: "Tanggal"
+    date_picker:
+      format: ! '%Y/%m/%d'
+      js_format: 'yy/mm/dd'
     time: "Waktu"
   spree/order:
     coupon_code: "Kode Kupon"
-    date: "Tanggal"
-    date_picker:
-      format: 'yy/mm/dd'
-    time: "Waktu"
   spree_alert_checking: "Cek keamanan Spree dan peringatan release"
   spree_alert_not_checking: "Tidak melakukan Cek keamanan Spree dan peringatan release"
   spree_gateway_error_flash_for_checkout: "Terdapat suatu masalah dengan informasi pembayaran anda. Cek informasi anda lagi dan coba lagi."

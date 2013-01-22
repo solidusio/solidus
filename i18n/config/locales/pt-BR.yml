@@ -1074,12 +1074,13 @@ pt-BR:
   sold: "Vendidos"
   sort_ordering: "Ordenação"
   special_instructions: "Instruções Especiais"
-  spree: "Spree"
   spree/order: 
     coupon_code: "Código do Cupom"
+  spree:
     date: "Data"
     date_picker: 
-      format: 'yy/mm/dd'
+      format: ! '%Y/%m/%d'
+      js_format: 'yy/mm/dd'
     time: "Hora"
   spree_alert_checking: "Verificar Por Alertas de Segurança e Atualização do Spree"
   spree_alert_not_checking: "Não Verificar Por Alertas de Segurança e Atualização do Spree"
