@@ -1102,11 +1102,11 @@ ja:
   sort_ordering: "ソート順"
   special_instructions: "特別な指示"
   spree:
-  spree/order:
-    coupon_code: "クーポンコード"
+    time: Time
     date: "日付"
     date_picker:
       format: 'yy/mm/dd'
+      js_format: 'yy/mm/dd'
     time: "時間"
   spree_alert_checking: "Spreeのセキュリティ・リリースアラートをチェックする"
   spree_alert_not_checking: "Spreeのセキュリティ・リリースアラートをチェックしない"
