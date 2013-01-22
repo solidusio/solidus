@@ -1080,12 +1080,13 @@ ja:
   sold: "販売済み"
   sort_ordering: "ソート順"
   special_instructions: "特別な指示"
-  spree:
   spree/order:
     coupon_code: "クーポンコード"
+  spree:
     date: "日付"
     date_picker:
-      format: 'yy/mm/dd'
+      format: ! '%Y/%m/%d'
+      js_format: 'yy/mm/dd'
     time: "時間"
   spree_alert_checking: "Spreeのセキュリティ・リリースアラートをチェックする"
   spree_alert_not_checking: "Spreeのセキュリティ・リリースアラートをチェックしない"

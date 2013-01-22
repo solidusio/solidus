@@ -1074,12 +1074,13 @@ uk:
   sold: "Продано"
   sort_ordering: "Порядок сортування"
   special_instructions: "Додаткові інструкції"
-  spree: 
   spree/order: 
     coupon_code: Купон
+  spree: 
     date: Date
     date_picker: 
-      format: 'yy/mm/dd'
+      format: ! '%Y/%m/%d'
+      js_format: 'yy/mm/dd'
     time: Time
   spree_alert_checking: "Перевіряти на наявність нових версій і онвлень безпеки"
   spree_alert_not_checking: "Не перевіряти на наявність нових версій і онвлень безпеки"

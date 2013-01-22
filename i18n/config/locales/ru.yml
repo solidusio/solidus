@@ -1097,13 +1097,13 @@ ru:
   sort_ordering: "Порядок сортировки"
   special_instructions: "Дополнительные инструкции"
   spree:
+    date: Дата
     date_picker:
       format: ! '%Y/%m/%d'
       js_format: 'yy/mm/dd'
+    time: Время
   spree/order: 
     coupon_code: Код купона
-    date: Дата
-    time: Время
   spree_alert_checking: "Проверять обновления новых версий и безопасности Spree"
   spree_alert_not_checking: "Обновления новых версий и безопасности Spree не проверяются"
   spree_gateway_error_flash_for_checkout: "Возникли проблемы с Вашими реквизитами. Пожалуйста, проверьте их и попробуйте ещё раз."
