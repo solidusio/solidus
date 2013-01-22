@@ -571,7 +571,7 @@ pl:
   mail_server_preferences: Ustawienia Serwera Poczty
   make_refund: "Dokonaj zwrotu"
   mark_shipped: "Oznacz jako wysłane"
-  master_price: "Cena główna"
+  master_price: "Cena brutto"
   match_choices:
     all: "Wszystkie"
     none: "Zadne"
@@ -645,6 +645,7 @@ pl:
     product_not_deleted: "Produkt nie mógł być usunięty"
     variant_deleted: "Wariant został usunięty"
     variant_not_deleted: "Wariant nie mógł być usunięty"
+  on_demand: "Na żadnanie"
   on_hand: "W magazynie"
   one_default_category_with_default_tax_rate: "Powinieneś skonfigurować dokładnie jedną domyślną kategorię z domyślnym podatkiem"
   operation: Operacja
@@ -758,7 +759,7 @@ pl:
   problem_authorizing_card: "Wystąpił problem przy autoryzacji karty"
   problem_capturing_card: "Wystąpił problem z przechwyceniem karty"
   problems_processing_order: "Wystąpiły problemy podczas przetwarzania zamówienia"
-  proceed_as_guest: "Nie, dziękuję, kontynuuj jako Gość"
+  proceed_as_guest: "Nie, dziękuję. Kontynuuj jako Gość"
   process: Przetwarzaj
   product: Produkt
   product_details: "Szczegóły produkty"
@@ -899,13 +900,13 @@ pl:
     give_store_credit:
       description: Gives the user store credit of the amount specified
       name: Give store credit
-  promotion_actions: Actions
+  promotion_actions: "Akcje"
   promotion_form:
     match_policies:
       all: Match any of these rules
       any: Match all of these rules
-  promotion_not_found: The coupon code you entered doesn't exist. Please try again.
-  promotion_rule: Promotion Rule
+  promotion_not_found: "Kod kuponu, który wpisałeś(aś) nie istnieje. Proszę spróbuj pownownie."
+  promotion_rule: "Reguła promocji"
   promotion_rule_types:
     first_order:
       description: Must be the customer's first order
@@ -926,7 +927,7 @@ pl:
       description: Available only to logged in users
       name: User Logged In
   promotions: Promocje
-  promotions_description: Manage offers and coupons with promotions
+  promotions_description: "Zarządzaj ofertami i kuponami promocyjnymi"
   properties: Właściwości
   property: Właściwość
   prototype: Prototyp
@@ -1070,13 +1071,14 @@ pl:
   sold: Sprzedane
   sort_ordering: "Sort ordering"
   special_instructions: "Specjalne Instrukcje"
-  spree:
   spree/order:
-    coupon_code: Kod Kuponu
-    date: Date
+    coupon_code: "Kod Kuponu"
+  spree:
+    date: Data
     date_picker:
-      format: 'yy/mm/dd'
-    time: Time
+      format: ! '%Y/%m/%d'
+      js_format: 'yy/mm/dd'
+    time: Czas
   spree_alert_checking: "Check for Spree security and release alerts"
   spree_alert_not_checking: "Not checking for Spree security and release alerts"
   spree_gateway_error_flash_for_checkout: "There was a problem with your payment information. Please check your information and try again."
