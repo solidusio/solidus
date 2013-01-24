@@ -19,4 +19,5 @@ Gem::Specification.new do |s|
   s.add_dependency('i18n', '~> 0.6')
   s.add_development_dependency "rspec-rails", "~> 2.12.0"
   s.add_development_dependency "sqlite3", "~> 1.3.6"
+  s.add_development_dependency 'i18n-spec'
 end
