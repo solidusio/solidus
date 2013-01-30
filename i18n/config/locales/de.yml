@@ -1077,11 +1077,11 @@ de:
   spree/order: 
     coupon_code: "Aktions-Code"
   spree: 
-    date: Date
-    date_picker: 
-      format: ! '%Y/%m/%d'
-      js_format: 'yy/mm/dd'
-    time: Time
+    date: Datum
+    date_picker:
+      format: ! '%d.%m.%Y'
+      js_format: 'dd.mm.yy'
+    time: Uhrzeit
   spree_alert_checking: "Überprüfe auf Spree Sicherheits- und Veröffentlichungshinweise"
   spree_alert_not_checking: "Überprüfe nicht auf Spree Sicherheits- und Veröffentlichungshinweise"
   spree_gateway_error_flash_for_checkout: "Es gab Probleme mit Ihren Zahlungsinformationen. Bitte überprüfen Sie Ihre Angaben und probieren Sie es erneut."
