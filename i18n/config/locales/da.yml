@@ -22,6 +22,7 @@ da:
         address1: Adresse
         address2: "Adresse (forts.)"
         city: By
+        company: Firma
         country: "Land"
         firstname: "Fornavn"
         lastname: "Efternavn"
@@ -719,7 +720,7 @@ da:
     awaiting_return: afventer returnering
     canceled: annulleret
     cart: indkøbskurv
-    complete: afslut
+    complete: gennemført
     confirm: bekræft
     delivery: levering
     payment: betaling
