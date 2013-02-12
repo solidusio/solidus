@@ -7,7 +7,7 @@ See the [official Internationalization documentation](http://guides.spreecommerc
 To install, simply add the Gem to your Gemfile:
 
 1. Add the following to your Gemfile
-pre>
+<pre>
   gem 'spree_i18n', :git => 'git://github.com/spree/spree_i18n.git'
 </pre>
 
