@@ -1074,9 +1074,11 @@ de:
   sold: Ausverkauft
   sort_ordering: "Sortierung"
   special_instructions: "Spezielle Anweisungen"
-  spree/order: 
+  spree/order:
     coupon_code: "Aktions-Code"
   spree: 
+    api:
+      generate_key: Key generieren
     date: Datum
     date_picker:
       format: ! '%d.%m.%Y'
