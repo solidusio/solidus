@@ -906,8 +906,8 @@ es-MX:
   promotion_actions: Actions
   promotion_form: 
     match_policies: 
-      all: Coincide con alguna de las siguientes reglas
-      any: Coincide con todas las siguientes reglas
+      all: Coincide con todas las siguientes reglas
+      any: Coincide con alguna de las siguientes reglas
   promotion_not_found: The coupon code you entered doesn't exist. Please try again.
   promotion_rule: Promotion Rule
   promotion_rule_types: 
