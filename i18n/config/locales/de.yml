@@ -663,15 +663,15 @@ de:
   order_email_resent: "Bestellbestätigung erneut versendet"
   order_mailer: 
     cancel_email: 
-      dear_customer: "Sehr geehrter Kunde,"
-      instructions: "ihre Bestellung wurde storniert. Bitte bewahren Sie diese Stornierung für ihre Unterlagen auf."
+      dear_customer: "Sehr geehrte Kundin, geehrter Kunde,"
+      instructions: "Ihre Bestellung wurde storniert. Bitte bewahren Sie diese Stornierung für Ihre Unterlagen auf."
       order_summary_canceled: "Bestellzusammenfassung [STORNO]"
       subject: "Bestellung storniert"
       subtotal: "Zwischensumme:"
       total: "Gesamtsumme:"
     confirm_email: 
       dear_customer: "Sehr geehrter Kunde,"
-      instructions: "bitte prüfen Sie noch einmal die folgende Bestellung und bewahren die Bestellbestätigung für ihre Unterlagen auf."
+      instructions: "bitte prüfen Sie noch einmal die folgende Bestellung und bewahren die Bestellbestätigung für Ihre Unterlagen auf."
       order_summary: "Bestellzusammenfassung"
       subject: "Bestellbestätigung"
       subtotal: "Zwischensumme:"
@@ -1018,7 +1018,7 @@ de:
   shipment_mailer: 
     shipped_email: 
       dear_customer: "Sehr geehrter Kunde,"
-      instructions: "ihre Bestellungen wurde versandt"
+      instructions: "Ihre Bestellung wurde versandt."
       shipment_summary: "Versandzusammenfassung"
       subject: "Versand Benachrichtigung"
       thanks: "Vielen Dank für Ihre Bestellung."
