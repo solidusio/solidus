@@ -216,7 +216,7 @@ ja:
         one: "ゾーン"
         other: "ゾーン"
   add: "追加"
-  add_action_of_type: Add action of type
+  add_action_of_type: "次のタイプのアクションを追加する"
   add_category: "カテゴリーの追加"
   add_country: "国の追加"
   add_new_header: "新規ヘッダの追加"
@@ -227,7 +227,7 @@ ja:
   add_option_value: "オプションの値を追加"
   add_product: "新規商品の追加"
   add_product_properties: "商品に属性を追加"
-  add_rule_of_type: Add rule of type
+  add_rule_of_type: "次のタイプのルールを追加する"
   add_scope: "範囲を追加"
   add_state: "都道府県（州）の追加"
   add_to_cart: "カートに追加"
@@ -463,9 +463,9 @@ ja:
       cart:
         add: "カートに入れる"
       checkout: 
-        coupon_code_added: "クーポンコードを追加しました。"
+        coupon_code_added: "クーポンコード追加"
       content: 
-        visited: Visit static content page
+        visited: "静的コンテンツページの訪問"
       order:
         contents_changed: "注文内容の変更"
       page_view: "静的ページを見る"
@@ -647,7 +647,7 @@ ja:
   no_products_found: "商品が見付かりませんでした。"
   no_promotions_found: "プロモーションが見つかりませんでした。"
   no_results: "検索結果がありませんでした。"
-  no_rules_added: No rules added
+  no_rules_added: "ルールが追加されていません"
   no_trackers_found: "トラッカーが見つかりませんでした。"
   no_user_found: "そのメールアドレスで登録されているユーザーがいません"
   none: "空です"
@@ -795,13 +795,13 @@ ja:
   product_has_no_description: "この商品に詳細がありません。"
   product_properties: "商品情報"
   product_rule: 
-    choose_products: Choose products
-    label: "Order must contain %{select} of these products"
-    match_all: all
-    match_any: at least one
+    choose_products: "商品を選択してください"
+    label: "注文が以下の商品を%{select}含まなければならない"
+    match_all: "少なくとも一つ"
+    match_any: "すべて"
     product_source: 
-      group: From product group
-      manual: Manually choose
+      group: "商品グループから"
+      manual: "手動で選択"
   product_scopes:
     groups:
       price:
@@ -918,45 +918,45 @@ ja:
   #products_with_zero_inventory_display: "Products with a zero inventory will %{not} be displayed"
 
   promotion: プロモーション
-  promotion_action: Promotion Action
+  promotion_action: プロモーションアクション
   promotion_action_types: 
     create_adjustment: 
-      description: Creates a promotion credit adjustment on the order
-      name: Create adjustment
+      description: "注文に対して値引きする"
+      name: "値引き"
     create_line_items: 
-      description: Populates the cart with the specified quantity of variant
-      name: Create line items
+      description: "特定の種類の商品をカートに加える"
+      name: "商品追加"
     give_store_credit: 
-      description: Gives the user store credit of the amount specified
-      name: Give store credit
-  promotion_actions: Actions
+      description: "指定された額のストアクレジットをユーザーに与える"
+      name: "ストアクレジット付与"
+  promotion_actions: "アクション"
   promotion_form: 
     match_policies: 
-      all: Match any of these rules
-      any: Match all of these rules
-  promotion_not_found: The coupon code you entered doesn't exist. Please try again.
-  promotion_rule: Promotion Rule
+      all: "以下のルールすべてに該当する"
+      any: "以下のルールのいずれかに該当する"
+  promotion_not_found: "入力されたクーポンコードは存在しません。再度入力してください。"
+  promotion_rule: "プロモーションルール"
   promotion_rule_types: 
     first_order: 
-      description: Must be the customer's first order
-      name: First order
+      description: "最初の注文である"
+      name: "最初の注文"
     item_total: 
-      description: Order total meets these criteria
-      name: Item total
+      description: "合計個数"
+      name: "合計個数"
     landing_page: 
-      description: Customer must have visited the specified page
-      name: Landing Page
+      description: "お客様が特定のページを訪問済みである"
+      name: "ランディングページ"
     product: 
-      description: Order includes specified product(s)
-      name: Product(s)
+      description: "注文に特定の商品を含む"
+      name: "商品"
     user: 
-      description: Available only to the specified users
-      name: User
+      description: "特定のユーザー限定"
+      name: "ユーザー"
     user_logged_in: 
-      description: Available only to logged in users
-      name: User Logged In
+      description: "ログイン中のユーザー限定"
+      name: "ログイン中のユーザー"
   promotions: プロモーション
-  promotions_description: Manage offers and coupons with promotions
+  promotions_description: "特価提供・クーポンの管理"
   properties: "属性"
   property: "属性"
   prototype: "プロトタイプ"
@@ -1004,7 +1004,7 @@ ja:
   rma_number: RMA番号
   rma_value: RMA値
   roles: "役割"
-  rules: Rules
+  rules: "ルール"
   s3_access_key: "S3アクセスキー"
   s3_bucket: "S3バケット"
   s3_headers: "S3ヘッダ"
