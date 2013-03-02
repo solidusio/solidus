@@ -49,12 +49,12 @@ it:
         name: Nome
         presentation: Presentazione
       spree/order:
-        checkout_complete: "Checkout Complete"
-        completed_at: "Completed At"
+        checkout_complete: "Acquisto Completato"
+        completed_at: "Completato alle"
         created_at: Order Date
         email: Customer E-Mail
-        ip_address: "IP Address"
-        item_total: "Item Total"
+        ip_address: "Indirizzo IP"
+        item_total: "Tutti gli articoli"
         number: Number
         payment_state: Payment State
         shipment_state: Shipment State
@@ -62,21 +62,21 @@ it:
         state: State
         total: Total
       spree/order/bill_address: 
-        address1: "Billing address street"
-        city: "Billing address city"
-        firstname: "Billing address first name"
-        lastname: "Billing address last name"
-        phone: "Billing address phone"
-        state: "Billing address state"
-        zipcode: "Billing address zipcode"
+        address1: "Indirizzo stradale (fatturazione)"
+        city: "Città (fatturazione)"
+        firstname: "Nome (fatturazione)"
+        lastname: "Cognome (fatturazione)"
+        phone: "Numero di telefono (fatturazione)"
+        state: "Provincia (fatturazione)"
+        zipcode: "CAP (fatturazione)"
       spree/order/ship_address: 
-        address1: "Shipping address street"
-        city: "Shipping address city"
-        firstname: "Shipping address first name"
-        lastname: "Shipping address last name"
-        phone: "Shipping address phone"
-        state: "Shipping address state"
-        zipcode: "Shipping address zipcode"
+        address1: "Indirizzo per la spedizione (Via / Corso etc)"
+        city: "Città"
+        firstname: "Nome"
+        lastname: "Cognome"
+        phone: "Numero di telefono"
+        state: "Provincia"
+        zipcode: "CAP"
       spree/payment_method:
         name: Nome
       spree/product: 
