@@ -1195,6 +1195,13 @@ fr:
   what_is_this: "Qu'est-ce que c'est ?"
   whats_this: "Qu'est-ce que"
   width: Largeur
+  views:
+    pagination:
+      first: "&laquo; Début"
+      last: "Fin &raquo;"
+      previous: "&lsaquo; Précédent"
+      next: "Suivant &rsaquo;"
+      truncate: "&hellip;"
   year: "Année"
   say_yes: "Yes"
   you_have_been_logged_out: "Vous avez été déconnecté"
