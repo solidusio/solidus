@@ -1056,7 +1056,7 @@ pt-BR:
   short_description: "Breve Descrição"
   show: "Mostrar"
   show_active: "Mostrar Ativos"
-  show_deleted: "Mortra Apagados"
+  show_deleted: "Mostra Apagados"
   show_incomplete_orders: "Mostra Pedidos Incompletos"
   show_only_complete_orders: "Mostrar Apenas Pedidos Completos"
   show_only_unfulfilled_orders: "Mostrar Apenas Pedidos Incompletos"
