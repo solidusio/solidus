@@ -221,6 +221,7 @@ pt-BR:
   add_country: "Adicionar país"
   add_new_header: "Adicionar Novo Cabeçalho"
   add_new_style: "Adicionar Novo Estilo"
+  add_one: "Adicione"
   add_option_type: "Adicionar Opção"
   add_option_types: "Adicionar Opções"
   add_option_value: "Adicionar Valor"
@@ -297,6 +298,7 @@ pt-BR:
   back_to_tax_categories_list: "Voltar Para a Lista de Categorias de Impostos"
   back_to_taxonomies_list: "Voltar a Lista de Taxonomias"
   back_to_trackers_list: "Voltar a Lista de Rastreadores"
+  back_to_users_list: "Voltar a lista de usuários"
   back_to_zones_list: "Voltar a Lista de Zonas"
   backordered: "Atrasado"
   backordering_is_allowed: "Adiamentos %{not} Permitidos"
@@ -349,6 +351,7 @@ pt-BR:
   copy_all_mails_to: "Copiar Todos Emails Para"
   cost_price: "Preço de Custo"
   count_of_reduced_by: "Conta de '%{name}' Reduzida por %{count}"
+  countries: "Países"
   country: "País"
   country_based: "País de Origem"
   coupon: "Cupom"
@@ -375,26 +378,6 @@ pt-BR:
   customer_details_updated: "Os Detalhes do Cliente Foram Atualizados"
   customer_search: "Busca de Clientes"
   cut: "Recortar"
-  date:
-    formats:
-      # Use the strftime parameters for formats.
-      # When no format has been given, it uses default.
-      # You can provide other formats here if you like!
-      default: "%d/%m/%Y"
-      short: "%d de %B de %Y"
-      long: "%d de %B"
-
-    day_names: [Domingo, Segunda, Terça, Quarta, Quinta, Sexta, Sábado]
-    abbr_day_names: [Dom, Seg, Ter, Qua, Qui, Sex, Sáb]
-
-    # Don't forget the nil at the beginning; there's no such thing as a 0th month
-    month_names: [~, Janeiro, Fevereiro, Março, Abril, Maio, Junho, Julho, Agosto, Setembro, Outubro, Novembro, Dezembro]
-    abbr_month_names: [~, Jan, Fev, Mar, Abr, Mai, Jun, Jul, Ago, Set, Out, Nov, Dez]
-    # Used in date_select and datetime_select.
-    order:
-      - :day
-      - :month
-      - :year
   date_completed: "Data do Término"
   date_created: "Data da Criação"
   date_range: "Entre as Datas"
@@ -412,11 +395,53 @@ pt-BR:
   description: "Descrição"
   destroy: "Remover"
   devise:
-    user_sessions:
-      user:
-        signed_out: "Saiu com sucesso"
-  didnt_receive_confirmation_instructions: "Não Recebeu Instruções de Confirmação?"
+    confirmations:
+      confirmed: 'Sua conta foi confirmada com sucesso. Você está logado.'
+      send_instructions: 'Dentro de minutos, você receberá um e-mail com instruções para a confirmação da sua conta.'
+      send_paranoid_instructions: 'Se o seu endereço de e-mail estiver cadastrado, você receberá uma mensagem com instruções para confirmação da sua conta.'
+    failure:
+      already_authenticated: 'Você já está logado.'
+      inactive: 'Sua conta ainda não foi ativada.'
+      invalid: 'E-mail ou senha inválidos.'
+      invalid_token: 'O token de autenticação não é válido.'
+      locked: 'Sua conta está bloqueada.'
+      not_found_in_database: 'E-mail ou senha inválidos.'
+      timeout: 'Sua sessão expirou, por favor, efetue login novamente para continuar.'
+      unauthenticated: 'Para continuar, efetue login ou registre-se.'
+      unconfirmed: 'Antes de continuar, confirme a sua conta.'
+    mailer:
+      confirmation_instructions:
+        subject: 'Instruções de confirmação'
+      reset_password_instructions:
+        subject: 'Instruções de troca de senha'
+      unlock_instructions:
+        subject: 'Instruções de desbloqueio'
+    omniauth_callbacks:
+      failure: 'Não foi possível autenticá-lo como %{kind} porque "%{reason}".'
+      success: 'Autenticado com sucesso com uma conta de %{kind}.'
+    passwords:
+      no_token: "Você só pode acessar essa página através de um e-mail de troca de senha. Se já estiver acessando por um e-mail, verifique se a URL fornecida está completa."
+      send_instructions: 'Dentro de minutos, você receberá um e-mail com instruções para a troca da sua senha.'
+      send_paranoid_instructions: 'Se o seu endereço de e-mail estiver cadastrado, você receberá um link de recuperação da senha via e-mail.'
+      updated: 'Sua senha foi alterada com sucesso. Você está logado.'
+      updated_not_active: 'Sua senha foi alterada com sucesso.'
+    registrations:
+      destroyed: 'Tchau! Sua conta foi cancelada com sucesso. Esperamos vê-lo novamente em breve.'
+      signed_up: 'Login efetuado com sucesso. Se não foi autorizado, a confirmação será enviada por e-mail.'
+      signed_up_but_inactive: 'Você foi cadastrado com sucesso. No entanto, não foi possível efetuar login, pois sua conta não foi ativada.'
+      signed_up_but_locked: 'Você foi cadastrado com sucesso. No entanto, não foi possível efetuar login, pois sua conta está bloqueada.'
+      signed_up_but_unconfirmed: 'Uma mensagem com um link de confirmação foi enviada para o seu endereço de e-mail. Por favor, abra o link para confirmar a sua conta.'
+      update_needs_confirmation: 'Você atualizou a sua conta com sucesso, mas o seu novo endereço de e-mail precisa ser confirmado. Por favor, acesse-o e clique no link de confirmação que enviamos.'
+      updated: 'Sua conta foi atualizada com sucesso.'
+    sessions:
+      signed_in: 'Login efetuado com sucesso!'
+      signed_out: 'Saiu com sucesso.'
+    unlocks:
+      send_instructions: 'Dentro de minutos, você receberá um email com instruções para o desbloqueio da sua conta.'
+      send_paranoid_instructions: 'Se sua conta existir, você receberá um e-mail com instruções para desbloqueá-la em alguns minutos.'
+      unlocked: 'Sua conta foi desbloqueada com sucesso. Efetue login para continuar.'
   didnt_receive_unlock_instructions: "Não Recebeu Instruções de Desbloqueio?"
+  didnt_receive_confirmation_instructions: "Não Recebeu Instruções de Confirmação?"
   discount_amount: "Desconto"
   dismiss_banner: "Não, Obrigado! Eu Não Estou Interessado, Não Mostre Essa Mensagem Novamente!"
   display: "Mostrar"
@@ -464,6 +489,15 @@ pt-BR:
       could_not_create_taxon: "Não foi Possível Criar o Taxon"
       no_payment_methods_available: "Não Existem Métodos de Pagamentos Configurados Para Esse Ambiente"
       no_shipping_methods_available: "Não Existem Métodos de Entrega Para o Local Selecionado, por Favor Troque seu Endereço e Tente Novamente."
+      # devise messages
+      already_confirmed: "já foi confirmado"
+      confirmation_period_expired: "precisa ser confirmada em até %{period}, por favor, solicite uma nova"
+      expired: "expirou, por favor, solicite uma nova"
+      not_found: "não encontrado"
+      not_locked: "não foi bloqueado"
+      not_saved:
+        one: "Não foi possível salvar %{resource}: 1 erro"
+        other: "Não foi possível salvar %{resource}: %{count} erros."
   errors_prohibited_this_record_from_being_saved:
     one: "1 Erro Impediu o Registro de ser Salvo!"
     other: "%{count} Erros Impediram o Registro de ser Salvo"
@@ -489,6 +523,7 @@ pt-BR:
   extension: "Extensão"
   extensions: "Extensões"
   filename: "Nome do arquivo"
+  filter_results: "Filtrar resultados"
   final_confirmation: "Confirmação Final"
   finalize: "Finalizar"
   finalized_payments: "Pagamentos Finalizados"
@@ -650,6 +685,7 @@ pt-BR:
   no_items_in_cart: "Quantidade de Itens no Carrinho"
   no_match_found: "Não Encontrado"
   no_products_found: "Não Existem Produtos"
+  no_promotions_found: "Não existem promoções"
   no_results: "Não Existem Resultados"
   no_rules_added: "Nenhuma Regra Adicionada"
   no_user_found: "Nenhum Usuário Encontrado com Este Email"
@@ -1119,9 +1155,10 @@ pt-BR:
   start: "Início"
   start_date: "Válido a Partir de"
   state: "Estado"
-  state_based: "Estadode Origem"
+  state_based: "Estado de Origem"
   state_setting_description: "Administrar a lista de estados/províncias associados a cada país."
   states: "Estados"
+  states_required: "Estados obrigatórios"
   status: "Status"
   stop: "Final"
   store: "Loja"
@@ -1159,13 +1196,6 @@ pt-BR:
       message: "Se Você Recebeu Esse Email, Suas Configurações Estão Corretas!"
       subject: "Email de Teste!"
   test_mode: "Modo de Teste"
-  time:
-    am: ""
-    formats:
-      default: "%a, %d de %B de %Y, %H:%M:%S %z"
-      long: "%d de %B de %Y, %H:%M"
-      short: "%d de %B, %H:%M"
-    pm: ""
   thank_you_for_your_order: "Obrigado Por sua Compra. por Favor, Imprima uma Cópia Desta Página de Confirmação Para seu Controle."
   there_were_problems_with_the_following_fields: "Existem Problemas com os Seguintes Campos:"
   this_file_language: "Português"
