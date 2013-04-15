@@ -1,0 +1,4 @@
+<!-- insert_bottom "[data-hook='admin_product_tabs']" -->
+<li<%== ' class="active"' if current == 'Translations' %>>
+  <%= link_to_with_icon 'icon-flag', 'Translations', admin_product_translations_url(@product) %>
+</li>
