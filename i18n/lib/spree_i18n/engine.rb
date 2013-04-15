@@ -1,3 +1,5 @@
+require 'globalize3'
+
 module SpreeI18n
   class Engine < Rails::Engine
     engine_name 'spree_i18n'
@@ -22,7 +24,6 @@ module SpreeI18n
     config.to_prepare &method(:activate).to_proc
 
     protected
-
     def self.add(pattern)
       files = Dir[File.join(File.dirname(__FILE__), '../..', pattern)]
       I18n.load_path.concat(files)

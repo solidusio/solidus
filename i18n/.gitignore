@@ -12,3 +12,4 @@ pkg
 *.sw?
 spec/dummy
 .rvmrc
+.sass-cache
