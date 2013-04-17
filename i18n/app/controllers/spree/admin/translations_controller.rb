@@ -27,7 +27,7 @@ module Spree
       end
 
       def resource
-        @resource ||= if klass.class_name == "SpreeProduct"
+        @resource ||= if slugged_models.include? klass.class_name
           klass.find_by_permalink(params[:resource_id])
         else
           klass.find(params[:resource_id])
@@ -36,6 +36,10 @@ module Spree
 
       def collection_url
         send "admin_#{resource_name}_url", @resource
+      end
+
+      def slugged_models
+        ["SpreeProduct"]
       end
   end
 end

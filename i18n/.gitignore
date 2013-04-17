@@ -13,3 +13,4 @@ pkg
 spec/dummy
 .rvmrc
 .sass-cache
+public/spree

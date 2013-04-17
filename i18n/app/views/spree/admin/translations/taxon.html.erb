@@ -1,3 +1,15 @@
+<%= render :partial => 'spree/admin/shared/configuration_menu' %>
+
+<% content_for :page_title do %>
+  <%= t(:taxon_edit) %>
+<% end %>
+
+<% content_for :page_actions do %>
+  <li>
+    <%= button_link_to t(:back_to_taxonomies_list), spree.admin_taxonomies_path, :icon => 'icon-arrow-left' %>
+  </li>
+<% end %>
+
 <div class="row">
   <fieldset class="no-border-top">
     <fieldset class="no-border-bottom">
@@ -31,7 +43,9 @@
       </nav>
     </fieldset>
 
-    <%= form_for [:admin, @resource], :method => :put, :html => { :multipart => true } do |f| %>
+    <%= form_for [:admin, @resource.taxonomy, @resource],
+              :url => admin_taxonomy_taxon_path(@taxon.taxonomy, @taxon.id),
+              :method => :put, :html => { :multipart => true } do |f| %>
       <fieldset class="omega eight columns no-border-bottom">
         <legend>Translations</legend>
         <table id="attr_fields" class="no-borders">
@@ -77,7 +91,9 @@
         </table>
       </fieldset>
 
-      <%= render :partial => 'spree/admin/shared/edit_resource_links' %>
+      <div class="form-buttons" data-hook="buttons">
+        <%= button t(:update), 'icon-refresh' %> <%= t(:or) %> <%= button_link_to t(:cancel), edit_admin_taxonomy_url(@taxon.taxonomy), :icon => "icon-remove" %>
+      </div>
     <% end %>
   </fieldset>
 </div>
