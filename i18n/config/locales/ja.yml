@@ -41,7 +41,7 @@ ja:
         verification_value: "照合コード"
         year: "年"
       spree/inventory_unit: 
-        state: "県"
+        state: "状態"
       spree/line_item: 
         price: "価格"
         quantity: "数量"
