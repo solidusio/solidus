@@ -5,14 +5,37 @@ module Spree
     helper_method :collection_url
     helper 'spree/locale'
 
-    private
+    def index
+      render resource_name
+    end
 
+    private
       def load_parent
-        @product ||= Spree::Product.find_by_permalink(params[:product_id])
+        set_resource_ivar(resource)
+      end
+
+      def resource_name
+        params[:resource].singularize
+      end
+
+      def set_resource_ivar(resource)
+        instance_variable_set("@#{resource_name}", resource)
+      end
+
+      def klass
+        @klass ||= "Spree::#{params[:resource].classify}".constantize
+      end
+
+      def resource
+        @resource ||= if klass.class_name == "SpreeProduct"
+          klass.find_by_permalink(params[:resource_id])
+        else
+          klass.find(params[:resource_id])
+        end
       end
 
       def collection_url
-        admin_product_url(load_parent)
+        send "admin_#{resource_name}_url", @resource
       end
   end
 end
