@@ -1,10 +1,10 @@
-<%= render :partial => 'spree/admin/shared/product_sub_menu' %>
-<%= render :partial => 'spree/admin/shared/product_tabs', :locals => { :current => 'Translations' } %>
-<%= render :partial => 'spree/shared/error_messages', :locals => { :target => @product } %>
+<% content_for :page_title do %>
+  <%= t(:editing_promotion) %>
+<% end %>
 
 <% content_for :page_actions do %>
   <li>
-    <%= link_to_add_fields t(:add_product_translations), 'tbody#product_properties', :class => 'icon-plus button' %>
+    <%= button_link_to t(:back_to_promotions_list), admin_promotions_path, :icon => 'icon-arrow-left' %>
   </li>
 <% end %>
 
@@ -29,10 +29,10 @@
     </fieldset>
 
     <fieldset class="alpha four columns no-border-bottom">
-      <legend>Product fields</legend>
+      <legend>Fields</legend>
       <nav class="menu">
         <ul id="attr_list">
-          <% @product.class.translates.each_with_index do |attr,i| %>
+          <% @resource.class.translates.each_with_index do |attr,i| %>
             <li class="<%= 'active' if i == 0 %>">
               <a data-attr="<%= attr %>" href="#"><%= attr %></a>
             </li>
@@ -42,6 +42,5 @@
     </fieldset>
 
     <%= render 'form' %>
-
   </fieldset>
 </div>
