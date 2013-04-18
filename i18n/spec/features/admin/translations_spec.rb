@@ -6,13 +6,14 @@ describe "Translations" do
   let(:language) { I18n.t("this_file_language", locale: "pt-BR") }
 
   before(:each) do
+    I18n.locale = I18n.default_locale
     reset_spree_preferences
     Spree::Config.all_locales = ['en', 'pt-BR']
     Spree::Config.supported_locales = ['en', 'pt-BR']
   end
 
   context "products", js: true do
-    let!(:product) { create(:product) }
+    let(:product) { create(:product) }
 
     context "fills in translations fields" do
       it "displays translated name on frontend" do
@@ -20,11 +21,11 @@ describe "Translations" do
         click_on "Translations"
 
         within("#attr_fields .name.en.odd") { fill_in_name "Pearl Jam" }
-        within("#attr_fields .name.pt-BR.odd") { fill_in_name "Academia da Berlinda" }
+        within("#attr_fields .name.pt-BR.odd") { fill_in_name "Geleia de perola" }
         click_on "Update"
 
         change_locale
-        page.should have_content("Academia da Berlinda")
+        page.should have_content("Geleia de perola")
       end
     end
 
@@ -57,7 +58,7 @@ describe "Translations" do
     end
   end
 
-  context "promotiond", js: true do
+  context "promotions", js: true do
     let!(:promotion) { create(:promotion) }
 
     it "saves translated attributes properly" do
@@ -77,7 +78,7 @@ describe "Translations" do
   context "taxonomies", js: true do
     let!(:taxonomy) { create(:taxonomy) }
 
-    it "display translated records on frontend" do
+    it "display translated name on frontend" do
       visit spree.admin_taxonomies_path
       find('.icon-flag').click
 
@@ -88,6 +89,24 @@ describe "Translations" do
       change_locale
       visit spree.root_path
       page.should have_content('GUITARRAS')
+    end
+  end
+
+  context "taxons", js: true do
+    let(:taxon) { create(:taxon) }
+    let(:taxonomy) { taxon.taxonomy }
+
+    it "display translated name on frontend" do
+      visit spree.edit_admin_taxonomy_taxon_path(taxonomy.id, taxon.id)
+      find('.icon-flag').click
+
+      within("#attr_fields .name.en.odd") { fill_in_name "Acoustic" }
+      within("#attr_fields .name.pt-BR.odd") { fill_in_name "Acusticas" }
+      click_on "Update"
+
+      change_locale
+      visit spree.root_path
+      page.should have_content('Acusticas')
     end
   end
 

@@ -2,6 +2,7 @@ source 'http://rubygems.org'
 
 group :assets do
   gem 'coffee-rails'
+  gem 'sass-rails', '~> 3.2'
 end
 
 group :test do
@@ -9,6 +10,7 @@ group :test do
   gem 'factory_girl_rails', '~> 4.2.1'
   gem 'ffaker'
   gem 'capybara'
+  gem 'pry-rails'
 end
 
 gem 'spree', github: 'spree/spree'

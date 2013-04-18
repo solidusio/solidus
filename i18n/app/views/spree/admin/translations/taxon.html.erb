@@ -12,36 +12,7 @@
 
 <div class="row">
   <fieldset class="no-border-top">
-    <fieldset class="no-border-bottom">
-      <legend>Settings</legend>
-
-      <div class="alpha six columns field">
-        <label for="show-only">Show only: </label>
-        <ul>
-          <li><input type="radio" name="show-only" value="all" checked> <label>All Translations</label></li>
-          <li><input type="radio" name="show-only" value="incomplete"> <label>Only Incomplete</label></li>
-          <li><input type="radio" name="show-only"value="complete"> <label>Only Complete</label></li>
-        </ul>
-      </div>
-
-      <div class="omega six columns">
-        <label for="locale">Select locale: </label>
-        <%= select_tag(:locale, options_for_select(admin_options_for_locale_select, Spree::Config.all_locales),  :class => 'fullwidth' , :multiple => 'true') %>
-      </div>
-    </fieldset>
-
-    <fieldset class="alpha four columns no-border-bottom">
-      <legend>Fields</legend>
-      <nav class="menu">
-        <ul id="attr_list">
-          <% @resource.class.translates.each_with_index do |attr,i| %>
-            <li class="<%= 'active' if i == 0 %>">
-              <a data-attr="<%= attr %>" href="#"><%= attr %></a>
-            </li>
-          <% end %>
-        </ul>
-      </nav>
-    </fieldset>
+    <%= render 'settings' %>
 
     <%= form_for [:admin, @resource.taxonomy, @resource],
               :url => admin_taxonomy_taxon_path(@taxon.taxonomy, @taxon.id),
