@@ -2,7 +2,7 @@
   <fieldset class="no-border-top">
     <%= render 'settings' %>
 
-    <%= form_for [:admin, @resource], :method => :put, :html => { :multipart => true } do |f| %>
+    <%= form_for [:admin, @resource] do |f| %>
       <fieldset class="omega eight columns no-border-bottom">
         <legend>Translations</legend>
         <table id="attr_fields" class="no-borders">
