@@ -1,5 +1,5 @@
 <!-- insert_bottom '#main-nav-bar' -->
-<% if Spree::Config.supported_locales.size > 1 %>
+<% if SpreeI18n::Config.supported_locales.size > 1 %>
   <li id="locale-select" style="float: right; margin-right: 10px;" data-hook>
     <%= form_tag(set_locale_path) do %>
       <label for="locale"><%= t(:language) %>:</label>

@@ -8,8 +8,8 @@ describe "Translations" do
   before(:each) do
     I18n.locale = I18n.default_locale
     reset_spree_preferences
-    Spree::Config.all_locales = ['en', 'pt-BR']
-    Spree::Config.supported_locales = ['en', 'pt-BR']
+    SpreeI18n::Config.available_locales = ['en', 'pt-BR']
+    SpreeI18n::Config.supported_locales = ['en', 'pt-BR']
   end
 
   context "products", js: true do

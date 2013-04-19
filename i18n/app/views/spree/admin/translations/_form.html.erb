@@ -11,7 +11,7 @@
             <col style="width: 90%" />
           </colgroup>
           <tbody>
-            <% Spree::Config.all_locales.each do |locale| %>
+            <% SpreeI18n::Config.available_locales.each do |locale| %>
               <%= f.globalize_fields_for locale.to_sym do |g| %>
                 <% @resource.class.translates.each_with_index do |attr,i| %>
                   <tr style="display:<%= i == 0 ? 'auto' : 'none' %>;" class="<%= attr %> <%= locale %> even">

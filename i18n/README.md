@@ -40,14 +40,14 @@ Add this line to app/assets/javascript/store/all.js on your app:
 You should see a TRANSLATIONS link or a flag icon on each admin section that
 supports this feature.
 
-This extension also adds two Spree configs that allow users to customize which
-locales should be displayed as options on the translation forms and which should
-be listed to customer on the frontend. e.g.:
+The extension contains two configs that allow users to customize which locales
+should be displayed as options on the translation forms and which should be
+listed to customers on the frontend. e.g. (add to an initializer):
 
-    Spree.config do |config|
-      config.all_locales = ["en", "es", "pt-BR"] # displayed on translation forms
-      config.supported_locales = ["en", "pt-BR"] # displayed on frontend select box
-    end
+    # displayed on translation forms
+    SpreeI18n::Config.available_locales = ["en", "es", "pt-BR"]
+    # displayed on frontend select box
+    SpreeI18n::Config.supported_locales = ["en", "pt-BR"]
 
 ## Running the tests 
 

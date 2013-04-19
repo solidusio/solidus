@@ -15,6 +15,10 @@ module SpreeI18n
       end
     end
 
+    initializer "spree_i18n.environment", :before => :load_config_initializers do |app|
+      SpreeI18n::Config = SpreeI18n::Configuration.new
+    end
+
     def self.activate
       Dir.glob(File.join(File.dirname(__FILE__), "../../app/**/*_decorator*.rb")) do |c|
         Rails.configuration.cache_classes ? require(c) : load(c)

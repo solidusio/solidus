@@ -3,7 +3,7 @@ require 'spec_helper'
 describe Spree::HomeController do
   before(:each) do
     reset_spree_preferences
-    Spree::Config[:supported_locales] = ["en", "es"]
+    SpreeI18n::Config.supported_locales = ["en", "es"]
   end
 
   context "tries not supported fr locale" do
