@@ -45,9 +45,12 @@ should be displayed as options on the translation forms and which should be
 listed to customers on the frontend. e.g. (add to an initializer):
 
     # displayed on translation forms
-    SpreeI18n::Config.available_locales = ["en", "es", "pt-BR"]
+    SpreeI18n::Config.available_locales = [:en, :es, :'pt-BR']
     # displayed on frontend select box
-    SpreeI18n::Config.supported_locales = ["en", "pt-BR"]
+    SpreeI18n::Config.supported_locales = [:en, :'pt-BR']
+
+ps. please use symbols, not strings. e.g. :'pt-BR' not just 'pt-BR'. Otherwise
+you may get unexpected errors
 
 ## Running the tests 
 

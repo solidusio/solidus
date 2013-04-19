@@ -34,8 +34,8 @@
                   </tr>
                   <tr style="display:<%= i == 0 ? 'auto' : 'none' %>;" class="<%= attr %> <%= locale %> odd">
                     <td class="flag table-column">
-                      <% if locale.include?('-') %>
-                        <img src="http://www.localeapp.com/assets/flags/regions/<%= locale.split('-').last %>.png">
+                      <% if locale.to_s.include?('-') %>
+                        <img src="http://www.localeapp.com/assets/flags/regions/<%= locale.to_s.split('-').last %>.png">
                       <% else %>
                         <img src="http://www.localeapp.com/assets/flags/languages/<%= locale %>.png">
                       <% end %>
