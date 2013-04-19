@@ -13,26 +13,41 @@ To install, simply add the Gem to your Gemfile:
 
 2. Run `bundle install`
 
-## Spree Products Translations
+## Model Translations
 
-We've introduced a product translations feature. Follow the steps to get it working.
+We've added support for translating models. The feature uses the globalize3 gem.
+So far the following models can have translations: Product, Promotion, OptionType, Taxonomy and Taxon.
 
-Point to the content branch:
+Follow the steps to get it working.
 
-    gem 'spree_i18n', :git => 'git://github.com/spree/spree_i18n.git', :branch => 'content'
+Point to the translate-models branch:
 
-Install and run the migration to create the product translations table:
+    gem 'spree_i18n', :git => 'git://github.com/spree/spree_i18n.git', :branch => 'translate-models'
+
+Install and run the migration to create the translations tables:
 
     bundle exec rake railties:install:migrations
     bundle exec rake db:migrate
 
-Add the following line to admin/all.js on your app:
+Add this line to app/assets/javascript/admin/all.js on your app:
 
     //= require admin/spree_i18n
 
-Go to admin products list and click on any product. You should see a TRANSLATIONS link
-in the products subtabs on the right. You should be able to set name, description,
-meta descriptions, and meta keywords for any product on your Spree project.
+Add this line to app/assets/javascript/store/all.js on your app:
+
+    //= require store/spree_i18n
+
+You should see a TRANSLATIONS link or a flag icon on each admin section that
+supports this feature.
+
+This extension also adds two Spree configs that allow users to customize which
+locales should be displayed as options on the translation forms and which should
+be listed to customer on the frontend. e.g.:
+
+    Spree.config do |config|
+      config.all_locales = ["en", "es", "pt-BR"] # displayed on translation forms
+      config.supported_locales = ["en", "pt-BR"] # displayed on frontend select box
+    end
 
 ## Running the tests 
 
