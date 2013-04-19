@@ -21,6 +21,10 @@ RSpec.configure do |config|
 
   config.use_transactional_fixtures = true
 
+  config.before(:each) do
+    I18n.locale = I18n.default_locale
+  end
+
   config.include FactoryGirl::Syntax::Methods
   config.include Spree::TestingSupport::UrlHelpers
   config.include Spree::TestingSupport::Preferences

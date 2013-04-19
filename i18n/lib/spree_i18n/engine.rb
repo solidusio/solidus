@@ -16,6 +16,7 @@ module SpreeI18n
     end
 
     initializer "spree_i18n.environment", :before => :load_config_initializers do |app|
+      app.config.i18n.fallbacks = true
       SpreeI18n::Config = SpreeI18n::Configuration.new
     end
 
