@@ -13,7 +13,8 @@ class AddTranslationsToMainModels < ActiveRecord::Migration
     Spree::Taxonomy.create_translation_table!({ :name => :string }, { :migrate_data => true })
 
     params = { :name => :string, :description => :text, :meta_title => :string,
-               :meta_description => :string, :meta_keywords => :string }
+               :meta_description => :string, :meta_keywords => :string,
+               :permalink => :string }
     Spree::Taxon.create_translation_table!(params, { :migrate_data => true })
   end
 
