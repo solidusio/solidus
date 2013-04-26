@@ -129,6 +129,29 @@ describe "Translations" do
     end
   end
 
+  context "localization settings", js: true do
+    let(:language) { I18n.t("this_file_language", locale: "de") }
+    let(:spanish) { I18n.t("this_file_language", locale: "es-MX") }
+
+    before do
+      SpreeI18n::Config.available_locales = [:en, :'pt-BR', :de]
+      visit spree.edit_admin_general_settings_path
+    end
+
+    it "adds german to supported locales and pick it on front end" do
+      targetted_select2_search(language, from: '#s2id_supported_locales_')
+      click_on 'Update'
+      change_locale
+      SpreeI18n::Config.supported_locales.should include(:de)
+    end
+
+    it "adds spanish to available locales" do
+      targetted_select2_search(spanish, from: '#s2id_available_locales_')
+      click_on 'Update'
+      SpreeI18n::Config.available_locales.should include(:'es-MX')
+    end
+  end
+
   # sleep 1 second to make sure the ajax request process properly
   def change_locale
     visit spree.root_path

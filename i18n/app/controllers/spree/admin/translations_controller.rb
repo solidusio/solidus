@@ -3,7 +3,7 @@ module Spree
     before_filter :load_parent
 
     helper_method :collection_url
-    helper 'spree/locale'
+    helper 'spree_i18n/locale'
 
     def index
       render resource_name

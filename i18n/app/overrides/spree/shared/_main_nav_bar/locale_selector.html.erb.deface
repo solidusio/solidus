@@ -3,7 +3,7 @@
   <li id="locale-select" style="float: right; margin-right: 10px;" data-hook>
     <%= form_tag(set_locale_path) do %>
       <label for="locale"><%= t(:language) %>:</label>
-      <%= select_tag(:locale, options_for_select(options_for_locale_select, I18n.locale),
+      <%= select_tag(:locale, options_for_select(supported_locales_options, I18n.locale),
                      :data => { :href => set_locale_path }) %>
       <noscript>
         <%= submit_tag %>

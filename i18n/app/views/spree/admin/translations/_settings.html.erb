@@ -12,7 +12,7 @@
 
   <div class="omega six columns">
     <label for="locale"><%= t(:select_locale) %>: </label>
-    <%= select_tag(:locale, options_for_select(admin_options_for_locale_select, SpreeI18n::Config.available_locales),  :class => 'fullwidth' , :multiple => 'true') %>
+    <%= select_available_locales_fields %>
   </div>
 </fieldset>
 

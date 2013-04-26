@@ -1,0 +1,13 @@
+<!-- insert_after '.row .security' -->
+<fieldset class="security no-border-bottom">
+  <legend align="center"><%= t(:localization_settings)%></legend>
+  <div class="field">
+    <label for="supported_locales_"><%= t(:supported_locales) %></label>
+    <%= select_supported_locales %>
+  </div>
+
+  <div class="field">
+    <label for="available_locales_"><%= t(:available_locales) %></label>
+    <%= select_available_locales %>
+  </div>
+</fieldset>

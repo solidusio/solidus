@@ -1,6 +1,6 @@
 display_locale_fields = () ->
   attr = $('#attr_list li.active a').data('attr')
-  locales = $('select#locale').val()
+  locales = $('#locale').val()
   show = $("input[name='show-only']:checked").val()
 
   $('table#attr_fields tr').hide()
@@ -32,7 +32,7 @@ $ ->
     display_locale_fields()
     false
 
-  $('select#locale').select2({placeholder: 'Please select a language.'})
-  $('select#locale').change display_locale_fields
+  $('#locale, #supported_locales_, #available_locales_').select2({placeholder: 'Please select a language.'})
+  $('#locale').change display_locale_fields
   $("input[name='show-only']").change display_locale_fields
 
