@@ -37,6 +37,10 @@ Add this line to app/assets/javascript/store/all.js on your app:
 
     //= require store/spree_i18n
 
+Add this line to app/assets/stylesheets/admin/all.css on your app:
+
+    *= require admin/spree_i18n
+
 You should see a TRANSLATIONS link or a flag icon on each admin section that
 supports this feature.
 

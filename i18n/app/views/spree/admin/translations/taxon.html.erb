@@ -15,50 +15,7 @@
     <%= render 'settings' %>
 
     <%= form_for [:admin, @resource.taxonomy, @resource], :url => admin_taxonomy_taxon_path(@taxon.taxonomy, @taxon.id) do |f| %>
-      <fieldset class="omega eight columns no-border-bottom">
-        <legend>Translations</legend>
-        <table id="attr_fields" class="no-borders">
-          <colgroup>
-            <col style="width: 10%" />
-            <col style="width: 90%" />
-          </colgroup>
-          <tbody>
-            <% SpreeI18n::Config.available_locales.each do |locale| %>
-              <%= f.globalize_fields_for locale.to_sym do |g| %>
-                <% @resource.class.translates.each_with_index do |attr,i| %>
-                  <tr style="display:<%= i == 0 ? 'auto' : 'none' %>;" class="<%= attr %> <%= locale %> even">
-                    <td style="padding:4px;" colspan="2">
-                      <%= t(:this_file_language, :locale => locale) %> - 
-                      <%= t(attr, :locale => locale ) %>
-                    </td>
-                  </tr>
-                  <tr style="display:<%= i == 0 ? 'auto' : 'none' %>;" class="<%= attr %> <%= locale %> odd">
-                    <td class="flag table-column">
-                      <% if locale.to_s.include?('-') %>
-                        <img src="http://www.localeapp.com/assets/flags/regions/<%= locale.to_s.split('-').last %>.png">
-                      <% else %>
-                        <img src="http://www.localeapp.com/assets/flags/languages/<%= locale %>.png">
-                      <% end %>
-                    </td>
-                    <td class="translation table-column">
-                      <% if @resource.class.columns_hash[attr.to_s].type == :text %>
-                        <%= g.text_area attr, :class => "fullwidth", :rows => 4 %>
-                      <% else %>
-                        <%= g.text_field attr, :class => "fullwidth" %>
-                      <% end %>
-                    </td>
-                  </tr>
-                <% end %>
-              <% end %>
-            <% end %>
-          </tbody>
-          <tfoot>
-            <tr style="display:none;">
-              <td colspan="2"></td>
-            </tr>
-          </tfoot>
-        </table>
-      </fieldset>
+      <%= render 'form_fields', f: f %>
 
       <div class="form-buttons" data-hook="buttons">
         <%= button t(:update), 'icon-refresh' %>

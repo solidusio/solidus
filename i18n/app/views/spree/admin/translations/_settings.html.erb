@@ -1,28 +1,28 @@
 <fieldset class="no-border-bottom">
-  <legend>Settings</legend>
+  <legend><%= t(:settings) %></legend>
 
   <div class="alpha six columns field">
-    <label for="show-only">Show only: </label>
+    <label for="show-only"><%= t(:show_only) %>: </label>
     <ul>
-      <li><input type="radio" name="show-only" value="all" checked> <label>All Translations</label></li>
-      <li><input type="radio" name="show-only" value="incomplete"> <label>Only Incomplete</label></li>
-      <li><input type="radio" name="show-only"value="complete"> <label>Only Complete</label></li>
+      <li><input type="radio" name="show-only" value="all" checked> <label><%= t(:all_translations) %></label></li>
+      <li><input type="radio" name="show-only" value="incomplete"> <label><%= t(:only_incomplete) %></label></li>
+      <li><input type="radio" name="show-only"value="complete"> <label><%= t(:only_complete) %></label></li>
     </ul>
   </div>
 
   <div class="omega six columns">
-    <label for="locale">Select locale: </label>
+    <label for="locale"><%= t(:select_locale) %>: </label>
     <%= select_tag(:locale, options_for_select(admin_options_for_locale_select, SpreeI18n::Config.available_locales),  :class => 'fullwidth' , :multiple => 'true') %>
   </div>
 </fieldset>
 
 <fieldset class="alpha four columns no-border-bottom">
-  <legend>Fields</legend>
+  <legend><%= t(:fields) %></legend>
   <nav class="menu">
     <ul id="attr_list">
-      <% @resource.class.translates.each_with_index do |attr,i| %>
+      <% @resource.class.translates.each_with_index do |attr, i| %>
         <li class="<%= 'active' if i == 0 %>">
-          <a data-attr="<%= attr %>" href="#"><%= attr %></a>
+          <a data-attr="<%= attr %>" href="#"><%= t(attr) %></a>
         </li>
       <% end %>
     </ul>

@@ -36,7 +36,7 @@ describe "Translations" do
         find('.icon-flag').click
 
         within("#attr_fields .name.en.odd") { fill_in_name "shirt sizes" }
-        within("#attr_list") { click_on "presentation" }
+        within("#attr_list") { click_on "Presentation" }
         within("#attr_fields .presentation.en.odd") { fill_in_name "size" }
         within("#attr_fields .presentation.pt-BR.odd") { fill_in_name "tamanho" }
         click_on "Update"
@@ -64,7 +64,7 @@ describe "Translations" do
         find('.icon-flag').click
 
         within("#attr_fields .name.pt-BR.odd") { fill_in_name "Modelo" }
-        within("#attr_list") { click_on "presentation" }
+        within("#attr_list") { click_on "Presentation" }
         within("#attr_fields .presentation.en.odd") { fill_in_name "Model" }
         within("#attr_fields .presentation.pt-BR.odd") { fill_in_name "Modelo" }
         click_on "Update"
