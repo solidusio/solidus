@@ -15,38 +15,37 @@ To install, simply add the Gem to your Gemfile:
 
 ## Model Translations
 
-We've added support for translating models. The feature uses the globalize3 gem.
-So far the following models can have translations: Product, Promotion, OptionType, Taxonomy and Taxon.
+We've added support for translating models. The feature uses the [globalize3](https://github.com/svenfuchs/globalize3)
+gem to localize model data. So far the following models are translatable:
 
-Follow the steps to get it working.
+  Product, Promotion, OptionType, Taxonomy, Taxon and Property.
 
-Point to the translate-models branch:
+Try it out! Point to the translate-models branch:
 
     gem 'spree_i18n', :git => 'git://github.com/spree/spree_i18n.git', :branch => 'translate-models'
 
-Install and run the migration to create the translations tables:
+You can use the generator to install migrations and append spree_i18n assets to
+your app spree manifest file.
 
-    bundle exec rake railties:install:migrations
-    bundle exec rake db:migrate
+    rails g spree_i18n:install
 
-Add this line to app/assets/javascript/admin/all.js on your app:
+This will insert this lines on your spree manifest files:
 
+    app/assets/javascripts/admin/all.js
     //= require admin/spree_i18n
 
-Add this line to app/assets/javascript/store/all.js on your app:
-
+    app/assets/javascripts/store/all.js
     //= require store/spree_i18n
 
-Add this line to app/assets/stylesheets/admin/all.css on your app:
-
+    app/assets/stylesheets/admin/all.css
     *= require admin/spree_i18n
 
-You should see a TRANSLATIONS link or a flag icon on each admin section that
-supports this feature.
+Start you server and you should see a TRANSLATIONS link or a flag icon on each
+admin section that supports this feature.
 
 The extension contains two configs that allow users to customize which locales
 should be displayed as options on the translation forms and which should be
-listed to customers on the frontend. e.g. (add to an initializer):
+listed to customers on the frontend. You can set them on an initializer. e.g.
 
     # displayed on translation forms
     SpreeI18n::Config.available_locales = [:en, :es, :'pt-BR']
@@ -55,6 +54,8 @@ listed to customers on the frontend. e.g. (add to an initializer):
 
 ps. please use symbols, not strings. e.g. :'pt-BR' not just 'pt-BR'. Otherwise
 you may get unexpected errors
+
+Or if you prefer they're also available on the admin UI general settings section.
 
 ## Running the tests 
 
