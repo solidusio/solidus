@@ -20,4 +20,8 @@ module Spree
   describe Promotion do
     include_context "behaves as translatable"
   end
+
+  describe Property do
+    include_context "behaves as translatable"
+  end
 end

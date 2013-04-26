@@ -9,6 +9,7 @@ class AddTranslationsToMainModels < ActiveRecord::Migration
 
     params = { :name => :string, :presentation => :string }
     Spree::OptionType.create_translation_table!(params, { :migrate_data => true })
+    Spree::Property.create_translation_table!(params, { :migrate_data => true })
 
     Spree::Taxonomy.create_translation_table!({ :name => :string }, { :migrate_data => true })
 

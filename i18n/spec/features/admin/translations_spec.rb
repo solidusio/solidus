@@ -55,6 +55,26 @@ describe "Translations" do
         page.should have_content("tamanho")
       end
     end
+
+    context "properties" do
+      let!(:property) { create(:property) }
+
+      it "displays translated name on frontend" do
+        visit spree.admin_properties_path
+        find('.icon-flag').click
+
+        within("#attr_fields .name.pt-BR.odd") { fill_in_name "Modelo" }
+        within("#attr_list") { click_on "presentation" }
+        within("#attr_fields .presentation.en.odd") { fill_in_name "Model" }
+        within("#attr_fields .presentation.pt-BR.odd") { fill_in_name "Modelo" }
+        click_on "Update"
+
+        change_locale
+        visit spree.admin_properties_path
+
+        page.should have_content("Modelo")
+      end
+    end
   end
 
   context "promotions", js: true do
