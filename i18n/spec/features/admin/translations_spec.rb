@@ -41,17 +41,8 @@ describe "Translations" do
         within("#attr_fields .presentation.pt-BR.odd") { fill_in_name "tamanho" }
         click_on "Update"
 
-        visit spree.admin_product_path(product)
-        select2_search "size", :from => "Option Types"
-        click_button "Update"
-        visit spree.admin_product_path(product)
-
-        within('#sidebar') { click_link "Variants" }
-        click_on "New Variant"
-        click_button "Create"
-
         change_locale
-        visit spree.product_path(product)
+        visit spree.admin_option_types_path
         page.should have_content("tamanho")
       end
     end

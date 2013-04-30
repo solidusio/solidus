@@ -13,26 +13,26 @@ module SpreeI18n
     end
 
     def supported_locales_options
-      Config.supported_locales.map do |locale|
-        [I18n.t(:this_file_language, :locale => locale), locale]
-      end
+      Config.supported_locales.map { |locale| locale_presentation(locale, false) }
     end
 
     def available_locales_options
-      Config.available_locales.map do |locale|
-        [I18n.t(:this_file_language, :locale => locale), locale]
-      end
+      Config.available_locales.map { |locale| locale_presentation(locale) }
     end
 
     def all_locales_options
-      I18n.available_locales.map do |locale|
-        [I18n.t(:this_file_language, :locale => locale), locale]
-      end
+      Locale.all.map { |locale| locale_presentation(locale) }
     end
 
-      private
-        def common_options
-          { :class => 'fullwidth' , :multiple => 'true' }
-        end
+    private
+      def locale_presentation(locale, key = true)
+        presentation = "#{I18n.t(:this_file_language, :locale => locale)}"
+        presentation << " (#{locale})" if key
+        [presentation, locale]
+      end
+
+      def common_options
+        { :class => 'fullwidth' , :multiple => 'true' }
+      end
   end
 end

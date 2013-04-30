@@ -10,6 +10,7 @@ group :test do
   gem 'factory_girl_rails', '~> 4.2.1'
   gem 'ffaker'
   gem 'capybara'
+  gem 'selenium-webdriver'
   gem 'pry-rails'
 end
 
