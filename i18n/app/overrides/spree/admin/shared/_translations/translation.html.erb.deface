@@ -1,0 +1,2 @@
+<!-- insert_bottom 'script' -->
+$.extend(Spree.translations, { translations: "<%= I18n.t(:translations) %>" })

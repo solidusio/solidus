@@ -1,4 +1,4 @@
-#Spree Internationalization
+# Spree Internationalization
 
 This is the Internationalization project for [Spree Commerce](http://spreecommerce.com/)
 
@@ -56,6 +56,11 @@ ps. please use symbols, not strings. e.g. :'pt-BR' not just 'pt-BR'. Otherwise
 you may get unexpected errors
 
 Or if you prefer they're also available on the admin UI general settings section.
+
+*Every record needs to have a translation. If by any chance you remove spree_i18n
+from your Gemfile, add some records and then add spree_i18n gem back you might get
+errors like ``undefined method for nilClass`` because Globalize will try fetch
+translations that do not exist.*
 
 ## Running the tests 
 
