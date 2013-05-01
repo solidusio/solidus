@@ -2,1209 +2,1210 @@
 # by Amir Hossein Babaeian (amirh.babaeian@gmail.com)
 # https://github.com/Amirhb
 ---
-fa: 
-  a_copy_of_all_mail_will_be_sent_to_the_following_addresses: یک کپی از نامه به آدرس های ذیل ارسال خواهد شد
-  abbreviation: مخفف
-  access_denied: "دسترسی امکان پذیر نیست"
-  account: حساب
-  account_updated: "حساب شما بروزرسانی شد!"
-  action: حرکت
-  actions: 
-    cancel: لغو
-    create: ایجاد
-    destroy: پاک کردن
-    list: لیست
-    listing: لیست کردن
-    new: جدید
-    update: بروز رسانی
-  activate: "Activate"
-  active: "فعال"
-  activerecord: 
-    attributes: 
-      spree/address: 
-        address1: Address
-        address2: "Address (contd.)"
-        city: City
-        country: "Country"
-        firstname: "First Name"
-        lastname: "Last Name"
-        phone: Phone
-        state: "State"
-        zipcode: "Zip Code"
-      spree/country: 
-        iso: ISO
-        iso3: ISO3
-        iso_name: "ISO Name"
-        name: Name
-        numcode: "ISO Code"
-      spree/credit_card: 
-        cc_type: Type
-        month: Month
-        number: Number
-        verification_value: "Verification Value"
-        year: Year
-      spree/inventory_unit: 
-        state: State
-      spree/line_item: 
-        price: Price
-        quantity: Quantity
-      spree/option_type: 
-        name: Name
-        presentation: Presentation
-      spree/order:
-        checkout_complete: "Checkout Complete"
-        completed_at: "Completed At"
-        created_at: Order Date
-        email: Customer E-Mail
-        ip_address: "IP Address"
-        item_total: "Item Total"
-        number: Number
-        payment_state: Payment State
-        shipment_state: Shipment State
-        special_instructions: "Special Instructions"
-        state: State
-        total: Total
-      spree/order/bill_address: 
-        address1: "Billing address street"
-        city: "Billing address city"
-        firstname: "Billing address first name"
-        lastname: "Billing address last name"
-        phone: "Billing address phone"
-        state: "Billing address state"
-        zipcode: "Billing address zipcode"
-      spree/order/ship_address: 
-        address1: "Shipping address street"
-        city: "Shipping address city"
-        firstname: "Shipping address first name"
-        lastname: "Shipping address last name"
-        phone: "Shipping address phone"
-        state: "Shipping address state"
-        zipcode: "Shipping address zipcode"
-      spree/payment_method:
-        name: Name
-      spree/product: 
-        available_on: "Available On"
-        cost_price: "Cost Price"
-        description: Description
-        master_price: "Master Price"
-        name: Name
-        on_demand: "On Demand"
-        on_hand: "On Hand"
-        shipping_category: "Shipping Category"
-        tax_category: "Tax Category"
-      spree/promotion: 
-        advertise: Advertise
-        code: Code
-        description: Description
-        event_name: Event Name
-        expires_at: Expires At
-        name: Name
-        path: Path
-        starts_at: Starts At
-        usage_limit: Usage Limit
-      spree/property: 
-        name: Name
-        presentation: Presentation
-      spree/prototype: 
-        name: Name
-      spree/return_authorization: 
-        amount: Amount
-      spree/role: 
-        name: Name
-      spree/state: 
-        abbr: Abbreviation
-        name: Name
-      spree/tax_category: 
-        description: Description
-        name: Name
-      spree/tax_rate: 
-        amount: Rate
-        included_in_price: Included in Price
-        show_rate_in_label: Show rate in label
-      spree/taxon: 
-        name: Name
-        permalink: Permalink
-        position: Position
-      spree/taxonomy: 
-        name: Name
-      spree/user: 
-        email: Email
-        password: "Password"
-        password_confirmation: "Password Confirmation"
-      spree/variant: 
-        cost_price: "Cost Price"
-        depth: Depth
-        height: Height
-        price: Price
-        sku: SKU
-        weight: Weight
-        width: Width
-      spree/zone: 
-        description: Description
-        name: Name
-    models: 
-      spree/address: 
-        one: Address
-        other: Addresses
-      spree/cheque_payment: 
-        one: Cheque Payment
-        other: Cheque Payments
-      spree/country: 
-        one: Country
-        other: Countries
-      spree/credit_card: 
-        one: "Credit Card"
-        other: "Credit Cards"
-      spree/creditcard_payment: 
-        one: "Credit Card Payment"
-        other: "Credit Card Payments"
-      spree/creditcard_txn: 
-        one: "Credit Card Transaction"
-        other: "Credit Card Transactions"
-      spree/inventory_unit: 
-        one: "Inventory Unit"
-        other: "Inventory Units"
-      spree/line_item: 
-        one: "Line Item"
-        other: "Line Items"
-      spree/order: 
-        one: Order
-        other: Orders
-      spree/payment: 
-        one: Payment
-        other: Payments
-      spree/product: 
-        one: Product
-        other: Products
-      spree/property: 
-        one: Property
-        other: Properties
-      spree/prototype: 
-        one: Prototype
-        other: Prototypes
-      spree/return_authorization: 
-        one: Return Authorization
-        other: Return Authorizations
-      spree/role: 
-        one: Roles
-        other: Roles
-      spree/shipment: 
-        one: Shipment
-        other: Shipments
-      spree/shipping_category: 
-        one: "Shipping Category"
-        other: "Shipping Categories"
-      spree/state: 
-        one: State
-        other: States
-      spree/tax_category: 
-        one: "Tax Category"
-        other: "Tax Categories"
-      spree/tax_rate: 
-        one: "Tax Rate"
-        other: "Tax Rates"
-      spree/taxon: 
-        one: Taxon
-        other: Taxons
-      spree/taxonomy: 
-        one: Taxonomy
-        other: Taxonomies
-      spree/user: 
-        one: User
-        other: Users
-      spree/variant: 
-        one: Variant
-        other: Variants
-      spree/zone: 
-        one: Zone
-        other: Zones
-  add: افزودن
-  add_action_of_type: Add action of type
-  add_category: "افزودن دسته بندی"
-  add_country: "افزودن کشور"
-  add_new_header: "Add New Header"
-  add_new_style: "Add New Style"
-  add_option_type: "افزدون نوع"
-  add_option_types: "افزودن انواع"
-  add_option_value: "افزودن مقدار"
-  add_product: "افزودن محصول"
-  add_product_properties: "افزودن ویژگی های محصول"
-  add_rule_of_type: افزودن قانون نوع
-  add_scope: "افزودن حوزه"
-  add_state: "افزودن ایالت یا استان"
-  add_to_cart: "افزودن به سبد خرید"
-  add_zone: "افزودن ناحیه"
-  additional_item: قیمت آیتم اضافه شده
-  address: آدرس
-  address_information: "اطلاعات آدرس"
-  adjustment: تعدیل
-  adjustment_total: تعدیل کل
-  adjustments: تعدیلات
-  admin: 
-    mail_methods: 
-      send_testmail: 'Send Testmail'
-      testmail: 
-        delivery_error: 'Testmail delivery error'
-        delivery_success: 'Testmail sent successfully'
-        error: 'Testmail error: %{e}'
-  administration: مدیریت
-  all: "همه"
-  all_departments: همه ی دپارتمان ها
-  allow_backorders: "مجوز ارائه پیش فروش"
-  allow_ssl_in_development_and_test: Allow SSL to be used when in development and test modes
-  allow_ssl_in_production: Allow SSL to be used in production mode
-  allow_ssl_in_staging: Allow SSL to be used in staging mode
-  allowed_ssl_in_production_mode: "SSL will %{not} be used in production"
-  already_registered: از پیش ثبت شده
-  alt_text: متن جایگزین
-  alternative_phone: تلفن جایگزین
-  amount: مقدار
-  analytics_trackers: ردگیرهای تحلیلی
-  and: and
-  apply: "اعمال کن"
-  are_you_sure: "آیا مطمئن هستید؟"
-  are_you_sure_category: "آیا مطمئن هستید که می خواهید این دسته بندی را پاک کنید؟"
-  are_you_sure_delete: "آیا مطمئن هستید که می خواهید این سطر را پاک کنید؟"
-  are_you_sure_delete_image: "آیا مطمئن هستید که می خواهید این تصویر را پاک کنید؟?"
-  are_you_sure_option_type: "آیا مطمئن هستید که می خواهید این نوع را پاک کنید؟?"
-  are_you_sure_you_want_to_capture: "Are you sure you want to capture?"
-  assign_taxon: "تخصیص نوع طبقه بندی"
-  assign_taxons: "تخصیص انواع طبقه بندی"
-  attachment_default_style: "Attachments Style"
-  attachment_default_url: "Attachments URL"
-  attachment_path: "Attachments Path"
-  attachment_styles: "Paperclip Styles"
-  authorization_failure: "خرابی در صدور مجوز"
-  authorized: مجاز
-  availability: "Availability"
-  available_on: "موجود است در"
-  available_taxons: "انواع موجود"
-  awaiting_return: Awaiting Return
-  back: برگشت
-  back_end: Back End
-  back_to_adjustments_list: "Back To Adjustments List"
-  back_to_images_list: "Back To Images List"
-  back_to_mail_methods_list: "Back To Mail Methods List"
-  back_to_option_tyles_list: "Back To Option Types List"
-  back_to_payment_methods_list: "Back To Payment Methods List"
-  back_to_payments_list: "Back To Payments List"
-  back_to_products_list: "Back To Products List"
-  back_to_promotions_list: "Back To Promotions List"
-  back_to_properties_list: "Back To Products List"
-  back_to_prototypes_list: "Back To Prototypes List"
-  back_to_reports_list: "Back To Reports List"
-  back_to_shipping_categories: "Back To Shipping Categories"
-  back_to_shipping_methods_list: "Back To Shipping Methods List"
-  back_to_states_list: "Back To States List"
-  back_to_store: "بازگشت به فروشگاه"
-  back_to_tax_categories_list: "Back To Tax Categories List"
-  back_to_taxonomies_list: "Back To Taxonomies List"
-  back_to_trackers_list: "Back To Trackers List"
-  back_to_zones_list: "Back To Zones List"
-  backordered: پیش فروش شده
-  backordering_is_allowed: #"Backordering %{not} allowed"
-  balance_due: "Balance Due"
-  bill_address: "آدرس"
-  billing: پرداخت
-  billing_address: "آدرس پرداخت"
-  both: هر دو
-  calculator: ماشین حساب
-  calculator_settings_warning: "اگر می خواهید نوع ماشین حساب را تغییر دهید، باید پیش از انجام تغییرات، حالت فعلی را ذخیره کنید"
-  cancel: لغو
-  cancel_my_account: حساب من را لغو کن
-  cancel_my_account_description: "ناراحتی؟"
-  canceled: لغو شد
-  cannot_create_payment_without_payment_methods: You cannot create a payment for an order without any payment methods defined.
-  cannot_create_returns: Cannot create returns as this order no shipped units.
-  cannot_perform_operation: "عملیات درخواستی قابل انجام نیست"
-  capture: Capture
-  card_code: "کد کارت"
-  card_details: "جزئیات کارت"
-  card_number: "شماره کارت"
-  card_type_is: نوع کارت
-  cart: سبد خرید
-  categories: دسته بندی ها
-  category: دسته بندی
-  change: تغییر
-  change_language: "تغییر زبان"
-  change_my_password: "تغییر رمز عبور"
-  charge_total: Charge Total
-  charged: Charged
-  charges: Charges
-  checkout: تصفیه حساب
-  cheque: چک
-  city: شهر
-  clone: Clone
-  code: کد
-  combine: Combine
-  complete: تکمیل
-  complete_list: "لیست کامل"
-  configuration: پیکربندی
-  configuration_options: "تنظیمات پیکربندی"
-  configurations: پیکربندی ها
-  configure_s3: "Configure S3"
-  configured: پیکربندی شده
-  confirm: تایید
-  confirm_delete: "تایید حذف"
-  confirm_password: "تکرار رمز عبور"
-  continue: ادامه
-  continue_shopping: "ادامه خرید"
-  copy_all_mails_to: همه ی نامه ها را کپی من به
-  cost_price: "قیمت"
-  count_of_reduced_by: "count of '%{name}' reduced by %{count}"
-  country: کشور
-  country_based: "بر حسب کشور"
-  coupon: کوپن
-  coupon_code: کد کوپن
-  coupon_code_applied: The coupon code was successfully applied to your order.
-  create: ایجاد
-  create_a_new_account: "ایجاد یک حساب جدید"
-  create_user_account: ایجاد حساب کاربری
-  created_successfully: "به صورت موفقیت آمیز ایجاد شد"
-  credit: اعتبار
-  credit_card: "کارت اعتباری"
-  credit_card_capture_complete: "Credit Card Was Captured"
-  credit_card_payment: "پرداخت با کارت اعتباری"
-  credit_cards: Credit Cards
-  credit_owed: "اعتبار مقروض"
-  credit_total: کل اعتبار
-  credits: اعتبارات
-  currency: Currency
-  currency_settings: "Currency Settings"
-  currency_symbol_position: "Put currency symbol before or after dollar amount?"
-  current: جاری
-  customer: مشتری
-  customer_details: "جزئیات مشتری"
-  customer_details_updated: "The customer's details have been updated."
-  customer_search: "جستجوی مشتری"
-  cut: Cut
-  date_completed: Date Completed
-  date_created: تاریخ ایجاد
-  date_range: "محدوده ی زمانی"
-  debit: Debit
-  default: پیش فرض
-  default_meta_description: Default Meta Description
-  default_meta_keywords: Default Meta Keywords
-  default_seo_title: Default Seo Title
-  default_tax: Default Tax
-  default_tax_zone: Default Tax Zone
-  defined_paperclip_styles: Defined Paperclip Styles
-  delete: حذف
-  delivery: تحویل
-  depth: عمق
-  description: توضیح
-  destroy: پاک کردن
-  didnt_receive_confirmation_instructions: "دستورالعمل تایید دریافت نشد؟"
-  didnt_receive_unlock_instructions: "دستورالعمل بازکردن قفل دریافت نشد؟"
-  discount_amount: "مقدار تخفیف"
-  dismiss_banner: "No. Thanks! I'm not interested, do not display this message again"
-  display: نمایش
-  display_currency: "Display currency"
-  dollar_amounts_displayed_as: "Dollar amounts displayed as %{example}"
-  edit: ویرایش
-  edit_general_settings: "ویرایش تنظیمات عمومی"
-  editing_billing_integration: Editing Billing Integration
-  editing_category: "ویرایش دسته بندی"
-  editing_mail_method: ویرایش متد نامه
-  editing_option_type: "ویرایش نوع انتخاب"
-  editing_option_types: "ویرایش انواع انتخاب"
-  editing_payment_method: ویرایش متد پرداخت
-  editing_product: "ویرایش محصول"
-  editing_product_group: "ویرایش گروه محصول"
-  editing_promotion: Editing Promotion
-  editing_property: "ویرایش اموال"
-  editing_prototype: "ویرایش نمونه اولیه"
-  editing_shipping_category: "ویرایش دسته بندی ارسال"
-  editing_shipping_method: "ویرایش روش ارسال"
-  editing_state: "ویرایش ایالت یا استان"
-  editing_tax_category: "ویرایش دسته بندی مالیات"
-  editing_tax_rate: "ویرایش نرخ مالیات"
-  editing_tracker: ویرایش ردگیر
-  editing_user: "ویرایش کاربر"
-  editing_zone: "ویرایش ناحیه"
-  email: ایمیل
-  email_address: "آدرس ایمیل"
-  email_server_settings_description: "تنظیم کردن سرور ایمیل"
-  empty: "خالی"
-  empty_cart: "سبد خرید خالی شود"
-  enable_login_via_login_password: "از ایمیل/رمز عبور استاندارد استفاده کن"
-  enable_login_via_openid: "در عوض از OpenID استفاده کن"
-  enable_mail_delivery: فعال سازی تحویل نامه
-  ending_in: "Ending in"
-  enter_at_least_five_letters: Enter at least five letters of customer name
-  enter_exactly_as_shown_on_card: لطفا به صورت دقیق طبق کارت، اطلاعات را وارد کنید
-  enter_password_to_confirm: "(ما به رمز عبور فعلی شما برای تایید تغییرات نیاز داریم)"
-  enter_token: Enter Token
-  environment: "محیط"
-  error: ایراد
-  error_user_destroy_with_orders: "Users with completed orders may not be deleted"
-  errors: 
-    messages: 
-      could_not_create_taxon: "امکان ایجاد نوع دسته بندی وجود ندارد"
-      no_payment_methods_available: "No payment methods are configured for this environment"
-      no_shipping_methods_available: "ارسال برای ناحیه انتخاب شده مقدور نمی باشد، لطفا منطقه ی دیگری را انتخاب کنید"
-  errors_prohibited_this_record_from_being_saved: 
-    one: "یک ایراد مانع از انجام ذخیره سازی است"
-    other: "%{count} ایراد مانع از انجام ذخیره سازی است"
-  event: رویداد
-  events: 
-    spree: 
-      cart: 
-        add: 'Add to cart'
-      checkout: 
-        coupon_code_added: Coupon code added
-      content: 
-        visited: Visit static content page
-      order: 
-        contents_changed: "Order contents changed"
-      page_view: "Static page viewed"
-      user: 
-        signup: 'User signup'
-  existing_customer: "مشتری کنونی"
-  expiration: "انقضاء"
-  expiration_month: "ماه انقضاء"
-  expiration_year: "سال انقضاء"
-  expiry: انقضاء
-  extension: الحاقی
-  extensions: الحاقیات
-  filename: نام فایل
-  final_confirmation: "تایید نهایی"
-  finalize: نهایی کردن
-  finalized_payments: پرداخت های نهایی شده
-  first_item: هزینه اولین آیتم
-  first_name: "نام"
-  first_name_begins_with: "حرف آغازین نام"
-  flat_percent: "Flat Percent"
-  flat_rate_amount: مقدار
-  flat_rate_per_item: "Flat Rate (per item)"
-  flat_rate_per_order: "Flat Rate (per order)"
-  flexible_rate: "Flexible Rate"
-  forgot_password: "آیا رمز عبور را فراموش کرده اید؟"
-  free_shipping: ارسال رایگان
-  from_state: از ایالت یا استان
-  front_end: Front End
-  full_name: "نام و نام خانوادگی"
-  gateway: درگاه
-  gateway_config_unavailable: "درگاه برای این محیط در دسترس نیست"
-  gateway_configuration: "پیکربندی درگاه"
-  gateway_error: "ایراد درگاه"
-  gateway_setting_description: "یک درگاه پرداخت انتخاب کرده و تنظیمات آن را انجام دهید"
-  gateway_settings_warning: "اگر نوع درگاه را تغییر می دهید، قبل از ویرایش تنظیمات درگاه، ابتدا آن را ذخیره کنید"
-  general: "عمومی"
-  general_settings: "تنظیمات عمومی"
-  general_settings_description: "پیکربندی تنظیمات کلی Spree"
-  google_analytics: "Google Analytics"
-  google_analytics_active: "فعال"
-  google_analytics_create: "Create New Google Analytics Account"
-  google_analytics_id: "Analytics ID"
-  google_analytics_new: "New Google Analytics Account"
-  google_analytics_setting_description: "Manage Google Analytics ID."
-  guest_checkout: تصفیه حساب میهمان
-  guest_user_account: تصفیه حساب به عنوان کاربر میهمان
-  has_no_shipped_units: has no shipped units
-  height: ارتفاع
-  hello_user: "سلام کاربر گرامی"
-  history: تاریخ
-  home: "صفحه اصلی"
-  icon: "آیکون"
-  icons_by: "آیکون توسط"
-  image: تصویر
-  image_settings: "Image Settings"
-  image_settings_description: "Image Settings Description"
-  image_settings_updated: "Image Settings successfully updated."
-  image_settings_warning: "You will need to regenerate thumbnails if you update the paperclip styles. Use rake paperclip:refresh:thumbnails to do this."
-  images: تصاویر
-  images_for: "تصاویر برای"
-  in_progress: "در حال پیشرفت"
-  include_in_shipment: مشمول ارسال شود
-  included_in_other_shipment: مشمول ارسال دیگری است
-  included_in_price: Included in Price
-  included_in_this_shipment: مشمول همین ارسال است
-  included_price_validation: "cannot be selected unless you have set a Default Tax Zone"
-  instructions_to_reset_password: "فرم زیر را کامل کنید، طریقه ایجاد رمز عبور جدید برای شما ایمیل خواهد شد"
-  insufficient_stock: "Insufficient stock available, only %{on_hand} remaining"
-  integration_settings_warning: "If you are changing the billing integration, you must save first before you can edit the integration settings"
-  intercept_email_address: Intercept Email Address
-  intercept_email_instructions: "Override email recipient and replace with this address."
-  invalid_search: "معیار جستجو نامعتبر است"
-  inventory: انبار
-  inventory_adjustment: "تعدیلات انبار"
-  inventory_setting_description: "Inventory Configuration, Backordering, Zero-Stock Display."
-  inventory_settings: "تنظیمات انبار"
-  is_not_available_to_shipment_address: is not available to shipment address
-  issue_number: Issue Number
-  item: آیتم
-  item_description: "توضیحات آیتم"
-  item_total: "کل آیتم ها"
-  item_total_rule: 
-    operators: 
-      gt: بیشتر از
-      gte: بیشتر از یا مساوی با
-  landing_page_rule: 
-    path: Path
-  last_name: "نام خانوادگی"
-  last_name_begins_with: "حرف آغازین نام خانوادگی"
-  learn_more: Learn More
-  leave_blank_to_not_change: "(اگر قصد تغییر ندارید، اینجا را خالی بگذارید)"
-  list: لیست
-  listing_categories: "لیست کردن دسته بندی ها"
-  listing_option_types: "لیست کردن انواع"
-  listing_orders: "لیست کردن سفارش ها"
-  listing_product_groups: "لیست کردن گروه های محصول"
-  listing_products: "Listing Products"
-  listing_reports: "لیست کردن گزارش ها"
-  listing_tax_categories: "لیست کردن دسته بندی های مالیات"
-  listing_users: "لیست کردن کاربران"
-  live: "زنده"
-  loading: در حال بارگذاری
-  locale_changed: "(زبان سایت به فارسی تغییر کرد)"
-  logged_in_as: "شما وارد شدید به عنوان"
-  logged_in_succesfully: "ورود موفقیت آمیز بود"
-  logged_out: "شما خارج شدید"
-  login: ورود
-  login_as_existing: "Log In as Existing Customer"
-  login_failed: "ورود شما موفقیت آمیز نبود"
-  login_name: ورود
-  logout: خروج
-  look_for_similar_items: جستجوی اقلام مشابه
-  maestro_or_solo_cards: Maestro/Solo cards
-  mail_delivery_enabled: "تحویل نامه فعال است"
-  mail_delivery_not_enabled: "تحویل نامه غیرفعال است"
-  mail_methods: متدهای نامه
-  mail_server_preferences: تنظیمات سرور میل
-  make_refund: Make refund
-  mark_shipped: "ارسال شده"
-  master_price: "Master قیمت"
-  match_choices: 
-    all: "All"
-    none: "None"
-    one: "One"
-  match_rule: "Products That Must Match:"
-  max_items: حداکثر اقلام
-  meta_description: "Meta Description"
-  meta_keywords: "Meta Keywords"
-  metadata: "Metadata"
-  minimal_amount: "حداقل مقدار"
-  missing_required_information: "اطلاعات لازم از دست رفته"
-  month: "ماه"
-  more: More
-  my_account: "حساب من"
-  my_orders: "سفارش های من"
-  name: نامه
-  name_or_sku: "Name or SKU"
-  new: جدید
-  new_adjustment: "تعدیل جدید"
-  new_billing_integration: New Billing Integration
-  new_category: "دسته بندی جدید"
-  new_customer: "مشتری جدید"
-  new_group: New Group
-  new_image: "تصویر جدید"
-  new_mail_method: متد میل جدید
-  new_option_type: "نوع جدید"
-  new_option_value: "مقدار جدید"
-  new_order: "سفارش جدید"
-  new_order_completed: "سفارش جدید کامل شد"
-  new_payment: "پرداخت جدید"
-  new_payment_method: متد پرداخت جدید
-  new_product: "محصول جدید"
-  new_product_group: گروه محصول جدید
-  new_promotion: New Promotion
-  new_property: "ویژگی جدید"
-  new_prototype: "نمونه اولیه جدید"
-  new_return_authorization: New Return Authorization
-  new_shipment: "ارسال جدید"
-  new_shipping_category: "دسته بندی ارسال جدید"
-  new_shipping_method: "متد ارسال جدید"
-  new_state: "ایالت جدید"
-  new_tax_category: "دسته بندی مالیات جدید"
-  new_tax_rate: "نرخ مالیات جدید"
-  new_taxon: "New Taxon"
-  new_taxonomy: "New Taxonomy"
-  new_tracker: ردگیر جدید
-  new_user: "کاربر جدید"
-  new_variant: "New Variant"
-  new_zone: "ناحیه جدید"
-  next: بعدی
-  say_no: "No"
-  no_items_in_cart: "سبد خرید خالی است"
-  no_match_found: "هیچ موردی یافت نشد"
-  no_products_found: "هیچ محصولی یافت نشد"
-  no_results: "بدون نتیجه"
-  no_rules_added: No rules added
-  no_user_found: "هیچ کاربری با این آدرس ایمیل یافت نشد"
-  none: هیچکدام
-  none_available: "موجود نیست"
-  normal_amount: "مقدار نرمال"
-  not: not
-  not_available: "N/A"
-  not_found: "%{resource} is not found"
-  not_shown: "Not Shown"
-  note: Note
-  notice_messages: 
-    option_type_removed: "Succesfully removed option type."
-    product_cloned: "Product has been cloned"
-    product_deleted: "محصول حذف شد"
-    product_not_cloned: "Product could not be cloned"
-    product_not_deleted: "نمی توان این محصول را حذف کرد"
-    variant_deleted: "Variant has been deleted"
-    variant_not_deleted: "Variant could not be deleted"
-  on_hand: "On Hand"
-  one_default_category_with_default_tax_rate: "You should configure exactly one default category with your countries default tax rate"
-  operation: عملیات
-  option_type: "Option Type"
-  option_types: "Option Types"
-  option_value: "Option Value"
-  option_values: "Option Values"
-  options: Options
-  or: یا
-  or_over_price: "%{price} or over"
-  order: سفارش
-  order_adjustments: "Order adjustments"
-  order_confirmation_note: ""
-  order_date: "تاریخ سفارش"
-  order_details: "جزئیات سفارش"
-  order_email_resent: "Order Email Resent"
-  order_mailer: 
-    cancel_email: 
-      dear_customer: "Dear Customer,"
-      instructions: "Your order has been CANCELED.  Please retain this cancellation information for your records."
-      order_summary_canceled: "Order Summary [CANCELED]"
-      subject: "لغو سفارش"
-      subtotal: "Subtotal:"
-      total: "Order Total:"
-    confirm_email: 
-      dear_customer: "Dear Customer,"
-      instructions: "Please review and retain the following order information for your records."
-      order_summary: "Order Summary"
-      subject: "تایید سفارش"
-      subtotal: "Subtotal:"
-      thanks: "Thank you for your business."
-      total: "Order Total:"
-  order_not_in_system: شماره سفارش در این سایت فاقد اعتبار است
-  order_number: سفارش
-  order_operation_authorize: Authorize
-  order_processed_but_following_items_are_out_of_stock: "سفارش شما پردازش شد، ولی اقلام ذیل موجود نمی باشند:"
-  order_processed_successfully: "سفارش شما به طور موفقیت آمیز پردازش شد"
-  order_state: 
+fa:
+  spree:
+    a_copy_of_all_mail_will_be_sent_to_the_following_addresses: یک کپی از نامه به آدرس های ذیل ارسال خواهد شد
+    abbreviation: مخفف
+    access_denied: "دسترسی امکان پذیر نیست"
+    account: حساب
+    account_updated: "حساب شما بروزرسانی شد!"
+    action: حرکت
+    actions:
+      cancel: لغو
+      create: ایجاد
+      destroy: پاک کردن
+      list: لیست
+      listing: لیست کردن
+      new: جدید
+      update: بروز رسانی
+    activate: "Activate"
+    active: "فعال"
+    activerecord:
+      attributes:
+        spree/address:
+          address1: Address
+          address2: "Address (contd.)"
+          city: City
+          country: "Country"
+          firstname: "First Name"
+          lastname: "Last Name"
+          phone: Phone
+          state: "State"
+          zipcode: "Zip Code"
+        spree/country:
+          iso: ISO
+          iso3: ISO3
+          iso_name: "ISO Name"
+          name: Name
+          numcode: "ISO Code"
+        spree/credit_card:
+          cc_type: Type
+          month: Month
+          number: Number
+          verification_value: "Verification Value"
+          year: Year
+        spree/inventory_unit:
+          state: State
+        spree/line_item:
+          price: Price
+          quantity: Quantity
+        spree/option_type:
+          name: Name
+          presentation: Presentation
+        spree/order:
+          checkout_complete: "Checkout Complete"
+          completed_at: "Completed At"
+          created_at: Order Date
+          email: Customer E-Mail
+          ip_address: "IP Address"
+          item_total: "Item Total"
+          number: Number
+          payment_state: Payment State
+          shipment_state: Shipment State
+          special_instructions: "Special Instructions"
+          state: State
+          total: Total
+        spree/order/bill_address:
+          address1: "Billing address street"
+          city: "Billing address city"
+          firstname: "Billing address first name"
+          lastname: "Billing address last name"
+          phone: "Billing address phone"
+          state: "Billing address state"
+          zipcode: "Billing address zipcode"
+        spree/order/ship_address:
+          address1: "Shipping address street"
+          city: "Shipping address city"
+          firstname: "Shipping address first name"
+          lastname: "Shipping address last name"
+          phone: "Shipping address phone"
+          state: "Shipping address state"
+          zipcode: "Shipping address zipcode"
+        spree/payment_method:
+          name: Name
+        spree/product:
+          available_on: "Available On"
+          cost_price: "Cost Price"
+          description: Description
+          master_price: "Master Price"
+          name: Name
+          on_demand: "On Demand"
+          on_hand: "On Hand"
+          shipping_category: "Shipping Category"
+          tax_category: "Tax Category"
+        spree/promotion:
+          advertise: Advertise
+          code: Code
+          description: Description
+          event_name: Event Name
+          expires_at: Expires At
+          name: Name
+          path: Path
+          starts_at: Starts At
+          usage_limit: Usage Limit
+        spree/property:
+          name: Name
+          presentation: Presentation
+        spree/prototype:
+          name: Name
+        spree/return_authorization:
+          amount: Amount
+        spree/role:
+          name: Name
+        spree/state:
+          abbr: Abbreviation
+          name: Name
+        spree/tax_category:
+          description: Description
+          name: Name
+        spree/tax_rate:
+          amount: Rate
+          included_in_price: Included in Price
+          show_rate_in_label: Show rate in label
+        spree/taxon:
+          name: Name
+          permalink: Permalink
+          position: Position
+        spree/taxonomy:
+          name: Name
+        spree/user:
+          email: Email
+          password: "Password"
+          password_confirmation: "Password Confirmation"
+        spree/variant:
+          cost_price: "Cost Price"
+          depth: Depth
+          height: Height
+          price: Price
+          sku: SKU
+          weight: Weight
+          width: Width
+        spree/zone:
+          description: Description
+          name: Name
+      models:
+        spree/address:
+          one: Address
+          other: Addresses
+        spree/cheque_payment:
+          one: Cheque Payment
+          other: Cheque Payments
+        spree/country:
+          one: Country
+          other: Countries
+        spree/credit_card:
+          one: "Credit Card"
+          other: "Credit Cards"
+        spree/creditcard_payment:
+          one: "Credit Card Payment"
+          other: "Credit Card Payments"
+        spree/creditcard_txn:
+          one: "Credit Card Transaction"
+          other: "Credit Card Transactions"
+        spree/inventory_unit:
+          one: "Inventory Unit"
+          other: "Inventory Units"
+        spree/line_item:
+          one: "Line Item"
+          other: "Line Items"
+        spree/order:
+          one: Order
+          other: Orders
+        spree/payment:
+          one: Payment
+          other: Payments
+        spree/product:
+          one: Product
+          other: Products
+        spree/property:
+          one: Property
+          other: Properties
+        spree/prototype:
+          one: Prototype
+          other: Prototypes
+        spree/return_authorization:
+          one: Return Authorization
+          other: Return Authorizations
+        spree/role:
+          one: Roles
+          other: Roles
+        spree/shipment:
+          one: Shipment
+          other: Shipments
+        spree/shipping_category:
+          one: "Shipping Category"
+          other: "Shipping Categories"
+        spree/state:
+          one: State
+          other: States
+        spree/tax_category:
+          one: "Tax Category"
+          other: "Tax Categories"
+        spree/tax_rate:
+          one: "Tax Rate"
+          other: "Tax Rates"
+        spree/taxon:
+          one: Taxon
+          other: Taxons
+        spree/taxonomy:
+          one: Taxonomy
+          other: Taxonomies
+        spree/user:
+          one: User
+          other: Users
+        spree/variant:
+          one: Variant
+          other: Variants
+        spree/zone:
+          one: Zone
+          other: Zones
+    add: افزودن
+    add_action_of_type: Add action of type
+    add_category: "افزودن دسته بندی"
+    add_country: "افزودن کشور"
+    add_new_header: "Add New Header"
+    add_new_style: "Add New Style"
+    add_option_type: "افزدون نوع"
+    add_option_types: "افزودن انواع"
+    add_option_value: "افزودن مقدار"
+    add_product: "افزودن محصول"
+    add_product_properties: "افزودن ویژگی های محصول"
+    add_rule_of_type: افزودن قانون نوع
+    add_scope: "افزودن حوزه"
+    add_state: "افزودن ایالت یا استان"
+    add_to_cart: "افزودن به سبد خرید"
+    add_zone: "افزودن ناحیه"
+    additional_item: قیمت آیتم اضافه شده
     address: آدرس
+    address_information: "اطلاعات آدرس"
+    adjustment: تعدیل
+    adjustment_total: تعدیل کل
     adjustments: تعدیلات
-    awaiting_return: awaiting return
+    admin:
+      mail_methods:
+        send_testmail: 'Send Testmail'
+        testmail:
+          delivery_error: 'Testmail delivery error'
+          delivery_success: 'Testmail sent successfully'
+          error: 'Testmail error: %{e}'
+    administration: مدیریت
+    all: "همه"
+    all_departments: همه ی دپارتمان ها
+    allow_backorders: "مجوز ارائه پیش فروش"
+    allow_ssl_in_development_and_test: Allow SSL to be used when in development and test modes
+    allow_ssl_in_production: Allow SSL to be used in production mode
+    allow_ssl_in_staging: Allow SSL to be used in staging mode
+    allowed_ssl_in_production_mode: "SSL will %{not} be used in production"
+    already_registered: از پیش ثبت شده
+    alt_text: متن جایگزین
+    alternative_phone: تلفن جایگزین
+    amount: مقدار
+    analytics_trackers: ردگیرهای تحلیلی
+    and: and
+    apply: "اعمال کن"
+    are_you_sure: "آیا مطمئن هستید؟"
+    are_you_sure_category: "آیا مطمئن هستید که می خواهید این دسته بندی را پاک کنید؟"
+    are_you_sure_delete: "آیا مطمئن هستید که می خواهید این سطر را پاک کنید؟"
+    are_you_sure_delete_image: "آیا مطمئن هستید که می خواهید این تصویر را پاک کنید؟?"
+    are_you_sure_option_type: "آیا مطمئن هستید که می خواهید این نوع را پاک کنید؟?"
+    are_you_sure_you_want_to_capture: "Are you sure you want to capture?"
+    assign_taxon: "تخصیص نوع طبقه بندی"
+    assign_taxons: "تخصیص انواع طبقه بندی"
+    attachment_default_style: "Attachments Style"
+    attachment_default_url: "Attachments URL"
+    attachment_path: "Attachments Path"
+    attachment_styles: "Paperclip Styles"
+    authorization_failure: "خرابی در صدور مجوز"
+    authorized: مجاز
+    availability: "Availability"
+    available_on: "موجود است در"
+    available_taxons: "انواع موجود"
+    awaiting_return: Awaiting Return
+    back: برگشت
+    back_end: Back End
+    back_to_adjustments_list: "Back To Adjustments List"
+    back_to_images_list: "Back To Images List"
+    back_to_mail_methods_list: "Back To Mail Methods List"
+    back_to_option_tyles_list: "Back To Option Types List"
+    back_to_payment_methods_list: "Back To Payment Methods List"
+    back_to_payments_list: "Back To Payments List"
+    back_to_products_list: "Back To Products List"
+    back_to_promotions_list: "Back To Promotions List"
+    back_to_properties_list: "Back To Products List"
+    back_to_prototypes_list: "Back To Prototypes List"
+    back_to_reports_list: "Back To Reports List"
+    back_to_shipping_categories: "Back To Shipping Categories"
+    back_to_shipping_methods_list: "Back To Shipping Methods List"
+    back_to_states_list: "Back To States List"
+    back_to_store: "بازگشت به فروشگاه"
+    back_to_tax_categories_list: "Back To Tax Categories List"
+    back_to_taxonomies_list: "Back To Taxonomies List"
+    back_to_trackers_list: "Back To Trackers List"
+    back_to_zones_list: "Back To Zones List"
+    backordered: پیش فروش شده
+    backordering_is_allowed: #"Backordering %{not} allowed"
+    balance_due: "Balance Due"
+    bill_address: "آدرس"
+    billing: پرداخت
+    billing_address: "آدرس پرداخت"
+    both: هر دو
+    calculator: ماشین حساب
+    calculator_settings_warning: "اگر می خواهید نوع ماشین حساب را تغییر دهید، باید پیش از انجام تغییرات، حالت فعلی را ذخیره کنید"
+    cancel: لغو
+    cancel_my_account: حساب من را لغو کن
+    cancel_my_account_description: "ناراحتی؟"
     canceled: لغو شد
+    cannot_create_payment_without_payment_methods: You cannot create a payment for an order without any payment methods defined.
+    cannot_create_returns: Cannot create returns as this order no shipped units.
+    cannot_perform_operation: "عملیات درخواستی قابل انجام نیست"
+    capture: Capture
+    card_code: "کد کارت"
+    card_details: "جزئیات کارت"
+    card_number: "شماره کارت"
+    card_type_is: نوع کارت
     cart: سبد خرید
-    complete: تکمیل
-    confirm: تایید
-    delivery: تحویل
-    payment: پرداخت
-    resumed: resumed
-    returned: برگشت خورد
-    skrill: skrill
-  order_summary: خلاصه سفارش
-  order_sure_want_to: #"Are you sure you want to %{event} this order?"
-  order_total: "کل سفارش"
-  order_total_message: "The total amount charged to your card will be"
-  order_updated: "سفارش بروز رسانی شد"
-  orders: سفارشات
-  other_payment_options: دیگر روش های پرداخت
-  out_of_stock: "موجودی نداریم"
-  over_paid: "Over Paid"
-  overview: مرور کلی
-  page_only_viewable_when_logged_in: You attempted to visit a page which can only be viewed when you are logged in
-  page_only_viewable_when_logged_out: You attempted to visit a page which can only be viewed when you are logged out
-  pagination: 
-    next_page: "next page &raquo;"
-    previous_page: "&laquo; previous page"
-    truncate: "&hellip;"
-  paid: پرداخت شد
-  parent_category: "دسته بندی والد"
-  password: رمز عبور
-  password_reset_instructions: "دستورالعمل ریست رمز عبور"
-  password_reset_instructions_are_mailed: "دستورالعمل ریست رمز عبور به ایمیل شما ارسال شد. لطفا ایمیل خود را چک کنید"
-  password_reset_token_not_found: "We're sorry, but we could not locate your account. If you are having issues try copying and pasting the URL from your email into your browser or restarting the reset password process."
-  password_updated: "رمز عبور بروز رسانی شد"
-  paste: Paste
-  path: Path
-  pay: pay
-  payment: پرداخت
-  payment_actions: "Actions"
-  payment_gateway: "درگاه پرداخت"
-  payment_information: "اطلاعات پرداخت"
-  payment_method: روش پرداخت
-  payment_methods: روش های پرداخت
-  payment_methods_setting_description: روش های پرداخت مشتری را پیکربندی کنید
-  payment_processing_failed: "پردازش پرداخت با مشکل مواجه شد. لطفا اطلاعات ورودی خود را کنترل کنید"
-  payment_processor_choose_banner_text: "If you need help choosing a payment processor, please visit"
-  payment_processor_choose_link: "our payments page"
-  payment_state: وضعیت پرداخت
-  payment_states: 
-    balance_due: balance due
+    categories: دسته بندی ها
+    category: دسته بندی
+    change: تغییر
+    change_language: "تغییر زبان"
+    change_my_password: "تغییر رمز عبور"
+    charge_total: Charge Total
+    charged: Charged
+    charges: Charges
     checkout: تصفیه حساب
-    completed: تکمیل شده
-    credit_owed: credit owed
-    failed: failed
-    paid: پرداخت شده
-    pending: معلق
-    processing: در حال پردازش
-    void: void
-  payment_updated: پرداخت بروز رسانی شد
-  payments: پرداخت ها
-  pending_payments: پرداخت های معلق
-  percent_per_item: Percent Per Item
-  permalink: Permalink
-  phone: تلفن
-  place_order: انجام سفارش
-  please_create_user: "لطفا یک حساب کاربری ایجاد کنید"
-  please_define_payment_methods: "Please define some payment methods first."
-  populate_get_error: "Something went wrong. Please try adding the item again."
-  powered_by: "Powered by"
-  presentation: Presentation
-  preview: پیش نمایش
-  previous: قبلی
-  price: قیمت
-  price_range: Price Range
-  price_sack: Price Sack
-  problem_authorizing_card: "Problem authorizing credit card"
-  problem_capturing_card: "Problem capturing credit card"
-  problems_processing_order: "پردازش سفارش شما با مشکل مواجه شد"
-  proceed_as_guest: "نه متشکرم، به عنوان کاربر میهمان ادامه می دهم"
-  process: پردازش
-  product: محصول
-  product_details: "اطلاعات محصول"
-  product_group: گروه محصول
-  product_group_invalid: Product Group has invalid scopes
-  product_groups: گروه های محصول
-  product_has_no_description: این محصول فاقد توضیحات است
-  product_properties: "ویژگی های محصول"
-  product_rule: 
-    choose_products: محصولات را انتخاب کنید
-    label: "Order must contain %{select} of these products"
-    match_all: همه
-    match_any: حداقل یکی
-    product_source: 
-      group: از گروه محصول
-      manual: انتخاب دستی
-  product_scopes: 
-    groups: 
-      price: 
-        description: "Scopes for selecting products based on Price"
-        name: قیمت
-      search: 
-        description: "Scopes for selecting products based on name, keywords and description of product"
-        name: "جستجوی متنی"
-      taxon: 
-        description: "Scopes for selecting products based on Taxons"
-        name: Taxon
-      values: 
-        description: "Scopes for selecting products based on option and property values"
-        name: مقادیر
-    scopes: 
-      ascend_by_name: 
-        name: Ascend by product name
-      ascend_by_updated_at: 
-        name: Ascend by actualization date
-      descend_by_name: 
-        name: Descend by product name
-      descend_by_updated_at: 
-        name: Descend by actualization date
-      in_name: 
-        args: 
-          words: Words
-        description: "(separated by space or comma)"
-        name: "Product name have following"
-        sentence: product name contain <em>%s</em>
-      in_name_or_description: 
-        args: 
-          words: Words
-        description: "(separated by space or comma)"
-        name: "Product name or description have following"
-        sentence: name or description contain <em>%s</em>
-      in_name_or_keywords: 
-        args: 
-          words: Words
-        description: "(separated by space or comma)"
-        name: "Product name or meta keywords have following"
-        sentence: name or keywords contain <em>%s</em>
-      in_taxons: 
-        args: 
-          "taxon_names": "Taxon names"
-        description: "Taxon names have to be separated by comma or space(eg. adidas,shoes)"
-        name: "In taxons and all their descendants"
-        sentence: in <em>%s</em> and all their descendants
-      master_price_gte: 
-        args: 
-          amount: Amount
-        description: ""
-        name: "Master price greater or equal to"
-        sentence: price greater or equal to <em>%.2f</em>
-      master_price_lte: 
-        args: 
-          amount: Amount
-        description: ""
-        name: "Master price lesser or equal to"
-        sentence: price less or equal to <em>%.2f</em>
-      price_between: 
-        args: 
-          high: High
-          low: Low
-        description: ""
-        name: "Price between"
-        sentence: price between <em>%.2f</em> and <em>%.2f</em>
-      taxons_name_eq: 
-        args: 
-          taxon_name: "Taxon name"
-        description: "In specific taxon - without descendants"
-        name: "In Taxon(without descendants)"
-        sentence: in <em>%s</em>
-      with: 
-        args: 
-          value: Value
-        description: "Selects all products that have at least one variant that have specified value as either option or property (eg. red)"
-        name: With value
-        sentence: with value <em>%s</em>
-      with_ids: 
-        args: 
-          ids: IDs
-        description: "Select specific products"
-        name: Products with IDs
-        sentence: with IDs <em>%s</em>
-      with_option: 
-        args: 
-          option: Option
-        description: "Selects all products that have specified option(eg. color)"
-        name: "With option"
-        sentence: with option <em>%s</em>
-      with_option_value: 
-        args: 
-          option: Option
-          value: Value
-        description: "Selects all products that have at least one variant with specified option and value(eg. color:red)"
-        name: "With option and value"
-        sentence: with option <em>%s</em> and value <em>%s</em>
-      with_property: 
-        args: 
-          property: Property
-        description: "Selects all products that have specified property(eg. weight)"
-        name: "With property"
-        sentence: with property <em>%s</em>
-      with_property_value: 
-        args: 
-          property: Property
-          value: Value
-        description: "Selects all products that have at least one variant with specified property and value(eg. weight:10kg)"
-        name: "With property value"
-        sentence: with property <em>%s</em> and value <em>%s</em>
-  products: Products
-  products_with_zero_inventory_display: #"Products with a zero inventory will %{not} be displayed"
-  promotion: Promotion
-  promotion_action: Promotion Action
-  promotion_action_types: 
-    create_adjustment: 
-      description: Creates a promotion credit adjustment on the order
-      name: Create adjustment
-    create_line_items: 
-      description: Populates the cart with the specified quantity of variant
-      name: Create line items
-    give_store_credit: 
-      description: Gives the user store credit of the amount specified
-      name: Give store credit
-  promotion_actions: Actions
-  promotion_form: 
-    match_policies: 
-      all: Match any of these rules
-      any: Match all of these rules
-  promotion_not_found: The coupon code you entered doesn't exist. Please try again.
-  promotion_rule: Promotion Rule
-  promotion_rule_types: 
-    first_order: 
-      description: Must be the customer's first order
-      name: First order
-    item_total: 
-      description: Order total meets these criteria
-      name: Item total
-    landing_page: 
-      description: Customer must have visited the specified page
-      name: Landing Page
-    product: 
-      description: Order includes specified product(s)
-      name: Product(s)
-    user: 
-      description: Available only to the specified users
-      name: User
-    user_logged_in: 
-      description: Available only to logged in users
-      name: User Logged In
-  promotions: Promotions
-  promotions_description: Manage offers and coupons with promotions
-  properties: Properties
-  property: Property
-  prototype: Prototype
-  prototypes: Prototypes
-  provider: "Provider"
-  provider_settings_warning: "If you are changing the provider type, you must save first before you can edit the provider settings"
-  qty: تعداد
-  quantity_returned: Quantity Returned
-  quantity_shipped: Quantity Shipped
-  range: "Range"
-  rate: Rate
-  reason: Reason
-  recalculate_order_total: "Recalculate order total"
-  receive: receive
-  received: دریافت شد
-  refund: Refund
-  register: به عنوان کاربر جدید ثبت نام کنید
-  register_or_guest: ثبت نام کنید یا به عنوان کاربر میهمان تصفیه حساب کنید
-  registration: ثبت نام
-  remember_me: "من را به یاد بسپار"
-  remove: Remove
-  rename: Rename
-  reports: گزارشات
-  required_for_solo_and_maestro: Required for Solo and Maestro cards.
-  resend: Resend
-  resend_confirmation_instructions: "Resend confirmation instructions"
-  resend_unlock_instructions: "Resend unlock instructions"
-  reset_password: "ریست رمز عبور"
-  resource_controller: 
-    member_object_not_found: "Member object not found."
-    successfully_created: "!به صورت موفقیت آمیز ایجاد شد"
-    successfully_removed: "Successfully removed!"
-    successfully_updated: "!به صورت موفقیت آمیز بروز رسانی شد"
-  response_code: "Response Code"
-  resume: "ادامه"
-  resumed: Resumed
-  return: برگشت
-  return_authorization: Return Authorization
-  return_authorization_updated: Return authorization updated
-  return_authorizations: Return Authorizations
-  return_quantity: Return Quantity
-  returned: برگشت داده شد
-  review: Review
-  rma_credit: RMA Credit
-  rma_number: RMA Number
-  rma_value: RMA Value
-  roles: Roles
-  rules: قوانین
-  s3_access_key: "Access Key"
-  s3_bucket: "Bucket"
-  s3_headers: "S3 Headers"
-  s3_not_used_for_product_images: "S3 is not being used for product images"
-  s3_protocol: "S3 Protocol"
-  s3_secret: "Secret Key"
-  s3_used_for_product_images: "S3 is being used for product images"
-  sales_tax: "مالیات فروش"
-  sales_total: "کل فروش"
-  sales_total_description: "کل فروش برای همه سفارش ها"
-  save_and_continue: ذخیره و ادامه
-  save_preferences: پیش فرض های ذخیره کردن
-  scope: Scope
-  scopes: Scopes
-  search: جستجو
-  search_results: "Search results for '%{keywords}'"
-  searching: در حال جستجو
-  secure_connection_type: نوع اتصال امن
-  secure_credit_card: Secure Credit Card
-  security_settings: "Security Settings"
-  select: انتخاب
-  select_from_prototype: "از نمونه اولیه انتخاب کن"
-  select_preferred_shipping_option: "روش ارسال دلخواه خود را انتخاب کنید"
-  send_copy_of_all_mails_to: Send Copy of All Mails To
-  send_copy_of_orders_mails_to: Send Copy of Order Mails To
-  send_mails_as: Send Mails As
-  send_me_reset_password_instructions: "دستورالعمل ریست رمز عبور را برای من ارسال کنید"
-  send_order_mails_as: Send Order Mails As
-  server: سرور
-  server_error: "سرور با ایراد مواجه شد"
-  settings: تنظیمات
-  ship: ارسال
-  ship_address: "Ship Address"
-  shipment: #Shipment
-  shipment_details: Shipment Details
-  shipment_inc_vat: "Shipment including VAT"
-  shipment_mailer: 
-    shipped_email: 
-      dear_customer: "Dear Customer,"
-      instructions: "Your order has been shipped"
-      shipment_summary: "Shipment Summary"
-      subject: "Shipment Notification"
-      thanks: "Thank you for your business."
-      track_information: "Tracking Information: %{tracking}"
-  shipment_number: "Shipment #"
-  shipment_state: Shipment State
-  shipment_states: 
-    backorder: backorder
-    partial: partial
-    pending: معلق
-    ready: آماده
+    cheque: چک
+    city: شهر
+    clone: Clone
+    code: کد
+    combine: Combine
+    complete: تکمیل
+    complete_list: "لیست کامل"
+    configuration: پیکربندی
+    configuration_options: "تنظیمات پیکربندی"
+    configurations: پیکربندی ها
+    configure_s3: "Configure S3"
+    configured: پیکربندی شده
+    confirm: تایید
+    confirm_delete: "تایید حذف"
+    confirm_password: "تکرار رمز عبور"
+    continue: ادامه
+    continue_shopping: "ادامه خرید"
+    copy_all_mails_to: همه ی نامه ها را کپی من به
+    cost_price: "قیمت"
+    count_of_reduced_by: "count of '%{name}' reduced by %{count}"
+    country: کشور
+    country_based: "بر حسب کشور"
+    coupon: کوپن
+    coupon_code: کد کوپن
+    coupon_code_applied: The coupon code was successfully applied to your order.
+    create: ایجاد
+    create_a_new_account: "ایجاد یک حساب جدید"
+    create_user_account: ایجاد حساب کاربری
+    created_successfully: "به صورت موفقیت آمیز ایجاد شد"
+    credit: اعتبار
+    credit_card: "کارت اعتباری"
+    credit_card_capture_complete: "Credit Card Was Captured"
+    credit_card_payment: "پرداخت با کارت اعتباری"
+    credit_cards: Credit Cards
+    credit_owed: "اعتبار مقروض"
+    credit_total: کل اعتبار
+    credits: اعتبارات
+    currency: Currency
+    currency_settings: "Currency Settings"
+    currency_symbol_position: "Put currency symbol before or after dollar amount?"
+    current: جاری
+    customer: مشتری
+    customer_details: "جزئیات مشتری"
+    customer_details_updated: "The customer's details have been updated."
+    customer_search: "جستجوی مشتری"
+    cut: Cut
+    date_completed: Date Completed
+    date_created: تاریخ ایجاد
+    date_range: "محدوده ی زمانی"
+    debit: Debit
+    default: پیش فرض
+    default_meta_description: Default Meta Description
+    default_meta_keywords: Default Meta Keywords
+    default_seo_title: Default Seo Title
+    default_tax: Default Tax
+    default_tax_zone: Default Tax Zone
+    defined_paperclip_styles: Defined Paperclip Styles
+    delete: حذف
+    delivery: تحویل
+    depth: عمق
+    description: توضیح
+    destroy: پاک کردن
+    didnt_receive_confirmation_instructions: "دستورالعمل تایید دریافت نشد؟"
+    didnt_receive_unlock_instructions: "دستورالعمل بازکردن قفل دریافت نشد؟"
+    discount_amount: "مقدار تخفیف"
+    dismiss_banner: "No. Thanks! I'm not interested, do not display this message again"
+    display: نمایش
+    display_currency: "Display currency"
+    dollar_amounts_displayed_as: "Dollar amounts displayed as %{example}"
+    edit: ویرایش
+    edit_general_settings: "ویرایش تنظیمات عمومی"
+    editing_billing_integration: Editing Billing Integration
+    editing_category: "ویرایش دسته بندی"
+    editing_mail_method: ویرایش متد نامه
+    editing_option_type: "ویرایش نوع انتخاب"
+    editing_option_types: "ویرایش انواع انتخاب"
+    editing_payment_method: ویرایش متد پرداخت
+    editing_product: "ویرایش محصول"
+    editing_product_group: "ویرایش گروه محصول"
+    editing_promotion: Editing Promotion
+    editing_property: "ویرایش اموال"
+    editing_prototype: "ویرایش نمونه اولیه"
+    editing_shipping_category: "ویرایش دسته بندی ارسال"
+    editing_shipping_method: "ویرایش روش ارسال"
+    editing_state: "ویرایش ایالت یا استان"
+    editing_tax_category: "ویرایش دسته بندی مالیات"
+    editing_tax_rate: "ویرایش نرخ مالیات"
+    editing_tracker: ویرایش ردگیر
+    editing_user: "ویرایش کاربر"
+    editing_zone: "ویرایش ناحیه"
+    email: ایمیل
+    email_address: "آدرس ایمیل"
+    email_server_settings_description: "تنظیم کردن سرور ایمیل"
+    empty: "خالی"
+    empty_cart: "سبد خرید خالی شود"
+    enable_login_via_login_password: "از ایمیل/رمز عبور استاندارد استفاده کن"
+    enable_login_via_openid: "در عوض از OpenID استفاده کن"
+    enable_mail_delivery: فعال سازی تحویل نامه
+    ending_in: "Ending in"
+    enter_at_least_five_letters: Enter at least five letters of customer name
+    enter_exactly_as_shown_on_card: لطفا به صورت دقیق طبق کارت، اطلاعات را وارد کنید
+    enter_password_to_confirm: "(ما به رمز عبور فعلی شما برای تایید تغییرات نیاز داریم)"
+    enter_token: Enter Token
+    environment: "محیط"
+    error: ایراد
+    error_user_destroy_with_orders: "Users with completed orders may not be deleted"
+    errors:
+      messages:
+        could_not_create_taxon: "امکان ایجاد نوع دسته بندی وجود ندارد"
+        no_payment_methods_available: "No payment methods are configured for this environment"
+        no_shipping_methods_available: "ارسال برای ناحیه انتخاب شده مقدور نمی باشد، لطفا منطقه ی دیگری را انتخاب کنید"
+    errors_prohibited_this_record_from_being_saved:
+      one: "یک ایراد مانع از انجام ذخیره سازی است"
+      other: "%{count} ایراد مانع از انجام ذخیره سازی است"
+    event: رویداد
+    events:
+      spree:
+        cart:
+          add: 'Add to cart'
+        checkout:
+          coupon_code_added: Coupon code added
+        content:
+          visited: Visit static content page
+        order:
+          contents_changed: "Order contents changed"
+        page_view: "Static page viewed"
+        user:
+          signup: 'User signup'
+    existing_customer: "مشتری کنونی"
+    expiration: "انقضاء"
+    expiration_month: "ماه انقضاء"
+    expiration_year: "سال انقضاء"
+    expiry: انقضاء
+    extension: الحاقی
+    extensions: الحاقیات
+    filename: نام فایل
+    final_confirmation: "تایید نهایی"
+    finalize: نهایی کردن
+    finalized_payments: پرداخت های نهایی شده
+    first_item: هزینه اولین آیتم
+    first_name: "نام"
+    first_name_begins_with: "حرف آغازین نام"
+    flat_percent: "Flat Percent"
+    flat_rate_amount: مقدار
+    flat_rate_per_item: "Flat Rate (per item)"
+    flat_rate_per_order: "Flat Rate (per order)"
+    flexible_rate: "Flexible Rate"
+    forgot_password: "آیا رمز عبور را فراموش کرده اید؟"
+    free_shipping: ارسال رایگان
+    from_state: از ایالت یا استان
+    front_end: Front End
+    full_name: "نام و نام خانوادگی"
+    gateway: درگاه
+    gateway_config_unavailable: "درگاه برای این محیط در دسترس نیست"
+    gateway_configuration: "پیکربندی درگاه"
+    gateway_error: "ایراد درگاه"
+    gateway_setting_description: "یک درگاه پرداخت انتخاب کرده و تنظیمات آن را انجام دهید"
+    gateway_settings_warning: "اگر نوع درگاه را تغییر می دهید، قبل از ویرایش تنظیمات درگاه، ابتدا آن را ذخیره کنید"
+    general: "عمومی"
+    general_settings: "تنظیمات عمومی"
+    general_settings_description: "پیکربندی تنظیمات کلی Spree"
+    google_analytics: "Google Analytics"
+    google_analytics_active: "فعال"
+    google_analytics_create: "Create New Google Analytics Account"
+    google_analytics_id: "Analytics ID"
+    google_analytics_new: "New Google Analytics Account"
+    google_analytics_setting_description: "Manage Google Analytics ID."
+    guest_checkout: تصفیه حساب میهمان
+    guest_user_account: تصفیه حساب به عنوان کاربر میهمان
+    has_no_shipped_units: has no shipped units
+    height: ارتفاع
+    hello_user: "سلام کاربر گرامی"
+    history: تاریخ
+    home: "صفحه اصلی"
+    icon: "آیکون"
+    icons_by: "آیکون توسط"
+    image: تصویر
+    image_settings: "Image Settings"
+    image_settings_description: "Image Settings Description"
+    image_settings_updated: "Image Settings successfully updated."
+    image_settings_warning: "You will need to regenerate thumbnails if you update the paperclip styles. Use rake paperclip:refresh:thumbnails to do this."
+    images: تصاویر
+    images_for: "تصاویر برای"
+    in_progress: "در حال پیشرفت"
+    include_in_shipment: مشمول ارسال شود
+    included_in_other_shipment: مشمول ارسال دیگری است
+    included_in_price: Included in Price
+    included_in_this_shipment: مشمول همین ارسال است
+    included_price_validation: "cannot be selected unless you have set a Default Tax Zone"
+    instructions_to_reset_password: "فرم زیر را کامل کنید، طریقه ایجاد رمز عبور جدید برای شما ایمیل خواهد شد"
+    insufficient_stock: "Insufficient stock available, only %{on_hand} remaining"
+    integration_settings_warning: "If you are changing the billing integration, you must save first before you can edit the integration settings"
+    intercept_email_address: Intercept Email Address
+    intercept_email_instructions: "Override email recipient and replace with this address."
+    invalid_search: "معیار جستجو نامعتبر است"
+    inventory: انبار
+    inventory_adjustment: "تعدیلات انبار"
+    inventory_setting_description: "Inventory Configuration, Backordering, Zero-Stock Display."
+    inventory_settings: "تنظیمات انبار"
+    is_not_available_to_shipment_address: is not available to shipment address
+    issue_number: Issue Number
+    item: آیتم
+    item_description: "توضیحات آیتم"
+    item_total: "کل آیتم ها"
+    item_total_rule:
+      operators:
+        gt: بیشتر از
+        gte: بیشتر از یا مساوی با
+    landing_page_rule:
+      path: Path
+    last_name: "نام خانوادگی"
+    last_name_begins_with: "حرف آغازین نام خانوادگی"
+    learn_more: Learn More
+    leave_blank_to_not_change: "(اگر قصد تغییر ندارید، اینجا را خالی بگذارید)"
+    list: لیست
+    listing_categories: "لیست کردن دسته بندی ها"
+    listing_option_types: "لیست کردن انواع"
+    listing_orders: "لیست کردن سفارش ها"
+    listing_product_groups: "لیست کردن گروه های محصول"
+    listing_products: "Listing Products"
+    listing_reports: "لیست کردن گزارش ها"
+    listing_tax_categories: "لیست کردن دسته بندی های مالیات"
+    listing_users: "لیست کردن کاربران"
+    live: "زنده"
+    loading: در حال بارگذاری
+    locale_changed: "(زبان سایت به فارسی تغییر کرد)"
+    logged_in_as: "شما وارد شدید به عنوان"
+    logged_in_succesfully: "ورود موفقیت آمیز بود"
+    logged_out: "شما خارج شدید"
+    login: ورود
+    login_as_existing: "Log In as Existing Customer"
+    login_failed: "ورود شما موفقیت آمیز نبود"
+    login_name: ورود
+    logout: خروج
+    look_for_similar_items: جستجوی اقلام مشابه
+    maestro_or_solo_cards: Maestro/Solo cards
+    mail_delivery_enabled: "تحویل نامه فعال است"
+    mail_delivery_not_enabled: "تحویل نامه غیرفعال است"
+    mail_methods: متدهای نامه
+    mail_server_preferences: تنظیمات سرور میل
+    make_refund: Make refund
+    mark_shipped: "ارسال شده"
+    master_price: "Master قیمت"
+    match_choices:
+      all: "All"
+      none: "None"
+      one: "One"
+    match_rule: "Products That Must Match:"
+    max_items: حداکثر اقلام
+    meta_description: "Meta Description"
+    meta_keywords: "Meta Keywords"
+    metadata: "Metadata"
+    minimal_amount: "حداقل مقدار"
+    missing_required_information: "اطلاعات لازم از دست رفته"
+    month: "ماه"
+    more: More
+    my_account: "حساب من"
+    my_orders: "سفارش های من"
+    name: نامه
+    name_or_sku: "Name or SKU"
+    new: جدید
+    new_adjustment: "تعدیل جدید"
+    new_billing_integration: New Billing Integration
+    new_category: "دسته بندی جدید"
+    new_customer: "مشتری جدید"
+    new_group: New Group
+    new_image: "تصویر جدید"
+    new_mail_method: متد میل جدید
+    new_option_type: "نوع جدید"
+    new_option_value: "مقدار جدید"
+    new_order: "سفارش جدید"
+    new_order_completed: "سفارش جدید کامل شد"
+    new_payment: "پرداخت جدید"
+    new_payment_method: متد پرداخت جدید
+    new_product: "محصول جدید"
+    new_product_group: گروه محصول جدید
+    new_promotion: New Promotion
+    new_property: "ویژگی جدید"
+    new_prototype: "نمونه اولیه جدید"
+    new_return_authorization: New Return Authorization
+    new_shipment: "ارسال جدید"
+    new_shipping_category: "دسته بندی ارسال جدید"
+    new_shipping_method: "متد ارسال جدید"
+    new_state: "ایالت جدید"
+    new_tax_category: "دسته بندی مالیات جدید"
+    new_tax_rate: "نرخ مالیات جدید"
+    new_taxon: "New Taxon"
+    new_taxonomy: "New Taxonomy"
+    new_tracker: ردگیر جدید
+    new_user: "کاربر جدید"
+    new_variant: "New Variant"
+    new_zone: "ناحیه جدید"
+    next: بعدی
+    say_no: "No"
+    no_items_in_cart: "سبد خرید خالی است"
+    no_match_found: "هیچ موردی یافت نشد"
+    no_products_found: "هیچ محصولی یافت نشد"
+    no_results: "بدون نتیجه"
+    no_rules_added: No rules added
+    no_user_found: "هیچ کاربری با این آدرس ایمیل یافت نشد"
+    none: هیچکدام
+    none_available: "موجود نیست"
+    normal_amount: "مقدار نرمال"
+    not: not
+    not_available: "N/A"
+    not_found: "%{resource} is not found"
+    not_shown: "Not Shown"
+    note: Note
+    notice_messages:
+      option_type_removed: "Succesfully removed option type."
+      product_cloned: "Product has been cloned"
+      product_deleted: "محصول حذف شد"
+      product_not_cloned: "Product could not be cloned"
+      product_not_deleted: "نمی توان این محصول را حذف کرد"
+      variant_deleted: "Variant has been deleted"
+      variant_not_deleted: "Variant could not be deleted"
+    on_hand: "On Hand"
+    one_default_category_with_default_tax_rate: "You should configure exactly one default category with your countries default tax rate"
+    operation: عملیات
+    option_type: "Option Type"
+    option_types: "Option Types"
+    option_value: "Option Value"
+    option_values: "Option Values"
+    options: Options
+    or: یا
+    or_over_price: "%{price} or over"
+    order: سفارش
+    order_adjustments: "Order adjustments"
+    order_confirmation_note: ""
+    order_date: "تاریخ سفارش"
+    order_details: "جزئیات سفارش"
+    order_email_resent: "Order Email Resent"
+    order_mailer:
+      cancel_email:
+        dear_customer: "Dear Customer,"
+        instructions: "Your order has been CANCELED.  Please retain this cancellation information for your records."
+        order_summary_canceled: "Order Summary [CANCELED]"
+        subject: "لغو سفارش"
+        subtotal: "Subtotal:"
+        total: "Order Total:"
+      confirm_email:
+        dear_customer: "Dear Customer,"
+        instructions: "Please review and retain the following order information for your records."
+        order_summary: "Order Summary"
+        subject: "تایید سفارش"
+        subtotal: "Subtotal:"
+        thanks: "Thank you for your business."
+        total: "Order Total:"
+    order_not_in_system: شماره سفارش در این سایت فاقد اعتبار است
+    order_number: سفارش
+    order_operation_authorize: Authorize
+    order_processed_but_following_items_are_out_of_stock: "سفارش شما پردازش شد، ولی اقلام ذیل موجود نمی باشند:"
+    order_processed_successfully: "سفارش شما به طور موفقیت آمیز پردازش شد"
+    order_state:
+      address: آدرس
+      adjustments: تعدیلات
+      awaiting_return: awaiting return
+      canceled: لغو شد
+      cart: سبد خرید
+      complete: تکمیل
+      confirm: تایید
+      delivery: تحویل
+      payment: پرداخت
+      resumed: resumed
+      returned: برگشت خورد
+      skrill: skrill
+    order_summary: خلاصه سفارش
+    order_sure_want_to: #"Are you sure you want to %{event} this order?"
+    order_total: "کل سفارش"
+    order_total_message: "The total amount charged to your card will be"
+    order_updated: "سفارش بروز رسانی شد"
+    orders: سفارشات
+    other_payment_options: دیگر روش های پرداخت
+    out_of_stock: "موجودی نداریم"
+    over_paid: "Over Paid"
+    overview: مرور کلی
+    page_only_viewable_when_logged_in: You attempted to visit a page which can only be viewed when you are logged in
+    page_only_viewable_when_logged_out: You attempted to visit a page which can only be viewed when you are logged out
+    pagination:
+      next_page: "next page &raquo;"
+      previous_page: "&laquo; previous page"
+      truncate: "&hellip;"
+    paid: پرداخت شد
+    parent_category: "دسته بندی والد"
+    password: رمز عبور
+    password_reset_instructions: "دستورالعمل ریست رمز عبور"
+    password_reset_instructions_are_mailed: "دستورالعمل ریست رمز عبور به ایمیل شما ارسال شد. لطفا ایمیل خود را چک کنید"
+    password_reset_token_not_found: "We're sorry, but we could not locate your account. If you are having issues try copying and pasting the URL from your email into your browser or restarting the reset password process."
+    password_updated: "رمز عبور بروز رسانی شد"
+    paste: Paste
+    path: Path
+    pay: pay
+    payment: پرداخت
+    payment_actions: "Actions"
+    payment_gateway: "درگاه پرداخت"
+    payment_information: "اطلاعات پرداخت"
+    payment_method: روش پرداخت
+    payment_methods: روش های پرداخت
+    payment_methods_setting_description: روش های پرداخت مشتری را پیکربندی کنید
+    payment_processing_failed: "پردازش پرداخت با مشکل مواجه شد. لطفا اطلاعات ورودی خود را کنترل کنید"
+    payment_processor_choose_banner_text: "If you need help choosing a payment processor, please visit"
+    payment_processor_choose_link: "our payments page"
+    payment_state: وضعیت پرداخت
+    payment_states:
+      balance_due: balance due
+      checkout: تصفیه حساب
+      completed: تکمیل شده
+      credit_owed: credit owed
+      failed: failed
+      paid: پرداخت شده
+      pending: معلق
+      processing: در حال پردازش
+      void: void
+    payment_updated: پرداخت بروز رسانی شد
+    payments: پرداخت ها
+    pending_payments: پرداخت های معلق
+    percent_per_item: Percent Per Item
+    permalink: Permalink
+    phone: تلفن
+    place_order: انجام سفارش
+    please_create_user: "لطفا یک حساب کاربری ایجاد کنید"
+    please_define_payment_methods: "Please define some payment methods first."
+    populate_get_error: "Something went wrong. Please try adding the item again."
+    powered_by: "Powered by"
+    presentation: Presentation
+    preview: پیش نمایش
+    previous: قبلی
+    price: قیمت
+    price_range: Price Range
+    price_sack: Price Sack
+    problem_authorizing_card: "Problem authorizing credit card"
+    problem_capturing_card: "Problem capturing credit card"
+    problems_processing_order: "پردازش سفارش شما با مشکل مواجه شد"
+    proceed_as_guest: "نه متشکرم، به عنوان کاربر میهمان ادامه می دهم"
+    process: پردازش
+    product: محصول
+    product_details: "اطلاعات محصول"
+    product_group: گروه محصول
+    product_group_invalid: Product Group has invalid scopes
+    product_groups: گروه های محصول
+    product_has_no_description: این محصول فاقد توضیحات است
+    product_properties: "ویژگی های محصول"
+    product_rule:
+      choose_products: محصولات را انتخاب کنید
+      label: "Order must contain %{select} of these products"
+      match_all: همه
+      match_any: حداقل یکی
+      product_source:
+        group: از گروه محصول
+        manual: انتخاب دستی
+    product_scopes:
+      groups:
+        price:
+          description: "Scopes for selecting products based on Price"
+          name: قیمت
+        search:
+          description: "Scopes for selecting products based on name, keywords and description of product"
+          name: "جستجوی متنی"
+        taxon:
+          description: "Scopes for selecting products based on Taxons"
+          name: Taxon
+        values:
+          description: "Scopes for selecting products based on option and property values"
+          name: مقادیر
+      scopes:
+        ascend_by_name:
+          name: Ascend by product name
+        ascend_by_updated_at:
+          name: Ascend by actualization date
+        descend_by_name:
+          name: Descend by product name
+        descend_by_updated_at:
+          name: Descend by actualization date
+        in_name:
+          args:
+            words: Words
+          description: "(separated by space or comma)"
+          name: "Product name have following"
+          sentence: product name contain <em>%s</em>
+        in_name_or_description:
+          args:
+            words: Words
+          description: "(separated by space or comma)"
+          name: "Product name or description have following"
+          sentence: name or description contain <em>%s</em>
+        in_name_or_keywords:
+          args:
+            words: Words
+          description: "(separated by space or comma)"
+          name: "Product name or meta keywords have following"
+          sentence: name or keywords contain <em>%s</em>
+        in_taxons:
+          args:
+            "taxon_names": "Taxon names"
+          description: "Taxon names have to be separated by comma or space(eg. adidas,shoes)"
+          name: "In taxons and all their descendants"
+          sentence: in <em>%s</em> and all their descendants
+        master_price_gte:
+          args:
+            amount: Amount
+          description: ""
+          name: "Master price greater or equal to"
+          sentence: price greater or equal to <em>%.2f</em>
+        master_price_lte:
+          args:
+            amount: Amount
+          description: ""
+          name: "Master price lesser or equal to"
+          sentence: price less or equal to <em>%.2f</em>
+        price_between:
+          args:
+            high: High
+            low: Low
+          description: ""
+          name: "Price between"
+          sentence: price between <em>%.2f</em> and <em>%.2f</em>
+        taxons_name_eq:
+          args:
+            taxon_name: "Taxon name"
+          description: "In specific taxon - without descendants"
+          name: "In Taxon(without descendants)"
+          sentence: in <em>%s</em>
+        with:
+          args:
+            value: Value
+          description: "Selects all products that have at least one variant that have specified value as either option or property (eg. red)"
+          name: With value
+          sentence: with value <em>%s</em>
+        with_ids:
+          args:
+            ids: IDs
+          description: "Select specific products"
+          name: Products with IDs
+          sentence: with IDs <em>%s</em>
+        with_option:
+          args:
+            option: Option
+          description: "Selects all products that have specified option(eg. color)"
+          name: "With option"
+          sentence: with option <em>%s</em>
+        with_option_value:
+          args:
+            option: Option
+            value: Value
+          description: "Selects all products that have at least one variant with specified option and value(eg. color:red)"
+          name: "With option and value"
+          sentence: with option <em>%s</em> and value <em>%s</em>
+        with_property:
+          args:
+            property: Property
+          description: "Selects all products that have specified property(eg. weight)"
+          name: "With property"
+          sentence: with property <em>%s</em>
+        with_property_value:
+          args:
+            property: Property
+            value: Value
+          description: "Selects all products that have at least one variant with specified property and value(eg. weight:10kg)"
+          name: "With property value"
+          sentence: with property <em>%s</em> and value <em>%s</em>
+    products: Products
+    products_with_zero_inventory_display: #"Products with a zero inventory will %{not} be displayed"
+    promotion: Promotion
+    promotion_action: Promotion Action
+    promotion_action_types:
+      create_adjustment:
+        description: Creates a promotion credit adjustment on the order
+        name: Create adjustment
+      create_line_items:
+        description: Populates the cart with the specified quantity of variant
+        name: Create line items
+      give_store_credit:
+        description: Gives the user store credit of the amount specified
+        name: Give store credit
+    promotion_actions: Actions
+    promotion_form:
+      match_policies:
+        all: Match any of these rules
+        any: Match all of these rules
+    promotion_not_found: The coupon code you entered doesn't exist. Please try again.
+    promotion_rule: Promotion Rule
+    promotion_rule_types:
+      first_order:
+        description: Must be the customer's first order
+        name: First order
+      item_total:
+        description: Order total meets these criteria
+        name: Item total
+      landing_page:
+        description: Customer must have visited the specified page
+        name: Landing Page
+      product:
+        description: Order includes specified product(s)
+        name: Product(s)
+      user:
+        description: Available only to the specified users
+        name: User
+      user_logged_in:
+        description: Available only to logged in users
+        name: User Logged In
+    promotions: Promotions
+    promotions_description: Manage offers and coupons with promotions
+    properties: Properties
+    property: Property
+    prototype: Prototype
+    prototypes: Prototypes
+    provider: "Provider"
+    provider_settings_warning: "If you are changing the provider type, you must save first before you can edit the provider settings"
+    qty: تعداد
+    quantity_returned: Quantity Returned
+    quantity_shipped: Quantity Shipped
+    range: "Range"
+    rate: Rate
+    reason: Reason
+    recalculate_order_total: "Recalculate order total"
+    receive: receive
+    received: دریافت شد
+    refund: Refund
+    register: به عنوان کاربر جدید ثبت نام کنید
+    register_or_guest: ثبت نام کنید یا به عنوان کاربر میهمان تصفیه حساب کنید
+    registration: ثبت نام
+    remember_me: "من را به یاد بسپار"
+    remove: Remove
+    rename: Rename
+    reports: گزارشات
+    required_for_solo_and_maestro: Required for Solo and Maestro cards.
+    resend: Resend
+    resend_confirmation_instructions: "Resend confirmation instructions"
+    resend_unlock_instructions: "Resend unlock instructions"
+    reset_password: "ریست رمز عبور"
+    resource_controller:
+      member_object_not_found: "Member object not found."
+      successfully_created: "!به صورت موفقیت آمیز ایجاد شد"
+      successfully_removed: "Successfully removed!"
+      successfully_updated: "!به صورت موفقیت آمیز بروز رسانی شد"
+    response_code: "Response Code"
+    resume: "ادامه"
+    resumed: Resumed
+    return: برگشت
+    return_authorization: Return Authorization
+    return_authorization_updated: Return authorization updated
+    return_authorizations: Return Authorizations
+    return_quantity: Return Quantity
+    returned: برگشت داده شد
+    review: Review
+    rma_credit: RMA Credit
+    rma_number: RMA Number
+    rma_value: RMA Value
+    roles: Roles
+    rules: قوانین
+    s3_access_key: "Access Key"
+    s3_bucket: "Bucket"
+    s3_headers: "S3 Headers"
+    s3_not_used_for_product_images: "S3 is not being used for product images"
+    s3_protocol: "S3 Protocol"
+    s3_secret: "Secret Key"
+    s3_used_for_product_images: "S3 is being used for product images"
+    sales_tax: "مالیات فروش"
+    sales_total: "کل فروش"
+    sales_total_description: "کل فروش برای همه سفارش ها"
+    save_and_continue: ذخیره و ادامه
+    save_preferences: پیش فرض های ذخیره کردن
+    scope: Scope
+    scopes: Scopes
+    search: جستجو
+    search_results: "Search results for '%{keywords}'"
+    searching: در حال جستجو
+    secure_connection_type: نوع اتصال امن
+    secure_credit_card: Secure Credit Card
+    security_settings: "Security Settings"
+    select: انتخاب
+    select_from_prototype: "از نمونه اولیه انتخاب کن"
+    select_preferred_shipping_option: "روش ارسال دلخواه خود را انتخاب کنید"
+    send_copy_of_all_mails_to: Send Copy of All Mails To
+    send_copy_of_orders_mails_to: Send Copy of Order Mails To
+    send_mails_as: Send Mails As
+    send_me_reset_password_instructions: "دستورالعمل ریست رمز عبور را برای من ارسال کنید"
+    send_order_mails_as: Send Order Mails As
+    server: سرور
+    server_error: "سرور با ایراد مواجه شد"
+    settings: تنظیمات
+    ship: ارسال
+    ship_address: "Ship Address"
+    shipment: #Shipment
+    shipment_details: Shipment Details
+    shipment_inc_vat: "Shipment including VAT"
+    shipment_mailer:
+      shipped_email:
+        dear_customer: "Dear Customer,"
+        instructions: "Your order has been shipped"
+        shipment_summary: "Shipment Summary"
+        subject: "Shipment Notification"
+        thanks: "Thank you for your business."
+        track_information: "Tracking Information: %{tracking}"
+    shipment_number: "Shipment #"
+    shipment_state: Shipment State
+    shipment_states:
+      backorder: backorder
+      partial: partial
+      pending: معلق
+      ready: آماده
+      shipped: ارسال شد
+    shipment_updated: Shipment Updated
+    shipments: "Shipments"
     shipped: ارسال شد
-  shipment_updated: Shipment Updated
-  shipments: "Shipments"
-  shipped: ارسال شد
-  shipping: ارسال
-  shipping_address: "آدرس ارسال"
-  shipping_categories: "دسته بندی های ارسال"
-  shipping_categories_description: "مدیریت دسته بندی های ارسال برای مشخص کردن روش ارسال محصولات"
-  shipping_category: دسته بندی ارسال
-  shipping_category_choose: "Shipping Category"
-  shipping_cost: هزینه
-  shipping_error: "ایراد در ارسال"
-  shipping_instructions: "دستورالعمل های ارسال"
-  shipping_method: "روش ارسال"
-  shipping_methods: "روش های ارسال"
-  shipping_methods_description: "مدیریت روش های ارسال"
-  shipping_total: "جمع ارسال"
-  shop_by_taxonomy: "خرید بر حسب %{taxonomy}"
-  shopping_cart: "سبد خرید"
-  short_description: "Short description"
-  show: نمایش
-  show_active: "Show Active"
-  show_deleted: "Show Deleted"
-  show_incomplete_orders: "نمایش سفارشات تکمیل نشده"
-  show_only_complete_orders: "نمایش سفارشات تکمیل شده"
-  show_only_unfulfilled_orders: "Show only unfulfilled orders"
-  show_out_of_stock_products: "Show out-of-stock products"
-  showing_first_n: "Showing first %{n}"
-  sign_up: "ثبت نام"
-  site_name: "نام سایت"
-  site_url: "آدرس سایت"
-  sku: SKU
-  smtp: SMTP
-  smtp_authentication_type: SMTP Authentication Type
-  smtp_domain: SMTP Domain
-  smtp_mail_host: SMTP Mail Host
-  smtp_password: SMTP Password
-  smtp_port: SMTP Port
-  smtp_send_all_emails_as_from_following_address: "تمام نامه ها را از آدرس ذیل ارسال کن"
-  smtp_send_copy_to_this_addresses: "Sends a copy of all outgoing mails to this address. For multiple addresses, separate with commas."
-  smtp_username: SMTP Username
-  sold: فروخته شد
-  sort_ordering: "Sort ordering"
-  special_instructions: "Special Instructions"
-  spree/order: 
-    coupon_code: Coupon Code
-  spree: 
-    date: Date
-    date_picker: 
-      format: ! '%Y/%m/%d'
-      js_format: 'yy/mm/dd'
-    time: Time
-  spree_alert_checking: "Check for Spree security and release alerts"
-  spree_alert_not_checking: "Not checking for Spree security and release alerts"
-  spree_gateway_error_flash_for_checkout: "There was a problem with your payment information. Please check your information and try again."
-  spree_inventory_error_flash_for_insufficient_quantity: "An item in your cart has become unavailable."
-  ssl_will_be_used_in_development_and_test_modes: "SSL will be used in development and test mode if necessary."
-  ssl_will_be_used_in_production_mode: "SSL will be used in production mode"
-  ssl_will_be_used_in_staging_mode: "SSL will be used in staging mode"
-  ssl_will_not_be_used_in_development_and_test_modes: "SSL will not be used in development and test mode if necessary."
-  ssl_will_not_be_used_in_production_mode: "SSL will not be used in production mode"
-  ssl_will_not_be_used_in_staging_mode: "SSL will not be used in staging mode"
-  start: شروع
-  start_date: Valid from
-  state: ایالت یا استان
-  state_based: "State Based"
-  state_setting_description: "Administer the list of states/provinces associated with each country."
-  states: ایالات یا استان ها
-  status: وضعیت
-  stop: توقف
-  store: فروشگاه
-  street_address: "آدرس"
-  street_address_2: "ادامه آدرس"
-  subtotal: جمع
-  subtract: Subtract
-  successfully_created: "%{resource} has been successfully created!"
-  successfully_removed: "%{resource} has been successfully removed!"
-  successfully_updated: "%{resource} has been successfully updated!"
-  system: سیستم
-  tax: مالیات
-  tax_categories: "دسته بندی های مالیات"
-  tax_categories_setting_description: "دسته بندی های مالیاتی را ایجاد کنید تا مشخص شود که چه محصولاتی مشمول مالیات می شوند"
-  tax_category: "دسته بندی مالیات"
-  tax_rates: "نرخ مالیات"
-  tax_rates_description: ایجاد و پیکربندی نرخ مالیات
-  tax_settings: "تنظیمات مالیات"
-  tax_settings_description: تنظیمات مالیات پایه
-  tax_total: "کل مالیات"
-  tax_type: "نوع مالیات"
-  taxon: Taxon
-  taxon_edit: Edit Taxon
-  taxonomies: طبقه بندی ها
-  taxonomies_setting_description: "ایجاد و مدیریت طبقه بندی ها"
-  taxonomy: Taxonomy
-  taxonomy_edit: "ویرایش طبقه بندی"
-  taxonomy_tree_error: "The requested change has not been accepted and the tree has been returned to its previous state, please try again."
-  taxonomy_tree_instruction: "* Right click a child in the tree to access the menu for adding, deleting or sorting a child."
-  taxons: Taxons
-  test: "تست"
-  test_mailer: 
-    test_email: 
-      greeting: 'Congratulations!'
-      message: 'If you have received this email, then your email settings are correct.'
-      subject: 'Testmail'
-  test_mode: مد تست
-  thank_you_for_your_order: "با تشکر، لطفا یک کپی از این صفحه برای نگهداری در نزد خود، پرینت کنید"
-  there_were_problems_with_the_following_fields: "به مشکلاتی در فیلدهای ذیل برخوردیم"
-  this_file_language: "فارسی(fa)"
-  thumbnail: "Thumbnail"
-  to_add_variants_you_must_first_define: "To add variants, you must first define"
-  to_state: "To State"
-  total: کل
-  tracking: ردگیری
-  transaction: تراکنش
-  transactions: تراکنش ها
-  tree: Tree
-  try_again: "دوباره تلاش کنید"
-  type: نوع
-  type_to_search: Type to search
-  unable_ship_method: "به علت مشکلی در سرور، نمی توان روش های ارسال را ایجاد کرد"
-  unable_to_authorize_credit_card: "Unable to Authorize Credit Card"
-  unable_to_capture_credit_card: "Unable to Capture Credit Card"
-  unable_to_connect_to_gateway: "اتصال به درگاه مقدور نیست"
-  unable_to_save_order: "ذخیره سفارش مقدور نیست"
-  under_paid: "Under Paid"
-  under_price: "Under %{price}"
-  unrecognized_card_type: نوع کارت ناشناخته
-  update: بروز رسانی
-  update_password: "ورود و بروز رسانی رمز عبور"
-  updated_successfully: "بروز رسانی موفقیت آمیز بود"
-  updating: در حال بروز رسانی
-  usage_limit: محدودیت استفاده
-  use_as_shipping_address: به عنوان آدرس ارسال استفاده کن
-  use_billing_address: همانند آدرس پرداخت
-  use_different_shipping_address: "از یک آدرس ارسال متفاوت استفاده کن "
-  use_new_cc: "از یک کارت جدید استفاده کن"
-  use_s3: "Use Amazon S3 For Images"
-  user: کاربر
-  user_account: حساب کاربری
-  user_created_successfully: "حساب کاربری ایجاد شد"
-  user_rule: 
-    choose_users: انتخاب کاربران
-  users: کاربران
-  validate_on_profile_create: Validate on profile create
-  validation: 
-    cannot_be_greater_than_available_stock: "cannot be greater than available stock."
-    cannot_be_less_than_shipped_units: "cannot be less than the number of shipped units."
-    cannot_destory_line_item_as_inventory_units_have_shipped: "Cannot destory line item as some inventory units have shipped."
-    is_too_large: "is too large -- stock on hand cannot cover requested quantity!"
-    must_be_int: "باید به صورت عدد صحیح وارد شوند"
-    must_be_non_negative: "must be a non-negative value"
-  value: مقدار
-  variant: Variant
-  variants: Variants
-  vat: "VAT"
-  version: نسخه
-  view_shipping_options: "نمایش انتخاب های ارسال"
-  void: Void
-  website: وبسایت
-  weight: وزن
-  welcome_to_sample_store: "به فروشگاه نمونه خوش آمدید"
-  what_is_a_cvv: "What is a (CVV) Credit Card Code?"
-  what_is_this: "این چیست؟"
-  whats_this: "چیه؟"
-  width: پهنا
-  year: "سال"
-  say_yes: "Yes"
-  you_have_been_logged_out: "شما خارج شدید"
-  you_have_no_orders_yet: "شما هنوز سفارشی ثبت نکرده اید"
-  your_cart_is_empty: "سبد خرید شما خالی است"
-  zip: کد پستی
-  zone: ناحیه
-  zone_based: "Zone Based"
-  zone_setting_description: "مجموعه ای از کشورها، ایالات، استان ها و دیگر نواحی که برای محاسبات مختلف بکار می روند"
-  zones: ناحیه ها
+    shipping: ارسال
+    shipping_address: "آدرس ارسال"
+    shipping_categories: "دسته بندی های ارسال"
+    shipping_categories_description: "مدیریت دسته بندی های ارسال برای مشخص کردن روش ارسال محصولات"
+    shipping_category: دسته بندی ارسال
+    shipping_category_choose: "Shipping Category"
+    shipping_cost: هزینه
+    shipping_error: "ایراد در ارسال"
+    shipping_instructions: "دستورالعمل های ارسال"
+    shipping_method: "روش ارسال"
+    shipping_methods: "روش های ارسال"
+    shipping_methods_description: "مدیریت روش های ارسال"
+    shipping_total: "جمع ارسال"
+    shop_by_taxonomy: "خرید بر حسب %{taxonomy}"
+    shopping_cart: "سبد خرید"
+    short_description: "Short description"
+    show: نمایش
+    show_active: "Show Active"
+    show_deleted: "Show Deleted"
+    show_incomplete_orders: "نمایش سفارشات تکمیل نشده"
+    show_only_complete_orders: "نمایش سفارشات تکمیل شده"
+    show_only_unfulfilled_orders: "Show only unfulfilled orders"
+    show_out_of_stock_products: "Show out-of-stock products"
+    showing_first_n: "Showing first %{n}"
+    sign_up: "ثبت نام"
+    site_name: "نام سایت"
+    site_url: "آدرس سایت"
+    sku: SKU
+    smtp: SMTP
+    smtp_authentication_type: SMTP Authentication Type
+    smtp_domain: SMTP Domain
+    smtp_mail_host: SMTP Mail Host
+    smtp_password: SMTP Password
+    smtp_port: SMTP Port
+    smtp_send_all_emails_as_from_following_address: "تمام نامه ها را از آدرس ذیل ارسال کن"
+    smtp_send_copy_to_this_addresses: "Sends a copy of all outgoing mails to this address. For multiple addresses, separate with commas."
+    smtp_username: SMTP Username
+    sold: فروخته شد
+    sort_ordering: "Sort ordering"
+    special_instructions: "Special Instructions"
+    spree/order:
+      coupon_code: Coupon Code
+    spree:
+      date: Date
+      date_picker:
+        format: ! '%Y/%m/%d'
+        js_format: 'yy/mm/dd'
+      time: Time
+    spree_alert_checking: "Check for Spree security and release alerts"
+    spree_alert_not_checking: "Not checking for Spree security and release alerts"
+    spree_gateway_error_flash_for_checkout: "There was a problem with your payment information. Please check your information and try again."
+    spree_inventory_error_flash_for_insufficient_quantity: "An item in your cart has become unavailable."
+    ssl_will_be_used_in_development_and_test_modes: "SSL will be used in development and test mode if necessary."
+    ssl_will_be_used_in_production_mode: "SSL will be used in production mode"
+    ssl_will_be_used_in_staging_mode: "SSL will be used in staging mode"
+    ssl_will_not_be_used_in_development_and_test_modes: "SSL will not be used in development and test mode if necessary."
+    ssl_will_not_be_used_in_production_mode: "SSL will not be used in production mode"
+    ssl_will_not_be_used_in_staging_mode: "SSL will not be used in staging mode"
+    start: شروع
+    start_date: Valid from
+    state: ایالت یا استان
+    state_based: "State Based"
+    state_setting_description: "Administer the list of states/provinces associated with each country."
+    states: ایالات یا استان ها
+    status: وضعیت
+    stop: توقف
+    store: فروشگاه
+    street_address: "آدرس"
+    street_address_2: "ادامه آدرس"
+    subtotal: جمع
+    subtract: Subtract
+    successfully_created: "%{resource} has been successfully created!"
+    successfully_removed: "%{resource} has been successfully removed!"
+    successfully_updated: "%{resource} has been successfully updated!"
+    system: سیستم
+    tax: مالیات
+    tax_categories: "دسته بندی های مالیات"
+    tax_categories_setting_description: "دسته بندی های مالیاتی را ایجاد کنید تا مشخص شود که چه محصولاتی مشمول مالیات می شوند"
+    tax_category: "دسته بندی مالیات"
+    tax_rates: "نرخ مالیات"
+    tax_rates_description: ایجاد و پیکربندی نرخ مالیات
+    tax_settings: "تنظیمات مالیات"
+    tax_settings_description: تنظیمات مالیات پایه
+    tax_total: "کل مالیات"
+    tax_type: "نوع مالیات"
+    taxon: Taxon
+    taxon_edit: Edit Taxon
+    taxonomies: طبقه بندی ها
+    taxonomies_setting_description: "ایجاد و مدیریت طبقه بندی ها"
+    taxonomy: Taxonomy
+    taxonomy_edit: "ویرایش طبقه بندی"
+    taxonomy_tree_error: "The requested change has not been accepted and the tree has been returned to its previous state, please try again."
+    taxonomy_tree_instruction: "* Right click a child in the tree to access the menu for adding, deleting or sorting a child."
+    taxons: Taxons
+    test: "تست"
+    test_mailer:
+      test_email:
+        greeting: 'Congratulations!'
+        message: 'If you have received this email, then your email settings are correct.'
+        subject: 'Testmail'
+    test_mode: مد تست
+    thank_you_for_your_order: "با تشکر، لطفا یک کپی از این صفحه برای نگهداری در نزد خود، پرینت کنید"
+    there_were_problems_with_the_following_fields: "به مشکلاتی در فیلدهای ذیل برخوردیم"
+    this_file_language: "فارسی(fa)"
+    thumbnail: "Thumbnail"
+    to_add_variants_you_must_first_define: "To add variants, you must first define"
+    to_state: "To State"
+    total: کل
+    tracking: ردگیری
+    transaction: تراکنش
+    transactions: تراکنش ها
+    tree: Tree
+    try_again: "دوباره تلاش کنید"
+    type: نوع
+    type_to_search: Type to search
+    unable_ship_method: "به علت مشکلی در سرور، نمی توان روش های ارسال را ایجاد کرد"
+    unable_to_authorize_credit_card: "Unable to Authorize Credit Card"
+    unable_to_capture_credit_card: "Unable to Capture Credit Card"
+    unable_to_connect_to_gateway: "اتصال به درگاه مقدور نیست"
+    unable_to_save_order: "ذخیره سفارش مقدور نیست"
+    under_paid: "Under Paid"
+    under_price: "Under %{price}"
+    unrecognized_card_type: نوع کارت ناشناخته
+    update: بروز رسانی
+    update_password: "ورود و بروز رسانی رمز عبور"
+    updated_successfully: "بروز رسانی موفقیت آمیز بود"
+    updating: در حال بروز رسانی
+    usage_limit: محدودیت استفاده
+    use_as_shipping_address: به عنوان آدرس ارسال استفاده کن
+    use_billing_address: همانند آدرس پرداخت
+    use_different_shipping_address: "از یک آدرس ارسال متفاوت استفاده کن "
+    use_new_cc: "از یک کارت جدید استفاده کن"
+    use_s3: "Use Amazon S3 For Images"
+    user: کاربر
+    user_account: حساب کاربری
+    user_created_successfully: "حساب کاربری ایجاد شد"
+    user_rule:
+      choose_users: انتخاب کاربران
+    users: کاربران
+    validate_on_profile_create: Validate on profile create
+    validation:
+      cannot_be_greater_than_available_stock: "cannot be greater than available stock."
+      cannot_be_less_than_shipped_units: "cannot be less than the number of shipped units."
+      cannot_destory_line_item_as_inventory_units_have_shipped: "Cannot destory line item as some inventory units have shipped."
+      is_too_large: "is too large -- stock on hand cannot cover requested quantity!"
+      must_be_int: "باید به صورت عدد صحیح وارد شوند"
+      must_be_non_negative: "must be a non-negative value"
+    value: مقدار
+    variant: Variant
+    variants: Variants
+    vat: "VAT"
+    version: نسخه
+    view_shipping_options: "نمایش انتخاب های ارسال"
+    void: Void
+    website: وبسایت
+    weight: وزن
+    welcome_to_sample_store: "به فروشگاه نمونه خوش آمدید"
+    what_is_a_cvv: "What is a (CVV) Credit Card Code?"
+    what_is_this: "این چیست؟"
+    whats_this: "چیه؟"
+    width: پهنا
+    year: "سال"
+    say_yes: "Yes"
+    you_have_been_logged_out: "شما خارج شدید"
+    you_have_no_orders_yet: "شما هنوز سفارشی ثبت نکرده اید"
+    your_cart_is_empty: "سبد خرید شما خالی است"
+    zip: کد پستی
+    zone: ناحیه
+    zone_based: "Zone Based"
+    zone_setting_description: "مجموعه ای از کشورها، ایالات، استان ها و دیگر نواحی که برای محاسبات مختلف بکار می روند"
+    zones: ناحیه ها
