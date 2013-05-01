@@ -104,7 +104,7 @@ namespace :spree_i18n do
   end
 
   def get_translation_keys(gem_name)
-    (dummy_comments, words) = Spree::I18nUtils.read_file(File.dirname(__FILE__) + "default/#{gem_name}.yml", "en")
+    (dummy_comments, words) = Spree::I18nUtils.read_file(File.dirname(__FILE__) + "/default/#{gem_name}.yml", "en")
       words
   end
 
