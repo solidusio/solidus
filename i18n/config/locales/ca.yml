@@ -1,6 +1,205 @@
 ---
 # Thanks to apertium.org for their api and softcatala.org for the online service wich help us to have the base translation and fix issues.
 ca:
+  activerecord:
+    attributes:
+      spree/address:
+        address1: Adreça
+        address2: "Adreça (continuació)"
+        city: Ciutat
+        country: País
+        firstname: Nom
+        lastname: Cognom
+        phone: Telèfon
+        state: Estat
+        zipcode: "Codi postal"
+      spree/country:
+        iso: ISO
+        iso3: ISO3
+        iso_name: "Nomeni ISO"
+        name: Nom
+        numcode: "Codi ISO"
+      spree/credit_card:
+        cc_type: Tipus
+        month: Mes
+        number: Nombre
+        verification_value: "Codi de verificació"
+        year: Any
+      spree/inventory_unit:
+        state: Província
+      spree/line_item:
+        price: Preu
+        quantity: Quantitat
+      spree/option_type:
+        name: Name
+        presentation: Presentation
+      spree/order:
+        checkout_complete: "Comanda completada"
+        completed_at: "Completat el"
+        created_at: Order Date
+        email: Customer E-Mail
+        ip_address: "Adreça IP"
+        item_total: "Total articles"
+        number: Nombre
+        payment_state: Payment State
+        shipment_state: Shipment State
+        special_instructions: "Instruccions especials"
+        state: Estat
+        total: Total
+      spree/order/bill_address:
+        address1: "Billing address street"
+        city: "Billing address city"
+        firstname: "Billing address first name"
+        lastname: "Billing address last name"
+        phone: "Billing address phone"
+        state: "Billing address state"
+        zipcode: "Billing address zipcode"
+      spree/order/ship_address:
+        address1: "Shipping address street"
+        city: "Shipping address city"
+        firstname: "Shipping address first name"
+        lastname: "Shipping address last name"
+        phone: "Shipping address phone"
+        state: "Shipping address state"
+        zipcode: "Shipping address zipcode"
+      spree/payment_method:
+        name: Name
+      spree/product:
+        available_on: "Disponible en"
+        cost_price: "Preu de cost"
+        description: Descripció
+        master_price: "Preu principal"
+        name: Nom
+        on_demand: "On Demand"
+        on_hand: "Disponibles"
+        shipping_category: "Categoria d'enviament"
+        tax_category: "Categoria d'impostos"
+      spree/promotion:
+        advertise: Advertise
+        code: "Codi"
+        description: "Descripció"
+        event_name: Event Name
+        expires_at: "Caduca el"
+        name: "Nom"
+        path: Path
+        starts_at: "Comença el"
+        usage_limit: "Límit d'ús"
+      spree/property:
+        name: Nom
+        presentation: Presentació
+      spree/prototype:
+        name: Nom
+      spree/return_authorization:
+        amount: Quantitat
+      spree/role:
+        name: Nom
+      spree/state:
+        abbr: Abreviatura
+        name: Nom
+      spree/tax_category:
+        description: Descripció
+        name: Nom
+      spree/tax_rate:
+        amount: Taxa
+        included_in_price: Included in Price
+        show_rate_in_label: Show rate in label
+      spree/taxon:
+        name: Nom
+        permalink: Enllaç permanent
+        position: Posició
+      spree/taxonomy:
+        name: Nom
+      spree/user:
+        email: Email
+        password: "Password"
+        password_confirmation: "Password Confirmation"
+      spree/variant:
+        cost_price: "Preu de cost"
+        depth: Profunditat
+        height: Altura
+        price: Preu
+        sku: Codi de producte
+        weight: Pes
+        width: Ample
+      spree/zone:
+        description: Descripció
+        name: Nom
+    models:
+      spree/address:
+        one: Adreça
+        other: Adreces
+      spree/cheque_payment:
+        one: Cheque Payment
+        other: Cheque Payments
+      spree/country:
+        one: País
+        other: Països
+      spree/credit_card:
+        one: "Targeta de crèdit"
+        other: "Targetes de crèdit"
+      spree/creditcard_payment:
+        one: "Credit Card Payment"
+        other: "Credit Card Payments"
+      spree/creditcard_txn:
+        one: "Credit Card Transaction"
+        other: "Credit Card Transactions"
+      spree/inventory_unit:
+        one: "Unitat en inventari"
+        other: "Unitats en inventari"
+      spree/line_item:
+        one: "Article"
+        other: "Articles"
+      spree/order:
+        one: Comanda
+        other: Comandes
+      spree/payment:
+        one: Pagament
+        other: Pagaments
+      spree/product:
+        one: Producte
+        other: Productes
+      spree/property:
+        one: Propietat
+        other: Propietats
+      spree/prototype:
+        one: Prototip
+        other: Prototips
+      spree/return_authorization:
+        one: Autorització de devolució
+        other: Autoritzacions de devolució
+      spree/role:
+        one: Funció
+        other: Funcions
+      spree/shipment:
+        one: Enviament
+        other: Enviaments
+      spree/shipping_category:
+        one: "Categoria d'enviament"
+        other: "Categories de enviament"
+      spree/state:
+        one: Estat
+        other: Estats
+      spree/tax_category:
+        one: "Categoria d'impostos"
+        other: "Categories d'impostos"
+      spree/tax_rate:
+        one: "Taxa d'impostos"
+        other: "Taxes d'impostos"
+      spree/taxon:
+        one: Categoria
+        other: Categories
+      spree/taxonomy:
+        one: Propietat
+        other: Propietats
+      spree/user:
+        one: Usuari
+        other: Usuaris
+      spree/variant:
+        one: Variant
+        other: Variants
+      spree/zone:
+        one: Zona
+        other: Zones
   spree:
     a_copy_of_all_mail_will_be_sent_to_the_following_addresses: Una còpia de tots els correus serà enviada a les següents adreces
     abbreviation: Abreviatura
@@ -18,205 +217,6 @@ ca:
       update: Actualitzar
     activate: "Activate"
     active: Actiu
-    activerecord:
-      attributes:
-        spree/address:
-          address1: Adreça
-          address2: "Adreça (continuació)"
-          city: Ciutat
-          country: País
-          firstname: Nom
-          lastname: Cognom
-          phone: Telèfon
-          state: Estat
-          zipcode: "Codi postal"
-        spree/country:
-          iso: ISO
-          iso3: ISO3
-          iso_name: "Nomeni ISO"
-          name: Nom
-          numcode: "Codi ISO"
-        spree/credit_card:
-          cc_type: Tipus
-          month: Mes
-          number: Nombre
-          verification_value: "Codi de verificació"
-          year: Any
-        spree/inventory_unit:
-          state: Província
-        spree/line_item:
-          price: Preu
-          quantity: Quantitat
-        spree/option_type:
-          name: Name
-          presentation: Presentation
-        spree/order:
-          checkout_complete: "Comanda completada"
-          completed_at: "Completat el"
-          created_at: Order Date
-          email: Customer E-Mail
-          ip_address: "Adreça IP"
-          item_total: "Total articles"
-          number: Nombre
-          payment_state: Payment State
-          shipment_state: Shipment State
-          special_instructions: "Instruccions especials"
-          state: Estat
-          total: Total
-        spree/order/bill_address:
-          address1: "Billing address street"
-          city: "Billing address city"
-          firstname: "Billing address first name"
-          lastname: "Billing address last name"
-          phone: "Billing address phone"
-          state: "Billing address state"
-          zipcode: "Billing address zipcode"
-        spree/order/ship_address:
-          address1: "Shipping address street"
-          city: "Shipping address city"
-          firstname: "Shipping address first name"
-          lastname: "Shipping address last name"
-          phone: "Shipping address phone"
-          state: "Shipping address state"
-          zipcode: "Shipping address zipcode"
-        spree/payment_method:
-          name: Name
-        spree/product:
-          available_on: "Disponible en"
-          cost_price: "Preu de cost"
-          description: Descripció
-          master_price: "Preu principal"
-          name: Nom
-          on_demand: "On Demand"
-          on_hand: "Disponibles"
-          shipping_category: "Categoria d'enviament"
-          tax_category: "Categoria d'impostos"
-        spree/promotion:
-          advertise: Advertise
-          code: "Codi"
-          description: "Descripció"
-          event_name: Event Name
-          expires_at: "Caduca el"
-          name: "Nom"
-          path: Path
-          starts_at: "Comença el"
-          usage_limit: "Límit d'ús"
-        spree/property:
-          name: Nom
-          presentation: Presentació
-        spree/prototype:
-          name: Nom
-        spree/return_authorization:
-          amount: Quantitat
-        spree/role:
-          name: Nom
-        spree/state:
-          abbr: Abreviatura
-          name: Nom
-        spree/tax_category:
-          description: Descripció
-          name: Nom
-        spree/tax_rate:
-          amount: Taxa
-          included_in_price: Included in Price
-          show_rate_in_label: Show rate in label
-        spree/taxon:
-          name: Nom
-          permalink: Enllaç permanent
-          position: Posició
-        spree/taxonomy:
-          name: Nom
-        spree/user:
-          email: Email
-          password: "Password"
-          password_confirmation: "Password Confirmation"
-        spree/variant:
-          cost_price: "Preu de cost"
-          depth: Profunditat
-          height: Altura
-          price: Preu
-          sku: Codi de producte
-          weight: Pes
-          width: Ample
-        spree/zone:
-          description: Descripció
-          name: Nom
-      models:
-        spree/address:
-          one: Adreça
-          other: Adreces
-        spree/cheque_payment:
-          one: Cheque Payment
-          other: Cheque Payments
-        spree/country:
-          one: País
-          other: Països
-        spree/credit_card:
-          one: "Targeta de crèdit"
-          other: "Targetes de crèdit"
-        spree/creditcard_payment:
-          one: "Credit Card Payment"
-          other: "Credit Card Payments"
-        spree/creditcard_txn:
-          one: "Credit Card Transaction"
-          other: "Credit Card Transactions"
-        spree/inventory_unit:
-          one: "Unitat en inventari"
-          other: "Unitats en inventari"
-        spree/line_item:
-          one: "Article"
-          other: "Articles"
-        spree/order:
-          one: Comanda
-          other: Comandes
-        spree/payment:
-          one: Pagament
-          other: Pagaments
-        spree/product:
-          one: Producte
-          other: Productes
-        spree/property:
-          one: Propietat
-          other: Propietats
-        spree/prototype:
-          one: Prototip
-          other: Prototips
-        spree/return_authorization:
-          one: Autorització de devolució
-          other: Autoritzacions de devolució
-        spree/role:
-          one: Funció
-          other: Funcions
-        spree/shipment:
-          one: Enviament
-          other: Enviaments
-        spree/shipping_category:
-          one: "Categoria d'enviament"
-          other: "Categories de enviament"
-        spree/state:
-          one: Estat
-          other: Estats
-        spree/tax_category:
-          one: "Categoria d'impostos"
-          other: "Categories d'impostos"
-        spree/tax_rate:
-          one: "Taxa d'impostos"
-          other: "Taxes d'impostos"
-        spree/taxon:
-          one: Categoria
-          other: Categories
-        spree/taxonomy:
-          one: Propietat
-          other: Propietats
-        spree/user:
-          one: Usuari
-          other: Usuaris
-        spree/variant:
-          one: Variant
-          other: Variants
-        spree/zone:
-          one: Zona
-          other: Zones
     add: Afegir
     add_action_of_type: Add action of type
     add_category: "Afegir Categoria"

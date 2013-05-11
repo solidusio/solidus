@@ -9,7 +9,6 @@ end
 group :test do
   gem 'i18n-spec', '~> 0.4.0'
   gem 'factory_girl_rails', '~> 4.2.1'
-  gem 'ffaker', '~> 1.15.0'
   gem 'capybara', '~> 2.1.0'
   gem 'selenium-webdriver', '~> 2.32.0'
 end
