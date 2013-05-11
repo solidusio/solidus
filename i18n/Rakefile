@@ -55,7 +55,8 @@ namespace :spree_i18n do
   desc "Syncronize translation files with latest en (adds comments with fallback en value)"
   task :sync do
     puts "Starting syncronization..."
-    words = composite_keys
+    words = translation_keys
+
     Dir["#{locales_dir}/*.yml"].each do |filename|
       basename = File.basename(filename, '.yml')
       (comments, other) = Spree::I18nUtils.read_file(filename, basename)
@@ -65,53 +66,8 @@ namespace :spree_i18n do
     end
   end
 
-  desc "Create a new translation file based on en"
-  task :new  do
-    unless locale = env_locale
-      print "You must provide a valid LOCALE value, for example:\nrake spree:i18:new LOCALE=pt-PT\n"
-      exit
-    end
-
-    Spree::I18nUtils.write_file "#{locales_dir}/#{locale}.yml", "#{locale}", '---', composite_keys
-    print "New locale generated.\n"
-    print "Don't forget to also download the rails translation from: http://github.com/svenfuchs/rails-i18n/tree/master/rails/locale\n"
-  end
-
-  desc "Show translation status for all supported locales other than en."
-  task :stats do
-    words = composite_keys
-    words.delete_if { |k,v| !v.match(/\w+/) or v.match(/^#/) }
-
-    results = ActiveSupport::OrderedHash.new
-    locale = ENV['LOCALE'] || ''
-    Dir["#{locales_dir}/*.yml"].each do |filename|
-      # next unless filename.match('_spree')
-      basename = File.basename(filename, '.yml')
-
-      # next if basename.starts_with?('en')
-      (comments, other) = Spree::I18nUtils.read_file(filename, basename)
-      other.delete_if { |k,v| !words[k] } #Remove if not defined in en.yml
-      other.delete_if { |k,v| !v.match(/\w+/) or v.match(/#/) }
-
-      translation_status = 100 * (other.values.size / words.values.size.to_f)
-      results[basename] = translation_status
-    end
-    puts "Translation status:"
-    results.sort.each do |basename, translation_status|
-      puts "#{basename}\t-    #{sprintf('%.1f', translation_status)}%"
-    end
-    puts
-  end
-
-  # Returns a composite hash of all relevant translation keys from each of the gems
-  def composite_keys
-    Hash.new.tap do |hash|
-      hash.merge! get_translation_keys("spree_core")
-    end
-  end
-
-  def get_translation_keys(gem_name)
-    (dummy_comments, words) = Spree::I18nUtils.read_file(File.dirname(__FILE__) + "/default/#{gem_name}.yml", "en")
+  def translation_keys
+    (dummy_comments, words) = Spree::I18nUtils.read_file(File.dirname(__FILE__) + "/default/spree_core.yml", "en")
       words
   end
 

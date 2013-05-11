@@ -5,7 +5,7 @@ module Spree
 
     # Retrieve comments, translation data in hash form
     def read_file(filename, basename)
-      (comments, data) = IO.read(filename).split(/\n#{basename}:\s*\n/)   #Add error checking for failed file read?
+      (comments, data) = IO.read(filename).split(/#{basename}:\s*\n/)   #Add error checking for failed file read?
       return comments, create_hash(data)
     end
     module_function :read_file
@@ -34,7 +34,7 @@ module Spree
     # Writes to file from translation data hash structure
     def write_file(filename,basename,comments,words,comment_values=true, fallback_values={})
       File.open(filename, "w") do |log|
-        log.puts(comments+"\n"+basename+": \n")
+        log.puts(basename+": \n")
         words.sort.each do |k,v|
           keys = k.split(':')
           (keys.size-1).times { keys[keys.size-1] = '  ' + keys[keys.size-1] }   #Add indentation for children keys
