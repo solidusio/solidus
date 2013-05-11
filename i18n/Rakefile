@@ -5,6 +5,7 @@ require 'rake/packagetask'
 require 'rubygems/package_task'
 require 'rspec/core/rake_task'
 require 'spree/testing_support/common_rake'
+require 'spree_i18n'
 
 Bundler::GemHelper.install_tasks
 RSpec::Core::RakeTask.new
@@ -25,29 +26,26 @@ end
 
 namespace :spree_i18n do
 
-  SPREE_MODULES = [ 'api', 'core', 'dash' ].freeze
-
   desc "Update by retrieving the latest Spree locale files"
   task :update_default do
     puts "Fetching latest Spree locale file to #{locales_dir}"
     require "uri"; require "net/https"
-    SPREE_MODULES.each do |mod|
-      location = "https://raw.github.com/schof/spree/i18n/#{mod}/config/locales/en.yml"
-      begin
-        uri = URI.parse(location)
-        http = Net::HTTP.new(uri.host, uri.port)
-        http.use_ssl = true
-        http.verify_mode = OpenSSL::SSL::VERIFY_NONE
-        puts "Getting from #{uri}"
-        request = Net::HTTP::Get.new(uri.request_uri)
-        case response = http.request(request)
-          when Net::HTTPRedirection then location = response['location']
-          when Net::HTTPClientError, Net::HTTPServerError then response.error!
-        end
-      end until Net::HTTPSuccess === response
 
-      File.open("#{default_dir}/spree_#{mod}.yml", 'w') { |file| file << response.body }
-    end
+    location = "https://raw.github.com/spree/spree/master/core/config/locales/en.yml"
+    begin
+      uri = URI.parse(location)
+      http = Net::HTTP.new(uri.host, uri.port)
+      http.use_ssl = true
+      http.verify_mode = OpenSSL::SSL::VERIFY_NONE
+      puts "Getting from #{uri}"
+      request = Net::HTTP::Get.new(uri.request_uri)
+      case response = http.request(request)
+        when Net::HTTPRedirection then location = response['location']
+        when Net::HTTPClientError, Net::HTTPServerError then response.error!
+      end
+    end until Net::HTTPSuccess === response
+
+    File.open("#{default_dir}/spree_core.yml", 'w') { |file| file << response.body }
   end
 
   desc "Syncronize translation files with latest en (adds comments with fallback en value)"
@@ -104,9 +102,7 @@ namespace :spree_i18n do
   # Returns a composite hash of all relevant translation keys from each of the gems
   def composite_keys
     Hash.new.tap do |hash|
-      SPREE_MODULES.each do |mod|
-        hash.merge! get_translation_keys("spree_#{mod}")
-      end
+      hash.merge! get_translation_keys("spree_core")
     end
   end
 
