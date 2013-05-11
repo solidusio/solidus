@@ -45,6 +45,10 @@ namespace :spree_i18n do
       end
     end until Net::HTTPSuccess === response
 
+    unless File.directory?(default_dir)
+      FileUtils.mkdir_p(default_dir)
+    end
+
     File.open("#{default_dir}/spree_core.yml", 'w') { |file| file << response.body }
   end
 
