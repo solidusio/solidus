@@ -1,5 +1,204 @@
 ---
 uk:
+  activerecord:
+    attributes:
+      spree/address:
+        address1: "Адреса"
+        address2: "Адреса (2ий рядок)"
+        city: "Місто"
+        country: "Країна"
+        firstname: "Ім'я"
+        lastname: "Прізвище"
+        phone: "Телефон"
+        state: "Регіон/Область"
+        zipcode: "Індекс"
+      spree/country:
+        iso: "ISO"
+        iso3: "ISO3"
+        iso_name: "Назва ISO"
+        name: "Назва"
+        numcode: "Код ISO"
+      spree/credit_card:
+        cc_type: Type
+        month: Month
+        number: Number
+        verification_value: "Verification Value"
+        year: Year
+      spree/inventory_unit:
+        state: "Стан"
+      spree/line_item:
+        price: "Ціна"
+        quantity: "Кількість"
+      spree/option_type:
+        name: Назва
+        presentation: "Відобразити як"
+      spree/order:
+      spree/order/bill_address:
+        address1: "Billing address street"
+        city: "Платіжний адресу. Місто"
+        firstname: "Платіжний адресу. Ім'я"
+        lastname: "Платіжний адресу. Прізвище"
+        phone: "Платіжний адресу. Телефон"
+        state: "Платіжний адресу. Регіон/Область"
+        zipcode: "Платіжний адресу. Індекс"
+      spree/order/ship_address:
+        address1: "Billing address street"
+        city: "Адреса доставки. Місто"
+        firstname: "Адреса доставки. Ім'я"
+        lastname: "Адреса доставки. Прізвище"
+        phone: "Адреса доставки. Телефон"
+        state: "Адреса доставки. Регіон/Область"
+        zipcode: "Адреса доставки. Індекс"
+        checkout_complete: "Замовлення завершено"
+        completed_at: "Дата завершення"
+        created_at: Дата замовлення
+        email: E-mail покупця
+        ip_address: "IP адреса"
+        item_total: "Всього товарів"
+        number: "Номер"
+        payment_state: Стан оплати
+        shipment_state: Стан доставки
+        special_instructions: "Додаткові інструкції"
+        state: "Статус"
+        total: "Разом"
+      spree/payment_method:
+        name: "Найменування"
+      spree/product:
+        available_on: "Доступно з"
+        cost_price: "Собівартість"
+        description: "Опис"
+        master_price: "Основна ціна"
+        name: "Назва"
+        on_demand: "On Demand"
+        on_hand: "В наявності"
+        shipping_category: "Категорія доставки"
+        tax_category: "Податкова категорія"
+      spree/promotion:
+        advertise: Рекламувати
+        code: "Код купона"
+        description: "Опис"
+        event_name: Назва події
+        expires_at: "Дата завершення промо-акції"
+        name: "Назва"
+        path: Шлях
+        starts_at: "Дата початку промо-акції"
+        usage_limit: "Максимальна кількість застосувань"
+      spree/property:
+        name: "Найменування"
+        presentation: "Відображати як"
+      spree/prototype:
+        name: "Найменування"
+      spree/return_authorization:
+        amount: "Сума"
+      spree/role:
+        name: "Найменування"
+      spree/state:
+        abbr: "Абревіатура"
+        name: "Назва"
+      spree/tax_category:
+        description: "Опис"
+        name: "Найменування"
+      spree/tax_rate:
+        amount: "Податкова ставка"
+        included_in_price: Включено в ціну
+        show_rate_in_label: Показувати ставку в мітці
+      spree/taxon:
+        name: "Найменування"
+        permalink: "Постійне посилання"
+        position: "Позиція"
+      spree/taxonomy:
+        name: "Найменування"
+      spree/user:
+        email: "Електронна пошта"
+        password: "Пароль"
+        password_confirmation: "Підтвердження пароля"
+      spree/variant:
+        cost_price: "Собівартість"
+        depth: "Глибина"
+        height: "Висота"
+        price: "Ціна"
+        sku: "Артикул"
+        weight: "Вага"
+        width: "Ширина"
+      spree/zone:
+        description: "Опис"
+        name: "Найменування"
+    models:
+      spree/address:
+        one: "Адреса"
+        other: "Адрес"
+      spree/cheque_payment:
+        one: "Оплата чеком"
+        other: "Оплати чеками"
+      spree/country:
+        one: "Країна"
+        other: "Країни"
+      spree/credit_card:
+        one: "Credit Card"
+        other: "Credit Cards"
+      spree/creditcard_payment:
+        one: "Платіж кредитною карткою"
+        other: "Платежі кредитною карткою"
+      spree/creditcard_txn:
+        one: "Транзакція кредитною карткою"
+        other: "Транзакціі кредитною карткою"
+      spree/inventory_unit:
+        one: "Одиниця обліку"
+        other: "Одиниці обліку"
+      spree/line_item:
+        one: "Позиція"
+        other: "Позиції"
+      spree/order:
+        one: "Замовлення"
+        other: "Замовлень"
+      spree/payment:
+        one: "Платіж"
+        other: "Платежі"
+      spree/product:
+        one: "Товар"
+        other: "Товари"
+      spree/property:
+        one: "Властивість"
+        other: "Властивості"
+      spree/prototype:
+        one: "Прототип"
+        other: "Прототипи"
+      spree/return_authorization:
+        one: "Дозвіл на повернення"
+        other: "Дозволи на повернення"
+      spree/role:
+        one: "Роль"
+        other: "Ролі"
+      spree/shipment:
+        one: "Відправлення"
+        other: "Відправки"
+      spree/shipping_category:
+        one: "Категорія доставки"
+        other: "Категорії доставки"
+      spree/state:
+        one: "Регіон/Область"
+        other: "Регіони"
+      spree/tax_category:
+        one: "Податкова категорія"
+        other: "Податкові категорії"
+      spree/tax_rate:
+        one: "Податкова ставка"
+        other: "Податкові ставки"
+      spree/taxon:
+        one: "Таксон"
+        other: "Таксон"
+      spree/taxonomy:
+        one: "Таксономія"
+        other: "Таксономії"
+      spree/user:
+        one: "Користувач"
+        other: "Користувачі"
+      spree/variant:
+        one: "Варіант"
+        other: "Варіанти"
+      spree/zone:
+        one: "Зона"
+        other: "Зони"
   spree:
     a_copy_of_all_mail_will_be_sent_to_the_following_addresses: "Копії всіх листів будуть надіслані на наступні адреси"
     abbreviation: "Абревіатура"
@@ -17,205 +216,6 @@ uk:
       update: "Змінити"
     activate: Активувати
     active: "Активний"
-    activerecord:
-      attributes:
-        spree/address:
-          address1: "Адреса"
-          address2: "Адреса (2ий рядок)"
-          city: "Місто"
-          country: "Країна"
-          firstname: "Ім'я"
-          lastname: "Прізвище"
-          phone: "Телефон"
-          state: "Регіон/Область"
-          zipcode: "Індекс"
-        spree/country:
-          iso: "ISO"
-          iso3: "ISO3"
-          iso_name: "Назва ISO"
-          name: "Назва"
-          numcode: "Код ISO"
-        spree/credit_card:
-          cc_type: Type
-          month: Month
-          number: Number
-          verification_value: "Verification Value"
-          year: Year
-        spree/inventory_unit:
-          state: "Стан"
-        spree/line_item:
-          price: "Ціна"
-          quantity: "Кількість"
-        spree/option_type:
-          name: Назва
-          presentation: "Відобразити як"
-        spree/order:
-        spree/order/bill_address:
-          address1: "Billing address street"
-          city: "Платіжний адресу. Місто"
-          firstname: "Платіжний адресу. Ім'я"
-          lastname: "Платіжний адресу. Прізвище"
-          phone: "Платіжний адресу. Телефон"
-          state: "Платіжний адресу. Регіон/Область"
-          zipcode: "Платіжний адресу. Індекс"
-        spree/order/ship_address:
-          address1: "Billing address street"
-          city: "Адреса доставки. Місто"
-          firstname: "Адреса доставки. Ім'я"
-          lastname: "Адреса доставки. Прізвище"
-          phone: "Адреса доставки. Телефон"
-          state: "Адреса доставки. Регіон/Область"
-          zipcode: "Адреса доставки. Індекс"
-          checkout_complete: "Замовлення завершено"
-          completed_at: "Дата завершення"
-          created_at: Дата замовлення
-          email: E-mail покупця
-          ip_address: "IP адреса"
-          item_total: "Всього товарів"
-          number: "Номер"
-          payment_state: Стан оплати
-          shipment_state: Стан доставки
-          special_instructions: "Додаткові інструкції"
-          state: "Статус"
-          total: "Разом"
-        spree/payment_method:
-          name: "Найменування"
-        spree/product:
-          available_on: "Доступно з"
-          cost_price: "Собівартість"
-          description: "Опис"
-          master_price: "Основна ціна"
-          name: "Назва"
-          on_demand: "On Demand"
-          on_hand: "В наявності"
-          shipping_category: "Категорія доставки"
-          tax_category: "Податкова категорія"
-        spree/promotion:
-          advertise: Рекламувати
-          code: "Код купона"
-          description: "Опис"
-          event_name: Назва події
-          expires_at: "Дата завершення промо-акції"
-          name: "Назва"
-          path: Шлях
-          starts_at: "Дата початку промо-акції"
-          usage_limit: "Максимальна кількість застосувань"
-        spree/property:
-          name: "Найменування"
-          presentation: "Відображати як"
-        spree/prototype:
-          name: "Найменування"
-        spree/return_authorization:
-          amount: "Сума"
-        spree/role:
-          name: "Найменування"
-        spree/state:
-          abbr: "Абревіатура"
-          name: "Назва"
-        spree/tax_category:
-          description: "Опис"
-          name: "Найменування"
-        spree/tax_rate:
-          amount: "Податкова ставка"
-          included_in_price: Включено в ціну
-          show_rate_in_label: Показувати ставку в мітці
-        spree/taxon:
-          name: "Найменування"
-          permalink: "Постійне посилання"
-          position: "Позиція"
-        spree/taxonomy:
-          name: "Найменування"
-        spree/user:
-          email: "Електронна пошта"
-          password: "Пароль"
-          password_confirmation: "Підтвердження пароля"
-        spree/variant:
-          cost_price: "Собівартість"
-          depth: "Глибина"
-          height: "Висота"
-          price: "Ціна"
-          sku: "Артикул"
-          weight: "Вага"
-          width: "Ширина"
-        spree/zone:
-          description: "Опис"
-          name: "Найменування"
-      models:
-        spree/address:
-          one: "Адреса"
-          other: "Адрес"
-        spree/cheque_payment:
-          one: "Оплата чеком"
-          other: "Оплати чеками"
-        spree/country:
-          one: "Країна"
-          other: "Країни"
-        spree/credit_card:
-          one: "Credit Card"
-          other: "Credit Cards"
-        spree/creditcard_payment:
-          one: "Платіж кредитною карткою"
-          other: "Платежі кредитною карткою"
-        spree/creditcard_txn:
-          one: "Транзакція кредитною карткою"
-          other: "Транзакціі кредитною карткою"
-        spree/inventory_unit:
-          one: "Одиниця обліку"
-          other: "Одиниці обліку"
-        spree/line_item:
-          one: "Позиція"
-          other: "Позиції"
-        spree/order:
-          one: "Замовлення"
-          other: "Замовлень"
-        spree/payment:
-          one: "Платіж"
-          other: "Платежі"
-        spree/product:
-          one: "Товар"
-          other: "Товари"
-        spree/property:
-          one: "Властивість"
-          other: "Властивості"
-        spree/prototype:
-          one: "Прототип"
-          other: "Прототипи"
-        spree/return_authorization:
-          one: "Дозвіл на повернення"
-          other: "Дозволи на повернення"
-        spree/role:
-          one: "Роль"
-          other: "Ролі"
-        spree/shipment:
-          one: "Відправлення"
-          other: "Відправки"
-        spree/shipping_category:
-          one: "Категорія доставки"
-          other: "Категорії доставки"
-        spree/state:
-          one: "Регіон/Область"
-          other: "Регіони"
-        spree/tax_category:
-          one: "Податкова категорія"
-          other: "Податкові категорії"
-        spree/tax_rate:
-          one: "Податкова ставка"
-          other: "Податкові ставки"
-        spree/taxon:
-          one: "Таксон"
-          other: "Таксон"
-        spree/taxonomy:
-          one: "Таксономія"
-          other: "Таксономії"
-        spree/user:
-          one: "Користувач"
-          other: "Користувачі"
-        spree/variant:
-          one: "Варіант"
-          other: "Варіанти"
-        spree/zone:
-          one: "Зона"
-          other: "Зони"
     add: "Додати"
     add_action_of_type: Додати дію для типа
     add_category: "Додати категорію"

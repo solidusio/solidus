@@ -1,5 +1,206 @@
 ---
 ru:
+  activerecord:
+    attributes:
+      spree/address:
+        address1: Адрес
+        address2: "доп. адрес"
+        city: Населённый пункт
+        country: "Страна"
+        firstname: "Имя"
+        lastname: "Фамилия"
+        phone: Телефон
+        state: "Область/Регион"
+        zipcode: "Почтовый индекс"
+      spree/country:
+        iso: ISO
+        iso3: ISO3
+        iso_name: "ISO-имя"
+        name: Name
+        numcode: "ISO-код"
+      spree/credit_card:
+        cc_type: Тип
+        month: Месяц
+        number: Номер
+        verification_value: "Значение проверки"
+        year: Год
+      spree/inventory_unit:
+        state: Состояние
+      spree/line_item:
+        price: Цена
+        quantity: Кол-во
+      spree/option_type:
+        name: Название
+        presentation: Представление
+      spree/order:
+        checkout_complete: "Оформление заказа завершено"
+        completed_at: "Завершено"
+        created_at: Дата заказа
+        email: E-mail покупателя
+        ip_address: "IP-адрес"
+        item_total: "Итого по товарам"
+        number: Номер
+        payment_state: Состояние оплаты
+        shipment_state: Состояние доставки
+        special_instructions: "Специальные инструкции"
+        state: Состояние
+        total: Итого по заказу
+      spree/order/bill_address:
+        address1: "Улица"
+        city: "Город"
+        firstname: "Имя"
+        lastname: "Фамилия"
+        phone: "Телефон"
+        state: "Область/Регион"
+        zipcode: "Почтовый индекс"
+      spree/order/ship_address:
+        address1: "Улица"
+        city: "Город"
+        firstname: "Имя"
+        lastname: "Фамилия"
+        phone: "Телефон"
+        state: "Область/Регион"
+        zipcode: "Почтовый индекс"
+      spree/payment_method:
+        name: Название
+      spree/product:
+        available_on: "Доступен с"
+        cost_currency: "Валюта"
+        cost_price: "Себестоимость"
+        description: Описание
+        master_price: "Цена"
+        name: Название
+        on_demand: "По требованию"
+        on_hand: "На складе"
+        shipping_category: "Категория доставки"
+        tax_category: "Категория налогов"
+      spree/promotion:
+        advertise: Рекламировать
+        code: Код
+        description: Описание
+        event_name: Название события
+        expires_at: Истекает в
+        name: Название
+        path: Путь
+        starts_at: Начинается
+        usage_limit: Лимит использования
+      spree/property:
+        name: Название
+        presentation: Представление
+      spree/prototype:
+        name: Название
+      spree/return_authorization:
+        amount: Сумма
+      spree/role:
+        name: Название
+      spree/state:
+        abbr: Аббревиатура
+        name: Название
+      spree/tax_category:
+        description: Описание
+        name: Название
+      spree/tax_rate:
+        amount: Ставка
+        included_in_price: Включено в прайс
+        show_rate_in_label: Показывать ставку в метке
+      spree/taxon:
+        name: Название
+        permalink: Пермалинк
+        position: Позиция
+      spree/taxonomy:
+        name: Название
+      spree/user:
+        email: Email
+        password: "Пароль"
+        password_confirmation: "Подтверждение пароля"
+      spree/variant:
+        cost_currency: "Валюта"
+        cost_price: "Себестоимость"
+        depth: Глубина
+        height: Высота
+        price: Цена
+        sku: Артикул
+        weight: Вес
+        width: Ширина
+      spree/zone:
+        description: Описание
+        name: Название
+    models:
+      spree/address:
+        one: Адрес
+        other: Адреса
+      spree/cheque_payment:
+        one: Оплата чеком
+        other: Платежи чеком
+      spree/country:
+        one: Страна
+        other: Страны
+      spree/credit_card:
+        one: "Кредитная карта"
+        other: "Кредитные карты"
+      spree/creditcard_payment:
+        one: "Платёж кредитной картой"
+        other: "Платёжи кредитной картой"
+      spree/creditcard_txn:
+        one: "Транзакция кредитной картой"
+        other: "Транзакции кредитной картой"
+      spree/inventory_unit:
+        one: "Единица"
+        other: "Единицы"
+      spree/line_item:
+        one: "Позиция"
+        other: "Позиции"
+      spree/order:
+        one: Заказ
+        other: Заказы
+      spree/payment:
+        one: Платёж
+        other: Платежи
+      spree/product:
+        one: Товар
+        other: Товары
+      spree/property:
+        one: Свойство
+        other: Свойства
+      spree/prototype:
+        one: Прототип
+        other: Прототипы
+      spree/return_authorization:
+        one: Return Authorization
+        other: Return Authorizations
+      spree/role:
+        one: Роль
+        other: Роли
+      spree/shipment:
+        one: Доставка
+        other: Доставки
+      spree/shipping_category:
+        one: "Категория доставки"
+        other: "Категории доставки"
+      spree/state:
+        one: Область/Регион
+        other: Области/Регионы
+      spree/tax_category:
+        one: "Категория налогов"
+        other: "Категории налогов"
+      spree/tax_rate:
+        one: "Ставка налога"
+        other: "Ставки налога"
+      spree/taxon:
+        one: Рубрика
+        other: Рубрики
+      spree/taxonomy:
+        one: Категория
+        other: Категории
+      spree/user:
+        one: Пользователь
+        other: Пользователи
+      spree/variant:
+        one: Вариант
+        other: Варианты
+      spree/zone:
+        one: Зона
+        other: Зоны
   spree:
     a_copy_of_all_mail_will_be_sent_to_the_following_addresses: "Копии всех писем будут отосланы на следующие адреса"
     abbreviation: "Аббревиатура"
@@ -24,207 +225,6 @@ ru:
         previous: "&laquo; назад"
         next: "вперёд &raquo;"
         truncate: "..."
-    activerecord:
-      attributes:
-        spree/address:
-          address1: Адрес
-          address2: "доп. адрес"
-          city: Населённый пункт
-          country: "Страна"
-          firstname: "Имя"
-          lastname: "Фамилия"
-          phone: Телефон
-          state: "Область/Регион"
-          zipcode: "Почтовый индекс"
-        spree/country:
-          iso: ISO
-          iso3: ISO3
-          iso_name: "ISO-имя"
-          name: Name
-          numcode: "ISO-код"
-        spree/credit_card:
-          cc_type: Тип
-          month: Месяц
-          number: Номер
-          verification_value: "Значение проверки"
-          year: Год
-        spree/inventory_unit:
-          state: Состояние
-        spree/line_item:
-          price: Цена
-          quantity: Кол-во
-        spree/option_type:
-          name: Название
-          presentation: Представление
-        spree/order:
-          checkout_complete: "Оформление заказа завершено"
-          completed_at: "Завершено"
-          created_at: Дата заказа
-          email: E-mail покупателя
-          ip_address: "IP-адрес"
-          item_total: "Итого по товарам"
-          number: Номер
-          payment_state: Состояние оплаты
-          shipment_state: Состояние доставки
-          special_instructions: "Специальные инструкции"
-          state: Состояние
-          total: Итого по заказу
-        spree/order/bill_address:
-          address1: "Улица"
-          city: "Город"
-          firstname: "Имя"
-          lastname: "Фамилия"
-          phone: "Телефон"
-          state: "Область/Регион"
-          zipcode: "Почтовый индекс"
-        spree/order/ship_address:
-          address1: "Улица"
-          city: "Город"
-          firstname: "Имя"
-          lastname: "Фамилия"
-          phone: "Телефон"
-          state: "Область/Регион"
-          zipcode: "Почтовый индекс"
-        spree/payment_method:
-          name: Название
-        spree/product:
-          available_on: "Доступен с"
-          cost_currency: "Валюта"
-          cost_price: "Себестоимость"
-          description: Описание
-          master_price: "Цена"
-          name: Название
-          on_demand: "По требованию"
-          on_hand: "На складе"
-          shipping_category: "Категория доставки"
-          tax_category: "Категория налогов"
-        spree/promotion:
-          advertise: Рекламировать
-          code: Код
-          description: Описание
-          event_name: Название события
-          expires_at: Истекает в
-          name: Название
-          path: Путь
-          starts_at: Начинается
-          usage_limit: Лимит использования
-        spree/property:
-          name: Название
-          presentation: Представление
-        spree/prototype:
-          name: Название
-        spree/return_authorization:
-          amount: Сумма
-        spree/role:
-          name: Название
-        spree/state:
-          abbr: Аббревиатура
-          name: Название
-        spree/tax_category:
-          description: Описание
-          name: Название
-        spree/tax_rate:
-          amount: Ставка
-          included_in_price: Включено в прайс
-          show_rate_in_label: Показывать ставку в метке
-        spree/taxon:
-          name: Название
-          permalink: Пермалинк
-          position: Позиция
-        spree/taxonomy:
-          name: Название
-        spree/user:
-          email: Email
-          password: "Пароль"
-          password_confirmation: "Подтверждение пароля"
-        spree/variant:
-          cost_currency: "Валюта"
-          cost_price: "Себестоимость"
-          depth: Глубина
-          height: Высота
-          price: Цена
-          sku: Артикул
-          weight: Вес
-          width: Ширина
-        spree/zone:
-          description: Описание
-          name: Название
-      models:
-        spree/address:
-          one: Адрес
-          other: Адреса
-        spree/cheque_payment:
-          one: Оплата чеком
-          other: Платежи чеком
-        spree/country:
-          one: Страна
-          other: Страны
-        spree/credit_card:
-          one: "Кредитная карта"
-          other: "Кредитные карты"
-        spree/creditcard_payment:
-          one: "Платёж кредитной картой"
-          other: "Платёжи кредитной картой"
-        spree/creditcard_txn:
-          one: "Транзакция кредитной картой"
-          other: "Транзакции кредитной картой"
-        spree/inventory_unit:
-          one: "Единица"
-          other: "Единицы"
-        spree/line_item:
-          one: "Позиция"
-          other: "Позиции"
-        spree/order:
-          one: Заказ
-          other: Заказы
-        spree/payment:
-          one: Платёж
-          other: Платежи
-        spree/product:
-          one: Товар
-          other: Товары
-        spree/property:
-          one: Свойство
-          other: Свойства
-        spree/prototype:
-          one: Прототип
-          other: Прототипы
-        spree/return_authorization:
-          one: Return Authorization
-          other: Return Authorizations
-        spree/role:
-          one: Роль
-          other: Роли
-        spree/shipment:
-          one: Доставка
-          other: Доставки
-        spree/shipping_category:
-          one: "Категория доставки"
-          other: "Категории доставки"
-        spree/state:
-          one: Область/Регион
-          other: Области/Регионы
-        spree/tax_category:
-          one: "Категория налогов"
-          other: "Категории налогов"
-        spree/tax_rate:
-          one: "Ставка налога"
-          other: "Ставки налога"
-        spree/taxon:
-          one: Рубрика
-          other: Рубрики
-        spree/taxonomy:
-          one: Категория
-          other: Категории
-        spree/user:
-          one: Пользователь
-          other: Пользователи
-        spree/variant:
-          one: Вариант
-          other: Варианты
-        spree/zone:
-          one: Зона
-          other: Зоны
     add: "Добавить"
     add_action_of_type: "Добавить действие типа"
     add_category: "Добавить категорию"

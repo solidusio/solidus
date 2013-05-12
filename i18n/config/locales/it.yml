@@ -1,5 +1,204 @@
 ---
 it:
+  activerecord:
+    attributes:
+      spree/address:
+        address1: 'Indirizzo'
+        address2: "Indirizzo secondario"
+        city: 'Città'
+        country: "Paese"
+        firstname: "Nome"
+        lastname: "Cognome"
+        phone: 'Telefono'
+        state: "Stato"
+        zipcode: "CAP"
+      spree/country:
+        iso: 'ISO'
+        iso3: 'ISO3'
+        iso_name: "Nome ISO"
+        name: 'Nome'
+        numcode: "Codice ISO"
+      spree/credit_card:
+        cc_type: 'Tipo di carta di credito'
+        month: 'Mese'
+        number: 'Numero'
+        verification_value: "Codice di verifica"
+        year: 'Anno'
+      spree/inventory_unit:
+        state: 'Stato'
+      spree/line_item:
+        price: 'Prezzo'
+        quantity: 'Quantità'
+      spree/option_type:
+        name: Nome
+        presentation: Presentazione
+      spree/order:
+        checkout_complete: "Acquisto Completato"
+        completed_at: "Completato alle"
+        created_at: Order Date
+        email: Customer E-Mail
+        ip_address: "Indirizzo IP"
+        item_total: "Tutti gli articoli"
+        number: Number
+        payment_state: Payment State
+        shipment_state: Shipment State
+        special_instructions: "Special Instructions"
+        state: State
+        total: Total
+      spree/order/bill_address:
+        address1: "Indirizzo stradale (fatturazione)"
+        city: "Città (fatturazione)"
+        firstname: "Nome (fatturazione)"
+        lastname: "Cognome (fatturazione)"
+        phone: "Numero di telefono (fatturazione)"
+        state: "Provincia (fatturazione)"
+        zipcode: "CAP (fatturazione)"
+      spree/order/ship_address:
+        address1: "Indirizzo per la spedizione (Via / Corso etc)"
+        city: "Città"
+        firstname: "Nome"
+        lastname: "Cognome"
+        phone: "Numero di telefono"
+        state: "Provincia"
+        zipcode: "CAP"
+      spree/payment_method:
+        name: Nome
+      spree/product:
+        available_on: "Disponibile in"
+        cost_price: "Prezzo di costo"
+        description: 'Descrizione'
+        master_price: "Prezzo di vendita"
+        name: 'Nome'
+        on_demand: "On Demand"
+        on_hand: "In stock"
+        shipping_category: "Categoria di vendita"
+        tax_category: "Tasse della Categoria"
+      spree/promotion:
+        advertise: "Pubblica"
+        code: "Codice"
+        description: "Descrizione"
+        event_name: "Nome dell'evento"
+        expires_at: "Scade il"
+        name: "Nome"
+        path: "Percorso"
+        starts_at: "Comincia il"
+        usage_limit: "Limiti di utilizzo"
+      spree/property:
+        name: 'Nome'
+        presentation: 'Presentazione'
+      spree/prototype:
+        name: 'Nome'
+      spree/return_authorization:
+        amount: 'Importo'
+      spree/role:
+        name: 'Nome'
+      spree/state:
+        abbr: 'Abbreviazione'
+        name: 'Nome'
+      spree/tax_category:
+        description: 'Descrizione'
+        name: 'Nome'
+      spree/tax_rate:
+        amount: 'Importo tasse'
+        included_in_price: Incluso nel prezzo
+        show_rate_in_label: Show rate in label
+      spree/taxon:
+        name: 'Nome'
+        permalink: 'Permalink'
+        position: 'Posizione'
+      spree/taxonomy:
+        name: 'Nome'
+      spree/user:
+        email: 'Email'
+        password: "Password"
+        password_confirmation: "Conferma password"
+      spree/variant:
+        cost_price: "Prezzo"
+        depth: 'Profondità'
+        height: 'Altezza'
+        price: 'Prezzo'
+        sku: 'SKU'
+        weight: 'Peso'
+        width: 'Larghezza'
+      spree/zone:
+        description: 'Descrizione'
+        name: 'Nome'
+    models:
+      spree/address:
+        one: 'Indirizzo'
+        other: "Indirizzi"
+      spree/cheque_payment:
+        one: "Conferma il Pagamento "
+        other: "Conferma i Pagamenti"
+      spree/country:
+        one: 'Paese'
+        other: 'Paesi'
+      spree/credit_card:
+        one: "Carta di credito"
+        other: "Carte di credito"
+      spree/creditcard_payment:
+        one: "Pagamento con Carta di Credito"
+        other: "Pagamenti con Carta di Credito"
+      spree/creditcard_txn:
+        one: "Transazione con Carta di Credito"
+        other: "Transazioni con Carta di Credito"
+      spree/inventory_unit:
+        one: "Unità d'inventario"
+        other: "Unità d'inventario"
+      spree/line_item:
+        one: "Gamma del prodotto"
+        other: "Gamma dei prodotti"
+      spree/order:
+        one: 'Ordine'
+        other: 'Ordini'
+      spree/payment:
+        one: 'Pagamento'
+        other: 'Pagamenti'
+      spree/product:
+        one: 'Prodotto'
+        other: 'Prodotti'
+      spree/property:
+        one: 'Proprietà'
+        other: 'Proprietà'
+      spree/prototype:
+        one: 'Prototipo'
+        other: 'Prototipi'
+      spree/return_authorization:
+        one: 'Autorizzazione alla restituzione'
+        other: 'Autorizzazioni alla restituzione'
+      spree/role:
+        one: 'Ruolo'
+        other: 'Ruoli'
+      spree/shipment:
+        one: 'Spedizione'
+        other: 'Spedizioni'
+      spree/shipping_category:
+        one: "Consegna Categoria"
+        other: "Consegna Categorie"
+      spree/state:
+        one: 'Regione'
+        other: 'Regioni'
+      spree/tax_category:
+        one: "Categoria delle tasse"
+        other: "Categorie delle tasse"
+      spree/tax_rate:
+        one: "Aliquota fiscale"
+        other: "Aliquote fiscali"
+      spree/taxon:
+        one: 'Tasso'
+        other: 'Tassi'
+      spree/taxonomy:
+        one: 'Tassonomia'
+        other: 'Tassonomie'
+      spree/user:
+        one: 'Utente'
+        other: 'Utenti'
+      spree/variant:
+        one: 'Variante'
+        other: 'Varianti'
+      spree/zone:
+        one: 'Zona'
+        other: 'Zone'
   spree:
     a_copy_of_all_mail_will_be_sent_to_the_following_addresses: 'Una copia di tutte le mail verranno invitate ai seguenti indirizzi'
     abbreviation: 'Abbreviazione'
@@ -17,205 +216,6 @@ it:
       update: 'Aggiorna'
     activate: "Attiva"
     active: "Attivo"
-    activerecord:
-      attributes:
-        spree/address:
-          address1: 'Indirizzo'
-          address2: "Indirizzo secondario"
-          city: 'Città'
-          country: "Paese"
-          firstname: "Nome"
-          lastname: "Cognome"
-          phone: 'Telefono'
-          state: "Stato"
-          zipcode: "CAP"
-        spree/country:
-          iso: 'ISO'
-          iso3: 'ISO3'
-          iso_name: "Nome ISO"
-          name: 'Nome'
-          numcode: "Codice ISO"
-        spree/credit_card:
-          cc_type: 'Tipo di carta di credito'
-          month: 'Mese'
-          number: 'Numero'
-          verification_value: "Codice di verifica"
-          year: 'Anno'
-        spree/inventory_unit:
-          state: 'Stato'
-        spree/line_item:
-          price: 'Prezzo'
-          quantity: 'Quantità'
-        spree/option_type:
-          name: Nome
-          presentation: Presentazione
-        spree/order:
-          checkout_complete: "Acquisto Completato"
-          completed_at: "Completato alle"
-          created_at: Order Date
-          email: Customer E-Mail
-          ip_address: "Indirizzo IP"
-          item_total: "Tutti gli articoli"
-          number: Number
-          payment_state: Payment State
-          shipment_state: Shipment State
-          special_instructions: "Special Instructions"
-          state: State
-          total: Total
-        spree/order/bill_address:
-          address1: "Indirizzo stradale (fatturazione)"
-          city: "Città (fatturazione)"
-          firstname: "Nome (fatturazione)"
-          lastname: "Cognome (fatturazione)"
-          phone: "Numero di telefono (fatturazione)"
-          state: "Provincia (fatturazione)"
-          zipcode: "CAP (fatturazione)"
-        spree/order/ship_address:
-          address1: "Indirizzo per la spedizione (Via / Corso etc)"
-          city: "Città"
-          firstname: "Nome"
-          lastname: "Cognome"
-          phone: "Numero di telefono"
-          state: "Provincia"
-          zipcode: "CAP"
-        spree/payment_method:
-          name: Nome
-        spree/product:
-          available_on: "Disponibile in"
-          cost_price: "Prezzo di costo"
-          description: 'Descrizione'
-          master_price: "Prezzo di vendita"
-          name: 'Nome'
-          on_demand: "On Demand"
-          on_hand: "In stock"
-          shipping_category: "Categoria di vendita"
-          tax_category: "Tasse della Categoria"
-        spree/promotion:
-          advertise: "Pubblica"
-          code: "Codice"
-          description: "Descrizione"
-          event_name: "Nome dell'evento"
-          expires_at: "Scade il"
-          name: "Nome"
-          path: "Percorso"
-          starts_at: "Comincia il"
-          usage_limit: "Limiti di utilizzo"
-        spree/property:
-          name: 'Nome'
-          presentation: 'Presentazione'
-        spree/prototype:
-          name: 'Nome'
-        spree/return_authorization:
-          amount: 'Importo'
-        spree/role:
-          name: 'Nome'
-        spree/state:
-          abbr: 'Abbreviazione'
-          name: 'Nome'
-        spree/tax_category:
-          description: 'Descrizione'
-          name: 'Nome'
-        spree/tax_rate:
-          amount: 'Importo tasse'
-          included_in_price: Incluso nel prezzo
-          show_rate_in_label: Show rate in label
-        spree/taxon:
-          name: 'Nome'
-          permalink: 'Permalink'
-          position: 'Posizione'
-        spree/taxonomy:
-          name: 'Nome'
-        spree/user:
-          email: 'Email'
-          password: "Password"
-          password_confirmation: "Conferma password"
-        spree/variant:
-          cost_price: "Prezzo"
-          depth: 'Profondità'
-          height: 'Altezza'
-          price: 'Prezzo'
-          sku: 'SKU'
-          weight: 'Peso'
-          width: 'Larghezza'
-        spree/zone:
-          description: 'Descrizione'
-          name: 'Nome'
-      models:
-        spree/address:
-          one: 'Indirizzo'
-          other: "Indirizzi"
-        spree/cheque_payment:
-          one: "Conferma il Pagamento "
-          other: "Conferma i Pagamenti"
-        spree/country:
-          one: 'Paese'
-          other: 'Paesi'
-        spree/credit_card:
-          one: "Carta di credito"
-          other: "Carte di credito"
-        spree/creditcard_payment:
-          one: "Pagamento con Carta di Credito"
-          other: "Pagamenti con Carta di Credito"
-        spree/creditcard_txn:
-          one: "Transazione con Carta di Credito"
-          other: "Transazioni con Carta di Credito"
-        spree/inventory_unit:
-          one: "Unità d'inventario"
-          other: "Unità d'inventario"
-        spree/line_item:
-          one: "Gamma del prodotto"
-          other: "Gamma dei prodotti"
-        spree/order:
-          one: 'Ordine'
-          other: 'Ordini'
-        spree/payment:
-          one: 'Pagamento'
-          other: 'Pagamenti'
-        spree/product:
-          one: 'Prodotto'
-          other: 'Prodotti'
-        spree/property:
-          one: 'Proprietà'
-          other: 'Proprietà'
-        spree/prototype:
-          one: 'Prototipo'
-          other: 'Prototipi'
-        spree/return_authorization:
-          one: 'Autorizzazione alla restituzione'
-          other: 'Autorizzazioni alla restituzione'
-        spree/role:
-          one: 'Ruolo'
-          other: 'Ruoli'
-        spree/shipment:
-          one: 'Spedizione'
-          other: 'Spedizioni'
-        spree/shipping_category:
-          one: "Consegna Categoria"
-          other: "Consegna Categorie"
-        spree/state:
-          one: 'Regione'
-          other: 'Regioni'
-        spree/tax_category:
-          one: "Categoria delle tasse"
-          other: "Categorie delle tasse"
-        spree/tax_rate:
-          one: "Aliquota fiscale"
-          other: "Aliquote fiscali"
-        spree/taxon:
-          one: 'Tasso'
-          other: 'Tassi'
-        spree/taxonomy:
-          one: 'Tassonomia'
-          other: 'Tassonomie'
-        spree/user:
-          one: 'Utente'
-          other: 'Utenti'
-        spree/variant:
-          one: 'Variante'
-          other: 'Varianti'
-        spree/zone:
-          one: 'Zona'
-          other: 'Zone'
     add: 'Aggiungi'
     add_action_of_type: "Aggiungi azione del tipo"
     add_category: "Aggiungi categoria"

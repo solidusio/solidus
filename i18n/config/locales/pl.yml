@@ -1,5 +1,204 @@
 ---
 pl:
+activerecord:
+  attributes:
+    spree/address:
+      address1: Adres
+      address2: "Adres (c.d.)"
+      city: Miasto
+      country: "Kraj"
+      firstname: "Imię"
+      lastname: "Nazwisko"
+      phone: Telefon
+      state: "Stan"
+      zipcode: "Kod Pocztowy"
+    spree/country:
+      iso: ISO
+      iso3: ISO3
+      iso_name: "Nazwa ISO"
+      name: Nazwa
+      numcode: "Kod ISO"
+    spree/credit_card:
+      cc_type: Typ
+      month: Miesiąc
+      number: Numer
+      verification_value: "Kod weryfikujący"
+      year: Rok
+    spree/inventory_unit:
+      state: Stan
+    spree/line_item:
+      price: Cena
+      quantity: Ilość
+    spree/option_type:
+      name: Nazwa
+      presentation: Prezentacja
+    spree/order:
+      checkout_complete: "Zamówienie ukończone"
+      completed_at: "Skompletowane o"
+      created_at: "Data zamówienia"
+      email: "E-Mail klienta"
+      ip_address: "Adres IP"
+      item_total: "Całkowita kwota"
+      number: Numer
+      payment_state: "Stan Płatności"
+      shipment_state: "Stan wysyłki"
+      special_instructions: "Specjalne Instrukcje"
+      state: Stan
+      total: Łącznie
+    spree/order/bill_address:
+      address1: "Billing address street"
+      city: "Billing address city"
+      firstname: "Billing address first name"
+      lastname: "Billing address last name"
+      phone: "Billing address phone"
+      state: "Billing address state"
+      zipcode: "Billing address zipcode"
+    spree/order/ship_address:
+      address1: "Shipping address street"
+      city: "Shipping address city"
+      firstname: "Shipping address first name"
+      lastname: "Shipping address last name"
+      phone: "Shipping address phone"
+      state: "Shipping address state"
+      zipcode: "Shipping address zipcode"
+    spree/payment_method:
+      name: Nazwa
+    spree/product:
+      available_on: "Dostępny Od"
+      cost_price: "Cena zakupu"
+      description: Opis
+      master_price: "Cena netto"
+      name: Nazwa
+      on_demand: "Na żadnanie"
+      on_hand: "Dostępny"
+      shipping_category: "Kategoria Dostawy"
+      tax_category: "Kategoria Podatkowa"
+    spree/promotion:
+      advertise: Reklamuj
+      code: Kod
+      description: Opis
+      event_name: Nazwa zdarzenia
+      expires_at: Dostępna do
+      name: Nazwa
+      path: Ścieżka
+      starts_at: Początek
+      usage_limit: Limit
+    spree/property:
+      name: Nazwa
+      presentation: Prezentacja
+    spree/prototype:
+      name: Nazwa
+    spree/return_authorization:
+      amount: Ilość
+    spree/role:
+      name: Nazwa
+    spree/state:
+      abbr: Skrót
+      name: Nazwa
+    spree/tax_category:
+      description: Opis
+      name: Nazwa
+    spree/tax_rate:
+      amount: Stawka
+      included_in_price: Wliczony w cenę
+      show_rate_in_label: Pokaż stawkę na etykieci
+    spree/taxon:
+      name: Nazwa
+      permalink: Permalink
+      position: Pozycja
+    spree/taxonomy:
+      name: Nazwa
+    spree/user:
+      email: Email
+      password: "Hasło"
+      password_confirmation: "Potwierdzenie Hasła"
+    spree/variant:
+      cost_price: "Cena zakupu"
+      depth: Głębokość
+      height: Wysokość
+      price: Cena
+      sku: SKU
+      weight: Waga
+      width: Szerokość
+    spree/zone:
+      description: Opis
+      name: Nazwa
+    models:
+      spree/address:
+        one: Adres
+        other: Adresy
+      spree/cheque_payment:
+        one: Płatność Czekiem
+        other: Płatności Czekiem
+      spree/country:
+        one: Kraj
+        other: Kraje
+      spree/credit_card:
+        one: "Karta Kredytowa"
+        other: "Karty Kredytowe"
+      spree/creditcard_payment:
+        one: "Płatność kartą kredytową"
+        other: "Płatności kartą kredytową"
+      spree/creditcard_txn:
+        one: "Transakcja kartą kredytową"
+        other: "Transakcje kartą kredytową"
+      spree/inventory_unit:
+        one: "Numer inwentaryzacyjny"
+        other: "Numery inwentaryzacyjne"
+      spree/line_item:
+        one: "Pozycja"
+        other: "Pozycje"
+      spree/order:
+        one: Zamówienie
+        other: Zamówienia
+      spree/payment:
+        one: Płatność
+        other: Płatności
+      spree/product:
+        one: Produkt
+        other: Produkty
+      spree/property:
+        one: Własność
+        other: Własności
+      spree/prototype:
+        one: Prototyp
+        other: Prototypy
+      spree/return_authorization:
+        one: Return Authorization
+        other: Return Authorizations
+      spree/role:
+        one: Rola
+        other: Role
+      spree/shipment:
+        one: Wysyłka
+        other: Wysyłki
+      spree/shipping_category:
+        one: "Kategoria Wysyłki"
+        other: "Kategorie Wysyłki"
+      spree/state:
+        one: Stan
+        other: Stany
+      spree/tax_category:
+        one: "Kategoria Podatkowa"
+        other: "Kategorie Podatkowe"
+      spree/tax_rate:
+        one: "Stawka Podatkowa"
+        other: "Stawki Podatkowe"
+      spree/taxon:
+        one: Takson
+        other: Taksony
+      spree/taxonomy:
+        one: Taksonomia
+        other: Taksonomie
+      spree/user:
+        one: Użytkownik
+        other: Użytkownicy
+      spree/variant:
+        one: Wariant
+        other: Warianty
+      spree/zone:
+        one: Strefa
+        other: Strefy
   spree:
     a_copy_of_all_mail_will_be_sent_to_the_following_addresses: Kopia wszystkich listów zostanie wysłana na poniższy adres
     abbreviation: Skrót
@@ -17,205 +216,6 @@ pl:
       update: Aktualizuj
     activate: "Aktywuj"
     active: "Aktywne"
-    activerecord:
-      attributes:
-        spree/address:
-          address1: Adres
-          address2: "Adres (c.d.)"
-          city: Miasto
-          country: "Kraj"
-          firstname: "Imię"
-          lastname: "Nazwisko"
-          phone: Telefon
-          state: "Stan"
-          zipcode: "Kod Pocztowy"
-        spree/country:
-          iso: ISO
-          iso3: ISO3
-          iso_name: "Nazwa ISO"
-          name: Nazwa
-          numcode: "Kod ISO"
-        spree/credit_card:
-          cc_type: Typ
-          month: Miesiąc
-          number: Numer
-          verification_value: "Kod weryfikujący"
-          year: Rok
-        spree/inventory_unit:
-          state: Stan
-        spree/line_item:
-          price: Cena
-          quantity: Ilość
-        spree/option_type:
-          name: Nazwa
-          presentation: Prezentacja
-        spree/order:
-          checkout_complete: "Zamówienie ukończone"
-          completed_at: "Skompletowane o"
-          created_at: "Data zamówienia"
-          email: "E-Mail klienta"
-          ip_address: "Adres IP"
-          item_total: "Całkowita kwota"
-          number: Numer
-          payment_state: "Stan Płatności"
-          shipment_state: "Stan wysyłki"
-          special_instructions: "Specjalne Instrukcje"
-          state: Stan
-          total: Łącznie
-        spree/order/bill_address:
-          address1: "Billing address street"
-          city: "Billing address city"
-          firstname: "Billing address first name"
-          lastname: "Billing address last name"
-          phone: "Billing address phone"
-          state: "Billing address state"
-          zipcode: "Billing address zipcode"
-        spree/order/ship_address:
-          address1: "Shipping address street"
-          city: "Shipping address city"
-          firstname: "Shipping address first name"
-          lastname: "Shipping address last name"
-          phone: "Shipping address phone"
-          state: "Shipping address state"
-          zipcode: "Shipping address zipcode"
-        spree/payment_method:
-          name: Nazwa
-        spree/product:
-          available_on: "Dostępny Od"
-          cost_price: "Cena zakupu"
-          description: Opis
-          master_price: "Cena netto"
-          name: Nazwa
-          on_demand: "Na żadnanie"
-          on_hand: "Dostępny"
-          shipping_category: "Kategoria Dostawy"
-          tax_category: "Kategoria Podatkowa"
-        spree/promotion:
-          advertise: Reklamuj
-          code: Kod
-          description: Opis
-          event_name: Nazwa zdarzenia
-          expires_at: Dostępna do
-          name: Nazwa
-          path: Ścieżka
-          starts_at: Początek
-          usage_limit: Limit
-        spree/property:
-          name: Nazwa
-          presentation: Prezentacja
-        spree/prototype:
-          name: Nazwa
-        spree/return_authorization:
-          amount: Ilość
-        spree/role:
-          name: Nazwa
-        spree/state:
-          abbr: Skrót
-          name: Nazwa
-        spree/tax_category:
-          description: Opis
-          name: Nazwa
-        spree/tax_rate:
-          amount: Stawka
-          included_in_price: Wliczony w cenę
-          show_rate_in_label: Pokaż stawkę na etykieci
-        spree/taxon:
-          name: Nazwa
-          permalink: Permalink
-          position: Pozycja
-        spree/taxonomy:
-          name: Nazwa
-        spree/user:
-          email: Email
-          password: "Hasło"
-          password_confirmation: "Potwierdzenie Hasła"
-        spree/variant:
-          cost_price: "Cena zakupu"
-          depth: Głębokość
-          height: Wysokość
-          price: Cena
-          sku: SKU
-          weight: Waga
-          width: Szerokość
-        spree/zone:
-          description: Opis
-          name: Nazwa
-      models:
-        spree/address:
-          one: Adres
-          other: Adresy
-        spree/cheque_payment:
-          one: Płatność Czekiem
-          other: Płatności Czekiem
-        spree/country:
-          one: Kraj
-          other: Kraje
-        spree/credit_card:
-          one: "Karta Kredytowa"
-          other: "Karty Kredytowe"
-        spree/creditcard_payment:
-          one: "Płatność kartą kredytową"
-          other: "Płatności kartą kredytową"
-        spree/creditcard_txn:
-          one: "Transakcja kartą kredytową"
-          other: "Transakcje kartą kredytową"
-        spree/inventory_unit:
-          one: "Numer inwentaryzacyjny"
-          other: "Numery inwentaryzacyjne"
-        spree/line_item:
-          one: "Pozycja"
-          other: "Pozycje"
-        spree/order:
-          one: Zamówienie
-          other: Zamówienia
-        spree/payment:
-          one: Płatność
-          other: Płatności
-        spree/product:
-          one: Produkt
-          other: Produkty
-        spree/property:
-          one: Własność
-          other: Własności
-        spree/prototype:
-          one: Prototyp
-          other: Prototypy
-        spree/return_authorization:
-          one: Return Authorization
-          other: Return Authorizations
-        spree/role:
-          one: Rola
-          other: Role
-        spree/shipment:
-          one: Wysyłka
-          other: Wysyłki
-        spree/shipping_category:
-          one: "Kategoria Wysyłki"
-          other: "Kategorie Wysyłki"
-        spree/state:
-          one: Stan
-          other: Stany
-        spree/tax_category:
-          one: "Kategoria Podatkowa"
-          other: "Kategorie Podatkowe"
-        spree/tax_rate:
-          one: "Stawka Podatkowa"
-          other: "Stawki Podatkowe"
-        spree/taxon:
-          one: Takson
-          other: Taksony
-        spree/taxonomy:
-          one: Taksonomia
-          other: Taksonomie
-        spree/user:
-          one: Użytkownik
-          other: Użytkownicy
-        spree/variant:
-          one: Wariant
-          other: Warianty
-        spree/zone:
-          one: Strefa
-          other: Strefy
     add: Dodaj
     add_action_of_type: Dodaj akcję o typie
     add_category: "Dodaj kategorię"

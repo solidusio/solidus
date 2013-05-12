@@ -1,5 +1,204 @@
 ---
 de:
+  activerecord:
+    attributes:
+      spree/address:
+        address1: Adresse
+        address2: "Adresse (Fortsetzung)"
+        city: Stadt
+        country: "Land"
+        firstname: "Vorname"
+        lastname: "Nachname"
+        phone: Telefonnummer
+        state: "Bundesland"
+        zipcode: PLZ
+      spree/country:
+        iso: ISO
+        iso3: ISO3
+        iso_name: "ISO-Name"
+        name: Name
+        numcode: "ISO-Nummer"
+      spree/credit_card:
+        cc_type: Typ
+        month: Monat
+        number: Nummer
+        verification_value: Kartenprüfnummer
+        year: Jahr
+      spree/inventory_unit:
+        state: Bundesland
+      spree/line_item:
+        price: Preis
+        quantity: Menge
+      spree/option_type:
+        name: Name
+        presentation: Angezeigter Wert
+      spree/order:
+        checkout_complete: "Checkout Erfolgreich"
+        completed_at: "Abgeschlossen am"
+        created_at: Bestelldatum
+        email: Kunden E-Mail
+        ip_address: "IP Adresse"
+        item_total: "Summe"
+        number: Bestellnummer
+        payment_state: Bezahlstatus
+        shipment_state: Versandstatus
+        special_instructions: "Zusätzliche Angaben"
+        state: Status
+        total: Gesamtsumme
+      spree/order/bill_address:
+        address1: "Billing address street"
+        city: "Billing address city"
+        firstname: "Billing address first name"
+        lastname: "Billing address last name"
+        phone: "Billing address phone"
+        state: "Billing address state"
+        zipcode: "Billing address zipcode"
+      spree/order/ship_address:
+        address1: "Shipping address street"
+        city: "Shipping address city"
+        firstname: "Shipping address first name"
+        lastname: "Shipping address last name"
+        phone: "Shipping address phone"
+        state: "Shipping address state"
+        zipcode: "Shipping address zipcode"
+      spree/payment_method:
+        name: Name
+      spree/product:
+        available_on: "Erhältlich ab"
+        cost_price: "Einkaufspreis"
+        description: Beschreibung
+        master_price: Nettopreis
+        name: Name
+        on_demand: "Auf Anfrage"
+        on_hand: verfügbar
+        shipping_category: "Versandkategorie"
+        tax_category: "Steuerkategorie"
+      spree/promotion:
+        advertise: Advertise
+        code: Code
+        description: Beschreibung
+        event_name: Event Name
+        expires_at: Läuft aus am
+        name: Name
+        path: Path
+        starts_at: Beginnt am
+        usage_limit: Usage Limit
+      spree/property:
+        name: Name
+        presentation: Angezeigter Wert
+      spree/prototype:
+        name: Name
+      spree/return_authorization:
+        amount: Anzahl
+      spree/role:
+        name: Name
+      spree/state:
+        abbr: Abkürzung
+        name: Name
+      spree/tax_category:
+        description: Beschreibung
+        name: Name
+      spree/tax_rate:
+        amount: Satz
+        included_in_price: Im Preis enthalten
+        show_rate_in_label: Zeige Steuersatz im Label
+      spree/taxon:
+        name: Name
+        permalink: Permalink
+        position: Posten
+      spree/taxonomy:
+        name: Name
+      spree/user:
+        email: E-Mail
+        password: "Passwort"
+        password_confirmation: "Passwort Bestätigung"
+      spree/variant:
+        cost_price: "Einkaufspreis"
+        depth: Tiefe
+        height: Höhe
+        price: Preis
+        sku: Artikelnummer
+        weight: Gewicht
+        width: Breite
+      spree/zone:
+        description: Beschreibung
+        name: Name
+    models:
+      spree/address:
+        one: Adresse
+        other: Adressen
+      spree/cheque_payment:
+        one: Scheckzahlung
+        other: Scheckzahlungen
+      spree/country:
+        one: Land
+        other: Länder
+      spree/credit_card:
+        one: Kreditkarte
+        other: Kreditkarten
+      spree/creditcard_payment:
+        one: "Kreditkartenzahlung"
+        other: "Kreditkartenzahlungen"
+      spree/creditcard_txn:
+        one: "Kreditkartentransaktion"
+        other: "Kreditkartentransaktionen"
+      spree/inventory_unit:
+        one: Inventarnummer
+        other: Inventarnummern
+      spree/line_item:
+        one: Einzelposten
+        other: Einzelposten
+      spree/order:
+        one: Bestellung
+        other: Bestellungen
+      spree/payment:
+        one: Bezahlung
+        other: Bezahlungen
+      spree/product:
+        one: Produkt
+        other: Produkte
+      spree/property:
+        one: Eigenschaft
+        other: Eigenschaften
+      spree/prototype:
+        one: Prototyp
+        other: Prototypen
+      spree/return_authorization:
+        one: Rückgabebewilligung
+        other: Rückgabebewilligungen
+      spree/role:
+        one: Rolle
+        other: Rollen
+      spree/shipment:
+        one: Lieferung
+        other: Lieferungen
+      spree/shipping_category:
+        one: "Versandkategorie"
+        other: "Versandkategorien"
+      spree/state:
+        one: Bundesland
+        other: Bundesländer
+      spree/tax_category:
+        one: "Steuerkategorie"
+        other: "Steuerkategorien"
+      spree/tax_rate:
+        one: "Steuersatz"
+        other: "Steuersätze"
+      spree/taxon:
+        one: "Produktklasse"
+        other: "Produktklassen"
+      spree/taxonomy:
+        one: Produktklassifizierung
+        other: Produktklassifizierungen
+      spree/user:
+        one: Benutzer
+        other: Benutzer
+      spree/variant:
+        one: Variante
+        other: Varianten
+      spree/zone:
+        one: Gebiet
+        other: Gebiete
   spree:
     a_copy_of_all_mail_will_be_sent_to_the_following_addresses: "Eine Kopie aller E-Mails wird an die folgenden Adressen geschickt"
     abbreviation: Abkürzung
@@ -17,205 +216,6 @@ de:
       update: aktualisieren
     activate: "Aktivieren"
     active: "Aktiv"
-    activerecord:
-      attributes:
-        spree/address:
-          address1: Adresse
-          address2: "Adresse (Fortsetzung)"
-          city: Stadt
-          country: "Land"
-          firstname: "Vorname"
-          lastname: "Nachname"
-          phone: Telefonnummer
-          state: "Bundesland"
-          zipcode: PLZ
-        spree/country:
-          iso: ISO
-          iso3: ISO3
-          iso_name: "ISO-Name"
-          name: Name
-          numcode: "ISO-Nummer"
-        spree/credit_card:
-          cc_type: Typ
-          month: Monat
-          number: Nummer
-          verification_value: Kartenprüfnummer
-          year: Jahr
-        spree/inventory_unit:
-          state: Bundesland
-        spree/line_item:
-          price: Preis
-          quantity: Menge
-        spree/option_type:
-          name: Name
-          presentation: Angezeigter Wert
-        spree/order:
-          checkout_complete: "Checkout Erfolgreich"
-          completed_at: "Abgeschlossen am"
-          created_at: Bestelldatum
-          email: Kunden E-Mail
-          ip_address: "IP Adresse"
-          item_total: "Summe"
-          number: Bestellnummer
-          payment_state: Bezahlstatus
-          shipment_state: Versandstatus
-          special_instructions: "Zusätzliche Angaben"
-          state: Status
-          total: Gesamtsumme
-        spree/order/bill_address:
-          address1: "Billing address street"
-          city: "Billing address city"
-          firstname: "Billing address first name"
-          lastname: "Billing address last name"
-          phone: "Billing address phone"
-          state: "Billing address state"
-          zipcode: "Billing address zipcode"
-        spree/order/ship_address:
-          address1: "Shipping address street"
-          city: "Shipping address city"
-          firstname: "Shipping address first name"
-          lastname: "Shipping address last name"
-          phone: "Shipping address phone"
-          state: "Shipping address state"
-          zipcode: "Shipping address zipcode"
-        spree/payment_method:
-          name: Name
-        spree/product:
-          available_on: "Erhältlich ab"
-          cost_price: "Einkaufspreis"
-          description: Beschreibung
-          master_price: Nettopreis
-          name: Name
-          on_demand: "Auf Anfrage"
-          on_hand: verfügbar
-          shipping_category: "Versandkategorie"
-          tax_category: "Steuerkategorie"
-        spree/promotion:
-          advertise: Advertise
-          code: Code
-          description: Beschreibung
-          event_name: Event Name
-          expires_at: Läuft aus am
-          name: Name
-          path: Path
-          starts_at: Beginnt am
-          usage_limit: Usage Limit
-        spree/property:
-          name: Name
-          presentation: Angezeigter Wert
-        spree/prototype:
-          name: Name
-        spree/return_authorization:
-          amount: Anzahl
-        spree/role:
-          name: Name
-        spree/state:
-          abbr: Abkürzung
-          name: Name
-        spree/tax_category:
-          description: Beschreibung
-          name: Name
-        spree/tax_rate:
-          amount: Satz
-          included_in_price: Im Preis enthalten
-          show_rate_in_label: Zeige Steuersatz im Label
-        spree/taxon:
-          name: Name
-          permalink: Permalink
-          position: Posten
-        spree/taxonomy:
-          name: Name
-        spree/user:
-          email: E-Mail
-          password: "Passwort"
-          password_confirmation: "Passwort Bestätigung"
-        spree/variant:
-          cost_price: "Einkaufspreis"
-          depth: Tiefe
-          height: Höhe
-          price: Preis
-          sku: Artikelnummer
-          weight: Gewicht
-          width: Breite
-        spree/zone:
-          description: Beschreibung
-          name: Name
-      models:
-        spree/address:
-          one: Adresse
-          other: Adressen
-        spree/cheque_payment:
-          one: Scheckzahlung
-          other: Scheckzahlungen
-        spree/country:
-          one: Land
-          other: Länder
-        spree/credit_card:
-          one: Kreditkarte
-          other: Kreditkarten
-        spree/creditcard_payment:
-          one: "Kreditkartenzahlung"
-          other: "Kreditkartenzahlungen"
-        spree/creditcard_txn:
-          one: "Kreditkartentransaktion"
-          other: "Kreditkartentransaktionen"
-        spree/inventory_unit:
-          one: Inventarnummer
-          other: Inventarnummern
-        spree/line_item:
-          one: Einzelposten
-          other: Einzelposten
-        spree/order:
-          one: Bestellung
-          other: Bestellungen
-        spree/payment:
-          one: Bezahlung
-          other: Bezahlungen
-        spree/product:
-          one: Produkt
-          other: Produkte
-        spree/property:
-          one: Eigenschaft
-          other: Eigenschaften
-        spree/prototype:
-          one: Prototyp
-          other: Prototypen
-        spree/return_authorization:
-          one: Rückgabebewilligung
-          other: Rückgabebewilligungen
-        spree/role:
-          one: Rolle
-          other: Rollen
-        spree/shipment:
-          one: Lieferung
-          other: Lieferungen
-        spree/shipping_category:
-          one: "Versandkategorie"
-          other: "Versandkategorien"
-        spree/state:
-          one: Bundesland
-          other: Bundesländer
-        spree/tax_category:
-          one: "Steuerkategorie"
-          other: "Steuerkategorien"
-        spree/tax_rate:
-          one: "Steuersatz"
-          other: "Steuersätze"
-        spree/taxon:
-          one: "Produktklasse"
-          other: "Produktklassen"
-        spree/taxonomy:
-          one: Produktklassifizierung
-          other: Produktklassifizierungen
-        spree/user:
-          one: Benutzer
-          other: Benutzer
-        spree/variant:
-          one: Variante
-          other: Varianten
-        spree/zone:
-          one: Gebiet
-          other: Gebiete
     add: "Hinzufügen"
     add_action_of_type: Add action of type
     add_category: "Kategorie hinzufügen"

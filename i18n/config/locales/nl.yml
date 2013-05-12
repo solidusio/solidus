@@ -1,216 +1,196 @@
 ---
 nl:
-  spree:
-    say_no: "Nee"
-    say_yes: "Ja"
-    5_biggest_spenders: "5 grootste klanten"
-    a_copy_of_all_mail_will_be_sent_to_the_following_addresses: "Een kopie van alle mail wordt verzonden naar de volgende adressen"
-    abbreviation: "Afkorting"
-    access_denied: "Toegang geweigerd"
-    account: "Account"
-    account_updated: "Account bijgewerkt!"
-    action: "Actie"
-    actions:
-      cancel: "Annuleer"
-      create: "Aanmaken"
-      destroy: "Verwijder"
-      list: "Lijst"
-      listing: "Opsomming"
-      new: "Nieuw"
-      update: "Bijwerken"
-    active: "Actief"
-    activerecord:
-      attributes:
-        address:
-          address1: "Adres"
-          address2: "Adres 2"
-          city: "Woonplaats"
-          country: "Land"
-          first_name_begins_with: "Voornaam begint met"
-          firstname: "Voornaam"
-          last_name_begins_with: "Achternaam begint met"
-          lastname: "Achternaam"
-          phone: "Telefoon"
-          state: "Provincie"
-          zipcode: "Postcode"
-        checkout:
-          bill_address:
-            address1: "Factuuradres"
-            city: "Woonplaats"
-            firstname: "Voornaam"
-            lastname: "Achternaam"
-            phone: "Telefoon"
-            state: "Provincie"
-            zipcode: "Postcode"
-          ship_address:
-            address1: "Verzendadres"
-            city: "Woonplaats"
-            firstname: "Voornaam"
-            lastname: "Achternaam"
-            phone: "Telefoon"
-            state: "Provincie"
-            zipcode: "Postcode"
-        country:
-          iso: "ISO"
-          iso3: "ISO3"
-          iso_name: "ISO Naam"
-          name: "Naam"
-          numcode: "ISO Code"
-        creditcard:
-          cc_type: "Type"
-          month: "Maand"
-          number: "Nummer"
-          verification_value: "Verificatie nummer"
-          year: "Jaar"
-        inventory_unit:
-          state: "Status"
-        line_item:
-          price: "Prijs"
-          quantity: "Aantal"
-        order:
-          checkout_complete: "Bestelling afgerond"
-          completed_at: "Voltooid op"
-          coupon_code: "Kortingscode"
-          ip_address: "IP adres"
-          item_total: "Product totaal"
-          number: "Nummer"
-          special_instructions: "Speciale instructies"
-          state: "Provincie"
-          total: "Totaal"
-        product:
-          available_on: "Beschikbaar Op"
-          cost_price: "Kostprijs"
-          description: "Omschrijving"
-          master_price: "Prijs"
-          name: "Naam"
-          on_hand: "Op Voorraad"
-          shipping_category: "Verzend categorie"
-          tax_category: "Belasting categorie"
-        product_group:
-          name: "Naam"
-          product_count: "Product aantal"
-          product_scopes: "Product scopes"
-          products: "Producten"
-          url: "URL"
-        product_scope:
-          arguments: "Eigenschappen"
-          description: "Omschrijving"
-        promotion:
-          code: "Code"
-          description: "Omschrijving"
-          expires_at: "Verloopt op"
-          name: "Naam"
-          starts_at: "Begint op"
-          usage_limit: "Gebruikslimiet"
-        property:
-          name: "Naam"
-          presentation: "Presentatie"
-        prototype:
-          name: "Naam"
-        return_authorization:
-          amount: "Aantal"
-        role:
-          name: "Naam"
-        state:
-          abbr: "Afkorting"
-          name: "Naam"
-        tax_category:
-          description: "Omschrijving"
-          name: "Naam"
-        tax_rate:
-          amount: "Bedrag"
-        taxon:
-          name: "Naam"
-          permalink: "Permalink"
-          position: "Positie"
-        taxonomy:
-          name: "Naam"
-        user:
-          email: "E-mail"
-        variant:
-          cost_price: "Kostprijs"
-          depth: "Diepte"
-          height: "Hoogte"
-          price: "Prijs"
-          sku: "Sku"
-          weight: "Gewicht"
-          width: "Breedte"
-        zone:
-          description: "Omschrijving"
-          name: "Naam"
-      models:
-        address:
-          one: "Adres"
-          other: "Adressen"
-        cheque_payment:
-          one: "Cheque betaling"
-          other: "Cheque betalingen"
-        country:
-          one: "Land"
-          other: "Landen"
-        creditcard:
-          one: "Creditcard"
-          other: "Creditcards"
-        inventory_unit:
-          one: "Voorraad eenheid"
-          other: "Voorraad eenheden"
-        line_item:
-          one: "Regel"
-          other: "Regels"
-        order:
-          one: "Bestelling"
-          other: "Bestellingen"
-        payment:
-          one: "Betaling"
-          other: "Betalingen"
-        product:
-          one: "Product"
-          other: "Producten"
-        product_group:
-          one: "Product groep"
-          other: "Product groepen"
-        property:
-          one: "Eigenschap"
-          other: "Eigenschappen"
-        prototype:
-          one: "Prototype"
-          other: "Prototypen"
-        return_authorization:
-          one: "Geef goedkeuring"
-          other: "Geef goedkeuringen"
-        role:
-          one: "Rol"
-          other: "Rollen"
-        shipment:
-          one: "Verzending"
-          other: "Verzendingen"
-        shipping_category:
-          one: "Verzend categorie"
-          other: "Verzend categorieën"
-        state:
-          one: "Provincie"
-          other: "Provincies"
-        tax_category:
-          one: "Belasting Categorie"
-          other: "Belasting Categorieën"
-        tax_rate:
-          one: "Belasting Tarief"
-          other: "Belasting Tarieven"
-        taxon:
-          one: "Taxon"
-          other: "Taxa"
-        taxonomy:
-          one: "Taxonomie"
-          other: "Taxonomieën"
-        user:
-          one: "Gebruiker"
-          other: "Gebruikers"
-        variant:
-          one: "Variant"
-          other: "Varianten"
-        zone:
-          one: "Zone"
-          other: "Zones"
+  activerecord:
+    attributes:
+      spree/address:
+        address1: "Adres"
+        address2: "Adres 2"
+        city: "Woonplaats"
+        country: "Land"
+        first_name_begins_with: "Voornaam begint met"
+        firstname: "Voornaam"
+        last_name_begins_with: "Achternaam begint met"
+        lastname: "Achternaam"
+        phone: "Telefoon"
+        state: "Provincie"
+        zipcode: "Postcode"
+      spree/order/bill_address:
+        address1: "Factuuradres"
+        city: "Woonplaats"
+        firstname: "Voornaam"
+        lastname: "Achternaam"
+        phone: "Telefoon"
+        state: "Provincie"
+        zipcode: "Postcode"
+      spree/order/ship_address:
+        address1: "Verzendadres"
+        city: "Woonplaats"
+        firstname: "Voornaam"
+        lastname: "Achternaam"
+        phone: "Telefoon"
+        state: "Provincie"
+        zipcode: "Postcode"
+      spree/country:
+        iso: "ISO"
+        iso3: "ISO3"
+        iso_name: "ISO Naam"
+        name: "Naam"
+        numcode: "ISO Code"
+      spree/creditcard:
+        cc_type: "Type"
+        month: "Maand"
+        number: "Nummer"
+        verification_value: "Verificatie nummer"
+        year: "Jaar"
+      spree/inventory_unit:
+        state: "Status"
+      spree/line_item:
+        price: "Prijs"
+        quantity: "Aantal"
+      spree/order:
+        checkout_complete: "Bestelling afgerond"
+        completed_at: "Voltooid op"
+        coupon_code: "Kortingscode"
+        ip_address: "IP adres"
+        item_total: "Product totaal"
+        number: "Nummer"
+        special_instructions: "Speciale instructies"
+        state: "Provincie"
+        total: "Totaal"
+      spree/product:
+        available_on: "Beschikbaar Op"
+        cost_price: "Kostprijs"
+        description: "Omschrijving"
+        master_price: "Prijs"
+        name: "Naam"
+        on_hand: "Op Voorraad"
+        shipping_category: "Verzend categorie"
+        tax_category: "Belasting categorie"
+      spree/product_group:
+        name: "Naam"
+        product_count: "Product aantal"
+        product_scopes: "Product scopes"
+        products: "Producten"
+        url: "URL"
+      spree/product_scope:
+        arguments: "Eigenschappen"
+        description: "Omschrijving"
+      spree/promotion:
+        code: "Code"
+        description: "Omschrijving"
+        expires_at: "Verloopt op"
+        name: "Naam"
+        starts_at: "Begint op"
+        usage_limit: "Gebruikslimiet"
+      spree/property:
+        name: "Naam"
+        presentation: "Presentatie"
+      spree/prototype:
+        name: "Naam"
+      spree/return_authorization:
+        amount: "Aantal"
+      spree/role:
+        name: "Naam"
+      spree/state:
+        abbr: "Afkorting"
+        name: "Naam"
+      spree/tax_category:
+        description: "Omschrijving"
+        name: "Naam"
+      spree/tax_rate:
+        amount: "Bedrag"
+      spree/taxon:
+        name: "Naam"
+        permalink: "Permalink"
+        position: "Positie"
+      spree/taxonomy:
+        name: "Naam"
+      spree/user:
+        email: "E-mail"
+      spree/variant:
+        cost_price: "Kostprijs"
+        depth: "Diepte"
+        height: "Hoogte"
+        price: "Prijs"
+        sku: "Sku"
+        weight: "Gewicht"
+        width: "Breedte"
+      spree/zone:
+        description: "Omschrijving"
+        name: "Naam"
+    models:
+      spree/address:
+        one: "Adres"
+        other: "Adressen"
+      spree/cheque_payment:
+        one: "Cheque betaling"
+        other: "Cheque betalingen"
+      spree/country:
+        one: "Land"
+        other: "Landen"
+      spree/creditcard:
+        one: "Creditcard"
+        other: "Creditcards"
+      spree/inventory_unit:
+        one: "Voorraad eenheid"
+        other: "Voorraad eenheden"
+      spree/line_item:
+        one: "Regel"
+        other: "Regels"
+      spree/order:
+        one: "Bestelling"
+        other: "Bestellingen"
+      spree/payment:
+        one: "Betaling"
+        other: "Betalingen"
+      spree/product:
+        one: "Product"
+        other: "Producten"
+      spree/product_group:
+        one: "Product groep"
+        other: "Product groepen"
+      spree/property:
+        one: "Eigenschap"
+        other: "Eigenschappen"
+      spree/prototype:
+        one: "Prototype"
+        other: "Prototypen"
+      spree/return_authorization:
+        one: "Geef goedkeuring"
+        other: "Geef goedkeuringen"
+      spree/role:
+        one: "Rol"
+        other: "Rollen"
+      spree/shipment:
+        one: "Verzending"
+        other: "Verzendingen"
+      spree/shipping_category:
+        one: "Verzend categorie"
+        other: "Verzend categorieën"
+      spree/state:
+        one: "Provincie"
+        other: "Provincies"
+      spree/tax_category:
+        one: "Belasting Categorie"
+        other: "Belasting Categorieën"
+      spree/tax_rate:
+        one: "Belasting Tarief"
+        other: "Belasting Tarieven"
+      spree/taxon:
+        one: "Taxon"
+        other: "Taxa"
+      spree/taxonomy:
+        one: "Taxonomie"
+        other: "Taxonomieën"
+      spree/user:
+        one: "Gebruiker"
+        other: "Gebruikers"
+      spree/variant:
+        one: "Variant"
+        other: "Varianten"
+      spree/zone:
+        one: "Zone"
+        other: "Zones"
       errors:
         template:
             body: "Er zijn problemen met de volgende velden"
@@ -237,6 +217,25 @@ nl:
             less_than_or_equal_to: "moet minder of gelijk zijn aan %{count}"
             odd: "moet oneven zijn"
             even: "moet even zijn"
+  spree:
+    say_no: "Nee"
+    say_yes: "Ja"
+    5_biggest_spenders: "5 grootste klanten"
+    a_copy_of_all_mail_will_be_sent_to_the_following_addresses: "Een kopie van alle mail wordt verzonden naar de volgende adressen"
+    abbreviation: "Afkorting"
+    access_denied: "Toegang geweigerd"
+    account: "Account"
+    account_updated: "Account bijgewerkt!"
+    action: "Actie"
+    actions:
+      cancel: "Annuleer"
+      create: "Aanmaken"
+      destroy: "Verwijder"
+      list: "Lijst"
+      listing: "Opsomming"
+      new: "Nieuw"
+      update: "Bijwerken"
+    active: "Actief"
     add: "Toevoegen"
     add_category: "Categorie toevoegen"
     add_country: "Land toevoegen"

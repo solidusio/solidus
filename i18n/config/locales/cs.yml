@@ -1,5 +1,204 @@
 ---
 cs:
+  activerecord:
+    attributes:
+      spree/address:
+        address1: Adresa
+        address2: "Adresa (pokr.)"
+        city: Město
+        country: Stát
+        firstname: Jméno
+        lastname: Příjmení
+        phone: Telefon
+        state: Země
+        zipcode: PSČ
+      spree/country:
+        iso: ISO
+        iso3: ISO3
+        iso_name: "Název ISO"
+        name: Název
+        numcode: "ISO kód"
+      spree/credit_card:
+        cc_type: Typ
+        month: Měsíc
+        number: Číslo
+        verification_value: "Verifikační význam"
+        year: Rok
+      spree/inventory_unit:
+        state: Země
+      spree/line_item:
+        price: Cena
+        quantity: Množství
+      spree/option_type:
+        name: Název
+        presentation: Prezentace
+      spree/order:
+        checkout_complete: "Odhlášení dokončeno"
+        completed_at: "Dokončeno v"
+        created_at: "Vytvořené v datu"
+        email: "E-Mail zákazníka"
+        ip_address: "IP Adresa"
+        item_total: "Zápis údajů"
+        number: Číslo
+        payment_state: "Stav platby"
+        shipment_state: "Stav zásílky"
+        special_instructions: "Speciální instrukce"
+        state: Stav
+        total: Total
+      spree/order/bill_address:
+        address1: Ulice
+        city: Město
+        firstname: Jméno
+        lastname: Přijmení
+        phone: Telefon
+        state: Země
+        zipcode: PSČ
+      spree/order/ship_address:
+        address1: Ulice
+        city: Město
+        firstname: Jmeno
+        lastname: Přijmeni
+        phone: Telefon
+        state: Země
+        zipcode: PSČ
+      spree/payment_method:
+        name: Název
+      spree/product:
+        available_on: "K dispozici na"
+        cost_price: "Nákladová cena"
+        description: Popis
+        master_price: "Základní cena"
+        name: Jmeno
+        on_demand: "Na požádání"
+        on_hand: Skladem
+        shipping_category: "Přepravní kategorie"
+        tax_category: "Kategorie daně"
+      spree/promotion:
+        advertise: Reklama
+        code: Kód
+        description: Popis
+        event_name: "Název události"
+        expires_at: "Vyprší v"
+        name: Název
+        path: Cesta
+        starts_at: "Začíná v"
+        usage_limit: "Omezení použití"
+      spree/property:
+        name: Název
+        presentation: Prezentace
+      spree/prototype:
+        name: Název
+      spree/return_authorization:
+        amount: Množství
+      spree/role:
+        name: Název
+      spree/state:
+        abbr: Zkratka
+        name: Název
+      spree/tax_category:
+        description: Popis
+        name: Název
+      spree/tax_rate:
+        amount: Sazba
+        included_in_price: "Zahrnuto v ceně"
+        show_rate_in_label: "Zobrazit cenu na známce"
+      spree/taxon:
+        name: Název
+        permalink: "Trvalý odkaz"
+        position: Pozice
+      spree/taxonomy:
+        name: Název
+      spree/user:
+        email: Email
+        password: Heslo
+        password_confirmation: "Potvrzení hesla"
+      spree/variant:
+        cost_price: "Velkoobchodní cena"
+        depth: Hloubka
+        height: Výška
+        price: Cena
+        sku: SKU
+        weight: Hmotnost
+        width: Šířka
+      spree/zone:
+        description: Popis
+        name: Název
+    models:
+      spree/address:
+        one: Adresa
+        other: Adresy
+      spree/cheque_payment:
+        one: "Kontrola platby"
+        other: "Kontrola plateb"
+      spree/country:
+        one: Země
+        other: Země
+      spree/credit_card:
+        one: "Kreditní karta"
+        other: "Kreditní karty"
+      spree/creditcard_payment:
+        one: "Platba kreditní kartou"
+        other: "Platby kreditní kartou"
+      spree/creditcard_txn:
+        one: "Transakce kreditní kartou"
+        other: "Transakce kreditními kartami"
+      spree/inventory_unit:
+        one: "Inventární jednotka"
+        other: "Inventární jednotky"
+      spree/line_item:
+        one: "Řádková položka"
+        other: "Řádkové položky"
+      spree/order:
+        one: Objednávka
+        other: Objednávky
+      spree/payment:
+        one: Platba
+        other: Platby
+      spree/product:
+        one: Výrobek
+        other: Výrobky
+      spree/property:
+        one: Vlastnost
+        other: Vlastnosti
+      spree/prototype:
+        one: Šablon
+        other: Šablony
+      spree/return_authorization:
+        one: "Návrat autorizace"
+        other: "Návrat povolení"
+      spree/role:
+        one: Funkce
+        other: Funkce
+      spree/shipment:
+        one: Náklad
+        other: Náklady
+      spree/shipping_category:
+        one: "Kategorie dopravy"
+        other: "Kategorie dopravy"
+      spree/state:
+        one: Země
+        other: Země
+      spree/tax_category:
+        one: "Daňová kategorie"
+        other: "Daňové kategorie"
+      spree/tax_rate:
+        one: "Sazba daně"
+        other: "Sazby daně"
+      spree/taxon:
+        one: Taxon
+        other: Taxons
+      spree/taxonomy:
+        one: Taxonomy
+        other: Taxonomies
+      spree/user:
+        one: Uživatel
+        other: Uživatelé
+      spree/variant:
+        one: Varianta
+        other: Varianty
+      spree/zone:
+        one: Zóna
+        other: Zóny
   spree:
     a_copy_of_all_mail_will_be_sent_to_the_following_addresses: "Zasílat kopii každého odeslaného emailu na další adresu"
     abbreviation: Zkratka
@@ -17,205 +216,6 @@ cs:
       update: Uložit
     activate: Aktivovat
     active: Aktivní
-    activerecord:
-      attributes:
-        spree/address:
-          address1: Adresa
-          address2: "Adresa (pokr.)"
-          city: Město
-          country: Stát
-          firstname: Jméno
-          lastname: Příjmení
-          phone: Telefon
-          state: Země
-          zipcode: PSČ
-        spree/country:
-          iso: ISO
-          iso3: ISO3
-          iso_name: "Název ISO"
-          name: Název
-          numcode: "ISO kód"
-        spree/credit_card:
-          cc_type: Typ
-          month: Měsíc
-          number: Číslo
-          verification_value: "Verifikační význam"
-          year: Rok
-        spree/inventory_unit:
-          state: Země
-        spree/line_item:
-          price: Cena
-          quantity: Množství
-        spree/option_type:
-          name: Název
-          presentation: Prezentace
-        spree/order:
-          checkout_complete: "Odhlášení dokončeno"
-          completed_at: "Dokončeno v"
-          created_at: "Vytvořené v datu"
-          email: "E-Mail zákazníka"
-          ip_address: "IP Adresa"
-          item_total: "Zápis údajů"
-          number: Číslo
-          payment_state: "Stav platby"
-          shipment_state: "Stav zásílky"
-          special_instructions: "Speciální instrukce"
-          state: Stav
-          total: Total
-        spree/order/bill_address:
-          address1: Ulice
-          city: Město
-          firstname: Jméno
-          lastname: Přijmení
-          phone: Telefon
-          state: Země
-          zipcode: PSČ
-        spree/order/ship_address:
-          address1: Ulice
-          city: Město
-          firstname: Jmeno
-          lastname: Přijmeni
-          phone: Telefon
-          state: Země
-          zipcode: PSČ
-        spree/payment_method:
-          name: Název
-        spree/product:
-          available_on: "K dispozici na"
-          cost_price: "Nákladová cena"
-          description: Popis
-          master_price: "Základní cena"
-          name: Jmeno
-          on_demand: "Na požádání"
-          on_hand: Skladem
-          shipping_category: "Přepravní kategorie"
-          tax_category: "Kategorie daně"
-        spree/promotion:
-          advertise: Reklama
-          code: Kód
-          description: Popis
-          event_name: "Název události"
-          expires_at: "Vyprší v"
-          name: Název
-          path: Cesta
-          starts_at: "Začíná v"
-          usage_limit: "Omezení použití"
-        spree/property:
-          name: Název
-          presentation: Prezentace
-        spree/prototype:
-          name: Název
-        spree/return_authorization:
-          amount: Množství
-        spree/role:
-          name: Název
-        spree/state:
-          abbr: Zkratka
-          name: Název
-        spree/tax_category:
-          description: Popis
-          name: Název
-        spree/tax_rate:
-          amount: Sazba
-          included_in_price: "Zahrnuto v ceně"
-          show_rate_in_label: "Zobrazit cenu na známce"
-        spree/taxon:
-          name: Název
-          permalink: "Trvalý odkaz"
-          position: Pozice
-        spree/taxonomy:
-          name: Název
-        spree/user:
-          email: Email
-          password: Heslo
-          password_confirmation: "Potvrzení hesla"
-        spree/variant:
-          cost_price: "Velkoobchodní cena"
-          depth: Hloubka
-          height: Výška
-          price: Cena
-          sku: SKU
-          weight: Hmotnost
-          width: Šířka
-        spree/zone:
-          description: Popis
-          name: Název
-      models:
-        spree/address:
-          one: Adresa
-          other: Adresy
-        spree/cheque_payment:
-          one: "Kontrola platby"
-          other: "Kontrola plateb"
-        spree/country:
-          one: Země
-          other: Země
-        spree/credit_card:
-          one: "Kreditní karta"
-          other: "Kreditní karty"
-        spree/creditcard_payment:
-          one: "Platba kreditní kartou"
-          other: "Platby kreditní kartou"
-        spree/creditcard_txn:
-          one: "Transakce kreditní kartou"
-          other: "Transakce kreditními kartami"
-        spree/inventory_unit:
-          one: "Inventární jednotka"
-          other: "Inventární jednotky"
-        spree/line_item:
-          one: "Řádková položka"
-          other: "Řádkové položky"
-        spree/order:
-          one: Objednávka
-          other: Objednávky
-        spree/payment:
-          one: Platba
-          other: Platby
-        spree/product:
-          one: Výrobek
-          other: Výrobky
-        spree/property:
-          one: Vlastnost
-          other: Vlastnosti
-        spree/prototype:
-          one: Šablon
-          other: Šablony
-        spree/return_authorization:
-          one: "Návrat autorizace"
-          other: "Návrat povolení"
-        spree/role:
-          one: Funkce
-          other: Funkce
-        spree/shipment:
-          one: Náklad
-          other: Náklady
-        spree/shipping_category:
-          one: "Kategorie dopravy"
-          other: "Kategorie dopravy"
-        spree/state:
-          one: Země
-          other: Země
-        spree/tax_category:
-          one: "Daňová kategorie"
-          other: "Daňové kategorie"
-        spree/tax_rate:
-          one: "Sazba daně"
-          other: "Sazby daně"
-        spree/taxon:
-          one: Taxon
-          other: Taxons
-        spree/taxonomy:
-          one: Taxonomy
-          other: Taxonomies
-        spree/user:
-          one: Uživatel
-          other: Uživatelé
-        spree/variant:
-          one: Varianta
-          other: Varianty
-        spree/zone:
-          one: Zóna
-          other: Zóny
     add: Přidat
     add_action_of_type: "Přidat typ akce"
     add_category: "Přidat kategorii"

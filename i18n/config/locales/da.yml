@@ -1,5 +1,207 @@
 ---
 da:
+  activerecord:
+    attributes:
+      spree/address:
+        address1: Adresse
+        address2: "Adresse (forts.)"
+        city: By
+        company: Firma
+        country: "Land"
+        firstname: "Fornavn"
+        lastname: "Efternavn"
+        phone: Telefon
+        state: "Delstat"
+        zipcode: "Postnummer"
+      spree/country:
+        iso: ISO
+        iso3: ISO3
+        iso_name: "ISO-navn"
+        name: Navn
+        numcode: "ISO-kode"
+      spree/credit_card:
+        cc_type: Type
+        month: Måned
+        number: Nummer
+        verification_value: "CVV-kode"
+        year: År
+      spree/inventory_unit:
+        state: Delstat
+      spree/line_item:
+        price: Pris
+        quantity: Antal
+      spree/option_type:
+        name: Navn
+        presentation: Præsentation
+      spree/order:
+        checkout_complete: Købsforløb gennemført
+        completed_at: Gennemført
+        created_at: Oprettet
+        email: E-mail-adresse
+        ip_address: IP-adresse
+        item_total: Varetotal
+        number: Antal
+        payment_state: Betalingsstatus
+        shipment_state: Leveringsstatus
+        special_instructions: Særlige forhold
+        state: Status
+        total: Total
+      spree/order/bill_address:
+        address1: Adresse
+        city: By
+        firstname: Fornavn
+        lastname: Efternavn
+        phone: Telefon
+        state: Delstat
+        zipcode: Postnummer
+      spree/order/ship_address:
+        address1: Adresse
+        city: By
+        firstname: Fornavn
+        lastname: Efternavn
+        phone: Telefon
+        state: Delstat
+        zipcode: Postnummer
+      spree/payment_method:
+        name: Navn
+      spree/product:
+        available_on: "Kan købes fra"
+        cost_currency: Kostvaluta
+        cost_price: "Kostpris"
+        description: Beskrivelse
+        master_price: Hovedpris
+        name: Navn
+        on_demand: "On Demand"
+        on_hand: "På lager"
+        shipping_category: "Forsendelseskategori"
+        tax_category: "Momskategori"
+      spree/promotion:
+        advertise: Reklamér
+        code: Kode
+        description: Beskrivelse
+        event_name: Eventnavn
+        expires_at: Udløber
+        name: Navn
+        path: Sti
+        starts_at: Starter
+        usage_limit: Brugsbegrænsning
+      spree/property:
+        name: Navn
+        presentation: Præsentation
+      spree/prototype:
+        name: Navn
+      spree/return_authorization:
+        amount: Antal
+      spree/role:
+        name: Navn
+      spree/state:
+        abbr: Forkortelse
+        name: Navn
+      spree/tax_category:
+        description: Beskrivelse
+        name: Navn
+      spree/tax_rate:
+        amount: Sats
+        included_in_price: Inkluderet i prisen
+        show_rate_in_label: Vis stas i label
+      spree/taxon:
+        name: Navn
+        permalink: Permalink
+        position: Position
+      spree/taxonomy:
+        name: Navn
+      spree/user:
+        email: E-mail-adresse
+        password: "Adgangskode"
+        password_confirmation: "Bekræft adgangskode"
+      spree/variant:
+        cost_currency: Kostvaluta
+        cost_price: "Kostpris"
+        depth: Dybte
+        height: Højde
+        price: Pris
+        sku: SKU
+        weight: Vægt
+        width: Bredde
+      spree/zone:
+        description: Beskrivelse
+        name: Navn
+    models:
+      spree/address:
+        one: Adresse
+        other: Adresser
+      spree/cheque_payment:
+        one: Betaling med check
+        other: Betaling med check
+      spree/country:
+        one: Land
+        other: Lande
+      spree/credit_card:
+        one: "Betalingskort"
+        other: "Betalingskort"
+      spree/creditcard_payment:
+        one: "Betaling med kort"
+        other: "Betaling med kort"
+      spree/creditcard_txn:
+        one: "Betalingskort-transaktion"
+        other: "Betalingskort-transaktioner"
+      spree/inventory_unit:
+        one: "Inventory Unit"
+        other: "Inventory Units"
+      spree/line_item:
+        one: "Ordrelinje"
+        other: "Ordrelinjer"
+      spree/order:
+        one: Ordre
+        other: Ordrer
+      spree/payment:
+        one: Betaling
+        other: Betalinger
+      spree/product:
+        one: Vare
+        other: Varer
+      spree/property:
+        one: Egenskab
+        other: Egenskaber
+      spree/prototype:
+        one: Prototype
+        other: Prototyper
+      spree/return_authorization:
+        one: Return Authorization
+        other: Return Authorizations
+      spree/role:
+        one: Rolle
+        other: Roller
+      spree/shipment:
+        one: Levering
+        other: Leveringer
+      spree/shipping_category:
+        one: "Leveringskategori"
+        other: "Leveringskategorier"
+      spree/state:
+        one: Delstat
+        other: Delstater
+      spree/tax_category:
+        one: "Momskategori"
+        other: "Momskategorier"
+      spree/tax_rate:
+        one: "Momssats"
+        other: "Momssatser"
+      spree/taxon:
+        one: Takson
+        other: Taksoner
+      spree/taxonomy:
+        one: Taksonomi
+        other: Taksonomier
+      spree/user:
+        one: Bruger
+        other: Brugere
+      spree/variant:
+        one: Variant
+        other: Varianter
+      spree/zone:
+        one: Zone
+        other: Zoner
   spree:
     a_copy_of_all_mail_will_be_sent_to_the_following_addresses: "En kopi af alle emails vil blive sent til følgende addresse"
     abbreviation: Forkortelse
@@ -17,208 +219,6 @@ da:
       update: Opdater
     activate: "Aktivér"
     active: "Aktiv"
-    activerecord:
-      attributes:
-        spree/address:
-          address1: Adresse
-          address2: "Adresse (forts.)"
-          city: By
-          company: Firma
-          country: "Land"
-          firstname: "Fornavn"
-          lastname: "Efternavn"
-          phone: Telefon
-          state: "Delstat"
-          zipcode: "Postnummer"
-        spree/country:
-          iso: ISO
-          iso3: ISO3
-          iso_name: "ISO-navn"
-          name: Navn
-          numcode: "ISO-kode"
-        spree/credit_card:
-          cc_type: Type
-          month: Måned
-          number: Nummer
-          verification_value: "CVV-kode"
-          year: År
-        spree/inventory_unit:
-          state: Delstat
-        spree/line_item:
-          price: Pris
-          quantity: Antal
-        spree/option_type:
-          name: Navn
-          presentation: Præsentation
-        spree/order:
-          checkout_complete: Købsforløb gennemført
-          completed_at: Gennemført
-          created_at: Oprettet
-          email: E-mail-adresse
-          ip_address: IP-adresse
-          item_total: Varetotal
-          number: Antal
-          payment_state: Betalingsstatus
-          shipment_state: Leveringsstatus
-          special_instructions: Særlige forhold
-          state: Status
-          total: Total
-        spree/order/bill_address:
-          address1: Adresse
-          city: By
-          firstname: Fornavn
-          lastname: Efternavn
-          phone: Telefon
-          state: Delstat
-          zipcode: Postnummer
-        spree/order/ship_address:
-          address1: Adresse
-          city: By
-          firstname: Fornavn
-          lastname: Efternavn
-          phone: Telefon
-          state: Delstat
-          zipcode: Postnummer
-        spree/payment_method:
-          name: Navn
-        spree/product:
-          available_on: "Kan købes fra"
-          cost_currency: Kostvaluta
-          cost_price: "Kostpris"
-          description: Beskrivelse
-          master_price: Hovedpris
-          name: Navn
-          on_demand: "On Demand"
-          on_hand: "På lager"
-          shipping_category: "Forsendelseskategori"
-          tax_category: "Momskategori"
-        spree/promotion:
-          advertise: Reklamér
-          code: Kode
-          description: Beskrivelse
-          event_name: Eventnavn
-          expires_at: Udløber
-          name: Navn
-          path: Sti
-          starts_at: Starter
-          usage_limit: Brugsbegrænsning
-        spree/property:
-          name: Navn
-          presentation: Præsentation
-        spree/prototype:
-          name: Navn
-        spree/return_authorization:
-          amount: Antal
-        spree/role:
-          name: Navn
-        spree/state:
-          abbr: Forkortelse
-          name: Navn
-        spree/tax_category:
-          description: Beskrivelse
-          name: Navn
-        spree/tax_rate:
-          amount: Sats
-          included_in_price: Inkluderet i prisen
-          show_rate_in_label: Vis stas i label
-        spree/taxon:
-          name: Navn
-          permalink: Permalink
-          position: Position
-        spree/taxonomy:
-          name: Navn
-        spree/user:
-          email: E-mail-adresse
-          password: "Adgangskode"
-          password_confirmation: "Bekræft adgangskode"
-        spree/variant:
-          cost_currency: Kostvaluta
-          cost_price: "Kostpris"
-          depth: Dybte
-          height: Højde
-          price: Pris
-          sku: SKU
-          weight: Vægt
-          width: Bredde
-        spree/zone:
-          description: Beskrivelse
-          name: Navn
-      models:
-        spree/address:
-          one: Adresse
-          other: Adresser
-        spree/cheque_payment:
-          one: Betaling med check
-          other: Betaling med check
-        spree/country:
-          one: Land
-          other: Lande
-        spree/credit_card:
-          one: "Betalingskort"
-          other: "Betalingskort"
-        spree/creditcard_payment:
-          one: "Betaling med kort"
-          other: "Betaling med kort"
-        spree/creditcard_txn:
-          one: "Betalingskort-transaktion"
-          other: "Betalingskort-transaktioner"
-        spree/inventory_unit:
-          one: "Inventory Unit"
-          other: "Inventory Units"
-        spree/line_item:
-          one: "Ordrelinje"
-          other: "Ordrelinjer"
-        spree/order:
-          one: Ordre
-          other: Ordrer
-        spree/payment:
-          one: Betaling
-          other: Betalinger
-        spree/product:
-          one: Vare
-          other: Varer
-        spree/property:
-          one: Egenskab
-          other: Egenskaber
-        spree/prototype:
-          one: Prototype
-          other: Prototyper
-        spree/return_authorization:
-          one: Return Authorization
-          other: Return Authorizations
-        spree/role:
-          one: Rolle
-          other: Roller
-        spree/shipment:
-          one: Levering
-          other: Leveringer
-        spree/shipping_category:
-          one: "Leveringskategori"
-          other: "Leveringskategorier"
-        spree/state:
-          one: Delstat
-          other: Delstater
-        spree/tax_category:
-          one: "Momskategori"
-          other: "Momskategorier"
-        spree/tax_rate:
-          one: "Momssats"
-          other: "Momssatser"
-        spree/taxon:
-          one: Takson
-          other: Taksoner
-        spree/taxonomy:
-          one: Taksonomi
-          other: Taksonomier
-        spree/user:
-          one: Bruger
-          other: Brugere
-        spree/variant:
-          one: Variant
-          other: Varianter
-        spree/zone:
-          one: Zone
-          other: Zoner
     add: Tilføj
     add_action_of_type: Tilføj handling
     add_category: "Tilføj kategori"

@@ -1,5 +1,204 @@
 ---
 fi:
+  activerecord:
+    attributes:
+      spree/address:
+        address1: Lähiosoite
+        address2: "Lähiosoite (jatkuu)"
+        city: Kaupunki
+        country: Maa
+        firstname: Etunimi
+        lastname: Sukunimi
+        phone: Puhelinnumero
+        state: Maakunta
+        zipcode: Postinumero
+      spree/country:
+        iso: ISO
+        iso3: ISO3
+        iso_name: ISO-nimi
+        name: Nimi
+        numcode: ISO-koodi
+      spree/credit_card:
+        cc_type: Tyyppi
+        month: Kuukausi
+        number: Numero
+        verification_value: Tarkistuskoodi
+        year: Vuosi
+      spree/inventory_unit:
+        state: Tila
+      spree/line_item:
+        price: Hinta
+        quantity: Määrä
+      spree/option_type:
+        name: Nimi
+        presentation: Presentation
+      spree/order:
+        checkout_complete: "Tilaus valmis"
+        completed_at: "Completed At"
+        created_at: Tilauspäivämäärä
+        email: Customer E-Mail
+        ip_address: "IP-osoite"
+        item_total: "Tuotteita yhteensä"
+        number: Numero
+        payment_state: "Maksun tila"
+        shipment_state: "Toimituksen tila"
+        special_instructions: Erityisohjeet
+        state: State
+        total: Yhteensä
+      spree/order/bill_address:
+        address1: "Maksuosoitteen lähiosoite"
+        city: "Maksuosoitteen kaupunki"
+        firstname: "Maksuosoitteen etunimi"
+        lastname: "Maksuosoitteen sukunimi"
+        phone: "Maksuosoitteen puhelinnumero"
+        state: "Maksuosoitteen maakunta"
+        zipcode: "Maksuosoitteen postinumero"
+      spree/order/ship_address:
+        address1: "Toimitusosoitteen lähiosoite"
+        city: "Toimitusosoitteen kaupunki"
+        firstname: "Toimitusosoitteen etunimi"
+        lastname: "Toimitusosoitteen etunimi"
+        phone: "Toimitusosoitteen puhelinnumero"
+        state: "Toimitusosoitteen maakunta"
+        zipcode: "Toimitusosoitteen postinumero"
+      spree/payment_method:
+        name: Nimi
+      spree/product:
+        available_on: "Available On"
+        cost_price: "Cost Price"
+        description: Kuvaus
+        master_price: "Master Price"
+        name: Nimi
+        on_demand: "On Demand"
+        on_hand: "On Hand"
+        shipping_category: "Toimituskategoria"
+        tax_category: "Verokategoria"
+      spree/promotion:
+        advertise: Mainosta
+        code: Koodi
+        description: Kuvaus
+        event_name: "Tapahtuman nimi"
+        expires_at: Vanhenee
+        name: Nimi
+        path: Polku
+        starts_at: Alkaa
+        usage_limit: Käyttörajoitus
+      spree/property:
+        name: Nimi
+        presentation: Presentation
+      spree/prototype:
+        name: Nimi
+      spree/return_authorization:
+        amount: Määrä
+      spree/role:
+        name: Nimi
+      spree/state:
+        abbr: Lyhenne
+        name: Nimi
+      spree/tax_category:
+        description: Kuvaus
+        name: Nimi
+      spree/tax_rate:
+        amount: Rate
+        included_in_price: Included in Price
+        show_rate_in_label: Show rate in label
+      spree/taxon:
+        name: Nimi
+        permalink: Permalink
+        position: Sijainti
+      spree/taxonomy:
+        name: Nimi
+      spree/user:
+        email: Sähköpostiosoite
+        password: Salasana
+        password_confirmation: "Vahvista salasana"
+      spree/variant:
+        cost_price: "Cost Price"
+        depth: Syvyys
+        height: Korkeus
+        price: Hinta
+        sku: SKU
+        weight: Paino
+        width: Leveys
+      spree/zone:
+        description: Kuvaus
+        name: Nimi
+    models:
+      spree/address:
+        one: Osoite
+        other: Osoitteet
+      spree/cheque_payment:
+        one: Cheque Payment
+        other: Cheque Payments
+      spree/country:
+        one: Maa
+        other: Maat
+      spree/credit_card:
+        one: Luottokortti
+        other: Luottokortit
+      spree/creditcard_payment:
+        one: Luottokorttimaksu
+        other: "Credit Card Payments"
+      spree/creditcard_txn:
+        one: "Credit Card Transaction"
+        other: "Credit Card Transactions"
+      spree/inventory_unit:
+        one: "Inventory Unit"
+        other: "Inventory Units"
+      spree/line_item:
+        one: "Line Item"
+        other: "Line Items"
+      spree/order:
+        one: Order
+        other: Orders
+      spree/payment:
+        one: Payment
+        other: Payments
+      spree/product:
+        one: Product
+        other: Products
+      spree/property:
+        one: Property
+        other: Properties
+      spree/prototype:
+        one: Prototype
+        other: Prototypes
+      spree/return_authorization:
+        one: Return Authorization
+        other: Return Authorizations
+      spree/role:
+        one: Roles
+        other: Roles
+      spree/shipment:
+        one: Shipment
+        other: Shipments
+      spree/shipping_category:
+        one: "Shipping Category"
+        other: "Shipping Categories"
+      spree/state:
+        one: State
+        other: States
+      spree/tax_category:
+        one: "Tax Category"
+        other: "Tax Categories"
+      spree/tax_rate:
+        one: "Tax Rate"
+        other: "Tax Rates"
+      spree/taxon:
+        one: Taxon
+        other: Taxons
+      spree/taxonomy:
+        one: Taxonomy
+        other: Taxonomies
+      spree/user:
+        one: User
+        other: Users
+      spree/variant:
+        one: Variant
+        other: Variants
+      spree/zone:
+        one: Zone
+        other: Zones
   spree:
     a_copy_of_all_mail_will_be_sent_to_the_following_addresses: "Kopio kaikista viesteistä lähetetään seuraaviin osoitteisiin"
     abbreviation: Lyhenne
@@ -17,205 +216,6 @@ fi:
       update: Päivitä
     activate: "Ota käyttöön"
     active: Käytössä
-    activerecord:
-      attributes:
-        spree/address:
-          address1: Lähiosoite
-          address2: "Lähiosoite (jatkuu)"
-          city: Kaupunki
-          country: Maa
-          firstname: Etunimi
-          lastname: Sukunimi
-          phone: Puhelinnumero
-          state: Maakunta
-          zipcode: Postinumero
-        spree/country:
-          iso: ISO
-          iso3: ISO3
-          iso_name: ISO-nimi
-          name: Nimi
-          numcode: ISO-koodi
-        spree/credit_card:
-          cc_type: Tyyppi
-          month: Kuukausi
-          number: Numero
-          verification_value: Tarkistuskoodi
-          year: Vuosi
-        spree/inventory_unit:
-          state: Tila
-        spree/line_item:
-          price: Hinta
-          quantity: Määrä
-        spree/option_type:
-          name: Nimi
-          presentation: Presentation
-        spree/order:
-          checkout_complete: "Tilaus valmis"
-          completed_at: "Completed At"
-          created_at: Tilauspäivämäärä
-          email: Customer E-Mail
-          ip_address: "IP-osoite"
-          item_total: "Tuotteita yhteensä"
-          number: Numero
-          payment_state: "Maksun tila"
-          shipment_state: "Toimituksen tila"
-          special_instructions: Erityisohjeet
-          state: State
-          total: Yhteensä
-        spree/order/bill_address:
-          address1: "Maksuosoitteen lähiosoite"
-          city: "Maksuosoitteen kaupunki"
-          firstname: "Maksuosoitteen etunimi"
-          lastname: "Maksuosoitteen sukunimi"
-          phone: "Maksuosoitteen puhelinnumero"
-          state: "Maksuosoitteen maakunta"
-          zipcode: "Maksuosoitteen postinumero"
-        spree/order/ship_address:
-          address1: "Toimitusosoitteen lähiosoite"
-          city: "Toimitusosoitteen kaupunki"
-          firstname: "Toimitusosoitteen etunimi"
-          lastname: "Toimitusosoitteen etunimi"
-          phone: "Toimitusosoitteen puhelinnumero"
-          state: "Toimitusosoitteen maakunta"
-          zipcode: "Toimitusosoitteen postinumero"
-        spree/payment_method:
-          name: Nimi
-        spree/product:
-          available_on: "Available On"
-          cost_price: "Cost Price"
-          description: Kuvaus
-          master_price: "Master Price"
-          name: Nimi
-          on_demand: "On Demand"
-          on_hand: "On Hand"
-          shipping_category: "Toimituskategoria"
-          tax_category: "Verokategoria"
-        spree/promotion:
-          advertise: Mainosta
-          code: Koodi
-          description: Kuvaus
-          event_name: "Tapahtuman nimi"
-          expires_at: Vanhenee
-          name: Nimi
-          path: Polku
-          starts_at: Alkaa
-          usage_limit: Käyttörajoitus
-        spree/property:
-          name: Nimi
-          presentation: Presentation
-        spree/prototype:
-          name: Nimi
-        spree/return_authorization:
-          amount: Määrä
-        spree/role:
-          name: Nimi
-        spree/state:
-          abbr: Lyhenne
-          name: Nimi
-        spree/tax_category:
-          description: Kuvaus
-          name: Nimi
-        spree/tax_rate:
-          amount: Rate
-          included_in_price: Included in Price
-          show_rate_in_label: Show rate in label
-        spree/taxon:
-          name: Nimi
-          permalink: Permalink
-          position: Sijainti
-        spree/taxonomy:
-          name: Nimi
-        spree/user:
-          email: Sähköpostiosoite
-          password: Salasana
-          password_confirmation: "Vahvista salasana"
-        spree/variant:
-          cost_price: "Cost Price"
-          depth: Syvyys
-          height: Korkeus
-          price: Hinta
-          sku: SKU
-          weight: Paino
-          width: Leveys
-        spree/zone:
-          description: Kuvaus
-          name: Nimi
-      models:
-        spree/address:
-          one: Osoite
-          other: Osoitteet
-        spree/cheque_payment:
-          one: Cheque Payment
-          other: Cheque Payments
-        spree/country:
-          one: Maa
-          other: Maat
-        spree/credit_card:
-          one: Luottokortti
-          other: Luottokortit
-        spree/creditcard_payment:
-          one: Luottokorttimaksu
-          other: "Credit Card Payments"
-        spree/creditcard_txn:
-          one: "Credit Card Transaction"
-          other: "Credit Card Transactions"
-        spree/inventory_unit:
-          one: "Inventory Unit"
-          other: "Inventory Units"
-        spree/line_item:
-          one: "Line Item"
-          other: "Line Items"
-        spree/order:
-          one: Order
-          other: Orders
-        spree/payment:
-          one: Payment
-          other: Payments
-        spree/product:
-          one: Product
-          other: Products
-        spree/property:
-          one: Property
-          other: Properties
-        spree/prototype:
-          one: Prototype
-          other: Prototypes
-        spree/return_authorization:
-          one: Return Authorization
-          other: Return Authorizations
-        spree/role:
-          one: Roles
-          other: Roles
-        spree/shipment:
-          one: Shipment
-          other: Shipments
-        spree/shipping_category:
-          one: "Shipping Category"
-          other: "Shipping Categories"
-        spree/state:
-          one: State
-          other: States
-        spree/tax_category:
-          one: "Tax Category"
-          other: "Tax Categories"
-        spree/tax_rate:
-          one: "Tax Rate"
-          other: "Tax Rates"
-        spree/taxon:
-          one: Taxon
-          other: Taxons
-        spree/taxonomy:
-          one: Taxonomy
-          other: Taxonomies
-        spree/user:
-          one: User
-          other: Users
-        spree/variant:
-          one: Variant
-          other: Variants
-        spree/zone:
-          one: Zone
-          other: Zones
     add: Lisää
     add_action_of_type: "Lisää toimintotyyppi"
     add_category: "Lisää kategoria"

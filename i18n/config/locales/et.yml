@@ -1,5 +1,204 @@
 ---
 et:
+  activerecord:
+    attributes:
+      spree/address:
+        address1: Aadress
+        address2: "Aadress (jätkub)"
+        city: Linn
+        country: Riik
+        firstname: Eesnimi
+        lastname: Perekonnanimi
+        phone: Telefon
+        state: Maakond
+        zipcode: Postiindeks
+      spree/country:
+        iso: ISO
+        iso3: ISO3
+        iso_name: "ISO Name"
+        name: Name
+        numcode: "ISO Code"
+      spree/credit_card:
+        cc_type: Type
+        month: Month
+        number: Number
+        verification_value: "Verification Value"
+        year: Year
+      spree/inventory_unit:
+        state: State
+      spree/line_item:
+        price: Price
+        quantity: Quantity
+      spree/option_type:
+        name: Name
+        presentation: Presentation
+      spree/order:
+        checkout_complete: "Checkout Complete"
+        completed_at: Esitatud
+        created_at: Order Date
+        email: Customer E-Mail
+        ip_address: "IP Address"
+        item_total: "Item Total"
+        number: Number
+        payment_state: Payment State
+        shipment_state: Shipment State
+        special_instructions: "Special Instructions"
+        state: State
+        total: Total
+      spree/order/bill_address:
+        address1: "Billing address street"
+        city: "Billing address city"
+        firstname: "Billing address first name"
+        lastname: "Billing address last name"
+        phone: "Billing address phone"
+        state: "Billing address state"
+        zipcode: "Billing address zipcode"
+      spree/order/ship_address:
+        address1: "Shipping address street"
+        city: "Shipping address city"
+        firstname: "Shipping address first name"
+        lastname: "Shipping address last name"
+        phone: "Shipping address phone"
+        state: "Shipping address state"
+        zipcode: "Shipping address zipcode"
+      spree/payment_method:
+        name: Nimetus
+      spree/product:
+        available_on: Saadaval alates
+        cost_price: "Cost Price"
+        description: Kirjeldus
+        master_price: Hind
+        name: Nimetus
+        on_demand: "On Demand"
+        on_hand: Laoseis
+        shipping_category: Tarnekategooria
+        tax_category: Maksukategooria
+      spree/promotion:
+        advertise: Advertise
+        code: Code
+        description: Description
+        event_name: Event Name
+        expires_at: Expires At
+        name: Name
+        path: Path
+        starts_at: Starts At
+        usage_limit: Usage Limit
+      spree/property:
+        name: Nimetus
+        presentation: Presentation
+      spree/prototype:
+        name: Nimetus
+      spree/return_authorization:
+        amount: Kogus
+      spree/role:
+        name: Nimetus
+      spree/state:
+        abbr: Abbreviation
+        name: Name
+      spree/tax_category:
+        description: Kirjeldus
+        name: Nimetus
+      spree/tax_rate:
+        amount: Rate
+        included_in_price: Included in Price
+        show_rate_in_label: Show rate in label
+      spree/taxon:
+        name: Nimetus
+        permalink: Püsiviide
+        position: Positsioon
+      spree/taxonomy:
+        name: Nimetus
+      spree/user:
+        email: Email
+        password: Salasõna
+        password_confirmation: Salasõna kordus
+      spree/variant:
+        cost_price: "Cost Price"
+        depth: Depth
+        height: Height
+        price: Price
+        sku: SKU
+        weight: Weight
+        width: Width
+      spree/zone:
+        description: Kirjeldus
+        name: Nimetus
+    models:
+      spree/address:
+        one: Aadress
+        other: Adaressid
+      spree/cheque_payment:
+        one: Cheque Payment
+        other: Cheque Payments
+      spree/country:
+        one: Riik
+        other: Riigid
+      spree/credit_card:
+        one: "Credit Card"
+        other: "Credit Cards"
+      spree/creditcard_payment:
+        one: "Credit Card Payment"
+        other: "Credit Card Payments"
+      spree/creditcard_txn:
+        one: "Credit Card Transaction"
+        other: "Credit Card Transactions"
+      spree/inventory_unit:
+        one: "Inventory Unit"
+        other: "Inventory Units"
+      spree/line_item:
+        one: "Line Item"
+        other: "Line Items"
+      spree/order:
+        one: Tellimus
+        other: Tellimused
+      spree/payment:
+        one: Makse
+        other: Maksed
+      spree/product:
+        one: Toode
+        other: Tooted
+      spree/property:
+        one: Property
+        other: Properties
+      spree/prototype:
+        one: Prototype
+        other: Prototypes
+      spree/return_authorization:
+        one: Return Authorization
+        other: Return Authorizations
+      spree/role:
+        one: Roles
+        other: Roles
+      spree/shipment:
+        one: Tarne
+        other: Tarned
+      spree/shipping_category:
+        one: Tarnekategooria
+        other: Tarnekategooriad
+      spree/state:
+        one: Maakond
+        other: Maakonnad
+      spree/tax_category:
+        one: Maksukategooria
+        other: Maksukategooriad
+      spree/tax_rate:
+        one: "Tax Rate"
+        other: "Tax Rates"
+      spree/taxon:
+        one: Takson
+        other: Taksonid
+      spree/taxonomy:
+        one: Taksonoomia
+        other: Taksonoomiad
+      spree/user:
+        one: Kasutaja
+        other: Kasutajad
+      spree/variant:
+        one: Variant
+        other: Variants
+      spree/zone:
+        one: Zone
+        other: Zones
   spree:
     a_copy_of_all_mail_will_be_sent_to_the_following_addresses: Koopia kõikidest postitustest saadetakse järgmisele aadressile
     abbreviation: Lühend
@@ -17,205 +216,6 @@ et:
       update: Uuendus
     activate: "Activate"
     active: Aktiivne
-    activerecord:
-      attributes:
-        spree/address:
-          address1: Aadress
-          address2: "Aadress (jätkub)"
-          city: Linn
-          country: Riik
-          firstname: Eesnimi
-          lastname: Perekonnanimi
-          phone: Telefon
-          state: Maakond
-          zipcode: Postiindeks
-        spree/country:
-          iso: ISO
-          iso3: ISO3
-          iso_name: "ISO Name"
-          name: Name
-          numcode: "ISO Code"
-        spree/credit_card:
-          cc_type: Type
-          month: Month
-          number: Number
-          verification_value: "Verification Value"
-          year: Year
-        spree/inventory_unit:
-          state: State
-        spree/line_item:
-          price: Price
-          quantity: Quantity
-        spree/option_type:
-          name: Name
-          presentation: Presentation
-        spree/order:
-          checkout_complete: "Checkout Complete"
-          completed_at: Esitatud
-          created_at: Order Date
-          email: Customer E-Mail
-          ip_address: "IP Address"
-          item_total: "Item Total"
-          number: Number
-          payment_state: Payment State
-          shipment_state: Shipment State
-          special_instructions: "Special Instructions"
-          state: State
-          total: Total
-        spree/order/bill_address:
-          address1: "Billing address street"
-          city: "Billing address city"
-          firstname: "Billing address first name"
-          lastname: "Billing address last name"
-          phone: "Billing address phone"
-          state: "Billing address state"
-          zipcode: "Billing address zipcode"
-        spree/order/ship_address:
-          address1: "Shipping address street"
-          city: "Shipping address city"
-          firstname: "Shipping address first name"
-          lastname: "Shipping address last name"
-          phone: "Shipping address phone"
-          state: "Shipping address state"
-          zipcode: "Shipping address zipcode"
-        spree/payment_method:
-          name: Nimetus
-        spree/product:
-          available_on: Saadaval alates
-          cost_price: "Cost Price"
-          description: Kirjeldus
-          master_price: Hind
-          name: Nimetus
-          on_demand: "On Demand"
-          on_hand: Laoseis
-          shipping_category: Tarnekategooria
-          tax_category: Maksukategooria
-        spree/promotion:
-          advertise: Advertise
-          code: Code
-          description: Description
-          event_name: Event Name
-          expires_at: Expires At
-          name: Name
-          path: Path
-          starts_at: Starts At
-          usage_limit: Usage Limit
-        spree/property:
-          name: Nimetus
-          presentation: Presentation
-        spree/prototype:
-          name: Nimetus
-        spree/return_authorization:
-          amount: Kogus
-        spree/role:
-          name: Nimetus
-        spree/state:
-          abbr: Abbreviation
-          name: Name
-        spree/tax_category:
-          description: Kirjeldus
-          name: Nimetus
-        spree/tax_rate:
-          amount: Rate
-          included_in_price: Included in Price
-          show_rate_in_label: Show rate in label
-        spree/taxon:
-          name: Nimetus
-          permalink: Püsiviide
-          position: Positsioon
-        spree/taxonomy:
-          name: Nimetus
-        spree/user:
-          email: Email
-          password: Salasõna
-          password_confirmation: Salasõna kordus
-        spree/variant:
-          cost_price: "Cost Price"
-          depth: Depth
-          height: Height
-          price: Price
-          sku: SKU
-          weight: Weight
-          width: Width
-        spree/zone:
-          description: Kirjeldus
-          name: Nimetus
-      models:
-        spree/address:
-          one: Aadress
-          other: Adaressid
-        spree/cheque_payment:
-          one: Cheque Payment
-          other: Cheque Payments
-        spree/country:
-          one: Riik
-          other: Riigid
-        spree/credit_card:
-          one: "Credit Card"
-          other: "Credit Cards"
-        spree/creditcard_payment:
-          one: "Credit Card Payment"
-          other: "Credit Card Payments"
-        spree/creditcard_txn:
-          one: "Credit Card Transaction"
-          other: "Credit Card Transactions"
-        spree/inventory_unit:
-          one: "Inventory Unit"
-          other: "Inventory Units"
-        spree/line_item:
-          one: "Line Item"
-          other: "Line Items"
-        spree/order:
-          one: Tellimus
-          other: Tellimused
-        spree/payment:
-          one: Makse
-          other: Maksed
-        spree/product:
-          one: Toode
-          other: Tooted
-        spree/property:
-          one: Property
-          other: Properties
-        spree/prototype:
-          one: Prototype
-          other: Prototypes
-        spree/return_authorization:
-          one: Return Authorization
-          other: Return Authorizations
-        spree/role:
-          one: Roles
-          other: Roles
-        spree/shipment:
-          one: Tarne
-          other: Tarned
-        spree/shipping_category:
-          one: Tarnekategooria
-          other: Tarnekategooriad
-        spree/state:
-          one: Maakond
-          other: Maakonnad
-        spree/tax_category:
-          one: Maksukategooria
-          other: Maksukategooriad
-        spree/tax_rate:
-          one: "Tax Rate"
-          other: "Tax Rates"
-        spree/taxon:
-          one: Takson
-          other: Taksonid
-        spree/taxonomy:
-          one: Taksonoomia
-          other: Taksonoomiad
-        spree/user:
-          one: Kasutaja
-          other: Kasutajad
-        spree/variant:
-          one: Variant
-          other: Variants
-        spree/zone:
-          one: Zone
-          other: Zones
     add: Lisa
     add_action_of_type: Lisa toimingu tüüp
     add_category: Lisa kategooria

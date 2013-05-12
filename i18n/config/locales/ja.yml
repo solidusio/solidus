@@ -1,5 +1,204 @@
 ---
 ja:
+  activerecord:
+    attributes:
+      spree/address:
+        address1: "住所1"
+        address2: "住所2"
+        city: "市区町村"
+        country: "国"
+        firstname: "名前（名）"
+        lastname: "名前（姓）"
+        phone: "電話番号"
+        state: "都道府県（州）"
+        zipcode: "郵便番号"
+      spree/country:
+        iso: "ISO"
+        iso3: "ISO3"
+        iso_name: "ISO名"
+        name: "名"
+        numcode: "ISOコード"
+      spree/credit_card:
+        cc_type: "カード類"
+        month: "月"
+        number: "カード番号"
+        verification_value: "照合コード"
+        year: "年"
+      spree/inventory_unit:
+        state: "状態"
+      spree/line_item:
+        price: "価格"
+        quantity: "数量"
+      spree/option_type:
+        name: 名称
+        presentation: 表示
+      spree/order:
+        checkout_complete: "注文の受け付けを完了しました"
+        completed_at: "完了日時"
+        created_at: "注文日"
+        email: "メールアドレス"
+        ip_address: "IPアドレス"
+        item_total: "合計個数"
+        number: "注文番号"
+        payment_state: "支払い状態"
+        shipment_state: "配送状態"
+        special_instructions: "特記事項"
+        state: "状態"
+        total: "合計"
+      spree/order/bill_address:
+        address1: "請求先の住所"
+        city: "請求先の住所・市"
+        firstname: "請求先の名"
+        lastname: "請求先の姓"
+        phone: "請求先の電話番号"
+        state: "請求先の都道府県(州)"
+        zipcode: "請求先の郵便番号"
+      spree/order/ship_address:
+        address1: "配送先の住所"
+        city: "配送先の市"
+        firstname: "配送先の名"
+        lastname: "配送先の姓"
+        phone: "配送先の電話番号"
+        state: "配送先の都道府県(州)"
+        zipcode: "配送先の郵便番号"
+      spree/payment_method:
+        name: "名称"
+      spree/product:
+        available_on: "販売開始日"
+        cost_price: "原価"
+        description: "説明"
+        master_price: "値段"
+        name: "商品名"
+        on_demand: "On Demand"
+        on_hand: "入荷数"
+        shipping_category: "配達区間"
+        tax_category: "税区"
+      spree/promotion:
+        advertise: "表示する"
+        code: "コード"
+        description: "説明"
+        event_name: "イベント名"
+        expires_at: "有効期限"
+        name: "名称"
+        path: "パス"
+        starts_at: "開始日時"
+        usage_limit: "使用可能回数"
+      spree/property:
+        name: "名称"
+        presentation: "表示"
+      spree/prototype:
+        name: "名称"
+      spree/return_authorization:
+        amount: "合計"
+      spree/role:
+        name: "名称"
+      spree/state:
+        abbr: "略語"
+        name: "名称"
+      spree/tax_category:
+        description: "説明"
+        name: "名称"
+      spree/tax_rate:
+        amount: "率"
+        included_in_price: "税込み"
+        show_rate_in_label: "税率を見る"
+      spree/taxon:
+        name: "名称"
+        permalink: "固定リンク"
+        position: "位置"
+      spree/taxonomy:
+        name: "名称"
+      spree/user:
+        email: "Eメール"
+        password: "パスワード"
+        password_confirmation: "パスワード（確認）"
+      spree/variant:
+        cost_price: "原価"
+        depth: "奥行き"
+        height: "高さ"
+        price: "価格"
+        sku: "品番"
+        weight: "重量"
+        width: "幅"
+      spree/zone:
+        description: "説明"
+        name: "名前"
+    models:
+      spree/address:
+        one: "住所"
+        other: "住所"
+      spree/cheque_payment:
+        one: "小切手による支払い"
+        other: "小切手による支払い"
+      spree/country:
+        one: "国名"
+        other: "国名"
+      spree/credit_card:
+        one: "クレジットカード"
+        other: "クレジットカード"
+      spree/creditcard_payment:
+        one: "Credit Card Payment"
+        other: "Credit Card Payments"
+      spree/creditcard_txn:
+        one: "Credit Card Transaction"
+        other: "Credit Card Transactions"
+      spree/inventory_unit:
+        one: "在庫品単位"
+        other: "在庫品単位"
+      spree/line_item:
+        one: "品目"
+        other: "品目"
+      spree/order:
+        one: "注文"
+        other: "注文"
+      spree/payment:
+        one: "支払い"
+        other: "支払い"
+      spree/product:
+        one: "商品"
+        other: "商品"
+      spree/property:
+        one: "属性"
+        other: "属性"
+      spree/prototype:
+        one: "プロトタイプ"
+        other: "プロトタイプ"
+      spree/return_authorization:
+        one: "返品許可"
+        other: "返品許可"
+      spree/role:
+        one: "役割"
+        other: "役割"
+      spree/shipment:
+        one: "配送"
+        other: "配送"
+      spree/shipping_category:
+        one: "配送カテゴリ"
+        other: "配送カテゴリ"
+      spree/state:
+        one: "都道府県（州）"
+        other: "都道府県（州）"
+      spree/tax_category:
+        one: "税区分"
+        other: "税区分"
+      spree/tax_rate:
+        one: "税率"
+        other: "税率"
+      spree/taxon:
+        one: "分類"
+        other: "分類"
+      spree/taxonomy:
+        one: "分類ツリー"
+        other: "分類ツリー"
+      spree/user:
+        one: "ユーザー"
+        other: "ユーザー"
+      spree/variant:
+        one: "種類"
+        other: "種類"
+      spree/zone:
+        one: "ゾーン"
+        other: "ゾーン"
   spree:
     a_copy_of_all_mail_will_be_sent_to_the_following_addresses: "以下のアドレスにメールが送信されます。"
     abbreviation: "省略"
@@ -17,205 +216,6 @@ ja:
       update: "更新"
     activate: "アクティベートする"
     active: "有効"
-    activerecord:
-      attributes:
-        spree/address:
-          address1: "住所1"
-          address2: "住所2"
-          city: "市区町村"
-          country: "国"
-          firstname: "名前（名）"
-          lastname: "名前（姓）"
-          phone: "電話番号"
-          state: "都道府県（州）"
-          zipcode: "郵便番号"
-        spree/country:
-          iso: "ISO"
-          iso3: "ISO3"
-          iso_name: "ISO名"
-          name: "名"
-          numcode: "ISOコード"
-        spree/credit_card:
-          cc_type: "カード類"
-          month: "月"
-          number: "カード番号"
-          verification_value: "照合コード"
-          year: "年"
-        spree/inventory_unit:
-          state: "状態"
-        spree/line_item:
-          price: "価格"
-          quantity: "数量"
-        spree/option_type:
-          name: 名称
-          presentation: 表示
-        spree/order:
-          checkout_complete: "注文の受け付けを完了しました"
-          completed_at: "完了日時"
-          created_at: "注文日"
-          email: "メールアドレス"
-          ip_address: "IPアドレス"
-          item_total: "合計個数"
-          number: "注文番号"
-          payment_state: "支払い状態"
-          shipment_state: "配送状態"
-          special_instructions: "特記事項"
-          state: "状態"
-          total: "合計"
-        spree/order/bill_address:
-          address1: "請求先の住所"
-          city: "請求先の住所・市"
-          firstname: "請求先の名"
-          lastname: "請求先の姓"
-          phone: "請求先の電話番号"
-          state: "請求先の都道府県(州)"
-          zipcode: "請求先の郵便番号"
-        spree/order/ship_address:
-          address1: "配送先の住所"
-          city: "配送先の市"
-          firstname: "配送先の名"
-          lastname: "配送先の姓"
-          phone: "配送先の電話番号"
-          state: "配送先の都道府県(州)"
-          zipcode: "配送先の郵便番号"
-        spree/payment_method:
-          name: "名称"
-        spree/product:
-          available_on: "販売開始日"
-          cost_price: "原価"
-          description: "説明"
-          master_price: "値段"
-          name: "商品名"
-          on_demand: "On Demand"
-          on_hand: "入荷数"
-          shipping_category: "配達区間"
-          tax_category: "税区"
-        spree/promotion:
-          advertise: "表示する"
-          code: "コード"
-          description: "説明"
-          event_name: "イベント名"
-          expires_at: "有効期限"
-          name: "名称"
-          path: "パス"
-          starts_at: "開始日時"
-          usage_limit: "使用可能回数"
-        spree/property:
-          name: "名称"
-          presentation: "表示"
-        spree/prototype:
-          name: "名称"
-        spree/return_authorization:
-          amount: "合計"
-        spree/role:
-          name: "名称"
-        spree/state:
-          abbr: "略語"
-          name: "名称"
-        spree/tax_category:
-          description: "説明"
-          name: "名称"
-        spree/tax_rate:
-          amount: "率"
-          included_in_price: "税込み"
-          show_rate_in_label: "税率を見る"
-        spree/taxon:
-          name: "名称"
-          permalink: "固定リンク"
-          position: "位置"
-        spree/taxonomy:
-          name: "名称"
-        spree/user:
-          email: "Eメール"
-          password: "パスワード"
-          password_confirmation: "パスワード（確認）"
-        spree/variant:
-          cost_price: "原価"
-          depth: "奥行き"
-          height: "高さ"
-          price: "価格"
-          sku: "品番"
-          weight: "重量"
-          width: "幅"
-        spree/zone:
-          description: "説明"
-          name: "名前"
-      models:
-        spree/address:
-          one: "住所"
-          other: "住所"
-        spree/cheque_payment:
-          one: "小切手による支払い"
-          other: "小切手による支払い"
-        spree/country:
-          one: "国名"
-          other: "国名"
-        spree/credit_card:
-          one: "クレジットカード"
-          other: "クレジットカード"
-        spree/creditcard_payment:
-          one: "Credit Card Payment"
-          other: "Credit Card Payments"
-        spree/creditcard_txn:
-          one: "Credit Card Transaction"
-          other: "Credit Card Transactions"
-        spree/inventory_unit:
-          one: "在庫品単位"
-          other: "在庫品単位"
-        spree/line_item:
-          one: "品目"
-          other: "品目"
-        spree/order:
-          one: "注文"
-          other: "注文"
-        spree/payment:
-          one: "支払い"
-          other: "支払い"
-        spree/product:
-          one: "商品"
-          other: "商品"
-        spree/property:
-          one: "属性"
-          other: "属性"
-        spree/prototype:
-          one: "プロトタイプ"
-          other: "プロトタイプ"
-        spree/return_authorization:
-          one: "返品許可"
-          other: "返品許可"
-        spree/role:
-          one: "役割"
-          other: "役割"
-        spree/shipment:
-          one: "配送"
-          other: "配送"
-        spree/shipping_category:
-          one: "配送カテゴリ"
-          other: "配送カテゴリ"
-        spree/state:
-          one: "都道府県（州）"
-          other: "都道府県（州）"
-        spree/tax_category:
-          one: "税区分"
-          other: "税区分"
-        spree/tax_rate:
-          one: "税率"
-          other: "税率"
-        spree/taxon:
-          one: "分類"
-          other: "分類"
-        spree/taxonomy:
-          one: "分類ツリー"
-          other: "分類ツリー"
-        spree/user:
-          one: "ユーザー"
-          other: "ユーザー"
-        spree/variant:
-          one: "種類"
-          other: "種類"
-        spree/zone:
-          one: "ゾーン"
-          other: "ゾーン"
     add: "追加"
     add_action_of_type: "次のタイプのアクションを追加する"
     add_category: "カテゴリーの追加"

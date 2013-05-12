@@ -1,5 +1,220 @@
 ---
 ro:
+  activerecord:
+    attributes:
+      spree/address:
+        address1: Adresa
+        address2: "Adresa (cont.)"
+        city: Oraș / Localitate
+        country: "Țara"
+        first_name_begins_with: "Prenumele începe cu"
+        firstname: "Prenume"
+        last_name_begins_with: "Numele începe cu"
+        lastname: "Nume"
+        phone: Telefon
+        state: "Județ / Regiune"
+        zipcode: "Cod poștal"
+      spree/checkout:
+        bill_address:
+          address1: "Adresa de facturare: strada"
+          city: "Adresa de facturare: orașul"
+          firstname: "Adresa de facturare: prenume"
+          lastname: "Adresa de facturare: nume"
+          phone: "Adresa de facturare: telefon"
+          state: "Adresa de facturare: județ / regiune"
+          zipcode: "Adresa de facturare: cod poștal"
+        ship_address:
+          address1: "Adresa de expediție: strada"
+          city: "Adresa de expediție: orașul"
+          firstname: "Adresa de expediție: prenume"
+          lastname: "Adresa de expediție: nume"
+          phone: "Adresa de expediție: telefon"
+          state: "Adresa de expediție: județ / regiune"
+          zipcode: "Adresa de expediție: cod poștal"
+      spree/country:
+        iso: ISO
+        iso3: ISO3
+        iso_name: "Denumire ISO"
+        name: Nume
+        numcode: "Cod ISO"
+      spree/creditcard:
+        cc_type: Tip
+        month: Lună
+        number: Număr
+        verification_value: "Cod de verificare"
+        year: An
+      spree/inventory_unit:
+        state: Județ / Regiune
+      spree/line_item:
+        price: Preț
+        quantity: Cantitate
+      spree/order:
+        checkout_complete: "Comandă finalizată"
+        completed_at: "Finalizată la"
+        coupon_code: "Cod cupon"
+        ip_address: "Adresa IP"
+        item_total: "Total articole"
+        number: Număr
+        special_instructions: "Instrucțiuni speciale"
+        state: Județ / Regiune
+        total: Total
+      spree/product:
+        available_on: "Disponibil de la"
+        cost_price: "Preț de cost"
+        description: Descriere
+        master_price: "Preț de bază"
+        name: Nume
+        on_hand: "În stoc"
+        shipping_category: "Categorie de livrare"
+        tax_category: "Categorie taxă"
+      spree/product_group:
+        name: "Nume"
+        product_count: "Total produse"
+        product_scopes: "Categorii produse"
+        products: "Produse"
+        url: "URL"
+      spree/product_scope:
+        arguments: "Parametri"
+        description: "Descriere"
+      spree/promotion:
+        code: "Cod"
+        description: "Descriere"
+        expires_at: "Expiră la"
+        name: "Nume"
+        starts_at: "Începe la"
+        usage_limit: "Limită de folosire"
+      spree/property:
+        name: Nume
+        presentation: Descriere
+      spree/prototype:
+        name: Nume
+      spree/return_authorization:
+        amount: Suma
+      spree/role:
+        name: Nume
+      spree/order:
+        checkout_complete: "Comandă procesată"
+        completed_at: "Comandă din data"
+        created_at: Data comenzii
+        email: Email client
+        ip_address: "Adresa IP"
+        item_total: "Total articole"
+        number: Număr
+        payment_state: Status plată
+        shipment_state: Status expediție
+        special_instructions: "Instrucțiuni speciale"
+        state: Status
+        total: Total
+      spree/address:
+        address1: Adresă
+        address2: "Adresă (continuare)"
+        city: Localitate
+        country: "Țara"
+        firstname: "Prenume"
+        lastname: "Nume"
+        phone: Telefon
+        state: "Județ / Regiune"
+        zipcode: "Cod poștal"
+      spree/state:
+        abbr: Prescurtare
+        name: Nume
+      spree/tax_category:
+        description: Descriere
+        name: Nume
+      spree/tax_rate:
+        amount: Tarif
+      spree/taxon:
+        name: Nume
+        permalink: Permalink
+        position: Poziție
+      spree/taxonomy:
+        name: Nume
+      spree/user:
+        email: Email
+      spree/variant:
+        cost_price: "Preț de cost"
+        depth: Adâncime
+        height: Înălțime
+        price: Preț
+        sku: Cod produs
+        weight: Greutate
+        width: Lățime
+      spree/zone:
+        description: Descriere
+        name: Naume
+    models:
+      spree/address:
+        one: Adresă
+        other: Adrese
+      spree/cheque_payment:
+        one: Plata prin transfer bancar
+        other: Plăți prin transfer bancar
+      spree/country:
+        one: Țara
+        other: Țări
+      spree/creditcard:
+        one: "Card credit"
+        other: "Carduri credit"
+      spree/inventory_unit:
+        one: "Unitatea de inventar"
+        other: "Unități de inventar"
+      spree/line_item:
+        one: "Element"
+        other: "Elemente"
+      spree/order:
+        one: Comandă
+        other: Comenzi
+      spree/payment:
+        one: Plată
+        other: Plăți
+      spree/product:
+        one: Produs
+        other: Produse
+      spree/product_group:
+        one: "Grup de produse"
+        other: "Grupuri de produse"
+      spree/property:
+        one: Proprietate
+        other: Proprietăți
+      spree/prototype:
+        one: Prototip
+        other: Prototipuri
+      spree/return_authorization:
+        one: "Autorizație de retur"
+        other: "Autorizații de retur"
+      spree/role:
+        one: Roluri
+        other: Roluri
+      spree/shipment:
+        one: Expediție
+        other: Expediții
+      spree/shipping_category:
+        one: "Categorie de expediție"
+        other: "Categorii de expediții"
+      spree/state:
+        one: Județ / Regiune
+        other: Județe / Regiuni
+      spree/tax_category:
+        one: "Categorie de taxare"
+        other: "Categorii de taxare"
+      spree/tax_rate:
+        one: "Tarif taxă"
+        other: "Tarife taxe"
+      spree/taxon:
+        one: Clasificare
+        other: Clasificări
+      spree/taxonomy:
+        one: Clasificare
+        other: Clasificări
+      spree/user:
+        one: Utilizator
+        other: Utilizatori
+      spree/variant:
+        one: Variantă
+        other: Variante
+      spree/zone:
+        one: Zonă
+        other: Zone
   spree:
     date:
       formats:
@@ -55,221 +270,6 @@ ro:
       new: Nou
       update: Actualizează
     active: "Activ"
-    activerecord:
-      attributes:
-        spree/address:
-          address1: Adresa
-          address2: "Adresa (cont.)"
-          city: Oraș / Localitate
-          country: "Țara"
-          first_name_begins_with: "Prenumele începe cu"
-          firstname: "Prenume"
-          last_name_begins_with: "Numele începe cu"
-          lastname: "Nume"
-          phone: Telefon
-          state: "Județ / Regiune"
-          zipcode: "Cod poștal"
-        spree/checkout:
-          bill_address:
-            address1: "Adresa de facturare: strada"
-            city: "Adresa de facturare: orașul"
-            firstname: "Adresa de facturare: prenume"
-            lastname: "Adresa de facturare: nume"
-            phone: "Adresa de facturare: telefon"
-            state: "Adresa de facturare: județ / regiune"
-            zipcode: "Adresa de facturare: cod poștal"
-          ship_address:
-            address1: "Adresa de expediție: strada"
-            city: "Adresa de expediție: orașul"
-            firstname: "Adresa de expediție: prenume"
-            lastname: "Adresa de expediție: nume"
-            phone: "Adresa de expediție: telefon"
-            state: "Adresa de expediție: județ / regiune"
-            zipcode: "Adresa de expediție: cod poștal"
-        spree/country:
-          iso: ISO
-          iso3: ISO3
-          iso_name: "Denumire ISO"
-          name: Nume
-          numcode: "Cod ISO"
-        spree/creditcard:
-          cc_type: Tip
-          month: Lună
-          number: Număr
-          verification_value: "Cod de verificare"
-          year: An
-        spree/inventory_unit:
-          state: Județ / Regiune
-        spree/line_item:
-          price: Preț
-          quantity: Cantitate
-        spree/order:
-          checkout_complete: "Comandă finalizată"
-          completed_at: "Finalizată la"
-          coupon_code: "Cod cupon"
-          ip_address: "Adresa IP"
-          item_total: "Total articole"
-          number: Număr
-          special_instructions: "Instrucțiuni speciale"
-          state: Județ / Regiune
-          total: Total
-        spree/product:
-          available_on: "Disponibil de la"
-          cost_price: "Preț de cost"
-          description: Descriere
-          master_price: "Preț de bază"
-          name: Nume
-          on_hand: "În stoc"
-          shipping_category: "Categorie de livrare"
-          tax_category: "Categorie taxă"
-        spree/product_group:
-          name: "Nume"
-          product_count: "Total produse"
-          product_scopes: "Categorii produse"
-          products: "Produse"
-          url: "URL"
-        spree/product_scope:
-          arguments: "Parametri"
-          description: "Descriere"
-        spree/promotion:
-          code: "Cod"
-          description: "Descriere"
-          expires_at: "Expiră la"
-          name: "Nume"
-          starts_at: "Începe la"
-          usage_limit: "Limită de folosire"
-        spree/property:
-          name: Nume
-          presentation: Descriere
-        spree/prototype:
-          name: Nume
-        spree/return_authorization:
-          amount: Suma
-        spree/role:
-          name: Nume
-        spree/order:
-          checkout_complete: "Comandă procesată"
-          completed_at: "Comandă din data"
-          created_at: Data comenzii
-          email: Email client
-          ip_address: "Adresa IP"
-          item_total: "Total articole"
-          number: Număr
-          payment_state: Status plată
-          shipment_state: Status expediție
-          special_instructions: "Instrucțiuni speciale"
-          state: Status
-          total: Total
-        spree/address:
-          address1: Adresă
-          address2: "Adresă (continuare)"
-          city: Localitate
-          country: "Țara"
-          firstname: "Prenume"
-          lastname: "Nume"
-          phone: Telefon
-          state: "Județ / Regiune"
-          zipcode: "Cod poștal"
-        spree/state:
-          abbr: Prescurtare
-          name: Nume
-        spree/tax_category:
-          description: Descriere
-          name: Nume
-        spree/tax_rate:
-          amount: Tarif
-        spree/taxon:
-          name: Nume
-          permalink: Permalink
-          position: Poziție
-        spree/taxonomy:
-          name: Nume
-        spree/user:
-          email: Email
-        spree/variant:
-          cost_price: "Preț de cost"
-          depth: Adâncime
-          height: Înălțime
-          price: Preț
-          sku: Cod produs
-          weight: Greutate
-          width: Lățime
-        spree/zone:
-          description: Descriere
-          name: Naume
-      models:
-        spree/address:
-          one: Adresă
-          other: Adrese
-        spree/cheque_payment:
-          one: Plata prin transfer bancar
-          other: Plăți prin transfer bancar
-        spree/country:
-          one: Țara
-          other: Țări
-        spree/creditcard:
-          one: "Card credit"
-          other: "Carduri credit"
-        spree/inventory_unit:
-          one: "Unitatea de inventar"
-          other: "Unități de inventar"
-        spree/line_item:
-          one: "Element"
-          other: "Elemente"
-        spree/order:
-          one: Comandă
-          other: Comenzi
-        spree/payment:
-          one: Plată
-          other: Plăți
-        spree/product:
-          one: Produs
-          other: Produse
-        spree/product_group:
-          one: "Grup de produse"
-          other: "Grupuri de produse"
-        spree/property:
-          one: Proprietate
-          other: Proprietăți
-        spree/prototype:
-          one: Prototip
-          other: Prototipuri
-        spree/return_authorization:
-          one: "Autorizație de retur"
-          other: "Autorizații de retur"
-        spree/role:
-          one: Roluri
-          other: Roluri
-        spree/shipment:
-          one: Expediție
-          other: Expediții
-        spree/shipping_category:
-          one: "Categorie de expediție"
-          other: "Categorii de expediții"
-        spree/state:
-          one: Județ / Regiune
-          other: Județe / Regiuni
-        spree/tax_category:
-          one: "Categorie de taxare"
-          other: "Categorii de taxare"
-        spree/tax_rate:
-          one: "Tarif taxă"
-          other: "Tarife taxe"
-        spree/taxon:
-          one: Clasificare
-          other: Clasificări
-        spree/taxonomy:
-          one: Clasificare
-          other: Clasificări
-        spree/user:
-          one: Utilizator
-          other: Utilizatori
-        spree/variant:
-          one: Variantă
-          other: Variante
-        spree/zone:
-          one: Zonă
-          other: Zone
     add: Adaugă
     add_category: "Adaugă categorie"
     add_country: "Adaugă țară"

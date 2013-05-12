@@ -1,5 +1,204 @@
 ---
 pt-BR:
+  activerecord:
+    attributes:
+      spree/address:
+        address1: "Primeiro Endereço"
+        address2: "Segundo Endereço"
+        city: "Cidade"
+        country: "País"
+        firstname: "Nome"
+        lastname: "Sobrenome"
+        phone: "Telefone"
+        state: "Estado"
+        zipcode: "CEP"
+      spree/country:
+        iso: "ISO"
+        iso3: "ISO3"
+        iso_name: "Nome do ISO"
+        name: "Nome"
+        numcode: "Código ISO"
+      spree/credit_card:
+        cc_type: "Tipo de Cartão"
+        month: "Mês"
+        number: "Número"
+        verification_value: "Código de verificação"
+        year: "Ano"
+      spree/inventory_unit:
+        state: "Estado"
+      spree/line_item:
+        price: "Preço"
+        quantity: "Quantidade"
+      spree/option_type:
+        name: "Nome"
+        presentation: "Apresentação"
+      spree/order:
+        checkout_complete: "Checkout Completo"
+        completed_at: "Completado em"
+        created_at: "Criado em"
+        email: "Email"
+        ip_address: "Endereço IP"
+        item_total: "Total de itens"
+        number: "Número"
+        payment_state: "Status do Pagamento"
+        shipment_state: "Status do Envio"
+        special_instructions: "Instruções de Envio"
+        state: "Estado"
+        total: "Total"
+      spree/order/bill_address:
+        address1: "Endereço"
+        city: "Cidade"
+        firstname: "Nome"
+        lastname: "Sobrenome"
+        phone: "Telefone"
+        state: "Estado"
+        zipcode: "CEP"
+      spree/order/ship_address:
+        address1: "Endereço"
+        city: "Cidade"
+        firstname: "Nome"
+        lastname: "Sobrenome"
+        phone: "Telefone"
+        state: "Estado"
+        zipcode: "CEP"
+      spree/payment_method:
+        name: "Nome"
+      spree/product:
+        available_on: "Disponível em"
+        cost_price: "Preço de Custo"
+        description: "Descrição"
+        master_price: "Preço Total"
+        name: "Nome"
+        on_demand: "Fazer pedido"
+        on_hand: "Pronta Entrega"
+        shipping_category: "Tipo de Entraga"
+        tax_category: "Tipo de Taxa"
+      spree/promotion:
+        advertise: "Aviso"
+        code: "Código"
+        description: "Descrição"
+        event_name: "Nome do Evento"
+        expires_at: "Expira em"
+        name: "Nome"
+        path: "Caminho"
+        starts_at: "Início em"
+        usage_limit: "Limite de uso"
+      spree/property:
+        name: "Nome"
+        presentation: "Apresentação"
+      spree/prototype:
+        name: "Nome"
+      spree/return_authorization:
+        amount: "Quantidade"
+      spree/role:
+        name: "Nome"
+      spree/state:
+        abbr: "Abreviação"
+        name: "Nome"
+      spree/tax_category:
+        description: "Descrição"
+        name: "Nome"
+      spree/tax_rate:
+        amount: "Valor"
+        included_in_price: "Incluso no Preço"
+        show_rate_in_label: "Mostrar Taxa no Rótulo"
+      spree/taxon:
+        name: "Nome"
+        permalink: "Permalink"
+        position: "Posição"
+      spree/taxonomy:
+        name: "Nome"
+      spree/user:
+        email: "Email"
+        password: "Senha"
+        password_confirmation: "Confirmação de Senha"
+      spree/variant:
+        cost_price: "Preço de Custo"
+        depth: "Profundidade"
+        height: "Altura"
+        price: "Preço"
+        sku: "SKU"
+        weight: "Peso"
+        width: "Largura"
+      spree/zone:
+        description: "Descrição"
+        name: "Nome"
+    models:
+      spree/address:
+        one: "Endereço"
+        other: "Endereços"
+      spree/cheque_payment:
+        one: "Pagamento em Cheque"
+        other: "Pagamento em Cheques"
+      spree/country:
+        one: "País"
+        other: "Países"
+      spree/credit_card:
+        one: "Cartão de Crédito"
+        other: "Cartões de Crédito"
+      spree/creditcard_payment:
+        one: "Pagamento com Cartão de Crédito"
+        other: "Pagamento com Cartões de Crédito"
+      spree/creditcard_txn:
+        one: "Transações com Cartões de Crédito"
+        other: "Transações com Cartões de Crédito"
+      spree/inventory_unit:
+        one: "Unidade de Inventário"
+        other: "Unidades de Inventário"
+      spree/line_item:
+        one: "Item"
+        other: "Itens"
+      spree/order:
+        one: "Pedido"
+        other: "Pedidos"
+      spree/payment:
+        one: "Pagamento"
+        other: "Pagamentos"
+      spree/product:
+        one: "Produto"
+        other: "Produtos"
+      spree/property:
+        one: "Propriedade"
+        other: "Propriedades"
+      spree/prototype:
+        one: "Protótipo"
+        other: "Protótipos"
+      spree/return_authorization:
+        one: "Autorização de Retorno"
+        other: "Autorização de Retornos"
+      spree/role:
+        one: "Função"
+        other: "Funções"
+      spree/shipment:
+        one: "Envio"
+        other: "Envios"
+      spree/shipping_category:
+        one: "Categoria do Envio"
+        other: "Categoria dos Envios"
+      spree/state:
+        one: "Estado"
+        other: "Estados"
+      spree/tax_category:
+        one: "Categoria do Imposto"
+        other: "Categoria dos Impostos"
+      spree/tax_rate:
+        one: "Taxa do Imposto"
+        other: "Taxa dos Impostos"
+      spree/taxon:
+        one: "Taxon"
+        other: "Taxon"
+      spree/taxonomy:
+        one: "Taxonomia"
+        other: "Taxonomias"
+      spree/user:
+        one: "Usuário"
+        other: "Usuários"
+      spree/variant:
+        one: "Variante"
+        other: "Variantes"
+      spree/zone:
+        one: "Zona"
+        other: "Zonas"
   spree:
     a_copy_of_all_mail_will_be_sent_to_the_following_addresses: "Uma cópia de todos e-mails serão enviadas aos destinatários a seguir"
     abbreviation: "Abreviação"
@@ -17,205 +216,6 @@ pt-BR:
       update: "Atualizar"
     activate: "Activate"
     active: "Ativo"
-    activerecord:
-      attributes:
-        spree/address:
-          address1: "Primeiro Endereço"
-          address2: "Segundo Endereço"
-          city: "Cidade"
-          country: "País"
-          firstname: "Nome"
-          lastname: "Sobrenome"
-          phone: "Telefone"
-          state: "Estado"
-          zipcode: "CEP"
-        spree/country:
-          iso: "ISO"
-          iso3: "ISO3"
-          iso_name: "Nome do ISO"
-          name: "Nome"
-          numcode: "Código ISO"
-        spree/credit_card:
-          cc_type: "Tipo de Cartão"
-          month: "Mês"
-          number: "Número"
-          verification_value: "Código de verificação"
-          year: "Ano"
-        spree/inventory_unit:
-          state: "Estado"
-        spree/line_item:
-          price: "Preço"
-          quantity: "Quantidade"
-        spree/option_type:
-          name: "Nome"
-          presentation: "Apresentação"
-        spree/order:
-          checkout_complete: "Checkout Completo"
-          completed_at: "Completado em"
-          created_at: "Criado em"
-          email: "Email"
-          ip_address: "Endereço IP"
-          item_total: "Total de itens"
-          number: "Número"
-          payment_state: "Status do Pagamento"
-          shipment_state: "Status do Envio"
-          special_instructions: "Instruções de Envio"
-          state: "Estado"
-          total: "Total"
-        spree/order/bill_address:
-          address1: "Endereço"
-          city: "Cidade"
-          firstname: "Nome"
-          lastname: "Sobrenome"
-          phone: "Telefone"
-          state: "Estado"
-          zipcode: "CEP"
-        spree/order/ship_address:
-          address1: "Endereço"
-          city: "Cidade"
-          firstname: "Nome"
-          lastname: "Sobrenome"
-          phone: "Telefone"
-          state: "Estado"
-          zipcode: "CEP"
-        spree/payment_method:
-          name: "Nome"
-        spree/product:
-          available_on: "Disponível em"
-          cost_price: "Preço de Custo"
-          description: "Descrição"
-          master_price: "Preço Total"
-          name: "Nome"
-          on_demand: "Fazer pedido"
-          on_hand: "Pronta Entrega"
-          shipping_category: "Tipo de Entraga"
-          tax_category: "Tipo de Taxa"
-        spree/promotion:
-          advertise: "Aviso"
-          code: "Código"
-          description: "Descrição"
-          event_name: "Nome do Evento"
-          expires_at: "Expira em"
-          name: "Nome"
-          path: "Caminho"
-          starts_at: "Início em"
-          usage_limit: "Limite de uso"
-        spree/property:
-          name: "Nome"
-          presentation: "Apresentação"
-        spree/prototype:
-          name: "Nome"
-        spree/return_authorization:
-          amount: "Quantidade"
-        spree/role:
-          name: "Nome"
-        spree/state:
-          abbr: "Abreviação"
-          name: "Nome"
-        spree/tax_category:
-          description: "Descrição"
-          name: "Nome"
-        spree/tax_rate:
-          amount: "Valor"
-          included_in_price: "Incluso no Preço"
-          show_rate_in_label: "Mostrar Taxa no Rótulo"
-        spree/taxon:
-          name: "Nome"
-          permalink: "Permalink"
-          position: "Posição"
-        spree/taxonomy:
-          name: "Nome"
-        spree/user:
-          email: "Email"
-          password: "Senha"
-          password_confirmation: "Confirmação de Senha"
-        spree/variant:
-          cost_price: "Preço de Custo"
-          depth: "Profundidade"
-          height: "Altura"
-          price: "Preço"
-          sku: "SKU"
-          weight: "Peso"
-          width: "Largura"
-        spree/zone:
-          description: "Descrição"
-          name: "Nome"
-      models:
-        spree/address:
-          one: "Endereço"
-          other: "Endereços"
-        spree/cheque_payment:
-          one: "Pagamento em Cheque"
-          other: "Pagamento em Cheques"
-        spree/country:
-          one: "País"
-          other: "Países"
-        spree/credit_card:
-          one: "Cartão de Crédito"
-          other: "Cartões de Crédito"
-        spree/creditcard_payment:
-          one: "Pagamento com Cartão de Crédito"
-          other: "Pagamento com Cartões de Crédito"
-        spree/creditcard_txn:
-          one: "Transações com Cartões de Crédito"
-          other: "Transações com Cartões de Crédito"
-        spree/inventory_unit:
-          one: "Unidade de Inventário"
-          other: "Unidades de Inventário"
-        spree/line_item:
-          one: "Item"
-          other: "Itens"
-        spree/order:
-          one: "Pedido"
-          other: "Pedidos"
-        spree/payment:
-          one: "Pagamento"
-          other: "Pagamentos"
-        spree/product:
-          one: "Produto"
-          other: "Produtos"
-        spree/property:
-          one: "Propriedade"
-          other: "Propriedades"
-        spree/prototype:
-          one: "Protótipo"
-          other: "Protótipos"
-        spree/return_authorization:
-          one: "Autorização de Retorno"
-          other: "Autorização de Retornos"
-        spree/role:
-          one: "Função"
-          other: "Funções"
-        spree/shipment:
-          one: "Envio"
-          other: "Envios"
-        spree/shipping_category:
-          one: "Categoria do Envio"
-          other: "Categoria dos Envios"
-        spree/state:
-          one: "Estado"
-          other: "Estados"
-        spree/tax_category:
-          one: "Categoria do Imposto"
-          other: "Categoria dos Impostos"
-        spree/tax_rate:
-          one: "Taxa do Imposto"
-          other: "Taxa dos Impostos"
-        spree/taxon:
-          one: "Taxon"
-          other: "Taxon"
-        spree/taxonomy:
-          one: "Taxonomia"
-          other: "Taxonomias"
-        spree/user:
-          one: "Usuário"
-          other: "Usuários"
-        spree/variant:
-          one: "Variante"
-          other: "Variantes"
-        spree/zone:
-          one: "Zona"
-          other: "Zonas"
     add: "Adicionar"
     add_action_of_type: "Adicionar Ação do Tipo"
     add_category: "Adicionar categoria"

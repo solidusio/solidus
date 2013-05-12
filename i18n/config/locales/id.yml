@@ -1,5 +1,204 @@
 ---
 id:
+  activerecord:
+    attributes:
+      spree/address:
+        address1: "Alamat"
+        address2: "Alamat (lanjutan)"
+        city: "Kota"
+        country: "Negara"
+        firstname: "Nama Depan"
+        lastname: "Nama Belakang"
+        phone: "Telepon"
+        state: "Provinsi"
+        zipcode: "Kode Pos"
+      spree/country:
+        iso: "ISO"
+        iso3: "ISO3"
+        iso_name: "Nama ISO"
+        name: "Nama"
+        numcode: "Kode ISO"
+      spree/credit_card:
+        cc_type: "Tipe"
+        month: "Bulan"
+        number: "Nomor"
+        verification_value: "Kode Verifikasi"
+        year: "Tahun"
+      spree/inventory_unit:
+        state: "Status"
+      spree/line_item:
+        price: "Harga"
+        quantity: "Kuantitas"
+      spree/option_type:
+        name: "Nama"
+        presentation: "Presentasi"
+      spree/order/bill_address:
+        address1: "Alamat penagihan nama jalan"
+        city: "Alamat penagihan kota"
+        firstname: "Alamat penagihan nama depan"
+        lastname: "Alamat penagihan nama keluarga"
+        phone: "Alamat penagihan nomor telepon"
+        state: "Alamat penagihan nama propinsi"
+        zipcode: "Alamat penagihan kode pos"
+      spree/order/ship_address:
+        address1: "Alamat pengiriman nama jalan"
+        city: "Alamat pengiriman kota"
+        firstname: "Alamat pengiriman nama depan"
+        lastname: "Alamat pengiriman nama keluarga"
+        phone: "Alamat pengirimian telepon"
+        state: "Alamat pengiriman provinsi"
+        zipcode: "Alamat pengiriman kode pos"
+      spree/order:
+        checkout_complete: "Checkout Selesai"
+        completed_at: "Terpenuhi Saat"
+        created_at: "Tanggal Pemesanan"
+        email: "E-mail Pelanggan"
+        ip_address: "Alamat IP"
+        item_total: "Total Barang"
+        number: "Nomor"
+        payment_state: "Status Pembayaran"
+        shipment_state: "Status Pengiriman"
+        special_instructions: "Instruksi Tambahan"
+        state: "Status"
+        total: "Total"
+      spree/payment_method:
+        name: "Nama"
+      spree/product:
+        available_on: "Tersedia Pada"
+        cost_price: "Harga Pengeluaran"
+        description: "Deskripsi"
+        master_price: "Harga Master"
+        name: "Nama"
+        on_demand: "On Demand"
+        on_hand: "Yang Tersedia"
+        shipping_category: "Kategori Pengiriman"
+        tax_category: "Kategori Pajak"
+      spree/promotion:
+        advertise: "Iklan"
+        code: "Kode"
+        description: "Deskripsi"
+        event_name: "Nama Event"
+        expires_at: "Berakhir Pada"
+        name: "Nama"
+        path: "Path"
+        starts_at: "Mulai Pada"
+        usage_limit: "Batas Penggunaan"
+      spree/property:
+        name: "Nama"
+        presentation: "Presentasi"
+      spree/prototype:
+        name: "Nama"
+      spree/return_authorization:
+        amount: "Jumlah"
+      spree/role:
+        name: "Nama"
+      spree/state:
+        abbr: "Singkatan"
+        name: "Nama"
+      spree/tax_category:
+        description: "Deskripsi"
+        name: "Nama"
+      spree/tax_rate:
+        amount: "Persentase"
+        included_in_price: "Termasuk dalam Harga"
+        show_rate_in_label: "Tunjukan persentase di label"
+      spree/taxon:
+        name: "Nama"
+        permalink: "Permalink"
+        position: "Posisi"
+      spree/taxonomy:
+        name: "Nama"
+      spree/user:
+        email: "Email"
+        password: "Kata Sandi"
+        password_confirmation: "Konfirmasi Kata Sandi"
+      spree/variant:
+        cost_price: "Harga Pengeluaran"
+        depth: "Kedalaman"
+        height: "Ketinggian"
+        price: "Harga"
+        sku: "SKU"
+        weight: "Berat"
+        width: "Lebar"
+      spree/zone:
+        description: "Deskripsi"
+        name: "Nama"
+    models:
+      spree/address:
+        one: "Alamat"
+        other: "Alamat lainnya"
+      spree/cheque_payment:
+        one: "Pembayaran Dengan Cek"
+        other: "Pembayaran lainnya Dengan Cek"
+      spree/country:
+        one: "Negara"
+        other: "Negara lainnya"
+      spree/credit_card:
+        one: "Kartu Kredit"
+        other: "Kartu kredit lainnya"
+      spree/creditcard_payment:
+        one: "Pembayaran dengan Kartu Kredit"
+        other: "Pembayaran lainnya dengan Kartu Kredit"
+      spree/creditcard_txn:
+        one: "Transaksi Kartu Kredit"
+        other: "Transaksi lainnya dengan Kartu Kredit"
+      spree/inventory_unit:
+        one: "Satuan Unit"
+        other: "Satuan Unit lainnya"
+      spree/line_item:
+        one: "Barang"
+        other: "Barang lainnya"
+      spree/order:
+        one: "Pemesanan"
+        other: "Pemesanan lainnya"
+      spree/payment:
+        one: "Pembayaran"
+        other: "Pembayaran lainnya"
+      spree/product:
+        one: "Produk"
+        other: "Produk lainnya"
+      spree/property:
+        one: "Properti"
+        other: "Properti lainnya"
+      spree/prototype:
+        one: "Prototipe"
+        other: "Prototipe lainnya"
+      spree/return_authorization:
+        one: "Otorisasi Pengembalian"
+        other: "Otorisasi Pengembalian lainnya"
+      spree/role:
+        one: "Peran"
+        other: "Peran lainnya"
+      spree/shipment:
+        one: "Pengiriman"
+        other: "Pengiriman lainnya"
+      spree/shipping_category:
+        one: "Kategori Pengiriman"
+        other: "Kategori Pengiriman lainnya"
+      spree/state:
+        one: "Provinsi"
+        other: "Provinsi lainnya"
+      spree/tax_category:
+        one: "Kategori Pajak"
+        other: "Kategori Pajak lainnya"
+      spree/tax_rate:
+        one: "Persentase Pajak"
+        other: "Persentase Pajak lainnya"
+      spree/taxon:
+        one: "Takson"
+        other: "Takson lainnya"
+      spree/taxonomy:
+        one: "Taksonomi"
+        other: "Taksonomi lainnya"
+      spree/user:
+        one: "Pengguna"
+        other: "Pengguna lainnya"
+      spree/variant:
+        one: "Varian"
+        other: "Varian lainnya"
+      spree/zone:
+        one: "Wilayah"
+        other: "Wilayah-wilayah"
   spree:
     a_copy_of_all_mail_will_be_sent_to_the_following_addresses: "Salinan dari semua email akan dikirim ke alamat ini"
     abbreviation: "Singkatan"
@@ -17,205 +216,6 @@ id:
       update: "Pembaharuan"
     activate: "Aktivasi"
     active: "Aktif"
-    activerecord:
-      attributes:
-        spree/address:
-          address1: "Alamat"
-          address2: "Alamat (lanjutan)"
-          city: "Kota"
-          country: "Negara"
-          firstname: "Nama Depan"
-          lastname: "Nama Belakang"
-          phone: "Telepon"
-          state: "Provinsi"
-          zipcode: "Kode Pos"
-        spree/country:
-          iso: "ISO"
-          iso3: "ISO3"
-          iso_name: "Nama ISO"
-          name: "Nama"
-          numcode: "Kode ISO"
-        spree/credit_card:
-          cc_type: "Tipe"
-          month: "Bulan"
-          number: "Nomor"
-          verification_value: "Kode Verifikasi"
-          year: "Tahun"
-        spree/inventory_unit:
-          state: "Status"
-        spree/line_item:
-          price: "Harga"
-          quantity: "Kuantitas"
-        spree/option_type:
-          name: "Nama"
-          presentation: "Presentasi"
-        spree/order/bill_address:
-          address1: "Alamat penagihan nama jalan"
-          city: "Alamat penagihan kota"
-          firstname: "Alamat penagihan nama depan"
-          lastname: "Alamat penagihan nama keluarga"
-          phone: "Alamat penagihan nomor telepon"
-          state: "Alamat penagihan nama propinsi"
-          zipcode: "Alamat penagihan kode pos"
-        spree/order/ship_address:
-          address1: "Alamat pengiriman nama jalan"
-          city: "Alamat pengiriman kota"
-          firstname: "Alamat pengiriman nama depan"
-          lastname: "Alamat pengiriman nama keluarga"
-          phone: "Alamat pengirimian telepon"
-          state: "Alamat pengiriman provinsi"
-          zipcode: "Alamat pengiriman kode pos"
-        spree/order:
-          checkout_complete: "Checkout Selesai"
-          completed_at: "Terpenuhi Saat"
-          created_at: "Tanggal Pemesanan"
-          email: "E-mail Pelanggan"
-          ip_address: "Alamat IP"
-          item_total: "Total Barang"
-          number: "Nomor"
-          payment_state: "Status Pembayaran"
-          shipment_state: "Status Pengiriman"
-          special_instructions: "Instruksi Tambahan"
-          state: "Status"
-          total: "Total"
-        spree/payment_method:
-          name: "Nama"
-        spree/product:
-          available_on: "Tersedia Pada"
-          cost_price: "Harga Pengeluaran"
-          description: "Deskripsi"
-          master_price: "Harga Master"
-          name: "Nama"
-          on_demand: "On Demand"
-          on_hand: "Yang Tersedia"
-          shipping_category: "Kategori Pengiriman"
-          tax_category: "Kategori Pajak"
-        spree/promotion:
-          advertise: "Iklan"
-          code: "Kode"
-          description: "Deskripsi"
-          event_name: "Nama Event"
-          expires_at: "Berakhir Pada"
-          name: "Nama"
-          path: "Path"
-          starts_at: "Mulai Pada"
-          usage_limit: "Batas Penggunaan"
-        spree/property:
-          name: "Nama"
-          presentation: "Presentasi"
-        spree/prototype:
-          name: "Nama"
-        spree/return_authorization:
-          amount: "Jumlah"
-        spree/role:
-          name: "Nama"
-        spree/state:
-          abbr: "Singkatan"
-          name: "Nama"
-        spree/tax_category:
-          description: "Deskripsi"
-          name: "Nama"
-        spree/tax_rate:
-          amount: "Persentase"
-          included_in_price: "Termasuk dalam Harga"
-          show_rate_in_label: "Tunjukan persentase di label"
-        spree/taxon:
-          name: "Nama"
-          permalink: "Permalink"
-          position: "Posisi"
-        spree/taxonomy:
-          name: "Nama"
-        spree/user:
-          email: "Email"
-          password: "Kata Sandi"
-          password_confirmation: "Konfirmasi Kata Sandi"
-        spree/variant:
-          cost_price: "Harga Pengeluaran"
-          depth: "Kedalaman"
-          height: "Ketinggian"
-          price: "Harga"
-          sku: "SKU"
-          weight: "Berat"
-          width: "Lebar"
-        spree/zone:
-          description: "Deskripsi"
-          name: "Nama"
-      models:
-        spree/address:
-          one: "Alamat"
-          other: "Alamat lainnya"
-        spree/cheque_payment:
-          one: "Pembayaran Dengan Cek"
-          other: "Pembayaran lainnya Dengan Cek"
-        spree/country:
-          one: "Negara"
-          other: "Negara lainnya"
-        spree/credit_card:
-          one: "Kartu Kredit"
-          other: "Kartu kredit lainnya"
-        spree/creditcard_payment:
-          one: "Pembayaran dengan Kartu Kredit"
-          other: "Pembayaran lainnya dengan Kartu Kredit"
-        spree/creditcard_txn:
-          one: "Transaksi Kartu Kredit"
-          other: "Transaksi lainnya dengan Kartu Kredit"
-        spree/inventory_unit:
-          one: "Satuan Unit"
-          other: "Satuan Unit lainnya"
-        spree/line_item:
-          one: "Barang"
-          other: "Barang lainnya"
-        spree/order:
-          one: "Pemesanan"
-          other: "Pemesanan lainnya"
-        spree/payment:
-          one: "Pembayaran"
-          other: "Pembayaran lainnya"
-        spree/product:
-          one: "Produk"
-          other: "Produk lainnya"
-        spree/property:
-          one: "Properti"
-          other: "Properti lainnya"
-        spree/prototype:
-          one: "Prototipe"
-          other: "Prototipe lainnya"
-        spree/return_authorization:
-          one: "Otorisasi Pengembalian"
-          other: "Otorisasi Pengembalian lainnya"
-        spree/role:
-          one: "Peran"
-          other: "Peran lainnya"
-        spree/shipment:
-          one: "Pengiriman"
-          other: "Pengiriman lainnya"
-        spree/shipping_category:
-          one: "Kategori Pengiriman"
-          other: "Kategori Pengiriman lainnya"
-        spree/state:
-          one: "Provinsi"
-          other: "Provinsi lainnya"
-        spree/tax_category:
-          one: "Kategori Pajak"
-          other: "Kategori Pajak lainnya"
-        spree/tax_rate:
-          one: "Persentase Pajak"
-          other: "Persentase Pajak lainnya"
-        spree/taxon:
-          one: "Takson"
-          other: "Takson lainnya"
-        spree/taxonomy:
-          one: "Taksonomi"
-          other: "Taksonomi lainnya"
-        spree/user:
-          one: "Pengguna"
-          other: "Pengguna lainnya"
-        spree/variant:
-          one: "Varian"
-          other: "Varian lainnya"
-        spree/zone:
-          one: "Wilayah"
-          other: "Wilayah-wilayah"
     add: "Tambahkan"
     add_action_of_type: "Tambahkan Aksi Dari Tipe"
     add_category: "Tambahkan Kategori"
