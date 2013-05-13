@@ -3,7 +3,7 @@ require 'spec_helper'
 describe "Translations" do
   stub_authorization!
 
-  let(:language) { I18n.t("this_file_language", locale: "pt-BR") }
+  let(:language) { Spree.t("this_file_language", locale: "pt-BR") }
 
   before(:each) do
     reset_spree_preferences
@@ -121,8 +121,8 @@ describe "Translations" do
   end
 
   context "localization settings", js: true do
-    let(:language) { I18n.t("this_file_language", locale: "de") }
-    let(:spanish) { I18n.t("this_file_language", locale: "es-MX") }
+    let(:language) { Spree.t("this_file_language", locale: "de") }
+    let(:spanish) { Spree.t("this_file_language", locale: "es-MX") }
 
     before do
       SpreeI18n::Config.available_locales = [:en, :'pt-BR', :de]

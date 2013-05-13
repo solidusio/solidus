@@ -1,4 +1,4 @@
 <!-- insert_top 'li' -->
 <li>
-  <%= button_link_to t(:translations), spree.admin_translations_path('taxons', @taxon.id), :icon => 'icon-flag' %>
+  <%= button_link_to Spree.t(:translations), spree.admin_translations_path('taxons', @taxon.id), :icon => 'icon-flag' %>
 </li>

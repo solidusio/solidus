@@ -7,6 +7,7 @@ require File.expand_path('../dummy/config/environment.rb',  __FILE__)
 Dir[File.join(File.dirname(__FILE__), "/support/**/*.rb")].each {|f| require f}
 
 require 'i18n-spec'
+require 'ffaker'
 require 'rspec/rails'
 require 'support/be_a_thorough_translation_of_matcher'
 
