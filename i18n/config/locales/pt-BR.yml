@@ -2,837 +2,1037 @@ pt-BR:
   activerecord:
     attributes:
       spree/address:
-        address1: "Primeiro Endereço"
-        address2: "Segundo Endereço"
-        city: "Cidade"
-        country: "País"
-        firstname: "Nome"
-        lastname: "Sobrenome"
-        phone: "Telefone"
-        state: "Estado"
-        zipcode: "CEP"
+        address1: Primeiro Endereço
+        address2: Segundo Endereço
+        city: Cidade
+        country: País
+        firstname: Nome
+        lastname: Sobrenome
+        phone: Telefone
+        state: Estado
+        zipcode: CEP
       spree/country:
-        iso: "ISO"
-        iso3: "ISO3"
-        iso_name: "Nome do ISO"
-        name: "Nome"
-        numcode: "Código ISO"
+        iso: ISO
+        iso3: ISO3
+        iso_name: Nome do ISO
+        name: Nome
+        numcode: Código ISO
       spree/credit_card:
-        cc_type: "Tipo de Cartão"
-        month: "Mês"
-        number: "Número"
-        verification_value: "Código de verificação"
-        year: "Ano"
+        cc_type: Tipo de Cartão
+        month: Mês
+        number: Número
+        verification_value: Código de verificação
+        year: Ano
       spree/inventory_unit:
-        state: "Estado"
+        state: Estado
       spree/line_item:
-        price: "Preço"
-        quantity: "Quantidade"
+        price: Preço
+        quantity: Quantidade
       spree/option_type:
-        name: "Nome"
-        presentation: "Apresentação"
+        name: Nome
+        presentation: Apresentação
       spree/order:
-        checkout_complete: "Checkout Completo"
-        completed_at: "Completado em"
-        created_at: "Criado em"
-        ip_address: "Endereço IP"
-        item_total: "Total de itens"
-        number: "Número"
-        payment_state: "Status do Pagamento"
-        shipment_state: "Status do Envio"
-        special_instructions: "Instruções de Envio"
-        state: "Estado"
+        checkout_complete: Checkout Completo
+        completed_at: Completado em
+        created_at: Criado em
+        email: 
+        ip_address: Endereço IP
+        item_total: Total de itens
+        number: Número
+        payment_state: Status do Pagamento
+        shipment_state: Status do Envio
+        special_instructions: Instruções de Envio
+        state: Estado
+        total: 
       spree/order/bill_address:
-        address1: "Endereço"
-        city: "Cidade"
-        firstname: "Nome"
-        lastname: "Sobrenome"
-        phone: "Telefone"
-        state: "Estado"
-        zipcode: "CEP"
+        address1: Endereço
+        city: Cidade
+        firstname: Nome
+        lastname: Sobrenome
+        phone: Telefone
+        state: Estado
+        zipcode: CEP
       spree/order/ship_address:
-        address1: "Endereço"
-        city: "Cidade"
-        firstname: "Nome"
-        lastname: "Sobrenome"
-        phone: "Telefone"
-        state: "Estado"
-        zipcode: "CEP"
+        address1: Endereço
+        city: Cidade
+        firstname: Nome
+        lastname: Sobrenome
+        phone: Telefone
+        state: Estado
+        zipcode: CEP
+      spree/payment:
+        amount: 
       spree/payment_method:
-        name: "Nome"
+        name: Nome
       spree/product:
-        available_on: "Disponível em"
-        cost_price: "Preço de Custo"
-        description: "Descrição"
-        master_price: "Preço Total"
-        name: "Nome"
-        on_hand: "Pronta Entrega"
-        shipping_category: "Tipo de Entraga"
-        tax_category: "Tipo de Taxa"
+        available_on: Disponível em
+        cost_currency: 
+        cost_price: Preço de Custo
+        description: Descrição
+        master_price: Preço Total
+        name: Nome
+        on_hand: Pronta Entrega
+        shipping_category: Tipo de Entraga
+        tax_category: Tipo de Taxa
       spree/promotion:
-        advertise: "Aviso"
-        code: "Código"
-        description: "Descrição"
-        event_name: "Nome do Evento"
-        expires_at: "Expira em"
-        name: "Nome"
-        path: "Caminho"
-        starts_at: "Início em"
-        usage_limit: "Limite de uso"
+        advertise: Aviso
+        code: Código
+        description: Descrição
+        event_name: Nome do Evento
+        expires_at: Expira em
+        name: Nome
+        path: Caminho
+        starts_at: Início em
+        usage_limit: Limite de uso
       spree/property:
-        name: "Nome"
-        presentation: "Apresentação"
+        name: Nome
+        presentation: Apresentação
       spree/prototype:
-        name: "Nome"
+        name: Nome
       spree/return_authorization:
-        amount: "Quantidade"
+        amount: Quantidade
       spree/role:
-        name: "Nome"
+        name: Nome
       spree/state:
-        abbr: "Abreviação"
-        name: "Nome"
+        abbr: Abreviação
+        name: Nome
       spree/tax_category:
-        description: "Descrição"
-        name: "Nome"
+        description: Descrição
+        name: Nome
       spree/tax_rate:
-        amount: "Valor"
-        included_in_price: "Incluso no Preço"
-        show_rate_in_label: "Mostrar Taxa no Rótulo"
+        amount: Valor
+        included_in_price: Incluso no Preço
+        show_rate_in_label: Mostrar Taxa no Rótulo
       spree/taxon:
-        name: "Nome"
-        permalink: "Permalink"
-        position: "Posição"
+        name: Nome
+        permalink: Permalink
+        position: Posição
       spree/taxonomy:
-        name: "Nome"
+        name: Nome
       spree/user:
-        email: "Email"
-        password: "Senha"
-        password_confirmation: "Confirmação de Senha"
+        email: Email
+        password: Senha
+        password_confirmation: Confirmação de Senha
       spree/variant:
-        cost_price: "Preço de Custo"
-        depth: "Profundidade"
-        height: "Altura"
-        price: "Preço"
-        sku: "SKU"
-        weight: "Peso"
-        width: "Largura"
+        cost_currency: 
+        cost_price: Preço de Custo
+        depth: Profundidade
+        height: Altura
+        price: Preço
+        sku: SKU
+        weight: Peso
+        width: Largura
       spree/zone:
-        description: "Descrição"
-        name: "Nome"
+        description: Descrição
+        name: Nome
     models:
       spree/address:
-        one: "Endereço"
-        other: "Endereços"
+        one: Endereço
+        other: Endereços
       spree/country:
-        one: "País"
-        other: "Países"
+        one: País
+        other: Países
       spree/credit_card:
-        one: "Cartão de Crédito"
-        other: "Cartões de Crédito"
+        one: Cartão de Crédito
+        other: Cartões de Crédito
       spree/inventory_unit:
-        one: "Unidade de Inventário"
-        other: "Unidades de Inventário"
+        one: Unidade de Inventário
+        other: Unidades de Inventário
       spree/line_item:
-        one: "Item"
-        other: "Itens"
+        one: Item
+        other: Itens
       spree/order:
-        one: "Pedido"
-        other: "Pedidos"
+        one: Pedido
+        other: Pedidos
       spree/payment:
-        one: "Pagamento"
-        other: "Pagamentos"
+        one: Pagamento
+        other: Pagamentos
       spree/product:
-        one: "Produto"
-        other: "Produtos"
+        one: Produto
+        other: Produtos
       spree/property:
-        one: "Propriedade"
-        other: "Propriedades"
+        one: Propriedade
+        other: Propriedades
       spree/prototype:
-        one: "Protótipo"
-        other: "Protótipos"
+        one: Protótipo
+        other: Protótipos
       spree/return_authorization:
-        one: "Autorização de Retorno"
-        other: "Autorização de Retornos"
+        one: Autorização de Retorno
+        other: Autorização de Retornos
       spree/role:
-        one: "Função"
-        other: "Funções"
+        one: Função
+        other: Funções
       spree/shipment:
-        one: "Envio"
-        other: "Envios"
+        one: Envio
+        other: Envios
       spree/shipping_category:
-        one: "Categoria do Envio"
-        other: "Categoria dos Envios"
+        one: Categoria do Envio
+        other: Categoria dos Envios
       spree/state:
-        one: "Estado"
-        other: "Estados"
+        one: Estado
+        other: Estados
       spree/tax_category:
-        one: "Categoria do Imposto"
-        other: "Categoria dos Impostos"
+        one: Categoria do Imposto
+        other: Categoria dos Impostos
       spree/tax_rate:
-        one: "Taxa do Imposto"
-        other: "Taxa dos Impostos"
+        one: Taxa do Imposto
+        other: Taxa dos Impostos
       spree/taxon:
-        one: "Taxon"
-        other: "Taxon"
+        one: Taxon
+        other: Taxon
       spree/taxonomy:
-        one: "Taxonomia"
-        other: "Taxonomias"
+        one: Taxonomia
+        other: Taxonomias
       spree/user:
-        one: "Usuário"
-        other: "Usuários"
+        one: Usuário
+        other: Usuários
       spree/variant:
-        one: "Variante"
-        other: "Variantes"
+        one: Variante
+        other: Variantes
       spree/zone:
-        one: "Zona"
-        other: "Zonas"
+        one: Zona
+        other: Zonas
+  devise:
+    confirmations:
+      confirmed: 
+      send_instructions: 
+    failure:
+      inactive: 
+      invalid: 
+      invalid_token: 
+      locked: 
+      timeout: 
+      unauthenticated: 
+      unconfirmed: 
+    mailer:
+      confirmation_instructions:
+        subject: 
+      reset_password_instructions:
+        subject: 
+      unlock_instructions:
+        subject: 
+    oauth_callbacks:
+      failure: 
+      success: 
+    unlocks:
+      send_instructions: 
+      unlocked: 
+    user_passwords:
+      user:
+        cannot_be_blank: 
+        send_instructions: 
+        updated: 
+    user_registrations:
+      destroyed: 
+      inactive_signed_up: 
+      signed_up: 
+      updated: 
+    user_sessions:
+      signed_in: 
+      signed_out: 
+  errors:
+    messages:
+      already_confirmed: 
+      not_found: 
+      not_locked: 
+      not_saved: 
   spree:
-    abbreviation: "Abreviação"
-    account: "Conta"
-    account_updated: "Conta atualizada!"
-    action: "Ação"
+    abbreviation: Abreviação
+    account: Conta
+    account_updated: Conta atualizada!
+    action: Ação
     actions:
-      cancel: "Cancelar"
-      create: "Criar"
-      destroy: "Remover"
-      list: "Listar"
-      listing: "Listando"
-      new: "Novo"
-      update: "Atualizar"
-    activate: "Activate"
-    active: "Ativo"
-    add: "Adicionar"
-    add_action_of_type: "Adicionar Ação do Tipo"
-    add_country: "Adicionar país"
-    add_new_header: "Adicionar Novo Cabeçalho"
-    add_new_style: "Adicionar Novo Estilo"
-    add_one: "Adicione"
-    add_option_value: "Adicionar Valor"
-    add_product: "Adicionar Produto"
-    add_product_properties: "Adicionar Propriedades"
-    add_rule_of_type: "Adicionar Regra do Tipo"
-    add_state: "Adicionar Estado"
-    add_to_cart: "Adicionar ao Carrinho"
-    additional_item: "Item Adicional"
-    adjustment: "Ajuste"
-    adjustment_total: "Total de Ajustes"
-    adjustments: "Ajustes"
+      cancel: Cancelar
+      continue: 
+      create: Criar
+      destroy: Remover
+      edit: 
+      list: Listar
+      listing: Listando
+      new: Novo
+      save: 
+      update: Atualizar
+    activate: Activate
+    active: Ativo
+    add: Adicionar
+    add_action_of_type: Adicionar Ação do Tipo
+    add_country: Adicionar país
+    add_new_header: Adicionar Novo Cabeçalho
+    add_new_style: Adicionar Novo Estilo
+    add_one: Adicione
+    add_option_value: Adicionar Valor
+    add_product: Adicionar Produto
+    add_product_properties: Adicionar Propriedades
+    add_rule_of_type: Adicionar Regra do Tipo
+    add_state: Adicionar Estado
+    add_stock: 
+    add_stock_management: 
+    add_to_cart: Adicionar ao Carrinho
+    add_variant: 
+    additional_item: Item Adicional
+    address1: 
+    address2: 
+    adjustment: Ajuste
+    adjustment_amount: 
+    adjustment_successfully_closed: 
+    adjustment_successfully_opened: 
+    adjustment_total: Total de Ajustes
+    adjustments: Ajustes
     admin:
       mail_methods:
-        send_testmail: 'Enviar Email de Teste'
+        send_testmail: Enviar Email de Teste
         testmail:
-          delivery_error: 'Erro de Envio'
-          delivery_success: 'Enviado com Sucesso'
-          error: 'Erro: %{e}'
-    administration: "Administração"
-    all: "Todos"
-    all_departments: "Todos Departamentos"
-    allow_ssl_in_development_and_test: "Permitir SSL em Desenvolvimento e Testes"
-    allow_ssl_in_production: "Permitir SSL em Produção"
-    allow_ssl_in_staging: "Permitir SSL em Staging"
-    alt_text: "Texto Alternativo"
-    alternative_phone: "Telefone Alternativo"
-    amount: "Quantidade"
-    analytics_trackers: "Rastreadores de Análise"
-    and: "E"
-    are_you_sure: "Tem Certeza?"
-    are_you_sure_delete: "Tem Certeza que Deseja Remover Este Registro?"
-    attachment_default_style: "Estilo Padrão de Anexo"
-    attachment_default_url: "Anexar URL"
-    attachment_path: "Anexar Caminho"
-    attachment_styles: "Anexar Estilos"
-    authorization_failure: "Falha na Autorização"
-    available_on: "Disponível em"
-    back: "Voltar"
-    back_end: "Back End"
-    back_to_adjustments_list: "Voltar a Lista de Ajustes"
-    back_to_images_list: "Voltar a Lista de Imagens"
-    back_to_payment_methods_list: "Voltar a Lista de Tipos de Pagamentos"
-    back_to_payments_list: "Voltar a Lista de Pagamentos"
-    back_to_products_list: "Voltar a Lista de Produtos"
-    back_to_promotions_list: "Voltar a Lista de Promoções"
-    back_to_properties_list: "Voltar a Lista de Propriedades"
-    back_to_prototypes_list: "Voltar a Lista de Protótipos"
-    back_to_reports_list: "Voltar a Lista de Relatórios"
-    back_to_shipping_categories: "Voltar a Lista de Categorias de Envio"
-    back_to_shipping_methods_list: "Voltar a Lista de Tipos de Envio"
-    back_to_states_list: "Voltar a Lista de Estados"
-    back_to_store: "Voltar Para a Loja"
-    back_to_tax_categories_list: "Voltar Para a Lista de Categorias de Impostos"
-    back_to_taxonomies_list: "Voltar a Lista de Taxonomias"
-    back_to_trackers_list: "Voltar a Lista de Rastreadores"
-    back_to_users_list: "Voltar a lista de usuários"
-    back_to_zones_list: "Voltar a Lista de Zonas"
-    balance_due: "Saldo Devedor"
-    bill_address: "Endereço da Conta"
-    billing: "Faturamento"
-    billing_address: "Endereço de Cobrança"
-    both: "Ambos"
-    calculator: "Calculadora"
-    calculator_settings_warning: "Se Você Alterar o Tipo de Calculadora, Deve-se Primeiro Confirmar a Alteração Antes de Editar as Configurações."
-    cancel: "Cancelar"
-    cannot_create_payment_without_payment_methods: "Você não Pode Efetuar o Pagamento sem Definir a Forma de Pagamento."
-    cannot_create_returns: "Não é Possível Criar um Retorno Para Esse Pedido, Pois ele Ainda não foi Enviado."
-    cannot_perform_operation: "Não foi Possível Realizar Esta Operação"
-    capture: "Copiar"
-    card_code: "Código do Cartão"
-    card_number: "Número do Cartão"
-    card_type_is: "O Tipo do Cartão é"
-    cart: "Carrinho"
-    categories: "Categorias"
-    category: "Categoria"
-    checkout: "Finalizar Compra"
-    city: "Cidade"
-    clone: "Cópia"
-    code: "Código"
-    complete: "Completo"
-    configuration: "Configuração"
-    configurations: "Configurações"
-    configure_s3: "Configurar S3"
-    confirm: "Confirme"
-    confirm_delete: "Confirmar Deleção"
-    confirm_password: "Confirmação da Senha"
-    continue: "Continuar"
-    continue_shopping: "Continuar Comprando"
-    cost_price: "Preço de Custo"
-    countries: "Países"
-    country: "País"
-    country_based: "País de Origem"
-    coupon: "Cupom"
-    coupon_code: "Código do Cupom"
-    coupon_code_applied: "O Código do Cupom Foi Acrecentado ao Seu Pedido"
-    create: "Criar"
-    create_a_new_account: "Criar uma Nova Conta"
-    credit: "Crédito"
-    credit_card: "Cartão de Crédito"
-    credit_cards: "Cartões de Crédito"
-    credit_owed: "Crédito Devedor"
-    currency: "Moeda"
-    currency_settings: "Configurações de Moeda"
-    currency_symbol_position: "Colocar o Símbolo da Moeda Antes ou Depois da Quantia?"
-    current: "Atual"
-    customer: "Cliente"
-    customer_details: "Detalhes do Cliente"
-    customer_details_updated: "Os Detalhes do Cliente Foram Atualizados"
-    customer_search: "Busca de Clientes"
-    cut: "Recortar"
-    date_completed: "Data do Término"
-    date_range: "Entre as Datas"
-    default: "Padrão"
-    default_meta_description: "Descrição Padrão"
-    default_meta_keywords: "Palavras-Chave Padrão"
-    default_seo_title: "Título SEO Padrão"
-    default_tax: "Imposto Padrão"
-    default_tax_zone: "Imposto de Zona Padrão"
-    delete: "Apagar"
-    delivery: "Entrega"
-    depth: "Profundidade"
-    description: "Descrição"
-    destroy: "Remover"
-    discount_amount: "Desconto"
-    dismiss_banner: "Não, Obrigado! Eu Não Estou Interessado, Não Mostre Essa Mensagem Novamente!"
-    display: "Mostrar"
-    display_currency: "Mostrar Moeda"
-    edit: "Editar"
-    editing_option_type: "Editando Tipo de Opção"
-    editing_payment_method: "Editando Método de Pagamento"
-    editing_product: "Editando Produto"
-    editing_promotion: "Editando Promoção"
-    editing_property: "Editando Propriedade"
-    editing_prototype: "Editando Protótipo"
-    editing_shipping_category: "Editando Categoria de Entrega"
-    editing_shipping_method: "Editando Método de Entrega"
-    editing_state: "Editando Estado"
-    editing_tax_category: "Editando Categoria de Imposto"
-    editing_tax_rate: "Editando Aliquota de Imposto"
-    editing_tracker: "Editando Rastreamento"
-    editing_user: "Editando Usuário"
-    editing_zone: "Editando a Zona"
-    email: "Email"
-    empty: "Vazio"
-    empty_cart: "Esvaziar o Carrinho"
-    enable_mail_delivery: "Habilitar envio de email"
-    ending_in: "Finalizando"
-    environment: "Ambiente"
-    error: "Erro"
+          delivery_error: Erro de Envio
+          delivery_success: Enviado com Sucesso
+          error: ! 'Erro: %{e}'
+    administration: Administração
+    agree_to_privacy_policy: 
+    agree_to_terms_of_service: 
+    all: Todos
+    all_adjustments_closed: 
+    all_adjustments_opened: 
+    all_departments: Todos Departamentos
+    allow_ssl_in_development_and_test: Permitir SSL em Desenvolvimento e Testes
+    allow_ssl_in_production: Permitir SSL em Produção
+    allow_ssl_in_staging: Permitir SSL em Staging
+    already_signed_up_for_analytics: 
+    alt_text: Texto Alternativo
+    alternative_phone: Telefone Alternativo
+    amount: Quantidade
+    analytics_desc_header_1: 
+    analytics_desc_header_2: 
+    analytics_desc_list_1: 
+    analytics_desc_list_2: 
+    analytics_desc_list_3: 
+    analytics_desc_list_4: 
+    analytics_trackers: Rastreadores de Análise
+    and: E
+    are_you_sure: Tem Certeza?
+    are_you_sure_delete: Tem Certeza que Deseja Remover Este Registro?
+    associated_adjustment_closed: 
+    attachment_default_style: Estilo Padrão de Anexo
+    attachment_default_url: Anexar URL
+    attachment_path: Anexar Caminho
+    attachment_styles: Anexar Estilos
+    attachment_url: 
+    authorization_failure: Falha na Autorização
+    available_on: Disponível em
+    back: Voltar
+    back_end: Back End
+    back_to_adjustments_list: Voltar a Lista de Ajustes
+    back_to_images_list: Voltar a Lista de Imagens
+    back_to_option_types_list: 
+    back_to_orders_list: 
+    back_to_payment_methods_list: Voltar a Lista de Tipos de Pagamentos
+    back_to_payments_list: Voltar a Lista de Pagamentos
+    back_to_products_list: Voltar a Lista de Produtos
+    back_to_promotions_list: Voltar a Lista de Promoções
+    back_to_properties_list: Voltar a Lista de Propriedades
+    back_to_prototypes_list: Voltar a Lista de Protótipos
+    back_to_reports_list: Voltar a Lista de Relatórios
+    back_to_shipping_categories: Voltar a Lista de Categorias de Envio
+    back_to_shipping_methods_list: Voltar a Lista de Tipos de Envio
+    back_to_states_list: Voltar a Lista de Estados
+    back_to_stock_locations_list: 
+    back_to_stock_movements_list: 
+    back_to_stock_transfers_list: 
+    back_to_store: Voltar Para a Loja
+    back_to_tax_categories_list: Voltar Para a Lista de Categorias de Impostos
+    back_to_taxonomies_list: Voltar a Lista de Taxonomias
+    back_to_trackers_list: Voltar a Lista de Rastreadores
+    back_to_users_list: Voltar a lista de usuários
+    back_to_zones_list: Voltar a Lista de Zonas
+    backorderable: 
+    balance_due: Saldo Devedor
+    bill_address: Endereço da Conta
+    billing: Faturamento
+    billing_address: Endereço de Cobrança
+    both: Ambos
+    calculator: Calculadora
+    calculator_settings_warning: Se Você Alterar o Tipo de Calculadora, Deve-se Primeiro Confirmar a Alteração Antes de Editar as Configurações.
+    cancel: Cancelar
+    cannot_create_payment_without_payment_methods: Você não Pode Efetuar o Pagamento sem Definir a Forma de Pagamento.
+    cannot_create_returns: Não é Possível Criar um Retorno Para Esse Pedido, Pois ele Ainda não foi Enviado.
+    cannot_perform_operation: Não foi Possível Realizar Esta Operação
+    cannot_set_shipping_method_without_address: 
+    capture: Copiar
+    card_code: Código do Cartão
+    card_number: Número do Cartão
+    card_type_is: O Tipo do Cartão é
+    cart: Carrinho
+    categories: Categorias
+    category: Categoria
+    check_for_spree_alerts: 
+    checkout: Finalizar Compra
+    choose_a_customer: 
+    choose_currency: 
+    choose_dashboard_locale: 
+    city: Cidade
+    clone: Cópia
+    close: 
+    close_all_adjustments: 
+    code: Código
+    company: 
+    complete: Completo
+    configuration: Configuração
+    configurations: Configurações
+    configure_s3: Configurar S3
+    confirm: Confirme
+    confirm_delete: Confirmar Deleção
+    confirm_password: Confirmação da Senha
+    continue: Continuar
+    continue_shopping: Continuar Comprando
+    cost_currency: 
+    cost_price: Preço de Custo
+    could_not_connect_to_jirafe: 
+    could_not_create_stock_movement: 
+    count_on_hand: 
+    countries: Países
+    country: País
+    country_based: País de Origem
+    country_name: 
+    country_names:
+      CA: 
+      FRA: 
+      ITA: 
+      US: 
+    coupon: Cupom
+    coupon_code: Código do Cupom
+    coupon_code_already_applied: 
+    coupon_code_applied: O Código do Cupom Foi Acrecentado ao Seu Pedido
+    coupon_code_better_exists: 
+    coupon_code_expired: 
+    coupon_code_max_usage: 
+    coupon_code_not_eligible: 
+    coupon_code_not_found: 
+    create: Criar
+    create_a_new_account: Criar uma Nova Conta
+    created_at: 
+    credit: Crédito
+    credit_card: Cartão de Crédito
+    credit_cards: Cartões de Crédito
+    credit_owed: Crédito Devedor
+    currency: Moeda
+    currency_decimal_mark: 
+    currency_settings: Configurações de Moeda
+    currency_symbol_position: Colocar o Símbolo da Moeda Antes ou Depois da Quantia?
+    currency_thousands_separator: 
+    current: Atual
+    current_promotion_usage: 
+    customer: Cliente
+    customer_details: Detalhes do Cliente
+    customer_details_updated: Os Detalhes do Cliente Foram Atualizados
+    customer_search: Busca de Clientes
+    cut: Recortar
+    dash:
+      jirafe:
+        app_id: 
+        app_token: 
+        explanation: 
+        header: 
+        site_id: 
+        token: 
+      jirafe_settings_updated: 
+    date: 
+    date_completed: Data do Término
+    date_picker:
+      format: 
+      js_format: 
+    date_range: Entre as Datas
+    default: Padrão
+    default_meta_description: Descrição Padrão
+    default_meta_keywords: Palavras-Chave Padrão
+    default_seo_title: Título SEO Padrão
+    default_tax: Imposto Padrão
+    default_tax_zone: Imposto de Zona Padrão
+    delete: Apagar
+    delivery: Entrega
+    depth: Profundidade
+    description: Descrição
+    destination: 
+    destroy: Remover
+    discount_amount: Desconto
+    dismiss_banner: Não, Obrigado! Eu Não Estou Interessado, Não Mostre Essa Mensagem Novamente!
+    display: Mostrar
+    display_currency: Mostrar Moeda
+    edit: Editar
+    editing_option_type: Editando Tipo de Opção
+    editing_payment_method: Editando Método de Pagamento
+    editing_product: Editando Produto
+    editing_promotion: Editando Promoção
+    editing_property: Editando Propriedade
+    editing_prototype: Editando Protótipo
+    editing_shipping_category: Editando Categoria de Entrega
+    editing_shipping_method: Editando Método de Entrega
+    editing_state: Editando Estado
+    editing_stock_location: 
+    editing_stock_movement: 
+    editing_tax_category: Editando Categoria de Imposto
+    editing_tax_rate: Editando Aliquota de Imposto
+    editing_tracker: Editando Rastreamento
+    editing_user: Editando Usuário
+    editing_zone: Editando a Zona
+    email: Email
+    empty: Vazio
+    empty_cart: Esvaziar o Carrinho
+    enable_mail_delivery: Habilitar envio de email
+    end: 
+    ending_in: Finalizando
+    environment: Ambiente
+    error: Erro
     errors:
       messages:
-        could_not_create_taxon: "Não foi Possível Criar o Taxon"
-        no_payment_methods_available: "Não Existem Métodos de Pagamentos Configurados Para Esse Ambiente"
-        no_shipping_methods_available: "Não Existem Métodos de Entrega Para o Local Selecionado, por Favor Troque seu Endereço e Tente Novamente."
+        could_not_create_taxon: Não foi Possível Criar o Taxon
+        no_payment_methods_available: Não Existem Métodos de Pagamentos Configurados Para Esse Ambiente
+        no_shipping_methods_available: Não Existem Métodos de Entrega Para o Local Selecionado, por Favor Troque seu Endereço e Tente Novamente.
     errors_prohibited_this_record_from_being_saved:
-      one: "1 Erro Impediu o Registro de ser Salvo!"
-      other: "%{count} Erros Impediram o Registro de ser Salvo"
-    event: "Evento"
+      one: 1 Erro Impediu o Registro de ser Salvo!
+      other: ! '%{count} Erros Impediram o Registro de ser Salvo'
+    event: Evento
     events:
       spree:
         cart:
-          add: 'Adicionar ao Carrinho'
+          add: Adicionar ao Carrinho
         checkout:
-          coupon_code_added: "Código do Cupom Adicionado"
+          coupon_code_added: Código do Cupom Adicionado
         content:
-          visited: "Página com Conteúdo Estático"
+          visited: Página com Conteúdo Estático
         order:
-          contents_changed: "Conteúdo do Pedido Alterado"
-        page_view: "Página Estática Visualizada"
+          contents_changed: Conteúdo do Pedido Alterado
+        page_view: Página Estática Visualizada
         user:
-          signup: 'Usuário Cadastrado'
-    expiration: "Validade"
-    extension: "Extensão"
-    filename: "Nome do arquivo"
-    filter_results: "Filtrar resultados"
-    finalize: "Finalizar"
-    first_item: "Custo do Primeiro Item"
-    first_name: "Nome"
-    first_name_begins_with: "Primeiro Nome Começa Com"
-    flat_percent: "Porcentagem"
-    flat_rate_per_item: "Aliquota por Item"
-    flat_rate_per_order: "Aliquota por Pedido"
-    flexible_rate: "Aliquita Flexivel"
-    forgot_password: "Esqueci a senha"
-    free_shipping: "Entrega Grátis"
-    front_end: "Front End"
-    gateway: "Gateway"
-    gateway_config_unavailable: "Gateway Não Disponível Para Este Ambiente"
-    gateway_error: "Erro na Gateway"
-    general: "Geral"
-    general_settings: "Configurações Gerais"
-    google_analytics: "Google Analytics"
-    google_analytics_id: "Analytics ID"
-    guest_checkout: "Comprar como Visitante"
-    guest_user_account: "Conta de Visitante"
-    has_no_shipped_units: "Não Existem Unidades Entregues"
-    height: "Altura"
-    home: "Início"
-    icon: "Ícone"
-    image: "Imagem"
-    image_settings: "Ajustar Imagens"
-    image_settings_updated: "Os Ajustes das Imagens Foram Atualizados"
-    image_settings_warning: "Você Precisará Gerar Novas Miniaturas se Atualizar os Estilos do Paperclip. Use rake paperclip:refresh:thumbnails Para Fazer Isso."
-    images: "Imagens"
-    included_in_price: "Incluso no Preço"
-    included_price_validation: "Não Pode Ser Selecionado a Menos que você Tenha Escolhido Zona de Imposto Padrão"
-    instructions_to_reset_password: "Preencha o Formulário Abaixo e Enviaremos Instruções de Como Resetar sua Senha por Email:"
-    insufficient_stock: "Estoque Insuficiente, Apenas %{on_hand} Em Estoque"
-    intercept_email_address: "Interceptar Endereço de Email"
-    intercept_email_instructions: "Interceptar Instrções de Email"
-    inventory: "Inventário"
-    inventory_adjustment: "Ajuste de Inventário"
-    is_not_available_to_shipment_address: "Não Está Disponível Para Endereço de Entrega"
-    item: "Item"
-    item_description: "Descrição do Item"
-    item_total: "Total de Itens"
+          signup: Usuário Cadastrado
+    exceptions:
+      count_on_hand_setter: 
+    expiration: Validade
+    extension: Extensão
+    filename: Nome do arquivo
+    fill_in_customer_info: 
+    filter_results: Filtrar resultados
+    finalize: Finalizar
+    first_item: Custo do Primeiro Item
+    first_name: Nome
+    first_name_begins_with: Primeiro Nome Começa Com
+    flat_percent: Porcentagem
+    flat_rate_per_item: Aliquota por Item
+    flat_rate_per_order: Aliquota por Pedido
+    flexible_rate: Aliquita Flexivel
+    forgot_password: Esqueci a senha
+    free_shipping: Entrega Grátis
+    front_end: Front End
+    gateway: Gateway
+    gateway_config_unavailable: Gateway Não Disponível Para Este Ambiente
+    gateway_error: Erro na Gateway
+    general: Geral
+    general_settings: Configurações Gerais
+    google_analytics: Google Analytics
+    google_analytics_id: Analytics ID
+    guest_checkout: Comprar como Visitante
+    guest_user_account: Conta de Visitante
+    has_no_shipped_units: Não Existem Unidades Entregues
+    height: Altura
+    hide_cents: 
+    home: Início
+    icon: Ícone
+    image: Imagem
+    image_settings: Ajustar Imagens
+    image_settings_updated: Os Ajustes das Imagens Foram Atualizados
+    image_settings_warning: Você Precisará Gerar Novas Miniaturas se Atualizar os Estilos do Paperclip. Use rake paperclip:refresh:thumbnails Para Fazer Isso.
+    images: Imagens
+    included_in_price: Incluso no Preço
+    included_price_validation: Não Pode Ser Selecionado a Menos que você Tenha Escolhido Zona de Imposto Padrão
+    instructions_to_reset_password: ! 'Preencha o Formulário Abaixo e Enviaremos Instruções de Como Resetar sua Senha por Email:'
+    insufficient_stock: Estoque Insuficiente, Apenas %{on_hand} Em Estoque
+    intercept_email_address: Interceptar Endereço de Email
+    intercept_email_instructions: Interceptar Instrções de Email
+    invalid_payment_provider: 
+    invalid_promotion_action: 
+    invalid_promotion_rule: 
+    inventory: Inventário
+    inventory_adjustment: Ajuste de Inventário
+    inventory_error_flash_for_insufficient_quantity: 
+    is_not_available_to_shipment_address: Não Está Disponível Para Endereço de Entrega
+    iso_name: 
+    item: Item
+    item_description: Descrição do Item
+    item_total: Total de Itens
     item_total_rule:
       operators:
-        gt: "Maior que"
-        gte: "Maior ou Igual que"
+        gt: Maior que
+        gte: Maior ou Igual que
+    jirafe: 
     landing_page_rule:
-      path: "Caminho"
-    last_name: "Sobrenome"
-    last_name_begins_with: "Sobrenome Começa Com:"
-    learn_more: "Aprenda Mais"
-    list: "Lista"
-    listing_orders: "Listando Pedidos"
-    listing_products: "Listing Products"
-    listing_reports: "Listando Relatórios"
-    listing_tax_categories: "Listando Categorias de Imposto"
-    listing_users: "Listando usuários"
-    loading: "Carregando"
-    locale_changed: "Local Alterado"
-    logged_in_as: "Logado Como"
-    logged_in_succesfully: "Logou com Sucesso"
-    logged_out: "Você Saiu."
-    login: "Entrar"
-    login_as_existing: "Entrar Como Usuário Existente"
-    login_failed: "Falha na Autenticação."
-    login_name: "Nome de Acesso"
-    logout: "Sair"
-    look_for_similar_items: "Procurar Artigos Similares"
-    maestro_or_solo_cards: "Maestro/Solo"
-    mail_methods: "Configurações de email"
-    make_refund: "Extornar"
-    master_price: "Preço Principal"
+      path: Caminho
+    last_name: Sobrenome
+    last_name_begins_with: ! 'Sobrenome Começa Com:'
+    learn_more: Aprenda Mais
+    list: Lista
+    listing_countries: 
+    listing_orders: Listando Pedidos
+    listing_products: Listing Products
+    listing_reports: Listando Relatórios
+    listing_tax_categories: Listando Categorias de Imposto
+    listing_users: Listando usuários
+    loading: Carregando
+    locale_changed: Local Alterado
+    location: 
+    lock: 
+    logged_in_as: Logado Como
+    logged_in_succesfully: Logou com Sucesso
+    logged_out: Você Saiu.
+    login: Entrar
+    login_as_existing: Entrar Como Usuário Existente
+    login_failed: Falha na Autenticação.
+    login_name: Nome de Acesso
+    logout: Sair
+    look_for_similar_items: Procurar Artigos Similares
+    maestro_or_solo_cards: Maestro/Solo
+    mail_method_settings: 
+    mail_methods: Configurações de email
+    make_refund: Extornar
+    master_price: Preço Principal
     match_choices:
-      all: "Tudo"
-      none: "Nenhum"
-    max_items: "Artigos máximos"
-    meta_description: "Descrição"
-    meta_keywords: "Palavras-Chave"
-    metadata: "Metadados"
-    minimal_amount: "Quantidade Mínima"
-    month: "Mês"
-    more: "Mais"
-    my_account: "Minha Conta"
-    my_orders: "Meus Pedidos"
-    name: "Nome"
-    name_or_sku: "Nome ou SKU"
-    new: "Novo"
-    new_adjustment: "Novo Ajuste"
-    new_customer: "Novo Cliente"
-    new_image: "Nova Imagem"
-    new_option_type: "Novo Tipo de Opção"
-    new_order: "Novo Pedido"
-    new_order_completed: "Novo Pedido Completado"
-    new_payment: "Novo Pagamento"
-    new_payment_method: "Nova Forma de Pagamento"
-    new_product: "Novo Produto"
-    new_promotion: "Nova Promoção"
-    new_property: "Nova Propriedade"
-    new_prototype: "Novo Protótipo"
-    new_return_authorization: "Nova Autorização de Retorno"
-    new_shipping_category: "Nova Categoria de Entrega"
-    new_shipping_method: "Novo Método de Entrega"
-    new_state: "Novo Estado"
-    new_tax_category: "Nova Categoria de Imposto"
-    new_tax_rate: "Nova Taxa de Imposto"
-    new_taxon: "Novo Táxon"
-    new_taxonomy: "Nova Taxonomia"
-    new_tracker: "Novo Rastreio"
-    new_user: "Novo usuário"
-    new_variant: "Nova Variante"
-    new_zone: "Nova Zona"
+      all: Tudo
+      none: Nenhum
+    max_items: Artigos máximos
+    meta_description: Descrição
+    meta_keywords: Palavras-Chave
+    metadata: Metadados
+    minimal_amount: Quantidade Mínima
+    month: Mês
+    more: Mais
+    move_stock_between_locations: 
+    my_account: Minha Conta
+    my_orders: Meus Pedidos
+    name: Nome
+    name_or_sku: Nome ou SKU
+    new: Novo
+    new_adjustment: Novo Ajuste
+    new_customer: Novo Cliente
+    new_image: Nova Imagem
+    new_option_type: Novo Tipo de Opção
+    new_order: Novo Pedido
+    new_order_completed: Novo Pedido Completado
+    new_payment: Novo Pagamento
+    new_payment_method: Nova Forma de Pagamento
+    new_product: Novo Produto
+    new_promotion: Nova Promoção
+    new_property: Nova Propriedade
+    new_prototype: Novo Protótipo
+    new_return_authorization: Nova Autorização de Retorno
+    new_shipping_category: Nova Categoria de Entrega
+    new_shipping_method: Novo Método de Entrega
+    new_state: Novo Estado
+    new_stock_location: 
+    new_stock_movement: 
+    new_stock_transfer: 
+    new_tax_category: Nova Categoria de Imposto
+    new_tax_rate: Nova Taxa de Imposto
+    new_taxon: Novo Táxon
+    new_taxonomy: Nova Taxonomia
+    new_tracker: Novo Rastreio
+    new_user: Novo usuário
+    new_variant: Nova Variante
+    new_zone: Nova Zona
     next: Próximo
-    no_products_found: "Não Existem Produtos"
-    no_promotions_found: "Não existem promoções"
-    no_results: "Não Existem Resultados"
-    no_rules_added: "Nenhuma Regra Adicionada"
-    none: "Nenhum"
-    normal_amount: "Quantidade Normal"
-    not: "Não"
-    not_available: "Indisponível"
-    not_found: "%{resource} Não Encontrado!"
+    no_actions_added: 
+    no_orders_found: 
+    no_payment_methods_found: 
+    no_products_found: Não Existem Produtos
+    no_promotions_found: Não existem promoções
+    no_results: Não Existem Resultados
+    no_rules_added: Nenhuma Regra Adicionada
+    no_shipping_methods_found: 
+    no_trackers_found: 
+    no_tracking_present: 
+    none: Nenhum
+    normal_amount: Quantidade Normal
+    not: Não
+    not_available: Indisponível
+    not_enough_stock: 
+    not_found: ! '%{resource} Não Encontrado!'
     notice_messages:
-      product_cloned: "Produto Clonado"
-      product_deleted: "Produto Deletado"
-      product_not_cloned: "Produto não Pode ser Clonado"
-      product_not_deleted: "Produto não Pode ser Deletado"
-      variant_deleted: "Variante Deletada"
-      variant_not_deleted: "Variante não Pode ser Deletada"
-    on_hand: "Em Estoque"
-    option_type: "Tipo de Opção"
-    option_types: "Tipos de Opção"
-    option_value: "Valor da Opcional"
-    option_values: "Valores Opcionais"
-    options: "Opções"
-    or: "Ou"
-    or_over_price: "%{price} ou Mais"
-    order: "Pedido"
-    order_adjustments: "Ajustar Pedido"
-    order_details: "Detalhes do Pedido"
-    order_email_resent: "Email de Confirmação Reenviado"
+      product_cloned: Produto Clonado
+      product_deleted: Produto Deletado
+      product_not_cloned: Produto não Pode ser Clonado
+      product_not_deleted: Produto não Pode ser Deletado
+      variant_deleted: Variante Deletada
+      variant_not_deleted: Variante não Pode ser Deletada
+    on_hand: Em Estoque
+    open: 
+    open_all_adjustments: 
+    option_type: Tipo de Opção
+    option_types: Tipos de Opção
+    option_value: Valor da Opcional
+    option_values: Valores Opcionais
+    optional: 
+    options: Opções
+    or: Ou
+    or_over_price: ! '%{price} ou Mais'
+    order: Pedido
+    order_adjustments: Ajustar Pedido
+    order_details: Detalhes do Pedido
+    order_email_resent: Email de Confirmação Reenviado
+    order_information: 
     order_mailer:
       cancel_email:
-        dear_customer: "Caro Cliente,"
-        instructions: "Seu Pedido Foi Cancelado. Por Favor, Mantenha Esse Cancelamento em Seus Registros."
-        order_summary_canceled: "Índice de Pedido [Cancelado]"
-        subject: "Cancelamento de Pedido"
-        subtotal: "Subtotal:"
-        total: "Total do Pedido:"
+        dear_customer: Caro Cliente,
+        instructions: Seu Pedido Foi Cancelado. Por Favor, Mantenha Esse Cancelamento em Seus Registros.
+        order_summary_canceled: Índice de Pedido [Cancelado]
+        subject: Cancelamento de Pedido
+        subtotal: 
+        total: 
       confirm_email:
-        dear_customer: "Caro Cliente,"
-        instructions: "Por Favor Reveja e Mantenha Essas Informações em Seus Registros."
-        order_summary: "Índice de Pedidos"
-        subject: "Confirmação de Pedidos"
-        subtotal: "Subtotal:"
-        thanks: "Obrigado Por Negociar."
-        total: "Total do Pedido:"
-    order_number: "Número do Pedido"
-    order_processed_successfully: "Seu Pedido foi Processado com Sucesso."
+        dear_customer: Caro Cliente,
+        instructions: Por Favor Reveja e Mantenha Essas Informações em Seus Registros.
+        order_summary: Índice de Pedidos
+        subject: Confirmação de Pedidos
+        subtotal: 
+        thanks: Obrigado Por Negociar.
+        total: 
+    order_not_found: 
+    order_number: Número do Pedido
+    order_populator:
+      out_of_stock: 
+      please_enter_reasonable_quantity: 
+    order_processed_successfully: Seu Pedido foi Processado com Sucesso.
     order_state:
-      address: "Endereço"
-      awaiting_return: "Aguardando Retorno"
-      canceled: "Cancelado"
-      cart: "Carrinho"
-      complete: "Completo"
-      confirm: "Confirmação"
-      delivery: "Entrega"
-      payment: "Pagamento"
-      resumed: "Resumido"
-      returned: "Devolvido"
-    order_summary: "Resumo do Pedido"
-    order_sure_want_to: "Você tem Certeza que Deseja %{event} Este Pedido?"
-    order_total: "Total do Pedido"
-    order_updated: "Pedido Atualizado"
-    orders: "Pedidos"
-    out_of_stock: "Esgotado"
-    overview: "Resumo"
+      address: Endereço
+      awaiting_return: Aguardando Retorno
+      canceled: Cancelado
+      cart: Carrinho
+      complete: Completo
+      confirm: Confirmação
+      delivery: Entrega
+      payment: Pagamento
+      resumed: Resumido
+      returned: Devolvido
+    order_summary: Resumo do Pedido
+    order_sure_want_to: Você tem Certeza que Deseja %{event} Este Pedido?
+    order_total: Total do Pedido
+    order_updated: Pedido Atualizado
+    orders: Pedidos
+    out_of_stock: Esgotado
+    overview: Resumo
+    package_from: 
     pagination:
-      next_page: "Próxima Página &raquo;"
-      previous_page: "&laquo; Página Anterior"
-      truncate: "&hellip;"
-    password: "Senha"
-    paste: "Colar"
-    path: "Caminho"
-    pay: "Pagar"
-    payment: "Pagamento"
-    payment_information: "Dados do Pagamento"
-    payment_method: "Método de Pagamento"
-    payment_methods: "Métodos de Pagamento"
-    payment_processing_failed: "Pagamento não foi Processado, por Favor Verifique os Detalhes Informados."
-    payment_processor_choose_banner_text: "Se Você Precisa de Ajuda Para Escolher um Tipo de Pagamento, Por Favor Visite:"
-    payment_processor_choose_link: "Nossa Página de Pagamentos"
-    payment_state: "Estado do Pagamento"
+      next_page: Próxima Página &raquo;
+      previous_page: ! '&laquo; Página Anterior'
+      truncate: ! '&hellip;'
+    password: Senha
+    paste: Colar
+    path: Caminho
+    pay: Pagar
+    payment: Pagamento
+    payment_information: Dados do Pagamento
+    payment_method: Método de Pagamento
+    payment_methods: Métodos de Pagamento
+    payment_processing_failed: Pagamento não foi Processado, por Favor Verifique os Detalhes Informados.
+    payment_processor_choose_banner_text: ! 'Se Você Precisa de Ajuda Para Escolher um Tipo de Pagamento, Por Favor Visite:'
+    payment_processor_choose_link: Nossa Página de Pagamentos
+    payment_state: Estado do Pagamento
     payment_states:
-      balance_due: "Saldo devedor"
-      checkout: "Comprar"
-      completed: "Completo"
-      credit_owed: "Crédito Devido"
-      failed: "Falhou"
-      paid: "Pago"
-      pending: "Pendente"
-      processing: "Processando"
-      void: "Nulo"
-    payment_updated: "Pagamento Atualizado"
-    payments: "Pagamentos"
-    percent_per_item: "POrcentagem po Item"
-    permalink: "Permalink"
-    phone: "Telefone"
-    place_order: "Fazer Pedido"
-    please_define_payment_methods: "Por Favor, Defina Algum Método de Pagamento."
-    populate_get_error: "Algo Está Errado. Tente Adicionar o Item Novamente."
-    powered_by: "Feito Por"
-    presentation: "Apresentação"
-    previous: "Anterior"
-    price: "Preço"
-    price_range: "Faixa de Preço"
-    price_sack: "Preço da Embalagem"
-    process: "Processar"
-    product: "Produto"
-    product_details: "Detalhes do Produto"
-    product_has_no_description: "Produto não tem descrição"
-    product_properties: "Propriedades do Produto"
+      balance_due: Saldo devedor
+      checkout: Comprar
+      completed: Completo
+      credit_owed: Crédito Devido
+      failed: Falhou
+      paid: Pago
+      pending: Pendente
+      processing: Processando
+      void: Nulo
+    payment_updated: Pagamento Atualizado
+    payments: Pagamentos
+    percent: 
+    percent_per_item: POrcentagem po Item
+    permalink: Permalink
+    phone: Telefone
+    place_order: Fazer Pedido
+    please_define_payment_methods: Por Favor, Defina Algum Método de Pagamento.
+    populate_get_error: Algo Está Errado. Tente Adicionar o Item Novamente.
+    powered_by: Feito Por
+    presentation: Apresentação
+    previous: Anterior
+    price: Preço
+    price_range: Faixa de Preço
+    price_sack: Preço da Embalagem
+    process: Processar
+    product: Produto
+    product_details: Detalhes do Produto
+    product_has_no_description: Produto não tem descrição
+    product_not_available_in_this_currency: 
+    product_properties: Propriedades do Produto
     product_rule:
-      choose_products: "Escolher Produtos"
-      label: "Pedido Deve Conter %{select} Destes Produtos"
-      match_all: "Todos"
-      match_any: "Pelo Menos Um"
+      choose_products: Escolher Produtos
+      label: Pedido Deve Conter %{select} Destes Produtos
+      match_all: Todos
+      match_any: Pelo Menos Um
       product_source:
-        group: "Grupo de Produtos"
-        manual: "Escolha Manual"
+        group: Grupo de Produtos
+        manual: Escolha Manual
     products: Produtos
-    promotion: "Promoção"
-    promotion_action: "Ação de Promoção"
+    promotion: Promoção
+    promotion_action: Ação de Promoção
     promotion_action_types:
       create_adjustment:
-        description: "Criar um Ajuste de Crédito Promocional no Pedido"
-        name: "Nome"
+        description: Criar um Ajuste de Crédito Promocional no Pedido
+        name: Nome
       create_line_items:
-        description: "Preencher o Carrinho Com a Quantidade Especificada de Variantes"
-        name: "Criar Itens"
+        description: Preencher o Carrinho Com a Quantidade Especificada de Variantes
+        name: Criar Itens
       give_store_credit:
-        description: "Dar ao Usuário da Loja o Montante Especificado"
-        name: "Crédito"
-    promotion_actions: "Ações das Promoções"
+        description: Dar ao Usuário da Loja o Montante Especificado
+        name: Crédito
+    promotion_actions: Ações das Promoções
     promotion_form:
       match_policies:
-        all: "Combinar Todas Regras"
-        any: "Combinar Algumas Regras"
-    promotion_rule: "Regras da Promoção"
+        all: Combinar Todas Regras
+        any: Combinar Algumas Regras
+    promotion_rule: Regras da Promoção
     promotion_rule_types:
       first_order:
-        description: "Deve ser o Primeiro Pedido do Usuário"
-        name: "Primeiro Pedido"
+        description: Deve ser o Primeiro Pedido do Usuário
+        name: Primeiro Pedido
       item_total:
-        description: "Total do Pedio Fecha com Estes Critérios"
-        name: "Total do Item"
+        description: Total do Pedio Fecha com Estes Critérios
+        name: Total do Item
       landing_page:
-        description: "O Cliente Deve Visitar a Página Especificada"
-        name: "Página de Destino"
+        description: O Cliente Deve Visitar a Página Especificada
+        name: Página de Destino
       product:
-        description: "Pedido Inclui Produto(s) Específico(s)"
-        name: "Produto(s)"
+        description: Pedido Inclui Produto(s) Específico(s)
+        name: Produto(s)
       user:
-        description: "Disponível Apenas Para Usuários Específicos"
-        name: "Usuários"
+        description: Disponível Apenas Para Usuários Específicos
+        name: Usuários
       user_logged_in:
-        description: "Disponível Apenas Para Usuários Logados"
-        name: "Usuário Logado"
-    promotions: "Promoções"
-    properties: "Propriedades"
-    property: "Propriedade"
-    prototype: "Protótipo"
-    prototypes: "Protótipos"
-    provider: "Provedor"
-    provider_settings_warning: "Se Está Mudando o Tipo de Provedor, Deve Salvar Antes de Editar as Configurações"
-    qty: "Quantidade"
-    quantity_returned: "Quantidade Retornada"
-    quantity_shipped: "Quantidade Enviada"
-    rate: "Taxa"
-    reason: "Razões"
-    receive: "Receber"
-    received: "Recebido"
-    refund: "Restituição"
-    register: "Registrar-se"
-    registration: "Registro"
-    remember_me: "Lembrar"
-    remove: "Remover"
-    rename: "Renomear"
-    reports: "Relatórios"
-    resend: "Reenviar"
-    reset_password: "Restaurar Minha Senha"
-    response_code: "Código de Resposta"
-    resume: "Continuar"
-    resumed: "Resumido"
-    return: "Devolução"
-    return_authorization: "Autorização de Devolução"
-    return_authorization_updated: "Autorização de Devolução Atualizada"
-    return_authorizations: "Autorizações de Devolução"
-    return_quantity: "Quantidade a ser Devolvida"
-    returned: "Devolvido"
-    review: "Revisar"
-    rma_credit: "Crédito RMA"
-    rma_number: "Número RMA"
-    rma_value: "Valor RMA"
-    roles: "Funções"
-    rules: "Regras"
-    s3_access_key: "Chave de Acesso S3"
-    s3_bucket: "S3 Bucket"
-    s3_headers: "S3 Headers"
-    s3_protocol: "Protocolo S3"
-    s3_secret: "Chave Secreta S3"
-    sales_total: "Total de Vendas"
-    sales_total_description: "Total de Vendas por Todos os Pedidos"
-    save_and_continue: "Salvar e Continuar"
-    say_no: "Não"
-    say_yes: "Sim"
-    scope: "Escopo"
-    search: "Busca"
-    search_results: "Resultados da Busca por '%{keywords}'"
-    searching: "Buscando"
-    secure_connection_type: "Tipo de Conexão Segura"
-    security_settings: "Configurações de Segurança"
-    select: "Selecionar"
-    select_from_prototype: "Selecionar a Partir de Protótipo"
-    send_copy_of_all_mails_to: "Enviar Cópias de Todos Emails Para"
-    send_mails_as: "Enviar Email Como"
-    server: "Servidor"
-    server_error: "O Servidor Retornou um Erro"
-    settings: "Configurações"
-    ship: "Entrega"
-    ship_address: "Endereço da Entrega"
-    shipment: "Distribuição"
-    shipment_inc_vat: "Entrega Incluindo VAT"
+        description: Disponível Apenas Para Usuários Logados
+        name: Usuário Logado
+    promotions: Promoções
+    properties: Propriedades
+    property: Propriedade
+    prototype: Protótipo
+    prototypes: Protótipos
+    provider: Provedor
+    provider_settings_warning: Se Está Mudando o Tipo de Provedor, Deve Salvar Antes de Editar as Configurações
+    qty: Quantidade
+    quantity: 
+    quantity_returned: Quantidade Retornada
+    quantity_shipped: Quantidade Enviada
+    rate: Taxa
+    reason: Razões
+    receive: Receber
+    receive_stock: 
+    received: Recebido
+    reference: 
+    refund: Restituição
+    register: Registrar-se
+    registration: Registro
+    remember_me: Lembrar
+    remove: Remover
+    rename: Renomear
+    reports: Relatórios
+    resend: Reenviar
+    reset_password: Restaurar Minha Senha
+    response_code: Código de Resposta
+    resume: Continuar
+    resumed: Resumido
+    return: Devolução
+    return_authorization: Autorização de Devolução
+    return_authorization_updated: Autorização de Devolução Atualizada
+    return_authorizations: Autorizações de Devolução
+    return_quantity: Quantidade a ser Devolvida
+    returned: Devolvido
+    review: Revisar
+    rma_credit: Crédito RMA
+    rma_number: Número RMA
+    rma_value: Valor RMA
+    roles: Funções
+    rules: Regras
+    s3_access_key: Chave de Acesso S3
+    s3_bucket: S3 Bucket
+    s3_headers: S3 Headers
+    s3_protocol: Protocolo S3
+    s3_secret: Chave Secreta S3
+    sales_total: Total de Vendas
+    sales_total_description: Total de Vendas por Todos os Pedidos
+    sales_totals: 
+    save_and_continue: Salvar e Continuar
+    say_no: Não
+    say_yes: Sim
+    scope: Escopo
+    search: Busca
+    search_results: Resultados da Busca por '%{keywords}'
+    searching: Buscando
+    secure_connection_type: Tipo de Conexão Segura
+    security_settings: Configurações de Segurança
+    select: Selecionar
+    select_from_prototype: Selecionar a Partir de Protótipo
+    select_stock: 
+    send_copy_of_all_mails_to: Enviar Cópias de Todos Emails Para
+    send_mails_as: Enviar Email Como
+    server: Servidor
+    server_error: O Servidor Retornou um Erro
+    settings: Configurações
+    ship: Entrega
+    ship_address: Endereço da Entrega
+    ship_total: 
+    shipment: Distribuição
+    shipment_inc_vat: Entrega Incluindo VAT
     shipment_mailer:
       shipped_email:
-        dear_customer: "Caro Cliente,"
-        instructions: "Seu Pedido Foi Enviado"
-        shipment_summary: "Resumo da Entrega"
-        subject: "Notificação de Envio"
-        thanks: "Obrigado por Comprar."
-        track_information: "Informação de Rastreio: %{tracking}"
-    shipment_state: "Estado da Entrega"
+        dear_customer: Caro Cliente,
+        instructions: Seu Pedido Foi Enviado
+        shipment_summary: Resumo da Entrega
+        subject: Notificação de Envio
+        thanks: Obrigado por Comprar.
+        track_information: ! 'Informação de Rastreio: %{tracking}'
+        track_link: 
+    shipment_state: Estado da Entrega
     shipment_states:
-      backorder: "Devolução"
-      partial: "Parcial"
-      pending: "Pendente"
-      ready: "Pronta"
-      shipped: "Entregue"
-    shipments: "Entregas"
-    shipped: "Despachado"
-    shipping: "Entrega"
-    shipping_address: "Endereço de Entrega"
-    shipping_categories: "Categorias de Entrega"
-    shipping_category: "Categoria de Entrega"
-    shipping_instructions: "Instruções de Entrega"
-    shipping_method: "Método de Entrega"
-    shipping_methods: "Métodos de Entrega"
-    shop_by_taxonomy: "Comprar por %{taxonomy}"
-    shopping_cart: "Carrinho de Compra"
-    show: "Mostrar"
-    show_active: "Mostrar Ativos"
-    show_deleted: "Mostra Apagados"
-    show_only_complete_orders: "Mostrar Apenas Pedidos Completos"
-    site_name: "Nome do Site"
-    site_url: "URL do Site"
-    sku: "SKU"
-    smtp: "SMTP"
-    smtp_authentication_type: "Tipo de Autenticação SMTP"
-    smtp_domain: "Domínio SMTP"
-    smtp_mail_host: "Servidor de Email SMTP"
-    smtp_password: "Senha SMTP"
-    smtp_port: "Porta SMTP"
-    smtp_send_all_emails_as_from_following_address: "Enviar Todos Emails Deste Endereço."
-    smtp_send_copy_to_this_addresses: "Enviar Cópia de Todos Emails Para Estes Endereços. Separar por Vírgulas ou Espaços"
-    smtp_username: "Usuário SMTP"
-    special_instructions: "Instruções Especiais"
-    spree_gateway_error_flash_for_checkout: "Existe um Problema com Seus Dados de Pagamento. por Favor, Verifique Seus Dados e Tente Novamente."
-    start: "Início"
-    start_date: "Válido a Partir de"
-    state: "Estado"
-    state_based: "Estado de Origem"
-    states: "Estados"
-    states_required: "Estados obrigatórios"
-    status: "Status"
-    stop: "Final"
-    store: "Loja"
-    street_address: "Endereço"
-    street_address_2: "Endereço (compl.)"
-    subtotal: "Sub-total"
-    subtract: "Subtrair"
-    successfully_created: "%{resource} Foi Criado com Sucesso!"
-    successfully_removed: "%{resource} Foi Removido com Sucesso!"
-    successfully_updated: "%{resource} Foi Atualizado com Sucesso!"
-    tax: "Imposto"
-    tax_categories: "Categorias de Imposto"
-    tax_category: "Categoria de Imposto"
-    tax_rates: "Aliquotas de Imposto"
-    tax_settings: "Configuração de Impostos"
-    tax_total: "Total de Imposto"
-    taxon: "Taxon"
-    taxon_edit: "Editar Taxon"
-    taxonomies: "Taxonomias"
-    taxonomy: "Taxonomia"
-    taxonomy_edit: "Editar Taxonomia"
-    taxonomy_tree_error: "A Modificação não foi Aceita e a Árvore Retornou ao seu Estado Anterior, por Favor Tente Novamente."
-    taxonomy_tree_instruction: "* Clique com o Botão Direito Sobre um nó da Árvore Para ver o Menu."
-    taxons: "Taxons"
-    test: "Teste"
+      backorder: Devolução
+      partial: Parcial
+      pending: Pendente
+      ready: Pronta
+      shipped: Entregue
+    shipments: Entregas
+    shipped: Despachado
+    shipping: Entrega
+    shipping_address: Endereço de Entrega
+    shipping_categories: Categorias de Entrega
+    shipping_category: Categoria de Entrega
+    shipping_flat_rate_per_item: 
+    shipping_flat_rate_per_order: 
+    shipping_flexible_rate: 
+    shipping_instructions: Instruções de Entrega
+    shipping_method: Método de Entrega
+    shipping_methods: Métodos de Entrega
+    shipping_price_sack: 
+    shop_by_taxonomy: Comprar por %{taxonomy}
+    shopping_cart: Carrinho de Compra
+    show: Mostrar
+    show_active: Mostrar Ativos
+    show_deleted: Mostra Apagados
+    show_only_complete_orders: Mostrar Apenas Pedidos Completos
+    show_rate_in_label: 
+    site_name: Nome do Site
+    site_url: URL do Site
+    sku: SKU
+    smtp: SMTP
+    smtp_authentication_type: Tipo de Autenticação SMTP
+    smtp_domain: Domínio SMTP
+    smtp_mail_host: Servidor de Email SMTP
+    smtp_password: Senha SMTP
+    smtp_port: Porta SMTP
+    smtp_send_all_emails_as_from_following_address: Enviar Todos Emails Deste Endereço.
+    smtp_send_copy_to_this_addresses: Enviar Cópia de Todos Emails Para Estes Endereços. Separar por Vírgulas ou Espaços
+    smtp_username: Usuário SMTP
+    source: 
+    special_instructions: Instruções Especiais
+    spree/order:
+      coupon_code: 
+    spree_gateway_error_flash_for_checkout: Existe um Problema com Seus Dados de Pagamento. por Favor, Verifique Seus Dados e Tente Novamente.
+    start: Início
+    start_date: Válido a Partir de
+    state: Estado
+    state_based: Estado de Origem
+    states: Estados
+    states_required: Estados obrigatórios
+    status: Status
+    stock_location: 
+    stock_location_info: 
+    stock_locations: 
+    stock_management: 
+    stock_movements: 
+    stock_movements_for_stock_location: 
+    stock_successfully_transferred: 
+    stock_transfer: 
+    stock_transfers: 
+    stop: Final
+    store: Loja
+    street_address: Endereço
+    street_address_2: Endereço (compl.)
+    subtotal: Sub-total
+    subtract: Subtrair
+    successfully_created: ! '%{resource} Foi Criado com Sucesso!'
+    successfully_removed: ! '%{resource} Foi Removido com Sucesso!'
+    successfully_signed_up_for_analytics: 
+    successfully_updated: ! '%{resource} Foi Atualizado com Sucesso!'
+    tax: Imposto
+    tax_categories: Categorias de Imposto
+    tax_category: Categoria de Imposto
+    tax_rate_amount_explanation: 
+    tax_rates: Aliquotas de Imposto
+    tax_settings: Configuração de Impostos
+    tax_total: Total de Imposto
+    taxon: Taxon
+    taxon_edit: Editar Taxon
+    taxon_placeholder: 
+    taxonomies: Taxonomias
+    taxonomy: Taxonomia
+    taxonomy_edit: Editar Taxonomia
+    taxonomy_tree_error: A Modificação não foi Aceita e a Árvore Retornou ao seu Estado Anterior, por Favor Tente Novamente.
+    taxonomy_tree_instruction: ! '* Clique com o Botão Direito Sobre um nó da Árvore Para ver o Menu.'
+    taxons: Taxons
+    test: Teste
     test_mailer:
       test_email:
-        greeting: "Parabéns"
-        message: "Se Você Recebeu Esse Email, Suas Configurações Estão Corretas!"
-        subject: "Email de Teste!"
-    test_mode: "Modo de Teste"
-    thank_you_for_your_order: "Obrigado Por sua Compra. por Favor, Imprima uma Cópia Desta Página de Confirmação Para seu Controle."
-    there_were_problems_with_the_following_fields: "Existem Problemas com os Seguintes Campos:"
-    thumbnail: "Miniatura"
-    to_add_variants_you_must_first_define: "Para Adicionar Variantes Você Deve Primeiro Definir"
-    total: "Total"
-    tracking: "Rastreio"
-    tree: "Árvore"
-    type: "Tipo"
-    type_to_search: "Tipo de busca"
-    unable_to_connect_to_gateway: "Impossível se Conectar no Gateway"
-    under_price: "Sob %{price}"
-    unrecognized_card_type: "Tipo de Cartão Desconhecido"
-    update: "Atualizar"
-    updating: "Atualizando"
-    usage_limit: "Limite de uso"
-    use_billing_address: "Usar Endereço de Cobrança"
-    use_new_cc: "Usar um Novo Cartão"
-    use_s3: "Usar Amazon S3 Para Imagens"
-    user: "Usuário"
+        greeting: Parabéns
+        message: Se Você Recebeu Esse Email, Suas Configurações Estão Corretas!
+        subject: Email de Teste!
+    test_mode: Modo de Teste
+    thank_you_for_your_order: Obrigado Por sua Compra. por Favor, Imprima uma Cópia Desta Página de Confirmação Para seu Controle.
+    there_were_problems_with_the_following_fields: ! 'Existem Problemas com os Seguintes Campos:'
+    thumbnail: Miniatura
+    time: 
+    to_add_variants_you_must_first_define: Para Adicionar Variantes Você Deve Primeiro Definir
+    total: Total
+    tracking: Rastreio
+    tracking_number: 
+    tracking_url: 
+    tracking_url_placeholder: 
+    transfer_from_location: 
+    transfer_stock: 
+    transfer_to_location: 
+    tree: Árvore
+    type: Tipo
+    type_to_search: Tipo de busca
+    unable_to_connect_to_gateway: Impossível se Conectar no Gateway
+    under_price: Sob %{price}
+    unlock: 
+    unrecognized_card_type: Tipo de Cartão Desconhecido
+    unshippable_items: 
+    update: Atualizar
+    updating: Atualizando
+    usage_limit: Limite de uso
+    use_billing_address: Usar Endereço de Cobrança
+    use_new_cc: Usar um Novo Cartão
+    use_s3: Usar Amazon S3 Para Imagens
+    user: Usuário
     user_rule:
-      choose_users: "Escolher Usuários"
-    users: "Usuários"
+      choose_users: Escolher Usuários
+    users: Usuários
     validation:
-      cannot_be_less_than_shipped_units: "Não Pode ser Menor que o Número de Unidades Enviadas."
-      cannot_destory_line_item_as_inventory_units_have_shipped: "Não Pode Apagar Itens de um Inventário que foi Entregue."
-      is_too_large: "É Muito Grande -- Quantidade em Estoque não Consegue Cobrir Este Pedido!"
-      must_be_int: "Deve ser um Inteiro"
-      must_be_non_negative: "Deve ser um Valor Positivo ou Zero"
-    value: "Valor"
-    variant: "Variante"
-    variants: "Variantes"
-    version: "Versão"
-    void: "Vazio"
-    weight: "Peso"
-    what_is_a_cvv: "O que é o Código de Segurança do Cartão de Crédito (CVV)?"
-    what_is_this: "O que é isto?"
-    width: "Largura"
-    year: "Ano"
-    you_have_no_orders_yet: "Você Não Possui Pedidos Ainda."
-    your_cart_is_empty: "O Carrinho Está Vazio"
-    zip: "Codigo Postal"
-    zone: "Zona"
-    zones: "Zonas"
+      cannot_be_less_than_shipped_units: Não Pode ser Menor que o Número de Unidades Enviadas.
+      cannot_destory_line_item_as_inventory_units_have_shipped: Não Pode Apagar Itens de um Inventário que foi Entregue.
+      exceeds_available_stock: 
+      is_too_large: É Muito Grande -- Quantidade em Estoque não Consegue Cobrir Este Pedido!
+      must_be_int: Deve ser um Inteiro
+      must_be_non_negative: Deve ser um Valor Positivo ou Zero
+    value: Valor
+    variant: Variante
+    variants: Variantes
+    version: Versão
+    void: Vazio
+    weight: Peso
+    what_is_a_cvv: O que é o Código de Segurança do Cartão de Crédito (CVV)?
+    what_is_this: O que é isto?
+    width: Largura
+    year: Ano
+    you_have_no_orders_yet: Você Não Possui Pedidos Ainda.
+    your_cart_is_empty: O Carrinho Está Vazio
+    your_order_is_empty_add_product: 
+    zip: Codigo Postal
+    zipcode: 
+    zone: Zona
+    zones: Zonas
