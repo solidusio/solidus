@@ -1,4 +1,3 @@
----
 lv:
   activerecord:
     attributes:
@@ -32,19 +31,6 @@ lv:
       spree/option_type:
         name: Name
         presentation: Presentation
-      spree/order:
-        checkout_complete: "Izrakstīšanās pabeigta"
-        completed_at: "Completed At"
-        created_at: Order Date
-        email: Customer E-Mail
-        ip_address: "IP Adrese"
-        item_total: "Kopējā vienība"
-        number: "Skaitlis"
-        payment_state: Payment State
-        shipment_state: Shipment State
-        special_instructions: "Īpašas norādes"
-        state: "Apgabals"
-        total: "Kopā"
       spree/order/bill_address:
         address1: "Billing address street"
         city: "Billing address city"
@@ -69,7 +55,6 @@ lv:
         description: "Apraksts"
         master_price: "Gala cena/Master Price"
         name: "Nosaukums"
-        on_demand: "On Demand"
         on_hand: "Pieejams"
         shipping_category: "Piegādes kategorija"
         tax_category: "Nodokļu kategorija"
@@ -127,21 +112,12 @@ lv:
       spree/address:
         one: "Adrese"
         other: "Adreses"
-      spree/cheque_payment:
-        one: "Samaksa ar čeku"
-        other: "Samaksa ar čeku"
       spree/country:
         one: "Valsts"
         other: "Valstis"
       spree/credit_card:
         one: "Credit Card"
         other: "Credit Cards"
-      spree/creditcard_payment:
-        one: "Credit Card Payment"
-        other: "Credit Card Payments"
-      spree/creditcard_txn:
-        one: "Credit Card Transaction"
-        other: "Credit Card Transactions"
       spree/inventory_unit:
         one: "Krājuma vienība"
         other: "Krājuma vienības"
@@ -200,9 +176,7 @@ lv:
         one: "Zona"
         other: "Zonas"
   spree:
-    a_copy_of_all_mail_will_be_sent_to_the_following_addresses: "Visi e-pasti tiks pārsūtīti arī uz šīm adresēm"
     abbreviation: "Saīsinājums"
-    access_denied: "Pieeja liegta"
     account: "Konts"
     account_updated: "Konts izmainīts!"
     action: "Darbība"
@@ -218,23 +192,16 @@ lv:
     active: "Aktīvs"
     add: "Pievienot"
     add_action_of_type: Add action of type
-    add_category: "Pievienot kategoriju"
     add_country: "Pievienot valsti"
     add_new_header: "Add New Header"
     add_new_style: "Add New Style"
-    add_option_type: "Pievienot opcijas tipu"
-    add_option_types: "Pievienot opcijas tipus"
     add_option_value: "Pievienot opcijas vērtību"
     add_product: "Pievienot produktu"
     add_product_properties: "Pievienot produkta īpašības"
     add_rule_of_type: Add rule of type
-    add_scope: "Pievienot diapazonu"
     add_state: "Pievienot rajonu"
     add_to_cart: "Pievienot grozam"
-    add_zone: "Pievienot zonu"
     additional_item: "Papildus vienības maksa"
-    address: "Adrese"
-    address_information: "Informācija par adresi"
     adjustment: "Piemērošana"
     adjustment_total: Adjustment Total
     adjustments: "Piemērošanas"
@@ -248,42 +215,26 @@ lv:
     administration: "Administrēšana"
     all: "Visi"
     all_departments: "Visas nodaļas"
-    allow_backorders: "Atļaut nokavētos sūtījumus"
     allow_ssl_in_development_and_test: Allow SSL to be used when in development and test modes
     allow_ssl_in_production: Allow SSL to be used in production mode
     allow_ssl_in_staging: Allow SSL to be used in staging mode
-    allowed_ssl_in_production_mode: "SSL %{not}tiks izmantots ražošanā"
-    already_registered: "Esi jau reģistrējies?"
     alt_text: "Cits teksts"
     alternative_phone: "Cits telefons"
     amount: "Summa"
     analytics_trackers: Analytics Trackers
     and: and
-    apply: "Apply"
     are_you_sure: "Vai esiet pārliecināts?"
-    are_you_sure_category: "Vai esiet pārliecināts, ka vēlaties dzēst šo kategoriju?"
     are_you_sure_delete: "Vai esiet pārliecināts, ka vēlaties dzēst šo ierakstu?"
-    are_you_sure_delete_image: "Vai esiet pārliecināts, ka vēlaties dzēst šo bildi?"
-    are_you_sure_option_type: "Vai esiet pārliecināts, ka vēlaties dzēst šo iespējas tipu?"
-    are_you_sure_you_want_to_capture: "Vai esiet pārliecināts, ka vēlaties satvert?"
-    assign_taxon: "Piešķirt Taxonu"
-    assign_taxons: "Piešķirt Taxonus"
     attachment_default_style: "Attachments Style"
     attachment_default_url: "Attachments URL"
     attachment_path: "Attachments Path"
     attachment_styles: "Paperclip Styles"
     authorization_failure: "Autorizācija neizdevās"
-    authorized: "Autorizēts"
-    availability: "Availability"
     available_on: "Pieejams no"
-    available_taxons: "Pieejams Taxons"
-    awaiting_return: "Gaidot atgriešanos"
     back: "Atpakaļ"
     back_end: Back End
     back_to_adjustments_list: "Back To Adjustments List"
     back_to_images_list: "Back To Images List"
-    back_to_mail_methods_list: "Back To Mail Methods List"
-    back_to_option_tyles_list: "Back To Option Types List"
     back_to_payment_methods_list: "Back To Payment Methods List"
     back_to_payments_list: "Back To Payments List"
     back_to_products_list: "Back To Products List"
@@ -299,8 +250,6 @@ lv:
     back_to_taxonomies_list: "Back To Taxonomies List"
     back_to_trackers_list: "Back To Trackers List"
     back_to_zones_list: "Back To Zones List"
-    backordered: "Nokavētie pasūtījumi"
-    backordering_is_allowed: "Nokavētie pasūtījumi %{not} atļauti"
     balance_due: "Atlikums"
     bill_address: "Rēķina adrese"
     billing: "Rēķins"
@@ -309,47 +258,30 @@ lv:
     calculator: "Kalkulātors"
     calculator_settings_warning: "Ja tu maini kalkulatora tipu, vispirms saglabā esošos datus, pirms maini kalkulatora iestatījumus"
     cancel: "Atcelt"
-    cancel_my_account: Cancel my account
-    cancel_my_account_description: "Unhappy?"
-    canceled: "Atcelts"
     cannot_create_payment_without_payment_methods: You cannot create a payment for an order without any payment methods defined.
     cannot_create_returns: "Nevar izveidot atgriešanu, jo šis pasūtījums vēl nav izsūtīts."
     cannot_perform_operation: "Cannot perform requested operation"
     capture: Capture
     card_code: "Kartes kods"
-    card_details: "Kartes detaļas"
     card_number: "Kartes numurs"
     card_type_is: "Kartes tips ir"
     cart: "Grozs"
     categories: "Kategorijas"
     category: "Kategorija"
-    change: "Izmaiņa"
-    change_language: "Izmainīt valodu"
-    change_my_password: "Izmanīt manu paroli"
-    charge_total: "Kopējā summa"
-    charged: "Samaksāts"
-    charges: Charges
     checkout: Pasūtīt
-    cheque: "Čeks"
     city: "Pilsēta"
     clone: "Klonēt"
     code: "Kods"
-    combine: "Apvienot"
     complete: "Pabeigts"
-    complete_list: "Pilns saraksts"
     configuration: "Konfigurācija"
-    configuration_options: "Konfigurācijas iespējas"
     configurations: "Konfigurācijas"
     configure_s3: "Configure S3"
-    configured: "Konfigurēts"
     confirm: "Apstiprini"
     confirm_delete: "Apstiprināt izdzēšanu"
     confirm_password: "Paroles apstiprinājums"
     continue: "Turpināt"
     continue_shopping: "Turpināt iepirkšanos"
-    copy_all_mails_to: "Kopēt visas vēstules uz"
     cost_price: "Pašizmaksa"
-    count_of_reduced_by: "count of '%{name}' reduced by %{count}"
     country: "Valsts"
     country_based: "Valsts"
     coupon: Coupon
@@ -357,16 +289,10 @@ lv:
     coupon_code_applied: The coupon code was successfully applied to your order.
     create: "Izveidot"
     create_a_new_account: "Izveidot jaunu kontu"
-    create_user_account: "Izveidot lietotāja kontu"
-    created_successfully: "Veiksmīgi izveidots"
     credit: "Kredīts"
     credit_card: "Kredītkarte"
-    credit_card_capture_complete: "Kredītkarte tika apstiprināta"
-    credit_card_payment: "Kredītkartes maksājums"
     credit_cards: Credit Cards
     credit_owed: "Kredīta parāds"
-    credit_total: "Kopējais kredīts"
-    credits: "Kredīti"
     currency: Currency
     currency_settings: "Currency Settings"
     currency_symbol_position: "Put currency symbol before or after dollar amount?"
@@ -377,38 +303,26 @@ lv:
     customer_search: "Klienta meklēšana"
     cut: Cut
     date_completed: Date Completed
-    date_created: "Izveidošanas datums"
     date_range: "Datuma diapazons"
-    debit: "Debits"
     default: Default
     default_meta_description: Default Meta Description
     default_meta_keywords: Default Meta Keywords
     default_seo_title: Default Seo Title
     default_tax: Default Tax
     default_tax_zone: Default Tax Zone
-    defined_paperclip_styles: Defined Paperclip Styles
     delete: "Izdzēst"
     delivery: Delivery
     depth: "Dziļums"
     description: "Apraksts"
     destroy: "Izdzēst"
-    didnt_receive_confirmation_instructions: "Didn't receive confirmation instructions?"
-    didnt_receive_unlock_instructions: "Didn't receive unlock instructions?"
     discount_amount: "Discount Amount"
     dismiss_banner: "No. Thanks! I'm not interested, do not display this message again"
     display: "Rādīt"
     display_currency: "Display currency"
-    dollar_amounts_displayed_as: "Dollar amounts displayed as %{example}"
     edit: "Rediģēt"
-    edit_general_settings: "Edit General Settings"
-    editing_billing_integration: Editing Billing Integration
-    editing_category: "Rediģēt kategoriju"
-    editing_mail_method: Editing Mail Method
     editing_option_type: "Rediģēt iespēju tipu"
-    editing_option_types: "Rediģēt iespēju tipus"
     editing_payment_method: "Rediģēt maksāšanas metodi"
     editing_product: "Rediģēt produktu"
-    editing_product_group: "Rediģēt produkta grupu"
     editing_promotion: Editing Promotion
     editing_property: "Rediģēt īpašības"
     editing_prototype: "Rediģēt prototipus"
@@ -421,21 +335,12 @@ lv:
     editing_user: "Rediģēt lietotāju"
     editing_zone: "Rediģēt zonu"
     email: "E-pasts"
-    email_address: "Epasta adrese"
-    email_server_settings_description: "E-pasta servera uzstādījumi."
     empty: "Empty"
     empty_cart: "Iztukšot grozu"
-    enable_login_via_login_password: "Izmanto standarta e-pastu/paroli"
-    enable_login_via_openid: "Tā vietā izmantot atvērto ID"
     enable_mail_delivery: "Atļaut pasta sūtīšanu"
     ending_in: "Ending in"
-    enter_at_least_five_letters: Enter at least five letters of customer name
-    enter_exactly_as_shown_on_card: "Lūdzu ievadiet precīzi kā norādīts uz kartes"
-    enter_password_to_confirm: "(we need your current password to confirm your changes)"
-    enter_token: Enter Token
     environment: "Vide"
     error: "Kļūda"
-    error_user_destroy_with_orders: "Users with completed orders may not be deleted"
     errors:
       messages:
         could_not_create_taxon: "Could not create taxon"
@@ -458,79 +363,47 @@ lv:
         page_view: "Static page viewed"
         user:
           signup: 'User signup'
-    existing_customer: "Esošais klients"
     expiration: "Izbeigšanās"
-    expiration_month: "Beigu mēnesis"
-    expiration_year: "Beigu gads"
-    expiry: Expiry
     extension: "Paplašinājums"
-    extensions: "Paplašinājumi"
     filename: "Faila nosaukums"
-    final_confirmation: "Beigu apstiprinājums"
     finalize: "Pabeigt"
-    finalized_payments: "Pabeigtie maksājumi"
     first_item: "Pirmās vienības maksājums"
     first_name: "Vārds"
     first_name_begins_with: "Vārds sākas ar"
     flat_percent: "Pamatprocents"
-    flat_rate_amount: "Summa"
     flat_rate_per_item: "Pamatlikme (par katru vienību)"
     flat_rate_per_order: "Pamatlikme (par pasūtījumu)"
     flexible_rate: "Elastīga likme"
     forgot_password: "Parole aizmirsta"
     free_shipping: Free Shipping
-    from_state: From State
     front_end: Front End
-    full_name: "Pilns vārds"
     gateway: Gateway
     gateway_config_unavailable: "Gateway unavailable for environment"
-    gateway_configuration: "Gateway konfigurācija"
     gateway_error: "Gateway kļūda"
-    gateway_setting_description: "Izvēlieties maksāšanas gateway un konfigurējiet tā iestatījumus."
-    gateway_settings_warning: "Pirms mainīt gateway tipu saglabājiet esošos iestatījumus"
     general: "Vispārīgi"
     general_settings: "Vispārīgi iestatījumi"
-    general_settings_description: "Konfigurēt vispārīgos Spree iestatījumus."
     google_analytics: "Google analītiķis"
-    google_analytics_active: "Aktīvs"
-    google_analytics_create: "Izveidot jaunu Google analītiķa kontu"
     google_analytics_id: "Analītiķa ID"
-    google_analytics_new: "Jauns Google analītiķa konts"
-    google_analytics_setting_description: "Pārvaldīt Google analītiķa ID"
     guest_checkout: "Ciemiņa izrakstīšanās"
     guest_user_account: "Izrakstīties kā ciemiņam"
     has_no_shipped_units: "Nav nosūtītu vienību"
     height: "Augstums"
-    hello_user: "Sveiks lietotāj"
-    history: "Vēsture"
     home: "Mājas"
     icon: "Icon"
-    icons_by: "Ikonas"
     image: "Attēls"
     image_settings: "Image Settings"
-    image_settings_description: "Image Settings Description"
     image_settings_updated: "Image Settings successfully updated."
     image_settings_warning: "You will need to regenerate thumbnails if you update the paperclip styles. Use rake paperclip:refresh:thumbnails to do this."
     images: "Attēli"
-    images_for: "Bildes priekš"
-    in_progress: "Progresā"
-    include_in_shipment: "Iekļaut sūtijumā"
-    included_in_other_shipment: "Iekļauts citā sūtijumā"
     included_in_price: Included in Price
-    included_in_this_shipment: "Iekļauts šajā sūtijumā"
     included_price_validation: "cannot be selected unless you have set a Default Tax Zone"
     instructions_to_reset_password: "Aizpildiet formu zemāk un uz e-pastu tiks nosūtīta instrukcija kā atjaunot paroli:"
     insufficient_stock: "Insufficient stock available, only %{on_hand} remaining"
-    integration_settings_warning: "Pirms mainīt norēķinu integrāciju, vispirms vajag saglabāt esošos iestādījumus"
     intercept_email_address: Intercept Email Address
     intercept_email_instructions: "Override email recipient and replace with this address."
-    invalid_search: "Nepareizs meklēšanas kritērījs."
     inventory: "Inventūra"
     inventory_adjustment: "Inventūras korekcija"
-    inventory_setting_description: "Inventūras konfigurācija, Nokavētie pasūtījumi, nulles-krājumu parādīšana"
-    inventory_settings: "Inventūras iestatījumi"
     is_not_available_to_shipment_address: "nav pieejams sūtīšanas adresei"
-    issue_number: Issue Number
     item: Vienība
     item_description: "Vienības apraksts"
     item_total: "Kopējā vienība"
@@ -543,17 +416,12 @@ lv:
     last_name: "Uzvārds"
     last_name_begins_with: "Uzvārds sākas ar"
     learn_more: Learn More
-    leave_blank_to_not_change: "(leave blank if you don't want to change it)"
     list: "Saraksts"
-    listing_categories: "Kategorijas"
-    listing_option_types: "Opcijas tipi"
     listing_orders: "Pasūtījumi"
-    listing_product_groups: "Produktu grupas"
     listing_products: "Produkti"
     listing_reports: "Atskaites"
     listing_tax_categories: "Nodokļu kategorijas"
     listing_users: "Lietotāji"
-    live: "Live"
     loading: "Lādējās"
     locale_changed: "Valoda nomainīta"
     logged_in_as: "Pieslēgties kā"
@@ -566,24 +434,17 @@ lv:
     logout: "Atslēgties"
     look_for_similar_items: "Meklēt līdzīgas preces"
     maestro_or_solo_cards: "Maestro/Solo kartes"
-    mail_delivery_enabled: "Pasta sūtīšana ir atļauta"
-    mail_delivery_not_enabled: "Pasta sūtīšana nav atļauta"
     mail_methods: Mail Methods
-    mail_server_preferences: Mail Server Preferences
     make_refund: Make refund
-    mark_shipped: "Atzīmēt aizsūtītos"
     master_price: "Master Price"
     match_choices:
       all: "All"
       none: "None"
-      one: "One"
-    match_rule: "Products That Must Match:"
     max_items: Max Items
     meta_description: "Meta apraksts"
     meta_keywords: "Meta atslēgas vārdi"
     metadata: "Metadata"
     minimal_amount: "Minimal Amount"
-    missing_required_information: "Trūkst prasītās informācijas"
     month: "Mēnesis"
     more: More
     my_account: "Mans konts"
@@ -592,25 +453,18 @@ lv:
     name_or_sku: "Vārds vai SKU"
     new: "Jauns"
     new_adjustment: "Jauns pielāgojums"
-    new_billing_integration: New Billing Integration
-    new_category: "Jauna kategorija"
     new_customer: "Jauns klients"
-    new_group: New Group
     new_image: "Jauns attēls"
-    new_mail_method: New Mail Method
     new_option_type: "Jauns opciju tips"
-    new_option_value: "Jauna opcijas vērtība"
     new_order: "Jauns pasūtījums"
     new_order_completed: "Jaunais pasūtījums pabeigts"
     new_payment: "Jauns maksājums"
     new_payment_method: "Jauna maksājuma metode"
     new_product: "Jauns produkts"
-    new_product_group: "Jauna produktu grupa"
     new_promotion: New Promotion
     new_property: "New Property"
     new_prototype: "Jauns prototips"
     new_return_authorization: New Return Authorization
-    new_shipment: "Jauns sūtījums"
     new_shipping_category: "Jauna sūtījuma kategorija"
     new_shipping_method: "Jauna sūtījuma metode"
     new_state: "Jauns rajons"
@@ -623,23 +477,15 @@ lv:
     new_variant: "Jauns variants"
     new_zone: "Jauna zona"
     next: "Nākamais"
-    say_no: "No"
-    no_items_in_cart: ""
-    no_match_found: "Nekas netika atrasts"
     no_products_found: "Neviens produkts netika atrasts"
     no_results: "No results"
     no_rules_added: No rules added
-    no_user_found: "Neviens lietotājs netika atrasts ar šādu e-pasta adresi"
     none: "Nekas"
-    none_available: "Nekas nav pieejams"
     normal_amount: "Normal Amount"
     not: not
     not_available: "N/A"
     not_found: "%{resource} is not found"
-    not_shown: "Not Shown"
-    note: "Piezīme"
     notice_messages:
-      option_type_removed: "Veiksmīgi noņemts opciju tips."
       product_cloned: "Produkts ir klonēts"
       product_deleted: "Produkts ir izdzēsts"
       product_not_cloned: "Produktu neizdevās klonēt"
@@ -647,8 +493,6 @@ lv:
       variant_deleted: "Variants ir izdzēsts"
       variant_not_deleted: "Variants nav izdzēsts"
     on_hand: "Ir uz vietas"
-    one_default_category_with_default_tax_rate: "You should configure exactly one default category with your countries default tax rate"
-    operation: Operation
     option_type: "Option Type"
     option_types: "Opciju tips"
     option_value: "Option Value"
@@ -658,8 +502,6 @@ lv:
     or_over_price: "%{price} or over"
     order: "Pasūtījums"
     order_adjustments: "Order adjustments"
-    order_confirmation_note: ""
-    order_date: "Pasūtījuma datums"
     order_details: "Pasūtījuma detaļas"
     order_email_resent: "Pasūtījuma e-pasts vēlreiz pārsūtīts"
     order_mailer:
@@ -678,14 +520,10 @@ lv:
         subtotal: "Subtotal:"
         thanks: "Thank you for your business."
         total: "Order Total:"
-    order_not_in_system: "Šis pasūtījuma numurs nav derīgs šajā saitā."
     order_number: "Pasūtījums"
-    order_operation_authorize: "Autorizēt"
-    order_processed_but_following_items_are_out_of_stock: "Jūsu pasūtījums ir ticis apstrādāts, bet sekojošas preces ir beigušās:"
     order_processed_successfully: "Jūsu pasūtījums ir apstrādāts veiksmīgi"
     order_state: # keys correspond to Checkout state names:
       address: address
-      adjustments: adjustments
       awaiting_return: awaiting return
       canceled: canceled
       cart: cart
@@ -695,40 +533,25 @@ lv:
       payment: payment
       resumed: resumed
       returned: returned
-      skrill: skrill
     order_summary: "Pasūtījuma apkopojums"
     order_sure_want_to: "Vai esiet pārliecināts, ka vēlaties %{event} šo pasūtījumu?"
     order_total: "Kopējais pasūtījums"
-    order_total_message: "Kopējais apjoms ņemts no jūsu kartes būs"
     order_updated: "Pasūtījums atjaunots"
     orders: "Pasūtījumi"
-    other_payment_options: "Citas maksājuma iespējas"
     out_of_stock: "Izpārdots"
-    over_paid: "Pārmaksāts"
     overview: "Pārskats"
-    page_only_viewable_when_logged_in: "Jūs mēģiniet apmeklēt lapu, kuru var redzēt tikai, kad esiet ielogojies."
-    page_only_viewable_when_logged_out: "Jūs mēģiniet apmeklēt lapu, kuru var redzēt tikai, kad esiet izlogojies."
     pagination:
       next_page: "next page &raquo;"
       previous_page: "&laquo; previous page"
       truncate: "&hellip;"
-    paid: "Samaksāts"
-    parent_category: "Galvenā kategorija"
     password: "Parole"
-    password_reset_instructions: "Paroles nomainīšanas instrukcija"
-    password_reset_instructions_are_mailed: "Instrukcija kā nomainīt paroli ir nosūtīta jums uz e-pastu. Lūdzu pārbaudiet savu e-pastu."
-    password_reset_token_not_found: "Mums ir žēl, bet mēs nevarējam atrast jūsu kontu. Ja jums ir sarežģījumi, mēģiniet nokopēt un ievietot linku no sava e-pasta interneta pārlūkā vai atsākiet paroles nomaiņas procesu."
-    password_updated: "Parole veiksmīgi atjaunota"
     paste: Paste
     path: "Ceļš"
     pay: "maksā"
     payment: "Maksājums"
-    payment_actions: "Actions"
-    payment_gateway: "Payment Gateway"
     payment_information: "Maksājumu informācija"
     payment_method: "Maksājuma metode"
     payment_methods: "Maksājuma metodes"
-    payment_methods_setting_description: "Konfigurēt metodes, kuras var izmantot klienti, lai maksātu"
     payment_processing_failed: "Payment could not be processed, please check the details you entered"
     payment_processor_choose_banner_text: "If you need help choosing a payment processor, please visit"
     payment_processor_choose_link: "our payments page"
@@ -745,31 +568,21 @@ lv:
       void: void
     payment_updated: "Maksājums atjaunots"
     payments: "Maksājumi"
-    pending_payments: "Nenokārtoti maksājumi"
     percent_per_item: Percent Per Item
     permalink: Permalink
     phone: "Telefons"
     place_order: "Veikt pasūtījumu"
-    please_create_user: "Lūdzu izveidojiet lietotāja kontu"
     please_define_payment_methods: "Please define some payment methods first."
     populate_get_error: "Something went wrong. Please try adding the item again."
     powered_by: "Powered by"
     presentation: "Prezentācija"
-    preview: "Pārskats"
     previous: "Iepriekšējais"
     price: "Cena"
     price_range: Price Range
     price_sack: Price Sack
-    problem_authorizing_card: "Problēma autorizēt kredīta karti"
-    problem_capturing_card: "Problem capturing credit card"
-    problems_processing_order: "Mums bija problēmas apstrādāt jūsu pasūtījumu"
-    proceed_as_guest: "Nē, paldies, turpināt kā ciemiņš"
     process: "Apstrādāt"
     product: "Produkts"
     product_details: "Produkta detaļas"
-    product_group: "Produkta grupa"
-    product_group_invalid: Product Group has invalid scopes
-    product_groups: "Produkta grupas"
     product_has_no_description: "Šim produktam nav nosaukuma"
     product_properties: "Produkta īpašības"
     product_rule:
@@ -780,118 +593,7 @@ lv:
       product_source:
         group: From product group
         manual: Manually choose
-    product_scopes:
-      groups:
-        price:
-          description: "Diapazons izvēloties produktu balstītu uz cenu"
-          name: "Cena"
-        search:
-          description: "Diapazons izvēloties produktus balstoties uz nosaukumu, atslēgas vārdiem un produkta aprakstu"
-          name: "Meklējamais teksts"
-        taxon:
-          description: "Diapazons izvēloties produktus balstītus uz Taxons"
-          name: Taxon
-        values:
-          description: "Diapazons izvēloties produktus balstītus uz opciju un īpašību vērtībām"
-          name: "Vērtības"
-      scopes:
-        ascend_by_name:
-          name: Ascend by product Nosaukums
-        ascend_by_updated_at:
-          name: Ascend by actualization date
-        descend_by_name:
-          name: Descend by product Nosaukums
-        descend_by_updated_at:
-          name: Descend by actualization date
-        in_name:
-          args:
-            words: "Vārdi"
-          description: "(atdalīts ar atstarpi vai komatu)"
-          name: "Produkta nosaukumam ir sekojošs"
-          sentence: "produkta nosaukums satur <em>%s</em>"
-        in_name_or_description:
-          args:
-            words: "Vārdi"
-          description: "(atdalīts ar atstarpi vai komatu)"
-          name: "Produkta nosaukumam vai aprakstam ir sekojošs"
-          sentence: "Nosaukums vai apraksts satur <em>%s</em>"
-        in_name_or_keywords:
-          args:
-            words: "Vārdi"
-          description: "(atdalīts ar atstarpi vai komatu)"
-          name: "Produkta nosaukumam vai meta atslēgas vārdiem ir sekojošs"
-          sentence: "Nosaukums vai atslēgas vārdi satur <em>%s</em>"
-        in_taxons:
-          args:
-            "taxon_names": "Taxon names"
-          description: "Taxon names have to be separated by comma or space(eg. adidas,shoes)"
-          name: "In taxons and all their descendants"
-          sentence: in <em>%s</em> and all their descendants
-        master_price_gte:
-          args:
-            amount: "Summa"
-          description: ""
-          name: "Master price greater or equal to"
-          sentence: price greater or equal to <em>%.2f</em>
-        master_price_lte:
-          args:
-            amount: "Summa"
-          description: ""
-          name: "Master price lesser or equal to"
-          sentence: price less or equal to <em>%.2f</em>
-        price_between:
-          args:
-            high: "Augsts"
-            low: "Zems"
-          description: ""
-          name: "Cena starp"
-          sentence: "cena starp <em>%.2f</em> un <em>%.2f</em>"
-        taxons_name_eq:
-          args:
-            taxon_name: "Taxon Nosaukums"
-          description: "In specific taxon - without descendants"
-          name: "In Taxon(without descendants)"
-          sentence: in <em>%s</em>
-        with:
-          args:
-            value: "Vērtība"
-          description: "Select specific products"
-          name: Products with IDs
-          sentence: with IDs <em>%s</em>
-        with_ids:
-          args:
-            ids: IDs
-          description: "Select specific products"
-          name: Products with IDs
-          sentence: with IDs <em>%s</em>
-        with_option:
-          args:
-            option: "Opcija"
-          description: "Izvēlās visus produktus, kuriem ir konkrēta opcija"
-          name: "Ar opciju"
-          sentence: "ar opciju <em>%s</em>"
-        with_option_value:
-          args:
-            option: "Opcija"
-            value: "Vērtība"
-          description: "Izvēlās visus produktus, kuram ir vismaz viens variants, kuram ir konkrēta vērtība vai kā opcija vai īpašība(eg. krāsa:sarkana)"
-          name: "Ar opciju un vērtību"
-          sentence: "ar opciju <em>%s</em> un vērtību <em>%s</em>"
-        with_property:
-          args:
-            property: Property
-          description: "Izvēlās visus produktus, kuriem ir konkrēta opcija(eg. svars)"
-          name: "Ar īpašību"
-          sentence: with property <em>%s</em>
-        with_property_value:
-          args:
-            property: Property
-            value: "Vērtība"
-          description: "Izvēlās visus produktus, kuram ir vismaz viens variants ar konkrētu opciju vai vērtību (eg. svars:10kg)"
-          name: "Ar īpašības vērtību"
-          sentence: with property <em>%s</em> and value <em>%s</em>
     products: "Produkti"
-    products_with_zero_inventory_display: "Produkti, kas nav noliktavā, %{not} tiks rādīti"
     promotion: Promotion
     promotion_action: Promotion Action
     promotion_action_types:
@@ -909,7 +611,6 @@ lv:
       match_policies:
         all: Match any of these rules
         any: Match all of these rules
-    promotion_not_found: The coupon code you entered doesn't exist. Please try again.
     promotion_rule: Promotion Rule
     promotion_rule_types:
       first_order:
@@ -931,7 +632,6 @@ lv:
         description: Available only to logged in users
         name: User Logged In
     promotions: Akcijas
-    promotions_description: Manage offers and coupons with promotions
     properties: Parametri
     property: Parametrs
     prototype: "Prototips"
@@ -941,30 +641,19 @@ lv:
     qty: "Daudzums"
     quantity_returned: Quantity Returned
     quantity_shipped: "Daudzums nosūtīts"
-    range: "Diapazons"
     rate: "Tarifs"
     reason: "Iemesls"
-    recalculate_order_total: "Pārrēķināt kopējo pasūtījumu"
     receive: "saņemt"
     received: "Saņemts"
     refund: "Atmaksāt"
     register: "Reģistrēties kā jauns lietotājs"
-    register_or_guest: Checkout as Guest or Register
     registration: "Reģistrācija"
     remember_me: "Atcerēties mani"
     remove: "Noņemt"
     rename: Rename
     reports: "Atskaites"
-    required_for_solo_and_maestro: "Vajadzīgs Solo and Maestro kartēm."
     resend: "Pārsūtīt"
-    resend_confirmation_instructions: "Resend confirmation instructions"
-    resend_unlock_instructions: "Resend unlock instructions"
     reset_password: "Nomainīt manu paroli"
-    resource_controller:
-      member_object_not_found: "Objekts nav atrasts."
-      successfully_created: "Veiksmīgi izveidots!"
-      successfully_removed: "Veiksmīgi noņemts!"
-      successfully_updated: "Veiksmīgi atjaunots!"
     response_code: "Reakcijas kods"
     resume: "atsākt"
     resumed: "Atsākts"
@@ -983,38 +672,29 @@ lv:
     s3_access_key: "Access Key"
     s3_bucket: "Bucket"
     s3_headers: "S3 Headers"
-    s3_not_used_for_product_images: "S3 is not being used for product images"
     s3_protocol: "S3 Protocol"
     s3_secret: "Secret Key"
-    s3_used_for_product_images: "S3 is being used for product images"
-    sales_tax: "Pārdošanas nodoklis"
     sales_total: "Kopējā realizācija"
     sales_total_description: "Sales Total For All Orders"
     save_and_continue: "Saglabāt un turpināt"
-    save_preferences: "Saglabāt iestatījumus"
+    say_no: "No"
+    say_yes: "Yes"
     scope: Scope
-    scopes: Scopes
     search: "Meklēšana"
     search_results: "Meklēšanas rezultāti '%{keywords}'"
     searching: Searching
     secure_connection_type: Secure Connection Type
-    secure_credit_card: Secure Credit Card
     security_settings: "Security Settings"
     select: "Izvēlēties"
     select_from_prototype: "Izvēlēties no prototipiem"
-    select_preferred_shipping_option: "Izvēlēties vēlamo sūtīšanas metodi"
     send_copy_of_all_mails_to: "Sūtīt visu vēstuļu kopijas uz"
-    send_copy_of_orders_mails_to: "Sūtīt vēstuļu pasūtījumu kopijas uz"
     send_mails_as: "Sūtīt vēstules kā"
-    send_me_reset_password_instructions: "Send me reset password instructions"
-    send_order_mails_as: "Sūtīt pasūtījuma vēstules kā"
     server: "Servers"
     server_error: "Serveris izdeva kļūdu"
     settings: "Uzstādījumi"
     ship: "sūtīt"
     ship_address: "Nosūtīšanas adrese"
     shipment: "Sūtījums"
-    shipment_details: "Sūtījuma detaļas"
     shipment_inc_vat: "Shipment including VAT"
     shipment_mailer:
       shipped_email:
@@ -1024,7 +704,6 @@ lv:
         subject: "Shipment Notification"
         thanks: "Thank you for your business."
         track_information: "Tracking Information: %{tracking}"
-    shipment_number: "Piegādes nr."
     shipment_state: Piegādes statuss
     shipment_states:
       backorder: backorder
@@ -1032,34 +711,21 @@ lv:
       pending: pending
       ready: ready
       shipped: shipped
-    shipment_updated: "Sūtījums atjaunots"
     shipments: "Sūtījumi"
     shipped: "Nosūtīts"
     shipping: "Sūtās"
     shipping_address: "Nosūtīšanas adrese"
     shipping_categories: "Sūtīšanas kategorijas"
-    shipping_categories_description: "Pārvaldīt sūtīšanas kategorijas, lai identificētu, kuri produkti var tikt sūtīti ar kuru metodi"
     shipping_category: "Sūtīšanas kategorija"
-    shipping_category_choose: "Shipping Category"
-    shipping_cost: "Maksa"
-    shipping_error: "Sūtīšanas kļūda"
     shipping_instructions: "Sūtīšanas instrukcijas"
     shipping_method: "Sūtīšanas metode"
     shipping_methods: "Sūtīšanas metodes"
-    shipping_methods_description: "Pārvaldīt sūtīšanas metodes"
-    shipping_total: "Kopējais sūtīšanai"
     shop_by_taxonomy: "Pirkt pēc %{taxonomy}"
     shopping_cart: "Iepirkuma grozs"
-    short_description: "Short description"
     show: "Parādīt"
     show_active: "Parādīt aktīvos"
     show_deleted: "Parādīt izdzēstos"
-    show_incomplete_orders: "Parādīt nepilnīgos pasūtījumus"
     show_only_complete_orders: "Parādīt tikai pabeigtos pasūtījumus"
-    show_only_unfulfilled_orders: "Show only unfulfilled orders"
-    show_out_of_stock_products: "Parādīt izpārdotos produktus"
-    showing_first_n: "Parādīt pirmos %{n}"
-    sign_up: "Parakstīties"
     site_name: "Interneta adreses nosaukums"
     site_url: "Interneta adreses links"
     sku: SKU
@@ -1072,32 +738,12 @@ lv:
     smtp_send_all_emails_as_from_following_address: "Sūtīt visas vēstules no sekojošās adreses."
     smtp_send_copy_to_this_addresses: "Sūta visas izejošās vēstules kopijas uz šo adresi. Vairākas adreses atdalīt ar komatu."
     smtp_username: SMTP Username
-    sold: "Pārdots"
-    sort_ordering: "Grupēt pasūtījumus"
     special_instructions: "Special Instructions"
-    spree/order:
-      coupon_code: Coupon Code
-    spree:
-      date: Date
-      date_picker:
-        format: ! '%Y/%m/%d'
-        js_format: 'yy/mm/dd'
-      time: Time
-    spree_alert_checking: "Check for Spree security and release alerts"
-    spree_alert_not_checking: "Not checking for Spree security and release alerts"
     spree_gateway_error_flash_for_checkout: "There was a problem with your payment information. Please check your information and try again."
-    spree_inventory_error_flash_for_insufficient_quantity: "An item in your cart has become unavailable."
-    ssl_will_be_used_in_development_and_test_modes: "SSL tiks izmantots attīstībā un testa modē, ja nepieciešams."
-    ssl_will_be_used_in_production_mode: "SSL tiks izmantots produkcijas modē"
-    ssl_will_be_used_in_staging_mode: "SSL will be used in staging mode"
-    ssl_will_not_be_used_in_development_and_test_modes: "SSL tiks izmantots attīstībā un testa modē, ja nepieciešams."
-    ssl_will_not_be_used_in_production_mode: "SSL tiks izmantots produkcijas modē"
-    ssl_will_not_be_used_in_staging_mode: "SSL will not be used in staging mode"
     start: "Starts"
     start_date: "Derīgs no"
     state: "Stāvoklis"
     state_based: "State Based"
-    state_setting_description: "Administrēt rajonu listi asociētu ar katru valsti."
     states: States
     status: "Status"
     stop: "Stop"
@@ -1109,21 +755,15 @@ lv:
     successfully_created: "%{resource} tika veiksmīgi izveidots(-a)!"
     successfully_removed: "%{resource} tika veiksmīgi izdzēsts(-a)!"
     successfully_updated: "%{resource} tika veiksmīgi saglabāts(-a)!"
-    system: "Sistēma"
     tax: "Nodokļi"
     tax_categories: "Nodokļu kategorijas"
-    tax_categories_setting_description: "Uzstādīt nodokļu kategorijas, lai identificētu, kurus produktus aplikt ar nodokli."
     tax_category: "Nodokļu kategorija"
     tax_rates: "Nodokļu likmes"
-    tax_rates_description: "Nodokļu tarifu iestatīšana un konfigurēšana."
     tax_settings: "Nodokļu uzstādījumi"
-    tax_settings_description: "Pamat nodokļu iestatījumi."
     tax_total: "Kopējie nodokļi"
-    tax_type: "Nodokļu tips"
     taxon: Taxon
     taxon_edit: Edit Taxon
     taxonomies: Klasifikatori
-    taxonomies_setting_description: "Pārvaldīt klasifikatorus"
     taxonomy: Taxonomy
     taxonomy_edit: "Labot klasifikatoru"
     taxonomy_tree_error: "Prasītās izmaiņas nav pieņemtas un koks ir atgriezts iepriekšējā stāvoklī, lūdzu, mēģiniet vēlreiz."
@@ -1138,45 +778,27 @@ lv:
     test_mode: "Testa Mode"
     thank_you_for_your_order: "Paldies par sadarbību. Lūdzu, izdrukājiet šo apstiprinājumu savai zināšanai."
     there_were_problems_with_the_following_fields: "Problēmas ar sekojošiem laukiem"
-    this_file_language: "Latvijas (LV)"
     thumbnail: "Thumbnail"
     to_add_variants_you_must_first_define: "Lai pievienotu variantu, vispirms definējiet"
-    to_state: "To State"
     total: "Kopā"
     tracking: Tracking
-    transaction: "Transakcija"
-    transactions: "Transakcijas"
     tree: "Koks"
-    try_again: "Mēģiniet vēlreiz"
     type: "Tips"
     type_to_search: Type to search
-    unable_ship_method: "Nav spējīgs ģenerēt nosūtīšanas metodes servera kļūdas dēļ."
-    unable_to_authorize_credit_card: "Nav spējīgs autorizēt kredītkarti"
-    unable_to_capture_credit_card: "Nav spējīgs atpazīt kredīt karti"
     unable_to_connect_to_gateway: "Nav spējīgs pievienoties gateway."
-    unable_to_save_order: "Nav spējīgs saglabāt pasūtījumu"
-    under_paid: "Under Paid"
     under_price: "Under %{price}"
     unrecognized_card_type: "Neatpazīstams kartes tips"
     update: "Atjaunot"
-    update_password: "Atjaunot manu paroli un ielaist sistēmā"
-    updated_successfully: "Veiksmīgi atjaunots"
     updating: "Atjaunojas"
     usage_limit: "Lietotāja limits"
-    use_as_shipping_address: "Lieto kā nosūtīšanas adresi"
     use_billing_address: "Lietot rēķina adresi"
-    use_different_shipping_address: "Izmantojiet citu sūtījuma adresi"
     use_new_cc: "Izmntot jaunu karti"
     use_s3: "Use Amazon S3 For Images"
     user: "Lietotājs"
-    user_account: "Lietotāja konts"
-    user_created_successfully: "Lietotājs izveidots veiksmīgi"
     user_rule:
       choose_users: Choose users
     users: "Lietotāji"
-    validate_on_profile_create: Validate on profile create
     validation:
-      cannot_be_greater_than_available_stock: "cannot be greater than available stock."
       cannot_be_less_than_shipped_units: "nevar būt mazāks par izsūtītām vienībām."
       cannot_destory_line_item_as_inventory_units_have_shipped: "Cannot destory line item as some inventory units have shipped."
       is_too_large: "ir par lielu - pieejamais daudzums nevar nodrošināt prasīto daudzumu!"
@@ -1185,24 +807,15 @@ lv:
     value: "Vērtība"
     variant: Variant
     variants: "Varianti"
-    vat: "PVN"
     version: "Versija"
-    view_shipping_options: "Apskatīt nosūtīšanas iespējas"
     void: Void
-    website: Website
     weight: Weight
-    welcome_to_sample_store: "Laipni lūdzam paraugu veikalā"
     what_is_a_cvv: "Kas ir (CVV) kredītkartes kods?"
     what_is_this: "Kas tas ir?"
-    whats_this: "Kas tas ir"
     width: "Platums"
     year: "Gads"
-    say_yes: "Yes"
-    you_have_been_logged_out: "Jūs esat izgājis no sistēmas."
     you_have_no_orders_yet: "You have no orders yet."
     your_cart_is_empty: "Jūsu iepirkuma grozs ir tukšs"
     zip: "Pasta indekss"
     zone: "Zona"
-    zone_based: "Uz zonas balstīts"
-    zone_setting_description: "Valstu, rajonu vai citu zonu kolekcija, kuru izmantot dažādās kalkulācijās."
     zones: "Zonas"
