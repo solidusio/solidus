@@ -22,6 +22,7 @@ class AddTranslationsToMainModels < ActiveRecord::Migration
   def down
     Spree::Product.drop_translation_table! :migrate_data => true
     Spree::Promotion.drop_translation_table! :migrate_data => true
+    Spree::Property.drop_translation_table! :migrate_data => true
     Spree::OptionType.drop_translation_table! :migrate_data => true
     Spree::Taxonomy.drop_translation_table! :migrate_data => true
     Spree::Taxon.drop_translation_table! :migrate_data => true
