@@ -983,6 +983,7 @@ sl-SI:
     test_mode: Testni način
     thank_you_for_your_order: Hvala za zaupanje. Prosimo natisnite si kopijo te potrditvene strani za lastno referenco.
     there_were_problems_with_the_following_fields: There were problems with the following fields
+    this_file_language: "Slovenščina (SL)"
     thumbnail: Mala slika
     time: 
     to_add_variants_you_must_first_define: Za dodajanje variant, morate najprej definirati

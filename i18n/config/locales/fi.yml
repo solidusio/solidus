@@ -983,6 +983,7 @@ fi:
     test_mode: Testimoodi
     thank_you_for_your_order: Kiitos tilauksestasi! Tulosta tarvittaessa kopio tästä vahvistuksesta.
     there_were_problems_with_the_following_fields: Seuraavissa kentissä oli virhe
+    this_file_language: Suomi
     thumbnail: Näytekuva
     time: 
     to_add_variants_you_must_first_define: Lisättävä variantti täytyy ensin määritellä

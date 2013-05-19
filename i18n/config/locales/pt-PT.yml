@@ -983,6 +983,7 @@ pt-PT:
     test_mode: Modo de Teste
     thank_you_for_your_order: Obrigado pela sua compra. Por favor, imprima uma cópia desta página de confirmação.
     there_were_problems_with_the_following_fields: Houve um problema com os seguintes campos
+    this_file_language: "Português"
     thumbnail: Miniatura
     time: 
     to_add_variants_you_must_first_define: Para adicionar variantes você deve primeiro definir

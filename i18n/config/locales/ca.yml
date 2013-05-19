@@ -983,6 +983,7 @@ ca:
     test_mode: Manera Prova
     thank_you_for_your_order: Gràcies per la seva comanda
     there_were_problems_with_the_following_fields: ! 'Han hagut problemes amb els següents camps: '
+    this_file_language: "Español"
     thumbnail: Miniatura
     time: 
     to_add_variants_you_must_first_define: Per agregar variants, primer ha de definir

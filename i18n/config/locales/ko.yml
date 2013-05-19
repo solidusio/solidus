@@ -983,6 +983,7 @@ ko:
     test_mode: 테스트 모드
     thank_you_for_your_order: 
     there_were_problems_with_the_following_fields: 다음 값들에 문제가 있습니다
+    this_file_language: "한국의 (KO)"
     thumbnail: 썸네일
     time: 
     to_add_variants_you_must_first_define: 배리언트를 추가하려면 먼저 정의해야 합니다

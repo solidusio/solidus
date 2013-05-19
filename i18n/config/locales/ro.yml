@@ -981,6 +981,7 @@ ro:
     test_mode: Mod Testare
     thank_you_for_your_order: Mulțumim pentru comandă. Te rugăm să tipărești o copie a acestei pagini de confirmare pentru registrele tale.
     there_were_problems_with_the_following_fields: Au apărut probleme la următoarele câmpuri
+    this_file_language: "Romanian (RO)"
     thumbnail: miniatură
     time: 
     to_add_variants_you_must_first_define: Pentru a adăuga variante, trebuie mai întâi să le definești
