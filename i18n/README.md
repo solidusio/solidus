@@ -6,23 +6,11 @@ See the [official Internationalization documentation](http://guides.spreecommerc
 
 To install, simply add the Gem to your Gemfile:
 
-1. Add the following to your Gemfile
-<pre>
-  gem 'spree_i18n', :git => 'git://github.com/spree/spree_i18n.git'
-</pre>
+Add the following to your Gemfile
 
-2. Run `bundle install`
+    gem 'spree_i18n', :git => 'git://github.com/spree/spree_i18n.git'
 
-## Model Translations
-
-We've added support for translating models. The feature uses the [globalize3](https://github.com/svenfuchs/globalize3)
-gem to localize model data. So far the following models are translatable:
-
-  Product, Promotion, OptionType, Taxonomy, Taxon and Property.
-
-Try it out! Point to the translate-models branch:
-
-    gem 'spree_i18n', :git => 'git://github.com/spree/spree_i18n.git', :branch => 'translate-models'
+Run `bundle install`
 
 You can use the generator to install migrations and append spree_i18n assets to
 your app spree manifest file.
@@ -40,6 +28,13 @@ This will insert this lines on your spree manifest files:
     app/assets/stylesheets/admin/all.css
     *= require admin/spree_i18n
 
+## Model Translations
+
+We've added support for translating models. The feature uses the [globalize3](https://github.com/svenfuchs/globalize3)
+gem to localize model data. So far the following models are translatable:
+
+  Product, Promotion, OptionType, Taxonomy, Taxon and Property.
+
 Start you server and you should see a TRANSLATIONS link or a flag icon on each
 admin section that supports this feature.
 
@@ -47,10 +42,8 @@ The extension contains two configs that allow users to customize which locales
 should be displayed as options on the translation forms and which should be
 listed to customers on the frontend. You can set them on an initializer. e.g.
 
-    # displayed on translation forms
-    SpreeI18n::Config.available_locales = [:en, :es, :'pt-BR']
-    # displayed on frontend select box
-    SpreeI18n::Config.supported_locales = [:en, :'pt-BR']
+    SpreeI18n::Config.available_locales = [:en, :es, :'pt-BR'] # displayed on translation forms
+    SpreeI18n::Config.supported_locales = [:en, :'pt-BR'] # displayed on frontend select box
 
 ps. please use symbols, not strings. e.g. :'pt-BR' not just 'pt-BR'. Otherwise
 you may get unexpected errors
