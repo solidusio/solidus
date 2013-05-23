@@ -533,6 +533,8 @@ id:
     height: Tinggi
     hide_cents: Sembunyikan nilai sen
     home: Beranda
+    i18n:
+      this_file_language: "Indonesian (ID)"
     icon: Ikon
     image: Gambar
     image_settings: Pengaturan Gambar
@@ -983,7 +985,6 @@ id:
     test_mode: Mode Tes
     thank_you_for_your_order: Terima kasih atas bisnis anda. Silahkan cetak sebuah salinan dari halaman konfirmasi ini untuk arsip anda.
     there_were_problems_with_the_following_fields: Terdapat beberapa masalah dengan
-    this_file_language: "Indonesian (ID)"
     thumbnail: Thumbnail
     time: 
     to_add_variants_you_must_first_define: Untuk menambah varian, pertama kali anda harus mendefinisikan

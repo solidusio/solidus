@@ -533,6 +533,8 @@ sk:
     height: Výška
     hide_cents: 
     home: Domov
+    i18n:
+      this_file_language: "Slovenčina"
     icon: Icon
     image: Obrázok
     image_settings: Image Settings
@@ -983,7 +985,6 @@ sk:
     test_mode: Test Mode
     thank_you_for_your_order: Ďakujeme za Vašu objednávku.  Prosím vytlačte kópiu toto potvrdenie pre Vaše položky objednávky.
     there_were_problems_with_the_following_fields: There were problems with the following fields
-    this_file_language: "Slovenčina"
     thumbnail: Miniatúra
     time: 
     to_add_variants_you_must_first_define: K pridaniu variánt, najprv musíte určiť

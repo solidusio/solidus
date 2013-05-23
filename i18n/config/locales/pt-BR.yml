@@ -533,6 +533,8 @@ pt-BR:
     height: Altura
     hide_cents: 
     home: Início
+    i18n:
+      this_file_language: "Português"
     icon: Ícone
     image: Imagem
     image_settings: Ajustar Imagens
@@ -983,7 +985,6 @@ pt-BR:
     test_mode: Modo de Teste
     thank_you_for_your_order: Obrigado Por sua Compra. por Favor, Imprima uma Cópia Desta Página de Confirmação Para seu Controle.
     there_were_problems_with_the_following_fields: ! 'Existem Problemas com os Seguintes Campos:'
-    this_file_language: "Português"
     thumbnail: Miniatura
     time: 
     to_add_variants_you_must_first_define: Para Adicionar Variantes Você Deve Primeiro Definir

@@ -533,6 +533,8 @@ en-GB:
     height: Height
     hide_cents: 
     home: Home
+    i18n:
+      this_file_language: "English (UK)"
     icon: Icon
     image: Image
     image_settings: Image Settings
@@ -983,7 +985,6 @@ en-GB:
     test_mode: Test Mode
     thank_you_for_your_order: Thank you for your business.  Please print out a copy of this confirmation page for your records.
     there_were_problems_with_the_following_fields: There were problems with the following fields
-    this_file_language: "English (UK)"
     thumbnail: Thumbnail
     time: 
     to_add_variants_you_must_first_define: To add variants, you must first define

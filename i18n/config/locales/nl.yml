@@ -531,6 +531,8 @@ nl:
     height: Hoogte
     hide_cents: 
     home: Home
+    i18n:
+      this_file_language: "Nederlands (NL)"
     icon: Icoon
     image: Afbeelding
     image_settings: 
@@ -981,7 +983,6 @@ nl:
     test_mode: Test modus
     thank_you_for_your_order: Hartelijk dank voor je bestelling. Je kan deze pagina afdrukken als bewijs van bestelling.
     there_were_problems_with_the_following_fields: Er zijn problemen met de volgende velden
-    this_file_language: "Nederlands (NL)"
     thumbnail: Thumbnail
     time: 
     to_add_variants_you_must_first_define: Om varianten toe te voegen dien je eerst te definiëren

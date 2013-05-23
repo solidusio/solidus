@@ -533,6 +533,8 @@ et:
     height: Kõrgus
     hide_cents: 
     home: Avaleht
+    i18n:
+      this_file_language: Eesti keel
     icon: Icon
     image: Pilt
     image_settings: Image Settings
@@ -983,7 +985,6 @@ et:
     test_mode: Testrežiim
     thank_you_for_your_order: Täname teid tellimuse eest
     there_were_problems_with_the_following_fields: There were problems with the following fields
-    this_file_language: Eesti keel
     thumbnail: Pisipilt
     time: 
     to_add_variants_you_must_first_define: variantide lisamiseks pead esmalt defineerima TODO

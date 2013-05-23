@@ -533,6 +533,8 @@ sv-SE:
     height: Höjd
     hide_cents: 
     home: Hem
+    i18n:
+      this_file_language: "Svenska (SE)"
     icon: Icon
     image: Bild
     image_settings: Bild inställningar
@@ -983,7 +985,6 @@ sv-SE:
     test_mode: Testläge
     thank_you_for_your_order: Tack för din beställning. Var god skriv ut denna sida för framtida korrespondens.
     there_were_problems_with_the_following_fields: Det var problem med följande fält
-    this_file_language: "Svenska (SE)"
     thumbnail: Miniatyrbild
     time: 
     to_add_variants_you_must_first_define: För att lägga till varianter måste du först definiera

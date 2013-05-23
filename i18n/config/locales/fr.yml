@@ -533,6 +533,8 @@ fr:
     height: Taille
     hide_cents: 
     home: Accueil
+    i18n:
+      this_file_language: "Français (FR)"
     icon: Icône
     image: Image
     image_settings: Image Settings
@@ -983,7 +985,6 @@ fr:
     test_mode: Test Mode
     thank_you_for_your_order: Merci de nous avoir fait confiance. Imprimez cette page de confirmation pour vos archives.
     there_were_problems_with_the_following_fields: Il y a eu des problèmes aves les champs suivants
-    this_file_language: "Français (FR)"
     thumbnail: Vignette
     time: 
     to_add_variants_you_must_first_define: Pour ajouter des variantes, vous devez premièrement définir

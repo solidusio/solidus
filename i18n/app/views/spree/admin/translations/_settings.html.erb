@@ -2,22 +2,22 @@
   <legend><%= Spree.t(:settings) %></legend>
 
   <div class="alpha six columns field">
-    <label for="show-only"><%= Spree.t(:show_only) %>: </label>
+    <label for="show-only"><%= Spree.t(:'i18n.show_only') %>: </label>
     <ul>
-      <li><input type="radio" name="show-only" value="all" checked> <label><%= Spree.t(:all_translations) %></label></li>
-      <li><input type="radio" name="show-only" value="incomplete"> <label><%= Spree.t(:only_incomplete) %></label></li>
-      <li><input type="radio" name="show-only"value="complete"> <label><%= Spree.t(:only_complete) %></label></li>
+      <li><input type="radio" name="show-only" value="all" checked> <label><%= Spree.t(:'i18n.all_translations') %></label></li>
+      <li><input type="radio" name="show-only" value="incomplete"> <label><%= Spree.t(:'i18n.only_incomplete') %></label></li>
+      <li><input type="radio" name="show-only"value="complete"> <label><%= Spree.t(:'i18n.only_complete') %></label></li>
     </ul>
   </div>
 
   <div class="omega six columns">
-    <label for="locale"><%= Spree.t(:select_locale) %>: </label>
+    <label for="locale"><%= Spree.t(:'i18n.select_locale') %>: </label>
     <%= select_available_locales_fields %>
   </div>
 </fieldset>
 
 <fieldset class="alpha four columns no-border-bottom">
-  <legend><%= Spree.t(:fields) %></legend>
+  <legend><%= Spree.t(:'i18n.fields') %></legend>
   <nav class="menu">
     <ul id="attr_list">
       <% @resource.class.translates.each_with_index do |attr, i| %>

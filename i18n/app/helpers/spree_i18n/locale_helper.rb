@@ -26,7 +26,7 @@ module SpreeI18n
 
     private
       def locale_presentation(locale, key = true)
-        presentation = "#{Spree.t(:this_file_language, :locale => locale)}"
+        presentation = "#{Spree.t(:'i18n.this_file_language', :locale => locale)}"
         presentation << " (#{locale})" if key
         [presentation, locale]
       end

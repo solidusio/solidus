@@ -531,6 +531,8 @@ cs:
     height: Výška
     hide_cents: 
     home: Obchod
+    i18n:
+      this_file_language: "Čeština (CS)"
     icon: Icon
     image: Obrázek
     image_settings: Nastavení obrázků
@@ -981,7 +983,6 @@ cs:
     test_mode: Testovací režim
     thank_you_for_your_order: Děkujeme za Váš nákup. Doporučujeme Vám vytisknout si kopii této stránky.
     there_were_problems_with_the_following_fields: Jsou problémy v následujících oblastech
-    this_file_language: "Čeština (CS)"
     thumbnail: Náhled obrázku
     time: 
     to_add_variants_you_must_first_define: Pro přidání variant musíte nejprve definovat.

@@ -533,6 +533,8 @@ zh-CN:
     height: 高度
     hide_cents: 
     home: 首页
+    i18n:
+      this_file_language: "中文(简体)"
     icon: Icon
     image: 图片
     image_settings: Image Settings
@@ -983,7 +985,6 @@ zh-CN:
     test_mode: 测试模式
     thank_you_for_your_order: 感谢您的订购，请打印这张订单作为购买凭证。
     there_were_problems_with_the_following_fields: There were problems with the following fields
-    this_file_language: "中文(简体)"
     thumbnail: 缩略图
     time: 
     to_add_variants_you_must_first_define: 要添加具体型号，您需要先定义

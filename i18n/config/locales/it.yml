@@ -504,6 +504,8 @@ it:
     hello_user: "Ciao utente"
     history: "Storia"
     home: "Home"
+    i18n:
+      this_file_language: "Italiano (IT)"
     icon: "Icona"
     icons_by: "Icone create da"
     image: "Immagine"
@@ -1138,7 +1140,6 @@ it:
     test_mode: "Modalità test"
     thank_you_for_your_order: "Grazie per l'acquisto."
     there_were_problems_with_the_following_fields: "Ci sono stati dei problemi con i seguenti campi"
-    this_file_language: "Italiano (IT)"
     thumbnail: "Miniatura"
     to_add_variants_you_must_first_define: "Per aggiungere campi devi prima definire"
     to_state: "allo State"

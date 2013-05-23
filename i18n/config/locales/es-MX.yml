@@ -533,6 +533,8 @@ es-MX:
     height: Altura
     hide_cents: 
     home: Inicio
+    i18n:
+      this_file_language: "Español (México)"
     icon: Icono
     image: Imagen
     image_settings: Image Settings
@@ -983,7 +985,6 @@ es-MX:
     test_mode: Modo Prueba
     thank_you_for_your_order: Gracias por su pedido
     there_were_problems_with_the_following_fields: ! 'Han habido problemas con los siguientes campos: '
-    this_file_language: "Español (México)"
     thumbnail: Miniatura
     time: 
     to_add_variants_you_must_first_define: Para agregar variantes, primero debe definir

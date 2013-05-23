@@ -533,6 +533,8 @@ lv:
     height: Augstums
     hide_cents: 
     home: Mājas
+    i18n:
+      this_file_language: "Latvijas (LV)"
     icon: Icon
     image: Attēls
     image_settings: Image Settings
@@ -983,7 +985,6 @@ lv:
     test_mode: Testa Mode
     thank_you_for_your_order: Paldies par sadarbību. Lūdzu, izdrukājiet šo apstiprinājumu savai zināšanai.
     there_were_problems_with_the_following_fields: Problēmas ar sekojošiem laukiem
-    this_file_language: "Latvijas (LV)"
     thumbnail: Thumbnail
     time: 
     to_add_variants_you_must_first_define: Lai pievienotu variantu, vispirms definējiet

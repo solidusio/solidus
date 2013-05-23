@@ -533,6 +533,8 @@ th:
     height: สูง
     hide_cents: 
     home: หน้าแรก
+    i18n:
+      this_file_language: "ภาษาไทย (TH)"
     icon: Icon
     image: รูปภาพ
     image_settings: Image Settings
@@ -983,7 +985,6 @@ th:
     test_mode: 
     thank_you_for_your_order: 
     there_were_problems_with_the_following_fields: 
-    this_file_language: "ภาษาไทย (TH)"
     thumbnail: 
     time: 
     to_add_variants_you_must_first_define: 

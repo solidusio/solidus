@@ -504,6 +504,8 @@ es:
     hello_user: "Hola usuario"
     history: Historia
     home: "Inicio"
+    i18n:
+      this_file_language: "Español"
     icon: "Icono"
     icons_by: "Iconos por"
     image: Imagen
@@ -1138,7 +1140,6 @@ es:
     test_mode: Modo Prueba
     thank_you_for_your_order: "Gracias por su pedido"
     there_were_problems_with_the_following_fields: "Han habido problemas con los siguientes campos: "
-    this_file_language: "Español"
     thumbnail: "Miniatura"
     to_add_variants_you_must_first_define: "Para agregar variantes, primero debe definir"
     to_state: "A estado"

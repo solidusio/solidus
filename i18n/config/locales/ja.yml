@@ -533,6 +533,8 @@ ja:
     height: 高さ
     hide_cents: セントの非表示
     home: ホーム
+    i18n:
+      this_file_language: "日本語 (ja-JP)"
     icon: アイコン
     image: 画像
     image_settings: 画像設定
@@ -983,7 +985,6 @@ ja:
     test_mode: テストモード
     thank_you_for_your_order: ご注文ありがとうございます。この確認画面を控えとして印刷してください。
     there_were_problems_with_the_following_fields: 以下の入力欄で問題がありました
-    this_file_language: "日本語 (ja-JP)"
     thumbnail: サムネール
     time: 
     to_add_variants_you_must_first_define: 種類を追加するには、まずそれを定義する必要があります。

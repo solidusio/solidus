@@ -533,6 +533,8 @@ nb-NO:
     height: Høyde
     hide_cents: 
     home: Home
+    i18n:
+      this_file_language: "Norsk"
     icon: Icon
     image: Bilde
     image_settings: Image Settings
@@ -983,7 +985,6 @@ nb-NO:
     test_mode: Test Mode
     thank_you_for_your_order: Takk for bestillingen. Vennligst skriv ut og ta vare på denne bekreftelsen.
     there_were_problems_with_the_following_fields: There were problems with the following fields
-    this_file_language: "Norsk"
     thumbnail: Thumbnail
     time: 
     to_add_variants_you_must_first_define: To add variants, you must first define

@@ -533,6 +533,8 @@ fa:
     height: ارتفاع
     hide_cents: 
     home: صفحه اصلی
+    i18n:
+      this_file_language: "فارسی(fa)"
     icon: آیکون
     image: تصویر
     image_settings: Image Settings
@@ -983,7 +985,6 @@ fa:
     test_mode: مد تست
     thank_you_for_your_order: با تشکر، لطفا یک کپی از این صفحه برای نگهداری در نزد خود، پرینت کنید
     there_were_problems_with_the_following_fields: به مشکلاتی در فیلدهای ذیل برخوردیم
-    this_file_language: "فارسی(fa)"
     thumbnail: Thumbnail
     time: 
     to_add_variants_you_must_first_define: To add variants, you must first define
