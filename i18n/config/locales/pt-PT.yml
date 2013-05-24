@@ -34,6 +34,7 @@ pt-PT:
       spree/order:
         checkout_complete: 
         completed_at: 
+        coupon_code: 
         created_at: 
         email: 
         ip_address: 
@@ -534,7 +535,17 @@ pt-PT:
     hide_cents: 
     home: Início
     i18n:
-      this_file_language: "Português"
+      available_locales: 
+      fields: 
+      language: 
+      localization_settings: 
+      only_complete: 
+      only_incomplete: 
+      select_locale: 
+      show_only: 
+      supported_locales: 
+      this_file_language: Português (PT)
+      translations: 
     icon: Icone
     image: Imagem
     image_settings: Image Settings

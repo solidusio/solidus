@@ -34,6 +34,7 @@ fi:
       spree/order:
         checkout_complete: Tilaus valmis
         completed_at: 
+        coupon_code: 
         created_at: Tilauspäivämäärä
         email: 
         ip_address: IP-osoite
@@ -534,7 +535,17 @@ fi:
     hide_cents: 
     home: Koti
     i18n:
+      available_locales: 
+      fields: 
+      language: 
+      localization_settings: 
+      only_complete: 
+      only_incomplete: 
+      select_locale: 
+      show_only: 
+      supported_locales: 
       this_file_language: Suomi
+      translations: 
     icon: Kuvake
     image: Kuva
     image_settings: Kuva-asetukset

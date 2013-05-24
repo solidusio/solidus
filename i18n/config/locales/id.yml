@@ -34,6 +34,7 @@ id:
       spree/order:
         checkout_complete: Checkout Selesai
         completed_at: Terpenuhi Saat
+        coupon_code: 
         created_at: Tanggal Pemesanan
         email: E-mail Pelanggan
         ip_address: Alamat IP
@@ -534,7 +535,17 @@ id:
     hide_cents: Sembunyikan nilai sen
     home: Beranda
     i18n:
-      this_file_language: "Indonesian (ID)"
+      available_locales: 
+      fields: 
+      language: 
+      localization_settings: 
+      only_complete: 
+      only_incomplete: 
+      select_locale: 
+      show_only: 
+      supported_locales: 
+      this_file_language: Indonesian (ID)
+      translations: 
     icon: Ikon
     image: Gambar
     image_settings: Pengaturan Gambar

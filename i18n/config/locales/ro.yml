@@ -34,6 +34,7 @@ ro:
       spree/order:
         checkout_complete: Comandă finalizată
         completed_at: Finalizată la
+        coupon_code: 
         created_at: 
         email: 
         ip_address: Adresa IP
@@ -532,7 +533,17 @@ ro:
     hide_cents: 
     home: Acasă
     i18n:
-      this_file_language: "Romanian (RO)"
+      available_locales: 
+      fields: 
+      language: 
+      localization_settings: 
+      only_complete: 
+      only_incomplete: 
+      select_locale: 
+      show_only: 
+      supported_locales: 
+      this_file_language: Romanian (RO)
+      translations: 
     icon: Icoană
     image: Imagine
     image_settings: 

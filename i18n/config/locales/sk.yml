@@ -2,41 +2,42 @@ sk:
   activerecord:
     attributes:
       spree/address:
-        address1: Address
-        address2: Address (contd.)
-        city: City
-        country: Country
-        firstname: First Name
-        lastname: Last Name
-        phone: Phone
-        state: State
-        zipcode: Zip Code
+        address1: Adresa
+        address2: Adresa (pokr.)
+        city: Mesto
+        country: Štát
+        firstname: Meno
+        lastname: Priezvisko
+        phone: Telefón
+        state: Kraj
+        zipcode: PSČ
       spree/country:
         iso: ISO
         iso3: ISO3
-        iso_name: ISO Name
-        name: Name
-        numcode: ISO Code
+        iso_name: Názov ISO
+        name: Názov
+        numcode: ISO kód štátu
       spree/credit_card:
-        cc_type: Type
-        month: Month
-        number: Number
+        cc_type: Typ
+        month: Mesiac
+        number: Číslo
         verification_value: Verification Value
-        year: Year
+        year: Rok
       spree/inventory_unit:
         state: State
       spree/line_item:
-        price: Price
-        quantity: Quantity
+        price: Cena
+        quantity: Množstvo
       spree/option_type:
-        name: Name
+        name: Názov
         presentation: Presentation
       spree/order:
         checkout_complete: 
         completed_at: 
-        created_at: 
-        email: 
-        ip_address: 
+        coupon_code: 
+        created_at: Dátum objednania
+        email: Email zákazníka
+        ip_address: IP adresa
         item_total: 
         number: 
         payment_state: 
@@ -534,7 +535,17 @@ sk:
     hide_cents: 
     home: Domov
     i18n:
-      this_file_language: "Slovenčina"
+      available_locales: 
+      fields: 
+      language: 
+      localization_settings: 
+      only_complete: 
+      only_incomplete: 
+      select_locale: 
+      show_only: 
+      supported_locales: 
+      this_file_language: Slovenčina
+      translations: 
     icon: Icon
     image: Obrázok
     image_settings: Image Settings

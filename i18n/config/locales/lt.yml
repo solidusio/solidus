@@ -34,6 +34,7 @@ lt:
       spree/order:
         checkout_complete: 
         completed_at: 
+        coupon_code: 
         created_at: 
         email: 
         ip_address: 
@@ -534,7 +535,17 @@ lt:
     hide_cents: 
     home: Pagrindinis
     i18n:
-      this_file_language: "Lietuvos (LT)"
+      available_locales: 
+      fields: 
+      language: 
+      localization_settings: 
+      only_complete: 
+      only_incomplete: 
+      select_locale: 
+      show_only: 
+      supported_locales: 
+      this_file_language: Lietuvos (LT)
+      translations: 
     icon: Icon
     image: Image
     image_settings: Image Settings

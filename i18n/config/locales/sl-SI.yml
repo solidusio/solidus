@@ -34,6 +34,7 @@ sl-SI:
       spree/order:
         checkout_complete: 
         completed_at: 
+        coupon_code: 
         created_at: 
         email: 
         ip_address: 
@@ -534,7 +535,17 @@ sl-SI:
     hide_cents: 
     home: Domov
     i18n:
-      this_file_language: "Slovenščina (SL)"
+      available_locales: 
+      fields: 
+      language: 
+      localization_settings: 
+      only_complete: 
+      only_incomplete: 
+      select_locale: 
+      show_only: 
+      supported_locales: 
+      this_file_language: Slovenščina (SL)
+      translations: 
     icon: Ikona
     image: Slika
     image_settings: Image Settings

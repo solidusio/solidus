@@ -34,6 +34,7 @@ nl-BE:
       spree/order:
         checkout_complete: 
         completed_at: 
+        coupon_code: 
         created_at: 
         email: 
         ip_address: 
@@ -534,7 +535,17 @@ nl-BE:
     hide_cents: 
     home: Home
     i18n:
-      this_file_language: "Nederlands (BE)"
+      available_locales: 
+      fields: 
+      language: 
+      localization_settings: 
+      only_complete: 
+      only_incomplete: 
+      select_locale: 
+      show_only: 
+      supported_locales: 
+      this_file_language: Nederlands (BE)
+      translations: 
     icon: Icoon
     image: Afbeelding
     image_settings: Image Settings

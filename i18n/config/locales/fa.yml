@@ -34,6 +34,7 @@ fa:
       spree/order:
         checkout_complete: 
         completed_at: 
+        coupon_code: 
         created_at: 
         email: 
         ip_address: 
@@ -534,7 +535,17 @@ fa:
     hide_cents: 
     home: صفحه اصلی
     i18n:
-      this_file_language: "فارسی(fa)"
+      available_locales: 
+      fields: 
+      language: 
+      localization_settings: 
+      only_complete: 
+      only_incomplete: 
+      select_locale: 
+      show_only: 
+      supported_locales: 
+      this_file_language: فارسی(fa)
+      translations: 
     icon: آیکون
     image: تصویر
     image_settings: Image Settings

@@ -34,6 +34,7 @@ zh-TW:
       spree/order:
         checkout_complete: 
         completed_at: 
+        coupon_code: 
         created_at: 
         email: 
         ip_address: 
@@ -533,6 +534,18 @@ zh-TW:
     height: 高
     hide_cents: 
     home: 家
+    i18n:
+      available_locales: 
+      fields: 
+      language: 
+      localization_settings: 
+      only_complete: 
+      only_incomplete: 
+      select_locale: 
+      show_only: 
+      supported_locales: 
+      this_file_language: 
+      translations: 
     icon: 圖示
     image: 圖片
     image_settings: Image Settings

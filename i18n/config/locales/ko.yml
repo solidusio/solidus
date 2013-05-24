@@ -34,6 +34,7 @@ ko:
       spree/order:
         checkout_complete: 
         completed_at: 
+        coupon_code: 
         created_at: 
         email: 
         ip_address: 
@@ -534,7 +535,17 @@ ko:
     hide_cents: 
     home: Home
     i18n:
-      this_file_language: "한국의 (KO)"
+      available_locales: 
+      fields: 
+      language: 
+      localization_settings: 
+      only_complete: 
+      only_incomplete: 
+      select_locale: 
+      show_only: 
+      supported_locales: 
+      this_file_language: 한국의 (KO)
+      translations: 
     icon: 아이콘
     image: 이미지
     image_settings: Image Settings

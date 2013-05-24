@@ -1,4 +1,4 @@
-uk:
+ua:
   activerecord:
     attributes:
       spree/address:
@@ -18,11 +18,11 @@ uk:
         name: Назва
         numcode: Код ISO
       spree/credit_card:
-        cc_type: Type
-        month: Month
-        number: Number
+        cc_type: Тип
+        month: Місяць
+        number: Номер
         verification_value: Verification Value
-        year: Year
+        year: Рік
       spree/inventory_unit:
         state: Стан
       spree/line_item:
@@ -32,18 +32,19 @@ uk:
         name: Назва
         presentation: Відобразити як
       spree/order:
-        checkout_complete: 
-        completed_at: 
-        created_at: 
-        email: 
-        ip_address: 
-        item_total: 
-        number: 
-        payment_state: 
-        shipment_state: 
-        special_instructions: 
-        state: 
-        total: 
+        checkout_complete: Оформлення замовлення завершене
+        completed_at: Завершено в
+        coupon_code: 
+        created_at: Дата замовлення
+        email: E-Mail кліента
+        ip_address: IP адреса
+        item_total: Разом
+        number: Номер
+        payment_state: Стан оплати
+        shipment_state: Стан доставки
+        special_instructions: Спеціальні інструкції
+        state: Регіон/Область
+        total: Загалом
       spree/order/bill_address:
         address1: Billing address street
         city: Платіжний адресу. Місто
@@ -61,12 +62,12 @@ uk:
         state: Статус
         zipcode: Адреса доставки. Індекс
       spree/payment:
-        amount: 
+        amount: Сума
       spree/payment_method:
         name: Найменування
       spree/product:
         available_on: Доступно з
-        cost_currency: 
+        cost_currency: Валюта
         cost_price: Собівартість
         description: Опис
         master_price: Основна ціна
@@ -114,7 +115,7 @@ uk:
         password: Пароль
         password_confirmation: Підтвердження пароля
       spree/variant:
-        cost_currency: 
+        cost_currency: Валюта
         cost_price: Собівартість
         depth: Глибина
         height: Висота
@@ -197,44 +198,44 @@ uk:
       confirmed: 
       send_instructions: 
     failure:
-      inactive: 
-      invalid: 
-      invalid_token: 
-      locked: 
-      timeout: 
-      unauthenticated: 
-      unconfirmed: 
+      inactive: Ваш обліковий запис ще не активовано.
+      invalid: Невірний E-Mail або пароль
+      invalid_token: Невірний код авторизації.
+      locked: Ваш обліковий запис заблокований.
+      timeout: Ваша сесія застаріла. Будь-ласка, увійдіть до системи повторно для продовження.
+      unauthenticated: Вам потрібно увійти або зареєструватись, щоб продовжити.
+      unconfirmed: Вам потрібно підтвердити Ваш обліковий запис перед тим, як продовжити.
     mailer:
       confirmation_instructions:
-        subject: 
+        subject: Інструкціі стосовно підвердження
       reset_password_instructions:
-        subject: 
+        subject: Інструкціі по скиданню паролю
       unlock_instructions:
-        subject: 
+        subject: Інструкції по розблокуванню
     oauth_callbacks:
       failure: 
       success: 
     unlocks:
-      send_instructions: 
-      unlocked: 
+      send_instructions: Ви отримаєте лист з інструкціями про те, як розблокувати ваш обліковий запис протягом декількох хвилин.
+      unlocked: Ваш акаунт розблоковано. Тепер ви успішно увійшли в систему.
     user_passwords:
       user:
         cannot_be_blank: 
         send_instructions: 
-        updated: 
+        updated: Ваш пароль змінено. Ви успішно увійшли до системи.
     user_registrations:
-      destroyed: 
+      destroyed: До побачення! Ваш акаунт знищено, але ми сподіваємося побачити вас знову найближчим часом.
       inactive_signed_up: 
       signed_up: 
       updated: 
     user_sessions:
-      signed_in: 
-      signed_out: 
+      signed_in: Ви успішно увійшли до системи.
+      signed_out: Ви вийшли з системи.
   errors:
     messages:
-      already_confirmed: 
-      not_found: 
-      not_locked: 
+      already_confirmed: вже було підтверджено
+      not_found: не знайдено
+      not_locked: було разблоковано
       not_saved: 
   spree:
     abbreviation: Абревіатура
@@ -243,14 +244,14 @@ uk:
     action: Дія
     actions:
       cancel: Скасувати
-      continue: 
+      continue: Продовжити
       create: Створити
       destroy: Видалити
-      edit: 
+      edit: Змінити
       list: Показати
       listing: Список
       new: Новий
-      save: 
+      save: Зберегти
       update: Змінити
     activate: Активувати
     active: Активний
@@ -259,7 +260,7 @@ uk:
     add_country: Додати країну
     add_new_header: Додати новий заголовок
     add_new_style: Додати новий стиль
-    add_one: 
+    add_one: Додати
     add_option_value: Додати значення опції
     add_product: Додати товар
     add_product_properties: Додати властивості товару
@@ -268,12 +269,12 @@ uk:
     add_stock: 
     add_stock_management: 
     add_to_cart: Додати в кошик
-    add_variant: 
+    add_variant: Додати варіант
     additional_item: Ставка для додаткових найменувань
-    address1: 
-    address2: 
+    address1: Адреса
+    address2: Адреса (продовження)
     adjustment: Надбавка
-    adjustment_amount: 
+    adjustment_amount: Загалом
     adjustment_successfully_closed: 
     adjustment_successfully_opened: 
     adjustment_total: Разом (надбавки)
@@ -299,7 +300,7 @@ uk:
     alt_text: Альтернативний текст
     alternative_phone: Додатковий телефон
     amount: Сума
-    analytics_desc_header_1: 
+    analytics_desc_header_1: Аналітика Spree
     analytics_desc_header_2: 
     analytics_desc_list_1: 
     analytics_desc_list_2: 
@@ -321,8 +322,8 @@ uk:
     back_end: в адміністративному інтерфейсі
     back_to_adjustments_list: Повернутися до списку покращень
     back_to_images_list: Поернутися до списку зображень
-    back_to_option_types_list: 
-    back_to_orders_list: 
+    back_to_option_types_list: Назад до списку типів опцій
+    back_to_orders_list: Назад до списку замовлень
     back_to_payment_methods_list: Повернутися до списку методів оплати
     back_to_payments_list: Повернутися до списку оплат
     back_to_products_list: Повернутися до списку продуктів
@@ -340,7 +341,7 @@ uk:
     back_to_tax_categories_list: Повернутися до списку категорій
     back_to_taxonomies_list: Повернутися до списку таксономій
     back_to_trackers_list: Повернутися до списку трекерів
-    back_to_users_list: 
+    back_to_users_list: Назад досписку користувачів
     back_to_zones_list: Повернутися до списку зон
     backorderable: 
     balance_due: Дебетове сальдо
@@ -364,15 +365,15 @@ uk:
     category: Категорія
     check_for_spree_alerts: 
     checkout: Оформлення замовлення
-    choose_a_customer: 
-    choose_currency: 
+    choose_a_customer: Виберіть кліента
+    choose_currency: Виберіть валюту
     choose_dashboard_locale: 
     city: Місто
     clone: Клонувати
-    close: 
+    close: Закрити
     close_all_adjustments: 
     code: Кодове слово
-    company: 
+    company: Компанія
     complete: Завершено
     configuration: Конфігурація
     configurations: Конфігурація
@@ -382,32 +383,32 @@ uk:
     confirm_password: Підтвердження пароля
     continue: Продовжити
     continue_shopping: Продовжити покупки
-    cost_currency: 
+    cost_currency: Валюта
     cost_price: Собівартість
     could_not_connect_to_jirafe: 
     could_not_create_stock_movement: 
     count_on_hand: 
-    countries: 
+    countries: Країни
     country: Країна
     country_based: Країна
-    country_name: 
+    country_name: Ім'я
     country_names:
-      CA: 
-      FRA: 
-      ITA: 
-      US: 
+      CA: Канада
+      FRA: Франція
+      ITA: Італія
+      US: Сполучені Штати Америки
     coupon: Купон
     coupon_code: Код купона
-    coupon_code_already_applied: 
+    coupon_code_already_applied: Цей код купона вже було використано у цьому замовленні
     coupon_code_applied: Купон успішно застосований до вашого замовлення.
     coupon_code_better_exists: 
     coupon_code_expired: 
-    coupon_code_max_usage: 
+    coupon_code_max_usage: Ліміт використання купону вичерпано
     coupon_code_not_eligible: 
     coupon_code_not_found: 
     create: Створити
     create_a_new_account: Створити новий обліковий запис
-    created_at: 
+    created_at: Створено в
     credit: Кредит
     credit_card: Кредитна картка
     credit_cards: Кредитні картки
@@ -433,11 +434,11 @@ uk:
         site_id: 
         token: 
       jirafe_settings_updated: 
-    date: 
+    date: Дата
     date_completed: Дата завершення
     date_picker:
       format: 
-      js_format: 
+      js_format: рр/мм/чч
     date_range: Період часу
     default: За замовчуванням
     default_meta_description: Meta Description за замовчуванням
@@ -449,7 +450,7 @@ uk:
     delivery: Доставка
     depth: Глибина
     description: Опис
-    destination: 
+    destination: Призначення
     destroy: Видалити
     discount_amount: Сума знижки
     dismiss_banner: Ні, дякую! Більше не показуйте це повідомлення
@@ -476,7 +477,7 @@ uk:
     empty: порожньо
     empty_cart: Очистити кошик
     enable_mail_delivery: Включити доставку пошти
-    end: 
+    end: Кінець
     ending_in: Закінчується
     environment: Змінна оточення
     error: помилка
@@ -531,10 +532,20 @@ uk:
     guest_user_account: Оформити покупку як гість
     has_no_shipped_units: не має відправлених одиниць обліку
     height: Висота
-    hide_cents: 
+    hide_cents: Сховати копійки
     home: Додому
     i18n:
-      this_file_language: "Українська (UK)"
+      available_locales: 
+      fields: 
+      language: 
+      localization_settings: 
+      only_complete: 
+      only_incomplete: 
+      select_locale: 
+      show_only: 
+      supported_locales: 
+      this_file_language: Ukrainian
+      translations: 
     icon: Іконка
     image: Зображення
     image_settings: Налаштування зображення
@@ -554,7 +565,7 @@ uk:
     inventory_adjustment: Надбавки
     inventory_error_flash_for_insufficient_quantity: 
     is_not_available_to_shipment_address: не може бути застосований до вказаною адресою доставки
-    iso_name: 
+    iso_name: Ім'я згідно ISO
     item: Найменування
     item_description: Опис товару
     item_total: Разом (товари)
@@ -569,7 +580,7 @@ uk:
     last_name_begins_with: Прізвище починається з
     learn_more: Дізнатися більше
     list: Список
-    listing_countries: 
+    listing_countries: Список країн
     listing_orders: Список замовлень
     listing_products: Список товарів
     listing_reports: Список звітів
@@ -577,7 +588,7 @@ uk:
     listing_users: Список користувачів
     loading: Завантажується
     locale_changed: Мова змінена
-    location: 
+    location: Локація
     lock: 
     logged_in_as: Користувач
     logged_in_succesfully: Ви увійшли в систему
@@ -638,13 +649,13 @@ uk:
     new_zone: Нова зона
     next: наст.
     no_actions_added: 
-    no_orders_found: 
-    no_payment_methods_found: 
+    no_orders_found: Замовлень не знайдено
+    no_payment_methods_found: Способів оплати не знайдено
     no_products_found: Не знайдено жодного товару
-    no_promotions_found: 
+    no_promotions_found: Акцій не знайдено
     no_results: Нічого не знайдено
     no_rules_added: Жодного правила не задано
-    no_shipping_methods_found: 
+    no_shipping_methods_found: Способів доставки не знайдено
     no_trackers_found: 
     no_tracking_present: 
     none: Жодного
@@ -661,13 +672,13 @@ uk:
       variant_deleted: Варіант успішно видалено
       variant_not_deleted: Варіант не може бути видалений
     on_hand: В наявності
-    open: 
+    open: Відкрити
     open_all_adjustments: 
     option_type: Товарна опція
     option_types: Товарні опції
     option_value: Можливе значення опції
     option_values: Можливі значення опцій
-    optional: 
+    optional: Опціонально
     options: Опції
     or: або
     or_over_price: 
@@ -675,23 +686,23 @@ uk:
     order_adjustments: Поправка замовлення
     order_details: Деталі замовлення
     order_email_resent: Лист з описом замовлення надіслано повторно
-    order_information: 
+    order_information: Інформація стосовно замовлення
     order_mailer:
       cancel_email:
         dear_customer: Шановний покупцю,
         instructions: Ваше замовлення СКАСОВАНО.
         order_summary_canceled: Стан замовлення [СКАСОВАНО]
         subject: Скасування замовлення
-        subtotal: 
-        total: 
+        subtotal: ! 'Разон: %{subtotal}'
+        total: ! 'Загалом: %{total}'
       confirm_email:
         dear_customer: Шановний покупцю,
         instructions: Перегляньте інформацію про скасування для вашого замовлення.
         order_summary: Всього
         subject: Підтвердження замовлення
-        subtotal: 
+        subtotal: ! 'Разон: %{subtotal}'
         thanks: Дякую за замовлення.
-        total: 
+        total: ! 'Загалом: %{total}'
     order_not_found: 
     order_number: Замовлення
     order_populator:
@@ -745,7 +756,7 @@ uk:
       void: анульований
     payment_updated: Платіж оновлений
     payments: Платежі
-    percent: 
+    percent: Процент
     percent_per_item: Проценти за одиницю
     permalink: Постійне посилання
     phone: Телефон
@@ -818,7 +829,7 @@ uk:
     provider: Провайдер
     provider_settings_warning: Якщо ви міняєте провайдера, ви повинні зберегти цю зміну, перш ніж ви зможете змінити налаштування провайдера.
     qty: Кількість
-    quantity: 
+    quantity: Кількість
     quantity_returned: Кількість повернення
     quantity_shipped: Кількість доставлених
     rate: Ставка
@@ -929,10 +940,10 @@ uk:
     smtp_send_all_emails_as_from_following_address: Відправляти усі повідомлення від цієї адреси.
     smtp_send_copy_to_this_addresses: Відправляти копії всіх повідомлень на цю адресу. Для використання кількох адрес розділіть їх комою.
     smtp_username: Користувач
-    source: 
+    source: Джерело
     special_instructions: Додаткові інструкції
     spree/order:
-      coupon_code: 
+      coupon_code: Код купона
     spree_gateway_error_flash_for_checkout: Виникли проблеми з Вашими реквізитами. Будь ласка, перевірте їх та спробуйте ще раз.
     start: Початок
     start_date: Дійсно з
@@ -969,7 +980,7 @@ uk:
     tax_total: Податки
     taxon: Таксон
     taxon_edit: Редагувати таксонів
-    taxon_placeholder: 
+    taxon_placeholder: Додати таксон
     taxonomies: Таксономії
     taxonomy: Таксономія
     taxonomy_edit: Редагування таксономії
@@ -986,13 +997,13 @@ uk:
     thank_you_for_your_order: Дякуємо за покупку!
     there_were_problems_with_the_following_fields: Виникли деякі проблеми з наступними полями
     thumbnail: Мініатюра
-    time: 
+    time: Час
     to_add_variants_you_must_first_define: Перед додаванням варіантів, ви повинні визначити
     total: Разом
     tracking: Відстеження
     tracking_number: 
     tracking_url: 
-    tracking_url_placeholder: 
+    tracking_url_placeholder: наприклад - http://quickship.com/package?num=:tracking
     transfer_from_location: 
     transfer_stock: 
     transfer_to_location: 
@@ -1035,6 +1046,6 @@ uk:
     your_cart_is_empty: Ваш кошик порожній
     your_order_is_empty_add_product: 
     zip: Індекс
-    zipcode: 
+    zipcode: Поштовий індекс
     zone: Торгова зона
     zones: Торгові зони

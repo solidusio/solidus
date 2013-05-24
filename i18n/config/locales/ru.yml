@@ -34,6 +34,7 @@ ru:
       spree/order:
         checkout_complete: Оформление заказа завершено
         completed_at: Завершено
+        coupon_code: 
         created_at: Дата заказа
         email: E-mail покупателя
         ip_address: IP-адрес
@@ -200,17 +201,17 @@ ru:
       inactive: 
       invalid: 
       invalid_token: 
-      locked: 
-      timeout: 
-      unauthenticated: 
-      unconfirmed: 
+      locked: Учетная запись заблокирована.
+      timeout: Ваша сессия истекла. Войдите заново, чтобы продолжить.
+      unauthenticated: Вам требуется войти или зарегистрироваться перед тем, как продолжить.
+      unconfirmed: Вы должны подтвердить свою учетную запись перед тем, как продолжить.
     mailer:
       confirmation_instructions:
-        subject: 
+        subject: Инструкции подтверждения
       reset_password_instructions:
-        subject: 
+        subject: Инструкции по сбросу пароля
       unlock_instructions:
-        subject: 
+        subject: Инструкции по разблокированию
     oauth_callbacks:
       failure: 
       success: 
@@ -219,7 +220,7 @@ ru:
       unlocked: 
     user_passwords:
       user:
-        cannot_be_blank: 
+        cannot_be_blank: Пароль не может быть пустым.
         send_instructions: 
         updated: 
     user_registrations:
@@ -243,14 +244,14 @@ ru:
     action: Действие
     actions:
       cancel: Отменить
-      continue: 
+      continue: Продолжить
       create: Создать
       destroy: Удалить
-      edit: 
+      edit: Редактировать
       list: Показать
       listing: Список
       new: Новый
-      save: 
+      save: Сохранить
       update: Изменить
     activate: Активировать
     active: Активен
@@ -268,10 +269,10 @@ ru:
     add_stock: 
     add_stock_management: 
     add_to_cart: Добавить в корзину
-    add_variant: 
+    add_variant: Добавить вариант
     additional_item: Ставка для дополнительных наименований
-    address1: 
-    address2: 
+    address1: Адрес
+    address2: Адрес (продолжение)
     adjustment: Надбавка
     adjustment_amount: 
     adjustment_successfully_closed: Корректировка была успешно закрыта!
@@ -299,7 +300,7 @@ ru:
     alt_text: Альтернативный текст
     alternative_phone: Дополнительный телефон
     amount: Сумма
-    analytics_desc_header_1: 
+    analytics_desc_header_1: Аналитика Spree
     analytics_desc_header_2: 
     analytics_desc_list_1: 
     analytics_desc_list_2: 
@@ -365,14 +366,14 @@ ru:
     check_for_spree_alerts: 
     checkout: Оформление заказа
     choose_a_customer: Выберите клиента
-    choose_currency: 
+    choose_currency: Выбрать валюту
     choose_dashboard_locale: 
     city: Город
     clone: Клонировать
     close: Закрыть
     close_all_adjustments: Закрыть все корректировки
     code: Кодовое слово
-    company: 
+    company: Компания
     complete: Завершено
     configuration: Конфигурация
     configurations: Конфигурация
@@ -387,15 +388,15 @@ ru:
     could_not_connect_to_jirafe: 
     could_not_create_stock_movement: 
     count_on_hand: 
-    countries: 
+    countries: Страны
     country: Страна
     country_based: Страна
-    country_name: 
+    country_name: Имя
     country_names:
-      CA: 
-      FRA: 
-      ITA: 
-      US: 
+      CA: Канада
+      FRA: Франция
+      ITA: Италия
+      US: Соединённые Штаты Америки
     coupon: Купон
     coupon_code: Код купона
     coupon_code_already_applied: Скидочный купон уже был применен к этому заказу
@@ -407,7 +408,7 @@ ru:
     coupon_code_not_found: Скидочный купон не существует. Пожалуйста, попробуйте еще раз.
     create: Создать
     create_a_new_account: Создать новую учетную запись
-    created_at: 
+    created_at: Создано в
     credit: Кредит
     credit_card: Кредитная карта
     credit_cards: Кредитные карты
@@ -476,7 +477,7 @@ ru:
     empty: пусто
     empty_cart: Очистить корзину
     enable_mail_delivery: Включить доставку почты
-    end: 
+    end: Конец
     ending_in: Оканчивается
     environment: Среда окружения
     error: ошибка
@@ -533,6 +534,18 @@ ru:
     height: Высота
     hide_cents: Hide cents
     home: Домой
+    i18n:
+      available_locales: 
+      fields: 
+      language: 
+      localization_settings: 
+      only_complete: 
+      only_incomplete: 
+      select_locale: 
+      show_only: 
+      supported_locales: 
+      this_file_language: Russian
+      translations: 
     icon: Иконка
     image: Изображение
     image_settings: Настройки изображений
@@ -552,7 +565,7 @@ ru:
     inventory_adjustment: Надбавки
     inventory_error_flash_for_insufficient_quantity: 
     is_not_available_to_shipment_address: не может быть применён к указанному адресу доставки
-    iso_name: 
+    iso_name: Имя согласно ISO
     item: Наименование
     item_description: Описание товара
     item_total: Итого (товары)
@@ -567,7 +580,7 @@ ru:
     last_name_begins_with: Фамилия начинается с
     learn_more: Узнать больше
     list: Список
-    listing_countries: 
+    listing_countries: Список стран
     listing_orders: Список заказов
     listing_products: Список товаров
     listing_reports: Список отчетов
@@ -575,7 +588,7 @@ ru:
     listing_users: Список пользователей
     loading: Загружается
     locale_changed: Язык изменён
-    location: 
+    location: Местоположение
     lock: Lock
     logged_in_as: Пользователь
     logged_in_succesfully: Вы вошли в систему
@@ -587,7 +600,7 @@ ru:
     logout: Выйти
     look_for_similar_items: Посмотрите похожие товары
     maestro_or_solo_cards: Кредитные карты Maestro/Solo
-    mail_method_settings: 
+    mail_method_settings: Настройки способов доставки почты
     mail_methods: Методы отправки почты
     make_refund: Сделать возврат
     master_price: Основная цена
@@ -673,7 +686,7 @@ ru:
     order_adjustments: Корректировки заказа
     order_details: Детали заказа
     order_email_resent: Письмо с описанием заказа выслано повторно
-    order_information: 
+    order_information: Информация относительно заказа
     order_mailer:
       cancel_email:
         dear_customer: Дорогой покупатель,
@@ -690,7 +703,7 @@ ru:
         subtotal: ! 'Подитог: %{subtotal}'
         thanks: Спасибо, что выбрали нас.
         total: ! 'Итого по заказу: %{total}'
-    order_not_found: 
+    order_not_found: Мы не смогли найти Ваш заказ. Попробуйте еще раз.
     order_number: Заказ
     order_populator:
       out_of_stock: 
@@ -716,8 +729,8 @@ ru:
     overview: Обзор
     package_from: 
     pagination:
-      next_page: 
-      previous_page: 
+      next_page: следующая страница &raquo;
+      previous_page: ! '&laquo; предидущая страница'
       truncate: 
     password: Пароль
     paste: Paste
@@ -743,7 +756,7 @@ ru:
       void: аннулирован
     payment_updated: Платёж обновлён
     payments: Платежи
-    percent: 
+    percent: Процент
     percent_per_item: Процент с каждой единицы товара
     permalink: Постоянная ссылка
     phone: Телефон
@@ -816,7 +829,7 @@ ru:
     provider: Провайдер
     provider_settings_warning: Если вы меняете провайдера, вы должны сохранить это изменение, прежде чем вы сможете изменить настройки провайдера.
     qty: Кол-во
-    quantity: 
+    quantity: Количество
     quantity_returned: Количество возврата
     quantity_shipped: Отправленное количество
     rate: Ставка
@@ -930,7 +943,7 @@ ru:
     source: 
     special_instructions: Дополнительные инструкции
     spree/order:
-      coupon_code: 
+      coupon_code: Код купона
     spree_gateway_error_flash_for_checkout: Возникли проблемы с Вашими реквизитами. Пожалуйста, проверьте их и попробуйте ещё раз.
     start: Начало
     start_date: Действительно с
@@ -984,7 +997,7 @@ ru:
     thank_you_for_your_order: Спасибо за покупку!
     there_were_problems_with_the_following_fields: Возникли некоторые проблемы со следующими полями
     thumbnail: Миниатюра
-    time: 
+    time: Время
     to_add_variants_you_must_first_define: Перед добавлением вариантов, вы должны определить
     total: Итого
     tracking: Отслеживание
@@ -1033,6 +1046,6 @@ ru:
     your_cart_is_empty: Ваша корзина пуста
     your_order_is_empty_add_product: 
     zip: Индекс
-    zipcode: 
+    zipcode: Почтовый индекс
     zone: Торговая зона
     zones: Торговые зоны

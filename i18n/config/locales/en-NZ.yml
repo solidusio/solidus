@@ -34,6 +34,7 @@ en-NZ:
       spree/order:
         checkout_complete: Checkout Complete
         completed_at: Completed At
+        coupon_code: 
         created_at: Order Date
         email: Customer E-Mail
         ip_address: IP Address
@@ -534,7 +535,17 @@ en-NZ:
     hide_cents: 
     home: Home
     i18n:
-      this_file_language: "English (New Zealand)"
+      available_locales: 
+      fields: 
+      language: 
+      localization_settings: 
+      only_complete: 
+      only_incomplete: 
+      select_locale: 
+      show_only: 
+      supported_locales: 
+      this_file_language: English (New Zealand)
+      translations: 
     icon: Icon
     image: Image
     image_settings: Image Settings

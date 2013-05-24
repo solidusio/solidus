@@ -34,6 +34,7 @@ lv:
       spree/order:
         checkout_complete: 
         completed_at: 
+        coupon_code: 
         created_at: 
         email: 
         ip_address: 
@@ -534,7 +535,17 @@ lv:
     hide_cents: 
     home: Mājas
     i18n:
-      this_file_language: "Latvijas (LV)"
+      available_locales: 
+      fields: 
+      language: 
+      localization_settings: 
+      only_complete: 
+      only_incomplete: 
+      select_locale: 
+      show_only: 
+      supported_locales: 
+      this_file_language: Latvijas (LV)
+      translations: 
     icon: Icon
     image: Attēls
     image_settings: Image Settings

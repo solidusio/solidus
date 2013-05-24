@@ -34,16 +34,17 @@ ca:
       spree/order:
         checkout_complete: Comanda completada
         completed_at: Completat el
-        created_at: 
+        coupon_code: 
+        created_at: Data Comanda
         email: 
         ip_address: Adreça IP
         item_total: Total articles
         number: Nombre
-        payment_state: 
-        shipment_state: 
+        payment_state: Estat Pagament
+        shipment_state: Estat Enviament
         special_instructions: Instruccions especials
         state: Estat
-        total: 
+        total: Total
       spree/order/bill_address:
         address1: Billing address street
         city: Billing address city
@@ -58,7 +59,7 @@ ca:
         firstname: Shipping address first name
         lastname: Shipping address last name
         phone: Shipping address phone
-        state: Shipping address state
+        state: Estat
         zipcode: Shipping address zipcode
       spree/payment:
         amount: 
@@ -66,7 +67,7 @@ ca:
         name: Name
       spree/product:
         available_on: Disponible en
-        cost_currency: 
+        cost_currency: Cost Moneda
         cost_price: Preu de cost
         description: Descripció
         master_price: Preu principal
@@ -114,7 +115,7 @@ ca:
         password: Password
         password_confirmation: Password Confirmation
       spree/variant:
-        cost_currency: 
+        cost_currency: Cost Moneda
         cost_price: Preu de cost
         depth: Profunditat
         height: Altura
@@ -187,20 +188,20 @@ ca:
         one: Usuari
         other: Usuaris
       spree/variant:
-        one: Variant
-        other: Variants
+        one: 
+        other: 
       spree/zone:
         one: Zona
-        other: Zones
+        other: 
   devise:
     confirmations:
       confirmed: 
       send_instructions: 
     failure:
-      inactive: 
-      invalid: 
-      invalid_token: 
-      locked: 
+      inactive: El seu compte no s'ha estat activat encara.
+      invalid: Correu electrònic o contrasenya no vàlids.
+      invalid_token: Token d'autenticació no vàlid.
+      locked: El seu compte està bloquejat.
       timeout: 
       unauthenticated: 
       unconfirmed: 
@@ -233,7 +234,7 @@ ca:
   errors:
     messages:
       already_confirmed: 
-      not_found: 
+      not_found: no trobat
       not_locked: 
       not_saved: 
   spree:
@@ -243,10 +244,10 @@ ca:
     action: Acció
     actions:
       cancel: Cancel·lar
-      continue: 
+      continue: Continuar
       create: Crear
       destroy: Eliminar
-      edit: 
+      edit: Edita
       list: Llesta
       listing: Llistat
       new: Nova
@@ -259,7 +260,7 @@ ca:
     add_country: Afegir País
     add_new_header: Add New Header
     add_new_style: Add New Style
-    add_one: 
+    add_one: Afegeix un
     add_option_value: Afegir valor d'opció
     add_product: Afegir producte
     add_product_properties: Afegir propietats de producte
@@ -270,8 +271,8 @@ ca:
     add_to_cart: Afegir al carret
     add_variant: 
     additional_item: Cost addicional per element
-    address1: 
-    address2: 
+    address1: Adreça
+    address2: Adreça(cont.)
     adjustment: Ajust
     adjustment_amount: 
     adjustment_successfully_closed: 
@@ -369,7 +370,7 @@ ca:
     choose_dashboard_locale: 
     city: Ciutat
     clone: Clonar
-    close: 
+    close: Tanca
     close_all_adjustments: 
     code: Codi
     company: 
@@ -390,7 +391,7 @@ ca:
     countries: 
     country: País
     country_based: País basi
-    country_name: 
+    country_name: Nom
     country_names:
       CA: 
       FRA: 
@@ -433,7 +434,7 @@ ca:
         site_id: 
         token: 
       jirafe_settings_updated: 
-    date: 
+    date: Data
     date_completed: Date Completed
     date_picker:
       format: 
@@ -476,7 +477,7 @@ ca:
     empty: Buit
     empty_cart: Buidar carret
     enable_mail_delivery: Habilitar enviament per correu
-    end: 
+    end: Fi
     ending_in: Ending in
     environment: Entorn
     error: error
@@ -534,7 +535,17 @@ ca:
     hide_cents: 
     home: Inici
     i18n:
-      this_file_language: "Español"
+      available_locales: 
+      fields: 
+      language: 
+      localization_settings: 
+      only_complete: 
+      only_incomplete: 
+      select_locale: 
+      show_only: 
+      supported_locales: 
+      this_file_language: Español
+      translations: 
     icon: Icona
     image: Imatge
     image_settings: Image Settings

@@ -34,6 +34,7 @@ ja:
       spree/order:
         checkout_complete: 注文の受け付けを完了しました
         completed_at: 完了日時
+        coupon_code: 
         created_at: 注文日
         email: メールアドレス
         ip_address: IPアドレス
@@ -66,7 +67,7 @@ ja:
         name: 名称
       spree/product:
         available_on: 販売開始日
-        cost_currency: 
+        cost_currency: コストカレンシー
         cost_price: 原価
         description: 説明
         master_price: 値段
@@ -114,7 +115,7 @@ ja:
         password: パスワード
         password_confirmation: パスワード（確認）
       spree/variant:
-        cost_currency: 
+        cost_currency: コストカレンシー
         cost_price: 原価
         depth: 奥行き
         height: 高さ
@@ -194,13 +195,13 @@ ja:
         other: ゾーン
   devise:
     confirmations:
-      confirmed: 
+      confirmed: アカウントが正常に確認されました。ログインしました。
       send_instructions: 
     failure:
-      inactive: 
-      invalid: 
-      invalid_token: 
-      locked: 
+      inactive: アカウントはまだ確認されませんでした。
+      invalid: Eメールアドレスもしくはパスワードが異なります。
+      invalid_token: 無効な認証トークン。
+      locked: アカウントはロックされています
       timeout: 
       unauthenticated: 
       unconfirmed: 
@@ -208,7 +209,7 @@ ja:
       confirmation_instructions:
         subject: 
       reset_password_instructions:
-        subject: 
+        subject: パスワードのリセット方法
       unlock_instructions:
         subject: 
     oauth_callbacks:
@@ -219,7 +220,7 @@ ja:
       unlocked: 
     user_passwords:
       user:
-        cannot_be_blank: 
+        cannot_be_blank: パスワードを入力してください。
         send_instructions: 
         updated: 
     user_registrations:
@@ -534,7 +535,17 @@ ja:
     hide_cents: セントの非表示
     home: ホーム
     i18n:
-      this_file_language: "日本語 (ja-JP)"
+      available_locales: 
+      fields: 
+      language: 
+      localization_settings: 
+      only_complete: 
+      only_incomplete: 
+      select_locale: 
+      show_only: 
+      supported_locales: 
+      this_file_language: 日本語 (ja-JP)
+      translations: 
     icon: アイコン
     image: 画像
     image_settings: 画像設定

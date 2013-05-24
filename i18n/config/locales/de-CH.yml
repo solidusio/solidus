@@ -34,6 +34,7 @@ de-CH:
       spree/order:
         checkout_complete: 
         completed_at: 
+        coupon_code: 
         created_at: 
         email: 
         ip_address: 
@@ -490,7 +491,17 @@ de-CH:
     hide_cents: 
     home: Home
     i18n:
+      available_locales: 
+      fields: 
+      language: 
+      localization_settings: 
+      only_complete: 
+      only_incomplete: 
+      select_locale: 
+      show_only: 
+      supported_locales: 
       this_file_language: Deutsch (Schweiz)
+      translations: 
     icon: Icon
     image: Bild
     image_settings: Image Settings

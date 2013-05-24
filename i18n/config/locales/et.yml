@@ -34,6 +34,7 @@ et:
       spree/order:
         checkout_complete: 
         completed_at: Esitatud
+        coupon_code: 
         created_at: 
         email: 
         ip_address: 
@@ -534,7 +535,17 @@ et:
     hide_cents: 
     home: Avaleht
     i18n:
+      available_locales: 
+      fields: 
+      language: 
+      localization_settings: 
+      only_complete: 
+      only_incomplete: 
+      select_locale: 
+      show_only: 
+      supported_locales: 
       this_file_language: Eesti keel
+      translations: 
     icon: Icon
     image: Pilt
     image_settings: Image Settings
