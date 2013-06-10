@@ -88,3 +88,5 @@ Next, if you're one of the community members with the necessary credentials to u
 ```
 localeapp --api-key=YOURAPIKEYHERE push ../spree/core/config/locales/en.yml
 ```
+
+Copyright (c) 2013 Spree Commerce Inc. and other contributors. released under the [New BSD License](https://github.com/spree/spree_i18n/LICENSE)
