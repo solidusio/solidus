@@ -1,4 +1,4 @@
-pt-PT:
+pt:
   activerecord:
     attributes:
       spree/address:

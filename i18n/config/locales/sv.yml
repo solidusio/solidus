@@ -1,4 +1,4 @@
-sv-SE:
+sv:
   activerecord:
     attributes:
       spree/address:
