@@ -1,4 +1,4 @@
-nb-NO:
+nb:
   activerecord:
     attributes:
       spree/address:
