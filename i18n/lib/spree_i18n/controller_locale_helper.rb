@@ -16,7 +16,7 @@ module SpreeI18n
           I18n.locale = if session.key?(:locale) && Config.supported_locales.include?(session[:locale].to_sym)
             session[:locale]
           else
-            Rails.application.config.i18n.default_locale
+            Rails.application.config.i18n.default_locale || I18n.default_locale
           end
         end
 
