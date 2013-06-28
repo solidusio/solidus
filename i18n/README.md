@@ -1,14 +1,15 @@
 # Spree Internationalization
 
-This is the Internationalization project for [Spree Commerce](http://spreecommerce.com/)
+This is the Internationalization project for [Spree Commerce][1]
 
-See the [official Internationalization documentation](http://guides.spreecommerce.com/i18n.html) for more details.
+See the [official Internationalization documentation][2] for more details.
 
-To install, simply add the Gem to your Gemfile:
+## Installation
 
-Add the following to your Gemfile
-
-    gem 'spree_i18n', :git => 'git://github.com/spree/spree_i18n.git'
+Add the following to your `Gemfile`
+```ruby
+gem 'spree_i18n', github: 'spree/spree_i18n'
+```
 
 Run `bundle install`
 
@@ -30,7 +31,7 @@ This will insert this lines on your spree manifest files:
 
 ## Model Translations
 
-We've added support for translating models. The feature uses the [globalize3](https://github.com/svenfuchs/globalize3)
+We've added support for translating models. The feature uses the [globalize3][3]
 gem to localize model data. So far the following models are translatable:
 
   Product, Promotion, OptionType, Taxonomy, Taxon and Property.
@@ -42,8 +43,10 @@ The extension contains two configs that allow users to customize which locales
 should be displayed as options on the translation forms and which should be
 listed to customers on the frontend. You can set them on an initializer. e.g.
 
-    SpreeI18n::Config.available_locales = [:en, :es, :'pt-BR'] # displayed on translation forms
-    SpreeI18n::Config.supported_locales = [:en, :'pt-BR'] # displayed on frontend select box
+```ruby
+SpreeI18n::Config.available_locales = [:en, :es, :'pt-BR'] # displayed on translation forms
+SpreeI18n::Config.supported_locales = [:en, :'pt-BR'] # displayed on frontend select box
+```
 
 ps. please use symbols, not strings. e.g. :'pt-BR' not just 'pt-BR'. Otherwise
 you may get unexpected errors
@@ -65,11 +68,11 @@ If you would like to run the tests of this project, follow these steps:
 
 # spree_i18n
 
-A ruby translation project managed on [Locale](http://www.localeapp.com/) that's open to all!
+A ruby translation project managed on [Localeapp][4] that's open to all!
 
 ## Contributing to spree_i18n
 
-- Edit the translations directly on the [spree_i18n](http://www.localeapp.com/projects/public?search=spree_i18n) project on Locale.
+- Edit the translations directly on the [spree_i18n][5] project on Locale.
 - **That's it!**
 - The maintainer will then pull translations from the Locale project and push to Github.
 
@@ -89,4 +92,11 @@ Next, if you're one of the community members with the necessary credentials to u
 localeapp --api-key=YOURAPIKEYHERE push ../spree/core/config/locales/en.yml
 ```
 
-Copyright (c) 2013 Spree Commerce Inc. and other contributors. released under the [New BSD License](https://github.com/spree/spree_i18n/LICENSE)
+Copyright (c) 2013 Spree Commerce Inc. and other contributors. released under the [New BSD License][6]
+
+[1]: http://spreecommerce.com
+[2]: http://guides.spreecommerce.com/i18n.html
+[3]: https://github.com/svenfuchs/globalize3
+[4]: http://www.localeapp.com
+[5]: http://www.localeapp.com/projects/4605
+[6]: https://github.com/spree/spree_i18n/tree/master/LICENSE
