@@ -34,9 +34,9 @@ fi:
       spree/order:
         checkout_complete: Tilaus valmis
         completed_at: 
-        coupon_code: 
+        coupon_code: Alennuskoodi
         created_at: Tilauspäivämäärä
-        email: 
+        email: Asiakkaan sähköposti
         ip_address: IP-osoite
         item_total: Tuotteita yhteensä
         number: Numero
@@ -46,28 +46,28 @@ fi:
         state: 
         total: Yhteensä
       spree/order/bill_address:
-        address1: Maksuosoitteen lähiosoite
-        city: Maksuosoitteen kaupunki
-        firstname: Maksuosoitteen etunimi
-        lastname: Maksuosoitteen sukunimi
-        phone: Maksuosoitteen puhelinnumero
-        state: Maksuosoitteen maakunta
-        zipcode: Maksuosoitteen postinumero
+        address1: Maksajan katuosoite
+        city: Maksajan postitoimipaikka
+        firstname: Maksajan etunimi
+        lastname: Maksajan sukunimi
+        phone: Maksajan puhelinnumero
+        state: Maksajan maakunta
+        zipcode: Maksajan postinumero
       spree/order/ship_address:
-        address1: Toimitusosoitteen lähiosoite
-        city: Toimitusosoitteen kaupunki
-        firstname: Toimitusosoitteen etunimi
-        lastname: Toimitusosoitteen etunimi
-        phone: Toimitusosoitteen puhelinnumero
-        state: Toimitusosoitteen maakunta
-        zipcode: Toimitusosoitteen postinumero
+        address1: Vastaanottajan katuosoite
+        city: Vastaanottajan postitoimipaikka
+        firstname: Vastaanottajan etunimi
+        lastname: Vastaanottajan sukunimi
+        phone: Vastaanottajan puhelinnumero
+        state: Vastaanottajan maakunta
+        zipcode: Vastaanottajan postinumero
       spree/payment:
-        amount: 
+        amount: Summa
       spree/payment_method:
         name: Nimi
       spree/product:
-        available_on: Available On
-        cost_currency: 
+        available_on: Saatavilla
+        cost_currency: Maksuvaluutta
         cost_price: Cost Price
         description: Kuvaus
         master_price: Master Price
@@ -102,7 +102,7 @@ fi:
         name: Nimi
       spree/tax_rate:
         amount: Rate
-        included_in_price: Included in Price
+        included_in_price: Sisältyy hintaan
         show_rate_in_label: Show rate in label
       spree/taxon:
         name: Nimi
@@ -115,7 +115,7 @@ fi:
         password: Salasana
         password_confirmation: Vahvista salasana
       spree/variant:
-        cost_currency: 
+        cost_currency: Maksuvaluutta
         cost_price: Cost Price
         depth: Syvyys
         height: Korkeus
@@ -286,6 +286,13 @@ fi:
           delivery_error: Virhe testiviestin toimituksessa
           delivery_success: Testiviesti lähetetty onnistuneesti
           error: ! 'Virhe testiviestissä: %{e}'
+      tab:
+        configuration: 
+        orders: 
+        overview: 
+        products: 
+        promotions: 
+        reports: 
     administration: Hallinnointi
     agree_to_privacy_policy: 
     agree_to_terms_of_service: 
@@ -429,6 +436,7 @@ fi:
       jirafe:
         app_id: 
         app_token: 
+        currently_unavailable: 
         explanation: 
         header: 
         site_id: 
@@ -942,6 +950,7 @@ fi:
     smtp_username: SMTP käyttäjänimi
     source: 
     special_instructions: Erityisohjeet
+    split: 
     spree/order:
       coupon_code: 
     spree_gateway_error_flash_for_checkout: Maksusi tiedoissa oli virhe. Ole hyvä ja tarkista tiedot, ja yritä uudelleen.

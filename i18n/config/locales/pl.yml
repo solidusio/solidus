@@ -32,19 +32,19 @@ pl:
         name: Nazwa
         presentation: Prezentacja
       spree/order:
-        checkout_complete: 
-        completed_at: 
-        coupon_code: 
-        created_at: 
-        email: 
-        ip_address: 
-        item_total: 
-        number: 
-        payment_state: 
-        shipment_state: 
-        special_instructions: 
-        state: 
-        total: 
+        checkout_complete: Płatność Zakończona
+        completed_at: Zakończono
+        coupon_code: Kod Rabatu
+        created_at: Data Zamówienia
+        email: E-Mail Klienta
+        ip_address: Adres IP
+        item_total: Łącznie Sztuk
+        number: Numer
+        payment_state: Status Płatności
+        shipment_state: Status Dostawy
+        special_instructions: Dodatkowe Instrukcje
+        state: Stan
+        total: Łącznie
       spree/order/bill_address:
         address1: Billing address street
         city: Billing address city
@@ -62,12 +62,12 @@ pl:
         state: Shipping address state
         zipcode: Shipping address zipcode
       spree/payment:
-        amount: 
+        amount: Kwota
       spree/payment_method:
         name: Nazwa
       spree/product:
         available_on: Dostępny Od
-        cost_currency: 
+        cost_currency: Waluta Kosztu
         cost_price: Cena zakupu
         description: Opis
         master_price: Cena netto
@@ -115,7 +115,7 @@ pl:
         password: Hasło
         password_confirmation: Potwierdzenie Hasła
       spree/variant:
-        cost_currency: 
+        cost_currency: Waluta Kosztu
         cost_price: Cena zakupu
         depth: Głębokość
         height: Wysokość
@@ -127,10 +127,22 @@ pl:
         description: Opis
         name: Nazwa
     models:
-      spree/address: 
-      spree/country: 
-      spree/credit_card: 
-      spree/inventory_unit: 
+      spree/address:
+        few: Adresów
+        one: Adres
+        other: Adresy
+      spree/country:
+        few: Krajów
+        one: Kraj
+        other: Kraje
+      spree/credit_card:
+        few: Kart Kredytowych
+        one: Karta Kredytowa
+        other: Karty Kredytowe
+      spree/inventory_unit:
+        few: Jednostek Stanu
+        one: Jednostka Stanu
+        other: Jednostki Stanu
       spree/line_item: 
       spree/order: 
       spree/payment: 
@@ -194,10 +206,10 @@ pl:
       not_locked: 
       not_saved: 
   spree:
-    abbreviation: 
-    account: 
-    account_updated: 
-    action: 
+    abbreviation: Skrót
+    account: Konto
+    account_updated: Konto Zauktalizowane
+    action: Akcja
     actions:
       cancel: 
       continue: 
@@ -209,19 +221,19 @@ pl:
       new: 
       save: 
       update: 
-    activate: 
-    active: 
-    add: 
-    add_action_of_type: 
-    add_country: 
-    add_new_header: 
-    add_new_style: 
-    add_one: 
+    activate: Aktywuj
+    active: Aktywny
+    add: Dodaj
+    add_action_of_type: Dodaj akcję typu
+    add_country: Dodaj Kraj
+    add_new_header: Dodaj Nowy Nagłówek
+    add_new_style: Dodaj Nowy Styl
+    add_one: Dodaj Jeden
     add_option_value: 
-    add_product: 
-    add_product_properties: 
-    add_rule_of_type: 
-    add_state: 
+    add_product: Dodaj Produkt
+    add_product_properties: Dodaj Właściwości Produktu
+    add_rule_of_type: ! 'Dodaj '
+    add_state: Dodaj Status
     add_stock: 
     add_stock_management: 
     add_to_cart: 
@@ -242,6 +254,13 @@ pl:
           delivery_error: 
           delivery_success: 
           error: 
+      tab:
+        configuration: 
+        orders: 
+        overview: 
+        products: 
+        promotions: 
+        reports: 
     administration: 
     agree_to_privacy_policy: 
     agree_to_terms_of_service: 
@@ -385,6 +404,7 @@ pl:
       jirafe:
         app_id: 
         app_token: 
+        currently_unavailable: 
         explanation: 
         header: 
         site_id: 
@@ -896,6 +916,7 @@ pl:
     smtp_username: 
     source: 
     special_instructions: 
+    split: 
     spree/order:
       coupon_code: 
     spree_gateway_error_flash_for_checkout: 

@@ -34,7 +34,7 @@ it:
       spree/order:
         checkout_complete: Checkout Completato
         completed_at: Completato il
-        coupon_code: 
+        coupon_code: Codice Coupon
         created_at: Data Ordine
         email: E-Mail Cliente
         ip_address: Indirizzo IP
@@ -158,8 +158,8 @@ it:
         one: Prototipo
         other: Prototipi
       spree/return_authorization:
-        one: Restituzione
-        other: Restituzioni
+        one: Resi
+        other: Resi
       spree/role:
         one: Ruolo
         other: Ruoli
@@ -270,7 +270,7 @@ it:
     add_state: Aggiungi Stato
     add_stock: Aggiungi Magazzino
     add_stock_management: Aggiungi Gestione Magazzino
-    add_to_cart: Aggiungi al Carrell
+    add_to_cart: Aggiungi al Carrello
     add_variant: Aggiungi Variante
     additional_item: Costo Aggiuntivo Articolo
     address1: Indirizzo
@@ -288,6 +288,13 @@ it:
           delivery_error: Errore Mail di Test
           delivery_success: Mail di Test consegnata con successo
           error: ! 'Errore Mail di Test: %{e}'
+      tab:
+        configuration: 
+        orders: 
+        overview: 
+        products: 
+        promotions: 
+        reports: 
     administration: Amministrazione
     agree_to_privacy_policy: Accetta Politica di Privacy
     agree_to_terms_of_service: Accetta i Termini di Servizio
@@ -355,7 +362,7 @@ it:
     calculator_settings_warning: Se stai cambiando la tipologia di calcolatore, devi prima salvare per modificare le configurazioni del calcolatore
     cancel: annulla
     cannot_create_payment_without_payment_methods: Non puoi creare un pagamento per l'ordine senza alcun metodo di pagamento specificato.
-    cannot_create_returns: Impossibile creare restituzioni perché questo ordine non ha unità spedite.
+    cannot_create_returns: Impossibile creare un reso perché questo ordine non ha unità spedite.
     cannot_perform_operation: Impossible effettuare l'operazione richiesta
     cannot_set_shipping_method_without_address: Impossibile impostare un metodo di spedizione finché i dettagli del cliente non vengono specificati.
     capture: Accetta
@@ -431,21 +438,22 @@ it:
       jirafe:
         app_id: App ID
         app_token: App Token
+        currently_unavailable: 
         explanation: I campi sottostanti potrebbero essere popolati se avessi scelto di usare Jirafe dalla dashboard di amministrazione.
         header: Configurazioni Jirafe Analytics
         site_id: ID Sito
         token: Token
       jirafe_settings_updated: Configurazione Jirafe aggiornata.
     date: Data
-    date_completed: Data di Completamento
+    date_completed: Completato il
     date_picker:
       format: ! '%d/%m/%Y'
       js_format: dd/mm/yy
     date_range: Intervallo di date
     default: Default
-    default_meta_description: Default Meta Description
-    default_meta_keywords: Default Meta Keywords
-    default_seo_title: Default Seo Title
+    default_meta_description: Meta Description predefinita
+    default_meta_keywords: Meta Keywords predefinite
+    default_seo_title: Titolo SEO predefinito
     default_tax: Tassazione di default
     default_tax_zone: Zona di Tassazione di Default
     delete: Elimina
@@ -537,17 +545,17 @@ it:
     hide_cents: Nascondi centesimi
     home: Home
     i18n:
-      available_locales: 
-      fields: 
-      language: 
-      localization_settings: 
-      only_complete: 
-      only_incomplete: 
-      select_locale: 
-      show_only: 
-      supported_locales: 
+      available_locales: Lingue Disponibili
+      fields: Campi
+      language: Lingua
+      localization_settings: Settaggi Localizzazione
+      only_complete: Solo complete
+      only_incomplete: Solo incomplete
+      select_locale: Seleziona lingua
+      show_only: Mostra solo
+      supported_locales: Lingue Supportate
       this_file_language: Italiano (IT)
-      translations: 
+      translations: Traduzioni
     icon: Icona
     image: Immagine
     image_settings: Impostazioni delle Immagini
@@ -570,7 +578,7 @@ it:
     iso_name: Nome Iso
     item: Oggetto
     item_description: Descrizione dell'oggetto
-    item_total: Totale dell'oggetto
+    item_total: Totale prodotto
     item_total_rule:
       operators:
         gt: maggiore di
@@ -855,7 +863,7 @@ it:
     return: ritorna
     return_authorization: Restituzione
     return_authorization_updated: Restituzione aggiornata
-    return_authorizations: Restituzioni
+    return_authorizations: Resi
     return_quantity: Quantità Restituzione
     returned: Restituito
     review: Rivedi
@@ -944,6 +952,7 @@ it:
     smtp_username: Username SMTP
     source: Sorgente
     special_instructions: Istruzioni Speciali
+    split: 
     spree/order:
       coupon_code: Codice Coupon
     spree_gateway_error_flash_for_checkout: Si è verificato un problema con le tue informazioni di pagamento. Per favore controlla le tue informazioni e prova ancora.

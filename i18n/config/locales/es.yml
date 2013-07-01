@@ -2,7 +2,7 @@ es:
   activerecord:
     attributes:
       spree/address:
-        address1: Direccion
+        address1: Dirección
         address2: ! '"Dirección (cont.) "'
         city: Ciudad
         country: Pais
@@ -34,7 +34,7 @@ es:
       spree/order:
         checkout_complete: Completar Pedido
         completed_at: Completado En
-        coupon_code: 
+        coupon_code: Código Cupón
         created_at: Fecha del Pedidio
         email: Email del Cliente
         ip_address: Dirección IP
@@ -288,6 +288,13 @@ es:
           delivery_error: Error en prueba de envío de email
           delivery_success: Prueba de envío de email satisfactoria
           error: ! 'Error en prueba de email: %{e}'
+      tab:
+        configuration: 
+        orders: 
+        overview: 
+        products: 
+        promotions: 
+        reports: 
     administration: Administración
     agree_to_privacy_policy: De acuerdo con la politica de privacidad.
     agree_to_terms_of_service: De acuerdo con las condiciones de uso
@@ -431,6 +438,7 @@ es:
       jirafe:
         app_id: ID App
         app_token: Token APP
+        currently_unavailable: 
         explanation: Los campos siguientes pueden ser ya completados si escojes registrarte con Jirafe desde el Panel de Instrumentos
         header: Preferencias de Jirafe Analytics
         site_id: ID Sitio Web
@@ -537,17 +545,17 @@ es:
     hide_cents: Ocutar centimos
     home: Home
     i18n:
-      available_locales: 
-      fields: 
-      language: 
-      localization_settings: 
-      only_complete: 
-      only_incomplete: 
-      select_locale: 
-      show_only: 
-      supported_locales: 
+      available_locales: Locales Disponibles
+      fields: Campos
+      language: Idioma
+      localization_settings: Ajustes Localización
+      only_complete: Solo completos
+      only_incomplete: Solo incompletos
+      select_locale: Seleccionar Locale
+      show_only: Solo mostrar
+      supported_locales: Locales Soportados
       this_file_language: Español
-      translations: 
+      translations: Traducciones
     icon: Icono
     image: Imagen
     image_settings: Preferencias de imagen
@@ -726,7 +734,7 @@ es:
     order_sure_want_to: ¿Estas seguro que quieres %{event} este pedido?
     order_total: Total Pedido
     order_updated: Pedido actualizado
-    orders: Pedidios
+    orders: Pedidos
     out_of_stock: Fuera de stock
     overview: Visión de conjunto
     package_from: paquete desde
@@ -944,6 +952,7 @@ es:
     smtp_username: Nombre de usuario SMTP
     source: Fuente
     special_instructions: Instrucciones especiales
+    split: 
     spree/order:
       coupon_code: Código de cupón
     spree_gateway_error_flash_for_checkout: Hubo un problema con tu información de pago. Por favor revisa tu información e intentado de nuevo

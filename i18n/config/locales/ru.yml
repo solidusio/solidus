@@ -1116,6 +1116,13 @@ ru:
           delivery_error: Ошибка отправки тестового письма
           delivery_success: Тестовое письмо успешно отправлено
           error: ! 'Ошибка отправки тестового письма: %{e}'
+      tab:
+        configuration: 
+        orders: 
+        overview: 
+        products: 
+        promotions: 
+        reports: 
     administration: Администрирование
     agree_to_privacy_policy: 
     agree_to_terms_of_service: 
@@ -1259,6 +1266,7 @@ ru:
       jirafe:
         app_id: 
         app_token: 
+        currently_unavailable: 
         explanation: 
         header: 
         site_id: 
@@ -1772,6 +1780,7 @@ ru:
     smtp_username: Пользователь
     source: 
     special_instructions: Дополнительные инструкции
+    split: 
     spree/order:
       coupon_code: Код купона
     spree_gateway_error_flash_for_checkout: Возникли проблемы с Вашими реквизитами. Пожалуйста, проверьте их и попробуйте ещё раз.

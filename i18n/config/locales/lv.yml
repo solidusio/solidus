@@ -6,8 +6,8 @@ lv:
         address2: Adrese (papildus)
         city: Pilsēta
         country: Valsts
-        firstname: First Name
-        lastname: Last Name
+        firstname: Vārds
+        lastname: Uzvārds
         phone: Telefons
         state: Rajons
         zipcode: Pasta indekss
@@ -18,23 +18,23 @@ lv:
         name: Nosaukums
         numcode: ISO kods
       spree/credit_card:
-        cc_type: Type
-        month: Month
-        number: Number
+        cc_type: Tips
+        month: Mēnesis
+        number: Numurs
         verification_value: Verification Value
-        year: Year
+        year: Gads
       spree/inventory_unit:
         state: Apgabals
       spree/line_item:
         price: Cena
         quantity: Daudzums
       spree/option_type:
-        name: Name
+        name: Nosaukums
         presentation: Presentation
       spree/order:
         checkout_complete: 
         completed_at: 
-        coupon_code: 
+        coupon_code: Kupona Kods
         created_at: 
         email: 
         ip_address: 
@@ -286,6 +286,13 @@ lv:
           delivery_error: Testmail delivery error
           delivery_success: Testmail sent successfully
           error: ! 'Testmail error: %{e}'
+      tab:
+        configuration: 
+        orders: 
+        overview: 
+        products: 
+        promotions: 
+        reports: 
     administration: Administrēšana
     agree_to_privacy_policy: 
     agree_to_terms_of_service: 
@@ -397,15 +404,15 @@ lv:
       FRA: 
       ITA: 
       US: 
-    coupon: Coupon
-    coupon_code: Coupon code
+    coupon: Kupons
+    coupon_code: Kupona kods
     coupon_code_already_applied: 
     coupon_code_applied: The coupon code was successfully applied to your order.
     coupon_code_better_exists: 
     coupon_code_expired: 
     coupon_code_max_usage: 
     coupon_code_not_eligible: 
-    coupon_code_not_found: 
+    coupon_code_not_found: Ievadītais kupona kods neeksistē. Lūdzu, mēģiniet vēlreiz.
     create: Izveidot
     create_a_new_account: Izveidot jaunu kontu
     created_at: 
@@ -429,6 +436,7 @@ lv:
       jirafe:
         app_id: 
         app_token: 
+        currently_unavailable: 
         explanation: 
         header: 
         site_id: 
@@ -495,7 +503,7 @@ lv:
         cart:
           add: Add to cart
         checkout:
-          coupon_code_added: Coupon code added
+          coupon_code_added: Kupona kods tika pievienots
         content:
           visited: Visit static content page
         order:
@@ -942,8 +950,9 @@ lv:
     smtp_username: SMTP Username
     source: 
     special_instructions: Special Instructions
+    split: 
     spree/order:
-      coupon_code: 
+      coupon_code: Kupona Kods
     spree_gateway_error_flash_for_checkout: There was a problem with your payment information. Please check your information and try again.
     start: Starts
     start_date: Derīgs no

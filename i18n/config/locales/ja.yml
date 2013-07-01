@@ -286,6 +286,13 @@ ja:
           delivery_error: テストメール送信エラー
           delivery_success: テストメールが正しく送信されました。
           error: ! 'テストメールエラー: %{e}'
+      tab:
+        configuration: 
+        orders: 
+        overview: 
+        products: 
+        promotions: 
+        reports: 
     administration: 管理
     agree_to_privacy_policy: 
     agree_to_terms_of_service: 
@@ -429,6 +436,7 @@ ja:
       jirafe:
         app_id: 
         app_token: 
+        currently_unavailable: 
         explanation: 
         header: 
         site_id: 
@@ -942,6 +950,7 @@ ja:
     smtp_username: SMTPユーザ名
     source: 
     special_instructions: 特別な指示
+    split: 
     spree/order:
       coupon_code: 
     spree_gateway_error_flash_for_checkout: 支払い情報に問題があります。情報をお確かめになり再試行願います。

@@ -288,6 +288,13 @@ pt-BR:
           delivery_error: Erro de Envio
           delivery_success: Enviado com Sucesso
           error: ! 'Erro: %{e}'
+      tab:
+        configuration: Configurações
+        orders: Pedidos
+        overview: Geral
+        products: Produtos
+        promotions: Promoções
+        reports: Relatórios
     administration: Administração
     agree_to_privacy_policy: Concordo com a politica de privacidade
     agree_to_terms_of_service: Concordo com os termos de serviço
@@ -433,6 +440,7 @@ pt-BR:
       jirafe:
         app_id: App ID
         app_token: App token
+        currently_unavailable: 
         explanation: Os campos abaixo já podem ser preenchidos if você escolher registrar no painel de administração do Jirafe.
         header: Configurações do Jirafe Analytics
         site_id: Site ID
@@ -946,6 +954,7 @@ pt-BR:
     smtp_username: Usuário SMTP
     source: Fonte
     special_instructions: Instruções Especiais
+    split: Dividir
     spree/order:
       coupon_code: Código do cupom
     spree_gateway_error_flash_for_checkout: Existe um Problema com Seus Dados de Pagamento. por Favor, Verifique Seus Dados e Tente Novamente.

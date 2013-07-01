@@ -286,6 +286,13 @@ ua:
           delivery_error: Помилка доставки тестового повідомлення
           delivery_success: Тестового повідомлення успішно доставлене
           error: ! 'Testmail error: %{e}'
+      tab:
+        configuration: 
+        orders: 
+        overview: 
+        products: 
+        promotions: 
+        reports: 
     administration: Администрирование
     agree_to_privacy_policy: 
     agree_to_terms_of_service: 
@@ -429,6 +436,7 @@ ua:
       jirafe:
         app_id: 
         app_token: 
+        currently_unavailable: 
         explanation: 
         header: 
         site_id: 
@@ -942,6 +950,7 @@ ua:
     smtp_username: Користувач
     source: Джерело
     special_instructions: Додаткові інструкції
+    split: 
     spree/order:
       coupon_code: Код купона
     spree_gateway_error_flash_for_checkout: Виникли проблеми з Вашими реквізитами. Будь ласка, перевірте їх та спробуйте ще раз.

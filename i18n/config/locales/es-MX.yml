@@ -21,7 +21,7 @@ es-MX:
         cc_type: Tipo
         month: Mes
         number: Número
-        verification_value: Valor de Verificación
+        verification_value: Código de Verificación
         year: Año
       spree/inventory_unit:
         state: Estado
@@ -34,7 +34,7 @@ es-MX:
       spree/order:
         checkout_complete: Flujo de Compra Completado
         completed_at: Completado el
-        coupon_code: 
+        coupon_code: Cupon
         created_at: Fecha de pedido
         email: E-Mail del cliente
         ip_address: Dirección IP
@@ -158,8 +158,8 @@ es-MX:
         one: Prototipo
         other: Prototipos
       spree/return_authorization:
-        one: Autorización de retorno
-        other: Autorizaciones de retorno
+        one: Autorización de Devolución
+        other: Autorizaciones de Devolución
       spree/role:
         one: Rol
         other: Roles
@@ -167,7 +167,7 @@ es-MX:
         one: Envío
         other: Envíos
       spree/shipping_category:
-        one: Categoría de Envíos
+        one: Categoría de Envío
         other: Categorías de Envíos
       spree/state:
         one: Estado
@@ -288,6 +288,13 @@ es-MX:
           delivery_error: Error en el envío del email de prueba
           delivery_success: Email de prueba enviado exitosamente
           error: ! 'Error del email de prueba: %{e}'
+      tab:
+        configuration: 
+        orders: 
+        overview: 
+        products: 
+        promotions: 
+        reports: 
     administration: Administración
     agree_to_privacy_policy: Aceptar política de privacidad.
     agree_to_terms_of_service: ! 'Aceptar términos del servicio. '
@@ -431,6 +438,7 @@ es-MX:
       jirafe:
         app_id: ID de aplicación
         app_token: Token de aplicación
+        currently_unavailable: 
         explanation: Los campos debajo pueden ser capturados si decides registrarte con Jirafe desde el Dashboard.
         header: Configuración de Jirafe Analytics
         site_id: ID de Sitio
@@ -537,17 +545,17 @@ es-MX:
     hide_cents: Ocultar centavos
     home: Inicio
     i18n:
-      available_locales: 
-      fields: 
-      language: 
-      localization_settings: 
-      only_complete: 
-      only_incomplete: 
-      select_locale: 
-      show_only: 
-      supported_locales: 
+      available_locales: Traduciones Disponibles
+      fields: Campos
+      language: Idioma
+      localization_settings: Ajustes de traducciones
+      only_complete: Solo completas
+      only_incomplete: Solo incompletas
+      select_locale: Escoge traducción
+      show_only: Mostrar solo
+      supported_locales: Traducciones soportadas
       this_file_language: Español (México)
-      translations: 
+      translations: Traducciones
     icon: Icono
     image: Imagen
     image_settings: Configuración de imágen
@@ -944,6 +952,7 @@ es-MX:
     smtp_username: Nombre de usuario SMTP
     source: Origen
     special_instructions: Instrucciones especiales
+    split: 
     spree/order:
       coupon_code: Código de Promoción
     spree_gateway_error_flash_for_checkout: hubo un problema con su información de pago. Por favor, revísela e inténtelo de nuevo.

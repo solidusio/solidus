@@ -286,6 +286,13 @@ ca:
           delivery_error: Testmail delivery error
           delivery_success: Testmail sent successfully
           error: ! 'Testmail error: %{e}'
+      tab:
+        configuration: 
+        orders: 
+        overview: 
+        products: 
+        promotions: 
+        reports: 
     administration: Administració
     agree_to_privacy_policy: 
     agree_to_terms_of_service: 
@@ -300,7 +307,7 @@ ca:
     alt_text: Text alternatiu
     alternative_phone: Telèfon alternatiu
     amount: Quantia
-    analytics_desc_header_1: 
+    analytics_desc_header_1: Spree Analytics
     analytics_desc_header_2: 
     analytics_desc_list_1: 
     analytics_desc_list_2: 
@@ -388,15 +395,15 @@ ca:
     could_not_connect_to_jirafe: 
     could_not_create_stock_movement: 
     count_on_hand: 
-    countries: 
+    countries: Països
     country: País
     country_based: País basi
     country_name: Nom
     country_names:
       CA: 
-      FRA: 
+      FRA: França
       ITA: 
-      US: 
+      US: Estats Units d'Amèrica
     coupon: Cupó
     coupon_code: Codi de cupó
     coupon_code_already_applied: 
@@ -429,6 +436,7 @@ ca:
       jirafe:
         app_id: 
         app_token: 
+        currently_unavailable: 
         explanation: 
         header: 
         site_id: 
@@ -536,7 +544,7 @@ ca:
     home: Inici
     i18n:
       available_locales: 
-      fields: 
+      fields: Camps
       language: 
       localization_settings: 
       only_complete: 
@@ -573,7 +581,7 @@ ca:
       operators:
         gt: major que
         gte: major o igual que
-    jirafe: 
+    jirafe: Jirafe
     landing_page_rule:
       path: Path
     last_name: Cognoms
@@ -672,7 +680,7 @@ ca:
       variant_deleted: Variant esborrada
       variant_not_deleted: La variant no ha pogut esborrar-se
     on_hand: Disponible
-    open: 
+    open: Obert
     open_all_adjustments: 
     option_type: Tipus d'opció
     option_types: Tipus d'opció
@@ -829,7 +837,7 @@ ca:
     provider: Proveïdor
     provider_settings_warning: Si està canviant el tipus de proveïdor, ha de guardar-ho abans d'editar les seves característiques
     qty: Quan.
-    quantity: 
+    quantity: Quantitat
     quantity_returned: Quantitat retornada
     quantity_shipped: Quantitat enviada
     rate: proporció
@@ -940,8 +948,9 @@ ca:
     smtp_send_all_emails_as_from_following_address: Envia tots els emails des de la següent adreça
     smtp_send_copy_to_this_addresses: Envia una còpia dels emails sortints a aquesta adreça. Per posar diversos emails, separi'ls per comes.
     smtp_username: Nom d'usuari SMTP
-    source: 
+    source: Font
     special_instructions: Instruccions especials
+    split: 
     spree/order:
       coupon_code: 
     spree_gateway_error_flash_for_checkout: va haver-hi un problema amb la seva informació de pagament. Per favor, revisi-la i intenti-ho de nou.
@@ -1046,6 +1055,6 @@ ca:
     your_cart_is_empty: La seva cistella està buida
     your_order_is_empty_add_product: 
     zip: Codi postal
-    zipcode: 
+    zipcode: Codi Postal
     zone: Zona
     zones: Zones

@@ -286,6 +286,13 @@ sl-SI:
           delivery_error: Testmail delivery error
           delivery_success: Testmail sent successfully
           error: ! 'Testmail error: %{e}'
+      tab:
+        configuration: 
+        orders: 
+        overview: 
+        products: 
+        promotions: 
+        reports: 
     administration: Administracija
     agree_to_privacy_policy: 
     agree_to_terms_of_service: 
@@ -429,6 +436,7 @@ sl-SI:
       jirafe:
         app_id: 
         app_token: 
+        currently_unavailable: 
         explanation: 
         header: 
         site_id: 
@@ -942,6 +950,7 @@ sl-SI:
     smtp_username: SMTP Uporabniško ime
     source: 
     special_instructions: Special Instructions
+    split: 
     spree/order:
       coupon_code: 
     spree_gateway_error_flash_for_checkout: There was a problem with your payment information. Please check your information and try again.

@@ -242,6 +242,13 @@ sw:
           delivery_error: 
           delivery_success: 
           error: 
+      tab:
+        configuration: 
+        orders: 
+        overview: 
+        products: 
+        promotions: 
+        reports: 
     administration: 
     agree_to_privacy_policy: 
     agree_to_terms_of_service: 
@@ -385,6 +392,7 @@ sw:
       jirafe:
         app_id: 
         app_token: 
+        currently_unavailable: 
         explanation: 
         header: 
         site_id: 
@@ -896,6 +904,7 @@ sw:
     smtp_username: 
     source: 
     special_instructions: 
+    split: 
     spree/order:
       coupon_code: 
     spree_gateway_error_flash_for_checkout: 

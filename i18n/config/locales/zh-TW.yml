@@ -2,15 +2,15 @@ zh-TW:
   activerecord:
     attributes:
       spree/address:
-        address1: Address
-        address2: Address (contd.)
-        city: City
-        country: Country
-        firstname: First Name
-        lastname: Last Name
-        phone: Phone
-        state: State
-        zipcode: Zip Code
+        address1: 地址
+        address2: 地址 (contd.)
+        city: 城市
+        country: 國家
+        firstname: 名
+        lastname: 姓
+        phone: 電話
+        state: 省/州
+        zipcode: 郵遞區號
       spree/country:
         iso: ISO
         iso3: ISO3
@@ -18,13 +18,13 @@ zh-TW:
         name: Name
         numcode: ISO Code
       spree/credit_card:
-        cc_type: Type
-        month: Month
-        number: Number
-        verification_value: Verification Value
-        year: Year
+        cc_type: 信用卡類型
+        month: 月份
+        number: 卡號
+        verification_value: 驗證碼
+        year: 年份
       spree/inventory_unit:
-        state: State
+        state: 狀態
       spree/line_item:
         price: Price
         quantity: Quantity
@@ -32,19 +32,19 @@ zh-TW:
         name: Name
         presentation: Presentation
       spree/order:
-        checkout_complete: 
-        completed_at: 
+        checkout_complete: 完成結帳
+        completed_at: 結帳日期
         coupon_code: 
-        created_at: 
-        email: 
-        ip_address: 
-        item_total: 
-        number: 
-        payment_state: 
-        shipment_state: 
-        special_instructions: 
-        state: 
-        total: 
+        created_at: 訂單日期
+        email: 電子信箱
+        ip_address: IP Address
+        item_total: 項目總計
+        number: 訂單號碼
+        payment_state: 付款狀態
+        shipment_state: 物流狀態
+        special_instructions: 特別說明
+        state: 狀態
+        total: 總計
       spree/order/bill_address:
         address1: Billing address street
         city: Billing address city
@@ -260,14 +260,14 @@ zh-TW:
     add_country: 增加國家
     add_new_header: Add New Header
     add_new_style: Add New Style
-    add_one: 
+    add_one: 新增
     add_option_value: 增加選項
     add_product: 增加商品
     add_product_properties: 增加商品屬性
     add_rule_of_type: 增加條件
     add_state: 增加 州,省,日本県,台灣縣市
-    add_stock: 
-    add_stock_management: 
+    add_stock: 新增庫存
+    add_stock_management: 新增庫存管理
     add_to_cart: 加到購物車
     add_variant: 
     additional_item: 額外商品花費
@@ -286,6 +286,13 @@ zh-TW:
           delivery_error: Testmail delivery error
           delivery_success: Testmail sent successfully
           error: ! 'Testmail error: %{e}'
+      tab:
+        configuration: 
+        orders: 
+        overview: 
+        products: 
+        promotions: 
+        reports: 
     administration: 管理介面
     agree_to_privacy_policy: 
     agree_to_terms_of_service: 
@@ -429,6 +436,7 @@ zh-TW:
       jirafe:
         app_id: 
         app_token: 
+        currently_unavailable: 
         explanation: 
         header: 
         site_id: 
@@ -942,6 +950,7 @@ zh-TW:
     smtp_username: 
     source: 
     special_instructions: 
+    split: 
     spree/order:
       coupon_code: 
     spree_gateway_error_flash_for_checkout: 

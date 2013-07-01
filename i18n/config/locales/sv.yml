@@ -34,7 +34,7 @@ sv:
       spree/order:
         checkout_complete: Utcheckning genomförd
         completed_at: Fullständig vid
-        coupon_code: 
+        coupon_code: Kupongkod
         created_at: Orderdatum
         email: Kundens e-post
         ip_address: IP adress
@@ -288,6 +288,13 @@ sv:
           delivery_error: Testmejl sändarfel
           delivery_success: Testmejl framgångsrikt skickat
           error: ! 'Testmejl fel: %{e}'
+      tab:
+        configuration: 
+        orders: 
+        overview: 
+        products: 
+        promotions: 
+        reports: 
     administration: Administration
     agree_to_privacy_policy: Acceptera privatpolicyn
     agree_to_terms_of_service: Acceptera användarvillkoren
@@ -431,6 +438,7 @@ sv:
       jirafe:
         app_id: App ID
         app_token: App symbol
+        currently_unavailable: 
         explanation: Fälten nedan kan redan vara ifyllda om du valde att registrera dig hos Jirafe från admin's dashboard
         header: Jirafe Analysinställningar
         site_id: Site ID
@@ -537,17 +545,17 @@ sv:
     hide_cents: Dölj ören
     home: Hem
     i18n:
-      available_locales: 
-      fields: 
-      language: 
-      localization_settings: 
-      only_complete: 
-      only_incomplete: 
-      select_locale: 
-      show_only: 
-      supported_locales: 
+      available_locales: Tillgängliga språk
+      fields: Fält
+      language: Språk
+      localization_settings: Lokaliseringsinställningar
+      only_complete: bara kompletta
+      only_incomplete: Endast ofullständiga
+      select_locale: Välj språk
+      show_only: Visa endast
+      supported_locales: Tillgängliga språk
       this_file_language: Svenska (SE)
-      translations: 
+      translations: Översättningar
     icon: Ikon
     image: Bild
     image_settings: Bildinställningar
@@ -944,6 +952,7 @@ sv:
     smtp_username: SMTP-användarnamn
     source: Källa
     special_instructions: Särskilda instruktioner
+    split: 
     spree/order:
       coupon_code: Kupongkod
     spree_gateway_error_flash_for_checkout: Det var ett problem med din betalningsinformation. Kontrollera din information och försök igen.

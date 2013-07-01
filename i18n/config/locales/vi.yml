@@ -286,6 +286,13 @@ vi:
           delivery_error: Testmail delivery error
           delivery_success: Testmail sent successfully
           error: ! 'Testmail error: %{e}'
+      tab:
+        configuration: 
+        orders: 
+        overview: 
+        products: 
+        promotions: 
+        reports: 
     administration: Quản trị
     agree_to_privacy_policy: Đồng ý với Điều khoản riêng tư
     agree_to_terms_of_service: Đồng ý với Điều khoản dịch vụ
@@ -429,6 +436,7 @@ vi:
       jirafe:
         app_id: App ID
         app_token: App Token
+        currently_unavailable: 
         explanation: Các mục dưới đây có thể đã được điền nếu bạn chọn đăng kí với Jirafe từ admin dashboard.
         header: Jirafe Analytics Settings
         site_id: Site ID
@@ -942,6 +950,7 @@ vi:
     smtp_username: Tên đăng nhập SMTP
     source: Nguồn
     special_instructions: Special Instructions
+    split: 
     spree/order:
       coupon_code: Mã khuyến mại
     spree_gateway_error_flash_for_checkout: There was a problem with your payment information. Please check your information and try again.

@@ -34,7 +34,7 @@ nl:
       spree/order:
         checkout_complete: Bestelling afgerond
         completed_at: Voltooid op
-        coupon_code: 
+        coupon_code: Kortingscode
         created_at: Order Datum
         email: Klant E-mail
         ip_address: IP adres
@@ -288,6 +288,13 @@ nl:
           delivery_error: Probleem met het afleveren van de Test Mail
           delivery_success: Test Mail succesvol verstuurd
           error: ! 'Test Mail fout: %{e}'
+      tab:
+        configuration: 
+        orders: 
+        overview: 
+        products: 
+        promotions: 
+        reports: 
     administration: Administratie
     agree_to_privacy_policy: ! 'Akkoord met Privacy beleid  '
     agree_to_terms_of_service: Akkoord met Algemene Voorwaarden
@@ -369,7 +376,7 @@ nl:
     checkout: Bestelling
     choose_a_customer: Kies een klant
     choose_currency: Kies een valuta
-    choose_dashboard_locale: Kies dashboard taal
+    choose_dashboard_locale: Kies dashboard regio-instelling
     city: Stad
     clone: Dupliceren
     close: Sluiten
@@ -431,6 +438,7 @@ nl:
       jirafe:
         app_id: App ID
         app_token: App Token
+        currently_unavailable: 
         explanation: De onderstaande velden kunnen al ingevuld zijn als je via het dashboard hebt gekozen om te registreren met Jirafe.
         header: Jirafe Analytics Instellingen
         site_id: 
@@ -537,17 +545,17 @@ nl:
     hide_cents: Verberg centen
     home: Home
     i18n:
-      available_locales: 
-      fields: 
-      language: 
-      localization_settings: 
-      only_complete: 
-      only_incomplete: 
-      select_locale: 
-      show_only: 
-      supported_locales: 
+      available_locales: Beschikbare regio-instellingen
+      fields: Velden
+      language: Taal
+      localization_settings: Regio-instellingen
+      only_complete: Enkel volledige
+      only_incomplete: Enkel onvolledige
+      select_locale: Selecteer regio-instelling
+      show_only: Toon enkel
+      supported_locales: Ondersteunde regio-instellingen
       this_file_language: Nederlands (NL)
-      translations: 
+      translations: Vertalingen
     icon: Icoon
     image: Afbeelding
     image_settings: Afbeeldingen Instellingen
@@ -589,7 +597,7 @@ nl:
     listing_tax_categories: Lijst BTW categorieën
     listing_users: Lijst gebruikers
     loading: Bezig met laden
-    locale_changed: Taal instellingen gewijzigd
+    locale_changed: Regio instelling gewijzigd
     location: Locatie
     lock: Vergrendel
     logged_in_as: Ingelogd als
@@ -944,6 +952,7 @@ nl:
     smtp_username: SMTP Gebruikersnaam
     source: Bron
     special_instructions: Speciale instructies
+    split: 
     spree/order:
       coupon_code: Kortings Code
     spree_gateway_error_flash_for_checkout: Er was een probleem met je betaal gegevens. Controleer je gegevens en probeer het opnieuw.

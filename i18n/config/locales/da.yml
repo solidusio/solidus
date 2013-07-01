@@ -288,6 +288,13 @@ da:
           delivery_error: Fejl ved aflevering af test-e-mail
           delivery_success: Test-e-mail afsendt
           error: ! 'Test-e-mail fejl: %{e}'
+      tab:
+        configuration: 
+        orders: 
+        overview: 
+        products: 
+        promotions: 
+        reports: 
     administration: Administration
     agree_to_privacy_policy: Godkend vores "privatlivs"-betingelser
     agree_to_terms_of_service: Godkend vores handelsbetingelser
@@ -431,6 +438,7 @@ da:
       jirafe:
         app_id: App ID
         app_token: App token
+        currently_unavailable: 
         explanation: Felterne nedenfor er måske allerede udfyldt hvis du valgte at registrere Jirafe fra administrations dashboard.
         header: Jirafe statistik indstillinger
         site_id: Site ID
@@ -944,6 +952,7 @@ da:
     smtp_username: SMTP-brugernavn
     source: Kilde
     special_instructions: Specielle instrukser
+    split: 
     spree/order:
       coupon_code: Rabatkode
     spree_gateway_error_flash_for_checkout: Der var et problem med din betalingsinformation. Check dine informationer og prøv igen.

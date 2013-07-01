@@ -34,7 +34,7 @@ de:
       spree/order:
         checkout_complete: Checkout Erfolgreich
         completed_at: Abgeschlossen am
-        coupon_code: 
+        coupon_code: Gutscheincode
         created_at: Bestelldatum
         email: Kunden E-Mail
         ip_address: IP Adresse
@@ -290,6 +290,13 @@ de:
           delivery_error: Test E-Mail Fehler
           delivery_success: Test E-Mail wurde erfolgreich versendet
           error: ! 'Test E-Mail Fehler: %{e}'
+      tab:
+        configuration: 
+        orders: 
+        overview: 
+        products: 
+        promotions: 
+        reports: 
     administration: Verwaltung
     agree_to_privacy_policy: Datenschutzerklärung akzeptieren
     agree_to_terms_of_service: Allgemeine Geschäftsbedingungen akzeptieren
@@ -433,6 +440,7 @@ de:
       jirafe:
         app_id: App ID
         app_token: App Token
+        currently_unavailable: 
         explanation: Die unten stehenden Felder sind evtl. schon ausgefüllt, wenn Sie die Registrierung mit Jirafe im Admin-Dashboard gewählt haben.
         header: Jirafe Analytics Einstellungen
         site_id: Seiten ID
@@ -539,17 +547,17 @@ de:
     hide_cents: Centbeträge ausblenden
     home: Home
     i18n:
-      available_locales: 
-      fields: 
-      language: 
-      localization_settings: 
-      only_complete: 
-      only_incomplete: 
-      select_locale: 
-      show_only: 
-      supported_locales: 
+      available_locales: Verfügbare Locales
+      fields: Felder
+      language: Sprache
+      localization_settings: Lokalisierungseinstellungen
+      only_complete: Nur vollständige
+      only_incomplete: Nur unvollständige
+      select_locale: Wähle Locale
+      show_only: Zeige nur
+      supported_locales: Unterstützte Locales
       this_file_language: Deutsch (DE)
-      translations: 
+      translations: Übersetzungen
     icon: Symbol
     image: Bild
     image_settings: Bildeinstellungen
@@ -946,6 +954,7 @@ de:
     smtp_username: SMTP-Benutzername
     source: Quelle
     special_instructions: Spezielle Anweisungen
+    split: 
     spree/order:
       coupon_code: Gutscheincode
     spree_gateway_error_flash_for_checkout: Es gab Probleme mit Ihren Zahlungsinformationen. Bitte überprüfen Sie Ihre Angaben und probieren Sie es erneut.

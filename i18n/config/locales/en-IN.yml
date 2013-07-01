@@ -288,6 +288,13 @@ en-IN:
           delivery_error: Testmail delivery error
           delivery_success: Testmail sent successfully
           error: ! 'Testmail error: %{e}'
+      tab:
+        configuration: 
+        orders: 
+        overview: 
+        products: 
+        promotions: 
+        reports: 
     administration: Administration
     agree_to_privacy_policy: Agree to Privacy Policy
     agree_to_terms_of_service: Agree to Terms of Service
@@ -431,6 +438,7 @@ en-IN:
       jirafe:
         app_id: App ID
         app_token: App Token
+        currently_unavailable: 
         explanation: The fields below may already be populated if you chose to register with Jirafe from the admin dashboard.
         header: Jirafe Analytics Settings
         site_id: Site ID
@@ -944,6 +952,7 @@ en-IN:
     smtp_username: SMTP Username
     source: Source
     special_instructions: Special Instructions
+    split: 
     spree/order:
       coupon_code: Coupon Code
     spree_gateway_error_flash_for_checkout: There was a problem with your payment information. Please check your information and try again.

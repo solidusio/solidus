@@ -34,7 +34,7 @@ zh-CN:
       spree/order:
         checkout_complete: 完成结账
         completed_at: 结账日期
-        coupon_code: 
+        coupon_code: 优惠券号码
         created_at: 下单日期
         email: 电子邮件
         ip_address: IP地址
@@ -286,6 +286,13 @@ zh-CN:
           delivery_error: 测试邮件发送失败
           delivery_success: 测试邮件发送成功
           error: ! '测试邮件错误: %{e}'
+      tab:
+        configuration: 
+        orders: 
+        overview: 
+        products: 
+        promotions: 
+        reports: 
     administration: 管理
     agree_to_privacy_policy: 同意隐私政策
     agree_to_terms_of_service: 同意服务条款
@@ -305,7 +312,7 @@ zh-CN:
     analytics_desc_list_1: 
     analytics_desc_list_2: 仅需要一个免费的Spree帐号用于激活
     analytics_desc_list_3: 
-    analytics_desc_list_4: 
+    analytics_desc_list_4: 完全免费
     analytics_trackers: 追踪分析
     and: 以及
     are_you_sure: 你确定么？
@@ -404,7 +411,7 @@ zh-CN:
     coupon_code_better_exists: 
     coupon_code_expired: 优惠券号码已过期
     coupon_code_max_usage: 优惠券号码使用次数超出限制
-    coupon_code_not_eligible: 
+    coupon_code_not_eligible: 您的订单号码无法在您的订单上生效。
     coupon_code_not_found: 您所输入的优惠券号码不存在。请重新输入。
     create: 创建
     create_a_new_account: 创建一个新帐号
@@ -429,6 +436,7 @@ zh-CN:
       jirafe:
         app_id: 
         app_token: 添加口令
+        currently_unavailable: 
         explanation: 
         header: Jirafe分析器设置
         site_id: 
@@ -535,9 +543,9 @@ zh-CN:
     hide_cents: 隐藏分钱
     home: 首页
     i18n:
-      available_locales: 
-      fields: 
-      language: 
+      available_locales: 可用的语言
+      fields: 好友
+      language: 语言
       localization_settings: 
       only_complete: 
       only_incomplete: 
@@ -942,6 +950,7 @@ zh-CN:
     smtp_username: SMTP用户名
     source: 
     special_instructions: 特别说明
+    split: 
     spree/order:
       coupon_code: 优惠券号码
     spree_gateway_error_flash_for_checkout: 您的支付信息存在错误。请检查您的信息后再次尝试。
