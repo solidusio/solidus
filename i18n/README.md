@@ -4,6 +4,16 @@ This is the Internationalization project for [Spree Commerce][1]
 
 See the [official Internationalization documentation][2] for more details.
 
+**Please read the instructions below before submitting a PR**
+
+- Edit the translations directly on the [spree_i18n][5] project on Locale.
+- **That's it!**
+- The maintainer will then pull translations from the Locale project and push to Github.
+
+Happy translating!
+
+Pull requests for any fixes on how the application works are still very welcome :-)
+
 ## Installation
 
 Add the following to your `Gemfile`
@@ -65,18 +75,6 @@ If you would like to run the tests of this project, follow these steps:
 1. Clone this repo using `git clone git://github.com/spree/spree_i18n`
 2. Change into the directory and run `bundle exec rake test_app` to generate a dummy application.
 3. Run `bundle exec rspec spec` to run the tests.
-
-# spree_i18n
-
-A ruby translation project managed on [Localeapp][4] that's open to all!
-
-## Contributing to spree_i18n
-
-- Edit the translations directly on the [spree_i18n][5] project on Locale.
-- **That's it!**
-- The maintainer will then pull translations from the Locale project and push to Github.
-
-Happy translating!
 
 ## Support Team
 
