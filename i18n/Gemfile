@@ -5,8 +5,8 @@ group :assets do
   gem 'sass-rails', '~> 3.2.6'
 end
 
-
 group :test do
+  gem 'rspec'
   gem 'i18n-spec', '~> 0.4.0'
   gem 'factory_girl_rails', '~> 4.2.1'
   gem 'capybara', '~> 2.1.0'
