@@ -23,7 +23,7 @@ module SpreeI18n
     # Need to manually add en to the array because the en.yml was moved from
     # this project. spree/spree now have those keys.
     def all_locales_options
-      Locale.all.map { |locale| locale_presentation(locale) }.push(["English (US)", :en])
+      Locale.all.map { |locale| locale_presentation(locale) }.push(['English', :en])
     end
 
     private
