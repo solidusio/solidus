@@ -1,8 +1,8 @@
 source 'http://rubygems.org'
 
 group :assets do
-  gem 'coffee-rails', '~> 3.2.2'
-  gem 'sass-rails', '~> 3.2.6'
+  gem 'coffee-rails', '~> 4.0.0'
+  gem 'sass-rails', '~> 4.0.0'
 end
 
 group :test do
@@ -14,6 +14,7 @@ group :test do
 end
 
 gem 'spree', github: 'spree/spree', branch: 'master'
-gem 'globalize3', '~> 0.3.0'
+gem 'globalize3', github: 'svenfuchs/globalize3', branch: 'rails4'
+gem 'paper_trail', github: 'airblade/paper_trail'
 
 gemspec
