@@ -10,7 +10,7 @@ group :test do
   gem 'i18n-spec', '~> 0.4.0'
   gem 'factory_girl_rails', '~> 4.2.1'
   gem 'capybara', '~> 2.1.0'
-  gem 'selenium-webdriver', '~> 2.32.0'
+  gem 'selenium-webdriver', '~> 2.34.0'
 end
 
 gem 'spree', github: 'spree/spree', branch: 'master'
