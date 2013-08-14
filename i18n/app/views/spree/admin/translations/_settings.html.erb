@@ -20,7 +20,7 @@
   <legend><%= Spree.t(:'i18n.fields') %></legend>
   <nav class="menu">
     <ul id="attr_list">
-      <% @resource.class.translates.each_with_index do |attr, i| %>
+      <% @resource.class.translated_attribute_names.each_with_index do |attr, i| %>
         <li class="<%= 'active' if i == 0 %>">
           <a data-attr="<%= attr %>" href="#"><%= Spree.t(attr) %></a>
         </li>

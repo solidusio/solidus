@@ -8,7 +8,7 @@
     <tbody>
       <% SpreeI18n::Config.available_locales.each do |locale| %>
         <%= f.globalize_fields_for locale.to_sym do |g| %>
-          <% @resource.class.translates.each_with_index do |attr,i| %>
+          <% @resource.class.translated_attribute_names.each_with_index do |attr,i| %>
             <tr style="display:<%= i == 0 ? 'auto' : 'none' %>;" class="<%= attr %> <%= locale %> even">
               <td style="padding:4px;" colspan="2">
                 <%= Spree.t(:'i18n.this_file_language', :locale => locale) %> -
