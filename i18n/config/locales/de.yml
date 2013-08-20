@@ -18,6 +18,7 @@ de:
         name: Name
         numcode: ISO-Nummer
       spree/credit_card:
+        base: 
         cc_type: Typ
         month: Monat
         number: Nummer
@@ -128,6 +129,12 @@ de:
       spree/zone:
         description: Beschreibung
         name: Name
+    errors:
+      models:
+        spree/credit_card:
+          attributes:
+            base:
+              card_expired: 
     models:
       spree/address:
         one: Adresse
@@ -291,12 +298,13 @@ de:
           delivery_success: Test E-Mail wurde erfolgreich versendet
           error: ! 'Test E-Mail Fehler: %{e}'
       tab:
-        configuration: 
-        orders: 
-        overview: 
-        products: 
-        promotions: 
-        reports: 
+        configuration: Konfiguration
+        orders: Bestellungen
+        overview: Übersicht
+        products: Produkte
+        promotions: Aktion
+        reports: Berichte
+        users: 
     administration: Verwaltung
     agree_to_privacy_policy: Datenschutzerklärung akzeptieren
     agree_to_terms_of_service: Allgemeine Geschäftsbedingungen akzeptieren
@@ -355,6 +363,7 @@ de:
     back_to_users_list: Zurück zur Benutzerliste
     back_to_zones_list: Zurück zur Zonen Liste
     backorderable: Nachbestellbar
+    backorders_allowed: 
     balance_due: Soll
     bill_address: Rechnungsadresse
     billing: Rechnung
@@ -440,7 +449,7 @@ de:
       jirafe:
         app_id: App ID
         app_token: App Token
-        currently_unavailable: 
+        currently_unavailable: Jirafe ist zurzeit nicht erreichbar. Spree stellt automatisch eine Verbindung her, sobald es wieder verfügbar ist.
         explanation: Die unten stehenden Felder sind evtl. schon ausgefüllt, wenn Sie die Registrierung mit Jirafe im Admin-Dashboard gewählt haben.
         header: Jirafe Analytics Einstellungen
         site_id: Seiten ID
@@ -449,6 +458,7 @@ de:
     date: Datum
     date_completed: Abschlußdatum
     date_picker:
+      first_day: 
       format: ! '%d.%m.%Y'
       js_format: dd.mm.yy
     date_range: Datum (von/bis)
@@ -570,6 +580,7 @@ de:
     insufficient_stock: Nicht genügend auf Lager. Nur noch %{on_hand} verbleibend.
     intercept_email_address: Email-Adresse abstellen
     intercept_email_instructions: Email-Empfänger überschreiben und mit dieser Adresse ersetzen.
+    internal_name: 
     invalid_payment_provider: Ungültiger Zahlungsanbieter.
     invalid_promotion_action: Ungültige Aktion
     invalid_promotion_rule: Ungültige Regel
@@ -585,6 +596,7 @@ de:
       operators:
         gt: größer als
         gte: größer oder gleich als
+    items_cannot_be_shipped: Wir können die ausgewählten Artikel nicht an Ihre Lieferadresse schicken. Bitte wählen Sie eine andere Lieferadresse.
     jirafe: Jirafe
     landing_page_rule:
       path: Path
@@ -663,11 +675,13 @@ de:
     no_actions_added: Keine Aktionen hinzugefügt
     no_orders_found: Keine Bestellungen gefunden
     no_payment_methods_found: Keine Zahlungsmethoden gefunden
+    no_pending_payments: Keine ausstehenden Zahlungen
     no_products_found: Keine Produkte gefunden
     no_promotions_found: Keine Werbeaktionen gefunden
     no_results: Keine Ergebnisse
     no_rules_added: Keine Regeln verfügbar
     no_shipping_methods_found: Keine Versandarten gefunden
+    no_stock_locations_found: Kein Lagerort gefunden
     no_trackers_found: Keine Tracker gefunden
     no_tracking_present: Keine Informationen zur Sendungsverfolgung angegeben.
     none: kein
@@ -687,6 +701,7 @@ de:
     open: Öffnen
     open_all_adjustments: Alle Anpassungen öffnen
     option_type: Optionstyp
+    option_type_placeholder: Optionstyp wählen
     option_types: Optionen
     option_value: Optionswert
     option_values: Optionswerte
@@ -954,7 +969,7 @@ de:
     smtp_username: SMTP-Benutzername
     source: Quelle
     special_instructions: Spezielle Anweisungen
-    split: 
+    split: Aufteilen
     spree/order:
       coupon_code: Gutscheincode
     spree_gateway_error_flash_for_checkout: Es gab Probleme mit Ihren Zahlungsinformationen. Bitte überprüfen Sie Ihre Angaben und probieren Sie es erneut.
@@ -969,6 +984,7 @@ de:
     stock_location_info: Lagerstandort Info
     stock_locations: Lagerstandorte
     stock_management: Lagerverwaltung
+    stock_management_requires_a_stock_location: Bitte erstellen Sie einen Lagerstandort um das Lager zu verwalten.
     stock_movements: Lagerbewegungen
     stock_movements_for_stock_location: Lagerbewegungen für %{stock_location_name}
     stock_successfully_transferred: Lager wurde erfolgreich zwischen den Standorten transferiert
@@ -1008,6 +1024,7 @@ de:
         subject: Spree Test E-Mail
     test_mode: Testmodus
     thank_you_for_your_order: Vielen Dank für Ihre Bestellung
+    there_are_no_items_for_this_order: Die Bestellung enthält keine Artikel. Bitte fügen Sie der Bestellung Artikel hinzu um fortfahren zu können.
     there_were_problems_with_the_following_fields: Folgende Felder sind betroffen
     thumbnail: Miniatur
     time: Zeit
@@ -1047,6 +1064,7 @@ de:
       must_be_non_negative: darf keinen negativen Wert haben
     value: Wert
     variant: Variante
+    variant_placeholder: Variante wählen
     variants: Varianten
     version: Version
     void: entwerten

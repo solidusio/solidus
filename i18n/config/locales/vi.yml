@@ -18,6 +18,7 @@ vi:
         name: Tên
         numcode: Mã ISO
       spree/credit_card:
+        base: 
         cc_type: Kiểu
         month: Tháng
         number: Số
@@ -126,6 +127,12 @@ vi:
       spree/zone:
         description: Description
         name: Name
+    errors:
+      models:
+        spree/credit_card:
+          attributes:
+            base:
+              card_expired: 
     models:
       spree/address:
         one: Địa chỉ
@@ -293,6 +300,7 @@ vi:
         products: 
         promotions: 
         reports: 
+        users: 
     administration: Quản trị
     agree_to_privacy_policy: Đồng ý với Điều khoản riêng tư
     agree_to_terms_of_service: Đồng ý với Điều khoản dịch vụ
@@ -351,6 +359,7 @@ vi:
     back_to_users_list: Quay lại Liệt kê người dùng
     back_to_zones_list: Back To Zones List
     backorderable: Có thể đặt chỗ
+    backorders_allowed: 
     balance_due: Tiền cần thanh toán
     bill_address: Địa chỉ thanh toán
     billing: Thanh Toán
@@ -445,6 +454,7 @@ vi:
     date: Ngày
     date_completed: Date Completed
     date_picker:
+      first_day: 
       format: ! '%d/%m/%Y'
       js_format: dd/mm/yy
     date_range: Giới hạn ngày
@@ -566,6 +576,7 @@ vi:
     insufficient_stock: Không đủ hàng, chỉ còn lại %{on_hand}
     intercept_email_address: Can thiệp địa chỉ email
     intercept_email_instructions: Ghi đè người nhận email với địa chỉ này
+    internal_name: 
     invalid_payment_provider: Nhà cung cấp thanh toán không đúng.
     invalid_promotion_action: Hành động khuyến mại không đúng.
     invalid_promotion_rule: Luật khuyến mại không đúng.
@@ -581,6 +592,7 @@ vi:
       operators:
         gt: lớn hơn
         gte: lớn hơn hoặc bằng
+    items_cannot_be_shipped: 
     jirafe: Jirafe
     landing_page_rule:
       path: Đường dẫn
@@ -659,11 +671,13 @@ vi:
     no_actions_added: Không cần làm gì
     no_orders_found: Không tìm được đơn hàng
     no_payment_methods_found: Không tìm được cách thức thanh toán
+    no_pending_payments: 
     no_products_found: Không tìm thấy sản phẩm
     no_promotions_found: Không tìm được khuyến mại
     no_results: No results
     no_rules_added: No rules added
     no_shipping_methods_found: Không tìm được cách thưc vận chuyển
+    no_stock_locations_found: 
     no_trackers_found: Không tìm được Theo dõi
     no_tracking_present: Không có thông tin theo dõi được cung cấp.
     none: Rỗng
@@ -683,6 +697,7 @@ vi:
     open: Mở
     open_all_adjustments: Mở tất cả Chỉnh sửa
     option_type: Option Type
+    option_type_placeholder: 
     option_types: Kiểu tùy chọn
     option_value: Option Value
     option_values: Giá trị tùy chọn
@@ -965,6 +980,7 @@ vi:
     stock_location_info: Thông tin địa điểm hàng
     stock_locations: Địa điểm hàng
     stock_management: Quản lý hàng
+    stock_management_requires_a_stock_location: 
     stock_movements: Chuyển động của hàng
     stock_movements_for_stock_location: Chuyển động của hàng cho %{stock_location_name}
     stock_successfully_transferred: Hàng đã thành công chuyển giữa dịa điểm.
@@ -1004,6 +1020,7 @@ vi:
         subject: Testmail
     test_mode: Chế độ kiểm tra
     thank_you_for_your_order: Cảm ơn đã mua hàng. Xin hãy in ra một bản của trang này để tiện cho việc chứng thực nếu cần.
+    there_are_no_items_for_this_order: 
     there_were_problems_with_the_following_fields: There were problems with the following fields
     thumbnail: Hình nhỏ
     time: Thời gian
@@ -1043,6 +1060,7 @@ vi:
       must_be_non_negative: phải là số dương
     value: Giá trị
     variant: Variant
+    variant_placeholder: 
     variants: Biến thể
     version: Phiên bản
     void: Vô hiệu hóa

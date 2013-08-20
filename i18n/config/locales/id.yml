@@ -18,6 +18,7 @@ id:
         name: Nama
         numcode: Kode ISO
       spree/credit_card:
+        base: 
         cc_type: Tipe
         month: Bulan
         number: Nomor
@@ -126,6 +127,12 @@ id:
       spree/zone:
         description: Deskripsi
         name: Nama
+    errors:
+      models:
+        spree/credit_card:
+          attributes:
+            base:
+              card_expired: 
     models:
       spree/address:
         one: Alamat
@@ -293,6 +300,7 @@ id:
         products: 
         promotions: 
         reports: 
+        users: 
     administration: Administrasi
     agree_to_privacy_policy: Setuju kepada Kebijakan Privasi
     agree_to_terms_of_service: Setuju kepada Ketentuan Servis
@@ -351,6 +359,7 @@ id:
     back_to_users_list: Kembali ke Daftar User
     back_to_zones_list: Kembali ke Daftar Wilayah
     backorderable: 
+    backorders_allowed: 
     balance_due: Sisa Pelunasan
     bill_address: Alamat Tagihan
     billing: Penagihan
@@ -445,6 +454,7 @@ id:
     date: Tanggal
     date_completed: Tanggal Selesai
     date_picker:
+      first_day: 
       format: ! '%Y/%m/%d'
       js_format: yy/mm/dd
     date_range: Rentang Tanggal
@@ -566,6 +576,7 @@ id:
     insufficient_stock: Stok tidak cukup, hanya tersedia %{on_hand} buah
     intercept_email_address: Intercept Email Address
     intercept_email_instructions: Ganti email penerima dengan email ini
+    internal_name: 
     invalid_payment_provider: Penyedia pembayaran tidak valid
     invalid_promotion_action: Aksi promosi tidak valid
     invalid_promotion_rule: Aturan promosi tidak valid
@@ -581,6 +592,7 @@ id:
       operators:
         gt: lebih besar dari
         gte: lebih besar dari atau sama dengan
+    items_cannot_be_shipped: 
     jirafe: Jirafe
     landing_page_rule:
       path: Path
@@ -659,11 +671,13 @@ id:
     no_actions_added: Tidak ada aksi yang ditambahkan
     no_orders_found: Tidak ditemukan pemesanan
     no_payment_methods_found: Tidak ditemukan metode pembayaran
+    no_pending_payments: 
     no_products_found: Produk tidak ditemukan
     no_promotions_found: Promosi tidak ditemukan
     no_results: Tidak ada hasil
     no_rules_added: Tidak ada aturan tambahan
     no_shipping_methods_found: Tidak ditemukan metode pengiriman
+    no_stock_locations_found: 
     no_trackers_found: Pelacak tidak ditemukan
     no_tracking_present: 
     none: Tidak ada
@@ -683,6 +697,7 @@ id:
     open: Buka
     open_all_adjustments: Buka Semua Penyesuaian
     option_type: Pilihan tipe
+    option_type_placeholder: 
     option_types: Pilihan tipe
     option_value: Pilihan nilai
     option_values: Pilihan nilai
@@ -965,6 +980,7 @@ id:
     stock_location_info: Informasi lokasi stok
     stock_locations: Lokasi Stok
     stock_management: Manajemen Stok
+    stock_management_requires_a_stock_location: 
     stock_movements: Pergerakan Stok
     stock_movements_for_stock_location: 
     stock_successfully_transferred: 
@@ -1004,6 +1020,7 @@ id:
         subject: Testmail
     test_mode: Mode Tes
     thank_you_for_your_order: Terima kasih atas bisnis anda. Silahkan cetak sebuah salinan dari halaman konfirmasi ini untuk arsip anda.
+    there_are_no_items_for_this_order: 
     there_were_problems_with_the_following_fields: Terdapat beberapa masalah dengan
     thumbnail: Thumbnail
     time: Waktu
@@ -1043,6 +1060,7 @@ id:
       must_be_non_negative: Harus merupakan nilai positif
     value: Nilai
     variant: Varian
+    variant_placeholder: 
     variants: Varian
     version: Versi
     void: Batalkan

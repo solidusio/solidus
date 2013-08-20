@@ -18,6 +18,7 @@ lv:
         name: Nosaukums
         numcode: ISO kods
       spree/credit_card:
+        base: 
         cc_type: Tips
         month: Mēnesis
         number: Numurs
@@ -126,6 +127,12 @@ lv:
       spree/zone:
         description: Apraksts
         name: Nosaukums
+    errors:
+      models:
+        spree/credit_card:
+          attributes:
+            base:
+              card_expired: 
     models:
       spree/address:
         one: Adrese
@@ -293,6 +300,7 @@ lv:
         products: 
         promotions: 
         reports: 
+        users: 
     administration: Administrēšana
     agree_to_privacy_policy: 
     agree_to_terms_of_service: 
@@ -351,6 +359,7 @@ lv:
     back_to_users_list: 
     back_to_zones_list: Back To Zones List
     backorderable: 
+    backorders_allowed: 
     balance_due: Atlikums
     bill_address: Rēķina adrese
     billing: Rēķins
@@ -445,6 +454,7 @@ lv:
     date: 
     date_completed: Date Completed
     date_picker:
+      first_day: 
       format: 
       js_format: 
     date_range: Datuma diapazons
@@ -566,6 +576,7 @@ lv:
     insufficient_stock: Insufficient stock available, only %{on_hand} remaining
     intercept_email_address: Intercept Email Address
     intercept_email_instructions: Override email recipient and replace with this address.
+    internal_name: 
     invalid_payment_provider: 
     invalid_promotion_action: 
     invalid_promotion_rule: 
@@ -581,6 +592,7 @@ lv:
       operators:
         gt: greater than
         gte: greater than or equal to
+    items_cannot_be_shipped: 
     jirafe: 
     landing_page_rule:
       path: Path
@@ -659,11 +671,13 @@ lv:
     no_actions_added: 
     no_orders_found: 
     no_payment_methods_found: 
+    no_pending_payments: 
     no_products_found: Neviens produkts netika atrasts
     no_promotions_found: 
     no_results: No results
     no_rules_added: No rules added
     no_shipping_methods_found: 
+    no_stock_locations_found: 
     no_trackers_found: 
     no_tracking_present: 
     none: Nekas
@@ -683,6 +697,7 @@ lv:
     open: 
     open_all_adjustments: 
     option_type: Option Type
+    option_type_placeholder: 
     option_types: Opciju tips
     option_value: Option Value
     option_values: Opciju vērtība
@@ -965,6 +980,7 @@ lv:
     stock_location_info: 
     stock_locations: 
     stock_management: 
+    stock_management_requires_a_stock_location: 
     stock_movements: 
     stock_movements_for_stock_location: 
     stock_successfully_transferred: 
@@ -1004,6 +1020,7 @@ lv:
         subject: Testmail
     test_mode: Testa Mode
     thank_you_for_your_order: Paldies par sadarbību. Lūdzu, izdrukājiet šo apstiprinājumu savai zināšanai.
+    there_are_no_items_for_this_order: 
     there_were_problems_with_the_following_fields: Problēmas ar sekojošiem laukiem
     thumbnail: Thumbnail
     time: 
@@ -1043,6 +1060,7 @@ lv:
       must_be_non_negative: ir jābūt pozitīvai vērtībai
     value: Vērtība
     variant: Variant
+    variant_placeholder: 
     variants: Varianti
     version: Versija
     void: Void

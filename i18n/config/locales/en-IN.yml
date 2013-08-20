@@ -18,6 +18,7 @@ en-IN:
         name: Name
         numcode: ISO Code
       spree/credit_card:
+        base: 
         cc_type: Type
         month: Month
         number: Number
@@ -126,6 +127,12 @@ en-IN:
       spree/zone:
         description: Description
         name: Name
+    errors:
+      models:
+        spree/credit_card:
+          attributes:
+            base:
+              card_expired: 
     models:
       spree/address:
         one: Address
@@ -295,6 +302,7 @@ en-IN:
         products: 
         promotions: 
         reports: 
+        users: 
     administration: Administration
     agree_to_privacy_policy: Agree to Privacy Policy
     agree_to_terms_of_service: Agree to Terms of Service
@@ -353,6 +361,7 @@ en-IN:
     back_to_users_list: Back To Users List
     back_to_zones_list: Back To Zones List
     backorderable: Backorderable
+    backorders_allowed: 
     balance_due: Balance Due
     bill_address: Bill Address
     billing: Billing
@@ -447,6 +456,7 @@ en-IN:
     date: Date
     date_completed: Date Completed
     date_picker:
+      first_day: 
       format: ! '%Y/%m/%d'
       js_format: yy/mm/dd
     date_range: Date Range
@@ -568,6 +578,7 @@ en-IN:
     insufficient_stock: Insufficient stock available, only %{on_hand} remaining
     intercept_email_address: Intercept Email Address
     intercept_email_instructions: Override email recipient and replace with this address.
+    internal_name: 
     invalid_payment_provider: Invalid payment provider.
     invalid_promotion_action: Invalid promotion action.
     invalid_promotion_rule: Invalid promotion rule.
@@ -583,6 +594,7 @@ en-IN:
       operators:
         gt: greater than
         gte: greater than or equal to
+    items_cannot_be_shipped: 
     jirafe: Jirafe
     landing_page_rule:
       path: Path
@@ -661,11 +673,13 @@ en-IN:
     no_actions_added: No actions added
     no_orders_found: No orders found
     no_payment_methods_found: No payment methods found
+    no_pending_payments: 
     no_products_found: No products found
     no_promotions_found: No promotions found
     no_results: No results
     no_rules_added: No rules added
     no_shipping_methods_found: No shipping methods found
+    no_stock_locations_found: 
     no_trackers_found: No Trackers Found
     no_tracking_present: No tracking details provided.
     none: None
@@ -685,6 +699,7 @@ en-IN:
     open: Open
     open_all_adjustments: Open All Adjustments
     option_type: Option Type
+    option_type_placeholder: 
     option_types: Option Types
     option_value: Option Value
     option_values: Option Values
@@ -967,6 +982,7 @@ en-IN:
     stock_location_info: Stock location info
     stock_locations: Stock Locations
     stock_management: Stock Management
+    stock_management_requires_a_stock_location: 
     stock_movements: Stock Movements
     stock_movements_for_stock_location: Stock Movements for %{stock_location_name}
     stock_successfully_transferred: Stock was successfully transferred between locations.
@@ -1006,6 +1022,7 @@ en-IN:
         subject: Testmail
     test_mode: Test Mode
     thank_you_for_your_order: Thank you for your business.  Please print out a copy of this confirmation page for your records.
+    there_are_no_items_for_this_order: 
     there_were_problems_with_the_following_fields: There were problems with the following fields
     thumbnail: Thumbnail
     time: Time
@@ -1045,6 +1062,7 @@ en-IN:
       must_be_non_negative: must be a non-negative value
     value: Value
     variant: Variant
+    variant_placeholder: 
     variants: Variants
     version: Version
     void: Void

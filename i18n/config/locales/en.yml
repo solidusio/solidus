@@ -1,4 +1,4 @@
-en-GB:
+en:
   activerecord:
     attributes:
       spree/address:
@@ -9,8 +9,8 @@ en-GB:
         firstname: First Name
         lastname: Last Name
         phone: Phone
-        state: County
-        zipcode: Post Code
+        state: State
+        zipcode: Zip Code
       spree/country:
         iso: ISO
         iso3: ISO3
@@ -25,7 +25,7 @@ en-GB:
         verification_value: Verification Value
         year: Year
       spree/inventory_unit:
-        state: County
+        state: State
       spree/line_item:
         price: Price
         quantity: Quantity
@@ -44,7 +44,7 @@ en-GB:
         payment_state: Payment State
         shipment_state: Shipment State
         special_instructions: Special Instructions
-        state: County
+        state: State
         total: Total
       spree/order/bill_address:
         address1: Billing address street
@@ -52,16 +52,16 @@ en-GB:
         firstname: Billing address first name
         lastname: Billing address last name
         phone: Billing address phone
-        state: Billing address county
-        zipcode: Billing address post code
+        state: Billing address state
+        zipcode: Billing address zipcode
       spree/order/ship_address:
         address1: Shipping address street
         city: Shipping address city
         firstname: Shipping address first name
         lastname: Shipping address last name
         phone: Shipping address phone
-        state: Shipping address county
-        zipcode: Shipping address post code
+        state: Shipping address state
+        zipcode: Shipping address zipcode
       spree/payment:
         amount: Amount
       spree/payment_method:
@@ -132,7 +132,7 @@ en-GB:
         spree/credit_card:
           attributes:
             base:
-              card_expired: 
+              card_expired: Card has expired
     models:
       spree/address:
         one: Address
@@ -165,8 +165,8 @@ en-GB:
         one: Prototype
         other: Prototypes
       spree/return_authorization:
-        one: Return Authorisation
-        other: Return Authorisations
+        one: Return Authorization
+        other: Return Authorizations
       spree/role:
         one: Roles
         other: Roles
@@ -177,8 +177,8 @@ en-GB:
         one: Shipping Category
         other: Shipping Categories
       spree/state:
-        one: County
-        other: Counties
+        one: State
+        other: States
       spree/tax_category:
         one: Tax Category
         other: Tax Categories
@@ -203,15 +203,15 @@ en-GB:
   devise:
     confirmations:
       confirmed: Your account was successfully confirmed. You are now signed in.
-      send_instructions: ! 'You will receive an email with instructions about how to confirm your account in a few minuets. '
+      send_instructions: You will receive an email with instructions about how to confirm your account in a few minutes.
     failure:
       inactive: Your account was not activated yet.
       invalid: Invalid email or password.
       invalid_token: Invalid authentication token.
       locked: Your account is locked.
-      timeout: ! 'Your session expired, please sign in again to continue. '
+      timeout: Your session expired, please sign in again to continue.
       unauthenticated: You need to sign in or sign up before continuing.
-      unconfirmed: ! 'You have to confirm your account before continuing. '
+      unconfirmed: You have to confirm your account before continuing.
     mailer:
       confirmation_instructions:
         subject: Confirmation instructions
@@ -220,8 +220,8 @@ en-GB:
       unlock_instructions:
         subject: Unlock Instructions
     oauth_callbacks:
-      failure: Could not authorise you from %{kind} because "%{reason}".
-      success: Successfully authorised from %{kind} account.
+      failure: Could not authorize you from %{kind} because "%{reason}".
+      success: Successfully authorized from %{kind} account.
     unlocks:
       send_instructions: You will receive an email with instructions about how to unlock your account in a few minutes.
       unlocked: Your account was successfully unlocked. You are now signed in.
@@ -237,19 +237,19 @@ en-GB:
       updated: You updated your account successfully.
     user_sessions:
       signed_in: Signed in successfully.
-      signed_out: Singed out successfully.
+      signed_out: Signed out successfully.
   errors:
     messages:
       already_confirmed: was already confirmed
       not_found: not found
       not_locked: was not locked
       not_saved:
-        one: ! '1 error prohibited with %{resource} from being saved:'
+        one: ! '1 error prohibited this %{resource} from being saved:'
         other: ! '%{count} errors prohibited this %{resource} from being saved:'
   spree:
     abbreviation: Abbreviation
     account: Account
-    account_updated: Account updated!
+    account_updated: Account updated
     action: Action
     actions:
       cancel: Cancel
@@ -277,7 +277,7 @@ en-GB:
     add_state: Add State
     add_stock: Add Stock
     add_stock_management: Add Stock Management
-    add_to_cart: Add To Basket
+    add_to_cart: Add To Cart
     add_variant: Add Variant
     additional_item: Additional Item Cost
     address1: Address
@@ -290,11 +290,11 @@ en-GB:
     adjustments: Adjustments
     admin:
       mail_methods:
-        send_testmail: Send Testmail
+        send_testmail: Send Test Mail
         testmail:
-          delivery_error: Testmail delivery error
-          delivery_success: Testmail sent successfully
-          error: ! 'Testmail error: %{e}'
+          delivery_error: Test Mail delivery error
+          delivery_success: Test Mail sent successfully
+          error: ! 'Test Mail error: %{e}'
       tab:
         configuration: Configuration
         orders: Orders
@@ -302,7 +302,7 @@ en-GB:
         products: Products
         promotions: Promotions
         reports: Reports
-        users: 
+        users: Users
     administration: Administration
     agree_to_privacy_policy: Agree to Privacy Policy
     agree_to_terms_of_service: Agree to Terms of Service
@@ -325,18 +325,18 @@ en-GB:
     analytics_desc_list_4: It's completely free!
     analytics_trackers: Analytics Trackers
     and: and
-    are_you_sure: Are you sure
+    are_you_sure: Are you sure?
     are_you_sure_delete: Are you sure you want to delete this record?
     associated_adjustment_closed: The associated adjustment is closed, and will not be recalculated. Do you want to open it?
     attachment_default_style: Attachments Style
-    attachment_default_url: Attachments URL
+    attachment_default_url: Attachments Default URL
     attachment_path: Attachments Path
     attachment_styles: Paperclip Styles
     attachment_url: Attachments URL
-    authorization_failure: Authorisation Failure
+    authorization_failure: Authorization Failure
     available_on: Available On
     back: Back
-    back_end: Back End
+    back_end: Backend
     back_to_adjustments_list: Back To Adjustments List
     back_to_images_list: Back To Images List
     back_to_option_types_list: Back To Option Types List
@@ -345,13 +345,13 @@ en-GB:
     back_to_payments_list: Back To Payments List
     back_to_products_list: Back To Products List
     back_to_promotions_list: Back To Promotions List
-    back_to_properties_list: Back To Products List
+    back_to_properties_list: Back To Properties List
     back_to_prototypes_list: Back To Prototypes List
     back_to_reports_list: Back To Reports List
     back_to_shipping_categories: Back To Shipping Categories
     back_to_shipping_methods_list: Back To Shipping Methods List
     back_to_states_list: Back To States List
-    back_to_stock_locations_list: Back to Stock Movements List
+    back_to_stock_locations_list: Back to Stock Locations List
     back_to_stock_movements_list: Back to Stock Movements List
     back_to_stock_transfers_list: Back to Stock Transfers List
     back_to_store: Go Back To Store
@@ -361,7 +361,7 @@ en-GB:
     back_to_users_list: Back To Users List
     back_to_zones_list: Back To Zones List
     backorderable: Backorderable
-    backorders_allowed: 
+    backorders_allowed: backorders allowed
     balance_due: Balance Due
     bill_address: Bill Address
     billing: Billing
@@ -371,14 +371,14 @@ en-GB:
     calculator_settings_warning: If you are changing the calculator type, you must save first before you can edit the calculator settings
     cancel: cancel
     cannot_create_payment_without_payment_methods: You cannot create a payment for an order without any payment methods defined.
-    cannot_create_returns: Cannot create returns as this order has not shipped yet.
+    cannot_create_returns: Cannot create returns as this order has no shipped units.
     cannot_perform_operation: Cannot perform requested operation
     cannot_set_shipping_method_without_address: Cannot set shipping method until customer details are provided.
-    capture: capture
+    capture: Capture
     card_code: Card Code
     card_number: Card Number
     card_type_is: Card type is
-    cart: Basket
+    cart: Cart
     categories: Categories
     category: Category
     check_for_spree_alerts: Check for Spree alerts
@@ -386,7 +386,7 @@ en-GB:
     choose_a_customer: Choose a customer
     choose_currency: Choose Currency
     choose_dashboard_locale: Choose Dashboard Locale
-    city: Town / City
+    city: City
     clone: Clone
     close: Close
     close_all_adjustments: Close All Adjustments
@@ -406,7 +406,7 @@ en-GB:
     could_not_connect_to_jirafe: Could not connect to Jirafe to sync data. This will be automatically retried later.
     could_not_create_stock_movement: There was a problem saving this stock movement. Please try again.
     count_on_hand: Count On Hand
-    countries: ! 'Countries '
+    countries: Countries
     country: Country
     country_based: Country Based
     country_name: Name
@@ -440,7 +440,7 @@ en-GB:
     current_promotion_usage: ! 'Current Usage: %{count}'
     customer: Customer
     customer_details: Customer Details
-    customer_details_updated: The customer's details have been updated.
+    customer_details_updated: Customer Details Updated
     customer_search: Customer Search
     cut: Cut
     dash:
@@ -456,7 +456,7 @@ en-GB:
     date: Date
     date_completed: Date Completed
     date_picker:
-      first_day: 
+      first_day: 0
       format: ! '%Y/%m/%d'
       js_format: yy/mm/dd
     date_range: Date Range
@@ -495,7 +495,7 @@ en-GB:
     editing_zone: Editing Zone
     email: Email
     empty: Empty
-    empty_cart: Empty Basket
+    empty_cart: Empty Cart
     enable_mail_delivery: Enable Mail Delivery
     end: End
     ending_in: Ending in
@@ -530,7 +530,7 @@ en-GB:
     filename: Filename
     fill_in_customer_info: Please fill in customer info
     filter_results: Filter Results
-    finalize: Finalise
+    finalize: Finalize
     first_item: First Item Cost
     first_name: First Name
     first_name_begins_with: First Name Begins With
@@ -538,7 +538,7 @@ en-GB:
     flat_rate_per_item: Flat Rate (per item)
     flat_rate_per_order: Flat Rate (per order)
     flexible_rate: Flexible Rate
-    forgot_password: Forgot Password
+    forgot_password: Forgot Password?
     free_shipping: Free Shipping
     front_end: Front End
     gateway: Gateway
@@ -552,33 +552,33 @@ en-GB:
     guest_user_account: Checkout as a Guest
     has_no_shipped_units: has no shipped units
     height: Height
-    hide_cents: ! 'Hide pence '
+    hide_cents: Hide cents
     home: Home
     i18n:
       available_locales: Available Locales
       fields: Fields
       language: Language
-      localization_settings: Localisation Settings
+      localization_settings: Localization Settings
       only_complete: Only complete
       only_incomplete: Only incomplete
       select_locale: Select locale
       show_only: Show only
       supported_locales: Supported Locales
-      this_file_language: English (UK)
+      this_file_language: English (US)
       translations: Translations
     icon: Icon
     image: Image
     image_settings: Image Settings
     image_settings_updated: Image Settings successfully updated.
-    image_settings_warning: You will need to regenerate thumbnails if you update the paperclip styles. Use rake paperclip:refresh:thumbnails to do this.
+    image_settings_warning: You will need to regenerate thumbnails if you update the paperclip styles. Use rake paperclip:refresh:thumbnails CLASS=Spree::Image to do this.
     images: Images
     included_in_price: Included in Price
     included_price_validation: cannot be selected unless you have set a Default Tax Zone
-    instructions_to_reset_password: ! 'Fill out the form below and instructions to reset your password will be emailed to you:'
+    instructions_to_reset_password: Please enter your email on the form below
     insufficient_stock: Insufficient stock available, only %{on_hand} remaining
     intercept_email_address: Intercept Email Address
     intercept_email_instructions: Override email recipient and replace with this address.
-    internal_name: 
+    internal_name: Internal Name
     invalid_payment_provider: Invalid payment provider.
     invalid_promotion_action: Invalid promotion action.
     invalid_promotion_rule: Invalid promotion rule.
@@ -616,7 +616,7 @@ en-GB:
     logged_in_succesfully: Logged in successfully
     logged_out: You have been logged out.
     login: Login
-    login_as_existing: Log In as Existing Customer
+    login_as_existing: Login as Existing Customer
     login_failed: Login authentication failed.
     login_name: Login
     logout: Logout
@@ -640,7 +640,7 @@ en-GB:
     my_account: My Account
     my_orders: My Orders
     name: Name
-    name_or_sku: Name or SKU
+    name_or_sku: Name or SKU (enter at least first 4 characters of product name)
     new: New
     new_adjustment: New Adjustment
     new_customer: New Customer
@@ -654,7 +654,7 @@ en-GB:
     new_promotion: New Promotion
     new_property: New Property
     new_prototype: New Prototype
-    new_return_authorization: New Return Authorisation
+    new_return_authorization: New Return Authorization
     new_shipping_category: New Shipping Category
     new_shipping_method: New Shipping Method
     new_state: New State
@@ -824,8 +824,8 @@ en-GB:
     promotion_actions: Actions
     promotion_form:
       match_policies:
-        all: Match any of these rules
-        any: Match all of these rules
+        all: Match all of these rules
+        any: Match any of these rules
     promotion_rule: Promotion Rule
     promotion_rule_types:
       first_order:
@@ -864,7 +864,7 @@ en-GB:
     received: Received
     reference: Reference
     refund: Refund
-    register: Register as a New User
+    register: Register
     registration: Registration
     remember_me: Remember me
     remove: Remove
@@ -876,9 +876,9 @@ en-GB:
     resume: resume
     resumed: Resumed
     return: return
-    return_authorization: Return Authorisation
-    return_authorization_updated: Return authorisation updated
-    return_authorizations: Return Authorisations
+    return_authorization: Return Authorization
+    return_authorization_updated: Return authorization updated
+    return_authorizations: Return Authorizations
     return_quantity: Return Quantity
     returned: Returned
     review: Review
@@ -935,19 +935,19 @@ en-GB:
       shipped: shipped
     shipments: Shipments
     shipped: Shipped
-    shipping: Delivery
-    shipping_address: Delivery Address
+    shipping: Shipping
+    shipping_address: Shipping Address
     shipping_categories: Shipping Categories
     shipping_category: Shipping Category
     shipping_flat_rate_per_item: Flat rate per package item
     shipping_flat_rate_per_order: Flat rate
     shipping_flexible_rate: Flexible Rate per package item
-    shipping_instructions: Delivery Instructions
-    shipping_method: Delivery Method
-    shipping_methods: Delivery Methods
+    shipping_instructions: Shipping Instructions
+    shipping_method: Shipping Method
+    shipping_methods: Shipping Methods
     shipping_price_sack: Price sack
     shop_by_taxonomy: Shop by %{taxonomy}
-    shopping_cart: Shopping Basket
+    shopping_cart: Shopping Cart
     show: Show
     show_active: Show Active
     show_deleted: Show Deleted
@@ -973,10 +973,10 @@ en-GB:
     spree_gateway_error_flash_for_checkout: There was a problem with your payment information. Please check your information and try again.
     start: Start
     start_date: Valid from
-    state: County
+    state: State
     state_based: State Based
-    states: Counties
-    states_required: County Required
+    states: States
+    states_required: States Required
     status: Status
     stock_location: Stock Location
     stock_location_info: Stock location info
@@ -1003,7 +1003,7 @@ en-GB:
     tax_category: Tax Category
     tax_rate_amount_explanation: Tax rates are a decimal amount to aid in calculations, (i.e. if the tax rate is 5% then enter 0.05)
     tax_rates: Tax Rates
-    tax_settings: Tax settings
+    tax_settings: Tax Settings
     tax_total: Tax Total
     taxon: Taxon
     taxon_edit: Edit Taxon
@@ -1019,7 +1019,7 @@ en-GB:
       test_email:
         greeting: Congratulations!
         message: If you have received this email, then your email settings are correct.
-        subject: Testmail
+        subject: Test Mail
     test_mode: Test Mode
     thank_you_for_your_order: Thank you for your business.  Please print out a copy of this confirmation page for your records.
     there_are_no_items_for_this_order: There are no items for this order. Please add an item to the order to continue.
@@ -1041,7 +1041,7 @@ en-GB:
     unable_to_connect_to_gateway: Unable to connect to gateway.
     under_price: Under %{price}
     unlock: Unlock
-    unrecognized_card_type: Unrecognised card type
+    unrecognized_card_type: Unrecognized card type
     unshippable_items: Unshippable Items
     update: Update
     updating: Updating
@@ -1071,10 +1071,10 @@ en-GB:
     what_is_this: What's This?
     width: Width
     year: Year
-    you_have_no_orders_yet: You have no orders yet.
-    your_cart_is_empty: Your basket is empty
+    you_have_no_orders_yet: You have no orders yet
+    your_cart_is_empty: Your cart is empty
     your_order_is_empty_add_product: Your order is empty, please search for and add a product above
-    zip: Post Code
-    zipcode: Post Code
+    zip: Zip
+    zipcode: Zip Code
     zone: Zone
     zones: Zones

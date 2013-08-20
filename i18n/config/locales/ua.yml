@@ -18,6 +18,7 @@ ua:
         name: Назва
         numcode: Код ISO
       spree/credit_card:
+        base: 
         cc_type: Тип
         month: Місяць
         number: Номер
@@ -34,7 +35,7 @@ ua:
       spree/order:
         checkout_complete: Оформлення замовлення завершене
         completed_at: Завершено в
-        coupon_code: 
+        coupon_code: Код купону
         created_at: Дата замовлення
         email: E-Mail кліента
         ip_address: IP адреса
@@ -126,6 +127,12 @@ ua:
       spree/zone:
         description: Опис
         name: Найменування
+    errors:
+      models:
+        spree/credit_card:
+          attributes:
+            base:
+              card_expired: 
     models:
       spree/address:
         one: Адреса
@@ -195,7 +202,7 @@ ua:
         other: Зони
   devise:
     confirmations:
-      confirmed: 
+      confirmed: Ваш обліковий запис був успішно підтверджений. Зараз ви в системі.
       send_instructions: 
     failure:
       inactive: Ваш обліковий запис ще не активовано.
@@ -220,14 +227,14 @@ ua:
       unlocked: Ваш акаунт розблоковано. Тепер ви успішно увійшли в систему.
     user_passwords:
       user:
-        cannot_be_blank: 
+        cannot_be_blank: Ваш пароль не може бути пустим.
         send_instructions: 
         updated: Ваш пароль змінено. Ви успішно увійшли до системи.
     user_registrations:
       destroyed: До побачення! Ваш акаунт знищено, але ми сподіваємося побачити вас знову найближчим часом.
-      inactive_signed_up: 
-      signed_up: 
-      updated: 
+      inactive_signed_up: Ви успішно зареєструвались, проте, ви не змогли увійти в систему тому що ваш обліковий запис %{reason}.
+      signed_up: Вітаємо! Ви успішно ввійшли в систему.
+      updated: Ваш обліковий запис був успішно змінений.
     user_sessions:
       signed_in: Ви успішно увійшли до системи.
       signed_out: Ви вийшли з системи.
@@ -266,8 +273,8 @@ ua:
     add_product_properties: Додати властивості товару
     add_rule_of_type: Додати правило типу
     add_state: Додати регіон/область
-    add_stock: 
-    add_stock_management: 
+    add_stock: Додати інвентар
+    add_stock_management: Додати управління інвентарем
     add_to_cart: Додати в кошик
     add_variant: Додати варіант
     additional_item: Ставка для додаткових найменувань
@@ -275,8 +282,8 @@ ua:
     address2: Адреса (продовження)
     adjustment: Надбавка
     adjustment_amount: Загалом
-    adjustment_successfully_closed: 
-    adjustment_successfully_opened: 
+    adjustment_successfully_closed: Коригування було успішно закрите!
+    adjustment_successfully_opened: Коригування було успішно відкрите!
     adjustment_total: Разом (надбавки)
     adjustments: Надбавки
     admin:
@@ -287,12 +294,13 @@ ua:
           delivery_success: Тестового повідомлення успішно доставлене
           error: ! 'Testmail error: %{e}'
       tab:
-        configuration: 
-        orders: 
-        overview: 
-        products: 
+        configuration: Налаштування
+        orders: Замовлення
+        overview: Перегляд
+        products: Товари
         promotions: 
         reports: 
+        users: 
     administration: Администрирование
     agree_to_privacy_policy: 
     agree_to_terms_of_service: 
@@ -351,6 +359,7 @@ ua:
     back_to_users_list: Назад досписку користувачів
     back_to_zones_list: Повернутися до списку зон
     backorderable: 
+    backorders_allowed: 
     balance_due: Дебетове сальдо
     bill_address: Платіжний адресу
     billing: Біллінг
@@ -445,6 +454,7 @@ ua:
     date: Дата
     date_completed: Дата завершення
     date_picker:
+      first_day: 
       format: 
       js_format: рр/мм/чч
     date_range: Період часу
@@ -566,6 +576,7 @@ ua:
     insufficient_stock: Недостатньо товару на складі, тільки %{on_hand} в наявності
     intercept_email_address: Перехоплення листів
     intercept_email_instructions: Замінити email одержувача на цю адресу.
+    internal_name: 
     invalid_payment_provider: 
     invalid_promotion_action: 
     invalid_promotion_rule: 
@@ -581,6 +592,7 @@ ua:
       operators:
         gt: більше
         gte: більше або дорівнює
+    items_cannot_be_shipped: 
     jirafe: 
     landing_page_rule:
       path: Шлях
@@ -659,11 +671,13 @@ ua:
     no_actions_added: 
     no_orders_found: Замовлень не знайдено
     no_payment_methods_found: Способів оплати не знайдено
+    no_pending_payments: 
     no_products_found: Не знайдено жодного товару
     no_promotions_found: Акцій не знайдено
     no_results: Нічого не знайдено
     no_rules_added: Жодного правила не задано
     no_shipping_methods_found: Способів доставки не знайдено
+    no_stock_locations_found: 
     no_trackers_found: 
     no_tracking_present: 
     none: Жодного
@@ -683,6 +697,7 @@ ua:
     open: Відкрити
     open_all_adjustments: 
     option_type: Товарна опція
+    option_type_placeholder: 
     option_types: Товарні опції
     option_value: Можливе значення опції
     option_values: Можливі значення опцій
@@ -965,6 +980,7 @@ ua:
     stock_location_info: 
     stock_locations: 
     stock_management: 
+    stock_management_requires_a_stock_location: 
     stock_movements: 
     stock_movements_for_stock_location: 
     stock_successfully_transferred: 
@@ -1004,6 +1020,7 @@ ua:
         subject: Тестове повідомлення
     test_mode: Тестовий режим
     thank_you_for_your_order: Дякуємо за покупку!
+    there_are_no_items_for_this_order: 
     there_were_problems_with_the_following_fields: Виникли деякі проблеми з наступними полями
     thumbnail: Мініатюра
     time: Час
@@ -1043,6 +1060,7 @@ ua:
       must_be_non_negative: має бути невід'ємним числом
     value: Значення
     variant: Варіант
+    variant_placeholder: 
     variants: Варіанти
     version: Версія
     void: Анульовані

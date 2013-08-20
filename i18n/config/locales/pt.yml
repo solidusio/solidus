@@ -18,6 +18,7 @@ pt:
         name: Name
         numcode: ISO Code
       spree/credit_card:
+        base: 
         cc_type: Type
         month: Month
         number: Number
@@ -126,6 +127,12 @@ pt:
       spree/zone:
         description: Description
         name: Name
+    errors:
+      models:
+        spree/credit_card:
+          attributes:
+            base:
+              card_expired: 
     models:
       spree/address:
         one: Address
@@ -293,6 +300,7 @@ pt:
         products: 
         promotions: 
         reports: 
+        users: 
     administration: Administração
     agree_to_privacy_policy: 
     agree_to_terms_of_service: 
@@ -351,6 +359,7 @@ pt:
     back_to_users_list: 
     back_to_zones_list: Back To Zones List
     backorderable: 
+    backorders_allowed: 
     balance_due: Saldo devedor
     bill_address: Endereço para Faturação
     billing: Faturação
@@ -445,6 +454,7 @@ pt:
     date: 
     date_completed: Date Completed
     date_picker:
+      first_day: 
       format: 
       js_format: 
     date_range: Entre as Datas
@@ -566,6 +576,7 @@ pt:
     insufficient_stock: Insufficient stock available, only %{on_hand} remaining
     intercept_email_address: ! 'Interceptar endereço de email '
     intercept_email_instructions: Sobreescrever destinatários por este endereço de email.
+    internal_name: 
     invalid_payment_provider: 
     invalid_promotion_action: 
     invalid_promotion_rule: 
@@ -581,6 +592,7 @@ pt:
       operators:
         gt: maior que
         gte: maior ou igual que
+    items_cannot_be_shipped: 
     jirafe: 
     landing_page_rule:
       path: Path
@@ -659,11 +671,13 @@ pt:
     no_actions_added: 
     no_orders_found: 
     no_payment_methods_found: 
+    no_pending_payments: 
     no_products_found: Não existem produtos
     no_promotions_found: 
     no_results: Não existem resultados
     no_rules_added: Nenhuma regra adicionada
     no_shipping_methods_found: 
+    no_stock_locations_found: 
     no_trackers_found: 
     no_tracking_present: 
     none: Nenhum
@@ -683,6 +697,7 @@ pt:
     open: 
     open_all_adjustments: 
     option_type: Tipo de Opção
+    option_type_placeholder: 
     option_types: Tipos de Opção
     option_value: Valor da Opção
     option_values: Valores das Opções
@@ -965,6 +980,7 @@ pt:
     stock_location_info: 
     stock_locations: 
     stock_management: 
+    stock_management_requires_a_stock_location: 
     stock_movements: 
     stock_movements_for_stock_location: 
     stock_successfully_transferred: 
@@ -1004,6 +1020,7 @@ pt:
         subject: Testmail
     test_mode: Modo de Teste
     thank_you_for_your_order: Obrigado pela sua compra. Por favor, imprima uma cópia desta página de confirmação.
+    there_are_no_items_for_this_order: 
     there_were_problems_with_the_following_fields: Houve um problema com os seguintes campos
     thumbnail: Miniatura
     time: 
@@ -1043,6 +1060,7 @@ pt:
       must_be_non_negative: deve ser um valor positivo ou zero
     value: Valor
     variant: Variant
+    variant_placeholder: 
     variants: Variantes
     version: Versão
     void: Vazio

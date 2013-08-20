@@ -18,6 +18,7 @@ ko:
         name: Name
         numcode: ISO Code
       spree/credit_card:
+        base: 
         cc_type: Type
         month: Month
         number: Number
@@ -126,6 +127,12 @@ ko:
       spree/zone:
         description: Description
         name: Name
+    errors:
+      models:
+        spree/credit_card:
+          attributes:
+            base:
+              card_expired: 
     models:
       spree/address:
         one: Address
@@ -293,6 +300,7 @@ ko:
         products: 
         promotions: 
         reports: 
+        users: 
     administration: 운영
     agree_to_privacy_policy: 
     agree_to_terms_of_service: 
@@ -351,6 +359,7 @@ ko:
     back_to_users_list: 
     back_to_zones_list: Back To Zones List
     backorderable: 
+    backorders_allowed: 
     balance_due: 부족
     bill_address: 청구서 주소
     billing: 청구서
@@ -445,6 +454,7 @@ ko:
     date: 
     date_completed: Date Completed
     date_picker:
+      first_day: 
       format: 
       js_format: 
     date_range: 날짜 범위
@@ -566,6 +576,7 @@ ko:
     insufficient_stock: Insufficient stock available, only %{on_hand} remaining
     intercept_email_address: 
     intercept_email_instructions: 
+    internal_name: 
     invalid_payment_provider: 
     invalid_promotion_action: 
     invalid_promotion_rule: 
@@ -581,6 +592,7 @@ ko:
       operators:
         gt: 보다 큰
         gte: 보다 크거나 같은
+    items_cannot_be_shipped: 
     jirafe: 
     landing_page_rule:
       path: Path
@@ -659,11 +671,13 @@ ko:
     no_actions_added: 
     no_orders_found: 
     no_payment_methods_found: 
+    no_pending_payments: 
     no_products_found: 찾는 상품이 없음
     no_promotions_found: 
     no_results: 결과가 없음
     no_rules_added: 추가 된 룰이 없음
     no_shipping_methods_found: 
+    no_stock_locations_found: 
     no_trackers_found: 
     no_tracking_present: 
     none: 없음
@@ -683,6 +697,7 @@ ko:
     open: 
     open_all_adjustments: 
     option_type: 옵션 타입
+    option_type_placeholder: 
     option_types: 옵션 타입
     option_value: 옵션 값
     option_values: 옵션 값
@@ -965,6 +980,7 @@ ko:
     stock_location_info: 
     stock_locations: 
     stock_management: 
+    stock_management_requires_a_stock_location: 
     stock_movements: 
     stock_movements_for_stock_location: 
     stock_successfully_transferred: 
@@ -1004,6 +1020,7 @@ ko:
         subject: Testmail
     test_mode: 테스트 모드
     thank_you_for_your_order: 
+    there_are_no_items_for_this_order: 
     there_were_problems_with_the_following_fields: 다음 값들에 문제가 있습니다
     thumbnail: 썸네일
     time: 
@@ -1043,6 +1060,7 @@ ko:
       must_be_non_negative: 
     value: 값
     variant: Variant
+    variant_placeholder: 
     variants: 배리언트
     version: 버전
     void: 

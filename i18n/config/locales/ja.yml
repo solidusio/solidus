@@ -18,6 +18,7 @@ ja:
         name: 名
         numcode: ISOコード
       spree/credit_card:
+        base: 
         cc_type: カード類
         month: 月
         number: カード番号
@@ -34,7 +35,7 @@ ja:
       spree/order:
         checkout_complete: 注文の受け付けを完了しました
         completed_at: 完了日時
-        coupon_code: 
+        coupon_code: クーポンコード
         created_at: 注文日
         email: メールアドレス
         ip_address: IPアドレス
@@ -126,6 +127,12 @@ ja:
       spree/zone:
         description: 説明
         name: 名前
+    errors:
+      models:
+        spree/credit_card:
+          attributes:
+            base:
+              card_expired: 
     models:
       spree/address:
         one: 住所
@@ -203,8 +210,8 @@ ja:
       invalid_token: 無効な認証トークン。
       locked: アカウントはロックされています
       timeout: 
-      unauthenticated: 
-      unconfirmed: 
+      unauthenticated: 続ける前にサインインかサインアップが必要です。
+      unconfirmed: 続ける前にアカウントの確認が必要です。
     mailer:
       confirmation_instructions:
         subject: 
@@ -222,15 +229,15 @@ ja:
       user:
         cannot_be_blank: パスワードを入力してください。
         send_instructions: 
-        updated: 
+        updated: パスワードの変更に成功しました。サインインし直してください。
     user_registrations:
       destroyed: 
       inactive_signed_up: 
       signed_up: 
       updated: 
     user_sessions:
-      signed_in: 
-      signed_out: 
+      signed_in: サインインに成功しました。
+      signed_out: サインアウトに成功しました。
   errors:
     messages:
       already_confirmed: 
@@ -266,13 +273,13 @@ ja:
     add_product_properties: 商品に属性を追加
     add_rule_of_type: 次のタイプのルールを追加する
     add_state: 都道府県（州）の追加
-    add_stock: 
+    add_stock: ストック追加
     add_stock_management: 
     add_to_cart: カートに追加
     add_variant: 
     additional_item: 2品目からの値段増加
-    address1: 
-    address2: 
+    address1: 住所１
+    address2: 住所２
     adjustment: 調整（値引き・追加料金）
     adjustment_amount: 
     adjustment_successfully_closed: 
@@ -293,6 +300,7 @@ ja:
         products: 
         promotions: 
         reports: 
+        users: 
     administration: 管理
     agree_to_privacy_policy: 
     agree_to_terms_of_service: 
@@ -351,6 +359,7 @@ ja:
     back_to_users_list: ユーザー一覧に戻る
     back_to_zones_list: ゾーン一覧に戻る
     backorderable: 
+    backorders_allowed: 
     balance_due: 未払額
     bill_address: 請求先住所
     billing: 決済
@@ -445,6 +454,7 @@ ja:
     date: 
     date_completed: 完了日
     date_picker:
+      first_day: 
       format: 
       js_format: 
     date_range: 日範囲
@@ -566,6 +576,7 @@ ja:
     insufficient_stock: 在庫が十分ではありません。残り%{on_hand}個です。
     intercept_email_address: 置き換え用のメールアドレス
     intercept_email_instructions: メールの宛先をこのアドレスで置き換えます。
+    internal_name: 
     invalid_payment_provider: 
     invalid_promotion_action: 
     invalid_promotion_rule: 
@@ -581,6 +592,7 @@ ja:
       operators:
         gt: greater than
         gte: greater than or equal to
+    items_cannot_be_shipped: 
     jirafe: 
     landing_page_rule:
       path: パス
@@ -659,11 +671,13 @@ ja:
     no_actions_added: 
     no_orders_found: 
     no_payment_methods_found: 
+    no_pending_payments: 
     no_products_found: 商品が見付かりませんでした。
     no_promotions_found: プロモーションが見つかりませんでした。
     no_results: 検索結果がありませんでした。
     no_rules_added: ルールが追加されていません
     no_shipping_methods_found: 
+    no_stock_locations_found: 
     no_trackers_found: トラッカーが見つかりませんでした。
     no_tracking_present: 
     none: 空です
@@ -683,6 +697,7 @@ ja:
     open: 
     open_all_adjustments: 
     option_type: オプションタイプ
+    option_type_placeholder: 
     option_types: オプションタイプ
     option_value: オプション価格
     option_values: オプション価格
@@ -965,6 +980,7 @@ ja:
     stock_location_info: 
     stock_locations: 
     stock_management: 
+    stock_management_requires_a_stock_location: 
     stock_movements: 
     stock_movements_for_stock_location: 
     stock_successfully_transferred: 
@@ -1004,6 +1020,7 @@ ja:
         subject: テストメール
     test_mode: テストモード
     thank_you_for_your_order: ご注文ありがとうございます。この確認画面を控えとして印刷してください。
+    there_are_no_items_for_this_order: 
     there_were_problems_with_the_following_fields: 以下の入力欄で問題がありました
     thumbnail: サムネール
     time: 
@@ -1043,6 +1060,7 @@ ja:
       must_be_non_negative: 0以上の数字が必要です
     value: 値
     variant: 種類
+    variant_placeholder: 
     variants: 種類
     version: バージョン
     void: 無効

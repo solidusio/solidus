@@ -18,6 +18,7 @@ de-CH:
         name: 
         numcode: 
       spree/credit_card:
+        base: 
         cc_type: 
         month: 
         number: 
@@ -126,6 +127,12 @@ de-CH:
       spree/zone:
         description: 
         name: 
+    errors:
+      models:
+        spree/credit_card:
+          attributes:
+            base:
+              card_expired: 
     models:
       spree/address: 
       spree/country: 
@@ -249,6 +256,7 @@ de-CH:
         products: 
         promotions: 
         reports: 
+        users: 
     administration: Verwaltung
     agree_to_privacy_policy: 
     agree_to_terms_of_service: 
@@ -307,6 +315,7 @@ de-CH:
     back_to_users_list: 
     back_to_zones_list: Back To Zones List
     backorderable: 
+    backorders_allowed: 
     balance_due: Total ausstehend
     bill_address: Rechnungsadresse
     billing: Billing
@@ -401,6 +410,7 @@ de-CH:
     date: 
     date_completed: Date Completed
     date_picker:
+      first_day: 
       format: 
       js_format: 
     date_range: Datum (von/bis)
@@ -522,6 +532,7 @@ de-CH:
     insufficient_stock: Insufficient stock available, only %{on_hand} remaining
     intercept_email_address: Intercept Email Address
     intercept_email_instructions: Override email recipient and replace with this address.
+    internal_name: 
     invalid_payment_provider: 
     invalid_promotion_action: 
     invalid_promotion_rule: 
@@ -537,6 +548,7 @@ de-CH:
       operators:
         gt: greater than
         gte: greater than or equal to
+    items_cannot_be_shipped: 
     jirafe: 
     landing_page_rule:
       path: Path
@@ -615,11 +627,13 @@ de-CH:
     no_actions_added: 
     no_orders_found: 
     no_payment_methods_found: 
+    no_pending_payments: 
     no_products_found: Keine Produkte gefunden
     no_promotions_found: 
     no_results: No results
     no_rules_added: No rules added
     no_shipping_methods_found: 
+    no_stock_locations_found: 
     no_trackers_found: 
     no_tracking_present: 
     none: kein
@@ -639,6 +653,7 @@ de-CH:
     open: 
     open_all_adjustments: 
     option_type: Option Type
+    option_type_placeholder: 
     option_types: Optionen
     option_value: Option Value
     option_values: Optionswalues
@@ -921,6 +936,7 @@ de-CH:
     stock_location_info: 
     stock_locations: 
     stock_management: 
+    stock_management_requires_a_stock_location: 
     stock_movements: 
     stock_movements_for_stock_location: 
     stock_successfully_transferred: 
@@ -960,6 +976,7 @@ de-CH:
         subject: Testmail
     test_mode: Test-Modus
     thank_you_for_your_order: Vielen Dank für ihre Bestellung
+    there_are_no_items_for_this_order: 
     there_were_problems_with_the_following_fields: There were problems with the following fields
     thumbnail: Miniaturansicht
     time: 
@@ -999,6 +1016,7 @@ de-CH:
       must_be_non_negative: must be a non-negative value
     value: Wert
     variant: Variant
+    variant_placeholder: 
     variants: Varianten
     version: Version
     void: Void

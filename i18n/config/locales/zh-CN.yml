@@ -18,6 +18,7 @@ zh-CN:
         name: 名称
         numcode: ISO编号
       spree/credit_card:
+        base: 
         cc_type: 信用卡类型
         month: 月份
         number: 卡号
@@ -126,6 +127,12 @@ zh-CN:
       spree/zone:
         description: 描述
         name: 名称
+    errors:
+      models:
+        spree/credit_card:
+          attributes:
+            base:
+              card_expired: 
     models:
       spree/address:
         one: 地址
@@ -293,6 +300,7 @@ zh-CN:
         products: 
         promotions: 
         reports: 
+        users: 
     administration: 管理
     agree_to_privacy_policy: 同意隐私政策
     agree_to_terms_of_service: 同意服务条款
@@ -351,6 +359,7 @@ zh-CN:
     back_to_users_list: 回到用户列表
     back_to_zones_list: 回到区域列表
     backorderable: 可预订
+    backorders_allowed: 
     balance_due: 尚欠款
     bill_address: 账单地址
     billing: 账单
@@ -445,6 +454,7 @@ zh-CN:
     date: 日期
     date_completed: 完成日期
     date_picker:
+      first_day: 
       format: ! '%Y/%m/%d'
       js_format: yy/mm/dd
     date_range: 时间范围
@@ -566,6 +576,7 @@ zh-CN:
     insufficient_stock: 库存不足，当前还剩下%{on_hand}件库存
     intercept_email_address: 用于接收邮件的邮箱地址
     intercept_email_instructions: 使用以下邮箱地址覆盖所有收件人邮箱
+    internal_name: 
     invalid_payment_provider: 无效的支付服务提供商。
     invalid_promotion_action: 无效的优惠方式。
     invalid_promotion_rule: 无效的促销规则。
@@ -581,6 +592,7 @@ zh-CN:
       operators:
         gt: 大于
         gte: 大于或等于
+    items_cannot_be_shipped: 
     jirafe: Jirafe
     landing_page_rule:
       path: Path
@@ -659,11 +671,13 @@ zh-CN:
     no_actions_added: 未添加动作
     no_orders_found: 找不到任何订单
     no_payment_methods_found: 找不到任何支付方式
+    no_pending_payments: 
     no_products_found: 找不到产品
     no_promotions_found: 找不到任何促销活动
     no_results: 无任何结果
     no_rules_added: 未添加规则
     no_shipping_methods_found: 找不到任何配送方式
+    no_stock_locations_found: 
     no_trackers_found: 找不到任何追踪器
     no_tracking_present: 未提供跟踪细节。
     none: 没有
@@ -683,6 +697,7 @@ zh-CN:
     open: 打开
     open_all_adjustments: 启用所有价格调整
     option_type: 选项类型
+    option_type_placeholder: 
     option_types: 选项类型
     option_value: 选项值
     option_values: 选项值
@@ -965,6 +980,7 @@ zh-CN:
     stock_location_info: 
     stock_locations: 
     stock_management: 
+    stock_management_requires_a_stock_location: 
     stock_movements: 
     stock_movements_for_stock_location: 
     stock_successfully_transferred: 
@@ -1004,6 +1020,7 @@ zh-CN:
         subject: 测试邮件
     test_mode: 测试模式
     thank_you_for_your_order: 感谢您的订购，请打印这张订单作为购买凭证。
+    there_are_no_items_for_this_order: 
     there_were_problems_with_the_following_fields: 以下字段存在错误
     thumbnail: 缩略图
     time: 时间
@@ -1043,6 +1060,7 @@ zh-CN:
       must_be_non_negative: 不能为负数
     value: 价值
     variant: 具体型号
+    variant_placeholder: 
     variants: 具体型号
     version: 版本
     void: 作废

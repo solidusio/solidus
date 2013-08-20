@@ -18,6 +18,7 @@ sl-SI:
         name: Name
         numcode: ISO Code
       spree/credit_card:
+        base: 
         cc_type: Type
         month: Month
         number: Number
@@ -126,6 +127,12 @@ sl-SI:
       spree/zone:
         description: Description
         name: Name
+    errors:
+      models:
+        spree/credit_card:
+          attributes:
+            base:
+              card_expired: 
     models:
       spree/address:
         one: Address
@@ -293,6 +300,7 @@ sl-SI:
         products: 
         promotions: 
         reports: 
+        users: 
     administration: Administracija
     agree_to_privacy_policy: 
     agree_to_terms_of_service: 
@@ -351,6 +359,7 @@ sl-SI:
     back_to_users_list: 
     back_to_zones_list: Back To Zones List
     backorderable: 
+    backorders_allowed: 
     balance_due: Balance Due
     bill_address: Naslov za Račun
     billing: Račun
@@ -445,6 +454,7 @@ sl-SI:
     date: 
     date_completed: Date Completed
     date_picker:
+      first_day: 
       format: 
       js_format: 
     date_range: Obdobje
@@ -566,6 +576,7 @@ sl-SI:
     insufficient_stock: Insufficient stock available, only %{on_hand} remaining
     intercept_email_address: Prestrezi Email naslov
     intercept_email_instructions: Zamenjaj prejemnika email sporočila s tem naslovom
+    internal_name: 
     invalid_payment_provider: 
     invalid_promotion_action: 
     invalid_promotion_rule: 
@@ -581,6 +592,7 @@ sl-SI:
       operators:
         gt: večje
         gte: večje ali enako
+    items_cannot_be_shipped: 
     jirafe: 
     landing_page_rule:
       path: Path
@@ -659,11 +671,13 @@ sl-SI:
     no_actions_added: 
     no_orders_found: 
     no_payment_methods_found: 
+    no_pending_payments: 
     no_products_found: Ni izdelkov
     no_promotions_found: 
     no_results: Ni zadetkov
     no_rules_added: Ni dodanih pravil
     no_shipping_methods_found: 
+    no_stock_locations_found: 
     no_trackers_found: 
     no_tracking_present: 
     none: Noben
@@ -683,6 +697,7 @@ sl-SI:
     open: 
     open_all_adjustments: 
     option_type: Option Type
+    option_type_placeholder: 
     option_types: Možnosti izbire
     option_value: Option Value
     option_values: Izbire
@@ -965,6 +980,7 @@ sl-SI:
     stock_location_info: 
     stock_locations: 
     stock_management: 
+    stock_management_requires_a_stock_location: 
     stock_movements: 
     stock_movements_for_stock_location: 
     stock_successfully_transferred: 
@@ -1004,6 +1020,7 @@ sl-SI:
         subject: Testmail
     test_mode: Testni način
     thank_you_for_your_order: Hvala za zaupanje. Prosimo natisnite si kopijo te potrditvene strani za lastno referenco.
+    there_are_no_items_for_this_order: 
     there_were_problems_with_the_following_fields: There were problems with the following fields
     thumbnail: Mala slika
     time: 
@@ -1043,6 +1060,7 @@ sl-SI:
       must_be_non_negative: mora biti pozitivna vrednost
     value: Vrednost
     variant: Variant
+    variant_placeholder: 
     variants: Variante
     version: Verzija
     void: Neveljaven

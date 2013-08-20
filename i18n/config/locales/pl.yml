@@ -18,6 +18,7 @@ pl:
         name: Nazwa
         numcode: Kod ISO
       spree/credit_card:
+        base: 
         cc_type: Typ
         month: Miesiąc
         number: Numer
@@ -126,6 +127,12 @@ pl:
       spree/zone:
         description: Opis
         name: Nazwa
+    errors:
+      models:
+        spree/credit_card:
+          attributes:
+            base:
+              card_expired: 
     models:
       spree/address:
         few: Adresów
@@ -144,13 +151,27 @@ pl:
         one: Jednostka Stanu
         other: Jednostki Stanu
       spree/line_item: 
-      spree/order: 
-      spree/payment: 
-      spree/product: 
-      spree/property: 
+      spree/order:
+        few: Zamówienia
+        one: Zamówienie
+        other: Zamówienia
+      spree/payment:
+        few: Płatności
+        one: Płatność
+        other: Płatności
+      spree/product:
+        few: Przedmioty
+        one: Przedmiot
+        other: Przedmioty
+      spree/property:
+        few: Właściwości
+        one: Właściwość
+        other: Właściwości
       spree/prototype: 
       spree/return_authorization: 
-      spree/role: 
+      spree/role:
+        one: Rola
+        other: Role
       spree/shipment: 
       spree/shipping_category: 
       spree/state: 
@@ -158,13 +179,17 @@ pl:
       spree/tax_rate: 
       spree/taxon: 
       spree/taxonomy: 
-      spree/user: 
-      spree/variant: 
+      spree/user:
+        one: Użytkownik
+        other: Użytkownicy
+      spree/variant:
+        one: Wariant
+        other: Warianty
       spree/zone: 
   devise:
     confirmations:
-      confirmed: 
-      send_instructions: 
+      confirmed: Twoje konto zostało pomyślnie potwierdzone. Jesteś już zalogowany/a.
+      send_instructions: W ciągu najbliższych kilku minut otrzymasz e-maila ze wskazówkami dotyczącymi potwierdzenia konta.
     failure:
       inactive: 
       invalid: 
@@ -261,6 +286,7 @@ pl:
         products: 
         promotions: 
         reports: 
+        users: 
     administration: 
     agree_to_privacy_policy: 
     agree_to_terms_of_service: 
@@ -319,6 +345,7 @@ pl:
     back_to_users_list: 
     back_to_zones_list: 
     backorderable: 
+    backorders_allowed: 
     balance_due: 
     bill_address: 
     billing: 
@@ -413,6 +440,7 @@ pl:
     date: 
     date_completed: 
     date_picker:
+      first_day: 
       format: 
       js_format: 
     date_range: 
@@ -532,6 +560,7 @@ pl:
     insufficient_stock: 
     intercept_email_address: 
     intercept_email_instructions: 
+    internal_name: 
     invalid_payment_provider: 
     invalid_promotion_action: 
     invalid_promotion_rule: 
@@ -547,6 +576,7 @@ pl:
       operators:
         gt: 
         gte: 
+    items_cannot_be_shipped: 
     jirafe: 
     landing_page_rule:
       path: 
@@ -625,11 +655,13 @@ pl:
     no_actions_added: 
     no_orders_found: 
     no_payment_methods_found: 
+    no_pending_payments: 
     no_products_found: 
     no_promotions_found: 
     no_results: 
     no_rules_added: 
     no_shipping_methods_found: 
+    no_stock_locations_found: 
     no_trackers_found: 
     no_tracking_present: 
     none: 
@@ -649,6 +681,7 @@ pl:
     open: 
     open_all_adjustments: 
     option_type: 
+    option_type_placeholder: 
     option_types: 
     option_value: 
     option_values: 
@@ -931,6 +964,7 @@ pl:
     stock_location_info: 
     stock_locations: 
     stock_management: 
+    stock_management_requires_a_stock_location: 
     stock_movements: 
     stock_movements_for_stock_location: 
     stock_successfully_transferred: 
@@ -970,6 +1004,7 @@ pl:
         subject: 
     test_mode: 
     thank_you_for_your_order: 
+    there_are_no_items_for_this_order: 
     there_were_problems_with_the_following_fields: 
     thumbnail: 
     time: 
@@ -1009,6 +1044,7 @@ pl:
       must_be_non_negative: 
     value: 
     variant: 
+    variant_placeholder: 
     variants: 
     version: 
     void: 

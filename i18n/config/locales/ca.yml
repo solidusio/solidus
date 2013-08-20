@@ -18,6 +18,7 @@ ca:
         name: Nom
         numcode: Codi ISO
       spree/credit_card:
+        base: 
         cc_type: Tipus
         month: Mes
         number: Nombre
@@ -126,6 +127,12 @@ ca:
       spree/zone:
         description: Descripció
         name: Nom
+    errors:
+      models:
+        spree/credit_card:
+          attributes:
+            base:
+              card_expired: 
     models:
       spree/address:
         one: Adreça
@@ -293,6 +300,7 @@ ca:
         products: 
         promotions: 
         reports: 
+        users: 
     administration: Administració
     agree_to_privacy_policy: 
     agree_to_terms_of_service: 
@@ -351,6 +359,7 @@ ca:
     back_to_users_list: 
     back_to_zones_list: Back To Zones List
     backorderable: 
+    backorders_allowed: 
     balance_due: Saldo pendent
     bill_address: Adreça de facturació
     billing: Facturació
@@ -445,6 +454,7 @@ ca:
     date: Data
     date_completed: Date Completed
     date_picker:
+      first_day: 
       format: 
       js_format: 
     date_range: Rang de Data
@@ -566,6 +576,7 @@ ca:
     insufficient_stock: Insufficient stock available, only %{on_hand} remaining
     intercept_email_address: Interceptar adreça d'Email
     intercept_email_instructions: Substituir el receptor de l'email amb aquesta adreça.
+    internal_name: 
     invalid_payment_provider: 
     invalid_promotion_action: 
     invalid_promotion_rule: 
@@ -581,6 +592,7 @@ ca:
       operators:
         gt: major que
         gte: major o igual que
+    items_cannot_be_shipped: 
     jirafe: Jirafe
     landing_page_rule:
       path: Path
@@ -659,11 +671,13 @@ ca:
     no_actions_added: 
     no_orders_found: 
     no_payment_methods_found: 
+    no_pending_payments: 
     no_products_found: No s'han trobat productes
     no_promotions_found: 
     no_results: Sense resultats
     no_rules_added: No s'han afegit noves normes
     no_shipping_methods_found: 
+    no_stock_locations_found: 
     no_trackers_found: 
     no_tracking_present: 
     none: Cap
@@ -683,6 +697,7 @@ ca:
     open: Obert
     open_all_adjustments: 
     option_type: Tipus d'opció
+    option_type_placeholder: 
     option_types: Tipus d'opció
     option_value: Valor de l'opció
     option_values: Valors de l'opció
@@ -965,6 +980,7 @@ ca:
     stock_location_info: 
     stock_locations: 
     stock_management: 
+    stock_management_requires_a_stock_location: 
     stock_movements: 
     stock_movements_for_stock_location: 
     stock_successfully_transferred: 
@@ -1004,6 +1020,7 @@ ca:
         subject: Testmail
     test_mode: Manera Prova
     thank_you_for_your_order: Gràcies per la seva comanda
+    there_are_no_items_for_this_order: 
     there_were_problems_with_the_following_fields: ! 'Han hagut problemes amb els següents camps: '
     thumbnail: Miniatura
     time: 
@@ -1043,6 +1060,7 @@ ca:
       must_be_non_negative: ha de ser un valor no negatiu
     value: valor
     variant: Variant
+    variant_placeholder: 
     variants: Variants
     version: Versió
     void: Buit

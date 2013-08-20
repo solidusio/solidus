@@ -18,6 +18,7 @@ pt-BR:
         name: Nome
         numcode: Código ISO
       spree/credit_card:
+        base: 
         cc_type: Tipo de Cartão
         month: Mês
         number: Número
@@ -126,6 +127,12 @@ pt-BR:
       spree/zone:
         description: Descrição
         name: Nome
+    errors:
+      models:
+        spree/credit_card:
+          attributes:
+            base:
+              card_expired: 
     models:
       spree/address:
         one: Endereço
@@ -295,6 +302,7 @@ pt-BR:
         products: Produtos
         promotions: Promoções
         reports: Relatórios
+        users: 
     administration: Administração
     agree_to_privacy_policy: Concordo com a politica de privacidade
     agree_to_terms_of_service: Concordo com os termos de serviço
@@ -353,6 +361,7 @@ pt-BR:
     back_to_users_list: Voltar a lista de usuários
     back_to_zones_list: Voltar a Lista de Zonas
     backorderable: Aceita pedido pendente
+    backorders_allowed: 
     balance_due: Saldo Devedor
     bill_address: Endereço da Conta
     billing: Faturamento
@@ -440,7 +449,7 @@ pt-BR:
       jirafe:
         app_id: App ID
         app_token: App token
-        currently_unavailable: 
+        currently_unavailable: Jirafe esta indisponível no momento. Spree irá se conectar automaticamente com Jirafe quando o serviço estive disponível
         explanation: Os campos abaixo já podem ser preenchidos if você escolher registrar no painel de administração do Jirafe.
         header: Configurações do Jirafe Analytics
         site_id: Site ID
@@ -449,6 +458,7 @@ pt-BR:
     date: Data
     date_completed: Data do Término
     date_picker:
+      first_day: 
       format: ! '%d/%m/%Y'
       js_format: dd/mm/yy
     date_range: Entre as Datas
@@ -549,7 +559,7 @@ pt-BR:
     i18n:
       available_locales: Idiomas disponíveis
       fields: Campos
-      language: Idimoa
+      language: Idioma
       localization_settings: Configurações de idioma
       only_complete: Apenas completas
       only_incomplete: Apenas incompletas
@@ -570,6 +580,7 @@ pt-BR:
     insufficient_stock: Estoque Insuficiente, Apenas %{on_hand} Em Estoque
     intercept_email_address: Interceptar Endereço de Email
     intercept_email_instructions: Interceptar Instrções de Email
+    internal_name: 
     invalid_payment_provider: Provedor de pagamento inválido
     invalid_promotion_action: Ação de promoção inválida
     invalid_promotion_rule: Regra de promoção inválida
@@ -585,6 +596,7 @@ pt-BR:
       operators:
         gt: Maior que
         gte: Maior ou Igual que
+    items_cannot_be_shipped: Estamos impossibilitados de enviar os itens selecionados para seu endereço de entrega. Por favor, escolha outro endereço.
     jirafe: Jirafe
     landing_page_rule:
       path: Caminho
@@ -663,11 +675,13 @@ pt-BR:
     no_actions_added: Nenhuma ação adicionada
     no_orders_found: Nenhum pedido encontrado
     no_payment_methods_found: Nenhum método de pagamento encontrado
+    no_pending_payments: Sem pagamentos pendentes
     no_products_found: Não Existem Produtos
     no_promotions_found: Não existem promoções
     no_results: Não Existem Resultados
     no_rules_added: Nenhuma Regra Adicionada
     no_shipping_methods_found: Nenhum método de envio encontrado
+    no_stock_locations_found: Nenhum local de estoque foi encontrado
     no_trackers_found: Nenhum localizador encontrado
     no_tracking_present: Detalhes de localização não foram fornecidos
     none: Nenhum
@@ -687,6 +701,7 @@ pt-BR:
     open: Abrir
     open_all_adjustments: Abrir todos os ajustes
     option_type: Tipo de Opção
+    option_type_placeholder: Escolha um tipo de opção
     option_types: Tipos de Opção
     option_value: Valor da Opcional
     option_values: Valores Opcionais
@@ -969,6 +984,7 @@ pt-BR:
     stock_location_info: Local de estoque
     stock_locations: Locais de estoque
     stock_management: Gerenciamento de estoque
+    stock_management_requires_a_stock_location: Por favor, crie um local de estoque para poder gerenciar o estoque.
     stock_movements: Movimentos de estoque
     stock_movements_for_stock_location: Movimentos de estoque por %{stock_location_name}
     stock_successfully_transferred: Estoque foi transferido com sucesso
@@ -1008,6 +1024,7 @@ pt-BR:
         subject: Email de Teste!
     test_mode: Modo de Teste
     thank_you_for_your_order: Obrigado Por sua Compra. por Favor, Imprima uma Cópia Desta Página de Confirmação Para seu Controle.
+    there_are_no_items_for_this_order: Não existem itens para esse pedido. Por favor adicione um item ao pedido para continuar.
     there_were_problems_with_the_following_fields: ! 'Existem Problemas com os Seguintes Campos:'
     thumbnail: Miniatura
     time: Horário
@@ -1047,6 +1064,7 @@ pt-BR:
       must_be_non_negative: Deve ser um Valor Positivo ou Zero
     value: Valor
     variant: Variante
+    variant_placeholder: Escolha uma variável
     variants: Variantes
     version: Versão
     void: Vazio

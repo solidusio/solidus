@@ -1,4 +1,4 @@
-sw:
+az:
   activerecord:
     attributes:
       spree/address:

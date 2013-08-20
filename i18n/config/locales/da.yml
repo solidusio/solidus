@@ -18,6 +18,7 @@ da:
         name: Navn
         numcode: ISO-kode
       spree/credit_card:
+        base: 
         cc_type: Type
         month: Måned
         number: Nummer
@@ -34,7 +35,7 @@ da:
       spree/order:
         checkout_complete: Købsforløb gennemført
         completed_at: Gennemført
-        coupon_code: 
+        coupon_code: Rabatkode
         created_at: Oprettet
         email: E-mail-adresse
         ip_address: IP-adresse
@@ -126,6 +127,12 @@ da:
       spree/zone:
         description: Beskrivelse
         name: Navn
+    errors:
+      models:
+        spree/credit_card:
+          attributes:
+            base:
+              card_expired: 
     models:
       spree/address:
         one: Adresse
@@ -289,12 +296,13 @@ da:
           delivery_success: Test-e-mail afsendt
           error: ! 'Test-e-mail fejl: %{e}'
       tab:
-        configuration: 
-        orders: 
-        overview: 
-        products: 
-        promotions: 
-        reports: 
+        configuration: Konfiguration
+        orders: Ordrer
+        overview: Oversigt
+        products: Produkter
+        promotions: Kampagner
+        reports: Rapporter
+        users: 
     administration: Administration
     agree_to_privacy_policy: Godkend vores "privatlivs"-betingelser
     agree_to_terms_of_service: Godkend vores handelsbetingelser
@@ -353,6 +361,7 @@ da:
     back_to_users_list: Tilbage til brugerlisten
     back_to_zones_list: Tilbage til zoner
     backorderable: Ventelist mulig
+    backorders_allowed: 
     balance_due: Forfalden saldo
     bill_address: Faktureringsadresse
     billing: Fakturering
@@ -438,7 +447,7 @@ da:
       jirafe:
         app_id: App ID
         app_token: App token
-        currently_unavailable: 
+        currently_unavailable: Jirafe er ikke tilgængelig lige nu. Spree forbinder automatisk igen når der er forbindelse
         explanation: Felterne nedenfor er måske allerede udfyldt hvis du valgte at registrere Jirafe fra administrations dashboard.
         header: Jirafe statistik indstillinger
         site_id: Site ID
@@ -447,6 +456,7 @@ da:
     date: Dato
     date_completed: Dato gennemført
     date_picker:
+      first_day: 
       format: ! '%d/%m/%Y'
       js_format: dd/mm/yy
     date_range: Datointerval
@@ -474,7 +484,7 @@ da:
     editing_property: Redigering af egenskab
     editing_prototype: Redigering af prototype
     editing_shipping_category: Redigering af leverings kategori
-    editing_shipping_method: Redigering af leverings metode
+    editing_shipping_method: Redigering af leveringsmetode
     editing_state: Redigering af delstat
     editing_stock_location: Redigerer lagersted
     editing_stock_movement: Redigerer lagerbevægelse
@@ -545,17 +555,17 @@ da:
     hide_cents: Skjul øre
     home: Forside
     i18n:
-      available_locales: 
-      fields: 
-      language: 
-      localization_settings: 
-      only_complete: 
-      only_incomplete: 
-      select_locale: 
-      show_only: 
-      supported_locales: 
+      available_locales: Tilgængelige sprog
+      fields: Felter
+      language: Sprog
+      localization_settings: Lande/sprog indstillinger
+      only_complete: Kun komplette
+      only_incomplete: Kun ikke-komplette
+      select_locale: Vælg sprog
+      show_only: Vis kun
+      supported_locales: Understøttede sprog
       this_file_language: Danish
-      translations: 
+      translations: Oversættelser
     icon: Ikon
     image: Billed
     image_settings: Indstillinger for billeder
@@ -568,6 +578,7 @@ da:
     insufficient_stock: Der er ikke nok på lager, kun %{on_hand} tilbage
     intercept_email_address: Opsnap e-mail-adresse
     intercept_email_instructions: Overskriv e-mail-modtagerens adresse med denne adresse.
+    internal_name: 
     invalid_payment_provider: Ugyldig betalingsformidler
     invalid_promotion_action: Ugyldig rabat handling.
     invalid_promotion_rule: Ugyldig rabat regel.
@@ -583,6 +594,7 @@ da:
       operators:
         gt: større end
         gte: større end eller lig med
+    items_cannot_be_shipped: Vi kan ikke levere til adressen. Vælg venlist en anden adresse.
     jirafe: Jirafe Statistik
     landing_page_rule:
       path: Path
@@ -608,7 +620,7 @@ da:
     login_failed: Login mislykkedes.
     login_name: Login
     logout: Log ud
-    look_for_similar_items: Lignende vareer
+    look_for_similar_items: Lignende varer
     maestro_or_solo_cards: Maestro- eller Solokort
     mail_method_settings: E-mail indstillinger
     mail_methods: E-mail-metoder
@@ -661,11 +673,13 @@ da:
     no_actions_added: Ingen handlinger tilføjet
     no_orders_found: Ingen ordrer fundet
     no_payment_methods_found: Ingen betalingsmetoder fundet
+    no_pending_payments: Ingen afventende betalinger
     no_products_found: Ingen varer fundet
     no_promotions_found: Ingen rabatter fundet
     no_results: Ingen resultater
     no_rules_added: Ingen regler tilføjet
     no_shipping_methods_found: Ingen leveringsmetoder fundet
+    no_stock_locations_found: 
     no_trackers_found: Der findes ingen trackere
     no_tracking_present: Ingen track & trace oplysninger.
     none: Ingen
@@ -685,6 +699,7 @@ da:
     open: Åben
     open_all_adjustments: Åbn alle justeringer
     option_type: Alternativ udgave
+    option_type_placeholder: 
     option_types: Alternative udgaver
     option_value: Alternativ værdi
     option_values: Alternative værdier
@@ -730,7 +745,7 @@ da:
       payment: betaling
       resumed: genoptager
       returned: returneret
-    order_summary: Ordre oversigt
+    order_summary: Ordreoversigt
     order_sure_want_to: Er du sikker på at du vil %{event} denne ordre?
     order_total: Ordre total
     order_updated: Ordre opdateret
@@ -898,10 +913,10 @@ da:
     server_error: Serveren returnerede en fejl
     settings: Indstillinger
     ship: lever
-    ship_address: Leverings adresse
+    ship_address: Leveringsadresse
     ship_total: Leveret total
     shipment: Levering
-    shipment_inc_vat: Inkluder moms i leveringsomkostninger
+    shipment_inc_vat: Leveringsomkostninger inkluderer moms
     shipment_mailer:
       shipped_email:
         dear_customer: Dear Customer,
@@ -952,7 +967,7 @@ da:
     smtp_username: SMTP-brugernavn
     source: Kilde
     special_instructions: Specielle instrukser
-    split: 
+    split: Del
     spree/order:
       coupon_code: Rabatkode
     spree_gateway_error_flash_for_checkout: Der var et problem med din betalingsinformation. Check dine informationer og prøv igen.
@@ -967,6 +982,7 @@ da:
     stock_location_info: Information om lagersted
     stock_locations: Lagersteder
     stock_management: Lagerstyring
+    stock_management_requires_a_stock_location: 
     stock_movements: Lagerbevægelser
     stock_movements_for_stock_location: Lagerbevægelser for %{stock_location_name}
     stock_successfully_transferred: Varerne er blevet flyttet mellem lagerstederne.
@@ -985,7 +1001,7 @@ da:
     tax: Moms
     tax_categories: Momskategorier
     tax_category: Momskategori
-    tax_rate_amount_explanation: Moms tastes som decimaltal. (25% tastes som 0,25)
+    tax_rate_amount_explanation: Moms tastes som decimaltal. (25% tastes som 0.25)
     tax_rates: Momssatser
     tax_settings: Momsindstillinger
     tax_total: Moms Total
@@ -1006,6 +1022,7 @@ da:
         subject: Testmail
     test_mode: Testtilstand
     thank_you_for_your_order: Tag for din bestilling. Udskriv venligst en kopi af denne bekræftelsesside til opbevaring.
+    there_are_no_items_for_this_order: 
     there_were_problems_with_the_following_fields: Der var problemer med følgende felter
     thumbnail: Thumbnail
     time: Tid
@@ -1045,6 +1062,7 @@ da:
       must_be_non_negative: skal være et positivt tal
     value: Værdi
     variant: Variant
+    variant_placeholder: Vælg en variant
     variants: Varianter
     version: Version
     void: Tom

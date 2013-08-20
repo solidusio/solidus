@@ -18,6 +18,7 @@ cs:
         name: Název
         numcode: ISO kód
       spree/credit_card:
+        base: 
         cc_type: Typ
         month: Měsíc
         number: Číslo
@@ -126,6 +127,12 @@ cs:
       spree/zone:
         description: Popis
         name: Název
+    errors:
+      models:
+        spree/credit_card:
+          attributes:
+            base:
+              card_expired: 
     models:
       spree/address:
         few: Adresy
@@ -318,6 +325,7 @@ cs:
         products: 
         promotions: 
         reports: 
+        users: 
     administration: Administrace
     agree_to_privacy_policy: Souhlasím se zásadami ochrany osobních údajů
     agree_to_terms_of_service: Souhlasím s podmínkami služby
@@ -376,6 +384,7 @@ cs:
     back_to_users_list: Zpět na seznam uživatelů
     back_to_zones_list: Zpět na seznam zón
     backorderable: Možnost objednávky z externího skladu
+    backorders_allowed: 
     balance_due: Nezaplacený zůstatek
     bill_address: Fakturační adresa
     billing: Fakturace
@@ -473,6 +482,7 @@ cs:
     date: Datum
     date_completed: Datum dokončení
     date_picker:
+      first_day: 
       format: ! '%d.%m.%Y'
       js_format: dd.mm.yy
     date_range: Datum (od-do)
@@ -595,6 +605,7 @@ cs:
     insufficient_stock: Nedostatečné skladové zásoby, zbývá pouze %{on_hand}
     intercept_email_address: Odchytávání emailů
     intercept_email_instructions: Anulovet email příjemce a nahradit s touto adresou
+    internal_name: 
     invalid_payment_provider: Neplatný poskytovatel plateb.
     invalid_promotion_action: Neplatná propagační akce.
     invalid_promotion_rule: Neplatné propagační pravidlo.
@@ -610,6 +621,7 @@ cs:
       operators:
         gt: větší než
         gte: větší nebo stejný než
+    items_cannot_be_shipped: 
     jirafe: Jirafe
     landing_page_rule:
       path: Cesta
@@ -688,11 +700,13 @@ cs:
     no_actions_added: Není potřeba žádné další akce
     no_orders_found: Nebyly nalezeny žádné objednávky
     no_payment_methods_found: Nebyly nalezeny žádné platební metody
+    no_pending_payments: 
     no_products_found: Nebyly nalezeny žádné výrobky
     no_promotions_found: Nebyly nalezeny žádné propagační akce
     no_results: Žádné výsledky
     no_rules_added: Žádné přidané pravidla
     no_shipping_methods_found: Nenalezeny žádné způsoby dodání
+    no_stock_locations_found: 
     no_trackers_found: Nebyl nalezen žádný tracker
     no_tracking_present: Sledování zásilky není dostupné
     none: Žádný
@@ -712,6 +726,7 @@ cs:
     open: Otevřít
     open_all_adjustments: Otevřít všechna přizpůsobení
     option_type: Typ volby
+    option_type_placeholder: 
     option_types: Typy voleb
     option_value: Hodnota volby
     option_values: Hodnoty voleb
@@ -994,6 +1009,7 @@ cs:
     stock_location_info: Informace o skladu
     stock_locations: Sklady
     stock_management: Správa skladu
+    stock_management_requires_a_stock_location: 
     stock_movements: Pohyby skladových zásob
     stock_movements_for_stock_location: Pohyb skladových zásob pro %{stock_location_name}
     stock_successfully_transferred: Skladové zásoby byly úspěšně přesunuty mezi lokacemi.
@@ -1033,6 +1049,7 @@ cs:
         subject: Testovací email
     test_mode: Testovací režim
     thank_you_for_your_order: Děkujeme za Váš nákup. Doporučujeme Vám vytisknout si kopii této stránky.
+    there_are_no_items_for_this_order: 
     there_were_problems_with_the_following_fields: Opravte prosím následující chyby
     thumbnail: Náhled obrázku
     time: Čas
@@ -1072,6 +1089,7 @@ cs:
       must_be_non_negative: musí být nezáporná hodnota
     value: Hodnota
     variant: Varianta
+    variant_placeholder: 
     variants: Varianty
     version: Verze
     void: Prázdné

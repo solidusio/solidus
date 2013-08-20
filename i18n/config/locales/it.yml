@@ -18,6 +18,7 @@ it:
         name: Nome
         numcode: Codice ISO
       spree/credit_card:
+        base: 
         cc_type: Tipologia
         month: Mese
         number: Numero
@@ -126,6 +127,12 @@ it:
       spree/zone:
         description: Descrizione
         name: Nome
+    errors:
+      models:
+        spree/credit_card:
+          attributes:
+            base:
+              card_expired: 
     models:
       spree/address:
         one: Indirizzo
@@ -295,6 +302,7 @@ it:
         products: 
         promotions: 
         reports: 
+        users: 
     administration: Amministrazione
     agree_to_privacy_policy: Accetta Politica di Privacy
     agree_to_terms_of_service: Accetta i Termini di Servizio
@@ -353,6 +361,7 @@ it:
     back_to_users_list: Torna alla Lista degli Utenti
     back_to_zones_list: Torna alla Lista delle Zone
     backorderable: Disponibile anche se terminato
+    backorders_allowed: 
     balance_due: Saldo Dovuto
     bill_address: Indirizzo di Fatturazione
     billing: Fatturazione
@@ -447,6 +456,7 @@ it:
     date: Data
     date_completed: Completato il
     date_picker:
+      first_day: 
       format: ! '%d/%m/%Y'
       js_format: dd/mm/yy
     date_range: Intervallo di date
@@ -568,6 +578,7 @@ it:
     insufficient_stock: Giacenze insufficienti, ne rimangono solo %{on_hand}
     intercept_email_address: Intercetta indirizzo Email
     intercept_email_instructions: Sovrascrivi il destinatario dell'email con questo indirizzo.
+    internal_name: 
     invalid_payment_provider: Provider del pagamento non valido.
     invalid_promotion_action: Azione della promozione non valida.
     invalid_promotion_rule: Regola della promozione non valida.
@@ -583,6 +594,7 @@ it:
       operators:
         gt: maggiore di
         gte: maggiore o uguale di
+    items_cannot_be_shipped: 
     jirafe: Jirafe
     landing_page_rule:
       path: Percorso
@@ -661,11 +673,13 @@ it:
     no_actions_added: Nessuna azione aggiunta
     no_orders_found: Nessun ordine trovato
     no_payment_methods_found: Nessun metodo di pagamento trovato
+    no_pending_payments: 
     no_products_found: Nessun prodotto trovato
     no_promotions_found: Nessuna promozione trovata
     no_results: Nessun risultato
     no_rules_added: Nessuna regola aggiunta
     no_shipping_methods_found: Nessun metodo di spedizione trovato
+    no_stock_locations_found: 
     no_trackers_found: Nessuno tracker trovato
     no_tracking_present: Non sono stati forniti dettagli sul tracciamento
     none: Niente
@@ -685,6 +699,7 @@ it:
     open: Apri
     open_all_adjustments: Apri tutti gli adattamenti
     option_type: Opzione
+    option_type_placeholder: 
     option_types: Opzioni
     option_value: Valore dell'Opzione
     option_values: Valori dell'Opzione
@@ -967,6 +982,7 @@ it:
     stock_location_info: Informazioni posizione stock
     stock_locations: Posizioni Stock
     stock_management: Gestione Stock
+    stock_management_requires_a_stock_location: 
     stock_movements: Movimenti Stock
     stock_movements_for_stock_location: Movimenti Stock per %{stock_location_name}
     stock_successfully_transferred: Lo stock è stato trasferito con successo.
@@ -1006,6 +1022,7 @@ it:
         subject: Mail di Test
     test_mode: Modalità Test
     thank_you_for_your_order: Grazie per il tuo ordine. Per favore stampa una copia di questa conferma come riferimento.
+    there_are_no_items_for_this_order: 
     there_were_problems_with_the_following_fields: Ci sono dei problemi con i seguenti campi
     thumbnail: Immagine
     time: Ora
@@ -1045,6 +1062,7 @@ it:
       must_be_non_negative: deve essere un valore non negativo
     value: Valore
     variant: Variante
+    variant_placeholder: 
     variants: Varianti
     version: Versione
     void: Annullato

@@ -3,34 +3,35 @@ nb:
     attributes:
       spree/address:
         address1: Address
-        address2: Address (contd.)
-        city: City
-        country: Country
-        firstname: First Name
-        lastname: Last Name
-        phone: Phone
-        state: State
-        zipcode: Zip Code
+        address2: 
+        city: 
+        country: 
+        firstname: 
+        lastname: 
+        phone: 
+        state: 
+        zipcode: 
       spree/country:
         iso: ISO
         iso3: ISO3
-        iso_name: ISO Name
-        name: Name
-        numcode: ISO Code
+        iso_name: 
+        name: 
+        numcode: 
       spree/credit_card:
+        base: 
         cc_type: Type
-        month: Month
-        number: Number
-        verification_value: Verification Value
-        year: Year
+        month: 
+        number: 
+        verification_value: 
+        year: 
       spree/inventory_unit:
         state: State
       spree/line_item:
-        price: Price
-        quantity: Quantity
+        price: 
+        quantity: 
       spree/option_type:
-        name: Name
-        presentation: Presentation
+        name: 
+        presentation: 
       spree/order:
         checkout_complete: 
         completed_at: 
@@ -46,19 +47,19 @@ nb:
         state: 
         total: 
       spree/order/bill_address:
-        address1: Billing address street
-        city: Billing address city
-        firstname: Billing address first name
-        lastname: Billing address last name
-        phone: Billing address phone
-        state: Billing address state
-        zipcode: Billing address zipcode
+        address1: 
+        city: 
+        firstname: 
+        lastname: 
+        phone: 
+        state: 
+        zipcode: 
       spree/order/ship_address:
-        address1: Shipping address street
-        city: Shipping address city
-        firstname: Shipping address first name
-        lastname: Shipping address last name
-        phone: Shipping address phone
+        address1: 
+        city: 
+        firstname: 
+        lastname: 
+        phone: 
         state: Shipping address state
         zipcode: Shipping address zipcode
       spree/payment:
@@ -73,10 +74,10 @@ nb:
         master_price: Master Price
         name: Name
         on_hand: On Hand
-        shipping_category: Shipping Category
-        tax_category: Tax Category
+        shipping_category: 
+        tax_category: 
       spree/promotion:
-        advertise: Advertise
+        advertise: 
         code: Code
         description: Description
         event_name: Event Name
@@ -101,31 +102,37 @@ nb:
         description: Description
         name: Name
       spree/tax_rate:
-        amount: Rate
-        included_in_price: Included in Price
-        show_rate_in_label: Show rate in label
+        amount: 
+        included_in_price: 
+        show_rate_in_label: 
       spree/taxon:
-        name: Name
-        permalink: Permalink
-        position: Position
+        name: 
+        permalink: 
+        position: 
       spree/taxonomy:
-        name: Name
+        name: 
       spree/user:
-        email: Email
-        password: Password
-        password_confirmation: Password Confirmation
+        email: 
+        password: 
+        password_confirmation: 
       spree/variant:
         cost_currency: 
-        cost_price: Cost Price
-        depth: Depth
+        cost_price: 
+        depth: 
         height: Height
-        price: Price
+        price: 
         sku: SKU
-        weight: Weight
-        width: Width
+        weight: 
+        width: 
       spree/zone:
-        description: Description
+        description: 
         name: Name
+    errors:
+      models:
+        spree/credit_card:
+          attributes:
+            base:
+              card_expired: 
     models:
       spree/address:
         one: Address
@@ -293,6 +300,7 @@ nb:
         products: 
         promotions: 
         reports: 
+        users: 
     administration: Administrasjon
     agree_to_privacy_policy: 
     agree_to_terms_of_service: 
@@ -351,6 +359,7 @@ nb:
     back_to_users_list: 
     back_to_zones_list: Back To Zones List
     backorderable: 
+    backorders_allowed: 
     balance_due: Balance Due
     bill_address: Fakturaadresse
     billing: Billing
@@ -445,6 +454,7 @@ nb:
     date: 
     date_completed: Date Completed
     date_picker:
+      first_day: 
       format: 
       js_format: 
     date_range: Datoområde
@@ -566,6 +576,7 @@ nb:
     insufficient_stock: Insufficient stock available, only %{on_hand} remaining
     intercept_email_address: Intercept Email Address
     intercept_email_instructions: Override email recipient and replace with this address.
+    internal_name: 
     invalid_payment_provider: 
     invalid_promotion_action: 
     invalid_promotion_rule: 
@@ -581,6 +592,7 @@ nb:
       operators:
         gt: greater than
         gte: greater than or equal to
+    items_cannot_be_shipped: 
     jirafe: 
     landing_page_rule:
       path: Path
@@ -659,11 +671,13 @@ nb:
     no_actions_added: 
     no_orders_found: 
     no_payment_methods_found: 
+    no_pending_payments: 
     no_products_found: No products found
     no_promotions_found: 
     no_results: No results
     no_rules_added: No rules added
     no_shipping_methods_found: 
+    no_stock_locations_found: 
     no_trackers_found: 
     no_tracking_present: 
     none: Ingen
@@ -683,6 +697,7 @@ nb:
     open: 
     open_all_adjustments: 
     option_type: Option Type
+    option_type_placeholder: 
     option_types: Variasjonstyper
     option_value: Option Value
     option_values: Variasjonsverdier
@@ -965,6 +980,7 @@ nb:
     stock_location_info: 
     stock_locations: 
     stock_management: 
+    stock_management_requires_a_stock_location: 
     stock_movements: 
     stock_movements_for_stock_location: 
     stock_successfully_transferred: 
@@ -1004,6 +1020,7 @@ nb:
         subject: Testmail
     test_mode: Test Mode
     thank_you_for_your_order: Takk for bestillingen. Vennligst skriv ut og ta vare på denne bekreftelsen.
+    there_are_no_items_for_this_order: 
     there_were_problems_with_the_following_fields: There were problems with the following fields
     thumbnail: Thumbnail
     time: 
@@ -1043,6 +1060,7 @@ nb:
       must_be_non_negative: must be a non-negative value
     value: Verdi
     variant: Variant
+    variant_placeholder: 
     variants: Varianter
     version: Versjon
     void: Void

@@ -18,6 +18,7 @@ tr:
         name: İsim
         numcode: ISO Kodu
       spree/credit_card:
+        base: 
         cc_type: Tip
         month: Ay
         number: Numara
@@ -126,6 +127,12 @@ tr:
       spree/zone:
         description: Açıklama
         name: İsim
+    errors:
+      models:
+        spree/credit_card:
+          attributes:
+            base:
+              card_expired: 
     models:
       spree/address: Adresler
       spree/country: Ülkeler
@@ -249,6 +256,7 @@ tr:
         products: 
         promotions: 
         reports: 
+        users: 
     administration: Yönetim
     agree_to_privacy_policy: Gizlilik Politikasını kabul ediyorum
     agree_to_terms_of_service: Hizmet Sözleşmesini kabul ediyorum
@@ -307,6 +315,7 @@ tr:
     back_to_users_list: Kullanıcı Listesine Geri Dön
     back_to_zones_list: Bölgeler Listesine Geri Dön
     backorderable: İade Edilebilir
+    backorders_allowed: 
     balance_due: Kalan Bakiye
     bill_address: Fatura Adresi
     billing: Fatura
@@ -401,6 +410,7 @@ tr:
     date: Tarih
     date_completed: Tarih Tamamlandı
     date_picker:
+      first_day: 
       format: ! '%d.%m%Y'
       js_format: dd.mm.yyyy
     date_range: Tarih Aralığı
@@ -520,6 +530,7 @@ tr:
     insufficient_stock: Bu üründen istenilen miktarda bulunmuyor, sadece %{on_hand} adet elde bulunmaktadır.
     intercept_email_address: E-posta Adresini Engelle
     intercept_email_instructions: E-posta adresini yoksay ve bu adresle değiştir.
+    internal_name: 
     invalid_payment_provider: Geçersiz ödeme sağlayıcı.
     invalid_promotion_action: Geçersiz promosyon hareketi.
     invalid_promotion_rule: Geçersiz promosyon kuralı.
@@ -535,6 +546,7 @@ tr:
       operators:
         gt: büyüktür
         gte: büyük yada eşittir
+    items_cannot_be_shipped: 
     jirafe: Jirafe
     landing_page_rule:
       path: Yol
@@ -613,11 +625,13 @@ tr:
     no_actions_added: Hiçbir hareyet eklenmemiş
     no_orders_found: Hiçbir sipariş bulunamadı
     no_payment_methods_found: Hiçbir ödeme yöntemi bulunamadı
+    no_pending_payments: 
     no_products_found: Hiçbir Ürün Bulunamadı
     no_promotions_found: Hiçbir promosyon bulunamadı
     no_results: Sonuç yok
     no_rules_added: Hiçbir kural eklenmedi
     no_shipping_methods_found: Hiçbir kargo yöntemi bulunamadı
+    no_stock_locations_found: 
     no_trackers_found: Hiçbir İzleyici Bulunamadı
     no_tracking_present: Hiçbir izleyici ayrıntısı belirtilmedi.
     none: Hiçbiri
@@ -637,6 +651,7 @@ tr:
     open: Açık
     open_all_adjustments: Tüm Kredileri Aç
     option_type: Seçenek Tipi
+    option_type_placeholder: 
     option_types: Seçenek Tipleri
     option_value: Seçenek Değeri
     option_values: Seçenek Değerleri
@@ -919,6 +934,7 @@ tr:
     stock_location_info: Stok bölge bilgisi
     stock_locations: Stok Bölgeleri
     stock_management: Stok Yönetimi
+    stock_management_requires_a_stock_location: 
     stock_movements: Stok Hareketleri
     stock_movements_for_stock_location: ! '%{stock_location_name} bölgesi için stok hareketleri'
     stock_successfully_transferred: Stok bölgeler arasında başarıyla aktarıldı.
@@ -958,6 +974,7 @@ tr:
         subject: Deneme Postası
     test_mode: Deneme Modu
     thank_you_for_your_order: Alışverişiniz için teşekkürler. Lütfen kayıtlarınızda tutmak için bu bilgi sayfasının bir kopyasını saklayınız.
+    there_are_no_items_for_this_order: 
     there_were_problems_with_the_following_fields: Aşağıdaki alanlarla ilgili sorunlar var
     thumbnail: Önizleme
     time: Zaman
@@ -997,6 +1014,7 @@ tr:
       must_be_non_negative: negatif olmayan bir değer olmalıdır
     value: Değer
     variant: Değişken
+    variant_placeholder: 
     variants: Değişkenler
     version: Sürüm
     void: Geçersiz

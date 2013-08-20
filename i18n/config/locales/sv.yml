@@ -18,13 +18,14 @@ sv:
         name: Namn
         numcode: ISO-kod
       spree/credit_card:
+        base: 
         cc_type: Typ
         month: Månad
         number: Nummer
         verification_value: Verifikationvärde
         year: År
       spree/inventory_unit:
-        state: Län
+        state: Status
       spree/line_item:
         price: Pris
         quantity: Antal
@@ -43,7 +44,7 @@ sv:
         payment_state: Betalningsstatus
         shipment_state: Fraktstatus
         special_instructions: Särskilda instruktioner
-        state: Län
+        state: Status
         total: Totalt
       spree/order/bill_address:
         address1: Faktureringsadress, gata
@@ -126,6 +127,12 @@ sv:
       spree/zone:
         description: Beskrivning
         name: Namn
+    errors:
+      models:
+        spree/credit_card:
+          attributes:
+            base:
+              card_expired: 
     models:
       spree/address:
         one: Adress
@@ -242,7 +249,7 @@ sv:
   spree:
     abbreviation: Förkortning
     account: Konto
-    account_updated: Konto sparat!
+    account_updated: Konto uppdaterat
     action: Åtgärd
     actions:
       cancel: Avbryt
@@ -289,12 +296,13 @@ sv:
           delivery_success: Testmejl framgångsrikt skickat
           error: ! 'Testmejl fel: %{e}'
       tab:
-        configuration: 
-        orders: 
-        overview: 
-        products: 
-        promotions: 
-        reports: 
+        configuration: Konfiguration
+        orders: Beställningar
+        overview: Översikt
+        products: Produkter
+        promotions: Kampanjer
+        reports: Rapporter
+        users: 
     administration: Administration
     agree_to_privacy_policy: Acceptera privatpolicyn
     agree_to_terms_of_service: Acceptera användarvillkoren
@@ -353,6 +361,7 @@ sv:
     back_to_users_list: Tillbaka till användarlistan
     back_to_zones_list: Tillbaka till zon-listan
     backorderable: Möjlig att förhandsbeställa
+    backorders_allowed: 
     balance_due: Summa att betala
     bill_address: Faktureringsadress
     billing: Fakturering
@@ -438,7 +447,7 @@ sv:
       jirafe:
         app_id: App ID
         app_token: App symbol
-        currently_unavailable: 
+        currently_unavailable: Jirafe är inte tillgänglig just nu. Spree ansluter automatiskt till Jirafe när tjänsten är tillgängligt.
         explanation: Fälten nedan kan redan vara ifyllda om du valde att registrera dig hos Jirafe från admin's dashboard
         header: Jirafe Analysinställningar
         site_id: Site ID
@@ -447,6 +456,7 @@ sv:
     date: Datum
     date_completed: Datum färdig
     date_picker:
+      first_day: 
       format: ! '%Y/%m/%d'
       js_format: yy/mm/dd
     date_range: Datumintervall
@@ -568,6 +578,7 @@ sv:
     insufficient_stock: Otillräckligt lager tillgängligt, endast %{on_hand} återstår
     intercept_email_address: Fånga e-postadress
     intercept_email_instructions: Skriv över epost-mottagarens adress och ersätt med denna.
+    internal_name: 
     invalid_payment_provider: ! 'Ogiltig betalningstjänst. '
     invalid_promotion_action: Ogiltig kampanjaktivitet
     invalid_promotion_rule: Ogiltig kampanjregel
@@ -583,6 +594,7 @@ sv:
       operators:
         gt: större än
         gte: större än eller lika med
+    items_cannot_be_shipped: Vi kan inte skicka till den angivna adressen. Var vänlig välj en annan adress.
     jirafe: Jirafe
     landing_page_rule:
       path: Sökväg
@@ -598,7 +610,7 @@ sv:
     listing_users: Visa användare
     loading: Laddar
     locale_changed: Språket har ändrats
-    location: Språk
+    location: Lager
     lock: Lås
     logged_in_as: Inloggad som
     logged_in_succesfully: Du har nu loggats in
@@ -661,11 +673,13 @@ sv:
     no_actions_added: Inga handlingar tillagda
     no_orders_found: Inga order hittades
     no_payment_methods_found: Inga betalningsmetoder hittade
+    no_pending_payments: Inga förestående betalningar
     no_products_found: Inga produkter hittades
     no_promotions_found: Inga kampanjer hittades
     no_results: Inga resultat
     no_rules_added: Inga regler tillagda
     no_shipping_methods_found: Inga fraktmetoder hittades
+    no_stock_locations_found: Ingen lagerplats hittad
     no_trackers_found: Ingen spårare hittad
     no_tracking_present: Inga spårningsdetaljer tillgodosedda
     none: Ingen
@@ -685,6 +699,7 @@ sv:
     open: Öppen
     open_all_adjustments: Öppna alla ändringar
     option_type: Alternativtyp
+    option_type_placeholder: Välj typ av alternativ
     option_types: Alternativtyper
     option_value: Alternativsvärde
     option_values: Alternativsvärden
@@ -724,7 +739,7 @@ sv:
       awaiting_return: väntar på retur
       canceled: annulerad
       cart: kundvagn
-      complete: Slutförd
+      complete: slutförd
       confirm: bekräfta
       delivery: leverans
       payment: betalning
@@ -952,7 +967,7 @@ sv:
     smtp_username: SMTP-användarnamn
     source: Källa
     special_instructions: Särskilda instruktioner
-    split: 
+    split: Dela
     spree/order:
       coupon_code: Kupongkod
     spree_gateway_error_flash_for_checkout: Det var ett problem med din betalningsinformation. Kontrollera din information och försök igen.
@@ -967,9 +982,10 @@ sv:
     stock_location_info: Information om lagret
     stock_locations: Lagerplacering
     stock_management: Lagerhantering
+    stock_management_requires_a_stock_location: Skapa en lagerplats för att kunna hantera lagret
     stock_movements: Lagerrörelser
     stock_movements_for_stock_location: Lagerrörelser för %{stock_location_name}
-    stock_successfully_transferred: Lagret flyttades mellan positioner
+    stock_successfully_transferred: Lagret flyttades mellan positioner.
     stock_transfer: Lageröverföring
     stock_transfers: Lageröverföringar
     stop: Stopp
@@ -1006,6 +1022,7 @@ sv:
         subject: Testmail
     test_mode: Testläge
     thank_you_for_your_order: Tack för ditt köp. Var god skriv ut denna sida för framtida korrespondens.
+    there_are_no_items_for_this_order: Det finns inga produkter för denna order. Lägg till en produkt för att fortsätta.
     there_were_problems_with_the_following_fields: Det var problem med följande fält
     thumbnail: Tumnagelbild
     time: Tid
@@ -1045,6 +1062,7 @@ sv:
       must_be_non_negative: måste vara ett positivt tal
     value: Värde
     variant: Variant
+    variant_placeholder: Välj en variant
     variants: Varianter
     version: Version
     void: Tom

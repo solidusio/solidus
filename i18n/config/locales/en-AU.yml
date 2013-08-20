@@ -18,6 +18,7 @@ en-AU:
         name: Name
         numcode: ISO Code
       spree/credit_card:
+        base: 
         cc_type: Type
         month: Month
         number: Number
@@ -126,6 +127,12 @@ en-AU:
       spree/zone:
         description: Description
         name: Name
+    errors:
+      models:
+        spree/credit_card:
+          attributes:
+            base:
+              card_expired: 
     models:
       spree/address:
         one: Address
@@ -293,6 +300,7 @@ en-AU:
         products: 
         promotions: 
         reports: 
+        users: 
     administration: Administration
     agree_to_privacy_policy: 
     agree_to_terms_of_service: 
@@ -351,6 +359,7 @@ en-AU:
     back_to_users_list: 
     back_to_zones_list: Back To Zones List
     backorderable: 
+    backorders_allowed: 
     balance_due: Balance Due
     bill_address: Bill Address
     billing: Billing
@@ -445,6 +454,7 @@ en-AU:
     date: 
     date_completed: Date Completed
     date_picker:
+      first_day: 
       format: 
       js_format: 
     date_range: Date Range
@@ -566,6 +576,7 @@ en-AU:
     insufficient_stock: Insufficient stock available, only %{on_hand} remaining
     intercept_email_address: Intercept Email Address
     intercept_email_instructions: Override email recipient and replace with this address.
+    internal_name: 
     invalid_payment_provider: 
     invalid_promotion_action: 
     invalid_promotion_rule: 
@@ -581,6 +592,7 @@ en-AU:
       operators:
         gt: greater than
         gte: greater than or equal to
+    items_cannot_be_shipped: 
     jirafe: 
     landing_page_rule:
       path: Path
@@ -659,11 +671,13 @@ en-AU:
     no_actions_added: 
     no_orders_found: 
     no_payment_methods_found: 
+    no_pending_payments: 
     no_products_found: No products found
     no_promotions_found: 
     no_results: No results
     no_rules_added: No rules added
     no_shipping_methods_found: 
+    no_stock_locations_found: 
     no_trackers_found: 
     no_tracking_present: 
     none: None
@@ -683,6 +697,7 @@ en-AU:
     open: 
     open_all_adjustments: 
     option_type: Option Type
+    option_type_placeholder: 
     option_types: Option Types
     option_value: Option Value
     option_values: Option Values
@@ -965,6 +980,7 @@ en-AU:
     stock_location_info: 
     stock_locations: 
     stock_management: 
+    stock_management_requires_a_stock_location: 
     stock_movements: 
     stock_movements_for_stock_location: 
     stock_successfully_transferred: 
@@ -1004,6 +1020,7 @@ en-AU:
         subject: Testmail
     test_mode: Test Mode
     thank_you_for_your_order: Thank you for your business.  Please print out a copy of this confirmation page for your records.
+    there_are_no_items_for_this_order: 
     there_were_problems_with_the_following_fields: There were problems with the following fields
     thumbnail: Thumbnail
     time: 
@@ -1043,6 +1060,7 @@ en-AU:
       must_be_non_negative: must be a non-negative value
     value: Value
     variant: Variant
+    variant_placeholder: 
     variants: Variants
     version: Version
     void: Void

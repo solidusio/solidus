@@ -18,6 +18,7 @@ zh-TW:
         name: Name
         numcode: ISO Code
       spree/credit_card:
+        base: 
         cc_type: 信用卡類型
         month: 月份
         number: 卡號
@@ -126,6 +127,12 @@ zh-TW:
       spree/zone:
         description: Description
         name: Name
+    errors:
+      models:
+        spree/credit_card:
+          attributes:
+            base:
+              card_expired: 
     models:
       spree/address:
         one: Address
@@ -293,6 +300,7 @@ zh-TW:
         products: 
         promotions: 
         reports: 
+        users: 
     administration: 管理介面
     agree_to_privacy_policy: 
     agree_to_terms_of_service: 
@@ -351,6 +359,7 @@ zh-TW:
     back_to_users_list: 
     back_to_zones_list: Back To Zones List
     backorderable: 
+    backorders_allowed: 
     balance_due: 未入帳
     bill_address: 帳單地址
     billing: 帳單
@@ -445,6 +454,7 @@ zh-TW:
     date: 
     date_completed: Date Completed
     date_picker:
+      first_day: 
       format: 
       js_format: 
     date_range: 日期範圍
@@ -566,6 +576,7 @@ zh-TW:
     insufficient_stock: Insufficient stock available, only %{on_hand} remaining
     intercept_email_address: 
     intercept_email_instructions: 
+    internal_name: 
     invalid_payment_provider: 
     invalid_promotion_action: 
     invalid_promotion_rule: 
@@ -581,6 +592,7 @@ zh-TW:
       operators:
         gt: 大於
         gte: 大於等於
+    items_cannot_be_shipped: 
     jirafe: 
     landing_page_rule:
       path: Path
@@ -659,11 +671,13 @@ zh-TW:
     no_actions_added: 
     no_orders_found: 
     no_payment_methods_found: 
+    no_pending_payments: 
     no_products_found: 找不到商品
     no_promotions_found: 
     no_results: 
     no_rules_added: No rules added
     no_shipping_methods_found: 
+    no_stock_locations_found: 
     no_trackers_found: 
     no_tracking_present: 
     none: 沒有
@@ -683,6 +697,7 @@ zh-TW:
     open: 
     open_all_adjustments: 
     option_type: 商品選項類型
+    option_type_placeholder: 
     option_types: 商品選項類型
     option_value: 商品選項
     option_values: 商品選項
@@ -965,6 +980,7 @@ zh-TW:
     stock_location_info: 
     stock_locations: 
     stock_management: 
+    stock_management_requires_a_stock_location: 
     stock_movements: 
     stock_movements_for_stock_location: 
     stock_successfully_transferred: 
@@ -1004,6 +1020,7 @@ zh-TW:
         subject: Testmail
     test_mode: 測試模式
     thank_you_for_your_order: 
+    there_are_no_items_for_this_order: 
     there_were_problems_with_the_following_fields: 
     thumbnail: 縮圖
     time: 
@@ -1043,6 +1060,7 @@ zh-TW:
       must_be_non_negative: 
     value: 值
     variant: Variant
+    variant_placeholder: 
     variants: 系列型號
     version: 版本
     void: 無效
