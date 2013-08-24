@@ -16,10 +16,18 @@ Pull requests for any fixes on how the application works are still very welcome 
 
 ## Installation
 
-Add the following to your `Gemfile`
+Add the following to your `Gemfile`. 
+
 ```ruby
 gem 'spree_i18n', github: 'spree/spree_i18n'
+gem 'globalize3', github: 'svenfuchs/globalize3', branch: 'rails4'
+gem 'paper_trail', github: 'airblade/paper_trail'
 ```
+
+*Note that while we dont have releases that support rails 4 you also need to
+add [globalize3][7] and [paper_trails][8] to your Gemfile and point them to the
+their rails 4 branch on github (paper_trails is a required by globalize3). Use
+the 2-0-stable branch in case you want to run it on any Spree 2.0.x release.*
 
 Run `bundle install`
 
@@ -98,3 +106,5 @@ Copyright (c) 2013 Spree Commerce Inc. and other contributors. released under th
 [4]: http://www.localeapp.com
 [5]: http://www.localeapp.com/projects/4605
 [6]: https://github.com/spree/spree_i18n/tree/master/LICENSE
+[7]: https://github.com/svenfuchs/globalize3/
+[8]: https://github.com/airblade/paper_trail
