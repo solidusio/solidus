@@ -134,7 +134,7 @@ de:
         spree/credit_card:
           attributes:
             base:
-              card_expired: 
+              card_expired: Karte abgelaufen
     models:
       spree/address:
         one: Adresse
@@ -157,9 +157,11 @@ de:
       spree/payment:
         one: Bezahlung
         other: Bezahlungen
+      spree/payment_method: 
       spree/product:
         one: Produkt
         other: Produkte
+      spree/promotion: 
       spree/property:
         one: Eigenschaft
         other: Eigenschaften
@@ -178,9 +180,12 @@ de:
       spree/shipping_category:
         one: Versandkategorie
         other: Versandkategorien
+      spree/shipping_method: 
       spree/state:
         one: Bundesland
         other: Bundesländer
+      spree/stock_location: 
+      spree/stock_transfer: 
       spree/tax_category:
         one: Steuerkategorie
         other: Steuerkategorien
@@ -193,6 +198,7 @@ de:
       spree/taxonomy:
         one: Produktklassifizierung
         other: Produktklassifizierungen
+      spree/tracker: 
       spree/user:
         one: Benutzer
         other: Benutzer
@@ -304,7 +310,7 @@ de:
         products: Produkte
         promotions: Aktion
         reports: Berichte
-        users: 
+        users: Benutzer
     administration: Verwaltung
     agree_to_privacy_policy: Datenschutzerklärung akzeptieren
     agree_to_terms_of_service: Allgemeine Geschäftsbedingungen akzeptieren
@@ -458,7 +464,7 @@ de:
     date: Datum
     date_completed: Abschlußdatum
     date_picker:
-      first_day: 
+      first_day: 0
       format: ! '%d.%m.%Y'
       js_format: dd.mm.yy
     date_range: Datum (von/bis)
@@ -580,7 +586,7 @@ de:
     insufficient_stock: Nicht genügend auf Lager. Nur noch %{on_hand} verbleibend.
     intercept_email_address: Email-Adresse abstellen
     intercept_email_instructions: Email-Empfänger überschreiben und mit dieser Adresse ersetzen.
-    internal_name: 
+    internal_name: Interne Bezeichnung
     invalid_payment_provider: Ungültiger Zahlungsanbieter.
     invalid_promotion_action: Ungültige Aktion
     invalid_promotion_rule: Ungültige Regel
@@ -678,6 +684,7 @@ de:
     no_pending_payments: Keine ausstehenden Zahlungen
     no_products_found: Keine Produkte gefunden
     no_promotions_found: Keine Werbeaktionen gefunden
+    no_resource_found: 
     no_results: Keine Ergebnisse
     no_rules_added: Keine Regeln verfügbar
     no_shipping_methods_found: Keine Versandarten gefunden
@@ -766,6 +773,7 @@ de:
     payment: Zahlung
     payment_information: Zahlungsinformationen
     payment_method: Zahlungsmethode
+    payment_method_not_supported: 
     payment_methods: Zahlungsmethoden
     payment_processing_failed: Die Bezahlung konnte nicht abgeschlossen werden, bitte überprüfen Sie Ihre Angaben.
     payment_processor_choose_banner_text: Wenn Sie hilfe bei der Auswahl des Zahlungsabwicklers haben, bitte besuchen Sie

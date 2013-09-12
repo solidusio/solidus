@@ -141,18 +141,24 @@ de-CH:
       spree/line_item: 
       spree/order: 
       spree/payment: 
+      spree/payment_method: 
       spree/product: 
+      spree/promotion: 
       spree/property: 
       spree/prototype: 
       spree/return_authorization: 
       spree/role: 
       spree/shipment: 
       spree/shipping_category: 
+      spree/shipping_method: 
       spree/state: 
+      spree/stock_location: 
+      spree/stock_transfer: 
       spree/tax_category: 
       spree/tax_rate: 
       spree/taxon: 
       spree/taxonomy: 
+      spree/tracker: 
       spree/user: 
       spree/variant: 
       spree/zone: 
@@ -630,6 +636,7 @@ de-CH:
     no_pending_payments: 
     no_products_found: Keine Produkte gefunden
     no_promotions_found: 
+    no_resource_found: 
     no_results: No results
     no_rules_added: No rules added
     no_shipping_methods_found: 
@@ -718,6 +725,7 @@ de-CH:
     payment: Zahlung
     payment_information: Zahlungsinformationen
     payment_method: Zahlungsmethode
+    payment_method_not_supported: 
     payment_methods: Zahlungsmethoden
     payment_processing_failed: Payment could not be processed, please check the details you entered
     payment_processor_choose_banner_text: If you need help choosing a payment processor, please visit

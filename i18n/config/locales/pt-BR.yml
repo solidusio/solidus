@@ -155,9 +155,11 @@ pt-BR:
       spree/payment:
         one: Pagamento
         other: Pagamentos
+      spree/payment_method: 
       spree/product:
         one: Produto
         other: Produtos
+      spree/promotion: 
       spree/property:
         one: Propriedade
         other: Propriedades
@@ -176,9 +178,12 @@ pt-BR:
       spree/shipping_category:
         one: Categoria do Envio
         other: Categoria dos Envios
+      spree/shipping_method: 
       spree/state:
         one: Estado
         other: Estados
+      spree/stock_location: 
+      spree/stock_transfer: 
       spree/tax_category:
         one: Categoria do Imposto
         other: Categoria dos Impostos
@@ -191,6 +196,7 @@ pt-BR:
       spree/taxonomy:
         one: Taxonomia
         other: Taxonomias
+      spree/tracker: 
       spree/user:
         one: Usuário
         other: Usuários
@@ -678,6 +684,7 @@ pt-BR:
     no_pending_payments: Sem pagamentos pendentes
     no_products_found: Não Existem Produtos
     no_promotions_found: Não existem promoções
+    no_resource_found: 
     no_results: Não Existem Resultados
     no_rules_added: Nenhuma Regra Adicionada
     no_shipping_methods_found: Nenhum método de envio encontrado
@@ -766,6 +773,7 @@ pt-BR:
     payment: Pagamento
     payment_information: Dados do Pagamento
     payment_method: Método de Pagamento
+    payment_method_not_supported: 
     payment_methods: Métodos de Pagamento
     payment_processing_failed: Pagamento não foi Processado, por Favor Verifique os Detalhes Informados.
     payment_processor_choose_banner_text: ! 'Se Você Precisa de Ajuda Para Escolher um Tipo de Pagamento, Por Favor Visite:'

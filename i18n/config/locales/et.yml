@@ -36,16 +36,16 @@ et:
         checkout_complete: 
         completed_at: Esitatud
         coupon_code: 
-        created_at: 
-        email: 
-        ip_address: 
+        created_at: Tellimuse kuupäev
+        email: Kliendi e-post
+        ip_address: IP Aadress
         item_total: 
         number: 
         payment_state: 
         shipment_state: 
         special_instructions: 
         state: 
-        total: 
+        total: Kokku
       spree/order/bill_address:
         address1: Billing address street
         city: Billing address city
@@ -63,7 +63,7 @@ et:
         state: Shipping address state
         zipcode: Shipping address zipcode
       spree/payment:
-        amount: 
+        amount: Summa
       spree/payment_method:
         name: Nimetus
       spree/product:
@@ -132,7 +132,7 @@ et:
         spree/credit_card:
           attributes:
             base:
-              card_expired: 
+              card_expired: Kaart on aegunud
     models:
       spree/address:
         one: Aadress
@@ -155,9 +155,11 @@ et:
       spree/payment:
         one: Makse
         other: Maksed
+      spree/payment_method: 
       spree/product:
         one: Toode
         other: Tooted
+      spree/promotion: 
       spree/property:
         one: Property
         other: Properties
@@ -176,9 +178,12 @@ et:
       spree/shipping_category:
         one: Tarnekategooria
         other: Tarnekategooriad
+      spree/shipping_method: 
       spree/state:
         one: Maakond
         other: Maakonnad
+      spree/stock_location: 
+      spree/stock_transfer: 
       spree/tax_category:
         one: Maksukategooria
         other: Maksukategooriad
@@ -191,6 +196,7 @@ et:
       spree/taxonomy:
         one: Taksonoomia
         other: Taksonoomiad
+      spree/tracker: 
       spree/user:
         one: Kasutaja
         other: Kasutajad
@@ -202,48 +208,50 @@ et:
         other: Zones
   devise:
     confirmations:
-      confirmed: 
-      send_instructions: 
+      confirmed: Sinu konto on edukalt kinnitatud. Sa oled nüüd sisse logitud.
+      send_instructions: Mõne minuti jooksul saad sa e-kirja juhistega oma konto kinnitamiseks.
     failure:
-      inactive: 
-      invalid: 
-      invalid_token: 
-      locked: 
-      timeout: 
-      unauthenticated: 
-      unconfirmed: 
+      inactive: Sinu konto polnud veel aktiveeritud.
+      invalid: Vigane e-post või salasõna.
+      invalid_token: Vigane autentimise võti.
+      locked: Sinu konto on lukustatud.
+      timeout: Sinu sessioon on aegunud, jätkamiseks logi palun sisse.
+      unauthenticated: Sa pead sisse logima või registreeruma enne jätkamist.
+      unconfirmed: Sa pead oma konto kinnitama, enne jätkamist.
     mailer:
       confirmation_instructions:
-        subject: 
+        subject: Kinnitamise juhised
       reset_password_instructions:
-        subject: 
+        subject: Parooli taastamise juhised
       unlock_instructions:
-        subject: 
+        subject: Lukust vabastamise juhised
     oauth_callbacks:
-      failure: 
-      success: 
+      failure: Ei õnnestunud autoriseerida %{kind}-kontot, põhjus "%{reason}".
+      success: Edukalt autoriseeritud %{kind}-konto.
     unlocks:
-      send_instructions: 
-      unlocked: 
+      send_instructions: Sa saad mõne minuti jooksul e-kirja juhistega, kuidas oma konto lukust vabastada.
+      unlocked: Sinu konto on edukalt lukust vabastatud. Sa oled nüüd sisse logitud.
     user_passwords:
       user:
-        cannot_be_blank: 
-        send_instructions: 
-        updated: 
+        cannot_be_blank: Sinu parool ei tohi olla tühi.
+        send_instructions: Mõne minuti jooksul saad sa kirja juhistega, kuidas oma parooli taastada.
+        updated: Sinu salasõna vahetati edukalt. Oled sisse logitud.
     user_registrations:
-      destroyed: 
-      inactive_signed_up: 
-      signed_up: 
-      updated: 
+      destroyed: Nägemist! Sinu konto on edukalt tühistatud. Loodame sind peagi uuesti näha.
+      inactive_signed_up: ! 'Sa registreerusid edukalt. Siiski ei saa me sind sisse logida, põhjus: %{reason}.'
+      signed_up: Tere tulemast! Sa registreerusid edukalt.
+      updated: Sa uuendasid edukalt oma kontot.
     user_sessions:
-      signed_in: 
-      signed_out: 
+      signed_in: Edukalt sisse logitud.
+      signed_out: Edukalt välja logitud.
   errors:
     messages:
-      already_confirmed: 
-      not_found: 
-      not_locked: 
-      not_saved: 
+      already_confirmed: on juba kinnitatud
+      not_found: ei leitud
+      not_locked: ei olnud lukus
+      not_saved:
+        one: 1 viga takistas salvestamast objekti %{resource}:"
+        other: ! '%{count} viga takistasid salvestamast objekti %{resource}:'
   spree:
     abbreviation: Lühend
     account: Konto
@@ -251,14 +259,14 @@ et:
     action: Toiming
     actions:
       cancel: Tühista
-      continue: 
+      continue: Jätka
       create: Loo uus
       destroy: Kustuta
-      edit: 
+      edit: Muuda
       list: Loetelu
       listing: Loetelu
       new: Uus
-      save: 
+      save: Salvesta
       update: Uuendus
     activate: Activate
     active: Aktiivne
@@ -267,7 +275,7 @@ et:
     add_country: Lisa riik
     add_new_header: Add New Header
     add_new_style: Add New Style
-    add_one: 
+    add_one: Lisa üks
     add_option_value: Lisa variatsionitüübi variante
     add_product: Lisa toode
     add_product_properties: Lisa toote omadusi
@@ -276,12 +284,12 @@ et:
     add_stock: 
     add_stock_management: 
     add_to_cart: Lisa ostukorvi
-    add_variant: 
+    add_variant: Lisa variant
     additional_item: Iga järgneva toote summa
-    address1: 
-    address2: 
+    address1: Aadress
+    address2: Aadress (jätkub)
     adjustment: Täiendus
-    adjustment_amount: 
+    adjustment_amount: Kogus
     adjustment_successfully_closed: 
     adjustment_successfully_opened: 
     adjustment_total: Adjustment Total
@@ -294,16 +302,16 @@ et:
           delivery_success: Testmail sent successfully
           error: ! 'Testmail error: %{e}'
       tab:
-        configuration: 
+        configuration: Seadistus
         orders: 
         overview: 
-        products: 
+        products: Tooted
         promotions: 
-        reports: 
-        users: 
+        reports: Raportid
+        users: Kasutajad
     administration: Administreerimisliides
     agree_to_privacy_policy: 
-    agree_to_terms_of_service: 
+    agree_to_terms_of_service: Nõustu Kasutustingimustega
     all: Kõik
     all_adjustments_closed: 
     all_adjustments_opened: 
@@ -315,12 +323,12 @@ et:
     alt_text: Alternatiivne tekst
     alternative_phone: Teine telefoninumber
     amount: Summa
-    analytics_desc_header_1: 
+    analytics_desc_header_1: Spree Analüütika
     analytics_desc_header_2: 
     analytics_desc_list_1: 
     analytics_desc_list_2: 
     analytics_desc_list_3: 
-    analytics_desc_list_4: 
+    analytics_desc_list_4: See on täiesti tasuta!
     analytics_trackers: Google Analytics
     and: and
     are_you_sure: Kas oled kindel?
@@ -381,15 +389,15 @@ et:
     category: Kategooria
     check_for_spree_alerts: 
     checkout: Vormista tellimus
-    choose_a_customer: 
+    choose_a_customer: Vali klient
     choose_currency: 
     choose_dashboard_locale: 
     city: Linn
     clone: Võta aluseks
-    close: 
+    close: Sulge
     close_all_adjustments: 
     code: Kood
-    company: 
+    company: Ettevõte
     complete: Esitatud
     configuration: Konfiguratsioon
     configurations: Konfiguratsioon
@@ -404,15 +412,15 @@ et:
     could_not_connect_to_jirafe: 
     could_not_create_stock_movement: 
     count_on_hand: 
-    countries: 
+    countries: Riigid
     country: Riik
     country_based: Riigipõhine
-    country_name: 
+    country_name: Nimi
     country_names:
-      CA: 
-      FRA: 
-      ITA: 
-      US: 
+      CA: Kanada
+      FRA: Prantsusmaa
+      ITA: Itaalia
+      US: Ameerika Ühendriigid
     coupon: Coupon
     coupon_code: Coupon code
     coupon_code_already_applied: 
@@ -424,7 +432,7 @@ et:
     coupon_code_not_found: 
     create: Loo kasutajakonto
     create_a_new_account: Loo uus konto
-    created_at: 
+    created_at: Loodud
     credit: Krediit
     credit_card: Krediitkaart
     credit_cards: Credit Cards
@@ -451,7 +459,7 @@ et:
         site_id: 
         token: 
       jirafe_settings_updated: 
-    date: 
+    date: Kuupäev
     date_completed: Date Completed
     date_picker:
       first_day: 
@@ -495,7 +503,7 @@ et:
     empty: Tühi
     empty_cart: Tühjenda ostukorv
     enable_mail_delivery: Luba e-mailide saatmine
-    end: 
+    end: Lõpp
     ending_in: Ending in
     environment: Keskkond
     error: Viga
@@ -527,7 +535,7 @@ et:
     extension: Laiendus
     filename: Faili nimi
     fill_in_customer_info: 
-    filter_results: 
+    filter_results: Filtreeri tulemusi
     finalize: Lõpeta
     first_item: Esimese toote summa
     first_name: Eesnimi
@@ -555,7 +563,7 @@ et:
     i18n:
       available_locales: 
       fields: 
-      language: 
+      language: Keel
       localization_settings: 
       only_complete: 
       only_incomplete: 
@@ -563,7 +571,7 @@ et:
       show_only: 
       supported_locales: 
       this_file_language: Eesti keel
-      translations: 
+      translations: Tõlked
     icon: Icon
     image: Pilt
     image_settings: Image Settings
@@ -593,7 +601,7 @@ et:
         gt: greater than
         gte: greater than or equal to
     items_cannot_be_shipped: 
-    jirafe: 
+    jirafe: Jirafe
     landing_page_rule:
       path: Path
     last_name: Perekonnanimi
@@ -608,7 +616,7 @@ et:
     listing_users: Kasutajate loetelu
     loading: Laen...
     locale_changed: Keel vahetatud
-    location: 
+    location: Asukoht
     lock: 
     logged_in_as: ! 'Sisse logitud:'
     logged_in_succesfully: Sisselogimine õnnestus!
@@ -674,6 +682,7 @@ et:
     no_pending_payments: 
     no_products_found: tooteid ei leitud
     no_promotions_found: 
+    no_resource_found: 
     no_results: No results
     no_rules_added: No rules added
     no_shipping_methods_found: 
@@ -694,14 +703,14 @@ et:
       variant_deleted: Variant kustutatud
       variant_not_deleted: Variandi kustutamine ebaõnnestus
     on_hand: Laoseis
-    open: 
+    open: Ava
     open_all_adjustments: 
     option_type: Option Type
     option_type_placeholder: 
     option_types: Variatsioonid
     option_value: Option Value
     option_values: valiku väärtused
-    optional: 
+    optional: Valikuline
     options: Variatsioonid
     or: või
     or_over_price: ! '%{price} or over'
@@ -762,6 +771,7 @@ et:
     payment: Makse
     payment_information: Makse informatsioon
     payment_method: Makseviis
+    payment_method_not_supported: 
     payment_methods: Makseviisid
     payment_processing_failed: Payment could not be processed, please check the details you entered
     payment_processor_choose_banner_text: If you need help choosing a payment processor, please visit
@@ -779,7 +789,7 @@ et:
       void: Kehtetu
     payment_updated: Makse uuendatud
     payments: Maksed
-    percent: 
+    percent: Protsent
     percent_per_item: Percent Per Item
     permalink: Püsiviide
     phone: Telefon
@@ -852,7 +862,7 @@ et:
     provider: Varustaja
     provider_settings_warning: Varustaja sätete muutmiseks peab eelnevalt varustaja salvestama
     qty: Kogus
-    quantity: 
+    quantity: Kogus
     quantity_returned: Quantity Returned
     quantity_shipped: Tarnitud kogus
     rate: Hind
@@ -1023,7 +1033,7 @@ et:
     there_are_no_items_for_this_order: 
     there_were_problems_with_the_following_fields: There were problems with the following fields
     thumbnail: Pisipilt
-    time: 
+    time: Aeg
     to_add_variants_you_must_first_define: variantide lisamiseks pead esmalt defineerima TODO
     total: Kokku
     tracking: Jälgimisnumber
@@ -1073,6 +1083,6 @@ et:
     your_cart_is_empty: Ostukorv on tühi
     your_order_is_empty_add_product: 
     zip: Postiindeks
-    zipcode: 
+    zipcode: Postiindeks
     zone: Tsoon
     zones: Tsoonid

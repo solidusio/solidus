@@ -155,9 +155,11 @@ vi:
       spree/payment:
         one: Thanh toán
         other: Payments
+      spree/payment_method: 
       spree/product:
         one: Sản phẩm
         other: Products
+      spree/promotion: 
       spree/property:
         one: Thuộc tính
         other: Properties
@@ -176,9 +178,12 @@ vi:
       spree/shipping_category:
         one: Shipping Category
         other: Shipping Categories
+      spree/shipping_method: 
       spree/state:
         one: State
         other: States
+      spree/stock_location: 
+      spree/stock_transfer: 
       spree/tax_category:
         one: Tax Category
         other: Tax Categories
@@ -191,6 +196,7 @@ vi:
       spree/taxonomy:
         one: Phân loại
         other: Taxonomies
+      spree/tracker: 
       spree/user:
         one: User
         other: Users
@@ -674,6 +680,7 @@ vi:
     no_pending_payments: 
     no_products_found: Không tìm thấy sản phẩm
     no_promotions_found: Không tìm được khuyến mại
+    no_resource_found: 
     no_results: No results
     no_rules_added: No rules added
     no_shipping_methods_found: Không tìm được cách thưc vận chuyển
@@ -712,15 +719,15 @@ vi:
     order_information: Thông tin đơn hàng
     order_mailer:
       cancel_email:
-        dear_customer: Dear Customer,
-        instructions: Your order has been CANCELED.  Please retain this cancellation information for your records.
+        dear_customer: Kính chào quý khách,
+        instructions: Đơn đặt hàng của quý khách bị hủy. Vui lòng kiểm tra lại đơn hàng của bạn.
         order_summary_canceled: Order Summary [CANCELED]
         subject: Cancellation of Order
         subtotal: ! 'Tổng phụ: %{subtotal}'
         total: ! 'Tổng đơn hàng: %{total}'
       confirm_email:
-        dear_customer: Dear Customer,
-        instructions: Please review and retain the following order information for your records.
+        dear_customer: Kính chào quý khách,
+        instructions: Vui lòng kiểm tra đơn đặt hàng của bạn.
         order_summary: Order Summary
         subject: Order Confirmation
         subtotal: ! 'Tổng phụ: %{subtotal}'
@@ -762,6 +769,7 @@ vi:
     payment: Thanh toán
     payment_information: Thông tin thanh toán
     payment_method: Phương thức thanh toán
+    payment_method_not_supported: 
     payment_methods: Phương thức thanh toán
     payment_processing_failed: Payment could not be processed, please check the details you entered
     payment_processor_choose_banner_text: If you need help choosing a payment processor, please visit
@@ -917,7 +925,7 @@ vi:
     shipment_inc_vat: Shipment including VAT
     shipment_mailer:
       shipped_email:
-        dear_customer: Dear Customer,
+        dear_customer: Kính chào quý khách,
         instructions: Your order has been shipped
         shipment_summary: Shipment Summary
         subject: Shipment Notification

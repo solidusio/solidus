@@ -162,10 +162,12 @@ cs:
         few: Platby
         one: Platba
         other: Plateb
+      spree/payment_method: 
       spree/product:
         few: Výrobky
         one: Výrobek
         other: Výrobků
+      spree/promotion: 
       spree/property:
         few: Vlastnosti
         one: Vlastnost
@@ -190,10 +192,13 @@ cs:
         few: Kategorie dodání
         one: Kategorie dodání
         other: Kategorií dodání
+      spree/shipping_method: 
       spree/state:
         few: Státy
         one: Stát
         other: Států
+      spree/stock_location: 
+      spree/stock_transfer: 
       spree/tax_category:
         few: Kategorie daně
         one: Kategorie daně
@@ -210,6 +215,7 @@ cs:
         few: Sekce
         one: Sekce
         other: Sekcí
+      spree/tracker: 
       spree/user:
         few: Uživatelé
         one: Uživatel
@@ -703,6 +709,7 @@ cs:
     no_pending_payments: 
     no_products_found: Nebyly nalezeny žádné výrobky
     no_promotions_found: Nebyly nalezeny žádné propagační akce
+    no_resource_found: 
     no_results: Žádné výsledky
     no_rules_added: Žádné přidané pravidla
     no_shipping_methods_found: Nenalezeny žádné způsoby dodání
@@ -791,6 +798,7 @@ cs:
     payment: Platba
     payment_information: Informace k platbě
     payment_method: Způsob platby
+    payment_method_not_supported: 
     payment_methods: Způsoby platby
     payment_processing_failed: Platba nemohla být zpracována, zkontrolujte prosím zadané údaje.
     payment_processor_choose_banner_text: Pokud potřebujete poradit při výběru platební služby, navštivte prosím

@@ -155,9 +155,11 @@ id:
       spree/payment:
         one: Pembayaran
         other: Pembayaran lainnya
+      spree/payment_method: 
       spree/product:
         one: Produk
         other: Produk lainnya
+      spree/promotion: 
       spree/property:
         one: Properti
         other: Properti lainnya
@@ -176,9 +178,12 @@ id:
       spree/shipping_category:
         one: Kategori Pengiriman
         other: Kategori Pengiriman lainnya
+      spree/shipping_method: 
       spree/state:
         one: Provinsi
         other: Provinsi lainnya
+      spree/stock_location: 
+      spree/stock_transfer: 
       spree/tax_category:
         one: Kategori Pajak
         other: Kategori Pajak lainnya
@@ -191,6 +196,7 @@ id:
       spree/taxonomy:
         one: Taksonomi
         other: Taksonomi lainnya
+      spree/tracker: 
       spree/user:
         one: Pengguna
         other: Pengguna lainnya
@@ -674,6 +680,7 @@ id:
     no_pending_payments: 
     no_products_found: Produk tidak ditemukan
     no_promotions_found: Promosi tidak ditemukan
+    no_resource_found: 
     no_results: Tidak ada hasil
     no_rules_added: Tidak ada aturan tambahan
     no_shipping_methods_found: Tidak ditemukan metode pengiriman
@@ -762,6 +769,7 @@ id:
     payment: Pembayaran
     payment_information: Informasi Pembayaran
     payment_method: Metode Pembayaran
+    payment_method_not_supported: 
     payment_methods: Metode Pembayaran
     payment_processing_failed: Pembayaran tidak dapat diproses, silahkan periksa rincian yang anda masukan
     payment_processor_choose_banner_text: Jika anda membutuhkan pilihan bantuan untuk proses pembayaran, silahkan kunjungi

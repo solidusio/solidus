@@ -155,9 +155,11 @@ lt:
       spree/payment:
         one: Payment
         other: Payments
+      spree/payment_method: 
       spree/product:
         one: Product
         other: Products
+      spree/promotion: 
       spree/property:
         one: Property
         other: Properties
@@ -176,9 +178,12 @@ lt:
       spree/shipping_category:
         one: Shipping Category
         other: Shipping Categories
+      spree/shipping_method: 
       spree/state:
         one: State
         other: States
+      spree/stock_location: 
+      spree/stock_transfer: 
       spree/tax_category:
         one: Tax Category
         other: Tax Categories
@@ -191,6 +196,7 @@ lt:
       spree/taxonomy:
         one: Taxonomy
         other: Taxonomies
+      spree/tracker: 
       spree/user:
         one: User
         other: Users
@@ -674,6 +680,7 @@ lt:
     no_pending_payments: 
     no_products_found: No products found
     no_promotions_found: 
+    no_resource_found: 
     no_results: No results
     no_rules_added: No rules added
     no_shipping_methods_found: 
@@ -762,6 +769,7 @@ lt:
     payment: Payment
     payment_information: Apmokėjimo informacija
     payment_method: Payment Method
+    payment_method_not_supported: 
     payment_methods: Payment Methods
     payment_processing_failed: Payment could not be processed, please check the details you entered
     payment_processor_choose_banner_text: If you need help choosing a payment processor, please visit

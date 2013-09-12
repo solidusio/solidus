@@ -155,9 +155,11 @@ ca:
       spree/payment:
         one: Pagament
         other: Pagaments
+      spree/payment_method: 
       spree/product:
         one: Producte
         other: Productes
+      spree/promotion: 
       spree/property:
         one: Propietat
         other: Propietats
@@ -176,9 +178,12 @@ ca:
       spree/shipping_category:
         one: Categoria d'enviament
         other: Categories de enviament
+      spree/shipping_method: 
       spree/state:
         one: Estat
         other: Estats
+      spree/stock_location: 
+      spree/stock_transfer: 
       spree/tax_category:
         one: Categoria d'impostos
         other: Categories d'impostos
@@ -191,6 +196,7 @@ ca:
       spree/taxonomy:
         one: Propietat
         other: Propietats
+      spree/tracker: 
       spree/user:
         one: Usuari
         other: Usuaris
@@ -674,6 +680,7 @@ ca:
     no_pending_payments: 
     no_products_found: No s'han trobat productes
     no_promotions_found: 
+    no_resource_found: 
     no_results: Sense resultats
     no_rules_added: No s'han afegit noves normes
     no_shipping_methods_found: 
@@ -762,6 +769,7 @@ ca:
     payment: Pagament
     payment_information: Informació del pagament
     payment_method: Mètode de pagament
+    payment_method_not_supported: 
     payment_methods: Mètodes de pagament
     payment_processing_failed: El pagament no ha pogut ser processat, per favor, revisi les dades proporcionades.
     payment_processor_choose_banner_text: If you need help choosing a payment processor, please visit

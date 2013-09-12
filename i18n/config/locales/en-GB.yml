@@ -132,7 +132,7 @@ en-GB:
         spree/credit_card:
           attributes:
             base:
-              card_expired: 
+              card_expired: Card has expired
     models:
       spree/address:
         one: Address
@@ -155,9 +155,11 @@ en-GB:
       spree/payment:
         one: Payment
         other: Payments
+      spree/payment_method: 
       spree/product:
         one: Product
         other: Products
+      spree/promotion: 
       spree/property:
         one: Property
         other: Properties
@@ -176,9 +178,12 @@ en-GB:
       spree/shipping_category:
         one: Shipping Category
         other: Shipping Categories
+      spree/shipping_method: 
       spree/state:
         one: County
         other: Counties
+      spree/stock_location: 
+      spree/stock_transfer: 
       spree/tax_category:
         one: Tax Category
         other: Tax Categories
@@ -191,6 +196,7 @@ en-GB:
       spree/taxonomy:
         one: Taxonomy
         other: Taxonomies
+      spree/tracker: 
       spree/user:
         one: User
         other: Users
@@ -302,7 +308,7 @@ en-GB:
         products: Products
         promotions: Promotions
         reports: Reports
-        users: 
+        users: Users
     administration: Administration
     agree_to_privacy_policy: Agree to Privacy Policy
     agree_to_terms_of_service: Agree to Terms of Service
@@ -361,7 +367,7 @@ en-GB:
     back_to_users_list: Back To Users List
     back_to_zones_list: Back To Zones List
     backorderable: Backorderable
-    backorders_allowed: 
+    backorders_allowed: backorders allowed
     balance_due: Balance Due
     bill_address: Bill Address
     billing: Billing
@@ -456,7 +462,7 @@ en-GB:
     date: Date
     date_completed: Date Completed
     date_picker:
-      first_day: 
+      first_day: 0
       format: ! '%Y/%m/%d'
       js_format: yy/mm/dd
     date_range: Date Range
@@ -578,7 +584,7 @@ en-GB:
     insufficient_stock: Insufficient stock available, only %{on_hand} remaining
     intercept_email_address: Intercept Email Address
     intercept_email_instructions: Override email recipient and replace with this address.
-    internal_name: 
+    internal_name: Internal Name
     invalid_payment_provider: Invalid payment provider.
     invalid_promotion_action: Invalid promotion action.
     invalid_promotion_rule: Invalid promotion rule.
@@ -676,6 +682,7 @@ en-GB:
     no_pending_payments: No pending payments
     no_products_found: No products found
     no_promotions_found: No promotions found
+    no_resource_found: 
     no_results: No results
     no_rules_added: No rules added
     no_shipping_methods_found: No shipping methods found
@@ -764,6 +771,7 @@ en-GB:
     payment: Payment
     payment_information: Payment Information
     payment_method: Payment Method
+    payment_method_not_supported: 
     payment_methods: Payment Methods
     payment_processing_failed: Payment could not be processed, please check the details you entered
     payment_processor_choose_banner_text: If you need help choosing a payment processor, please visit

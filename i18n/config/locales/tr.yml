@@ -132,7 +132,7 @@ tr:
         spree/credit_card:
           attributes:
             base:
-              card_expired: 
+              card_expired: Kart süresi doldu
     models:
       spree/address: Adresler
       spree/country: Ülkeler
@@ -141,18 +141,24 @@ tr:
       spree/line_item: Kalem
       spree/order: Siparişler
       spree/payment: Ödemeler
+      spree/payment_method: 
       spree/product: Ürünler
+      spree/promotion: 
       spree/property: Özellikler
       spree/prototype: Prototipler
       spree/return_authorization: Geri İade Yetkileri
       spree/role: Roller
       spree/shipment: Kargolar
       spree/shipping_category: Kargo Kategorileri
+      spree/shipping_method: 
       spree/state: Bölgeler
+      spree/stock_location: 
+      spree/stock_transfer: 
       spree/tax_category: Vergi Sınıfları
       spree/tax_rate: Vergi Oranları
       spree/taxon: Gruplar
       spree/taxonomy: Gruplandırmalar
+      spree/tracker: 
       spree/user: Kullanıcılar
       spree/variant: Değişkenler
       spree/zone: Bölgeler
@@ -250,13 +256,13 @@ tr:
           delivery_success: Deneme Postası başaırla gönderlidi
           error: ! 'Deneme Postası hatası: %{e}'
       tab:
-        configuration: 
-        orders: 
+        configuration: Yapılandırma
+        orders: Siparişler
         overview: 
-        products: 
+        products: Ürünler
         promotions: 
-        reports: 
-        users: 
+        reports: Raporlar
+        users: Kullanıcılar
     administration: Yönetim
     agree_to_privacy_policy: Gizlilik Politikasını kabul ediyorum
     agree_to_terms_of_service: Hizmet Sözleşmesini kabul ediyorum
@@ -628,6 +634,7 @@ tr:
     no_pending_payments: 
     no_products_found: Hiçbir Ürün Bulunamadı
     no_promotions_found: Hiçbir promosyon bulunamadı
+    no_resource_found: 
     no_results: Sonuç yok
     no_rules_added: Hiçbir kural eklenmedi
     no_shipping_methods_found: Hiçbir kargo yöntemi bulunamadı
@@ -716,6 +723,7 @@ tr:
     payment: Ödeme
     payment_information: Ödeme Bilgisi
     payment_method: Ödeme Yöntemi
+    payment_method_not_supported: 
     payment_methods: Ödeme Yöntemleri
     payment_processing_failed: Ödeme gerçekleştirilemedi, lütfen girmiş olduğunuz bilgileri kontrol ediniz
     payment_processor_choose_banner_text: Ödeme işlemi seçmekte zorlanıyorsanız, lütfen takip eden bağlantıya tıklayınız

@@ -132,7 +132,7 @@ es:
         spree/credit_card:
           attributes:
             base:
-              card_expired: 
+              card_expired: La Tarjeta ha expirado
     models:
       spree/address:
         one: Dirección.
@@ -155,9 +155,11 @@ es:
       spree/payment:
         one: Pago
         other: Pagos
+      spree/payment_method: 
       spree/product:
         one: Producto
         other: Productos
+      spree/promotion: 
       spree/property:
         one: Propiedad
         other: Propiedades
@@ -176,9 +178,12 @@ es:
       spree/shipping_category:
         one: Categoría de envío
         other: Categorías de envío
+      spree/shipping_method: 
       spree/state:
         one: Provincia
         other: Provincias
+      spree/stock_location: 
+      spree/stock_transfer: 
       spree/tax_category:
         one: Categoría fiscal
         other: Categorías fiscales
@@ -191,6 +196,7 @@ es:
       spree/taxonomy:
         one: Categoría
         other: Categorías
+      spree/tracker: 
       spree/user:
         one: Usuario
         other: Usuarios
@@ -302,7 +308,7 @@ es:
         products: Productos
         promotions: Promociones
         reports: Informes
-        users: 
+        users: Usuarios
     administration: Administración
     agree_to_privacy_policy: De acuerdo con la politica de privacidad.
     agree_to_terms_of_service: De acuerdo con las condiciones de uso
@@ -361,7 +367,7 @@ es:
     back_to_users_list: Volver a Listado de Usuarios
     back_to_zones_list: Volver a Listado de Zonas
     backorderable: Devuelto
-    backorders_allowed: 
+    backorders_allowed: Permitida la Devolucion
     balance_due: Saldo adeudado
     bill_address: Dirección de facturación
     billing: Facturación
@@ -578,7 +584,7 @@ es:
     insufficient_stock: Stock disponible insuficiente, sólo %{on_hand} restante
     intercept_email_address: Interceptar Dirección Email
     intercept_email_instructions: Sobrescribe correo electrónico del destinatario y reemplázalo con esta dirección.
-    internal_name: 
+    internal_name: Nombre interno
     invalid_payment_provider: Proveedor de pago invalido
     invalid_promotion_action: Acción de promoción inválida
     invalid_promotion_rule: Regla de promoción inválida
@@ -676,6 +682,7 @@ es:
     no_pending_payments: No hay pagos pendientes
     no_products_found: No se encontraron productos
     no_promotions_found: No se encontraron promociones
+    no_resource_found: 
     no_results: sin resultados
     no_rules_added: No se añadieron reglas
     no_shipping_methods_found: No se encontraron métodos de envio
@@ -764,6 +771,7 @@ es:
     payment: Pago
     payment_information: Información del Pago
     payment_method: Método de Pago
+    payment_method_not_supported: 
     payment_methods: Métodos de Pago
     payment_processing_failed: El pago no pudo ser procesado, por favor comprueba los detalles que has introducido
     payment_processor_choose_banner_text: Si necesitas ayuda a la hora de escojer un procesador de pago, por favor visita

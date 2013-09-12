@@ -155,9 +155,11 @@ ko:
       spree/payment:
         one: Payment
         other: Payments
+      spree/payment_method: 
       spree/product:
         one: Product
         other: Products
+      spree/promotion: 
       spree/property:
         one: Property
         other: Properties
@@ -176,9 +178,12 @@ ko:
       spree/shipping_category:
         one: Shipping Category
         other: Shipping Categories
+      spree/shipping_method: 
       spree/state:
         one: State
         other: States
+      spree/stock_location: 
+      spree/stock_transfer: 
       spree/tax_category:
         one: Tax Category
         other: Tax Categories
@@ -191,6 +196,7 @@ ko:
       spree/taxonomy:
         one: Taxonomy
         other: Taxonomies
+      spree/tracker: 
       spree/user:
         one: User
         other: Users
@@ -674,6 +680,7 @@ ko:
     no_pending_payments: 
     no_products_found: 찾는 상품이 없음
     no_promotions_found: 
+    no_resource_found: 
     no_results: 결과가 없음
     no_rules_added: 추가 된 룰이 없음
     no_shipping_methods_found: 
@@ -762,6 +769,7 @@ ko:
     payment: 지불
     payment_information: 지불 정보
     payment_method: 결제 방법
+    payment_method_not_supported: 
     payment_methods: 결제 방법
     payment_processing_failed: 결제 중에 문제가 발생했습니다. 잠시 후에 다시 해보시기 바랍니다.
     payment_processor_choose_banner_text: If you need help choosing a payment processor, please visit

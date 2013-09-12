@@ -155,9 +155,11 @@ da:
       spree/payment:
         one: Betaling
         other: Betalinger
+      spree/payment_method: 
       spree/product:
         one: Vare
         other: Varer
+      spree/promotion: 
       spree/property:
         one: Egenskab
         other: Egenskaber
@@ -176,9 +178,12 @@ da:
       spree/shipping_category:
         one: Leveringskategori
         other: Leveringskategorier
+      spree/shipping_method: 
       spree/state:
         one: Delstat
         other: Delstater
+      spree/stock_location: 
+      spree/stock_transfer: 
       spree/tax_category:
         one: Momskategori
         other: Momskategorier
@@ -191,6 +196,7 @@ da:
       spree/taxonomy:
         one: Taksonomi
         other: Taksonomier
+      spree/tracker: 
       spree/user:
         one: Bruger
         other: Brugere
@@ -676,6 +682,7 @@ da:
     no_pending_payments: Ingen afventende betalinger
     no_products_found: Ingen varer fundet
     no_promotions_found: Ingen rabatter fundet
+    no_resource_found: 
     no_results: Ingen resultater
     no_rules_added: Ingen regler tilføjet
     no_shipping_methods_found: Ingen leveringsmetoder fundet
@@ -764,6 +771,7 @@ da:
     payment: Betaling
     payment_information: Betalingsinformation
     payment_method: Betalingsmetode
+    payment_method_not_supported: 
     payment_methods: Betalingsmetoder
     payment_processing_failed: Betalingen kunne ikke gennemføres. Hver venlig at checke de detaljer du har indtastet.
     payment_processor_choose_banner_text: If you need help choosing a payment processor, please visit

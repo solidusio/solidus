@@ -155,9 +155,11 @@ lv:
       spree/payment:
         one: Maksājums
         other: Maksājumi
+      spree/payment_method: 
       spree/product:
         one: Produkts
         other: Produkti
+      spree/promotion: 
       spree/property:
         one: Property
         other: Properties
@@ -176,9 +178,12 @@ lv:
       spree/shipping_category:
         one: Piegādes kategorija
         other: Piegādes kategorijas
+      spree/shipping_method: 
       spree/state:
         one: Štats
         other: Štati
+      spree/stock_location: 
+      spree/stock_transfer: 
       spree/tax_category:
         one: Nodokļu kategorija
         other: Nodokļu kategorijas
@@ -191,6 +196,7 @@ lv:
       spree/taxonomy:
         one: Taxonomy
         other: Taxonomies
+      spree/tracker: 
       spree/user:
         one: Lietotājs
         other: Lietotāji
@@ -674,6 +680,7 @@ lv:
     no_pending_payments: 
     no_products_found: Neviens produkts netika atrasts
     no_promotions_found: 
+    no_resource_found: 
     no_results: No results
     no_rules_added: No rules added
     no_shipping_methods_found: 
@@ -762,6 +769,7 @@ lv:
     payment: Maksājums
     payment_information: Maksājumu informācija
     payment_method: Maksājuma metode
+    payment_method_not_supported: 
     payment_methods: Maksājuma metodes
     payment_processing_failed: Payment could not be processed, please check the details you entered
     payment_processor_choose_banner_text: If you need help choosing a payment processor, please visit

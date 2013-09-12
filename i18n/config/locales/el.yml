@@ -1,132 +1,132 @@
-pl:
+el:
   activerecord:
     attributes:
       spree/address:
-        address1: Adres
-        address2: Adres (c.d.)
-        city: Miasto
-        country: Kraj
-        firstname: Imię
-        lastname: Nazwisko
-        phone: Telefon
-        state: Stan
-        zipcode: Kod Pocztowy
+        address1: Διεύθυνση
+        address2: Διεύθυνση (συνεχ.)
+        city: Πόλη
+        country: Χώρα
+        firstname: Όνομα
+        lastname: Επίθετο
+        phone: Τηλέφωνο
+        state: 
+        zipcode: Ταχυδρομικός Κώδικας
       spree/country:
-        iso: ISO
-        iso3: ISO3
-        iso_name: Nazwa ISO
-        name: Nazwa
-        numcode: Kod ISO
+        iso: 
+        iso3: 
+        iso_name: 
+        name: 
+        numcode: 
       spree/credit_card:
         base: 
-        cc_type: Typ
-        month: Miesiąc
-        number: Numer
-        verification_value: Kod weryfikujący
-        year: Rok
+        cc_type: Τύπος
+        month: Μήνας
+        number: Αριθμός
+        verification_value: 
+        year: Έτος
       spree/inventory_unit:
-        state: Stan
+        state: 
       spree/line_item:
-        price: Cena
-        quantity: Ilość
+        price: Τιμή
+        quantity: Ποσότητα
       spree/option_type:
-        name: Nazwa
-        presentation: Prezentacja
+        name: Όνομα
+        presentation: Παρουσίαση
       spree/order:
-        checkout_complete: Płatność Zakończona
-        completed_at: Zakończono
-        coupon_code: Kod Rabatu
-        created_at: Data Zamówienia
-        email: E-Mail Klienta
-        ip_address: Adres IP
-        item_total: Łącznie Sztuk
-        number: Numer
-        payment_state: Status Płatności
-        shipment_state: Status Dostawy
-        special_instructions: Dodatkowe Instrukcje
-        state: Stan
-        total: Łącznie
+        checkout_complete: 
+        completed_at: 
+        coupon_code: 
+        created_at: Ημερομηνία Παραγγελίας
+        email: 
+        ip_address: 
+        item_total: 
+        number: 
+        payment_state: 
+        shipment_state: 
+        special_instructions: 
+        state: 
+        total: 
       spree/order/bill_address:
-        address1: Billing address street
-        city: Billing address city
-        firstname: Billing address first name
-        lastname: Billing address last name
-        phone: Billing address phone
-        state: Billing address state
-        zipcode: Billing address zipcode
+        address1: 
+        city: 
+        firstname: 
+        lastname: 
+        phone: 
+        state: 
+        zipcode: 
       spree/order/ship_address:
-        address1: Shipping address street
-        city: Shipping address city
-        firstname: Shipping address first name
-        lastname: Shipping address last name
-        phone: Shipping address phone
-        state: Shipping address state
-        zipcode: Shipping address zipcode
+        address1: 
+        city: 
+        firstname: 
+        lastname: 
+        phone: 
+        state: 
+        zipcode: 
       spree/payment:
-        amount: Kwota
+        amount: 
       spree/payment_method:
-        name: Nazwa
+        name: 
       spree/product:
-        available_on: Dostępny Od
-        cost_currency: Waluta Kosztu
-        cost_price: Cena zakupu
-        description: Opis
-        master_price: Cena netto
-        name: Nazwa
-        on_hand: Dostępny
-        shipping_category: Kategoria Dostawy
-        tax_category: Kategoria Podatkowa
+        available_on: 
+        cost_currency: 
+        cost_price: 
+        description: 
+        master_price: 
+        name: 
+        on_hand: 
+        shipping_category: 
+        tax_category: 
       spree/promotion:
-        advertise: Reklamuj
-        code: Kod
-        description: Opis
-        event_name: Nazwa zdarzenia
-        expires_at: Dostępna do
-        name: Nazwa
-        path: Ścieżka
-        starts_at: Początek
-        usage_limit: Limit
+        advertise: 
+        code: 
+        description: 
+        event_name: 
+        expires_at: 
+        name: 
+        path: 
+        starts_at: 
+        usage_limit: 
       spree/property:
-        name: Nazwa
-        presentation: Prezentacja
+        name: 
+        presentation: 
       spree/prototype:
-        name: Nazwa
+        name: 
       spree/return_authorization:
-        amount: Ilość
+        amount: 
       spree/role:
-        name: Nazwa
+        name: 
       spree/state:
-        abbr: Skrót
-        name: Nazwa
+        abbr: 
+        name: 
       spree/tax_category:
-        description: Opis
-        name: Nazwa
+        description: 
+        name: 
       spree/tax_rate:
-        amount: Stawka
-        included_in_price: Wliczony w cenę
-        show_rate_in_label: Pokaż stawkę na etykieci
+        amount: 
+        included_in_price: 
+        show_rate_in_label: 
       spree/taxon:
-        name: Nazwa
-        permalink: Permalink
-        position: Pozycja
+        name: 
+        permalink: 
+        position: 
       spree/taxonomy:
-        name: Nazwa
+        name: 
       spree/user:
-        email: Email
-        password: Hasło
-        password_confirmation: Potwierdzenie Hasła
+        email: 
+        password: 
+        password_confirmation: 
       spree/variant:
-        cost_currency: Waluta Kosztu
-        cost_price: Cena zakupu
-        depth: Głębokość
-        height: Wysokość
-        price: Cena
-        sku: SKU
-        weight: Waga
-        width: Szerokość
+        cost_currency: 
+        cost_price: 
+        depth: 
+        height: 
+        price: 
+        sku: 
+        weight: 
+        width: 
       spree/zone:
-        description: Opis
-        name: Nazwa
+        description: 
+        name: 
     errors:
       models:
         spree/credit_card:
@@ -135,45 +135,33 @@ pl:
               card_expired: 
     models:
       spree/address:
-        few: Adresów
-        one: Adres
-        other: Adresy
+        one: Διεύθυνση
+        other: Διευθύνσεις
       spree/country:
-        few: Krajów
-        one: Kraj
-        other: Kraje
+        one: Χώρα
+        other: Χώρες
       spree/credit_card:
-        few: Kart Kredytowych
-        one: Karta Kredytowa
-        other: Karty Kredytowe
-      spree/inventory_unit:
-        few: Jednostek Stanu
-        one: Jednostka Stanu
-        other: Jednostki Stanu
+        one: Πιστωτική Κάρτα
+        other: Πιστωτικές Κάρτες
+      spree/inventory_unit: 
       spree/line_item: 
       spree/order:
-        few: Zamówienia
-        one: Zamówienie
-        other: Zamówienia
+        one: Παραγγελία
+        other: Παραγγελίες
       spree/payment:
-        few: Płatności
-        one: Płatność
-        other: Płatności
+        one: Πληρωμή
+        other: Πληρωμές
       spree/payment_method: 
       spree/product:
-        few: Przedmioty
-        one: Przedmiot
-        other: Przedmioty
+        one: Προϊόν
+        other: Προϊόντα
       spree/promotion: 
       spree/property:
-        few: Właściwości
-        one: Właściwość
-        other: Właściwości
+        one: Ιδιότητα
+        other: Ιδιότητες
       spree/prototype: 
       spree/return_authorization: 
-      spree/role:
-        one: Rola
-        other: Role
+      spree/role: 
       spree/shipment: 
       spree/shipping_category: 
       spree/shipping_method: 
@@ -186,21 +174,21 @@ pl:
       spree/taxonomy: 
       spree/tracker: 
       spree/user:
-        one: Użytkownik
-        other: Użytkownicy
-      spree/variant:
-        one: Wariant
-        other: Warianty
-      spree/zone: 
+        one: Χρήστης
+        other: Χρήστες
+      spree/variant: 
+      spree/zone:
+        one: Ζώνη
+        other: Ζώνες
   devise:
     confirmations:
-      confirmed: Twoje konto zostało pomyślnie potwierdzone. Jesteś już zalogowany/a.
-      send_instructions: W ciągu najbliższych kilku minut otrzymasz e-maila ze wskazówkami dotyczącymi potwierdzenia konta.
+      confirmed: 
+      send_instructions: 
     failure:
-      inactive: 
+      inactive: Ο λογαριασμός σας δεν έχει ενεργοποιηθεί ακόμα.
       invalid: 
       invalid_token: 
-      locked: 
+      locked: Ο λογαριασμός σας είναι κλειδωμένος
       timeout: 
       unauthenticated: 
       unconfirmed: 
@@ -237,10 +225,10 @@ pl:
       not_locked: 
       not_saved: 
   spree:
-    abbreviation: Skrót
-    account: Konto
-    account_updated: Konto Zauktalizowane
-    action: Akcja
+    abbreviation: Συντομογραφία
+    account: Λογαριασμός
+    account_updated: 
+    action: 
     actions:
       cancel: 
       continue: 
@@ -252,32 +240,32 @@ pl:
       new: 
       save: 
       update: 
-    activate: Aktywuj
-    active: Aktywny
-    add: Dodaj
-    add_action_of_type: Dodaj akcję typu
-    add_country: Dodaj Kraj
-    add_new_header: Dodaj Nowy Nagłówek
-    add_new_style: Dodaj Nowy Styl
-    add_one: Dodaj Jeden
+    activate: Ενεργοποίηση
+    active: 
+    add: Προσθήκη
+    add_action_of_type: 
+    add_country: Προσθήκη Χώρας
+    add_new_header: 
+    add_new_style: 
+    add_one: 
     add_option_value: 
-    add_product: Dodaj Produkt
-    add_product_properties: Dodaj Właściwości Produktu
-    add_rule_of_type: ! 'Dodaj '
-    add_state: Dodaj Status
+    add_product: Προσθήκη Προϊόντος
+    add_product_properties: Προσθήκη Ιδιοτήτων Προίόντος
+    add_rule_of_type: 
+    add_state: 
     add_stock: 
     add_stock_management: 
-    add_to_cart: 
+    add_to_cart: Προσθήκη στο καλάθι
     add_variant: 
     additional_item: 
-    address1: 
-    address2: 
-    adjustment: 
-    adjustment_amount: 
+    address1: Διεύθυνση
+    address2: Διεύθυνση (συνχ.)
+    adjustment: Ρύθμιση
+    adjustment_amount: Ποσότητα
     adjustment_successfully_closed: 
     adjustment_successfully_opened: 
     adjustment_total: 
-    adjustments: 
+    adjustments: Ρυθμίσεις
     admin:
       mail_methods:
         send_testmail: 
@@ -287,16 +275,16 @@ pl:
           error: 
       tab:
         configuration: 
-        orders: 
+        orders: Παραγγελίες
         overview: 
-        products: 
+        products: Προίόντα
         promotions: 
         reports: 
-        users: 
+        users: Χρήστες
     administration: 
     agree_to_privacy_policy: 
     agree_to_terms_of_service: 
-    all: 
+    all: Όλα
     all_adjustments_closed: 
     all_adjustments_opened: 
     all_departments: 
@@ -306,7 +294,7 @@ pl:
     already_signed_up_for_analytics: 
     alt_text: 
     alternative_phone: 
-    amount: 
+    amount: Ποσότητα
     analytics_desc_header_1: 
     analytics_desc_header_2: 
     analytics_desc_list_1: 
@@ -314,7 +302,7 @@ pl:
     analytics_desc_list_3: 
     analytics_desc_list_4: 
     analytics_trackers: 
-    and: 
+    and: και
     are_you_sure: 
     are_you_sure_delete: 
     associated_adjustment_closed: 
@@ -325,7 +313,7 @@ pl:
     attachment_url: 
     authorization_failure: 
     available_on: 
-    back: 
+    back: Πίσω
     back_end: 
     back_to_adjustments_list: 
     back_to_images_list: 
@@ -369,7 +357,7 @@ pl:
     card_number: 
     card_type_is: 
     cart: 
-    categories: 
+    categories: Κατηγορίες
     category: 
     check_for_spree_alerts: 
     checkout: 
@@ -401,10 +389,10 @@ pl:
     country_based: 
     country_name: 
     country_names:
-      CA: 
-      FRA: 
-      ITA: 
-      US: 
+      CA: Καναδάς
+      FRA: Γαλλία
+      ITA: Ιταλία
+      US: Ηνωμένες Πολιτείες Αμερικής
     coupon: 
     coupon_code: 
     coupon_code_already_applied: 
@@ -552,8 +540,8 @@ pl:
       select_locale: 
       show_only: 
       supported_locales: 
-      this_file_language: 
-      translations: 
+      this_file_language: Αγγλικά (ΗΠΑ)
+      translations: Μεταφράσεις
     icon: 
     image: 
     image_settings: 

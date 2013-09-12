@@ -155,9 +155,11 @@ ua:
       spree/payment:
         one: Платіж
         other: Платежі
+      spree/payment_method: 
       spree/product:
         one: Товар
         other: Товари
+      spree/promotion: 
       spree/property:
         one: Властивість
         other: Властивості
@@ -176,9 +178,12 @@ ua:
       spree/shipping_category:
         one: Категорія доставки
         other: Категорії доставки
+      spree/shipping_method: 
       spree/state:
         one: Регіон/Область
         other: Регіони
+      spree/stock_location: 
+      spree/stock_transfer: 
       spree/tax_category:
         one: Податкова категорія
         other: Податкові категорії
@@ -191,6 +196,7 @@ ua:
       spree/taxonomy:
         one: Таксономія
         other: Таксономії
+      spree/tracker: 
       spree/user:
         one: Користувач
         other: Користувачі
@@ -298,9 +304,9 @@ ua:
         orders: Замовлення
         overview: Перегляд
         products: Товари
-        promotions: 
-        reports: 
-        users: 
+        promotions: Акції
+        reports: Звіти
+        users: Користувачі
     administration: Администрирование
     agree_to_privacy_policy: 
     agree_to_terms_of_service: 
@@ -403,7 +409,7 @@ ua:
     cost_price: Собівартість
     could_not_connect_to_jirafe: 
     could_not_create_stock_movement: 
-    count_on_hand: 
+    count_on_hand: У наявності
     countries: Країни
     country: Країна
     country_based: Країна
@@ -555,12 +561,12 @@ ua:
     i18n:
       available_locales: 
       fields: 
-      language: 
-      localization_settings: 
-      only_complete: 
-      only_incomplete: 
-      select_locale: 
-      show_only: 
+      language: Мова
+      localization_settings: Налаштування локалізації
+      only_complete: Тільки завершені
+      only_incomplete: Тільки не завершені
+      select_locale: Виберіть мову
+      show_only: Відображати тільки
       supported_locales: 
       this_file_language: Ukrainian
       translations: 
@@ -674,6 +680,7 @@ ua:
     no_pending_payments: 
     no_products_found: Не знайдено жодного товару
     no_promotions_found: Акцій не знайдено
+    no_resource_found: 
     no_results: Нічого не знайдено
     no_rules_added: Жодного правила не задано
     no_shipping_methods_found: Способів доставки не знайдено
@@ -729,7 +736,7 @@ ua:
     order_not_found: 
     order_number: Замовлення
     order_populator:
-      out_of_stock: 
+      out_of_stock: ! '%{item} немає у наявності.'
       please_enter_reasonable_quantity: 
     order_processed_successfully: Ваше замовлення було успішно опрацьоване
     order_state:
@@ -762,6 +769,7 @@ ua:
     payment: Платіж
     payment_information: Інформація про платіж
     payment_method: Спосіб оплати
+    payment_method_not_supported: 
     payment_methods: Способи оплати
     payment_processing_failed: Немодливо здійснити платіж. Перевірте ведену інформацію
     payment_processor_choose_banner_text: Якщо вам потрібна допомога у виборі інструменту оплати, відвідайте
@@ -892,7 +900,7 @@ ua:
     s3_secret: Secret Key
     sales_total: Разом (продаж)
     sales_total_description: Загальний обсяг продажів за всіма замовленнями
-    sales_totals: 
+    sales_totals: Продажі загалом
     save_and_continue: Зберегти і продовжити
     say_no: Ні
     say_yes: Так
@@ -1060,7 +1068,7 @@ ua:
       must_be_non_negative: має бути невід'ємним числом
     value: Значення
     variant: Варіант
-    variant_placeholder: 
+    variant_placeholder: Виберіть варіант
     variants: Варіанти
     version: Версія
     void: Анульовані

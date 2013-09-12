@@ -132,7 +132,7 @@ ru:
         spree/credit_card:
           attributes:
             base:
-              card_expired: 
+              card_expired: Истек срок действия карты
     models:
       spree/address:
         few: Адреса
@@ -157,9 +157,11 @@ ru:
       spree/payment:
         one: Платёж
         other: Платежи
+      spree/payment_method: 
       spree/product:
         one: Товар
         other: Товары
+      spree/promotion: 
       spree/property:
         one: Свойство
         other: Свойства
@@ -178,9 +180,12 @@ ru:
       spree/shipping_category:
         one: Категория доставки
         other: Категории доставки
+      spree/shipping_method: 
       spree/state:
         one: Область/Регион
         other: Области/Регионы
+      spree/stock_location: 
+      spree/stock_transfer: 
       spree/tax_category:
         one: Категория налогов
         other: Категории налогов
@@ -193,6 +198,7 @@ ru:
       spree/taxonomy:
         one: Категория
         other: Категории
+      spree/tracker: 
       spree/user:
         one: Пользователь
         other: Пользователи
@@ -304,7 +310,7 @@ ru:
         products: Товары
         promotions: Акции
         reports: Отчёты
-        users: 
+        users: Пользователи
     administration: Администрирование
     agree_to_privacy_policy: Согласиться с Политикой Конфиденциальности
     agree_to_terms_of_service: Согласиться с Уловиями обслуживания
@@ -489,7 +495,7 @@ ru:
     editing_shipping_method: Редактирование способа доставки
     editing_state: Редактирование региона/области
     editing_stock_location: Редактирование Расположения Склада
-    editing_stock_movement: 
+    editing_stock_movement: Редактировать движение товара
     editing_tax_category: Редактирование категории налога
     editing_tax_rate: Редактирование налоговой ставки
     editing_tracker: Редактирование трекера
@@ -580,9 +586,9 @@ ru:
     insufficient_stock: Недостаточно единиц товара, только %{on_hand} есть в наличии
     intercept_email_address: Перехват писем
     intercept_email_instructions: Заменить email получателя на этот адрес.
-    internal_name: 
+    internal_name: Внутреннее имя
     invalid_payment_provider: Неверно указан способ оплаты
-    invalid_promotion_action: 
+    invalid_promotion_action: Неверная промо-акция
     invalid_promotion_rule: Неверно указан принцип рекламной кампании
     inventory: Товарная номенклатура
     inventory_adjustment: Надбавки
@@ -661,7 +667,7 @@ ru:
     new_shipping_method: Новый способ доставки
     new_state: Новый регион/область
     new_stock_location: Добавить новый склад
-    new_stock_movement: 
+    new_stock_movement: Новое движение товара
     new_stock_transfer: Новое перемещение по складу
     new_tax_category: Новая категория налогов
     new_tax_rate: Новая ставка налога
@@ -678,17 +684,18 @@ ru:
     no_pending_payments: Нет незавершённых платежей
     no_products_found: Не найдено ни одного товара
     no_promotions_found: Нет акций
+    no_resource_found: 
     no_results: Ничего не найдено
     no_rules_added: Ни одного правила не задано
     no_shipping_methods_found: Нет способов отправки
     no_stock_locations_found: Складов не найдено
     no_trackers_found: Треккеров не найдено
-    no_tracking_present: 
+    no_tracking_present: Отсутствуют детали отслеживания
     none: Ни одного
     normal_amount: Обычная сумма
     not: не
     not_available: Не доступен
-    not_enough_stock: 
+    not_enough_stock: Недостаточно позиций в исходном местоположении для завершения движения
     not_found: ! '%{resource} не найден'
     notice_messages:
       product_cloned: Копия товара создана
@@ -701,7 +708,7 @@ ru:
     open: Открыть
     open_all_adjustments: Open All Adjustments
     option_type: Товарная опция
-    option_type_placeholder: 
+    option_type_placeholder: Выберите тип опции
     option_types: Товарные опции
     option_value: Возможное значение опции
     option_values: Возможные значения опции
@@ -766,6 +773,7 @@ ru:
     payment: Платеж
     payment_information: Информация о платеже
     payment_method: Способ оплаты
+    payment_method_not_supported: 
     payment_methods: Способы оплаты
     payment_processing_failed: Невозможно произвести платёж, пожалуйста, проверьте введённую информацию
     payment_processor_choose_banner_text: ! 'Если Вам нужна помощь в выборе способа оплаты, пожалуйста, зайдите на '
@@ -864,7 +872,7 @@ ru:
     receive: Получить
     receive_stock: 
     received: Получен
-    reference: 
+    reference: Ссылка
     refund: Возврат
     register: Зарегистрироваться как новый пользователь
     registration: Регистрация
@@ -941,9 +949,9 @@ ru:
     shipping_address: Адрес доставки
     shipping_categories: Категории доставки
     shipping_category: Категория доставки
-    shipping_flat_rate_per_item: 
-    shipping_flat_rate_per_order: 
-    shipping_flexible_rate: 
+    shipping_flat_rate_per_item: Фиксированная ставка за единицу товара
+    shipping_flat_rate_per_order: Фиксированная ставка
+    shipping_flexible_rate: Гибкая ставка за единицу товара
     shipping_instructions: Иструкции по доставке
     shipping_method: Способ
     shipping_methods: Способы доставки
@@ -967,7 +975,7 @@ ru:
     smtp_send_all_emails_as_from_following_address: Отправлять все сообщения от этого адреса.
     smtp_send_copy_to_this_addresses: Отправлять копии всех сообщений на этот адрес. Для использования нескольких адресов разделите их запятой.
     smtp_username: Пользователь
-    source: 
+    source: Источник
     special_instructions: Дополнительные инструкции
     split: Разделить
     spree/order:
@@ -983,13 +991,13 @@ ru:
     stock_location: Расположение склада
     stock_location_info: 
     stock_locations: Адреса складов
-    stock_management: 
+    stock_management: Управление Запасами
     stock_management_requires_a_stock_location: Добавьте расположение склада для управления запасами, пожалуйста.
     stock_movements: Перемещения товаров
     stock_movements_for_stock_location: Перемещения товаров для %{stock_location_name}
     stock_successfully_transferred: Товары успешно перемещены с одного склада на другой.
-    stock_transfer: 
-    stock_transfers: 
+    stock_transfer: Движение Товаров
+    stock_transfers: Движения Товаров
     stop: Конец
     store: В магазин
     street_address: Адрес
@@ -1003,7 +1011,7 @@ ru:
     tax: Налог
     tax_categories: Категории налогов
     tax_category: Категория налогов
-    tax_rate_amount_explanation: 
+    tax_rate_amount_explanation: Налоговые ставки вводятся как десятичные значения (напр. если налог 5%, то вводите 0.05)
     tax_rates: Налоговые ставки
     tax_settings: Настройки налогообложения
     tax_total: Налоги
@@ -1034,8 +1042,8 @@ ru:
     tracking_number: Трекинговый номер
     tracking_url: Трекинговый URL
     tracking_url_placeholder: например, http://quickship.com/package?num=:tracking
-    transfer_from_location: 
-    transfer_stock: 
+    transfer_from_location: Перевести из
+    transfer_stock: Перевести Товар
     transfer_to_location: Перевести на
     tree: Дерево
     type: Тип

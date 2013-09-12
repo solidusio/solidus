@@ -141,18 +141,24 @@ az:
       spree/line_item: 
       spree/order: 
       spree/payment: 
+      spree/payment_method: 
       spree/product: 
+      spree/promotion: 
       spree/property: 
       spree/prototype: 
       spree/return_authorization: 
       spree/role: 
       spree/shipment: 
       spree/shipping_category: 
+      spree/shipping_method: 
       spree/state: 
+      spree/stock_location: 
+      spree/stock_transfer: 
       spree/tax_category: 
       spree/tax_rate: 
       spree/taxon: 
       spree/taxonomy: 
+      spree/tracker: 
       spree/user: 
       spree/variant: 
       spree/zone: 
@@ -628,6 +634,7 @@ az:
     no_pending_payments: 
     no_products_found: 
     no_promotions_found: 
+    no_resource_found: 
     no_results: 
     no_rules_added: 
     no_shipping_methods_found: 
@@ -716,6 +723,7 @@ az:
     payment: 
     payment_information: 
     payment_method: 
+    payment_method_not_supported: 
     payment_methods: 
     payment_processing_failed: 
     payment_processor_choose_banner_text: 

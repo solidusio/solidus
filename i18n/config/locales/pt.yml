@@ -2,35 +2,35 @@ pt:
   activerecord:
     attributes:
       spree/address:
-        address1: Address
-        address2: Address (contd.)
-        city: City
-        country: Country
-        firstname: First Name
-        lastname: Last Name
-        phone: Phone
-        state: State
-        zipcode: Zip Code
+        address1: Endereço
+        address2: Endereço (cont.)
+        city: Cidade
+        country: País
+        firstname: Primeiro Nome
+        lastname: Ultimo Nome
+        phone: Telefone
+        state: Estado
+        zipcode: Código Postal
       spree/country:
         iso: ISO
         iso3: ISO3
-        iso_name: ISO Name
-        name: Name
-        numcode: ISO Code
+        iso_name: Nome ISO
+        name: Nome
+        numcode: Código ISO
       spree/credit_card:
         base: 
-        cc_type: Type
-        month: Month
-        number: Number
+        cc_type: Tipo
+        month: Mês
+        number: Número
         verification_value: Verification Value
         year: Year
       spree/inventory_unit:
         state: State
       spree/line_item:
-        price: Price
-        quantity: Quantity
+        price: Preço
+        quantity: Quantidade
       spree/option_type:
-        name: Name
+        name: Nome
         presentation: Presentation
       spree/order:
         checkout_complete: 
@@ -40,7 +40,7 @@ pt:
         email: 
         ip_address: 
         item_total: 
-        number: 
+        number: Número
         payment_state: 
         shipment_state: 
         special_instructions: 
@@ -63,23 +63,23 @@ pt:
         state: Shipping address state
         zipcode: Shipping address zipcode
       spree/payment:
-        amount: 
+        amount: Quantia
       spree/payment_method:
-        name: Name
+        name: Nome
       spree/product:
         available_on: Available On
         cost_currency: 
         cost_price: Cost Price
-        description: Description
+        description: Descrição
         master_price: Master Price
-        name: Name
+        name: Nome
         on_hand: On Hand
         shipping_category: Shipping Category
         tax_category: Tax Category
       spree/promotion:
         advertise: Advertise
-        code: Code
-        description: Description
+        code: Código
+        description: Descrição
         event_name: Event Name
         expires_at: Expires At
         name: Name
@@ -155,9 +155,11 @@ pt:
       spree/payment:
         one: Payment
         other: Payments
+      spree/payment_method: 
       spree/product:
         one: Product
         other: Products
+      spree/promotion: 
       spree/property:
         one: Property
         other: Properties
@@ -176,9 +178,12 @@ pt:
       spree/shipping_category:
         one: Shipping Category
         other: Shipping Categories
+      spree/shipping_method: 
       spree/state:
         one: State
         other: States
+      spree/stock_location: 
+      spree/stock_transfer: 
       spree/tax_category:
         one: Tax Category
         other: Tax Categories
@@ -191,6 +196,7 @@ pt:
       spree/taxonomy:
         one: Taxonomy
         other: Taxonomies
+      spree/tracker: 
       spree/user:
         one: User
         other: Users
@@ -674,6 +680,7 @@ pt:
     no_pending_payments: 
     no_products_found: Não existem produtos
     no_promotions_found: 
+    no_resource_found: 
     no_results: Não existem resultados
     no_rules_added: Nenhuma regra adicionada
     no_shipping_methods_found: 
@@ -762,6 +769,7 @@ pt:
     payment: Pagamento
     payment_information: Dados do Pagamento
     payment_method: Método de Pagamento
+    payment_method_not_supported: 
     payment_methods: Métodos de Pagamento
     payment_processing_failed: Pagamento não foi processado, por favor verifique os detalhes informados.
     payment_processor_choose_banner_text: If you need help choosing a payment processor, please visit

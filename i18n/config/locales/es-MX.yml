@@ -81,10 +81,10 @@ es-MX:
         code: Código
         description: Descripción
         event_name: Nombre de Evento
-        expires_at: Expira en
+        expires_at: Expira
         name: Nombre
         path: Ruta
-        starts_at: Comienza el
+        starts_at: Comienza
         usage_limit: Límite de Uso
       spree/property:
         name: Nombre
@@ -132,7 +132,7 @@ es-MX:
         spree/credit_card:
           attributes:
             base:
-              card_expired: 
+              card_expired: La tarjeta ha expirado.
     models:
       spree/address:
         one: Dirección
@@ -155,9 +155,11 @@ es-MX:
       spree/payment:
         one: Pago
         other: Pagos
+      spree/payment_method: 
       spree/product:
         one: Producto
         other: Productos
+      spree/promotion: 
       spree/property:
         one: Propiedad
         other: Propiedades
@@ -176,9 +178,12 @@ es-MX:
       spree/shipping_category:
         one: Categoría de Envío
         other: Categorías de Envíos
+      spree/shipping_method: 
       spree/state:
         one: Estado
         other: Estados
+      spree/stock_location: 
+      spree/stock_transfer: 
       spree/tax_category:
         one: Categoría de Impuesto
         other: Categorías de Impuesto
@@ -191,6 +196,7 @@ es-MX:
       spree/taxonomy:
         one: Taxonomía
         other: Taxonomías
+      spree/tracker: 
       spree/user:
         one: Usuario
         other: Usuarios
@@ -202,10 +208,10 @@ es-MX:
         other: Zonas
   devise:
     confirmations:
-      confirmed: ! 'Su cuenta fue confirmada correctamente. Ahora está registrado '
+      confirmed: Su cuenta fue confirmada correctamente. Ahora está conectado.
       send_instructions: En breve recibirá un email con instrucciones para confirmar su cuenta.
     failure:
-      inactive: Su cuenta no se ha activado aún
+      inactive: Su cuenta no ha sido activada aún.
       invalid: Email o contraseña no válidos
       invalid_token: Token de autenticación no válido
       locked: Su cuenta está bloqueada
@@ -232,7 +238,7 @@ es-MX:
         updated: Su contraseña fue actualizada correctamente. Ahora está conectado.
     user_registrations:
       destroyed: ! 'Su cuenta  fue cancelada correctamente. Esperamos volverlo a ver pronto. ¡Adiós! '
-      inactive_signed_up: ! 'Usted se ha registrado correctamente sin embargo, no podemos registrarlo debido a que su cuenta está %{reason} '
+      inactive_signed_up: ! 'Usted se ha registrado correctamente. Sin embargo, no podemos registrarlo debido a que su cuenta está %{reason} '
       signed_up: ! '¡Bienvenido! Se ha registrado exitosamente. '
       updated: Ha actualizado su cuenta exitosamente.
     user_sessions:
@@ -257,7 +263,7 @@ es-MX:
       create: Crear
       destroy: Eliminar
       edit: Editar
-      list: Lista
+      list: Listar
       listing: Listado
       new: Nueva
       save: Guardar
@@ -298,11 +304,11 @@ es-MX:
       tab:
         configuration: Configuración
         orders: Ordenes
-        overview: 
+        overview: Visión general
         products: Productos
         promotions: Promociones
         reports: Reportes
-        users: 
+        users: Usuarios
     administration: Administración
     agree_to_privacy_policy: Aceptar política de privacidad.
     agree_to_terms_of_service: ! 'Aceptar términos del servicio. '
@@ -447,8 +453,8 @@ es-MX:
       jirafe:
         app_id: ID de aplicación
         app_token: Token de aplicación
-        currently_unavailable: 
-        explanation: Los campos debajo pueden ser capturados si decides registrarte con Jirafe desde el Dashboard.
+        currently_unavailable: Jirafe no esta disponible. Spree se conectará a Jirafe una vez esté activo.
+        explanation: Los siguientes campos pueden ser capturados si decides registrarte con Jirafe desde el Dashboard.
         header: Configuración de Jirafe Analytics
         site_id: ID de Sitio
         token: Token
@@ -564,7 +570,7 @@ es-MX:
       select_locale: Escoge traducción
       show_only: Mostrar solo
       supported_locales: Traducciones soportadas
-      this_file_language: Español (México)
+      this_file_language: 
       translations: Traducciones
     icon: Icono
     image: Imagen
@@ -651,7 +657,7 @@ es-MX:
     new_payment: Nuevo pago
     new_payment_method: Nueva forma de pago
     new_product: Nuevo producto
-    new_promotion: nueva promoción
+    new_promotion: Nueva promoción
     new_property: Nueva propiedad
     new_prototype: Nuevo prototipo
     new_return_authorization: Nueva autorización de devolución
@@ -676,6 +682,7 @@ es-MX:
     no_pending_payments: 
     no_products_found: No se han encontrado productos
     no_promotions_found: No se encontraron promociones
+    no_resource_found: 
     no_results: Sin resultados
     no_rules_added: No se han añadido nuevas reglas
     no_shipping_methods_found: No hay métodos de envío encontrados
@@ -764,6 +771,7 @@ es-MX:
     payment: Pago
     payment_information: Información del pago
     payment_method: Método de pago
+    payment_method_not_supported: 
     payment_methods: Métodos de pago
     payment_processing_failed: El pago no ha podido ser procesado, por favor revise los datos proporcionados.
     payment_processor_choose_banner_text: Si necesitas ayuda eligiendo un procesador de pagos, por favor visita
@@ -1055,14 +1063,14 @@ es-MX:
     users: Usuarios
     validation:
       cannot_be_less_than_shipped_units: no puede ser menos que el número de unidades enviadas.
-      cannot_destory_line_item_as_inventory_units_have_shipped: Cannot destory line item as some inventory units have shipped.
+      cannot_destory_line_item_as_inventory_units_have_shipped: No se pudo destruir el articulo ya que algunas unidades han sido enviadas.
       exceeds_available_stock: Excede el inventario disponible. Por favor asegúrate de que los artículos tengan una cantidad válida
       is_too_large: es demasiado grande -- no hay suficientes productos disponibles para ésa cantidad
       must_be_int: debe ser un entero
       must_be_non_negative: debe ser un valor no negativo
     value: valor
     variant: Variante
-    variant_placeholder: 
+    variant_placeholder: Selecciona una variante
     variants: Variantes
     version: Versión
     void: Vacío

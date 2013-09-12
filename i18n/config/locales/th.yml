@@ -155,9 +155,11 @@ th:
       spree/payment:
         one: ชำระ
         other: ชำระ
+      spree/payment_method: 
       spree/product:
         one: สินค้า
         other: สินค้า
+      spree/promotion: 
       spree/property:
         one: คุณสมบัติ
         other: คุณสมบัติ
@@ -176,9 +178,12 @@ th:
       spree/shipping_category:
         one: ประเภทการจัดส่ง
         other: ประเภทการจัดส่ง
+      spree/shipping_method: 
       spree/state:
         one: จังหวัด
         other: จังหวัด
+      spree/stock_location: 
+      spree/stock_transfer: 
       spree/tax_category:
         one: ประเภทภาษี
         other: ประเภทภาษี
@@ -191,6 +196,7 @@ th:
       spree/taxonomy:
         one: Taxonomy
         other: Taxonomies
+      spree/tracker: 
       spree/user:
         one: ผู้ใช้งาน
         other: ผู้ใช้งาน
@@ -300,7 +306,7 @@ th:
         products: สินค้า
         promotions: โปรโมชั่น
         reports: รายงาน
-        users: 
+        users: ผู้ใช้
     administration: การจัดการ
     agree_to_privacy_policy: ตกลงในนโยบายความเป็นส่วนตัว
     agree_to_terms_of_service: ตกลงในข้อตกลงบริการ
@@ -674,6 +680,7 @@ th:
     no_pending_payments: ไม่พบรายการรอชำระ
     no_products_found: ไม่พบสินค้า
     no_promotions_found: ไม่พบโปรโมชั่น
+    no_resource_found: 
     no_results: ไม่พบผลลัพท์
     no_rules_added: ไม่พบ rules
     no_shipping_methods_found: ไม่พบวิธีการจัดส่ง
@@ -762,6 +769,7 @@ th:
     payment: ชำระ
     payment_information: ข้อมูลการชำระเงิน
     payment_method: วิธีชำระเงิน
+    payment_method_not_supported: 
     payment_methods: วิธีชำระเงิน
     payment_processing_failed: ไม่สามารถชำระเงินได้ กรุณาตรวจสอบข้อมูลที่คุณได้กรอกใหม่
     payment_processor_choose_banner_text: หากคุณต้องการความช่วยเหลือในการตัดเงิน กรุณาไปยัง

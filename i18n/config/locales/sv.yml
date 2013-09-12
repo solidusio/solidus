@@ -132,7 +132,7 @@ sv:
         spree/credit_card:
           attributes:
             base:
-              card_expired: 
+              card_expired: Kortet har löpt ut
     models:
       spree/address:
         one: Adress
@@ -155,9 +155,11 @@ sv:
       spree/payment:
         one: Betalning
         other: Betalningar
+      spree/payment_method: 
       spree/product:
         one: Produkt
         other: Produkter
+      spree/promotion: 
       spree/property:
         one: Egenskap
         other: Egenskaper
@@ -176,9 +178,12 @@ sv:
       spree/shipping_category:
         one: Fraktkategori
         other: Fraktkategorier
+      spree/shipping_method: 
       spree/state:
         one: Län
         other: Län
+      spree/stock_location: 
+      spree/stock_transfer: 
       spree/tax_category:
         one: Momskategori
         other: Momskategorier
@@ -191,6 +196,7 @@ sv:
       spree/taxonomy:
         one: Klassifikation
         other: Klassifikationer
+      spree/tracker: 
       spree/user:
         one: Användare
         other: Användare
@@ -302,7 +308,7 @@ sv:
         products: Produkter
         promotions: Kampanjer
         reports: Rapporter
-        users: 
+        users: Användare
     administration: Administration
     agree_to_privacy_policy: Acceptera privatpolicyn
     agree_to_terms_of_service: Acceptera användarvillkoren
@@ -360,8 +366,8 @@ sv:
     back_to_trackers_list: Tillbaka till lista med spårare
     back_to_users_list: Tillbaka till användarlistan
     back_to_zones_list: Tillbaka till zon-listan
-    backorderable: Möjlig att förhandsbeställa
-    backorders_allowed: 
+    backorderable: Möjligt att förhandsbeställa
+    backorders_allowed: förhandsbeställning tillåtet
     balance_due: Summa att betala
     bill_address: Faktureringsadress
     billing: Fakturering
@@ -456,7 +462,7 @@ sv:
     date: Datum
     date_completed: Datum färdig
     date_picker:
-      first_day: 
+      first_day: 0
       format: ! '%Y/%m/%d'
       js_format: yy/mm/dd
     date_range: Datumintervall
@@ -494,7 +500,7 @@ sv:
     editing_user: Redigerar användare
     editing_zone: Redigerar zon
     email: Epost
-    empty: tom
+    empty: Tom
     empty_cart: Töm varukorgen
     enable_mail_delivery: Aktivera sändning av e-post
     end: Slut
@@ -578,7 +584,7 @@ sv:
     insufficient_stock: Otillräckligt lager tillgängligt, endast %{on_hand} återstår
     intercept_email_address: Fånga e-postadress
     intercept_email_instructions: Skriv över epost-mottagarens adress och ersätt med denna.
-    internal_name: 
+    internal_name: Internt namn
     invalid_payment_provider: ! 'Ogiltig betalningstjänst. '
     invalid_promotion_action: Ogiltig kampanjaktivitet
     invalid_promotion_rule: Ogiltig kampanjregel
@@ -676,6 +682,7 @@ sv:
     no_pending_payments: Inga förestående betalningar
     no_products_found: Inga produkter hittades
     no_promotions_found: Inga kampanjer hittades
+    no_resource_found: 
     no_results: Inga resultat
     no_rules_added: Inga regler tillagda
     no_shipping_methods_found: Inga fraktmetoder hittades
@@ -764,6 +771,7 @@ sv:
     payment: Betalning
     payment_information: Betalningsinformation
     payment_method: Betalningsmetod
+    payment_method_not_supported: 
     payment_methods: Betalningsmetoder
     payment_processing_failed: Betalningen kunde inte behandlas, var god kolla att uppgifterna som du skrev in är korrekta
     payment_processor_choose_banner_text: Om du behöver hjälp med att välja en betaltjänst, besök
@@ -928,7 +936,7 @@ sv:
         track_link: ! 'Tracking länk: %{url}'
     shipment_state: Leveransstatus
     shipment_states:
-      backorder: Restorder
+      backorder: förhandsbeställning
       partial: partiell
       pending: avvaktande
       ready: färdig
@@ -980,7 +988,7 @@ sv:
     status: Status
     stock_location: Lagerplacering
     stock_location_info: Information om lagret
-    stock_locations: Lagerplacering
+    stock_locations: Lagerplaceringar
     stock_management: Lagerhantering
     stock_management_requires_a_stock_location: Skapa en lagerplats för att kunna hantera lagret
     stock_movements: Lagerrörelser

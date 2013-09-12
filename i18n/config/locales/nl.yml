@@ -132,7 +132,7 @@ nl:
         spree/credit_card:
           attributes:
             base:
-              card_expired: 
+              card_expired: Kaart is verlopen
     models:
       spree/address:
         one: Adres
@@ -155,9 +155,11 @@ nl:
       spree/payment:
         one: Betaling
         other: Betalingen
+      spree/payment_method: 
       spree/product:
         one: Product
         other: Producten
+      spree/promotion: 
       spree/property:
         one: Eigenschap
         other: Eigenschappen
@@ -176,9 +178,12 @@ nl:
       spree/shipping_category:
         one: Verzend categorie
         other: Verzend categorieën
+      spree/shipping_method: 
       spree/state:
         one: Provincie
         other: Provincies
+      spree/stock_location: 
+      spree/stock_transfer: 
       spree/tax_category:
         one: Belasting Categorie
         other: Belasting Categorieën
@@ -191,6 +196,7 @@ nl:
       spree/taxonomy:
         one: Taxonomie
         other: Taxonomieën
+      spree/tracker: 
       spree/user:
         one: Gebruiker
         other: Gebruikers
@@ -302,7 +308,7 @@ nl:
         products: Producten
         promotions: Promoties
         reports: Rapportages
-        users: 
+        users: Gebruikers
     administration: Administratie
     agree_to_privacy_policy: ! 'Akkoord met Privacy beleid  '
     agree_to_terms_of_service: Akkoord met Algemene Voorwaarden
@@ -578,7 +584,7 @@ nl:
     insufficient_stock: Onvoldoende voorraad beschikbaar, enkel %{on_hand} beschikbaar
     intercept_email_address: E-mailadres opvangen
     intercept_email_instructions: Ontvanger van de e-mail overschrijven met dit e-mail adres.
-    internal_name: 
+    internal_name: Interne Naam
     invalid_payment_provider: ! 'Ongeldige betalingsprovider. '
     invalid_promotion_action: Ongeldige promotie actie.
     invalid_promotion_rule: Ongeldige promotie regel.
@@ -676,10 +682,11 @@ nl:
     no_pending_payments: 
     no_products_found: Geen producten gevonden
     no_promotions_found: Geen promoties gevonden
+    no_resource_found: 
     no_results: Geen resultaten
     no_rules_added: Geen regels toegevoegd
     no_shipping_methods_found: Geen verzend methodes gevonden
-    no_stock_locations_found: 
+    no_stock_locations_found: Geen voorraad locaties gevonden
     no_trackers_found: Geen Trackers Gevonden
     no_tracking_present: Geen Tracking details opgegeven.
     none: Geen
@@ -764,6 +771,7 @@ nl:
     payment: Betaling
     payment_information: Betaalmethode
     payment_method: Betaalmethode
+    payment_method_not_supported: 
     payment_methods: Betaalmethoden
     payment_processing_failed: De betaling kan niet worden verwerkt, controleer de informatie die je hebt ingevuld
     payment_processor_choose_banner_text: ! 'Als je hulp nodig hebt bij het kiezen van een betalingsprovider, bezoek '

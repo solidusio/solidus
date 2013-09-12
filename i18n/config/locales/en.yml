@@ -155,9 +155,15 @@ en:
       spree/payment:
         one: Payment
         other: Payments
+      spree/payment_method:
+        one: Payment Method
+        other: Payment Methods
       spree/product:
         one: Product
         other: Products
+      spree/promotion:
+        one: Promotion
+        other: Promotions
       spree/property:
         one: Property
         other: Properties
@@ -176,9 +182,18 @@ en:
       spree/shipping_category:
         one: Shipping Category
         other: Shipping Categories
+      spree/shipping_method:
+        one: Shipping Method
+        other: Shipping Methods
       spree/state:
         one: State
         other: States
+      spree/stock_location:
+        one: Stock Location
+        other: Stock Locations
+      spree/stock_transfer:
+        one: Stock Transfer
+        other: Stock Transfers
       spree/tax_category:
         one: Tax Category
         other: Tax Categories
@@ -191,6 +206,9 @@ en:
       spree/taxonomy:
         one: Taxonomy
         other: Taxonomies
+      spree/tracker:
+        one: Tracker
+        other: Trackers
       spree/user:
         one: User
         other: Users
@@ -594,7 +612,7 @@ en:
       operators:
         gt: greater than
         gte: greater than or equal to
-    items_cannot_be_shipped: We are unable to ship the selected items to your shipping address. Please choose another shipping address.
+    items_cannot_be_shipped: We are unable to calculate shipping rates for the selected items.
     jirafe: Jirafe
     landing_page_rule:
       path: Path
@@ -676,6 +694,7 @@ en:
     no_pending_payments: No pending payments
     no_products_found: No products found
     no_promotions_found: No promotions found
+    no_resource_found: No %{resource} found
     no_results: No results
     no_rules_added: No rules added
     no_shipping_methods_found: No shipping methods found
@@ -764,6 +783,7 @@ en:
     payment: Payment
     payment_information: Payment Information
     payment_method: Payment Method
+    payment_method_not_supported: That payment method is unsupported. Please choose another one.
     payment_methods: Payment Methods
     payment_processing_failed: Payment could not be processed, please check the details you entered
     payment_processor_choose_banner_text: If you need help choosing a payment processor, please visit

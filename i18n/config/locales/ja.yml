@@ -155,9 +155,11 @@ ja:
       spree/payment:
         one: 支払い
         other: 支払い
+      spree/payment_method: 
       spree/product:
         one: 商品
         other: 商品
+      spree/promotion: 
       spree/property:
         one: 属性
         other: 属性
@@ -176,9 +178,12 @@ ja:
       spree/shipping_category:
         one: 配送カテゴリ
         other: 配送カテゴリ
+      spree/shipping_method: 
       spree/state:
         one: 都道府県（州）
         other: 都道府県（州）
+      spree/stock_location: 
+      spree/stock_transfer: 
       spree/tax_category:
         one: 税区分
         other: 税区分
@@ -191,6 +196,7 @@ ja:
       spree/taxonomy:
         one: 分類ツリー
         other: 分類ツリー
+      spree/tracker: 
       spree/user:
         one: ユーザー
         other: ユーザー
@@ -674,6 +680,7 @@ ja:
     no_pending_payments: 
     no_products_found: 商品が見付かりませんでした。
     no_promotions_found: プロモーションが見つかりませんでした。
+    no_resource_found: 
     no_results: 検索結果がありませんでした。
     no_rules_added: ルールが追加されていません
     no_shipping_methods_found: 
@@ -762,6 +769,7 @@ ja:
     payment: 支払い方法
     payment_information: 支払い情報
     payment_method: 支払い方法
+    payment_method_not_supported: 
     payment_methods: 支払い方法
     payment_processing_failed: 決済が失敗しました。入力した情報を確認してから再び決済を行ってみて下さい。
     payment_processor_choose_banner_text: もし決済処理会社の選択でお困りでしたら、どうぞ

@@ -155,9 +155,11 @@ zh-CN:
       spree/payment:
         one: 支付
         other: 支付
+      spree/payment_method: 
       spree/product:
         one: 产品
         other: 产品
+      spree/promotion: 
       spree/property:
         one: 属性
         other: 属性
@@ -176,9 +178,12 @@ zh-CN:
       spree/shipping_category:
         one: 物流分类
         other: 物流分类
+      spree/shipping_method: 
       spree/state:
         one: 省份
         other: 省份
+      spree/stock_location: 
+      spree/stock_transfer: 
       spree/tax_category:
         one: 缴税分类
         other: 缴税分类
@@ -191,6 +196,7 @@ zh-CN:
       spree/taxonomy:
         one: 分类
         other: 分类
+      spree/tracker: 
       spree/user:
         one: 用户
         other: 用户
@@ -674,6 +680,7 @@ zh-CN:
     no_pending_payments: 
     no_products_found: 找不到产品
     no_promotions_found: 找不到任何促销活动
+    no_resource_found: 
     no_results: 无任何结果
     no_rules_added: 未添加规则
     no_shipping_methods_found: 找不到任何配送方式
@@ -762,6 +769,7 @@ zh-CN:
     payment: 支付
     payment_information: 支付信息
     payment_method: 支付方式
+    payment_method_not_supported: 
     payment_methods: 支付方式
     payment_processing_failed: 无法处理支付信息，请检查您所输入的详细信息
     payment_processor_choose_banner_text: 如果您需要关于支付处理的帮助，请访问
