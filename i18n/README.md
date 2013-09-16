@@ -21,13 +21,11 @@ Add the following to your `Gemfile`.
 ```ruby
 gem 'spree_i18n', github: 'spree/spree_i18n'
 gem 'globalize3', github: 'svenfuchs/globalize3', branch: 'rails4'
-gem 'paper_trail', github: 'airblade/paper_trail'
 ```
 
 *Note that while we dont have releases that support rails 4 you also need to
-add [globalize3][7] and [paper_trails][8] to your Gemfile and point them to the
-their rails 4 branch on github (paper_trails is a required by globalize3). Use
-the 2-0-stable branch in case you want to run it on any Spree 2.0.x release.*
+add [globalize3][7] to your Gemfile and point it to the the rails 4 branch
+on github. Use the 2-0-stable branch in case you want to run it on any Spree 2.0.x release.*
 
 Run `bundle install`
 

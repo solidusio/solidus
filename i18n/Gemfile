@@ -15,6 +15,5 @@ end
 
 gem 'spree', github: 'spree/spree', branch: 'master'
 gem 'globalize3', github: 'svenfuchs/globalize3', branch: 'rails4'
-gem 'paper_trail', github: 'airblade/paper_trail'
 
 gemspec
