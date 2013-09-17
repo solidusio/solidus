@@ -132,7 +132,7 @@ fr:
         spree/credit_card:
           attributes:
             base:
-              card_expired: 
+              card_expired: Cette carte est expirée
     models:
       spree/address:
         one: Adresse
@@ -156,6 +156,8 @@ fr:
         one: Paiement
         other: Paiements
       spree/payment_method: 
+        one: Méthode de paiment
+        other: Méthodes de paiment
       spree/product:
         one: Produit
         other: Produits
@@ -308,7 +310,7 @@ fr:
         products: Produits
         promotions: Promotions
         reports: Statistiques
-        users: 
+        users: Utilisateurs
     administration: Administration
     agree_to_privacy_policy: Accepter l'Engagement de Confidentialité
     agree_to_terms_of_service: Accepter les termes du contrat.
@@ -510,7 +512,7 @@ fr:
     errors:
       messages:
         could_not_create_taxon: Impossible de créer une taxon
-        no_payment_methods_available: No payment methods are configured for this environment
+        no_payment_methods_available: Aucune méthode de paiment n'est configuré pour cet environnement
         no_shipping_methods_available: Pas de moyen de livraison disponible pour la destination choisie, changez l'adresse et réessayez.
     errors_prohibited_this_record_from_being_saved:
       one: 1 erreur empêche l'enregistrement de cette entrée
@@ -519,7 +521,7 @@ fr:
     events:
       spree:
         cart:
-          add: Add to cart
+          add: Ajouter au panier
         checkout:
           coupon_code_added: Coupon code added
         content:
@@ -721,19 +723,19 @@ fr:
     order_information: Information sur la commande
     order_mailer:
       cancel_email:
-        dear_customer: Dear Customer,
-        instructions: Your order has been CANCELED.  Please retain this cancellation information for your records.
-        order_summary_canceled: Order Summary [CANCELED]
+        dear_customer: Cher client,
+        instructions: Votre commande a été ANNULÉ. Veuillez conserver les informations suivantes à propos de votre commande annulé.
+        order_summary_canceled: Sommaire de la commande [ANNULÉ]
         subject: Annulation de la commande
         subtotal: ! 'Sous-total: %{subtotal}'
         total: ! 'Total de le commande: %{total}'
       confirm_email:
-        dear_customer: Dear Customer,
-        instructions: Please review and retain the following order information for your records.
-        order_summary: Order Summary
+        dear_customer: Cher client,
+        instructions: Veuillez vérifier et sauvegarder les informations suivante à propos de votre commande.
+        order_summary: Sommaire de la commande
         subject: Confirmation de commande
         subtotal: ! 'Sous-total: %{subtotal}'
-        thanks: Thank you for your business.
+        thanks: Merci d'avoir fait affaire avec nous.
         total: ! 'Total de le commande: %{total}'
     order_not_found: Impossible de trouver votre commande. Merci d'essayer à nouveau.
     order_number: Commande
