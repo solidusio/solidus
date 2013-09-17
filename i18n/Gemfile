@@ -5,6 +5,8 @@ group :assets do
   gem 'sass-rails', '~> 4.0.0'
 end
 
+gem 'pg'
+
 group :test do
   gem 'rspec'
   gem 'i18n-spec', '~> 0.4.0'
