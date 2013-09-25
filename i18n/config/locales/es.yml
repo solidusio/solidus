@@ -463,7 +463,7 @@ es:
     date_completed: Fecha completada
     date_picker:
       first_day: 1
-      format: ! '%d%m%Y'
+      format: ! '%d/%m/%Y'
       js_format: dd/mm/yy
     date_range: Rango de fechas
     default: Por defecto
