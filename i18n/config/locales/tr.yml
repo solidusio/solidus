@@ -6,31 +6,31 @@ tr:
         address2: Adres (Devamı)
         city: Şehir
         country: Ülke
-        firstname: İsim
-        lastname: Soyisim
+        firstname: Ad
+        lastname: Soyad
         phone: Telefon
-        state: Bölge
+        state: Eyalet
         zipcode: Posta Kodu
       spree/country:
         iso: ISO
         iso3: ISO3
         iso_name: ISO İsmi
-        name: İsim
+        name: Ad
         numcode: ISO Kodu
       spree/credit_card:
         base: 
-        cc_type: Tip
+        cc_type: Tür
         month: Ay
         number: Numara
         verification_value: Doğrulama Kodu
         year: Yıl
       spree/inventory_unit:
-        state: Bölge
+        state: Eyalet
       spree/line_item:
         price: Fiyat
         quantity: Miktar
       spree/option_type:
-        name: İsim
+        name: Ad
         presentation: Tanıtım
       spree/order:
         checkout_complete: Ödeme Tamamlandı
@@ -49,68 +49,68 @@ tr:
       spree/order/bill_address:
         address1: Fatura adresi, cadde
         city: Fatura adresi, şehir
-        firstname: Fatura adresi, isim
-        lastname: Fatura adresi, soyisim
+        firstname: Fatura adresi, ad
+        lastname: Fatura adresi, soyad
         phone: Fatura adresi, telefon
         state: Fatura adresi, bölge
         zipcode: Fatura adresi, posta kodu
       spree/order/ship_address:
         address1: Kargo adresi, cadde
         city: Kargo adresi, şehir
-        firstname: Kargo adresi, isim
-        lastname: Kargo adresi, soyisim
+        firstname: Kargo adresi, ad
+        lastname: Kargo adresi, soyad
         phone: Kargo adresi, telefon
         state: Kargo adresi, bölge
         zipcode: Kargo adresi, posta kodu
       spree/payment:
         amount: Miktar
       spree/payment_method:
-        name: İsim
+        name: Ad
       spree/product:
-        available_on: Stoğa Gelişi
+        available_on: Stoğa Geliş Tarihi
         cost_currency: Maliyet Kuru
         cost_price: Maliyet Fiyatı
         description: Açıklama
-        master_price: Esas Fiyat
-        name: İsim
+        master_price: Asıl Fiyat
+        name: Ad
         on_hand: Elde
-        shipping_category: Kargo Sınıfı
-        tax_category: Vergi Sınıfı
+        shipping_category: Kargo Türü
+        tax_category: Vergi Türü
       spree/promotion:
         advertise: Duyuru
         code: Kod
         description: Açıklama
         event_name: Olay Adı
         expires_at: Bitiş Tarihi
-        name: İsim
+        name: Ad
         path: Yol
         starts_at: Başlama Tarihi
         usage_limit: Kullanım Limiti
       spree/property:
-        name: İsim
+        name: Ad
         presentation: Tanıtım
       spree/prototype:
-        name: İsim
+        name: Ad
       spree/return_authorization:
         amount: Miktar
       spree/role:
-        name: İsim
+        name: Ad
       spree/state:
         abbr: Kısaltma
-        name: İsim
+        name: Ad
       spree/tax_category:
         description: Açıklama
-        name: İsim
+        name: Ad
       spree/tax_rate:
-        amount: Oran
+        amount: Miktar
         included_in_price: Fiyata Dahil
         show_rate_in_label: Oranları etikette göster
       spree/taxon:
-        name: İsim
+        name: Ad
         permalink: Kalıcı Bağlantı
         position: Konum
       spree/taxonomy:
-        name: İsim
+        name: Ad
       spree/user:
         email: E-posta
         password: Şifre
@@ -126,7 +126,7 @@ tr:
         width: Genişlik
       spree/zone:
         description: Açıklama
-        name: İsim
+        name: Ad
     errors:
       models:
         spree/credit_card:
@@ -160,7 +160,7 @@ tr:
       spree/taxonomy: Gruplandırmalar
       spree/tracker: 
       spree/user: Kullanıcılar
-      spree/variant: Değişkenler
+      spree/variant: Çeşitler
       spree/zone: Bölgeler
   devise:
     confirmations:
@@ -171,7 +171,7 @@ tr:
       invalid: Geçersiz e-posta ya da şifre.
       invalid_token: Geçersiz kimlik girdisi.
       locked: Hesabınız kilitlenmiş.
-      timeout: Oturum süreniz dolmuştur, devam etmek için lütfen yeniden giriş yapınız.
+      timeout: Oturum süreniz dolmuştur, devam etmek için lütfen yeniden giriş yapın.
       unauthenticated: Devam etmeden önce giriş yapmalı ya da kayıt olmalısınız.
       unconfirmed: Devam etmeden önce hesabınızı etkinleştirmelisiniz.
     mailer:
@@ -228,7 +228,7 @@ tr:
     add_action_of_type: Hareket tipi ekle
     add_country: Ülke ekle
     add_new_header: Yeni başlık ekle
-    add_new_style: Yeni stil ekle
+    add_new_style: Yeni biçim ekle
     add_one: Yeni ekle
     add_option_value: Seçenek Değeri Ekle
     add_product: Ürün Ekle
@@ -274,7 +274,7 @@ tr:
     allow_ssl_in_production: Gerçek satış aşamasında SSL kullanımına izin ver
     allow_ssl_in_staging: Devreye alma aşamasında SSL kullanımına izin ver
     already_signed_up_for_analytics: Spree Analizleri servisinde kaydınız zaten var.
-    alt_text: Alternatif Yazı
+    alt_text: Alternatif Metin
     alternative_phone: Alternatif Telefon
     amount: Miktar
     analytics_desc_header_1: Spree Analizleri
@@ -355,9 +355,9 @@ tr:
     complete: tamamı
     configuration: Ayarlama
     configurations: Ayarlamalar
-    configure_s3: S3 ayarla
+    configure_s3: S3 ayarlarını yap
     confirm: Onay
-    confirm_delete: Silmeyi Onayla
+    confirm_delete: Silme İşlemini Onayla
     confirm_password: Şifre Onayı
     continue: Devam
     continue_shopping: Alışverişe Devam et
@@ -369,7 +369,7 @@ tr:
     countries: Ülkeler
     country: Ülke
     country_based: Ülke Tabanlı
-    country_name: İsim
+    country_name: Ad
     country_names:
       CA: Kanada
       FRA: Fransa
@@ -431,7 +431,7 @@ tr:
     depth: Derinlik
     description: Açıklama
     destination: Gideceği Yer
-    destroy: Yoket
+    destroy: Sil
     discount_amount: İndirim Miktarı
     dismiss_banner: Hayır. Teşekkürler! İlgilenmiyorum, bu mesajı tekrar gösterme.
     display: Göster
@@ -544,14 +544,14 @@ tr:
     inventory_adjustment: Stok Kredisi
     inventory_error_flash_for_insufficient_quantity: Sepetinizde bulunan bir ürün artık temin edilemiyor.
     is_not_available_to_shipment_address: belirtilen adrese gönderilememektedir
-    iso_name: Iso ismi
+    iso_name: Iso Adı
     item: Ürün
     item_description: Ürün Açıklaması
     item_total: Toplam Ürün
     item_total_rule:
       operators:
         gt: büyüktür
-        gte: büyük yada eşittir
+        gte: büyük ya da eşittir
     items_cannot_be_shipped: 
     jirafe: Jirafe
     landing_page_rule:
@@ -628,7 +628,7 @@ tr:
     new_variant: Yeni Değişken
     new_zone: Yeni Bölge
     next: Sonraki
-    no_actions_added: Hiçbir hareyet eklenmemiş
+    no_actions_added: Hiçbir eylem eklenmemiş
     no_orders_found: Hiçbir sipariş bulunamadı
     no_payment_methods_found: Hiçbir ödeme yöntemi bulunamadı
     no_pending_payments: 
@@ -810,7 +810,7 @@ tr:
     properties: Özellikler
     property: Özellik
     prototype: Prototip
-    prototypes: Prototiplrt
+    prototypes: Prototipler
     provider: Sağlayıcı
     provider_settings_warning: Sağlayıcı tipini değiştirirseniz, sağlayıcı ayarlarını değiştirebilmek için öncelikle değişiklikleri kaydetmeniz gerekmektedir
     qty: Miktar
