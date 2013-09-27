@@ -728,7 +728,7 @@ de:
         order_summary_canceled: Bestellzusammenfassung [STORNO]
         subject: Bestellung storniert
         subtotal: ! 'Zwischensumme: %{subtotal}'
-        total: ! 'Gesamtsume: %{total}'
+        total: ! 'Gesamtsumme: %{total}'
       confirm_email:
         dear_customer: Sehr geehrter Kunde,
         instructions: bitte prüfen Sie noch einmal die folgende Bestellung und bewahren die Bestellbestätigung für Ihre Unterlagen auf.
@@ -736,7 +736,7 @@ de:
         subject: Bestellbestätigung
         subtotal: ! 'Zwischensumme: %{subtotal}'
         thanks: Vielen Dank für Ihre Bestellung.
-        total: ! 'Gesamtsume: %{total}'
+        total: ! 'Gesamtsumme: %{total}'
     order_not_found: Wir konnten Ihre Bestellung nicht finden. Bitte versuchen Sie es später noch einmal.
     order_number: Bestellnummer
     order_populator:
