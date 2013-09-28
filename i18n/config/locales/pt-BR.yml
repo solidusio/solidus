@@ -18,7 +18,7 @@ pt-BR:
         name: Nome
         numcode: Código ISO
       spree/credit_card:
-        base: 
+        base:
         cc_type: Tipo de Cartão
         month: Mês
         number: Número
@@ -132,7 +132,7 @@ pt-BR:
         spree/credit_card:
           attributes:
             base:
-              card_expired: 
+              card_expired: Cartão expirado
     models:
       spree/address:
         one: Endereço
@@ -155,11 +155,15 @@ pt-BR:
       spree/payment:
         one: Pagamento
         other: Pagamentos
-      spree/payment_method: 
+      spree/payment_method:
+        one: Método de pagamento
+        other: Métodos de pagamento
       spree/product:
         one: Produto
         other: Produtos
-      spree/promotion: 
+      spree/promotion:
+        one: Promoção
+        other: Promoções
       spree/property:
         one: Propriedade
         other: Propriedades
@@ -178,12 +182,18 @@ pt-BR:
       spree/shipping_category:
         one: Categoria do Envio
         other: Categoria dos Envios
-      spree/shipping_method: 
+      spree/shipping_method:
+        one: Método de envio
+        other: Métodos de envio
       spree/state:
         one: Estado
         other: Estados
-      spree/stock_location: 
-      spree/stock_transfer: 
+      spree/stock_location:
+        one: Depósito
+        other: Depósito
+      spree/stock_transfer:
+        one: Transferência de estoque
+        other: Transferências de estoque
       spree/tax_category:
         one: Categoria do Imposto
         other: Categoria dos Impostos
@@ -196,7 +206,9 @@ pt-BR:
       spree/taxonomy:
         one: Taxonomia
         other: Taxonomias
-      spree/tracker: 
+      spree/tracker:
+        one: Rastreador
+        other: Rastreadores
       spree/user:
         one: Usuário
         other: Usuários
@@ -308,7 +320,7 @@ pt-BR:
         products: Produtos
         promotions: Promoções
         reports: Relatórios
-        users: 
+        users:
     administration: Administração
     agree_to_privacy_policy: Concordo com a politica de privacidade
     agree_to_terms_of_service: Concordo com os termos de serviço
@@ -342,7 +354,7 @@ pt-BR:
     authorization_failure: Falha na Autorização
     available_on: Disponível em
     back: Voltar
-    back_end: Back End
+    back_end: Backend
     back_to_adjustments_list: Voltar a Lista de Ajustes
     back_to_images_list: Voltar a Lista de Imagens
     back_to_option_types_list: Voltar a lista de Tipos de Opção
@@ -367,14 +379,14 @@ pt-BR:
     back_to_users_list: Voltar a lista de usuários
     back_to_zones_list: Voltar a Lista de Zonas
     backorderable: Aceita pedido pendente
-    backorders_allowed: 
+    backorders_allowed: permite pedido em espera
     balance_due: Saldo Devedor
     bill_address: Endereço da Conta
     billing: Faturamento
     billing_address: Endereço de Cobrança
     both: Ambos
     calculator: Calculadora
-    calculator_settings_warning: Se Você Alterar o Tipo de Calculadora, Deve-se Primeiro Confirmar a Alteração Antes de Editar as Configurações.
+    calculator_settings_warning: Se você alterar o tipo de calculadora, deve-se primeiro confirmar a alteração antes de editar as configurações.
     cancel: Cancelar
     cannot_create_payment_without_payment_methods: Você não Pode Efetuar o Pagamento sem Definir a Forma de Pagamento.
     cannot_create_returns: Não é Possível Criar um Retorno Para Esse Pedido, Pois ele Ainda não foi Enviado.
@@ -443,9 +455,7 @@ pt-BR:
     currency_symbol_position: Colocar o Símbolo da Moeda Antes ou Depois da Quantia?
     currency_thousands_separator: Separador de milhares da moeda
     current: Atual
-    current_promotion_usage:
-      one: promoção aplicada
-      other: ! '%{count} promoções aplicadas'
+    current_promotion_usage: ! 'Current Usage: %{count}'
     customer: Cliente
     customer_details: Detalhes do Cliente
     customer_details_updated: Os Detalhes do Cliente Foram Atualizados
@@ -464,7 +474,7 @@ pt-BR:
     date: Data
     date_completed: Data do Término
     date_picker:
-      first_day: 
+      first_day: 0
       format: ! '%d/%m/%Y'
       js_format: dd/mm/yy
     date_range: Entre as Datas
@@ -586,7 +596,7 @@ pt-BR:
     insufficient_stock: Estoque Insuficiente, Apenas %{on_hand} Em Estoque
     intercept_email_address: Interceptar Endereço de Email
     intercept_email_instructions: Interceptar Instrções de Email
-    internal_name: 
+    internal_name: Nome interno
     invalid_payment_provider: Provedor de pagamento inválido
     invalid_promotion_action: Ação de promoção inválida
     invalid_promotion_rule: Regra de promoção inválida
@@ -601,7 +611,7 @@ pt-BR:
     item_total_rule:
       operators:
         gt: Maior que
-        gte: Maior ou Igual que
+        gte: Maior ou igual que
     items_cannot_be_shipped: Estamos impossibilitados de enviar os itens selecionados para seu endereço de entrega. Por favor, escolha outro endereço.
     jirafe: Jirafe
     landing_page_rule:
@@ -610,9 +620,9 @@ pt-BR:
     last_name_begins_with: ! 'Sobrenome Começa Com:'
     learn_more: Aprenda Mais
     list: Lista
-    listing_countries: Lista de países
+    listing_countries: Listando Países
     listing_orders: Listando Pedidos
-    listing_products: Listing Products
+    listing_products: Listando Produtos
     listing_reports: Listando Relatórios
     listing_tax_categories: Listando Categorias de Imposto
     listing_users: Listando usuários
@@ -620,9 +630,9 @@ pt-BR:
     locale_changed: Local Alterado
     location: Local
     lock: Travar
-    logged_in_as: Logado Como
-    logged_in_succesfully: Logou com Sucesso
-    logged_out: Você Saiu.
+    logged_in_as: Logado como
+    logged_in_succesfully: Logou com sucesso
+    logged_out: Você saiu.
     login: Entrar
     login_as_existing: Entrar Como Usuário Existente
     login_failed: Falha na Autenticação.
@@ -682,11 +692,11 @@ pt-BR:
     no_orders_found: Nenhum pedido encontrado
     no_payment_methods_found: Nenhum método de pagamento encontrado
     no_pending_payments: Sem pagamentos pendentes
-    no_products_found: Não Existem Produtos
+    no_products_found: Não existem produtos
     no_promotions_found: Não existem promoções
-    no_resource_found: 
-    no_results: Não Existem Resultados
-    no_rules_added: Nenhuma Regra Adicionada
+    no_resource_found: Não existe %{resource}
+    no_results: Não existem resultados
+    no_rules_added: Nenhuma regra adicionada
     no_shipping_methods_found: Nenhum método de envio encontrado
     no_stock_locations_found: Nenhum local de estoque foi encontrado
     no_trackers_found: Nenhum localizador encontrado
@@ -696,7 +706,7 @@ pt-BR:
     not: Não
     not_available: Indisponível
     not_enough_stock: Não há inventório suficiente no estoque para complete essa transferência
-    not_found: ! '%{resource} Não Encontrado!'
+    not_found: ! '%{resource} não encontrado'
     notice_messages:
       product_cloned: Produto Clonado
       product_deleted: Produto Deletado
@@ -714,8 +724,8 @@ pt-BR:
     option_values: Valores Opcionais
     optional: Opcional
     options: Opções
-    or: Ou
-    or_over_price: ! '%{price} ou Mais'
+    or: ou
+    or_over_price: ! '%{price} ou mais'
     order: Pedido
     order_adjustments: Ajustar Pedido
     order_details: Detalhes do Pedido
@@ -773,32 +783,32 @@ pt-BR:
     payment: Pagamento
     payment_information: Dados do Pagamento
     payment_method: Método de Pagamento
-    payment_method_not_supported: 
+    payment_method_not_supported:
     payment_methods: Métodos de Pagamento
     payment_processing_failed: Pagamento não foi Processado, por Favor Verifique os Detalhes Informados.
     payment_processor_choose_banner_text: ! 'Se Você Precisa de Ajuda Para Escolher um Tipo de Pagamento, Por Favor Visite:'
     payment_processor_choose_link: Nossa Página de Pagamentos
     payment_state: Estado do Pagamento
     payment_states:
-      balance_due: Saldo devedor
-      checkout: Comprar
-      completed: Completo
-      credit_owed: Crédito Devido
-      failed: Falhou
-      paid: Pago
-      pending: Pendente
-      processing: Processando
-      void: Nulo
+      balance_due: saldo devedor
+      checkout: comprar
+      completed: completo
+      credit_owed: crédito devido
+      failed: falhou
+      paid: pago
+      pending: pendente
+      processing: processando
+      void: nulo
     payment_updated: Pagamento Atualizado
     payments: Pagamentos
-    percent: por centos
-    percent_per_item: POrcentagem po Item
+    percent: porcentos
+    percent_per_item: Porcentagem po Item
     permalink: Permalink
     phone: Telefone
     place_order: Fazer Pedido
     please_define_payment_methods: Por Favor, Defina Algum Método de Pagamento.
     populate_get_error: Algo Está Errado. Tente Adicionar o Item Novamente.
-    powered_by: Feito Por
+    powered_by: Feito por
     presentation: Apresentação
     previous: Anterior
     price: Preço
@@ -881,7 +891,7 @@ pt-BR:
     rename: Renomear
     reports: Relatórios
     resend: Reenviar
-    reset_password: Restaurar Minha Senha
+    reset_password: Restaurar minha senha
     response_code: Código de Resposta
     resume: Continuar
     resumed: Resumido
@@ -910,7 +920,7 @@ pt-BR:
     say_yes: Sim
     scope: Escopo
     search: Busca
-    search_results: Resultados da Busca por '%{keywords}'
+    search_results: Resultados da busca por '%{keywords}'
     searching: Buscando
     secure_connection_type: Tipo de Conexão Segura
     security_settings: Configurações de Segurança
@@ -1041,7 +1051,7 @@ pt-BR:
     tracking: Rastreio
     tracking_number: Número localizador
     tracking_url: URL localizadora
-    tracking_url_placeholder: e.g. http://quickship.com/package?num=:tracking
+    tracking_url_placeholder: e.g. http://websro.correios.com.br/sro_bin/txect01$.QueryList?P_LINGUA=001&P_TIPO=001&P_COD_UNI=:tracking
     transfer_from_location: Transferir de
     transfer_stock: Estoque de transferência
     transfer_to_location: Transferir para
