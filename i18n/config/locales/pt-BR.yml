@@ -221,15 +221,15 @@ pt-BR:
   devise:
     confirmations:
       confirmed: Sua conta foi confirmada com sucesso. Você já está logado.
-      send_instructions: Você receberá um email com instruções para confirmar sua conta em alguns minutos
+      send_instructions: Em alguns minutos você recebrá um email com instruções para confimar sua conta.
     failure:
-      inactive: Sua conta foi ativada com sucesso
-      invalid: Email ou senha inválidos
-      invalid_token: Token de autenticação inválido
-      locked: Sua conta está congelada
-      timeout: Sua sessão expirou, por favor faça o login novamente
-      unauthenticated: Você precisa logar ou se cadastrar antes de continuar
-      unconfirmed: Você precisa confirmar sua conta antes de continuar
+      inactive: Sua conta ainda não foi ativada.
+      invalid: Email ou senha inválidos.
+      invalid_token: Token de autenticação inválido.
+      locked: Sua conta está congelada.
+      timeout: Sua sessão expirou, por favor faça o login novamente.
+      unauthenticated: Você precisa logar-se ou cadastrar-se antes de continuar.
+      unconfirmed: Você precisa confirmar sua conta antes de continuar.
     mailer:
       confirmation_instructions:
         subject: Instruções de confirmação
@@ -238,24 +238,24 @@ pt-BR:
       unlock_instructions:
         subject: Descongelar instruções
     oauth_callbacks:
-      failure: Não foi possível autorizar ao %{kind} por que "%{reason}"
-      success: Autorizado sobre %{kind} com sucesso
+      failure: Não foi possível autorizar ao %{kind} por que "%{reason}".
+      success: Autorizado sobre %{kind} com sucesso.
     unlocks:
-      send_instructions: Você receberá um email com instruções sobre como liberar sua conta em alguns minutos
-      unlocked: Sua conta foi liberada com sucesso. Você já está logado
+      send_instructions: Em alguns minutos você recebrá um email com instruções para liberar sua conta.
+      unlocked: Sua conta foi liberada com sucesso. Você já está logado.
     user_passwords:
       user:
         cannot_be_blank: Sua senha deve ser preenchida
         send_instructions: Você receberá um email com instruções sobre como gerar uma nova senha em alguns minutos
-        updated: Sua senha foi atualizada com sucesso. Você já está logado.
+        updated: Sua senha foi atualizada com sucesso. Você está logado.
     user_registrations:
       destroyed: Tchau! Sua conta foi cancelada com sucesso. Esperamos ver você novamente em breve.
-      inactive_signed_up: Você se cadastrou com sucesso. Contudo, você não pode logar porque sua conta %{reason}
+      inactive_signed_up: Você se cadastrou com sucesso. Contudo, você não pode logar porque sua conta %{reason}.
       signed_up: Bem vindo! Você foi cadastrado com sucesso!
-      updated: Sua conta foi atualizada
+      updated: Sua conta foi atualizada.
     user_sessions:
-      signed_in: Login realizado com sucesso
-      signed_out: Log out realizado com sucesso
+      signed_in: Log in realizado com sucesso.
+      signed_out: Log out realizado com sucesso.
   errors:
     messages:
       already_confirmed: já foi confirmado
