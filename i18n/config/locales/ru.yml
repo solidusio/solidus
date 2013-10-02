@@ -466,7 +466,7 @@ ru:
     date_picker:
       first_day: 
       format: ! '%d.%m.%Y'
-      js_format: dd.mm.yyyy
+      js_format: dd.mm.yy
     date_range: Период времени
     default: По умолчанию
     default_meta_description: Meta-описание по умолчанию
