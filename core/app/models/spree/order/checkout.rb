@@ -110,6 +110,7 @@ module Spree
               after_transition to: :complete, do: :finalize!
               after_transition to: :resumed,  do: :after_resume
               after_transition to: :canceled, do: :after_cancel
+              before_transition to: :resumed, do: :ensure_line_items_are_in_stock
 
               after_transition from: any - :cart, to: any - [:confirm, :complete] do |order|
                 order.update_totals
