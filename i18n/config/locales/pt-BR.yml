@@ -595,7 +595,7 @@ pt-BR:
     instructions_to_reset_password: ! 'Preencha o Formulário Abaixo e Enviaremos Instruções de Como Resetar sua Senha por Email:'
     insufficient_stock: Estoque Insuficiente, Apenas %{on_hand} Em Estoque
     intercept_email_address: Interceptar Endereço de Email
-    intercept_email_instructions: Interceptar Instrções de Email
+    intercept_email_instructions: Interceptar Instruções de Email
     internal_name: Nome interno
     invalid_payment_provider: Provedor de pagamento inválido
     invalid_promotion_action: Ação de promoção inválida
