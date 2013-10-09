@@ -256,13 +256,16 @@ tr:
           delivery_success: Deneme Postası başaırla gönderlidi
           error: ! 'Deneme Postası hatası: %{e}'
       tab:
-        configuration: Yapılandırma
-        orders: Siparişler
-        overview: 
-        products: Ürünler
-        promotions: 
-        reports: Raporlar
-        users: Kullanıcılar
+         configuration: Ayarlar
+         orders: Siparişler
+         overview: Ön izleme
+         products: Ürünler
+         promotions: Promosyonlar
+         reports: Raporlar
+         users: Kullanıcılar
+         option_types: Seçenek Tipleri
+         properties: Özellikler
+         prototypes: Prototipler
     administration: Yönetim
     agree_to_privacy_policy: Gizlilik Politikasını kabul ediyorum
     agree_to_terms_of_service: Hizmet Sözleşmesini kabul ediyorum
@@ -560,12 +563,12 @@ tr:
     last_name_begins_with: Soyismi Şununla Başlayan
     learn_more: Daha Fazla
     list: Liste
-    listing_countries: Ülkeleri Listeleme
-    listing_orders: Siparişleri Listeleme
-    listing_products: Ürünleri Listeleme
-    listing_reports: Raporları Listeleme
-    listing_tax_categories: Vergi Kategorilerini Listeleme
-    listing_users: Kullanıcıları Listeleme
+    listing_countries: Ülke Listesi
+    listing_orders: Sipariş Listesi
+    listing_products: Ürün Listesi
+    listing_reports: Rapor Listesi
+    listing_tax_categories: Vergi Kategorileri Listesi
+    listing_users: Kullanıcı Listesi
     loading: Yükleniyor
     locale_changed: Dil Değiştirildi
     location: Konum
