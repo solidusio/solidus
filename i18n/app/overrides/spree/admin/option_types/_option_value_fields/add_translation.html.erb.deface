@@ -1,0 +1,3 @@
+<!-- insert_bottom 'td.actions' -->
+<%= link_to '', admin_translations_path('option_values', f.object.id),
+        class: 'icon_link with-tip icon-flag no-text', title: Spree.t(:'i18n.translations') %>

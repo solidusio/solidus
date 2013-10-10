@@ -47,6 +47,26 @@ describe "Translations" do
       end
     end
 
+    context "option values" do
+      let!(:option_type) { create(:option_value).option_type }
+
+      it "displays translated name on frontend" do
+        visit spree.edit_admin_option_type_path(option_type)
+        find('.icon-flag').click
+
+        within("#attr_fields .name.en.odd") { fill_in_name "big" }
+        within("#attr_list") { click_on "Presentation" }
+        within("#attr_fields .presentation.en.odd") { fill_in_name "big" }
+        within("#attr_fields .presentation.pt-BR.odd") { fill_in_name "grande" }
+        click_on "Update"
+
+        change_locale
+        visit spree.edit_admin_option_type_path(option_type)
+        page.should have_selector("input[value=grande]")
+      end
+    end
+
+
     context "properties" do
       let!(:property) { create(:property) }
 
