@@ -20,7 +20,7 @@ Add the following to your `Gemfile`.
 
 ```ruby
 gem 'spree_i18n', github: 'spree/spree_i18n'
-gem 'globalize3', github: 'svenfuchs/globalize3', branch: 'rails4'
+gem 'globalize', github: 'globalize/globalize', branch: 'rails4'
 ```
 
 *Note that while we dont have releases that support rails 4 you also need to
@@ -104,5 +104,5 @@ Copyright (c) 2013 Spree Commerce Inc. and other contributors. released under th
 [4]: http://www.localeapp.com
 [5]: http://www.localeapp.com/projects/4605
 [6]: https://github.com/spree/spree_i18n/tree/master/LICENSE
-[7]: https://github.com/svenfuchs/globalize3/
+[7]: https://github.com/globalize/globalize
 [8]: https://github.com/airblade/paper_trail

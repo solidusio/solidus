@@ -1,4 +1,4 @@
-require 'globalize3'
+require 'globalize'
 
 module SpreeI18n
   class Engine < Rails::Engine
