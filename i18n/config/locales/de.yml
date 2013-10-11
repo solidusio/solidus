@@ -1011,7 +1011,7 @@ de:
     tax: Steuer
     tax_categories: Steuerkategorien
     tax_category: Steuerkategorie
-    tax_rate_amount_explanation: Steuern werden dezumal angegeben um Berechnungen zu erleichtern. (z.B. für 5% Steuern 0.05 eingeben)
+    tax_rate_amount_explanation: Steuern werden dezimal angegeben um Berechnungen zu erleichtern. (z.B. für 5% Steuern 0.05 eingeben)
     tax_rates: Steuersätze
     tax_settings: Einstellungen für Steuerklassen
     tax_total: U-St. Gesamt
