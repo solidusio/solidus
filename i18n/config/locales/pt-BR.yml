@@ -802,7 +802,7 @@ pt-BR:
     payment_updated: Pagamento Atualizado
     payments: Pagamentos
     percent: porcentos
-    percent_per_item: Porcentagem po Item
+    percent_per_item: Porcentagem por Item
     permalink: Permalink
     phone: Telefone
     place_order: Fazer Pedido
@@ -852,7 +852,7 @@ pt-BR:
         description: Deve ser o Primeiro Pedido do Usuário
         name: Primeiro Pedido
       item_total:
-        description: Total do Pedio Fecha com Estes Critérios
+        description: Total do Pedido Fecha com Estes Critérios
         name: Total do Item
       landing_page:
         description: O Cliente Deve Visitar a Página Especificada
