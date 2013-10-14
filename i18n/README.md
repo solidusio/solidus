@@ -20,7 +20,7 @@ Add the following to your `Gemfile`.
 
 ```ruby
 gem 'spree_i18n', github: 'spree/spree_i18n'
-gem 'globalize', github: 'globalize/globalize', branch: 'rails4'
+gem 'globalize', github: 'globalize/globalize', branch: 'master'
 ```
 
 *Note that while we dont have releases that support rails 4 you also need to
