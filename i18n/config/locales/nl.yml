@@ -41,10 +41,10 @@ nl:
         ip_address: IP adres
         item_total: Product totaal
         number: Nummer
-        payment_state: Betaling Status
-        shipment_state: Verzending Status
+        payment_state: Betaalstatus
+        shipment_state: Verzendstatus
         special_instructions: Speciale instructies
-        state: Provincie
+        state: Status
         total: Totaal
       spree/order/bill_address:
         address1: Factuuradres
@@ -356,7 +356,7 @@ nl:
     back_to_reports_list: Terug Naar Rapporten Lijst
     back_to_shipping_categories: ! 'Terug Naar Verzend Categorieën '
     back_to_shipping_methods_list: Terug Naar Verzend Methoden Lijst
-    back_to_states_list: Terug Naar Staten Lijst
+    back_to_states_list: Terug Naar Staten/Provinciën Lijst
     back_to_stock_locations_list: Terug Naar Voorraad Lokaties Lijst
     back_to_stock_movements_list: ! 'Terug Naar Voorraad Verplaatsingen Lijst '
     back_to_stock_transfers_list: ! 'Terug Naar Voorraad Transfers Lijst '
@@ -483,22 +483,22 @@ nl:
     display: Weergeven
     display_currency: Weergave valuta
     edit: Wijzig
-    editing_option_type: Optie type wijzigen
-    editing_payment_method: Bewerk betaalmethode
-    editing_product: Product wijzigen
-    editing_promotion: Bewerk promotie
-    editing_property: Eigenschap wijzigen
-    editing_prototype: Prototype wijzigen
-    editing_shipping_category: Wijzigen verzend categorie
-    editing_shipping_method: Wijzigen verzendwijze
-    editing_state: Wijzigen Status
-    editing_stock_location: Bewerken Voorraad Locatie
-    editing_stock_movement: Bewerken Voorraad Verplaatsing
-    editing_tax_category: Wijzigen BTW categorie
-    editing_tax_rate: Bewerk BTW tarief
+    editing_option_type: Bewerk Optietypes
+    editing_payment_method: Bewerk Betaalmethodes
+    editing_product: Bewerk Producten
+    editing_promotion: Bewerk Promoties
+    editing_property: Bewerk Eigenschappen
+    editing_prototype: Bewerk Prototypes
+    editing_shipping_category: Bewerk Verzendcategorieën
+    editing_shipping_method: Bewerk Verzendmethoden
+    editing_state: Bewerk Staten/Provinciën
+    editing_stock_location: Bewerk Voorraadlocatie
+    editing_stock_movement: Bewerk Voorraadverplaatsing
+    editing_tax_category: Bewerk BTW categorieën
+    editing_tax_rate: Bewerk BTW tarieven
     editing_tracker: Bewerk tracker
-    editing_user: Gebruiker wijzigen
-    editing_zone: Zone wijzigen
+    editing_user: Bewerk Gebruikers
+    editing_zone: Bewerk Zones
     email: E-mail
     empty: Leeg
     empty_cart: Winkelwagen legen
@@ -663,7 +663,7 @@ nl:
     new_return_authorization: Nieuwe autorisatie terugsturen
     new_shipping_category: Nieuwe verzend categorie
     new_shipping_method: Nieuwe verzendwijze
-    new_state: Nieuwe status
+    new_state: Nieuwe staat/provincie
     new_stock_location: Nieuwe Voorraad Locatie
     new_stock_movement: Nieuwe Voorraad Verplaatsing
     new_stock_transfer: Nieuwe Voorraad Overdracht
@@ -776,7 +776,7 @@ nl:
     payment_processing_failed: De betaling kan niet worden verwerkt, controleer de informatie die je hebt ingevuld
     payment_processor_choose_banner_text: ! 'Als je hulp nodig hebt bij het kiezen van een betalingsprovider, bezoek '
     payment_processor_choose_link: ! 'onze betalingspagina '
-    payment_state: Betaling
+    payment_state: Betaalstatus
     payment_states:
       balance_due: In afwachting
       checkout: Afrekenen
@@ -934,7 +934,7 @@ nl:
         thanks: Bedankt voor je bestelling.
         track_information: ! 'Tracking Informatie: %{tracking}'
         track_link: ! 'Tracking Link: %{url}'
-    shipment_state: Verzend status
+    shipment_state: Verzendstatus
     shipment_states:
       backorder: backorder
       partial: gedeeltelijk
@@ -981,10 +981,10 @@ nl:
     spree_gateway_error_flash_for_checkout: Er was een probleem met je betaal gegevens. Controleer je gegevens en probeer het opnieuw.
     start: Start
     start_date: Geldig vanaf
-    state: Staat/provincie
-    state_based: Staat/provincie basis
-    states: Staten/provinciën
-    states_required: Staten Verplicht
+    state: Status
+    state_based: Status gebaseerd
+    states: Statussen
+    states_required: Vereiste statussen
     status: Status
     stock_location: Voorraad locatie
     stock_location_info: Voorraad locatie info
