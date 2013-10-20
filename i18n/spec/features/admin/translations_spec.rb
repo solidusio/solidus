@@ -122,7 +122,7 @@ describe "Translations" do
 
   context "localization settings", js: true do
     let(:language) { Spree.t(:'i18n.this_file_language', locale: 'de') }
-    let(:spanish) { Spree.t(:'i18n.this_file_language', locale: 'es-MX') }
+    let(:french) { Spree.t(:'i18n.this_file_language', locale: 'fr') }
 
     before do
       SpreeI18n::Config.available_locales = [:en, :'pt-BR', :de]
@@ -137,9 +137,9 @@ describe "Translations" do
     end
 
     it "adds spanish to available locales" do
-      targetted_select2_search(spanish, from: '#s2id_available_locales_')
+      targetted_select2_search(french, from: '#s2id_available_locales_')
       click_on 'Update'
-      SpreeI18n::Config.available_locales.should include(:'es-MX')
+      SpreeI18n::Config.available_locales.should include(:fr)
     end
   end
 
