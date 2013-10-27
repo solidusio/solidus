@@ -19,7 +19,7 @@ ru:
         numcode: ISO-код
       spree/credit_card:
         base: 
-        cc_type: Тип
+        cc_type: Тип кредитной карты
         month: Месяц
         number: Номер
         verification_value: Значение проверки
@@ -107,7 +107,7 @@ ru:
         show_rate_in_label: Показывать ставку в метке
       spree/taxon:
         name: Название
-        permalink: Пермалинк
+        permalink: Постоянная ссылка
         position: Позиция
       spree/taxonomy:
         name: Название
@@ -118,7 +118,7 @@ ru:
       spree/variant:
         cost_currency: Валюта
         cost_price: Себестоимость
-        depth: Глубина
+        depth: Толщина
         height: Высота
         price: Цена
         sku: Артикул
@@ -132,7 +132,7 @@ ru:
         spree/credit_card:
           attributes:
             base:
-              card_expired: Истек срок действия карты
+              card_expired: Срок действия карты истек
     models:
       spree/address:
         few: Адреса
@@ -169,8 +169,8 @@ ru:
         one: Прототип
         other: Прототипы
       spree/return_authorization:
-        one: Return Authorization
-        other: Return Authorizations
+        one: Вернуть товар
+        other: Вернуть товары
       spree/role:
         one: Роль
         other: Роли
@@ -222,7 +222,7 @@ ru:
       unconfirmed: Вы должны подтвердить свою учетную запись перед тем, как продолжить.
     mailer:
       confirmation_instructions:
-        subject: Инструкции подтверждения
+        subject: Инструкции для подтверждения
       reset_password_instructions:
         subject: Инструкции по сбросу пароля
       unlock_instructions:
@@ -284,12 +284,12 @@ ru:
     add_rule_of_type: Добавить правило типа
     add_state: Добавить регион/область
     add_stock: Добавить Склад
-    add_stock_management: Добавить Управление запасами
+    add_stock_management: Добавить управление запасами
     add_to_cart: Добавить в корзину
     add_variant: Добавить вариант
     additional_item: Ставка для дополнительных наименований
     address1: Адрес
-    address2: Адрес (продолжение)
+    address2: Адрес (дополнительно)
     adjustment: Надбавка
     adjustment_amount: Количество
     adjustment_successfully_closed: Корректировка была успешно закрыта!
@@ -315,8 +315,8 @@ ru:
     agree_to_privacy_policy: Согласиться с Политикой Конфиденциальности
     agree_to_terms_of_service: Согласиться с Уловиями обслуживания
     all: все
-    all_adjustments_closed: All adjustments successfully closed!
-    all_adjustments_opened: All adjustments successfully opened!
+    all_adjustments_closed: Все настройки успешно закрыты!
+    all_adjustments_opened: Все настройки успешно открыты!
     all_departments: Все разделы
     allow_ssl_in_development_and_test: Разрешить SSL для development и test режимов
     allow_ssl_in_production: Разрешить SSL для production режима
@@ -328,19 +328,19 @@ ru:
     analytics_desc_header_1: Аналитика Spree
     analytics_desc_header_2: Аналитика в прямом эфире добавлена на Spree dashboard
     analytics_desc_list_1: Получать информацию о продажах в реальном времени
-    analytics_desc_list_2: Только бесплатный аккаунт Spree требуется для активации
+    analytics_desc_list_2: Бесплатный аккаунт Spree требуется для активации
     analytics_desc_list_3: Отсутствует код для установки
     analytics_desc_list_4: Полностью бесплатный!
     analytics_trackers: Трекеры веб-аналитики
-    and: and
+    and: и
     are_you_sure: Вы уверены
     are_you_sure_delete: Вы уверены, что хотите удалить эту запись?
     associated_adjustment_closed: Связанная корректировка закрыта, и не будет пересчитана. Хотите ли вы открыть её?
     attachment_default_style: Стандартный стиль прикреплённого файла
-    attachment_default_url: Стандартный url прикреплённого файла
+    attachment_default_url: Стандартный url адрес прикреплённого файла
     attachment_path: Путь к прикреплённому файлу
     attachment_styles: Стили изображений
-    attachment_url: URL изображений
+    attachment_url: URL путь изображений
     authorization_failure: Ошибка авторизации
     available_on: Доступно с
     back: Назад
@@ -389,13 +389,13 @@ ru:
     cart: Корзина
     categories: Категории
     category: Категория
-    check_for_spree_alerts: Проверить Оповещения Spree
+    check_for_spree_alerts: Проверить оповещения Spree
     checkout: Оформление заказа
     choose_a_customer: Выберите клиента
     choose_currency: Выбрать валюту
-    choose_dashboard_locale: Выбрать язык отображения Dashboard
+    choose_dashboard_locale: Выбрать язык отображения панели управления
     city: Город
-    clone: Клонировать
+    clone: Копировать
     close: Закрыть
     close_all_adjustments: Закрыть все корректировки
     code: Кодовое слово
@@ -1075,9 +1075,9 @@ ru:
     variant_placeholder: Выберите вариант
     variants: Варианты
     version: Версия
-    void: Анулировать
+    void: Аннулировать
     weight: Вес
-    what_is_a_cvv: Что означает CVV?
+    what_is_a_cvv: Что такое CVV?
     what_is_this: Что это?
     width: Ширина
     year: Год
