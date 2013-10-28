@@ -15,6 +15,8 @@ module SpreeI18n
         def set_user_language
           I18n.locale = if session.key?(:locale) && Config.supported_locales.include?(session[:locale].to_sym)
             session[:locale]
+          elsif respond_to?(:config_locale, true)
+            config_locale
           else
             Rails.application.config.i18n.default_locale || I18n.default_locale
           end
