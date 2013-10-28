@@ -18,7 +18,7 @@ ru:
         name: Название
         numcode: ISO-код
       spree/credit_card:
-        base: 
+        base:
         cc_type: Тип кредитной карты
         month: Месяц
         number: Номер
@@ -157,11 +157,15 @@ ru:
       spree/payment:
         one: Платёж
         other: Платежи
-      spree/payment_method: 
+      spree/payment_method:
+        one: Способ оплаты
+        other: Способы оплаты
       spree/product:
         one: Товар
         other: Товары
-      spree/promotion: 
+      spree/promotion:
+        one: Акция
+        other: Акции
       spree/property:
         one: Свойство
         other: Свойства
@@ -180,12 +184,18 @@ ru:
       spree/shipping_category:
         one: Категория доставки
         other: Категории доставки
-      spree/shipping_method: 
+      spree/shipping_method:
+        one: Cпособ доставки
+        other: Cпособы доставки
       spree/state:
         one: Область/Регион
         other: Области/Регионы
-      spree/stock_location: 
-      spree/stock_transfer: 
+      spree/stock_location:
+        one: Расположение склада
+        other: Расположение складов
+      spree/stock_transfer:
+        one: Перемещение по складу
+        other: Перемещения по складам
       spree/tax_category:
         one: Категория налогов
         other: Категории налогов
@@ -198,7 +208,9 @@ ru:
       spree/taxonomy:
         one: Категория
         other: Категории
-      spree/tracker: 
+      spree/tracker:
+        one: Трекер
+        other: Трекеры
       spree/user:
         one: Пользователь
         other: Пользователи
@@ -311,6 +323,9 @@ ru:
         promotions: Акции
         reports: Отчёты
         users: Пользователи
+        option_types: Товарные опции
+        properties: Свойства
+        prototypes: Прототипы
     administration: Администрирование
     agree_to_privacy_policy: Согласиться с Политикой Конфиденциальности
     agree_to_terms_of_service: Согласиться с Уловиями обслуживания
@@ -369,7 +384,8 @@ ru:
     back_to_users_list: Назад к Списку пользователей
     back_to_zones_list: Вернуться к списку торговых зон
     backorderable: Возможен предзаказ
-    backorders_allowed: 
+    backorderable_default: Предзаказ по умолчанию
+    backorders_allowed: Предзаказы разрешены
     balance_due: Дебетовое сальдо
     bill_address: Платёжный адрес
     billing: Биллинг
@@ -423,6 +439,7 @@ ru:
       FRA: Франция
       ITA: Италия
       US: Соединённые Штаты Америки
+      RU: Россия
     coupon: Купон
     coupon_code: Код купона
     coupon_code_already_applied: Скидочный купон уже был применен к этому заказу
@@ -464,7 +481,7 @@ ru:
     date: Дата
     date_completed: Дата завершения
     date_picker:
-      first_day: 
+      first_day: 1
       format: ! '%d.%m.%Y'
       js_format: dd.mm.yy
     date_range: Период времени
@@ -560,7 +577,7 @@ ru:
     guest_user_account: Оформить покупку как гость
     has_no_shipped_units: не имеет отправленных единиц учёта
     height: Высота
-    hide_cents: Hide cents
+    hide_cents: Скрыть центы
     home: Домой
     i18n:
       available_locales: Доступные переводы
@@ -684,11 +701,12 @@ ru:
     no_pending_payments: Нет незавершённых платежей
     no_products_found: Не найдено ни одного товара
     no_promotions_found: Нет акций
-    no_resource_found: 
+    no_resource_found: Ни одного %{resource} не найдено
     no_results: Ничего не найдено
     no_rules_added: Ни одного правила не задано
     no_shipping_methods_found: Нет способов отправки
     no_stock_locations_found: Складов не найдено
+    no_stock_transfers_found: Перемещений по складу не найдено
     no_trackers_found: Треккеров не найдено
     no_tracking_present: Отсутствуют детали отслеживания
     none: Ни одного
@@ -706,7 +724,7 @@ ru:
       variant_not_deleted: Вариант не может быть удален
     on_hand: В наличии
     open: Открыть
-    open_all_adjustments: Open All Adjustments
+    open_all_adjustments: Открыть все корректировки
     option_type: Товарная опция
     option_type_placeholder: Выберите тип опции
     option_types: Товарные опции
@@ -761,10 +779,10 @@ ru:
     orders: Заказы
     out_of_stock: Нет в наличии
     overview: Обзор
-    package_from: 
+    package_from: Фасовку в
     pagination:
       next_page: следующая страница &raquo;
-      previous_page: ! '&laquo; предидущая страница'
+      previous_page: ! '&laquo; предыдущая страница'
       truncate: ! '&hellip;'
     password: Пароль
     paste: Paste
@@ -773,7 +791,7 @@ ru:
     payment: Платеж
     payment_information: Информация о платеже
     payment_method: Способ оплаты
-    payment_method_not_supported: 
+    payment_method_not_supported: Этот способ оплаты не поддерживается
     payment_methods: Способы оплаты
     payment_processing_failed: Невозможно произвести платёж, пожалуйста, проверьте введённую информацию
     payment_processor_choose_banner_text: ! 'Если Вам нужна помощь в выборе способа оплаты, пожалуйста, зайдите на '
@@ -808,7 +826,7 @@ ru:
     product: Товар
     product_details: Описание товара
     product_has_no_description: У данного товара нет описания.
-    product_not_available_in_this_currency: This product is not available in the selected currency.
+    product_not_available_in_this_currency: Этот товар недоступен в выбранной валюте.
     product_properties: Свойства товара
     product_rule:
       choose_products: Выбранные товары
@@ -829,8 +847,8 @@ ru:
         description: Заполняет корзину указанным количеством вариантов
         name: Создать элемент заказа
       give_store_credit:
-        description: Gives the user store credit of the amount specified
-        name: Give store credit
+        description: Пополняет счет пользователя в магазине на указанную сумму
+        name: Пополнить счет пользователя
     promotion_actions: Акции
     promotion_form:
       match_policies:
@@ -857,6 +875,7 @@ ru:
         description: Доступно только зарегистрированным пользователям
         name: Пользователь авторизовался
     promotions: Промо-акции
+    propagate_all_variants: Применить ко всем вариантам
     properties: Свойства
     property: Свойство
     prototype: Прототип
@@ -870,9 +889,10 @@ ru:
     rate: Ставка
     reason: Причина
     receive: Получить
-    receive_stock: 
+    receive_stock: Получить товар
     received: Получен
     reference: Ссылка
+    reference_cont: Ссылка
     refund: Возврат
     register: Зарегистрироваться как новый пользователь
     registration: Регистрация
@@ -907,7 +927,7 @@ ru:
     sales_totals: Всего продано
     save_and_continue: Сохранить и продолжить
     say_no: Нет
-    say_yes: 'Yes'
+    say_yes: Да
     scope: Фильтр
     search: Поиск
     search_results: Результаты поиска по запросу '%{keywords}'
@@ -953,9 +973,9 @@ ru:
     shipping_flat_rate_per_order: Фиксированная ставка
     shipping_flexible_rate: Гибкая ставка за единицу товара
     shipping_instructions: Иструкции по доставке
-    shipping_method: Способ
+    shipping_method: Способ доставки
     shipping_methods: Способы доставки
-    shipping_price_sack: 
+    shipping_price_sack: Подсчет стоимости доставки
     shop_by_taxonomy: ! '%{taxonomy}'
     shopping_cart: Корзина
     show: Показать
@@ -986,10 +1006,10 @@ ru:
     state: Регион/Область
     state_based: Есть области
     states: Регионы/Области
-    states_required: 
+    states_required: Регионы обязательны
     status: Статус
     stock_location: Расположение склада
-    stock_location_info: 
+    stock_location_info: Подробности расположения склада
     stock_locations: Адреса складов
     stock_management: Управление Запасами
     stock_management_requires_a_stock_location: Добавьте расположение склада для управления запасами, пожалуйста.
@@ -1002,7 +1022,7 @@ ru:
     store: В магазин
     street_address: Адрес
     street_address_2: Адрес (строка 2)
-    subtotal: Подитог
+    subtotal: Подытог
     subtract: Вычет
     successfully_created: ! '%{resource} был успешно создан!'
     successfully_removed: ! '%{resource} был успешно удален!'
@@ -1066,7 +1086,7 @@ ru:
     validation:
       cannot_be_less_than_shipped_units: не может быть меньше, чем количество отгруженных единиц
       cannot_destory_line_item_as_inventory_units_have_shipped: Не могу удалить позицию так как некоторые товары уже были отправлены.
-      exceeds_available_stock: exceeds available stock. Please ensure line items have a valid quantity.
+      exceeds_available_stock: превышает количество на складе. Пожалуйста проверьте количество товара.
       is_too_large: слишком много - количество на складе меньше запрошенного количества!
       must_be_int: должно быть целым числом
       must_be_non_negative: должно быть неотрицательным числом
@@ -1088,3 +1108,4 @@ ru:
     zipcode: Почтовый индекс
     zone: Торговая зона
     zones: Торговые зоны
+  expiration: Окончание действия
