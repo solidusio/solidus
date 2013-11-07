@@ -18,7 +18,7 @@ fr:
         name: Nom
         numcode: Code ISO
       spree/credit_card:
-        base: 
+        base:
         cc_type: Type
         month: Month
         number: Numéro
@@ -155,13 +155,13 @@ fr:
       spree/payment:
         one: Paiement
         other: Paiements
-      spree/payment_method: 
+      spree/payment_method:
         one: Méthode de paiment
         other: Méthodes de paiment
       spree/product:
         one: Produit
         other: Produits
-      spree/promotion: 
+      spree/promotion:
       spree/property:
         one: Proprieté
         other: Proprietés
@@ -180,12 +180,12 @@ fr:
       spree/shipping_category:
         one: Catégorie de livraison"
         other: Catégories de livraison
-      spree/shipping_method: 
+      spree/shipping_method:
       spree/state:
         one: Région
         other: Régions
-      spree/stock_location: 
-      spree/stock_transfer: 
+      spree/stock_location:
+      spree/stock_transfer:
       spree/tax_category:
         one: Catégorie de taxe
         other: Catégories des taxes
@@ -198,7 +198,7 @@ fr:
       spree/taxonomy:
         one: Taxonomie
         other: Taxonomies
-      spree/tracker: 
+      spree/tracker:
       spree/user:
         one: Utilisateur
         other: Utilisateurs
@@ -369,7 +369,7 @@ fr:
     back_to_users_list: Retour aux utilisateurs
     back_to_zones_list: Back To Zones List
     backorderable: Peut être acheté même si le stock est vide
-    backorders_allowed: 
+    backorders_allowed:
     balance_due: Solde dû
     bill_address: Adresse facturée
     billing: Facturation
@@ -464,9 +464,9 @@ fr:
     date: Date
     date_completed: Date Completed
     date_picker:
-      first_day: 
+      first_day:
       format: ! '%Y/%m/%d'
-      js_format: dd/mm/yyyy
+      js_format: dd/mm/yy
     date_range: Sélection de dates
     default: Défaut
     default_meta_description: Default Meta Description
@@ -586,7 +586,7 @@ fr:
     insufficient_stock: Insufficient stock available, only %{on_hand} remaining
     intercept_email_address: Intercepter l'adresse courriel
     intercept_email_instructions: Remplacer l'adresse courriel de destination par cette adresse
-    internal_name: 
+    internal_name:
     invalid_payment_provider: Invalid payment provider.
     invalid_promotion_action: Action pour la promotion est invalide.
     invalid_promotion_rule: Règle de promotion invalide
@@ -684,7 +684,7 @@ fr:
     no_pending_payments: Aucun paiement en attente
     no_products_found: Aucun article trouvé
     no_promotions_found: Aucune promotion trouvée
-    no_resource_found: 
+    no_resource_found:
     no_results: Pas de résultats
     no_rules_added: Pas de règles ajouté
     no_shipping_methods_found: Aucune méthode d'envoi trouvée
@@ -773,7 +773,7 @@ fr:
     payment: Paiement
     payment_information: Information sur le paiement
     payment_method: Méthode de paiement
-    payment_method_not_supported: 
+    payment_method_not_supported:
     payment_methods: Méthodes de paiement
     payment_processing_failed: Le paiement ne peut être effectué, merci de vérifier les informations fournies
     payment_processor_choose_banner_text: Si vous avez besoin d'aide pour schoisir une méthode de paiement, svp visitez
