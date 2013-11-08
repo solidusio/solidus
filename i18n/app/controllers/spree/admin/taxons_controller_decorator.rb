@@ -11,7 +11,7 @@ module Spree
         end
 
         def translations_attributes
-          [:locale, :name, :description, :permalink, :meta_description, :meta_keywords, :meta_title]
+          [:id, :locale, :name, :description, :permalink, :meta_description, :meta_keywords, :meta_title]
         end
     end
   end
