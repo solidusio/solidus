@@ -114,6 +114,14 @@ describe "Translations" do
       within("#attr_fields .name.pt-BR.odd") { fill_in_name "Acusticas" }
       click_on "Update"
 
+      visit spree.edit_admin_taxonomy_taxon_path(taxonomy.id, taxon.id)
+      find('.icon-flag').click
+
+      # ensure we're not duplicating translated records on database
+      expect {
+        click_on "Update"
+      }.not_to change { taxon.translations.count }
+
       change_locale
       visit spree.root_path
       page.should have_content('Acusticas')
