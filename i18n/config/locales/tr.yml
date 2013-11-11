@@ -555,7 +555,7 @@ tr:
       operators:
         gt: büyüktür
         gte: büyük ya da eşittir
-    items_cannot_be_shipped: 
+    items_cannot_be_shipped: "Seçtiğiniz ülkeye gönderim yapılamamaktadır"
     jirafe: Jirafe
     landing_page_rule:
       path: Yol
@@ -661,7 +661,7 @@ tr:
     open: Açık
     open_all_adjustments: Tüm Kredileri Aç
     option_type: Seçenek Tipi
-    option_type_placeholder: 
+    option_type_placeholder:  Bir Seçenek Tipi Seçiniz
     option_types: Seçenek Tipleri
     option_value: Seçenek Değeri
     option_values: Seçenek Değerleri
@@ -905,6 +905,7 @@ tr:
     shipping_flat_rate_per_item: Paketteki her bir ürün için sabit oran
     shipping_flat_rate_per_order: Sabit oran
     shipping_flexible_rate: Paketteki her bir ürün için değişken oran
+    shipping_info: Teslimat Süresi
     shipping_instructions: Kargo Aşamaları
     shipping_method: ! 'Kargo Yöntemi '
     shipping_methods: Kargo Yöntemleri
@@ -1025,7 +1026,7 @@ tr:
       must_be_non_negative: negatif olmayan bir değer olmalıdır
     value: Değer
     variant: Değişken
-    variant_placeholder: 
+    variant_placeholder: Bir varyant seçin
     variants: Değişkenler
     version: Sürüm
     void: Geçersiz
