@@ -13,7 +13,7 @@ root.taxon_tree_menu = (obj, context) ->
 
   translation_base_path = admin_base_url.path().replace(/taxons/, "translations")
   translation_base_path = translation_base_path.replace(/taxonomies/, "taxons")
-  translation_base_path = translation_base_path.replace(/\d/, id)
+  translation_base_path = translation_base_path.replace(/\d+/, id)
   translation_url.setPath(translation_base_path);
 
   create:
