@@ -12,7 +12,7 @@ module Spree
 
     def duplicate_translations(old_product)
       old_product.translations.each do |translation|
-        self.translations << translation
+        self.translations << translation.dup
       end
     end
   end
