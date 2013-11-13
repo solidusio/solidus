@@ -30,6 +30,7 @@ RSpec.configure do |config|
   config.include FactoryGirl::Syntax::Methods
   config.include Spree::TestingSupport::UrlHelpers
   config.include Spree::TestingSupport::Preferences
+  config.include Spree::TestingSupport::ControllerRequests, :type => :controller
 
   config.extend Spree::TestingSupport::AuthorizationHelpers::Request, type: :feature
 end
