@@ -374,10 +374,230 @@ tr:
     country_based: Ülke Tabanlı
     country_name: Ad
     country_names:
-      CA: Kanada
-      FRA: Fransa
-      ITA: İtalya
+      AF: Afganistan
+      DE: Almanya
+      AD: Andorra
+      AO: Angola
+      AG: Antigua ve Barbuda
+      AR: Arjantin
+      AL: Arnavutluk
+      AW: Aruba
+      AU: Avustralya
+      AT: Avusturya
+      AZ: Azerbaycan
+      BS: Bahamalar
+      BH: Bahreyn
+      BD: Bangladeş
+      BB: Barbados
+      EH: Batı Sahra (MA)
+      BE: Belçika
+      BZ: Belize
+      BJ: Benin
+      BM: Bermuda
+      BY: Beyaz Rusya
+      BT: Bhutan
+      AE: Birleşik Arap Emirlikleri
       US: Amerika Birleşik Devletleri
+      GB: Birleşik Krallık
+      BO: Bolivya
+      BA: Bosna-Hersek
+      BW: Botsvana
+      BR: Brezilya
+      BN: Bruney
+      BG: Bulgaristan
+      BF: Burkina Faso
+      BI: Burundi
+      TD: Çad
+      KY: Cayman Adaları
+      GI: Cebelitarık (GB)
+      CZ: Çek Cumhuriyeti
+      DZ: Cezayir
+      DJ: Cibuti
+      CN: Çin
+      DK: Danimarka
+      CD: Demokratik Kongo Cumhuriyeti
+      TL: Doğu Timor
+      DO: Dominik Cumhuriyeti
+      DM: Dominika
+      EC: Ekvador
+      GQ: Ekvator Ginesi
+      SV: El Salvador
+      ID: Endonezya
+      ER: Eritre
+      AM: Ermenistan
+      MF: Ermiş Martin (FR)
+      EE: Estonya
+      ET: Etiyopya
+      FK: Falkland Adaları
+      FO: Faroe Adaları (DK)
+      MA: Fas
+      FJ: Fiji
+      CI: Fildişi Sahili
+      PH: Filipinler
+      FI: Finlandiya
+      FR: Fransa
+      GF: Fransız Guyanası (FR)
+      PF: Fransız Polinezyası (FR)
+      GA: Gabon
+      GM: Gambiya
+      GH: Gana
+      GN: Gine
+      GW: Gine Bissau
+      GD: Grenada
+      GL: Grönland (DK)
+      GP: Guadeloupe (FR)
+      GT: Guatemala
+      GG: Guernsey (GB)
+      ZA: Güney Afrika
+      KR: Güney Kore
+      GE: Gürcistan
+      GY: Guyana
+      HT: Haiti
+      IN: Hindistan
+      HR: Hırvatistan
+      NL: Hollanda
+      HN: Honduras
+      HK: Hong Kong (CN)
+      VG: İngiliz Virjin Adaları
+      IQ: Irak
+      IR: İran
+      IE: İrlanda
+      ES: İspanya
+      IL: İsrail
+      SE: İsveç
+      CH: İsviçre
+      IT: İtalya
+      IS: İzlanda
+      JM: Jamaika
+      JP: Japonya
+      JE: Jersey (GB)
+      KH: Kamboçya
+      CM: Kamerun
+      CA: Kanada
+      ME: Karadağ
+      QA: Katar
+      KZ: Kazakistan
+      KE: Kenya
+      CY: Kıbrıs
+      KG: Kırgızistan
+      KI: Kiribati
+      CO: Kolombiya
+      KM: Komorlar
+      CG: Kongo Cumhuriyeti
+      KV: Kosova (RS)
+      CR: Kosta Rika
+      CU: Küba
+      KW: Kuveyt
+      KP: Kuzey Kore
+      LA: Laos
+      LS: Lesoto
+      LV: Letonya
+      LR: Liberya
+      LY: Libya
+      LI: Lihtenştayn
+      LT: Litvanya
+      LB: Lübnan
+      LU: Lüksemburg
+      HU: Macaristan
+      MG: Madagaskar
+      MO: Makao (CN)
+      MK: Makedonya
+      MW: Malavi
+      MV: Maldivler
+      MY: Malezya
+      ML: Mali
+      MT: Malta
+      IM: Man Adası (GB)
+      MH: Marshall Adaları
+      MQ: Martinique (FR)
+      MU: Mauritius
+      YT: Mayotte (FR)
+      MX: Meksika
+      FM: Mikronezya
+      EG: Mısır
+      MN: Moğolistan
+      MD: Moldova
+      MC: Monako
+      MR: Moritanya
+      MZ: Mozambik
+      MM: Myanmar
+      NA: Namibya
+      NR: Nauru
+      NP: Nepal
+      NE: Nijer
+      NG: Nijerya
+      NI: Nikaragua
+      NO: Norveç
+      CF: Orta Afrika Cumhuriyeti
+      UZ: Özbekistan
+      PK: Pakistan
+      PW: Palau
+      PA: Panama
+      PG: Papua Yeni Gine
+      PY: Paraguay
+      PE: Peru
+      PL: Polonya
+      PT: Portekiz
+      PR: Porto Riko (US)
+      RE: Réunion (FR)
+      RO: Romanya
+      RW: Ruanda
+      RU: Rusya
+      BL: Saint Barthélemy (FR)
+      KN: Saint Kitts ve Nevis
+      LC: Saint Lucia
+      PM: Saint Pierre ve Miquelon (FR)
+      VC: Saint Vincent ve Grenadinler
+      WS: Samoa
+      SM: San Marino
+      ST: São Tomé ve Príncipe
+      SN: Senegal
+      SC: Seyşeller
+      SL: Sierra Leone
+      CL: Şili
+      SG: Singapur
+      RS: Sırbistan
+      SK: Slovakya Cumhuriyeti
+      SI: Slovenya
+      SB: Solomon Adaları
+      SO: Somali
+      SS: South Sudan
+      SJ: Spitsbergen (NO)
+      LK: Sri Lanka
+      SD: Sudan
+      SR: Surinam
+      SY: Suriye
+      SA: Suudi Arabistan
+      SZ: Svaziland
+      TJ: Tacikistan
+      TZ: Tanzanya
+      TH: Tayland
+      TW: Tayvan
+      TG: Togo
+      TO: Tonga
+      TT: Trinidad ve Tobago
+      TN: Tunus
+      TR: Türkiye
+      TM: Türkmenistan
+      TC: Turks ve Caicos
+      TV: Tuvalu
+      UG: Uganda
+      UA: Ukrayna
+      OM: Umman
+      JO: Ürdün
+      UY: Uruguay
+      VU: Vanuatu
+      VA: Vatikan
+      VE: Venezuela
+      VN: Vietnam
+      WF: Wallis ve Futuna (FR)
+      YE: Yemen
+      NC: Yeni Kaledonya (FR)
+      NZ: Yeni Zelanda
+      CV: Yeşil Burun Adaları
+      GR: Yunanistan
+      ZM: Zambiya
+      ZW: Zimbabve
     coupon: Kupon
     coupon_code: Kupon kodu
     coupon_code_already_applied: Girdiğiniz kupon kodu bu siparişe önceden uygulandı
