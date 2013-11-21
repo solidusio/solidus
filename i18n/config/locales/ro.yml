@@ -18,7 +18,7 @@ ro:
         name: Nume
         numcode: Cod ISO
       spree/credit_card:
-        base: 
+        base: Bază
         cc_type: Tip
         month: Luna
         number: Număr
@@ -132,7 +132,7 @@ ro:
         spree/credit_card:
           attributes:
             base:
-              card_expired: 
+              card_expired: Cartela a expirat
     models:
       spree/address:
         one: Adresă
@@ -155,7 +155,7 @@ ro:
       spree/payment:
         one: Plată
         other: Plăți
-      spree/payment_method: 
+      spree/payment_method:
       spree/product:
         one: Produs
         other: Produse
@@ -302,13 +302,16 @@ ro:
           delivery_success: Email de test trimis cu succes
           error: ! 'Eroare email de test: %{e}'
       tab:
-        configuration: 
-        orders: 
-        overview: 
-        products: 
-        promotions: 
-        reports: 
-        users: 
+        configuration: Configurație
+        option_types: Tipuri opțiune
+        orders: Comenzi
+        overview: Prezentare generală
+        products: Produse
+        promotions: Promoții
+        properties: Proprietăți
+        prototypes: Prototipuri
+        reports: Rapoarte
+        users: Utilizatori
     administration: Administrare
     agree_to_privacy_policy: Acceptă Politica de Confidențialitate
     agree_to_terms_of_service: Acceptă Condițiile de Utilizare
@@ -896,9 +899,9 @@ ro:
     roles: Roluri
     rules: Reguli
     s3_access_key: Cheie Acces
-    s3_bucket: 
-    s3_headers: 
-    s3_protocol: 
+    s3_bucket: Găleată
+    s3_headers: Anteturi
+    s3_protocol: Protocol
     s3_secret: Cheie secretă
     sales_total: Total vânzări
     sales_total_description: Total vânzări pentru toate comenzile
@@ -954,6 +957,7 @@ ro:
     shipping_method: Metodă livrare
     shipping_methods: Metode livrare
     shipping_price_sack: Sac de preț
+    shop: Magazin
     shop_by_taxonomy: ! '%{taxonomy}'
     shopping_cart: Coș cumpărături
     show: Afișează
@@ -975,7 +979,7 @@ ro:
     smtp_username: Nume utilizator SMTP
     source: Sursa
     special_instructions: Instrucțiuni speciale
-    split: 
+    split: Divide
     spree/order:
       coupon_code: Cod voucher
     spree_gateway_error_flash_for_checkout: A apărut o problemă legat de informațiile de plată. Te rugăm verifică dacă informațiile sunt corecte și mai încearcă odaată.
