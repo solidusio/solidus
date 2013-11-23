@@ -751,6 +751,7 @@ pt-BR:
     order_number: Número do Pedido
     order_populator:
       out_of_stock: ! '%{item} está fora de estoque.'
+      selected_quantity_not_available: ! 'A quantidade selecionada do %{item} não está disponível.'
       please_enter_reasonable_quantity: Por favor insira uma quantia válida.
     order_processed_successfully: Seu Pedido foi Processado com Sucesso.
     order_state:
