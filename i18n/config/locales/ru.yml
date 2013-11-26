@@ -768,6 +768,7 @@ ru:
     order_populator:
       out_of_stock: ! 'На складе не хватает товара: %{item}.'
       please_enter_reasonable_quantity: ! 'Введите, пожалуйста, правильное количество товара. '
+      selected_quantity_not_available: Товара нет в нужном количестве.
     order_processed_successfully: Ваш заказ был успешно обработан
     order_state:
       address: Адрес
