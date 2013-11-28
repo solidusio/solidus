@@ -32,6 +32,7 @@ ro:
       spree/option_type:
         name: Nume
         presentation: Prezentare
+        other: Alta
       spree/order:
         checkout_complete: Comandă finalizată
         completed_at: Finalizată la
