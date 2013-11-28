@@ -789,7 +789,7 @@ pt-BR:
     payment_processing_failed: Pagamento não foi Processado, por Favor Verifique os Detalhes Informados.
     payment_processor_choose_banner_text: ! 'Se Você Precisa de Ajuda Para Escolher um Tipo de Pagamento, Por Favor Visite:'
     payment_processor_choose_link: Nossa Página de Pagamentos
-    payment_state: Estado do Pagamento
+    payment_state: Status do Pagamento
     payment_states:
       balance_due: saldo devedor
       checkout: comprar
@@ -1083,7 +1083,7 @@ pt-BR:
       must_be_non_negative: Deve ser um Valor Positivo ou Zero
     value: Valor
     variant: Variante
-    variant_placeholder: Escolha uma variável
+    variant_placeholder: Escolha um produto
     variants: Variantes
     version: Versão
     void: Vazio
