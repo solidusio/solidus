@@ -1078,6 +1078,12 @@ ro:
     variant_placeholder: 
     variants: Variante
     version: Versiune
+    views:
+      pagination:
+        first: Prima
+        last: Ultima
+        next: Urmatoarea
+        previous: Precedenta
     void: Void
     weight: Greutate
     what_is_a_cvv: Ce înseamnă (CVV) Codul de securitate al cardului de credit?
