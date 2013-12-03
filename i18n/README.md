@@ -4,15 +4,7 @@ This is the Internationalization project for [Spree Commerce][1]
 
 See the [official Internationalization documentation][2] for more details.
 
-**Please read the instructions below before submitting a PR**
-
-- Edit the translations directly on the [spree_i18n][5] project on Locale.
-- **That's it!**
-- The maintainer will then pull translations from the Locale project and push to Github.
-
 Happy translating!
-
-Pull requests for any fixes on how the application works are still very welcome :-)
 
 ## Installation
 
@@ -77,27 +69,11 @@ If you would like to run the tests of this project, follow these steps:
 2. Change into the directory and run `bundle exec rake test_app` to generate a dummy application.
 3. Run `bundle exec rspec spec` to run the tests.
 
-## Support Team
-
-First, make sure you have created the temporary directory used by the localeapp gem during pushes, etc.
-
-```
-mkdir -p .localeapp/locales
-```
-
-Next, if you're one of the community members with the necessary credentials to update the default locale file on localeapp.com then you can do so with the following command.
-
-```
-localeapp --api-key=YOURAPIKEYHERE push ../spree/core/config/locales/en.yml
-```
-
 Copyright (c) 2013 Spree Commerce Inc. and other contributors. released under the [New BSD License][6]
 
 [1]: http://spreecommerce.com
 [2]: http://guides.spreecommerce.com/i18n.html
 [3]: https://github.com/svenfuchs/globalize3
-[4]: http://www.localeapp.com
-[5]: http://www.localeapp.com/projects/4605
 [6]: https://github.com/spree/spree_i18n/tree/master/LICENSE
 [7]: https://github.com/globalize/globalize
 [8]: https://github.com/airblade/paper_trail
