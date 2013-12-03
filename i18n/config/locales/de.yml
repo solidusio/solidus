@@ -18,7 +18,7 @@ de:
         name: Name
         numcode: ISO-Nummer
       spree/credit_card:
-        base: 
+        base:
         cc_type: Typ
         month: Monat
         number: Nummer
@@ -157,11 +157,11 @@ de:
       spree/payment:
         one: Bezahlung
         other: Bezahlungen
-      spree/payment_method: 
+      spree/payment_method:
       spree/product:
         one: Produkt
         other: Produkte
-      spree/promotion: 
+      spree/promotion:
       spree/property:
         one: Eigenschaft
         other: Eigenschaften
@@ -180,12 +180,12 @@ de:
       spree/shipping_category:
         one: Versandkategorie
         other: Versandkategorien
-      spree/shipping_method: 
+      spree/shipping_method:
       spree/state:
         one: Bundesland
         other: Bundesländer
-      spree/stock_location: 
-      spree/stock_transfer: 
+      spree/stock_location:
+      spree/stock_transfer:
       spree/tax_category:
         one: Steuerkategorie
         other: Steuerkategorien
@@ -198,7 +198,7 @@ de:
       spree/taxonomy:
         one: Produktklassifizierung
         other: Produktklassifizierungen
-      spree/tracker: 
+      spree/tracker:
       spree/user:
         one: Benutzer
         other: Benutzer
@@ -369,7 +369,7 @@ de:
     back_to_users_list: Zurück zur Benutzerliste
     back_to_zones_list: Zurück zur Zonen Liste
     backorderable: Nachbestellbar
-    backorders_allowed: 
+    backorders_allowed:
     balance_due: Soll
     bill_address: Rechnungsadresse
     billing: Rechnung
@@ -684,7 +684,7 @@ de:
     no_pending_payments: Keine ausstehenden Zahlungen
     no_products_found: Keine Produkte gefunden
     no_promotions_found: Keine Werbeaktionen gefunden
-    no_resource_found: 
+    no_resource_found:
     no_results: Keine Ergebnisse
     no_rules_added: Keine Regeln verfügbar
     no_shipping_methods_found: Keine Versandarten gefunden
@@ -741,6 +741,7 @@ de:
     order_number: Bestellnummer
     order_populator:
       out_of_stock: ! '%{item} ist nicht mehr verfügbar.'
+      selected_quantity_not_available: ! 'Die gewählte Menge von %{item} ist leider nicht verfügbar.'
       please_enter_reasonable_quantity: Bitte eine angemessene Menge angeben.
     order_processed_successfully: Ihre Bestellung wurde erfolgreich bearbeitet
     order_state:
@@ -773,7 +774,7 @@ de:
     payment: Zahlung
     payment_information: Zahlungsinformationen
     payment_method: Zahlungsmethode
-    payment_method_not_supported: 
+    payment_method_not_supported:
     payment_methods: Zahlungsmethoden
     payment_processing_failed: Die Bezahlung konnte nicht abgeschlossen werden, bitte überprüfen Sie Ihre Angaben.
     payment_processor_choose_banner_text: Wenn Sie hilfe bei der Auswahl des Zahlungsabwicklers haben, bitte besuchen Sie
@@ -905,6 +906,7 @@ de:
     sales_total: Gesamtumsatz
     sales_total_description: Gesamtsumme aller Bestellungen
     sales_totals: Gesamtumsätze
+    save_my_address: Adresse speichern
     save_and_continue: Speichern und fortsetzen
     say_no: 'No'
     say_yes: 'Yes'
