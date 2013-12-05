@@ -765,8 +765,12 @@ ro:
     overview: Sumar
     package_from: pachet din
     pagination:
+      first: prima
+      last: ultima
+      next: urmatoarea
       next_page: pagina următoare %raquo;
       previous_page: ! '&laquo; pagina anterioară'
+      previous: anterioara
       truncate: ! '&hellip;'
     password: Parola
     paste: Lipire
