@@ -326,6 +326,8 @@ ru:
         option_types: Товарные опции
         properties: Свойства
         prototypes: Прототипы
+        taxonomies: Таксономии
+        taxons: Таксоны
     administration: Администрирование
     agree_to_privacy_policy: Согласиться с Политикой Конфиденциальности
     agree_to_terms_of_service: Согласиться с Уловиями обслуживания
