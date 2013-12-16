@@ -604,7 +604,7 @@ ro:
       operators:
         gt: mai mare de
         gte: mai mare de sau egal cu
-    items_cannot_be_shipped: 
+    items_cannot_be_shipped: Itemii nu pot fi cumpărați
     jirafe: Jirafe
     landing_page_rule:
       path: Cale
