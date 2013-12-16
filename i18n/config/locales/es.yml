@@ -740,6 +740,7 @@ es:
     order_populator:
       out_of_stock: ! '%{item} está fuera de stock'
       please_enter_reasonable_quantity: Por favor, introduce un cantidad razonable
+      selected_quantity_not_available: La cantidad seleccionada no esta disponible
     order_processed_successfully: Tu pedido ha sido procesado con éxito
     order_state:
       address: Dirección
