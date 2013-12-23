@@ -12,12 +12,7 @@ Add the following to your `Gemfile`.
 
 ```ruby
 gem 'spree_i18n', github: 'spree/spree_i18n'
-gem 'globalize', github: 'globalize/globalize'
 ```
-*You need to also add globalize and point to github to get a fix for fallback
-queries. See https://github.com/globalize/globalize/pull/300 for details. Once
-globalize releases a new gem it should be safe to remove it from your Gemfile.
-spree_i18n already loads it as its dependency."
 
 Run `bundle install`
 
