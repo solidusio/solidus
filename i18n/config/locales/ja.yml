@@ -260,11 +260,11 @@ ja:
       continue: 
       create: 作成
       destroy: 削除
-      edit: 
+      edit: 編集
       list: リスト
       listing: 一覧
       new: 新規
-      save: 
+      save: 保存
       update: 更新
     activate: アクティベートする
     active: 有効
@@ -569,7 +569,7 @@ ja:
       show_only: 
       supported_locales: 
       this_file_language: 日本語 (ja-JP)
-      translations: 
+      translations: 翻訳 
     icon: アイコン
     image: 画像
     image_settings: 画像設定
@@ -704,7 +704,7 @@ ja:
     open: 
     open_all_adjustments: 
     option_type: オプションタイプ
-    option_type_placeholder: 
+    option_type_placeholder: プレイスホルダ
     option_types: オプションタイプ
     option_value: オプション価格
     option_values: オプション価格
@@ -1013,7 +1013,7 @@ ja:
     tax_total: 税合計
     taxon: 分類
     taxon_edit: 分類を編集
-    taxon_placeholder: 
+    taxon_placeholder: 分類プレイスホルダ
     taxonomies: 分類ツリー
     taxonomy: 分類ツリー
     taxonomy_edit: 分類ツリーを編集する
@@ -1068,7 +1068,7 @@ ja:
       must_be_non_negative: 0以上の数字が必要です
     value: 値
     variant: 種類
-    variant_placeholder: 
+    variant_placeholder: 種類プレイスホルダ
     variants: 種類
     version: バージョン
     void: 無効
