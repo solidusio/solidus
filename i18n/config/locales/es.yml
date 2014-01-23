@@ -159,7 +159,9 @@ es:
       spree/product:
         one: Producto
         other: Productos
-      spree/promotion: 
+      spree/promotion:
+        one: Promoción
+        other: Promociones
       spree/property:
         one: Propiedad
         other: Propiedades
@@ -682,7 +684,7 @@ es:
     no_pending_payments: No hay pagos pendientes
     no_products_found: No se encontraron productos
     no_promotions_found: No se encontraron promociones
-    no_resource_found: 
+    no_resource_found: ! 'No se encontraron %{resource}'
     no_results: sin resultados
     no_rules_added: No se añadieron reglas
     no_shipping_methods_found: No se encontraron métodos de envio
