@@ -151,6 +151,29 @@ describe "Translations" do
     end
   end
 
+  context "permalink routing", js: true do
+    let(:language) { Spree.t(:'i18n.this_file_language', locale: 'de') }
+    let(:product) { create(:product) }
+
+    it "finds the right product with permalink in a not active language" do
+      SpreeI18n::Config.available_locales = [:en, :de]
+      SpreeI18n::Config.supported_locales = [:en, :de]
+
+      visit spree.admin_product_path(product)
+      click_on "Translations"
+      click_on "Permalink"
+      within("#attr_fields .permalink.en.odd") { fill_in_name "en_link" }
+      within("#attr_fields .permalink.de.odd") { fill_in_name "de_link" }
+      click_on "Update"
+
+      visit spree.product_path 'en_link'
+      page.should have_content('Product')
+
+      visit spree.product_path 'de_link'
+      page.should have_content('Product')
+    end
+  end
+
   # sleep 1 second to make sure the ajax request process properly
   def change_locale
     visit spree.root_path
