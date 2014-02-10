@@ -445,7 +445,7 @@ pt-BR:
     coupon_code: Código do Cupom
     coupon_code_already_applied: O cupom já foi adicionado ao pedido
     coupon_code_applied: O Código do cupom foi acrecentado ao seu pedido
-    coupon_code_better_exists: O pedido já possui um cupom com melhor disconto
+    coupon_code_better_exists: O pedido já possui um cupom com melhor desconto
     coupon_code_expired: O cupom está expirado
     coupon_code_max_usage: O limite de uso do cupom foi excedido
     coupon_code_not_eligible: O cupom não é válido para esse pedido
