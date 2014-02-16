@@ -739,7 +739,7 @@ nl:
         thanks: Bedankt voor je bestelling.
         total: ! 'Bestelling totaal: %{total}'
     order_not_found: We konden je bestelling niet vinden. Probeer het nogmaals.
-    order_number: Nummer bestelling
+    order_number: Bestelling %{number}
     order_populator:
       out_of_stock: ! '%{item} is niet op voorraad.'
       please_enter_reasonable_quantity: Vul een redelijke hoeveelheid in.
