@@ -964,7 +964,7 @@ nl:
     shopping_cart: Winkelwagen
     show: Toon
     show_active: Toon actieve
-    show_deleted: Toon verwijderde bestellingen
+    show_deleted: Toon verwijderde items
     show_only_complete_orders: Toon enkel afgewerkte bestellingen
     show_rate_in_label: Toon tarief naast naam
     site_name: Site naam
