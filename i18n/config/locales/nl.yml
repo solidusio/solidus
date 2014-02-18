@@ -602,7 +602,7 @@ nl:
       operators:
         gt: groter dan
         gte: groter dan of gelijk aan
-    items_cannot_be_shipped: 
+    items_cannot_be_shipped: Items kunnen niet worden verstuurd
     jirafe: Jirafe
     landing_page_rule:
       path: Pad
