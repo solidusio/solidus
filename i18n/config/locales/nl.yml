@@ -382,7 +382,7 @@ nl:
     cannot_create_returns: Kan geen retour aanmaken aangezien de bestelling nog niet is verstuurd
     cannot_perform_operation: Kan deze opdracht niet uitvoeren
     cannot_set_shipping_method_without_address: Kan geen verzendmethode kiezen totdat klant details bekend zijn.
-    capture: in rekening brengen
+    capture: betaling vastleggen
     card_code: Kaartcode
     card_number: Kaartnummer
     card_type_is: Kaarttype is
