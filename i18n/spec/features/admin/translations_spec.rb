@@ -193,9 +193,9 @@ describe "Translations" do
 
       visit spree.admin_product_path(product)
       click_on "Translations"
-      click_on "Permalink"
-      within("#attr_fields .permalink.en.odd") { fill_in_name "en_link" }
-      within("#attr_fields .permalink.de.odd") { fill_in_name "de_link" }
+      click_on "Slug"
+      within("#attr_fields .slug.en.odd") { fill_in_name "en_link" }
+      within("#attr_fields .slug.de.odd") { fill_in_name "de_link" }
       click_on "Update"
 
       visit spree.product_path 'en_link'

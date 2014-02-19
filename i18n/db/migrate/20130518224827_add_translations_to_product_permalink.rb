@@ -1,6 +1,10 @@
 class AddTranslationsToProductPermalink < ActiveRecord::Migration
   def up
-    fields = { :permalink => :string }
+    if column_exists?(:spree_products, :permalink)
+      fields = { :permalink => :string }
+    else
+      fields = { :slug => :string }
+    end
     Spree::Product.add_translation_fields!(fields, { :migrate_data => true })
   end
 

@@ -28,7 +28,7 @@ module Spree
 
       def resource
         @resource ||= if slugged_models.include? klass.class_name
-          klass.find_by_permalink(params[:resource_id])
+          klass.friendly.find(params[:resource_id])
         else
           klass.find(params[:resource_id])
         end
