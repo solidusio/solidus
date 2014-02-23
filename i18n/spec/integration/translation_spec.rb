@@ -21,4 +21,12 @@ describe "Translation" do
       translation.should == "PLZ"
     end
   end
+
+  # Chilean spanish is chosen
+  context 'when current locale is Chilean Spanish' do
+    it 'translation is available' do
+      I18n.locale = :'es-CL'
+      translation.should == 'Código Postal'
+    end
+  end
 end
