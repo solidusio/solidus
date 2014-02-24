@@ -42,7 +42,7 @@ es:
         item_total: Total de Artículo
         number: Número
         payment_state: Estado del Pago
-        shipment_state: Estado del Envio
+        shipment_state: Estado del Envío
         special_instructions: Instrucciones especiales
         state: Estado
         total: Total
@@ -175,8 +175,8 @@ es:
         one: Función
         other: Funciones
       spree/shipment:
-        one: Envio
-        other: Envios
+        one: Envío
+        other: Envíos
       spree/shipping_category:
         one: Categoría de envío
         other: Categorías de envío
@@ -687,7 +687,7 @@ es:
     no_resource_found: ! 'No se encontraron %{resource}'
     no_results: sin resultados
     no_rules_added: No se añadieron reglas
-    no_shipping_methods_found: No se encontraron métodos de envio
+    no_shipping_methods_found: No se encontraron métodos de envío
     no_stock_locations_found: No se han encontrado localizaciones de stock
     no_trackers_found: No se encontraron trackers
     no_tracking_present: No se proporcionaron detalles del tracking
@@ -947,9 +947,9 @@ es:
     shipments: Envíos
     shipped: Enviado
     shipping: Envío
-    shipping_address: Dirección de envio
-    shipping_categories: Categorías de envio
-    shipping_category: Categoria de Envio
+    shipping_address: Dirección de envío
+    shipping_categories: Categorías de envío
+    shipping_category: Categoría de Envío
     shipping_flat_rate_per_item: Tarifa plana por artículo empaquetado
     shipping_flat_rate_per_order: Tarifa Plana
     shipping_flexible_rate: Tarifa Flexible por artículo empaquetado

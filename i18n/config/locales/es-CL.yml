@@ -5,7 +5,7 @@ es-CL:
         address1: Dirección
         address2: ! '"Dirección Complementaria"'
         city: Ciudad
-        country: Pais
+        country: País
         firstname: Nombre
         lastname: Apellidos
         phone: Teléfono
@@ -247,7 +247,7 @@ es-CL:
     user_passwords:
       user:
         cannot_be_blank: Tu contraseña no puede estar en blanco
-        send_instructions: Recibiras un email con instrucciones sobre como reinicializar tu contraseña en breves minutos
+        send_instructions: Recibirás un email con instrucciones sobre como reinicializar tu contraseña en breves minutos
         updated: Tu contraseña fue cambiada con éxito. Ya estás registrado.
     user_registrations:
       destroyed: ¡Adiós! Tu cuenta fue cancelada satisfactoriamente. Esperamos volver a verte pronto.
@@ -266,7 +266,7 @@ es-CL:
         one: 1 error evitó que este %{resource} fuese grabado.
         other: ! '%{count} errores evitaron que este %{resource} fuese grabado:'
   spree:
-    abbreviation: Abrevición
+    abbreviation: Abreviación
     account: Cuenta
     account_updated: Cuenta actualizada
     action: Acción
@@ -328,7 +328,7 @@ es-CL:
         Taxonomies: Categorías
         import: Importar
     administration: Administración
-    agree_to_privacy_policy: De acuerdo con la politica de privacidad.
+    agree_to_privacy_policy: De acuerdo con la política de privacidad.
     agree_to_terms_of_service: De acuerdo con las condiciones de uso
     all: Todos
     all_adjustments_closed: Todos los ajustes cerrados satisfactoriamente
@@ -363,7 +363,7 @@ es-CL:
     backorderable_default: Posible Devolución
     back_end: Parte interna
     back_to_adjustments_list: Volver a la Lista de ajustes
-    back_to_countries_list: Volver al Listado de Paises
+    back_to_countries_list: Volver al Listado de Países
     back_to_images_list: Volver a la Lista de imágenes
     back_to_option_types_list: Volver a la Lista de opciones de Tipos
     back_to_orders_list: Volver a la Lista de Pedidos
@@ -418,7 +418,7 @@ es-CL:
     close: Cerrar
     close_all_adjustments: Cerrar todos los ajustes
     code: Código
-    company: Compañia
+    company: Compañía
     complete: Completar
     configuration: Configuración
     configurations: Configuraciones
@@ -441,14 +441,14 @@ es-CL:
       CA: Canada
       FRA: Francia
       ITA: Italia
-      US: Estados Unidos de America
+      US: Estados Unidos de América
     coupon: Cupón
     coupon_code: Código Cupón
     coupon_code_already_applied: El código del cupón ya ha sido aplicado a este pedido
     coupon_code_applied: El código del cupón fue aplicado satisfactoriamente a este pedido.
     coupon_code_better_exists: El código del cupón aplicado previamente es más conveniente para tí
     coupon_code_expired: El código del cupón ha expirado
-    coupon_code_max_usage: Excedido el limite de uso del código del cupón
+    coupon_code_max_usage: Excedido el límite de uso del código del cupón
     coupon_code_not_eligible: Este código de cupón no es elegible para este pedido
     coupon_code_not_found: El código del cupón que has introducido no existe. Inténtalo de nuevo.
     create: Crear
@@ -926,7 +926,7 @@ es-CL:
     s3_access_key: Clave de acceso
     s3_bucket: Bucket
     configure_s3: Configurar S3
-    s3_headers: ! '"Encabezamientos S3'
+    s3_headers: ! '"Encabezados S3'
     s3_protocol: Protocolo S3
     s3_secret: Clave Secreta
     sales_total: Total de ventas
@@ -1108,8 +1108,8 @@ es-CL:
     what_is_this: ¿Qué es esto?
     width: Longitud
     year: Año
-    you_have_no_orders_yet: No tienes pedidos todavia
-    your_cart_is_empty: Tu carrito esta vacio
+    you_have_no_orders_yet: No tienes pedidos todavía
+    your_cart_is_empty: Tu carrito esta vacío
     your_order_is_empty_add_product: Tu pedido esta vacío, por favor busca y añade un producto a continuación
     zip: Postal
     zipcode: Código Postal
