@@ -391,9 +391,9 @@ es:
     category: Categoría
     check_for_spree_alerts: Comprobar alertas de Spre
     checkout: Realizar pedido
-    choose_a_customer: Escoje un cliente
-    choose_currency: Escoje moneda
-    choose_dashboard_locale: Escoje idioma del Panel de Instrumentos
+    choose_a_customer: Escoge un cliente
+    choose_currency: Escoge moneda
+    choose_dashboard_locale: Escoge idioma del Panel de Instrumentos
     city: Ciudad
     clone: Clonar
     close: Cerrar
@@ -456,7 +456,7 @@ es:
         app_id: ID App
         app_token: Token APP
         currently_unavailable: Jirafe no está disponible en estos momentos. Spree conectará automáticamente con Jirafe una vez esté disponible.
-        explanation: Los campos siguientes pueden ser ya completados si escojes registrarte con Jirafe desde el Panel de Instrumentos
+        explanation: Los campos siguientes pueden ser ya completados si escoges registrarte con Jirafe desde el Panel de Instrumentos
         header: Preferencias de Jirafe Analytics
         site_id: ID Sitio Web
         token: Token
@@ -708,7 +708,7 @@ es:
     open: Abrir
     open_all_adjustments: Abrir todos los ajustes
     option_type: Tipo de opción
-    option_type_placeholder: Escoje un tipo de opción
+    option_type_placeholder: Escoge un tipo de opción
     option_types: Tipos de opción
     option_value: Valor de opción
     option_values: Valores de opción
@@ -777,7 +777,7 @@ es:
     payment_method_not_supported: 
     payment_methods: Métodos de Pago
     payment_processing_failed: El pago no pudo ser procesado, por favor comprueba los detalles que has introducido
-    payment_processor_choose_banner_text: Si necesitas ayuda a la hora de escojer un procesador de pago, por favor visita
+    payment_processor_choose_banner_text: Si necesitas ayuda a la hora de escoger un procesador de pago, por favor visita
     payment_processor_choose_link: nuestra pagina de pagos
     payment_state: Estado del Pago
     payment_states:
@@ -812,13 +812,13 @@ es:
     product_not_available_in_this_currency: Este producto no está disponible en la moneda seleccionada.
     product_properties: Propiedades del producto
     product_rule:
-      choose_products: Escoje productos
+      choose_products: Escoge productos
       label: El pedido debe contener %{select} de estos productos
       match_all: Todos
       match_any: al menos uno
       product_source:
         group: Desde grupo de producto
-        manual: Escoje manualmente
+        manual: Escoge manualmente
     products: Productos
     promotion: Promoción
     promotion_action: Acción de promoción
@@ -1062,7 +1062,7 @@ es:
     use_s3: Usa Amazon S3 para las Imágenes
     user: Usuario
     user_rule:
-      choose_users: Escoje Usuarios
+      choose_users: Escoge Usuarios
     users: Usuarios
     validation:
       cannot_be_less_than_shipped_units: no puede ser menor que el número de unidades enviadas.
@@ -1073,7 +1073,7 @@ es:
       must_be_non_negative: debe ser un valor no negativo
     value: Valor
     variant: Variante
-    variant_placeholder: Escoje una variante
+    variant_placeholder: Escoge una variante
     variants: Variantes
     version: Versión
     void: Anular
