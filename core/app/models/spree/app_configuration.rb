@@ -57,6 +57,7 @@ module Spree
     preference :order_mutex_max_age, :integer, default: 2.minutes
     preference :orders_per_page, :integer, default: 15
     preference :prices_inc_tax, :boolean, default: false
+    preference :properties_per_page, :integer, default: 15
     preference :products_per_page, :integer, default: 12
     preference :promotions_per_page, :integer, default: 15
     preference :customer_returns_per_page, :integer, default: 15
