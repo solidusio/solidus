@@ -55,7 +55,7 @@ zh-CN:
         state: 省份
         zipcode: 邮政编码
       spree/order/ship_address:
-        address1: di zhi
+        address1: 地址
         city: 城市
         firstname: 名字
         lastname: 姓氏
@@ -104,7 +104,7 @@ zh-CN:
       spree/tax_rate:
         amount: 税率
         included_in_price: 包含在售价中
-        show_rate_in_label: Show rate in label
+        show_rate_in_label: 在标签中显示比率
       spree/taxon:
         name: 名称
         permalink: 永久链接
@@ -269,15 +269,15 @@ zh-CN:
     activate: 激活
     active: 激活
     add: 添加
-    add_action_of_type: Add action of type
+    add_action_of_type: 添加激活方式
     add_country: 添加国家
-    add_new_header: Add New Header
+    add_new_header: 添加新的头部
     add_new_style: 添加新的样式
     add_one: 新建
     add_option_value: 添加选项值
     add_product: 添加产品
     add_product_properties: 添加产品属性
-    add_rule_of_type: Add rule of type
+    add_rule_of_type: 添加新的类型规则
     add_state: 添加一个省份
     add_stock: 添加库存
     add_stock_management: 添加库存管理
@@ -300,13 +300,13 @@ zh-CN:
           delivery_success: 测试邮件发送成功
           error: ! '测试邮件错误: %{e}'
       tab:
-        configuration: 
-        orders: 
-        overview: 
-        products: 
-        promotions: 
-        reports: 
-        users: 
+        configuration: 配置
+        orders: 订单
+        overview: 概览
+        products: 产品
+        promotions: 促销
+        reports: 报告
+        users: 用户
     administration: 管理
     agree_to_privacy_policy: 同意隐私政策
     agree_to_terms_of_service: 同意服务条款
@@ -474,7 +474,7 @@ zh-CN:
     delivery: 配送
     depth: 长
     description: 描述
-    destination: 
+    destination: 目的地
     destroy: 删除
     discount_amount: 折扣金额
     dismiss_banner: 不，谢谢！我对此不感兴趣，请不要再显示此信息。
@@ -637,7 +637,7 @@ zh-CN:
     meta_description: 元描述
     meta_keywords: 关键字
     metadata: 元数据
-    minimal_amount: Minimal Amount
+    minimal_amount: 少量
     month: 月
     more: 更多
     move_stock_between_locations: 
@@ -704,7 +704,7 @@ zh-CN:
     open: 打开
     open_all_adjustments: 启用所有价格调整
     option_type: 选项类型
-    option_type_placeholder: 
+    option_type_placeholder: 选项类型默认值
     option_types: 选项类型
     option_value: 选项值
     option_values: 选项值
@@ -793,8 +793,8 @@ zh-CN:
     phone: 电话
     place_order: 下单
     please_define_payment_methods: 请先设定支付方式。
-    populate_get_error: Something went wrong. Please try adding the item again.
-    powered_by: Powered by
+    populate_get_error: 出错了，请重新添加项目。
+    powered_by: 技术支持
     presentation: 描述
     previous: 上一页
     price: 价格
@@ -1061,7 +1061,7 @@ zh-CN:
     users: 用户详情
     validation:
       cannot_be_less_than_shipped_units: 不能少于已配送的单位数。
-      cannot_destory_line_item_as_inventory_units_have_shipped: Cannot destory line item as some inventory units have shipped.
+      cannot_destory_line_item_as_inventory_units_have_shipped: 已经发货的商品不能被删除。
       exceeds_available_stock: 超出可用的库存。请确认订单项拥有有效的数量。
       is_too_large: 数量太多了 -- 现有库存无法满足您需要的数量!
       must_be_int: 必须是整数
