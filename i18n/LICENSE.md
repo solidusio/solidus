@@ -1,4 +1,4 @@
-Copyright Spree Commerce Inc. and other contributors. (c) 2013 Sean Schofield
+Copyright Spree Commerce Inc. and other contributors. (c) 2014 Sean Schofield
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without modification,

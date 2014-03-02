@@ -1,4 +1,0 @@
-test: &test
-  adapter: sqlite3
-  encoding: utf8
-  database: ":memory:"

@@ -9,7 +9,7 @@ module ActionView
       #
       # Use it like this:
       #
-      # <h1>Editing post</h1> 
+      # <h1>Editing post</h1>
       #
       # <% form_for(@post) do |f| %>
       #   <%= f.error_messages %>

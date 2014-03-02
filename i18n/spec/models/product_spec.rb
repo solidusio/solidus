@@ -4,11 +4,11 @@ module Spree
   describe Product do
     # Regression test for #309
     it "duplicates translations" do
-      product = FactoryGirl.create(:product)
+      product = create(:product)
       original_count = product.translations.count
       new_product = product.duplicate
-      new_product.translations.should_not be_blank
-      product.translations.count.should == original_count
+      expect(new_product.translations).not_to be_blank
+      expect(product.translations.count).to eq original_count
     end
   end
 end

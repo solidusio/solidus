@@ -6,7 +6,7 @@ shared_context "behaves as translatable" do
     end
 
     it "falls back to default locale" do
-      subject.name.should == "English"
+      expect(subject.name).to eq "English"
     end
   end
 
@@ -21,7 +21,7 @@ shared_context "behaves as translatable" do
 
     it "falls back to not default translations" do
       I18n.locale = :en
-      model.name.should == "produto"
+      expect(model.name).to eq "produto"
     end
   end
 
@@ -38,7 +38,7 @@ shared_context "behaves as translatable" do
       model.name = "produto"
 
       I18n.locale = :de
-      model.name.should == "product"
+      expect(model.name).to eq "product"
     end
   end
 end
