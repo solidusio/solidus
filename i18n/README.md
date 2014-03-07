@@ -24,16 +24,16 @@ your app spree manifest file.
 
     rails g spree_i18n:install
 
-This will insert this lines on your spree manifest files:
+This will insert these lines into your spree manifest files:
 
-    app/assets/javascripts/admin/all.js
-    //= require admin/spree_i18n
+    vendor/assets/javascripts/spree/backend/all.js
+    //= spree/backend/spree_i18n
 
-    app/assets/javascripts/store/all.js
-    //= require store/spree_i18n
+    vvendor/assets/javascripts/spree/frontend/all.js
+    //= spree/frontend/spree_i18n
 
-    app/assets/stylesheets/admin/all.css
-    *= require admin/spree_i18n
+    vendor/assets/stylesheets/spree/frontend/all.css
+    *= require spree/frontend/spree_i18n
 
 ## Model Translations
 
