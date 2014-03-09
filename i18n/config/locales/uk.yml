@@ -1,4 +1,4 @@
-ua:
+uk:
   activerecord:
     attributes:
       spree/address:
@@ -22,7 +22,7 @@ ua:
         cc_type: Тип
         month: Місяць
         number: Номер
-        verification_value: Verification Value
+        verification_value: Код перевірки автентичності (CVV/CVC)
         year: Рік
       spree/inventory_unit:
         state: Стан
@@ -33,7 +33,7 @@ ua:
         name: Назва
         presentation: Відобразити як
       spree/order:
-        checkout_complete: Оформлення замовлення завершене
+        checkout_complete: Оформлення замовлення завершено
         completed_at: Завершено в
         coupon_code: Код купону
         created_at: Дата замовлення
@@ -43,24 +43,24 @@ ua:
         number: Номер
         payment_state: Стан оплати
         shipment_state: Стан доставки
-        special_instructions: Спеціальні інструкції
-        state: Регіон/Область
+        special_instructions: Додаткові інструкції
+        state: Стан
         total: Загалом
       spree/order/bill_address:
-        address1: Billing address street
-        city: Платіжний адресу. Місто
-        firstname: Платіжний адресу. Ім'я
-        lastname: Платіжний адресу. Прізвище
-        phone: Платіжний адресу. Телефон
-        state: Платіжний адресу. Регіон/Область
-        zipcode: Платіжний адресу. Індекс
+        address1: Платіжна адреса. Вулиця
+        city: Платіжна адреса. Місто
+        firstname: Платіжна адреса. Ім'я
+        lastname: Платіжна адреса. Прізвище
+        phone: Платіжна адреса. Телефон
+        state: Платіжна адреса. Регіон/Область
+        zipcode: Платіжна адреса. Індекс
       spree/order/ship_address:
-        address1: Billing address street
+        address1: Адреса доставки. Вулиця
         city: Адреса доставки. Місто
         firstname: Адреса доставки. Ім'я
         lastname: Адреса доставки. Прізвище
         phone: Адреса доставки. Телефон
-        state: Статус
+        state: Адреса доставки. Регіон/Область
         zipcode: Адреса доставки. Індекс
       spree/payment:
         amount: Сума
@@ -85,13 +85,12 @@ ua:
         name: Назва
         path: Шлях
         starts_at: Дата початку промо-акції
-        usage_limit: Максимальна кількість застосувань
+        usage_limit: Максимальна кількість використань
       spree/property:
         name: Найменування
         presentation: Відображати як
       spree/prototype:
         name: Найменування
-        other: Прототипи
       spree/return_authorization:
         amount: Сума
       spree/role:
@@ -133,109 +132,182 @@ ua:
         spree/credit_card:
           attributes:
             base:
-              card_expired: 
+              card_expired: Термін дії картки закінчився
     models:
       spree/address:
         one: Адреса
+        few: Адреси
+        many: Адрес
         other: Адрес
       spree/country:
         one: Країна
-        other: Країни
+        few: Країни
+        many: Країн
+        other: Країн
       spree/credit_card:
-        one: Credit Card
-        other: Credit Cards
+        one: Кредитна картка
+        few: Кредитні картки
+        many: Кредитних карток
+        other: Кредитних карток
       spree/inventory_unit:
         one: Одиниця обліку
-        other: Одиниці обліку
+        few: Одиниці обліку
+        many: Одиниць обліку
+        other: Одиниць обліку
       spree/line_item:
         one: Позиція
-        other: Позиції
+        few: Позиції
+        many: Позицій
+        other: Позицій
+      spree/option_type:
+        one: Характеристика
+        few: Характеристики
+        many: Характеристик
+        other: Характеристик
       spree/order:
         one: Замовлення
+        few: Замовлення
+        many: Замовлень
         other: Замовлень
       spree/payment:
         one: Платіж
-        other: Платежі
-      spree/payment_method: 
+        few: Платежа
+        many: Платежів
+        other: Платежів
+      spree/payment_method:
+        one: Спосіб оплати
+        few: Способи оплати
+        many: Способів оплати
+        other: Способів оплати
       spree/product:
         one: Товар
-        other: Товари
-      spree/promotion: 
+        few: Товари
+        many: Товарів
+        other: Товарів
+      spree/promotion:
+        one: Акція
+        few: Акції
+        many: Акцій
+        other: Акцій
       spree/property:
         one: Властивість
-        other: Властивості
+        few: Властивості
+        many: Властивостей
+        other: Властивостей
       spree/prototype:
         one: Прототип
-        other: Прототипа
+        few: Прототипи
+        many: Прототипів
+        other: Прототипів
       spree/return_authorization:
         one: Дозвіл на повернення
-        other: Дозволи на повернення
+        few: Дозволи на повернення
+        many: Дозволів на повернення
+        other: Дозволів на повернення
       spree/role:
         one: Роль
-        other: Ролі
+        few: Ролі
+        many: Ролей
+        other: Ролей
       spree/shipment:
         one: Відправлення
-        other: Відправки
+        few: Відправлення
+        many: Відправлень
+        other: Відправлень
       spree/shipping_category:
         one: Категорія доставки
-        other: Категорії доставки
-      spree/shipping_method: 
+        few: Категорії доставки
+        many: Категорій доставки
+        other: Категорій доставки
+      spree/shipping_method:
+        one: Спосіб доставки
+        few: Способи доставки
+        many: Способів доставки
+        other: Способів доставки
       spree/state:
         one: Регіон/Область
-        other: Регіони
-      spree/stock_location: 
-      spree/stock_transfer: 
+        few: Регіони/Області
+        many: Регіонів/Областей
+        other: Регіонів/Областей
+      spree/stock_location:
+        one: Склад
+        few: Склади
+        many: Складів
+        other: Складів
+      spree/stock_transfer:
+        one: Переміщення товарів
+        few: Переміщення товарів
+        many: Переміщень товарів
+        other: Переміщень товарів
       spree/tax_category:
         one: Податкова категорія
-        other: Податкові категорії
+        few: Податкові категорії
+        many: Податкових категорій
+        other: Податкових категорій
       spree/tax_rate:
         one: Податкова ставка
-        other: Податкові ставки
+        few: Податкові ставки
+        many: Податкових ставок
+        other: Податкових ставок
       spree/taxon:
-        one: Таксон
-        other: Таксон
+        one: Розділ
+        few: Розділа
+        many: Розділів
+        other: Розділів
       spree/taxonomy:
-        one: Таксономія
-        other: Таксономії
-      spree/tracker: 
+        one: Каталог
+        few: Каталоги
+        many: Каталогів
+        other: Каталогів
+      spree/tracker:
+        one: Трекер веб-аналітики
+        few: Трекера веб-аналітики
+        many: Трекерів веб-аналітики
+        other: Трекерів веб-аналітики
       spree/user:
         one: Користувач
-        other: Користувачі
+        few: Користувача
+        many: Користувачів
+        other: Користувачів
       spree/variant:
         one: Варіант
-        other: Варіанти
+        few: Варіанта
+        many: Варіантів
+        other: Варіантів
       spree/zone:
         one: Зона
-        other: Зони
+        few: Зони
+        many: Зон
+        other: Зон
   devise:
     confirmations:
       confirmed: Ваш обліковий запис був успішно підтверджений. Зараз ви в системі.
-      send_instructions: 
+      send_instructions: Ви отримаєте лист з інструкціями щодо активації вашого облікового запису впродовж декількох хвилин.
     failure:
       inactive: Ваш обліковий запис ще не активовано.
       invalid: Невірний E-Mail або пароль
       invalid_token: Невірний код авторизації.
       locked: Ваш обліковий запис заблокований.
-      timeout: Ваша сесія застаріла. Будь ласка, увійдіть до системи повторно для продовження.
-      unauthenticated: Вам потрібно увійти або зареєструватись, щоб продовжити.
-      unconfirmed: Вам потрібно підтвердити Ваш обліковий запис перед тим, як продовжити.
+      timeout: "Ваша сесія застаріла. Будь ласка, увійдіть до системи повторно для продовження."
+      unauthenticated: "Вам потрібно увійти або зареєструватись, щоб продовжити."
+      unconfirmed: "Вам потрібно підтвердити Ваш обліковий запис перед тим, як продовжити."
     mailer:
       confirmation_instructions:
         subject: Інструкціі стосовно підвердження
       reset_password_instructions:
-        subject: Інструкціі по скиданню паролю
+        subject: Інструкціі по скиданню пароля
       unlock_instructions:
         subject: Інструкції по розблокуванню
     oauth_callbacks:
       failure: Невдала авторизація з %{kind} через "%{reason}".
-      success: Успішно увійшли з %{kind} аккаунту.
+      success: "Успішно увійшли з %{kind} аккаунту."
     unlocks:
-      send_instructions: Ви отримаєте лист з інструкціями про те, як розблокувати ваш обліковий запис протягом декількох хвилин.
+      send_instructions: Ви отримаєте лист з інструкціями щодо розблокування вашого облікового запису впродовж декількох хвилин.
       unlocked: Ваш акаунт розблоковано. Тепер ви успішно увійшли в систему.
     user_passwords:
       user:
         cannot_be_blank: Ваш пароль не може бути пустим.
-        send_instructions: 
+        send_instructions: Ви отримаєте лист з інструкціями щодо скидання вашого пароля впродовж декількох хвилин.
         updated: Ваш пароль змінено. Ви успішно увійшли до системи.
     user_registrations:
       destroyed: До побачення! Ваш акаунт знищено, але ми сподіваємося побачити вас знову найближчим часом.
@@ -249,8 +321,10 @@ ua:
     messages:
       already_confirmed: вже було підтверджено
       not_found: не знайдено
-      not_locked: було разблоковано
+      not_locked: не було заблоковано
       not_saved: 
+        one: ! '1 помилка перешкоджає збереженню %{resource}:'
+        other: ! '%{count} помилок перешкоджають збереженню %{resource}:'
   spree:
     abbreviation: Абревіатура
     account: Обліковий запис
@@ -275,50 +349,53 @@ ua:
     add_new_header: Додати новий заголовок
     add_new_style: Додати новий стиль
     add_one: Додати
-    add_option_value: Додати значення опції
+    add_option_value: Додати значення характеристики
     add_product: Додати товар
     add_product_properties: Додати властивості товару
     add_rule_of_type: Додати правило типу
     add_state: Додати регіон/область
-    add_stock: Додати інвентар
-    add_stock_management: Додати управління інвентарем
+    add_stock: Додати склад
+    add_stock_management: Додати управління запасами
     add_to_cart: Додати в кошик
     add_variant: Додати варіант
     additional_item: Ставка для додаткових найменувань
     address1: Адреса
     address2: Адреса (продовження)
-    adjustment: Надбавка
+    adjustment: Коригування
     adjustment_amount: Загалом
     adjustment_successfully_closed: Коригування було успішно закрите!
     adjustment_successfully_opened: Коригування було успішно відкрите!
-    adjustment_total: Разом (надбавки)
-    adjustments: Надбавки
+    adjustment_total: Разом (коригування)
+    adjustments: Коригування
     admin:
       mail_methods:
         send_testmail: Надіслати тестове повідомлення
         testmail:
           delivery_error: Помилка доставки тестового повідомлення
-          delivery_success: Тестового повідомлення успішно доставлене
+          delivery_success: Тестове повідомлення успішно доставлене
           error: ! 'Testmail error: %{e}'
       tab:
         configuration: Налаштування
         orders: Замовлення
+        option_types: Характеристики
         overview: Перегляд
         products: Товари
         promotions: Акції
+        properties: Властивості
+        prototypes: Прототипи
         reports: Звіти
         users: Користувачі
-    administration: Администрирование
-    agree_to_privacy_policy: 
-    agree_to_terms_of_service: 
-    all: все
-    all_adjustments_closed: 
-    all_adjustments_opened: 
+    administration: Адміністрування
+    agree_to_privacy_policy: Погоджуюсь з політикою конфіденційності
+    agree_to_terms_of_service: Погоджуюсь з умовами обслуговування
+    all: всі
+    all_adjustments_closed: Всі коригування успішно закриті!
+    all_adjustments_opened: Всі коригування успішно відкриті!
     all_departments: Всі розділи
     allow_ssl_in_development_and_test: Використовувати SSL в development та test режимах
     allow_ssl_in_production: Використовувати SSL в production
     allow_ssl_in_staging: Використовувати SSL в staging
-    already_signed_up_for_analytics: 
+    already_signed_up_for_analytics: Ви вже підписані на Spree Analytics
     alt_text: Альтернативний текст
     alternative_phone: Додатковий телефон
     amount: Сума
@@ -330,55 +407,62 @@ ua:
     analytics_desc_list_4: Повністю безкоштовний!
     analytics_trackers: Трекери веб-аналітики
     and: і
+    api:
+      key: Ключ API
+      access: Доступ до програмного інтерфейсу (API)
+      clear_key: Видалити
+      regenerate_key: Перестворити
     are_you_sure: Ви впевнені
     are_you_sure_delete: Ви впевнені, що хочете видалити цей запис?
-    associated_adjustment_closed: 
-    attachment_default_style: Стандартний стиль прикріпленого файла
-    attachment_default_url: Стандартний url прикріпленого файла
+    associated_adjustment_closed: Пов’язане коригування закрито, і не буде перераховано. Чи бажаєте відкрити її?
+    attachment_default_style: Стандартний стиль прикріпленого файлу
+    attachment_default_url: Стандартний url прикріпленого файлу
     attachment_path: Шлях до прикріпленого файлу
     attachment_styles: Стилі paperclip
-    attachment_url: 
+    attachment_url: URL прикріпленого файлу
     authorization_failure: Помилка авторизації
     available_on: Доступно з
+    avs_response: Відповідь AVS
     back: Назад
     back_end: в адміністративному інтерфейсі
-    back_to_adjustments_list: Повернутися до списку покращень
-    back_to_images_list: Поернутися до списку зображень
-    back_to_option_types_list: Назад до списку типів опцій
+    backordered: Під замовлення
+    back_to_adjustments_list: Назад до списку коригувань
+    back_to_images_list: Назад до списку зображень
+    back_to_option_types_list: Назад до списку характеристик
     back_to_orders_list: Назад до списку замовлень
-    back_to_payment_methods_list: Повернутися до списку методів оплати
-    back_to_payments_list: Повернутися до списку оплат
-    back_to_products_list: Повернутися до списку продуктів
-    back_to_promotions_list: Повернутися до списку промо
-    back_to_properties_list: Повернутися до списку властивостей
-    back_to_prototypes_list: Повернутися до списку прототипів
-    back_to_reports_list: Повернутися до списку звітів
-    back_to_shipping_categories: Повернутися до списку категорій доставки
-    back_to_shipping_methods_list: Повернутися до списку методів доставки
-    back_to_states_list: Повернутися до списку областей
-    back_to_stock_locations_list: 
-    back_to_stock_movements_list: 
-    back_to_stock_transfers_list: 
+    back_to_payment_methods_list: Назад до списку методів оплати
+    back_to_payments_list: Назад до списку оплат
+    back_to_products_list: Назад до списку продуктів
+    back_to_promotions_list: Назад до списку промо
+    back_to_properties_list: Назад до списку властивостей
+    back_to_prototypes_list: Назад до списку прототипів
+    back_to_reports_list: Назад до списку звітів
+    back_to_shipping_categories: Назад до списку категорій доставки
+    back_to_shipping_methods_list: Назад до списку методів доставки
+    back_to_states_list: Назад до списку областей
+    back_to_stock_locations_list: Назад до списку складів
+    back_to_stock_movements_list: Назад до переміщень товарів
+    back_to_stock_transfers_list: Назад до переміщень між складами
     back_to_store: Повернутися до магазину
-    back_to_tax_categories_list: Повернутися до списку категорій
-    back_to_taxonomies_list: Повернутися до списку таксономій
-    back_to_trackers_list: Повернутися до списку трекерів
-    back_to_users_list: Назад досписку користувачів
-    back_to_zones_list: Повернутися до списку зон
-    backorderable: 
-    backorders_allowed: 
+    back_to_tax_categories_list: Назад до списку категорій
+    back_to_taxonomies_list: Назад до списку каталогів
+    back_to_trackers_list: Назад до списку трекерів
+    back_to_users_list: Назад до списку користувачів
+    back_to_zones_list: Назад до списку зон
+    backorderable: Можливий продаж під замовлення
+    backorders_allowed: Продаж під замовлення дозволено
     balance_due: Дебетове сальдо
-    bill_address: Платіжний адресу
+    bill_address: Платіжна адреса
     billing: Біллінг
-    billing_address: Платіжний адресу
+    billing_address: Платіжна адреса
     both: скрізь
     calculator: Калькулятор
-    calculator_settings_warning: При зміні типу калькулятора, ви повинні зберегти цю зміну, перш ніж ви зможете змінити налаштування калькулятора.
+    calculator_settings_warning: При зміні типу калькулятора, ви повинні зберегти зміни, перш ніж ви зможете змінювати його налаштування.
     cancel: Відміна
-    cannot_create_payment_without_payment_methods: Ненможливо створити оплату без визначення методів оплати.
+    cannot_create_payment_without_payment_methods: Неможливо створити оплату без визначення методів оплати.
     cannot_create_returns: Неможливо оформити повернення, тому що це замовлення ще не відправлено.
     cannot_perform_operation: Неможливо виконати необхідну операцію
-    cannot_set_shipping_method_without_address: 
+    cannot_set_shipping_method_without_address: Неможливо обрати спосіб доставки, поки дані користувача не вказані.
     capture: Провести платіж
     card_code: Код карти
     card_number: Номер карти
@@ -386,15 +470,16 @@ ua:
     cart: Кошик
     categories: Категорії
     category: Категорія
-    check_for_spree_alerts: 
+    check_for_spree_alerts: Перевіряти сповіщення Spree
     checkout: Оформлення замовлення
     choose_a_customer: Виберіть кліента
     choose_currency: Виберіть валюту
-    choose_dashboard_locale: 
+    choose_dashboard_locale: Вибрати мову панелі управління
+    сhoose_location: Виберіть склад
     city: Місто
     clone: Клонувати
     close: Закрити
-    close_all_adjustments: 
+    close_all_adjustments: Закрити всі коригування
     code: Кодове слово
     company: Компанія
     complete: Завершено
@@ -439,17 +524,18 @@ ua:
     credit_cards: Кредитні картки
     credit_owed: Кредитна заборгованість
     currency: Валюта
-    currency_decimal_mark: Десятковий роздільник для валюти
-    currency_settings: Налаштування валюти
+    currency_decimal_mark: Десятковий роздільник валюти
+    currency_settings: Настройки валюти
     currency_symbol_position: Розташування символу валюти відносно суми
-    currency_thousands_separator: Роздільник тисяч для валюти
+    currency_thousands_separator: Роздільник тисяч валюти
     current: Поточний
     current_promotion_usage: ! 'Використано: %{count}'
     customer: Клієнт
     customer_details: Реквізити клієнта
-    customer_details_updated: Дані замовника успішно оновлені
+    customer_details_updated: Дані замовника успішно оновлено
     customer_search: Пошук клієнта
     cut: Вирізати
+    cvv_response: Відповідь CVV
     dash:
       jirafe:
         app_id: ID додатку
@@ -459,7 +545,7 @@ ua:
         header: Налаштування аналітики Jirafe
         site_id: ID сайту
         token: Токен
-      jirafe_settings_updated: Налаштування Jirafe оновлено.
+      jirafe_settings_updated: Настройки Jirafe оновлено.
     date: Дата
     date_completed: Дата завершення
     date_picker:
@@ -480,11 +566,11 @@ ua:
     destination: Призначення
     destroy: Видалити
     discount_amount: Сума знижки
-    dismiss_banner: Ні, дякую! Більше не показуйте це повідомлення
+    dismiss_banner: Ні, дякую! Більше не показувати це повідомлення
     display: Показати
-    display_currency: Показвати валюту
+    display_currency: Показувати валюту
     edit: Редагувати
-    editing_option_type: Редагування опції
+    editing_option_type: Редагування характеристики
     editing_payment_method: Редагування способу оплати
     editing_product: Редагування товару
     editing_promotion: Редагування промо-акції
@@ -493,7 +579,7 @@ ua:
     editing_shipping_category: Редагування категорії доставки
     editing_shipping_method: Редагування способу доставки
     editing_state: Редагування регіону/області
-    editing_stock_location: Редагування розміщення складу
+    editing_stock_location: Редагування складу
     editing_stock_movement: Редагування руху товару
     editing_tax_category: Редагування категорії податку
     editing_tax_rate: Редагування податкової ставки
@@ -510,11 +596,13 @@ ua:
     error: помилка
     errors:
       messages:
-        could_not_create_taxon: Неможливо створити таксон
-        no_payment_methods_available: Для зазначеної зміни отонення відсутні методи оплати
+        could_not_create_taxon: Неможливо створити розділ
+        no_payment_methods_available: Для зазначеної зміни оточення відсутні методи оплати
         no_shipping_methods_available: Для зазначеного місця розташування відсутні способи доставки, будь ласка, змініть адресу та спробуйте знову.
     errors_prohibited_this_record_from_being_saved:
       one: 1 помилка не дозволяє зберегти запис в базі
+      few: ! '%{count} помилки не дозволяють зберегти запит у базі'
+      many: ! '%{count} помилок не дозволяють зберегти запит у базі'
       other: ! '%{count} помилки не дозволяють зберегти запит у базі'
     event: Подія
     events:
@@ -532,8 +620,10 @@ ua:
           signup: Новий користувач
     exceptions:
       count_on_hand_setter: Неможливо встановити значення count_on_hand вручну, оскільки воно встановлюється автоматично за допомогою recalculate_count_on_hand callback'у. Замість цього використовуйте, будь ласка, `update_column(:count_on_hand, value)`
+    existing_shipments: Існуючі відправлення
     expiration: Закінчення дії
     extension: Розширення
+    failed_payment_attempts: Невдалих спроб проведення платежу
     filename: Ім'я файлу
     fill_in_customer_info: Заповніть інформацію про клієнта
     filter_results: Результати фільтрації
@@ -552,7 +642,7 @@ ua:
     gateway_config_unavailable: Шлюз не доступний для даного оточення
     gateway_error: Помилка платіжного шлюзу
     general: Основні
-    general_settings: Загальні параметри
+    general_settings: Загальні настройки
     google_analytics: Google Analytics
     google_analytics_id: Google Analytics ID
     guest_checkout: Гостьове замовлення
@@ -562,10 +652,10 @@ ua:
     hide_cents: Сховати копійки
     home: Додому
     i18n:
-      available_locales: Доступные переводы
+      available_locales: Доступні переклади
       fields: Поля
       language: Мова
-      localization_settings: Налаштування локалізації
+      localization_settings: Настройки локалізації
       only_complete: Тільки завершені
       only_incomplete: Тільки не завершені
       select_locale: Виберіть мову
@@ -573,10 +663,11 @@ ua:
       supported_locales: Мови, що підтримуються
       this_file_language: Ukrainian
       translations: Переклади
+      all_translations: Всі переклади
     icon: Іконка
     image: Зображення
-    image_settings: Налаштування зображення
-    image_settings_updated: Налаштування зображення оновлені
+    image_settings: Настройки зображення
+    image_settings_updated: Настройки зображення оновлені
     image_settings_warning: Вам потрібно перестворити мініатюри, якщо ви оновили стилі paperclip. Використайте paperclip:refresh:thumbnails для цього
     images: Зображення
     included_in_price: Включено в ціну
@@ -589,8 +680,8 @@ ua:
     invalid_payment_provider: Невірно вказано спосіб оплати
     invalid_promotion_action: Невірна промо-акція
     invalid_promotion_rule: Невірно вказано принцип рекламної кампанії
-    inventory: Товарна номенклатура
-    inventory_adjustment: Надбавки
+    inventory: Номенклатура
+    inventory_adjustment: Коригування
     inventory_error_flash_for_insufficient_quantity: Один з товарів вашої корзини став недоступним.
     is_not_available_to_shipment_address: не може бути застосований до вказаною адресою доставки
     iso_name: Ім'я згідно ISO
@@ -629,7 +720,7 @@ ua:
     logout: Вийти
     look_for_similar_items: Подивіться схожі товари
     maestro_or_solo_cards: Кредитні карти Maestro/Solo
-    mail_method_settings: Налаштування способів доставки пошти
+    mail_method_settings: Настройки способів доставки пошти
     mail_methods: Методи відправки пошти
     make_refund: Зробити повернення
     master_price: Основна ціна
@@ -637,31 +728,33 @@ ua:
       all: Всі
       none: Жодного
     max_items: Максимальне число найменувань за початковою ставкою
-    meta_description: Опис
+    meta_description: Метаопис
     meta_keywords: Ключові слова
     metadata: Метадані
     minimal_amount: Мінімальна сума
     month: Місяць
     more: Більше
     move_stock_between_locations: Переміщення товарів між складами
+    move_variant_to: Перемістити {{variant.name}} до
     my_account: Мій обліковий запис
     my_orders: Мої замовлення
     name: Найменування
     name_or_sku: Найменування або артикул
     new: Новий
-    new_adjustment: Нова надбавка
+    new_adjustment: Нове коригування
     new_customer: Для нових користувачів
     new_image: Нове зображення
-    new_option_type: Нова опція
+    new_option_type: Нова характеристика
     new_order: Нове замовлення
     new_order_completed: Оформлення замовлення завершено
     new_payment: Новий платіж
     new_payment_method: Новий спосіб оплати
     new_product: Новий товар
     new_promotion: Нова акція
-    new_property: Нове властивість
+    new_property: Нова властивість
     new_prototype: Новий прототип
     new_return_authorization: Нове дозвіл на повернення
+    new_shipment_at_location: Нове відправлення на склад
     new_shipping_category: Нова категорія доставки
     new_shipping_method: Новий спосіб доставки
     new_state: Новий регіон/область
@@ -670,8 +763,8 @@ ua:
     new_stock_transfer: Додати переміщення по складу
     new_tax_category: Нова категорія податків
     new_tax_rate: Нова ставка податку
-    new_taxon: Новий таксон
-    new_taxonomy: Нова таксономія
+    new_taxon: Новий розділ
+    new_taxonomy: Новий каталог
     new_tracker: Новий трекер
     new_user: Новий користувач
     new_variant: Новий варіант
@@ -683,7 +776,7 @@ ua:
     no_pending_payments: Немає незавершених платежів
     no_products_found: Не знайдено жодного товару
     no_promotions_found: Акцій не знайдено
-    no_resource_found: Ні одного %{resource} не знайдено
+    no_resource_found: ! '%{resource} не знайдено'
     no_results: Нічого не знайдено
     no_rules_added: Жодного правила не задано
     no_shipping_methods_found: Способів доставки не знайдено
@@ -706,15 +799,15 @@ ua:
     on_hand: В наявності
     open: Відкрити
     open_all_adjustments: Відкрити всі коригування
-    option_type: Товарна опція
-    option_type_placeholder: Виберіть тип опції
-    option_types: Товарні опції
-    option_value: Можливе значення опції
-    option_values: Можливі значення опцій
+    option_type: Характеристика
+    option_type_placeholder: Виберіть характеристики
+    option_types: Характеристики
+    option_value: Значення характеристики
+    option_values: Значення характеристик
     optional: Опціонально
     options: Опції
     or: або
-    or_over_price: більше ніж %{price}
+    or_over_price: дорожче %{price}
     order: Замовлення
     order_adjustments: Коригування замовлення
     order_details: Деталі замовлення
@@ -730,7 +823,7 @@ ua:
         total: ! 'Загалом: %{total}'
       confirm_email:
         dear_customer: Шановний покупцю,
-        instructions: Перегляньте інформацію про скасування для вашого замовлення.
+        instructions: Перегляньте інформацію про скасування вашого замовлення.
         order_summary: Всього
         subject: Підтвердження замовлення
         subtotal: ! 'Проміжний підсумок: %{subtotal}'
@@ -740,6 +833,7 @@ ua:
     order_number: Замовлення
     order_populator:
       out_of_stock: ! '%{item} немає у наявності.'
+      selected_quantity_not_available: ! 'Обрана кількість %{item} не доступна.'
       please_enter_reasonable_quantity: Введіть, будь ласка, правильну кількість товару.
     order_processed_successfully: Ваше замовлення було успішно опрацьоване
     order_state:
@@ -787,9 +881,14 @@ ua:
       paid: сплачений
       pending: в очікуванні
       processing: в обробці
-      void: анульований
-    payment_updated: Платіж оновлений
+      void: анульовано
+    payment_updated: Платіж оновлено
     payments: Платежі
+    payments_count:
+      one: ! '%{count} Платіж'
+      few: ! '%{count} Платежа'
+      many: ! '%{count} Платежів'
+      other: ! '%{count} Платежі'
     percent: Процент
     percent_per_item: Проценти за одиницю
     permalink: Постійне посилання
@@ -822,8 +921,8 @@ ua:
     promotion_action: Промо акція
     promotion_action_types:
       create_adjustment:
-        description: Створити промо для замовлення
-        name: Створити покращення
+        description: Створити коригування для замовлення
+        name: Створити коригування
       create_line_items:
         description: Заповняє корзину вказаною коількістю варіантів
         name: Створити елемент замовлення
@@ -844,7 +943,7 @@ ua:
         description: Сума замовлення відповідає таким критеріям
         name: Сума замовлення
       landing_page:
-        description: Покупець повинний відвідати деяку сторіну
+        description: Покупець повинен відвідати вказану сторіну
         name: Промо сторінки
       product:
         description: Замовлення включає зазначені товари
@@ -861,7 +960,7 @@ ua:
     prototype: Прототип
     prototypes: Прототипи
     provider: Провайдер
-    provider_settings_warning: Якщо ви міняєте провайдера, ви повинні зберегти цю зміну, перш ніж ви зможете змінити налаштування провайдера.
+    provider_settings_warning: Якщо ви змінюєте провайдера, ви повинні зберегти цю зміну, перш ніж ви зможете змінити його настройки.
     qty: Кількість
     quantity: Кількість
     quantity_returned: Кількість повернення
@@ -876,7 +975,7 @@ ua:
     register: Зареєструватися як новий користувач
     registration: Реєстрація
     remember_me: Запам'ятати мене
-    remove: Прибрати
+    remove: Видалити
     rename: Переіменувати
     reports: Звіти
     resend: Відправити повторно
@@ -891,6 +990,8 @@ ua:
     return_quantity: повернена кількість
     returned: Повернуті
     review: Огляд
+    risk: Ризик
+    risk_analysis: Аналіз ризиків
     rma_credit: RMA Кредит
     rma_number: Номер RMA
     rma_value: Сума RMA
@@ -898,12 +999,13 @@ ua:
     rules: Правила
     s3_access_key: Access Key
     s3_bucket: Bucket
-    s3_headers: S3 заголовки
-    s3_protocol: S3 протокол
-    s3_secret: Секретний ключ
+    s3_headers: S3 Headers
+    s3_protocol: S3 Protocol
+    s3_secret: Secret Key
     sales_total: Разом (продаж)
     sales_total_description: Загальний обсяг продажів за всіма замовленнями
     sales_totals: Продажі загалом
+    save_my_address: Зберегти мою адресу
     save_and_continue: Зберегти і продовжити
     say_no: Ні
     say_yes: Так
@@ -912,20 +1014,20 @@ ua:
     search_results: Результати пошуку за запитом '%{keywords}'
     searching: Йде пошук ...
     secure_connection_type: Тип захищеного з'єднання
-    security_settings: Налаштування безпеки
+    security_settings: Настройки безпеки
     select: Обрати
     select_from_prototype: Вибрати з прототипів
     select_stock: Вибрати склад
-    send_copy_of_all_mails_to: Відсилати копії всіх листів на
-    send_mails_as: Відсилати пошту як
+    send_copy_of_all_mails_to: Надсилати копії всіх листів на
+    send_mails_as: Надсилати пошту як
     server: Сервер
     server_error: На сервері сталася помилка
     settings: Настройки
     ship: доставка
     ship_address: Адреса доставки
     ship_total: Всього до доставки
-    shipment: Відправлення
-    shipment_inc_vat: Доставка включаючи ПДВ
+    shipment: Відправки
+    shipment_inc_vat: Сума включає ПДВ
     shipment_mailer:
       shipped_email:
         dear_customer: Шановний покупцю,
@@ -933,7 +1035,7 @@ ua:
         shipment_summary: Звіт про доставку
         subject: Повідомлення про доставку
         thanks: Дякую за замовлення.
-        track_information: ! 'Відстежит замовлення: %{tracking}'
+        track_information: ! 'Відслідкувати замовлення: %{tracking}'
         track_link: ! 'Адреса відслідковування: %{url}'
     shipment_state: Статус відправки
     shipment_states:
@@ -962,8 +1064,8 @@ ua:
     show_deleted: Показати видалені
     show_only_complete_orders: Показувати тільки завершені замовлення
     show_rate_in_label: Показувати процент в назві
-    site_name: Назва магазину
-    site_url: URL адреса магазину
+    site_name: Назва сайту
+    site_url: URL адреса сайту
     sku: Артикул
     smtp: SMTP
     smtp_authentication_type: Тип SMTP аутентифікації
@@ -971,12 +1073,12 @@ ua:
     smtp_mail_host: Адреса сервера SMTP
     smtp_password: Пароль SMTP
     smtp_port: Порт SMTP
-    smtp_send_all_emails_as_from_following_address: Відправляти усі повідомлення від цієї адреси.
-    smtp_send_copy_to_this_addresses: Відправляти копії всіх повідомлень на цю адресу. Для використання кількох адрес розділіть їх комою.
+    smtp_send_all_emails_as_from_following_address: Надсилати усі повідомлення з цієї адреси.
+    smtp_send_copy_to_this_addresses: Надсилати копії всіх повідомлень на цю адресу. Для використання кількох адрес розділіть їх комою.
     smtp_username: Користувач
     source: Джерело
     special_instructions: Додаткові інструкції
-    split: Розділювач
+    split: Розділити
     spree/order:
       coupon_code: Код купона
     spree_gateway_error_flash_for_checkout: Виникли проблеми з Вашими реквізитами. Будь ласка, перевірте їх та спробуйте ще раз.
@@ -989,20 +1091,21 @@ ua:
     status: Статус
     stock_location: Розташування складу
     stock_location_info: Подробиці про розташування складу
-    stock_locations: Адреси складів
+    stock_locations: Склади
     stock_management: Управління запасами
     stock_management_requires_a_stock_location: Будь ласка, додайте розташування складу для управління запасами.
     stock_movements: Переміщення товарів
     stock_movements_for_stock_location: Переміщення товарів для %{stock_location_name}
     stock_successfully_transferred: Товари успішно переміщені з одного складу на інший.
-    stock_transfer: Рух товарів
-    stock_transfers: Рухи товарів
+    stock_transfer: Переміщення товарів
+    stock_transfers: Переміщення товарів
     stop: Кінець
     store: До магазину
     street_address: Адреса
     street_address_2: Адреса (рядок 2)
     subtotal: Проміжна сума
     subtract: Відрахування
+    success: Успішно
     successfully_created: ! '%{resource} був успішно створений!'
     successfully_removed: ! '%{resource} був успішно знищений!'
     successfully_signed_up_for_analytics: Авторизація в Spree Analytics пройшла успішно
@@ -1014,15 +1117,15 @@ ua:
     tax_rates: Податкові ставки
     tax_settings: Настройки оподаткування
     tax_total: Податки
-    taxon: Таксон
-    taxon_edit: Редагувати таксонів
-    taxon_placeholder: Додати таксон
-    taxonomies: Таксономії
-    taxonomy: Таксономія
-    taxonomy_edit: Редагування таксономії
-    taxonomy_tree_error: Запитувана зміна не було здійснення і дерево повернуто у попередній стан. Будь ласка, спробуйте знову.
-    taxonomy_tree_instruction: ! '* Клацніть правою кнопкою миші на елементі дерева для додавання, видалення або сортування таксонів.'
-    taxons: Таксон
+    taxon: Розділ
+    taxon_edit: Редагувати Розділ
+    taxon_placeholder: Додати Розділ
+    taxonomies: Каталоги
+    taxonomy: Каталог
+    taxonomy_edit: Редагування каталогу
+    taxonomy_tree_error: Операцію не виконано і дерево повернуто у попередній стан. Будь ласка, спробуйте знову.
+    taxonomy_tree_instruction: ! '* Клацніть правою кнопкою миші на елементі дерева для додавання, видалення або сортування розділів.'
+    taxons: Розділи
     test: Test
     test_mailer:
       test_email:
@@ -1037,7 +1140,8 @@ ua:
     time: Час
     to_add_variants_you_must_first_define: Перед додаванням варіантів, ви повинні визначити
     total: Разом
-    tracking: Відстеження
+    track_inventory: Обліковувати залишки
+    tracking: Відслідковування
     tracking_number: Трекінговий номер
     tracking_url: Трекінговий URL
     tracking_url_placeholder: наприклад - http://quickship.com/package?num=:tracking
@@ -1082,8 +1186,24 @@ ua:
     year: Рік
     you_have_no_orders_yet: У Вас ще немає замовлень.
     your_cart_is_empty: Ваш кошик порожній
-    your_order_is_empty_add_product: Ваша корзина порожня. Будь ласка, знайдіть та додайте продукти
+    your_order_is_empty_add_product: Ваша корзина порожня. Будь ласка, виберіть та додайте до корзини товари
     zip: Індекс
     zipcode: Поштовий індекс
     zone: Торгова зона
     zones: Торгові зони
+  views:
+    pagination:
+      first: "&laquo; Перша"
+      last: "Остання &raquo;"
+      previous: "&lsaquo; Назад"
+      next: "Вперед &rsaquo;"
+      truncate: "&hellip;"
+  helpers:
+    page_entries_info:
+      one_page:
+        display_entries:
+          zero: "Не знайдено %{entry_name}"
+          one: "Показано <b>1</b> %{entry_name}"
+          other: "Показано <b>всі %{count}</b> %{entry_name}"
+      more_pages:
+        display_entries: "Показано %{entry_name} <b>%{first}&nbsp;-&nbsp;%{last}</b> з <b>%{total}</b>"
