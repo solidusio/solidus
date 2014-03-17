@@ -1034,7 +1034,7 @@ ru:
     store: В магазин
     street_address: Адрес
     street_address_2: Адрес (строка 2)
-    subtotal: Подытог
+    subtotal: Подитог
     subtract: Вычет
     successfully_created: ! '%{resource} был успешно создан!'
     successfully_removed: ! '%{resource} был успешно удален!'
