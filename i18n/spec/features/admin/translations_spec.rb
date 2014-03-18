@@ -54,8 +54,8 @@ feature "Translations", js: true do
         fill_in "Presentation", with: "Sizes"
         click_button "Create"
 
-        expect(page).to have_content "Option Type \"Shirt Size\" has been successfully created"
-        expect(page).to have_content "OPTION VALUES"
+        page.should have_content "has been successfully created"
+        page.should have_content "OPTION VALUES"
       end
     end
 
