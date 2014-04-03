@@ -10,7 +10,7 @@ en-AU:
         lastname: Last Name
         phone: Phone
         state: State
-        zipcode: Zip Code
+        zipcode: Postcode
       spree/country:
         iso: ISO
         iso3: ISO3
@@ -53,7 +53,7 @@ en-AU:
         lastname: Billing address last name
         phone: Billing address phone
         state: Billing address state
-        zipcode: Billing address zipcode
+        zipcode: Billing address postcode
       spree/order/ship_address:
         address1: Shipping address street
         city: Shipping address city
@@ -61,7 +61,7 @@ en-AU:
         lastname: Shipping address last name
         phone: Shipping address phone
         state: Shipping address state
-        zipcode: Shipping address zipcode
+        zipcode: Shipping address postcode
       spree/payment:
         amount: 
       spree/payment_method:
@@ -390,7 +390,7 @@ en-AU:
     choose_a_customer: 
     choose_currency: 
     choose_dashboard_locale: 
-    city: Town / City
+    city: Suburb / City
     clone: Clone
     close: 
     close_all_adjustments: 
@@ -1080,7 +1080,7 @@ en-AU:
     you_have_no_orders_yet: You have no orders yet.
     your_cart_is_empty: Your basket is empty
     your_order_is_empty_add_product: 
-    zip: Post Code
-    zipcode: 
+    zip: Postcode
+    zipcode: Postcode
     zone: Zone
     zones: Zones
