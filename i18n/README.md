@@ -42,7 +42,7 @@ gem to localize model data. So far the following models are translatable:
 
     Product, Promotion, OptionType, Taxonomy, Taxon and Property.
 
-Start you server and you should see a TRANSLATIONS link or a flag icon on each
+Start your server and you should see a TRANSLATIONS link or a flag icon on each
 admin section that supports this feature.
 
 The extension contains two configs that allow users to customize which locales
