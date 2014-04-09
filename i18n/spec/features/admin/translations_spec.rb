@@ -169,6 +169,7 @@ feature "Translations", js: true do
     given(:french) { Spree.t(:'i18n.this_file_language', locale: 'fr') }
 
     background do
+      create(:store)
       SpreeI18n::Config.available_locales = [:en, :'pt-BR', :de]
       visit spree.edit_admin_general_settings_path
     end
