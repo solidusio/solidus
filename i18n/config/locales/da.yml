@@ -40,7 +40,7 @@ da:
         email: E-mail-adresse
         ip_address: IP-adresse
         item_total: Varetotal
-        number: Antal
+        number: Ordrenummer
         payment_state: Betalingsstatus
         shipment_state: Leveringsstatus
         special_instructions: Særlige forhold
