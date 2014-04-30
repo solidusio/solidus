@@ -141,90 +141,116 @@ ru:
               card_expired: Срок действия карты истек
     models:
       spree/address:
-        few: Адреса
-        many: Адреса
         one: Адрес
+        many: Адресов
         other: Адреса
       spree/country:
         one: Страна
+        many: Стран
         other: Страны
       spree/credit_card:
         one: Кредитная карта
+        many: Кредитных карт
         other: Кредитные карты
       spree/inventory_unit:
         one: Единица
+        many: Единиц
         other: Единицы
       spree/line_item:
         one: Позиция
+        many: Позиций
         other: Позиции
       spree/order:
         one: Заказ
+        many: Заказов
         other: Заказы
       spree/payment:
         one: Платёж
+        many: Платежей
         other: Платежи
       spree/payment_method:
         one: Способ оплаты
-        other: Способы оплаты
+        many: Способов оплаты
+        other: Способа оплаты
       spree/product:
         one: Товар
-        other: Товары
+        many: Товаров
+        other: Товара
       spree/promotion:
         one: Акция
+        many: Акций
         other: Акции
       spree/property:
         one: Свойство
+        many: Свойств
         other: Свойства
       spree/prototype:
         one: Прототип
+        many: Прототипов
         other: Прототипы
       spree/return_authorization:
-        one: Вернуть товар
-        other: Вернуть товары
+        one: Разрешение на возврат
+        many: Разрешений на возврат
+        other: Разрешения на возврат
       spree/role:
         one: Роль
+        many: Ролей
         other: Роли
       spree/shipment:
         one: Доставка
+        many: Доставок
         other: Доставки
       spree/shipping_category:
         one: Категория доставки
+        many: Категорий доставки
         other: Категории доставки
       spree/shipping_method:
         one: Cпособ доставки
-        other: Cпособы доставки
+        many: Cпособов доставки
+        other: Cпособа доставки
       spree/state:
         one: Область/Регион
-        other: Области/Регионы
+        many: Областей/Регионов
+        other: Области/Региона
       spree/stock_location:
         one: Расположение склада
-        other: Расположение складов
+        many: Расположений складов
+        other: Расположения складов
       spree/stock_transfer:
-        one: Перемещение по складу
+        one: Перемещение по складам
+        many: Перемещений по складам
         other: Перемещения по складам
       spree/tax_category:
         one: Категория налогов
+        many: Категорий налогов
         other: Категории налогов
       spree/tax_rate:
         one: Ставка налога
+        many: Ставок налога
         other: Ставки налога
       spree/taxon:
-        one: Рубрика
-        other: Рубрики
+        one: Таксон
+        many: Таксонов
+        other: Таксона
       spree/taxonomy:
-        one: Категория
-        other: Категории
+        one: Таксономия
+        many: Таксономий
+        other: Таксономии
       spree/tracker:
         one: Трекер
-        other: Трекеры
+        many: Трекеров
+        other: Трекера
       spree/user:
         one: Пользователь
-        other: Пользователи
+        many: Пользователей
+        other: Пользователя
       spree/variant:
         one: Вариант
-        other: Варианты
+        many: Вариантов
+        other: Варианта
       spree/zone:
         one: Зона
+        many: Зон
         other: Зоны
   devise:
     confirmations:
@@ -247,7 +273,7 @@ ru:
         subject: Инструкции по разблокированию
     oauth_callbacks:
       failure: Не смогли войти с %{kind} потому что "%{reason}".
-      success: Успешно вошли с  %{kind} аккаунта.
+      success: Успешно вошли с %{kind} аккаунта.
     unlocks:
       send_instructions: Вы получите письмо с инструкциями о том как разблокировать ваш аккаунт в течении нескольких минут.
       unlocked: Ваш аккаунт был успешно разблокирован. Сейчас вы вошли в систему.
@@ -270,8 +296,9 @@ ru:
       not_found: не найден
       not_locked: не был заблокирован
       not_saved:
-        one: ! '1 ошибка препятствует сохранению %{resource}:'
-        other: ! '%{count} ошибок препятствуют сохранению %{resource}:'
+        one: ! 'Одна ошибка препятствует сохранению %{resource}:'
+        many: ! '%{count} ошибок препятствуют сохранению %{resource}:'
+        other: ! '%{count} ошибки препятствуют сохранению %{resource}:'
   spree:
     abbreviation: Аббревиатура
     account: Учетная запись
@@ -399,6 +426,7 @@ ru:
     back_to_properties_list: Вернуться к списку свойств товаров
     back_to_prototypes_list: Вернуться к списку прототипов
     back_to_reports_list: Вернуться к списку отчетов
+    back_to_return_authorizations_list: Вернуться к списку разрешений возврата
     back_to_shipping_categories: Вернуться к списку категорий доставки
     back_to_shipping_methods_list: Вернуться к списку методов доставки
     back_to_states_list: Вернуться к списку регионов/областей
@@ -428,6 +456,7 @@ ru:
     cannot_perform_operation: Невозможно выполнить требуемую операцию
     cannot_set_shipping_method_without_address: Невозможно выбрать способ доставки, пока данные пользователя не указаны.
     capture: Провести платёж
+    capture_events: Платежи
     card_code: Код карты
     card_number: Номер карты
     card_type_is: Тип карты
@@ -558,8 +587,8 @@ ru:
         no_shipping_methods_available: Для указанного местоположения отсутствуют способы доставки, пожалуйста, смените адрес и попробуйте снова.
     errors_prohibited_this_record_from_being_saved:
       one: 1 ошибка не позволяет сохранить запись в базе
-      few: ! '%{count} ошибки не позволяют сохранить запрос в базе'
       many: ! '%{count} ошибок не позволяют сохранить запись в базе'
+      other: ! '%{count} ошибки не позволяют сохранить запрос в базе'
     event: Событие
     events:
       spree:
@@ -607,6 +636,7 @@ ru:
     hide_cents: Скрыть центы
     home: Домой
     i18n:
+      all_translations: Все переводы
       available_locales: Доступные переводы
       fields: Поля
       language: Язык
@@ -673,6 +703,7 @@ ru:
     login_failed: Вход не выполнен.
     login_name: Логин
     logout: Выйти
+    logs: Журналы событий
     look_for_similar_items: Посмотрите похожие товары
     maestro_or_solo_cards: Кредитные карты Maestro/Solo
     mail_method_settings: Настройки способов доставки почты
@@ -1093,6 +1124,7 @@ ru:
     to_add_variants_you_must_first_define: Перед добавлением вариантов, вы должны определить
     total: Итого
     total_sales: Всего продано на
+    track_inventory: Отслеживать наличие
     tracking: Отслеживание
     tracking_number: Трекинговый номер
     tracking_url: Трекинговый URL
