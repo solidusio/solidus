@@ -436,11 +436,6 @@ pt-BR:
     country: País
     country_based: País de Origem
     country_name: Nome
-    country_names:
-      CA: Canada
-      FRA: França
-      ITA: Itália
-      US: Estados Unidos
     coupon: Cupom
     coupon_code: Código do Cupom
     coupon_code_already_applied: O cupom já foi adicionado ao pedido

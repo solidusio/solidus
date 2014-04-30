@@ -420,11 +420,6 @@ ro:
     country: Țara
     country_based: Bazat pe țară
     country_name: Nume
-    country_names:
-      CA: Canada
-      FRA: Franța
-      ITA: Italia
-      US: Statele Unite ale Americii
     coupon: Cupon
     coupon_code: Cod cupon
     coupon_code_already_applied: Codul voucher a fost deja aplicat acestei comenzi

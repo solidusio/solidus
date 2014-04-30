@@ -448,11 +448,6 @@ it:
     country: Paese
     country_based: In Base alla Nazione
     country_name: Nome
-    country_names:
-      CA: Canada
-      FRA: Francia
-      ITA: Italia
-      US: Stati Uniti d'America
     coupon: Coupon
     coupon_code: Codice coupon
     coupon_code_already_applied: Il codice coupon è stato già applicato a quest'ordine

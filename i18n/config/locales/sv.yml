@@ -416,11 +416,6 @@ sv:
     country: Land
     country_based: Landbaserat
     country_name: Namn
-    country_names:
-      CA: Kanada
-      FRA: Frankrike
-      ITA: Italien
-      US: USA
     coupon: Värdekupong
     coupon_code: Värdekupongskod
     coupon_code_already_applied: Kupongkoden har redan använts på denna order

@@ -414,11 +414,6 @@ id:
     country: Negara
     country_based: Berdasarkan negara
     country_name: Nama
-    country_names:
-      CA: Kanada
-      FRA: Prancis
-      ITA: Itali
-      US: Amerika Serikat
     coupon: Kupon
     coupon_code: Kode kupon
     coupon_code_already_applied: Kode kupon suda diaplikasikan ke pemesanan ini sebelumnya.

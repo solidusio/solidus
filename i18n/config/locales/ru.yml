@@ -465,12 +465,6 @@ ru:
     country: Страна
     country_based: Страна
     country_name: Имя
-    country_names:
-      CA: Канада
-      FRA: Франция
-      ITA: Италия
-      US: Соединённые Штаты Америки
-      RU: Россия
     coupon: Купон
     coupon_code: Код купона
     coupon_code_already_applied: Скидочный купон уже был применен к этому заказу

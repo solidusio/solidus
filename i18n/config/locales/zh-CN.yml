@@ -414,11 +414,6 @@ zh-CN:
     country: 国家
     country_based: 根据国家
     country_name: 名称
-    country_names:
-      CA: 加拿大
-      FRA: 法国
-      ITA: 意大利
-      US: 美国
     coupon: 优惠券
     coupon_code: 优惠券号码
     coupon_code_already_applied: 优惠券号码已在本订单中使用

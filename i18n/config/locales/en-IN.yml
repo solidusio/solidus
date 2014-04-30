@@ -416,11 +416,6 @@ en-IN:
     country: Country
     country_based: Country Based
     country_name: Name
-    country_names:
-      CA: Canada
-      FRA: France
-      ITA: Italy
-      US: United States of America
     coupon: Coupon
     coupon_code: Coupon code
     coupon_code_already_applied: The coupon code has already been applied to this order

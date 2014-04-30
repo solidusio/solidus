@@ -437,11 +437,6 @@ es-CL:
     country: País
     country_based: País base
     country_name: Nombre
-    country_names:
-      CA: Canada
-      FRA: Francia
-      ITA: Italia
-      US: Estados Unidos de América
     coupon: Cupón
     coupon_code: Código Cupón
     coupon_code_already_applied: El código del cupón ya ha sido aplicado a este pedido

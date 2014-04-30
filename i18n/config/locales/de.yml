@@ -421,11 +421,6 @@ de:
     country: Land
     country_based: Länder basiert
     country_name: Name
-    country_names:
-      CA: Kanada
-      FRA: Frankreich
-      ITA: Italien
-      US: Vereinigte Staaten von Amerika
     coupon: Gutschein
     coupon_code: Gutschein-Code
     coupon_code_already_applied: Der Gutschein-Code wurde bereits bei dieser Bestellung eingelöst

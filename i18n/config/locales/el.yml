@@ -388,11 +388,6 @@ el:
     country: 
     country_based: 
     country_name: 
-    country_names:
-      CA: Καναδάς
-      FRA: Γαλλία
-      ITA: Ιταλία
-      US: Ηνωμένες Πολιτείες Αμερικής
     coupon: 
     coupon_code: 
     coupon_code_already_applied: 

@@ -500,13 +500,6 @@ uk:
     country: Країна
     country_based: Країна
     country_name: Ім'я
-    country_names:
-      CA: Канада
-      FRA: Франція
-      ITA: Італія
-      US: Сполучені Штати Америки
-      RU: Россія
-      UA: Україна
     coupon: Купон
     coupon_code: Код купона
     coupon_code_already_applied: Цей код купона вже було використано у цьому замовленні

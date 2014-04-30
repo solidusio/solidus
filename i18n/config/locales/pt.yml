@@ -414,11 +414,6 @@ pt:
     country: País
     country_based: Baseado em País
     country_name: 
-    country_names:
-      CA: 
-      FRA: 
-      ITA: 
-      US: 
     coupon: Cupão
     coupon_code: Código do cupão de desconto
     coupon_code_already_applied: 

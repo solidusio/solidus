@@ -414,11 +414,6 @@ ca:
     country: País
     country_based: País basi
     country_name: Nom
-    country_names:
-      CA: 
-      FRA: França
-      ITA: 
-      US: Estats Units d'Amèrica
     coupon: Cupó
     coupon_code: Codi de cupó
     coupon_code_already_applied: 

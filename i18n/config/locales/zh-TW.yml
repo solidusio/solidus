@@ -374,11 +374,6 @@ zh-TW:
     country: 國家
     country_based: 依據國家
     country_name: 名稱
-    country_names:
-      CA: 加拿大
-      FRA: 法國
-      ITA: 義大利
-      US: 美國
     coupon: 促銷代碼
     coupon_code: 促銷代碼
     coupon_code_already_applied: 優惠代碼已經被使用在這個訂單

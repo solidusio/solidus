@@ -414,11 +414,6 @@ th:
     country: ประเทศ
     country_based: ยีดประเทศเป็นหลัก
     country_name: ชื่อ
-    country_names:
-      CA: แคนาดา
-      FRA: ฝรั่งเศส
-      ITA: อิตาลี
-      US: สหรัฐอเมริกา
     coupon: คูปอง
     coupon_code: หมายเลขคูปอง
     coupon_code_already_applied: คูปองใบนี้ได้ถูกใช้ในรายการสั่งซื้อนี้แล้ว

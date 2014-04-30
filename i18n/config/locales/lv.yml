@@ -414,11 +414,6 @@ lv:
     country: Valsts
     country_based: Valsts
     country_name: 
-    country_names:
-      CA: 
-      FRA: 
-      ITA: 
-      US: 
     coupon: Kupons
     coupon_code: Kupona kods
     coupon_code_already_applied: 

@@ -414,11 +414,6 @@ vi:
     country: Quốc gia
     country_based: Dựa trên quốc gia
     country_name: Tên
-    country_names:
-      CA: Canada
-      FRA: Pháp
-      ITA: Ý
-      US: Hoa kỳ
     coupon: Coupon
     coupon_code: Coupon code
     coupon_code_already_applied: Mã khuyến mại đã được dùng cho đơn hàng khác

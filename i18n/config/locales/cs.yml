@@ -439,11 +439,6 @@ cs:
     country: Země
     country_based: Založeno na zemi
     country_name: Název země
-    country_names:
-      CA: Kanada
-      FRA: Francie
-      ITA: Itálie
-      US: Spojené státy americké
     coupon: Kupón
     coupon_code: Kód kupónu
     coupon_code_already_applied: Kuponu již byla aplikován pro tuto objednávku

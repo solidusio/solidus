@@ -428,11 +428,6 @@ fi:
     country: Maa
     country_based: Sijaintimaa
     country_name: Nimi
-    country_names:
-      CA: Kanada
-      FRA: Ranska
-      ITA: Italia
-      US: Yhdysvallat
     coupon: Kuponki
     coupon_code: Tarjouskoodi
     coupon_code_already_applied: Kampanjakoodi on jo käytössä tällä tilauksella
