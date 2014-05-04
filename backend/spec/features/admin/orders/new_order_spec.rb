@@ -120,22 +120,29 @@ describe "New Order" do
   end
 
   # Regression test for #3336
-  it "transitions order after products are selected", js: true do
-    click_on "Customer Details"
+  context "start by customer address" do
+    it "completes order fine", js: true do
+      click_on "Customer Details"
 
-    within "#select-customer" do
-      targetted_select2_search user.email, :from => "#s2id_customer_search"
-    end
-    check "order_use_billing"
-    fill_in_address
-    click_on "Update"
+      within "#select-customer" do
+        targetted_select2_search user.email, :from => "#s2id_customer_search"
+      end
 
-    click_on "Shipments"
-    select2_search product.name, :from => Spree.t(:name_or_sku)
-    click_icon :plus
-    wait_for_ajax
-    within(".additional-info .state") do
-      page.should have_content("CONFIRM")
+      check "order_use_billing"
+      fill_in_address
+      click_on "Update"
+
+      click_on "Order Details"
+      select2_search product.name, :from => Spree.t(:name_or_sku)
+      click_icon :plus
+      wait_for_ajax
+
+      click_on "Payments"
+      click_on "Continue"
+
+      within(".additional-info .state") do
+        page.should have_content("COMPLETE")
+      end
     end
   end
 
