@@ -135,14 +135,6 @@ module Spree
           end
         end
 
-        def next!(options={})
-          if @order.valid? && @order.next
-            render :show, status: options[:status] || 200
-          else
-            render :could_not_transition, status: 422
-          end
-        end
-
         def find_order
           @order = Spree::Order.find_by!(number: params[:id])
         end
