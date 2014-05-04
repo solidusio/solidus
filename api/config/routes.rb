@@ -53,7 +53,14 @@ Spree::Core::Engine.add_routes do
       end
     }
 
-    resources :checkouts do
+    # the "GET /api/checkouts" endpoint does not exist but the route is used here:
+    #   https://github.com/bonobos/spree/blob/27a2b42/backend/app/views/spree/admin/shared/_routes.html.erb#L10
+    # as a base to build a checkout url here:
+    #   https://github.com/bonobos/spree/blob/27a2b42/backend/app/assets/javascripts/spree/backend/admin.js.erb#L283
+    # this is fixed in more recent versions of spree.
+    get 'checkouts', to: 'checkouts_index_does_not#exist', as: 'checkouts'
+
+    resources :checkouts, only: [:update] do
       member do
         put :next
         put :advance

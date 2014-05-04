@@ -13,12 +13,6 @@ module Spree
       # This before_filter comes from Spree::Core::ControllerHelpers::Order
       skip_before_filter :set_current_order
 
-      def create
-        authorize! :create, Order
-        @order = Spree::Core::Importer::Order.import(current_api_user, nested_params)
-        respond_with(@order, default_template: 'spree/api/orders/show', status: 201)
-      end
-
       def next
         if @order.confirm?
           ActiveSupport::Deprecation.warn "Using Spree::Api::CheckoutsController#next to transition to complete is deprecated. Please use #complete instead of #next.", caller
@@ -48,10 +42,6 @@ module Spree
         end
       rescue StateMachine::InvalidTransition
         respond_with(@order, default_template: 'spree/api/orders/could_not_transition', status: 422)
-      end
-
-      def show
-        redirect_to(api_order_path(params[:id]), status: 301)
       end
 
       def update
