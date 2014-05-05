@@ -254,6 +254,15 @@ nl:
       not_saved:
         one: ! '1 fout voorkwam dat deze %{resource} werd opgeslagen:'
         other: ! '%{count} fouten voorkwamen dat deze %{resource} werd opgeslagen:'
+  helpers:
+    page_entries_info:
+      one_page:
+        display_entries:
+          zero: "Geen %{entry_name} gevonden"
+          one: "Bekijk <b>1</b> %{entry_name}"
+          other: "Bekijk <b>%{count}</b> %{entry_name}"
+      more_pages:
+        display_entries: "Overzicht van %{entry_name} <b>%{first}&nbsp;-&nbsp;%{last}</b> van <b>%{total}</b>"
   spree:
     abbreviation: Afkorting
     account: Account
@@ -1091,7 +1100,7 @@ nl:
       exceeds_available_stock: overschrijdt beschikbare voorraad. Zorg dat je een juiste hoeveelheid hebt ingevuld per bestelregel.
       is_too_large: is te veel - voorraad kan de aanvraag niet aan!
       must_be_int: moet een getal zijn
-      must_be_non_negative: moet een niet-negatief getal zijn
+      must_be_non_negative: moet een positief getal zijn
     value: Waarde
     variant: Variant
     variant_placeholder: Kies een variant
@@ -1110,3 +1119,10 @@ nl:
     zipcode: Postcode
     zone: Gebied
     zones: Gebieden
+  views:
+    pagination:
+      first: "&laquo; Eerste"
+      last: "Laatste &raquo;"
+      previous: "&lsaquo; Vorige"
+      next: "Volgende &rsaquo;"
+      truncate: "&hellip;"
