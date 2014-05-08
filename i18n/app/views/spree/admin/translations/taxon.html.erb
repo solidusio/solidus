@@ -6,7 +6,7 @@
 
 <% content_for :page_actions do %>
   <li>
-    <%= button_link_to Spree.t(:back_to_taxonomies_list), spree.admin_taxonomies_path, :icon => 'icon-arrow-left' %>
+    <%= button_link_to Spree.t(:back_to_taxonomies_list), spree.admin_taxonomies_path, icon: 'arrow-left' %>
   </li>
 <% end %>
 
@@ -14,13 +14,13 @@
   <fieldset class="no-border-top">
     <%= render 'settings' %>
 
-    <%= form_for [:admin, @resource.taxonomy, @resource], :url => admin_taxonomy_taxon_path(@taxon.taxonomy, @taxon.id) do |f| %>
+    <%= form_for [:admin, @resource.taxonomy, @resource], url: admin_taxonomy_taxon_path(@taxon.taxonomy, @taxon.id) do |f| %>
       <%= render 'form_fields', f: f %>
 
       <div class="form-buttons" data-hook="buttons">
-        <%= button Spree.t(:update), 'icon-refresh' %>
+        <%= button Spree.t(:update), 'refresh' %>
         <%= Spree.t(:or) %>
-        <%= button_link_to Spree.t(:cancel), edit_admin_taxonomy_url(@taxon.taxonomy), :icon => "icon-remove" %>
+        <%= button_link_to Spree.t(:cancel), edit_admin_taxonomy_url(@taxon.taxonomy), icon: "remove" %>
       </div>
     <% end %>
   </fieldset>

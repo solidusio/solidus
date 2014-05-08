@@ -4,20 +4,20 @@
 
 <% content_for :page_actions do %>
   <li>
-    <%= button_link_to Spree.t(:back_to_option_value_list), spree.edit_admin_option_type_path(@option_value.option_type), :icon => 'icon-arrow-left' %>
+    <%= button_link_to Spree.t(:back_to_option_value_list), spree.edit_admin_option_type_path(@option_value.option_type), icon: 'arrow-left' %>
   </li>
 <% end %>
 
-<%= render :partial => 'spree/shared/error_messages', :locals => { :target => @option_value } %>
+<%= render :partial => 'spree/shared/error_messages', locals: { target: @option_value } %>
 <div class="row">
   <fieldset class="no-border-top translations">
     <%= render 'settings' %>
     <%= form_for [:admin,:option_type, @resource] do |f| %>
       <%= render 'form_fields', f: f %>
       <div class="form-buttons filter-actions actions" data-hook="buttons">
-        <%= button Spree.t('actions.update'), 'icon-refresh' %>
+        <%= button Spree.t('actions.update'), 'fa fa-refresh' %>
         <span class="or"><%= Spree.t(:or) %></span>
-        <%= button_link_to Spree.t('actions.cancel'), spree.edit_admin_option_type_path(@option_value.option_type), :icon => 'icon-remove' %>
+        <%= button_link_to Spree.t('actions.cancel'), spree.edit_admin_option_type_path(@option_value.option_type), icon: 'remove' %>
       </div>
     <% end %>
   </fieldset>

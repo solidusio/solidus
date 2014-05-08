@@ -11,7 +11,11 @@ module I18n
         end
 
         def lookup(locale, key, scope=[], options={})
-          I18nData.countries(locale)[key]
+          begin
+            I18nData.countries(locale)[key]
+          rescue I18nData::NoTranslationAvailable
+            # rescue failed lookup to fall back to this extensions locale files.
+          end
         end
       end
 

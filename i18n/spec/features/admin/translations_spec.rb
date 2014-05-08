@@ -33,7 +33,7 @@ feature "Translations", js: true do
 
       scenario "displays translated name on frontend" do
         visit spree.admin_option_types_path
-        find('.icon-flag').click
+        find('.fa-flag').click
 
         within("#attr_fields .name.en.odd") { fill_in_name "shirt sizes" }
         within("#attr_list") { click_on "Presentation" }
@@ -64,7 +64,7 @@ feature "Translations", js: true do
 
       scenario "displays translated name on frontend" do
         visit spree.edit_admin_option_type_path(option_type)
-        find('.icon-flag').click
+        find('.fa-flag').click
 
         within("#attr_fields .name.en.odd") { fill_in_name "big" }
         within("#attr_list") { click_on "Presentation" }
@@ -84,7 +84,7 @@ feature "Translations", js: true do
 
       scenario "displays translated name on frontend" do
         visit spree.admin_properties_path
-        find('.icon-flag').click
+        find('.fa-flag').click
 
         within("#attr_fields .name.pt-BR.odd") { fill_in_name "Modelo" }
         within("#attr_list") { click_on "Presentation" }
@@ -105,7 +105,7 @@ feature "Translations", js: true do
 
     scenario "saves translated attributes properly" do
       visit spree.admin_promotions_path
-      find('.icon-flag').click
+      find('.fa-flag').click
 
       within("#attr_fields .name.en.odd") { fill_in_name "All free" }
       within("#attr_fields .name.pt-BR.odd") { fill_in_name "Salve salve" }
@@ -122,7 +122,7 @@ feature "Translations", js: true do
 
     scenario "display translated name on frontend" do
       visit spree.admin_taxonomies_path
-      find('.icon-flag').click
+      find('.fa-flag').click
 
       within("#attr_fields .name.en.odd") { fill_in_name "Guitars" }
       within("#attr_fields .name.pt-BR.odd") { fill_in_name "Guitarras" }
@@ -144,14 +144,14 @@ feature "Translations", js: true do
 
     scenario "display translated name on frontend" do
       visit spree.edit_admin_taxonomy_taxon_path(taxonomy.id, taxon.id)
-      find('.icon-flag').click
+      find('.fa-flag').click
 
       within("#attr_fields .name.en.odd") { fill_in_name "Acoustic" }
       within("#attr_fields .name.pt-BR.odd") { fill_in_name "Acusticas" }
       click_on "Update"
 
       visit spree.edit_admin_taxonomy_taxon_path(taxonomy.id, taxon.id)
-      find('.icon-flag').click
+      find('.fa-flag').click
 
       # ensure we're not duplicating translated records on database
       expect {
