@@ -27,10 +27,10 @@ your app spree manifest file.
 This will insert these lines into your spree manifest files:
 
     vendor/assets/javascripts/spree/backend/all.js
-    //= spree/backend/spree_i18n
+    //= require spree/backend/spree_i18n
 
-    vvendor/assets/javascripts/spree/frontend/all.js
-    //= spree/frontend/spree_i18n
+    vendor/assets/javascripts/spree/frontend/all.js
+    //= require spree/frontend/spree_i18n
 
     vendor/assets/stylesheets/spree/frontend/all.css
     *= require spree/frontend/spree_i18n
