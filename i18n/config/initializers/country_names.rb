@@ -25,3 +25,30 @@ module I18n
 end
 
 I18n.backend = I18n::Backend::Chain.new(I18n::Backend::I18nDataBackend.new, I18n.backend)
+
+
+module I18nData
+
+  private
+  def self.normal_to_region_code(normal)
+    country_mappings = {
+      "DE-CH" => "de",
+      "FR-CH" => "fr",
+      "EN-AU" => "en",
+      "EN-GB" => "en",
+      "EN-US" => "en",
+      "EN-IN" => "en",
+      "EN-NZ" => "en",
+      "ES-CL" => "es",
+      "ES-EC" => "es",
+      "ES-MX" => "es",
+      "PT-BR" => "pt",
+      "SL-SI" => "sl",
+      "ZH-TW" => "zh_CN",
+      "ZH-CN" => "zh_CN",
+      "ZH" => "zh_CN",
+      "BN" => "bn_IN",
+      }
+    country_mappings[normal] || normal
+  end
+end
