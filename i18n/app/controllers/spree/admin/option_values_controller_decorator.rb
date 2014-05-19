@@ -11,6 +11,6 @@ Spree::Admin::OptionValuesController.class_eval do
   end
 
   def permitted_params
-   [:name, :presentation,:translations_attributes => [:id,:locale, :name, :presentation]]
+    Spree::PermittedAttributes.option_value_attributes
   end
 end
