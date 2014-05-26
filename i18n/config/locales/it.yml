@@ -564,7 +564,7 @@ it:
     failed_payment_attempts: Tentativi di Pagamento falliti
     filename: Nome del file
     fill_in_customer_info: Per favore completa le informazioni sul cliente
-    filter_results: Risultati del filtro
+    filter_results: Filtra Risultati
     finalize: Concludi
     finalized: Concluso
     find_a_taxon: Cerca un Taxon
@@ -781,7 +781,7 @@ it:
         thanks: Grazie per il tuo ordine.
         total: ! 'Totale Ordine: %{total}'
     order_not_found: Non abbiamo trovato il tuo ordine. Per favore riprova ancora.
-    order_number: Ordine %{number}
+    order_number: Ordine
     order_populator:
       out_of_stock: ! '%{item} non è disponibile.'
       please_enter_reasonable_quantity: Per favore immetti una quantità ragionevole.
