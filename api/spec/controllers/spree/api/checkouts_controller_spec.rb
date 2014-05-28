@@ -311,6 +311,12 @@ module Spree
         api_put :next, id: order.to_param, order_token: order.guest_token, order: {}
         expect(json_response["errors"]["base"]).to include(Spree.t(:no_payment_found))
       end
+
+      it "returns an error if expected_total is present and does not match actual total" do
+        api_put :next, :id => order.to_param, :order_token => order.token, :expected_total => order.total + 1
+        response.status.should == 400
+        json_response['errors']['expected_total'].should include(Spree.t(:expected_total_mismatch, :scope => 'api.order'))
+      end
     end
 
     context "PUT 'advance'" do

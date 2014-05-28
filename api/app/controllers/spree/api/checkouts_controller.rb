@@ -11,6 +11,10 @@ module Spree
       def next
         load_order(true)
         authorize! :update, @order, order_token
+        if !expected_total_ok?(params[:expected_total])
+          respond_with(@order, default_template: 'spree/api/orders/expected_total_mismatch', status: 400)
+          return
+        end
         @order.next!
         respond_with(@order, default_template: 'spree/api/orders/show', status: 200)
       rescue StateMachine::InvalidTransition
@@ -93,6 +97,11 @@ module Spree
 
         def order_id
           super || params[:id]
+        end
+
+        def expected_total_ok?(expected_total)
+          return true if expected_total.blank?
+          @order.total == BigDecimal(expected_total)
         end
     end
   end
