@@ -13,6 +13,7 @@ module Spree
             create_params = params.slice :currency
             order = Spree::Order.create! create_params
             order.associate_user!(user)
+            order.save
 
             shipments_attrs = params.delete(:shipments_attributes)
 
