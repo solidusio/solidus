@@ -12,6 +12,7 @@ module Spree
 
             order = Spree::Order.create!
             order.associate_user!(user)
+            order.save
 
             create_shipments_from_params(params.delete(:shipments_attributes), order)
             create_line_items_from_params(params.delete(:line_items_attributes),order)

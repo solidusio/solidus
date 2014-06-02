@@ -254,18 +254,21 @@ module Spree
       @contents ||= Spree::OrderContents.new(self)
     end
 
-    # Associates the specified user with the order.
+    # Associates the specified user and user addresses with the order.
     def associate_user!(user, override_email = true)
       self.user = user
       attrs_to_set = { user_id: user.id }
       attrs_to_set[:email] = user.email if override_email
       attrs_to_set[:created_by_id] = user.id if self.created_by.blank?
-      assign_attributes(attrs_to_set)
 
       if persisted?
         # immediately persist the changes we just made, but don't use save since we might have an invalid address associated
         self.class.unscoped.where(id: id).update_all(attrs_to_set)
       end
+
+      attrs_to_set[:ship_address_attributes] = user.ship_address.attributes.except('id', 'updated_at', 'created_at') if user.ship_address
+      attrs_to_set[:bill_address_attributes] = user.bill_address.attributes.except('id', 'updated_at', 'created_at') if user.bill_address
+      assign_attributes(attrs_to_set)
     end
 
     # FIXME refactor this method and implement validation using validates_* utilities
@@ -645,6 +648,5 @@ module Spree
       def set_currency
         self.currency = Spree::Config[:currency] if self[:currency].nil?
       end
-
   end
 end
