@@ -36,17 +36,7 @@ module Spree
       end
 
       def update
-        unlock = params[:shipment].delete(:unlock)
-
-        if unlock == 'yes'
-          @shipment.adjustment.open
-        end
-
         @shipment.update_attributes(shipment_params)
-
-        if unlock == 'yes'
-          @shipment.adjustment.close
-        end
 
         @shipment.reload
         respond_with(@shipment, default_template: :show)
