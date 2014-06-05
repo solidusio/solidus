@@ -13,7 +13,7 @@ module Spree
             create_params = params.slice :currency
             order = Spree::Order.create! create_params
             order.associate_user!(user)
-            order.save
+            order.save!
 
             shipments_attrs = params.delete(:shipments_attributes)
 
@@ -28,7 +28,10 @@ module Spree
               order.state = 'complete'
             end
 
-            params.delete(:user_id) unless user.try(:has_spree_role?, "admin") && params.key?(:user_id)
+            user_id = params.delete(:user_id)
+            if user && user.has_spree_role?("admin")
+              order.user_id = user_id
+            end
 
             order.update_attributes!(params)
 
