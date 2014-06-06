@@ -106,6 +106,7 @@ module Spree
     def empty
       order.line_items.destroy_all
       order.adjustments.destroy_all
+      order.shipments.destroy_all
       reload_totals
     end
 

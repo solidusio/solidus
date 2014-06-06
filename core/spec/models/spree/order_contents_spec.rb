@@ -367,6 +367,7 @@ describe Spree::OrderContents do
     it "clears out line items, adjustments and update totals" do
       expect(order.line_items).to receive(:destroy_all)
       expect(order.adjustments).to receive(:destroy_all)
+      expect(order.shipments).to receive(:destroy_all)
       expect(order.contents).to receive(:reload_totals)
 
       order.contents.empty
