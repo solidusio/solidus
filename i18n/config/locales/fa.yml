@@ -2,36 +2,36 @@ fa:
   activerecord:
     attributes:
       spree/address:
-        address1: Address
-        address2: Address (contd.)
-        city: City
-        country: Country
-        firstname: First Name
-        lastname: Last Name
-        phone: Phone
-        state: State
-        zipcode: Zip Code
+        address1: آدرس 
+        address2: ادامه آدرس
+        city: شهر
+        country: کشور
+        firstname: نام
+        lastname: نام خانوادگی
+        phone: تلفن
+        state: استان
+        zipcode: کد پستی
       spree/country:
         iso: ISO
         iso3: ISO3
         iso_name: ISO Name
-        name: Name
+        name: نام
         numcode: ISO Code
       spree/credit_card:
         base: 
-        cc_type: Type
-        month: Month
-        number: Number
+        cc_type: نوع
+        month: ماه
+        number: عدد
         verification_value: Verification Value
-        year: Year
+        year: سال
       spree/inventory_unit:
         state: State
       spree/line_item:
-        price: Price
+        price: قیمت
         quantity: Quantity
       spree/option_type:
-        name: Name
-        presentation: Presentation
+        name: نام
+        presentation: نمایش
       spree/order:
         checkout_complete: 
         completed_at: 
