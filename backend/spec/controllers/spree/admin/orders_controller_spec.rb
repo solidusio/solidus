@@ -76,6 +76,11 @@ describe Spree::Admin::OrdersController, :type => :controller do
 
     # Test for #3346
     context "#new" do
+      let(:user) { create(:user) }
+      before do
+        allow(controller).to receive_messages :spree_current_user => user
+      end
+
       it "imports a new order and sets the current user as a creator" do
         Spree::Core::Importer::Order.should_receive(:import)
           .with(nil, {'created_by_id' => controller.try_spree_current_user.id})
