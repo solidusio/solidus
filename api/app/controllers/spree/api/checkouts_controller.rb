@@ -58,6 +58,7 @@ module Spree
           send(method_name) if respond_to?(method_name, true)
         end
 
+        # This is used in cancan
         def order_id
           super || params[:id]
         end
