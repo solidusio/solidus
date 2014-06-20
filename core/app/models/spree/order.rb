@@ -3,8 +3,8 @@ require 'spree/order/checkout'
 
 module Spree
   class Order < ActiveRecord::Base
-    include Checkout
-    include CurrencyUpdater
+    include Spree::Order::Checkout
+    include Spree::Order::CurrencyUpdater
 
     extend Spree::DisplayMoney
     money_methods :outstanding_balance, :item_total, :adjustment_total,
