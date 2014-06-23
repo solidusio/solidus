@@ -34,6 +34,11 @@
           <%= f.select :state_eq, Spree::Order.state_machines[:state].states.collect {|s| [Spree.t("order_state.#{s.name}"), s.value]}, {:include_blank => true}, :class => 'select2' %>
         </div>
 
+        <div class="field">
+          <%= label_tag nil, "Shipment Number" %>
+          <%= f.text_field :shipments_number_cont %>
+        </div>
+
       </div>
 
       <div class="four columns">
