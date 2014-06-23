@@ -17,7 +17,7 @@ module SpreeI18n
 
     initializer "spree_i18n.environment", :before => :load_config_initializers do |app|
       app.config.i18n.fallbacks = true
-      I18n.locale = app.config.i18n.default_locale
+      I18n.locale = app.config.i18n.default_locale if app.config.i18n.default_locale
       SpreeI18n::Config = SpreeI18n::Configuration.new
     end
 
