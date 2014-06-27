@@ -28,7 +28,7 @@ fa:
         state: State
       spree/line_item:
         price: قیمت
-        quantity: Quantity
+        quantity: مقدار
       spree/option_type:
         name: نام
         presentation: نمایش
@@ -859,8 +859,8 @@ fa:
     quantity_returned: Quantity Returned
     quantity_shipped: Quantity Shipped
     rate: Rate
-    reason: Reason
-    receive: receive
+    reason: علت
+    receive: دریافت
     receive_stock: 
     received: دریافت شد
     reference: 
@@ -868,10 +868,10 @@ fa:
     register: به عنوان کاربر جدید ثبت نام کنید
     registration: ثبت نام
     remember_me: من را به یاد بسپار
-    remove: Remove
-    rename: Rename
+    remove: حذف
+    rename: تغییر نام
     reports: گزارشات
-    resend: Resend
+    resend: ارسال دوباره
     reset_password: ریست رمز عبور
     response_code: Response Code
     resume: ادامه
@@ -882,7 +882,7 @@ fa:
     return_authorizations: Return Authorizations
     return_quantity: Return Quantity
     returned: برگشت داده شد
-    review: Review
+    review: بازبینی
     rma_credit: RMA Credit
     rma_number: RMA Number
     rma_value: RMA Value
@@ -897,8 +897,8 @@ fa:
     sales_total_description: کل فروش برای همه سفارش ها
     sales_totals: 
     save_and_continue: ذخیره و ادامه
-    say_no: 'No'
-    say_yes: 'Yes'
+    say_no: 'خیر'
+    say_yes: 'بله'
     scope: Scope
     search: جستجو
     search_results: Search results for '%{keywords}'
@@ -934,7 +934,7 @@ fa:
       pending: معلق
       ready: آماده
       shipped: ارسال شد
-    shipments: Shipments
+    shipments: مرسولات
     shipped: ارسال شد
     shipping: ارسال
     shipping_address: آدرس ارسال
@@ -971,7 +971,7 @@ fa:
     split: 
     spree/order:
       coupon_code: 
-    spree_gateway_error_flash_for_checkout: There was a problem with your payment information. Please check your information and try again.
+    spree_gateway_error_flash_for_checkout: مشکلی در با اطلاعات پرداخت شما وجود دارد، لطفا اطلاعات را بررسی کنید و دوباره تلاش کنید.
     start: شروع
     start_date: Valid from
     state: ایالت یا استان
@@ -994,11 +994,11 @@ fa:
     street_address: آدرس
     street_address_2: ادامه آدرس
     subtotal: جمع
-    subtract: Subtract
-    successfully_created: ! '%{resource} has been successfully created!'
-    successfully_removed: ! '%{resource} has been successfully removed!'
+    subtract: منها
+    successfully_created: ! '%{resource} با موفقیت ایجاد شد!'
+    successfully_removed: ! '%{resource} با موفقیت حذف شد!'
     successfully_signed_up_for_analytics: 
-    successfully_updated: ! '%{resource} has been successfully updated!'
+    successfully_updated: ! '%{resource} با موفقیت به‌روزرسانی‌ شد!'
     tax: مالیات
     tax_categories: دسته بندی های مالیات
     tax_category: دسته بندی مالیات
@@ -1018,9 +1018,9 @@ fa:
     test: تست
     test_mailer:
       test_email:
-        greeting: Congratulations!
-        message: If you have received this email, then your email settings are correct.
-        subject: Testmail
+        greeting: تبریک!
+        message: اگر شما این ایمیل را دریافت نموده‌اید، به معنی آن است که تنظیمات ایمیل شما با موفقیت انجام شده است.
+        subject: ایمیل تست
     test_mode: مد تست
     thank_you_for_your_order: با تشکر، لطفا یک کپی از این صفحه برای نگهداری در نزد خود، پرینت کنید
     there_are_no_items_for_this_order: 
