@@ -25,7 +25,7 @@ fa:
         verification_value: Verification Value
         year: سال
       spree/inventory_unit:
-        state: State
+        state: استان
       spree/line_item:
         price: قیمت
         quantity: مقدار
@@ -82,25 +82,25 @@ fa:
         description: Description
         event_name: Event Name
         expires_at: Expires At
-        name: Name
-        path: Path
+        name: نام
+        path: مسیر
         starts_at: Starts At
         usage_limit: Usage Limit
       spree/property:
-        name: Name
-        presentation: Presentation
+        name: نام
+        presentation: نمایش
       spree/prototype:
-        name: Name
+        name: نام
       spree/return_authorization:
         amount: Amount
       spree/role:
-        name: Name
+        name: نام
       spree/state:
         abbr: Abbreviation
-        name: Name
+        name: نام
       spree/tax_category:
-        description: Description
-        name: Name
+        description: توضیحات
+        name: نام
       spree/tax_rate:
         amount: Rate
         included_in_price: Included in Price
@@ -110,11 +110,11 @@ fa:
         permalink: Permalink
         position: Position
       spree/taxonomy:
-        name: Name
+        name: نام
       spree/user:
-        email: Email
-        password: Password
-        password_confirmation: Password Confirmation
+        email: ایمیل
+        password: رمز‌عبور
+        password_confirmation: تایید رمز‌عبور
       spree/variant:
         cost_currency: 
         cost_price: Cost Price
@@ -125,8 +125,8 @@ fa:
         weight: Weight
         width: Width
       spree/zone:
-        description: Description
-        name: Name
+        description: توضیحات
+        name: نام
     errors:
       models:
         spree/credit_card:
@@ -135,14 +135,14 @@ fa:
               card_expired: 
     models:
       spree/address:
-        one: Address
-        other: Addresses
+        one: آدرس
+        other: آدرس‌ها
       spree/country:
-        one: Country
-        other: Countries
+        one: کشور
+        other: کشورها
       spree/credit_card:
-        one: Credit Card
-        other: Credit Cards
+        one: کارت اعتباری
+        other: کارت‌های اعتباری
       spree/inventory_unit:
         one: Inventory Unit
         other: Inventory Units
@@ -157,12 +157,12 @@ fa:
         other: Payments
       spree/payment_method: 
       spree/product:
-        one: Product
-        other: Products
+        one: محصول
+        other: محصول‌ها
       spree/promotion: 
       spree/property:
-        one: Property
-        other: Properties
+        one: خصوصیت
+        other: خصوصیات
       spree/prototype:
         one: Prototype
         other: Prototypes
@@ -198,8 +198,8 @@ fa:
         other: Taxonomies
       spree/tracker: 
       spree/user:
-        one: User
-        other: Users
+        one: کاربر
+        other: کاربرها
       spree/variant:
         one: Variant
         other: Variants
@@ -342,12 +342,12 @@ fa:
     back: برگشت
     back_end: Back End
     back_to_adjustments_list: Back To Adjustments List
-    back_to_images_list: Back To Images List
+    back_to_images_list: بازگشت به لیست تصویرها
     back_to_option_types_list: 
     back_to_orders_list: 
     back_to_payment_methods_list: Back To Payment Methods List
-    back_to_payments_list: Back To Payments List
-    back_to_products_list: Back To Products List
+    back_to_payments_list: بازگشت به لیست پرداخت
+    back_to_products_list: بازگشت به لیست محصول‌ها
     back_to_promotions_list: Back To Promotions List
     back_to_properties_list: Back To Products List
     back_to_prototypes_list: Back To Prototypes List
@@ -430,16 +430,16 @@ fa:
     credit_card: کارت اعتباری
     credit_cards: کارت‌های اعتباری
     credit_owed: اعتبار مقروض
-    currency: Currency
+    currency: واحد پول
     currency_decimal_mark: 
-    currency_settings: Currency Settings
+    currency_settings: تنظیمات واحد پول
     currency_symbol_position: Put currency symbol before or after dollar amount?
     currency_thousands_separator: 
     current: جاری
     current_promotion_usage: 
     customer: مشتری
     customer_details: جزئیات مشتری
-    customer_details_updated: The customer's details have been updated.
+    customer_details_updated: اطلاعات مشتری بروز رسانی شد
     customer_search: جستجوی مشتری
     cut: Cut
     dash:
@@ -460,9 +460,9 @@ fa:
       js_format: 
     date_range: محدوده‌ی زمانی
     default: پیش فرض
-    default_meta_description: Default Meta Description
-    default_meta_keywords: Default Meta Keywords
-    default_seo_title: Default Seo Title
+    default_meta_description: ابر توضیحات پیشفرض
+    default_meta_keywords: ابر کلمات کلیدی پیشفرض
+    default_seo_title: تیتر پیشفرض برای موتورهای جستجو
     default_tax: Default Tax
     default_tax_zone: Default Tax Zone
     delete: حذف
@@ -567,8 +567,8 @@ fa:
       translations: 
     icon: آیکون
     image: تصویر
-    image_settings: Image Settings
-    image_settings_updated: Image Settings successfully updated.
+    image_settings: تنظیمات تصویر
+    image_settings_updated: تنظیمات تصویر بروزرسانی شد.
     image_settings_warning: You will need to regenerate thumbnails if you update the paperclip styles. Use rake paperclip:refresh:thumbnails to do this.
     images: تصاویر
     included_in_price: Included in Price
@@ -749,7 +749,7 @@ fa:
     order_sure_want_to: 
     order_total: کل سفارش
     order_updated: سفارش بروز‌رسانی شد
-    orders: سفارشات
+    orders: سفارش‌ها
     out_of_stock: موجودی نداریم
     overview: مرور کلی
     package_from: 
@@ -803,7 +803,7 @@ fa:
     product_not_available_in_this_currency: 
     product_properties: ویژگی‌های محصول
     product_rule:
-      choose_products: محصولات را انتخاب کنید
+      choose_products: محصول‌ها را انتخاب کنید
       label: Order must contain %{select} of these products
       match_all: همه
       match_any: حداقل یکی
@@ -921,8 +921,8 @@ fa:
     shipment_inc_vat: Shipment including VAT
     shipment_mailer:
       shipped_email:
-        dear_customer: Dear Customer,
-        instructions: Your order has been shipped
+        dear_customer: مشتری گرامی,
+        instructions: سفارش شما ارسال شد
         shipment_summary: Shipment Summary
         subject: Shipment Notification
         thanks: Thank you for your business.
@@ -977,7 +977,7 @@ fa:
     start_date: Valid from
     state: ایالت یا استان
     state_based: State Based
-    states: ایالات یا استان‌ها
+    states: ایالت‌ها یا استان‌ها
     states_required: 
     status: وضعیت
     stock_location: 
@@ -1025,7 +1025,7 @@ fa:
     test_mode: مد تست
     thank_you_for_your_order: با تشکر، لطفا یک کپی از این صفحه برای نگهداری در نزد خود، پرینت کنید
     there_are_no_items_for_this_order: 
-    there_were_problems_with_the_following_fields: به مشکلاتی در فیلدهای ذیل برخوردیم
+    there_were_problems_with_the_following_fields: به مشکل‌هایی در فیلدهای ذیل برخوردیم
     thumbnail: Thumbnail
     time: 
     to_add_variants_you_must_first_define: To add variants, you must first define
@@ -1053,8 +1053,8 @@ fa:
     use_s3: Use Amazon S3 For Images
     user: کاربر
     user_rule:
-      choose_users: انتخاب کاربران
-    users: کاربران
+      choose_users: انتخاب کاربرها
+    users: کاربرها
     validation:
       cannot_be_less_than_shipped_units: cannot be less than the number of shipped units.
       cannot_destory_line_item_as_inventory_units_have_shipped: Cannot destory line item as some inventory units have shipped.
