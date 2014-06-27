@@ -7,7 +7,7 @@ fa:
         city: شهر
         country: کشور
         firstname: نام
-        lastname: نام خانوادگی
+        lastname: نام‌خانوادگی
         phone: تلفن
         state: استان
         zipcode: کد پستی
@@ -265,7 +265,7 @@ fa:
       listing: لیست کردن
       new: جدید
       save: 
-      update: بروز رسانی
+      update: بروزرسانی
     activate: Activate
     active: فعال
     add: افزودن
@@ -276,7 +276,7 @@ fa:
     add_one: 
     add_option_value: افزودن مقدار
     add_product: افزودن محصول
-    add_product_properties: افزودن ویژگی های محصول
+    add_product_properties: افزودن ویژگی‌های محصول
     add_rule_of_type: افزودن قانون نوع
     add_state: افزودن ایالت یا استان
     add_stock: 
@@ -294,10 +294,10 @@ fa:
     adjustments: تعدیلات
     admin:
       mail_methods:
-        send_testmail: Send Testmail
+        send_testmail: ارسال ایمیل تست
         testmail:
-          delivery_error: Testmail delivery error
-          delivery_success: Testmail sent successfully
+          delivery_error: مشکلی در ارسال ایمیل تست بوجود آمده‌است
+          delivery_success: ایمیل تست با موفقیت ارسال شد.
           error: ! 'Testmail error: %{e}'
       tab:
         configuration: 
@@ -313,7 +313,7 @@ fa:
     all: همه
     all_adjustments_closed: 
     all_adjustments_opened: 
-    all_departments: همه ی دپارتمان ها
+    all_departments: همه ی دپارتمان‌ها
     allow_ssl_in_development_and_test: Allow SSL to be used when in development and test modes
     allow_ssl_in_production: Allow SSL to be used in production mode
     allow_ssl_in_staging: Allow SSL to be used in staging mode
@@ -327,10 +327,10 @@ fa:
     analytics_desc_list_2: 
     analytics_desc_list_3: 
     analytics_desc_list_4: 
-    analytics_trackers: ردگیرهای تحلیلی
+    analytics_trackers: ردگیر‌های تحلیلی
     and: and
     are_you_sure: آیا مطمئن هستید؟
-    are_you_sure_delete: آیا مطمئن هستید که می خواهید این سطر را پاک کنید؟
+    are_you_sure_delete: آیا مطمئن هستید که می‌خواهید این سطر را پاک کنید؟
     associated_adjustment_closed: 
     attachment_default_style: Attachments Style
     attachment_default_url: Attachments URL
@@ -371,10 +371,10 @@ fa:
     billing: پرداخت
     billing_address: آدرس پرداخت
     both: هر دو
-    calculator: ماشین حساب
-    calculator_settings_warning: اگر می خواهید نوع ماشین حساب را تغییر دهید، باید پیش از انجام تغییرات، حالت فعلی را ذخیره کنید
+    calculator: ماشین‌حساب
+    calculator_settings_warning: اگر می‌خواهید نوع ماشین‌حساب را تغییر دهید، باید پیش از انجام تغییرات، حالت فعلی را ذخیره کنید
     cancel: لغو
-    cannot_create_payment_without_payment_methods: You cannot create a payment for an order without any payment methods defined.
+    cannot_create_payment_without_payment_methods: مادامی که روش پرداختی تعریف نشده‌است، شما نمی‌توانید پرداختی برای سفارش ایجاد کنید.
     cannot_create_returns: Cannot create returns as this order no shipped units.
     cannot_perform_operation: عملیات درخواستی قابل انجام نیست
     cannot_set_shipping_method_without_address: 
@@ -383,10 +383,10 @@ fa:
     card_number: شماره کارت
     card_type_is: نوع کارت
     cart: سبد خرید
-    categories: دسته بندی ها
-    category: دسته بندی
+    categories: دسته‌بندی‌ها
+    category: دسته‌بندی
     check_for_spree_alerts: 
-    checkout: تصفیه حساب
+    checkout: تصفیه‌حساب
     choose_a_customer: 
     choose_currency: 
     choose_dashboard_locale: 
@@ -398,11 +398,11 @@ fa:
     company: 
     complete: تکمیل
     configuration: پیکربندی
-    configurations: پیکربندی ها
+    configurations: پیکربندی‌ها
     configure_s3: Configure S3
     confirm: تایید
     confirm_delete: تایید حذف
-    confirm_password: تکرار رمز عبور
+    confirm_password: تکرار رمز‌عبور
     continue: ادامه
     continue_shopping: ادامه خرید
     cost_currency: 
@@ -428,7 +428,7 @@ fa:
     created_at: 
     credit: اعتبار
     credit_card: کارت اعتباری
-    credit_cards: Credit Cards
+    credit_cards: کارت‌های اعتباری
     credit_owed: اعتبار مقروض
     currency: Currency
     currency_decimal_mark: 
@@ -458,7 +458,7 @@ fa:
       first_day: 
       format: 
       js_format: 
-    date_range: محدوده ی زمانی
+    date_range: محدوده‌ی زمانی
     default: پیش فرض
     default_meta_description: Default Meta Description
     default_meta_keywords: Default Meta Keywords
@@ -482,12 +482,12 @@ fa:
     editing_promotion: Editing Promotion
     editing_property: ویرایش اموال
     editing_prototype: ویرایش نمونه اولیه
-    editing_shipping_category: ویرایش دسته بندی ارسال
+    editing_shipping_category: ویرایش دسته‌بندی ارسال
     editing_shipping_method: ویرایش روش ارسال
     editing_state: ویرایش ایالت یا استان
     editing_stock_location: 
     editing_stock_movement: 
-    editing_tax_category: ویرایش دسته بندی مالیات
+    editing_tax_category: ویرایش دسته‌بندی مالیات
     editing_tax_rate: ویرایش نرخ مالیات
     editing_tracker: ویرایش ردگیر
     editing_user: ویرایش کاربر
@@ -495,33 +495,33 @@ fa:
     email: ایمیل
     empty: خالی
     empty_cart: سبد خرید خالی شود
-    enable_mail_delivery: فعال سازی تحویل نامه
+    enable_mail_delivery: فعال‌سازی تحویل نامه
     end: 
     ending_in: Ending in
     environment: محیط
     error: ایراد
     errors:
       messages:
-        could_not_create_taxon: امکان ایجاد نوع دسته بندی وجود ندارد
+        could_not_create_taxon: امکان ایجاد نوع دسته‌بندی وجود ندارد
         no_payment_methods_available: No payment methods are configured for this environment
-        no_shipping_methods_available: ارسال برای ناحیه انتخاب شده مقدور نمی باشد، لطفا منطقه ی دیگری را انتخاب کنید
+        no_shipping_methods_available: ارسال برای ناحیه انتخاب شده مقدور نمی‌باشد، لطفا منطقه‌ی دیگری را انتخاب کنید
     errors_prohibited_this_record_from_being_saved:
-      one: یک ایراد مانع از انجام ذخیره سازی است
-      other: ! '%{count} ایراد مانع از انجام ذخیره سازی است'
+      one: یک ایراد مانع از انجام ذخیره‌سازی است
+      other: ! '%{count} ایراد مانع از انجام ذخیره‌سازی است'
     event: رویداد
     events:
       spree:
         cart:
-          add: Add to cart
+          add: اضافه به سبد خرید
         checkout:
-          coupon_code_added: Coupon code added
+          coupon_code_added: کد کوپن اضافه شد
         content:
           visited: Visit static content page
         order:
-          contents_changed: Order contents changed
+          contents_changed: محتویات سفارش تغییر یافت
         page_view: Static page viewed
         user:
-          signup: User signup
+          signup: ثبت‌نام کاربر
     exceptions:
       count_on_hand_setter: 
     expiration: انقضاء
@@ -537,7 +537,7 @@ fa:
     flat_rate_per_item: Flat Rate (per item)
     flat_rate_per_order: Flat Rate (per order)
     flexible_rate: Flexible Rate
-    forgot_password: آیا رمز عبور را فراموش کرده اید؟
+    forgot_password: آیا رمز‌عبور را فراموش کرده‌اید؟
     free_shipping: ارسال رایگان
     front_end: Front End
     gateway: درگاه
@@ -547,8 +547,8 @@ fa:
     general_settings: تنظیمات عمومی
     google_analytics: Google Analytics
     google_analytics_id: Analytics ID
-    guest_checkout: تصفیه حساب میهمان
-    guest_user_account: تصفیه حساب به عنوان کاربر میهمان
+    guest_checkout: تصفیه‌حساب میهمان
+    guest_user_account: تصفیه‌حساب به عنوان کاربر میهمان
     has_no_shipped_units: has no shipped units
     height: ارتفاع
     hide_cents: 
@@ -588,7 +588,7 @@ fa:
     iso_name: 
     item: آیتم
     item_description: توضیحات آیتم
-    item_total: کل آیتم ها
+    item_total: کل آیتم‌ها
     item_total_rule:
       operators:
         gt: بیشتر از
@@ -597,22 +597,22 @@ fa:
     jirafe: 
     landing_page_rule:
       path: Path
-    last_name: نام خانوادگی
-    last_name_begins_with: حرف آغازین نام خانوادگی
-    learn_more: Learn More
+    last_name: نام‌خانوادگی
+    last_name_begins_with: حرف آغازین نام‌خانوادگی
+    learn_more: بیشتر بدانید
     list: لیست
     listing_countries: 
-    listing_orders: لیست کردن سفارش ها
-    listing_products: Listing Products
-    listing_reports: لیست کردن گزارش ها
-    listing_tax_categories: لیست کردن دسته بندی های مالیات
-    listing_users: لیست کردن کاربران
+    listing_orders: لیست کردن سفارش‌ها
+    listing_products: لیست کردن محصول‌ها
+    listing_reports: لیست کردن گزارش‌ها
+    listing_tax_categories: لیست کردن دسته‌بندی‌های مالیات
+    listing_users: لیست کردن کاربرها
     loading: در حال بارگذاری
     locale_changed: (زبان سایت به فارسی تغییر کرد)
     location: 
     lock: 
     logged_in_as: شما وارد شدید به عنوان
-    logged_in_succesfully: ورود موفقیت آمیز بود
+    logged_in_succesfully: ورود موفقیت‌آمیز بود
     logged_out: شما خارج شدید
     login: ورود
     login_as_existing: Log In as Existing Customer
@@ -622,7 +622,7 @@ fa:
     look_for_similar_items: جستجوی اقلام مشابه
     maestro_or_solo_cards: Maestro/Solo cards
     mail_method_settings: 
-    mail_methods: متدهای نامه
+    mail_methods: متد‌های نامه
     make_refund: Make refund
     master_price: Master قیمت
     match_choices:
@@ -637,7 +637,7 @@ fa:
     more: More
     move_stock_between_locations: 
     my_account: حساب من
-    my_orders: سفارش های من
+    my_orders: سفارش‌های من
     name: نامه
     name_or_sku: Name or SKU
     new: جدید
@@ -654,13 +654,13 @@ fa:
     new_property: ویژگی جدید
     new_prototype: نمونه اولیه جدید
     new_return_authorization: New Return Authorization
-    new_shipping_category: دسته بندی ارسال جدید
+    new_shipping_category: دسته‌بندی ارسال جدید
     new_shipping_method: متد ارسال جدید
     new_state: ایالت جدید
     new_stock_location: 
     new_stock_movement: 
     new_stock_transfer: 
-    new_tax_category: دسته بندی مالیات جدید
+    new_tax_category: دسته‌بندی مالیات جدید
     new_tax_rate: نرخ مالیات جدید
     new_taxon: New Taxon
     new_taxonomy: New Taxonomy
@@ -687,12 +687,12 @@ fa:
     not: not
     not_available: N/A
     not_enough_stock: 
-    not_found: ! '%{resource} is not found'
+    not_found: ! '%{resource} پیدا نشد'
     notice_messages:
-      product_cloned: Product has been cloned
+      product_cloned: محصول کپی شد
       product_deleted: محصول حذف شد
-      product_not_cloned: Product could not be cloned
-      product_not_deleted: نمی توان این محصول را حذف کرد
+      product_not_cloned: نمی‌توان از این محصول کپی ایجاد کرد
+      product_not_deleted: نمی‌توان این محصول را حذف کرد
       variant_deleted: Variant has been deleted
       variant_not_deleted: Variant could not be deleted
     on_hand: On Hand
@@ -714,16 +714,16 @@ fa:
     order_information: 
     order_mailer:
       cancel_email:
-        dear_customer: Dear Customer,
-        instructions: Your order has been CANCELED.  Please retain this cancellation information for your records.
-        order_summary_canceled: Order Summary [CANCELED]
+        dear_customer: مشتری عزیز،
+        instructions: سفارش شما لغو شده‌است، لطفا از این اطلاعات را نگه‌داری کنید.
+        order_summary_canceled: خلاصه سفارش [لغو شده]
         subject: لغو سفارش
         subtotal: 
         total: 
       confirm_email:
-        dear_customer: Dear Customer,
-        instructions: Please review and retain the following order information for your records.
-        order_summary: Order Summary
+        dear_customer: مشتری عزیز،
+        instructions: لطفا جزئیات را بازبینی کنید و از این اطلاعات را نگه‌داری کنید.
+        order_summary: خلاصه سفارش
         subject: تایید سفارش
         subtotal: 
         thanks: Thank you for your business.
@@ -748,16 +748,16 @@ fa:
     order_summary: خلاصه سفارش
     order_sure_want_to: 
     order_total: کل سفارش
-    order_updated: سفارش بروز رسانی شد
+    order_updated: سفارش بروز‌رسانی شد
     orders: سفارشات
     out_of_stock: موجودی نداریم
     overview: مرور کلی
     package_from: 
     pagination:
-      next_page: next page &raquo;
-      previous_page: ! '&laquo; previous page'
+      next_page: صفحه‌ی بعدی &raquo;
+      previous_page: ! '&laquo; صفحه‌ی قبلی'
       truncate: ! '&hellip;'
-    password: رمز عبور
+    password: رمز‌عبور
     paste: Paste
     path: Path
     pay: pay
@@ -765,10 +765,11 @@ fa:
     payment_information: اطلاعات پرداخت
     payment_method: روش پرداخت
     payment_method_not_supported: 
-    payment_methods: روش های پرداخت
+    payment_methods: روش‌های پرداخت
     payment_processing_failed: پردازش پرداخت با مشکل مواجه شد. لطفا اطلاعات ورودی خود را کنترل کنید
     payment_processor_choose_banner_text: If you need help choosing a payment processor, please visit
-    payment_processor_choose_link: our payments page
+    payment_processor_choose_banner_text: اگر برای انتخاب پردازشگر پرداخت به اطلاعات بیشتری احتیاج داشتید، اینجا را مطالعه کنید
+    payment_processor_choose_link: صفحه‌ی پرداخت ما
     payment_state: وضعیت پرداخت
     payment_states:
       balance_due: balance due
@@ -780,8 +781,8 @@ fa:
       pending: معلق
       processing: در حال پردازش
       void: void
-    payment_updated: پرداخت بروز رسانی شد
-    payments: پرداخت ها
+    payment_updated: پرداخت بروز‌رسانی شد
+    payments: پرداخت‌ها
     percent: 
     percent_per_item: Percent Per Item
     permalink: Permalink
@@ -800,7 +801,7 @@ fa:
     product_details: اطلاعات محصول
     product_has_no_description: این محصول فاقد توضیحات است
     product_not_available_in_this_currency: 
-    product_properties: ویژگی های محصول
+    product_properties: ویژگی‌های محصول
     product_rule:
       choose_products: محصولات را انتخاب کنید
       label: Order must contain %{select} of these products
@@ -870,7 +871,7 @@ fa:
     remember_me: من را به یاد بسپار
     remove: حذف
     rename: تغییر نام
-    reports: گزارشات
+    reports: گزارش‌ها
     resend: ارسال دوباره
     reset_password: ریست رمز عبور
     response_code: Response Code
@@ -894,7 +895,7 @@ fa:
     s3_protocol: S3 Protocol
     s3_secret: Secret Key
     sales_total: کل فروش
-    sales_total_description: کل فروش برای همه سفارش ها
+    sales_total_description: کل فروش برای همه سفارش‌ها
     sales_totals: 
     save_and_continue: ذخیره و ادامه
     say_no: 'خیر'
@@ -934,25 +935,25 @@ fa:
       pending: معلق
       ready: آماده
       shipped: ارسال شد
-    shipments: مرسولات
+    shipments: مرسوله‌ها
     shipped: ارسال شد
     shipping: ارسال
     shipping_address: آدرس ارسال
-    shipping_categories: دسته بندی های ارسال
-    shipping_category: دسته بندی ارسال
+    shipping_categories: دسته‌بندی‌های ارسال
+    shipping_category: دسته‌بندی ارسال
     shipping_flat_rate_per_item: 
     shipping_flat_rate_per_order: 
     shipping_flexible_rate: 
-    shipping_instructions: دستورالعمل های ارسال
+    shipping_instructions: دستورالعمل‌های ارسال
     shipping_method: روش ارسال
-    shipping_methods: روش های ارسال
+    shipping_methods: روش‌های ارسال
     shipping_price_sack: 
     shop_by_taxonomy: خرید بر حسب %{taxonomy}
     shopping_cart: سبد خرید
     show: نمایش
     show_active: Show Active
     show_deleted: Show Deleted
-    show_only_complete_orders: نمایش سفارشات تکمیل شده
+    show_only_complete_orders: نمایش سفارش‌های تکمیل شده
     show_rate_in_label: 
     site_name: نام سایت
     site_url: آدرس سایت
@@ -963,7 +964,7 @@ fa:
     smtp_mail_host: SMTP Mail Host
     smtp_password: SMTP Password
     smtp_port: SMTP Port
-    smtp_send_all_emails_as_from_following_address: تمام نامه ها را از آدرس ذیل ارسال کن
+    smtp_send_all_emails_as_from_following_address: تمام نامه‌ها را از آدرس ذیل ارسال کن
     smtp_send_copy_to_this_addresses: Sends a copy of all outgoing mails to this address. For multiple addresses, separate with commas.
     smtp_username: SMTP Username
     source: 
@@ -971,12 +972,12 @@ fa:
     split: 
     spree/order:
       coupon_code: 
-    spree_gateway_error_flash_for_checkout: مشکلی در با اطلاعات پرداخت شما وجود دارد، لطفا اطلاعات را بررسی کنید و دوباره تلاش کنید.
+    spree_gateway_error_flash_for_checkout: مشکلی در اطلاعات پرداخت شما وجود دارد، لطفا اطلاعات را بررسی کنید و دوباره تلاش کنید.
     start: شروع
     start_date: Valid from
     state: ایالت یا استان
     state_based: State Based
-    states: ایالات یا استان ها
+    states: ایالات یا استان‌ها
     states_required: 
     status: وضعیت
     stock_location: 
@@ -1000,8 +1001,8 @@ fa:
     successfully_signed_up_for_analytics: 
     successfully_updated: ! '%{resource} با موفقیت به‌روزرسانی‌ شد!'
     tax: مالیات
-    tax_categories: دسته بندی های مالیات
-    tax_category: دسته بندی مالیات
+    tax_categories: دسته‌بندی‌های مالیات
+    tax_category: دسته‌بندی مالیات
     tax_rate_amount_explanation: 
     tax_rates: نرخ مالیات
     tax_settings: تنظیمات مالیات
@@ -1009,9 +1010,9 @@ fa:
     taxon: Taxon
     taxon_edit: Edit Taxon
     taxon_placeholder: 
-    taxonomies: طبقه بندی ها
-    taxonomy: Taxonomy
-    taxonomy_edit: ویرایش طبقه بندی
+    taxonomies: طبقه‌بندی‌ها
+    taxonomy: طبقه‌بندی
+    taxonomy_edit: ویرایش طبقه‌بندی
     taxonomy_tree_error: The requested change has not been accepted and the tree has been returned to its previous state, please try again.
     taxonomy_tree_instruction: ! '* Right click a child in the tree to access the menu for adding, deleting or sorting a child.'
     taxons: Taxons
@@ -1019,7 +1020,7 @@ fa:
     test_mailer:
       test_email:
         greeting: تبریک!
-        message: اگر شما این ایمیل را دریافت نموده‌اید، به معنی آن است که تنظیمات ایمیل شما با موفقیت انجام شده است.
+        message: اگر شما این ایمیل را دریافت نموده‌اید، به معنی آن است که تنظیمات ایمیل شما با موفقیت انجام شده‌است.
         subject: ایمیل تست
     test_mode: مد تست
     thank_you_for_your_order: با تشکر، لطفا یک کپی از این صفحه برای نگهداری در نزد خود، پرینت کنید
@@ -1044,8 +1045,8 @@ fa:
     unlock: 
     unrecognized_card_type: نوع کارت ناشناخته
     unshippable_items: 
-    update: بروز رسانی
-    updating: در حال بروز رسانی
+    update: بروز‌رسانی
+    updating: در حال بروز‌رسانی
     usage_limit: محدودیت استفاده
     use_billing_address: همانند آدرس پرداخت
     use_new_cc: از یک کارت جدید استفاده کن
@@ -1078,4 +1079,4 @@ fa:
     zip: کد پستی
     zipcode: 
     zone: ناحیه
-    zones: ناحیه ها
+    zones: ناحیه‌ها
