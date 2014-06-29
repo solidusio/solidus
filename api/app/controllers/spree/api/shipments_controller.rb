@@ -36,10 +36,8 @@ module Spree
       end
 
       def update
-        @shipment.update_attributes(shipment_params)
-
-        @shipment.reload
-        respond_with(@shipment, default_template: :show)
+        @shipment.update_attributes_and_order(shipment_params)
+        respond_with(@shipment.reload, default_template: :show)
       end
 
       def ready
