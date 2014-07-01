@@ -3,7 +3,7 @@ ru:
     attributes:
       spree/address:
         address1: Адрес
-        address2: доп. адрес
+        address2: адрес (продолж.)
         city: Населённый пункт
         country: Страна
         firstname: Имя
@@ -109,7 +109,7 @@ ru:
         name: Название
       spree/tax_rate:
         amount: Ставка
-        included_in_price: Включено в прайс
+        included_in_price: Включено в цену
         show_rate_in_label: Показывать ставку в метке
       spree/taxon:
         name: Название
@@ -320,6 +320,7 @@ ru:
     add: Добавить
     add_action_of_type: Добавить действие типа
     add_country: Добавить страну
+    add_coupon_code: Добавить код купона
     add_new_header: Добавить новый заголовок
     add_new_style: Добавить новый стиль
     add_one: Добавить
@@ -328,13 +329,13 @@ ru:
     add_product_properties: Добавить свойства товара
     add_rule_of_type: Добавить правило типа
     add_state: Добавить регион/область
-    add_stock: Добавить Склад
+    add_stock: Добавить склад
     add_stock_management: Добавить управление запасами
     add_to_cart: Добавить в корзину
     add_variant: Добавить вариант
     additional_item: Ставка для дополнительных наименований
     address1: Адрес
-    address2: Адрес (дополнительно)
+    address2: адрес (продолж.)
     adjustable: Корректируемое
     adjustment: Корректировка
     adjustment_amount: Количество
@@ -369,6 +370,7 @@ ru:
         orders: Заказы
         items: Товары
         items_purchased: Купленные товары
+        order_history: История заказов
     administration: Администрирование
     agree_to_privacy_policy: Согласиться с Политикой Конфиденциальности
     agree_to_terms_of_service: Согласиться с Уловиями обслуживания
@@ -411,14 +413,16 @@ ru:
     attachment_styles: Стили изображений
     attachment_url: URL путь изображений
     authorization_failure: Ошибка авторизации
+    auto_capture: Автозахват
     available_on: Доступно с
     average_order_value: Средняя сумма заказа
     back: Назад
     back_end: в администраторском интерфейсе
     back_to_adjustments_list: Вернуться к списку корректировок
+    back_to_countries_list: Вернуться к списку стран
     back_to_images_list: Вернуться к списку изображений
     back_to_option_types_list: Вернуться к списку товарных опций
-    back_to_orders_list: Назад к Списку заказов
+    back_to_orders_list: Вернуться к cписку заказов
     back_to_payment_methods_list: Вернуться к списку методов оплаты
     back_to_payments_list: Вернуться к списку способов оплаты
     back_to_products_list: Вернуться к списку товаров
@@ -430,14 +434,14 @@ ru:
     back_to_shipping_categories: Вернуться к списку категорий доставки
     back_to_shipping_methods_list: Вернуться к списку методов доставки
     back_to_states_list: Вернуться к списку регионов/областей
-    back_to_stock_locations_list: Назад к Списку складов
-    back_to_stock_movements_list: Назад к Перемещениям товаров
-    back_to_stock_transfers_list: Назад к Перемещениям между складами
-    back_to_store: Назад к списку
+    back_to_stock_locations_list: Назад к списку складов
+    back_to_stock_movements_list: Назад к перемещениям товаров
+    back_to_stock_transfers_list: Назад к перемещениям между складами
+    back_to_store: Вернуться в магазин
     back_to_tax_categories_list: Вернуться к списку категорий налогов
     back_to_taxonomies_list: Вернуться к списку таксономий
     back_to_trackers_list: Вернуться к списку трекеров веб-аналитики
-    back_to_users_list: Назад к Списку пользователей
+    back_to_users_list: Назад к списку пользователей
     back_to_zones_list: Вернуться к списку торговых зон
     backorderable: Возможен предзаказ
     backorderable_default: Предзаказ по умолчанию
@@ -471,6 +475,7 @@ ru:
     choose_currency: Выбрать валюту
     choose_dashboard_locale: Выбрать язык отображения панели управления
     city: Город
+    click_and_drag_on_the_products_to_sort_them: Перетаскивайте товары мышкой для сортировки
     clone: Копировать
     close: Закрыть
     close_all_adjustments: Закрыть все корректировки
@@ -586,10 +591,10 @@ ru:
         no_payment_methods_available: Для этого окружения не настроено ни одного способа оплаты
         no_shipping_methods_available: Для указанного местоположения отсутствуют способы доставки, пожалуйста, смените адрес и попробуйте снова.
     errors_prohibited_this_record_from_being_saved:
-      few: ! '%{count} ошибок не позволяют сохранить запись в базе'
-      many: ! '%{count} ошибки не позволяют сохранить запрос в базе'
-      one: 1 ошибка не позволяет сохранить запись в базе
-      other: ! '%{count} ошибки не позволяют сохранить запрос в базе'
+      few: ! '%{count} ошибки не позволяют сохранить запись в базе'
+      many: ! '%{count} ошибок не позволяют сохранить запись в базе'
+      one: 'Одна ошибка не позволяет сохранить запись в базе'
+      other: ! '%{count} ошибки не позволяют сохранить запись в базе'
     event: Событие
     events:
       spree:
@@ -606,6 +611,7 @@ ru:
           signup: Новый пользователь
     exceptions:
       count_on_hand_setter: Невозможно установить значение count_on_hand вручную, т.к. оно устанавливается автоматически с помощью recalculate_count_on_hand callback'а. Вместо этого, используйте `update_column(:count_on_hand, value)`, пожалуйста
+    excl: искл.
     expiration: Окончание действия
     extension: Расширение
     filename: Имя файла
@@ -655,6 +661,7 @@ ru:
     image_settings_updated: Настройки изображений успешно обновлены
     image_settings_warning: Вам нужно будет пересоздать миниатюры картинок, если вы изменили стили Paperclip. Воспользуйтесь командой rake paperclip:refresh:thumbnails.
     images: Изображения
+    incl: вкл.
     included_in_price: Включено в цену
     included_price_validation: не может быть выбрано, если только вы настроили зону налогообложения по умолчанию
     instructions_to_reset_password: Чтобы сбросить пароль, заполните форму ниже. Новый пароль будет отправлен вам по указанному email
@@ -685,6 +692,7 @@ ru:
     last_name_begins_with: Фамилия начинается с
     learn_more: Узнать больше
     lifetime_stats: Статистика
+    line_item_adjustments: Корректировки позиций
     list: Список
     listing_countries: Список стран
     listing_orders: Список заказов
@@ -729,6 +737,7 @@ ru:
     name_or_sku: Наименование или артикул
     new: Новый
     new_adjustment: Новая корректировка
+    new_country: Новая страна
     new_customer: Для новых пользователей
     new_image: Новое изображение
     new_option_type: Новая опция
@@ -798,9 +807,10 @@ ru:
     or_over_price: более чем %{price}
     order: Заказ
     order_adjustments: Корректировки заказа
-    order_details: Детали заказа
+    order_approved: Заказ подтвержден
+    order_details: Реквизиты заказа
     order_email_resent: Письмо с описанием заказа выслано повторно
-    order_information: Информация относительно заказа
+    order_information: Информация
     order_mailer:
       cancel_email:
         dear_customer: Дорогой покупатель,
@@ -818,7 +828,7 @@ ru:
         thanks: Спасибо, что выбрали нас.
         total: ! 'Итого по заказу: %{total}'
     order_not_found: Мы не смогли найти Ваш заказ. Попробуйте еще раз.
-    order_number: Заказ
+    order_number: Заказ %{number}
     order_populator:
       out_of_stock: ! 'На складе не хватает товара: %{item}.'
       please_enter_reasonable_quantity: ! 'Введите, пожалуйста, правильное количество товара. '
@@ -1010,6 +1020,7 @@ ru:
     ship_total: Всего к доставке
     shipment: Отправка
     shipment_adjustments: Корректировки доставки
+    shipment_details: Реквизиты доставки
     shipment_inc_vat: Сумма включает НДС
     shipment_mailer:
       shipped_email:
@@ -1144,6 +1155,7 @@ ru:
     update: Изменить
     updating: Обновление
     usage_limit: Максимальное количество использований
+    use_app_default: По умолчанию
     use_billing_address: Использовать платёжный адрес
     use_new_cc: Использовать новую карту
     use_s3: Использовать Amazon S3 для хранения изображений
