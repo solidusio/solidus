@@ -20,7 +20,7 @@ Gem::Specification.new do |s|
   s.has_rdoc = false
 
   s.add_dependency 'rails-i18n', '~> 4.0.1'
-  s.add_dependency 'spree_core', '~> 2.3.0.beta'
+  s.add_dependency 'spree_core', '~> 2.4.0.beta'
   s.add_dependency 'globalize', '~> 4.0.1'
   s.add_dependency 'i18n_data', '~> 0.5.1'
 
