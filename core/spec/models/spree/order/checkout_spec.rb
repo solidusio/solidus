@@ -243,6 +243,7 @@ describe Spree::Order do
         context "with a shipment that has a price" do
           before do
             shipment.shipping_rates.first.update_column(:cost, 10)
+            order.set_shipments_cost
           end
 
           it "transitions to payment" do
@@ -254,6 +255,7 @@ describe Spree::Order do
         context "with a shipment that is free" do
           before do
             shipment.shipping_rates.first.update_column(:cost, 0)
+            order.set_shipments_cost
           end
 
           it "skips payment, transitions to confirm" do
