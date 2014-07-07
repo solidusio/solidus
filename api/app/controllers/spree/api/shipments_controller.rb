@@ -1,9 +1,11 @@
 module Spree
   module Api
     class ShipmentsController < Spree::Api::BaseController
-
-      before_action :find_and_update_shipment, only: [:ship, :ready, :add, :remove]
+      before_filter :find_order_on_create, only: :create
+      before_filter :find_shipment, only: [:update, :ship, :ready, :add, :remove]
       before_action :load_transfer_params, only: [:transfer_to_location, :transfer_to_shipment]
+      around_filter :lock_order, except: [:mine]
+      before_filter :update_shipment, only: [:ship, :ready, :add, :remove]
 
       def mine
         if current_api_user.persisted?
@@ -19,8 +21,11 @@ module Spree
       end
 
       def create
-        @order = Spree::Order.find_by!(number: params.fetch(:shipment).fetch(:order_id))
-        authorize! :read, @order
+        # TODO Can remove conditional here once deprecated #find_order is removed.
+        unless @order.present?
+          @order = Spree::Order.find_by!(number: params[:shipment][:order_id])
+          authorize! :read, @order
+        end
         authorize! :create, Shipment
         quantity = params[:quantity].to_i
         @shipment = @order.shipments.create(stock_location_id: params.fetch(:stock_location_id))
@@ -32,7 +37,6 @@ module Spree
       end
 
       def update
-        @shipment = Spree::Shipment.accessible_by(current_ability, :update).readonly(false).find_by!(number: params[:id])
         @shipment.update_attributes_and_order(shipment_params)
 
         respond_with(@shipment.reload, default_template: :show)
@@ -88,14 +92,31 @@ module Spree
 
       def load_transfer_params
         @original_shipment         = Spree::Shipment.where(number: params[:original_shipment_number]).first
+        @order                     = @original_shipment.order
         @variant                   = Spree::Variant.find(params[:variant_id])
         @quantity                  = params[:quantity].to_i
         authorize! :read, @original_shipment
         authorize! :create, Shipment
       end
 
-      def find_and_update_shipment
-        @shipment = Spree::Shipment.accessible_by(current_ability, :update).readonly(false).find_by!(number: params[:id])
+      def find_order_on_create
+        # TODO Can remove conditional here once deprecated #find_order is removed.
+        unless @order.present?
+          @order = Spree::Order.find_by!(number: params[:shipment][:order_id])
+          authorize! :read, @order
+        end
+      end
+
+      def find_shipment
+        if @order.present?
+          @shipment = @order.shipments.accessible_by(current_ability, :update).find_by!(number: params[:id])
+        else
+          @shipment = Spree::Shipment.accessible_by(current_ability, :update).readonly(false).find_by!(number: params[:id])
+          @order = @shipment.order
+        end
+      end
+
+      def update_shipment
         @shipment.update_attributes(shipment_params)
         @shipment.reload
       end

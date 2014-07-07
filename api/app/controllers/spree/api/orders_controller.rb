@@ -12,10 +12,12 @@ module Spree
 
       before_action :find_order, except: [:create, :mine, :current, :index, :update]
 
+      before_filter :find_order, except: [:create, :mine, :current, :index]
+      around_filter :lock_order, except: [:create, :mine, :current, :index]
+
       # Dynamically defines our stores checkout steps to ensure we check authorization on each step.
       Order.checkout_steps.keys.each do |step|
         define_method step do
-          find_order
           authorize! :update, @order, params[:token]
         end
       end
@@ -62,7 +64,6 @@ module Spree
       end
 
       def update
-        find_order(true)
         authorize! :update, @order, order_token
 
         result = if request.patch?
@@ -102,7 +103,6 @@ module Spree
       end
 
       def apply_coupon_code
-        find_order
         authorize! :update, @order, order_token
         @order.coupon_code = params[:coupon_code]
         @handler = PromotionHandler::Coupon.new(@order).apply
@@ -137,7 +137,7 @@ module Spree
         end
 
         def find_order(lock = false)
-          @order = Spree::Order.lock(lock).find_by!(number: params[:id])
+          @order = Spree::Order.find_by!(number: params[:id])
         end
 
         def find_current_order
@@ -149,9 +149,9 @@ module Spree
 
           incomplete_orders = current_api_user.orders.incomplete.order(:created_at)
           incomplete_orders = incomplete_orders.where('created_at > ?', last_completed_at) if last_completed_at
-
           incomplete_orders
         end
+
 
         def order_id
           super || params[:id]

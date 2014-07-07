@@ -35,6 +35,13 @@ module Spree
       def config_locale
         Spree::Frontend::Config[:locale]
       end
+
+      def lock_order
+        OrderMutex.with_lock!(@order) { yield }
+      rescue Spree::OrderMutex::LockFailed => e
+        flash[:error] = Spree.t(:order_mutex_error)
+        redirect_to spree.cart_path
+      end
   end
 end
 

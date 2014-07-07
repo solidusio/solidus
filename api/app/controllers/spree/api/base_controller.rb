@@ -171,6 +171,13 @@ module Spree
         @order = Spree::Order.find_by(number: order_id)
         authorize! :read, @order, order_token
       end
+
+      def lock_order
+        OrderMutex.with_lock!(@order) { yield }
+      rescue Spree::OrderMutex::LockFailed => e
+        render text: e.message, status: 409
+      end
+
     end
   end
 end

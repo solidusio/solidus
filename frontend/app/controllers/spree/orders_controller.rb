@@ -8,9 +8,11 @@ module Spree
 
     respond_to :html
 
-    before_action :assign_order_with_lock, only: :update
-    before_action :apply_coupon_code, only: :update
-    skip_before_action :verify_authenticity_token, only: [:populate]
+    before_filter :assign_order, only: :update
+    # note: do not lock the #edit action because that's where we redirect when we fail to acquire a lock
+    around_filter :lock_order, only: :update
+    before_filter :apply_coupon_code, only: :update
+    skip_before_filter :verify_authenticity_token, only: [:populate]
 
     def show
       @order = Order.find_by_number!(params[:id])
@@ -103,12 +105,13 @@ module Spree
         end
       end
 
-      def assign_order_with_lock
-        @order = current_order(lock: true)
+      def assign_order
+        @order = current_order
         unless @order
           flash[:error] = Spree.t(:order_not_found)
           redirect_to root_path and return
         end
       end
+
   end
 end
