@@ -73,6 +73,7 @@ module Spree
     preference :site_url, :string, default: 'demo.spreecommerce.com'
     preference :tax_using_ship_address, :boolean, default: true
     preference :track_inventory_levels, :boolean, default: true # Determines whether to track on_hand values for variants / products.
+    preference :allow_return_item_amount_editing, :boolean, default: false # Determines whether an admin is allowed to change a return item's pre-calculated amount
 
     # Default mail headers settings
     preference :enable_mail_delivery, :boolean, :default => false
