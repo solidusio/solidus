@@ -82,12 +82,15 @@ module Spree
         subject.shipping_rates = [ Spree::ShippingRate.new(shipping_method: shipping_method, cost: 10.00, selected: true) ]
 
         shipment = subject.to_shipment
+        expect(shipment.address).to eq subject.order.ship_address
+        expect(shipment.order).to eq subject.order
         expect(shipment.stock_location).to eq subject.stock_location
         expect(shipment.inventory_units.size).to eq 3
 
         first_unit = shipment.inventory_units.first
         expect(first_unit.variant).to eq variant
         expect(first_unit.state).to eq 'on_hand'
+        expect(first_unit.order).to eq subject.order
         expect(first_unit).to be_pending
 
         last_unit = shipment.inventory_units.last
