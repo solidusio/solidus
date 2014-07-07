@@ -19,12 +19,11 @@ module Spree
         # The current incomplete order from the session for use in cart and during checkout
         def current_order(options = {})
           options[:create_order_if_necessary] ||= false
-          options[:lock] ||= false
 
           return @current_order if @current_order
 
           if session[:order_id]
-            current_order = Spree::Order.includes(:adjustments).lock(options[:lock]).find_by(id: session[:order_id], currency: current_currency)
+            current_order = Spree::Order.includes(:adjustments).find_by(id: session[:order_id], currency: current_currency)
             @current_order = current_order unless current_order.try(:completed?)
           end
 

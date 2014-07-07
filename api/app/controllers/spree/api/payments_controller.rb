@@ -3,6 +3,7 @@ module Spree
     class PaymentsController < Spree::Api::BaseController
 
       before_filter :find_order
+      around_filter :lock_order, only: [:create, :update, :destroy, :authorize, :capture, :purchase, :void, :credit]
       before_filter :find_payment, only: [:update, :show, :authorize, :purchase, :capture, :void, :credit]
 
       def index

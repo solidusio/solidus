@@ -1,20 +1,20 @@
 module Spree
   module Api
     class OrdersController < Spree::Api::BaseController
-
       skip_before_filter :check_for_user_or_api_key, only: :apply_coupon_code
       skip_before_filter :authenticate_user, only: :apply_coupon_code
+
+      before_filter :find_order, except: [:create, :mine, :index]
+      around_filter :lock_order, except: [:create, :mine, :index]
 
       # Dynamically defines our stores checkout steps to ensure we check authorization on each step.
       Order.checkout_steps.keys.each do |step|
         define_method step do
-          find_order
           authorize! :update, @order, params[:token]
         end
       end
 
       def cancel
-        find_order
         authorize! :update, @order, params[:token]
         @order.cancel!
         render :show
@@ -27,7 +27,6 @@ module Spree
       end
 
       def empty
-        find_order
         authorize! :update, @order, order_token
         @order.empty!
         @order.update!
@@ -41,7 +40,6 @@ module Spree
       end
 
       def show
-        find_order
         authorize! :show, @order, order_token
         method = "before_#{@order.state}"
         send(method) if respond_to?(method, true)
@@ -49,7 +47,6 @@ module Spree
       end
 
       def update
-        find_order(true)
         authorize! :update, @order, order_token
         # Parsing line items through as an update_attributes call in the API will result in
         # many line items for the same variant_id being created. We must be smarter about this,
@@ -76,7 +73,6 @@ module Spree
       end
 
       def apply_coupon_code
-        find_order
         authorize! :update, @order, order_token
         @order.coupon_code = params[:coupon_code]
         @handler = PromotionHandler::Coupon.new(@order).apply
@@ -140,8 +136,8 @@ module Spree
           end
         end
 
-        def find_order(lock = false)
-          @order = Spree::Order.lock(lock).find_by!(number: params[:id])
+        def find_order
+          @order = Spree::Order.find_by!(number: params[:id])
         end
 
         def before_delivery
