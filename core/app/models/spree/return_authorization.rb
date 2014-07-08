@@ -3,7 +3,7 @@ module Spree
     belongs_to :order, class_name: 'Spree::Order', inverse_of: :return_authorizations
 
     has_many :return_items, inverse_of: :return_authorization, dependent: :destroy
-    has_many :inventory_units, through: :return_items
+    has_many :inventory_units, through: :return_items, dependent: :nullify
     has_many :customer_returns, through: :return_items
 
     belongs_to :stock_location
