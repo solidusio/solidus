@@ -12,7 +12,7 @@ module Spree
       end
 
       def new
-        @payment_methods = Spree::PaymentMethod.where(environment: Rails.env)
+        @payment_methods = Spree::PaymentMethod.available
         respond_with(@payment_method)
       end
 
