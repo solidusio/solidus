@@ -30,9 +30,9 @@ describe Spree::ReturnAuthorization do
       context "number is not assigned" do
         let(:return_authorization) { FactoryGirl.build(:return_authorization, number: nil) }
 
-        it "should assign number with random RMA number" do
+        it "should assign number with random RA number" do
           return_authorization.save
-          return_authorization.number.should =~ /RMA\d{9}/
+          return_authorization.number.should =~ /RA\d{9}/
         end
       end
     end
