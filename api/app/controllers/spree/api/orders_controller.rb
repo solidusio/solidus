@@ -7,6 +7,8 @@ module Spree
       class_attribute :admin_order_attributes
       self.admin_order_attributes = [:import, :number, :completed_at, :locked_at, :channel]
 
+      wrap_parameters false
+
       skip_before_filter :check_for_user_or_api_key, only: :apply_coupon_code
       skip_before_filter :authenticate_user, only: :apply_coupon_code
 
