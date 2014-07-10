@@ -54,6 +54,11 @@ module Spree
     def customer_returned_items?
       customer_returns.exists?
     end
+    #
+    # Used when Adjustment#update! wants to update the related adjustment
+    def compute_amount(*args)
+      amount.abs * -1
+    end
 
     private
 
