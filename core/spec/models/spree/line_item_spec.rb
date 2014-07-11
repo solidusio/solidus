@@ -149,6 +149,15 @@ describe Spree::LineItem do
       expect(line_item).to have(0).error_on(:currency)
     end
   end
+  context "currency same as order.currency" do
+    it "is a valid line item" do
+      line_item = order.line_items.first
+      line_item.currency = order.currency
+      line_item.valid?
+
+      expect(line_item).to have(0).error_on(:currency)
+    end
+  end
 
   context "currency different than order.currency" do
     it "is not a valid line item" do
