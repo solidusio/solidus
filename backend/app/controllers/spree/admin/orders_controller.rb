@@ -2,7 +2,7 @@ module Spree
   module Admin
     class OrdersController < Spree::Admin::BaseController
       before_filter :initialize_order_events
-      before_filter :load_order, :only => [:edit, :update, :advance, :complete, :confirm, :cancel, :resume, :approve, :resend, :open_adjustments, :close_adjustments]
+      before_filter :load_order, :only => [:edit, :update, :advance, :complete, :confirm, :cancel, :resume, :approve, :resend, :open_adjustments, :close_adjustments, :cart]
 
       respond_to :html
 
@@ -50,12 +50,23 @@ module Spree
       def new
         user = Spree.user_class.find_by_id(params[:user_id])
         @order = Spree::Core::Importer::Order.import(user, order_params)
-        redirect_to edit_admin_order_url(@order)
+        redirect_to cart_admin_order_url(@order)
       end
 
       def edit
-        unless @order.complete?
+        can_not_transition_without_customer_info
+
+        unless @order.completed?
           @order.refresh_shipment_rates
+        end
+      end
+
+      def cart
+        unless @order.completed?
+          @order.refresh_shipment_rates
+        end
+        if @order.shipped_shipments.count > 0
+          redirect_to edit_admin_order_url(@order)
         end
       end
 

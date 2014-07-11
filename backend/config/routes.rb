@@ -76,6 +76,7 @@ Spree::Core::Engine.add_routes do
         put :advance
         get :confirm
         put :complete
+        get :cart
         post :resend
         get :open_adjustments
         get :close_adjustments

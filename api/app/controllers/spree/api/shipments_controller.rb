@@ -7,6 +7,7 @@ module Spree
       before_filter :find_shipment, only: [:update, :ship, :ready, :add, :remove]
       around_filter :lock_order, only: [:create, :update, :ready, :ship, :add, :remove]
       before_filter :update_shipment, only: [:ship, :ready, :add, :remove]
+      before_filter :load_transfer_params, only: [:transfer_to_location, :transfer_to_shipment]
 
       def mine
         if current_api_user.persisted?
@@ -87,6 +88,18 @@ module Spree
         respond_with(@shipment, default_template: :show)
       end
 
+      def transfer_to_location
+        @stock_location = Spree::StockLocation.find(params[:stock_location_id])
+        @original_shipment.transfer_to_location(@variant, @quantity, @stock_location)
+        render json: {success: true, message: Spree.t(:shipment_transfer_success)}, status: 201
+      end
+
+      def transfer_to_shipment
+        @target_shipment  = Spree::Shipment.find_by!(number: params[:target_shipment_number])
+        @original_shipment.transfer_to_shipment(@variant, @quantity, @target_shipment)
+        render json: {success: true, message: Spree.t(:shipment_transfer_success)}, status: 201
+      end
+
       private
 
       def find_order
@@ -117,6 +130,14 @@ module Spree
       def update_shipment
         @shipment.update_attributes(shipment_params)
         @shipment.reload
+      end
+
+      def load_transfer_params
+        @original_shipment         = Spree::Shipment.where(number: params[:original_shipment_number]).first
+        @variant                   = Spree::Variant.find(params[:variant_id])
+        @quantity                  = params[:quantity].to_i
+        authorize! :read, @original_shipment
+        authorize! :create, Shipment
       end
 
       def shipment_params

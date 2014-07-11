@@ -82,6 +82,8 @@ Spree::Core::Engine.add_routes do
     resources :shipments, :only => [:create, :update] do
       collection do
         get :mine
+        post 'transfer_to_location'
+        post 'transfer_to_shipment'
       end
 
       member do

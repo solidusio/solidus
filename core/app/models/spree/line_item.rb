@@ -1,6 +1,6 @@
 module Spree
   class LineItem < ActiveRecord::Base
-    before_validation :adjust_quantity
+    before_validation :invalid_quantity_check
     belongs_to :order, class_name: "Spree::Order", inverse_of: :line_items, touch: true
     belongs_to :variant, class_name: "Spree::Variant", inverse_of: :line_items
     belongs_to :tax_category, class_name: "Spree::TaxCategory"
@@ -73,7 +73,7 @@ module Spree
     alias display_total money
     alias display_amount money
 
-    def adjust_quantity
+    def invalid_quantity_check
       self.quantity = 0 if quantity.nil? || quantity < 0
     end
 
@@ -122,7 +122,7 @@ module Spree
 
       def ensure_proper_currency
         unless currency == order.currency
-          errors.add(:currency, t(:must_match_order_currency))
+          errors.add(:currency, :must_match_order_currency)
         end
       end
   end

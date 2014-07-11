@@ -17,7 +17,13 @@ describe "New Order" do
     click_on "New Order"
   end
 
-  it "completes new order succesfully", js: true do
+  it "does check if you have a billing address before letting you add shipments" do
+    click_on "Shipments"
+    page.should have_content 'Please fill in customer info'
+    expect(current_path).to eql(spree.edit_admin_order_customer_path(Spree::Order.last))
+  end
+
+  it "completes new order succesfully withous using the cart", js: true do
     select2_search product.name, :from => Spree.t(:name_or_sku)
     click_icon :plus
     click_on "Customer Details"
@@ -43,11 +49,42 @@ describe "New Order" do
     click_on "Payments"
     click_icon "capture"
 
-    click_on "Order Details"
+    click_on "Shipments"
     click_on "ship"
     wait_for_ajax
 
     page.should have_content("shipped")
+  end
+
+  context "adding new item to the order", js: true do
+    it "inventory items show up just fine and are also registered as shipments" do
+      select2_search product.name, :from => Spree.t(:name_or_sku)
+
+      within("table.stock-levels") do
+        fill_in "variant_quantity", :with => 2
+        click_icon :plus
+      end
+
+      within(".line-items") do
+        page.should have_content(product.name)
+      end
+
+      click_on "Customer Details"
+
+      within "#select-customer" do
+        targetted_select2_search user.email, :from => "#s2id_customer_search"
+      end
+
+      check "order_use_billing"
+      fill_in_address
+      click_on "Update"
+
+      click_on "Shipments"
+
+      within(".stock-contents") do
+        page.should have_content(product.name)
+      end
+    end
   end
 
   # Regression test for #3958
@@ -84,7 +121,7 @@ describe "New Order" do
     fill_in_address
     click_on "Update"
 
-    click_on "Order Details"
+    click_on "Shipments"
     select2_search product.name, :from => Spree.t(:name_or_sku)
     click_icon :plus
     wait_for_ajax

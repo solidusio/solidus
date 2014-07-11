@@ -285,7 +285,82 @@ module Spree
       end
     end
 
+    # Update Shipment and make sure Order states follow the shipment changes
+    def update_attributes_and_order(params = {})
+      if self.update_attributes params
+        if params.has_key? :selected_shipping_rate_id
+          # Changing the selected Shipping Rate won't update the cost (for now)
+          # so we persist the Shipment#cost before calculating order shipment
+          # total and updating payment state (given a change in shipment cost
+          # might change the Order#payment_state)
+          self.update_amounts
+
+          order.updater.update_shipment_total
+          order.updater.update_payment_state
+
+          # Update shipment state only after order total is updated because it
+          # (via Order#paid?) affects the shipment state (YAY)
+          self.update_columns(
+            state: determine_state(order),
+            updated_at: Time.now
+          )
+
+          # And then it's time to update shipment states and finally persist
+          # order changes
+          order.updater.update_shipment_state
+          order.updater.persist_totals
+        end
+
+        true
+      end
+    end
+
+    class ShipmentTransferError < StandardError
+    end
+
+    def transfer_to_location(variant, quantity, stock_location)
+      if (quantity <= 0 || !enough_stock_at_destination_location(variant, quantity, stock_location))
+        raise ShipmentTransferError
+      end
+
+      transaction do
+        new_shipment = order.shipments.create!(stock_location: stock_location)
+
+        order.contents.remove(variant, quantity, self)
+        order.contents.add(variant, quantity, nil, new_shipment)
+
+        refresh_rates
+        save!
+        new_shipment.refresh_rates
+        new_shipment.save!
+      end
+    end
+
+    def transfer_to_shipment(variant, quantity, shipment_to_transfer_to)
+      quantity_already_shipment_to_transfer_to = shipment_to_transfer_to.manifest.find{|mi| mi.line_item.variant == variant}.try(:quantity) || 0
+      final_quantity = quantity + quantity_already_shipment_to_transfer_to
+
+      if (quantity <= 0 || self.id == shipment_to_transfer_to.id || !enough_stock_at_destination_location(variant, final_quantity, shipment_to_transfer_to.stock_location))
+        raise ShipmentTransferError
+      end
+
+      transaction do
+        order.contents.remove(variant, quantity, self)
+        order.contents.add(variant, quantity, nil, shipment_to_transfer_to)
+
+        refresh_rates
+        save!
+        shipment_to_transfer_to.refresh_rates
+        shipment_to_transfer_to.save!
+      end
+    end
+
     private
+      def enough_stock_at_destination_location(variant, quantity, stock_location)
+        stock_item = Spree::StockItem.where(variant: variant).
+                                      where(stock_location: stock_location).first
+        (stock_item.count_on_hand >= quantity || stock_item.backorderable)
+      end
 
       def manifest_unstock(item)
         stock_location.unstock item.variant, item.quantity, self
