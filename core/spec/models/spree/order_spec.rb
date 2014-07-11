@@ -741,15 +741,6 @@ describe Spree::Order do
     end
   end
 
-  describe '#quantity' do
-    # Uses a persisted record, as the quantity is retrieved via a DB count
-    let(:order) { create :order_with_line_items }
-
-    it 'sums the quantity of all line items' do
-      expect(order.quantity).to eq 5
-    end
-  end
-
   describe "#pre_tax_item_amount" do
     it "sums all of the line items' pre tax amounts" do
       subject.line_items = [
@@ -926,6 +917,14 @@ describe Spree::Order do
     it 'excludes orders with no shipment' do
       order.shipments.destroy_all
       expect(subject).not_to include order
+    end
+  end
+
+  describe "locking" do
+    let(:order) { Spree::Order.create } # need a persisted in order to test locking
+
+    it 'can lock' do
+      expect { order.with_lock {} }.to_not raise_error
     end
   end
 end
