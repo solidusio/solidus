@@ -116,6 +116,10 @@ module Spree
       credits.count
     end
 
+    def used_by?(user, excluded_orders = [])
+      orders.where.not(id: excluded_orders.map(&:id)).complete.where(user_id: user.id).exists?
+    end
+
     private
     def normalize_blank_values
       [:code, :path].each do |column|
