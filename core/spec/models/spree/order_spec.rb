@@ -908,4 +908,13 @@ describe Spree::Order do
       order.apply_free_shipping_promotions
     end
   end
+
+  describe '#quantity' do
+    # Uses a persisted record, as the quantity is retrieved via a DB count
+    let(:order) { create :order_with_line_items }
+
+    it 'sums the quantity of all line items' do
+      expect(order.quantity).to eq 5
+    end
+  end
 end

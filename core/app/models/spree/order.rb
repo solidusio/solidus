@@ -597,6 +597,10 @@ module Spree
       super
     end
 
+    def quantity
+      line_items.sum(:quantity)
+    end
+
     private
 
       def link_by_email
