@@ -5,8 +5,19 @@ module SpreeI18n
   module ControllerLocaleHelper
     extend ActiveSupport::Concern
     included do
-      before_filter :set_user_language
-      before_filter :globalize_fallbacks
+      # Ensures any existing action of the same kind and name retains its
+      # position in the callback chain
+      def self._stable_action(kind, name)
+        # When registering a callback where one of the same kind and name already
+        # exists in the chain, ActiveSupport removes the existing one and appends
+        # the new one to the end, disrupting the existing chain order
+        unless _process_action_callbacks.select { |c| c.kind == kind }.find { |c| c.filter == name }
+          send("#{kind}_action", name)
+        end
+      end
+
+      _stable_action :before, :set_user_language
+      prepend_before_filter :globalize_fallbacks
 
       private
         # Overrides the Spree::Core::ControllerHelpers::Common logic so that only
