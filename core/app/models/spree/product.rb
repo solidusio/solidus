@@ -21,7 +21,8 @@
 module Spree
   class Product < ActiveRecord::Base
     extend FriendlyId
-    friendly_id :name, use: :slugged
+
+    friendly_id :slug_candidates, use: :history
 
     acts_as_paranoid
     has_many :product_option_types, dependent: :destroy, inverse_of: :product
