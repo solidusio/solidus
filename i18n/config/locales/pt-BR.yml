@@ -764,7 +764,7 @@ pt-BR:
         thanks: Obrigado Por Negociar.
         total: ! 'Total do pedido: %{total}'
     order_not_found: Não conseguimos encontrar seu pedido. Por favor tente novamente.
-    order_number: Número do Pedido
+    order_number: 'Número do Pedido %{number}'
     order_populator:
       out_of_stock: ! '%{item} está fora de estoque.'
       selected_quantity_not_available: ! 'A quantidade selecionada do %{item} não está disponível.'
