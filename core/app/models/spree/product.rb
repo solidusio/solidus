@@ -247,6 +247,13 @@ module Spree
         master.is_master = true
       end
 
+      def slug_candidates
+        [
+            :name,
+            [:name, :sku]
+        ]
+      end
+
       # there's a weird quirk with the delegate stuff that does not automatically save the delegate object
       # when saving so we force a save using a hook.
       def save_master
