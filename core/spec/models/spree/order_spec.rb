@@ -913,4 +913,24 @@ describe Spree::Order do
       expect(subject.pre_tax_item_amount).to eq 19.0
     end
   end
+
+  describe '#quantity' do
+    # Uses a persisted record, as the quantity is retrieved via a DB count
+    let(:order) { create :order_with_line_items }
+
+    it 'sums the quantity of all line items' do
+      expect(order.quantity).to eq 5
+    end
+  end
+
+  describe "#create_proposed_shipments" do
+    it "assigns the coordinator returned shipments to its shipments" do
+      shipment = build(:shipment)
+      Spree::Stock::Coordinator.any_instance.stub(:shipments).and_return([shipment])
+      subject.create_proposed_shipments
+      expect(subject.shipments).to eq [shipment]
+    end
+
+  end
+
 end
