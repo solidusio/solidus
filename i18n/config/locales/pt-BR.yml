@@ -974,6 +974,7 @@ pt-BR:
       pending: Pendente
       ready: Pronta
       shipped: Enviado
+    shipment_details: Detalhes da Entrega
     shipments: Entregas
     shipped: Despachado
     shipping: Entrega
