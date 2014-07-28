@@ -101,6 +101,16 @@ module Spree
       usage_limit.present? && usage_limit > 0 && adjusted_credits_count(promotable) >= usage_limit
     end
 
+    def blacklisted?(promotable)
+      case promotable
+      when Spree::LineItem
+        !promotable.product.promotionable?
+      when Spree::Order
+        promotable.line_items.any? &&
+          !promotable.line_items.joins(:product).where(spree_products: {promotionable: true}).any?
+      end
+    end
+
     def adjusted_credits_count(promotable)
       credits_count - promotable.adjustments.promotion.where(:source_id => actions.pluck(:id)).count
     end
