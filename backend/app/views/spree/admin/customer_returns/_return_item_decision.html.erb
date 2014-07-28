@@ -4,6 +4,7 @@
       <th><%= Spree.t(:product) %></th>
       <th><%= Spree.t(:reception_status) %></th>
       <th><%= Spree.t(:pre_tax_refund_amount) %></th>
+      <th><%= Spree.t(:exchange_for) %></th>
       <th class="actions"></th>
     </tr>
   </thead>
@@ -16,6 +17,7 @@
         </td>
         <td class="align-center"><%= return_item.reception_status.humanize %></td>
         <td class="align-center"><%= return_item.display_pre_tax_amount %></td>
+        <td class="align-center"><%= return_item.exchange_variant.try(:options_text) %></td>
         <td class='actions'>
           <%= form_for [:admin, return_item] do |f| %>
             <%= f.hidden_field 'acceptance_status', value: 'accepted' %>
