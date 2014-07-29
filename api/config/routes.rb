@@ -70,6 +70,7 @@ Spree::Core::Engine.add_routes do
     end
 
     get '/orders/mine', :to => 'orders#mine', :as => 'my_orders'
+    get "/orders/current", to: "orders#current", to: "orders#current", as: "current_order"
 
     resources :orders, &order_routes
 
