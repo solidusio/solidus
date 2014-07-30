@@ -24,6 +24,7 @@ module Spree
     preference :address_requires_state, :boolean, default: true # should state/state_name be required
     preference :admin_interface_logo, :string, default: 'logo/spree_50.png'
     preference :admin_products_per_page, :integer, default: 10
+    preference :admin_variants_per_page, :integer, default: 20
     preference :allow_backorder_shipping, :boolean, default: false # should only be true if you don't need to track inventory
     preference :allow_checkout_on_gateway_error, :boolean, default: false
     preference :allow_guest_checkout, :boolean, default: true

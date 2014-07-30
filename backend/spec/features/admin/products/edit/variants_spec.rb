@@ -46,9 +46,11 @@ describe "Product Variants" do
       within('#sidebar') { click_link "Variants" }
       click_link "New Variant"
 
-      targetted_select2 "black", :from => "#s2id_variant_option_value_ids"
-      fill_in "variant_sku", :with => "A100"
-      click_button "Create"
+      within "#new_variant" do
+        targetted_select2 "black", :from => "#s2id_variant_option_value_ids"
+        fill_in "variant_sku", :with => "A100"
+        click_button "Create"
+      end
       page.should have_content("successfully created!")
 
       within(".index") do
