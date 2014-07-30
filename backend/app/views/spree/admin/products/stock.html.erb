@@ -10,6 +10,8 @@
   <%= render 'add_stock_form' %>
 </div>
 
+<%= paginate @variants %>
+
 <table class="index" id="listing_product_stock">
   <colgroup>
     <col style="width: 25%" />
@@ -89,3 +91,4 @@
     <% end %>
   </tbody>
 </table>
+<%= paginate @variants %>
