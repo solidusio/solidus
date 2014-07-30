@@ -48,7 +48,7 @@ module Spree
         end
 
         def load_option_types_values
-          @option_types = parent.option_types.includes(:option_values).sort_by(&:presentation)
+          @option_types = parent.option_types.includes(:option_values)
           @option_values = @option_types.flat_map(&:option_values).uniq(&:presentation)
         end
 
