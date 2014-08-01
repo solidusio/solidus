@@ -472,6 +472,7 @@ module Spree
           end
 
           before do
+            order.bill_address = FactoryGirl.create(:address)
             order.ship_address = FactoryGirl.create(:address)
             order.state = 'delivery'
             order.save

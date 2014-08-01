@@ -44,7 +44,6 @@ module Spree
         order_params = object_params
         line_items = order_params.delete('line_items_attributes')
         if @order.update_attributes(order_params)
-          persist_user_address(@order) 
           @order.update_line_items(line_items)
           if current_api_user.has_spree_role?('admin') && user_id.present?
             @order.associate_user!(Spree.user_class.find(user_id))

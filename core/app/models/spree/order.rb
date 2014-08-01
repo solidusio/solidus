@@ -21,6 +21,7 @@ module Spree
     token_resource
 
     attr_reader :coupon_code
+    attr_accessor :temporary_address
 
     if Spree.user_class
       belongs_to :user, class_name: Spree.user_class.to_s
@@ -257,21 +258,18 @@ module Spree
       @contents ||= Spree::OrderContents.new(self)
     end
 
-    # Associates the specified user and user addresses with the order.
+    # Associates the specified user with the order.
     def associate_user!(user, override_email = true)
       self.user = user
       attrs_to_set = { user_id: user.try(:id) }
       attrs_to_set[:email] = user.try(:email) if override_email
       attrs_to_set[:created_by_id] = user.try(:id) if self.created_by.blank?
+      assign_attributes(attrs_to_set)
 
       if persisted?
         # immediately persist the changes we just made, but don't use save since we might have an invalid address associated
         self.class.unscoped.where(id: id).update_all(attrs_to_set)
       end
-
-      attrs_to_set[:ship_address_attributes] = user.ship_address.attributes.except('id', 'updated_at', 'created_at') if user.try(:ship_address)
-      attrs_to_set[:bill_address_attributes] = user.bill_address.attributes.except('id', 'updated_at', 'created_at') if user.try(:bill_address)
-      assign_attributes(attrs_to_set)
     end
 
     # FIXME refactor this method and implement validation using validates_* utilities

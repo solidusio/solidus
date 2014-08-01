@@ -67,24 +67,7 @@ module Spree
           before { user.stub :has_spree_role? => true }
 
           context "a user's id is not provided" do
-            context "nil user id is provided" do
-              it "unassociates the admin user from the order" do
-                params = { user_id: nil }
-                order = Importer::Order.import(user, params)
-                expect(order.user_id).to be_nil
-              end
-            end
-
-            context "another user's id is provided" do
-              it "permits the user to be assigned" do
-                params = { user_id: other_user.id }
-                order = Importer::Order.import(user, params)
-                expect(order.user_id).to eq(other_user.id)
-              end
-            end
-          end
-
-          context "a user's id is not provided" do
+            # this is a regression spec for an issue we ran into at Bonobos
             it "doesn't unassociate the admin from the order" do
               params = { }
               order = Importer::Order.import(user, params)
