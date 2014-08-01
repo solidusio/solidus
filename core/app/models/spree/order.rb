@@ -233,11 +233,13 @@ module Spree
       ActiveSupport::Deprecation.warn("Use OrderContents#associate_user instead. Called by #{caller.first}")
       contents.associate_user(user, override_email)
     end
-
+    
     def generate_order_number
+      digits = 9
       self.number ||= loop do
-        random = "R#{Array.new(9){rand(9)}.join}"
-        break random unless self.class.exists?(number: random)
+         random = "R#{Array.new(digits){rand(digits)}.join}"
+         break random self.class.exists?(number: random)
+    	   digits += 1 if self.class.count > 10**digits/2
       end
     end
 
