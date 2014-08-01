@@ -11,6 +11,8 @@ en:
         phone: Phone
         state: State
         zipcode: Zip Code
+      spree/calculator/tiered_percent:
+        preferred_tiers: Tiers
       spree/country:
         iso: ISO
         iso3: ISO3
@@ -244,6 +246,12 @@ en:
         other: Zones
     errors:
       models:
+        spree/calculator/tiered_percent:
+          attributes:
+            preferred_tiers:
+              too_long:
+                one: "has a maximum of 1 tier"
+                other: "has a maximum of %{count} tiers"
         spree/classification:
           attributes:
             taxon_id:
@@ -1269,6 +1277,8 @@ en:
     there_were_problems_with_the_following_fields: There were problems with the following fields
     this_order_has_already_received_a_refund: This order has already received a refund
     thumbnail: Thumbnail
+    tiers: Tiers
+    tiered_percent: Tiered Percent
     time: Time
     to_add_variants_you_must_first_define: To add variants, you must first define
     total: Total
