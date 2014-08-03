@@ -28,12 +28,7 @@ module Spree
             order.update_attributes!(params)
 
             # Really ensure that the order totals & states are correct
-            order.updater.update_totals
-            if order.completed?
-              order.updater.update_payment_state
-              order.updater.update_shipment_state
-            end
-            order.updater.persist_totals
+            order.updater.update
             order.reload
           rescue Exception => e
             order.destroy if order && order.persisted?
@@ -69,6 +64,7 @@ module Spree
               rate = shipment.shipping_rates.create!(:shipping_method => shipping_method,
                                                      :cost => s[:cost])
               shipment.selected_shipping_rate_id = rate.id
+              shipment.update_amounts
 
             rescue Exception => e
               raise "Order import shipments: #{e.message} #{s}"
