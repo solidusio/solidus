@@ -43,18 +43,10 @@
       <%= render partial: 'reimbursements_table', locals: {reimbursements: @customer_return.reimbursements} %>
     <% else %>
       <div class='align-center'>
-        <%= button_to(
-          [:admin, @order, Spree::Reimbursement.new],
-          {
-            class: 'button fa fa-reply',
-            params: {
-              "return_item_ids" => @accepted_return_items.map(&:id).join(','),
-              "reimbursement[customer_return_id]" => @customer_return.id,
-            },
-            method: 'post',
-          }
-        ) do %>
-          <%= Spree.t(:create_reimbursement) %>
+        <%= form_for [:admin, @order, Spree::Reimbursement.new] do |f| %>
+          <%= hidden_field_tag 'return_item_ids', @accepted_return_items.map(&:id).join(',') %>
+          <%= f.hidden_field 'customer_return_id', value: @customer_return.id %>
+          <%= f.button Spree.t(:create_reimbursement), class: 'button fa fa-reply' %>
         <% end %>
       </div>
     <% end %>
