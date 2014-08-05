@@ -21,7 +21,7 @@ module Spree
     token_resource
 
     attr_reader :coupon_code
-    attr_accessor :temporary_address
+    attr_accessor :temporary_address, :temporary_credit_card
 
     if Spree.user_class
       belongs_to :user, class_name: Spree.user_class.to_s
@@ -327,6 +327,11 @@ module Spree
 
     def credit_cards
       credit_card_ids = payments.from_credit_card.pluck(:source_id).uniq
+      CreditCard.where(id: credit_card_ids)
+    end
+
+    def valid_credit_cards
+      credit_card_ids = payments.from_credit_card.valid.pluck(:source_id).uniq
       CreditCard.where(id: credit_card_ids)
     end
 
