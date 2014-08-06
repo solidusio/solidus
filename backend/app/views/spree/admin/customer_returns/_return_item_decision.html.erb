@@ -2,10 +2,13 @@
   <thead>
     <tr>
       <th><%= Spree.t(:product) %></th>
-      <th><%= Spree.t(:reception_status) %></th>
-      <th><%= Spree.t(:pre_tax_refund_amount) %></th>
+      <th><%= Spree.t(:sku) %></th>
+      <th><%= Spree.t(:pre_tax_amount) %></th>
+      <th><%= Spree.t(:preferred_reimbursement_type) %></th>
       <th><%= Spree.t(:exchange_for) %></th>
-      <th class="actions"></th>
+      <% if show_decision %>
+        <th class="actions"></th>
+      <% end %>
     </tr>
   </thead>
   <tbody>
@@ -15,19 +18,19 @@
           <div class="variant-name"><%= return_item.inventory_unit.variant.name %></div>
           <div class="variant-options"><%= return_item.inventory_unit.variant.options_text %></div>
         </td>
-        <td class="align-center"><%= return_item.reception_status.humanize %></td>
-        <td class="align-center"><%= return_item.display_pre_tax_amount %></td>
-        <td class="align-center"><%= return_item.exchange_variant.try(:options_text) %></td>
-        <td class='actions'>
-          <%= form_for [:admin, return_item] do |f| %>
-            <%= f.hidden_field 'acceptance_status', value: 'accepted' %>
-            <%= f.button Spree.t(:accept), class: 'fa fa-thumbs-up icon_link no-text with-tip', title: Spree.t(:accept), "data-action" => 'save' %>
-          <% end %>
-          <%= form_for [:admin, return_item] do |f| %>
-            <%= f.hidden_field 'acceptance_status', value: 'rejected' %>
-            <%= f.button Spree.t(:reject), class: 'fa fa-thumbs-down icon_link no-text with-tip', title: Spree.t(:reject), "data-action" => 'remove' %>
-          <% end %>
         </td>
+        <% if show_decision %>
+          <td class='actions'>
+            <%= form_for [:admin, return_item] do |f| %>
+              <%= f.hidden_field 'acceptance_status', value: 'accepted' %>
+              <%= f.button Spree.t(:accept), class: 'fa fa-thumbs-up icon_link no-text with-tip', title: Spree.t(:accept), "data-action" => 'save' %>
+            <% end %>
+            <%= form_for [:admin, return_item] do |f| %>
+              <%= f.hidden_field 'acceptance_status', value: 'rejected' %>
+              <%= f.button Spree.t(:reject), class: 'fa fa-thumbs-down icon_link no-text with-tip', title: Spree.t(:reject), "data-action" => 'remove' %>
+            <% end %>
+          </td>
+        <% end %>
       </tr>
     <% end %>
   </tbody>
