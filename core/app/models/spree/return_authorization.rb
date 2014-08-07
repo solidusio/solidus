@@ -19,6 +19,7 @@ module Spree
     validate :must_have_shipped_units, on: :create
 
     state_machine initial: :authorized do
+      before_transition to: :canceled, do: :cancel_return_items
 
       event :cancel do
         transition to: :canceled, from: :authorized
@@ -59,6 +60,10 @@ module Spree
           random = "RA#{Array.new(9){rand(9)}.join}"
           break random unless self.class.exists?(number: random)
         end
+      end
+
+      def cancel_return_items
+        return_items.each(&:cancel!)
       end
 
   end
