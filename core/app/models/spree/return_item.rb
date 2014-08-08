@@ -37,9 +37,9 @@ module Spree
     scope :decided, -> { where.not(acceptance_status: %w(pending manual_intervention_required)) }
     scope :reimbursed, -> { where.not(reimbursement_id: nil) }
     scope :not_reimbursed, -> { where(reimbursement_id: nil) }
-    scope :exchange_requested, -> { where.not(exchange_variant: nil) }
-    scope :exchange_processed, -> { where.not(exchange_inventory_unit: nil) }
-    scope :exchange_required, -> { exchange_requested.where(exchange_inventory_unit: nil) }
+    scope :exchange_requested, -> { where.not(exchange_variant_id: nil) }
+    scope :exchange_processed, -> { where.not(exchange_inventory_unit_id: nil) }
+    scope :exchange_required, -> { exchange_requested.where(exchange_inventory_unit_id: nil) }
 
     serialize :acceptance_status_errors
 
