@@ -18,6 +18,17 @@
           <div class="variant-name"><%= return_item.inventory_unit.variant.name %></div>
           <div class="variant-options"><%= return_item.inventory_unit.variant.options_text %></div>
         </td>
+        <td>
+          <%= return_item.inventory_unit.variant.sku %>
+        </td>
+        <td class="align-center">
+          <%= return_item.display_pre_tax_amount %>
+        </td>
+        <td class="align-center">
+          <%= reimbursement_type_name(return_item.preferred_reimbursement_type) %>
+        </td>
+        <td class="align-center">
+          <%= return_item.exchange_variant.try(:options_text) %>
         </td>
         <% if show_decision %>
           <td class='actions'>
