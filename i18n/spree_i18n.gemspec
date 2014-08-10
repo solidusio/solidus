@@ -34,7 +34,7 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'capybara', '~> 2.2.1'
   s.add_development_dependency 'selenium-webdriver'
   s.add_development_dependency 'poltergeist', '~> 1.5.0'
-  s.add_development_dependency 'simplecov', '~> 0.7.1'
+  s.add_development_dependency 'simplecov', '~> 0.9.0'
   s.add_development_dependency 'database_cleaner', '~> 1.2.0'
   s.add_development_dependency 'ffaker'
   s.add_development_dependency 'pry'
