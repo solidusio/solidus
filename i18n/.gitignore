@@ -16,3 +16,5 @@ spec/dummy
 .rvmrc
 .sass-cache
 public/spree
+.ruby-version
+.ruby-gemsets
