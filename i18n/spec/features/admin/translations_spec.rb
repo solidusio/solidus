@@ -1,6 +1,4 @@
-require 'spec_helper'
-
-feature "Translations", js: true do
+RSpec.feature "Translations", :js do
   stub_authorization!
 
   given(:language) { Spree.t(:'i18n.this_file_language', locale: 'pt-BR') }
@@ -54,8 +52,8 @@ feature "Translations", js: true do
         fill_in "Presentation", with: "Sizes"
         click_button "Create"
 
-        page.should have_content "has been successfully created"
-        page.should have_content "OPTION VALUES"
+        expect(page).to have_content "has been successfully created"
+        expect(page).to have_content "OPTION VALUES"
       end
     end
 
@@ -77,7 +75,6 @@ feature "Translations", js: true do
         expect(page).to have_selector("input[value=grande]")
       end
     end
-
 
     context "properties" do
       given!(:property) { create(:property) }

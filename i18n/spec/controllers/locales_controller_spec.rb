@@ -1,6 +1,4 @@
-require 'spec_helper'
-
-describe Spree::HomeController do
+RSpec.describe Spree::HomeController, type: :controller do
   before do
     reset_spree_preferences
     SpreeI18n::Config.supported_locales = [:en, :es]

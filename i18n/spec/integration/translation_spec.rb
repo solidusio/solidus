@@ -1,8 +1,6 @@
 # encoding: utf-8
 
-require 'spec_helper'
-
-describe "Translation" do
+RSpec.describe "Translation" do
   def translation
     I18n.t("activerecord.attributes.spree/address.zipcode")
   end

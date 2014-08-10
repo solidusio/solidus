@@ -1,8 +1,6 @@
 # encoding: utf-8
 
-require 'spec_helper'
-
-describe "Russian errors translations" do
+RSpec.describe "Russian errors translations" do
   def translation(count)
     Spree.t(:errors_prohibited_this_record_from_being_saved, :count => count)
   end

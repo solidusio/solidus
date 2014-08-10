@@ -1,9 +1,7 @@
-require 'spec_helper'
-
 module Spree
-  describe Product do
-    let(:product) { FactoryGirl.create(:product) }
-    let(:taxon) { FactoryGirl.create(:taxon) }
+  RSpec.describe Product, type: :model do
+    let(:product) { create(:product) }
+    let(:taxon) { create(:taxon) }
 
     # Regression test for #309
     it "duplicates translations" do
@@ -16,7 +14,7 @@ module Spree
     # Regression test for #433
     it "allow saving a product with taxons" do
       product.taxons << taxon
-      product.taxons.should include(taxon)
+      expect(product.taxons).to include(taxon)
     end
   end
 end
