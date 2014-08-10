@@ -22,7 +22,7 @@ RSpec.feature "Translations", :js do
         click_on "Update"
 
         change_locale
-        expect(page).to have_content("Geleia de perola")
+        expect(page).to have_text_like 'Geleia de perola'
       end
     end
 
@@ -41,7 +41,7 @@ RSpec.feature "Translations", :js do
 
         change_locale
         visit spree.admin_option_types_path
-        expect(page).to have_content("tamanho")
+        expect(page).to have_text_like 'tamanho'
       end
 
       # Regression test for issue #354
@@ -52,8 +52,8 @@ RSpec.feature "Translations", :js do
         fill_in "Presentation", with: "Sizes"
         click_button "Create"
 
-        expect(page).to have_content "has been successfully created"
-        expect(page).to have_content "OPTION VALUES"
+        expect(page).to have_text_like 'has been successfully created'
+        expect(page).to have_text_like 'Option Values'
       end
     end
 
@@ -92,7 +92,7 @@ RSpec.feature "Translations", :js do
         change_locale
         visit spree.admin_properties_path
 
-        expect(page).to have_content("Modelo")
+        expect(page).to have_text_like 'Modelo'
       end
     end
   end
@@ -110,7 +110,7 @@ RSpec.feature "Translations", :js do
 
       change_locale
       visit spree.admin_promotions_path
-      expect(page).to have_content("Salve salve")
+      expect(page).to have_text_like 'Salve salve'
     end
   end
 
@@ -127,7 +127,7 @@ RSpec.feature "Translations", :js do
 
       change_locale
       visit spree.root_path
-      expect(page).to have_content('GUITARRAS')
+      expect(page).to have_text_like 'Guitarras'
     end
   end
 
@@ -157,7 +157,7 @@ RSpec.feature "Translations", :js do
 
       change_locale
       visit spree.root_path
-      expect(page).to have_content('Acusticas')
+      expect(page).to have_text_like 'Acusticas'
     end
   end
 
@@ -201,10 +201,10 @@ RSpec.feature "Translations", :js do
       click_on "Update"
 
       visit spree.product_path 'en_link'
-      expect(page).to have_content('Product')
+      expect(page).to have_text_like 'Product'
 
       visit spree.product_path 'de_link'
-      expect(page).to have_content('Product')
+      expect(page).to have_text_like 'Product'
     end
   end
 
