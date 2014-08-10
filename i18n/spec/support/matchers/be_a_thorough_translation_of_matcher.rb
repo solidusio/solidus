@@ -15,7 +15,7 @@ RSpec::Matchers.define :be_a_thorough_translation_of do |default_locale_filepath
     @keys = keys
   end
 
-  failure_message_for_should do |filepath|
+  failure_message do |filepath|
     "expected #{filepath} to translate :\n- " << @misses.keys.sort.join("\n- ")
   end
 end
