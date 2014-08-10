@@ -29,7 +29,7 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'sqlite3', '~> 1.3.9'
   s.add_development_dependency 'coffee-rails', '~> 4.0.0'
   s.add_development_dependency 'sass-rails', '~> 4.0.0'
-  s.add_development_dependency 'i18n-spec', '~> 0.4.1'
+  s.add_development_dependency 'i18n-spec', '~> 0.5.2'
   s.add_development_dependency 'factory_girl', '~> 4.4'
   s.add_development_dependency 'capybara', '~> 2.2.1'
   s.add_development_dependency 'selenium-webdriver'
