@@ -563,7 +563,7 @@ pl:
     images: Zdjęcia
     included_in_price: Wliczony w cenę
     included_price_validation:
-    instructions_to_reset_password: Wypełnij formular poniżej. Instrukcje jak zresetować hasło zostaną wysłane drogą emailową
+    instructions_to_reset_password: Wypełnij formularz poniżej. Instrukcje jak zresetować hasło zostaną wysłane drogą emailową
     insufficient_stock: Brak wystarczającej ilości towaru w magazynie. Zostało tylko %{on_hand}
     intercept_email_address: Przechwytywanie adresu email
     intercept_email_instructions: Nadpisz email adresata i zastąp tym adresem.
