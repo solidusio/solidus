@@ -9,7 +9,7 @@ module Spree
     let!(:default_refund_reason)  { Spree::RefundReason.find_or_create_by!(name: Spree::RefundReason::RETURN_PROCESSING_REASON, mutable: false) }
     let(:creditable)              { DummyCreditable.new(amount: 99.99) }
 
-    class DummyCreditable < Spree::Base
+    class DummyCreditable < ActiveRecord::Base
       attr_accessor :amount
       self.table_name = 'spree_payments' # Your creditable class should not use this table
     end
