@@ -89,9 +89,9 @@ module Spree
 
       def ensure_one_default
         if self.default
-          StockLocation.where(default: true).where.not(id: self.id).each do |stock_location|
+          StockLocation.where.not(id: self.id).each do |stock_location|
             stock_location.default = false
-            stock_location.save!
+            stock_location.save! if stock_location.changed?
           end
         end
       end
