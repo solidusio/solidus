@@ -79,6 +79,10 @@ Spree::Core::Engine.add_routes do
       resources :states, :only => [:index, :show]
     end
     resources :shipments, :only => [:create, :update] do
+      collection do
+        get :mine
+      end
+
       member do
         put :ready
         put :ship
