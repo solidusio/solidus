@@ -337,6 +337,11 @@ module Spree
       CreditCard.where(id: credit_card_ids)
     end
 
+    def valid_credit_cards
+      credit_card_ids = payments.from_credit_card.valid.pluck(:source_id).uniq
+      CreditCard.where(id: credit_card_ids)
+    end
+
     # Finalizes an in progress order after checkout is complete.
     # Called after transition to complete state when payments will have been processed
     def finalize!
