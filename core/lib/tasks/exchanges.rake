@@ -28,24 +28,27 @@ namespace :exchanges do
           variant_inventory_units.each { |i| i.update_columns(line_item_id: line_item.id, order_id: order.id) }
         end
 
-        Spree::OrderUpdater.new(order.reload).update
+        order.reload.update!
+        while order.next; end
 
-        card_to_reuse = original_order.valid_credit_cards.first
-        # TODO bring back default logic when the default cc work is reimplemented
-        # card_to_reuse = original_order.user.credit_cards.default.first if !card_to_reuse && original_order.user
-        card_to_reuse = original_order.user.credit_cards.last if !card_to_reuse && original_order.user
+        unless order.payments.present?
+          card_to_reuse = original_order.valid_credit_cards.first
+          # TODO bring back default logic when the default cc work is reimplemented
+          # card_to_reuse = original_order.user.credit_cards.default.first if !card_to_reuse && original_order.user
+          card_to_reuse = original_order.user.credit_cards.last if !card_to_reuse && original_order.user
 
-        Spree::Payment.create(order: order,
-                              payment_method_id: card_to_reuse.try(:payment_method_id),
-                              source: card_to_reuse,
-                              amount: order.total)
+          Spree::Payment.create(order: order,
+                                payment_method_id: card_to_reuse.try(:payment_method_id),
+                                source: card_to_reuse,
+                                amount: order.total)
+        end
 
         inventory_units.each { |i| i.update_columns(order_id: order.id) }
         shipment.update_columns(order_id: order.id)
         order.update_columns(state: "confirm")
 
-        order.next
-        Spree::OrderUpdater.new(order.reload).update
+        order.reload.next!
+        order.update!
         order.finalize!
 
         failed_orders << order unless order.completed? && order.valid?
