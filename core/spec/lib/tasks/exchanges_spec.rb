@@ -96,9 +96,6 @@ describe "exchanges:charge_unreturned_items" do
         expect { subject.invoke }.not_to change { Spree::Order.count }
       end
 
-      it "does not process two payments" do
-      end
-
       context "there is no card from the previous order" do
         # TODO bring this back when default credit card work is implemented
         # let!(:credit_card) { create(:credit_card, user: order.user, default: true, gateway_customer_profile_id: "BGS-123") }
