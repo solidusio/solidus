@@ -57,6 +57,8 @@ describe "exchanges:charge_unreturned_items" do
 
       it "moves the shipment for the unreturned items to the new order" do
         subject.invoke
+        new_order = Spree::Order.last
+        expect(new_order.shipments.count).to eq 1
         expect(return_item_2.reload.exchange_shipment.order).to eq Spree::Order.last
       end
 
