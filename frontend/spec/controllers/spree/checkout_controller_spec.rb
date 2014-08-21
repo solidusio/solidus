@@ -140,7 +140,6 @@ describe Spree::CheckoutController do
 
       context "when in the confirm state" do
         before do
-          order.stub :confirmation_required? => true
           order.update_column(:state, "confirm")
           order.stub :user => user
           # An order requires a payment to reach the complete state
@@ -273,6 +272,7 @@ describe Spree::CheckoutController do
           payment_method = FactoryGirl.create(:simple_credit_card_payment_method)
           payment = FactoryGirl.create(:payment, :payment_method => payment_method)
           order.payments << payment
+          order.next!
         end
       end
 

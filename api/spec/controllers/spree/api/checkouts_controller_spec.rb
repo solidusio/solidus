@@ -56,7 +56,6 @@ module Spree
       end
 
       before(:each) do
-        Order.any_instance.stub(:confirmation_required? => true)
         Order.any_instance.stub(:payment_required? => true)
       end
 
@@ -264,7 +263,7 @@ module Spree
       end
 
       it "returns a sensible error when no payment method is specified" do
-        order.update_column(:state, "payment")
+        order.update_column(:state, "confirm")
         api_put :next, :id => order.to_param, :order_token => order.token, :order => {}
         json_response["errors"]["base"].should include(Spree.t(:no_pending_payments))
       end

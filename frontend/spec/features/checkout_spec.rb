@@ -86,7 +86,6 @@ describe "Checkout", inaccessible: true do
   context "doesn't allow bad credit card numbers" do
     before(:each) do
       order = OrderWalkthrough.up_to(:delivery)
-      order.stub :confirmation_required? => true
       order.stub(:available_payment_methods => [ create(:credit_card_payment_method, :environment => 'test') ])
 
       user = create(:user)
@@ -111,34 +110,11 @@ describe "Checkout", inaccessible: true do
     end
   end
 
-  #regression test for #3945
-  context "when Spree::Config[:always_include_confirm_step] is true" do
-    before do
-      Spree::Config[:always_include_confirm_step] = true
-    end
-
-    it "displays confirmation step", :js => true do
-      add_mug_to_cart
-      click_button "Checkout"
-
-      fill_in "order_email", :with => "test@example.com"
-      fill_in_address
-
-      click_button "Save and Continue"
-      click_button "Save and Continue"
-      click_button "Save and Continue"
-
-      continue_button = find(".continue")
-      continue_button.value.should == "Place Order"
-    end
-  end
-
   context "and likes to double click buttons" do
     let!(:user) { create(:user) }
     
     let!(:order) do
       order = OrderWalkthrough.up_to(:delivery)
-      order.stub :confirmation_required? => true
 
       order.reload
       order.user = user
@@ -277,6 +253,7 @@ describe "Checkout", inaccessible: true do
       click_on "Save and Continue"
       click_on "Save and Continue"
       click_on "Save and Continue"
+      click_on "Place Order"
 
       expect(current_path).to eql(spree.order_path(Spree::Order.last))
     end
@@ -381,7 +358,7 @@ describe "Checkout", inaccessible: true do
     context "doesn't fill in coupon code input" do
       it "advances just fine" do
         click_on "Save and Continue"
-        expect(current_path).to eql(spree.order_path(Spree::Order.last))
+        expect(current_path).to eql(spree.checkout_state_path("confirm"))
       end
     end
   end

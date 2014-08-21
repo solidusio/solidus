@@ -56,12 +56,16 @@ class OrderWalkthrough
     order.next!
   end
 
+  def self.confirm(order)
+    order.next!
+  end
+
   def self.complete(order)
     #noop?
   end
 
   def self.states
-    [:address, :delivery, :payment, :complete]
+    [:address, :delivery, :payment, :confirm, :complete]
   end
 
 end
