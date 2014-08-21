@@ -283,7 +283,7 @@ describe Spree::CheckoutController do
 
       it "when GatewayError is raised" do
         order.payments.any_instance.stub(:process!).and_raise(Spree::Core::GatewayError.new(Spree.t(:payment_processing_failed)))
-        spree_put :update, :order => {}
+        spree_put :update, :order => {}, state: 'confirm'
         flash[:error].should == Spree.t(:payment_processing_failed)
       end
     end

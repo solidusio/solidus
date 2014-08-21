@@ -14,7 +14,6 @@ module Spree
         order.payment_required?
       end
       go_to_state :confirm
-      go_to_state :complete
     end
 
     token_resource

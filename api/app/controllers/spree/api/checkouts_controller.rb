@@ -2,8 +2,8 @@ module Spree
   module Api
     class CheckoutsController < Spree::Api::BaseController
       before_filter :associate_user, only: :update
-      before_filter :load_order, only: [:next, :advance, :update]
-      around_filter :lock_order, only: [:next, :advance, :update]
+      before_filter :load_order, only: [:next, :advance, :update, :complete]
+      around_filter :lock_order, only: [:next, :advance, :update, :complete]
       before_filter :update_order_state, only: [:next, :advance, :update]
 
       include Spree::Core::ControllerHelpers::Auth
@@ -18,11 +18,12 @@ module Spree
       end
 
       def next
-        authorize! :update, @order, order_token
-        if !expected_total_ok?(params[:expected_total])
-          respond_with(@order, default_template: 'spree/api/orders/expected_total_mismatch', status: 400)
+        if @order.confirm?
+          ActiveSupport::Deprecation.warn "Using Spree::Api::CheckoutsController#next to transition to complete is deprecated. Please use #complete instead of #next.", caller
+          complete
           return
         end
+        authorize! :update, @order, order_token
         @order.next!
         respond_with(@order, default_template: 'spree/api/orders/show', status: 200)
       rescue StateMachine::InvalidTransition
@@ -33,6 +34,18 @@ module Spree
         authorize! :update, @order, order_token
         while @order.next; end
         respond_with(@order, default_template: 'spree/api/orders/show', status: 200)
+      end
+
+      def complete
+        authorize! :update, @order, order_token
+        if !expected_total_ok?(params[:expected_total])
+          respond_with(@order, default_template: 'spree/api/orders/expected_total_mismatch', status: 400)
+        else
+          @order.complete!
+          respond_with(@order, default_template: 'spree/api/orders/show', status: 200)
+        end
+      rescue StateMachine::InvalidTransition
+        respond_with(@order, default_template: 'spree/api/orders/could_not_transition', status: 422)
       end
 
       def show

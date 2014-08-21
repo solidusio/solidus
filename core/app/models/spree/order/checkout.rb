@@ -53,6 +53,10 @@ module Spree
                 order.save
               end
 
+              event :complete do
+                transition to: :complete, from: [:confirm]
+              end
+
               event :cancel do
                 transition to: :canceled, if: :allow_cancel?
               end

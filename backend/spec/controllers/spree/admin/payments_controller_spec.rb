@@ -29,15 +29,11 @@ module Spree
           spree_post :create, attributes
         end
 
-        it "should process payment correctly" do
+        it "should create payments correctly" do
           order.payments.count.should == 1
+          expect(order.payments.last.state).to eq 'checkout'
           expect(response).to redirect_to(spree.admin_order_payments_path(order))
-          expect(order.reload.state).to eq('complete')
-        end
-
-        # Regression for #4768
-        it "doesnt process the same payment twice" do
-          Spree::LogEntry.where(source: order.payments.first).count.should == 1
+          expect(order.reload.state).to eq('confirm')
         end
       end
 

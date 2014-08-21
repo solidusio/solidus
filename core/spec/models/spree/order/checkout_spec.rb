@@ -14,8 +14,7 @@ describe Spree::Order do
       { :address => :delivery },
       { :delivery => :payment },
       { :payment => :confirm },
-      { :confirm => :complete },
-      { :delivery => :confirm }
+      { :delivery => :confirm },
     ]
 
     transitions.each do |transition|
@@ -458,7 +457,7 @@ describe Spree::Order do
       end
 
       order.payments.create!({ :amount => order.outstanding_balance, :payment_method => payment_method, :source => creditcard })
-      order.next!
+      order.complete!
     end
   end
 

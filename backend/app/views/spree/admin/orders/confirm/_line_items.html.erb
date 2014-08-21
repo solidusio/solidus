@@ -1,0 +1,33 @@
+<% if order.line_items.exists? %>
+  <table class="line-items index" data-hook="line-items">
+    <thead>
+      <th colspan="2"><%= Spree.t(:name) %></th>
+      <th><%= Spree.t(:price) %></th>
+      <th><%= Spree.t(:quantity) %></th>
+      <th><%= Spree.t(:total_price) %></th>
+    </thead>
+
+    <tbody>
+      <% order.line_items.each do |item| %>
+
+        <tr class="line-item" id="line-item-<%= item.id %>">
+          <td class="line-item-image">
+            <%= mini_image(item.variant) %>
+          </td>
+          <td class="line-item-name">
+            <%= item.variant.product.name %><br><%= "(" + variant_options(item.variant) + ")" unless item.variant.option_values.empty? %>
+          </td>
+          <td class="line-item-price align-center">
+            <%= item.single_money.to_html %>
+          </td>
+          <td class="line-item-qty-show align-center">
+            <%= item.quantity %>
+          </td>
+          <td class="line-item-total align-center">
+            <%= line_item_shipment_price(item, item.quantity) %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% end %>
