@@ -10,27 +10,18 @@ describe Spree::Order, :type => :model do
   end
 
   context "with default state machine" do
-    let(:transitions) do
-      [
-        { :address => :delivery },
-        { :delivery => :payment },
-        { :payment => :confirm },
-        { :confirm => :complete },
-        { :payment => :complete },
-        { :delivery => :complete }
-      ]
-    end
+    transitions = [
+      { :address => :delivery },
+      { :delivery => :payment },
+      { :payment => :confirm },
+      { :delivery => :confirm },
+    ]
 
-    it "has the following transitions" do
-      transitions.each do |transition|
+    transitions.each do |transition|
+      it "transitions from #{transition.keys.first} to #{transition.values.first}" do
         transition = Spree::Order.find_transition(:from => transition.keys.first, :to => transition.values.first)
         expect(transition).not_to be_nil
       end
-    end
-
-    it "does not have a transition from delivery to confirm" do
-      transition = Spree::Order.find_transition(:from => :delivery, :to => :confirm)
-      expect(transition).to be_nil
     end
 
     it '.find_transition when contract was broken' do
@@ -63,6 +54,7 @@ describe Spree::Order, :type => :model do
     end
 
     context "#checkout_steps" do
+<<<<<<< HEAD
       context "when confirmation not required" do
         before do
           allow(order).to receive_messages :confirmation_required? => false
@@ -85,17 +77,54 @@ describe Spree::Order, :type => :model do
         end
       end
 
+||||||| parent of 74d4316... Restore "explicit complete" work
+      context "when confirmation not required" do
+        before do
+          order.stub :confirmation_required? => false
+          order.stub :payment_required? => true
+        end
+
+        specify do
+          order.checkout_steps.should == %w(address delivery payment complete)
+        end
+      end
+
+      context "when confirmation required" do
+        before do
+          order.stub :confirmation_required? => true
+          order.stub :payment_required? => true
+        end
+
+        specify do
+          order.checkout_steps.should == %w(address delivery payment confirm complete)
+        end
+      end
+
+=======
+>>>>>>> 74d4316... Restore "explicit complete" work
       context "when payment not required" do
         before { allow(order).to receive_messages :payment_required? => false }
         specify do
+<<<<<<< HEAD
           expect(order.checkout_steps).to eq(%w(address delivery complete))
+||||||| parent of 74d4316... Restore "explicit complete" work
+          order.checkout_steps.should == %w(address delivery complete)
+=======
+          order.checkout_steps.should == %w(address delivery confirm complete)
+>>>>>>> 74d4316... Restore "explicit complete" work
         end
       end
 
       context "when payment required" do
         before { allow(order).to receive_messages :payment_required? => true }
         specify do
+<<<<<<< HEAD
           expect(order.checkout_steps).to eq(%w(address delivery payment complete))
+||||||| parent of 74d4316... Restore "explicit complete" work
+          order.checkout_steps.should == %w(address delivery payment complete)
+=======
+          order.checkout_steps.should == %w(address delivery payment confirm complete)
+>>>>>>> 74d4316... Restore "explicit complete" work
         end
       end
     end
@@ -321,7 +350,14 @@ describe Spree::Order, :type => :model do
 
         it "transitions to complete" do
           order.next!
+<<<<<<< HEAD
           expect(order.state).to eq("complete")
+||||||| parent of 74d4316... Restore "explicit complete" work
+          order.state.should == "complete"
+=======
+          assert_state_changed(order, 'delivery', 'confirm')
+          order.state.should == "confirm"
+>>>>>>> 74d4316... Restore "explicit complete" work
         end
       end
 
@@ -355,9 +391,15 @@ describe Spree::Order, :type => :model do
             order.set_shipments_cost
           end
 
-          it "skips payment, transitions to complete" do
+          it "skips payment, transitions to confirm" do
             order.next!
+<<<<<<< HEAD
             expect(order.state).to eq("complete")
+||||||| parent of 74d4316... Restore "explicit complete" work
+            order.state.should == "complete"
+=======
+            order.state.should == "confirm"
+>>>>>>> 74d4316... Restore "explicit complete" work
           end
         end
       end
@@ -389,6 +431,7 @@ describe Spree::Order, :type => :model do
         allow(order).to receive(:ensure_available_shipping_rates) { true }
       end
 
+<<<<<<< HEAD
       context "with confirmation required" do
         before do
           allow(order).to receive_messages :confirmation_required? => true
@@ -434,6 +477,37 @@ describe Spree::Order, :type => :model do
             expect(order.errors[:base]).to include(Spree.t(:no_payment_found))
           end
         end
+||||||| parent of 74d4316... Restore "explicit complete" work
+      context "with confirmation required" do
+        before do
+          order.stub :confirmation_required? => true
+        end
+
+        it "transitions to confirm" do
+          order.next!
+          assert_state_changed(order, 'payment', 'confirm')
+          order.state.should == "confirm"
+        end
+      end
+
+      context "without confirmation required" do
+        before do
+          order.stub :confirmation_required? => false
+          order.stub :payment_required? => true
+        end
+
+        it "transitions to complete" do
+          order.should_receive(:process_payments!).once.and_return true
+          order.next!
+          assert_state_changed(order, 'payment', 'complete')
+          order.state.should == "complete"
+        end
+=======
+      it "transitions to confirm" do
+        order.next!
+        assert_state_changed(order, 'payment', 'confirm')
+        order.state.should == "confirm"
+>>>>>>> 74d4316... Restore "explicit complete" work
       end
 
       # Regression test for #2028
@@ -445,8 +519,16 @@ describe Spree::Order, :type => :model do
         it "does not call process payments" do
           expect(order).not_to receive(:process_payments!)
           order.next!
+<<<<<<< HEAD
           assert_state_changed(order, 'payment', 'complete')
           expect(order.state).to eq("complete")
+||||||| parent of 74d4316... Restore "explicit complete" work
+          assert_state_changed(order, 'payment', 'complete')
+          order.state.should == "complete"
+=======
+          assert_state_changed(order, 'payment', 'confirm')
+          order.state.should == "confirm"
+>>>>>>> 74d4316... Restore "explicit complete" work
         end
       end
     end
@@ -640,6 +722,9 @@ describe Spree::Order, :type => :model do
     before do
       @old_checkout_flow = Spree::Order.checkout_flow
       Spree::Order.class_eval do
+        remove_transition from: :delivery, to: :confirm
+      end
+      Spree::Order.class_eval do
         insert_checkout_step :new_step, before: :address
       end
     end
@@ -662,7 +747,13 @@ describe Spree::Order, :type => :model do
 
       specify do
         order = Spree::Order.new
+<<<<<<< HEAD
         expect(order.checkout_steps).to eq(%w(new_step before_address address delivery complete))
+||||||| parent of 74d4316... Restore "explicit complete" work
+        order.checkout_steps.should == %w(new_step before_address address delivery complete)
+=======
+        order.checkout_steps.should == %w(new_step before_address address delivery confirm complete)
+>>>>>>> 74d4316... Restore "explicit complete" work
       end
     end
 
@@ -675,7 +766,13 @@ describe Spree::Order, :type => :model do
 
       specify do
         order = Spree::Order.new
+<<<<<<< HEAD
         expect(order.checkout_steps).to eq(%w(new_step address after_address delivery complete))
+||||||| parent of 74d4316... Restore "explicit complete" work
+        order.checkout_steps.should == %w(new_step address after_address delivery complete)
+=======
+        order.checkout_steps.should == %w(new_step address after_address delivery confirm complete)
+>>>>>>> 74d4316... Restore "explicit complete" work
       end
     end
   end
@@ -683,6 +780,9 @@ describe Spree::Order, :type => :model do
   context "remove checkout step" do
     before do
       @old_checkout_flow = Spree::Order.checkout_flow
+      Spree::Order.class_eval do
+        remove_transition from: :delivery, to: :confirm
+      end
       Spree::Order.class_eval do
         remove_checkout_step :address
       end
@@ -699,7 +799,65 @@ describe Spree::Order, :type => :model do
 
     specify do
       order = Spree::Order.new
+<<<<<<< HEAD
       expect(order.checkout_steps).to eq(%w(delivery complete))
+||||||| parent of 74d4316... Restore "explicit complete" work
+      order.checkout_steps.should == %w(delivery complete)
+    end
+  end
+
+  describe "payment processing" do
+    # Turn off transactional fixtures so that we can test that
+    # processing state is persisted.
+    self.use_transactional_fixtures = false
+    before(:all) { DatabaseCleaner.strategy = :truncation }
+    after(:all) do
+      DatabaseCleaner.clean
+      DatabaseCleaner.strategy = :transaction
+    end
+    let(:order) { OrderWalkthrough.up_to(:payment) }
+    let(:creditcard) { create(:credit_card) }
+    let!(:payment_method) { create(:credit_card_payment_method, :environment => 'test') }
+
+    it "does not process payment within transaction" do
+      # Make sure we are not already in a transaction
+      ActiveRecord::Base.connection.open_transactions.should == 0
+
+      Spree::Payment.any_instance.should_receive(:authorize!) do
+        ActiveRecord::Base.connection.open_transactions.should == 0
+      end
+
+      order.payments.create!({ :amount => order.outstanding_balance, :payment_method => payment_method, :source => creditcard })
+      order.next!
+=======
+      order.checkout_steps.should == %w(delivery confirm complete)
+    end
+  end
+
+  describe "payment processing" do
+    # Turn off transactional fixtures so that we can test that
+    # processing state is persisted.
+    self.use_transactional_fixtures = false
+    before(:all) { DatabaseCleaner.strategy = :truncation }
+    after(:all) do
+      DatabaseCleaner.clean
+      DatabaseCleaner.strategy = :transaction
+    end
+    let(:order) { OrderWalkthrough.up_to(:payment) }
+    let(:creditcard) { create(:credit_card) }
+    let!(:payment_method) { create(:credit_card_payment_method, :environment => 'test') }
+
+    it "does not process payment within transaction" do
+      # Make sure we are not already in a transaction
+      ActiveRecord::Base.connection.open_transactions.should == 0
+
+      Spree::Payment.any_instance.should_receive(:authorize!) do
+        ActiveRecord::Base.connection.open_transactions.should == 0
+      end
+
+      order.payments.create!({ :amount => order.outstanding_balance, :payment_method => payment_method, :source => creditcard })
+      order.complete!
+>>>>>>> 74d4316... Restore "explicit complete" work
     end
   end
 

@@ -220,6 +220,7 @@ module Spree
         expect(order.credit_cards).to match_array [credit_card]
       end
 
+<<<<<<< HEAD
       it "can transition from confirm to complete" do
         order.update_columns(completed_at: Time.now, state: 'complete')
         allow_any_instance_of(Spree::Order).to receive_messages(payment_required?: false)
@@ -228,6 +229,17 @@ module Spree
         expect(response.status).to eq(200)
       end
 
+||||||| parent of 74d4316... Restore "explicit complete" work
+      it "can transition from confirm to complete" do
+        order.update_column(:state, "confirm")
+        Spree::Order.any_instance.stub(:payment_required? => false)
+        api_put :update, :id => order.to_param, :order_token => order.token
+        json_response['state'].should == 'complete'
+        response.status.should == 200
+      end
+
+=======
+>>>>>>> 74d4316... Restore "explicit complete" work
       it "returns the order if the order is already complete" do
         order.update_columns(completed_at: Time.now, state: 'complete')
         api_put :update, id: order.to_param, order_token: order.guest_token
@@ -300,7 +312,9 @@ module Spree
         expect(response.status).to eq(422)
         expect(json_response['error']).to match(/could not be transitioned/)
       end
+    end
 
+<<<<<<< HEAD
       it "doesnt advance payment state if order has no payment" do
         order.update_column(:state, "payment")
         api_put :next, id: order.to_param, order_token: order.guest_token, order: {}
@@ -311,6 +325,63 @@ module Spree
         api_put :next, :id => order.to_param, :order_token => order.guest_token, :expected_total => order.total + 1
         response.status.should == 400
         json_response['errors']['expected_total'].should include(Spree.t(:expected_total_mismatch, :scope => 'api.order'))
+||||||| parent of 74d4316... Restore "explicit complete" work
+      it "returns a sensible error when no payment method is specified" do
+        order.update_column(:state, "payment")
+        api_put :next, :id => order.to_param, :order_token => order.token, :order => {}
+        json_response["errors"]["base"].should include(Spree.t(:no_pending_payments))
+      end
+
+      it "returns an error if expected_total is present and does not match actual total" do
+        api_put :next, :id => order.to_param, :order_token => order.token, :expected_total => order.total + 1
+        response.status.should == 400
+        json_response['errors']['expected_total'].should include(Spree.t(:expected_total_mismatch, :scope => 'api.order'))
+=======
+    # NOTE: Temporarily making "next" behave just like "complete" when order is in confirm state
+    #       Using "next" this way is deprecated.
+    [:next, :complete].each do |action|
+      context "#{action}" do
+        context "with order in confirm state" do
+          subject do
+            api_put action, params
+          end
+
+          let(:params) { {id: order.to_param, order_token: order.token} }
+          let(:order) { create(:order_with_line_items) }
+
+          before do
+            order.update_column(:state, "confirm")
+
+            if action == :next
+              ActiveSupport::Deprecation.should_receive(:warn).once
+            end
+          end
+
+          it "can transition from confirm to complete" do
+            Spree::Order.any_instance.stub(:payment_required? => false)
+            subject
+            json_response['state'].should == 'complete'
+            response.status.should == 200
+          end
+
+          it "returns a sensible error when no payment method is specified" do
+            # api_put :complete, :id => order.to_param, :order_token => order.token, :order => {}
+            subject
+            json_response["errors"]["base"].should include(Spree.t(:no_pending_payments))
+          end
+
+          context "with mismatched expected_total" do
+            let(:params) { super().merge(expected_total: order.total + 1) }
+
+            it "returns an error if expected_total is present and does not match actual total" do
+              # api_put :complete, :id => order.to_param, :order_token => order.token, :expected_total => order.total + 1
+              subject
+              response.status.should == 400
+              json_response['errors']['expected_total'].should include(Spree.t(:expected_total_mismatch, :scope => 'api.order'))
+            end
+          end
+        end
+>>>>>>> 74d4316... Restore "explicit complete" work
       end
 
       context 'insufficient stock' do

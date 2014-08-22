@@ -2,7 +2,7 @@ module Spree
   module Admin
     class OrdersController < Spree::Admin::BaseController
       before_action :initialize_order_events
-      before_action :load_order, only: [:edit, :update, :advance, :cancel, :resume, :approve, :resend, :open_adjustments, :close_adjustments, :cart]
+      before_action :load_order, only: [:edit, :update, :complete, :advance, :cancel, :resume, :approve, :resend, :open_adjustments, :close_adjustments, :cart]
 
       respond_to :html
 
@@ -102,6 +102,23 @@ module Spree
             redirect_to confirm_admin_order_url(@order)
           end
         end
+      end
+
+      # GET
+      def confirm
+        if @order.completed?
+          redirect_to edit_admin_order_url(@order)
+        end
+      end
+
+      # PUT
+      def complete
+        @order.complete!
+        flash[:success] = Spree.t(:order_completed)
+        redirect_to edit_admin_order_url(@order)
+      rescue StateMachine::InvalidTransition => e
+        flash[:error] = e.message
+        redirect_to confirm_admin_order_url(@order)
       end
 
       def cancel

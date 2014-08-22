@@ -51,7 +51,6 @@ module Spree
                 order.save
               end
 
-
               event :cancel do
                 transition to: :canceled, if: :allow_cancel?
               end

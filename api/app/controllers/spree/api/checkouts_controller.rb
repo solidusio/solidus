@@ -11,12 +11,19 @@ module Spree
       skip_before_action :set_current_order
 
       def next
+        if @order.confirm?
+          ActiveSupport::Deprecation.warn "Using Spree::Api::CheckoutsController#next to transition to complete is deprecated. Please use #complete instead of #next.", caller
+          complete
+          return
+        end
+
         load_order(true)
         authorize! :update, @order, order_token
         if !expected_total_ok?(params[:expected_total])
           respond_with(@order, default_template: 'spree/api/orders/expected_total_mismatch', status: 400)
           return
         end
+        authorize! :update, @order, order_token
         @order.next!
         respond_with(@order, default_template: 'spree/api/orders/show', status: 200)
       rescue StateMachine::InvalidTransition
@@ -28,6 +35,18 @@ module Spree
         authorize! :update, @order, order_token
         while @order.next; end
         respond_with(@order, default_template: 'spree/api/orders/show', status: 200)
+      end
+
+      def complete
+        authorize! :update, @order, order_token
+        if !expected_total_ok?(params[:expected_total])
+          respond_with(@order, default_template: 'spree/api/orders/expected_total_mismatch', status: 400)
+        else
+          @order.complete!
+          respond_with(@order, default_template: 'spree/api/orders/show', status: 200)
+        end
+      rescue StateMachine::InvalidTransition
+        respond_with(@order, default_template: 'spree/api/orders/could_not_transition', status: 422)
       end
 
       def update

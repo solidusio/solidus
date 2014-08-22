@@ -368,6 +368,7 @@ describe Spree::CheckoutController, :type => :controller do
           payment_method = FactoryGirl.create(:simple_credit_card_payment_method)
           payment = FactoryGirl.create(:payment, :payment_method => payment_method)
           order.payments << payment
+          order.next!
         end
       end
 

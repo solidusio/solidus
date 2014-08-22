@@ -28,7 +28,7 @@ describe Spree::Order, :type => :model do
 
         it "should finalize order when transitioning to complete state" do
           expect(order).to receive(:finalize!)
-          order.next!
+          order.complete!
         end
 
         context "when credit card processing fails" do

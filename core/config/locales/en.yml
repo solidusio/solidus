@@ -542,10 +542,12 @@ en:
     code: Code
     company: Company
     complete: complete
+    complete_order: Complete Order
     configuration: Configuration
     configurations: Configurations
     confirm: Confirm
     confirm_delete: Confirm Deletion
+    confirm_order: Confirm Order
     confirm_password: Password Confirmation
     continue: Continue
     continue_shopping: Continue shopping
@@ -573,7 +575,12 @@ en:
     coupon_code_max_usage: Coupon code usage limit exceeded
     coupon_code_not_eligible: This coupon code is not eligible for this order
     coupon_code_not_found: The coupon code you entered doesn't exist. Please try again.
+<<<<<<< HEAD
     coupon_code_unknown_error: This coupon code could not be applied to the cart at this time.
+||||||| parent of 74d4316... Restore "explicit complete" work
+=======
+    customer: Customer
+>>>>>>> 74d4316... Restore "explicit complete" work
     customer_return: Customer Return
     customer_returns: Customer Returns
     create: Create
@@ -724,6 +731,7 @@ en:
     forgot_password: Forgot Password?
     free_shipping: Free Shipping
     free_shipping_amount: "-"
+    from: From
     front_end: Front End
     gateway: Gateway
     gateway_config_unavailable: Gateway unavailable for environment
@@ -937,6 +945,7 @@ en:
     order_already_updated: The order has already been updated.
     order_approved: Order approved
     order_canceled: Order canceled
+    order_completed: Order completed
     order_details: Order Details
     order_email_resent: Order Email Resent
     order_information: Order Information

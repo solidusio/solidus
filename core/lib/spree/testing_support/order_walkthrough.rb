@@ -24,8 +24,14 @@ class OrderWalkthrough
     add_line_item!(order)
     order.next!
 
-    end_state_position = states.index(state.to_sym)
-    states[0..end_state_position].each do |state|
+    states_to_process = if state == :complete
+                          states
+                        else
+                          end_state_position = states.index(state.to_sym)
+                          states[0..end_state_position]
+                        end
+
+    states_to_process.each do |state|
       send(state, order)
     end
 
@@ -57,12 +63,16 @@ class OrderWalkthrough
     order.next!
   end
 
+  def self.confirm(order)
+    order.complete!
+  end
+
   def self.complete(order)
     #noop?
   end
 
   def self.states
-    [:address, :delivery, :payment, :complete]
+    [:address, :delivery, :payment, :confirm]
   end
 
 end

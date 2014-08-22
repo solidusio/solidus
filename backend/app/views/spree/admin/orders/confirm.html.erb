@@ -1,0 +1,61 @@
+<%= render partial: 'spree/admin/shared/order_tabs', locals: {current: 'Confirm'} %>
+
+<% content_for :page_title do %>
+  <i class="fa fa-arrow-right"></i> <%= Spree.t(:confirm_order) %>
+<% end %>
+
+<%= render partial: 'spree/admin/orders/confirm/customer_details', locals: {order: @order} %>
+
+<% if Spree::Order.checkout_step_names.include?(:delivery) %>
+  <%= render partial: 'spree/admin/orders/confirm/shipment', collection: @order.shipments, locals: {order: @order} %>
+<% else %>
+  <%= render partial: 'spree/admin/orders/confirm/line_items', locals: {order: @order} %>
+<% end %>
+
+<%=
+  render(
+    partial: 'spree/admin/orders/adjustments',
+    locals: {
+      adjustments: @order.line_item_adjustments,
+      order: @order,
+      title: Spree.t(:line_item_adjustments),
+    }
+  )
+%>
+
+<%=
+  render(
+    partial: 'spree/admin/orders/adjustments',
+    locals: {
+      adjustments: @order.shipment_adjustments,
+      order: @order,
+      title: Spree.t(:shipment_adjustments),
+    }
+  )
+%>
+
+<%=
+  render(
+    partial: 'spree/admin/orders/adjustments',
+    locals: {
+      adjustments: @order.adjustments,
+      order: @order,
+      title: Spree.t(:order_adjustments),
+    }
+  )
+%>
+
+<% if @order.line_items.exists? %>
+  <fieldset class="no-border-bottom" id="order-total" data-hook="order_details_total">
+    <legend><%= Spree.t(:order_total) %></legend>
+    <span class="order-total"><%= @order.display_total %></span>
+  </fieldset>
+<% end %>
+
+<%= render partial: 'spree/admin/orders/confirm/payments', locals: {payments: @order.payments} %>
+
+<div class="form-buttons filter-actions actions" data-hook="complete-order-button">
+  <%= button_to [:complete, :admin, @order], {class: 'button fa fa-rocket', method: 'put'} do %>
+    <%= Spree.t(:complete_order) %>
+  <% end %>
+</div>

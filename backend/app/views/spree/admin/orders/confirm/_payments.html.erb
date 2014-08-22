@@ -1,0 +1,41 @@
+<fieldset class="no-border-bottom">
+  <legend><%= Spree.t(:payments) %></legend>
+  <table class="index">
+    <thead>
+      <tr data-hook="payments_header">
+        <th><%= Spree.t(:identifier) %></th>
+        <th><%= "#{Spree.t('date')}/#{Spree.t('time')}" %></th>
+        <th><%= Spree.t(:amount) %></th>
+        <th><%= Spree.t(:payment_method) %></th>
+        <th><%= Spree.t(:transaction_id) %></th>
+        <th><%= Spree.t(:payment_state) %></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% payments.each do |payment| %>
+        <tr>
+          <td>
+            <%= payment.identifier %>
+          </td>
+          <td>
+            <%= pretty_time(payment.created_at) %>
+          </td>
+          <td class="align-center amount">
+            <%= payment.display_amount.to_html %>
+          </td>
+          <td class="align-center">
+            <%= payment_method_name(payment) %>
+          </td>
+          <td class="align-center">
+            <%= payment.transaction_id %>
+          </td>
+          <td class="align-center">
+            <span class="state <%= payment.state %>">
+              <%= Spree.t(payment.state, :scope => :payment_states, :default => payment.state.capitalize) %>
+            </span>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</fieldsset>

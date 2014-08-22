@@ -31,13 +31,9 @@ module Spree
 
         it "should process payment correctly" do
           expect(order.payments.count).to eq(1)
+          expect(order.payments.last.state).to eq 'checkout'
           expect(response).to redirect_to(spree.admin_order_payments_path(order))
-          expect(order.reload.state).to eq('complete')
-        end
-
-        # Regression for #4768
-        it "doesnt process the same payment twice" do
-          expect(Spree::LogEntry.where(source: order.payments.first).count).to eq(1)
+          expect(order.reload.state).to eq('confirm')
         end
       end
 

@@ -39,6 +39,13 @@ describe "New Order", :type => :feature do
     click_on "Update"
 
     expect(current_path).to eql(spree.admin_order_payments_path(Spree::Order.last))
+
+    click_on "Confirm"
+    click_on "Complete"
+
+    expect(current_path).to eql(spree.edit_admin_order_path(Spree::Order.last))
+
+    click_on "Payments"
     click_icon "capture"
 
     click_on "Shipments"
@@ -126,7 +133,7 @@ describe "New Order", :type => :feature do
       click_on "Continue"
 
       within(".additional-info .state") do
-        expect(page).to have_content("COMPLETE")
+        expect(page).to have_content("CONFIRM")
       end
     end
   end

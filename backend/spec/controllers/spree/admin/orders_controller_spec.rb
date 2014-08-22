@@ -162,6 +162,61 @@ describe Spree::Admin::OrdersController, :type => :controller do
       end
     end
 
+    context '#confirm' do
+      subject do
+        spree_get :confirm, id: order.number
+      end
+
+      context 'when incomplete' do
+        before { order.stub :completed? => false }
+
+        it 'is successful' do
+          subject
+          expect(response.status).to eq 200
+        end
+      end
+
+      context 'when already completed' do
+        before { order.stub :completed? => true }
+
+        it 'redirects to edit' do
+          subject
+          expect(response).to redirect_to(spree.edit_admin_order_path(order))
+        end
+      end
+    end
+
+    context "#complete" do
+      subject do
+        spree_put :complete, id: order.number
+      end
+
+      context 'when successful' do
+        before { order.stub(:complete!) }
+
+        it 'completes the order' do
+          expect(order).to receive(:complete!)
+          subject
+        end
+
+        it 'messages and redirects' do
+          subject
+          expect(flash[:success]).to eq Spree.t(:order_completed)
+          expect(response).to redirect_to(spree.edit_admin_order_path(order))
+        end
+      end
+
+      context 'with an StateMachine::InvalidTransition error' do
+        let(:order) { create(:order) }
+
+        it 'messages and redirects' do
+          subject
+          expect(response).to redirect_to(spree.confirm_admin_order_path(order))
+          expect(flash[:error].to_s).to include("Cannot transition state via :complete from :cart")
+        end
+      end
+    end
+
     # Test for #3919
     context "search" do
       let(:user) { create(:user) }

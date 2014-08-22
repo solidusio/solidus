@@ -30,6 +30,12 @@
       </li>
     <% end %>
 
+    <% if !@order.completed? && can?(:update, @order) %>
+      <li<%== ' class="active"' if current == 'Confirm' %> data-hook='admin_order_tabs_confirm'>
+        <%= link_to_with_icon 'check', Spree.t(:confirm), confirm_admin_order_url(@order) %>
+      </li>
+    <% end %>
+
     <% if can? :index, Spree::ReturnAuthorization %>
       <% if @order.completed? %>
         <li<%== ' class="active"' if current == 'Return Authorizations' %> data-hook='admin_order_tabs_return_authorizations'>

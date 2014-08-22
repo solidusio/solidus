@@ -20,6 +20,17 @@
   }
 }
 
+// Order-total
+[data-hook="customer_details_total"]{
+  text-align: center;
+
+  .customer {
+    font-size: 20px;
+    font-weight: 600;
+    color: $color-success;
+  }
+}
+
 [data-hook="admin_order_form_fields"] {
   legend.stock-location {
     color: $color-body-text;

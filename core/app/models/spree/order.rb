@@ -17,8 +17,7 @@ module Spree
       go_to_state :delivery
       go_to_state :payment, if: ->(order) { order.payment_required? }
       go_to_state :confirm, if: ->(order) { order.confirmation_required? }
-      go_to_state :complete
-      remove_transition from: :delivery, to: :confirm
+      go_to_state :confirm
     end
 
     attr_reader :coupon_code
@@ -211,16 +210,6 @@ module Spree
     # Is this a free order in which case the payment step should be skipped
     def payment_required?
       total.to_f > 0.0
-    end
-
-    # If true, causes the confirmation step to happen during the checkout process
-    def confirmation_required?
-      Spree::Config[:always_include_confirm_step] ||
-        payments.valid.map(&:payment_method).compact.any?(&:payment_profiles_supported?) ||
-        # Little hacky fix for #4117
-        # If this wasn't here, order would transition to address state on confirm failure
-        # because there would be no valid payments any more.
-        state == 'confirm'
     end
 
     def backordered?

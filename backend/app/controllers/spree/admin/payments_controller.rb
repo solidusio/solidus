@@ -26,11 +26,15 @@ module Spree
 
         begin
           if @payment.save
-            # Transition order as far as it will go.
-            while @order.next; end
-            # If "@order.next" didn't trigger payment processing already (e.g. if the order was
-            # already complete) then trigger it manually now
-            @payment.process! if @order.completed? && @payment.checkout?
+            if @order.completed?
+              # If the order was already complete then go ahead and process the payment
+              # (auth and/or capture depending on payment method configuration)
+              @payment.process! if @payment.checkout?
+            else
+              # Transition order as far as it will go.
+              while @order.next; end
+            end
+
             flash[:success] = flash_message_for(@payment, :successfully_created)
             redirect_to admin_order_payments_path(@order)
           else

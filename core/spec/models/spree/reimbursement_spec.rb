@@ -79,7 +79,7 @@ describe Spree::Reimbursement, type: :model do
         payment.save!
         order.next! # confirm
       end
-      order.next! # completed
+      order.complete! # completed
       customer_return.save!
       return_item.accept!
     end
