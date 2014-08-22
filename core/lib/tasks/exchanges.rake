@@ -51,7 +51,7 @@ namespace :exchanges do
         shipment.update_attributes!(order_id: order.id)
         order.update_attributes!(state: "confirm")
 
-        order.reload.complete!
+        order.reload.next!
         order.update!
         order.finalize!
 

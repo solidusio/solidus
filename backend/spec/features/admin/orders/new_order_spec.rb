@@ -34,13 +34,6 @@ describe "New Order" do
     click_on "Update"
 
     expect(current_path).to eql(spree.admin_order_payments_path(Spree::Order.last))
-
-    click_on "Confirm"
-    click_on "Complete"
-
-    expect(current_path).to eql(spree.edit_admin_order_path(Spree::Order.last))
-
-    click_on "Payments"
     click_icon "capture"
 
     click_on "Order Details"
@@ -89,7 +82,7 @@ describe "New Order" do
     click_icon :plus
     wait_for_ajax
     within(".additional-info .state") do
-      page.should have_content("CONFIRM")
+      page.should have_content("PAYMENT")
     end
   end
 

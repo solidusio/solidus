@@ -24,7 +24,7 @@ describe Spree::Order do
 
         it "should finalize order when transitioning to complete state" do
           order.should_receive(:finalize!)
-          order.complete!
+          order.next!
         end
 
         context "when credit card processing fails" do

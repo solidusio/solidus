@@ -153,7 +153,7 @@ module Spree
       Order.any_instance.stub :user => current_api_user
       api_get :show, :id => order.to_param
       response.status.should == 200
-      json_response["checkout_steps"].should == ["address", "delivery", "confirm", "complete"]
+      json_response["checkout_steps"].should == ["address", "delivery", "complete"]
     end
 
     # Regression test for #1992

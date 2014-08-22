@@ -10,18 +10,27 @@ describe Spree::Order do
   end
 
   context "with default state machine" do
-    transitions = [
-      { :address => :delivery },
-      { :delivery => :payment },
-      { :payment => :confirm },
-      { :delivery => :confirm },
-    ]
+    let(:transitions) do
+      [
+        { :address => :delivery },
+        { :delivery => :payment },
+        { :payment => :confirm },
+        { :confirm => :complete },
+        { :payment => :complete },
+        { :delivery => :complete }
+      ]
+    end
 
-    transitions.each do |transition|
-      it "transitions from #{transition.keys.first} to #{transition.values.first}" do
+    it "has the following transitions" do
+      transitions.each do |transition|
         transition = Spree::Order.find_transition(:from => transition.keys.first, :to => transition.values.first)
         transition.should_not be_nil
       end
+    end
+
+    it "does not have a transition from delivery to confirm" do
+      transition = Spree::Order.find_transition(:from => :delivery, :to => :confirm)
+      transition.should be_nil
     end
 
     it '.find_transition when contract was broken' do
@@ -39,17 +48,39 @@ describe Spree::Order do
     end
 
     context "#checkout_steps" do
+      context "when confirmation not required" do
+        before do
+          order.stub :confirmation_required? => false
+          order.stub :payment_required? => true
+        end
+
+        specify do
+          order.checkout_steps.should == %w(address delivery payment complete)
+        end
+      end
+
+      context "when confirmation required" do
+        before do
+          order.stub :confirmation_required? => true
+          order.stub :payment_required? => true
+        end
+
+        specify do
+          order.checkout_steps.should == %w(address delivery payment confirm complete)
+        end
+      end
+
       context "when payment not required" do
         before { order.stub :payment_required? => false }
         specify do
-          order.checkout_steps.should == %w(address delivery confirm complete)
+          order.checkout_steps.should == %w(address delivery complete)
         end
       end
 
       context "when payment required" do
         before { order.stub :payment_required? => true }
         specify do
-          order.checkout_steps.should == %w(address delivery payment confirm complete)
+          order.checkout_steps.should == %w(address delivery payment complete)
         end
       end
     end
@@ -219,8 +250,7 @@ describe Spree::Order do
 
         it "transitions to complete" do
           order.next!
-          assert_state_changed(order, 'delivery', 'confirm')
-          order.state.should == "confirm"
+          order.state.should == "complete"
         end
       end
 
@@ -252,9 +282,9 @@ describe Spree::Order do
             shipment.shipping_rates.first.update_column(:cost, 0)
           end
 
-          it "skips payment, transitions to confirm" do
+          it "skips payment, transitions to complete" do
             order.next!
-            order.state.should == "confirm"
+            order.state.should == "complete"
           end
         end
       end
@@ -265,10 +295,30 @@ describe Spree::Order do
         order.state = 'payment'
       end
 
-      it "transitions to confirm" do
-        order.next!
-        assert_state_changed(order, 'payment', 'confirm')
-        order.state.should == "confirm"
+      context "with confirmation required" do
+        before do
+          order.stub :confirmation_required? => true
+        end
+
+        it "transitions to confirm" do
+          order.next!
+          assert_state_changed(order, 'payment', 'confirm')
+          order.state.should == "confirm"
+        end
+      end
+
+      context "without confirmation required" do
+        before do
+          order.stub :confirmation_required? => false
+          order.stub :payment_required? => true
+        end
+
+        it "transitions to complete" do
+          order.should_receive(:process_payments!).once.and_return true
+          order.next!
+          assert_state_changed(order, 'payment', 'complete')
+          order.state.should == "complete"
+        end
       end
 
       # Regression test for #2028
@@ -280,8 +330,8 @@ describe Spree::Order do
         it "does not call process payments" do
           order.should_not_receive(:process_payments!)
           order.next!
-          assert_state_changed(order, 'payment', 'confirm')
-          order.state.should == "confirm"
+          assert_state_changed(order, 'payment', 'complete')
+          order.state.should == "complete"
         end
       end
     end
@@ -366,9 +416,6 @@ describe Spree::Order do
     before do
       @old_checkout_flow = Spree::Order.checkout_flow
       Spree::Order.class_eval do
-        remove_transition from: :delivery, to: :confirm
-      end
-      Spree::Order.class_eval do
         insert_checkout_step :new_step, before: :address
       end
     end
@@ -391,7 +438,7 @@ describe Spree::Order do
 
       specify do
         order = Spree::Order.new
-        order.checkout_steps.should == %w(new_step before_address address delivery confirm complete)
+        order.checkout_steps.should == %w(new_step before_address address delivery complete)
       end
     end
 
@@ -404,7 +451,7 @@ describe Spree::Order do
 
       specify do
         order = Spree::Order.new
-        order.checkout_steps.should == %w(new_step address after_address delivery confirm complete)
+        order.checkout_steps.should == %w(new_step address after_address delivery complete)
       end
     end
   end
@@ -412,9 +459,6 @@ describe Spree::Order do
   context "remove checkout step" do
     before do
       @old_checkout_flow = Spree::Order.checkout_flow
-      Spree::Order.class_eval do
-        remove_transition from: :delivery, to: :confirm
-      end
       Spree::Order.class_eval do
         remove_checkout_step :address
       end
@@ -431,7 +475,7 @@ describe Spree::Order do
 
     specify do
       order = Spree::Order.new
-      order.checkout_steps.should == %w(delivery confirm complete)
+      order.checkout_steps.should == %w(delivery complete)
     end
   end
 
@@ -457,7 +501,7 @@ describe Spree::Order do
       end
 
       order.payments.create!({ :amount => order.outstanding_balance, :payment_method => payment_method, :source => creditcard })
-      order.complete!
+      order.next!
     end
   end
 

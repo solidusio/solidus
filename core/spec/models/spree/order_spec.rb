@@ -557,6 +557,43 @@ describe Spree::Order do
     end
   end
 
+  context "#confirmation_required?" do
+
+    # Regression test for #4117
+    it "is required if the state is currently 'confirm'" do
+      order = Spree::Order.new
+      assert !order.confirmation_required?
+      order.state = 'confirm'
+      assert order.confirmation_required?
+    end
+
+    context 'Spree::Config[:always_include_confirm_step] == true' do
+
+      before do
+        Spree::Config[:always_include_confirm_step] = true
+      end
+
+      it "returns true if payments empty" do
+        order = Spree::Order.new
+        assert order.confirmation_required?
+      end
+    end
+
+    context 'Spree::Config[:always_include_confirm_step] == false' do
+
+      it "returns false if payments empty and Spree::Config[:always_include_confirm_step] == false" do
+        order = Spree::Order.new
+        assert !order.confirmation_required?
+      end
+
+      it "does not bomb out when an order has an unpersisted payment" do
+        order = Spree::Order.new
+        order.payments.build
+        assert !order.confirmation_required?
+      end
+    end
+  end
+
   # Regression test for #2191
   context "when an order has an adjustment that zeroes the total, but another adjustment for shipping that raises it above zero" do
     let!(:persisted_order) { create(:order) }
@@ -685,14 +722,14 @@ describe Spree::Order do
   describe ".restart_checkout_flow" do
     it "updates the state column to the first checkout_steps value" do
       order = create(:order, :state => "delivery")
-      expect(order.checkout_steps).to eql ["address", "delivery", "confirm", "complete"]
+      expect(order.checkout_steps).to eql ["address", "delivery", "complete"]
       expect{ order.restart_checkout_flow }.to change{order.state}.from("delivery").to("address")
     end
 
     context "with custom checkout_steps" do
       it "updates the state column to the first checkout_steps value" do
         order = create(:order, :state => "delivery")
-        order.should_receive(:checkout_steps).and_return ["custom_step", "address", "delivery", "confirm", "complete"]
+        order.should_receive(:checkout_steps).and_return ["custom_step", "address", "delivery", "complete"]
         expect{ order.restart_checkout_flow }.to change{order.state}.from("delivery").to("custom_step")
       end
     end
