@@ -78,7 +78,7 @@ describe Spree::Reimbursement do
         payment.save!
         order.next! # confirm
       end
-      order.next! # completed
+      order.complete! # completed
       if payment
         payment.state = 'completed'
         payment.save!

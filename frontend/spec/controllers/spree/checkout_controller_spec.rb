@@ -140,7 +140,6 @@ describe Spree::CheckoutController do
 
       context "when in the confirm state" do
         before do
-          order.stub :confirmation_required? => true
           order.update_column(:state, "confirm")
           order.stub :user => user
           # An order requires a payment to reach the complete state
@@ -273,6 +272,7 @@ describe Spree::CheckoutController do
           payment_method = FactoryGirl.create(:simple_credit_card_payment_method)
           payment = FactoryGirl.create(:payment, :payment_method => payment_method)
           order.payments << payment
+          order.next!
         end
       end
 
@@ -283,7 +283,7 @@ describe Spree::CheckoutController do
 
       it "when GatewayError is raised" do
         order.payments.any_instance.stub(:process!).and_raise(Spree::Core::GatewayError.new(Spree.t(:payment_processing_failed)))
-        spree_put :update, :order => {}
+        spree_put :update, :order => {}, state: 'confirm'
         flash[:error].should == Spree.t(:payment_processing_failed)
       end
     end

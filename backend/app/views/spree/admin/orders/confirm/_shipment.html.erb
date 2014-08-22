@@ -1,0 +1,54 @@
+<div id="<%= "shipment_#{shipment.id}" %>" data-hook="admin_shipment_form">
+  <%= render :partial => "spree/admin/variants/split", :formats => :js %>
+  <fieldset class="no-border-bottom">
+    <legend align="center" class="stock-location" data-hook="stock-location">
+      <%= Spree.t(:shipment) %>
+      <span class="shipment-number"><%= shipment.number %></span>
+      <%= Spree.t(:from) %>
+      <strong class="stock-location-name" data-hook="stock-location-name">"<%= shipment.stock_location.name %>"</strong>
+    </legend>
+  </fieldset>
+
+  <table class="stock-contents index" data-hook="stock-contents">
+    <thead>
+      <th colspan="2">
+        <%= Spree.t(:item_description) %>
+      </th>
+      <th><%= Spree.t(:price) %></th>
+      <th><%= Spree.t(:quantity) %></th>
+      <th><%= Spree.t(:total) %></th>
+    </thead>
+
+    <tbody data-shipment-number="<%= shipment.number %>" data-order-number="<%= order.number %>">
+      <%= render 'spree/admin/orders/confirm/shipment_manifest', shipment: shipment %>
+
+      <tr class="show-method total">
+        <% if rate = shipment.selected_shipping_rate %>
+          <td colspan="4">
+            <strong><%= rate.name %></strong>
+          </td>
+          <td class="total" align="center">
+            <span><%= shipment.display_cost %></span>
+          </td>
+        <% else %>
+          <td colspan='5'><%= Spree.t(:no_shipping_method_selected) %></td>
+        <% end %>
+      </tr>
+
+      <tr class="edit-tracking hidden total">
+        <td colspan="5">
+          <label><%= Spree.t(:tracking_number) %>:</label>
+          <%= text_field_tag :tracking, shipment.tracking %>
+        </td>
+      </tr>
+
+      <% if order.special_instructions.present? %>
+        <tr class='special_instructions'>
+          <td colspan="5">
+            <strong><%= Spree.t(:special_instructions) %>:&nbsp;</strong><%= order.special_instructions %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

@@ -57,6 +57,7 @@ Spree::Core::Engine.add_routes do
       member do
         put :next
         put :advance
+        put :complete
       end
       order_routes.call
     end
