@@ -19,7 +19,7 @@ module Spree
     token_resource
 
     attr_reader :coupon_code
-    attr_accessor :temporary_address
+    attr_accessor :temporary_address, :temporary_credit_card
 
     if Spree.user_class
       belongs_to :user, class_name: Spree.user_class.to_s
