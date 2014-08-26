@@ -73,6 +73,7 @@ Spree::Core::Engine.add_routes do
 
     resources :orders, :except => [:show] do
       member do
+        put :advance
         get :confirm
         put :complete
         post :resend

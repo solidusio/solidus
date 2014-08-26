@@ -2,7 +2,7 @@ module Spree
   module Admin
     class OrdersController < Spree::Admin::BaseController
       before_filter :initialize_order_events
-      before_filter :load_order, :only => [:edit, :update, :complete, :confirm, :cancel, :resume, :approve, :resend, :open_adjustments, :close_adjustments]
+      before_filter :load_order, :only => [:edit, :update, :advance, :complete, :confirm, :cancel, :resume, :approve, :resend, :open_adjustments, :close_adjustments]
 
       respond_to :html
 
@@ -73,10 +73,29 @@ module Spree
         render :action => :edit
       end
 
+      def advance
+        if @order.completed?
+          flash[:notice] = Spree.t('order_already_completed')
+          redirect_to edit_admin_order_url(@order)
+        else
+          while @order.next; end
+
+          if @order.confirm?
+            flash[:success] = Spree.t('order_ready_for_confirm')
+            redirect_to confirm_admin_order_url(@order)
+          else
+            flash[:error] = @order.errors.full_messages
+            redirect_to confirm_admin_order_url(@order)
+          end
+        end
+      end
+
       # GET
       def confirm
         if @order.completed?
           redirect_to edit_admin_order_url(@order)
+        elsif !@order.confirm?
+          render template: 'spree/admin/orders/confirm_advance'
         end
       end
 
