@@ -72,6 +72,9 @@ Spree::Core::Engine.add_routes do
     resources :orders, except: [:show] do
       member do
         get :cart
+        put :advance
+        get :confirm
+        put :complete
         post :resend
         get :open_adjustments
         get :close_adjustments

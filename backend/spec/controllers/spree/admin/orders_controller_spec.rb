@@ -116,6 +116,52 @@ describe Spree::Admin::OrdersController, :type => :controller do
       end
     end
 
+    describe '#advance' do
+      subject do
+        spree_put :advance, id: order.number
+      end
+
+      context 'when incomplete' do
+        before do
+          order.stub(:completed?).and_return(false, true)
+          order.stub(:next).and_return(true, false)
+        end
+
+        context 'when successful' do
+          before { order.stub(:confirm?).and_return(true) }
+
+          it 'messages and redirects' do
+            subject
+            expect(flash[:success]).to eq Spree.t('order_ready_for_confirm')
+            expect(response).to redirect_to(spree.confirm_admin_order_path(order))
+          end
+        end
+
+        context 'when unsuccessful' do
+          before do
+            order.stub(:confirm?).and_return(false)
+            order.stub(:errors).and_return(double(full_messages: ['failed']))
+          end
+
+          it 'messages and redirects' do
+            subject
+            expect(flash[:error]) == order.errors.full_messages
+            expect(response).to redirect_to(spree.confirm_admin_order_path(order))
+          end
+        end
+      end
+
+      context 'when already completed' do
+        before { order.stub :completed? => true }
+
+        it 'messages and redirects' do
+          subject
+          expect(flash[:notice]).to eq Spree.t('order_already_completed')
+          expect(response).to redirect_to(spree.edit_admin_order_path(order))
+        end
+      end
+    end
+
     # Test for #3919
     context "search" do
       let(:user) { create(:user) }
