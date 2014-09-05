@@ -632,7 +632,7 @@ module Spree
         payments.completed.each { |payment| payment.cancel! }
 
         send_cancel_email
-        self.update_column(:payment_state, 'credit_owed') unless shipped?
+        self.update_column(:payment_state, 'void') unless shipped?
       end
 
       def send_cancel_email

@@ -6,7 +6,7 @@ module Spree
     let(:updater) { Spree::OrderUpdater.new(order) }
 
     context "order totals" do
-      before do 
+      before do
         2.times do
           create(:line_item, :order => order, price: 10)
         end
@@ -108,6 +108,14 @@ module Spree
     end
 
     context "updating payment state" do
+      it "is void if the order is canceled with payments" do
+        order.stub(:state).and_return('canceled')
+        order.stub_chain(:payments, :present?).and_return('true')
+
+        updater.update_payment_state
+        order.payment_state.should == 'void'
+      end
+
       it "is failed if last payment failed" do
         order.stub_chain(:payments, :last, :state).and_return('failed')
 
