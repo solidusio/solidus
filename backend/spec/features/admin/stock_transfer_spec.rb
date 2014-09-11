@@ -19,7 +19,7 @@ describe 'Stock Transfers', :js => true do
     page.should have_content('SF')
 
     transfer = Spree::StockTransfer.last
-    transfer.should have(2).stock_movements
+    expect(transfer.stock_movements.size).to eq 2
   end
 
   describe 'received stock transfer' do
@@ -29,8 +29,8 @@ describe 'Stock Transfers', :js => true do
       page.should have_selector("#stock-location-destination")
 
       transfer = Spree::StockTransfer.last
-      transfer.should have(1).stock_movements
-      transfer.source_location.should be_nil
+      expect(transfer.stock_movements.size).to eq 1
+      expect(transfer.source_location).to be_nil
     end
 
     it 'receive stock to a single location' do

@@ -136,6 +136,18 @@ describe Spree::ReturnAuthorization do
     end
   end
 
+  context "can_receive?" do
+    it "should allow_receive when inventory units assigned" do
+      return_authorization.stub(:inventory_units => [1,2,3])
+      return_authorization.can_receive?.should be true
+    end
+
+    it "should not allow_receive with no inventory units" do
+      return_authorization.stub(:inventory_units => [])
+      return_authorization.can_receive?.should be false
+    end
+  end
+
   describe "#refundable_amount" do
     let(:weighted_line_item_pre_tax_amount) { 5.0 }
     let(:line_item_count)                   { return_authorization.order.line_items.count }
