@@ -577,7 +577,7 @@ fr:
     images: Images
     included_in_price: Inclus dans le prix
     included_price_validation: ne peut pas être sélectionné tant que vous n'avez pas défini une zone de taxe par défaut
-    instructions_to_reset_password: ! 'Remplissez le formulaire ci-après et les instuctions pour réinitialiser votre mot de passe vous seront envoyées par courriel:'
+    instructions_to_reset_password: ! 'Remplissez le formulaire ci-après et les instructions pour réinitialiser votre mot de passe vous seront envoyées par courriel:'
     insufficient_stock: Stock disponible insuffisant, il n'en reste seulement que %{on_hand}
     intercept_email_address: Intercepter l'adresse courriel
     intercept_email_instructions: Remplacer l'adresse courriel de destination par cette adresse
