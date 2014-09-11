@@ -76,7 +76,7 @@ RSpec.configure do |config|
       config.default_retry_count = ENV['RSPEC_RETRY_COUNT'].to_i
     end
   end
-  
+
   if ENV['WEBDRIVER'] == 'accessible'
     config.around(:each, :inaccessible => true) do |example|
       Capybara::Accessible.skip_audit { example.run }
