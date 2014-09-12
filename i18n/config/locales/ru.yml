@@ -207,7 +207,7 @@ ru:
       spree/shipping_method:
         one: Cпособ доставки
         many: Cпособов доставки
-        other: Cпособа доставки
+        other: Cпособы доставки
       spree/state:
         one: Область/Регион
         many: Областей/Регионов
