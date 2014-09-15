@@ -142,6 +142,9 @@ describe Spree::Order do
     end
 
     context "resets payment state" do
+
+      let(:payment) { create(:payment) }
+
       before do
         # TODO: This is ugly :(
         # Stubs methods that cause unwanted side effects in this test
@@ -150,6 +153,10 @@ describe Spree::Order do
         order.stub :has_available_shipment
         order.stub :restock_items!
         shipment.stub(:cancel!)
+        payment.stub(:cancel!)
+        order.stub_chain(:payments, :valid, :size).and_return(1)
+        order.stub_chain(:payments, :completed).and_return([payment])
+        order.stub_chain(:payments, :last).and_return(payment)
       end
 
       context "without shipped items" do

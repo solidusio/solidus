@@ -580,9 +580,8 @@ module Spree
       def after_cancel
         shipments.each { |shipment| shipment.cancel! }
         payments.completed.each { |payment| payment.cancel! }
-
         send_cancel_email
-        self.update_column(:payment_state, 'void') unless shipped?
+        self.update!
       end
 
       def send_cancel_email
