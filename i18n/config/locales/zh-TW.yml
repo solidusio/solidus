@@ -72,7 +72,7 @@ zh-TW:
         cost_price: 成本
         description: 描述
         master_price: 預設價格
-        name: Name
+        name: 名稱
         on_hand: 庫存
         shipping_category: 運送分類
         tax_category: 稅金分類
@@ -83,16 +83,19 @@ zh-TW:
         event_name: 活動名稱
         expires_at: 有效日期
         name: 名稱
-        path: 途徑
+        path: 路徑
         starts_at: 起始日期
         usage_limit: 使用次數限制
+      spree/promotion_category:
+        one: 促銷分類
+        other: 促銷分類
       spree/property:
         name: 名稱
         presentation: 描述
       spree/prototype:
         name: 名稱
       spree/return_authorization:
-        amount: Amount
+        amount: 金額
       spree/role:
         name: 名稱
       spree/state:
@@ -126,7 +129,7 @@ zh-TW:
         width: 寬
       spree/zone:
         description: 描述
-        name: Name
+        name: 名稱
     errors:
       models:
         spree/credit_card:
@@ -139,18 +142,18 @@ zh-TW:
       spree/credit_card: 信用卡
       spree/inventory_unit: 庫存單位
       spree/line_item:
-        one: Line Item
-        other: Line Items
+        one: 單項
+        other: 單項
       spree/order: 訂單
       spree/payment: 付款
       spree/payment_method: 
       spree/product: 產品
-      spree/promotion: 
+      spree/promotion: 促銷
       spree/property: 屬性
       spree/prototype: 原型
       spree/return_authorization:
-        one: Return Authorization
-        other: Return Authorizations
+        one: 返回授權
+        other: 返回授權
       spree/role: 角色
       spree/shipment: 貨運
       spree/shipping_category: 貨運類別
@@ -289,18 +292,22 @@ zh-TW:
     analytics_desc_list_4: 完全免費!
     analytics_trackers: 分析追蹤
     and: 以及
+    approve: 核准
+    approver: 核准者
+    approved_at: 核准日期
     are_you_sure: 你確定嗎?
     are_you_sure_delete: 你確定要刪除?
     associated_adjustment_closed: 這個關聯的調整項目已經停用, 而且不會被重複計算, 您要啓用它嗎?
     attachment_default_style: 附件樣式
     attachment_default_url: 附件網址
     attachment_path: 附件路徑
-    attachment_styles: Paperclip Styles
+    attachment_styles: Paperclip 式樣
     attachment_url: 附件網址
     authorization_failure: 認証失敗
     available_on: 上架時間
     back: 返回
     back_end: 後端
+    backordered: 待補
     back_to_adjustments_list: 返回調整項目列表
     back_to_images_list: 返回圖片列表
     back_to_option_types_list: 返回選項類別列表
@@ -401,7 +408,7 @@ zh-TW:
     customer_details: 客戶資料
     customer_details_updated: 客戶資料更新完成
     customer_search: 搜尋客戶
-    cut: ! "\bCut"
+    cut: "剪下"
     dash:
       jirafe:
         app_id: App ID
@@ -420,11 +427,11 @@ zh-TW:
       js_format: yy/mm/dd
     date_range: 日期範圍
     default: 預設
-    default_meta_description: Default Meta Description
-    default_meta_keywords: Default Meta Keywords
-    default_seo_title: Default Seo Title
-    default_tax: Default Tax
-    default_tax_zone: Default Tax Zone
+    default_meta_description: 預設 Meta 描述
+    default_meta_keywords: 預設 Meta 關鍵字
+    default_seo_title: 預設 Seo 標題
+    default_tax: 預設稅項
+    default_tax_zone: 預設稅區
     delete: 刪除
     delivery: 抵達
     depth: 深
@@ -432,9 +439,9 @@ zh-TW:
     destination: 目的地
     destroy: 刪除
     discount_amount: 折扣金額
-    dismiss_banner: No. Thanks! I'm not interested, do not display this message again
+    dismiss_banner: 不。謝謝！我沒有興趣，不要再顯示此訊息。
     display: 顯示
-    display_currency: Display currency
+    display_currency: 顯示貨幣
     edit: 編輯
     editing_option_type: 編輯選項類型
     editing_payment_method: 編輯付費方式
@@ -472,16 +479,16 @@ zh-TW:
     events:
       spree:
         cart:
-          add: Add to cart
+          add: 加入購物車
         checkout:
-          coupon_code_added: Coupon code added
+          coupon_code_added: 添加了優惠券號碼
         content:
-          visited: Visit static content page
+          visited: 訪問靜態頁面
         order:
-          contents_changed: Order contents changed
-        page_view: Static page viewed
+          contents_changed: 訂單內容已變更
+        page_view: 被訪問靜態頁面
         user:
-          signup: User signup
+          signup: 使用者登記
     exceptions:
       count_on_hand_setter: 無法手動設置 count_on_hand, 將會在 recalculate_count_on_hand 中被自動設定. 請使用 `update_column(:count_on_hand, value)`
     expiration: 過期
@@ -492,7 +499,7 @@ zh-TW:
     finalize: 完成
     first_item: 第一項商品價格
     first_name: 名
-    first_name_begins_with: First Name Begins With
+    first_name_begins_with: 名字開始
     flat_percent: 固定比例
     flat_rate_per_item: 固定金額(每商品)
     flat_rate_per_order: 固定金額(單一訂單)
@@ -527,15 +534,15 @@ zh-TW:
       translations: 翻譯
     icon: 圖示
     image: 圖片
-    image_settings: Image Settings
-    image_settings_updated: Image Settings successfully updated.
-    image_settings_warning: You will need to regenerate thumbnails if you update the paperclip styles. Use rake paperclip:refresh:thumbnails to do this.
+    image_settings: 圖片設定
+    image_settings_updated: 成功更新圖片設定。
+    image_settings_warning: 如果您更新了 paperclip 的樣式，您需要重新生成縮略圖。您可以通過運行“rake paperclip:refresh:thumbnails CLASS=Spree::Image”以完成目的。
     images: 圖片
-    included_in_price: Included in Price
-    included_price_validation: cannot be selected unless you have set a Default Tax Zone
+    included_in_price: 已包括於售價
+    included_price_validation: 除非您設置了默認的繳稅區域，否則無法選擇
     instructions_to_reset_password: 請填寫如下表格來重置你的密碼，重置後的密碼會通過電子郵件發送給您
-    insufficient_stock: Insufficient stock available, only %{on_hand} remaining
-    intercept_email_address: 攔截Email 位址
+    insufficient_stock: 庫存不足，當前還剩下 %{on_hand} 件庫存
+    intercept_email_address: 攔截電郵地址
     intercept_email_instructions: 更改電子郵件回函收件位址為這個位址
     internal_name: 內部名稱
     invalid_payment_provider: 不正確的付費供應商.
@@ -586,8 +593,8 @@ zh-TW:
     make_refund: 退款
     master_price: 主要定價
     match_choices:
-      all: All
-      none: None
+      all: 全部
+      none: 清空
     max_items: 
     meta_description: Meta 描述
     meta_keywords: Meta 關鍵字
@@ -657,7 +664,7 @@ zh-TW:
       variant_not_deleted: 具體型號不能被刪除
     on_hand: 庫存
     open: 
-    open_all_adjustments: 
+    open_all_adjustments: 啟用所有價格調整
     option_type: 商品選項類型
     option_type_placeholder: 
     option_types: 商品選項類型
@@ -666,32 +673,32 @@ zh-TW:
     optional: 
     options: 選項
     or: 或
-    or_over_price: ! '%{price} or over'
+    or_over_price: ! '%{price} 或以上'
     order: 訂單
-    order_adjustments: Order adjustments
+    order_adjustments: 訂單調整
     order_details: 訂單資料
     order_email_resent: 重新發送了訂單郵件
     order_information: 訂單資訊
     order_mailer:
       cancel_email:
-        dear_customer: Dear Customer,
-        instructions: Your order has been CANCELED.  Please retain this cancellation information for your records.
-        order_summary_canceled: Order Summary [CANCELED]
+        dear_customer: 親愛的顧客，
+        instructions: 您的訂單已被取消。請保留此取消信息記錄。
+        order_summary_canceled: 訂單總覽 [已取消]
         subject: 註銷訂單
-        subtotal: ! '小計: %{subtotal}'
-        total: ! '共計: %{total}'
+        subtotal: "小計: %{subtotal}"
+        total: "共計: %{total}"
       confirm_email:
-        dear_customer: Dear Customer,
-        instructions: Please review and retain the following order information for your records.
-        order_summary: Order Summary
+        dear_customer:  親愛的顧客，
+        instructions: 請仔細閱讀並保留以下訂單信息記錄。
+        order_summary:  訂單總覽
         subject: 訂單確認
-        subtotal: ! '小計: %{subtotal}'
-        thanks: Thank you for your business.
-        total: ! '共計: %{total}'
+        subtotal: "小計: %{subtotal}"
+        thanks: 謝謝你的購物和信賴。
+        total: "共計: %{total}"
     order_not_found: 找不到您的訂單. 請再試一次.
-    order_number: 訂單編號
+    order_number: "訂單編號 %{number}"
     order_populator:
-      out_of_stock: ! '%{item} 已無存貨'
+      out_of_stock: "%{item} 已無存貨"
       please_enter_reasonable_quantity: 請輸入合理的數量.
     order_processed_successfully: 您的訂單已被接收
     order_state:
@@ -703,7 +710,7 @@ zh-TW:
       confirm: 確認
       delivery: 寄送方式
       payment: 付款
-      resumed: Resumed
+      resumed: 重新開始
       returned: 己寄回
     order_summary: 訂單總計
     order_sure_want_to: 您確定您想要%{event}這個訂單嗎？
@@ -714,11 +721,11 @@ zh-TW:
     overview: 總覽
     package_from: 包裝自
     pagination:
-      next_page: next page &raquo;
-      previous_page: ! '&laquo; previous page'
+      next_page: 下一頁 &raquo;
+      previous_page: ! '&laquo; 上一頁'
       truncate: ! '&hellip;'
     password: 密碼
-    paste: Paste
+    paste: 貼上
     path: 路徑
     pay: 付款
     payment: 付款
@@ -727,8 +734,8 @@ zh-TW:
     payment_method_not_supported: 
     payment_methods: 付費方式
     payment_processing_failed: 
-    payment_processor_choose_banner_text: If you need help choosing a payment processor, please visit
-    payment_processor_choose_link: our payments page
+    payment_processor_choose_banner_text: 如果您需要關於支付處理的幫助，請訪問
+    payment_processor_choose_link: 我們的支付頁面
     payment_state: 付費狀態
     payment_states:
       balance_due: 未入帳
@@ -742,20 +749,20 @@ zh-TW:
       void: 無效
     payment_updated: 付費資料已更新
     payments: 付費資料
-    percent: 
-    percent_per_item: Percent Per Item
+    percent: 百分比
+    percent_per_item: 單件百分比
     permalink: 永久連結
     phone: 電話
-    place_order: 
-    please_define_payment_methods: Please define some payment methods first.
-    populate_get_error: Something went wrong. Please try adding the item again.
-    powered_by: Powered by
-    presentation: 
-    previous: 
+    place_order: 落單
+    please_define_payment_methods: 請先設定支付方式。
+    populate_get_error: 發生錯誤，請再添加項目。
+    powered_by: 技術支持
+    presentation: 描述
+    previous: 上一個
     price: 價格
-    price_range: Price Range
-    price_sack: Price Sack
-    process: 
+    price_range: 價格範圍
+    price_sack: 袋價格
+    process: 處理
     product: 產品
     product_details: 商品資料
     product_has_no_description: 該產品沒有描述
@@ -767,27 +774,30 @@ zh-TW:
       match_all: 全部
       match_any: 最新一個
       product_source:
-        group: 
+        group: 從產品分組        
         manual: 手動選擇
     products: 商品
     promotion: 促銷方案
-    promotion_action: Promotion Action
+    promotion_action: 優惠方式
     promotion_action_types:
       create_adjustment:
-        description: 增加一筆促銷用的價格調整
-        name: 增加價格調整
+        description: 為訂單添加促銷用的價格調整
+        name: 添加訂單的價格調整
+      create_item_adjustments:
+        description: 為訂單上的單項產品添加一筆促銷用的價格調整
+        name: 添加單項的價格調整
       create_line_items:
-        description: 增加特定商品到訂單中
-        name: 增加訂單商品
-      give_store_credit:
-        description: Gives the user store credit of the amount specified
-        name: Give store credit
-    promotion_actions: Actions
+        description: 添加特定商品到訂單中
+        name: 添加訂單商品
+      free_shipping:
+        description: 整張訂單免費發貨
+        name: 免運費
+    promotion_actions: 優惠方式
     promotion_form:
       match_policies:
         all: 符合所有條件
         any: 符合任一條件
-    promotion_rule: Promotion Rule
+    promotion_rule: 促銷規則
     promotion_rule_types:
       first_order:
         description: 使用者的第 1 筆訂單
@@ -796,8 +806,11 @@ zh-TW:
         description: 商品總價符合條件
         name: 商品總價
       landing_page:
-        description: Customer must have visited the specified page
-        name: Landing Page
+        description: 客戶必須訪問了指定的頁面
+        name: 登陸頁面
+      one_use_per_user:
+        description: 每人只可使用一次
+        name: 每人一次
       product:
         description: 訂單中包含特定商品
         name: 商品
@@ -807,13 +820,17 @@ zh-TW:
       user_logged_in:
         description: 網站已註冊的使用者
         name: 已註冊使用者登入
+      taxon:
+        description: 訂單中包括指定分類產品
+        name: 分類
     promotions: 促銷方案
+    promotion_uses: 促銷使用頻率
     properties: 屬性
     property: 屬性
     prototype: 原型
     prototypes: 原型
     provider: 供應商
-    provider_settings_warning: 如果您正在修改提供者類型，您需要在編輯提供者設置之前先保存。#"If you are changing the provider type, you must save first before you can edit the provider settings"
+    provider_settings_warning: 如果您正在修改提供者類型，您需要在編輯提供者設置之前先保存。
     qty: 數量
     quantity: 數量
     quantity_returned: 退貨數量
@@ -857,14 +874,14 @@ zh-TW:
     sales_total_description: 
     sales_totals: 
     save_and_continue: 儲存後繼續
-    say_no: 'No'
-    say_yes: 'Yes'
+    say_no: '不'
+    say_yes: '是的'
     scope: 範圍
     search: 搜尋
     search_results: ! '''%{keywords}'' 搜尋結果'
     searching: 搜尋中
     secure_connection_type: 安全連線類型
-    security_settings: Security Settings
+    security_settings: 安全設定
     select: 選擇
     select_from_prototype: 從商品原型選擇
     select_stock: 選擇庫存
@@ -877,15 +894,15 @@ zh-TW:
     ship_address: 出貨地址
     ship_total: 
     shipment: 出貨資料
-    shipment_inc_vat: Shipment including VAT
+    shipment_inc_vat: 含增值税的配送
     shipment_mailer:
       shipped_email:
-        dear_customer: Dear Customer,
-        instructions: Your order has been shipped
-        shipment_summary: Shipment Summary
+        dear_customer: 親愛的顧客，
+        instructions: 您的訂單已發貨
+        shipment_summary: 發貨概覽
         subject: 出貨通知
-        thanks: Thank you for your business.
-        track_information: ! 'Tracking Information: %{tracking}'
+        thanks: 謝謝你的購物和信賴。
+        track_information: ! '貨運單號： %{tracking}'
         track_link: ! '追蹤連結: %{url}'
     shipment_state: 出貨狀態
     shipment_states:
@@ -900,9 +917,9 @@ zh-TW:
     shipping_address: 出貨地址
     shipping_categories: 出貨分類
     shipping_category: 出貨分類
-    shipping_flat_rate_per_item: 
-    shipping_flat_rate_per_order: 
-    shipping_flexible_rate: 
+    shipping_flat_rate_per_item: 以單項計固定費率
+    shipping_flat_rate_per_order: 固定費率
+    shipping_flexible_rate: 以每項計彈性價格
     shipping_instructions: 配送嚮導
     shipping_method: 出貨方式
     shipping_methods: 出貨方式
@@ -928,7 +945,7 @@ zh-TW:
     smtp_username: SMTP 使用者名稱
     source: 來源
     special_instructions: 特殊說明
-    split: 
+    split: 分拆
     spree/order:
       coupon_code: 優惠代碼
     spree_gateway_error_flash_for_checkout: 你的付費資訊有問題. 請檢查後再試一次.
@@ -939,16 +956,16 @@ zh-TW:
     states: 省份
     states_required: 需要州別
     status: 狀態
-    stock_location: 物件位置
-    stock_location_info: 庫存位置資訊
-    stock_locations: 庫存位置
+    stock_location: 庫存區域
+    stock_location_info: 庫存區域資訊
+    stock_locations: 庫存區域
     stock_management: 庫存管理
-    stock_management_requires_a_stock_location: 
+    stock_management_requires_a_stock_location: 請先新增庫存區域，才可使用庫存管理
     stock_movements: 庫存動向
-    stock_movements_for_stock_location: 
-    stock_successfully_transferred: 
-    stock_transfer: 
-    stock_transfers: 
+    stock_movements_for_stock_location: "%{stock_location_name} 的庫存動向"
+    stock_successfully_transferred: 庫存已成功在兩區域轉移
+    stock_transfer: 庫存轉移
+    stock_transfers: 庫存轉移 
     stop: 停止
     store: 商店
     street_address: 地址
@@ -1015,15 +1032,15 @@ zh-TW:
       choose_users: 選擇使用者
     users: 使用者
     validation:
-      cannot_be_less_than_shipped_units: 
-      cannot_destory_line_item_as_inventory_units_have_shipped: Cannot destory line item as some inventory units have shipped.
-      exceeds_available_stock: 
-      is_too_large: 
+      cannot_be_less_than_shipped_units: 不能少於已配送的單位數。
+      cannot_destory_line_item_as_inventory_units_have_shipped: 已經發貨的商品不能被刪除。
+      exceeds_available_stock: 超出可用的庫存。請確認訂單項的有效的數量。
+      is_too_large: 數量太多了，現有庫存無法滿足您需要的數量！
       must_be_int: 必須是整數
       must_be_non_negative: 必須為非負數
     value: 值
-    variant: Variant
-    variant_placeholder: 
+    variant: 具體型號
+    variant_placeholder: 選擇具体型号
     variants: 系列型號
     version: 版本
     void: 無效

@@ -729,7 +729,7 @@ en-AU:
         thanks: Thank you for your business.
         total: 
     order_not_found: 
-    order_number: Order
+    order_number: "Order %{number}"
     order_populator:
       out_of_stock: 
       please_enter_reasonable_quantity: 
