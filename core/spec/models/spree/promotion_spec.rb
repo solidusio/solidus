@@ -341,7 +341,6 @@ describe Spree::Promotion do
             it { should_not be}
           end
         end
->>>>>>> dae636b... Extract payload to a let statement.
       end
     end
 
