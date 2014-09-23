@@ -5,10 +5,6 @@ describe Spree::Calculator::TieredFlatRate do
 
   describe "#valid?" do
     subject { calculator.valid? }
-    context "when tiers is not a hash" do
-      before { calculator.preferred_tiers = ["nope"] }
-      it { should be false }
-    end
     context "when tiers is a hash" do
       context "and one of the keys is not a positive number" do
         before { calculator.preferred_tiers = { "nope" => 20 } }

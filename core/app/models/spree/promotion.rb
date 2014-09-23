@@ -72,7 +72,7 @@ module Spree
 
     # called anytime order.update! happens
     def eligible?(promotable)
-      return false if expired? || usage_limit_exceeded?(promotable)
+      return false if expired? || usage_limit_exceeded?(promotable) || blacklisted?(promotable)
       !!eligible_rules(promotable, {})
     end
 

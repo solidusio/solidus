@@ -13,10 +13,6 @@ describe Spree::Calculator::TieredPercent do
       before { calculator.preferred_base_percent = 110 }
       it { should be false }
     end
-    context "when tiers is not a hash" do
-      before { calculator.preferred_tiers = ["nope"] }
-      it { should be false }
-    end
     context "when tiers is a hash" do
       context "and one of the keys is not a positive number" do
         before { calculator.preferred_tiers = { "nope" => 20 } }
@@ -45,7 +41,7 @@ describe Spree::Calculator::TieredPercent do
     end
     context "when amount falls within the second tier" do
       let(:amount) { 150 }
-      it { should eq 22 }
+      it { should eq 22.5 }
     end
   end
 end

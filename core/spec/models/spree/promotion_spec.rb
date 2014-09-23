@@ -262,11 +262,13 @@ describe Spree::Promotion do
     end
 
     context "with 'all' match policy" do
+      let(:promo1) { stub_model(Spree::PromotionRule, :eligible? => true, :applicable? => true) }
+      let(:promo2) { stub_model(Spree::PromotionRule, :eligible? => true, :applicable? => true) }
+
       before { promotion.match_policy = 'all' }
 
       it "should have eligible rules if all rules are eligible" do
-        promotion.promotion_rules = [stub_model(Spree::PromotionRule, :eligible? => true, :applicable? => true),
-                                     stub_model(Spree::PromotionRule, :eligible? => true, :applicable? => true)]
+        promotion.promotion_rules = [promo1, promo2]
         promotion.promotion_rules.stub(:for).and_return(promotion.promotion_rules)
         promotion.eligible_rules(promotable).should eq [promo1, promo2]
       end
