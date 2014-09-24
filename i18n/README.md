@@ -73,7 +73,7 @@ Here are some ways *you* can contribute:
 * by using prerelease versions
 * by reporting [bugs][8]
 * by suggesting new features
-* by writing [translations][9]
+* by writing translations
 * by writing or editing documentation
 * by writing specifications
 * by writing code (*no patch is too small*: fix typos, add comments, clean up inconsistent whitespace)
@@ -101,4 +101,3 @@ Copyright (c) 2014 [Spree Commerce Inc][3]. and other [contributors][5]. release
 [6]: https://github.com/spree/spree_i18n/blob/master/LICENSE.md
 [7]: http://www.fsf.org/licensing/essays/free-sw.html
 [8]: https://github.com/spree/spree_i18n/issues
-[9]: http://www.localeapp.com/projects/4605
