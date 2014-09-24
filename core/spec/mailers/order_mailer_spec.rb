@@ -6,7 +6,7 @@ describe Spree::OrderMailer, :type => :mailer do
   include EmailSpec::Matchers
 
   let(:order) do
-    order = stub_model(Spree::Order)
+    order = create(:order)
     product = stub_model(Spree::Product, :name => %Q{The "BEST" product})
     variant = stub_model(Spree::Variant, :product => product)
     price = stub_model(Spree::Price, :variant => variant, :amount => 5.00)
@@ -44,8 +44,21 @@ describe Spree::OrderMailer, :type => :mailer do
 
   context "only shows eligible adjustments in emails" do
     before do
-      create(:adjustment, :order => order, :eligible => true, :label => "Eligible Adjustment")
-      create(:adjustment, :order => order, :eligible => false, :label => "Ineligible Adjustment")
+      create(
+        :adjustment,
+        adjustable: order,
+        order:      order,
+        eligible:   true,
+        label:      'Eligible Adjustment'
+      )
+
+      create(
+        :adjustment,
+        adjustable: order,
+        order:      order,
+        eligible:   false,
+        label:      'Ineligible Adjustment'
+      )
     end
 
     let!(:confirmation_email) { Spree::OrderMailer.confirm_email(order) }
