@@ -20,7 +20,7 @@ uk:
       spree/country:
         iso: ISO
         iso3: ISO3
-        iso_name: Назва за ISO
+        iso_name: Назва згідно ISO
         name: Назва
         numcode: Код ISO
       spree/credit_card:
@@ -364,7 +364,7 @@ uk:
         spree/reimbursement:
           attributes:
             base:
-              return_items_order_id_does_not_match: Одна або більше позицій повернення не належить до того є замовлення, що відшкодування.
+              return_items_order_id_does_not_match: Одна або більше позицій повернення не належить до того ж замовлення, що відшкодування.
         spree/return_item:
           attributes:
             reimbursement:
@@ -539,13 +539,13 @@ uk:
     back_to_payments_list: Назад до списку оплат
     back_to_products_list: Назад до списку продуктів
     back_to_promotions_list: Назад до списку промо
-    back_to_promotion_categories_list: Back To Promotions Categories List
+    back_to_promotion_categories_list: Назад до списку категорій промо-акцій
     back_to_properties_list: Назад до списку властивостей
     back_to_prototypes_list: Назад до списку прототипів
     back_to_reports_list: Назад до списку звітів
     back_to_refund_reason_list: Назад до причин повернення
     back_to_reimbursement_type_list: Назад до типів відшкодувань
-    back_to_rma_reason_list: Назад до причин RMA
+    back_to_rma_reason_list: Назад до підстав дозволу на повернення
     back_to_shipping_categories: Назад до категорій доставки
     back_to_shipping_categories_list: Назад до списку категорій доставки
     back_to_shipping_methods_list: Назад до списку методів доставки
@@ -705,7 +705,7 @@ uk:
     editing_refund_reason: Редагування причини повернення
     editing_reimbursement: Редагування відшкодування
     editing_reimbursement_type: Редагування виду відшкодування
-    editing_rma_reason: Редагування підстави для RMA
+    editing_rma_reason: Редагування підстави для дозволу на повернення
     editing_shipping_category: Редагування категорії доставки
     editing_shipping_method: Редагування способу доставки
     editing_state: Редагування регіону/області
@@ -928,8 +928,8 @@ uk:
     new_prototype: Новий прототип
     new_refund: Нове повернення
     new_refund_reason: Нова причина повернення
-    new_rma_reason: Нова підстава RMA
-    new_return_authorization: Нове дозвіл на повернення
+    new_rma_reason: Нова підстава дозволу на повернення
+    new_return_authorization: Новий дозвіл на повернення
     new_shipment_at_location: Нове відправлення на склад
     new_shipping_category: Нова категорія доставки
     new_shipping_method: Новий спосіб доставки
@@ -1284,7 +1284,7 @@ uk:
       ready: готовий
       shipped: відправлений
     shipment_transfer_success: Варіанти успішно перенесено
-    shipment_transfer_error: Сталась помилка при перенесення варіантів
+    shipment_transfer_error: Сталась помилка при перенесенні варіантів
     shipments: Відправки
     shipped: Відправлено
     shipping: Доставка
