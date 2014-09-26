@@ -555,7 +555,7 @@ uk:
     back_to_stock_transfers_list: Назад до переміщень між складами
     back_to_store: Повернутися до магазину
     back_to_tax_categories_list: Назад до списку категорій
-    back_to_taxonomies_list: Назад до списку каталогів
+    back_to_taxonomies_list: Назад до списку таксономій
     back_to_trackers_list: Назад до списку трекерів
     back_to_users_list: Назад до списку користувачів
     back_to_zones_list: Назад до списку зон
@@ -939,8 +939,8 @@ uk:
     new_stock_transfer: Додати переміщення по складу
     new_tax_category: Нова категорія податків
     new_tax_rate: Нова ставка податку
-    new_taxon: Новий розділ
-    new_taxonomy: Новий каталог
+    new_taxon: Новий таксон
+    new_taxonomy: Нова таксономія
     new_tracker: Новий трекер
     new_user: Новий користувач
     new_variant: Новий варіант
