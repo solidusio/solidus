@@ -72,7 +72,7 @@ uk:
       spree/payment:
         amount: Сума
       spree/payment_method:
-        name: Найменування
+        name: Назва
       spree/product:
         available_on: Доступно з
         cost_currency: Валюта
@@ -116,7 +116,7 @@ uk:
         mail_from_address: "e-mail в полі Від:"
       spree/tax_category:
         description: Опис
-        name: Найменування
+        name: Назва
       spree/tax_rate:
         amount: Податкова ставка
         included_in_price: Включено в ціну
@@ -142,7 +142,7 @@ uk:
         width: Ширина
       spree/zone:
         description: Опис
-        name: Найменування
+        name: Назва
     models:
       spree/address:
         one: Адреса
@@ -907,9 +907,9 @@ uk:
     move_stock_between_locations: Переміщення товарів між складами
     my_account: Мій обліковий запис
     my_orders: Мої замовлення
-    name: Найменування
+    name: Назва
     name_on_card: Ім’я на карті
-    name_or_sku: Найменування або артикул
+    name_or_sku: Назва або артикул
     new: Новий
     new_adjustment: Нове коригування
     new_customer: Для нових користувачів
