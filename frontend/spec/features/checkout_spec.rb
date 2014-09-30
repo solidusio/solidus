@@ -112,7 +112,7 @@ describe "Checkout", inaccessible: true do
 
   context "and likes to double click buttons" do
     let!(:user) { create(:user) }
-    
+
     let!(:order) do
       order = OrderWalkthrough.up_to(:delivery)
 
@@ -200,6 +200,7 @@ describe "Checkout", inaccessible: true do
 
       Spree::CheckoutController.any_instance.stub(current_order: order)
       Spree::CheckoutController.any_instance.stub(try_spree_current_user: user)
+      Spree::OrdersController.any_instance.stub(try_spree_current_user: user)
 
       visit spree.checkout_state_path(:payment)
     end
