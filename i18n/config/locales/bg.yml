@@ -1,0 +1,1084 @@
+bg:
+  activerecord:
+    attributes:
+      spree/address:
+        address1: Адрес
+        address2: Адрес (продъл.)
+        city: Град    
+        country: Държава
+        firstname: Име
+        lastname: Фамилия
+        phone: Телефон
+        state: Област
+        zipcode: Пощенски код
+      spree/country:
+        iso: ISO
+        iso3: ISO3
+        iso_name: ISO Име
+        name: Име
+        numcode: ISO Код
+      spree/credit_card:
+        base: 
+        cc_type: Type
+        month: Месец
+        number: Номер
+        verification_value: Стойност за потвърждение
+        year: Година
+      spree/inventory_unit:
+        state: County Държава
+      spree/line_item:
+        price:  Цена
+        quantity:  Количество
+      spree/option_type:
+        name: Name Име
+        presentation:  Презентация
+      spree/order:
+        checkout_complete: Завършена поръчка
+        completed_at:  Завършена на
+        coupon_code:  Код на ваучер
+        created_at:  Дата на поръчка
+        email:  Клиентски и-мейл
+        ip_address:  IP Адрес
+        item_total:  Общо
+        number:  Номер
+        payment_state:  Състояние на плащане
+        shipment_state:  Състояние на доставка
+        special_instructions:  Специални инструкции
+        state:  Държава
+        total:  Общо
+      spree/order/bill_address:
+        address1:  Адрес за плащане -улица
+        city:   Адрес за плащане - град
+        firstname:   първо име
+        lastname:  фамилия
+        phone:   тел. номер
+        state:   община
+        zipcode:  пощенски код
+      spree/order/ship_address: 
+        address1:  Адрес за доставка - улица
+        city: Адрес за доставка - град
+        firstname:  Адрес за доставка -първо име
+        lastname:  Адрес за доставка - фамилия
+        phone: Адрес за доставка - тел. номер
+        state:  county Адрес за доставка - община 
+        zipcode:  Адрес за доставка - пощ. код
+      spree/payment:
+        amount:  Сума
+      spree/payment_method:
+        name:  Име
+      spree/product:
+        available_on:  В наличност от
+        cost_currency:  Валута
+        cost_price:  Цена
+        description:  Описание
+        master_price:  Крайна цена
+        name:  Име
+        on_hand:  В наличие
+        shipping_category:  Доставна категория
+        tax_category:  Данъчна категория
+      spree/promotion:
+        advertise: Рекламирай
+        code: Code Код
+        description:  Описание
+        event_name:  Име на акция
+        expires_at:  Изтича на
+        name: Име
+        path:  Път
+        starts_at:  Започва на
+        usage_limit:  Лимит
+      spree/property:
+        name: Име
+        presentation:  Презентация
+      spree/prototype:
+        name:  Име
+      spree/return_authorization:
+        amount:  Количество
+      spree/role:
+        name: Име
+      spree/state:
+        abbr: Съкращение
+        name:  Име
+      spree/tax_category:
+        description:  Описание
+        name:  Име
+      spree/tax_rate:
+        amount: Процент
+        included_in_price:  Включен в цената
+        show_rate_in_label: label Покажи процента в цената
+      spree/taxon:
+        name:  Име
+        permalink: Permalink
+        position:  Позиция
+      spree/taxonomy:
+        name:  Име
+      spree/user:
+        email: l И-мейл
+        password:  Парола 
+        password_confirmation:  Повтори парола
+      spree/variant:
+        cost_currency:  Валута
+        cost_price:  Price Цена
+        depth:  Дълбочина
+        height:  Височина
+        price:  Цена
+        sku: SKU
+        weight:  Тежест
+        width:  Ширина
+      spree/zone:
+        description:  Описание
+        name:  Име
+    errors:
+      models: 
+        spree/credit_card: 
+          attributes: 
+            base: 
+              card_expired: Картата е изтекла
+    models:
+      spree/address: 
+        one:  Адрес
+        other:  Адреси
+      spree/country:
+        one:  Държава
+        other:  Държави
+      spree/credit_card:
+        one:  Кредитна карта
+        other:  Кредитни карти
+      spree/inventory_unit:
+        one:  Складна единица
+        other:  Складни единици
+      spree/line_item:
+        one: Line Item 
+        other: Line Items
+      spree/order:
+        one:  Поръчка
+        other:  Поръчки
+      spree/payment:
+        one:  Плащане
+        other:  Плащания
+      spree/payment_method: 
+      spree/product:
+        one:  Продукт
+        other:  Продукти
+      spree/promotion: 
+      spree/property:
+        one:  Харатеристика
+        other:  Характеристики
+      spree/prototype:
+        one:  Прототип
+        other:  Прототипи
+      spree/return_authorization:
+        one:  Върни ауторизация
+        other:  Върни ауторизации
+      spree/role:
+        one:  Роли
+        other:  Роли
+      spree/shipment:
+        one:  Доставка
+        other:  Доставки
+      spree/shipping_category:
+        one:  Доставна категория
+        other:  Доставни категории
+      spree/shipping_method: 
+      spree/state:
+        one: Държава
+        other: Държави
+      spree/stock_location: 
+      spree/stock_transfer: 
+      spree/tax_category:
+        one:  Данъчна категория
+        other:  Данъчна категория
+      spree/tax_rate:
+        one:  Данъчен процент
+        other:  данъчни проценти
+      spree/taxon:
+        one: Taxon
+        other: Taxons
+      spree/taxonomy:
+        one: Taxonomy
+        other: Taxonomies
+      spree/tracker: 
+      spree/user:
+        one:  Потребител
+        other:  Потребители
+      spree/variant:
+        one:  Вариант
+        other:  Варианти
+      spree/zone:
+        one: Zone Зона
+        other: Зони
+  devise:
+    confirmations:
+      confirmed:  Вашият акаунт е потвърден. Вече сте вписан.
+      send_instructions: ! До няколко минути ще получите съобщение с обяснение как да потвърдите своя акаунт. 
+    failure:
+      inactive:  Вашият акаунт все още не е активен.
+      invalid:  Грешен имейл или парола
+      invalid_token: Invalid authentication token. 
+      locked:  Вашият акаунт е заключен.
+      timeout: !  Вашата сесия е изтекла, моля влезте повторно.
+      unauthenticated:  Трябва да се впишете или регистрирате преди да продължите
+      unconfirmed: !  Трябва да потвърдите акаунта си преди да продължите.
+    mailer :
+      confirmation_instructions:
+        subject:  Инструкции за потвърждаване
+      reset_password_instructions:
+        subject: Reset password instructions Инструкции за смяна на паролата
+      unlock_instructions: 
+        subject: Инструкции за отключване
+    oauth_callbacks:
+      failure: Could not authorise you from %{kind} because "%{reason}".
+      success: Successfully authorised from %{kind} account.
+    unlocks:
+      send_instructions:  До няколко минути ще получите имейл с инструкции как да отключите своя акаунт.
+      unlocked:  Вашият акаунт бе отключен успешно. Вече сте вписани.
+    user_passwords:
+      user:
+        cannot_be_blank:  Вашата парола не може бъде празна
+        send_instructions:  До няколко минути ще получите имейл с инструкции как да промените паролата си.
+        updated: Вашата парола бе променена успешко. Вече сте вписани.
+    user_registrations:
+      destroyed:  Вашият акаунт бе отменен успешно. Надяваме се да ви видим скоро.
+      inactive_signed_up: You have signed up successfully. However, we could not sign you in because your account is %{reason}.
+      signed_up:  Вие се регистрирахте успешно.
+      updated:  Успешно обновихте своя акаунт.
+    user_sessions:
+      signed_in:  Успешно влизане
+      signed_out:  Успешно излизане
+  errors:
+    messages:
+      already_confirmed:   Вече бе потвърден
+      not_found:  не намерен
+      not_locked: не бе заключен
+      not_saved:
+        one: ! 'Една грешка предоотврати запазването на %{resource} :'
+        other: ! '%{count} грешки предоотвратиха запазването на %{resource} :'
+  spree:
+    abbreviation: Абривиатура
+    account: Акаунт
+    account_updated: Акаунтът бе обновен! 
+    action: Действие
+    actions:
+      cancel: Отмени
+      continue:  Продължи
+      create: Създай
+      destroy: Унищожи
+      edit: Редактирай
+      list: Списък
+      listing: Listing
+      new: Нов
+      save: Запази
+      update: Обновни
+    activate: Активирай
+    active: Активен
+    add: Добави
+    add_action_of_type: Добави действие от тип
+    add_country: Добави страна
+    add_new_header: Добави нов хедър
+    add_new_style: Добави нов стил
+    add_one: Добави едно
+    add_option_value: Добави опционална стойност
+    add_product: Добави продукт
+    add_product_properties: Добави характеристики на продукт
+    add_rule_of_type: Добави правило от тип
+    add_state:  Добави състояние
+    add_stock:  добави стока
+    add_stock_management:  Добави управление на стока
+    add_to_cart: Добави в кошницата
+    add_variant: Добави вариант
+    additional_item: Additional Цена на артикул
+    address1: Адрес
+    address2: Адрес (продължение)
+    adjustment: Поправка
+    adjustment_amount: Стойност
+    adjustment_successfully_closed:  Поправката бе успешно затворена
+    adjustment_successfully_opened:  Поправката бе успешно отворена
+    adjustment_total: Обща стойност на поправката
+    adjustments: Поправки
+    admin:
+      mail_methods:
+        send_testmail: Изпрати тестов имейл
+        testmail:
+          delivery_error: Грешка при изпращане на тестов имейл
+          delivery_success: Тестов имейл изпратен успешно
+          error: ! 'Testmail error: %{e}'
+      tab:
+        configuration: Конфигурация
+        orders: Поръчки
+        overview: Прегледай
+        products: Продукти
+        promotions: Промоции
+        reports: Доклади
+        users: Потребители
+    administration: Администрация
+    agree_to_privacy_policy: Съгласен съм с политиката за защита на лични данни
+    agree_to_terms_of_service: Съгласен съм с Общите условия
+    all: Всички
+    all_adjustments_closed: Всички промени завършени успешно!
+    all_adjustments_opened: Всички промени отворено успешно!
+    all_departments: Всички отдели
+    allow_ssl_in_development_and_test: Позволи SSL да бъде ползвано при тестов режим
+    allow_ssl_in_production: Allow SSL to be used in production mode
+    allow_ssl_in_staging: Allow SSL to be used in staging mode
+    already_signed_up_for_analytics: You have already signed up for Spree Analytics
+    alt_text: Алтернативен текст
+    alternative_phone: Алтернативен телефон
+    amount: Сума
+    analytics_desc_header_1: Spree Analytics
+    analytics_desc_header_2: Live analytics integrated into your Spree dashboard
+    analytics_desc_list_1: Get live sales information as it happens
+    analytics_desc_list_2: Requires only a free Spree account to activate
+    analytics_desc_list_3: Absolutely no code to install
+    analytics_desc_list_4: It's completely free!
+    analytics_trackers: Analytics Trackers
+    and: и
+    are_you_sure: Сигурни ли сте
+    are_you_sure_delete: Сигурни ли сте, че искате да изтриете този запис?
+    associated_adjustment_closed: The associated adjustment is closed, and will not be recalculated. Do you want to open it?
+    attachment_default_style: Attachments Style
+    attachment_default_url: Attachments URL
+    attachment_path: Attachments Path
+    attachment_styles: Paperclip Styles
+    attachment_url: Attachments URL
+    authorization_failure: Authorisation Failure
+    available_on: Available On
+    back: Back
+    back_end: Back End
+    back_to_adjustments_list: Обратно към списъка с промени
+    back_to_images_list: Обратъно към списъка с изображения
+    back_to_option_types_list: Обратно към списъка с възможности
+    back_to_orders_list: Обратно към списъка с поръчки
+    back_to_payment_methods_list: Обратно към списъка с начини на плащане
+    back_to_payments_list: Обратно към списък с плащания
+    back_to_products_list: Обратно към списък с продукти
+    back_to_promotions_list: Обратно към списък с промоции
+    back_to_properties_list: Обратно към списък с продукти
+    back_to_prototypes_list: Обратно към списък с прототипи
+    back_to_reports_list: Обратно към списък с доклади
+    back_to_shipping_categories: Обратно към списък с доставки
+    back_to_shipping_methods_list: Обратно към списък  с начини за доставка
+    back_to_states_list: Обратно към списък със състояния
+    back_to_stock_locations_list: Back to Stock Movements List
+    back_to_stock_movements_list: Back to Stock Movements List
+    back_to_stock_transfers_list: Back to Stock Transfers List
+    back_to_store: Go Back To Store
+    back_to_tax_categories_list: Back To Tax Categories List
+    back_to_taxonomies_list: Back To Taxonomies List
+    back_to_trackers_list: Back To Trackers List
+    back_to_users_list: Back To Users List
+    back_to_zones_list: Back To Zones List
+    backorderable: Backorderable
+    backorders_allowed: backorders allowed
+    balance_due: Balance Due
+    bill_address: Адрес на плащане
+    billing: Плащане
+    billing_address: Адрес на плащане
+    both: И двете
+    calculator: Калкулатор
+    calculator_settings_warning: If you are changing the calculator type, you must save first before you can edit the calculator settings
+    cancel: cancel
+    cannot_create_payment_without_payment_methods: Не може да платите без да сте избрали начин на плащане
+    cannot_create_returns: Не можете да върнете стока обратно преди поръчката да е пусната.
+    cannot_perform_operation: Желаното действие не може да бъде извършено.
+    cannot_set_shipping_method_without_address: Начин за доставка не може да бъде зададен без данни на клиента.
+    capture: Картина
+    card_code: Код на карта
+    card_number: Номер на карта
+    card_type_is: Видът на картата
+    cart: Кошница
+    categories: Категории
+    category: Категория
+    check_for_spree_alerts: Check for Spree alerts
+    checkout: Плащане
+    choose_a_customer: Избери клиент
+    choose_currency: Избери валута
+    choose_dashboard_locale: Choose Dashboard Locale
+    city: Град
+    clone: Клонирай
+    close: Затвори
+    close_all_adjustments: Затвори всички промени
+    code: Код
+    company: Компания
+    complete: Завърши
+    configuration: Конфигурация
+    configurations: Конфигурации
+    configure_s3: Конфигурирай S3
+    confirm: Потвърди
+    confirm_delete: Потвърди изтриване
+    confirm_password: Потвърди парола
+    continue: Продължи
+    continue_shopping: Продължи пазаруването
+    cost_currency: Валута
+    cost_price: Cost Pricе
+    could_not_connect_to_jirafe: Could not connect to Jirafe to sync data. This will be automatically retried later.
+    could_not_create_stock_movement: There was a problem saving this stock movement. Please try again.
+    count_on_hand: Count On Hand
+    countries: ! 'Countries '
+    country: Страна
+    country_based: Country Based
+    country_name: Име
+    coupon: Ваучер
+    coupon_code: Код на ваучер
+    coupon_code_already_applied: Този код вече е използван за тази доставка.
+    coupon_code_applied: Този код бе успешно приложен към вашата поръчка
+    coupon_code_better_exists: Предишният ваучер предоставя по-добри условия
+    coupon_code_expired: Този ваучер е изтекъл
+    coupon_code_max_usage: Употребата на ваучери преминава лимита.
+    coupon_code_not_eligible: Този код не е валиден за тази поръчка. 
+    coupon_code_not_found: Въведеният код не е валиден. Опитайте отново.
+    create: Създай
+    create_a_new_account: Създай нов акаунт
+    created_at: Създаден на
+    credit: Кредит
+    credit_card: Кредитна карта
+    credit_cards: Кредитни карти
+    credit_owed: Дължима сума по кредит
+    currency: Валута
+    currency_decimal_mark: Currency decimal mark
+    currency_settings: Currency Settings
+    currency_symbol_position: Put currency symbol before or after dollar amount?
+    currency_thousands_separator: Currency thousands separator
+    current: Current
+    current_promotion_usage: ! 'Current Usage: %{count}'
+    customer: Customer
+    customer_details: Customer Details
+    customer_details_updated: The customer's details have been updated.
+    customer_search: Customer Search
+    cut: Cut
+    dash:
+      jirafe:
+        app_id: App ID
+        app_token: App Token
+        currently_unavailable: Jirafe is currently unavailable. Spree will automatically connect to Jirafe once it is available.
+        explanation: The fields below may already be populated if you chose to register with Jirafe from the admin dashboard.
+        header: Jirafe Analytics Settings
+        site_id: Site ID
+        token: Token
+      jirafe_settings_updated: Jirafe Settings have been updated.
+    date: Date
+    date_completed: Date Completed
+    date_picker:
+      first_day: 0
+      format: ! '%Y/%m/%d'
+      js_format: yy/mm/dd
+    date_range: Date Range
+    default: Default
+    default_meta_description: Default Meta Description
+    default_meta_keywords: Default Meta Keywords
+    default_seo_title: Default Seo Title
+    default_tax: Default Tax
+    default_tax_zone: Default Tax Zone
+    delete: Изтрий
+    delivery: Delivery
+    depth: Depth
+    description: Description
+    destination: Destination
+    destroy: Destroy
+    discount_amount: Discount Amount
+    dismiss_banner: No. Thanks! I'm not interested, do not display this message again
+    display: Display
+    display_currency: Display currency
+    edit: Edit
+    editing_option_type: Editing Option Type
+    editing_payment_method: Editing Payment Method
+    editing_product: Editing Product
+    editing_promotion: Editing Promotion
+    editing_property: Editing Property
+    editing_prototype: Editing Prototype
+    editing_shipping_category: Editing Shipping Category
+    editing_shipping_method: Editing Shipping Method
+    editing_state: Editing State
+    editing_stock_location: Editing Stock Location
+    editing_stock_movement: Editing Stock Movement
+    editing_tax_category: Editing Tax Category
+    editing_tax_rate: Editing Tax Rate
+    editing_tracker: Editing Tracker
+    editing_user: Editing User
+    editing_zone: Editing Zone
+    email: Email
+    empty: Empty
+    empty_cart: Empty Basket
+    enable_mail_delivery: Позволи изпращане по поща
+    end: Край
+    ending_in: Приключване в
+    environment: среда
+    error: грешка
+    errors:
+      messages:
+        could_not_create_taxon: Провал в създаването на група
+        no_payment_methods_available: Няма методи за заплащане конфигурирани за тази среда
+        no_shipping_methods_available: Няма възможност за изпращане по куриер до избраната локация, моля сменете адреса си и пробвайте пак.
+    errors_prohibited_this_record_from_being_saved:
+      one: Грешка попречи на тези дани да бъдат записани.
+      other: ! '%{count} errors prohibited this record from being saved'
+    event: Събитие
+    events:
+      spree:
+        cart:
+          add: Добави към количка
+        checkout:
+          coupon_code_added: Купон за остъпка прибавен
+        content:
+          visited: Посети статична страница с данни
+        order:
+          contents_changed: Реда на съдържанието променее
+        page_view: Статична страница видяна
+        user:
+          signup: Потребителски вход
+    exceptions:
+      count_on_hand_setter: Грешка при ръчното обновяването на count_on_hand, тъй като бе обновено от повик към recalculate_count_on_hand. Моля използвайте`update_column(:count_on_hand, value)` вместо това.
+    expiration: Срок на годност
+    extension: Удъжения
+    filename: Име на файл
+    fill_in_customer_info: Моля попълнете потребителска информация
+    filter_results: Филтриране на резултатите
+    finalize: Финализирай
+    first_item: Цена на първи предмет
+    first_name: Първо име
+    first_name_begins_with: Първо име  започва с
+    flat_percent: Плосък процент
+    flat_rate_per_item: Пропорционална такса (на предмет)
+    flat_rate_per_order: Пропорционална такса (на поръчка)
+    flexible_rate: Гъвкав курс
+    forgot_password: Забравена парола
+    free_shipping: Безплатна доставка
+    front_end: Преден Край
+    gateway: Портал
+    gateway_config_unavailable: Порталът не е на разположение за тази среда
+    gateway_error: Грешка в портала
+    general: Генерален
+    general_settings: Генерални настройки
+    google_analytics: Google Аналитика
+    google_analytics_id: Идентифиционен номер на аналитиката
+    guest_checkout: Каса за гости
+    guest_user_account: Маркирай като гост.
+    has_no_shipped_units: Няма пратени единици.
+    height: Височина
+    hide_cents: ! 'Hide pence '
+    home: Дом
+    i18n:
+      available_locales: Достъпни места
+      fields: Полета
+      language: Език
+      localization_settings: Настройки за локализация
+      only_complete: Само завършени
+      only_incomplete: Само незавършени.
+      select_locale: Избери място
+      show_only: Покажи само
+      supported_locales: Подържани места
+      this_file_language: Български (БГ)
+      translations: Преводи
+    icon: Икона
+    image: Образ
+    image_settings: Настойки на образа
+    image_settings_updated: Настройките на образа успешно обновени.
+    image_settings_warning: Налага се да регенерирате портрета ако обновите кламеровия стил. Използвайте rake paperclip:refresh:thumbnails за да направите това.
+    images: Образи
+    included_in_price: Включено в цената
+    included_price_validation: Не може да бъде избрано докато не изберете подходяща област
+    instructions_to_reset_password: ! 'Fill out the form below and instructions to reset your password will be emailed to you:'
+    insufficient_stock: Недостатъчно количество стока в наличност, само %{on_hand} остават.
+    intercept_email_address: Пресрещане на имеил адрес
+    intercept_email_instructions: Отемни сегашните имеил приемници и замени с този адрес.
+    internal_name: Вътрешно име.
+    invalid_payment_provider: Невалиден разплащателен метод.
+    invalid_promotion_action: Невалидна промоционална дейност.
+    invalid_promotion_rule: Невалидно промоционално правило.
+    inventory: Инвентар
+    inventory_adjustment: Наглацяне на инвентара
+    inventory_error_flash_for_insufficient_quantity: Количествата на предмет във вашата кошница се изчерпаха.
+    is_not_available_to_shipment_address: Не е достъпно до адрес на доставка
+    iso_name: Iso Име
+    item: Предмет
+    item_description: Описание на предмет
+    item_total: Количество
+    item_total_rule:
+      operators:
+        gt: повече ог
+        gte: повече от или равно на
+    items_cannot_be_shipped: Нямаме възможносттта да доставим тези предмети до този адрес. Моля изберете друг адрес на доставка.
+    jirafe: Жираф
+    landing_page_rule:
+      path: Път
+    last_name: Последно име
+    last_name_begins_with: Последното име започва с
+    learn_more: Научи повече
+    list: Списък
+    listing_countries: Изброяване на Държави
+    listing_orders: Изброяване на Поръчки
+    listing_products: Изброяване на Продукти
+    listing_reports: Изброяване на Доклади
+    listing_tax_categories: Изброяване на Таксови Категории
+    listing_users: Изброяване на Потребители
+    loading: Зареждане
+    locale_changed: Местоположение сменено
+    location: Местоположение
+    lock: Закючи
+    logged_in_as: Влезте като
+    logged_in_succesfully: Успешно влизане
+    logged_out: Успешен изход.
+    login: Вход
+    login_as_existing: Влезте като настоящ клиент
+    login_failed: Неуспешно за установяване на автентичността.
+    login_name: Потребителско име
+    logout: Изход
+    look_for_similar_items: Потърси за подобни предмети
+    maestro_or_solo_cards: Маестро/Соло карти
+    mail_method_settings: Настройки за имейл.
+    mail_methods: Методи на пращане на имейли.
+    make_refund: Въстановяване на сума
+    master_price: Главна сума
+    match_choices:
+      all: Всички
+      none: Никои
+    max_items: Максимален брой предмети
+    meta_description: Описание
+    meta_keywords: Ключови думи
+    metadata: Дата
+    minimal_amount: Минимално количество
+    month: Месец
+    more: Още
+    move_stock_between_locations: Премести стока между местоположения.
+    my_account: Моя профил
+    my_orders: Моите поръчки
+    name: Име
+    name_or_sku: Име или Идентификационен номер на продукт
+    new: Име
+    new_adjustment: Ново нагалсяне
+    new_customer: Нов клиент
+    new_image: Нов образ
+    new_option_type: Нов метод за настойки
+    new_order: Нова поръчка
+    new_order_completed: Нава поръчка завършена
+    new_payment: Ново заплащане
+    new_payment_method: Нов метод за заплащане
+    new_product: Нов продукт
+    new_promotion: Нова промоция
+    new_property: Ново свойство
+    new_prototype: Нов прототип
+    new_return_authorization: Нов метод за оторизиране на връщане
+    new_shipping_category: Нова категория за доставки
+    new_shipping_method: Нов метод за доставки
+    new_state: Ново състояние
+    new_stock_location: Ново местоположение на стока
+    new_stock_movement: Ново преместване на стока
+    new_stock_transfer: Нов трансфер на стока
+    new_tax_category: Нова категория такси
+    new_tax_rate: Новa dанъчна ставка
+    new_taxon: Нов таксон
+    new_taxonomy: Нова таксономия
+    new_tracker: Нов тракер
+    new_user: Нов потребител
+    new_variant: Нов вариант
+    new_zone: Нова зона
+    next: Следващ
+    no_actions_added: Няма избрани дейности
+    no_orders_found: Няма избрани поръчки
+    no_payment_methods_found: Няма избрани методи за заплащане
+    no_pending_payments: Няма настоящи плащания
+    no_products_found: Няма открити пордукти
+    no_promotions_found: Няма открити промоции
+    no_resource_found: Няма отркити ресурси
+    no_results: Няма резилтати
+    no_rules_added: Никакви правила прибавени
+    no_shipping_methods_found: Няма избрани методи за доставка
+    no_stock_locations_found: Няма открита стокова наличност
+    no_trackers_found: Няма открите тракери
+    no_tracking_present: Няма информация за следене
+    none: Нищо
+    normal_amount: Нормално количество
+    not: не
+    not_available: Няма в наличност
+    not_enough_stock: Няма достатъчно налични количества в стока да се извърши поръчката.
+    not_found: ! '%{resource} is not found'
+    notice_messages:
+      product_cloned: Продуктът бе дупликиран
+      product_deleted: Продуктът беше изтрит
+      product_not_cloned: Продуктът не бе клониран
+      product_not_deleted: Продуктът не можеше да бъде изтрит
+      variant_deleted: Вариантът бе изтрит
+      variant_not_deleted: Вариантът не можеше да бъде изтрит
+    on_hand: Наличност
+    open: Open
+    open_all_adjustments: Open All Adjustments
+    option_type: Option Type
+    option_type_placeholder: Choose an option type
+    option_types: Option Types
+    option_value: Option Value
+    option_values: Option Values
+    optional: Optional
+    options: Options
+    or: or
+    or_over_price: ! '%{price} or over'
+    order: Order
+    order_adjustments: Order adjustments
+    order_details: Order Details
+    order_email_resent: Order Email Resent
+    order_information: Order Information
+    order_mailer:
+      cancel_email:
+        dear_customer: Dear Customer,
+        instructions: Your order has been CANCELED.  Please retain this cancellation information for your records.
+        order_summary_canceled: Order Summary [CANCELED]
+        subject: Cancellation of Order
+        subtotal: ! 'Subtotal: %{subtotal}'
+        total: ! 'Order Total: %{total}'
+      confirm_email:
+        dear_customer: Dear Customer,
+        instructions: Please review and retain the following order information for your records.
+        order_summary: Order Summary
+        subject: Order Confirmation
+        subtotal: ! 'Subtotal: %{subtotal}'
+        thanks: Thank you for your business.
+        total: ! 'Order Total: %{total}'
+    order_not_found: We couldn't find your order. Please try that action again.
+    order_number: Order
+    order_populator:
+      out_of_stock: ! '%{item} is out of stock.'
+      selected_quantity_not_available: ! 'Selected quantity of %{item} is not available.'
+      please_enter_reasonable_quantity: Please enter a reasonable quantity.
+    order_processed_successfully: Your order has been processed successfully
+    order_state:
+      address: address
+      awaiting_return: awaiting return
+      canceled: отказано
+      cart: количка
+      complete: завършено
+      confirm: потвърди
+      delivery: доставка
+      payment: плащане
+      resumed: възобновено
+      returned: върнато
+    order_summary: Преглед на поръчка
+    order_sure_want_to: Are you sure you want to %{event} this order?
+    order_total: Цялостна стойност
+    order_updated: Поръчката бе обновена
+    orders: Поръчки
+    out_of_stock: Не е в наличност
+    overview: Преглед
+    package_from: package from
+    pagination:
+      next_page: next page &raquo;
+      previous_page: ! '&laquo; previous page'
+      truncate: ! '&hellip;'
+    password: Парола
+    paste: Постави
+    path: Път
+    pay: Плати
+    payment: Плащане
+    payment_information: Информация за плащане
+    payment_method: Начин на плащане
+    payment_method_not_supported: 
+    payment_methods: Методи на плащане
+    payment_processing_failed: Payment could not be processed, please check the details you entered
+    payment_processor_choose_banner_text: If you need help choosing a payment processor, please visit
+    payment_processor_choose_link: our payments page
+    payment_state: Статус на плащането
+    payment_states:
+      balance_due: balance due
+      checkout: checkout
+      completed: completed
+      credit_owed: credit owed
+      failed: провалено
+      paid: paid
+      pending: pending
+      processing: processing
+      void: void
+    payment_updated: Плащането бе обновено
+    payments: Плащания
+    percent: Процент
+    percent_per_item: Percent Per Item
+    permalink: Permalink
+    phone: Телефон
+    place_order: Направи поръчка
+    please_define_payment_methods: Моля, първо дефинирайте методи за плащане.
+    populate_get_error: Something went wrong. Please try adding the item again.
+    powered_by: Уебсайтът е задвижван от
+    presentation: Presentation
+    previous: Предходен
+    price: Цена
+    price_range: Price Range
+    price_sack: Price Sack
+    process: Продукт
+    product: Product
+    product_details: Информация за продукта
+    product_has_no_description: This product has no description
+    product_not_available_in_this_currency: This product is not available in the selected currency.
+    product_properties: Product Properties
+    product_rule:
+      choose_products: Избери продукти
+      label: Поръчката трябва да има %{select} от тези продукти
+      match_all: всички
+      match_any: поне един
+      product_source:
+        group: От продуктова група
+        manual: Избери ръчно
+    products: Продукти
+    promotion: Promotion
+    promotion_action: Promotion Action
+    promotion_action_types:
+      create_adjustment:
+        description: Creates a promotion credit adjustment on the order
+        name: Create adjustment
+      create_line_items:
+        description: Populates the cart with the specified quantity of variant
+        name: Create line items
+      give_store_credit:
+        description: Gives the user store credit of the amount specified
+        name: Give store credit
+    promotion_actions: Actions
+    promotion_form:
+      match_policies:
+        all: Match any of these rules
+        any: Match all of these rules
+    promotion_rule: Promotion Rule
+    promotion_rule_types:
+      first_order:
+        description: Must be the customer's first order
+        name: First order
+      item_total:
+        description: Order total meets these criteria
+        name: Item total
+      landing_page:
+        description: Потребителят трябва да е посетил определена страница
+        name: Целева страница
+      product:
+        description: Поръчката има следният/ите продукт(и)
+        name: Продукт(и)
+      user:
+        description: Достъпно само за определени потребители
+        name: Потребител
+      user_logged_in:
+        description: Достъпно само за потребители, които са влезли в сайта
+        name: Потребителят е влязал в сайта
+    promotions: Promotions
+    properties: Properties
+    property: Property
+    prototype: Prototype
+    prototypes: Прототипи
+    provider: Доставчик
+    provider_settings_warning: If you are changing the provider type, you must save first before you can edit the provider settings
+    qty: Кол.
+    quantity: Количество
+    quantity_returned: Количество върнато
+    quantity_shipped: Количество пратено
+    rate: Rate
+    reason: Причина
+    receive: получи
+    receive_stock: Receive Stock
+    received: Получено
+    reference: Reference
+    refund: Refund
+    register: Регистрирай се като нов потребител
+    registration: Регистрация
+    remember_me: Запомни ме
+    remove: Премахни
+    rename: Преименувай
+    reports: Reports
+    resend: Препрати
+    reset_password: Възстанови паролата
+    response_code: Response Code
+    resume: продължи
+    resumed: Продължено
+    return: върни
+    return_authorization: Return Authorisation
+    return_authorization_updated: Return authorisation updated
+    return_authorizations: Return Authorisations
+    return_quantity: Return Quantity
+    returned: Returned
+    review: Review
+    rma_credit: RMA Credit
+    rma_number: RMA Number
+    rma_value: RMA Value
+    roles: Роли
+    rules: ПРавила
+    s3_access_key: Access Key
+    s3_bucket: Bucket
+    s3_headers: S3 Headers
+    s3_protocol: S3 Протокол
+    s3_secret: Secret Key
+    sales_total: Sales Total
+    sales_total_description: Sales Total For All Orders
+    sales_totals: Sales Totals
+    save_and_continue: Save and Continue
+    say_no: 'Не'
+    say_yes: 'Да'
+    scope: Scope
+    search: Търси
+    search_results: Резултати за '%{keywords}'
+    searching: Търсене
+    secure_connection_type: Secure Connection Type
+    security_settings: Security Settings
+    select: Select
+    select_from_prototype: Select From Prototype
+    select_stock: Select stock
+    send_copy_of_all_mails_to: Send Copy of All Mails To
+    send_mails_as: Send Mails As
+    server: Сървър
+    server_error: Сървърът върна грешла
+    settings: Настройки
+    ship: прати
+    ship_address:  Адрес
+    ship_total:  Общо
+    shipment: Доставка
+    shipment_inc_vat: Shipment including VAT Доставка + ДДС
+    shipment_mailer:
+      shipped_email:
+        dear_customer:  Драги клиент
+        instructions:  Вашата поръчка е пусната
+        shipment_summary:  Обзор на поръчката
+        subject: Shipment  Нотификация
+        thanks: Благодарим Ви!
+        track_information: ! 'Tracking Information: %{tracking}'
+        track_link: ! 'Tracking Link: %{url}'
+    shipment_state: Положение на пратката
+    shipment_states:
+      backorder: неизпълнена
+      partial: частична
+      pending: изчакваща
+      ready: готова
+      shipped: пратена
+    shipments:
+    shipped: пратена
+    shipping: Пратки
+    shipping_address: Адрес на доставка
+    shipping_categories: Катергории за доставки
+    shipping_category: Категория за доставка
+    shipping_flat_rate_per_item: Flat rate per package item
+    shipping_flat_rate_per_order: Flat rate
+    shipping_flexible_rate: Flexible Rate per package item
+    shipping_instructions: Delivery Instructions
+    shipping_method: Delivery Method
+    shipping_methods: Delivery Methods
+    shipping_price_sack: Price sack
+    shop_by_taxonomy: Shop by %{taxonomy}
+    shopping_cart: Shopping Basket
+    show: Show
+    show_active: Show Active
+    show_deleted: Show Deleted
+    show_only_complete_orders: Only show complete orders
+    show_rate_in_label: Show rate in label
+    site_name: Site Name
+    site_url: Site URL
+    sku: SKU
+    smtp: SMTP
+    smtp_authentication_type: SMTP Authentication Type
+    smtp_domain: SMTP Домейн
+    smtp_mail_host: SMTP Mail Host
+    smtp_password: SMTP Парола
+    smtp_port: SMTP Порт
+    smtp_send_all_emails_as_from_following_address: Прати всички имейли от този адрес
+    smtp_send_copy_to_this_addresses: Праща копие на всички изходящи имейли от този адрес. За повече от един адрес, разделете със запетая
+    smtp_username: SMTP Потребителско име
+    source: Source
+    special_instructions: Special Instructions
+    split: Split
+    spree/order:
+      coupon_code: Coupon Code
+    spree_gateway_error_flash_for_checkout: There was a problem with your payment information. Please check your information and try again.
+    start: Start
+    start_date: Valid from
+    state: County
+    state_based: State Based
+    states: Counties
+    states_required: County Required
+    status: Status
+    stock_location: Stock Location
+    stock_location_info: Stock location info
+    stock_locations: Stock Locations
+    stock_management: Stock Management
+    stock_management_requires_a_stock_location: Please create a stock location in order to manage stock.
+    stock_movements: Stock Movements
+    stock_movements_for_stock_location: Stock Movements for %{stock_location_name}
+    stock_successfully_transferred: Stock was successfully transferred between locations.
+    stock_transfer: Stock Transfer
+    stock_transfers: Stock Transfers
+    stop: Stop
+    store: Store
+    street_address: Street Address
+    street_address_2: Street Address (cont'd)
+    subtotal: Subtotal
+    subtract: Subtract
+    successfully_created: ! '%{resource} has been successfully created!'
+    successfully_removed: ! '%{resource} has been successfully removed!'
+    successfully_signed_up_for_analytics: Successfully signed up for Spree Analytics
+    successfully_updated: ! '%{resource} has been successfully updated!'
+    tax: Tax
+    tax_categories: Tax Categories
+    tax_category: Tax Category
+    tax_rate_amount_explanation: Tax rates are a decimal amount to aid in calculations, (i.e. if the tax rate is 5% then enter 0.05)
+    tax_rates: Tax Rates
+    tax_settings: Tax settings
+    tax_total: Tax Total
+    taxon: Taxon
+    taxon_edit: Промени таксон
+    taxon_placeholder: Добави таксон
+    taxonomies: Таксономии
+    taxonomy: Таксономия
+    taxonomy_edit: Промени таксономия
+    taxonomy_tree_error: The requested change has not been accepted and the tree has been returned to its previous state, please try again.
+    taxonomy_tree_instruction: ! '* Right click a child in the tree to access the menu for adding, deleting or sorting a child.'
+    taxons: Таксони
+    test: Тест
+    test_mailer:
+      test_email:
+        greeting: Congratulations!
+        message: If you have received this email, then your email settings are correct.
+        subject: Testmail
+    test_mode: Test Mode
+    thank_you_for_your_order: Thank you for your business.  Please print out a copy of this confirmation page for your records.
+    there_are_no_items_for_this_order: There are no items for this order. Please add an item to the order to continue.
+    there_were_problems_with_the_following_fields: There were problems with the following fields
+    thumbnail: Thumbnail
+    time: Време
+    to_add_variants_you_must_first_define: За да добавите варианти, трябва да дефинирате
+    total: Общо
+    tracking: Tracking
+    tracking_number: Tracking Number
+    tracking_url: Tracking URL
+    tracking_url_placeholder: e.g. http://quickship.com/package?num=:tracking
+    transfer_from_location: Transfer From
+    transfer_stock: Трансферирай запаси
+    transfer_to_location: Трансферирай към
+    tree: Дърво
+    type: Тип
+    type_to_search: Тип на търсене
+    unable_to_connect_to_gateway: Unable to connect to gateway.
+    under_price: Под %{price}
+    unlock: Отключи
+    unrecognized_card_type: Неразпознат тип карта
+    unshippable_items: Неизпращаеми артикули 
+    update: Обнови
+    updating: Обновване
+    usage_limit: Лимит на ползване
+    use_billing_address: Използвай адрес за фактуриране
+    use_new_cc: Използвай нова карта
+    use_s3: Използвай Amazon S3 за изображения
+    user: User
+    user_rule:
+      choose_users: Изберете потребители
+    users: Потребители
+    validation:
+      cannot_be_less_than_shipped_units: не може да бъде по-малко от броя на изпратените единици
+      cannot_destory_line_item_as_inventory_units_have_shipped: Уговорените артикули не може да се изтрие, тъй като някои има изпратени единици от инвентара.
+      exceeds_available_stock: е над наличността. Моля, уверете че уговорните покупки имат валидна стойност.
+      is_too_large: е прекалено голяма --  наличността не достига!
+      must_be_int: трябва да е цяло число
+      must_be_non_negative: трябва да е позитивна стойност
+    value: Стойност
+    variant:  Вариант
+    variant_placeholder:  Избери вариант
+    variants: Варианти
+    version: Версия
+    void:  Откажи
+    weight: Тежест
+    what_is_a_cvv:  Какво е CVV код?
+    what_is_this:  Какво е това?
+    width:  Ширина
+    year: Година
+    you_have_no_orders_yet:  Все още нямате поръчки
+    your_cart_is_empty: Вашата кошница е празна
+    your_order_is_empty_add_product:  Вашата кошница е празна, моля добаете артикули
+    zip:  пощ. кид
+    zipcode:  пощ. код
+    zone:  Зона
+    zones:  Зони
