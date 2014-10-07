@@ -42,9 +42,10 @@ uk:
       spree/order:
         checkout_complete: Оформлення замовлення завершено
         completed_at: Завершено в
+        considered_risky: Вважається ризикованим
         coupon_code: Код купону
         created_at: Дата замовлення
-        email: E-Mail кліента
+        email: E-Mail клієнта
         ip_address: IP адреса
         item_total: Разом
         number: Номер
@@ -386,9 +387,9 @@ uk:
       unconfirmed: "Вам потрібно підтвердити Ваш обліковий запис перед тим, як продовжити."
     mailer:
       confirmation_instructions:
-        subject: Інструкціі стосовно підвердження
+        subject: Інструкції стосовно підвердження
       reset_password_instructions:
-        subject: Інструкціі по скиданню пароля
+        subject: Інструкції по скиданню пароля
       unlock_instructions:
         subject: Інструкції по розблокуванню
     oauth_callbacks:
@@ -398,7 +399,7 @@ uk:
       send_instructions: Ви отримаєте лист з інструкціями щодо розблокування вашого облікового запису впродовж декількох хвилин.
       unlocked: Ваш акаунт розблоковано. Тепер ви успішно увійшли в систему.
     user_passwords:
-      user:
+      spree_user:
         cannot_be_blank: Ваш пароль не може бути пустим.
         send_instructions: Ви отримаєте лист з інструкціями щодо скидання вашого пароля впродовж декількох хвилин.
         updated: Ваш пароль змінено. Ви успішно увійшли до системи.
@@ -537,7 +538,7 @@ uk:
     back_to_payment: Назад до оплати
     back_to_payment_methods_list: Назад до списку методів оплати
     back_to_payments_list: Назад до списку оплат
-    back_to_products_list: Назад до списку продуктів
+    back_to_products_list: Назад до списку товарів
     back_to_promotions_list: Назад до списку промо
     back_to_promotion_categories_list: Назад до списку категорій промо-акцій
     back_to_properties_list: Назад до списку властивостей
@@ -571,7 +572,7 @@ uk:
     calculated_reimbursements: Обчислені відшкодування
     calculator: Калькулятор
     calculator_settings_warning: При зміні типу калькулятора, ви повинні зберегти зміни, перш ніж ви зможете змінювати його налаштування.
-    cancel: Відміна
+    cancel: Скасувати
     cannot_create_payment_without_payment_methods: Неможливо створити оплату без визначення методів оплати.
     cannot_create_customer_returns: Неможливо створити повернення покупця, оскільки це замовлення не має відправлених одиниць.
     cannot_create_returns: Неможливо оформити повернення, тому що це замовлення ще не відправлено.
@@ -589,10 +590,11 @@ uk:
       other: 'Проміжник підсумок (позицій: %{count})'
     categories: Категорії
     category: Категорія
+    change_my_password: Змінити мій пароль
     charged: Стягнено
     check_for_spree_alerts: Перевіряти сповіщення Spree
     checkout: Оформлення замовлення
-    choose_a_customer: Виберіть кліента
+    choose_a_customer: Виберіть клієнта
     choose_a_taxon_to_sort_products_for: "Виберіть таксон для сортування товарів"
     choose_currency: Виберіть валюту
     choose_dashboard_locale: Вибрати мову панелі управління
@@ -651,7 +653,7 @@ uk:
     credit_owed: Кредитна заборгованість
     currency: Валюта
     currency_decimal_mark: Десятковий роздільник валюти
-    currency_settings: Настройки валюти
+    currency_settings: Налаштування валюти
     currency_symbol_position: Розташування символу валюти відносно суми
     currency_thousands_separator: Роздільник тисяч валюти
     current: Поточний
@@ -671,7 +673,7 @@ uk:
         header: Налаштування аналітики Jirafe
         site_id: ID сайту
         token: Токен
-      jirafe_settings_updated: Настройки Jirafe оновлено.
+      jirafe_settings_updated: Налаштування Jirafe оновлено.
     date: Дата
     date_completed: Дата завершення
     date_picker:
@@ -774,7 +776,7 @@ uk:
     failed_payment_attempts: Невдалих спроб проведення платежу
     filename: Ім’я файлу
     fill_in_customer_info: Заповніть інформацію про клієнта
-    filter_results: Результати фільтрації
+    filter_results: Фільтрувати
     finalize: Завершити
     find_a_taxon: Знайти таксон
     finalized: Завершено
@@ -792,7 +794,7 @@ uk:
     gateway_config_unavailable: Шлюз не доступний для даного оточення
     gateway_error: Помилка платіжного шлюзу
     general: Основні
-    general_settings: Загальні настройки
+    general_settings: Загальні налаштування
     google_analytics: Google Analytics
     google_analytics_id: Google Analytics ID
     guest_checkout: Гостьове замовлення
@@ -802,10 +804,11 @@ uk:
     hide_cents: Сховати копійки
     home: Додому
     i18n:
+      all_translations: Усі переклади
       available_locales: Доступні переклади
       fields: Поля
       language: Мова
-      localization_settings: Настройки локалізації
+      localization_settings: Налаштування локалізації
       only_complete: Тільки завершені
       only_incomplete: Тільки не завершені
       select_locale: Виберіть мову
@@ -1007,14 +1010,14 @@ uk:
         total: ! 'Загалом: %{total}'
       confirm_email:
         dear_customer: Шановний покупцю,
-        instructions: Перегляньте інформацію про скасування вашого замовлення.
+        instructions: Перегляньте інформацію про ваше замовлення.
         order_summary: Всього
         subject: Підтвердження замовлення
         subtotal: ! 'Проміжний підсумок: %{subtotal}'
-        thanks: Дякую за замовлення.
+        thanks: Дякуємо за замовлення.
         total: ! 'Загалом: %{total}'
-    order_not_found: Ми не змогли знайти Вашу замовлення. Спробуйте ще раз.
-    order_number: Замовлення
+    order_not_found: Ми не змогли знайти Ваше замовлення. Спробуйте ще раз.
+    order_number: Замовлення %{number}
     order_populator:
       out_of_stock: ! '%{item} немає у наявності.'
       selected_quantity_not_available: ! 'Обрана кількість %{item} не доступна.'
@@ -1041,7 +1044,7 @@ uk:
     other_items_in_other: Інші позиції в замовленні
     out_of_stock: Немає в наявності
     overview: Огляд
-    package_from: Фасовку в
+    package_from: Пакунок з
     pagination:
       next_page: наступна сторінка &raquo;
       previous_page: ! '&laquo; попередня сторінка'
@@ -1166,7 +1169,7 @@ uk:
     prototype: Прототип
     prototypes: Прототипи
     provider: Провайдер
-    provider_settings_warning: Якщо ви змінюєте провайдера, ви повинні зберегти цю зміну, перш ніж ви зможете змінити його настройки.
+    provider_settings_warning: Якщо ви змінюєте провайдера, ви повинні зберегти цю зміну, перш ніж ви зможете змінити його налаштування.
     qty: Кількість
     quantity: Кількість
     quantity_returned: Кількість повернення
@@ -1248,7 +1251,7 @@ uk:
     search_results: Результати пошуку за запитом '%{keywords}'
     searching: Йде пошук ...
     secure_connection_type: Тип захищеного з’єднання
-    security_settings: Настройки безпеки
+    security_settings: Налаштування безпеки
     select: Обрати
     select_from_prototype: Вибрати з прототипів
     select_a_return_authorization_reason: Виберіть підставу для дозволу на повернення
@@ -1258,7 +1261,7 @@ uk:
     send_mails_as: Надсилати пошту як
     server: Сервер
     server_error: На сервері сталася помилка
-    settings: Настройки
+    settings: Налаштування
     ship: доставка
     ship_address: Адреса доставки
     ship_total: Всього до доставки
@@ -1272,7 +1275,7 @@ uk:
         instructions: Ваше замовлення відправлено
         shipment_summary: Звіт про доставку
         subject: Повідомлення про доставку
-        thanks: Дякую за замовлення.
+        thanks: Дякуємо за замовлення.
         track_information: ! 'Відслідкувати замовлення: %{tracking}'
         track_link: ! 'Адреса відслідковування: %{url}'
     shipment_state: Статус відправки
@@ -1291,10 +1294,10 @@ uk:
     shipping_address: Адреса доставки
     shipping_categories: Категорії доставки
     shipping_category: Категорія доставки
-    shipping_flat_rate_per_item: Фіксованая ставка за одиницю товару
-    shipping_flat_rate_per_order: Фіксованая ставка
+    shipping_flat_rate_per_item: Фіксована ставка за одиницю товару
+    shipping_flat_rate_per_order: Фіксована ставка
     shipping_flexible_rate: Гнучка ставка за одиницю товару
-    shipping_instructions: Іструкціі щодо доставки
+    shipping_instructions: Іструкції щодо доставки
     shipping_method: Спосіб
     shipping_methods: Способи доставки
     shipping_price_sack: Підрахунок вартості доставки
@@ -1305,6 +1308,7 @@ uk:
     show_active: Показати активні
     show_deleted: Показати видалені
     show_only_complete_orders: Показувати тільки завершені замовлення
+    show_only_considered_risky: Показувати тільки ризиковані замовлення
     show_rate_in_label: Показувати процент в назві
     sku: Артикул
     skus: Артикули
@@ -1360,7 +1364,7 @@ uk:
     tax_category: Категорія податків
     tax_rate_amount_explanation: Податкові ставки вводяться як десяткові значення (наприклад якщо податок 5%, то вводьте 0.05)
     tax_rates: Податкові ставки
-    tax_settings: Настройки оподаткування
+    tax_settings: Налаштування оподаткування
     tax_total: Податки
     taxon: Таксон
     taxon_edit: Редагувати таксон
