@@ -18,8 +18,12 @@ describe Spree::Admin::BaseController do
 
     it "checks error" do
       allow(controller).to receive_message_chain(:spree, :root_path).and_return('/rooot')
+    end
+
+    it "redirects to root" do
+      controller.stub_chain(:spree, :root_path).and_return('/root')
       get :index
-      expect(response).to redirect_to "/rooot"
+      expect(response).to redirect_to '/root'
     end
   end
 
