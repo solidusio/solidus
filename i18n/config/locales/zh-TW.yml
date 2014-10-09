@@ -372,7 +372,7 @@ zh-TW:
     confirm_password: 確認密碼
     continue: 繼續
     continue_shopping: 繼續購物
-    cost_currency: 消費幣別
+    cost_currency: 成本貨幣
     cost_price: 成本價格
     could_not_connect_to_jirafe: 無法從 Jirafe同步資料, 稍候將自動重新嘗試.
     could_not_create_stock_movement: 在儲存庫存動向時發生了錯誤, 請再試一次.
