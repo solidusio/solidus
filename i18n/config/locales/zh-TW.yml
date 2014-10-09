@@ -315,7 +315,7 @@ zh-TW:
     back_to_payment_methods_list: 返回付費方式列表
     back_to_payments_list: 返回付費列表
     back_to_products_list: 返回產品列表
-    back_to_promotions_list: 返回促銷活動列表
+    back_to_promotions_list: 返回優惠推廣列表
     back_to_properties_list: 返回屬性列表
     back_to_prototypes_list: 返回原型列表
     back_to_reports_list: 返回報告列表
@@ -446,7 +446,7 @@ zh-TW:
     editing_option_type: 編輯選項類型
     editing_payment_method: 編輯付費方式
     editing_product: 編輯商品
-    editing_promotion: 編輯促銷方案
+    editing_promotion: 編輯優惠推廣
     editing_property: 編輯屬性
     editing_prototype: 編輯原型
     editing_shipping_category: 編輯出貨類型
@@ -617,7 +617,7 @@ zh-TW:
     new_payment: 新增付費紀錄
     new_payment_method: 新增付費方式
     new_product: 新增商品
-    new_promotion: 新增促銷方案
+    new_promotion: 新增優惠推廣
     new_property: 新增商品屬性
     new_prototype: 新增商品原型
     new_return_authorization: 新增退貨資料
@@ -777,7 +777,7 @@ zh-TW:
         group: 從產品分組        
         manual: 手動選擇
     products: 商品
-    promotion: 促銷方案
+    promotion: 優惠推廣
     promotion_action: 優惠方式
     promotion_action_types:
       create_adjustment:
@@ -823,7 +823,7 @@ zh-TW:
       taxon:
         description: 訂單中包括指定分類產品
         name: 分類
-    promotions: 促銷方案
+    promotions: 優惠推廣
     promotion_uses: 促銷使用頻率
     properties: 屬性
     property: 屬性
