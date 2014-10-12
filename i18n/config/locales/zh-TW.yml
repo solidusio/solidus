@@ -633,7 +633,7 @@ zh-TW:
     new_taxonomy: 新增分類
     new_tracker: 
     new_user: 新增使用者
-    new_variant: 新增系列型號
+    new_variant: 新增款式系列
     new_zone: 新增區域
     next: 下一頁
     no_actions_added: 
@@ -1041,7 +1041,7 @@ zh-TW:
     value: 值
     variant: 具體型號
     variant_placeholder: 選擇具体型号
-    variants: 系列型號
+    variants: 款式系列
     version: 版本
     void: 無效
     weight: 重
