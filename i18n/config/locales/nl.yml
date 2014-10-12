@@ -931,7 +931,7 @@ nl:
     say_yes: Ja
     scope: Scope
     search: Zoek
-    search_results: Zoekresulaten voor '%{keywords}'
+    search_results: Zoekresultaten voor '%{keywords}'
     searching: Bezig met zoeken
     secure_connection_type: Type beveiligde verbinding
     security_settings: Beveiligingsinstellingen
