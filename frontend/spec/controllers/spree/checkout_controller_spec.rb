@@ -222,6 +222,26 @@ describe Spree::CheckoutController do
       end
     end
 
+    # Regression test for #4190
+    context "state_lock_version incorrect" do
+      before do
+        order.update_columns(state_lock_version: 2, state: "address")
+      end
+
+      it "redirects back to current state" do
+        spree_post :update, {
+            state: "address",
+            order: {
+              bill_address_attributes: order.bill_address.attributes.except("created_at", "updated_at"),
+              state_lock_version: 1,
+              use_billing: true
+            }
+        }
+        expect(response).to redirect_to spree.checkout_state_path('address')
+        expect(flash[:error]).to eq "The order has already been updated."
+      end
+    end
+
     context "when current_order is nil" do
       before { controller.stub :current_order => nil }
 
