@@ -3,7 +3,7 @@ require 'spec_helper'
 describe "Orders Listing", type: :feature, js: true do
   stub_authorization!
 
-  let!(:promotion) { create(:promotion_with_item_adjustment) }
+  let!(:promotion) { create(:promotion_with_item_adjustment, code: "vnskseiw") }
 
   before(:each) do
     allow_any_instance_of(Spree::OrderInventory).to receive(:add_to_shipment)
@@ -139,7 +139,7 @@ describe "Orders Listing", type: :feature, js: true do
 
       it "only shows the orders with the selected promotion" do
         click_on 'Filter'
-        select2 promotion.name, from: "Promotion"
+        fill_in "q_promotions_code_cont", with: promotion.code
         click_on 'Filter Results'
         within_row(1) { expect(page).to have_content("R100") }
         within("table#listing_orders") { expect(page).not_to have_content("R200") }
