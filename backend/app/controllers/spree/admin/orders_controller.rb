@@ -7,6 +7,7 @@ module Spree
       respond_to :html
 
       def index
+        query_present = params[:q]
         params[:q] ||= {}
         params[:q][:completed_at_not_null] ||= '1' if Spree::Config[:show_only_complete_orders_by_default]
         @show_only_completed = params[:q][:completed_at_not_null] == '1'
@@ -38,7 +39,13 @@ module Spree
         # lazyoading other models here (via includes) may result in an invalid query
         # e.g. SELECT  DISTINCT DISTINCT "spree_orders".id, "spree_orders"."created_at" AS alias_0 FROM "spree_orders"
         # see https://github.com/spree/spree/pull/3919
-        @orders = @search.result(distinct: true).
+        @orders = if query_present
+          @search.result(distinct: true)
+        else
+          @search.result
+        end
+
+        @orders = @orders.
           page(params[:page]).
           per(params[:per_page] || Spree::Config[:orders_per_page])
 

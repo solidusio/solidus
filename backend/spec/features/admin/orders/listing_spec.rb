@@ -3,7 +3,7 @@ require 'spec_helper'
 describe "Orders Listing" do
   stub_authorization!
 
-  let!(:promotion) { create(:promotion_with_item_adjustment) }
+  let!(:promotion) { create(:promotion_with_item_adjustment, code: "vnskseiw") }
 
   before(:each) do
     @order1 = create(:order, :created_at => 1.day.from_now, :completed_at => 1.day.from_now, :number => "R100")
@@ -101,7 +101,7 @@ describe "Orders Listing" do
       end
 
       it "only shows the orders with the selected promotion" do
-        select2 promotion.name, :from => "Promotion"
+        fill_in "q_promotions_code_cont", with: promotion.code
         click_icon :search
         within_row(1) { page.should have_content("R100") }
         within("table#listing_orders") { page.should_not have_content("R200") }

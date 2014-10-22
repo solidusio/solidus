@@ -72,7 +72,7 @@
         </div>
         <div class="field">
           <%= label_tag nil, Spree.t(:promotion) %>
-          <%= f.select :promotions_id_in, Spree::Promotion.all.collect {|p| [p.name, p.id]}, {:include_blank => true}, :class => 'select2' %>
+          <%= f.text_field :promotions_code_cont, :size => 25 %>
         </div>
       </div>
 
