@@ -32,6 +32,6 @@ child :adjustments => :adjustments do
   extends "spree/api/adjustments/show"
 end
 
-child :credit_cards => :credit_cards do
+child :valid_credit_cards => :credit_cards do
   extends "spree/api/credit_cards/show"
 end
