@@ -30,9 +30,12 @@ pt-BR:
         price: Preço
         quantity: Quantidade
       spree/option_type:
+        one: Tipo de opção
+        other: Tipos de opção
         name: Nome
         presentation: Apresentação
       spree/order:
+        considered_risky: Considerado de risco
         checkout_complete: Checkout Completo
         completed_at: Completado em
         coupon_code: Código do cupom
@@ -92,6 +95,8 @@ pt-BR:
       spree/prototype:
         name: Nome
       spree/return_authorization:
+        one: Autorização de retorno
+        other: Autorizações de retorno
         amount: Quantidade
       spree/role:
         name: Nome
@@ -143,9 +148,15 @@ pt-BR:
       spree/line_item:
         one: Item
         other: Itens
+      spree/option_type:
+        one: Tipo de opção
+        other: Tipos de opção
       spree/order:
         one: Pedido
         other: Pedidos
+      spree/order_considered_risky:
+        one: Considerado de risco
+        other: Considerados de risco
       spree/payment:
         one: Pagamento
         other: Pagamentos
@@ -167,6 +178,9 @@ pt-BR:
       spree/return_authorization:
         one: Autorização de Retorno
         other: Autorização de Retornos
+      spree/return_authorization_reason:
+        one: Razão de retorno
+        other: Razões de retorno
       spree/role:
         one: Função
         other: Funções
@@ -289,6 +303,7 @@ pt-BR:
     add: Adicionar
     add_action_of_type: Adicionar Ação do Tipo
     add_country: Adicionar país
+    add_coupon_code: Adicionar código de Coupon
     add_new_header: Adicionar Novo Cabeçalho
     add_new_style: Adicionar Novo Estilo
     add_one: Adicione
@@ -325,6 +340,15 @@ pt-BR:
         configuration: "Configurações"
         promotions: "Promoções"
         users: "Usuários"
+      user:
+        account: Conta
+        addresses: Endereçamento
+        items: Compras
+        items_purchased: Histórico de compras
+        order_history: Historico de pedidos
+        order_num: Pedido Num.
+        orders: Pedidos
+        user_information: Informações do usuário
     administration: Administração
     agree_to_privacy_policy: Concordo com a politica de privacidade
     agree_to_terms_of_service: Concordo com os termos de serviço
@@ -347,6 +371,12 @@ pt-BR:
     analytics_desc_list_4: Completamente gratuito!
     analytics_trackers: Rastreadores de Análise
     and: E
+    api:
+      acess: Acesso
+      clear_key: Limpar Chave
+      key: Chave
+      regenerate_key: Regenerar Chave
+    aprove: Aprovar
     are_you_sure: Tem Certeza?
     are_you_sure_delete: Tem certeza que deseja remover este registro?
     associated_adjustment_closed: O ajuste relacionado está fechado e não será recalculado. Você que deixar o ajuste em aberto?
@@ -357,6 +387,7 @@ pt-BR:
     attachment_url: URL de anexos
     authorization_failure: Falha na Autorização
     available_on: Disponível em
+    average_order_value: Média de valor por compra
     avs_response: Resposta do AVS
     back: Voltar
     back_end: Backend
@@ -369,9 +400,12 @@ pt-BR:
     back_to_payment_methods_list: Voltar a lista de Tipos de Pagamentos
     back_to_payments_list: Voltar a lista de Pagamentos
     back_to_products_list: Voltar a lista de Produtos
+    back_to_promotion_category_list: Voltar para lista de categoria de promoções
     back_to_promotions_list: Voltar a lista de Promoções
     back_to_properties_list: Voltar a lista de Propriedades
     back_to_prototypes_list: Voltar a lista de Protótipos
+    back_to_reimbursement_type_list: Voltar para lista de tipos de reembolso
+    back_to_refund_reason_list: Voltar para lista
     back_to_reports_list: Voltar a lista de Relatórios
     back_to_shipping_categories: Voltar a lista de Categorias de Envio
     back_to_shipping_methods_list: Voltar a lista de Tipos de Envio
@@ -410,6 +444,8 @@ pt-BR:
     check_for_spree_alerts: Receber alertas do Spree
     checkout: Finalizar Compra
     choose_a_customer: Escolha um cliente
+    choose_a_taxon_to_sort_products_for: Selecione taxonomia para ordenar os produtos
+    choose_a_taxon_to_sort_products_from: Escolha uma taxonomia para organizar os produtos
     choose_currency: Escolha moeda
     choose_dashboard_locale: Escolha idioma do painel
     city: Cidade
@@ -447,6 +483,7 @@ pt-BR:
     coupon_code_not_found: O código do cupom não existe. Por favor tente novamente
     create: Criar
     create_a_new_account: Criar uma Nova Conta
+    create_new_order: Criar novo pedido
     created_at: Criado
     credit: Crédito
     credit_card: Cartão de Crédito
@@ -500,11 +537,13 @@ pt-BR:
     display_currency: Mostrar Moeda
     edit: Editar
     editing_option_type: Editando Tipo de Opção
+    editing_option_value: Editando valor do campo
     editing_payment_method: Editando Método de Pagamento
     editing_product: Editando Produto
     editing_promotion: Editando Promoção
     editing_property: Editando Propriedade
     editing_prototype: Editando Protótipo
+    editing_refund_reasons: Editando razões para reembolso
     editing_shipping_category: Editando Categoria de Entrega
     editing_shipping_method: Editando Método de Entrega
     editing_state: Editando Estado
@@ -578,6 +617,7 @@ pt-BR:
     hide_cents: Esconder centavos
     home: Início
     i18n:
+      all_translations: Todas as traduções
       available_locales: Idiomas disponíveis
       fields: Campos
       language: Idioma
@@ -624,6 +664,7 @@ pt-BR:
     last_name: Sobrenome
     last_name_begins_with: ! 'Sobrenome Começa Com:'
     learn_more: Aprenda Mais
+    lifetime_stats: Histórico
     list: Lista
     listing_countries: Listando Países
     listing_orders: Listando Pedidos
@@ -658,11 +699,13 @@ pt-BR:
         ssl: "SSL"
         tls: "TLS"
     make_refund: Extornar
+    manage_promotion_categories: Gerenciar categoria de promoções
     master_price: Preço Principal
     match_choices:
       all: Tudo
       none: Nenhum
     max_items: Artigos máximos
+    member_since: Membro desde
     meta_description: Descrição
     meta_keywords: Palavras-Chave
     metadata: Metadados
@@ -686,9 +729,13 @@ pt-BR:
     new_payment_method: Nova Forma de Pagamento
     new_product: Novo Produto
     new_promotion: Nova Promoção
+    new_promotion_category: Nova Categoria de promoção
     new_property: Nova Propriedade
     new_prototype: Novo Protótipo
+    new_refund_reason: Criar razão para reembolso
+    new_reimbursement_type: Novo tipo de reembolso
     new_return_authorization: Nova Autorização de Retorno
+    new_rma_reason: Nova razão para autorização de retorno
     new_shipping_category: Nova Categoria de Entrega
     new_shipping_method: Novo Método de Entrega
     new_state: Novo Estado
@@ -730,6 +777,7 @@ pt-BR:
       product_not_deleted: Produto não Pode ser Deletado
       variant_deleted: Variante Deletada
       variant_not_deleted: Variante não Pode ser Deletada
+    num_orders: Número de pedidos
     on_hand: Em Estoque
     open: Abrir
     open_all_adjustments: Abrir todos os ajustes
@@ -859,6 +907,7 @@ pt-BR:
         description: Dar ao usuário da loja o montante especificado
         name: Crédito
     promotion_actions: Ações das Promoções
+    promotion_category: Categoria de promoções
     promotion_form:
       match_policies:
         all: Combinar todas regras
@@ -901,6 +950,8 @@ pt-BR:
     received: Recebido
     reference: Referência
     refund: Restituição
+    refund_reasons: Razões para restituição
+    reimbursement_types: Tipos de restituição
     register: Registrar-se
     registration: Registro
     remember_me: Lembrar
@@ -914,6 +965,8 @@ pt-BR:
     resumed: Resumido
     return: Devolução
     return_authorization: Autorização de devolução
+    return_authorization_reason: Razão para autorização de devolução
+    return_authorization_reasons: Razões para autorização de devolução
     return_authorization_updated: Autorização de devolução atualizada
     return_authorizations: Autorizações de devolução
     return_quantity: Quantidade a ser devolvida
@@ -994,6 +1047,7 @@ pt-BR:
     show_active: Mostrar ativos
     show_deleted: Mostra apagados
     show_only_complete_orders: Mostrar apenas pedidos completos
+    show_only_considered_risky: Mostrar apenas os considerados de Risco
     show_rate_in_label: Mostrar valor no label
     site_name: Nome do site
     site_url: URL do site
@@ -1071,6 +1125,7 @@ pt-BR:
     to_add_variants_you_must_first_define: Para adicionar variantes você deve primeiro definir
     total: Total
     total_price: Preço total
+    total_sales: Total em compras
     track_inventory: Rastrear Inventário
     tracking: Rastreio
     tracking_number: Número localizador
@@ -1110,6 +1165,12 @@ pt-BR:
     variant_placeholder: Escolha um produto
     variants: Variantes
     version: Versão
+    views:
+      pagination:
+        first: Primeiro
+        last: Último
+        next: Próximo
+        previous: Anterior
     void: Vazio
     weight: Peso
     what_is_a_cvv: O que é o código de segurança do cartão de crédito (CVV)?
