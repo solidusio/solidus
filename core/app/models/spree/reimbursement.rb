@@ -164,5 +164,17 @@ module Spree
                  end
       unpaid_amount.abs.between?(0, leniency)
     end
+
+
+    # If there are multiple different reimbursement types for a single reimbursement,
+    # We open ourselves to a one-cent rounding error for every type over the first one.
+    # This is due to how we round #unpaid_amount and how each reimbursement type will round as well.
+    # Since at this point, the payments and credits have already been processed, we should
+    # allow the reimbursement to show as 'reimbursed' and not 'errored'
+    def unpaid_amount_within_tolerance?
+      reimbursement_count = reimbursement_models.count { |model| model.total_amount_reimbursed_for(self) > 0 }
+      leniency = reimbursement_count > 0 ? (reimbursement_count - 1) * 0.01.to_d : 0
+      unpaid_amount.abs.between?(0, leniency)
+    end
   end
 end
