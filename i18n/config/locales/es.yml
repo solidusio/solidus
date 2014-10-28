@@ -18,7 +18,7 @@ es:
         name: Nombre
         numcode: Código ISO
       spree/credit_card:
-        base: 
+        base:
         cc_type: Tipo
         month: Mes
         number: Número
@@ -155,7 +155,7 @@ es:
       spree/payment:
         one: Pago
         other: Pagos
-      spree/payment_method: 
+      spree/payment_method:
       spree/product:
         one: Producto
         other: Productos
@@ -180,12 +180,12 @@ es:
       spree/shipping_category:
         one: Categoría de envío
         other: Categorías de envío
-      spree/shipping_method: 
+      spree/shipping_method:
       spree/state:
         one: Provincia
         other: Provincias
-      spree/stock_location: 
-      spree/stock_transfer: 
+      spree/stock_location:
+      spree/stock_transfer:
       spree/tax_category:
         one: Categoría fiscal
         other: Categorías fiscales
@@ -198,7 +198,7 @@ es:
       spree/taxonomy:
         one: Categoría
         other: Categorías
-      spree/tracker: 
+      spree/tracker:
       spree/user:
         one: Usuario
         other: Usuarios
@@ -215,7 +215,7 @@ es:
     failure:
       inactive: Tu cuenta no fue activada todavía.
       invalid: Email o password inválido.
-      invalid_token: Cadena de autenticación no valida.
+      invalid_token: Cadena de autenticación inválida.
       locked: Tu cuenta está bloqueada
       timeout: Tu sesión expiró, por favor regístrate otra vez para continuar.
       unauthenticated: Necesitas registrarte o darte de alta antes de continuar
@@ -569,6 +569,7 @@ es:
       supported_locales: Locales Soportados
       this_file_language: Español
       translations: Traducciones
+      all_translations: Todas las Traducciones
     icon: Icono
     image: Imagen
     image_settings: Preferencias de imagen
@@ -582,7 +583,7 @@ es:
     intercept_email_address: Interceptar Dirección Email
     intercept_email_instructions: Sobrescribe correo electrónico del destinatario y reemplázalo con esta dirección.
     internal_name: Nombre interno
-    invalid_payment_provider: Proveedor de pago invalido
+    invalid_payment_provider: Proveedor de pago inválido
     invalid_promotion_action: Acción de promoción inválida
     invalid_promotion_rule: Regla de promoción inválida
     inventory: Inventario
@@ -737,7 +738,7 @@ es:
     order_populator:
       out_of_stock: ! '%{item} está fuera de stock'
       please_enter_reasonable_quantity: Por favor, introduce un cantidad razonable
-      selected_quantity_not_available: La cantidad seleccionada no esta disponible
+      selected_quantity_not_available: La cantidad seleccionada no está disponible
     order_processed_successfully: Tu pedido ha sido procesado con éxito
     order_state:
       address: Dirección
@@ -769,7 +770,7 @@ es:
     payment: Pago
     payment_information: Información del Pago
     payment_method: Método de Pago
-    payment_method_not_supported: 
+    payment_method_not_supported: Método de Pago no soportado
     payment_methods: Métodos de Pago
     payment_processing_failed: El pago no pudo ser procesado, por favor comprueba los detalles que has introducido
     payment_processor_choose_banner_text: Si necesitas ayuda a la hora de escoger un procesador de pago, por favor visita
@@ -953,12 +954,12 @@ es:
     shipping_methods: Métodos de Envío
     shipping_price_sack: Saco de Precio
     shop_by_taxonomy: Comprar por %{taxonomy}
-    shopping_cart: Carrito de la Compra
+    shopping_cart: Carrito de Compras
     show: Mostrar
     show_active: Mostrar Activo
     show_deleted: Mostrar Borrado
     show_only_complete_orders: Mostrar solamente Pedidos completos
-    show_rate_in_label: Motrar tarifa en la etiqueta
+    show_rate_in_label: Mostrar tarifa en la etiqueta
     site_name: Nombre Sitio Web
     site_url: URL Sitio Web
     sku: Referencia
@@ -969,7 +970,7 @@ es:
     smtp_password: Password SMTP
     smtp_port: Puerto SMTP
     smtp_send_all_emails_as_from_following_address: Enviar todos los mails desde la siguiente dirección
-    smtp_send_copy_to_this_addresses: Enviar una copia de todos los mails salientes a esta dirección. Para multiples direcciones, separar con comas.
+    smtp_send_copy_to_this_addresses: Enviar una copia de todos los mails salientes a esta dirección. Para múltiples direcciones, separar con comas.
     smtp_username: Nombre de usuario SMTP
     source: Fuente
     special_instructions: Instrucciones especiales
@@ -1007,7 +1008,7 @@ es:
     tax: Tasa
     tax_categories: Categorías fiscales
     tax_category: Categoría Fiscal
-    tax_rate_amount_explanation: Las tasas de impuestos son numeros decimales para ayudar en los calculos, (p.e. si la tasa de impuesto es del 5%, introducir 0.05)
+    tax_rate_amount_explanation: Las tasas de impuestos son numeros decimales para ayudar en los cálculos, (p. ej. si la tasa de impuesto es del 5%, introducir 0.05)
     tax_rates: Tasas de impuestos
     tax_settings: Preferencias de impuestos
     tax_total: Total de impuesto
@@ -1037,7 +1038,7 @@ es:
     tracking: Tracking
     tracking_number: Número de Tracking
     tracking_url: URL de Tracking
-    tracking_url_placeholder: e.g. http://quickship.com/package?num=:tracking
+    tracking_url_placeholder: p. ej. http://quickship.com/package?num=:tracking
     transfer_from_location: Transferido desde
     transfer_stock: Transferencia de Stock
     transfer_to_location: Transferido a
@@ -1077,9 +1078,9 @@ es:
     what_is_this: ¿Qué es esto?
     width: Longitud
     year: Año
-    you_have_no_orders_yet: No tienes pedidos todavia
-    your_cart_is_empty: Tu carrito esta vacio
-    your_order_is_empty_add_product: Tu pedido esta vacío, por favor busca y añade un producto a continuación
+    you_have_no_orders_yet: No tienes pedidos todavía
+    your_cart_is_empty: Tu carrito está vacío
+    your_order_is_empty_add_product: Tu pedido está vacío, por favor busca y añade un producto a continuación
     zip: Postal
     zipcode: Código Postal
     zone: Zona

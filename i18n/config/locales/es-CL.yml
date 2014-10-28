@@ -224,9 +224,9 @@ es-CL:
       confirmed: Tu cuenta fue confirmada satisfactoriamente. Ya estás registrado.
       send_instructions: Recibirás un email con instrucciones sobre como confirmar tu cuenta en breves minutos.
     failure:
-      inactive: Tu cuenta aún no ha activada.
+      inactive: Tu cuenta aún no ha sido activada.
       invalid: Email o contraseña inválida.
-      invalid_token: Cadena de autenticación no valida.
+      invalid_token: Cadena de autenticación no válida.
       locked: Tu cuenta está bloqueada
       timeout: Tu sesión expiró, por favor inicia sesión nuevamente para continuar.
       unauthenticated: Necesitas registrarte o activar tu cuenta antes de continuar
@@ -602,7 +602,7 @@ es-CL:
     intercept_email_address: Interceptar Dirección Email
     intercept_email_instructions: Sobrescribe correo electrónico del destinatario y reemplázalo con esta dirección.
     internal_name: Nombre interno
-    invalid_payment_provider: Proveedor de pago invalido
+    invalid_payment_provider: Proveedor de pago inválido
     invalid_promotion_action: Acción de promoción inválida
     invalid_promotion_rule: Regla de promoción inválida
     inventory: Inventario
@@ -760,7 +760,7 @@ es-CL:
     order_populator:
       out_of_stock: ! '%{item} está fuera de stock'
       please_enter_reasonable_quantity: Por favor, introduce un cantidad razonable
-      selected_quantity_not_available: La cantidad seleccionada no esta disponible
+      selected_quantity_not_available: La cantidad seleccionada no está disponible
     order_processed_successfully: Tu pedido ha sido procesado con éxito
     order_state:
       address: Dirección
@@ -995,7 +995,7 @@ es-CL:
     smtp_password: Contraseña SMTP
     smtp_port: Puerto SMTP
     smtp_send_all_emails_as_from_following_address: Enviar todos los mails desde la siguiente dirección
-    smtp_send_copy_to_this_addresses: Enviar una copia de todos los mails salientes a esta dirección. Para multiples direcciones, separar con comas.
+    smtp_send_copy_to_this_addresses: Enviar una copia de todos los mails salientes a esta dirección. Para múltiples direcciones, separar con comas.
     smtp_username: Nombre de usuario SMTP
     source: Fuente
     special_instructions: Instrucciones especiales
@@ -1033,7 +1033,7 @@ es-CL:
     tax: Tasa
     tax_categories: Categorías fiscales
     tax_category: Categoría Fiscal
-    tax_rate_amount_explanation: Las tasas de impuestos son numeros decimales para ayudar en los calculos, (p.e. si la tasa de impuesto es del 5%, introducir 0.05)
+    tax_rate_amount_explanation: Las tasas de impuestos son numeros decimales para ayudar en los calculos, (p. ej. si la tasa de impuesto es del 5%, introducir 0.05)
     tax_rates: Tasas de impuestos
     tax_settings: Preferencias de impuestos
     tax_total: Total de impuesto
@@ -1063,7 +1063,7 @@ es-CL:
     tracking: Tracking
     tracking_number: Número de Tracking
     tracking_url: URL de Tracking
-    tracking_url_placeholder: e.g. http://quickship.com/package?num=:tracking
+    tracking_url_placeholder: p. ej. http://quickship.com/package?num=:tracking
     transfer_from_location: Transferido desde
     transfer_stock: Transferencia de Stock
     transfer_to_location: Transferido a
@@ -1104,8 +1104,8 @@ es-CL:
     width: Longitud
     year: Año
     you_have_no_orders_yet: No tienes pedidos todavía
-    your_cart_is_empty: Tu carrito esta vacío
-    your_order_is_empty_add_product: Tu pedido esta vacío, por favor busca y añade un producto a continuación
+    your_cart_is_empty: Tu carrito está vacío
+    your_order_is_empty_add_product: Tu pedido está vacío, por favor busca y añade un producto a continuación
     zip: Postal
     zipcode: Código Postal
     zone: Zona

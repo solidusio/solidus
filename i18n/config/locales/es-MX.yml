@@ -448,7 +448,7 @@ es-MX:
       jirafe:
         app_id: ID de aplicación
         app_token: Token de aplicación
-        currently_unavailable: Jirafe no esta disponible. Spree se conectará a Jirafe una vez esté activo.
+        currently_unavailable: Jirafe no está disponible. Spree se conectará a Jirafe una vez esté activo.
         explanation: Los siguientes campos pueden ser capturados si decides registrarte con Jirafe desde el Dashboard.
         header: Configuración de Jirafe Analytics
         site_id: ID de Sitio
@@ -567,6 +567,7 @@ es-MX:
       supported_locales: Traducciones soportadas
       this_file_language: 
       translations: Traducciones
+      all_translations: Todas las Traducciones
     icon: Icono
     image: Imagen
     image_settings: Configuración de imagen
