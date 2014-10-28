@@ -22,6 +22,9 @@
           <td class="line-item-image"><%= mini_image(item.variant) %></td>
           <td class="line-item-name">
             <%= item.variant.product.name %><br><%= "(" + variant_options(item.variant) + ")" unless item.variant.option_values.empty? %>
+            <% if item.variant.sku.present? %>
+              <strong><%= Spree.t(:sku) %>:</strong> <%= item.variant.sku %>
+            <% end %>
           </td>
           <td class="line-item-price align-center"><%= item.single_money.to_html %></td>
           <td class="line-item-qty-show align-center">
