@@ -6,19 +6,19 @@ module Spree
       include Spree::Reimbursement::ReimbursementTypeValidator
       
       class_attribute :expired_reimbursement_type
-      self.expired_reimbursement_type = Spree::ReimbursementType::OriginalPayment
+      self.expired_reimbursement_type = Spree::ReimbursementType::Credit
 
       class_attribute :refund_time_constraint
       self.refund_time_constraint = 90.days
     end
 
-    let(:return_item)   { create(:return_item) }
+    let(:return_item)   { create(:return_item, preferred_reimbursement_type: preferred_reimbursement_type) }
     let(:dummy)         { DummyClass.new }
+    let(:preferred_reimbursement_type) { Spree::ReimbursementType::Credit.new }
 
     describe '#valid_preferred_reimbursement_type?' do
       before do
         dummy.stub(:past_reimbursable_time_period?).and_return(true)
-        return_item.stub(:preferred_reimbursement_type).and_return(Spree::ReimbursementType::Credit)
       end
 
       subject { dummy.valid_preferred_reimbursement_type?(return_item) }
@@ -30,13 +30,13 @@ module Spree
         end
 
         it 'if the return items preferred method of reimbursement is the expired method of reimbursement' do
-          return_item.stub(:preferred_reimbursement_type).and_return(dummy.expired_reimbursement_type)
           subject.should be true
         end
       end
 
       context 'is invalid' do
         it 'if the return item is past the eligible time period and the preferred method of reimbursement is not the expired method of reimbursement' do
+          return_item.update_attributes!(preferred_reimbursement_type: Spree::ReimbursementType::OriginalPayment.new)
           subject.should be false
         end
       end
