@@ -303,12 +303,23 @@ describe Spree::Promotion, :type => :model do
       end
       context "and it contains items" do
         let!(:line_item) { create(:line_item, order: promotable) }
-        context "and the items are all non-promotionable" do
+        let!(:line_item2) { create(:line_item, order: promotable) }
+
+        context "and at least one item is non-promotionable" do
           before do
             line_item.product.update_column(:promotionable, false)
           end
+          it { should be false }
+        end
+
+        context "and the items are all non-promotionable" do
+          before do
+            line_item.product.update_column(:promotionable, false)
+            line_item2.product.update_column(:promotionable, false)
+          end
           it { is_expected.to be false }
         end
+
         context "and at least one item is promotionable" do
           it { is_expected.to be true }
         end
