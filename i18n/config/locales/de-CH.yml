@@ -35,6 +35,7 @@ de-CH:
       spree/order:
         checkout_complete: 
         completed_at: 
+        considered_risky: Riskant
         coupon_code: 
         created_at: 
         email: 
@@ -886,6 +887,7 @@ de-CH:
     shipment_state: Versandstatus
     shipment_states:
       backorder: Lieferrückstand
+      canceled: Abgebrochen
       partial: Teillieferung
       pending: bevorstehend
       ready: Bereit
@@ -909,6 +911,7 @@ de-CH:
     show_active: Show Active
     show_deleted: Gelöschte anzeigen
     show_only_complete_orders: Nur komplette Bestellungen anzeigen
+    show_only_considered_risky: Nur riskante Bestellungen anzeigen
     show_rate_in_label: 
     site_name: Seitenname
     site_url: Seiten-URL
