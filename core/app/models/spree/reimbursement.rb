@@ -17,8 +17,6 @@ module Spree
 
     before_create :generate_number
 
-    after_save :send_reimbursement_email, if: :reimbursed?
-
     scope :reimbursed, -> { where(reimbursement_status: 'reimbursed') }
 
     # The reimbursement_tax_calculator property should be set to an object that responds to "call"
@@ -110,6 +108,7 @@ module Spree
       if unpaid_amount_within_tolerance?
         reimbursed!
         reimbursement_success_hooks.each { |h| h.call self }
+        send_reimbursement_email
       else
         errored!
         reimbursement_failure_hooks.each { |h| h.call self }
