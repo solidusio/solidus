@@ -18,13 +18,6 @@ module Spree
         line_item.errors.should_receive(:[]).with(:quantity).and_return []
         subject.validate(line_item)
       end
-
-      it 'should consider existing inventory_units sufficient' do
-        Stock::Quantifier.any_instance.stub(can_supply?: false)
-        line_item.should_not_receive(:errors)
-        line_item.stub(inventory_units: [double] * 5)
-        subject.validate(line_item)
-      end
     end
   end
 end

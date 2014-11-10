@@ -115,12 +115,23 @@ describe Spree::Order do
     end
 
     context "from address" do
+      let(:ship_address) { FactoryGirl.create(:ship_address) }
+
       before do
         order.state = 'address'
+        order.ship_address = ship_address
         order.stub(:has_available_payment)
         shipment = FactoryGirl.create(:shipment, :order => order)
         order.email = "user@example.com"
         order.save!
+      end
+
+      context "no shipping address" do
+        let(:ship_address) { nil }
+
+        it "does not transition without a ship address" do
+          expect { order.next! }.to raise_error
+        end
       end
 
       it "updates totals" do
@@ -176,15 +187,6 @@ describe Spree::Order do
 
         expect(order.user).to_not receive(:persist_order_address)
         order.next!
-      end
-
-      context "cannot transition to delivery" do
-        context "if there are no shipping rates for any shipment" do
-          specify do
-            transition = lambda { order.next! }
-            transition.should raise_error(StateMachine::InvalidTransition, /#{Spree.t(:items_cannot_be_shipped)}/)
-          end
-        end
       end
     end
 
@@ -313,6 +315,32 @@ describe Spree::Order do
       order.save!
     end
 
+    context "out of stock" do
+      before do
+        order.user = FactoryGirl.create(:user)
+        order.email = 'spree@example.org'
+        order.payments << FactoryGirl.create(:payment)
+        order.stub(payment_required?: true)
+        order.line_items << FactoryGirl.create(:line_item)
+        order.line_items.first.variant.stock_items.each do |si|
+          si.set_count_on_hand(0)
+          si.update_attributes(:backorderable => false)
+        end
+
+        Spree::OrderUpdater.new(order).update
+        order.save!
+      end
+
+      it "does not allow the order to complete" do
+        expect {
+          order.complete!
+        }.to raise_error Spree::LineItem::InsufficientStock
+
+        expect(order.state).to eq 'confirm'
+        expect(order.line_items.first.errors[:quantity]).to be_present
+      end
+    end
+
     context "default credit card" do
       before do
         order.user = FactoryGirl.create(:user)
@@ -321,6 +349,7 @@ describe Spree::Order do
 
         # make sure we will actually capture a payment
         order.stub(payment_required?: true)
+        order.stub(ensure_available_shipping_rates: true)
         order.line_items << FactoryGirl.create(:line_item)
         Spree::OrderUpdater.new(order).update
 
@@ -407,7 +436,9 @@ describe Spree::Order do
     end
 
     it "does not attempt to process payments" do
+      order.stub(:ensure_available_shipping_rates).and_return(true)
       order.stub_chain(:line_items, :present?).and_return(true)
+      order.stub_chain(:line_items, :map).and_return([])
       order.should_not_receive(:payment_required?)
       order.should_not_receive(:process_payments!)
       order.next!

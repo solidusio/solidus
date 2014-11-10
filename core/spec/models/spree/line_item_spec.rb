@@ -139,65 +139,6 @@ describe Spree::LineItem do
     end
   end
 
-  context "has inventory (completed order so items were already unstocked)" do
-    let(:order) { Spree::Order.create }
-    let(:variant) { create(:variant) }
-
-    context "nothing left on stock" do
-      before do
-        variant.stock_items.update_all count_on_hand: 5, backorderable: false
-        order.contents.add(variant, 5)
-        order.create_proposed_shipments
-        order.finalize!
-      end
-
-      it "allows to decrease item quantity" do
-        line_item = order.line_items.first
-        line_item.quantity -= 1
-        line_item.target_shipment = order.shipments.first
-
-        line_item.save
-        expect(line_item).to have(0).errors_on(:quantity)
-      end
-
-      it "doesnt allow to increase item quantity" do
-        line_item = order.line_items.first
-        line_item.quantity += 2
-        line_item.target_shipment = order.shipments.first
-
-        line_item.save
-        expect(line_item).to have(1).errors_on(:quantity)
-      end
-    end
-
-    context "2 items left on stock" do
-      before do
-        variant.stock_items.update_all count_on_hand: 7, backorderable: false
-        order.contents.add(variant, 5)
-        order.create_proposed_shipments
-        order.finalize!
-      end
-
-      it "allows to increase quantity up to stock availability" do
-        line_item = order.line_items.first
-        line_item.quantity += 2
-        line_item.target_shipment = order.shipments.first
-
-        line_item.save
-        expect(line_item).to have(0).errors_on(:quantity)
-      end
-
-      it "doesnt allow to increase quantity over stock availability" do
-        line_item = order.line_items.first
-        line_item.quantity += 3
-        line_item.target_shipment = order.shipments.first
-
-        line_item.save
-        expect(line_item).to have(1).errors_on(:quantity)
-      end
-    end
-  end
-
   context "currency same as order.currency" do
     it "is a valid line item" do
       line_item = order.line_items.first

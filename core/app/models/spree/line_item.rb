@@ -1,5 +1,7 @@
 module Spree
   class LineItem < ActiveRecord::Base
+    class InsufficientStock < StandardError; end
+
     before_validation :invalid_quantity_check
     belongs_to :order, class_name: "Spree::Order", inverse_of: :line_items, touch: true
     belongs_to :variant, class_name: "Spree::Variant", inverse_of: :line_items
@@ -20,7 +22,6 @@ module Spree
       message: Spree.t('validation.must_be_int')
     }
     validates :price, numericality: true
-    validates_with Stock::AvailabilityValidator
 
     validate :ensure_proper_currency
     before_destroy :update_inventory

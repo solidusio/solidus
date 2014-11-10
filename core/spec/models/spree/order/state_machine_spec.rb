@@ -20,7 +20,10 @@ describe Spree::Order do
       end
 
       context "when payment processing succeeds" do
-        before { order.stub :process_payments! => true }
+        before do
+          order.stub :process_payments! => true
+          order.stub :ensure_available_shipping_rates => true
+        end
 
         it "should finalize order when transitioning to complete state" do
           order.should_receive(:finalize!)
