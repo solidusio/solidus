@@ -161,14 +161,23 @@ describe Spree::Order, :type => :model do
     end
 
     context "from address" do
+      let(:ship_address) { FactoryGirl.create(:ship_address) }
+
       before do
         order.state = 'address'
-        allow(order).to receive(:has_available_payment)
-        order.bill_address = FactoryGirl.create(:bill_address)
-        order.ship_address = FactoryGirl.create(:ship_address)
-        FactoryGirl.create(:shipment, :order => order)
+        order.ship_address = ship_address
+        order.stub(:has_available_payment)
+        shipment = FactoryGirl.create(:shipment, :order => order)
         order.email = "user@example.com"
         order.save!
+      end
+
+      context "no shipping address" do
+        let(:ship_address) { nil }
+
+        it "does not transition without a ship address" do
+          expect { order.next! }.to raise_error
+        end
       end
 
       it "updates totals" do
@@ -253,6 +262,15 @@ describe Spree::Order, :type => :model do
 
         it 'should update shipment_total' do
           expect { order.next! }.to change{ order.shipment_total }.by(10.00)
+        end
+      end
+
+      context "cannot transition to delivery" do
+        context "if there are no shipping rates for any shipment" do
+          specify do
+            transition = lambda { order.next! }
+            transition.should raise_error(StateMachine::InvalidTransition, /#{Spree.t(:items_cannot_be_shipped)}/)
+          end
         end
       end
     end
@@ -478,6 +496,7 @@ describe Spree::Order, :type => :model do
 
         # make sure we will actually capture a payment
         allow(order).to receive_messages(payment_required?: true)
+        allow(order).to receive_messages(ensure_available_shipping_rates: true)
         order.line_items << FactoryGirl.create(:line_item)
         order.line_items.each { |li| li.inventory_units.create! }
         Spree::OrderUpdater.new(order).update

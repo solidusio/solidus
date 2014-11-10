@@ -23,7 +23,6 @@ module Spree
       message: Spree.t('validation.must_be_int')
     }
     validates :price, numericality: true
-    validates_with Stock::AvailabilityValidator
 
     validate :ensure_proper_currency
     before_destroy :update_inventory

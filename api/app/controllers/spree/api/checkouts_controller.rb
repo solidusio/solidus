@@ -3,6 +3,8 @@ module Spree
     class CheckoutsController < Spree::Api::BaseController
       before_action :associate_user, only: :update
 
+      rescue_from Spree::LineItem::InsufficientStock, with: :insufficient_stock_for_line_items
+
       include Spree::Core::ControllerHelpers::Auth
       include Spree::Core::ControllerHelpers::Order
       # This before_filter comes from Spree::Core::ControllerHelpers::Order
@@ -101,6 +103,10 @@ module Spree
         def expected_total_ok?(expected_total)
           return true if expected_total.blank?
           @order.total == BigDecimal(expected_total)
+        end
+
+        def insufficient_stock_for_line_items(exception)
+          render json: { errors: ["Quantity is not available for items in your order"], type: 'insufficient_stock' }, status: 422
         end
     end
   end

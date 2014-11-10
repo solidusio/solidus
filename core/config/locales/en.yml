@@ -1208,6 +1208,7 @@ en:
     settings: Settings
     ship: ship
     ship_address: Ship Address
+    ship_address_required: Valid shipping address required
     ship_total: Ship Total
     shipment: Shipment
     shipment_adjustments: "Shipment adjustments"

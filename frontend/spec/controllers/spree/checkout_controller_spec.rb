@@ -306,6 +306,33 @@ describe Spree::CheckoutController, :type => :controller do
         allow(controller).to receive_messages :check_authorization => true
       end
 
+      context "when the order is invalid" do
+        before do
+          order.stub :update_attributes => true, :next => nil
+          order.errors.add :base, 'Base error'
+          order.errors.add :adjustments, 'error'
+        end
+
+        it "due to the order having errors" do
+          spree_put :update, :order => {}
+          flash[:error].should == "Base error\nAdjustments error"
+          response.should redirect_to(spree.checkout_state_path('address'))
+        end
+      end
+    end
+
+    context "fails to transition to complete from confirm" do
+      let(:order) do
+        FactoryGirl.create(:order_with_line_items).tap do |order|
+          order.next!
+        end
+      end
+
+      before do
+        controller.stub :current_order => order
+        controller.stub :check_authorization => true
+      end
+
       context "when the country is not a shippable country" do
         before do
           order.ship_address.tap do |address|
@@ -314,28 +341,19 @@ describe Spree::CheckoutController, :type => :controller do
             address.state_name = 'Victoria'
             address.save
           end
+
+          payment_method = FactoryGirl.create(:simple_credit_card_payment_method)
+          payment = FactoryGirl.create(:payment, :payment_method => payment_method)
+          order.payments << payment
         end
 
         it "due to no available shipping rates for any of the shipments" do
           expect(order.shipments.count).to eq(1)
           order.shipments.first.shipping_rates.delete_all
-          spree_put :update, :order => {}
-          expect(flash[:error]).to eq(Spree.t(:items_cannot_be_shipped))
-          expect(response).to redirect_to(spree.checkout_state_path('address'))
-        end
-      end
-
-      context "when the order is invalid" do
-        before do
-          allow(order).to receive_messages :update_attributes => true, :next => nil
-          order.errors.add :base, 'Base error'
-          order.errors.add :adjustments, 'error'
-        end
-
-        it "due to the order having errors" do
-          spree_put :update, :order => {}
-          expect(flash[:error]).to eq("Base error\nAdjustments error")
-          expect(response).to redirect_to(spree.checkout_state_path('address'))
+          order.update_attributes(state: 'confirm')
+          spree_put :update, { order: {}, state: 'confirm' }
+          flash[:error].should == Spree.t(:items_cannot_be_shipped)
+          response.should redirect_to(spree.checkout_state_path('confirm'))
         end
       end
     end

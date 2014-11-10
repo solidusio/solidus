@@ -537,6 +537,12 @@ module Spree
       %w(partial shipped).include?(shipment_state)
     end
 
+    def ensure_shipping_address
+      unless ship_address && ship_address.valid?
+        errors.add(:base, Spree.t(:ship_address_required)) and return false
+      end
+    end
+
     def create_proposed_shipments
       adjustments.shipping.delete_all
       shipments.destroy_all
@@ -691,6 +697,13 @@ module Spree
         errors = line_items.map { |line_item| inventory_validator.validate(line_item) }.compact
         raise Spree::LineItem::InsufficientStock if errors.any?
       end
+    end
+
+    def validate_line_item_availability
+      availability_validator = Spree::Stock::AvailabilityValidator.new
+
+      errors = line_items.map { |line_item| availability_validator.validate(line_item) }.compact
+      raise Spree::LineItem::InsufficientStock if errors.any?
     end
 
     def ensure_line_items_present

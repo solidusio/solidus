@@ -68,6 +68,12 @@ module Spree
                 transition to: :awaiting_return
               end
 
+              # Sequence of before_transition to: :complete
+              # calls matter so that we do not process payments
+              # until validations have passed
+              before_transition to: :complete, do: :validate_line_item_availability
+              before_transition to: :complete, do: :ensure_available_shipping_rates
+
               if states[:payment]
                 event :payment_failed do
                   transition to: :payment, from: :confirm
@@ -103,8 +109,8 @@ module Spree
               end
 
               if states[:delivery]
+                before_transition to: :delivery, do: :ensure_shipping_address
                 before_transition to: :delivery, do: :create_proposed_shipments
-                before_transition to: :delivery, do: :ensure_available_shipping_rates
                 before_transition to: :delivery, do: :set_shipments_cost
                 before_transition from: :delivery, do: :apply_free_shipping_promotions
               end
