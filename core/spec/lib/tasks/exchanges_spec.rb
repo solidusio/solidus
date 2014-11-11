@@ -104,21 +104,11 @@ describe "exchanges:charge_unreturned_items" do
       end
 
       context "there is no card from the previous order" do
-        # TODO bring this back when default credit card work is implemented
-        # let!(:credit_card) { create(:credit_card, user: order.user, default: true, gateway_customer_profile_id: "BGS-123") }
-        # before { Spree::Order.any_instance.stub(:valid_credit_cards) { [] } }
-        #
-        # it "attempts to use the user's default card" do
-        #   subject.invoke
-        #   new_order = Spree::Order.last
-        #   expect(new_order.credit_cards).to be_present
-        #   expect(new_order.credit_cards.first).to eq credit_card
-        # end
-        let!(:credit_card) { create(:credit_card, user: order.user, gateway_customer_profile_id: "BGS-123") }
+        let!(:credit_card) { create(:credit_card, user: order.user, default: true, gateway_customer_profile_id: "BGS-123") }
         before { Spree::Order.any_instance.stub(:valid_credit_cards) { [] } }
 
-        it "attempts to use the user's first card" do
-          expect { subject.invoke }.to change { Spree::Payment.count }.by(1)
+        it "attempts to use the user's default card" do
+          subject.invoke
           new_order = Spree::Order.last
           expect(new_order.credit_cards).to be_present
           expect(new_order.credit_cards.first).to eq credit_card

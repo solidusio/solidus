@@ -40,9 +40,7 @@ namespace :exchanges do
 
         unless order.payments.present?
           card_to_reuse = original_order.valid_credit_cards.first
-          # TODO bring back default logic when the default cc work is reimplemented
-          # card_to_reuse = original_order.user.credit_cards.default.first if !card_to_reuse && original_order.user
-          card_to_reuse = original_order.user.credit_cards.last if !card_to_reuse && original_order.user
+          card_to_reuse = original_order.user.credit_cards.default.first if !card_to_reuse && original_order.user
           Spree::Payment.create!(order: order,
                                  payment_method_id: card_to_reuse.try(:payment_method_id),
                                  source: card_to_reuse,
