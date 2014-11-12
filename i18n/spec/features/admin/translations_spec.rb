@@ -26,6 +26,23 @@ RSpec.feature "Translations", :js do
       end
     end
 
+    context "product properties" do
+      given!(:product_property) { create(:product_property, value: "red") }
+
+      scenario "displays translated value on frontend" do
+        visit spree.admin_product_product_properties_path(product_property.product)
+        find('.fa-flag').click
+
+        within("#attr_fields .value.pt-BR.odd") { fill_in_name "vermelho" }
+        click_on "Update"
+
+        change_locale
+        visit spree.admin_product_product_properties_path(product_property.product)
+
+        expect(page).to have_text_like 'vermelho'
+      end
+    end
+
     context "option types" do
       given!(:option_type) { create(:option_value).option_type }
 
