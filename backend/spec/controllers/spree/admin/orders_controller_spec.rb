@@ -206,6 +206,18 @@ describe Spree::Admin::OrdersController, :type => :controller do
         spree_post :open_adjustments, id: order.number
         expect(response).to redirect_to(:back)
       end
+
+      context 'insufficient stock to complete the order' do
+        before do
+          order.should_receive(:complete!).and_raise Spree::LineItem::InsufficientStock
+        end
+
+        it 'messages and redirects' do
+          subject
+          expect(response).to redirect_to(spree.cart_admin_order_path(order))
+          expect(flash[:error].to_s).to eq Spree.t(:insufficient_stock_for_order)
+        end
+      end
     end
 
     context "#close_adjustments" do
