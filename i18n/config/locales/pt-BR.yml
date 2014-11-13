@@ -372,10 +372,30 @@ pt-BR:
     analytics_trackers: Rastreadores de Análise
     and: E
     api:
-      acess: Acesso
-      clear_key: Limpar Chave
-      key: Chave
-      regenerate_key: Regenerar Chave
+      must_specify_api_key: "Você deve especificar uma chave da API."
+      invalid_api_key: "Chave (%{key}) da API especificada é inválida."
+      unauthorized: "Você não está autorizado a executar essa ação."
+      invalid_resource: "Recurso inválido. Por favor, corrija os erros e tente novamente."
+      resource_not_found: "O recurso que você estava procurando não pode ser encontrado "
+      gateway_error: "Houve um problema com gateway de pagamento: %{text}"
+      access: "Acesso API"
+      key: "Chave"
+      clear_key: "Limpar chave"
+      regenerate_key: "Regerar Chave"
+      no_key: "Nenhuma chave"
+      generate_key: "Gerar chave da API"
+      key_generated: "Chave gerada"
+      key_cleared: "Chave limpa"
+      order:
+        could_not_transition: "O pedido não pode avançar. Por favor, corrija os erros e tente novamente."
+        invalid_shipping_method: "Método de entrega selecionado é inválido."
+      payment:
+        credit_over_limit: "Este pagamento só pode ser creditado até %{limit}. Por favor, especifique um valor igual ou menor a este número."
+        update_forbidden: "Este pagamento não pode ser atualizado porque ele está %{state}."
+      shipment:
+        cannot_ready: "Não está pronto para envio."
+      stock_location_required: "Um parametro stock_location_id deve ser fornecido no pedido para obter os movimentos de estoque."
+      invalid_taxonomy_id: "Taxonomy id inválida."
     aprove: Aprovar
     are_you_sure: Tem Certeza?
     are_you_sure_delete: Tem certeza que deseja remover este registro?
