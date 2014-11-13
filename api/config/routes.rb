@@ -69,6 +69,7 @@ Spree::Core::Engine.add_routes do
     resources :option_types do
       resources :option_values
     end
+    resources :option_values
 
     get '/orders/mine', :to => 'orders#mine', :as => 'my_orders'
     get "/orders/current", to: "orders#current", to: "orders#current", as: "current_order"
