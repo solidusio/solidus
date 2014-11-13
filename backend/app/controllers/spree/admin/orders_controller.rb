@@ -4,6 +4,8 @@ module Spree
       before_filter :initialize_order_events
       before_filter :load_order, :only => [:edit, :update, :advance, :complete, :confirm, :cancel, :resume, :approve, :resend, :open_adjustments, :close_adjustments, :cart]
 
+      rescue_from Spree::LineItem::InsufficientStock, with: :insufficient_stock_error
+
       respond_to :html
 
       def index
@@ -186,6 +188,11 @@ module Spree
 
         def model_class
           Spree::Order
+        end
+
+        def insufficient_stock_error
+          flash[:error] = Spree.t(:insufficient_stock_for_order)
+          redirect_to cart_admin_order_url(@order)
         end
     end
   end
