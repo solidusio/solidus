@@ -243,7 +243,7 @@ en-GB:
       updated: You updated your account successfully.
     user_sessions:
       signed_in: Signed in successfully.
-      signed_out: Singed out successfully.
+      signed_out: Signed out successfully.
   errors:
     messages:
       already_confirmed: was already confirmed
