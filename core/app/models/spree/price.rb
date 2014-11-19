@@ -8,10 +8,8 @@ module Spree
     validate :validate_amount_maximum
     after_save :set_default_price
 
-    def display_amount
-      money
-    end
-    alias :display_price :display_amount
+    extend DisplayMoney
+    money_methods :amount, :price
 
     def money
       Spree::Money.new(amount || 0, { currency: currency })
