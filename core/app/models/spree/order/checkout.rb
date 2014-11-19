@@ -83,7 +83,7 @@ module Spree
                 before_transition to: :complete do |order|
                   order.process_payments! if order.payment_required?
                 end
-                after_transition to: :complete, do: :persist_user_credit_card
+                before_transition to: :confirm, do: :persist_user_credit_card
                 before_transition to: :payment, do: :set_shipments_cost
                 before_transition to: :payment, do: :create_tax_charge!
                 before_transition to: :payment, do: :assign_default_credit_card
