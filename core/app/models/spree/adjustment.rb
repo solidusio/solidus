@@ -59,6 +59,9 @@ module Spree
     scope :included, -> { where(included: true)  }
     scope :additional, -> { where(included: false) }
 
+    extend DisplayMoney
+    money_methods :amount
+
     def closed?
       state == "closed"
     end
@@ -94,10 +97,6 @@ module Spree
 
     def currency
       adjustable ? adjustable.currency : Spree::Config[:currency]
-    end
-
-    def display_amount
-      Spree::Money.new(amount, { currency: currency })
     end
 
     private
