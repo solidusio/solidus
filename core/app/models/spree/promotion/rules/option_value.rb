@@ -22,7 +22,7 @@ module Spree
           pid = line_item.product.id
           ovids = line_item.variant.option_values.pluck(:id)
 
-          product_ids.include?(pid) && (value_ids(pid) - ovids).empty?
+          product_ids.include?(pid) && (value_ids(pid) & ovids).present?
         end
 
         def preferred_eligible_values_with_numerification

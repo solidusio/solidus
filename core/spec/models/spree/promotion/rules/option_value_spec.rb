@@ -75,8 +75,12 @@ describe Spree::Promotion::Rules::OptionValue do
         let(:option_value_ids) { [option_value_blue.id] }
         it { should be true }
       end
-      context "when not all of the option values match" do
+      context "when any of the option values match" do
         let(:option_value_ids) { [option_value_blue.id, option_value_medium.id] }
+        it { should be true }
+      end
+      context "when none of the option values match" do
+        let(:option_value_ids) { [option_value_medium.id] }
         it { should be false }
       end
     end
