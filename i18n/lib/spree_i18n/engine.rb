@@ -1,4 +1,5 @@
 require 'globalize'
+require 'friendly_id/globalize'
 
 module SpreeI18n
   class Engine < Rails::Engine
