@@ -1,4 +1,4 @@
-source 'http://rubygems.org'
+source 'https://rubygems.org'
 
 gem 'spree', github: 'spree/spree', branch: 'master'
 gem 'pg'
