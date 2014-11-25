@@ -4,10 +4,6 @@ module Spree
       :fallbacks_for_empty_translations => true
     include SpreeI18n::Translatable
 
-    # N+1 problem
-    default_scope -> { includes(:translations).references(:translations) } if method_defined?(:translations) && connection.table_exists?(self.translations_table_name)
-    default_scope -> { includes(master: [:prices, :images]).references(master: [:prices, :images]) }
-
     def duplicate_extra(old_product)
       duplicate_translations(old_product)
     end
