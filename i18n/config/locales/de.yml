@@ -35,6 +35,7 @@ de:
       spree/order:
         checkout_complete: Checkout Erfolgreich
         completed_at: Abgeschlossen am
+        considered_risky: Riskant
         coupon_code: Gutscheincode
         created_at: Bestelldatum
         email: Kunden E-Mail
@@ -939,6 +940,7 @@ de:
     shipment_state: Versandstatus
     shipment_states:
       backorder: Nachlieferung
+      canceled: Abgebrochen
       partial: Teillieferung
       pending: Ausstehend
       ready: Bereit
@@ -962,6 +964,7 @@ de:
     show_active: Aktive anzeigen
     show_deleted: Gelöschte anzeigen
     show_only_complete_orders: Nur abgeschlossene Bestellungen anzeigen
+    show_only_considered_risky: Nur riskante Bestellungen anzeigen
     show_rate_in_label: Zeige Steuer im Label
     site_name: Seitenname
     site_url: Seiten-URL
