@@ -1,6 +1,6 @@
 # Spree Internationalization
 
-[![Build Status](https://travis-ci.org/spree/spree_i18n.png?branch=master)](https://travis-ci.org/spree/spree_i18n)
+[![Build Status](https://travis-ci.org/spree-contrib/spree_i18n.png?branch=master)](https://travis-ci.org/spree-contrib/spree_i18n)
 [![Code Climate](https://codeclimate.com/github/spree/spree_i18n.png)](https://codeclimate.com/github/spree/spree_i18n)
 
 This is the Internationalization project for [Spree Commerce][1]
