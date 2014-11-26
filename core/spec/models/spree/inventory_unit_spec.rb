@@ -239,4 +239,20 @@ describe Spree::InventoryUnit, :type => :model do
       expect(subject.included_tax_total).to eq line_item_included_tax_total / quantity
     end
   end
+
+  describe "#exchange_requested?" do
+
+    subject { inventory_unit.exchange_requested? }
+
+    context "return item contains inventory unit and was for an exchange" do
+      let(:exchange_return_item) { create(:exchange_return_item) }
+      let(:inventory_unit) { exchange_return_item.inventory_unit }
+      it { should eq true }
+    end
+
+    context "return item does not contain inventory unit" do
+      let(:inventory_unit) { create(:inventory_unit) }
+      it { should eq false }
+    end
+  end
 end

@@ -21,7 +21,7 @@
       <%= f.fields_for :return_items, @form_return_items do |item_fields| %>
         <% return_item = item_fields.object %>
         <% inventory_unit = return_item.inventory_unit %>
-        <% editable = inventory_unit.shipped? && allow_return_item_changes && return_item.reimbursement.nil? %>
+        <% editable = inventory_unit.shipped? && !inventory_unit.exchange_requested? && allow_return_item_changes && return_item.reimbursement.nil? %>
         <tr>
           <td class="align-center" class="inventory-unit-checkbox">
             <% if editable %>

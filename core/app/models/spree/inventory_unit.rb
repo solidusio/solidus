@@ -80,6 +80,10 @@ module Spree
       line_item.included_tax_total * percentage_of_line_item
     end
 
+    def exchange_requested?
+      return_items.any?(&:exchange_requested?)
+    end
+
     private
 
       def allow_ship?

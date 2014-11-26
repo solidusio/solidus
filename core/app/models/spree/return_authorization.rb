@@ -18,6 +18,7 @@ module Spree
     validates :reason, presence: true
     validates :stock_location, presence: true
     validate :must_have_shipped_units, on: :create
+    validate :no_previously_exchanged_inventory_units, on: :create
 
 
     # These are called prior to generating expedited exchanges shipments.
@@ -70,6 +71,12 @@ module Spree
         self.number ||= loop do
           random = "RA#{Array.new(9){rand(9)}.join}"
           break random unless self.class.exists?(number: random)
+        end
+      end
+
+      def no_previously_exchanged_inventory_units
+        if return_items.map(&:inventory_unit).any?(&:exchange_requested?)
+          errors.add(:base, Spree.t(:return_items_cannot_be_created_for_inventory_units_that_are_already_awaiting_exchange))
         end
       end
 

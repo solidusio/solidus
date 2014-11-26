@@ -1160,6 +1160,7 @@ en:
     return_item_time_period_ineligible: Return item is outside the eligible time period
     return_items: Return Items
     return_items_cannot_be_associated_with_multiple_orders: Return items cannot be associated with multiple orders.
+    return_items_cannot_be_created_for_inventory_units_that_are_already_awaiting_exchange: Return items cannot be created for inventory units that are already awaiting exchange.
     reimbursement_mailer:
       reimbursement_email:
         days_to_send: ! 'You have %{days} days to send back any items awaiting exchange.'
