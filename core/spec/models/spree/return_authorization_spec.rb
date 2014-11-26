@@ -20,10 +20,33 @@ describe Spree::ReturnAuthorization do
       return_authorization.errors[:order].should == ["has no shipped units"]
     end
 
+    context "an inventory unit is already being exchanged" do
+      let(:order)                           { create(:shipped_order, line_items_count: 2) }
+      let!(:previous_exchange_return_item)  { create(:exchange_return_item, inventory_unit: order.inventory_units.last) }
+      let(:return_item)                     { create(:return_item, inventory_unit: order.inventory_units.last) }
+      let(:return_authorization)            { build(:return_authorization, order: order, return_items: [return_item]) }
+
+      it "should be invalid" do
+        return_authorization.save
+        return_authorization.errors['base'].should include('Return items cannot be created for inventory units that are already awaiting exchange.')
+      end
+    end
+
+    context "an inventory unit is not being exchanged" do
+      let(:order)                           { create(:shipped_order, line_items_count: 2) }
+      let(:return_item)                     { create(:return_item, inventory_unit: order.inventory_units.last) }
+      let(:return_authorization)            { build(:return_authorization, order: order, return_items: [return_item]) }
+
+      it "is valid" do
+        return_authorization.save
+        return_authorization.errors['base'].size.should eq 0
+      end
+    end
+
     context "expedited exchanges are configured" do
       let(:order)                { create(:shipped_order, line_items_count: 2) }
-      let(:exchange_return_item) { create(:exchange_return_item, inventory_unit: order.inventory_units.first) }
-      let(:return_item)          { create(:return_item, inventory_unit: order.inventory_units.last) }
+      let(:exchange_return_item) { build(:exchange_return_item, inventory_unit: order.inventory_units.first) }
+      let(:return_item)          { build(:return_item, inventory_unit: order.inventory_units.last) }
       subject                    { create(:return_authorization, order: order, return_items: [exchange_return_item, return_item]) }
 
       before do
@@ -140,7 +163,7 @@ describe Spree::ReturnAuthorization do
     before do
       pending "TODO: get this method into our fork"
     end
-    
+
     it "should allow_receive when inventory units assigned" do
       return_authorization.stub(:inventory_units => [1,2,3])
       return_authorization.can_receive?.should be true
