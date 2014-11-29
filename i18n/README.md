@@ -1,7 +1,7 @@
 # Spree Internationalization
 
-[![Build Status](https://travis-ci.org/spree-contrib/spree_i18n.png?branch=master)](https://travis-ci.org/spree-contrib/spree_i18n)
-[![Code Climate](https://codeclimate.com/github/spree/spree_i18n.png)](https://codeclimate.com/github/spree/spree_i18n)
+[![Build Status](https://travis-ci.org/spree-contrib/spree_i18n.svg?branch=master)](https://travis-ci.org/spree-contrib/spree_i18n)
+[![Code Climate](https://codeclimate.com/github/spree-contrib/spree_i18n/badges/gpa.svg)](https://codeclimate.com/github/spree-contrib/spree_i18n)
 
 This is the Internationalization project for [Spree Commerce][1]
 
@@ -9,12 +9,14 @@ See the [official Internationalization documentation][2] for more details.
 
 Happy translating!
 
+---
+
 ## Installation
 
 Add the following to your `Gemfile`:
 
 ```ruby
-gem 'spree_i18n', github: 'spree/spree_i18n', branch: 'master'
+gem 'spree_i18n', github: 'spree-contrib/spree_i18n', branch: 'master'
 ```
 
 Run `bundle install`
@@ -26,14 +28,18 @@ your app spree manifest file.
 
 This will insert these lines into your spree manifest files:
 
-    vendor/assets/javascripts/spree/backend/all.js
-    //= require spree/backend/spree_i18n
+```
+vendor/assets/javascripts/spree/backend/all.js
+//= require spree/backend/spree_i18n
 
-    vendor/assets/javascripts/spree/frontend/all.js
-    //= require spree/frontend/spree_i18n
+vendor/assets/javascripts/spree/frontend/all.js
+//= require spree/frontend/spree_i18n
 
-    vendor/assets/stylesheets/spree/frontend/all.css
-    *= require spree/frontend/spree_i18n
+vendor/assets/stylesheets/spree/frontend/all.css
+*= require spree/frontend/spree_i18n
+```
+
+---
 
 ## Model Translations
 
@@ -64,40 +70,19 @@ from your Gemfile, add some records and then add spree_i18n gem back you might g
 errors like ``undefined method for nilClass`` because Globalize will try fetch
 translations that do not exist.*
 
+---
+
 ## Contributing
 
-In the spirit of [free software][7], **everyone** is encouraged to help improve this project.
+[See corresponding guidelines][7]
 
-Here are some ways *you* can contribute:
+---
 
-* by using prerelease versions
-* by reporting [bugs][8]
-* by suggesting new features
-* by writing translations
-* by writing or editing documentation
-* by writing specifications
-* by writing code (*no patch is too small*: fix typos, add comments, clean up inconsistent whitespace)
-* by refactoring code
-* by resolving [issues][8]
-* by reviewing patches
-
-Starting point:
-
-* Fork the repo
-* Clone your repo
-* Run `bundle install`
-* Run `bundle exec rake test_app` to create the test application in `spec/test_app`
-* Make your changes
-* Ensure specs pass by running `bundle exec rspec spec`
-* Submit your pull request
-
-Copyright (c) 2014 [Spree Commerce Inc][3]. and other [contributors][5]. released under the [New BSD License][6]
+Copyright (c) 2014 [Spree Commerce Inc.][1] and other [contributors][5]. released under the [New BSD License][6]
 
 [1]: http://spreecommerce.com
-[2]: http://guides.spreecommerce.com/i18n.html
+[2]: http://guides.spreecommerce.com/developer/i18n.html
 [3]: https://github.com/globalize/globalize
-[4]: https://github.com/spree
-[5]: https://github.com/spree/spree_i18n/graphs/contributors
-[6]: https://github.com/spree/spree_i18n/blob/master/LICENSE.md
-[7]: http://www.fsf.org/licensing/essays/free-sw.html
-[8]: https://github.com/spree/spree_i18n/issues
+[5]: https://github.com/spree-contrib/spree_i18n/graphs/contributors
+[6]: https://github.com/spree-contrib/spree_i18n/blob/master/LICENSE.md
+[7]: https://github.com/spree-contrib/spree_i18n/blob/master/CONTRIBUTING.md

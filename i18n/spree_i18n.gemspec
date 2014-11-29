@@ -8,9 +8,7 @@ Gem::Specification.new do |s|
   s.author      = 'Sean Schofield'
   s.email       = 'sean.schofield@gmail.com'
   s.homepage    = 'http://spreecommerce.com'
-  s.license     = %q{BSD-3}
-
-  s.rubyforge_project = 'spree_i18n'
+  s.license     = 'BSD-3'
 
   s.files        = `git ls-files`.split("\n")
   s.test_files   = `git ls-files -- spec/*`.split("\n")
@@ -24,7 +22,7 @@ Gem::Specification.new do |s|
   s.add_dependency 'i18n_data', '~> 0.5.1'
   s.add_dependency 'rails-i18n', '~> 4.0.1'
   s.add_dependency 'spree_core', '~> 3.0.0.beta'
-  
+
   s.add_development_dependency 'rspec'
   s.add_development_dependency 'rspec-rails', '~> 3.0.0'
   s.add_development_dependency 'sqlite3', '~> 1.3.9'
