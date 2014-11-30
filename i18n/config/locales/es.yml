@@ -46,6 +46,7 @@ es:
         special_instructions: Instrucciones especiales
         state: Estado
         total: Total
+        considered_risky: Arriesgado
       spree/order/bill_address:
         address1: Calle dirección de facturación
         city: Ciudad dirección de facturación
@@ -333,6 +334,9 @@ es:
     analytics_desc_list_4: Es completamente gratuito!
     analytics_trackers: Analytics Trackers
     and: y
+    approve: aprobar
+    approver: Aprobador
+    approved_at: Aprobado en    
     are_you_sure: ¿Estás seguro?
     are_you_sure_delete: ¿Estás seguro de que quieres borrar este registro?
     associated_adjustment_closed: El ajuste asociado está cerrado y no será recalculado. ¿Quieres abrirlo?
@@ -605,6 +609,8 @@ es:
     last_name: Apellidos
     last_name_begins_with: Apellido comienza con
     learn_more: Aprender más
+    lifetime_stats: Histórico de estadísticas
+    line_item_adjustments: "Ajustes de línea de pedido"    
     list: Lista
     listing_countries: Listando Países
     listing_orders: Listando Pedidos
@@ -745,6 +751,7 @@ es:
       awaiting_return: Esperando devolución
       canceled: cancelada
       cart: Carrito
+      considered_risky: considerado arriesgado
       complete: completado
       confirm: Confirmada
       delivery: Entrega
@@ -880,8 +887,8 @@ es:
     resend: Reenviar
     reset_password: Reinicializar password
     response_code: Código de respuesta
-    resume: resumen
-    resumed: Resumido
+    resume: reanudar
+    resumed: Reanudado
     return: Volver
     return_authorization: Autorización para devolución
     return_authorization_updated: Autorización para devolución actualizada
@@ -889,6 +896,9 @@ es:
     return_quantity: Cantidad de devolución
     returned: Devuelto
     review: Revisar
+    risk: Riesgo
+    risk_analysis: Análisis arriesgado
+    risky: Arriesgado
     rma_credit: Crédito RMA
     rma_number: Número RMA
     rma_value: Valor RMA
@@ -903,6 +913,7 @@ es:
     sales_total_description: Total de ventas de todos los pedidos
     sales_totals: Totales de ventas
     save_and_continue: Guardar y continuar
+    save_my_address: Recordar esta dirección
     say_no: 'No'
     say_yes: Si
     scope: Alcance
@@ -959,6 +970,7 @@ es:
     show_active: Mostrar Activo
     show_deleted: Mostrar Borrado
     show_only_complete_orders: Mostrar solamente Pedidos completos
+    show_only_considered_risky: Mostrar solamente Pedidos arriesgados
     show_rate_in_label: Mostrar tarifa en la etiqueta
     site_name: Nombre Sitio Web
     site_url: URL Sitio Web
