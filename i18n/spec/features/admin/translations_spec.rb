@@ -155,13 +155,9 @@ RSpec.feature "Translations", :js do
     end
   end
 
-  context "taxons", focus: true do
-    given!(:taxon)    { create(:taxon) }
-    given!(:taxonomy) { taxon.taxonomy }
-    given!(:product) do
-      product = create(:product)
-      product.taxons << taxon
-    end
+  context 'taxons' do
+    given!(:taxonomy) { create(:taxonomy) }
+    given!(:taxon) { create(:taxon, taxonomy: taxonomy, parent_id: taxonomy.root.id) }
 
     scenario "display translated name on frontend" do
       visit spree.edit_admin_taxonomy_taxon_path(taxonomy.id, taxon.id)
@@ -178,6 +174,9 @@ RSpec.feature "Translations", :js do
       expect {
         click_on "Update"
       }.not_to change { taxon.translations.count }
+
+      # ensure taxon is in root or it will not be visible
+      expect(taxonomy.root.children.count).to be(1)
 
       change_locale
       visit spree.root_path

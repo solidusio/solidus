@@ -1,6 +1,6 @@
 RSpec.feature "Products", :js do
   stub_authorization!
-  let!(:product) { create(:product) }
+  given!(:product) { create(:product) }
 
   # Regression Spec: https://github.com/spree/spree_i18n/issues/386
   context "cloning" do
