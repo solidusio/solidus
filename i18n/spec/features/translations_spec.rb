@@ -12,8 +12,8 @@ RSpec.feature "Translations", :js do
     context 'switches locale from the dropdown' do
       scenario 'selected translation is applied' do
         visit '/'
-        select('Português (BR)', :from => 'Language')
-        expect(page).to have_content('INÍCIO')
+        select('Português (BR)', from: 'Language')
+        expect(page).to have_content('Início')
       end
     end
   end
