@@ -134,7 +134,7 @@ describe Spree::Reimbursement, type: :model do
     end
 
     context "when exchange is required" do
-      let(:exchange_variant) { build(:variant) }
+      let(:exchange_variant) { create(:on_demand_variant, product: return_item.inventory_unit.variant.product) }
       before { return_item.exchange_variant = exchange_variant }
       it "generates an exchange shipment for the order for the exchange items" do
         expect { subject }.to change { order.reload.shipments.count }.by 1
