@@ -47,6 +47,9 @@ module Spree
         can :update, Order do |order, token|
           order.user == user || order.token && token == order.token
         end
+        can :create, ReturnAuthorization do |return_authorization|
+          return_authorization.order.user == user
+        end
         can [:create, :read], Address
         can :update, Address do |address|
           user.bill_address == address || user.ship_address == address

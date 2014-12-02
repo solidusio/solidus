@@ -14,6 +14,20 @@ module Spree
       stub_authentication!
     end
 
+    shared_examples_for 'a return authorization creator' do
+      it "can create a new return authorization" do
+        stock_location = FactoryGirl.create(:stock_location)
+        reason = FactoryGirl.create(:return_authorization_reason)
+        rma_params = { :stock_location_id => stock_location.id,
+                       :return_authorization_reason_id => reason.id,
+                       :memo => "Defective" }
+        api_post :create, :order_id => order.number, :return_authorization => rma_params
+        response.status.should == 201
+        json_response.should have_attributes(attributes)
+        json_response["state"].should_not be_blank
+      end
+    end
+
     context "as the order owner" do
       before do
         Order.any_instance.stub :user => current_api_user
@@ -34,10 +48,7 @@ module Spree
         assert_unauthorized!
       end
 
-      it "cannot create a new return authorization" do
-        api_post :create
-        assert_unauthorized!
-      end
+      it_behaves_like "a return authorization creator"
 
       it "cannot update a return authorization" do
         api_put :update
@@ -47,6 +58,17 @@ module Spree
       it "cannot delete a return authorization" do
         api_delete :destroy
         assert_not_found!
+      end
+    end
+
+    context "as another non-admin user that's not the order's owner" do
+      before do
+        Order.any_instance.stub :user => create(:user)
+      end
+
+      it "cannot create a new return authorization" do
+        api_post :create
+        assert_unauthorized!
       end
     end
 
@@ -131,17 +153,7 @@ module Spree
         lambda { return_authorization.reload }.should raise_error(ActiveRecord::RecordNotFound)
       end
 
-      it "can add a new return authorization to an existing order" do
-        stock_location = FactoryGirl.create(:stock_location)
-        reason = FactoryGirl.create(:return_authorization_reason)
-        rma_params = { :stock_location_id => stock_location.id,
-                       :return_authorization_reason_id => reason.id,
-                       :memo => "Defective" }
-        api_post :create, :order_id => order.number, :return_authorization => rma_params
-        response.status.should == 201
-        json_response.should have_attributes(attributes)
-        json_response["state"].should_not be_blank
-      end
+      it_behaves_like "a return authorization creator"
     end
 
     context "as just another user" do
