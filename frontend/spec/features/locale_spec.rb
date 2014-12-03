@@ -3,7 +3,7 @@ require 'spec_helper'
 describe "setting locale" do
   before do
     I18n.locale = I18n.default_locale
-    I18n.backend.store_translations(:fr, 
+    I18n.backend.store_translations(:fr,
      :spree => {
        :cart => "Panier",
        :shopping_cart => "Panier"
