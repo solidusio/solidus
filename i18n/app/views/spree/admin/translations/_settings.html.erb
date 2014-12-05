@@ -4,9 +4,24 @@
   <div class="alpha six columns field">
     <label for="show-only"><%= Spree.t(:'i18n.show_only') %>: </label>
     <ul>
-      <li><input type="radio" name="show-only" value="all" checked> <label><%= Spree.t(:'i18n.all_translations') %></label></li>
-      <li><input type="radio" name="show-only" value="incomplete"> <label><%= Spree.t(:'i18n.only_incomplete') %></label></li>
-      <li><input type="radio" name="show-only"value="complete"> <label><%= Spree.t(:'i18n.only_complete') %></label></li>
+      <li>
+        <input type="radio" name="show-only" value="all" id="show-only-all" checked>
+        <label for="show-only-all">
+          <%= Spree.t(:'i18n.all_translations') %>
+        </label>
+      </li>
+      <li>
+        <input type="radio" name="show-only" value="incomplete" id="show-only-incomplete">
+        <label for="show-only-incomplete">
+          <%= Spree.t(:'i18n.only_incomplete') %>
+        </label>
+      </li>
+      <li>
+        <input type="radio" name="show-only" value="complete" id="show-only-complete">
+        <label for="show-only-complete">
+          <%= Spree.t(:'i18n.only_complete') %>
+        </label>
+      </li>
     </ul>
   </div>
 
