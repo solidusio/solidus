@@ -1,6 +1,12 @@
 module Spree
   module Api
     class OrdersController < Spree::Api::BaseController
+      class_attribute :admin_shipment_attributes
+      self.admin_shipment_attributes = [:shipping_method, :stock_location, :inventory_units => [:variant_id, :sku]]
+
+      class_attribute :admin_order_attributes
+      self.admin_order_attributes = [:import, :number, :completed_at, :locked_at, :channel]
+
       skip_before_filter :check_for_user_or_api_key, only: :apply_coupon_code
       skip_before_filter :authenticate_user, only: :apply_coupon_code
 
@@ -128,14 +134,6 @@ module Spree
           else
             super
           end
-        end
-
-        def admin_shipment_attributes
-          [:shipping_method, :stock_location, :inventory_units => [:variant_id, :sku]]
-        end
-
-        def admin_order_attributes
-          [:import, :number, :completed_at, :locked_at, :channel]
         end
 
         def next!(options={})
