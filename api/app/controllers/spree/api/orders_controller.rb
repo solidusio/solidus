@@ -1,6 +1,12 @@
 module Spree
   module Api
     class OrdersController < Spree::Api::BaseController
+      class_attribute :admin_shipment_attributes
+      self.admin_shipment_attributes = [:shipping_method, :stock_location, :inventory_units => [:variant_id, :sku]]
+
+      class_attribute :admin_order_attributes
+      self.admin_order_attributes = [:import, :number, :completed_at, :locked_at, :channel]
+
       skip_before_action :check_for_user_or_api_key, only: :apply_coupon_code
       skip_before_action :authenticate_user, only: :apply_coupon_code
 
@@ -120,6 +126,14 @@ module Spree
           params[:order][:line_items_attributes] = params[:order].delete(:line_items) if params[:order][:line_items]
           params[:order][:ship_address_attributes] = params[:order].delete(:ship_address) if params[:order][:ship_address]
           params[:order][:bill_address_attributes] = params[:order].delete(:bill_address) if params[:order][:bill_address]
+        end
+
+        def permitted_shipment_attributes
+          if current_api_user.has_spree_role? "admin"
+            super + admin_shipment_attributes
+          else
+            super
+          end
         end
 
         def find_order(lock = false)
