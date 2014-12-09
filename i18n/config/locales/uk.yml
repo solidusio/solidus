@@ -1081,8 +1081,8 @@ uk:
       few: ! '%{count} Платежа'
       many: ! '%{count} Платежів'
       other: ! '%{count} Платежі'
-    percent: Процент
-    percent_per_item: Проценти за одиницю
+    percent: Відсоток
+    percent_per_item: Відсоток за одиницю
     permalink: Постійне посилання
     pending: Очікується
     phone: Телефон
