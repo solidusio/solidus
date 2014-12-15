@@ -188,7 +188,7 @@ module Spree
     end
 
     def eligible_exchange_variant
-      return unless exchange_variant
+      return unless exchange_variant && exchange_variant_id_changed?
       unless eligible_exchange_variants.include?(exchange_variant)
         errors.add(:base, Spree.t(:invalid_exchange_variant))
       end
