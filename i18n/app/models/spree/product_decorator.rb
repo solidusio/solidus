@@ -7,6 +7,18 @@ module Spree
 
     include SpreeI18n::Translatable
 
+    # Allow to filter products through their translations, too
+    def self.like_any(fields, values)
+      translations = Spree::Product::Translation.arel_table
+
+      joins(:translations).where(fields.map { |field|
+        values.map { |value|
+          translations[field].matches("%#{value}%").        # extension: match with translations under current locale
+            or(arel_table[field].matches("%#{value}%"))     # compatible with original behaviour
+        }.inject(:or)
+      }.inject(:or).and(translations[:locale].eq(I18n.locale)))
+    end
+
     def duplicate_extra(old_product)
       duplicate_translations(old_product)
     end
