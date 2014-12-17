@@ -2,15 +2,15 @@ nb:
   activerecord:
     attributes:
       spree/address:
-        address1: Address
+        address1: Adresse
         address2: 
         city: 
         country: 
-        firstname: 
-        lastname: 
-        phone: 
-        state: 
-        zipcode: 
+        firstname: Fornavn
+        lastname: Etternavn
+        phone: Telefon
+        state: Stat/Fylke
+        zipcode: Postnummer
       spree/country:
         iso: ISO
         iso3: ISO3
@@ -20,176 +20,176 @@ nb:
       spree/credit_card:
         base: 
         cc_type: Type
-        month: 
-        number: 
+        month: Måned
+        number: Nummer
         verification_value: 
-        year: 
+        year: År
       spree/inventory_unit:
-        state: State
+        state: Stat/Fylke
       spree/line_item:
-        price: 
-        quantity: 
+        price: Pris
+        quantity: Antall
       spree/option_type:
-        name: 
-        presentation: 
+        name: Navn
+        presentation: Presentasjon 
       spree/order:
-        checkout_complete: 
-        completed_at: 
-        coupon_code: 
-        created_at: 
-        email: 
-        ip_address: 
-        item_total: 
-        number: 
-        payment_state: 
-        shipment_state: 
-        special_instructions: 
-        state: 
-        total: 
+        checkout_complete: Ordre fullført
+        completed_at: Fullført
+        coupon_code: Rabattkode
+        created_at: Opprettet
+        email: Epost
+        ip_address: IP Adresse
+        item_total: Totalt antall
+        number: Nummer
+        payment_state: Betalingsstatus
+        shipment_state: Forsendelsesstatus
+        special_instructions: Spesielle instrukser
+        state: Stat/Fylke
+        total: Total
       spree/order/bill_address:
-        address1: 
-        city: 
-        firstname: 
-        lastname: 
-        phone: 
-        state: 
-        zipcode: 
+        address1: Adresse
+        city: By/Poststed
+        firstname: Forvnavn
+        lastname: Etternavn
+        phone: Telefon
+        state: Stat/Fylke
+        zipcode: Postnummer
       spree/order/ship_address:
-        address1: 
-        city: 
-        firstname: 
-        lastname: 
-        phone: 
-        state: Shipping address state
-        zipcode: Shipping address zipcode
+        address1: Adresse
+        city: By/Poststed
+        firstname: Fornavn
+        lastname: Etternavn
+        phone: Telefon
+        state: Postadresse Stat/Fylke
+        zipcode: Postadresse Postnummer
       spree/payment:
-        amount: 
+        amount: Beløp
       spree/payment_method:
-        name: Name
+        name: Navn
       spree/product:
-        available_on: Available On
-        cost_currency: 
-        cost_price: Cost Price
-        description: Description
-        master_price: Master Price
-        name: Name
-        on_hand: On Hand
-        shipping_category: 
-        tax_category: 
+        available_on: Tilgjengelig fra
+        cost_currency: Valuta
+        cost_price: Kostpris
+        description: Beskrivelse
+        master_price: Grunnpris
+        name: Navn
+        on_hand: For hånd
+        shipping_category: Forsendelseskategori 
+        tax_category: Avgiftskategori
       spree/promotion:
-        advertise: 
-        code: Code
-        description: Description
-        event_name: Event Name
-        expires_at: Expires At
-        name: Name
-        path: Path
-        starts_at: Starts At
-        usage_limit: Usage Limit
+        advertise: Reklamere
+        code: Kode
+        description: Beskrivelse
+        event_name: Hendelsesnavn
+        expires_at: Utgår den
+        name: Navn
+        path: Sti
+        starts_at: Starter ved
+        usage_limit: Bruksgrense
       spree/property:
-        name: Name
-        presentation: Presentation
+        name: Navn
+        presentation: Presentasjon
       spree/prototype:
-        name: Name
+        name: Navn
       spree/return_authorization:
-        amount: Amount
+        amount: Mengde
       spree/role:
-        name: Name
+        name: Navn
       spree/state:
-        abbr: Abbreviation
-        name: Name
+        abbr: Forkortelse
+        name: Navn
       spree/tax_category:
-        description: Description
-        name: Name
+        description: Beskrivelse
+        name: Navn
       spree/tax_rate:
-        amount: 
-        included_in_price: 
-        show_rate_in_label: 
+        amount: Mengde
+        included_in_price: Inkluder i pris 
+        show_rate_in_label: Vis sats 
       spree/taxon:
-        name: 
-        permalink: 
-        position: 
+        name: Navn
+        permalink: Permalenke 
+        position: Posisjon
       spree/taxonomy:
-        name: 
+        name: Navn
       spree/user:
-        email: 
-        password: 
+        email: Epost
+        password: Passord
         password_confirmation: 
       spree/variant:
         cost_currency: 
-        cost_price: 
-        depth: 
-        height: Height
-        price: 
-        sku: SKU
-        weight: 
-        width: 
+        cost_price: Kostpris
+        depth: Dybde
+        height: Høyde
+        price: Pris
+        sku: PLU
+        weight: Vekt
+        width: Bredde
       spree/zone:
-        description: 
-        name: Name
-    errors:
-      models:
+        description: Beskrivelse
+        name: Navn
+    errors: Feilmelding
+      models: Modell
         spree/credit_card:
           attributes:
             base:
-              card_expired: 
+              card_expired: Utløpsdato 
     models:
       spree/address:
-        one: Address
-        other: Addresses
+        one: Adresse
+        other: Adresser
       spree/country:
-        one: Country
-        other: Countries
+        one: Land
+        other: Land
       spree/credit_card:
-        one: Credit Card
-        other: Credit Cards
+        one: Kredittkort
+        other: Kredittkort
       spree/inventory_unit:
-        one: Inventory Unit
-        other: Inventory Units
+        one: Lagerenhet
+        other: Lagerenheter
       spree/line_item:
-        one: Line Item
-        other: Line Items
+        one: Varelinje
+        other: Varelinjer
       spree/order:
-        one: Order
-        other: Orders
+        one: Ordre
+        other: Ordrer
       spree/payment:
-        one: Payment
-        other: Payments
+        one: Betaling
+        other: Betalinger
       spree/payment_method: 
       spree/product:
-        one: Product
-        other: Products
+        one: Produkt
+        other: Produkter
       spree/promotion: 
       spree/property:
         one: Property
         other: Properties
       spree/prototype:
         one: Prototype
-        other: Prototypes
+        other: Prototyper
       spree/return_authorization:
-        one: Return Authorization
-        other: Return Authorizations
+        one: Retur autorisasjon
+        other: Retur autorisasjon
       spree/role:
-        one: Roles
-        other: Roles
+        one: Rolle
+        other: Roller
       spree/shipment:
-        one: Shipment
-        other: Shipments
+        one: Forsendelse
+        other: Forsendeleser
       spree/shipping_category:
-        one: Shipping Category
-        other: Shipping Categories
+        one: Forsendelseskategori
+        other: Forsendelseskategorier
       spree/shipping_method: 
       spree/state:
-        one: State
-        other: States
+        one: Fylke
+        other: Fylker
       spree/stock_location: 
       spree/stock_transfer: 
       spree/tax_category:
-        one: Tax Category
-        other: Tax Categories
+        one: Avgiftskategori
+        other: Avgiftskategorier
       spree/tax_rate:
-        one: Tax Rate
-        other: Tax Rates
+        one: Avgiftssats
+        other: Avgiftssatser
       spree/taxon:
         one: Taxon
         other: Taxons
@@ -198,128 +198,128 @@ nb:
         other: Taxonomies
       spree/tracker: 
       spree/user:
-        one: User
-        other: Users
+        one: Bruker
+        other: Brukere
       spree/variant:
         one: Variant
-        other: Variants
+        other: Varianter
       spree/zone:
-        one: Zone
-        other: Zones
+        one: Sone
+        other: Soner
   devise:
     confirmations:
       confirmed: 
       send_instructions: 
     failure:
-      inactive: 
-      invalid: 
-      invalid_token: 
-      locked: 
-      timeout: 
-      unauthenticated: 
-      unconfirmed: 
+      inactive: Inaktiv
+      invalid: Ugyldig
+      invalid_token: Ugyldighetsnøkkel
+      locked: Låst
+      timeout: Tidsavbrudd
+      unauthenticated: Uatorisert
+      unconfirmed: Ubekfreftet
     mailer:
-      confirmation_instructions:
-        subject: 
-      reset_password_instructions:
-        subject: 
+      confirmation_instructions: 
+        subject: Bekreftelsesinstruksjoner
+      reset_password_instructions: 
+        subject: Tilbakestillingsinstruksjoner
       unlock_instructions:
-        subject: 
+        subject: Opplåsningsinstruksjoner
     oauth_callbacks:
-      failure: 
-      success: 
+      failure: Feilet
+      success: Vellykket
     unlocks:
-      send_instructions: 
-      unlocked: 
+      send_instructions: Send opplåsningsinstruksjoner 
+      unlocked: Ulåst
     user_passwords:
-      user:
-        cannot_be_blank: 
-        send_instructions: 
-        updated: 
-    user_registrations:
+      user: 
+        cannot_be_blank: Kan ikke være blank
+        send_instructions: Send passordinstruks
+        updated: Oppdaterd
+    user_registrations: 
       destroyed: 
       inactive_signed_up: 
       signed_up: 
       updated: 
     user_sessions:
-      signed_in: 
-      signed_out: 
+      signed_in: Logget inn
+      signed_out: Logget ut
   errors:
-    messages:
-      already_confirmed: 
-      not_found: 
-      not_locked: 
-      not_saved: 
+    messages: 
+      already_confirmed: Allerede bekreftet
+      not_found: Ikke funnet
+      not_locked: Ikke låst
+      not_saved: Ikke lagret
   spree:
     abbreviation: Fortkortelse
     account: Konto
-    account_updated: Account updated!
-    action: Aksjon
-    actions:
+    account_updated: Konto oppdatert!
+    action: Hendelse
+    actions: Hendelser
       cancel: Avbryt
-      continue: 
+      continue: Fortsett
       create: Opprett
-      destroy: Fjern
-      edit: 
+      destroy: Slett
+      edit: Endre
       list: List opp
       listing: Viser
       new: Ny
-      save: 
+      save: Lagre
       update: Oppdater
-    activate: Activate
-    active: Active
+    activate: Aktiver
+    active: Aktiv
     add: Legg til
-    add_action_of_type: Add action of type
+    add_action_of_type: Legg til hendelsestype
     add_country: Legg til land
-    add_new_header: Add New Header
-    add_new_style: Add New Style
-    add_one: 
+    add_new_header: Legg til nytt hode
+    add_new_style: Legg til ny stil
+    add_one: Legg til en
     add_option_value: Legg til variasjonsverdi
-    add_product: Add Product
+    add_product: Legg til produkt
     add_product_properties: Legg til produktegenskaper
-    add_rule_of_type: Add rule of type
+    add_rule_of_type: Legg til regeltype
     add_state: Legg til tilstand
-    add_stock: 
-    add_stock_management: 
+    add_stock: Legg til lagerbeholdning
+    add_stock_management: Legg til lagerkontroll
     add_to_cart: Legg i handlekurv
-    add_variant: 
-    additional_item: Additional Item Cost
-    address1: 
-    address2: 
+    add_variant: Legg til variant
+    additional_item: Tillegskostnad
+    address1: Adresselinje 1
+    address2: Adresselinje 2
     adjustment: Justering
-    adjustment_amount: 
-    adjustment_successfully_closed: 
-    adjustment_successfully_opened: 
-    adjustment_total: Adjustment Total
-    adjustments: Adjustments
+    adjustment_amount: Justeringsbeløp
+    adjustment_successfully_closed: Justering lukket vellykket
+    adjustment_successfully_opened: Justering vellykket åpnet
+    adjustment_total: Totaljustering
+    adjustments: Justeringer
     admin:
       mail_methods:
         send_testmail: Send Testmail
         testmail:
-          delivery_error: Testmail delivery error
-          delivery_success: Testmail sent successfully
-          error: ! 'Testmail error: %{e}'
+          delivery_error: Testmail leveringsfeil
+          delivery_success: Vellykket sending av testmail.
+          error: ! 'Testmail feilmelding: %{e}'
       tab:
-        configuration: 
-        orders: 
-        overview: 
-        products: 
-        promotions: 
-        reports: 
-        users: 
+        configuration: Konfigurasjon
+        orders: Ordrer
+        overview: Oversikt
+        products: Produkter
+        promotions: Promoteringer
+        reports: Rapporter
+        users: Brukere
     administration: Administrasjon
-    agree_to_privacy_policy: 
-    agree_to_terms_of_service: 
-    all: All
-    all_adjustments_closed: 
-    all_adjustments_opened: 
-    all_departments: All departments
-    allow_ssl_in_development_and_test: Allow SSL to be used when in development and test modes
-    allow_ssl_in_production: Allow SSL to be used in production mode
-    allow_ssl_in_staging: Allow SSL to be used in staging mode
-    already_signed_up_for_analytics: 
-    alt_text: Alternative Text
-    alternative_phone: Alternative Phone
+    agree_to_privacy_policy: Godta personvernsregler
+    agree_to_terms_of_service: Godta bruksregler
+    all: Alle
+    all_adjustments_closed: Alle justeringer lukket
+    all_adjustments_opened: Alle justeringer åpne
+    all_departments: Alle avdelinger
+    allow_ssl_in_development_and_test: Tillat bruk av SSL i utviklings- og testmiljø
+    allow_ssl_in_production: Tillat bruk av SSL i produksjonsmiljø
+    allow_ssl_in_staging: Tillatt bruk av SSL i stagingmiljø
+    already_signed_up_for_analytics: Allerede registrert for Analytics
+    alt_text: Alternativ tekst
+    alternative_phone: Alternativ telefon
     amount: Beløp
     analytics_desc_header_1: 
     analytics_desc_header_2: 
@@ -328,31 +328,31 @@ nb:
     analytics_desc_list_3: 
     analytics_desc_list_4: 
     analytics_trackers: Analytics Trackers
-    and: and
+    and: og
     are_you_sure: Er du sikker
     are_you_sure_delete: Er du sikker på at du vil slette denne?
     associated_adjustment_closed: 
-    attachment_default_style: Attachments Style
-    attachment_default_url: Attachments URL
-    attachment_path: Attachments Path
-    attachment_styles: Paperclip Styles
+    attachment_default_style: Standardstil for vedlegg
+    attachment_default_url: Standard URL for vedlegg
+    attachment_path: Sti for vedlegg
+    attachment_styles: Paperclip stiler
     attachment_url: 
     authorization_failure: Autorisering feilet
-    available_on: Tilgjengelig
+    available_on: Tilgjengelig fra
     back: Tilbake
     back_end: Back End
-    back_to_adjustments_list: Back To Adjustments List
-    back_to_images_list: Back To Images List
+    back_to_adjustments_list: Tilbake til justeringsliste
+    back_to_images_list: Tilbake til bildeliste
     back_to_option_types_list: 
-    back_to_orders_list: 
-    back_to_payment_methods_list: Back To Payment Methods List
-    back_to_payments_list: Back To Payments List
-    back_to_products_list: Back To Products List
-    back_to_promotions_list: Back To Promotions List
+    back_to_orders_list: Tilbake til ordreliste
+    back_to_payment_methods_list: Tilbake til liste over betalingsmetoder
+    back_to_payments_list: Tilbake til liste over betalinger
+    back_to_products_list: Tilbake til produktliste
+    back_to_promotions_list: Tilbake til promoteringsliste
     back_to_properties_list: Back To Products List
     back_to_prototypes_list: Back To Prototypes List
-    back_to_reports_list: Back To Reports List
-    back_to_shipping_categories: Back To Shipping Categories
+    back_to_reports_list: Tilbake til rapportlister
+    back_to_shipping_categories: Tilbake til forsendelseskategori-liste
     back_to_shipping_methods_list: Back To Shipping Methods List
     back_to_states_list: Back To States List
     back_to_stock_locations_list: 
@@ -368,10 +368,10 @@ nb:
     backorders_allowed: 
     balance_due: Balance Due
     bill_address: Fakturaadresse
-    billing: Billing
+    billing: Fakturering
     billing_address: Fakturaadresse
-    both: Both
-    calculator: Calculator
+    both: Begge
+    calculator: Kalkulator
     calculator_settings_warning: If you are changing the calculator type, you must save first before you can edit the calculator settings
     cancel: Avbryt
     cannot_create_payment_without_payment_methods: You cannot create a payment for an order without any payment methods defined.
@@ -381,67 +381,67 @@ nb:
     capture: capture
     card_code: CVV-kode
     card_number: Kortnummer
-    card_type_is: Card type is
+    card_type_is: Korttype er
     cart: Handlekurv
     categories: Kategorier
     category: Kategori
     check_for_spree_alerts: 
     checkout: Til kassen
-    choose_a_customer: 
-    choose_currency: 
+    choose_a_customer: Velg kunde
+    choose_currency: Velg valuta
     choose_dashboard_locale: 
     city: Sted
-    clone: Clone
-    close: 
+    clone: Klon
+    close: Lukk
     close_all_adjustments: 
     code: Code
-    company: 
-    complete: complete
+    company: Firma
+    complete: Fullført
     configuration: Konfigurasjon
     configurations: Konfigurasjoner
-    configure_s3: Configure S3
+    configure_s3: Konfigurer S3
     confirm: Bekreft
-    confirm_delete: Confirm Deletion
+    confirm_delete: Bekreft sletting
     confirm_password: Bekreft passord
     continue: Fortsett
     continue_shopping: Fortsett å handle
     cost_currency: 
-    cost_price: Cost Price
+    cost_price: Kostpris
     could_not_connect_to_jirafe: 
     could_not_create_stock_movement: 
     count_on_hand: 
     countries: 
     country: Land
     country_based: Land
-    country_name: 
-    coupon: Coupon
-    coupon_code: Coupon code
-    coupon_code_already_applied: 
-    coupon_code_applied: The coupon code was successfully applied to your order.
+    country_name: Landnavn 
+    coupon: Rabattkupong
+    coupon_code: Rabattkode
+    coupon_code_already_applied: Rabattkupong er allerede brukt
+    coupon_code_applied: Rabattkupong ble lagt til på ordren
     coupon_code_better_exists: 
-    coupon_code_expired: 
-    coupon_code_max_usage: 
-    coupon_code_not_eligible: 
-    coupon_code_not_found: 
+    coupon_code_expired: Rabattkoden er utgått på dato
+    coupon_code_max_usage: Maksgrensen for rabattkupongen er nådd
+    coupon_code_not_eligible: Rabattkoden er ikke gyldig
+    coupon_code_not_found: Rabattkoden ble ikke funnet
     create: Opprett
     create_a_new_account: Opprett ny konto
-    created_at: 
-    credit: Credit
+    created_at: Opprettet
+    credit: Kreditt
     credit_card: Kredittkort
-    credit_cards: Credit Cards
-    credit_owed: Credit Owed
-    currency: Currency
-    currency_decimal_mark: 
-    currency_settings: Currency Settings
-    currency_symbol_position: Put currency symbol before or after dollar amount?
-    currency_thousands_separator: 
+    credit_cards: Kredittkort
+    credit_owed: Skyldig kreditt
+    currency: Valuta
+    currency_decimal_mark: Valuta kommaplassering
+    currency_settings: Valuttainstillinger
+    currency_symbol_position: Plasser valutasymbol foran eller etter beløp?
+    currency_thousands_separator: Separator for tusenedeler
     current: Nå
     current_promotion_usage: 
     customer: Kunde
-    customer_details: Customer Details
-    customer_details_updated: The customer's details have been updated.
-    customer_search: Customer Search
-    cut: Cut
+    customer_details: Kundedetaljer
+    customer_details_updated: Kundedetaljer
+    customer_search: Kundesøk
+    cut: Klipp up
     dash:
       jirafe:
         app_id: 
@@ -460,45 +460,45 @@ nb:
       js_format: 
     date_range: Datoområde
     default: Default
-    default_meta_description: Default Meta Description
-    default_meta_keywords: Default Meta Keywords
-    default_seo_title: Default Seo Title
-    default_tax: Default Tax
-    default_tax_zone: Default Tax Zone
+    default_meta_description: Standard Meta-beskrivelse
+    default_meta_keywords: Standard Meta-nøkkelord
+    default_seo_title: Standard SEO Tittel
+    default_tax: Standardavgift
+    default_tax_zone: Standard avgiftsnivå
     delete: Slett
-    delivery: Delivery
+    delivery: Levering
     depth: Dybde
     description: Beskrivelse
-    destination: 
+    destination: Destinasjon
     destroy: Fjern
-    discount_amount: Discount Amount
-    dismiss_banner: No. Thanks! I'm not interested, do not display this message again
+    discount_amount: Rabattbeløp
+    dismiss_banner: Nei takk! Ikke vis dette igjen, takk!
     display: Vis
-    display_currency: Display currency
+    display_currency: Vis valutta
     edit: Endre
     editing_option_type: Endre variasjonstype
-    editing_payment_method: Editing Payment Method
+    editing_payment_method: Endre betalingsmetode
     editing_product: Endre produkt
-    editing_promotion: Editing Promotion
+    editing_promotion: Endre promotering
     editing_property: Endre egenskap
     editing_prototype: Endre prototype
     editing_shipping_category: Endre fraktkategori
     editing_shipping_method: Endre leveransemåte
-    editing_state: Endre stat
-    editing_stock_location: 
-    editing_stock_movement: 
-    editing_tax_category: Endre momskategori
-    editing_tax_rate: Editing Tax Rate
+    editing_state: Endre fylke
+    editing_stock_location: Endre lagerlokasjon
+    editing_stock_movement: Endre lagerbeholdning
+    editing_tax_category: Endre avgiftskategori
+    editing_tax_rate: Endre avgiftsnivå
     editing_tracker: Editing Tracker
     editing_user: Endre bruker
     editing_zone: Endre sone
     email: Epost
-    empty: Empty
+    empty: Tom
     empty_cart: Tøm handlekurv
     enable_mail_delivery: Skru på sending av epost
-    end: 
-    ending_in: Ending in
-    environment: Environment
+    end: Avslutt
+    ending_in: Ender om
+    environment: Miljø
     error: feil
     errors:
       messages:
@@ -509,27 +509,27 @@ nb:
       one: 1 error prohibited this record from being saved
       other: ! '%{count} errors prohibited this record from being saved'
     event: Hendelse
-    events:
+    events: Hendelser
       spree:
         cart:
-          add: Add to cart
+          add: Legg til i handlekurv
         checkout:
-          coupon_code_added: Coupon code added
+          coupon_code_added: Rabattkode lagt til
         content:
           visited: Visit static content page
         order:
           contents_changed: Order contents changed
         page_view: Static page viewed
         user:
-          signup: User signup
+          signup: Brukerregistrering
     exceptions:
       count_on_hand_setter: 
     expiration: Utgår
     extension: Utvidelse
     filename: Filnavn
-    fill_in_customer_info: 
-    filter_results: 
-    finalize: Finalize
+    fill_in_customer_info: Fyll ut kundeinformasjon
+    filter_results: Filtrer resultater
+    finalize: Ferdigstill
     first_item: First Item Cost
     first_name: Fornavn
     first_name_begins_with: First Name Begins With
