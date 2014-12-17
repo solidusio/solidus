@@ -547,12 +547,12 @@ nb:
     general_settings: Generelle innstillinger
     google_analytics: Google Analytics
     google_analytics_id: Analytics ID
-    guest_checkout: Guest Checkout
-    guest_user_account: Checkout as a Guest
-    has_no_shipped_units: has no shipped units
+    guest_checkout: Fullfør som gjestebruker
+    guest_user_account: Fullfør som gjestebruker
+    has_no_shipped_units: har ingen sendte enheter
     height: Høyde
     hide_cents: 
-    home: Home
+    home: Hjem
     i18n:
       available_locales: 
       fields: 
@@ -565,18 +565,18 @@ nb:
       supported_locales: 
       this_file_language: Norsk
       translations: 
-    icon: Icon
+    icon: Ikon
     image: Bilde
-    image_settings: Image Settings
-    image_settings_updated: Image Settings successfully updated.
+    image_settings: Bildeinstillinger
+    image_settings_updated: Bildeinstillinger vellykket oppdatert
     image_settings_warning: You will need to regenerate thumbnails if you update the paperclip styles. Use rake paperclip:refresh:thumbnails to do this.
     images: Bilder
-    included_in_price: Included in Price
+    included_in_price: Inkluder i pris
     included_price_validation: cannot be selected unless you have set a Default Tax Zone
     instructions_to_reset_password: ! 'Fill out the form below and instructions to reset your password will be emailed to you:'
-    insufficient_stock: Insufficient stock available, only %{on_hand} remaining
+    insufficient_stock: Manglende varer på lager, kun  %{on_hand} gjenstår
     intercept_email_address: Intercept Email Address
-    intercept_email_instructions: Override email recipient and replace with this address.
+    intercept_email_instructions: Overstyr epostadresse å bruk denne
     internal_name: 
     invalid_payment_provider: 
     invalid_promotion_action: 
@@ -591,55 +591,55 @@ nb:
     item_total: Solgte varer
     item_total_rule:
       operators:
-        gt: greater than
-        gte: greater than or equal to
+        gt: større en
+        gte: større en, eller er lik 
     items_cannot_be_shipped: 
     jirafe: 
     landing_page_rule:
       path: Path
     last_name: Etternavn
-    last_name_begins_with: Last Name Begins With
-    learn_more: Learn More
+    last_name_begins_with: Etternavn begynner med
+    learn_more: Lær mer
     list: Liste
     listing_countries: 
     listing_orders: Ordrer
-    listing_products: Listing Products
+    listing_products: Produkter
     listing_reports: Rapporter
     listing_tax_categories: Momskategorier
     listing_users: Brukere
-    loading: Loading
+    loading: Laster
     locale_changed: Endret språk
     location: 
     lock: 
     logged_in_as: Innlogget som
-    logged_in_succesfully: Logged in successfully
-    logged_out: You have been logged out.
-    login: Login
-    login_as_existing: Log In as Existing Customer
-    login_failed: Login authentication failed.
+    logged_in_succesfully: Innloggin vellykket
+    logged_out: Du har blitt logget ut
+    login: Logg inn
+    login_as_existing: Logg inn som eksisterende bruker
+    login_failed: Autentisering feilet
     login_name: Brukernavn
     logout: Logg ut
-    look_for_similar_items: Look for similar items
-    maestro_or_solo_cards: Maestro/Solo cards
+    look_for_similar_items: Se etter lignende varer
+    maestro_or_solo_cards: Maestro/Solo kort
     mail_method_settings: 
     mail_methods: Mail Methods
-    make_refund: Make refund
+    make_refund: Opprett refusjon
     master_price: Ordinær pris
     match_choices:
-      all: All
-      none: None
+      all: Alle
+      none: Ingen
     max_items: Max Items
     meta_description: Meta Description
     meta_keywords: Meta Keywords
     metadata: Metadata
     minimal_amount: Minimal Amount
-    month: Month
-    more: More
+    month: Måned
+    more: Mer
     move_stock_between_locations: 
     my_account: Min konto
     my_orders: Mine ordrer
     name: Navn
-    name_or_sku: Name or SKU
+    name_or_sku: Navn eller VE
     new: Ny
     new_adjustment: New Adjustment
     new_customer: Ny kunde
@@ -650,13 +650,13 @@ nb:
     new_payment: New Payment
     new_payment_method: New Payment Method
     new_product: Nytt produkt
-    new_promotion: New Promotion
+    new_promotion: Ny promotering
     new_property: Ny egenskap
     new_prototype: Ny prototype
-    new_return_authorization: New Return Authorization
+    new_return_authorization: Ny returautorisasjon
     new_shipping_category: Ny fraktkategori
     new_shipping_method: Ny leveransemåte
-    new_state: Ny stat
+    new_state: Nytt fylke
     new_stock_location: 
     new_stock_movement: 
     new_stock_transfer: 
@@ -673,28 +673,28 @@ nb:
     no_orders_found: 
     no_payment_methods_found: 
     no_pending_payments: 
-    no_products_found: No products found
-    no_promotions_found: 
-    no_resource_found: 
-    no_results: No results
-    no_rules_added: No rules added
-    no_shipping_methods_found: 
-    no_stock_locations_found: 
+    no_products_found: Ingen produkter funnet
+    no_promotions_found: Ingen promoteringer funnet
+    no_resource_found: Ingen resurser funnet
+    no_results: Ingen resultater
+    no_rules_added: Ingen regler satt
+    no_shipping_methods_found: Ingen forsendelsesmetode funnet
+    no_stock_locations_found: Ingen lagerlokasjoner funnet
     no_trackers_found: 
     no_tracking_present: 
     none: Ingen
     normal_amount: Normal Amount
-    not: not
+    not: ikke
     not_available: N/A
     not_enough_stock: 
-    not_found: ! '%{resource} is not found'
+    not_found: ! '%{resource} ble ikke funnet'
     notice_messages:
-      product_cloned: Product has been cloned
-      product_deleted: Product has been deleted
-      product_not_cloned: Product could not be cloned
-      product_not_deleted: Product could not be deleted
-      variant_deleted: Variant has been deleted
-      variant_not_deleted: Variant could not be deleted
+      product_cloned: Produktet ble  kopiert
+      product_deleted: Produktet ble slettet
+      product_not_cloned: Produktet kunne ikke kopieres
+      product_not_deleted: Produktet kunne ikke slettes
+      variant_deleted: Varianten ble slettet
+      variant_not_deleted: Varianten kunne ikke slettes
     on_hand: Tilgjengelig
     open: 
     open_all_adjustments: 
@@ -706,7 +706,7 @@ nb:
     optional: 
     options: Valg
     or: eller
-    or_over_price: ! '%{price} or over'
+    or_over_price: ! '%{price} eller over'
     order: Ordre
     order_adjustments: Order adjustments
     order_details: Ordredetaljer
@@ -714,39 +714,39 @@ nb:
     order_information: 
     order_mailer:
       cancel_email:
-        dear_customer: Dear Customer,
-        instructions: Your order has been CANCELED.  Please retain this cancellation information for your records.
-        order_summary_canceled: Order Summary [CANCELED]
-        subject: Cancellation of Order
+        dear_customer: Kjære kunde,
+        instructions: Din ordre er blit KANSELLERT. Vennligst ta vare på denne kanselleringen for din egen del.
+        order_summary_canceled: Ordresummering [CANCELED]
+        subject: Kansellering av ordre
         subtotal: 
-        total: 
-      confirm_email:
-        dear_customer: Dear Customer,
-        instructions: Please review and retain the following order information for your records.
-        order_summary: Order Summary
-        subject: Order Confirmation
+        total: Totalbeløp
+      confirm_email: Bekreft epost
+        dear_customer: Kjære kunde,
+        instructions: Vennligst se over ordren, og ta vare på denne for din egen del.
+        order_summary: Ordresummering
+        subject: Ordrebekreftelse
         subtotal: 
-        thanks: Thank you for your business.
+        thanks: Takk for at du handlet hos oss.
         total: 
     order_not_found: 
     order_number: Ordrenummer
     order_populator:
-      out_of_stock: 
-      please_enter_reasonable_quantity: 
+      out_of_stock: Ikke på lager
+      please_enter_reasonable_quantity: Vennligst oppgi et fornuftig antall 
     order_processed_successfully: Din ordre har blitt behandlet
     order_state:
-      address: address
-      awaiting_return: awaiting return
-      canceled: canceled
-      cart: cart
-      complete: complete
-      confirm: confirm
-      delivery: delivery
-      payment: payment
-      resumed: resumed
-      returned: returned
-    order_summary: Order Summary
-    order_sure_want_to: Are you sure you want to %{event} this order?
+      address: Adresse
+      awaiting_return: Venter på retur
+      canceled: Kansellert
+      cart: Handlekurv
+      complete: Fullført
+      confirm: Bekreft
+      delivery: Levering
+      payment: Betaling
+      resumed: Gjenopptatt
+      returned: Returnert
+    order_summary: Ordresummering
+    order_sure_want_to: Er du sikker på at du vil %{event} denne ordren?
     order_total: Ordresum
     order_updated: Ordre oppdatert
     orders: Ordrer
@@ -754,63 +754,63 @@ nb:
     overview: Oversikt
     package_from: 
     pagination:
-      next_page: next page &raquo;
-      previous_page: ! '&laquo; previous page'
+      next_page: neste side &raquo;
+      previous_page: ! '&laquo; forrige side'
       truncate: ! '&hellip;'
     password: Passord
-    paste: Paste
+    paste: Lim inn
     path: Sti
     pay: betal
     payment: Betaling
     payment_information: Betalingsinformasjon
-    payment_method: Payment Method
-    payment_method_not_supported: 
-    payment_methods: Payment Methods
-    payment_processing_failed: Payment could not be processed, please check the details you entered
-    payment_processor_choose_banner_text: If you need help choosing a payment processor, please visit
-    payment_processor_choose_link: our payments page
-    payment_state: Payment State
-    payment_states:
+    payment_method: Betalingsmetode
+    payment_method_not_supported: Betalingsmetoden ikke støttet
+    payment_methods: Betalingsmetoder
+    payment_processing_failed: Betalingen kunne ikke gjennomføres, vennligst sjekk at alt stemmer
+    payment_processor_choose_banner_text: Hvis du trenger hjelp med å velge en betalingsprosess, vennligst gå til 
+    payment_processor_choose_link: vår betalingsside
+    payment_state: Betalingstilstand
+    payment_states: 
       balance_due: balance due
-      checkout: checkout
-      completed: completed
-      credit_owed: credit owed
-      failed: failed
-      paid: paid
-      pending: pending
-      processing: processing
-      void: void
-    payment_updated: Payment Updated
+      checkout: fullfør
+      completed: fullført
+      credit_owed: skyldig kreditt
+      failed: feilet
+      paid: betalt
+      pending: avventer
+      processing: prosseserer
+      void: ugyldig
+    payment_updated: Betaling oppdatert
     payments: Betalinger
-    percent: 
-    percent_per_item: Percent Per Item
-    permalink: Permalink
+    percent: Prosent
+    percent_per_item: Prosent per enhet
+    permalink: Permalenke
     phone: Telefon
     place_order: Bekreft ordre
-    please_define_payment_methods: Please define some payment methods first.
-    populate_get_error: Something went wrong. Please try adding the item again.
-    powered_by: Powered by
+    please_define_payment_methods: Vennligst velg betalingsmetode.
+    populate_get_error: Noe gikk galt! Vennligst prøv å legge til produktet på nytt.
+    powered_by: Kjører på
     presentation: Presentasjon
     previous: Forrige
     price: Pris
-    price_range: Price Range
+    price_range: Prisgruppe
     price_sack: Price Sack
     process: Prosess
     product: Produkt
     product_details: Produktdetaljer
-    product_has_no_description: Product has not description
-    product_not_available_in_this_currency: 
+    product_has_no_description: Produkt har ingen beskrivelse
+    product_not_available_in_this_currency: Produktet er ikke tilgjengelig i denne valutaen
     product_properties: Produktegenskaper
     product_rule:
-      choose_products: Choose products
-      label: Order must contain %{select} of these products
-      match_all: all
-      match_any: at least one
+      choose_products: Velg produkt
+      label: Ordren må inneholde %{select} ett av disse produktene
+      match_all: alle
+      match_any: minst ett
       product_source:
-        group: From product group
-        manual: Manually choose
+        group: Fra produktgruppe
+        manual: Velg manuelt
     products: Produkter
-    promotion: Promotion
+    promotion: Promotering
     promotion_action: Promotion Action
     promotion_action_types:
       create_adjustment:
@@ -820,8 +820,8 @@ nb:
         description: Populates the cart with the specified quantity of variant
         name: Create line items
       give_store_credit:
-        description: Gives the user store credit of the amount specified
-        name: Give store credit
+        description: Gir brukeren kredittbeløp tilsvarende det som settes
+        name: Gi kreditt
     promotion_actions: Actions
     promotion_form:
       match_policies:
@@ -830,8 +830,8 @@ nb:
     promotion_rule: Promotion Rule
     promotion_rule_types:
       first_order:
-        description: Must be the customer's first order
-        name: First order
+        description: Må være kundens første ordre
+        name: Første ordre
       item_total:
         description: Order total meets these criteria
         name: Item total
@@ -839,15 +839,15 @@ nb:
         description: Customer must have visited the specified page
         name: Landing Page
       product:
-        description: Order includes specified product(s)
-        name: Product(s)
+        description: Ordren inkluderer spesifike produkt(er)
+        name: Produkt(er)
       user:
-        description: Available only to the specified users
-        name: User
+        description: Kun tilgjengelig for spesifiserte brukere
+        name: Bruker
       user_logged_in:
-        description: Available only to logged in users
-        name: User Logged In
-    promotions: Promotions
+        description: Kun tilgjengelig for innloggede brukere
+        name: Bruker logget inn
+    promotions: Promoteringer
     properties: Egenskaper
     property: Egenskap
     prototype: Prototype
@@ -859,103 +859,103 @@ nb:
     quantity_returned: Quantity Returned
     quantity_shipped: Quantity Shipped
     rate: Nivå
-    reason: Reason
-    receive: receive
+    reason: Begrunnelse
+    receive: motta
     receive_stock: 
-    received: Received
+    received: Motatt
     reference: 
-    refund: Refund
-    register: Register as a New User
-    registration: Registration
+    refund: Refusjon
+    register: Registrer som ny bruker
+    registration: Registrering
     remember_me: Husk meg
     remove: Fjern
-    rename: Rename
+    rename: Gi nytt navn
     reports: Rapporter
     resend: Send på nytt
-    reset_password: Reset my password
+    reset_password: Nullstill passord
     response_code: Responskode
-    resume: fortsett
-    resumed: Fortsatt
+    resume: Gjenoppta
+    resumed: Gjenopptatt
     return: returner
     return_authorization: Return Authorization
     return_authorization_updated: Return authorization updated
     return_authorizations: Return Authorizations
     return_quantity: Return Quantity
     returned: Returnert
-    review: Review
+    review: Omtale
     rma_credit: RMA Credit
     rma_number: RMA Number
     rma_value: RMA Value
     roles: Roller
-    rules: Rules
+    rules: Regler
     s3_access_key: Access Key
     s3_bucket: Bucket
     s3_headers: S3 Headers
     s3_protocol: S3 Protocol
     s3_secret: Secret Key
     sales_total: Brutto omsetning
-    sales_total_description: Sales Total For All Orders
+    sales_total_description: Total omsetning, aller ordrer
     sales_totals: 
-    save_and_continue: Save and Continue
-    say_no: 'No'
-    say_yes: 'Yes'
-    scope: Scope
+    save_and_continue: Lagre og fortsett
+    say_no: 'Nei'
+    say_yes: 'Ja'
+    scope: Rekkevidde
     search: Søk
-    search_results: Search results for '%{keywords}'
-    searching: Searching
+    search_results: Søkeresultat for '%{keywords}'
+    searching: Søker
     secure_connection_type: Kryptert forbindelse
-    security_settings: Security Settings
+    security_settings: Sikkerhetsinstillinger
     select: Velg
     select_from_prototype: Velg fra prototype
     select_stock: 
     send_copy_of_all_mails_to: Send kopi av all epost til
     send_mails_as: Send epost som
     server: Server
-    server_error: The server returned an error
-    settings: Settings
+    server_error: Serveren returnerte en feilmelding
+    settings: Innstillinger
     ship: send
     ship_address: Leveringsadresse
     ship_total: 
     shipment: Leveranse
-    shipment_inc_vat: Shipment including VAT
+    shipment_inc_vat: Forsendelsen inkluderert MVA
     shipment_mailer:
       shipped_email:
-        dear_customer: Dear Customer,
-        instructions: Your order has been shipped
-        shipment_summary: Shipment Summary
-        subject: Shipment Notification
-        thanks: Thank you for your business.
-        track_information: ! 'Tracking Information: %{tracking}'
-        track_link: 
+        dear_customer: Kjære kunde,
+        instructions: Din ordre er nå sendt
+        shipment_summary: Forsendelsoppsummering
+        subject: Forsendelsesinformasjon
+        thanks: Takk for handelen.
+        track_information: ! 'Sporingsinformasjon: %{tracking}'
+        track_link: Sporingslenke:
     shipment_state: Shipment State
     shipment_states:
-      backorder: backorder
-      partial: partial
-      pending: pending
-      ready: ready
-      shipped: shipped
-    shipments: Shipments
+      backorder: Resteordre
+      partial: dellevert
+      pending: avventer
+      ready: klar
+      shipped: sendt
+    shipments: Forsendelser
     shipped: Sendt
     shipping: Frakt
     shipping_address: Leveringsadresse
     shipping_categories: Fraktkategorier
-    shipping_category: Shipping Category
-    shipping_flat_rate_per_item: 
-    shipping_flat_rate_per_order: 
+    shipping_category: Fraktkatergori
+    shipping_flat_rate_per_item: Fast forsendelsespris per enhet
+    shipping_flat_rate_per_order: Fast forsendelsespris per ordre
     shipping_flexible_rate: 
-    shipping_instructions: Shipping Instructions
+    shipping_instructions: Forsendelsesinstrukser
     shipping_method: Leveransemåte
     shipping_methods: Leveransemåter
     shipping_price_sack: 
-    shop_by_taxonomy: Shop by %{taxonomy}
+    shop_by_taxonomy: Handle etter %{taxonomy}
     shopping_cart: Handlekurv
-    show: Show
-    show_active: Show Active
+    show: Vis
+    show_active: Show Aktive
     show_deleted: Vis slettede
     show_only_complete_orders: Vis bare ferdige ordrer
     show_rate_in_label: 
-    site_name: Site Name
-    site_url: Site URL
+    site_name: Sidenavn
+    site_url: Sideadresse (URL)
     sku: Varenummer
     smtp: SMTP
     smtp_authentication_type: SMTP autentisering
@@ -963,21 +963,21 @@ nb:
     smtp_mail_host: SMTP server
     smtp_password: SMTP passord
     smtp_port: SMTP portnummer
-    smtp_send_all_emails_as_from_following_address: Send all mails as from the following address.
-    smtp_send_copy_to_this_addresses: Sends a copy of all outgoing mails to this address. For multiple addresses, separate with commas.
+    smtp_send_all_emails_as_from_following_address: Send alle utgående eposter fra denne adressen.
+    smtp_send_copy_to_this_addresses: Sender en kopi av alle utgående eposter til følgende adresser, for flere adresser, separer med komma.
     smtp_username: SMTP brukernavn
     source: 
     special_instructions: Special Instructions
     split: 
     spree/order:
       coupon_code: 
-    spree_gateway_error_flash_for_checkout: There was a problem with your payment information. Please check your information and try again.
+    spree_gateway_error_flash_for_checkout: Det er noe galt med betalingsinformasjonen din. Vennligst se over, å prøv igjen.
     start: Start
-    start_date: Valid from
-    state: Stat
+    start_date: Gyldig fra
+    state: Fylke
     state_based: Stater
-    states: Stater
-    states_required: 
+    states: Fylker
+    states_required: Fylke er påkrevd 
     status: Status
     stock_location: 
     stock_location_info: 
@@ -995,8 +995,8 @@ nb:
     street_address_2: Gateadresse (forts.)
     subtotal: Sum
     subtract: Trekk fra
-    successfully_created: ! '%{resource} has been successfully created!'
-    successfully_removed: ! '%{resource} has been successfully removed!'
+    successfully_created: ! '%{resource} ble vellykket opprettet!'
+    successfully_removed: ! '%{resource} ble vellykket fjernet!'
     successfully_signed_up_for_analytics: 
     successfully_updated: ! '%{resource} has been successfully updated!'
     tax: Moms
@@ -1018,20 +1018,20 @@ nb:
     test: Test
     test_mailer:
       test_email:
-        greeting: Congratulations!
-        message: If you have received this email, then your email settings are correct.
+        greeting: Gratulerer!
+        message: Hvis du kan lese denne eposten har du satt opp konfigurasjonen korrekt.
         subject: Testmail
-    test_mode: Test Mode
+    test_mode: Testmodus
     thank_you_for_your_order: Takk for bestillingen. Vennligst skriv ut og ta vare på denne bekreftelsen.
     there_are_no_items_for_this_order: 
-    there_were_problems_with_the_following_fields: There were problems with the following fields
-    thumbnail: Thumbnail
+    there_were_problems_with_the_following_fields: Det er feil i følgende felter
+    thumbnail: Minibilde
     time: 
-    to_add_variants_you_must_first_define: To add variants, you must first define
+    to_add_variants_you_must_first_define: For og legge til varians, må du først definere
     total: Total
     tracking: Sporing
-    tracking_number: 
-    tracking_url: 
+    tracking_number: Sporingsnummer 
+    tracking_url: Spooringslenke
     tracking_url_placeholder: 
     transfer_from_location: 
     transfer_stock: 
@@ -1039,28 +1039,28 @@ nb:
     tree: Tre
     type: Type
     type_to_search: Type to search
-    unable_to_connect_to_gateway: Unable to connect to gateway.
+    unable_to_connect_to_gateway: Kan ikke koble til gateway.
     under_price: Under %{price}
-    unlock: 
-    unrecognized_card_type: Unrecognized card type
-    unshippable_items: 
+    unlock: Lås opp
+    unrecognized_card_type: Ukjent korttype
+    unshippable_items: Enhet kan ikke sendes
     update: Oppdater
-    updating: Updating
-    usage_limit: Usage Limit
+    updating: Oppdaterer
+    usage_limit: Bruksgrense
     use_billing_address: Bruk fakturaadressen
-    use_new_cc: Use a new card
-    use_s3: Use Amazon S3 For Images
+    use_new_cc: Bruk et annet kort
+    use_s3: Bruk Amazon S3 for bilder
     user: Bruker
     user_rule:
-      choose_users: Choose users
+      choose_users: Velg bruker
     users: Brukere
     validation:
       cannot_be_less_than_shipped_units: cannot be less than the number of shipped units.
       cannot_destory_line_item_as_inventory_units_have_shipped: Cannot destory line item as some inventory units have shipped.
       exceeds_available_stock: 
-      is_too_large: is too large -- stock on hand cannot cover requested quantity!
-      must_be_int: must be an integer
-      must_be_non_negative: must be a non-negative value
+      is_too_large: for stort -- Varebeholdning kan ikke dekke forespurt antall!
+      must_be_int: må være et heltall
+      must_be_non_negative: må være en ikke-negativ verdi
     value: Verdi
     variant: Variant
     variant_placeholder: 
@@ -1072,9 +1072,9 @@ nb:
     what_is_this: Hva er dette?
     width: Bredde
     year: Year
-    you_have_no_orders_yet: You have no orders yet.
+    you_have_no_orders_yet: Du har ingen ordrer ennå.
     your_cart_is_empty: Din handlekurv er tom
-    your_order_is_empty_add_product: 
+    your_order_is_empty_add_product: Handlekurven din er tom, legg til et produkt
     zip: Postnummer
     zipcode: 
     zone: Sone
