@@ -26,6 +26,7 @@ describe "New Order" do
   it "completes new order succesfully withous using the cart", js: true do
     select2_search product.name, :from => Spree.t(:name_or_sku)
     click_icon :plus
+    wait_for_ajax
     click_on "Customer Details"
 
     within "#select-customer" do

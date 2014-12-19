@@ -152,6 +152,8 @@ adjustShipmentItems = function(shipment_number, variant_id, quantity){
         data: { variant_id: variant_id, quantity: new_quantity }
       }).done(function( msg ) {
         Spree.advanceOrder();
+      }).fail(function(msg) {
+        alert(msg.responseJSON.message)
       });
     }
 }
