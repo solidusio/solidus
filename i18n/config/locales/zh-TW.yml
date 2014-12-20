@@ -2,1057 +2,1302 @@ zh-TW:
   activerecord:
     attributes:
       spree/address:
-        address1: 地址
-        address2: 地址 (接續.)
-        city: 城市
-        country: 國家
-        firstname: 名
-        lastname: 姓
-        phone: 電話
-        state: 省/州
-        zipcode: 郵遞區號
+        address1: "地址"
+        address2: "地址 (接續.)"
+        city: "城市"
+        country: "國家"
+        firstname: "名"
+        lastname: "姓"
+        phone: "電話"
+        state: "省/州"
+        zipcode: "郵遞區號"
+      spree/calculator/tiered_flat_rate:
+        preferred_base_amount:
+        preferred_tiers:
+      spree/calculator/tiered_percent:
+        preferred_base_percent:
+        preferred_tiers:
       spree/country:
         iso: ISO
         iso3: ISO3
         iso_name: ISO 名稱
-        name: 名稱
+        name: "名稱"
         numcode: ISO 編碼
       spree/credit_card:
-        base: 
-        cc_type: 信用卡類型
-        month: 月份
-        number: 卡號
-        verification_value: 驗證碼
-        year: 年份
+        base:
+        cc_type: "信用卡類型"
+        month: "月份"
+        name:
+        number: "卡號"
+        verification_value: "驗證碼"
+        year: "年份"
       spree/inventory_unit:
-        state: 狀態
+        state: "狀態"
       spree/line_item:
-        price: 價格
-        quantity: 數量
+        price: "價格"
+        quantity: "數量"
       spree/option_type:
-        name: 名稱
-        presentation: 描述
+        name: "名稱"
+        presentation: "描述"
       spree/order:
-        checkout_complete: 完成結帳
-        completed_at: 結帳日期
-        coupon_code: 優惠代碼
-        created_at: 訂單日期
-        email: 電子信箱
+        checkout_complete: "完成結帳"
+        completed_at: "結帳日期"
+        considered_risky:
+        coupon_code: "優惠代碼"
+        created_at: "訂單日期"
+        email: "電子信箱"
         ip_address: IP 位址
-        item_total: 項目總計
-        number: 訂單號碼
-        payment_state: 付款狀態
-        shipment_state: 物流狀態
-        special_instructions: 特別說明
-        state: 狀態
-        total: 總計
+        item_total: "項目總計"
+        number: "訂單號碼"
+        payment_state: "付款狀態"
+        shipment_state: "物流狀態"
+        special_instructions: "特別說明"
+        state: "狀態"
+        total: "總計"
       spree/order/bill_address:
-        address1: 帳單地址
-        city: 城市
-        firstname: 名
-        lastname: 姓
-        phone: 電話
-        state: 州/省
-        zipcode: 郵遞區號
+        address1: "帳單地址"
+        city: "城市"
+        firstname: "名"
+        lastname: "姓"
+        phone: "電話"
+        state: "州/省"
+        zipcode: "郵遞區號"
       spree/order/ship_address:
-        address1: 送貨地址
-        city: 城市
-        firstname: 名
-        lastname: 姓
-        phone: 電話
-        state: 州/省
-        zipcode: 郵遞區號
+        address1: "送貨地址"
+        city: "城市"
+        firstname: "名"
+        lastname: "姓"
+        phone: "電話"
+        state: "州/省"
+        zipcode: "郵遞區號"
       spree/payment:
-        amount: 金額
+        amount: "金額"
       spree/payment_method:
-        name: 名稱
+        name: "名稱"
       spree/product:
-        available_on: 上架日期
-        cost_currency: 成本幣別
-        cost_price: 成本
-        description: 描述
-        master_price: 預設價格
-        name: 名稱
-        on_hand: 庫存
-        shipping_category: 運送分類
-        tax_category: 稅金分類
+        available_on: "上架日期"
+        cost_currency: "成本幣別"
+        cost_price: "成本"
+        description: "描述"
+        master_price: "預設價格"
+        name: "名稱"
+        on_hand: "庫存"
+        shipping_category: "運送分類"
+        tax_category: "稅金分類"
       spree/promotion:
-        advertise: 廣告
-        code: 編號
-        description: 描述
-        event_name: 活動名稱
-        expires_at: 有效日期
-        name: 名稱
-        path: 路徑
-        starts_at: 起始日期
-        usage_limit: 使用次數限制
+        advertise: "廣告"
+        code: "編號"
+        description: "描述"
+        event_name: "活動名稱"
+        expires_at: "有效日期"
+        name: "名稱"
+        path: "路徑"
+        starts_at: "起始日期"
+        usage_limit: "使用次數限制"
       spree/promotion_category:
-        one: 促銷分類
-        other: 促銷分類
+        name:
       spree/property:
-        name: 名稱
-        presentation: 描述
+        name: "名稱"
+        presentation: "描述"
       spree/prototype:
-        name: 名稱
+        name: "名稱"
       spree/return_authorization:
-        amount: 金額
+        amount: "金額"
       spree/role:
-        name: 名稱
+        name: "名稱"
       spree/state:
-        abbr: 縮寫
-        name: 名稱
+        abbr: "縮寫"
+        name: "名稱"
+      spree/state_change:
+        state_changes:
+        state_from:
+        state_to:
+        timestamp:
+        type:
+        updated:
+        user:
+      spree/store:
+        mail_from_address:
+        meta_description:
+        meta_keywords:
+        name:
+        seo_title:
+        url:
       spree/tax_category:
-        description: 描述
-        name: 名稱
+        description: "描述"
+        name: "名稱"
       spree/tax_rate:
-        amount: 稅率
-        included_in_price: 包含在售價中
-        show_rate_in_label: 顯示稅率
+        amount: "稅率"
+        included_in_price: "包含在售價中"
+        show_rate_in_label: "顯示稅率"
       spree/taxon:
-        name: 名稱
-        permalink: 永久連結
-        position: 位置
+        name: "名稱"
+        permalink: "永久連結"
+        position: "位置"
       spree/taxonomy:
-        name: 名稱
+        name: "名稱"
       spree/user:
         email: Email
-        password: 密碼
-        password_confirmation: 確認密碼
+        password: "密碼"
+        password_confirmation: "確認密碼"
       spree/variant:
-        cost_currency: 成本幣別
-        cost_price: 成本價
-        depth: 長/深
-        height: 高度
-        price: 單價
-        sku: 條碼
-        weight: 重量
-        width: 寬
+        cost_currency: "成本幣別"
+        cost_price: "成本價"
+        depth: "長/深"
+        height: "高度"
+        price: "單價"
+        sku: "條碼"
+        weight: "重量"
+        width: "寬"
       spree/zone:
-        description: 描述
-        name: 名稱
+        description: "描述"
+        name: "名稱"
     errors:
       models:
+        spree/calculator/tiered_flat_rate:
+          attributes:
+            base:
+              keys_should_be_positive_number:
+            preferred_tiers:
+              should_be_hash:
+        spree/calculator/tiered_percent:
+          attributes:
+            base:
+              keys_should_be_positive_number:
+              values_should_be_percent:
+            preferred_tiers:
+              should_be_hash:
+        spree/classification:
+          attributes:
+            taxon_id:
+              already_linked:
         spree/credit_card:
           attributes:
             base:
-              card_expired: 信用卡已失效
+              card_expired: "信用卡已失效"
+              expiry_invalid:
+        spree/line_item:
+          attributes:
+            currency:
+              must_match_order_currency:
+        spree/refund:
+          attributes:
+            amount:
+              greater_than_allowed:
+        spree/reimbursement:
+          attributes:
+            base:
+              return_items_order_id_does_not_match:
+        spree/return_item:
+          attributes:
+            inventory_unit:
+              other_completed_return_item_exists:
+            reimbursement:
+              cannot_be_associated_unless_accepted:
+        spree/store:
+          attributes:
+            base:
+              cannot_destroy_default_store:
     models:
-      spree/address: 地址
-      spree/country: 國家
-      spree/credit_card: 信用卡
-      spree/inventory_unit: 庫存單位
+      spree/address: "地址"
+      spree/country: "國家"
+      spree/credit_card: "信用卡"
+      spree/customer_return:
+      spree/inventory_unit: "庫存單位"
       spree/line_item:
-        one: 單項
-        other: 單項
-      spree/order: 訂單
-      spree/payment: 付款
-      spree/payment_method: 
-      spree/product: 產品
-      spree/promotion: 促銷
-      spree/property: 屬性
-      spree/prototype: 原型
+        one: "單項"
+        other: "單項"
+      spree/option_type:
+      spree/option_value:
+      spree/order: "訂單"
+      spree/payment: "付款"
+      spree/payment_method:
+      spree/product: "產品"
+      spree/promotion: "促銷"
+      spree/promotion_category:
+      spree/property: "屬性"
+      spree/prototype: "原型"
+      spree/refund_reason:
+      spree/reimbursement:
+      spree/reimbursement_type:
       spree/return_authorization:
-        one: 返回授權
-        other: 返回授權
-      spree/role: 角色
-      spree/shipment: 貨運
-      spree/shipping_category: 貨運類別
-      spree/shipping_method: 
-      spree/state: 州/省
-      spree/stock_location: 
-      spree/stock_transfer: 
-      spree/tax_category: 稅金類別
-      spree/tax_rate: 稅率
-      spree/taxon: 分類
-      spree/taxonomy: 分類
-      spree/tracker: 
-      spree/user: 使用者
-      spree/variant: 型號
-      spree/zone: 區域
+        one: "返回授權"
+        other: "返回授權"
+      spree/return_authorization_reason:
+      spree/role: "角色"
+      spree/shipment: "貨運"
+      spree/shipping_category: "貨運類別"
+      spree/shipping_method:
+      spree/state: "州/省"
+      spree/state_change:
+      spree/stock_location:
+      spree/stock_movement:
+      spree/stock_transfer:
+      spree/tax_category: "稅金類別"
+      spree/tax_rate: "稅率"
+      spree/taxon: "分類"
+      spree/taxonomy: "分類"
+      spree/tracker:
+      spree/user: "使用者"
+      spree/variant: "型號"
+      spree/zone: "區域"
   devise:
     confirmations:
-      confirmed: 您的帳號已驗證成功. 現已登入.
-      send_instructions: 您將在幾分鐘內收到一封說明如何驗證帳號的電子郵件.
+      confirmed: "您的帳號已驗證成功. 現已登入."
+      send_instructions: "您將在幾分鐘內收到一封說明如何驗證帳號的電子郵件."
     failure:
-      inactive: 您的帳號尚未啓用.
-      invalid: 錯誤的帳號或者密碼.
-      invalid_token: 不正確的認證辨識碼.
-      locked: 您的帳號已被鎖定.
-      timeout: 您的連線已過期, 請重新登入.
-      unauthenticated: 您必須先登入或者註冊.
-      unconfirmed: 您必須先驗證帳號才能繼續.
+      inactive: "您的帳號尚未啓用."
+      invalid: "錯誤的帳號或者密碼."
+      invalid_token: "不正確的認證辨識碼."
+      locked: "您的帳號已被鎖定."
+      timeout: "您的連線已過期, 請重新登入."
+      unauthenticated: "您必須先登入或者註冊."
+      unconfirmed: "您必須先驗證帳號才能繼續."
     mailer:
       confirmation_instructions:
-        subject: 驗證說明
+        subject: "驗證說明"
       reset_password_instructions:
-        subject: 重置密碼說明
+        subject: "重置密碼說明"
       unlock_instructions:
-        subject: 帳號解鎖說明
+        subject: "帳號解鎖說明"
     oauth_callbacks:
-      failure: 由於"%{reason}", 您無法從%{kind} 獲得授權.
-      success: 成功從%{kind} 帳號取得授權.
+      failure: "由於%{reason}, 您無法從%{kind} 獲得授權."
+      success: "成功從%{kind} 帳號取得授權."
     unlocks:
-      send_instructions: 您將在數分鐘內收到一封說明如何解鎖帳號的電子郵件.
-      unlocked: 您的帳號已成功解鎖. 現已登入.
+      send_instructions: "您將在數分鐘內收到一封說明如何解鎖帳號的電子郵件."
+      unlocked: "您的帳號已成功解鎖. 現已登入."
     user_passwords:
       user:
-        cannot_be_blank: 密碼不能空白.
-        send_instructions: 您將在數分鐘內收到一封說明如何重置密碼的電子郵件.
-        updated: 密碼變更成功, 現已登入.
+        cannot_be_blank: "密碼不能空白."
+        send_instructions: "您將在數分鐘內收到一封說明如何重置密碼的電子郵件."
+        updated: "密碼變更成功, 現已登入."
     user_registrations:
-      destroyed: 再會! 您的帳號已註銷, 希望您再度造訪.
-      inactive_signed_up: 您已註冊成功. 但由於您的帳號%{reason}, 故無法登入.
-      signed_up: 歡迎! 您已註冊成功.
-      updated: 您的帳號已更新成功.
+      destroyed: "再會! 您的帳號已註銷, 希望您再度造訪."
+      inactive_signed_up: "您已註冊成功. 但由於您的帳號%{reason}, 故無法登入."
+      signed_up: "歡迎! 您已註冊成功."
+      updated: "您的帳號已更新成功."
     user_sessions:
-      signed_in: 登入成功.
-      signed_out: 登出成功.
+      signed_in: "登入成功."
+      signed_out: "登出成功."
   errors:
     messages:
-      already_confirmed: 已驗證
-      not_found: 找不到
-      not_locked: 未鎖定
-      not_saved: 在儲存%{resource}時遭遇%{count} 個錯誤
+      already_confirmed: "已驗證"
+      not_found: "找不到"
+      not_locked: "未鎖定"
+      not_saved: "在儲存%{resource}時遭遇%{count} 個錯誤"
   spree:
-    abbreviation: 縮寫
-    account: 帳戶
-    account_updated: 帳戶已更新
-    action: 操作
+    abbreviation: "縮寫"
+    accept:
+    acceptance_errors:
+    acceptance_status:
+    accepted:
+    account: "帳戶"
+    account_updated: "帳戶已更新"
+    action: "操作"
     actions:
-      cancel: 取消
-      continue: 繼續
-      create: 建立
-      destroy: 刪除
-      edit: 編輯
-      list: 列表
-      listing: 列出中
-      new: 新增
-      save: 儲存
-      update: 更新
-    activate: 啓用
-    active: 啟動
-    add: 增加
-    add_action_of_type: 增加促銷優惠
-    add_country: 增加國家
-    add_new_header: 增加新 Header
-    add_new_style: 增加新樣式
-    add_one: 新增
-    add_option_value: 增加選項
-    add_product: 增加商品
-    add_product_properties: 增加商品屬性
-    add_rule_of_type: 增加條件
-    add_state: 增加 州,省,日本県,台灣縣市
-    add_stock: 新增庫存
-    add_stock_management: 新增庫存管理
-    add_to_cart: 加到購物車
-    add_variant: 新增型號
-    additional_item: 額外商品花費
-    address1: 地址
-    address2: 地址 (接續)
-    adjustment: 其他項目
-    adjustment_amount: 金額
-    adjustment_successfully_closed: 其他項目已成功停用!
-    adjustment_successfully_opened: 其他項目已成功啓用!
-    adjustment_total: 其他項目總計
-    adjustments: 其他項目
+      cancel: "取消"
+      continue: "繼續"
+      create: "建立"
+      destroy: "刪除"
+      edit: "編輯"
+      list: "列表"
+      listing: "列出中"
+      new: "新增"
+      refund:
+      save: "儲存"
+      update: "更新"
+    activate: "啓用"
+    active: "啟動"
+    add: "增加"
+    add_action_of_type: "增加促銷優惠"
+    add_country: "增加國家"
+    add_coupon_code:
+    add_new_header: "增加新 Header"
+    add_new_style: "增加新樣式"
+    add_one: "新增"
+    add_option_value: "增加選項"
+    add_product: "增加商品"
+    add_product_properties: "增加商品屬性"
+    add_rule_of_type: "增加條件"
+    add_state: "增加 州,省,日本県,台灣縣市"
+    add_stock: "新增庫存"
+    add_stock_management: "新增庫存管理"
+    add_to_cart: "加到購物車"
+    add_variant: "新增型號"
+    additional_item: "額外商品花費"
+    address1: "地址"
+    address2: "地址 (接續)"
+    adjustable:
+    adjustment: "其他項目"
+    adjustment_amount: "金額"
+    adjustment_successfully_closed: "其他項目已成功停用!"
+    adjustment_successfully_opened: "其他項目已成功啓用!"
+    adjustment_total: "其他項目總計"
+    adjustments: "其他項目"
     admin:
-      mail_methods:
-        send_testmail: 寄送測試郵件
-        testmail:
-          delivery_error: 測試郵件遞送錯誤
-          delivery_success: 測試郵件寄送成功
-          error: ! '測試郵件錯誤: %{e}'
       tab:
-        configuration: 設定
-        orders: 訂單
-        overview: 總覽
-        products: 產品
-        promotions: 宣傳
-        reports: 報表
-        users: 使用者
-    administration: 管理介面
-    agree_to_privacy_policy: 同意隱私條款
-    agree_to_terms_of_service: 同意服務條款
-    all: 全部
-    all_adjustments_closed: 所有調整項目已成功停用!
-    all_adjustments_opened: 所有調整項目已成功啓用!
-    all_departments: 所有部門
-    allow_ssl_in_development_and_test: 允許在 Development / Test 模式下使用SSL
-    allow_ssl_in_production: 允許在 Production 模式下使用SSL
-    allow_ssl_in_staging: 允許在 Staging 模式下使用SSL
-    already_signed_up_for_analytics: 您已註冊 Spree Analytics
-    alt_text: 說明文字
-    alternative_phone: 額外電話
-    amount: 金額
+        configuration: "設定"
+        option_types:
+        orders: "訂單"
+        overview: "總覽"
+        products: "產品"
+        promotions: "宣傳"
+        properties:
+        prototypes:
+        reports: "報表"
+        taxonomies:
+        taxons:
+        users: "使用者"
+      user:
+        account:
+        addresses:
+        items:
+        items_purchased:
+        order_history:
+        order_num:
+        orders:
+        user_information:
+    administration: "管理介面"
+    advertise:
+    agree_to_privacy_policy: "同意隱私條款"
+    agree_to_terms_of_service: "同意服務條款"
+    all: "全部"
+    all_adjustments_closed: "所有調整項目已成功停用!"
+    all_adjustments_opened: "所有調整項目已成功啓用!"
+    all_departments: "所有部門"
+    all_items_have_been_returned:
+    allow_ssl_in_development_and_test: "允許在 Development / Test 模式下使用SSL"
+    allow_ssl_in_production: "允許在 Production 模式下使用SSL"
+    allow_ssl_in_staging: "允許在 Staging 模式下使用SSL"
+    already_signed_up_for_analytics: "您已註冊 Spree Analytics"
+    alt_text: "說明文字"
+    alternative_phone: "額外電話"
+    amount: "金額"
     analytics_desc_header_1: Spree Analytics
-    analytics_desc_header_2: 整合線上分析至您的Spree 控制台
-    analytics_desc_list_1: 
-    analytics_desc_list_2: 只需一個免費的Spree 帳號便能啓用
-    analytics_desc_list_3: 完全不需要插入程式碼
-    analytics_desc_list_4: 完全免費!
-    analytics_trackers: 分析追蹤
-    and: 以及
-    approve: 核准
-    approver: 核准者
-    approved_at: 核准日期
-    are_you_sure: 你確定嗎?
-    are_you_sure_delete: 你確定要刪除?
-    associated_adjustment_closed: 這個關聯的調整項目已經停用, 而且不會被重複計算, 您要啓用它嗎?
-    attachment_default_style: 附件樣式
-    attachment_default_url: 附件網址
-    attachment_path: 附件路徑
-    attachment_styles: Paperclip 式樣
-    attachment_url: 附件網址
-    authorization_failure: 認証失敗
-    available_on: 上架時間
-    back: 返回
-    back_end: 後端
-    backordered: 待補
-    back_to_adjustments_list: 返回調整項目列表
-    back_to_images_list: 返回圖片列表
-    back_to_option_types_list: 返回選項類別列表
-    back_to_orders_list: 返回訂單列表
-    back_to_payment_methods_list: 返回付費方式列表
-    back_to_payments_list: 返回付費列表
-    back_to_products_list: 返回產品列表
-    back_to_promotions_list: 返回優惠推廣列表
-    back_to_properties_list: 返回屬性列表
-    back_to_prototypes_list: 返回原型列表
-    back_to_reports_list: 返回報告列表
-    back_to_shipping_categories: 返回貨運分類
-    back_to_shipping_methods_list: 返回貨運方式列表
-    back_to_states_list: 返回州/省列表
-    back_to_stock_locations_list: 返回庫存位置列表
-    back_to_stock_movements_list: 返回庫存動向列表
-    back_to_stock_transfers_list: 返回庫存轉移列表
-    back_to_store: 回商店
-    back_to_tax_categories_list: 返回稅金分類列表
-    back_to_taxonomies_list: 返回分類列表
-    back_to_trackers_list: 返回追蹤者列表
-    back_to_users_list: 返回使用者列表
-    back_to_zones_list: 返回區域列表
-    backorderable: 可預購
-    backorders_allowed: 已允許預購
-    balance_due: 未入帳
-    bill_address: 帳單地址
-    billing: 帳單
-    billing_address: 帳單地址
-    both: 全部
-    calculator: 計算規則
-    calculator_settings_warning: 如果你更改了計算規則, 需要先儲存才能進行修改
-    cancel: 取消
-    cannot_create_payment_without_payment_methods: 你無法在未定義付費方法前產生訂單的付費資訊.
-    cannot_create_returns: 無法建立退貨資訊, 因為這筆訂單不需要配送
-    cannot_perform_operation: 無法執行要求的運算
-    cannot_set_shipping_method_without_address: 在消費者細節沒提供前, 無法設定運送方法
-    capture: 入帳完成付款
-    card_code: 信用卡驗證碼
-    card_number: 信用卡卡號
-    card_type_is: 信用卡類型
-    cart: 購物車
-    categories: 分類
-    category: 分類
-    check_for_spree_alerts: 檢查 Spree的警告
-    checkout: 結帳
-    choose_a_customer: 選擇一個消費者
-    choose_currency: 選擇幣別
-    choose_dashboard_locale: 選擇控制台語系
-    city: 城市
-    clone: 複製
-    close: 關閉
-    close_all_adjustments: 停用所有調整項目
-    code: 編碼
-    company: 公司
-    complete: 完成
-    configuration: 偏好設定
-    configurations: 偏好設定
-    configure_s3: 設定 S3
-    confirm: 確認
-    confirm_delete: 確認刪除
-    confirm_password: 確認密碼
-    continue: 繼續
-    continue_shopping: 繼續購物
-    cost_currency: 成本貨幣
-    cost_price: 成本價格
-    could_not_connect_to_jirafe: 無法從 Jirafe同步資料, 稍候將自動重新嘗試.
-    could_not_create_stock_movement: 在儲存庫存動向時發生了錯誤, 請再試一次.
-    count_on_hand: 庫存數量
-    countries: 國家
-    country: 國家
-    country_based: 依據國家
-    country_name: 名稱
-    coupon: 促銷代碼
-    coupon_code: 促銷代碼
-    coupon_code_already_applied: 優惠代碼已經被使用在這個訂單
-    coupon_code_applied: 優惠代碼已經成功使用在您的訂單.
-    coupon_code_better_exists: 上一組優惠代碼比較划算
-    coupon_code_expired: 優惠代碼已過期
-    coupon_code_max_usage: 已達優惠代碼使用上限
-    coupon_code_not_eligible: 此優惠代碼不適用於本訂單
-    coupon_code_not_found: 您輸入的優惠代碼不存在. 請再試一次.
-    create: 建立
-    create_a_new_account: 建立新帳號
-    created_at: 建立於
-    credit: 額度
-    credit_card: 信用卡
-    credit_cards: 信用卡
-    credit_owed: 負債
-    currency: 幣別
-    currency_decimal_mark: 幣別小數點符號
-    currency_settings: 幣別設定
-    currency_symbol_position: 幣別符號在金額數字前還是後?
-    currency_thousands_separator: 幣別千分位分隔符號
-    current: 目前的
-    current_promotion_usage: ! '目前使用量: %{count}'
-    customer: 客戶
-    customer_details: 客戶資料
-    customer_details_updated: 客戶資料更新完成
-    customer_search: 搜尋客戶
+    analytics_desc_header_2: "整合線上分析至您的Spree 控制台"
+    analytics_desc_list_1:
+    analytics_desc_list_2: "只需一個免費的Spree 帳號便能啓用"
+    analytics_desc_list_3: "完全不需要插入程式碼"
+    analytics_desc_list_4: "完全免費!"
+    analytics_trackers: "分析追蹤"
+    and: "以及"
+    approve: "核准"
+    approved_at: "核准日期"
+    approver: "核准者"
+    are_you_sure: "你確定嗎?"
+    are_you_sure_delete: "你確定要刪除?"
+    associated_adjustment_closed: "這個關聯的調整項目已經停用, 而且不會被重複計算, 您要啓用它嗎?"
+    authorization_failure: "認証失敗"
+    authorized:
+    auto_capture:
+    available_on: "上架時間"
+    average_order_value:
+    avs_response:
+    back: "返回"
+    back_end: "後端"
+    back_to_payment:
+    back_to_resource_list:
+    back_to_rma_reason_list:
+    back_to_store: "回商店"
+    back_to_users_list: "返回使用者列表"
+    backorderable: "可預購"
+    backorderable_default:
+    backordered: "待補"
+    backorders_allowed: "已允許預購"
+    balance_due: "未入帳"
+    base_amount:
+    base_percent:
+    bill_address: "帳單地址"
+    billing: "帳單"
+    billing_address: "帳單地址"
+    both: "全部"
+    calculated_reimbursements:
+    calculator: "計算規則"
+    calculator_settings_warning: "如果你更改了計算規則, 需要先儲存才能進行修改"
+    cancel: "取消"
+    canceled_at:
+    canceler:
+    cannot_create_customer_returns:
+    cannot_create_payment_without_payment_methods: "你無法在未定義付費方法前產生訂單的付費資訊."
+    cannot_create_returns: "無法建立退貨資訊, 因為這筆訂單不需要配送"
+    cannot_perform_operation: "無法執行要求的運算"
+    cannot_set_shipping_method_without_address: "在消費者細節沒提供前, 無法設定運送方法"
+    capture: "入帳完成付款"
+    capture_events:
+    card_code: "信用卡驗證碼"
+    card_number: "信用卡卡號"
+    card_type:
+    card_type_is: "信用卡類型"
+    cart: "購物車"
+    cart_subtotal:
+    categories: "分類"
+    category: "分類"
+    charged:
+    check_for_spree_alerts: "檢查 Spree的警告"
+    checkout: "結帳"
+    choose_a_customer: "選擇一個消費者"
+    choose_a_taxon_to_sort_products_for:
+    choose_currency: "選擇幣別"
+    choose_dashboard_locale: "選擇控制台語系"
+    choose_location:
+    city: "城市"
+    clear_cache:
+    clear_cache_ok:
+    clear_cache_warning:
+    click_and_drag_on_the_products_to_sort_them:
+    clone: "複製"
+    close: "關閉"
+    close_all_adjustments: "停用所有調整項目"
+    code: "編碼"
+    company: "公司"
+    complete: "完成"
+    configuration: "偏好設定"
+    configurations: "偏好設定"
+    confirm: "確認"
+    confirm_delete: "確認刪除"
+    confirm_password: "確認密碼"
+    continue: "繼續"
+    continue_shopping: "繼續購物"
+    cost_currency: "成本貨幣"
+    cost_price: "成本價格"
+    could_not_connect_to_jirafe: "無法從 Jirafe同步資料, 稍候將自動重新嘗試."
+    could_not_create_customer_return:
+    could_not_create_stock_movement: "在儲存庫存動向時發生了錯誤, 請再試一次."
+    count_on_hand: "庫存數量"
+    countries: "國家"
+    country: "國家"
+    country_based: "依據國家"
+    country_name: "名稱"
+    country_names:
+      CA:
+      FRA:
+      ITA:
+      US:
+    coupon: "促銷代碼"
+    coupon_code: "促銷代碼"
+    coupon_code_already_applied: "優惠代碼已經被使用在這個訂單"
+    coupon_code_applied: "優惠代碼已經成功使用在您的訂單."
+    coupon_code_better_exists: "上一組優惠代碼比較划算"
+    coupon_code_expired: "優惠代碼已過期"
+    coupon_code_max_usage: "已達優惠代碼使用上限"
+    coupon_code_not_eligible: "此優惠代碼不適用於本訂單"
+    coupon_code_not_found: "您輸入的優惠代碼不存在. 請再試一次."
+    coupon_code_unknown_error:
+    create: "建立"
+    create_a_new_account: "建立新帳號"
+    create_new_order:
+    create_reimbursement:
+    created_at: "建立於"
+    credit: "額度"
+    credit_card: "信用卡"
+    credit_cards: "信用卡"
+    credit_owed: "負債"
+    credits:
+    currency: "幣別"
+    currency_decimal_mark: "幣別小數點符號"
+    currency_settings: "幣別設定"
+    currency_symbol_position: "幣別符號在金額數字前還是後?"
+    currency_thousands_separator: "幣別千分位分隔符號"
+    current: "目前的"
+    current_promotion_usage: "目前使用量: %{count}"
+    customer: "客戶"
+    customer_details: "客戶資料"
+    customer_details_updated: "客戶資料更新完成"
+    customer_return:
+    customer_returns:
+    customer_search: "搜尋客戶"
     cut: "剪下"
+    cvv_response:
     dash:
       jirafe:
         app_id: App ID
         app_token: App Token
         currently_unavailable: Jirafe 目前無法使用. Spree 將在Jirafe 恢復正常時自動連線.
-        explanation: 如果你選擇從管理界面來註冊Jirafe, 以下填寫的欄位很有可能已經存在
+        explanation: "如果你選擇從管理界面來註冊Jirafe, 以下填寫的欄位很有可能已經存在"
         header: Jirafe Analytics 設定
-        site_id: 網站 ID
-        token: 辨識碼
+        site_id: "網站 ID"
+        token: "辨識碼"
       jirafe_settings_updated: Jirafe 設定已經更新.
-    date: 日期
-    date_completed: 完成日期
+    date: "日期"
+    date_completed: "完成日期"
     date_picker:
       first_day: 0
-      format: ! '%Y/%m/%d'
+      format: "%Y/%m/%d"
       js_format: yy/mm/dd
-    date_range: 日期範圍
-    default: 預設
-    default_meta_description: 預設 Meta 描述
-    default_meta_keywords: 預設 Meta 關鍵字
-    default_seo_title: 預設 Seo 標題
-    default_tax: 預設稅項
-    default_tax_zone: 預設稅區
-    delete: 刪除
-    delivery: 抵達
-    depth: 深
-    description: 描述
-    destination: 目的地
-    destroy: 刪除
-    discount_amount: 折扣金額
-    dismiss_banner: 不。謝謝！我沒有興趣，不要再顯示此訊息。
-    display: 顯示
-    display_currency: 顯示貨幣
-    edit: 編輯
-    editing_option_type: 編輯選項類型
-    editing_payment_method: 編輯付費方式
-    editing_product: 編輯商品
-    editing_promotion: 編輯優惠推廣
-    editing_property: 編輯屬性
-    editing_prototype: 編輯原型
-    editing_shipping_category: 編輯出貨類型
-    editing_shipping_method: 編輯出貨方式
-    editing_state: 州, 省, 日本県, 台灣縣市
-    editing_stock_location: 編輯庫存位置
-    editing_stock_movement: 編輯庫存動向
-    editing_tax_category: 編輯課稅類型
-    editing_tax_rate: 編輯稅率
-    editing_tracker: Editing Tracker
-    editing_user: 編輯使用者
-    editing_zone: 編輯區域
+    date_range: "日期範圍"
+    default: "預設"
+    default_refund_amount:
+    default_tax: "預設稅項"
+    default_tax_zone: "預設稅區"
+    delete: "刪除"
+    deleted_variants_present:
+    delivery: "抵達"
+    depth: "深"
+    description: "描述"
+    destination: "目的地"
+    destroy: "刪除"
+    details:
+    discount_amount: "折扣金額"
+    dismiss_banner: "不。謝謝！我沒有興趣，不要再顯示此訊息。"
+    display: "顯示"
+    display_currency: "顯示貨幣"
+    doesnt_track_inventory:
+    edit: "編輯"
+    editing_resource:
+    editing_rma_reason:
+    editing_user: "編輯使用者"
+    eligibility_errors:
+      messages:
+        has_excluded_product:
+        item_total_less_than:
+        item_total_less_than_or_equal:
+        item_total_more_than:
+        item_total_more_than_or_equal:
+        limit_once_per_user:
+        missing_product:
+        missing_taxon:
+        no_applicable_products:
+        no_matching_taxons:
+        no_user_or_email_specified:
+        no_user_specified:
+        not_first_order:
     email: Email
-    empty: 空
-    empty_cart: 清空購物車
-    enable_mail_delivery: 啟用 Email 寄送功能
-    end: 結束
+    empty: "空"
+    empty_cart: "清空購物車"
+    enable_mail_delivery: "啟用 Email 寄送功能"
+    end: "結束"
     ending_in: Ending in
-    environment: 環境
-    error: 錯誤
+    environment: "環境"
+    error: "錯誤"
     errors:
       messages:
-        could_not_create_taxon: 無法建立類型
+        could_not_create_taxon: "無法建立類型"
         no_payment_methods_available: No payment methods are configured for this environment
-        no_shipping_methods_available: 沒有可用的出貨方式, 請修改地址後再試一次
+        no_shipping_methods_available: "沒有可用的出貨方式, 請修改地址後再試一次"
     errors_prohibited_this_record_from_being_saved:
-      one: 有 1 個錯誤發生使得這筆資料無法被儲存
-      other: 有 %{count} 個錯誤發生使得這筆資料無法被儲存
-    event: 觸發事件
+      one: "有 1 個錯誤發生使得這筆資料無法被儲存"
+      other: "有 %{count} 個錯誤發生使得這筆資料無法被儲存"
+    event: "觸發事件"
     events:
       spree:
         cart:
-          add: 加入購物車
+          add: "加入購物車"
         checkout:
-          coupon_code_added: 添加了優惠券號碼
+          coupon_code_added: "添加了優惠券號碼"
         content:
-          visited: 訪問靜態頁面
+          visited: "訪問靜態頁面"
         order:
-          contents_changed: 訂單內容已變更
-        page_view: 被訪問靜態頁面
+          contents_changed: "訂單內容已變更"
+        page_view: "被訪問靜態頁面"
         user:
-          signup: 使用者登記
+          signup: "使用者登記"
     exceptions:
-      count_on_hand_setter: 無法手動設置 count_on_hand, 將會在 recalculate_count_on_hand 中被自動設定. 請使用 `update_column(:count_on_hand, value)`
-    expiration: 過期
-    extension: 擴展
-    filename: 檔案名稱
-    fill_in_customer_info: 請填寫消費者資訊
-    filter_results: 過濾結果
-    finalize: 完成
-    first_item: 第一項商品價格
-    first_name: 名
-    first_name_begins_with: 名字開始
-    flat_percent: 固定比例
-    flat_rate_per_item: 固定金額(每商品)
-    flat_rate_per_order: 固定金額(單一訂單)
-    flexible_rate: 變動金額
-    forgot_password: 忘記密碼
-    free_shipping: 免運費
-    front_end: 前端
+      count_on_hand_setter: "無法手動設置 count_on_hand, 將會在 recalculate_count_on_hand 中被自動設定. 請使用 `update_column(:count_on_hand, value)`"
+    exchange_for:
+    excl:
+    existing_shipments:
+    expedited_exchanges_warning:
+    expiration: "過期"
+    extension: "擴展"
+    failed_payment_attempts:
+    filename: "檔案名稱"
+    fill_in_customer_info: "請填寫消費者資訊"
+    filter_results: "過濾結果"
+    finalize: "完成"
+    finalized:
+    find_a_taxon:
+    first_item: "第一項商品價格"
+    first_name: "名"
+    first_name_begins_with: "名字開始"
+    flat_percent: "固定比例"
+    flat_rate_per_order: "固定金額(單一訂單)"
+    flexible_rate: "變動金額"
+    forgot_password: "忘記密碼"
+    free_shipping: "免運費"
+    free_shipping_amount:
+    front_end: "前端"
     gateway: Gateway
     gateway_config_unavailable: Gateway unavailable for environment
     gateway_error: Gateway Error
-    general: 一般
-    general_settings: 一般設定
+    general: "一般"
+    general_settings: "一般設定"
     google_analytics: Google Analytics
     google_analytics_id: Analytics ID
-    guest_checkout: 訪客結帳
-    guest_user_account: 訪客帳戶
-    has_no_shipped_units: 不需出貨
-    height: 高
-    hide_cents: 隱藏小數點
-    home: 首頁
+    guest_checkout: "訪客結帳"
+    guest_user_account: "訪客帳戶"
+    has_no_shipped_units: "不需出貨"
+    height: "高"
+    hide_cents: "隱藏小數點"
+    home: "首頁"
     i18n:
-      available_locales: 可用語系
-      fields: 欄位
-      language: 語言
-      localization_settings: 在地化設定
-      only_complete: 只限完成
-      only_incomplete: 只限非完成
-      select_locale: 選擇語系
-      show_only: 只顯示
-      supported_locales: 支援語系
-      this_file_language: 中文 (繁體)
-      translations: 翻譯
-    icon: 圖示
-    image: 圖片
-    image_settings: 圖片設定
-    image_settings_updated: 成功更新圖片設定。
-    image_settings_warning: 如果您更新了 paperclip 的樣式，您需要重新生成縮略圖。您可以通過運行“rake paperclip:refresh:thumbnails CLASS=Spree::Image”以完成目的。
-    images: 圖片
-    included_in_price: 已包括於售價
-    included_price_validation: 除非您設置了默認的繳稅區域，否則無法選擇
-    instructions_to_reset_password: 請填寫如下表格來重置你的密碼，重置後的密碼會通過電子郵件發送給您
-    insufficient_stock: 庫存不足，當前還剩下 %{on_hand} 件庫存
-    intercept_email_address: 攔截電郵地址
-    intercept_email_instructions: 更改電子郵件回函收件位址為這個位址
-    internal_name: 內部名稱
-    invalid_payment_provider: 不正確的付費供應商.
-    invalid_promotion_action: 不正確的宣傳操作.
-    invalid_promotion_rule: 不正確的宣傳規則.
-    inventory: 庫存
-    inventory_adjustment: 庫存調整
-    inventory_error_flash_for_insufficient_quantity: 您購物車內的商品已無法使用.
-    is_not_available_to_shipment_address: 沒有可用的出貨地址
+      available_locales: "可用語系"
+      fields: "欄位"
+      language: "語言"
+      localization_settings: "在地化設定"
+      only_complete: "只限完成"
+      only_incomplete: "只限非完成"
+      select_locale: "選擇語系"
+      show_only: "只顯示"
+      supported_locales: "支援語系"
+      this_file_language: "中文 (繁體)"
+      translations: "翻譯"
+    icon: "圖示"
+    identifier:
+    image: "圖片"
+    images: "圖片"
+    implement_eligible_for_return:
+    implement_requires_manual_intervention:
+    inactive:
+    incl:
+    included_in_price: "已包括於售價"
+    included_price_validation: "除非您設置了默認的繳稅區域，否則無法選擇"
+    incomplete:
+    info_number_of_skus_not_shown:
+    info_product_has_multiple_skus:
+    instructions_to_reset_password: "請填寫如下表格來重置你的密碼，重置後的密碼會通過電子郵件發送給您"
+    insufficient_stock: "庫存不足，當前還剩下 %{on_hand} 件庫存"
+    insufficient_stock_lines_present:
+    intercept_email_address: "攔截電郵地址"
+    intercept_email_instructions: "更改電子郵件回函收件位址為這個位址"
+    internal_name: "內部名稱"
+    invalid_credit_card:
+    invalid_exchange_variant:
+    invalid_payment_provider: "不正確的付費供應商."
+    invalid_promotion_action: "不正確的宣傳操作."
+    invalid_promotion_rule: "不正確的宣傳規則."
+    inventory: "庫存"
+    inventory_adjustment: "庫存調整"
+    inventory_error_flash_for_insufficient_quantity: "您購物車內的商品已無法使用."
+    inventory_state:
+    is_not_available_to_shipment_address: "沒有可用的出貨地址"
     iso_name: ISO 名稱
-    item: 商品
-    item_description: 商品描述
-    item_total: 商品總價
+    item: "商品"
+    item_description: "商品描述"
+    item_total: "商品總價"
     item_total_rule:
       operators:
-        gt: 大於
-        gte: 大於等於
-    items_cannot_be_shipped: 我們無法遞送物品至您的運送地址. 請選擇其他運送位置.
+        gt: "大於"
+        gte: "大於等於"
+        lt:
+        lte:
+    items_cannot_be_shipped: "我們無法遞送物品至您的運送地址. 請選擇其他運送位置."
+    items_in_rmas:
+    items_reimbursed:
+    items_to_be_reimbursed:
     jirafe: Jirafe
     landing_page_rule:
       path: Path
-    last_name: 姓
-    last_name_begins_with: 姓氏開頭
+    last_name: "姓"
+    last_name_begins_with: "姓氏開頭"
     learn_more: Learn More
-    list: 列表
-    listing_countries: 國家列表
-    listing_orders: 訂單列表
-    listing_products: 商品列表
-    listing_reports: 報告列表
-    listing_tax_categories: 稅別列表
-    listing_users: 使用者列表
-    loading: 載入中
-    locale_changed: 語系已變更
-    location: 位置
-    lock: 鎖定
-    logged_in_as: 目前帳號
-    logged_in_succesfully: 登入成功
-    logged_out: 你已經完成登出
-    login: 登入
-    login_as_existing: 用戶登入
-    login_failed: 登入認証失敗
-    login_name: 使用者名稱
-    logout: 登出
-    look_for_similar_items: 瀏覽相似的商品
-    maestro_or_solo_cards: Maestro/Solo cards
-    mail_method_settings: 郵件方式設定
-    mail_methods: EMail 寄送方式
-    make_refund: 退款
-    master_price: 主要定價
+    lifetime_stats:
+    line_item_adjustments:
+    list: "列表"
+    loading: "載入中"
+    locale_changed: "語系已變更"
+    location: "位置"
+    lock: "鎖定"
+    log_entries:
+    logged_in_as: "目前帳號"
+    logged_in_succesfully: "登入成功"
+    logged_out: "你已經完成登出"
+    login: "登入"
+    login_as_existing: "用戶登入"
+    login_failed: "登入認証失敗"
+    login_name: "使用者名稱"
+    logout: "登出"
+    logs:
+    look_for_similar_items: "瀏覽相似的商品"
+    make_refund: "退款"
+    make_sure_the_above_reimbursement_amount_is_correct:
+    manage_promotion_categories:
+    manage_variants:
+    manual_intervention_required:
+    master_price: "主要定價"
     match_choices:
-      all: 全部
-      none: 清空
-    max_items: 
+      all: "全部"
+      none: "清空"
+    max_items:
+    member_since:
+    memo:
     meta_description: Meta 描述
     meta_keywords: Meta 關鍵字
+    meta_title:
     metadata: Metadata
-    minimal_amount: 最小個數
-    month: 月
+    minimal_amount: "最小個數"
+    month: "月"
     more: More
-    move_stock_between_locations: 移動庫存位置
-    my_account: 我的帳戶
-    my_orders: 我的訂單
-    name: 名稱
-    name_or_sku: 商品名稱或編號
-    new: 新增
-    new_adjustment: 新增訂單項目
-    new_customer: 新增客戶
-    new_image: 新增圖片
-    new_option_type: 新增商品選項類型
-    new_order: 新增訂單
-    new_order_completed: 新增訂單完成
-    new_payment: 新增付費紀錄
-    new_payment_method: 新增付費方式
-    new_product: 新增商品
-    new_promotion: 新增優惠推廣
-    new_property: 新增商品屬性
-    new_prototype: 新增商品原型
-    new_return_authorization: 新增退貨資料
-    new_shipping_category: 新增出貨類型
-    new_shipping_method: 新增出貨方式
-    new_state: 新增省份
-    new_stock_location: 新增庫存位置
-    new_stock_movement: 新增庫存動向
-    new_stock_transfer: 新增庫存轉移
-    new_tax_category: 新增課稅分類
-    new_tax_rate: 新增稅率
-    new_taxon: 新增分類
-    new_taxonomy: 新增分類
-    new_tracker: 
-    new_user: 新增使用者
-    new_variant: 新增款式系列
-    new_zone: 新增區域
-    next: 下一頁
-    no_actions_added: 
-    no_orders_found: 無訂單
-    no_payment_methods_found: 找不到付款方式
-    no_pending_payments: 
-    no_products_found: 找不到商品
-    no_promotions_found: 無宣傳活動
-    no_resource_found: 
-    no_results: 沒有結果
+    move_stock_between_locations: "移動庫存位置"
+    my_account: "我的帳戶"
+    my_orders: "我的訂單"
+    name: "名稱"
+    name_on_card:
+    name_or_sku: "商品名稱或編號"
+    new: "新增"
+    new_adjustment: "新增訂單項目"
+    new_country:
+    new_customer: "新增客戶"
+    new_customer_return:
+    new_image: "新增圖片"
+    new_option_type: "新增商品選項類型"
+    new_order: "新增訂單"
+    new_order_completed: "新增訂單完成"
+    new_payment: "新增付費紀錄"
+    new_payment_method: "新增付費方式"
+    new_product: "新增商品"
+    new_promotion: "新增優惠推廣"
+    new_promotion_category:
+    new_property: "新增商品屬性"
+    new_prototype: "新增商品原型"
+    new_refund:
+    new_refund_reason:
+    new_return_authorization: "新增退貨資料"
+    new_rma_reason:
+    new_shipment_at_location:
+    new_shipping_category: "新增出貨類型"
+    new_shipping_method: "新增出貨方式"
+    new_state: "新增省份"
+    new_stock_location: "新增庫存位置"
+    new_stock_movement: "新增庫存動向"
+    new_stock_transfer: "新增庫存轉移"
+    new_tax_category: "新增課稅分類"
+    new_tax_rate: "新增稅���"
+    new_taxon: "新增分類"
+    new_taxonomy: "新增分類"
+    new_tracker:
+    new_user: "新增使用者"
+    new_variant: "新增款式系列"
+    new_zone: "新增區域"
+    next: "下一頁"
+    no_actions_added:
+    no_payment_found:
+    no_pending_payments:
+    no_products_found: "找不到商品"
+    no_resource_found:
+    no_results: "沒有結果"
+    no_returns_found:
     no_rules_added: No rules added
-    no_shipping_methods_found: 沒有運送方式
-    no_stock_locations_found: 沒有任何庫存位置
-    no_trackers_found: 
-    no_tracking_present: 
-    none: 沒有
-    normal_amount: 一般數量
-    not: 不
+    no_shipping_method_selected:
+    no_state_changes:
+    no_tracking_present:
+    none: "沒有"
+    none_selected:
+    normal_amount: "一般數量"
+    not: "不"
     not_available: N/A
-    not_enough_stock: 來源地沒有足夠的庫存以完成遞送.
-    not_found: ! '%{resource} is not found'
+    not_enough_stock: "來源地沒有足夠的庫存以完成遞送."
+    not_found: "%{resource} is not found"
+    note:
     notice_messages:
-      product_cloned: 商品已經被覆制
-      product_deleted: 商品已經被刪除
-      product_not_cloned: 商品無法被複製
-      product_not_deleted: 商品無法被刪除
-      variant_deleted: 具體型號已經被刪除
-      variant_not_deleted: 具體型號不能被刪除
-    on_hand: 庫存
-    open: 
-    open_all_adjustments: 啟用所有價格調整
-    option_type: 商品選項類型
-    option_type_placeholder: 
-    option_types: 商品選項類型
-    option_value: 商品選項
-    option_values: 商品選項
-    optional: 
-    options: 選項
-    or: 或
-    or_over_price: ! '%{price} 或以上'
-    order: 訂單
-    order_adjustments: 訂單調整
-    order_details: 訂單資料
-    order_email_resent: 重新發送了訂單郵件
-    order_information: 訂單資訊
+      product_cloned: "商品已經被覆制"
+      product_deleted: "商品已經被刪除"
+      product_not_cloned: "商品無法被複製"
+      product_not_deleted: "商品無法被刪除"
+      variant_deleted: "具體型號已經被刪除"
+      variant_not_deleted: "具體型號不能被刪除"
+    num_orders:
+    on_hand: "庫存"
+    open:
+    open_all_adjustments: "啟用所有價格調整"
+    option_type: "商品選項類型"
+    option_type_placeholder:
+    option_types: "商品選項類型"
+    option_value: "商品選項"
+    option_values: "商品選項"
+    optional:
+    options: "選項"
+    or: "或"
+    or_over_price: "%{price} 或以上"
+    order: "訂單"
+    order_adjustments: "訂單調整"
+    order_already_updated:
+    order_approved:
+    order_canceled:
+    order_details: "訂單資料"
+    order_email_resent: "重新發送了訂單郵件"
+    order_information: "訂單資訊"
     order_mailer:
       cancel_email:
-        dear_customer: 親愛的顧客，
-        instructions: 您的訂單已被取消。請保留此取消信息記錄。
-        order_summary_canceled: 訂單總覽 [已取消]
-        subject: 註銷訂單
-        subtotal: "小計: %{subtotal}"
-        total: "共計: %{total}"
+        dear_customer: "親愛的顧客，"
+        instructions: "您的訂單已被取消。請保留此取消信息記錄。"
+        order_summary_canceled: "訂單總覽 [已取消]"
+        subject: "註銷訂單"
+        subtotal:
+        total:
       confirm_email:
-        dear_customer:  親愛的顧客，
-        instructions: 請仔細閱讀並保留以下訂單信息記錄。
-        order_summary:  訂單總覽
-        subject: 訂單確認
-        subtotal: "小計: %{subtotal}"
-        thanks: 謝謝你的購物和信賴。
-        total: "共計: %{total}"
-    order_not_found: 找不到您的訂單. 請再試一次.
+        dear_customer: "親愛的顧客，"
+        instructions: "請仔細閱讀並保留以下訂單信息記錄。"
+        order_summary: "訂單總覽"
+        subject: "訂單確認"
+        subtotal:
+        thanks: "謝謝你的購物和信賴。"
+        total:
+    order_not_found: "找不到您的訂單. 請再試一次."
     order_number: "訂單編號 %{number}"
     order_populator:
       out_of_stock: "%{item} 已無存貨"
-      please_enter_reasonable_quantity: 請輸入合理的數量.
-    order_processed_successfully: 您的訂單已被接收
+      please_enter_reasonable_quantity: "請輸入合理的數量."
+      selected_quantity_not_available:
+    order_processed_successfully: "您的訂單已被接收"
+    order_resumed:
     order_state:
-      address: 地址
-      awaiting_return: 等待寄回
-      canceled: 取消
-      cart: 購物車
-      complete: 完成
-      confirm: 確認
-      delivery: 寄送方式
-      payment: 付款
-      resumed: 重新開始
-      returned: 己寄回
-    order_summary: 訂單總計
-    order_sure_want_to: 您確定您想要%{event}這個訂單嗎？
-    order_total: 總金額
-    order_updated: 訂單已更新
-    orders: 訂單
-    out_of_stock: 缺貨中
-    overview: 總覽
-    package_from: 包裝自
+      address: "地址"
+      awaiting_return: "等待寄回"
+      canceled: "取消"
+      cart: "購物車"
+      complete: "完成"
+      confirm: "確認"
+      considered_risky:
+      delivery: "寄送方式"
+      payment: "付款"
+      resumed: "重新開始"
+      returned: "己寄回"
+    order_summary: "訂單總計"
+    order_sure_want_to: "您確定您想要%{event}這個訂單嗎？"
+    order_total: "總金額"
+    order_updated: "訂單已更新"
+    orders: "訂單"
+    other_items_in_other:
+    out_of_stock: "缺貨中"
+    overview: "總覽"
+    package_from: "包裝自"
     pagination:
-      next_page: 下一頁 &raquo;
-      previous_page: ! '&laquo; 上一頁'
-      truncate: ! '&hellip;'
-    password: 密碼
-    paste: 貼上
-    path: 路徑
-    pay: 付款
-    payment: 付款
-    payment_information: 付費資訊
-    payment_method: 付費方式
-    payment_method_not_supported: 
-    payment_methods: 付費方式
-    payment_processing_failed: 
-    payment_processor_choose_banner_text: 如果您需要關於支付處理的幫助，請訪問
-    payment_processor_choose_link: 我們的支付頁面
-    payment_state: 付費狀態
+      next_page: "下一頁 »"
+      previous_page: "« 上一頁"
+      truncate: "…"
+    password: "密碼"
+    paste: "貼上"
+    path: "路徑"
+    pay: "付款"
+    payment: "付款"
+    payment_could_not_be_created:
+    payment_identifier:
+    payment_information: "付費資訊"
+    payment_method: "付費方式"
+    payment_method_not_supported:
+    payment_methods: "付費方式"
+    payment_processing_failed:
+    payment_processor_choose_banner_text: "如果您需要關於支付處理的幫助，請訪問"
+    payment_processor_choose_link: "我們的支付頁面"
+    payment_state: "付費狀態"
     payment_states:
-      balance_due: 未入帳
-      checkout: 付款
-      completed: 已完成
-      credit_owed: 
-      failed: 失敗
-      paid: 已付費
-      pending: 擱置
-      processing: 處理中
-      void: 無效
-    payment_updated: 付費資料已更新
-    payments: 付費資料
-    percent: 百分比
-    percent_per_item: 單件百分比
-    permalink: 永久連結
-    phone: 電話
-    place_order: 落單
-    please_define_payment_methods: 請先設定支付方式。
-    populate_get_error: 發生錯誤，請再添加項目。
-    powered_by: 技術支持
-    presentation: 描述
-    previous: 上一個
-    price: 價格
-    price_range: 價格範圍
-    price_sack: 袋價格
-    process: 處理
-    product: 產品
-    product_details: 商品資料
-    product_has_no_description: 該產品沒有描述
-    product_not_available_in_this_currency: 本產品無法使用您選擇的幣別付費.
-    product_properties: 商品屬性
+      balance_due: "未入帳"
+      checkout: "付款"
+      completed: "已完成"
+      credit_owed:
+      failed: "失敗"
+      paid: "已付費"
+      pending: "擱置"
+      processing: "處理中"
+      void: "無效"
+    payment_updated: "付費資料已更新"
+    payments: "付費資料"
+    pending:
+    percent: "百分比"
+    percent_per_item: "單件百分比"
+    permalink: "永久連結"
+    phone: "電話"
+    place_order: "落單"
+    please_define_payment_methods: "請先設定支付方式。"
+    populate_get_error: "發生錯誤，請再添加項目。"
+    powered_by: "技術支持"
+    pre_tax_amount:
+    pre_tax_refund_amount:
+    pre_tax_total:
+    preferred_reimbursement_type:
+    presentation: "描述"
+    previous: "上一個"
+    previous_state_missing:
+    price: "價格"
+    price_range: "價格範圍"
+    price_sack: "袋價格"
+    process: "處理"
+    product: "產品"
+    product_details: "商品資料"
+    product_has_no_description: "該產品沒有描述"
+    product_not_available_in_this_currency: "本產品無法使用您選擇的幣別付費."
+    product_properties: "商品屬性"
     product_rule:
-      choose_products: 選擇產品
-      label: 訂單必須包含%{select}
-      match_all: 全部
-      match_any: 最新一個
+      choose_products: "選擇產品"
+      label:
+      match_all: "全部"
+      match_any: "最新一個"
+      match_none:
       product_source:
-        group: 從產品分組        
-        manual: 手動選擇
-    products: 商品
-    promotion: 優惠推廣
-    promotion_action: 優惠方式
+        group: "從產品分組"
+        manual: "手動選擇"
+    products: "商品"
+    promotion: "優惠推廣"
+    promotion_action: "優惠方式"
     promotion_action_types:
       create_adjustment:
-        description: 為訂單添加促銷用的價格調整
-        name: 添加訂單的價格調整
+        description: "為訂單添加促銷用的價格調整"
+        name: "添加訂單的價格調整"
       create_item_adjustments:
-        description: 為訂單上的單項產品添加一筆促銷用的價格調整
-        name: 添加單項的價格調整
+        description: "為訂單上的單項產品添加一筆促銷用的價格調整"
+        name: "添加單項的價格調整"
       create_line_items:
-        description: 添加特定商品到訂單中
-        name: 添加訂單商品
+        description: "添加特定商品到訂單中"
+        name: "添加訂單商品"
       free_shipping:
-        description: 整張訂單免費發貨
-        name: 免運費
-    promotion_actions: 優惠方式
+        description: "整張訂單免費發貨"
+        name: "免運費"
+    promotion_actions: "優惠方式"
     promotion_form:
       match_policies:
-        all: 符合所有條件
-        any: 符合任一條件
-    promotion_rule: 促銷規則
+        all: "符合所有條件"
+        any: "符合任一條件"
+    promotion_rule: "促銷規則"
     promotion_rule_types:
       first_order:
-        description: 使用者的第 1 筆訂單
-        name: 第 1 筆訂單
+        description: "使用者的第 1 筆訂單"
+        name: "第 1 筆訂單"
       item_total:
-        description: 商品總價符合條件
-        name: 商品總價
+        description: "商品總價符合條件"
+        name: "商品總價"
       landing_page:
-        description: 客戶必須訪問了指定的頁面
-        name: 登陸頁面
+        description: "客戶必須訪問了指定的頁面"
+        name: "登陸頁面"
       one_use_per_user:
-        description: 每人只可使用一次
-        name: 每人一次
+        description: "每人只可使用一次"
+        name: "每人一次"
+      option_value:
+        description:
+        name:
       product:
-        description: 訂單中包含特定商品
-        name: 商品
-      user:
-        description: 符合特定使用者
-        name: 使用者
-      user_logged_in:
-        description: 網站已註冊的使用者
-        name: 已註冊使用者登入
+        description: "訂單中包含特定商品"
+        name: "商品"
       taxon:
-        description: 訂單中包括指定分類產品
-        name: 分類
-    promotions: 優惠推廣
-    promotion_uses: 促銷使用頻率
-    properties: 屬性
-    property: 屬性
-    prototype: 原型
-    prototypes: 原型
-    provider: 供應商
-    provider_settings_warning: 如果您正在修改提供者類型，您需要在編輯提供者設置之前先保存。
-    qty: 數量
-    quantity: 數量
-    quantity_returned: 退貨數量
-    quantity_shipped: 出貨數量
-    rate: 費率
-    reason: 理由
-    receive: 收到
-    receive_stock: 接收存貨
-    received: 已收到
-    reference: 參考
-    refund: 退款
-    register: 註冊新用戶
-    registration: 註冊
-    remember_me: 記住我
-    remove: 移除
+        description: "訂單中包括指定分類產品"
+        name: "分類"
+      user:
+        description: "符合特定使用者"
+        name: "使用者"
+      user_logged_in:
+        description: "網站已註冊的使用者"
+        name: "已註冊使用者登入"
+    promotion_uses: "促銷使用頻率"
+    promotionable:
+    promotions: "優惠推廣"
+    propagate_all_variants:
+    properties: "屬性"
+    property: "屬性"
+    prototype: "原型"
+    prototypes: "原型"
+    provider: "供應商"
+    provider_settings_warning: "如果您正在修改提供者類型，您需要在編輯提供者設置之前先保存。"
+    qty: "數量"
+    quantity: "數量"
+    quantity_returned: "退貨數量"
+    quantity_shipped: "出貨數量"
+    quick_search:
+    rate: "費率"
+    reason: "理由"
+    receive: "收到"
+    receive_stock: "接收存貨"
+    received: "已收到"
+    reception_status:
+    reference: "參考"
+    refund: "退款"
+    refund_amount_must_be_greater_than_zero:
+    refund_reasons:
+    refunded_amount:
+    refunds:
+    register: "註冊新用戶"
+    registration: "註冊"
+    reimburse:
+    reimbursed:
+    reimbursement:
+    reimbursement_mailer:
+      reimbursement_email:
+        days_to_send:
+        dear_customer:
+        exchange_summary:
+        for:
+        instructions:
+        refund_summary:
+        subject:
+        total_refunded:
+    reimbursement_perform_failed:
+    reimbursement_status:
+    reimbursement_type:
+    reimbursement_type_override:
+    reimbursement_types:
+    reimbursements:
+    reject:
+    rejected:
+    remember_me: "記住我"
+    remove: "移除"
     rename: Rename
-    reports: 報告
-    resend: 重寄
-    reset_password: 重設密碼
-    response_code: 回應代碼
-    resume: 恢復
-    resumed: 已恢復
-    return: 退回
-    return_authorization: 退貨資料
-    return_authorization_updated: 退貨資料已更新
-    return_authorizations: 退貨資料
-    return_quantity: 退貨數量
-    returned: 已退回
+    report:
+    reports: "報告"
+    resend: "重寄"
+    reset_password: "重設密碼"
+    response_code: "回應代碼"
+    resume: "恢復"
+    resumed: "已恢復"
+    return: "退回"
+    return_authorization: "退貨資料"
+    return_authorization_reasons:
+    return_authorization_updated: "退貨資料已更新"
+    return_authorizations: "退貨資料"
+    return_item_inventory_unit_ineligible:
+    return_item_inventory_unit_reimbursed:
+    return_item_rma_ineligible:
+    return_item_time_period_ineligible:
+    return_items:
+    return_items_cannot_be_associated_with_multiple_orders:
+    return_number:
+    return_quantity: "退貨數量"
+    returned: "已退回"
+    returns:
     review: Review
+    risk:
+    risk_analysis:
+    risky:
     rma_credit: RMA 額度
     rma_number: RMA 數字
     rma_value: RMA 值
-    roles: 角色
-    rules: 規則
-    s3_access_key: Access Key
-    s3_bucket: Bucket
-    s3_headers: S3 Headers
-    s3_protocol: S3 Protocol
-    s3_secret: Secret Key
-    sales_total: 
-    sales_total_description: 
-    sales_totals: 
-    save_and_continue: 儲存後繼續
-    say_no: '不'
-    say_yes: '是的'
-    scope: 範圍
-    search: 搜尋
-    search_results: ! '''%{keywords}'' 搜尋結果'
-    searching: 搜尋中
-    secure_connection_type: 安全連線類型
-    security_settings: 安全設定
-    select: 選擇
-    select_from_prototype: 從商品原型選擇
-    select_stock: 選擇庫存
-    send_copy_of_all_mails_to: 將所有郵件的副本發送至
-    send_mails_as: 發送郵件作為
-    server: 伺服器
-    server_error: 伺服器回傳了錯誤訊息
-    settings: 設定
-    ship: 出貨
-    ship_address: 出貨地址
-    ship_total: 
-    shipment: 出貨資料
-    shipment_inc_vat: 含增值税的配送
+    roles: "角色"
+    rules: "規則"
+    safe:
+    sales_total:
+    sales_total_description:
+    sales_totals:
+    save_and_continue: "儲存後繼續"
+    save_my_address:
+    say_no: "不"
+    say_yes: "是的"
+    scope: "範圍"
+    search: "搜尋"
+    search_results: "%{keywords} 搜尋結果"
+    searching: "搜尋中"
+    secure_connection_type: "安全連線類型"
+    security_settings: "安全設定"
+    select: "選擇"
+    select_a_return_authorization_reason:
+    select_a_stock_location:
+    select_from_prototype: "從商品原型選擇"
+    select_stock: "選擇庫存"
+    send_copy_of_all_mails_to: "將所有郵件的副本發送至"
+    send_mails_as: "發送郵件作為"
+    server: "伺服器"
+    server_error: "伺服器回傳了錯誤訊息"
+    settings: "設定"
+    ship: "出貨"
+    ship_address: "出貨地址"
+    ship_total:
+    shipment: "出貨資料"
+    shipment_adjustments:
+    shipment_details:
     shipment_mailer:
       shipped_email:
-        dear_customer: 親愛的顧客，
-        instructions: 您的訂單已發貨
-        shipment_summary: 發貨概覽
-        subject: 出貨通知
-        thanks: 謝謝你的購物和信賴。
-        track_information: ! '貨運單號： %{tracking}'
-        track_link: ! '追蹤連結: %{url}'
-    shipment_state: 出貨狀態
+        dear_customer: "親愛的顧客，"
+        instructions: "您的訂單已發貨"
+        shipment_summary: "發貨概覽"
+        subject: "出貨通知"
+        thanks: "謝謝你的購物和信賴。"
+        track_information: "貨運單號： %{tracking}"
+        track_link: "追蹤連結: %{url}"
+    shipment_state: "出貨狀態"
     shipment_states:
-      backorder: 預購
-      partial: 部份出貨
-      pending: 擱置
-      ready: 準備出貨
-      shipped: 已出貨
-    shipments: 出貨資料
-    shipped: 已寄出
-    shipping: 運費
-    shipping_address: 出貨地址
-    shipping_categories: 出貨分類
-    shipping_category: 出貨分類
-    shipping_flat_rate_per_item: 以單項計固定費率
-    shipping_flat_rate_per_order: 固定費率
-    shipping_flexible_rate: 以每項計彈性價格
-    shipping_instructions: 配送嚮導
-    shipping_method: 出貨方式
-    shipping_methods: 出貨方式
-    shipping_price_sack: 
-    shop_by_taxonomy: 依照%{taxonomy}排序
-    shopping_cart: 購物車
-    show: 顯示
-    show_active: 顯示使用中的資料
-    show_deleted: 顯示被刪除的資料
-    show_only_complete_orders: 顯示已完成的訂單
-    show_rate_in_label: 
-    site_name: 網站名稱
-    site_url: 網址
-    sku: 商品編號
-    smtp: SMTP
-    smtp_authentication_type: SMTP 認證方式
-    smtp_domain: SMTP 網域
-    smtp_mail_host: SMTP Mail 主機
-    smtp_password: SMTP 密碼
-    smtp_port: SMTP 埠口
-    smtp_send_all_emails_as_from_following_address: 使用以下的信箱位址來寄送所有郵件.
-    smtp_send_copy_to_this_addresses: 對所有寄出的郵件另送一份副本到這個位址. 若有多個位址, 請用逗號分隔.
-    smtp_username: SMTP 使用者名稱
-    source: 來源
-    special_instructions: 特殊說明
-    split: 分拆
-    spree/order:
-      coupon_code: 優惠代碼
-    spree_gateway_error_flash_for_checkout: 你的付費資訊有問題. 請檢查後再試一次.
-    start: 開始
-    start_date: 有效期開始
-    state: 省份
-    state_based: 依據省份
-    states: 省份
-    states_required: 需要州別
-    status: 狀態
-    stock_location: 庫存區域
-    stock_location_info: 庫存區域資訊
-    stock_locations: 庫存區域
-    stock_management: 庫存管理
-    stock_management_requires_a_stock_location: 請先新增庫存區域，才可使用庫存管理
-    stock_movements: 庫存動向
+      backorder: "預購"
+      canceled:
+      partial: "部份出貨"
+      pending: "擱置"
+      ready: "準備出貨"
+      shipped: "已出貨"
+    shipment_transfer_error:
+    shipment_transfer_success:
+    shipments: "出貨資料"
+    shipped: "已寄出"
+    shipping: "運費"
+    shipping_address: "出貨地址"
+    shipping_categories: "出貨分類"
+    shipping_category: "出貨分類"
+    shipping_flat_rate_per_item: "以單項計固定費率"
+    shipping_flat_rate_per_order: "固定費率"
+    shipping_flexible_rate: "以每項計彈性價格"
+    shipping_instructions: "配送嚮導"
+    shipping_method: "出貨方式"
+    shipping_methods: "出貨方式"
+    shipping_price_sack:
+    shipping_total:
+    shop_by_taxonomy: "依照%{taxonomy}排序"
+    shopping_cart: "購物車"
+    show: "顯示"
+    show_active: "顯示使用中的資料"
+    show_deleted: "顯示被刪除的資料"
+    show_only_complete_orders: "顯示已完成的訂單"
+    show_only_considered_risky:
+    show_rate_in_label:
+    sku: "商品編號"
+    skus:
+    slug:
+    source: "來源"
+    special_instructions: "特殊說明"
+    split: "分拆"
+    spree_gateway_error_flash_for_checkout: "你的付費資訊有問題. 請檢查後再試一次."
+    ssl:
+      change_protocol:
+    start: "開始"
+    state: "省份"
+    state_based: "依據省份"
+    state_machine_states:
+      accepted:
+      address:
+      authorized:
+      awaiting:
+      awaiting_return:
+      backordered:
+      canceled:
+      cart:
+      checkout:
+      closed:
+      complete:
+      completed:
+      confirm:
+      delivery:
+      errored:
+      failed:
+      given_to_customer:
+      invalid:
+      manual_intervention_required:
+      on_hand:
+      open:
+      order:
+      payment:
+      pending:
+      processing:
+      ready:
+      reimbursed:
+      resumed:
+      returned:
+      shipped:
+      void:
+    states: "省份"
+    states_required: "需要州別"
+    status: "狀態"
+    stock:
+    stock_location: "庫存區域"
+    stock_location_info: "庫存區域資訊"
+    stock_locations: "庫存區域"
+    stock_locations_need_a_default_country:
+    stock_management: "庫存管理"
+    stock_management_requires_a_stock_location: "請先新增庫存區域，才可使用庫存管理"
+    stock_movements: "庫存動向"
     stock_movements_for_stock_location: "%{stock_location_name} 的庫存動向"
-    stock_successfully_transferred: 庫存已成功在兩區域轉移
-    stock_transfer: 庫存轉移
-    stock_transfers: 庫存轉移 
-    stop: 停止
-    store: 商店
-    street_address: 地址
-    street_address_2: 地址(繼續)
-    subtotal: 小計
-    subtract: 減去
-    successfully_created: 建立%{resource}成功！
-    successfully_removed: 刪除%{resource}成功！
-    successfully_signed_up_for_analytics: 
-    successfully_updated: 更新%{resource}成功！
-    tax: 稅
-    tax_categories: 課稅類別
-    tax_category: 課稅類別
-    tax_rate_amount_explanation: 
-    tax_rates: 稅率
-    tax_settings: 課稅設置
-    tax_total: 課稅總額
-    taxon: 分類
-    taxon_edit: 編輯分類
-    taxon_placeholder: 
-    taxonomies: 分類
+    stock_successfully_transferred: "庫存已成功在兩區域轉移"
+    stock_transfer: "庫存轉移"
+    stock_transfers: "庫存轉移"
+    stop: "停止"
+    store: "商店"
+    street_address: "地址"
+    street_address_2: "地址(繼續)"
+    subtotal: "小計"
+    subtract: "減去"
+    success:
+    successfully_created: "建立%{resource}成功！"
+    successfully_refunded:
+    successfully_removed: "刪除%{resource}成功！"
+    successfully_signed_up_for_analytics:
+    successfully_updated: "更新%{resource}成功！"
+    summary:
+    tax: "稅"
+    tax_categories: "課稅類別"
+    tax_category: "課稅類別"
+    tax_code:
+    tax_included:
+    tax_rate_amount_explanation:
+    tax_rates: "稅率"
+    taxon: "分類"
+    taxon_edit: "編輯分類"
+    taxon_placeholder:
+    taxon_rule:
+      choose_taxons:
+      label:
+      match_all:
+      match_any:
+    taxonomies: "分類"
     taxonomy: Taxonomy
-    taxonomy_edit: 編輯分類
-    taxonomy_tree_error: 請求的變更沒有被接受，樹會恢復到之前的狀態，請重新嘗試。
-    taxonomy_tree_instruction: ! '* 右鍵單擊一個樹的子結點以訪問添加、刪除或排序字節點的菜單。'
-    taxons: 分類
-    test: 測試
+    taxonomy_edit: "編輯分類"
+    taxonomy_tree_error: "請求的變更沒有被接受，樹會恢復到之前的狀態，請重新嘗試。"
+    taxonomy_tree_instruction: "* 右鍵單擊一個樹的子結點以訪問添加、刪除或排序字節點的菜單。"
+    taxons: "分類"
+    test: "測試"
     test_mailer:
       test_email:
         greeting: Congratulations!
         message: If you have received this email, then your email settings are correct.
         subject: Testmail
-    test_mode: 測試模式
-    thank_you_for_your_order: 
-    there_are_no_items_for_this_order: 
-    there_were_problems_with_the_following_fields: 
-    thumbnail: 縮圖
-    time: 時間
-    to_add_variants_you_must_first_define: 
-    total: 總金額
-    tracking: 物流追蹤碼
-    tracking_number: 追蹤號碼
-    tracking_url: 追蹤網址
-    tracking_url_placeholder: ! '例如: http://quickship.com/package?num=:tracking'
-    transfer_from_location: 
-    transfer_stock: 
-    transfer_to_location: 
-    tree: 樹
-    type: 類型
-    type_to_search: 輸入搜尋關鍵字
-    unable_to_connect_to_gateway: 無法連上 gateway
+    test_mode: "測試模式"
+    thank_you_for_your_order:
+    there_are_no_items_for_this_order:
+    there_were_problems_with_the_following_fields:
+    this_order_has_already_received_a_refund:
+    thumbnail: "縮圖"
+    tiered_flat_rate:
+    tiered_percent:
+    tiers:
+    time: "時間"
+    to_add_variants_you_must_first_define:
+    total: "總金額"
+    total_per_item:
+    total_pre_tax_refund:
+    total_price:
+    total_sales:
+    track_inventory:
+    tracking: "物流追蹤碼"
+    tracking_number: "追蹤號碼"
+    tracking_url: "追蹤網址"
+    tracking_url_placeholder: "例如: http://quickship.com/package?num=:tracking"
+    transaction_id:
+    transfer_from_location:
+    transfer_stock:
+    transfer_to_location:
+    tree: "樹"
+    type: "類型"
+    type_to_search: "輸入搜尋關鍵字"
+    unable_to_connect_to_gateway: "無法連上 gateway"
+    unable_to_create_reimbursements:
     under_price: Under %{price}
-    unlock: 解鎖
-    unrecognized_card_type: 無法辨識的信用卡類別
-    unshippable_items: 
-    update: 更新
-    updating: 更新中
-    usage_limit: 使用次數限制
-    use_billing_address: 使用帳單地址
-    use_new_cc: 使用新卡
+    unlock: "解鎖"
+    unrecognized_card_type: "無法辨識的信用卡類別"
+    unshippable_items:
+    update: "更新"
+    updating: "更新中"
+    usage_limit: "使用次數限制"
+    use_app_default:
+    use_billing_address: "使用帳單地址"
+    use_new_cc: "使用新卡"
     use_s3: Use Amazon S3 For Images
-    user: 使用者
+    user: "使用者"
     user_rule:
-      choose_users: 選擇使用者
-    users: 使用者
+      choose_users: "選擇使用者"
+    users: "使用者"
     validation:
-      cannot_be_less_than_shipped_units: 不能少於已配送的單位數。
-      cannot_destory_line_item_as_inventory_units_have_shipped: 已經發貨的商品不能被刪除。
-      exceeds_available_stock: 超出可用的庫存。請確認訂單項的有效的數量。
-      is_too_large: 數量太多了，現有庫存無法滿足您需要的數量！
-      must_be_int: 必須是整數
-      must_be_non_negative: 必須為非負數
-    value: 值
-    variant: 具體型號
-    variant_placeholder: 選擇具体型号
-    variants: 款式系列
-    version: 版本
-    void: 無效
-    weight: 重
-    what_is_a_cvv: 什麼是 (CVV) 信用卡代碼?
-    what_is_this: 這是什麼？
-    width: 寬
-    year: 年
-    you_have_no_orders_yet: 您還沒有任何訂單
-    your_cart_is_empty: 購物車是空的
-    your_order_is_empty_add_product: 你的訂單是空的, 請搜尋並加入產品
-    zip: 郵遞區號
-    zipcode: 區域代碼
-    zone: 區域
-    zones: 區域
+      cannot_be_less_than_shipped_units: "不能少於已配送的單位數。"
+      cannot_destroy_line_item_as_inventory_units_have_shipped:
+      exceeds_available_stock: "超出可用的庫存。請確認訂單項的有效的數量。"
+      is_too_large: "數量太多了，現有庫存無法滿足您需要的數量！"
+      must_be_int: "必須是整數"
+      must_be_non_negative: "必須為非負數"
+      unpaid_amount_not_zero:
+    value: "值"
+    variant: "具體型號"
+    variant_placeholder: "選擇具体型号"
+    variants: "款式系列"
+    version: "版本"
+    void: "無效"
+    weight: "重"
+    what_is_a_cvv: "什麼是 (CVV) 信用卡代碼?"
+    what_is_this: "這是什麼？"
+    width: "寬"
+    year: "年"
+    you_have_no_orders_yet: "您還沒有任何訂單"
+    your_cart_is_empty: "購物車是空的"
+    your_order_is_empty_add_product: "你的訂單是空的, 請搜尋並加入產品"
+    zip: "郵遞區號"
+    zipcode: "區域代碼"
+    zone: "區域"
+    zones: "區域"
