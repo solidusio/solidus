@@ -1,0 +1,17 @@
+---
+# Too picky.
+LineLength:
+  Enabled: false
+
+# This should truly be on for well documented gems.
+Documentation:
+  Enabled: false
+
+# Neatly aligned code is to swell.
+SingleSpaceBeforeFirstArg:
+  Enabled: false
+
+# Don't mess with RSpec DSL.
+Blocks:
+  Exclude:
+    - 'spec/**/*'

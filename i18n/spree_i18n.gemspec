@@ -36,4 +36,5 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'database_cleaner', '~> 1.3.0'
   s.add_development_dependency 'ffaker', '>= 1.25.0'
   s.add_development_dependency 'pry-rails', '>= 0.3.0'
+  s.add_development_dependency 'rubocop', '>= 0.24.1'
 end
