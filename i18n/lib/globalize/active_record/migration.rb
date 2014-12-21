@@ -11,14 +11,14 @@ module Globalize
 
       delegate :create_translation_table!, :add_translation_fields!, :drop_translation_table!,
         :translation_index_name, :translation_locale_index_name,
-        :to => :globalize_migrator
+        to: :globalize_migrator
 
       class Migrator
         include Globalize::ActiveRecord::Exceptions
 
         attr_reader :model, :fields
         delegate :translated_attribute_names, :connection, :table_name,
-          :table_name_prefix, :translations_table_name, :columns, :to => :model
+          :table_name_prefix, :translations_table_name, :columns, to: :model
 
         def initialize(model)
           @model = model
@@ -90,13 +90,13 @@ module Globalize
           connection.add_index(
             translations_table_name,
             "#{table_name.sub(/^#{table_name_prefix}/, "").singularize}_id",
-            :name => translation_index_name
+            name: translation_index_name
           )
           # index for select('DISTINCT locale') call in translation.rb
           connection.add_index(
             translations_table_name,
             :locale,
-            :name => translation_locale_index_name
+            name: translation_locale_index_name
           )
         end
 
@@ -105,14 +105,14 @@ module Globalize
         end
 
         def drop_translations_index
-          connection.remove_index(translations_table_name, :name => translation_index_name)
+          connection.remove_index(translations_table_name, name: translation_index_name)
         end
 
         def move_data_to_translation_table
           model.find_each do |record|
-            translation = record.translation_for(I18n.default_locale) || record.translations.build(:locale => I18n.default_locale)
+            translation = record.translation_for(I18n.default_locale) || record.translations.build(locale: I18n.default_locale)
             fields.each do |attribute_name, attribute_type|
-              translation[attribute_name] = record.read_attribute(attribute_name, {:translated => false})
+              translation[attribute_name] = record.read_attribute(attribute_name, {translated: false})
             end
             translation.save!
           end
@@ -130,7 +130,7 @@ module Globalize
             end
 
             # Now, update the actual model's record with the hash.
-            @model.update_all(fields_to_update, {:id => translated_record['id']})
+            @model.update_all(fields_to_update, {id: translated_record['id']})
           end
         end
 
@@ -184,7 +184,6 @@ module Globalize
             end
           end
         end
-
       end
     end
   end

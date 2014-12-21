@@ -22,7 +22,7 @@ module Spree
     # Regression tests for #466
     describe ".like_any" do
       context "allow searching products through their translations" do
-        before(:each) do
+        before do
           I18n.locale = :"zh-CN"
         end
 

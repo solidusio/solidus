@@ -20,6 +20,7 @@ module SpreeI18n
       prepend_before_filter :globalize_fallbacks
 
       private
+
         # Overrides the Spree::Core::ControllerHelpers::Common logic so that only
         # supported locales defined by SpreeI18n::Config.supported_locales can
         # actually be set

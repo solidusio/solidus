@@ -4,11 +4,11 @@
 
 <% content_for :page_actions do %>
   <li>
-    <%= button_link_to Spree.t(:back_to_product_property_list), spree.admin_product_product_properties_path(@product_property.product), :icon => 'icon-arrow-left' %>
+    <%= button_link_to Spree.t(:back_to_product_property_list), spree.admin_product_product_properties_path(@product_property.product), icon: 'icon-arrow-left' %>
   </li>
 <% end %>
 
-<%= render :partial => 'spree/shared/error_messages', :locals => { :target => @product_property } %>
+<%= render partial: 'spree/shared/error_messages', locals: { target: @product_property } %>
 <div class="row">
   <fieldset class="no-border-top translations">
     <%= render 'settings' %>
@@ -17,9 +17,8 @@
       <div class="form-buttons filter-actions actions" data-hook="buttons">
         <%= button Spree.t('actions.update'), 'icon-refresh' %>
         <span class="or"><%= Spree.t(:or) %></span>
-        <%= button_link_to Spree.t('actions.cancel'), spree.admin_product_product_properties_path(@product_property.product), :icon => 'icon-remove' %>
+        <%= button_link_to Spree.t('actions.cancel'), spree.admin_product_product_properties_path(@product_property.product), icon: 'icon-remove' %>
       </div>
     <% end %>
   </fieldset>
 </div>
-

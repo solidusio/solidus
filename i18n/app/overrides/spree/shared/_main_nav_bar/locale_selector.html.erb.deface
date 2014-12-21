@@ -4,7 +4,7 @@
     <%= form_tag(spree.set_locale_path) do %>
       <label for="locale"><%= Spree.t(:'i18n.language') %>:</label>
       <%= select_tag(:locale, options_for_select(supported_locales_options, I18n.locale),
-                     :data => { :href => spree.set_locale_path }) %>
+                     data: { href: spree.set_locale_path }) %>
       <noscript>
         <%= submit_tag %>
       </noscript>

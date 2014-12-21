@@ -11,8 +11,8 @@
           <% @resource.class.translated_attribute_names.each_with_index do |attr,i| %>
             <tr style="display:<%= i == 0 ? 'auto' : 'none' %>;" class="<%= attr %> <%= locale %> even">
               <td style="padding:4px;" colspan="2">
-                <%= Spree.t(:'i18n.this_file_language', :locale => locale) %> -
-                <%= Spree.t(attr, :locale => locale ) %>
+                <%= Spree.t(:'i18n.this_file_language', locale: locale) %> -
+                <%= Spree.t(attr, locale: locale ) %>
               </td>
             </tr>
             <tr style="display:<%= i == 0 ? 'auto' : 'none' %>;" class="<%= attr %> <%= locale %> odd">
@@ -25,9 +25,9 @@
               </td>
               <td class="translation table-column">
                 <% if @resource.class.columns_hash[attr.to_s].type == :text %>
-                  <%= g.text_area attr, :class => "fullwidth", :rows => 4 %>
+                  <%= g.text_area attr, class: "fullwidth", rows: 4 %>
                 <% else %>
-                  <%= g.text_field attr, :class => "fullwidth" %>
+                  <%= g.text_field attr, class: "fullwidth" %>
                 <% end %>
               </td>
             </tr>

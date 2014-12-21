@@ -1,4 +1,4 @@
-<%= render :partial => 'spree/admin/shared/product_sub_menu' %>
+<%= render partial: 'spree/admin/shared/product_sub_menu' %>
 
 <% content_for :page_title do %>
   <%= Spree.t(:editing_option_type) %> <span class="green">"<%= @option_type.name %>"</span>
@@ -10,5 +10,5 @@
   </li>
 <% end %>
 
-<%= render :partial => 'spree/shared/error_messages', locals: { target: @option_type } %>
+<%= render partial: 'spree/shared/error_messages', locals: { target: @option_type } %>
 <%= render 'form' %>

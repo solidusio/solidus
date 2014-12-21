@@ -10,7 +10,7 @@ require 'spree_i18n'
 Bundler::GemHelper.install_tasks
 RSpec::Core::RakeTask.new
 
-task :default => :spec
+task default: :spec
 
 spec = eval(File.read('spree_i18n.gemspec'))
 

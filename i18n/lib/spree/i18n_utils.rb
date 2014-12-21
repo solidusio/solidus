@@ -45,6 +45,5 @@ module Spree
       end
     end
     module_function :write_file
-
   end
 end

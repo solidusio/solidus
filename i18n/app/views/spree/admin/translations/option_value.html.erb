@@ -8,7 +8,7 @@
   </li>
 <% end %>
 
-<%= render :partial => 'spree/shared/error_messages', locals: { target: @option_value } %>
+<%= render partial: 'spree/shared/error_messages', locals: { target: @option_value } %>
 <div class="row">
   <fieldset class="no-border-top translations">
     <%= render 'settings' %>

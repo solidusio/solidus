@@ -28,13 +28,13 @@ module SpreeI18n
 
     private
       def locale_presentation(locale, key = true)
-        presentation = "#{Spree.t(:'i18n.this_file_language', :locale => locale)}"
+        presentation = "#{Spree.t(:'i18n.this_file_language', locale: locale)}"
         presentation << " (#{locale})" if key
         [presentation, locale]
       end
 
       def common_options
-        { :class => 'fullwidth' , :multiple => 'true' }
+        { class: 'fullwidth' , multiple: 'true' }
       end
   end
 end
