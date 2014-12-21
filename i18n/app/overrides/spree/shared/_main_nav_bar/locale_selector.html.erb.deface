@@ -1,13 +1,12 @@
-<!-- insert_bottom '#main-nav-bar' -->
+<!-- insert_bottom '#main-nav-bar > .navbar-right' -->
 <% if SpreeI18n::Config.supported_locales.size > 1 %>
-  <li id="locale-select" style="float: right; margin-right: 10px;" data-hook>
-    <%= form_tag(spree.set_locale_path) do %>
-      <label for="locale"><%= Spree.t(:'i18n.language') %>:</label>
-      <%= select_tag(:locale, options_for_select(supported_locales_options, I18n.locale),
-                     data: { href: spree.set_locale_path }) %>
-      <noscript>
-        <%= submit_tag %>
-      </noscript>
+  <li id="locale-select" data-hook>
+    <%= form_tag spree.set_locale_path, class: 'navbar-form' do %>
+      <div class="form-group">
+        <label for="locale" class="sr-only"><%= Spree.t(:'i18n.language') %></label>
+        <%= select_tag(:locale, options_for_select(supported_locales_options, I18n.locale), class: 'form-control', data: { href: spree.set_locale_path }) %>
+        <noscript><%= submit_tag %></noscript>
+      </div>
     <% end %>
   </li>
 <% end %>
