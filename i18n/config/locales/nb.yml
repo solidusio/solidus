@@ -9,7 +9,7 @@ nb:
         firstname: Fornavn
         lastname: Etternavn
         phone: Telefon
-        state: Stat/Fylke
+        state: Fylke
         zipcode: Postnummer
       spree/country:
         iso: ISO
@@ -25,7 +25,7 @@ nb:
         verification_value: 
         year: År
       spree/inventory_unit:
-        state: Tilstand
+        state: status
       spree/line_item:
         price: Pris
         quantity: Antall
@@ -44,7 +44,7 @@ nb:
         payment_state: Betalingsstatus
         shipment_state: Forsendelsesstatus
         special_instructions: Spesielle instrukser
-        state: tilstand
+        state: status
         total: Total
       spree/order/bill_address:
         address1: Adresse
@@ -52,7 +52,7 @@ nb:
         firstname: Forvnavn
         lastname: Etternavn
         phone: Telefon
-        state: Stat/Fylke
+        state: Fylke
         zipcode: Postnummer
       spree/order/ship_address:
         address1: Adresse
@@ -60,8 +60,8 @@ nb:
         firstname: Fornavn
         lastname: Etternavn
         phone: Telefon
-        state: Postadresse Stat/Fylke
-        zipcode: Postadresse Postnummer
+        state: Fylke
+        zipcode: Postnummer
       spree/payment:
         amount: Beløp
       spree/payment_method:
@@ -180,8 +180,8 @@ nb:
         other: Forsendelseskategorier
       spree/shipping_method: 
       spree/state:
-        one: Tilstand
-        other: Tilstand
+        one: Status
+        other: Statuser
       spree/stock_location: Lagerlokasjon 
       spree/stock_transfer: Beholdningsendring
       spree/tax_category:
@@ -283,7 +283,7 @@ nb:
     add_product: Legg til produkt
     add_product_properties: Legg til produktegenskaper
     add_rule_of_type: Legg til regeltype
-    add_state: Legg til tilstand
+    add_state: Legg til status
     add_stock: Legg til lagerbeholdning
     add_stock_management: Legg til lagerstyring
     add_to_cart: Legg i handlekurv
@@ -369,6 +369,7 @@ nb:
     back_to_trackers_list: Tilbake til sporinger
     back_to_users_list: Tilbake til brukere
     back_to_zones_list: Tilbake til soner
+    back_to_countries_list: Tilbake til landsoversikt
     backorderable: Restordre 
     backorders_allowed: Kan settes på restordre
     backordered: I restordre
@@ -591,7 +592,7 @@ nb:
     inventory_adjustment: Justering av varelager
     inventory_error_flash_for_insufficient_quantity: Ikke nok beholdning 
     is_not_available_to_shipment_address: er ikke tilgjengelig for levering
-    iso_name: 
+    iso_name: ISO Navn 
     item: Artikkel
     item_description: Beskrivelse
     item_total: Solgte varer
@@ -903,6 +904,7 @@ nb:
     sales_total_description: Brutto omsetning for alle ordrer
     sales_totals: Brutto omsetninger
     save_and_continue: Lagre og Fortsett 
+    save_my_address: Husk adressen min
     say_no: 'Nei'
     say_yes: 'Ja'
     scope: Virkefelt
@@ -980,7 +982,7 @@ nb:
     spree_gateway_error_flash_for_checkout: Det er en feil med betalingsinformasjonen din - Se over å prøv igjen
     start: Start
     start_date: Gyldig fra
-    state: Tilstand (FYLKE)
+    state: Fylke
     state_based: Tilstandsbasert
     states: Fylker
     states_required: Fylke påkrevd
