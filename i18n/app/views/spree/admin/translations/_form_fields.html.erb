@@ -1,6 +1,6 @@
-<fieldset class="omega eight columns no-border-bottom">
+<fieldset>
   <legend><%= Spree.t(:'i18n.translations') %></legend>
-  <table id="attr_fields" class="no-borders">
+  <table id="attr_fields" class="table">
     <colgroup>
       <col style="width: 10%" />
       <col style="width: 90%" />
@@ -8,26 +8,26 @@
     <tbody>
       <% SpreeI18n::Config.available_locales.each do |locale| %>
         <%= f.globalize_fields_for locale.to_sym do |g| %>
-          <% @resource.class.translated_attribute_names.each_with_index do |attr,i| %>
+          <% @resource.class.translated_attribute_names.each_with_index do |attr, i| %>
             <tr style="display:<%= i == 0 ? 'auto' : 'none' %>;" class="<%= attr %> <%= locale %> even">
-              <td style="padding:4px;" colspan="2">
+              <td colspan="2">
                 <%= Spree.t(:'i18n.this_file_language', locale: locale) %> -
-                <%= Spree.t(attr, locale: locale ) %>
+                <%= Spree.t(attr, locale: locale) %>
               </td>
             </tr>
             <tr style="display:<%= i == 0 ? 'auto' : 'none' %>;" class="<%= attr %> <%= locale %> odd">
-              <td class="flag table-column">
+              <td class="flag">
                 <% if locale.to_s.include?('-') %>
                   <img src="http://www.localeapp.com/assets/flags/regions/<%= locale.to_s.split('-').last %>.png">
                 <% else %>
                   <img src="http://www.localeapp.com/assets/flags/languages/<%= locale %>.png">
                 <% end %>
               </td>
-              <td class="translation table-column">
+              <td class="translation">
                 <% if @resource.class.columns_hash[attr.to_s].type == :text %>
-                  <%= g.text_area attr, class: "fullwidth", rows: 4 %>
+                  <%= g.text_area attr, class: 'form-control', rows: 4 %>
                 <% else %>
-                  <%= g.text_field attr, class: "fullwidth" %>
+                  <%= g.text_field attr, class: 'form-control' %>
                 <% end %>
               </td>
             </tr>

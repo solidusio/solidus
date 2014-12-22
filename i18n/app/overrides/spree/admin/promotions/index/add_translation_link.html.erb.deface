@@ -1,3 +1,2 @@
 <!-- insert_bottom 'td.actions' -->
-<%= link_to '', admin_translations_path('promotions', promotion.id),
-        class: 'icon_link with-tip fa fa-flag no-text', title: Spree.t(:'i18n.translations') %>
+<%= link_to_with_icon 'translate', nil, admin_translations_path('promotions', promotion.id), title: Spree.t(:'i18n.translations'), class: 'btn btn-default' %>

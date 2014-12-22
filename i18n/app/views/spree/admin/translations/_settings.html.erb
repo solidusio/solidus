@@ -1,37 +1,31 @@
-<fieldset class="no-border-bottom">
+<fieldset>
   <legend><%= Spree.t(:settings) %></legend>
-
-  <div class="alpha six columns field">
-    <label for="show-only"><%= Spree.t(:'i18n.show_only') %>:</label>
-    <ul>
-      <li>
-        <input type="radio" name="show-only" value="all" id="show-only-all" checked>
-        <label for="show-only-all">
-          <%= Spree.t(:'i18n.all_translations') %>
+  <div class="row">
+    <div class="col-md-12">
+      <label for="show-only"><%= Spree.t(:'i18n.show_only') %></label>
+      <div class="form-group">
+        <label for="show-only-all" class="radio-inline">
+          <input type="radio" name="show-only" value="all" id="show-only-all" checked>
+          <%= Spree.t(:all) %>
         </label>
-      </li>
-      <li>
-        <input type="radio" name="show-only" value="incomplete" id="show-only-incomplete">
-        <label for="show-only-incomplete">
+        <label for="show-only-incomplete" class="radio-inline">
+          <input type="radio" name="show-only" value="incomplete" id="show-only-incomplete">
           <%= Spree.t(:'i18n.only_incomplete') %>
         </label>
-      </li>
-      <li>
-        <input type="radio" name="show-only" value="complete" id="show-only-complete">
-        <label for="show-only-complete">
+        <label for="show-only-complete" class="radio-inline">
+          <input type="radio" name="show-only" value="complete" id="show-only-complete">
           <%= Spree.t(:'i18n.only_complete') %>
         </label>
-      </li>
-    </ul>
-  </div>
-
-  <div class="omega six columns">
-    <label for="locale"><%= Spree.t(:'i18n.select_locale') %>: </label>
-    <%= select_available_locales_fields %>
+      </div>
+      <div class="form-group">
+        <label for="locale"><%= Spree.t(:'i18n.select_locale') %></label>
+        <%= select_available_locales_fields %>
+      </div>
+    </div>
   </div>
 </fieldset>
 
-<fieldset class="alpha four columns no-border-bottom">
+<fieldset>
   <legend><%= Spree.t(:'i18n.fields') %></legend>
   <nav class="menu">
     <ul id="attr_list">
