@@ -32,6 +32,7 @@ module Spree
     after_initialize :build_source
 
     validates :amount, numericality: true
+    validates :source, presence: true, if: :source_required?
 
     default_scope -> { order("#{self.table_name}.created_at") }
 
@@ -174,6 +175,10 @@ module Spree
           end
         end
         return !errors.present?
+      end
+
+      def source_required?
+        payment_method.present? && payment_method.source_required?
       end
 
       def profiles_supported?

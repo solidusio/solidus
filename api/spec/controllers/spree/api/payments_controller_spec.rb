@@ -33,10 +33,35 @@ module Spree
           expect(json_response["payment_methods"].first).to have_attributes([:id, :name, :description])
         end
 
-        it "can create a new payment" do
-          api_post :create, :payment => { :payment_method_id => PaymentMethod.first.id, :amount => 50 }
-          expect(response.status).to eq(201)
-          expect(json_response).to have_attributes(attributes)
+        context "payment source is not required" do
+          before do
+            Spree::Gateway::Bogus.any_instance.stub(:source_required?).and_return(false)
+          end
+
+          it "can create a new payment" do
+            api_post :create, :payment => { :payment_method_id => PaymentMethod.first.id, :amount => 50 }
+            response.status.should == 201
+            json_response.should have_attributes(attributes)
+          end
+        end
+
+        context "payment source is required" do
+          context "no source is provided" do
+            it "returns errors" do
+              api_post :create, :payment => { :payment_method_id => PaymentMethod.first.id, :amount => 50 }
+              response.status.should == 422
+              json_response['error'].should == "Invalid resource. Please fix errors and try again."
+              json_response['errors']['source'].should == ["can't be blank"]
+            end
+          end
+
+          context "source is provided" do
+            it "can create a new payment" do
+              api_post :create, :payment => { :payment_method_id => PaymentMethod.first.id, :amount => 50, source_attributes: {gateway_payment_profile_id: 1} }
+              response.status.should == 201
+              json_response.should have_attributes(attributes)
+            end
+          end
         end
 
         it "can view a pre-existing payment's details" do
