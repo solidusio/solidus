@@ -11,13 +11,13 @@ module SpreeI18n
     #   supported_locales = [:es, :de, :en]
     #
     #   # right
-    #   { :en => [:en, :de, :es], :es => [:es, :en, :de] .. }
+    #   { en: [:en, :de, :es], es: [:es, :en, :de] .. }
     #
     #   # wrong, spanish locale would fallback to english first
-    #   { :en => [:en, :es], :es => [:en, :es] }
+    #   { en: [:en, :es], es: [:en, :es] }
     #
     #   # wrong, spanish locale would fallback to german first instead of :en (default)
-    #   { :en => [:en, :de, :es], :es => [:es, :de, :en] .. }
+    #   { en: [:en, :de, :es], es: [:es, :de, :en] .. }
     #
     def self.config!
       supported = SpreeI18n::Config.supported_locales

@@ -14,4 +14,3 @@ Spree::Admin::ProductPropertiesController.class_eval do
    [translations_attributes: [:id, :locale, :value]]
   end
 end
-

@@ -1,12 +1,11 @@
 <!-- insert_after '.row .security' -->
-<fieldset class="security no-border-bottom">
-  <legend align="center"><%= Spree.t(:'i18n.localization_settings')%></legend>
-  <div class="field">
+<fieldset class="security">
+  <legend><%= Spree.t(:'i18n.localization_settings') %></legend>
+  <div class="form-group">
     <label for="supported_locales_"><%= Spree.t(:'i18n.supported_locales') %></label>
     <%= select_supported_locales %>
   </div>
-
-  <div class="field">
+  <div class="form-group">
     <label for="available_locales_"><%= Spree.t(:'i18n.available_locales') %></label>
     <%= select_available_locales %>
   </div>

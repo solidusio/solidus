@@ -23,6 +23,7 @@ Starting point:
 * Run `bundle exec rake test_app` to create the test application in `spec/test_app`
 * Make your changes
 * Ensure specs pass by running `bundle exec rspec spec`
+* Ensure all syntax ok by running `rubocop .`
 * Submit your pull request
 
 [1]: http://www.fsf.org/licensing/essays/free-sw.html

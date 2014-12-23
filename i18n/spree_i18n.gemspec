@@ -1,7 +1,13 @@
+# coding: utf-8
+lib = File.expand_path('../lib/', __FILE__)
+$LOAD_PATH.unshift lib unless $LOAD_PATH.include?(lib)
+
+require 'spree_i18n/version'
+
 Gem::Specification.new do |s|
   s.platform    = Gem::Platform::RUBY
   s.name        = 'spree_i18n'
-  s.version     = '3.0.0'
+  s.version     = SpreeI18n.version
   s.summary     = 'Provides locale information for use in Spree.'
   s.description = s.summary
 
@@ -36,4 +42,5 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'database_cleaner', '~> 1.3.0'
   s.add_development_dependency 'ffaker', '>= 1.25.0'
   s.add_development_dependency 'pry-rails', '>= 0.3.0'
+  s.add_development_dependency 'rubocop', '>= 0.24.1'
 end

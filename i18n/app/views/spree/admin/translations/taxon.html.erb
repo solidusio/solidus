@@ -1,27 +1,23 @@
-<%= render :partial => 'spree/admin/shared/configuration_menu' %>
-
 <% content_for :page_title do %>
   <%= Spree.t(:taxon_edit) %>
 <% end %>
 
 <% content_for :page_actions do %>
-  <li>
-    <%= button_link_to Spree.t(:back_to_taxonomies_list), spree.admin_taxonomies_path, icon: 'arrow-left' %>
-  </li>
+  <%= button_link_to Spree.t(:back_to_taxonomies_list), spree.admin_taxonomies_path, class: 'btn-primary', icon: 'arrow-left' %>
 <% end %>
 
-<div class="row">
-  <fieldset class="no-border-top">
+<div class="row translations">
+  <div class="col-md-4">
     <%= render 'settings' %>
-
+  </div>
+  <div class="col-md-8">
     <%= form_for [:admin, @resource.taxonomy, @resource], url: admin_taxonomy_taxon_path(@taxon.taxonomy, @taxon.id) do |f| %>
       <%= render 'form_fields', f: f %>
-
-      <div class="form-buttons" data-hook="buttons">
-        <%= button Spree.t(:update), 'refresh' %>
-        <%= Spree.t(:or) %>
-        <%= button_link_to Spree.t(:cancel), edit_admin_taxonomy_url(@taxon.taxonomy), icon: "remove" %>
+      <div class="form-actions" data-hook="buttons">
+        <%= button Spree.t(:update), 'update' %>
+        <span class="or"><%= Spree.t(:or) %></span>
+        <%= button_link_to Spree.t(:cancel), edit_admin_taxonomy_url(@taxon.taxonomy), icon: 'remove' %>
       </div>
     <% end %>
-  </fieldset>
+  </div>
 </div>

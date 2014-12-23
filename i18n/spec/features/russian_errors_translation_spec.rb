@@ -2,7 +2,7 @@
 
 RSpec.describe "Russian errors translations" do
   def translation(count)
-    Spree.t(:errors_prohibited_this_record_from_being_saved, :count => count)
+    Spree.t(:errors_prohibited_this_record_from_being_saved, count: count)
   end
 
   context "when current locale is Russian" do

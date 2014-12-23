@@ -1,5 +1,10 @@
-.translations {
-  .form-buttons {
-    clear: both;
-  }
+// Remove Bootstrap default border on tables.
+.translations table td {
+  border-top: none !important;
+}
+
+// Patch list buttons that gets squashed.
+// TODO: This should be fixed in spree_backend.
+table.table td.actions {
+  white-space: nowrap;
 }
