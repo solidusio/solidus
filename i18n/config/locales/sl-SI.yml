@@ -2,543 +2,613 @@ sl-SI:
   activerecord:
     attributes:
       spree/address:
-        address1: Address
-        address2: Address (contd.)
-        city: City
-        country: Country
-        firstname: First Name
-        lastname: Last Name
-        phone: Phone
-        state: State
-        zipcode: Zip Code
+        address1:
+        address2:
+        city:
+        country:
+        firstname:
+        lastname:
+        phone:
+        state:
+        zipcode:
+      spree/calculator/tiered_flat_rate:
+        preferred_base_amount:
+        preferred_tiers:
+      spree/calculator/tiered_percent:
+        preferred_base_percent:
+        preferred_tiers:
       spree/country:
-        iso: ISO
-        iso3: ISO3
-        iso_name: ISO Name
-        name: Name
-        numcode: ISO Code
+        iso:
+        iso3:
+        iso_name:
+        name:
+        numcode:
       spree/credit_card:
-        base: 
-        cc_type: Type
-        month: Month
-        number: Number
-        verification_value: Verification Value
-        year: Year
+        base:
+        cc_type:
+        month:
+        name:
+        number:
+        verification_value:
+        year:
       spree/inventory_unit:
-        state: State
+        state:
       spree/line_item:
-        price: Price
-        quantity: Quantity
+        price:
+        quantity:
       spree/option_type:
-        name: Name
-        presentation: Presentation
+        name:
+        presentation:
       spree/order:
-        checkout_complete: 
-        completed_at: 
-        coupon_code: 
-        created_at: 
-        email: 
-        ip_address: 
-        item_total: 
-        number: 
-        payment_state: 
-        shipment_state: 
-        special_instructions: 
-        state: 
-        total: 
+        checkout_complete:
+        completed_at:
+        considered_risky:
+        coupon_code:
+        created_at:
+        email:
+        ip_address:
+        item_total:
+        number:
+        payment_state:
+        shipment_state:
+        special_instructions:
+        state:
+        total:
       spree/order/bill_address:
-        address1: Billing address street
-        city: Billing address city
-        firstname: Billing address first name
-        lastname: Billing address last name
-        phone: Billing address phone
-        state: Billing address state
-        zipcode: Billing address zipcode
+        address1:
+        city:
+        firstname:
+        lastname:
+        phone:
+        state:
+        zipcode:
       spree/order/ship_address:
-        address1: Shipping address street
-        city: Shipping address city
-        firstname: Shipping address first name
-        lastname: Shipping address last name
-        phone: Shipping address phone
-        state: Shipping address state
-        zipcode: Shipping address zipcode
+        address1:
+        city:
+        firstname:
+        lastname:
+        phone:
+        state:
+        zipcode:
       spree/payment:
-        amount: 
+        amount:
       spree/payment_method:
-        name: Name
+        name:
       spree/product:
-        available_on: Available On
-        cost_currency: 
-        cost_price: Cost Price
-        description: Description
-        master_price: Master Price
-        name: Name
-        on_hand: On Hand
-        shipping_category: Shipping Category
-        tax_category: Tax Category
+        available_on:
+        cost_currency:
+        cost_price:
+        description:
+        master_price:
+        name:
+        on_hand:
+        shipping_category:
+        tax_category:
       spree/promotion:
-        advertise: Advertise
-        code: Code
-        description: Description
-        event_name: Event Name
-        expires_at: Expires At
-        name: Name
-        path: Path
-        starts_at: Starts At
-        usage_limit: Usage Limit
+        advertise:
+        code:
+        description:
+        event_name:
+        expires_at:
+        name:
+        path:
+        starts_at:
+        usage_limit:
+      spree/promotion_category:
+        name:
       spree/property:
-        name: Name
-        presentation: Presentation
+        name:
+        presentation:
       spree/prototype:
-        name: Name
+        name:
       spree/return_authorization:
-        amount: Amount
+        amount:
       spree/role:
-        name: Name
+        name:
       spree/state:
-        abbr: Abbreviation
-        name: Name
+        abbr:
+        name:
+      spree/state_change:
+        state_changes:
+        state_from:
+        state_to:
+        timestamp:
+        type:
+        updated:
+        user:
+      spree/store:
+        mail_from_address:
+        meta_description:
+        meta_keywords:
+        name:
+        seo_title:
+        url:
       spree/tax_category:
-        description: Description
-        name: Name
+        description:
+        name:
       spree/tax_rate:
-        amount: Rate
-        included_in_price: Included in Price
-        show_rate_in_label: Show rate in label
+        amount:
+        included_in_price:
+        show_rate_in_label:
       spree/taxon:
-        name: Name
-        permalink: Permalink
-        position: Position
+        name:
+        permalink:
+        position:
       spree/taxonomy:
-        name: Name
+        name:
       spree/user:
-        email: Email
-        password: Password
-        password_confirmation: Password Confirmation
+        email:
+        password:
+        password_confirmation:
       spree/variant:
-        cost_currency: 
-        cost_price: Cost Price
-        depth: Depth
-        height: Height
-        price: Price
-        sku: SKU
-        weight: Weight
-        width: Width
+        cost_currency:
+        cost_price:
+        depth:
+        height:
+        price:
+        sku:
+        weight:
+        width:
       spree/zone:
-        description: Description
-        name: Name
+        description:
+        name:
     errors:
       models:
+        spree/calculator/tiered_flat_rate:
+          attributes:
+            base:
+              keys_should_be_positive_number:
+            preferred_tiers:
+              should_be_hash:
+        spree/calculator/tiered_percent:
+          attributes:
+            base:
+              keys_should_be_positive_number:
+              values_should_be_percent:
+            preferred_tiers:
+              should_be_hash:
+        spree/classification:
+          attributes:
+            taxon_id:
+              already_linked:
         spree/credit_card:
           attributes:
             base:
-              card_expired: 
+              card_expired:
+              expiry_invalid:
+        spree/line_item:
+          attributes:
+            currency:
+              must_match_order_currency:
+        spree/refund:
+          attributes:
+            amount:
+              greater_than_allowed:
+        spree/reimbursement:
+          attributes:
+            base:
+              return_items_order_id_does_not_match:
+        spree/return_item:
+          attributes:
+            inventory_unit:
+              other_completed_return_item_exists:
+            reimbursement:
+              cannot_be_associated_unless_accepted:
+        spree/store:
+          attributes:
+            base:
+              cannot_destroy_default_store:
     models:
       spree/address:
-        one: Address
-        other: Addresses
       spree/country:
-        one: Country
-        other: Countries
       spree/credit_card:
-        one: Credit Card
-        other: Credit Cards
+      spree/customer_return:
       spree/inventory_unit:
-        one: Inventory Unit
-        other: Inventory Units
       spree/line_item:
-        one: Line Item
-        other: Line Items
+      spree/option_type:
+      spree/option_value:
       spree/order:
-        one: Order
-        other: Orders
       spree/payment:
-        one: Payment
-        other: Payments
-      spree/payment_method: 
+      spree/payment_method:
       spree/product:
-        one: Product
-        other: Products
-      spree/promotion: 
+      spree/promotion:
+      spree/promotion_category:
       spree/property:
-        one: Property
-        other: Properties
       spree/prototype:
-        one: Prototype
-        other: Prototypes
+      spree/refund_reason:
+      spree/reimbursement:
+      spree/reimbursement_type:
       spree/return_authorization:
-        one: Return Authorization
-        other: Return Authorizations
+      spree/return_authorization_reason:
       spree/role:
-        one: Roles
-        other: Roles
       spree/shipment:
-        one: Shipment
-        other: Shipments
       spree/shipping_category:
-        one: Shipping Category
-        other: Shipping Categories
-      spree/shipping_method: 
+      spree/shipping_method:
       spree/state:
-        one: State
-        other: States
-      spree/stock_location: 
-      spree/stock_transfer: 
+      spree/state_change:
+      spree/stock_location:
+      spree/stock_movement:
+      spree/stock_transfer:
       spree/tax_category:
-        one: Tax Category
-        other: Tax Categories
       spree/tax_rate:
-        one: Tax Rate
-        other: Tax Rates
       spree/taxon:
-        one: Taxon
-        other: Taxons
       spree/taxonomy:
-        one: Taxonomy
-        other: Taxonomies
-      spree/tracker: 
+      spree/tracker:
       spree/user:
-        one: User
-        other: Users
       spree/variant:
-        one: Variant
-        other: Variants
       spree/zone:
-        one: Zone
-        other: Zones
   devise:
     confirmations:
-      confirmed: 
-      send_instructions: 
+      confirmed:
+      send_instructions:
     failure:
-      inactive: 
-      invalid: 
-      invalid_token: 
-      locked: 
-      timeout: 
-      unauthenticated: 
-      unconfirmed: 
+      inactive:
+      invalid:
+      invalid_token:
+      locked:
+      timeout:
+      unauthenticated:
+      unconfirmed:
     mailer:
       confirmation_instructions:
-        subject: 
+        subject:
       reset_password_instructions:
-        subject: 
+        subject:
       unlock_instructions:
-        subject: 
+        subject:
     oauth_callbacks:
-      failure: 
-      success: 
+      failure:
+      success:
     unlocks:
-      send_instructions: 
-      unlocked: 
+      send_instructions:
+      unlocked:
     user_passwords:
       user:
-        cannot_be_blank: 
-        send_instructions: 
-        updated: 
+        cannot_be_blank:
+        send_instructions:
+        updated:
     user_registrations:
-      destroyed: 
-      inactive_signed_up: 
-      signed_up: 
-      updated: 
+      destroyed:
+      inactive_signed_up:
+      signed_up:
+      updated:
     user_sessions:
-      signed_in: 
-      signed_out: 
+      signed_in:
+      signed_out:
   errors:
     messages:
-      already_confirmed: 
-      not_found: 
-      not_locked: 
-      not_saved: 
+      already_confirmed:
+      not_found:
+      not_locked:
+      not_saved:
   spree:
     abbreviation: Okrajšava
+    accept:
+    acceptance_errors:
+    acceptance_status:
+    accepted:
     account: Uporabniški račun
     account_updated: Uporabniški račun osvežen!
     action: Možnosti
     actions:
       cancel: Prekini
-      continue: 
+      continue:
       create: Ustvari
       destroy: Izbriši
-      edit: 
+      edit:
       list: Prikaz
       listing: Prikazujem
       new: Dodaj
-      save: 
+      refund:
+      save:
       update: Posodobi
     activate: Activate
     active: Objavljeno
     add: Dodaj
     add_action_of_type: Add action of type
     add_country: Dodaj Državo
+    add_coupon_code:
     add_new_header: Add New Header
     add_new_style: Add New Style
-    add_one: 
+    add_one:
     add_option_value: Dodaj izbiro
     add_product: Dodaj izdelek
     add_product_properties: Dodaj lastnosti izdelka
     add_rule_of_type: Dodaj tip pravila
     add_state: Dodaj pokraijno
-    add_stock: 
-    add_stock_management: 
+    add_stock:
+    add_stock_management:
     add_to_cart: Dodaj v košarico
-    add_variant: 
+    add_variant:
     additional_item: Additional Item Cost
-    address1: 
-    address2: 
+    address1:
+    address2:
+    adjustable:
     adjustment: Prilagoditev
-    adjustment_amount: 
-    adjustment_successfully_closed: 
-    adjustment_successfully_opened: 
+    adjustment_amount:
+    adjustment_successfully_closed:
+    adjustment_successfully_opened:
     adjustment_total: Prilagoditev Skupaj
     adjustments: Prilagoditve
     admin:
-      mail_methods:
-        send_testmail: Send Testmail
-        testmail:
-          delivery_error: Testmail delivery error
-          delivery_success: Testmail sent successfully
-          error: ! 'Testmail error: %{e}'
       tab:
-        configuration: 
-        orders: 
-        overview: 
-        products: 
-        promotions: 
-        reports: 
-        users: 
+        configuration:
+        option_types:
+        orders:
+        overview:
+        products:
+        promotions:
+        properties:
+        prototypes:
+        reports:
+        taxonomies:
+        taxons:
+        users:
+      user:
+        account:
+        addresses:
+        items:
+        items_purchased:
+        order_history:
+        order_num:
+        orders:
+        user_information:
     administration: Administracija
-    agree_to_privacy_policy: 
-    agree_to_terms_of_service: 
+    advertise:
+    agree_to_privacy_policy:
+    agree_to_terms_of_service:
     all: Vse
-    all_adjustments_closed: 
-    all_adjustments_opened: 
+    all_adjustments_closed:
+    all_adjustments_opened:
     all_departments: Vsi oddelki
-    allow_ssl_in_development_and_test: Allow SSL to be used when in development and test modes
-    allow_ssl_in_production: Allow SSL to be used in production mode
-    allow_ssl_in_staging: Allow SSL to be used in staging mode
-    already_signed_up_for_analytics: 
+    all_items_have_been_returned:
+    allow_ssl_in_development_and_test:
+    allow_ssl_in_production:
+    allow_ssl_in_staging:
+    already_signed_up_for_analytics:
     alt_text: Alternativni tekst
     alternative_phone: Drugi telefon
     amount: Znesek
-    analytics_desc_header_1: 
-    analytics_desc_header_2: 
-    analytics_desc_list_1: 
-    analytics_desc_list_2: 
-    analytics_desc_list_3: 
-    analytics_desc_list_4: 
+    analytics_desc_header_1:
+    analytics_desc_header_2:
+    analytics_desc_list_1:
+    analytics_desc_list_2:
+    analytics_desc_list_3:
+    analytics_desc_list_4:
     analytics_trackers: Statistike
-    and: and
+    and:
+    approve:
+    approved_at:
+    approver:
     are_you_sure: Ste prepričani?
     are_you_sure_delete: Ste prepričani, da želite izbrisati ta vnos?
-    associated_adjustment_closed: 
-    attachment_default_style: Attachments Style
-    attachment_default_url: Attachments URL
-    attachment_path: Attachments Path
-    attachment_styles: Paperclip Styles
-    attachment_url: 
+    associated_adjustment_closed:
     authorization_failure: Napaka pri avtorizaciji
+    authorized:
+    auto_capture:
     available_on: Na voljo
+    average_order_value:
+    avs_response:
     back: Nazaj
     back_end: Nazaj na Konec
-    back_to_adjustments_list: Back To Adjustments List
-    back_to_images_list: Back To Images List
-    back_to_option_types_list: 
-    back_to_orders_list: 
-    back_to_payment_methods_list: Back To Payment Methods List
-    back_to_payments_list: Back To Payments List
-    back_to_products_list: Back To Products List
-    back_to_promotions_list: Back To Promotions List
-    back_to_properties_list: Back To Products List
-    back_to_prototypes_list: Back To Prototypes List
-    back_to_reports_list: Back To Reports List
-    back_to_shipping_categories: Back To Shipping Categories
-    back_to_shipping_methods_list: Back To Shipping Methods List
-    back_to_states_list: Back To States List
-    back_to_stock_locations_list: 
-    back_to_stock_movements_list: 
-    back_to_stock_transfers_list: 
+    back_to_payment:
+    back_to_resource_list:
+    back_to_rma_reason_list:
     back_to_store: Nazaj v trgovino
-    back_to_tax_categories_list: Back To Tax Categories List
-    back_to_taxonomies_list: Back To Taxonomies List
-    back_to_trackers_list: Back To Trackers List
-    back_to_users_list: 
-    back_to_zones_list: Back To Zones List
-    backorderable: 
-    backorders_allowed: 
+    back_to_users_list:
+    backorderable:
+    backorderable_default:
+    backordered:
+    backorders_allowed:
     balance_due: Balance Due
+    base_amount:
+    base_percent:
     bill_address: Naslov za Račun
     billing: Račun
     billing_address: Naslov za Račun
     both: Oboje
+    calculated_reimbursements:
     calculator: Kalkulator
-    calculator_settings_warning: Če spreminjate tip kalkulatorja, morate pred urejanjem nastavitev najprej shraniti.
+    calculator_settings_warning: "Če spreminjate tip kalkulatorja, morate pred urejanjem nastavitev najprej shraniti."
     cancel: prekini
+    canceled_at:
+    canceler:
+    cannot_create_customer_returns:
     cannot_create_payment_without_payment_methods: You cannot create a payment for an order without any payment methods defined.
     cannot_create_returns: Ne morem generirati vračil, ker naročilo še ni bilo poslano.
     cannot_perform_operation: Ni mogoče izvesti zahtevane operacije
-    cannot_set_shipping_method_without_address: 
+    cannot_set_shipping_method_without_address:
     capture: zajemi
+    capture_events:
     card_code: Koda Kartice
-    card_number: Številka Kartice
+    card_number: "Številka Kartice"
+    card_type:
     card_type_is: Tip kartice je
     cart: Košarica
+    cart_subtotal:
     categories: Kategorije
     category: Kategorija
-    check_for_spree_alerts: 
+    charged:
+    check_for_spree_alerts:
     checkout: Naročilo
-    choose_a_customer: 
-    choose_currency: 
-    choose_dashboard_locale: 
+    choose_a_customer:
+    choose_a_taxon_to_sort_products_for:
+    choose_currency:
+    choose_dashboard_locale:
+    choose_location:
     city: Mesto
+    clear_cache:
+    clear_cache_ok:
+    clear_cache_warning:
+    click_and_drag_on_the_products_to_sort_them:
     clone: Kloniraj
-    close: 
-    close_all_adjustments: 
+    close:
+    close_all_adjustments:
     code: Koda
-    company: 
+    company:
     complete: complete
     configuration: Nastavitev
     configurations: Nastavitve
-    configure_s3: Configure S3
     confirm: Potrdi
     confirm_delete: Potrdi izbris?
     confirm_password: Potrditev gesla
     continue: Nadaljuj
     continue_shopping: Nadaljuj z nakupovanjem
-    cost_currency: 
+    cost_currency:
     cost_price: Nabavna Cena
-    could_not_connect_to_jirafe: 
-    could_not_create_stock_movement: 
-    count_on_hand: 
-    countries: 
+    could_not_connect_to_jirafe:
+    could_not_create_customer_return:
+    could_not_create_stock_movement:
+    count_on_hand:
+    countries:
     country: Država
     country_based: Glede na Države
-    country_name: 
+    country_name:
+    country_names:
+      CA:
+      FRA:
+      ITA:
+      US:
     coupon: Kupon
     coupon_code: Koda kupona
-    coupon_code_already_applied: 
-    coupon_code_applied: The coupon code was successfully applied to your order.
-    coupon_code_better_exists: 
-    coupon_code_expired: 
-    coupon_code_max_usage: 
-    coupon_code_not_eligible: 
-    coupon_code_not_found: 
+    coupon_code_already_applied:
+    coupon_code_applied:
+    coupon_code_better_exists:
+    coupon_code_expired:
+    coupon_code_max_usage:
+    coupon_code_not_eligible:
+    coupon_code_not_found:
+    coupon_code_unknown_error:
     create: Ustvari
     create_a_new_account: Ustvari nov račun
-    created_at: 
+    create_new_order:
+    create_reimbursement:
+    created_at:
     credit: Kredit
     credit_card: Kreditna kartica
-    credit_cards: Credit Cards
-    credit_owed: Credit Owed
-    currency: Currency
-    currency_decimal_mark: 
-    currency_settings: Currency Settings
-    currency_symbol_position: Put currency symbol before or after dollar amount?
-    currency_thousands_separator: 
+    credit_cards:
+    credit_owed:
+    credits:
+    currency:
+    currency_decimal_mark:
+    currency_settings:
+    currency_symbol_position:
+    currency_thousands_separator:
     current: Trenutno
-    current_promotion_usage: 
+    current_promotion_usage:
     customer: Stranka
     customer_details: Podrobnosti stranke
-    customer_details_updated: The customer's details have been updated.
+    customer_details_updated:
+    customer_return:
+    customer_returns:
     customer_search: Iskanje strank
-    cut: Cut
+    cut:
+    cvv_response:
     dash:
       jirafe:
-        app_id: 
-        app_token: 
-        currently_unavailable: 
-        explanation: 
-        header: 
-        site_id: 
-        token: 
-      jirafe_settings_updated: 
-    date: 
-    date_completed: Date Completed
+        app_id:
+        app_token:
+        currently_unavailable:
+        explanation:
+        header:
+        site_id:
+        token:
+      jirafe_settings_updated:
+    date:
+    date_completed:
     date_picker:
-      first_day: 
-      format: 
-      js_format: 
+      first_day:
+      format:
+      js_format:
     date_range: Obdobje
     default: Privzeto
-    default_meta_description: Default Meta Description
-    default_meta_keywords: Default Meta Keywords
-    default_seo_title: Default Seo Title
-    default_tax: Default Tax
-    default_tax_zone: Default Tax Zone
+    default_refund_amount:
+    default_tax:
+    default_tax_zone:
     delete: Izbriši
+    deleted_variants_present:
     delivery: Delivery
     depth: Globina
     description: Opis
-    destination: 
+    destination:
     destroy: Izbriši
+    details:
     discount_amount: Znesek popusta
-    dismiss_banner: No. Thanks! I'm not interested, do not display this message again
+    dismiss_banner:
     display: Prikaži
     display_currency: Display currency
+    doesnt_track_inventory:
     edit: Uredi
-    editing_option_type: Urejanje možnosti izbire
-    editing_payment_method: Urejanje načina plačila
-    editing_product: Urejanje izdelka
-    editing_promotion: Urejanje promocije
-    editing_property: Urejanje lastnosti
-    editing_prototype: Urejanje prototipa
-    editing_shipping_category: Urejanje kategorije poštnine
-    editing_shipping_method: Urejanje načina dostave
-    editing_state: Urejanje pokrajine
-    editing_stock_location: 
-    editing_stock_movement: 
-    editing_tax_category: Urejanje davčne kategorije
-    editing_tax_rate: Urejanje davčne stopnje
-    editing_tracker: Urejanje statistik
+    editing_resource:
+    editing_rma_reason:
     editing_user: Urejanje uporabnika
-    editing_zone: Urejanje območja
-    email: Email
+    eligibility_errors:
+      messages:
+        has_excluded_product:
+        item_total_less_than:
+        item_total_less_than_or_equal:
+        item_total_more_than:
+        item_total_more_than_or_equal:
+        limit_once_per_user:
+        missing_product:
+        missing_taxon:
+        no_applicable_products:
+        no_matching_taxons:
+        no_user_or_email_specified:
+        no_user_specified:
+        not_first_order:
+    email:
     empty: Izprazni
     empty_cart: Izprazni košarico
     enable_mail_delivery: Vklopi pošiljanje emailov
-    end: 
-    ending_in: Ending in
+    end:
+    ending_in:
     environment: Okolje
     error: napaka
     errors:
       messages:
-        could_not_create_taxon: Could not create taxon
-        no_payment_methods_available: No payment methods are configured for this environment
-        no_shipping_methods_available: No shipping methods available for selected location, please change your address and try again.
+        could_not_create_taxon:
+        no_payment_methods_available:
+        no_shipping_methods_available:
     errors_prohibited_this_record_from_being_saved:
-      one: 1 error prohibited this record from being saved
-      other: ! '%{count} errors prohibited this record from being saved'
     event: Dogodek
     events:
       spree:
         cart:
-          add: Add to cart
+          add:
         checkout:
-          coupon_code_added: Coupon code added
+          coupon_code_added:
         content:
-          visited: Visit static content page
+          visited:
         order:
-          contents_changed: Order contents changed
-        page_view: Static page viewed
+          contents_changed:
+        page_view:
         user:
-          signup: User signup
+          signup:
     exceptions:
-      count_on_hand_setter: 
+      count_on_hand_setter:
+    exchange_for:
+    excl:
+    existing_shipments:
+    expedited_exchanges_warning:
     expiration: Velja do
     extension: Razširitev
+    failed_payment_attempts:
     filename: Datoteka
-    fill_in_customer_info: 
-    filter_results: 
+    fill_in_customer_info:
+    filter_results:
     finalize: Zaključi
+    finalized:
+    find_a_taxon:
     first_item: Strošek prvega izdelka
     first_name: Ime
     first_name_begins_with: Ime se začne z
     flat_percent: Fiksni odstotek
-    flat_rate_per_item: Fiksna cena (na izdelek)
     flat_rate_per_order: Fiksna cena (na naročilo)
     flexible_rate: Fleksibilna cena
     forgot_password: Ne spomnim se gesla
     free_shipping: Brezplačna dostava
+    free_shipping_amount:
     front_end: Front End
     gateway: Ponudnik
     gateway_config_unavailable: Gateway unavailable for environment
@@ -551,41 +621,50 @@ sl-SI:
     guest_user_account: Naroči kot gost
     has_no_shipped_units: nima prodajnih enot
     height: Višina
-    hide_cents: 
+    hide_cents:
     home: Domov
     i18n:
-      available_locales: 
-      fields: 
-      language: 
-      localization_settings: 
-      only_complete: 
-      only_incomplete: 
-      select_locale: 
-      show_only: 
-      supported_locales: 
+      available_locales:
+      fields:
+      language:
+      localization_settings:
+      only_complete:
+      only_incomplete:
+      select_locale:
+      show_only:
+      supported_locales:
       this_file_language: Slovenščina (SL)
-      translations: 
+      translations:
     icon: Ikona
+    identifier:
     image: Slika
-    image_settings: Image Settings
-    image_settings_updated: Image Settings successfully updated.
-    image_settings_warning: You will need to regenerate thumbnails if you update the paperclip styles. Use rake paperclip:refresh:thumbnails to do this.
     images: Slike
-    included_in_price: Included in Price
-    included_price_validation: cannot be selected unless you have set a Default Tax Zone
-    instructions_to_reset_password: ! 'Izpolnite spodnji obrazec in navodila za ponastavitev gesla vam bomo poslali na email:'
-    insufficient_stock: Insufficient stock available, only %{on_hand} remaining
+    implement_eligible_for_return:
+    implement_requires_manual_intervention:
+    inactive:
+    incl:
+    included_in_price:
+    included_price_validation:
+    incomplete:
+    info_number_of_skus_not_shown:
+    info_product_has_multiple_skus:
+    instructions_to_reset_password: 'Izpolnite spodnji obrazec in navodila za ponastavitev gesla vam bomo poslali na email:'
+    insufficient_stock:
+    insufficient_stock_lines_present:
     intercept_email_address: Prestrezi Email naslov
     intercept_email_instructions: Zamenjaj prejemnika email sporočila s tem naslovom
-    internal_name: 
-    invalid_payment_provider: 
-    invalid_promotion_action: 
-    invalid_promotion_rule: 
+    internal_name:
+    invalid_credit_card:
+    invalid_exchange_variant:
+    invalid_payment_provider:
+    invalid_promotion_action:
+    invalid_promotion_rule:
     inventory: Inventar
     inventory_adjustment: Prilagoditev inventarja
-    inventory_error_flash_for_insufficient_quantity: 
+    inventory_error_flash_for_insufficient_quantity:
+    inventory_state:
     is_not_available_to_shipment_address: ni na voljo za ta naslov pošiljanja
-    iso_name: 
+    iso_name:
     item: Izdelek
     item_description: Opis izdelka
     item_total: Izdelki skupaj
@@ -593,24 +672,26 @@ sl-SI:
       operators:
         gt: večje
         gte: večje ali enako
-    items_cannot_be_shipped: 
-    jirafe: 
+        lt:
+        lte:
+    items_cannot_be_shipped:
+    items_in_rmas:
+    items_reimbursed:
+    items_to_be_reimbursed:
+    jirafe:
     landing_page_rule:
-      path: Path
+      path:
     last_name: Priimek
     last_name_begins_with: Priimek se začne z
     learn_more: Learn More
+    lifetime_stats:
+    line_item_adjustments:
     list: Seznam
-    listing_countries: 
-    listing_orders: Naročila
-    listing_products: Listing Products
-    listing_reports: Poročila
-    listing_tax_categories: Davčne kategorije
-    listing_users: Uporabniki
     loading: Nalagam
     locale_changed: Locale Changed
-    location: 
-    lock: 
+    location:
+    lock:
+    log_entries:
     logged_in_as: Prijavljeni ste kot
     logged_in_succesfully: Prijava uspešna
     logged_out: Uspešno ste se odjavili.
@@ -619,30 +700,38 @@ sl-SI:
     login_failed: Prijava ni uspela.
     login_name: Uporabniško ime
     logout: Odjava
+    logs:
     look_for_similar_items: Poišči podobne izdelke
-    maestro_or_solo_cards: Maestro/Solo kartice
-    mail_method_settings: 
-    mail_methods: Mail Methods
-    make_refund: Make refund
+    make_refund:
+    make_sure_the_above_reimbursement_amount_is_correct:
+    manage_promotion_categories:
+    manage_variants:
+    manual_intervention_required:
     master_price: Osnovna cena
     match_choices:
       all: All
       none: None
     max_items: Max Izdelkov
+    member_since:
+    memo:
     meta_description: Meta opis
     meta_keywords: Meta ključne besede
+    meta_title:
     metadata: Metadata
     minimal_amount: Minimalni znesek
     month: Mesec
     more: More
-    move_stock_between_locations: 
+    move_stock_between_locations:
     my_account: Moj račun
     my_orders: Moja naročila
     name: Ime
+    name_on_card:
     name_or_sku: Ime ali šifra
     new: Novo
     new_adjustment: Nova prilagoditev
+    new_country:
     new_customer: Nova stranka
+    new_customer_return:
     new_image: Dodaj sliko
     new_option_type: Nova možnost izbire
     new_order: Novo naročilo
@@ -651,15 +740,20 @@ sl-SI:
     new_payment_method: Nov način plačila
     new_product: Dodaj Izdelek
     new_promotion: Dodaj promocijo
+    new_promotion_category:
     new_property: Dodaj lastnost
     new_prototype: Dodaj prototip
+    new_refund:
+    new_refund_reason:
     new_return_authorization: Nova avtorizacija vračila
+    new_rma_reason:
+    new_shipment_at_location:
     new_shipping_category: Dodaj kategorijo poštnine
     new_shipping_method: Dodaj tip dostave
     new_state: Nova Zvezna Država
-    new_stock_location: 
-    new_stock_movement: 
-    new_stock_transfer: 
+    new_stock_location:
+    new_stock_movement:
+    new_stock_transfer:
     new_tax_category: Dodaj davčno stopnjo
     new_tax_rate: Dodaj davčno stopnjo
     new_taxon: Dodaj takson
@@ -669,25 +763,25 @@ sl-SI:
     new_variant: Dodaj varianto
     new_zone: Dodaj območje
     next: Naprej
-    no_actions_added: 
-    no_orders_found: 
-    no_payment_methods_found: 
-    no_pending_payments: 
+    no_actions_added:
+    no_payment_found:
+    no_pending_payments:
     no_products_found: Ni izdelkov
-    no_promotions_found: 
-    no_resource_found: 
+    no_resource_found:
     no_results: Ni zadetkov
+    no_returns_found:
     no_rules_added: Ni dodanih pravil
-    no_shipping_methods_found: 
-    no_stock_locations_found: 
-    no_trackers_found: 
-    no_tracking_present: 
+    no_shipping_method_selected:
+    no_state_changes:
+    no_tracking_present:
     none: Noben
+    none_selected:
     normal_amount: Normalna količina
     not: ne
     not_available: N/A
-    not_enough_stock: 
-    not_found: ! '%{resource} is not found'
+    not_enough_stock:
+    not_found: "%{resource} is not found"
+    note:
     notice_messages:
       product_cloned: Izdelek je bil podvojen
       product_deleted: Izdelek je bil izbrisan
@@ -695,52 +789,59 @@ sl-SI:
       product_not_deleted: Izdelka ni mogoče izbrisati
       variant_deleted: Varianta je bila izbrisana
       variant_not_deleted: Variante ni mogoče izbrisati
+    num_orders:
     on_hand: Na zalogi
-    open: 
-    open_all_adjustments: 
+    open:
+    open_all_adjustments:
     option_type: Option Type
-    option_type_placeholder: 
+    option_type_placeholder:
     option_types: Možnosti izbire
     option_value: Option Value
     option_values: Izbire
-    optional: 
+    optional:
     options: Možnosti
     or: ali
-    or_over_price: ! '%{price} or over'
+    or_over_price: "%{price} or over"
     order: Naročilo
-    order_adjustments: Order adjustments
+    order_adjustments:
+    order_already_updated:
+    order_approved:
+    order_canceled:
     order_details: Podrobnosti naročila
     order_email_resent: Email z naročilom je bil ponovno poslan.
-    order_information: 
+    order_information:
     order_mailer:
       cancel_email:
-        dear_customer: Dear Customer,
-        instructions: Your order has been CANCELED.  Please retain this cancellation information for your records.
-        order_summary_canceled: Order Summary [CANCELED]
-        subject: Cancellation of Order
-        subtotal: 
-        total: 
+        dear_customer:
+        instructions:
+        order_summary_canceled:
+        subject:
+        subtotal:
+        total:
       confirm_email:
-        dear_customer: Dear Customer,
-        instructions: Please review and retain the following order information for your records.
-        order_summary: Order Summary
-        subject: Order Confirmation
-        subtotal: 
-        thanks: Thank you for your business.
-        total: 
-    order_not_found: 
-    order_number: Naročilo
+        dear_customer:
+        instructions:
+        order_summary:
+        subject:
+        subtotal:
+        thanks:
+        total:
+    order_not_found:
+    order_number:
     order_populator:
-      out_of_stock: 
-      please_enter_reasonable_quantity: 
+      out_of_stock:
+      please_enter_reasonable_quantity:
+      selected_quantity_not_available:
     order_processed_successfully: Vaše naročilo je bilo uspešno obdelano
+    order_resumed:
     order_state:
       address: naslov
-      awaiting_return: čakajo na vrnitev
+      awaiting_return: "čakajo na vrnitev"
       canceled: preklicana
       cart: košarica
       complete: končaj
       confirm: potrdi
+      considered_risky:
       delivery: dostava
       payment: plačilo
       resumed: resumed
@@ -750,79 +851,92 @@ sl-SI:
     order_total: Naročilo skupaj
     order_updated: Naročilo osveženo
     orders: Naročila
+    other_items_in_other:
     out_of_stock: Ni na zalogi
     overview: Pregled
-    package_from: 
+    package_from:
     pagination:
-      next_page: next page &raquo;
-      previous_page: ! '&laquo; previous page'
-      truncate: ! '&hellip;'
+      next_page:
+      previous_page:
+      truncate: "…"
     password: Geslo
     paste: Paste
     path: Pot
     pay: plačaj
     payment: Plačilo
+    payment_could_not_be_created:
+    payment_identifier:
     payment_information: Podatki o plačilu
     payment_method: Način plačila
-    payment_method_not_supported: 
+    payment_method_not_supported:
     payment_methods: Načini plačila
     payment_processing_failed: Plačila ni možno izvesti, prosimo preverite vnešene podatke
-    payment_processor_choose_banner_text: If you need help choosing a payment processor, please visit
-    payment_processor_choose_link: our payments page
+    payment_processor_choose_banner_text:
+    payment_processor_choose_link:
     payment_state: Stanje plačila
     payment_states:
-      balance_due: balance due
-      checkout: checkout
-      completed: completed
-      credit_owed: credit owed
-      failed: failed
+      balance_due:
+      checkout:
+      completed:
+      credit_owed:
+      failed:
       paid: plačano
-      pending: pending
-      processing: processing
-      void: void
+      pending:
+      processing:
+      void:
     payment_updated: Plačilo osveženo
     payments: Plačila
-    percent: 
-    percent_per_item: Percent Per Item
+    pending:
+    percent:
+    percent_per_item:
     permalink: Povezava
     phone: Telefon
     place_order: Oddaj naročilo
-    please_define_payment_methods: Please define some payment methods first.
-    populate_get_error: Something went wrong. Please try adding the item again.
+    please_define_payment_methods:
+    populate_get_error:
     powered_by: Poganja
+    pre_tax_amount:
+    pre_tax_refund_amount:
+    pre_tax_total:
+    preferred_reimbursement_type:
     presentation: Prikazano ime
     previous: Nazaj
+    previous_state_missing:
     price: Cena
-    price_range: Price Range
-    price_sack: Price Sack
+    price_range:
+    price_sack:
     process: Procesiraj
     product: Izdelek
     product_details: Podrobnosti izdelka
     product_has_no_description: Izdelek nima opisa
-    product_not_available_in_this_currency: 
+    product_not_available_in_this_currency:
     product_properties: Lastnosti izdelka
     product_rule:
       choose_products: Izberite izdelke
-      label: Naročilo mora vsebovati naslednje izdelke %{select}
+      label:
       match_all: vse
       match_any: vsaj en
+      match_none:
       product_source:
         group: Iz skupine izdelkov
         manual: Ročno izberi
     products: Izdelki
-    promotion: Promotion
-    promotion_action: Promotion Action
+    promotion:
+    promotion_action:
     promotion_action_types:
       create_adjustment:
-        description: Creates a promotion credit adjustment on the order
-        name: Create adjustment
+        description:
+        name:
+      create_item_adjustments:
+        description:
+        name:
       create_line_items:
-        description: Populates the cart with the specified quantity of variant
-        name: Create line items
-      give_store_credit:
-        description: Gives the user store credit of the amount specified
-        name: Give store credit
-    promotion_actions: Actions
+        description:
+        name:
+      free_shipping:
+        description:
+        name:
+    promotion_actions:
     promotion_form:
       match_policies:
         all: Ujemaj se s katerim koli izmed teh pravil
@@ -838,38 +952,78 @@ sl-SI:
       landing_page:
         description: Customer must have visited the specified page
         name: Landing Page
+      one_use_per_user:
+        description:
+        name:
+      option_value:
+        description:
+        name:
       product:
         description: Naročilo vsebuje določene izdelke
         name: Izdelek(i)
+      taxon:
+        description:
+        name:
       user:
         description: Na vojo samo za določene uporabnike
         name: Uporabnik
       user_logged_in:
-        description: Available only to logged in users
-        name: User Logged In
+        description:
+        name:
+    promotion_uses:
+    promotionable:
     promotions: Promocije
+    propagate_all_variants:
     properties: Lastnosti
     property: Lastnost
     prototype: Prototip
     prototypes: Prototipi
     provider: Ponudnik
-    provider_settings_warning: Če spreminjate tip ponudnika, morate najprej shraniti predno lahko urejate nastavitve ponudnika
+    provider_settings_warning: "Če spreminjate tip ponudnika, morate najprej shraniti predno lahko urejate nastavitve ponudnika"
     qty: Količina
-    quantity: 
+    quantity:
     quantity_returned: Quantity Returned
     quantity_shipped: Poslana količina
+    quick_search:
     rate: Stopnja
     reason: Razlog
     receive: prejmi
-    receive_stock: 
+    receive_stock:
     received: Prejeto
-    reference: 
+    reception_status:
+    reference:
     refund: Povračilo
+    refund_amount_must_be_greater_than_zero:
+    refund_reasons:
+    refunded_amount:
+    refunds:
     register: Registriraj se kot nov uporabnik
     registration: Registracija
+    reimburse:
+    reimbursed:
+    reimbursement:
+    reimbursement_mailer:
+      reimbursement_email:
+        days_to_send:
+        dear_customer:
+        exchange_summary:
+        for:
+        instructions:
+        refund_summary:
+        subject:
+        total_refunded:
+    reimbursement_perform_failed:
+    reimbursement_status:
+    reimbursement_type:
+    reimbursement_type_override:
+    reimbursement_types:
+    reimbursements:
+    reject:
+    rejected:
     remember_me: Zapomni si me
     remove: Odstrani
-    rename: Rename
+    rename:
+    report:
     reports: Poročila
     resend: Pošlji ponovno
     reset_password: Ponastavi moje geslo
@@ -878,27 +1032,36 @@ sl-SI:
     resumed: Nadaljevana
     return: vračilo
     return_authorization: Avtorizacija vračila
+    return_authorization_reasons:
     return_authorization_updated: Avtorizacija vračila spremenjena
     return_authorizations: Avtorizacije vračil
+    return_item_inventory_unit_ineligible:
+    return_item_inventory_unit_reimbursed:
+    return_item_rma_ineligible:
+    return_item_time_period_ineligible:
+    return_items:
+    return_items_cannot_be_associated_with_multiple_orders:
+    return_number:
     return_quantity: Količina za vračilo
     returned: Vrnjeno
-    review: Review
+    returns:
+    review:
+    risk:
+    risk_analysis:
+    risky:
     rma_credit: RMA kredit
     rma_number: RMA šifra
     rma_value: RMA vrednost
     roles: Vloge
-    rules: Rules
-    s3_access_key: Access Key
-    s3_bucket: Bucket
-    s3_headers: S3 Headers
-    s3_protocol: S3 Protocol
-    s3_secret: Secret Key
+    rules:
+    safe:
     sales_total: Skupaj
     sales_total_description: Sales Total For All Orders
-    sales_totals: 
+    sales_totals:
     save_and_continue: Shrani in nadaljuj
-    say_no: 'No'
-    say_yes: 'Yes'
+    save_my_address:
+    say_no:
+    say_yes:
     scope: Pravilo
     search: Najdi
     search_results: Iskalni razultati za '%{keywords}'
@@ -906,8 +1069,10 @@ sl-SI:
     secure_connection_type: Tip varne povezave
     security_settings: Security Settings
     select: Izberi
+    select_a_return_authorization_reason:
+    select_a_stock_location:
     select_from_prototype: Izberi iz prototipa
-    select_stock: 
+    select_stock:
     send_copy_of_all_mails_to: Pošlji kopijo vseh emailov na
     send_mails_as: Pošiljatelj izhodnih emailov
     server: Strežnik
@@ -915,105 +1080,143 @@ sl-SI:
     settings: Nastavitve
     ship: pošlji
     ship_address: Naslov za dostavo
-    ship_total: 
+    ship_total:
     shipment: Pošiljka
-    shipment_inc_vat: Shipment including VAT
+    shipment_adjustments:
+    shipment_details:
     shipment_mailer:
       shipped_email:
-        dear_customer: Dear Customer,
+        dear_customer: Dear Customer,\n
         instructions: Your order has been shipped
         shipment_summary: Shipment Summary
         subject: Shipment Notification
         thanks: Thank you for your business.
-        track_information: ! 'Tracking Information: %{tracking}'
-        track_link: 
+        track_information: 'Tracking Information: %{tracking}'
+        track_link:
     shipment_state: Stanje pošiljke
     shipment_states:
       backorder: backorder
+      canceled:
       partial: delno
       pending: v teku
       ready: pripravljeno
       shipped: poslano
+    shipment_transfer_error:
+    shipment_transfer_success:
     shipments: Pošiljke
     shipped: Poslano
     shipping: Poštnina
     shipping_address: Naslov za dostavo
     shipping_categories: Kategorije poštnine
     shipping_category: Kategorija poštnine
-    shipping_flat_rate_per_item: 
-    shipping_flat_rate_per_order: 
-    shipping_flexible_rate: 
+    shipping_flat_rate_per_item:
+    shipping_flat_rate_per_order:
+    shipping_flexible_rate:
     shipping_instructions: Navodila za dostavo
     shipping_method: Način dostave
     shipping_methods: Načini dostave
-    shipping_price_sack: 
+    shipping_price_sack:
+    shipping_total:
     shop_by_taxonomy: Preglej %{taxonomy}
     shopping_cart: Nakupovalna košarica
     show: Prikaži
     show_active: Prikaži objavljene
     show_deleted: Prikaži izbrisane
     show_only_complete_orders: Prikaži le dokončana naročila
-    show_rate_in_label: 
-    site_name: Ime spletne trgovine
-    site_url: URL spletne trgovine
-    sku: šifra
-    smtp: SMTP
-    smtp_authentication_type: SMTP način avtentikacije
-    smtp_domain: SMTP domena
-    smtp_mail_host: SMTP strežnik
-    smtp_password: SMTP geslo
-    smtp_port: SMTP port
-    smtp_send_all_emails_as_from_following_address: Pošiljaj vse emaile s sledečega email naslova.
-    smtp_send_copy_to_this_addresses: Pošlji kopijo emailov naročil na sledeče email naslove(ločene z vejico).
-    smtp_username: SMTP Uporabniško ime
-    source: 
+    show_only_considered_risky:
+    show_rate_in_label:
+    sku: "šifra"
+    skus:
+    slug:
+    source:
     special_instructions: Special Instructions
-    split: 
-    spree/order:
-      coupon_code: 
+    split:
     spree_gateway_error_flash_for_checkout: There was a problem with your payment information. Please check your information and try again.
+    ssl:
+      change_protocol:
     start: Od
-    start_date: Veljaven od
     state: Pokrajina
     state_based: Na osnovi pokrajin
+    state_machine_states:
+      accepted:
+      address:
+      authorized:
+      awaiting:
+      awaiting_return:
+      backordered:
+      canceled:
+      cart:
+      checkout:
+      closed:
+      complete:
+      completed:
+      confirm:
+      delivery:
+      errored:
+      failed:
+      given_to_customer:
+      invalid:
+      manual_intervention_required:
+      on_hand:
+      open:
+      order:
+      payment:
+      pending:
+      processing:
+      ready:
+      reimbursed:
+      resumed:
+      returned:
+      shipped:
+      void:
     states: Pokrajine
-    states_required: 
+    states_required:
     status: Status
-    stock_location: 
-    stock_location_info: 
-    stock_locations: 
-    stock_management: 
-    stock_management_requires_a_stock_location: 
-    stock_movements: 
-    stock_movements_for_stock_location: 
-    stock_successfully_transferred: 
-    stock_transfer: 
-    stock_transfers: 
+    stock:
+    stock_location:
+    stock_location_info:
+    stock_locations:
+    stock_locations_need_a_default_country:
+    stock_management:
+    stock_management_requires_a_stock_location:
+    stock_movements:
+    stock_movements_for_stock_location:
+    stock_successfully_transferred:
+    stock_transfer:
+    stock_transfers:
     stop: Do
     store: Trgovina
     street_address: Ulica in hišna številka
     street_address_2: Ulica dodatno
     subtotal: Skupaj
     subtract: Odštej
-    successfully_created: ! '%{resource} has been successfully created!'
-    successfully_removed: ! '%{resource} has been successfully removed!'
-    successfully_signed_up_for_analytics: 
-    successfully_updated: ! '%{resource} has been successfully updated!'
+    success:
+    successfully_created: "%{resource} has been successfully created!"
+    successfully_refunded:
+    successfully_removed: "%{resource} has been successfully removed!"
+    successfully_signed_up_for_analytics:
+    successfully_updated: "%{resource} has been successfully updated!"
+    summary:
     tax: DDV
     tax_categories: Davčne kategorije
     tax_category: Davčna kategorija
-    tax_rate_amount_explanation: 
+    tax_code:
+    tax_included:
+    tax_rate_amount_explanation:
     tax_rates: Davčne stopnje
-    tax_settings: Nastavitve davkov
-    tax_total: Davek skupaj
     taxon: Takson
     taxon_edit: Uredi takson
-    taxon_placeholder: 
+    taxon_placeholder:
+    taxon_rule:
+      choose_taxons:
+      label:
+      match_all:
+      match_any:
     taxonomies: Taksonomije
     taxonomy: Taxonomy
     taxonomy_edit: Uredi taksonomijo
     taxonomy_tree_error: Zahtevana sprememba ni bila sprejeta zato je bila drevesna struktura povrnjena v prejšnje stanje, prosimo poskusite znova.
-    taxonomy_tree_instruction: ! '* Ob desnem kliku na vejo v drevesni strukturi se odpre meni za dodajanje, sortiranje in brisanje elementov'
+    taxonomy_tree_instruction: "* Ob desnem kliku na vejo v drevesni strukturi se odpre meni za dodajanje, sortiranje in brisanje elementov"
     taxons: Taksoni
     test: Test
     test_mailer:
@@ -1023,30 +1226,42 @@ sl-SI:
         subject: Testmail
     test_mode: Testni način
     thank_you_for_your_order: Hvala za zaupanje. Prosimo natisnite si kopijo te potrditvene strani za lastno referenco.
-    there_are_no_items_for_this_order: 
+    there_are_no_items_for_this_order:
     there_were_problems_with_the_following_fields: There were problems with the following fields
+    this_order_has_already_received_a_refund:
     thumbnail: Mala slika
-    time: 
+    tiered_flat_rate:
+    tiered_percent:
+    tiers:
+    time:
     to_add_variants_you_must_first_define: Za dodajanje variant, morate najprej definirati
     total: Skupaj
+    total_per_item:
+    total_pre_tax_refund:
+    total_price:
+    total_sales:
+    track_inventory:
     tracking: Sledenje
-    tracking_number: 
-    tracking_url: 
-    tracking_url_placeholder: 
-    transfer_from_location: 
-    transfer_stock: 
-    transfer_to_location: 
+    tracking_number:
+    tracking_url:
+    tracking_url_placeholder:
+    transaction_id:
+    transfer_from_location:
+    transfer_stock:
+    transfer_to_location:
     tree: Drevo
     type: Tip
     type_to_search: Vrsta iskanja
     unable_to_connect_to_gateway: Povezava do ponudnika plačilnih storitev ni uspela
+    unable_to_create_reimbursements:
     under_price: Under %{price}
-    unlock: 
+    unlock:
     unrecognized_card_type: Neznan tip kartice
-    unshippable_items: 
+    unshippable_items:
     update: Spremeni
     updating: Osvežujem
     usage_limit: Omejitev uporabe
+    use_app_default:
     use_billing_address: Uporabi naslov za račun
     use_new_cc: Uporabi drugo kreditno karico
     use_s3: Use Amazon S3 For Images
@@ -1056,26 +1271,27 @@ sl-SI:
     users: Uporabniki
     validation:
       cannot_be_less_than_shipped_units: ne more biti manjše od števila prodanih enot.
-      cannot_destory_line_item_as_inventory_units_have_shipped: Cannot destory line item as some inventory units have shipped.
-      exceeds_available_stock: 
+      cannot_destroy_line_item_as_inventory_units_have_shipped:
+      exceeds_available_stock:
       is_too_large: je prevelika -- na zalogi ni dovolj naročenih izdelkov!
       must_be_int: mora biti celo število
       must_be_non_negative: mora biti pozitivna vrednost
+      unpaid_amount_not_zero:
     value: Vrednost
     variant: Variant
-    variant_placeholder: 
+    variant_placeholder:
     variants: Variante
     version: Verzija
     void: Neveljaven
     weight: Teža
     what_is_a_cvv: Kaj je CVV varnostna številka kreditne kartice?
     what_is_this: Kaj je to?
-    width: Širina
+    width: "Širina"
     year: Leto
     you_have_no_orders_yet: You have no orders yet.
     your_cart_is_empty: Vaša nakupovalna košarica je prazna
-    your_order_is_empty_add_product: 
+    your_order_is_empty_add_product:
     zip: Poštna številka
-    zipcode: 
+    zipcode:
     zone: Območje
     zones: Območja
