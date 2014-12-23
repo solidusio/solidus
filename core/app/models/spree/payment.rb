@@ -39,6 +39,7 @@ module Spree
     after_rollback :persist_invalid
 
     validates :amount, numericality: true
+    validates :source, presence: true, if: :source_required?
 
     # transaction_id is much easier to understand
     def transaction_id
@@ -164,6 +165,10 @@ module Spree
           end
         end
         return !errors.present?
+      end
+
+      def source_required?
+        payment_method.present? && payment_method.source_required?
       end
 
       def profiles_supported?

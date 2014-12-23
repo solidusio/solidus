@@ -141,12 +141,22 @@ module Spree
 
       it "can update payment method and transition from payment to confirm" do
         order.update_column(:state, "payment")
+        Spree::Gateway::Bogus.any_instance.stub(:source_required?).and_return(false)
         api_put :update, :id => order.to_param, :order_token => order.token,
           :order => { :payments_attributes => [{ :payment_method_id => @payment_method.id }] }
         json_response['state'].should == 'confirm'
         json_response['payments'][0]['payment_method']['name'].should == @payment_method.name
         json_response['payments'][0]['amount'].should == order.total.to_s
         response.status.should == 200
+      end
+
+      it "returns errors when source is required and missing" do
+        order.update_column(:state, "payment")
+        api_put :update, :id => order.to_param, :order_token => order.token,
+          :order => { :payments_attributes => [{ :payment_method_id => @payment_method.id }] }
+        response.status.should == 422
+        source_errors = json_response['errors']['payments.source']
+        source_errors.should include("can't be blank")
       end
 
       it "can update payment method with source and transition from payment to confirm" do
