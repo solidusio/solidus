@@ -66,7 +66,7 @@ describe "Products" do
           context "uses руб as the currency symbol" do
             it "on the products listing page" do
               click_link "Products"
-              within_row(1) { page.should have_content("руб19.99") }
+              within_row(1) { page.should have_content("₽19.99") }
             end
           end
         end
