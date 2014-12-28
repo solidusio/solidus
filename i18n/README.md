@@ -78,7 +78,7 @@ translations that do not exist.*
 
 ---
 
-Copyright (c) 2014 [Spree Commerce Inc.][1] and other [contributors][5]. released under the [New BSD License][6]
+Copyright (c) 2010-2015 [Spree Commerce Inc.][1] and other [contributors][5]. released under the [New BSD License][6]
 
 [1]: http://spreecommerce.com
 [2]: http://guides.spreecommerce.com/developer/i18n.html
