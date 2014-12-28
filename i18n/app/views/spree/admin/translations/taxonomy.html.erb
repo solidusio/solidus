@@ -1,9 +1,9 @@
 <% content_for :page_title do %>
-  <%= Spree.t(:taxonomy_edit) %>
+  <%= Spree.t(:editing_resource, resource: Spree::Taxonomy.model_name.human) %>
 <% end %>
 
 <% content_for :page_actions do %>
-  <%= button_link_to Spree.t(:back_to_taxonomies_list), spree.admin_taxonomies_path, class: 'btn-primary', icon: 'arrow-left' %>
+  <%= button_link_to Spree.t(:back_to_resource_list, resource: Spree::Taxonomy.model_name.human), spree.admin_taxonomies_path, class: 'btn-primary', icon: 'arrow-left' %>
 <% end %>
 
 <%= render 'form' %>
