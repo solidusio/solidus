@@ -31,7 +31,7 @@ RSpec.feature "Translations", :js do
 
       scenario "displays translated value on frontend" do
         visit spree.admin_product_product_properties_path(product_property.product)
-        find('.fa-flag').click
+        within_row(1) { click_icon :translate }
 
         within("#attr_fields .value.pt-BR.odd") { fill_in_name "vermelho" }
         click_on "Update"
@@ -48,7 +48,7 @@ RSpec.feature "Translations", :js do
 
       scenario "displays translated name on frontend" do
         visit spree.admin_option_types_path
-        find('.fa-flag').click
+        within_row(1) { click_icon :translate }
 
         within("#attr_fields .name.en.odd") { fill_in_name "shirt sizes" }
         within("#attr_list") { click_on "Presentation" }
@@ -79,7 +79,7 @@ RSpec.feature "Translations", :js do
 
       scenario "displays translated name on frontend" do
         visit spree.edit_admin_option_type_path(option_type)
-        find('.fa-flag').click
+        within_row(1) { click_icon :translate }
 
         within("#attr_fields .name.en.odd") { fill_in_name "big" }
         within("#attr_list") { click_on "Presentation" }
@@ -98,7 +98,7 @@ RSpec.feature "Translations", :js do
 
       scenario "displays translated name on frontend" do
         visit spree.admin_properties_path
-        find('.fa-flag').click
+        within_row(1) { click_icon :translate }
 
         within("#attr_fields .name.pt-BR.odd") { fill_in_name "Modelo" }
         within("#attr_list") { click_on "Presentation" }
@@ -119,7 +119,7 @@ RSpec.feature "Translations", :js do
 
     scenario "saves translated attributes properly" do
       visit spree.admin_promotions_path
-      find('.fa-flag').click
+      within_row(1) { click_icon :translate }
 
       within("#attr_fields .name.en.odd") { fill_in_name "All free" }
       within("#attr_fields .name.pt-BR.odd") { fill_in_name "Salve salve" }
@@ -132,9 +132,9 @@ RSpec.feature "Translations", :js do
 
     it "render edit route properly" do
       visit spree.admin_promotions_path
-      find('.fa-flag').click
-      find('.fa-remove').click
-      expect(page).to have_css('.page-title')
+      within_row(1) { click_icon :translate }
+      click_on 'Cancel'
+      expect(page).to have_css('.content-header')
     end
   end
 
@@ -143,7 +143,7 @@ RSpec.feature "Translations", :js do
 
     scenario "display translated name on frontend" do
       visit spree.admin_taxonomies_path
-      find('.fa-flag').click
+      within_row(1) { click_icon :translate }
 
       within("#attr_fields .name.en.odd") { fill_in_name "Guitars" }
       within("#attr_fields .name.pt-BR.odd") { fill_in_name "Guitarras" }
@@ -161,14 +161,14 @@ RSpec.feature "Translations", :js do
 
     scenario "display translated name on frontend" do
       visit spree.edit_admin_taxonomy_taxon_path(taxonomy.id, taxon.id)
-      find('.fa-flag').click
+      within_row(1) { click_icon :translate }
 
       within("#attr_fields .name.en.odd") { fill_in_name "Acoustic" }
       within("#attr_fields .name.pt-BR.odd") { fill_in_name "Acusticas" }
       click_on "Update"
 
       visit spree.edit_admin_taxonomy_taxon_path(taxonomy.id, taxon.id)
-      find('.fa-flag').click
+      within_row(1) { click_icon :translate }
 
       # ensure we're not duplicating translated records on database
       expect {
