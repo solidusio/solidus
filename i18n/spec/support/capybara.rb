@@ -6,7 +6,7 @@ RSpec.configure do |config|
   Capybara.javascript_driver = :poltergeist
 
   Capybara.register_driver(:poltergeist) do |app|
-    Capybara::Poltergeist::Driver.new app, timeout: 30
+    Capybara::Poltergeist::Driver.new app, timeout: 90
   end
 
   config.before(:each, :js) do
