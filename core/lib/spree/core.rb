@@ -74,6 +74,7 @@ require 'spree/core/controller_helpers/search'
 require 'spree/core/controller_helpers/ssl'
 require 'spree/core/controller_helpers/store'
 require 'spree/core/controller_helpers/strong_parameters'
+require 'spree/core/unreturned_item_charger'
 
 # Hack waiting on https://github.com/pluginaweek/state_machine/pull/275
 module StateMachine
