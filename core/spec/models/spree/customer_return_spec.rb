@@ -72,6 +72,31 @@ describe Spree::CustomerReturn, :type => :model do
     end
   end
 
+  describe "#total" do
+    let(:pre_tax_amount)  { 15.0 }
+    let(:tax_amount)  { 5.0 }
+    let(:customer_return) { create(:customer_return, line_items_count: 2) }
+
+    before do
+      Spree::ReturnItem.where(customer_return_id: customer_return.id).update_all(pre_tax_amount: pre_tax_amount, additional_tax_total: tax_amount)
+    end
+
+    subject { customer_return.total }
+
+    it "returns the sum of the return item's total amount" do
+      expect(subject).to eq ((pre_tax_amount * 2) + (tax_amount * 2))
+    end
+  end
+
+  describe "#display_total" do
+    let(:customer_return) { Spree::CustomerReturn.new }
+
+    it "returns a Spree::Money" do
+      customer_return.stub(total: 21.22)
+      customer_return.display_total.should == Spree::Money.new(21.22)
+    end
+  end
+
   describe "#pre_tax_total" do
     let(:pre_tax_amount)  { 15.0 }
     let(:customer_return) { create(:customer_return, line_items_count: 2) }

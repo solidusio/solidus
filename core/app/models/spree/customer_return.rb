@@ -15,6 +15,14 @@ module Spree
 
     accepts_nested_attributes_for :return_items
 
+    def total
+      return_items.sum(&:total)
+    end
+
+    def display_total
+      Spree::Money.new(total, { currency: Spree::Config[:currency] })
+    end
+
     def pre_tax_total
       return_items.sum(:pre_tax_amount)
     end
