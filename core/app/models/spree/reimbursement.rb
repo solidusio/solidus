@@ -128,6 +128,14 @@ module Spree
       return_items.select(&:exchange_required?)
     end
 
+    def any_exchanges?
+      return_items.any?(&:exchange_processed?)
+    end
+
+    def all_exchanges?
+      return_items.all?(&:exchange_processed?)
+    end
+
     private
 
     def generate_number
