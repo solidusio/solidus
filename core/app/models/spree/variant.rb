@@ -22,6 +22,13 @@ module Spree
     has_and_belongs_to_many :option_values, join_table: :spree_option_values_variants
     has_many :images, -> { order(:position) }, as: :viewable, dependent: :destroy, class_name: "Spree::Image"
 
+    has_one :default_price,
+      -> { where(currency: Spree::Config[:currency], is_default: true) },
+      class_name: 'Spree::Price',
+      dependent: :destroy
+
+    delegate_belongs_to :default_price, :display_price, :display_amount, :price, :price=, :currency
+
     has_many :prices,
       class_name: 'Spree::Price',
       dependent: :destroy,
@@ -148,7 +155,7 @@ module Spree
     end
 
     def price_in(currency)
-      prices.select{ |price| price.currency == currency }.first || Spree::Price.new(variant_id: self.id, currency: currency)
+      prices.detect{ |price| price.currency == currency && price.is_default } || Spree::Price.new(variant_id: self.id, currency: currency)
     end
 
     def amount_in(currency)

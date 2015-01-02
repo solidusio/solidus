@@ -6,6 +6,7 @@ module Spree
     validate :check_price
     validates :amount, numericality: { greater_than_or_equal_to: 0 }, allow_nil: true
     validate :validate_amount_maximum
+    after_save :set_default_price
 
     def display_amount
       money
@@ -42,6 +43,13 @@ module Spree
     def validate_amount_maximum
       if amount && amount > maximum_amount
         errors.add :amount, I18n.t('errors.messages.less_than_or_equal_to', count: maximum_amount)
+      end
+    end
+
+    def set_default_price
+      if is_default?
+        other_default_prices = variant.prices.where(currency: self.currency, is_default: true).where.not(id: self.id)
+        other_default_prices.each { |p| p.update_attributes!(is_default: false) }
       end
     end
   end

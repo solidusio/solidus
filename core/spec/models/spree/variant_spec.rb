@@ -164,6 +164,34 @@ describe Spree::Variant, :type => :model do
     end
   end
 
+  context "#default_price" do
+    context "when multiple prices are present in addition to a default price" do
+      before do
+        variant.prices << create(:price, :variant => variant, :currency => "USD", :amount => 12.12, :is_default => false)
+        variant.prices << create(:price, :variant => variant, :currency => "EUR", :amount => 29.99)
+        variant.prices << create(:price, :variant => variant, :currency => "EUR", :amount => 10.00, :is_default => false)
+        variant.reload
+      end
+
+      it "the default stays the same" do
+        variant.default_price.amount.should == 19.99
+      end
+
+      it "displays default price" do
+        variant.price_in("USD").display_amount.to_s.should == "$19.99"
+        variant.price_in("EUR").display_amount.to_s.should == "€29.99"
+      end
+    end
+
+    context "when adding multiple prices" do
+      it "it can reassign a default price" do
+        variant.default_price.amount.should == 19.99
+        variant.prices << create(:price, :variant => variant, :currency => "USD", :amount => 12.12)
+        variant.reload.default_price.amount.should == 12.12
+      end
+    end
+  end
+
   describe '.price_in' do
     before do
       variant.prices << create(:price, :variant => variant, :currency => "EUR", :amount => 33.33)
