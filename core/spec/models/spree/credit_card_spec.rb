@@ -4,7 +4,7 @@ describe Spree::CreditCard do
   let(:valid_credit_card_attributes) do
     { :number => '4111111111111111',
       :verification_value => '123',
-      :expiry => "12 / 14",
+      :expiry => "12 / 15",
       :name => "Spree Commerce" }
   end
 
@@ -167,39 +167,39 @@ describe Spree::CreditCard do
   # Regression test for #3847 & #3896
   context "#expiry=" do
     it "can set with a 2-digit month and year" do
-      credit_card.expiry = '04 / 14'
+      credit_card.expiry = '04 / 15'
       expect(credit_card.month).to eq(4)
-      expect(credit_card.year).to eq(2014)
+      expect(credit_card.year).to eq(2015)
     end
 
     it "can set with a 2-digit month and 4-digit year" do
-      credit_card.expiry = '04 / 2014'
+      credit_card.expiry = '04 / 2015'
       expect(credit_card.month).to eq(4)
-      expect(credit_card.year).to eq(2014)
+      expect(credit_card.year).to eq(2015)
     end
 
     it "can set with a 2-digit month and 4-digit year without whitespace" do
-      credit_card.expiry = '04/14'
+      credit_card.expiry = '04/15'
       expect(credit_card.month).to eq(4)
-      expect(credit_card.year).to eq(2014)
+      expect(credit_card.year).to eq(2015)
     end
 
     it "can set with a 2-digit month and 4-digit year without whitespace" do
-      credit_card.expiry = '04/2014'
+      credit_card.expiry = '04/2015'
       expect(credit_card.month).to eq(4)
-      expect(credit_card.year).to eq(2014)
+      expect(credit_card.year).to eq(2015)
     end
 
     it "can set with a 2-digit month and 4-digit year without whitespace and slash" do
-      credit_card.expiry = '042014'
+      credit_card.expiry = '042015'
       expect(credit_card.month).to eq(4)
-      expect(credit_card.year).to eq(2014)
+      expect(credit_card.year).to eq(2015)
     end
 
     it "can set with a 2-digit month and 2-digit year without whitespace and slash" do
-      credit_card.expiry = '0414'
+      credit_card.expiry = '0415'
       expect(credit_card.month).to eq(4)
-      expect(credit_card.year).to eq(2014)
+      expect(credit_card.year).to eq(2015)
     end
 
     it "does not blow up when passed an empty string" do

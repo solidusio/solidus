@@ -48,7 +48,6 @@ module Spree
         params = { email: 'test@test.com',
                    completed_at: Time.now,
                    line_items_attributes: line_items }
-
         order = Importer::Order.import(user,params)
         order.should be_completed
         order.state.should eq 'complete'

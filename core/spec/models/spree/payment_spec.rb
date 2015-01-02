@@ -17,7 +17,7 @@ describe Spree::Payment do
     Spree::CreditCard.create!(
       number: "4111111111111111",
       month: "12",
-      year: "2014",
+      year: "2015",
       verification_value: "123",
       name: "Name"
     )
