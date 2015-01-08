@@ -114,7 +114,7 @@ describe "exchanges:charge_unreturned_items" do
         before { allow_any_instance_of(Spree::Payment).to receive(:authorize!).and_raise(RuntimeError) }
 
         it "raises an error with the order" do
-          expect { subject.invoke }.to raise_error(Spree::UnableToChargeForUnreturnedItems)
+          expect { subject.invoke }.to raise_error(Spree::ChargeUnreturnedItemsFailures)
         end
       end
 

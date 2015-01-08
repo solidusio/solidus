@@ -1,18 +1,21 @@
 module Spree
   class UnreturnedItemCharger
+    class ChargeFailure < StandardError
+      attr_accessor :new_order
+      def initialize(message, new_order)
+        @new_order = new_order
+        super(message)
+      end
+    end
+
+    class_attribute :failure_handler
 
     attr_reader :original_order
-
-    alias_method :order, :original_order
 
     def initialize(shipment, return_items)
       @shipment = shipment
       @original_order = @shipment.order
       @return_items = return_items
-    end
-
-    def self.notify_of_errors(error_message)
-      raise UnableToChargeForUnreturnedItems.new(error_message)
     end
 
     def charge_for_items
@@ -32,6 +35,12 @@ module Spree
       new_order.reload.complete!
       new_order.update!
       new_order.finalize!
+
+      if !new_order.completed?
+        raise ChargeFailure.new('order not complete', new_order)
+      elsif !new_order.valid?
+        raise ChargeFailure.new('order not valid', new_order)
+      end
     end
 
     private
@@ -75,6 +84,4 @@ module Spree
       order_attributes
     end
   end
-
-  class UnableToChargeForUnreturnedItems < StandardError; end
 end
