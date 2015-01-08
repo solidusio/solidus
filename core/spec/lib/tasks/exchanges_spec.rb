@@ -113,7 +113,7 @@ describe "exchanges:charge_unreturned_items" do
         before { Spree::Payment.any_instance.stub(:authorize!).and_raise(RuntimeError) }
 
         it "raises an error with the order" do
-          expect { subject.invoke }.to raise_error(Spree::UnableToChargeForUnreturnedItems)
+          expect { subject.invoke }.to raise_error(Spree::ChargeUnreturnedItemsFailures)
         end
       end
 
