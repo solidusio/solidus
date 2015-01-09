@@ -96,11 +96,7 @@ module Spree
 
       private
         def taxon_params
-          params.require(:taxon).permit(permitted_params)
-        end
-
-        def permitted_params
-          Spree::PermittedAttributes.taxon_attributes
+          params.require(:taxon).permit(permitted_taxon_attributes)
         end
     end
   end
