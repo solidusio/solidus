@@ -288,7 +288,7 @@ ko:
     acceptance_status:
     accepted:
     account: "계정"
-    account_updated: "계정 정보가 수정되었음!"
+    account_updated: "계정 정보가 수정되었습니다!"
     action: "행동"
     actions:
       cancel: "취소"
@@ -353,7 +353,7 @@ ko:
         order_num:
         orders:
         user_information:
-    administration: "운영"
+    administration: "관리"
     advertise:
     agree_to_privacy_policy:
     agree_to_terms_of_service:
@@ -381,7 +381,7 @@ ko:
     approved_at:
     approver:
     are_you_sure: "확실합니까?"
-    are_you_sure_delete: record를 삭제하겠습니까?
+    are_you_sure_delete: "기록을 삭제하시겠습니까?"
     associated_adjustment_closed:
     authorization_failure: "인증 실패"
     authorized:
@@ -406,7 +406,7 @@ ko:
     bill_address: "청구서 주소"
     billing: "청구서"
     billing_address: "청구서 주소"
-    both: "양쪽 모두"
+    both: "양 쪽 모두"
     calculated_reimbursements:
     calculator: "계산기"
     calculator_settings_warning:
@@ -572,7 +572,7 @@ ko:
         no_shipping_methods_available:
     errors_prohibited_this_record_from_being_saved:
       one: "저장하는 중에 문제가 발생했습니다."
-      other: "저장하는 중에 문제 %{count}개가 발생했습니다."
+      other: "저장하는 중에 문제가 %{count}개 발생했습니다."
     event: "이벤트"
     events:
       spree:
@@ -635,7 +635,7 @@ ko:
       select_locale:
       show_only:
       supported_locales:
-      this_file_language: "한국의 (KO)"
+      this_file_language: "한국어 (KO)"
       translations:
     icon: "아이콘"
     identifier:
@@ -756,14 +756,14 @@ ko:
     new_stock_location:
     new_stock_movement:
     new_stock_transfer:
-    new_tax_category: "새 세금 Category"
+    new_tax_category: "새 세금 분류"
     new_tax_rate: "새로운 세율"
-    new_taxon: "새 분류"
-    new_taxonomy:
+    new_taxon: "새 분류군"
+    new_taxonomy: "새 분류계"
     new_tracker: "새 트랙커"
     new_user: "새 사용자"
-    new_variant: "새 배리언트"
-    new_zone: "새 존"
+    new_variant: "새 품종"
+    new_zone: "새 지역"
     next: "다음"
     no_actions_added:
     no_payment_found:
@@ -772,7 +772,7 @@ ko:
     no_resource_found:
     no_results: "결과가 없음"
     no_returns_found:
-    no_rules_added: "추가 된 룰이 없음"
+    no_rules_added: "추가 된 규칙이 없음"
     no_shipping_method_selected:
     no_state_changes:
     no_tracking_present:
@@ -789,8 +789,8 @@ ko:
       product_deleted:
       product_not_cloned:
       product_not_deleted:
-      variant_deleted: "배리언트는 삭제됐습니다"
-      variant_not_deleted: "배리언트를 삭제할 수 없습니다"
+      variant_deleted: "품종이 삭제됐습니다"
+      variant_not_deleted: "품종을 삭제할 수 없습니다"
     num_orders:
     on_hand: "재고"
     open:
@@ -941,8 +941,8 @@ ko:
     promotion_actions:
     promotion_form:
       match_policies:
-        all: "이 규칙에 하나라도 일치"
-        any: "이 규칙에 모두 일치"
+        all: "이 규칙에 모두 일치"
+        any: "이 규칙에 하나라도 일치"
     promotion_rule: Promotion Rule
     promotion_rule_types:
       first_order:
@@ -1052,8 +1052,8 @@ ko:
     risk_analysis:
     risky:
     rma_credit:
-    rma_number: RMA 번호
-    rma_value: RMA 값
+    rma_number: "RMA 번호"
+    rma_value: "RMA 값"
     roles:
     rules: "규칙"
     safe:
@@ -1064,7 +1064,7 @@ ko:
     save_my_address:
     say_no: false
     say_yes: true
-    scope: "스코프"
+    scope: "범위"
     search: "검색"
     search_results: "%{keywords}의 검색 결과"
     searching: "검색중"
@@ -1109,8 +1109,8 @@ ko:
     shipped: "배송됨"
     shipping: "배송료"
     shipping_address: "배송 주소"
-    shipping_categories: "배송 Categories"
-    shipping_category: "배송 Category"
+    shipping_categories: "배송 분류"
+    shipping_category: "배송 분류"
     shipping_flat_rate_per_item:
     shipping_flat_rate_per_order:
     shipping_flexible_rate:
@@ -1200,26 +1200,26 @@ ko:
     successfully_updated:
     summary:
     tax: "세금"
-    tax_categories: "세금 Categories"
-    tax_category: "세금 Category"
+    tax_categories: "세금 분류"
+    tax_category: "세금 분류"
     tax_code:
     tax_included:
     tax_rate_amount_explanation:
     tax_rates: "세율"
-    taxon: "분류"
-    taxon_edit: "분류 편집"
+    taxon: "분류군"
+    taxon_edit: "분류군 편집"
     taxon_placeholder:
     taxon_rule:
       choose_taxons:
       label:
       match_all:
       match_any:
-    taxonomies: "분류"
-    taxonomy: Taxonomy
+    taxonomies: "분류계"
+    taxonomy: "분류군"
     taxonomy_edit:
     taxonomy_tree_error:
     taxonomy_tree_instruction:
-    taxons: "분류"
+    taxons: "종류"
     test: "테스트"
     test_mailer:
       test_email:
@@ -1231,12 +1231,12 @@ ko:
     there_are_no_items_for_this_order:
     there_were_problems_with_the_following_fields: "다음 값들에 문제가 있습니다"
     this_order_has_already_received_a_refund:
-    thumbnail: "썸네일"
+    thumbnail: "미리보기"
     tiered_flat_rate:
     tiered_percent:
     tiers:
     time:
-    to_add_variants_you_must_first_define: "배리언트를 추가하려면 먼저 정의해야 합니다"
+    to_add_variants_you_must_first_define: "품종을 추가하려면 먼저 정의해야 합니다"
     total: "합계"
     total_per_item:
     total_pre_tax_refund:
@@ -1282,7 +1282,7 @@ ko:
     value: "값"
     variant:
     variant_placeholder:
-    variants: "배리언트"
+    variants: "품종"
     version: "버전"
     void:
     weight: "무게"
@@ -1294,6 +1294,6 @@ ko:
     your_cart_is_empty: "장바구니가 비었습니다"
     your_order_is_empty_add_product:
     zip: "우편번호"
-    zipcode:
-    zone: "존"
-    zones: "존"
+    zipcode: "우편번호"
+    zone: "지역"
+    zones: "지역"
