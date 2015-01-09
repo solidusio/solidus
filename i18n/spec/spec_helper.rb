@@ -15,14 +15,13 @@ require 'ffaker'
 require 'rspec/rails'
 
 RSpec.configure do |config|
-  config.mock_with :rspec
-  config.use_transactional_fixtures = false
   config.fail_fast = false
   config.filter_run focus: true
-  config.run_all_when_everything_filtered = true
-
   config.infer_spec_type_from_file_location!
+  config.mock_with :rspec
   config.raise_errors_for_deprecations!
+  config.run_all_when_everything_filtered = true
+  config.use_transactional_fixtures = false
 
   config.expect_with :rspec do |expectations|
     expectations.syntax = :expect
