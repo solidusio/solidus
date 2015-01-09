@@ -431,7 +431,6 @@ describe Spree::Payment do
         end
       end
     end
-
   end
 
   context "when already processing" do
