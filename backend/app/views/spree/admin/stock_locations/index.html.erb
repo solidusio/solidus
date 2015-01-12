@@ -16,15 +16,17 @@
 <% end %>
 
 <% if @stock_locations.any? %>
-  <table class="index" id='listing_stock_locations' data-hook>
+  <table class="index sortable" id='listing_stock_locations' data-hook data-sortable-link="<%= update_positions_admin_stock_locations_url %>">
     <colgroup>
-      <col style="width: 40%" />
+      <col style="width: 10%">
+      <col style="width: 30%" />
       <col style="width: 15%" />
       <col style="width: 30%" />
       <col style="width: 15%" />
     </colgroup>
     <thead>
       <tr data-hook="stock_locations_header">
+        <th class="no-border"></th>
         <th><%= Spree.t(:name) %></th>
         <th><%= Spree.t(:state) %></th>
         <th><%= Spree.t(:stock_movements) %></th>
@@ -37,6 +39,7 @@
            @delete_url = admin_stock_location_path(stock_location)
       %>
         <tr id="<%= spree_dom_id stock_location %>" data-hook="stock_location_row" class="<%= cycle('odd', 'even')%>">
+          <td class="no-border"><span class="handle"></span></td>
           <td class="align-center"><%= display_name(stock_location) %></td>
           <td class="align-center"><span class="state <%= state(stock_location) %>"><%= Spree.t(state(stock_location)) %></span></td>
           <td class="align-center"><%= link_to Spree.t(:stock_movements), admin_stock_location_stock_movements_path(stock_location.id) %> </td>

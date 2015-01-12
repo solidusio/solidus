@@ -157,6 +157,7 @@ Spree::Core::Engine.add_routes do
       resources :stock_movements, except: [:edit, :update, :destroy]
       collection do
         post :transfer_stock
+        post :update_positions
       end
     end
 
