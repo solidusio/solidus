@@ -44,7 +44,7 @@ module I18nData
       "ES-MX" => "es",
       "PT-BR" => "pt",
       "SL-SI" => "sl",
-      "ZH-TW" => "zh_CN",
+      "ZH-TW" => "zh_TW",
       "ZH-CN" => "zh_CN",
       "ZH" => "zh_CN",
       "BN" => "bn_IN",
