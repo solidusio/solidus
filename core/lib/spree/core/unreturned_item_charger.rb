@@ -33,8 +33,6 @@ module Spree
       set_shipment_for_new_order
 
       new_order.reload.complete!
-      new_order.update!
-      new_order.finalize!
 
       if !new_order.completed?
         raise ChargeFailure.new('order not complete', new_order)
