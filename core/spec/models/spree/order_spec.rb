@@ -506,7 +506,6 @@ describe Spree::Order, :type => :model do
         :name => "Fake",
         :active => true,
         :display_on => "front_end",
-        :environment => Rails.env
       })
       expect(order.available_payment_methods).to include(payment_method)
     end
@@ -516,7 +515,6 @@ describe Spree::Order, :type => :model do
         :name => "Fake",
         :active => true,
         :display_on => "both",
-        :environment => Rails.env
       })
       expect(order.available_payment_methods).to include(payment_method)
     end
@@ -526,7 +524,6 @@ describe Spree::Order, :type => :model do
         :name => "Fake",
         :active => true,
         :display_on => "both",
-        :environment => Rails.env
       })
       expect(order.available_payment_methods.count).to eq(1)
       expect(order.available_payment_methods).to include(payment_method)
