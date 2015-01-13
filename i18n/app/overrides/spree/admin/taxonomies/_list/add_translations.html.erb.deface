@@ -1,2 +1,2 @@
 <!-- insert_bottom 'td.actions' -->
-<%= link_to_with_icon 'translate', nil, admin_translations_path('taxonomies', taxonomy.id), title: Spree.t(:'i18n.translations'), class: 'btn btn-default' %>
+<%= link_to_with_icon 'translate', nil, admin_translations_path('taxonomies', taxonomy.id), title: Spree.t(:'i18n.translations'), class: 'btn btn-sm btn-primary' %>
