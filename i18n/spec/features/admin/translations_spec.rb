@@ -160,8 +160,12 @@ RSpec.feature "Translations", :js do
     given!(:taxon) { create(:taxon, taxonomy: taxonomy, parent_id: taxonomy.root.id) }
 
     scenario "display translated name on frontend" do
-      visit spree.edit_admin_taxonomy_taxon_path(taxonomy.id, taxon.id)
-      within_row(1) { click_icon :translate }
+      visit spree.edit_admin_taxonomy_path(taxonomy.id)
+      wait_for_ajax
+
+      within "#taxonomy_tree" do
+        click_link 'Translations'
+      end
 
       within("#attr_fields .name.en.odd") { fill_in_name "Acoustic" }
       within("#attr_fields .name.pt-BR.odd") { fill_in_name "Acusticas" }

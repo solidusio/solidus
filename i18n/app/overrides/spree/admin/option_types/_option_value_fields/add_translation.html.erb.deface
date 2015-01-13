@@ -1,2 +1,5 @@
 <!-- insert_bottom 'td.actions' -->
-<%= link_to_with_icon 'translate', nil, admin_translations_path('option_values', f.object.id), title: Spree.t(:'i18n.translations'), class: 'btn btn-default' %>
+
+<% if f.object.persisted? %>
+  <%= link_to_with_icon 'translate', nil, admin_translations_path('option_values', f.object.id), title: Spree.t(:'i18n.translations'), class: 'btn btn-default' %>
+<% end %>
