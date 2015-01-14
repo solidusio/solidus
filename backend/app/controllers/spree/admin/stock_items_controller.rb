@@ -19,7 +19,7 @@ module Spree
         if stock_movement.save
           flash[:success] = flash_message_for(stock_movement, :successfully_created)
         else
-          flash[:error] = Spree.t(:could_not_create_stock_movement)
+          flash[:error] = stock_movement_and_item_errors(stock_movement)
         end
 
         redirect_to :back
@@ -35,6 +35,10 @@ module Spree
       end
 
       private
+        def stock_movement_and_item_errors(stock_movement)
+          (stock_movement.errors.full_messages + stock_movement.stock_item.errors.full_messages).join(', ')
+        end
+
         def stock_movement_params
           params.require(:stock_movement).permit(permitted_stock_movement_attributes)
         end
