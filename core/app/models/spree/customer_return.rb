@@ -49,6 +49,10 @@ module Spree
       !return_items.undecided.exists?
     end
 
+    def return_order!
+      order.return! if order.all_inventory_units_returned?
+    end
+
     private
 
     def generate_number
@@ -59,8 +63,8 @@ module Spree
     end
 
     def process_return!
-      return_items.each(&:receive!)
-      order.return! if order.all_inventory_units_returned?
+      return_items.each(&:attempt_accept)
+      return_order!
     end
 
     def return_items_belong_to_same_order

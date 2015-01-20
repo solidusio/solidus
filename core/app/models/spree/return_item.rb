@@ -1,6 +1,6 @@
 module Spree
   class ReturnItem < Spree::Base
-    COMPLETED_RECEPTION_STATUSES = %w(received given_to_customer)
+    COMPLETED_RECEPTION_STATUSES = %i(received given_to_customer lost_in_transit)
 
     class_attribute :return_eligibility_validator
     self.return_eligibility_validator = ReturnItem::EligibilityValidator::Default
@@ -27,10 +27,12 @@ module Spree
     validate :validate_no_other_completed_return_items, on: :create
 
     after_create :cancel_others, unless: :cancelled?
+    after_save :receive_items
 
     scope :awaiting_return, -> { where(reception_status: 'awaiting') }
-    scope :received, -> { where(reception_status: 'received') }
     scope :not_cancelled, -> { where.not(reception_status: 'cancelled') }
+    scope :given_to_customer, -> { where(reception_status: 'given_to_customer') }
+    scope :lost_in_transit, -> { where(reception_status: 'lost_in_transit') }
     scope :pending, -> { where(acceptance_status: 'pending') }
     scope :accepted, -> { where(acceptance_status: 'accepted') }
     scope :rejected, -> { where(acceptance_status: 'rejected') }
@@ -53,11 +55,10 @@ module Spree
     before_save :set_exchange_pre_tax_amount
 
     state_machine :reception_status, initial: :awaiting do
-      after_transition to: :received, do: :attempt_accept
-      after_transition to: :received, do: :process_inventory_unit!
+      after_transition to: COMPLETED_RECEPTION_STATUSES,  do: :attempt_accept
 
       event :receive do
-        transition to: :received, from: :awaiting
+        transition to: :received, from: [:awaiting, :given_to_customer, :lost_in_transit]
       end
 
       event :cancel do
@@ -66,6 +67,10 @@ module Spree
 
       event :give do
         transition to: :given_to_customer, from: :awaiting
+      end
+
+      event :lost do
+        transition to: :lost_in_transit, from: :awaiting
       end
     end
 
@@ -149,7 +154,20 @@ module Spree
       self.pre_tax_amount = refund_amount_calculator.new.compute(self)
     end
 
+    def available_active_status_paths
+      status_paths = reception_status_paths.to_states
+      status_paths.delete(:cancelled)
+      status_paths
+    end
+
     private
+
+    def receive_items
+      if received? && reception_status_was != "received"
+        process_inventory_unit!
+        self.customer_return.return_order! if customer_return
+      end
+    end
 
     def persist_acceptance_status_errors
       self.update_attributes(acceptance_status_errors: validator.errors)
