@@ -3,6 +3,8 @@ require 'spec_helper'
 describe Spree::OrderContents, :type => :model do
   let(:order) { Spree::Order.create }
   let(:variant) { create(:variant) }
+  let!(:stock_location) { variant.stock_locations.first }
+  let(:stock_location_2) { create(:stock_location) }
 
   subject { described_class.new(order) }
 
@@ -52,6 +54,14 @@ describe Spree::OrderContents, :type => :model do
 
       expect(order.item_total.to_f).to eq(19.99)
       expect(order.total.to_f).to eq(19.99)
+    end
+
+    it "should create stock location associations if provided" do
+      line_item = subject.add(variant, 3, stock_location_quantities: {stock_location.id => 1, stock_location_2.id => 2})
+      order_stock_locations = line_item.order.order_stock_locations
+      order_stock_locations.count.should == 2
+      order_stock_locations.map(&:quantity).should == [1, 2]
+      order_stock_locations.map(&:stock_location_id).should == [stock_location.id, stock_location_2.id]
     end
 
     context "running promotions" do

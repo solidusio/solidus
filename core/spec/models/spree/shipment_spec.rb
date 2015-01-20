@@ -5,6 +5,7 @@ describe Spree::Shipment, :type => :model do
   let(:stock_location) { create(:stock_location) }
   let(:order) { create(:order_ready_to_ship, line_items_count: 1) }
   let(:shipping_method) { create(:shipping_method, name: "UPS") }
+  let(:stock_location) { create(:stock_location) }
   let(:shipment) do
     order.shipments.create!(
       state: 'pending',
@@ -469,6 +470,13 @@ describe Spree::Shipment, :type => :model do
             receive(:fulfill_for_order_with_stock_location).
             with(order, stock_location)
           )
+          shipment.ship!
+        end
+
+        it "should call fulfill_order_with_stock_location" do
+          shipment.stub(:update_order_shipment_state)
+          shipment.stub(:send_shipped_email)
+          shipment.should_receive(:fulfill_order_with_stock_location)
           shipment.ship!
         end
 

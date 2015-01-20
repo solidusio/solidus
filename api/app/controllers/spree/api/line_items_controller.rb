@@ -11,9 +11,9 @@ module Spree
       def create
         variant = Spree::Variant.find(params[:line_item][:variant_id])
         @line_item = @order.contents.add(
-            variant,
-            params[:line_item][:quantity] || 1,
-            line_item_params[:options] || {}
+          variant,
+          params[:line_item][:quantity] || 1,
+          stock_location_quantities: params[:line_item][:stock_location_quantities]
         )
 
         if @line_item.errors.empty?

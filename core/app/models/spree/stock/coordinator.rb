@@ -6,6 +6,7 @@ module Spree
       def initialize(order, inventory_units = nil)
         @order = order
         @inventory_units = inventory_units || InventoryUnitBuilder.new(order).units
+        @preallocated_inventory_units = []
       end
 
       def shipments
@@ -15,9 +16,33 @@ module Spree
       end
 
       def packages
-        packages = build_packages
+        packages = build_location_configured_packages
+        packages = build_packages(packages)
         packages = prioritize_packages(packages)
         packages = estimate_packages(packages)
+      end
+
+      # Build packages for the inventory units that have preferred stock locations first
+      #
+      # Certain variants have been selected to be fulfilled from a particular stock
+      # location during the process of the order being created. The rest of the
+      # service objects the coordinator uses do a lot of automated logic to
+      # determine which stock location is best for the inventory unit to be
+      # fulfilled from, but for these special snowflakes we KNOW which stock
+      # location they should be fulfilled from. So rather than sending these units
+      # through the rest of the packing / prioritization, lets just put them
+      # in packages we know they should be in and deal with other automatically-
+      # handled inventory units otherwise.
+      def build_location_configured_packages(packages = Array.new)
+        order.order_stock_locations.where(shipment_fulfilled: false).group_by(&:stock_location).each do |stock_location, stock_location_configurations|
+          units = stock_location_configurations.flat_map do |stock_location_configuration|
+            unallocated_inventory_units.select { |iu| iu.variant == stock_location_configuration.variant }.take(stock_location_configuration.quantity)
+          end
+          packer = build_packer(stock_location, units)
+          packages += packer.packages
+          @preallocated_inventory_units += units
+        end
+        packages
       end
 
       # Build packages as per stock location
@@ -27,19 +52,24 @@ module Spree
       # to build a package because it would be empty. Plus we avoid errors down
       # the stack because it would assume the stock location has stock items
       # for the given order
-      # 
+      #
       # Returns an array of Package instances
       def build_packages(packages = Array.new)
         StockLocation.active.each do |stock_location|
-          units_for_location = inventory_units.select { |unit| stock_location.stock_item(unit.variant) }
+          units_for_location = unallocated_inventory_units.select { |unit| stock_location.stock_item(unit.variant) }
           next unless units_for_location.any?
-          packer = build_packer(stock_location, units_for_location)
+          packer = build_packer(stock_location, unallocated_inventory_units)
           packages += packer.packages
         end
         packages
       end
 
       private
+
+      def unallocated_inventory_units
+        inventory_units - @preallocated_inventory_units
+      end
+
       def prioritize_packages(packages)
         prioritizer = Prioritizer.new(inventory_units, packages)
         prioritizer.prioritized_packages

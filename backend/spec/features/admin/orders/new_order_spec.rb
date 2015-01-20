@@ -24,6 +24,9 @@ describe "New Order", :type => :feature do
   it "completes new order succesfully without using the cart", js: true do
     click_on 'Cart'
     select2_search product.name, from: Spree.t(:name_or_sku)
+
+    fill_in_quantity("table.stock-levels", "quantity_0", 2)
+
     click_icon :plus
     click_on "Customer Details"
 
@@ -62,10 +65,10 @@ describe "New Order", :type => :feature do
       click_on 'Cart'
       select2_search product.name, from: Spree.t(:name_or_sku)
 
-      within("table.stock-levels") do
-        fill_in "variant_quantity", with: 2
-        click_icon :plus
-      end
+      fill_in_quantity('table.stock-levels', 'quantity_0', 2)
+
+      click_icon :plus
+      wait_for_ajax
 
       within(".line-items") do
         expect(page).to have_content(product.name)
@@ -98,7 +101,12 @@ describe "New Order", :type => :feature do
     it "can still see line items" do
       click_on 'Cart'
       select2_search product.name, from: Spree.t(:name_or_sku)
+
+      fill_in_quantity('table.stock-levels', 'quantity_0', 1)
+
       click_icon :plus
+      wait_for_ajax
+
       within(".line-items") do
         within(".line-item-name") do
           expect(page).to have_content(product.name)
