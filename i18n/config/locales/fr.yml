@@ -585,26 +585,23 @@ fr:
     dismiss_banner: Non Merci ! Ça ne m'intéresse pas, ne pas afficher ce message les fois suivantes
     display: Afficher
     display_currency: Devise d'affichage
-    doesnt_track_inventory:
-    edit: "Éditer"
-    editing_resource:
-    editing_rma_reason:
-    editing_user: "Édition d'un utilisateur"
-    eligibility_errors:
-      messages:
-        has_excluded_product:
-        item_total_less_than:
-        item_total_less_than_or_equal:
-        item_total_more_than:
-        item_total_more_than_or_equal:
-        limit_once_per_user:
-        missing_product:
-        missing_taxon:
-        no_applicable_products:
-        no_matching_taxons:
-        no_user_or_email_specified:
-        no_user_specified:
-        not_first_order:
+    edit: Éditer
+    editing_option_type: Édition du type d'option
+    editing_payment_method: Édition de la méthode de paiement
+    editing_product: Édition du produit
+    editing_promotion: Édition de la Promotion
+    editing_property: Édition de la propriété
+    editing_prototype: Édition du prototype
+    editing_shipping_category: Édition de la catégorie de livraison
+    editing_shipping_method: Édition de la méthode de livraison
+    editing_state: Édition de la région
+    editing_stock_location: Édition du lieu de Stock
+    editing_stock_movement: Édition du mouvement de Stock
+    editing_tax_category: Édition de la catégorie fiscale
+    editing_tax_rate: Modification du taux d'imposition
+    editing_tracker: Édition du tracker
+    editing_user: Édition d'un utilisateur
+    editing_zone: Édition d'une zone
     email: Courriel
     empty: Vide
     empty_cart: Vider le panier
@@ -866,16 +863,16 @@ fr:
         instructions: Votre commande a été ANNULÉE. Veuillez conserver les informations suivantes à propos de votre commande annulée.
         order_summary_canceled: Sommaire de la commande [ANNULÉE]
         subject: Annulation de la commande
-        subtotal:
-        total:
+        subtotal: ! 'Sous-total: %{subtotal}'
+        total: ! 'Total de la commande: %{total}'
       confirm_email:
-        dear_customer: Cher client,\n
-        instructions: Veuillez vérifier et sauvegarder les informations suivante à propos de votre commande.
+        dear_customer: Cher client,
+        instructions: Veuillez vérifier et sauvegarder les informations suivantes à propos de votre commande.
         order_summary: Sommaire de la commande
         subject: Confirmation de commande
         subtotal:
         thanks: Merci d'avoir fait affaire avec nous.
-        total:
+        total: ! 'Total de la commande: %{total}'
     order_not_found: Impossible de trouver votre commande. Merci d'essayer à nouveau.
     order_number:
     order_populator:
@@ -978,14 +975,17 @@ fr:
         description: Crée un ajustement de promotion sur la commande
         name: Créer un ajustement
       create_item_adjustments:
-        description:
-        name:
+        description: Crée un ajustement de promotion sur un item.
+        name: Crée un ajustement sur un item.
       create_line_items:
         description: Remplit le panier avec la quantité spécifiée de variante
         name: Créez des lignes d'article
+      give_store_credit:
+        description: Accorde à l'utilisateur un avoir de la quantité indiquée
+        name: Accorder un avoir
       free_shipping:
-        description:
-        name:
+        description: Livraison gratuite pour la commande.
+        name: Livraison gratuite
     promotion_actions: Actions
     promotion_form:
       match_policies:
