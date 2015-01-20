@@ -37,7 +37,7 @@ module Spree
 
     @@checkout_attributes = [:email, :use_billing, :shipping_method_id, :coupon_code, :special_instructions]
 
-    @@customer_return_attributes = [:stock_location_id, return_items_attributes: [:id, :inventory_unit_id, :return_authorization_id, :returned, :pre_tax_amount, :acceptance_status, :exchange_variant_id, :resellable]]
+    @@customer_return_attributes = [:stock_location_id, return_items_attributes: [:id, :inventory_unit_id, :return_authorization_id, :returned, :pre_tax_amount, :reception_status, :acceptance_status, :exchange_variant_id, :resellable]]
 
     @@image_attributes = [:alt, :attachment, :position, :viewable_type, :viewable_id]
 
@@ -71,7 +71,7 @@ module Spree
     # month / year may be provided by some sources, or others may elect to use one field
     @@source_attributes = [
       :number, :month, :year, :expiry, :verification_value,
-      :first_name, :last_name, :cc_type, :gateway_customer_profile_id, 
+      :first_name, :last_name, :cc_type, :gateway_customer_profile_id,
       :gateway_payment_profile_id, :last_digits, :name, :encrypted_data]
 
     @@stock_item_attributes = [:variant, :stock_location, :backorderable, :variant_id]

@@ -9,6 +9,7 @@
       <th><%= Spree.t(:pre_tax_amount) %></th>
       <th><%= Spree.t(:exchange_for) %></th>
       <th><%= Spree.t(:resellable) %></th>
+      <th><%= Spree.t(:reception_status) %></th>
     </tr>
   </thead>
   <tbody>
@@ -22,7 +23,6 @@
             <%= item_fields.hidden_field :return_authorization_id %>
             <%= item_fields.hidden_field :pre_tax_amount %>
           </div>
-
           <%= item_fields.check_box :returned, {checked: false, class: 'add-item', "data-price" => return_item.pre_tax_amount}, '1', '0' %>
         </td>
         <td>
@@ -40,6 +40,9 @@
         </td>
         <td class="align-center">
           <%= item_fields.check_box :resellable, { checked: return_item.resellable } %>
+        </td>
+        <td class="align-center">
+          <%= item_fields.select :reception_status, return_item.available_active_status_paths.collect { |s| [s.to_s.humanize, s] }, {include_blank: false}, {class: 'add-item select2 fullwidth'} %>
         </td>
       </tr>
     <% end %>
