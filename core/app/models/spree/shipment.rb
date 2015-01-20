@@ -390,7 +390,12 @@ module Spree
         inventory_units.each &:ship!
         send_shipped_email
         touch :shipped_at
+        fulfill_order_with_stock_location
         update_order_shipment_state
+      end
+
+      def fulfill_order_with_stock_location
+        Spree::OrderStockLocation.fulfill_for_order_with_stock_location(order, stock_location)
       end
 
       def update_order_shipment_state

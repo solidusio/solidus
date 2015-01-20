@@ -23,8 +23,11 @@ describe "New Order" do
     expect(current_path).to eql(spree.edit_admin_order_customer_path(Spree::Order.last))
   end
 
-  it "completes new order succesfully withous using the cart", js: true do
+  it "completes new order succesfully without using the cart", js: true do
     select2_search product.name, :from => Spree.t(:name_or_sku)
+
+    fill_in_quantity("table.stock-levels", "quantity_0", 2)
+
     click_icon :plus
     wait_for_ajax
     click_on "Customer Details"
@@ -61,10 +64,10 @@ describe "New Order" do
     it "inventory items show up just fine and are also registered as shipments" do
       select2_search product.name, :from => Spree.t(:name_or_sku)
 
-      within("table.stock-levels") do
-        fill_in "variant_quantity", :with => 2
-        click_icon :plus
-      end
+      fill_in_quantity('table.stock-levels', 'quantity_0', 2)
+
+      click_icon :plus
+      wait_for_ajax
 
       within(".line-items") do
         page.should have_content(product.name)
@@ -96,7 +99,12 @@ describe "New Order" do
 
     it "can still see line items" do
       select2_search product.name, :from => Spree.t(:name_or_sku)
+
+      fill_in_quantity('table.stock-levels', 'quantity_0', 1)
+
       click_icon :plus
+      wait_for_ajax
+
       within(".line-items") do
         within(".line-item-name") do
           page.should have_content(product.name)

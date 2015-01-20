@@ -17,7 +17,7 @@ describe Spree::Admin::BaseController do
     end
 
     it "checks error" do
-      controller.stub root_path: "/rooot"
+      allow(controller).to receive_message_chain(:spree, :root_path).and_return('/rooot')
       get :index
       expect(response).to redirect_to "/rooot"
     end

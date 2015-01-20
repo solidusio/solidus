@@ -6,8 +6,8 @@ module Spree
       @order = order
     end
 
-    def add(variant, quantity = 1, currency = nil, shipment = nil)
-      line_item = add_to_line_item(variant, quantity, currency, shipment)
+    def add(variant, quantity = 1, currency = nil, shipment = nil, stock_location_quantities: nil)
+      line_item = add_to_line_item(variant, quantity, currency, shipment, stock_location_quantities: stock_location_quantities)
       reload_totals
       shipment.present? ? shipment.update_amounts : order.ensure_updated_shipments
       PromotionHandler::Cart.new(order, line_item).activate
@@ -119,7 +119,7 @@ module Spree
         order.reload
       end
 
-      def add_to_line_item(variant, quantity, currency=nil, shipment=nil)
+      def add_to_line_item(variant, quantity, currency=nil, shipment=nil, stock_location_quantities: nil)
         line_item = grab_line_item_by_variant(variant)
 
         if line_item
@@ -128,6 +128,7 @@ module Spree
           line_item.currency = currency unless currency.nil?
         else
           line_item = order.line_items.new(quantity: quantity, variant: variant)
+          create_order_stock_locations(line_item, stock_location_quantities)
           line_item.target_shipment = shipment
           if currency
             line_item.currency = currency
@@ -163,6 +164,14 @@ module Spree
         end
 
         line_item
+      end
+
+      def create_order_stock_locations(line_item, stock_location_quantities)
+        return unless stock_location_quantities.present?
+        order = line_item.order
+        stock_location_quantities.each do |stock_location_id, quantity|
+          order.order_stock_locations.create!(stock_location_id: stock_location_id, quantity: quantity, variant_id: line_item.variant_id) unless quantity.to_i.zero?
+        end
       end
   end
 end

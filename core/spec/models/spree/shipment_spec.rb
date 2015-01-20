@@ -8,10 +8,12 @@ describe Spree::Shipment do
                                          currency: 'USD',
                                          touch: true }
   let(:shipping_method) { create(:shipping_method, name: "UPS") }
+  let(:stock_location) { create(:stock_location) }
   let(:shipment) do
     shipment = Spree::Shipment.new
     shipment.stub(shipping_method: shipping_method)
     shipment.stub(order: order)
+    shipment.stub(stock_location: stock_location)
     shipment.state = 'pending'
     shipment.cost = 1
     shipment.save
@@ -414,6 +416,13 @@ describe Spree::Shipment do
 
           shipment.ship!
           shipment_id.should == shipment.id
+        end
+
+        it "should call fulfill_order_with_stock_location" do
+          shipment.stub(:update_order_shipment_state)
+          shipment.stub(:send_shipped_email)
+          shipment.should_receive(:fulfill_order_with_stock_location)
+          shipment.ship!
         end
 
         it "finalizes adjustments" do

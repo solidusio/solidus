@@ -28,6 +28,12 @@ module CapybaraExt
     end
   end
 
+  def fill_in_quantity(table_column, selector, quantity)
+    within(table_column) do
+      fill_in selector, :with => quantity
+    end
+  end
+
   def set_select2_field(field, value)
     page.execute_script %Q{$('#{field}').select2('val', '#{value}')}
   end

@@ -52,6 +52,9 @@ module Spree
     has_many :variants, through: :line_items
     has_many :refunds, through: :payments
 
+    has_many :order_stock_locations, class_name: "Spree::OrderStockLocation"
+    has_many :stock_locations, through: :order_stock_locations
+
     has_and_belongs_to_many :promotions, join_table: 'spree_orders_promotions'
 
     has_many :shipments, dependent: :destroy, inverse_of: :order do
