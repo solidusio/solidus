@@ -141,7 +141,11 @@ module Spree
         end
 
         def find_current_order
-          current_api_user ? current_api_user.orders.incomplete.order(:created_at).last : nil
+          current_api_user ? find_current_api_user_orders.last : nil
+        end
+
+        def find_current_api_user_orders
+          current_api_user.orders.incomplete.order(:created_at)
         end
 
         def order_id
