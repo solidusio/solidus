@@ -604,6 +604,11 @@ module Spree
         payments.offset_payment.exists? # how old versions of spree stored refunds
     end
 
+    def fully_discounted?
+      adjustment_total + line_items.map(&:final_amount).sum == 0.0
+    end
+    alias_method :fully_discounted, :fully_discounted?
+
     private
 
       def link_by_email
