@@ -233,7 +233,7 @@ module Spree
     end
 
     def should_restock?
-      variant.should_track_inventory? && stock_item && Spree::Config[:restock_inventory]
+      variant.should_track_inventory? && stock_item && stock_item.stock_location.restock_inventory?
     end
   end
 end
