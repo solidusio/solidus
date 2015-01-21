@@ -48,6 +48,7 @@ describe Spree::ReturnItem, :type => :model do
       before do
         inventory_unit.update_attributes!(state: 'shipped')
         return_item.update_attributes!(reception_status: 'awaiting')
+        stock_item.stock_location.update_attributes!(restock_inventory: true)
       end
 
       it 'increases the count on hand' do
@@ -66,9 +67,9 @@ describe Spree::ReturnItem, :type => :model do
         end
       end
 
-      context 'when the restock_inventory preference is false' do
+      context "when the stock location's restock_inventory is false" do
         before do
-          Spree::Config[:restock_inventory] = false
+          stock_item.stock_location.update_attributes!(restock_inventory: false)
         end
 
         it 'does not increase the count on hand' do
