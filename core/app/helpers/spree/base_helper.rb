@@ -125,14 +125,6 @@ module Spree
       return spree.nested_taxons_path(taxon.permalink)
     end
 
-    def gem_available?(name)
-       Gem::Specification.find_by_name(name)
-    rescue Gem::LoadError
-       false
-    rescue
-       Gem.available?(name)
-    end
-
     def display_price(product_or_variant)
       product_or_variant.price_in(current_currency).display_price.to_html
     end
