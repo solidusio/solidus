@@ -666,6 +666,11 @@ module Spree
       guest_token
     end
 
+    def fully_discounted?
+      adjustment_total + line_items.map(&:final_amount).sum == 0.0
+    end
+    alias_method :fully_discounted, :fully_discounted?
+
     def unreturned_exchange?
       shipment = self.shipments.first
       shipment.present? ? (shipment.created_at < self.created_at) : false
