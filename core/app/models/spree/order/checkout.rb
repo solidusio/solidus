@@ -80,8 +80,12 @@ module Spree
               before_transition to: :complete, do: :ensure_available_shipping_rates
 
               if states[:payment]
+                event :payment_failed do
+                  transition to: :payment, from: :confirm
+                end
+
                 before_transition to: :complete do |order|
-                  order.process_payments! if order.payment_required?
+                  order.process_payments!.tap { |success| order.handle_failed_payments unless success } if order.payment_required?
                 end
                 after_transition to: :complete, do: :persist_user_credit_card
                 before_transition to: :payment, do: :set_shipments_cost
@@ -273,6 +277,12 @@ module Spree
               cc = self.user.default_credit_card
               self.payments.create!(payment_method_id: cc.payment_method_id, source: cc)
             end
+          end
+
+          def handle_failed_payments
+            errors = self.errors[:base]
+            self.payment_failed!
+            errors.each { |error| self.errors.add(:base, error) }
           end
 
           private
