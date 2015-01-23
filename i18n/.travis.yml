@@ -6,6 +6,7 @@ env:
   - DB=mysql
   - DB=postgres
 sudo: false
+cache: bundler
 before_script:
   - sh -e /etc/init.d/xvfb start
   - export DISPLAY=:99.0
