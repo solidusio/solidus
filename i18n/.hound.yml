@@ -7,7 +7,7 @@ LineLength:
 Documentation:
   Enabled: false
 
-# Neatly aligned code is to swell.
+# Neatly aligned code is too swell.
 SingleSpaceBeforeFirstArg:
   Enabled: false
 
@@ -15,3 +15,7 @@ SingleSpaceBeforeFirstArg:
 Blocks:
   Exclude:
     - 'spec/**/*'
+
+# Avoid contradictory style rules by enforce single quotes.
+StringLiterals:
+  EnforcedStyle: single_quotes
