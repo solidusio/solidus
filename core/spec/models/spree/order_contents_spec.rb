@@ -209,4 +209,32 @@ describe Spree::OrderContents do
       }.to change { order.payment_state }
     end
   end
+
+  describe "#associate_user" do
+    let(:user) { Spree.user_class.new }
+    let(:order) { Spree::Order.new }
+
+    before do
+      allow_any_instance_of(Spree::OrderContents).to receive(:reload_totals)
+      allow_any_instance_of(Spree::Order).to receive(:associate_user!)
+      allow_any_instance_of(Spree::PromotionHandler::Cart).to receive(:activate)
+    end
+
+    subject { described_class.new(order).associate_user(user, true) }
+
+    it "associates the user" do
+      expect(order).to receive(:associate_user!).with(user, true)
+      subject
+    end
+
+    it "attempts to re-activate promotions" do
+      expect_any_instance_of(Spree::PromotionHandler::Cart).to receive(:activate)
+      subject
+    end
+
+    it "reloads totals" do
+      expect_any_instance_of(Spree::OrderContents).to receive(:reload_totals).twice
+      subject
+    end
+  end
 end

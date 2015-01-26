@@ -42,6 +42,14 @@ module Spree
       end
     end
 
+    def associate_user(user, override_email = true)
+      order.associate_user!(user, override_email)
+      reload_totals
+      PromotionHandler::Cart.new(order).activate
+      reload_totals
+      true
+    end
+
     private
       def order_updater
         @updater ||= OrderUpdater.new(order)
