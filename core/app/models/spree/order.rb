@@ -407,15 +407,6 @@ module Spree
      line_items.select(&:insufficient_stock?)
     end
 
-    def empty!
-      line_items.destroy_all
-      updater.update_item_count
-
-      adjustments.destroy_all
-      update_totals
-      persist_totals
-    end
-
     def has_step?(step)
       checkout_steps.include?(step)
     end

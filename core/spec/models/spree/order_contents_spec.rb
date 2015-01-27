@@ -345,4 +345,23 @@ describe Spree::OrderContents do
       end.to change { order.reload.state }.from('complete').to('canceled')
     end
   end
+
+  describe "#empty" do
+    let(:order) { stub_model(Spree::Order, item_count: 2) }
+
+    before do
+      order.stub(:line_items => line_items = [1, 2])
+      order.stub(:adjustments => adjustments = [])
+    end
+
+    it "clears out line items, adjustments and update totals" do
+      expect(order.line_items).to receive(:destroy_all)
+      expect(order.adjustments).to receive(:destroy_all)
+      expect(order.contents).to receive(:reload_totals)
+
+      order.contents.empty
+      expect(order.item_total).to eq 0
+    end
+  end
+
 end

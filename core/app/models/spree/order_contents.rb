@@ -102,6 +102,12 @@ module Spree
       while @order.next; end
     end
 
+    def empty
+      order.line_items.destroy_all
+      order.adjustments.destroy_all
+      reload_totals
+    end
+
     private
       def order_updater
         @updater ||= OrderUpdater.new(order)
