@@ -3,7 +3,8 @@ module Spree
     class ProductsController < ResourceController
       helper 'spree/products'
 
-      before_filter :load_data, :except => :index
+      before_filter :load_data, :except => [:index, :stock]
+      before_filter :load_variants, :only => :stock
       create.before :create_before
       update.before :update_before
       helper_method :clone_object_url
@@ -66,9 +67,8 @@ module Spree
       end
 
       def stock
-        @variants = @product.variants
-        @variants = [@product.master] if @variants.empty?
-        @variants = Kaminari.paginate_array(@variants).page(params[:page]).per(Spree::Config[:admin_variants_per_page])
+        @hide_out_of_stock = params[:hide_out_of_stock]
+        @option_values = @product.variants.flat_map(&:option_values).uniq
         @stock_locations = StockLocation.accessible_by(current_ability, :read)
         if @stock_locations.empty?
           flash[:error] = Spree.t(:stock_management_requires_a_stock_location)
@@ -91,6 +91,20 @@ module Spree
           @option_types = OptionType.order(:name)
           @tax_categories = TaxCategory.order(:name)
           @shipping_categories = ShippingCategory.order(:name)
+        end
+
+        def load_variants
+          @sku = params[:sku] || ""
+          @selected_option_value_ids = (params[:option_value_ids] || []).reject(&:blank?)
+          if @sku.present?
+            @variants = Spree::Variant.where(sku: @sku)
+          elsif @selected_option_value_ids.present?
+            @variants = @product.variants.joins(:option_values).where(spree_option_values: { id: @selected_option_value_ids }).group("spree_variants.id").having("count(spree_option_values.id) = ?", @selected_option_value_ids.length)
+          else
+            @variants = @product.variants
+            @variants = Kaminari.paginate_array([@product.master]) if @variants.empty?
+          end
+          @variants = @variants.page(params[:page]).per(Spree::Config[:admin_variants_per_page])
         end
 
         def collection
@@ -126,7 +140,7 @@ module Spree
         def product_includes
           [{ :variants => [:images, { :option_values => :option_type }], :master => [:images, :default_price]}]
         end
-        
+
         def clone_object_url resource
           clone_admin_product_url resource
         end

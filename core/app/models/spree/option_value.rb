@@ -16,5 +16,9 @@ module Spree
         variants.find_each(&:touch)
       # end
     end
+
+    def presentation_with_option_type
+      "#{self.option_type.presentation} - #{self.presentation}"
+    end
   end
 end
