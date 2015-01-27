@@ -374,20 +374,6 @@ module Spree
         expect(json_response['line_items'].first['price'].to_f).to eq(line_item.variant.price)
       end
 
-      context "params contain line_items_attributes" do
-        it "doesn't add an extra line item" do
-          variant2 = create(:variant)
-          api_put :update, :id => order.to_param, :order => {
-            :line_items_attributes => [
-              { :id => line_item.id, :quantity => 10 },
-              { :variant_id => variant2.id, :quantity => 1}
-            ]
-          }
-          response.status.should == 200
-          json_response['line_items'].count.should == 1
-        end
-      end
-
       it "can add billing address" do
         api_put :update, :id => order.to_param, :order => { :bill_address_attributes => billing_address }
 
