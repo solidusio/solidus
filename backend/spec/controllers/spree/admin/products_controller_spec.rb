@@ -44,10 +44,44 @@ describe Spree::Admin::ProductsController, :type => :controller do
   end
 
   context "stock" do
-    let(:product) { create(:product) }
+    let!(:product) { create(:product) }
+    let!(:variant_1) { create(:variant, product: product) }
+    let!(:variant_2) { create(:variant, product: product, option_values: variant_1.option_values) }
+    let!(:variant_3) { create(:variant, product: product) }
+
+    let(:sku) { variant_1.sku }
+    let(:option_value_ids) { ["", variant_2.option_values.first.id] }
+    subject { spree_get :stock, { sku: sku, option_value_ids: option_value_ids, hide_out_of_stock: "1", id: product.slug } }
+
     it "restricts stock location based on accessible attributes" do
       expect(Spree::StockLocation).to receive(:accessible_by).and_return([])
       spree_get :stock, :id => product
+    end
+
+    context "with a given sku" do
+      it "finds the correct variants" do
+        subject
+        expect(assigns(:variants)).to match_array [variant_1]
+      end
+    end
+
+    context "with no sku but given option value ids" do
+      let(:sku) { "" }
+
+      it "finds the correct variants" do
+        subject
+        expect(assigns(:variants)).to match_array [variant_1, variant_2]
+      end
+    end
+
+    context "with no sku or option value ids" do
+      let(:sku) { "" }
+      let(:option_value_ids) { [""] }
+
+      it "finds all variants associated to the product" do
+        subject
+        expect(assigns(:variants)).to match_array product.variants
+      end
     end
   end
 end

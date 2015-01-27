@@ -12,5 +12,9 @@ module Spree
     def touch_all_variants
       variants.update_all(updated_at: Time.current)
     end
+
+    def presentation_with_option_type
+      "#{self.option_type.presentation} - #{self.presentation}"
+    end
   end
 end

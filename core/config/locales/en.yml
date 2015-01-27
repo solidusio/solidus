@@ -738,6 +738,7 @@ en:
     has_no_shipped_units: has no shipped units
     height: Height
     hide_cents: Hide cents
+    hide_out_of_stock: Hide out of stock
     home: Home
     i18n:
       available_locales: Available Locales
@@ -1377,6 +1378,7 @@ en:
     value: Value
     variant: Variant
     variant_placeholder: Choose a variant
+    variant_search: Variant Search
     variants: Variants
     version: Version
     void: Void

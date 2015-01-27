@@ -3,7 +3,8 @@ module Spree
     class ProductsController < ResourceController
       helper 'spree/products'
 
-      before_action :load_data, except: :index
+      before_action :load_data, :except => [:index, :stock]
+      before_action :load_variants, :only => :stock
       create.before :create_before
       update.before :update_before
       helper_method :clone_object_url
@@ -67,9 +68,8 @@ module Spree
       end
 
       def stock
-        @variants = @product.variants.includes(*variant_stock_includes)
-        @variants = [@product.master] if @variants.empty?
-        @variants = Kaminari.paginate_array(@variants).page(params[:page]).per(Spree::Config[:admin_variants_per_page])
+        @hide_out_of_stock = params[:hide_out_of_stock]
+        @option_values = @product.variants.flat_map(&:option_values).uniq
         @stock_locations = StockLocation.accessible_by(current_ability, :read)
         if @stock_locations.empty?
           flash[:error] = Spree.t(:stock_management_requires_a_stock_location)
@@ -94,10 +94,45 @@ module Spree
         @shipping_categories = ShippingCategory.order(:name)
       end
 
+<<<<<<< HEAD
       def collection
         return @collection if @collection.present?
         params[:q] ||= {}
         params[:q][:deleted_at_null] ||= "1"
+=======
+        def load_variants
+          @sku = params[:sku] || ""
+          @selected_option_value_ids = (params[:option_value_ids] || []).reject(&:blank?)
+          if @sku.present?
+            @variants = Spree::Variant.where(sku: @sku)
+          elsif @selected_option_value_ids.present?
+            @variants = @product.variants.joins(:option_values).where(spree_option_values: { id: @selected_option_value_ids }).group("spree_variants.id").having("count(spree_option_values.id) = ?", @selected_option_value_ids.length)
+          else
+            @variants = @product.variants
+            @variants = Kaminari.paginate_array([@product.master]) if @variants.empty?
+          end
+          @variants = @variants.page(params[:page]).per(Spree::Config[:admin_variants_per_page])
+        end
+
+        def collection
+          return @collection if @collection.present?
+          params[:q] ||= {}
+          params[:q][:deleted_at_null] ||= "1"
+
+          params[:q][:s] ||= "name asc"
+          @collection = super
+          @collection = @collection.with_deleted if params[:q][:deleted_at_null] == '0'
+          # @search needs to be defined as this is passed to search_form_for
+          @search = @collection.ransack(params[:q])
+          @collection = @search.result.
+                distinct_by_product_ids(params[:q][:s]).
+                includes(product_includes).
+                page(params[:page]).
+                per(Spree::Config[:admin_products_per_page])
+
+          @collection
+        end
+>>>>>>> 78a510d... Usability improvements to product stock management page
 
         params[:q][:s] ||= "name asc"
         @collection = super
@@ -120,12 +155,22 @@ module Spree
         @prototype = Spree::Prototype.find(params[:product][:prototype_id])
       end
 
+<<<<<<< HEAD
       def update_before
         # note: we only reset the product properties if we're receiving a post
         #       from the form on that tab
         return unless params[:clear_product_properties]
         params[:product] ||= {}
       end
+=======
+        def product_includes
+          [{ :variants => [:images, { :option_values => :option_type }], :master => [:images, :default_price]}]
+        end
+
+        def clone_object_url resource
+          clone_admin_product_url resource
+        end
+>>>>>>> 78a510d... Usability improvements to product stock management page
 
       def product_includes
         [{ variants: [:images], master: [:images, :default_price] }]
