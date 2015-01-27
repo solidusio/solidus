@@ -313,4 +313,52 @@ describe Spree::Admin::OrdersController, :type => :controller do
       }.to raise_error ActiveRecord::RecordNotFound
     end
   end
+
+  describe "#update" do
+    let(:order) { create(:order) }
+    let(:payload) do
+      {
+        id: order.number,
+        order: { email: "foo@bar.com" }
+      }
+    end
+
+    before do
+      allow(order.contents).to receive(:update_cart)
+      expect(Spree::Order).to receive(:find_by_number!) { order }
+    end
+    subject { spree_put :update, payload }
+
+    it "attempts to update the order" do
+      expect(order.contents).to receive(:update_cart).with(payload[:order])
+      subject
+    end
+
+    context "the order is already completed" do
+      before { allow(order).to receive(:completed?) { true } }
+
+      it "renders the edit route" do
+        subject
+        expect(response).to render_template(:edit)
+      end
+    end
+
+    context "the order is not completed" do
+      before { allow(order).to receive(:completed?) { false } }
+
+      it "redirects to the customer path" do
+        subject
+        expect(response).to redirect_to(spree.admin_order_customer_path(order))
+      end
+    end
+
+    context "the order has no line items" do
+      let(:order) { Spree::Order.new }
+      it "includes an error on the order" do
+        subject
+        expect(order.errors[:line_items]).to include Spree.t('errors.messages.blank')
+      end
+    end
+
+  end
 end

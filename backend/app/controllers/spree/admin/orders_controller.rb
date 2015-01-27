@@ -80,17 +80,13 @@ module Spree
       end
 
       def update
-        if @order.update_attributes(params[:order]) && @order.line_items.present?
-          @order.update!
-          unless @order.completed?
-            # Jump to next step if order is not completed.
-            redirect_to admin_order_customer_path(@order) and return
-          end
+        @order.contents.update_cart(params[:order])
+        @order.errors.add(:line_items, Spree.t('errors.messages.blank')) if @order.line_items.empty?
+        if @order.completed?
+          render :action => :edit
         else
-          @order.errors.add(:line_items, Spree.t('errors.messages.blank')) if @order.line_items.empty?
+          redirect_to admin_order_customer_path(@order)
         end
-
-        render :action => :edit
       end
 
       def advance
