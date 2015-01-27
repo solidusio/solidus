@@ -27,11 +27,16 @@ module Spree
       end
 
       def update
-        @line_item.update_attributes(params[:line_item])
+        @order.contents.update_cart(line_items_attributes: line_items_attributes)
         render_order_form
       end
 
       private
+
+        def line_items_attributes
+          { line_items_attributes: params[:line_item].merge(id: params[:id]) }
+        end
+
         def render_order_form
           render :partial => 'spree/admin/orders/form', :locals => { :order => @order.reload }
         end
