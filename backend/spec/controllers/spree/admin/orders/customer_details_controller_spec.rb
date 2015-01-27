@@ -29,7 +29,7 @@ describe Spree::Admin::Orders::CustomerDetailsController, type: :controller do
         it "attempts to associate the user" do
           mock_user = mock_model(Spree.user_class, id: 1)
           allow(Spree.user_class).to receive(:find) { mock_user }
-          expect(order).to receive(:associate_user!).with(mock_user, true)
+          expect(order.contents).to receive(:associate_user).with(mock_user, true)
           attributes = {
             order_id: order.number,
             order: { email: "" },
@@ -45,7 +45,7 @@ describe Spree::Admin::Orders::CustomerDetailsController, type: :controller do
                                            next: false,
                                            refresh_shipment_rates: true)
 
-          expect(order).not_to receive(:associate_user!)
+          expect(order.contents).not_to receive(:associate_user)
 
           attributes = {
             order_id: order.number,

@@ -6,7 +6,7 @@ require 'spec_helper'
 describe Spree::CheckoutController do
   render_views
   let(:token) { 'some_token' }
-  let(:user) { stub_model(Spree::LegacyUser) }
+  let(:user) { create(:user) }
 
   before do
     controller.stub :try_spree_current_user => user

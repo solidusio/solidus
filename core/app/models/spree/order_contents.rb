@@ -42,11 +42,29 @@ module Spree
       end
     end
 
+    # NOTE I'm not sure that override_email is necessary,
+    # let's look into removing it at some point.
+    #
+    # -AT 01/27/2015
     def associate_user(user, override_email = true)
-      order.associate_user!(user, override_email)
-      reload_totals
-      PromotionHandler::Cart.new(order).activate
-      reload_totals
+      return unless user
+      order.user = user
+      order.email = user.email if !order.email || override_email
+      order.created_by ||= user
+
+      ###
+      # TODO ideally we would fix up how we deal with persistence here, but
+      # this is current behavior that seems worth maintaining for now (at least
+      # based on specs).
+      #
+      # -AT 01/27/2015
+      if order.persisted?
+        order.save!
+
+        reload_totals
+        PromotionHandler::Cart.new(order).activate
+        reload_totals
+      end
       true
     end
 

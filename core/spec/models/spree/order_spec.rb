@@ -77,64 +77,6 @@ describe Spree::Order do
     end
   end
 
-  context "#associate_user!" do
-    it "should associate a user with a persisted order" do
-      order = FactoryGirl.create(:order_with_line_items, created_by: nil)
-      user = FactoryGirl.create(:user)
-
-      order.user = nil
-      order.email = nil
-      order.associate_user!(user)
-      order.user.should == user
-      order.email.should == user.email
-      order.created_by.should == user
-
-      # verify that the changes we made were persisted
-      order.reload
-      order.user.should == user
-      order.email.should == user.email
-      order.created_by.should == user
-    end
-
-    it "should not overwrite the created_by if it already is set" do
-      creator = create(:user)
-      order = FactoryGirl.create(:order_with_line_items, created_by: creator)
-      user = FactoryGirl.create(:user)
-
-      order.user = nil
-      order.email = nil
-      order.associate_user!(user)
-      order.user.should == user
-      order.email.should == user.email
-      order.created_by.should == creator
-
-      # verify that the changes we made were persisted
-      order.reload
-      order.user.should == user
-      order.email.should == user.email
-      order.created_by.should == creator
-    end
-
-
-    it "should associate a user with a non-persisted order" do
-      order = Spree::Order.new
-
-      expect do
-        order.associate_user!(user)
-      end.to change { [order.user, order.email] }.from([nil, nil]).to([user, user.email])
-    end
-
-    it "should not persist an invalid address" do
-      address = Spree::Address.new
-      order.user = nil
-      order.email = nil
-      order.ship_address = address
-      expect do
-        order.associate_user!(user)
-      end.not_to change { address.persisted? }.from(false)
-    end
-  end
-
   context "#create" do
     it "should assign an order number" do
       order = Spree::Order.create

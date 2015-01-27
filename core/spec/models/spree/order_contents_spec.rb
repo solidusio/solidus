@@ -211,20 +211,60 @@ describe Spree::OrderContents do
   end
 
   describe "#associate_user" do
-    let(:user) { Spree.user_class.new }
-    let(:order) { Spree::Order.new }
+    let(:order) { create(:order_with_line_items, created_by: nil, user: nil, email: nil) }
+    let(:user)  { create(:user) }
+    let(:override_email) { false }
 
-    before do
-      allow_any_instance_of(Spree::OrderContents).to receive(:reload_totals)
-      allow_any_instance_of(Spree::Order).to receive(:associate_user!)
-      allow_any_instance_of(Spree::PromotionHandler::Cart).to receive(:activate)
-    end
-
-    subject { described_class.new(order).associate_user(user, true) }
+    subject { described_class.new(order).associate_user(user, override_email) }
 
     it "associates the user" do
-      expect(order).to receive(:associate_user!).with(user, true)
-      subject
+      expect { subject }.to change { order.reload.user }.to user
+    end
+
+    context "order email is already set" do
+      before { order.update_attributes!(email: FactoryGirl.generate(:random_email)) }
+      context "told to override the email" do
+        let(:override_email) { true }
+        it "copies the user's email" do
+          expect { subject }.to change { order.reload.email }.to user.email
+        end
+      end
+      context "not told to override the email" do
+        let(:override_email) { false }
+        it "leave the order's email intact" do
+          expect { subject }.not_to change { order.reload.email }
+        end
+      end
+    end
+
+    context "order email is not yet set" do
+      it "copies the user's email" do
+        expect { subject }.to change { order.reload.email }.to user.email
+      end
+    end
+
+    context "created_by is already set" do
+      before { order.update_attributes!(created_by: create(:user)) }
+      it "leaves the created_by intact" do
+        expect { subject }.not_to change { order.reload.created_by }
+      end
+    end
+
+    context "created_by is not yet set" do
+      it "sets the user to be the created_by" do
+        expect { subject }.to change { order.reload.created_by }.to user
+      end
+    end
+
+    context "the order is invalid" do
+      before do
+        order.build_ship_address
+        expect(order.ship_address).not_to be_valid
+        expect(order).not_to be_valid
+      end
+      it "still saves the new user association" do
+        expect { subject }.to change { order.reload.user }.to user
+      end
     end
 
     it "attempts to re-activate promotions" do
