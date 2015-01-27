@@ -500,63 +500,6 @@ describe Spree::Order do
     end
   end
 
-  # Regression tests for #2179
-  context "#merge!" do
-    let(:variant) { create(:variant) }
-    let(:order_1) { Spree::Order.create }
-    let(:order_2) { Spree::Order.create }
-
-    it "destroys the other order" do
-      order_1.merge!(order_2)
-      lambda { order_2.reload }.should raise_error(ActiveRecord::RecordNotFound)
-    end
-
-    context "user is provided" do
-      it "assigns user to new order" do
-        order_1.merge!(order_2, user)
-        expect(order_1.user).to eq user
-      end
-    end
-
-    context "merging together two orders with line items for the same variant" do
-      before do
-        order_1.contents.add(variant, 1)
-        order_2.contents.add(variant, 1)
-      end
-
-      specify do
-        order_1.merge!(order_2)
-        order_1.line_items.count.should == 1
-
-        line_item = order_1.line_items.first
-        line_item.quantity.should == 2
-        line_item.variant_id.should == variant.id
-      end
-    end
-
-    context "merging together two orders with different line items" do
-      let(:variant_2) { create(:variant) }
-
-      before do
-        order_1.contents.add(variant, 1)
-        order_2.contents.add(variant_2, 1)
-      end
-
-      specify do
-        order_1.merge!(order_2)
-        line_items = order_1.line_items
-        line_items.count.should == 2
-
-        expect(order_1.item_count).to eq 2
-        expect(order_1.item_total).to eq line_items.map(&:amount).sum
-
-        # No guarantee on ordering of line items, so we do this:
-        line_items.pluck(:quantity).should =~ [1, 1]
-        line_items.pluck(:variant_id).should =~ [variant.id, variant_2.id]
-      end
-    end
-  end
-
   # Regression test for #2191
   context "when an order has an adjustment that zeroes the total, but another adjustment for shipping that raises it above zero" do
     let!(:persisted_order) { create(:order) }

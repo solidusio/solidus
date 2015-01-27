@@ -62,7 +62,7 @@ module Spree
             if session[:order_id].nil? && last_incomplete_order
               session[:order_id] = last_incomplete_order.id
             elsif current_order && last_incomplete_order && current_order != last_incomplete_order
-              current_order.merge!(last_incomplete_order, user)
+              current_order.contents.merge(last_incomplete_order, user: user)
             end
           end
         end

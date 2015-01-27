@@ -50,6 +50,30 @@ module Spree
       true
     end
 
+    def merge(other_order, user: nil)
+      other_order.line_items.each do |line_item|
+        next unless line_item.currency == order.currency
+        current_line_item = order.line_items.find_by(variant: line_item.variant)
+        if current_line_item
+          current_line_item.quantity += line_item.quantity
+          current_line_item.save
+        else
+          line_item.order_id = order.id
+          line_item.save
+        end
+      end
+
+      # TODO: Call this class's `associate_user' method after it's merged in
+      order.associate_user!(user) if order.user.nil? && user
+
+      order.updater.update_item_count
+      order.update!
+
+      # So that the destroy doesn't take out line items which may have been re-assigned
+      other_order.line_items.reload
+      other_order.destroy
+    end
+
     private
       def order_updater
         @updater ||= OrderUpdater.new(order)
