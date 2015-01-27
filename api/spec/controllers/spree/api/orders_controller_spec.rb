@@ -231,10 +231,11 @@ module Spree
 
     # Regression test for #3404
     it "can specify additional parameters for a line item" do
-      Order.should_receive(:create!).and_return(order = Spree::Order.new)
-      order.stub(:associate_user!)
-      order.stub_chain(:contents, :add).and_return(line_item = double('LineItem'))
-      line_item.should_receive(:update_attributes).with("special" => true)
+      order, line_item = Spree::Order.new, double('LineItem')
+      expect(Order).to receive(:create!) { order }
+      allow(order).to receive(:contents) { double(associate_user: true, add: line_item) }
+
+      expect(line_item).to receive(:update_attributes).with("special" => true)
 
       controller.stub(permitted_line_item_attributes: [:id, :variant_id, :quantity, :special])
       api_post :create, :order => {
@@ -271,10 +272,11 @@ module Spree
 
     # Regression test for #3404
     it "does not update line item needlessly" do
-      Order.should_receive(:create!).and_return(order = Spree::Order.new)
-      order.stub(:associate_user!)
-      order.stub_chain(:contents, :add).and_return(line_item = double('LineItem'))
-      line_item.should_not_receive(:update_attributes)
+      order, line_item = Spree::Order.new, double('LineItem')
+      expect(Order).to receive(:create!) { order }
+      allow(order).to receive(:contents) { double(associate_user: true, add: line_item) }
+      expect(line_item).not_to receive(:update_attributes)
+
       api_post :create, :order => {
         :line_items => {
           "0" => {

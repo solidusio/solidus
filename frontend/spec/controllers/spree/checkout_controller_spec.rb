@@ -56,7 +56,7 @@ describe Spree::CheckoutController do
 
       it "should associate the order with a user" do
         order.user = nil
-        order.should_receive(:associate_user!).with(user)
+        order.contents.should_receive(:associate_user).with(user)
         spree_get :edit, {}, :order_id => 1
       end
     end

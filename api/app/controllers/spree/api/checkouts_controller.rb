@@ -46,7 +46,7 @@ module Spree
         if @order.update_attributes(order_params)
           @order.update_line_items(line_items)
           if current_api_user.has_spree_role?('admin') && user_id.present?
-            @order.associate_user!(Spree.user_class.find(user_id))
+            @order.contents.associate_user(Spree.user_class.find(user_id))
           end
           return if after_update_attributes
           state_callback(:after) if @order.next

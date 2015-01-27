@@ -19,7 +19,7 @@ module Spree
     end
 
     def charge_for_items
-      new_order.associate_user!(@original_order.user) if @original_order.user
+      new_order.contents.associate_user(@original_order.user) if @original_order.user
 
       add_exchange_variants_to_order
 

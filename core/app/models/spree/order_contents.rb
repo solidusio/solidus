@@ -81,8 +81,7 @@ module Spree
         end
       end
 
-      # TODO: Call this class's `associate_user' method after it's merged in
-      order.associate_user!(user) if order.user.nil? && user
+      associate_user(user) if order.user.nil? && user
 
       order.updater.update_item_count
       order.update!

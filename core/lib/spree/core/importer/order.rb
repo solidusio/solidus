@@ -11,7 +11,7 @@ module Spree
             ensure_state_id_from_params params[:bill_address_attributes]
 
             order = Spree::Order.create!
-            order.associate_user!(user)
+            order.contents.associate_user(user)
 
             create_shipments_from_params(params.delete(:shipments_attributes), order)
             create_line_items_from_params(params.delete(:line_items_attributes),order)
