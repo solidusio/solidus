@@ -40,6 +40,7 @@ describe Spree::Admin::OrdersController, :type => :controller do
 
     before do
       allow(Spree::Order).to receive_messages(find_by_number!: order)
+      order.stub(contents: Spree::OrderContents.new(order))
     end
 
     context "#approve" do

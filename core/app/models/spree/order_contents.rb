@@ -34,6 +34,10 @@ module Spree
       end
     end
 
+    def advance
+      while @order.next; end
+    end
+
     private
       def after_add_or_remove(line_item, options = {})
         reload_totals

@@ -33,7 +33,7 @@ module Spree
 
       def advance
         authorize! :update, @order, order_token
-        while @order.next; end
+        @order.contents.advance
         respond_with(@order, default_template: 'spree/api/orders/show', status: 200)
       end
 

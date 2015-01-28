@@ -92,7 +92,7 @@ module Spree
           flash[:notice] = Spree.t('order_already_completed')
           redirect_to edit_admin_order_url(@order)
         else
-          while @order.next; end
+          @order.contents.advance
 
           if @order.confirm?
             flash[:success] = Spree.t('order_ready_for_confirm')
