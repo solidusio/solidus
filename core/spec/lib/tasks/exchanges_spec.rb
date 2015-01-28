@@ -13,7 +13,6 @@ describe "exchanges:charge_unreturned_items" do
 
   context "there are unreturned items" do
     let!(:order) { create(:shipped_order, line_items_count: 2) }
-    let!(:customer_return) { build(:customer_return, return_items: [return_item_1, return_item_2]) }
     let(:return_item_1) { build(:exchange_return_item, inventory_unit: order.inventory_units.first) }
     let(:return_item_2) { build(:exchange_return_item, inventory_unit: order.inventory_units.last) }
     let!(:rma) { create(:return_authorization, order: order, return_items: [return_item_1, return_item_2]) }

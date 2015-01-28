@@ -45,7 +45,7 @@
         <% unless return_item.received? %>
           <td class='align-center'>
             <%= form_for [:admin, return_item] do |f| %>
-              <%= f.hidden_field 'reception_status', value: 'received' %>
+              <%= f.hidden_field 'reception_status_event', value: 'receive' %>
               <%= f.button Spree.t(:receive), class: 'fa icon_link no-text with-tip', "data-action" => 'save' %>
             <% end %>
           </td>

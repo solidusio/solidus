@@ -27,12 +27,12 @@ module Spree
     validate :validate_no_other_completed_return_items, on: :create
 
     after_create :cancel_others, unless: :cancelled?
-    after_save :receive_items
 
     scope :awaiting_return, -> { where(reception_status: 'awaiting') }
     scope :not_cancelled, -> { where.not(reception_status: 'cancelled') }
     scope :given_to_customer, -> { where(reception_status: 'given_to_customer') }
     scope :lost_in_transit, -> { where(reception_status: 'lost_in_transit') }
+    scope :received, -> { where(reception_status: 'received') }
     scope :pending, -> { where(acceptance_status: 'pending') }
     scope :accepted, -> { where(acceptance_status: 'accepted') }
     scope :rejected, -> { where(acceptance_status: 'rejected') }
@@ -56,6 +56,7 @@ module Spree
 
     state_machine :reception_status, initial: :awaiting do
       after_transition to: COMPLETED_RECEPTION_STATUSES,  do: :attempt_accept
+      after_transition to: :received, do: :process_inventory_unit!
 
       event :receive do
         transition to: :received, from: [:awaiting, :given_to_customer, :lost_in_transit]
@@ -156,18 +157,14 @@ module Spree
 
     def available_active_status_paths
       status_paths = reception_status_paths.to_states
+      event_paths = reception_status_paths.events
       status_paths.delete(:cancelled)
-      status_paths
+      event_paths.delete(:cancel)
+
+      status_paths.map{ |s| s.to_s.humanize }.zip(event_paths)
     end
 
     private
-
-    def receive_items
-      if received? && reception_status_was != "received"
-        process_inventory_unit!
-        self.customer_return.return_order! if customer_return
-      end
-    end
 
     def persist_acceptance_status_errors
       self.update_attributes(acceptance_status_errors: validator.errors)
@@ -190,6 +187,7 @@ module Spree
       inventory_unit.return!
 
       Spree::StockMovement.create!(stock_item_id: stock_item.id, quantity: 1) if should_restock?
+      customer_return.process_return! if customer_return
     end
 
     # This logic is also present in the customer return. The reason for the
