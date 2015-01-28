@@ -8,7 +8,6 @@ module Spree
       def edit
         @preferences_security = [:allow_ssl_in_production,
                         :allow_ssl_in_staging, :allow_ssl_in_development_and_test]
-        @preferences_currency = [:display_currency, :hide_cents]
       end
 
       def update
