@@ -14,11 +14,6 @@ module Spree
       skip_before_filter :set_current_order
 
       def next
-        if @order.confirm?
-          ActiveSupport::Deprecation.warn "Using Spree::Api::CheckoutsController#next to transition to complete is deprecated. Please use #complete instead of #next.", caller
-          complete
-          return
-        end
         authorize! :update, @order, order_token
         @order.next!
         respond_with(@order, default_template: 'spree/api/orders/show', status: 200)
