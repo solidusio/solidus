@@ -26,7 +26,10 @@ describe Spree::Admin::OrdersController do
     end
 
     let(:order) { mock_model(Spree::Order, :completed? => true, :total => 100, :number => 'R123456789', billing_address: mock_model(Spree::Address)) }
-    before { Spree::Order.stub :find_by_number! => order }
+    before do
+      Spree::Order.stub :find_by_number! => order
+      order.stub(contents: Spree::OrderContents.new(order))
+    end
 
     context "#approve" do
       it "approves an order" do

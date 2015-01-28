@@ -81,6 +81,10 @@ module Spree
       order.cancel!
     end
 
+    def advance
+      while @order.next; end
+    end
+
     private
       def order_updater
         @updater ||= OrderUpdater.new(order)
