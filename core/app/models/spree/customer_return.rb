@@ -49,7 +49,7 @@ module Spree
       !return_items.undecided.exists?
     end
 
-    def return_order!
+    def process_return!
       order.return! if order.all_inventory_units_returned?
     end
 
@@ -60,11 +60,6 @@ module Spree
         random = "CR#{Array.new(9){rand(9)}.join}"
         break random unless self.class.exists?(number: random)
       end
-    end
-
-    def process_return!
-      return_items.each(&:attempt_accept)
-      return_order!
     end
 
     def return_items_belong_to_same_order
