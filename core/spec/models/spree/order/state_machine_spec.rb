@@ -126,7 +126,7 @@ describe Spree::Order do
         mail_message
       }
       mail_message.should_receive :deliver
-      order.cancel!
+      order.contents.cancel
       order_id.should == order.id
     end
 
@@ -156,7 +156,7 @@ describe Spree::Order do
         it "should set payment state to 'credit owed'" do
           # Regression test for #3711
           order.should_receive(:update_column).with(:payment_state, 'void')
-          order.cancel!
+          order.contents.cancel
         end
       end
 
@@ -166,7 +166,7 @@ describe Spree::Order do
         end
 
         it "should not alter the payment state" do
-          order.cancel!
+          order.contents.cancel
           order.payment_state.should be_nil
         end
       end
@@ -177,7 +177,7 @@ describe Spree::Order do
         it "should automatically refund all payments" do
           order.stub_chain(:payments, :completed).and_return([payment])
           payment.should_receive(:cancel!)
-          order.cancel!
+          order.contents.cancel
         end
       end
     end

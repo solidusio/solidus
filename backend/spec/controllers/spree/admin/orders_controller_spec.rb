@@ -37,9 +37,11 @@ describe Spree::Admin::OrdersController do
     end
 
     context "#cancel" do
+      let(:order) { create(:order, state: 'complete', completed_at: Time.now) }
       it "cancels an order" do
-        expect(order).to receive(:cancel!)
-        spree_put :cancel, id: order.number
+        expect do
+          spree_put :cancel, id: order.number
+        end.to change { order.reload.state }.from('complete').to('canceled')
         expect(flash[:success]).to eq Spree.t(:order_canceled)
       end
     end

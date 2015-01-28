@@ -22,7 +22,7 @@ module Spree
 
       def cancel
         authorize! :update, @order, params[:token]
-        @order.cancel!
+        @order.contents.cancel
         render :show
       end
 

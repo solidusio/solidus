@@ -74,6 +74,13 @@ module Spree
       other_order.destroy
     end
 
+    # TODO: It would be nice to remove this from Spree::Order except that it's
+    # part of the state_machine definition.  We should think about the best ways
+    # to replace external code hooking directly into state_machine & etc.
+    def cancel
+      order.cancel!
+    end
+
     private
       def order_updater
         @updater ||= OrderUpdater.new(order)

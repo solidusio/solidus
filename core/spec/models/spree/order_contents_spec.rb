@@ -296,4 +296,13 @@ describe Spree::OrderContents do
     end
   end
 
+  describe "#cancel" do
+    let(:order) { create(:order, state: 'complete', completed_at: Time.now) }
+
+    it "cancels the order" do
+      expect do
+        order.cancel
+      end.to change { order.reload.state }.from('complete').to('canceled')
+    end
+  end
 end
