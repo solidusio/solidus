@@ -5,12 +5,6 @@
       <%= text_field :tracker, :analytics_id, :class => 'fullwidth' %>
     </div>
   </div>
-  <div class="four columns">
-    <div data-hook="environment" class="field">
-      <%= label_tag :tracker_environment, Spree.t(:environment) %>
-      <%= collection_select(:tracker, :environment, rails_environments, :to_s, :titleize, {}, {:id => 'tracker-env', :class => 'select2 fullwidth'}) %>
-    </div>
-  </div>
   <div class="omega four columns">
     <div data-hook="active" class="field">
       <%= label_tag nil, Spree.t(:active) %>
