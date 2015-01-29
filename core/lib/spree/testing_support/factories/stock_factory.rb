@@ -1,7 +1,7 @@
 FactoryGirl.define do
   # must use build()
   factory :stock_packer, class: Spree::Stock::Packer do
-    ignore do
+    transient do
       stock_location { build(:stock_location) }
       contents []
     end
@@ -10,7 +10,7 @@ FactoryGirl.define do
   end
 
   factory :stock_package, class: Spree::Stock::Package do
-    ignore do
+    transient do
       stock_location { build(:stock_location) }
       contents       { [] }
       variants_contents { {} }
@@ -25,7 +25,7 @@ FactoryGirl.define do
     end
 
     factory :stock_package_fulfilled do
-      ignore { variants_contents { { build(:variant) => 2 } } }
+      transient { variants_contents { { build(:variant) => 2 } } }
     end
   end
 end

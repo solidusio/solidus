@@ -5,7 +5,7 @@ FactoryGirl.define do
     completed_at nil
     email { user.email }
 
-    ignore do
+    transient do
       line_items_price BigDecimal.new(10)
     end
 
@@ -20,7 +20,7 @@ FactoryGirl.define do
       bill_address
       ship_address
 
-      ignore do
+      transient do
         line_items_count 5
         shipment_cost 100
       end
