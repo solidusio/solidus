@@ -108,6 +108,11 @@ module Spree
       reload_totals
     end
 
+    def apply_coupon_code(coupon_code)
+      order.coupon_code = coupon_code
+      PromotionHandler::Coupon.new(order).apply
+    end
+
     private
       def order_updater
         @updater ||= OrderUpdater.new(order)

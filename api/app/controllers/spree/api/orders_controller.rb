@@ -89,8 +89,7 @@ module Spree
 
       def apply_coupon_code
         authorize! :update, @order, order_token
-        @order.coupon_code = params[:coupon_code]
-        @handler = PromotionHandler::Coupon.new(@order).apply
+        @handler = @order.contents.apply_coupon_code(params[:coupon_code])
         status = @handler.successful? ? 200 : 422
         render "spree/api/promotions/handler", :status => status
       end

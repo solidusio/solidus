@@ -17,9 +17,7 @@ module Spree
       # which needs it)
       def apply_coupon_code
         if params[:order] && params[:order][:coupon_code]
-          @order.coupon_code = params[:order][:coupon_code]
-
-          handler = PromotionHandler::Coupon.new(@order).apply
+          handler = @order.contents.apply_coupon_code(params[:order][:coupon_code])
 
           if handler.error.present?
             flash.now[:error] = handler.error

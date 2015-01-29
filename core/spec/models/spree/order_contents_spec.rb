@@ -374,4 +374,15 @@ describe Spree::OrderContents do
     end
   end
 
+  describe "#apply_coupon_code" do
+    let(:order) { create(:order_with_line_items) }
+    let(:promo) { create(:promotion_with_item_adjustment, code: 'abc') }
+
+    it "applies the promo and returns the handler" do
+      result = order.contents.apply_coupon_code(promo.code)
+      expect(order.reload.promotions).to eq [promo]
+      expect(result).to be_a Spree::PromotionHandler::Coupon
+    end
+  end
+
 end
