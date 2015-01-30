@@ -25,6 +25,24 @@ describe Spree::Admin::Orders::CustomerDetailsController, type: :controller do
         spree_put :update, attributes
       end
 
+      # Regression spec
+      context 'completed order' do
+        let(:order) { create(:shipped_order) }
+        let(:attributes) do
+          {
+            order_id: order.number,
+            guest_checkout: 'false',
+            user_id: order.user_id,
+            order: { email: "foo@bar.com" }
+          }
+        end
+
+        it 'allows the updating of an email address' do
+          expect { spree_put :update, attributes }.to change { order.reload.email }.to eq 'foo@bar.com'
+          expect(response).to be_redirect
+        end
+      end
+
       context "false guest checkout param" do
         it "attempts to associate the user" do
           mock_user = mock_model(Spree.user_class, id: 1)
@@ -32,8 +50,9 @@ describe Spree::Admin::Orders::CustomerDetailsController, type: :controller do
           expect(order.contents).to receive(:associate_user).with(mock_user, true)
           attributes = {
             order_id: order.number,
-            order: { email: "" },
-            guest_checkout: 'false'
+            user_id: mock_user.id,
+            guest_checkout: 'false',
+            order: { email: "" }
           }
           spree_put :update, attributes
         end

@@ -20,12 +20,17 @@ module Spree
 
         def update
           if @order.contents.update_cart(order_params)
-            if params[:guest_checkout] == "false"
+
+            if should_associate_user?
               requested_user = Spree.user_class.find(params[:user_id])
               @order.contents.associate_user(requested_user, @order.email.blank?)
             end
-            @order.next
-            @order.refresh_shipment_rates
+
+            unless @order.completed?
+              @order.next
+              @order.refresh_shipment_rates
+            end
+
             flash[:success] = Spree.t('customer_details_updated')
             redirect_to edit_admin_order_url(@order)
           else
@@ -50,6 +55,10 @@ module Spree
 
           def model_class
             Spree::Order
+          end
+
+          def should_associate_user?
+            params[:guest_checkout] == "false" && params[:user_id] && params[:user_id].to_i != @order.user_id
           end
 
       end
