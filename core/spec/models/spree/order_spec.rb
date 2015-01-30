@@ -53,7 +53,7 @@ describe Spree::Order do
       credit_card_payment_method = create(:credit_card_payment_method)
       attributes = {
         :payments_attributes => [
-          { 
+          {
             :payment_method_id => credit_card_payment_method.id,
             :source_attributes => {
               :name => "Ryan Bigg",
@@ -226,7 +226,7 @@ describe Spree::Order do
       end
 
       context "and order is approved" do
-        before do 
+        before do
           order.stub :approved? => true
         end
 
@@ -866,6 +866,29 @@ describe Spree::Order do
 
       it { expect(order.fully_discounted?).to eq false }
 
+    end
+  end
+
+  describe "#unreturned_exchange?" do
+    let(:order) { create(:order_with_line_items) }
+    subject { order.unreturned_exchange? }
+
+    context "the order does not have a shipment" do
+      before { order.shipments.destroy_all }
+
+      it { should be false }
+    end
+
+    context "shipment created after order" do
+      it { should be false }
+    end
+
+    context "shipment created before order" do
+      before do
+        order.shipments.first.update_attributes!(created_at: order.created_at - 1.day)
+      end
+
+      it { should be true }
     end
   end
 end

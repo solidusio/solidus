@@ -570,6 +570,11 @@ module Spree
     end
     alias_method :fully_discounted, :fully_discounted?
 
+    def unreturned_exchange?
+      shipment = self.shipments.first
+      shipment.present? ? (shipment.created_at < self.created_at) : false
+    end
+
     private
 
       def link_by_email
