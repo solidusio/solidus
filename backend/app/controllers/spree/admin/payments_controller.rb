@@ -17,13 +17,19 @@ module Spree
       end
 
       def new
-        @payment = @order.payments.build
+        @payment = @order.contents.add_payment
       end
 
       def create
         invoke_callbacks(:create, :before)
-        @payment ||= @order.payments.build(object_params)
-        if params[:card].present? and params[:card] != 'new'
+        @payment ||= @order.contents.add_payment(object_params)
+
+        # TODO figure out where this is supposed to live, it doesn't really
+        # fit nicely in order contents since it's based on this funky param,
+        # but is weird here as well
+        #
+        # - AT 02/02/2015
+        if params[:card].present? && params[:card] != 'new'
           @payment.source = @payment.payment_method.payment_source_class.find_by_id(params[:card])
         end
 
@@ -31,13 +37,10 @@ module Spree
           if @payment.save
             invoke_callbacks(:create, :after)
 
-            if @order.completed?
-              # If the order was already complete then go ahead and process the payment
-              # (auth and/or capture depending on payment method configuration)
-              @payment.process! if @payment.checkout?
+            if @order.completed? && @payment.checkout?
+              @order.contents.process_payments(payments: [@payment])
             else
-              # Transition order as far as it will go.
-              while @order.next; end
+              @order.contents.advance
             end
 
             flash[:success] = flash_message_for(@payment, :successfully_created)

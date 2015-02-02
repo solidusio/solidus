@@ -251,7 +251,7 @@ describe Spree::Order do
   end
 
   context "#process_payments!" do
-    let(:payment) { stub_model(Spree::Payment) }
+    let(:payment) { stub_model(Spree::Payment, order: order) }
     before { order.stub :pending_payments => [payment], :total => 10 }
 
     it "should process the payments" do

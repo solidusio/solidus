@@ -17,7 +17,7 @@ module Spree
       end
 
       def create
-        @payment = @order.payments.build(payment_params)
+        @payment = @order.contents.add_payment(payment_params)
         if @payment.save
           respond_with(@payment, status: 201, default_template: :show)
         else

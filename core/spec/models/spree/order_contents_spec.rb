@@ -385,4 +385,44 @@ describe Spree::OrderContents do
     end
   end
 
+  describe "#add_payment" do
+    let(:order) { Spree::Order.new }
+    it "builds a payment with the params passed in" do
+      expect { order.contents.add_payment(amount: 5.0) }.to change { order.payments.length }.by(1)
+      payment = order.payments.last
+      expect(payment.amount).to eq 5.0
+      expect(payment).not_to be_persisted
+    end
+  end
+
+  describe "#process_payments" do
+    let(:order) { mock_model(Spree::Order, payments: payments) }
+    let(:payments) { 2.times.map { mock_model(Spree::Payment, process!: true) } }
+    before { payments.each { |p| allow(p).to receive(:order) { order } } }
+    subject { described_class.new(order).process_payments }
+
+    it "processes each of the order's payments" do
+      payments.each { |p| expect(p).to receive(:process!).once }
+      subject
+    end
+
+    context "subset of payments are specified" do
+      subject { described_class.new(order).process_payments(payments: [payments.first]) }
+      it "processes the specified payments only" do
+        expect(payments.first).to receive(:process!).once
+        expect(payments.last).not_to receive(:process!)
+        subject
+      end
+    end
+
+    context "one of the payments is for a different order" do
+      before { allow(payments.first).to receive(:order) { Spree::Order.new } }
+      subject { described_class.new(order).process_payments(payments: [payments.first]) }
+      it "raises an error" do
+        expect { subject }.to raise_error(ArgumentError, /for a different order/)
+      end
+    end
+
+  end
+
 end

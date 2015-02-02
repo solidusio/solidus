@@ -386,7 +386,7 @@ module Spree
         pending_payments.each do |payment|
           break if payment_total >= total
 
-          payment.process!
+          contents.process_payments(payments: [payment])
 
           if payment.completed?
             self.payment_total += payment.amount

@@ -100,7 +100,7 @@ module Spree
           return [] unless payments_hash
           payments_hash.each do |p|
             begin
-              payment = order.payments.build
+              payment = order.contents.add_payment
               payment.amount = p[:amount].to_f
               payment.state = p.fetch(:state, 'completed')
               payment.payment_method = Spree::PaymentMethod.find_by_name!(p[:payment_method])

@@ -115,6 +115,21 @@ module Spree
       PromotionHandler::Coupon.new(order).apply
     end
 
+    def add_payment(payment_params = {})
+      order.payments.build(payment_params)
+    end
+
+    def process_payments(payments: [])
+      payments = payments.presence || order.payments
+
+      if payments.any? { |p| p.order != order }
+        raise ArgumentError.new("Requested payment is for a different order")
+      end
+
+      payments.each(&:process!)
+      true
+    end
+
     private
       def order_updater
         @updater ||= OrderUpdater.new(order)
