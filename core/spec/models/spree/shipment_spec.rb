@@ -707,4 +707,23 @@ describe Spree::Shipment, :type => :model do
       expect(state_change.next_state).to eq('ready')
     end
   end
+
+  context "don't require shipment" do
+    let(:stock_location) { create(:stock_location, fulfillable: false)}
+    let(:unshippable_shipment) { create(:shipment, stock_location: stock_location)}
+    before { order.stub paid?: true }
+
+    it 'proceeds automatically to shipped state' do
+      unshippable_shipment.ready!
+      expect(unshippable_shipment.state).to eq('shipped')
+    end
+
+    it 'does not send a confirmation email' do
+      expect(unshippable_shipment).to_not receive(:send_shipment_email)
+      unshippable_shipment.ready!
+      unshippable_shipment.inventory_units.each do |unit|
+        expect(unit.state).to eq('shipped')
+      end
+    end
+  end
 end

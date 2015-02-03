@@ -34,6 +34,8 @@ module Spree
     # shipment state machine (see http://github.com/pluginaweek/state_machine/tree/master for details)
     state_machine initial: :pending, use_transactions: false do
       event :ready do
+        transition from: :pending, to: :shipped, if: lambda {|shipment| !shipment.requires_shipment? }
+
         transition from: :pending, to: :ready, if: lambda { |shipment|
           # Fix for #2040
           shipment.determine_state(shipment.order) == 'ready'
@@ -379,6 +381,10 @@ module Spree
         shipment_to_transfer_to.refresh_rates
         shipment_to_transfer_to.save!
       end
+    end
+
+    def requires_shipment?
+      self.stock_location.fulfillable?
     end
 
     private

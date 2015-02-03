@@ -38,6 +38,10 @@
           <%= f.label :active, Spree.t(:restock_inventory) %>
           <%= f.check_box :restock_inventory %>
         </li>
+        <li>
+          <%= f.label :active, Spree.t(:fulfillable_stock) %>
+          <%= f.check_box :fulfillable %>
+        </li>
       </ul>
     <% end %>
   </div>
