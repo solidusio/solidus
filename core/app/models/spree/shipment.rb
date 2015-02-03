@@ -34,6 +34,8 @@ module Spree
     # shipment state machine (see http://github.com/pluginaweek/state_machine/tree/master for details)
     state_machine initial: :pending, use_transactions: false do
       event :ready do
+        transition from: :pending, to: :shipped, if: lambda {|shipment| !shipment.requires_shipment? }
+
         transition from: :pending, to: :ready, if: lambda { |shipment|
           # Fix for #2040
           shipment.determine_state(shipment.order) == 'ready'
@@ -155,7 +157,7 @@ module Spree
     alias discounted_amount discounted_cost
 
     # Only one of either included_tax_total or additional_tax_total is set
-    # This method returns the total of the two. Saves having to check if 
+    # This method returns the total of the two. Saves having to check if
     # tax is included or additional.
     def tax_total
       included_tax_total + additional_tax_total
@@ -355,6 +357,10 @@ module Spree
       end
     end
 
+    def requires_shipment?
+      self.stock_location.fulfillable?
+    end
+
     private
       def enough_stock_at_destination_location(variant, quantity, stock_location)
         stock_item = Spree::StockItem.where(variant: variant).
@@ -388,7 +394,7 @@ module Spree
 
       def after_ship
         inventory_units.each &:ship!
-        send_shipped_email
+        send_shipped_email if requires_shipment?
         touch :shipped_at
         fulfill_order_with_stock_location
         update_order_shipment_state
