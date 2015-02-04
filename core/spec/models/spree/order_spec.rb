@@ -488,38 +488,80 @@ describe Spree::Order do
   end
 
   context "ensure shipments will be updated" do
-    before { Spree::Shipment.create!(order: order) }
-
-    it "destroys current shipments" do
-      order.ensure_updated_shipments
-      expect(order.shipments).to be_empty
+    before do
+      Spree::Shipment.create!(order: order)
     end
 
-    it "puts order back in address state" do
-      order.ensure_updated_shipments
-      expect(order.state).to eql "address"
+    ['payment', 'confirm'].each do |order_state|
+      context 'when ther order is in the #{order_state} state' do
+        before do
+          order.state = order_state
+          order.shipments.create!
+        end
+
+        it "destroys current shipments" do
+          order.ensure_updated_shipments
+          expect(order.shipments).to be_empty
+        end
+
+        it "puts order back in address state" do
+          order.ensure_updated_shipments
+          expect(order.state).to eql "address"
+        end
+
+        it "resets shipment_total" do
+          order.update_column(:shipment_total, 5)
+          order.ensure_updated_shipments
+          expect(order.shipment_total).to eq(0)
+        end
+      end
     end
 
-    it "resets shipment_total" do
-      order.update_column(:shipment_total, 5)
-      order.ensure_updated_shipments
-      expect(order.shipment_total).to eq(0)
-    end
-
-    context "except when order is completed, that's OrderInventory job" do
-      it "doesn't touch anything" do
-        order.stub completed?: true
-        order.update_column(:shipment_total, 5)
+    context 'when the order is in address state' do
+      before do
+        order.state = 'address'
         order.shipments.create!
+      end
 
+      it "destroys current shipments" do
+        order.ensure_updated_shipments
+        expect(order.shipments).to be_empty
+      end
+
+      it "resets shipment_total" do
+        order.update_column(:shipment_total, 5)
+        order.ensure_updated_shipments
+        expect(order.shipment_total).to eq(0)
+      end
+
+      it "does not touch the state" do
         expect {
           order.ensure_updated_shipments
-        }.not_to change { order.shipment_total }
+        }.not_to change { order.state }
+      end
+    end
 
+    context 'when the order is completed' do
+      before do
+        order.state = 'complete'
+        order.completed_at = Time.now
+        order.update_column(:shipment_total, 5)
+        order.shipments.create!
+      end
+
+      it "does not destroy the current shipments" do
         expect {
           order.ensure_updated_shipments
         }.not_to change { order.shipments }
+      end
 
+      it "does not reset the shipment total" do
+        expect {
+          order.ensure_updated_shipments
+        }.not_to change { order.shipment_total }
+      end
+
+      it "does not put the order back in the address state" do
         expect {
           order.ensure_updated_shipments
         }.not_to change { order.state }
