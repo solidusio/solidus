@@ -11,9 +11,9 @@
 <% if @payment_methods.any? %>
   <%= render :partial => 'spree/shared/error_messages', :locals => { :target => @payment } %>
 
-  <%= form_for @payment, :url => admin_order_payments_path(@order) do |f| %>
+  <%= form_tag admin_order_payments_path(@order), :class => 'new_payment', :id => 'new_payment' do %>
     <fieldset class="no-border-top">
-      <%= render :partial => 'form', :locals => { :f => f } %>
+      <%= render :partial => 'form' %>
 
       <div class="filter-actions actions" data-hook="buttons">
         <%= button @order.cart? ? Spree.t('actions.continue') : Spree.t('actions.update'), @order.cart? ? 'arrow-right' : 'refresh' %>

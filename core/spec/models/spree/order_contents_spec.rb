@@ -388,10 +388,20 @@ describe Spree::OrderContents do
   describe "#add_payment" do
     let(:order) { Spree::Order.new }
     it "builds a payment with the params passed in" do
-      expect { order.contents.add_payment(amount: 5.0) }.to change { order.payments.length }.by(1)
+      expect { order.contents.add_payment(payment_params: { amount: 5.0 }) }.to change { order.payments.length }.by(1)
       payment = order.payments.last
       expect(payment.amount).to eq 5.0
-      expect(payment).not_to be_persisted
+      expect(payment).to be_persisted
+    end
+
+    it "returns a tuple of the payment and whether it saved successfully" do
+      payment, success = order.contents.add_payment
+      expect(payment).to be_a Spree::Payment
+      expect(success).to eq true
+
+      allow_any_instance_of(Spree::Payment).to receive(:save) { false }
+      payment, success = order.contents.add_payment
+      expect(success).to eq false
     end
   end
 

@@ -100,11 +100,14 @@ module Spree
           return [] unless payments_hash
           payments_hash.each do |p|
             begin
-              payment = order.contents.add_payment
-              payment.amount = p[:amount].to_f
-              payment.state = p.fetch(:state, 'completed')
-              payment.payment_method = Spree::PaymentMethod.find_by_name!(p[:payment_method])
-              payment.save!
+              payment, success = order.contents.add_payment(
+                payment_params: {
+                  amount: p[:amount].to_f,
+                  state: p.fetch(:state, 'completed'),
+                  payment_method: Spree::PaymentMethod.find_by_name!(p[:payment_method])
+                }
+              )
+              raise payment.errors unless success
             rescue Exception => e
               raise "Order import payments: #{e.message} #{p}"
             end

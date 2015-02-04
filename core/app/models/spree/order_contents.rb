@@ -114,8 +114,13 @@ module Spree
       PromotionHandler::Coupon.new(order).apply
     end
 
-    def add_payment(payment_params = {})
-      order.payments.build(payment_params)
+    # Returns tuple of payment and whether it saved successfully for now,
+    # while we figure out the optimal interface here.
+    def add_payment(payment_params: {}, source_id: nil, payment: nil)
+      # not sure why, but apparently the build doesn't make the order available in the payment's before_create hook
+      payment ||= order.payments.build(payment_params.merge(order: order))
+      payment.source = payment.payment_method.payment_source_class.find_by_id(source_id) if source_id
+      [payment, payment.save]
     end
 
     def process_payments(payments: [])

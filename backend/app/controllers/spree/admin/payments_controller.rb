@@ -17,44 +17,31 @@ module Spree
       end
 
       def new
-        @payment = @order.contents.add_payment
       end
 
       def create
-        invoke_callbacks(:create, :before)
-        @payment ||= @order.contents.add_payment(object_params)
+        invoke_callbacks(:create, :before) # this may set @payment
+        @payment, success = @order.contents.add_payment(payment_params: object_params, source_id: card_id, payment: @payment)
+        if success
+          invoke_callbacks(:create, :after)
 
-        # TODO figure out where this is supposed to live, it doesn't really
-        # fit nicely in order contents since it's based on this funky param,
-        # but is weird here as well
-        #
-        # - AT 02/02/2015
-        if params[:card].present? && params[:card] != 'new'
-          @payment.source = @payment.payment_method.payment_source_class.find_by_id(params[:card])
-        end
-
-        begin
-          if @payment.save
-            invoke_callbacks(:create, :after)
-
-            if @order.completed? && @payment.checkout?
-              @order.contents.process_payments(payments: [@payment])
-            else
-              @order.contents.advance
-            end
-
-            flash[:success] = flash_message_for(@payment, :successfully_created)
-            redirect_to admin_order_payments_path(@order)
+          if @order.completed? && @payment.checkout?
+            @order.contents.process_payments(payments: [@payment])
           else
-            invoke_callbacks(:create, :fails)
-            flash[:error] = Spree.t(:payment_could_not_be_created)
-            render :new
+            @order.contents.advance
           end
-        rescue Spree::Core::GatewayError => e
+
+          flash[:success] = flash_message_for(@payment, :successfully_created)
+          redirect_to admin_order_payments_path(@order)
+        else
           invoke_callbacks(:create, :fails)
-          flash[:error] = "#{e.message}"
-          redirect_to new_admin_order_payment_path(@order)
+          flash[:error] = Spree.t(:payment_could_not_be_created)
+          render :new
         end
+      rescue Spree::Core::GatewayError => e
+        invoke_callbacks(:create, :fails)
+        flash[:error] = "#{e.message}"
+        redirect_to new_admin_order_payment_path(@order)
       end
 
       def fire
@@ -79,8 +66,14 @@ module Spree
         if params[:payment] and params[:payment_source] and source_params = params.delete(:payment_source)[params[:payment][:payment_method_id]]
           params[:payment][:source_attributes] = source_params
         end
-        
+
         params.require(:payment).permit(permitted_payment_attributes)
+      end
+
+      def card_id
+        if params[:card].present? && params[:card] != 'new'
+          params[:card]
+        end
       end
 
       def load_data
