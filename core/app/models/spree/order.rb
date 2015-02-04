@@ -555,11 +555,12 @@ module Spree
     # to delivery again so that proper updated shipments are created.
     # e.g. customer goes back from payment step and changes order items
     def ensure_updated_shipments
-      if shipments.any? && !self.completed?
+      unless completed?
         self.shipments.destroy_all
         self.update_column(:shipment_total, 0)
-        restart_checkout_flow
       end
+
+      restart_checkout_flow if payment? || confirm?
     end
 
     def restart_checkout_flow

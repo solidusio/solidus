@@ -496,6 +496,88 @@ describe Spree::Order, :type => :model do
     end
   end
 
+  context "ensure shipments will be updated" do
+    before do
+      Spree::Shipment.create!(order: order)
+    end
+
+    ['payment', 'confirm'].each do |order_state|
+      context 'when ther order is in the #{order_state} state' do
+        before do
+          order.state = order_state
+          order.shipments.create!
+        end
+
+        it "destroys current shipments" do
+          order.ensure_updated_shipments
+          expect(order.shipments).to be_empty
+        end
+
+        it "puts order back in address state" do
+          order.ensure_updated_shipments
+          expect(order.state).to eql "address"
+        end
+
+        it "resets shipment_total" do
+          order.update_column(:shipment_total, 5)
+          order.ensure_updated_shipments
+          expect(order.shipment_total).to eq(0)
+        end
+      end
+    end
+
+    context 'when the order is in address state' do
+      before do
+        order.state = 'address'
+        order.shipments.create!
+      end
+
+      it "destroys current shipments" do
+        order.ensure_updated_shipments
+        expect(order.shipments).to be_empty
+      end
+
+      it "resets shipment_total" do
+        order.update_column(:shipment_total, 5)
+        order.ensure_updated_shipments
+        expect(order.shipment_total).to eq(0)
+      end
+
+      it "does not touch the state" do
+        expect {
+          order.ensure_updated_shipments
+        }.not_to change { order.state }
+      end
+    end
+
+    context 'when the order is completed' do
+      before do
+        order.state = 'complete'
+        order.completed_at = Time.now
+        order.update_column(:shipment_total, 5)
+        order.shipments.create!
+      end
+
+      it "does not destroy the current shipments" do
+        expect {
+          order.ensure_updated_shipments
+        }.not_to change { order.shipments }
+      end
+
+      it "does not reset the shipment total" do
+        expect {
+          order.ensure_updated_shipments
+        }.not_to change { order.shipment_total }
+      end
+
+      it "does not put the order back in the address state" do
+        expect {
+          order.ensure_updated_shipments
+        }.not_to change { order.state }
+      end
+    end
+  end
+
   describe "#tax_address" do
     before { Spree::Config[:tax_using_ship_address] = tax_using_ship_address }
     subject { order.tax_address }
