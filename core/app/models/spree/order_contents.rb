@@ -85,8 +85,7 @@ module Spree
 
       associate_user(user) if order.user.nil? && user
 
-      order.updater.update_item_count
-      order.update!
+      reload_totals
 
       # So that the destroy doesn't take out line items which may have been re-assigned
       other_order.line_items.reload
@@ -136,7 +135,6 @@ module Spree
       end
 
       def reload_totals
-        order_updater.update_item_count
         order_updater.update
         order.reload
       end
