@@ -24,7 +24,7 @@ module Spree
     validate :belongs_to_same_customer_order
     validate :validate_acceptance_status_for_reimbursement
     validates :inventory_unit, presence: true
-    validate :validate_no_other_completed_return_items, on: :create
+    validate :validate_no_other_completed_return_items
 
     after_create :cancel_others, unless: :cancelled?
 
@@ -229,9 +229,9 @@ module Spree
       other_return_item = Spree::ReturnItem.where({
         inventory_unit_id: inventory_unit_id,
         reception_status: COMPLETED_RECEPTION_STATUSES,
-      }).first
+      }).where.not(id: self.id).first
 
-      if other_return_item
+      if other_return_item && (new_record? || COMPLETED_RECEPTION_STATUSES.include?(reception_status.to_sym))
         errors.add(:inventory_unit, :other_completed_return_item_exists, {
           inventory_unit_id: inventory_unit_id,
           return_item_id: other_return_item.id,

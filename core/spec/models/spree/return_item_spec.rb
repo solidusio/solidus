@@ -42,6 +42,22 @@ describe Spree::ReturnItem, :type => :model do
       subject
     end
 
+    context 'when there is a received return item with the same inventory unit' do
+      let!(:return_item_with_dupe_inventory_unit) { create(:return_item, inventory_unit: inventory_unit, reception_status: 'received') }
+
+      before do
+        assert_raises(StateMachine::InvalidTransition) { subject }
+      end
+
+      it 'does not receive the return item' do
+        expect(return_item.reception_status).to eq 'awaiting'
+      end
+
+      it 'adds an error to the return item' do
+        expect(return_item.errors[:inventory_unit]).to include "#{return_item.inventory_unit_id} has already been taken by return item #{return_item_with_dupe_inventory_unit.id}"
+      end
+    end
+
     context 'with a stock location' do
       let(:stock_item)      { inventory_unit.find_stock_item }
 
