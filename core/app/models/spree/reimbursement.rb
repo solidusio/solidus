@@ -59,7 +59,7 @@ module Spree
     state_machine :reimbursement_status, initial: :pending do
 
       event :errored do
-        transition to: :errored, from: :pending
+        transition to: :errored, from: [:pending, :errored]
       end
 
       event :reimbursed do
