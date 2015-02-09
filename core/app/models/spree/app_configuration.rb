@@ -36,7 +36,6 @@ module Spree
     preference :always_put_site_name_in_title, :boolean, default: true
     preference :auto_capture, :boolean, default: false # automatically capture the credit card (as opposed to just authorize and capture later)
     preference :binary_inventory_cache, :boolean, default: false # only invalidate product cache when a stock item changes whether it is in_stock
-    preference :check_for_spree_alerts, :boolean, default: true
     preference :checkout_zone, :string, default: nil # replace with the name of a zone if you would like to limit the countries
     preference :company, :boolean, default: false # Request company field for billing and shipping addr
     preference :currency, :string, default: "USD"
@@ -49,11 +48,9 @@ module Spree
     preference :default_meta_description, :string, default: 'Spree demo site'
     preference :default_meta_keywords, :string, default: 'spree, demo'
     preference :default_seo_title, :string, default: ''
-    preference :dismissed_spree_alerts, :string, default: ''
     preference :expedited_exchanges, :boolean, default: false # NOTE this requires payment profiles to be supported on your gateway of choice as well as a delayed job handler to be configured with activejob. kicks off an exchange shipment upon return authorization save. charge customer if they do not return items within timely manner.
     preference :expedited_exchanges_days_window, :integer, default: 14 # the amount of days the customer has to return their item after the expedited exchange is shipped in order to avoid being charged
     preference :hide_cents, :boolean, default: false
-    preference :last_check_for_spree_alerts, :string, default: nil
     preference :layout, :string, default: 'spree/layouts/spree_application'
     preference :logo, :string, default: 'logo/spree_50.png'
     preference :max_level_in_taxons_menu, :integer, default: 1 # maximum nesting level in taxons menu

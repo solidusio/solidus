@@ -116,11 +116,7 @@ Spree::Core::Engine.add_routes do
       end
     end
 
-    resource :general_settings do
-      collection do
-        post :dismiss_alert
-      end
-    end
+    resource :general_settings
 
     resources :return_items, only: [:update]
 
