@@ -14,7 +14,7 @@ describe 'alerts', :type => :controller do
   end
 
   before do
-    # Spree::Alert.should_receive(:current).and_return("string")
+    expect(Spree::Alert).to receive(:current).and_return("string")
   end
 
   # Regression test for #3716
