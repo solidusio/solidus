@@ -12,6 +12,7 @@ module Spree
     let!(:shipping_method) do
       FactoryGirl.create(:shipping_method).tap do |shipping_method|
         shipping_method.zones.first.zone_members.create!(zoneable: ship_address.country)
+        shipping_method.calculator.set_preference(:amount, 10.0)
       end
     end
 
