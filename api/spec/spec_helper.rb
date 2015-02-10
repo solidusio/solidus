@@ -43,11 +43,13 @@ RSpec.configure do |config|
   config.include FactoryGirl::Syntax::Methods
   config.include Spree::Api::TestingSupport::Helpers, :type => :controller
   config.extend Spree::Api::TestingSupport::Setup, :type => :controller
-  config.include Spree::TestingSupport::Preferences, :type => :controller
+  config.include Spree::TestingSupport::Preferences
 
   config.fail_fast = ENV['FAIL_FAST'] || false
 
-  config.before do
+  config.before(:each) do
+    Rails.cache.clear
+    reset_spree_preferences
     Spree::Api::Config[:requires_authentication] = true
   end
 
