@@ -181,7 +181,7 @@ describe Spree::Order, :type => :model do
         expect(order.adjustment_total).to eq(0.5)
         expect(order.additional_tax_total).to eq(0.5)
         expect(order.included_tax_total).to eq(0)
-        expect(order.total).to eq(10.5)
+        expect(order.total).to eq(20.5)
       end
 
       it "transitions to delivery" do
