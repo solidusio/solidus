@@ -145,7 +145,8 @@ describe Spree::Order do
         order.adjustment_total.should == 0.5
         order.additional_tax_total.should == 0.5
         order.included_tax_total.should == 0
-        order.total.should == 10.5
+        order.shipment_total.should == 10
+        order.total.should == 20.5
       end
 
       it "transitions to delivery" do
