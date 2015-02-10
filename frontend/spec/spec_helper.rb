@@ -74,6 +74,8 @@ RSpec.configure do |config|
   end
 
   config.before(:each) do
+    Rails.cache.clear
+    reset_spree_preferences
     WebMock.disable!
     if RSpec.current_example.metadata[:js]
       DatabaseCleaner.strategy = :truncation
@@ -86,7 +88,6 @@ RSpec.configure do |config|
       ActiveRecord::Base.connection.increment_open_transactions
     end
     DatabaseCleaner.start
-    reset_spree_preferences
   end
 
   config.after(:each) do
