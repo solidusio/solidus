@@ -71,18 +71,6 @@ describe Spree::Api::BaseController do
     json_response.should == { "exception" => "no joy" }
   end
 
-  it "maps symantec keys to nested_attributes keys" do
-    klass = double(:nested_attributes_options => { :line_items => {},
-                                                  :bill_address => {} })
-    attributes = { 'line_items' => { :id => 1 },
-                   'bill_address' => { :id => 2 },
-                   'name' => 'test order' }
-
-    mapped = subject.map_nested_attributes_keys(klass, attributes)
-    mapped.has_key?('line_items_attributes').should be true
-    mapped.has_key?('name').should be true
-  end
-
   context 'lock_order' do
     let!(:order) { create :order }
 

@@ -38,6 +38,15 @@ module Spree
 
       private
 
+      def map_nested_attributes_keys(klass, attributes)
+        nested_keys = klass.nested_attributes_options.keys
+        attributes.inject({}) do |h, (k,v)|
+          key = nested_keys.include?(k.to_sym) ? "#{k}_attributes" : k
+          h[key] = v
+          h
+        end.with_indifferent_access
+      end
+
       def zone
         @zone ||= Spree::Zone.accessible_by(current_ability, :read).find(params[:id])
       end

@@ -107,5 +107,27 @@ module Spree
         lambda { @zone.reload }.should raise_error(ActiveRecord::RecordNotFound)
       end
     end
+
+    describe '#map_nested_attributes_keys' do
+      it "maps symantec keys to nested_attributes keys" do
+        klass = double(
+          :nested_attributes_options => {
+            :line_items => {},
+            :bill_address => {},
+          },
+        )
+        attributes = {
+          'line_items' => { :id => 1 },
+          'bill_address' => { :id => 2 },
+          'name' => 'test order',
+        }
+
+        mapped = subject.send(:map_nested_attributes_keys, klass, attributes)
+        expect(mapped).to have_key('line_items_attributes')
+        expect(mapped).to have_key('name')
+      end
+    end
+
   end
+
 end

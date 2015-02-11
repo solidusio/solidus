@@ -60,7 +60,7 @@ Spree::Core::Engine.add_routes do
     # this is fixed in more recent versions of spree.
     get 'checkouts', to: 'checkouts_index_does_not#exist', as: 'checkouts'
 
-    resources :checkouts, only: [:update] do
+    resources :checkouts, only: [:none] do
       member do
         put :next
         put :advance
