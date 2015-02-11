@@ -1088,4 +1088,23 @@ describe Spree::Order, :type => :model do
       it { should be true }
     end
   end
+
+  describe '.unreturned_exchange' do
+    let(:order) { create(:order_with_line_items) }
+    subject { described_class.unreturned_exchange }
+
+    it 'includes orders that have a shipment created prior to the order' do
+      order.shipments.first.update_attributes!(created_at: order.created_at - 1.day)
+      expect(subject).to include order
+    end
+
+    it 'excludes orders that were created prior to their shipment' do
+      expect(subject).not_to include order
+    end
+
+    it 'excludes orders with no shipment' do
+      order.shipments.destroy_all
+      expect(subject).not_to include order
+    end
+  end
 end

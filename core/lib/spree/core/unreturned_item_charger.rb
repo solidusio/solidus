@@ -8,7 +8,7 @@ module Spree
       end
     end
 
-    class_attribute :failure_handler
+    class_attribute :failure_handler, :order_approver
 
     attr_reader :original_order
 
@@ -32,6 +32,7 @@ module Spree
       # the original exchange shipment, not the built one
       set_shipment_for_new_order
 
+      new_order.approved_by(self.class.order_approver || @original_order.approver || Spree.user_class.first)
       new_order.reload.complete!
 
       if !new_order.completed?
