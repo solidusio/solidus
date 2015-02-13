@@ -1,8 +1,7 @@
 module Spree
   class ReturnItem < ActiveRecord::Base
 
-    INTERMEDIATE_RECEPTION_STATUSES = %i(given_to_customer lost_in_transit shipped_wrong_item short_shipped)
-    COMPLETED_RECEPTION_STATUSES = INTERMEDIATE_RECEPTION_STATUSES + [:received]
+    COMPLETED_RECEPTION_STATUSES = %i(received given_to_customer lost_in_transit)
 
     class_attribute :return_eligibility_validator
     self.return_eligibility_validator = ReturnItem::EligibilityValidator::DefaultEligibilityValidator
@@ -32,10 +31,9 @@ module Spree
 
     scope :awaiting_return, -> { where(reception_status: 'awaiting') }
     scope :not_cancelled, -> { where.not(reception_status: 'cancelled') }
+    scope :given_to_customer, -> { where(reception_status: 'given_to_customer') }
+    scope :lost_in_transit, -> { where(reception_status: 'lost_in_transit') }
     scope :received, -> { where(reception_status: 'received') }
-    INTERMEDIATE_RECEPTION_STATUSES.each do |reception_status|
-      scope reception_status, -> { where(reception_status: reception_status) }
-    end
     scope :pending, -> { where(acceptance_status: 'pending') }
     scope :accepted, -> { where(acceptance_status: 'accepted') }
     scope :rejected, -> { where(acceptance_status: 'rejected') }
@@ -62,20 +60,28 @@ module Spree
       after_transition to: COMPLETED_RECEPTION_STATUSES,  do: :attempt_accept
       after_transition to: :received, do: :process_inventory_unit!
 
-      event(:cancel) { transition to: :cancelled, from: :awaiting }
+      event :receive do
+        transition to: :received, from: [:awaiting, :given_to_customer, :lost_in_transit]
+      end
 
-      event(:receive) { transition to: :received, from: INTERMEDIATE_RECEPTION_STATUSES + [:awaiting] }
-      event(:give) { transition to: :given_to_customer, from: :awaiting }
-      event(:lost) { transition to: :lost_in_transit, from: :awaiting }
-      event(:wrong_item_shipped) { transition to: :shipped_wrong_item, from: :awaiting }
-      event(:short_shipped) { transition to: :short_shipped, from: :awaiting }
+      event :cancel do
+        transition to: :cancelled, from: :awaiting
+      end
+
+      event :give do
+        transition to: :given_to_customer, from: :awaiting
+      end
+
+      event :lost do
+        transition to: :lost_in_transit, from: :awaiting
+      end
     end
 
     extend DisplayMoney
     money_methods :pre_tax_amount, :total
 
     def reception_completed?
-      COMPLETED_RECEPTION_STATUSES.map(&:to_s).include?(reception_status.to_s)
+      COMPLETED_RECEPTION_STATUSES.include?(reception_status)
     end
 
     state_machine :acceptance_status, initial: :pending do
@@ -146,7 +152,7 @@ module Spree
       self.pre_tax_amount = refund_amount_calculator.new.compute(self)
     end
 
-    def potential_reception_transitions
+    def available_active_status_paths
       status_paths = reception_status_paths.to_states
       event_paths = reception_status_paths.events
       status_paths.delete(:cancelled)
