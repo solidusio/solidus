@@ -74,11 +74,10 @@ describe Spree::Order, :type => :model do
     end
 
     it "can be approved by a user" do
-      expect(order).to receive(:approve!)
-      order.approved_by(stub_model(Spree::LegacyUser, id: 1))
+      order.approved_by(user: stub_model(Spree::LegacyUser, id: 1))
       expect(order.approver_id).to eq(1)
       expect(order.approved_at).to be_present
-      expect(order.approved?).to be true
+      expect(order).to be_approved
     end
   end
 end

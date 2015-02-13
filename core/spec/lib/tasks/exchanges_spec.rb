@@ -117,36 +117,13 @@ describe "exchanges:charge_unreturned_items" do
         subject.invoke
       end
 
-      context 'approval' do
-
-        it 'approves the order' do
-          subject.invoke
-          new_order = Spree::Order.last
-          expect(new_order).to be_approved
-          expect(new_order.is_risky?).to eq false
-        end
-
-        it 'defaults to reusing the approver of the original order' do
-          user = create(:user)
-          order.update_attributes!(approver_id: user.id)
-          subject.invoke
-          expect(Spree::Order.last.approver).to eq user
-        end
-
-        it 'uses the first user if the original order has no approver' do
-          order.update_attributes!(approver_id: nil)
-          subject.invoke
-          expect(Spree::Order.last.approver).to eq Spree.user_class.first
-        end
-
-        it 'can configure the approver of the order' do
-          user = create(:user)
-          Spree::UnreturnedItemCharger.order_approver = user
-          subject.invoke
-          expect(Spree::Order.last.approver).to eq user
-          Spree::UnreturnedItemCharger.order_approver = nil
-        end
-
+      it 'approves the order' do
+        subject.invoke
+        new_order = Spree::Order.last
+        expect(new_order).to be_approved
+        expect(new_order.is_risky?).to eq false
+        expect(new_order.approver_name).to eq "Spree::UnreturnedItemCharger"
+        expect(new_order.approver).to be nil
       end
 
       context "there is no card from the previous order" do

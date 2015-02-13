@@ -598,14 +598,11 @@ module Spree
       end
     end
 
-    def approved_by(user)
-      self.transaction do
-        approve!
-        self.update_columns(
-          approver_id: user.id,
-          approved_at: Time.now,
-        )
-      end
+    def approved_by(user: nil, name: nil)
+      raise ArgumentError, 'either user or name must be specified' unless user || name
+      self.approver = user
+      self.approver_name = name
+      approve!
     end
 
     def approved?
@@ -623,11 +620,11 @@ module Spree
     end
 
     def considered_risky!
-      update_column(:considered_risky, true)
+      update_attributes!(considered_risky: true)
     end
 
     def approve!
-      update_column(:considered_risky, false)
+      update_attributes!(considered_risky: false, approved_at: Time.now)
     end
 
     # moved from api order_decorator. This is a better place for it.
