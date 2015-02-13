@@ -42,7 +42,7 @@
           <%= item_fields.check_box :resellable, { checked: return_item.resellable } %>
         </td>
         <td class="align-center">
-          <%= item_fields.select :reception_status_event, return_item.available_active_status_paths, {include_blank: false}, {class: 'add-item select2 fullwidth'} %>
+          <%= item_fields.select :reception_status_event, return_item.potential_reception_transitions, {include_blank: true}, {class: 'add-item select2 fullwidth'} %>
         </td>
       </tr>
     <% end %>
