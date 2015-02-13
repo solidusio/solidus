@@ -39,7 +39,7 @@ module Spree
           expect(assigns(:order)).to eq order
         end
 
-        it "creates a new customer return" do
+        it "builds a new customer return" do
           subject
           expect(assigns(:customer_return)).to_not be_persisted
         end
@@ -63,7 +63,7 @@ module Spree
               expect(assigns(:new_return_items).length).to eq (total_inventory_count - rma_return_items_count - customer_return_return_items_count)
             end
 
-            it "creates new return items" do
+            it "builds new return items" do
               expect(assigns(:new_return_items).all? { |return_item| !return_item.persisted? }).to eq true
             end
 
@@ -87,7 +87,7 @@ module Spree
               expect(assigns(:new_return_items).length).to eq expected_total
             end
 
-            it "creates new return items" do
+            it "builds new return items" do
               expect(assigns(:new_return_items).all? { |return_item| !return_item.persisted? }).to eq true
             end
 
@@ -149,67 +149,49 @@ module Spree
 
       describe "#create" do
         let(:order) { create(:shipped_order, line_items_count: 1) }
-
-        subject do
-          spree_post :create, customer_return_params
-        end
-
-        context "valid customer return" do
-          let(:stock_location) { order.shipments.last.stock_location }
-
-          let!(:customer_return_params) do
-            {
-              order_id: order.to_param,
-              customer_return: {
-                stock_location_id: stock_location.id,
-                return_items_attributes: {
-                  "0" => {
-                    returned: "1",
-                    "pre_tax_amount"=>"15.99",
-                    inventory_unit_id: order.inventory_units.shipped.last.id,
-                    reception: 'receive'
-                  }
+        let(:reception_status_event) { 'receive' }
+        let(:stock_location_id) { order.shipments.last.stock_location.id }
+        let(:customer_return_params) do
+          {
+            order_id: order.to_param,
+            customer_return: {
+              stock_location_id: stock_location_id,
+              return_items_attributes: {
+                "0" => {
+                  returned: "1",
+                  "pre_tax_amount"=>"15.99",
+                  inventory_unit_id: order.inventory_units.shipped.last.id,
+                  reception_status_event: reception_status_event
                 }
               }
             }
-          end
-
-          it "creates a customer return" do
-            expect{ subject }.to change { Spree::CustomerReturn.count }.by(1)
-          end
-
-          it "redirects to the index page" do
-            subject
-            expect(response).to redirect_to(spree.edit_admin_order_customer_return_path(order, assigns(:customer_return)))
-          end
+          }
         end
 
-        context "invalid customer return" do
-          let!(:customer_return_params) do
-            {
-              order_id: order.to_param,
-              customer_return: {
-                stock_location_id: "",
-                return_items_attributes: {
-                  "0" => {
-                    returned: "1",
-                    "pre_tax_amount"=>"15.99",
-                    inventory_unit_id: order.inventory_units.shipped.last.id,
-                    reception: 'receive'
-                  }
-                }
-              }
-            }
-          end
+        subject { spree_post :create, customer_return_params }
 
-          it "doesn't create a customer return" do
-            expect{ subject }.to_not change { Spree::CustomerReturn.count }
-          end
+        it { expect { subject }.to change { Spree::CustomerReturn.count }.by(1) }
+        it do
+          subject
+          expect(response).to redirect_to spree.edit_admin_order_customer_return_path(order, id: Spree::CustomerReturn.last.id)
+        end
 
-          it "renders the new page" do
-            subject
-            expect(response).to render_template(:new)
-          end
+        it 'executes the reception status event on the return items' do
+          subject
+          customer_return = Spree::CustomerReturn.last
+          expect(customer_return.return_items.map(&:reception_status).uniq).to eq ['received']
+        end
+
+        context "missing stock location" do
+          let(:stock_location_id) { '' }
+          it { expect{ subject }.to_not change { Spree::CustomerReturn.count } }
+          it { subject; expect(response).to render_template(:new) }
+        end
+
+        context "missing reception status event" do
+          let(:reception_status_event) { '' }
+          it { expect{ subject }.to_not change { Spree::CustomerReturn.count } }
+          it { subject; expect(response).to redirect_to spree.new_admin_order_customer_return_path(order) }
         end
       end
     end
