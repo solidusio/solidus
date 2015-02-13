@@ -38,6 +38,9 @@
           <%= return_item.exchange_variant.try(:exchange_name) %>
         </td>
         <td class="align-center">
+          <%= item_fields.check_box :resellable, { checked: return_item.resellable } %>
+        </td>
+        <td class="align-center">
           <%= item_fields.select :reception_status_event, return_item.potential_reception_transitions, {include_blank: true}, {class: 'add-item select2 fullwidth'} %>
         </td>
       </tr>

@@ -237,8 +237,7 @@ describe Spree::ReturnItem, :type => :model do
     give: 'given_to_customer',
     lost: 'lost_in_transit',
     wrong_item_shipped: 'shipped_wrong_item',
-    short_shipped: 'short_shipped',
-    in_transit: 'in_transit'
+    short_shipped: 'short_shipped'
   }.each do |transition, status|
     describe "##{transition}" do
       let(:return_item) { create(:return_item, reception_status: status, inventory_unit: inventory_unit) }

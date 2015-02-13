@@ -1,7 +1,8 @@
 module Spree
-  class ReturnItem < Spree::Base
-    INTERMEDIATE_RECEPTION_STATUSES = %i(given_to_customer lost_in_transit shipped_wrong_item short_shipped in_transit)
-    COMPLETED_RECEPTION_STATUSES = %i(received given_to_customer lost_in_transit)
+  class ReturnItem < ActiveRecord::Base
+
+    INTERMEDIATE_RECEPTION_STATUSES = %i(given_to_customer lost_in_transit shipped_wrong_item short_shipped)
+    COMPLETED_RECEPTION_STATUSES = INTERMEDIATE_RECEPTION_STATUSES + [:received]
 
     class_attribute :return_eligibility_validator
     self.return_eligibility_validator = ReturnItem::EligibilityValidator::Default
@@ -68,7 +69,6 @@ module Spree
       event(:lost) { transition to: :lost_in_transit, from: :awaiting }
       event(:wrong_item_shipped) { transition to: :shipped_wrong_item, from: :awaiting }
       event(:short_shipped) { transition to: :short_shipped, from: :awaiting }
-      event(:in_transit) { transition to: :in_transit, from: :awaiting }
     end
 
     def reception_completed?
