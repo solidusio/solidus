@@ -7,7 +7,32 @@ describe "exchanges:charge_unreturned_items" do
     it { expect(subject.prerequisites).to include("environment") }
   end
 
+  before do
+    @original_expedited_exchanges_pref = Spree::Config[:expedited_exchanges]
+    Spree::Config[:expedited_exchanges] = true
+    Spree::StockItem.update_all(count_on_hand: 10)
+  end
+
+  after { Spree::Config[:expedited_exchanges] = @original_expedited_exchanges_pref }
+
   context "there are no unreturned items" do
+    it { expect { subject.invoke }.not_to change { Spree::Order.count } }
+  end
+
+  context "there are return items in an intermediate return status" do
+    let!(:order) { create(:shipped_order, line_items_count: 2) }
+    let(:return_item_1) { build(:exchange_return_item, inventory_unit: order.inventory_units.first) }
+    let(:return_item_2) { build(:exchange_return_item, inventory_unit: order.inventory_units.last) }
+    let!(:rma) { create(:return_authorization, order: order, return_items: [return_item_1, return_item_2]) }
+    let!(:tax_rate) { create(:tax_rate, zone: order.tax_zone, tax_category: return_item_2.exchange_variant.tax_category) }
+    before do
+      rma.save!
+      Spree::Shipment.last.ship!
+      return_item_1.lost!
+      return_item_2.give!
+      Timecop.travel (Spree::Config[:expedited_exchanges_days_window] + 1).days
+    end
+    after { Timecop.return }
     it { expect { subject.invoke }.not_to change { Spree::Order.count } }
   end
 
@@ -19,19 +44,13 @@ describe "exchanges:charge_unreturned_items" do
     let!(:tax_rate) { create(:tax_rate, zone: order.tax_zone, tax_category: return_item_2.exchange_variant.tax_category) }
 
     before do
-      @original_expedited_exchanges_pref = Spree::Config[:expedited_exchanges]
-      Spree::Config[:expedited_exchanges] = true
-      Spree::StockItem.update_all(count_on_hand: 10)
       rma.save!
       Spree::Shipment.last.ship!
       return_item_1.receive!
       Timecop.travel travel_time
     end
 
-    after do
-      Timecop.return
-      Spree::Config[:expedited_exchanges] = @original_expedited_exchanges_pref
-    end
+    after { Timecop.return }
 
     context "fewer than the config allowed days have passed" do
       let(:travel_time) { (Spree::Config[:expedited_exchanges_days_window] - 1).days }
