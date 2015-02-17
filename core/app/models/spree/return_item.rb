@@ -30,6 +30,7 @@ module Spree
     after_create :cancel_others, unless: :cancelled?
 
     scope :awaiting_return, -> { where(reception_status: 'awaiting') }
+    scope :expecting_return, -> { where.not(reception_status: COMPLETED_RECEPTION_STATUSES) }
     scope :not_cancelled, -> { where.not(reception_status: 'cancelled') }
     scope :given_to_customer, -> { where(reception_status: 'given_to_customer') }
     scope :lost_in_transit, -> { where(reception_status: 'lost_in_transit') }
