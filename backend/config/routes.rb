@@ -100,7 +100,7 @@ Spree::Core::Engine.add_routes do
           put :fire
         end
       end
-      resources :payments do
+      resources :payments, only: [:index, :new, :show, :create] do
         member do
           put :fire
         end
