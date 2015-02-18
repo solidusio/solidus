@@ -94,7 +94,6 @@ Spree::Core::Engine.add_routes do
       end
 
       resources :adjustments
-      resources :line_items
       resources :return_authorizations do
         member do
           put :fire
