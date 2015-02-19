@@ -45,7 +45,7 @@ describe Spree::Admin::OrdersController, :type => :controller do
 
     context "#approve" do
       it "approves an order" do
-        expect(order).to receive(:approved_by).with(user: controller.try_spree_current_user)
+        expect(order.contents).to receive(:approve).with(user: controller.try_spree_current_user)
         spree_put :approve, id: order.number
         expect(flash[:success]).to eq Spree.t(:order_approved)
       end

@@ -582,19 +582,6 @@ module Spree
       end
     end
 
-    def approved_by(user: nil, name: nil)
-      raise ArgumentError, 'either user or name must be specified' unless user || name
-      self.approver = user
-      self.approver_name = name
-      approve!
-    end
-
-    def approve!
-      update_attributes!(
-        approved_at: Time.now
-      )
-    end
-
     def approved?
       !!self.approved_at
     end
