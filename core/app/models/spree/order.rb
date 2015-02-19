@@ -480,13 +480,6 @@ module Spree
       }.squish!).uniq.count > 0
     end
 
-    def approved_by(user: nil, name: nil)
-      raise 'user or name must be specified' unless user || name
-      self.approver = user
-      self.approver_name = name
-      approve!
-    end
-
     def approved?
       !!self.approved_at
     end
@@ -503,10 +496,6 @@ module Spree
 
     def considered_risky!
       update_attributes!(considered_risky: true)
-    end
-
-    def approve!
-      update_attributes!(considered_risky: false, approved_at: Time.now)
     end
 
     # moved from api order_decorator. This is a better place for it.

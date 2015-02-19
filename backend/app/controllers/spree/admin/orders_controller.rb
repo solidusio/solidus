@@ -138,7 +138,7 @@ module Spree
       end
 
       def approve
-        @order.approved_by(user: try_spree_current_user)
+        @order.contents.approve(user: try_spree_current_user)
         flash[:success] = Spree.t(:order_approved)
         redirect_to :back
       end

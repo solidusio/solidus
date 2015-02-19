@@ -435,4 +435,51 @@ describe Spree::OrderContents do
 
   end
 
+  describe "#approve" do
+    context 'when a name is supplied' do
+      it 'approves the order' do
+        order.contents.approve(name: 'Jordan')
+        expect(order.approver).to be_nil
+        expect(order.approver_name).to eq('Jordan')
+        expect(order.considered_risky).to be_falsy
+        expect(order.approved_at).to be_present
+        expect(order.approved?).to be_truthy
+      end
+    end
+
+    context 'when a user is supplied' do
+      let(:user) { create(:user) }
+
+      it 'approves the order' do
+        order.contents.approve(user: user)
+        expect(order.approver).to eq(user)
+        expect(order.approver_name).to be_nil
+        expect(order.considered_risky).to be_falsey
+        expect(order.approved_at).to be_present
+        expect(order.approved?).to be_truthy
+      end
+    end
+
+    context 'when a user and a name are supplied' do
+      let(:user) { create(:user) }
+
+      it 'approves the order' do
+        order.contents.approve(user: user, name: 'Jordan')
+        expect(order.approver).to eq(user)
+        expect(order.approver_name).to eq('Jordan')
+        expect(order.considered_risky).to be_falsey
+        expect(order.approved_at).to be_present
+        expect(order.approved?).to be_truthy
+      end
+    end
+
+    context 'when neither a user nor a name are supplied' do
+      it 'raises' do
+        expect {
+          order.contents.approve
+        }.to raise_error(ArgumentError, 'user or name must be specified')
+      end
+    end
+  end
+
 end

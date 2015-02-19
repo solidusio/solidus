@@ -136,6 +136,19 @@ module Spree
       true
     end
 
+    def approve(user: nil, name: nil)
+      if user.blank? && name.blank?
+        raise ArgumentError, 'user or name must be specified'
+      end
+
+      order.update_attributes!(
+        approver: user,
+        approver_name: name,
+        considered_risky: false,
+        approved_at: Time.now,
+      )
+    end
+
     private
       def order_updater
         @updater ||= OrderUpdater.new(order)

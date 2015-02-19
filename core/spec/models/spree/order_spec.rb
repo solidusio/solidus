@@ -676,23 +676,6 @@ describe Spree::Order do
     end
   end
 
-  context "is considered risky" do
-    let(:order) do
-      order = FactoryGirl.create(:completed_order_with_pending_payment)
-      order.considered_risky!
-      order
-    end
-
-    it "can be approved by a user" do
-      order.approved_by(user: user)
-      expect(order.approver_id).to eq user.id
-      expect(order.considered_risky).to eq false
-      expect(order.approved_at).to be_present
-      expect(order.approved?).to be true
-    end
-  end
-
-
   # Regression tests for #4072
   context "#state_changed" do
     let(:order) { FactoryGirl.create(:order) }

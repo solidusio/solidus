@@ -32,7 +32,7 @@ module Spree
       # the original exchange shipment, not the built one
       set_shipment_for_new_order
 
-      new_order.approved_by(name: self.class.name)
+      new_order.contents.approve(name: self.class.name)
       new_order.reload.complete!
 
       if !new_order.completed?
