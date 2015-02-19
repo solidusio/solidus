@@ -444,6 +444,52 @@ describe Spree::Order, :type => :model do
       order.save!
     end
 
+    context "out of stock" do
+      before do
+        order.user = FactoryGirl.create(:user)
+        order.email = 'spree@example.org'
+        order.payments << FactoryGirl.create(:payment)
+        order.stub(payment_required?: true)
+        order.line_items << FactoryGirl.create(:line_item)
+        order.line_items.first.variant.stock_items.each do |si|
+          si.set_count_on_hand(0)
+          si.update_attributes(:backorderable => false)
+        end
+
+        Spree::OrderUpdater.new(order).update
+        order.save!
+      end
+
+      it "does not allow the order to complete" do
+        expect {
+          order.complete!
+        }.to raise_error Spree::LineItem::InsufficientStock
+
+        expect(order.state).to eq 'confirm'
+        expect(order.line_items.first.errors[:quantity]).to be_present
+      end
+    end
+
+    context "no inventory units" do
+      before do
+        order.user = FactoryGirl.create(:user)
+        order.email = 'spree@example.com'
+        order.payments << FactoryGirl.create(:payment)
+        order.stub(payment_required?: true)
+        order.line_items << FactoryGirl.create(:line_item)
+
+        Spree::OrderUpdater.new(order).update
+        order.save!
+      end
+
+      it "does not allow order to complete" do
+        expect { order.complete! }.to raise_error Spree::LineItem::InsufficientStock
+
+        expect(order.state).to eq 'confirm'
+        expect(order.line_items.first.errors[:inventory]).to be_present
+      end
+    end
+
     context "default credit card" do
       before do
         order.user = FactoryGirl.create(:user)
@@ -453,6 +499,7 @@ describe Spree::Order, :type => :model do
         # make sure we will actually capture a payment
         allow(order).to receive_messages(payment_required?: true)
         order.line_items << FactoryGirl.create(:line_item)
+        order.line_items.each { |li| li.inventory_units.create! }
         Spree::OrderUpdater.new(order).update
 
         order.save!
@@ -477,12 +524,14 @@ describe Spree::Order, :type => :model do
         order.email = 'spree@example.org'
         payment = FactoryGirl.create(:payment)
         payment.stub(:process!).and_raise(Spree::Core::GatewayError.new('processing failed'))
+        order.line_items.each { |li| li.inventory_units.create! }
         order.payments << payment
 
         # make sure we will actually capture a payment
         order.stub(payment_required?: true)
         order.stub(ensure_available_shipping_rates: true)
         order.line_items << FactoryGirl.create(:line_item)
+        order.line_items.each { |li| li.inventory_units.create! }
         Spree::OrderUpdater.new(order).update
       end
 

@@ -684,6 +684,15 @@ module Spree
       true unless new_record? or ['cart', 'address'].include?(state)
     end
 
+    def ensure_inventory_units
+      if has_step?("delivery")
+        inventory_validator = Spree::Stock::InventoryValidator.new
+
+        errors = line_items.map { |line_item| inventory_validator.validate(line_item) }.compact
+        raise Spree::LineItem::InsufficientStock if errors.any?
+      end
+    end
+
     def ensure_line_items_present
       unless line_items.present?
         errors.add(:base, Spree.t(:there_are_no_items_for_this_order)) and return false
