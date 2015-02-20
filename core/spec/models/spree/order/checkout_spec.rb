@@ -507,6 +507,44 @@ describe Spree::Order, :type => :model do
       end
     end
 
+    context "exchange order completion" do
+      before do
+        order.email = 'spree@example.org'
+        order.payments << FactoryGirl.create(:payment)
+        order.shipments.create!
+        order.stub(payment_required?: true)
+        order.stub(:ensure_available_shipping_rates).and_return(true)
+      end
+
+      context 'when the line items are not available' do
+        before do
+          order.line_items << FactoryGirl.create(:line_item)
+          Spree::OrderUpdater.new(order).update
+
+          order.save!
+        end
+
+        context 'when the exchange is for an unreturned item' do
+          before do
+            order.shipments.first.update_attributes!(created_at: order.created_at - 1.day)
+            expect(order.unreturned_exchange?).to eq true
+          end
+
+          it 'allows the order to complete' do
+            order.complete!
+
+            expect(order).to be_complete
+          end
+        end
+
+        context 'when the exchange is not for an unreturned item' do
+          it 'does not allow the order to completed' do
+            expect { order.complete! }.to raise_error  Spree::LineItem::InsufficientStock
+          end
+        end
+      end
+    end
+
     context "default credit card" do
       before do
         order.user = FactoryGirl.create(:user)

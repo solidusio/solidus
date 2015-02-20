@@ -70,7 +70,8 @@ module Spree
               # Sequence of before_transition to: :complete
               # calls matter so that we do not process payments
               # until validations have passed
-              before_transition to: :complete, do: :validate_line_item_availability
+              before_transition to: :complete, do: :validate_line_item_availability, unless: :unreturned_exchange?
+              before_transition to: :complete, do: :ensure_inventory_units, unless: :unreturned_exchange?
               before_transition to: :complete, do: :ensure_available_shipping_rates
 
               if states[:payment]
