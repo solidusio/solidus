@@ -174,6 +174,17 @@ module Spree
         end
       end
 
+      context "a newer complete order exists" do
+        it "does not return the latest incomplete order" do
+          Timecop.travel 1.minute.from_now do
+            new_order = create(:shipped_order, user: order.user)
+            expect(new_order.completed_at).to be > order.created_at
+            expect(subject.status).to eq 204
+            expect(subject.body).to be_blank
+          end
+        end
+      end
+
       context "an incomplete order does not exist" do
 
         before do
