@@ -47,5 +47,23 @@ module Spree
         end
       end
     end
+
+    context "soft-deletion" do
+      subject do
+        product.destroy
+        product.reload
+      end
+
+      it "keeps the translation on deletion" do
+        subject
+        expect(product.translations).not_to be_empty
+      end
+
+      it "changes the slug on the translation to allow reuse of original slug" do
+        expect do
+          subject
+        end.to change { product.slug }
+      end
+    end
   end
 end
