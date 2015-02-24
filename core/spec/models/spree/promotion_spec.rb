@@ -325,12 +325,12 @@ describe Spree::Promotion, :type => :model do
     end
 
     let!(:adjustment) do
-      create(
-        :adjustment,
-        source: action,
-        promotion_code: promotion.codes.first,
-        amount: 10,
-        label: "Promotional adjustment",
+      order = create(:order)
+      Spree::Adjustment.create!(
+        :source => action,
+        :adjustable => order,
+        :amount => 10,
+        :label => "Promotional adjustment"
       )
     end
 
