@@ -235,7 +235,7 @@ module Spree
       expect(Order).to receive(:create!) { order }
       allow(order).to receive(:contents) { double(associate_user: true, add: line_item) }
 
-      expect(line_item).to receive(:update_attributes).with("special" => true)
+      expect(line_item).to receive(:update_attributes!).with("special" => true)
 
       controller.stub(permitted_line_item_attributes: [:id, :variant_id, :quantity, :special])
       api_post :create, :order => {
