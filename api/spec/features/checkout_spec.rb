@@ -62,7 +62,7 @@ module Spree
       # It seems we are missing an order-scoped address api endpoint since we need
       # to use update here.
       expect {
-        update_order(order_params: { order: { address_type => address.attributes } })
+        update_order(order_params: { order: { address_type => address.attributes.except('id') } })
       }.to change { @order.reload.public_send(address_type) }.to address
     end
 
@@ -125,8 +125,8 @@ module Spree
 
       create_order(order_params: {
         order: {
-          bill_address: bill_address.as_json,
-          ship_address: ship_address.as_json,
+          bill_address: bill_address.attributes.except('id').as_json,
+          ship_address: ship_address.attributes.except('id').as_json,
           line_items: {
             0 => { variant_id: variant_1.id, quantity: 2 },
             1 => { variant_id: variant_2.id, quantity: 2 }
@@ -157,8 +157,8 @@ module Spree
       create_order
       update_order(order_params: {
         order: {
-          bill_address: bill_address.as_json,
-          ship_address: ship_address.as_json,
+          bill_address: bill_address.attributes.except('id').as_json,
+          ship_address: ship_address.attributes.except('id').as_json,
           line_items: {
             0 => { variant_id: variant_1.id, quantity: 2 },
             1 => { variant_id: variant_2.id, quantity: 2 }
