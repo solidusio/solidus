@@ -9,7 +9,7 @@ module Spree
                         :shipping_category_id, :meta_description, :meta_keywords,
                         :shipping_category
 
-    has_many :inventory_units
+    has_many :inventory_units, inverse_of: :variant
     has_many :line_items, inverse_of: :variant
 
     has_many :stock_items, dependent: :destroy, inverse_of: :variant
@@ -204,8 +204,12 @@ module Spree
         end
       end
 
+      def default_price_changed?
+        default_price && (default_price.changed? || default_price.new_record?)
+      end
+
       def save_default_price
-        default_price.save if default_price && (default_price.changed? || default_price.new_record?)
+        default_price.save if default_price_changed?
       end
 
       def set_cost_currency

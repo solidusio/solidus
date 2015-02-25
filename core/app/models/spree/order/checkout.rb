@@ -107,6 +107,8 @@ module Spree
                 before_transition from: :delivery, do: :apply_free_shipping_promotions
               end
 
+              before_transition to: :resumed, do: :ensure_line_items_are_in_stock
+
               after_transition to: :complete, do: :finalize!
               after_transition to: :resumed,  do: :after_resume
               after_transition to: :canceled, do: :after_cancel
@@ -237,12 +239,15 @@ module Spree
                   raise Core::GatewayError.new Spree.t(:invalid_credit_card)
                 end
 
+                credit_card.verification_value = params[:cvc_confirm] if params[:cvc_confirm].present?
+
                 attributes[:payments_attributes].first[:source] = credit_card
                 attributes[:payments_attributes].first[:payment_method_id] = credit_card.payment_method_id
                 attributes[:payments_attributes].first.delete :source_attributes
               end
 
               success = self.update_attributes(attributes)
+              set_shipments_cost if self.shipments.any?
             end
             @updating_params = nil
             success

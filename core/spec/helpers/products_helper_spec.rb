@@ -31,6 +31,12 @@ module Spree
         it { should be_nil }
       end
 
+      context "when the master has no price" do
+        let(:product_price) { nil }
+
+        it { should be_nil }
+      end
+
       context "when currency is default" do
         context "when variant is more than master" do
           let(:variant_price) { 15 }
@@ -196,7 +202,7 @@ THIS IS THE BEST PRODUCT EVER!
           @products.stub(:maximum).with(:updated_at) { updated_at }
         end
 
-        it { should == 'USD/spree/products/all-10-20111213-5' }
+        it { should == 'en/USD/spree/products/all-10-20111213-5' }
       end
 
       context 'when there is no considered maximum updated date' do
@@ -207,7 +213,7 @@ THIS IS THE BEST PRODUCT EVER!
           Date.stub(:today) { today }
         end
 
-        it { should == 'USD/spree/products/all-10-20131211-1234567' }
+        it { should == 'en/USD/spree/products/all-10-20131211-1234567' }
       end
     end
   end

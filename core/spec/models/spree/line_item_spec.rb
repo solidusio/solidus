@@ -35,6 +35,7 @@ describe Spree::LineItem do
       end
 
       it "triggers adjustment total recalculation" do
+        line_item.should_receive(:update_tax_charge) # Regression test for https://github.com/spree/spree/issues/4671
         line_item.should_receive(:recalculate_adjustments)
         line_item.save
       end
@@ -139,6 +140,15 @@ describe Spree::LineItem do
     end
   end
 
+  context "currency same as order.currency" do
+    it "is a valid line item" do
+      line_item = order.line_items.first
+      line_item.currency = order.currency
+      line_item.valid?
+
+      expect(line_item).to have(0).error_on(:currency)
+    end
+  end
   context "currency same as order.currency" do
     it "is a valid line item" do
       line_item = order.line_items.first

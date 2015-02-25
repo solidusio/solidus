@@ -1,7 +1,8 @@
 module Spree
   class Zone < ActiveRecord::Base
-    has_many :zone_members, dependent: :destroy, class_name: "Spree::ZoneMember"
-    has_many :tax_rates, dependent: :destroy
+    has_many :zone_members, dependent: :destroy, class_name: "Spree::ZoneMember", inverse_of: :zone
+    has_many :tax_rates, dependent: :destroy, inverse_of: :zone
+
     has_and_belongs_to_many :shipping_methods, :join_table => 'spree_shipping_methods_zones'
 
     validates :name, presence: true, uniqueness: true
@@ -14,7 +15,7 @@ module Spree
     def self.default_tax
       where(default_tax: true).first
     end
-  
+
     # Returns the matching zone with the highest priority zone type (State, Country, Zone.)
     # Returns nil in the case of no matches.
     def self.match(address)
@@ -71,12 +72,12 @@ module Spree
     # All zoneables belonging to the zone members.  Will be a collection of either
     # countries or states depending on the zone type.
     def zoneables
-      members.collect(&:zoneable)
+      members.includes(:zoneable).collect(&:zoneable)
     end
 
     def country_ids
       if kind == 'country'
-        members.collect(&:zoneable_id)
+        members.pluck(:zoneable_id)
       else
         []
       end
@@ -84,30 +85,18 @@ module Spree
 
     def state_ids
       if kind == 'state'
-        members.collect(&:zoneable_id)
+        members.pluck(:zoneable_id)
       else
         []
       end
     end
 
     def country_ids=(ids)
-      zone_members.destroy_all
-      ids.reject{ |id| id.blank? }.map do |id|
-        member = ZoneMember.new
-        member.zoneable_type = 'Spree::Country'
-        member.zoneable_id = id
-        members << member
-      end
+      set_zone_members(ids, 'Spree::Country')
     end
 
     def state_ids=(ids)
-      zone_members.destroy_all
-      ids.reject{ |id| id.blank? }.map do |id|
-        member = ZoneMember.new
-        member.zoneable_type = 'Spree::State'
-        member.zoneable_id = id
-        members << member
-      end
+      set_zone_members(ids, 'Spree::State')
     end
 
     # Indicates whether the specified zone falls entirely within the zone performing
@@ -117,9 +106,9 @@ module Spree
       return false if zone_members.empty? || target.zone_members.empty?
 
       if kind == target.kind
-        return false if target.zoneables.any? { |target_zoneable| zoneables.exclude?(target_zoneable) }
+        return false if (target.zoneables.collect(&:id) - zoneables.collect(&:id)).present?
       else
-        return false if target.zoneables.any? { |target_state| zoneables.exclude?(target_state.country) }
+        return false if (target.zoneables.collect(&:country).collect(&:id) - zoneables.collect(&:id)).present?
       end
       true
     end
@@ -134,6 +123,16 @@ module Spree
 
       def remove_previous_default
         Spree::Zone.where('id != ?', self.id).update_all(default_tax: false) if default_tax
+      end
+
+      def set_zone_members(ids, type)
+        zone_members.destroy_all
+        ids.reject{ |id| id.blank? }.map do |id|
+          member = ZoneMember.new
+          member.zoneable_type = type
+          member.zoneable_id = id
+          members << member
+        end
       end
   end
 end

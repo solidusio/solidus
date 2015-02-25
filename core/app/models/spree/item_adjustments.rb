@@ -47,8 +47,9 @@ module Spree
       included_tax_total = 0
       additional_tax_total = 0
       run_callbacks :tax_adjustments do
-        included_tax_total = adjustments.tax.included.reload.map(&:update!).compact.sum
-        additional_tax_total = adjustments.tax.additional.reload.map(&:update!).compact.sum
+        tax = (item.respond_to?(:all_adjustments) ? item.all_adjustments : item.adjustments).tax
+        included_tax_total = tax.included.reload.map(&:update!).compact.sum
+        additional_tax_total = tax.additional.reload.map(&:update!).compact.sum
       end
 
       item.update_columns(
@@ -71,7 +72,7 @@ module Spree
     end
 
     def best_promotion_adjustment
-      @best_promotion_adjustment ||= adjustments.promotion.eligible.reorder("amount ASC, created_at DESC").first
+      @best_promotion_adjustment ||= adjustments.promotion.eligible.reorder("amount ASC, created_at DESC, id DESC").first
     end
   end
 end

@@ -5,7 +5,7 @@ module Spree
         if payment_method && payment_method.source_required?
           if source
             if !processing?
-              if payment_method.supports?(source)
+              if payment_method.supports?(source) || token_based?
                 if payment_method.auto_capture?
                   purchase!
                 else
@@ -50,7 +50,7 @@ module Spree
             gateway_options
           )
 
-          money = ::Money.new(amount, Spree::Config[:currency])
+          money = ::Money.new(amount, currency)
           capture_events.create!(amount: money.to_f)
           handle_response(response, :complete, :failure)
         end
@@ -183,6 +183,10 @@ module Spree
       # The unique identifier to be passed in to the payment gateway
       def gateway_order_id
         "#{order.number}-#{self.identifier}"
+      end
+
+      def token_based?
+        source.gateway_customer_profile_id.present? || source.gateway_payment_profile_id.present?
       end
     end
   end

@@ -271,6 +271,7 @@ en:
           attributes:
             base:
               card_expired: "Card has expired"
+              expiry_invalid: "Card expiration is invalid"
         spree/line_item:
           attributes:
             currency:
@@ -471,6 +472,7 @@ en:
     back_to_reimbursement_type_list: Back To Reimbursement Type List
     back_to_rma_reason_list: Back To RMA Reason List
     back_to_shipping_categories: Back To Shipping Categories
+    back_to_shipping_categories_list: Back To Shipping Categories List
     back_to_shipping_methods_list: Back To Shipping Methods List
     back_to_states_list: Back To States List
     back_to_stock_locations_list: Back to Stock Locations List
@@ -483,6 +485,7 @@ en:
     back_to_users_list: Back To Users List
     back_to_zones_list: Back To Zones List
     backorderable: Backorderable
+    backorderable_default: Backorderable default
     backorders_allowed: backorders allowed
     balance_due: Balance Due
     base_amount: Base Amount
@@ -520,6 +523,7 @@ en:
     choose_dashboard_locale: Choose Dashboard Locale
     choose_location: Choose location
     city: City
+    click_and_drag_on_the_products_to_sort_them: 'Click &amp; drag on the products to sort them.'
     clone: Clone
     close: Close
     close_all_adjustments: Close All Adjustments
@@ -677,6 +681,7 @@ en:
       count_on_hand_setter: Cannot set count_on_hand manually, as it is set automatically by the recalculate_count_on_hand callback. Please use `update_column(:count_on_hand, value)` instead.
     exchange_for: Exchange for
     expedited_exchanges_warning: "Any specified exchanges will ship to the customer immediately upon saving. The customer will be charged the full amount of the item if they do not return the original item within %{days_window} days."
+    excl: excl.
     expiration: Expiration
     extension: Extension
     existing_shipments: Existing shipments
@@ -729,12 +734,14 @@ en:
     image: Image
     images: Images
     inactive: Inactive
+    incl: incl.
     included_in_price: Included in Price
     included_price_validation: cannot be selected unless you have set a Default Tax Zone
     incomplete: Incomplete
     instructions_to_reset_password: Please enter your email on the form below
     insufficient_stock: Insufficient stock available, only %{on_hand} remaining
     insufficient_stock_for_order: Insufficient stock quantity for items in the order
+    insufficient_stock_lines_present: Some line items in this order have insufficient quantity.
     intercept_email_address: Intercept Email Address
     intercept_email_instructions: Override email recipient and replace with this address.
     internal_name: Internal Name
@@ -905,6 +912,7 @@ en:
     order: Order
     order_adjustments: Order adjustments
     order_already_completed: Order is already completed
+    order_already_updated: The order has already been updated.
     order_approved: Order approved
     order_canceled: Order canceled
     order_completed: Order completed
@@ -1071,6 +1079,7 @@ en:
         name: User Logged In
     promotions: Promotions
     promotion_uses: Promotion uses
+    propagate_all_variants: Propagate all variants
     properties: Properties
     property: Property
     prototype: Prototype
@@ -1333,7 +1342,9 @@ en:
     usage_limit: Usage Limit
     use_app_default: Use App Default
     use_billing_address: Use Billing Address
+    use_existing_cc: Use an existing card on file
     use_new_cc: Use a new card
+    use_new_cc_or_payment_method: Use a new card / payment method
     use_s3: Use Amazon S3 For Images
     user: User
     user_rule:

@@ -72,17 +72,27 @@ module Spree
           end
         }
 
+        # Check for applied adjustments.
         discount = order.line_item_adjustments.promotion.detect(&detector)
         discount ||= order.shipment_adjustments.promotion.detect(&detector)
         discount ||= order.adjustments.promotion.detect(&detector)
 
-        if discount.eligible
+        # Check for applied line items.
+        created_line_items = promotion.actions.detect { |a| a.type == 'Spree::Promotion::Actions::CreateLineItems' }
+
+        if (discount && discount.eligible) || created_line_items
           order.update_totals
           order.persist_totals
           self.success = Spree.t(:coupon_code_applied)
         else
-          # if the promotion was created after the order
-          self.error = Spree.t(:coupon_code_not_found)
+          # if the promotion exists on an order, but wasn't found above,
+          # we've already selected a better promotion
+          if order.promotions.with_coupon_code(order.coupon_code)
+            self.error = Spree.t(:coupon_code_better_exists)
+          else
+            # if the promotion was created after the order
+            self.error = Spree.t(:coupon_code_not_found)
+          end
         end
       end
     end

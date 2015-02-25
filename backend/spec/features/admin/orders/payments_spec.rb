@@ -66,8 +66,7 @@ describe 'Payments' do
       # end
     end
 
-    it 'should be able to list and create payment methods for an order', js: true do
-      find('#payment_status').text.should == 'PENDING'
+    it 'lists and create payments for an order', js: true do
       within_row(1) do
         column_text(3).should == '$150.00'
         column_text(4).should == 'Credit Card'
@@ -75,9 +74,7 @@ describe 'Payments' do
       end
 
       click_icon :void
-
-      # as it had a payment greater than order total ($50)
-      find('#payment_status').text.should == 'CREDIT OWED'
+      find('#payment_status').text.should == 'BALANCE DUE'
       page.should have_content('Payment Updated')
 
       within_row(1) do
@@ -213,6 +210,21 @@ describe 'Payments' do
         expect(find("#card_#{cc.id}")).to be_checked
         click_button "Continue"
         page.should have_content("Payment has been successfully created!")
+      end
+    end
+
+    context "with a check" do
+      let!(:payment_method) { create(:check_payment_method) }
+
+      before do
+        visit spree.admin_order_payments_path(order.reload)
+      end
+
+      it "can successfully be created and captured" do
+        click_on 'Continue'
+        expect(page).to have_content("Payment has been successfully created!")
+        click_icon(:capture)
+        expect(page).to have_content("Payment Updated")
       end
     end
   end

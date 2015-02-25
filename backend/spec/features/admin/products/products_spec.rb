@@ -66,7 +66,7 @@ describe "Products" do
           context "uses руб as the currency symbol" do
             it "on the products listing page" do
               click_link "Products"
-              within_row(1) { page.should have_content("₽19.99") }
+              within_row(1) { expect(page).to have_content("₽19.99") }
             end
           end
         end
@@ -172,10 +172,13 @@ describe "Products" do
       end
 
       it "should keep option values selected if validation fails", :js => true do
+        fill_in "product_name", :with => "Baseball Cap"
+        fill_in "product_sku", :with => "B100"
+        fill_in "product_price", :with => "100"
         select "Size", :from => "Prototype"
         check "Large"
         click_button "Create"
-        page.should have_content("Name can't be blank")
+        page.should have_content("Shipping category can't be blank")
         field_labeled("Size").should be_checked
         field_labeled("Large").should be_checked
         field_labeled("Small").should_not be_checked
@@ -205,8 +208,11 @@ describe "Products" do
       end
 
       it "should show validation errors", :js => true do
+        fill_in "product_name", :with => "Baseball Cap"
+        fill_in "product_sku", :with => "B100"
+        fill_in "product_price", :with => "100"
         click_button "Create"
-        page.should have_content("Name can't be blank")
+        page.should have_content("Shipping category can't be blank")
       end
 
       context "using a locale with a different decimal format " do
@@ -254,7 +260,7 @@ describe "Products" do
         page.should have_content("successfully updated!")
       end
     end
-    
+
 
     context "cloning a product", :js => true do
       it "should allow an admin to clone a product" do
@@ -333,6 +339,7 @@ describe "Products" do
         visit spree.admin_products_path
         accept_alert do
           click_icon :trash
+          wait_for_ajax
         end
         # This will show our deleted product
         check "Show Deleted"
@@ -344,8 +351,8 @@ describe "Products" do
   end
 
   context 'with only product permissions' do
-  
-    before do 
+
+    before do
       Spree::Admin::BaseController.any_instance.stub(:spree_current_user).and_return(nil)
     end
 
@@ -366,7 +373,7 @@ describe "Products" do
       page.should have_css('a.edit')
       page.should_not have_css('a.delete-resource')
     end
-  
+
     it "should only display accessible links on edit" do
       visit spree.admin_product_path(product)
 

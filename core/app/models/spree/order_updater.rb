@@ -15,6 +15,7 @@ module Spree
     # object with callbacks (otherwise you will end up in an infinite recursion as the
     # associations try to save and then in turn try to call +update!+ again.)
     def update
+      update_totals
       if order.completed?
         update_payment_state
         update_shipments
@@ -49,7 +50,12 @@ module Spree
 
     # give each of the shipments a chance to update themselves
     def update_shipments
-      shipments.each { |shipment| shipment.update!(order) if shipment.persisted? }
+      shipments.each do |shipment|
+        next unless shipment.persisted?
+        shipment.update!(order)
+        shipment.refresh_rates
+        shipment.update_amounts
+      end
     end
 
     def update_shipment_total
@@ -145,6 +151,7 @@ module Spree
     #
     # The +payment_state+ value helps with reporting, etc. since it provides a quick and easy way to locate Orders needing attention.
     def update_payment_state
+      last_state = order.payment_state
       # line_item are empty when user empties cart
       if line_items.empty? || round_money(order.payment_total) < round_money(order.total)
         if payments.present?
@@ -173,10 +180,12 @@ module Spree
       elsif round_money(order.payment_total) > round_money(order.total)
         order.payment_state = 'credit_owed'
       else
-        order.payment_state = 'paid'
+        order.payment_state = 'balance_due' if order.outstanding_balance > 0
+        order.payment_state = 'credit_owed' if order.outstanding_balance < 0
+        order.payment_state = 'paid' if !order.outstanding_balance?
       end
-
-      order.state_changed('payment')
+      order.state_changed('payment') if last_state != order.payment_state
+      order.payment_state
     end
 
     private

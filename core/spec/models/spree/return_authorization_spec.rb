@@ -191,6 +191,12 @@ describe Spree::ReturnAuthorization do
       it "returns the pre-tax line item total" do
         subject.should eq (weighted_line_item_pre_tax_amount * line_item_count)
       end
+
+      it "should add credit for specified amount" do
+        return_authorization.amount = 20
+        Spree::Adjustment.should_receive(:create).with(adjustable: order, amount: -20, label: Spree.t(:rma_credit), source: return_authorization)
+        return_authorization.receive!
+      end
     end
 
     context "promotions" do
@@ -208,12 +214,52 @@ describe Spree::ReturnAuthorization do
 
     subject { return_authorization.customer_returned_items? }
 
+    it "should update the stock item counts in the stock location" do
+      count_on_hand = inventory_unit.find_stock_item.count_on_hand
+      return_authorization.receive!
+      inventory_unit.find_stock_item.count_on_hand.should == count_on_hand + 1
+    end
+
+    context 'with Config.track_inventory_levels == false' do
+      before do
+        Spree::Config.track_inventory_levels = false
+        expect(Spree::StockItem).not_to receive(:find_by)
+        expect(Spree::StockMovement).not_to receive(:create!)
+      end
+
+      it "should NOT update the stock item counts in the stock location" do
+        count_on_hand = inventory_unit.find_stock_item.count_on_hand
+        return_authorization.receive!
+        expect(inventory_unit.find_stock_item.count_on_hand).to eql count_on_hand
+      end
+    end
+
+    context "to a different stock location" do
+      let(:new_stock_location) { FactoryGirl.create(:stock_location, :name => "other") }
+
+      before do
+        return_authorization.stub(:stock_location_id => new_stock_location.id)
+        return_authorization.stub(:inventory_units => [inventory_unit], :amount => -20)
+      end
+    end
+
     context "has associated customer returns" do
       let(:customer_return) { create(:customer_return) }
       let(:return_authorization) { customer_return.return_authorizations.first }
 
       it "returns true" do
         expect(subject).to eq true
+      end
+
+      it "should NOT raise an error when no stock item exists in the stock location" do
+        inventory_unit.find_stock_item.destroy
+        expect { return_authorization.receive! }.not_to raise_error
+      end
+
+      it "should not update the stock item counts in the original stock location" do
+        count_on_hand = inventory_unit.find_stock_item.count_on_hand
+        return_authorization.receive!
+        inventory_unit.find_stock_item.count_on_hand.should == count_on_hand
       end
     end
 

@@ -3,7 +3,7 @@ module Spree
     belongs_to :variant, class_name: "Spree::Variant", inverse_of: :inventory_units
     belongs_to :order, class_name: "Spree::Order", inverse_of: :inventory_units
     belongs_to :shipment, class_name: "Spree::Shipment", touch: true, inverse_of: :inventory_units
-    belongs_to :return_authorization, class_name: "Spree::ReturnAuthorization"
+    belongs_to :return_authorization, class_name: "Spree::ReturnAuthorization", inverse_of: :inventory_units
     belongs_to :line_item, class_name: "Spree::LineItem", inverse_of: :inventory_units
 
     has_many :return_items, inverse_of: :inventory_unit
@@ -26,7 +26,7 @@ module Spree
       event :fill_backorder do
         transition to: :on_hand, from: :backordered
       end
-      after_transition on: :fill_backorder, do: :update_order
+      after_transition on: :fill_backorder, do: :fulfill_order
 
       event :ship do
         transition to: :shipped, if: :allow_ship?
@@ -90,8 +90,9 @@ module Spree
         Spree::Config[:allow_backorder_shipping] || self.on_hand?
       end
 
-      def update_order
-        order.update!
+      def fulfill_order
+        self.reload
+        order.fulfill!
       end
 
       def percentage_of_line_item

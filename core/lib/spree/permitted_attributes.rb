@@ -28,14 +28,16 @@ module Spree
     mattr_reader *ATTRIBUTES
 
     @@address_attributes = [
-      :firstname, :lastname, :address1, :address2,
+      :id, :firstname, :lastname, :address1, :address2,
       :city, :country_id, :state_id, :zipcode, :phone,
       :state_name, :alternative_phone, :company,
       :country => [:iso, :name, :iso3, :iso_name],
       :state => [:name, :abbr]
     ]
 
-    @@checkout_attributes = [:email, :use_billing, :shipping_method_id, :coupon_code, :special_instructions]
+    @@checkout_attributes = [
+      :coupon_code, :email, :shipping_method_id, :special_instructions, :use_billing
+    ]
 
     @@customer_return_attributes = [:stock_location_id, return_items_attributes: [:id, :inventory_unit_id, :return_authorization_id, :returned, :pre_tax_amount, :reception_status_event, :acceptance_status, :exchange_variant_id, :resellable]]
 

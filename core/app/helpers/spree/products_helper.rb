@@ -11,14 +11,13 @@ module Spree
 
     # returns the formatted price for the specified variant as a difference from product price
     def variant_price_diff(variant)
-      diff = variant.amount_in(current_currency) - variant.product.amount_in(current_currency)
-      return nil if diff == 0
-      amount = Spree::Money.new(diff.abs, { currency: current_currency }).to_html
-      if diff > 0
-        "(#{Spree.t(:add)}: #{amount})".html_safe
-      else
-        "(#{Spree.t(:subtract)}: #{amount})".html_safe
-      end
+      variant_amount = variant.amount_in(current_currency)
+      product_amount = variant.product.amount_in(current_currency)
+      return if variant_amount == product_amount || product_amount.nil?
+      diff   = variant.amount_in(current_currency) - product_amount
+      amount = Spree::Money.new(diff.abs, currency: current_currency).to_html
+      label  = diff > 0 ? :add : :subtract
+      "(#{Spree.t(label)}: #{amount})".html_safe
     end
 
     # returns the formatted full price for the variant, if at least one variant price differs from product price
@@ -55,7 +54,7 @@ module Spree
     def cache_key_for_products
       count = @products.count
       max_updated_at = (@products.maximum(:updated_at) || Date.today).to_s(:number)
-      "#{current_currency}/spree/products/all-#{params[:page]}-#{max_updated_at}-#{count}"
+      "#{I18n.locale}/#{current_currency}/spree/products/all-#{params[:page]}-#{max_updated_at}-#{count}"
     end
   end
 end

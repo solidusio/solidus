@@ -101,4 +101,7 @@ describe Spree::Api::BaseController do
     end
   end
 
+  it "lets a subclass override the product associations that are eager-loaded" do
+    controller.respond_to?(:product_includes, true).should be
+  end
 end

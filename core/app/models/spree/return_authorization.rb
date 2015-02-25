@@ -1,6 +1,6 @@
 module Spree
   class ReturnAuthorization < ActiveRecord::Base
-    belongs_to :order, class_name: 'Spree::Order'
+    belongs_to :order, class_name: 'Spree::Order', inverse_of: :return_authorizations
 
     has_many :return_items, inverse_of: :return_authorization, dependent: :destroy
     has_many :inventory_units, through: :return_items
@@ -53,6 +53,11 @@ module Spree
 
     def customer_returned_items?
       customer_returns.exists?
+    end
+    #
+    # Used when Adjustment#update! wants to update the related adjustment
+    def compute_amount(*args)
+      amount.abs * -1
     end
 
     private

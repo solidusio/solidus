@@ -4,7 +4,7 @@ describe Spree::CreditCard do
   let(:valid_credit_card_attributes) do
     { :number => '4111111111111111',
       :verification_value => '123',
-      :expiry => "12 / 15",
+      :expiry => "12 / #{Time.now.year + 1}",
       :name => "Spree Commerce" }
   end
 
@@ -64,6 +64,11 @@ describe Spree::CreditCard do
       credit_card.can_credit?(payment).should be false
     end
 
+    it "should be false when order payment_state is not 'credit_owed'" do
+      payment = mock_model(Spree::Payment, completed?: true, order: mock_model(Spree::Order, payment_state: 'paid'))
+      credit_card.can_credit?(payment).should be false
+    end
+
     it "should be false when credit_allowed is zero" do
       payment = mock_model(Spree::Payment, completed?: true, credit_allowed: 0, order: mock_model(Spree::Order, payment_state: 'credit_owed'))
       credit_card.can_credit?(payment).should be false
@@ -88,11 +93,40 @@ describe Spree::CreditCard do
       expect(credit_card).to have(1).error_on(:name)
     end
 
+    # Regression spec for #4971
+    it "should not bomb out when given an invalid expiry" do
+      credit_card.month = 13
+      credit_card.year = Time.now.year + 1
+      credit_card.should_not be_valid
+      credit_card.errors[:base].should == ["Card expiration is invalid"]
+    end
+
     it "should validate expiration is not in the past" do
       credit_card.month = 1.month.ago.month
       credit_card.year = 1.month.ago.year
       credit_card.should_not be_valid
       credit_card.errors[:base].should == ["Card has expired"]
+    end
+
+    it "should not be expired expiring on the current month" do
+      credit_card.attributes = valid_credit_card_attributes
+      credit_card.month = Time.zone.now.month
+      credit_card.year = Time.zone.now.year
+      credit_card.should be_valid
+    end
+
+    it "should handle TZ correctly" do
+      # The card is valid according to the system clock's local time
+      # (Time.now).
+      # However it has expired in rails's configured time zone (Time.current),
+      # which is the value we should be respecting.
+      time = Time.new(2014, 04, 30, 23, 0, 0, "-07:00")
+      Timecop.freeze(time) do
+        credit_card.month = 1.month.ago.month
+        credit_card.year = 1.month.ago.year
+        credit_card.should_not be_valid
+        credit_card.errors[:base].should == ["Card has expired"]
+      end
     end
 
     it "does not run expiration in the past validation if month is not set" do
@@ -205,6 +239,12 @@ describe Spree::CreditCard do
     it "does not blow up when passed an empty string" do
       lambda { credit_card.expiry = '' }.should_not raise_error
     end
+
+    # Regression test for #4725
+    it "does not blow up when passed one number" do
+      lambda { credit_card.expiry = '12' }.should_not raise_error
+    end
+
   end
 
   context "#cc_type=" do
@@ -262,6 +302,26 @@ describe Spree::CreditCard do
     end
   end
 
+  context "#first_name" do
+    before do
+      credit_card.name = "Ludwig van Beethoven"
+    end
+
+    it "extracts the first name" do
+      expect(credit_card.first_name).to eq "Ludwig"
+    end
+  end
+
+  context "#last_name" do
+    before do
+      credit_card.name = "Ludwig van Beethoven"
+    end
+
+    it "extracts the last name" do
+      expect(credit_card.last_name).to eq "van Beethoven"
+    end
+  end
+
   context "#to_active_merchant" do
     before do
       credit_card.number = "4111111111111111"
@@ -280,6 +340,19 @@ describe Spree::CreditCard do
       am_card.first_name.should == "Bob"
       am_card.last_name = "Boblaw"
       am_card.verification_value.should == 123
+    end
+
+    context "provides name instead of first and last" do
+      before do
+        credit_card.first_name = credit_card.last_name = nil
+        credit_card.name = "Ludwig van Beethoven"
+      end
+
+      it "falls back to split first and last" do
+        am_card = credit_card.to_active_merchant
+        expect(am_card.first_name).to eq "Ludwig"
+        expect(am_card.last_name).to eq "van Beethoven"
+      end
     end
   end
 

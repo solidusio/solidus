@@ -42,6 +42,51 @@ module Spree
           raise_insufficient_quantity and return if @order.insufficient_stock_lines.present?
         end
 
+        def object_params
+          modify_payment_attributes params[:order] || {}
+
+          protected_params = if params[:order]
+                               params.require(:order).permit(permitted_checkout_attributes)
+                             else
+                               {}
+                             end
+
+          map_nested_attributes_keys Order, protected_params
+        end
+
+        def user_id
+          params[:order][:user_id] if params[:order]
+        end
+
+        # For payment step, filter order parameters to produce the expected
+        # nested attributes for a single payment and its source, discarding
+        # attributes for payment methods other than the one selected
+        #
+        # respond_to check is necessary due to issue described in #2910
+        def modify_payment_attributes(object_params)
+          if @order.has_checkout_step?('payment') && @order.payment?
+            if object_params[:payments_attributes].is_a?(Hash)
+              object_params[:payments_attributes] = [object_params[:payments_attributes]]
+            end
+            if object_params[:payment_source].present? && source_params = object_params.delete(:payment_source)[object_params[:payments_attributes].first[:payment_method_id].to_s]
+              object_params[:payments_attributes].first[:source_attributes] = source_params
+            end
+            if object_params[:payments_attributes]
+              object_params[:payments_attributes].first[:amount] = @order.total.to_s
+            end
+          end
+        end
+
+        def nested_params
+          map_nested_attributes_keys Order, params[:order] || {}
+        end
+
+        # Should be overriden if you have areas of your checkout that don't match
+        # up to a step within checkout_steps, such as a registration step
+        def skip_state_validation?
+          false
+        end
+
         def update_order_state
           @order.state = params[:state] if params[:state]
           state_callback(:before)
@@ -58,6 +103,7 @@ module Spree
           send(method_name) if respond_to?(method_name, true)
         end
 
+        # This is used in cancan
         def order_id
           super || params[:id]
         end

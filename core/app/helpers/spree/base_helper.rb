@@ -20,11 +20,11 @@ module Spree
         text = "#{text}: (#{Spree.t('empty')})"
         css_class = 'empty'
       else
-        text = "#{text}: (#{simple_current_order.item_count})  <span class='amount'>#{simple_current_order.display_total.to_html}</span>".html_safe
+        text = "#{text}: (#{simple_current_order.item_count})  <span class='amount'>#{simple_current_order.display_total.to_html}</span>"
         css_class = 'full'
       end
 
-      link_to text, spree.cart_path, :class => "cart-info #{css_class}"
+      link_to text.html_safe, spree.cart_path, :class => "cart-info #{css_class}"
     end
 
     # human readable list of variant options
@@ -118,7 +118,7 @@ module Spree
       countries.collect do |country|
         country.name = Spree.t(country.iso, scope: 'country_names', default: country.name)
         country
-      end.sort { |a, b| a.name.parameterize <=> b.name.parameterize }
+      end.sort_by { |c| c.name.parameterize }
     end
 
     def seo_url(taxon)
@@ -162,9 +162,10 @@ module Spree
     end
 
     private
+
     # Returns style of image or nil
     def image_style_from_method_name(method_name)
-      if style = method_name.to_s.sub(/_image$/, '')
+      if method_name.to_s.match(/_image$/) && style = method_name.to_s.sub(/_image$/, '')
         possible_styles = Spree::Image.attachment_definitions[:attachment][:styles]
         style if style.in? possible_styles.with_indifferent_access
       end

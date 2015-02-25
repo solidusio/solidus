@@ -29,27 +29,14 @@ module Spree
         @shipment = @order.shipments.create(stock_location_id: params[:stock_location_id])
         @order.contents.add(variant, quantity, nil, @shipment)
 
-        @shipment.refresh_rates
         @shipment.save!
 
         respond_with(@shipment.reload, default_template: :show)
       end
 
       def update
-        unlock = params[:shipment].delete(:unlock)
-
-        if unlock == 'yes'
-          @shipment.adjustment.open
-        end
-
-        @shipment.update_attributes(shipment_params)
-
-        if unlock == 'yes'
-          @shipment.adjustment.close
-        end
-
-        @shipment.reload
-        respond_with(@shipment, default_template: :show)
+        @shipment.update_attributes_and_order(shipment_params)
+        respond_with(@shipment.reload, default_template: :show)
       end
 
       def ready

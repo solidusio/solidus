@@ -22,9 +22,9 @@
 # it might be reinstated.
 module Spree
   class Adjustment < ActiveRecord::Base
-    belongs_to :adjustable, polymorphic: true
+    belongs_to :adjustable, polymorphic: true, touch: true
     belongs_to :source, polymorphic: true
-    belongs_to :order, :class_name => "Spree::Order"
+    belongs_to :order, class_name: "Spree::Order"
 
     validates :label, presence: true
     validates :amount, numericality: true
@@ -66,6 +66,14 @@ module Spree
       state == "closed"
     end
 
+    def currency
+      adjustable ? adjustable.currency : Spree::Config[:currency]
+    end
+
+    def display_amount
+      Spree::Money.new(amount, { currency: currency })
+    end
+
     def promotion?
       source.class < Spree::PromotionAction
     end
@@ -95,15 +103,12 @@ module Spree
       amount
     end
 
-    def currency
-      adjustable ? adjustable.currency : Spree::Config[:currency]
-    end
-
     private
 
     def update_adjustable_adjustment_total
       # Cause adjustable's total to be recalculated
       Spree::ItemAdjustments.new(adjustable).update if adjustable
     end
+
   end
 end

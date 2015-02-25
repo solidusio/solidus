@@ -13,12 +13,14 @@ module Spree
             order = Spree::Order.create!
             order.contents.associate_user(user)
 
-            create_shipments_from_params(params.delete(:shipments_attributes), order)
+            shipments_attrs = params.delete(:shipments_attributes)
+
+            create_shipments_from_params(shipments_attrs, order)
             create_line_items_from_params(params.delete(:line_items_attributes),order)
             create_adjustments_from_params(params.delete(:adjustments_attributes), order)
             create_payments_from_params(params.delete(:payments_attributes), order)
 
-            if(completed_at = params.delete(:completed_at))
+            if (completed_at = params.delete(:completed_at))
               order.completed_at = completed_at
               order.state = 'complete'
             end
@@ -26,9 +28,16 @@ module Spree
             params.delete(:user_id) unless user.try(:has_spree_role?, "admin") && params.key?(:user_id)
 
             order.update_attributes!(params)
-            # Really ensure that the order totals are correct
-            order.update_totals
-            order.persist_totals
+
+            order.create_proposed_shipments unless shipments_attrs.present?
+
+            # Really ensure that the order totals & states are correct
+            order.updater.update
+            if shipments_attrs.present?
+              order.shipments.each_with_index do |shipment, index|
+                shipment.update_columns(cost: shipments_attrs[index][:cost].to_f) if shipments_attrs[index][:cost].present?
+              end
+            end
             order.reload
           rescue Exception => e
             order.destroy if order && order.persisted?
@@ -41,8 +50,13 @@ module Spree
           shipments_hash.each do |s|
             begin
               shipment = order.shipments.build
-              shipment.tracking = s[:tracking]
-              shipment.stock_location = Spree::StockLocation.find_by_name!(s[:stock_location])
+              shipment.tracking       = s[:tracking]
+              shipment.stock_location = Spree::StockLocation.find_by_admin_name(s[:stock_location]) || Spree::StockLocation.find_by_name!(s[:stock_location])
+
+              if s[:shipped_at].present?
+                shipment.shipped_at = s[:shipped_at]
+                shipment.state      = 'shipped'
+              end
 
               inventory_units = s[:inventory_units] || []
               inventory_units.each do |iu|
@@ -59,6 +73,7 @@ module Spree
               rate = shipment.shipping_rates.create!(:shipping_method => shipping_method,
                                                      :cost => s[:cost])
               shipment.selected_shipping_rate_id = rate.id
+              shipment.update_amounts
 
             rescue Exception => e
               raise "Order import shipments: #{e.message} #{s}"
@@ -70,12 +85,15 @@ module Spree
           return {} unless line_items_hash
           line_items_hash.each_key do |k|
             begin
-              line_item = line_items_hash[k]
-              ensure_variant_id_from_params(line_item)
-
-              extra_params = line_item.except(:variant_id, :quantity)
+              extra_params = line_items_hash[k].except(:variant_id, :quantity, :sku)
+              line_item = ensure_variant_id_from_params(line_items_hash[k])
               line_item = order.contents.add(Spree::Variant.find(line_item[:variant_id]), line_item[:quantity])
-              line_item.update_attributes(extra_params) unless extra_params.empty?
+              # Raise any errors with saving to prevent import succeeding with line items failing silently.
+              if extra_params.present?
+                line_item.update_attributes!(extra_params)
+              else
+                line_item.save!
+              end
             rescue Exception => e
               raise "Order import line items: #{e.message} #{line_item}"
             end
@@ -116,10 +134,13 @@ module Spree
 
         def self.ensure_variant_id_from_params(hash)
           begin
+            sku = hash.delete(:sku)
             unless hash[:variant_id].present?
-              hash[:variant_id] = Spree::Variant.active.find_by_sku!(hash[:sku]).id
-              hash.delete(:sku)
+              hash[:variant_id] = Spree::Variant.active.find_by_sku!(sku).id
             end
+            hash
+          rescue ActiveRecord::RecordNotFound => e
+            raise "Ensure order import variant: Variant w/SKU #{sku} not found."
           rescue Exception => e
             raise "Ensure order import variant: #{e.message} #{hash}"
           end

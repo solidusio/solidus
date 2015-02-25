@@ -11,7 +11,6 @@ module Spree
         expect(subject.apply).to be_a Coupon
       end
 
-
       context "coupon code promotion doesnt exist" do
         before { Promotion.create name: "promo", :code => nil }
 
@@ -130,7 +129,7 @@ module Spree
             let(:order) { create(:order) }
             let(:calculator) { Calculator::FlatRate.new(preferred_amount: 10) }
 
-            before do 
+            before do
               order.stub({
                 :coupon_code => "10off",
                 # These need to be here so that promotion adjustment "wins"
@@ -171,6 +170,19 @@ module Spree
               coupon.apply
               expect(coupon.successful?).to be false
               expect(coupon.error).to eq Spree.t(:coupon_code_max_usage)
+            end
+
+            context "when the a new coupon is less good" do
+              let!(:action_5) { Promotion::Actions::CreateAdjustment.create(promotion: promotion_5, calculator: calculator_5) }
+              let(:calculator_5) { Calculator::FlatRate.new(preferred_amount: 5) }
+              let!(:promotion_5) { Promotion.create name: "promo", :code => "5off"  }
+
+              it 'notifies of better deal' do
+                subject.apply
+                order.stub( { coupon_code: '5off' } )
+                coupon = Coupon.new(order).apply
+                expect(coupon.error).to eq Spree.t(:coupon_code_better_exists)
+              end
             end
           end
         end
@@ -253,6 +265,23 @@ module Spree
             end
           end
         end
+
+        context "with a CreateLineItems action" do
+          let!(:variant) { create(:variant) }
+          let!(:action) { Promotion::Actions::CreateLineItems.create(promotion: promotion, promotion_action_line_items_attributes: { :'0' => { variant_id: variant.id }}) }
+          let(:order) { create(:order) }
+
+          before do
+            order.stub(coupon_code: "10off")
+          end
+
+          it "successfully activates promo" do
+            subject.apply
+            expect(subject.success).to be_present
+            expect(order.line_items.pluck(:variant_id)).to include(variant.id)
+          end
+        end
+
       end
     end
   end

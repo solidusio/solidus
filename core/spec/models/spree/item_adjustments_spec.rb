@@ -6,6 +6,7 @@ module Spree
     let(:line_item) { order.line_items.first }
 
     let(:subject) { ItemAdjustments.new(line_item) }
+    let(:order_subject) { ItemAdjustments.new(order) }
 
     context '#update' do
       it "updates a linked adjustment" do
@@ -43,9 +44,10 @@ module Spree
 
       context "tax included in price" do
         before do
-          create(:adjustment, 
+          create(:adjustment,
             :source => tax_rate,
             :adjustable => line_item,
+            :order => order,
             :included => true
           )
         end
@@ -58,13 +60,21 @@ module Spree
           line_item.promo_total.should == -10
           line_item.adjustment_total.should == -10
         end
+
+        it "tax linked to order" do
+          order_subject.update_adjustments
+          order.reload
+          order.included_tax_total.should == 0.5
+          order.additional_tax_total.should == 00
+        end
       end
 
       context "tax excluded from price" do
         before do
-          create(:adjustment, 
+          create(:adjustment,
             :source => tax_rate,
             :adjustable => line_item,
+            :order => order,
             :included => false
           )
         end
@@ -78,6 +88,13 @@ module Spree
           line_item.additional_tax_total.should == 0.5
           line_item.promo_total.should == -10
           line_item.adjustment_total.should == -9.5
+        end
+
+        it "tax linked to order" do
+          order_subject.update_adjustments
+          order.reload
+          order.included_tax_total.should == 0
+          order.additional_tax_total.should == 0.5
         end
       end
     end
@@ -113,6 +130,20 @@ module Spree
 
         line_item.adjustments.promotion.eligible.count.should == 1
         line_item.adjustments.promotion.eligible.first.label.should == 'Promotion C'
+      end
+
+      it "should choose the most recent promotion adjustment when amounts are equal" do
+        # Using Timecop is a regression test
+        Timecop.freeze do
+          create_adjustment("Promotion A", -200)
+          create_adjustment("Promotion B", -200)
+        end
+        line_item.adjustments.each {|a| a.update_column(:eligible, true)}
+
+        subject.choose_best_promotion_adjustment
+
+        line_item.adjustments.promotion.eligible.count.should == 1
+        line_item.adjustments.promotion.eligible.first.label.should == 'Promotion B'
       end
 
       context "when previously ineligible promotions become available" do
@@ -224,7 +255,7 @@ module Spree
           @before_tax_adjustments_called = true
         end
 
-        set_callback :promo_adjustments, :after do |object|
+        set_callback :tax_adjustments, :after do |object|
           @after_tax_adjustments_called = true
         end
       end

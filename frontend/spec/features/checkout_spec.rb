@@ -63,7 +63,7 @@ describe "Checkout", inaccessible: true do
         click_button "Save and Continue"
         page.should_not have_content("undefined method `promotion'")
         click_button "Save and Continue"
-        page.should have_content("Shipping total $10.00")
+        page.should have_content("Shipping total: $10.00")
       end
     end
 
@@ -79,6 +79,20 @@ describe "Checkout", inaccessible: true do
           expect(page).to_not have_content('Free Shipping')
         end
       end
+    end
+
+    # Regression test for #4190
+    it "updates state_lock_version on form submission", js: true do
+      add_mug_to_cart
+      click_button "Checkout"
+
+      expect(find('input#order_state_lock_version', visible: false).value).to eq "0"
+
+      fill_in "order_email", with: "test@example.com"
+      fill_in_address
+      click_button "Save and Continue"
+
+      expect(find('input#order_state_lock_version', visible: false).value).to eq "1"
     end
   end
 
@@ -112,7 +126,7 @@ describe "Checkout", inaccessible: true do
 
   context "and likes to double click buttons" do
     let!(:user) { create(:user) }
-    
+
     let!(:order) do
       order = OrderWalkthrough.up_to(:delivery)
 
@@ -200,6 +214,7 @@ describe "Checkout", inaccessible: true do
 
       Spree::CheckoutController.any_instance.stub(current_order: order)
       Spree::CheckoutController.any_instance.stub(try_spree_current_user: user)
+      Spree::OrdersController.any_instance.stub(try_spree_current_user: user)
 
       visit spree.checkout_state_path(:payment)
     end
@@ -431,14 +446,14 @@ describe "Checkout", inaccessible: true do
 
   def fill_in_address
     address = "order_bill_address_attributes"
-    fill_in "#{address}_firstname", :with => "Ryan"
-    fill_in "#{address}_lastname", :with => "Bigg"
-    fill_in "#{address}_address1", :with => "143 Swan Street"
-    fill_in "#{address}_city", :with => "Richmond"
-    select "United States of America", :from => "#{address}_country_id"
-    select "Alabama", :from => "#{address}_state_id"
-    fill_in "#{address}_zipcode", :with => "12345"
-    fill_in "#{address}_phone", :with => "(555) 555-5555"
+    fill_in "#{address}_firstname", with: "Ryan"
+    fill_in "#{address}_lastname", with: "Bigg"
+    fill_in "#{address}_address1", with: "143 Swan Street"
+    fill_in "#{address}_city", with: "Richmond"
+    select "United States of America", from: "#{address}_country_id"
+    select "Alabama", from: "#{address}_state_id"
+    fill_in "#{address}_zipcode", with: "12345"
+    fill_in "#{address}_phone", with: "(555) 555-5555"
   end
 
   def add_mug_to_cart

@@ -17,7 +17,7 @@ describe Spree::Payment do
     Spree::CreditCard.create!(
       number: "4111111111111111",
       month: "12",
-      year: "2015",
+      year: Time.now.year + 1,
       verification_value: "123",
       name: "Name"
     )
@@ -49,6 +49,19 @@ describe Spree::Payment do
   before(:each) do
     # So it doesn't create log entries every time a processing method is called
     payment.log_entries.stub(:create!)
+  end
+
+  context '.risky' do
+
+    let!(:payment_1) { create(:payment, avs_response: 'Y', cvv_response_code: 'M', cvv_response_message: 'Match') }
+    let!(:payment_2) { create(:payment, avs_response: 'Y', cvv_response_code: 'M', cvv_response_message: '') }
+    let!(:payment_3) { create(:payment, avs_response: 'A', cvv_response_code: 'M', cvv_response_message: 'Match') }
+    let!(:payment_4) { create(:payment, avs_response: 'Y', cvv_response_code: 'N', cvv_response_message: 'No Match') }
+
+    it 'should not return successful responses' do
+      expect(subject.class.risky.to_a).to match_array([payment_3, payment_4])
+    end
+
   end
 
   context '#uncaptured_amount' do
@@ -100,20 +113,6 @@ describe Spree::Payment do
       payment.invalidate
       payment.state.should eq('invalid')
     end
-
-    context "the payment's source is invalid" do
-
-      before(:each) do
-        card.year = 2014
-        payment.source = card
-      end
-
-      it "transitions to invalid" do
-        payment.state = 'checkout'
-        payment.invalidate
-        payment.state.should eq ('invalid')
-      end
-    end
   end
 
   context "processing" do
@@ -146,6 +145,21 @@ describe Spree::Payment do
         payment.state.should eq('invalid')
       end
 
+      # Regression test for #4598
+      it "should allow payments with a gateway_customer_profile_id" do
+        payment.source.stub :gateway_customer_profile_id => "customer_1"
+        payment.payment_method.should_receive(:supports?).with(payment.source).and_return(false)
+        payment.should_receive(:started_processing!)
+        payment.process!
+      end
+
+      # Another regression test for #4598
+      it "should allow payments with a gateway_customer_profile_id" do
+        payment.source.stub :gateway_payment_profile_id => "customer_1"
+        payment.payment_method.should_receive(:supports?).with(payment.source).and_return(false)
+        payment.should_receive(:started_processing!)
+        payment.process!
+      end
     end
 
     describe "#authorize!" do
@@ -403,7 +417,6 @@ describe Spree::Payment do
         end
       end
     end
-
   end
 
   context "when already processing" do
@@ -491,6 +504,32 @@ describe Spree::Payment do
         end
       end
 
+      context "with multiple payment attempts" do
+        it "should not try to create profiles on old failed payment attempts" do
+          Spree::Payment.any_instance.stub(:payment_method) { gateway }
+
+          order.payments.create!(source_attributes: {number: "4111111111111115",
+                                                    month: "12",
+                                                    year: Time.now.year + 1,
+                                                    verification_value: "123",
+                                                    name: "Name"
+          },
+          :payment_method => gateway,
+          :amount => 100)
+          gateway.should_receive(:create_profile).exactly :once
+          order.payments.count.should == 1
+          order.payments.create!(source_attributes: {number: "4111111111111111",
+                                                    month: "12",
+                                                    year: Time.now.year + 1,
+                                                    verification_value: "123",
+                                                    name: "Name"
+          },
+          :payment_method => gateway,
+          :amount => 100)
+        end
+
+      end
+
       context "when successfully connecting to the gateway" do
         it "should create a payment profile" do
           payment.payment_method.should_receive :create_profile
@@ -516,6 +555,22 @@ describe Spree::Payment do
           :payment_method => gateway
         )
       end
+    end
+  end
+
+  describe '#invalidate_old_payments' do
+      before {
+        Spree::Payment.skip_callback(:rollback, :after, :persist_invalid)
+      }
+      after {
+        Spree::Payment.set_callback(:rollback, :after, :persist_invalid)
+      }
+
+    it 'should not invalidate other payments if not valid' do
+      payment.save
+      invalid_payment = Spree::Payment.new(:amount => 100, :order => order, :state => 'invalid', :payment_method => gateway)
+      invalid_payment.save
+      payment.reload.state.should == 'checkout'
     end
   end
 
@@ -698,7 +753,6 @@ describe Spree::Payment do
 
     context "when the locale uses a comma as a decimal separator" do
       before(:each) do
-        skip 'we will worry about locales later'
         I18n.backend.store_translations(:fr, { :number => { :currency => { :format => { :delimiter => ' ', :separator => ',' } } } })
         I18n.locale = :fr
         subject.amount = amount
@@ -725,25 +779,41 @@ describe Spree::Payment do
 
         its(:amount) { should eql(BigDecimal('2.99')) }
       end
+
+      context "amount contains a negative sign" do
+        let(:amount) { '-2,99 $' }
+
+        its(:amount) { should eql(BigDecimal('-2.99')) }
+      end
+
+      context "amount uses a dot as a decimal separator" do
+        let(:amount) { '2.99' }
+
+        its(:amount) { should eql(BigDecimal('2.99')) }
+      end
     end
   end
 
   describe "is_avs_risky?" do
-    it "returns false if avs_response == 'D'" do
-      payment.update_attribute(:avs_response, "D")
-      payment.is_avs_risky?.should == false
-    end
-
-    it "returns false if avs_response == nil" do
-      payment.update_attribute(:avs_response, nil)
-      payment.is_avs_risky?.should == false
-    end
-
-    it "returns true if avs_response == A-Z, omitting D" do
-      # should use avs_response_code helper
-      ('A'..'Z').reject{ |x| x == 'D' }.to_a.each do |char|
+    it "returns false if avs_response included in NON_RISKY_AVS_CODES" do
+      ('A'..'Z').reject{ |x| subject.class::RISKY_AVS_CODES.include?(x) }.to_a.each do |char|
         payment.update_attribute(:avs_response, char)
-        payment.is_avs_risky?.should == true
+        expect(payment.is_avs_risky?).to eq false
+      end
+    end
+
+    it "returns false if avs_response.blank?" do
+      payment.update_attribute(:avs_response, nil)
+      expect(payment.is_avs_risky?).to eq false
+      payment.update_attribute(:avs_response, '')
+      expect(payment.is_avs_risky?).to eq false
+    end
+
+    it "returns true if avs_response in RISKY_AVS_CODES" do
+      # should use avs_response_code helper
+      ('A'..'Z').reject{ |x| subject.class::NON_RISKY_AVS_CODES.include?(x) }.to_a.each do |char|
+        payment.update_attribute(:avs_response, char)
+        expect(payment.is_avs_risky?).to eq true
       end
     end
   end

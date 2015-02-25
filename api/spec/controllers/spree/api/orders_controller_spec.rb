@@ -235,7 +235,7 @@ module Spree
       expect(Order).to receive(:create!) { order }
       allow(order).to receive(:contents) { double(associate_user: true, add: line_item) }
 
-      expect(line_item).to receive(:update_attributes).with("special" => true)
+      expect(line_item).to receive(:update_attributes!).with("special" => true)
 
       controller.stub(permitted_line_item_attributes: [:id, :variant_id, :quantity, :special])
       api_post :create, :order => {
@@ -553,6 +553,23 @@ module Spree
         expect(updated_at.split("T").last).to have_content(milisecond)
       end
 
+      context "caching enabled" do
+        before do
+          ActionController::Base.perform_caching = true
+          3.times { Order.create }
+        end
+
+        it "returns unique orders" do
+          api_get :index
+
+          orders = json_response["orders"]
+          expect(orders.count).to be >= 3
+          expect(orders.map { |o| o["id"] }.sort).to eq(Order.order(:id).pluck(:id))
+        end
+
+        after { ActionController::Base.perform_caching = false }
+      end
+
       context "with two orders" do
         before { create(:order) }
 
@@ -667,4 +684,3 @@ module Spree
     end
   end
 end
-

@@ -3,8 +3,8 @@ require 'spree/order/checkout'
 
 module Spree
   class Order < ActiveRecord::Base
-    include Checkout
-    include CurrencyUpdater
+    include Spree::Order::Checkout
+    include Spree::Order::CurrencyUpdater
 
     extend Spree::DisplayMoney
     money_methods :outstanding_balance, :item_total, :adjustment_total,
@@ -15,10 +15,7 @@ module Spree
     checkout_flow do
       go_to_state :address
       go_to_state :delivery
-      go_to_state :payment, if: ->(order) do
-        order.set_shipments_cost if order.shipments.any?
-        order.payment_required?
-      end
+      go_to_state :payment, if: ->(order) { order.payment_required? }
       go_to_state :confirm
     end
 
@@ -46,9 +43,9 @@ module Spree
     alias_attribute :ship_total, :shipment_total
 
     has_many :state_changes, as: :stateful
-    has_many :line_items, -> { order('created_at ASC') }, dependent: :destroy, inverse_of: :order
+    has_many :line_items, -> { order("#{LineItem.table_name}.created_at ASC") }, dependent: :destroy, inverse_of: :order
     has_many :payments, dependent: :destroy
-    has_many :return_authorizations, dependent: :destroy
+    has_many :return_authorizations, dependent: :destroy, inverse_of: :order
     has_many :reimbursements, inverse_of: :order
     has_many :adjustments, -> { order("#{Adjustment.table_name}.created_at ASC") }, as: :adjustable, dependent: :destroy
     has_many :line_item_adjustments, through: :line_items, source: :adjustments
@@ -86,6 +83,7 @@ module Spree
 
     validates :email, presence: true, if: :require_email
     validates :email, email: true, if: :require_email, allow_blank: true
+    validates :number, uniqueness: true
     validate :has_available_shipment
 
     make_permalink field: :number
@@ -101,6 +99,7 @@ module Spree
 
     scope :created_between, ->(start_date, end_date) { where(created_at: start_date..end_date) }
     scope :completed_between, ->(start_date, end_date) { where(completed_at: start_date..end_date) }
+    scope :reverse_chronological, -> { order(created_at: :desc) }
 
     # shows completed orders first, by their completed_at date, then uncompleted orders by their created_at
     scope :reverse_chronological, -> { order('spree_orders.completed_at IS NULL', completed_at: :desc, created_at: :desc) }
@@ -135,7 +134,7 @@ module Spree
 
     def all_adjustments
       Adjustment.where("order_id = :order_id OR (adjustable_id = :order_id AND adjustable_type = 'Spree::Order')",
-        :order_id => self.id)
+        order_id: self.id)
     end
 
     # For compatiblity with Calculator::PriceSack
@@ -235,15 +234,18 @@ module Spree
       contents.associate_user(user, override_email)
     end
 
-    # FIXME refactor this method and implement validation using validates_* utilities
-    def generate_order_number
-      record = true
-      while record
-        random = "R#{Array.new(9){rand(9)}.join}"
-        record = self.class.where(number: random).first
-      end
-      self.number = random if self.number.blank?
-      self.number
+    def generate_order_number(digits = 9)
+      self.number ||= loop do
+         # Make a random number.
+         random = "R#{Array.new(digits){rand(10)}.join}"
+         # Use the random  number if no other order exists with it.
+         if self.class.exists?(number: random)
+           # If over half of all possible options are taken add another digit.
+           digits += 1 if self.class.count > (10 ** digits / 2)
+         else
+           break random
+         end
+       end
     end
 
     def shipped_shipments
@@ -271,7 +273,11 @@ module Spree
     end
 
     def outstanding_balance
-      total - payment_total
+      if self.state == 'canceled' && self.payments.present? && self.payments.completed.size > 0
+        -1 * payment_total
+      else
+        total - payment_total
+      end
     end
 
     def outstanding_balance?
@@ -320,6 +326,12 @@ module Spree
       deliver_order_confirmation_email unless confirmation_delivered?
 
       consider_risk
+    end
+
+    def fulfill!
+      shipments.each { |shipment| shipment.update!(self) if shipment.persisted? }
+      updater.update_shipment_state
+      save!
     end
 
     def deliver_order_confirmation_email
@@ -382,6 +394,12 @@ module Spree
 
     def insufficient_stock_lines
      line_items.select(&:insufficient_stock?)
+    end
+
+    def ensure_line_items_are_in_stock
+      if insufficient_stock_lines.present?
+        errors.add(:base, Spree.t(:insufficient_stock_lines_present)) and return false
+      end
     end
 
     def has_step?(step)
@@ -472,12 +490,7 @@ module Spree
     end
 
     def is_risky?
-      self.payments.where(%{
-        (avs_response IS NOT NULL and avs_response != '' and avs_response != 'D' and avs_response != 'M') or
-        (cvv_response_code IS NOT NULL and cvv_response_code != 'M') or
-        cvv_response_message IS NOT NULL and cvv_response_message != '' or
-        state = 'failed'
-      }.squish!).uniq.count > 0
+      self.payments.risky.count > 0
     end
 
     def approved?
@@ -511,7 +524,7 @@ module Spree
       self.ensure_updated_shipments
     end
 
-    def reload
+    def reload(options=nil)
       remove_instance_variable(:@tax_zone) if defined?(@tax_zone)
       super
     end
@@ -579,9 +592,8 @@ module Spree
       def after_cancel
         shipments.each { |shipment| shipment.cancel! }
         payments.completed.each { |payment| payment.cancel! }
-
         send_cancel_email
-        self.update_column(:payment_state, 'void') unless shipped?
+        self.update!
       end
 
       def send_cancel_email

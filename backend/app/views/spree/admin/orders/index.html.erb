@@ -48,7 +48,7 @@
         </div>
         <div class="field">
           <%= label_tag nil, Spree.t(:email) %>
-          <%= f.email_field :email_cont %>
+          <%= f.text_field :email_cont %>
         </div>
       </div>
 
@@ -135,7 +135,7 @@
           <% if order.user %>
             <%= link_to order.email, edit_admin_user_path(order.user) %>
           <% else %>
-            <%= order.email %>
+            <%= mail_to order.email %>
           <% end %>
         </td>
         <td class="align-center"><%= order.display_total.to_html %></td>
