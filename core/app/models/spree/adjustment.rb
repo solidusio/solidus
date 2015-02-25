@@ -25,6 +25,7 @@ module Spree
     belongs_to :adjustable, polymorphic: true, touch: true
     belongs_to :source, polymorphic: true
     belongs_to :order, class_name: "Spree::Order"
+    belongs_to :promotion_code, :class_name => 'Spree::PromotionCode'
 
     validates :adjustable, presence: true
     validates :order, presence: true
@@ -43,6 +44,7 @@ module Spree
 
     after_create :update_adjustable_adjustment_total
     after_destroy :update_adjustable_adjustment_total
+    before_save :update_promotion_code
 
     scope :open, -> { where(state: 'open') }
     scope :closed, -> { where(state: 'closed') }
@@ -118,5 +120,11 @@ module Spree
       ItemAdjustments.new(adjustable).update
     end
 
+    # Temporary to make sure data is getting written correctly
+    def update_promotion_code
+      if promotion? && source.promotion.try(:promotion_code).present?
+        self.promotion_code = source.promotion.promotion_code
+      end
+    end
   end
 end
