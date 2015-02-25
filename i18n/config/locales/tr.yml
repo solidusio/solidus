@@ -532,7 +532,7 @@ tr:
     description: Açıklama
     destination: Gideceği Yer
     destroy: Sil
-    details:
+    details: Ayrıntılar
     discount_amount: "İndirim Miktarı"
     dismiss_banner: Hayır. Teşekkürler! İlgilenmiyorum, bu mesajı tekrar gösterme.
     display: Göster
@@ -986,7 +986,7 @@ tr:
     quantity: Miktar
     quantity_returned: Dönen Miktar
     quantity_shipped: Kargolanan Miktar
-    quick_search:
+    quick_search: Hızlı Arama
     rate: Oran
     reason: Sebep
     receive: alınan
@@ -1175,7 +1175,7 @@ tr:
     states: Bölgeler
     states_required: Zorunlu Bölgeler
     status: Durum
-    stock:
+    stock: Stok
     stock_location: Stok Bölgesi
     stock_location_info: Stok bölge bilgisi
     stock_locations: Stok Bölgeleri
