@@ -37,6 +37,11 @@ module Spree
 
     scope :applied, -> { joins("INNER JOIN #{order_join_table} ON #{order_join_table}.promotion_id = #{table_name}.id").uniq }
 
+    # temporary code. remove after the column is dropped from the db.
+    def columns
+      super.reject { |column| column.name == 'code' }
+    end
+
     def self.advertised
       where(advertise: true)
     end
