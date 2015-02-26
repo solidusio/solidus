@@ -16,4 +16,5 @@ FactoryGirl.define do
   sequence(:random_email)       { Faker::Internet.email }
 
   sequence(:sku) { |n| "SKU-#{n}" }
+  sequence(:random_code)        { Faker::Lorem.characters(10) }
 end

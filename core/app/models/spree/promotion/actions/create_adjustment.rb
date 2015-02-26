@@ -28,6 +28,7 @@ module Spree
             order: order,
             adjustable: order,
             source: self,
+            promotion_code: options[:promotion_code],
             label: "#{Spree.t(:promotion)} (#{promotion.name})"
           )
           true

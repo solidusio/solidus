@@ -12,7 +12,8 @@ describe "Promotion Adjustments", :type => :feature do
 
     it "should allow an admin to create a flat rate discount coupon promo" do
       fill_in "Name", :with => "Promotion"
-      fill_in "Code", :with => "order"
+      fill_in "bulk_base", :with => "order"
+      fill_in "bulk_number", :with => "1"
       click_button "Create"
       expect(page).to have_content("Editing Promotion")
 
@@ -32,7 +33,7 @@ describe "Promotion Adjustments", :type => :feature do
       within('#actions_container') { click_button "Update" }
 
       promotion = Spree::Promotion.find_by_name("Promotion")
-      expect(promotion.code).to eq("order")
+      expect(promotion.codes.first.value).to eq("order")
 
       first_rule = promotion.rules.first
       expect(first_rule.class).to eq(Spree::Promotion::Rules::ItemTotal)
@@ -49,7 +50,7 @@ describe "Promotion Adjustments", :type => :feature do
     it "should allow an admin to create a single user coupon promo with flat rate discount" do
       fill_in "Name", :with => "Promotion"
       fill_in "Usage Limit", :with => "1"
-      fill_in "Code", :with => "single_use"
+      fill_in "bulk_base", :with => "single_use"
       click_button "Create"
       expect(page).to have_content("Editing Promotion")
 
@@ -62,7 +63,7 @@ describe "Promotion Adjustments", :type => :feature do
 
       promotion = Spree::Promotion.find_by_name("Promotion")
       expect(promotion.usage_limit).to eq(1)
-      expect(promotion.code).to eq("single_use")
+      expect(promotion.codes.first.value).to eq("single_use")
 
       first_action = promotion.actions.first
       expect(first_action.class).to eq(Spree::Promotion::Actions::CreateAdjustment)
@@ -91,7 +92,7 @@ describe "Promotion Adjustments", :type => :feature do
       within('#actions_container') { click_button "Update" }
 
       promotion = Spree::Promotion.find_by_name("Promotion")
-      expect(promotion.code).to be_blank
+      expect(promotion.codes.first).to be_nil
 
       first_rule = promotion.rules.first
       expect(first_rule.class).to eq(Spree::Promotion::Rules::ItemTotal)
@@ -125,7 +126,7 @@ describe "Promotion Adjustments", :type => :feature do
       within('#actions_container') { click_button "Update" }
 
       promotion = Spree::Promotion.find_by_name("Promotion")
-      expect(promotion.code).to be_blank
+      expect(promotion.codes.first).to be_nil
 
       first_rule = promotion.rules.first
       expect(first_rule.class).to eq(Spree::Promotion::Rules::Product)
@@ -154,7 +155,7 @@ describe "Promotion Adjustments", :type => :feature do
       within('#actions_container') { click_button "Update" }
 
       promotion = Spree::Promotion.find_by_name("Promotion")
-      expect(promotion.code).to be_blank
+      expect(promotion.code.first.value).to be_blank
 
       first_rule = promotion.rules.first
       expect(first_rule.class).to eq(Spree::Promotion::Rules::ItemTotal)
@@ -180,7 +181,7 @@ describe "Promotion Adjustments", :type => :feature do
 
       promotion = Spree::Promotion.find_by_name("Promotion")
       expect(promotion.path).to eq("content/cvv")
-      expect(promotion.code).to be_blank
+      expect(promotion.codes.first).to be_nil
       expect(promotion.rules).to be_blank
 
       first_action = promotion.actions.first

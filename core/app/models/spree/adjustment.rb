@@ -44,7 +44,6 @@ module Spree
 
     after_create :update_adjustable_adjustment_total
     after_destroy :update_adjustable_adjustment_total
-    before_save :update_promotion_code
 
     scope :open, -> { where(state: 'open') }
     scope :closed, -> { where(state: 'closed') }
@@ -118,13 +117,6 @@ module Spree
     def update_adjustable_adjustment_total
       # Cause adjustable's total to be recalculated
       ItemAdjustments.new(adjustable).update
-    end
-
-    # Temporary to make sure data is getting written correctly
-    def update_promotion_code
-      if promotion? && source.promotion.try(:promotion_code).present?
-        self.promotion_code = source.promotion.promotion_code
-      end
     end
   end
 end

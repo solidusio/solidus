@@ -36,7 +36,7 @@
 
         <div class="field">
           <%= label_tag nil, Spree.t(:promotion) %>
-          <%= f.text_field :promotions_promotion_code_value_cont, :size => 25 %>
+          <%= f.text_field :promotions_codes_value_cont, :size => 25 %>
         </div>
 
         <div class="field">
@@ -79,10 +79,6 @@
           <label>
             <%= f.check_box :completed_at_not_null, {:checked => @show_only_completed}, '1', '0' %>
             <%= Spree.t(:show_only_complete_orders) %>
-          </label>
-          <label>
-            <%= f.check_box :considered_risky_eq, {:checked => (params[:q][:considered_risky_eq] == '1')}, '1', '' %>
-            <%= Spree.t(:show_only_considered_risky) %>
           </label>
         </div>
       </div>

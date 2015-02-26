@@ -3,9 +3,23 @@ module Spree
     class PromotionsController < ResourceController
       before_action :load_data
 
+      create.before :build_promotion_codes
+
       helper 'spree/promotion_rules'
 
       protected
+        def build_promotion_codes
+          @bulk_base = params[:bulk_base] if params[:bulk_base].present?
+          @bulk_number = Integer(params[:bulk_number]) if params[:bulk_number].present?
+
+          if @bulk_base && @bulk_number
+            @promotion.build_promotion_codes(
+              base_code: @bulk_base,
+              number_of_codes: @bulk_number,
+            )
+          end
+        end
+
         def location_after_save
           spree.edit_admin_promotion_url(@promotion)
         end

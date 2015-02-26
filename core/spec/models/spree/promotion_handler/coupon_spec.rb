@@ -47,14 +47,14 @@ module Spree
       end
 
       context "coupon code promotion doesnt exist" do
-        before { Promotion.create name: "promo", :code => nil }
+        before { create(:promotion) }
 
         it "doesnt fetch any promotion" do
           expect(subject.promotion).to be_blank
         end
 
         context "with no actions defined" do
-          before { Promotion.create name: "promo", :code => "10off" }
+          before { create(:promotion, name: "promo", code: "10off") }
 
           it "populates error message" do
             subject.apply
@@ -64,7 +64,7 @@ module Spree
       end
 
       context "existing coupon code promotion" do
-        let!(:promotion) { Promotion.create name: "promo", :code => "10off"  }
+        let!(:promotion) { create(:promotion, name: "promo", code: "10off")  }
         let!(:action) { Promotion::Actions::CreateItemAdjustments.create(promotion: promotion, calculator: calculator) }
         let(:calculator) { Calculator::FlatRate.new(preferred_amount: 10) }
 
@@ -120,7 +120,7 @@ module Spree
             before do
               allow(order).to receive_messages :coupon_code => "10off"
               calculator = Calculator::FlatRate.new(preferred_amount: 10)
-              general_promo = Promotion.create name: "General Promo"
+              general_promo = create(:promotion, name: "General Promo")
               general_action = Promotion::Actions::CreateItemAdjustments.create(promotion: general_promo, calculator: calculator)
 
               order.contents.add create(:variant)
@@ -276,7 +276,7 @@ module Spree
           end
           context "and multiple quantity per line item" do
             before(:each) do
-              twnty_off = Promotion.create name: "promo", :code => "20off"
+              twnty_off = create(:promotion, name: "promo", code: "20off")
               twnty_off_calc = Calculator::FlatRate.new(preferred_amount: 20)
               Promotion::Actions::CreateItemAdjustments.create(promotion: twnty_off,
                                                                calculator: twnty_off_calc)

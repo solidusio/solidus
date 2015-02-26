@@ -4,6 +4,7 @@ module Spree
   describe 'Api Feature Specs', type: :request do
     before { Spree::Api::Config[:requires_authentication] = false }
     let!(:promotion) { FactoryGirl.create(:promotion, :with_order_adjustment, code: 'foo', weighted_order_adjustment_amount: 10) }
+    let(:promotion_code) { promotion.codes.first }
     let(:bill_address) { FactoryGirl.create(:address) }
     let(:ship_address) { FactoryGirl.create(:address) }
     let(:variant_1) { FactoryGirl.create(:variant, price: 100.00) }
@@ -52,7 +53,7 @@ module Spree
 
     def add_promotion(promotion)
       expect {
-        put "api/orders/#{@order.number}/apply_coupon_code", coupon_code: promotion.code
+        put "api/orders/#{@order.number}/apply_coupon_code", coupon_code: promotion_code.value
       }.to change { @order.promotions.count }.by 1
       expect(response).to have_http_status(:ok)
     end

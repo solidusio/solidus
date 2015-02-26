@@ -1,5 +1,5 @@
 class Spree::PromotionCode < ActiveRecord::Base
-  belongs_to :promotion, inverse_of: :promotion_code
+  belongs_to :promotion, inverse_of: :codes
   has_many :adjustments
 
   validates :usage_limit, numericality: { greater_than: 0, allow_nil: true }
@@ -13,4 +13,5 @@ class Spree::PromotionCode < ActiveRecord::Base
   def downcase_value
     self.value = value.downcase
   end
+
 end

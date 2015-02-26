@@ -26,8 +26,8 @@
 
       <div class="four columns">
         <div class="field">
-          <%= label_tag :q_code_cont, Spree.t(:code) %>
-          <%= f.text_field :promotion_code_value_cont, tabindex: 1 %>
+          <%= label_tag :q_codes_value_cont, Spree.t(:code) %>
+          <%= f.text_field :codes_value_cont, tabindex: 1 %>
         </div>
       </div>
 
@@ -85,7 +85,7 @@
       <% @promotions.each do |promotion| %>
         <tr id="<%= spree_dom_id promotion %>" class="<%= cycle('odd', 'even')%>">
           <td><%= promotion.name %></td>
-          <td class="align-center"><%= promotion.code %></td>
+          <td class="align-center"><%= promotion.codes.first.try!(:value) %></td>
           <td><%= promotion.description %></td>
           <td class="align-center"><%= promotion.usage_limit.nil? ? "∞" : promotion.usage_limit  %></td>
           <td class="align-center"><%= Spree.t(:current_promotion_usage, :count => promotion.credits_count) %></td>
