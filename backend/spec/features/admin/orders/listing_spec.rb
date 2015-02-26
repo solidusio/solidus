@@ -139,7 +139,7 @@ describe "Orders Listing", type: :feature, js: true do
 
       it "only shows the orders with the selected promotion" do
         click_on 'Filter'
-        fill_in "q_promotions_code_cont", with: promotion.code
+        fill_in "q_promotions_promotion_code_value_cont", with: promotion.code
         click_on 'Filter Results'
         within_row(1) { expect(page).to have_content("R100") }
         within("table#listing_orders") { expect(page).not_to have_content("R200") }

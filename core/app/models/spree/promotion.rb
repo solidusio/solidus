@@ -28,7 +28,8 @@ module Spree
     validates :description, length: { maximum: 255 }
 
     before_save :normalize_blank_values
-    before_save :update_promotion_code_value
+
+    after_save :save_promotion_code
 
     scope :coupons, ->{ where("#{table_name}.code IS NOT NULL") }
 
@@ -40,10 +41,6 @@ module Spree
       where(advertise: true)
     end
 
-    def self.with_coupon_code(coupon_code)
-      where("lower(#{quoted_table_name}.code) = ?", coupon_code.strip.downcase).first
-    end
-
     def self.active
       where('spree_promotions.starts_at IS NULL OR spree_promotions.starts_at < ?', Time.now).
         where('spree_promotions.expires_at IS NULL OR spree_promotions.expires_at > ?', Time.now)
@@ -53,8 +50,26 @@ module Spree
       order && !UNACTIVATABLE_ORDER_STATES.include?(order.state)
     end
 
+    # Temporarily keeping the same interface for promotion codes while using
+    # promotion_codes table.
+    def code
+      promotion_code.try!(:value)
+    end
+    def code=(val)
+      if promotion_code
+        promotion_code.value = val
+      else
+        build_promotion_code(value: val) if val.present?
+      end
+    end
+
     def expired?
-      !!(starts_at && Time.now < starts_at || expires_at && Time.now > expires_at)
+      !active?
+    end
+
+    def active?
+      (starts_at.nil? || starts_at < Time.now) &&
+        (expires_at.nil? || expires_at > Time.now)
     end
 
     def activate(payload)
@@ -180,19 +195,11 @@ module Spree
     end
 
     def normalize_blank_values
-      [:code, :path].each do |column|
-        self[column] = nil if self[column].blank?
-      end
+      self[:path] = nil if self[:path].blank?
     end
 
-    def update_promotion_code_value
-      if code.present?
-        if promotion_code.present?
-          promotion_code.update_attributes!(value: code)
-        else
-          build_promotion_code(value: code)
-        end
-      end
+    def save_promotion_code
+      promotion_code.save! if promotion_code.present?
     end
 
     def match_all?
