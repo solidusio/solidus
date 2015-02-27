@@ -33,12 +33,6 @@ describe "Adjustments", :type => :feature do
     click_link "Adjustments"
   end
 
-  after :each do
-    order.reload.all_adjustments.each do |adjustment|
-      expect(adjustment.order_id).to equal(order.id)
-    end
-  end
-
   context "admin managing adjustments" do
     it "should display the correct values for existing order adjustments" do
       within_row(1) do
@@ -62,8 +56,10 @@ describe "Adjustments", :type => :feature do
         fill_in "adjustment_amount", :with => "10"
         fill_in "adjustment_label", :with => "rebate"
         click_button "Continue"
-        expect(page).to have_content("successfully created!")
-        expect(page).to have_content("Total: $180.00")
+
+        order.reload.all_adjustments.each do |adjustment|
+          expect(adjustment.order_id).to equal(order.id)
+        end
       end
     end
 

@@ -21,10 +21,11 @@ describe Spree::PromotionCode do
     let(:promotion) { create(:promotion, :with_order_adjustment, per_code_usage_limit: per_code_usage_limit) }
     let(:promotion_code) { create(:promotion_code, promotion: promotion) }
     let(:promotable) { create(:order) }
+    let(:order) { create(:order) }
 
     context "there is a usage limit set" do
       let!(:existing_adjustment) do
-        Spree::Adjustment.create!(label: 'Adjustment', amount: 1, source: promotion.actions.first, promotion_code: promotion_code)
+        Spree::Adjustment.create!(label: 'Adjustment', amount: 1, source: promotion.actions.first, promotion_code: promotion_code, adjustable: order, order: order)
       end
 
       context "the usage limit is not exceeded" do
@@ -46,7 +47,7 @@ describe Spree::PromotionCode do
 
         context "for the same order" do
           let!(:existing_adjustment) do
-            Spree::Adjustment.create!(adjustable: promotable, label: 'Adjustment', amount: 1, source: promotion.actions.first, promotion_code: promotion_code)
+            Spree::Adjustment.create!(adjustable: promotable, label: 'Adjustment', amount: 1, source: promotion.actions.first, promotion_code: promotion_code, order: promotable)
           end
 
           it "returns false" do
@@ -69,8 +70,8 @@ describe Spree::PromotionCode do
     let(:promotable) { create(:order) }
     let(:promotion) { create(:promotion, :with_order_adjustment, code: 'abc123') }
     let(:promotion_code) { promotion.codes.first }
-    let!(:adjustment1) { Spree::Adjustment.create!(adjustable: promotable, label: 'Adjustment', amount: 1, source: promotion.actions.first, promotion_code: promotion_code) }
-    let!(:adjustment2) { Spree::Adjustment.create!(adjustable: promotable, label: 'Adjustment', amount: 1, source: promotion.actions.first, promotion_code: promotion_code) }
+    let!(:adjustment1) { Spree::Adjustment.create!(adjustable: promotable, label: 'Adjustment', amount: 1, source: promotion.actions.first, promotion_code: promotion_code, order: promotable) }
+    let!(:adjustment2) { Spree::Adjustment.create!(adjustable: promotable, label: 'Adjustment', amount: 1, source: promotion.actions.first, promotion_code: promotion_code, order: promotable) }
 
     it "counts the eligible adjustments that have used this promotion" do
       adjustment2.update_columns(eligible: false)

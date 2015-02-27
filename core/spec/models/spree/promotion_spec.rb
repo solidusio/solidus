@@ -180,12 +180,13 @@ describe Spree::Promotion, :type => :model do
 
   context "#usage_limit_exceeded?" do
     let(:promotable) { create(:order) }
+    let(:order) { create(:order) }
 
     context "there is a usage limit set" do
       let(:promotion) { create(:promotion, :with_order_adjustment, usage_limit: usage_limit) }
 
       let!(:existing_adjustment) do
-        Spree::Adjustment.create!(label: 'Adjustment', amount: 1, source: promotion.actions.first)
+        Spree::Adjustment.create!(label: 'Adjustment', amount: 1, source: promotion.actions.first, adjustable: order, order: order)
       end
 
       context "the usage limit is not exceeded" do
@@ -207,7 +208,7 @@ describe Spree::Promotion, :type => :model do
 
         context "for the same order" do
           let!(:existing_adjustment) do
-            Spree::Adjustment.create!(adjustable: promotable, label: 'Adjustment', amount: 1, source: promotion.actions.first)
+            Spree::Adjustment.create!(adjustable: promotable, label: 'Adjustment', amount: 1, source: promotion.actions.first, order: promotable)
           end
 
           it "returns false" do
@@ -228,8 +229,8 @@ describe Spree::Promotion, :type => :model do
   context "#usage_count" do
     let(:promotable) { create(:order) }
     let(:promotion) { create(:promotion, :with_order_adjustment) }
-    let!(:adjustment1) { Spree::Adjustment.create!(adjustable: promotable, label: 'Adjustment', amount: 1, source: promotion.actions.first) }
-    let!(:adjustment2) { Spree::Adjustment.create!(adjustable: promotable, label: 'Adjustment', amount: 1, source: promotion.actions.first) }
+    let!(:adjustment1) { Spree::Adjustment.create!(adjustable: promotable, label: 'Adjustment', amount: 1, source: promotion.actions.first, order: promotable) }
+    let!(:adjustment2) { Spree::Adjustment.create!(adjustable: promotable, label: 'Adjustment', amount: 1, source: promotion.actions.first, order: promotable) }
 
     it "counts the eligible adjustments that have used this promotion" do
       adjustment2.update_columns(eligible: false)
@@ -330,6 +331,7 @@ describe Spree::Promotion, :type => :model do
         order:      order,
         adjustable: order,
         source:     action,
+        promotion_code: promotion.codes.first,
         amount:     10,
         label:      'Promotional adjustment'
       )
@@ -386,10 +388,11 @@ describe Spree::Promotion, :type => :model do
     end
 
     context "when the promotion's usage limit is exceeded" do
+      let(:order) { create(:order) }
       let(:promotion) { create(:promotion, :with_order_adjustment) }
 
       before do
-        Spree::Adjustment.create!(label: 'Adjustment', amount: 1, source: promotion.actions.first)
+        Spree::Adjustment.create!(label: 'Adjustment', amount: 1, source: promotion.actions.first, adjustable: order, order: order)
         promotion.usage_limit = 1
       end
 
@@ -399,11 +402,12 @@ describe Spree::Promotion, :type => :model do
     end
 
     context "when the promotion code's usage limit is exceeded" do
+      let(:order) { create(:order) }
       let(:promotion) { create(:promotion, :with_order_adjustment, code: 'abc123', per_code_usage_limit: 1) }
       let(:promotion_code) { promotion.codes.first }
 
       before do
-        Spree::Adjustment.create!(label: 'Adjustment', amount: 1, source: promotion.actions.first, promotion_code: promotion_code)
+        Spree::Adjustment.create!(label: 'Adjustment', amount: 1, source: promotion.actions.first, promotion_code: promotion_code, order: order, adjustable: order)
       end
 
       it "returns false" do

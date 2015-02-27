@@ -123,7 +123,7 @@ module Spree
             begin
               adjustment = order.adjustments.build(
                 order:  order,
-                amount: a[:amount].to_f,
+                amount: a[:amount].to_d,
                 label:  a[:label]
               )
               adjustment.save!

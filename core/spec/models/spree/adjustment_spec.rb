@@ -137,12 +137,12 @@ describe Spree::Adjustment, :type => :model do
 
         let(:promotion) { create(:promotion, :with_order_adjustment, code: 'somecode') }
         let(:promotion_code) { promotion.codes.first }
-        let(:order) { create(:order_with_line_items, line_items_count: 1) }
+        let(:order1) { create(:order_with_line_items, line_items_count: 1) }
 
         before do
-          promotion.activate(order: order, promotion_code: promotion_code)
-          expect(order.adjustments.size).to eq 1
-          @adjustment = order.adjustments.first
+          promotion.activate(order: order1, promotion_code: promotion_code)
+          expect(order1.adjustments.size).to eq 1
+          @adjustment = order1.adjustments.first
         end
 
         context "the promotion is eligible" do
