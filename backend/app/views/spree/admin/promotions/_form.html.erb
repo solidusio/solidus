@@ -9,7 +9,7 @@
       
       <%= f.field_container :code do %>
         <%= f.label :code %>
-        <%= f.text_field :code, :class => 'fullwidth' %>
+        <%= text_field_tag 'promotion[code]', @promotion.code, :class => 'fullwidth' %>
       <% end %>
 
       <%= f.field_container :path do %>
