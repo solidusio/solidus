@@ -20,7 +20,7 @@ describe Spree::Promotion::Actions::FreeShipping, :type => :model do
         order.shipments.first.cost.should == 100
         order.shipments.last.cost.should == 100
         action.perform(payload).should be true
-        promotion.credits_count.should == 2
+        promotion.usage_count.should == 2
         order.shipment_adjustments.count.should == 2
         order.shipment_adjustments.first.amount.to_i.should == -100
         order.shipment_adjustments.last.amount.to_i.should == -100
@@ -32,7 +32,7 @@ describe Spree::Promotion::Actions::FreeShipping, :type => :model do
       it "should not create a discount" do
         action.perform(payload).should be true
         action.perform(payload).should be false
-        promotion.credits_count.should == 2
+        promotion.usage_count.should == 2
         order.shipment_adjustments.count.should == 2
       end
     end
