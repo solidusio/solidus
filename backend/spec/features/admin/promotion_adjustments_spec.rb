@@ -49,8 +49,9 @@ describe "Promotion Adjustments", :type => :feature do
 
     it "should allow an admin to create a single user coupon promo with flat rate discount" do
       fill_in "Name", :with => "Promotion"
-      fill_in "Usage Limit", :with => "1"
+      fill_in "promotion[usage_limit]", :with => "1"
       fill_in "bulk_base", :with => "single_use"
+      fill_in "bulk_number", :with => "1"
       click_button "Create"
       expect(page).to have_content("Editing Promotion")
 

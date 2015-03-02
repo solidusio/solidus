@@ -7,6 +7,17 @@ module Spree
 
       subject { Coupon.new(order) }
 
+      def expect_order_connection(order:, promotion:, promotion_code:nil)
+        expect(order.promotions.to_a).to include(promotion)
+        expect(order.order_promotions.flat_map(&:promotion_code)).to include(promotion_code)
+      end
+
+      def expect_adjustment_creation(adjustable:, promotion:, promotion_code:nil)
+        expect(adjustable.adjustments.map(&:source).map(&:promotion)).to include(promotion)
+        expect(adjustable.adjustments.map(&:promotion_code)).to include(promotion_code)
+      end
+
+
       it "returns self in apply" do
         expect(subject.apply).to be_a Coupon
       end
@@ -54,7 +65,7 @@ module Spree
         end
 
         context "with no actions defined" do
-          before { create(:promotion, name: "promo", code: "10off") }
+          before { create(:promotion, code: "10off") }
 
           it "populates error message" do
             subject.apply
@@ -64,7 +75,8 @@ module Spree
       end
 
       context "existing coupon code promotion" do
-        let!(:promotion) { create(:promotion, name: "promo", code: "10off")  }
+        let!(:promotion) { promotion_code.promotion }
+        let(:promotion_code) { create(:promotion_code, value: '10off') }
         let!(:action) { Promotion::Actions::CreateItemAdjustments.create(promotion: promotion, calculator: calculator) }
         let(:calculator) { Calculator::FlatRate.new(preferred_amount: 10) }
 
@@ -83,8 +95,9 @@ module Spree
                 expect(order.total).to eq(130)
                 subject.apply
                 expect(subject.success).to be_present
+                expect_order_connection(order: order, promotion: promotion, promotion_code: promotion_code)
                 order.line_items.each do |line_item|
-                  expect(line_item.adjustments.count).to eq(1)
+                  expect_adjustment_creation(adjustable: line_item, promotion: promotion, promotion_code: promotion_code)
                 end
                 # Ensure that applying the adjustment actually affects the order's total!
                 expect(order.reload.total).to eq(100)
@@ -105,8 +118,9 @@ module Spree
                 expect(order.total).to eq(130)
                 subject.apply
                 expect(subject.success).to be_present
+                expect_order_connection(order: order, promotion: promotion, promotion_code: promotion_code)
                 order.line_items.each do |line_item|
-                  expect(line_item.adjustments.count).to eq(1)
+                  expect_adjustment_creation(adjustable: line_item, promotion: promotion, promotion_code: promotion_code)
                 end
                 # Ensure that applying the adjustment actually affects the order's total!
                 expect(order.reload.total).to eq(100)
@@ -130,12 +144,16 @@ module Spree
             it "successfully activates promo" do
               subject.apply
               expect(subject).to be_successful
+              expect_order_connection(order: order, promotion: promotion, promotion_code: promotion_code)
+              order.line_items.each do |line_item|
+                expect_adjustment_creation(adjustable: line_item, promotion: promotion, promotion_code: promotion_code)
+              end
             end
           end
         end
 
         context "with a free-shipping adjustment action" do
-          let!(:action) { Promotion::Actions::FreeShipping.create(promotion: promotion) }
+          let!(:action) { Promotion::Actions::FreeShipping.create!(promotion: promotion) }
           context "right coupon code given" do
             let(:order) { create(:order_with_line_items, :line_items_count => 3) }
 
@@ -146,7 +164,10 @@ module Spree
               subject.apply
               expect(subject.success).to be_present
 
-              expect(order.shipment_adjustments.count).to eq(1)
+              expect_order_connection(order: order, promotion: promotion, promotion_code: promotion_code)
+              order.shipments.each do |shipment|
+                expect_adjustment_creation(adjustable: shipment, promotion: promotion, promotion_code: promotion_code)
+              end
             end
 
             it "coupon already applied to the order" do
@@ -177,6 +198,8 @@ module Spree
               subject.apply
               expect(subject.success).to be_present
               expect(order.adjustments.count).to eq(1)
+              expect_order_connection(order: order, promotion: promotion, promotion_code: promotion_code)
+              expect_adjustment_creation(adjustable: order, promotion: promotion, promotion_code: promotion_code)
             end
 
             it "coupon already applied to the order" do

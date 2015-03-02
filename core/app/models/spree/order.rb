@@ -61,7 +61,8 @@ module Spree
     has_many :variants, through: :line_items
     has_many :refunds, through: :payments
 
-    has_and_belongs_to_many :promotions, join_table: 'spree_orders_promotions'
+    has_many :order_promotions, class_name: 'Spree::OrderPromotion'
+    has_many :promotions, through: :order_promotions
 
     has_many :shipments, dependent: :destroy, inverse_of: :order do
       def states

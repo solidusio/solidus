@@ -634,6 +634,7 @@ en:
     dismiss_banner: No. Thanks! I'm not interested, do not display this message again
     display: Display
     display_currency: Display currency
+    download_promotion_code_list: Download Code List
     edit: Edit
     editing_country: Editing Country
     editing_option_type: Editing Option Type
@@ -923,6 +924,7 @@ en:
       variant_deleted: Variant has been deleted
       variant_not_deleted: Variant could not be deleted
     num_orders: "# Orders"
+    number_of_codes: ! '%{count} codes'
     on_hand: On Hand
     open: Open
     open_all_adjustments: Open All Adjustments
