@@ -190,38 +190,6 @@ describe "Promotion Adjustments", :type => :feature do
       expect(first_action_calculator.preferred_amount).to eq(4)
     end
 
-    it "should allow an admin to create a promotion that adds a 'free' item to the cart" do
-      create(:product, :name => "RoR Mug")
-      fill_in "Name", :with => "Promotion"
-      fill_in "Code", :with => "complex"
-      click_button "Create"
-      expect(page).to have_content("Editing Promotion")
-
-      select2 "Create line items", :from => "Add action of type"
-
-      within('#action_fields') { click_button "Add" }
-
-      page.find('.create_line_items .select2-choice').click
-      page.find('.select2-input').set('RoR Mug')
-      page.find('.select2-highlighted').click
-
-      within('#actions_container') { click_button "Update" }
-
-      select2 "Create whole-order adjustment", :from => "Add action of type"
-      within('#new_promotion_action_form') { click_button "Add" }
-      select2 "Flat Rate", :from => "Calculator"
-      within('#actions_container') { click_button "Update" }
-      within('.calculator-fields') { fill_in "Amount", :with => "40.00" }
-      within('#actions_container') { click_button "Update" }
-
-      promotion = Spree::Promotion.find_by_name("Promotion")
-      expect(promotion.code).to eq("complex")
-
-      first_action = promotion.actions.first
-      expect(first_action.class).to eq(Spree::Promotion::Actions::CreateLineItems)
-      line_item = expect(first_action.promotion_action_line_items).not_to be_empty
-    end
-
     it "ceasing to be eligible for a promotion with item total rule then becoming eligible again" do
       fill_in "Name", :with => "Promotion"
       click_button "Create"

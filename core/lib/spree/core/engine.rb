@@ -85,7 +85,6 @@ module Spree
         app.config.spree.promotions.actions = [
           Promotion::Actions::CreateAdjustment,
           Promotion::Actions::CreateItemAdjustments,
-          Promotion::Actions::CreateLineItems,
           Promotion::Actions::FreeShipping]
       end
 
