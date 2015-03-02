@@ -1,12 +1,20 @@
+*   Remove Promotion::Actions::CreateLineItems
+
+    They were broken in a couple ways.
+
+    Issue https://github.com/bonobos/spree/pull/259
+
+    *Phillip Birtcher* *Jordan Brough*
+
 *   Remove Api::CheckoutsController
 
-    Issue #229
+    Issue https://github.com/bonobos/spree/pull/229
 
     *Jordan Brough*
 
 *   Remove the Spree::Alert system
 
-    Issue #222
+    Issue https://github.com/bonobos/spree/pull/222
 
     *Jordan Brough*
 
