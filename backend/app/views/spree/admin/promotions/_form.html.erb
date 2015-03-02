@@ -19,6 +19,11 @@
         <% end %>
       <% end %>
 
+      <%= f.field_container :per_code_usage_limit do %>
+        <%= f.label :per_code_usage_limit %>
+        <%= f.text_field :per_code_usage_limit, class: 'fullwidth' %>
+      <% end %>
+
       <%= f.field_container :path do %>
         <%= f.label :path %>
         <%= f.text_field :path, :class => 'fullwidth' %>
@@ -44,8 +49,8 @@
   </div>
 
   <div id="expiry_fields" class="three columns omega">
-    <%= f.field_container :usage_limit do %>
-      <%= f.label :usage_limit %><br />
+    <%= f.field_container :overall_usage_limit do %>
+      <%= f.label :overall_usage_limit %><br />
       <%= f.number_field :usage_limit, :min => 0, :class => 'fullwidth' %><br>
       <span class="info">
         <%= Spree.t(:current_promotion_usage, :count => @promotion.usage_count) %>
