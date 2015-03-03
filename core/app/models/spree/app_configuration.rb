@@ -92,9 +92,13 @@ module Spree
     }
 
     DEPRECATED_STORE_PREFERENCES.each do |old_preference_name, store_method|
+      # Avoid warning about implementation details
+      bc = ActiveSupport::BacktraceCleaner.new
+      bc.add_silencer { |line| line =~ %r{spree/preferences} }
+
       # support all the old preference methods with a warning
       define_method "preferred_#{old_preference_name}" do
-        ActiveSupport::Deprecation.warn("#{old_preference_name} is no longer supported on Spree::Config, please access it through #{store_method} on Spree::Store")
+        ActiveSupport::Deprecation.warn("#{old_preference_name} is no longer supported on Spree::Config, please access it through #{store_method} on Spree::Store", bc.clean(caller))
         Store.default.send(store_method)
       end
     end
