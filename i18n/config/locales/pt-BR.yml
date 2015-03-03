@@ -27,7 +27,7 @@ pt-BR:
         base:
         cc_type: Tipo de Cartão
         month: Mês
-        name:
+        name: Nome no Cartão
         number: Número
         verification_value: Código de Verificação
         year: Ano
@@ -95,7 +95,7 @@ pt-BR:
         starts_at: Início em
         usage_limit: Limite de uso
       spree/promotion_category:
-        name:
+        name: Categorias de Promoções
       spree/property:
         name: Nome
         presentation: Apresentação
@@ -117,12 +117,12 @@ pt-BR:
         updated:
         user:
       spree/store:
-        mail_from_address:
-        meta_description:
-        meta_keywords:
-        name:
-        seo_title:
-        url:
+        mail_from_address: E-mail para envio de mensagens
+        meta_description: Descrição
+        meta_keywords: Palavras-Chave
+        name: Nome
+        seo_title: Título SEO
+        url: URL
       spree/tax_category:
         description: Descrição
         name: Nome
@@ -175,7 +175,7 @@ pt-BR:
           attributes:
             base:
               card_expired: Cartão expirou
-              expiry_invalid:
+              expiry_invalid: Data de Expiração inválida
         spree/line_item:
           attributes:
             currency:
@@ -280,11 +280,11 @@ pt-BR:
         one: Taxa do Imposto
         other: Taxa dos Impostos
       spree/taxon:
-        one: Taxon
-        other: Taxon
+        one: Árvore de Categorias
+        other: Árvores de Categorias
       spree/taxonomy:
-        one: Taxonomia
-        other: Taxonomias
+        one: Categoria
+        other: Categorias
       spree/tracker:
         one: Rastreador
         other: Rastreadores
@@ -395,16 +395,16 @@ pt-BR:
     admin:
       tab:
         configuration: Configurações
-        option_types:
+        option_types: Tipos
         orders: Pedidos
         overview: Geral
         products: Produtos
         promotions: Promoções
-        properties:
-        prototypes:
+        properties: Propriedades
+        prototypes: Protótipos
         reports: Relatórios
-        taxonomies:
-        taxons:
+        taxonomies: Categorias
+        taxons:  Árvores de Categorias
         users: Usuários
       user:
         account: Conta
@@ -424,7 +424,7 @@ pt-BR:
     all_adjustments_opened: Todos os ajustes foram abertos com sucesso!
     all_departments: Todos Departamentos
     all_items_have_been_returned:
-    allow_ssl_in_development_and_test: Permitir SSL em desenvolvimento e test
+    allow_ssl_in_development_and_test: Permitir SSL em desenvolvimento e teste
     allow_ssl_in_production: Permitir SSL em Produção
     allow_ssl_in_staging: Permitir SSL em Staging
     already_signed_up_for_analytics: Você já se cadastrou no Spree Analytics
@@ -453,8 +453,8 @@ pt-BR:
     avs_response: Resposta do AVS
     back: Voltar
     back_end:
-    back_to_payment:
-    back_to_resource_list:
+    back_to_payment: Voltar para lista de Pagamentos
+    back_to_resource_list: "Voltar para lista de %{resource}"
     back_to_rma_reason_list:
     back_to_store: Voltar Para a Loja
     back_to_users_list: Voltar a lista de usuários
@@ -494,14 +494,14 @@ pt-BR:
     check_for_spree_alerts: Receber alertas do Spree
     checkout: Finalizar Compra
     choose_a_customer: Escolha um cliente
-    choose_a_taxon_to_sort_products_for: Selecione taxonomia para ordenar os produtos
+    choose_a_taxon_to_sort_products_for: Selecione uma árvore de categorias para ordenar os produtos
     choose_currency: Escolha moeda
     choose_dashboard_locale: Escolha idioma do painel
     choose_location:
     city: Cidade
-    clear_cache:
-    clear_cache_ok:
-    clear_cache_warning:
+    clear_cache: Limpar cache
+    clear_cache_ok: Cache foi limpado
+    clear_cache_warning: Atenção ao limpar o cache
     click_and_drag_on_the_products_to_sort_them:
     clone: Cópia
     close: Fechar
@@ -594,14 +594,14 @@ pt-BR:
     description: Descrição
     destination: Destino
     destroy: Remover
-    details:
+    details: Detalhes
     discount_amount: Desconto
     dismiss_banner: Não, obrigado! Eu não estou interessado, não mostre essa mensagem novamente!
     display: Mostrar
     display_currency: Mostrar Moeda
     doesnt_track_inventory:
     edit: Editar
-    editing_resource:
+    editing_resource: "Editando %{resource}"
     editing_rma_reason:
     editing_user: Editando Usuário
     eligibility_errors:
@@ -615,7 +615,7 @@ pt-BR:
         missing_product:
         missing_taxon:
         no_applicable_products:
-        no_matching_taxons:
+        no_matching_taxons: Nenhuma árvore de categoria correspondente
         no_user_or_email_specified:
         no_user_specified:
         not_first_order:
@@ -629,7 +629,7 @@ pt-BR:
     error: Erro
     errors:
       messages:
-        could_not_create_taxon: Não foi possível criar o taxon
+        could_not_create_taxon: Não foi possível criar a árvore de categorias
         no_payment_methods_available: Não existem métodos de pagamentos configurados para esse ambiente
         no_shipping_methods_available: Não existem métodos de entrega para o local selecionado, por favor troque seu endereço e tente novamente.
     errors_prohibited_this_record_from_being_saved:
@@ -663,7 +663,7 @@ pt-BR:
     filter_results: Filtrar resultados
     finalize: Finalizar
     finalized:
-    find_a_taxon:
+    find_a_taxon: Procurar uma árvore de categorias
     first_item: Custo do primeiro item
     first_name: Nome
     first_name_begins_with: Primeiro nome começa com
@@ -705,11 +705,11 @@ pt-BR:
     images: Imagens
     implement_eligible_for_return:
     implement_requires_manual_intervention:
-    inactive:
+    inactive: Inativo
     incl:
     included_in_price: Incluso no preço
     included_price_validation: Não pode ser selecionado a menos que você tenha escolhido zona de imposto padrão
-    incomplete:
+    incomplete: Incompleto
     info_number_of_skus_not_shown:
     info_product_has_multiple_skus:
     instructions_to_reset_password: 'Preencha o formulário abaixo e enviaremos instruções de como resetar sua senha por email:'
@@ -718,7 +718,7 @@ pt-BR:
     intercept_email_address: Interceptar endereço de email
     intercept_email_instructions: Interceptar Instruções de Email
     internal_name: Nome interno
-    invalid_credit_card:
+    invalid_credit_card: Cartão de Crédito Inválido
     invalid_exchange_variant:
     invalid_payment_provider: Provedor de pagamento inválido
     invalid_promotion_action: Ação de promoção inválida
@@ -736,12 +736,12 @@ pt-BR:
       operators:
         gt: Maior que
         gte: Maior ou igual que
-        lt:
-        lte:
+        lt: Menor que
+        lte: Maior ou igual que
     items_cannot_be_shipped: Estamos impossibilitados de enviar os itens selecionados para seu endereço de entrega. Por favor, escolha outro endereço.
     items_in_rmas:
-    items_reimbursed:
-    items_to_be_reimbursed:
+    items_reimbursed: Itens reembolsados
+    items_to_be_reimbursed: Itens a ser reembolsados
     jirafe: Jirafe
     landing_page_rule:
       path: Caminho
@@ -770,7 +770,7 @@ pt-BR:
     make_sure_the_above_reimbursement_amount_is_correct:
     manage_promotion_categories: Gerenciar categoria de promoções
     manage_variants:
-    manual_intervention_required:
+    manual_intervention_required: Intervenção manual necessária
     master_price: Preço Principal
     match_choices:
       all: Tudo
@@ -780,7 +780,7 @@ pt-BR:
     memo:
     meta_description: Descrição
     meta_keywords: Palavras-Chave
-    meta_title:
+    meta_title: 
     metadata: Metadados
     minimal_amount: Quantidade Mínima
     month: Mês
@@ -789,7 +789,7 @@ pt-BR:
     my_account: Minha Conta
     my_orders: Meus Pedidos
     name: Nome
-    name_on_card:
+    name_on_card: Nome no cartão
     name_or_sku: Nome ou SKU (insira pelo menos 4 caracteres do nome do produto)
     new: Novo
     new_adjustment: Novo Ajuste
@@ -807,7 +807,7 @@ pt-BR:
     new_promotion_category: Nova Categoria de promoção
     new_property: Nova Propriedade
     new_prototype: Novo Protótipo
-    new_refund:
+    new_refund: Novo reembolso
     new_refund_reason: Criar razão para reembolso
     new_return_authorization: Nova Autorização de Retorno
     new_rma_reason: Nova razão para autorização de retorno
@@ -820,26 +820,26 @@ pt-BR:
     new_stock_transfer: Nova transferência de estoque
     new_tax_category: Nova Categoria de Imposto
     new_tax_rate: Nova Taxa de Imposto
-    new_taxon: Novo Táxon
-    new_taxonomy: Nova Taxonomia
+    new_taxon: Nova Árvore de Categorias
+    new_taxonomy: Nova Categoria
     new_tracker: Novo Rastreio
     new_user: Novo usuário
     new_variant: Nova Variante
     new_zone: Nova Zona
     next: Próximo
     no_actions_added: Nenhuma ação adicionada
-    no_payment_found:
+    no_payment_found: Nenhum pagamento encontrado
     no_pending_payments: Sem pagamentos pendentes
     no_products_found: Não existem produtos
     no_resource_found: Não existe %{resource}
     no_results: Não existem resultados
-    no_returns_found:
+    no_returns_found: Nenhum retorno encontrado
     no_rules_added: Nenhuma regra adicionada
-    no_shipping_method_selected:
+    no_shipping_method_selected: Nenhum método de entrega selecionado
     no_state_changes:
     no_tracking_present: Detalhes de localização não foram fornecidos
     none: Nenhum
-    none_selected:
+    none_selected: Nenhum selecionado
     normal_amount: Quantidade Normal
     not: Não
     not_available: Indisponível
@@ -868,9 +868,9 @@ pt-BR:
     or_over_price: "%{price} ou mais"
     order: Pedido
     order_adjustments: Ajustar Pedido
-    order_already_updated:
-    order_approved:
-    order_canceled:
+    order_already_updated: Pedido já foi atualizado
+    order_approved: Pedido aprovado
+    order_canceled: Pedido cancelado
     order_details: Detalhes do Pedido
     order_email_resent: Email de confirmação reenviado
     order_information: Informações do pedido
@@ -880,16 +880,16 @@ pt-BR:
         instructions: Seu pedido foi cancelado. Por favor, mantenha esse cancelamento em seus registros.
         order_summary_canceled: "Índice de Pedido [Cancelado]"
         subject: Cancelamento de Pedido
-        subtotal:
-        total:
+        subtotal: Subtotal
+        total: Total
       confirm_email:
         dear_customer: Caro Cliente,\n
         instructions: Por favor reveja e mantenha essas informações em seus registros.
         order_summary: "Índice de Pedidos"
         subject: Confirmação de Pedidos
-        subtotal:
+        subtotal: Subtotal
         thanks: Obrigado Por Negociar.
-        total:
+        total: Total
     order_not_found: Não conseguimos encontrar seu pedido. Por favor tente novamente.
     order_number: Número do Pedido %{number}
     order_populator:
@@ -928,8 +928,8 @@ pt-BR:
     path: Caminho
     pay: Pagar
     payment: Pagamento
-    payment_could_not_be_created:
-    payment_identifier:
+    payment_could_not_be_created: Pagamento não pode ser criado
+    payment_identifier: Identificador de Pagamento
     payment_information: Dados do Pagamento
     payment_method: Método de Pagamento
     payment_method_not_supported: Esse método de pagamento não é suportado. Por favor escolha outro.
@@ -950,7 +950,7 @@ pt-BR:
       void: nulo
     payment_updated: Pagamento Atualizado
     payments: Pagamentos
-    pending:
+    pending: pendente
     percent: porcentos
     percent_per_item: Porcentagem por Item
     permalink: Permalink
@@ -980,7 +980,7 @@ pt-BR:
       label:
       match_all: Todos
       match_any: Pelo Menos Um
-      match_none:
+      match_none: Nenhum
       product_source:
         group: Grupo de Produtos
         manual: Escolha Manual
@@ -992,8 +992,8 @@ pt-BR:
         description: Criar um ajuste de crédito promocional no pedido
         name: Nome
       create_item_adjustments:
-        description:
-        name:
+        description: Descrição
+        name: Nome
       create_line_items:
         description: Preencher o carrinho com a quantidade especificada de variantes
         name: Criar Itens
@@ -1035,7 +1035,7 @@ pt-BR:
         description: Disponível apenas para usuários logados
         name: Usuário Logado
     promotion_uses:
-    promotionable:
+    promotionable: Em promoção
     promotions: Promoções
     propagate_all_variants:
     properties: Propriedades
@@ -1264,35 +1264,35 @@ pt-BR:
     tax: Imposto
     tax_categories: Categorias de imposto
     tax_category: Categoria de imposto
-    tax_code:
+    tax_code: Código do imposto
     tax_included:
     tax_rate_amount_explanation: Valores das taxas são em décimos. (ex. se o valor é 5% insira 0.05)
     tax_rates: Aliquotas de imposto
-    taxon: Taxon
-    taxon_edit: Editar taxon
-    taxon_placeholder: Adicionar uma taxonomia
+    taxon: Categoria
+    taxon_edit: Editar categoria
+    taxon_placeholder: Adicionar uma árvore de categorias
     taxon_rule:
       choose_taxons:
       label:
       match_all:
       match_any:
-    taxonomies: Taxonomias
-    taxonomy: Taxonomia
-    taxonomy_edit: Editar Taxonomia
+    taxonomies: Categorias
+    taxonomy: Categoria
+    taxonomy_edit: Editar Categoria
     taxonomy_tree_error: A modificação não foi aceita e a árvore retornou ao seu estado anterior, por favor tente novamente.
     taxonomy_tree_instruction: "* Clique com o botão direito sobre um nó da árvore para ver o menu."
-    taxons: Taxons
+    taxons: Árvores de Categorias
     test: Teste
     test_mailer:
-      test_email:
-        greeting: Parabéns
-        message: Se você recebeu esse email, suas configurações estão corretas!
-        subject: Email de teste!
+      test_email: Email de Teste
+      greeting: Parabéns
+      message: Se você recebeu esse email, suas configurações estão corretas!
+      subject: Email de teste!
     test_mode: Modo de teste
     thank_you_for_your_order: Obrigado por sua compra. Por favor, imprima uma cópia desta página de confirmação para seu controle.
     there_are_no_items_for_this_order: Não existem itens para esse pedido. Por favor adicione um item ao pedido para continuar.
     there_were_problems_with_the_following_fields: 'Existem problemas com os seguintes campos:'
-    this_order_has_already_received_a_refund:
+    this_order_has_already_received_a_refund: Esse pedindo já recebeu um reembolso
     thumbnail: Miniatura
     tiered_flat_rate:
     tiered_percent:
@@ -1309,7 +1309,7 @@ pt-BR:
     tracking_number: Número localizador
     tracking_url: URL localizadora
     tracking_url_placeholder: e.g. http://websro.correios.com.br/sro_bin/txect01$.QueryList?P_LINGUA=001&P_TIPO=001&P_COD_UNI=:tracking
-    transaction_id:
+    transaction_id: ID da Transação
     transfer_from_location: Transferir de
     transfer_stock: Estoque de transferência
     transfer_to_location: Transferir para
