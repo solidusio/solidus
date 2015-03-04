@@ -2,7 +2,7 @@ $(document).ready ->
   window.productTemplate = Handlebars.compile($('#product_template').text());
   $('#taxon_products').sortable();
   $('#taxon_products').on "sortstop", (event, ui) ->
-    $.ajax
+    Spree.ajax
       url: Spree.routes.classifications_api,
       method: 'PUT',
       data:
@@ -17,6 +17,7 @@ $(document).ready ->
       ajax:
         url: Spree.routes.taxons_search,
         datatype: 'json',
+        headers: { "X-Spree-Token": Spree.api_key },
         data: (term, page) ->
           per_page: 50,
           page: page,
@@ -34,7 +35,7 @@ $(document).ready ->
 
   $('#taxon_id').on "change", (e) ->
     el = $('#taxon_products')
-    $.ajax
+    Spree.ajax
       url: Spree.routes.taxon_products_api,
       data:
         id: e.val,

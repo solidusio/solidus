@@ -61,7 +61,7 @@ Spree.ready ($) ->
           )
 
           coupon_status.removeClass();
-          $.ajax({
+          Spree.ajax({
             async: false,
             method: "PUT",
             url: url,

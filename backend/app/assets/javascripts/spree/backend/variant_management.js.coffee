@@ -3,7 +3,7 @@ jQuery ->
     $(@).siblings('.variant_track_inventory').val($(@).is(':checked'))
     $(@).parent('form').submit()
   $('.toggle_variant_track_inventory').on 'submit', ->
-    $.ajax
+    Spree.ajax
       type: @method
       url: @action
       data: $(@).serialize()

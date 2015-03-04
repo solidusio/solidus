@@ -18,8 +18,9 @@ $.fn.variantAutocomplete = ->
       $.get Spree.routes.variants_search + "/" + element.val(), {}, (data) ->
         callback data
     ajax:
-      url: Spree.url(Spree.routes.variants_api)
+      url: Spree.routes.variants_api
       datatype: "json"
+      headers: { "X-Spree-Token": Spree.api_key }
       data: (term, page) ->
         q:
           product_name_or_sku_cont: term

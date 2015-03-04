@@ -30,7 +30,7 @@ $ ->
 
       $('#transfer_receive_stock').change (event) => @receive_stock_change(event)
 
-      $.getJSON Spree.url(Spree.routes.stock_locations_api) + '?token=' + Spree.api_key, (data) =>
+      Spree.getJSON Spree.routes.stock_locations_api, (data) =>
         @locations = (location for location in data.stock_locations)
         @force_receive_stock() if @locations.length < 2
 

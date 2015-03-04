@@ -38,7 +38,7 @@ addVariant = function() {
 adjustLineItems = function(order_number, variant_id, quantity){
     var url = Spree.routes.orders_api + "/" + order_number + '/line_items';
 
-    $.ajax({
+    Spree.ajax({
         type: "POST",
         url: Spree.url(url),
         data: {
@@ -46,7 +46,6 @@ adjustLineItems = function(order_number, variant_id, quantity){
             variant_id: variant_id,
             quantity: quantity
           },
-          token: Spree.api_key
         }
     }).done(function( msg ) {
         window.Spree.advanceOrder();

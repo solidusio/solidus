@@ -5,7 +5,7 @@ $ ->
     ($ '.no-objects-found').hide()
 
     ($ this).hide()
-    $.ajax
+    Spree.ajax
       type: 'GET'
       url: @href
       data: (

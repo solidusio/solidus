@@ -128,7 +128,7 @@ $(document).ready(function(){
   $(".observe_field").on('change', function() {
     target = $(this).data("update");
     $(target).hide();
-    $.ajax({ dataType: 'html',
+    Spree.ajax({ dataType: 'html',
              url: $(this).data("base-url")+encodeURIComponent($(this).val()),
              type: 'get',
              success: function(data){
@@ -161,7 +161,7 @@ $(document).ready(function(){
   $('body').on('click', '.delete-resource', function() {
     var el = $(this);
     if (confirm(el.data("confirm"))) {
-      $.ajax({
+      Spree.ajax({
         type: 'POST',
         url: $(this).prop("href"),
         data: {
@@ -189,7 +189,7 @@ $(document).ready(function(){
     if (el.prop("href").substr(-1) == '#') {
       el.parents("tr").fadeOut('hide');
     }else if (el.prop("href")) {
-      $.ajax({
+      Spree.ajax({
         type: 'POST',
         url: el.prop("href"),
         data: {
@@ -211,7 +211,7 @@ $(document).ready(function(){
   $('body').on('click', '.select_properties_from_prototype', function(){
     $("#busy_indicator").show();
     var clicked_link = $(this);
-    $.ajax({ dataType: 'script', url: clicked_link.prop("href"), type: 'get',
+    Spree.ajax({ dataType: 'script', url: clicked_link.prop("href"), type: 'get',
         success: function(data){
           clicked_link.parent("td").parent("tr").hide();
           $("#busy_indicator").hide();
@@ -245,7 +245,7 @@ $(document).ready(function(){
               positions['positions['+parts[2]+']'] = position;
             }
           });
-          $.ajax({
+          Spree.ajax({
             type: 'POST',
             dataType: 'script',
             url: $(ui.item).closest("table.sortable").data("sortable-link"),
@@ -273,7 +273,7 @@ $(document).ready(function(){
   });
 
   window.Spree.advanceOrder = function() {
-      $.ajax({
+      Spree.ajax({
           type: "PUT",
           async: false,
           data: {

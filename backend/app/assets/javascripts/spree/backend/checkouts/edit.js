@@ -17,6 +17,7 @@ $(document).ready(function() {
       placeholder: Spree.translations.choose_a_customer,
       ajax: {
         url: Spree.routes.user_search,
+        headers: { "X-Spree-Token": Spree.api_key },
         datatype: 'json',
         data: function(term, page) {
           return {

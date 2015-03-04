@@ -9,7 +9,7 @@ Spree.ready ($) ->
     ($ 'form#update-cart #update-button').attr('disabled', true)
 
 Spree.fetch_cart = ->
-  $.ajax
+  Spree.ajax
     url: Spree.pathFor("cart_link"),
     success: (data) ->
       $('#link-to-cart').html data

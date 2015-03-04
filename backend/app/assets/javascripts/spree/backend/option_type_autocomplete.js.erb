@@ -10,7 +10,7 @@ $(document).ready(function () {
           ids: element.val(),
           token: Spree.api_key
         });
-        return $.getJSON(url, null, function (data) {
+        return Spree.getJSON(url, null, function (data) {
           return callback(data);
         });
       },
@@ -18,12 +18,10 @@ $(document).ready(function () {
         url: Spree.routes.option_type_search,
         quietMillis: 200,
         datatype: 'json',
+        headers: { "X-Spree-Token": Spree.api_key },
         data: function (term) {
           return {
-            q: {
-              name_cont: term
-            },
-            token: Spree.api_key
+            q: { name_cont: term }
           };
         },
         results: function (data) {
