@@ -35,11 +35,15 @@ module Spree
       new_order.approved_by(name: self.class.name)
       new_order.reload.complete!
 
+      @return_items.each(&:expired!)
+      create_new_rma if Spree::Config[:create_rma_for_unreturned_exchange]
+
       if !new_order.completed?
         raise ChargeFailure.new('order not complete', new_order)
       elsif !new_order.valid?
         raise ChargeFailure.new('order not valid', new_order)
       end
+
     end
 
     private
@@ -70,6 +74,16 @@ module Spree
                                payment_method_id: card_to_reuse.try(:payment_method_id),
                                source: card_to_reuse,
                                amount: new_order.total)
+      end
+    end
+
+    def create_new_rma
+      @return_items.group_by(&:return_authorization).each do |rma, return_items|
+        new_return_items = return_items.map { |ri| Spree::ReturnItem.create!(inventory_unit: ri.inventory_unit) }
+        Spree::ReturnAuthorization.create!(order: rma.order,
+                                           reason: rma.reason,
+                                           stock_location: rma.stock_location,
+                                           return_items: new_return_items)
       end
     end
 

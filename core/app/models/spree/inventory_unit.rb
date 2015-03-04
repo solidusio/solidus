@@ -81,7 +81,7 @@ module Spree
     end
 
     def exchange_requested?
-      return_items.any?(&:exchange_requested?)
+      return_items.not_expired.any?(&:exchange_requested?)
     end
 
     private

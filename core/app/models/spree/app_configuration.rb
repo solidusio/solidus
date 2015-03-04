@@ -38,6 +38,7 @@ module Spree
     preference :binary_inventory_cache, :boolean, default: false # only invalidate product cache when a stock item changes whether it is in_stock
     preference :checkout_zone, :string, default: nil # replace with the name of a zone if you would like to limit the countries
     preference :company, :boolean, default: false # Request company field for billing and shipping addr
+    preference :create_rma_for_unreturned_exchange, :boolean, default: false # allows rma to be created for items after unreturned exchange charge has been made
     preference :currency, :string, default: "USD"
     preference :currency_decimal_mark, :string, default: "."
     preference :currency_symbol_position, :string, default: "before"

@@ -163,6 +163,12 @@ describe Spree::ReturnItem, :type => :model do
       it { is_expected.not_to be_persisted }
     end
 
+    context 'with a expired item' do
+      let!(:return_item) { create(:return_item, inventory_unit: inventory_unit, reception_status: 'expired') }
+
+      it { should_not be_persisted }
+    end
+
     context "with a non-cancelled return item" do
       let!(:return_item) { create(:return_item, inventory_unit: inventory_unit) }
 

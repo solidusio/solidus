@@ -159,6 +159,29 @@ describe "exchanges:charge_unreturned_items" do
           expect { subject.invoke }.not_to change { Spree::Order.count }
         end
       end
+
+      context 'rma for unreturned exchanges' do
+        context 'config to not create' do
+          before { Spree::Config[:create_rma_for_unreturned_exchange] = false }
+
+          it 'does not create rma' do
+            expect { subject.invoke }.not_to change { Spree::ReturnAuthorization.count }
+          end
+        end
+
+        context 'config to create' do
+          before do
+            Spree::Config[:create_rma_for_unreturned_exchange] = true
+          end
+
+          it 'creates with return items' do
+            expect { subject.invoke }.to change { Spree::ReturnAuthorization.count }
+            rma = Spree::ReturnAuthorization.last
+
+            expect(rma.return_items.all?(&:awaiting?)).to be true
+          end
+        end
+      end
     end
   end
 end
