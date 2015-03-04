@@ -159,6 +159,8 @@ module Spree
     context "as just another user" do
       before do
         user = create(:user)
+        allow(Spree.user_class).to receive(:find_by).
+                                     and_return(user)
       end
 
       it "cannot add a new line item to the order" do
