@@ -4,6 +4,7 @@ describe "Orders Listing", type: :feature, js: true do
   stub_authorization!
 
   let!(:promotion) { create(:promotion_with_item_adjustment, code: "vnskseiw") }
+  let(:promotion_code) { promotion.codes.first }
 
   before(:each) do
     allow_any_instance_of(Spree::OrderInventory).to receive(:add_to_shipment)
@@ -132,7 +133,10 @@ describe "Orders Listing", type: :feature, js: true do
 
     context "filter on promotions" do
       before(:each) do
-        @order1.promotions << promotion
+        @order1.order_promotions.build(
+          promotion: promotion,
+          promotion_code: promotion_code,
+        )
         @order1.save
         visit spree.admin_orders_path
       end

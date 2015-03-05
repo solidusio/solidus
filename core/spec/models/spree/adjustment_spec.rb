@@ -164,4 +164,31 @@ describe Spree::Adjustment, :type => :model do
     end
   end
 
+  describe "promotion code presence error" do
+    subject do
+      adjustment.valid?
+      adjustment.errors[:promotion_code]
+    end
+
+    context "when the adjustment is not a promotion adjustment" do
+      let(:adjustment) { build(:adjustment) }
+
+      it { is_expected.to be_blank }
+    end
+
+    context "when the adjustment is a promotion adjustment" do
+      let(:adjustment) { build(:adjustment, source: promotion.actions.first) }
+      let(:promotion) { create(:promotion, :with_order_adjustment) }
+
+      context "when the promotion does not have a code" do
+        it { is_expected.to be_blank }
+      end
+
+      context "when the promotion has a code" do
+        let!(:promotion_code) { create(:promotion_code, promotion: promotion) }
+
+        it { is_expected.to include("can't be blank") }
+      end
+    end
+  end
 end

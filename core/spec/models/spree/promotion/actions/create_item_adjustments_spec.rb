@@ -128,9 +128,10 @@ module Spree
         end
 
         context "#destroy" do
-          let!(:action) { CreateItemAdjustments.create! }
-          let(:other_action) { CreateItemAdjustments.create! }
-          before { promotion.promotion_actions = [other_action] }
+          let!(:action) { promotion.actions.first }
+          let(:other_action) { other_promotion.actions.first }
+          let(:promotion) { create(:promotion, :with_line_item_adjustment) }
+          let(:other_promotion) { create(:promotion, :with_line_item_adjustment) }
 
           it "destroys adjustments for incompleted orders" do
             order = Order.create

@@ -31,6 +31,7 @@ module Spree
     validates :order, presence: true
     validates :label, presence: true
     validates :amount, numericality: true
+    validates :promotion_code, presence: true, if: :require_promotion_code?
 
     state_machine :state, initial: :open do
       event :close do
@@ -118,6 +119,10 @@ module Spree
     def update_adjustable_adjustment_total
       # Cause adjustable's total to be recalculated
       ItemAdjustments.new(adjustable).update
+    end
+
+    def require_promotion_code?
+      promotion? && source.promotion.codes.any?
     end
   end
 end

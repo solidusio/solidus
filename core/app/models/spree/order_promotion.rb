@@ -8,5 +8,15 @@ module Spree
     belongs_to :order, class_name: 'Spree::Order'
     belongs_to :promotion, class_name: 'Spree::Promotion'
     belongs_to :promotion_code, class_name: 'Spree::PromotionCode'
+
+    validates :order, presence: true
+    validates :promotion, presence: true
+    validates :promotion_code, presence: true, if: :require_promotion_code?
+
+    private
+
+    def require_promotion_code?
+      promotion && promotion.codes.any?
+    end
   end
 end

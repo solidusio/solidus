@@ -102,7 +102,13 @@ module Spree
     context "best promotion is always applied" do
       let(:calculator) { Calculator::FlatRate.new(:preferred_amount => 10) }
 
-      let(:source) { Promotion::Actions::CreateItemAdjustments.create calculator: calculator }
+      let(:source) do
+        Promotion::Actions::CreateItemAdjustments.create!(
+          calculator: calculator,
+          promotion: promotion,
+        )
+      end
+      let(:promotion) { create(:promotion) }
 
       def create_adjustment(label, amount)
         create(:adjustment, :order      => order,
