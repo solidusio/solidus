@@ -869,8 +869,8 @@ nl:
         subtotal:
         total:
       confirm_email:
-        dear_customer: Bestek klant
-        instructions: Controlleer je bestelling en bewaar deze mail.
+        dear_customer: Beste klant,
+        instructions: Controleer je bestelling en bewaar deze mail.
         order_summary: Besteloverzicht
         subject: Bestelling is bevestigd
         subtotal:
