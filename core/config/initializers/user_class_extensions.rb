@@ -5,10 +5,8 @@ Spree::Core::Engine.config.to_prepare do
       include Spree::UserApiAuthentication
       include Spree::UserReporting
 
-      has_and_belongs_to_many :spree_roles,
-                              join_table: 'spree_roles_users',
-                              foreign_key: "user_id",
-                              class_name: "Spree::Role"
+      has_many :role_users, foreign_key: "user_id", class_name: "Spree::RoleUser"
+      has_many :spree_roles, through: :role_users, source: :role
 
       has_many :spree_orders, foreign_key: "user_id", class_name: "Spree::Order"
 
