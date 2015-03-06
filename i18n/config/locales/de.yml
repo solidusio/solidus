@@ -27,7 +27,7 @@ de:
         base:
         cc_type: Typ
         month: Monat
-        name:
+        name: Name
         number: Nummer
         verification_value: Kartenprüfnummer
         year: Jahr
@@ -40,7 +40,7 @@ de:
         name: Name
         presentation: Angezeigter Wert
       spree/order:
-        checkout_complete: Checkout Erfolgreich
+        checkout_complete: Bestellung Erfolgreich
         completed_at: Abgeschlossen am
         considered_risky: Riskant
         coupon_code: Gutscheincode
@@ -95,16 +95,16 @@ de:
         starts_at: Beginnt am
         usage_limit: Begrenztes Kontingent
       spree/promotion_category:
-        name:
+        name: Werbungskategorie
       spree/property:
         name: Name
         presentation: Angezeigter Wert
       spree/prototype:
-        name:
+        name: Name
       spree/return_authorization:
         amount: Anzahl
       spree/role:
-        name:
+        name: Name
       spree/state:
         abbr: Abkürzung
         name: Name
@@ -117,12 +117,12 @@ de:
         updated:
         user:
       spree/store:
-        mail_from_address:
-        meta_description:
-        meta_keywords:
-        name:
-        seo_title:
-        url:
+        mail_from_address: Versandadresse
+        meta_description: Seitenbeschreibung
+        meta_keywords: Stichwörter
+        name: Name des Shops
+        seo_title: Name (Suchmaschinenoptimiert)
+        url: Adresse des Shops
       spree/tax_category:
         description: Beschreibung
         name: Name
@@ -164,7 +164,7 @@ de:
           attributes:
             base:
               keys_should_be_positive_number:
-              values_should_be_percent:
+              values_should_be_percent: Wert sollte in Prozent angegeben sein
             preferred_tiers:
               should_be_hash:
         spree/classification:
@@ -175,15 +175,15 @@ de:
           attributes:
             base:
               card_expired: Karte abgelaufen
-              expiry_invalid:
+              expiry_invalid: Falsches Ablaufdatum
         spree/line_item:
           attributes:
             currency:
-              must_match_order_currency:
+              must_match_order_currency: Muss mit der Bestellungswährung übereinstimmen
         spree/refund:
           attributes:
             amount:
-              greater_than_allowed:
+              greater_than_allowed: Maximalwert überschritten
         spree/reimbursement:
           attributes:
             base:
@@ -329,10 +329,10 @@ de:
         other: "%{count} Fehler haben das Speichern von %{resource} verhindert:"
   spree:
     abbreviation: Abkürzung
-    accept:
+    accept: Akzeptieren
     acceptance_errors:
     acceptance_status:
-    accepted:
+    accepted: Akzeptiert
     account: Konto
     account_updated: Konto aktualisiert!
     action: Aktion
@@ -345,7 +345,7 @@ de:
       list: auflisten
       listing: Liste
       new: neu
-      refund:
+      refund: Gutschrift
       save: Speichern
       update: aktualisieren
     activate: Aktivieren
@@ -369,7 +369,7 @@ de:
     additional_item: Kosten für weiteren Artikel
     address1: Adresse
     address2: Adresse (Fortsetzung)
-    adjustable:
+    adjustable: Anpassbar
     adjustment: Anpassung
     adjustment_amount: Betrag
     adjustment_successfully_closed: Anpassung wurde erfolgreich geschlossen!
@@ -387,27 +387,27 @@ de:
         properties: Eigenschaften
         prototypes: Prototypen
         reports: Berichte
-        taxonomies:
-        taxons:
+        taxonomies: Klassifikationen
+        taxons: Klassifikation
         users: Benutzer
       user:
-        account:
-        addresses:
-        items:
-        items_purchased:
-        order_history:
-        order_num:
-        orders:
-        user_information:
+        account: Konto
+        addresses: Adressen
+        items: Artikel
+        items_purchased: Gekaufte Artikel
+        order_history: Bestellhistorie
+        order_num: Bestellnummer
+        orders: Bestellungen
+        user_information: Benutzerinformationen
     administration: Verwaltung
-    advertise:
+    advertise: Bewerben
     agree_to_privacy_policy: Datenschutzerklärung akzeptieren
     agree_to_terms_of_service: Allgemeine Geschäftsbedingungen akzeptieren
     all: Alles
     all_adjustments_closed: Alle Anpassung wurden erfolgreich geschlossen!
     all_adjustments_opened: Alle Anpassung wurden erfolgreich geöffnet!
     all_departments: Alle Bereiche
-    all_items_have_been_returned:
+    all_items_have_been_returned: Alles zurückgegeben
     allow_ssl_in_development_and_test: Erlaube SSL im Vorproduktions- und Testmodus
     allow_ssl_in_production: Erlaube SSL im Produktionsmodus
     allow_ssl_in_staging: Erlaube SSL im Vorproduktionsmodus
@@ -423,43 +423,43 @@ de:
     analytics_desc_list_4: Komplett kostenlos!
     analytics_trackers: Zugriffsstatistik Tracker
     and: und
-    approve:
-    approved_at:
-    approver:
+    approve: Zustimmen
+    approved_at: Zugestimmt am
+    approver: Zustimmer
     are_you_sure: Sind Sie sicher
     are_you_sure_delete: Sind sie sicher, dass Sie diesen Eintrag löschen möchten?
     associated_adjustment_closed: Die verknüpfte Anpassung ist geschlossen und wird nicht neu berechnet. Möchten Sie die Anpassung öffnen?
     authorization_failure: Bitte authentifizieren Sie sich.
-    authorized:
+    authorized: Authorisiert
     auto_capture:
     available_on: erhältlich ab
-    average_order_value:
+    average_order_value: Durchschnittsbestellwert
     avs_response:
     back: Zurück
     back_end: Backend
-    back_to_payment:
-    back_to_resource_list:
-    back_to_rma_reason_list:
+    back_to_payment: Zurück zur Zahlung
+    back_to_resource_list: Zurück zur Bestellliste
+    back_to_rma_reason_list: Zurück zur Rücksendeliste
     back_to_store: Zurück zum Shop
     back_to_users_list: Zurück zur Benutzerliste
     backorderable: Nachbestellbar
-    backorderable_default:
-    backordered:
-    backorders_allowed:
+    backorderable_default: Nachbestellbar (standard)
+    backordered: Nachbestellt
+    backorders_allowed: Nachbestellt (standard)
     balance_due: Soll
-    base_amount:
-    base_percent:
+    base_amount: Grundwert
+    base_percent: Grundwert (prozentual)
     bill_address: Rechnungsadresse
     billing: Rechnung
     billing_address: Rechnungsadresse
     both: beides
-    calculated_reimbursements:
+    calculated_reimbursements: Errechnete Vergütung
     calculator: Rechner
     calculator_settings_warning: Wenn Sie den Berechungs-Typ ändern, müssen Sie erst speichern, bevor Sie die Berechnungs-Einstellungen bearbeiten können
     cancel: abbrechen
-    canceled_at:
-    canceler:
-    cannot_create_customer_returns:
+    canceled_at: Abgebrochen am
+    canceler: Abgebrochen von
+    cannot_create_customer_returns: Kann Rücksendung nicht durchführen.
     cannot_create_payment_without_payment_methods: Sie können keine Zahlung für eine Bestellung anlegen, ohne vorher eine Zahlungsmethode definiert zu haben.
     cannot_create_returns: Sie können diese Bestellung nicht zurückgeben, da sie noch nicht versendet wurde.
     cannot_perform_operation: Kann diese Operation nicht durchführen.
@@ -468,25 +468,25 @@ de:
     capture_events:
     card_code: Kartenprüfnummer
     card_number: Kartennummer
-    card_type:
+    card_type: Kartentyp
     card_type_is: Kartentyp ist
     cart: Warenkorb
     cart_subtotal:
     categories: Kategorien
     category: Kategorie
-    charged:
+    charged: Berechnet
     check_for_spree_alerts: Auf Warnungen von Spree prüfen
     checkout: Zur Kasse
     choose_a_customer: Kunden auswählen
-    choose_a_taxon_to_sort_products_for:
+    choose_a_taxon_to_sort_products_for: Sortierungsklassifizierung wählen
     choose_currency: Währung auswählen
     choose_dashboard_locale: Dashboard-Sprache wählen
     choose_location:
     city: Ort
-    clear_cache:
-    clear_cache_ok:
-    clear_cache_warning:
-    click_and_drag_on_the_products_to_sort_them:
+    clear_cache: Zwischenspeicher leeren
+    clear_cache_ok: Zwischenspeicher erfolgreich geleert
+    clear_cache_warning: Fehler beim Leeren vom Zwischenspeicher
+    click_and_drag_on_the_products_to_sort_them: Produkte können durch Klicken und Ziehen sortiert werden
     clone: Klonen
     close: Schließen
     close_all_adjustments: Alle Anpassungen schließen
@@ -518,23 +518,23 @@ de:
     coupon: Gutschein
     coupon_code: Gutschein-Code
     coupon_code_already_applied: Der Gutschein-Code wurde bereits bei dieser Bestellung eingelöst
-    coupon_code_applied: Der Coupon wurde erfolgreich zu Ihrer Bestellung zugeordnet.
+    coupon_code_applied: Der Gutschein wurde erfolgreich zu Ihrer Bestellung zugeordnet.
     coupon_code_better_exists: Der zuvor angegebene Gutscheincode ergibt ein besseres Angebot
     coupon_code_expired: Der Gutschein-Code ist abgelaufen
     coupon_code_max_usage: Limit für Gutschein-Codes erreicht
-    coupon_code_not_eligible: Der Coupon-Code kann nicht auf diese Bestellung angewendet werden
+    coupon_code_not_eligible: Der Gutschein-Code kann nicht auf diese Bestellung angewendet werden
     coupon_code_not_found: Der eingegebene Gutschein-Code existiert nicht. Bitte versuchen Sie es noch einmal.
-    coupon_code_unknown_error:
+    coupon_code_unknown_error: Der Gutschein-Code verursachte ein unbekannntes Problem
     create: Erstellen
     create_a_new_account: Neues Konto erstellen
-    create_new_order:
-    create_reimbursement:
+    create_new_order: Neuer Bestellung
+    create_reimbursement: Rückerstattung beantragen
     created_at: Erstellt am
     credit: Credit
     credit_card: Kreditkarte
     credit_cards: Credit Cards
     credit_owed: Betrag ausstehend
-    credits:
+    credits: Gutschrift
     currency: Currency
     currency_decimal_mark: Dezimaltrennzeichen
     currency_settings: Währungseinstellungen
@@ -545,11 +545,11 @@ de:
     customer: Kunde
     customer_details: Kundendetails
     customer_details_updated: Die Kundendaten wurden aktualisiert.
-    customer_return:
-    customer_returns:
+    customer_return: Rücksendung
+    customer_returns: Rücksendungen
     customer_search: Kunden Suche
     cut: Cut
-    cvv_response:
+    cvv_response: Verifikationsantwort
     dash:
       jirafe:
         app_id: App ID
@@ -578,7 +578,7 @@ de:
     description: Beschreibung
     destination: Ziel
     destroy: Entfernen
-    details:
+    details: Details
     discount_amount: Skonto
     dismiss_banner: Nein. Danke! Ich bin nicht interessiert, bitte diese Nachricht nicht erneut anzeigen.
     display: Angezeigter Wert
@@ -665,7 +665,7 @@ de:
     general_settings: Allgemeine Einstellungen
     google_analytics: Google Analytics
     google_analytics_id: Analytics ID
-    guest_checkout: Gast Checkout
+    guest_checkout: Gast Bestellung
     guest_user_account: Ohne Registrierung bestellen
     has_no_shipped_units: hat keine gelieferten Einheiten
     height: Höhe
