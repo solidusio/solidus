@@ -7,16 +7,14 @@
         <%= f.text_field :name, :class => 'fullwidth' %>
       <% end %>
 
-      <% if @promotion.new_record? %>
-        <%= f.field_container :base_code do %>
-          <%= label_tag :base_code %>
-          <%= text_field_tag "bulk_base", @bulk_base, :class => 'fullwidth' %>
-        <% end %>
+      <%= f.field_container :base_code do %>
+        <%= label_tag :base_code %>
+        <%= text_field_tag "bulk_base", @bulk_base, :readonly => !@promotion.new_record?, :class => 'fullwidth' %>
+      <% end %>
 
-        <%= f.field_container :number_of_codes do %>
-          <%= label_tag :number_of_codes %>
-          <%= text_field_tag "bulk_number", @bulk_number, class: 'fullwidth' %>
-        <% end %>
+      <%= f.field_container :number_of_codes do %>
+        <%= label_tag :number_of_codes %>
+        <%= text_field_tag "bulk_number", @bulk_number, :readonly => !@promotion.new_record?, class: 'fullwidth' %>
       <% end %>
 
       <%= f.field_container :per_code_usage_limit do %>

@@ -2,6 +2,7 @@ module Spree
   module Admin
     class PromotionsController < ResourceController
       before_action :load_data
+      before_action :load_bulk_code_information, only: [:edit]
 
       create.before :build_promotion_codes
 
@@ -18,6 +19,11 @@ module Spree
               number_of_codes: @bulk_number,
             )
           end
+        end
+
+        def load_bulk_code_information
+          @bulk_base = @promotion.codes.first.try!(:value)
+          @bulk_number = @promotion.codes.count
         end
 
         def location_after_save
