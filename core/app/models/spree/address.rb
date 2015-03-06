@@ -6,6 +6,7 @@ module Spree
     belongs_to :state, class_name: "Spree::State"
 
     has_many :shipments, inverse_of: :address
+    has_many :cartons, inverse_of: :address
 
     validates :firstname, :lastname, :address1, :city, :country, presence: true
     validates :zipcode, presence: true, if: :require_zipcode?

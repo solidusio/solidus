@@ -4,6 +4,7 @@ module Spree
     belongs_to :order, class_name: "Spree::Order", inverse_of: :inventory_units
     belongs_to :shipment, class_name: "Spree::Shipment", touch: true, inverse_of: :inventory_units
     belongs_to :return_authorization, class_name: "Spree::ReturnAuthorization", inverse_of: :inventory_units
+    belongs_to :carton, class_name: "Spree::Carton", inverse_of: :inventory_units
     belongs_to :line_item, class_name: "Spree::LineItem", inverse_of: :inventory_units
 
     has_many :return_items, inverse_of: :inventory_unit
