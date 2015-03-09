@@ -53,19 +53,14 @@ module Spree
             # Standard ActiveMerchant void usage
             response = payment_method.void(self.response_code, gateway_options)
           end
-          record_response(response)
 
-          if response.success?
-            self.response_code = response.authorization
-            self.void
-          else
-            gateway_error(response)
-          end
+          handle_void_response(response)
         end
       end
 
       def cancel!
-        payment_method.cancel(response_code)
+        response = payment_method.cancel(response_code)
+        handle_void_response(response)
       end
 
       def gateway_options
@@ -154,6 +149,17 @@ module Spree
           self.send("#{success_state}!")
         else
           self.send(failure_state)
+          gateway_error(response)
+        end
+      end
+
+      def handle_void_response(response)
+        record_response(response)
+
+        if response.success?
+          self.response_code = response.authorization
+          self.void
+        else
           gateway_error(response)
         end
       end

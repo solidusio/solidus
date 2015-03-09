@@ -373,6 +373,34 @@ describe Spree::Payment, :type => :model do
       end
     end
 
+    describe "#cancel!" do
+      before do
+        payment.response_code = 'abc'
+        payment.state = 'pending'
+      end
+
+      context "if successful" do
+        it "should update the response_code with the authorization from the gateway" do
+          # Change it to something different
+          allow(gateway).to receive_messages :cancel => success_response
+          payment.cancel!
+          expect(payment.state).to eq('void')
+          expect(payment.response_code).to eq('123')
+        end
+      end
+
+      context "if unsuccessful" do
+        it "should not void the payment" do
+          allow(gateway).to receive_messages :cancel => failed_response
+          expect { payment.cancel! }.to raise_error(Spree::Core::GatewayError)
+          expect(payment.state).to eq('pending')
+          expect(payment.response_code).to eq('abc')
+        end
+      end
+
+    end
+
+
     describe "#void_transaction!" do
       before do
         payment.response_code = '123'
