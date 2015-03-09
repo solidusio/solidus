@@ -766,7 +766,7 @@ de:
     last_name: Nachname
     last_name_begins_with: Nachname beginnt mit
     learn_more: Mehr dazu
-    lifetime_stats: Statistiken: Lebenszyklus
+    lifetime_stats: 'Statistiken: Lebenszyklus'
     line_item_adjustments: Einzelpositionen ändern
     list: Liste
     loading: Laden
@@ -1183,7 +1183,7 @@ de:
       pending: Ausstehend
       ready: Bereit
       shipped: Ausgeliefert
-    shipment_transfer_error: Lieferung: Übergabefehler
+    shipment_transfer_error: 'Lieferung: Übergabefehler'
     shipment_transfer_success: Lieferung erfolgreich
     shipments: Lieferungen
     shipped: Ausgeliefert
