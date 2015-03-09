@@ -360,6 +360,13 @@ de:
         one: 'Ein Fehler hat das Speichern von %{resource} verhindert:'
         other: "%{count} Fehler haben das Speichern von %{resource} verhindert:"
   spree:
+    filter: Filter
+    order_line_items: Bestellposten
+    transaction_id: Transaktion
+    role_id: Rolle
+    new_role: Neue Rolle
+    address: Adresse
+    backorder: Nachlieferung
     abbreviation: Abkürzung
     accept: Akzeptieren
     acceptance_errors: Akzeptanzfehler
@@ -462,8 +469,8 @@ de:
     are_you_sure_delete: "Sind sie sich sicher, dass Sie diesen Eintrag löschen möchten?"
     associated_adjustment_closed: Die verknüpfte Anpassung ist geschlossen und wird nicht neu berechnet. Möchten Sie die Anpassung öffnen?
     authorization_failure: Bitte authentifizieren Sie sich.
-    authorized: Authorisiert
-    auto_capture: Automatisch Erfassen
+    authorized: Autorisiert
+    auto_capture: automatische Erfassung
     available_on: erhältlich ab
     average_order_value: Durchschnittsbestellwert
     avs_response: Ergebnis der Adressprüfung
@@ -503,7 +510,7 @@ de:
     card_type: Kartentyp
     card_type_is: Kartentyp ist
     cart: Warenkorb
-    cart_subtotal: Zwischenwert des Warenkorbs
+    cart_subtotal: Zwischensumme Warenkorb
     categories: Kategorien
     category: Kategorie
     charged: Berechnet
@@ -617,8 +624,8 @@ de:
     display_currency: Währung anzeigen
     doesnt_track_inventory: Bestandsverfolgung ist deaktiviert
     edit: Bearbeiten
-    editing_resource: Quelle bearbeiten
-    editing_rma_reason: Rücksendungsgrund bearbeiten
+    editing_resource: Eintrag bearbeiten
+    editing_rma_reason: Rückgabebewilligungsgrund bearbeiten
     editing_user: Benutzer bearbeiten
     eligibility_errors:
       messages:
@@ -767,7 +774,7 @@ de:
     last_name_begins_with: Nachname beginnt mit
     learn_more: Mehr dazu
     lifetime_stats: 'Statistiken: Lebenszyklus'
-    line_item_adjustments: Einzelpositionen ändern
+    line_item_adjustments: Anpassungen Bestellposten
     list: Liste
     loading: Laden
     locale_changed: Sprache geändert
@@ -822,13 +829,13 @@ de:
     new_payment_method: Neue Zahlungsmethode
     new_product: Neues Produkt
     new_promotion: Neue Werbeaktion
-    new_promotion_category: Neue Werbekategorie
+    new_promotion_category: Neue Kategorie für Werbeaktionen
     new_property: Neue Eigenschaft
     new_prototype: Neuer Prototyp
     new_refund: Neue Gutschrift
-    new_refund_reason: Gutschrift begründen
+    new_refund_reason: Neue Gutschriftbegründung
     new_return_authorization: Neue Rückgabebewilligung
-    new_rma_reason: Neue Rücksendungsbegründung
+    new_rma_reason: Neuer Rückgabebewilligungsgrund
     new_shipment_at_location: Neue Lieferung an Adresse
     new_shipping_category: Neue Versandkategorie
     new_shipping_method: Neue Versandart
@@ -849,7 +856,7 @@ de:
     no_payment_found: Keine Zahlung gefunden
     no_pending_payments: Keine ausstehenden Zahlungen
     no_products_found: Keine Produkte gefunden
-    no_resource_found: Keine Quelle gefunden
+    no_resource_found: Keine Einträge gefunden
     no_results: Keine Ergebnisse
     no_returns_found: Keine Erstattung gefunden
     no_rules_added: Keine Regeln verfügbar
@@ -871,7 +878,7 @@ de:
       product_not_deleted: Produkt konnte nicht gelöscht werden
       variant_deleted: Variante wurde gelöscht
       variant_not_deleted: Variante konnte nicht gelöscht werden
-    num_orders: Bestellzahl
+    num_orders: Anzahl Bestellungen
     on_hand: Auf Lager
     open: "Öffnen"
     open_all_adjustments: Alle Anpassungen öffnen
@@ -983,7 +990,7 @@ de:
     preferred_reimbursement_type: Bevorzugter Vergütungstyp
     presentation: Angezeigter Wert
     previous: zurück
-    previous_state_missing: Nicht verfügbar
+    previous_state_missing: kein vorheriger Status
     price: Preis
     price_range: Preisbereich
     price_sack: Preis füllen
@@ -1074,11 +1081,11 @@ de:
     received: erhalten
     reception_status: Empfangsstatus
     reference: Referenz
-    refund: Gutschrift beantragen
-    refund_amount_must_be_greater_than_zero: Gutschrift muss größer 0 sein
-    refund_reasons: Gutschriftsbegründungen
-    refunded_amount: Gutschriftshöhe
-    refunds: Gutschriften
+    refund: Rückerstattung
+    refund_amount_must_be_greater_than_zero: Rückerstattung muss größer 0 sein
+    refund_reasons: Rückerstattungsgründe
+    refunded_amount: Rückerstattungsbetrag
+    refunds: Rückerstattungen
     register: Als Neukunde registrieren
     registration: Registrierung
     reimburse: Vergüten
@@ -1165,7 +1172,7 @@ de:
     ship_total: Versand gesamt
     shipment: Sendung
     shipment_adjustments: Sendung anpassen
-    shipment_details: Details der Sendung
+    shipment_details: Versendungsdetails
     shipment_mailer:
       shipped_email:
         dear_customer: "Sehr geehrte/r Kunde/in,\n"
@@ -1209,7 +1216,7 @@ de:
     show_rate_in_label: Zeige Steuer im Label
     sku: Artikelnummer
     skus: Artikelnummern
-    slug: Kürzel
+    slug: Permalink
     source: Quelle
     special_instructions: Spezielle Anweisungen
     split: Aufteilen
@@ -1283,7 +1290,7 @@ de:
     tax_categories: Steuerkategorien
     tax_category: Steuerkategorie
     tax_code: SteuerID
-    tax_included: Inkl. Steuern
+    tax_included: enthaltene Steuer
     tax_rate_amount_explanation: Steuern werden dezimal angegeben um Berechnungen zu erleichtern. (z.B. für 5% Steuern 0.05 eingeben)
     tax_rates: Steuersätze
     taxon: Produktklasse
@@ -1322,7 +1329,7 @@ de:
     total_pre_tax_refund: Komplett erstattet (Vorsteuer)
     total_price: Preis (total)
     total_sales: Gesamtumsatz
-    track_inventory: Warenkorb verfolgen
+    track_inventory: auf Bestand achten
     tracking: Tracking
     tracking_number: Tracking Nummer
     tracking_url: Tracking URL
