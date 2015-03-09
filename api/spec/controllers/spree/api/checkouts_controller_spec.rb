@@ -313,7 +313,7 @@ module Spree
       end
 
       it "returns an error if expected_total is present and does not match actual total" do
-        api_put :next, :id => order.to_param, :order_token => order.token, :expected_total => order.total + 1
+        api_put :next, :id => order.to_param, :order_token => order.guest_token, :expected_total => order.total + 1
         response.status.should == 400
         json_response['errors']['expected_total'].should include(Spree.t(:expected_total_mismatch, :scope => 'api.order'))
       end
