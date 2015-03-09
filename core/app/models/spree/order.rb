@@ -663,6 +663,11 @@ module Spree
         payments.offset_payment.exists? # how old versions of spree stored refunds
     end
 
+    def token
+      ActiveSupport::Deprecation.warn("Spree::Order#token is DEPRECATED, please use #guest_token instead.", caller)
+      guest_token
+    end
+
     private
 
     def link_by_email
