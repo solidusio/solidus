@@ -39,7 +39,7 @@ group :test, :development do
     gem 'pry-debugger'
   end
   platforms :ruby_20, :ruby_21 do
-    gem 'pry-byebug'
+    gem 'pry-byebug', '~> 1.0'
   end
   gem 'rspec-retry'
 end
