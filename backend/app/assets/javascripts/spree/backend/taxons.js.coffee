@@ -17,7 +17,7 @@ $(document).ready ->
       ajax:
         url: Spree.routes.taxons_search,
         datatype: 'json',
-        headers: { "X-Spree-Token": Spree.api_key },
+        params: { "headers": { "X-Spree-Token": Spree.api_key } },
         data: (term, page) ->
           per_page: 50,
           page: page,

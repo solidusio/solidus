@@ -14,7 +14,7 @@ $.fn.userAutocomplete = function () {
     ajax: {
       url: Spree.routes.user_search,
       datatype: 'json',
-      headers: { "X-Spree-Token": Spree.api_key },
+      params: { "headers": { "X-Spree-Token": Spree.api_key } },
       data: function (term) {
         return {
           q: term,
