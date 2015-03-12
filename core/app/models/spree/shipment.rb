@@ -34,6 +34,8 @@ module Spree
     # shipment state machine (see http://github.com/pluginaweek/state_machine/tree/master for details)
     state_machine initial: :pending, use_transactions: false do
       event :ready do
+        # TODO: Remove this transition and the #requires_shipment? method when
+        # we stop marking shipments as shipped
         transition from: :pending, to: :shipped, if: lambda {|shipment| !shipment.requires_shipment? }
 
         transition from: :pending, to: :ready, if: lambda { |shipment|
@@ -401,10 +403,6 @@ module Spree
 
       def recalculate_adjustments
         Spree::ItemAdjustments.new(self).update
-      end
-
-      def send_shipped_email
-        ShipmentMailer.shipped_email(self.id).deliver
       end
 
       def set_cost_zero_when_nil

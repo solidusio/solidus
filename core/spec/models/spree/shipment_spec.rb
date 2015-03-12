@@ -461,29 +461,12 @@ describe Spree::Shipment, :type => :model do
           allow(shipment).to receive_messages(require_inventory: false, update_order: true, state: state)
         end
 
-        it "should update shipped_at timestamp" do
-          allow_any_instance_of(Spree::ShipmentHandler).to receive(:update_order_shipment_state)
-          allow_any_instance_of(Spree::ShipmentHandler).to receive(:send_shipped_email)
-
+        it "should call fulfill_order_with_stock_location" do
+          expect(Spree::OrderStockLocation).to(
+            receive(:fulfill_for_order_with_stock_location).
+            with(order, stock_location)
+          )
           shipment.ship!
-          expect(shipment.shipped_at).not_to be_nil
-          # Ensure value is persisted
-          shipment.reload
-          expect(shipment.shipped_at).not_to be_nil
-        end
-
-        it "should send a shipment email" do
-          mail_message = double 'Mail::Message'
-          shipment_id = nil
-          expect(Spree::ShipmentMailer).to receive(:shipped_email) { |*args|
-            shipment_id = args[0]
-            mail_message
-          }
-          expect(mail_message).to receive :deliver
-          allow_any_instance_of(Spree::ShipmentHandler).to receive(:update_order_shipment_state)
-
-          shipment.ship!
-          expect(shipment_id).to eq(shipment.id)
         end
 
         it "finalizes adjustments" do

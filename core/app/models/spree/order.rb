@@ -235,6 +235,10 @@ module Spree
       @contents ||= Spree::OrderContents.new(self)
     end
 
+    def shipping
+      @shipping ||= Spree::OrderShipping.new(self)
+    end
+
     # Associates the specified user with the order.
     def associate_user!(user, override_email = true)
       self.user = user
