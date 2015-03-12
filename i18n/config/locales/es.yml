@@ -81,7 +81,7 @@ es:
         description: Descripción
         master_price: Precio maestro
         name: Nombre
-        on_hand: En mano
+        on_hand: Disponible
         shipping_category: Categoría de envío
         tax_category: Categoría fiscal
       spree/promotion:
@@ -485,10 +485,10 @@ es:
     choose_dashboard_locale: Escoge idioma del Panel de Instrumentos
     choose_location:
     city: Ciudad
-    clear_cache:
-    clear_cache_ok:
-    clear_cache_warning:
-    click_and_drag_on_the_products_to_sort_them:
+    clear_cache: Limpiar caché
+    clear_cache_ok: Caché limpiado
+    clear_cache_warning: Limpiar el caché reducirá temporalmente el rendimiento de su tienda
+    click_and_drag_on_the_products_to_sort_them: Haga clic y arrastre los productos para ordenarlos
     clone: Clonar
     close: Cerrar
     close_all_adjustments: Cerrar todos los ajustes
@@ -505,7 +505,7 @@ es:
     cost_currency: Moneda de costo
     cost_price: Precio de costo
     could_not_connect_to_jirafe: No se pudo conectar a Jirafe para sincronizar los datos. Se intentará más tarde automáticamente.
-    could_not_create_customer_return:
+    could_not_create_customer_return: No se pudo crear la devolución al cliente
     could_not_create_stock_movement: Hubo un problema grabando este movimiento de stock. Por favor inténtalo otra vez.
     count_on_hand: Disponible
     countries: Países
@@ -722,8 +722,8 @@ es:
       operators:
         gt: Mayor que
         gte: Mayor que o igual a
-        lt:
-        lte:
+        lt: Menor que
+        lte: Menor que o igual a
     items_cannot_be_shipped: No es posible enviar los elementos seleccionados a su dirección de entrega. Por favor indica otra dirección de entrega.
     items_in_rmas:
     items_reimbursed:
@@ -766,7 +766,7 @@ es:
     memo:
     meta_description: Descripción Meta
     meta_keywords: Keywords Meta
-    meta_title:
+    meta_title: Título Meta
     metadata: Metadata
     minimal_amount: Cuantía mínima
     month: Mes
@@ -775,13 +775,13 @@ es:
     my_account: Mi Cuenta
     my_orders: Mis Pedidos
     name: Nombre
-    name_on_card:
+    name_on_card: Nombre en la tarjeta
     name_or_sku: Nombre o SKU (introducir al menos los 4 primeros caracteres o nombre del producto)
     new: Nuevo
     new_adjustment: Nuevo Ajuste
-    new_country:
+    new_country: Nuevo País
     new_customer: Nuevo Cliente
-    new_customer_return:
+    new_customer_return: Nueva Devolución
     new_image: Nueva Imagen
     new_option_type: Nuevo Tipo de Opción
     new_order: Nuevo Pedido
@@ -793,10 +793,10 @@ es:
     new_promotion_category:
     new_property: Nueva propiedad
     new_prototype: Nuevo prototipo
-    new_refund:
+    new_refund: Nuevo reembolso
     new_refund_reason:
     new_return_authorization: Nueva autorización de devolución
-    new_rma_reason:
+    new_rma_reason: Nueva razón RMA
     new_shipment_at_location:
     new_shipping_category: Nueva categoría de envío
     new_shipping_method: Nueva forma de envío
@@ -814,7 +814,7 @@ es:
     new_zone: Nueva Zona
     next: Siguiente
     no_actions_added: No acciones añadidas
-    no_payment_found:
+    no_payment_found: No se encontro pago
     no_pending_payments: No hay pagos pendientes
     no_products_found: No se encontraron productos
     no_resource_found: No se encontraron %{resource}
@@ -831,7 +831,7 @@ es:
     not_available: No disponible
     not_enough_stock: No hay suficiente inventario en la localización fuente para completar esta transferencia
     not_found: No se encontró %{resource}
-    note:
+    note: Nota
     notice_messages:
       product_cloned: El producto ha sido clonado
       product_deleted: El producto ha sido borrado
@@ -839,7 +839,7 @@ es:
       product_not_deleted: El producto no pudo ser borrado
       variant_deleted: La Variante ha sido borrada
       variant_not_deleted: La Variante no pudo ser borrada
-    num_orders:
+    num_orders: "# Ordenes"
     on_hand: Disponible
     open: Abrir
     open_all_adjustments: Abrir todos los ajustes
@@ -901,7 +901,7 @@ es:
     order_total: Total Pedido
     order_updated: Pedido actualizado
     orders: Pedidos
-    other_items_in_other:
+    other_items_in_other: Otros artículos en orden
     out_of_stock: Fuera de stock
     overview: Visión de conjunto
     package_from: paquete desde
@@ -936,14 +936,14 @@ es:
       void: anular
     payment_updated: Pago actualizado
     payments: Pagos
-    pending:
+    pending: Pendiente
     percent: Porcentaje
     percent_per_item: Porcentaje por artículo
     permalink: Permalink
     phone: Teléfono
     place_order: Ponga el pedido
     please_define_payment_methods: Por favor define algún método de pago primero
-    populate_get_error: Algo fue mal. Por favor intenta añadir el artículo otra vez.
+    populate_get_error: Algo salió mal. Por favor intenta añadir el artículo otra vez.
     powered_by: Desarrollado por
     pre_tax_amount:
     pre_tax_refund_amount:
@@ -1003,17 +1003,17 @@ es:
         description: El ciente debe haber visitado la página especificada
         name: Página de destino
       one_use_per_user:
-        description:
-        name:
+        description: Descripción
+        name: Nombre
       option_value:
-        description:
-        name:
+        description: Descripción
+        name: Nombre
       product:
         description: El pedido incluye productos específicos
         name: Producto(s)
       taxon:
-        description:
-        name:
+        description: Descripción
+        name: Nombre
       user:
         description: Disponible solamente a usuarios específicos
         name: Usuario
@@ -1046,12 +1046,12 @@ es:
     refund_amount_must_be_greater_than_zero:
     refund_reasons:
     refunded_amount:
-    refunds:
+    refunds: Reembolsos
     register: Registrar
     registration: Registro
-    reimburse:
-    reimbursed:
-    reimbursement:
+    reimburse: Reembolsar
+    reimbursed: Reembolsado
+    reimbursement: Reembolso
     reimbursement_mailer:
       reimbursement_email:
         days_to_send:
@@ -1132,7 +1132,7 @@ es:
     ship_address: Dirección de envío
     ship_total: Total de envío
     shipment: Envío
-    shipment_adjustments:
+    shipment_adjustments: 
     shipment_details:
     shipment_mailer:
       shipped_email:
@@ -1146,7 +1146,7 @@ es:
     shipment_state: Estado del envío
     shipment_states:
       backorder: Pedido pendiente de existencias
-      canceled:
+      canceled: Cancelado
       partial: Parcial
       pending: Pendiente
       ready: Listo
@@ -1240,7 +1240,7 @@ es:
     street_address_2: Calle (cont.)
     subtotal: Subtotal
     subtract: Restar
-    success:
+    success: Éxito
     successfully_created: "%{resource} ha sido creado con éxito"
     successfully_refunded:
     successfully_removed: "%{resource} ha sido eliminado con éxito"
