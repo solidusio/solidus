@@ -42,4 +42,31 @@ describe Spree::Carton do
     it { is_expected.to eq carton.number }
   end
 
+  describe "#order_numbers" do
+    subject { carton.order_numbers }
+    let(:order) { carton.orders.first }
+
+    it "returns a list of the order numbers it is associated to" do
+      expect(subject).to eq [order.number]
+    end
+  end
+
+  describe "#order_emails" do
+    subject { carton.order_emails }
+
+    let(:carton) { create(:carton, inventory_units: [first_order.inventory_units, second_order.inventory_units].flatten) }
+    let(:first_order) { create(:order_ready_to_ship, line_items_count: 1) }
+    let(:second_order) { create(:order_ready_to_ship, line_items_count: 1) }
+    let(:email) { 'something@something.com' }
+
+    before do
+      first_order.update_attributes!(email: email)
+      second_order.update_attributes!(email: email)
+    end
+
+    it "returns a unique list of the order emails it is associated to" do
+      expect(subject).to eq [email]
+    end
+  end
+
 end

@@ -68,14 +68,10 @@ class Spree::OrderShipping
         # having Shipment#ship! call OrderShipping#ship_shipment. We only really
         # need this `update_columns` for the specs, until we make that change.
         shipment.update_columns(state: 'shipped', shipped_at: Time.now)
-
-        if stock_location.fulfillable? # e.g. digital gift cards that aren't actually shipped
-          # TODO: send inventory units instead of shipment
-          Spree::ShipmentMailer.shipped_email(shipment).deliver
-        end
       end
     end
 
+    send_shipment_email(carton) if stock_location.fulfillable? # e.g. digital gift cards that aren't actually shipped
     fulfill_order_stock_locations(stock_location)
     update_order_state
 
@@ -94,5 +90,9 @@ class Spree::OrderShipping
       shipment_state: new_state,
       updated_at: Time.now,
     )
+  end
+
+  def send_shipment_email(carton)
+    Spree::CartonMailer.shipped_email(carton.id).deliver
   end
 end

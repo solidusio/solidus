@@ -1,4 +1,6 @@
 class Spree::Carton < ActiveRecord::Base
+  include Spree::ShippingManifest
+
   belongs_to :address, class_name: 'Spree::Address', inverse_of: :cartons
   belongs_to :stock_location, class_name: 'Spree::StockLocation', inverse_of: :cartons
   belongs_to :shipping_method, class_name: 'Spree::ShippingMethod', inverse_of: :cartons
@@ -24,5 +26,13 @@ class Spree::Carton < ActiveRecord::Base
 
   def tracking_url
     @tracking_url ||= shipping_method.build_tracking_url(tracking)
+  end
+
+  def order_numbers
+    orders.map(&:number)
+  end
+
+  def order_emails
+    orders.map(&:email).uniq
   end
 end

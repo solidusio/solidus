@@ -2,8 +2,11 @@ require 'ostruct'
 
 module Spree
   class Shipment < Spree::Base
-    belongs_to :address, class_name: 'Spree::Address', inverse_of: :shipments
     belongs_to :order, class_name: 'Spree::Order', touch: true, inverse_of: :shipments
+    include Spree::ShippingManifest
+
+    belongs_to :order, class_name: 'Spree::Order', touch: true, inverse_of: :shipments
+    belongs_to :address, class_name: 'Spree::Address', inverse_of: :shipments
     belongs_to :stock_location, class_name: 'Spree::StockLocation'
 
     has_many :adjustments, as: :adjustable, dependent: :delete_all
@@ -158,24 +161,6 @@ module Spree
       inventory_units.includes(:line_item).map(&:line_item).uniq
     end
 
-    ManifestItem = Struct.new(:line_item, :variant, :quantity, :states)
-
-    def manifest
-      # Grouping by the ID means that we don't have to call out to the association accessor
-      # This makes the grouping by faster because it results in less SQL cache hits.
-      inventory_units.group_by(&:variant_id).map do |variant_id, units|
-        units.group_by(&:line_item_id).map do |line_item_id, units|
-
-          states = {}
-          units.group_by(&:state).each { |state, iu| states[state] = iu.count }
-
-          line_item = units.first.line_item
-          variant = units.first.variant
-          ManifestItem.new(line_item, variant, units.length, states)
-        end
-      end.flatten
-    end
-
     def process_order_payments
       pending_payments =  order.pending_payments
                             .sort_by(&:uncaptured_amount).reverse
@@ -200,6 +185,10 @@ module Spree
         payment.capture!(cents)
         shipment_to_pay -= capturable_amount
       end
+    end
+
+    def line_items
+      inventory_units.includes(:line_item).map(&:line_item).uniq
     end
 
     def ready_or_pending?

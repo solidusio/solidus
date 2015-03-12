@@ -5,12 +5,12 @@
 ============================================================
 <%= Spree.t('shipment_mailer.shipped_email.shipment_summary') %>
 ============================================================
-<% @shipment.manifest.each do |item| %>
+<% @carton.manifest.each do |item| %>
   <%= item.variant.sku %> <%= item.variant.product.name %> <%= item.variant.options_text %>
 <% end %>
 ============================================================
 
-<%= Spree.t('shipment_mailer.shipped_email.track_information', :tracking => @shipment.tracking)     if @shipment.tracking %>
-<%= Spree.t('shipment_mailer.shipped_email.track_link',        :url      => @shipment.tracking_url) if @shipment.tracking_url %>
+<%= Spree.t('shipment_mailer.shipped_email.track_information', :tracking => @carton.tracking)     if @carton.tracking %>
+<%= Spree.t('shipment_mailer.shipped_email.track_link',        :url      => @carton.tracking_url) if @carton.tracking_url %>
 
 <%= Spree.t('shipment_mailer.shipped_email.thanks') %>
