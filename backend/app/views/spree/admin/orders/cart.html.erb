@@ -16,7 +16,7 @@
   <%= render :partial => 'spree/shared/error_messages', :locals => { :target => @order } %>
 </div>
 
-<% if @order.payments.exists? && @order.considered_risky? %>
+<% if @order.payments.exists? && @order.is_risky? %>
     <%= render 'spree/admin/orders/risk_analysis', latest_payment: @order.payments.order("created_at DESC").first %>
 <% end %>
 
