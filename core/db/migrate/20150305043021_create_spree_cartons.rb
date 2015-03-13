@@ -19,6 +19,6 @@ class CreateSpreeCartons < ActiveRecord::Migration
     add_index "spree_cartons", "number", unique: true
     add_index "spree_cartons", "external_number"
 
-    add_column "spree_inventory_units", "carton_id", :integer, index: true
+    add_column "spree_inventory_units", "carton_id", :integer
   end
 end
