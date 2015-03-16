@@ -72,7 +72,7 @@ FactoryGirl.define do
             after(:create) do |order|
               order.shipments.each do |shipment|
                 shipment.inventory_units.update_all state: 'shipped'
-                shipment.update_column('state', 'shipped')
+                shipment.update_columns(state: 'shipped', shipped_at: Time.now)
               end
               order.reload
             end
