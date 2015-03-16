@@ -43,5 +43,4 @@ class Spree::PromotionCode < ActiveRecord::Base
   def adjustment_promotion_scope(adjustment_scope)
     adjustment_scope.promotion.where(source_id: promotion.actions.map(&:id), promotion_code_id: id)
   end
-
 end

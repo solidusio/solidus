@@ -43,47 +43,79 @@ describe Spree::Admin::PromotionsController, :type => :controller do
   end
 
   describe "#create" do
+    subject { spree_post :create, params }
     let(:params) { {promotion: {name: 'some promo'}} }
 
-    it "succeeds" do
-      expect {
-        spree_post :create, params
-      }.to change { Spree::Promotion.count }.by(1)
-    end
-
-    context "with one promo codes" do
-      let(:params) do
-        super().merge(bulk_base: 'abc', bulk_number: 1)
+    context "it succeeds" do
+      it "creates a promotion" do
+        expect { subject }.to change { Spree::Promotion.count }.by(1)
       end
 
-      it "succeeds and creates one code" do
-        expect {
+      it "sets the flash message" do
+        subject
+        expect(flash[:success]).to eq "Promotion has been successfully created!"
+      end
+
+      it "redirects to promotion edit" do
+        subject
+        expect(response).to redirect_to "http://test.host/admin/promotions/#{assigns(:promotion).id}/edit"
+      end
+
+      context "with one promo codes" do
+        let(:params) do
+          super().merge(promotion_builder: { base_code: 'abc', number_of_codes: 1 })
+        end
+
+        it "succeeds and creates one code" do
           expect {
-            spree_post :create, params
-          }.to change { Spree::Promotion.count }.by(1)
-        }.to change { Spree::PromotionCode.count }.by(1)
+            expect {
+              subject
+            }.to change { Spree::Promotion.count }.by(1)
+          }.to change { Spree::PromotionCode.count }.by(1)
 
-        expect(assigns(:promotion).codes.first.value).to eq ('abc')
-      end
-    end
-
-    context "with multiple promo codes" do
-      let(:params) do
-        super().merge(bulk_base: 'abc', bulk_number: 2)
+          expect(assigns(:promotion).codes.first.value).to eq ('abc')
+        end
       end
 
-      before { srand 123 }
+      context "with multiple promo codes" do
+        let(:params) do
+          super().merge(promotion_builder: { base_code: 'abc', number_of_codes: 2 })
+        end
 
-      it "succeeds and creates multiple codes" do
-        expect {
+        before { srand 123 }
+
+        it "succeeds and creates multiple codes" do
           expect {
-            spree_post :create, params
-          }.to change { Spree::Promotion.count }.by(1)
-        }.to change { Spree::PromotionCode.count }.by(2)
+            expect {
+              subject
+            }.to change { Spree::Promotion.count }.by(1)
+          }.to change { Spree::PromotionCode.count }.by(2)
 
-        expect(assigns(:promotion).codes.map(&:value).sort).to eq ["abc_kzwbar", "abc_nccgrt"]
+          expect(assigns(:promotion).codes.map(&:value).sort).to eq ["abc_kzwbar", "abc_nccgrt"]
+        end
       end
     end
+
+    context "it fails" do
+      let(:params) { {} }
+
+      it "does not create a promotion" do
+        expect {
+          subject
+        }.not_to change { Spree::Promotion.count }
+      end
+
+      it "sets the flash error" do
+        subject
+        expect(flash[:error]).to eq "Name can't be blank"
+      end
+
+      it "renders new" do
+        subject
+        expect(response).to render_template :new
+      end
+    end
+
   end
 
 end

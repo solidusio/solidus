@@ -1101,6 +1101,7 @@ en:
         description: Order includes products with specified taxon(s)
         name: Taxon(s)
     promotions: Promotions
+    promotion_successfully_created: Promotion has been successfully created!
     promotion_uses: Promotion uses
     propagate_all_variants: Propagate all variants
     properties: Properties

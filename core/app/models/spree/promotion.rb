@@ -3,9 +3,6 @@ module Spree
     MATCH_POLICIES = %w(all any)
     UNACTIVATABLE_ORDER_STATES = ["complete", "awaiting_return", "returned"]
 
-    class_attribute :default_random_code_length
-    self.default_random_code_length = 6
-
     attr_reader :eligibility_errors
 
     belongs_to :promotion_category
@@ -219,23 +216,6 @@ module Spree
       end
     end
 
-    # Build promo codes. If number_of_codes is great than one then generate
-    # multiple codes by adding a random suffix to each code.
-    #
-    # @param base_code [String] When number_of_codes=1 this is the code. When
-    #   number_of_codes > 1 it is the base of the generated codes.
-    # @param number_of_codes [Integer] Number of codes to generate
-    # @param usage_limit [Integer] Usage limit for each code
-    def build_promotion_codes(base_code:, number_of_codes:)
-      if number_of_codes == 1
-        codes.build(value: base_code)
-      elsif number_of_codes > 1
-        number_of_codes.times do
-          build_code_with_base(base_code: base_code)
-        end
-      end
-    end
-
     private
     def blacklisted?(promotable)
       case promotable
@@ -261,20 +241,6 @@ module Spree
 
     def usage_count_for(promotable)
       adjustment_promotion_scope(promotable.adjustments).count
-    end
-
-    def build_code_with_base(base_code:)
-      random_code = code_with_randomness(base_code: base_code)
-
-      if Spree::PromotionCode.where(value: random_code).exists? || codes.any? {|c| c.value == random_code }
-        build_code_with_base(base_code: base_code)
-      else
-        codes.build(value: random_code)
-      end
-    end
-
-    def code_with_randomness(base_code:)
-      "#{base_code}_#{Array.new(Promotion.default_random_code_length){ ('A'..'Z').to_a.sample }.join}"
     end
   end
 end
