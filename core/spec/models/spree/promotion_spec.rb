@@ -721,8 +721,9 @@ describe Spree::Promotion, :type => :model do
     end
 
     context "when number_of_codes is greater than 1" do
-      subject { promotion.build_promotion_codes(base_code: 'abc', number_of_codes: 2) }
+      subject { promotion.build_promotion_codes(base_code: 'abc', number_of_codes: number_of_codes) }
       before  { srand 123 }
+      let(:number_of_codes) { 2 }
 
       it "builds the correct number of codes" do
         subject
@@ -740,12 +741,15 @@ describe Spree::Promotion, :type => :model do
       end
 
       context "there is a collision with the random codes generated" do
+        before { Spree::Promotion.default_random_code_length = 1 }
+        let(:number_of_codes) { 26 }
+
+        # With a random code length of 1, collisions happen frequently.
+        # with srand(123) it happens after the third iteration. Given a different random seed,
+        # we have a 6.5510660712837325e-09 percent chance of it not colliding with 26 iterations.
         it "will resolve the collision" do
-          # Generate the same code twice, then generate a new code
-          promotion.should_receive(:code_with_randomness).twice.and_return("duplicate_code")
-          promotion.should_receive(:code_with_randomness).once.and_return("new_code")
           subject
-          expect(promotion.codes.map(&:value).uniq.size).to eq 2
+          expect(promotion.codes.map(&:value).uniq.size).to eq number_of_codes
         end
       end
     end

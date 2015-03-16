@@ -2,7 +2,9 @@ module Spree
   class Promotion < Spree::Base
     MATCH_POLICIES = %w(all any)
     UNACTIVATABLE_ORDER_STATES = ["complete", "awaiting_return", "returned"]
-    DEFAULT_RANDOM_CODE_LENGTH = 6
+
+    class_attribute :default_random_code_length
+    self.default_random_code_length = 6
 
     attr_reader :eligibility_errors
 
@@ -272,7 +274,7 @@ module Spree
     end
 
     def code_with_randomness(base_code:)
-      "#{base_code}_#{Array.new(DEFAULT_RANDOM_CODE_LENGTH){ ('A'..'Z').to_a.sample }.join}"
+      "#{base_code}_#{Array.new(Promotion.default_random_code_length){ ('A'..'Z').to_a.sample }.join}"
     end
   end
 end
