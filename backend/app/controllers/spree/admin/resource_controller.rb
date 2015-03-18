@@ -40,7 +40,7 @@ class Spree::Admin::ResourceController < Spree::Admin::BaseController
       respond_with(@object) do |format|
         format.html do
           flash.now[:error] = @object.errors.full_messages.join(", ")
-          render action: 'edit'
+          render_after_update_error
         end
         format.js { render layout: false }
       end
@@ -62,7 +62,7 @@ class Spree::Admin::ResourceController < Spree::Admin::BaseController
       respond_with(@object) do |format|
         format.html do
           flash.now[:error] = @object.errors.full_messages.join(", ")
-          render action: 'new'
+          render_after_create_error
         end
         format.js { render layout: false }
       end
@@ -254,5 +254,13 @@ class Spree::Admin::ResourceController < Spree::Admin::BaseController
 
     def new_actions
       [:new, :create]
+    end
+
+    def render_after_create_error
+      render action: 'new'
+    end
+
+    def render_after_update_error
+      render action: 'edit'
     end
 end
