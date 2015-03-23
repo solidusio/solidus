@@ -5,6 +5,13 @@ module Spree
     preference :base_percent, :decimal, default: 0
     preference :tiers, :hash, default: {}
 
+    before_validation do
+      # Convert tier values to decimals. Strings don't do us much good.
+      if preferred_tiers.is_a?(Hash)
+        self.preferred_tiers = Hash[*preferred_tiers.flatten.map(&:to_f)]
+      end
+    end
+
     validates :preferred_base_percent, numericality: {
       greater_than_or_equal_to: 0,
       less_than_or_equal_to: 100
@@ -19,11 +26,6 @@ module Spree
       base, percent = preferred_tiers.sort.reverse.detect{ |b,_| object.amount >= b }
       (object.amount * (percent || preferred_base_percent) / 100).round(2)
     end
-
-    def preferred_tiers_with_conversion= values
-      self.preferred_tiers_without_conversion = Hash[*values.flatten.map(&:to_f)]
-    end
-    alias_method_chain :preferred_tiers=, :conversion
 
     private
     def preferred_tiers_content
