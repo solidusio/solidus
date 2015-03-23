@@ -1,5 +1,8 @@
 module Spree
   class LineItem < Spree::Base
+    class InsufficientStock < StandardError
+    end
+
     before_validation :invalid_quantity_check
     belongs_to :order, class_name: "Spree::Order", inverse_of: :line_items, touch: true
     belongs_to :variant, class_name: "Spree::Variant", inverse_of: :line_items
