@@ -3,6 +3,8 @@
 # the one component of Spree.
 source 'https://rubygems.org'
 
+gem 'rails', '4.1.9'
+
 platforms :ruby do
   gem 'mysql2'
   gem 'pg'
