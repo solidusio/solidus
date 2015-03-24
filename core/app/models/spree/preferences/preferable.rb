@@ -63,13 +63,11 @@ module Spree::Preferences::Preferable
   end
 
   def has_preference?(name)
-    respond_to? self.class.preference_getter_method(name)
+    defined_preferences.include?(name.to_sym)
   end
 
   def defined_preferences
-    methods.grep(/\Apreferred_.*=\Z/).map do |pref_method|
-      pref_method.to_s.gsub(/\Apreferred_|=\Z/, '').to_sym
-    end
+    self.class.defined_preferences
   end
 
   def default_preferences

@@ -1,11 +1,25 @@
 module Spree::Preferences
   module PreferableClassMethods
+    def defined_preferences
+      []
+    end
 
     def preference(name, type, *args)
       options = args.extract_options!
       options.assert_valid_keys(:default)
       default = options[:default]
       default = ->{ options[:default] } unless default.is_a?(Proc)
+
+      # The defined preferences on a class are all those defined directly on
+      # that class as well as those defined on ancestors.
+      # We store these as a class instance variable on each class which has a
+      # preference. super() collects preferences defined on ancestors.
+      singleton_preferences = (@defined_singleton_preferences ||= [])
+      singleton_preferences << name.to_sym
+
+      define_singleton_method :defined_preferences do
+        super() + singleton_preferences
+      end
 
       # cache_key will be nil for new objects, then if we check if there
       # is a pending preference before going to default
