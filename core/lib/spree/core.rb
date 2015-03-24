@@ -18,6 +18,10 @@ require 'state_machine'
 # invalid state of a Payment. In the future this should be removed.
 StateMachine::Machine.ignore_method_conflicts = true
 
+# This is required because ActiveModel::Validations#invalid? conflicts with the
+# invalid state of a Payment. In the future this should be removed.
+StateMachine::Machine.ignore_method_conflicts = true
+
 module Spree
 
   mattr_accessor :user_class
