@@ -9,6 +9,7 @@ platforms :ruby do
   gem 'mysql2'
   gem 'pg'
   gem 'sqlite3'
+  gem 'fast_sqlite'
 end
 
 platforms :jruby do
