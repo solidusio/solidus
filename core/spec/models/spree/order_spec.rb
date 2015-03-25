@@ -515,7 +515,7 @@ describe Spree::Order, :type => :model do
 
         it "puts order back in address state" do
           order.ensure_updated_shipments
-          expect(order.state).to eql "address"
+          expect(order.state).to eql "cart"
         end
 
         it "resets shipment_total" do
