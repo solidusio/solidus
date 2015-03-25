@@ -502,7 +502,7 @@ describe Spree::Order, :type => :model do
     end
 
     ['payment', 'confirm'].each do |order_state|
-      context 'when ther order is in the #{order_state} state' do
+      context "when ther order is in the #{order_state} state" do
         before do
           order.state = order_state
           order.shipments.create!
