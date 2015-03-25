@@ -6,12 +6,13 @@ $(document).ready(function () {
       placeholder: Spree.translations.option_type_placeholder,
       multiple: true,
       initSelection: function (element, callback) {
-        var url = Spree.url(Spree.routes.option_type_search, {
-          ids: element.val(),
-          token: Spree.api_key
-        });
-        return Spree.getJSON(url, null, function (data) {
-          return callback(data);
+        return Spree.ajax({
+          url: Spree.routes.option_type_search,
+          data: { ids: element.val() },
+          type: 'get',
+          success: function(data) {
+            return callback(data);
+          }
         });
       },
       ajax: {
