@@ -22,6 +22,7 @@ describe "New Order", :type => :feature do
   end
 
   it "completes new order succesfully without using the cart", js: true do
+    click_on 'Cart'
     select2_search product.name, from: Spree.t(:name_or_sku)
     click_icon :plus
     click_on "Customer Details"
@@ -49,6 +50,7 @@ describe "New Order", :type => :feature do
 
   context "adding new item to the order", js: true do
     it "inventory items show up just fine and are also registered as shipments" do
+      click_on 'Cart'
       select2_search product.name, from: Spree.t(:name_or_sku)
 
       within("table.stock-levels") do
@@ -85,6 +87,7 @@ describe "New Order", :type => :feature do
     end
 
     it "can still see line items" do
+      click_on 'Cart'
       select2_search product.name, from: Spree.t(:name_or_sku)
       click_icon :plus
       within(".line-items") do
@@ -134,8 +137,7 @@ describe "New Order", :type => :feature do
       create(:credit_card, default: true, user: user)
     end
     it "transitions to delivery not to complete" do
-      click_link "Orders"
-      click_link "New Order"
+      click_on 'Cart'
       select2_search product.name, from: Spree.t(:name_or_sku)
       within("table.stock-levels") do
         fill_in "variant_quantity", with: 1

@@ -21,12 +21,13 @@ describe "Customer Details", type: :feature, js: true do
       visit spree.admin_path
       click_link "Orders"
       click_link "New Order"
+      click_on 'Cart'
       select2_search product.name, from: Spree.t(:name_or_sku)
       within("table.stock-levels") do
         fill_in "variant_quantity", with: 1
         click_icon :plus
       end
-      wait_for_ajax
+      expect(page).to have_css('.line-item')
       click_link "Customer Details"
       targetted_select2 "foobar@example.com", from: "#s2id_customer_search"
       # 5317 - Address prefills using user's default.
