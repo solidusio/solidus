@@ -41,7 +41,7 @@ class ::Spree::PromotionCode::CodeBuilder
       valid_codes += get_unique_codes(new_codes)
     end
 
-    valid_codes.to_a
+    valid_codes.to_a.take(num_codes)
   end
 
   def generate_random_code

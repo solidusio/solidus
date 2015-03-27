@@ -25,7 +25,6 @@ describe Spree::PromotionCode::CodeBuilder do
     end
 
     context "with more than one code" do
-      before { srand 123 }
       let(:num_codes) { 2 }
 
       it "builds the correct number of codes" do
@@ -44,7 +43,7 @@ describe Spree::PromotionCode::CodeBuilder do
         expect(values.all? { |val| val.starts_with?("#{base_code}_") }).to be true
       end
 
-      context 'when there is a code colision' do
+      context 'when every possible code must be used' do
         before do
           @old_length = described_class.random_code_length
           described_class.random_code_length = 1
@@ -53,9 +52,22 @@ describe Spree::PromotionCode::CodeBuilder do
 
         let(:num_codes) { 26 }
 
-        # With a random code length of 1, collisions happen frequently.
-        # with srand(123) it happens after the second iteration.
         it "resolves the collision" do
+          subject
+          expect(builder.promotion.codes.map(&:value).uniq).to have(num_codes).items
+        end
+      end
+
+      context "when collisions occur" do
+        before do
+          @old_length = described_class.random_code_length
+          described_class.random_code_length = 1
+        end
+        after { described_class.random_code_length = @old_length }
+
+        let(:num_codes) { 25 } # every possible code except 1
+
+        it "resolves the collisions and returns the correct number of codes" do
           subject
           expect(builder.promotion.codes.map(&:value).uniq).to have(num_codes).items
         end
