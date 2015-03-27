@@ -268,7 +268,7 @@ module Spree
       @contents ||= Spree::OrderContents.new(self)
     end
 
-    # Associates the specified user and user addresses with the order.
+    # Associates the specified user with the order.
     def associate_user!(user, override_email = true)
       self.user = user
       attrs_to_set = { user_id: user.try(:id) }

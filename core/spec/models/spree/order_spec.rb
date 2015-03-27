@@ -43,21 +43,6 @@ describe Spree::Order, :type => :model do
       subject
       expect(order.reload.canceler).to eq(admin_user)
     end
-
-    it "should duplicate a user's ship and bill addresses and associate them with a persisted order" do
-      order = FactoryGirl.create(:order_with_line_items, ship_address: nil, bill_address: nil)
-      ship_address = FactoryGirl.create(:address)
-      bill_address = FactoryGirl.create(:address)
-      user = FactoryGirl.create(:user, ship_address: ship_address, bill_address: bill_address)
-
-      order.associate_user!(user)
-      order.ship_address.attributes.except('id', 'updated_at', 'created_at').should == ship_address.attributes.except('id', 'updated_at', 'created_at')
-      order.bill_address.attributes.except('id', 'updated_at', 'created_at').should == bill_address.attributes.except('id', 'updated_at', 'created_at')
-
-      # verify we generated new address models
-      order.ship_address_id.should_not == ship_address.id
-      order.bill_address_id.should_not == bill_address.id
-    end
   end
 
   context "#create" do
