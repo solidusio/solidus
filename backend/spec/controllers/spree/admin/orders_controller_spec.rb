@@ -315,6 +315,8 @@ describe Spree::Admin::OrdersController, :type => :controller do
   end
 
   describe "#update" do
+    stub_authorization!
+
     let(:order) { create(:order) }
     let(:payload) do
       {
