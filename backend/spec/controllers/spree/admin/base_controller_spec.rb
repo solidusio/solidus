@@ -16,10 +16,9 @@ describe Spree::Admin::BaseController, :type => :controller do
       allow_any_instance_of(Spree::Admin::BaseController).to receive(:spree_current_user).and_return(nil)
     end
 
-    it "redirects to root" do
-      allow(controller).to receive_message_chain(:spree, :root_path).and_return('/root')
+    it "redirects to unauthorized" do
       get :index
-      expect(response).to redirect_to '/root'
+      expect(response).to redirect_to '/unauthorized'
     end
   end
 end
