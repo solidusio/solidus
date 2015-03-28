@@ -231,12 +231,9 @@ RSpec.feature "Translations", :js do
 
   private
 
-  # sleep 1 second to make sure the ajax request process properly
   def change_locale
     visit spree.root_path
-    within("#locale-select") { select language, from: "locale" }
-    sleep 1
-    visit spree.root_path
+    within("#locale-select") { select language, from: "switch_to_locale" }
   end
 
   def fill_in_name(value)
