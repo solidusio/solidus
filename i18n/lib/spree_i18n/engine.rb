@@ -1,5 +1,6 @@
 require 'globalize'
 require 'friendly_id/globalize'
+require 'routing_filter'
 
 module SpreeI18n
   class Engine < Rails::Engine

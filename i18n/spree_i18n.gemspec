@@ -27,6 +27,7 @@ Gem::Specification.new do |s|
   s.add_runtime_dependency 'globalize', '~> 5.0.1'
   s.add_runtime_dependency 'i18n_data', '~> 0.5.1'
   s.add_runtime_dependency 'rails-i18n', '~> 4.0.1'
+  s.add_runtime_dependency 'routing-filter', '~> 0.5.0'
   s.add_runtime_dependency 'spree_core', '~> 3.1.0.beta'
 
   s.add_development_dependency 'byebug'
