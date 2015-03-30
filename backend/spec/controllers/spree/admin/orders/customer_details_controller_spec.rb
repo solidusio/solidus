@@ -44,17 +44,18 @@ describe Spree::Admin::Orders::CustomerDetailsController, type: :controller do
       end
 
       context "false guest checkout param" do
+        let!(:assigned_user){ create :user }
         it "attempts to associate the user" do
-          mock_user = mock_model(Spree.user_class, id: 1)
-          allow(Spree.user_class).to receive(:find) { mock_user }
-          expect(order.contents).to receive(:associate_user).with(mock_user, true)
           attributes = {
             order_id: order.number,
-            user_id: mock_user.id,
+            user_id: assigned_user.id,
             guest_checkout: 'false',
             order: { email: "" }
           }
-          spree_put :update, attributes
+
+          expect {
+            spree_put :update, attributes
+          }.to change{ order.reload.user }.to(assigned_user)
         end
       end
 
@@ -64,13 +65,14 @@ describe Spree::Admin::Orders::CustomerDetailsController, type: :controller do
                                            next: false,
                                            refresh_shipment_rates: true)
 
-          expect(order.contents).not_to receive(:associate_user)
-
           attributes = {
             order_id: order.number,
             order: { email: "foo@example.com" }
           }
-          spree_put :update, attributes
+
+          expect {
+            spree_put :update, attributes
+          }.not_to change{ order.reload.user }
         end
       end
     end
