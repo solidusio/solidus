@@ -42,7 +42,7 @@ pl:
       spree/order:
         checkout_complete: Zamówienie zakończone
         completed_at: Zakończone o
-        considered_risky:
+        considered_risky: Ryzykowne
         coupon_code: Kod kuponu
         created_at: Data zamówienia
         email: E-mail klienta
@@ -651,7 +651,7 @@ pl:
     filter_results: Wyniki filtra
     finalize: Zakończ
     finalized:
-    find_a_taxon:
+    find_a_taxon: Znajdź takson
     first_item: Koszt pierwszej sztuki
     first_name: Imię
     first_name_begins_with: Imię zaczyna się na
@@ -723,9 +723,9 @@ pl:
     item_total_rule:
       operators:
         gt: większy niż
-        gte: równy lub większy niż
-        lt:
-        lte:
+        gte: większy lub równy
+        lt: mniej niż
+        lte: mniejszy lub równy
     items_cannot_be_shipped: Nie można było obliczyć stawek wysyłki dla wybranych pozycji.
     items_in_rmas:
     items_reimbursed:
@@ -739,7 +739,7 @@ pl:
     lifetime_stats:
     line_item_adjustments:
     list: Lista
-    loading: "Ładuje"
+    loading: "Ładuję"
     locale_changed: Zmieniono ustawienia regionalne
     location: Lokalizacja
     lock: Zablokuj
@@ -883,7 +883,7 @@ pl:
     order_populator:
       out_of_stock: Brak %{item} w magazynie.
       please_enter_reasonable_quantity: Podaj rozsądną ilość.
-      selected_quantity_not_available:
+      selected_quantity_not_available: ! 'wybrana dla %{item} nie jest dostępna.'
     order_processed_successfully: Twoje zamówienie zostało przetworzone
     order_resumed:
     order_state:
@@ -893,7 +893,7 @@ pl:
       cart: koszyk
       complete: zakończone
       confirm: potwierdź
-      considered_risky:
+      considered_risky: ryzykowne
       delivery: dostawa
       payment: płatność
       resumed: wznowione
@@ -1036,7 +1036,7 @@ pl:
     quantity: Ilość
     quantity_returned: Ilość zwrócona
     quantity_shipped: Ilość wysłana
-    quick_search:
+    quick_search: Szybkie wyszukiwanie...
     rate: Rata
     reason: Powód
     receive: Odbierz
@@ -1096,17 +1096,17 @@ pl:
     return_number:
     return_quantity: Zwracana ilość
     returned: Zwrócono
-    returns:
+    returns: Zwroty
     review: Przegląd
-    risk:
-    risk_analysis:
-    risky:
+    risk: Ryzyko
+    risk_analysis: Analiza ryzyka
+    risky: Ryzykowne
     rma_credit: Kredyt RMA
     rma_number: Numer RMA
     rma_value: Wartość RMA
     roles: Role
     rules: Reguły
-    safe:
+    safe: Bezpieczne
     sales_total: Sprzedaż razem
     sales_total_description: Sprzedaż razem dla wszystkich zamówień
     sales_totals: Suma sprzedaży
@@ -1125,6 +1125,7 @@ pl:
     select_a_stock_location:
     select_from_prototype: Wybierz z prototypu
     select_stock: Wybierz magazyn
+    selected_quantity_not_available: ! 'wybrana dla %{item} nie jest dostępna.'
     send_copy_of_all_mails_to: Wyślij kopię wszystkich wiadomości do
     send_mails_as: Wyślij wiadomości jako
     server: Serwer
@@ -1175,7 +1176,7 @@ pl:
     show_active: Pokaż aktywne
     show_deleted: Pokaż usunięte
     show_only_complete_orders: Pokaż tylko zamknięte zamówienia
-    show_only_considered_risky:
+    show_only_considered_risky: Pokaż tylko zamówienia ryzykowne
     show_rate_in_label: Pokaż stawkę w etykiecie
     sku: SKU
     skus:
@@ -1185,7 +1186,7 @@ pl:
     split: Podziel
     spree_gateway_error_flash_for_checkout: Był problem z Twoimi informacjami, dotyczącymi płatności. Sprawdź dane i spróbuj ponownie.
     ssl:
-      change_protocol:
+      change_protocol: "Proszę zmienić protokół na HTTP (zamiast HTTPS) i powtórzyć żądanie"
     start: Start
     state: Stan
     state_based: Stan oparty na
@@ -1224,7 +1225,7 @@ pl:
     states: Stany
     states_required: Wymagane stany
     status: Status
-    stock:
+    stock: Stan zaopatrzenia
     stock_location: Lokalizacja magazynu
     stock_location_info: Informacja o lokalizacji magazynu
     stock_locations: Lokalizacje magazynów
