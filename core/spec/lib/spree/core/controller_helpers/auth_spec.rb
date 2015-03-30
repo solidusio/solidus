@@ -87,9 +87,8 @@ describe Spree::Core::ControllerHelpers::Auth, type: :controller do
         expect(response).to redirect_to('/login')
       end
       it 'redirects root path' do
-        allow(controller).to receive_message_chain(:spree, :root_path).and_return('/root_path')
         get :index
-        expect(response).to redirect_to('/root_path')
+        expect(response).to redirect_to('/unauthorized')
       end
     end
   end
