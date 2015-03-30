@@ -68,6 +68,7 @@ describe Spree::Admin::UsersController, :type => :controller do
   describe "#create" do
     before do
       use_mock_user
+      allow(mock_user).to receive_messages(:spree_roles= => true, :stock_locations= => true)
       user.spree_roles << Spree::Role.find_or_create_by(name: 'admin')
     end
 
@@ -84,11 +85,26 @@ describe Spree::Admin::UsersController, :type => :controller do
       ))
       spree_post :create, { :user => { :bill_address_attributes => { :city => "New York" } } }
     end
+
+    it "can set roles" do
+      role = Spree::Role.create(name: "my_role")
+      role_2 = Spree::Role.create(name: "my_role_2")
+      expect(mock_user).to receive(:spree_roles=).with([role, role_2])
+      spree_post :create, { user: { spree_role_ids: [role.id, role_2.id] } }
+    end
+
+    it "can set stock locations" do
+      location = Spree::StockLocation.create(name: "my_location")
+      location_2 = Spree::StockLocation.create(name: "my_location_2")
+      expect(mock_user).to receive(:stock_locations=).with([location, location_2])
+      spree_post :create, { user: { stock_location_ids: [location.id, location_2.id] } }
+    end
   end
 
   describe "#update" do
     before do
       use_mock_user
+      allow(mock_user).to receive_messages(:spree_roles= => true, :stock_locations= => true)
       user.spree_roles << Spree::Role.find_or_create_by(name: 'admin')
     end
 
@@ -104,6 +120,20 @@ describe Spree::Admin::UsersController, :type => :controller do
         "bill_address_attributes" => { "city" => "New York" }
       ))
       spree_put :update, { :id => mock_user.id, :user => { :bill_address_attributes => { :city => "New York" } } }
+    end
+
+    it "can set roles" do
+      role = Spree::Role.create(name: "my_role")
+      role_2 = Spree::Role.create(name: "my_role_2")
+      expect(mock_user).to receive(:spree_roles=).with([role, role_2])
+      spree_put :update, { id: mock_user.id, user: { spree_role_ids: [role.id, role_2.id] } }
+    end
+
+    it "can set stock locations" do
+      location = Spree::StockLocation.create(name: "my_location")
+      location_2 = Spree::StockLocation.create(name: "my_location_2")
+      expect(mock_user).to receive(:stock_locations=).with([location, location_2])
+      spree_put :update, { id: mock_user.id, user: { stock_location_ids: [location.id, location_2.id] } }
     end
   end
 
@@ -149,7 +179,8 @@ describe Spree::Admin::UsersController, :type => :controller do
 end
 
 def use_mock_user
-  allow(mock_user).to receive(:save).and_return(true)
-  allow(Spree.user_class).to receive(:find).with(mock_user.id.to_s).and_return(mock_user)
-  allow(Spree.user_class).to receive(:new).and_return(mock_user)
+  mock_user.stub(:save).and_return(true)
+  mock_user.stub(:update_attributes).and_return(true)
+  Spree.user_class.stub(:find).with(mock_user.id.to_s).and_return(mock_user)
+  Spree.user_class.stub(:new).and_return(mock_user)
 end

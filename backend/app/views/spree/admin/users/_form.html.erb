@@ -16,7 +16,18 @@
           </li>
         <% end %>
       </ul>
-      <%= hidden_field_tag 'user[spree_role_ids][]', '' %>
+    </div>
+
+    <div data-hook="admin_user_form_stock_locations" class="field">
+      <%= label_tag nil, Spree.t(:stock_locations) %>
+      <ul>
+        <% @stock_locations.each do |stock_location| %>
+          <li>
+            <%= check_box_tag 'user[stock_location_ids][]', stock_location.id, @user.stock_locations.include?(stock_location), :id => "user_spree_stock_locations_#{stock_location.name}" %>
+            <%= label_tag stock_location.name %>
+          </li>
+        <% end %>
+      </ul>
     </div>
 
   </div>

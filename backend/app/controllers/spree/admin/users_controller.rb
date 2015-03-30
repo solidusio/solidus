@@ -1,13 +1,13 @@
 module Spree
   module Admin
     class UsersController < ResourceController
-      rescue_from Spree::Core::DestroyWithOrdersError, :with => :user_destroy_with_orders_error
+      rescue_from Spree::Core::DestroyWithOrdersError, with: :user_destroy_with_orders_error
 
       after_action :sign_in_if_change_own_password, only: :update
 
       # http://spreecommerce.com/blog/2010/11/02/json-hijacking-vulnerability/
       before_action :check_json_authenticity, only: :index
-      before_action :load_roles
+      before_filter :load_roles, :load_stock_locations, only: [:edit, :new]
 
       def index
         respond_with(@collection) do |format|
@@ -21,37 +21,26 @@ module Spree
       end
 
       def create
-        if params[:user]
-          roles = params[:user].delete("spree_role_ids")
-        end
-
         @user = Spree.user_class.new(user_params)
         if @user.save
+          set_roles
+          set_stock_locations
 
-          if roles
-            @user.spree_roles = roles.reject(&:blank?).collect{|r| Spree::Role.find(r)}
-          end
-
-          flash.now[:success] = Spree.t(:created_successfully)
-          render :edit
+          flash[:success] = Spree.t(:created_successfully)
+          redirect_to edit_admin_user_url(@user)
         else
-          render :new
+          redirect_to new_admin_user_url
         end
       end
 
       def update
-        if params[:user]
-          roles = params[:user].delete("spree_role_ids")
-        end
-
         if @user.update_attributes(user_params)
-          if roles
-            @user.spree_roles = roles.reject(&:blank?).collect{|r| Spree::Role.find(r)}
-          end
-          flash.now[:success] = Spree.t(:account_updated)
+          set_roles
+          set_stock_locations
+          flash[:success] = Spree.t(:account_updated)
         end
 
-        render :edit
+        redirect_to edit_admin_user_url(@user)
       end
 
       def addresses
@@ -153,6 +142,18 @@ module Spree
 
         def load_roles
           @roles = Spree::Role.all
+        end
+
+        def load_stock_locations
+          @stock_locations = Spree::StockLocation.all
+        end
+
+        def set_roles
+          @user.spree_roles = Spree::Role.where(id: (params[:user][:spree_role_ids] || []))
+        end
+
+        def set_stock_locations
+          @user.stock_locations = Spree::StockLocation.where(id: (params[:user][:stock_location_ids] || []))
         end
     end
   end

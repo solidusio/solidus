@@ -8,6 +8,9 @@ Spree::Core::Engine.config.to_prepare do
       has_many :role_users, foreign_key: "user_id", class_name: "Spree::RoleUser"
       has_many :spree_roles, through: :role_users, source: :role
 
+      has_many :user_stock_locations, foreign_key: "user_id", class_name: "Spree::UserStockLocation"
+      has_many :stock_locations, through: :user_stock_locations
+
       has_many :spree_orders, foreign_key: "user_id", class_name: "Spree::Order"
 
       belongs_to :ship_address, class_name: 'Spree::Address'
