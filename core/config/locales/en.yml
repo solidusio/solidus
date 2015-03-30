@@ -769,7 +769,6 @@ en:
     instructions_to_reset_password: Please enter your email on the form below
     insufficient_stock: Insufficient stock available, only %{on_hand} remaining
     insufficient_stock_lines_present: Some line items in this order have insufficient quantity.
-    insufficient_stock_for_order: Insufficient stock quantity for items in the order
     intercept_email_address: Intercept Email Address
     intercept_email_instructions: Override email recipient and replace with this address.
     internal_name: Internal Name
