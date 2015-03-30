@@ -51,6 +51,15 @@ describe Spree::Carton do
     end
   end
 
+  describe "#shipment_numbers" do
+    subject { carton.shipment_numbers }
+    let(:shipment) { carton.shipments.first }
+
+    it "returns a list of the order numbers it is associated to" do
+      expect(subject).to eq [shipment.number]
+    end
+  end
+
   describe "#order_emails" do
     subject { carton.order_emails }
 

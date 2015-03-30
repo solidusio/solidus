@@ -505,18 +505,6 @@ describe "Order Details", type: :feature, js: true do
       expect(page).not_to have_link('Return Authorizations')
     end
 
-    it "can add tracking information" do
-      visit spree.edit_admin_order_path(order)
-      within("table.index tr:nth-child(5)") do
-        click_icon :edit
-      end
-      fill_in "tracking", :with => "FOOBAR"
-      click_icon :ok
-
-      expect(page).not_to have_css("input[name=tracking]")
-      expect(page).to have_content("Tracking: FOOBAR")
-    end
-
     it "can change the shipping method" do
       order = create(:completed_order_with_totals)
       visit spree.edit_admin_order_path(order)
@@ -534,10 +522,12 @@ describe "Order Details", type: :feature, js: true do
       order = create(:order_ready_to_ship)
       order.refresh_shipment_rates
       visit spree.edit_admin_order_path(order)
+
       click_icon 'arrow-right'
       wait_for_ajax
-      within '.shipment-state' do
-        expect(page).to have_content('SHIPPED')
+
+      within '.carton-state' do
+        page.should have_content('SHIPPED')
       end
     end
   end

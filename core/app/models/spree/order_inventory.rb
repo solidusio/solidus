@@ -83,6 +83,7 @@ module Spree
         return 0 if quantity == 0 || shipment.shipped?
 
         shipment_units = shipment.inventory_units_for_item(line_item, variant).reject do |variant_unit|
+          # TODO: exclude all 'shipped' states
           variant_unit.state == 'shipped'
         end.sort_by(&:state)
 

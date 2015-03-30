@@ -1,0 +1,73 @@
+<div id="<%= dom_id(carton) %>" data-hook="admin_carton_form">
+  <%= render :partial => "spree/admin/variants/split", :formats => :js %>
+  <fieldset class="no-border-bottom">
+    <legend align="center" class="stock-location" data-hook="stock-location">
+      <span class="carton-number"><%= carton.number %></span>
+      -
+      <span class="carton-state"><%= Spree.t("shipment_states.shipped") %></span>
+      <%= Spree.t(:package_from) %>
+      <strong class="stock-location-name" data-hook="stock-location-name">'<%= carton.stock_location.name %>'</strong>
+    </legend>
+  </fieldset>
+
+  <table class="stock-contents index" data-hook="stock-contents">
+    <colgroup>
+      <col style="width: 10%;" />
+      <col style="width: 55%;" />
+      <col style="width: 15%;" />
+      <col style="width: 5%;" />
+      <col style="width: 15%;" />
+    </colgroup>
+
+    <thead>
+      <th colspan="2"><%= Spree.t(:item_description) %></th>
+      <th><%= Spree.t(:price) %></th>
+      <th><%= Spree.t(:quantity) %></th>
+      <th><%= Spree.t(:total) %></th>
+    </thead>
+
+    <tbody data-shipment-number="<%= carton.number %>" data-order-number="<%= order.number %>">
+      <%= render 'spree/admin/orders/carton_manifest', carton: carton %>
+
+      <tr class="show-method total">
+        <% if method = carton.shipping_method %>
+          <td colspan="5">
+            <strong><%= method.name %></strong>
+          </td>
+        <% else %>
+          <td colspan='5'><%= Spree.t(:no_shipping_method_selected) %></td>
+        <% end %>
+      </tr>
+
+      <% if order.special_instructions.present? %>
+        <tr class='special_instructions'>
+          <td colspan="5">
+            <strong><%= Spree.t(:special_instructions) %>:&nbsp;</strong><%= order.special_instructions %>
+          </td>
+        </tr>
+      <% end %>
+
+      <tr class="show-tracking total">
+        <td colspan="5">
+          <% if carton.tracking.present? %>
+            <strong><%= Spree.t(:tracking) %>:</strong> <%= carton.tracking %>
+          <% else %>
+            <%= Spree.t(:no_tracking_present) %>
+          <% end %>
+        </td>
+      </tr>
+
+      <tr class='shipment-numbers'>
+        <td colspan="5">
+          <strong><%= Spree.t(:shipment_numbers) %>:&nbsp;</strong><%= carton.shipment_numbers.join(", ") %>
+        </td>
+      </tr>
+
+      <tr class='ship-date'>
+        <td colspan="5">
+          <strong><%= Spree.t(:shipment_date) %>:&nbsp;</strong><%= carton.display_shipped_at %>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

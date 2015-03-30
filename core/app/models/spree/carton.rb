@@ -1,12 +1,11 @@
 class Spree::Carton < ActiveRecord::Base
-  include Spree::ShippingManifest
-
   belongs_to :address, class_name: 'Spree::Address', inverse_of: :cartons
   belongs_to :stock_location, class_name: 'Spree::StockLocation', inverse_of: :cartons
   belongs_to :shipping_method, class_name: 'Spree::ShippingMethod', inverse_of: :cartons
 
   has_many :inventory_units, inverse_of: :carton
   has_many :orders, -> { uniq }, through: :inventory_units
+  has_many :shipments, -> { uniq }, through: :inventory_units
 
   validates :address, presence: true
   validates :stock_location, presence: true
@@ -34,5 +33,17 @@ class Spree::Carton < ActiveRecord::Base
 
   def order_emails
     orders.map(&:email).uniq
+  end
+
+  def shipment_numbers
+    shipments.map(&:number)
+  end
+
+  def display_shipped_at
+    shipped_at.to_s(:rfc822)
+  end
+
+  def manifest
+    @manifest ||= Spree::ShippingManifest.new(inventory_units: inventory_units).items
   end
 end

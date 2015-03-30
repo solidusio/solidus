@@ -1,5 +1,8 @@
 module Spree
   class InventoryUnit < Spree::Base
+    PRE_SHIPMENT_STATES = %w(backordered on_hand)
+    POST_SHIPMENT_STATES = %w(returned)
+
     belongs_to :variant, class_name: "Spree::Variant", inverse_of: :inventory_units
     belongs_to :order, class_name: "Spree::Order", inverse_of: :inventory_units
     belongs_to :shipment, class_name: "Spree::Shipment", touch: true, inverse_of: :inventory_units
@@ -12,7 +15,9 @@ module Spree
 
     scope :backordered, -> { where state: 'backordered' }
     scope :on_hand, -> { where state: 'on_hand' }
+    scope :pre_shipment, -> { where(state: PRE_SHIPMENT_STATES) }
     scope :shipped, -> { where state: 'shipped' }
+    scope :post_shipment, -> { where(state: POST_SHIPMENT_STATES) }
     scope :returned, -> { where state: 'returned' }
     scope :backordered_per_variant, ->(stock_item) do
       includes(:shipment, :order)

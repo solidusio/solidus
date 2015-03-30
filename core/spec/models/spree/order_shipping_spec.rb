@@ -145,5 +145,29 @@ describe Spree::OrderShipping do
       end
     end
 
+    context "when the shipment has been partially shipped previously" do
+      let(:order) { create(:order_ready_to_ship, line_items_count: 2) }
+      let(:shipped_inventory) { [shipment.inventory_units.first] }
+      let(:unshipped_inventory) { [shipment.inventory_units.last] }
+
+      before do
+        order.shipping.ship(
+          inventory_units: shipped_inventory,
+          stock_location: shipment.stock_location,
+          address: shipment.address,
+          shipping_method: shipment.shipping_method,
+        )
+      end
+
+      it "marks the inventory units as shipped" do
+        expect { subject }.to change { unshipped_inventory.map(&:reload).map(&:state) }.from(['on_hand']).to(['shipped'])
+      end
+
+      it "creates a carton with the shipment's inventory units" do
+        expect { subject }.to change { order.cartons.count }.by(1)
+        expect(subject.inventory_units).to match_array(unshipped_inventory)
+      end
+    end
+
   end
 end

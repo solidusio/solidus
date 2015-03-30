@@ -3,7 +3,6 @@ require 'ostruct'
 module Spree
   class Shipment < Spree::Base
     belongs_to :order, class_name: 'Spree::Order', touch: true, inverse_of: :shipments
-    include Spree::ShippingManifest
 
     belongs_to :order, class_name: 'Spree::Order', touch: true, inverse_of: :shipments
     belongs_to :address, class_name: 'Spree::Address', inverse_of: :shipments
@@ -14,6 +13,7 @@ module Spree
     has_many :shipping_rates, -> { order('cost ASC') }, dependent: :delete_all
     has_many :shipping_methods, through: :shipping_rates
     has_many :state_changes, as: :stateful
+    has_many :cartons, -> { uniq }, through: :inventory_units
 
     after_save :update_adjustments
 
@@ -216,6 +216,10 @@ module Spree
 
     def selected_shipping_rate
       shipping_rates.where(selected: true).first
+    end
+
+    def manifest
+      @manifest ||= Spree::ShippingManifest.new(inventory_units: inventory_units).items
     end
 
     def selected_shipping_rate_id

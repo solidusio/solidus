@@ -15,7 +15,7 @@ class Spree::OrderShipping
   # @return The carton created.
   def ship_shipment(shipment, external_number: nil, tracking_number: nil)
     ship(
-      inventory_units: shipment.inventory_units,
+      inventory_units: shipment.inventory_units.pre_shipment,
       stock_location: shipment.stock_location,
       address: shipment.address,
       shipping_method: shipment.shipping_method,
