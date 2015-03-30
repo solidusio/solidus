@@ -120,6 +120,20 @@ describe Spree::Payment, :type => :model do
       payment.invalidate
       expect(payment.state).to eq('invalid')
     end
+
+    context "the payment's source is invalid" do
+
+      before(:each) do
+        card.year = 2014
+        payment.source = card
+      end
+
+      it "transitions to invalid" do
+        payment.state = 'checkout'
+        payment.invalidate
+        payment.state.should eq ('invalid')
+      end
+    end
   end
 
   context "processing" do
