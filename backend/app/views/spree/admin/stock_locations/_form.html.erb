@@ -4,6 +4,11 @@
       <%= f.field_container :name do %>
         <%= f.label :name, Spree.t(:name) %> <span class="required">*</span><br />
         <%= f.text_field :name, class: 'fullwidth', required: true %>
+    </div>
+    <div data-hook="stock_location_code">
+      <%= f.field_container :code do %>
+        <%= f.label :code, Spree.t(:code) %>
+        <%= f.text_field :code, :class => 'fullwidth', :label => false %>
       <% end %>
     </div>
     <div data-hook="stock_location_admin_name">

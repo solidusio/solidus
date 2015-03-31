@@ -9,6 +9,7 @@ module Spree
     belongs_to :country, class_name: 'Spree::Country'
 
     validates_presence_of :name
+    validates_uniqueness_of :code, allow_blank: true, case_sensitive: false
 
     scope :active, -> { where(active: true) }
     scope :order_default, -> { order(default: :desc, name: :asc) }
