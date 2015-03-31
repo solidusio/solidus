@@ -13,7 +13,7 @@ module Spree
       def create
         variant = Variant.find(params[:variant_id])
         stock_location = StockLocation.find(params[:stock_location_id])
-        stock_movement = stock_location.stock_movements.build(stock_movement_params)
+        stock_movement = stock_location.stock_movements.build(stock_movement_params.merge(originator: try_spree_current_user))
         stock_movement.stock_item = stock_location.set_up_stock_item(variant)
 
         if stock_movement.save
