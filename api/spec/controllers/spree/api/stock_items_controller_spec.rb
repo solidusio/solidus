@@ -14,38 +14,63 @@ module Spree
     end
 
     context "as a normal user" do
-      it "cannot list stock items for a stock location" do
-        api_get :index, stock_location_id: stock_location.to_param
-        expect(response.status).to eq(404)
+      describe "#index" do
+        it "can list stock items for an active stock location" do
+          api_get :index, stock_location_id: stock_location.to_param
+          expect(response).to be_success
+          json_response['stock_items'].first.should have_attributes(attributes)
+          json_response['stock_items'].first['variant']['sku'].should eq 'ABC'
+        end
+
+        it "cannot list stock items for an inactive stock location" do
+          stock_location.update_attributes!(active: false)
+          api_get :index, stock_location_id: stock_location.to_param
+          expect(response).to be_not_found
+        end
       end
 
-      it "cannot see a stock item" do
-        api_get :show, stock_location_id: stock_location.to_param, id: stock_item.to_param
-        expect(response.status).to eq(404)
+      describe "#show" do
+        it "can see a stock item for an active stock location" do
+          api_get :show, stock_location_id: stock_location.to_param, id: stock_item.to_param
+          json_response.should have_attributes(attributes)
+          json_response['count_on_hand'].should eq stock_item.count_on_hand
+        end
+
+        it "cannot see a stock item for an inactive stock location" do
+          stock_location.update_attributes!(active: false)
+          api_get :show, stock_location_id: stock_location.to_param, id: stock_item.to_param
+          response.status.should == 404
+        end
       end
 
-      it "cannot create a stock item" do
-        variant = create(:variant)
-        params = {
-          stock_location_id: stock_location.to_param,
-          stock_item: {
-            variant_id: variant.id,
-            count_on_hand: '20'
+      describe "#create" do
+        it "cannot create a stock item" do
+          variant = create(:variant)
+          params = {
+            stock_location_id: stock_location.to_param,
+            stock_item: {
+              variant_id: variant.id,
+              count_on_hand: '20'
+            }
           }
-        }
 
-        api_post :create, params
-        expect(response.status).to eq(404)
+          api_post :create, params
+          response.status.should == 401
+        end
       end
 
-      it "cannot update a stock item" do
-        api_put :update, stock_location_id: stock_location.to_param, stock_item_id: stock_item.to_param
-        expect(response.status).to eq(404)
+      describe "#update" do
+        it "cannot update a stock item" do
+          api_put :update, stock_location_id: stock_location.to_param, stock_item_id: stock_item.to_param
+          response.status.should == 404
+        end
       end
 
-      it "cannot destroy a stock item" do
-        api_delete :destroy, stock_location_id: stock_location.to_param, stock_item_id: stock_item.to_param
-        expect(response.status).to eq(404)
+      describe "#destroy" do
+        it "cannot destroy a stock item" do
+          api_delete :destroy, stock_location_id: stock_location.to_param, stock_item_id: stock_item.to_param
+          response.status.should == 404
+        end
       end
     end
 

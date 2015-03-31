@@ -19,112 +19,127 @@ module Spree
       stub_authentication!
     end
 
-    it "can see a paginated list of variants" do
-      api_get :index
-      first_variant = json_response["variants"].first
-      expect(first_variant).to have_attributes(show_attributes)
-      expect(first_variant["stock_items"]).to be_present
-      expect(json_response["count"]).to eq(1)
-      expect(json_response["current_page"]).to eq(1)
-      expect(json_response["pages"]).to eq(1)
-    end
+    describe "#index" do
 
-    it 'can control the page size through a parameter' do
-      create(:variant)
-      api_get :index, :per_page => 1
-      expect(json_response['count']).to eq(1)
-      expect(json_response['current_page']).to eq(1)
-      expect(json_response['pages']).to eq(3)
-    end
-
-    it 'can query the results through a parameter' do
-      expected_result = create(:variant, :sku => 'FOOBAR')
-      api_get :index, :q => { :sku_cont => 'FOO' }
-      expect(json_response['count']).to eq(1)
-      expect(json_response['variants'].first['sku']).to eq expected_result.sku
-    end
-
-    it "variants returned contain option values data" do
-      api_get :index
-      option_values = json_response["variants"].last["option_values"]
-      expect(option_values.first).to have_attributes([:name,
-                                                 :presentation,
-                                                 :option_type_name,
-                                                 :option_type_id])
-    end
-
-    it "variants returned contain images data" do
-      variant.images.create!(:attachment => image("thinking-cat.jpg"))
-
-      api_get :index
-
-      expect(json_response["variants"].last).to have_attributes([:images])
-      expect(json_response['variants'].first['images'].first).to have_attributes([:attachment_file_name,
-                                                                               :attachment_width,
-                                                                               :attachment_height,
-                                                                               :attachment_content_type,
-                                                                               :mini_url,
-                                                                               :small_url,
-                                                                               :product_url,
-                                                                               :large_url])
-
-    end
-
-    it 'variants returned do not contain cost price data' do
-      api_get :index
-      expect(json_response["variants"].first.has_key?(:cost_price)).to eq false
-    end
-
-    # Regression test for #2141
-    context "a deleted variant" do
-      before do
-        variant.update_column(:deleted_at, Time.now)
-      end
-
-      it "is not returned in the results" do
+      it "can see a paginated list of variants" do
         api_get :index
-        expect(json_response["variants"].count).to eq(0)
+        first_variant = json_response["variants"].first
+        first_variant.should have_attributes(show_attributes)
+        first_variant["stock_items"].should be_present
+        json_response["count"].should == 1
+        json_response["current_page"].should == 1
+        json_response["pages"].should == 1
       end
 
-      it "is not returned even when show_deleted is passed" do
-        api_get :index, :show_deleted => true
-        expect(json_response["variants"].count).to eq(0)
+      it 'can control the page size through a parameter' do
+        create(:variant)
+        api_get :index, :per_page => 1
+        json_response['count'].should == 1
+        json_response['current_page'].should == 1
+        json_response['pages'].should == 3
+      end
+
+      it 'can query the results through a paramter' do
+        expected_result = create(:variant, :sku => 'FOOBAR')
+        api_get :index, :q => { :sku_cont => 'FOO' }
+        json_response['count'].should == 1
+        json_response['variants'].first['sku'].should eq expected_result.sku
+      end
+
+      it "variants returned contain option values data" do
+        api_get :index
+        option_values = json_response["variants"].last["option_values"]
+        option_values.first.should have_attributes([:name,
+                                                   :presentation,
+                                                   :option_type_name,
+                                                   :option_type_id])
+      end
+
+      it "variants returned contain images data" do
+        variant.images.create!(:attachment => image("thinking-cat.jpg"))
+
+        api_get :index
+
+        json_response["variants"].last.should have_attributes([:images])
+        json_response['variants'].first['images'].first.should have_attributes([:attachment_file_name,
+                                                                                 :attachment_width,
+                                                                                 :attachment_height,
+                                                                                 :attachment_content_type,
+                                                                                 :mini_url,
+                                                                                 :small_url,
+                                                                                 :product_url,
+                                                                                 :large_url])
+
+      end
+
+      # Regression test for #2141
+      context "a deleted variant" do
+        before do
+          variant.update_column(:deleted_at, Time.now)
+        end
+
+        it "is not returned in the results" do
+          api_get :index
+          json_response["variants"].count.should == 0
+        end
+
+        it "is not returned even when show_deleted is passed" do
+          api_get :index, :show_deleted => true
+          json_response["variants"].count.should == 0
+        end
+      end
+
+      context "pagination" do
+        it "can select the next page of variants" do
+          second_variant = create(:variant)
+          api_get :index, :page => 2, :per_page => 1
+          json_response["variants"].first.should have_attributes(show_attributes)
+          json_response["total_count"].should == 3
+          json_response["current_page"].should == 2
+          json_response["pages"].should == 3
+        end
+      end
+
+      context "stock item filter" do
+        let(:stock_location) { variant.stock_locations.first }
+        let!(:inactive_stock_location) { create(:stock_location, propagate_all_variants: true, name: "My special stock location", active: false) }
+
+        it "only returns stock items for active stock locations" do
+          api_get :index
+          variant = json_response['variants'].first
+          stock_items = variant['stock_items'].map { |si| si['stock_location_name'] }
+
+          expect(stock_items).to include stock_location.name
+          expect(stock_items).not_to include inactive_stock_location.name
+        end
       end
     end
 
-    context "pagination" do
-      it "can select the next page of variants" do
-        second_variant = create(:variant)
-        api_get :index, :page => 2, :per_page => 1
-        expect(json_response["variants"].first).to have_attributes(show_attributes)
-        expect(json_response["total_count"]).to eq(3)
-        expect(json_response["current_page"]).to eq(2)
-        expect(json_response["pages"]).to eq(3)
+    describe "#show" do
+
+      it "can see a single variant" do
+        api_get :show, :id => variant.to_param
+        json_response.should have_attributes(show_attributes)
+        json_response["stock_items"].should be_present
+        option_values = json_response["option_values"]
+        option_values.first.should have_attributes([:name,
+                                                   :presentation,
+                                                   :option_type_name,
+                                                   :option_type_id])
       end
-    end
 
-    it "can see a single variant" do
-      api_get :show, :id => variant.to_param
-      expect(json_response).to have_attributes(show_attributes)
-      expect(json_response["stock_items"]).to be_present
-      option_values = json_response["option_values"]
-      expect(option_values.first).to have_attributes([:name,
-                                                 :presentation,
-                                                 :option_type_name,
-                                                 :option_type_id])
-    end
+      it "can see a single variant with images" do
+        variant.images.create!(:attachment => image("thinking-cat.jpg"))
 
-    it "can see a single variant with images" do
-      variant.images.create!(:attachment => image("thinking-cat.jpg"))
+        api_get :show, :id => variant.to_param
 
-      api_get :show, :id => variant.to_param
-
-      expect(json_response).to have_attributes(show_attributes + [:images])
-      option_values = json_response["option_values"]
-      expect(option_values.first).to have_attributes([:name,
-                                                 :presentation,
-                                                 :option_type_name,
-                                                 :option_type_id])
+        json_response.should have_attributes(show_attributes + [:images])
+        option_values = json_response["option_values"]
+        option_values.first.should have_attributes([:name,
+                                                   :presentation,
+                                                   :option_type_name,
+                                                   :option_type_id])
+      end
     end
 
     it "can learn how to create a new variant" do

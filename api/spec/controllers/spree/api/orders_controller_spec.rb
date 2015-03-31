@@ -288,7 +288,7 @@ module Spree
       after { Spree::Ability.remove_ability(::BarAbility) }
 
       it "can view an order" do
-        user = mock_model(Spree::LegacyUser)
+        user = build(:user)
         allow(user).to receive_message_chain(:spree_roles, :pluck).and_return(["bar"])
         allow(user).to receive(:has_spree_role?).with('bar').and_return(true)
         allow(user).to receive(:has_spree_role?).with('admin').and_return(false)

@@ -10,11 +10,8 @@ node :total_on_hand do
 end
 
 
-child(:stock_items => :stock_items) do
+child(root_object.stock_items.accessible_by(current_ability) => :stock_items) do
   attributes :id, :count_on_hand, :stock_location_id, :backorderable
   attribute :available? => :available
-
-  glue(:stock_location) do
-    attribute :name => :stock_location_name
-  end
+  node(:stock_location_name) { |si| si.stock_location.name }
 end

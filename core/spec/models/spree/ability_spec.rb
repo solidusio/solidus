@@ -201,6 +201,32 @@ describe Spree::Ability, :type => :model do
       end
     end
 
+    context 'for Stock Item' do
+      let(:resource) { Spree::StockItem.new }
+      context 'active stock location' do
+        before { resource.build_stock_location(active: true) }
+        it_should_behave_like 'read only'
+      end
+
+      context 'inactive stock location' do
+        before { resource.build_stock_location(active: false) }
+        it_should_behave_like 'access denied'
+      end
+    end
+
+    context 'for Stock Location' do
+      let(:resource) { Spree::StockLocation.new }
+      context 'active' do
+        before { resource.active = true }
+        it_should_behave_like 'read only'
+      end
+
+      context 'inactive' do
+        before { resource.active = false }
+        it_should_behave_like 'access denied'
+      end
+    end
+
     context 'for Taxons' do
       let(:resource) { Spree::Taxon.new }
       context 'requested by any user' do
