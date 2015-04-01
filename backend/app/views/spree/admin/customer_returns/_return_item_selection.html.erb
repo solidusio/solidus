@@ -7,6 +7,7 @@
       <th><%= Spree.t(:product) %></th>
       <th><%= Spree.t(:sku) %></th>
       <th><%= Spree.t(:pre_tax_amount) %></th>
+      <th><%= Spree.t(:state) %></th>
       <th><%= Spree.t(:exchange_for) %></th>
       <th><%= Spree.t(:reception_status) %></th>
     </tr>
@@ -33,6 +34,9 @@
         </td>
         <td class="align-center">
           <%= return_item.display_pre_tax_amount %>
+        </td>
+        <td class="align-center">
+          <%= return_item.inventory_unit.state %>
         </td>
         <td class="align-center">
           <%= return_item.exchange_variant.try(:exchange_name) %>
