@@ -32,7 +32,7 @@ fr:
         verification_value: Code de sécurité
         year: Année
       spree/inventory_unit:
-        state: Région
+        state: Province / Région / État
       spree/line_item:
         price: Prix
         quantity: Quantité
@@ -40,19 +40,19 @@ fr:
         name: Nom
         presentation: Présentation
       spree/order:
-        checkout_complete: Paiement complet
+        checkout_complete: Votre commande à été reçu
         completed_at: Terminé à
         considered_risky: Considérée à risque
-        coupon_code: Code Promo
+        coupon_code: Coupon de promotion
         created_at: Date d'achat
         email: Courriel du client
         ip_address: Adresse IP
-        item_total: Total d'articles
+        item_total: Nombre total d'articles
         number: Nombre
         payment_state: "État du paiement"
         shipment_state: "État du colis"
         special_instructions: Instructions spéciales
-        state: Région
+        state: Province / Région / État
         total: Total
       spree/order/bill_address:
         address1: Rue de l'adresse de facturation
@@ -60,7 +60,7 @@ fr:
         firstname: Prénom pour l'adresse de facturation
         lastname: Nom pour l'adresse de facturation
         phone: Numéro de téléphone de l'adresse de facturation
-        state: Région de l'adresse de facturation
+        state: Province / Région / État de l'adresse de facturation
         zipcode: Code postal de l'adresse de facturation
       spree/order/ship_address:
         address1: Rue de l'adresse de livraison
@@ -68,7 +68,7 @@ fr:
         firstname: Prénom pour l'adresse de livraison
         lastname: Nom pour l'adresse de livraison
         phone: Numéro de téléphone de l'adresse de livraison
-        state: Région de l'adresse de livraison
+        state: Province / Région / État de l'adresse de livraison
         zipcode: Code postal de l'adresse de livraison
       spree/payment:
         amount: Montant
@@ -677,17 +677,17 @@ fr:
     fill_in_customer_info: Merci de remplir les informations client.
     filter_results: Filtrer les resultats
     finalize: Finaliser
-    finalized:
-    find_a_taxon:
-    first_item: Coût du premier article
+    finalized: Finaliser
+    find_a_taxon: Trouver un taxon
+    first_item: Premier article
     first_name: Prénom
-    first_name_begins_with: Prénom commmance par
+    first_name_begins_with: Prénom commmençant par
     flat_percent: Pourcentage net
-    flat_rate_per_order: Taux net (par commande)
+    flat_rate_per_order: Taux net par commande
     flexible_rate: Taux flexible
     forgot_password: Mot de passe oublié
     free_shipping: Livraison gratuite
-    free_shipping_amount:
+    free_shipping_amount: "-"
     front_end: Front End
     gateway: Méthode de paiement
     gateway_config_unavailable: Méthode de paiement indisponible pour cet environnement
@@ -695,10 +695,10 @@ fr:
     general: Général
     general_settings: Paramètres généraux
     google_analytics: Google Analytics
-    google_analytics_id: Google Analytics ID
-    guest_checkout: Commande invité
-    guest_user_account: Commander en tant qu'invité
-    has_no_shipped_units: n'a pas d'unité livrée
+    google_analytics_id: ID Google Analytics
+    guest_checkout: Passer la commande en tant qu'invité
+    guest_user_account: Invité
+    has_no_shipped_units: Aucune unité à été livré
     height: Taille
     hide_cents: Cacher les centimes
     home: Accueil
@@ -707,41 +707,43 @@ fr:
       fields: Champs
       language: Langue
       localization_settings: Réglages régionaux
-      only_complete: Complètes seulement
-      only_incomplete: Incomplètes seulement
+      only_complete: Commandes complètes seulement
+      only_incomplete: Commandes incomplètes seulement
       select_locale: Sélectionnez vos paramètres régionaux
       show_only: Afficher seulement
       supported_locales: Paramètres régionaux supportés
       this_file_language: Français (FR)
       translations: Traductions
     icon: Icône
-    identifier:
+    identifier: Identification
     image: Image
     images: Images
     implement_eligible_for_return:
     implement_requires_manual_intervention:
-    inactive:
-    incl:
+    inactive: Inactif
+    incl: inclus
     included_in_price: Inclus dans le prix
     included_price_validation: ne peut pas être sélectionné tant que vous n'avez pas défini une zone de taxe par défaut
-    incomplete:
+    incomplete: Incomplet
     info_number_of_skus_not_shown:
-    info_product_has_multiple_skus:
-    instructions_to_reset_password: 'Remplissez le formulaire ci-après et les instructions pour réinitialiser votre mot de passe vous seront envoyées par courriel:'
+      one: un
+      other: "et %{count} autres"
+    info_product_has_multiple_skus: "Ce produit possède %{count} variantes:"
+    instructions_to_reset_password: 'Remplissez le formulaire ci-dessous et les instructions pour réinitialiser votre mot de passe vous seront envoyées par courriel:'
     insufficient_stock: Stock disponible insuffisant, il n'en reste seulement que %{on_hand}
-    insufficient_stock_lines_present:
+    insufficient_stock_lines_present: Nous n'avons pas tous les articles de votre commande dans notre inventaire.
     intercept_email_address: Intercepter l'adresse courriel
     intercept_email_instructions: Remplacer l'adresse courriel de destination par cette adresse
     internal_name: Nom interne
-    invalid_credit_card:
+    invalid_credit_card: Carte de crédit invalide
     invalid_exchange_variant:
-    invalid_payment_provider: Prestataire de paiement non valide.
-    invalid_promotion_action: Action pour la promotion non valide.
+    invalid_payment_provider: Fournisseur de paiement invalide.
+    invalid_promotion_action: Action de promotion invalide.
     invalid_promotion_rule: Règle de promotion invalide
     inventory: Inventaire
     inventory_adjustment: Ajustement de l'inventaire
     inventory_error_flash_for_insufficient_quantity: Un article de votre panier n'est plus disponible.
-    inventory_state:
+    inventory_state: État de l'inventaire
     is_not_available_to_shipment_address: n'est pas disponible pour l'adresse de livraison
     iso_name: Nom ISO
     item: Article
@@ -750,27 +752,27 @@ fr:
     item_total_rule:
       operators:
         gt: plus grand que
-        gte: plus grand ou égal à
-        lt:
-        lte:
+        gte: égal ou plus grand que
+        lt: plus petit que
+        lte: égal ou plus petit que
     items_cannot_be_shipped: Il nous est impossible de livrer l'article sélectionné à votre adresse de livraison. Veuillez choisir une autre adresse de livraison.
     items_in_rmas:
     items_reimbursed:
     items_to_be_reimbursed:
     jirafe: Jirafe
     landing_page_rule:
-      path: Path
+      path: Chemin
     last_name: Nom
     last_name_begins_with: Le nom commmence par
     learn_more: Pour en savoir plus
-    lifetime_stats:
+    lifetime_stats: Statistiques à vie
     line_item_adjustments:
     list: Liste
     loading: Chargement
     locale_changed: Paramètres régionaux changés
     location: Emplacement
     lock: Verrouiller
-    log_entries:
+    log_entries: Entrées dans le journal
     logged_in_as: Identifié en tant que
     logged_in_succesfully: Connexion réussie
     logged_out: Vous avez été déconnecté
@@ -779,24 +781,24 @@ fr:
     login_failed: L'authentification a échoué
     login_name: Identifiant
     logout: Se déconnecter
-    logs:
-    look_for_similar_items: Chercher des articles similaires
+    logs: Journal
+    look_for_similar_items: Rechercher des articles similaires
     make_refund: Effectuer un remboursement
-    make_sure_the_above_reimbursement_amount_is_correct:
-    manage_promotion_categories:
-    manage_variants:
-    manual_intervention_required:
+    make_sure_the_above_reimbursement_amount_is_correct: Veuillez vérifier que le montant du remboursement est correct
+    manage_promotion_categories: Gérer les catégories de promotions
+    manage_variants: Gérer les variantes
+    manual_intervention_required: Intervention manuelle requise
     master_price: Prix de départ
     match_choices:
       all: Tous
       none: Aucun
     max_items: Nombre maximum d'objets
-    member_since:
-    memo:
+    member_since: Membre depuis
+    memo: note
     meta_description: Description Meta
     meta_keywords: Mots clés Meta
-    meta_title:
-    metadata: Metadata
+    meta_title: Titre du site
+    metadata: Données Meta
     minimal_amount: Montant minimal
     month: Mois
     more: Plus
@@ -804,13 +806,13 @@ fr:
     my_account: Mon compte
     my_orders: Mes commandes
     name: Nom
-    name_on_card:
+    name_on_card: Nom sur la carte
     name_or_sku: Nom ou référence
     new: Nouveau
     new_adjustment: Nouvel ajustement
-    new_country:
+    new_country: Nouveau pays
     new_customer: Nouveau client
-    new_customer_return:
+    new_customer_return: 
     new_image: Nouvelle image
     new_option_type: Nouveau type d'option
     new_order: Nouvelle commande
@@ -819,14 +821,14 @@ fr:
     new_payment_method: Nouvelle méthode de paiement
     new_product: Nouveau produit
     new_promotion: Nouvelle promotion
-    new_promotion_category:
+    new_promotion_category: Nouvelle catégorie de promotion
     new_property: Nouvelle propriété
     new_prototype: Nouveau prototype
-    new_refund:
-    new_refund_reason:
+    new_refund: Nouveau remboursement
+    new_refund_reason: Nouvelle raison pour un remboursement
     new_return_authorization: Nouveau retour d'autorisation
     new_rma_reason:
-    new_shipment_at_location:
+    new_shipment_at_location: Nouvel envoi de livrasion
     new_shipping_category: Nouvelle catégorie de livraison
     new_shipping_method: Nouvelle méthode de livraison
     new_state: Nouvelle région
@@ -843,24 +845,24 @@ fr:
     new_zone: Nouvelle zone
     next: Suivant
     no_actions_added: Aucune action ajoutée
-    no_payment_found:
+    no_payment_found: Aucun paiment trouvé
     no_pending_payments: Aucun paiement en attente
     no_products_found: Aucun article trouvé
-    no_resource_found:
+    no_resource_found: Aucun ressource trouvée
     no_results: Aucun résultat
-    no_returns_found:
+    no_returns_found: Aucun retour trouvé
     no_rules_added: Aucune règle ajoutée
-    no_shipping_method_selected:
-    no_state_changes:
+    no_shipping_method_selected: Aucune méthode de livraison sélectionnée
+    no_state_changes: Aucun changement de province, de région ou d'état
     no_tracking_present: Les détails pour le traqueur ne sont pas présents
     none: Aucun
-    none_selected:
+    none_selected: Aucune sélection
     normal_amount: Montant normal
     not: pas
     not_available: N/A
     not_enough_stock: Il n'y a pas assez de stock à l'emplacement source pour compléter ce transfert.
     not_found: "%{resource} n'est pas trouvé"
-    note:
+    note: note
     notice_messages:
       product_cloned: Le produit a été cloné
       product_deleted: Le produit a été supprimé
@@ -883,9 +885,9 @@ fr:
     or_over_price: "%{price} ou plus"
     order: Commande
     order_adjustments: Ajustement de la commande
-    order_already_updated:
-    order_approved:
-    order_canceled:
+    order_already_updated: Commande déjà mise à jour
+    order_approved: Commande approuvée
+    order_canceled: Commande annulée
     order_details: Détails de la commande
     order_email_resent: Renvoi de la commande par courriel
     order_information: Information sur la commande
@@ -902,17 +904,17 @@ fr:
         instructions: Veuillez vérifier et sauvegarder les informations suivantes à propos de votre commande.
         order_summary: Sommaire de la commande
         subject: Confirmation de commande
-        subtotal:
+        subtotal: Sous-total de la commande
         thanks: Merci d'avoir fait affaire avec nous.
         total: ! 'Total de la commande: %{total}'
     order_not_found: Impossible de trouver votre commande. Merci d'essayer à nouveau.
-    order_number:
+    order_number: Numéro de facture
     order_populator:
       out_of_stock: "%{item} n'est plus en stock."
       please_enter_reasonable_quantity: Veuillez saisir une quantité raisonnable.
-      selected_quantity_not_available:
+      selected_quantity_not_available: La quantité sélectionnée n'est pas disponible
     order_processed_successfully: Votre commande a été traitée avec succès
-    order_resumed:
+    order_resumed: Résumé de votre commande
     order_state:
       address: adresse
       awaiting_return: en attente du retour
@@ -935,7 +937,7 @@ fr:
     overview: Vue d'ensemble
     package_from: Paquet de
     pagination:
-      next_page: page suivante»
+      next_page: "page suivante »"
       previous_page: "« page précédente"
       truncate: "…"
     password: Mot de passe
@@ -947,7 +949,7 @@ fr:
     payment_identifier:
     payment_information: Information sur le paiement
     payment_method: Méthode de paiement
-    payment_method_not_supported:
+    payment_method_not_supported: Ce méthode de paiement n'est pas supportée
     payment_methods: Méthodes de paiement
     payment_processing_failed: Le paiement ne peut être effectué, merci de vérifier les informations fournies
     payment_processor_choose_banner_text: Si vous avez besoin d'aide pour schoisir une méthode de paiement, svp visitez
