@@ -164,13 +164,14 @@ describe Spree::Order, :type => :model do
       before do
         order.state = 'address'
         allow(order).to receive(:has_available_payment)
+        order.bill_address = FactoryGirl.create(:bill_address)
+        order.ship_address = FactoryGirl.create(:ship_address)
         FactoryGirl.create(:shipment, :order => order)
         order.email = "user@example.com"
         order.save!
       end
 
       it "updates totals" do
-        allow(order).to receive_messages(:ensure_available_shipping_rates => true)
         line_item = FactoryGirl.create(:line_item, :price => 10, :adjustment_total => 10)
         order.line_items << line_item
         tax_rate = create(:tax_rate, :tax_category => line_item.tax_category, :amount => 0.05)
