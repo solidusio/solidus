@@ -12,11 +12,11 @@ fr:
         state: Province / Région / État
         zipcode: Code Postal
       spree/calculator/tiered_flat_rate:
-        preferred_base_amount:
-        preferred_tiers:
+        preferred_base_amount: Montant de base
+        preferred_tiers: Tiers
       spree/calculator/tiered_percent:
-        preferred_base_percent:
-        preferred_tiers:
+        preferred_base_percent: Pourcentage de base
+        preferred_tiers: Tiers
       spree/country:
         iso: ISO
         iso3: ISO3
@@ -26,10 +26,10 @@ fr:
       spree/credit_card:
         base:
         cc_type: Type
-        month: Month
-        name:
+        month: Mois
+        name: Nom
         number: Numéro
-        verification_value: Valeur de vérification
+        verification_value: Code de sécurité
         year: Année
       spree/inventory_unit:
         state: Région
@@ -38,19 +38,19 @@ fr:
         quantity: Quantité
       spree/option_type:
         name: Nom
-        presentation: Presentation
+        presentation: Présentation
       spree/order:
         checkout_complete: Paiement complet
         completed_at: Terminé à
         considered_risky: Considérée à risque
         coupon_code: Code Promo
         created_at: Date d'achat
-        email: Email du client
+        email: Courriel du client
         ip_address: Adresse IP
         item_total: Total d'articles
         number: Nombre
         payment_state: "État du paiement"
-        shipment_state: "État de la cargaison"
+        shipment_state: "État du colis"
         special_instructions: Instructions spéciales
         state: Région
         total: Total
@@ -85,7 +85,7 @@ fr:
         shipping_category: Catégorie de livraison
         tax_category: Catégorie de taxe
       spree/promotion:
-        advertise: Faire de la publicité
+        advertise: Publiciser
         code: Code
         description: Description
         event_name: Nom de l'événement
@@ -95,7 +95,7 @@ fr:
         starts_at: Débute le
         usage_limit: Limite d'utilisation
       spree/promotion_category:
-        name:
+        name: Nom
       spree/property:
         name: Nom
         presentation: Présentation
@@ -109,20 +109,20 @@ fr:
         abbr: Abréviation
         name: Nom
       spree/state_change:
-        state_changes:
-        state_from:
-        state_to:
-        timestamp:
-        type:
-        updated:
-        user:
+        state_changes: Changement d'état
+        state_from: de
+        state_to: à
+        timestamp: Horodatage
+        type: Type
+        updated: Mis à jour le
+        user: Utilisateur
       spree/store:
-        mail_from_address:
-        meta_description:
-        meta_keywords:
-        name:
-        seo_title:
-        url:
+        mail_from_address: Courriel d'envoi
+        meta_description: Description (Meta)
+        meta_keywords: Mots-clés (Meta)
+        name: Nom du site
+        seo_title: Titre SEO
+        url: Adresse URL
       spree/tax_category:
         description: Description
         name: Nom
@@ -144,7 +144,7 @@ fr:
         cost_currency: Devise du prix
         cost_price: Prix coûtant
         depth: Profondeur
-        height: Taille
+        height: Hauteur
         price: Prix
         sku: SKU
         weight: Poids
@@ -157,47 +157,47 @@ fr:
         spree/calculator/tiered_flat_rate:
           attributes:
             base:
-              keys_should_be_positive_number:
+              keys_should_be_positive_number: "Les clés Tier devraient toutes être des nombres plus grand que 0"
             preferred_tiers:
-              should_be_hash:
+              should_be_hash: "devrait être une table de hachage"
         spree/calculator/tiered_percent:
           attributes:
             base:
-              keys_should_be_positive_number:
-              values_should_be_percent:
+              keys_should_be_positive_number: "Les clés Tier devraient toutes être des nombres plus grand que 0"
+              values_should_be_percent: "Les valeurs Tier devraient toutes être des percentages compris entre 0% et 100%"
             preferred_tiers:
-              should_be_hash:
+              should_be_hash: "devrait être une table de hachage"
         spree/classification:
           attributes:
             taxon_id:
-              already_linked:
+              already_linked: "est déjà relié à ce produit"
         spree/credit_card:
           attributes:
             base:
               card_expired: Cette carte est expirée
-              expiry_invalid:
+              expiry_invalid: Cette carte est invalide
         spree/line_item:
           attributes:
             currency:
-              must_match_order_currency:
+              must_match_order_currency: Doit correspondre à la devise de la commande
         spree/refund:
           attributes:
             amount:
-              greater_than_allowed:
+              greater_than_allowed: est plus grand que la valeur autorisée.
         spree/reimbursement:
           attributes:
             base:
-              return_items_order_id_does_not_match:
+              return_items_order_id_does_not_match: Un ou plusieurs des articles de retour spécifiées n'appartiennent pas à la même commande que du remboursement.
         spree/return_item:
           attributes:
-            inventory_unit:
-              other_completed_return_item_exists:
             reimbursement:
-              cannot_be_associated_unless_accepted:
+              cannot_be_associated_unless_accepted: ne peut pas être associé à un article retourné qui n'est pas accepté.
+            inventory_unit:
+              other_completed_return_item_exists: "%{inventory_unit_id} est déjà pris par un article retourné %{return_item_id}"
         spree/store:
           attributes:
             base:
-              cannot_destroy_default_store:
+              cannot_destroy_default_store: Impossible de détruire la boutique par défaut.
     models:
       spree/address:
         one: Adresse
@@ -209,14 +209,20 @@ fr:
         one: Carte de crédit
         other: Cartes de crédit
       spree/customer_return:
+        one: Retour de la clientèle
+        other: Retours de la clientèle
       spree/inventory_unit:
         one: Stock
         other: Stocks
       spree/line_item:
-        one: Variante de produits
-        other: Variantes de produits
+        one: article
+        other: articles
       spree/option_type:
+        one: Type d'option
+        other: Types d'option
       spree/option_value:
+        one: Valeur d'option
+        other: Valeurs d'option
       spree/order:
         one: Commande
         other: Commandes
@@ -230,7 +236,11 @@ fr:
         one: Produit
         other: Produits
       spree/promotion:
+        one: Promotion
+        other: Promotions
       spree/promotion_category:
+        one: Catégorie de promotion
+        other: Catégories de promotion
       spree/property:
         one: Proprieté
         other: Proprietés
@@ -238,29 +248,47 @@ fr:
         one: Prototype
         other: Prototypes
       spree/refund_reason:
+        one: Raison du remboursement
+        other: Raisons du remboursement
       spree/reimbursement:
+        one: Remboursement
+        other: Remboursements
       spree/reimbursement_type:
+        one: Type de remboursement
+        other: Types de remboursement
       spree/return_authorization:
         one: Retour d'autorisation
         other: Retours d'autorisations
       spree/return_authorization_reason:
+        one: Raison du retour d'autorisation
+        other: Raisons du retour d'autorisation
       spree/role:
-        one: Rôles
+        one: Rôle
         other: Rôles
       spree/shipment:
-        one: Expedition
-        other: Expeditions
+        one: Expédition
+        other: Expéditions
       spree/shipping_category:
         one: Catégorie de livraison
         other: Catégories de livraison
       spree/shipping_method:
+        one: Méthode de livraison
+        other: Méthodes de livraison
       spree/state:
         one: Région
         other: Régions
       spree/state_change:
+        one: Changement de région
+        other: Changements de région
       spree/stock_location:
+        one: Emplacement du stock
+        other: Emplacements du stock
       spree/stock_movement:
+        one: Mouvement de stock
+        other: Mouvements de stock
       spree/stock_transfer:
+        one: Transfert de stock
+        other: Transferts de stock
       spree/tax_category:
         one: Catégorie de taxe
         other: Catégories des taxes
@@ -268,28 +296,30 @@ fr:
         one: Taux de la taxe
         other: Taux des taxes
       spree/taxon:
-        one: Chemin
-        other: Chemins
+        one: Taxon
+        other: Taxons
       spree/taxonomy:
         one: Taxonomie
         other: Taxonomies
       spree/tracker:
+        one: Code de suivi
+        other: Codes de suivi
       spree/user:
         one: Utilisateur
         other: Utilisateurs
       spree/variant:
-        one: Version
-        other: Versions
+        one: Variante
+        other: Variantes
       spree/zone:
         one: Zone
         other: Zones
   devise:
     confirmations:
-      confirmed: Votre compte a était confirmé avec succès. Vous êtes maintenant enregistré.
-      send_instructions: Vous recevrez un email avec des instructions pour confirmer la création de votre compte dans quelques minutes.
+      confirmed: Votre compte a été confirmé avec succès. Vous êtes maintenant enregistré.
+      send_instructions: Vous recevrez un courriel avec des instructions pour confirmer la création de votre compte dans quelques minutes.
     failure:
       inactive: Votre compte n'est pas encore actif.
-      invalid: Email ou mot de passe invalide.
+      invalid: Courriel ou mot de passe invalide.
       invalid_token: Marque d'authentification invalide.
       locked: Votre compte est bloqué.
       timeout: Votre session est expirée, s'il vous plaît connectez-vous de nouveaux pour continuer.
@@ -303,8 +333,8 @@ fr:
       unlock_instructions:
         subject: Instruction de déblocage de compte
     oauth_callbacks:
-      failure: "%{kind} ne vous a pas autorizé à cause de %{reason}."
-      success: Le compte %{kind} vous a autorizé avec succès
+      failure: "%{kind} ne vous a pas autorisé à cause de %{reason}."
+      success: Le compte %{kind} vous a autorisé avec succès
     unlocks:
       send_instructions: Vous allez recevoir un courriel expliquant comment déverrouiller votre compte dans quelques minutes.
       unlocked: Votre compte a été déverrouillé. Vous êtes maintenant connecté.
@@ -315,7 +345,7 @@ fr:
         updated: Votre mot de passe à été changé avec succès. Vous êtes désormais connecté.
     user_registrations:
       destroyed: Au revoir! Votre compte a été supprimé avec succès. Nous espérons vous revoir bientôt
-      inactive_signed_up: Votre compte a été créé avec succés. Cependant, nous n'avons pas pu vous connecter car votre compte est %{reason}
+      inactive_signed_up: Votre compte a été créé avec succès. Cependant, nous n'avons pas pu vous connecter car votre compte est %{reason}
       signed_up: Vous êtes connecté, bienvenue.
       updated: Votre compte a bien été mis à jour.
     user_sessions:
@@ -331,10 +361,10 @@ fr:
         other: "%{resource} n'a pu etre sauvegardé à cause de %{count} erreurs:"
   spree:
     abbreviation: Abréviation
-    accept:
-    acceptance_errors:
-    acceptance_status:
-    accepted:
+    accept: Accepter
+    acceptance_errors: Erreurs d'acceptation
+    acceptance_status: Statuts d'acceptation
+    accepted: Accepté
     account: Compte
     account_updated: Compte mis à jour!
     action: Action
@@ -347,7 +377,7 @@ fr:
       list: Liste
       listing: Lister
       new: Nouveau
-      refund:
+      refund: Rembourser
       save: Enregistrer
       update: Mise à jour
     activate: Activer
@@ -355,7 +385,7 @@ fr:
     add: Ajouter
     add_action_of_type: Ajouter l'action de type
     add_country: Ajouter un pays
-    add_coupon_code:
+    add_coupon_code: Ajouter un code promo
     add_new_header: Ajouter une nouvelle en-tête
     add_new_style: Ajouter un nouveau style
     add_one: Ajouter un
@@ -371,7 +401,7 @@ fr:
     additional_item: Coût d'un article supplémentaire
     address1: Adresse
     address2: Adresse (complément)
-    adjustable:
+    adjustable: Ajustable
     adjustment: Ajustement
     adjustment_amount: Montant
     adjustment_successfully_closed: Ajustement fermé avec succès!
@@ -381,38 +411,38 @@ fr:
     admin:
       tab:
         configuration: Configuration
-        option_types:
+        option_types: Types d'option
         orders: Commandes
         overview: Vue d'ensemble
         products: Produits
         promotions: Promotions
-        properties:
-        prototypes:
+        properties: Propriétés
+        prototypes: Prototypes
         reports: Statistiques
-        taxonomies:
-        taxons:
+        taxonomies: Taxonomies
+        taxons: Taxons
         users: Utilisateurs
       user:
-        account:
-        addresses:
-        items:
-        items_purchased:
-        order_history:
-        order_num:
-        orders:
-        user_information:
+        account: Compte
+        addresses: Adresses
+        items: Articles
+        items_purchased: Articles achetés
+        order_history: Historique des commandes
+        order_num: "Commande #"
+        orders: Commandes
+        user_information: Informations de l'utilisateur
     administration: Administration
-    advertise:
+    advertise: Publiciser
     agree_to_privacy_policy: Accepter l'Engagement de Confidentialité
     agree_to_terms_of_service: Accepter les termes du contrat.
     all: Tous
     all_adjustments_closed: Tous les ajustements ont été fermé avec succès!
     all_adjustments_opened: Tous les ajustements ont été ouvert avec succès!
     all_departments: Tous les départements
-    all_items_have_been_returned:
-    allow_ssl_in_development_and_test: Permettre l'utilisation du SSL en cas de développement et de modes test
+    all_items_have_been_returned: Tous les articles ont été retournés
+    allow_ssl_in_development_and_test: Permettre l'utilisation du SSL en mode développement et test
     allow_ssl_in_production: Permettre l'utilisation du SSL en mode production
-    allow_ssl_in_staging: Permettre l'utilisation du SSL en mode mise en scène
+    allow_ssl_in_staging: Permettre l'utilisation du SSL en mode acceptation
     already_signed_up_for_analytics: Vous êtes déjà inscrit à Spree Analytics
     alt_text: Texte alternatif
     alternative_phone: Téléphone secondaire
@@ -425,87 +455,89 @@ fr:
     analytics_desc_list_4: C'est totalement gratuit!
     analytics_trackers: Traqueurs analytiques
     and: et
-    approve:
-    approved_at:
-    approver:
+    approve: Approuver
+    approved_at: approuver le
+    approver: Approbateur
     are_you_sure: En êtes-vous sûr ?
     are_you_sure_delete: "Êtes-vous sûr de vouloir supprimer cet enregistrement ?"
     associated_adjustment_closed: L'ajustement associé est fermé, et ne sera pas recalculé. Voulez-vous l'ouvrir?
     authorization_failure: Vous n'avez pas les droits nécessaires pour afficher cette section
-    authorized:
-    auto_capture:
+    authorized: Autorisé
+    auto_capture: Acceptation automatique
     available_on: Disponible le
-    average_order_value:
-    avs_response:
+    average_order_value: Valeur moyenne de la commande
+    avs_response: Réponse AVS
     back: Retour
-    back_end: Back End
-    back_to_payment:
-    back_to_resource_list:
-    back_to_rma_reason_list:
+    back_end: Gestion
+    back_to_payment: Retour au paiement
+    back_to_resource_list: 'Retour à la liste %{resource}'
+    back_to_rma_reason_list: Retour à la liste des RMA
     back_to_store: Boutique
     back_to_users_list: Retour à la liste des utilisateurs
     backorderable: Peut être acheté même si le stock est vide
-    backorderable_default:
-    backordered:
-    backorders_allowed: reliquats autorisé
+    backorderable_default: Peut être acheté même si le stock est vide (défault)
+    backordered: En rupture de stock
+    backorders_allowed: Ruptures de stock autorisées
     balance_due: Solde dû
-    base_amount:
-    base_percent:
+    base_amount: Montant de base
+    base_percent: Pourcentage de base
     bill_address: Adresse facturée
     billing: Facturation
     billing_address: Adresse de facturation
     both: Les deux
-    calculated_reimbursements:
+    calculated_reimbursements: Calcul des remboursements
     calculator: Calculateur
     calculator_settings_warning: Si vous changez le type de calculateur, vous devez tout d'abord enregistrer avant de pouvoir modifier les paramètres du calculateur.
     cancel: annuler
-    canceled_at:
-    canceler:
-    cannot_create_customer_returns:
-    cannot_create_payment_without_payment_methods: Vous ne pouvez pas créer un paiement pour une commande sans aucun moyens de paiement définies.
+    canceled_at: Annulé le
+    canceler: Annulateur
+    cannot_create_customer_returns: Impossible de créer des retours tant que cette commande n'a pas d'articles expédiés.
+    cannot_create_payment_without_payment_methods: Vous ne pouvez pas créer un paiement pour une commande sans aucun moyen de paiement défini.
     cannot_create_returns: Ne peut créer de retour tant que cette commande n'a pas été expédiée.
     cannot_perform_operation: Ne peut pas accomplir l'action demandée
     cannot_set_shipping_method_without_address: La méthode d'expédition ne peut être définie tant que les données du client ne sont pas spécifiées
     capture: accepté
-    capture_events:
+    capture_events: Événements d'acceptation
     card_code: Code de la carte
     card_number: Numéro de carte
-    card_type:
+    card_type: Type de cate
     card_type_is: Le type de la carte est
     cart: Panier
     cart_subtotal:
+      one: 'Sous-total (1 article)'
+      other: 'Sous-total (%{count} articles)'
     categories: Catégories
     category: Categorie
-    charged:
+    charged: Chargé
     check_for_spree_alerts: Recevoir les alertes de Spree
     checkout: Passer la commande
     choose_a_customer: Choisissez un client
-    choose_a_taxon_to_sort_products_for:
+    choose_a_taxon_to_sort_products_for: "Choisir une taxon pour organiser les produits pour"
     choose_currency: Choisir la devise
     choose_dashboard_locale: Choisir la langue du tableau de bord
-    choose_location:
+    choose_location: Choisir la localisation
     city: Ville
-    clear_cache:
-    clear_cache_ok:
-    clear_cache_warning:
-    click_and_drag_on_the_products_to_sort_them:
-    clone: Clone
+    clear_cache: Supprimer la cache
+    clear_cache_ok: La cache a bien été supprimée
+    clear_cache_warning: Supprimer la cache va temporairement réduire les performances de votre boutique.
+    click_and_drag_on_the_products_to_sort_them:  Cliquer et faire glisser les produits pour les organiser.
+    clone: Cloner
     close: Fermer
     close_all_adjustments: Fermer tous les ajustements
     code: Code
     company: Entreprise
-    complete: complète
-    configuration: compléter
+    complete: compléter
+    configuration: Configuration
     configurations: Configurations
     confirm: Confirmation
     confirm_delete: Confirmation de la suppression
     confirm_password: Confirmation du mot de passe
     continue: Continuer
     continue_shopping: Continuer vos achats
-    cost_currency: Coût monétaire
+    cost_currency: Devise du prix
     cost_price: Prix coûtant
     could_not_connect_to_jirafe: Impossible de se connecter à Jirafe pour synchroniser les données.
-    could_not_create_customer_return:
+    could_not_create_customer_return: Impossible de créer un retour de client
     could_not_create_stock_movement: Une erreur est survenue pendant la sauvegarde du mouvement de stock. Merci d'essayer à nouveau.
     count_on_hand: Nombre en stock
     countries: Pays
@@ -513,33 +545,33 @@ fr:
     country_based: Basé sur un pays
     country_name: Nom
     country_names:
-      CA:
-      FRA:
-      ITA:
-      US:
+      CA: Canada
+      FRA: France
+      ITA: Italie
+      US: États-Unis d'Amérique
     coupon: Coupon
     coupon_code: Code Promo
-    coupon_code_already_applied: Le coupon a déjà été utilisé pour cette commande
+    coupon_code_already_applied: Le code promo a déjà été utilisé pour cette commande
     coupon_code_applied: Le code promo a été appliqué avec succès à votre commande.
-    coupon_code_better_exists: Le coupon utilisé précédemment vous offre une meilleure réduction
-    coupon_code_expired: Le coupon n'est plus valable
-    coupon_code_max_usage: Le coupon à été utilisé trop de fois et n'est plus valide
-    coupon_code_not_eligible: Le coupon ne peut pas être utilisé pour cette commande
-    coupon_code_not_found: Le coupon que vous avez entré n'existe pas.
-    coupon_code_unknown_error:
+    coupon_code_better_exists: Le code promo utilisé précédemment vous offre une meilleure réduction
+    coupon_code_expired: Le code promo n'est plus valable
+    coupon_code_max_usage: Le code promo à été utilisé trop de fois et n'est plus valide
+    coupon_code_not_eligible: Le code promo ne peut pas être utilisé pour cette commande
+    coupon_code_not_found: Le code promo que vous avez entré n'existe pas.
+    coupon_code_unknown_error: Ce code promo ne peut pas être appliqué au panier pour le moment.
     create: Créer
     create_a_new_account: Créer un nouveau compte
-    create_new_order:
-    create_reimbursement:
+    create_new_order: Créer une nouvelle commande
+    create_reimbursement: Créer un remboursement
     created_at: Date de création
     credit: Crédit
     credit_card: Carte de crédit
     credit_cards: Cartes de crédit
     credit_owed: Crédit restant dû
-    credits:
+    credits: Crédits
     currency: Devise
     currency_decimal_mark: 'Devise: séparateur decimale'
-    currency_settings: Paramètres de devise
+    currency_settings: Paramètres de la devise
     currency_symbol_position: Mettre le symbole monétaire avant ou après le montant ?
     currency_thousands_separator: 'Devise: séparateur de millième'
     current: Actuellement
@@ -547,11 +579,11 @@ fr:
     customer: Client
     customer_details: Détails du client
     customer_details_updated: Les détails du client ont été mis à jour.
-    customer_return:
-    customer_returns:
+    customer_return: Retour du client
+    customer_returns: Retours du client
     customer_search: Rechercher un client
     cut: Couper
-    cvv_response:
+    cvv_response: Réponse du CVV
     dash:
       jirafe:
         app_id: App ID
@@ -565,24 +597,24 @@ fr:
     date: Date
     date_completed: Date d'achèvement
     date_picker:
-      first_day:
+      first_day: 0
       format: "%d/%m/%Y"
       js_format: dd/mm/yy
     date_range: Sélection de dates
     default: Défaut
-    default_refund_amount:
+    default_refund_amount: Montant de remboursement par défaut
     default_tax: Taxe par défaut
     default_tax_zone: Zone de taxe par défaut
     delete: Supprimer
-    deleted_variants_present:
+    deleted_variants_present: Certains articles de cette commande ne sont plus disponibles.
     delivery: Livraison
     depth: Profondeur
     description: Description
     destination: Destination
     destroy: Supprimer
-    details:
+    details: Détails
     discount_amount: Montant de la réduction
-    dismiss_banner: Non Merci ! Ça ne m'intéresse pas, ne pas afficher ce message les fois suivantes
+    dismiss_banner: Non Merci ! Ça ne m'intéresse pas, ne pas afficher ce message les prochaines fois
     display: Afficher
     display_currency: Devise d'affichage
     edit: Éditer
@@ -613,7 +645,7 @@ fr:
     errors:
       messages:
         could_not_create_taxon: Impossible de créer une taxon
-        no_payment_methods_available: Aucune méthode de paiment n'est configurée pour cet environnement
+        no_payment_methods_available: Aucune méthode de paiement n'est configurée pour cet environnement
         no_shipping_methods_available: Pas de moyen de livraison disponible pour la destination choisie, changez l'adresse et réessayez.
     errors_prohibited_this_record_from_being_saved:
       one: 1 erreur empêche l'enregistrement de cette entrée
@@ -633,14 +665,14 @@ fr:
         user:
           signup: Inscription utilisateur
     exceptions:
-      count_on_hand_setter: Impossible de définir count_on_hand manuellement, tel qu'il est définie automatiquement par le rappel de recalculate_count_on_hand. S'il vous plaît utilisez `update_column (:count_on_hand, value)` à la place.
-    exchange_for:
-    excl:
+      count_on_hand_setter: Impossible de définir count_on_hand manuellement, tel qu'il est défini automatiquement par le rappel de recalculate_count_on_hand. S'il vous plaît utilisez `update_column (:count_on_hand, value)` à la place.
+    exchange_for: Échange pour
+    excl: exclu.
     existing_shipments:
     expedited_exchanges_warning:
     expiration: Expiration
     extension: Prolongation
-    failed_payment_attempts:
+    failed_payment_attempts: Tentatives de paiement échouées
     filename: Nom du fichier
     fill_in_customer_info: Merci de remplir les informations client.
     filter_results: Filtrer les resultats
@@ -1034,7 +1066,7 @@ fr:
     quantity: Quantité
     quantity_returned: Quantité retournée
     quantity_shipped: Quantité envoyée
-    quick_search:
+    quick_search: Recherche rapide
     rate: Taux
     reason: Raison
     receive: recevoir
