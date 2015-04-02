@@ -509,8 +509,8 @@ describe Spree::Shipment, :type => :model do
     context 'with Config.auto_capture_on_dispatch == false' do
       # Regression test for #2040
       it "cannot ready a shipment for an order if the order is unpaid" do
-        allow(order).to receive_messages(paid?: false)
-        assert !shipment.can_ready?
+        expect(order).to receive_messages(paid?: false)
+        expect(shipment).not_to be_can_ready
       end
     end
 
