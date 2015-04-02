@@ -16,7 +16,7 @@ module Spree
     accepts_nested_attributes_for :return_items
 
     def total
-      return_items.sum(&:total)
+      return_items.map(&:total).sum
     end
 
     def display_total
