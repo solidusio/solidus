@@ -384,7 +384,7 @@ module Spree
     end
 
     def requires_shipment?
-      stock_location && stock_location.fulfillable?
+      !stock_location || stock_location.fulfillable?
     end
 
     private
