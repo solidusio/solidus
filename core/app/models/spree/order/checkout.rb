@@ -51,10 +51,6 @@ module Spree
                 order.save
               end
 
-              event :complete do
-                transition to: :complete, from: :confirm, if: ->(order) { order.confirmation_required? }
-                transition to: :complete, from: :payment, if: ->(order) { !order.confirmation_required? }
-              end
 
               event :cancel do
                 transition to: :canceled, if: :allow_cancel?
@@ -91,6 +87,11 @@ module Spree
                 before_transition to: :payment, do: :set_shipments_cost
                 before_transition to: :payment, do: :create_tax_charge!
                 before_transition to: :payment, do: :assign_default_credit_card
+
+                event :complete do
+                  transition to: :complete, from: :confirm
+                  transition to: :complete, from: :payment
+                end
               end
 
               before_transition from: :cart, do: :ensure_line_items_present
