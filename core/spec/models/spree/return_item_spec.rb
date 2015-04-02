@@ -256,8 +256,8 @@ describe Spree::ReturnItem, :type => :model do
         end
 
         it 'does not decrease inventory' do
-          subject
           expect(return_item).to_not receive(:process_inventory_unit)
+          subject
         end
 
         it "transitions successfully" do
