@@ -16,6 +16,7 @@
 # a.preferred_color
 #
 require "spree/core/search/base"
+require "spree/core/search/variant"
 
 module Spree
   class AppConfiguration < Preferences::Configuration
