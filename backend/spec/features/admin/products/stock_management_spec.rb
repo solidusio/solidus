@@ -97,11 +97,12 @@ describe "Stock Management", :type => :feature do
     end
 
     # Regression test for #3304
+    # It is OK to still render the stock page, ensure no errors in this case
     context "with no stock location" do
       before do
         @product = create(:product, name: 'apache baseball cap', price: 10)
         v = @product.variants.create!(sku: 'FOOBAR')
-        Spree::StockLocation.delete_all
+        Spree::StockLocation.destroy_all
         click_link "Products"
         within_row(1) do
           click_icon :edit
@@ -109,9 +110,9 @@ describe "Stock Management", :type => :feature do
         click_link "Stock Management"
       end
 
-      it "redirects to stock locations page" do
-        expect(page).to have_content(Spree.t(:stock_management_requires_a_stock_location))
-        expect(page.current_url).to include("admin/stock_locations")
+      it "renders" do
+        page.should have_content(Spree.t(:editing_product))
+        page.current_url.should match("admin/products/apache-baseball-cap/stock")
       end
     end
   end
