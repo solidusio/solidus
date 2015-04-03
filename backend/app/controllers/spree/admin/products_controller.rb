@@ -70,11 +70,7 @@ module Spree
       def stock
         @hide_out_of_stock = params[:hide_out_of_stock]
         @option_values = @product.variants.flat_map(&:option_values).uniq
-        @stock_locations = StockLocation.accessible_by(current_ability, :read)
-        if @stock_locations.empty?
-          flash[:error] = Spree.t(:stock_management_requires_a_stock_location)
-          redirect_to admin_stock_locations_path
-        end
+        @stock_locations = StockLocation.accessible_by(current_ability, :update)
       end
 
       protected
