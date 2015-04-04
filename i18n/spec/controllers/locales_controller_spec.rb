@@ -6,14 +6,14 @@ RSpec.describe Spree::HomeController, type: :controller do
 
   context "tries not supported fr locale" do
     it "falls back do default locale" do
-      get :index, { use_route: :spree }, { locale: 'fr' }
+      get :index, use_route: :spree, locale: 'fr'
       expect(I18n.locale).to eq :en
     end
   end
 
   context "tries supported es locale" do
     it "falls back do default locale" do
-      get :index, { use_route: :spree }, { locale: 'es' }
+      get :index, use_route: :spree, locale: 'es'
       expect(I18n.locale).to eq :es
     end
   end
