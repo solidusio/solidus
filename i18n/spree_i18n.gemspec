@@ -47,4 +47,5 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'selenium-webdriver', '>= 2.41'
   s.add_development_dependency 'simplecov', '~> 0.9.0'
   s.add_development_dependency 'guard-rspec', '>= 4.2.0'
+  s.add_development_dependency 'launchy'
 end
