@@ -1,11 +1,18 @@
 module Spree
   class StockTransfer < Spree::Base
     has_many :stock_movements, :as => :originator
+    has_many :transfer_items
 
-    belongs_to :source_location, :class_name => 'StockLocation'
-    belongs_to :destination_location, :class_name => 'StockLocation'
+    belongs_to :created_by, :class_name => 'Spree::User'
+    belongs_to :closed_by, :class_name => 'Spree::User'
+    belongs_to :source_location, :class_name => 'Spree::StockLocation'
+    belongs_to :destination_location, :class_name => 'Spree::StockLocation'
 
     make_permalink field: :number, prefix: 'T'
+
+    def closed?
+      closed_at.present?
+    end
 
     def to_param
       number
