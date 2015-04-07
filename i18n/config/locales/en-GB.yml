@@ -328,6 +328,8 @@ en-GB:
         one: '1 error prohibited with %{resource} from being saved:'
         other: "%{count} errors prohibited this %{resource} from being saved:"
   spree:
+    filter: Filter
+    quick_search: Quick Search . . .
     abbreviation: Abbreviation
     accept:
     acceptance_errors:
