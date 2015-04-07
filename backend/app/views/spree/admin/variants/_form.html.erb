@@ -27,6 +27,13 @@
       <%= f.label :tax_category_id, Spree.t(:tax_category) %>
       <%= f.collection_select(:tax_category_id, @tax_categories, :id, :name, { :include_blank => Spree.t('match_choices.none') }, { :class => 'select2 fullwidth' }) %>
     </div>
+
+    <div class="field" data-hook="tax_category">
+      <label>
+        <%= f.check_box :track_inventory %>
+        <%= Spree.t(:track_inventory) %>
+      </label>
+    </div>
   </div>
 </div>
 

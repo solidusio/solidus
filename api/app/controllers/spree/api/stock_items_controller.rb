@@ -1,7 +1,7 @@
 module Spree
   module Api
     class StockItemsController < Spree::Api::BaseController
-      before_action :stock_location, except: [:update, :destroy]
+      before_filter :load_stock_location, only: [:index, :show, :create]
 
       def index
         @stock_items = scope.ransack(params[:q]).result.page(params[:page]).per(params[:per_page])
@@ -16,36 +16,33 @@ module Spree
       def create
         authorize! :create, StockItem
 
-        count_on_hand = 0
-        if params[:stock_item].has_key?(:count_on_hand)
-          count_on_hand = params[:stock_item][:count_on_hand].to_i
-        end
-
         @stock_item = scope.new(stock_item_params)
-        if @stock_item.save
-          @stock_item.adjust_count_on_hand(count_on_hand)
-          respond_with(@stock_item, status: 201, default_template: :show)
-        else
-          invalid_resource!(@stock_item)
+
+        Spree::StockItem.transaction do
+          if @stock_item.save
+            adjust_stock_item_count_on_hand(count_on_hand_adjustment)
+            respond_with(@stock_item, status: 201, default_template: :show)
+          else
+            invalid_resource!(@stock_item)
+          end
         end
       end
 
       def update
         @stock_item = StockItem.accessible_by(current_ability, :update).find(params[:id])
+        @stock_location = @stock_item.stock_location
 
-        count_on_hand = 0
-        if params[:stock_item].has_key?(:count_on_hand)
-          count_on_hand = params[:stock_item][:count_on_hand].to_i
-          params[:stock_item].delete(:count_on_hand)
-        end
+        adjustment = count_on_hand_adjustment
+        params[:stock_item].delete(:count_on_hand)
+        adjustment -= @stock_item.count_on_hand if params[:stock_item][:force]
 
-        updated = params[:stock_item][:force] ? @stock_item.set_count_on_hand(count_on_hand)
-                                              : @stock_item.adjust_count_on_hand(count_on_hand)
-
-        if updated
-          respond_with(@stock_item, status: 200, default_template: :show)
-        else
-          invalid_resource!(@stock_item)
+        Spree::StockItem.transaction do
+          if @stock_item.update_attributes(stock_item_params)
+            adjust_stock_item_count_on_hand(adjustment)
+            respond_with(@stock_item, status: 200, default_template: :show)
+          else
+            invalid_resource!(@stock_item)
+          end
         end
       end
 
@@ -57,9 +54,9 @@ module Spree
 
       private
 
-      def stock_location
+      def load_stock_location
         render 'spree/api/shared/stock_location_required', status: 422 and return unless params[:stock_location_id]
-        @stock_location ||= StockLocation.accessible_by(current_ability, :read).find(params[:stock_location_id])
+        @stock_location ||= StockLocation.accessible_by(current_ability, action_name.to_sym).find(params[:stock_location_id])
       end
 
       def scope
@@ -69,6 +66,15 @@ module Spree
 
       def stock_item_params
         params.require(:stock_item).permit(permitted_stock_item_attributes)
+      end
+
+      def count_on_hand_adjustment
+        params[:stock_item][:count_on_hand].to_i
+      end
+
+      def adjust_stock_item_count_on_hand(count_on_hand_adjustment)
+        @stock_movement = @stock_location.move(@stock_item.variant, count_on_hand_adjustment, current_api_user)
+        @stock_item = @stock_movement.stock_item
       end
     end
   end

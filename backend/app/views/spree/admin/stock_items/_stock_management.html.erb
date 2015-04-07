@@ -1,0 +1,108 @@
+<%= render :partial => 'stock_location_stock_item_template' %>
+
+<%= paginate @variants %>
+
+<table class="index" id="listing_product_stock">
+  <colgroup>
+    <col style="width: 50%" />
+    <col style="width: 20%" />
+    <col style="width: 10%" />
+    <col style="width: 5%" />
+    <col style="width: 5%" />
+    <col style="width: 10%" />
+  </colgroup>
+  <thead>
+    <tr>
+      <th><%= Spree.t(:item) %></th>
+      <th><%= Spree.t(:options) %></th>
+      <th><%= Spree.t(:stock_location) %></th>
+      <th><%= Spree.t(:backorderable_header) %></th>
+      <th><%= Spree.t(:count_on_hand) %></th>
+      <th class="actions"></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% variants.each do |variant| %>
+      <%- locations_without_items = @stock_item_stock_locations - variant.stock_items.flat_map(&:stock_location) %>
+      <%- display_add_row = locations_without_items.any? && can?(:create, Spree::StockItem) %>
+      <%- row_count = (variant.stock_items.map(&:stock_location) & @stock_item_stock_locations).size %>
+      <%- row_count += display_add_row ? 2 : 1 %>
+
+      <tr id="<%= spree_dom_id variant %>">
+        <td class="align-center no-padding" rowspan="<%= row_count %>">
+          <div class='variant-container'>
+            <div class='variant-image'>
+              <%= small_image variant %>
+            </div>
+            <div class='variant-details'>
+              <table class='stock-variant-field-table'>
+                <tbody>
+                  <% @variant_display_attributes.each do |display_attribute| %>
+                    <tr>
+                      <td><%= Spree.t(display_attribute[:string_key]) %></td>
+                      <td class="fullwidth">
+                        <%= variant.send(display_attribute[:attr_name]) %>
+                      </td>
+                    </tr>
+                  <% end %>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </td>
+        <td class="align-center" rowspan="<%= row_count %>">
+          <table class='stock-variant-field-table'>
+            <% variant.option_values.sort_by(&:option_type_name).each do |option_value| %>
+              <tr>
+                <td>
+                  <%= option_value.option_type_presentation %>
+                </td>
+                <td><%= option_value.presentation %></td>
+              </tr>
+            <% end %>
+          </table>
+        </td>        
+      </tr>
+      <% variant.stock_items.each do |item| %>
+        <% if @stock_item_stock_locations.include?(item.stock_location) %>
+          <tr class="<%= cycle('odd', 'even', :name => 'stock_locations')%>" data-variant-id="<%= variant.id %>">
+            <td class='align-center location-name-cell'><%= item.stock_location.name %></td>
+            <td class='align-center'>
+              <% if can?(:update, item) %>
+                <%= check_box_tag :backorderable, 'backorderable', item.backorderable?, id: "backorderable-#{item.id}", disabled: "disabled" %>
+              <% end %>
+            </td>
+            <td class="align-center" id="count-on-hand-<%= item.id %>">
+              <span><%= item.count_on_hand %></span>
+              <%= number_field_tag :count_on_hand, item.count_on_hand, class: 'fullwidth js-stock-item-count' %>
+            </td>
+            <td class="actions">
+              <%= link_to_with_icon 'edit', Spree.t('actions.edit'), '#', :no_text => true, :data => {:action => 'edit', :id => item.id } if can?(:edit, item) %>
+              <%= link_to_with_icon 'check', Spree.t('actions.update'), '#', :no_text => true, :data => {:action => 'green', :id => item.id, :location_id => item.stock_location_id } if can?(:edit, item) %>
+              <%= link_to_with_icon 'void', Spree.t('actions.cancel'), '#', :no_text => true, :data => {:action => 'red', :id => item.id } if can?(:edit, item) %>
+            </td>
+          </tr>
+        <% end %>
+      <% end %>
+      <% if display_add_row %>
+        <tr class="<%= cycle('odd', 'even', :name => 'stock_locations')%>" data-variant-id="<%= variant.id %>">
+          <td class='location-name-cell'>
+            <%= select_tag :stock_location_id, options_from_collection_for_select(locations_without_items, :id, :name), { :include_blank => true, :class => 'select2', "data-placeholder" => Spree.t(:add_to_stock_location), :id => "variant-stock-location-#{variant.id}" } %>
+          </td>
+          <td class="align-center">
+            <%= check_box_tag :backorderable, 'backorderable', false, id: "variant-backorderable-#{variant.id}" %>
+          </td>
+          <td class="align-center">
+            <%= number_field_tag :count_on_hand, "", class: 'fullwidth', id: "variant-count-on-hand-#{variant.id}" %>
+          </td>
+          <td class="actions">
+            <%= link_to_with_icon 'plus', Spree.t('actions.create'), '#', :no_text => true, :data => {:action => 'green', :variant_id => variant.id } if can?(:create, Spree::StockItem) %>
+          </td>
+        </tr>
+      <% end %>
+      <% reset_cycle("stock_locations") %>
+    <% end %>
+  </tbody>
+</table>
+
+<%= paginate @variants %>

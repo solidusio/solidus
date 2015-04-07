@@ -55,7 +55,7 @@ module Spree
           }
 
           api_post :create, params
-          response.status.should == 401
+          response.status.should == 404
         end
       end
 
@@ -108,52 +108,157 @@ module Spree
         expect(json_response['count_on_hand']).to eq stock_item.count_on_hand
       end
 
-      it 'can create a new stock item' do
-        variant = create(:variant)
-        # Creating a variant also creates stock items.
-        # We don't want any to exist (as they would conflict with what we're about to create)
-        StockItem.delete_all
-        params = {
-          stock_location_id: stock_location.to_param,
-          stock_item: {
-            variant_id: variant.id,
-            count_on_hand: '20'
+      context 'creating a stock item' do
+        let!(:variant) do
+          variant = create(:variant)
+          # Creating a variant also creates stock items.
+          # We don't want any to exist (as they would conflict with what we're about to create)
+          StockItem.delete_all
+          variant
+        end
+        let(:params) do
+          {
+            stock_location_id: stock_location.to_param,
+            stock_item: {
+              variant_id: variant.id,
+              count_on_hand: '20'
+            }
           }
-        }
+        end
 
-        api_post :create, params
-        expect(response.status).to eq(201)
-        expect(json_response).to have_attributes(attributes)
+        subject { api_post :create, params }
+
+        it 'can create a new stock item' do
+          subject
+          expect(response.status).to eq 201
+          expect(json_response).to have_attributes(attributes)
+        end
+
+        it 'creates a stock movement' do
+          expect { subject }.to change { Spree::StockMovement.count }.by(1)
+          expect(assigns(:stock_movement).quantity).to eq 20
+        end
+
+        context 'variant tracks inventory' do
+          before do
+            expect(variant.track_inventory).to eq true
+          end
+
+          it "sets the stock item's count_on_hand" do
+            subject
+            expect(assigns(:stock_item).count_on_hand).to eq 20
+          end
+        end
+
+        context 'variant does not track inventory' do
+          before do
+            variant.update_attributes(track_inventory: false)
+          end
+
+          it "doesn't set the stock item's count_on_hand" do
+            subject
+            expect(assigns(:stock_item).count_on_hand).to eq 0
+          end
+        end
       end
 
-      it 'can update a stock item to add new inventory' do
-        expect(stock_item.count_on_hand).to eq(10)
-        params = {
-          id: stock_item.to_param,
-          stock_item: {
-            count_on_hand: 40,
-          }
-        }
+      context 'updating a stock item' do
+        before do
+          expect(stock_item.count_on_hand).to eq 10
+        end
 
-        api_put :update, params
-        expect(response.status).to eq(200)
-        expect(json_response['count_on_hand']).to eq 50
-      end
+        subject { api_put :update, params }
 
-      it 'can set a stock item to modify the current inventory' do
-        expect(stock_item.count_on_hand).to eq(10)
+        context 'adjusting count_on_hand' do
+          let(:params) do
+            {
+              id: stock_item.to_param,
+              stock_item: {
+                count_on_hand: 40,
+                backorderable: true
+              }
+            }
+          end
 
-        params = {
-          id: stock_item.to_param,
-          stock_item: {
-            count_on_hand: 40,
-            force: true,
-          }
-        }
+          it 'can update a stock item to add new inventory' do
+            subject
+            expect(response.status).to eq 200
+            expect(json_response['count_on_hand']).to eq 50
+            expect(json_response['backorderable']).to eq true
+          end
 
-        api_put :update, params
-        expect(response.status).to eq(200)
-        expect(json_response['count_on_hand']).to eq 40
+          it 'creates a stock movement for the adjusted quantity' do
+            expect { subject }.to change { Spree::StockMovement.count }.by(1)
+            expect(Spree::StockMovement.last.quantity).to eq 40
+          end
+
+          context 'tracking inventory' do
+            before do
+              expect(stock_item.should_track_inventory?).to eq true
+            end
+
+             it "sets the stock item's count_on_hand" do
+              subject
+              expect(assigns(:stock_item).count_on_hand).to eq 50
+            end
+          end
+
+          context 'not tracking inventory' do
+            before do
+              stock_item.variant.update_attributes(track_inventory: false)
+            end
+
+            it "doesn't set the stock item's count_on_hand" do
+              subject
+              expect(assigns(:stock_item).count_on_hand).to eq 10
+            end
+          end
+        end
+
+        context 'setting count_on_hand' do
+          let(:params) do
+            {
+              id: stock_item.to_param,
+              stock_item: {
+                count_on_hand: 40,
+                force: true,
+              }
+            }
+          end
+
+          it 'can set a stock item to modify the current inventory' do
+            subject
+            expect(response.status).to eq 200
+            expect(json_response['count_on_hand']).to eq 40
+          end
+
+          it 'creates a stock movement for the adjusted quantity' do
+            expect { subject }.to change { Spree::StockMovement.count }.by(1)
+            expect(assigns(:stock_movement).quantity).to eq 30
+          end
+
+          context 'tracking inventory' do
+            before do
+              expect(stock_item.should_track_inventory?).to eq true
+            end
+
+            it "updates the stock item's count_on_hand" do
+              subject
+              expect(assigns(:stock_item).count_on_hand).to eq 40
+            end
+          end
+
+          context 'not tracking inventory' do
+            before do
+              stock_item.variant.update_attributes(track_inventory: false)
+            end
+
+            it "doesn't update the stock item's count_on_hand" do
+              subject
+              expect(assigns(:stock_item).count_on_hand).to eq 10
+            end
+          end
+        end
       end
 
       it 'can delete a stock item' do

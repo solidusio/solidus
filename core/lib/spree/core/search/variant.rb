@@ -12,7 +12,7 @@ module Spree
           :option_values_name_cont,
         ]
 
-        def initialize(query_string, scope: Spree::Variant)
+        def initialize(query_string, scope: Spree::Variant.all)
           @query_string = query_string
           @scope = scope
         end
@@ -25,6 +25,8 @@ module Spree
         # == Returns:
         # ActiveRecord::Relation of variants
         def results
+          return @scope if @query_string.blank?
+
           matches = @query_string.split.map do |word|
             @scope.ransack(search_terms(word)).result.pluck(:id)
           end

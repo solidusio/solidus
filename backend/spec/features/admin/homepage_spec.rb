@@ -31,7 +31,7 @@ describe "Homepage", :type => :feature do
       end
 
       it "should have a link to configuration" do
-        page.find_link("Configuration")['/admin/configurations']
+        page.find_link("Settings")['/admin/configurations']
       end
     end
 
@@ -74,7 +74,7 @@ describe "Homepage", :type => :feature do
       expect(page).not_to have_link('Products')
       expect(page).not_to have_link('Promotions')
       expect(page).not_to have_link('Reports')
-      expect(page).not_to have_link('Configuration')
+      expect(page).not_to have_link('Settings')
     end
   end
 

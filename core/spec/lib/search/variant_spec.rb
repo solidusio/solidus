@@ -13,6 +13,11 @@ module Spree
     let(:product) { FactoryGirl.create(:product, name: "My Special Product", slug: "my-special-product") }
     let!(:variant) { FactoryGirl.create(:variant, product: product, sku: "abc-123") }
 
+    context "blank string" do
+      it { assert_found(nil, variant) }
+      it { assert_found("", variant) }
+    end
+
     context "by sku" do
       it { assert_found("abc-123", variant) }
       it { assert_found("abc-1", variant) }

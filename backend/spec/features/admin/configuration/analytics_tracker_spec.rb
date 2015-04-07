@@ -7,7 +7,7 @@ describe "Analytics Tracker", :type => :feature do
     before(:each) do
       2.times { create(:tracker, :environment => "test") }
       visit spree.admin_path
-      click_link "Configuration"
+      click_link "Settings"
       click_link "Analytics Tracker"
     end
 
@@ -33,7 +33,7 @@ describe "Analytics Tracker", :type => :feature do
   context "create" do
     before(:each) do
       visit spree.admin_path
-      click_link "Configuration"
+      click_link "Settings"
       click_link "Analytics Tracker"
     end
 

@@ -7,7 +7,7 @@ describe "Tax Rates", :type => :feature do
 
   before do
     visit spree.admin_path
-    click_link "Configuration"
+    click_link "Settings"
   end
 
   # Regression test for #535

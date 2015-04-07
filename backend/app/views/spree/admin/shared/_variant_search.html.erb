@@ -1,0 +1,22 @@
+<div data-hook="admin_orders_index_search">
+  <%= form_for :variant_search, url: form_path, method: :get do |f| %>
+    <div class="field-block alpha four columns">
+      <div class="field">
+        <%= label_tag nil, Spree.t(:stock_location) %>
+        <%= select_tag :stock_location_id, options_from_collection_for_select(stock_locations, :id, :name, params[:stock_location_id]), { :include_blank => true, :class => 'select2 fullwidth', "data-placeholder" => Spree.t(:select_a_stock_location) } %>
+      </div>
+    </div>
+    <div data-hook="add_product_name" class="field <%= if content_for?(:sidebar) then 'eight' else 'twelve' end %> columns alpha">
+      <%= label_tag :add_variant_id, Spree.t(:variant) %>
+      <%= text_field_tag :variant_search_term, params[:variant_search_term], :class => "fullwidth", :placeholder => Spree.t(:variant_search_placeholder) %>
+    </div>
+
+    <div class="clearfix"></div>
+
+    <div class="actions filter-actions">
+      <div data-hook="admin_orders_index_search_buttons">
+        <%= button Spree.t(:filter_results), 'search' %>
+      </div>
+    </div>
+  <% end %>
+</div>

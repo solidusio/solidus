@@ -1,0 +1,32 @@
+<% if @product %>
+  <% content_for :page_actions do %>
+    <li><%= button_link_to Spree.t(:back_to_products_list), session[:return_to] || admin_products_url, :icon => 'arrow-left' %></li>
+  <% end %>
+
+  <%= render :partial => 'spree/admin/shared/product_sub_menu' %>
+  <%= render :partial => 'spree/admin/shared/product_tabs', :locals => { :current => 'Stock Management' } %>
+  <%= render :partial => 'spree/shared/error_messages', :locals => { :target => @product } %>
+<% else %>
+  <% content_for :page_title do %>
+    <%= Spree.t(:manage_stock) %>
+  <% end %>
+<% end %>
+
+<% content_for :table_filter_title do %>
+  <%= Spree.t(:search) %>
+<% end %>
+
+<% content_for :table_filter do %>
+  <% form_path = @product ? admin_product_stock_path(product: @product) : admin_stock_items_path %>
+  <%= render :partial => 'spree/admin/shared/variant_search', :locals => { :form_path => form_path, :stock_locations => @stock_locations } %>
+<% end %>
+
+<% if @variants.any? %>
+  <%= render :partial => 'stock_management', :locals => { :variants => @variants } %>
+<% else %>
+  <div class="fullwidth no-objects-found">
+    <%= Spree.t(:no_variants_found) %>
+    <br/>
+    <%= Spree.t(:try_changing_search_values) %>
+  </div>
+<% end %>

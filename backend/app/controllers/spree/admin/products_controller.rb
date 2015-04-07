@@ -3,8 +3,7 @@ module Spree
     class ProductsController < ResourceController
       helper 'spree/products'
 
-      before_action :load_data, :except => [:index, :stock]
-      before_action :load_variants, :only => :stock
+      before_filter :load_data, :except => [:index]
       create.before :create_before
       update.before :update_before
       helper_method :clone_object_url
@@ -67,12 +66,6 @@ module Spree
         redirect_to edit_admin_product_url(@new)
       end
 
-      def stock
-        @hide_out_of_stock = params[:hide_out_of_stock]
-        @option_values = @product.variants.flat_map(&:option_values).uniq
-        @stock_locations = StockLocation.accessible_by(current_ability, :update)
-      end
-
       protected
 
       def find_resource
@@ -90,20 +83,6 @@ module Spree
         @shipping_categories = ShippingCategory.order(:name)
       end
 
-      def load_variants
-        @sku = params[:sku] || ""
-        @selected_option_value_ids = (params[:option_value_ids] || []).reject(&:blank?)
-        if @sku.present?
-          @variants = Spree::Variant.where(sku: @sku)
-        elsif @selected_option_value_ids.present?
-          @variants = @product.variants.joins(:option_values).where(spree_option_values: { id: @selected_option_value_ids }).group("spree_variants.id").having("count(spree_option_values.id) = ?", @selected_option_value_ids.length)
-        else
-          @variants = @product.variants
-          @variants = Kaminari.paginate_array([@product.master]) if @variants.empty?
-        end
-        @variants = @variants.page(params[:page]).per(Spree::Config[:admin_variants_per_page])
-      end
-
       def collection
         return @collection if @collection.present?
         params[:q] ||= {}
@@ -111,16 +90,14 @@ module Spree
 
         params[:q][:s] ||= "name asc"
         @collection = super
-        if params[:q].delete(:deleted_at_null) == '0'
-          @collection = @collection.with_deleted
-        end
+        @collection = @collection.with_deleted if params[:q].delete(:deleted_at_null) == '0'
         # @search needs to be defined as this is passed to search_form_for
         @search = @collection.ransack(params[:q])
         @collection = @search.result.
               distinct_by_product_ids(params[:q][:s]).
               includes(product_includes).
               page(params[:page]).
-              per(params[:per_page] || Spree::Config[:admin_products_per_page])
+              per(Spree::Config[:admin_products_per_page])
 
         @collection
       end
@@ -149,6 +126,11 @@ module Spree
 
       def variant_stock_includes
         [:images, stock_items: :stock_location, option_values: :option_type]
+      end
+
+
+      def variant_scope
+        @product.variants
       end
     end
   end

@@ -32,7 +32,6 @@ Spree::Core::Engine.add_routes do
       end
       member do
         get :clone
-        get :stock
       end
       resources :variants do
         collection do
@@ -41,6 +40,7 @@ Spree::Core::Engine.add_routes do
       end
       resources :variants_including_master,   only: [:update]
     end
+    get '/products/:product_slug/stock', to: "stock_items#index", as: :product_stock
 
     get '/variants/search', to: "variants#search", as: :search_variants
 
@@ -166,7 +166,7 @@ Spree::Core::Engine.add_routes do
       end
     end
 
-    resources :stock_items, only: [:create, :update, :destroy]
+    resources :stock_items, :except => [:show, :new, :edit]
     resources :tax_rates
 
     resources :trackers

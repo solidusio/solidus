@@ -5,7 +5,7 @@ describe "Tax Categories", :type => :feature do
 
   before(:each) do
     visit spree.admin_path
-    click_link "Configuration"
+    click_link "Settings"
   end
 
   context "admin visiting tax categories list" do

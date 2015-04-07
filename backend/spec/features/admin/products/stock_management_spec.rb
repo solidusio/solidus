@@ -10,7 +10,8 @@ describe "Stock Management", :type => :feature do
   context "given a product with a variant and a stock location" do
     let!(:stock_location) { create(:stock_location, name: 'Default') }
     let!(:product) { create(:product, name: 'apache baseball cap', price: 10) }
-    let!(:variant) { product.master }
+    let!(:variant) { create(:variant, product: product) }
+    let(:stock_item) { variant.stock_items.find_by(stock_location: stock_location) }
 
     before do
       stock_location.stock_item(variant).update_column(:count_on_hand, 10)
@@ -18,82 +19,6 @@ describe "Stock Management", :type => :feature do
       click_link "Products"
       within_row(1) { click_icon :edit }
       click_link "Stock Management"
-    end
-
-    context "toggle backorderable for a variant's stock item" do
-      let(:backorderable) { find ".stock_item_backorderable" }
-
-      before do
-        expect(backorderable).to be_checked
-        backorderable.set(false)
-        wait_for_ajax
-      end
-
-      it "persists the value when page reload", js: true do
-        visit current_path
-        expect(backorderable).not_to be_checked
-      end
-    end
-
-    # Regression test for #2896
-    # The regression was that unchecking the last checkbox caused a redirect
-    # to happen. By ensuring that we're still on an /admin/products URL, we
-    # assert that the redirect is *not* happening.
-    it "can toggle backorderable for the second variant stock item", js: true do
-      new_location = create(:stock_location, name: "Another Location")
-      click_link "Stock Management"
-
-      new_location_backorderable = find "#stock_item_backorderable_#{new_location.id}"
-      new_location_backorderable.set(false)
-      wait_for_ajax
-
-      expect(page.current_url).to include("/admin/products")
-    end
-
-    it "can create a new stock movement", js: true do
-      fill_in "stock_movement_quantity", with: 5
-      select2 "default", from: "Stock Location"
-      click_button "Add Stock"
-
-      expect(page).to have_content('successfully created')
-
-      within(:css, '.stock_location_info table') do
-        expect(column_text(2)).to eq '15'
-      end
-    end
-
-    it "can create a new negative stock movement", js: true do
-      fill_in "stock_movement_quantity", with: -5
-      select2 "default", from: "Stock Location"
-      click_button "Add Stock"
-
-      expect(page).to have_content('successfully created')
-
-      within(:css, '.stock_location_info table') do
-        expect(column_text(2)).to eq '5'
-      end
-    end
-
-    context "with multiple variants" do
-      before do
-        variant = product.variants.create!(sku: 'SPREEC')
-        variant.stock_items.first.update_column(:count_on_hand, 30)
-        click_link "Stock Management"
-      end
-
-      it "can create a new stock movement for the specified variant", js: true do
-        fill_in "stock_movement_quantity", with: 10
-        select2 "SPREEC", from: "Variant"
-        click_button "Add Stock"
-
-        expect(page).to have_content('successfully created')
-
-        within("#listing_product_stock tr", :text => "SPREEC") do
-          within("table") do
-            expect(column_text(2)).to eq '40'
-          end
-        end
-      end
     end
 
     # Regression test for #3304
@@ -113,6 +38,46 @@ describe "Stock Management", :type => :feature do
       it "renders" do
         page.should have_content(Spree.t(:editing_product))
         page.current_url.should match("admin/products/apache-baseball-cap/stock")
+      end
+    end
+
+    it "can create a positive stock adjustment", js: true do
+      adjust_count_on_hand('14')
+      stock_item.reload
+      expect(stock_item.count_on_hand).to eq 14
+      expect(stock_item.stock_movements.count).to eq 1
+      expect(stock_item.stock_movements.first.quantity).to eq 4
+    end
+
+    it "can create a negative stock adjustment", js: true do
+      adjust_count_on_hand('4')
+      stock_item.reload
+      expect(stock_item.count_on_hand).to eq 4
+      expect(stock_item.stock_movements.count).to eq 1
+      expect(stock_item.stock_movements.first.quantity).to eq -6
+    end
+
+    def adjust_count_on_hand(count_on_hand)
+      find(:css, ".fa-edit[data-id='#{stock_item.id}']").click
+      expect(page).to have_selector("#count-on-hand-#{variant.id} input[type='number']", visible: true)
+      find(:css, "#count-on-hand-#{variant.id} input[type='number']").set(count_on_hand)
+      find(:css, ".fa-check[data-id='#{stock_item.id}']").click
+      wait_for_ajax
+      expect(page).to have_content('Updated successfully')
+    end
+
+    context "with multiple stock locations" do
+      before do
+        create(:stock_location, name: 'Other location', propagate_all_variants: false)
+      end
+
+      it "can add stock items to other stock locations", js: true do
+        visit current_url
+        fill_in "variant-count-on-hand-#{variant.id}", with: '3'
+        targetted_select2_search "Other location", from: "#variant-stock-location-#{variant.id}"
+        find(:css, ".fa-plus[data-variant-id='#{variant.id}']").click
+        wait_for_ajax
+        expect(page).to have_content('Created successfully')
       end
     end
   end

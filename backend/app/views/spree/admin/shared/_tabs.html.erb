@@ -10,12 +10,14 @@
   <%= tab *Spree::BackendConfiguration::REPORT_TABS, icon: 'file'  %>
 <% end %>
 
-<%= tab *Spree::BackendConfiguration::CONFIGURATION_TABS, label: 'configuration', icon: 'wrench', url: spree.edit_admin_general_settings_path %>
+<%= tab *Spree::BackendConfiguration::CONFIGURATION_TABS, label: 'settings', icon: 'wrench', url: spree.edit_admin_general_settings_path %>
 
 <% if can? :admin, Spree::Promotion %>
   <%= tab *Spree::BackendConfiguration::PROMOTION_TABS, url: spree.admin_promotions_path, icon: 'bullhorn' %>
 <% end %>
-
+<% if can? :admin, Spree::StockLocation %>
+  <%= tab(:stock_items, :url => spree.admin_stock_items_path, :label => 'stock', :icon => 'cubes', match_path: %r(^/admin/stock)) %>
+<% end %>
 <% if Spree.user_class && can?(:admin, Spree.user_class) %>
   <%= tab *Spree::BackendConfiguration::USER_TABS, url: spree.admin_users_path, icon: 'user' %>
 <% end %>
