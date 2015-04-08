@@ -1,9 +1,15 @@
-require_dependency 'spree/api/controller_setup'
+require 'spree/api/responders'
 
 module Spree
   module Api
     class BaseController < ActionController::Base
-      include Spree::Api::ControllerSetup
+      prepend_view_path Rails.root + "app/views"
+      append_view_path File.expand_path("../../../app/views", File.dirname(__FILE__))
+
+      self.responder = Spree::Api::Responders::AppResponder
+      respond_to :json
+
+      include CanCan::ControllerAdditions
       include Spree::Core::ControllerHelpers::SSL
       include Spree::Core::ControllerHelpers::Store
       include Spree::Core::ControllerHelpers::StrongParameters

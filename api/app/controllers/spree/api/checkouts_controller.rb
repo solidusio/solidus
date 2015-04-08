@@ -8,7 +8,6 @@ module Spree
 
       rescue_from Spree::LineItem::InsufficientStock, with: :insufficient_stock_for_line_items
 
-      include Spree::Core::ControllerHelpers::Auth
       include Spree::Core::ControllerHelpers::Order
       # This before_filter comes from Spree::Core::ControllerHelpers::Order
       skip_before_action :set_current_order
