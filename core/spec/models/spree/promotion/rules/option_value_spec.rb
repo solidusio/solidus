@@ -24,7 +24,8 @@ describe Spree::Promotion::Rules::OptionValue do
   end
 
   describe "#eligible?" do
-    let(:line_item) { create :line_item }
+    let(:variant) { create :variant }
+    let(:line_item) { create :line_item, variant: variant }
     let(:promotable) { line_item.order }
     subject { rule.eligible?(promotable) }
     context "when there are any applicable line items" do
