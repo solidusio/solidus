@@ -114,6 +114,7 @@ module Spree
 
               before_transition to: :complete, do: :ensure_line_item_variants_are_not_deleted
               before_transition to: :complete, do: :ensure_line_items_are_in_stock
+              before_transition to: :complete, do: :ensure_inventory_units
 
               after_transition to: :complete, do: :finalize!
               after_transition to: :resumed,  do: :after_resume
