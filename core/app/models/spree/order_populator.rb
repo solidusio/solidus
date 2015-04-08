@@ -14,7 +14,6 @@ module Spree
       # protect against passing a nil hash being passed in
       # due to an empty params[:options]
       attempt_cart_add(variant_id, quantity, options || {})
-      order.ensure_updated_shipments
       valid?
     end
 
