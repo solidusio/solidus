@@ -6,8 +6,13 @@ FactoryGirl.define do
     order
     stock_location
 
+    transient do
+      shipping_method nil
+    end
+
     after(:create) do |shipment, evalulator|
-      shipment.add_shipping_method(create(:shipping_method), true)
+      shipping_method = evalulator.shipping_method || create(:shipping_method)
+      shipment.add_shipping_method(shipping_method, true)
 
       shipment.order.line_items.each do |line_item|
         line_item.quantity.times do

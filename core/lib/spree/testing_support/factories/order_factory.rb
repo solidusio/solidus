@@ -24,13 +24,14 @@ FactoryGirl.define do
       transient do
         line_items_count 1
         shipment_cost 100
+        shipping_method nil
       end
 
       after(:create) do |order, evaluator|
         create_list(:line_item, evaluator.line_items_count, order: order, price: evaluator.line_items_price)
         order.line_items.reload
 
-        create(:shipment, order: order, cost: evaluator.shipment_cost)
+        create(:shipment, order: order, cost: evaluator.shipment_cost, shipping_method: evaluator.shipping_method)
         order.shipments.reload
 
         order.update!
