@@ -20,6 +20,7 @@ $.fn.variantAutocomplete = ->
     ajax:
       url: Spree.routes.variants_api
       datatype: "json"
+      quietMillis: 500
       params: { "headers": { "X-Spree-Token": Spree.api_key } }
       data: (term, page) ->
         q:
