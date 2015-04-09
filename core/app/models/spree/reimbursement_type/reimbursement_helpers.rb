@@ -1,6 +1,11 @@
 module Spree
   module ReimbursementType::ReimbursementHelpers
+    # Ordered list of payment methods that are valid for the reimbursement
+    # type to use for reimbursing. Leaving this nil allows anything.
+    attr_accessor :eligible_refund_methods
+
     def create_refunds(reimbursement, payments, unpaid_amount, simulate, reimbursement_list = [])
+      payments = sorted_eligible_refund_payments(payments)
       payments.map do |payment|
         break if unpaid_amount <= 0
         next unless payment.can_credit?
@@ -45,6 +50,14 @@ module Spree
 
     def create_creditable(reimbursement, unpaid_amount)
       Spree::Reimbursement::Credit.default_creditable_class.new(reimbursement: reimbursement, amount: unpaid_amount)
+    end
+
+    def sorted_eligible_refund_payments(payments)
+      if eligible_refund_methods = self.eligible_refund_methods
+        payments = payments.select { |p| eligible_refund_methods.include? p.payment_method.class }
+        payments = payments.sort_by { |p| eligible_refund_methods.index(p.payment_method.class) }
+      end
+      payments
     end
   end
 end

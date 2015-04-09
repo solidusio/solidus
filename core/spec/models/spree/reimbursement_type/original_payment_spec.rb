@@ -50,6 +50,57 @@ module Spree
           expect(subject).to eq []
         end
       end
+
+      context "multiple payment methods" do
+        let(:simulate) { true }
+        let!(:check_payment) { create(:check_payment, order: reimbursement.order, amount: 5.0, state: "completed") }
+        let(:refund_amount) { 10.0 }
+
+        let(:refund_payment_methods) { subject.map { |refund| refund.payment.payment_method } }
+
+        before do
+          reimbursement.order.payments.first.update_attributes!(amount: 5.0)
+          return_item.update_attributes!(pre_tax_amount: refund_amount)
+        end
+
+        it "includes refunds all payment type" do
+          expect(refund_payment_methods).to include payment.payment_method
+          expect(refund_payment_methods).to include check_payment.payment_method
+        end
+
+        context "filtering payment methods" do
+          around do |example|
+            original = described_class.eligible_refund_methods
+            described_class.eligible_refund_methods = [check_payment.payment_method.class]
+            example.run
+            described_class.eligible_refund_methods = original
+          end
+
+          it "does not refund to ineligible payment methods" do
+            expect(refund_payment_methods).to eq [check_payment.payment_method]
+          end
+        end
+
+        context "sorting payment methods" do
+          around do |example|
+            original = described_class.eligible_refund_methods
+            described_class.eligible_refund_methods = [check_payment.payment_method.class, payment.payment_method.class]
+            example.run
+            described_class.eligible_refund_methods = original
+          end
+
+          it "respects configured payment type sort order" do
+            expect(refund_payment_methods).to eq [check_payment.payment_method, payment.payment_method]
+          end
+
+          context "only one refund is necessary" do
+            let(:refund_amount) { 4.0 }
+            it "only returns refunds to satisfy the refund amount" do
+              expect(refund_payment_methods).to eq [check_payment.payment_method]
+            end
+          end
+        end
+      end
     end
   end
 end
