@@ -23,12 +23,16 @@ FactoryGirl.define do
 
       transient do
         line_items_count 1
+        line_items_attributes { [{}] * line_items_count }
         shipment_cost 100
         shipping_method nil
       end
 
       after(:create) do |order, evaluator|
-        create_list(:line_item, evaluator.line_items_count, order: order, price: evaluator.line_items_price)
+        evaluator.line_items_attributes.each do |attributes|
+          attributes = {order: order, price: evaluator.line_items_price}.merge(attributes)
+          create(:line_item, attributes)
+        end
         order.line_items.reload
 
         create(:shipment, order: order, cost: evaluator.shipment_cost, shipping_method: evaluator.shipping_method)

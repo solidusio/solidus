@@ -5,8 +5,10 @@ FactoryGirl.define do
     pre_tax_amount { price }
     order
     transient do
-      association :product
+      product nil
     end
-    variant{ product.master }
+    variant do
+      (product || create(:product)).master
+    end
   end
 end
