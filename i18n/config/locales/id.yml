@@ -874,10 +874,6 @@ id:
         total:
     order_not_found: Kami tidak dapat menemukan pesanan Anda. Silahkan coba lagi.
     order_number: Nomor Pesanan
-    order_populator:
-      out_of_stock: Stok %{item} habis
-      please_enter_reasonable_quantity: Silahkan masukkan jumlah yang sesuai
-      selected_quantity_not_available:
     order_processed_successfully: Pesanan anda telah berhasil diproses
     order_resumed:
     order_state:

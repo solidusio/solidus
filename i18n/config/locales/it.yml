@@ -920,10 +920,6 @@ it:
         total: ! 'Totale Ordine:'
     order_not_found: Non abbiamo trovato il tuo ordine. Per favore riprova ancora.
     order_number: "Ordine %{number}"
-    order_populator:
-      out_of_stock: "%{item} non è disponibile."
-      please_enter_reasonable_quantity: Per favore immetti una quantità ragionevole.
-      selected_quantity_not_available: "La quantità selezionata di %{item} non è disponibile."
     order_processed_successfully: Il tuo ordine è stato processato con successo
     order_resumed: Ordine Riattivato
     order_state:

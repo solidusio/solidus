@@ -870,10 +870,6 @@ th:
         total:
     order_not_found: "เราไม่พบรายการสั่งซื้อของคุณ กรุณาลองใหม่อีกครั้ง"
     order_number: "รหัสสั่งซื้อ %{number}"
-    order_populator:
-      out_of_stock: "%{item} นั้นหมดชั่วคราว"
-      please_enter_reasonable_quantity: "กรุณาใส่จำนวนที่เหมาะสม"
-      selected_quantity_not_available:
     order_processed_successfully: "รายการสั่งซื้อของคุณถูกดำเนินการเรียบร้อยแล้ว"
     order_resumed:
     order_state:

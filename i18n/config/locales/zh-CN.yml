@@ -874,10 +874,6 @@ zh-CN:
         total:
     order_not_found: "我们无法找到您的订单。请重新尝试。"
     order_number: "订单号 %{number}"
-    order_populator:
-      out_of_stock: "%{item} 库存不足"
-      please_enter_reasonable_quantity: "请输入一个合理的数量"
-      selected_quantity_not_available:
     order_processed_successfully: "您的订单已经被成功处理了"
     order_resumed:
     order_state:

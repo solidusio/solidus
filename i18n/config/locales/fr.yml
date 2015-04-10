@@ -812,7 +812,7 @@ fr:
     new_adjustment: Nouvel ajustement
     new_country: Nouveau pays
     new_customer: Nouveau client
-    new_customer_return: 
+    new_customer_return:
     new_image: Nouvelle image
     new_option_type: Nouveau type d'option
     new_order: Nouvelle commande
@@ -909,10 +909,6 @@ fr:
         total: ! 'Total de la commande: %{total}'
     order_not_found: Impossible de trouver votre commande. Merci d'essayer à nouveau.
     order_number: Numéro de facture
-    order_populator:
-      out_of_stock: "%{item} n'est plus en stock."
-      please_enter_reasonable_quantity: Veuillez saisir une quantité raisonnable.
-      selected_quantity_not_available: La quantité sélectionnée n'est pas disponible
     order_processed_successfully: Votre commande a été traitée avec succès
     order_resumed: Résumé de votre commande
     order_state:

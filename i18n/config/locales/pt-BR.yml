@@ -904,10 +904,6 @@ pt-BR:
         total: Total
     order_not_found: Não conseguimos encontrar seu pedido. Por favor tente novamente.
     order_number: Número do Pedido %{number}
-    order_populator:
-      out_of_stock: "%{item} está fora de estoque."
-      please_enter_reasonable_quantity: Por favor insira uma quantia válida.
-      selected_quantity_not_available: A quantidade selecionada do %{item} não está disponível.
     order_processed_successfully: Seu pedido foi processado com sucesso.
     order_resumed: Pedido retomado
     order_state:

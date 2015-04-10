@@ -804,9 +804,6 @@ fa:
         total:
     order_not_found:
     order_number: سفارش
-    order_populator:
-      out_of_stock:
-      please_enter_reasonable_quantity:
     order_processed_successfully: سفارش شما به طور موفقیت‌آمیز ثبت شد.
     order_state:
       address: آدرس

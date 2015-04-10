@@ -834,10 +834,6 @@ zh-TW:
         total:
     order_not_found: "找不到您的訂單. 請再試一次."
     order_number: "訂單編號 %{number}"
-    order_populator:
-      out_of_stock: "%{item} 已無存貨"
-      please_enter_reasonable_quantity: "請輸入合理的數量."
-      selected_quantity_not_available:
     order_processed_successfully: "您的訂單已被接收"
     order_resumed:
     order_state:

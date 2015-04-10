@@ -912,10 +912,6 @@ sv:
         total: 'Totalsumma:'
     order_not_found: Vi kunde inte hitta din order. Gör ett nytt försök.
     order_number: Beställning %{number}
-    order_populator:
-      out_of_stock: "%{item} är slut i lager"
-      please_enter_reasonable_quantity: Ange ett rimligt antal.
-      selected_quantity_not_available: utval av %{item} är inte tillgänglig.
     order_processed_successfully: Din order har tagits emot.
     order_resumed: Beställningen återupptogs
     order_state:

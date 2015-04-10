@@ -878,10 +878,6 @@ nl:
         total:
     order_not_found: We konden je bestelling niet vinden. Probeer het nogmaals.
     order_number: Bestelling %{number}
-    order_populator:
-      out_of_stock: "%{item} is niet op voorraad."
-      please_enter_reasonable_quantity: Vul een redelijke hoeveelheid in.
-      selected_quantity_not_available:
     order_processed_successfully: Je bestelling is succesvol verwerkt
     order_resumed:
     order_state:
