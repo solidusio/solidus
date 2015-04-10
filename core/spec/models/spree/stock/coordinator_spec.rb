@@ -46,6 +46,44 @@ module Spree
           end
         end
       end
+
+      # regression spec
+      context "when there is one unit that has stock in a stock location that a non-tracked unit has no stock item in" do
+        let!(:stock_location_1) { create(:stock_location, propagate_all_variants: false, active: true) }
+        let!(:stock_location_2) { create(:stock_location, propagate_all_variants: false, active: true) }
+
+        let!(:variant_1) do
+          create(:variant, track_inventory: true).tap do |variant|
+            variant.stock_items.destroy_all
+            stock_item = variant.stock_items.create!(stock_location: stock_location_1)
+            stock_item.set_count_on_hand(10)
+          end
+        end
+        let!(:variant_2) do
+          create(:variant, track_inventory: false).tap do |variant|
+            variant.stock_items.destroy_all
+            stock_item = variant.stock_items.create!(stock_location: stock_location_2)
+            stock_item.set_count_on_hand(0)
+          end
+        end
+
+        let!(:order) { create(:order, line_items: [create(:line_item, variant: variant_1), create(:line_item, variant: variant_2)]) }
+
+        it "splits the inventory units to stock locations that they have stock items for" do
+          packages = subject.packages
+
+          expect(subject.packages.size).to eq 2
+
+          location_1_package = packages.detect { |p| p.stock_location == stock_location_1 }
+          location_2_package = packages.detect { |p| p.stock_location == stock_location_2 }
+
+          expect(location_1_package).to be_present
+          expect(location_2_package).to be_present
+
+          expect(location_1_package.contents.map(&:inventory_unit).map(&:variant)).to eq [variant_1]
+          expect(location_2_package.contents.map(&:inventory_unit).map(&:variant)).to eq [variant_2]
+        end
+      end
     end
   end
 end

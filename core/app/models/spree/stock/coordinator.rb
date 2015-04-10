@@ -31,9 +31,9 @@ module Spree
       # Returns an array of Package instances
       def build_packages(packages = Array.new)
         StockLocation.active.each do |stock_location|
-          next unless stock_location.stock_items.where(:variant_id => inventory_units.map(&:variant_id)).exists?
-
-          packer = build_packer(stock_location, inventory_units)
+          units_for_location = unallocated_inventory_units.select { |unit| stock_location.stock_item(unit.variant) }
+          next unless units_for_location.any?
+          packer = build_packer(stock_location, units_for_location)
           packages += packer.packages
         end
         packages

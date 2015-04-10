@@ -1,5 +1,7 @@
 module Spree
   class StockLocation < Spree::Base
+    class InvalidMovementError < StandardError; end
+
     has_many :shipments
     has_many :stock_items, dependent: :delete_all, inverse_of: :stock_location
     has_many :cartons, inverse_of: :stock_location
@@ -85,6 +87,9 @@ module Spree
     end
 
     def move(variant, quantity, originator = nil)
+      if quantity < 1 && !stock_item(variant)
+        raise InvalidMovementError.new(Spree.t(:negative_movement_absent_item))
+      end
       stock_item_or_create(variant).stock_movements.create!(quantity: quantity,
                                                             originator: originator)
     end

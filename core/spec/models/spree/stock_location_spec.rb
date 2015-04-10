@@ -244,5 +244,36 @@ module Spree
       end
     end
 
+
+    describe "#move" do
+      let!(:variant) { create(:variant) }
+      def move
+        subject.move(variant, quantity)
+      end
+
+      context "no stock item exists" do
+        before { subject.stock_items.destroy_all }
+        context "positive movement" do
+          let(:quantity) { 1 }
+          it "creates a stock item" do
+            expect { move }.to change { subject.stock_items.count }.by 1
+          end
+        end
+
+        # We should not be creating stock items that do not exist
+        # for the sake of a negative movement.
+        context "negative movement" do
+          let(:quantity) { -1 }
+          it "raises an error" do
+            expect {
+              expect {
+                move
+              }.to raise_error StockLocation::InvalidMovementError
+            }.not_to change { subject.stock_items.count }
+          end
+        end
+
+      end
+    end
   end
 end
