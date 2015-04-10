@@ -1,7 +1,9 @@
 FactoryGirl.define do
   factory :return_item, class: Spree::ReturnItem do
     association(:inventory_unit, factory: :inventory_unit, state: :shipped)
-    association(:return_authorization, factory: :return_authorization)
+    return_authorization do |return_item|
+      build(:return_authorization, order: inventory_unit.order)
+    end
 
     factory :exchange_return_item do
       after(:build) do |return_item|
