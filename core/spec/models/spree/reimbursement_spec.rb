@@ -52,7 +52,8 @@ describe Spree::Reimbursement, type: :model do
     let!(:tax_rate)               { nil }
     let!(:tax_zone)               { create :zone, default_tax: true }
     let(:shipping_method)         { create :shipping_method, zones: [tax_zone] }
-    let(:order)                   { create(:order_with_line_items, state: 'payment', line_items_count: 1, line_items_price: line_items_price, shipment_cost: 0, shipping_method: shipping_method) }
+    let(:variant)                 { create :variant }
+    let(:order)                   { create(:order_with_line_items, state: 'payment', line_items_attributes: [{variant: variant, price: line_items_price}], shipment_cost: 0, shipping_method: shipping_method) }
     let(:line_items_price)        { BigDecimal.new(10) }
     let(:line_item)               { order.line_items.first }
     let(:inventory_unit)          { line_item.inventory_units.first }
