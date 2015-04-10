@@ -128,8 +128,16 @@ module Spree
           params[:order][:bill_address_attributes] = params[:order].delete(:bill_address) if params[:order][:bill_address].present?
         end
 
+        def permitted_order_attributes
+          if is_admin?
+            super + admin_order_attributes
+          else
+            super
+          end
+        end
+
         def permitted_shipment_attributes
-          if current_api_user.has_spree_role? "admin"
+          if is_admin?
             super + admin_shipment_attributes
           else
             super
