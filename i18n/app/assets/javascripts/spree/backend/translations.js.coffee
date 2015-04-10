@@ -1,13 +1,13 @@
 display_locale_fields = () ->
-  attr = $('#attr_list li.active a').data('attr')
+  attr    = $('#attr_list a.active').data('attr')
   locales = $('#locale').val()
-  show = $("input[name='show-only']:checked").val()
+  show    = $("select[name='show-only']").val()
 
-  $('table#attr_fields tr').hide()
+  $('#attr_fields .panel').hide()
 
   for locale in locales
     do (locale) ->
-      value = $('table#attr_fields tr.' + attr + '.' + locale + ' td.translation :input').val().replace /^\s+|\s+$/g, ""
+      value = $('#attr_fields .panel.' + attr + '.' + locale + ' :input').val().replace /^\s+|\s+$/g, ""
 
       if show == 'incomplete'
         display = value == ''
@@ -17,22 +17,24 @@ display_locale_fields = () ->
         display = true
 
       if display
-        $('table#attr_fields tr.' + attr + '.' + locale).show()
+        $('#attr_fields .panel.' + attr + '.' + locale).show()
 
-  if $('table#attr_fields tr:visible').length == 0 and show != 'all'
-    $('table#attr_fields tfoot tr').show()
-    $('table#attr_fields tfoot td').html('No <strong>' + show + '</strong> translations for <strong>' + attr + '</strong>.')
+  if $('#attr_fields .panel:visible').length == 0 and show != 'all'
+    $('#attr_fields .no-translations').show()
 
 
 $ ->
   $('#attr_list a').click ->
-    $('#attr_list li').removeClass('active')
-    $(this).parent().addClass('active')
+    $('#attr_list a').removeClass('active')
+    $(this).addClass('active')
 
     display_locale_fields()
     false
 
   $('#locale, #supported_locales_, #available_locales_').select2({placeholder: 'Please select a language.'})
-  $('#locale').change display_locale_fields
-  $("input[name='show-only']").change display_locale_fields
+  $('#locale').change ->
+    display_locale_fields()
+
+  $("select[name='show-only']").change ->
+    display_locale_fields()
 

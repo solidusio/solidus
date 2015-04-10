@@ -6,9 +6,11 @@
   <%= button_link_to Spree.t(:back_to_resource_list, resource: Spree::OptionValue.model_name.human), spree.edit_admin_option_type_path(@option_value.option_type), class: 'btn-primary', icon: 'arrow-left' %>
 <% end %>
 
+<%= render 'settings' %>
+
 <div class="row translations">
   <div class="col-md-4">
-    <%= render 'settings' %>
+    <%= render 'fields' %>
   </div>
   <div class="col-md-8">
     <%= form_for [:admin, :option_type, @resource] do |f| %>

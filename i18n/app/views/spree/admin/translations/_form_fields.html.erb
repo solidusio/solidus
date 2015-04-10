@@ -1,44 +1,35 @@
-<fieldset>
-  <legend><%= Spree.t(:'i18n.translations') %></legend>
-  <table id="attr_fields" class="table">
-    <colgroup>
-      <col style="width: 10%" />
-      <col style="width: 90%" />
-    </colgroup>
-    <tbody>
-      <% SpreeI18n::Config.available_locales.each do |locale| %>
-        <%= f.globalize_fields_for locale.to_sym do |g| %>
-          <% @resource.class.translated_attribute_names.each_with_index do |attr, i| %>
-            <tr style="display:<%= i == 0 ? 'auto' : 'none' %>;" class="<%= attr %> <%= locale %> even">
-              <td colspan="2">
-                <%= Spree.t(:'i18n.this_file_language', locale: locale) %> -
-                <%= Spree.t(attr, locale: locale) %>
-              </td>
-            </tr>
-            <tr style="display:<%= i == 0 ? 'auto' : 'none' %>;" class="<%= attr %> <%= locale %> odd">
-              <td class="flag">
-                <% if locale.to_s.include?('-') %>
-                  <img src="https://www.localeapp.com/assets/flags/regions/<%= locale.to_s.split('-').last %>.png">
-                <% else %>
-                  <img src="https://www.localeapp.com/assets/flags/languages/<%= locale %>.png">
-                <% end %>
-              </td>
-              <td class="translation">
-                <% if @resource.class.columns_hash[attr.to_s].type == :text %>
-                  <%= g.text_area attr, class: 'form-control', rows: 4 %>
-                <% else %>
-                  <%= g.text_field attr, class: 'form-control' %>
-                <% end %>
-              </td>
-            </tr>
-          <% end %>
-        <% end %>
+<div id="attr_fields">
+  <% SpreeI18n::Config.available_locales.each do |locale| %>
+    <%= f.globalize_fields_for locale.to_sym do |g| %>
+      <% @resource.class.translated_attribute_names.each_with_index do |attr, i| %>
+        <div class="panel panel-default <%= attr %> <%= locale %>" style="display:<%= i == 0 ? 'auto' : 'none' %>;">
+          <div class="panel-heading">
+            <%= Spree.t(attr, locale: locale) %>
+
+            <div class="pull-right text-muted">
+              <small><i><%= Spree.t(:'i18n.this_file_language', locale: locale) %></i></small>
+
+              <% if locale.to_s.include?('-') %>
+                <img src="https://www.localeapp.com/assets/flags/regions/<%= locale.to_s.split('-').last %>.png">
+              <% else %>
+                <img src="https://www.localeapp.com/assets/flags/languages/<%= locale %>.png">
+              <% end %>
+            </div>
+          </div>
+
+          <div class="panel-body">
+            <% if @resource.class.columns_hash[attr.to_s].type == :text %>
+              <%= g.text_area attr, class: 'form-control', rows: 4 %>
+            <% else %>
+              <%= g.text_field attr, class: 'form-control' %>
+            <% end %>
+          </div>
+        </div>
       <% end %>
-    </tbody>
-    <tfoot>
-      <tr style="display:none;">
-        <td colspan="2"></td>
-      </tr>
-    </tfoot>
-  </table>
-</fieldset>
+    <% end %>
+  <% end %>
+
+  <p class="no-translations" style="display: none">There are no any translation for given criteria</p>
+</div>
+
+<hr/>

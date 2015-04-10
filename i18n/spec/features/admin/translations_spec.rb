@@ -17,8 +17,8 @@ RSpec.feature "Translations", :js do
         visit spree.admin_product_path(product)
         click_on "Translations"
 
-        within("#attr_fields .name.en.odd") { fill_in_name "Pearl Jam" }
-        within("#attr_fields .name.pt-BR.odd") { fill_in_name "Geleia de perola" }
+        within("#attr_fields .name.en") { fill_in_name "Pearl Jam" }
+        within("#attr_fields .name.pt-BR") { fill_in_name "Geleia de perola" }
         click_on "Update"
 
         change_locale
@@ -33,7 +33,7 @@ RSpec.feature "Translations", :js do
         visit spree.admin_product_product_properties_path(product_property.product)
         within_row(1) { click_icon :translate }
 
-        within("#attr_fields .value.pt-BR.odd") { fill_in_name "vermelho" }
+        within("#attr_fields .value.pt-BR") { fill_in_name "vermelho" }
         click_on "Update"
 
         change_locale
@@ -50,10 +50,10 @@ RSpec.feature "Translations", :js do
         visit spree.admin_option_types_path
         within_row(1) { click_icon :translate }
 
-        within("#attr_fields .name.en.odd") { fill_in_name "shirt sizes" }
+        within("#attr_fields .name.en") { fill_in_name "shirt sizes" }
         within("#attr_list") { click_on "Presentation" }
-        within("#attr_fields .presentation.en.odd") { fill_in_name "size" }
-        within("#attr_fields .presentation.pt-BR.odd") { fill_in_name "tamanho" }
+        within("#attr_fields .presentation.en") { fill_in_name "size" }
+        within("#attr_fields .presentation.pt-BR") { fill_in_name "tamanho" }
         click_on "Update"
 
         change_locale
@@ -81,10 +81,10 @@ RSpec.feature "Translations", :js do
         visit spree.edit_admin_option_type_path(option_type)
         within_row(1) { click_icon :translate }
 
-        within("#attr_fields .name.en.odd") { fill_in_name "big" }
+        within("#attr_fields .name.en") { fill_in_name "big" }
         within("#attr_list") { click_on "Presentation" }
-        within("#attr_fields .presentation.en.odd") { fill_in_name "big" }
-        within("#attr_fields .presentation.pt-BR.odd") { fill_in_name "grande" }
+        within("#attr_fields .presentation.en") { fill_in_name "big" }
+        within("#attr_fields .presentation.pt-BR") { fill_in_name "grande" }
         click_on "Update"
 
         change_locale
@@ -100,10 +100,10 @@ RSpec.feature "Translations", :js do
         visit spree.admin_properties_path
         within_row(1) { click_icon :translate }
 
-        within("#attr_fields .name.pt-BR.odd") { fill_in_name "Modelo" }
+        within("#attr_fields .name.pt-BR") { fill_in_name "Modelo" }
         within("#attr_list") { click_on "Presentation" }
-        within("#attr_fields .presentation.en.odd") { fill_in_name "Model" }
-        within("#attr_fields .presentation.pt-BR.odd") { fill_in_name "Modelo" }
+        within("#attr_fields .presentation.en") { fill_in_name "Model" }
+        within("#attr_fields .presentation.pt-BR") { fill_in_name "Modelo" }
         click_on "Update"
 
         change_locale
@@ -121,8 +121,8 @@ RSpec.feature "Translations", :js do
       visit spree.admin_promotions_path
       within_row(1) { click_icon :translate }
 
-      within("#attr_fields .name.en.odd") { fill_in_name "All free" }
-      within("#attr_fields .name.pt-BR.odd") { fill_in_name "Salve salve" }
+      within("#attr_fields .name.en") { fill_in_name "All free" }
+      within("#attr_fields .name.pt-BR") { fill_in_name "Salve salve" }
       click_on "Update"
 
       change_locale
@@ -145,8 +145,8 @@ RSpec.feature "Translations", :js do
       visit spree.admin_taxonomies_path
       within_row(1) { click_icon :translate }
 
-      within("#attr_fields .name.en.odd") { fill_in_name "Guitars" }
-      within("#attr_fields .name.pt-BR.odd") { fill_in_name "Guitarras" }
+      within("#attr_fields .name.en") { fill_in_name "Guitars" }
+      within("#attr_fields .name.pt-BR") { fill_in_name "Guitarras" }
       click_on "Update"
 
       change_locale
@@ -162,12 +162,12 @@ RSpec.feature "Translations", :js do
     scenario "display translated name on frontend" do
       visit spree.admin_translations_path('taxons', taxon.id)
 
-      within("#attr_fields .name.en.odd") { fill_in_name "Acoustic" }
-      within("#attr_fields .name.pt-BR.odd") { fill_in_name "Acusticas" }
+      within("#attr_fields .name.en") { fill_in_name "Acoustic" }
+      within("#attr_fields .name.pt-BR") { fill_in_name "Acusticas" }
       click_on "Update"
 
       visit spree.admin_translations_path('taxons', taxon.id)
-      
+
       # ensure we're not duplicating translated records on database
       expect {
         click_on "Update"
@@ -217,8 +217,8 @@ RSpec.feature "Translations", :js do
       visit spree.admin_product_path(product)
       click_on "Translations"
       click_on "Slug"
-      within("#attr_fields .slug.en.odd") { fill_in_name "en_link" }
-      within("#attr_fields .slug.de.odd") { fill_in_name "de_link" }
+      within("#attr_fields .slug.en") { fill_in_name "en_link" }
+      within("#attr_fields .slug.de") { fill_in_name "de_link" }
       click_on "Update"
 
       visit spree.product_path 'en_link'

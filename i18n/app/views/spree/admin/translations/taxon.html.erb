@@ -6,9 +6,11 @@
   <%= button_link_to Spree.t(:back_to_resource_list, resource: Spree::Taxonomy.model_name.human), spree.admin_taxonomies_path, class: 'btn-primary', icon: 'arrow-left' %>
 <% end %>
 
+<%= render 'settings' %>
+
 <div class="row translations">
   <div class="col-md-4">
-    <%= render 'settings' %>
+    <%= render 'fields' %>
   </div>
   <div class="col-md-8">
     <%= form_for [:admin, @resource.taxonomy, @resource], url: admin_taxonomy_taxon_path(@taxon.taxonomy, @taxon.id) do |f| %>

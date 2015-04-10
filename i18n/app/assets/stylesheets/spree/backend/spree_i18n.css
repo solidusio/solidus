@@ -6,3 +6,12 @@
  *= require spree/backend
  *= require_tree .
 */
+
+/* This belongs to the core, not that extension */
+.no-margin-bottom {
+	margin-bottom: 0;
+}
+
+.no-padding-bottom {
+	padding-bottom: 0;
+}
