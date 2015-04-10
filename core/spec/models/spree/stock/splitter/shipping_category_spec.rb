@@ -5,19 +5,21 @@ module Spree
     module Splitter
       describe ShippingCategory, :type => :model do
 
+        let(:order) { create(:order_with_line_items, line_items_count: 1) }
+        let(:line_item) { order.line_items.first }
         let(:variant1) { build(:variant) }
         let(:variant2) { build(:variant) }
         let(:shipping_category_1) { create(:shipping_category, name: 'A') }
         let(:shipping_category_2) { create(:shipping_category, name: 'B') }
 
         def inventory_unit1
-          build(:inventory_unit, variant: variant1).tap do |inventory_unit|
+          build(:inventory_unit, variant: variant1, order: order, line_item: line_item).tap do |inventory_unit|
             inventory_unit.variant.product.shipping_category = shipping_category_1
           end
         end
 
         def inventory_unit2
-          build(:inventory_unit, variant: variant2).tap do |inventory_unit|
+          build(:inventory_unit, variant: variant2, order: order, line_item: line_item).tap do |inventory_unit|
             inventory_unit.variant.product.shipping_category = shipping_category_2
           end
         end
