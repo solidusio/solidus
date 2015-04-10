@@ -559,9 +559,9 @@ module Spree
       unless completed?
         self.shipments.destroy_all
         self.update_column(:shipment_total, 0)
+        restart_checkout_flow
       end
 
-      restart_checkout_flow if payment? || confirm?
     end
 
     def restart_checkout_flow
