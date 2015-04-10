@@ -528,10 +528,9 @@ describe Spree::Order, :type => :model do
         expect(order.shipment_total).to eq(0)
       end
 
-      it "does not touch the state" do
-        expect {
-          order.ensure_updated_shipments
-        }.not_to change { order.state }
+      it "puts the order in the cart state" do
+        order.ensure_updated_shipments
+        expect(order.state).to eq "cart"
       end
     end
 
