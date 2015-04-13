@@ -225,27 +225,6 @@ describe Spree::Order, :type => :model do
         expect(order.user).to_not receive(:persist_order_address)
         order.next!
       end
-
-      context "cannot transition to delivery" do
-        context "with an existing shipment" do
-          before do
-            line_item = FactoryGirl.create(:line_item, :price => 10)
-            order.line_items << line_item
-          end
-
-          context "if there are no shipping rates for any shipment" do
-            it "raises an InvalidTransitionError" do
-              transition = lambda { order.next! }
-              expect(transition).to raise_error(StateMachine::InvalidTransition, /#{Spree.t(:items_cannot_be_shipped)}/)
-            end
-
-            it "deletes all the shipments" do
-              order.next
-              expect(order.shipments).to be_empty
-            end
-          end
-        end
-      end
     end
 
     context "to delivery" do
