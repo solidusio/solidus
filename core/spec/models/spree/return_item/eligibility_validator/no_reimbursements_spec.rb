@@ -19,6 +19,14 @@ describe Spree::ReturnItem::EligibilityValidator::NoReimbursements do
         subject
         expect(validator.errors[:inventory_unit_reimbursed]).to eq Spree.t('return_item_inventory_unit_reimbursed')
       end
+
+      context "but the return item has been expired" do
+        before { return_item.expired }
+
+        it "returns true" do
+          expect(subject).to eq true
+        end
+      end
     end
 
     context "inventory unit has not been reimbursed" do
