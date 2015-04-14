@@ -39,8 +39,8 @@
           <td class="align-center"><%= method.display_on.blank? ? Spree.t(:both) : Spree.t(method.display_on) %></td>
           <td class="align-center"><%= method.active ? Spree.t(:say_yes) : Spree.t(:say_no) %></td>
           <td data-hook="admin_payment_methods_index_row_actions" class="actions">
-            <%= link_to_edit method, :no_text => true %>
-            <%= link_to_delete method, :no_text => true  %>
+            <%= link_to_edit method.becomes(Spree::PaymentMethod), :no_text => true %>
+            <%= link_to_delete method.becomes(Spree::PaymentMethod), :no_text => true  %>
           </td>
         </tr>
       <% end %>
