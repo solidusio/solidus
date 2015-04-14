@@ -22,6 +22,10 @@ module Spree
       true
     end
 
+    def self.model_name
+      ActiveModel::Name.new Spree::LegacyUser, Spree, 'user'
+    end
+
     attr_accessor :password
     attr_accessor :password_confirmation
 
