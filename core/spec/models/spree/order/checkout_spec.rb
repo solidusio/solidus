@@ -593,6 +593,8 @@ describe Spree::Order, :type => :model do
 
   # Regression test for #3665
   context "with only a complete step" do
+    let!(:line_item){ create :line_item, order: order }
+
     before do
       @old_checkout_flow = Spree::Order.checkout_flow
       Spree::Order.class_eval do
@@ -607,11 +609,10 @@ describe Spree::Order, :type => :model do
     end
 
     it "does not attempt to process payments" do
-      allow(order).to receive_message_chain(:line_items, :present?) { true }
-      allow(order).to receive(:ensure_line_items_are_in_stock) { true }
-      allow(order).to receive(:ensure_line_item_variants_are_not_deleted) { true }
-      expect(order).not_to receive(:payment_required?)
-      expect(order).not_to receive(:process_payments!)
+      order.email = 'user@example.com'
+      order.stub(:ensure_available_shipping_rates).and_return(true)
+      order.should_not_receive(:payment_required?)
+      order.should_not_receive(:process_payments!)
       order.next!
       assert_state_changed(order, 'cart', 'complete')
     end
