@@ -237,6 +237,12 @@ describe Spree::Order, :type => :model do
     end
 
     context "to delivery" do
+      let(:ship_address) { FactoryGirl.create(:ship_address) }
+
+      before do
+        order.ship_address = ship_address
+      end
+
       context 'when order has default selected_shipping_rate_id' do
         let(:shipment) { create(:shipment, order: order) }
         let(:shipping_method) { create(:shipping_method) }
@@ -267,6 +273,11 @@ describe Spree::Order, :type => :model do
 
       context "cannot transition to delivery" do
         context "if there are no shipping rates for any shipment" do
+          let!(:line_item){ create :line_item, order: order }
+          before do
+            order.state = 'address'
+            order.email = 'user@example.com'
+          end
           specify do
             transition = lambda { order.next! }
             transition.should raise_error(StateMachine::InvalidTransition, /#{Spree.t(:items_cannot_be_shipped)}/)
@@ -276,7 +287,10 @@ describe Spree::Order, :type => :model do
     end
 
     context "from delivery" do
+      let(:ship_address) { FactoryGirl.create(:ship_address) }
+
       before do
+        order.ship_address = ship_address
         order.state = 'delivery'
         allow(order).to receive(:apply_free_shipping_promotions)
       end
