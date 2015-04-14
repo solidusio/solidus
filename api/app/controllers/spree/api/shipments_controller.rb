@@ -8,7 +8,7 @@ module Spree
       before_filter :update_shipment, only: [:ship, :ready, :add, :remove]
 
       def mine
-        if current_api_user.persisted?
+        if current_api_user
           @shipments = Spree::Shipment
             .reverse_chronological
             .joins(:order)

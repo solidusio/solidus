@@ -177,8 +177,8 @@ describe Spree::Api::ShipmentsController, :type => :controller do
         end
       end
 
-      context "the current api user is not persisted" do
-        let(:current_api_user) { Spree.user_class.new }
+      context "the current api user does not exist" do
+        let(:current_api_user) { nil }
 
         it "returns a 401" do
           expect(response.status).to eq(401)

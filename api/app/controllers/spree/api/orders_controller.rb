@@ -95,7 +95,7 @@ module Spree
       end
 
       def mine
-        if current_api_user.persisted?
+        if current_api_user
           @orders = current_api_user.orders.reverse_chronological.ransack(params[:q]).result.page(params[:page]).per(params[:per_page])
         else
           render "spree/api/errors/unauthorized", status: :unauthorized
