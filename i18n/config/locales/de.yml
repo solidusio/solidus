@@ -218,11 +218,11 @@ de:
         one: Einzelposten
         other: Einzelposten
       spree/option_type:
-        one: Gewählte Opion
-        other: Gewählte Opionen
+        one: Gewählte Option
+        other: Gewählte Optionen
       spree/option_value:
-        one: Gewählter Opionswert
-        other: Gewählte Opionswerte
+        one: Gewählter Optionswert
+        other: Gewählte Optionswerte
       spree/order:
         one: Bestellung
         other: Bestellungen
