@@ -293,6 +293,7 @@ describe Spree::Order, :type => :model do
         order.ship_address = ship_address
         order.state = 'delivery'
         allow(order).to receive(:apply_free_shipping_promotions)
+        allow(order).to receive(:ensure_available_shipping_rates) { true }
       end
 
       it "attempts to apply free shipping promotions" do
@@ -385,6 +386,7 @@ describe Spree::Order, :type => :model do
     context "from payment" do
       before do
         order.state = 'payment'
+        allow(order).to receive(:ensure_available_shipping_rates) { true }
       end
 
       context "with confirmation required" do
@@ -488,6 +490,7 @@ describe Spree::Order, :type => :model do
         order.email = 'spree@example.com'
         order.payments << FactoryGirl.create(:payment)
         order.stub(payment_required?: true)
+        allow(order).to receive(:ensure_available_shipping_rates) { true }
         order.line_items << FactoryGirl.create(:line_item)
 
         Spree::OrderUpdater.new(order).update
