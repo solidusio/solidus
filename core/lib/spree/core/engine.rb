@@ -63,6 +63,12 @@ module Spree
           Spree::Calculator::FlatRate,
           Spree::Calculator::FlexiRate
         ]
+
+        app.config.spree.calculators.add_class('promotion_actions_create_quantity_adjustments')
+        app.config.spree.calculators.promotion_actions_create_item_adjustments = [
+          Spree::Calculator::PercentOnLineItem,
+          Spree::Calculator::FlatRate
+        ]
       end
 
       # Promotion rules need to be evaluated on after initialize otherwise
@@ -85,6 +91,7 @@ module Spree
         app.config.spree.promotions.actions = [
           Promotion::Actions::CreateAdjustment,
           Promotion::Actions::CreateItemAdjustments,
+          Promotion::Actions::CreateQuantityAdjustments,
           Promotion::Actions::FreeShipping]
       end
 

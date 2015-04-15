@@ -763,6 +763,7 @@ en:
     general_settings: General Settings
     google_analytics: Google Analytics
     google_analytics_id: Analytics ID
+    group_size: Group size
     guest_checkout: Guest Checkout
     guest_user_account: Checkout as a Guest
     has_no_shipped_units: has no shipped units
@@ -1097,6 +1098,9 @@ en:
       create_item_adjustments:
         description: Creates a promotion credit adjustment on a line item
         name: Create per-line-item adjustment
+      create_quantity_adjustments:
+        description: Creates an adjustment on a line item based on quantity
+        name: Create per-quantity adjustment
       free_shipping:
         description: Makes all shipments for the order free
         name: Free shipping
