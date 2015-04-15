@@ -42,7 +42,7 @@ ru:
       spree/order:
         checkout_complete: "Оформление заказа завершено"
         completed_at: "Завершено"
-        considered_risky:
+        considered_risky: "Статус риска"
         coupon_code: "Код купона"
         created_at: "Дата заказа"
         email: E-mail покупателя
@@ -95,7 +95,8 @@ ru:
         starts_at: "Начинается"
         usage_limit: "Лимит использования"
       spree/promotion_category:
-        name:
+        name: "Название"
+        code: "Код"
       spree/property:
         name: "Название"
         presentation: "Представление"
@@ -117,7 +118,7 @@ ru:
         updated:
         user:
       spree/store:
-        mail_from_address:
+        mail_from_address: "Отсылать почту как"
         meta_description: Meta-описание
         meta_keywords: Meta ключевые слова
         name: "Название сайта"
@@ -212,6 +213,9 @@ ru:
         one: "Кредитная карта"
         other: "Кредитные карты"
       spree/customer_return:
+        many: "Возвратов покупателю"
+        one: "Возврат покупателю"
+        other: "Возвраты покупателю"
       spree/inventory_unit:
         many: "Единиц"
         one: "Единица"
@@ -243,6 +247,9 @@ ru:
         one: "Акция"
         other: "Акции"
       spree/promotion_category:
+        many: "Категорий акций"
+        one: "Категория акций"
+        other: "Категории акций"
       spree/property:
         many: "Свойств"
         one: "Свойство"
@@ -252,13 +259,22 @@ ru:
         one: "Прототип"
         other: "Прототипы"
       spree/refund_reason:
+        many: "Причин возврата"
+        one: "Причина возврата"
+        other: "Причины возврата"
       spree/reimbursement:
       spree/reimbursement_type:
+        many: "Типов возврата"
+        one: "Тип возврата"
+        other: "Типы возврата"
       spree/return_authorization:
         many: "Разрешений на возврат"
         one: "Разрешение на возврат"
         other: "Разрешения на возврат"
       spree/return_authorization_reason:
+        many: "Причин разрешения на возврат"
+        one: "Причина разрешения на возврат"
+        other: "Причины разрешения на возврат"
       spree/role:
         many: "Ролей"
         one: "Роль"
@@ -479,8 +495,8 @@ ru:
     back: "Назад"
     back_end: "в администраторском интерфейсе"
     back_to_payment:
-    back_to_resource_list:
-    back_to_rma_reason_list:
+    back_to_resource_list: "Назад к списку"
+    back_to_rma_reason_list: "Назад к списку причин разрешения на возврат"
     back_to_store: "Вернуться в магазин"
     back_to_users_list: "Назад к списку пользователей"
     backorderable: "Возможен предзаказ"
@@ -524,9 +540,9 @@ ru:
     choose_dashboard_locale: "Выбрать язык отображения панели управления"
     choose_location:
     city: "Город"
-    clear_cache:
+    clear_cache: "Очистить кэш"
     clear_cache_ok:
-    clear_cache_warning:
+    clear_cache_warning: "Внимание, данное действие приведёт к очистке кэша"
     click_and_drag_on_the_products_to_sort_them: "Перетаскивайте товары мышкой для сортировки"
     clone: "Копировать"
     close: "Закрыть"
@@ -568,7 +584,7 @@ ru:
     coupon_code_unknown_error:
     create: "Создать"
     create_a_new_account: "Создать новую учетную запись"
-    create_new_order:
+    create_new_order: "Создать новый заказ"
     create_reimbursement:
     created_at: "Создано в"
     credit: "Кредит"
@@ -587,7 +603,7 @@ ru:
     customer_details: "Реквизиты клиента"
     customer_details_updated: "Данные клиента были обновлены."
     customer_return:
-    customer_returns:
+    customer_returns: "Возвраты покупателю"
     customer_search: "Поиск клиента"
     cut:
     cvv_response:
@@ -619,7 +635,7 @@ ru:
     description: "Описание"
     destination: "Назначение"
     destroy: "Удалить"
-    details:
+    details: "Описание товара"
     discount_amount: "Сумма скидки"
     dismiss_banner: "Нет, спасибо! Я не заинтересован. Не показывайте мне больше это сообщение."
     display: "Показать"
@@ -687,6 +703,7 @@ ru:
     failed_payment_attempts:
     filename: "Имя файла"
     fill_in_customer_info: "Заполните информацию о клиенте"
+    filter: "Фильтр"
     filter_results: "Результаты фильтрации"
     finalize: "Завершить"
     finalized:
@@ -822,7 +839,7 @@ ru:
     new_adjustment: "Новая корректировка"
     new_country: "Новая страна"
     new_customer: "Для новых пользователей"
-    new_customer_return:
+    new_customer_return: "Новый возврат покупателю"
     new_image: "Новое изображение"
     new_option_type: "Новая опция"
     new_order: "Новый заказ"
@@ -831,13 +848,13 @@ ru:
     new_payment_method: "Новый способ оплаты"
     new_product: "Новый товар"
     new_promotion: "Новая акция"
-    new_promotion_category:
+    new_promotion_category: "Новая категория акций"
     new_property: "Новое свойство"
     new_prototype: "Новый прототип"
     new_refund:
-    new_refund_reason:
+    new_refund_reason: "Новая причина возврата"
     new_return_authorization: "Новое разрешение на возврат"
-    new_rma_reason:
+    new_rma_reason: "Новая причина разрешения на возврат"
     new_shipment_at_location:
     new_shipping_category: "Новая категория доставки"
     new_shipping_method: "Новый способ доставки"
@@ -1071,7 +1088,7 @@ ru:
     quantity: "Количество"
     quantity_returned: "Количество возврата"
     quantity_shipped: "Отправленное количество"
-    quick_search:
+    quick_search: "Поиск . . ."
     rate: "Ставка"
     reason: "Причина"
     receive: "Получить"
@@ -1081,7 +1098,7 @@ ru:
     reference: "Ссылка"
     refund: "Возврат"
     refund_amount_must_be_greater_than_zero:
-    refund_reasons:
+    refund_reasons: "Причины возврата"
     refunded_amount:
     refunds:
     register: "Зарегистрироваться как новый пользователь"
@@ -1103,7 +1120,7 @@ ru:
     reimbursement_status:
     reimbursement_type:
     reimbursement_type_override:
-    reimbursement_types:
+    reimbursement_types: "Типы возврата"
     reimbursements:
     reject:
     rejected:
@@ -1119,7 +1136,7 @@ ru:
     resumed: "Возобновлен"
     return: "возвратить"
     return_authorization: "Разрешение на возврат"
-    return_authorization_reasons:
+    return_authorization_reasons: "Причины разрешения на возврат"
     return_authorization_updated: "Разрешение на возврат обновлено"
     return_authorizations: "Разрешения на возврат"
     return_item_inventory_unit_ineligible:
@@ -1128,10 +1145,10 @@ ru:
     return_item_time_period_ineligible:
     return_items:
     return_items_cannot_be_associated_with_multiple_orders:
-    return_number:
+    return_number: "Номер возврата"
     return_quantity: "возвращенное количество"
     returned: "Возвращенные"
-    returns:
+    returns: "Разрешения на возврат"
     review: "Проверить"
     risk:
     risk_analysis:
@@ -1141,7 +1158,7 @@ ru:
     rma_value: "Сумма RMA"
     roles: "Роли"
     rules: "Правила"
-    safe:
+    safe: "Безопасный"
     sales_total: "Итого (продажи)"
     sales_total_description: "Общий объём продаж по всем заказам"
     sales_totals: "Всего продано"
@@ -1156,8 +1173,8 @@ ru:
     secure_connection_type: "Тип защищенного соединения"
     security_settings: "Настройки безопасности"
     select: "Выбрать"
-    select_a_return_authorization_reason:
-    select_a_stock_location:
+    select_a_return_authorization_reason: "Выбрать причину разрешения на возврат"
+    select_a_stock_location: "Выбрать адрес склада"
     select_from_prototype: "Выбрать из прототипов"
     select_stock: "Выбрать склад"
     send_copy_of_all_mails_to: "Отсылать копии всех писем на"
@@ -1214,7 +1231,7 @@ ru:
     show_rate_in_label: "Показывать процент в названии"
     sku: "Артикул"
     skus:
-    slug:
+    slug: "Ссылка"
     source: "Источник"
     special_instructions: "Дополнительные инструкции"
     split: "Разделить"
@@ -1259,7 +1276,7 @@ ru:
     states: "Регионы/Области"
     states_required: "Регионы обязательны"
     status: "Статус"
-    stock:
+    stock: "Управление запасами"
     stock_location: "Расположение склада"
     stock_location_info: "Подробности расположения склада"
     stock_locations: "Адреса складов"
