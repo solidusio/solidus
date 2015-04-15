@@ -674,6 +674,7 @@ th:
       only_incomplete: "เฉพาะที่ไม่สมบูรณ์"
       select_locale: "เลือกภาษา"
       show_only: "แสดงเฉพาะ"
+      store_translations:
       supported_locales: "ภาษาที่รองรับ"
       this_file_language: "ภาษาไทย (TH)"
       translations: "แปล"

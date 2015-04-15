@@ -692,6 +692,7 @@ fi:
       only_incomplete: Vain keskeneräiset
       select_locale: Valitse kieli
       show_only: Näytä vain
+      store_translations:
       supported_locales: Tuetut kielet
       this_file_language: Suomi
       translations: Käännökset

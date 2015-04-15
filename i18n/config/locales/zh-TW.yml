@@ -638,6 +638,7 @@ zh-TW:
       only_incomplete: "只限非完成"
       select_locale: "選擇語系"
       show_only: "只顯示"
+      store_translations:
       supported_locales: "支援語系"
       this_file_language: "中文 (繁體)"
       translations: "翻譯"

@@ -672,6 +672,7 @@ lv:
       only_incomplete:
       select_locale:
       show_only:
+      store_translations:
       supported_locales:
       this_file_language: Latvijas (LV)
       translations:

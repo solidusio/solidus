@@ -689,6 +689,7 @@ sk:
       only_incomplete: "Len nekompletné"
       select_locale: "Zvoliť národné prostredie"
       show_only: "Len zobraziť"
+      store_translations:
       supported_locales: "Podporované národné prostredia"
       this_file_language: Slovenčina
       translations: "Praklady"

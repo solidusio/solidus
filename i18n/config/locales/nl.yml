@@ -682,6 +682,7 @@ nl:
       only_incomplete: Enkel onvolledige
       select_locale: Selecteer regio-instelling
       show_only: Toon enkel
+      store_translations:
       supported_locales: Ondersteunde regio-instellingen
       this_file_language: Nederlands (NL)
       translations: Vertalingen

@@ -632,6 +632,7 @@ tr:
       only_incomplete: Sadece tamamlanmayanlar
       select_locale: Dil Seç
       show_only: Sadece Şunları Göster
+      store_translations:
       supported_locales: Desteklenen Diller
       this_file_language: Türkçe (TR)
       translations: "Çeviriler"

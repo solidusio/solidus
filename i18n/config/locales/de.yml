@@ -719,6 +719,7 @@ de:
       only_incomplete: Nur unvollständige
       select_locale: Wähle Locale
       show_only: Zeige nur
+      store_translations:
       supported_locales: Unterstützte Locales
       this_file_language: Deutsch (DE)
       translations: "Übersetzungen"

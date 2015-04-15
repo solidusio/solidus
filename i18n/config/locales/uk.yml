@@ -789,6 +789,7 @@ uk:
       only_incomplete: "Тільки не завершені"
       select_locale: "Виберіть мову"
       show_only: "Відображати тільки"
+      store_translations:
       supported_locales: "Мови, що підтримуються"
       this_file_language: Ukrainian
       translations: "Переклади"

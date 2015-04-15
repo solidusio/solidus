@@ -723,6 +723,7 @@ it:
       only_incomplete: Solo incomplete
       select_locale: Seleziona lingua
       show_only: Mostra solo
+      store_translations: Traduzioni Store
       supported_locales: Lingue Supportate
       this_file_language: Italiano (IT)
       translations: Traduzioni

@@ -712,6 +712,7 @@ sv:
       only_incomplete: Endast ofullständiga
       select_locale: Välj språk
       show_only: Visa endast
+      store_translations:
       supported_locales: Tillgängliga språk
       this_file_language: Svenska (SE)
       translations: "Översättningar"

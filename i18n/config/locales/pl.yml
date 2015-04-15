@@ -684,6 +684,7 @@ pl:
       only_incomplete: Tylko niepełne
       select_locale: Wybierz ustawienia regionalne
       show_only: Pokaż tylko
+      store_translations:
       supported_locales: Wspierane ustawienia lokalne
       this_file_language: Polski (PL)
       translations: Tłumaczenia

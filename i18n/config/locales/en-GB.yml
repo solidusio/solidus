@@ -682,6 +682,7 @@ en-GB:
       only_incomplete: Only incomplete
       select_locale: Select locale
       show_only: Show only
+      store_translations:
       supported_locales: Supported Locales
       this_file_language: English (UK)
       translations: Translations

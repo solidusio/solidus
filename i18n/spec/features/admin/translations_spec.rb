@@ -2,8 +2,10 @@ RSpec.feature "Translations", :js do
   stub_authorization!
 
   given(:language) { Spree.t(:'i18n.this_file_language', locale: 'pt-BR') }
+  given!(:store) { create(:store) }
 
   background do
+    create(:store)
     reset_spree_preferences
     SpreeI18n::Config.available_locales = [:en, :'pt-BR']
     SpreeI18n::Config.supported_locales = [:en, :'pt-BR']
@@ -179,6 +181,21 @@ RSpec.feature "Translations", :js do
       change_locale
       visit spree.root_path
       expect(page).to have_text_like 'Acusticas'
+    end
+  end
+
+  context "store" do
+    scenario 'saves translated attributes properly' do
+      visit spree.edit_admin_general_settings_path
+      click_link Spree.t(:configurations)
+      click_link "Store Translations"
+
+      within("#attr_fields .name.pt-BR") { fill_in_name "nome store" }
+      click_on "Update"
+
+      visit spree.admin_translations_path('stores', store)
+
+      expect(page).to have_selector("input[value='nome store']")
     end
   end
 

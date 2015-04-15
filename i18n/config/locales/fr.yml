@@ -711,6 +711,7 @@ fr:
       only_incomplete: Commandes incomplètes seulement
       select_locale: Sélectionnez vos paramètres régionaux
       show_only: Afficher seulement
+      store_translations:
       supported_locales: Paramètres régionaux supportés
       this_file_language: Français (FR)
       translations: Traductions

@@ -678,6 +678,7 @@ id:
       only_incomplete:
       select_locale:
       show_only: Tampilkan hanya
+      store_translations:
       supported_locales:
       this_file_language: Indonesian (ID)
       translations: Terjemahan

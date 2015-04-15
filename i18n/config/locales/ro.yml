@@ -680,6 +680,7 @@ ro:
       only_incomplete: Doar nefinalizate
       select_locale: Setează localizare
       show_only: Afișează doar
+      store_translations:
       supported_locales: Localizări sprijinite
       this_file_language: Romanian (RO)
       translations: Traduceri

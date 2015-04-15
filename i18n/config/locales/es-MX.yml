@@ -680,6 +680,7 @@ es-MX:
       only_incomplete: Solo incompletas
       select_locale: Escoge traducción
       show_only: Mostrar solo
+      store_translations:
       supported_locales: Traducciones soportadas
       this_file_language:
       translations: Traducciones
