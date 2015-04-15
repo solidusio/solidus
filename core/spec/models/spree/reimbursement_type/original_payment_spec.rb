@@ -54,6 +54,7 @@ module Spree
       context "multiple payment methods" do
         let(:simulate) { true }
         let!(:check_payment) { create(:check_payment, order: reimbursement.order, amount: 5.0, state: "completed") }
+        let(:payment) { reimbursement.order.payments.detect { |p| p.payment_method.is_a? Spree::Gateway::Bogus } }
         let(:refund_amount) { 10.0 }
 
         let(:refund_payment_methods) { subject.map { |refund| refund.payment.payment_method } }
