@@ -575,12 +575,8 @@ en:
     coupon_code_max_usage: Coupon code usage limit exceeded
     coupon_code_not_eligible: This coupon code is not eligible for this order
     coupon_code_not_found: The coupon code you entered doesn't exist. Please try again.
-<<<<<<< HEAD
     coupon_code_unknown_error: This coupon code could not be applied to the cart at this time.
-||||||| parent of 74d4316... Restore "explicit complete" work
-=======
     customer: Customer
->>>>>>> 74d4316... Restore "explicit complete" work
     customer_return: Customer Return
     customer_returns: Customer Returns
     create: Create
