@@ -1,4 +1,4 @@
-<% carton.manifest.each do |item| %>
+<% carton.manifest_for_order(order).each do |item| %>
   <tr class="stock-item" data-item-quantity="<%= item.quantity %>">
     <td class="item-image">
       <%= mini_image(item.variant) %>

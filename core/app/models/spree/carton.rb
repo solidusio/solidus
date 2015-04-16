@@ -46,4 +46,12 @@ class Spree::Carton < ActiveRecord::Base
   def manifest
     @manifest ||= Spree::ShippingManifest.new(inventory_units: inventory_units).items
   end
+
+  def manifest_for_order(order)
+    Spree::ShippingManifest.new(inventory_units: (inventory_units & order.inventory_units)).items
+  end
+
+  def any_exchanges?
+    inventory_units.any?(&:original_return_item)
+  end
 end

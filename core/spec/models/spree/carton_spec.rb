@@ -78,4 +78,56 @@ describe Spree::Carton do
     end
   end
 
+  describe "#manifest" do
+    subject { carton.manifest }
+
+    let(:carton) { create(:carton, inventory_units: [first_order.inventory_units, second_order.inventory_units].flatten) }
+    let(:first_order) { create(:order_ready_to_ship, line_items_count: 1) }
+    let(:first_line_item) { first_order.line_items.first }
+    let(:second_order) { create(:order_ready_to_ship, line_items_count: 1) }
+    let(:second_line_item) { second_order.line_items.first }
+
+    it "contains only the items in both the carton and order" do
+      expect(subject.map(&:line_item)).to match_array([first_line_item, second_line_item])
+    end
+  end
+
+  describe "#manifest_for_order" do
+    subject { carton.manifest_for_order(first_order) }
+
+    let(:carton) { create(:carton, inventory_units: [first_order.inventory_units, second_order.inventory_units].flatten) }
+    let(:first_order) { create(:order_ready_to_ship, line_items_count: 1) }
+    let(:first_line_item) { first_order.line_items.first }
+    let(:second_order) { create(:order_ready_to_ship, line_items_count: 1) }
+
+    it "contains only the items in both the carton and order" do
+      expect(subject.map(&:line_item)).to eq [first_line_item]
+    end
+  end 
+
+  describe "#any_exchanges?" do
+    subject { carton.any_exchanges? }
+
+    let(:carton) { create(:carton, inventory_units: [first_order.inventory_units, second_order.inventory_units].flatten) }
+    let(:first_order) { create(:order_ready_to_ship, line_items_count: 1) }
+    let(:second_order) { create(:order_ready_to_ship, line_items_count: 1) }
+
+    context "when any of the inventory has an original return item" do
+      let(:return_item) { create(:return_item) }
+      before do
+        first_order.inventory_units.first.original_return_item = return_item
+        first_order.save
+      end
+
+      it "is true" do
+        expect(subject).to be_truthy
+      end
+    end
+
+    context "when none of the inventory has an original return item" do
+      it "is false" do
+        expect(subject).to be_falsey
+      end
+    end
+  end
 end

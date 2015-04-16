@@ -5,6 +5,7 @@
       <span class="carton-number"><%= carton.number %></span>
       -
       <span class="carton-state"><%= Spree.t("shipment_states.shipped") %></span>
+      <span class="carton-exchange"><%= Spree.t(:exchange) if carton.any_exchanges? %></span>
       <%= Spree.t(:package_from) %>
       <strong class="stock-location-name" data-hook="stock-location-name">'<%= carton.stock_location.name %>'</strong>
     </legend>
@@ -27,7 +28,7 @@
     </thead>
 
     <tbody data-shipment-number="<%= carton.number %>" data-order-number="<%= order.number %>">
-      <%= render 'spree/admin/orders/carton_manifest', carton: carton %>
+      <%= render 'spree/admin/orders/carton_manifest', carton: carton, order: order %>
 
       <tr class="show-method total">
         <% if method = carton.shipping_method %>
@@ -68,6 +69,17 @@
           <strong><%= Spree.t(:shipment_date) %>:&nbsp;</strong><%= carton.display_shipped_at %>
         </td>
       </tr>
+
+      <% if carton.orders.size > 1 %>
+        <tr class='order-numbers'>
+          <td colspan="5">
+            <strong><%= Spree.t(:carton_orders) %>:&nbsp;</strong>
+            <% (carton.orders - [order]).each do |order| %>
+              <%= link_to order.number, edit_admin_order_path(order) %>
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
     </tbody>
   </table>
 </div>
