@@ -12,8 +12,6 @@ class Spree::PromotionCode < ActiveRecord::Base
   # @param promotable object (e.g. order/line item/shipment)
   # @return true or false
   def usage_limit_exceeded?(promotable)
-    # TODO: This logic appears to be wrong.
-    # See note on Promotion#usage_limit_exceeded?
     if usage_limit
       usage_count - usage_count_for(promotable) >= usage_limit
     end
@@ -23,7 +21,11 @@ class Spree::PromotionCode < ActiveRecord::Base
   #
   # @return [Integer] usage count
   def usage_count
-    adjustment_promotion_scope(Spree::Adjustment.eligible).count
+    adjustment_promotion_scope(Spree::Adjustment.eligible).
+      joins(:order).
+      merge(Spree::Order.complete).
+      distinct.
+      count(:order_id)
   end
 
   def usage_limit
@@ -33,6 +35,7 @@ class Spree::PromotionCode < ActiveRecord::Base
   private
 
   def usage_count_for(promotable)
+    return 0 if promotable.is_a?(Spree::Order) && !promotable.completed?
     adjustment_promotion_scope(promotable.adjustments).count
   end
 
