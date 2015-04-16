@@ -12,7 +12,7 @@
     <td class="item-price align-center"><%= item.line_item.single_money.to_html %></td>
     <td class="item-qty-show align-center">
         <% item.states.each do |state,count| %>
-          <%= count %>
+          <%= count %> x <%= Spree.t(state).downcase %>
         <% end %>
     </td>
     <td class="item-qty-edit hidden">
