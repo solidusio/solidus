@@ -419,44 +419,6 @@ describe Spree::Order, :type => :model do
     end
   end
 
-  context "#confirmation_required?" do
-
-    # Regression test for #4117
-    it "is required if the state is currently 'confirm'" do
-      order = Spree::Order.new
-      assert !order.confirmation_required?
-      order.state = 'confirm'
-      assert order.confirmation_required?
-    end
-
-    context 'Spree::Config[:always_include_confirm_step] == true' do
-
-      before do
-        Spree::Config[:always_include_confirm_step] = true
-      end
-
-      it "returns true if payments empty" do
-        order = Spree::Order.new
-        assert order.confirmation_required?
-      end
-    end
-
-    context 'Spree::Config[:always_include_confirm_step] == false' do
-
-      it "returns false if payments empty and Spree::Config[:always_include_confirm_step] == false" do
-        order = Spree::Order.new
-        assert !order.confirmation_required?
-      end
-
-      it "does not bomb out when an order has an unpersisted payment" do
-        order = Spree::Order.new
-        order.payments.build
-        assert !order.confirmation_required?
-      end
-    end
-  end
-
-
   context "add_update_hook" do
     before do
       Spree::Order.class_eval do

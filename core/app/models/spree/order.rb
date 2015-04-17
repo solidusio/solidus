@@ -16,7 +16,7 @@ module Spree
       go_to_state :address
       go_to_state :delivery
       go_to_state :payment, if: ->(order) { order.payment_required? }
-      go_to_state :confirm, if: ->(order) { order.confirmation_required? }
+      go_to_state :confirm
       go_to_state :confirm
     end
 
@@ -210,6 +210,10 @@ module Spree
     # Is this a free order in which case the payment step should be skipped
     def payment_required?
       total.to_f > 0.0
+    end
+
+    def confirmation_required?
+      true
     end
 
     def backordered?

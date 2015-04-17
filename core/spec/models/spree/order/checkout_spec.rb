@@ -56,18 +56,16 @@ describe Spree::Order, :type => :model do
     context "#checkout_steps" do
       context "when confirmation not required" do
         before do
-          allow(order).to receive_messages :confirmation_required? => false
           allow(order).to receive_messages :payment_required? => true
         end
 
         specify do
-          expect(order.checkout_steps).to eq(%w(address delivery payment complete))
+          expect(order.checkout_steps).to eq(%w(address delivery payment confirm complete))
         end
       end
 
       context "when confirmation required" do
         before do
-          allow(order).to receive_messages :confirmation_required? => true
           allow(order).to receive_messages :payment_required? => true
         end
 
@@ -79,14 +77,14 @@ describe Spree::Order, :type => :model do
       context "when payment not required" do
         before { allow(order).to receive_messages :payment_required? => false }
         specify do
-          expect(order.checkout_steps).to eq(%w(address delivery complete))
+          expect(order.checkout_steps).to eq(%w(address delivery confirm complete))
         end
       end
 
       context "when payment required" do
         before { allow(order).to receive_messages :payment_required? => true }
         specify do
-          expect(order.checkout_steps).to eq(%w(address delivery payment complete))
+          expect(order.checkout_steps).to eq(%w(address delivery payment confirm complete))
         end
       end
     end
@@ -312,7 +310,7 @@ describe Spree::Order, :type => :model do
 
         it "transitions to complete" do
           order.next!
-          expect(order.state).to eq("complete")
+          expect(order.state).to eq("confirm")
         end
       end
 
@@ -348,7 +346,7 @@ describe Spree::Order, :type => :model do
 
           it "skips payment, transitions to confirm" do
             order.next!
-            expect(order.state).to eq("complete")
+            expect(order.state).to eq("confirm")
           end
         end
       end
@@ -382,7 +380,6 @@ describe Spree::Order, :type => :model do
 
       context "with confirmation required" do
         before do
-          allow(order).to receive_messages :confirmation_required? => true
         end
 
         it "transitions to confirm" do
@@ -395,7 +392,6 @@ describe Spree::Order, :type => :model do
       context "without confirmation required" do
         before do
           order.email = "spree@example.com"
-          allow(order).to receive_messages :confirmation_required? => false
           allow(order).to receive_messages :payment_required? => true
           order.payments << FactoryGirl.create(:payment, state: payment_state, order: order)
         end
@@ -408,7 +404,7 @@ describe Spree::Order, :type => :model do
           end
 
           it "transitions to complete" do
-            order.next!
+            order.complete!
             assert_state_changed(order, 'payment', 'complete')
             expect(order.state).to eq('complete')
           end
@@ -419,7 +415,7 @@ describe Spree::Order, :type => :model do
 
           it "raises a StateMachine::InvalidTransition" do
             expect {
-              order.next!
+              order.complete!
             }.to raise_error(StateMachine::InvalidTransition, /#{Spree.t(:no_payment_found)}/)
 
             expect(order.errors[:base]).to include(Spree.t(:no_payment_found))
@@ -436,8 +432,8 @@ describe Spree::Order, :type => :model do
         it "does not call process payments" do
           expect(order).not_to receive(:process_payments!)
           order.next!
-          assert_state_changed(order, 'payment', 'complete')
-          expect(order.state).to eq("complete")
+          assert_state_changed(order, 'payment', 'confirm')
+          expect(order.state).to eq("confirm")
         end
       end
     end
@@ -513,14 +509,14 @@ describe Spree::Order, :type => :model do
       end
 
       it "makes the current credit card a user's default credit card" do
-        order.next!
+        order.complete!
         expect(order.state).to eq 'complete'
         expect(order.user.reload.default_credit_card.try(:id)).to eq(order.credit_cards.first.id)
       end
 
       it "does not assign a default credit card if temporary_credit_card is set" do
         order.temporary_credit_card = true
-        order.next!
+        order.complete!
         expect(order.user.reload.default_credit_card).to be_nil
       end
     end
@@ -656,7 +652,7 @@ describe Spree::Order, :type => :model do
 
       specify do
         order = Spree::Order.new
-        expect(order.checkout_steps).to eq(%w(new_step before_address address delivery complete))
+        expect(order.checkout_steps).to eq(%w(new_step before_address address delivery confirm complete))
       end
     end
 
@@ -669,7 +665,7 @@ describe Spree::Order, :type => :model do
 
       specify do
         order = Spree::Order.new
-        expect(order.checkout_steps).to eq(%w(new_step address after_address delivery complete))
+        expect(order.checkout_steps).to eq(%w(new_step address after_address delivery confirm complete))
       end
     end
   end
@@ -696,7 +692,7 @@ describe Spree::Order, :type => :model do
 
     specify do
       order = Spree::Order.new
-      expect(order.checkout_steps).to eq(%w(delivery complete))
+      expect(order.checkout_steps).to eq(%w(delivery confirm complete))
     end
   end
 
