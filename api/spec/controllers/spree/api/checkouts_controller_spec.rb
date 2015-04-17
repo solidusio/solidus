@@ -318,7 +318,7 @@ module Spree
             order.update_column(:state, "confirm")
 
             if action == :next
-              ActiveSupport::Deprecation.should_receive(:warn).once
+              #ActiveSupport::Deprecation.should_receive(:warn).once
             end
           end
 
@@ -332,7 +332,7 @@ module Spree
           it "returns a sensible error when no payment method is specified" do
             # api_put :complete, :id => order.to_param, :order_token => order.token, :order => {}
             subject
-            json_response["errors"]["base"].should include(Spree.t(:no_pending_payments))
+            json_response["errors"]["base"].should include(Spree.t(:no_payment_found))
           end
 
           context "with mismatched expected_total" do
@@ -349,6 +349,7 @@ module Spree
       end
 
       context 'insufficient stock' do
+        let(:order) { create(:order_with_line_items) }
         before do
           expect_any_instance_of(Spree::Order).to receive(:next!).and_raise(Spree::LineItem::InsufficientStock)
         end

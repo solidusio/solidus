@@ -256,7 +256,7 @@ module Spree
       allow_any_instance_of(Order).to receive_messages :user => current_api_user
       api_get :show, :id => order.to_param
       expect(response.status).to eq(200)
-      expect(json_response["checkout_steps"]).to eq(["address", "delivery", "complete"])
+      expect(json_response["checkout_steps"]).to eq(%w[address delivery confirm complete])
     end
 
     # Regression test for #1992
