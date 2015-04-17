@@ -711,6 +711,7 @@ en:
     exchange_for: Exchange for
     expedited_exchanges_warning: "Any specified exchanges will ship to the customer immediately upon saving. The customer will be charged the full amount of the item if they do not return the original item within %{days_window} days."
     excl: excl.
+    expected_items: Expected Items
     expiration: Expiration
     extension: Extension
     existing_shipments: Existing shipments
@@ -929,6 +930,7 @@ en:
       variant_deleted: Variant has been deleted
       variant_not_deleted: Variant could not be deleted
     num_orders: "# Orders"
+    number: Number
     number_of_codes: ! '%{count} codes'
     on_hand: On Hand
     open: Open
@@ -1125,6 +1127,7 @@ en:
     receive: receive
     receive_stock: Receive Stock
     received: Received
+    received_items: Received Items
     reception_status: Reception Status
     reference: Reference
     refund: Refund
@@ -1220,6 +1223,7 @@ en:
     ship_total: Ship Total
     shipment: Shipment
     shipment_adjustments: "Shipment adjustments"
+    shipment_date: Shipment Date
     shipment_details: "From %{stock_location} via %{shipping_method}"
     shipment_mailer:
       shipped_email:
@@ -1339,6 +1343,7 @@ en:
     tiered_flat_rate: Tiered Flat Rate
     tiered_percent: Tiered Percent
     time: Time
+    to: to
     to_add_variants_you_must_first_define: To add variants, you must first define
     total: Total
     total_per_item: Total per item
@@ -1354,6 +1359,7 @@ en:
     transfer_from_location: Transfer From
     transfer_stock: Transfer Stock
     transfer_to_location: Transfer To
+    transfer_number: Transfer Number
     tree: Tree
     type: Type
     type_to_search: Type to search

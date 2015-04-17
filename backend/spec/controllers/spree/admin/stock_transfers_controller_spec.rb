@@ -4,37 +4,35 @@ module Spree
   describe Admin::StockTransfersController, :type => :controller do
     stub_authorization!
 
+    let(:warehouse) { StockLocation.create(name: "Warehouse")}
+    let(:ny_store) { StockLocation.create(name: "NY Store")}
+    let(:la_store) { StockLocation.create(name: "LA Store")}
+
     let!(:stock_transfer1) {
       StockTransfer.create do |transfer|
-        transfer.source_location_id = 1
-        transfer.destination_location_id = 2
-        transfer.reference = 'PO 666'
+        transfer.source_location_id = warehouse.id
+        transfer.destination_location_id = ny_store.id
       end }
 
     let!(:stock_transfer2) {
       StockTransfer.create do |transfer|
-        transfer.source_location_id = 3
-        transfer.destination_location_id = 4
-        transfer.reference = 'PO 666'
+        transfer.source_location_id = warehouse.id
+        transfer.destination_location_id = la_store.id
+        transfer.closed_at = DateTime.now
       end }
 
 
     context "#index" do
-      it "gets all transfers without search criteria" do
-        spree_get :index
-        expect(assigns[:stock_transfers].count).to eq 2
+      it "searches by stock location" do
+        spree_get :index, :q => { :source_location_id_or_destination_location_id_eq => ny_store.id }
+        assigns[:stock_transfers].count.should eq 1
+        assigns[:stock_transfers].should include(stock_transfer1)
       end
 
-      it "searches by source location" do
-        spree_get :index, :q => { :source_location_id_eq => 1 }
-        expect(assigns[:stock_transfers].count).to eq 1
-        expect(assigns[:stock_transfers]).to include(stock_transfer1)
-      end
-
-      it "searches by destination location" do
-        spree_get :index, :q => { :destination_location_id_eq => 4 }
-        expect(assigns[:stock_transfers].count).to eq 1
-        expect(assigns[:stock_transfers]).to include(stock_transfer2)
+      it "searches by status" do
+        spree_get :index, :q => { :closed_at_null => 0 }
+        assigns[:stock_transfers].count.should eq 1
+        assigns[:stock_transfers].should include(stock_transfer2)
       end
     end
   end

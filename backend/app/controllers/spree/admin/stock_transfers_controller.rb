@@ -1,24 +1,7 @@
 module Spree
   module Admin
-    class StockTransfersController < Admin::BaseController
-      before_action :load_stock_locations, only: :index
-
-      def index
-        @q = StockTransfer.ransack(params[:q])
-
-        @stock_transfers = @q.result
-                             .includes(:stock_movements => { :stock_item => :stock_location })
-                             .order('created_at DESC')
-                             .page(params[:page])
-      end
-
-      def show
-        @stock_transfer = StockTransfer.find_by_param(params[:id])
-      end
-
-      def new
-
-      end
+    class StockTransfersController < ResourceController
+      before_filter :load_stock_locations, only: [:index]
 
       def create
         variants = Hash.new(0)
@@ -35,9 +18,20 @@ module Spree
         redirect_to admin_stock_transfer_path(stock_transfer)
       end
 
+      protected
+
+      def collection
+        params[:q] = params[:q] || {}
+        @search = super.ransack(params[:q])
+        @search.result.
+          page(params[:page]).
+          per(params[:per_page] || Spree::Config[:orders_per_page])
+      end
+
       private
+
       def load_stock_locations
-        @stock_locations = Spree::StockLocation.active.order_default
+        @stock_locations = Spree::StockLocation.accessible_by(current_ability, :index)
       end
 
       def source_location

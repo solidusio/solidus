@@ -18,6 +18,18 @@ module Spree
       number
     end
 
+    def ship(tracking_number: tracking_number, shipped_at: shipped_at)
+      update_attributes!(tracking_number: tracking_number, shipped_at: shipped_at)
+    end
+
+    def received_item_count
+      transfer_items.sum(:received_quantity)
+    end
+
+    def expected_item_count
+      transfer_items.sum(:expected_quantity)
+    end
+
     def source_movements
       stock_movements.joins(:stock_item)
         .where('spree_stock_items.stock_location_id' => source_location_id)

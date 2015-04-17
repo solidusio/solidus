@@ -17,10 +17,8 @@ describe 'Stock Transfers', :type => :feature, :js => true do
     click_button 'Add'
     click_button 'Transfer Stock'
 
-    expect(page).to have_content('STOCK TRANSFER REFERENCE PO 666')
-    expect(page).to have_content('NY')
-    expect(page).to have_content('SF')
-    expect(page).to have_content(variant.name)
+    page.should have_content('NY')
+    page.should have_content('SF')
 
     transfer = Spree::StockTransfer.last
     expect(transfer.stock_movements.size).to eq 2
@@ -28,9 +26,8 @@ describe 'Stock Transfers', :type => :feature, :js => true do
 
   describe 'received stock transfer' do
     def it_is_received_stock_transfer(page)
-      expect(page).to have_content('STOCK TRANSFER REFERENCE PO 666')
-      expect(page).not_to have_selector("#stock-location-source")
-      expect(page).to have_selector("#stock-location-destination")
+      page.should_not have_content("San Francisco")
+      page.should have_content("New York")
 
       transfer = Spree::StockTransfer.last
       expect(transfer.stock_movements.size).to eq 1
@@ -38,16 +35,14 @@ describe 'Stock Transfers', :type => :feature, :js => true do
     end
 
     it 'receive stock to a single location' do
-      source_location = create(:stock_location_with_items, :name => 'NY')
-      destination_location = create(:stock_location, :name => 'SF')
-      variant = Spree::Variant.last
+      source_location = create(:stock_location_with_items, :name => 'New York')
+      destination_location = create(:stock_location, :name => 'San Francisco')
 
       visit spree.new_admin_stock_transfer_path
 
       fill_in 'reference', :with => 'PO 666'
       check 'transfer_receive_stock'
-      select('NY', :from => 'transfer_destination_location_id')
-      select2_search variant.name, :from => 'Variant'
+      select('New York', :from => 'transfer_destination_location_id')
 
       click_button 'Add'
       click_button 'Transfer Stock'
@@ -56,15 +51,13 @@ describe 'Stock Transfers', :type => :feature, :js => true do
     end
 
     it 'forced to only receive there is only one location' do
-      source_location = create(:stock_location_with_items, :name => 'NY')
-      variant = Spree::Variant.last
+      source_location = create(:stock_location_with_items, :name => 'New York')
 
       visit spree.new_admin_stock_transfer_path
 
       fill_in 'reference', :with => 'PO 666'
 
-      select('NY', :from => 'transfer_destination_location_id')
-      select2_search variant.name, :from => 'Variant'
+      select('New York', :from => 'transfer_destination_location_id')
 
       click_button 'Add'
       click_button 'Transfer Stock'

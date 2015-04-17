@@ -1,5 +1,3 @@
-<%= render 'spree/admin/shared/configuration_menu' %>
-
 <% content_for :page_title do %>
   <%= Spree.t(:stock_transfers) %>
 <% end %>
@@ -10,33 +8,46 @@
   </li>
 <% end %>
 
-<div data-hook="admin_orders_index_search">
-  <fieldset>
-    <legend align="center"><%= Spree.t(:search) %></legend>
-    <%= search_form_for @q, :url => admin_stock_transfers_path do |f| %>
+<% content_for :table_filter_title do %>
+  <%= Spree.t(:search) %>
+<% end %>
+
+<% content_for :table_filter do %>
+  <div data-hook="admin_stock_transfers_index_search">
+    <%= search_form_for [:admin, @search] do |f| %>
+      <div class="field-block alpha four columns">
+        <div class="field">
+          <%= f.label nil, Spree.t(:stock_location) %>
+          <%= f.select :source_location_id_or_destination_location_id_eq, options_from_collection_for_select(@stock_locations, :id, :name, params[:q][:source_location_id_or_destination_location_id_eq]), {include_blank: true}, {class: 'select2 fullwidth'} %>
+        </div>
+      </div>
+
+      <div class="field-block alpha four columns">
+        <div class="date-range-filter field">
+          <%= f.label nil, Spree.t(:date_range) %>
+          <div class="date-range-fields">
+            <%= f.text_field :created_at_gt, class: 'datepicker datepicker-from', include_blank: true, value: params[:q][:created_at_gt], placeholder: Spree.t(:start) %>
+
+            <span class="range-divider">
+              <i class="fa fa-arrow-right"></i>
+            </span>
+
+            <%= f.text_field :created_at_lt, class: 'datepicker datepicker-to', include_blank: true, value: params[:q][:created_at_lt], placeholder: Spree.t(:stop) %>
+          </div>
+        </div>
+      </div>
 
       <div class="field-block alpha four columns">
         <div class="field">
-          <%= f.label :reference_cont, Spree.t(:reference_cont) %>
-          <%= f.text_field :reference_cont, class: 'fullwidth' %>
+          <%= f.label nil, Spree.t(:transfer_number) %>
+          <%= f.text_field :number_cont, value: params[:q][:number_cont] %>
         </div>
       </div>
 
-      <div class="four columns">
+      <div class="field-block alpha four columns">
         <div class="field">
-          <%= f.label :source_location, Spree.t(:source) %>
-          <%= f.select :source_location_id_eq,
-               options_from_collection_for_select(@stock_locations, :id, :name, @q.source_location_id_eq),
-               { include_blank: true }, class: 'select2 fullwidth' %>
-        </div>
-      </div>
-
-      <div class="omega four columns">
-        <div class="field">
-          <%= f.label :destination_location, Spree.t(:destination) %>
-          <%= f.select :destination_location_id_eq,
-               options_from_collection_for_select(@stock_locations, :id, :name, @q.destination_location_id_eq),
-               { include_blank: true }, class: 'select2 fullwidth' %>
+          <%= f.label nil, Spree.t(:status) %>
+          <%= f.select :closed_at_null, options_for_select([[Spree.t(:open), 1],[Spree.t(:closed), 0]], params[:q][:closed_at_null]), {include_blank: true}, {class: 'select2 fullwidth'} %>
         </div>
       </div>
 
@@ -48,48 +59,54 @@
         </div>
       </div>
     <% end %>
-  </fieldset>
-</div>
+  </div>
+<% end %>
+
+<%= paginate @stock_transfers %>
+
 
 <% if @stock_transfers.any? %>
-  <table class='index' id='listing_stock_transfers' data-hook>
-    <colgroup>
-      <col style='width: 25%' />
-      <col style='width: 20%' />
-      <col style='width: 20%' />
-      <col style='width: 25%' />
-      <col style='width: 10%' />
-    </colgroup>
+  <table class="index" id="listing_stock_transfers">
     <thead>
-      <tr data-hook='stock_transfers_header'>
-        <th><%= Spree.t(:created_at) %></th>
-        <th><%= Spree.t(:reference) %></th>
-        <th><%= Spree.t(:source) %></th>
-        <th><%= Spree.t(:destination) %></th>
-        <th class='actions'></th>
+      <tr>
+        <th><%= sort_link @search, :created_at,      Spree.t(:date) %></th>
+        <th><%= sort_link @search, :from,            Spree.t(:from) %></th>
+        <th><%= sort_link @search, :to,              Spree.t(:to) %></th>
+        <th><%= sort_link @search, :number,          Spree.t(:number) %></th>
+        <th><%= sort_link @search, :shipment_date,   Spree.t(:shipment_date) %></th>
+        <th><%= sort_link @search, :expected_items,  Spree.t(:expected_items) %></th>
+        <th><%= sort_link @search, :received_items,  Spree.t(:received_items) %></th>
+        <th><%= sort_link @search, :status,          Spree.t(:status) %></th>
+        <th class="actions"></th>
       </tr>
     </thead>
     <tbody>
       <% @stock_transfers.each do |stock_transfer| %>
-        <tr id="<%= spree_dom_id stock_transfer %>" data-hook="stock_transfer_row" class="<%= cycle('odd', 'even')%>">
-          <td class="align-center"><%= stock_transfer.created_at %></td>
-          <td class="align-center"><%= stock_transfer.reference %></td>
-          <td class="align-center"><%= stock_transfer.source_location.try(:name) %></td>
-          <td class="align-center"><%= stock_transfer.destination_location.try(:name) %></td>
-          <td class='actions'>
-            <%= link_to '', admin_stock_transfer_path(stock_transfer),
-            title: 'view', class: 'view icon_link with-tip fa fa-eye-open no-text',
-            data: {action: 'view'} %>
+        <tr id="<%= spree_dom_id stock_transfer %>" class="<%= cycle('odd', 'even') %>">
+          <td><%= stock_transfer.created_at.to_date %></td>
+          <td><%= stock_transfer.source_location.try(:name) %></td>
+          <td><%= stock_transfer.destination_location.name %></td>
+          <td><%= handle_stock_transfer(stock_transfer) %></td>
+          <td><%= stock_transfer.shipped_at %></td>
+          <td class="align-center"><%= stock_transfer.expected_item_count %></td>
+          <td class="align-center"><%= stock_transfer.received_item_count %></td>
+          <td><%= status(stock_transfer) %></td>
+          <td class="actions">
+          <% if stock_transfer.closed_at? %>
+            <%= link_to_with_icon 'view', Spree.t(:show), '#', :no_text => true, :data => {:action => 'show'} if can?(:show, stock_transfer) %>
+          <% else %>
+            <%= link_to_with_icon 'download', Spree.t(:receive), '#', :no_text => true %>
+          <% end %>
           </td>
         </tr>
       <% end %>
     </tbody>
   </table>
 <% else %>
-  <div class="alpha twelve columns no-objects-found">
-    <%= Spree.t(:no_resource_found, resource: I18n.t(:other, scope: 'activerecord.models.spree/stock_transfer')) %>,
-    <%= link_to Spree.t(:add_one), spree.new_admin_stock_transfer_path %>!
+  <div class="alpha sixteen columns no-objects-found">
+    <%= Spree.t(:no_resource_found, resource: I18n.t(:other, scope: 'activerecord.models.spree/stock_transfer')) %>
   </div>
 <% end %>
 
 <%= paginate @stock_transfers %>
+
