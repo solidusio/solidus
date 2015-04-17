@@ -93,9 +93,9 @@
           <td><%= status(stock_transfer) %></td>
           <td class="actions">
           <% if stock_transfer.closed_at? %>
-            <%= link_to_with_icon 'view', Spree.t(:show), '#', :no_text => true, :data => {:action => 'show'} if can?(:show, stock_transfer) %>
+            <%= link_to_with_icon 'view', Spree.t(:show), '#', no_text: true, data: { action: 'show' } if can?(:show, stock_transfer) %>
           <% else %>
-            <%= link_to_with_icon 'download', Spree.t(:receive), '#', :no_text => true %>
+            <%= link_to_with_icon 'download', Spree.t('actions.receive'), receive_admin_stock_transfer_path(stock_transfer), no_text: true, data: { action: 'green' } if can?(:edit, stock_transfer) %>
           <% end %>
           </td>
         </tr>

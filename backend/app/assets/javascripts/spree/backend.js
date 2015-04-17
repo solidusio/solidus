@@ -49,3 +49,11 @@ Spree.routes.payments_api = function(order_id) {
 Spree.routes.stock_items_api = function(stock_location_id) {
   return Spree.pathFor('api/stock_locations/' + stock_location_id + '/stock_items')
 }
+
+Spree.routes.receive_transfer_items_api = function(stockTransferNumber) {
+  return Spree.pathFor('api/stock_transfers/' + stockTransferNumber + '/receive')
+}
+
+Spree.routes.update_transfer_items_api = function(stockTransferNumber, itemId) {
+  return Spree.pathFor('api/stock_transfers/' + stockTransferNumber + '/transfer_items/' + itemId)
+}

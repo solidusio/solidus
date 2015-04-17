@@ -1,0 +1,45 @@
+#stock_transfer_summary {
+  margin: 20px 0px;
+  display: inline-block;
+
+  .location,
+  .count-summary {
+    float: left;
+    font-size: 15px;
+  }
+  .location {
+    width: 70%;
+  }
+  .count-summary {
+    width: 30%;
+    text-align: right;
+    &:after {
+      content: "";
+      clear: both;
+      display: table;
+    }
+  }
+  .summary-field {
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 105%;
+  }
+  .arrow {
+    margin: 0px 5px;
+  }
+}
+
+#received-transfer-items {
+  margin-top: 70px;
+
+  a.fa-void,
+  a.fa-check,
+  .js-received-count { display: none; }
+
+  input[type='number'] {
+    min-width: 65px;
+  }
+  .new-row {
+    display: none;
+  }
+}

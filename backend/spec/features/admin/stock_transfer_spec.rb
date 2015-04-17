@@ -26,8 +26,8 @@ describe 'Stock Transfers', :type => :feature, :js => true do
 
   describe 'received stock transfer' do
     def it_is_received_stock_transfer(page)
-      page.should_not have_content("San Francisco")
-      page.should have_content("New York")
+      page.should_not have_content(/San Francisco/i)
+      page.should have_content(/New York/i)
 
       transfer = Spree::StockTransfer.last
       expect(transfer.stock_movements.size).to eq 1

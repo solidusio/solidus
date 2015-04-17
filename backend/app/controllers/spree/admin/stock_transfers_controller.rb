@@ -18,6 +18,10 @@ module Spree
         redirect_to admin_stock_transfer_path(stock_transfer)
       end
 
+      def receive
+        @received_items = @stock_transfer.transfer_items.received
+      end
+
       protected
 
       def collection
@@ -26,6 +30,10 @@ module Spree
         @search.result.
           page(params[:page]).
           per(params[:per_page] || Spree::Config[:orders_per_page])
+      end
+
+      def find_resource
+        model_class.find_by(number: params[:id])
       end
 
       private

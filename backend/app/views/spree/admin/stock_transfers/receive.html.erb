@@ -1,0 +1,84 @@
+<%= render 'spree/admin/shared/configuration_menu' %>
+<%= render :partial => 'transfer_item_template' %>
+<%= render :partial => "spree/admin/variants/autocomplete", :formats => :js %>
+
+<% content_for :page_title do %>
+  <%= "#{Spree.t(:receiving)} #{@stock_transfer.number}" %>
+<% end %>
+
+<% content_for :page_actions do %>
+  <li>
+    <%= button_link_to Spree.t(:back_to_stock_transfers_list), admin_stock_transfers_path, :icon => 'arrow-left' %>
+  </li>
+<% end %>
+
+<div id='stock_transfer_summary' class='fullwidth'>
+  <div class='location'>
+    <span class='summary-field'>From:</span>
+    <span><%= @stock_transfer.source_location.admin_name %></span>
+    <span class='arrow'>&rarr;</span>
+    <span class='summary-field'>To:</span>
+    <span><%= @stock_transfer.destination_location.admin_name %></span>
+  </div>
+  <div class='count-summary'>
+    <span id='total-received-quantity'><%= @stock_transfer.received_item_count %></span>
+    /
+    <span><%= @stock_transfer.expected_item_count %></span>
+    <span class='summary-field'>Received</span>
+  </div>
+</div>
+
+<fieldset>
+  <legend align="center"><%= Spree.t(:variant_to_be_received) %></legend>
+  <div data-hook="transfer_item_selection">
+    <%= hidden_field_tag :stock_transfer_number, @stock_transfer.number %>
+    <%= hidden_field_tag :transfer_item_variant_id, "", :class => "variant_autocomplete fullwidth" %>
+  </div>
+</fieldset>
+
+<fieldset id='received-transfer-items'>
+  <legend align="center"><%= Spree.t(:received_items) %></legend>
+    <table class="index" <%= 'hidden' if @received_items.empty? %> id="listing_received_transfer_items">
+      <colgroup>
+        <col style="width: 45%" />
+        <col style="width: 25%" />
+        <col style="width: 10%" />
+        <col style="width: 10%" />
+        <col style="width: 10%" />
+      </colgroup>
+      <thead>
+        <tr>
+          <th><%= Spree.t(:item) %></th>
+          <th><%= Spree.t(:sku) %></th>
+          <th><%= Spree.t(:received) %></th>
+          <th class="actions"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @received_items.each do |item| %>
+          <%- variant = item.variant %>
+          <tr data-transfer-item-id="<%= item.id %>">
+            <td class="align-center no-padding">
+              <%= small_image variant %>
+              <p><%= variant.name %></p>
+            </td>
+            <td>
+              <span><%= variant.sku %></span>
+            </td>
+            <td class='align-center' id="received-quantity-<%= item.id %>">
+              <span class='js-received-count-text'><%= item.received_quantity %></span>
+              <%= number_field_tag :received_quantity, item.received_quantity, class: 'fullwidth js-received-count', id: "received_quantity_#{item.id}" %>
+            </td>
+            <td class="actions">
+              <%= link_to_with_icon 'edit', Spree.t('actions.edit'), '#', no_text: true, data: { action: 'edit', id: item.id } if can?(:edit, item) %>
+              <%= link_to_with_icon 'check', Spree.t('actions.update'), '#', no_text: true, data: { action: 'green', id: item.id } if can?(:edit, item) %>
+              <%= link_to_with_icon 'void', Spree.t('actions.cancel'), '#', no_text: true, data: { action: 'red', id: item.id } if can?(:edit, item) %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+    <div class="no-objects-found" <%= 'hidden' if @received_items.any? %>>
+      <%= Spree.t(:no_resource_found, resource: I18n.t(:other, scope: 'activerecord.models.spree/transfer_item')) %>
+    </div>
+</fieldset>

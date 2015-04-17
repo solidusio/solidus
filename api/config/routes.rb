@@ -116,6 +116,14 @@ Spree::Core::Engine.add_routes do
 
     resources :stock_items, only: [:index, :update, :destroy]
 
+    resources :stock_transfers, only: [] do
+      resources :transfer_items, only: [:update] do
+        collection do
+          post :receive
+        end
+      end
+    end
+
     resources :stores
 
     resources :store_credit_events, only: [] do
@@ -126,7 +134,6 @@ Spree::Core::Engine.add_routes do
 
     get '/config/money', to: 'config#money'
     get '/config', to: 'config#show'
-
     put '/classifications', to: 'classifications#update', as: :classifications
     get '/taxons/products', to: 'taxons#products', as: :taxon_products
   end

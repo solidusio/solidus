@@ -8,8 +8,8 @@ FactoryGirl.define do
          variant_1 = create(:variant)
          variant_2 = create(:variant)
 
-         stock_transfer.transfer_items.create(variant: variant_1)
-         stock_transfer.transfer_items.create(variant: variant_2)
+         stock_transfer.transfer_items.create(variant: variant_1, expected_quantity: 5)
+         stock_transfer.transfer_items.create(variant: variant_2, expected_quantity: 5)
       end
     end
   end
