@@ -35,8 +35,11 @@ class Spree::PromotionCode < ActiveRecord::Base
   private
 
   def usage_count_for(promotable)
-    return 0 if promotable.is_a?(Spree::Order) && !promotable.completed?
-    adjustment_promotion_scope(promotable.adjustments).count
+    adjustment_promotion_scope(promotable.adjustments).
+      joins(:order).
+      merge(Spree::Order.complete).
+      distinct.
+      count(:order_id)
   end
 
   def downcase_value

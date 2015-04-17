@@ -16,40 +16,112 @@ describe Spree::PromotionCode do
   end
 
   describe "#usage_limit_exceeded?" do
-    let(:promotion) { FactoryGirl.create(:promotion, :with_order_adjustment, code: "discount", per_code_usage_limit: usage_limit) }
-    let(:code) { promotion.codes.first }
-
-    let(:promotable) { FactoryGirl.create(:completed_order_with_promotion, promotion: promotion) }
-
     subject { code.usage_limit_exceeded?(promotable) }
 
-    context "when there is a usage limit" do
-      context "and the limit is not exceeded" do
-        let(:usage_limit) { 10 }
-        it { is_expected.to be_falsy }
+    context "with an order-level adjustment" do
+      let(:promotion) do
+        FactoryGirl.create(
+          :promotion,
+          :with_order_adjustment,
+          code: "discount",
+          per_code_usage_limit: usage_limit
+        )
       end
-      context "and the limit is exceeded" do
-        let(:usage_limit) { 1 }
-        context "on a different order" do
-          before do
-            FactoryGirl.create(:completed_order_with_promotion, promotion: promotion)
-            promotable.adjustments.update_all(eligible: true)
-          end
-          it { is_expected.to be_truthy }
-        end
-        context "on the same order" do
+      let(:code) { promotion.codes.first }
+
+      let(:promotable) do
+        FactoryGirl.create(
+          :completed_order_with_promotion,
+          promotion: promotion
+        )
+      end
+
+      context "when there is a usage limit" do
+        context "and the limit is not exceeded" do
+          let(:usage_limit) { 10 }
           it { is_expected.to be_falsy }
         end
+        context "and the limit is exceeded" do
+          let(:usage_limit) { 1 }
+          context "on a different order" do
+            before do
+              FactoryGirl.create(
+                :completed_order_with_promotion,
+                promotion: promotion
+              )
+              promotable.adjustments.update_all(eligible: true)
+            end
+            it { is_expected.to be_truthy }
+          end
+          context "on the same order" do
+            it { is_expected.to be_falsy }
+          end
+        end
+      end
+      context "when there is no usage limit" do
+        let(:usage_limit) { nil }
+        it { is_expected.to be_falsy }
       end
     end
-    context "when there is no usage limit" do
-      let(:usage_limit) { nil }
-      it { is_expected.to be_falsy }
+    context "with an item-level adjustment" do
+      let(:promotion) do
+        FactoryGirl.create(
+          :promotion,
+          :with_line_item_adjustment,
+          code: "discount",
+          per_code_usage_limit: usage_limit
+        )
+      end
+      let(:code) { promotion.codes.first }
+
+      let(:order) { FactoryGirl.create(:order_with_line_items) }
+      let(:promotable) { order.line_items.first }
+
+      before do
+        promotion.actions.first.perform({
+          order: order,
+          promotion: promotion,
+          promotion_code: code
+        })
+      end
+
+      context "when there is a usage limit" do
+        context "and the limit is not exceeded" do
+          let(:usage_limit) { 10 }
+          it { is_expected.to be_falsy }
+        end
+        context "and the limit is exceeded" do
+          let(:usage_limit) { 1 }
+          context "on a different order" do
+            before do
+              FactoryGirl.create(
+                :completed_order_with_promotion,
+                promotion: promotion
+              )
+              promotable.adjustments.update_all(eligible: true)
+            end
+            it { is_expected.to be_truthy }
+          end
+          context "on the same order" do
+            it { is_expected.to be_falsy }
+          end
+        end
+      end
+      context "when there is no usage limit" do
+        let(:usage_limit) { nil }
+        it { is_expected.to be_falsy }
+      end
     end
   end
 
   describe "#usage_count" do
-    let(:promotion) { FactoryGirl.create(:promotion, :with_order_adjustment, code: "discount") }
+    let(:promotion) do
+      FactoryGirl.create(
+        :promotion,
+        :with_order_adjustment,
+        code: "discount"
+      )
+    end
     let(:code) { promotion.codes.first }
 
     subject { code.usage_count }
@@ -60,12 +132,16 @@ describe Spree::PromotionCode do
       it { is_expected.to eq 0 }
     end
     context "when the code is applied to a complete order" do
+      let!(:order) do
+        FactoryGirl.create(
+          :completed_order_with_promotion,
+          promotion: promotion
+        )
+      end
       context "and the promo is eligible" do
-        let!(:order) { FactoryGirl.create(:completed_order_with_promotion, promotion: promotion) }
         it { is_expected.to eq 1 }
       end
       context "and the promo is ineligible" do
-        let!(:order) { FactoryGirl.create(:completed_order_with_promotion, promotion: promotion) }
         before { order.adjustments.promotion.update_all(eligible: false) }
         it { is_expected.to eq 0 }
       end
