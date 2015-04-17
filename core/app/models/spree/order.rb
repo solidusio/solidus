@@ -17,7 +17,6 @@ module Spree
       go_to_state :delivery
       go_to_state :payment, if: ->(order) { order.payment_required? }
       go_to_state :confirm
-      go_to_state :confirm
     end
 
     attr_reader :coupon_code

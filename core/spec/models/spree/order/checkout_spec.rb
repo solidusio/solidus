@@ -439,6 +439,21 @@ describe Spree::Order, :type => :model do
     end
   end
 
+  context "from confirm" do
+    before do
+      order.state = 'confirm'
+      order.save!
+    end
+
+    it "returns false on next" do
+      expect(order.next).to be_falsy
+    end
+
+    it "is unable to next" do
+      expect(order).not_to be_can_next
+    end
+  end
+
   context "to complete" do
     before do
       order.state = 'confirm'
