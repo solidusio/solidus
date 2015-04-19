@@ -197,7 +197,7 @@ sv:
         spree/store:
           attributes:
             base:
-              cannot_destroy_default_store: Kan inte radera den primära shoppen.
+              cannot_destroy_default_store: Kan inte radera den primära butiken.
     models:
       spree/address:
         one: Adress
@@ -712,7 +712,7 @@ sv:
       only_incomplete: Endast ofullständiga
       select_locale: Välj språk
       show_only: Visa endast
-      store_translations:
+      store_translations: Butiks översättningar
       supported_locales: Tillgängliga språk
       this_file_language: Svenska (SE)
       translations: "Översättningar"
@@ -1266,7 +1266,7 @@ sv:
     stock_transfer: Lageröverföring
     stock_transfers: Lageröverföringar
     stop: Stopp
-    store: Affär
+    store: Butik
     street_address: Adress
     street_address_2: Adress (forts.)
     subtotal: Delsumma
