@@ -214,6 +214,7 @@ describe 'Payments', :type => :feature do
     end
 
     context "with a check" do
+      let(:order) { create(:completed_order_with_totals, :line_items_count => 1) }
       let!(:payment_method) { create(:check_payment_method) }
 
       before do
@@ -221,7 +222,7 @@ describe 'Payments', :type => :feature do
       end
 
       it "can successfully be created and captured" do
-        click_on 'Continue'
+        click_on 'Update'
         expect(page).to have_content("Payment has been successfully created!")
         click_icon(:capture)
         expect(page).to have_content("Payment Updated")
