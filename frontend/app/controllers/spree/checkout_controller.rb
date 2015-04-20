@@ -29,7 +29,7 @@ module Spree
     def update
       if @order.update_from_params(params, permitted_checkout_attributes, request.headers.env)
         @order.temporary_address = !params[:save_user_address]
-        success = if params[:state] == 'confirm'
+        success = if @order.state == 'confirm'
           @order.complete
         else
           @order.next

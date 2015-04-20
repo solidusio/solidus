@@ -455,6 +455,7 @@ describe "Checkout", type: :feature, inaccessible: true do
       visit spree.checkout_state_path(:delivery)
       click_button "Save and Continue"
       click_button "Save and Continue"
+      click_button "Place Order"
     end
 
     it "displays a thank you message" do
