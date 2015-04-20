@@ -184,8 +184,8 @@ module Spree
         }
 
         api_put :update, id: order.to_param, order_token: order.guest_token,
-          order: { payments_attributes: [{ payment_method_id: @payment_method.id.to_s }],
-                      payment_source: { @payment_method.id.to_s => source_attributes } }
+          order: { payments_attributes: [{ payment_method_id: @payment_method.id.to_s }]},
+                      payment_source: { @payment_method.id.to_s => source_attributes }
         expect(json_response['payments'][0]['payment_method']['name']).to eq(@payment_method.name)
         expect(json_response['payments'][0]['amount']).to eq(order.total.to_s)
         expect(response.status).to eq(200)
