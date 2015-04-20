@@ -2,7 +2,7 @@ module Spree
   module Admin
     class OrdersController < Spree::Admin::BaseController
       before_action :initialize_order_events
-      before_action :load_order, only: [:edit, :update, :complete, :advance, :cancel, :resume, :approve, :resend, :open_adjustments, :close_adjustments, :cart]
+      before_action :load_order, only: [:edit, :update, :complete, :advance, :cancel, :resume, :approve, :resend, :open_adjustments, :close_adjustments, :cart, :confirm]
 
       respond_to :html
 
