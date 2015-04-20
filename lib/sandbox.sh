@@ -1,8 +1,14 @@
 #!/bin/sh
 # Used in the sandbox rake task in Rakefile
 
+RAILSDB=$(case "$DB" in
+postgres) echo "postgresql";;
+mysql) echo "mysql";;
+*) echo "sqlite3";;
+esac)
+
 rm -rf ./sandbox
-bundle exec rails new sandbox --skip-bundle
+bundle exec rails new sandbox --skip-bundle --database="$RAILSDB"
 if [ ! -d "sandbox" ]; then
   echo 'sandbox rails application failed'
   exit 1
