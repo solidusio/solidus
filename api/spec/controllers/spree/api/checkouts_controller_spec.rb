@@ -311,7 +311,7 @@ module Spree
             api_put action, params
           end
 
-          let(:params) { {id: order.to_param, order_token: order.token} }
+          let(:params) { {id: order.to_param, order_token: order.guest_token} }
           let(:order) { create(:order_with_line_items) }
 
           before do
@@ -354,7 +354,7 @@ module Spree
           expect_any_instance_of(Spree::Order).to receive(:next!).and_raise(Spree::LineItem::InsufficientStock)
         end
 
-        subject { api_put :next, :id => order.to_param, :order_token => order.token }
+        subject { api_put :next, :id => order.to_param, :order_token => order.guest_token }
 
         it "should return a 422" do
           expect(subject.status).to eq(422)
