@@ -125,8 +125,8 @@ module Spree
 
       create_order(order_params: {
         order: {
-          bill_address: bill_address.as_json,
-          ship_address: ship_address.as_json,
+          bill_address: bill_address.as_json.except('id'),
+          ship_address: ship_address.as_json.except('id'),
           line_items: {
             0 => { variant_id: variant_1.id, quantity: 2 },
             1 => { variant_id: variant_2.id, quantity: 2 }
@@ -157,8 +157,8 @@ module Spree
       create_order
       update_order(order_params: {
         order: {
-          bill_address: bill_address.as_json,
-          ship_address: ship_address.as_json,
+          bill_address: bill_address.as_json.except('id'),
+          ship_address: ship_address.as_json.except('id'),
           line_items: {
             0 => { variant_id: variant_1.id, quantity: 2 },
             1 => { variant_id: variant_2.id, quantity: 2 }

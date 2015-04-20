@@ -38,6 +38,7 @@ module Spree
       end
 
       def complete
+        load_order(true)
         authorize! :update, @order, order_token
         if !expected_total_ok?(params[:expected_total])
           respond_with(@order, default_template: 'spree/api/orders/expected_total_mismatch', status: 400)
