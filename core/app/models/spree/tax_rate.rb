@@ -71,7 +71,7 @@ module Spree
         pre_tax_amount /= (1 + included_rates.map(&:amount).sum)
       end
 
-      item.update_column(:pre_tax_amount, pre_tax_amount)
+      item.update_column(:pre_tax_amount, pre_tax_amount.round(2))
     end
 
     # This method is best described by the documentation on #potentially_applicable?
