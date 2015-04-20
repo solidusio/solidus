@@ -119,28 +119,6 @@ describe "Checkout", type: :feature, inaccessible: true do
     end
   end
 
-  #regression test for #3945
-  context "when Spree::Config[:always_include_confirm_step] is true" do
-    before do
-      Spree::Config[:always_include_confirm_step] = true
-    end
-
-    it "displays confirmation step", :js => true do
-      add_mug_to_cart
-      click_button "Checkout"
-
-      fill_in "order_email", :with => "test@example.com"
-      fill_in_address
-
-      click_button "Save and Continue"
-      click_button "Save and Continue"
-      click_button "Save and Continue"
-
-      continue_button = find(".continue")
-      expect(continue_button.value).to eq("Place Order")
-    end
-  end
-
   context "and likes to double click buttons" do
     let!(:user) { create(:user) }
 
