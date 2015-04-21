@@ -5,19 +5,8 @@ module SpreeI18n
   module ControllerLocaleHelper
     extend ActiveSupport::Concern
     included do
-      # Ensures any existing action of the same kind and name retains its
-      # position in the callback chain
-      def self._stable_action(kind, name)
-        # When registering a callback where one of the same kind and name already
-        # exists in the chain, ActiveSupport removes the existing one and appends
-        # the new one to the end, disrupting the existing chain order
-        unless _process_action_callbacks.select { |c| c.kind == kind }.find { |c| c.filter == name }
-          send("#{kind}_action", name)
-        end
-      end
-
-      _stable_action :before, :set_user_language
       prepend_before_filter :globalize_fallbacks
+      prepend_before_filter :set_user_language
 
       private
 
@@ -25,8 +14,9 @@ module SpreeI18n
         # supported locales defined by SpreeI18n::Config.supported_locales can
         # actually be set
         def set_user_language
-          I18n.locale = if session.key?(:locale) && Config.supported_locales.include?(session[:locale].to_sym)
-            session[:locale]
+          # params[:locale] can be added by routing-filter gem
+          I18n.locale = if params[:locale] && Config.supported_locales.include?(params[:locale].to_sym)
+            params[:locale]
           elsif respond_to?(:config_locale, true) && !config_locale.blank?
             config_locale
           else

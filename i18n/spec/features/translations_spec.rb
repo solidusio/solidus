@@ -11,8 +11,8 @@ RSpec.feature "Translations", :js do
   context 'page' do
     context 'switches locale from the dropdown' do
       scenario 'selected translation is applied' do
-        visit '/'
-        select('Português (BR)', from: 'Language')
+        visit spree.root_path
+        select('Português (BR)', from: Spree.t(:'i18n.language'))
         expect(page).to have_content('Início')
       end
     end
