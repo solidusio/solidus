@@ -2,7 +2,7 @@
 
 <%= paginate @variants %>
 
-<table class="index" id="listing_product_stock">
+<table class="index number-field-update-table" id="listing_product_stock">
   <colgroup>
     <col style="width: 50%" />
     <col style="width: 20%" />
@@ -61,7 +61,7 @@
               </tr>
             <% end %>
           </table>
-        </td>        
+        </td>
       </tr>
       <% variant.stock_items.each do |item| %>
         <% if @stock_item_stock_locations.include?(item.stock_location) %>
@@ -72,15 +72,8 @@
                 <%= check_box_tag :backorderable, 'backorderable', item.backorderable?, id: "backorderable-#{item.id}", disabled: "disabled" %>
               <% end %>
             </td>
-            <td class="align-center" id="count-on-hand-<%= item.id %>">
-              <span><%= item.count_on_hand %></span>
-              <%= number_field_tag :count_on_hand, item.count_on_hand, class: 'fullwidth js-stock-item-count' %>
-            </td>
-            <td class="actions">
-              <%= link_to_with_icon 'edit', Spree.t('actions.edit'), '#', :no_text => true, :data => {:action => 'edit', :id => item.id } if can?(:edit, item) %>
-              <%= link_to_with_icon 'check', Spree.t('actions.update'), '#', :no_text => true, :data => {:action => 'green', :id => item.id, :location_id => item.stock_location_id } if can?(:edit, item) %>
-              <%= link_to_with_icon 'void', Spree.t('actions.cancel'), '#', :no_text => true, :data => {:action => 'red', :id => item.id } if can?(:edit, item) %>
-            </td>
+            <%= render partial: 'spree/admin/shared/number_field_update_cell', locals: { resource_id: item.id, field_tag: :count_on_hand, number_value: item.count_on_hand } %>
+            <%= render partial: 'spree/admin/shared/number_field_update_actions', locals: { resource: item, update_data: { location_id: item.stock_location_id } } %>
           </tr>
         <% end %>
       <% end %>

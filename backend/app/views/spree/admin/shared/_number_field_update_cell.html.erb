@@ -1,0 +1,4 @@
+<td class="align-center" id="number-update-<%= resource_id %>">
+  <span class="js-number-update-text"><%= number_value %></span>
+  <%= number_field_tag field_tag, number_value, id: "#{field_tag.to_s}_#{resource_id}", class: 'fullwidth js-number-update-input' %>
+</td>

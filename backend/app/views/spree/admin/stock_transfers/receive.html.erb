@@ -38,7 +38,7 @@
 
 <fieldset id='received-transfer-items'>
   <legend align="center"><%= Spree.t(:received_items) %></legend>
-    <table class="index" <%= 'hidden' if @received_items.empty? %> id="listing_received_transfer_items">
+    <table class="index number-field-update-table" <%= 'hidden' if @received_items.empty? %> id="listing_received_transfer_items">
       <colgroup>
         <col style="width: 45%" />
         <col style="width: 25%" />
@@ -65,15 +65,8 @@
             <td>
               <span><%= variant.sku %></span>
             </td>
-            <td class='align-center' id="received-quantity-<%= item.id %>">
-              <span class='js-received-count-text'><%= item.received_quantity %></span>
-              <%= number_field_tag :received_quantity, item.received_quantity, class: 'fullwidth js-received-count', id: "received_quantity_#{item.id}" %>
-            </td>
-            <td class="actions">
-              <%= link_to_with_icon 'edit', Spree.t('actions.edit'), '#', no_text: true, data: { action: 'edit', id: item.id } if can?(:edit, item) %>
-              <%= link_to_with_icon 'check', Spree.t('actions.update'), '#', no_text: true, data: { action: 'green', id: item.id } if can?(:edit, item) %>
-              <%= link_to_with_icon 'void', Spree.t('actions.cancel'), '#', no_text: true, data: { action: 'red', id: item.id } if can?(:edit, item) %>
-            </td>
+            <%= render partial: 'spree/admin/shared/number_field_update_cell', locals: { resource_id: item.id, field_tag: :received_quantity, number_value: item.received_quantity } %>
+            <%= render partial: 'spree/admin/shared/number_field_update_actions', locals: { resource: item, update_data: {} } %>
           </tr>
         <% end %>
       </tbody>
