@@ -75,7 +75,6 @@ RSpec.describe Spree::PromotionCode do
           per_code_usage_limit: usage_limit
         )
       end
-      let(:promotable) { order.line_items.first }
       before do
         promotion.actions.first.perform({
           order: order,
@@ -85,10 +84,18 @@ RSpec.describe Spree::PromotionCode do
       end
       context "when there are multiple line items" do
         let(:order) { FactoryGirl.create(:order_with_line_items, line_items_count: 2) }
-        it_behaves_like "it should"
+        describe "the first item" do
+          let(:promotable) { order.line_items.first }
+          it_behaves_like "it should"
+        end
+        describe "the second item" do
+          let(:promotable) { order.line_items.last }
+          it_behaves_like "it should"
+        end
       end
       context "when there is a single line item" do
         let(:order) { FactoryGirl.create(:order_with_line_items) }
+        let(:promotable) { order.line_items.first }
         it_behaves_like "it should"
       end
     end
