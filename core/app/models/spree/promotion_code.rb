@@ -35,7 +35,7 @@ class Spree::PromotionCode < ActiveRecord::Base
   private
 
   def usage_count_for(promotable)
-    adjustment_promotion_scope(promotable.adjustments).
+    adjustment_promotion_scope(promotable.adjustments.eligible).
       joins(:order).
       merge(Spree::Order.complete).
       distinct.
