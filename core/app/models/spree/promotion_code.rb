@@ -7,13 +7,13 @@ class Spree::PromotionCode < ActiveRecord::Base
 
   before_save :downcase_value
 
-  # Whether the given promotable would violate the usage restrictions
+  # Whether the promotion code has exceeded its usage restrictions
   #
-  # @param promotable object (e.g. order/line item/shipment)
+  # @param promotable object (e.g. order/line item/shipment) No longer used.
   # @return true or false
-  def usage_limit_exceeded?(promotable)
+  def usage_limit_exceeded?(promotable = nil)
     if usage_limit
-      usage_count - usage_count_for(promotable) >= usage_limit
+      usage_count >= usage_limit
     end
   end
 
@@ -21,7 +21,7 @@ class Spree::PromotionCode < ActiveRecord::Base
   #
   # @return [Integer] usage count
   def usage_count
-    adjustment_promotion_scope(Spree::Adjustment.eligible).
+    adjustments.eligible.
       joins(:order).
       merge(Spree::Order.complete).
       distinct.
@@ -34,19 +34,10 @@ class Spree::PromotionCode < ActiveRecord::Base
 
   private
 
-  def usage_count_for(promotable)
-    adjustment_promotion_scope(promotable.adjustments.eligible).
-      joins(:order).
-      merge(Spree::Order.complete).
-      distinct.
-      count(:order_id)
-  end
-
   def downcase_value
     self.value = value.downcase
   end
 
   def adjustment_promotion_scope(adjustment_scope)
-    adjustment_scope.promotion.where(source_id: promotion.actions.map(&:id), promotion_code_id: id)
   end
 end

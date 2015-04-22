@@ -32,5 +32,20 @@ RSpec.feature "Promotion Code Invalidation" do
     within("#cart_adjustments") do
       expect(page).to have_content("-$10.00")
     end
+
+    # Remove an item
+    fill_in "order_line_items_attributes_0_quantity", with: 0
+    click_button "Update"
+    within("#cart_adjustments") do
+      expect(page).to have_content("-$5.00")
+    end
+
+    # Add it back
+    visit spree.root_path
+    click_link "DL-44"
+    click_button "Add To Cart"
+    within("#cart_adjustments") do
+      expect(page).to have_content("-$10.00")
+    end
   end
 end

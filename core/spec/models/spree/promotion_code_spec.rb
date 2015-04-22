@@ -16,7 +16,7 @@ RSpec.describe Spree::PromotionCode do
   end
 
   describe "#usage_limit_exceeded?" do
-    subject { code.usage_limit_exceeded?(promotable) }
+    subject { code.usage_limit_exceeded? }
 
     shared_examples "it should" do
       context "when there is a usage limit" do
@@ -32,6 +32,7 @@ RSpec.describe Spree::PromotionCode do
                 :completed_order_with_promotion,
                 promotion: promotion
               )
+              code.adjustments.update_all(eligible: true)
             end
             it { is_expected.to be_truthy }
           end
