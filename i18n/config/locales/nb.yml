@@ -42,7 +42,7 @@ nb:
       spree/order:
         checkout_complete: Ordre fullført
         completed_at: Fullført
-        considered_risky:
+        considered_risky: Risikabel
         coupon_code: Rabattkode
         created_at: Opprettet
         email: Epost
@@ -479,7 +479,7 @@ nb:
     choose_a_taxon_to_sort_products_for:
     choose_currency: Velg valuta
     choose_dashboard_locale:
-    choose_location:
+    choose_location: Velg lokasjon
     city: Sted
     clear_cache:
     clear_cache_ok:
@@ -642,10 +642,11 @@ nb:
     failed_payment_attempts:
     filename: Filnavn
     fill_in_customer_info: Fyll ut kundeinformasjon
+    filter: Filter
     filter_results: Filtrer resultater
     finalize: Ferdigstill
     finalized:
-    find_a_taxon:
+    find_a_taxon: Finn en gruppe
     first_item: Pris på første vare
     first_name: Fornavn
     first_name_begins_with: Fornavn begynner med
@@ -810,7 +811,7 @@ nb:
     new_zone: Ny sone
     next: Neste
     no_actions_added: Ingen hendelse lagt til
-    no_payment_found:
+    no_payment_found: Ingen betalinger funnet
     no_pending_payments: Ingen utestående betalinger
     no_products_found: Ingen produkter tilgjengelig
     no_resource_found:
@@ -873,7 +874,7 @@ nb:
         thanks: Takk for handelen.
         total: Totalbeløp
     order_not_found: Ordren ble ikke funnet
-    order_number:
+    order_number: Ordre %{number}
     order_populator:
       out_of_stock:
       please_enter_reasonable_quantity: Vennligst oppgi et fornuftig antall
@@ -1030,7 +1031,7 @@ nb:
     quantity:
     quantity_returned: Antall returnert
     quantity_shipped: Antall sendt
-    quick_search:
+    quick_search: Hurtigsøk..
     rate: Nivå
     reason: Grunn
     receive: motta
@@ -1040,7 +1041,7 @@ nb:
     reference: Referansje
     refund: Refusjon
     refund_amount_must_be_greater_than_zero:
-    refund_reasons:
+    refund_reasons: Refusjonsgrunner
     refunded_amount:
     refunds:
     register: Registrer som ny bruker
@@ -1078,7 +1079,7 @@ nb:
     resumed: Gjenopptatt
     return: returner
     return_authorization: Returautorisasjon
-    return_authorization_reasons:
+    return_authorization_reasons: Grunner for returautorisasjon
     return_authorization_updated: Returautorisasjon oppdatert
     return_authorizations: Returautorisasjoner
     return_item_inventory_unit_ineligible:
@@ -1092,15 +1093,15 @@ nb:
     returned: Returnert
     returns:
     review: Omtale
-    risk:
-    risk_analysis:
-    risky:
+    risk: Risko
+    risk_analysis: Risikoanalyse
+    risky: Risikabel
     rma_credit: RMA Kreditt
     rma_number: RMA Nummer
     rma_value: RMA Verdi
     roles: Roller
     rules: Regler
-    safe:
+    safe: Sikker
     sales_total: Brutto omsetning
     sales_total_description: Brutto omsetning for alle ordrer
     sales_totals: Brutto omsetninger
@@ -1126,10 +1127,10 @@ nb:
     settings: Innstillinger
     ship: send
     ship_address: Leveringsadresse
-    ship_total:
+    ship_total: Leveringskostnader
     shipment: Levering
     shipment_adjustments:
-    shipment_details:
+    shipment_details: Leveringsdetaljer
     shipment_mailer:
       shipped_email:
         dear_customer: Kjære kunde,
@@ -1138,11 +1139,11 @@ nb:
         subject: Forsendelsesbekreftelse
         thanks: Takk for handelen.
         track_information: 'Sporingsinformasjon: %{tracking}'
-        track_link:
+        track_link: Sporingslink
     shipment_state: Forsendelsestatus
     shipment_states:
       backorder: restordre
-      canceled:
+      canceled: kansellert
       partial: del-levert
       pending: venter
       ready: klar
@@ -1169,17 +1170,17 @@ nb:
     show_active: Vis aktive
     show_deleted: Vis slettede
     show_only_complete_orders: Vis bare ferdige ordrer
-    show_only_considered_risky:
+    show_only_considered_risky: Vis kun risikable ordre
     show_rate_in_label: Inkluder i produktet
     sku: Varenummer
-    skus:
-    slug:
-    source:
+    skus: Varenumre
+    slug: Slug
+    source: Kilde
     special_instructions: Spesielle instrukser
     split: Del
     spree_gateway_error_flash_for_checkout: Det er en feil med betalingsinformasjonen din - Se over å prøv igjen
     ssl:
-      change_protocol:
+      change_protocol: Endre protokoll
     start: Start
     state: Fylke
     state_based: Tilstandsbasert
@@ -1218,7 +1219,7 @@ nb:
     states: Fylker
     states_required: Fylke påkrevd
     status: Status
-    stock:
+    stock: Lager
     stock_location: Varelokasjon
     stock_location_info: Varelokasjoninformasjon
     stock_locations: Varelokasjoner
@@ -1254,7 +1255,7 @@ nb:
     taxon_edit: Endre gruppe
     taxon_placeholder: Grupper
     taxon_rule:
-      choose_taxons:
+      choose_taxons: Velg grupper
       label:
       match_all:
       match_any:
