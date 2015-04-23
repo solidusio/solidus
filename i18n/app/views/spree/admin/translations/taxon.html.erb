@@ -13,12 +13,12 @@
     <%= render 'fields' %>
   </div>
   <div class="col-md-8">
-    <%= form_for [:admin, @resource.taxonomy, @resource], url: admin_taxonomy_taxon_path(@taxon.taxonomy, @taxon.id) do |f| %>
+    <%= form_for [:admin, @resource.taxonomy, @resource], url: spree.admin_taxonomy_taxon_path(@taxon.taxonomy, @taxon.id) do |f| %>
       <%= render 'form_fields', f: f %>
       <div class="form-actions" data-hook="buttons">
         <%= button Spree.t(:update), 'update' %>
         <span class="or"><%= Spree.t(:or) %></span>
-        <%= button_link_to Spree.t(:cancel), edit_admin_taxonomy_url(@taxon.taxonomy), icon: 'remove' %>
+        <%= button_link_to Spree.t(:cancel), spree.edit_admin_taxonomy_url(@taxon.taxonomy), icon: 'remove' %>
       </div>
     <% end %>
   </div>
