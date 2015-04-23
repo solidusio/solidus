@@ -47,6 +47,7 @@
 
   }.to_json
 %>
+  _.extend(Spree.translations, Spree.customTranslations);
 </script>
 
 <% if I18n.locale != :en %>

@@ -1,15 +1,37 @@
 <script type="text/x-handlebars-template" id="receive-count-for-transfer-item-template">
   <tr class='new-row' data-transfer-item-id="{{id}}">
     <td class="align-center no-padding">
-      {{#if variantImageURL }}
-        <img alt="{{variantName}}" src="{{variantImageURL}}">
-      {{ else }}
-        <img alt='{{variant.name}}' src='<%= image_path("noimage/small.png") %>' />
-      {{/if}}
-      <p>{{variantName}}</p>
+      <div class='variant-container'>
+        <div class='variant-image'>
+          {{#if variantImageURL }}
+            <img alt="{{variantName}}" src="{{variantImageURL}}">
+          {{ else }}
+            <img alt='{{variant.name}}' src='<%= image_path("noimage/small.png") %>' />
+          {{/if}}
+        </div>
+        <div class='variant-details'>
+          <table class='stock-variant-field-table'>
+            <tbody>
+              {{#each variantDisplayAttributes}}
+                <tr>
+                  <td>{{this.label}}</td>
+                  <td class="fullwidth">{{this.value}}</td>
+                </tr>
+              {{/each}}
+            </tbody>
+          </table>
+        </div>
+      </div>
     </td>
-    <td>
-      <span>{{variantSKU}}</span>
+    <td class="align-center">
+      <table class='stock-variant-field-table'>
+        {{#each variantOptions}}
+          <tr>
+            <td>{{this.option_type}}</td>
+            <td>{{this.option_value}}</td>
+          </tr>
+        {{/each}}
+      </table>
     </td>
     <td class='align-center' id="number-update-{{id}}">
       <span class='js-number-update-text'>{{receivedQuantity}}</span>

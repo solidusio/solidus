@@ -35,10 +35,11 @@ class ReceiveVariantForm
       transferItems: stockTransfer.transfer_items
     transferItem = stockTransfer.findTransferItemByVariantId(variantId)
     rowTemplate = Handlebars.compile($('#receive-count-for-transfer-item-template').html())
+
     htmlOutput = rowTemplate(
       id: transferItem.id
-      variantSKU: transferItem.variant.sku
-      variantName: transferItem.variant.name
+      variantDisplayAttributes: formatVariantDisplayAttributes(transferItem.variant)
+      variantOptions: formatVariantOptionValues(transferItem.variant)
       variantImageURL: transferItem.variant.images[0]?.small_url
       receivedQuantity: transferItem.received_quantity
     )
@@ -60,6 +61,21 @@ class ReceiveVariantForm
     else
       errorData.responseJSON.error
     show_flash('error', errorMessage)
+
+  formatVariantDisplayAttributes = (variant) ->
+    displayAttributes = JSON.parse($("#variant_display_attributes").val())
+    _.map(displayAttributes, (attribute) =>
+      label: Spree.translations[attribute.string_key]
+      value: variant[attribute.attr_name]
+    )
+
+  formatVariantOptionValues = (variant) ->
+    optionValues = variant.option_values
+    optionValues = _.sortBy(optionValues, 'option_type_presentation')
+    _.map(optionValues, (optionValue) ->
+      option_type: optionValue.option_type_presentation
+      option_value: optionValue.presentation
+    )
 
 Spree.StockTransfers ?= {}
 Spree.StockTransfers.ReceiveVariantForm = ReceiveVariantForm

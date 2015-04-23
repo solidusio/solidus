@@ -1,6 +1,12 @@
 module Spree
   module Admin
     class StockTransfersController < ResourceController
+      class_attribute :variant_display_attributes
+      self.variant_display_attributes = [
+        { string_key: :sku, attr_name: :sku },
+        { string_key: :name, attr_name: :name }
+      ]
+
       before_filter :load_stock_locations, only: [:index]
 
       def create
@@ -20,6 +26,7 @@ module Spree
 
       def receive
         @received_items = @stock_transfer.transfer_items.received
+        @variant_display_attributes = self.class.variant_display_attributes
       end
 
       protected

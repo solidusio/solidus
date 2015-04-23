@@ -35,3 +35,15 @@
     display: none;
   }
 }
+
+#listing_received_transfer_items {
+  > tbody {
+    tr {
+      &:hover {
+        td {
+          background-color: $color-1;
+        }
+      }
+    }
+  }
+}
