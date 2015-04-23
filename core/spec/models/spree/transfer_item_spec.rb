@@ -45,4 +45,30 @@ describe Spree::TransferItem do
       end
     end
   end
+
+  describe "received stock transfer guard" do
+
+    subject { transfer_item.update_attributes(received_quantity: 2) }
+
+    context "stock transfer is not received" do
+      before do
+        stock_transfer.update_attributes(received_at: nil)
+      end
+
+      it "can update" do
+        subject
+        expect(transfer_item.reload.received_quantity).to eq 2
+      end
+    end
+
+    context "stock transfer is received" do
+      before do
+        stock_transfer.update_attributes(received_at: Time.now)
+      end
+
+      it "cannot update" do
+        expect { subject }.to raise_error(Spree::StockTransfer::CannotModifyReceivedStockTransfer)
+      end
+    end
+  end
 end

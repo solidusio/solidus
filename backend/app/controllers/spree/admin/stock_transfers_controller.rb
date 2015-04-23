@@ -8,6 +8,7 @@ module Spree
       ]
 
       before_filter :load_stock_locations, only: [:index]
+      before_filter :ensure_receivable_stock_transfer, only: [:receive, :finalize_receive]
 
       def create
         variants = Hash.new(0)
@@ -29,10 +30,28 @@ module Spree
         @variant_display_attributes = self.class.variant_display_attributes
       end
 
+      def finalize_receive
+        Spree::StockTransfer.transaction do
+          if @stock_transfer.update_attributes(finalize_receive_params)
+            adjust_inventory
+            redirect_to admin_stock_transfers_path
+          else
+            flash[:error] = Spree.t(:unable_to_finalize_stock_transfer)
+            redirect_to receive_admin_stock_transfer_path(@stock_transfer)
+          end
+        end
+      end
+
       protected
 
       def collection
         params[:q] = params[:q] || {}
+        @show_only_open = if params[:q][:received_at_null].present?
+          params[:q][:received_at_null] == '1'
+        else
+          true
+        end
+        params[:q].delete(:received_at_null) unless @show_only_open
         @search = super.ransack(params[:q])
         @search.result.
           page(params[:page]).
@@ -49,6 +68,13 @@ module Spree
         @stock_locations = Spree::StockLocation.accessible_by(current_ability, :index)
       end
 
+      def ensure_receivable_stock_transfer
+        unless @stock_transfer.receivable?
+          flash[:error] = Spree.t(:stock_transfer_must_be_receivable)
+          redirect_to admin_stock_transfers_path and return
+        end
+      end
+
       def source_location
         @source_location ||= params.has_key?(:transfer_receive_stock) ? nil :
                                StockLocation.find(params[:transfer_source_location_id])
@@ -56,6 +82,16 @@ module Spree
 
       def destination_location
         @destination_location ||= StockLocation.find(params[:transfer_destination_location_id])
+      end
+
+      def finalize_receive_params
+        { received_at: Time.now, received_by: try_spree_current_user }
+      end
+
+      def adjust_inventory
+        @stock_movements = @stock_transfer.transfer_items.received.map do |transfer_item|
+          @stock_transfer.destination_location.move(transfer_item.variant, transfer_item.received_quantity, @stock_transfer)
+        end
       end
     end
   end

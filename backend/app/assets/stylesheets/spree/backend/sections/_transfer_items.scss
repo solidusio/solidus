@@ -36,6 +36,53 @@
   }
 }
 
+#finalize-warning {
+  display: none;
+  width: 100%;
+  padding: 10px 20px;
+  border-radius: 4px;
+  margin-bottom: 15px;
+  color: $color-notice;
+  border: 1px solid $color-notice;
+  background-color: very-light($color-notice, 1);
+  i {
+    font-size: 30px;
+  }
+  .warning-title {
+    width: 100%;
+    text-align: center;
+    span {
+      bottom: 5px;
+      font-size: 15px;
+      position: relative;
+      margin-left: 10px;
+    }
+  }
+  .action-consequences {
+    margin-top: 10px;
+    ul {
+      margin-left: 30px;
+    }
+  }
+  .actions {
+    width: 100%;
+    margin-top: 10px;
+    text-align: right;
+    a {
+      margin: 0px 7px;
+      color: $color-notice;
+      &:hover,
+      &:active,
+      &:visited {
+        color: $color-notice;
+      }
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+}
+
 #listing_received_transfer_items {
   > tbody {
     tr {

@@ -10,5 +10,14 @@ module Spree
     scope :received, -> { where('received_quantity > 0') }
     scope :fully_received, -> { where('expected_quantity = received_quantity') }
 
+    before_save :ensure_stock_transfer_not_received
+
+    private
+
+    def ensure_stock_transfer_not_received
+      if self.stock_transfer.received?
+        raise Spree::StockTransfer::CannotModifyReceivedStockTransfer
+      end
+    end
   end
 end

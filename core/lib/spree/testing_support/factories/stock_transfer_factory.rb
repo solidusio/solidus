@@ -11,6 +11,11 @@ FactoryGirl.define do
          stock_transfer.transfer_items.create(variant: variant_1, expected_quantity: 5)
          stock_transfer.transfer_items.create(variant: variant_2, expected_quantity: 5)
       end
+
+      factory :receivable_stock_transfer_with_items do
+        submitted_at   Time.now
+        shipped_at     Time.now
+      end
     end
   end
 end

@@ -10,7 +10,25 @@
   <li>
     <%= button_link_to Spree.t(:back_to_stock_transfers_list), admin_stock_transfers_path, :icon => 'arrow-left' %>
   </li>
+  <li>
+    <%= button_link_to Spree.t(:finalize_reception), '#', :icon => 'lock', :id => 'finalize-transfer-button' %>
+  </li>
 <% end %>
+
+<div id="finalize-warning">
+  <div class='warning-title'>
+    <i class='fa fa-warning'></i>
+    <span><%= Spree.t(:you_cannot_undo_action) %></span>
+  </div>
+  <div class='action-consequences'>
+    <%= render :partial => 'finalize_reception_consequences' %>
+  </div>
+  <span><%= Spree.t(:are_you_sure_finalize_reception_stock_transfer) %></span>
+  <div class='actions'>
+    <%= link_to Spree.t(:no_dont_finalize), '#', :id => 'cancel-finalize-link' %>
+    <%= link_to Spree.t(:yes_finalize), finalize_receive_admin_stock_transfer_path(@stock_transfer), { method: 'put' } %>
+  </div>
+</div>
 
 <div id='stock_transfer_summary' class='fullwidth'>
   <div class='location'>

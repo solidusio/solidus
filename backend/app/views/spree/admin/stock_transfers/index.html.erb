@@ -45,9 +45,11 @@
       </div>
 
       <div class="field-block alpha four columns">
-        <div class="field">
-          <%= f.label nil, Spree.t(:status) %>
-          <%= f.select :closed_at_null, options_for_select([[Spree.t(:open), 1],[Spree.t(:closed), 0]], params[:q][:closed_at_null]), {include_blank: true}, {class: 'select2 fullwidth'} %>
+        <div class="field checkbox">
+          <label>
+            <%= f.check_box :received_at_null, { checked: @show_only_open }, '1', '0' %>
+            <%= Spree.t(:show_only_open_transfers) %>
+          </label>
         </div>
       </div>
 
@@ -69,13 +71,12 @@
   <table class="index" id="listing_stock_transfers">
     <thead>
       <tr>
-        <th><%= sort_link @search, :created_at,      Spree.t(:date) %></th>
+        <th><%= sort_link @search, :number,          Spree.t(:number) %></th>
         <th><%= sort_link @search, :from,            Spree.t(:from) %></th>
         <th><%= sort_link @search, :to,              Spree.t(:to) %></th>
-        <th><%= sort_link @search, :number,          Spree.t(:number) %></th>
-        <th><%= sort_link @search, :shipment_date,   Spree.t(:shipment_date) %></th>
-        <th><%= sort_link @search, :expected_items,  Spree.t(:expected_items) %></th>
-        <th><%= sort_link @search, :received_items,  Spree.t(:received_items) %></th>
+        <th><%= sort_link @search, :expected_items,  Spree.t(:expected) %></th>
+        <th><%= sort_link @search, :received_items,  Spree.t(:received) %></th>
+        <th><%= sort_link @search, :shipped_at,      Spree.t(:shipped) %></th>
         <th><%= sort_link @search, :status,          Spree.t(:status) %></th>
         <th class="actions"></th>
       </tr>
@@ -83,20 +84,19 @@
     <tbody>
       <% @stock_transfers.each do |stock_transfer| %>
         <tr id="<%= spree_dom_id stock_transfer %>" class="<%= cycle('odd', 'even') %>">
-          <td><%= stock_transfer.created_at.to_date %></td>
+          <td><%= handle_stock_transfer(stock_transfer) %></td>
           <td><%= stock_transfer.source_location.try(:name) %></td>
           <td><%= stock_transfer.destination_location.name %></td>
-          <td><%= handle_stock_transfer(stock_transfer) %></td>
-          <td><%= stock_transfer.shipped_at %></td>
           <td class="align-center"><%= stock_transfer.expected_item_count %></td>
           <td class="align-center"><%= stock_transfer.received_item_count %></td>
+          <td><%= stock_transfer.shipped_at.try(:to_date) %></td>
           <td><%= status(stock_transfer) %></td>
           <td class="actions">
-          <% if stock_transfer.closed_at? %>
-            <%= link_to_with_icon 'view', Spree.t(:show), '#', no_text: true, data: { action: 'show' } if can?(:show, stock_transfer) %>
-          <% else %>
-            <%= link_to_with_icon 'download', Spree.t('actions.receive'), receive_admin_stock_transfer_path(stock_transfer), no_text: true, data: { action: 'green' } if can?(:edit, stock_transfer) %>
-          <% end %>
+            <% if !stock_transfer.receivable? && can?(:show, stock_transfer) %>
+              <%= link_to_with_icon 'eye', Spree.t(:show), admin_stock_transfer_path(stock_transfer), no_text: true, data: { action: 'green' } %>
+            <% elsif stock_transfer.receivable? && can?(:edit, stock_transfer) %>
+              <%= link_to_with_icon 'download', Spree.t('actions.receive'), receive_admin_stock_transfer_path(stock_transfer), no_text: true, data: { action: 'green' } %>
+            <% end %>
           </td>
         </tr>
       <% end %>

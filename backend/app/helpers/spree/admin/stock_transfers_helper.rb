@@ -10,7 +10,7 @@ module Spree
       end
 
       def status(stock_transfer)
-        stock_transfer.closed? ? Spree.t(:closed) : Spree.t(:open)
+        stock_transfer.received? ? Spree.t(:closed) : Spree.t(:open)
       end
     end
   end
