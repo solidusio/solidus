@@ -5,16 +5,16 @@ describe Spree::OrderMutex do
 
   context "without an existing lock" do
     it "executes the block" do
-      calls = 0
-      Spree::OrderMutex.with_lock!(order) { calls += 1 }
-      expect(calls).to eq 1
+      expect { |b|
+        Spree::OrderMutex.with_lock!(order, &b)
+      }.to yield_control.once
     end
 
     it "releases the lock for subsequent calls" do
-      calls = 0
-      Spree::OrderMutex.with_lock!(order) { calls += 1 }
-      Spree::OrderMutex.with_lock!(order) { calls += 1 }
-      expect(calls).to eq 2
+      expect { |b|
+        Spree::OrderMutex.with_lock!(order, &b)
+        Spree::OrderMutex.with_lock!(order, &b)
+      }.to yield_control.twice
     end
 
     it "returns the value of the block" do
@@ -24,15 +24,17 @@ describe Spree::OrderMutex do
 
   context "with an existing lock on the same order" do
     it "raises a LockFailed error and then releases the lock" do
-      expect {
-        Spree::OrderMutex.with_lock!(order) do
-          Spree::OrderMutex.with_lock!(order) { }
-        end
-      }.to raise_error(Spree::OrderMutex::LockFailed)
+      Spree::OrderMutex.with_lock!(order) do
+        expect {
+          expect { |b|
+            Spree::OrderMutex.with_lock!(order, &b)
+          }.not_to yield_control
+        }.to raise_error(Spree::OrderMutex::LockFailed)
+      end
 
-      expect {
-        Spree::OrderMutex.with_lock!(order) { }
-      }.to_not raise_error
+      expect { |b|
+        Spree::OrderMutex.with_lock!(order, &b)
+      }.to yield_control.once
     end
   end
 
@@ -47,9 +49,9 @@ describe Spree::OrderMutex do
     end
 
     it "executes the block" do
-      calls = 0
-      Spree::OrderMutex.with_lock!(order) { calls += 1 }
-      expect(calls).to eq 1
+      expect { |b|
+        Spree::OrderMutex.with_lock!(order, &b)
+      }.to yield_control.once
     end
   end
 
@@ -61,9 +63,9 @@ describe Spree::OrderMutex do
     end
 
     it "executes the block" do
-      calls = 0
-      Spree::OrderMutex.with_lock!(order) { calls += 1 }
-      expect(calls).to eq 1
+      expect { |b|
+        Spree::OrderMutex.with_lock!(order, &b)
+      }.to yield_control.once
     end
   end
 end
