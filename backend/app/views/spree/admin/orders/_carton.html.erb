@@ -27,7 +27,7 @@
       <th><%= Spree.t(:total) %></th>
     </thead>
 
-    <tbody data-shipment-number="<%= carton.number %>" data-order-number="<%= order.number %>">
+    <tbody data-hook="carton-details" data-shipment-number="<%= carton.number %>" data-order-number="<%= order.number %>">
       <%= render 'spree/admin/orders/carton_manifest', carton: carton, order: order %>
 
       <tr class="show-method total">
@@ -78,6 +78,12 @@
               <%= link_to order.number, edit_admin_order_path(order) %>
             <% end %>
           </td>
+        </tr>
+      <% end %>
+
+      <% if carton.external_number.present? %>
+        <tr class="external-number">
+          <strong><%= Spree.t(:carton_external_number) %>:&nbsp;</strong><%= carton.external_number %>
         </tr>
       <% end %>
     </tbody>

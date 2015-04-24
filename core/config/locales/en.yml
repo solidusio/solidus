@@ -525,6 +525,7 @@ en:
     cart_subtotal:
       one: 'Subtotal (1 item)'
       other: 'Subtotal (%{count} items)'
+    carton_external_number: External Number
     carton_orders: 'Other orders with Carton'
     categories: Categories
     category: Category
