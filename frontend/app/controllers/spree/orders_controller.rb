@@ -48,7 +48,7 @@ module Spree
       # 2,147,483,647 is crazy. See issue #2695.
       if quantity.between?(1, 2_147_483_647)
         begin
-          order.contents.add(variant, quantity, current_currency)
+          order.contents.add(variant, quantity)
         rescue ActiveRecord::RecordInvalid => e
           error = e.record.errors.full_messages.join(", ")
         end
