@@ -341,10 +341,10 @@ es-CL:
         other: "%{count} errores evitaron que este %{resource} fuese grabado:"
   spree:
     abbreviation: Abreviación
-    accept:
+    accept: Aceptar
     acceptance_errors:
     acceptance_status:
-    accepted:
+    accepted: Aceptado
     account: Cuenta
     account_updated: Cuenta actualizada
     action: Acción
@@ -357,7 +357,7 @@ es-CL:
       list: Listar
       listing: Listado
       new: Nuevo
-      refund:
+      refund: Reembolso
       save: Guardar
       update: Actualizar
     activate: Activar
@@ -435,8 +435,8 @@ es-CL:
     analytics_desc_list_4: Es completamente gratuito!
     analytics_trackers: Analytics Trackers
     and: y
-    approve:
-    approved_at:
+    approve: Aprobar
+    approved_at: Aprobado en
     approver:
     are_you_sure: "¿Estás seguro?"
     are_you_sure_delete: "¿Estás seguro de que quieres borrar este registro?"
@@ -480,7 +480,7 @@ es-CL:
     capture_events:
     card_code: Código de tarjeta
     card_number: Número de tarjeta
-    card_type:
+    card_type: Tipo de tarjeta
     card_type_is: Tipo de tarjeta es
     cart: Carrito
     cart_subtotal:
@@ -546,7 +546,7 @@ es-CL:
     credit_card: Tarjeta de Crédito
     credit_cards: Tarjetas de Crédito
     credit_owed: Crédito adeudado
-    credits:
+    credits: Créditos
     currency: Moneda
     currency_decimal_mark: Marca decimal de moneda
     currency_settings: Parámetros de moneda
@@ -590,7 +590,7 @@ es-CL:
     description: Descripción
     destination: Destino
     destroy: Eliminar
-    details:
+    details: Detalles
     discount_amount: Valor de descuento
     dismiss_banner: No. Gracias! No estoy interesado. no mostrar este mensaje otra vez
     display: Mostrar
@@ -733,8 +733,8 @@ es-CL:
       operators:
         gt: Mayor que
         gte: Mayor o igual que
-        lt:
-        lte:
+        lt: Menor que
+        lte: Menor o igual que
     items_cannot_be_shipped: No es posible enviar los elementos seleccionados a su dirección de entrega. Por favor indica otra dirección de entrega.
     items_in_rmas:
     items_reimbursed:
@@ -1041,7 +1041,7 @@ es-CL:
     quantity: Cantidad
     quantity_returned: Cantidad devuelta
     quantity_shipped: Cantidad enviada
-    quick_search:
+    quick_search: Búsqueda rápida
     rate: Tarifa
     reason: Razón
     receive: recibir
