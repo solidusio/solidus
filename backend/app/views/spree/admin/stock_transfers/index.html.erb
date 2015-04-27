@@ -92,10 +92,10 @@
           <td><%= stock_transfer.shipped_at.try(:to_date) %></td>
           <td><%= status(stock_transfer) %></td>
           <td class="actions">
-            <% if !stock_transfer.receivable? && can?(:show, stock_transfer) %>
-              <%= link_to_with_icon 'eye', Spree.t(:show), admin_stock_transfer_path(stock_transfer), no_text: true, data: { action: 'green' } %>
-            <% elsif stock_transfer.receivable? && can?(:edit, stock_transfer) %>
+            <% if stock_transfer.receivable? && can?(:edit, stock_transfer) %>
               <%= link_to_with_icon 'download', Spree.t('actions.receive'), receive_admin_stock_transfer_path(stock_transfer), no_text: true, data: { action: 'green' } %>
+            <% elsif can?(:show, stock_transfer) %>
+              <%= link_to_with_icon 'eye', Spree.t(:show), admin_stock_transfer_path(stock_transfer), no_text: true, data: { action: 'green' } %>
             <% end %>
           </td>
         </tr>
