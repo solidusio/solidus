@@ -239,6 +239,10 @@ module Spree
       @shipping ||= Spree::OrderShipping.new(self)
     end
 
+    def cancellations
+      @cancellations ||= Spree::OrderCancellations.new(self)
+    end
+
     # Associates the specified user with the order.
     def associate_user!(user, override_email = true)
       self.user = user

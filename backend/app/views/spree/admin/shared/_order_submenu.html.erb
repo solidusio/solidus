@@ -51,5 +51,11 @@
         </li>
       <% end %>
     <% end %>
+
+    <% if can?(:cancel, Spree::InventoryUnit) && @order.inventory_units.cancelable.present? %>
+      <%= content_tag('li', :class => ('active' if current == 'Cancel Inventory'), :data => {:hook => 'admin_order_tabs_cancel_inventory'}) do %>
+        <%= link_to_with_icon 'cancel', Spree.t(:cancel_inventory), admin_order_cancellations_path(@order) %>
+      <% end %>
+    <% end %>
   </ul>
 </nav>

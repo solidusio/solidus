@@ -504,8 +504,11 @@ en:
     calculator: Calculator
     calculator_settings_warning: If you are changing the calculator type, you must save first before you can edit the calculator settings
     cancel: cancel
-    canceler: Canceler
+    cancel_inventory: 'Cancel Inventory'
+    canceled: canceled
     canceled_at: Canceled at
+    canceler: Canceler
+    cancellation: Cancellation
     cannot_create_payment_without_payment_methods: You cannot create a payment for an order without any payment methods defined.
     cannot_create_returns: Cannot create returns as this order has no shipped units.
     cannot_perform_operation: Cannot perform requested operation
@@ -782,6 +785,7 @@ en:
     invalid_promotion_rule: Invalid promotion rule.
     inventory: Inventory
     inventory_adjustment: Inventory Adjustment
+    inventory_canceled: Inventory canceled
     inventory_error_flash_for_insufficient_quantity: An item in your cart has become unavailable.
     inventory_state: Inventory State
     is_not_available_to_shipment_address: is not available to shipment address
@@ -893,6 +897,7 @@ en:
     next: Next
     no_actions_added: No actions added
     no_images_found: No images found
+    no_inventory_selected: No inventory selected
     no_orders_found: No orders found
     no_payment_methods_found: No payment methods found
     no_payment_found: No payment found
@@ -1351,6 +1356,7 @@ en:
     tree: Tree
     type: Type
     type_to_search: Type to search
+    unable_to_find_all_inventory_units: Unable to find all specified inventory units
     unable_to_connect_to_gateway: Unable to connect to gateway.
     unable_to_create_reimbursements: Unable to create reimbursements because there are items pending manual intervention.
     under_price: Under %{price}

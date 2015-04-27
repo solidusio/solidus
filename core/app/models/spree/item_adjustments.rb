@@ -56,11 +56,13 @@ module Spree
         additional_tax_total = tax.additional.reload.map(&:update!).compact.sum
       end
 
+      item_cancellation_total = adjustments.cancellation.reload.map(&:update!).compact.sum
+
       item.update_columns(
         :promo_total => promo_total,
         :included_tax_total => included_tax_total,
         :additional_tax_total => additional_tax_total,
-        :adjustment_total => promo_total + additional_tax_total,
+        :adjustment_total => promo_total + additional_tax_total + item_cancellation_total,
         :updated_at => Time.now,
       )
     end

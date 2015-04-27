@@ -48,6 +48,7 @@ module Spree
 
     scope :open, -> { where(state: 'open') }
     scope :closed, -> { where(state: 'closed') }
+    scope :cancellation, -> { where(source_type: 'Spree::UnitCancel') }
     scope :tax, -> { where(source_type: 'Spree::TaxRate') }
     scope :non_tax, -> do
       source_type = arel_table[:source_type]
