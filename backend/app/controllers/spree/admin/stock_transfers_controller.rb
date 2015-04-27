@@ -8,7 +8,7 @@ module Spree
       ]
 
       before_filter :load_stock_locations, only: [:index]
-      before_filter :ensure_receivable_stock_transfer, only: [:receive, :finalize_receive]
+      before_filter :ensure_receivable_stock_transfer, only: [:receive, :close]
 
       def create
         variants = Hash.new(0)
@@ -30,9 +30,9 @@ module Spree
         @variant_display_attributes = self.class.variant_display_attributes
       end
 
-      def finalize_receive
+      def close
         Spree::StockTransfer.transaction do
-          if @stock_transfer.update_attributes(finalize_receive_params)
+          if @stock_transfer.update_attributes(close_params)
             adjust_inventory
             redirect_to admin_stock_transfers_path
           else
@@ -46,12 +46,12 @@ module Spree
 
       def collection
         params[:q] = params[:q] || {}
-        @show_only_open = if params[:q][:received_at_null].present?
-          params[:q][:received_at_null] == '1'
+        @show_only_open = if params[:q][:closed_at_null].present?
+          params[:q][:closed_at_null] == '1'
         else
           true
         end
-        params[:q].delete(:received_at_null) unless @show_only_open
+        params[:q].delete(:closed_at_null) unless @show_only_open
         @search = super.ransack(params[:q])
         @search.result.
           page(params[:page]).
@@ -84,8 +84,8 @@ module Spree
         @destination_location ||= StockLocation.find(params[:transfer_destination_location_id])
       end
 
-      def finalize_receive_params
-        { received_at: Time.now, received_by: try_spree_current_user }
+      def close_params
+        { closed_at: Time.now, closed_by: try_spree_current_user }
       end
 
       def adjust_inventory

@@ -15,8 +15,8 @@ module Spree
     private
 
     def ensure_stock_transfer_not_received
-      if self.stock_transfer.received?
-        raise Spree::StockTransfer::CannotModifyReceivedStockTransfer
+      if self.stock_transfer.closed?
+        raise Spree::StockTransfer::CannotModifyClosedStockTransfer
       end
     end
   end

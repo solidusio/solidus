@@ -1,13 +1,13 @@
 module Spree
   class StockTransfer < Spree::Base
-    class CannotModifyReceivedStockTransfer < StandardError; end
+    class CannotModifyClosedStockTransfer < StandardError; end
 
     has_many :stock_movements, :as => :originator
     has_many :transfer_items
 
     belongs_to :created_by, :class_name => Spree.user_class.to_s
-    belongs_to :submitted_by, :class_name => Spree.user_class.to_s
-    belongs_to :received_by, :class_name => Spree.user_class.to_s
+    belongs_to :finalized_by, :class_name => Spree.user_class.to_s
+    belongs_to :closed_by, :class_name => Spree.user_class.to_s
     belongs_to :source_location, :class_name => 'Spree::StockLocation'
     belongs_to :destination_location, :class_name => 'Spree::StockLocation'
 
@@ -17,12 +17,12 @@ module Spree
       number
     end
 
-    def submitted?
-      submitted_at.present?
+    def finalized?
+      finalized_at.present?
     end
 
-    def received?
-      received_at.present?
+    def closed?
+      closed_at.present?
     end
 
     def shipped?
@@ -30,7 +30,7 @@ module Spree
     end
 
     def receivable?
-      submitted? && shipped? && !received?
+      finalized? && shipped? && !closed?
     end
 
     def ship(tracking_number: tracking_number, shipped_at: shipped_at)

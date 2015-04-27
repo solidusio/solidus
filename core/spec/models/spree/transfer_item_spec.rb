@@ -50,9 +50,9 @@ describe Spree::TransferItem do
 
     subject { transfer_item.update_attributes(received_quantity: 2) }
 
-    context "stock transfer is not received" do
+    context "stock transfer is not closed" do
       before do
-        stock_transfer.update_attributes(received_at: nil)
+        stock_transfer.update_attributes(closed_at: nil)
       end
 
       it "can update" do
@@ -61,13 +61,13 @@ describe Spree::TransferItem do
       end
     end
 
-    context "stock transfer is received" do
+    context "stock transfer is closed" do
       before do
-        stock_transfer.update_attributes(received_at: Time.now)
+        stock_transfer.update_attributes(closed_at: Time.now)
       end
 
       it "cannot update" do
-        expect { subject }.to raise_error(Spree::StockTransfer::CannotModifyReceivedStockTransfer)
+        expect { subject }.to raise_error(Spree::StockTransfer::CannotModifyClosedStockTransfer)
       end
     end
   end

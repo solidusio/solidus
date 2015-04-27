@@ -51,12 +51,12 @@ module Spree
     describe "receivable?" do
       subject { stock_transfer.receivable? }
 
-      context "closed" do
+      context "finalized" do
         before do
-          stock_transfer.update_attributes(submitted_at: Time.now)
+          stock_transfer.update_attributes(finalized_at: Time.now)
         end
 
-        it { should eq false }
+        it { is_expected.to eq false }
       end
 
       context "shipped" do
@@ -64,39 +64,39 @@ module Spree
           stock_transfer.update_attributes(shipped_at: Time.now)
         end
 
-        it { should eq false }
+        it { is_expected.to eq false }
       end
 
-      context "received" do
+      context "closed" do
         before do
-          stock_transfer.update_attributes(received_at: Time.now)
+          stock_transfer.update_attributes(closed_at: Time.now)
         end
 
-        it { should eq false }
+        it { is_expected.to eq false }
       end
 
-      context "received and closed" do
+      context "finalized and closed" do
         before do
-          stock_transfer.update_attributes(submitted_at: Time.now, received_at: Time.now)
+          stock_transfer.update_attributes(finalized_at: Time.now, closed_at: Time.now)
         end
 
-        it { should eq false }
+        it { is_expected.to eq false }
       end
 
-      context "received and shipped" do
+      context "shipped and closed" do
         before do
-          stock_transfer.update_attributes(received_at: Time.now, shipped_at: Time.now)
+          stock_transfer.update_attributes(shipped_at: Time.now, closed_at: Time.now)
         end
 
-        it { should eq false }
+        it { is_expected.to eq false }
       end
 
-      context "closed and shipped" do
+      context "finalized and shipped" do
         before do
-          stock_transfer.update_attributes(submitted_at: Time.now, shipped_at: Time.now)
+          stock_transfer.update_attributes(finalized_at: Time.now, shipped_at: Time.now)
         end
 
-        it { should eq true }
+        it { is_expected.to eq true }
       end
     end
   end

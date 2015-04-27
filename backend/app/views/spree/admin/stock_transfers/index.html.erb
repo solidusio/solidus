@@ -47,7 +47,7 @@
       <div class="field-block alpha four columns">
         <div class="field checkbox">
           <label>
-            <%= f.check_box :received_at_null, { checked: @show_only_open }, '1', '0' %>
+            <%= f.check_box :closed_at_null, { checked: @show_only_open }, '1', '0' %>
             <%= Spree.t(:show_only_open_transfers) %>
           </label>
         </div>

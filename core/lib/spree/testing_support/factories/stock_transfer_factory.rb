@@ -13,7 +13,7 @@ FactoryGirl.define do
       end
 
       factory :receivable_stock_transfer_with_items do
-        submitted_at   Time.now
+        finalized_at   Time.now
         shipped_at     Time.now
       end
     end

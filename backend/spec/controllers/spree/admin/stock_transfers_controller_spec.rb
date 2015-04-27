@@ -7,7 +7,7 @@ module Spree
     shared_context 'ensures receivable stock transfer' do
       context 'outbound stock transfer' do
         before do
-          transfer_with_items.update_attributes(submitted_at: nil, shipped_at: nil)
+          transfer_with_items.update_attributes(finalized_at: nil, shipped_at: nil)
         end
 
         it 'redirects back to index' do
@@ -33,8 +33,8 @@ module Spree
         StockTransfer.create do |transfer|
           transfer.source_location_id = warehouse.id
           transfer.destination_location_id = la_store.id
-          transfer.submitted_at = DateTime.now
-          transfer.received_at = DateTime.now
+          transfer.finalized_at = DateTime.now
+          transfer.closed_at = DateTime.now
         end }
 
       it "searches by stock location" do
@@ -43,19 +43,13 @@ module Spree
         assigns(:stock_transfers).should include(stock_transfer1)
       end
 
-      it "searches by status" do
-        spree_get :index, :q => { :submitted_at_null => 0 }
-        assigns(:stock_transfers).count.should eq 1
-        assigns(:stock_transfers).should include(stock_transfer2)
-      end
-
-      it "filters the fully received stock transfers" do
-        spree_get :index, :q => { :received_at_null => '1' }
+      it "filters the closed stock transfers" do
+        spree_get :index, :q => { :closed_at_null => '1' }
         expect(assigns(:stock_transfers)).to match_array [stock_transfer1]
       end
 
       it "doesn't filter any stock transfers" do
-        spree_get :index, :q => { :received_at_null => '0' }
+        spree_get :index, :q => { :closed_at_null => '0' }
         expect(assigns(:stock_transfers)).to match_array [stock_transfer1, stock_transfer2]
       end
     end
@@ -101,7 +95,7 @@ module Spree
       end
     end
 
-    context "#finalize_receive" do
+    context "#close" do
       let!(:user) { create(:user) }
       let!(:transfer_with_items) { create(:receivable_stock_transfer_with_items) }
 
@@ -110,25 +104,25 @@ module Spree
       end
 
       subject do
-        spree_put :finalize_receive, id: transfer_with_items.to_param
+        spree_put :close, id: transfer_with_items.to_param
       end
 
       include_context 'ensures receivable stock transfer'
 
-      context "successfully finalized" do
+      context "successfully closed" do
         it "redirects back to index" do
           subject
           expect(response).to redirect_to(spree.admin_stock_transfers_path)
         end
 
-        it "sets the received_by to the current user" do
+        it "sets the closed_by to the current user" do
           subject
-          expect(transfer_with_items.reload.received_by).to eq(user)
+          expect(transfer_with_items.reload.closed_by).to eq(user)
         end
 
-        it "sets the received_at date" do
+        it "sets the closed_at date" do
           subject
-          expect(transfer_with_items.reload.received_at).to_not be_nil
+          expect(transfer_with_items.reload.closed_at).to_not be_nil
         end
 
         context "stock movements" do

@@ -26,7 +26,7 @@
   <span><%= Spree.t(:are_you_sure_finalize_reception_stock_transfer) %></span>
   <div class='actions'>
     <%= link_to Spree.t(:no_dont_finalize), '#', :id => 'cancel-finalize-link' %>
-    <%= link_to Spree.t(:yes_finalize), finalize_receive_admin_stock_transfer_path(@stock_transfer), { method: 'put' } %>
+    <%= link_to Spree.t(:yes_finalize), close_admin_stock_transfer_path(@stock_transfer), { method: 'put' } %>
   </div>
 </div>
 
