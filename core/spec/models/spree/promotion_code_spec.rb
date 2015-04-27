@@ -135,4 +135,48 @@ RSpec.describe Spree::PromotionCode do
       end
     end
   end
+
+  describe "completing multiple orders with the same code", slow: true do
+    let(:promotion) do
+      FactoryGirl.create(
+        :promotion,
+        :with_order_adjustment,
+        code: "discount",
+        per_code_usage_limit: 1
+      )
+    end
+    let(:code) { promotion.codes.first }
+    let(:order) do
+      FactoryGirl.create(:order_with_line_items).tap do |order|
+        FactoryGirl.create(:payment, amount: order.total, order: order)
+        promotion.activate(order: order, promotion_code: code)
+      end
+    end
+    let(:promo_adjustment) { order.adjustments.promotion.first }
+    before do
+      order.next! until order.confirm?
+
+      FactoryGirl.create(:order_with_line_items).tap do |order|
+        FactoryGirl.create(:payment, amount: order.total, order: order)
+        promotion.activate(order: order, promotion_code: code)
+        order.next! until order.confirm?
+        order.complete!
+      end
+    end
+    it "makes the promotion ineligible" do
+      expect{
+        order.complete
+      }.to change{ promo_adjustment.reload.eligible }.to(false)
+    end
+    it "adjusts the promo_total" do
+      expect{
+        order.complete
+      }.to change(order, :promo_total).by(10)
+    end
+    it "adjusts the total" do
+      expect{
+        order.complete
+      }.to change(order, :total).by(10)
+    end
+  end
 end

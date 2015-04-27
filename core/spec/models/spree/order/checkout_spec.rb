@@ -670,6 +670,7 @@ describe Spree::Order, :type => :model do
     it "does not attempt to process payments" do
       order.email = 'user@example.com'
       order.stub(:ensure_available_shipping_rates).and_return(true)
+      order.stub(:ensure_promotions_eligible).and_return(true)
       order.should_not_receive(:payment_required?)
       order.should_not_receive(:process_payments!)
       order.next!
