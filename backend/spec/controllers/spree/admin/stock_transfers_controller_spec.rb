@@ -175,7 +175,7 @@ module Spree
 
         it "displays a flash error message" do
           subject
-          expect(flash[:error]).to eq Spree.t(:unable_to_finalize_stock_transfer)
+          expect(flash[:error]).to eq Spree.t(:unable_to_close_stock_transfer)
         end
       end
     end

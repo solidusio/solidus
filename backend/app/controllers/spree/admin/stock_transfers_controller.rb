@@ -36,7 +36,7 @@ module Spree
             adjust_inventory
             redirect_to admin_stock_transfers_path
           else
-            flash[:error] = Spree.t(:unable_to_finalize_stock_transfer)
+            flash[:error] = Spree.t(:unable_to_close_stock_transfer)
             redirect_to receive_admin_stock_transfer_path(@stock_transfer)
           end
         end

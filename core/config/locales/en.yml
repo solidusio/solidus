@@ -479,7 +479,7 @@ en:
     approved_at: Approved at
     are_you_sure: Are you sure?
     are_you_sure_delete: Are you sure you want to delete this record?
-    are_you_sure_finalize_reception_stock_transfer: Are you sure you want to finalize the reception of this stock transfer?
+    are_you_sure_close_stock_transfer: Are you sure you want to close this stock transfer?
     authorization_failure: Authorization Failure
     authorized: Authorized
     auto_capture: Auto Capture
@@ -749,10 +749,9 @@ en:
     fill_in_customer_info: Please fill in customer info
     filter_results: Filter Results
     finalize: Finalize
-    finalize_reception: Finalize Reception
     find_a_taxon: Find a Taxon
     finalized: Finalized
-    finalize_stock_transfer:
+    close_stock_transfer:
       will_cause: Finalizing the reception of a stock transfer will cause the following
       no_longer_edit: You will no longer be able to edit the stock transfer in any way
       stock_movements_created: Stock movements will be created for the received items
@@ -1433,7 +1432,7 @@ en:
     try_changing_search_values: Try changing the search values.
     type: Type
     type_to_search: Type to search
-    unable_to_finalize_stock_transfer: Unable to finalize the stock transfer
+    unable_to_close_stock_transfer: Unable to close the stock transfer
     unable_to_find_all_inventory_units: Unable to find all specified inventory units
     unable_to_connect_to_gateway: Unable to connect to gateway.
     unable_to_create_reimbursements: Unable to create reimbursements because there are items pending manual intervention.
