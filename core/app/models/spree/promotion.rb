@@ -114,7 +114,7 @@ module Spree
     def eligible?(promotable, promotion_code: nil)
       return false if expired?
       return false if usage_limit_exceeded?(promotable)
-      return false if promotion_code && promotion_code.usage_limit_exceeded?(promotable)
+      return false if promotion_code && promotion_code.usage_limit_exceeded?
       return false if blacklisted?(promotable)
       !!eligible_rules(promotable, {})
     end

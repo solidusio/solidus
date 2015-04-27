@@ -9,9 +9,8 @@ class Spree::PromotionCode < ActiveRecord::Base
 
   # Whether the promotion code has exceeded its usage restrictions
   #
-  # @param promotable object (e.g. order/line item/shipment) No longer used.
   # @return true or false
-  def usage_limit_exceeded?(promotable = nil)
+  def usage_limit_exceeded?
     if usage_limit
       usage_count >= usage_limit
     end
@@ -36,8 +35,5 @@ class Spree::PromotionCode < ActiveRecord::Base
 
   def downcase_value
     self.value = value.downcase
-  end
-
-  def adjustment_promotion_scope(adjustment_scope)
   end
 end

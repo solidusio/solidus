@@ -393,12 +393,16 @@ describe Spree::Promotion, :type => :model do
     end
 
     context "when the promotion code's usage limit is exceeded" do
-      let(:order) { create(:completed_order_with_totals) }
+      let(:order) { FactoryGirl.create(:completed_order_with_promotion, promotion: promotion) }
       let(:promotion) { create(:promotion, :with_order_adjustment, code: 'abc123', per_code_usage_limit: 1) }
       let(:promotion_code) { promotion.codes.first }
 
       before do
-        Spree::Adjustment.create!(label: 'Adjustment', amount: 1, source: promotion.actions.first, promotion_code: promotion_code, order: order, adjustable: order)
+        FactoryGirl.create(
+          :completed_order_with_promotion,
+          promotion: promotion
+        )
+        promotion_code.adjustments.update_all(eligible: true)
       end
 
       it "returns false" do
