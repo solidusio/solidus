@@ -83,7 +83,9 @@
 
       <% if carton.external_number.present? %>
         <tr class="external-number">
-          <strong><%= Spree.t(:carton_external_number) %>:&nbsp;</strong><%= carton.external_number %>
+          <td colspan="5">
+            <strong><%= Spree.t(:carton_external_number) %>:&nbsp;</strong><%= carton.external_number %>
+          </td>
         </tr>
       <% end %>
     </tbody>
