@@ -100,7 +100,7 @@ module Spree
       let!(:transfer_with_items) { create(:receivable_stock_transfer_with_items) }
 
       before do
-        controller.stub(try_spree_current_user: user)
+        allow(controller).to receive(:try_spree_current_user) { user }
       end
 
       subject do
