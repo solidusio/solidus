@@ -4,12 +4,12 @@ $(document).ready ->
     Spree.StockTransfers.ReceiveVariantForm.beginListening()
     Spree.StockTransfers.ReceiveUpdateForms.beginListening()
 
-    $("#finalize-transfer-button").on('click', (ev) ->
+    $("#close-transfer-button").on('click', (ev) ->
       ev.preventDefault()
-      $('#finalize-warning').show()
+      $('#close-stock-transfer-warning').show()
     )
 
-    $("#cancel-finalize-link").on('click', (ev) ->
+    $("#cancel-close-link").on('click', (ev) ->
       ev.preventDefault()
-      $('#finalize-warning').hide()
+      $('#close-stock-transfer-warning').hide()
     )

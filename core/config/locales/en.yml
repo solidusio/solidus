@@ -752,7 +752,7 @@ en:
     find_a_taxon: Find a Taxon
     finalized: Finalized
     close_stock_transfer:
-      will_cause: Finalizing the reception of a stock transfer will cause the following
+      will_cause: Closing a stock transfer will cause the following
       no_longer_edit: You will no longer be able to edit the stock transfer in any way
       stock_movements_created: Stock movements will be created for the received items
     first_item: First Item
@@ -932,7 +932,7 @@ en:
     new_zone: New Zone
     next: Next
     no_actions_added: No actions added
-    no_dont_finalize: No, don't finalize
+    no_dont_close: No, don't close
     no_images_found: No images found
     no_inventory_selected: No inventory selected
     no_orders_found: No orders found
@@ -1476,7 +1476,7 @@ en:
     what_is_this: What's This?
     width: Width
     year: Year
-    yes_finalize: Yes, finalize
+    yes_close: Yes, close
     you_have_no_orders_yet: You have no orders yet
     you_cannot_undo_action: You will not be able to undo this action
     your_cart_is_empty: Your cart is empty

@@ -11,11 +11,11 @@
     <%= button_link_to Spree.t(:back_to_stock_transfers_list), admin_stock_transfers_path, :icon => 'arrow-left' %>
   </li>
   <li>
-    <%= button_link_to Spree.t(:close), '#', :icon => 'lock', :id => 'finalize-transfer-button' %>
+    <%= button_link_to Spree.t(:close), '#', :icon => 'lock', :id => 'close-transfer-button' %>
   </li>
 <% end %>
 
-<div id="finalize-warning">
+<div id="close-stock-transfer-warning">
   <div class='warning-title'>
     <i class='fa fa-warning'></i>
     <span><%= Spree.t(:you_cannot_undo_action) %></span>
@@ -25,8 +25,8 @@
   </div>
   <span><%= Spree.t(:are_you_sure_close_stock_transfer) %></span>
   <div class='actions'>
-    <%= link_to Spree.t(:no_dont_finalize), '#', :id => 'cancel-finalize-link' %>
-    <%= link_to Spree.t(:yes_finalize), close_admin_stock_transfer_path(@stock_transfer), { method: 'put' } %>
+    <%= link_to Spree.t(:no_dont_close), '#', :id => 'cancel-close-link' %>
+    <%= link_to Spree.t(:yes_close), close_admin_stock_transfer_path(@stock_transfer), { method: 'put' } %>
   </div>
 </div>
 
