@@ -26,6 +26,13 @@ module Spree
         .where('spree_orders.completed_at is not null')
         .backordered.order("spree_orders.completed_at ASC")
     end
+    scope :shippable, -> do
+      if Spree::Config[:allow_backorder_shipping]
+        where(state: %w(on_hand backordered))
+      else
+        on_hand
+      end
+    end
 
     # state machine (see http://github.com/pluginaweek/state_machine/tree/master for details)
     state_machine initial: :on_hand do

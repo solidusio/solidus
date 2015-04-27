@@ -107,6 +107,20 @@ describe Spree::OrderShipping do
 
     it_behaves_like 'shipment shipping'
 
+    context "when not all units are shippable" do
+      let(:order) { create(:order_ready_to_ship, line_items_count: 2) }
+      let(:shippable_line_item) { order.line_items.first }
+      let(:unshippable_line_item) { order.line_items.last }
+
+      before do
+        unshippable_line_item.inventory_units.each(&:cancel!)
+      end
+
+      it "only ships the shippable ones" do
+        expect(subject.inventory_units).to match_array(shippable_line_item.inventory_units)
+      end
+    end
+
     context "with an external_number" do
       subject do
         order.shipping.ship_shipment(
