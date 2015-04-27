@@ -2,20 +2,22 @@ require 'spec_helper'
 require 'benchmark'
 
 describe Spree::Shipment, :type => :model do
-  let(:order) { mock_model Spree::Order, backordered?: false,
-                                         canceled?: false,
-                                         can_ship?: true,
-                                         currency: 'USD',
-                                         number: 'S12345',
-                                         paid?: false,
-                                         touch: true }
+  let(:order) { create(:order_ready_to_ship, line_items_count: 1) }
   let(:shipping_method) { create(:shipping_method, name: "UPS") }
   let(:shipment) do
-    shipment = Spree::Shipment.new(cost: 1, state: 'pending')
-    allow(shipment).to receive_messages order: order
-    allow(shipment).to receive_messages shipping_method: shipping_method
-    shipment.save
-    shipment
+    order.shipments.create!(
+      state: 'pending',
+      cost: 1,
+      address: order.ship_address,
+      inventory_units: order.inventory_units,
+      shipping_rates: [
+        Spree::ShippingRate.new(
+          shipping_method: shipping_method,
+          selected: true,
+        ),
+      ],
+      stock_location: stock_location,
+    )
   end
 
   let(:variant) { mock_model(Spree::Variant) }
@@ -36,10 +38,10 @@ describe Spree::Shipment, :type => :model do
   end
 
   it 'is backordered if one if its inventory_units is backordered' do
-    allow(shipment).to receive_messages(inventory_units: [
-      mock_model(Spree::InventoryUnit, backordered?: false),
-      mock_model(Spree::InventoryUnit, backordered?: true)
-    ])
+    shipment.inventory_units = [
+      build(:inventory_unit, state: 'backordered', shipment: nil),
+      build(:inventory_unit, state: 'shipped', shipment: nil),
+    ]
     expect(shipment).to be_backordered
   end
 
@@ -81,8 +83,8 @@ describe Spree::Shipment, :type => :model do
 
   context "display_amount" do
     it "retuns a Spree::Money" do
-      allow(shipment).to receive(:cost) { 21.22 }
-      expect(shipment.display_amount).to eq(Spree::Money.new(21.22))
+      shipment.cost = 21.22
+      shipment.display_amount.should == Spree::Money.new(21.22)
     end
   end
 
@@ -280,11 +282,6 @@ describe Spree::Shipment, :type => :model do
     end
 
     context "when shipment state changes to shipped" do
-      before do
-        allow_any_instance_of(Spree::ShipmentHandler).to receive(:send_shipped_email)
-        allow_any_instance_of(Spree::ShipmentHandler).to receive(:update_order_shipment_state)
-      end
-
       it "should call after_ship" do
         shipment.state = 'pending'
         expect(shipment).to receive :after_ship
@@ -452,10 +449,7 @@ describe Spree::Shipment, :type => :model do
       end
 
       it 'unstocks them items' do
-        allow_any_instance_of(Spree::ShipmentHandler).to receive(:update_order_shipment_state)
-        allow_any_instance_of(Spree::ShipmentHandler).to receive(:send_shipped_email)
-
-        expect(shipment_with_inventory_units.stock_location).to receive(:unstock)
+        shipment_with_inventory_units.stock_location.should_receive(:unstock).exactly(5).times
         subject
       end
     end
@@ -493,9 +487,6 @@ describe Spree::Shipment, :type => :model do
         end
 
         it "finalizes adjustments" do
-          allow_any_instance_of(Spree::ShipmentHandler).to receive(:update_order_shipment_state)
-          allow_any_instance_of(Spree::ShipmentHandler).to receive(:send_shipped_email)
-
           shipment.adjustments.each do |adjustment|
             expect(adjustment).to receive(:finalize!)
           end
@@ -660,11 +651,17 @@ describe Spree::Shipment, :type => :model do
   end
 
   context "#tracking_url" do
-    it "uses shipping method to determine url" do
-      expect(shipping_method).to receive(:build_tracking_url).with('1Z12345').and_return(:some_url)
-      shipment.tracking = '1Z12345'
+    subject do
+      shipment.tracking_url
+    end
 
-      expect(shipment.tracking_url).to eq(:some_url)
+    before do
+      shipping_method.update!(tracking_url: "https://example.com/:tracking")
+      shipment.tracking = '1Z12345'
+    end
+
+    it "uses shipping method to determine url" do
+      is_expected.to eq("https://example.com/1Z12345")
     end
   end
 
@@ -714,7 +711,14 @@ describe Spree::Shipment, :type => :model do
 
   context "don't require shipment" do
     let(:stock_location) { create(:stock_location, fulfillable: false)}
-    let(:unshippable_shipment) { create(:shipment, stock_location: stock_location)}
+    let(:unshippable_shipment) do
+      create(
+        :shipment,
+        stock_location: stock_location,
+        inventory_units: [build(:inventory_unit)],
+      )
+    end
+
     before { order.stub paid?: true }
 
     it 'proceeds automatically to shipped state' do
