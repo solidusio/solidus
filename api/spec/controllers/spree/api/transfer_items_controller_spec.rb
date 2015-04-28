@@ -19,13 +19,6 @@ module Spree
           expect(response.status).to eq 404
         end
       end
-
-      describe "#receive" do
-        it "cannot receive transfer items from a stock transfer" do
-          api_post :receive, stock_transfer_id: stock_transfer.to_param, variant_id: transfer_item.variant.to_param
-          expect(response.status).to eq 404
-        end
-      end
     end
 
     context "as an admin" do
@@ -60,34 +53,6 @@ module Spree
 
           it "does not update the transfer item" do
             expect { subject }.to_not change { transfer_item.reload.received_quantity }
-          end
-        end
-      end
-
-      describe "#receive" do
-        subject do
-          api_post :receive, stock_transfer_id: stock_transfer.to_param, variant_id: variant_id
-        end
-
-        context "valid parameters" do
-          let(:variant_id) { transfer_item.variant.to_param }
-
-          it "can receive a transfer items from a stock transfer" do
-            subject
-            expect(response.status).to eq 200
-          end
-
-          it "increments the received quantity for the transfer_item" do
-            expect { subject }.to change { transfer_item.reload.received_quantity }.by(1)
-          end
-        end
-
-        context "variant is not in the transfer order" do
-          let(:variant_id) { create(:variant).to_param }
-
-          it "returns a 404" do
-            subject
-            expect(response.status).to eq 404
           end
         end
       end

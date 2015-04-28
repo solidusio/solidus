@@ -24,13 +24,16 @@ class ReceiveVariantForm
   receiveTransferItem = (variantId) ->
     stockTransferNumber = $("#stock_transfer_number").val()
     $(".select2-results").html("<li class='select2-no-results'>#{Spree.translations.receiving_match}</li>")
-    transferItem = new Spree.TransferItem
-      variantId: variantId
-      stockTransferNumber: stockTransferNumber
-    transferItem.save(successHandler, errorHandler)
+    stockTransfer = new Spree.StockTransfer
+      number: stockTransferNumber
+    stockTransfer.receive(variantId, successHandler, errorHandler)
 
-  successHandler = (transferItem) =>
+  successHandler = (stockTransfer, variantId) =>
     resetVariantAutocomplete()
+    stockTransfer = new Spree.StockTransfer
+      number: stockTransfer.number
+      transferItems: stockTransfer.transfer_items
+    transferItem = stockTransfer.findTransferItemByVariantId(variantId)
     rowTemplate = Handlebars.compile($('#receive-count-for-transfer-item-template').html())
     htmlOutput = rowTemplate(
       id: transferItem.id
@@ -52,10 +55,10 @@ class ReceiveVariantForm
 
   errorHandler = (errorData) ->
     resetVariantAutocomplete()
-    errorMessage = if errorData.status == 404
-      Spree.translations.item_not_in_stock_transfer
-    else
+    errorMessage = if errorData.responseJSON.errors?
       errorData.responseText
+    else
+      errorData.responseJSON.error
     show_flash('error', errorMessage)
 
 Spree.StockTransfers ?= {}

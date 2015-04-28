@@ -117,11 +117,10 @@ Spree::Core::Engine.add_routes do
     resources :stock_items, only: [:index, :update, :destroy]
 
     resources :stock_transfers, only: [] do
-      resources :transfer_items, only: [:update] do
-        collection do
-          post :receive
-        end
+      member do
+        post :receive
       end
+      resources :transfer_items, only: [:update]
     end
 
     resources :stores

@@ -31,6 +31,7 @@ module Spree
         :promotion_attributes,
         :store_attributes,
         :store_credit_history_attributes
+        :stock_transfer_attributes,
         :transfer_item_attributes
       ]
 
@@ -170,6 +171,8 @@ module Spree
         :display_amount, :display_user_total_amount, :display_action,
         :display_event_date
       ]
+
+      @@stock_transfer_attributes = [:id, :number]
 
       @@transfer_item_attributes = [:id, :received_quantity]
 
