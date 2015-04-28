@@ -1044,8 +1044,6 @@ fa:
     show_deleted: Show Deleted
     show_only_complete_orders: نمایش سفارشات تکمیل شده
     show_rate_in_label:
-    site_name: نام سایت
-    site_url: آدرس سایت
     sku: کد کالا
     smtp: SMTP
     smtp_authentication_type: SMTP Authentication Type
