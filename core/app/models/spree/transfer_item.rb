@@ -3,7 +3,7 @@ module Spree
     belongs_to :stock_transfer
     belongs_to :variant
 
-    validate :stock_transfer_not_received
+    validate :stock_transfer_not_closed
     validates_presence_of :stock_transfer, :variant
     validates :expected_quantity, numericality: { greater_than: 0 }
     validates :received_quantity, numericality: { greater_than_or_equal_to: 0, less_than_or_equal_to: :expected_quantity }
@@ -13,7 +13,7 @@ module Spree
 
     private
 
-    def stock_transfer_not_received
+    def stock_transfer_not_closed
       if self.stock_transfer.closed?
         errors.add(:base, Spree.t('errors.messages.cannot_modify_transfer_item_closed_stock_transfer'))
       end
