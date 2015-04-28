@@ -715,6 +715,7 @@ en:
     error: error
     errors:
       messages:
+        cannot_modify_transfer_item_closed_stock_transfer: Transfer items that are part of a closed stock transfer cannot be modified.
         could_not_create_taxon: Could not create taxon
         no_payment_methods_available: No payment methods are configured for this environment
         no_shipping_methods_available: No shipping methods available for selected location, please change your address and try again.
