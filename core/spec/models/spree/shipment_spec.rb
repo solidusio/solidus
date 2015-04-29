@@ -2,6 +2,7 @@ require 'spec_helper'
 require 'benchmark'
 
 describe Spree::Shipment, :type => :model do
+  let(:stock_location) { create(:stock_location) }
   let(:order) { create(:order_ready_to_ship, line_items_count: 1) }
   let(:shipping_method) { create(:shipping_method, name: "UPS") }
   let(:shipment) do
