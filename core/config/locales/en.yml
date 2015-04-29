@@ -380,6 +380,7 @@ en:
     activate: Activate
     active: Active
     add: Add
+    added: Added
     add_action_of_type: Add action of type
     add_country: Add Country
     add_coupon_code: Add Coupon Code
@@ -396,6 +397,7 @@ en:
     add_to_cart: Add To Cart
     add_to_stock_location: Add to location
     add_variant: Add Variant
+    adding_match: Adding match
     additional_item: Additional Item
     address1: Address
     address2: Address (contd.)
@@ -480,6 +482,7 @@ en:
     are_you_sure: Are you sure?
     are_you_sure_delete: Are you sure you want to delete this record?
     are_you_sure_close_stock_transfer: Are you sure you want to close this stock transfer?
+    are_you_sure_finalize_stock_transfer: Are you sure you want to finalize this stock transfer?
     authorization_failure: Authorization Failure
     authorized: Authorized
     auto_capture: Auto Capture
@@ -573,6 +576,10 @@ en:
     clone: Clone
     close: Close
     close_all_adjustments: Close All Adjustments
+    close_stock_transfer:
+      will_cause: Closing a stock transfer will cause the following
+      no_longer_edit: You will no longer be able to edit the stock transfer in any way
+      stock_movements_created: Stock movements will be created for the received items
     code: Code
     company: Company
     complete: complete
@@ -618,6 +625,7 @@ en:
     create_new_order: Create new order
     create_reimbursement: Create reimbursement
     created_at: Created At
+    created_by: Created by
     created_successfully: Created successfully
     credit: Credit
     credits: Credits
@@ -657,10 +665,12 @@ en:
     default_tax_zone: Default Tax Zone
     delete: Delete
     deleted_variants_present: Some line items in this order have products that are no longer available.
+    deleted_successfully: Deleted successfully
     delivery: Delivery
     depth: Depth
     description: Description
     destination: Destination
+    destination_location: Destination location
     destroy: Destroy
     discount_amount: Discount Amount
     dismiss_banner: No. Thanks! I'm not interested, do not display this message again
@@ -685,6 +695,7 @@ en:
     editing_state: Editing State
     editing_stock_location: Editing Stock Location
     editing_stock_movement: Editing Stock Movement
+    editing_stock_transfer: Editing Stock Transfer
     editing_tax_category: Editing Tax Category
     editing_tax_rate: Editing Tax Rate
     editing_tracker: Editing Tracker
@@ -716,7 +727,9 @@ en:
     errors:
       messages:
         cannot_modify_transfer_item_closed_stock_transfer: Transfer items that are part of a closed stock transfer cannot be modified.
+        cannot_delete_transfer_item_with_finalized_stock_transfer: Transfer items that are part of a finalized stock transfer cannot be destroyed.
         could_not_create_taxon: Could not create taxon
+        transfer_item_insufficient_stock: Transfer item's variant does not have enough stock in the stock transfer's source location
         no_payment_methods_available: No payment methods are configured for this environment
         no_shipping_methods_available: No shipping methods available for selected location, please change your address and try again.
     errors_prohibited_this_record_from_being_saved:
@@ -741,6 +754,7 @@ en:
     exchange_for: Exchange for
     expedited_exchanges_warning: "Any specified exchanges will ship to the customer immediately upon saving. The customer will be charged the full amount of the item if they do not return the original item within %{days_window} days."
     excl: excl.
+    expected: Expected
     expected_items: Expected Items
     expiration: Expiration
     extension: Extension
@@ -750,6 +764,9 @@ en:
     fill_in_customer_info: Please fill in customer info
     filter_results: Filter Results
     finalize: Finalize
+    finalize_stock_transfer:
+      will_cause: Finalizing a stock transfer will cause the following
+      no_longer_change_items: You will no longer be able to add or edit any transfer items
     find_a_taxon: Find a Taxon
     finalized: Finalized
     close_stock_transfer:
@@ -934,6 +951,7 @@ en:
     next: Next
     no_actions_added: No actions added
     no_dont_close: No, don't close
+    no_dont_finalize: No, don't finalize
     no_images_found: No images found
     no_inventory_selected: No inventory selected
     no_orders_found: No orders found
@@ -1163,6 +1181,7 @@ en:
     quantity_returned: Quantity Returned
     quantity_shipped: Quantity Shipped
     rate: Rate
+    ready_to_ship: Ready to ship
     reason: Reason
     receive: receive
     received: Received
@@ -1315,6 +1334,7 @@ en:
     skus: SKUs
     slug: Slug
     source: Source
+    source_location: Source location
     special_instructions: Special Instructions
     split: Split
     spree_gateway_error_flash_for_checkout: There was a problem with your payment information. Please check your information and try again.
@@ -1336,6 +1356,7 @@ en:
     stock_movements_for_stock_location: Stock Movements for %{stock_location_name}
     stock_successfully_transferred: Stock was successfully transferred between locations.
     stock_transfer: Stock Transfer
+    stock_transfer_cannot_be_finalized: Stock transfer cannot be finalized
     stock_transfer_must_be_receivable: Stock transfer must be closed and shipped
     stock_transfers: Stock Transfers
     stop: Stop
@@ -1433,10 +1454,10 @@ en:
     try_changing_search_values: Try changing the search values.
     type: Type
     type_to_search: Type to search
-    unable_to_close_stock_transfer: Unable to close the stock transfer
     unable_to_find_all_inventory_units: Unable to find all specified inventory units
     unable_to_connect_to_gateway: Unable to connect to gateway.
     unable_to_create_reimbursements: Unable to create reimbursements because there are items pending manual intervention.
+    unable_to_create_stock_transfer: Unable to create the stock transfer
     under_price: Under %{price}
     unlock: Unlock
     unrecognized_card_type: Unrecognized card type
@@ -1468,6 +1489,7 @@ en:
     variant_placeholder: Choose a variant
     variant_search: Variant Search
     variant_search_placeholder: "SKU or Option Value"
+    variant_to_add: Variant to add
     variant_to_be_received: Variant to be received
     variants: Variants
     version: Version
@@ -1478,6 +1500,7 @@ en:
     width: Width
     year: Year
     yes_close: Yes, close
+    yes_finalize: Yes, finalize
     you_have_no_orders_yet: You have no orders yet
     you_cannot_undo_action: You will not be able to undo this action
     your_cart_is_empty: Your cart is empty

@@ -1,8 +1,8 @@
 $(document).ready ->
   if $('#received-transfer-items').length > 0
-    Spree.StockTransfers.ReceiveVariantForm.initializeForm()
-    Spree.StockTransfers.ReceiveVariantForm.beginListening()
-    Spree.StockTransfers.ReceiveUpdateForms.beginListening()
+    Spree.StockTransfers.VariantForm.initializeForm()
+    Spree.StockTransfers.VariantForm.beginListeningForReceive()
+    Spree.StockTransfers.CountUpdateForms.beginListening(true)
 
     $("#close-transfer-button").on('click', (ev) ->
       ev.preventDefault()

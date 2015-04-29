@@ -175,7 +175,7 @@ module Spree
 
       @@stock_transfer_attributes = [:id, :number]
 
-      @@transfer_item_attributes = [:id, :received_quantity]
+      @@transfer_item_attributes = [:id, :expected_quantity, :received_quantity]
 
       @@transfer_item_variant_attributes = []
 

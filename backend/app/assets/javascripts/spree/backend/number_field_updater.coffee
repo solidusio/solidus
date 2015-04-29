@@ -19,6 +19,7 @@ class NumberFieldUpdater
 
   toggleReadOnly = (id, show) ->
     toggleButtonVisibility('edit', id, show)
+    toggleButtonVisibility('trash', id, show)
     cssDisplay = if show then 'block' else 'none'
     $("#number-update-#{id} span").css('display', cssDisplay)
 

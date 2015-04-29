@@ -100,7 +100,7 @@ module Spree
       :name, :parent_id, :position, :icon, :description, :permalink, :taxonomy_id,
       :meta_description, :meta_keywords, :meta_title, :child_index]
 
-    @@transfer_item_attributes = [:received_quantity]
+    @@transfer_item_attributes = [:variant_id, :expected_quantity, :received_quantity]
 
     # TODO Should probably use something like Spree.user_class.attributes
     @@user_attributes = [:email, :password, :password_confirmation]

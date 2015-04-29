@@ -2,6 +2,7 @@ module Spree
   module Api
     class StockTransfersController < Spree::Api::BaseController
       def receive
+        authorize! :update, TransferItem
         @stock_transfer = Spree::StockTransfer.accessible_by(current_ability, :update).find_by!(number: params[:id])
         variant = Spree::Variant.accessible_by(current_ability, :show).find(params[:variant_id])
         transfer_item = @stock_transfer.transfer_items.find_by(variant: variant)

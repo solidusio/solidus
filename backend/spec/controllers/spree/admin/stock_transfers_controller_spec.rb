@@ -54,6 +54,43 @@ module Spree
       end
     end
 
+    context "#create" do
+      let(:warehouse) { StockLocation.create(name: "Warehouse", active: false)}
+
+      subject do
+        spree_post :create, stock_transfer: { source_location_id: warehouse.id, description: nil }
+      end
+
+      context "user doesn't have read access to the selected stock location" do
+        before do
+          expect(controller).to receive(:authorize!) { raise CanCan::AccessDenied }
+        end
+
+        it "redirects to authorization_failure" do
+          subject
+          expect(response).to redirect_to('/unauthorized')
+        end
+      end
+
+      context "valid parameters" do
+        let!(:user) { create(:user) }
+
+        before do
+          allow(controller).to receive(:try_spree_current_user) { user }
+        end
+
+        it "redirects to the edit page" do
+          subject
+          expect(response).to redirect_to(spree.edit_admin_stock_transfer_path(assigns(:stock_transfer)))
+        end
+
+        it "sets the created_by to the current user" do
+          subject
+          expect(assigns(:stock_transfer).created_by).to eq(user)
+        end
+      end
+    end
+
     context "#receive" do
       let!(:transfer_with_items) { create(:receivable_stock_transfer_with_items) }
       let(:variant_1)            { transfer_with_items.transfer_items[0].variant }
@@ -91,6 +128,64 @@ module Spree
 
         it "assigns received_items correctly" do
           expect(assigns(:received_items)).to match_array [transfer_item]
+        end
+      end
+    end
+
+    context "#finalize" do
+      let!(:user) { create(:user) }
+      let!(:transfer_with_items) { create(:receivable_stock_transfer_with_items, finalized_at: nil, shipped_at: nil) }
+
+      before do
+        allow(controller).to receive(:try_spree_current_user) { user }
+      end
+
+      subject do
+        spree_put :finalize, id: transfer_with_items.to_param
+      end
+
+      context 'stock transfer is not finalizable' do
+        before do
+          transfer_with_items.update_attributes(finalized_at: Time.now)
+        end
+
+        it 'redirects back to index' do
+          subject
+          expect(flash[:error]).to eq Spree.t(:stock_transfer_cannot_be_finalized)
+          expect(response).to redirect_to(spree.admin_stock_transfers_path)
+        end
+      end
+
+      context "successfully finalized" do
+        it "redirects back to index" do
+          subject
+          expect(response).to redirect_to(spree.admin_stock_transfers_path)
+        end
+
+        it "sets the finalized_by to the current user" do
+          subject
+          expect(transfer_with_items.reload.finalized_by).to eq(user)
+        end
+
+        it "sets the finalized_at date" do
+          subject
+          expect(transfer_with_items.reload.finalized_at).to_not be_nil
+        end
+      end
+
+      context "error finalizing the stock transfer" do
+        before do
+          transfer_with_items.update_attributes(destination_location_id: nil)
+        end
+
+        it "redirects back to edit" do
+          subject
+          expect(response).to redirect_to(spree.edit_admin_stock_transfer_path(transfer_with_items))
+        end
+
+        it "displays a flash error message" do
+          subject
+          expect(flash[:error]).to eq "Destination location can't be blank"
         end
       end
     end
@@ -163,9 +258,9 @@ module Spree
         end
       end
 
-      context "error finalizing the stock transfer" do
+      context "error closing the stock transfer" do
         before do
-          Spree::StockTransfer.any_instance.stub(update_attributes: false)
+          transfer_with_items.update_columns(destination_location_id: nil)
         end
 
         it "redirects back to receive" do
@@ -175,7 +270,7 @@ module Spree
 
         it "displays a flash error message" do
           subject
-          expect(flash[:error]).to eq Spree.t(:unable_to_close_stock_transfer)
+          expect(flash[:error]).to eq "Destination location can't be blank"
         end
       end
     end

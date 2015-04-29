@@ -73,7 +73,9 @@
               <% end %>
             </td>
             <%= render partial: 'spree/admin/shared/number_field_update_cell', locals: { resource_id: item.id, field_tag: :count_on_hand, number_value: item.count_on_hand } %>
-            <%= render partial: 'spree/admin/shared/number_field_update_actions', locals: { resource: item, update_data: { location_id: item.stock_location_id } } %>
+            <td class="actions">
+              <%= render partial: 'spree/admin/shared/number_field_update_actions', locals: { resource: item, update_data: { location_id: item.stock_location_id } } %>
+            </td>
           </tr>
         <% end %>
       <% end %>

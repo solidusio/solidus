@@ -15,7 +15,7 @@ module Spree
       describe "#receive" do
         it "cannot receive transfer items from a stock transfer" do
           api_post :receive, stock_transfer_id: stock_transfer.to_param, variant_id: transfer_item.variant.to_param
-          expect(response.status).to eq 404
+          expect(response.status).to eq 401
         end
       end
     end

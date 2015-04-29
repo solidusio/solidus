@@ -61,7 +61,7 @@
 
 <fieldset id='received-transfer-items'>
   <legend align="center"><%= Spree.t(:received_items) %></legend>
-    <table class="index stock-table number-field-update-table" <%= 'hidden' if @received_items.empty? %> id="listing_received_transfer_items">
+    <table class="index stock-table number-field-update-table" <%= 'hidden' if @received_items.empty? %> id="listing_transfer_items">
       <colgroup>
         <col style="width: 45%" />
         <col style="width: 25%" />
@@ -82,7 +82,7 @@
           <%- variant = item.variant %>
           <tr data-transfer-item-id="<%= item.id %>">
             <td class="align-center no-padding">
-              <div class='variant-container'>
+              <div class='variant-container' data-variant-id="<%= variant.id %>">
                 <div class='variant-image'>
                   <%= small_image variant %>
                 </div>
@@ -115,7 +115,9 @@
               </table>
             </td>
             <%= render partial: 'spree/admin/shared/number_field_update_cell', locals: { resource_id: item.id, field_tag: :received_quantity, number_value: item.received_quantity } %>
-            <%= render partial: 'spree/admin/shared/number_field_update_actions', locals: { resource: item, update_data: {} } %>
+            <td class="actions">
+              <%= render partial: 'spree/admin/shared/number_field_update_actions', locals: { resource: item, update_data: {} } %>
+            </td>
           </tr>
         <% end %>
       </tbody>

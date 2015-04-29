@@ -1,5 +1,3 @@
-<td class="actions">
-  <%= link_to_with_icon 'edit', Spree.t('actions.edit'), '#', no_text: true, data: { action: 'edit', id: resource.id } if can?(:edit, resource) %>
-  <%= link_to_with_icon 'check', Spree.t('actions.update'), '#', no_text: true, data: update_data.merge(action: 'green', id: resource.id) if can?(:edit, resource) %>
-  <%= link_to_with_icon 'void', Spree.t('actions.cancel'), '#', no_text: true, data: { action: 'red', id: resource.id } if can?(:edit, resource) %>
-</td>
+<%= link_to_with_icon 'edit', Spree.t('actions.edit'), '#', no_text: true, data: { action: 'edit', id: resource.id } if can?(:edit, resource) %>
+<%= link_to_with_icon 'check', Spree.t('actions.update'), '#', no_text: true, data: update_data.merge(action: 'green', id: resource.id) if can?(:edit, resource) %>
+<%= link_to_with_icon 'void', Spree.t('actions.cancel'), '#', no_text: true, data: { action: 'red', id: resource.id } if can?(:edit, resource) %>

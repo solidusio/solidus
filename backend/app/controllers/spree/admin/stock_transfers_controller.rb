@@ -7,27 +7,24 @@ module Spree
         { translation_key: :name, attr_name: :name }
       ]
 
-      before_filter :load_stock_locations, only: [:index]
+      before_filter :load_stock_locations, only: [:index, :new]
+      before_filter :load_variant_display_attributes, only: [:receive, :edit]
+      before_filter :load_destination_stock_locations, only: :edit
+      before_filter :ensure_access_to_stock_location, only: :create
+      before_filter :ensure_finalizable_stock_transfer, only: :finalize
       before_filter :ensure_receivable_stock_transfer, only: [:receive, :close]
-
-      def create
-        variants = Hash.new(0)
-        params[:variant].each_with_index do |variant_id, i|
-          variants[variant_id] += params[:quantity][i].to_i
-        end
-
-        stock_transfer = StockTransfer.create(:reference => params[:reference])
-        stock_transfer.transfer(source_location,
-                                destination_location,
-                                variants)
-
-        flash[:success] = Spree.t(:stock_successfully_transferred)
-        redirect_to admin_stock_transfer_path(stock_transfer)
-      end
 
       def receive
         @received_items = @stock_transfer.transfer_items.received
-        @variant_display_attributes = self.class.variant_display_attributes
+      end
+
+      def finalize
+        if @stock_transfer.update_attributes(finalize_params)
+          redirect_to admin_stock_transfers_path
+        else
+          flash[:error] = @stock_transfer.errors.full_messages.join(", ")
+          redirect_to edit_admin_stock_transfer_path(@stock_transfer)
+        end
       end
 
       def close
@@ -36,7 +33,7 @@ module Spree
             adjust_inventory
             redirect_to admin_stock_transfers_path
           else
-            flash[:error] = Spree.t(:unable_to_close_stock_transfer)
+            flash[:error] = @stock_transfer.errors.full_messages.join(", ")
             redirect_to receive_admin_stock_transfer_path(@stock_transfer)
           end
         end
@@ -58,8 +55,29 @@ module Spree
           per(params[:per_page] || Spree::Config[:orders_per_page])
       end
 
+      def permitted_resource_params
+        resource_params = super
+        if action == :create
+          resource_params.merge!(created_by: try_spree_current_user)
+        end
+        resource_params
+      end
+
       def find_resource
         model_class.find_by(number: params[:id])
+      end
+
+      def render_after_create_error
+        load_stock_locations
+        super
+      end
+
+      def location_after_save
+        if action == :create
+          edit_admin_stock_transfer_path(@stock_transfer)
+        else
+          collection_url
+        end
       end
 
       private
@@ -68,11 +86,31 @@ module Spree
         @stock_locations = Spree::StockLocation.accessible_by(current_ability, :index)
       end
 
+      def load_destination_stock_locations
+        @stock_locations = load_stock_locations.where.not(id: @stock_transfer.source_location_id)
+      end
+
+      def load_variant_display_attributes
+        @variant_display_attributes = self.class.variant_display_attributes
+      end
+
+      def ensure_finalizable_stock_transfer
+        unless @stock_transfer.finalizable?
+          flash[:error] = Spree.t(:stock_transfer_cannot_be_finalized)
+          redirect_to admin_stock_transfers_path and return
+        end
+      end
+
       def ensure_receivable_stock_transfer
         unless @stock_transfer.receivable?
           flash[:error] = Spree.t(:stock_transfer_must_be_receivable)
           redirect_to admin_stock_transfers_path and return
         end
+      end
+
+      def ensure_access_to_stock_location
+        return unless permitted_resource_params[:source_location_id].present?
+        authorize! :read, Spree::StockLocation.find(create_params[:source_location_id])
       end
 
       def source_location
@@ -86,6 +124,15 @@ module Spree
 
       def close_params
         { closed_at: Time.now, closed_by: try_spree_current_user }
+      end
+
+      def finalize_params
+        { finalized_at: Time.now, finalized_by: try_spree_current_user }
+      end
+
+      def create_params
+        stock_transfer_params = params.require(:stock_transfer).permit(:source_location_id, :description)
+        stock_transfer_params.merge(created_by: try_spree_current_user)
       end
 
       def adjust_inventory
