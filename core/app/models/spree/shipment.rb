@@ -373,7 +373,7 @@ module Spree
     private
 
       def after_ship
-        ShipmentHandler.factory(self).perform
+        order.shipping.ship_shipment(self)
       end
 
       def can_get_rates?
