@@ -193,5 +193,37 @@ describe Spree::TransferItem do
         expect { subject }.to change { Spree::TransferItem.count }.by(-1)
       end
     end
+
+    context "scopes" do
+      let(:partially_received) { stock_transfer.transfer_items.first }
+      let(:fully_received) { stock_transfer.transfer_items.last }
+      let(:variant) { create(:variant)}
+
+      before do
+        fully_received.update_attributes(expected_quantity: 1, received_quantity: 1)
+        partially_received.update_attributes(expected_quantity: 2, received_quantity: 1)
+
+        stock_transfer.source_location.stock_item(variant).set_count_on_hand(5)
+        stock_transfer.transfer_items.create!(variant: variant, expected_quantity: 1, received_quantity: 0)
+      end
+
+      context '.received' do
+        it 'only returns items that have received quantity greater than 0' do
+          expect(Spree::TransferItem.received).to match_array [fully_received, partially_received]
+        end
+      end
+
+      context '.fully_received' do
+        it 'returns only items that have not been fully received' do
+          expect(Spree::TransferItem.fully_received).to eq [fully_received]
+        end
+      end
+
+      context '.partially_received' do
+        it 'returns only items where received quantity is less that expected' do
+          expect(Spree::TransferItem.partially_received).to eq [partially_received]
+        end
+      end
+    end
   end
 end

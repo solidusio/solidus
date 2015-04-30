@@ -11,6 +11,7 @@ module Spree
 
     scope :received, -> { where('received_quantity > 0') }
     scope :fully_received, -> { where('expected_quantity = received_quantity') }
+    scope :partially_received, -> { received.where('expected_quantity > received_quantity') }
 
     before_destroy :ensure_stock_transfer_not_finalized
     before_validation :ensure_stock_transfer_not_closed
