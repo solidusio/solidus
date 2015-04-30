@@ -21,7 +21,11 @@
     <span><%= Spree.t(:you_cannot_undo_action) %></span>
   </div>
   <div class='action-consequences'>
-    <%= render :partial => 'close_consequences' %>
+    <span><%= Spree.t('close_stock_transfer.will_cause') %>:</span>
+    <ul data-hook='close-stock-transfer-consequences'>
+      <li><%= Spree.t('close_stock_transfer.no_longer_edit') %></li>
+      <li><%= Spree.t('close_stock_transfer.stock_movements_created') %></li>
+    </ul>
   </div>
   <span><%= Spree.t(:are_you_sure_close_stock_transfer) %></span>
   <div class='actions'>
