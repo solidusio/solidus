@@ -39,7 +39,7 @@
                 <tbody>
                   <% @variant_display_attributes.each do |display_attribute| %>
                     <tr>
-                      <td><%= Spree.t(display_attribute[:string_key]) %></td>
+                      <td><%= Spree.t(display_attribute[:translation_key]) %></td>
                       <td class="fullwidth">
                         <%= variant.send(display_attribute[:attr_name]) %>
                       </td>

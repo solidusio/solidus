@@ -3,8 +3,8 @@ module Spree
     class StockItemsController < ResourceController
       class_attribute :variant_display_attributes
       self.variant_display_attributes = [
-        { string_key: :sku, attr_name: :sku },
-        { string_key: :name, attr_name: :name }
+        { translation_key: :sku, attr_name: :sku },
+        { translation_key: :name, attr_name: :name }
       ]
 
       update.before :determine_backorderable

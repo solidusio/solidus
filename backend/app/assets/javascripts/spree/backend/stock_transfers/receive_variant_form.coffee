@@ -65,7 +65,7 @@ class ReceiveVariantForm
   formatVariantDisplayAttributes = (variant) ->
     displayAttributes = JSON.parse($("#variant_display_attributes").val())
     _.map(displayAttributes, (attribute) =>
-      label: Spree.translations[attribute.string_key]
+      label: Spree.translations[attribute.translation_key]
       value: variant[attribute.attr_name]
     )
 
