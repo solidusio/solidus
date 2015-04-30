@@ -440,10 +440,6 @@ describe Spree::Shipment, :type => :model do
   end
 
   context "#ship" do
-    before do
-      allow(shipment).to receive_message_chain(:stock_location, :fulfillable?) { true }
-    end
-
     context "when the shipment is canceled" do
       let(:shipment_with_inventory_units) { create(:shipment, order: create(:order_with_line_items), state: 'canceled') }
       let(:subject) { shipment_with_inventory_units.ship! }
@@ -708,6 +704,7 @@ describe Spree::Shipment, :type => :model do
     let(:unshippable_shipment) do
       create(
         :shipment,
+        address: create(:address),
         stock_location: stock_location,
         inventory_units: [build(:inventory_unit)],
       )
