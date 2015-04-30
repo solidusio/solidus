@@ -65,19 +65,4 @@ describe Spree::Order, :type => :model do
       end
     end
   end
-
-  context "is considered risky" do
-    let(:order) do
-      order = FactoryGirl.create(:completed_order_with_pending_payment)
-      order.considered_risky!
-      order
-    end
-
-    it "can be approved by a user" do
-      order.approved_by(user: stub_model(Spree::LegacyUser, id: 1))
-      expect(order.approver_id).to eq(1)
-      expect(order.approved_at).to be_present
-      expect(order).to be_approved
-    end
-  end
 end
