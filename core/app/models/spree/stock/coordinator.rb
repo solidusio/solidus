@@ -58,7 +58,7 @@ module Spree
         StockLocation.active.each do |stock_location|
           units_for_location = unallocated_inventory_units.select { |unit| stock_location.stock_item(unit.variant) }
           next unless units_for_location.any?
-          packer = build_packer(stock_location, unallocated_inventory_units)
+          packer = build_packer(stock_location, units_for_location)
           packages += packer.packages
         end
         packages
