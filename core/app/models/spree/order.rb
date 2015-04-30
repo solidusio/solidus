@@ -589,16 +589,18 @@ module Spree
       approve!
     end
 
+    def approve!
+      update_attributes!(
+        approved_at: Time.now
+      )
+    end
+
     def approved?
       !!self.approved_at
     end
 
     def can_approve?
       !approved?
-    end
-
-    def approve!
-      update_attributes!(considered_risky: false, approved_at: Time.now)
     end
 
     # moved from api order_decorator. This is a better place for it.
