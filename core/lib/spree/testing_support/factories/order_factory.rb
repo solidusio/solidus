@@ -35,7 +35,7 @@ FactoryGirl.define do
         end
         order.line_items.reload
 
-        create(:shipment, order: order, cost: evaluator.shipment_cost, shipping_method: evaluator.shipping_method)
+        create(:shipment, order: order, cost: evaluator.shipment_cost, shipping_method: evaluator.shipping_method, address: evaluator.ship_address)
         order.shipments.reload
 
         order.update!
