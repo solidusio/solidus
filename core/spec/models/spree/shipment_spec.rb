@@ -69,6 +69,7 @@ describe Spree::Shipment, :type => :model do
     end
 
     it 'returns pending when unpaid' do
+      allow(order).to receive_messages paid?: false
       expect(shipment.determine_state(order)).to eq 'pending'
     end
 
