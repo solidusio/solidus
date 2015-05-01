@@ -715,7 +715,6 @@ module Spree
 
     def after_resume
       shipments.each { |shipment| shipment.resume! }
-      consider_risk
     end
 
     def use_billing?

@@ -8,7 +8,7 @@ describe "Orders Listing", type: :feature, js: true do
 
   before(:each) do
     allow_any_instance_of(Spree::OrderInventory).to receive(:add_to_shipment)
-    @order1 = create(:order_with_line_items, created_at: 1.day.from_now, completed_at: 1.day.from_now, considered_risky: true, number: "R100")
+    @order1 = create(:order_with_line_items, created_at: 1.day.from_now, completed_at: 1.day.from_now, number: "R100")
     @order2 = create(:order, created_at: 1.day.ago, completed_at: 1.day.ago, number: "R200")
     visit spree.admin_orders_path
   end
@@ -17,13 +17,11 @@ describe "Orders Listing", type: :feature, js: true do
     it "should list existing orders" do
       within_row(1) do
         expect(column_text(2)).to eq "R100"
-        expect(find("td:nth-child(3)")).to have_css '.considered_risky'
         expect(column_text(4)).to eq "CART"
       end
 
       within_row(2) do
         expect(column_text(2)).to eq "R200"
-        expect(find("td:nth-child(3)")).to have_css '.considered_safe'
       end
     end
 
@@ -57,23 +55,6 @@ describe "Orders Listing", type: :feature, js: true do
 
       # Ensure that the other order doesn't show up
       within("table#listing_orders") { expect(page).not_to have_content("R100") }
-    end
-
-    it "should be able to filter risky orders" do
-      click_on 'Filter'
-      # Check risky and filter
-      check "q_considered_risky_eq"
-      click_on 'Filter Results'
-
-      click_on 'Filter'
-      # Insure checkbox still checked
-      expect(find("#q_considered_risky_eq")).to be_checked
-      # Insure we have the risky order, R100
-      within_row(1) do
-        expect(page).to have_content("R100")
-      end
-      # Insure the non risky order is not present
-      expect(page).not_to have_content("R200")
     end
 
     it "should be able to filter on variant_id" do
