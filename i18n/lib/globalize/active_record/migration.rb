@@ -130,7 +130,7 @@ module Globalize
             end
 
             # Now, update the actual model's record with the hash.
-            @model.update_all(fields_to_update, {id: translated_record['id']})
+            @model.where(id: translated_record['id']).update_all(fields_to_update)
           end
         end
 
