@@ -76,11 +76,6 @@ describe Spree::Shipment, :type => :model do
       allow(order).to receive_messages paid?: true
       expect(shipment.determine_state(order)).to eq 'ready'
     end
-
-    it 'returns ready when Config.auto_capture_on_dispatch' do
-      Spree::Config.auto_capture_on_dispatch = true
-      expect(shipment.determine_state(order)).to eq 'ready'
-    end
   end
 
   context "display_amount" do
@@ -453,56 +448,10 @@ describe Spree::Shipment, :type => :model do
   end
 
   context "#ready" do
-    context 'with Config.auto_capture_on_dispatch == false' do
-      # Regression test for #2040
-      it "cannot ready a shipment for an order if the order is unpaid" do
-        expect(order).to receive_messages(paid?: false)
-        expect(shipment).not_to be_can_ready
-      end
-    end
-
-    context 'with Config.auto_capture_on_dispatch == true' do
-      before do
-        Spree::Config[:auto_capture_on_dispatch] = true
-        @order = create :completed_order_with_pending_payment
-        @shipment = @order.shipments.first
-        @shipment.cost = @order.ship_total
-      end
-
-      it "shipments ready for an order if the order is unpaid" do
-        expect(@shipment.ready?).to be true
-      end
-
-      it "tells the order to process payment in #after_ship" do
-        expect(@shipment).to receive(:process_order_payments)
-        @shipment.ship!
-      end
-
-      context "order has pending payments" do
-        let(:payment) do
-          payment = @order.payments.first
-          payment.update_attribute :state, 'pending'
-          payment
-        end
-
-        it "can fully capture an authorized payment" do
-          payment.update_attribute(:amount, @order.total)
-
-          expect(payment.amount).to eq payment.uncaptured_amount
-          @shipment.ship!
-          expect(payment.reload.uncaptured_amount.to_f).to eq 0
-        end
-
-        it "can partially capture an authorized payment" do
-          payment.update_attribute(:amount, @order.total + 50)
-
-          expect(payment.amount).to eq payment.uncaptured_amount
-          @shipment.ship!
-          expect(payment.captured_amount).to eq @order.total
-          expect(payment.captured_amount).to eq payment.amount
-          expect(payment.order.payments.pending.first.amount).to eq 50
-        end
-      end
+    # Regression test for #2040
+    it "cannot ready a shipment for an order if the order is unpaid" do
+      expect(order).to receive_messages(paid?: false)
+      expect(shipment).not_to be_can_ready
     end
   end
 
