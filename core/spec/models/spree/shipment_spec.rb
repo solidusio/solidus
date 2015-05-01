@@ -292,35 +292,6 @@ describe Spree::Shipment, :type => :model do
         shipment.update!(order)
       end
 
-      context "when using the default shipment handler" do
-        it "should call the 'perform' method" do
-          shipment.state = 'pending'
-          allow(shipment).to receive_messages determine_state: 'shipped'
-          expect_any_instance_of(Spree::ShipmentHandler).to receive(:perform)
-          shipment.update!(order)
-        end
-      end
-
-      context "when using a custom shipment handler" do
-        before do
-          Spree::ShipmentHandler::UPS = Class.new {
-            def initialize(shipment) true end
-            def perform() true end
-          }
-        end
-
-        it "should call the custom handler's 'perform' method" do
-          shipment.state = 'pending'
-          allow(shipment).to receive_messages determine_state: 'shipped'
-          expect_any_instance_of(Spree::ShipmentHandler::UPS).to receive(:perform)
-          shipment.update!(order)
-        end
-
-        after do
-          Spree::ShipmentHandler.send(:remove_const, :UPS)
-        end
-      end
-
       # Regression test for #4347
       context "with adjustments" do
         before do
