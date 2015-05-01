@@ -15,6 +15,6 @@ FactoryGirl.define do
   end
 
   factory :shipping_no_amount_calculator, class: Spree::Calculator::Shipping::FlatRate do
-    preferred_amount amount 0
+    preferred_amount 0
   end
 end
