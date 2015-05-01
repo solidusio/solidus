@@ -26,19 +26,9 @@ describe Spree::Promotion, :type => :model do
     end
   end
 
-  describe ".coupons" do
-    it "scopes promotions with coupon code present only" do
-      promotion = Spree::Promotion.create! name: "test", code: ''
-      expect(Spree::Promotion.coupons).to be_empty
-
-      promotion.update_column :code, "check"
-      expect(Spree::Promotion.coupons.first).to eq promotion
-    end
-  end
-
   describe ".applied" do
     it "scopes promotions that have been applied to an order only" do
-      promotion = Spree::Promotion.create! name: "test", code: ''
+      promotion = Spree::Promotion.create! name: "test"
       expect(Spree::Promotion.applied).to be_empty
 
       promotion.orders << create(:order)
