@@ -11,7 +11,7 @@ FactoryGirl.define do
     end
 
     after(:create) do |shipment, evalulator|
-      shipping_method = evalulator.shipping_method || create(:shipping_method)
+      shipping_method = evalulator.shipping_method || create(:shipping_method, cost: evalulator.cost)
       shipment.add_shipping_method(shipping_method, true)
 
       shipment.order.line_items.each do |line_item|

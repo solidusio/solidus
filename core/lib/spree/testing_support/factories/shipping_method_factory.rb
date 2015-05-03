@@ -11,7 +11,11 @@ FactoryGirl.define do
     end
 
     factory :shipping_method, class: Spree::ShippingMethod do
-      association(:calculator, factory: :shipping_calculator, strategy: :build)
+      transient do
+        cost 10.0
+      end
+
+      calculator { |s| s.association(:shipping_calculator, strategy: :build, preferred_amount: s.cost) }
     end
 
     factory :free_shipping_method, class: Spree::ShippingMethod do
