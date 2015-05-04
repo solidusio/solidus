@@ -325,7 +325,7 @@ addVariantFromStockLocation = function(event) {
   if(shipment==undefined){
     Spree.ajax({
       type: "POST",
-      url: Spree.url(Spree.routes.shipments_api + "?shipment[order_id]=" + order_number),
+      url: Spree.routes.shipments_api + "?shipment[order_id]=" + order_number,
       data: {
         variant_id: variant_id,
         quantity: quantity,
