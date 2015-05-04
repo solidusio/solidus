@@ -9,7 +9,9 @@ module Spree
         let!(:variant) { create(:variant) }
         let!(:stock_location) { variant.stock_locations.first }
         let(:stock_item) { variant.stock_items.first }
+        let!(:user) { create :user }
 
+        before { expect(controller).to receive(:spree_current_user).and_return(user) }
         before { request.env["HTTP_REFERER"] = "product_admin_page" }
 
         subject do
