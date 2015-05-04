@@ -1,7 +1,6 @@
 module Spree
   module Api
     class CheckoutsController < Spree::Api::BaseController
-      before_action :associate_user, only: :update
       before_filter :load_order, only: [:next, :advance, :update, :complete]
       around_filter :lock_order, only: [:next, :advance, :update, :complete]
       before_filter :update_order_state, only: [:next, :advance, :update, :complete]
