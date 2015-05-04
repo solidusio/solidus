@@ -17,7 +17,7 @@ describe "Orders Listing", type: :feature, js: true do
     it "should list existing orders" do
       within_row(1) do
         expect(column_text(2)).to eq "R100"
-        expect(column_text(4)).to eq "CART"
+        expect(column_text(3)).to eq "CART"
       end
 
       within_row(2) do
