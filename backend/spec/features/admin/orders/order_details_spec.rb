@@ -89,7 +89,7 @@ describe "Order Details", type: :feature, js: true do
           click_icon :edit
         end
         fill_in "tracking", :with => "FOOBAR"
-        click_icon :ok
+        click_icon :check
 
         expect(page).not_to have_css("input[name=tracking]")
         expect(page).to have_content("Tracking: FOOBAR")
@@ -102,7 +102,7 @@ describe "Order Details", type: :feature, js: true do
           click_icon :edit
         end
         select2 "Default", :from => "Shipping Method"
-        click_icon :ok
+        click_icon :check
 
         expect(page).not_to have_css('#selected_shipping_rate_id')
         expect(page).to have_content("Default")
@@ -516,7 +516,7 @@ describe "Order Details", type: :feature, js: true do
         click_icon :edit
       end
       select2 "Default", :from => "Shipping Method"
-      click_icon :ok
+      click_icon :check
 
       expect(page).not_to have_css('#selected_shipping_rate_id')
       expect(page).to have_content("Default")
