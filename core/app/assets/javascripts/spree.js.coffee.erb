@@ -34,16 +34,12 @@ class window.Spree
   # Spree.ajax({url: "url", settings: 'go here'})
   #
   # Spree.getJSON has the same method signature as $.getJSON
-  @ajax: (url_or_settings, settings) ->
-    url = undefined
-    options = undefined
-    if (typeof(url_or_settings) == "string")
-      url = url_or_settings
-      options = settings
-    else
-      url = url_or_settings['url']
-      delete url_or_settings['url']
-      options = url_or_settings
+  @ajax: (url, options) ->
+    if typeof(url) == "object"
+      options = url
+      url = undefined
+
+    options = options || {}
 
     options = $.extend(options, { headers: { "X-Spree-Token": Spree.api_key } })
     $.ajax(url, options)
