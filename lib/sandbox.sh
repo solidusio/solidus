@@ -13,8 +13,6 @@ mysql)
 	;;
 esac
 
-echo $RAILSDB
-
 rm -rf ./sandbox
 bundle exec rails new sandbox --skip-bundle --database="$RAILSDB"
 if [ ! -d "sandbox" ]; then
