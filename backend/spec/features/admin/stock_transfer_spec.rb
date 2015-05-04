@@ -44,6 +44,9 @@ describe 'Stock Transfers', :type => :feature, :js => true do
       check 'transfer_receive_stock'
       select('New York', :from => 'transfer_destination_location_id')
 
+      variant = Spree::Variant.last
+      select2_search variant.name, :from => 'Variant'
+
       click_button 'Add'
       click_button 'Transfer Stock'
 
@@ -58,6 +61,9 @@ describe 'Stock Transfers', :type => :feature, :js => true do
       fill_in 'reference', :with => 'PO 666'
 
       select('New York', :from => 'transfer_destination_location_id')
+
+      variant = Spree::Variant.last
+      select2_search variant.name, :from => 'Variant'
 
       click_button 'Add'
       click_button 'Transfer Stock'
