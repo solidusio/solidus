@@ -829,6 +829,7 @@ module Spree
             "success" => Spree.t(:coupon_code_applied),
             "error" => nil,
             "successful" => true,
+            "status_code" => "coupon_code_applied",
           })
         end
       end
@@ -845,6 +846,7 @@ module Spree
             "success" => nil,
             "error" => Spree.t(:coupon_code_unknown_error),
             "successful" => false,
+            "status_code" => "coupon_code_unknown_error",
           })
         end
       end
