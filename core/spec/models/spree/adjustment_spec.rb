@@ -133,22 +133,22 @@ describe Spree::Adjustment, :type => :model do
       end
 
       context "it is a promotion adjustment" do
-        subject { @adjustment.update! }
+        subject { adjustment.update! }
 
         let(:promotion) { create(:promotion, :with_order_adjustment, code: 'somecode') }
         let(:promotion_code) { promotion.codes.first }
         let(:order1) { create(:order_with_line_items, line_items_count: 1) }
 
-        before do
+        let!(:adjustment) do
           promotion.activate(order: order1, promotion_code: promotion_code)
           expect(order1.adjustments.size).to eq 1
-          @adjustment = order1.adjustments.first
+          order1.adjustments.first
         end
 
         context "the promotion is eligible" do
           it "sets the adjustment elgiible to true" do
             subject
-            expect(@adjustment.eligible).to eq true
+            expect(adjustment.eligible).to eq true
           end
         end
 
@@ -157,7 +157,7 @@ describe Spree::Adjustment, :type => :model do
 
           it "sets the adjustment elgiible to false" do
             subject
-            expect(@adjustment.eligible).to eq false
+            expect(adjustment.eligible).to eq false
           end
         end
       end
