@@ -13,7 +13,7 @@ module Spree
         payload = HashWithIndifferentAccess.new(JSON.parse(subject.body))
         expect(payload).to_not be_nil
         Spree::Api::ApiHelpers.promotion_attributes.each do |attribute|
-          expect(payload.has_key?(attribute)).to be true
+          expect(payload).to be_has_key(attribute)
         end
       end
     end
@@ -37,7 +37,7 @@ module Spree
         end
 
         context 'when finding by code' do
-          let(:id) { promotion.code }
+          let(:id) { promotion.codes.first }
 
           it_behaves_like "a JSON response"
         end

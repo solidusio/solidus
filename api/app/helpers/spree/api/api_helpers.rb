@@ -152,7 +152,7 @@ module Spree
 
       @@promotion_attributes = [
         :id, :name, :description, :expires_at, :starts_at, :type, :usage_limit,
-        :match_policy, :code, :advertise, :path
+        :match_policy, :advertise, :path
       ]
 
       @@store_attributes = [
