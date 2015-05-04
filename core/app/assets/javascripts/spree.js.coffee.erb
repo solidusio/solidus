@@ -43,10 +43,10 @@ class window.Spree
     else
       url = url_or_settings['url']
       delete url_or_settings['url']
+      options = url_or_settings
 
-      options = $.extend(options, { headers: { "X-Spree-Token": Spree.api_key } })
-      $.ajax(url, options)
-        $.ajax(Spree.url(url).toString(), url_or_settings)
+    options = $.extend(options, { headers: { "X-Spree-Token": Spree.api_key } })
+    $.ajax(url, options)
 
   @routes:
     states_search: @pathFor('api/states')
