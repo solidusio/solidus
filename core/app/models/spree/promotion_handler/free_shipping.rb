@@ -12,7 +12,7 @@ module Spree
 
       def activate
         promotions.each do |promotion|
-          next if promotion.code.present? && !order_promo_ids.include?(promotion.id)
+          next if promotion.codes.any? && !order_promo_ids.include?(promotion.id)
 
           if promotion.eligible?(order)
             promotion.activate(order: order)
