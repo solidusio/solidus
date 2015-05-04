@@ -19,7 +19,7 @@ module Spree
           api_get :index, stock_location_id: stock_location.to_param
           expect(response).to be_success
           json_response['stock_items'].first.should have_attributes(attributes)
-          json_response['stock_items'].first['variant']['sku'].should eq 'ABC'
+          json_response['stock_items'].first['variant']['sku'].should match /\ASKU-\d+\z/
         end
 
         it "cannot list stock items for an inactive stock location" do
