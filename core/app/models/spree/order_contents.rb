@@ -65,12 +65,12 @@ module Spree
           line_item.quantity += quantity.to_i
           line_item.currency = currency unless currency.nil?
         else
-          create_order_stock_locations(line_item, options[:stock_location_quantities])
           opts = { currency: order.currency }.merge ActionController::Parameters.new(options).
                                               permit(PermittedAttributes.line_item_attributes)
           line_item = order.line_items.new(quantity: quantity,
                                             variant: variant,
                                             options: opts)
+          create_order_stock_locations(line_item, options[:stock_location_quantities])
         end
         line_item.target_shipment = options[:shipment] if options.has_key? :shipment
         line_item.save!
