@@ -63,6 +63,12 @@ module Spree
       raise 'Attempted to call code= on a Spree::Promotion. Promotions are now tied to multiple code records'
     end
 
+    def self.with_coupon_code(val)
+      if code = PromotionCode.where(value: val.downcase).first
+        code.promotion
+      end
+    end
+
     def as_json(options={})
       options[:except] ||= :code
       super
