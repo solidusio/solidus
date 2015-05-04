@@ -1,6 +1,7 @@
 require 'spec_helper'
 
 describe Spree::Admin::CancellationsController do
+  stub_authorization!
 
   describe "#index" do
     subject { spree_get :index, order_id: order.number }
@@ -65,8 +66,6 @@ describe Spree::Admin::CancellationsController do
 
       it "creates a unit cancel" do
         expect { subject }.to change { Spree::UnitCancel.count }.by(1)
-        expect(Spree::UnitCancel.last.created_by).to be_present
-        expect(Spree::UnitCancel.last.created_by).to eq(controller.spree_current_user.email)
       end
 
       it "cancels the inventory" do
