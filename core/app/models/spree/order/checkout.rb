@@ -67,13 +67,6 @@ module Spree
                 transition to: :awaiting_return
               end
 
-              # Sequence of before_transition to: :complete
-              # calls matter so that we do not process payments
-              # until validations have passed
-              before_transition to: :complete, do: :validate_line_item_availability, unless: :unreturned_exchange?
-              before_transition to: :complete, do: :ensure_inventory_units, unless: :unreturned_exchange?
-              before_transition to: :complete, do: :ensure_available_shipping_rates
-
               if states[:payment]
                 event :payment_failed do
                   transition to: :payment, from: :confirm
@@ -119,9 +112,14 @@ module Spree
               before_transition to: :resumed, do: :ensure_line_item_variants_are_not_deleted
               before_transition to: :resumed, do: :ensure_line_items_are_in_stock
 
+              # Sequence of before_transition to: :complete
+              # calls matter so that we do not process payments
+              # until validations have passed
+              before_transition to: :complete, do: :validate_line_item_availability, unless: :unreturned_exchange?
+              before_transition to: :complete, do: :ensure_available_shipping_rates
               before_transition to: :complete, do: :ensure_line_item_variants_are_not_deleted
               before_transition to: :complete, do: :ensure_line_items_are_in_stock
-              before_transition to: :complete, do: :ensure_inventory_units
+              before_transition to: :complete, do: :ensure_inventory_units, unless: :unreturned_exchange?
 
               after_transition to: :complete, do: :finalize!
               after_transition to: :resumed,  do: :after_resume
