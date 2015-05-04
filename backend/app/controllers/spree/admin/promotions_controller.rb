@@ -10,7 +10,7 @@ module Spree
 
       def create
         @promotion_builder = Spree::PromotionBuilder.new(
-          permitted_promo_builder_params.merge(user: spree_current_user),
+          permitted_promo_builder_params.merge(user: try_spree_current_user),
           permitted_resource_params,
         )
         @promotion = @promotion_builder.promotion
