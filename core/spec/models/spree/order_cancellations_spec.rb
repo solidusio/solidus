@@ -42,6 +42,7 @@ describe Spree::OrderCancellations do
 
       before do
         order.contents.add(line_item.variant)
+        line_item.reload
 
         # make the total $1.67 so it divides unevenly
         Spree::Adjustment.tax.create!(
