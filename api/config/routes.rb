@@ -115,6 +115,12 @@ Spree::Core::Engine.add_routes do
 
     resources :stores
 
+    resources :store_credit_events, only: [] do
+      collection do
+        get :mine
+      end
+    end
+
     get '/config/money', to: 'config#money'
     get '/config', to: 'config#show'
 

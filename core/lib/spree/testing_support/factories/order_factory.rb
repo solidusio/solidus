@@ -3,7 +3,7 @@ FactoryGirl.define do
     user
     bill_address
     completed_at nil
-    email { user.email }
+    email { user.try(:email) }
     store
 
     transient do

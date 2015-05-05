@@ -179,6 +179,11 @@ Spree::Core::Engine.add_routes do
         get :addresses
         put :addresses
       end
+      resources :store_credits, except: [:destroy] do
+        member do
+          put :invalidate
+        end
+      end
     end
   end
 

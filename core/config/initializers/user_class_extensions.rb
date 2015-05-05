@@ -13,6 +13,9 @@ Spree::Core::Engine.config.to_prepare do
 
       has_many :spree_orders, foreign_key: "user_id", class_name: "Spree::Order"
 
+      has_many :store_credits, -> { includes(:credit_type) }, foreign_key: "user_id", class_name: "Spree::StoreCredit"
+      has_many :store_credit_events, through: :store_credits
+
       belongs_to :ship_address, class_name: 'Spree::Address'
       belongs_to :bill_address, class_name: 'Spree::Address'
 
@@ -23,6 +26,10 @@ Spree::Core::Engine.config.to_prepare do
 
       def last_incomplete_spree_order
         spree_orders.incomplete.order('created_at DESC').first
+      end
+
+      def total_available_store_credit
+        store_credits.reload.to_a.sum{ |credit| credit.amount_remaining }
       end
     end
   end

@@ -87,6 +87,8 @@ module Spree
                 before_transition to: :payment, do: :create_tax_charge!
                 before_transition to: :payment, do: :assign_default_credit_card
 
+                before_transition to: :confirm, do: :add_store_credit_payments
+
                 event :complete do
                   transition to: :complete, from: :confirm
                   transition to: :complete, from: :payment

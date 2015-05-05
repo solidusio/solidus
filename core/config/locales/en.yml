@@ -115,6 +115,8 @@ en:
         seo_title: Seo Title
         name: Site Name
         mail_from_address: Mail From Address
+      spree/store_credit:
+        amount_used: Amount used
       spree/tax_category:
         description: Description
         name: Name
@@ -422,7 +424,32 @@ en:
         order_history: Order History
         order_num: "Order #"
         orders: Orders
+        store_credit: Store Credit
         user_information: User Information
+      store_credits:
+        add: "Add store credit"
+        new: "New store credit"
+        edit: "Editing store credit"
+        back_to_user_list: "Back to user list"
+        back_to_store_credit_list: "Back to store credit list"
+        credited_html_header: "Amount Credited"
+        used_html_header: "Amount Used"
+        authed_html_header: "Amount Authorized"
+        type_html_header: "Credit Type"
+        created_by: "Created By"
+        invalidated: "Invalidated"
+        issued_on: "Issued On"
+        select_reason: "Select a reason for this store credit"
+        unable_to_create: "Unable to create store credit"
+        unable_to_update: "Unable to update store credit"
+        unable_to_delete: "Unable to delete store credit"
+        resource_name: "store credits"
+        no_store_credit_selected: "No store credit was selected"
+        errors:
+          cannot_change_used_store_credit: "Store credit that has been claimed cannot be changed"
+          amount_used_cannot_be_greater: "cannot be greater than the credited amount"
+          amount_authorized_exceeds_total_credit: " exceeds the available credit"
+          amount_used_not_zero: "is greater than zero. Can not delete store credit"
     administration: Administration
     agree_to_privacy_policy: Agree to Privacy Policy
     agree_to_terms_of_service: Agree to Terms of Service
@@ -1295,6 +1322,31 @@ en:
     stock_transfers: Stock Transfers
     stop: Stop
     store: Store
+    store_credit:
+      allocated: "Added"
+      authorized: "Authorized"
+      captured: "Used"
+      credit: "Credit"
+      credit_allocation_memo: "This is a credit from store credit ID %{id}"
+      currency_mismatch: "Store credit currency does not match order currency"
+      errors:
+        unable_to_fund: "Unable to pay for order using store credits"
+        cannot_invalidate_uncaptured_authorization: "Cannot invalidate a store credit with an uncaptured authorization"
+      expiring: Expiring
+      insufficient_authorized_amount: "Unable to capture more than authorized amount"
+      insufficient_funds: "Store credit amount remaining is not sufficient"
+      invalidate: "Invalidate"
+      non_expiring: Non-expiring
+      select_one_store_credit: "Select store credit to go towards remaining balance"
+      store_credit: Store Credit
+      successful_action: "Successful store credit %{action}"
+      unable_to_credit: "Unable to credit code: %{auth_code}"
+      unable_to_void: "Unable to void code: %{auth_code}"
+      unable_to_find: "Could not find store credit"
+      unable_to_find_for_action: "Could not find store credit for auth code: %{auth_code} for action: %{action}"
+      user_has_no_store_credits: "User does not have any available store credit"
+    store_credit_category:
+      default: Default
     street_address: Street Address
     street_address_2: Street Address (cont'd)
     subtotal: Subtotal

@@ -16,6 +16,6 @@ module Spree
                             :stock_locations, :trackers, :refund_reasons,
                             :reimbursement_types, :return_authorization_reasons]
     PROMOTION_TABS     ||= [:promotions, :promotion_categories]
-    USER_TABS          ||= [:users]
+    USER_TABS          ||= [:users, :store_credits]
   end
 end
