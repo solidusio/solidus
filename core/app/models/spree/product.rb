@@ -1,24 +1,8 @@
-# PRODUCTS
-# Products represent an entity for sale in a store.
-# Products can have variations, called variants
-# Products properties include description, permalink, availability,
-#   shipping category, etc. that do not change by variant.
-#
-# MASTER VARIANT
-# Every product has one master variant, which stores master price and sku, size and weight, etc.
-# The master variant does not have option values associated with it.
-# Price, SKU, size, weight, etc. are all delegated to the master variant.
-# Contains on_hand inventory levels only when there are no variants for the product.
-#
-# VARIANTS
-# All variants can access the product properties directly (via reverse delegation).
-# Inventory units are tied to Variant.
-# The master variant can have inventory units, but not option values.
-# All other variants have option values and may have inventory units.
-# Sum of on_hand each variant's inventory level determine "on_hand" level for the product.
-#
-
 module Spree
+  # Products represent an entity for sale in a store. Products can have
+  # variations, called variants. Product properties include description,
+  # permalink, availability, shipping category, etc. that do not change by
+  # variant.
   class Product < Spree::Base
     extend FriendlyId
     friendly_id :slug_candidates, use: :history
@@ -98,11 +82,12 @@ module Spree
 
     alias :options :product_option_types
 
-    # the master variant is not a member of the variants array
+    # @return [Boolean] true if there are any variants
     def has_variants?
       variants.any?
     end
 
+    # @return [Spree::TaxCategory] tax category for this product, or the default tax category
     def tax_category
       if self[:tax_category_id].nil?
         TaxCategory.where(is_default: true).first
@@ -111,13 +96,21 @@ module Spree
       end
     end
 
-    # Adding properties and option types on creation based on a chosen prototype
+    # Overrides the prototype_id setter in order to ensure it is cast to an
+    # integer.
+    #
+    # @param value [#to_i] the intended new value
+    # @!attribute [rw] prototype_id
+    #   @return [Fixnum]
     attr_reader :prototype_id
     def prototype_id=(value)
       @prototype_id = value.to_i
     end
 
-    # Ensures option_types and product_option_types exist for keys in option_values_hash
+    # Ensures option_types and product_option_types exist for keys in
+    # option_values_hash.
+    #
+    # @return [Array] the option_values
     def ensure_option_types_exist_for_values_hash
       return if option_values_hash.nil?
       option_values_hash.keys.map(&:to_i).each do |id|
@@ -126,29 +119,34 @@ module Spree
       end
     end
 
-    # for adding products which are closely related to existing ones
-    # define "duplicate_extra" for site-specific actions, eg for additional fields
+    # Creates a new product with the same attributes, variants, etc.
+    #
+    # @return [Spree::Product] the duplicate
     def duplicate
       duplicator = ProductDuplicator.new(self)
       duplicator.duplicate
     end
 
-    # use deleted? rather than checking the attribute directly. this
-    # allows extensions to override deleted? if they want to provide
-    # their own definition.
+    # Use for checking whether this product has been deleted. Provided for
+    # overriding the logic for determining if a product is deleted.
+    #
+    # @return [Boolean] true if this product is deleted
     def deleted?
       !!deleted_at
     end
 
-    # determine if product is available.
-    # deleted products and products with nil or future available_on date
-    # are not available
+    # Determines if product is available. A product is not available if they are
+    # deleted or have a nil or future available_on date.
+    #
+    # @return [Boolean] true if this product is available
     def available?
       !(available_on.nil? || available_on.future?) && !deleted?
     end
 
-    # split variants list into hash which shows mapping of opt value onto matching variants
-    # eg categorise_variants_from_option(color) => {"red" -> [...], "blue" -> [...]}
+    # Groups variants by the specified option type.
+    #
+    # @param opt_type [String] the name of the option type to group by
+    # @return [Hash] option_type as keys, array of variants as values.
     def categorise_variants_from_option(opt_type)
       return {} unless option_types.include?(opt_type)
       variants.active.group_by { |v| v.option_values.detect { |o| o.option_type == opt_type} }
@@ -162,28 +160,35 @@ module Spree
       }.inject(:or)
     end
 
-    # Suitable for displaying only variants that has at least one option value.
-    # There may be scenarios where an option type is removed and along with it
-    # all option values. At that point all variants associated with only those
-    # values should not be displayed to frontend users. Otherwise it breaks the
-    # idea of having variants
+    # @param current_currency [String] currency to filter variants by; defaults to Spree's default
+    # @return [Array<Spree::Variant>] all variants with at least one option value
     def variants_and_option_values(current_currency = nil)
       variants.includes(:option_values).active(current_currency).select do |variant|
         variant.option_values.any?
       end
     end
 
+    # @return [Boolean] true if there are no option values
     def empty_option_values?
       options.empty? || options.any? do |opt|
         opt.option_type.option_values.empty?
       end
     end
 
+    # Gets the value of the given property. Returns nil if the property does
+    # not exist.
+    #
+    # @param property_name [String] the name of the property to find
+    # @return [String]
     def property(property_name)
       return nil unless prop = properties.find_by(name: property_name)
       product_properties.find_by(property: prop).try(:value)
     end
 
+    # Assigns the given value to the given property.
+    #
+    # @param property_name [String] the name of the property
+    # @param property_value [String] the property value
     def set_property(property_name, property_value)
       ActiveRecord::Base.transaction do
         # Works around spree_i18n #301
@@ -198,11 +203,16 @@ module Spree
       end
     end
 
+    # @return [Array] all advertised and not-rejected promotions
     def possible_promotions
       promotion_ids = promotion_rules.map(&:promotion_id).uniq
       Spree::Promotion.advertised.where(id: promotion_ids).reject(&:expired?)
     end
 
+    # The number of on-hand stock items; Infinity if any variant does not track
+    # inventory.
+    #
+    # @return [Fixnum, Infinity]
     def total_on_hand
       if any_variants_not_track_inventory?
         Float::INFINITY
@@ -211,9 +221,9 @@ module Spree
       end
     end
 
-    # Master variant may be deleted (i.e. when the product is deleted)
-    # which would make AR's default finder return nil.
-    # This is a stopgap for that little problem.
+    # Override so if the master variant is deleted, we can still find it.
+    #
+    # @return [Spree::Variant] the master variant
     def master
       super || variants_including_master.with_deleted.where(is_master: true).first
     end
