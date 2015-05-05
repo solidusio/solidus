@@ -1,10 +1,13 @@
-Spree::Core::Engine.config.to_prepare do
-  if Spree.user_class
-    Spree.user_class.class_eval do
+module Spree
+  module UserMethods
+    extend ActiveSupport::Concern
 
-      include Spree::UserApiAuthentication
-      include Spree::UserReporting
+    include UserApiAuthentication
+    include UserReporting
+    include UserAddress
+    include UserPaymentSource
 
+    included do
       has_many :role_users, foreign_key: "user_id", class_name: "Spree::RoleUser"
       has_many :spree_roles, through: :role_users, source: :role
 
@@ -15,15 +18,15 @@ Spree::Core::Engine.config.to_prepare do
 
       belongs_to :ship_address, class_name: 'Spree::Address'
       belongs_to :bill_address, class_name: 'Spree::Address'
+    end
 
-      # has_spree_role? simply needs to return true or false whether a user has a role or not.
-      def has_spree_role?(role_in_question)
-        spree_roles.any? { |role| role.name == role_in_question.to_s }
-      end
+    # has_spree_role? simply needs to return true or false whether a user has a role or not.
+    def has_spree_role?(role_in_question)
+      spree_roles.any? { |role| role.name == role_in_question.to_s }
+    end
 
-      def last_incomplete_spree_order
-        spree_orders.incomplete.order('created_at DESC').first
-      end
+    def last_incomplete_spree_order
+      spree_orders.incomplete.order('created_at DESC').first
     end
   end
 end
