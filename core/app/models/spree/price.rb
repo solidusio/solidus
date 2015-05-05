@@ -11,19 +11,27 @@ module Spree
     extend DisplayMoney
     money_methods :amount, :price
 
+    # @return [Spree::Money] this price as a Spree::Money object
     def money
       Spree::Money.new(amount || 0, { currency: currency })
     end
 
+    # An alias for #amount
     def price
       amount
     end
 
+    # Sets this price's amount to a new value, parsing it if the new value is
+    # a string.
+    #
+    # @param price [String, #to_d] a new amount
     def price=(price)
       self[:amount] = Spree::LocalizedNumber.parse(price)
     end
 
-    # Remove variant default_scope `deleted_at: nil`
+    # @note This returns the variant regardless of whether it was soft
+    #   deleted.
+    # @return [Spree::Variant] this price's variant.
     def variant
       Spree::Variant.unscoped { super }
     end
