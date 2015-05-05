@@ -62,4 +62,6 @@ RSpec.configure do |config|
   config.include Spree::TestingSupport::Mail
 
   config.fail_fast = ENV['FAIL_FAST'] || false
+
+  config.extend WithModel
 end

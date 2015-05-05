@@ -9,7 +9,7 @@ module Spree
     self.default_reimbursement_type = Spree::ReimbursementType::OriginalPayment
 
     class_attribute :expired_reimbursement_type
-    self.expired_reimbursement_type = Spree::ReimbursementType::OriginalPayment
+    self.expired_reimbursement_type = Spree::ReimbursementType::StoreCredit
 
     class_attribute :exchange_reimbursement_type
     self.exchange_reimbursement_type = Spree::ReimbursementType::Exchange

@@ -24,6 +24,8 @@ module Spree
     # update the order totals, etc.
     after_save :update_order
 
+    after_create :create_eligible_credit_event
+
     # invalidate previously entered payments
     after_create :invalidate_old_payments
 
@@ -49,6 +51,9 @@ module Spree
 
     scope :risky, -> { where("avs_response IN (?) OR (cvv_response_code IS NOT NULL and cvv_response_code != 'M') OR state = 'failed'", RISKY_AVS_CODES) }
     scope :valid, -> { where.not(state: %w(failed invalid)) }
+
+    scope :store_credits, -> { where(source_type: Spree::StoreCredit.to_s) }
+    scope :not_store_credits, -> { where(arel_table[:source_type].not_eq(Spree::StoreCredit.to_s).or(arel_table[:source_type].eq(nil))) }
 
     # order state machine (see http://github.com/pluginaweek/state_machine/tree/master for details)
     state_machine initial: :checkout do
@@ -185,6 +190,12 @@ module Spree
       amount - captured_amount
     end
 
+
+    # @return [Boolean] true when the payment method exists and is a store credit payment method
+    def store_credit?
+      payment_method.try!(:store_credit?)
+    end
+
     private
 
       def validate_source
@@ -219,8 +230,8 @@ module Spree
       end
 
       def invalidate_old_payments
-        if state != 'invalid' and state != 'failed'
-          order.payments.with_state('checkout').where("id != ?", self.id).each do |payment|
+        if !store_credit? && !['invalid', 'failed'].include?(state)
+          order.payments.checkout.where(payment_method: payment_method).where("id != ?", self.id).each do |payment|
             payment.invalidate!
           end
         end
@@ -270,5 +281,21 @@ module Spree
       def generate_identifier
         Array.new(8){ IDENTIFIER_CHARS.sample }.join
       end
+
+      def create_eligible_credit_event
+        # When cancelling an order, a payment with the negative amount
+        # of the payment total is created to refund the customer. That
+        # payment has a source of itself (Spree::Payment) no matter the
+        # type of payment getting refunded, hence the additional check
+        # if the source is a store credit.
+        if store_credit? && source.is_a?(Spree::StoreCredit)
+          source.update_attributes!({
+            action: Spree::StoreCredit::ELIGIBLE_ACTION,
+            action_amount: amount,
+            action_authorization_code: response_code,
+          })
+        end
+      end
+
   end
 end

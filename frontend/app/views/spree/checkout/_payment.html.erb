@@ -1,7 +1,6 @@
 <fieldset id="payment" data-hook>
   <legend align="center"><%= Spree.t(:payment_information) %></legend>
   <div data-hook="checkout_payment_step">
-
     <% if @payment_sources.present? %>
       <div class="card_options">
         <%= radio_button_tag 'use_existing_card', 'yes', true %>

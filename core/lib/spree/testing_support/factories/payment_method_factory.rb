@@ -15,4 +15,13 @@ FactoryGirl.define do
     name 'Credit Card'
     environment 'test'
   end
+
+  factory :store_credit_payment_method, class: Spree::PaymentMethod::StoreCredit do
+    name          "Store Credit"
+    description   "Store Credit"
+    active        true
+    environment   "test"
+    display_on    'none'
+    auto_capture  true
+  end
 end

@@ -32,7 +32,7 @@
     <h6><%= Spree.t(:payment_information) %> <%= link_to "(#{Spree.t(:edit)})", checkout_state_path(:payment) unless order.completed? %></h6>
     <div class="payment-info">
       <% order.payments.valid.each do |payment| %>
-        <%= render payment%><br/>
+        <%= render payment %><br/>
       <% end %>
     </div>
   </div>
@@ -81,7 +81,7 @@
   <tfoot id="order-total" data-hook="order_details_total">
     <tr class="total">
       <td colspan="4"><b><%= Spree.t(:order_total) %>:</b></td>
-      <td class="total"><span id="order_total"><%= order.display_total.to_html %></span></td>
+      <td class="total"><span id="order_total"><%= order.display_order_total_after_store_credit.to_html %></span></td>
     </tr>
   </tfoot>
 
@@ -122,6 +122,15 @@
           <td class="total"><span><%= Spree::Money.new(adjustments.sum(&:amount), currency: order.currency) %></span></td>
         </tr>
       <% end %>
+    </tfoot>
+  <% end %>
+
+  <% if order.total_applicable_store_credit > 0.0 %>
+    <tfoot id="store-credit" data-hook="order_details_store_credit">
+      <tr class="total">
+        <td colspan='4'><%= Spree.t("store_credit.store_credit") %>:</td>
+        <td class='total'><span><%= order.display_total_applicable_store_credit.to_html %></span></td>
+      </tr>
     </tfoot>
   <% end %>
 

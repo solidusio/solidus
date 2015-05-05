@@ -9,6 +9,11 @@ module Spree
 
     self.table_name = 'spree_users'
 
+    # for url generation
+    def self.model_name
+      ActiveModel::Name.new(self, nil, "User")
+    end
+
     has_many :orders, foreign_key: :user_id
 
     before_destroy :check_completed_orders
