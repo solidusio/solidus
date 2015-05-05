@@ -9,7 +9,11 @@ FactoryGirl.define do
         build(
           :inventory_unit,
           # ensure the shipment uses the same stock location as the carton
-          shipment: build(:shipment, stock_location: stock_location)
+          shipment: build(
+            :shipment,
+            stock_location: stock_location,
+            shipping_method: shipping_method,
+          )
         ),
       ]
     end
