@@ -30,9 +30,8 @@ module Spree
     attr_accessor :password_confirmation
 
     private
-
-      def check_completed_orders
-        raise Spree::Core::DestroyWithOrdersError if orders.complete.present?
-      end
+    def check_completed_orders
+      raise Spree::Core::DestroyWithOrdersError if orders.complete.present?
+    end
   end
 end
