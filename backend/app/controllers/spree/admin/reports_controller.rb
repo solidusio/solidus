@@ -57,7 +57,6 @@ module Spree
           @totals[order.currency][:adjustment_total] += order.display_adjustment_total.money
           @totals[order.currency][:sales_total] += order.display_total.money
         end
-
       end
 
       private
