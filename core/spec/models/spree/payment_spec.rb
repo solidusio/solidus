@@ -341,17 +341,14 @@ describe Spree::Payment, :type => :model do
               expect(payment.payment_method).to receive(:capture).with(capture_amount, payment.response_code, anything).and_return(success_response)
             end
 
-            it "should make payment complete & create pending payment for remaining amount" do
+            it "should make payment complete and update amount" do
               expect(payment).to receive(:complete!)
               payment.capture!(capture_amount)
               order = payment.order
               payments = order.payments
 
-              expect(payments.size).to eq 2
-              expect(payments.pending.first.amount).to eq 1
               # Payment stays processing for spec because of receive(:complete!) stub.
               expect(payments.processing.first.amount).to eq(capture_amount / 100)
-              expect(payments.processing.first.source).to eq(payments.pending.first.source)
             end
 
             it "logs capture events" do
