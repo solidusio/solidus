@@ -17,8 +17,7 @@
 
     <tbody>
       <% order.line_items.each do |item| %>
-        
-        <tr class="line-item" id="line-item-<%= item.id %>">
+        <%= content_tag :tr, class: 'line-item', id: "line-item-#{item.id}", data: { line_item_id: item.id } do %>
           <td class="line-item-image"><%= mini_image(item.variant) %></td>
           <td class="line-item-name">
             <%= item.variant.product.name %><br><%= "(" + variant_options(item.variant) + ")" unless item.variant.option_values.empty? %>
@@ -36,13 +35,13 @@
           <td class="line-item-total align-center"><%= line_item_shipment_price(item, item.quantity) %></td>
           <td class="cart-line-item-delete actions" data-hook="cart_line_item_delete">
             <% if can? :update, item %>
-              <%= link_to '', '#', :class => 'save-line-item fa fa-ok no-text with-tip', :data => { 'line-item-id' => item.id, :action => 'save'}, :title => Spree.t('actions.save') %>
-              <%= link_to '', '#', :class => 'cancel-line-item fa fa-cancel no-text with-tip', :data => {:action => 'cancel'}, :title => Spree.t('actions.cancel') %>
-              <%= link_to '', '#', :class => 'edit-line-item fa fa-edit no-text with-tip', :data => {:action => 'edit'}, :title => Spree.t('edit') %>
-              <%= link_to '', '#', :class => 'delete-line-item fa fa-trash no-text with-tip', :data => { 'line-item-id' => item.id, :action => 'remove'}, :title => Spree.t('delete') %>
+              <%= link_to '', '#', :class => 'save-line-item fa fa-ok no-text with-tip',       :title => Spree.t('actions.save') %>
+              <%= link_to '', '#', :class => 'cancel-line-item fa fa-cancel no-text with-tip', :title => Spree.t('actions.cancel') %>
+              <%= link_to '', '#', :class => 'edit-line-item fa fa-edit no-text with-tip',     :title => Spree.t('edit') %>
+              <%= link_to '', '#', :class => 'delete-line-item fa fa-trash no-text with-tip',  :title => Spree.t('delete') %>
             <% end %>
           </td>
-        </tr>
+        <% end %>
       <% end %>
     </tbody>
   </table>

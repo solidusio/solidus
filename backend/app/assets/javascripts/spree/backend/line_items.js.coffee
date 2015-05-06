@@ -6,32 +6,28 @@ editingDone = (e) ->
   e.preventDefault()
   $(e.delegateTarget).removeClass('editing')
 
+onSaveLineItem = (e) ->
+  e.preventDefault()
+  line_item = $(this).closest('.line-item')
+  line_item_id = line_item.data('line-item-id')
+  quantity = parseInt(line_item.find('input.line_item_quantity').val())
+  adjustLineItem(line_item_id, quantity)
+  editingDone(e)
+
+onDeleteLineItem = (e) ->
+  e.preventDefault()
+  return unless confirm(Spree.translations.are_you_sure_delete)
+  line_item = $(this).closest('.line-item')
+  line_item_id = line_item.data('line-item-id');
+  deleteLineItem(line_item_id)
+  editingDone(e)
+
 $(document).ready ->
   $('.line-item')
     .on('click', '.edit-line-item',   editing)
     .on('click', '.cancel-line-item', editingDone)
-
-  #handle save click
-  $('a.save-line-item').click (e) ->
-    save = $ this
-    line_item = $(this).closest('.line-item')
-    e.delegateTarget = line_item
-    line_item_id = save.data('line-item-id')
-    quantity = parseInt(save.parents('tr').find('input.line_item_quantity').val())
-
-    editingLineItemDone(e)
-    adjustLineItem(line_item_id, quantity)
-
-  # handle delete click
-  $('a.delete-line-item').click (e) ->
-    if confirm(Spree.translations.are_you_sure_delete)
-      line_item = $(this).closest('.line-item')
-      e.delegateTarget = line_item
-      del = $(this);
-      line_item_id = del.data('line-item-id');
-
-      editingLineItemDone(e)
-      deleteLineItem(line_item_id)
+    .on('click', '.save-line-item',   onSaveLineItem)
+    .on('click', '.delete-line-item', onDeleteLineItem)
 
 lineItemURL = (line_item_id) ->
   url = Spree.routes.orders_api + "/" + order_number + "/line_items/" + line_item_id + ".json"
