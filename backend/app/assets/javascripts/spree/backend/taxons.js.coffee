@@ -26,10 +26,9 @@ $(document).ready ->
         page: page,
         q:
           name_cont: term
-      results: (data, page) ->
-        more = page < data.pages;
+      results: (data) ->
         results: data['taxons'],
-        more: more
+        more: data.current_page < data.pages
     formatResult: (taxon) ->
       taxon.pretty_name;
     formatSelection: (taxon) ->
