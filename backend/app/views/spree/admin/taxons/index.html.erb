@@ -14,7 +14,9 @@
 
 <%= render :partial => 'spree/admin/shared/product_sub_menu' %>
 <span id='sorting_explanation' style='display:none'><%= Spree.t(:click_and_drag_on_the_products_to_sort_them) %></span>
-<ul id='taxon_products'></ul>
 
-<%= render :partial => "spree/admin/products/autocomplete", :formats => :js %>
+<div class='sixteen columns'>
+  <div id='taxon_products' class='list-group'></div>
+</div>
 
+<%= render "spree/admin/products/sortable" %>

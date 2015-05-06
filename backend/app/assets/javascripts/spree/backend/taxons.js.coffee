@@ -1,5 +1,4 @@
 $(document).ready ->
-  window.productTemplate = Handlebars.compile($('#product_template').text());
   $('#taxon_products').sortable();
   $('#taxon_products').on "sortstop", (event, ui) ->
     Spree.ajax
@@ -32,6 +31,7 @@ $(document).ready ->
         taxon.pretty_name;
       formatSelection: (taxon) ->
         taxon.pretty_name;
+  window.productTemplate = Handlebars.compile($('#product_template_sortable').text());
 
   $('#taxon_id').on "change", (e) ->
     el = $('#taxon_products')

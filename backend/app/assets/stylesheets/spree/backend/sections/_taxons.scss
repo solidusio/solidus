@@ -3,19 +3,8 @@
   font-style: italic;
 }
 
-.small_product {
-  text-align: center;
-
-  img {
-    border: 1px solid #d9d9db;
-    padding: 5px;
-  }
-  
-  margin: 10px;
-}
-
 #taxon_products {
-  > li {
-    height: 170px;
+  .product_name {
+    margin-left: 1em;
   }
 }
