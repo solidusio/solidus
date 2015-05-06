@@ -33,6 +33,10 @@ $(document).ready ->
         taxon.pretty_name;
   window.productTemplate = Handlebars.compile($('#product_template_sortable').text());
 
+  productListTemplate = (products) ->
+    products.map(productTemplate).join('') ||
+    "<h4>#{Spree.translations.no_results}</h4>"
+
   $('#taxon_id').on "change", (e) ->
     el = $('#taxon_products')
     Spree.ajax
@@ -41,11 +45,4 @@ $(document).ready ->
         id: e.val,
         token: Spree.api_key
       success: (data) ->
-        el.empty();
-        if data.products.length == 0
-          $('#taxon_products').html("<h4>" + Spree.translations.no_results + "</h4>")
-        else
-          for product in data.products
-            if product.master.images[0] != undefined && product.master.images[0].small_url != undefined
-              product.image = product.master.images[0].small_url
-            el.append(productTemplate({ product: product }))
+        el.html productListTemplate(data.products)
