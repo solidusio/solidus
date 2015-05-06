@@ -4,12 +4,27 @@ module Spree
     INTERMEDIATE_RECEPTION_STATUSES = %i(given_to_customer lost_in_transit shipped_wrong_item short_shipped)
     COMPLETED_RECEPTION_STATUSES = INTERMEDIATE_RECEPTION_STATUSES + [:received]
 
+    # @!scope class
+    # @!attribute return_eligibility_validator
+    # Configurable validator for determining whether given return item is
+    # eligible for return.
+    # @return [Class]
     class_attribute :return_eligibility_validator
     self.return_eligibility_validator = ReturnItem::EligibilityValidator::Default
 
+    # @!scope class
+    # @!attribute exchange_variant_engine
+    # Configurable engine for determining which variants can be exchanged for a
+    # given variant.
+    # @return [Class]
     class_attribute :exchange_variant_engine
     self.exchange_variant_engine = ReturnItem::ExchangeVariantEligibility::SameProduct
 
+    # @!scope class
+    # @!attribute refund_amount_calculator
+    # Configurable calculator for determining the amount ro refund when
+    # refunding.
+    # @return [Class]
     class_attribute :refund_amount_calculator
     self.refund_amount_calculator = Calculator::Returns::DefaultRefundAmount
 
@@ -77,6 +92,8 @@ module Spree
     extend DisplayMoney
     money_methods :pre_tax_amount, :total
 
+    # @return [Boolean] true when this retur item is in a complete reception
+    #   state
     def reception_completed?
       COMPLETED_RECEPTION_STATUSES.map(&:to_s).include?(reception_status.to_s)
     end
@@ -107,31 +124,49 @@ module Spree
       after_transition any => any, :do => :persist_acceptance_status_errors
     end
 
+    # @param inventory_unit [Spree::InventoryUnit] the inventory for which we
+    #   want a return item
+    # @return [Spree::ReturnItem] a valid return item for the given inventory
+    #   unit if one exists, or a new one if one does not
     def self.from_inventory_unit(inventory_unit)
       valid.find_by(inventory_unit: inventory_unit) ||
         new(inventory_unit: inventory_unit).tap(&:set_default_pre_tax_amount)
     end
 
+    # @return [Boolean] true when an exchange has been requested on this return
+    #   item
     def exchange_requested?
       exchange_variant.present?
     end
 
+    # @return [Boolean] true when an exchange has been processed for this
+    #   return item
     def exchange_processed?
       exchange_inventory_unit.present?
     end
 
+    # @return [Boolean] true when an exchange has been requested but has yet to
+    #   be processed
     def exchange_required?
       exchange_requested? && !exchange_processed?
     end
 
+    # @return [BigDecimal] the cost of the item before tax, plus the included
+    #   and additional taxes
     def total
       pre_tax_amount + included_tax_total + additional_tax_total
     end
 
+    # @note This uses the exchange_variant_engine configured on the class.
+    # @return [ActiveRecord::Relation<Spree::Variant>] the variants eligible
+    #   for exchange for this return item
     def eligible_exchange_variants
       exchange_variant_engine.eligible_variants(variant)
     end
 
+    # Builds the exchange inventory unit for this return item, only if an
+    # exchange is required, correctly associating the variant, line item and
+    # order.
     def build_exchange_inventory_unit
       # The inventory unit needs to have the new variant
       # but it also needs to know the original line item
@@ -141,10 +176,15 @@ module Spree
       super(variant: exchange_variant, line_item: inventory_unit.line_item, order: inventory_unit.order) if exchange_required?
     end
 
+    # @return [Spree::Shipment, nil] the exchange inventory unit's shipment if it exists
     def exchange_shipment
       exchange_inventory_unit.try(:shipment)
     end
 
+    # Calculates and sets the default pre-tax amount to be refunded.
+    #
+    # @note This uses the configured refund_amount_calculator configured on the
+    #   class.
     def set_default_pre_tax_amount
       self.pre_tax_amount = refund_amount_calculator.new.compute(self)
     end
