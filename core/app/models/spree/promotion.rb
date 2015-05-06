@@ -32,6 +32,7 @@ module Spree
     before_save :normalize_blank_values
 
     scope :coupons, ->{ where("#{table_name}.code IS NOT NULL") }
+    scope :advertised, -> { where(advertise: true) }
 
     order_join_table = reflect_on_association(:orders).join_table
 
@@ -40,10 +41,6 @@ module Spree
     # temporary code. remove after the column is dropped from the db.
     def columns
       super.reject { |column| column.name == 'code' }
-    end
-
-    def self.advertised
-      where(advertise: true)
     end
 
     def self.active
