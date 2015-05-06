@@ -9,32 +9,32 @@ $(document).ready ->
         taxon_id: $('#taxon_id').val(),
         position: ui.item.index()
 
-  if $('#taxon_id').length > 0
-    $('#taxon_id').select2
-      dropdownCssClass: "taxon_select_box",
-      placeholder: Spree.translations.find_a_taxon,
-      ajax:
-        url: Spree.routes.taxons_search,
-        datatype: 'json',
-        params: { "headers": { "X-Spree-Token": Spree.api_key } },
-        data: (term, page) ->
-          per_page: 50,
-          page: page,
-          q:
-            name_cont: term
-        results: (data, page) ->
-          more = page < data.pages;
-          results: data['taxons'],
-          more: more
-      formatResult: (taxon) ->
-        taxon.pretty_name;
-      formatSelection: (taxon) ->
-        taxon.pretty_name;
   window.productTemplate = Handlebars.compile($('#product_template_sortable').text());
 
   productListTemplate = (products) ->
     products.map(productTemplate).join('') ||
     "<h4>#{Spree.translations.no_results}</h4>"
+
+  $('#taxon_id').select2
+    dropdownCssClass: "taxon_select_box",
+    placeholder: Spree.translations.find_a_taxon,
+    ajax:
+      url: Spree.routes.taxons_search,
+      datatype: 'json',
+      params: { "headers": { "X-Spree-Token": Spree.api_key } },
+      data: (term, page) ->
+        per_page: 50,
+        page: page,
+        q:
+          name_cont: term
+      results: (data, page) ->
+        more = page < data.pages;
+        results: data['taxons'],
+        more: more
+    formatResult: (taxon) ->
+      taxon.pretty_name;
+    formatSelection: (taxon) ->
+      taxon.pretty_name;
 
   $('#taxon_id').on "change", (e) ->
     el = $('#taxon_products')
