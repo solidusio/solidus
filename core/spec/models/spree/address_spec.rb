@@ -185,12 +185,12 @@ describe Spree::Address, :type => :model do
       let(:user) { double("User", bill_address: bill_address, ship_address: ship_address) }
 
       it "returns a copy of that user bill address" do
-        expect(subject.default(user).phone).to eq bill_address.phone
+        expect(described_class.default(user).phone).to eq bill_address.phone
       end
 
       it "falls back to build default when user has no address" do
         allow(user).to receive_messages(bill_address: nil)
-        expect(subject.default(user)).to eq subject.build_default
+        expect(described_class.default(user)).to eq described_class.build_default
       end
     end
   end
