@@ -40,7 +40,6 @@ adjustLineItem = (line_item_id, quantity) ->
     data:
       line_item:
         quantity: quantity
-      token: Spree.api_key
   ).done (msg) ->
     window.Spree.advanceOrder()
 
