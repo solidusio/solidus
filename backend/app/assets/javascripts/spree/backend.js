@@ -18,6 +18,7 @@
 //= require equalize
 //= require responsive-tables
 //= require underscore-min
+//= require backbone
 //= require spree
 //= require spree/backend/spree-select2
 //= require_tree .
