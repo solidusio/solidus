@@ -177,15 +177,6 @@ module Spree
       adjustment_promotion_scope(Spree::Adjustment.eligible).count
     end
 
-    # Number of times the code has been used for the given promotable
-    #
-    # @param promotable promotable object (e.g. order/line item/shipment)
-    # @return [Integer] usage count for this promotable
-    # TODO: specs
-    def usage_count_for(promotable)
-      adjustment_promotion_scope(promotable.adjustments).count
-    end
-
     # TODO: specs
     def line_item_actionable?(order, line_item, promotion_code: nil)
       if eligible?(order, promotion_code: promotion_code)
@@ -221,6 +212,11 @@ module Spree
     end
 
     private
+
+    def usage_count_for(promotable)
+      adjustment_promotion_scope(promotable.adjustments).count
+    end
+
     def blacklisted?(promotable)
       case promotable
       when Spree::LineItem
