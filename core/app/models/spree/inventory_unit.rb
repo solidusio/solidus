@@ -52,18 +52,24 @@ module Spree
       end
     end
 
-    # This was refactored from a simpler query because the previous implementation
-    # led to issues once users tried to modify the objects returned. That's due
-    # to ActiveRecord `joins(shipment: :stock_location)` only returning readonly
-    # objects
-    #
-    # Returns an array of backordered inventory units as per a given stock item
+    # @param stock_item [Spree::StockItem] the stock item of the desired
+    #   inventory units
+    # @return [Array<Spree::InventoryUnit>] an array of backordered inventory
+    #   units for the given stock item
     def self.backordered_for_stock_item(stock_item)
+      # This was refactored from a simpler query because the previous
+      # implementation led to issues once users tried to modify the objects
+      # returned. That's due to ActiveRecord `joins(shipment: :stock_location)`
+      # only returning readonly objects
       backordered_per_variant(stock_item).select do |unit|
         unit.shipment.stock_location == stock_item.stock_location
       end
     end
 
+    # Updates the given inventory units to not be pending.
+    #
+    # @param inventory_units [<Spree::InventoryUnit>] the inventory to be
+    #   finalized
     def self.finalize_units!(inventory_units)
       inventory_units.map do |iu|
         iu.update_columns(
@@ -73,28 +79,42 @@ module Spree
       end
     end
 
+    # @return [Spree::StockItem] the first stock item from this shipment's
+    #   stock location that is associated with this inventory unit's variant
     def find_stock_item
       Spree::StockItem.where(stock_location_id: shipment.stock_location_id,
         variant_id: variant_id).first
     end
 
-    # Remove variant default_scope `deleted_at: nil`
+    # @note This returns the variant regardless of whether it was soft
+    #   deleted.
+    # @return [Spree::Variant] this inventory unit's variant.
     def variant
       Spree::Variant.unscoped { super }
     end
 
+    # @return [Spree::ReturnItem] a valid return item for this inventory unit
+    #   if one exists, or a new one if one does not
     def current_or_new_return_item
       Spree::ReturnItem.from_inventory_unit(self)
     end
 
+    # @return [BigDecimal] the portion of the additional tax on the line item
+    #   this inventory unit belongs to that is associated with this individual
+    #   inventory unit
     def additional_tax_total
       line_item.additional_tax_total * percentage_of_line_item
     end
 
+    # @return [BigDecimal] the portion of the included tax on the line item
+    #   this inventory unit belongs to that is associated with this
+    #   individual inventory unit
     def included_tax_total
       line_item.included_tax_total * percentage_of_line_item
     end
 
+    # @return [Boolean] true if this inventory unit has any return items
+    #   which have requested exchanges
     def exchange_requested?
       return_items.not_expired.any?(&:exchange_requested?)
     end
