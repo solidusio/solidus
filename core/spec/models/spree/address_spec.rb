@@ -17,11 +17,6 @@ describe Spree::Address, :type => :model do
   end
 
   context "validation" do
-    before do
-      configure_spree_preferences do |config|
-        config.address_requires_state = true
-      end
-    end
 
     let(:country) { mock_model(Spree::Country, :states => [state], :states_required => true) }
     let(:state) { stub_model(Spree::State, :name => 'maryland', :abbr => 'md') }
@@ -31,61 +26,71 @@ describe Spree::Address, :type => :model do
       allow(country.states).to receive_messages :find_all_by_name_or_abbr => [state]
     end
 
-    it "state_name is not nil and country does not have any states" do
-      address.state = nil
-      address.state_name = 'alabama'
-      expect(address).to be_valid
+    context 'address does not require state' do
+      before do
+        Spree::Config.address_requires_state = false
+      end
+      it "address_requires_state preference is false" do
+        address.state = nil
+        address.state_name = nil
+        expect(address).to be_valid
+      end
     end
 
-    it "errors when state_name is nil" do
-      address.state_name = nil
-      address.state = nil
-      expect(address).not_to be_valid
-    end
+    context 'address requires state' do
+      before do
+        Spree::Config.address_requires_state = true
+      end
 
-    it "full state name is in state_name and country does contain that state" do
-      address.state_name = 'alabama'
-      # called by state_validate to set up state_id.
-      # Perhaps this should be a before_validation instead?
-      expect(address).to be_valid
-      expect(address.state).not_to be_nil
-      expect(address.state_name).to be_nil
-    end
+      it "state_name is not nil and country does not have any states" do
+        address.state = nil
+        address.state_name = 'alabama'
+        expect(address).to be_valid
+      end
 
-    it "state abbr is in state_name and country does contain that state" do
-      address.state_name = state.abbr
-      expect(address).to be_valid
-      expect(address.state_id).not_to be_nil
-      expect(address.state_name).to be_nil
-    end
+      it "errors when state_name is nil" do
+        address.state_name = nil
+        address.state = nil
+        expect(address).not_to be_valid
+      end
 
-    it "state is entered but country does not contain that state" do
-      address.state = state
-      address.country = stub_model(Spree::Country, :states_required => true)
-      address.valid?
-      expect(address.errors["state"]).to eq(['is invalid'])
-    end
+      it "full state name is in state_name and country does contain that state" do
+        address.state_name = 'alabama'
+        # called by state_validate to set up state_id.
+        # Perhaps this should be a before_validation instead?
+        expect(address).to be_valid
+        expect(address.state).not_to be_nil
+        expect(address.state_name).to be_nil
+      end
 
-    it "both state and state_name are entered but country does not contain the state" do
-      address.state = state
-      address.state_name = 'maryland'
-      address.country = stub_model(Spree::Country, :states_required => true)
-      expect(address).to be_valid
-      expect(address.state_id).to be_nil
-    end
+      it "state abbr is in state_name and country does contain that state" do
+        address.state_name = state.abbr
+        expect(address).to be_valid
+        expect(address.state_id).not_to be_nil
+        expect(address.state_name).to be_nil
+      end
 
-    it "both state and state_name are entered and country does contain the state" do
-      address.state = state
-      address.state_name = 'maryland'
-      expect(address).to be_valid
-      expect(address.state_name).to be_nil
-    end
+      it "state is entered but country does not contain that state" do
+        address.state = state
+        address.country = stub_model(Spree::Country, :states_required => true)
+        address.valid?
+        expect(address.errors["state"]).to eq(['is invalid'])
+      end
 
-    it "address_requires_state preference is false" do
-      Spree::Config.set :address_requires_state => false
-      address.state = nil
-      address.state_name = nil
-      expect(address).to be_valid
+      it "both state and state_name are entered but country does not contain the state" do
+        address.state = state
+        address.state_name = 'maryland'
+        address.country = stub_model(Spree::Country, :states_required => true)
+        expect(address).to be_valid
+        expect(address.state_id).to be_nil
+      end
+
+      it "both state and state_name are entered and country does contain the state" do
+        address.state = state
+        address.state_name = 'maryland'
+        expect(address).to be_valid
+        expect(address.state_name).to be_nil
+      end
     end
 
     it "requires phone" do
