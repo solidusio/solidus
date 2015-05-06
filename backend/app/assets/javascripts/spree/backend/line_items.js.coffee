@@ -29,8 +29,8 @@ $(document).ready ->
     .on('click', '.save-line-item',   onSaveLineItem)
     .on('click', '.delete-line-item', onDeleteLineItem)
 
-lineItemURL = (line_item_id) ->
-  url = Spree.routes.orders_api + "/" + order_number + "/line_items/" + line_item_id + ".json"
+lineItemURL = (id) ->
+  "#{Spree.routes.line_items_api(order_number)}/#{id}.json"
 
 adjustLineItem = (line_item_id, quantity) ->
   url = lineItemURL(line_item_id)
@@ -48,7 +48,7 @@ deleteLineItem = (line_item_id) ->
   url = lineItemURL(line_item_id)
   Spree.ajax(
     type: "DELETE"
-    url: Spree.url(url)
+    url: url
   ).done (msg) ->
     $('#line-item-' + line_item_id).remove()
     if $('.line-items tr.line-item').length == 0
