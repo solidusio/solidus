@@ -153,7 +153,7 @@ describe Spree::StockItem, :type => :model do
     end
   end
 
-  context "destroyed" do
+  context "destroyed", touching: true do
     before { subject.destroy }
 
     it "recreates stock item just fine" do
@@ -171,7 +171,7 @@ describe Spree::StockItem, :type => :model do
     end
   end
 
-  describe "#after_save" do
+  describe "#after_save", touching: true do
     before do
       subject.variant.update_column(:updated_at, 1.day.ago)
     end
@@ -238,7 +238,7 @@ describe Spree::StockItem, :type => :model do
     end
   end
 
-  describe "#after_touch" do
+  describe "#after_touch", touching: true do
     it "touches its variant" do
       expect do
         subject.touch

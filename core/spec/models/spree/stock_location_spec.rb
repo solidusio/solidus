@@ -92,7 +92,7 @@ module Spree
       expect(stock_item).to be_nil
     end
 
-    describe '#stock_item_or_create' do
+    describe '#stock_item_or_create', touching: true do
       before do
         variant = create(:variant)
         variant.stock_items.destroy_all
@@ -211,7 +211,7 @@ module Spree
         end
       end
 
-      context 'without stock_items' do
+      context 'without stock_items', touching: true do
         subject { create(:stock_location) }
         let(:variant) { create(:base_variant) }
 
@@ -251,7 +251,7 @@ module Spree
         subject.move(variant, quantity)
       end
 
-      context "no stock item exists" do
+      context "no stock item exists", touching: true do
         before { subject.stock_items.destroy_all }
         context "positive movement" do
           let(:quantity) { 1 }

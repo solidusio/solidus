@@ -101,7 +101,7 @@ describe Spree::Order, :type => :model do
         allow(order).to receive_messages :is_risky? => false
       end
 
-      it "should set completed_at" do
+      it "should set completed_at", touching: true do
         order.finalize!
         expect(order.completed_at).to be_present
       end

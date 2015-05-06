@@ -80,7 +80,7 @@ describe Spree::ShippingMethod, :type => :model do
   # Regression test for #4320
   context "soft deletion" do
     let(:shipping_method) { create(:shipping_method) }
-    it "soft-deletes when destroy is called" do
+    it "soft-deletes when destroy is called", touching: true do
       shipping_method.destroy
       expect(shipping_method.deleted_at).not_to be_blank
     end

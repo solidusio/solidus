@@ -127,7 +127,7 @@ describe Spree::UnitCancel do
         it { is_expected.to eq(-10.00) }
       end
 
-      context 'when canceling an unshipped exchange inventory unit' do
+      context 'when canceling an unshipped exchange inventory unit', touching: true do
         subject do
           unit_cancel.compute_amount(@exchange_inventory_unit.line_item)
         end

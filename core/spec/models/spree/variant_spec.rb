@@ -44,7 +44,7 @@ describe Spree::Variant, :type => :model do
         it { expect(product.master).to be_in_stock }
       end
 
-      context 'when a variant is created' do
+      context 'when a variant is created', touching: true do
         before(:each) do
           product.variants.create!(:name => 'any-name')
         end
@@ -459,7 +459,7 @@ describe Spree::Variant, :type => :model do
     end
   end
 
-  describe "touching" do
+  describe "touching", touching: true do
     it "updates a product" do
       variant.product.update_column(:updated_at, 1.day.ago)
       variant.touch

@@ -80,7 +80,7 @@ describe Spree::Product, :type => :model do
       end
     end
 
-    context "product has no variants" do
+    context "product has no variants", touching: true do
       context "#destroy" do
         it "should set deleted_at value" do
           product.destroy
@@ -96,7 +96,7 @@ describe Spree::Product, :type => :model do
       end
 
       context "#destroy" do
-        it "should set deleted_at value" do
+        it "should set deleted_at value", touching: true do
           product.destroy
           expect(product.deleted_at).not_to be_nil
           expect(product.variants_including_master.all? { |v| !v.deleted_at.nil? }).to be true
@@ -158,7 +158,7 @@ describe Spree::Product, :type => :model do
         expect(product).not_to be_available
       end
 
-      it "should not be available if destroyed" do
+      it "should not be available if destroyed", touching: true do
         product.destroy
         expect(product).not_to be_available
       end
@@ -194,7 +194,7 @@ describe Spree::Product, :type => :model do
       let(:variant) { product.master }
       let(:stock_item) { variant.stock_items.first }
 
-      it "doesnt raise ReadOnlyRecord error" do
+      it "doesnt raise ReadOnlyRecord error", touching: true do
         Spree::StockMovement.create!(stock_item: stock_item, quantity: 1)
         expect { product.destroy }.not_to raise_error
       end
@@ -217,7 +217,7 @@ describe Spree::Product, :type => :model do
         expect(product.slug).not_to match "/"
       end
 
-      it "renames slug on destroy" do
+      it "renames slug on destroy", touching: true do
         old_slug = product.slug
         product.destroy
         expect(old_slug).to_not eq product.slug

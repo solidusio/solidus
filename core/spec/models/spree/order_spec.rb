@@ -181,7 +181,7 @@ describe Spree::Order, :type => :model do
 
     let(:order) { create :order_with_line_items }
 
-    context 'when variant is destroyed' do
+    context 'when variant is destroyed', touching: true do
       before do
         allow(order).to receive(:restart_checkout_flow)
         order.line_items.first.variant.destroy

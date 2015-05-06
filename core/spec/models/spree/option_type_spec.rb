@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe Spree::OptionType, :type => :model do
-  context "touching" do
+  context "touching", touching: true do
     it "should touch a product" do
       product_option_type = create(:product_option_type)
       option_type = product_option_type.option_type
