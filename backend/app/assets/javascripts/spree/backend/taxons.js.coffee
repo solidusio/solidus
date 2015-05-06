@@ -20,7 +20,6 @@ $(document).ready ->
     placeholder: Spree.translations.find_a_taxon,
     ajax:
       url: Spree.routes.taxons_search,
-      datatype: 'json',
       params: { "headers": { "X-Spree-Token": Spree.api_key } },
       data: (term, page) ->
         per_page: 50,
