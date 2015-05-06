@@ -1,6 +1,7 @@
 require 'globalize'
 require 'friendly_id/globalize'
 require 'routing_filter'
+require 'kaminari-i18n/engine'
 
 module SpreeI18n
   class Engine < Rails::Engine
