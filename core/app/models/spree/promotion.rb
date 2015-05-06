@@ -31,7 +31,7 @@ module Spree
 
     before_save :normalize_blank_values
 
-    scope :coupons, ->{ where("#{table_name}.code IS NOT NULL") }
+    scope :coupons, -> { where.not(code: nil) }
     scope :advertised, -> { where(advertise: true) }
 
     order_join_table = reflect_on_association(:orders).join_table
