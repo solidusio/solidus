@@ -55,7 +55,7 @@ describe "exchanges:charge_unreturned_items" do
     context "fewer than the config allowed days have passed" do
       let(:travel_time) { (Spree::Config[:expedited_exchanges_days_window] - 1).days }
 
-      it "does not create a new order" do
+      it "does not create a new order", touching: true do
         expect { subject.invoke }.not_to change { Spree::Order.count }
       end
     end

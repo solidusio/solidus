@@ -47,7 +47,7 @@ describe Spree::Promotion, :type => :model do
     end
   end
 
-  describe "#destroy" do
+  describe "#destroy", touching: true do
     let(:promotion) { Spree::Promotion.create(:name => "delete me") }
 
     before(:each) do

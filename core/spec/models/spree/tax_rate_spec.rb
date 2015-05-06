@@ -312,7 +312,7 @@ describe Spree::TaxRate, :type => :model do
             Spree::TaxRate.adjust(@order.tax_zone, @order.line_items)
           end
 
-          it "should delete adjustments for open order when taxrate is deleted" do
+          it "should delete adjustments for open order when taxrate is deleted", touching: true do
             @rate1.destroy!
             @rate2.destroy!
             expect(line_item.adjustments.count).to eq(0)

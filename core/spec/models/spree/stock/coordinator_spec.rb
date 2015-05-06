@@ -70,7 +70,7 @@ module Spree
 
         let!(:order) { create(:order, line_items: [create(:line_item, variant: variant_1), create(:line_item, variant: variant_2)]) }
 
-        it "splits the inventory units to stock locations that they have stock items for" do
+        it "splits the inventory units to stock locations that they have stock items for", touching: true do
           packages = subject.packages
 
           expect(subject.packages.size).to eq 2

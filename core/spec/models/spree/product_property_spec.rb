@@ -11,7 +11,7 @@ describe Spree::ProductProperty, :type => :model do
   end
 
   context "touching" do
-    it "should update product" do
+    it "should update product", touching: true do
       pp = create(:product_property)
       expect(pp.product).to receive(:touch)
       pp.touch

@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 # Tests for #3958's features
-describe "Order Line Items", type: :feature, js: true do
+describe "Order Line Items", type: :feature, js: true, touching: true do
   stub_authorization!
 
   before do

@@ -52,6 +52,16 @@ RSpec.configure do |config|
     DatabaseCleaner.clean_with :truncation
   end
 
+  config.around :each do |example|
+    if example.metadata[:touching]
+      example.run
+    else
+      ActiveRecord::Base.no_touching do
+        example.run
+      end
+    end
+  end
+
   config.before :each do
     Rails.cache.clear
     reset_spree_preferences

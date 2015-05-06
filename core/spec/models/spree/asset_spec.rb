@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe Spree::Asset, :type => :model do
   describe "#viewable" do
-    it "touches association" do
+    it "touches association", touching: true do
       product = create(:custom_product)
       asset = Spree::Asset.create! { |a| a.viewable = product.master }
 

@@ -46,7 +46,7 @@ describe Spree::OrderInventory, :type => :model do
 
       before { Spree::Config.track_inventory_levels = false }
 
-      it "creates only on hand inventory units" do
+      it "creates only on hand inventory units", touching: true do
         variant.stock_items.destroy_all
 
         # The before_save callback in LineItem would verify inventory
@@ -62,7 +62,7 @@ describe Spree::OrderInventory, :type => :model do
       let(:variant) { create(:variant) }
       before { variant.track_inventory = false }
 
-      it "creates only on hand inventory units" do
+      it "creates only on hand inventory units", touching: true do
         variant.stock_items.destroy_all
 
         line_item = order.contents.add variant, 1

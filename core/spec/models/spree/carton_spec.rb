@@ -3,6 +3,12 @@ require 'spec_helper'
 describe Spree::Carton do
   let(:carton) { create(:carton) }
 
+  it 'sups' do
+    puts Benchmark.measure {
+      create :carton
+    }
+  end
+
   describe "#create" do
     subject { carton }
 
