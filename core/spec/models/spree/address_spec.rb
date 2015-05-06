@@ -178,17 +178,19 @@ describe Spree::Address, :type => :model do
     end
 
     context "user given" do
-      let(:bill_address) { Spree::Address.new(phone: Time.now.to_i) }
-      let(:ship_address) { double("ShipAddress") }
-      let(:user) { double("User", bill_address: bill_address, ship_address: ship_address) }
+      let(:bill_address) { Spree::Address.new(phone: '123-456-7890') }
+      let(:user) { double("User", bill_address: bill_address) }
 
       it "returns a copy of that user bill address" do
-        expect(described_class.default(user).phone).to eq bill_address.phone
+        expect(described_class.default(user).phone).to eq '123-456-7890'
       end
 
-      it "falls back to build default when user has no address" do
-        allow(user).to receive_messages(bill_address: nil)
-        expect(described_class.default(user)).to eq described_class.build_default
+      context 'has no address' do
+        let(:bill_address) { nil }
+
+        it "falls back to build default when user has no address" do
+          expect(described_class.default(user)).to eq described_class.build_default
+        end
       end
     end
   end
