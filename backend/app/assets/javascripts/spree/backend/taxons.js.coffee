@@ -13,6 +13,9 @@ $(document).ready ->
     draggable.next().insertBefore(draggable)
     sortupdate(draggable)
 
+  focusDraggable = (e) ->
+    $(e.srcElement).focus()
+
   moveDraggable = (e) ->
     if e.keyCode == $.ui.keyCode.UP
       raiseDraggable $(e.currentTarget)
@@ -30,8 +33,11 @@ $(document).ready ->
 
   sortable = $('#taxon_products').sortable()
     .on
+      sortstart: focusDraggable
+      sortstop: focusDraggable
       sortupdate: saveSort
     .on
+      click: focusDraggable
       keydown: moveDraggable
     , '.sort_item'
 
