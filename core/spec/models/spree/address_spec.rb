@@ -239,8 +239,10 @@ describe Spree::Address, :type => :model do
     end
   end
 
-  context "defines require_phone? helper method" do
-    let(:address) { stub_model(Spree::Address) }
-    specify { expect(address.instance_eval{ require_phone? }).to be true}
+  context '#requires_phone' do
+    let(:address) { described_class..new }
+    subject { described_class.new.require_phone? }
+
+    it { is_expected.to be }
   end
 end
