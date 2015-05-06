@@ -20,7 +20,6 @@ $(document).ready ->
         data: (term, page) ->
           per_page: 50,
           page: page,
-          token: Spree.api_key,
           q:
             name_cont: term
         results: (data, page) ->
@@ -41,8 +40,6 @@ $(document).ready ->
     el = $('#taxon_products')
     Spree.ajax
       url: Spree.routes.taxon_products_api,
-      data:
-        id: e.val,
-        token: Spree.api_key
+      data: { id: e.val }
       success: (data) ->
         el.html productListTemplate(data.products)
