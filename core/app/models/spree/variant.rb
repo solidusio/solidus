@@ -1,4 +1,18 @@
 module Spree
+  # == Master Variant
+  #
+  # Every product has one master variant, which stores master price and SKU,
+  # size and weight, etc. The master variant does not have option values
+  # associated with it. Contains on_hand inventory levels only when there are
+  # no variants for the product.
+  #
+  # == Variants
+  #
+  # All variants can access the product properties directly (via reverse
+  # delegation). Inventory units are tied to Variant.  The master variant can
+  # have inventory units, but not option values. All other variants have
+  # option values and may have inventory units. Sum of on_hand each variant's
+  # inventory level determine "on_hand" level for the product.
   class Variant < Spree::Base
     acts_as_paranoid
 
@@ -50,10 +64,16 @@ module Spree
 
     scope :in_stock, -> { joins(:stock_items).where('count_on_hand > ? OR track_inventory = ?', 0, false) }
 
+    # Returns variants that are not deleted and have a price in the given
+    # currency.
+    #
+    # @param currency [String] the currency to filter by; defaults to Spree's default
+    # @return [ActiveRecord::Relation]
     def self.active(currency = nil)
       joins(:prices).where(deleted_at: nil).where('spree_prices.currency' => currency || Spree::Config[:currency]).where('spree_prices.amount IS NOT NULL')
     end
 
+    # @return [Spree::TaxCategory] the variant's tax category
     def tax_category
       if self[:tax_category_id].nil?
         product.tax_category
@@ -62,23 +82,37 @@ module Spree
       end
     end
 
+    # Sets the cost_price for the variant.
+    #
+    # @param price [Any] the price to set
+    # @return [Bignum]
     def cost_price=(price)
       self[:cost_price] = Spree::LocalizedNumber.parse(price) if price.present?
     end
 
+    # Sets the weight for the variant.
+    #
+    # @param weight [Any] the weight to set
+    # @return [Bignum]
     def weight=(weight)
       self[:weight] = Spree::LocalizedNumber.parse(weight) if weight.present?
     end
 
-    # returns number of units currently on backorder for this variant.
+    # Counts the number of units currently on backorder for this variant.
+    #
+    # @return [Fixnum]
     def on_backorder
       inventory_units.with_state('backordered').size
     end
 
+    # @return [Boolean] true if this variant can be backordered
     def is_backorderable?
       Spree::Stock::Quantifier.new(self).backorderable?
     end
 
+    # Creates a sentence out of the variant's (sorted) option values.
+    #
+    # @return [String] a sentence-ified string of option values.
     def options_text
       values = self.option_values.sort do |a, b|
         a.option_type.position <=> b.option_type.position
@@ -91,35 +125,50 @@ module Spree
       values.to_sentence({ words_connector: ", ", two_words_connector: ", " })
     end
 
-    # Default to master name
+    # Determines the name of an Exchange variant.
+    #
+    # @return [String] the master variant name, if it is a master; or a comma-separated list of all option values.
     def exchange_name
       is_master? ? name : options_text
     end
 
+    # Generates a verbose name for the variant, appending 'Master' if it is a
+    # master variant, otherwise a list of its option values.
+    #
+    # @return [String] the generated name
     def descriptive_name
       is_master? ? name + ' - Master' : name + ' - ' + options_text
     end
 
-    # use deleted? rather than checking the attribute directly. this
-    # allows extensions to override deleted? if they want to provide
-    # their own definition.
+    # Returns whether this variant has been deleted. Provided as a method of
+    # overriding the logic for determining if a variant is deleted.
+    #
+    # @return [Boolean] true if this variant has been deleted
     def deleted?
       !!deleted_at
     end
 
-    # Product may be created with deleted_at already set,
-    # which would make AR's default finder return nil.
-    # This is a stopgap for that little problem.
+    # Override ActiveRecord finder to function even if the product has been
+    # deleted.
+    #
+    # @return [Spree::Product]
     def product
       Spree::Product.unscoped { super }
     end
 
+    # Assign given options hash to option values.
+    #
+    # @param options [Array] array of hashes with a name and value.
     def options=(options = {})
       options.each do |option|
         set_option_value(option[:name], option[:value])
       end
     end
 
+    # Sets an option type and value for the given name and value.
+    #
+    # @param opt_name [String] the name of the option
+    # @param opt_value [String] the value to set to the option
     def set_option_value(opt_name, opt_value)
       # no option values on master
       return if self.is_master
@@ -150,18 +199,36 @@ module Spree
       self.save
     end
 
+    # Fetches the option value for the given option name.
+    #
+    # @param opt_name [String] the name of the option whose value you want
+    # @return [String] the option value
     def option_value(opt_name)
       self.option_values.detect { |o| o.option_type.name == opt_name }.try(:presentation)
     end
 
+    # Converts the variant's price to the given currency.
+    #
+    # @param currency [String] the desired currency
+    # @return [Spree::Price] the price in the desired currency
     def price_in(currency)
       prices.detect{ |price| price.currency == currency && price.is_default } || Spree::Price.new(variant_id: self.id, currency: currency)
     end
 
+    # Fetches the price amount in the specified currency.
+    #
+    # @param currency (see #price)
+    # @return [Float] the amount in the specified currency.
     def amount_in(currency)
       price_in(currency).try(:amount)
     end
 
+    # Calculates the sum of the specified price modifiers in the specified
+    # currency.
+    #
+    # @param currency [String] (see #price)
+    # @param options (see #price_modifier_amount)
+    # @return (see #price_modifier_amount)
     def price_modifier_amount_in(currency, options = {})
       return 0 unless options.present?
 
@@ -175,6 +242,10 @@ module Spree
       }.sum
     end
 
+    # Calculates the sum of the specified price modifiers.
+    #
+    # @param options [Hash] for specifying keys, eg: `{keys: ['key_1', 'key_2']}`
+    # @return [Fixnum] the sum
     def price_modifier_amount(options = {})
       return 0 unless options.present?
 
@@ -188,30 +259,45 @@ module Spree
       }.sum
     end
 
+    # Generates a friendly name and sku string.
+    #
+    # @return [String]
     def name_and_sku
       "#{name} - #{sku}"
     end
 
+    # Generates a string of the SKU and a list of all the option values.
+    #
+    # @return [String]
     def sku_and_options_text
       "#{sku} #{options_text}".strip
     end
 
+    # @return [Boolean] true if there is stock on-hand for the variant.
     def in_stock?
       Rails.cache.fetch(in_stock_cache_key) do
         total_on_hand > 0
       end
     end
 
+    # @param quantity [Fixnum] how many are desired
+    # @return [Boolean] true if the desired quantity can be supplied
     def can_supply?(quantity=1)
       Spree::Stock::Quantifier.new(self).can_supply?(quantity)
     end
 
+    # Fetches the on-hand quantity of the variant.
+    #
+    # @return [Fixnum] the number currently on-hand
     def total_on_hand
       Spree::Stock::Quantifier.new(self).total_on_hand
     end
 
-    # Shortcut method to determine if inventory tracking is enabled for this variant
-    # This considers both variant tracking flag and site-wide inventory tracking settings
+    # Shortcut method to determine if inventory tracking is enabled for this
+    # variant. This considers both variant tracking flag and site-wide inventory
+    # tracking settings.
+    #
+    # @return [Boolean] true if inventory tracking is enabled
     def should_track_inventory?
       self.track_inventory? && Spree::Config.track_inventory_levels
     end
