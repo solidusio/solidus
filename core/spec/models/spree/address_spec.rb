@@ -5,15 +5,13 @@ describe Spree::Address, :type => :model do
   subject { Spree::Address }
 
   context "aliased attributes" do
-    let(:address) { Spree::Address.new }
+    let(:address) { Spree::Address.new firstname: 'Ryan', lastname: 'Bigg'}
 
-    it "first_name" do
-      address.firstname = "Ryan"
+    it " first_name" do
       expect(address.first_name).to eq("Ryan")
     end
 
     it "last_name" do
-      address.lastname = "Bigg"
       expect(address.last_name).to eq("Bigg")
     end
   end
