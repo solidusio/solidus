@@ -38,6 +38,9 @@ describe "Customer Details", type: :feature, js: true do
       expect(find('#order_bill_address_attributes_city').value).to eq user.bill_address.city
       expect(find('#order_bill_address_attributes_zipcode').value).to eq user.bill_address.zipcode
       expect(find('#order_bill_address_attributes_country_id').value).to eq user.bill_address.country_id.to_s
+      # This spec fails on slow computers if we do not wait for AJAX here due
+      # to slow loading of states based on the selected country.
+      wait_for_ajax
       expect(find('#order_bill_address_attributes_state_id').value).to eq user.bill_address.state_id.to_s
       expect(find('#order_bill_address_attributes_phone').value).to eq user.bill_address.phone
       click_button "Update"
