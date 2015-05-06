@@ -20,6 +20,7 @@
 //= require underscore-min
 //= require backbone
 //= require spree
+//= require ./backend/backbone-overrides
 //= require spree/backend/spree-select2
 //= require_tree .
 
