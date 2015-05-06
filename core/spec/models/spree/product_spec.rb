@@ -175,20 +175,6 @@ describe Spree::Product, :type => :model do
       end
     end
 
-    describe 'Variants sorting' do
-      context 'without master variant' do
-        it 'sorts variants by position' do
-          expect(product.variants.to_sql).to match(/ORDER BY (\`|\")spree_variants(\`|\").position ASC/)
-        end
-      end
-
-      context 'with master variant' do
-        it 'sorts variants by position' do
-          expect(product.variants_including_master.to_sql).to match(/ORDER BY (\`|\")spree_variants(\`|\").position ASC/)
-        end
-      end
-    end
-
     context "has stock movements" do
       let(:product) { create(:product) }
       let(:variant) { product.master }
