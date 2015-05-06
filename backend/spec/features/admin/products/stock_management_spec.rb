@@ -74,7 +74,7 @@ describe "Stock Management", :type => :feature do
       it "can add stock items to other stock locations", js: true do
         visit current_url
         fill_in "variant-count-on-hand-#{variant.id}", with: '3'
-        targetted_select2_search "Other location", from: "#variant-stock-location-#{variant.id}"
+        targetted_select2_search "Other location", from: "#s2id_variant-stock-location-#{variant.id}"
         find(:css, ".fa-plus[data-variant-id='#{variant.id}']").click
         wait_for_ajax
         expect(page).to have_content('Created successfully')
