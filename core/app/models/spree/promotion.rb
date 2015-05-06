@@ -33,6 +33,12 @@ module Spree
 
     scope :coupons, -> { where.not(code: nil) }
     scope :advertised, -> { where(advertise: true) }
+    scope :active, -> do
+      table = self.arel_table
+      time = Time.current
+      where(table[:starts_at].eq(nil).or(table[:starts_at].lt(time))).
+        where(table[:expires_at].eq(nil).or(table[:expires_at].gt(time)))
+    end
 
     order_join_table = reflect_on_association(:orders).join_table
 
@@ -41,11 +47,6 @@ module Spree
     # temporary code. remove after the column is dropped from the db.
     def columns
       super.reject { |column| column.name == 'code' }
-    end
-
-    def self.active
-      where('spree_promotions.starts_at IS NULL OR spree_promotions.starts_at < ?', Time.now).
-        where('spree_promotions.expires_at IS NULL OR spree_promotions.expires_at > ?', Time.now)
     end
 
     def self.order_activatable?(order)
