@@ -1,3 +1,19 @@
+.line-item.editing {
+  .edit-line-item,
+  .delete-line-item,
+  .line-item-qty-show {
+    display: none !important;
+  }
+}
+
+.line-item:not(.editing) {
+  .save-line-item,
+  .cancel-line-item,
+  .line-item-qty-edit {
+    display: none !important;
+  }
+}
+
 // Customize orders filter
 [data-hook="admin_orders_index_search"] {
   select[data-placeholder="Status"] {
