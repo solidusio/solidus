@@ -6,12 +6,13 @@ body {
   font-size: $body-font-size;
   font-weight: 400;
   color: $color-body-text;
+  background: $color-body-bg;
   text-rendering: optimizeLegibility;
 }
 
 hr {
   border-top: 1px solid $color-border;
-  border-bottom: 1px solid white;
+  border-bottom: 1px solid $color-body-bg;
   border-left: none;
 }
 
