@@ -4,44 +4,6 @@ describe Spree::Address, :type => :model do
 
   subject { Spree::Address }
 
-  describe "clone" do
-    it "creates a copy of the address with the exception of the id, updated_at and created_at attributes" do
-      state = create(:state)
-      original = create(:address,
-                         :address1 => 'address1',
-                         :address2 => 'address2',
-                         :alternative_phone => 'alternative_phone',
-                         :city => 'city',
-                         :country => Spree::Country.first,
-                         :firstname => 'firstname',
-                         :lastname => 'lastname',
-                         :company => 'company',
-                         :phone => 'phone',
-                         :state_id => state.id,
-                         :state_name => state.name,
-                         :zipcode => '10001')
-
-      cloned = original.clone
-
-      expect(cloned.address1).to eq(original.address1)
-      expect(cloned.address2).to eq(original.address2)
-      expect(cloned.alternative_phone).to eq(original.alternative_phone)
-      expect(cloned.city).to eq(original.city)
-      expect(cloned.country_id).to eq(original.country_id)
-      expect(cloned.firstname).to eq(original.firstname)
-      expect(cloned.lastname).to eq(original.lastname)
-      expect(cloned.company).to eq(original.company)
-      expect(cloned.phone).to eq(original.phone)
-      expect(cloned.state_id).to eq(original.state_id)
-      expect(cloned.state_name).to eq(original.state_name)
-      expect(cloned.zipcode).to eq(original.zipcode)
-
-      expect(cloned.id).not_to eq(original.id)
-      expect(cloned.created_at).not_to eq(original.created_at)
-      expect(cloned.updated_at).not_to eq(original.updated_at)
-    end
-  end
-
   context "aliased attributes" do
     let(:address) { Spree::Address.new }
 
@@ -277,8 +239,10 @@ describe Spree::Address, :type => :model do
     end
   end
 
-  context "defines require_phone? helper method" do
-    let(:address) { stub_model(Spree::Address) }
-    specify { expect(address.instance_eval{ require_phone? }).to be true}
+  context '#requires_phone' do
+    let(:address) { described_class..new }
+    subject { described_class.new.require_phone? }
+
+    it { is_expected.to be }
   end
 end

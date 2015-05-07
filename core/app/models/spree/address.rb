@@ -24,7 +24,7 @@ module Spree
 
     def self.default(user = nil, kind = "bill")
       if user && user_address = user.send(:"#{kind}_address")
-        user_address.clone
+        user_address.dup
       else
         build_default
       end
@@ -55,7 +55,8 @@ module Spree
     end
 
     def clone
-      self.class.new(self.attributes.except('id', 'updated_at', 'created_at'))
+      ActiveSupport::Deprecation.warn "Spree::Address.clone is deprecated and may be removed from future releases, Use Spree::Address.dup instead", caller
+      self.dup
     end
 
     def ==(other_address)
