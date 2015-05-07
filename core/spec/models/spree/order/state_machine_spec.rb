@@ -197,10 +197,6 @@ describe Spree::Order, :type => :model do
         let(:payment) { create(:payment) }
 
         it "should automatically refund all payments" do
-          allow(order).to receive_message_chain(:payments, :valid, :size).and_return(1)
-          allow(order).to receive_message_chain(:payments, :completed).and_return([payment])
-          allow(order).to receive_message_chain(:payments, :completed, :includes).and_return([payment])
-          allow(order).to receive_message_chain(:payments, :last).and_return(payment)
           expect(payment).to receive(:cancel!)
           order.cancel!
         end
