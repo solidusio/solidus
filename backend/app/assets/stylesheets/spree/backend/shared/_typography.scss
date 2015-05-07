@@ -1,8 +1,7 @@
 // Base
 //--------------------------------------------------------------
-body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, form, p, blockquote, th, td { margin: 0; padding: 0; font-size: 13px; }
-
 body {
+  padding: 0;
   font-family: $base-font-family;
   font-size: $body-font-size;
   font-weight: 400;
@@ -107,6 +106,7 @@ dl {
   dd {
     width: 60%;
     padding-right: 0;
+    margin-left: 0;
   }
 
   dd:after {
