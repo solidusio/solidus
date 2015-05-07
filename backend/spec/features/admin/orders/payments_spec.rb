@@ -179,8 +179,7 @@ describe 'Payments', :type => :feature do
         fill_in "Expiration", :with => "09 / #{Time.now.year + 1}"
         fill_in "Card Code", :with => "007"
         # Regression test for #4277
-        sleep(1)
-        expect(find('.ccType', :visible => false).value).to eq('visa')
+        expect(page).to have_css('.ccType[value="visa"]', visible: false)
         click_button "Continue"
         expect(page).to have_content("Payment has been successfully created!")
       end
