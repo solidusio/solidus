@@ -323,7 +323,6 @@ describe "Products", :type => :feature do
           wait_for_ajax
         end
 
-        page.all('tr.product_property').size > 1
         within(:css, "tr.product_property:first-child") do
           expect(first('input[type=text]').value).to eq('baseball_cap_color')
         end
@@ -335,15 +334,19 @@ describe "Products", :type => :feature do
 
       it "is still viewable" do
         visit spree.admin_products_path
+
+        expect(page).to have_content(product.name)
         accept_alert do
           click_icon :trash
-          wait_for_ajax
         end
+
+        expect(page).to have_no_content(product.name)
+
         # This will show our deleted product
         check "Show Deleted"
         click_icon :search
         click_link product.name
-        expect(find("#product_price").value.to_f).to eq(product.price.to_f)
+        expect(page).to have_field('Master Price', with: product.price.to_f)
       end
     end
   end

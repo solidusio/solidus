@@ -30,7 +30,6 @@ describe "Shipments", :type => :feature do
 
     it "can ship a completed order" do
       click_link "ship"
-      wait_for_ajax
 
       expect(page).to have_content("SHIPPED PACKAGE")
       expect(order.reload.shipment_state).to eq("shipped")
@@ -53,14 +52,12 @@ describe "Shipments", :type => :feature do
       within_row(1) { click_icon 'arrows-h' }
       targetted_select2 'LA', from: '#s2id_item_stock_location'
       click_icon :ok
-      wait_for_ajax
-      expect(page.find("#shipment_#{order.shipments.first.id}")).to be_present
+      expect(page).to have_css("#shipment_#{order.shipments.first.id}")
 
       within_row(2) { click_icon 'arrows-h' }
       targetted_select2 "LA(#{order.reload.shipments.last.number})", from: '#s2id_item_stock_location'
       click_icon :ok
-      wait_for_ajax
-      expect(page.find("#shipment_#{order.reload.shipments.last.id}")).to be_present
+      expect(page).to have_css("#shipment_#{order.reload.shipments.last.id}")
     end
   end
 end
