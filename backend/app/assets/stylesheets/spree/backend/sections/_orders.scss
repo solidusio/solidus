@@ -15,7 +15,7 @@
 
   .order-total {
     font-size: 35px;
-    font-weight: 600;
+    font-weight: $font-weight-bold;
     color: $color-success;
   }
 }
@@ -26,7 +26,7 @@
 
   .customer {
     font-size: 20px;
-    font-weight: 600;
+    font-weight: $font-weight-bold;
     color: $color-success;
   }
 }

@@ -18,7 +18,7 @@ nav.menu {
         text-align: left;
         border: 1px solid transparent;
         text-transform: uppercase;
-        font-weight: 600;
+        font-weight: $font-weight-bold;
         font-size: 90%;
       }
 
@@ -112,7 +112,7 @@ nav.menu {
       }
 
       span.text {
-        font-weight: 600;
+        font-weight: $font-weight-bold;
       }
     }
 

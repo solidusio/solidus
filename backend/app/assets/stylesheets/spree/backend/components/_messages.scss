@@ -35,7 +35,7 @@
   z-index: 1000;
   font-size: 120%;
   color: $color-1;
-  font-weight: 600;
+  font-weight: $font-weight-bold;
 
   &.notice  { background-color: rgba($color-notice,  0.8) }
   &.success { background-color: rgba($color-success, 0.8) }

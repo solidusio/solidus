@@ -72,7 +72,7 @@ textarea {
 }
 
 label {
-  font-weight: 600;
+  font-weight: $font-weight-bold;
   text-transform: uppercase;
   font-size: 85%;
   display: inline;
@@ -100,7 +100,7 @@ button, .button {
   background-color: $color-btn-bg;
   color: $color-btn-text;
   text-transform: uppercase;
-  font-weight: 600 !important;
+  font-weight: $font-weight-bold !important;
   white-space: nowrap;
 
   &:before {
@@ -218,7 +218,7 @@ fieldset {
     background-color: $color-1;
     color: $color-2;
     font-size: 14px;
-    font-weight: 600;
+    font-weight: $font-weight-bold;
     text-transform: uppercase;
     text-align: center;
     padding: 8px 15px;

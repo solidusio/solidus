@@ -16,7 +16,7 @@ hr {
 }
 
 strong, b {
-  font-weight: 600;
+  font-weight: $font-weight-bold;
 }
 
 // links
@@ -48,7 +48,7 @@ a {
 //--------------------------------------------------------------
 
 h1,h2,h3,h4,h5,h6 {
-  font-weight: 600;
+  font-weight: $font-weight-bold;
   color: $color-headers;
   line-height: 1.1;
 }
@@ -97,7 +97,7 @@ dl {
 
   dt {
     width: 40%;
-    font-weight: 600;
+    font-weight: $font-weight-bold;
     padding-left: 0;
     text-transform: uppercase;
     font-size: 85%;
