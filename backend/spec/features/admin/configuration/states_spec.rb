@@ -9,19 +9,9 @@ describe "States", :type => :feature do
     @hungary = Spree::Country.create!(:name => "Hungary", :iso_name => "Hungary")
   end
 
-  # TODO: For whatever reason, rendering of the states page takes a non-trivial amount of time
-  # Therefore we navigate to it, and wait until what we see is visible
   def go_to_states_page
     visit spree.admin_country_states_path(country)
-    counter = 0
-    until page.has_css?("#new_state_link")
-      if counter < 10
-        sleep(2)
-        counter += 1
-      else
-        raise "Could not see new state link!"
-      end
-    end
+    expect(page).to have_css("#new_state_link")
   end
 
   context "admin visiting states listing" do
