@@ -59,9 +59,9 @@ module Spree
     end
 
     def self.with_coupon_code(val)
-      if code = PromotionCode.where(value: val.downcase).first
-        code.promotion
-      end
+      joins(:codes).where(
+        PromotionCode.arel_table[:value].eq(val.downcase)
+      ).first
     end
 
     def as_json(options={})
