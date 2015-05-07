@@ -233,7 +233,7 @@ module Spree
     end
 
     def adjustment_promotion_scope(adjustment_scope)
-      adjustment_scope.promotion.where(source_id: actions.map(&:id))
+      adjustment_scope.promotion.where(source_id: actions.pluck(:id))
     end
   end
 end
