@@ -116,6 +116,12 @@ dl {
 
 }
 
+.dl-collapse {
+  dt, dd {
+    width: auto;
+  }
+}
+
 // Helpers
 .align-center  { text-align: center  }
 .align-right   { text-align: right   }
