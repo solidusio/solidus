@@ -15,6 +15,7 @@ module Spree
       has_many :stock_locations, through: :user_stock_locations
 
       has_many :spree_orders, foreign_key: "user_id", class_name: "Spree::Order"
+      has_many :orders, foreign_key: "user_id", class_name: "Spree::Order"
 
       belongs_to :ship_address, class_name: 'Spree::Address'
       belongs_to :bill_address, class_name: 'Spree::Address'
