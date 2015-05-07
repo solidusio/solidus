@@ -74,8 +74,8 @@ module Spree
     end
 
     def active?
-      (starts_at.nil? || starts_at < Time.now) &&
-        (expires_at.nil? || expires_at > Time.now)
+      (starts_at.nil? || starts_at < Time.current) &&
+        (expires_at.nil? || expires_at > Time.current)
     end
 
     def activate(order:, line_item: nil, user: nil, path: nil, promotion_code: nil)
