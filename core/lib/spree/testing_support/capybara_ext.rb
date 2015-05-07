@@ -34,10 +34,6 @@ module CapybaraExt
     end
   end
 
-  def set_select2_field(field, value)
-    page.execute_script %Q{$('#{field}').select2('val', '#{value}')}
-  end
-
   def select2_search(value, options)
     label = find_label_by_text(options[:from])
     within label.first(:xpath,".//..") do
