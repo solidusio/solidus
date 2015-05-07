@@ -17,9 +17,7 @@
   @if $spec   {         #{$property}: $value; }
 }
 
-//************************************************************************//
-// Source : https://github.com/thoughtbot/bourbon/blob/master/app/assets/stylesheets/css3/_border-radius.scss
-//************************************************************************//
 @mixin border-radius ($radii) {
-  @include prefixer(border-radius, $radii, webkit, moz, ms, o);
+  border-radius: $radii;
+  @warn 'DEPRECATION WARNING: border-radius does not require vendor prefixing';
 }

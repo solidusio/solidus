@@ -1,7 +1,7 @@
 #powerTip {
   background-color: $color-3;
   padding: 5px 15px;
-  @include border-radius($border-radius);
+  border-radius: $border-radius;
 
   &.n:before, &.ne:before, &.nw:before {
     border-top-width: 5px;

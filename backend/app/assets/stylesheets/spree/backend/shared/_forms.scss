@@ -8,9 +8,9 @@ input[type="url"],
 input[type="number"],
 input[type="tel"],
 textarea, fieldset {
-  @include border-radius($border-radius);
   padding: 7px 10px;
   border: 1px solid $color-txt-brd;
+  border-radius: $border-radius;
   color: $color-txt-text;
   font-size: 90%;
 
@@ -93,10 +93,10 @@ label {
 input[type="submit"],
 input[type="button"],
 button, .button {
-  @include border-radius($border-radius);
   display: inline-block;
   padding: 8px 15px;
   border: none;
+  border-radius: $border-radius;
   background-color: $color-btn-bg;
   color: $color-btn-text;
   text-transform: uppercase;
@@ -245,7 +245,7 @@ fieldset {
     }
 
     button, .button, input[type="submit"], input[type="button"], span.or {
-      @include border-radius($border-radius);
+      border-radius: $border-radius;
 
       -webkit-box-shadow: 0 0 0 15px $color-1;
          -moz-box-shadow: 0 0 0 15px $color-1;

@@ -64,12 +64,12 @@
 }
 
 #jstree-marker-line {
-  @include border-radius($border-radius !important);
   height: 0px !important;
   margin-left: 5px !important;
   margin-top: -2px !important;
   border: none !important;
   border-bottom: 1px solid $color-body-text !important;
+
   background-color:  very-light($color-3) !important;
 
   -webkit-box-shadow: none !important;
@@ -84,7 +84,7 @@
   -webkit-box-shadow: none !important;
   box-shadow: none !important;
   border: none !important;
-  @include border-radius($border-radius !important);
+  border-radius: $border-radius !important;
 
   &:before {
     content: '';
@@ -106,9 +106,9 @@
     font-size: 90% !important;
 
     &:hover {
-      @include border-radius($border-radius !important);
       background-color: $color-2 !important;
       border: none !important;
+      border-radius: $border-radius !important;
       -moz-box-shadow: none !important;
       -webkit-box-shadow: none !important;
       line-height: inherit !important;
