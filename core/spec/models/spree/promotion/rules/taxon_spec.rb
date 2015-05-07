@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe Spree::Promotion::Rules::Taxon, :type => :model do
-  let(:rule){ subject }
+  let(:rule) { Spree::Promotion::Rules::Taxon.create!(promotion: create(:promotion)) }
 
   context '#elegible?(order)' do
     let(:taxon){ create :taxon, name: 'first' }
@@ -17,7 +17,7 @@ describe Spree::Promotion::Rules::Taxon, :type => :model do
         rule.preferred_match_policy = 'any'
       end
 
-      it 'is eligible if order does has any prefered taxon' do
+      it 'is eligible if order does have any prefered taxon' do
         order.products.first.taxons << taxon
         rule.taxons << taxon
         expect(rule).to be_eligible(order)

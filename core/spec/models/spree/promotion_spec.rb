@@ -470,21 +470,21 @@ describe Spree::Promotion, :type => :model do
     end
 
     context "with 'all' match policy" do
-      let(:promo1) { Spree::PromotionRule.create! }
-      let(:promo2) { Spree::PromotionRule.create! }
+      let(:rule1) { Spree::PromotionRule.create!(promotion: promotion) }
+      let(:rule2) { Spree::PromotionRule.create!(promotion: promotion) }
 
       before { promotion.match_policy = 'all' }
 
       context "when all rules are eligible" do
         before do
-          allow(promo1).to receive_messages(eligible?: true, applicable?: true)
-          allow(promo2).to receive_messages(eligible?: true, applicable?: true)
+          allow(rule1).to receive_messages(eligible?: true, applicable?: true)
+          allow(rule2).to receive_messages(eligible?: true, applicable?: true)
 
-          promotion.promotion_rules = [promo1, promo2]
+          promotion.promotion_rules = [rule1, rule2]
           allow(promotion.promotion_rules).to receive(:for).and_return(promotion.promotion_rules)
         end
         it "returns the eligible rules" do
-          expect(promotion.eligible_rules(promotable)).to eq [promo1, promo2]
+          expect(promotion.eligible_rules(promotable)).to eq [rule1, rule2]
         end
         it "does set anything to eligiblity errors" do
           promotion.eligible_rules(promotable)
@@ -495,10 +495,10 @@ describe Spree::Promotion, :type => :model do
       context "when any of the rules is not eligible" do
         let(:errors) { double ActiveModel::Errors, empty?: false }
         before do
-          allow(promo1).to receive_messages(eligible?: true, applicable?: true, eligibility_errors: nil)
-          allow(promo2).to receive_messages(eligible?: false, applicable?: true, eligibility_errors: errors)
+          allow(rule1).to receive_messages(eligible?: true, applicable?: true, eligibility_errors: nil)
+          allow(rule2).to receive_messages(eligible?: false, applicable?: true, eligibility_errors: errors)
 
-          promotion.promotion_rules = [promo1, promo2]
+          promotion.promotion_rules = [rule1, rule2]
           allow(promotion.promotion_rules).to receive(:for).and_return(promotion.promotion_rules)
         end
         it "returns nil" do
@@ -525,12 +525,12 @@ describe Spree::Promotion, :type => :model do
       end
 
       context "when none of the rules are eligible" do
-        let(:promo) { Spree::PromotionRule.create! }
+        let(:rule) { Spree::PromotionRule.create!(promotion: promotion) }
         let(:errors) { double ActiveModel::Errors, empty?: false }
         before do
-          allow(promo).to receive_messages(eligible?: false, applicable?: true, eligibility_errors: errors)
+          allow(rule).to receive_messages(eligible?: false, applicable?: true, eligibility_errors: errors)
 
-          promotion.promotion_rules = [promo]
+          promotion.promotion_rules = [rule]
           allow(promotion.promotion_rules).to receive(:for).and_return(promotion.promotion_rules)
         end
         it "returns nil" do

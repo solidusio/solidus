@@ -391,7 +391,7 @@ module Spree
     end
 
     def deliver_order_confirmation_email
-      OrderMailer.confirm_email(self.id).deliver
+      OrderMailer.confirm_email(self.id).deliver_now
       update_column(:confirmation_delivered, true)
     end
 
@@ -420,7 +420,7 @@ module Spree
     # Check to see if any line item variants are soft, deleted.
     # If so add error and restart checkout.
     def ensure_line_item_variants_are_not_deleted
-      if line_items.select{ |li| li.variant.destroyed? }.present?
+      if line_items.any? { |li| li.variant.paranoia_destroyed? }
         errors.add(:base, Spree.t(:deleted_variants_present))
         restart_checkout_flow
         false
@@ -773,7 +773,7 @@ module Spree
     end
 
     def send_cancel_email
-      OrderMailer.cancel_email(self.id).deliver
+      OrderMailer.cancel_email(self.id).deliver_now
     end
 
     def after_resume

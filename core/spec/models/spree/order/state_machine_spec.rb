@@ -76,8 +76,9 @@ describe Spree::Order, :type => :model do
   end
 
   context "#can_cancel?" do
+    states = [:pending, :backorder, :ready]
 
-    %w(pending backorder ready).each do |shipment_state|
+    states.each do |shipment_state|
       it "should be true if shipment_state is #{shipment_state}" do
         allow(order).to receive_messages :completed? => true
         order.shipment_state = shipment_state
@@ -85,7 +86,7 @@ describe Spree::Order, :type => :model do
       end
     end
 
-    (Spree::Shipment.state_machine.states.keys - %w(pending backorder ready)).each do |shipment_state|
+    (Spree::Shipment.state_machine.states.keys - states).each do |shipment_state|
       it "should be false if shipment_state is #{shipment_state}" do
         allow(order).to receive_messages :completed? => true
         order.shipment_state = shipment_state
@@ -139,7 +140,7 @@ describe Spree::Order, :type => :model do
         order_id = args[0]
         mail_message
       }
-      expect(mail_message).to receive :deliver
+      expect(mail_message).to receive :deliver_now
       order.cancel!
       expect(order_id).to eq(order.id)
     end
@@ -149,7 +150,7 @@ describe Spree::Order, :type => :model do
         allow(shipment).to receive(:ensure_correct_adjustment)
         allow(shipment).to receive(:update_order)
         allow(Spree::OrderMailer).to receive(:cancel_email).and_return(mail_message = double)
-        allow(mail_message).to receive :deliver
+        allow(mail_message).to receive :deliver_now
 
         allow(order).to receive :has_available_shipment
       end
@@ -163,7 +164,7 @@ describe Spree::Order, :type => :model do
         # TODO: This is ugly :(
         # Stubs methods that cause unwanted side effects in this test
         allow(Spree::OrderMailer).to receive(:cancel_email).and_return(mail_message = double)
-        allow(mail_message).to receive :deliver
+        allow(mail_message).to receive :deliver_now
         allow(order).to receive :has_available_shipment
         allow(order).to receive :restock_items!
         allow(shipment).to receive(:cancel!)

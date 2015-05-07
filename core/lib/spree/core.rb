@@ -12,15 +12,16 @@ require 'paperclip'
 require 'paranoia'
 require 'premailer/rails'
 require 'ransack'
-require 'state_machine'
+require 'state_machines-activerecord'
+require 'responders'
 
 # This is required because ActiveModel::Validations#invalid? conflicts with the
 # invalid state of a Payment. In the future this should be removed.
-StateMachine::Machine.ignore_method_conflicts = true
+StateMachines::Machine.ignore_method_conflicts = true
 
 # This is required because ActiveModel::Validations#invalid? conflicts with the
 # invalid state of a Payment. In the future this should be removed.
-StateMachine::Machine.ignore_method_conflicts = true
+StateMachines::Machine.ignore_method_conflicts = true
 
 module Spree
 
@@ -93,12 +94,3 @@ require 'spree/core/controller_helpers/ssl'
 require 'spree/core/controller_helpers/store'
 require 'spree/core/controller_helpers/strong_parameters'
 require 'spree/core/unreturned_item_charger'
-
-# Hack waiting on https://github.com/pluginaweek/state_machine/pull/275
-module StateMachine
-  module Integrations
-    module ActiveModel
-      public :around_validation
-    end
-  end
-end

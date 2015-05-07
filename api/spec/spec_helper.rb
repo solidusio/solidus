@@ -29,6 +29,7 @@ require 'ffaker'
 Dir[File.dirname(__FILE__) + "/support/**/*.rb"].each {|f| require f}
 
 require 'spree/testing_support/factories'
+require 'spree/testing_support/rspec-activemodel-mocks_patch'
 require 'spree/testing_support/preferences'
 
 require 'spree/api/testing_support/caching'

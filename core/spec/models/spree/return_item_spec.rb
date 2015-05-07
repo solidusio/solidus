@@ -4,7 +4,7 @@ shared_examples "an invalid state transition" do |status, expected_status|
   let(:status) { status }
 
   it "cannot transition to #{expected_status}" do
-    expect { subject }.to raise_error(StateMachine::InvalidTransition)
+    expect { subject }.to raise_error(StateMachines::InvalidTransition)
   end
 end
 
@@ -46,7 +46,7 @@ describe Spree::ReturnItem, :type => :model do
       let!(:return_item_with_dupe_inventory_unit) { create(:return_item, inventory_unit: inventory_unit, reception_status: 'received') }
 
       before do
-        assert_raises(StateMachine::InvalidTransition) { subject }
+        assert_raises(StateMachines::InvalidTransition) { subject }
       end
 
       it 'does not receive the return item' do

@@ -166,7 +166,7 @@ module Spree
 
       it "returns errors when source is required and missing" do
         order.update_column(:state, "payment")
-        api_put :update, :id => order.to_param, :order_token => order.token,
+        api_put :update, :id => order.to_param, :order_token => order.guest_token,
           :order => { :payments_attributes => [{ :payment_method_id => @payment_method.id }] }
         response.status.should == 422
         source_errors = json_response['errors']['payments.source']

@@ -46,6 +46,7 @@ FactoryGirl.define do
 
       after(:create) do |promotion, evaluator|
         rule = Spree::Promotion::Rules::ItemTotal.create!(
+          promotion: promotion,
           preferred_operator_min: 'gte',
           preferred_operator_max: 'lte',
           preferred_amount_min: evaluator.item_total_threshold_amount,

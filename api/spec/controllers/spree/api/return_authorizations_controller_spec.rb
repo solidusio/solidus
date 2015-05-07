@@ -51,12 +51,12 @@ module Spree
       it_behaves_like "a return authorization creator"
 
       it "cannot update a return authorization" do
-        api_put :update
+        api_put :update, id: 0
         assert_not_found!
       end
 
       it "cannot delete a return authorization" do
-        api_delete :destroy
+        api_delete :destroy, id: 0
         assert_not_found!
       end
     end

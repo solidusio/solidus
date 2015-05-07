@@ -27,7 +27,6 @@ module Spree
       private
 
       def stock_location
-        render 'spree/api/shared/stock_location_required', status: 422 and return unless params[:stock_location_id]
         @stock_location ||= StockLocation.accessible_by(current_ability, :read).find(params[:stock_location_id])
       end
 

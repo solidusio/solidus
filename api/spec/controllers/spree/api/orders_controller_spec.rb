@@ -4,7 +4,6 @@ require 'spree/testing_support/bar_ability'
 module Spree
   describe Api::OrdersController, :type => :controller do
     render_views
-
     let!(:order) { create(:order) }
     let(:variant) { create(:variant) }
     let(:line_item) { create(:line_item) }
@@ -305,11 +304,6 @@ module Spree
       assert_unauthorized!
     end
 
-    it "cannot add address information to an order that doesn't belong to them" do
-      api_put :address, :id => order.to_param
-      assert_unauthorized!
-    end
-
     it "can create an order" do
       api_post :create, :order => { :line_items => { "0" => { :variant_id => variant.to_param, :quantity => 5 } } }
       expect(response.status).to eq(201)
@@ -597,8 +591,8 @@ module Spree
           expect(source[:name]).to eq payment.source.name
           expect(source[:cc_type]).to eq payment.source.cc_type
           expect(source[:last_digits]).to eq payment.source.last_digits
-          expect(source[:month].to_i).to eq payment.source.month
-          expect(source[:year].to_i).to eq payment.source.year
+          expect(source[:month]).to eq payment.source.month
+          expect(source[:year]).to eq payment.source.year
           expect(source.has_key?(:gateway_customer_profile_id)).to be false
           expect(source.has_key?(:gateway_payment_profile_id)).to be false
         end
@@ -708,8 +702,8 @@ module Spree
         expect(source[:name]).to eq payment.source.name
         expect(source[:cc_type]).to eq payment.source.cc_type
         expect(source[:last_digits]).to eq payment.source.last_digits
-        expect(source[:month].to_i).to eq payment.source.month
-        expect(source[:year].to_i).to eq payment.source.year
+        expect(source[:month]).to eq payment.source.month
+        expect(source[:year]).to eq payment.source.year
         expect(source[:gateway_customer_profile_id]).to eq payment.source.gateway_customer_profile_id
         expect(source[:gateway_payment_profile_id]).to eq payment.source.gateway_payment_profile_id
       end

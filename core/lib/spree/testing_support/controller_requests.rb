@@ -25,6 +25,12 @@ module Spree
     # the Spree engine, and use regular get, post, put or delete to make
     # requests to your application.
     module ControllerRequests
+      extend ActiveSupport::Concern
+
+      included do
+        routes { Spree::Core::Engine.routes }
+      end
+
       def spree_get(action, parameters = nil, session = nil, flash = nil)
         process_spree_action(action, parameters, session, flash, "GET")
       end
@@ -64,13 +70,12 @@ module Spree
 
       def process_spree_action(action, parameters = nil, session = nil, flash = nil, method = "GET")
         parameters ||= {}
-        process(action, method, parameters.merge!(:use_route => :spree), session, flash)
+        process(action, method, parameters, session, flash)
       end
 
       def process_spree_xhr_action(action, parameters = nil, session = nil, flash = nil, method = :get)
         parameters ||= {}
         parameters.reverse_merge!(:format => :json)
-        parameters.merge!(:use_route => :spree)
         xml_http_request(method, action, parameters, session, flash)
       end
     end

@@ -5,7 +5,7 @@ class CreateSpreePromotionCodes < ActiveRecord::Migration
       t.string :value, null: false
       t.integer :usage_limit
 
-      t.timestamps
+      t.timestamps null: true
     end
 
     add_index :spree_promotion_codes, :value, unique: true

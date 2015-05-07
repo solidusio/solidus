@@ -207,7 +207,7 @@ describe Spree::Admin::OrdersController, :type => :controller do
         end
       end
 
-      context 'with an StateMachine::InvalidTransition error' do
+      context 'with an StateMachines::InvalidTransition error' do
         let(:order) { create(:order) }
 
         it 'messages and redirects' do
@@ -353,7 +353,7 @@ describe Spree::Admin::OrdersController, :type => :controller do
 
     it "raise active record not found" do
       expect {
-        spree_get :edit, id: nil
+        spree_get :edit, id: 0
       }.to raise_error ActiveRecord::RecordNotFound
     end
   end
@@ -399,7 +399,8 @@ describe Spree::Admin::OrdersController, :type => :controller do
     end
 
     context "the order has no line items" do
-      let(:order) { Spree::Order.new }
+      let(:order) { Spree::Order.new(:number => "1234") }
+
       it "includes an error on the order" do
         subject
         expect(order.errors[:line_items]).to include Spree.t('errors.messages.blank')
