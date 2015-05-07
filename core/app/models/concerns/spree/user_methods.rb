@@ -19,6 +19,8 @@ module Spree
 
       belongs_to :ship_address, class_name: 'Spree::Address'
       belongs_to :bill_address, class_name: 'Spree::Address'
+
+      before_destroy :check_completed_orders
     end
 
     # has_spree_role? simply needs to return true or false whether a user has a role or not.
@@ -29,5 +31,12 @@ module Spree
     def last_incomplete_spree_order
       spree_orders.incomplete.order('created_at DESC').first
     end
+
+    private
+
+    def check_completed_orders
+      raise Spree::Core::DestroyWithOrdersError if orders.complete.present?
+    end
+
   end
 end
