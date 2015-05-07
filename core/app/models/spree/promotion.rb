@@ -13,10 +13,10 @@ module Spree
     has_many :promotion_actions, autosave: true, dependent: :destroy
     alias_method :actions, :promotion_actions
 
-    has_many :order_promotions, class_name: 'Spree::OrderPromotion'
+    has_many :order_promotions, class_name: "Spree::OrderPromotion"
     has_many :orders, through: :order_promotions
 
-    has_many :codes, class_name: 'Spree::PromotionCode', inverse_of: :promotion
+    has_many :codes, class_name: "Spree::PromotionCode", inverse_of: :promotion
     alias_method :promotion_codes, :codes
 
     accepts_nested_attributes_for :promotion_actions, :promotion_rules
@@ -43,7 +43,7 @@ module Spree
 
     # temporary code. remove after the column is dropped from the db.
     def columns
-      super.reject { |column| column.name == 'code' }
+      super.reject { |column| column.name == "code" }
     end
 
     def self.order_activatable?(order)
@@ -51,11 +51,11 @@ module Spree
     end
 
     def code
-      raise 'Attempted to call code on a Spree::Promotion. Promotions are now tied to multiple code records'
+      raise "Attempted to call code on a Spree::Promotion. Promotions are now tied to multiple code records"
     end
 
     def code=(val)
-      raise 'Attempted to call code= on a Spree::Promotion. Promotions are now tied to multiple code records'
+      raise "Attempted to call code= on a Spree::Promotion. Promotions are now tied to multiple code records"
     end
 
     def self.with_coupon_code(val)
@@ -198,7 +198,7 @@ module Spree
       ].any? do |adjustment_type|
         user.orders.complete.joins(adjustment_type).where(
           spree_adjustments: {
-            source_type: 'Spree::PromotionAction',
+            source_type: "Spree::PromotionAction",
             source_id: actions.map(&:id),
             eligible: true
           }
@@ -220,20 +220,20 @@ module Spree
       end
     end
 
-    def adjustment_promotion_scope(adjustment_scope)
-      adjustment_scope.promotion.where(source_id: actions.map(&:id))
-    end
-
     def normalize_blank_values
       self[:path] = nil if self[:path].blank?
     end
 
     def match_all?
-      match_policy == 'all'
+      match_policy == "all"
     end
 
     def usage_count_for(promotable)
       adjustment_promotion_scope(promotable.adjustments).count
+    end
+
+    def adjustment_promotion_scope(adjustment_scope)
+      adjustment_scope.promotion.where(source_id: actions.map(&:id))
     end
   end
 end
