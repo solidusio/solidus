@@ -36,10 +36,7 @@ group :test do
 end
 
 group :test, :development do
-  platforms :ruby_19 do
-    gem 'pry-debugger'
-  end
-  platforms :ruby_20, :ruby_21 do
+  platforms :mri do
     gem 'pry-byebug', '~> 1.0'
   end
 end
