@@ -51,7 +51,7 @@ describe Spree::Admin::SearchController, :type => :controller do
 
       context 'when searching by bill address last name' do
         it_should_behave_like 'user found by search' do
-          let(:user_attribute) { user.bill_address.firstname }
+          let(:user_attribute) { user.bill_address.lastname }
         end
       end
     end
@@ -62,4 +62,43 @@ describe Spree::Admin::SearchController, :type => :controller do
     end
   end
 
+  describe 'get #products' do
+    let!(:product_one) { create(:product, name: 'jersey') }
+    let!(:product_two) { create(:product, name: 'better jersey') }
+
+    subject { spree_get :products, params }
+
+    shared_examples_for 'product search' do
+      it 'should respond with http success' do
+        subject
+        expect(response).to be_success
+      end
+
+      it 'should set the Surrogate-Control header' do
+        subject
+        expect(response.headers['Surrogate-Control']).to eq 'max-age=900'
+      end
+
+      it 'should find the correct products' do
+        subject
+        expect(assigns(:products)).to eq expected_products
+      end
+    end
+
+    context 'when ids param is present' do
+      let(:params) { { ids: product_one.id } }
+
+      it_should_behave_like 'product search' do
+        let(:expected_products) { [product_one] }
+      end
+    end
+
+    context 'when idds param is not present' do
+      let(:params) { { q: {name_cont: 'jersey'} } }
+
+      it_should_behave_like 'product search' do
+        let(:expected_products) { [product_one, product_two] }
+      end
+    end
+  end
 end
