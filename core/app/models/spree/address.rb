@@ -30,19 +30,19 @@ module Spree
       end
     end
 
-    # Can modify an address if it's not been used in an order (but checkouts controller has finer control)
-    # def editable?
-    #   new_record? || (shipments.empty? && checkouts.empty?)
-    # end
-
+    # @return [String] the full name on this address
     def full_name
       "#{firstname} #{lastname}".strip
     end
 
+    # @return [String] a string representation of this state
     def state_text
       state.try(:abbr) || state.try(:name) || state_name
     end
 
+    # @param other [Spree::Address, nil] the address we are comparing with
+    # @return [Boolean] true if this fields on this address match the fields on
+    #   the other address
     def same_as?(other)
       return false if other.nil?
       attributes.except('id', 'updated_at', 'created_at') == other.attributes.except('id', 'updated_at', 'created_at')
@@ -50,15 +50,22 @@ module Spree
 
     alias same_as same_as?
 
+    # @return [String] the full name on the address followed by the first line
+    #   of the address
     def to_s
       "#{full_name}: #{address1}"
     end
 
+    # @return [Spree::Address] a new address that is the same_as? this address
     def clone
       ActiveSupport::Deprecation.warn "Spree::Address.clone is deprecated and may be removed from future releases, Use Spree::Address.dup instead", caller
       self.dup
     end
 
+    # @note This compares the addresses based on only the fields that make up
+    #   the logical "address" and excludes their order IDs. Use #same_as? to
+    #   include the order IDs in the comparison
+    # @return [Boolean] true if the two addresses have the same address fields
     def ==(other_address)
       self_attrs = self.attributes
       other_attrs = other_address.respond_to?(:attributes) ? other_address.attributes : {}
@@ -68,11 +75,13 @@ module Spree
       self_attrs == other_attrs
     end
 
+    # @return [Boolean] true if the order is missing all of the address fields
+    #   are nil
     def empty?
       attributes.except('id', 'created_at', 'updated_at', 'order_id', 'country_id').all? { |_, v| v.nil? }
     end
 
-    # Generates an ActiveMerchant compatible address hash
+    # @return [Hash] an ActiveMerchant compatible address hash
     def active_merchant_hash
       {
         name: full_name,
@@ -86,10 +95,15 @@ module Spree
       }
     end
 
+    # @todo Remove this from the public API if possible.
+    # @return [true] whether or not the address requires a phone number to be
+    #   valid
     def require_phone?
       true
     end
 
+    # @todo Remove this from the public API if possible.
+    # @return [true] whether or not the address requires a zipcode to be valid
     def require_zipcode?
       true
     end

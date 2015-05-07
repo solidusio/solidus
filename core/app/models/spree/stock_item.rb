@@ -15,14 +15,22 @@ module Spree
     after_save :conditional_variant_touch, if: :changed?
     after_touch { variant.touch }
 
+    # @return [Array<Spree::InventoryUnit>] the backordered inventory units
+    #   associated with this stock item
     def backordered_inventory_units
       Spree::InventoryUnit.backordered_for_stock_item(self)
     end
 
+    # @return [String] the name of this stock item's variant
     def variant_name
       variant.name
     end
 
+    # Adjusts the count on hand by a given value.
+    #
+    # @note This will cause backorders to be processed.
+    # @param value [Fixnum] the amount to change the count on hand by, positive
+    #   or negative values are valid
     def adjust_count_on_hand(value)
       self.with_lock do
         self.count_on_hand = self.count_on_hand + value
@@ -32,6 +40,10 @@ module Spree
       end
     end
 
+    # Sets this stock item's count on hand.
+    #
+    # @note This will cause backorders to be processed.
+    # @param value [Fixnum] the desired count on hand
     def set_count_on_hand(value)
       self.count_on_hand = value
       process_backorders(count_on_hand - count_on_hand_was)
@@ -39,19 +51,26 @@ module Spree
       self.save!
     end
 
+    # @return [Boolean] true if this stock item's count on hand is not zero
     def in_stock?
       self.count_on_hand > 0
     end
 
-    # Tells whether it's available to be included in a shipment
+    # @return [Boolean] true if this stock item can be included in a shipment
     def available?
       self.in_stock? || self.backorderable?
     end
 
+    # @note This returns the variant regardless of whether it was soft
+    #   deleted.
+    # @return [Spree::Variant] this stock item's variant.
     def variant
       Spree::Variant.unscoped { super }
     end
 
+    # Sets the count on hand to zero if it not already zero.
+    #
+    # @note This processes backorders if the count on hand is not zero.
     def reduce_count_on_hand_to_zero
       self.set_count_on_hand(0) if count_on_hand > 0
     end

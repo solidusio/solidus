@@ -1,13 +1,14 @@
-# This file exists solely to test whether or not there are missing translations
-# within the code that Spree's test suite covers.
-#
-# If there is a translation referenced which has no corresponding key within the
-# .yml file, then there will be a message output at the end of the suite showing
-# that.
-#
-# If there is a translation within the locale file which *isn't* used in the
-# test, this will also be shown at the end of the suite run.
 module Spree
+  # This file exists solely to test whether or not there are missing translations
+  # within the code that Spree's test suite covers.
+  #
+  # If there is a translation referenced which has no corresponding key within the
+  # .yml file, then there will be a message output at the end of the suite showing
+  # that.
+  #
+  # If there is a translation within the locale file which *isn't* used in the
+  # test, this will also be shown at the end of the suite run.
+
   class << self
     attr_accessor :used_translations, :missing_translation_messages,
                   :unused_translations, :unused_translation_messages

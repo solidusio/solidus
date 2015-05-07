@@ -1,7 +1,12 @@
 module Spree
   class LocalizedNumber
-
-    # Strips all non-price-like characters from the number, taking into account locale settings.
+    # Given a string, strips all non-price-like characters from it,
+    # taking into account locale settings. Returns the input given anything
+    # else.
+    #
+    # @param number [String, anything] the number to be parsed or anything else
+    # @return [BigDecimal, anything] the number parsed from the string passed
+    #   in, or whatever you passed in
     def self.parse(number)
       return number unless number.is_a?(String)
 
@@ -15,6 +20,5 @@ module Spree
 
       number.to_d
     end
-
   end
 end

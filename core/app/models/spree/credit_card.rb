@@ -35,6 +35,10 @@ module Spree
       jcb: /^(?:2131|1800|35\d{3})\d{11}$/
     }
 
+    # Sets the expiry date on this credit card.
+    #
+    # @param expiry [String] the desired new expiry date in one of the
+    #   following formats: "mm/yy", "mm / yyyy", "mmyy", "mmyyyy"
     def expiry=(expiry)
       return unless expiry.present?
 
@@ -51,13 +55,20 @@ module Spree
       self[:month] = self[:month].to_i if self[:month]
     end
 
+    # Sets the credit card number, removing any non-numeric characters.
+    #
+    # @param num [String] the desired credit card number
     def number=(num)
       @number = num.gsub(/[^0-9]/, '') rescue nil
     end
 
-    # cc_type is set by jquery.payment, which helpfully provides different
-    # types from Active Merchant. Converting them is necessary.
+    # Sets the credit card type, converting it to the preferred internal
+    # representation from jquery.payment's representation when appropriate.
+    #
+    # @param type [String] the desired credit card type
     def cc_type=(type)
+      # cc_type is set by jquery.payment, which helpfully provides different
+      # types from Active Merchant. Converting them is necessary.
       self[:cc_type] = case type
       when 'mastercard', 'maestro' then 'master'
       when 'amex' then 'american_express'
@@ -67,61 +78,84 @@ module Spree
       end
     end
 
+    # Sets the last digits field based on the assigned credit card number.
     def set_last_digits
       number.to_s.gsub!(/\s/,'')
       verification_value.to_s.gsub!(/\s/,'')
       self.last_digits ||= number.to_s.length <= 4 ? number : number.to_s.slice(-4..-1)
     end
 
+    # @return [String] the credit card type if it can be determined from the
+    #   number, otherwise the empty string
     def try_type_from_number
       numbers = number.delete(' ') if number
       CARD_TYPES.find{|type, pattern| return type.to_s if numbers =~ pattern}.to_s
     end
 
+    # @return [Boolean] true when a verification value is present
     def verification_value?
       verification_value.present?
     end
 
-    # Show the card number, with all but last 4 numbers replace with "X". (XXXX-XXXX-XXXX-4338)
+    # @return [String] the card number, with all but last 4 numbers replace
+    #   with "X", as in "XXXX-XXXX-XXXX-4338"
     def display_number
       "XXXX-XXXX-XXXX-#{last_digits}"
     end
 
+    # @return [Array<String>] the actions available on this credit card
     def actions
       %w{capture void credit}
     end
 
-    # Indicates whether its possible to capture the payment
+    # @param payment [Spree::Payment] the payment we want to know if can be captured
+    # @return [Boolean] true when the payment is in the pending or checkout states
     def can_capture?(payment)
       payment.pending? || payment.checkout?
     end
 
-    # Indicates whether its possible to void the payment.
+    # @param payment [Spree::Payment] the payment we want to know if can be voided
+    # @return [Boolean] true when the payment is not failed or voided
     def can_void?(payment)
       !payment.failed? && !payment.void?
     end
 
-    # Indicates whether its possible to credit the payment.  Note that most gateways require that the
-    # payment be settled first which generally happens within 12-24 hours of the transaction.
+    # Indicates whether its possible to credit the payment.  Note that most
+    # gateways require that the payment be settled first which generally
+    # happens within 12-24 hours of the transaction.
+    #
+    # @param payment [Spree::Payment] the payment we want to know if can be credited
+    # @return [Boolean] true when the payment is completed and can be credited
     def can_credit?(payment)
       payment.completed? && payment.credit_allowed > 0
     end
 
+    # @return [Boolean] true when there is a gateway customer or payment
+    #   profile id present
     def has_payment_profile?
       gateway_customer_profile_id.present? || gateway_payment_profile_id.present?
     end
 
-    # ActiveMerchant needs first_name/last_name because we pass it a Spree::CreditCard and it calls those methods on it.
-    # Looking at the ActiveMerchant source code we should probably be calling #to_active_merchant before passing
-    # the object to ActiveMerchant but this should do for now.
+    # @note ActiveMerchant needs first_name/last_name because we pass it a
+    #   Spree::CreditCard and it calls those methods on it.
+    # @todo We should probably be calling #to_active_merchant before passing
+    #   the object to ActiveMerchant.
+    # @return [String] the first name on this credit card
     def first_name
       name.to_s.split(/[[:space:]]/, 2)[0]
     end
 
+    # @note ActiveMerchant needs first_name/last_name because we pass it a
+    #   Spree::CreditCard and it calls those methods on it.
+    # @todo We should probably be calling #to_active_merchant before passing
+    #   the object to ActiveMerchant.
+    # @return [String] the last name on this credit card
     def last_name
       name.to_s.split(/[[:space:]]/, 2)[1]
     end
 
+    # @return [ActiveMerchant::Billing::CreditCard] an ActiveMerchant credit
+    #   card that represents this credit card
     def to_active_merchant
       ActiveMerchant::Billing::CreditCard.new(
         :number => number,

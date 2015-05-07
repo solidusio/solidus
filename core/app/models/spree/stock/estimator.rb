@@ -3,11 +3,19 @@ module Spree
     class Estimator
       attr_reader :order, :currency
 
+      # @param order [Spree::Order] the order whose shipping rates to estimate
       def initialize(order)
         @order = order
         @currency = order.currency
       end
 
+      # Estimate the shipping rates for a package.
+      #
+      # @param package [Spree::Stock::Package] the package to be shipped
+      # @param frontend_only [Boolean] restricts the shipping methods to only
+      #   those marked frontend if truthy
+      # @return [Array<Spree::ShippingRate>] the shipping rates sorted by
+      #   descending cost, with the least costly marked "selected"
       def shipping_rates(package, frontend_only = true)
         rates = calculate_shipping_rates(package)
         rates.select! { |rate| rate.shipping_method.frontend? } if frontend_only

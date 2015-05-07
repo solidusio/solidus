@@ -50,11 +50,6 @@ module Spree
     scope :risky, -> { where("avs_response IN (?) OR (cvv_response_code IS NOT NULL and cvv_response_code != 'M') OR state = 'failed'", RISKY_AVS_CODES) }
     scope :valid, -> { where.not(state: %w(failed invalid)) }
 
-    # transaction_id is much easier to understand
-    def transaction_id
-      response_code
-    end
-
     # order state machine (see http://github.com/pluginaweek/state_machine/tree/master for details)
     state_machine initial: :checkout do
       # With card payments, happens before purchase or authorization happens
@@ -94,15 +89,23 @@ module Spree
       end
     end
 
-    def currency
-      order.currency
+    # @return [String] this payment's response code
+    def transaction_id
+      response_code
     end
 
+    # @return [String] this payment's currency
+    delegate :currency, to: :order
+
+    # @return [Spree::Money] this amount of this payment as money object
     def money
       Spree::Money.new(amount, { currency: currency })
     end
     alias display_amount money
 
+    # Sets the amount, parsing it based on i18n settings if it is a string.
+    #
+    # @param amount [BigDecimal, String] the desired new amount
     def amount=(amount)
       self[:amount] =
         case amount
@@ -113,19 +116,30 @@ module Spree
         end || amount
     end
 
+    # The total amount of the offsets (for old-style refunds) for this payment.
+    #
+    # @return [BigDecimal] the total amount of this payment's offsets
     def offsets_total
       offsets.pluck(:amount).sum
     end
 
+    # The total amount this payment can be credited.
+    #
+    # @return [BigDecimal] the amount of this payment minus the offsets
+    #   (old-style refunds) and refunds
     def credit_allowed
       amount - (offsets_total.abs + refunds.sum(:amount))
     end
 
+    # @return [Boolean] true when this payment can be credited
     def can_credit?
       credit_allowed > 0
     end
 
-    # see https://github.com/spree/spree/issues/981
+    # When this is a new record without a source, builds a new source based on
+    # this payment's payment method and associates it correctly.
+    #
+    # @see https://github.com/spree/spree/issues/981
     def build_source
       return unless new_record?
       if source_attributes.present? && source.blank? && payment_method.try(:payment_source_class)
@@ -135,21 +149,25 @@ module Spree
       end
     end
 
+    # @return [Array<String>] the actions available on this payment
     def actions
       return [] unless payment_source and payment_source.respond_to? :actions
       payment_source.actions.select { |action| !payment_source.respond_to?("can_#{action}?") or payment_source.send("can_#{action}?", self) }
     end
 
+    # @return [Object] the source of ths payment
     def payment_source
       res = source.is_a?(Payment) ? source.source : source
       res || payment_method
     end
 
+    # @return [Boolean] true when this payment is risky based on address
     def is_avs_risky?
       return false if avs_response.blank? || NON_RISKY_AVS_CODES.include?(avs_response)
       return true
     end
 
+    # @return [Boolean] true when this payment is risky based on cvv
     def is_cvv_risky?
       return false if cvv_response_code == "M"
       return false if cvv_response_code.nil?
@@ -157,10 +175,12 @@ module Spree
       return true
     end
 
+    # @return [BigDecimal] the total amount captured on this payment
     def captured_amount
       capture_events.sum(:amount)
     end
 
+    # @return [BigDecimal] the total amount left uncaptured on this payment
     def uncaptured_amount
       amount - captured_amount
     end
