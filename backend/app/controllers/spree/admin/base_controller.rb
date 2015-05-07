@@ -61,6 +61,17 @@ module Spree
             redirect_to edit_admin_order_customer_url(@order)
           end
         end
+
+        def lock_order
+          OrderMutex.with_lock!(@order) { yield }
+        rescue Spree::OrderMutex::LockFailed => e
+          flash[:error] = Spree.t(:order_mutex_admin_error)
+          redirect_to order_mutex_redirect_path
+        end
+
+        def order_mutex_redirect_path
+          edit_admin_order_path(@order)
+        end
     end
   end
 end
