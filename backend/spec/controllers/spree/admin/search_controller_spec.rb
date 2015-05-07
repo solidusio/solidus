@@ -2,8 +2,9 @@ require 'spec_helper'
 
 describe Spree::Admin::SearchController, :type => :controller do
   stub_authorization!
+
   # Regression test for ernie/ransack#176
-  let(:user) { create(:user, :email => "spree_commerce@example.com") }
+  let(:user) { create(:user, email: "spree_commerce@example.com") }
 
   before do
     user.ship_address = create(:address)
@@ -11,29 +12,45 @@ describe Spree::Admin::SearchController, :type => :controller do
     user.save
   end
 
-  it "can find a user by their email "do
-    spree_xhr_get :users, :q => user.email
-    expect(assigns[:users]).to include(user)
-  end
+  describe 'GET #users' do
+    subject { spree_xhr_get :users, q: search_query }
 
-  it "can find a user by their ship address's first name" do
-    spree_xhr_get :users, :q => user.ship_address.firstname
-    expect(assigns[:users]).to include(user)
-  end
+    shared_examples_for 'user found by search' do
+      it "should include users matching query" do
+        subject
+        expect(assigns[:users]).to include(user)
+      end
+    end
 
-  it "can find a user by their ship address's last name" do
-    spree_xhr_get :users, :q => user.ship_address.lastname
-    expect(assigns[:users]).to include(user)
-  end
+    context 'when searching by email' do
+      it_should_behave_like 'user found by search' do
+        let(:search_query) { user.email }
+      end
+    end
 
-  it "can find a user by their bill address's first name" do
-    spree_xhr_get :users, :q => user.bill_address.firstname
-    expect(assigns[:users]).to include(user)
-  end
+    context 'when searching by ship addresss first name' do
+      it_should_behave_like 'user found by search' do
+        let(:search_query) { user.ship_address.firstname }
+      end
+    end
 
-  it "can find a user by their bill address's last name" do
-    spree_xhr_get :users, :q => user.bill_address.lastname
-    expect(assigns[:users]).to include(user)
+    context 'when searching by ship address last name' do
+      it_should_behave_like 'user found by search' do
+        let(:search_query) { user.ship_address.lastname }
+      end
+    end
+
+    context 'when searching by bill address first name' do
+      it_should_behave_like 'user found by search' do
+        let(:search_query) { user.bill_address.firstname }
+      end
+    end
+
+    context 'when searching by bill address last name' do
+      it_should_behave_like 'user found by search' do
+        let(:search_query) { user.bill_address.firstname }
+      end
+    end
   end
 
 end
