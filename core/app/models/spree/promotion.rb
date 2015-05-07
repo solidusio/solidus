@@ -39,10 +39,7 @@ module Spree
       where(table[:starts_at].eq(nil).or(table[:starts_at].lt(time))).
         where(table[:expires_at].eq(nil).or(table[:expires_at].gt(time)))
     end
-
-    order_join_table = reflect_on_association(:orders).join_table
-
-    scope :applied, -> { joins("INNER JOIN #{order_join_table} ON #{order_join_table}.promotion_id = #{table_name}.id").uniq }
+    scope :applied, -> { joins(:order_promotions).uniq }
 
     # temporary code. remove after the column is dropped from the db.
     def columns
