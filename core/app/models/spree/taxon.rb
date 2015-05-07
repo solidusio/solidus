@@ -28,8 +28,8 @@ module Spree
     validates_attachment :icon,
       content_type: { content_type: ["image/jpg", "image/jpeg", "image/png", "image/gif"] }
 
-    # indicate which filters should be used for a taxon
-    # this method should be customized to your own site
+    # @note This method is meant to be overridden on a store by store basis.
+    # @return [Array] filters that should be used for a taxon
     def applicable_filters
       fs = []
       # fs << ProductFilters.taxons_below(self)
@@ -40,7 +40,8 @@ module Spree
       fs
     end
 
-    # Return meta_title if set otherwise generates from root name and/or taxon name
+    # @return [String] meta_title if set otherwise a string containing the
+    #   root name and taxon name
     def seo_title
       unless meta_title.blank?
         meta_title
@@ -49,7 +50,8 @@ module Spree
       end
     end
 
-    # Creates permalink based on Stringex's .to_url method
+    # Sets this taxons permalink to a valid url encoded string based on its
+    # name and its parents permalink (if present.)
     def set_permalink
       if parent.present?
         self.permalink = [parent.permalink, (permalink.blank? ? name.to_url : permalink.split('/').last)].join('/')
@@ -58,15 +60,19 @@ module Spree
       end
     end
 
-    # For #2759
+    # @return [String] this taxon's permalink
     def to_param
       permalink
     end
 
+    # @return [ActiveRecord::Relation<Spree::Product>] the active products the
+    #   belong to this taxon
     def active_products
       products.active
     end
 
+    # @return [String] this taxon's ancestors names followed by its own name,
+    #   separated by arrows
     def pretty_name
       ancestor_chain = self.ancestors.inject("") do |name, ancestor|
         name += "#{ancestor.name} -> "
@@ -74,13 +80,14 @@ module Spree
       ancestor_chain + "#{name}"
     end
 
-    # awesome_nested_set sorts by :lft and :rgt. This call re-inserts the child
-    # node so that its resulting position matches the observable 0-indexed position.
-    # ** Note ** no :position column needed - a_n_s doesn't handle the reordering if
-    #  you bring your own :order_column.
-    #
-    #  See #3390 for background.
+    # @see https://github.com/spree/spree/issues/3390
     def child_index=(idx)
+      # awesome_nested_set sorts by :lft and :rgt. This call re-inserts the
+      # child node so that its resulting position matches the observable
+      # 0-indexed position.
+      #
+      # NOTE: no :position column needed - awesom_nested_set doesn't handle the
+      # reordering if you bring your own :order_column.
       move_to_child_with_index(parent, idx.to_i) unless self.new_record?
     end
 
