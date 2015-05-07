@@ -42,5 +42,4 @@ group :test, :development do
   platforms :ruby_20, :ruby_21 do
     gem 'pry-byebug', '~> 1.0'
   end
-  gem 'rspec-retry'
 end
