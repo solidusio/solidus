@@ -18,7 +18,7 @@ module Spree
       number
     end
 
-    def ship(tracking_number: tracking_number, shipped_at: shipped_at)
+    def ship(tracking_number:, shipped_at:)
       update_attributes!(tracking_number: tracking_number, shipped_at: shipped_at)
     end
 
