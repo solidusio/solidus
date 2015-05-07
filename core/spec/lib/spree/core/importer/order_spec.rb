@@ -113,15 +113,6 @@ module Spree
         expect(line_item.variant_id).to eq(variant_id)
       end
 
-      it 'handles line_item building exceptions' do
-        line_items['0'][:variant_id] = 'XXX'
-        params = { :line_items_attributes => line_items }
-
-        expect {
-          order = Importer::Order.import(user,params)
-        }.to raise_error /XXX/
-      end
-
       it 'handles line_item updating exceptions' do
         line_items['0'][:currency] = 'GBP'
         params = { :line_items_attributes => line_items }
@@ -142,14 +133,6 @@ module Spree
         expect(line_item.quantity).to eq(5)
       end
 
-      it 'handles exceptions when sku is not found' do
-        params = { :line_items_attributes => {
-                     "0" => { :sku => 'XXX', :quantity => 5 } }}
-        expect {
-          order = Importer::Order.import(user,params)
-        }.to raise_error /XXX/
-      end
-
       it 'can build an order from API shipping address' do
         params = { :ship_address_attributes => ship_address,
                    :line_items_attributes => line_items }
@@ -166,17 +149,6 @@ module Spree
 
         order = Importer::Order.import(user,params)
         expect(order.ship_address.country.iso).to eq 'US'
-      end
-
-      it 'handles country lookup exceptions' do
-        ship_address.delete(:country_id)
-        ship_address[:country] = { 'iso' => 'XXX' }
-        params = { :ship_address_attributes => ship_address,
-                   :line_items_attributes => line_items }
-
-        expect {
-          order = Importer::Order.import(user,params)
-        }.to raise_error /XXX/
       end
 
       it 'can build an order from API with state attributes' do
@@ -272,7 +244,7 @@ module Spree
         address = { :country => { "name" => "NoNoCountry" } }
         expect {
           Importer::Order.ensure_country_id_from_params(address)
-        }.to raise_error /NoNoCountry/
+        }.to raise_error ActiveRecord::RecordNotFound
       end
 
       it 'ensures_state_id for state fields' do
@@ -363,17 +335,6 @@ module Spree
         end
       end
 
-      it 'handles shipment building exceptions' do
-        params = { :shipments_attributes => [{ tracking: '123456789',
-                                               cost: '4.99',
-                                               shipping_method: 'XXX',
-                                               inventory_units: [{ sku: sku }]
-                                             }] }
-        expect {
-          order = Importer::Order.import(user,params)
-        }.to raise_error /XXX/
-      end
-
       it 'adds adjustments' do
         params = { :adjustments_attributes => [
             { label: 'Shipping Discount', amount: -4.99 },
@@ -404,16 +365,6 @@ module Spree
 
       end
 
-      it 'handles adjustment building exceptions' do
-        params = { :adjustments_attributes => [
-            { amount: 'XXX' },
-            { label: 'Promotion Discount', amount: '-3.00' }] }
-
-        expect {
-          order = Importer::Order.import(user,params)
-        }.to raise_error /XXX/
-      end
-
       it 'builds a payment using state' do
         params = { :payments_attributes => [{ amount: '4.99',
                                               payment_method: payment_method.name,
@@ -428,14 +379,6 @@ module Spree
                                               status: 'completed' }] }
         order = Importer::Order.import(user,params)
         expect(order.payments.first.amount).to eq 4.99
-      end
-
-      it 'handles payment building exceptions' do
-        params = { :payments_attributes => [{ amount: '4.99',
-                                              payment_method: 'XXX' }] }
-        expect {
-          order = Importer::Order.import(user, params)
-        }.to raise_error /XXX/
       end
 
       it 'build a source payment using years and month' do
