@@ -5,6 +5,8 @@ var update_state = function (region, done) {
   var state_select = $('span#' + region + 'state select.select2');
   var state_input = $('span#' + region + 'state input.state_name');
 
+  state_select.select2('disable');
+
   $.get(Spree.routes.states_search + '?country_id=' + country, function (data) {
     var states = data.states;
     if (states.length > 0) {

@@ -34,10 +34,6 @@ module CapybaraExt
     end
   end
 
-  def set_select2_field(field, value)
-    page.execute_script %Q{$('#{field}').select2('val', '#{value}')}
-  end
-
   def select2_search(value, options)
     label = find_label_by_text(options[:from])
     within label.first(:xpath,".//..") do
@@ -47,9 +43,20 @@ module CapybaraExt
   end
 
   def targetted_select2_search(value, options)
-    page.execute_script %Q{$('#{options[:from]}').select2('open')}
-    page.execute_script "$('#{options[:dropdown_css]} input.select2-input').val('#{value}').trigger('keyup-change');"
+    find("#{options[:from]}:not(.select2-container-disabled)").click
+
+    within_entire_page do
+      find("input.select2-input").set(value)
+    end
+
     select_select2_result(value)
+  end
+
+  # Executes the given block within the context of the entire capybara
+  # document. Can be used to 'escape' from within the context of another within
+  # block.
+  def within_entire_page(&block)
+    within(:xpath, '//body', &block)
   end
 
   def select2(value, options)
@@ -80,7 +87,7 @@ module CapybaraExt
 
   def select_select2_result(value)
     # results are in a div appended to the end of the document
-    within(:xpath, '//body') do
+    within_entire_page do
       page.find("div.select2-result-label", text: %r{#{Regexp.escape(value)}}i).click
     end
   end
