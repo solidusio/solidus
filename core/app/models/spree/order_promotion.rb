@@ -1,7 +1,8 @@
-# Spree::OrderPromotion represents the relationship between:
-# 1. A promotion that a user attempted to apply to their order
-# 2. The specific code that they used
 module Spree
+  # Spree::OrderPromotion represents the relationship between:
+  #
+  # 1. A promotion that a user attempted to apply to their order
+  # 2. The specific code that they used
   class OrderPromotion < ActiveRecord::Base
     self.table_name = 'spree_orders_promotions'
 

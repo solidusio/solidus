@@ -1,5 +1,8 @@
-# Default implementation of User.  This class is intended to be modified by extensions (ex. spree_auth_devise)
 module Spree
+  # Default implementation of User.
+  #
+  # @note This class is intended to be modified by extensions (ex.
+  #   spree_auth_devise)
   class LegacyUser < Spree::Base
     include UserAddress
     include UserPaymentSource

@@ -1,8 +1,8 @@
-# A rule to apply to an order greater than (or greater than or equal to)
-# a specific amount
 module Spree
   class Promotion
     module Rules
+      # A rule to apply to an order greater than (or greater than or equal to)
+      # a specific amount
       class ItemTotal < PromotionRule
         preference :amount_min, :decimal, default: 100.00
         preference :operator_min, :string, default: '>'

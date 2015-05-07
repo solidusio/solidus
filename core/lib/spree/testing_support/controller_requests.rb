@@ -1,30 +1,29 @@
-# Use this module to easily test Spree actions within Spree components
-# or inside your application to test routes for the mounted Spree engine.
-#
-# Inside your spec_helper.rb, include this module inside the RSpec.configure
-# block by doing this:
-#
-#   require 'spree/testing_support/controller_requests'
-#   RSpec.configure do |c|
-#     c.include Spree::TestingSupport::ControllerRequests, :type => :controller
-#   end
-#
-# Then, in your controller tests, you can access spree routes like this:
-#
-#   require 'spec_helper'
-#
-#   describe Spree::ProductsController do
-#     it "can see all the products" do
-#       spree_get :index
-#     end
-#   end
-#
-# Use spree_get, spree_post, spree_put or spree_delete to make requests
-# to the Spree engine, and use regular get, post, put or delete to make
-# requests to your application.
-#
 module Spree
   module TestingSupport
+    # Use this module to easily test Spree actions within Spree components or
+    # inside your application to test routes for the mounted Spree engine.
+    #
+    # Inside your spec_helper.rb, include this module inside the
+    # RSpec.configure block by doing this:
+    #
+    #   require 'spree/testing_support/controller_requests'
+    #   RSpec.configure do |c|
+    #     c.include Spree::TestingSupport::ControllerRequests, :type => :controller
+    #   end
+    #
+    # Then, in your controller tests, you can access spree routes like this:
+    #
+    #   require 'spec_helper'
+    #
+    #   describe Spree::ProductsController do
+    #     it "can see all the products" do
+    #       spree_get :index
+    #     end
+    #   end
+    #
+    # Use spree_get, spree_post, spree_put or spree_delete to make requests to
+    # the Spree engine, and use regular get, post, put or delete to make
+    # requests to your application.
     module ControllerRequests
       def spree_get(action, parameters = nil, session = nil, flash = nil)
         process_spree_action(action, parameters, session, flash, "GET")
