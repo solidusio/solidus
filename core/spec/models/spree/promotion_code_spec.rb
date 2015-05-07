@@ -178,5 +178,10 @@ RSpec.describe Spree::PromotionCode do
         order.complete
       }.to change(order, :total).by(10)
     end
+    it "resets the state of the order" do
+      expect{
+        order.complete
+      }.to change{ order.reload.state }.from("confirm").to("address")
+    end
   end
 end

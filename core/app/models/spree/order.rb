@@ -724,8 +724,10 @@ module Spree
     def ensure_promotions_eligible
       updater.update_adjustment_total
       if promo_total_changed?
-        errors.add(:base, Spree.t(:promotion_total_changed_before_complete)) and return false
+        restart_checkout_flow
+        errors.add(:base, Spree.t(:promotion_total_changed_before_complete))
       end
+      errors.empty?
     end
 
     def validate_line_item_availability
