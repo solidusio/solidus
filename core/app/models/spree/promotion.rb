@@ -210,10 +210,6 @@ module Spree
 
     private
 
-    def usage_count_for(promotable)
-      adjustment_promotion_scope(promotable.adjustments).count
-    end
-
     def blacklisted?(promotable)
       case promotable
       when Spree::LineItem
