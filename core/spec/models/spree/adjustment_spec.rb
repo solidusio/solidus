@@ -130,14 +130,14 @@ describe Spree::Adjustment, :type => :model do
       end
 
       context "it is a promotion adjustment" do
-        let(:promotion) { create(:promotion, :with_order_adjustment, code: 'somecode') }
+        let(:promotion) { create(:promotion, :with_order_adjustment, starts_at: promo_start_date) }
+        let(:promo_start_date) { nil }
         let(:promotion_code) { promotion.codes.first }
-        let(:order1) { create(:order_with_line_items, line_items_count: 1) }
+        let(:order) { create(:order_with_line_items, line_items_count: 1) }
 
         let!(:adjustment) do
-          promotion.activate(order: order1, promotion_code: promotion_code)
-          expect(order1.adjustments.size).to eq 1
-          order1.adjustments.first
+          promotion.activate(order: order, promotion_code: promotion_code)
+          order.adjustments.first
         end
 
         context "the promotion is eligible" do
@@ -148,7 +148,7 @@ describe Spree::Adjustment, :type => :model do
         end
 
         context "the promotion is not eligible" do
-          before { promotion.update_attributes!(starts_at: 1.day.from_now) }
+          let(:promo_start_date) { Date.tomorrow }
 
           it "sets the adjustment elgiible to false" do
             subject
