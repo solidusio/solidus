@@ -49,4 +49,8 @@ end
 
 RSpec.configure do |config|
   config.include Spree::Fixtures::RSpecShortcut
+
+  config.before(:each) do
+    Spree::Fixtures.reset
+  end
 end
