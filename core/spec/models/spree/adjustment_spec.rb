@@ -6,15 +6,12 @@ require 'spec_helper'
 describe Spree::Adjustment, :type => :model do
 
   let(:order) { Spree::Order.new }
-
-  before do
-    allow(order).to receive(:update!)
-  end
+  let(:line_item) { create :line_item, order: order }
 
   let(:adjustment) { Spree::Adjustment.create!(label: 'Adjustment', adjustable: order, order: order, amount: 5) }
 
   context '#create & #destroy' do
-    let(:adjustment) { Spree::Adjustment.new(label: "Adjustment", amount: 5, order: order, adjustable: create(:line_item)) }
+    let(:adjustment) { Spree::Adjustment.new(label: "Adjustment", amount: 5, order: order, adjustable: line_item) }
 
     it 'calls #update_adjustable_adjustment_total' do
       expect(adjustment).to receive(:update_adjustable_adjustment_total).twice
@@ -24,11 +21,10 @@ describe Spree::Adjustment, :type => :model do
   end
 
   context '#save' do
-    let(:adjustment) { Spree::Adjustment.create(label: "Adjustment", amount: 5, order: order, adjustable: create(:line_item)) }
+    let(:adjustment) { Spree::Adjustment.create(label: "Adjustment", amount: 5, order: order, adjustable: line_item) }
 
     it 'touches the adjustable' do
-      expect(adjustment.adjustable).to receive(:touch)
-      adjustment.save
+      expect { adjustment.save }.to change { line_item.updated_at }
     end
   end
 
@@ -49,24 +45,35 @@ describe Spree::Adjustment, :type => :model do
   end
 
   context "adjustment state" do
-    let(:adjustment) { create(:adjustment, order: order, state: 'open') }
+    subject { build(:adjustment, order: order, state: state) }
 
     context "#closed?" do
-      it "is true when adjustment state is closed" do
-        adjustment.state = "closed"
-        expect(adjustment).to be_closed
+      context 'is closed' do
+        let(:state) { 'closed' }
+        it { is_expected.to be_closed }
       end
 
-      it "is false when adjustment state is open" do
-        adjustment.state = "open"
-        expect(adjustment).to_not be_closed
+      context 'is open' do
+        let(:state) { 'open' }
+        it { is_expected.to_not be_closed }
       end
     end
   end
 
   context '#currency' do
-    it 'returns the globally configured currency' do
-      expect(adjustment.currency).to eq 'USD'
+    let(:order) { Spree::Order.new currency: 'JPY' }
+
+    it 'returns the adjustables currency' do
+      expect(adjustment.currency).to eq 'JPY'
+    end
+
+    context 'adjustable is nil' do
+      before do
+        adjustment.adjustable = nil
+      end
+      it 'uses the global currency of USD' do
+        expect(adjustment.currency).to eq 'USD'
+      end
     end
   end
 
@@ -90,30 +97,24 @@ describe Spree::Adjustment, :type => :model do
     end
 
     context "with currency set to JPY" do
-      context "when adjustable is set to an order" do
-        before do
-          expect(order).to receive(:currency).and_return('JPY')
-          adjustment.adjustable = order
-        end
+      let(:order) { Spree::Order.new currency: 'JPY' }
 
+      context "when adjustable is set to an order" do
         it "displays in JPY" do
           expect(adjustment.display_amount.to_s).to eq "¥11"
-        end
-      end
-
-      context "when adjustable is nil" do
-        it "displays in the default currency" do
-          expect(adjustment.display_amount.to_s).to eq "$10.55"
         end
       end
     end
   end
 
   context '#update!' do
+    let(:adjustment) { Spree::Adjustment.create!(label: 'Adjustment', order: order, adjustable: order, amount: 5, state: state, source: source) }
+    let(:source) { mock_model(Spree::TaxRate, compute_amount: 10) }
+
     subject { adjustment.update! }
 
     context "when adjustment is closed" do
-      before { expect(adjustment).to receive(:closed?).and_return(true) }
+      let(:state) { 'closed' }
 
       it "does not update the adjustment" do
         expect(adjustment).to_not receive(:update_column)
@@ -122,19 +123,13 @@ describe Spree::Adjustment, :type => :model do
     end
 
     context "when adjustment is open" do
-      before { expect(adjustment).to receive(:closed?).and_return(false) }
+      let(:state) { 'open' }
 
       it "updates the amount" do
-        expect(adjustment).to receive(:adjustable).and_return(double("Adjustable")).at_least(1).times
-        expect(adjustment).to receive(:source).and_return(double("Source")).at_least(1).times
-        expect(adjustment.source).to receive("compute_amount").with(adjustment.adjustable).and_return(5)
-        expect(adjustment).to receive(:update_columns).with(amount: 5, updated_at: kind_of(Time))
-        subject
+        expect { subject }.to change { adjustment.amount }.to(10)
       end
 
       context "it is a promotion adjustment" do
-        subject { adjustment.update! }
-
         let(:promotion) { create(:promotion, :with_order_adjustment, code: 'somecode') }
         let(:promotion_code) { promotion.codes.first }
         let(:order1) { create(:order_with_line_items, line_items_count: 1) }
