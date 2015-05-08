@@ -122,28 +122,71 @@ module Spree
 
       subject { stock_transfer.finalize(user) }
 
-      it "sets a finalized_at date" do
-        expect { subject }.to change { stock_transfer.finalized_at }
+      context "can be finalized" do
+        it "sets a finalized_at date" do
+          expect { subject }.to change { stock_transfer.finalized_at }
+        end
+
+        it "sets the finalized_by to the supplied user" do
+          subject
+          expect(stock_transfer.finalized_by).to eq user
+        end
       end
 
-      it "sets the finalized_by to the supplied user" do
-        subject
-        expect(stock_transfer.finalized_by).to eq user
+      context "can't be finalized" do
+        before do
+          stock_transfer.update_attributes(finalized_at: Time.now)
+        end
+
+        it "doesn't set a finalized_at date" do
+          expect { subject }.to_not change { stock_transfer.finalized_at }
+        end
+
+        it "doesn't set a finalized_by user" do
+          expect { subject }.to_not change { stock_transfer.finalized_by }
+        end
+
+        it "adds an error message" do
+          subject
+          expect(stock_transfer.errors.full_messages).to include Spree.t(:stock_transfer_cannot_be_finalized)
+        end
       end
     end
 
     describe "#close" do
       let(:user) { create(:user) }
+      let(:stock_transfer) { create(:receivable_stock_transfer_with_items) }
 
       subject { stock_transfer.close(user) }
 
-      it "sets a closed_at date" do
-        expect { subject }.to change { stock_transfer.closed_at }
+      context "can be closed" do
+        it "sets a closed_at date" do
+          expect { subject }.to change { stock_transfer.closed_at }
+        end
+
+        it "sets the closed_by to the supplied user" do
+          subject
+          expect(stock_transfer.closed_by).to eq user
+        end
       end
 
-      it "sets the closed_by to the supplied user" do
-        subject
-        expect(stock_transfer.closed_by).to eq user
+      context "can't be closed" do
+        before do
+          stock_transfer.update_attributes(finalized_at: nil)
+        end
+
+        it "doesn't set a closed_at date" do
+          expect { subject }.to_not change { stock_transfer.closed_at }
+        end
+
+        it "doesn't set a closed_by user" do
+          expect { subject }.to_not change { stock_transfer.closed_by }
+        end
+
+        it "adds an error message" do
+          subject
+          expect(stock_transfer.errors.full_messages).to include Spree.t(:stock_transfer_must_be_receivable)
+        end
       end
     end
   end

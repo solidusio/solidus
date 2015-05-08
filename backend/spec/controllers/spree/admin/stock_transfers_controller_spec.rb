@@ -4,20 +4,6 @@ module Spree
   describe Admin::StockTransfersController, :type => :controller do
     stub_authorization!
 
-    shared_context 'ensures receivable stock transfer' do
-      context 'outbound stock transfer' do
-        before do
-          transfer_with_items.update_attributes(finalized_at: nil, shipped_at: nil)
-        end
-
-        it 'redirects back to index' do
-          subject
-          expect(flash[:error]).to eq Spree.t(:stock_transfer_must_be_receivable)
-          expect(response).to redirect_to(spree.admin_stock_transfers_path)
-        end
-      end
-    end
-
     context "#index" do
       let(:warehouse) { StockLocation.create(name: "Warehouse")}
       let(:ny_store) { StockLocation.create(name: "NY Store")}
@@ -101,7 +87,17 @@ module Spree
         spree_get :receive, parameters
       end
 
-      include_context 'ensures receivable stock transfer'
+      context 'stock transfer is not receivable' do
+        before do
+          transfer_with_items.update_attributes(finalized_at: nil, shipped_at: nil)
+        end
+
+        it 'redirects back to index' do
+          subject
+          expect(flash[:error]).to eq Spree.t(:stock_transfer_must_be_receivable)
+          expect(response).to redirect_to(spree.admin_stock_transfers_path)
+        end
+      end
 
       context "no items have been received" do
         let(:parameters) do
@@ -149,10 +145,10 @@ module Spree
           transfer_with_items.update_attributes(finalized_at: Time.now)
         end
 
-        it 'redirects back to index' do
+        it 'redirects back to edit' do
           subject
           expect(flash[:error]).to eq Spree.t(:stock_transfer_cannot_be_finalized)
-          expect(response).to redirect_to(spree.admin_stock_transfers_path)
+          expect(response).to redirect_to(spree.edit_admin_stock_transfer_path(transfer_with_items))
         end
       end
 
@@ -202,7 +198,17 @@ module Spree
         spree_put :close, id: transfer_with_items.to_param
       end
 
-      include_context 'ensures receivable stock transfer'
+      context 'stock transfer is not receivable' do
+        before do
+          transfer_with_items.update_attributes(finalized_at: nil, shipped_at: nil)
+        end
+
+        it 'redirects back to receive' do
+          subject
+          expect(flash[:error]).to eq Spree.t(:stock_transfer_must_be_receivable)
+          expect(response).to redirect_to(spree.receive_admin_stock_transfer_path(transfer_with_items))
+        end
+      end
 
       context "successfully closed" do
         it "redirects back to index" do

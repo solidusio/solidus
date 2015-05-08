@@ -11,8 +11,7 @@ module Spree
       before_filter :load_variant_display_attributes, only: [:receive, :edit]
       before_filter :load_destination_stock_locations, only: :edit
       before_filter :ensure_access_to_stock_location, only: :create
-      before_filter :ensure_finalizable_stock_transfer, only: :finalize
-      before_filter :ensure_receivable_stock_transfer, only: [:receive, :close]
+      before_filter :ensure_receivable_stock_transfer, only: :receive
 
       def receive
         @received_items = @stock_transfer.transfer_items.received
@@ -92,13 +91,6 @@ module Spree
 
       def load_variant_display_attributes
         @variant_display_attributes = self.class.variant_display_attributes
-      end
-
-      def ensure_finalizable_stock_transfer
-        unless @stock_transfer.finalizable?
-          flash[:error] = Spree.t(:stock_transfer_cannot_be_finalized)
-          redirect_to admin_stock_transfers_path and return
-        end
       end
 
       def ensure_receivable_stock_transfer
