@@ -13,7 +13,7 @@ module Spree
     its(:description) { should eq 'PO123' }
     its(:to_param) { should match /T\d+/ }
 
-    describe "receivable?" do
+    describe "#receivable?" do
       subject { stock_transfer.receivable? }
 
       context "finalized" do
@@ -65,7 +65,7 @@ module Spree
       end
     end
 
-    describe "finalizable?" do
+    describe "#finalizable?" do
       subject { stock_transfer.finalizable? }
 
       context "finalized" do
@@ -114,6 +114,36 @@ module Spree
         end
 
         it { is_expected.to eq true }
+      end
+    end
+
+    describe "#finalize" do
+      let(:user) { create(:user) }
+
+      subject { stock_transfer.finalize(user) }
+
+      it "sets a finalized_at date" do
+        expect { subject }.to change { stock_transfer.finalized_at }
+      end
+
+      it "sets the finalized_by to the supplied user" do
+        subject
+        expect(stock_transfer.finalized_by).to eq user
+      end
+    end
+
+    describe "#close" do
+      let(:user) { create(:user) }
+
+      subject { stock_transfer.close(user) }
+
+      it "sets a closed_at date" do
+        expect { subject }.to change { stock_transfer.closed_at }
+      end
+
+      it "sets the closed_by to the supplied user" do
+        subject
+        expect(stock_transfer.closed_by).to eq user
       end
     end
   end

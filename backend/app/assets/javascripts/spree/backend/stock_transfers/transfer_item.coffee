@@ -22,8 +22,10 @@ class TransferItem
   update: (successHandler, errorHandler) ->
     itemAttrs = if @receivedQuantity?
       { received_quantity: @receivedQuantity }
-    else
+    else if @expectedQuantity?
       { expected_quantity: @expectedQuantity }
+    else
+      {}
     Spree.ajax
       url: Spree.routes.update_transfer_items_api(@stockTransferNumber, @id)
       type: "PUT"

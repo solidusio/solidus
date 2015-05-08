@@ -46,7 +46,7 @@
     <% end %>
     <%= f.field_container :destination_location do %>
       <%= f.label nil, Spree.t(:destination_location) %>
-      <%= f.select :destination_location_id, options_from_collection_for_select(@stock_locations, :id, :name, @stock_transfer.destination_location_id), {include_blank: true}, {class: 'select2 fullwidth', "data-placeholder" => Spree.t(:select_a_stock_location)} %>
+      <%= f.select :destination_location_id, options_from_collection_for_select(@destination_stock_locations, :id, :name, @stock_transfer.destination_location_id), {include_blank: true}, {class: 'select2 fullwidth', "data-placeholder" => Spree.t(:select_a_stock_location)} %>
       <%= f.error_message_on :destination_location %>
     <% end %>
     <div class="filter-actions actions" data-hook="buttons">

@@ -61,5 +61,13 @@ module Spree
       stock_movements.joins(:stock_item)
         .where('spree_stock_items.stock_location_id' => destination_location_id)
     end
+
+    def finalize(finalized_by)
+      self.update_attributes({ finalized_at: Time.now, finalized_by: finalized_by })
+    end
+
+    def close(closed_by)
+      self.update_attributes({ closed_at: Time.now, closed_by: closed_by })
+    end
   end
 end

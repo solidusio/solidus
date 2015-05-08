@@ -121,7 +121,7 @@ module Spree
       describe "#destroy" do
         subject { api_delete :destroy, id: transfer_item.to_param }
 
-        context "can be destroyed" do
+        context "hasn't been finalized" do
           it "can delete a transfer item" do
             subject
             expect(response.status).to eq 200
@@ -132,7 +132,7 @@ module Spree
           end
         end
 
-        context "cannot be destroyed" do
+        context "has been finalized" do
           before do
             stock_transfer.update_attributes(finalized_at: Time.now)
           end

@@ -19,7 +19,7 @@ module Spree
       end
 
       def finalize
-        if @stock_transfer.update_attributes(finalize_params)
+        if @stock_transfer.finalize(try_spree_current_user)
           redirect_to admin_stock_transfers_path
         else
           flash[:error] = @stock_transfer.errors.full_messages.join(", ")
@@ -29,7 +29,7 @@ module Spree
 
       def close
         Spree::StockTransfer.transaction do
-          if @stock_transfer.update_attributes(close_params)
+          if @stock_transfer.close(try_spree_current_user)
             adjust_inventory
             redirect_to admin_stock_transfers_path
           else
@@ -87,7 +87,7 @@ module Spree
       end
 
       def load_destination_stock_locations
-        @stock_locations = load_stock_locations.where.not(id: @stock_transfer.source_location_id)
+        @destination_stock_locations = load_stock_locations.where.not(id: @stock_transfer.source_location_id)
       end
 
       def load_variant_display_attributes
@@ -120,14 +120,6 @@ module Spree
 
       def destination_location
         @destination_location ||= StockLocation.find(params[:transfer_destination_location_id])
-      end
-
-      def close_params
-        { closed_at: Time.now, closed_by: try_spree_current_user }
-      end
-
-      def finalize_params
-        { finalized_at: Time.now, finalized_by: try_spree_current_user }
       end
 
       def create_params
