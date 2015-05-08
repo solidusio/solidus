@@ -1,7 +1,7 @@
 require 'factory_girl'
 
 class Spree::Fixtures
-  # Share a comman instance of the fixture set
+  # Share a common instance of the fixture set
   def self.instance
     @instance ||= new
   end
