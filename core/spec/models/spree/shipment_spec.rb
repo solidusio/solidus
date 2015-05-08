@@ -649,4 +649,15 @@ describe Spree::Shipment, :type => :model do
       expect(shipment.final_price_with_items).to eq(shipment.final_price + order.line_items.to_a.sum(&:price))
     end
   end
+
+  describe "#editable_by?" do
+    let(:user) { build :user }
+
+    it "should be false if the order has shipped" do
+      shipment.ready!
+      shipment.ship!
+
+      expect(shipment.editable_by?(user)).to be_falsy
+    end
+  end
 end
