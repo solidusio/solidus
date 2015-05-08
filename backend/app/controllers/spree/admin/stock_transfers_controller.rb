@@ -110,7 +110,7 @@ module Spree
 
       def ensure_access_to_stock_location
         return unless permitted_resource_params[:source_location_id].present?
-        authorize! :read, Spree::StockLocation.find(create_params[:source_location_id])
+        authorize! :read, Spree::StockLocation.find(permitted_resource_params[:source_location_id])
       end
 
       def source_location
@@ -120,11 +120,6 @@ module Spree
 
       def destination_location
         @destination_location ||= StockLocation.find(params[:transfer_destination_location_id])
-      end
-
-      def create_params
-        stock_transfer_params = params.require(:stock_transfer).permit(:source_location_id, :description)
-        stock_transfer_params.merge(created_by: try_spree_current_user)
       end
 
       def adjust_inventory
