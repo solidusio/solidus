@@ -73,6 +73,13 @@ RSpec.configure do |config|
     end
   end
 
+  config.before(:suite) do
+    # create the default stock location outside of the spec transactions but
+    # after truncation so that it's preserved between specs.
+    # it will still get wiped out for the :js specs that use truncation.
+    Spree::Fixtures.instance.stock_locations.default
+  end
+
   config.before(:each) do
     Rails.cache.clear
     reset_spree_preferences
