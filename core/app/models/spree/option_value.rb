@@ -9,10 +9,14 @@ module Spree
 
     after_touch :touch_all_variants
 
+    # Updates the updated_at column on all the variants associated with this
+    # option value.
     def touch_all_variants
       variants.update_all(updated_at: Time.current)
     end
 
+    # @return [String] a string representation of all option value and its
+    #   option type
     def presentation_with_option_type
       "#{self.option_type.presentation} - #{self.presentation}"
     end
