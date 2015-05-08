@@ -643,4 +643,10 @@ describe Spree::Shipment, :type => :model do
       expect(shipment).to be_backordered
     end
   end
+
+  describe "#final_price_with_items" do
+    it "should return the total item and shipping cost" do
+      expect(shipment.final_price_with_items).to eq(shipment.final_price + order.line_items.to_a.sum(&:price))
+    end
+  end
 end
