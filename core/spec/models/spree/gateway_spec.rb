@@ -6,7 +6,7 @@ describe Spree::Gateway, :type => :model do
     end
 
     def imaginary_method
-
+      'imaginary!'
     end
   end
 
@@ -17,9 +17,7 @@ describe Spree::Gateway, :type => :model do
   end
 
   it "passes through all arguments on a method_missing call" do
-    gateway = TestGateway.new
-    expect(gateway.provider).to receive(:imaginary_method).with('foo')
-    gateway.imaginary_method('foo')
+    expect(TestGateway.new.imaginary_method).to eq 'imaginary!'
   end
 
   context "fetching payment sources" do

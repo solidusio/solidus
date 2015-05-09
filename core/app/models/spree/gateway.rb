@@ -30,7 +30,7 @@ module Spree
     end
 
     def method_missing(method, *args)
-      if @provider.nil? || !@provider.respond_to?(method)
+      if provider.nil? || !provider.respond_to?(method)
         super
       else
         provider.send(method, *args)
