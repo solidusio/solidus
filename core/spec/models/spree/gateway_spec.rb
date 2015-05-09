@@ -21,32 +21,47 @@ describe Spree::Gateway, :type => :model do
   end
 
   context "fetching payment sources" do
-    let(:order) { Spree::Order.create(user_id: 1) }
+    let(:user) { create :user }
+    let(:order) { Spree::Order.create(user: user, completed_at: completed_at) }
 
-    let(:has_card) { create(:credit_card_payment_method) }
-    let(:no_card) { create(:credit_card_payment_method) }
+    let(:payment_method) { create(:credit_card_payment_method) }
 
     let(:cc) do
-      create(:credit_card, payment_method: has_card, gateway_customer_profile_id: "EFWE")
+      create(:credit_card,
+             payment_method: payment_method,
+             gateway_customer_profile_id: "EFWE",
+             user: cc_user)
     end
 
     let(:payment) do
-      create(:payment, order: order, source: cc, payment_method: has_card)
+      create(:payment, order: order, source: cc, payment_method: payment_method)
     end
 
-    it "finds credit cards associated on a order completed" do
-      allow(payment.order).to receive_messages completed?: true
+    context 'order is not complete and credit card user is nil' do
+      let(:cc_user) { nil }
+      let(:completed_at) { nil }
 
-      expect(no_card.reusable_sources(payment.order)).to be_empty
-      expect(has_card.reusable_sources(payment.order)).not_to be_empty
+      it "finds no credit cards associated to the order" do
+        expect(payment_method.reusable_sources(payment.order)).to be_empty
+      end
     end
 
-    it "finds credit cards associated with the order user" do
-      cc.update_column :user_id, 1
-      allow(payment.order).to receive_messages completed?: false
+    context 'order is complete but credit card user is nil' do
+      let(:cc_user) { nil }
+      let(:completed_at) { Date.yesterday }
 
-      expect(no_card.reusable_sources(payment.order)).to be_empty
-      expect(has_card.reusable_sources(payment.order)).not_to be_empty
+      it "finds credit cards associated on a order completed" do
+        expect(payment_method.reusable_sources(payment.order)).to eq [cc]
+      end
+    end
+
+    context 'order is not complete but credit card has user' do
+      let(:cc_user) { user }
+      let(:completed_at) { nil }
+
+      it "finds credit cards associated to the user" do
+        expect(payment_method.reusable_sources(payment.order)).to eq [cc]
+      end
     end
   end
 end
