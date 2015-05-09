@@ -3,12 +3,11 @@ require 'spec_helper'
 describe Spree::Asset, :type => :model do
   describe "#viewable" do
     it "touches association" do
-      product = create(:custom_product)
-      asset = Spree::Asset.create! { |a| a.viewable = product.master }
+      product = build(:custom_product)
 
       expect do
-        asset.save
-      end.to change { product.reload.updated_at }
+        Spree::Asset.create! { |a| a.viewable = product.master }
+      end.to change { product.updated_at }
     end
   end
 
