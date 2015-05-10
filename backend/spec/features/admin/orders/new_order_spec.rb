@@ -53,7 +53,6 @@ describe "New Order", :type => :feature do
 
     click_on "Shipments"
     click_on "ship"
-    wait_for_ajax
 
     within '.carton-state' do
       page.should have_content('SHIPPED')
@@ -68,7 +67,6 @@ describe "New Order", :type => :feature do
       fill_in_quantity('table.stock-levels', 'quantity_0', 2)
 
       click_icon :plus
-      wait_for_ajax
 
       within(".line-items") do
         expect(page).to have_content(product.name)
@@ -105,7 +103,6 @@ describe "New Order", :type => :feature do
       fill_in_quantity('table.stock-levels', 'quantity_0', 1)
 
       click_icon :plus
-      wait_for_ajax
 
       within(".line-items") do
         within(".line-item-name") do
@@ -135,9 +132,12 @@ describe "New Order", :type => :feature do
       click_on "Update"
 
       click_on "Shipments"
+
       select2_search product.name, from: Spree.t(:name_or_sku)
+
       click_icon :plus
-      wait_for_ajax
+
+      expect(page).to have_css('.stock-item')
 
       click_on "Payments"
       click_on "Continue"
@@ -159,8 +159,11 @@ describe "New Order", :type => :feature do
       within("table.stock-levels") do
         find('.variant_quantity').set(1)
       end
+
       click_icon :plus
-      wait_for_ajax
+
+      expect(page).to have_css('.line-item')
+
       click_link "Customer Details"
       targetted_select2 user.email, from: "#s2id_customer_search"
       click_button "Update"
