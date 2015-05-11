@@ -93,25 +93,7 @@ module CapybaraExt
   end
 
   def find_label_by_text(text)
-    label = find_label(text)
-    counter = 0
-
-    # Because JavaScript testing is prone to errors...
-    while label.nil? && counter < 10
-      sleep(1)
-      counter += 1
-      label = find_label(text)
-    end
-
-    if label.nil?
-      raise "Could not find label by text #{text}"
-    end
-
-    label
-  end
-
-  def find_label(text)
-    first(:xpath, "//label[text()[contains(.,'#{text}')]]")
+    find(:xpath, "//label[text()[contains(.,'#{text}')]]")
   end
 
   def wait_for_ajax

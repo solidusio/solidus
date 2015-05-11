@@ -48,7 +48,6 @@ describe "Order Details", type: :feature, js: true do
         end
 
         click_icon :plus
-        wait_for_ajax
 
         within("#order_total") do
           expect(page).to have_content("$80.00")
@@ -137,7 +136,6 @@ describe "Order Details", type: :feature, js: true do
           end
 
           click_icon :plus
-          wait_for_ajax
 
           within(".line-items") do
             expect(page).to have_content(tote.name)
@@ -186,7 +184,7 @@ describe "Order Details", type: :feature, js: true do
             targetted_select2 stock_location2.name, from: '#s2id_item_stock_location'
             click_icon :ok
 
-            wait_for_ajax
+            expect(page).to have_css('.shipment', count: 2)
 
             expect(order.shipments.count).to eq(2)
             expect(order.shipments.last.backordered?).to eq(false)
@@ -202,7 +200,7 @@ describe "Order Details", type: :feature, js: true do
             fill_in 'item_quantity', with: 2
             click_icon :ok
 
-            wait_for_ajax
+            expect(page).to have_content("PENDING PACKAGE FROM 'CLARKSVILLE'")
 
             expect(order.shipments.count).to eq(1)
             expect(order.shipments.last.backordered?).to eq(false)
@@ -218,7 +216,7 @@ describe "Order Details", type: :feature, js: true do
             fill_in 'item_quantity', with: 5
             click_icon :ok
 
-            wait_for_ajax
+            expect(page).to have_content("PENDING PACKAGE FROM 'CLARKSVILLE'")
 
             expect(order.shipments.count).to eq(1)
             expect(order.shipments.last.backordered?).to eq(false)
@@ -313,7 +311,7 @@ describe "Order Details", type: :feature, js: true do
               fill_in 'item_quantity', with: 2
               click_icon :ok
 
-              wait_for_ajax
+              expect(page).to have_content("PENDING PACKAGE FROM 'CLARKSVILLE'")
 
               expect(order.shipments.count).to eq(1)
               expect(order.shipments.first.inventory_units_for(product.master).count).to eq(2)
@@ -332,7 +330,7 @@ describe "Order Details", type: :feature, js: true do
             targetted_select2 stock_location2.name, from: '#s2id_item_stock_location'
             click_icon :ok
 
-            wait_for_ajax
+            expect(page).to have_css('.shipment', count: 2)
 
             expect(order.shipments.count).to eq(2)
             expect(order.shipments.last.backordered?).to eq(false)
@@ -528,7 +526,6 @@ describe "Order Details", type: :feature, js: true do
       visit spree.edit_admin_order_path(order)
 
       click_icon 'arrow-right'
-      wait_for_ajax
 
       within '.carton-state' do
         page.should have_content('SHIPPED')
