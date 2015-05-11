@@ -10,14 +10,11 @@ describe Spree::AppConfiguration, :type => :model do
   end
 
   it "should be available as Spree::Config for legacy access" do
-    Spree::Config.layout = "my/layout"
-    expect(Spree::Config.layout).to eq "my/layout"
+    expect(Spree::Config).to be_a Spree::AppConfiguration
   end
 
   it "uses base searcher class by default" do
-    prefs.searcher_class = nil
     expect(prefs.searcher_class).to eq Spree::Core::Search::Base
   end
 
 end
-
