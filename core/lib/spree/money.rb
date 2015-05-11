@@ -6,6 +6,15 @@ module Spree
   # Spree::Money is a relatively thin wrapper around Monetize which handles
   # formatting via Spree::Config.
   class Money
+    class <<self
+      attr_accessor :default_formatting_rules
+    end
+    self.default_formatting_rules = {
+      # Ruby money currently has this as false, which is wrong for the vast
+      # majority of locales.
+      sign_before_symbol: true
+    }
+
     attr_reader :money
 
     delegate :cents, to: :money
@@ -25,16 +34,7 @@ module Spree
     #   currency symbol
     def initialize(amount, options={})
       @money = Monetize.parse([amount, (options[:currency] || Spree::Config[:currency])].join)
-      @options = {}
-      @options[:with_currency] = Spree::Config[:display_currency]
-      @options[:symbol_position] = Spree::Config[:currency_symbol_position].to_sym
-      @options[:no_cents] = Spree::Config[:hide_cents]
-      @options[:decimal_mark] = Spree::Config[:currency_decimal_mark]
-      @options[:thousands_separator] = Spree::Config[:currency_thousands_separator]
-      @options[:sign_before_symbol] = Spree::Config[:currency_sign_before_symbol]
-      @options.merge!(options)
-      # Must be a symbol because the Money gem doesn't do the conversion
-      @options[:symbol_position] = @options[:symbol_position].to_sym
+      @options = Spree::Money.default_formatting_rules.merge(options)
     end
 
     # @return [String] the value of this money object formatted according to

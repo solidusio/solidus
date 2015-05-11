@@ -70,46 +70,6 @@
             </div>
           </fieldset>
         </div>
-        <div class="omega six columns">
-          <fieldset class="currency no-border-bottom">
-            <legend align="center"><%= Spree.t(:currency_settings)%></legend>
-            <% @preferences_currency.each do |key|
-                type = Spree::Config.preference_type(key) %>
-                <div class="field">
-                  <%= label_tag(key, Spree.t(key)) + tag(:br) if type != :boolean %>
-                  <%= preference_field_tag(key, Spree::Config[key], :type => type) %>
-                  <%= label_tag(key, Spree.t(key)) + tag(:br) if type == :boolean %>
-                </div>
-            <% end %>
-            <div class="field">
-              <%= label_tag :currency, Spree.t(:choose_currency) %><br>
-              <%= select_tag :currency, currency_options, :class => 'fullwidth' %>
-            </div>
-            <div class="field">
-              <%= label_tag Spree.t(:currency_symbol_position) %><br>
-              <div class="choices">
-                <ul>
-                  <li>
-                    <%= radio_button_tag :currency_symbol_position, "before", Spree::Config[:currency_symbol_position] == "before" %>
-                    <%= label_tag :currency_symbol_position_before, Spree::Money.new(10, :symbol_position => "before") %>
-                  </li>
-                  <li class="white-space-nowrap">
-                    <%= radio_button_tag :currency_symbol_position, "after", Spree::Config[:currency_symbol_position] == "after" %>
-                    <%= label_tag :currency_symbol_position_after, Spree::Money.new(10, :symbol_position => "after") %>
-                  </li>
-                </ul>
-              </div>
-            </div>
-            <div class="field">
-              <%= label_tag :currency_decimal_mark, Spree.t(:currency_decimal_mark) %><br>
-              <%= text_field_tag :currency_decimal_mark, Spree::Config[:currency_decimal_mark], :size => 3 %>
-            </div>
-            <div class="field">
-              <%= label_tag :currency_thousands_separator, Spree.t(:currency_thousands_separator) %><br>
-              <%= text_field_tag :currency_thousands_separator, Spree::Config[:currency_thousands_separator], :size => 3 %>
-            </div>
-          </fieldset>
-        </div>
       </div>
 
       <div class="form-buttons filter-actions actions" data-hook="buttons">

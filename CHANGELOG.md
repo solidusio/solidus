@@ -1,3 +1,5 @@
+## Solidus 1.0
+
 *   Replace ShipmentMailer with CartonMailer
 
     IMPORTANT: Appliction and extension code targeting ShipmentMailer needs to
@@ -30,4 +32,13 @@
 
     *Jordan Brough*
 
-## Spree 2.2.2 (May 15, 2014) ##
+*   Remove Spree::Money preferences
+
+    Removes Spree::Config's `symbol_position`, `no_cents`, `decimal_mark`, and
+    `thousands_separator`. This allows us to use the better defaults provided
+    by RubyMoney. For the same functionality of the existing preferences,
+    `Spree::Money.default_formatting_rules` can be used.
+
+    https://github.com/solidusio/solidus/pull/47
+
+    *John Hawthorn*
