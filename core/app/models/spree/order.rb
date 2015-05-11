@@ -621,10 +621,6 @@ module Spree
       super
     end
 
-    def tax_total
-      included_tax_total + additional_tax_total
-    end
-
     def quantity
       line_items.sum(:quantity)
     end
