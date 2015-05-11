@@ -1,4 +1,11 @@
 module Spree
+  # Option types denote the different options for a variant. A typical option
+  # type would be a size, with that option type’s values being something such
+  # as "Small", "Medium" and "Large". Another typical option type could be a
+  # color, such as "Red", "Green", or "Blue".
+  #
+  # A product can be assigned many option types, but must be assigned at least
+  # one if you wish to create variants for that product.
   class OptionType < Spree::Base
     acts_as_list
 

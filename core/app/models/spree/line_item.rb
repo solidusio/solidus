@@ -37,6 +37,8 @@ module Spree
 
     attr_accessor :target_shipment
 
+    # Sets this line item's price, cost price, and currency from this line
+    # item's variant if they are nil and a variant is present.
     def copy_price
       if variant
         self.price = variant.price if price.nil?
@@ -45,63 +47,88 @@ module Spree
       end
     end
 
+    # Sets this line item's tax category from this line item's variant if a
+    # variant is present.
     def copy_tax_category
       if variant
         self.tax_category = variant.tax_category
       end
     end
 
+    # @return [BigDecimal] the amount of this line item, which is the line
+    #   item's price multiplied by its quantity.
     def amount
       price * quantity
     end
     alias subtotal amount
 
+    # @return [BigDecimal] the amount of this line item, taking into
+    #   consideration line item promotions.
     def discounted_amount
       amount + promo_total
     end
 
+    # @return [Spree::Money] the amount of this line item, taking into
+    #   consideration line item promotions.
     def discounted_money
       Spree::Money.new(discounted_amount, { currency: currency })
     end
 
+    # @return [BigDecimal] the amount of this line item, taking into
+    #   consideration all its adjustments.
     def final_amount
       amount + adjustment_total
     end
     alias total final_amount
 
+    # @return [Spree::Money] the price of this line item
     def single_money
       Spree::Money.new(price, { currency: currency })
     end
     alias single_display_amount single_money
 
+    # @return [Spree::Moeny] the amount of this line item
     def money
       Spree::Money.new(amount, { currency: currency })
     end
     alias display_total money
     alias display_amount money
 
+    # Sets the quantity to zero if it is nil or less than zero.
     def invalid_quantity_check
       self.quantity = 0 if quantity.nil? || quantity < 0
     end
 
+    # @return [Boolean] true when it is possible to supply the required
+    #   quantity of stock of this line item's variant
     def sufficient_stock?
       Stock::Quantifier.new(variant).can_supply? quantity
     end
 
+    # @return [Boolean] true when it is not possible to supply the required
+    #   quantity of stock of this line item's variant
     def insufficient_stock?
       !sufficient_stock?
     end
 
-    # Remove product default_scope `deleted_at: nil`
+    # @note This will return the product even if it has been deleted.
+    # @return [Spree::Product, nil] the product associated with this line
+    #   item, if there is one
     def product
       variant.product
     end
 
-    # Remove variant default_scope `deleted_at: nil`
+    # @note This will return the variant even if it has been deleted.
+    # @return [Spree::Variant, nil] the variant associated with this line
+    #   item, if there is one
     def variant
       Spree::Variant.unscoped { super }
     end
 
+    # Sets the options on the line item according to the order's currency or
+    # one passed in.
+    #
+    # @param options [Hash] options for this line item
     def options=(options={})
       return unless options.present?
 
