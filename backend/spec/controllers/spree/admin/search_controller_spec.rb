@@ -2,8 +2,9 @@ require 'spec_helper'
 
 describe Spree::Admin::SearchController, :type => :controller do
   stub_authorization!
+
   # Regression test for ernie/ransack#176
-  let(:user) { create(:user, :email => "spree_commerce@example.com") }
+  let(:user) { create(:user, email: "spree_commerce@example.com") }
 
   before do
     user.ship_address = create(:address)
@@ -11,29 +12,93 @@ describe Spree::Admin::SearchController, :type => :controller do
     user.save
   end
 
-  it "can find a user by their email "do
-    spree_xhr_get :users, :q => user.email
-    expect(assigns[:users]).to include(user)
+  describe 'GET #users' do
+    subject { spree_xhr_get :users, params }
+
+    shared_examples_for 'user found by search' do
+      it "should include users matching query" do
+        subject
+        expect(assigns[:users]).to include(user)
+      end
+    end
+
+    context 'when searching by user attributes' do
+      let(:params) { { q: user_attribute } }
+
+      context 'when searching by email' do
+        it_should_behave_like 'user found by search' do
+          let(:user_attribute) { user.email }
+        end
+      end
+
+      context 'when searching by ship addresss first name' do
+        it_should_behave_like 'user found by search' do
+          let(:user_attribute) { user.ship_address.firstname }
+        end
+      end
+
+      context 'when searching by ship address last name' do
+        it_should_behave_like 'user found by search' do
+          let(:user_attribute) { user.ship_address.lastname }
+        end
+      end
+
+      context 'when searching by bill address first name' do
+        it_should_behave_like 'user found by search' do
+          let(:user_attribute) { user.bill_address.firstname }
+        end
+      end
+
+      context 'when searching by bill address last name' do
+        it_should_behave_like 'user found by search' do
+          let(:user_attribute) { user.bill_address.lastname }
+        end
+      end
+    end
+
+    context 'when searching by user ids' do
+      let(:params) { { ids: user.id.to_s } }
+      it_should_behave_like 'user found by search'
+    end
   end
 
-  it "can find a user by their ship address's first name" do
-    spree_xhr_get :users, :q => user.ship_address.firstname
-    expect(assigns[:users]).to include(user)
-  end
+  describe 'get #products' do
+    let!(:product_one) { create(:product, name: 'jersey') }
+    let!(:product_two) { create(:product, name: 'better jersey') }
 
-  it "can find a user by their ship address's last name" do
-    spree_xhr_get :users, :q => user.ship_address.lastname
-    expect(assigns[:users]).to include(user)
-  end
+    subject { spree_get :products, params }
 
-  it "can find a user by their bill address's first name" do
-    spree_xhr_get :users, :q => user.bill_address.firstname
-    expect(assigns[:users]).to include(user)
-  end
+    shared_examples_for 'product search' do
+      it 'should respond with http success' do
+        subject
+        expect(response).to be_success
+      end
 
-  it "can find a user by their bill address's last name" do
-    spree_xhr_get :users, :q => user.bill_address.lastname
-    expect(assigns[:users]).to include(user)
-  end
+      it 'should set the Surrogate-Control header' do
+        subject
+        expect(response.headers['Surrogate-Control']).to eq 'max-age=900'
+      end
 
+      it 'should find the correct products' do
+        subject
+        expect(assigns(:products)).to eq expected_products
+      end
+    end
+
+    context 'when ids param is present' do
+      let(:params) { { ids: product_one.id } }
+
+      it_should_behave_like 'product search' do
+        let(:expected_products) { [product_one] }
+      end
+    end
+
+    context 'when idds param is not present' do
+      let(:params) { { q: {name_cont: 'jersey'} } }
+
+      it_should_behave_like 'product search' do
+        let(:expected_products) { [product_one, product_two] }
+      end
+    end
+  end
 end
