@@ -1,6 +1,6 @@
 class VariantForm
-  @initializeForm: ->
-    autoCompleteEl().variantAutocomplete()
+  @initializeForm: (isBuilding) ->
+    autoCompleteEl().variantAutocomplete({ in_stock_only: isBuilding })
     resetVariantAutocomplete()
 
   @beginListeningForReceive: ->

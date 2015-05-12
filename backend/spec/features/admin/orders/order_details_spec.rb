@@ -149,11 +149,12 @@ describe "Order Details", type: :feature, js: true do
           product.master.stock_items.first.update_column(:count_on_hand, 0)
         end
 
-        it "displays out of stock instead of add button" do
-          select2_search product.name, :from => Spree.t(:name_or_sku)
+        it "doesn't display the out of stock variant in the search results" do
+          select2_search_without_selection product.name, from: ".variant_autocomplete"
 
-          within("table.stock-levels") do
-            page.should have_content(0)
+          page.should have_selector('.select2-no-results')
+          within(".select2-no-results") do
+            page.should have_content("NO MATCHES FOUND")
           end
         end
       end

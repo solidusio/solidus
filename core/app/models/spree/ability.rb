@@ -60,7 +60,7 @@ module Spree
         can :display, StockLocation, active: true
         can :display, Taxon
         can :display, Taxonomy
-        can :display, Variant
+        can [:display, :view_out_of_stock], Variant
         can :display, Zone
       end
 
