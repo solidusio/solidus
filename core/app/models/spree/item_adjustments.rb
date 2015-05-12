@@ -78,7 +78,7 @@ module Spree
     end
 
     def best_promotion_adjustment
-      @best_promotion_adjustment ||= adjustments.promotion.eligible.reorder("amount ASC, created_at DESC, id DESC").first
+      @best_promotion_adjustment ||= adjustments.promotion.eligible.reorder(:amount, created_at: :desc, id: :desc).first
     end
   end
 end
