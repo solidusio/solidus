@@ -13,10 +13,10 @@ module Spree
     has_many :promotion_actions, autosave: true, dependent: :destroy
     alias_method :actions, :promotion_actions
 
-    has_many :order_promotions, class_name: 'Spree::OrderPromotion'
+    has_many :order_promotions, class_name: "Spree::OrderPromotion"
     has_many :orders, through: :order_promotions
 
-    has_many :codes, class_name: 'Spree::PromotionCode', inverse_of: :promotion
+    has_many :codes, class_name: "Spree::PromotionCode", inverse_of: :promotion
     alias_method :promotion_codes, :codes
 
     accepts_nested_attributes_for :promotion_actions, :promotion_rules
@@ -31,24 +31,19 @@ module Spree
 
     before_save :normalize_blank_values
 
-    scope :coupons, ->{ where("#{table_name}.code IS NOT NULL") }
-
-    order_join_table = reflect_on_association(:orders).join_table
-
-    scope :applied, -> { joins("INNER JOIN #{order_join_table} ON #{order_join_table}.promotion_id = #{table_name}.id").uniq }
+    scope :coupons, -> { where.not(code: nil) }
+    scope :advertised, -> { where(advertise: true) }
+    scope :active, -> do
+      table = self.arel_table
+      time = Time.current
+      where(table[:starts_at].eq(nil).or(table[:starts_at].lt(time))).
+        where(table[:expires_at].eq(nil).or(table[:expires_at].gt(time)))
+    end
+    scope :applied, -> { joins(:order_promotions).uniq }
 
     # temporary code. remove after the column is dropped from the db.
     def columns
-      super.reject { |column| column.name == 'code' }
-    end
-
-    def self.advertised
-      where(advertise: true)
-    end
-
-    def self.active
-      where('spree_promotions.starts_at IS NULL OR spree_promotions.starts_at < ?', Time.now).
-        where('spree_promotions.expires_at IS NULL OR spree_promotions.expires_at > ?', Time.now)
+      super.reject { |column| column.name == "code" }
     end
 
     def self.order_activatable?(order)
@@ -56,17 +51,17 @@ module Spree
     end
 
     def code
-      raise 'Attempted to call code on a Spree::Promotion. Promotions are now tied to multiple code records'
+      raise "Attempted to call code on a Spree::Promotion. Promotions are now tied to multiple code records"
     end
 
     def code=(val)
-      raise 'Attempted to call code= on a Spree::Promotion. Promotions are now tied to multiple code records'
+      raise "Attempted to call code= on a Spree::Promotion. Promotions are now tied to multiple code records"
     end
 
     def self.with_coupon_code(val)
-      if code = PromotionCode.where(value: val.downcase).first
-        code.promotion
-      end
+      joins(:codes).where(
+        PromotionCode.arel_table[:value].eq(val.downcase)
+      ).first
     end
 
     def as_json(options={})
@@ -79,8 +74,8 @@ module Spree
     end
 
     def active?
-      (starts_at.nil? || starts_at < Time.now) &&
-        (expires_at.nil? || expires_at > Time.now)
+      (starts_at.nil? || starts_at < Time.current) &&
+        (expires_at.nil? || expires_at > Time.current)
     end
 
     def activate(order:, line_item: nil, user: nil, path: nil, promotion_code: nil)
@@ -179,15 +174,6 @@ module Spree
       adjustment_promotion_scope(Spree::Adjustment.eligible).count
     end
 
-    # Number of times the code has been used for the given promotable
-    #
-    # @param promotable promotable object (e.g. order/line item/shipment)
-    # @return [Integer] usage count for this promotable
-    # TODO: specs
-    def usage_count_for(promotable)
-      adjustment_promotion_scope(promotable.adjustments).count
-    end
-
     # TODO: specs
     def line_item_actionable?(order, line_item, promotion_code: nil)
       if eligible?(order, promotion_code: promotion_code)
@@ -212,7 +198,7 @@ module Spree
       ].any? do |adjustment_type|
         user.orders.complete.joins(adjustment_type).where(
           spree_adjustments: {
-            source_type: 'Spree::PromotionAction',
+            source_type: "Spree::PromotionAction",
             source_id: actions.map(&:id),
             eligible: true
           }
@@ -223,6 +209,7 @@ module Spree
     end
 
     private
+
     def blacklisted?(promotable)
       case promotable
       when Spree::LineItem
@@ -233,20 +220,20 @@ module Spree
       end
     end
 
-    def adjustment_promotion_scope(adjustment_scope)
-      adjustment_scope.promotion.where(source_id: actions.map(&:id))
-    end
-
     def normalize_blank_values
       self[:path] = nil if self[:path].blank?
     end
 
     def match_all?
-      match_policy == 'all'
+      match_policy == "all"
     end
 
     def usage_count_for(promotable)
       adjustment_promotion_scope(promotable.adjustments).count
+    end
+
+    def adjustment_promotion_scope(adjustment_scope)
+      adjustment_scope.promotion.where(source_id: actions.pluck(:id))
     end
   end
 end
