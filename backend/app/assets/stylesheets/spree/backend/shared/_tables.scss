@@ -202,7 +202,7 @@ table {
         border-color: $color-2 !important;
         text-transform: uppercase;
         font-size: 110%;
-        font-weight: 600;
+        font-weight: $font-weight-bold;
         background-color: lighten($color-2, 50);
       }
       .total {

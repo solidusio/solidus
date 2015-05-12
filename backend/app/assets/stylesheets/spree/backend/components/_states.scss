@@ -1,7 +1,7 @@
 .state {
   text-transform: uppercase;
   font-size: 80%;
-  font-weight: 600;
+  font-weight: $font-weight-bold;
 
   &:before {
     content: '';

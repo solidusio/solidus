@@ -8,14 +8,13 @@ input[type="url"],
 input[type="number"],
 input[type="tel"],
 textarea, fieldset {
-  @include border-radius($border-radius);
   padding: 7px 10px;
   border: 1px solid $color-txt-brd;
+  border-radius: $border-radius;
   color: $color-txt-text;
   font-size: 90%;
 
   &:focus {
-    outline: none;
     border-color: $color-txt-hover-brd;
   }
 
@@ -72,7 +71,7 @@ textarea {
 }
 
 label {
-  font-weight: 600;
+  font-weight: $font-weight-bold;
   text-transform: uppercase;
   font-size: 85%;
   display: inline;
@@ -93,14 +92,14 @@ label {
 input[type="submit"],
 input[type="button"],
 button, .button {
-  @include border-radius($border-radius);
   display: inline-block;
   padding: 8px 15px;
   border: none;
+  border-radius: $border-radius;
   background-color: $color-btn-bg;
   color: $color-btn-text;
   text-transform: uppercase;
-  font-weight: 600 !important;
+  font-weight: $font-weight-bold !important;
   white-space: nowrap;
 
   &:before {
@@ -218,7 +217,7 @@ fieldset {
     background-color: $color-1;
     color: $color-2;
     font-size: 14px;
-    font-weight: 600;
+    font-weight: $font-weight-bold;
     text-transform: uppercase;
     text-align: center;
     padding: 8px 15px;
@@ -245,7 +244,7 @@ fieldset {
     }
 
     button, .button, input[type="submit"], input[type="button"], span.or {
-      @include border-radius($border-radius);
+      border-radius: $border-radius;
 
       -webkit-box-shadow: 0 0 0 15px $color-1;
          -moz-box-shadow: 0 0 0 15px $color-1;

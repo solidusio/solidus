@@ -1,23 +1,23 @@
 // Base
 //--------------------------------------------------------------
-body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, form, p, blockquote, th, td { margin: 0; padding: 0; font-size: 13px; }
-
 body {
+  padding: 0;
   font-family: $base-font-family;
   font-size: $body-font-size;
   font-weight: 400;
   color: $color-body-text;
+  background: $color-body-bg;
   text-rendering: optimizeLegibility;
 }
 
 hr {
   border-top: 1px solid $color-border;
-  border-bottom: 1px solid white;
+  border-bottom: 1px solid $color-body-bg;
   border-left: none;
 }
 
 strong, b {
-  font-weight: 600;
+  font-weight: $font-weight-bold;
 }
 
 // links
@@ -26,10 +26,6 @@ a {
   color: $color-link;
   text-decoration: none;
   line-height: inherit;
-
-  &, &:hover, &:active, &:visited, &:focus {
-    outline: none;
-  }
 
   &:visited {
     color: $color-link-visited;
@@ -49,7 +45,7 @@ a {
 //--------------------------------------------------------------
 
 h1,h2,h3,h4,h5,h6 {
-  font-weight: 600;
+  font-weight: $font-weight-bold;
   color: $color-headers;
   line-height: 1.1;
 }
@@ -98,7 +94,7 @@ dl {
 
   dt {
     width: 40%;
-    font-weight: 600;
+    font-weight: $font-weight-bold;
     padding-left: 0;
     text-transform: uppercase;
     font-size: 85%;
@@ -107,6 +103,7 @@ dl {
   dd {
     width: 60%;
     padding-right: 0;
+    margin-left: 0;
   }
 
   dd:after {
@@ -114,6 +111,12 @@ dl {
     clear: both;
   }
 
+}
+
+.dl-collapse {
+  dt, dd {
+    width: auto;
+  }
 }
 
 // Helpers
