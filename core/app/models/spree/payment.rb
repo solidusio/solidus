@@ -190,7 +190,6 @@ module Spree
       amount - captured_amount
     end
 
-
     # @return [Boolean] true when the payment method exists and is a store credit payment method
     def store_credit?
       payment_method.try!(:store_credit?)
@@ -234,20 +233,6 @@ module Spree
           order.payments.checkout.where(payment_method: payment_method).where("id != ?", self.id).each do |payment|
             payment.invalidate!
           end
-        end
-      end
-
-      def split_uncaptured_amount
-        if uncaptured_amount > 0
-          order.payments.create! amount: uncaptured_amount,
-                                 avs_response: avs_response,
-                                 cvv_response_code: cvv_response_code,
-                                 cvv_response_message: cvv_response_message,
-                                 payment_method: payment_method,
-                                 response_code: response_code,
-                                 source: source,
-                                 state: 'pending'
-          update_attributes(amount: captured_amount)
         end
       end
 
