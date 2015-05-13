@@ -909,7 +909,7 @@ fr:
         thanks: Merci d'avoir fait affaire avec nous.
         total: ! 'Total de la commande: %{total}'
     order_not_found: Impossible de trouver votre commande. Merci d'essayer à nouveau.
-    order_number: Numéro de facture
+    order_number: Facture %{number}
     order_processed_successfully: Votre commande a été traitée avec succès
     order_resumed: Résumé de votre commande
     order_state:
