@@ -93,15 +93,46 @@ describe "exchanges:charge_unreturned_items" do
         expect(new_order.credit_cards.first).to eq order.valid_credit_cards.first
       end
 
-      it "authorizes the order for the full amount of the unreturned items including taxes" do
-        expect { subject.invoke }.to change { Spree::Payment.count }.by(1)
-        new_order = Spree::Order.last
-        expected_amount = return_item_2.reload.exchange_variant.price + new_order.additional_tax_total + new_order.included_tax_total + new_order.shipment_total
-        expect(new_order.total).to eq expected_amount
-        payment = new_order.payments.first
-        expect(payment.amount).to eq expected_amount
-        expect(payment).to be_pending
-        expect(new_order.item_total).to eq return_item_2.reload.exchange_variant.price
+      context "payments" do
+        it "authorizes the order for the full amount of the unreturned items including taxes" do
+          expect { subject.invoke }.to change { Spree::Payment.count }.by(1)
+          new_order = Spree::Order.last
+          expected_amount = return_item_2.reload.exchange_variant.price + new_order.additional_tax_total + new_order.included_tax_total + new_order.shipment_total
+          expect(new_order.total).to eq expected_amount
+          payment = new_order.payments.first
+          expect(payment.amount).to eq expected_amount
+          expect(new_order.item_total).to eq return_item_2.reload.exchange_variant.price
+        end
+
+        context "auto_capture_exchanges is true" do
+          before do
+            @original_auto_capture_exchanges = Spree::Config[:auto_capture_exchanges]
+            Spree::Config[:auto_capture_exchanges] = true
+          end
+
+          after { Spree::Config[:auto_capture_exchanges] = @original_auto_capture_exchanges }
+
+          it 'creates a pending payment' do
+            expect { subject.invoke }.to change { Spree::Payment.count }.by(1)
+            payment = Spree::Payment.last
+            expect(payment).to be_completed
+          end
+        end
+
+        context "auto_capture_exchanges is false" do
+          before do
+            @original_auto_capture_exchanges = Spree::Config[:auto_capture_exchanges]
+            Spree::Config[:auto_capture_exchanges] = false
+          end
+
+          after { Spree::Config[:auto_capture_exchanges] = @original_auto_capture_exchanges }
+
+          it 'captures payment' do
+            expect { subject.invoke }.to change { Spree::Payment.count }.by(1)
+            payment = Spree::Payment.last
+            expect(payment).to be_pending
+          end
+        end
       end
 
       it "does not attempt to create a new order for the item more than once" do

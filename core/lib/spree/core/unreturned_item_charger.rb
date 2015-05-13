@@ -34,6 +34,7 @@ module Spree
 
       new_order.contents.approve(name: self.class.name)
       new_order.reload.complete!
+      new_order.payments.map(&:capture!) if (Spree::Config[:auto_capture_exchanges] && !Spree::Config[:auto_capture])
 
       @return_items.each(&:expired!)
       create_new_rma if Spree::Config[:create_rma_for_unreturned_exchange]
