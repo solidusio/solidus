@@ -377,14 +377,43 @@ describe Spree::Shipment, :type => :model do
   context "#resume" do
     let(:inventory_unit) { create(:inventory_unit) }
 
-    it 'will determine new state based on order' do
-      allow(shipment.order).to receive(:update!)
+    before { shipment.state = 'canceled' }
 
-      shipment.state = 'canceled'
-      expect(shipment).to receive(:determine_state).and_return(:ready)
-      expect(shipment).to receive(:after_resume)
-      shipment.resume!
-      expect(shipment.state).to eq 'ready'
+    context "when order cannot ship" do
+      before { order.stub(can_ship?: false) }
+      it "should result in a 'pending' state" do
+        shipment.resume!
+        shipment.state.should eq 'pending'
+      end
+    end
+
+    context "when order is not paid" do
+      before { order.stub(paid?: false) }
+      it "should result in a 'ready' state" do
+        shipment.resume!
+        shipment.state.should eq 'pending'
+      end
+    end
+
+    context "when any inventory is backordered" do
+      before { allow_any_instance_of(Spree::InventoryUnit).to receive(:backordered?).and_return(true) }
+      it "should result in a 'ready' state" do
+        shipment.resume!
+        shipment.state.should eq 'pending'
+      end
+    end
+
+    context "when the order is paid, shippable, and not backordered" do
+      before do
+        order.stub(can_ship?: true)
+        order.stub(paid?: true)
+        allow_any_instance_of(Spree::InventoryUnit).to receive(:backordered?).and_return(false)
+      end
+
+      it "should result in a 'ready' state" do
+        shipment.resume!
+        shipment.state.should eq 'ready'
+      end
     end
 
     it 'unstocks them items' do
@@ -392,17 +421,6 @@ describe Spree::Shipment, :type => :model do
       shipment.stock_location = mock_model(Spree::StockLocation)
       expect(shipment.stock_location).to receive(:unstock).with(variant, 1, shipment)
       shipment.after_resume
-    end
-
-    it 'will determine new state based on order' do
-      allow(shipment.order).to receive(:update!)
-
-      shipment.state = 'canceled'
-      expect(shipment).to receive(:determine_state).twice.and_return('ready')
-      expect(shipment).to receive(:after_resume)
-      shipment.resume!
-      # Shipment is pending because order is already paid
-      expect(shipment.state).to eq 'pending'
     end
   end
 
