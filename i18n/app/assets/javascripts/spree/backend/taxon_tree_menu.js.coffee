@@ -17,19 +17,19 @@ root.taxon_tree_menu = (obj, context) ->
   translation_url.setPath(translation_base_path);
 
   create:
-    label: "<i class='fa fa-plus'></i> " + Spree.translations.add,
+    label: "<span class='icon icon-plus'></span> " + Spree.translations.add,
     action: (obj) -> context.create(obj)
   rename:
-    label: "<i class='fa fa-pencil'></i> " + Spree.translations.rename,
+    label: "<span class='icon icon-pencil'></span> " + Spree.translations.rename,
     action: (obj) -> context.rename(obj)
   remove:
-    label: "<i class='fa fa-trash'></i> " + Spree.translations.remove,
+    label: "<span class='icon icon-trash'></span> " + Spree.translations.remove,
     action: (obj) -> context.remove(obj)
   edit:
     separator_before: true,
-    label: "<i class='fa fa-edit'></i> " + Spree.translations.edit,
+    label: "<span class='icon icon-cog'></span> " + Spree.translations.edit,
     action: (obj) -> window.location = edit_url.toString()
   translate:
     separator_before: true,
-    label: "<i class='fa fa-flag'></i> " + Spree.translations.translations,
+    label: "<span class='icon icon-flag'></span> " + Spree.translations.translations,
     action: (obj) -> window.location = translation_url.toString()
