@@ -1,5 +1,11 @@
 # This class represents all of the actions one can take to modify an Order after it is complete
 class Spree::OrderCancellations
+
+  # If you need to message a third party service when an item is canceled then
+  # set short_ship_tax_notifier to an object that responds to:
+  #     #call(unit_cancels)
+  class_attribute :short_ship_tax_notifier
+
   def initialize(order)
     @order = order
   end
@@ -9,23 +15,37 @@ class Spree::OrderCancellations
       raise ArgumentError, "Not all inventory units belong to this order"
     end
 
+    unit_cancels = []
+
     Spree::OrderMutex.with_lock!(@order) do
-      inventory_units.each { |iu| short_ship_unit(iu, whodunnit: whodunnit) }
+
+      Spree::InventoryUnit.transaction do
+        inventory_units.each do |iu|
+          unit_cancels << short_ship_unit(iu, whodunnit: whodunnit)
+        end
+      end
+
       @order.update!
+
+      if short_ship_tax_notifier
+        short_ship_tax_notifier.call(unit_cancels)
+      end
     end
+
+    unit_cancels
   end
 
   private
 
   def short_ship_unit(inventory_unit, whodunnit:nil)
-    Spree::InventoryUnit.transaction do
-      unit_cancel = Spree::UnitCancel.create!(
-        inventory_unit: inventory_unit,
-        reason: Spree::UnitCancel::SHORT_SHIP,
-        created_by: whodunnit,
-      )
-      unit_cancel.adjust!
-      inventory_unit.cancel!
-    end
+    unit_cancel = Spree::UnitCancel.create!(
+      inventory_unit: inventory_unit,
+      reason: Spree::UnitCancel::SHORT_SHIP,
+      created_by: whodunnit,
+    )
+    unit_cancel.adjust!
+    inventory_unit.cancel!
+
+    unit_cancel
   end
 end

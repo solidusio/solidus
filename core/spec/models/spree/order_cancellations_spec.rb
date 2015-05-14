@@ -62,5 +62,27 @@ describe Spree::OrderCancellations do
         expect(line_item.total).to eq 0
       end
     end
+
+    describe 'short_ship_tax_notifier' do
+      context 'when present' do
+        let(:short_ship_tax_notifier) { double }
+
+        before do
+          @old_notifier = Spree::OrderCancellations.short_ship_tax_notifier
+          Spree::OrderCancellations.short_ship_tax_notifier = short_ship_tax_notifier
+        end
+        after do
+          Spree::OrderCancellations.short_ship_tax_notifier = @old_notifier
+        end
+
+        it 'calls the short_ship_tax_notifier' do
+          expect(short_ship_tax_notifier).to receive(:call) do |unit_cancels|
+            expect(unit_cancels.map(&:inventory_unit)).to match_array([inventory_unit])
+          end
+
+          order.cancellations.short_ship([inventory_unit])
+        end
+      end
+    end
   end
 end
