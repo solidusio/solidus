@@ -11,8 +11,10 @@ module Spree
     # have the same amount, then it will pick the latest one.
     def update
       if best_promotion_adjustment
-        other_promotions = @adjustments.where.not(id: best_promotion_adjustment.id)
-        other_promotions.update_all(:eligible => false)
+        @adjustments.select(&:eligible?).each do |adjustment|
+          next if adjustment == best_promotion_adjustment
+          adjustment.update_columns(eligible: false)
+        end
         best_promotion_adjustment.amount
       else
         0
