@@ -554,8 +554,9 @@ pt-BR:
     coupon_code_unknown_error:
     create: Criar
     create_a_new_account: Criar uma Nova Conta
+    create_new_account: "Criar Nova Conta"
     create_new_order: Criar novo pedido
-    create_reimbursement:
+    create_reimbursement: Criar reembolso
     created_at: Criado
     credit: Crédito
     credit_card: Cartão de Crédito
