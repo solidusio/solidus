@@ -563,6 +563,7 @@ en:
     categories: Categories
     category: Category
     charged: Charged
+    check_stock_on_transfer: Check stock on transfer
     checkout: Checkout
     choose_a_customer: Choose a customer
     choose_a_taxon_to_sort_products_for: "Choose a taxon to sort products for"

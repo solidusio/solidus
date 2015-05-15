@@ -1,7 +1,8 @@
 require 'spec_helper'
 
 describe Spree::TransferItem do
-  let(:stock_transfer) { create(:stock_transfer_with_items) }
+  let(:stock_location) { create(:stock_location, name: "Warehouse") }
+  let(:stock_transfer) { create(:stock_transfer_with_items, source_location: stock_location) }
   let(:transfer_item)  { stock_transfer.transfer_items.first }
 
   subject { transfer_item }
@@ -78,6 +79,13 @@ describe Spree::TransferItem do
             stock_item.set_count_on_hand(0)
           end
           include_examples 'availability check passes'
+
+          context "stock location doesn't check stock" do
+            before do
+              stock_location.update_attributes!(check_stock_on_transfer: false)
+            end
+            include_examples 'availability check passes'
+          end
         end
 
         context "variant available" do
@@ -105,6 +113,13 @@ describe Spree::TransferItem do
             stock_item.set_count_on_hand(0)
           end
           include_examples 'availability check fails'
+
+          context "stock location doesn't check stock" do
+            before do
+              stock_location.update_attributes!(check_stock_on_transfer: false)
+            end
+            include_examples 'availability check passes'
+          end
         end
 
         context "variant available" do

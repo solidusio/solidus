@@ -3,7 +3,7 @@ module Spree
     belongs_to :stock_transfer
     belongs_to :variant
 
-    validate :stock_availability, unless: :stock_transfer_closed?
+    validate :stock_availability, if: :check_stock?
     validates_presence_of :stock_transfer, :variant
     validates_uniqueness_of :variant_id, scope: :stock_transfer_id
     validates :expected_quantity, numericality: { greater_than: 0 }
@@ -39,6 +39,10 @@ module Spree
 
     def stock_transfer_closed?
       stock_transfer.closed?
+    end
+
+    def check_stock?
+      !stock_transfer_closed? && stock_transfer.source_location.check_stock_on_transfer?
     end
   end
 end
