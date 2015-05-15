@@ -35,14 +35,12 @@ module Spree
       # Additional tax adjustments are the opposite, affecting the final total.
       promo_total = 0
       run_callbacks :promo_adjustments do
-        promotion_total = adjustments.promotion.reload.map do |adjustment|
+        adjustments.promotion.reload.map do |adjustment|
           adjustment.update!(@item)
-        end.compact.sum
-
-        unless promotion_total == 0
-          choose_best_promotion_adjustment
         end
-        promo_total = best_promotion_adjustment.try(:amount).to_f
+
+        choose_best_promotion_adjustment
+        promo_total = best_promotion_adjustment.try(:amount) || 0
       end
 
       included_tax_total = 0
@@ -64,18 +62,16 @@ module Spree
       )
     end
 
-    # Picks one (and only one) promotion to be eligible for this order
-    # This promotion provides the most discount, and if two promotions
-    # have the same amount, then it will pick the latest one.
+    def promotion_chooser
+      @promotion_chooser ||= PromotionChooser.new(adjustments.promotion)
+    end
+
     def choose_best_promotion_adjustment
-      if best_promotion_adjustment
-        other_promotions = self.adjustments.promotion.where.not(id: best_promotion_adjustment.id)
-        other_promotions.update_all(:eligible => false)
-      end
+      promotion_chooser.update
     end
 
     def best_promotion_adjustment
-      @best_promotion_adjustment ||= adjustments.promotion.eligible.reorder("amount ASC, created_at DESC, id DESC").first
+      promotion_chooser.best_promotion_adjustment
     end
   end
 end

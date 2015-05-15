@@ -223,6 +223,7 @@ describe Spree::Promotion, :type => :model do
     let!(:adjustment2) { Spree::Adjustment.create!(adjustable: promotable, label: 'Adjustment', amount: 1, source: promotion.actions.first, order: promotable) }
 
     it "counts the eligible adjustments that have used this promotion" do
+      adjustment1.update_columns(eligible: true)
       adjustment2.update_columns(eligible: false)
       expect(promotion.usage_count).to eq 1
     end
