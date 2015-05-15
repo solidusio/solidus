@@ -16,7 +16,7 @@
   <%= tab *Spree::BackendConfiguration::PROMOTION_TABS, url: spree.admin_promotions_path, icon: 'bullhorn' %>
 <% end %>
 <% if can? :admin, Spree::StockLocation %>
-  <%= tab(:stock_items, :url => spree.admin_stock_items_path, :label => 'stock', :icon => 'cubes', match_path: %r(^/admin/stock)) %>
+  <%= tab(:stock_items, :stock_transfers, :url => spree.admin_stock_items_path, :label => 'stock', :icon => 'cubes', match_path: %r(^/admin/stock)) %>
 <% end %>
 <% if Spree.user_class && can?(:admin, Spree.user_class) %>
   <%= tab *Spree::BackendConfiguration::USER_TABS, url: spree.admin_users_path, icon: 'user' %>

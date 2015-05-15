@@ -1,0 +1,6 @@
+<% content_for :sub_menu do %>
+  <ul id="sub_nav" data-hook="admin_stock_transfer_sub_tabs" class="inline-menu">
+    <%= tab :stock_items, :label => 'management', :match_path => '/stock_items' %>
+    <%= tab :stock_transfers, :label => 'transfers', :match_path => '/stock_transfers' %>
+  </ul>
+<% end %>
