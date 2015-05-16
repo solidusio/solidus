@@ -27,7 +27,7 @@ tr:
         base:
         cc_type: Tür
         month: Ay
-        name:
+        name: İsim Soyisim
         number: Numara
         verification_value: Doğrulama Kodu
         year: Yıl
@@ -42,7 +42,7 @@ tr:
       spree/order:
         checkout_complete: "Ödeme Tamamlandı"
         completed_at: Tamamlanma zamanı
-        considered_risky:
+        considered_risky: Riskli Olarak Belirtildi
         coupon_code: Kupon Kodu
         created_at: Sipariş Tarihi
         email: Müşteri E-posta
@@ -425,7 +425,7 @@ tr:
     card_type:
     card_type_is: Kart Tipi
     cart: Sepet
-    cart_subtotal:
+    cart_subtotal: Ara Toplam
     categories: Kategoriler
     category: Kategori
     charged:
@@ -435,10 +435,10 @@ tr:
     choose_a_taxon_to_sort_products_for:
     choose_currency: Kur Seç
     choose_dashboard_locale: Kontrol Paneli Dili Seç
-    choose_location:
+    choose_location: Yer Seç
     city: "Şehir"
-    clear_cache:
-    clear_cache_ok:
+    clear_cache: Önbelleği Temizle
+    clear_cache_ok: 
     clear_cache_warning:
     click_and_drag_on_the_products_to_sort_them:
     clone: "Çoğalt"
@@ -481,8 +481,8 @@ tr:
     coupon_code_unknown_error:
     create: Oluştur
     create_a_new_account: Yeni hesap oluştur
-    create_new_order:
-    create_reimbursement:
+    create_new_order: Yeni sipariş oluştur
+    create_reimbursement: İade oluştur
     created_at: Oluşturulma zamanı
     credit: Kredi
     credit_card: Kredi Kartı
@@ -539,7 +539,7 @@ tr:
     display_currency: Kurları göster
     doesnt_track_inventory:
     edit: Düzenle
-    editing_resource:
+    editing_resource: Kaynak düzenleniyor
     editing_rma_reason:
     editing_user: Kullanıcı Düzenleme
     eligibility_errors:
@@ -550,13 +550,13 @@ tr:
         item_total_more_than:
         item_total_more_than_or_equal:
         limit_once_per_user:
-        missing_product:
-        missing_taxon:
+        missing_product: Ürün bulunamadı
+        missing_taxon: Sınıflandırma bulunamadı
         no_applicable_products:
-        no_matching_taxons:
-        no_user_or_email_specified:
+        no_matching_taxons: Eşleşen ürün yok
+        no_user_or_email_specified: 
         no_user_specified:
-        not_first_order:
+        not_first_order: İlk sipariş değil
     email: E-posta
     empty: Boş
     empty_cart: Sepeti Boşalt
@@ -598,8 +598,8 @@ tr:
     fill_in_customer_info: Lütfen müşteri bilgilerini giriniz.
     filter_results: Süzgeç Sonuçları
     finalize: Sonlandır
-    finalized:
-    find_a_taxon:
+    finalized: Sonlandırldı
+    find_a_taxon: Bir sınıflandırma bul
     first_item: "İlk Parça Maliyeti"
     first_name: "İsim"
     first_name_begins_with: "İsmi Şununla Başlayan"
@@ -637,16 +637,16 @@ tr:
       this_file_language: Türkçe (TR)
       translations: "Çeviriler"
     icon: Simge
-    identifier:
+    identifier: Belirteç
     image: Resim
     images: Resimler
     implement_eligible_for_return:
     implement_requires_manual_intervention:
-    inactive:
+    inactive: Pasif
     incl:
     included_in_price: Fiyata eklenmiş
     included_price_validation: Varsayılan Vergi Bölgesi ayarlanmadan seçilemez
-    incomplete:
+    incomplete: Tamamlanmamış
     info_number_of_skus_not_shown:
     info_product_has_multiple_skus:
     instructions_to_reset_password: Lütfen aşağıdaki forma e-posta adresinizi giriniz.
@@ -655,7 +655,7 @@ tr:
     intercept_email_address: E-posta Adresini Engelle
     intercept_email_instructions: E-posta adresini yoksay ve bu adresle değiştir.
     internal_name:
-    invalid_credit_card:
+    invalid_credit_card: Geçersiz kredi kartı
     invalid_exchange_variant:
     invalid_payment_provider: Geçersiz ödeme sağlayıcı.
     invalid_promotion_action: Geçersiz promosyon hareketi.
@@ -672,9 +672,9 @@ tr:
     item_total_rule:
       operators:
         gt: büyüktür
-        gte: büyük ya da eşittir
-        lt:
-        lte:
+        gte: büyük eşittir
+        lt: küçüktür
+        lte: küçük eşittir
     items_cannot_be_shipped: Seçtiğiniz ülkeye gönderim yapılamamaktadır
     items_in_rmas:
     items_reimbursed:
@@ -692,7 +692,7 @@ tr:
     locale_changed: Dil Değiştirildi
     location: Konum
     lock: Kilitle
-    log_entries:
+    log_entries: Log kayıtları
     logged_in_as: 'Açılan Oturum: '
     logged_in_succesfully: Giriş Başarılı
     logged_out: "Çıkış Yaptınız."
@@ -701,7 +701,7 @@ tr:
     login_failed: Giriş başarısız.
     login_name: Giriş
     logout: "Çıkış"
-    logs:
+    logs: Loglar
     look_for_similar_items: Benzer ürünlere bak
     make_refund: Geri ödeme Yap
     make_sure_the_above_reimbursement_amount_is_correct:
@@ -744,10 +744,10 @@ tr:
     new_promotion_category:
     new_property: Yeni Özellik
     new_prototype: Yeni Prototip
-    new_refund:
-    new_refund_reason:
+    new_refund: Yeni Geri Ödeme
+    new_refund_reason: Yeni Geri Ödeme Sebebi
     new_return_authorization: Yeni İade İzni
-    new_rma_reason:
+    new_rma_reason: Yeni İade Sebebi
     new_shipment_at_location:
     new_shipping_category: Yeni Kargo Kategorisi
     new_shipping_method: Yeni Kargo Yöntemi
@@ -765,10 +765,10 @@ tr:
     new_zone: Yeni Bölge
     next: Sonraki
     no_actions_added: Hiçbir eylem eklenmemiş
-    no_payment_found:
-    no_pending_payments:
+    no_payment_found: Hiçbir ödeme bulunamadı
+    no_pending_payments: Bekleyen ödeme yok
     no_products_found: Hiçbir Ürün Bulunamadı
-    no_resource_found:
+    no_resource_found: Kayıt bulunamadı
     no_results: Sonuç yok
     no_returns_found:
     no_rules_added: Hiçbir kural eklenmedi
@@ -776,13 +776,13 @@ tr:
     no_state_changes:
     no_tracking_present: Hiçbir izleyici ayrıntısı belirtilmedi.
     none: Hiçbiri
-    none_selected:
+    none_selected: Hiçbiri Seçili Değil
     normal_amount: Normal Miktar
     not: değil
     not_available: mevcut değil
     not_enough_stock: Belirtilen bölgede bu siparişi tamamlayabilecek kadar stok bulunmuyor.
     not_found: "%{resource} bulunamadı"
-    note:
+    note: Not
     notice_messages:
       product_cloned: "Ürün çoğaltıldı"
       product_deleted: "Ürün silindi"
@@ -826,11 +826,11 @@ tr:
         instructions: Lütfen aşağıdaki sipariş bilgilerini gözden geçiriniz ve kayıtlarınız için saklayınız.
         order_summary: Sipariş Özeti
         subject: Sipariş Onayı
-        subtotal:
+        subtotal: Ara Toplam
         thanks: Alışverişiniz için teşekkürler
-        total:
+        total: Toplam
     order_not_found: Siparişinizi bulamadık. Lütfen tekrar deneyiniz.
-    order_number:
+    order_number: Sipariş Numarası
     order_processed_successfully: Siparişiniz başarıyla işlenmiştir.
     order_resumed:
     order_state:
@@ -900,7 +900,7 @@ tr:
     preferred_reimbursement_type:
     presentation: Tanıtım
     previous: "Önceki"
-    previous_state_missing:
+    previous_state_missing: Önceki durum bulunamadı
     price: Fiyat
     price_range: Fiyat Aralığı
     price_sack: Fiyat Torbası
@@ -912,10 +912,10 @@ tr:
     product_properties: "Ürün Özellikleri"
     product_rule:
       choose_products: "Ürün seçin"
-      label:
+      label: Etiket
       match_all: tümü
       match_any: en az bir
-      match_none:
+      match_none: hiçbiri
       product_source:
         group: "Ürün grubundan"
         manual: Elle seçim
@@ -998,8 +998,8 @@ tr:
     refunds:
     register: Kayıt ol
     registration: Kayıt
-    reimburse:
-    reimbursed:
+    reimburse: Ödemeyi iade et
+    reimbursed: Ödeme iade edildi
     reimbursement:
     reimbursement_mailer:
       reimbursement_email:
@@ -1022,7 +1022,7 @@ tr:
     remember_me: Beni hatırla
     remove: Kaldır
     rename: Yeniden adlandır
-    report:
+    report: Rapor
     reports: Raporlar
     resend: Tekrar Gönder
     reset_password: "Şifremi Sıfırla"
@@ -1053,12 +1053,12 @@ tr:
     rma_value: "İade(RMA) Değeri"
     roles: Roller
     rules: Kurallar
-    safe:
+    safe: Güvenli
     sales_total: Satış Toplamı
     sales_total_description: Tüm Siparişlerin Satış Toplamı
     sales_totals: Satış Toplamı
     save_and_continue: Kaydet ve İlerle
-    save_my_address:
+    save_my_address: Adresimi Kaydet
     say_no: Hayır
     say_yes: Evet
     scope: Kapsam
@@ -1096,13 +1096,13 @@ tr:
     shipment_state: Kargo Durumu
     shipment_states:
       backorder: hazırlanıyor
-      canceled:
+      canceled: iptal edildi
       partial: kısmen
       pending: bekliyor
       ready: hazır
       shipped: kargoya verildi
-    shipment_transfer_error:
-    shipment_transfer_success:
+    shipment_transfer_error: Kargo transferi hatalı
+    shipment_transfer_success: Kargo transferi başarılı
     shipments: Kargolamalar
     shipped: Kargolanan
     shipping: Kargolama
@@ -1116,7 +1116,7 @@ tr:
     shipping_method: 'Kargo Yöntemi '
     shipping_methods: Kargo Yöntemleri
     shipping_price_sack: Fiyat pakedi
-    shipping_total:
+    shipping_total: Kargo Toplamı
     shop_by_taxonomy: "%{taxonomy} ile Alışveriş"
     shopping_cart: Alışveriş Sepeti
     show: Göster
@@ -1125,12 +1125,12 @@ tr:
     show_only_complete_orders: Sadece tamamlanmış siparişleri göster
     show_only_considered_risky:
     show_rate_in_label: Etikette oranı göster
-    sku: SKU
-    skus:
-    slug:
+    sku: Stok Kodu
+    skus: Stok Kodları
+    slug: slug
     source: Kaynak
     special_instructions: "Özel Açıklamalar"
-    split:
+    split: Ayır
     spree_gateway_error_flash_for_checkout: "Ödeme bilgilerinizle alakalı bir sorun oluştu. Lütfen bilgilerinizi kontrol ederek tekrar deneyiniz."
     ssl:
       change_protocol:
@@ -1232,15 +1232,15 @@ tr:
     thumbnail: "Önizleme"
     tiered_flat_rate:
     tiered_percent:
-    tiers:
+    tiers: Katmanlar
     time: Zaman
     to_add_variants_you_must_first_define: Değişken eklemeden önce değişkeni tanımlamanız gerekmektedir
     total: Toplam
     total_per_item:
     total_pre_tax_refund:
-    total_price:
+    total_price: Toplam Fiyat
     total_sales:
-    track_inventory:
+    track_inventory: Stoğu takip et
     tracking: Takip
     tracking_number: Takip Numarası
     tracking_url: Takip URL'si
