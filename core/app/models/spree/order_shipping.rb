@@ -13,7 +13,7 @@ class Spree::OrderShipping
   # @param external_number An optional external number. e.g. from a shipping company or 3PL.
   # @param tracking_number An optional tracking number.
   # @return The carton created.
-  def ship_shipment(shipment, external_number: nil, tracking_number: nil)
+  def ship_shipment(shipment, external_number: nil, tracking_number: nil, suppress_mailer: false)
     ship(
       inventory_units: shipment.inventory_units.shippable,
       stock_location: shipment.stock_location,
@@ -24,6 +24,7 @@ class Spree::OrderShipping
       # TODO: Remove the `|| shipment.tracking` once Shipment#ship! is called by
       # OrderShipping#ship rather than vice versa
       tracking_number: tracking_number || shipment.tracking,
+      suppress_mailer: suppress_mailer,
     )
   end
 
@@ -40,7 +41,7 @@ class Spree::OrderShipping
   # @param tracking_number An option tracking number.
   # @return The carton created.
   def ship(inventory_units:, stock_location:, address:, shipping_method:,
-           shipped_at: Time.now, external_number: nil, tracking_number: nil)
+           shipped_at: Time.now, external_number: nil, tracking_number: nil, suppress_mailer: false)
 
     carton = nil
 
@@ -71,7 +72,7 @@ class Spree::OrderShipping
       end
     end
 
-    send_shipment_email(carton) if stock_location.fulfillable? # e.g. digital gift cards that aren't actually shipped
+    send_shipment_email(carton) if stock_location.fulfillable? && !suppress_mailer # e.g. digital gift cards that aren't actually shipped
     fulfill_order_stock_locations(stock_location)
     update_order_state
 

@@ -526,7 +526,8 @@ describe "Order Details", type: :feature, js: true do
       order.refresh_shipment_rates
       visit spree.edit_admin_order_path(order)
 
-      click_icon 'arrow-right'
+      find(".ship-shipment-button").click
+      wait_for_ajax
 
       within '.carton-state' do
         page.should have_content('SHIPPED')

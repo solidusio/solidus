@@ -1280,6 +1280,7 @@ en:
     select_stock: Select stock
     selected_quantity_not_available: ! 'selected of %{item} is not available.'
     send_copy_of_all_mails_to: Send Copy of All Mails To
+    send_mailer: Send Mailer
     send_mails_as: Send Mails As
     server: Server
     server_error: The server returned an error
