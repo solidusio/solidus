@@ -54,6 +54,7 @@ module Spree
       end
 
       def ship
+        authorize! :ship, @shipment
         unless @shipment.shipped?
           @shipment.ship!
         end
