@@ -17,6 +17,8 @@ class Spree::OrderCapturing
       begin
         sorted_payments(@order).each do |payment|
           amount = [uncaptured_amount, payment.money.cents].min
+          break unless amount > 0
+
           payment.capture!(amount)
           uncaptured_amount -= amount
         end
