@@ -42,7 +42,7 @@ class VariantForm
       transferItem = new Spree.TransferItem
         id: transferItemId
         stockTransferNumber: stockTransferNumber
-        expectedQuantity: expectedQuantity
+        expectedQuantity: expectedQuantity + 1
       transferItem.update(updateSuccessHandler, errorHandler)
     else
       transferItem = new Spree.TransferItem
