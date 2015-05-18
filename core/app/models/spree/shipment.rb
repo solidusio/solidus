@@ -8,7 +8,7 @@ module Spree
     belongs_to :address, class_name: 'Spree::Address', inverse_of: :shipments
     belongs_to :stock_location, class_name: 'Spree::StockLocation'
 
-    has_many :adjustments, as: :adjustable, dependent: :delete_all
+    has_many :adjustments, as: :adjustable, inverse_of: :adjustable, dependent: :delete_all
     has_many :inventory_units, dependent: :destroy, inverse_of: :shipment
     has_many :shipping_rates, -> { order('cost ASC') }, dependent: :delete_all
     has_many :shipping_methods, through: :shipping_rates
