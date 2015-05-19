@@ -1,6 +1,7 @@
 module Spree
   class StockTransfer < Spree::Base
     class CannotModifyClosedStockTransfer < StandardError; end
+    class InvalidTransferMovement < StandardError; end
 
     has_many :stock_movements, :as => :originator
     has_many :transfer_items
@@ -71,6 +72,18 @@ module Spree
       end
     end
 
+    def transfer
+      transaction do
+        transfer_items.each do |item|
+          raise InvalidTransferMovement unless item.valid?
+          source_location.unstock(item.variant, item.expected_quantity, self)
+        end
+      end
+    rescue InvalidTransferMovement
+      errors.add(:base, Spree.t(:not_enough_stock))
+      false
+    end
+
     def close(closed_by)
       if receivable?
         self.update_attributes({ closed_at: Time.now, closed_by: closed_by })
@@ -79,5 +92,6 @@ module Spree
         false
       end
     end
+
   end
 end

@@ -189,5 +189,43 @@ module Spree
         end
       end
     end
+
+    context '#transfer' do
+      let(:stock_transfer) { create(:stock_transfer_with_items) }
+
+      before do
+        stock_transfer.transfer_items.each { |item| item.update_attributes(expected_quantity: 1) }
+      end
+
+      subject { stock_transfer.transfer }
+
+      context 'with enough stock' do
+
+        it 'creates stock movements for transfer items' do
+          expect{ subject }.to change{ Spree::StockMovement.count }.by(stock_transfer.transfer_items.count)
+        end
+      end
+
+      context 'without enough stock' do
+        before do
+          stockless_variant = stock_transfer.transfer_items.last.variant
+          stock_transfer.source_location.stock_item(stockless_variant).set_count_on_hand(0)
+        end
+
+        it 'rollsback the transaction' do
+          expect{ subject }.to_not change{ Spree::StockMovement.count }
+        end
+
+        it 'adds errors' do
+          subject
+          expect(stock_transfer.errors.full_messages.join(', ')).to match /not enough inventory/
+        end
+
+        it 'returns false' do
+          expect(subject).to eq false
+        end
+
+      end
+    end
   end
 end

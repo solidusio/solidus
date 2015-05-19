@@ -1,0 +1,126 @@
+<% content_for :page_title do %>
+  <%= "#{Spree.t(:ship)} #{Spree.t(:stock_transfer)} \##{@stock_transfer.number}" %>
+<% end %>
+
+<% content_for :page_actions do %>
+  <li>
+    <%= button_link_to Spree.t(:back_to_stock_transfers_list), admin_stock_transfers_path, icon: 'arrow-left' %>
+  </li>
+  <li>
+    <%= button_link_to Spree.t(:ship), '#', icon: 'check', id: 'confirm-ship-transfer-button' %>
+  </li>
+<% end %>
+
+<div id="ship-stock-transfer-warning" >
+  <div class='warning-title'>
+    <i class='fa fa-warning'></i>
+    <span><%= Spree.t(:you_cannot_undo_action) %></span>
+  </div>
+  <div class='action-consequences'>
+    <span><%= Spree.t('ship_stock_transfer.will_cause') %>:</span>
+    <ul data-hook='ship-stock-transfer-consequences'>
+      <li><%= Spree.t('ship_stock_transfer.no_further_changes') %></li>
+    </ul>
+  </div>
+  <span><%= Spree.t(:are_you_sure_ship_stock_transfer) %></span>
+  <div class='actions'>
+    <%= link_to Spree.t(:no_dont_ship), '#', :id => 'cancel-ship-link' %>
+    <%= link_to Spree.t(:yes_ship), ship_admin_stock_transfer_path(@stock_transfer), { :method => 'PUT', :id => 'confirm-ship-link'} %>
+  </div>
+</div>
+
+<div id='stock_transfer_summary' class='fullwidth'>
+  <div class='location'>
+    <h5>
+    <span><%= @stock_transfer.source_location.admin_name %></span>
+    <span class='arrow'>&rarr;</span>
+    <span><%= @stock_transfer.destination_location.admin_name %></span>
+    </h5>
+  </div>
+  <div class='shipment-description'>
+    <div class='summary-field creator'><%= Spree.t(:created_by) %>: <%= @stock_transfer.created_by.email %></div>
+    <div class='summary-field description'><%= @stock_transfer.description %></div>
+  </div>
+</div>
+
+<fieldset>
+  <legend align='center'><%= Spree.t(:tracking_info) %></legend>
+    <%= form_for [:admin, @stock_transfer] do |f| %>
+    <div class='field-block alpha'>
+      <div class='field'>
+        <%= f.label "tracking_number", Spree.t(:tracking_number) %>
+        <%= f.text_field :tracking_number, value: @stock_transfer.tracking_number, maxlength: 255, size: 0, class: 'fullwidth' %>
+      </div>
+    </div>
+
+    <div class='clearfix'></div>
+
+    <div class="actions filter-actions add_tracking_number">
+      <%= f.submit Spree.t('actions.save') %>
+    </div>
+  <% end %>
+</fieldset>
+
+<fieldset id='stock-transfer-transfer-items'>
+  <legend align="center"><%= Spree.t(:transfer_items) %></legend>
+  <table class="index stock-table number-field-update-table" <%= 'hidden' if @stock_transfer.transfer_items.empty? %> id="listing_transfer_items">
+    <colgroup>
+      <col style="width: 55%" />
+      <col style="width: 30%" />
+      <col style="width: 15%" />
+    </colgroup>
+    <thead>
+      <tr>
+        <th><%= Spree.t(:item) %></th>
+        <th><%= Spree.t(:options) %></th>
+        <th><%= Spree.t(:expected) %></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @stock_transfer.transfer_items.each do |item| %>
+        <%- variant = item.variant %>
+        <tr data-transfer-item-id="<%= item.id %>">
+          <td class="align-center no-padding">
+            <div class='variant-container' data-variant-id="<%= variant.id %>">
+              <div class='variant-image'>
+                <%= small_image variant %>
+              </div>
+              <div class='variant-details'>
+                <table class='stock-variant-field-table'>
+                  <tbody>
+                    <% @variant_display_attributes.each do |display_attribute| %>
+                      <tr>
+                        <td><%= Spree.t(display_attribute[:translation_key]) %></td>
+                        <td class="fullwidth">
+                          <%= variant.send(display_attribute[:attr_name]) %>
+                        </td>
+                      </tr>
+                    <% end %>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </td>
+          <td class="align-center">
+            <table class='stock-variant-field-table'>
+              <% variant.option_values.sort_by(&:option_type_name).each do |option_value| %>
+                <tr>
+                  <td>
+                    <%= option_value.option_type_presentation %>
+                  </td>
+                  <td><%= option_value.presentation %></td>
+                </tr>
+              <% end %>
+            </table>
+          </td>
+          <td class="align-center">
+            <%= item.expected_quantity %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+  <div class="no-objects-found" <%= 'hidden' if @stock_transfer.transfer_items.any? %>>
+    <%= Spree.t(:no_resource_found, resource: I18n.t(:other, scope: 'activerecord.models.spree/transfer_item')) %>
+  </div>
+</fieldset>
