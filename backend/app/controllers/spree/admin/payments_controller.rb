@@ -1,10 +1,11 @@
 module Spree
   module Admin
     class PaymentsController < Spree::Admin::BaseController
-      before_action :load_order, only: [:create, :new, :index, :fire]
-      before_action :load_payment, except: [:create, :new, :index]
-      before_action :load_data
-      before_action :can_not_transition_without_customer_info
+      before_filter :load_order, :only => [:create, :new, :index, :fire]
+      before_filter :load_payment, :except => [:create, :new, :index, :fire]
+      before_filter :load_payment_for_fire, :only => :fire
+      before_filter :load_data
+      before_filter :can_not_transition_without_customer_info
 
       respond_to :html
 
@@ -91,6 +92,11 @@ module Spree
 
       def load_payment
         @payment = Payment.find(params[:id])
+      end
+
+      def load_payment_for_fire
+        load_payment
+        authorize! params[:e].to_sym, @payment
       end
 
       def model_class

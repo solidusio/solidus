@@ -5,6 +5,7 @@ module Spree
     describe PaymentsController, :type => :controller do
       stub_authorization!
 
+      let(:user) { create(:admin_user) }
       let(:order) { create(:order) }
 
       context "with a valid credit card" do
@@ -85,6 +86,54 @@ module Spree
         it "should redirect to the customer details page" do
           spree_get :index, { amount: 100, order_id: order.number }
           expect(response).to redirect_to(spree.edit_admin_order_customer_path(order))
+        end
+      end
+
+      describe 'fire' do
+        describe 'authorization' do
+          let(:payment) { create(:payment, state: 'checkout') }
+          let(:order) { payment.order }
+
+          context 'the user is authorized' do
+            class CaptureAllowedAbility
+              include CanCan::Ability
+
+              def initialize(user)
+                can :capture, Spree::Payment
+              end
+            end
+
+            before do
+              Spree::Ability.register_ability(CaptureAllowedAbility)
+            end
+
+            it 'allows the action' do
+              expect {
+                spree_post(:fire, id: payment.to_param, e: 'capture', order_id: order.to_param)
+              }.to change { payment.reload.state }.from('checkout').to('completed')
+            end
+          end
+
+          context 'the user is not authorized' do
+            class CaptureNotAllowedAbility
+              include CanCan::Ability
+
+              def initialize(user)
+                cannot :capture, Spree::Payment
+              end
+            end
+
+            before do
+              Spree::Ability.register_ability(CaptureNotAllowedAbility)
+            end
+
+            it 'does not allow the action' do
+              expect {
+                spree_post(:fire, id: payment.to_param, e: 'capture', order_id: order.to_param)
+              }.to_not change { payment.reload.state }
+              expect(flash[:error]).to eq('Authorization Failure')
+            end
+          end
         end
       end
 
