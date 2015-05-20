@@ -70,6 +70,18 @@ describe Spree::OrderCapturing do
         end
       end
 
+      context "when a payment is not needed to capture the entire order" do
+        let(:bogus_total) { order.total }
+        let(:secondary_payment_method) { SecondaryBogusPaymentMethod }
+        let(:payment_methods) { [Spree::Gateway::Bogus, SecondaryBogusPaymentMethod] }
+
+        it "captures for the order and voids the unused payment" do
+          subject
+          expect(order.reload.payment_state).to eq 'paid'
+          expect(@secondary_bogus_payment.reload.state).to eq 'void'
+        end
+      end
+
       context "when there is an error processing a payment" do
         let(:secondary_payment_method) { ExceptionallyBogusPaymentMethod }
         let(:bogus_total) { order.total - 1 }
