@@ -6,6 +6,7 @@ describe Spree::OrderCancellations do
 
     let(:order) { create(:order_ready_to_ship, line_items_count: 1) }
     let(:inventory_unit) { order.inventory_units.first }
+    let(:shipment) { inventory_unit.shipment }
 
     it "creates a UnitCancel record" do
       expect { subject }.to change { Spree::UnitCancel.count }.by(1)
@@ -17,6 +18,14 @@ describe Spree::OrderCancellations do
 
     it "cancels the inventory unit" do
       expect { subject }.to change { inventory_unit.state }.to "canceled"
+    end
+
+    it "updates the shipment.state" do
+      expect { subject }.to change { shipment.reload.state }.from('ready').to('shipped')
+    end
+
+    it "updates the order.shipment_state" do
+      expect { subject }.to change { order.shipment_state }.from('ready').to('shipped')
     end
 
     it "adjusts the order" do
