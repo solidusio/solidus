@@ -8,7 +8,7 @@ module Spree
       ]
 
       before_filter :load_stock_locations, only: [:index, :new]
-      before_filter :load_variant_display_attributes, only: [:receive, :edit, :tracking_info]
+      before_filter :load_variant_display_attributes, only: [:receive, :edit, :show, :tracking_info]
       before_filter :load_destination_stock_locations, only: :edit
       before_filter :ensure_access_to_stock_location, only: :create
       before_filter :ensure_receivable_stock_transfer, only: :receive
