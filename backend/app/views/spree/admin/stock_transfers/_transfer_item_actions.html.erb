@@ -1,0 +1,9 @@
+<% if show_actions %>
+  <%= render partial: 'spree/admin/shared/number_field_update_cell', locals: { resource_id: item.id, field_tag: "#{quantity_type}_quantity", number_value: item.send("#{quantity_type}_quantity") } %>
+  <td class="actions">
+    <%= render partial: 'spree/admin/shared/number_field_update_actions', locals: { resource: item, update_data: {} } %>
+    <%= link_to_with_icon 'trash', Spree.t('delete'), '#', no_text: true, data: { action: 'remove', id: item.id } if quantity_type == 'expected' && can?(:destroy, item) %>
+  </td>
+<% else %>
+  <td class='align-center'><%= item.send("#{quantity_type}_quantity") %></td>
+<% end %>

@@ -1,0 +1,63 @@
+  <table class="index stock-table number-field-update-table" <%= 'hidden' if @stock_transfer.transfer_items.empty? %> id="listing_transfer_items">
+    <colgroup>
+      <col style="width: 45%" />
+      <col style="width: 25%" />
+      <col style="width: 10%" />
+      <col style="width: 10%" />
+      <col style="width: 10%" />
+    </colgroup>
+    <thead>
+      <tr>
+        <th><%= Spree.t(:item) %></th>
+        <th><%= Spree.t(:options) %></th>
+        <% if show_expected %><th><%= Spree.t(:expected) %></th><% end %>
+        <% if show_received %><th><%= Spree.t(:received) %></th><% end %>
+        <% if show_actions %><th class='actions'></th><% end %>
+      </tr>
+    </thead>
+    <tbody>
+      <% @stock_transfer.transfer_items.each do |item| %>
+        <%- variant = item.variant %>
+        <tr data-transfer-item-id="<%= item.id %>">
+          <td class="align-center no-padding">
+            <div class='variant-container' data-variant-id="<%= variant.id %>">
+              <div class='variant-image'>
+                <%= small_image variant %>
+              </div>
+              <div class='variant-details'>
+                <table class='stock-variant-field-table'>
+                  <tbody>
+                    <% @variant_display_attributes.each do |display_attribute| %>
+                      <tr>
+                        <td><%= Spree.t(display_attribute[:translation_key]) %></td>
+                        <td class="fullwidth">
+                          <%= variant.send(display_attribute[:attr_name]) %>
+                        </td>
+                      </tr>
+                    <% end %>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </td>
+          <td class="align-center">
+            <table class='stock-variant-field-table'>
+              <% variant.option_values.sort_by(&:option_type_name).each do |option_value| %>
+                <tr>
+                  <td>
+                    <%= option_value.option_type_presentation %>
+                  </td>
+                  <td><%= option_value.presentation %></td>
+                </tr>
+              <% end %>
+            </table>
+          </td>
+          <% if show_expected %><%= render partial: 'transfer_item_actions', locals: { item: item, show_actions: show_actions, quantity_type: 'expected'} %><% end %>
+          <% if show_received %><%= render partial: 'transfer_item_actions', locals: { item: item, show_actions: show_actions, quantity_type: 'received'} %><% end %>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+  <div class="no-objects-found" <%= 'hidden' if @stock_transfer.transfer_items.any? %>>
+    <%= Spree.t(:no_resource_found, resource: I18n.t(:other, scope: 'activerecord.models.spree/transfer_item')) %>
+  </div>
