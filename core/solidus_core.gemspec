@@ -1,17 +1,17 @@
 # encoding: UTF-8
-version = File.read(File.expand_path("../../SPREE_VERSION", __FILE__)).strip
+version = File.read(File.expand_path("../../SOLIDUS_VERSION", __FILE__)).strip
 
 Gem::Specification.new do |s|
   s.platform    = Gem::Platform::RUBY
-  s.name        = 'spree_core'
+  s.name        = 'solidus_core'
   s.version     = version
   s.summary     = 'The bare bones necessary for Spree.'
   s.description = 'The bare bones necessary for Spree.'
 
   s.required_ruby_version = '>= 2.1.0'
-  s.author      = 'Sean Schofield'
-  s.email       = 'sean@spreecommerce.com'
-  s.homepage    = 'http://spreecommerce.com'
+  s.author      = 'Solidus Team'
+  s.email       = 'contact@solidus.io'
+  s.homepage    = 'http://solidus.io'
   s.license     = %q{BSD-3}
 
   s.files        = Dir['LICENSE', 'README.md', 'app/**/*', 'config/**/*', 'lib/**/*', 'db/**/*', 'vendor/**/*']

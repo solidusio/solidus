@@ -1,18 +1,16 @@
 # -*- encoding: utf-8 -*-
 $:.push File.expand_path("../lib", __FILE__)
-version = File.read(File.expand_path("../../SPREE_VERSION", __FILE__)).strip
+version = File.read(File.expand_path("../../SOLIDUS_VERSION", __FILE__)).strip
 
 Gem::Specification.new do |s|
-  s.name        = "spree_cmd"
+  s.name        = "solidus_cmd"
   s.version     = version
-  s.authors     = ["Chris Mar"]
-  s.email       = ["chris@spreecommerce.com"]
-  s.homepage    = "http://spreecommerce.com"
+  s.authors     = 'Solidus Team'
+  s.email       = 'contact@solidus.io'
+  s.homepage    = "http://solidus.io"
   s.license     = %q{BSD-3}
   s.summary     = %q{Spree Commerce command line utility}
   s.description = %q{tools to create new Spree stores and extensions}
-
-  s.rubyforge_project = "spree_cmd"
 
   s.files         = `git ls-files`.split("\n")
   s.test_files    = `git ls-files -- {test,spec,features}/*`.split("\n")

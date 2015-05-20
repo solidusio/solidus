@@ -21,15 +21,12 @@ if [ ! -d "sandbox" ]; then
 fi
 
 cd ./sandbox
-echo "gem 'spree', :path => '..'" >> Gemfile
-echo "gem 'spree_auth_devise', :github => 'spree/spree_auth_devise', :branch => '2-4-stable'" >> Gemfile
+echo "gem 'solidus', :path => '..'" >> Gemfile
+echo "gem 'solidus_auth_devise', :github => 'solidusio/solidus_auth_devise'" >> Gemfile
 
 cat <<RUBY >> Gemfile
 group :test, :development do
-  platforms :ruby_19 do
-    gem 'pry-debugger'
-  end
-  platforms :ruby_20, :ruby_21 do
+  platforms :mri do
     gem 'pry-byebug'
   end
 end
