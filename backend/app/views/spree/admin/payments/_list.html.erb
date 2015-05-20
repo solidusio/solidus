@@ -20,10 +20,9 @@
         <td class="align-center"><%= payment.transaction_id %></td>
         <td class="align-center"> <span class="state <%= payment.state %>"><%= Spree.t(payment.state, :scope => :payment_states, :default => payment.state.capitalize) %></span></td>
         <td class="actions">
-          <% payment.actions.each do |action| %>
-            <% if !can?(action.to_sym, payment) %>
-              <%# don't display things the user can't do %>
-            <% elsif action == 'credit' %>
+          <% allowed_actions = payment.actions.select { |a| can?(a.to_sym, payment) } %>
+          <% allowed_actions.each do |action| %>
+            <% if action == 'credit' %>
               <%= link_to_with_icon 'reply', Spree.t(:refund), new_admin_order_payment_refund_path(@order, payment), no_text: true %>
             <% elsif action == 'capture' && !@order.completed? %>
               <%# no capture prior to completion. payments get captured when the order completes. %>
