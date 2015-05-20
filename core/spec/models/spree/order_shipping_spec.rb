@@ -121,6 +121,16 @@ describe Spree::OrderShipping do
       end
     end
 
+    context "when all units are canceled or shipped" do
+      let(:order) { create(:order_ready_to_ship, line_items_count: 2) }
+
+      before { Spree::OrderCancellations.new(order).short_ship([order.inventory_units.first]) }
+
+      it "updates the order shipment state" do
+        expect { subject }.to change { order.reload.shipment_state }.from('ready').to('shipped')
+      end
+    end
+
     context "with an external_number" do
       subject do
         order.shipping.ship_shipment(
