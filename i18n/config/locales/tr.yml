@@ -1186,8 +1186,8 @@ tr:
     stock_transfers: Stok Aktarmaları
     stop: Dur
     store: Mağaza
-    street_address: Sürekli Adres
-    street_address_2: Sürekli Adres (Devamı)
+    street_address: Adres Satırı
+    street_address_2: Adres Satırı (Devamı)
     subtotal: Alt toplam
     subtract: "Çıkart"
     success:
