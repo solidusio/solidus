@@ -1337,5 +1337,46 @@ describe Spree::Order, :type => :model do
         expect(subject.display_store_credit_remaining_after_capture.money.cents).to eq (amount_remaining * 100.0)
       end
     end
+
+    context 'when not capturing at order completion' do
+      let!(:store_credit_payment_method) do
+        create(
+          :store_credit_payment_method,
+          auto_capture: false, # not capturing at completion time
+        )
+      end
+
+      describe '#after_cancel' do
+        let(:user) { create(:user) }
+        let!(:store_credit) do
+          create(:store_credit, amount: 100, user: user)
+        end
+        let(:order) do
+          create(
+            :order_with_line_items,
+            user: user,
+            line_items_count: 1,
+            # order will be $20 total:
+            line_items_price: 10,
+            shipment_cost: 10,
+          )
+        end
+
+        before do
+          order.contents.advance
+          order.complete!
+        end
+
+        it 'releases the pending store credit authorization' do
+          expect {
+            order.cancel!
+          }.to change {
+            store_credit.reload.amount_authorized
+          }.from(20).to(0)
+
+          expect(store_credit.amount_remaining).to eq 100
+        end
+      end
+    end
   end
 end
