@@ -834,15 +834,15 @@ tr:
     order_processed_successfully: Siparişiniz başarıyla işlenmiştir.
     order_resumed:
     order_state:
-      address: adreste
+      address: adres
       awaiting_return: dönüş bekleniyor
       canceled: iptal edildi
       cart: sepette
       complete: tamamlandı
       confirm: onay bekliyor
-      considered_risky:
+      considered_risky: riskli bulundu
       delivery: taşımada
-      payment: "ödeme bekliyor"
+      payment: ödeme
       resumed: devam ediyor
       returned: geri döndü
     order_summary: Sipariş Özeti
@@ -863,11 +863,11 @@ tr:
     path: Yol
     pay: "öde"
     payment: "Ödeme"
-    payment_could_not_be_created:
-    payment_identifier:
+    payment_could_not_be_created: Ödeme oluşturulamadı
+    payment_identifier: Ödeme Kodu
     payment_information: "Ödeme Bilgisi"
     payment_method: "Ödeme Yöntemi"
-    payment_method_not_supported:
+    payment_method_not_supported: Ödeme yöntemi desteklenmiyor
     payment_methods: "Ödeme Yöntemleri"
     payment_processing_failed: "Ödeme gerçekleştirilemedi, lütfen girmiş olduğunuz bilgileri kontrol ediniz"
     payment_processor_choose_banner_text: "Ödeme işlemi seçmekte zorlanıyorsanız, lütfen takip eden bağlantıya tıklayınız"
