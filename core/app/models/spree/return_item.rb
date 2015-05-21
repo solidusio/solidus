@@ -1,8 +1,8 @@
 module Spree
   class ReturnItem < ActiveRecord::Base
 
-    INTERMEDIATE_RECEPTION_STATUSES = %i(given_to_customer lost_in_transit shipped_wrong_item short_shipped)
-    COMPLETED_RECEPTION_STATUSES = INTERMEDIATE_RECEPTION_STATUSES + [:received]
+    INTERMEDIATE_RECEPTION_STATUSES = %i(given_to_customer lost_in_transit shipped_wrong_item short_shipped in_transit)
+    COMPLETED_RECEPTION_STATUSES = INTERMEDIATE_RECEPTION_STATUSES + [:received, :unexchanged]
 
     # @!scope class
     # @!attribute return_eligibility_validator
@@ -77,11 +77,13 @@ module Spree
 
     state_machine :reception_status, initial: :awaiting do
       after_transition to: COMPLETED_RECEPTION_STATUSES,  do: :attempt_accept
+      after_transition to: COMPLETED_RECEPTION_STATUSES,  do: :check_unexchange
       after_transition to: :received, do: :process_inventory_unit!
 
       event(:cancel) { transition to: :cancelled, from: :awaiting }
 
       event(:receive) { transition to: :received, from: INTERMEDIATE_RECEPTION_STATUSES + [:awaiting] }
+      event(:unexchange) { transition to: :unexchanged, from: [:awaiting] }
       event(:give) { transition to: :given_to_customer, from: :awaiting }
       event(:lost) { transition to: :lost_in_transit, from: :awaiting }
       event(:wrong_item_shipped) { transition to: :shipped_wrong_item, from: :awaiting }
@@ -200,6 +202,12 @@ module Spree
       status_paths.map{ |s| s.to_s.humanize }.zip(event_paths)
     end
 
+    def part_of_exchange?
+      # test whether this ReturnItem was either a) one for which an exchange was sent or
+      #   b) the exchanged item itself being returned in lieu of the original item
+      exchange_requested? || sibling_intended_for_exchange('unexchanged')
+    end
+
     private
 
     def persist_acceptance_status_errors
@@ -224,6 +232,20 @@ module Spree
 
       Spree::StockMovement.create!(stock_item_id: stock_item.id, quantity: 1) if should_restock?
       customer_return.process_return! if customer_return
+    end
+
+    def sibling_intended_for_exchange(status)
+      # This happens when we ship an exchange to a customer, but the customer keeps the original and returns the exchange
+      self.class.find_by(reception_status: status, exchange_inventory_unit: inventory_unit)
+    end
+
+    def check_unexchange
+      original_ri = sibling_intended_for_exchange('awaiting')
+      if original_ri
+        original_ri.unexchange!
+        set_default_pre_tax_amount
+        save!
+      end
     end
 
     # This logic is also present in the customer return. The reason for the
