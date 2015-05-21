@@ -110,11 +110,27 @@ module Spree
       let(:order) { Order.new }
       let(:updater) { order.updater }
 
-      it "is failed if no valid payments" do
-        allow(order).to receive_message_chain(:payments, :valid, :size).and_return(0)
+      context 'no valid payments with non-zero order total' do
+        it "is failed" do
+          allow(order).to receive_message_chain(:payments, :valid, :size).and_return(0)
+          order.total = 1
+          order.payment_total = 0
 
-        updater.update_payment_state
-        expect(order.payment_state).to eq('failed')
+          updater.update_payment_state
+          expect(order.payment_state).to eq('failed')
+        end
+      end
+
+      context 'invalid payments are present but order total is zero' do
+        it 'is paid' do
+          order.payments << Spree::Payment.new(state: 'invalid')
+          order.total = 0
+          order.payment_total = 0
+
+          expect {
+            updater.update_payment_state
+          }.to change { order.payment_state }.to 'paid'
+        end
       end
 
       context "payment total is greater than order total" do
