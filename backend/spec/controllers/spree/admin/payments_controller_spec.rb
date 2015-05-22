@@ -3,7 +3,9 @@ require 'spec_helper'
 module Spree
   module Admin
     describe PaymentsController, :type => :controller do
-      stub_authorization!
+      before do
+        controller.stub :spree_current_user => user
+      end
 
       let(:user) { create(:admin_user) }
       let(:order) { create(:order) }
