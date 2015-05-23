@@ -527,7 +527,7 @@ tr:
     default_tax_zone: Varsayılan Vergi Bölgesi
     delete: Sil
     deleted_variants_present:
-    delivery: Ulaştırma
+    delivery: Teslimat
     depth: Derinlik
     description: Açıklama
     destination: Gideceği Yer
@@ -537,7 +537,7 @@ tr:
     dismiss_banner: Hayır. Teşekkürler! İlgilenmiyorum, bu mesajı tekrar gösterme.
     display: Göster
     display_currency: Kurları göster
-    doesnt_track_inventory:
+    doesnt_track_inventory: Stok takip edilemiyor
     edit: Düzenle
     editing_resource: Kaynak düzenleniyor
     editing_rma_reason:
@@ -643,7 +643,7 @@ tr:
     implement_eligible_for_return:
     implement_requires_manual_intervention:
     inactive: Pasif
-    incl:
+    incl: dahil
     included_in_price: Fiyata eklenmiş
     included_price_validation: Varsayılan Vergi Bölgesi ayarlanmadan seçilemez
     incomplete: Tamamlanmamış
@@ -654,7 +654,7 @@ tr:
     insufficient_stock_lines_present:
     intercept_email_address: E-posta Adresini Engelle
     intercept_email_instructions: E-posta adresini yoksay ve bu adresle değiştir.
-    internal_name:
+    internal_name: dahili isim
     invalid_credit_card: Geçersiz kredi kartı
     invalid_exchange_variant:
     invalid_payment_provider: Geçersiz ödeme sağlayıcı.
@@ -685,7 +685,7 @@ tr:
     last_name: Soyisim
     last_name_begins_with: Soyismi Şununla Başlayan
     learn_more: Daha Fazla
-    lifetime_stats:
+    lifetime_stats: tüm zaman istatistikleri
     line_item_adjustments:
     list: Liste
     loading: Yükleniyor
@@ -717,7 +717,7 @@ tr:
     memo:
     meta_description: Meta Açıklaması
     meta_keywords: Meta Kelimeleri
-    meta_title:
+    meta_title: Meta Başlığı
     metadata: Meta verisi
     minimal_amount: En düşük Miktar
     month: Ay
@@ -726,11 +726,11 @@ tr:
     my_account: Hesabım
     my_orders: Siparişlerim
     name: "İsim"
-    name_on_card:
+    name_on_card: Kart Üzerindeki İsim
     name_or_sku: "İsim ya da SKU (en az 4 karakter giriniz)"
     new: Yeni
     new_adjustment: Yeni Kredi
-    new_country:
+    new_country: Yeni Ülke
     new_customer: Yeni Müşteri
     new_customer_return:
     new_image: Yeni Resim
@@ -741,7 +741,7 @@ tr:
     new_payment_method: Yeni Ödeme Yöntemi
     new_product: Yeni Ürün
     new_promotion: Yeni Promosyon
-    new_promotion_category:
+    new_promotion_category: Yeni Promosyon Kategorisi
     new_property: Yeni Özellik
     new_prototype: Yeni Prototip
     new_refund: Yeni Geri Ödeme
@@ -790,7 +790,7 @@ tr:
       product_not_deleted: "Ürün silinemedi"
       variant_deleted: Değişken silindi
       variant_not_deleted: Değişken silinemedi
-    num_orders:
+    num_orders: Sipariş Sayısı
     on_hand: Elde
     open: Açık
     open_all_adjustments: Tüm Kredileri Aç
@@ -1080,9 +1080,9 @@ tr:
     ship: kargo
     ship_address: Kargo Adresi
     ship_total: Kargo Toplamı
-    shipment: Kargolama
+    shipment: Kargo
     shipment_adjustments:
-    shipment_details:
+    shipment_details: Kargo Detayları
     shipment_mailer:
       shipped_email:
         dear_customer: |
@@ -1138,24 +1138,24 @@ tr:
     state: Bölge
     state_based: Bölge Tabanlı
     state_machine_states:
-      accepted:
-      address:
-      authorized:
+      accepted: kabul edildi
+      address: adres
+      authorized: yetkilendirildi
       awaiting:
       awaiting_return:
-      backordered:
-      canceled:
-      cart:
+      backordered: önsipariş verildi
+      canceled: iptal edildi
+      cart: sepet
       checkout:
-      closed:
+      closed: kapandı
       complete:
-      completed:
-      confirm:
-      delivery:
-      errored:
-      failed:
+      completed: tamamlandı
+      confirm: onayla
+      delivery: teslimat
+      errored: hatalı
+      failed: hatalı
       given_to_customer:
-      invalid:
+      invalid: geçersiz
       manual_intervention_required:
       on_hand:
       open:
