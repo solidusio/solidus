@@ -292,7 +292,7 @@ tr:
     action: Hareket
     actions:
       cancel: "İptal"
-      continue: Devam
+      continue: Devam Et
       create: Oluştur
       destroy: Sil
       edit: Düzenle
@@ -452,7 +452,7 @@ tr:
     confirm: Onay
     confirm_delete: Silme İşlemini Onayla
     confirm_password: "Şifre Onayı"
-    continue: Devam
+    continue: Devam Et
     continue_shopping: Alışverişe Devam et
     cost_currency: Maliyet Kuru
     cost_price: Maliyet Fiyatı
@@ -1291,7 +1291,7 @@ tr:
     you_have_no_orders_yet: Henüz hiçbir siparişiniz yok
     your_cart_is_empty: Sepetiniz Boş
     your_order_is_empty_add_product: Siparişinizde hiç ürün yok, lütfen arama yapınız ve yukarıya bir ürün ekleyiniz
-    zip: Posta
+    zip: Posta Kodu
     zipcode: Posta Kodu
     zone: Bölge
     zones: Bölgeler
