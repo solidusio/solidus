@@ -22,7 +22,7 @@ fi
 
 cd ./sandbox
 echo "gem 'solidus', :path => '..'" >> Gemfile
-echo "gem 'solidus_auth_devise', :github => 'solidusio/solidus_auth_devise'" >> Gemfile
+echo "gem 'solidus_auth_devise'" >> Gemfile
 
 cat <<RUBY >> Gemfile
 group :test, :development do
