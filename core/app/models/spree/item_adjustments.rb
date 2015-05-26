@@ -39,8 +39,7 @@ module Spree
           adjustment.update!(@item)
         end
 
-        choose_best_promotion_adjustment
-        promo_total = best_promotion_adjustment.try(:amount) || 0
+        promo_total = PromotionChooser.new(adjustments.promotion).update
       end
 
       included_tax_total = 0
@@ -60,18 +59,6 @@ module Spree
         :adjustment_total => promo_total + additional_tax_total + item_cancellation_total,
         :updated_at => Time.now,
       )
-    end
-
-    def promotion_chooser
-      @promotion_chooser ||= PromotionChooser.new(adjustments.promotion)
-    end
-
-    def choose_best_promotion_adjustment
-      promotion_chooser.update
-    end
-
-    def best_promotion_adjustment
-      promotion_chooser.best_promotion_adjustment
     end
   end
 end
