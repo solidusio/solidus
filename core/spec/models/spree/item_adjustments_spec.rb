@@ -132,7 +132,7 @@ module Spree
                             :label => "Some other credit")
         line_item.adjustments.each {|a| a.update_column(:eligible, true)}
 
-        subject.choose_best_promotion_adjustment
+        subject.update
 
         expect(line_item.adjustments.promotion.eligible.count).to eq(1)
         expect(line_item.adjustments.promotion.eligible.first.label).to eq('Promotion C')
@@ -146,7 +146,7 @@ module Spree
         end
         line_item.adjustments.each {|a| a.update_column(:eligible, true)}
 
-        subject.choose_best_promotion_adjustment
+        subject.update
 
         expect(line_item.adjustments.promotion.eligible.count).to eq(1)
         expect(line_item.adjustments.promotion.eligible.first.label).to eq('Promotion B')
@@ -160,7 +160,7 @@ module Spree
         end
         line_item.adjustments.each {|a| a.update_column(:eligible, true)}
 
-        subject.choose_best_promotion_adjustment
+        subject.update
 
         line_item.adjustments.promotion.eligible.count.should == 1
         line_item.adjustments.promotion.eligible.first.label.should == 'Promotion B'
@@ -238,7 +238,7 @@ module Spree
 
         # regression for #3274
         it "still makes the previous best eligible adjustment valid" do
-          subject.choose_best_promotion_adjustment
+          subject.update
           expect(line_item.adjustments.promotion.eligible.first.label).to eq('Promotion A')
         end
       end
@@ -248,7 +248,7 @@ module Spree
         create_adjustment("Promotion B", -200)
         create_adjustment("Promotion C", -200)
 
-        subject.choose_best_promotion_adjustment
+        subject.update
 
         expect(line_item.adjustments.promotion.eligible.count).to eq(1)
         expect(line_item.adjustments.promotion.eligible.first.amount.to_i).to eq(-200)
