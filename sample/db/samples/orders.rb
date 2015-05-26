@@ -30,6 +30,7 @@ orders[1].line_items.create!(
   :price => 22.99)
 
 orders.each(&:create_proposed_shipments)
+orders.each(&:create_tax_charge!)
 
 orders.each do |order|
   order.state = "complete"
