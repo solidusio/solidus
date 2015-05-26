@@ -1028,6 +1028,11 @@ en:
         subtotal: ! 'Subtotal:'
         thanks: Thank you for your business.
         total: ! 'Order Total:'
+      inventory_cancellation:
+        dear_customer: Dear Customer,
+        instructions: Some items in your order have been CANCELED.  Please retain this cancellation information for your records.
+        order_summary_canceled: Canceled Items
+        subject: Cancellation of Items
     order_mutex_admin_error: Order is being modified by someone else. Please try again.
     order_mutex_error: Something went wrong. Please try again.
     order_not_found: We couldn't find your order. Please try that action again.
