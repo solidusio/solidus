@@ -8,7 +8,7 @@ rescue LoadError
   exit
 end
 
-spec = eval(File.read('spree.gemspec'))
+spec = eval(File.read('solidus.gemspec'))
 Gem::PackageTask.new(spec) do |pkg|
   pkg.gem_spec = spec
 end
@@ -73,32 +73,32 @@ end
 namespace :gem do
   desc "run gem install for all gems"
   task :install do
-    version = File.read(File.expand_path("../SPREE_VERSION", __FILE__)).strip
+    version = File.read(File.expand_path("../SOLIDUS_VERSION", __FILE__)).strip
 
     %w(core api backend frontend sample cmd).each do |gem_name|
       puts "########################### #{gem_name} #########################"
       puts "Deleting #{gem_name}/pkg"
       FileUtils.rm_rf("#{gem_name}/pkg")
       cmd = "cd #{gem_name} && bundle exec rake gem"; puts cmd; system cmd
-      cmd = "cd #{gem_name}/pkg && gem install spree_#{gem_name}-#{version}.gem"; puts cmd; system cmd
+      cmd = "cd #{gem_name}/pkg && gem install solidus_#{gem_name}-#{version}.gem"; puts cmd; system cmd
     end
     puts "Deleting pkg directory"
     FileUtils.rm_rf("pkg")
     cmd = "bundle exec rake gem"; puts cmd; system cmd
-    cmd = "gem install pkg/spree-#{version}.gem"; puts cmd; system cmd
+    cmd = "gem install pkg/solidus-#{version}.gem"; puts cmd; system cmd
   end
 end
 
 namespace :gem do
   desc "Release all gems to gemcutter. Package spree components, then push spree"
   task :release do
-    version = File.read(File.expand_path("../SPREE_VERSION", __FILE__)).strip
+    version = File.read(File.expand_path("../SOLIDUS_VERSION", __FILE__)).strip
 
     %w(core api backend frontend sample cmd).each do |gem_name|
       puts "########################### #{gem_name} #########################"
-      cmd = "cd #{gem_name}/pkg && gem push spree_#{gem_name}-#{version}.gem"; puts cmd; system cmd
+      cmd = "cd #{gem_name}/pkg && gem push solidus_#{gem_name}-#{version}.gem"; puts cmd; system cmd
     end
-    cmd = "gem push pkg/spree-#{version}.gem"; puts cmd; system cmd
+    cmd = "gem push pkg/solidus-#{version}.gem"; puts cmd; system cmd
   end
 end
 

@@ -10,15 +10,15 @@ load 'lib/tasks/exchanges.rake'
 Bundler::GemHelper.install_tasks
 RSpec::Core::RakeTask.new
 
-spec = eval(File.read('spree_core.gemspec'))
+spec = eval(File.read('solidus_core.gemspec'))
 Gem::PackageTask.new(spec) do |p|
   p.gem_spec = spec
 end
 
 desc "Release to gemcutter"
 task :release do
-  version = File.read(File.expand_path("../../SPREE_VERSION", __FILE__)).strip
-  cmd = "cd pkg && gem push spree_core-#{version}.gem"; puts cmd; system cmd
+  version = File.read(File.expand_path("../../SOLIDUS_VERSION", __FILE__)).strip
+  cmd = "cd pkg && gem push solidus_core-#{version}.gem"; puts cmd; system cmd
 end
 
 task :default => :spec
