@@ -5,7 +5,7 @@ class Spree::OrderCapturing
 
   # Allows your store to void unused payments and release auths
   class_attribute :void_unused_payments
-  self.void_unused_payments = true
+  self.void_unused_payments = false
 
   def initialize(order, sorted_payment_method_classes = nil)
     @order = order
