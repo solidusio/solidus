@@ -1,8 +1,6 @@
 module Spree
   # Manage (recalculate) item (LineItem or Shipment) adjustments
   class ItemAdjustments
-    include ActiveSupport::Callbacks
-    define_callbacks :promo_adjustments, :tax_adjustments
     attr_reader :item
 
     delegate :adjustments, :order, to: :item
@@ -33,22 +31,15 @@ module Spree
       # These ones should not affect the eventual total price.
       #
       # Additional tax adjustments are the opposite, affecting the final total.
-      promo_total = 0
-      run_callbacks :promo_adjustments do
-        adjustments.promotion.reload.map do |adjustment|
-          adjustment.update!(@item)
-        end
-
-        promo_total = PromotionChooser.new(adjustments.promotion).update
+      adjustments.promotion.reload.map do |adjustment|
+        adjustment.update!(@item)
       end
 
-      included_tax_total = 0
-      additional_tax_total = 0
-      run_callbacks :tax_adjustments do
-        tax = (item.respond_to?(:all_adjustments) ? item.all_adjustments : item.adjustments).tax
-        included_tax_total = tax.is_included.reload.map(&:update!).compact.sum
-        additional_tax_total = tax.additional.reload.map(&:update!).compact.sum
-      end
+      promo_total = PromotionChooser.new(adjustments.promotion).update
+
+      tax = (item.respond_to?(:all_adjustments) ? item.all_adjustments : item.adjustments).tax
+      included_tax_total = tax.is_included.reload.map(&:update!).compact.sum
+      additional_tax_total = tax.additional.reload.map(&:update!).compact.sum
 
       item_cancellation_total = adjustments.cancellation.reload.map(&:update!).compact.sum
 
