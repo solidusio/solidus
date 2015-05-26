@@ -34,6 +34,46 @@ describe Spree::StoreCreditEvent do
     end
   end
 
+  describe "#capture_action?" do
+    subject { event.capture_action? }
+
+    context "for capture events" do
+      let(:event) { create(:store_credit_capture_event) }
+
+      it "returns true" do
+        expect(subject).to eq true
+      end
+    end
+
+    context "for non-capture events" do
+      let(:event) { create(:store_credit_auth_event) }
+
+      it "returns false" do
+        expect(subject).to eq false
+      end
+    end
+  end
+
+  describe "#authorization_action?" do
+    subject { event.authorization_action? }
+
+    context "for auth events" do
+      let(:event) { create(:store_credit_auth_event) }
+
+      it "returns true" do
+        expect(subject).to eq true
+      end
+    end
+
+    context "for non-auth events" do
+      let(:event) { create(:store_credit_capture_event) }
+
+      it "returns false" do
+        expect(subject).to eq false
+      end
+    end
+  end
+
   describe "#display_amount" do
     let(:event_amount) { 120.0 }
 

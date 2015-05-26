@@ -7,5 +7,9 @@ FactoryGirl.define do
     factory :store_credit_auth_event, class: Spree::StoreCreditEvent do
       action             { Spree::StoreCredit::AUTHORIZE_ACTION }
     end
+
+    factory :store_credit_capture_event do
+      action             { Spree::StoreCredit::CAPTURE_ACTION }
+    end
   end
 end
