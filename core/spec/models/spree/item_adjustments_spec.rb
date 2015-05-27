@@ -6,7 +6,6 @@ module Spree
     let(:line_item) { order.line_items.first }
 
     let(:subject) { ItemAdjustments.new(line_item) }
-    let(:order_subject) { ItemAdjustments.new(order) }
 
     context '#update' do
       it "updates a linked adjustment" do
@@ -62,7 +61,7 @@ module Spree
         end
 
         it "tax linked to order" do
-          order_subject.update_adjustments
+          order.update!
           order.reload
           expect(order.included_tax_total).to eq(0.5)
           expect(order.additional_tax_total).to eq(00)
@@ -91,8 +90,7 @@ module Spree
         end
 
         it "tax linked to order" do
-          order_subject.update_adjustments
-          order.reload
+          order.update!
           expect(order.included_tax_total).to eq(0)
           expect(order.additional_tax_total).to eq(0.5)
         end

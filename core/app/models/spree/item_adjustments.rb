@@ -38,6 +38,11 @@ module Spree
 
       promo_total = PromotionChooser.new(promotion_adjustments).update
 
+      # Calculating the totals for the order here would be incorrect. Order's
+      # totals are the sum of the adjustments on all child models, as well as
+      # its own.
+      return if Spree::Order === item
+
       tax = adjustments.select(&:tax?)
 
       included_tax_total = tax.select(&:included?).map(&:update!).compact.sum
