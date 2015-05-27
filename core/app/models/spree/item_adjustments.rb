@@ -3,8 +3,6 @@ module Spree
   class ItemAdjustments
     attr_reader :item
 
-    delegate :adjustments, :order, to: :item
-
     def initialize(item)
       @item = item
     end
@@ -31,17 +29,21 @@ module Spree
       # These ones should not affect the eventual total price.
       #
       # Additional tax adjustments are the opposite, affecting the final total.
-      adjustments.promotion.reload.map do |adjustment|
+
+      promotion_adjustments = adjustments.select(&:promotion?)
+
+      promotion_adjustments.each do |adjustment|
         adjustment.update!(@item)
       end
 
-      promo_total = PromotionChooser.new(adjustments.promotion).update
+      promo_total = PromotionChooser.new(promotion_adjustments).update
 
-      tax = (item.respond_to?(:all_adjustments) ? item.all_adjustments : item.adjustments).tax
-      included_tax_total = tax.is_included.reload.map(&:update!).compact.sum
-      additional_tax_total = tax.additional.reload.map(&:update!).compact.sum
+      tax = adjustments.select(&:tax?)
 
-      item_cancellation_total = adjustments.cancellation.reload.map(&:update!).compact.sum
+      included_tax_total = tax.select(&:included?).map(&:update!).compact.sum
+      additional_tax_total = tax.reject(&:included?).map(&:update!).compact.sum
+
+      item_cancellation_total = adjustments.select(&:cancellation?).map(&:update!).compact.sum
 
       item.update_columns(
         :promo_total => promo_total,
@@ -50,6 +52,15 @@ module Spree
         :adjustment_total => promo_total + additional_tax_total + item_cancellation_total,
         :updated_at => Time.now,
       )
+    end
+
+    private
+    def adjustments
+      # This is done intentionally to avoid loading the association. If the
+      # association is loaded, the records may become stale due to code
+      # elsewhere in spree. When that is remedied, this should be changed to
+      # just item.adjustments
+      @adjustments ||= item.adjustments.all.to_a
     end
   end
 end

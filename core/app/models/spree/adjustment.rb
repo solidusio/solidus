@@ -82,6 +82,14 @@ module Spree
       source_type == 'Spree::PromotionAction'
     end
 
+    def tax?
+      source_type == 'Spree::TaxRate'
+    end
+
+    def cancellation?
+      source_type == 'Spree::UnitCancel'
+    end
+
     # Recalculate amount given a target e.g. Order, Shipment, LineItem
     #
     # Passing a target here would always be recommended as it would avoid
