@@ -79,7 +79,7 @@ module Spree
     end
 
     def promotion?
-      source.class < Spree::PromotionAction
+      source_type == 'Spree::PromotionAction'
     end
 
     # Recalculate amount given a target e.g. Order, Shipment, LineItem
