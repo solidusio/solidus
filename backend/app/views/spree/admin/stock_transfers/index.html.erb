@@ -95,7 +95,7 @@
             <% if stock_transfer.receivable? && can?(:edit, stock_transfer) %>
               <%= link_to_with_icon 'download', Spree.t('actions.receive'), receive_admin_stock_transfer_path(stock_transfer), no_text: true, data: { action: 'green' } %>
             <% elsif can?(:edit, stock_transfer) %>
-              <%= link_to_with_icon 'edit', Spree.t('actions.edit'), edit_admin_stock_transfer_path(stock_transfer), no_text: true, data: { action: 'edit' } %>
+              <%= link_to_with_icon 'edit', Spree.t('actions.edit'), edit_or_ship_path(stock_transfer), no_text: true, data: { action: 'edit' } %>
             <% elsif can?(:show, stock_transfer) %>
               <%= link_to_with_icon 'eye', Spree.t(:show), admin_stock_transfer_path(stock_transfer), no_text: true, data: { action: 'green' } %>
             <% end %>
