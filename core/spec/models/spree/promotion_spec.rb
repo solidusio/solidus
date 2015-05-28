@@ -168,64 +168,121 @@ describe Spree::Promotion, :type => :model do
     end
   end
 
-  context "#usage_limit_exceeded?" do
-    let(:promotable) { create(:order) }
-    let(:order) { create(:order) }
+  describe "#usage_limit_exceeded?" do
+    subject { promotion.usage_limit_exceeded? }
 
-    context "there is a usage limit set" do
-      let(:promotion) { create(:promotion, :with_order_adjustment, usage_limit: usage_limit) }
-
-      let!(:existing_adjustment) do
-        Spree::Adjustment.create!(label: 'Adjustment', amount: 1, source: promotion.actions.first, adjustable: order, order: order)
+    shared_examples "it should" do
+      context "when there is a usage limit" do
+        context "and the limit is not exceeded" do
+          let(:usage_limit) { 10 }
+          it { is_expected.to be_falsy }
+        end
+        context "and the limit is exceeded" do
+          let(:usage_limit) { 1 }
+          context "on a different order" do
+            before do
+              FactoryGirl.create(
+                :completed_order_with_promotion,
+                promotion: promotion
+              )
+              promotion.actions.first.adjustments.update_all(eligible: true)
+            end
+            it { is_expected.to be_truthy }
+          end
+          context "on the same order" do
+            it { is_expected.to be_falsy }
+          end
+        end
       end
-
-      context "the usage limit is not exceeded" do
-        let(:usage_limit) { 10 }
-
-        it "returns false" do
-          expect(promotion.usage_limit_exceeded?(promotable)).to be_falsey
-        end
-      end
-
-      context "the usage limit is exceeded" do
-        let(:usage_limit) { 1 }
-
-        context "for a different order" do
-          it "returns true" do
-            expect(promotion.usage_limit_exceeded?(promotable)).to be(true)
-          end
-        end
-
-        context "for the same order" do
-          let!(:existing_adjustment) do
-            Spree::Adjustment.create!(adjustable: promotable, label: 'Adjustment', amount: 1, source: promotion.actions.first, order: promotable)
-          end
-
-          it "returns false" do
-            expect(promotion.usage_limit_exceeded?(promotable)).to be(false)
-          end
-        end
+      context "when there is no usage limit" do
+        let(:usage_limit) { nil }
+        it { is_expected.to be_falsy }
       end
     end
 
-    context "there is no usage limit set" do
-      it "returns false" do
-        promotion.usage_limit = nil
-        expect(promotion.usage_limit_exceeded?(promotable)).to be_falsey
+    context "with an order-level adjustment" do
+      let(:promotion) do
+        FactoryGirl.create(
+          :promotion,
+          :with_order_adjustment,
+          code: "discount",
+          usage_limit: usage_limit
+        )
+      end
+      let(:promotable) do
+        FactoryGirl.create(
+          :completed_order_with_promotion,
+          promotion: promotion
+        )
+      end
+      it_behaves_like "it should"
+    end
+
+    context "with an item-level adjustment" do
+      let(:promotion) do
+        FactoryGirl.create(
+          :promotion,
+          :with_line_item_adjustment,
+          code: "discount",
+          usage_limit: usage_limit
+        )
+      end
+      before do
+        promotion.actions.first.perform({
+          order: order,
+          promotion: promotion,
+          promotion_code: promotion.codes.first
+        })
+      end
+      context "when there are multiple line items" do
+        let(:order) { FactoryGirl.create(:order_with_line_items, line_items_count: 2) }
+        describe "the first item" do
+          let(:promotable) { order.line_items.first }
+          it_behaves_like "it should"
+        end
+        describe "the second item" do
+          let(:promotable) { order.line_items.last }
+          it_behaves_like "it should"
+        end
+      end
+      context "when there is a single line item" do
+        let(:order) { FactoryGirl.create(:order_with_line_items) }
+        let(:promotable) { order.line_items.first }
+        it_behaves_like "it should"
       end
     end
   end
 
-  context "#usage_count" do
-    let(:promotable) { create(:order) }
-    let(:promotion) { create(:promotion, :with_order_adjustment) }
-    let!(:adjustment1) { Spree::Adjustment.create!(adjustable: promotable, label: 'Adjustment', amount: 1, source: promotion.actions.first, order: promotable) }
-    let!(:adjustment2) { Spree::Adjustment.create!(adjustable: promotable, label: 'Adjustment', amount: 1, source: promotion.actions.first, order: promotable) }
+  describe "#usage_count" do
+    let(:promotion) do
+      FactoryGirl.create(
+        :promotion,
+        :with_order_adjustment,
+        code: "discount"
+      )
+    end
 
-    it "counts the eligible adjustments that have used this promotion" do
-      adjustment1.update_columns(eligible: true)
-      adjustment2.update_columns(eligible: false)
-      expect(promotion.usage_count).to eq 1
+    subject { promotion.usage_count }
+
+    context "when the code is applied to a non-complete order" do
+      let(:order) { FactoryGirl.create(:order_with_line_items) }
+      before { promotion.activate(order: order, promotion_code: promotion.codes.first) }
+      it { is_expected.to eq 0 }
+    end
+    context "when the code is applied to a complete order" do
+      let!(:order) do
+        FactoryGirl.create(
+          :completed_order_with_promotion,
+          promotion: promotion
+        )
+      end
+      context "and the promo is eligible" do
+        it { is_expected.to eq 1 }
+      end
+      context "and the promo is ineligible" do
+        before { order.adjustments.promotion.update_all(eligible: false) }
+        it { is_expected.to eq 0 }
+      end
     end
   end
 
@@ -330,7 +387,7 @@ describe Spree::Promotion, :type => :model do
 
     it "counts eligible adjustments" do
       adjustment.update_column(:eligible, true)
-      expect(promotion.usage_count).to eq(1)
+      expect(promotion.usage_count).to eq(0)
     end
 
     # Regression test for #4112
@@ -379,11 +436,14 @@ describe Spree::Promotion, :type => :model do
     end
 
     context "when the promotion's usage limit is exceeded" do
-      let(:order) { create(:order) }
-      let(:promotion) { create(:promotion, :with_order_adjustment) }
+      let(:order) { FactoryGirl.create(:completed_order_with_promotion, promotion: promotion) }
+      let(:promotion) { FactoryGirl.create(:promotion, :with_order_adjustment) }
 
       before do
-        Spree::Adjustment.create!(label: 'Adjustment', amount: 1, source: promotion.actions.first, adjustable: order, order: order)
+        FactoryGirl.create(
+          :completed_order_with_promotion,
+          promotion: promotion
+        )
         promotion.usage_limit = 1
       end
 
