@@ -1,19 +1,14 @@
 # Use singleton class Spree::Preferences::Store.instance to access
 #
-# StoreInstance has a persistence flag that is on by default,
-# but we disable database persistence in testing to speed up tests
-#
 
 require 'singleton'
 
 module Spree::Preferences
 
   class StoreInstance
-    attr_accessor :persistence
 
     def initialize
       @cache = Rails.cache
-      @persistence = true
     end
 
     def set(key, value)
@@ -86,7 +81,7 @@ module Spree::Preferences
     end
 
     def should_persist?
-      @persistence and Spree::Preference.table_exists?
+      Spree::Preference.table_exists?
     end
 
   end
