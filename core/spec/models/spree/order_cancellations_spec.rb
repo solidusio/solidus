@@ -40,7 +40,14 @@ describe Spree::OrderCancellations do
     end
 
     context "when send_cancellation_mailer is false" do
-      subject { Spree::OrderCancellations.new(order, send_cancellation_mailer: false).short_ship([inventory_unit]) }
+      subject { Spree::OrderCancellations.new(order).short_ship([inventory_unit]) }
+
+      before do
+        @original_send_boolean = Spree::OrderCancellations.send_cancellation_mailer
+        Spree::OrderCancellations.send_cancellation_mailer = false
+      end
+
+      after { Spree::OrderCancellations.send_cancellation_mailer = @original_send_boolean }
 
       it "does not send a cancellation email" do
         expect(Spree::OrderMailer).not_to receive(:inventory_cancellation_email)
