@@ -481,7 +481,7 @@ describe Spree::Order, :type => :model do
       it "does not allow the order to complete" do
         expect {
           order.complete!
-        }.to raise_error Spree::LineItem::InsufficientStock
+        }.to raise_error Spree::Order::InsufficientStock
 
         expect(order.state).to eq 'confirm'
         expect(order.line_items.first.errors[:quantity]).to be_present
@@ -502,7 +502,7 @@ describe Spree::Order, :type => :model do
       end
 
       it "does not allow order to complete" do
-        expect { order.complete! }.to raise_error Spree::LineItem::InsufficientStock
+        expect { order.complete! }.to raise_error Spree::Order::InsufficientStock
 
         expect(order.state).to eq 'confirm'
         expect(order.line_items.first.errors[:inventory]).to be_present
@@ -541,7 +541,7 @@ describe Spree::Order, :type => :model do
 
         context 'when the exchange is not for an unreturned item' do
           it 'does not allow the order to completed' do
-            expect { order.complete! }.to raise_error  Spree::LineItem::InsufficientStock
+            expect { order.complete! }.to raise_error  Spree::Order::InsufficientStock
           end
         end
       end
@@ -557,7 +557,7 @@ describe Spree::Order, :type => :model do
         allow(order).to receive_messages(payment_required?: true)
         allow(order).to receive_messages(ensure_available_shipping_rates: true)
         order.line_items << FactoryGirl.create(:line_item)
-        order.line_items.each { |li| li.inventory_units.create! }
+        order.create_proposed_shipments
         Spree::OrderUpdater.new(order).update
 
         order.save!
@@ -589,7 +589,7 @@ describe Spree::Order, :type => :model do
         order.stub(payment_required?: true)
         order.stub(ensure_available_shipping_rates: true)
         order.line_items << FactoryGirl.create(:line_item)
-        order.line_items.each { |li| li.inventory_units.create! }
+        order.create_proposed_shipments
         Spree::OrderUpdater.new(order).update
       end
 

@@ -5,6 +5,8 @@ module Spree
       before_action :load_order, only: [:edit, :update, :complete, :advance, :cancel, :resume, :approve, :resend, :open_adjustments, :close_adjustments, :cart, :confirm]
       around_filter :lock_order, :only => [:update, :advance, :complete, :confirm, :cancel, :resume, :approve, :resend]
 
+      rescue_from Spree::Order::InsufficientStock, with: :insufficient_stock_error
+
       respond_to :html
 
       def index

@@ -15,6 +15,10 @@ module Spree
     has_one :original_return_item, class_name: "Spree::ReturnItem", foreign_key: :exchange_inventory_unit_id, dependent: :destroy
     has_one :unit_cancel, class_name: "Spree::UnitCancel"
 
+    validates_presence_of :order, :shipment, :line_item, :variant
+
+    before_destroy :ensure_no_return_items
+
     scope :backordered, -> { where state: 'backordered' }
     scope :on_hand, -> { where state: 'on_hand' }
     scope :pre_shipment, -> { where(state: PRE_SHIPMENT_STATES) }
