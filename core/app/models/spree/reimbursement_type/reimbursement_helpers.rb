@@ -49,7 +49,14 @@ module Spree
     end
 
     def create_creditable(reimbursement, unpaid_amount)
-      Spree::Reimbursement::Credit.default_creditable_class.new(reimbursement: reimbursement, amount: unpaid_amount)
+      Spree::Reimbursement::Credit.default_creditable_class.new(
+        user: reimbursement.order.user,
+        amount: unpaid_amount,
+        category: Spree::StoreCreditCategory.reimbursement_category(reimbursement),
+        created_by: Spree::StoreCredit.default_created_by,
+        memo: "Refund for uncreditable payments on order #{reimbursement.order.number}",
+        currency: reimbursement.order.currency
+      )
     end
 
     def sorted_eligible_refund_payments(payments)

@@ -57,7 +57,7 @@ describe Spree::Reimbursement, type: :model do
     let(:line_items_price)        { BigDecimal.new(10) }
     let(:line_item)               { order.line_items.first }
     let(:inventory_unit)          { line_item.inventory_units.first }
-    let(:payment)                 { build(:payment, amount: payment_amount, order: order, state: 'completed') }
+    let(:payment)                 { build(:payment, amount: payment_amount, order: order, state: 'checkout') }
     let(:payment_amount)          { order.total }
     let(:customer_return)         { build(:customer_return, return_items: [return_item]) }
     let(:return_item)             { build(:return_item, inventory_unit: inventory_unit) }
@@ -80,6 +80,7 @@ describe Spree::Reimbursement, type: :model do
         order.next! # confirm
       end
       order.complete! # completed
+      payment.capture!
       customer_return.save!
       return_item.accept!
     end

@@ -15,7 +15,7 @@ module Spree
     extend Spree::DisplayMoney
     money_methods :outstanding_balance, :item_total, :adjustment_total,
       :included_tax_total, :additional_tax_total, :tax_total,
-      :shipment_total, :total
+      :shipment_total, :total, :order_total_after_store_credit, :total_available_store_credit
     alias :display_ship_total :display_shipment_total
 
     checkout_flow do
@@ -649,6 +649,71 @@ module Spree
       additional_tax_total + included_tax_total
     end
 
+    def add_store_credit_payments
+      payments.store_credits.checkout.each(&:invalidate!)
+
+      remaining_total = outstanding_balance
+
+      if user && user.store_credits.any?
+        payment_method = Spree::PaymentMethod::StoreCredit.first
+
+        user.store_credits.order_by_priority.each do |credit|
+          break if remaining_total.zero?
+          next if credit.amount_remaining.zero?
+
+          amount_to_take = [credit.amount_remaining, remaining_total].min
+          payments.create!(source: credit,
+                           payment_method: payment_method,
+                           amount: amount_to_take,
+                           state: 'checkout',
+                           response_code: credit.generate_authorization_code)
+          remaining_total -= amount_to_take
+        end
+      end
+
+      other_payments = payments.checkout.not_store_credits
+      if remaining_total.zero?
+        other_payments.each(&:invalidate!)
+      elsif other_payments.any?
+        other_payments.first.update_attributes!(amount: remaining_total)
+      end
+
+      if payments.checkout.sum(:amount) != total
+        errors.add(:base, Spree.t("store_credit.errors.unable_to_fund")) and return false
+      end
+    end
+
+    def covered_by_store_credit?
+      return false unless user
+      user.total_available_store_credit >= total
+    end
+    alias_method :covered_by_store_credit, :covered_by_store_credit?
+
+    def total_available_store_credit
+      return 0.0 unless user
+      user.total_available_store_credit
+    end
+
+    def order_total_after_store_credit
+      total - total_applicable_store_credit
+    end
+
+    def total_applicable_store_credit
+      if confirm? || complete?
+        payments.store_credits.valid.sum(:amount)
+      else
+        [total, (user.try(:total_available_store_credit) || 0.0)].min
+      end
+    end
+
+    def display_total_applicable_store_credit
+      Spree::Money.new(-total_applicable_store_credit, { currency: currency })
+    end
+
+    def display_store_credit_remaining_after_capture
+      Spree::Money.new(total_available_store_credit - total_applicable_store_credit, { currency: currency })
+    end
+
     private
 
     def link_by_email
@@ -701,6 +766,8 @@ module Spree
     def after_cancel
       shipments.each { |shipment| shipment.cancel! }
       payments.completed.each { |payment| payment.cancel! }
+      payments.store_credits.pending.each { |payment| payment.void! }
+
       send_cancel_email
       self.update!
     end

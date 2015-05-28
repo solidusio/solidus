@@ -10,6 +10,9 @@
   </span>
   <br />
   <span class="full-name"><%= source.name %></span>
+<% elsif source.is_a?(Spree::StoreCredit) %>
+  <%= content_tag(:span, payment.payment_method.name) %>:
+  <%= content_tag(:span, payment.display_amount) %>
 <% else %>
   <%= content_tag(:span, payment.payment_method.name) %>
 <% end %>

@@ -57,9 +57,16 @@
       </tbody>
     <% end %>
 
+    <% if order.total_applicable_store_credit > 0.0 %>
+      <tr data-hook="checkout-summary-store-credit">
+        <td><%= Spree.t("store_credit.store_credit") %>:</td>
+        <td><%= order.display_total_applicable_store_credit.to_html %></td>
+      </tr>
+    <% end %>
+
     <tr data-hook="order_total">
       <td><strong><%= Spree.t(:order_total) %>:</strong></td>
-      <td><strong><span id='summary-order-total'><%= order.display_total.to_html %></span></strong></td>
+      <td><strong><span id='summary-order-total'><%= order.display_order_total_after_store_credit.to_html %></span></strong></td>
     </tr>
   </tbody>
 </table>
