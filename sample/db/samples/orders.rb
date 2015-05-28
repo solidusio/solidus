@@ -1,5 +1,7 @@
 Spree::Sample.load_sample("addresses")
 
+payment_method = Spree::PaymentMethod::Check.first!
+
 orders = []
 orders << Spree::Order.create!(
   :number => "R123456789",
@@ -29,10 +31,9 @@ orders[1].line_items.create!(
   :quantity => 1,
   :price => 22.99)
 
-orders.each(&:create_proposed_shipments)
-
 orders.each do |order|
-  order.state = "complete"
-  order.completed_at = Time.now - 1.day
-  order.save!
+  order.payments.create!(payment_method: payment_method)
+
+  order.next! while !order.can_complete?
+  order.complete!
 end
