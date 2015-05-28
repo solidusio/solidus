@@ -9,7 +9,7 @@ module Spree
       # end
       #
       def reset_spree_preferences(&config_block)
-        Spree::Config.preferences = Spree::Config.default_preferences
+        Spree::Config.preference_store = Spree::Config.default_preferences
 
         configure_spree_preferences(&config_block) if block_given?
       end
