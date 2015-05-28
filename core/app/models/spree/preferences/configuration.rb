@@ -29,7 +29,11 @@ module Spree::Preferences
     end
 
     def preferences
-      ScopedStore.new(self.class.name.underscore)
+      @preferences ||= ScopedStore.new(self.class.name.underscore)
+    end
+
+    def preferences=(preference_store)
+      @preferences = preference_store
     end
 
     def reset
