@@ -78,20 +78,23 @@ module Spree
       adjustable ? adjustable.currency : Spree::Config[:currency]
     end
 
+    # @return [Boolean] true when this is a promotion adjustment (Promotion adjustments have a {PromotionAction} source)
     def promotion?
       source_type == 'Spree::PromotionAction'
     end
 
+    # @return [Boolean] true when this is a tax adjustment (Tax adjustments have a {TaxRate} source)
     def tax?
       source_type == 'Spree::TaxRate'
     end
 
+    # @return [Boolean] true when this is a cancellation adjustment (Cancellation adjustments have a {UnitCancel} source)
     def cancellation?
       source_type == 'Spree::UnitCancel'
     end
 
     # Recalculate and persist the amount from this adjustment's source based on
-    # the adjustable (Order, Shipment, or LineItem)
+    # the adjustable ({Order}, {Shipment}, or {LineItem})
     #
     # If the adjustment has no source (such as when created manually from the
     # admin) or is closed, this is a noop.
