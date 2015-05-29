@@ -730,6 +730,7 @@ en:
       messages:
         cannot_modify_transfer_item_closed_stock_transfer: Transfer items that are part of a closed stock transfer cannot be modified.
         cannot_delete_transfer_item_with_finalized_stock_transfer: Transfer items that are part of a finalized stock transfer cannot be destroyed.
+        cannot_update_expected_transfer_item_with_finalized_stock_transfer: The expected quantity cannot be updated on transfer items that are part of a finalized stock transfer.
         could_not_create_taxon: Could not create taxon
         transfer_item_insufficient_stock: Transfer item's variant does not have enough stock in the stock transfer's source location
         no_payment_methods_available: No payment methods are configured for this environment
