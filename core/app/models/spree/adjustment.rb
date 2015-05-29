@@ -107,15 +107,16 @@ module Spree
       # If the adjustment has no source, do not attempt to re-calculate the amount.
       # Chances are likely that this was a manually created adjustment in the admin backend.
       if source.present?
-        amount = source.compute_amount(target || adjustable)
-        self.update_columns(
-          amount: amount,
-          updated_at: Time.now,
-        )
+        self.amount = source.compute_amount(target || adjustable)
 
         if promotion?
-          self.update_column(:eligible, source.promotion.eligible?(adjustable, promotion_code: promotion_code))
+          self.eligible = source.promotion.eligible?(adjustable, promotion_code: promotion_code)
         end
+
+        # Persist only if changed
+        # This is only not a save! to avoid the extra queries to load the order
+        # (for validations) and to touch the adjustment.
+        update_columns(eligible: eligible, amount: amount, updated_at: Time.now) if changed?
       end
       amount
     end
