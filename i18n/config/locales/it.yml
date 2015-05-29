@@ -1149,7 +1149,7 @@ it:
     sales_totals: Totali Vendite
     save_and_continue: Salva e Continua
     save_my_address: Salva il mio indirizzo
-    say_no: false
+    say_no: No
     say_yes: Sì
     scope: Campo
     search: Cerca
