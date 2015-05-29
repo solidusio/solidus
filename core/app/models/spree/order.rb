@@ -766,7 +766,7 @@ module Spree
     def after_cancel
       shipments.each { |shipment| shipment.cancel! }
       payments.completed.each { |payment| payment.cancel! }
-      payments.store_credits.pending.each { |payment| payment.void! }
+      payments.store_credits.pending.each { |payment| payment.void_transaction! }
 
       send_cancel_email
       self.update!
