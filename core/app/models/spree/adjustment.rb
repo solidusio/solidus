@@ -90,18 +90,22 @@ module Spree
       source_type == 'Spree::UnitCancel'
     end
 
-    # Recalculate amount given a target e.g. Order, Shipment, LineItem
+    # Recalculate and persist the amount from this adjustment's source based on
+    # the adjustable (Order, Shipment, or LineItem)
     #
-    # Passing a target here would always be recommended as it would avoid
-    # hitting the database again and would ensure you're compute values over
-    # the specific object amount passed here.
+    # If the adjustment has no source (such as when created manually from the
+    # admin) or is closed, this is a noop.
     #
-    # Noop if the adjustment is locked.
-    #
-    # If the adjustment has no source, do not attempt to re-calculate the amount.
-    # Chances are likely that this was a manually created adjustment in the admin backend.
+    # @param target [Spree::LineItem,Spree::Shipment,Spree::Order] Deprecated: the target to calculate against
+    # @return [BigDecimal] New amount of this adjustment
     def update!(target = nil)
+      if target
+        ActiveSupport::Deprecation.warn("Passing a target to Adjustment#update! is deprecated. The adjustment will use the correct target from it's adjustable association.", caller)
+      end
       return amount if closed?
+
+      # If the adjustment has no source, do not attempt to re-calculate the amount.
+      # Chances are likely that this was a manually created adjustment in the admin backend.
       if source.present?
         amount = source.compute_amount(target || adjustable)
         self.update_columns(
