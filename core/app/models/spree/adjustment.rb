@@ -128,10 +128,6 @@ module Spree
       adjustable ? adjustable.currency : Spree::Config[:currency]
     end
 
-    def display_amount
-      Spree::Money.new(amount, { currency: currency })
-    end
-
     private
 
     def update_adjustable_adjustment_total
