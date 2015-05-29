@@ -12,6 +12,14 @@ module Spree
 
     delegate :currency, to: :store_credit
 
+    def capture_action?
+      action == Spree::StoreCredit::CAPTURE_ACTION
+    end
+
+    def authorization_action?
+      action == Spree::StoreCredit::AUTHORIZE_ACTION
+    end
+
     def display_amount
       Spree::Money.new(amount, { currency: currency })
     end

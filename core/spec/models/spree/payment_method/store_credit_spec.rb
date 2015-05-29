@@ -255,26 +255,39 @@ describe Spree::PaymentMethod::StoreCredit do
     let(:auth_code)    { "1-SC-20141111111111" }
     let(:captured_amount) { 10.0 }
 
-    let!(:capture_event) { create(:store_credit_auth_event,
-                                    action: Spree::StoreCredit::CAPTURE_ACTION,
-                                    authorization_code: auth_code,
-                                    amount: captured_amount,
-                                    store_credit: store_credit) }
+    context "capture event found" do
+      let!(:store_credit_event) { create(:store_credit_capture_event,
+                                        authorization_code: auth_code,
+                                        amount: captured_amount,
+                                        store_credit: store_credit) }
 
-    context "store credit event found" do
       it "creates a store credit for the same amount that was captured" do
         expect_any_instance_of(Spree::StoreCredit).to receive(:credit).with(captured_amount, auth_code, store_credit.currency)
         subject
       end
     end
 
-    context "store credit event not found" do
-      subject do
-        Spree::PaymentMethod::StoreCredit.new.cancel('INVALID')
+    context "capture event not found" do
+      context "auth event found" do
+        let!(:store_credit_event) { create(:store_credit_auth_event,
+                                          authorization_code: auth_code,
+                                          amount: captured_amount,
+                                          store_credit: store_credit) }
+
+        it "creates a store credit for the same amount that was captured" do
+          expect_any_instance_of(Spree::StoreCredit).to receive(:void).with(auth_code)
+          subject
+        end
       end
 
-      it "returns false" do
-        expect(subject).to be false
+      context "store credit event not found" do
+        subject do
+          Spree::PaymentMethod::StoreCredit.new.cancel('INVALID')
+        end
+
+        it "returns false" do
+          expect(subject).to be false
+        end
       end
     end
   end
