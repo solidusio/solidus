@@ -1,14 +1,13 @@
 module Spree
-  # I Choo-Choo-Choose You
   class PromotionChooser
-    # FIXME: adjust currently needs to be a scope
     def initialize(adjustments)
       @adjustments = adjustments
     end
 
-    # Picks one (and only one) promotion to be eligible for this order
-    # This promotion provides the most discount, and if two promotions
-    # have the same amount, then it will pick the latest one.
+    # Picks the best promotion from this set of adjustments, all others are
+    # marked as ineligible.
+    #
+    # @return [BigDecimal] The amount of the best adjustment
     def update
       if best_promotion_adjustment
         @adjustments.select(&:eligible?).each do |adjustment|
@@ -17,10 +16,11 @@ module Spree
         end
         best_promotion_adjustment.amount
       else
-        0
+        BigDecimal.new('0')
       end
     end
 
+    # @return The best promotion from this set of adjustments.
     def best_promotion_adjustment
       @best_promotion_adjustment ||= @adjustments.select(&:eligible?).min_by do |a|
         [a.amount, -a.id]
