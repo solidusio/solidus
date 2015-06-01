@@ -52,7 +52,7 @@ module Spree
         end
 
         it "tax has no bearing on final price" do
-          subject.update_adjustments
+          subject.update
           line_item.reload
           expect(line_item.included_tax_total).to eq(0.5)
           expect(line_item.additional_tax_total).to eq(0)
@@ -79,7 +79,7 @@ module Spree
         end
 
         it "tax applies to line item" do
-          subject.update_adjustments
+          subject.update
           line_item.reload
           # Taxable amount is: $20 (base) - $10 (promotion) = $10
           # Tax rate is 5% (of $10).

@@ -8,11 +8,8 @@ module Spree
       @item = item
     end
 
-    def update
-      update_adjustments if item.persisted?
-      item
-    end
-
+    # Update the item's adjustments and totals
+    #
     # If the item is an {Order}, this will update and select the best
     # promotion adjustment.
     #
@@ -21,7 +18,11 @@ module Spree
     # adjustments, and then update the total fields (promo_total,
     # included_tax_total, additional_tax_total, and adjustment_total) on the
     # item.
-    def update_adjustments
+    #
+    # This is a noop if the item is not persisted.
+    def update
+      return @item unless item.persisted?
+
       # Promotion adjustments must be applied first, then tax adjustments.
       # This fits the criteria for VAT tax as outlined here:
       # http://www.hmrc.gov.uk/vat/managing/charging/discounts-etc.htm#1
@@ -68,6 +69,8 @@ module Spree
         :adjustment_total => @item.adjustment_total,
         :updated_at => Time.now,
       ) if @item.changed?
+
+      @item
     end
 
     private
