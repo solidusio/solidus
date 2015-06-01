@@ -4,8 +4,6 @@ module Spree
   # checkout which has nothing to do with updating an order that this approach
   # is waranted.
   class CheckoutController < Spree::StoreController
-    ssl_required
-
     before_filter :load_order
     around_filter :lock_order
     before_filter :ensure_valid_state_lock_version, only: [:update]
