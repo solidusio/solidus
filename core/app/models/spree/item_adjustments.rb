@@ -3,6 +3,7 @@ module Spree
   class ItemAdjustments
     attr_reader :item
 
+    # @param item [Order, LineItem, Shipment] the item whose adjustments should be updated
     def initialize(item)
       @item = item
     end
@@ -12,8 +13,14 @@ module Spree
       item
     end
 
-    # TODO this should be probably the place to calculate proper item taxes
-    # values after promotions are applied
+    # If the item is an {Order}, this will update and select the best
+    # promotion adjustment.
+    #
+    # If it is a {LineItem} or {Shipment}, it will update and select the best
+    # promotion adjustment, update tax adjustments, update cancellation
+    # adjustments, and then update the total fields (promo_total,
+    # included_tax_total, additional_tax_total, and adjustment_total) on the
+    # item.
     def update_adjustments
       # Promotion adjustments must be applied first, then tax adjustments.
       # This fits the criteria for VAT tax as outlined here:
@@ -31,7 +38,6 @@ module Spree
       # Additional tax adjustments are the opposite, affecting the final total.
 
       promotion_adjustments = adjustments.select(&:promotion?)
-
       promotion_adjustments.each(&:update!)
 
       promo_total = PromotionChooser.new(promotion_adjustments).update
@@ -39,6 +45,9 @@ module Spree
       # Calculating the totals for the order here would be incorrect. Order's
       # totals are the sum of the adjustments on all child models, as well as
       # its own.
+      #
+      # We want to select the best promotion for the order, but the remainder
+      # of the calculations here are done in the OrderUpdater instead.
       return if Spree::Order === item
 
       @item.promo_total = promo_total
