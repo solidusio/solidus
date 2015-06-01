@@ -32,9 +32,7 @@ module Spree
 
       promotion_adjustments = adjustments.select(&:promotion?)
 
-      promotion_adjustments.each do |adjustment|
-        adjustment.update!
-      end
+      promotion_adjustments.each(&:update!)
 
       promo_total = PromotionChooser.new(promotion_adjustments).update
 
