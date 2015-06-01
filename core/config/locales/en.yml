@@ -763,6 +763,7 @@ en:
     extension: Extension
     existing_shipments: Existing shipments
     failed_payment_attempts: Failed Payment Attempts
+    failure: Failure
     filename: Filename
     fill_in_customer_info: Please fill in customer info
     filter_results: Filter Results
