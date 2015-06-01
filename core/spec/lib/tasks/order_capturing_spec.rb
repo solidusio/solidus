@@ -21,6 +21,16 @@ describe "order_capturing:capture_payments" do
         expect { subject.invoke }.to change { payment.reload.state }.to('completed')
       }.to change { order.reload.payment_state }.to('paid')
     end
+
+    context "when there is an error capturing payment" do
+      before do
+        Spree::OrderCapturing.any_instance.stub(:capture_payments).and_raise(StateMachine::InvalidTransition)
+      end
+
+      it "raises a OrderCapturingFailures" do
+        expect { subject.invoke }.to raise_error(Spree::OrderCapturingFailures)
+      end
+    end
   end
 
   context "with any inventory not shipped or canceled" do
