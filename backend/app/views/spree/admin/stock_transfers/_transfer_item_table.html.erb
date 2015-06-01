@@ -16,7 +16,7 @@
       </tr>
     </thead>
     <tbody>
-      <% @stock_transfer.transfer_items.each do |item| %>
+      <% transfer_items.each do |item| %>
         <%- variant = item.variant %>
         <tr data-transfer-item-id="<%= item.id %>">
           <td class="align-center no-padding">

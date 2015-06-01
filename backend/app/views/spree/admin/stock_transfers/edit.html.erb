@@ -66,5 +66,5 @@
 
 <fieldset id='stock-transfer-transfer-items'>
   <legend align="center"><%= Spree.t(:added) %></legend>
-  <%= render partial: 'transfer_item_table', locals: { show_expected: true, show_received: false, show_actions: true } %>
+  <%= render partial: 'transfer_item_table', locals: { transfer_items: @stock_transfer.transfer_items, show_expected: true, show_received: false, show_actions: true } %>
 </fieldset>
