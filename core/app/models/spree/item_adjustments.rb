@@ -41,20 +41,24 @@ module Spree
       # its own.
       return if Spree::Order === item
 
+      @item.promo_total = promo_total
+
       tax = adjustments.select(&:tax?)
 
-      included_tax_total = tax.select(&:included?).map(&:update!).compact.sum
-      additional_tax_total = tax.reject(&:included?).map(&:update!).compact.sum
+      @item.included_tax_total = tax.select(&:included?).map(&:update!).compact.sum
+      @item.additional_tax_total = tax.reject(&:included?).map(&:update!).compact.sum
 
       item_cancellation_total = adjustments.select(&:cancellation?).map(&:update!).compact.sum
 
-      item.update_columns(
-        :promo_total => promo_total,
-        :included_tax_total => included_tax_total,
-        :additional_tax_total => additional_tax_total,
-        :adjustment_total => promo_total + additional_tax_total + item_cancellation_total,
+      @item.adjustment_total = @item.promo_total + @item.additional_tax_total + item_cancellation_total
+
+      @item.update_columns(
+        :promo_total => @item.promo_total,
+        :included_tax_total => @item.included_tax_total,
+        :additional_tax_total => @item.additional_tax_total,
+        :adjustment_total => @item.adjustment_total,
         :updated_at => Time.now,
-      )
+      ) if @item.changed?
     end
 
     private
