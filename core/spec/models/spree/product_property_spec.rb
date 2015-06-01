@@ -5,8 +5,8 @@ describe Spree::ProductProperty, :type => :model do
   context "validations" do
     it "should validate length of value" do
       pp = create(:product_property)
-      expect_any_instance_of(Spree::Validations::DbMaximumLengthValidator).to receive(:validate)
-      pp.valid?
+      pp.value = "x" * 256
+      expect(pp).not_to be_valid
     end
   end
 

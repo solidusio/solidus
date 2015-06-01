@@ -4,8 +4,7 @@ module Spree
     belongs_to :property, class_name: 'Spree::Property', inverse_of: :product_properties
 
     validates :property, presence: true
-
-    validates_with Spree::Validations::DbMaximumLengthValidator, field: :value
+    validates :value, length: { maximum: 255 }
 
     default_scope -> { order("#{self.table_name}.position") }
 
