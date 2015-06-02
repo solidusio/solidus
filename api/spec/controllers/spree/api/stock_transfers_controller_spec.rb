@@ -39,6 +39,11 @@ module Spree
           it "increments the received quantity for the transfer_item" do
             expect { subject }.to change { transfer_item.reload.received_quantity }.by(1)
           end
+
+          it "returns the received transfer item in the response" do
+            subject
+            expect(JSON.parse(response.body)["received_item"]["id"]).to eq transfer_item.id
+          end
         end
 
         context "variant is not in the transfer order" do
