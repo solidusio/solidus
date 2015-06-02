@@ -678,7 +678,7 @@ module Spree
         other_payments.first.update_attributes!(amount: remaining_total)
       end
 
-      if payments.checkout.sum(:amount) != total
+      if pending_payments.sum(:amount) != total
         errors.add(:base, Spree.t("store_credit.errors.unable_to_fund")) and return false
       end
     end
