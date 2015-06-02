@@ -74,6 +74,7 @@ describe Spree::PromotionCode do
     let!(:adjustment2) { Spree::Adjustment.create!(adjustable: promotable, label: 'Adjustment', amount: 1, source: promotion.actions.first, promotion_code: promotion_code, order: promotable) }
 
     it "counts the eligible adjustments that have used this promotion" do
+      adjustment1.update_columns(eligible: true)
       adjustment2.update_columns(eligible: false)
       expect(promotion_code.usage_count).to eq 1
     end

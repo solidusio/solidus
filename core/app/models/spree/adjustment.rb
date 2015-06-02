@@ -78,42 +78,54 @@ module Spree
       adjustable ? adjustable.currency : Spree::Config[:currency]
     end
 
+    # @return [Boolean] true when this is a promotion adjustment (Promotion adjustments have a {PromotionAction} source)
     def promotion?
-      source.class < Spree::PromotionAction
+      source_type == 'Spree::PromotionAction'
     end
 
-    # Recalculate amount given a target e.g. Order, Shipment, LineItem
+    # @return [Boolean] true when this is a tax adjustment (Tax adjustments have a {TaxRate} source)
+    def tax?
+      source_type == 'Spree::TaxRate'
+    end
+
+    # @return [Boolean] true when this is a cancellation adjustment (Cancellation adjustments have a {UnitCancel} source)
+    def cancellation?
+      source_type == 'Spree::UnitCancel'
+    end
+
+    # Recalculate and persist the amount from this adjustment's source based on
+    # the adjustable ({Order}, {Shipment}, or {LineItem})
     #
-    # Passing a target here would always be recommended as it would avoid
-    # hitting the database again and would ensure you're compute values over
-    # the specific object amount passed here.
+    # If the adjustment has no source (such as when created manually from the
+    # admin) or is closed, this is a noop.
     #
-    # Noop if the adjustment is locked.
-    #
-    # If the adjustment has no source, do not attempt to re-calculate the amount.
-    # Chances are likely that this was a manually created adjustment in the admin backend.
+    # @param target [Spree::LineItem,Spree::Shipment,Spree::Order] Deprecated: the target to calculate against
+    # @return [BigDecimal] New amount of this adjustment
     def update!(target = nil)
+      if target
+        ActiveSupport::Deprecation.warn("Passing a target to Adjustment#update! is deprecated. The adjustment will use the correct target from it's adjustable association.", caller)
+      end
       return amount if closed?
+
+      # If the adjustment has no source, do not attempt to re-calculate the amount.
+      # Chances are likely that this was a manually created adjustment in the admin backend.
       if source.present?
-        amount = source.compute_amount(target || adjustable)
-        self.update_columns(
-          amount: amount,
-          updated_at: Time.now,
-        )
+        self.amount = source.compute_amount(target || adjustable)
 
         if promotion?
-          self.update_column(:eligible, source.promotion.eligible?(adjustable, promotion_code: promotion_code))
+          self.eligible = source.promotion.eligible?(adjustable, promotion_code: promotion_code)
         end
+
+        # Persist only if changed
+        # This is only not a save! to avoid the extra queries to load the order
+        # (for validations) and to touch the adjustment.
+        update_columns(eligible: eligible, amount: amount, updated_at: Time.now) if changed?
       end
       amount
     end
 
     def currency
       adjustable ? adjustable.currency : Spree::Config[:currency]
-    end
-
-    def display_amount
-      Spree::Money.new(amount, { currency: currency })
     end
 
     private

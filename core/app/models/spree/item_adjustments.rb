@@ -1,27 +1,28 @@
 module Spree
   # Manage (recalculate) item (LineItem or Shipment) adjustments
   class ItemAdjustments
-    include ActiveSupport::Callbacks
-    define_callbacks :promo_adjustments, :tax_adjustments
     attr_reader :item
 
-    delegate :adjustments, :order, to: :item
-
+    # @param item [Order, LineItem, Shipment] the item whose adjustments should be updated
     def initialize(item)
       @item = item
-
-      # Don't attempt to reload the item from the DB if it's not there
-      @item.reload if @item.instance_of?(Shipment) && @item.persisted?
     end
 
+    # Update the item's adjustments and totals
+    #
+    # If the item is an {Order}, this will update and select the best
+    # promotion adjustment.
+    #
+    # If it is a {LineItem} or {Shipment}, it will update and select the best
+    # promotion adjustment, update tax adjustments, update cancellation
+    # adjustments, and then update the total fields (promo_total,
+    # included_tax_total, additional_tax_total, and adjustment_total) on the
+    # item.
+    #
+    # This is a noop if the item is not persisted.
     def update
-      update_adjustments if item.persisted?
-      item
-    end
+      return @item unless item.persisted?
 
-    # TODO this should be probably the place to calculate proper item taxes
-    # values after promotions are applied
-    def update_adjustments
       # Promotion adjustments must be applied first, then tax adjustments.
       # This fits the criteria for VAT tax as outlined here:
       # http://www.hmrc.gov.uk/vat/managing/charging/discounts-etc.htm#1
@@ -36,49 +37,49 @@ module Spree
       # These ones should not affect the eventual total price.
       #
       # Additional tax adjustments are the opposite, affecting the final total.
-      promo_total = 0
-      run_callbacks :promo_adjustments do
-        promotion_total = adjustments.promotion.reload.map do |adjustment|
-          adjustment.update!(@item)
-        end.compact.sum
 
-        unless promotion_total == 0
-          choose_best_promotion_adjustment
-        end
-        promo_total = best_promotion_adjustment.try(:amount).to_f
-      end
+      promotion_adjustments = adjustments.select(&:promotion?)
+      promotion_adjustments.each(&:update!)
 
-      included_tax_total = 0
-      additional_tax_total = 0
-      run_callbacks :tax_adjustments do
-        tax = (item.respond_to?(:all_adjustments) ? item.all_adjustments : item.adjustments).tax
-        included_tax_total = tax.is_included.reload.map(&:update!).compact.sum
-        additional_tax_total = tax.additional.reload.map(&:update!).compact.sum
-      end
+      promo_total = PromotionChooser.new(promotion_adjustments).update
 
-      item_cancellation_total = adjustments.cancellation.reload.map(&:update!).compact.sum
+      # Calculating the totals for the order here would be incorrect. Order's
+      # totals are the sum of the adjustments on all child models, as well as
+      # its own.
+      #
+      # We want to select the best promotion for the order, but the remainder
+      # of the calculations here are done in the OrderUpdater instead.
+      return if Spree::Order === item
 
-      item.update_columns(
-        :promo_total => promo_total,
-        :included_tax_total => included_tax_total,
-        :additional_tax_total => additional_tax_total,
-        :adjustment_total => promo_total + additional_tax_total + item_cancellation_total,
+      @item.promo_total = promo_total
+
+      tax = adjustments.select(&:tax?)
+
+      @item.included_tax_total = tax.select(&:included?).map(&:update!).compact.sum
+      @item.additional_tax_total = tax.reject(&:included?).map(&:update!).compact.sum
+
+      item_cancellation_total = adjustments.select(&:cancellation?).map(&:update!).compact.sum
+
+      @item.adjustment_total = @item.promo_total + @item.additional_tax_total + item_cancellation_total
+
+      @item.update_columns(
+        :promo_total => @item.promo_total,
+        :included_tax_total => @item.included_tax_total,
+        :additional_tax_total => @item.additional_tax_total,
+        :adjustment_total => @item.adjustment_total,
         :updated_at => Time.now,
-      )
+      ) if @item.changed?
+
+      @item
     end
 
-    # Picks one (and only one) promotion to be eligible for this order
-    # This promotion provides the most discount, and if two promotions
-    # have the same amount, then it will pick the latest one.
-    def choose_best_promotion_adjustment
-      if best_promotion_adjustment
-        other_promotions = self.adjustments.promotion.where.not(id: best_promotion_adjustment.id)
-        other_promotions.update_all(:eligible => false)
-      end
-    end
-
-    def best_promotion_adjustment
-      @best_promotion_adjustment ||= adjustments.promotion.eligible.reorder("amount ASC, created_at DESC, id DESC").first
+    private
+    def adjustments
+      # This is done intentionally to avoid loading the association. If the
+      # association is loaded, the records may become stale due to code
+      # elsewhere in spree. When that is remedied, this should be changed to
+      # just item.adjustments
+      @adjustments ||= item.adjustments.all.to_a
     end
   end
 end

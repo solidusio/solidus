@@ -81,7 +81,7 @@ describe Spree::Admin::SearchController, :type => :controller do
 
       it 'should find the correct products' do
         subject
-        expect(assigns(:products)).to eq expected_products
+        expect(assigns(:products)).to match_array expected_products
       end
     end
 

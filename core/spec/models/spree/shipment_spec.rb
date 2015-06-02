@@ -636,7 +636,7 @@ describe Spree::Shipment, :type => :model do
     it 'does not send a confirmation email' do
       expect(unshippable_shipment).to_not receive(:send_shipment_email)
       unshippable_shipment.ready!
-      unshippable_shipment.inventory_units.each do |unit|
+      unshippable_shipment.inventory_units(true).each do |unit|
         expect(unit.state).to eq('shipped')
       end
     end

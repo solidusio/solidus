@@ -6,7 +6,6 @@ module Spree
     let(:line_item) { order.line_items.first }
 
     let(:subject) { ItemAdjustments.new(line_item) }
-    let(:order_subject) { ItemAdjustments.new(order) }
 
     context '#update' do
       it "updates a linked adjustment" do
@@ -53,7 +52,7 @@ module Spree
         end
 
         it "tax has no bearing on final price" do
-          subject.update_adjustments
+          subject.update
           line_item.reload
           expect(line_item.included_tax_total).to eq(0.5)
           expect(line_item.additional_tax_total).to eq(0)
@@ -62,7 +61,7 @@ module Spree
         end
 
         it "tax linked to order" do
-          order_subject.update_adjustments
+          order.update!
           order.reload
           expect(order.included_tax_total).to eq(0.5)
           expect(order.additional_tax_total).to eq(00)
@@ -80,7 +79,7 @@ module Spree
         end
 
         it "tax applies to line item" do
-          subject.update_adjustments
+          subject.update
           line_item.reload
           # Taxable amount is: $20 (base) - $10 (promotion) = $10
           # Tax rate is 5% (of $10).
@@ -91,8 +90,7 @@ module Spree
         end
 
         it "tax linked to order" do
-          order_subject.update_adjustments
-          order.reload
+          order.update!
           expect(order.included_tax_total).to eq(0)
           expect(order.additional_tax_total).to eq(0.5)
         end
@@ -132,7 +130,7 @@ module Spree
                             :label => "Some other credit")
         line_item.adjustments.each {|a| a.update_column(:eligible, true)}
 
-        subject.choose_best_promotion_adjustment
+        subject.update
 
         expect(line_item.adjustments.promotion.eligible.count).to eq(1)
         expect(line_item.adjustments.promotion.eligible.first.label).to eq('Promotion C')
@@ -146,7 +144,7 @@ module Spree
         end
         line_item.adjustments.each {|a| a.update_column(:eligible, true)}
 
-        subject.choose_best_promotion_adjustment
+        subject.update
 
         expect(line_item.adjustments.promotion.eligible.count).to eq(1)
         expect(line_item.adjustments.promotion.eligible.first.label).to eq('Promotion B')
@@ -160,7 +158,7 @@ module Spree
         end
         line_item.adjustments.each {|a| a.update_column(:eligible, true)}
 
-        subject.choose_best_promotion_adjustment
+        subject.update
 
         line_item.adjustments.promotion.eligible.count.should == 1
         line_item.adjustments.promotion.eligible.first.label.should == 'Promotion B'
@@ -238,7 +236,7 @@ module Spree
 
         # regression for #3274
         it "still makes the previous best eligible adjustment valid" do
-          subject.choose_best_promotion_adjustment
+          subject.update
           expect(line_item.adjustments.promotion.eligible.first.label).to eq('Promotion A')
         end
       end
@@ -248,45 +246,10 @@ module Spree
         create_adjustment("Promotion B", -200)
         create_adjustment("Promotion C", -200)
 
-        subject.choose_best_promotion_adjustment
+        subject.update
 
         expect(line_item.adjustments.promotion.eligible.count).to eq(1)
         expect(line_item.adjustments.promotion.eligible.first.amount.to_i).to eq(-200)
-      end
-    end
-
-    # For #4483
-    context "callbacks" do
-      class SuperItemAdjustments < Spree::ItemAdjustments
-        attr_accessor :before_promo_adjustments_called,
-                      :after_promo_adjustments_called,
-                      :before_tax_adjustments_called,
-                      :after_tax_adjustments_called
-
-        set_callback :promo_adjustments, :before do |object|
-          @before_promo_adjustments_called = true
-        end
-
-        set_callback :promo_adjustments, :after do |object|
-          @after_promo_adjustments_called = true
-        end
-
-        set_callback :tax_adjustments, :before do |object|
-          @before_tax_adjustments_called = true
-        end
-
-        set_callback :tax_adjustments, :after do |object|
-          @after_tax_adjustments_called = true
-        end
-      end
-      let(:subject) { SuperItemAdjustments.new(line_item) }
-
-      it "calls all the callbacks" do
-        subject.update_adjustments
-        expect(subject.before_promo_adjustments_called).to be true
-        expect(subject.after_promo_adjustments_called).to be true
-        expect(subject.before_tax_adjustments_called).to be true
-        expect(subject.after_tax_adjustments_called).to be true
       end
     end
   end
