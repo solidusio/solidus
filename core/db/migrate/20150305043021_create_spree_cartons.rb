@@ -13,7 +13,7 @@ class CreateSpreeCartons < ActiveRecord::Migration
 
       t.datetime "shipped_at"
 
-      t.timestamps
+      t.timestamps null: true
     end
 
     add_index "spree_cartons", "number", unique: true

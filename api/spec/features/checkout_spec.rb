@@ -23,7 +23,7 @@ module Spree
 
     def login
       expect {
-        post 'api/users', user: { email: "featurecheckoutuser@example.com", password: "featurecheckoutuser" }
+        post '/api/users', user: { email: "featurecheckoutuser@example.com", password: "featurecheckoutuser" }
       }.to change { Spree.user_class.count }.by 1
       expect(response).to have_http_status(:created)
       @user = Spree.user_class.find(parsed['id'])
@@ -33,27 +33,27 @@ module Spree
     end
 
     def create_order(order_params: {})
-      expect { post 'api/orders', order_params }.to change { Order.count }.by 1
+      expect { post '/api/orders', order_params }.to change { Order.count }.by 1
       expect(response).to have_http_status(:created)
       @order = Order.find(parsed['id'])
       expect(@order.email).to eq "featurecheckoutuser@example.com"
     end
 
     def update_order(order_params: {})
-      put "api/orders/#{@order.number}", order_params
+      put "/api/orders/#{@order.number}", order_params
       expect(response).to have_http_status(:ok)
     end
 
     def create_line_item(variant, quantity = 1)
       expect {
-        post "api/orders/#{@order.number}/line_items", line_item: { variant_id: variant.id, quantity: quantity }
+        post "/api/orders/#{@order.number}/line_items", line_item: { variant_id: variant.id, quantity: quantity }
       }.to change { @order.line_items.count }.by 1
       expect(response).to have_http_status(:created)
     end
 
     def add_promotion(promotion)
       expect {
-        put "api/orders/#{@order.number}/apply_coupon_code", coupon_code: promotion_code.value
+        put "/api/orders/#{@order.number}/apply_coupon_code", coupon_code: promotion_code.value
       }.to change { @order.promotions.count }.by 1
       expect(response).to have_http_status(:ok)
     end
@@ -69,19 +69,19 @@ module Spree
 
     def add_payment
       expect {
-        post "api/orders/#{@order.number}/payments", payment: { payment_method_id: payment_method.id }
+        post "/api/orders/#{@order.number}/payments", payment: { payment_method_id: payment_method.id }
       }.to change { @order.reload.payments.count }.by 1
       expect(response).to have_http_status(:created)
       expect(@order.payments.last.payment_method).to eq payment_method
     end
 
     def advance
-      put "api/checkouts/#{@order.number}/advance"
+      put "/api/checkouts/#{@order.number}/advance"
       expect(response).to have_http_status(:ok)
     end
 
     def complete
-      put "api/checkouts/#{@order.number}/complete"
+      put "/api/checkouts/#{@order.number}/complete"
       expect(response).to have_http_status(:ok)
     end
 

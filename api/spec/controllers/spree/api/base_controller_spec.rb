@@ -135,7 +135,7 @@ describe Spree::Api::BaseController, :type => :controller do
 
     context 'without an existing lock' do
       it 'succeeds' do
-        api_get :index, order_token: order.token, order_id: order.number
+        api_get :index, order_token: order.guest_token, order_id: order.number
         response.status.should == 200
       end
     end
@@ -146,7 +146,7 @@ describe Spree::Api::BaseController, :type => :controller do
       end
 
       it 'returns a 409 conflict' do
-        api_get :index, order_token: order.token, order_id: order.number
+        api_get :index, order_token: order.guest_token, order_id: order.number
         response.status.should == 409
       end
     end

@@ -77,13 +77,23 @@ module Spree
           end
         end
 
+        def set_custom_route
+          @routes = ActionDispatch::Routing::RouteSet.new.tap do |r|
+            r.draw { get 'custom_show' => 'spree/api/products#custom_show' }
+          end
+        end
+
         it "uses the specified custom template through the request header" do
+          set_custom_route
+
           request.headers['X-Spree-Template'] = 'show'
           api_get :custom_show, :id => product.id
           expect(response).to render_template('spree/api/products/show')
         end
 
         it "uses the specified custom template through the template URL parameter" do
+          set_custom_route
+
           api_get :custom_show, :id => product.id, :template => 'show'
           expect(response).to render_template('spree/api/products/show')
         end

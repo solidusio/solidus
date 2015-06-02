@@ -4,7 +4,7 @@ class CreateUnitCancels < ActiveRecord::Migration
       t.references :inventory_unit, index: true, null: false
       t.string :reason
       t.string :created_by
-      t.timestamps
+      t.timestamps null: true
     end
   end
 end

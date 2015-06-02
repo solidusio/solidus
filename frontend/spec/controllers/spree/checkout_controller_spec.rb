@@ -314,7 +314,7 @@ describe Spree::CheckoutController, :type => :controller do
         end
 
         it "due to the order having errors" do
-          spree_put :update, :order => {}
+          spree_put :update, :state => order.state, :order => {}
           flash[:error].should == "Base error\nAdjustments error"
           response.should redirect_to(spree.checkout_state_path('address'))
         end
@@ -351,7 +351,7 @@ describe Spree::CheckoutController, :type => :controller do
           expect(order.shipments.count).to eq(1)
           order.shipments.first.shipping_rates.delete_all
           order.update_attributes(state: 'confirm')
-          spree_put :update, { order: {}, state: 'confirm' }
+          spree_put :update, state: order.state, :order => {}
           flash[:error].should == Spree.t(:items_cannot_be_shipped)
           response.should redirect_to(spree.checkout_state_path('confirm'))
         end
@@ -379,7 +379,7 @@ describe Spree::CheckoutController, :type => :controller do
 
       it "when GatewayError is raised" do
         allow_any_instance_of(Spree::Payment).to receive(:process!).and_raise(Spree::Core::GatewayError.new(Spree.t(:payment_processing_failed)))
-        spree_put :update, :order => {}
+        spree_put :update, state: order.state, :order => {}
         expect(flash[:error]).to eq(Spree.t(:payment_processing_failed))
       end
     end
@@ -423,7 +423,7 @@ describe Spree::CheckoutController, :type => :controller do
 
     it "doesn't set shipping address on the order" do
       expect(order).to_not receive(:ship_address=)
-      spree_post :update
+      spree_post :update, state: order.state
     end
 
     it "doesn't remove unshippable items before payment" do

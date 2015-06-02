@@ -61,14 +61,14 @@ module Spree
 
       describe "#update" do
         it "cannot update a stock item" do
-          api_put :update, stock_location_id: stock_location.to_param, stock_item_id: stock_item.to_param
+          api_put :update, stock_location_id: stock_location.to_param, id: stock_item.to_param
           response.status.should == 404
         end
       end
 
       describe "#destroy" do
         it "cannot destroy a stock item" do
-          api_delete :destroy, stock_location_id: stock_location.to_param, stock_item_id: stock_item.to_param
+          api_delete :destroy, stock_location_id: stock_location.to_param, id: stock_item.to_param
           response.status.should == 404
         end
       end

@@ -13,6 +13,7 @@ describe "Variant scopes", :type => :model do
     expect(Spree::Variant.descend_by_popularity.first).to eq(variant_1)
   end
 
+
   context "finding by option values" do
     let!(:option_type) { create(:option_type, :name => "bar") }
     let!(:option_value_1) do

@@ -116,7 +116,7 @@ module Spree
         @order.complete!
         flash[:success] = Spree.t(:order_completed)
         redirect_to edit_admin_order_url(@order)
-      rescue StateMachine::InvalidTransition => e
+      rescue StateMachines::InvalidTransition => e
         flash[:error] = e.message
         redirect_to confirm_admin_order_url(@order)
       end
@@ -140,7 +140,7 @@ module Spree
       end
 
       def resend
-        OrderMailer.confirm_email(@order.id, true).deliver
+        OrderMailer.confirm_email(@order.id, true).deliver_now
         flash[:success] = Spree.t(:order_email_resent)
 
         redirect_to :back

@@ -5,7 +5,7 @@ class CreateTransferItems < ActiveRecord::Migration
       t.integer :stock_transfer_id, null: false
       t.integer :expected_quantity, null: false, default: 0
       t.integer :received_quantity, null: false, default: 0
-      t.timestamps
+      t.timestamps null: true
     end
 
     add_index :spree_transfer_items, :stock_transfer_id

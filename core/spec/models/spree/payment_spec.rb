@@ -648,13 +648,6 @@ describe Spree::Payment, :type => :model do
   end
 
   describe '#invalidate_old_payments' do
-      before {
-        Spree::Payment.skip_callback(:rollback, :after, :persist_invalid)
-      }
-      after {
-        Spree::Payment.set_callback(:rollback, :after, :persist_invalid)
-      }
-
     it 'should not invalidate other payments if not valid' do
       payment.save
       invalid_payment = Spree::Payment.new(:amount => 100, :order => order, :state => 'invalid', :payment_method => gateway)

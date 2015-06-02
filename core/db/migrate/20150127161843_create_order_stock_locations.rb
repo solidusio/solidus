@@ -6,7 +6,7 @@ class CreateOrderStockLocations < ActiveRecord::Migration
       t.integer :quantity
       t.integer :stock_location_id
       t.boolean :shipment_fulfilled, null: false, default: false
-      t.timestamps
+      t.timestamps null: true
     end
   end
 end

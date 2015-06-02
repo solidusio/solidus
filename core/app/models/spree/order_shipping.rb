@@ -93,6 +93,6 @@ class Spree::OrderShipping
   end
 
   def send_shipment_email(carton)
-    Spree::CartonMailer.shipped_email(carton.id).deliver
+    Spree::CartonMailer.shipped_email(carton.id).deliver_now
   end
 end
