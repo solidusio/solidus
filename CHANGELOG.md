@@ -42,3 +42,15 @@
     https://github.com/solidusio/solidus/pull/47
 
     *John Hawthorn*
+
+*   Remove SSL preferences and controller helpers
+
+    In production any ecommerce site should use SSL for all connections. It is
+    both a security necessity and an SEO gain. Instead of the existing
+    configuration, SSL should be configured by the web server, load balancer,
+    or through rails.
+
+    For information on configuring rails for SSL see
+    http://api.rubyonrails.org/classes/ActionController/ForceSSL/ClassMethods.html
+
+    *Clarke Brunsdon*

@@ -10,7 +10,6 @@ module Spree
       respond_to :json
 
       include CanCan::ControllerAdditions
-      include Spree::Core::ControllerHelpers::SSL
       include Spree::Core::ControllerHelpers::Store
       include Spree::Core::ControllerHelpers::StrongParameters
 
@@ -33,8 +32,6 @@ module Spree
       rescue_from Spree::Core::GatewayError, with: :gateway_error
 
       helper Spree::Api::ApiHelpers
-
-      ssl_allowed
 
       def map_nested_attributes_keys(klass, attributes)
         nested_keys = klass.nested_attributes_options.keys

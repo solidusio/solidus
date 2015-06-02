@@ -28,9 +28,6 @@ module Spree
     preference :allow_checkout_on_gateway_error, :boolean, default: false
     preference :allow_guest_checkout, :boolean, default: true
     preference :allow_return_item_amount_editing, :boolean, default: false # Determines whether an admin is allowed to change a return item's pre-calculated amount
-    preference :allow_ssl_in_development_and_test, :boolean, default: false
-    preference :allow_ssl_in_production, :boolean, default: true
-    preference :allow_ssl_in_staging, :boolean, default: true
     preference :alternative_billing_phone, :boolean, default: false # Request extra phone for bill addr
     preference :alternative_shipping_phone, :boolean, default: false # Request extra phone for ship addr
     preference :always_put_site_name_in_title, :boolean, default: true
@@ -52,7 +49,6 @@ module Spree
     preference :products_per_page, :integer, default: 12
     preference :promotions_per_page, :integer, default: 15
     preference :customer_returns_per_page, :integer, default: 15
-    preference :redirect_https_to_http, :boolean, :default => false
     preference :require_master_price, :boolean, default: true
     preference :return_eligibility_number_of_days, :integer, default: 365
     preference :shipping_instructions, :boolean, default: false # Request instructions/info for shipping
