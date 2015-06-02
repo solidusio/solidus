@@ -38,6 +38,19 @@ module Spree
       while @order.next; end
     end
 
+    def approve(user: nil, name: nil)
+      if user.blank? && name.blank?
+        raise ArgumentError, 'user or name must be specified'
+      end
+
+      order.update_attributes!(
+        approver: user,
+        approver_name: name,
+        approved_at: Time.now,
+      )
+    end
+
+
     private
       def after_add_or_remove(line_item, options = {})
         reload_totals
