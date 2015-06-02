@@ -1372,6 +1372,7 @@ en:
     stock_management_requires_a_stock_location: Please create a stock location in order to manage stock.
     stock_movements: Stock Movements
     stock_movements_for_stock_location: Stock Movements for %{stock_location_name}
+    stock_not_below_zero: Stock must not be below zero.
     stock_successfully_transferred: Stock was successfully transferred between locations.
     stock_transfer: Stock Transfer
     stock_transfer_cannot_be_finalized: Stock transfer cannot be finalized

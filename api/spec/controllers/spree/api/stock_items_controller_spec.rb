@@ -116,12 +116,13 @@ module Spree
           StockItem.delete_all
           variant
         end
+        let(:count_on_hand) { '20' }
         let(:params) do
           {
             stock_location_id: stock_location.to_param,
             stock_item: {
               variant_id: variant.id,
-              count_on_hand: '20'
+              count_on_hand: count_on_hand
             }
           }
         end
@@ -160,6 +161,17 @@ module Spree
             expect(assigns(:stock_item).count_on_hand).to eq 0
           end
         end
+
+        context "attempting to set negative inventory" do
+          let(:count_on_hand) { '-1' }
+
+          it "does not allow negative inventory for the stock item" do
+            subject
+            expect(response.status).to eq 422
+            expect(response.body).to match Spree.t(:stock_not_below_zero)
+            expect(assigns(:stock_item).count_on_hand).to eq 0
+          end
+        end
       end
 
       context 'updating a stock item' do
@@ -170,11 +182,12 @@ module Spree
         subject { api_put :update, params }
 
         context 'adjusting count_on_hand' do
+          let(:count_on_hand) { 40 }
           let(:params) do
             {
               id: stock_item.to_param,
               stock_item: {
-                count_on_hand: 40,
+                count_on_hand: count_on_hand,
                 backorderable: true
               }
             }
@@ -213,14 +226,26 @@ module Spree
               expect(assigns(:stock_item).count_on_hand).to eq 10
             end
           end
+
+          context "attempting to set negative inventory" do
+            let(:count_on_hand) { '-11' }
+
+            it "does not allow negative inventory for the stock item" do
+              subject
+              expect(response.status).to eq 422
+              expect(response.body).to match Spree.t(:stock_not_below_zero)
+              expect(assigns(:stock_item).count_on_hand).to eq 10
+            end
+          end
         end
 
         context 'setting count_on_hand' do
+          let(:count_on_hand) { 40 }
           let(:params) do
             {
               id: stock_item.to_param,
               stock_item: {
-                count_on_hand: 40,
+                count_on_hand: count_on_hand,
                 force: true,
               }
             }
@@ -255,6 +280,17 @@ module Spree
 
             it "doesn't update the stock item's count_on_hand" do
               subject
+              expect(assigns(:stock_item).count_on_hand).to eq 10
+            end
+          end
+
+          context "attempting to set negative inventory" do
+            let(:count_on_hand) { '-1' }
+
+            it "does not allow negative inventory for the stock item" do
+              subject
+              expect(response.status).to eq 422
+              expect(response.body).to match Spree.t(:stock_not_below_zero)
               expect(assigns(:stock_item).count_on_hand).to eq 10
             end
           end
