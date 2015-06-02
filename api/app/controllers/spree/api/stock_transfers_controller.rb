@@ -11,7 +11,7 @@ module Spree
         elsif @transfer_item.update_attributes(received_quantity: @transfer_item.received_quantity + 1)
           render 'spree/api/stock_transfers/receive', status: 200
         else
-          invalid_resource!(@stock_transfer)
+          invalid_resource!(transfer_item)
         end
       end
     end
