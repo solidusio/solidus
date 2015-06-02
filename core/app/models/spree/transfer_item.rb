@@ -1,6 +1,6 @@
 module Spree
   class TransferItem < ActiveRecord::Base
-    belongs_to :stock_transfer
+    belongs_to :stock_transfer, inverse_of: :transfer_items
     belongs_to :variant
 
     validate :stock_availability, if: :check_stock?

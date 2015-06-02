@@ -4,7 +4,7 @@ module Spree
     class InvalidTransferMovement < StandardError; end
 
     has_many :stock_movements, :as => :originator
-    has_many :transfer_items
+    has_many :transfer_items, inverse_of: :stock_transfer
 
     belongs_to :created_by, :class_name => Spree.user_class.to_s
     belongs_to :finalized_by, :class_name => Spree.user_class.to_s

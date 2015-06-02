@@ -13,6 +13,27 @@ module Spree
     its(:description) { should eq 'PO123' }
     its(:to_param) { should match /T\d+/ }
 
+    describe "transfer item building" do
+      let(:stock_transfer) do
+        variant = source_location.stock_items.first.variant
+        stock_transfer = Spree::StockTransfer.new(
+          number: "T123",
+          source_location: source_location,
+          destination_location: destination_location
+        )
+        stock_transfer.transfer_items.build(variant: variant, expected_quantity: 5)
+        stock_transfer
+      end
+
+      subject { stock_transfer.save }
+
+      it { is_expected.to eq true }
+
+      it "creates the associated transfer item" do
+        expect { subject }.to change { Spree::TransferItem.count }.by(1)
+      end
+    end
+
     describe "#receivable?" do
       subject { stock_transfer.receivable? }
 
