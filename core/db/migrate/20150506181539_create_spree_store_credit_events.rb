@@ -8,7 +8,7 @@ class CreateSpreeStoreCreditEvents < ActiveRecord::Migration
       t.string  :authorization_code, null: false
       t.datetime :deleted_at
       t.references :originator, polymorphic: true
-      t.timestamps
+      t.timestamps null: true
     end
 
     add_index :spree_store_credit_events, :store_credit_id

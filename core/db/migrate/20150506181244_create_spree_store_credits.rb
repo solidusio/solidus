@@ -10,7 +10,7 @@ class CreateSpreeStoreCredits < ActiveRecord::Migration
       t.string :currency
       t.text :memo
       t.datetime :spree_store_credits, :deleted_at
-      t.timestamps
+      t.timestamps null: true
     end
 
     add_index :spree_store_credits, :deleted_at
