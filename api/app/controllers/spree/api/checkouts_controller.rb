@@ -126,7 +126,7 @@ module Spree
         end
 
         def insufficient_stock_for_line_items(exception)
-          render json: { errors: ["Quantity is not available for items in your order"], type: 'insufficient_stock' }, status: 422
+          render json: { errors: [I18n.t(:quantity_is_not_available, :scope => "spree.api.order")], type: 'insufficient_stock' }, status: 422
         end
     end
   end
