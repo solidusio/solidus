@@ -25,14 +25,7 @@ describe Spree::Preferences::Preferable, :type => :model do
 
   before :each do
     @a = A.new
-    allow(@a).to receive_messages(:persisted? => true)
     @b = B.new
-    allow(@b).to receive_messages(:persisted? => true)
-
-    # ensure we're persisting as that is the default
-    #
-    store = Spree::Preferences::Store.instance
-    store.persistence = true
   end
 
   describe "preference definitions" do

@@ -28,9 +28,12 @@ module Spree::Preferences
       yield(self) if block_given?
     end
 
-    def preferences
-      ScopedStore.new(self.class.name.underscore)
+    attr_writer :preference_store
+    def preference_store
+      @preference_store ||= ScopedStore.new(self.class.name.underscore)
     end
+
+    alias_method :preferences, :preference_store
 
     def reset
       preferences.each do |name, value|

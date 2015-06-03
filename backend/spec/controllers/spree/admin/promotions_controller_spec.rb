@@ -82,8 +82,6 @@ describe Spree::Admin::PromotionsController, :type => :controller do
           super().merge(promotion_builder: { base_code: 'abc', number_of_codes: 2 })
         end
 
-        before { srand 123 }
-
         it "succeeds and creates multiple codes" do
           expect {
             expect {
@@ -91,7 +89,10 @@ describe Spree::Admin::PromotionsController, :type => :controller do
             }.to change { Spree::Promotion.count }.by(1)
           }.to change { Spree::PromotionCode.count }.by(2)
 
-          expect(assigns(:promotion).codes.map(&:value).sort).to eq ["abc_kzwbar", "abc_nccgrt"]
+          codes = assigns(:promotion).codes.map(&:value).sort
+          expect(codes.length).to be 2
+          expect(codes[0]).to match(/abc_[a-z]{6}/)
+          expect(codes[1]).to match(/abc_[a-z]{6}/)
         end
       end
     end
