@@ -746,7 +746,7 @@ zh-CN:
     login_as_existing: "作为一个已有客户登陆"
     login_failed: "登陆认证失败。"
     login_name: "用户名"
-    logout: "登出/注销"
+    logout: "退出"
     logs:
     look_for_similar_items: "寻找类似的产品"
     make_refund: "进行退款??"
