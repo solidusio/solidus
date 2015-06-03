@@ -22,7 +22,7 @@
           <td class="align-center no-padding">
             <div class='variant-container' data-variant-id="<%= variant.id %>">
               <div class='variant-image'>
-                <%= small_image variant %>
+                <%= image_tag(variant.display_image.attachment(:small)) %>
               </div>
               <div class='variant-details'>
                 <table class='stock-variant-field-table'>

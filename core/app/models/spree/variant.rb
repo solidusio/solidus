@@ -302,6 +302,10 @@ module Spree
       self.track_inventory? && Spree::Config.track_inventory_levels
     end
 
+    def display_image
+      images.first || Spree::Image.new
+    end
+
     private
 
       def set_master_out_of_stock
