@@ -17,6 +17,8 @@ Gem::Specification.new do |s|
   s.files        = Dir['LICENSE', 'README.md', 'app/**/*', 'config/**/*', 'lib/**/*', 'db/**/*', 'vendor/**/*']
   s.require_path = 'lib'
 
+  s.required_ruby_version = '>= 2.1.0'
+
   s.add_dependency 'activemerchant', '~> 1.44.1'
   s.add_dependency 'acts_as_list', '~> 0.3'
   s.add_dependency 'awesome_nested_set', '~> 3.0.1'
