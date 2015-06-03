@@ -48,7 +48,7 @@ module Spree
     scope :awaiting_return, -> { where(reception_status: 'awaiting') }
     scope :expecting_return, -> { where.not(reception_status: COMPLETED_RECEPTION_STATUSES) }
     scope :not_cancelled, -> { where.not(reception_status: 'cancelled') }
-    scope :valid, -> { where.not(reception_status: %w(cancelled expired))}
+    scope :valid, -> { where.not(reception_status: %w(cancelled expired unexchanged))}
     scope :not_expired, -> { where.not(reception_status: 'expired')}
     scope :received, -> { where(reception_status: 'received') }
     INTERMEDIATE_RECEPTION_STATUSES.each do |reception_status|
