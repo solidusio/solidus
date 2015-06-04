@@ -24,5 +24,4 @@ Gem::Specification.new do |s|
   s.add_dependency 'solidus_backend', version
   s.add_dependency 'solidus_frontend', version
   s.add_dependency 'solidus_sample', version
-  s.add_dependency 'solidus_cmd', version
 end
