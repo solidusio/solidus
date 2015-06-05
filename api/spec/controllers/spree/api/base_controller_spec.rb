@@ -60,12 +60,21 @@ describe Spree::Api::BaseController, :type => :controller do
     end
   end
 
-  it 'handles exceptions' do
+  it 'chatches StandardError' do
+    expect(subject).to receive(:authenticate_user).and_return(true)
+    expect(subject).to receive(:load_user_roles).and_return(true)
+    expect(subject).to receive(:index).and_raise("no joy")
+    get :index, :token => "fake_key"
+    expect(json_response).to eq({ "exception" => "no joy" })
+  end
+
+  it 'raises Exception' do
     expect(subject).to receive(:authenticate_user).and_return(true)
     expect(subject).to receive(:load_user_roles).and_return(true)
     expect(subject).to receive(:index).and_raise(Exception.new("no joy"))
-    get :index, :token => "fake_key"
-    expect(json_response).to eq({ "exception" => "no joy" })
+    expect {
+      get :index, :token => "fake_key"
+    }.to raise_error(Exception, "no joy")
   end
 
   it "maps semantic keys to nested_attributes keys" do
