@@ -7,7 +7,9 @@ class DeleteInventoryUnitsWithoutShipment < ActiveRecord::Migration
     Spree::Order.where(id: order_ids).find_each do |order|
       # Order may not be completed but have shipped
       # shipments if it has a pending unreturned exchange
-      next if order.completed? || order.shipments.any? { |s| s.shipped? }
+      next if order.completed?
+      next if order.canceled?
+      next if order.shipments.any? { |s| s.shipped? || s.ready? || s.canceled? }
       say "Removing inventory units without shipment for order ##{order.number}"
       order.transaction do
         order.inventory_units.destroy_all
