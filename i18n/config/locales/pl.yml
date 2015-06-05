@@ -1189,7 +1189,7 @@ pl:
     ssl:
       change_protocol: "Proszę zmienić protokół na HTTP (zamiast HTTPS) i powtórzyć żądanie"
     start: Start
-    state: Stan
+    state: Województwo
     state_based: Stan oparty na
     state_machine_states:
       accepted:
