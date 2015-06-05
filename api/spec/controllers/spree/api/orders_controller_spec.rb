@@ -371,21 +371,6 @@ module Spree
       end
     end
 
-    # Regression test for #3404
-    it "does not update line item needlessly" do
-      expect(Order).to receive(:create!).and_return(order = Spree::Order.new)
-      allow(order).to receive(:associate_user!)
-      allow(order).to receive_message_chain(:contents, :add).and_return(line_item = double('LineItem'))
-      expect(line_item).not_to receive(:update_attributes)
-      api_post :create, :order => {
-        :line_items => {
-          "0" => {
-            :variant_id => variant.to_param, :quantity => 5
-          }
-        }
-      }
-    end
-
     it "can create an order without any parameters" do
       expect { api_post :create }.not_to raise_error
       expect(response.status).to eq(201)
