@@ -24,11 +24,11 @@ describe 'spree:migrations:copy_shipped_shipments_to_cartons' do
       shipped_and_cartonized_order.shipments.first
     end
 
-    let(:shipped_order) { create(:shipped_order, line_items_count: 1) }
+    let(:shipped_order) { create(:shipped_order, line_items_count: 1, with_cartons: false) }
 
     let(:shipped_order_without_units) do
       create(:shipped_order, line_items_count: 1) do |order|
-        order.inventory_units.destroy_all
+        order.inventory_units.delete_all
       end
     end
 
@@ -70,7 +70,7 @@ describe 'spree:migrations:copy_shipped_shipments_to_cartons' do
 
       let!(:second_shipped_shipment) { second_shipped_order.shipments.first }
 
-      let(:second_shipped_order) { create(:shipped_order, line_items_count: 1) }
+      let(:second_shipped_order) { create(:shipped_order, line_items_count: 1, with_cartons: false) }
 
       it 'creates only a carton for the second shipment' do
         expect {

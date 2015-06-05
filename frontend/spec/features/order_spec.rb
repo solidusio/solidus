@@ -6,7 +6,6 @@ describe 'orders', :type => :feature do
 
   before do
     order.update_attribute(:user_id, user.id)
-    order.shipments.destroy_all
     allow_any_instance_of(Spree::OrdersController).to receive_messages(:try_spree_current_user => user)
   end
 

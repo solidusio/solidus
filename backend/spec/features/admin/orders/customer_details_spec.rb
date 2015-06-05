@@ -69,6 +69,7 @@ describe "Customer Details", type: :feature, js: true do
         end
 
         click_button "Update"
+        click_link "Customer Details"
         expect(find_field("order_bill_address_attributes_state_name").value).to eq("Piaui")
       end
     end
@@ -92,6 +93,7 @@ describe "Customer Details", type: :feature, js: true do
     end
 
     it "should show validation errors" do
+      order.update_attributes!(ship_address_id: nil)
       click_link "Customer Details"
       click_button "Update"
       expect(page).to have_content("Shipping address first name can't be blank")

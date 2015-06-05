@@ -677,4 +677,33 @@ describe Spree::Shipment, :type => :model do
       end
     end
   end
+
+  context "destroy prevention" do
+    it "can be destroyed when pending" do
+      shipment = create(:shipment, state: "pending")
+      expect(shipment.destroy).to be_truthy
+      expect { shipment.reload }.to raise_error(ActiveRecord::RecordNotFound)
+    end
+
+    it "cannot be destroyed when ready" do
+      shipment = create(:shipment, state: "ready")
+      expect(shipment.destroy).to eq false
+      expect(shipment.errors.full_messages.join).to match /Cannot destroy/
+      expect { shipment.reload }.not_to raise_error
+    end
+
+    it "cannot be destroyed when shipped" do
+      shipment = create(:shipment, state: "shipped")
+      expect(shipment.destroy).to eq false
+      expect(shipment.errors.full_messages.join).to match /Cannot destroy/
+      expect { shipment.reload }.not_to raise_error
+    end
+
+    it "cannot be destroyed when canceled" do
+      shipment = create(:shipment, state: "canceled")
+      expect(shipment.destroy).to eq false
+      expect(shipment.errors.full_messages.join).to match /Cannot destroy/
+      expect { shipment.reload }.not_to raise_error
+    end
+  end
 end

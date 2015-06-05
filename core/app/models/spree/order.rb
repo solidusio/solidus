@@ -13,6 +13,7 @@ module Spree
     include Spree::Order::Payments
 
     class InsufficientStock < StandardError; end
+    class CannotRebuildShipments < StandardError; end
 
     extend Spree::DisplayMoney
     money_methods :outstanding_balance, :item_total, :adjustment_total,
@@ -524,9 +525,15 @@ module Spree
     end
 
     def create_proposed_shipments
-      adjustments.shipping.destroy_all
-      shipments.destroy_all
-      self.shipments = Spree::Stock::Coordinator.new(self).shipments
+      if completed?
+        raise CannotRebuildShipments.new(Spree.t(:cannot_rebuild_shipments_order_completed))
+      elsif shipments.any? { |s| !s.pending? }
+        raise CannotRebuildShipments.new(Spree.t(:cannot_rebuild_shipments_shipments_not_pending))
+      else
+        adjustments.shipping.destroy_all
+        shipments.destroy_all
+        self.shipments = Spree::Stock::Coordinator.new(self).shipments
+      end
     end
 
     def apply_free_shipping_promotions
@@ -542,7 +549,7 @@ module Spree
     # to delivery again so that proper updated shipments are created.
     # e.g. customer goes back from payment step and changes order items
     def ensure_updated_shipments
-      unless completed?
+      if !completed? && shipments.all?(&:pending?)
         self.shipments.destroy_all
         self.update_column(:shipment_total, 0)
         restart_checkout_flow

@@ -285,6 +285,12 @@ en:
             base:
               card_expired: "Card has expired"
               expiry_invalid: "Card expiration is invalid"
+        spree/inventory_unit:
+          attributes:
+            state:
+              cannot_destroy: "Cannot destroy a %{state} inventory unit"
+            base:
+              cannot_destroy_shipment_state: "Cannot destroy an inventory unit for a %{state} shipment"
         spree/line_item:
           attributes:
             currency:
@@ -303,11 +309,16 @@ en:
               cannot_be_associated_unless_accepted: cannot be associated to a return item that is not accepted.
             inventory_unit:
               other_completed_return_item_exists: "%{inventory_unit_id} has already been taken by return item %{return_item_id}"
+        spree/shipment:
+          attributes:
+            state:
+              cannot_destroy: "Cannot destroy a %{state} shipment"
+            base:
+              cannot_remove_items_shipment_state: "Cannot remove items from a %{state} shipment"
         spree/store:
           attributes:
             base:
               cannot_destroy_default_store: Cannot destroy the default Store.
-
 
   devise:
     confirmations:
@@ -547,6 +558,8 @@ en:
     cancellation: Cancellation
     cannot_create_payment_without_payment_methods: You cannot create a payment for an order without any payment methods defined.
     cannot_create_returns: Cannot create returns as this order has no shipped units.
+    cannot_rebuild_shipments_order_completed: Cannot rebuild shipments for a completed order.
+    cannot_rebuild_shipments_shipments_not_pending: Cannot rebuild shipments for an order with non-pending shipments.
     cannot_perform_operation: Cannot perform requested operation
     cannot_set_shipping_method_without_address: Cannot set shipping method until customer details are provided.
     capture: Capture

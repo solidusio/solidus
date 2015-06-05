@@ -17,6 +17,7 @@ describe Spree::ReturnAuthorization, :type => :model do
     let(:order) { Spree::Order.create }
 
     it "should be invalid when order has no inventory units" do
+      order.inventory_units.each(&:delete)
       return_authorization.save
       expect(return_authorization.errors[:order]).to eq(["has no shipped units"])
     end

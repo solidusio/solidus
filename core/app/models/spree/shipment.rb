@@ -19,6 +19,8 @@ module Spree
 
     before_validation :set_cost_zero_when_nil
 
+    before_destroy :ensure_can_destroy
+
     # TODO remove the suppress_mailer temporary variable once we are calling 'ship'
     # from outside of the state machine and can actually pass variables through.
     attr_accessor :special_instructions, :suppress_mailer
@@ -423,5 +425,12 @@ module Spree
         end
       end
 
+
+      def ensure_can_destroy
+        unless pending?
+          errors.add(:state, :cannot_destroy, state: self.state)
+          return false
+        end
+      end
   end
 end
