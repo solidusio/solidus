@@ -13,10 +13,7 @@ module Spree
           @states = @states.page(params[:page]).per(params[:per_page])
         end
 
-        state = @states.last
-        if stale?(state)
-          respond_with(@states)
-        end
+        respond_with(@states)
       end
 
       def show
