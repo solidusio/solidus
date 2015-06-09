@@ -37,21 +37,13 @@ end
 
 desc "clean the whole repository by removing all the generated files"
 task :clean do
-  puts "Deleting sandbox..."
-  FileUtils.rm_rf("sandbox")
-  puts "Deleting pkg directory.."
-  FileUtils.rm_rf("pkg")
+  rm_rf "sandbox"
+  rm_rf "pkg"
 
   %w(api backend core frontend sample).each do |gem_name|
-    puts "Cleaning #{gem_name}:"
-    puts "  Deleting #{gem_name}/Gemfile.lock"
-    FileUtils.rm_f("#{gem_name}/Gemfile.lock")
-    puts "  Deleting #{gem_name}/pkg"
-    FileUtils.rm_rf("#{gem_name}/pkg")
-    puts "  Deleting #{gem_name}'s dummy application"
-    Dir.chdir("#{gem_name}/spec") do
-      FileUtils.rm_rf("dummy")
-    end
+    rm_f  "#{gem_name}/Gemfile.lock"
+    rm_rf "#{gem_name}/pkg"
+    rm_rf "#{gem_name}/spec/dummy"
   end
 end
 
