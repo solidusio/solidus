@@ -235,7 +235,7 @@ bundle exec rake spree_auth:admin:create
 Running Tests
 -------------
 
-We use CircleCI to run the tests for Spree.
+We use CircleCI to run the tests for Solidus.
 
 You can see the build statuses at [https://circleci.com/gh/solidusio/solidus](https://circleci.com/gh/solidusio/solidus)
 
@@ -276,7 +276,7 @@ If you want to run the simplecov code coverage report
 COVERAGE=true bundle exec rspec spec
 ```
 
-If you're working on multiple facets of Spree to test,
+If you're working on multiple facets of Solidus to test,
 please ensure that you have a postgres user:
 
 ```shell
@@ -290,7 +290,7 @@ brew update && brew install phantomjs
 ```
 
 To execute all the tests, you may want to run this command at the
-root of the Spree project to generate test applications and run
+root of the Solidus project to generate test applications and run
 specs for all the facets:
 ```shell
 bash build.sh
@@ -299,6 +299,5 @@ bash build.sh
 Contributing
 ------------
 
-Spree is an open source project and we encourage contributions. Please see the
-[contributors guidelines](CONTRIBUTING.md)
-before contributing.
+Solidus is an open source project and we encourage contributions. Please read
+[CONTRIBUTING.md](CONTRIBUTING.md) before contributing.
