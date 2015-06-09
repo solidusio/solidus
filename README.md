@@ -1,5 +1,7 @@
 
-SUMMARY
+![](https://s3.amazonaws.com/i.hawth.ca/u/solidus.png)
+
+Summary
 -------
 
 Solidus is a complete open source e-commerce solution built with Ruby on Rails. It
