@@ -675,17 +675,9 @@ en-GB:
     home: Home
     i18n:
       available_locales: Available Locales
-      fields: Fields
       language: Language
       localization_settings: Localisation Settings
-      only_complete: Only complete
-      only_incomplete: Only incomplete
-      select_locale: Select locale
-      show_only: Show only
-      store_translations:
-      supported_locales: Supported Locales
       this_file_language: English (UK)
-      translations: Translations
     icon: Icon
     identifier:
     image: Image

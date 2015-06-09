@@ -675,17 +675,9 @@ es:
     home: Inicio
     i18n:
       available_locales: Locales Disponibles
-      fields: Campos
       language: Idioma
       localization_settings: Ajustes Localización
-      only_complete: Sólo completos
-      only_incomplete: Sólo incompletos
-      select_locale: Seleccionar Locale
-      show_only: Sólo mostrar
-      store_translations:
-      supported_locales: Locales Soportados
       this_file_language: Español
-      translations: Traducciones
     icon: Icono
     identifier:
     image: Imagen

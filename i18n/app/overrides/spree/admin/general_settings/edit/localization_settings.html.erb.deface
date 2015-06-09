@@ -1,19 +1,18 @@
 <!-- insert_after '.row .security' -->
 <div class="panel panel-default panel-localization">
   <div class="panel-heading">
-    <h1 class="panel-title"><%= Spree.t(:'i18n.localization_settings') %></h1>
+    <h1 class="panel-title"><%= Spree.t(:localization_settings, scope: 'i18n') %></h1>
   </div>
 
   <div class="panel-body">
     <div class="form-group">
-      <label for="supported_locales_"><%= Spree.t(:'i18n.supported_locales') %></label>
-      <%= select_supported_locales %>
-      <p class="help-block"><%= Spree.t(:'i18n.locales_displayed_on_frontend_select_box') %></p>
-    </div>
-    <div class="form-group">
-      <label for="available_locales_"><%= Spree.t(:'i18n.available_locales') %></label>
+      <label for="available_locales_">
+        <%= Spree.t(:available_locales, scope: 'i18n') %>
+      </label>
       <%= select_available_locales %>
-      <p class="help-block"><%= Spree.t(:'i18n.locales_displayed_on_translation_forms') %></p>
+      <p class="help-block">
+        <%= Spree.t(:locales_displayed_on_frontend_select_box, scope: 'i18n') %>
+      </p>
     </div>
   </div>
 </div>

@@ -1,7 +1,0 @@
-<%= render 'spree/admin/shared/product_tabs', current: 'Translations' %>
-
-<% content_for :page_actions do %>
-  <%= button_link_to Spree.t(:back_to_resource_list, resource: Spree::Product.model_name.human), spree.admin_products_path, class: 'btn-primary', icon: 'arrow-left' %>
-<% end %>
-
-<%= render 'form' %>

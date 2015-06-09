@@ -1,5 +1,3 @@
-require 'globalize'
-require 'friendly_id/globalize'
 require 'routing_filter'
 require 'kaminari-i18n/engine'
 
@@ -24,17 +22,6 @@ module SpreeI18n
       SpreeI18n::Config = SpreeI18n::Configuration.new
     end
 
-    initializer "spree_i18n.permitted_attributes", before: :load_config_initializers do |app|
-      taxon_attributes = { translations_attributes: [:id, :locale, :name, :description, :permalink, :meta_description, :meta_keywords, :meta_title] }
-      Spree::PermittedAttributes.taxon_attributes << taxon_attributes
-
-      option_value_attributes = { translations_attributes: [:id, :locale, :name, :presentation] }
-      Spree::PermittedAttributes.option_value_attributes << option_value_attributes
-
-      store_attributes = { translations_attributes: [:id, :locale, :name, :meta_description, :meta_keywords, :seo_title] }
-      Spree::PermittedAttributes.store_attributes << store_attributes
-    end
-
     def self.activate
       Dir.glob(File.join(File.dirname(__FILE__), "../../app/**/*_decorator*.rb")) do |c|
         Rails.configuration.cache_classes ? require(c) : load(c)
@@ -44,6 +31,7 @@ module SpreeI18n
     config.to_prepare &method(:activate).to_proc
 
     protected
+
     def self.add(pattern)
       files = Dir[File.join(File.dirname(__FILE__), '../..', pattern)]
       I18n.load_path.concat(files)

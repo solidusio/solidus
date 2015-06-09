@@ -671,17 +671,9 @@ id:
     home: Beranda
     i18n:
       available_locales:
-      fields:
       language: Bahasa
       localization_settings: Pengaturan Lokalisasi
-      only_complete:
-      only_incomplete:
-      select_locale:
-      show_only: Tampilkan hanya
-      store_translations:
-      supported_locales:
       this_file_language: Indonesian (ID)
-      translations: Terjemahan
     icon: Ikon
     identifier:
     image: Gambar
