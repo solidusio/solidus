@@ -28,7 +28,7 @@ module Spree
 
       describe "#destroy" do
         it "cannot delete a transfer item" do
-          api_delete :destroy, id: transfer_item.to_param
+          api_delete :destroy, stock_transfer_id: stock_transfer.to_param, id: transfer_item.to_param
           expect(response.status).to eq 401
         end
       end
@@ -87,7 +87,7 @@ module Spree
 
       describe "#update" do
         subject do
-          update_params = { id: transfer_item.to_param, transfer_item: { received_quantity: received_quantity } }
+          update_params = { id: transfer_item.to_param, stock_transfer_id: stock_transfer.to_param, transfer_item: { received_quantity: received_quantity } }
           api_put :update, update_params
         end
 
@@ -119,7 +119,7 @@ module Spree
       end
 
       describe "#destroy" do
-        subject { api_delete :destroy, id: transfer_item.to_param }
+        subject { api_delete :destroy, id: transfer_item.to_param, stock_transfer_id: stock_transfer.to_param }
 
         context "hasn't been finalized" do
           it "can delete a transfer item" do
