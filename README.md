@@ -25,6 +25,8 @@ are interested in. For example, you could use just the barebones solidus\_core
 gem and perhaps combine it with your own custom frontend instead of using
 solidus_frontend.
 
+[![Circle CI](https://circleci.com/gh/solidusio/solidus/tree/master.svg?style=svg&circle-token=a181a07d1f92f7297b8174d5c77091ecc5d3cdf7)](https://circleci.com/gh/solidusio/solidus/tree/master)
+
 Getting started
 ---------------
 
@@ -233,11 +235,9 @@ bundle exec rake spree_auth:admin:create
 Running Tests
 -------------
 
-[![Team City](http://www.jetbrains.com/img/logos/logo_teamcity_small.gif)](http://www.jetbrains.com/teamcity)
+We use CircleCI to run the tests for Spree.
 
-We use [TeamCity](http://www.jetbrains.com/teamcity/) to run the tests for Spree.
-
-You can see the build statuses at [http://ci.spree.fm](http://ci.spree.fm/guestLogin.html?guest=1).
+You can see the build statuses at [https://circleci.com/gh/solidusio/solidus](https://circleci.com/gh/solidusio/solidus)
 
 ---
 
