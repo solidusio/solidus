@@ -1,16 +1,10 @@
 require 'rake'
-require 'rubygems/package_task'
 require 'thor/group'
 begin
   require 'spree/testing_support/common_rake'
 rescue LoadError
   raise "Could not find spree/testing_support/common_rake. You need to run this command using Bundler."
   exit
-end
-
-spec = eval(File.read('solidus.gemspec'))
-Gem::PackageTask.new(spec) do |pkg|
-  pkg.gem_spec = spec
 end
 
 task default: :test
@@ -48,49 +42,47 @@ task :clean do
 end
 
 namespace :gem do
-  desc "run rake gem for all gems"
+  def version
+    File.read(File.expand_path("../SOLIDUS_VERSION", __FILE__)).strip
+  end
+
+  def for_each_gem
+    %w(core api backend frontend sample).each do |gem_name|
+      yield "pkg/solidus_#{gem_name}-#{version}.gem"
+    end
+    yield "pkg/solidus-#{version}.gem"
+  end
+
+  desc "Build all solidus gems"
   task :build do
-    %w(core api backend frontend sample ).each do |gem_name|
-      puts "########################### #{gem_name} #########################"
-      puts "Deleting #{gem_name}/pkg"
-      FileUtils.rm_rf("#{gem_name}/pkg")
-      cmd = "cd #{gem_name} && bundle exec rake gem"; puts cmd; system cmd
-    end
-    puts "Deleting pkg directory"
-    FileUtils.rm_rf("pkg")
-    cmd = "bundle exec rake gem"; puts cmd; system cmd
-  end
-end
-
-namespace :gem do
-  desc "run gem install for all gems"
-  task :install do
-    version = File.read(File.expand_path("../SOLIDUS_VERSION", __FILE__)).strip
+    pkgdir = File.expand_path("../pkg", __FILE__)
+    FileUtils.mkdir_p pkgdir
 
     %w(core api backend frontend sample).each do |gem_name|
-      puts "########################### #{gem_name} #########################"
-      puts "Deleting #{gem_name}/pkg"
-      FileUtils.rm_rf("#{gem_name}/pkg")
-      cmd = "cd #{gem_name} && bundle exec rake gem"; puts cmd; system cmd
-      cmd = "cd #{gem_name}/pkg && gem install solidus_#{gem_name}-#{version}.gem"; puts cmd; system cmd
+      Dir.chdir(gem_name) do
+        sh "gem build solidus_#{gem_name}.gemspec"
+        mv "solidus_#{gem_name}-#{version}.gem", pkgdir
+      end
     end
-    puts "Deleting pkg directory"
-    FileUtils.rm_rf("pkg")
-    cmd = "bundle exec rake gem"; puts cmd; system cmd
-    cmd = "gem install pkg/solidus-#{version}.gem"; puts cmd; system cmd
+
+    sh "gem build solidus.gemspec"
+    mv "solidus-#{version}.gem", pkgdir
   end
-end
 
-namespace :gem do
-  desc "Release all gems to gemcutter. Package spree components, then push spree"
-  task :release do
-    version = File.read(File.expand_path("../SOLIDUS_VERSION", __FILE__)).strip
-
-    %w(core api backend frontend sample).each do |gem_name|
-      puts "########################### #{gem_name} #########################"
-      cmd = "cd #{gem_name}/pkg && gem push solidus_#{gem_name}-#{version}.gem"; puts cmd; system cmd
+  desc "Install all solidus gems"
+  task :install => :build do
+    for_each_gem do |gem_path|
+      sh "gem install #{gem_path}"
     end
-    cmd = "gem push pkg/solidus-#{version}.gem"; puts cmd; system cmd
+  end
+
+  desc "Release all gems to rubygems"
+  task :release => :build do
+    sh "git tag -a -m \"Version #{version}\" v#{version}"
+
+    for_each_gem do |gem_path|
+      sh "gem push '#{gem_path}'"
+    end
   end
 end
 
