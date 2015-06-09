@@ -44,8 +44,8 @@ task :clean do
 
   %w(api backend core frontend sample).each do |gem_name|
     puts "Cleaning #{gem_name}:"
-    puts "  Deleting #{gem_name}/Gemfile"
-    FileUtils.rm_f("#{gem_name}/Gemfile")
+    puts "  Deleting #{gem_name}/Gemfile.lock"
+    FileUtils.rm_f("#{gem_name}/Gemfile.lock")
     puts "  Deleting #{gem_name}/pkg"
     FileUtils.rm_rf("#{gem_name}/pkg")
     puts "  Deleting #{gem_name}'s dummy application"
