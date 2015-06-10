@@ -6,7 +6,7 @@
   <% if content_for? :title %>
     <%= yield :title %>
   <% else %>
-    <%= "Spree #{Spree.t('administration')}: " %>
+    <%= "Solidus #{Spree.t('administration')}: " %>
     <%= Spree.t(controller.controller_name, :default => controller.controller_name.titleize) %>
   <% end %>
 </title>
