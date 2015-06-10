@@ -3,7 +3,7 @@ module Spree
     belongs_to :option_type, class_name: 'Spree::OptionType', touch: true, inverse_of: :option_values
     acts_as_list scope: :option_type
 
-    has_many :option_values_variants
+    has_many :option_values_variants, dependent: :destroy
     has_many :variants, through: :option_values_variants
 
     validates :name, presence: true, uniqueness: { scope: :option_type_id }
