@@ -2,7 +2,7 @@ module Spree
   class ReturnItem < ActiveRecord::Base
 
     INTERMEDIATE_RECEPTION_STATUSES = %i(given_to_customer lost_in_transit shipped_wrong_item short_shipped in_transit)
-    COMPLETED_RECEPTION_STATUSES = INTERMEDIATE_RECEPTION_STATUSES + [:received, :unexchanged]
+    COMPLETED_RECEPTION_STATUSES = INTERMEDIATE_RECEPTION_STATUSES + [:received]
 
     # @!scope class
     # @!attribute return_eligibility_validator
@@ -196,8 +196,10 @@ module Spree
       event_paths = reception_status_paths.events
       status_paths.delete(:cancelled)
       status_paths.delete(:expired)
+      status_paths.delete(:unexchanged)
       event_paths.delete(:cancel)
       event_paths.delete(:expired)
+      event_paths.delete(:unexchange)
 
       status_paths.map{ |s| s.to_s.humanize }.zip(event_paths)
     end
