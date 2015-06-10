@@ -37,6 +37,7 @@ end
 
 desc "clean the whole repository by removing all the generated files"
 task :clean do
+  rm_f  "Gemfile.lock"
   rm_rf "sandbox"
   rm_rf "pkg"
 
