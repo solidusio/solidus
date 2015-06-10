@@ -15,7 +15,6 @@ solidus gem you automatically require all of the necessary gem dependencies whic
 * solidus_api (RESTful API)
 * solidus_frontend (User-facing components)
 * solidus_backend (Admin area)
-* solidus_cmd (Command-line tools)
 * solidus_core (Models & Mailers, the basic components of Solidus that it can't run without)
 * solidus_sample (Sample data)
 
