@@ -2,7 +2,7 @@ require 'fileutils'
 
 version = ARGV.pop
 
-%w( cmd core api backend frontend sample ).each do |framework|
+%w( core api backend frontend sample ).each do |framework|
   puts "Installing #{framework}..."
 
   Dir.chdir(framework) do
