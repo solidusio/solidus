@@ -161,8 +161,9 @@ describe Spree::OrderShipping do
 
     context "when the shipment has been partially shipped previously" do
       let(:order) { create(:order_ready_to_ship, line_items_count: 2) }
-      let(:shipped_inventory) { [shipment.inventory_units.first] }
-      let(:unshipped_inventory) { [shipment.inventory_units.last] }
+      let(:inventory_units) { shipment.inventory_units.to_a }
+      let(:shipped_inventory) { [inventory_units.first] }
+      let(:unshipped_inventory) { [inventory_units.last] }
 
       before do
         order.shipping.ship(
