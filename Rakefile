@@ -10,11 +10,10 @@ end
 task default: :test
 
 desc "Runs all tests in all Spree engines"
-task :test do
-  Rake::Task['test_app'].invoke
+task :test => :test_app do
   %w(api backend core frontend sample).each do |gem_name|
     Dir.chdir("#{File.dirname(__FILE__)}/#{gem_name}") do
-      system("rspec") or exit!(1)
+      sh 'rspec'
     end
   end
 end
