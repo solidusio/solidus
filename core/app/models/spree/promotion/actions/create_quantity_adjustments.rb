@@ -1,6 +1,6 @@
 module Spree::Promotion::Actions
   class CreateQuantityAdjustments < CreateItemAdjustments
-    include Spree::Core::CalculatedAdjustments
+    include Spree::CalculatedAdjustments
 
     preference :group_size, :integer, default: 1
 
@@ -59,7 +59,7 @@ module Spree::Promotion::Actions
       order = line_item.order
       line_items = actionable_line_items(order)
 
-      actioned_line_items = order.line_item_adjustments.
+      actioned_line_items = order.line_item_adjustments(true).
         select { |a| a.source == self && a.amount < 0 }.
         map(&:adjustable)
       other_line_items = actioned_line_items - [line_item]
@@ -80,7 +80,7 @@ module Spree::Promotion::Actions
     private
 
     def actionable_line_items(order)
-      order.line_items.select do |item|
+      order.line_items(true).select do |item|
         promotion.line_item_actionable? order, item
       end
     end
