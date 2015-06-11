@@ -347,26 +347,6 @@ module Spree
           end
         end
       end
-
-      context 'insufficient stock' do
-        let(:order) { create(:order_with_line_items) }
-        before do
-          expect_any_instance_of(Spree::Order).to receive(:next!).and_raise(Spree::Order::InsufficientStock)
-        end
-
-        subject { api_put :next, :id => order.to_param, :order_token => order.guest_token }
-
-        it "should return a 422" do
-          expect(subject.status).to eq(422)
-        end
-
-        it "returns an error message" do
-          subject
-          expect(JSON.parse(response.body)).to eq(
-            {"errors" => ["Quantity is not available for items in your order"], "type" => "insufficient_stock"}
-          )
-        end
-      end
     end
 
     context "PUT 'advance'" do

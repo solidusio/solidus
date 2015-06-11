@@ -184,6 +184,10 @@ module Spree
         render text: e.message, status: 409
       end
 
+      def insufficient_stock_error(exception)
+        render json: { errors: [I18n.t(:quantity_is_not_available, :scope => "spree.api.order")], type: 'insufficient_stock' }, status: 422
+      end
+
     end
   end
 end

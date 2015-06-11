@@ -4,6 +4,8 @@ module Spree
       before_filter :load_order
       around_filter :lock_order, only: [:create, :update, :destroy, :add, :receive, :cancel]
 
+      rescue_from Spree::Order::InsufficientStock, with: :insufficient_stock_error
+
       def create
         authorize! :create, ReturnAuthorization
         @return_authorization = @order.return_authorizations.build(return_authorization_params)
