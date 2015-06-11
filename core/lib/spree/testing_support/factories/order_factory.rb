@@ -51,7 +51,7 @@ FactoryGirl.define do
 
         factory :completed_order_with_pending_payment do
           after(:create) do |order|
-            create(:payment, amount: order.total, order: order)
+            create(:payment, amount: order.total, order: order, state: 'pending')
           end
         end
 
