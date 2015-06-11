@@ -120,6 +120,10 @@ module Spree::Promotion::Actions
       def amount
         @line_item.price
       end
+
+      def currency
+        @line_item.currency
+      end
     end
   end
 end
