@@ -95,35 +95,20 @@ module Spree::Preferences::Preferable
     when :integer
       value.to_i
     when :boolean
-      if value.is_a?(FalseClass) ||
-         value.nil? ||
+      if !value ||
          value == 0 ||
-         value =~ /^(f|false|0)$/i ||
+         value =~ /\A(f|false|0)\Z/i ||
          (value.respond_to? :empty? and value.empty?)
          false
       else
          true
       end
     when :array
-      value.is_a?(Array) ? value : Array.wrap(value)
+      raise TypeError, "Array expected got #{value.inspect}" unless value.is_a?(Array)
+      value
     when :hash
-      case value.class.to_s
-      when "Hash"
-        value
-      when "String"
-        # only works with hashes whose keys are strings
-        JSON.parse value.gsub('=>', ':')
-      when "Array"
-        begin
-          value.try(:to_h)
-        rescue TypeError
-          Hash[*value]
-        rescue ArgumentError
-          raise 'An even count is required when passing an array to be converted to a hash'
-        end
-      else
-        value.class.ancestors.include?(Hash) ? value : {}
-      end
+      raise TypeError, "Hash expected got #{value.inspect}" unless value.is_a?(Hash)
+      value
     else
       value
     end
