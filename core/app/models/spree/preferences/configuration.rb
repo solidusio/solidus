@@ -61,13 +61,10 @@ module Spree::Preferences
       end
     end
 
-    def method_missing(method, *args)
-      name = "preferred_#{method}"
-      if respond_to?(name)
-        send(name, *args)
-      else
-        super
-      end
+    def self.preference name, type, options={}
+      super
+      alias_method "#{name}", "preferred_#{name}"
+      alias_method "#{name}=", "preferred_#{name}="
     end
   end
 end
