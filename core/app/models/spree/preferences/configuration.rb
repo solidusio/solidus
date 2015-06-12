@@ -50,14 +50,9 @@ module Spree::Preferences
 
     alias :get :get_preference
 
-    def set(*args)
-      options = args.extract_options!
+    def set(options)
       options.each do |name, value|
         set_preference name, value
-      end
-
-      if args.size == 2
-        set_preference args[0], args[1]
       end
     end
 
