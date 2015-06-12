@@ -62,17 +62,12 @@ module Spree::Preferences
     end
 
     def method_missing(method, *args)
-      name = method.to_s.gsub('=', '')
-      if has_preference? name
-        if method.to_s =~ /=$/
-          set_preference(name, args.first)
-        else
-          get_preference name
-        end
+      name = "preferred_#{method}"
+      if respond_to?(name)
+        send(name, *args)
       else
         super
       end
     end
-
   end
 end
