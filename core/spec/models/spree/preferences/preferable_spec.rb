@@ -279,13 +279,6 @@ describe Spree::Preferences::Preferable, :type => :model do
       end
     end
 
-    it "clear preferences" do
-      @pt.set_preference(:pref_test_pref, 'xyz')
-      expect(@pt.preferred_pref_test_pref).to eq('xyz')
-      @pt.clear_preferences
-      expect(@pt.preferred_pref_test_pref).to eq('abc')
-    end
-
     it "clear preferences when record is deleted" do
       @pt.save!
       @pt.preferred_pref_test_pref = 'lmn'

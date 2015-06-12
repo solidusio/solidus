@@ -78,10 +78,6 @@ module Spree::Preferences::Preferable
     ]
   end
 
-  def clear_preferences
-    preferences.keys.each {|pref| preferences.delete pref}
-  end
-
   private
 
   def convert_preference_value(value, type)
