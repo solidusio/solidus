@@ -180,17 +180,7 @@ describe Spree::Preferences::Preferable, :type => :model do
 
       it "with arrays" do
         @a.set_preference(:is_array, [])
-        expect(@a.preferences[:is_array]).to be_is_a(Array)
-      end
-
-      it "with string" do
-        @a.set_preference(:is_array, "string")
-        expect(@a.preferences[:is_array]).to be_is_a(Array)
-      end
-
-      it "with hash" do
-        @a.set_preference(:is_array, {})
-        expect(@a.preferences[:is_array]).to be_is_a(Array)
+        expect(@a.preferences[:is_array]).to eq []
       end
     end
 
@@ -213,36 +203,6 @@ describe Spree::Preferences::Preferable, :type => :model do
         ancestor_of_hash = ActionController::Parameters.new({ key: :value })
         @a.set_preference(:is_hash, ancestor_of_hash)
         expect(@a.preferences[:is_hash]).to eql({"key" => :value})
-      end
-
-      it "with string" do
-        @a.set_preference(:is_hash, "{\"0\"=>{\"answer\"=>\"1\", \"value\"=>\"No\"}}")
-        expect(@a.preferences[:is_hash]).to be_is_a(Hash)
-      end
-
-      it "with boolean" do
-        @a.set_preference(:is_hash, false)
-        expect(@a.preferences[:is_hash]).to be_is_a(Hash)
-        @a.set_preference(:is_hash, true)
-        expect(@a.preferences[:is_hash]).to be_is_a(Hash)
-      end
-
-      it "with simple array" do
-        @a.set_preference(:is_hash, ["key", "value", "another key", "another value"])
-        expect(@a.preferences[:is_hash]).to be_is_a(Hash)
-        expect(@a.preferences[:is_hash]["key"]).to eq("value")
-        expect(@a.preferences[:is_hash]["another key"]).to eq("another value")
-      end
-
-      it "with a nested array" do
-        @a.set_preference(:is_hash, [["key", "value"], ["another key", "another value"]])
-        expect(@a.preferences[:is_hash]).to be_is_a(Hash)
-        expect(@a.preferences[:is_hash]["key"]).to eq("value")
-        expect(@a.preferences[:is_hash]["another key"]).to eq("another value")
-      end
-
-      it "with single array" do
-        expect { @a.set_preference(:is_hash, ["key"]) }.to raise_error(ArgumentError)
       end
     end
 
