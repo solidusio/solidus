@@ -4,8 +4,7 @@ module Spree::Preferences
       []
     end
 
-    def preference(name, type, *args)
-      options = args.extract_options!
+    def preference(name, type, options={})
       options.assert_valid_keys(:default)
       default = options[:default]
       default = ->{ options[:default] } unless default.is_a?(Proc)
