@@ -10,7 +10,7 @@
 # setters:
 # a.color = :blue
 # a[:color] = :blue
-# a.set :color = :blue
+# a.set color: :blue
 # a.preferred_color = :blue
 #
 # getters:
