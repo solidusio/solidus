@@ -778,7 +778,7 @@ fr:
     logged_in_succesfully: Connexion réussie
     logged_out: Vous avez été déconnecté
     login: Connexion
-    login_as_existing: Connecter en tant que client existant
+    login_as_existing: Commander en tant que client existant
     login_failed: L'authentification a échoué
     login_name: Identifiant
     logout: Se déconnecter
