@@ -9,7 +9,7 @@ is a fork of spree.
 
 Solidus actually consists of several different gems, each of which are maintained
 in a single repository and documented in a single set of
-[online documentation](http://spreecommerce.com/documentation). By requiring the
+[online documentation](http://docs.solidus.io/). By requiring the
 solidus gem you automatically require all of the necessary gem dependencies which are:
 
 * solidus_api (RESTful API)
