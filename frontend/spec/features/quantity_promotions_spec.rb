@@ -43,9 +43,7 @@ RSpec.feature "Quantity Promotions" do
     # Reduce quantity by 1, making promotion not apply.
     fill_in "order_line_items_attributes_0_quantity", with: 1
     click_button "Update"
-    within("#cart_adjustments") do
-      expect(page).to have_content("$0.00")
-    end
+    expect(page).to_not have_content("#cart_adjustments")
 
     # Bump quantity to 3, making promotion apply "once."
     fill_in "order_line_items_attributes_0_quantity", with: 3
