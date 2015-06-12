@@ -40,9 +40,7 @@ module Spree::Preferences
     alias_method :preferences, :preference_store
 
     def reset
-      preferences.each do |name, value|
-        set_preference name, preference_default(name)
-      end
+      set(default_preferences)
     end
 
     alias :[] :get_preference
