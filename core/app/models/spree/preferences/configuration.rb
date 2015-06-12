@@ -33,6 +33,10 @@ module Spree::Preferences
       @preference_store ||= ScopedStore.new(self.class.name.underscore)
     end
 
+    def use_static_preferences!
+      @preference_store = default_preferences
+    end
+
     alias_method :preferences, :preference_store
 
     def reset
