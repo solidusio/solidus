@@ -38,38 +38,54 @@ module Spree::Preferences::Preferable
     extend Spree::Preferences::PreferableClassMethods
   end
 
+  # Get a preference
+  # @param name [#to_sym] name of preference
+  # @return [Object] The value of preference +name+
   def get_preference(name)
     has_preference! name
     send self.class.preference_getter_method(name)
   end
 
+  # Set a preference
+  # @param name [#to_sym] name of preference
+  # @param value [Object] new value for preference +name+
   def set_preference(name, value)
     has_preference! name
     send self.class.preference_setter_method(name), value
   end
 
+  # @param name [#to_sym] name of preference
+  # @return [Symbol] The type of preference +name+
   def preference_type(name)
     has_preference! name
     send self.class.preference_type_getter_method(name)
   end
 
+  # @param name [#to_sym] name of preference
+  # @return [Object] The default for preference +name+
   def preference_default(name)
     has_preference! name
     send self.class.preference_default_getter_method(name)
   end
 
+  # Raises an exception if the +name+ preference is not defined on this class
+  # @param name [#to_sym] name of preference
   def has_preference!(name)
     raise NoMethodError.new "#{name} preference not defined" unless has_preference? name
   end
 
+  # @param name [#to_sym] name of preference
+  # @return [Boolean] if preference exists on this class
   def has_preference?(name)
     defined_preferences.include?(name.to_sym)
   end
 
+  # @return [Array<Symbol>] All preferences defined on this class
   def defined_preferences
     self.class.defined_preferences
   end
 
+  # @return [Hash{Symbol => Object}] Default for all preferences defined on this class
   def default_preferences
     Hash[
       defined_preferences.map do |preference|
