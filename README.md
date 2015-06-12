@@ -24,7 +24,9 @@ are interested in. For example, you could use just the barebones solidus\_core
 gem and perhaps combine it with your own custom frontend instead of using
 solidus_frontend.
 
-[![Circle CI](https://circleci.com/gh/solidusio/solidus/tree/master.svg?style=svg&circle-token=a181a07d1f92f7297b8174d5c77091ecc5d3cdf7)](https://circleci.com/gh/solidusio/solidus/tree/master)
+[![Circle CI](https://circleci.com/gh/solidusio/solidus/tree/master.svg?style=shield&circle-token=a181a07d1f92f7297b8174d5c77091ecc5d3cdf7)](https://circleci.com/gh/solidusio/solidus/tree/master)
+[![Gem](https://img.shields.io/gem/v/solidus.svg)](https://rubygems.org/gems/solidus)
+[![License](http://img.shields.io/badge/license-BSD-yellowgreen.svg)](LICENSE.md)
 
 Getting started
 ---------------
