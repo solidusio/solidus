@@ -358,7 +358,7 @@ describe Spree::CheckoutController, :type => :controller do
       end
     end
 
-    context "fails to transition from payment to complete" do
+    context "when GatewayError is raised" do
       let(:order) do
         FactoryGirl.create(:order_with_line_items).tap do |order|
           until order.state == 'payment'
@@ -366,7 +366,7 @@ describe Spree::CheckoutController, :type => :controller do
           end
           # So that the confirmation step is skipped and we get straight to the action.
           payment_method = FactoryGirl.create(:simple_credit_card_payment_method)
-          payment = FactoryGirl.create(:payment, :payment_method => payment_method)
+          payment = FactoryGirl.create(:payment, payment_method: payment_method, amount: order.total)
           order.payments << payment
           order.next!
         end
@@ -377,7 +377,7 @@ describe Spree::CheckoutController, :type => :controller do
         allow(controller).to receive_messages :check_authorization => true
       end
 
-      it "when GatewayError is raised" do
+      it "fails to transition from payment to complete" do
         allow_any_instance_of(Spree::Payment).to receive(:process!).and_raise(Spree::Core::GatewayError.new(Spree.t(:payment_processing_failed)))
         spree_put :update, state: order.state, :order => {}
         expect(flash[:error]).to eq(Spree.t(:payment_processing_failed))
