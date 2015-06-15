@@ -5,7 +5,7 @@ describe "New Order", :type => :feature do
   let!(:state) { create(:state) }
   let!(:user) { create(:user, ship_address: create(:address), bill_address: create(:address)) }
   let!(:payment_method) { create(:check_payment_method) }
-  let!(:shipping_method) { create(:shipping_method) }
+  let!(:shipping_method) { create(:shipping_method, cost: 0.0) }
 
   stub_authorization!
 
