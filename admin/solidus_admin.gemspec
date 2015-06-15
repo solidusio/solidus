@@ -3,16 +3,16 @@ version = File.read(File.expand_path("../../SOLIDUS_VERSION", __FILE__)).strip
 
 Gem::Specification.new do |s|
   s.platform    = Gem::Platform::RUBY
-  s.name        = 'solidus_backend'
+  s.name        = 'solidus_admin'
   s.version     = version
-  s.summary     = 'backend e-commerce functionality for the Spree project.'
+  s.summary     = 'admin e-commerce functionality for the Solidus project.'
   s.description = 'Required dependency for Spree'
 
   s.required_ruby_version = '>= 2.1.0'
   s.author      = 'Solidus Team'
   s.email       = 'contact@solidus.io'
   s.homepage    = 'http://solidus.io'
-  s.rubyforge_project = 'solidus_backend'
+  s.rubyforge_project = 'solidus_admin'
 
   s.files        = Dir['LICENSE', 'README.md', 'app/**/*', 'config/**/*', 'lib/**/*', 'db/**/*', 'vendor/**/*']
   s.require_path = 'lib'

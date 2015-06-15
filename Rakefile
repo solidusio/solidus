@@ -11,7 +11,7 @@ task default: :test
 
 desc "Runs all tests in all Spree engines"
 task :test => :test_app do
-  %w(api backend core frontend sample).each do |gem_name|
+  %w(api admin core frontend sample).each do |gem_name|
     Dir.chdir("#{File.dirname(__FILE__)}/#{gem_name}") do
       sh 'rspec'
     end
@@ -20,10 +20,8 @@ end
 
 desc "Generates a dummy app for testing for every Spree engine"
 task :test_app do
-  %w(api backend core frontend sample).each do |engine|
-    ENV['LIB_NAME'] = File.join('spree', engine)
-    ENV['DUMMY_PATH'] = File.expand_path("../#{engine}/spec/dummy", __FILE__)
-    Rake::Task['common:test_app'].execute
+  %w(api admin core frontend sample).each do |engine|
+    sh "cd #{engine} && rake test_app"
   end
 end
 
@@ -33,7 +31,7 @@ task :clean do
   rm_rf "sandbox"
   rm_rf "pkg"
 
-  %w(api backend core frontend sample).each do |gem_name|
+  %w(api admin core frontend sample).each do |gem_name|
     rm_f  "#{gem_name}/Gemfile.lock"
     rm_rf "#{gem_name}/pkg"
     rm_rf "#{gem_name}/spec/dummy"
@@ -46,7 +44,7 @@ namespace :gem do
   end
 
   def for_each_gem
-    %w(core api backend frontend sample).each do |gem_name|
+    %w(core api admin frontend sample).each do |gem_name|
       yield "pkg/solidus_#{gem_name}-#{version}.gem"
     end
     yield "pkg/solidus-#{version}.gem"
@@ -57,7 +55,7 @@ namespace :gem do
     pkgdir = File.expand_path("../pkg", __FILE__)
     FileUtils.mkdir_p pkgdir
 
-    %w(core api backend frontend sample).each do |gem_name|
+    %w(core api admin frontend sample).each do |gem_name|
       Dir.chdir(gem_name) do
         sh "gem build solidus_#{gem_name}.gemspec"
         mv "solidus_#{gem_name}-#{version}.gem", pkgdir
