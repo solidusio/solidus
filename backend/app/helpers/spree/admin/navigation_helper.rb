@@ -9,8 +9,10 @@ module Spree
       def tab(*args)
         options = {:label => args.first.to_s}
 
-        # Return if resource is found and user is not allowed to :admin
-        return '' if klass = klass_for(options[:label]) and cannot?(:admin, klass)
+        # If options[:label] corresponds to a class, auth based on permissions
+        # to that class. Otherwise auth based on the symbol for that class.
+        auth_target = klass_for(options[:label]) || options[:label]
+        return '' if cannot?(:admin, auth_target)
 
         if args.last.is_a?(Hash)
           options = options.merge(args.pop)
