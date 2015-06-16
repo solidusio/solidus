@@ -29,7 +29,7 @@ module Spree
 
     def build_subject(subject_text, resend)
       subject = (resend ? "[#{Spree.t(:resend).upcase}] " : '')
-      subject += "#{Spree::Config[:site_name]} #{subject_text} ##{@order.number}"
+      subject += "#{Spree::Store.current.name} #{subject_text} ##{@order.number}"
     end
   end
 end
