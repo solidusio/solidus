@@ -43,7 +43,7 @@ describe Spree::Promotion::Actions::CreateAdjustment, :type => :model do
       action.perform(payload)
       action.perform(payload)
       expect(promotion.usage_count).to eq(0)
-      expect(promotion.adjustments.count).to eq(1)
+      expect(order.adjustments.count).to eq(1)
     end
 
     context "when a promotion code is used" do
