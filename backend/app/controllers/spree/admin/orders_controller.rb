@@ -184,6 +184,11 @@ module Spree
         def model_class
           Spree::Order
         end
+
+        def insufficient_stock_error
+          flash[:error] = Spree.t(:insufficient_stock_for_order)
+          redirect_to cart_admin_order_url(@order)
+        end
     end
   end
 end
