@@ -14,7 +14,8 @@ module Spree
 
         it "adds a validation error" do
           subject
-          display_name = "#{line_item.variant.name} (#{line_item.variant.options_text})"
+          display_name = "#{line_item.variant.name}"
+          display_name +=  " (#{line_item.variant.options_text})" unless line_item.variant.options_text.blank?
           expect(line_item.errors).to match_array ["Quantity selected of #{display_name.inspect} is not available."]
         end
       end
@@ -69,7 +70,7 @@ module Spree
           let!(:stock_location_1) { create(:stock_location, name: "Test Warehouse", active: false) }
 
           before do
-            order.contents.add(variant, stock_location_quantities: { stock_location_1.id => 1})
+            order.contents.add(variant, 1, stock_location_quantities: { stock_location_1.id => 1})
             order.contents.advance
             stock_location_1.stock_items.update_all(count_on_hand: 0, backorderable: false)
           end
