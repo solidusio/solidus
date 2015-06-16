@@ -24,7 +24,7 @@ describe "order_capturing:capture_payments" do
 
     context "when there is an error capturing payment" do
       before do
-        Spree::OrderCapturing.any_instance.stub(:capture_payments).and_raise(StateMachine::InvalidTransition)
+        Spree::OrderCapturing.any_instance.stub(:capture_payments).and_raise(StateMachines::InvalidTransition)
       end
 
       it "raises a OrderCapturingFailures" do
