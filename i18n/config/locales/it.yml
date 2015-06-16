@@ -716,17 +716,9 @@ it:
     home: Home
     i18n:
       available_locales: Lingue Disponibili
-      fields: Campi
       language: Lingua
       localization_settings: Impostazioni Localizzazione
-      only_complete: Solo complete
-      only_incomplete: Solo incomplete
-      select_locale: Seleziona lingua
-      show_only: Mostra solo
-      store_translations: Traduzioni Store
-      supported_locales: Lingue Supportate
       this_file_language: Italiano (IT)
-      translations: Traduzioni
     icon: Icona
     image: Immagine
     images: Immagini

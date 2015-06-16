@@ -673,17 +673,9 @@ da:
     home: Forside
     i18n:
       available_locales: Tilgængelige sprog
-      fields: Felter
       language: Sprog
       localization_settings: Lande/sprog indstillinger
-      only_complete: Kun komplette
-      only_incomplete: Kun ikke-komplette
-      select_locale: Vælg sprog
-      show_only: Vis kun
-      store_translations:
-      supported_locales: Understøttede sprog
       this_file_language: Danish
-      translations: Oversættelser
     icon: Ikon
     identifier:
     image: Billed

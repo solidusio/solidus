@@ -733,17 +733,9 @@ ru:
     home: "Домой"
     i18n:
       available_locales: "Доступные переводы"
-      fields: "Поля"
       language: "Язык"
       localization_settings: "Настройки локализации"
-      only_complete: "Только завершённые"
-      only_incomplete: "Только незавершённые"
-      select_locale: "Выберите локализацию"
-      show_only: "Показывать только"
-      store_translations:
-      supported_locales: "Поддерживаемые языки"
       this_file_language: Russian
-      translations: "Переводы"
     icon: "Иконка"
     identifier:
     image: "Изображение"

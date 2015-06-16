@@ -627,17 +627,9 @@ vi:
     home: Trang chủ
     i18n:
       available_locales:
-      fields:
       language:
       localization_settings:
-      only_complete:
-      only_incomplete:
-      select_locale:
-      show_only:
-      store_translations:
-      supported_locales:
       this_file_language: tiếng Việt (VN)
-      translations:
     icon: Biểu tượng
     identifier:
     image: Hình ảnh

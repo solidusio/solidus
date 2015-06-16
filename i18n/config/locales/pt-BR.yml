@@ -702,17 +702,9 @@ pt-BR:
     home: Início
     i18n:
       available_locales: Idiomas disponíveis
-      fields: Campos
       language: Idioma
       localization_settings: Configurações de idioma
-      only_complete: Apenas completas
-      only_incomplete: Apenas incompletas
-      select_locale: Selecione o idioma
-      show_only: Mostrar apenas
-      store_translations:
-      supported_locales: Idiomas suportados
       this_file_language: Português (BR)
-      translations: Traduções
     icon: "Ícone"
     identifier:
     image: Imagem

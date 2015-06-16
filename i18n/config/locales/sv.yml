@@ -705,17 +705,9 @@ sv:
     home: Hem
     i18n:
       available_locales: Tillgängliga språk
-      fields: Fält
       language: Språk
       localization_settings: Lokaliseringsinställningar
-      only_complete: bara kompletta
-      only_incomplete: Endast ofullständiga
-      select_locale: Välj språk
-      show_only: Visa endast
-      store_translations: Butiks översättningar
-      supported_locales: Tillgängliga språk
       this_file_language: Svenska (SE)
-      translations: "Översättningar"
     icon: Ikon
     identifier: Identifierare
     image: Bild

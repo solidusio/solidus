@@ -1,8 +1,0 @@
-<div class="panel panel-default fields">
-  <div class="panel-heading"><%= Spree.t(:'i18n.fields') %></div>
-  <div class="list-group" id="attr_list">
-    <% @resource.class.translated_attribute_names.each_with_index do |attr, i| %>
-      <a class="list-group-item <%= 'active' if i == 0 %>" data-attr="<%= attr %>" href="#"><%= Spree.t(attr) %></a>
-    <% end %>
-  </div>
-</div>

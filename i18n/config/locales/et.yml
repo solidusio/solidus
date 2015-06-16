@@ -653,17 +653,9 @@ et:
     home: Avaleht
     i18n:
       available_locales:
-      fields:
       language: Keel
       localization_settings:
-      only_complete:
-      only_incomplete:
-      select_locale:
-      show_only:
-      store_translations:
-      supported_locales:
       this_file_language: Eesti keel
-      translations: Tõlked
     icon: Icon
     identifier:
     image: Pilt

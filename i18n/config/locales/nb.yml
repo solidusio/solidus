@@ -672,16 +672,9 @@ nb:
     home: Hjem
     i18n:
       available_locales:
-      fields:
       language:
       localization_settings:
-      only_complete:
-      only_incomplete:
-      select_locale:
-      show_only:
-      supported_locales:
       this_file_language: Norsk
-      translations:
     icon: Ikon
     identifier:
     image: Bilde
