@@ -734,9 +734,7 @@ module Spree
 
     def validate_line_item_availability
       availability_validator = Spree::Stock::AvailabilityValidator.new
-
-      errors = line_items.map { |line_item| availability_validator.validate(line_item) }.compact
-      raise Spree::LineItem::InsufficientStock if errors.any?
+      raise InsufficientStock unless line_items.all? { |line_item| availability_validator.validate(line_item) }
     end
 
     def ensure_line_items_present

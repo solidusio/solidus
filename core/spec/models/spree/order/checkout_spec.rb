@@ -556,6 +556,7 @@ describe Spree::Order, :type => :model do
         # make sure we will actually capture a payment
         allow(order).to receive_messages(payment_required?: true)
         allow(order).to receive_messages(ensure_available_shipping_rates: true)
+        allow(order).to receive_messages(validate_line_item_availability: true)
         order.line_items << FactoryGirl.create(:line_item)
         order.create_proposed_shipments
         Spree::OrderUpdater.new(order).update
@@ -588,6 +589,7 @@ describe Spree::Order, :type => :model do
         # make sure we will actually capture a payment
         order.stub(payment_required?: true)
         order.stub(ensure_available_shipping_rates: true)
+        order.stub(validate_line_item_availability: true)
         order.line_items << FactoryGirl.create(:line_item)
         order.create_proposed_shipments
         Spree::OrderUpdater.new(order).update
@@ -671,6 +673,8 @@ describe Spree::Order, :type => :model do
       order.email = 'user@example.com'
       order.stub(:ensure_available_shipping_rates).and_return(true)
       order.stub(:ensure_promotions_eligible).and_return(true)
+      order.stub_chain(:line_items, :present?).and_return(true)
+      order.stub(validate_line_item_availability: true)
       order.should_not_receive(:payment_required?)
       order.should_not_receive(:process_payments!)
       order.next!
