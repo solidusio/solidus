@@ -1,10 +1,6 @@
-Spree is an open source project and we encourage contributions.  Please see the
-[contributors guidelines](http://spreecommerce.com/documentation/contributing_to_spree.html)
-before contributing.
-
 ## Filing an issue
 
-When filing an issue on the Spree project, please provide these details:
+When filing an issue on the Solidus project, please provide these details:
 
 * A comprehensive list of steps to reproduce the issue.
 * What you're *expecting* to happen compared with what's *actually* happening.
@@ -24,7 +20,7 @@ the information requested is provided.
 ## Pull requests
 
 We gladly accept pull requests to add documentation, fix bugs and, in some circumstances,
-add new features to Spree.
+add new features to Solidus.
 
 Here's a quick guide:
 
