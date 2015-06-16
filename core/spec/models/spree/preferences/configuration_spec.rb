@@ -20,7 +20,7 @@ describe Spree::Preferences::Configuration, :type => :model do
   end
 
   it "uses set/get to access preferences" do
-    @config.set :color, 'green'
+    @config.set(color: 'green')
     expect(@config.get(:color)).to eq 'green'
   end
 
