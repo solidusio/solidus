@@ -8,13 +8,6 @@ ror_jr_spaghetti = Spree::Product.find_by_name!("Ruby on Rails Jr. Spaghetti")
 ror_mug = Spree::Product.find_by_name!("Ruby on Rails Mug")
 ror_ringer = Spree::Product.find_by_name!("Ruby on Rails Ringer T-Shirt")
 ror_stein = Spree::Product.find_by_name!("Ruby on Rails Stein")
-spree_baseball_jersey = Spree::Product.find_by_name!("Spree Baseball Jersey")
-spree_stein = Spree::Product.find_by_name!("Spree Stein")
-spree_jr_spaghetti = Spree::Product.find_by_name!("Spree Jr. Spaghetti")
-spree_mug = Spree::Product.find_by_name!("Spree Mug")
-spree_ringer = Spree::Product.find_by_name!("Spree Ringer T-Shirt")
-spree_tote = Spree::Product.find_by_name!("Spree Tote")
-spree_bag = Spree::Product.find_by_name!("Spree Bag")
 ruby_baseball_jersey = Spree::Product.find_by_name!("Ruby Baseball Jersey")
 apache_baseball_jersey = Spree::Product.find_by_name!("Apache Baseball Jersey")
 
@@ -126,34 +119,6 @@ masters = {
   ruby_baseball_jersey => {
     :sku => "RUB-00001",
     :cost_price => 17
-  },
-  spree_baseball_jersey => {
-    :sku => "SPR-00001",
-    :cost_price => 17
-  },
-  spree_stein => {
-    :sku => "SPR-00016",
-    :cost_price => 15
-  },
-  spree_jr_spaghetti => {
-    :sku => "SPR-00013",
-    :cost_price => 17
-  },
-  spree_mug => {
-    :sku => "SPR-00014",
-    :cost_price => 11
-  },
-  spree_ringer => {
-    :sku => "SPR-00015",
-    :cost_price => 17
-  },
-  spree_tote => {
-    :sku => "SPR-00011",
-    :cost_price => 13
-  },
-  spree_bag => {
-    :sku => "SPR-00012",
-    :cost_price => 21
   }
 }
 

@@ -22,7 +22,7 @@ module Spree
   class AppConfiguration < Preferences::Configuration
     # Alphabetized to more easily lookup particular preferences
     preference :address_requires_state, :boolean, default: true # should state/state_name be required
-    preference :admin_interface_logo, :string, default: 'logo/spree_50.png'
+    preference :admin_interface_logo, :string, default: 'logo/solidus_logo.png'
     preference :admin_products_per_page, :integer, default: 10
     preference :admin_variants_per_page, :integer, default: 20
     preference :allow_checkout_on_gateway_error, :boolean, default: false
@@ -41,7 +41,7 @@ module Spree
     preference :expedited_exchanges, :boolean, default: false # NOTE this requires payment profiles to be supported on your gateway of choice as well as a delayed job handler to be configured with activejob. kicks off an exchange shipment upon return authorization save. charge customer if they do not return items within timely manner.
     preference :expedited_exchanges_days_window, :integer, default: 14 # the amount of days the customer has to return their item after the expedited exchange is shipped in order to avoid being charged
     preference :layout, :string, default: 'spree/layouts/spree_application'
-    preference :logo, :string, default: 'logo/spree_50.png'
+    preference :logo, :string, default: 'logo/solidus_logo.png'
     preference :max_level_in_taxons_menu, :integer, default: 1 # maximum nesting level in taxons menu
     preference :order_mutex_max_age, :integer, default: 2.minutes
     preference :orders_per_page, :integer, default: 15

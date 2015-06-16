@@ -1,1 +1,1 @@
-Rails.application.config.assets.precompile += %w( jquery-ui/* logo/spree_50.png )
+Rails.application.config.assets.precompile += %w( jquery-ui/* logo/solidus_logo.png )

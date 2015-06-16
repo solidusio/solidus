@@ -7,6 +7,3 @@ ror_baseball_jersey = Spree::Product.find_by_name!("Ruby on Rails Baseball Jerse
 ror_baseball_jersey.option_types = [size, color]
 ror_baseball_jersey.save!
 
-spree_baseball_jersey = Spree::Product.find_by_name!("Spree Baseball Jersey")
-spree_baseball_jersey.option_types = [size, color]
-spree_baseball_jersey.save!

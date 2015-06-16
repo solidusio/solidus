@@ -61,41 +61,6 @@ products = [
     :eur_price => 16
   },
   {
-    :name => "Spree Baseball Jersey",
-    :tax_category => tax_category,
-    :shipping_category => shipping_category,
-    :price => 19.99,
-    :eur_price => 16
-  },
-  {
-    :name => "Spree Jr. Spaghetti",
-    :tax_category => tax_category,
-    :shipping_category => shipping_category,
-    :price => 19.99,
-    :eur_price => 16
-  },
-  {
-    :name => "Spree Ringer T-Shirt",
-    :tax_category => tax_category,
-    :shipping_category => shipping_category,
-    :price => 19.99,
-    :eur_price => 16
-  },
-  {
-    :name => "Spree Tote",
-    :tax_category => tax_category,
-    :shipping_category => shipping_category,
-    :price => 15.99,
-    :eur_price => 14,
-  },
-  {
-    :name => "Spree Bag",
-    :tax_category => tax_category,
-    :shipping_category => shipping_category,
-    :price => 22.99,
-    :eur_price => 19
-  },
-  {
     :name => "Ruby on Rails Mug",
     :shipping_category => shipping_category,
     :price => 13.99,
@@ -106,18 +71,6 @@ products = [
     :shipping_category => shipping_category,
     :price => 16.99,
     :eur_price => 14
-  },
-  {
-    :name => "Spree Stein",
-    :shipping_category => shipping_category,
-    :price => 16.99,
-    :eur_price => 14,
-  },
-  {
-    :name => "Spree Mug",
-    :shipping_category => shipping_category,
-    :price => 13.99,
-    :eur_price => 12
   }
 ]
 
