@@ -142,5 +142,13 @@ module Spree
       def current_return_item
         return_items.not_cancelled.first
       end
+
+      # If an inventory unit is associated with return items and really needs
+      # to be deleted then explicitly delete the associated return items first.
+      def ensure_no_return_items
+        if return_items.exists?
+          raise "Inventory units associated with return items should not be deleted."
+        end
+      end
   end
 end
