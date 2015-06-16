@@ -673,6 +673,8 @@ describe Spree::Order, :type => :model do
       order.email = 'user@example.com'
       order.stub(:ensure_available_shipping_rates).and_return(true)
       order.stub(:ensure_promotions_eligible).and_return(true)
+      order.stub(:ensure_line_item_variants_are_not_deleted).and_return(true)
+      order.stub(:ensure_line_items_are_in_stock).and_return(true)
       order.stub_chain(:line_items, :present?).and_return(true)
       order.stub(validate_line_item_availability: true)
       order.should_not_receive(:payment_required?)
