@@ -719,7 +719,7 @@ module Spree
         inventory_validator = Spree::Stock::InventoryValidator.new
 
         errors = line_items.map { |line_item| inventory_validator.validate(line_item) }.compact
-        raise Spree::LineItem::InsufficientStock if errors.any?
+        raise InsufficientStock if errors.any?
       end
     end
 
