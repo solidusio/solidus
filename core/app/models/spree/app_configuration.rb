@@ -220,12 +220,14 @@ module Spree
     preference :credit_to_new_allocation, :boolean, default: false
 
     # searcher_class allows spree extension writers to provide their own Search class
+    attr_writer :searcher_class
     def searcher_class
       @searcher_class ||= Spree::Core::Search::Base
     end
 
-    def searcher_class=(sclass)
-      @searcher_class = sclass
+    attr_writer :gateway_preferences
+    def gateway_preferences
+      @gateway_preferences ||= {}
     end
 
     # all the following can be deprecated when store prefs are no longer supported
