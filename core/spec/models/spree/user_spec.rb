@@ -1,20 +1,36 @@
 require 'spec_helper'
 
 describe Spree::LegacyUser, :type => :model do
-  # Regression test for #2844 + #3346
   context "#last_incomplete_order" do
     let!(:user) { create(:user) }
-    let!(:order) { create(:order, bill_address: create(:address), ship_address: create(:address)) }
 
-    let!(:order_1) { create(:order, :created_at => 1.day.ago, :user => user, :created_by => user) }
-    let!(:order_2) { create(:order, :user => user, :created_by => user) }
-    let!(:order_3) { create(:order, :user => user, :created_by => create(:user)) }
+    it "can scope to a store" do
+      store = create(:store)
+      store_1_order = create(:order, user: user, store: store)
+      store_2_order = create(:order, user: user, store: create(:store))
+      expect(user.last_incomplete_spree_order(store: store)).to eq store_1_order
+    end
 
-    it "returns correct order" do
-      expect(user.last_incomplete_spree_order).to eq order_3
+    it "excludes completed orders" do
+      order = create(:completed_order_with_totals, user: user, created_by: user)
+      expect(user.last_incomplete_spree_order).to eq nil
+    end
+
+    it "excludes orders created prior to the user's last completed order" do
+      incomplete_order = create(:order, user: user, created_by: user)
+      completed_order = create(:completed_order_with_totals, user: user, created_by: user)
+      expect(user.last_incomplete_spree_order).to eq nil
+    end
+
+    it "chooses the most recently created incomplete order" do
+      order_1 = create(:order, user: user)
+      order_2 = create(:order, user: user)
+      expect(user.last_incomplete_spree_order).to eq order_2
     end
 
     context "persists order address" do
+      let!(:order) { create(:order, bill_address: create(:address), ship_address: create(:address)) }
+
       it "copies over order addresses" do
         expect {
           user.persist_order_address(order)

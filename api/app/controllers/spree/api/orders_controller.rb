@@ -86,8 +86,7 @@ module Spree
       end
 
       def current
-        @order = find_current_order
-        if @order
+        if current_api_user && @order = current_api_user.last_incomplete_spree_order(store: current_store)
           respond_with(@order, default_template: :show, locals: { root_object: @order })
         else
           head :no_content
@@ -96,7 +95,7 @@ module Spree
 
       def mine
         if current_api_user
-          @orders = current_api_user.orders.reverse_chronological.ransack(params[:q]).result.page(params[:page]).per(params[:per_page])
+          @orders = current_api_user.orders.by_store(current_store).reverse_chronological.ransack(params[:q]).result.page(params[:page]).per(params[:per_page])
         else
           render "spree/api/errors/unauthorized", status: :unauthorized
         end
@@ -147,19 +146,6 @@ module Spree
         def find_order(lock = false)
           @order = Spree::Order.find_by!(number: params[:id])
         end
-
-        def find_current_order
-          current_api_user ? find_current_api_user_orders.last : nil
-        end
-
-        def find_current_api_user_orders
-          last_completed_at = current_api_user.orders.complete.order(completed_at: :desc).limit(1).pluck(:completed_at)[0]
-
-          incomplete_orders = current_api_user.orders.incomplete.order(:created_at)
-          incomplete_orders = incomplete_orders.where('created_at > ?', last_completed_at) if last_completed_at
-          incomplete_orders
-        end
-
 
         def order_id
           super || params[:id]

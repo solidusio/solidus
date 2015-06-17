@@ -24,8 +24,13 @@ Spree::Core::Engine.config.to_prepare do
         spree_roles.any? { |role| role.name == role_in_question.to_s }
       end
 
-      def last_incomplete_spree_order
-        spree_orders.incomplete.order('created_at DESC').first
+      # @return [Spree::Order] the most-recently-created incomplete order
+      # since the customer's last complete order.
+      def last_incomplete_spree_order(store: nil)
+        self_orders = self.orders
+        self_orders = self_orders.where(store: store) if store
+        last_order = self_orders.order(:created_at).last
+        last_order unless last_order.try!(:completed?)
       end
 
       def total_available_store_credit
