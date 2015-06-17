@@ -84,7 +84,14 @@ describe Spree::Admin::OrdersController, :type => :controller do
 
       it "imports a new order and sets the current user as a creator" do
         Spree::Core::Importer::Order.should_receive(:import)
-          .with(nil, {'created_by_id' => controller.try_spree_current_user.id})
+          .with(nil, hash_including(created_by_id: controller.try_spree_current_user.id))
+          .and_return(order)
+        spree_get :new
+      end
+
+      it "sets frontend_viewable to false" do
+        Spree::Core::Importer::Order.should_receive(:import)
+          .with(nil, hash_including(frontend_viewable: false ))
           .and_return(order)
         spree_get :new
       end
@@ -95,7 +102,7 @@ describe Spree::Admin::OrdersController, :type => :controller do
 
         it "imports a new order and assigns the user to the order" do
           Spree::Core::Importer::Order.should_receive(:import)
-            .with(user, {'created_by_id' => controller.try_spree_current_user.id})
+            .with(user, hash_including(created_by_id: controller.try_spree_current_user.id))
             .and_return(order)
           spree_get :new, { user_id: user.id }
         end

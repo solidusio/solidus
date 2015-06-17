@@ -4,6 +4,17 @@ describe Spree::LegacyUser, :type => :model do
   context "#last_incomplete_order" do
     let!(:user) { create(:user) }
 
+
+    it "excludes orders that are not frontend_viewable" do
+      order = create(:order, user: user, frontend_viewable: false)
+      expect(user.last_incomplete_spree_order).to eq nil
+    end
+
+    it "can include orders that are not frontend viewable" do
+      order = create(:order, user: user, frontend_viewable: false)
+      expect(user.last_incomplete_spree_order(only_frontend_viewable: false)).to eq order
+    end
+
     it "can scope to a store" do
       store = create(:store)
       store_1_order = create(:order, user: user, store: store)
