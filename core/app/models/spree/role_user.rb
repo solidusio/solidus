@@ -2,7 +2,7 @@ module Spree
   class RoleUser < ActiveRecord::Base
     self.table_name = "spree_roles_users"
     belongs_to :role, class_name: "Spree::Role"
-    belongs_to :user, class_name: Spree.user_class.to_s
+    belongs_to :user, class_name: Spree::UserClassHandle.new
 
     after_save :generate_admin_api_key
 
