@@ -15,7 +15,7 @@ module Spree
     # @raise [RuntimeError] if Spree.user_class is nil
     def to_s
       fail "'Spree.user_class' has not been set yet." unless Spree.user_class
-      Spree.user_class.to_s
+      "::#{Spree.user_class}"
     end
   end
 end
