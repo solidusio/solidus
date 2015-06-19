@@ -6,11 +6,19 @@
       <%= f.error_message_on :amount %>
     <% end %>
   </div>
-  <div class="omega nine columns">
+
+  <div class="six columns">
     <%= f.field_container :label do %>
       <%= f.label :label, raw(Spree.t(:description) + content_tag(:span, " *", :class => "required")) %>
       <%= text_field :adjustment, :label, :class => 'fullwidth' %>
       <%= f.error_message_on :label %>
+    <% end %>
+  </div>
+
+  <div class="omega three columns">
+    <%= f.field_container :label do %>
+      <%= f.label :adjustment_reason_id, Spree.t(:reason) %><br/>
+      <%= f.collection_select(:adjustment_reason_id, reasons_for(@adjustment), :id, :name, {include_blank: true}, {"data-placeholder" => Spree.t(:select_a_reason), class: 'select2 fullwidth'}) %>
     <% end %>
   </div>
 </div>
