@@ -21,7 +21,7 @@ module Spree
     # Shouldn't run on test mode because migrations inside engine don't have
     # engine name on the file name
     def check
-      if File.directory?("db/migrate")
+      if File.directory?(app_dir)
         engine_in_app = app_migrations.map do |file_name|
           name, engine = file_name.split(".", 2)
           next unless match_engine?(engine)
@@ -42,18 +42,26 @@ module Spree
 
     private
       def engine_migrations
-        Dir.entries("#{config.root}/db/migrate").map do |file_name|
+        Dir.entries(engine_dir).map do |file_name|
           name = file_name.split("_", 2).last.split(".", 2).first
           name.empty? ? next : name
         end.compact! || []
       end
 
       def app_migrations
-        Dir.entries("db/migrate").map do |file_name|
+        Dir.entries(app_dir).map do |file_name|
           next if [".", ".."].include? file_name
           name = file_name.split("_", 2).last
           name.empty? ? next : name
         end.compact! || []
+      end
+
+      def app_dir
+        "#{Rails.root}/db/migrate"
+      end
+
+      def engine_dir
+        "#{config.root}/db/migrate"
       end
 
       def match_engine?(engine)
