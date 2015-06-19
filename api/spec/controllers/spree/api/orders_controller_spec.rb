@@ -65,9 +65,11 @@ module Spree
 
     context "the current api user is authenticated" do
       let(:current_api_user) { order.user }
-      let(:order) { create(:order, line_items: [line_item]) }
+      let(:store) { create(:store) }
+      let(:order) { create(:order, line_items: [line_item], store: store) }
 
-      it "can view all of their own orders" do
+      it "can view all of their own orders for the current store" do
+        request.env['SERVER_NAME'] = store.url
         api_get :mine
 
         expect(response.status).to eq(200)
@@ -79,7 +81,16 @@ module Spree
         expect(json_response["orders"].first["line_items"].first["id"]).to eq(line_item.id)
       end
 
+      it "cannot view orders for a different store" do
+        request.env['SERVER_NAME'] = "foo"
+        api_get :mine
+
+        expect(response.status).to eq(200)
+        expect(json_response["orders"].length).to eq(0)
+      end
+
       it "can filter the returned results" do
+        request.env['SERVER_NAME'] = store.url
         api_get :mine, q: {completed_at_not_null: 1}
 
         expect(response.status).to eq(200)
@@ -89,13 +100,14 @@ module Spree
       it "returns orders in reverse chronological order by completed_at" do
         order.update_columns completed_at: Time.now
 
-        order2 = Order.create user: order.user, completed_at: Time.now - 1.day
+        order2 = Order.create user: order.user, completed_at: Time.now - 1.day, store: store
         expect(order2.created_at).to be > order.created_at
-        order3 = Order.create user: order.user, completed_at: nil
+        order3 = Order.create user: order.user, completed_at: nil, store: store
         expect(order3.created_at).to be > order2.created_at
-        order4 = Order.create user: order.user, completed_at: nil
+        order4 = Order.create user: order.user, completed_at: nil, store: store
         expect(order4.created_at).to be > order3.created_at
 
+        request.env['SERVER_NAME'] = store.url
         api_get :mine
         expect(response.status).to eq(200)
         expect(json_response["pages"]).to eq(1)
@@ -111,96 +123,9 @@ module Spree
       let(:current_api_user) { order.user }
       let!(:order) { create(:order, line_items: [line_item]) }
 
-      subject do
+      it "uses the user's last_incomplete_spree_order logic with the current store" do
+        expect(current_api_user).to receive(:last_incomplete_spree_order).with(store: controller.current_store)
         api_get :current, format: 'json'
-      end
-
-      context "an incomplete order exists" do
-        it "returns that order" do
-          expect(JSON.parse(subject.body)['id']).to eq order.id
-          expect(subject).to be_success
-        end
-      end
-
-      context "multiple incomplete orders exist" do
-        it "returns the latest incomplete order" do
-          new_order = Spree::Order.create! user: order.user
-          expect(new_order.created_at).to be > order.created_at
-          expect(JSON.parse(subject.body)['id']).to eq new_order.id
-        end
-      end
-
-      context "an incomplete order does not exist" do
-
-        before do
-          order.update_attribute(:state, order_state)
-          order.update_attribute(:completed_at, 5.minutes.ago)
-        end
-
-        ["complete", "returned", "awaiting_return"].each do |order_state|
-          context "order is in the #{order_state} state" do
-            let(:order_state) { order_state }
-
-            it "returns no content" do
-              expect(subject.status).to eq 204
-              expect(subject.body).to be_blank
-            end
-          end
-        end
-      end
-    end
-
-    describe 'current' do
-      let(:current_api_user) { order.user }
-      let!(:order) { create(:order, line_items: [line_item]) }
-
-      subject do
-        api_get :current, format: 'json'
-      end
-
-      context "an incomplete order exists" do
-        it "returns that order" do
-          expect(JSON.parse(subject.body)['id']).to eq order.id
-          expect(subject).to be_success
-        end
-      end
-
-      context "multiple incomplete orders exist" do
-        it "returns the latest incomplete order" do
-          new_order = Spree::Order.create! user: order.user
-          expect(new_order.created_at).to be > order.created_at
-          expect(JSON.parse(subject.body)['id']).to eq new_order.id
-        end
-      end
-
-      context "a newer complete order exists" do
-        it "does not return the latest incomplete order" do
-          Timecop.travel 1.minute.from_now do
-            new_order = create(:shipped_order, user: order.user)
-            expect(new_order.completed_at).to be > order.created_at
-            expect(subject.status).to eq 204
-            expect(subject.body).to be_blank
-          end
-        end
-      end
-
-      context "an incomplete order does not exist" do
-
-        before do
-          order.update_attribute(:state, order_state)
-          order.update_attribute(:completed_at, 5.minutes.ago)
-        end
-
-        ["complete", "returned", "awaiting_return"].each do |order_state|
-          context "order is in the #{order_state} state" do
-            let(:order_state) { order_state }
-
-            it "returns no content" do
-              expect(subject.status).to eq 204
-              expect(subject.body).to be_blank
-            end
-          end
-        end
       end
     end
 

@@ -113,6 +113,8 @@ module Spree
     scope :created_between, ->(start_date, end_date) { where(created_at: start_date..end_date) }
     scope :completed_between, ->(start_date, end_date) { where(completed_at: start_date..end_date) }
 
+    scope :by_store, ->(store) { where(store_id: store.id) }
+
     # shows completed orders first, by their completed_at date, then uncompleted orders by their created_at
     scope :reverse_chronological, -> { order('spree_orders.completed_at IS NULL', completed_at: :desc, created_at: :desc) }
     scope :unreturned_exchange, -> { joins(:shipments).where('spree_orders.created_at > spree_shipments.created_at') }

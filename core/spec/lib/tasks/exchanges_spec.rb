@@ -69,6 +69,11 @@ describe "exchanges:charge_unreturned_items" do
         expect(Spree::Order.last).to be_completed
       end
 
+      it "sets frontend_viewable to false" do
+        subject.invoke
+        expect(Spree::Order.last).not_to be_frontend_viewable
+      end
+
       it "moves the shipment for the unreturned items to the new order" do
         subject.invoke
         new_order = Spree::Order.last
