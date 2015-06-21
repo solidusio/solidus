@@ -6,7 +6,6 @@
 //= require jquery-ui/autocomplete
 //= require modernizr
 //= require jquery.cookie
-//= require jquery.delayedobserver
 //= require jquery.jstree/jquery.jstree
 //= require jquery.alerts/jquery.alerts
 //= require jquery.powertip
