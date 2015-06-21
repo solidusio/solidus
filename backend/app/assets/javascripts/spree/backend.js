@@ -10,7 +10,6 @@
 //= require jquery.alerts/jquery.alerts
 //= require jquery.powertip
 //= require jquery.vAlign
-//= require css_browser_selector_dev
 //= require spin
 //= require jquery.adaptivemenu
 //= require equalize

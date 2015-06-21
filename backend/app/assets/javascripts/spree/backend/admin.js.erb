@@ -256,10 +256,6 @@ $(document).ready(function(){
       });
   });
 
-  $('a.dismiss').click(function() {
-    $(this).parent().fadeOut();
-  });
-
   window.Spree.advanceOrder = function() {
       Spree.ajax({
           type: "PUT",
