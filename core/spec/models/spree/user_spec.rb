@@ -28,13 +28,13 @@ describe Spree::LegacyUser, :type => :model do
     end
 
     it "excludes orders created prior to the user's last completed order" do
-      incomplete_order = create(:order, user: user, created_by: user)
+      incomplete_order = create(:order, user: user, created_by: user, created_at: 1.second.ago)
       completed_order = create(:completed_order_with_totals, user: user, created_by: user)
       expect(user.last_incomplete_spree_order).to eq nil
     end
 
     it "chooses the most recently created incomplete order" do
-      order_1 = create(:order, user: user)
+      order_1 = create(:order, user: user, created_at: 1.second.ago)
       order_2 = create(:order, user: user)
       expect(user.last_incomplete_spree_order).to eq order_2
     end
