@@ -1,30 +1,30 @@
 
-![](https://s3.amazonaws.com/i.hawth.ca/u/solidus.png)
+![](https://raw.githubusercontent.com/solidusio/solidus/master/solidus.png)
 
 Summary
 -------
 
 Solidus is a complete open source e-commerce solution built with Ruby on Rails. It
-is a fork of spree.
+is a fork of Spree.
 
 Solidus actually consists of several different gems, each of which are maintained
 in a single repository and documented in a single set of
 [online documentation](http://docs.solidus.io/). By requiring the
 solidus gem you automatically require all of the necessary gem dependencies which are:
 
-* solidus_api (RESTful API)
-* solidus_frontend (User-facing components)
-* solidus_backend (Admin area)
-* solidus_core (Models & Mailers, the basic components of Solidus that it can't run without)
-* solidus_sample (Sample data)
+* solidus\_api (RESTful API)
+* solidus\_frontend (User-facing components)
+* solidus\_backend (Admin area)
+* solidus\_core (Models & Mailers, the basic components of Solidus that it can't run without)
+* solidus\_sample (Sample data)
 
 All of the gems are designed to work together to provide a fully functional
 e-commerce platform. It is also possible, however, to use only the pieces you
 are interested in. For example, you could use just the barebones solidus\_core
 gem and perhaps combine it with your own custom frontend instead of using
-solidus_frontend.
+solidus\_frontend.
 
-[![Circle CI](https://circleci.com/gh/solidusio/solidus/tree/master.svg?style=shield&circle-token=a181a07d1f92f7297b8174d5c77091ecc5d3cdf7)](https://circleci.com/gh/solidusio/solidus/tree/master)
+[![Circle CI](https://circleci.com/gh/solidusio/solidus/tree/master.svg?style=shield)](https://circleci.com/gh/solidusio/solidus/tree/master)
 [![Gem](https://img.shields.io/gem/v/solidus.svg)](https://rubygems.org/gems/solidus)
 [![License](http://img.shields.io/badge/license-BSD-yellowgreen.svg)](LICENSE.md)
 
@@ -97,7 +97,7 @@ Use the install generator to set up Solidus:
 rails g spree:install --sample=false --seed=false
 ```
 
-At this point, if you are using solidus_auth_devise you will need to change this
+At this point, if you are using solidus\_auth\_devise you will need to change this
 line in `config/initializers/spree.rb`:
 
 ```ruby
