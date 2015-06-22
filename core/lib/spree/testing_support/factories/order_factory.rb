@@ -47,7 +47,7 @@ FactoryGirl.define do
 
         after(:create) do |order|
           order.refresh_shipment_rates
-          order.update_column(:completed_at, Time.now)
+          order.update_column(:completed_at, Time.current)
         end
 
         factory :completed_order_with_pending_payment do
