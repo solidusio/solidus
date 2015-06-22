@@ -8,7 +8,7 @@ module Spree
       ]
 
       before_filter :load_stock_locations, only: [:index, :new]
-      before_filter :load_variant_display_attributes, only: [:receive, :edit]
+      before_filter :load_variant_display_attributes, only: [:receive, :edit, :show, :tracking_info]
       before_filter :load_destination_stock_locations, only: :edit
       before_filter :ensure_access_to_stock_location, only: :create
       before_filter :ensure_receivable_stock_transfer, only: :receive
@@ -19,7 +19,7 @@ module Spree
 
       def finalize
         if @stock_transfer.finalize(try_spree_current_user)
-          redirect_to admin_stock_transfers_path
+          redirect_to tracking_info_admin_stock_transfer_path(@stock_transfer)
         else
           flash[:error] = @stock_transfer.errors.full_messages.join(", ")
           redirect_to edit_admin_stock_transfer_path(@stock_transfer)
@@ -38,6 +38,17 @@ module Spree
         end
       end
 
+      def ship
+        if @stock_transfer.transfer
+          @stock_transfer.ship(shipped_at: DateTime.now)
+          flash[:success] = Spree.t(:stock_transfer_complete)
+          redirect_to admin_stock_transfers_path
+        else
+          flash[:error] = @stock_transfer.errors.full_messages.join(", ")
+          redirect_to tracking_info_admin_stock_transfer_path(@stock_transfer)
+        end
+      end
+
       protected
 
       def collection
@@ -49,6 +60,7 @@ module Spree
         end
         params[:q].delete(:closed_at_null) unless @show_only_open
         @search = super.ransack(params[:q])
+        @search.sorts = 'created_at desc'
         @search.result.
           page(params[:page]).
           per(params[:per_page] || Spree::Config[:orders_per_page])
@@ -75,7 +87,7 @@ module Spree
         if action == :create
           edit_admin_stock_transfer_path(@stock_transfer)
         else
-          collection_url
+          :back
         end
       end
 

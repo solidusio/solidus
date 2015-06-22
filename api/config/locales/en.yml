@@ -19,6 +19,7 @@ en:
         could_not_transition: "The order could not be transitioned. Please fix the errors and try again."
         invalid_shipping_method: "Invalid shipping method specified."
         expected_total_mismatch: "Expected total does not match actual total."
+        quantity_is_not_available: "Quantity is not available for items in your order"
       payment:
         credit_over_limit: "This payment can only be credited up to %{limit}. Please specify an amount less than or equal to this number."
         update_forbidden: "This payment cannot be updated because it is %{state}."

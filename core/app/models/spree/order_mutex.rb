@@ -17,14 +17,16 @@ module Spree
         # limit the maximum lock time just in case a lock is somehow left in place accidentally
         expired.where(order: order).delete_all
 
-        order_mutex = create!(order: order)
+        begin
+          order_mutex = create!(order: order)
+        rescue ActiveRecord::RecordNotUnique
+          error = LockFailed.new("Could not obtain lock on order #{order.id}")
+          logger.error error.inspect
+          raise error
+        end
 
         yield
 
-      rescue ActiveRecord::RecordNotUnique
-        error = LockFailed.new("Could not obtain lock on order #{order.id}")
-        logger.error error.inspect
-        raise error
       ensure
         order_mutex.destroy if order_mutex
       end

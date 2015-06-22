@@ -231,7 +231,7 @@ module Spree
             end
 
             context "when the promotion exceeds its usage limit" do
-              let(:second_order) { create(:order, coupon_code: "10off", item_total: 50, ship_total: 10) }
+              let!(:second_order) { FactoryGirl.create(:completed_order_with_promotion, promotion: promotion) }
 
               before do
                 promotion.update!(usage_limit: 1)
@@ -246,39 +246,6 @@ module Spree
               it "returns a coupon is at max usage error" do
                 subject.apply
                 expect(subject.error).to eq Spree.t(:coupon_code_max_usage)
-              end
-            end
-
-            context "when the promotion code exceeds its usage limit" do
-              let(:second_order) { create(:order, coupon_code: "10off", item_total: 50, ship_total: 10) }
-
-              before do
-                promotion.update!(per_code_usage_limit: 1)
-                Coupon.new(second_order).apply
-              end
-
-              it "is not successful" do
-                subject.apply
-                expect(subject.successful?).to be false
-              end
-
-              it "returns a coupon is at max usage error" do
-                subject.apply
-                expect(subject.error).to eq Spree.t(:coupon_code_max_usage)
-              end
-            end
-
-            context "when the a new coupon is less good" do
-              let!(:action_5) { Promotion::Actions::CreateAdjustment.create(promotion: promotion_5, calculator: calculator_5) }
-              let(:calculator_5) { Calculator::FlatRate.new(preferred_amount: 5) }
-              let!(:promotion_5) { Promotion.create name: "promo" }
-              let!(:promotion_code_5) { promotion_5.codes.create! value: "5off"  }
-
-              it 'notifies of better deal' do
-                subject.apply
-                allow(order).to receive_messages( { coupon_code: '5off' } )
-                coupon = Coupon.new(order).apply
-                expect(coupon.error).to eq Spree.t(:coupon_code_better_exists)
               end
             end
           end

@@ -163,6 +163,8 @@ Spree::Core::Engine.add_routes do
         get :receive
         put :finalize
         put :close
+        get :tracking_info
+        put :ship
       end
     end
 

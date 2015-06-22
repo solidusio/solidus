@@ -48,6 +48,10 @@
           <%= f.label :active, Spree.t(:fulfillable_stock) %>
           <%= f.check_box :fulfillable %>
         </li>
+        <li class="fullwidth">
+          <%= f.label :check_stock_on_transfer, Spree.t(:check_stock_on_transfer) %>
+          <%= f.check_box :check_stock_on_transfer %>
+        </li>
       </ul>
     <% end %>
   </div>

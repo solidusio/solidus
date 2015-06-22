@@ -1,9 +1,11 @@
 module Spree
   class StockTransfer < Spree::Base
-    class CannotModifyClosedStockTransfer < StandardError; end
+    class InvalidTransferMovement < StandardError; end
+
+    acts_as_paranoid
 
     has_many :stock_movements, :as => :originator
-    has_many :transfer_items
+    has_many :transfer_items, inverse_of: :stock_transfer
 
     belongs_to :created_by, :class_name => Spree.user_class.to_s
     belongs_to :finalized_by, :class_name => Spree.user_class.to_s
@@ -15,6 +17,8 @@ module Spree
     validates_presence_of :destination_location, if: :finalized?
 
     make_permalink field: :number, prefix: 'T'
+
+    before_destroy :ensure_not_finalized
 
     def to_param
       number
@@ -71,12 +75,33 @@ module Spree
       end
     end
 
+    def transfer
+      transaction do
+        transfer_items.each do |item|
+          raise InvalidTransferMovement unless item.valid?
+          source_location.unstock(item.variant, item.expected_quantity, self)
+        end
+      end
+    rescue InvalidTransferMovement
+      errors.add(:base, Spree.t(:not_enough_stock))
+      false
+    end
+
     def close(closed_by)
       if receivable?
         self.update_attributes({ closed_at: Time.now, closed_by: closed_by })
       else
         errors.add(:base, Spree.t(:stock_transfer_must_be_receivable))
         false
+      end
+    end
+
+    private
+
+    def ensure_not_finalized
+      if finalized?
+        errors.add(:base, Spree.t('errors.messages.cannot_delete_finalized_stock_transfer'))
+        return false
       end
     end
   end

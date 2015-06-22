@@ -9,7 +9,15 @@ module Spree
         end
       end
 
-      def status(stock_transfer)
+      def stock_transfer_edit_or_ship_path(stock_transfer)
+        if stock_transfer.finalized?
+          tracking_info_admin_stock_transfer_path(stock_transfer)
+        else
+          edit_admin_stock_transfer_path(stock_transfer)
+        end
+      end
+
+      def stock_transfer_status(stock_transfer)
         stock_transfer.closed? ? Spree.t(:closed) : Spree.t(:open)
       end
     end

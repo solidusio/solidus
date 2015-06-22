@@ -19,7 +19,9 @@ module Spree
 
     before_validation :set_cost_zero_when_nil
 
-    attr_accessor :special_instructions
+    # TODO remove the suppress_mailer temporary variable once we are calling 'ship'
+    # from outside of the state machine and can actually pass variables through.
+    attr_accessor :special_instructions, :suppress_mailer
 
     accepts_nested_attributes_for :address
     accepts_nested_attributes_for :inventory_units
@@ -37,14 +39,8 @@ module Spree
     # shipment state machine (see http://github.com/pluginaweek/state_machine/tree/master for details)
     state_machine initial: :pending, use_transactions: false do
       event :ready do
-        # TODO: Remove this transition and the #requires_shipment? method when
-        # we stop marking shipments as shipped
-        transition from: :pending, to: :shipped, if: lambda {|shipment| !shipment.requires_shipment? }
-
-        transition from: :pending, to: :ready, if: lambda { |shipment|
-          # Fix for #2040
-          shipment.determine_state(shipment.order) == 'ready'
-        }
+        transition from: :pending, to: :shipped, if: :can_transition_from_pending_to_shipped?
+        transition from: :pending, to: :ready, if: :can_transition_from_pending_to_ready?
       end
 
       event :pend do
@@ -62,12 +58,7 @@ module Spree
       after_transition to: :canceled, do: :after_cancel
 
       event :resume do
-        transition from: :canceled, to: :ready, if: lambda { |shipment|
-          shipment.determine_state(shipment.order) == :ready
-        }
-        transition from: :canceled, to: :pending, if: lambda { |shipment|
-          shipment.determine_state(shipment.order) == :ready
-        }
+        transition from: :canceled, to: :ready, if: :can_transition_from_canceled_to_ready?
         transition from: :canceled, to: :pending
       end
       after_transition from: :canceled, to: [:pending, :ready, :shipped], do: :after_resume
@@ -79,6 +70,19 @@ module Spree
           name:           'shipment',
         )
       end
+    end
+
+    def can_transition_from_pending_to_shipped?
+      !requires_shipment?
+    end
+
+    def can_transition_from_pending_to_ready?
+      order.can_ship? && !inventory_units.any?(&:backordered?) &&
+        (order.paid? || !Spree::Config[:require_payment_to_ship])
+    end
+
+    def can_transition_from_canceled_to_ready?
+      can_transition_from_pending_to_ready?
     end
 
     extend DisplayMoney
@@ -103,19 +107,6 @@ module Spree
 
     def currency
       order ? order.currency : Spree::Config[:currency]
-    end
-
-    # Determines the appropriate +state+ according to the following logic:
-    #
-    # pending    unless order is complete and +order.payment_state+ is +paid+
-    # shipped    if already shipped (ie. does not change the state)
-    # ready      all other cases
-    def determine_state(order)
-      return 'canceled' if order.canceled?
-      return 'pending' unless order.can_ship?
-      return 'pending' if inventory_units.any? &:backordered?
-      return 'shipped' if state == 'shipped'
-      order.paid? ? 'ready' : 'pending'
     end
 
     def discounted_cost
@@ -236,6 +227,24 @@ module Spree
       shipping_rates.update_all(selected: false)
       shipping_rates.update(id, selected: true)
       self.save!
+    end
+
+    # Determines the appropriate +state+ according to the following logic:
+    #
+    # canceled   if order is canceled
+    # pending    unless order is complete and +order.payment_state+ is +paid+
+    # shipped    if already shipped (ie. does not change the state)
+    # ready      all other cases
+    def determine_state(order)
+      return 'canceled' if order.canceled?
+      return 'pending' unless order.can_ship?
+      return 'pending' if inventory_units.any? &:backordered?
+      return 'shipped' if state == 'shipped'
+      if order.paid? || !Spree::Config[:require_payment_to_ship]
+        'ready'
+      else
+        'pending'
+      end
     end
 
     def set_up_inventory(state, variant, order, line_item)
@@ -379,7 +388,7 @@ module Spree
     private
 
       def after_ship
-        order.shipping.ship_shipment(self)
+        order.shipping.ship_shipment(self, suppress_mailer: suppress_mailer)
       end
 
       def can_get_rates?

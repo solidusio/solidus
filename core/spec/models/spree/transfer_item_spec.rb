@@ -1,7 +1,8 @@
 require 'spec_helper'
 
 describe Spree::TransferItem do
-  let(:stock_transfer) { create(:stock_transfer_with_items) }
+  let(:stock_location) { create(:stock_location, name: "Warehouse") }
+  let(:stock_transfer) { create(:stock_transfer_with_items, source_location: stock_location) }
   let(:transfer_item)  { stock_transfer.transfer_items.first }
 
   subject { transfer_item }
@@ -78,6 +79,13 @@ describe Spree::TransferItem do
             stock_item.set_count_on_hand(0)
           end
           include_examples 'availability check passes'
+
+          context "stock location doesn't check stock" do
+            before do
+              stock_location.update_attributes!(check_stock_on_transfer: false)
+            end
+            include_examples 'availability check passes'
+          end
         end
 
         context "variant available" do
@@ -105,6 +113,13 @@ describe Spree::TransferItem do
             stock_item.set_count_on_hand(0)
           end
           include_examples 'availability check fails'
+
+          context "stock location doesn't check stock" do
+            before do
+              stock_location.update_attributes!(check_stock_on_transfer: false)
+            end
+            include_examples 'availability check passes'
+          end
         end
 
         context "variant available" do
@@ -151,6 +166,41 @@ describe Spree::TransferItem do
     end
   end
 
+  describe "expected quantity update guard" do
+    let(:attrs) { { expected_quantity: 1 } }
+
+    subject { transfer_item.update_attributes(attrs) }
+
+    context "stock transfer is finalized" do
+      before do
+        stock_transfer.update_attributes(finalized_at: Time.now)
+      end
+
+      it "adds an error message" do
+        subject
+        expect(transfer_item.errors.full_messages).to include Spree.t('errors.messages.cannot_update_expected_transfer_item_with_finalized_stock_transfer')
+      end
+
+      context "updating received_quantity" do
+        let(:attrs) { { received_quantity: 1 } }
+
+        it "updates the received quantity successfully" do
+          expect { subject }.to change { transfer_item.received_quantity }.to(1)
+        end
+      end
+    end
+
+    context "stock transfer is not finalized" do
+      before do
+        stock_transfer.update_attributes(finalized_at: nil, shipped_at: nil)
+      end
+
+      it "updates the expected quantity successfully" do
+        expect { subject }.to change { transfer_item.expected_quantity }.to(1)
+      end
+    end
+  end
+
   describe "destroy finalized stock transfer guard" do
     subject { transfer_item.destroy }
 
@@ -176,6 +226,38 @@ describe Spree::TransferItem do
 
       it "destroys the transfer item" do
         expect { subject }.to change { Spree::TransferItem.count }.by(-1)
+      end
+    end
+
+    context "scopes" do
+      let(:partially_received) { stock_transfer.transfer_items.first }
+      let(:fully_received) { stock_transfer.transfer_items.last }
+      let(:variant) { create(:variant)}
+
+      before do
+        fully_received.update_attributes(expected_quantity: 1, received_quantity: 1)
+        partially_received.update_attributes(expected_quantity: 2, received_quantity: 1)
+
+        stock_transfer.source_location.stock_item(variant).set_count_on_hand(5)
+        stock_transfer.transfer_items.create!(variant: variant, expected_quantity: 1, received_quantity: 0)
+      end
+
+      context '.received' do
+        it 'only returns items that have received quantity greater than 0' do
+          expect(Spree::TransferItem.received).to match_array [fully_received, partially_received]
+        end
+      end
+
+      context '.fully_received' do
+        it 'returns only items that have not been fully received' do
+          expect(Spree::TransferItem.fully_received).to eq [fully_received]
+        end
+      end
+
+      context '.partially_received' do
+        it 'returns only items where received quantity is less that expected' do
+          expect(Spree::TransferItem.partially_received).to eq [partially_received]
+        end
       end
     end
   end

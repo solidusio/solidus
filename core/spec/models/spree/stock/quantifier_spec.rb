@@ -2,9 +2,9 @@ require 'spec_helper'
 
 shared_examples_for 'unlimited supply' do
   it 'can_supply? any amount' do
-    expect(subject.can_supply?(1)).to be true
-    expect(subject.can_supply?(101)).to be true
-    expect(subject.can_supply?(100_001)).to be true
+    expect(subject.can_supply?(1)).to eq true
+    expect(subject.can_supply?(101)).to eq true
+    expect(subject.can_supply?(100_001)).to eq true
   end
 end
 
@@ -12,17 +12,17 @@ module Spree
   module Stock
     describe Quantifier, :type => :model do
 
+      let(:target_stock_location) { nil }
       let!(:stock_location) { create :stock_location_with_items  }
       let!(:stock_item) { stock_location.stock_items.order(:id).first }
 
-      subject { described_class.new(stock_item.variant) }
+      subject { described_class.new(stock_item.variant, target_stock_location) }
 
       specify { expect(subject.stock_items).to eq([stock_item]) }
 
-
       context 'with a single stock location/item' do
         it 'total_on_hand should match stock_item' do
-          expect(subject.total_on_hand).to eq(stock_item.count_on_hand)
+          expect(subject.total_on_hand).to eq stock_item.count_on_hand
         end
 
         context 'when track_inventory_levels is false' do
@@ -42,7 +42,6 @@ module Spree
         end
 
         context 'when stock item allows backordering' do
-
           specify { expect(subject.backorderable?).to be true }
 
           it_should_behave_like 'unlimited supply'
@@ -93,6 +92,22 @@ module Spree
           end
         end
 
+      end
+
+      context 'with a specific stock location' do
+        let!(:stock_location_2)     { create :stock_location }
+        let!(:stock_location_3)     { create :stock_location, active: false }
+        let(:target_stock_location) { stock_location_3 }
+
+        before do
+          Spree::StockItem.update_all(count_on_hand: 0, backorderable: false)
+          stock_location_3.stock_items.where(variant_id: stock_item.variant).update_all(count_on_hand: 5, backorderable: false)
+        end
+
+        it 'can_supply? only upto total_on_hand' do
+          expect(subject.can_supply?(5)).to eq true
+          expect(subject.can_supply?(6)).to eq false
+        end
       end
 
     end

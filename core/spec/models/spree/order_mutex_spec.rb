@@ -68,4 +68,29 @@ describe Spree::OrderMutex do
       }.to yield_control.once
     end
   end
+
+  context "when an unrelated RecordNotUnique error occurs" do
+    with_model 'Widget' do
+      table do |t|
+        t.integer :order_id
+      end
+    end
+
+    before do
+      ActiveRecord::Base.connection.add_index Widget.table_name, :order_id, unique: true
+    end
+
+    def raise_record_not_unique
+      Widget.create!(order_id: 1)
+      Widget.create!(order_id: 1)
+    end
+
+    it "does not rescue the unrelated error" do
+      expect {
+        Spree::OrderMutex.with_lock!(order) do
+          raise_record_not_unique
+        end
+      }.to raise_error(ActiveRecord::RecordNotUnique)
+    end
+  end
 end

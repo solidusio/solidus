@@ -333,32 +333,28 @@ describe Spree::Payment, :type => :model do
             end
           end
 
-          context 'for partial amount' do
-            let(:original_amount) { payment.money.money.cents }
-            let(:capture_amount) { original_amount - 100 }
+          it "logs capture events" do
+            payment.capture!
+            expect(payment.capture_events.count).to eq(1)
+            expect(payment.capture_events.first.amount).to eq(payment.amount)
+          end
+        end
 
-            before do
-              expect(payment.payment_method).to receive(:capture).with(capture_amount, payment.response_code, anything).and_return(success_response)
-            end
+        context "capturing a partial amount" do
+          it "logs capture events" do
+            payment.capture!(5000)
+            expect(payment.capture_events.count).to eq(1)
+            expect(payment.capture_events.first.amount).to eq(50)
+          end
 
-            it "should make payment complete & create pending payment for remaining amount" do
-              expect(payment).to receive(:complete!)
-              payment.capture!(capture_amount)
-              order = payment.order
-              payments = order.payments
+          it "stores the captured amount on the payment" do
+            payment.capture!(6000)
+            expect(payment.captured_amount).to eq(60)
+          end
 
-              expect(payments.size).to eq 2
-              expect(payments.pending.first.amount).to eq 1
-              # Payment stays processing for spec because of receive(:complete!) stub.
-              expect(payments.processing.first.amount).to eq(capture_amount / 100)
-              expect(payments.processing.first.source).to eq(payments.pending.first.source)
-            end
-
-            it "logs capture events" do
-              payment.capture!(capture_amount)
-              expect(payment.capture_events.count).to eq(1)
-              expect(payment.capture_events.first.amount).to eq(capture_amount / 100)
-            end
+          it "updates the amount of the payment" do
+            payment.capture!(6000)
+            expect(payment.reload.amount).to eq(60)
           end
         end
 
@@ -586,7 +582,7 @@ describe Spree::Payment, :type => :model do
 
       context "when there is an error connecting to the gateway" do
         it "should call gateway_error " do
-          expect(gateway).to receive(:create_profile).and_raise(ActiveMerchant::ConnectionError)
+          expect(gateway).to receive(:create_profile).and_raise(ActiveMerchant::ConnectionError.new("foo", nil))
           expect do
             Spree::Payment.create(
               :amount => 100,
@@ -959,6 +955,37 @@ describe Spree::Payment, :type => :model do
         {"checkout" => "processing"},
         { "processing" => "pending"}
       ])
+    end
+  end
+
+  describe "#actions" do
+    let(:source) { Spree::CreditCard.new }
+    before { allow(subject).to receive(:payment_source) { source } }
+
+    it "includes the actions that the source can take" do
+      allow(source).to receive(:can_capture?) { true }
+      expect(subject.actions).to include "capture"
+    end
+
+    it "excludes actions that the source cannot take" do
+      allow(source).to receive(:can_capture?) { false }
+      expect(subject.actions).not_to include "capture"
+    end
+
+    it "does not include 'failure' by default" do
+      expect(subject.actions).not_to include "failure"
+    end
+
+    context "payment state is processing" do
+      it "includes the 'failure' action" do
+        # because the processing state does not provide
+        # clarity about what has happened with an external
+        # payment processor, so we want to allow the ability
+        # to have someone look at the what happened and determine
+        # to mark the payment as having failed
+        subject.state = 'processing'
+        expect(subject.actions).to include "failure"
+      end
     end
   end
 end

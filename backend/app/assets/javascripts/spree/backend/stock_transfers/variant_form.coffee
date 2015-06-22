@@ -1,6 +1,6 @@
 class VariantForm
-  @initializeForm: ->
-    autoCompleteEl().variantAutocomplete()
+  @initializeForm: (isBuilding) ->
+    autoCompleteEl().variantAutocomplete({ in_stock_only: isBuilding })
     resetVariantAutocomplete()
 
   @beginListeningForReceive: ->
@@ -42,7 +42,7 @@ class VariantForm
       transferItem = new Spree.TransferItem
         id: transferItemId
         stockTransferNumber: stockTransferNumber
-        expectedQuantity: expectedQuantity
+        expectedQuantity: expectedQuantity + 1
       transferItem.update(updateSuccessHandler, errorHandler)
     else
       transferItem = new Spree.TransferItem
@@ -67,11 +67,11 @@ class VariantForm
     show_flash('success', Spree.translations.updated_successfully)
 
   receiveSuccessHandler = (stockTransfer, variantId) =>
-    stockTransfer = new Spree.StockTransfer
-      number: stockTransfer.number
-      transferItems: stockTransfer.transfer_items
-    transferItem = stockTransfer.findTransferItemByVariantId(variantId)
-    successHandler(transferItem, variantId, true)
+    receivedItem =
+      id: stockTransfer.received_item.id
+      variant: stockTransfer.received_item.variant
+      received_quantity: stockTransfer.received_item.received_quantity
+    successHandler(receivedItem, true)
     Spree.StockTransfers.ReceivedCounter.updateTotal()
     show_flash('success', Spree.translations.received_successfully)
 

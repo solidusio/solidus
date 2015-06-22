@@ -519,4 +519,28 @@ describe Spree::Variant, :type => :model do
       expect(Spree::Variant.in_stock).to eq [in_stock_variant]
     end
   end
+
+  describe "#display_image" do
+    subject { variant.display_image }
+
+    context "variant has associated images" do
+      let(:attachment) { File.open(File.expand_path('../../../fixtures/thinking-cat.jpg', __FILE__)) }
+      let(:image_params) { { viewable_id: variant.id, viewable_type: 'Spree::Variant', attachment: attachment, alt: "position 1", position: 1 } }
+      let!(:first_image) { Spree::Image.create(image_params) }
+      let!(:second_image) { image_params.merge(alt: "position 2", position: 2) }
+
+      it "returns the first image" do
+        expect(subject).to eq first_image
+      end
+    end
+
+    context "variant does not have any associated images" do
+      it "returns an image" do
+        expect(subject).to be_a(Spree::Image)
+      end
+      it "returns unpersisted record" do
+        expect(subject).to be_new_record
+      end
+    end
+  end
 end

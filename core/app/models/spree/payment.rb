@@ -156,8 +156,9 @@ module Spree
 
     # @return [Array<String>] the actions available on this payment
     def actions
-      return [] unless payment_source and payment_source.respond_to? :actions
-      payment_source.actions.select { |action| !payment_source.respond_to?("can_#{action}?") or payment_source.send("can_#{action}?", self) }
+      sa = source_actions
+      sa |= ["failure"] if processing?
+      sa
     end
 
     # @return [Object] the source of ths payment
@@ -190,13 +191,17 @@ module Spree
       amount - captured_amount
     end
 
-
     # @return [Boolean] true when the payment method exists and is a store credit payment method
     def store_credit?
       payment_method.try!(:store_credit?)
     end
 
     private
+
+      def source_actions
+        return [] unless payment_source and payment_source.respond_to? :actions
+        payment_source.actions.select { |action| !payment_source.respond_to?("can_#{action}?") or payment_source.send("can_#{action}?", self) }
+      end
 
       def validate_source
         if source && !source.valid?
@@ -234,20 +239,6 @@ module Spree
           order.payments.checkout.where(payment_method: payment_method).where("id != ?", self.id).each do |payment|
             payment.invalidate!
           end
-        end
-      end
-
-      def split_uncaptured_amount
-        if uncaptured_amount > 0
-          order.payments.create! amount: uncaptured_amount,
-                                 avs_response: avs_response,
-                                 cvv_response_code: cvv_response_code,
-                                 cvv_response_message: cvv_response_message,
-                                 payment_method: payment_method,
-                                 response_code: response_code,
-                                 source: source,
-                                 state: 'pending'
-          update_attributes(amount: captured_amount)
         end
       end
 

@@ -1,9 +1,10 @@
 module Spree
   class TransferItem < ActiveRecord::Base
-    belongs_to :stock_transfer
+    acts_as_paranoid
+    belongs_to :stock_transfer, inverse_of: :transfer_items
     belongs_to :variant
 
-    validate :stock_availability, unless: :stock_transfer_closed?
+    validate :stock_availability, if: :check_stock?
     validates_presence_of :stock_transfer, :variant
     validates_uniqueness_of :variant_id, scope: :stock_transfer_id
     validates :expected_quantity, numericality: { greater_than: 0 }
@@ -11,9 +12,11 @@ module Spree
 
     scope :received, -> { where('received_quantity > 0') }
     scope :fully_received, -> { where('expected_quantity = received_quantity') }
+    scope :partially_received, -> { received.where('expected_quantity > received_quantity') }
 
     before_destroy :ensure_stock_transfer_not_finalized
     before_validation :ensure_stock_transfer_not_closed
+    before_update :prevent_expected_quantity_update_stock_transfer_finalized
 
     private
 
@@ -30,6 +33,13 @@ module Spree
       end
     end
 
+    def prevent_expected_quantity_update_stock_transfer_finalized
+      if expected_quantity_changed? && stock_transfer.finalized?
+        errors.add(:base, Spree.t('errors.messages.cannot_update_expected_transfer_item_with_finalized_stock_transfer'))
+        return false
+      end
+    end
+
     def stock_availability
       stock_item = variant.stock_items.find_by(stock_location: stock_transfer.source_location)
       if stock_item.nil? || stock_item.count_on_hand < expected_quantity
@@ -39,6 +49,10 @@ module Spree
 
     def stock_transfer_closed?
       stock_transfer.closed?
+    end
+
+    def check_stock?
+      !stock_transfer_closed? && stock_transfer.source_location.check_stock_on_transfer?
     end
   end
 end

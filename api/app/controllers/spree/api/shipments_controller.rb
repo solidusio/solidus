@@ -54,7 +54,9 @@ module Spree
       end
 
       def ship
+        authorize! :ship, @shipment
         unless @shipment.shipped?
+          @shipment.suppress_mailer = (params[:send_mailer] == 'false')
           @shipment.ship!
         end
         respond_with(@shipment, default_template: :show)

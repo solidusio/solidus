@@ -12,6 +12,8 @@ module Spree
     include Spree::Order::CurrencyUpdater
     include Spree::Order::Payments
 
+    class InsufficientStock < StandardError; end
+
     extend Spree::DisplayMoney
     money_methods :outstanding_balance, :item_total, :adjustment_total,
       :included_tax_total, :additional_tax_total, :tax_total,
@@ -661,7 +663,7 @@ module Spree
       other_payments = payments.checkout.not_store_credits
       if remaining_total.zero?
         other_payments.each(&:invalidate!)
-      elsif other_payments.any?
+      elsif other_payments.size == 1
         other_payments.first.update_attributes!(amount: remaining_total)
       end
 
@@ -717,15 +719,22 @@ module Spree
         inventory_validator = Spree::Stock::InventoryValidator.new
 
         errors = line_items.map { |line_item| inventory_validator.validate(line_item) }.compact
-        raise Spree::LineItem::InsufficientStock if errors.any?
+        raise InsufficientStock if errors.any?
       end
+    end
+
+    def ensure_promotions_eligible
+      updater.update_adjustment_total
+      if promo_total_changed?
+        restart_checkout_flow
+        errors.add(:base, Spree.t(:promotion_total_changed_before_complete))
+      end
+      errors.empty?
     end
 
     def validate_line_item_availability
       availability_validator = Spree::Stock::AvailabilityValidator.new
-
-      errors = line_items.map { |line_item| availability_validator.validate(line_item) }.compact
-      raise Spree::LineItem::InsufficientStock if errors.any?
+      raise InsufficientStock unless line_items.all? { |line_item| availability_validator.validate(line_item) }
     end
 
     def ensure_line_items_present
