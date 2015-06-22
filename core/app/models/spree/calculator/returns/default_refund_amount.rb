@@ -9,7 +9,7 @@ module Spree
       end
 
       def compute(return_item)
-        return 0.0.to_d if return_item.exchange_requested?
+        return 0.0.to_d if return_item.part_of_exchange?
         weighted_order_adjustment_amount(return_item.inventory_unit) + weighted_line_item_pre_tax_amount(return_item.inventory_unit)
       end
 

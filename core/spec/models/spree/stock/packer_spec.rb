@@ -46,6 +46,19 @@ module Spree
           end
         end
 
+        context "not enough on hand and not backorderable" do
+          let(:packer) { Packer.new(stock_location, inventory_units) }
+
+          before do
+            stock_location.stock_items.update_all(backorderable: false)
+            stock_location.stock_items.each { |si| si.set_count_on_hand(0) }
+          end
+
+          it "raises an error" do
+            expect { packer.default_package }.to raise_error Spree::Order::InsufficientStock
+          end
+        end
+
         context "doesn't track inventory levels" do
           let(:variant) { build(:variant) }
           let(:order) { build(:order_with_line_items, line_items_count: 1) }

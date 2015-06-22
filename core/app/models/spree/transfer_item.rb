@@ -1,6 +1,7 @@
 module Spree
   class TransferItem < ActiveRecord::Base
-    belongs_to :stock_transfer
+    acts_as_paranoid
+    belongs_to :stock_transfer, inverse_of: :transfer_items
     belongs_to :variant
 
     validate :stock_availability, if: :check_stock?
@@ -15,6 +16,7 @@ module Spree
 
     before_destroy :ensure_stock_transfer_not_finalized
     before_validation :ensure_stock_transfer_not_closed
+    before_update :prevent_expected_quantity_update_stock_transfer_finalized
 
     private
 
@@ -27,6 +29,13 @@ module Spree
     def ensure_stock_transfer_not_finalized
       unless stock_transfer.finalizable?
         errors.add(:base, Spree.t('errors.messages.cannot_delete_transfer_item_with_finalized_stock_transfer'))
+        return false
+      end
+    end
+
+    def prevent_expected_quantity_update_stock_transfer_finalized
+      if expected_quantity_changed? && stock_transfer.finalized?
+        errors.add(:base, Spree.t('errors.messages.cannot_update_expected_transfer_item_with_finalized_stock_transfer'))
         return false
       end
     end

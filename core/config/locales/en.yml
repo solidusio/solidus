@@ -729,7 +729,9 @@ en:
     errors:
       messages:
         cannot_modify_transfer_item_closed_stock_transfer: Transfer items that are part of a closed stock transfer cannot be modified.
+        cannot_delete_finalized_stock_transfer: Finalized stock transfers cannot be destroyed.
         cannot_delete_transfer_item_with_finalized_stock_transfer: Transfer items that are part of a finalized stock transfer cannot be destroyed.
+        cannot_update_expected_transfer_item_with_finalized_stock_transfer: The expected quantity cannot be updated on transfer items that are part of a finalized stock transfer.
         could_not_create_taxon: Could not create taxon
         transfer_item_insufficient_stock: Transfer item's variant does not have enough stock in the stock transfer's source location
         no_payment_methods_available: No payment methods are configured for this environment
@@ -762,6 +764,7 @@ en:
     extension: Extension
     existing_shipments: Existing shipments
     failed_payment_attempts: Failed Payment Attempts
+    failure: Failure
     filename: Filename
     fill_in_customer_info: Please fill in customer info
     filter_results: Filter Results
@@ -1369,6 +1372,7 @@ en:
     stock_management_requires_a_stock_location: Please create a stock location in order to manage stock.
     stock_movements: Stock Movements
     stock_movements_for_stock_location: Stock Movements for %{stock_location_name}
+    stock_not_below_zero: Stock must not be below zero.
     stock_successfully_transferred: Stock was successfully transferred between locations.
     stock_transfer: Stock Transfer
     stock_transfer_cannot_be_finalized: Stock transfer cannot be finalized

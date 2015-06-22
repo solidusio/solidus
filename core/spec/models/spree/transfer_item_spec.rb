@@ -166,6 +166,41 @@ describe Spree::TransferItem do
     end
   end
 
+  describe "expected quantity update guard" do
+    let(:attrs) { { expected_quantity: 1 } }
+
+    subject { transfer_item.update_attributes(attrs) }
+
+    context "stock transfer is finalized" do
+      before do
+        stock_transfer.update_attributes(finalized_at: Time.now)
+      end
+
+      it "adds an error message" do
+        subject
+        expect(transfer_item.errors.full_messages).to include Spree.t('errors.messages.cannot_update_expected_transfer_item_with_finalized_stock_transfer')
+      end
+
+      context "updating received_quantity" do
+        let(:attrs) { { received_quantity: 1 } }
+
+        it "updates the received quantity successfully" do
+          expect { subject }.to change { transfer_item.received_quantity }.to(1)
+        end
+      end
+    end
+
+    context "stock transfer is not finalized" do
+      before do
+        stock_transfer.update_attributes(finalized_at: nil, shipped_at: nil)
+      end
+
+      it "updates the expected quantity successfully" do
+        expect { subject }.to change { transfer_item.expected_quantity }.to(1)
+      end
+    end
+  end
+
   describe "destroy finalized stock transfer guard" do
     subject { transfer_item.destroy }
 
