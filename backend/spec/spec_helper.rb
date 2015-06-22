@@ -65,7 +65,7 @@ RSpec.configure do |config|
     Rails.cache.clear
     reset_spree_preferences
     WebMock.disable!
-    if RSpec.current_example.metadata[:js]
+    if RSpec.current_example.metadata[:js] || RSpec.current_example.metadata[:truncation]
       DatabaseCleaner.strategy = :truncation
     else
       DatabaseCleaner.strategy = :transaction
@@ -73,7 +73,7 @@ RSpec.configure do |config|
     # TODO: Find out why open_transactions ever gets below 0
     # See issue #3428
     if ActiveRecord::Base.connection.open_transactions < 0
-      ActiveRecord::Base.connection.increment_open_transactions
+      raise "open_transactions is #{ActiveRecord::Base.connection.open_transactions}"
     end
 
     DatabaseCleaner.start
