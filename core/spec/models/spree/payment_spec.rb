@@ -582,7 +582,7 @@ describe Spree::Payment, :type => :model do
 
       context "when there is an error connecting to the gateway" do
         it "should call gateway_error " do
-          expect(gateway).to receive(:create_profile).and_raise(ActiveMerchant::ConnectionError)
+          expect(gateway).to receive(:create_profile).and_raise(ActiveMerchant::ConnectionError.new("foo", nil))
           expect do
             Spree::Payment.create(
               :amount => 100,
@@ -955,6 +955,37 @@ describe Spree::Payment, :type => :model do
         {"checkout" => "processing"},
         { "processing" => "pending"}
       ])
+    end
+  end
+
+  describe "#actions" do
+    let(:source) { Spree::CreditCard.new }
+    before { allow(subject).to receive(:payment_source) { source } }
+
+    it "includes the actions that the source can take" do
+      allow(source).to receive(:can_capture?) { true }
+      expect(subject.actions).to include "capture"
+    end
+
+    it "excludes actions that the source cannot take" do
+      allow(source).to receive(:can_capture?) { false }
+      expect(subject.actions).not_to include "capture"
+    end
+
+    it "does not include 'failure' by default" do
+      expect(subject.actions).not_to include "failure"
+    end
+
+    context "payment state is processing" do
+      it "includes the 'failure' action" do
+        # because the processing state does not provide
+        # clarity about what has happened with an external
+        # payment processor, so we want to allow the ability
+        # to have someone look at the what happened and determine
+        # to mark the payment as having failed
+        subject.state = 'processing'
+        expect(subject.actions).to include "failure"
+      end
     end
   end
 end

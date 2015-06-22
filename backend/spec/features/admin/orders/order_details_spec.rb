@@ -149,11 +149,12 @@ describe "Order Details", type: :feature, js: true do
           product.master.stock_items.first.update_column(:count_on_hand, 0)
         end
 
-        it "displays out of stock instead of add button" do
-          select2_search product.name, :from => Spree.t(:name_or_sku)
+        it "doesn't display the out of stock variant in the search results" do
+          select2_search_without_selection product.name, from: ".variant_autocomplete"
 
-          within("table.stock-levels") do
-            page.should have_content(0)
+          page.should have_selector('.select2-no-results')
+          within(".select2-no-results") do
+            page.should have_content("NO MATCHES FOUND")
           end
         end
       end
@@ -525,7 +526,8 @@ describe "Order Details", type: :feature, js: true do
       order.refresh_shipment_rates
       visit spree.edit_admin_order_path(order)
 
-      click_icon 'arrow-right'
+      find(".ship-shipment-button").click
+      wait_for_ajax
 
       within '.carton-state' do
         page.should have_content('SHIPPED')

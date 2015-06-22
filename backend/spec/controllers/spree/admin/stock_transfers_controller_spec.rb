@@ -4,10 +4,11 @@ module Spree
   describe Admin::StockTransfersController, :type => :controller do
     stub_authorization!
 
+    let(:warehouse) { StockLocation.create(name: "Warehouse")}
+    let(:ny_store) { StockLocation.create(name: "NY Store")}
+    let(:la_store) { StockLocation.create(name: "LA Store")}
+
     context "#index" do
-      let(:warehouse) { StockLocation.create(name: "Warehouse")}
-      let(:ny_store) { StockLocation.create(name: "NY Store")}
-      let(:la_store) { StockLocation.create(name: "LA Store")}
 
       let!(:stock_transfer1) {
         StockTransfer.create do |transfer|
@@ -153,9 +154,9 @@ module Spree
       end
 
       context "successfully finalized" do
-        it "redirects back to index" do
+        it "redirects to tracking_info" do
           subject
-          expect(response).to redirect_to(spree.admin_stock_transfers_path)
+          expect(response).to redirect_to(spree.tracking_info_admin_stock_transfer_path(transfer_with_items))
         end
 
         it "sets the finalized_by to the current user" do
@@ -277,6 +278,52 @@ module Spree
         it "displays a flash error message" do
           subject
           expect(flash[:error]).to eq "Destination location can't be blank"
+        end
+      end
+    end
+
+    context "#finish" do
+      let(:stock_transfer) { Spree::StockTransfer.create(source_location: warehouse, destination_location: ny_store, created_by: create(:admin_user))}
+      let(:transfer_variant) { create(:variant) }
+      let(:warehouse_stock_item) { warehouse.stock_items.find_by(variant: transfer_variant) }
+      let(:ny_stock_item) { ny_store.stock_items.find_by(variant: transfer_variant) }
+
+      before do
+        warehouse_stock_item.set_count_on_hand(1)
+        stock_transfer.transfer_items.create!(variant: transfer_variant, expected_quantity: 1)
+      end
+
+      context "with transferable items" do
+
+        it "marks the transfer shipped" do
+          spree_put :ship, :id => stock_transfer.number
+
+          expect(stock_transfer.reload.shipped_at).to_not be_nil
+          expect(flash[:success]).to be_present
+        end
+
+        it "makes stock movements for the transferred items" do
+          spree_put :ship, :id => stock_transfer.number
+
+          expect(Spree::StockMovement.count).to eq 1
+          expect(warehouse_stock_item.reload.count_on_hand).to eq 0
+        end
+      end
+
+      context "with non-transferable items" do
+        before { warehouse_stock_item.set_count_on_hand(0) }
+
+        it "does not mark the transfer shipped" do
+          spree_put :ship, :id => stock_transfer.number
+
+          expect(stock_transfer.reload.shipped_at).to be_nil
+        end
+
+        it "errors and redirects to tracking_info page" do
+          spree_put :ship, :id => stock_transfer.number
+
+          expect(flash[:error]).to match /not enough inventory/
+          expect(response).to redirect_to(spree.tracking_info_admin_stock_transfer_path(stock_transfer))
         end
       end
     end

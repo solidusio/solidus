@@ -22,6 +22,8 @@
 .fa-cancel:before,
 .fa-void:before      { @extend .fa-times:before    }
 
+.fa-failure:before   { @extend .fa-thumbs-down:before }
+
 .fa-trash:before     { @extend .fa-trash-o:before  }
 
 .fa-capture:before   { @extend .fa-check:before    }

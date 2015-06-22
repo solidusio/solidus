@@ -119,6 +119,7 @@ module Spree
               # until validations have passed
               before_transition to: :complete, do: :validate_line_item_availability, unless: :unreturned_exchange?
               before_transition to: :complete, do: :ensure_available_shipping_rates
+              before_transition to: :complete, do: :ensure_promotions_eligible
               before_transition to: :complete, do: :ensure_line_item_variants_are_not_deleted
               before_transition to: :complete, do: :ensure_line_items_are_in_stock
               before_transition to: :complete, do: :ensure_inventory_units, unless: :unreturned_exchange?

@@ -70,6 +70,30 @@ describe Spree::OrderCapturing do
         end
       end
 
+      context "when a payment is not needed to capture the entire order" do
+        let(:bogus_total) { order.total }
+        let(:secondary_payment_method) { SecondaryBogusPaymentMethod }
+        let(:payment_methods) { [Spree::Gateway::Bogus, SecondaryBogusPaymentMethod] }
+
+        context "when void_unused_payments is true" do
+          before { allow(Spree::OrderCapturing).to receive(:void_unused_payments).and_return(true) }
+
+          it "captures for the order and voids the unused payment" do
+            subject
+            expect(order.reload.payment_state).to eq 'paid'
+            expect(@secondary_bogus_payment.reload.state).to eq 'void'
+          end
+        end
+
+        context "when void_unused_payments is false" do
+          it "captures for the order and leaves the unused payment in a pending state" do
+            subject
+            expect(order.reload.payment_state).to eq 'paid'
+            expect(@secondary_bogus_payment.reload.state).to eq 'pending'
+          end
+        end
+      end
+
       context "when there is an error processing a payment" do
         let(:secondary_payment_method) { ExceptionallyBogusPaymentMethod }
         let(:bogus_total) { order.total - 1 }
@@ -78,7 +102,7 @@ describe Spree::OrderCapturing do
 
         class ExceptionallyBogusPaymentMethod < Spree::Gateway::Bogus
           def capture(*args)
-            raise ActiveMerchant::ConnectionError
+            raise ActiveMerchant::ConnectionError.new("foo", nil)
           end
         end
 

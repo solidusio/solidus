@@ -2,10 +2,11 @@ require 'spec_helper'
 
 describe Spree::OrderCancellations do
   describe "#short_ship" do
-    subject { order.cancellations.short_ship([inventory_unit]) }
+    subject { Spree::OrderCancellations.new(order).short_ship([inventory_unit]) }
 
     let(:order) { create(:order_ready_to_ship, line_items_count: 1) }
     let(:inventory_unit) { order.inventory_units.first }
+    let(:shipment) { inventory_unit.shipment }
 
     it "creates a UnitCancel record" do
       expect { subject }.to change { Spree::UnitCancel.count }.by(1)
@@ -19,8 +20,39 @@ describe Spree::OrderCancellations do
       expect { subject }.to change { inventory_unit.state }.to "canceled"
     end
 
+    it "updates the shipment.state" do
+      expect { subject }.to change { shipment.reload.state }.from('ready').to('shipped')
+    end
+
+    it "updates the order.shipment_state" do
+      expect { subject }.to change { order.shipment_state }.from('ready').to('shipped')
+    end
+
     it "adjusts the order" do
       expect { subject }.to change { order.total }.by(-10.0)
+    end
+
+    it "sends a cancellation email" do
+      mail_double = double
+      expect(Spree::OrderMailer).to receive(:inventory_cancellation_email).with(order, [inventory_unit]).and_return(mail_double)
+      expect(mail_double).to receive(:deliver)
+      subject
+    end
+
+    context "when send_cancellation_mailer is false" do
+      subject { Spree::OrderCancellations.new(order).short_ship([inventory_unit]) }
+
+      before do
+        @original_send_boolean = Spree::OrderCancellations.send_cancellation_mailer
+        Spree::OrderCancellations.send_cancellation_mailer = false
+      end
+
+      after { Spree::OrderCancellations.send_cancellation_mailer = @original_send_boolean }
+
+      it "does not send a cancellation email" do
+        expect(Spree::OrderMailer).not_to receive(:inventory_cancellation_email)
+        subject
+      end
     end
 
     context "with a who" do

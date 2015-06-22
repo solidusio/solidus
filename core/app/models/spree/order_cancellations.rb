@@ -6,6 +6,10 @@ class Spree::OrderCancellations
   #     #call(unit_cancels)
   class_attribute :short_ship_tax_notifier
 
+  # allows sending an email when inventory is cancelled
+  class_attribute :send_cancellation_mailer
+  self.send_cancellation_mailer = true
+
   def initialize(order)
     @order = order
   end
@@ -23,6 +27,9 @@ class Spree::OrderCancellations
         inventory_units.each do |iu|
           unit_cancels << short_ship_unit(iu, whodunnit: whodunnit)
         end
+
+        update_shipped_shipments(inventory_units)
+        Spree::OrderMailer.inventory_cancellation_email(@order, inventory_units).deliver if Spree::OrderCancellations.send_cancellation_mailer
       end
 
       @order.update!
@@ -47,5 +54,19 @@ class Spree::OrderCancellations
     inventory_unit.cancel!
 
     unit_cancel
+  end
+
+  # if any shipments are now fully shipped then mark them as such
+  def update_shipped_shipments(inventory_units)
+    shipments = Spree::Shipment.
+      includes(:inventory_units).
+      where(id: inventory_units.map(&:shipment_id)).
+      to_a
+
+    shipments.each do |shipment|
+      if shipment.inventory_units.all? {|iu| iu.shipped? || iu.canceled? }
+        shipment.update_attributes!(state: 'shipped', shipped_at: Time.now)
+      end
+    end
   end
 end

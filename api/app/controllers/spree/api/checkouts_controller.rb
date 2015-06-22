@@ -5,7 +5,7 @@ module Spree
       around_filter :lock_order, only: [:next, :advance, :update, :complete]
       before_filter :update_order_state, only: [:next, :advance, :update, :complete]
 
-      rescue_from Spree::LineItem::InsufficientStock, with: :insufficient_stock_for_line_items
+      rescue_from Spree::Order::InsufficientStock, with: :insufficient_stock_error
 
       include Spree::Core::ControllerHelpers::Order
       # This before_filter comes from Spree::Core::ControllerHelpers::Order
@@ -125,8 +125,8 @@ module Spree
           @order.total == BigDecimal(expected_total)
         end
 
-        def insufficient_stock_for_line_items(exception)
-          render json: { errors: ["Quantity is not available for items in your order"], type: 'insufficient_stock' }, status: 422
+        def insufficient_stock_error(exception)
+          render json: { errors: [I18n.t(:quantity_is_not_available, :scope => "spree.api.order")], type: 'insufficient_stock' }, status: 422
         end
     end
   end

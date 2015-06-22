@@ -89,6 +89,32 @@ module Spree
         end
       end
 
+      context "stock filtering" do
+        subject { api_get :index, in_stock_only: true }
+
+        context "variant is out of stock" do
+          before do
+            variant.stock_items.update_all(count_on_hand: 0)
+          end
+
+          it "is not returned in the results" do
+            subject
+            expect(json_response["variants"].count).to eq 0
+          end
+        end
+
+        context "variant is in stock" do
+          before do
+            variant.stock_items.update_all(count_on_hand: 10)
+          end
+
+          it "is returned in the results" do
+            subject
+            expect(json_response["variants"].count).to eq 1
+          end
+        end
+      end
+
       context "pagination" do
         it "can select the next page of variants" do
           second_variant = create(:variant)

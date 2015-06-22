@@ -3,6 +3,10 @@ require 'spec_helper'
 describe Spree::OrderShipping do
   let(:order) { create(:order_ready_to_ship, line_items_count: 1) }
 
+  def emails
+    ActionMailer::Base.deliveries
+  end
+
   shared_examples 'shipment shipping' do
 
     it "marks the inventory units as shipped" do
@@ -16,10 +20,6 @@ describe Spree::OrderShipping do
 
     describe "shipment email" do
       before { with_test_mail { subject } }
-
-      def emails
-        ActionMailer::Base.deliveries
-      end
 
       it "should send a shipment email" do
         expect(emails.size).to eq(1)
@@ -98,6 +98,24 @@ describe Spree::OrderShipping do
       end
     end
 
+    context "when told to suppress the mailer" do
+      before { with_test_mail { subject } }
+
+      subject do
+        order.shipping.ship(
+          inventory_units: inventory_units,
+          stock_location: stock_location,
+          address: address,
+          shipping_method: shipping_method,
+          suppress_mailer: true,
+        )
+      end
+
+      it "does not send a shipment email" do
+        expect(emails.size).to eq(0)
+      end
+    end
+
   end
 
   describe "#ship_shipment" do
@@ -118,6 +136,16 @@ describe Spree::OrderShipping do
 
       it "only ships the shippable ones" do
         expect(subject.inventory_units).to match_array(shippable_line_item.inventory_units)
+      end
+    end
+
+    context "when all units are canceled or shipped" do
+      let(:order) { create(:order_ready_to_ship, line_items_count: 2) }
+
+      before { Spree::OrderCancellations.new(order).short_ship([order.inventory_units.first]) }
+
+      it "updates the order shipment state" do
+        expect { subject }.to change { order.reload.shipment_state }.from('ready').to('shipped')
       end
     end
 
@@ -184,5 +212,19 @@ describe Spree::OrderShipping do
       end
     end
 
+    context "when told to suppress the mailer" do
+      before { with_test_mail { subject } }
+
+      subject do
+        order.shipping.ship_shipment(
+          shipment,
+          suppress_mailer: true,
+        )
+      end
+
+      it "does not send a shipment email" do
+        expect(emails.size).to eq(0)
+      end
+    end
   end
 end

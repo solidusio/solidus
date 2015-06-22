@@ -483,6 +483,7 @@ en:
     are_you_sure_delete: Are you sure you want to delete this record?
     are_you_sure_close_stock_transfer: Are you sure you want to close this stock transfer?
     are_you_sure_finalize_stock_transfer: Are you sure you want to finalize this stock transfer?
+    are_you_sure_ship_stock_transfer: Are you sure you want to ship this stock transfer?
     authorization_failure: Authorization Failure
     authorized: Authorized
     auto_capture: Auto Capture
@@ -728,7 +729,9 @@ en:
     errors:
       messages:
         cannot_modify_transfer_item_closed_stock_transfer: Transfer items that are part of a closed stock transfer cannot be modified.
+        cannot_delete_finalized_stock_transfer: Finalized stock transfers cannot be destroyed.
         cannot_delete_transfer_item_with_finalized_stock_transfer: Transfer items that are part of a finalized stock transfer cannot be destroyed.
+        cannot_update_expected_transfer_item_with_finalized_stock_transfer: The expected quantity cannot be updated on transfer items that are part of a finalized stock transfer.
         could_not_create_taxon: Could not create taxon
         transfer_item_insufficient_stock: Transfer item's variant does not have enough stock in the stock transfer's source location
         no_payment_methods_available: No payment methods are configured for this environment
@@ -761,6 +764,7 @@ en:
     extension: Extension
     existing_shipments: Existing shipments
     failed_payment_attempts: Failed Payment Attempts
+    failure: Failure
     filename: Filename
     fill_in_customer_info: Please fill in customer info
     filter_results: Filter Results
@@ -953,6 +957,7 @@ en:
     no_actions_added: No actions added
     no_dont_close: No, don't close
     no_dont_finalize: No, don't finalize
+    no_dont_ship: No, don't ship
     no_images_found: No images found
     no_inventory_selected: No inventory selected
     no_orders_found: No orders found
@@ -1026,6 +1031,12 @@ en:
         subtotal: ! 'Subtotal:'
         thanks: Thank you for your business.
         total: ! 'Order Total:'
+      inventory_cancellation:
+        dear_customer: Dear Customer,
+        instructions: Some items in your order have been CANCELED.  Please retain this cancellation information for your records.
+        order_summary_canceled: Canceled Items
+        subject: Cancellation of Items
+    order_mutex_admin_error: Order is being modified by someone else. Please try again.
     order_mutex_error: Something went wrong. Please try again.
     order_not_found: We couldn't find your order. Please try that action again.
     order_number: Order %{number}
@@ -1169,6 +1180,7 @@ en:
         name: Taxon(s)
     promotions: Promotions
     promotion_successfully_created: Promotion has been successfully created!
+    promotion_total_changed_before_complete: "One or more of the promotions on your order have become ineligible and were removed. Please check the new order amounts and try again."
     promotion_uses: Promotion uses
     propagate_all_variants: Propagate all variants
     properties: Properties
@@ -1276,6 +1288,7 @@ en:
     select_stock: Select stock
     selected_quantity_not_available: ! 'selected of %{item} is not available.'
     send_copy_of_all_mails_to: Send Copy of All Mails To
+    send_mailer: Send Mailer
     send_mails_as: Send Mails As
     server: Server
     server_error: The server returned an error
@@ -1283,7 +1296,11 @@ en:
     ship: ship
     ship_address: Ship Address
     ship_address_required: Valid shipping address required
+    ship_stock_transfer:
+      will_cause: Shipping a stock transfer will cause the following
+      no_further_changes: You will no longer be able to make changes to the stock transfer
     ship_total: Ship Total
+    shipped_at: Shipped At
     shipment: Shipment
     shipment_adjustments: "Shipment adjustments"
     shipment_details: "From %{stock_location} via %{shipping_method}"
@@ -1355,9 +1372,11 @@ en:
     stock_management_requires_a_stock_location: Please create a stock location in order to manage stock.
     stock_movements: Stock Movements
     stock_movements_for_stock_location: Stock Movements for %{stock_location_name}
+    stock_not_below_zero: Stock must not be below zero.
     stock_successfully_transferred: Stock was successfully transferred between locations.
     stock_transfer: Stock Transfer
     stock_transfer_cannot_be_finalized: Stock transfer cannot be finalized
+    stock_transfer_complete: Stock Transfer Complete
     stock_transfer_must_be_receivable: Stock transfer must be closed and shipped
     stock_transfers: Stock Transfers
     stop: Stop
@@ -1443,10 +1462,12 @@ en:
     total_sales: Total Sales
     track_inventory: Track Inventory
     tracking: Tracking
+    tracking_info: Tracking Info
     tracking_number: Tracking Number
     tracking_url: Tracking URL
     tracking_url_placeholder: e.g. http://quickship.com/package?num=:tracking
     transaction_id: Transaction ID
+    transfer_items: Transfer Items
     transfer_from_location: Transfer From
     transfer_stock: Transfer Stock
     transfer_to_location: Transfer To
@@ -1502,6 +1523,7 @@ en:
     year: Year
     yes_close: Yes, close
     yes_finalize: Yes, finalize
+    yes_ship: Yes, ship
     you_have_no_orders_yet: You have no orders yet
     you_cannot_undo_action: You will not be able to undo this action
     your_cart_is_empty: Your cart is empty
