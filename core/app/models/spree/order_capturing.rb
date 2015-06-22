@@ -7,6 +7,9 @@ class Spree::OrderCapturing
   class_attribute :void_unused_payments
   self.void_unused_payments = false
 
+  class_attribute :failure_handler
+  self.failure_handler = ->(failures) { raise Spree::OrderCapturingFailures.new(failures.to_json) }
+
   def initialize(order, sorted_payment_method_classes = nil)
     @order = order
     @sorted_payment_method_classes = sorted_payment_method_classes || Spree::OrderCapturing.sorted_payment_method_classes
@@ -42,3 +45,5 @@ class Spree::OrderCapturing
     payments = payments.sort_by { |p| [@sorted_payment_method_classes.index(p.payment_method.class), p.id] }
   end
 end
+
+class Spree::OrderCapturingFailures < StandardError; end

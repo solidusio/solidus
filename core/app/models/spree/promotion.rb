@@ -113,8 +113,8 @@ module Spree
     # called anytime order.update! happens
     def eligible?(promotable, promotion_code: nil)
       return false if expired?
-      return false if usage_limit_exceeded?(promotable)
-      return false if promotion_code && promotion_code.usage_limit_exceeded?(promotable)
+      return false if usage_limit_exceeded?
+      return false if promotion_code && promotion_code.usage_limit_exceeded?
       return false if blacklisted?(promotable)
       !!eligible_rules(promotable, {})
     end
@@ -150,20 +150,12 @@ module Spree
       rules.where(type: "Spree::Promotion::Rules::Product").map(&:products).flatten.uniq
     end
 
-    # Whether the given promotable would violate the usage restrictions
+    # Whether the promotion has exceeded it's usage restrictions.
     #
-    # @param promotable object (e.g. order/line item/shipment)
     # @return true or false
-    def usage_limit_exceeded?(promotable)
-      # TODO: This logic appears to be wrong.
-      # Currently if you have:
-      # - 2 different line item level actions on a promotion
-      # - 2 line items in an order
-      # Then using the promo on that order will create 4 adjustments and count as 4
-      # usages.
-      # See also PromotionCode#usage_limit_exceeded?
+    def usage_limit_exceeded?
       if usage_limit
-        usage_count - usage_count_for(promotable) >= usage_limit
+        usage_count >= usage_limit
       end
     end
 
@@ -171,7 +163,13 @@ module Spree
     #
     # @return [Integer] usage count
     def usage_count
-      adjustment_promotion_scope(Spree::Adjustment.eligible).count
+      Spree::Adjustment.eligible.
+        promotion.
+        where(source_id: actions.map(&:id)).
+        joins(:order).
+        merge(Spree::Order.complete).
+        distinct.
+        count(:order_id)
     end
 
     # TODO: specs
@@ -226,14 +224,6 @@ module Spree
 
     def match_all?
       match_policy == "all"
-    end
-
-    def usage_count_for(promotable)
-      adjustment_promotion_scope(promotable.adjustments).count
-    end
-
-    def adjustment_promotion_scope(adjustment_scope)
-      adjustment_scope.promotion.where(source_id: actions.pluck(:id))
     end
   end
 end

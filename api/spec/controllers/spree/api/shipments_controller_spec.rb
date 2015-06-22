@@ -119,26 +119,6 @@ describe Spree::Api::ShipmentsController, :type => :controller do
       end
     end
 
-    context "can transition a shipment from ready to ship" do
-      before do
-        allow_any_instance_of(Spree::Order).to receive_messages(:paid? => true, :complete? => true)
-        # For the shipment notification email
-        Spree::Config[:mails_from] = "spree@example.com"
-
-        shipment.update!(shipment.order)
-        expect(shipment.state).to eq("ready")
-        allow_any_instance_of(Spree::ShippingRate).to receive_messages(:cost => 5)
-      end
-
-      it "can transition a shipment from ready to ship" do
-        shipment.reload
-        api_put :ship, id: shipment.to_param, shipment: { tracking: "123123", order_id: shipment.order.to_param }
-        expect(json_response).to have_attributes(attributes)
-        expect(json_response["state"]).to eq("shipped")
-      end
-
-    end
-
     describe '#mine' do
       subject do
         api_get :mine, format: 'json', params: params
@@ -186,5 +166,87 @@ describe Spree::Api::ShipmentsController, :type => :controller do
       end
     end
 
+  end
+
+  describe "#ship" do
+    let(:shipment) { create(:order_ready_to_ship).shipments.first }
+
+    let(:send_mailer) { nil }
+    subject { api_put :ship, id: shipment.to_param, send_mailer: send_mailer }
+
+    context "the user is allowed to ship the shipment" do
+      sign_in_as_admin!
+      it "ships the shipment" do
+        Timecop.freeze do
+          subject
+          shipment.reload
+          expect(shipment.state).to eq 'shipped'
+          expect(shipment.shipped_at.to_i).to eq Time.now.to_i
+        end
+      end
+
+      context "send_mailer not present" do
+        it "sends the shipped shipments mailer" do
+          with_test_mail { subject }
+          expect(ActionMailer::Base.deliveries.size).to eq 1
+          expect(ActionMailer::Base.deliveries.last.subject).to match /Shipment Notification/
+        end
+      end
+
+      context "send_mailer set to false" do
+        let(:send_mailer) { 'false' }
+        it "does not send the shipped shipments mailer" do
+          with_test_mail { subject }
+          expect(ActionMailer::Base.deliveries.size).to eq 0
+        end
+      end
+
+      context "send_mailer set to true" do
+        let(:send_mailer) { 'true' }
+        it "sends the shipped shipments mailer" do
+          with_test_mail { subject }
+          expect(ActionMailer::Base.deliveries.size).to eq 1
+          expect(ActionMailer::Base.deliveries.last.subject).to match /Shipment Notification/
+        end
+      end
+    end
+
+    context "the user is not allowed to ship the shipment" do
+      sign_in_as_admin!
+
+      before do
+        ability = Spree::Ability.new(current_api_user)
+        ability.cannot :ship, Spree::Shipment
+        allow(controller).to receive(:current_ability) { ability }
+      end
+
+      it "does nothing" do
+        expect {
+          expect {
+            subject
+          }.not_to change(shipment, :state)
+        }.not_to change(shipment, :shipped_at)
+      end
+
+      it "responds with a 401" do
+        subject
+        expect(response.status).to eq 401
+      end
+    end
+
+    context "the user is not allowed to view the shipment" do
+      it "does nothing" do
+        expect {
+          expect {
+            subject
+          }.not_to change(shipment, :state)
+        }.not_to change(shipment, :shipped_at)
+      end
+
+      it "responds with a 404" do
+        subject
+        expect(response).to be_not_found
+      end
+    end
   end
 end

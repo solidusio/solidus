@@ -19,7 +19,6 @@ module Spree
 
             create_shipments_from_params(shipments_attrs, order)
             create_line_items_from_params(params.delete(:line_items_attributes),order)
-            create_shipments_from_params(params.delete(:shipments_attributes), order)
             create_adjustments_from_params(params.delete(:adjustments_attributes), order)
             create_payments_from_params(params.delete(:payments_attributes), order)
 
@@ -69,9 +68,11 @@ module Spree
               # trying to view these units. Note the Importer might not be
               # able to find the line item if line_item.variant_id |= iu.variant_id
               unit.variant_id = iu[:variant_id]
-              unit.line_item_id = line_items.select do |l|
-                l.variant_id.to_i == iu[:variant_id].to_i
-              end.first.try(:id)
+              if line_item = order.line_items.find_by(variant_id: iu[:variant_id])
+                unit.line_item = line_item
+              else
+                unit.line_item = order.contents.add(Spree::Variant.find(iu[:variant_id]), 1)
+              end
             end
 
             # Mark shipped if it should be.

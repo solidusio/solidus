@@ -6,12 +6,35 @@ module Spree
     let(:source_location) { create(:stock_location_with_items) }
     let(:stock_item) { source_location.stock_items.order(:id).first }
     let(:variant) { stock_item.variant }
-    let(:stock_transfer) { StockTransfer.create(description: 'PO123') }
+    let(:stock_transfer) do
+      StockTransfer.create(description: 'PO123', source_location: source_location, destination_location: destination_location)
+    end
 
     subject { stock_transfer }
 
     its(:description) { should eq 'PO123' }
     its(:to_param) { should match /T\d+/ }
+
+    describe "transfer item building" do
+      let(:stock_transfer) do
+        variant = source_location.stock_items.first.variant
+        stock_transfer = Spree::StockTransfer.new(
+          number: "T123",
+          source_location: source_location,
+          destination_location: destination_location
+        )
+        stock_transfer.transfer_items.build(variant: variant, expected_quantity: 5)
+        stock_transfer
+      end
+
+      subject { stock_transfer.save }
+
+      it { is_expected.to eq true }
+
+      it "creates the associated transfer item" do
+        expect { subject }.to change { Spree::TransferItem.count }.by(1)
+      end
+    end
 
     describe "#receivable?" do
       subject { stock_transfer.receivable? }
@@ -190,7 +213,36 @@ module Spree
       end
     end
 
-    context '#transfer' do
+    describe "destroying" do
+      subject { stock_transfer.destroy }
+
+      context "stock transfer is finalized" do
+        before do
+          stock_transfer.update_attributes!(finalized_at: Time.now)
+        end
+
+        it "doesn't destroy the stock transfer" do
+          expect { subject }.to_not change { Spree::StockTransfer.count }
+        end
+
+        it "adds an error message to the model" do
+          subject
+          expect(stock_transfer.errors.full_messages).to include Spree.t('errors.messages.cannot_delete_finalized_stock_transfer')
+        end
+      end
+
+      context "stock transfer is not finalized" do
+        before do
+          stock_transfer.update_attributes!(finalized_at: nil)
+        end
+
+        it "destroys the stock transfer" do
+          expect { subject }.to change { Spree::StockTransfer.count }.by(-1)
+        end
+      end
+    end
+
+    describe '#transfer' do
       let(:stock_transfer) { create(:stock_transfer_with_items) }
 
       before do

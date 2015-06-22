@@ -351,7 +351,7 @@ module Spree
       context 'insufficient stock' do
         let(:order) { create(:order_with_line_items) }
         before do
-          expect_any_instance_of(Spree::Order).to receive(:next!).and_raise(Spree::LineItem::InsufficientStock)
+          expect_any_instance_of(Spree::Order).to receive(:next!).and_raise(Spree::Order::InsufficientStock)
         end
 
         subject { api_put :next, :id => order.to_param, :order_token => order.guest_token }

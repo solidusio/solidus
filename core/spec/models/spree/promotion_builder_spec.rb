@@ -91,7 +91,7 @@ describe Spree::PromotionBuilder do
         end
       end
 
-      context "when the builder can build promotion codes", focus: true do
+      context "when the builder can build promotion codes" do
         let(:number_of_codes) { 1 }
 
         it "creates the correct number of codes" do

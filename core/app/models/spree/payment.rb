@@ -156,8 +156,9 @@ module Spree
 
     # @return [Array<String>] the actions available on this payment
     def actions
-      return [] unless payment_source and payment_source.respond_to? :actions
-      payment_source.actions.select { |action| !payment_source.respond_to?("can_#{action}?") or payment_source.send("can_#{action}?", self) }
+      sa = source_actions
+      sa |= ["failure"] if processing?
+      sa
     end
 
     # @return [Object] the source of ths payment
@@ -196,6 +197,11 @@ module Spree
     end
 
     private
+
+      def source_actions
+        return [] unless payment_source and payment_source.respond_to? :actions
+        payment_source.actions.select { |action| !payment_source.respond_to?("can_#{action}?") or payment_source.send("can_#{action}?", self) }
+      end
 
       def validate_source
         if source && !source.valid?

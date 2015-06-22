@@ -59,22 +59,13 @@ $(document).ready(function () {
     return false;
   });
 
-  // handle ship click
-  $('[data-hook=admin_shipment_form] a.ship').on('click', function () {
-    var link = $(this);
-    var shipment_number = link.data('shipment-number');
-    var url = Spree.routes.shipments_api + '/' + shipment_number + '/ship.json';
-    Spree.ajax({
-      type: 'PUT',
-      url: url,
-      data: {
-        token: Spree.api_key
-      }
-    }).done(function () {
-      window.location.reload();
-    }).error(function (msg) {
-      console.log(msg);
-    });
+  // add header to ship ujs ajax call
+  $("form#admin-ship-shipment").on("ajax:beforeSend", function(event, xhr, settings) {
+    xhr.setRequestHeader("X-Spree-Token", Spree.api_key);
+  });
+
+  $("form#admin-ship-shipment").on("ajax:success", function(event, xhr, settings) {
+    window.location.reload();
   });
 
   // handle shipping method edit click

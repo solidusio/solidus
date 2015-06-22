@@ -76,7 +76,7 @@ table {
           color: $color-1;
         }
       }
-      .fa-trash:hover, .fa-void:hover {
+      .fa-trash:hover, .fa-void:hover, .fa-failure:hover {
         background-color: $color-error;
         color: $color-1;
       }

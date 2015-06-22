@@ -60,6 +60,7 @@ module Spree
         end
         params[:q].delete(:closed_at_null) unless @show_only_open
         @search = super.ransack(params[:q])
+        @search.sorts = 'created_at desc'
         @search.result.
           page(params[:page]).
           per(params[:per_page] || Spree::Config[:orders_per_page])

@@ -3,9 +3,15 @@ module Spree
     class Quantifier
       attr_reader :stock_items
 
-      def initialize(variant)
+      def initialize(variant, stock_location = nil)
         @variant = variant
-        @stock_items = Spree::StockItem.joins(:stock_location).where(:variant_id => @variant, Spree::StockLocation.table_name =>{ :active => true})
+        where_args = { variant_id: @variant }
+        if stock_location
+          where_args.merge!(stock_location: stock_location)
+        else
+          where_args.merge!(Spree::StockLocation.table_name => { active: true })
+        end
+        @stock_items = Spree::StockItem.joins(:stock_location).where(where_args)
       end
 
       # Returns the total number of inventory units on hand for the variant.

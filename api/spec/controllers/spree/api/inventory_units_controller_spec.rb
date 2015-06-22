@@ -11,23 +11,24 @@ module Spree
 
     context "as an admin" do
       sign_in_as_admin!
+      let(:variant) { create(:variant) }
 
       it "gets an inventory unit" do
         api_get :show, :id => @inventory_unit.id
         expect(json_response['state']).to eq @inventory_unit.state
       end
 
-      it "updates an inventory unit (only shipment is accessable by default)" do
+      it "updates an inventory unit" do
         api_put :update, :id => @inventory_unit.id,
-                         :inventory_unit => { :shipment => nil }
-        expect(json_response['shipment_id']).to be_nil
+                         :inventory_unit => { variant_id: variant.id }
+        json_response['variant_id'].should eq variant.id
       end
 
       context 'fires state event' do
         it 'if supplied with :fire param' do
           api_put :update, :id => @inventory_unit.id,
                            :fire => 'ship',
-                           :inventory_unit => { :shipment => nil }
+                           :inventory_unit => { variant_id: variant.id }
 
           expect(json_response['state']).to eq 'shipped'
         end

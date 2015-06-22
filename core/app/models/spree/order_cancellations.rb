@@ -6,6 +6,10 @@ class Spree::OrderCancellations
   #     #call(unit_cancels)
   class_attribute :short_ship_tax_notifier
 
+  # allows sending an email when inventory is cancelled
+  class_attribute :send_cancellation_mailer
+  self.send_cancellation_mailer = true
+
   def initialize(order)
     @order = order
   end
@@ -25,6 +29,7 @@ class Spree::OrderCancellations
         end
 
         update_shipped_shipments(inventory_units)
+        Spree::OrderMailer.inventory_cancellation_email(@order, inventory_units).deliver if Spree::OrderCancellations.send_cancellation_mailer
       end
 
       @order.update!

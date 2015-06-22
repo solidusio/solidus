@@ -1,7 +1,7 @@
 module Spree
   class ReturnItem < ActiveRecord::Base
 
-    INTERMEDIATE_RECEPTION_STATUSES = %i(given_to_customer lost_in_transit shipped_wrong_item short_shipped)
+    INTERMEDIATE_RECEPTION_STATUSES = %i(given_to_customer lost_in_transit shipped_wrong_item short_shipped in_transit)
     COMPLETED_RECEPTION_STATUSES = INTERMEDIATE_RECEPTION_STATUSES + [:received]
 
     # @!scope class
@@ -48,7 +48,7 @@ module Spree
     scope :awaiting_return, -> { where(reception_status: 'awaiting') }
     scope :expecting_return, -> { where.not(reception_status: COMPLETED_RECEPTION_STATUSES) }
     scope :not_cancelled, -> { where.not(reception_status: 'cancelled') }
-    scope :valid, -> { where.not(reception_status: %w(cancelled expired))}
+    scope :valid, -> { where.not(reception_status: %w(cancelled expired unexchanged))}
     scope :not_expired, -> { where.not(reception_status: 'expired')}
     scope :received, -> { where(reception_status: 'received') }
     INTERMEDIATE_RECEPTION_STATUSES.each do |reception_status|
@@ -77,11 +77,13 @@ module Spree
 
     state_machine :reception_status, initial: :awaiting do
       after_transition to: COMPLETED_RECEPTION_STATUSES,  do: :attempt_accept
+      after_transition to: COMPLETED_RECEPTION_STATUSES,  do: :check_unexchange
       after_transition to: :received, do: :process_inventory_unit!
 
       event(:cancel) { transition to: :cancelled, from: :awaiting }
 
       event(:receive) { transition to: :received, from: INTERMEDIATE_RECEPTION_STATUSES + [:awaiting] }
+      event(:unexchange) { transition to: :unexchanged, from: [:awaiting] }
       event(:give) { transition to: :given_to_customer, from: :awaiting }
       event(:lost) { transition to: :lost_in_transit, from: :awaiting }
       event(:wrong_item_shipped) { transition to: :shipped_wrong_item, from: :awaiting }
@@ -194,25 +196,24 @@ module Spree
       event_paths = reception_status_paths.events
       status_paths.delete(:cancelled)
       status_paths.delete(:expired)
+      status_paths.delete(:unexchanged)
       event_paths.delete(:cancel)
       event_paths.delete(:expired)
+      event_paths.delete(:unexchange)
 
       status_paths.map{ |s| s.to_s.humanize }.zip(event_paths)
+    end
+
+    def part_of_exchange?
+      # test whether this ReturnItem was either a) one for which an exchange was sent or
+      #   b) the exchanged item itself being returned in lieu of the original item
+      exchange_requested? || sibling_intended_for_exchange('unexchanged')
     end
 
     private
 
     def persist_acceptance_status_errors
       self.update_attributes(acceptance_status_errors: validator.errors)
-    end
-
-    def stock_item
-      return unless customer_return
-
-      Spree::StockItem.find_by({
-        variant_id: inventory_unit.variant_id,
-        stock_location_id: customer_return.stock_location_id,
-      })
     end
 
     def currency
@@ -222,8 +223,24 @@ module Spree
     def process_inventory_unit!
       inventory_unit.return!
 
-      Spree::StockMovement.create!(stock_item_id: stock_item.id, quantity: 1) if should_restock?
-      customer_return.process_return! if customer_return
+      if customer_return
+        customer_return.stock_location.restock(inventory_unit.variant, 1, customer_return) if should_restock?
+        customer_return.process_return!
+      end
+    end
+
+    def sibling_intended_for_exchange(status)
+      # This happens when we ship an exchange to a customer, but the customer keeps the original and returns the exchange
+      self.class.find_by(reception_status: status, exchange_inventory_unit: inventory_unit)
+    end
+
+    def check_unexchange
+      original_ri = sibling_intended_for_exchange('awaiting')
+      if original_ri
+        original_ri.unexchange!
+        set_default_pre_tax_amount
+        save!
+      end
     end
 
     # This logic is also present in the customer return. The reason for the
@@ -285,7 +302,10 @@ module Spree
     end
 
     def should_restock?
-      variant.should_track_inventory? && stock_item && stock_item.stock_location.restock_inventory?
+      resellable? &&
+        variant.should_track_inventory? &&
+        customer_return &&
+        customer_return.stock_location.restock_inventory?
     end
   end
 end
