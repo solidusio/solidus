@@ -157,7 +157,7 @@ module Spree
     # The +payment_state+ value helps with reporting, etc. since it provides a quick and easy way to locate Orders needing attention.
     def update_payment_state
       last_state = order.payment_state
-      if payments.present? && payments.valid.size == 0
+      if payments.present? && payments.valid.size == 0 && order.outstanding_balance != 0
         order.payment_state = 'failed'
       elsif order.state == 'canceled' && order.payment_total == 0
         order.payment_state = 'void'
