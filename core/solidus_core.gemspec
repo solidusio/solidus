@@ -19,7 +19,7 @@ Gem::Specification.new do |s|
 
   s.required_ruby_version = '>= 2.1.0'
 
-  s.add_dependency 'activemerchant', '~> 1.44.1'
+  s.add_dependency 'activemerchant', '~> 1.48.0'
   s.add_dependency 'acts_as_list', '~> 0.3'
   s.add_dependency 'awesome_nested_set', '~> 3.0.1'
   s.add_dependency 'carmen', '~> 1.0.0'

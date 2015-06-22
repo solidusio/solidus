@@ -1,5 +1,6 @@
 module Spree
   class TransferItem < ActiveRecord::Base
+    acts_as_paranoid
     belongs_to :stock_transfer, inverse_of: :transfer_items
     belongs_to :variant
 

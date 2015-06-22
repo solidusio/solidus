@@ -268,7 +268,7 @@ module Spree
         end
 
         it 'ensures variant exists and is not deleted' do
-          expect(Importer::Order).to receive(:ensure_variant_id_from_params)
+          expect(Importer::Order).to receive(:ensure_variant_id_from_params).and_call_original
           order = Importer::Order.import(user,params)
         end
 

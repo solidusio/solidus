@@ -102,7 +102,7 @@ describe Spree::OrderCapturing do
 
         class ExceptionallyBogusPaymentMethod < Spree::Gateway::Bogus
           def capture(*args)
-            raise ActiveMerchant::ConnectionError
+            raise ActiveMerchant::ConnectionError.new("foo", nil)
           end
         end
 

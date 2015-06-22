@@ -25,6 +25,7 @@ module Spree
             next unless stock_location.stock_item(variant)
 
             on_hand, backordered = stock_location.fill_status(variant, units.count)
+            raise Spree::Order::InsufficientStock unless on_hand > 0 || backordered > 0
             package.add_multiple units.slice!(0, on_hand), :on_hand if on_hand > 0
             package.add_multiple units.slice!(0, backordered), :backordered if backordered > 0
           else

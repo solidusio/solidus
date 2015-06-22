@@ -4,19 +4,15 @@ module Spree
     validates :name, presence: true, uniqueness: { scope: :deleted_at, allow_blank: true }
 
     has_many :tax_rates, dependent: :destroy, inverse_of: :tax_category
+    after_save :ensure_one_default
 
-    before_save :set_default_category
+    def self.default
+      find_by(is_default: true)
+    end
 
-    def set_default_category
-      #set existing default tax category to false if this one has been marked as default
-
-      if is_default && tax_category = self.class.where(is_default: true).first
-        unless tax_category == self
-          tax_category.update_columns(
-            is_default: false,
-            updated_at: Time.now,
-          )
-        end
+    def ensure_one_default
+      if is_default
+        Spree::TaxCategory.where(is_default: true).where.not(id: self.id).update_all(is_default: false, updated_at: Time.now)
       end
     end
   end

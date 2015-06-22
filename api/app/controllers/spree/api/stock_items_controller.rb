@@ -73,6 +73,9 @@ module Spree
       end
 
       def adjust_stock_item_count_on_hand(count_on_hand_adjustment)
+        if @stock_item.count_on_hand + count_on_hand_adjustment < 0
+          raise StockLocation::InvalidMovementError.new(Spree.t(:stock_not_below_zero))
+        end
         @stock_movement = @stock_location.move(@stock_item.variant, count_on_hand_adjustment, current_api_user)
         @stock_item = @stock_movement.stock_item
       end

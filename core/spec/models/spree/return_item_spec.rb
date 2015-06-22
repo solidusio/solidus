@@ -77,12 +77,13 @@ describe Spree::ReturnItem, :type => :model do
     end
 
     context 'with a stock location' do
-      let(:stock_item)      { inventory_unit.find_stock_item }
+      let(:stock_location) { customer_return.stock_location }
+      let(:stock_item)      { stock_location.stock_item(inventory_unit.variant) }
 
       before do
         inventory_unit.update_attributes!(state: 'shipped')
         return_item.update_attributes!(reception_status: 'awaiting')
-        stock_item.stock_location.update_attributes!(restock_inventory: true)
+        stock_location.update_attributes!(restock_inventory: true)
       end
 
       it 'increases the count on hand' do
@@ -103,12 +104,24 @@ describe Spree::ReturnItem, :type => :model do
 
       context "when the stock location's restock_inventory is false" do
         before do
-          stock_item.stock_location.update_attributes!(restock_inventory: false)
+          stock_location.update_attributes!(restock_inventory: false)
         end
 
         it 'does not increase the count on hand' do
           expect { subject }.to_not change { stock_item.reload.count_on_hand }
         end
+      end
+
+      context "when the inventory unit's variant does not yet have a stock item for the stock location it was returned to" do
+        before { inventory_unit.variant.stock_items.destroy_all }
+
+        it "creates a new stock item for the inventory unit with a count of 1" do
+          expect { subject }.to change(Spree::StockItem, :count).by(1)
+          stock_item = Spree::StockItem.last
+          expect(stock_item.variant).to eq inventory_unit.variant
+          expect(stock_item.count_on_hand).to eq 1
+        end
+
       end
 
       Spree::ReturnItem::INTERMEDIATE_RECEPTION_STATUSES.each do |status|

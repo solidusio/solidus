@@ -46,6 +46,24 @@ module Spree
           end
         end
 
+        context "transfer item has been fully received" do
+          let(:variant_id) { transfer_item.variant.to_param }
+
+          before do
+            transfer_item.update_attributes!(expected_quantity: 1, received_quantity: 1)
+          end
+
+          it "returns a 422" do
+            subject
+            expect(response.status).to eq 422
+          end
+
+          it "returns a specific error message" do
+            subject
+            expect(JSON.parse(response.body)["errors"]["received_quantity"]).to eq ["must be less than or equal to 1"]
+          end
+        end
+
         context "variant is not in the transfer order" do
           let(:variant_id) { create(:variant).to_param }
 
