@@ -22,22 +22,7 @@ module Spree
       # Can be used to capture partial amounts of a payment, and will create
       # a new pending payment record for the remaining amount to capture later.
       def capture!(amount = nil)
-        return true if completed?
-        amount ||= money.money.cents
-        started_processing!
-        protect_from_connection_error do
-          check_environment
-          # Standard ActiveMerchant capture usage
-          response = payment_method.capture(
-            amount,
-            response_code,
-            gateway_options
-          )
-          money = ::Money.new(amount, currency)
-          capture_events.create!(amount: money.to_f)
-          split_uncaptured_amount
-          handle_response(response, :complete, :failure)
-        end
+        order.interface.capture_payment(self, amount: amount)
       end
 
       def void_transaction!
@@ -152,6 +137,9 @@ module Spree
           gateway_error(response)
         end
       end
+
+      # FIXME
+      public :handle_response
 
       def handle_void_response(response)
         record_response(response)

@@ -248,21 +248,13 @@ module Spree
       @cancellations ||= Spree::OrderCancellations.new(self)
     end
 
+    def interface
+      Spree::OrderInterface.new(self)
+    end
+
     # Associates the specified user with the order.
     def associate_user!(user, override_email = true)
-      self.user = user
-      attrs_to_set = { user_id: user.try(:id) }
-      attrs_to_set[:email] = user.try(:email) if override_email
-      attrs_to_set[:created_by_id] = user.try(:id) if self.created_by.blank?
-
-      if persisted?
-        # immediately persist the changes we just made, but don't use save since we might have an invalid address associated
-        self.class.unscoped.where(id: id).update_all(attrs_to_set)
-      end
-
-      attrs_to_set[:ship_address_attributes] = user.ship_address.attributes.except('id', 'updated_at', 'created_at') if user.try(:ship_address)
-      attrs_to_set[:bill_address_attributes] = user.bill_address.attributes.except('id', 'updated_at', 'created_at') if user.try(:bill_address)
-      assign_attributes(attrs_to_set)
+      interface.associate_user(user, override_email: override_email)
     end
 
     def generate_order_number(options = {})
