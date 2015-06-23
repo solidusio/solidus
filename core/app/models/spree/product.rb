@@ -3,6 +3,10 @@ module Spree
   # variations, called variants. Product properties include description,
   # permalink, availability, shipping category, etc. that do not change by
   # variant.
+  #
+  # @note this model uses {https://github.com/radar/paranoia paranoia}.
+  #   +#destroy+ will only soft-destroy records and the default scope hides
+  #   soft-destroyed records using +WHERE deleted_at IS NULL+.
   class Product < Spree::Base
     extend FriendlyId
     friendly_id :slug_candidates, use: :history
@@ -135,8 +139,8 @@ module Spree
       !!deleted_at
     end
 
-    # Determines if product is available. A product is not available if they are
-    # deleted or have a nil or future available_on date.
+    # Determines if product is available. A product is available if it has not
+    # been deleted and the available_on date is in the past.
     #
     # @return [Boolean] true if this product is available
     def available?
@@ -152,6 +156,14 @@ module Spree
       variants.active.group_by { |v| v.option_values.detect { |o| o.option_type == opt_type} }
     end
 
+    # Poor man's full text search.
+    #
+    # Filters products to those which have any of the strings in +values+ in
+    # any of the fields in +fields+.
+    #
+    # @param fields [Array{String,Symbol}] columns of the products table to search for values
+    # @param values [Array{String}] strings to search through fields for
+    # @return [ActiveRecord::Relation] scope with WHERE clause for search applied
     def self.like_any(fields, values)
       where fields.map { |field|
         values.map { |value|
@@ -175,11 +187,8 @@ module Spree
       end
     end
 
-    # Gets the value of the given property. Returns nil if the property does
-    # not exist.
-    #
     # @param property_name [String] the name of the property to find
-    # @return [String]
+    # @return [String] the value of the given property. nil if property is undefined on this product
     def property(property_name)
       return nil unless prop = properties.find_by(name: property_name)
       product_properties.find_by(property: prop).try(:value)
