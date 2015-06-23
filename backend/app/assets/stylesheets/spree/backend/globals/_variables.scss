@@ -16,6 +16,7 @@ $color-3:                        #5498DA !default;    // Light Blue
 $color-4:                        #6788A2 !default;    // Dark Blue
 $color-5:                        #C60F13 !default;    // Red
 $color-6:                        #FF9300 !default;    // Yellow
+$color-7:                        #F4F4F4 !default;    // Light Gray
 
 // Body base colors
 $color-body-bg:                  $color-1 !default;
@@ -69,6 +70,8 @@ $color-sel-bg:                   $color-3 !default;
 $color-sel-text:                 $color-1 !default;
 $color-sel-hover-bg:             $color-2 !default;
 $color-sel-hover-text:           $color-1 !default;
+$color-sel-disabled-bg:          $color-7 !default;
+$color-sel-disabled-text:        $color-4 !default;
 
 // Text inputs colors
 $color-txt-brd:                  $color-border !default;

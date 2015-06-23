@@ -3,6 +3,13 @@
     background-color: $color-sel-hover-bg !important;
     border-color: $color-sel-hover-bg !important;
   }
+
+  &.select2-container-disabled .select2-choice {
+    background-color: $color-sel-disabled-bg !important;
+    border-color: $color-sel-disabled-bg !important;
+    color: $color-sel-disabled-text !important;
+  }
+
   .select2-choice {
     background-image: none !important;
     background-color: $color-sel-bg;
@@ -39,6 +46,7 @@
     }
   }
 }
+
 
 .select2-drop {
   box-shadow: none !important;
