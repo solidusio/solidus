@@ -26,7 +26,7 @@ module Spree
           name, engine = file_name.split(".", 2)
           next unless match_engine?(engine)
           name
-        end.compact! || []
+        end.compact
 
         missing_migrations = engine_migrations.sort - engine_in_app.sort
         unless missing_migrations.empty?
