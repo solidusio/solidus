@@ -4,7 +4,7 @@ class CreateLineItemActions < ActiveRecord::Migration
       t.references :line_item, index: true, null: false
       t.references :action, index: true, null: false
       t.integer :quantity, default: 0
-      t.timestamps
+      t.timestamps null: true
     end
   end
 end
