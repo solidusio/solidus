@@ -247,7 +247,7 @@ fieldset {
       display: inline-block;
     }
 
-    button, .button, input[type="submit"], input[type="button"], span.or {
+    button, .button, input[type="submit"], input[type="button"] {
       border-radius: $border-radius;
 
       -webkit-box-shadow: 0 0 0 15px $color-1;
@@ -267,6 +267,7 @@ fieldset {
       margin-left: 5px;
       margin-right: 11px;
       position: relative;
+      z-index: 1;
 
       -webkit-box-shadow: 0 0 0 5px $color-1;
          -moz-box-shadow: 0 0 0 5px $color-1;
