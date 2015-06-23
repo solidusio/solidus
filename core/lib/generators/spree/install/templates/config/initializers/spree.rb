@@ -1,4 +1,5 @@
 # Configure Solidus Preferences
+# See http://docs.solidus.io/Spree/AppConfiguration.html for details
 
 Spree.config do |config|
   # Without this preferences are loaded and persisted to the database. This
