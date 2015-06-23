@@ -27,6 +27,7 @@ describe 'Stock Transfers', :type => :feature, :js => true do
         page.find('button').trigger('click')
       end
 
+      expect(page).to have_content('Stock Transfer has been successfully updated')
       expect(page).to have_css(:div, '#finalize-stock-transfer-warning')
       expect(page).to have_content("NY")
     end
@@ -48,6 +49,7 @@ describe 'Stock Transfers', :type => :feature, :js => true do
         fill_in 'stock_transfer_tracking_number', :with => "12345"
         click_button 'Save'
 
+        expect(page).to have_content('Stock Transfer has been successfully updated')
         expect(stock_transfer.reload.tracking_number).to eq '12345'
       end
     end
