@@ -26,7 +26,7 @@ Spree.config do |config|
   # Frontend:
 
   # Custom logo for the frontend
-  # config.logo = "logo/spree_50.png"
+  # config.logo = "logo/solidus_logo.png"
 
   # Template to use when rendering layout
   # config.layout = "spree/layouts/spree_application"
@@ -35,7 +35,7 @@ Spree.config do |config|
   # Admin:
 
   # Custom logo for the admin
-  # config.admin_interface_logo = "logo/spree_50.png"
+  # config.admin_interface_logo = "logo/solidus_logo.png"
 end
 
 Spree.user_class = <%= (options[:user_class].blank? ? "Spree::LegacyUser" : options[:user_class]).inspect %>
