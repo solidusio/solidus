@@ -13,9 +13,10 @@ describe Spree::Admin::ReturnAuthorizationsController, :type => :controller do
   describe "#load_return_authorization_reasons" do
     let!(:inactive_rma_reason) { create(:return_authorization_reason, active: false) }
 
-    context "return authorization has an associated inactive reason" do
+    context "a return item in the return authorization has an associated inactive reason" do
       let!(:other_inactive_rma_reason) { create(:return_authorization_reason, active: false) }
-      let(:return_authorization) { create(:return_authorization, reason: inactive_rma_reason) }
+      let(:return_item) { create(:return_item, return_authorization_reason: inactive_rma_reason) }
+      let(:return_authorization) { return_item.return_authorization }
 
       it "loads all the active rma reasons" do
         spree_get :edit, id: return_authorization.to_param, order_id: return_authorization.order.to_param
@@ -89,7 +90,7 @@ describe Spree::Admin::ReturnAuthorizationsController, :type => :controller do
     context '#create failed' do
       subject do
         spree_post :create, {
-          return_authorization: {return_authorization_reason_id: -1}, # invalid reason_id
+          return_authorization: {stock_location_id: nil}, # return authorization requires valid stock location, so this will fail
           order_id: order.to_param,
         }
       end
@@ -100,7 +101,7 @@ describe Spree::Admin::ReturnAuthorizationsController, :type => :controller do
     context '#update failed' do
       subject do
         spree_put :update, {
-          return_authorization: {return_authorization_reason_id: -1}, # invalid reason_id
+          return_authorization: {stock_location_id: nil}, # return authorization requires valid stock location, so this will fail
           id: return_authorization.to_param,
           order_id: order.to_param,
         }

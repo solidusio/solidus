@@ -31,7 +31,6 @@ module Spree
         new_return_items = unassociated_inventory_units.map do |new_unit|
           Spree::ReturnItem.new(inventory_unit: new_unit).tap(&:set_default_pre_tax_amount)
         end
-
         @form_return_items = (@return_authorization.return_items + new_return_items).sort_by(&:inventory_unit_id)
       end
 
@@ -40,11 +39,7 @@ module Spree
       end
 
       def load_return_authorization_reasons
-        @reasons = Spree::ReturnAuthorizationReason.active
-        # Only allow an inactive reason if it's already associated to the RMA
-        if @return_authorization.reason && !@return_authorization.reason.active?
-          @reasons << @return_authorization.reason
-        end
+        @reasons = Spree::ReturnAuthorizationReason.reasons_for_return_items(@return_authorization.return_items)
       end
     end
   end
