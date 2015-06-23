@@ -30,7 +30,10 @@ module Spree
         :stock_item_attributes,
         :promotion_attributes,
         :store_attributes,
-        :store_credit_history_attributes
+        :store_credit_history_attributes,
+        :stock_transfer_attributes,
+        :transfer_item_attributes,
+        :transfer_item_variant_attributes
       ]
 
       mattr_reader *ATTRIBUTES
@@ -169,6 +172,12 @@ module Spree
         :display_amount, :display_user_total_amount, :display_action,
         :display_event_date
       ]
+
+      @@stock_transfer_attributes = [:id, :number]
+
+      @@transfer_item_attributes = [:id, :expected_quantity, :received_quantity]
+
+      @@transfer_item_variant_attributes = []
 
       def variant_attributes
         if @current_user_roles && @current_user_roles.include?("admin")

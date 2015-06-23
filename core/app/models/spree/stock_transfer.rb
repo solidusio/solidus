@@ -1,24 +1,50 @@
 module Spree
   class StockTransfer < Spree::Base
-    has_many :stock_movements, :as => :originator
-    has_many :transfer_items
+    class InvalidTransferMovement < StandardError; end
 
-    belongs_to :created_by, :class_name => 'Spree::User'
-    belongs_to :closed_by, :class_name => 'Spree::User'
+    acts_as_paranoid
+
+    has_many :stock_movements, :as => :originator
+    has_many :transfer_items, inverse_of: :stock_transfer
+
+    belongs_to :created_by, :class_name => Spree.user_class.to_s
+    belongs_to :finalized_by, :class_name => Spree.user_class.to_s
+    belongs_to :closed_by, :class_name => Spree.user_class.to_s
     belongs_to :source_location, :class_name => 'Spree::StockLocation'
     belongs_to :destination_location, :class_name => 'Spree::StockLocation'
 
+    validates_presence_of :source_location
+    validates_presence_of :destination_location, if: :finalized?
+
     make_permalink field: :number, prefix: 'T'
 
-    def closed?
-      closed_at.present?
-    end
+    before_destroy :ensure_not_finalized
 
     def to_param
       number
     end
 
-    def ship(tracking_number:, shipped_at:)
+    def finalized?
+      finalized_at.present?
+    end
+
+    def closed?
+      closed_at.present?
+    end
+
+    def shipped?
+      shipped_at.present?
+    end
+
+    def finalizable?
+      !finalized? && !shipped? && !closed?
+    end
+
+    def receivable?
+      finalized? && shipped? && !closed?
+    end
+
+    def ship(tracking_number: tracking_number, shipped_at: shipped_at)
       update_attributes!(tracking_number: tracking_number, shipped_at: shipped_at)
     end
 
@@ -40,21 +66,43 @@ module Spree
         .where('spree_stock_items.stock_location_id' => destination_location_id)
     end
 
-    def transfer(source_location, destination_location, variants)
-      transaction do
-        variants.each_pair do |variant, quantity|
-          source_location.unstock(variant, quantity, self) if source_location
-          destination_location.restock(variant, quantity, self)
-
-          self.source_location = source_location
-          self.destination_location = destination_location
-          self.save!
-        end
+    def finalize(finalized_by)
+      if finalizable?
+        self.update_attributes({ finalized_at: Time.now, finalized_by: finalized_by })
+      else
+        errors.add(:base, Spree.t(:stock_transfer_cannot_be_finalized))
+        false
       end
     end
 
-    def receive(destination_location, variants)
-      transfer(nil, destination_location, variants)
+    def transfer
+      transaction do
+        transfer_items.each do |item|
+          raise InvalidTransferMovement unless item.valid?
+          source_location.unstock(item.variant, item.expected_quantity, self)
+        end
+      end
+    rescue InvalidTransferMovement
+      errors.add(:base, Spree.t(:not_enough_stock))
+      false
+    end
+
+    def close(closed_by)
+      if receivable?
+        self.update_attributes({ closed_at: Time.now, closed_by: closed_by })
+      else
+        errors.add(:base, Spree.t(:stock_transfer_must_be_receivable))
+        false
+      end
+    end
+
+    private
+
+    def ensure_not_finalized
+      if finalized?
+        errors.add(:base, Spree.t('errors.messages.cannot_delete_finalized_stock_transfer'))
+        return false
+      end
     end
   end
 end

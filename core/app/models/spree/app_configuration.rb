@@ -32,6 +32,7 @@ module Spree
     preference :alternative_shipping_phone, :boolean, default: false # Request extra phone for ship addr
     preference :always_put_site_name_in_title, :boolean, default: true
     preference :auto_capture, :boolean, default: false # automatically capture the credit card (as opposed to just authorize and capture later)
+    preference :auto_capture_exchanges, :boolean, default: false # automatically capture the credit card (as opposed to just authorize and capture later)
     preference :binary_inventory_cache, :boolean, default: false # only invalidate product cache when a stock item changes whether it is in_stock
     preference :checkout_zone, :string, default: nil # replace with the name of a zone if you would like to limit the countries
     preference :company, :boolean, default: false # Request company field for billing and shipping addr
@@ -43,6 +44,7 @@ module Spree
     preference :layout, :string, default: 'spree/layouts/spree_application'
     preference :logo, :string, default: 'logo/solidus_logo.png'
     preference :max_level_in_taxons_menu, :integer, default: 1 # maximum nesting level in taxons menu
+    preference :order_capturing_time_window, :integer, default: 14 # the number of days to look back for fully-shipped/cancelled orders in order to charge for them
     preference :order_mutex_max_age, :integer, default: 2.minutes
     preference :orders_per_page, :integer, default: 15
     preference :properties_per_page, :integer, default: 15
@@ -50,6 +52,7 @@ module Spree
     preference :promotions_per_page, :integer, default: 15
     preference :customer_returns_per_page, :integer, default: 15
     preference :require_master_price, :boolean, default: true
+    preference :require_payment_to_ship, :boolean, default: true # Allows shipments to be ready to ship regardless of the order being paid if false
     preference :return_eligibility_number_of_days, :integer, default: 365
     preference :shipping_instructions, :boolean, default: false # Request instructions/info for shipping
     preference :show_only_complete_orders_by_default, :boolean, default: true

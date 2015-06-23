@@ -12,20 +12,20 @@
       <%= f.text_field :tax_code, :class => 'fullwidth' %>
     <% end %>
   </div>
-  
-  <div class="five columns">
-    <%= f.field_container :description do %>
-      <%= f.label :description, Spree.t(:description) %><br>
-      <%= f.text_field :description, :class => 'fullwidth' %>
-    <% end %>
-  </div>
 
-  <div class="three columns omega">
+  <div class="two columns omega">
     <%= f.field_container :is_default, :class => ['checkbox'] do %>
       <label>
         <%= f.check_box :is_default %>
         <%= Spree.t(:default) %>
       </label>
+    <% end %>
+  </div>
+
+  <div class="alpha six columns">
+    <%= f.field_container :description do %>
+      <%= f.label :description, Spree.t(:description) %><br>
+      <%= f.text_area :description, :class => 'fullwidth' %>
     <% end %>
   </div>
 </div>

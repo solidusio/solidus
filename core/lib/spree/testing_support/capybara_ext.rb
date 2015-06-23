@@ -42,6 +42,11 @@ module CapybaraExt
     targetted_select2_search(value, options)
   end
 
+  def select2_search_without_selection(value, options)
+    page.execute_script "$('#{options[:from]}').select2('open');"
+    page.execute_script "$('input.select2-input').val('#{value}').trigger('keyup-change');"
+  end
+
   def targetted_select2_search(value, options)
     find("#{options[:from]}:not(.select2-container-disabled)").click
 

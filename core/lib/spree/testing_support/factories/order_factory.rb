@@ -51,7 +51,7 @@ FactoryGirl.define do
 
         factory :completed_order_with_pending_payment do
           after(:create) do |order|
-            create(:payment, amount: order.total, order: order)
+            create(:payment, amount: order.total, order: order, state: 'pending')
           end
         end
 
@@ -78,6 +78,22 @@ FactoryGirl.define do
             end
           end
         end
+      end
+    end
+  end
+
+  factory :completed_order_with_promotion, parent: :completed_order_with_totals, class: "Spree::Order" do
+    transient do
+      promotion nil
+      promotion_code nil
+    end
+
+    after(:create) do |order, evaluator|
+      promotion = evaluator.promotion || create(:promotion, code: "test")
+      promotion_code = evaluator.promotion_code || promotion.codes.first
+
+      promotion.actions.each do |action|
+        action.perform({order: order, promotion: promotion, promotion_code: promotion_code})
       end
     end
   end

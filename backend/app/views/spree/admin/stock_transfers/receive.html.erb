@@ -1,0 +1,65 @@
+<%= render :partial => 'spree/admin/shared/stock_sub_menu' %>
+<%= render :partial => 'transfer_item_template' %>
+<%= render :partial => "spree/admin/variants/autocomplete", :formats => :js %>
+
+<% content_for :page_title do %>
+  <%= "#{Spree.t(:receiving)} #{@stock_transfer.number}" %>
+<% end %>
+
+<% content_for :page_actions do %>
+  <li>
+    <%= button_link_to Spree.t(:back_to_stock_transfers_list), admin_stock_transfers_path, :icon => 'arrow-left' %>
+  </li>
+  <li>
+    <%= button_link_to Spree.t(:close), '#', :icon => 'lock', :id => 'close-transfer-button' %>
+  </li>
+<% end %>
+
+<div id="close-stock-transfer-warning">
+  <div class='warning-title'>
+    <i class='fa fa-warning'></i>
+    <span><%= Spree.t(:you_cannot_undo_action) %></span>
+  </div>
+  <div class='action-consequences'>
+    <span><%= Spree.t('close_stock_transfer.will_cause') %>:</span>
+    <ul data-hook='close-stock-transfer-consequences'>
+      <li><%= Spree.t('close_stock_transfer.no_longer_edit') %></li>
+      <li><%= Spree.t('close_stock_transfer.stock_movements_created') %></li>
+    </ul>
+  </div>
+  <span><%= Spree.t(:are_you_sure_close_stock_transfer) %></span>
+  <div class='actions'>
+    <%= link_to Spree.t(:no_dont_close), '#', :id => 'cancel-close-link' %>
+    <%= link_to Spree.t(:yes_close), close_admin_stock_transfer_path(@stock_transfer), { method: 'put' } %>
+  </div>
+</div>
+
+<div id='stock_transfer_summary' class='fullwidth'>
+  <div class='location'>
+    <span class='summary-field'>From:</span>
+    <span><%= @stock_transfer.source_location.admin_name %></span>
+    <span class='arrow'>&rarr;</span>
+    <span class='summary-field'>To:</span>
+    <span><%= @stock_transfer.destination_location.admin_name %></span>
+  </div>
+  <div class='count-summary'>
+    <span id='total-received-quantity'><%= @stock_transfer.received_item_count %></span>
+    /
+    <span><%= @stock_transfer.expected_item_count %></span>
+    <span class='summary-field'>Received</span>
+  </div>
+</div>
+
+<fieldset>
+  <legend align="center"><%= Spree.t(:variant_to_be_received) %></legend>
+  <div data-hook="transfer_item_selection">
+    <%= hidden_field_tag :stock_transfer_number, @stock_transfer.number %>
+    <%= hidden_field_tag :variant_display_attributes, @variant_display_attributes.to_json %>
+    <%= hidden_field_tag :transfer_item_variant_id, "", :class => "variant_autocomplete fullwidth" %>
+  </div>
+</fieldset>
+
+<fieldset id='received-transfer-items'>
+  <legend align="center"><%= Spree.t(:received_items) %></legend>
+  <%= render partial: 'transfer_item_table', locals: { transfer_items: @received_items, show_expected: false, show_received: true, show_actions: true } %>
+</fieldset>

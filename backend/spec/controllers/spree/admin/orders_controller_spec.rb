@@ -223,6 +223,18 @@ describe Spree::Admin::OrdersController, :type => :controller do
           expect(flash[:error].to_s).to include("Cannot transition state via :complete from :cart")
         end
       end
+
+      context 'insufficient stock to complete the order' do
+        before do
+          order.should_receive(:complete!).and_raise Spree::Order::InsufficientStock
+        end
+
+        it 'messages and redirects' do
+          subject
+          expect(response).to redirect_to(spree.cart_admin_order_path(order))
+          expect(flash[:error].to_s).to eq Spree.t(:insufficient_stock_for_order)
+        end
+      end
     end
 
     # Test for #3919

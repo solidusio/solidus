@@ -1012,7 +1012,7 @@ describe Spree::Order, :type => :model do
         let(:order)       { create(:order, total: order_total) }
 
         context "there is a credit card payment" do
-          let!(:cc_payment) { create(:payment, order: order) }
+          let!(:cc_payment) { create(:payment, order: order, amount: order_total) }
 
           before do
             # callbacks recalculate total based on line items

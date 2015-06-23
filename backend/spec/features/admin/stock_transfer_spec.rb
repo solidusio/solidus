@@ -3,72 +3,82 @@ require 'spec_helper'
 describe 'Stock Transfers', :type => :feature, :js => true do
   stub_authorization!
 
-  it 'transfer between 2 locations' do
-    source_location = create(:stock_location_with_items, :name => 'NY')
-    destination_location = create(:stock_location, :name => 'SF')
-    variant = Spree::Variant.last
+  let(:admin_user) { create(:admin_user) }
+  let(:description) { 'Test stock transfer' }
 
-    visit spree.new_admin_stock_transfer_path
-
-    fill_in 'reference', :with => 'PO 666'
-
-    select2_search variant.name, :from => 'Variant'
-
-    click_button 'Add'
-    click_button 'Transfer Stock'
-
-    page.should have_content('NY')
-    page.should have_content('SF')
-
-    transfer = Spree::StockTransfer.last
-    expect(transfer.stock_movements.size).to eq 2
+  before do
+    Spree::Admin::BaseController.any_instance.stub(:spree_current_user).and_return(admin_user)
   end
 
-  describe 'received stock transfer' do
-    def it_is_received_stock_transfer(page)
-      page.should_not have_content("San Francisco")
-      page.should have_content("New York")
-
-      transfer = Spree::StockTransfer.last
-      expect(transfer.stock_movements.size).to eq 1
-      expect(transfer.source_location).to be_nil
-    end
-
-    it 'receive stock to a single location' do
-      source_location = create(:stock_location_with_items, :name => 'New York')
-      destination_location = create(:stock_location, :name => 'San Francisco')
+  describe 'create stock transfer' do
+    it 'can create a stock transfer' do
+      source_location = create(:stock_location_with_items, :name => 'NY')
+      destination_location = create(:stock_location, :name => 'SF')
 
       visit spree.new_admin_stock_transfer_path
+      select "SF", from: 'stock_transfer[source_location_id]'
+      fill_in 'stock_transfer_description', with: description
+      click_button 'Continue'
 
-      fill_in 'reference', :with => 'PO 666'
-      check 'transfer_receive_stock'
-      select('New York', :from => 'transfer_destination_location_id')
+      expect(page.find('#stock_transfer_description').value).to eq description
 
-      variant = Spree::Variant.last
-      select2_search variant.name, :from => 'Variant'
+      select "NY", from: 'stock_transfer[destination_location_id]'
+      within "form.edit_stock_transfer" do
+        page.find('button').trigger('click')
+      end
 
-      click_button 'Add'
-      click_button 'Transfer Stock'
+      expect(page).to have_css(:div, '#finalize-stock-transfer-warning')
+      expect(page).to have_content("NY")
+    end
+  end
 
-      it_is_received_stock_transfer page
+  describe 'ship stock transfer' do
+    let(:stock_transfer) { create(:stock_transfer_with_items) }
+
+    before do
+      stock_transfer.transfer_items do |item|
+        item.update_attributes(expected_quantity: 1)
+      end
     end
 
-    it 'forced to only receive there is only one location' do
-      source_location = create(:stock_location_with_items, :name => 'New York')
+    describe "tracking info" do
+      it 'adds tracking number' do
+        visit spree.tracking_info_admin_stock_transfer_path(stock_transfer)
 
-      visit spree.new_admin_stock_transfer_path
+        fill_in 'stock_transfer_tracking_number', :with => "12345"
+        click_button 'Save'
 
-      fill_in 'reference', :with => 'PO 666'
+        expect(stock_transfer.reload.tracking_number).to eq '12345'
+      end
+    end
 
-      select('New York', :from => 'transfer_destination_location_id')
+    describe 'with enough stock' do
+      it 'ships stock transfer' do
+        visit spree.tracking_info_admin_stock_transfer_path(stock_transfer)
+        click_link 'ship'
 
-      variant = Spree::Variant.last
-      select2_search variant.name, :from => 'Variant'
+        first('#confirm-ship-link', visible: false).click
+        expect(current_path).to eq spree.admin_stock_transfers_path
+        expect(stock_transfer.reload.shipped_at).to_not be_nil
+      end
+    end
 
-      click_button 'Add'
-      click_button 'Transfer Stock'
+    describe 'without enough stock' do
+      before do
+        stock_transfer.transfer_items.each do |item|
+          stock_transfer.source_location.stock_item(item.variant).set_count_on_hand(0)
+        end
+      end
 
-      it_is_received_stock_transfer page
+      it 'does not ship stock transfer' do
+        visit spree.tracking_info_admin_stock_transfer_path(stock_transfer)
+
+        click_link 'ship'
+
+        first('#confirm-ship-link', visible: false).click
+        expect(current_path).to eq spree.tracking_info_admin_stock_transfer_path(stock_transfer)
+        expect(stock_transfer.reload.shipped_at).to be_nil
+      end
     end
   end
 end

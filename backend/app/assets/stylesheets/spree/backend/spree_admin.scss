@@ -22,6 +22,8 @@
 @import 'spree/backend/components/table-filter';
 @import 'spree/backend/components/navigation';
 @import 'spree/backend/components/sidebar';
+@import 'spree/backend/components/number_field_update';
+@import 'spree/backend/components/stock_table';
 
 @import 'font-awesome';
 @import 'spree/backend/plugins/powertip';
@@ -41,6 +43,8 @@
 @import 'spree/backend/sections/taxons';
 @import 'spree/backend/sections/users';
 @import 'spree/backend/sections/stock_management';
+@import 'spree/backend/sections/transfer_items';
+@import 'spree/backend/sections/stock_transfers';
 
 @import 'spree/backend/hacks/mozilla';
 @import 'spree/backend/hacks/opera';

@@ -1,28 +1,27 @@
-# coding: UTF-8
 require 'spec_helper'
 
 describe Spree::Admin::StockMovementsHelper, :type => :helper do
 
   describe "#pretty_originator" do
+    let!(:stock_location) { create(:stock_location_with_items) }
+    let!(:stock_item)     { stock_location.stock_items.first }
+    let(:stock_movement)  { create(:stock_movement, stock_item: stock_item, originator: originator) }
 
-    context "transfering between two locations" do
-      let(:destination_location) { create(:stock_location_with_items) }
-      let(:source_location) { create(:stock_location_with_items) }
-      let(:stock_item) { source_location.stock_items.order(:id).first }
-      let(:variant) { stock_item.variant }
+    subject { helper.pretty_originator(stock_movement) }
 
-      before do
-        @stock_transfer = Spree::StockTransfer.create(reference: 'PO123')
-        variants = { variant => 5 }
-        @stock_transfer.transfer(source_location,
-                       destination_location,
-                       variants)
-        helper.pretty_originator(@stock_transfer.stock_movements.last)
+    context "originator has a number" do
+      let(:originator) { create(:order) }
+
+      it "returns the originator's number" do
+        expect(subject).to eq originator.number
       end
+    end
 
+    context "originator doesn't have a number" do
+      let(:originator) { create(:user) }
 
-      it "returns link to stock transfer" do
-        expect(helper.pretty_originator(@stock_transfer.stock_movements.last)).to eq @stock_transfer.number
+      it "returns an empty string" do
+        expect(subject).to eq ""
       end
     end
   end

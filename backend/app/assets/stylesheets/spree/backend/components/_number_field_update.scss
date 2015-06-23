@@ -1,0 +1,13 @@
+.number-field-update-table {
+  td.actions {
+    a.fa-void,
+    a.fa-check {
+      display: none;
+    }
+  }
+  .js-number-update-input { display: none; }
+
+  input[type='number'] {
+    min-width: 65px;
+  }
+}

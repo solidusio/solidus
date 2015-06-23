@@ -4,17 +4,16 @@ class IndexUpdateForms
     $('body').on 'click', '#listing_product_stock .fa-edit', (ev) =>
       ev.preventDefault()
       stockItemId = $(ev.currentTarget).data('id')
-      hideReadOnlyElements(stockItemId)
       storeBackorderableState(stockItemId)
-      resetCountOnHandInput(stockItemId)
+      Spree.NumberFieldUpdater.hideReadOnly(stockItemId)
       showEditForm(stockItemId)
 
     # Cancel
     $('body').on 'click', '#listing_product_stock .fa-void', (ev) =>
       ev.preventDefault()
       stockItemId = $(ev.currentTarget).data('id')
-      hideEditForm(stockItemId)
       restoreBackorderableState(stockItemId)
+      Spree.NumberFieldUpdater.hideForm(stockItemId)
       showReadOnlyElements(stockItemId)
 
     # Submit
@@ -23,7 +22,7 @@ class IndexUpdateForms
       stockItemId = $(ev.currentTarget).data('id')
       stockLocationId = $(ev.currentTarget).data('location-id')
       backorderable = $("#backorderable-#{stockItemId}").prop("checked")
-      countOnHand = parseInt($("#count-on-hand-#{stockItemId} input[type='number']").val(), 10)
+      countOnHand = parseInt($("#number-update-#{stockItemId} input[type='number']").val(), 10)
 
       stockItem = new Spree.StockItem
         id: stockItemId
@@ -33,56 +32,32 @@ class IndexUpdateForms
       stockItem.update(successHandler, errorHandler)
 
   showReadOnlyElements = (stockItemId) ->
-    toggleReadOnlyElements(stockItemId, true)
-
-  hideReadOnlyElements = (stockItemId) ->
-    toggleReadOnlyElements(stockItemId, false)
-
-  toggleReadOnlyElements = (stockItemId, show) ->
-    disabledValue = if show then 'disabled' else null
-    textCssDisplay = if show then 'block' else 'none'
-    toggleButtonVisibility('edit', stockItemId, show)
-    $("#backorderable-#{stockItemId}").prop('disabled', disabledValue)
-    $("#count-on-hand-#{stockItemId} span").css('display', textCssDisplay)
+    toggleBackorderable(stockItemId, false)
+    Spree.NumberFieldUpdater.showReadOnly(stockItemId)
 
   showEditForm = (stockItemId) ->
-    toggleEditFormVisibility(stockItemId, true)
+    toggleBackorderable(stockItemId, true)
+    Spree.NumberFieldUpdater.showForm(stockItemId)
 
-  hideEditForm = (stockItemId) ->
-    toggleEditFormVisibility(stockItemId, false)
-
-  toggleEditFormVisibility = (stockItemId, show) ->
+  toggleBackorderable = (stockItemId, show) ->
     disabledValue = if show then null else 'disabled'
-    inputCssDisplay = if show then 'block' else 'none'
-    toggleButtonVisibility('void', stockItemId, show)
-    toggleButtonVisibility('check', stockItemId, show)
     $("#backorderable-#{stockItemId}").prop('disabled', disabledValue)
-    $("#count-on-hand-#{stockItemId} input[type='number']").css('display', inputCssDisplay)
-
-  toggleButtonVisibility = (buttonIcon, stockItemId, show) ->
-    cssDisplay = if show then 'inline-block' else 'none'
-    $(".fa-#{buttonIcon}[data-id='#{stockItemId}']").css('display', cssDisplay)
-
-  resetCountOnHandInput = (stockItemId) ->
-    tableCell = $("#count-on-hand-#{stockItemId}")
-    countText = tableCell.find('span').text().trim()
-    tableCell.find("input[type='number']").val(countText)
 
   storeBackorderableState = (stockItemId) ->
     backorderableCheckbox = $("#backorderable-#{stockItemId}")
-    backorderableCheckbox.parent('td').attr('data-was-checked', backorderableCheckbox.prop('checked'))
+    backorderableCheckbox.parent('td').attr('was-checked', backorderableCheckbox.prop('checked'))
 
   restoreBackorderableState = (stockItemId) ->
     backorderableCheckbox = $("#backorderable-#{stockItemId}")
-    backorderableCheckbox.prop('checked', backorderableCheckbox.parent('td').data('was-checked'))
+    checked = backorderableCheckbox.parent('td').attr('was-checked') is "true"
+    backorderableCheckbox.prop('checked', checked)
 
   successHandler = (stockItem) =>
-    $("#count-on-hand-#{stockItem.id} span").text(stockItem.count_on_hand)
-    hideEditForm(stockItem.id)
-    showReadOnlyElements(stockItem.id)
+    toggleBackorderable(stockItem.id, false)
+    Spree.NumberFieldUpdater.successHandler(stockItem.id, stockItem.count_on_hand)
     show_flash("success", Spree.translations.updated_successfully)
 
-  errorHandler = (errorData) =>
+  errorHandler = (errorData) ->
     show_flash("error", errorData.responseText)
 
 Spree.StockManagement ?= {}

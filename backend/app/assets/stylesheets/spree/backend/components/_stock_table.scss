@@ -1,0 +1,42 @@
+.stock-table {
+  .stock-variant-field-table {
+    tr td {
+      padding: 2px;
+      border: none;
+      text-align: left;
+    }
+    tr td:first-child {
+      font-weight: bold;
+    }
+    margin-bottom: 0px;
+  }
+
+  > tbody {
+    > tr {
+      &:hover {
+        .stock-variant-field-table {
+          td {
+            background-color: $color-1;
+          }
+        }
+      }
+    }
+    .variant-image {
+      width: 31%;
+      padding: 0 2%;
+      img { width: 100%; }
+    }
+    .variant-details {
+      width: 65%;
+      padding: 0px 5px;
+    }
+    .variant-image,
+    .variant-details,
+    .variant-container {
+      float: left;
+    }
+    .variant-container {
+      padding-top: 10px;
+    }
+  }
+}

@@ -27,6 +27,22 @@ describe Spree::ReturnItem::EligibilityValidator::NoReimbursements do
           expect(subject).to eq true
         end
       end
+
+      context "but the return item has been canceled" do
+        before { return_item.cancel }
+
+        it "returns true" do
+          expect(subject).to eq true
+        end
+      end
+
+      context "but the return item has been unexchanged" do
+        before { return_item.unexchange }
+
+        it "returns true" do
+          expect(subject).to eq true
+        end
+      end
     end
 
     context "inventory unit has not been reimbursed" do

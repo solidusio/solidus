@@ -7,6 +7,7 @@
   <%= render :partial => 'spree/admin/shared/product_tabs', :locals => { :current => 'Stock Management' } %>
   <%= render :partial => 'spree/shared/error_messages', :locals => { :target => @product } %>
 <% else %>
+  <%= render :partial => 'spree/admin/shared/stock_sub_menu' %>
   <% content_for :page_title do %>
     <%= Spree.t(:manage_stock) %>
   <% end %>

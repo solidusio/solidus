@@ -62,7 +62,9 @@ module Spree
             variants = variants.with_deleted
           end
 
-          variants.accessible_by(current_ability, :read)
+          variants = variants.accessible_by(current_ability, :read)
+          variants = variants.in_stock if params[:in_stock_only] || cannot?(:view_out_of_stock, Spree::Variant)
+          variants
         end
 
         def variant_params

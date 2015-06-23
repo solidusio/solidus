@@ -157,7 +157,17 @@ Spree::Core::Engine.add_routes do
 
     resources :shipping_methods
     resources :shipping_categories
-    resources :stock_transfers, only: [:index, :show, :new, :create]
+
+    resources :stock_transfers, :except => [:destroy] do
+      member do
+        get :receive
+        put :finalize
+        put :close
+        get :tracking_info
+        put :ship
+      end
+    end
+
     resources :stock_locations do
       resources :stock_movements, except: [:edit, :update, :destroy]
       collection do

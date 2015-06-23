@@ -31,6 +31,7 @@ Dir[File.dirname(__FILE__) + "/support/**/*.rb"].each {|f| require f}
 require 'spree/testing_support/factories'
 require 'spree/testing_support/rspec-activemodel-mocks_patch'
 require 'spree/testing_support/preferences'
+require 'spree/testing_support/mail'
 
 require 'spree/api/testing_support/caching'
 require 'spree/api/testing_support/helpers'
@@ -45,6 +46,7 @@ RSpec.configure do |config|
   config.include Spree::Api::TestingSupport::Helpers, :type => :controller
   config.extend Spree::Api::TestingSupport::Setup, :type => :controller
   config.include Spree::TestingSupport::Preferences
+  config.include Spree::TestingSupport::Mail
 
   config.fail_fast = ENV['FAIL_FAST'] || false
 
