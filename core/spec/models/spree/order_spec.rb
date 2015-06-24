@@ -1065,11 +1065,10 @@ describe Spree::Order, :type => :model do
       end
 
       context "the available store credit is not enough to pay for the entire order" do
-        let(:expected_cc_total)  { 100.0 }
-        let(:store_credit_total) { order_total - expected_cc_total }
+        let(:order_total) { 500 }
+        let(:store_credit_total) { order_total - 100 }
         let(:store_credit)       { create(:store_credit, amount: store_credit_total) }
-        let(:order)              { create(:order, user: store_credit.user, total: order_total) }
-
+        let(:order) { create(:order_with_totals, user: store_credit.user, line_items_price: order_total).tap(&:update!) }
 
         context "there are no other payments" do
           it "adds an error to the model" do
@@ -1082,18 +1081,29 @@ describe Spree::Order, :type => :model do
           let!(:cc_payment) { create(:payment, order: order, state: "checkout") }
 
           before do
-            # callbacks recalculate total based on line items
-            # this ensures the total is what we expect
-            order.update_column(:total, order_total)
             subject
-            order.reload
           end
 
           it "charges the outstanding balance to the credit card" do
             expect(order.errors.messages).to be_empty
             expect(order.payments.count).to eq 2
             expect(order.payments.first.source).to be_a(Spree::CreditCard)
-            expect(order.payments.first.amount).to eq expected_cc_total
+            expect(order.payments.first.amount).to eq 100
+          end
+
+          # see associated comment in order_decorator#add_store_credit_payments
+          context "the store credit is already in the pending state" do
+            before do
+              order.payments.store_credits.last.authorize!
+              order.add_store_credit_payments
+            end
+
+            it "charges the outstanding balance to the credit card" do
+              expect(order.errors.messages).to be_empty
+              expect(order.payments.count).to eq 2
+              expect(order.payments.first.source).to be_a(Spree::CreditCard)
+              expect(order.payments.first.amount).to eq 100
+            end
           end
         end
       end
