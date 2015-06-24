@@ -57,4 +57,6 @@ RSpec.configure do |config|
   end
 
   config.use_transactional_fixtures = true
+
+  config.example_status_persistence_file_path = "./spec/examples.txt"
 end

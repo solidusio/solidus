@@ -106,4 +106,6 @@ RSpec.configure do |config|
   config.extend WithModel
 
   config.fail_fast = ENV['FAIL_FAST'] || false
+
+  config.example_status_persistence_file_path = "./spec/examples.txt"
 end
