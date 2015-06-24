@@ -632,8 +632,15 @@ module Spree
     alias_method :fully_discounted, :fully_discounted?
 
     def unreturned_exchange?
+      # created_at - 1 is a hack to ensure that this doesn't blow up on MySQL,
+      # records loaded from the DB on MySQL will have a precision of 1 second,
+      # but records in memory may still have miliseconds on them, causing this
+      # to be true where it shouldn't be.
+      #
+      # FIXME: find a better way to determine if an order is an unreturned
+      # exchange
       shipment = self.shipments.first
-      shipment.present? ? (shipment.created_at < self.created_at) : false
+      shipment.present? ? (shipment.created_at < self.created_at - 1) : false
     end
 
     def tax_total
