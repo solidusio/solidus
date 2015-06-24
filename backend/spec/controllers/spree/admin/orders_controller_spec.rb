@@ -2,15 +2,6 @@ require 'spec_helper'
 require 'cancan'
 require 'spree/testing_support/bar_ability'
 
-# Ability to test access to specific model instances
-class OrderSpecificAbility
-  include CanCan::Ability
-
-  def initialize(user)
-    can [:admin, :manage], Spree::Order, :number => 'R987654321'
-  end
-end
-
 describe Spree::Admin::OrdersController, :type => :controller do
 
   context "with authorization" do
@@ -351,19 +342,23 @@ describe Spree::Admin::OrdersController, :type => :controller do
       expect(response).to redirect_to('/unauthorized')
     end
 
-    it 'should restrict returned order(s) on index when using OrderSpecificAbility' do
-      number = order.number
+    context 'with only permissions on Order' do
+      stub_authorization! do |ability|
+        can [:admin, :manage], Spree::Order, :number => 'R987654321'
+      end
 
-      3.times { create(:completed_order_with_totals) }
-      expect(Spree::Order.complete.count).to eq 4
-      Spree::Ability.register_ability(OrderSpecificAbility)
+      it 'should restrict returned order(s) on index when using OrderSpecificAbility' do
+        number = order.number
 
-      allow(user).to receive_messages :has_spree_role? => false
-      spree_get :index
-      expect(response).to render_template :index
-      expect(assigns['orders'].size).to eq 1
-      expect(assigns['orders'].first.number).to eq number
-      expect(Spree::Order.accessible_by(Spree::Ability.new(user), :index).pluck(:number)).to eq  [number]
+        3.times { create(:completed_order_with_totals) }
+        expect(Spree::Order.complete.count).to eq 4
+
+        allow(user).to receive_messages :has_spree_role? => false
+        spree_get :index
+        expect(response).to render_template :index
+        expect(assigns['orders'].size).to eq 1
+        expect(assigns['orders'].first.number).to eq number
+      end
     end
   end
 
