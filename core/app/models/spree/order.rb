@@ -669,9 +669,12 @@ module Spree
         other_payments.first.update_attributes!(amount: remaining_total)
       end
 
+      payments.reload
+
       if payments.checkout.sum(:amount) != total
         errors.add(:base, Spree.t("store_credit.errors.unable_to_fund")) and return false
       end
+
     end
 
     def covered_by_store_credit?
