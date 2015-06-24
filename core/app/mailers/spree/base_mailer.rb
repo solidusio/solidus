@@ -1,8 +1,8 @@
 module Spree
   class BaseMailer < ActionMailer::Base
 
-    def from_address
-      Spree::Config[:mails_from]
+    def from_address(store = nil)
+      store ? store.mail_from_address : Spree::Config[:mails_from]
     end
 
     def money(amount, currency = Spree::Config[:currency])

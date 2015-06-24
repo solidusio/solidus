@@ -23,6 +23,17 @@ describe Spree::OrderMailer, :type => :mailer do
     end
   end
 
+  context "when order has a store" do
+    before do
+      store = FactoryGirl.build :store, mail_from_address: "store@example.com"
+      allow(order).to receive(:store).and_return(store)
+    end
+    it "uses the order's store for the from address" do
+      message = Spree::OrderMailer.confirm_email(order)
+      expect(message.from).to eq ["store@example.com"]
+    end
+  end
+
   it "doesn't aggressively escape double quotes in confirmation body" do
     confirmation_email = Spree::OrderMailer.confirm_email(order)
     expect(confirmation_email.body).not_to include("&quot;")
