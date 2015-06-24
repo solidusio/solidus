@@ -68,7 +68,7 @@ module Spree
       context "removing a search query" do
         around do |example|
           search_terms = described_class.search_terms
-          described_class.search_terms.delete(:sku_cont)
+          described_class.search_terms -= [:sku_cont]
           example.run
           described_class.search_terms = search_terms
         end
@@ -79,7 +79,7 @@ module Spree
       context "adding a search query" do
         around do |example|
           search_terms = described_class.search_terms
-          described_class.search_terms << :weight_eq
+          described_class.search_terms += [:weight_eq]
           example.run
           described_class.search_terms = search_terms
         end
