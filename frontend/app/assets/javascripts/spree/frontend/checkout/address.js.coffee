@@ -14,11 +14,15 @@ Spree.ready ($) ->
               Spree.Checkout[countryId] =
                 states: data.states
                 states_required: data.states_required
-              Spree.fillStates(Spree.Checkout[countryId], region)
+              Spree.fillStates(region)
           else
-            Spree.fillStates(Spree.Checkout[countryId], region)
+            Spree.fillStates(region)
 
-      Spree.fillStates = (data, region) ->
+      Spree.fillStates = (region) ->
+        countryId = getCountryId(region)
+        data = Spree.Checkout[countryId]
+        return unless data?
+
         statesRequired = data.states_required
         states = data.states
 
