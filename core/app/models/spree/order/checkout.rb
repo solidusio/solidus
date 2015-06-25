@@ -307,7 +307,7 @@ module Spree
             if self.payments.from_credit_card.count == 0 && self.user && self.user.default_credit_card.try(:valid?)
               cc = self.user.default_credit_card
               self.payments.create!(payment_method_id: cc.payment_method_id, source: cc)
-              self.bill_address ||= self.user.bill_address.try(:clone) if self.user.bill_address.try(:valid?)
+              self.bill_address ||= self.user.bill_address.try!(:clone) if self.user.bill_address.try!(:valid?)
             end
           end
 
