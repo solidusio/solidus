@@ -12,7 +12,7 @@ module Spree
   end
 end
 
-describe Spree::Admin::WidgetsController, :type => :controller do
+describe Spree::Admin::WidgetsController, :type => :controller, :truncation => true do
   stub_authorization!
 
   after(:all) do
@@ -161,10 +161,6 @@ describe Spree::Admin::WidgetsController, :type => :controller do
 
     it 'updates the position of widget 2' do
       expect { subject }.to change { widget_2.reload.position }.from(2).to(1)
-    end
-
-    it 'touches updated_at' do
-      expect { subject }.to change { widget_1.reload.updated_at }
     end
   end
 end

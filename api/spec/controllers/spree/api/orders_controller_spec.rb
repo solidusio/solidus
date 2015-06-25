@@ -111,11 +111,11 @@ module Spree
         api_get :mine
         expect(response.status).to eq(200)
         expect(json_response["pages"]).to eq(1)
-        expect(json_response["orders"].length).to eq(4)
-        expect(json_response["orders"][0]["number"]).to eq(order.number)
-        expect(json_response["orders"][1]["number"]).to eq(order2.number)
-        expect(json_response["orders"][2]["number"]).to eq(order4.number)
-        expect(json_response["orders"][3]["number"]).to eq(order3.number)
+        orders = json_response["orders"]
+        expect(orders.length).to eq(4)
+        expect(orders[0]["number"]).to eq(order.number)
+        expect(orders[1]["number"]).to eq(order2.number)
+        expect([orders[2]["number"], orders[3]["number"]]).to match_array([order3.number, order4.number])
       end
     end
 

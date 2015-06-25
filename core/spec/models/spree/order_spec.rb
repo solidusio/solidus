@@ -1121,8 +1121,8 @@ describe Spree::Order, :type => :model do
           end
 
           it "uses the primary store credit type over the secondary" do
-            primary_payment = order.payments.first
-            secondary_payment = order.payments.last
+            primary_payment = order.payments.detect{|x| x.source == primary_store_credit }
+            secondary_payment = order.payments.detect{|x| x.source == secondary_store_credit }
 
             expect(order.payments.size).to eq 2
             expect(primary_payment.source).to eq primary_store_credit
