@@ -28,14 +28,20 @@ describe Spree::Order, :type => :model do
       expect(Spree::Order.find_transition({foo: :bar, baz: :dog})).to be_falsey
     end
 
-    it '.remove_transition' do
-      options = {:from => transitions.first.keys.first, :to => transitions.first.values.first}
-      allow(Spree::Order).to receive(:next_event_transition).and_return([options])
-      expect(Spree::Order.remove_transition(options)).to be_truthy
-    end
+    describe "remove_transition" do
+      after do
+        Spree::Order.checkout_flow(&@old_checkout_flow)
+      end
 
-    it '.remove_transition when contract was broken' do
-      expect(Spree::Order.remove_transition(nil)).to be_falsey
+      it '.remove_transition' do
+        options = {:from => transitions.first.keys.first, :to => transitions.first.values.first}
+        allow(Spree::Order).to receive(:next_event_transition).and_return([options])
+        expect(Spree::Order.remove_transition(options)).to be_truthy
+      end
+
+      it '.remove_transition when contract was broken' do
+        expect(Spree::Order.remove_transition(nil)).to be_falsey
+      end
     end
 
     it "always return integer on checkout_step_index" do
