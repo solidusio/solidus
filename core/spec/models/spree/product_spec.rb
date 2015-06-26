@@ -29,10 +29,8 @@ describe Spree::Product, :type => :model do
       end
 
       it 'calls #duplicate_extra' do
-        Spree::Product.class_eval do
-          def duplicate_extra(old_product)
-            self.name = old_product.name.reverse
-          end
+        expect_any_instance_of(Spree::Product).to receive(:duplicate_extra) do |product, old_product|
+          product.name = old_product.name.reverse
         end
 
         clone = product.duplicate
