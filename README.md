@@ -55,6 +55,15 @@ Run migrations to create the new models in the database.
 bundle exec rake db:migrate
 ```
 
+Finally start the rails server
+
+```
+bundle exec rails s
+````
+
+The solidus_frontend storefront will be accessible at http://localhost:3000/
+and the admin can be found at http://localhost:3000/admin/.
+
 
 Installation options
 --------------------
@@ -85,16 +94,6 @@ bundle exec rake db:migrate
 bundle exec rake db:seed
 bundle exec rake spree_sample:load
 ```
-
-Browse Store
-------------
-
-http://localhost:nnnn
-
-Browse Admin Interface
-----------------------
-
-http://localhost:nnnn/admin
 
 Working with the edge source (latest and greatest features)
 -----------------------------------------------------------
