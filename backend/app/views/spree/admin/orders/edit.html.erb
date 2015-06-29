@@ -20,7 +20,9 @@
   <%= render 'spree/admin/orders/risk_analysis', latest_payment: @order.payments.order("created_at DESC").first %>
 <% end %>
 
-<%= render partial: 'add_product' if @order.shipment_state != 'shipped' && can?(:update, @order) %>
+<% if can?(:update, Spree::Shipment) && can?(:update, @order) && @order.shipment_state != "shipped" %>
+  <%= render partial: 'add_product' %>
+<% end %>
 
 <% if @order.line_items.empty? %>
   <div class="no-objects-found">

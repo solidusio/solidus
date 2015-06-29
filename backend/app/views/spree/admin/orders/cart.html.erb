@@ -20,7 +20,9 @@
     <%= render 'spree/admin/orders/risk_analysis', latest_payment: @order.payments.order("created_at DESC").first %>
 <% end %>
 
-<%= render :partial => 'add_line_item' if can?(:update, @order) %>
+<% if can?(:update, @order) && can?(:create, Spree::LineItem) %>
+  <%= render :partial => 'add_line_item' %>
+<% end %>
 
 <% if @order.line_items.empty? %>
     <div class="no-objects-found">
@@ -35,5 +37,5 @@
 </div>
 
 <% content_for :head do %>
-    <%= javascript_tag 'var expand_variants = true;' %>
+  <%= javascript_tag 'var expand_variants = true;' %>
 <% end %>
