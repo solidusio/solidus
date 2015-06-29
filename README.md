@@ -98,41 +98,6 @@ bundle exec rake spree_sample:load
 There are also options and rake tasks provided by
 [solidus\_auth\_devise](https://github.com/solidusio/solidus_auth_devise).
 
-Working with the edge source (latest and greatest features)
------------------------------------------------------------
-
-The source code is essentially a collection of gems. Solidus is meant to be run
-within the context of Rails application. You can easily create a sandbox
-application inside of your cloned source directory for testing purposes.
-
-
-1. Clone the Git repo
-
-```shell
-git clone git://github.com/solidusio/solidus.git
-cd solidus
-```
-
-2. Install the gem dependencies
-
-```shell
-bundle install
-```
-
-3. Create a sandbox Rails application for testing purposes (and automatically
-perform all necessary database setup)
-
-```shell
-bundle exec rake sandbox
-```
-
-4. Start the server
-
-```shell
-cd sandbox
-rails server
-```
-
 Performance
 -----------
 
@@ -145,14 +110,70 @@ include. This can be disabled by adding the following to
 config.assets.debug = false
 ```
 
-Running Tests
--------------
+Developing Solidus
+------------------
 
-We use CircleCI to run the tests for Solidus.
+* Clone the Git repo
 
-You can see the build statuses at [https://circleci.com/gh/solidusio/solidus](https://circleci.com/gh/solidusio/solidus)
+    ```shell
+    git clone git://github.com/solidusio/solidus.git
+    cd solidus
+    ```
 
----
+* Install the gem dependencies
+
+    ```shell
+    bundle install
+    ```
+
+### Sandbox
+
+Solidus is meant to be run within the context of Rails application. You can
+easily create a sandbox application inside of your cloned source directory for
+testing purposes.
+
+This sandbox includes solidus\_auth\_devise and generates with seed and sample
+data already loaded.
+
+* Create the sandbox application (`DB=mysql` or `DB=postgres` can be specified
+  to override the default sqlite)
+
+  ```shell
+  bundle exec rake sandbox
+  ```
+
+* Start the server
+
+    ```shell
+    cd sandbox
+    rails server
+    ```
+
+### Tests
+
+#### CircleCI
+We use CircleCI to run the tests for Solidus as well as all incoming pull
+requests. All pull requests must pass to be merged.
+
+You can see the build statuses at
+[https://circleci.com/gh/solidusio/solidus](https://circleci.com/gh/solidusio/solidus)
+
+#### Running all tests
+
+To execute all the tests, run this command at the root of the Solidus project
+to generate test applications and run specs for all projects:
+
+```shell
+bash build.sh
+```
+
+This runs using postgresql by default, but can be overridden by specifying
+`DB=sqlite` or `DB=mysql` in the environment.
+
+[PhantomJS](http://phantomjs.org/) is required for the frontend and backend
+test suites.
+
+#### Running an individual test suite
 
 Each gem contains its own series of tests, and for each directory, you need to
 do a quick one-time creation of a test application and then you can use it to run
@@ -169,16 +190,6 @@ dummy apps database, which defaults to sqlite3.
 DB=postgres bundle exec rake test_app
 ```
 
-If you want to run specs for only a single spec file
-```shell
-bundle exec rspec spec/models/spree/state_spec.rb
-```
-
-If you want to run a particular line of spec
-```shell
-bundle exec rspec spec/models/spree/state_spec.rb:7
-```
-
 You can also enable fail fast in order to stop tests at the first failure
 ```shell
 FAIL_FAST=true bundle exec rspec spec/models/state_spec.rb
@@ -187,26 +198,6 @@ FAIL_FAST=true bundle exec rspec spec/models/state_spec.rb
 If you want to run the simplecov code coverage report
 ```shell
 COVERAGE=true bundle exec rspec spec
-```
-
-If you're working on multiple facets of Solidus to test,
-please ensure that you have a postgres user:
-
-```shell
-createuser -s -r postgres
-```
-
-And also ensure that you have [PhantomJS](http://phantomjs.org/) installed as well:
-
-```shell
-brew update && brew install phantomjs
-```
-
-To execute all the tests, you may want to run this command at the
-root of the Solidus project to generate test applications and run
-specs for all the facets:
-```shell
-bash build.sh
 ```
 
 Contributing
