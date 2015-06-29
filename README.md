@@ -56,19 +56,11 @@ bundle exec rake db:migrate
 ```
 
 
-Using stable builds and bleeding edge
--------------
+Installation options
+--------------------
 
-To use a stable build of Spree, you can manually add Spree to your
-Rails application. To use the 2-4-stable branch of Spree, add this line to
-your Gemfile.
-
-```ruby
-gem 'solidus'
-```
-
-Alternatively, if you want to use the bleeding edge version of Solidus, use this
-line:
+Instead of a stable build, if you want to use the bleeding edge version of
+Solidus, use this line:
 
 ```ruby
 gem 'solidus', github: 'solidusio/solidus'
@@ -78,46 +70,14 @@ gem 'solidus', github: 'solidusio/solidus'
 state. It is unwise to use this branch in a production system you care deeply
 about.**
 
-If you wish to have authentication included also, you will need to add the
-`solidus_auth_devise` gem as well.
-
-```ruby
-gem 'solidus_auth_devise'
-```
-
-Once you've done that, then you can install these gems using this command:
-
-```shell
-bundle install
-```
-
-Use the install generator to set up Solidus:
-
-```shell
-rails g spree:install --sample=false --seed=false
-```
-
-At this point, if you are using solidus\_auth\_devise you will need to change this
-line in `config/initializers/spree.rb`:
-
-```ruby
-Spree.user_class = "Spree::LegacyUser"
-```
-
-To this:
-
-```ruby
-Spree.user_class = "Spree::User"
-```
-
-You can avoid running migrations or generating seed and sample data by passing
-in these flags:
+By default, the installation generator (`rails g spree:install`) will run
+migrations as well as adding seed and sample data. This can be disabled using
 
 ```shell
 rails g spree:install --migrate=false --sample=false --seed=false
 ```
 
-You can always perform the steps later by using these commands.
+You can always perform any of these steps later by using these commands.
 
 ```shell
 bundle exec rake railties:install:migrations
