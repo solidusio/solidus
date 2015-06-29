@@ -1,8 +1,13 @@
 module Spree
   class BaseMailer < ActionMailer::Base
 
-    def from_address
-      Spree::Config[:mails_from]
+    def from_address(store = nil)
+      if store
+        store.mail_from_address
+      else
+        ActiveSupport::Deprecation.warn "A Spree::Store should be provided to determine the from address.", caller
+        Spree::Config[:mails_from]
+      end
     end
 
     def money(amount, currency = Spree::Config[:currency])
