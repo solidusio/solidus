@@ -54,8 +54,8 @@ module Spree
           let(:order) { create(:shipped_order, line_items_count: 4) }
           let(:rma) { create(:return_authorization, order: order, reason: return_authorization_reason_1) }
 
-          let!(:rma_return_item) { create(:return_item, return_authorization: rma, inventory_unit: order.inventory_units.first, return_authorization_reason: return_authorization_reason_2) }
-          let!(:customer_return_return_item) { create(:return_item, return_authorization: nil, inventory_unit: order.inventory_units.last, return_authorization_reason: return_authorization_reason_3) }
+          let!(:rma_return_item) { create(:return_item, return_authorization: rma, inventory_unit: order.inventory_units.first, return_reason: return_authorization_reason_2) }
+          let!(:customer_return_return_item) { create(:return_item, return_authorization: nil, inventory_unit: order.inventory_units.last, return_reason: return_authorization_reason_3) }
 
           context "all return items are associated with a customer return" do
             let!(:previous_customer_return) { create(:customer_return_without_return_items, return_items: [rma_return_item, customer_return_return_item]) }

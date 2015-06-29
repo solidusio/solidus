@@ -36,7 +36,7 @@ module Spree
     belongs_to :reimbursement, inverse_of: :return_items
     belongs_to :preferred_reimbursement_type, class_name: 'Spree::ReimbursementType'
     belongs_to :override_reimbursement_type, class_name: 'Spree::ReimbursementType'
-    belongs_to :return_authorization_reason, class_name: 'Spree::ReturnAuthorizationReason', foreign_key: :return_authorization_reason_id
+    belongs_to :return_reason, class_name: 'Spree::ReturnAuthorizationReason', foreign_key: :return_authorization_reason_id
 
     validate :eligible_exchange_variant
     validate :belongs_to_same_customer_order

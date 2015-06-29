@@ -8,8 +8,8 @@ module Spree
       reasons = Spree::ReturnAuthorizationReason.active
       # Only allow an inactive reason if it's already associated to a return item
       return_items.each do |return_item|
-        if return_item.return_authorization_reason && !return_item.return_authorization_reason.active?
-          reasons << return_item.return_authorization_reason
+        if return_item.return_reason && !return_item.return_reason.active?
+          reasons << return_item.return_reason
         end
       end
       reasons

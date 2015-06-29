@@ -15,7 +15,7 @@ describe Spree::Admin::ReturnAuthorizationsController, :type => :controller do
 
     context "a return item in the return authorization has an associated inactive reason" do
       let!(:other_inactive_rma_reason) { create(:return_authorization_reason, active: false) }
-      let(:return_item) { create(:return_item, return_authorization_reason: inactive_rma_reason) }
+      let(:return_item) { create(:return_item, return_reason: inactive_rma_reason) }
       let(:return_authorization) { return_item.return_authorization }
 
       it "loads all the active rma reasons" do
