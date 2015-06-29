@@ -95,6 +95,9 @@ bundle exec rake db:seed
 bundle exec rake spree_sample:load
 ```
 
+There are also options and rake tasks provided by
+[solidus\_auth\_devise](https://github.com/solidusio/solidus_auth_devise).
+
 Working with the edge source (latest and greatest features)
 -----------------------------------------------------------
 
@@ -140,40 +143,6 @@ include. This can be disabled by adding the following to
 
 ```ruby
 config.assets.debug = false
-```
-
-Use Dedicated Solidus Devise Authentication
--------------------------------------------
-Add the following to your Gemfile
-
-```ruby
-gem 'solidus_auth_devise', github: 'solidusio/solidus_auth_devise'
-```
-
-Then run `bundle install`. Authentication will then work exactly as it did in
-previous versions of Spree.
-
-If you're installing this in a new Solidus application, you'll need to install
-and run the migrations with
-
-```shell
-bundle exec rake spree_auth:install:migrations
-bundle exec rake db:migrate
-```
-
-change the following line in `config/initializers/spree.rb`
-```ruby
-Spree.user_class = 'Spree::LegacyUser'
-```
-to
-```ruby
-Spree.user_class = 'Spree::User'
-```
-
-In order to set up the admin user for the application you should then run:
-
-```shell
-bundle exec rake spree_auth:admin:create
 ```
 
 Running Tests
