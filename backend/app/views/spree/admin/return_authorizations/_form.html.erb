@@ -61,7 +61,7 @@
           </td>
           <td>
             <% if editable %>
-              <%= item_fields.select :return_authorization_reason_id, @reasons.collect{|r|[r.name, r.id]}, {include_blank: true}, {class: 'select2 fullwidth'} %>
+              <%= item_fields.select :return_reason_id, @reasons.collect{|r|[r.name, r.id]}, {include_blank: true}, {class: 'select2 fullwidth'} %>
             <% else %>
               <%= return_item.return_reason.try(:name) %>
             <% end %>

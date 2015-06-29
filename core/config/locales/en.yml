@@ -207,9 +207,9 @@ en:
       spree/return_authorization:
         one: Return Authorization
         other: Return Authorizations
-      spree/return_authorization_reason:
-        one: Return Authorization Reason
-        other: Return Authorization Reasons
+      spree/return_reason:
+        one: Return Reason
+        other: Return Reasons
       spree/role:
         one: Roles
         other: Roles
@@ -1235,7 +1235,7 @@ en:
     resumed: Resumed
     return: return
     return_authorization: Return Authorization
-    return_authorization_reasons: Return Authorization Reasons
+    return_reasons: Return Reasons
     return_authorization_updated: Return authorization updated
     return_authorizations: Return Authorizations
     return_item_inventory_unit_ineligible: Return item's inventory unit must be shipped
@@ -1283,7 +1283,6 @@ en:
     security_settings: Security Settings
     select: Select
     select_from_prototype: Select From Prototype
-    select_a_return_authorization_reason: Select a reason for the return authorization
     select_a_stock_location: Select a stock location
     select_stock: Select stock
     selected_quantity_not_available: ! 'selected of %{item} is not available.'

@@ -17,9 +17,9 @@ module Spree
     shared_examples_for 'a return authorization creator' do
       it "can create a new return authorization" do
         stock_location = FactoryGirl.create(:stock_location)
-        reason = FactoryGirl.create(:return_authorization_reason)
+        reason = FactoryGirl.create(:return_reason)
         rma_params = { :stock_location_id => stock_location.id,
-                       :return_authorization_reason_id => reason.id,
+                       :return_reason_id => reason.id,
                        :memo => "Defective" }
         api_post :create, :order_id => order.number, :return_authorization => rma_params
         response.status.should == 201

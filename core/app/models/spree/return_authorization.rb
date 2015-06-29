@@ -7,7 +7,8 @@ module Spree
     has_many :customer_returns, through: :return_items
 
     belongs_to :stock_location
-    belongs_to :reason, class_name: 'Spree::ReturnAuthorizationReason', foreign_key: :return_authorization_reason_id
+    belongs_to :reason, class_name: 'Spree::ReturnReason', foreign_key: :return_reason_id
+
     before_create :generate_number
 
     after_save :generate_expedited_exchange_reimbursements

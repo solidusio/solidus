@@ -49,7 +49,7 @@
           <%= item_fields.select :reception_status_event, return_item.potential_reception_transitions, {include_blank: true}, {class: 'add-item select2 fullwidth'} %>
         </td>
         <td class="align-center">
-          <%= item_fields.select :return_authorization_reason_id, @reasons.collect{|r|[r.name, r.id]}, {include_blank: true}, {class: 'select2 fullwidth'} %>
+          <%= item_fields.select :return_reason_id, @reasons.collect{|r|[r.name, r.id]}, {include_blank: true}, {class: 'select2 fullwidth'} %>
         </td>
       </tr>
     <% end %>

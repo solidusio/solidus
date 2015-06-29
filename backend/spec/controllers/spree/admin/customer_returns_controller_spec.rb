@@ -45,17 +45,17 @@ module Spree
         end
 
         context "with previous customer return" do
-          let(:return_authorization_reason_1) { create(:return_authorization_reason) }
-          let(:return_authorization_reason_2) { create(:return_authorization_reason) }
-          let(:return_authorization_reason_3) { create(:return_authorization_reason) }
-          let!(:inactive_rma_reason) { create(:return_authorization_reason, active: false) }
+          let(:return_reason_1) { create(:return_reason) }
+          let(:return_reason_2) { create(:return_reason) }
+          let(:return_reason_3) { create(:return_reason) }
+          let!(:inactive_rma_reason) { create(:return_reason, active: false) }
 
 
           let(:order) { create(:shipped_order, line_items_count: 4) }
-          let(:rma) { create(:return_authorization, order: order, reason: return_authorization_reason_1) }
+          let(:rma) { create(:return_authorization, order: order, reason: return_reason_1) }
 
-          let!(:rma_return_item) { create(:return_item, return_authorization: rma, inventory_unit: order.inventory_units.first, return_reason: return_authorization_reason_2) }
-          let!(:customer_return_return_item) { create(:return_item, return_authorization: nil, inventory_unit: order.inventory_units.last, return_reason: return_authorization_reason_3) }
+          let!(:rma_return_item) { create(:return_item, return_authorization: rma, inventory_unit: order.inventory_units.first, return_reason: return_reason_2) }
+          let!(:customer_return_return_item) { create(:return_item, return_authorization: nil, inventory_unit: order.inventory_units.last, return_reason: return_reason_3) }
 
           context "all return items are associated with a customer return" do
             let!(:previous_customer_return) { create(:customer_return_without_return_items, return_items: [rma_return_item, customer_return_return_item]) }
@@ -78,7 +78,7 @@ module Spree
             end
 
             it "loads the correct return authorization reasons" do
-              assigns(:reasons).should =~ [return_authorization_reason_1, return_authorization_reason_2, return_authorization_reason_3]
+              assigns(:reasons).should =~ [return_reason_1, return_reason_2, return_reason_3]
             end
           end
 
@@ -110,7 +110,7 @@ module Spree
             end
 
             it "loads the correct return authorization reasons" do
-              assigns(:reasons).should =~ [return_authorization_reason_1, return_authorization_reason_2, return_authorization_reason_3]
+              assigns(:reasons).should =~ [return_reason_1, return_reason_2, return_reason_3]
             end
           end
         end
@@ -120,7 +120,7 @@ module Spree
         let(:order)           { customer_return.order }
         let(:customer_return) { create(:customer_return, line_items_count: 3) }
 
-        let!(:inactive_rma_reason) { create(:return_authorization_reason, active: false) }
+        let!(:inactive_rma_reason) { create(:return_reason, active: false) }
 
         let!(:accepted_return_item)            { customer_return.return_items.order('id').first.tap(&:accept!) }
         let!(:rejected_return_item)            { customer_return.return_items.order('id').second.tap(&:reject!)}
@@ -167,17 +167,17 @@ module Spree
 
         it "loads the correct return authorization reasons" do
           subject
-          assigns(:reasons).should =~ Spree::ReturnAuthorizationReason.active
+          assigns(:reasons).should =~ Spree::ReturnReason.active
         end
 
         context "a return item has an inactive return authorization reason" do
           before(:each) do
-            accepted_return_item.update_attributes(return_authorization_reason_id: inactive_rma_reason.id)
+            accepted_return_item.update_attributes(return_reason_id: inactive_rma_reason.id)
           end
 
           it "includes the inactive return authorization reason" do
             subject
-            assigns(:reasons).should =~ Spree::ReturnAuthorizationReason.active + [inactive_rma_reason]
+            assigns(:reasons).should =~ Spree::ReturnReason.active + [inactive_rma_reason]
           end
         end
       end
