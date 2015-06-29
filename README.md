@@ -13,9 +13,9 @@ in a single repository and documented in a single set of
 solidus gem you automatically require all of the necessary gem dependencies which are:
 
 * solidus\_api (RESTful API)
-* solidus\_frontend (User-facing components)
+* solidus\_frontend (Cart and storefront)
 * solidus\_backend (Admin area)
-* solidus\_core (Models & Mailers, the basic components of Solidus that it can't run without)
+* solidus\_core (Essential models, mailers, and classes)
 * solidus\_sample (Sample data)
 
 All of the gems are designed to work together to provide a fully functional
