@@ -6,7 +6,7 @@ Gem::Specification.new do |s|
   s.name        = 'solidus'
   s.version     = version
   s.summary     = 'Full-stack e-commerce framework for Ruby on Rails.'
-  s.description = 'Spree is an open source e-commerce framework for Ruby on Rails.  Join us on the spree-user google group or in #spree on IRC'
+  s.description = 'Solidus is an open source e-commerce framework for Ruby on Rails.'
 
   s.files        = Dir['README.md', 'lib/**/*']
   s.require_path = 'lib'

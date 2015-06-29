@@ -5,8 +5,8 @@ Gem::Specification.new do |s|
   s.platform    = Gem::Platform::RUBY
   s.name        = 'solidus_sample'
   s.version     = version
-  s.summary     = 'Sample data (including images) for use with Spree.'
-  s.description = 'Required dependency for Spree'
+  s.summary     = 'Sample data (including images) for use with Solidus.'
+  s.description = s.summary
 
   s.required_ruby_version = '>= 2.1.0'
   s.author      = 'Solidus Team'

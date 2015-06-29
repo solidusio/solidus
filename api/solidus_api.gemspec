@@ -4,9 +4,10 @@ version = File.read(File.expand_path("../../SOLIDUS_VERSION", __FILE__)).strip
 Gem::Specification.new do |gem|
   gem.author        = 'Solidus Team'
   gem.email         = 'contact@solidus.io'
-  gem.description   = %q{Spree's API}
-  gem.summary       = %q{Spree's API}
-  gem.homepage      = ""
+  gem.homepage      = 'http://solidus.io/'
+
+  gem.summary       = %q{REST API for the Solidus e-commerce framework.}
+  gem.description   = gem.summary
 
   gem.files         = `git ls-files`.split($\)
   gem.executables   = gem.files.grep(%r{^bin/}).map{ |f| File.basename(f) }

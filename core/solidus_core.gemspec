@@ -5,8 +5,8 @@ Gem::Specification.new do |s|
   s.platform    = Gem::Platform::RUBY
   s.name        = 'solidus_core'
   s.version     = version
-  s.summary     = 'The bare bones necessary for Spree.'
-  s.description = 'The bare bones necessary for Spree.'
+  s.summary     = 'Essential models, mailers, and classes for the Solidus e-commerce project.'
+  s.description = s.summary
 
   s.required_ruby_version = '>= 2.1.0'
   s.author      = 'Solidus Team'
