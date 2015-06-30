@@ -73,6 +73,10 @@ RSpec.configure do |config|
     end
   end
 
+  config.before(:suite) do
+    DatabaseCleaner.clean_with :truncation
+  end
+
   config.before(:each) do
     Rails.cache.clear
     reset_spree_preferences
