@@ -6,9 +6,13 @@
       </li>
     <% end %>
 
-    <% if can?(:update, @order) && checkout_steps.include?("address") %>
+    <% if checkout_steps.include?("address") %>
       <li<%== ' class="active"' if current == 'Customer Details' %> data-hook='admin_order_tabs_customer_details'>
-        <%= link_to_with_icon 'user', Spree.t(:customer_details), admin_order_customer_url(@order) %>
+        <% if can?(:update, @order) %>
+          <%= link_to_with_icon 'user', Spree.t(:customer_details), edit_admin_order_customer_url(@order) %>
+        <% else %>
+          <%= link_to_with_icon 'user', Spree.t(:customer_details), admin_order_customer_url(@order) %>
+        <% end %>
       </li>
     <% end %>
 
