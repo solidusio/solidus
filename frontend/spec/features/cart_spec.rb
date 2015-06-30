@@ -34,9 +34,7 @@ describe "Cart", type: :feature, inaccessible: true do
     visit spree.root_path
     click_link "RoR Mug"
     click_button "add-to-cart-button"
-    within("#line_items") do
-      click_link "delete_line_item_1"
-    end
+    find('.cart-item-delete .delete').click
     expect(page).not_to have_content("Line items quantity must be an integer")
     expect(page).not_to have_content("RoR Mug")
     expect(page).to have_content("Your cart is empty")
