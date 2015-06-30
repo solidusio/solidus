@@ -5,8 +5,8 @@ Gem::Specification.new do |s|
   s.platform    = Gem::Platform::RUBY
   s.name        = 'solidus_frontend'
   s.version     = version
-  s.summary     = 'Frontend e-commerce functionality for the Spree project.'
-  s.description = 'Required dependency for Spree'
+  s.summary     = 'Cart and storefront for the Solidus e-commerce project.'
+  s.description = s.summary
 
   s.required_ruby_version = '>= 2.1.0'
   s.author      = 'Solidus Team'
