@@ -524,7 +524,7 @@ module Spree
     end
 
     def create_proposed_shipments
-      adjustments.shipping.delete_all
+      adjustments.shipping.destroy_all
       shipments.destroy_all
       self.shipments = Spree::Stock::Coordinator.new(self).shipments
     end
