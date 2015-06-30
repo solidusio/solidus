@@ -1,7 +1,7 @@
 FactoryGirl.define do
   factory :carton, class: Spree::Carton do
     address
-    stock_location
+    stock_location { Spree::Fixtures.instance.stock_locations.default }
     shipping_method
     shipped_at { Time.now }
     inventory_units do

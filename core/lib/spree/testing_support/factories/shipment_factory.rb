@@ -4,7 +4,7 @@ FactoryGirl.define do
     cost 100.00
     state 'pending'
     order
-    stock_location
+    stock_location { Spree::Fixtures.instance.stock_locations.default }
 
     transient do
       shipping_method nil

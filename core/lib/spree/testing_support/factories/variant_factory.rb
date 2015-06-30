@@ -15,8 +15,9 @@ FactoryGirl.define do
     product { |p| p.association(:base_product) }
     option_values { [create(:option_value)] }
 
-    # ensure stock item will be created for this variant
-    before(:create) { create(:stock_location) if Spree::StockLocation.count == 0 }
+    # ensure there is a stock location so that a stock item will be created for
+    # this variant
+    before(:create) { Spree::Fixtures.instance.stock_locations.default }
 
     factory :variant do
       # on_hand 5
