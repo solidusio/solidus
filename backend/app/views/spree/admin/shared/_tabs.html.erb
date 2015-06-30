@@ -6,7 +6,7 @@
   <%= tab *Spree::BackendConfiguration::PRODUCT_TABS, icon: 'th-large' %>
 <% end %>
 
-<% if can? :admin, Spree::Admin::ReportsController %>
+<% if can? :admin, :reports %>
   <%= tab *Spree::BackendConfiguration::REPORT_TABS, icon: 'file'  %>
 <% end %>
 

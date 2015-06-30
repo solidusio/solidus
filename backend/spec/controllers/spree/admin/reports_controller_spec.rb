@@ -125,10 +125,6 @@ describe Spree::Admin::ReportsController, :type => :controller do
     end
   end
 
-  it 'should respond to model_class as Spree::AdminReportsController' do
-    expect(controller.send(:model_class)).to eql(Spree::Admin::ReportsController)
-  end
-
   after(:each) do
     Spree::Admin::ReportsController.available_reports.delete_if do |key, value|
       key != :sales_total

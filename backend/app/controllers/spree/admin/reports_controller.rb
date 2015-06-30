@@ -61,12 +61,7 @@ module Spree
 
       private
 
-      def model_class
-        Spree::Admin::ReportsController
-      end
-
       @@available_reports = {}
-
     end
   end
 end
