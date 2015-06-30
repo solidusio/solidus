@@ -7,7 +7,8 @@ module Spree
     has_many :customer_returns, through: :return_items
 
     belongs_to :stock_location
-    belongs_to :reason, class_name: 'Spree::ReturnAuthorizationReason', foreign_key: :return_authorization_reason_id
+    belongs_to :reason, class_name: 'Spree::ReturnReason', foreign_key: :return_reason_id
+
     before_create :generate_number
 
     after_save :generate_expedited_exchange_reimbursements
@@ -15,7 +16,6 @@ module Spree
     accepts_nested_attributes_for :return_items, allow_destroy: true
 
     validates :order, presence: true
-    validates :reason, presence: true
     validates :stock_location, presence: true
     validate :must_have_shipped_units, on: :create
     validate :no_previously_exchanged_inventory_units, on: :create

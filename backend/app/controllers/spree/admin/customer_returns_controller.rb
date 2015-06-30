@@ -44,6 +44,11 @@ module Spree
       def load_form_data
         return_items = @order.inventory_units.map(&:current_or_new_return_item).reject(&:customer_return_id)
         @rma_return_items, @new_return_items = return_items.partition(&:return_authorization_id)
+        load_return_reasons
+      end
+
+      def load_return_reasons
+        @reasons = Spree::ReturnReason.reasons_for_return_items(@customer_return.return_items)
       end
 
       def permitted_resource_params

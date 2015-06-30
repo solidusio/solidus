@@ -45,11 +45,17 @@ module Spree
         end
 
         context "with previous customer return" do
-          let(:order) { create(:shipped_order, line_items_count: 4) }
-          let(:rma) { create(:return_authorization, order: order) }
+          let(:return_reason_1) { create(:return_reason) }
+          let(:return_reason_2) { create(:return_reason) }
+          let(:return_reason_3) { create(:return_reason) }
+          let!(:inactive_rma_reason) { create(:return_reason, active: false) }
 
-          let!(:rma_return_item) { create(:return_item, return_authorization: rma, inventory_unit: order.inventory_units.first) }
-          let!(:customer_return_return_item) { create(:return_item, return_authorization: nil, inventory_unit: order.inventory_units.last) }
+
+          let(:order) { create(:shipped_order, line_items_count: 4) }
+          let(:rma) { create(:return_authorization, order: order, reason: return_reason_1) }
+
+          let!(:rma_return_item) { create(:return_item, return_authorization: rma, inventory_unit: order.inventory_units.first, return_reason: return_reason_2) }
+          let!(:customer_return_return_item) { create(:return_item, return_authorization: nil, inventory_unit: order.inventory_units.last, return_reason: return_reason_3) }
 
           context "all return items are associated with a customer return" do
             let!(:previous_customer_return) { create(:customer_return_without_return_items, return_items: [rma_return_item, customer_return_return_item]) }
@@ -69,6 +75,10 @@ module Spree
 
             it "does not have any rma return items" do
               expect(assigns(:rma_return_items)).to eq []
+            end
+
+            it "loads the correct return authorization reasons" do
+              assigns(:reasons).should =~ [return_reason_1, return_reason_2, return_reason_3]
             end
           end
 
@@ -98,6 +108,10 @@ module Spree
             it "has one rma return item" do
               expect(assigns(:rma_return_items)).to include(rma_return_item)
             end
+
+            it "loads the correct return authorization reasons" do
+              assigns(:reasons).should =~ [return_reason_1, return_reason_2, return_reason_3]
+            end
           end
         end
       end
@@ -105,6 +119,8 @@ module Spree
       describe "#edit" do
         let(:order)           { customer_return.order }
         let(:customer_return) { create(:customer_return, line_items_count: 3) }
+
+        let!(:inactive_rma_reason) { create(:return_reason, active: false) }
 
         let!(:accepted_return_item)            { customer_return.return_items.order('id').first.tap(&:accept!) }
         let!(:rejected_return_item)            { customer_return.return_items.order('id').second.tap(&:reject!)}
@@ -114,36 +130,55 @@ module Spree
           spree_get :edit, { order_id: order.to_param, id: customer_return.to_param }
         end
 
-        before do
-          subject
-        end
-
         it "loads the order" do
+          subject
           expect(assigns(:order)).to eq order
         end
 
         it "loads the customer return" do
+          subject
           expect(assigns(:customer_return)).to eq customer_return
         end
 
         it "loads the accepted return items" do
+          subject
           expect(assigns(:accepted_return_items)).to eq [accepted_return_item]
         end
 
         it "loads the rejected return items" do
+          subject
           expect(assigns(:rejected_return_items)).to eq [rejected_return_item]
         end
 
         it "loads the return items that require manual intervention" do
+          subject
           expect(assigns(:manual_intervention_return_items)).to eq [manual_intervention_return_item]
         end
 
         it "loads the return items that are still pending" do
+          subject
           expect(assigns(:pending_return_items)).to eq []
         end
 
         it "loads the reimbursements that are still pending" do
+          subject
           expect(assigns(:pending_reimbursements)).to eq []
+        end
+
+        it "loads the correct return authorization reasons" do
+          subject
+          assigns(:reasons).should =~ Spree::ReturnReason.active
+        end
+
+        context "a return item has an inactive return authorization reason" do
+          before(:each) do
+            accepted_return_item.update_attributes(return_reason_id: inactive_rma_reason.id)
+          end
+
+          it "includes the inactive return authorization reason" do
+            subject
+            assigns(:reasons).should =~ Spree::ReturnReason.active + [inactive_rma_reason]
+          end
         end
       end
 

@@ -102,7 +102,7 @@ describe Spree::UnitCancel do
         Spree::ReturnAuthorization.create!(
           order: order,
           stock_location: @shipment.stock_location,
-          reason: create(:return_authorization_reason),
+          reason: create(:return_reason),
           return_items: [
             Spree::ReturnItem.new(
               inventory_unit: @shipped_inventory_unit,

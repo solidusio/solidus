@@ -10,15 +10,17 @@ class CreateSpreeReturnAuthorizationReasons < ActiveRecord::Migration
 
     reversible do |direction|
       direction.up do
-        Spree::ReturnAuthorizationReason.create!(name: 'Better price available')
-        Spree::ReturnAuthorizationReason.create!(name: 'Missed estimated delivery date')
-        Spree::ReturnAuthorizationReason.create!(name: 'Missing parts or accessories')
-        Spree::ReturnAuthorizationReason.create!(name: 'Damaged/Defective')
-        Spree::ReturnAuthorizationReason.create!(name: 'Different from what was ordered')
-        Spree::ReturnAuthorizationReason.create!(name: 'Different from description')
-        Spree::ReturnAuthorizationReason.create!(name: 'No longer needed/wanted')
-        Spree::ReturnAuthorizationReason.create!(name: 'Accidental order')
-        Spree::ReturnAuthorizationReason.create!(name: 'Unauthorized purchase')
+        if defined?(Spree::ReturnAuthorizationReason)
+          Spree::ReturnAuthorizationReason.create!(name: 'Better price available')
+          Spree::ReturnAuthorizationReason.create!(name: 'Missed estimated delivery date')
+          Spree::ReturnAuthorizationReason.create!(name: 'Missing parts or accessories')
+          Spree::ReturnAuthorizationReason.create!(name: 'Damaged/Defective')
+          Spree::ReturnAuthorizationReason.create!(name: 'Different from what was ordered')
+          Spree::ReturnAuthorizationReason.create!(name: 'Different from description')
+          Spree::ReturnAuthorizationReason.create!(name: 'No longer needed/wanted')
+          Spree::ReturnAuthorizationReason.create!(name: 'Accidental order')
+          Spree::ReturnAuthorizationReason.create!(name: 'Unauthorized purchase')
+        end
       end
     end
 
