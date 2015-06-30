@@ -124,10 +124,6 @@ module Spree
           return true if expected_total.blank?
           @order.total == BigDecimal(expected_total)
         end
-
-        def insufficient_stock_error(exception)
-          render json: { errors: [I18n.t(:quantity_is_not_available, :scope => "spree.api.order")], type: 'insufficient_stock' }, status: 422
-        end
     end
   end
 end
