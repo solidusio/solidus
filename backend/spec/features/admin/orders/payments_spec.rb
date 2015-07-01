@@ -89,9 +89,7 @@ describe 'Payments', :type => :feature do
       expect(page).to have_content('successfully created!')
 
       click_icon(:capture)
-      expect(find('#payment_status').text).to eq('PAID')
-
-      expect(page).not_to have_selector('#new_payment_section')
+      expect(find('#payment_status').text).to eq('BALANCE DUE')
     end
 
     # Regression test for #1269
