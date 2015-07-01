@@ -4,10 +4,6 @@ require 'spec_helper'
 describe Spree::Admin::NavigationHelper, :type => :helper do
 
   describe "#tab" do
-    before do
-      allow(helper).to receive(:cannot?).and_return false
-    end
-
     context "creating an admin tab" do
       it "should capitalize the first letter of each word in the tab's label" do
         admin_tab = helper.tab(:orders)
@@ -74,34 +70,4 @@ describe Spree::Admin::NavigationHelper, :type => :helper do
       end
     end
   end
-
-  describe '#klass_for' do
-
-    it 'returns correct klass for Spree model' do
-      expect(klass_for(:products)).to eq(Spree::Product)
-      expect(klass_for(:product_properties)).to eq(Spree::ProductProperty)
-    end
-
-    it 'returns correct klass for non-spree model' do
-      class MyUser
-      end
-      expect(klass_for(:my_users)).to eq(MyUser)
-
-      Object.send(:remove_const, 'MyUser')
-    end
-
-    it 'returns correct namespaced klass for non-spree model' do
-      module My
-        class User
-        end
-      end
-
-      expect(klass_for(:my_users)).to eq(My::User)
-
-      My.send(:remove_const, 'User')
-      Object.send(:remove_const, 'My')
-    end
-
-  end
-
 end

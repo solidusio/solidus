@@ -9,11 +9,6 @@ module Spree
       def tab(*args)
         options = {:label => args.first.to_s}
 
-        # If options[:label] corresponds to a class, auth based on permissions
-        # to that class. Otherwise auth based on the symbol for that class.
-        auth_target = klass_for(options[:label]) || options[:label]
-        return '' if cannot?(:admin, auth_target)
-
         if args.last.is_a?(Hash)
           options = options.merge(args.pop)
         end
@@ -44,22 +39,6 @@ module Spree
           css_classes << options[:css_class]
         end
         content_tag('li', link, :class => css_classes.join(' '))
-      end
-
-      # finds class for a given symbol / string
-      #
-      # Example :
-      # :products returns Spree::Product
-      # :my_products returns MyProduct if MyProduct is defined
-      # :my_products returns My::Product if My::Product is defined
-      # if cannot constantize it returns nil
-      # This will allow us to use cancan abilities on tab
-      def klass_for(name)
-        model_name = name.to_s
-
-        ["Spree::#{model_name.classify}", model_name.classify, model_name.gsub('_', '/').classify].find do |t|
-          t.safe_constantize
-        end.try(:safe_constantize)
       end
 
       def link_to_clone(resource, options={})

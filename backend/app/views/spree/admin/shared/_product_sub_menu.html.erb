@@ -1,10 +1,22 @@
 <% content_for :sub_menu do %>
   <ul id="sub_nav" data-hook="admin_product_sub_tabs" class="inline-menu">
-    <%= tab :products, :match_path => '/products' %>
-    <%= tab :option_types, :match_path => '/option_types' %>
-    <%= tab :properties %>
-    <%= tab :prototypes %>
-    <%= tab :taxonomies %>
-    <%= tab :taxons %>
+    <% if can? :admin, Spree::Product %>
+      <%= tab :products, :match_path => '/products' %>
+    <% end %>
+    <% if can? :admin, Spree::OptionType %>
+      <%= tab :option_types, :match_path => '/option_types' %>
+    <% end %>
+    <% if can? :admin, Spree::Property %>
+      <%= tab :properties %>
+    <% end %>
+    <% if can? :admin, Spree::Prototype %>
+      <%= tab :prototypes %>
+    <% end %>
+    <% if can? :admin, Spree::Taxonomy %>
+      <%= tab :taxonomies %>
+    <% end %>
+    <% if can? :admin, Spree::Taxon %>
+      <%= tab :taxons %>
+    <% end %>
   </ul>
 <% end %>
