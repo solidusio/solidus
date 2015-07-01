@@ -9,7 +9,7 @@ module Spree
         #
         # Returns:
         #
-        # - true if all pending_payments processed successfully
+        # - true if all pending payments processed successfully
         #
         # - true if a payment failed, ie. raised a GatewayError
         #   which gets rescued and converted to TRUE when
@@ -29,10 +29,6 @@ module Spree
 
         def capture_payments!
           process_payments_with(:purchase!)
-        end
-
-        def pending_payments
-          payments.select { |payment| payment.pending? }
         end
 
         def unprocessed_payments
