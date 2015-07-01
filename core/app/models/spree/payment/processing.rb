@@ -6,6 +6,7 @@ module Spree
       #     - There is no payment method
       #     - The payment method does not require a source
       #     - The payment is in the "processing" state
+      #     - 'auto_capture?' is false and the payment is already authorized.
       #   - Raise an exception when:
       #     - The source is missing or invalid
       #     - The payment is in a state that cannot transition to 'processing'
@@ -25,7 +26,11 @@ module Spree
         if payment_method.auto_capture?
           purchase!
         else
-          authorize!
+          if pending?
+            # do nothing. already authorized.
+          else
+            authorize!
+          end
         end
       end
 

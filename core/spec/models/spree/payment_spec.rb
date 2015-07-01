@@ -5,7 +5,7 @@ describe Spree::Payment, :type => :model do
   let(:refund_reason) { create(:refund_reason) }
 
   let(:gateway) do
-    gateway = Spree::Gateway::Bogus.new(:environment => 'test', :active => true)
+    gateway = Spree::Gateway::Bogus.new(:environment => 'test', :active => true, :name => 'Bogus gateway')
     allow(gateway).to receive_messages :source_required => true
     gateway
   end
@@ -138,16 +138,69 @@ describe Spree::Payment, :type => :model do
 
   context "processing" do
     describe "#process!" do
-      it "should purchase if with auto_capture" do
-        expect(payment.payment_method).to receive(:auto_capture?).and_return(true)
-        payment.process!
-        expect(payment).to be_completed
+      context 'with autocapture' do
+        before do
+          payment.payment_method.update_attributes!(auto_capture: true)
+        end
+
+        it "should purchase" do
+          payment.process!
+          expect(payment).to be_completed
+        end
       end
 
-      it "should authorize without auto_capture" do
-        expect(payment.payment_method).to receive(:auto_capture?).and_return(false)
-        payment.process!
-        expect(payment).to be_pending
+      context 'without autocapture' do
+        before do
+          payment.payment_method.update_attributes!(auto_capture: false)
+        end
+
+        context 'when in the checkout state' do
+          before { payment.update_attributes!(state: 'checkout') }
+
+          it "authorizes" do
+            payment.process!
+            expect(payment).to be_pending
+          end
+        end
+
+        context 'when in the processing state' do
+          before { payment.update_attributes!(state: 'processing') }
+
+          it "does not authorize" do
+            payment.process!
+            expect(payment).to be_processing
+          end
+        end
+
+        context 'when in the pending state' do
+          before { payment.update_attributes!(state: 'pending') }
+
+          it "does not re-authorize" do
+            expect(payment).to_not receive(:authorize!)
+            payment.process!
+            expect(payment).to be_pending
+          end
+        end
+
+        context 'when in a failed state' do
+          before { payment.update_attributes!(state: 'failed') }
+
+          it "raises an exception" do
+            expect {
+              payment.process!
+            }.to raise_error(StateMachines::InvalidTransition, /Cannot transition/)
+          end
+        end
+
+        context 'when in the completed state' do
+          before { payment.update_attributes!(state: 'completed') }
+
+          it "authorizes" do
+            payment.process!
+            # TODO: Is this really what we want to happen in this case?
+            expect(payment).to be_pending
+          end
+        end
       end
 
       it "should make the state 'processing'" do
