@@ -294,5 +294,53 @@ describe Spree::Admin::Ability do
         it { should_not be_able_to(:edit, Spree::Product) }
       end
     end
+
+    context "managing users" do
+      let(:role) { :user_management }
+
+      context "when the user has the user_management role" do
+        let(:has_role) { true }
+
+        it { should be_able_to(:manage, Spree.user_class) }
+        it { should be_able_to(:manage, Spree::StoreCredit) }
+      end
+
+      context "when the user does not have the user_management role" do
+        let(:has_role) { false }
+
+        it { should_not be_able_to(:manage, Spree.user_class) }
+        it { should_not be_able_to(:manage, Spree::StoreCredit) }
+      end
+    end
+
+    context "displaying users" do
+      let(:role) { :user_display }
+
+      context "when the user has the user_display role" do
+        let(:has_role) { true }
+
+        it { should be_able_to(:display, Spree.user_class) }
+        it { should be_able_to(:admin, Spree.user_class) }
+        it { should be_able_to(:edit, Spree.user_class) }
+        it { should be_able_to(:addresses, Spree.user_class) }
+        it { should be_able_to(:orders, Spree.user_class) }
+        it { should be_able_to(:items, Spree.user_class) }
+        it { should be_able_to(:display, Spree::StoreCredit) }
+        it { should be_able_to(:admin, Spree::StoreCredit) }
+      end
+
+      context "when the user does not have the user_display role" do
+        let(:has_role) { false }
+
+        it { should_not be_able_to(:display, Spree.user_class) }
+        it { should_not be_able_to(:admin, Spree.user_class) }
+        it { should_not be_able_to(:edit, Spree.user_class) }
+        it { should_not be_able_to(:addresses, Spree.user_class) }
+        it { should_not be_able_to(:orders, Spree.user_class) }
+        it { should_not be_able_to(:items, Spree.user_class) }
+        it { should_not be_able_to(:display, Spree::StoreCredit) }
+        it { should_not be_able_to(:admin, Spree::StoreCredit) }
+      end
+    end
   end
 end

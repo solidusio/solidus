@@ -79,6 +79,16 @@ module Spree
           can [:display, :admin], Spree::Taxonomy
           can [:display, :admin], Spree::Taxon
         end
+
+        if user.has_spree_role? :user_management
+          can :manage, Spree.user_class
+          can :manage, Spree::StoreCredit
+        end
+
+        if user.has_spree_role? :user_display
+          can [:display, :admin, :edit, :addresses, :orders, :items], Spree.user_class
+          can [:display, :admin], Spree::StoreCredit
+        end
       end
     end
   end
