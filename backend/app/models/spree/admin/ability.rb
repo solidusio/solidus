@@ -41,6 +41,17 @@ module Spree
         if user.has_spree_role? :report_display
           can [:display, :admin, :sales_total], :reports
         end
+
+        if user.has_spree_role? :stock_management
+          can :manage, Spree::StockItem
+          can :manage, Spree::StockTransfer
+          can :manage, Spree::TransferItem
+        end
+
+        if user.has_spree_role? :stock_display
+          can [:display, :admin], Spree::StockItem
+          can [:display, :admin], Spree::StockTransfer
+        end
       end
     end
   end
