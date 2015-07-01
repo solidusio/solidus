@@ -1,6 +1,24 @@
 module Spree
   class Payment < Spree::Base
     module Processing
+      # "process!" means:
+      #   - Do nothing when:
+      #     - There is no payment method
+      #     - The payment method does not require a source
+      #     - The payment is in the "processing" state
+      #   - Raise an exception when:
+      #     - The source is missing or invalid
+      #     - The payment is in a state that cannot transition to 'processing'
+      #       (failed/void/invalid states). Note: 'completed' can transition to
+      #       'processing' and thus calling #process! on a completed Payment
+      #       will attempt to re-authorize/re-purchase the payment.
+      #   - Otherwise:
+      #     - If 'auto_capture?' is true:
+      #       - Call #purchase on the payment gateway. (i.e. authorize+capture)
+      #         even if the payment is already completed.
+      #     - Else:
+      #       - Call #authorize on the payment gateway even if the payment is
+      #         already completed.
       def process!
         return if payment_method.nil?
 
