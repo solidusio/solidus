@@ -15,6 +15,8 @@
 <%= form_for [:admin, @product], :method => :put, :html => { :multipart => true } do |f| %>
   <fieldset class="no-border-top">
     <%= render :partial => 'form', :locals => { :f => f } %>
-    <%= render :partial => 'spree/admin/shared/edit_resource_links' %>
+    <% if can?(:update, @product) %>
+      <%= render :partial => 'spree/admin/shared/edit_resource_links' %>
+    <% end %>
   </fieldset>
 <% end %>
