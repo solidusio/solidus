@@ -140,5 +140,25 @@ describe Spree::Admin::Ability do
         it { should_not be_able_to(:cart, Spree::Order) }
       end
     end
+
+    context "displaying reports" do
+      let(:role) { :report_display }
+
+      context "when the user has the report_display role" do
+        let(:has_role) { true }
+
+        it { should be_able_to(:display, :reports) }
+        it { should be_able_to(:admin, :reports) }
+        it { should be_able_to(:sales_total, :reports) }
+      end
+
+      context "when the user does not have the report_display role" do
+        let(:has_role) { false }
+
+        it { should_not be_able_to(:display, :reports) }
+        it { should_not be_able_to(:admin, :reports) }
+        it { should_not be_able_to(:sales_total, :reports) }
+      end
+    end
   end
 end

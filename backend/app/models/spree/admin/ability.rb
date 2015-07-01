@@ -37,6 +37,10 @@ module Spree
           can [:display, :admin], Spree::ReturnAuthorization
           can [:display, :admin], Spree::CustomerReturn
         end
+
+        if user.has_spree_role? :report_display
+          can [:display, :admin, :sales_total], :reports
+        end
       end
     end
   end
