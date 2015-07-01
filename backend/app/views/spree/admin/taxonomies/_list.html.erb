@@ -14,11 +14,19 @@
   <tbody>
     <% @taxonomies.each do |taxonomy| %>
       <tr id="<%= spree_dom_id taxonomy %>" data-hook="taxonomies_row" class="<%= cycle('odd', 'even')%>">
-        <td class="no-border"><span class="handle"></span></td>
+        <td class="no-border">
+          <% if can?(:update_positions, Spree::Taxonomy) %>
+            <span class="handle"></span>
+          <% end %>
+        </td>
         <td class="align-center"><%= taxonomy.name %></td>
         <td class="actions">
-          <%= link_to_edit taxonomy, :no_text => true %>
-          <%= link_to_delete taxonomy, :no_text => true %>
+          <% if can?(:update, taxonomy) %>
+            <%= link_to_edit taxonomy, :no_text => true %>
+          <% end %>
+          <% if can?(:destroy, taxonomy) %>
+            <%= link_to_delete taxonomy, :no_text => true %>
+          <% end %>
         </td>
       </tr>
     <% end %>
