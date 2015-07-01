@@ -27,11 +27,7 @@ module Spree
 
         begin
           if @payment.save
-            if @order.completed?
-              # If the order was already complete then go ahead and process the payment
-              # (auth and/or capture depending on payment method configuration)
-              @payment.process! if @payment.checkout?
-            else
+            if !@order.completed?
               # Transition order as far as it will go.
               while @order.next; end
             end
