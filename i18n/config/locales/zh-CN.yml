@@ -731,12 +731,12 @@ zh-CN:
     location: "位置"
     lock: "锁住/冻结"
     log_entries:
-    logged_in_as: "已登陆为"
-    logged_in_succesfully: "登陆成功"
+    logged_in_as: "已登录为"
+    logged_in_succesfully: "登录成功"
     logged_out: "您已经登出系统"
     login: "登录"
-    login_as_existing: "作为一个已有客户登陆"
-    login_failed: "登陆认证失败。"
+    login_as_existing: "作为一个已有客户登录"
+    login_failed: "登录认证失败。"
     login_name: "用户名"
     logout: "退出"
     logs:
@@ -986,7 +986,7 @@ zh-CN:
         name: "小记"
       landing_page:
         description: "客户必须访问了指定的页面"
-        name: "登陆页面"
+        name: "登录页面"
       one_use_per_user:
         description: "每人只可使用一次"
         name: "每人一次"
