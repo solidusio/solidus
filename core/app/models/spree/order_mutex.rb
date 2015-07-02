@@ -5,7 +5,7 @@ module Spree
 
     belongs_to :order, class_name: "Spree::Order"
 
-    scope :expired, -> { where("#{quoted_table_name}.created_at <= ?", Spree::Config[:order_mutex_max_age].ago) }
+    scope :expired, -> { where(arel_table[:created_at].lteq(Spree::Config[:order_mutex_max_age].seconds.ago)) }
 
     class << self
       # Obtain a lock on an order, execute the supplied block and then release the lock.

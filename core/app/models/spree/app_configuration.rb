@@ -138,7 +138,7 @@ module Spree
 
     # @!attribute [rw] order_mutex_max_age
     #   @return [Integer] Max age of {OrderMutex} in seconds (default: 2 minutes)
-    preference :order_mutex_max_age, :integer, default: 2.minutes
+    preference :order_mutex_max_age, :integer, default: 120
 
     # @!attribute [rw] orders_per_page
     #   @return [Integer] Orders to show per-page in the admin (default: +15+)
