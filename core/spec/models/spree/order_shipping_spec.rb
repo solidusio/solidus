@@ -23,7 +23,7 @@ describe Spree::OrderShipping do
 
       it "should send a shipment email" do
         expect(emails.size).to eq(1)
-        expect(emails.first.subject).to eq("Spree Test Store Shipment Notification ##{order.number}")
+        expect(emails.first.subject).to eq("#{order.store.name} Shipment Notification ##{order.number}")
       end
     end
 
