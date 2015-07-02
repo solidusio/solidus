@@ -16,10 +16,10 @@ module Spree
       #   - Otherwise:
       #     - If 'auto_capture?' is true:
       #       - Call #purchase on the payment gateway. (i.e. authorize+capture)
-      #         even if the payment is already failed/completed/etc.
+      #         even if the payment is already completed.
       #     - Else:
       #       - Call #authorize on the payment gateway even if the payment is
-      #         already authorized/failed/completed/etc.
+      #         already completed.
       def process!
         return if payment_method.nil?
 
