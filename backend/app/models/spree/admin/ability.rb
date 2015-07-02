@@ -4,6 +4,11 @@ module Spree
       include CanCan::Ability
 
       def initialize user
+        # TODO: this could be extracted out to a sub role eventually
+        if user.has_spree_role?(:dashboard_display)
+          can [:admin, :home], :dashboards
+        end
+
         if user.has_spree_role? :promotion_management
           can :manage, Spree::Promotion
           can :manage, Spree::PromotionRule

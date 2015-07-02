@@ -15,6 +15,24 @@ describe Spree::Admin::Ability do
         and_return(has_role)
     end
 
+    context "displaying dashboards" do
+      let(:role) { :dashboard_display }
+
+      context "when the user has the dashboard_display role" do
+        let(:has_role) { true }
+
+        it { should be_able_to(:admin, :dashboards) }
+        it { should be_able_to(:home, :dashboards) }
+      end
+
+      context "when the user does not have the dashboard_display role" do
+        let(:has_role) { false }
+
+        it { should_not be_able_to(:admin, :dashboards) }
+        it { should_not be_able_to(:home, :dashboards) }
+      end
+    end
+
     context "managing promotions" do
       let(:role) { :promotion_management}
 
