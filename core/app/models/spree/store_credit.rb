@@ -10,8 +10,8 @@ class Spree::StoreCredit < ActiveRecord::Base
 
   DEFAULT_CREATED_BY_EMAIL = "spree@example.com"
 
-  belongs_to :user, class_name: Spree.user_class.to_s
-  belongs_to :created_by, class_name: Spree.user_class.to_s
+  belongs_to :user, class_name: Spree::UserClassHandle.new
+  belongs_to :created_by, class_name: Spree::UserClassHandle.new
   belongs_to :category, class_name: "Spree::StoreCreditCategory"
   belongs_to :credit_type, class_name: 'Spree::StoreCreditType', :foreign_key => 'type_id'
   has_many :store_credit_events
