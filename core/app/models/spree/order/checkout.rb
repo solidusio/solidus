@@ -72,16 +72,7 @@ module Spree
                   transition to: :payment, from: :confirm
                 end
 
-                before_transition to: :complete do |order|
-                  if order.payment_required? && order.payments.valid.empty?
-                    order.errors.add(:base, Spree.t(:no_payment_found))
-                    false
-                  elsif order.payment_required?
-                    order.process_payments!.tap do |success|
-                      order.handle_failed_payments unless success
-                    end
-                  end
-                end
+                before_transition to: :complete, do: :process_payments_before_complete
                 after_transition to: :complete, do: :persist_user_credit_card
                 before_transition to: :payment, do: :set_shipments_cost
                 before_transition to: :payment, do: :create_tax_charge!
@@ -311,13 +302,26 @@ module Spree
             end
           end
 
-          def handle_failed_payments
-            errors = self.errors[:base]
-            self.payment_failed!
-            errors.each { |error| self.errors.add(:base, error) }
+          private
+
+          def process_payments_before_complete
+            return if !payment_required?
+
+            if payments.valid.empty?
+              errors.add(:base, Spree.t(:no_payment_found))
+              return false
+            end
+
+            if process_payments!
+              true
+            else
+              saved_errors = errors[:base]
+              payment_failed!
+              saved_errors.each { |error| errors.add(:base, error) }
+              false
+            end
           end
 
-          private
           # For payment step, filter order parameters to produce the expected nested
           # attributes for a single payment and its source, discarding attributes
           # for payment methods other than the one selected

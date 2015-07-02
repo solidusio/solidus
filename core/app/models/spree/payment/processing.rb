@@ -1,11 +1,36 @@
 module Spree
   class Payment < Spree::Base
     module Processing
+      # "process!" means:
+      #   - Do nothing when:
+      #     - There is no payment method
+      #     - The payment method does not require a source
+      #     - The payment is in the "processing" state
+      #     - 'auto_capture?' is false and the payment is already authorized.
+      #   - Raise an exception when:
+      #     - The source is missing or invalid
+      #     - The payment is in a state that cannot transition to 'processing'
+      #       (failed/void/invalid states). Note: 'completed' can transition to
+      #       'processing' and thus calling #process! on a completed Payment
+      #       will attempt to re-authorize/re-purchase the payment.
+      #   - Otherwise:
+      #     - If 'auto_capture?' is true:
+      #       - Call #purchase on the payment gateway. (i.e. authorize+capture)
+      #         even if the payment is already completed.
+      #     - Else:
+      #       - Call #authorize on the payment gateway even if the payment is
+      #         already completed.
       def process!
-        if payment_method && payment_method.auto_capture?
+        return if payment_method.nil?
+
+        if payment_method.auto_capture?
           purchase!
         else
-          authorize!
+          if pending?
+            # do nothing. already authorized.
+          else
+            authorize!
+          end
         end
       end
 
@@ -106,19 +131,20 @@ module Spree
           raise ArgumentError.new("handle_payment_preconditions must be called with a block")
         end
 
-        if payment_method && payment_method.source_required?
-          if source
-            if !processing?
-              if payment_method.supports?(source) || token_based?
-                yield
-              else
-                invalidate!
-                raise Core::GatewayError.new(Spree.t(:payment_method_not_supported))
-              end
+        return if payment_method.nil?
+        return if !payment_method.source_required?
+
+        if source
+          if !processing?
+            if payment_method.supports?(source) || token_based?
+              yield
+            else
+              invalidate!
+              raise Core::GatewayError.new(Spree.t(:payment_method_not_supported))
             end
-          else
-            raise Core::GatewayError.new(Spree.t(:payment_processing_failed))
           end
+        else
+          raise Core::GatewayError.new(Spree.t(:payment_processing_failed))
         end
       end
 
