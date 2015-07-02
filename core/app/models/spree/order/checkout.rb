@@ -305,9 +305,7 @@ module Spree
           private
 
           def process_payments_before_complete
-            if !payment_required?
-              return
-            end
+            return if !payment_required?
 
             if payments.valid.empty?
               errors.add(:base, Spree.t(:no_payment_found))
