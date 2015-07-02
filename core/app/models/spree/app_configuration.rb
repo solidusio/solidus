@@ -225,9 +225,8 @@ module Spree
       @searcher_class ||= Spree::Core::Search::Base
     end
 
-    attr_writer :gateway_preferences
-    def gateway_preferences
-      @gateway_preferences ||= {}
+    def static_model_preferences
+      @static_model_preferences ||= Spree::Preferences::StaticModelPreferences.new
     end
 
     # all the following can be deprecated when store prefs are no longer supported

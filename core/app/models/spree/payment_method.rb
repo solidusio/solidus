@@ -26,9 +26,17 @@ module Spree
       raise ::NotImplementedError, "You must implement payment_source_class method for #{self.class}."
     end
 
+    def self.preference_sources
+      Spree::Config.static_model_preferences.for_class(self)
+    end
+
+    def available_preference_sources
+      self.class.preference_sources.keys
+    end
+
     def preferences
       if preferences_source
-        Spree::Config.gateway_preferences[preferences_source]
+        self.class.preference_sources[preferences_source]
       else
         super
       end
