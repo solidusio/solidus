@@ -37,6 +37,7 @@ spree_dev
 spree_test
 testapp
 **/spec/dummy
+**/spec/examples.txt
 tmp
 public/google_base.xml
 public/template_google_base.xml

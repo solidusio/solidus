@@ -73,6 +73,10 @@ RSpec.configure do |config|
     end
   end
 
+  config.before(:suite) do
+    DatabaseCleaner.clean_with :truncation
+  end
+
   config.before(:each) do
     Rails.cache.clear
     reset_spree_preferences
@@ -113,4 +117,10 @@ RSpec.configure do |config|
   config.include Paperclip::Shoulda::Matchers
 
   config.fail_fast = ENV['FAIL_FAST'] || false
+
+  config.example_status_persistence_file_path = "./spec/examples.txt"
+
+  config.order = :random
+
+  Kernel.srand config.seed
 end

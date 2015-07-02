@@ -1,10 +1,5 @@
 class OrderWalkthrough
   def self.up_to(state)
-    # A payment method must exist for an order to proceed through the Address state
-    unless Spree::PaymentMethod.exists?
-      FactoryGirl.create(:check_payment_method)
-    end
-
     # Need to create a valid zone too...
     zone = FactoryGirl.create(:zone)
     country = FactoryGirl.create(:country)
@@ -56,8 +51,8 @@ class OrderWalkthrough
   end
 
   def self.payment(order)
-    FactoryGirl.create(:credit_card) unless Spree::CreditCard.exists?
-    order.payments.create!(:payment_method => Spree::PaymentMethod.first, :amount => order.total, source: Spree::CreditCard.first)
+    credit_card = FactoryGirl.create(:credit_card)
+    order.payments.create!(:payment_method => credit_card.payment_method, :amount => order.total, source: credit_card)
     # TODO: maybe look at some way of making this payment_state change automatic
     order.payment_state = 'paid'
     order.next!
