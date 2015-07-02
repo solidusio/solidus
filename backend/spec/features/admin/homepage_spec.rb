@@ -10,10 +10,6 @@ describe "Homepage", :type => :feature do
         visit spree.admin_path
       end
 
-      it "should have the header text 'Listing Orders'" do
-        within('h1') { expect(page).to have_content("Listing Orders") }
-      end
-
       it "should have a link to overview" do
         within(:xpath, ".//figure[@data-hook='logo-wrapper']") { page.find(:xpath, "a[@href='/admin']") }
       end
@@ -60,11 +56,12 @@ describe "Homepage", :type => :feature do
 
   context 'as fakedispatch user' do
 
-    before do 
+    before do
       allow_any_instance_of(Spree::Admin::BaseController).to receive(:spree_current_user).and_return(nil)
     end
-    
+
     custom_authorization! do |user|
+      can [:admin, :home], :dashboards
       can [:admin, :edit, :index, :read], Spree::Order
     end
 
