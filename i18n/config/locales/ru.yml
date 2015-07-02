@@ -697,7 +697,7 @@ ru:
         user:
           signup: "Новый пользователь"
     exceptions:
-      count_on_hand_setter: "Невозможно установить значение count_on_hand вручную, т.к. оно устанавливается автоматически с помощью recalculate_count_on_hand callback'а. Вместо этого, используйте `update_column(:count_on_hand, value)`, пожалуйста"
+      count_on_hand_setter: "Невозможно установить значение count_on_hand вручную, т.к. оно устанавливается автоматически с помощью recalculate_count_on_hand callback'а. Вместо этого, используйте `update_column(:count_on_hand, value)`"
     exchange_for:
     excl: "искл."
     existing_shipments:
@@ -917,14 +917,14 @@ ru:
     order_information: "Информация"
     order_mailer:
       cancel_email:
-        dear_customer: "Дорогой покупатель,\\n"
+        dear_customer: "Дорогой покупатель,\n"
         instructions: "Ваш заказ был отменен. Сохраните эту информацию для истории."
         order_summary_canceled: "Детали заказа [ОТМЕНЕНО]"
         subject: "Аннулирование заказа"
         subtotal:
         total:
       confirm_email:
-        dear_customer: "Дорогой покупатель,\\n"
+        dear_customer: "Дорогой покупатель,\n"
         instructions: "Пожалуйста, проверьте детали заказа."
         order_summary: "Детали заказа"
         subject: "Подтверждение заказа"
@@ -939,7 +939,7 @@ ru:
       address: "Адрес"
       awaiting_return: "Ожидает возврата"
       canceled: "Отменён"
-      cart: "орзина"
+      cart: "Корзина"
       complete: "Завершение"
       confirm: "Подтверждение"
       considered_risky:
@@ -1187,7 +1187,7 @@ ru:
     shipment_details:
     shipment_mailer:
       shipped_email:
-        dear_customer: "Дорогой покупатель,\\n"
+        dear_customer: "Дорогой покупатель,\n"
         instructions: "Ваш заказ был успешно отправлен."
         shipment_summary: "Детали доставки"
         subject: "Уведомление о доставке"
@@ -1278,8 +1278,8 @@ ru:
     stock_location_info: "Подробности расположения склада"
     stock_locations: "Адреса складов"
     stock_locations_need_a_default_country:
-    stock_management: "Управление Запасами"
-    stock_management_requires_a_stock_location: "Добавьте расположение склада для управления запасами, пожалуйста."
+    stock_management: "Управление запасами"
+    stock_management_requires_a_stock_location: "Добавьте расположение склада для управления запасами."
     stock_movements: "Перемещения товаров"
     stock_movements_for_stock_location: "Перемещения товаров для %{stock_location_name}"
     stock_successfully_transferred: "Товары успешно перемещены с одного склада на другой."
@@ -1289,7 +1289,7 @@ ru:
     store: "В магазин"
     street_address: "Адрес"
     street_address_2: "Адрес (строка 2)"
-    subtotal: "Подитог"
+    subtotal: "Подытог"
     subtract: "Вычет"
     success:
     successfully_created: "%{resource} был успешно создан!"
@@ -1297,7 +1297,7 @@ ru:
     successfully_removed: "%{resource} был успешно удален!"
     successfully_signed_up_for_analytics: "Успешно авторизованы в Spree Analytics"
     successfully_updated: "%{resource} был успешно обновлен!"
-    summary:
+    summary: "Сводка"
     tax: "Налог"
     tax_categories: "Категории налогов"
     tax_category: "Категория налогов"
