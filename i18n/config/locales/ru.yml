@@ -225,6 +225,9 @@ ru:
         one: "Позиция"
         other: "Позиции"
       spree/option_type:
+        many: "Товарных опций"
+        one: "Товарная опция"
+        other: "Товарные опции"
       spree/option_value:
       spree/order:
         many: "Заказов"
@@ -237,11 +240,11 @@ ru:
       spree/payment_method:
         many: "Способов оплаты"
         one: "Способ оплаты"
-        other: "Способа оплаты"
+        other: "Способы оплаты"
       spree/product:
         many: "Товаров"
         one: "Товар"
-        other: "Товара"
+        other: "Товары"
       spree/promotion:
         many: "Акций"
         one: "Акция"
@@ -294,7 +297,7 @@ ru:
       spree/state:
         many: "Областей/Регионов"
         one: "Область/Регион"
-        other: "Области/Региона"
+        other: "Области/Регионы"
       spree/state_change:
       spree/stock_location:
         many: "Расположений складов"
@@ -324,7 +327,7 @@ ru:
       spree/tracker:
         many: "Трекеров"
         one: "Трекер"
-        other: "Трекера"
+        other: "Трекеры"
       spree/user:
         many: "Пользователей"
         one: "Пользователь"
@@ -441,6 +444,7 @@ ru:
         overview: "Обзор"
         products: "Товары"
         promotions: "Акции"
+        promotion_categories: "Категории акций"
         properties: "Свойства"
         prototypes: "Прототипы"
         reports: "Отчёты"
@@ -1279,8 +1283,8 @@ ru:
     stock_movements: "Перемещения товаров"
     stock_movements_for_stock_location: "Перемещения товаров для %{stock_location_name}"
     stock_successfully_transferred: "Товары успешно перемещены с одного склада на другой."
-    stock_transfer: "Движение Товаров"
-    stock_transfers: "Движения Товаров"
+    stock_transfer: "Движение товаров"
+    stock_transfers: "Движения товаров"
     stop: "Конец"
     store: "В магазин"
     street_address: "Адрес"
