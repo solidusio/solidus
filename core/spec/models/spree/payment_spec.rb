@@ -175,7 +175,7 @@ describe Spree::Payment, :type => :model do
         context 'when in the pending state' do
           before { payment.update_attributes!(state: 'pending') }
 
-          it "does not authorize" do
+          it "does not re-authorize" do
             expect(payment).to_not receive(:authorize!)
             payment.process!
             expect(payment).to be_pending
@@ -195,7 +195,7 @@ describe Spree::Payment, :type => :model do
         context 'when in the completed state' do
           before { payment.update_attributes!(state: 'completed') }
 
-          it "raises an exception" do
+          it "authorizes" do
             payment.process!
             # TODO: Is this really what we want to happen in this case?
             expect(payment).to be_pending
