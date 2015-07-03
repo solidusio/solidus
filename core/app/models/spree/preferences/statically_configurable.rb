@@ -7,10 +7,10 @@ module Spree
         def preference_sources
           Spree::Config.static_model_preferences.for_class(self)
         end
-      end
 
-      def available_preference_sources
-        self.class.preference_sources.keys
+        def available_preference_sources
+          preference_sources.keys
+        end
       end
 
       # override assignment to cast empty string to nil
