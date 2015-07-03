@@ -6,9 +6,11 @@
 
 <% content_for :page_actions do %>
   <ul class="actions inline-menu">
-    <li>
-      <%= button_link_to Spree.t(:new_tax_category), new_object_url, :icon => 'plus', :id => 'admin_new_tax_categories_link' %>
-    </li>
+    <% if can?(:create, Spree::TaxCategory) %>
+      <li>
+        <%= button_link_to Spree.t(:new_tax_category), new_object_url, :icon => 'plus', :id => 'admin_new_tax_categories_link' %>
+      </li>
+    <% end %>
   </ul>
 <% end %>
 
@@ -41,15 +43,21 @@
         <td class="align-center"><%= tax_category.description %></td>
         <td class="align-center"><%= tax_category.is_default? ? Spree.t(:say_yes) : Spree.t(:say_no) %></td>
         <td class="actions">
-          <%= link_to_edit tax_category, :no_text => true %>
-          <%= link_to_delete tax_category, :no_text => true %>
+          <% if can?(:update, tax_category) %>
+            <%= link_to_edit tax_category, :no_text => true %>
+          <% end %>
+          <% if can?(:destroy, tax_category) %>
+            <%= link_to_delete tax_category, :no_text => true %>
+          <% end %>
       </tr>
     <% end %>
   </tbody>
 </table>
 <% else %>
   <div class="alpha twelve columns no-objects-found">
-    <%= Spree.t(:no_resource_found, resource: I18n.t(:other, scope: 'activerecord.models.spree/tax_category')) %>,
-    <%= link_to Spree.t(:add_one), spree.new_admin_tax_category_path %>!
+    <%= Spree.t(:no_resource_found, resource: I18n.t(:other, scope: 'activerecord.models.spree/tax_category')) %>
+    <% if can?(:create, Spree::TaxCategory) %>
+      <%= link_to Spree.t(:add_one), spree.new_admin_tax_category_path %>!
+    <% end %>
   </div>
 <% end %>
