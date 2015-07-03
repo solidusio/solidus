@@ -11,6 +11,8 @@ module Spree
     has_many :payments, class_name: "Spree::Payment", inverse_of: :payment_method
     has_many :credit_cards, class_name: "Spree::CreditCard"
 
+    include Spree::Preferences::StaticallyConfigurable
+
     def self.providers
       Rails.application.config.spree.payment_methods
     end
@@ -24,29 +26,6 @@ module Spree
     # nil means the payment method doesn't require a source e.g. check
     def payment_source_class
       raise ::NotImplementedError, "You must implement payment_source_class method for #{self.class}."
-    end
-
-    def self.preference_sources
-      Spree::Config.static_model_preferences.for_class(self)
-    end
-
-    def available_preference_sources
-      self.class.preference_sources.keys
-    end
-
-    def preferences
-      if preferences_source
-        self.class.preference_sources[preferences_source]
-      else
-        super
-      end
-    end
-
-    def preferences=(val)
-      if preferences_source
-      else
-        super
-      end
     end
 
     def self.available(display_on = 'both')
