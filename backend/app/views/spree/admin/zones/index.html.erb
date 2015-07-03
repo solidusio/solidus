@@ -5,9 +5,11 @@
 <% end %>
 
 <% content_for :page_actions do %>
-  <li>
-    <%= button_link_to Spree.t(:new_zone), new_object_url, :icon => 'plus', :id => 'admin_new_zone_link' %>
-  </li>
+  <% if can?(:create, Spree::Zone) %>
+    <li>
+      <%= button_link_to Spree.t(:new_zone), new_object_url, :icon => 'plus', :id => 'admin_new_zone_link' %>
+    </li>
+  <% end %>
 <% end %>
 
 <%= paginate @zones %>
@@ -37,8 +39,12 @@
           <td><%= zone.description %></td>
           <td class="align-center"><%= zone.default_tax? ? Spree.t(:say_yes) : Spree.t(:say_no) %></td>
           <td class="actions">
-            <%=link_to_edit zone, :no_text => true %>
-            <%=link_to_delete zone, :no_text => true %>
+            <% if can?(:update, zone) %>
+              <%= link_to_edit zone, :no_text => true %>
+            <% end %>
+            <% if can?(:destroy, zone) %>
+              <%= link_to_delete zone, :no_text => true %>
+            <% end %>
           </td>
         </tr>
       <% end %>
@@ -46,8 +52,10 @@
   </table>
 <% else %>
   <div class="alpha twelve columns no-objects-found">
-    <%= Spree.t(:no_resource_found, resource: I18n.t(:other, scope: 'activerecord.models.spree/zone')) %>,
-    <%= link_to Spree.t(:add_one), spree.new_admin_zone_path %>!
+    <%= Spree.t(:no_resource_found, resource: I18n.t(:other, scope: 'activerecord.models.spree/zone')) %>
+    <% if can?(:create, Spree::Zone) %>
+      <%= link_to Spree.t(:add_one), spree.new_admin_zone_path %>!
+    <% end %>
   </div>
 <% end %>
 
