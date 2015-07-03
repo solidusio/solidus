@@ -5,9 +5,11 @@
 <% end %>
 
 <% content_for :page_actions do %>
-  <li>
-    <%= button_link_to Spree.t(:new_tracker), new_object_url, :icon => 'plus', :id => 'admin_new_tracker_link' %>
-  </li>
+  <% if can?(:create, Spree::Tracker) %>
+    <li>
+      <%= button_link_to Spree.t(:new_tracker), new_object_url, :icon => 'plus', :id => 'admin_new_tracker_link' %>
+    </li>
+  <% end %>
 <% end %>
 
 <% if @trackers.any? %>
@@ -33,8 +35,13 @@
           <td class="align-center"><%= tracker.environment.to_s.titleize %></td>
           <td class="align-center"><%= tracker.active ? Spree.t(:say_yes) : Spree.t(:say_no) %></td>
           <td class="actions">
-            <%= link_to_edit tracker, :no_text => true %>
-            <%= link_to_delete tracker, :no_text => true %>
+            <% if can?(:update, tracker) %>
+              <%= link_to_edit tracker, :no_text => true %>
+            <% end %>
+
+            <% if can?(:destroy, tracker) %>
+              <%= link_to_delete tracker, :no_text => true %>
+            <% end %>
           </td>
         </tr>
       <% end %>
@@ -42,7 +49,9 @@
   </table>
 <% else %>
   <div class="no-objects-found">
-    <%= Spree.t(:no_resource_found, resource: I18n.t(:other, scope: 'activerecord.models.spree/tracker')) %>,
-    <%= link_to Spree.t(:add_one), new_object_url %>!
+    <%= Spree.t(:no_resource_found, resource: I18n.t(:other, scope: 'activerecord.models.spree/tracker')) %>
+    <% if can?(:create, Spree::Tracker) %>
+      <%= link_to Spree.t(:add_one), new_object_url %>!
+    <% end %>
   </div>
 <% end %>
