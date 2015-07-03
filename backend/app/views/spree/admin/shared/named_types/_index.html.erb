@@ -6,9 +6,11 @@
 
 <% content_for :page_actions do %>
   <ul class="actions inline-menu">
-    <li>
-      <%= button_link_to new_button_text, new_object_url, { icon: 'plus', id: 'admin_new_named_type' } %>
-    </li>
+    <% if can?(:create, Spree::ReturnReason) %>
+      <li>
+        <%= button_link_to new_button_text, new_object_url, { icon: 'plus', id: 'admin_new_named_type' } %>
+      </li>
+    <% end %>
   </ul>
 <% end %>
 
@@ -36,7 +38,7 @@
             <%= Spree.t(named_type.active? ? :active : :inactive) %>
           </td>
           <td class="actions">
-            <% if named_type.mutable? %>
+            <% if named_type.mutable? && can?(:update, named_type) %>
               <%= link_to_edit named_type, no_text: true %>
             <% end %>
           </td>
@@ -46,7 +48,9 @@
   </table>
 <% else %>
   <div class="alpha twelve columns no-objects-found">
-    <%= Spree.t(:no_resource_found, resource: resource_name) %>,
-    <%= link_to Spree.t(:add_one), new_object_url %>!
+    <%= Spree.t(:no_resource_found, resource: resource_name) %>
+    <% if can?(:create, Spree::ReturnReason) %>
+      <%= link_to Spree.t(:add_one), new_object_url %>!
+    <% end %>
   </div>
 <% end %>
