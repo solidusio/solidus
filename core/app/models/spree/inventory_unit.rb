@@ -17,7 +17,7 @@ module Spree
 
     validates_presence_of :order, :shipment, :line_item, :variant
 
-    before_destroy :ensure_no_return_items
+    before_destroy :ensure_can_destroy
 
     scope :backordered, -> { where state: 'backordered' }
     scope :on_hand, -> { where state: 'on_hand' }
@@ -143,11 +143,15 @@ module Spree
         return_items.not_cancelled.first
       end
 
-      # If an inventory unit is associated with return items and really needs
-      # to be deleted then explicitly delete the associated return items first.
-      def ensure_no_return_items
-        if return_items.exists?
-          raise "Inventory units associated with return items should not be deleted."
+      def ensure_can_destroy
+        if !backordered? && !on_hand?
+          errors.add(:state, :cannot_destroy, state: self.state)
+          return false
+        end
+
+        unless shipment.pending?
+          errors.add(:base, :cannot_destroy_shipment_state, state: shipment.state)
+          return false
         end
       end
   end

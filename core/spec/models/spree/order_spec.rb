@@ -371,7 +371,20 @@ describe Spree::Order, :type => :model do
           order.ensure_updated_shipments
           expect(order.shipment_total).to eq(0)
         end
+
+        it "does nothing if any shipments are ready" do
+          shipment = create(:shipment, order: subject, state: "ready")
+          expect { subject.ensure_updated_shipments }.not_to change { subject.reload.shipments }
+          expect { shipment.reload }.not_to raise_error
+        end
+
+        it "does nothing if any shipments are shipped" do
+          shipment = create(:shipment, order: subject, state: "shipped")
+          expect { subject.ensure_updated_shipments }.not_to change { subject.reload.shipments }
+          expect { shipment.reload }.not_to raise_error
+        end
       end
+
     end
 
     context 'when the order is in address state' do
@@ -860,6 +873,28 @@ describe Spree::Order, :type => :model do
       allow_any_instance_of(Spree::Stock::Coordinator).to receive(:shipments).and_return([shipment])
       subject.create_proposed_shipments
       expect(subject.shipments).to eq [shipment]
+    end
+
+    it "raises an error if any shipments are ready" do
+      shipment = create(:shipment, order: subject, state: "ready")
+      expect {
+        expect {
+          subject.create_proposed_shipments
+        }.to raise_error(Spree::Order::CannotRebuildShipments)
+      }.not_to change { subject.reload.shipments }
+
+      expect { shipment.reload }.not_to raise_error
+    end
+
+    it "raises an error if any shipments are shipped" do
+      shipment = create(:shipment, order: subject, state: "shipped")
+      expect {
+        expect {
+          subject.create_proposed_shipments
+        }.to raise_error(Spree::Order::CannotRebuildShipments)
+      }.not_to change { subject.reload.shipments }
+
+      expect { shipment.reload }.not_to raise_error
     end
   end
 

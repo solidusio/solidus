@@ -66,16 +66,20 @@ module Spree
         quantity = params[:quantity].to_i
 
         @shipment.order.contents.add(variant, quantity, {shipment: @shipment})
-
         respond_with(@shipment, default_template: :show)
       end
 
       def remove
         quantity = params[:quantity].to_i
 
-        @shipment.order.contents.remove(variant, quantity, {shipment: @shipment})
-        @shipment.reload if @shipment.persisted?
-        respond_with(@shipment, default_template: :show)
+        if @shipment.pending?
+          @shipment.order.contents.remove(variant, quantity, {shipment: @shipment})
+          @shipment.reload if @shipment.persisted?
+          respond_with(@shipment, default_template: :show)
+        else
+          @shipment.errors.add(:base, :cannot_remove_items_shipment_state, state: @shipment.state)
+          invalid_resource!(@shipment)
+        end
       end
 
       def transfer_to_location
@@ -85,7 +89,7 @@ module Spree
       end
 
       def transfer_to_shipment
-        @target_shipment  = Spree::Shipment.find_by!(number: params[:target_shipment_number])
+        @target_shipment = Spree::Shipment.find_by!(number: params[:target_shipment_number])
         @original_shipment.transfer_to_shipment(@variant, @quantity, @target_shipment)
         render json: {success: true, message: Spree.t(:shipment_transfer_success)}, status: 201
       end

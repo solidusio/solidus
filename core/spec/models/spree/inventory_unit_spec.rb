@@ -262,4 +262,46 @@ describe Spree::InventoryUnit, :type => :model do
       it { should eq false }
     end
   end
+
+  context "destroy prevention" do
+    it "can be destroyed when on hand" do
+      inventory_unit = create(:inventory_unit, state: "on_hand")
+      expect(inventory_unit.destroy).to be_truthy
+      expect { inventory_unit.reload }.to raise_error(ActiveRecord::RecordNotFound)
+    end
+
+    it "can be destroyed when backordered" do
+      inventory_unit = create(:inventory_unit, state: "backordered")
+      expect(inventory_unit.destroy).to be_truthy
+      expect { inventory_unit.reload }.to raise_error(ActiveRecord::RecordNotFound)
+    end
+
+    it "cannot be destroyed when shipped" do
+      inventory_unit = create(:inventory_unit, state: "shipped")
+      expect(inventory_unit.destroy).to eq false
+      expect(inventory_unit.errors.full_messages.join).to match /Cannot destroy/
+      expect { inventory_unit.reload }.not_to raise_error
+    end
+
+    it "cannot be destroyed when returned" do
+      inventory_unit = create(:inventory_unit, state: "returned")
+      expect(inventory_unit.destroy).to eq false
+      expect(inventory_unit.errors.full_messages.join).to match /Cannot destroy/
+      expect { inventory_unit.reload }.not_to raise_error
+    end
+
+    it "cannot be destroyed if its shipment is ready" do
+      inventory_unit = create(:order_ready_to_ship).inventory_units.first
+      expect(inventory_unit.destroy).to eq false
+      expect(inventory_unit.errors.full_messages.join).to match /Cannot destroy/
+      expect { inventory_unit.reload }.not_to raise_error
+    end
+
+    it "cannot be destroyed if its shipment is shipped" do
+      inventory_unit = create(:shipped_order).inventory_units.first
+      expect(inventory_unit.destroy).to eq false
+      expect(inventory_unit.errors.full_messages.join).to match /Cannot destroy/
+      expect { inventory_unit.reload }.not_to raise_error
+    end
+  end
 end

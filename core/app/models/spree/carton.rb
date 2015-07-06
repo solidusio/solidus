@@ -3,7 +3,7 @@ class Spree::Carton < ActiveRecord::Base
   belongs_to :stock_location, class_name: 'Spree::StockLocation', inverse_of: :cartons
   belongs_to :shipping_method, class_name: 'Spree::ShippingMethod', inverse_of: :cartons
 
-  has_many :inventory_units, inverse_of: :carton
+  has_many :inventory_units, class_name: "Spree::InventoryUnit", inverse_of: :carton, dependent: :nullify
   has_many :orders, -> { uniq }, through: :inventory_units
   has_many :shipments, -> { uniq }, through: :inventory_units
 

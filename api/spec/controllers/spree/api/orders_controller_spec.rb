@@ -318,20 +318,7 @@ module Spree
                                  :country_id => country.id} }
       let(:country) { create(:country, {name: "Brazil", iso_name: "BRAZIL", iso: "BR", iso3: "BRA", numcode: 76 })}
 
-      before do
-        allow_any_instance_of(Order).to receive_messages user: current_api_user
-        order.next # Switch from cart to address
-        order.bill_address = nil
-        order.ship_address = nil
-        order.save
-        expect(order.state).to eq("address")
-      end
-
-      def clean_address(address)
-        address.delete(:state)
-        address.delete(:country)
-        address
-      end
+      before { allow_any_instance_of(Order).to receive_messages user: current_api_user }
 
       context "line_items hash not present in request" do
         it "responds successfully" do
@@ -401,15 +388,16 @@ module Spree
       end
 
       it "can add shipping address" do
-        expect(order.ship_address).to be_nil
+        order.update_attributes!(ship_address_id: nil)
 
-        api_put :update, :id => order.to_param, :order => { :ship_address_attributes => shipping_address }
-
-        expect(order.reload.ship_address).not_to be_nil
+        expect {
+          api_put :update, :id => order.to_param, :order => { :ship_address_attributes => shipping_address }
+        }.to change { order.reload.ship_address }.from(nil)
       end
 
       it "receives error message if trying to add shipping address with errors" do
-        expect(order.ship_address).to be_nil
+        order.update_attributes!(ship_address_id: nil)
+
         shipping_address[:firstname] = ""
 
         api_put :update, :id => order.to_param, :order => { :ship_address_attributes => shipping_address }
@@ -442,19 +430,15 @@ module Spree
       end
 
       context "with a line item" do
-        let(:order_with_line_items) do
-          order = create(:order_with_line_items)
-          create(:adjustment, order: order, adjustable: order)
-          order
-        end
+        let(:order) { create(:order_with_line_items) }
 
         it "can empty an order" do
-          expect(order_with_line_items.adjustments.count).to eq(1)
-          api_put :empty, :id => order_with_line_items.to_param
+          create(:adjustment, order: order, adjustable: order)
+          api_put :empty, :id => order.to_param
           expect(response.status).to eq(204)
-          order_with_line_items.reload
-          expect(order_with_line_items.line_items).to be_empty
-          expect(order_with_line_items.adjustments).to be_empty
+          order.reload
+          expect(order.line_items).to be_empty
+          expect(order.adjustments).to be_empty
         end
 
         it "can list its line items with images" do
@@ -516,8 +500,6 @@ module Spree
           end
 
           before do
-            order.bill_address = FactoryGirl.create(:address)
-            order.ship_address = FactoryGirl.create(:address)
             order.next!
             order.save
           end
