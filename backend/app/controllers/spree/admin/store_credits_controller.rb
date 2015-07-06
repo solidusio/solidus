@@ -2,21 +2,71 @@ module Spree
   module Admin
     class StoreCreditsController < ResourceController
       belongs_to 'spree/user', model_class: Spree.user_class
-      before_action :load_categories, only: [:new, :edit]
+      before_action :load_categories, only: [:new]
+      before_action :load_update_reasons, only: [:edit_amount, :edit_validity]
+      before_action :load_store_credit, expect: [:index, :create, :update_amount, :invalidate]
+      before_action :ensure_update_reason, only: [:update_amount, :invalidate]
       create.fails :load_categories
-      update.fails :load_categories
       create.before :set_action_originator
 
-      def invalidate
-        if @store_credit.invalidate
+      helper Spree::Admin::StoreCreditEventsHelper
+
+      def show
+        @store_credit_events = @store_credit.store_credit_events.chronological
+      end
+
+      def create
+        @store_credit = @user.store_credits.build(
+          permitted_store_credit_params.merge({
+            created_by: try_spree_current_user,
+            action_originator: try_spree_current_user,
+          })
+        )
+
+        if @store_credit.save
+          flash[:success] = flash_message_for(@store_credit, :successfully_created)
+          redirect_to admin_user_store_credits_path(@user)
+        else
+          load_categories
+          flash[:error] = "#{Spree.t("admin.store_credits.unable_to_create")} #{@store_credit.errors.full_messages}"
+          render :new
+        end
+      end
+
+      def update
+        @store_credit.assign_attributes(permitted_store_credit_params)
+        @store_credit.created_by = try_spree_current_user
+
+        if @store_credit.save
+          flash[:success] = flash_message_for(@store_credit, :successfully_updated)
           respond_with(@store_credit) do |format|
-            format.html { redirect_to location_after_destroy }
-            format.js   { render :partial => "spree/admin/shared/destroy" }
+            format.js { render partial: '/spree/admin/store_credits/update' }
           end
         else
+          flash[:error] = "#{Spree.t("admin.store_credits.unable_to_update")} #{@store_credit.errors.full_messages}"
           respond_with(@store_credit) do |format|
-            format.html { redirect_to location_after_destroy }
+            format.js { render partial: '/spree/admin/store_credits/update' }
           end
+        end
+      end
+
+      def update_amount
+        @store_credit = @user.store_credits.find(params[:id])
+        amount = params.require(:store_credit).require(:amount)
+        if @store_credit.update_amount(amount, @update_reason, try_spree_current_user)
+          flash[:success] = flash_message_for(@store_credit, :successfully_updated)
+          redirect_to admin_user_store_credit_path(@user, @store_credit)
+        else
+          render_edit_page
+        end
+      end
+
+      def invalidate
+        @store_credit = @user.store_credits.find(params[:id])
+        if @store_credit.invalidate(@update_reason, try_spree_current_user)
+          redirect_to admin_user_store_credit_path(@user, @store_credit)
+        else
+          render_edit_page
         end
       end
 
@@ -31,12 +81,38 @@ module Spree
         @collection = super.reverse_order
       end
 
+      def load_update_reasons
+        @update_reasons = Spree::StoreCreditUpdateReason.all.order(:name)
+      end
+
       def load_categories
         @credit_categories = Spree::StoreCreditCategory.all.order(:name)
       end
 
       def set_action_originator
         @object.action_originator = try_spree_current_user
+      end
+
+      def ensure_update_reason
+        @update_reason = Spree::StoreCreditUpdateReason.find_by(id: params[:update_reason_id])
+        unless @update_reason
+          @store_credit.errors.add(:base, Spree.t("admin.store_credits.errors.update_reason_required"))
+          render_edit_page
+        end
+      end
+
+      def render_edit_page
+        if action == :update_amount
+          template = :edit_amount
+          translation_key = 'update'
+        else
+          template = :edit_validity
+          translation_key = 'invalidate'
+        end
+
+        load_update_reasons
+        flash[:error] = "#{Spree.t("admin.store_credits.unable_to_#{translation_key}")}: #{@store_credit.errors.full_messages.join(', ')}"
+        render template and return
       end
     end
   end

@@ -1,6 +1,7 @@
 module Spree
   module UserMethods
     extend ActiveSupport::Concern
+    extend Spree::DisplayMoney
 
     include Spree::UserApiAuthentication
     include Spree::UserReporting
@@ -19,6 +20,7 @@ module Spree
 
       has_many :store_credits, -> { includes(:credit_type) }, foreign_key: "user_id", class_name: "Spree::StoreCredit"
       has_many :store_credit_events, through: :store_credits
+      money_methods :total_available_store_credit
 
       belongs_to :ship_address, class_name: 'Spree::Address'
       belongs_to :bill_address, class_name: 'Spree::Address'

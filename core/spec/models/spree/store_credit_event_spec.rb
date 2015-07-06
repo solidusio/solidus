@@ -34,6 +34,64 @@ describe Spree::StoreCreditEvent do
     end
   end
 
+  describe "update reason validation" do
+    subject { event.valid? }
+
+    context "adjustment event" do
+      context "has an update reason" do
+        let(:event) { build(:store_credit_adjustment_event) }
+
+        it "returns true" do
+          expect(subject).to eq true
+        end
+      end
+
+      context "doesn't have an update reason" do
+        let(:event) { build(:store_credit_adjustment_event, update_reason: nil) }
+
+        it "returns false" do
+          expect(subject).to eq false
+        end
+
+        it "adds an error message indicating the update reason is missing" do
+          subject
+          expect(event.errors.full_messages).to match ["Update reason can't be blank"]
+        end
+      end
+    end
+
+    context "invalidate event" do
+      context "has an update reason" do
+        let(:event) { build(:store_credit_invalidate_event) }
+
+        it "returns true" do
+          expect(subject).to eq true
+        end
+      end
+
+      context "doesn't have an update reason" do
+        let(:event) { build(:store_credit_invalidate_event, update_reason: nil) }
+
+        it "returns false" do
+          expect(subject).to eq false
+        end
+
+        it "adds an error message indicating the update reason is missing" do
+          subject
+          expect(event.errors.full_messages).to match ["Update reason can't be blank"]
+        end
+      end
+    end
+
+    context "event doesn't require an update reason" do
+      let(:event) { build(:store_credit_auth_event) }
+
+      it "returns true" do
+        expect(subject).to eq true
+      end
+    end
+  end
+
   describe "#capture_action?" do
     subject { event.capture_action? }
 
@@ -67,6 +125,66 @@ describe Spree::StoreCreditEvent do
 
     context "for non-auth events" do
       let(:event) { create(:store_credit_capture_event) }
+
+      it "returns false" do
+        expect(subject).to eq false
+      end
+    end
+  end
+
+  describe "#action_requires_reason?" do
+    subject { event.action_requires_reason? }
+
+    context "for adjustment events" do
+      let(:event) { create(:store_credit_adjustment_event) }
+
+      it "returns true" do
+        expect(subject).to eq true
+      end
+    end
+
+    context "for invalidate events" do
+      let(:event) { create(:store_credit_invalidate_event) }
+
+      it "returns true" do
+        expect(subject).to eq true
+      end
+    end
+
+    context "for capture events" do
+      let(:event) { create(:store_credit_capture_event) }
+
+      it "returns false" do
+        expect(subject).to eq false
+      end
+    end
+
+    context "for authorize events" do
+      let(:event) { create(:store_credit_auth_event) }
+
+      it "returns false" do
+        expect(subject).to eq false
+      end
+    end
+
+    context "for allocation events" do
+      let(:event) { create(:store_credit_event, action: Spree::StoreCredit::ALLOCATION_ACTION) }
+
+      it "returns false" do
+        expect(subject).to eq false
+      end
+    end
+
+    context "for void events" do
+      let(:event) { create(:store_credit_event, action: Spree::StoreCredit::VOID_ACTION) }
+
+      it "returns false" do
+        expect(subject).to eq false
+      end
+    end
+
+    context "for credit events" do
+      let(:event) { create(:store_credit_event, action: Spree::StoreCredit::CREDIT_ACTION) }
 
       it "returns false" do
         expect(subject).to eq false
@@ -113,45 +231,61 @@ describe Spree::StoreCreditEvent do
   end
 
   describe "#display_action" do
-    subject { create(:store_credit_auth_event, action: action) }
+    subject { event.display_action  }
 
     context "capture event" do
-      let(:action) { Spree::StoreCredit::CAPTURE_ACTION }
+      let(:event) { create(:store_credit_capture_event) }
 
-      it "returns used" do
-        expect(subject.display_action).to eq Spree.t('store_credit.captured')
-      end
-    end
-
-    context "authorize event" do
-      let(:action) { Spree::StoreCredit::AUTHORIZE_ACTION }
-
-      it "returns authorized" do
-        expect(subject.display_action).to eq Spree.t('store_credit.authorized')
+      it "returns the action's display text" do
+        expect(subject).to eq "Used"
       end
     end
 
     context "allocation event" do
-      let(:action) { Spree::StoreCredit::ALLOCATION_ACTION }
+      let(:event) { create(:store_credit_event, action: Spree::StoreCredit::ALLOCATION_ACTION) }
 
-      it "returns added" do
-        expect(subject.display_action).to eq Spree.t('store_credit.allocated')
+      it "returns the action's display text" do
+        expect(subject).to eq "Added"
       end
     end
 
     context "void event" do
-      let(:action) { Spree::StoreCredit::VOID_ACTION }
+      let(:event) { create(:store_credit_event, action: Spree::StoreCredit::VOID_ACTION) }
 
-      it "returns credit" do
-        expect(subject.display_action).to eq Spree.t('store_credit.credit')
+      it "returns the action's display text" do
+        expect(subject).to eq "Credit"
       end
     end
 
     context "credit event" do
-      let(:action) { Spree::StoreCredit::CREDIT_ACTION }
+      let(:event) { create(:store_credit_event, action: Spree::StoreCredit::CREDIT_ACTION) }
 
-      it "returns credit" do
-        expect(subject.display_action).to eq Spree.t('store_credit.credit')
+      it "returns the action's display text" do
+        expect(subject).to eq "Credit"
+      end
+    end
+
+    context "adjustment event" do
+      let(:event) { create(:store_credit_adjustment_event) }
+
+      it "returns the action's display text" do
+        expect(subject).to eq "Adjustment"
+      end
+    end
+
+    context "authorize event" do
+      let(:event) { create(:store_credit_auth_event) }
+
+      it "returns an empty string" do
+        expect(subject).to eq ""
+      end
+    end
+
+    context "eligible event" do
+      let(:event) { create(:store_credit_event, action: Spree::StoreCredit::ELIGIBLE_ACTION) }
+
+      it "returns an empty string" do
+        expect(subject).to eq ""
       end
     end
   end
