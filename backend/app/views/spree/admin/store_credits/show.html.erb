@@ -1,0 +1,110 @@
+<% content_for :page_title do %>
+  <%= link_to "#{Spree.t(:editing_user)} #{@user.email}", edit_admin_user_url(@user) %>
+<% end %>
+
+<%= render :partial => 'spree/admin/users/sidebar', :locals => { :current => :store_credits } %>
+<% content_for :page_actions do %>
+  <li><%= link_to_with_icon 'arrow-left', Spree.t("admin.store_credits.back_to_store_credit_list"), admin_user_store_credits_path(@user), class: 'button' %></li>
+  <% if @store_credit.editable? && can?(:edit, @store_credit) %>
+    <li><%= link_to_with_icon 'dollar', Spree.t("admin.store_credits.change_amount"), edit_amount_admin_user_store_credit_path(@user, @store_credit), class: 'button' %></li>
+  <% end %>
+  <% if @store_credit.invalidateable? && can?(:invalidate, @store_credit) %>
+    <li><%= link_to_with_icon 'ban', Spree.t("invalidate"), edit_validity_admin_user_store_credit_path(@user, @store_credit), class: 'button' %></li>
+  <% end %>
+<% end %>
+
+<table id='sc-detail-table'>
+  <colgroup>
+    <col style="width: 20%;" />
+    <col style="width: 65%;" />
+    <col style="width: 15%;" />
+  </colgroup>
+  <tr>
+    <td>
+      <strong><%= Spree.t(:amount) %>:</strong>
+    </td>
+    <td><%= @store_credit.display_amount.to_html %></td>
+    <td class='actions'></td>
+  </tr>
+  <tr>
+    <td>
+      <strong><%= Spree.t(:created_by) %>:</strong>
+    </td>
+    <td><%= @store_credit.created_by_email %></td>
+    <td class='actions'></td>
+  </tr>
+  <tr>
+    <td>
+      <strong><%= Spree.t("admin.store_credits.credit_type") %>:</strong>
+    </td>
+    <td><%= @store_credit.category_name %></td>
+    <td class='actions'></td>
+  </tr>
+  <tr id='memo-display-row'>
+    <td>
+      <strong><%= Spree.t(:memo) %>:</strong>
+    </td>
+    <td class='js-memo-text'>
+      <%= @store_credit.memo %>
+    </td>
+    <td class='actions align-center'>
+      <% if can?(:update, @store_credit) %>
+        <%= link_to '', '#', class: 'js-edit-memo edit-method fa fa-edit no-text with-tip', data: { action: 'edit' }, title: Spree.t('edit') %>
+      <% end %>
+    </td>
+  </tr>
+  <tr id='memo-edit-row' class='hidden' data-original-value='<%= @store_credit.memo %>'>
+    <td>
+      <strong><%= Spree.t(:memo) %>:</strong>
+    </td>
+    <td>
+      <%= form_tag admin_user_store_credit_path(@user, @store_credit), method: :put, remote: true, id: 'sc_memo_edit_form' do %>
+        <%= text_area_tag 'store_credit[memo]', @store_credit.memo  %>
+      <% end %>
+    </td>
+    <td class='actions align-center'>
+      <% if can?(:update, @store_credit) %>
+        <%= link_to '', '#', class: 'js-save-memo fa fa-check no-text with-tip', data: { user_id: @user.id, store_credit_id: @store_credit.id, action: 'save' }, title: Spree.t('actions.save') %>
+        <%= link_to '', '#', class: 'js-cancel-memo fa fa-void no-text with-tip', data: { action: 'void' }, title: Spree.t('actions.cancel') %>
+      <% end %>
+    </td>
+  </tr>
+</table>
+
+<fieldset>
+  <legend align='center'><%= Spree.t("admin.store_credits.history") %></legend>
+  <table>
+    <colgroup>
+      <col style="width: 15%;" />
+      <col style="width: 10%;" />
+      <col style="width: 10%;" />
+      <col style="width: 25%;" />
+      <col style="width: 10%;" />
+      <col style="width: 30%;" />
+    </colgroup>
+    <thead>
+      <tr>
+        <th><%= Spree.t(:date) %></th>
+        <th><%= Spree.t(:action) %></th>
+        <th><%= Spree.t(:amount) %></th>
+        <th><%= Spree.t(:created_by) %></th>
+        <th><%= Spree.t("admin.store_credits.total_unused").html_safe %></th>
+        <th><%= Spree.t("admin.store_credits.reason_for_updating").html_safe %></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @store_credit_events.each do |event| %>
+        <tr>
+          <td data-hook="admin_show_store_credit_date_cell">
+            <%= event.created_at %>
+          </td>
+          <td><%= admin_action_name(event) %></td>
+          <td class='align-right'><%= event.display_amount %></td>
+          <td><%= originator_link(event) %></td>
+          <td class='align-right'><%= event.display_user_total_amount %></td>
+          <td><%= event.update_reason.try!(:name) %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</fieldset>
