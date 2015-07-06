@@ -107,10 +107,16 @@ module Spree
 
       private
         def user_params
-          params.require(:user).permit(permitted_user_attributes |
-                                       [:spree_role_ids,
-                                        ship_address_attributes: permitted_address_attributes,
-                                        bill_address_attributes: permitted_address_attributes])
+          attributes = permitted_user_attributes | [
+            ship_address_attributes: permitted_address_attributes,
+            bill_address_attributes: permitted_address_attributes
+          ]
+
+          if can? :manage, Spree::Role
+            attributes += [{ spree_role_ids: [] }]
+          end
+
+          params.require(:user).permit(attributes)
         end
 
         # handling raise from Spree::Admin::ResourceController#destroy
@@ -142,6 +148,7 @@ module Spree
 
         def load_roles
           @roles = Spree::Role.all
+          @user_roles = @user.spree_roles
         end
 
         def load_stock_locations
@@ -149,7 +156,9 @@ module Spree
         end
 
         def set_roles
-          @user.spree_roles = Spree::Role.where(id: (params[:user][:spree_role_ids] || []))
+          return unless user_params[:spree_role_ids]
+
+          @user.spree_roles = Spree::Role.where(id: user_params[:spree_role_ids])
         end
 
         def set_stock_locations

@@ -6,17 +6,25 @@
       <%= error_message_on :user, :email %>
     <% end %>
 
-    <div data-hook="admin_user_form_roles" class="field">
-      <%= label_tag nil, Spree.t(:roles) %>
-      <ul>
-        <% @roles.each do |role| %>
-          <li>
-            <%= check_box_tag 'user[spree_role_ids][]', role.id, @user.spree_roles.include?(role), :id => "user_spree_role_#{role.name}" %>
-            <%= label_tag "user_spree_role_#{role.name}", role.name %>
-          </li>
-        <% end %>
-      </ul>
-    </div>
+    <% if can? :display, Spree::Role %>
+      <div data-hook="admin_user_form_roles" class="field">
+        <%= label_tag nil, Spree.t(:roles) %>
+        <ul>
+          <% if can? :manage, Spree::Role %>
+            <% @roles.each do |role| %>
+              <li>
+                <%= check_box_tag 'user[spree_role_ids][]', role.id, @user_roles.include?(role), id: "user_spree_role_#{role.name}" %>
+                <%= label_tag "user_spree_role_#{role.name}", role.name %>
+              </li>
+            <% end %>
+          <% else %>
+            <% @user_roles.each do |role| %>
+              <%= role.name %>
+            <% end %>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
 
     <div data-hook="admin_user_form_stock_locations" class="field">
       <%= label_tag nil, Spree.t(:stock_locations) %>

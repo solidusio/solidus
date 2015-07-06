@@ -321,6 +321,7 @@ describe Spree::Admin::Ability do
 
         it { should be_able_to(:manage, Spree.user_class) }
         it { should be_able_to(:manage, Spree::StoreCredit) }
+        it { should be_able_to(:display, Spree::Role) }
       end
 
       context "when the user does not have the user_management role" do
@@ -328,6 +329,7 @@ describe Spree::Admin::Ability do
 
         it { should_not be_able_to(:manage, Spree.user_class) }
         it { should_not be_able_to(:manage, Spree::StoreCredit) }
+        it { should_not be_able_to(:display, Spree::Role) }
       end
     end
 
@@ -345,6 +347,7 @@ describe Spree::Admin::Ability do
         it { should be_able_to(:items, Spree.user_class) }
         it { should be_able_to(:display, Spree::StoreCredit) }
         it { should be_able_to(:admin, Spree::StoreCredit) }
+        it { should be_able_to(:display, Spree::Role) }
       end
 
       context "when the user does not have the user_display role" do
@@ -358,6 +361,7 @@ describe Spree::Admin::Ability do
         it { should_not be_able_to(:items, Spree.user_class) }
         it { should_not be_able_to(:display, Spree::StoreCredit) }
         it { should_not be_able_to(:admin, Spree::StoreCredit) }
+        it { should_not be_able_to(:display, Spree::Role) }
       end
     end
 
