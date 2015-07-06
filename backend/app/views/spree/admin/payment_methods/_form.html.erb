@@ -3,17 +3,26 @@
   <div data-hook="payment_method">
 
     <div class="alpha four columns">
-      <div id="preference-settings" data-hook class="field">
-        <%= f.label :type, Spree.t(:provider) %>
-        <%= collection_select(:payment_method, :type, @providers, :to_s, :name, {}, {:id => 'gtwy-type', :class => 'select2 fullwidth'}) %>
+      <div id="preference-settings">
+        <div class="field">
+          <%= f.label :type, Spree.t(:provider) %>
+          <%= collection_select(:payment_method, :type, @providers, :to_s, :name, {}, {:id => 'gtwy-type', :class => 'select2 fullwidth js-gateway-type'}) %>
+        </div>
 
-        <% unless @object.new_record? %>
-          <%= preference_fields(@object, f) %>
+        <div class="field js-preference-source-wrapper">
+          <%= label_tag :preference_source, 'Preference Source' %>
+          <%= f.select(:preference_source, [["Custom", nil]] + @object.class.available_preference_sources, {}, class: 'select2 fullwidth js-preference-source') %>
+        </div>
 
-          <% if @object.respond_to?(:preferences) %>
-            <div id="gateway-settings-warning" class="info warning"><%= Spree.t(:provider_settings_warning) %></div>
+        <div class="gateway-settings js-gateway-settings">
+          <% if @object.preference_source.present? %>
+            Using static preferences "<%= @object.preference_source %>"
+          <% elsif !@object.new_record? %>
+            <%= preference_fields(@object, f) %>
           <% end %>
-        <% end %>
+        </div>
+
+        <div class="info warning js-gateway-settings-warning"><%= Spree.t(:provider_settings_warning) %></div>
       </div>
       <div data-hook="environment" class="field">
         <%= label_tag :payment_method_environment, Spree.t(:environment) %>

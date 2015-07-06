@@ -1,10 +1,21 @@
 $ ->
-  original_gtwy_type = $('#gtwy-type').prop('value')
-  $('div#gateway-settings-warning').hide()
-  $('#gtwy-type').change ->
-    if $('#gtwy-type').prop('value') == original_gtwy_type
-      $('div.gateway-settings').show()
-      $('div#gateway-settings-warning').hide()
+  $gateway_type = $('select.js-gateway-type')
+  $preference_source = $('select.js-preference-source')
+
+  original_gtwy_type = $gateway_type.val()
+  original_preference_source = $preference_source.val()
+  render = ->
+    gateway_type = $gateway_type.val()
+    preference_source = $preference_source.val()
+
+    $('.js-preference-source-wrapper').toggle(gateway_type == original_gtwy_type)
+    if gateway_type == original_gtwy_type && preference_source == original_preference_source
+      $('.js-gateway-settings').show()
+      $('.js-gateway-settings-warning').hide()
     else
-      $('div.gateway-settings').hide()
-      $('div#gateway-settings-warning').show()
+      $('.js-gateway-settings').hide()
+      $('.js-gateway-settings-warning').show()
+
+  $gateway_type.change(render)
+  $preference_source.change(render)
+  render()
