@@ -60,7 +60,7 @@
   <div data-hook="transfer_item_selection">
     <%= hidden_field_tag :stock_transfer_number, @stock_transfer.number %>
     <%= hidden_field_tag :variant_display_attributes, @variant_display_attributes.to_json %>
-    <%= hidden_field_tag :transfer_item_variant_id, "", :class => "variant_autocomplete fullwidth" %>
+    <%= text_field_tag :transfer_item_variant_id, "", :class => "variant_autocomplete fullwidth" %>
   </div>
 </fieldset>
 
