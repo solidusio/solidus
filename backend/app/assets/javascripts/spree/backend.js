@@ -11,7 +11,6 @@
 //= require jquery.powertip
 //= require jquery.vAlign
 //= require spin
-//= require jquery.adaptivemenu
 //= require equalize
 //= require responsive-tables
 //= require underscore-min
