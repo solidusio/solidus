@@ -394,8 +394,8 @@ module Spree
           expect(json_response['variants'].count).to eq(2) # 2 variants
 
           variants = json_response['variants'].select { |v| !v['is_master'] }
-          expect(variants.last['option_values'][0]['name']).to eq('small')
-          expect(variants.last['option_values'][0]['option_type_name']).to eq('size')
+          size_option_value = variants.last['option_values'].detect{|x| x['option_type_name'] == 'size' }
+          expect(size_option_value['name']).to eq('small')
 
           expect(json_response['option_types'].count).to eq(2) # size, color
         end
