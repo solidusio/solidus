@@ -1,12 +1,10 @@
-module Spree
-  module Core
-    Engine.config.to_prepare do
-      methods_included = Spree.user_class.included_modules.include? UserMethods
+# Ensure that Spree.user_class includes the UserMethods concern
+# Previously these methods were injected automatically onto the class, which we
+# are still doing for compatability, but with a warning.
 
-      if !methods_included
-        ActiveSupport::Deprecation.warn "#{ Spree.user_class.name } must include Spree::UserMethods"
-        Spree.user_class.class_eval { include UserMethods }
-      end
-    end
+Spree::Core::Engine.config.to_prepare do
+  unless Spree.user_class.included_modules.include?(Spree::UserMethods)
+    ActiveSupport::Deprecation.warn "#{Spree.user_class} must include Spree::UserMethods"
+    Spree.user_class.include Spree::UserMethods
   end
 end
