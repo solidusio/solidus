@@ -17,7 +17,7 @@ describe Spree::Admin::StoreCreditsController do
   let!(:update_reason)     { create(:store_credit_update_reason) }
 
   describe "#show" do
-    let!(:store_credit) { create(:store_credit, category: a_credit_category) }
+    let!(:store_credit) { create(:store_credit, user: user, category: a_credit_category) }
     let!(:event)        { create(:store_credit_auth_event, store_credit: store_credit, created_at: 5.days.ago) }
 
     before { spree_get :show, user_id: user.id, id: store_credit.id }
@@ -93,7 +93,7 @@ describe Spree::Admin::StoreCreditsController do
   end
 
   describe "#edit_amount" do
-    let!(:store_credit)      { create(:store_credit, category: a_credit_category) }
+    let!(:store_credit)      { create(:store_credit, user: user, category: a_credit_category) }
 
     before { spree_get :edit_amount, user_id: user.id, id: store_credit.id }
 
@@ -105,7 +105,7 @@ describe Spree::Admin::StoreCreditsController do
   end
 
   describe "#edit_validity" do
-    let!(:store_credit)      { create(:store_credit, category: a_credit_category) }
+    let!(:store_credit)      { create(:store_credit, user: user, category: a_credit_category) }
 
     before { spree_get :edit_validity, user_id: user.id, id: store_credit.id }
 
@@ -151,9 +151,7 @@ describe Spree::Admin::StoreCreditsController do
           user_id: user.id,
           id: store_credit.id,
           store_credit: {
-            amount: updated_amount,
-            category_id: a_credit_category.id
-          category_id: b_credit_category.id
+            category_id: b_credit_category.id
           }
         }
       end
