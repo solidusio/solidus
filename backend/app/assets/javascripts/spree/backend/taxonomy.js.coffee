@@ -28,12 +28,11 @@ handle_create = (e, data) ->
   Spree.ajax
     type: "POST",
     dataType: "json",
-    url: base_url.toString(),
+    url: base_url,
     data: {
       "taxon[name]": name,
       "taxon[parent_id]": new_parent.prop("id"),
       "taxon[child_index]": position,
-      token: Spree.api_key
     },
     error: handle_ajax_error,
     success: (data,result) ->
@@ -65,10 +64,9 @@ handle_delete = (e, data) ->
       Spree.ajax
         type: "POST",
         dataType: "json",
-        url: delete_url.toString(),
+        url: delete_url,
         data: {
           _method: "delete",
-          token: Spree.api_key
         },
         error: handle_ajax_error
     else
@@ -82,7 +80,7 @@ root.setup_taxonomy_tree = (taxonomy_id) ->
     root.base_url = Spree.routes.taxonomy_taxons_path
 
     Spree.ajax
-      url: Spree.url(base_url.path().replace("/taxons", "/jstree")).toString(),
+      url: base_url.replace("/taxons", "/jstree"),
       success: (taxonomy) ->
         last_rollback = null
 
@@ -90,6 +88,7 @@ root.setup_taxonomy_tree = (taxonomy_id) ->
           json_data:
             data: taxonomy,
             ajax:
+              headers: { "X-Spree-Token": Spree.api_key }
               url: (e) ->
                 "#{base_url}/#{e.prop('id')}/jstree"
           themes:
