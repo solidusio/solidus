@@ -4,10 +4,7 @@ module Spree
       belongs_to 'spree/user', model_class: Spree.user_class
       before_action :load_categories, only: [:new]
       before_action :load_update_reasons, only: [:edit_amount, :edit_validity]
-      before_action :load_store_credit, expect: [:index, :create, :update_amount, :invalidate]
       before_action :ensure_update_reason, only: [:update_amount, :invalidate]
-      create.fails :load_categories
-      create.before :set_action_originator
 
       helper Spree::Admin::StoreCreditEventsHelper
 
@@ -17,7 +14,7 @@ module Spree
 
       def create
         @store_credit = @user.store_credits.build(
-          permitted_store_credit_params.merge({
+          permitted_resource_params.merge({
             created_by: try_spree_current_user,
             action_originator: try_spree_current_user,
           })
@@ -34,7 +31,7 @@ module Spree
       end
 
       def update
-        @store_credit.assign_attributes(permitted_store_credit_params)
+        @store_credit.assign_attributes(permitted_resource_params)
         @store_credit.created_by = try_spree_current_user
 
         if @store_credit.save
@@ -87,10 +84,6 @@ module Spree
 
       def load_categories
         @credit_categories = Spree::StoreCreditCategory.all.order(:name)
-      end
-
-      def set_action_originator
-        @object.action_originator = try_spree_current_user
       end
 
       def ensure_update_reason
