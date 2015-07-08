@@ -43,7 +43,7 @@ module Spree
     end
 
     def display_action
-      return "" if NON_EXPOSED_ACTIONS.include?(action)
+      return if NON_EXPOSED_ACTIONS.include?(action)
       Spree.t("store_credit.display_action.#{action}")
     end
 
