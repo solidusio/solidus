@@ -15,8 +15,9 @@ $.fn.variantAutocomplete = (searchOptions = {}) ->
     placeholder: Spree.translations.variant_placeholder
     minimumInputLength: 3
     initSelection: (element, callback) ->
-      $.get Spree.routes.variants_search + "/" + element.val(), {}, (data) ->
-        callback data
+      Spree.ajax
+        url: Spree.routes.variants_api + "/" + element.val()
+        success: callback
     ajax:
       url: Spree.routes.variants_api
       datatype: "json"
