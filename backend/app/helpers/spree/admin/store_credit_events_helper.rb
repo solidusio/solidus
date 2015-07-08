@@ -1,4 +1,18 @@
 module Spree::Admin::StoreCreditEventsHelper
+  mattr_accessor :originator_links
+  self.originator_links = {
+    Spree::Payment.to_s => {
+      href_type: :payment,
+      translation_options: :order_number,
+      translation_key: 'admin.store_credits.payment_originator'
+    },
+    Spree::Refund.to_s => {
+      href_type: :payments,
+      translation_options: :order_number,
+      translation_key: 'admin.store_credits.refund_originator'
+    },
+  }
+
   def store_credit_event_admin_action_name(store_credit_event)
     if Spree::StoreCreditEvent::NON_EXPOSED_ACTIONS.include?(store_credit_event.action) ||
       store_credit_event.action == Spree::StoreCredit::VOID_ACTION
@@ -12,37 +26,48 @@ module Spree::Admin::StoreCreditEventsHelper
     originator = store_credit_event.originator
     return unless originator
 
+    add_user_originator_link
+    unless self.originator_links.key?(store_credit_event.originator.class.to_s)
+      raise "Unexpected originator type #{originator.class.to_s}"
+    end
+
     options = { target: '_blank' }
-    case originator
-    when Spree.user_class
+    link_options = self.originator_links[store_credit_event.originator.class.to_s]
+    case link_options[:href_type]
+    when :user
       link_to(
-        Spree.t("admin.store_credits.user_originator", { email: originator.email }),
+        Spree.t(link_options[:translation_key], { email: originator.email }),
         spree.edit_admin_user_path(originator),
         options
       )
-    when Spree::Payment
+    when :payment
       order = originator.order
       link_to(
-        Spree.t("admin.store_credits.payment_originator", { order_number: order.number }),
+        Spree.t(link_options[:translation_key], { order_number: order.number }),
         spree.admin_order_payment_path(order, originator),
         options
       )
-    when Spree::Refund
+    when :payments
       order = originator.payment.order
       link_to(
-        Spree.t("admin.store_credits.refund_originator", { order_number: order.number }),
+        Spree.t(link_options[:translation_key], { order_number: order.number }),
         spree.admin_order_payments_path(order),
         options
       )
-    when Spree::VirtualGiftCard
-      order = originator.line_item.order
-      link_to(
-        Spree.t("admin.store_credits.giftcard_originator", { order_number: order.number }),
-        spree.edit_admin_order_path(order),
-        options
-      )
-    else
-      raise "Unexpected originator type #{originator.class.to_s}"
     end
+  end
+
+  private
+
+  # Cannot set the value for a user originator
+  # because Spree.user_class is not defined at that time.
+  # Spree::UserClassHandle does not work here either as
+  # the assignment is evaluated before user_class is set
+  def add_user_originator_link
+    self.originator_links[Spree.user_class.to_s] = {
+      href_type: :user,
+      translation_options: :email,
+      translation_key: 'admin.store_credits.user_originator'
+    }
   end
 end
