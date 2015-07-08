@@ -64,7 +64,7 @@ describe Spree::Admin::StoreCreditEventsHelper, type: :helper do
       let(:originator) { create(:user) }
 
       it "returns a link to the user's edit page" do
-        expect(subject).to eq %Q(<a href=\"/admin/users/#{originator.id}/edit\" target=\"_blank\">User - #{originator.email}</a>)
+        expect(subject).to eq %Q(<a target=\"_blank\" href=\"/admin/users/#{originator.id}/edit\">User - #{originator.email}</a>)
       end
     end
 
@@ -72,7 +72,7 @@ describe Spree::Admin::StoreCreditEventsHelper, type: :helper do
       let(:originator) { create(:payment) }
 
       it "returns a link to the order's payments page" do
-        expect(subject).to eq %Q(<a href=\"/admin/orders/#{originator.order.number}/payments/#{originator.id}\" target=\"_blank\">Payment - Order ##{originator.order.number}</a>)
+        expect(subject).to eq %Q(<a target=\"_blank\" href=\"/admin/orders/#{originator.order.number}/payments/#{originator.id}\">Payment - Order ##{originator.order.number}</a>)
       end
     end
 
@@ -80,7 +80,7 @@ describe Spree::Admin::StoreCreditEventsHelper, type: :helper do
       let(:originator) { create(:refund, amount: 1.0) }
 
       it "returns a link to the order's payments page" do
-        expect(subject).to eq %Q(<a href=\"/admin/orders/#{originator.payment.order.number}/payments\" target=\"_blank\">Refund - Order ##{originator.payment.order.number}</a>)
+        expect(subject).to eq %Q(<a target=\"_blank\" href=\"/admin/orders/#{originator.payment.order.number}/payments\">Refund - Order ##{originator.payment.order.number}</a>)
       end
     end
 
@@ -88,7 +88,7 @@ describe Spree::Admin::StoreCreditEventsHelper, type: :helper do
       let(:originator) { create(:virtual_gift_card) }
 
       it "returns a link to the order's edit page" do
-        expect(subject).to eq %Q(<a href=\"/admin/orders/#{originator.line_item.order.number}/edit\" target=\"_blank\">Gift Card - Order ##{originator.line_item.order.number}</a>)
+        expect(subject).to eq %Q(<a target=\"_blank\" href=\"/admin/orders/#{originator.line_item.order.number}/edit\">Gift Card - Order ##{originator.line_item.order.number}</a>)
       end
     end
 

@@ -14,7 +14,7 @@ module Spree::Admin::StoreCreditEventsHelper
 
     options = { target: '_blank' }
     case originator
-    when Spree::User
+    when Spree.user_class
       link_to(
         Spree.t("admin.store_credits.user_originator", { email: originator.email }),
         spree.edit_admin_user_path(originator),
