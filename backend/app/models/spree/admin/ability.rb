@@ -9,20 +9,6 @@ module Spree
           can [:admin, :home], :dashboards
         end
 
-        if user.has_spree_role? :product_management
-          can :manage, Spree::Product
-          can :manage, Spree::Image
-          can :manage, Spree::Variant
-          can :manage, Spree::OptionValue
-          can :manage, Spree::ProductProperty
-          can :manage, Spree::OptionType
-          can :manage, Spree::Property
-          can :manage, Spree::Prototype
-          can :manage, Spree::Taxonomy
-          can :manage, Spree::Taxon
-          can :manage, Spree::Classification
-        end
-
         if user.has_spree_role? :product_display
           can [:display, :admin, :edit], Spree::Product
           can [:display, :admin], Spree::Image

@@ -33,42 +33,6 @@ describe Spree::Admin::Ability do
       end
     end
 
-    context "managing products" do
-      let(:role) { :product_management }
-
-      context "when the user has the product_management role" do
-        let(:has_role) { true }
-
-        it { should be_able_to(:manage, Spree::Product) }
-        it { should be_able_to(:manage, Spree::Image) }
-        it { should be_able_to(:manage, Spree::Variant) }
-        it { should be_able_to(:manage, Spree::OptionValue) }
-        it { should be_able_to(:manage, Spree::ProductProperty) }
-        it { should be_able_to(:manage, Spree::OptionType) }
-        it { should be_able_to(:manage, Spree::Property) }
-        it { should be_able_to(:manage, Spree::Prototype) }
-        it { should be_able_to(:manage, Spree::Taxonomy) }
-        it { should be_able_to(:manage, Spree::Taxon) }
-        it { should be_able_to(:manage, Spree::Classification) }
-      end
-
-      context "when the user does not have the product_management role" do
-        let(:has_role) { false }
-
-        it { should_not be_able_to(:manage, Spree::Product) }
-        it { should_not be_able_to(:manage, Spree::Image) }
-        it { should_not be_able_to(:manage, Spree::Variant) }
-        it { should_not be_able_to(:manage, Spree::OptionValue) }
-        it { should_not be_able_to(:manage, Spree::ProductProperty) }
-        it { should_not be_able_to(:manage, Spree::OptionType) }
-        it { should_not be_able_to(:manage, Spree::Property) }
-        it { should_not be_able_to(:manage, Spree::Prototype) }
-        it { should_not be_able_to(:manage, Spree::Taxonomy) }
-        it { should_not be_able_to(:manage, Spree::Taxon) }
-        it { should_not be_able_to(:manage, Spree::Classification) }
-      end
-    end
-
     context "displaying products" do
       let(:role) { :product_display }
 
