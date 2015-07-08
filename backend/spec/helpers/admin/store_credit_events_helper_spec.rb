@@ -84,14 +84,6 @@ describe Spree::Admin::StoreCreditEventsHelper, type: :helper do
       end
     end
 
-    context "originator is a gift card" do
-      let(:originator) { create(:virtual_gift_card) }
-
-      it "returns a link to the order's edit page" do
-        expect(subject).to eq %Q(<a target=\"_blank\" href=\"/admin/orders/#{originator.line_item.order.number}/edit\">Gift Card - Order ##{originator.line_item.order.number}</a>)
-      end
-    end
-
     context "originator is not specifically handled" do
       let(:originator) { create(:store_credit_update_reason) }
 
