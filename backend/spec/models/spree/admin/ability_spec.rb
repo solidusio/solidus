@@ -33,62 +33,6 @@ describe Spree::Admin::Ability do
       end
     end
 
-    context "displaying products" do
-      let(:role) { :product_display }
-
-      context "when the user has the product_displayj role" do
-        let(:has_role) { true }
-
-        it { should be_able_to(:display, Spree::Product) }
-        it { should be_able_to(:display, Spree::Image) }
-        it { should be_able_to(:display, Spree::Variant) }
-        it { should be_able_to(:display, Spree::OptionValue) }
-        it { should be_able_to(:display, Spree::ProductProperty) }
-        it { should be_able_to(:display, Spree::OptionType) }
-        it { should be_able_to(:display, Spree::Property) }
-        it { should be_able_to(:display, Spree::Prototype) }
-        it { should be_able_to(:display, Spree::Taxonomy) }
-        it { should be_able_to(:display, Spree::Taxon) }
-        it { should be_able_to(:admin, Spree::Product) }
-        it { should be_able_to(:admin, Spree::Image) }
-        it { should be_able_to(:admin, Spree::Variant) }
-        it { should be_able_to(:admin, Spree::OptionValue) }
-        it { should be_able_to(:admin, Spree::ProductProperty) }
-        it { should be_able_to(:admin, Spree::OptionType) }
-        it { should be_able_to(:admin, Spree::Property) }
-        it { should be_able_to(:admin, Spree::Prototype) }
-        it { should be_able_to(:admin, Spree::Taxonomy) }
-        it { should be_able_to(:admin, Spree::Taxon) }
-        it { should be_able_to(:edit, Spree::Product) }
-      end
-
-      context "when the user does not have the product_display role" do
-        let(:has_role) { false }
-
-        it { should_not be_able_to(:display, Spree::Product) }
-        it { should_not be_able_to(:display, Spree::Image) }
-        it { should_not be_able_to(:display, Spree::Variant) }
-        it { should_not be_able_to(:display, Spree::OptionValue) }
-        it { should_not be_able_to(:display, Spree::ProductProperty) }
-        it { should_not be_able_to(:display, Spree::OptionType) }
-        it { should_not be_able_to(:display, Spree::Property) }
-        it { should_not be_able_to(:display, Spree::Prototype) }
-        it { should_not be_able_to(:display, Spree::Taxonomy) }
-        it { should_not be_able_to(:display, Spree::Taxon) }
-        it { should_not be_able_to(:admin, Spree::Product) }
-        it { should_not be_able_to(:admin, Spree::Image) }
-        it { should_not be_able_to(:admin, Spree::Variant) }
-        it { should_not be_able_to(:admin, Spree::OptionValue) }
-        it { should_not be_able_to(:admin, Spree::ProductProperty) }
-        it { should_not be_able_to(:admin, Spree::OptionType) }
-        it { should_not be_able_to(:admin, Spree::Property) }
-        it { should_not be_able_to(:admin, Spree::Prototype) }
-        it { should_not be_able_to(:admin, Spree::Taxonomy) }
-        it { should_not be_able_to(:admin, Spree::Taxon) }
-        it { should_not be_able_to(:edit, Spree::Product) }
-      end
-    end
-
     context "managing users" do
       let(:role) { :user_management }
 
