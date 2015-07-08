@@ -69,6 +69,8 @@ module Spree
         ability = clazz.send(:new, user)
         @rules = rules + ability.send(:rules)
       end
+
+      Spree::RoleConfiguration.instance.activate_permissions! self, user
     end
   end
 end

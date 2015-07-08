@@ -26,6 +26,17 @@ describe Spree::Ability, :type => :model do
     Spree::Ability.abilities = Set.new
   }
 
+  describe "#initialize" do
+    subject { Spree::Ability.new(user) }
+
+    it "activates permissions from the role configuration" do
+      expect(Spree::RoleConfiguration.instance).to receive(:activate_permissions!).
+        once
+
+      subject
+    end
+  end
+
   context 'register_ability' do
     it 'should add the ability to the list of abilties' do
       Spree::Ability.register_ability(FooAbility)
