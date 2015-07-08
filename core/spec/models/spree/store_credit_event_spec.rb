@@ -284,8 +284,8 @@ describe Spree::StoreCreditEvent do
     context "eligible event" do
       let(:event) { create(:store_credit_event, action: Spree::StoreCredit::ELIGIBLE_ACTION) }
 
-      it "returns an empty string" do
-        expect(subject).to eq ""
+      it "returns nil" do
+        expect(subject).to be_nil
       end
     end
   end
