@@ -42,7 +42,6 @@ require 'spree/testing_support/order_walkthrough'
 require 'spree/testing_support/capybara_ext'
 
 require 'paperclip/matchers'
-require 'cancan/matchers'
 
 require 'capybara/poltergeist'
 Capybara.javascript_driver = :poltergeist
