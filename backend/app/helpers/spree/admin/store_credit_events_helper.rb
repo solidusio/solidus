@@ -12,34 +12,37 @@ module Spree::Admin::StoreCreditEventsHelper
     originator = store_credit_event.originator
     return unless originator
 
+    options = { target: '_blank' }
     case originator
     when Spree::User
-      translation_key = 'user'
-      translation_options = { email: originator.email }
-      href = spree.edit_admin_user_path(originator)
+      link_to(
+        Spree.t("admin.store_credits.user_originator", { email: originator.email }),
+        spree.edit_admin_user_path(originator),
+        options
+      )
     when Spree::Payment
       order = originator.order
-      translation_key = 'payment'
-      translation_options = { order_number: order.number }
-      href = spree.admin_order_payment_path(order, originator)
+      link_to(
+        Spree.t("admin.store_credits.payment_originator", { order_number: order.number }),
+        spree.admin_order_payment_path(order, originator),
+        options
+      )
     when Spree::Refund
       order = originator.payment.order
-      translation_key = 'refund'
-      translation_options = { order_number: order.number }
-      href = spree.admin_order_payments_path(order)
+      link_to(
+        Spree.t("admin.store_credits.refund_originator", { order_number: order.number }),
+        spree.admin_order_payments_path(order),
+        options
+      )
     when Spree::VirtualGiftCard
       order = originator.line_item.order
-      translation_key = 'giftcard'
-      translation_options = { order_number: order.number }
-      href = spree.edit_admin_order_path(order)
+      link_to(
+        Spree.t("admin.store_credits.giftcard_originator", { order_number: order.number }),
+        spree.edit_admin_order_path(order),
+        options
+      )
     else
       raise "Unexpected originator type #{originator.class.to_s}"
     end
-
-    link_to(
-      Spree.t("admin.store_credits.#{translation_key}_originator", translation_options),
-      href,
-      target: '_blank'
-    )
   end
 end
