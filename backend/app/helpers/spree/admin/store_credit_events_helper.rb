@@ -2,13 +2,13 @@ module Spree::Admin::StoreCreditEventsHelper
   mattr_accessor :originator_links
   self.originator_links = {
     Spree::Payment.to_s => {
+      new_tab: true,
       href_type: :payment,
-      translation_options: :order_number,
       translation_key: 'admin.store_credits.payment_originator'
     },
     Spree::Refund.to_s => {
+      new_tab: true,
       href_type: :payments,
-      translation_options: :order_number,
       translation_key: 'admin.store_credits.refund_originator'
     },
   }
@@ -31,13 +31,24 @@ module Spree::Admin::StoreCreditEventsHelper
       raise "Unexpected originator type #{originator.class.to_s}"
     end
 
-    options = { target: '_blank' }
+    options = {}
     link_options = self.originator_links[store_credit_event.originator.class.to_s]
+    options[:target] = '_blank' if link_options[:new_tab]
+
+    # Although not all href_types are used in originator_links
+    # they are necessary because they may be used within extensions
     case link_options[:href_type]
     when :user
       link_to(
         Spree.t(link_options[:translation_key], { email: originator.email }),
         spree.edit_admin_user_path(originator),
+        options
+      )
+    when :line_item
+      order = originator.line_item.order
+      link_to(
+        Spree.t(link_options[:translation_key], { order_number: order.number }),
+        spree.edit_admin_order_path(order),
         options
       )
     when :payment
@@ -65,8 +76,8 @@ module Spree::Admin::StoreCreditEventsHelper
   # the assignment is evaluated before user_class is set
   def add_user_originator_link
     self.originator_links[Spree.user_class.to_s] = {
+      new_tab: true,
       href_type: :user,
-      translation_options: :email,
       translation_key: 'admin.store_credits.user_originator'
     }
   end
