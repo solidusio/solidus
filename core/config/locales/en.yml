@@ -467,7 +467,6 @@ en:
         history: "Store credit history"
         invalidated: "Invalidated"
         issued_on: "Issued On"
-        giftcard_originator: "Gift Card - Order #%{order_number}"
         payment_originator: "Payment - Order #%{order_number}"
         reason_for_updating: "Reason for updating"
         refund_originator: "Refund - Order #%{order_number}"
