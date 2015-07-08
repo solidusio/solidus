@@ -64,7 +64,7 @@ class Spree::OrderShipping
       # TODO: Remove tracking numbers from shipments.
       shipment.update_attributes!(tracking: tracking_number)
 
-      if shipment.inventory_units.all? {|iu| iu.shipped? || iu.canceled? }
+      if shipment.inventory_units(true).all? {|iu| iu.shipped? || iu.canceled? }
         # TODO: make OrderShipping#ship_shipment call Shipment#ship! rather than
         # having Shipment#ship! call OrderShipping#ship_shipment. We only really
         # need this `update_columns` for the specs, until we make that change.
