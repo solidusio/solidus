@@ -9,25 +9,6 @@ module Spree
           can [:admin, :home], :dashboards
         end
 
-        if user.has_spree_role? :configuration_management
-          can :manage, :general_settings
-          can :manage, Spree::TaxCategory
-          can :manage, Spree::TaxRate
-          can :manage, Spree::Zone
-          can :manage, Spree::Country
-          can :manage, Spree::State
-          can :manage, Spree::PaymentMethod
-          can :manage, Spree::Taxonomy
-          can :manage, Spree::ShippingMethod
-          can :manage, Spree::ShippingCategory
-          can :manage, Spree::StockLocation
-          can :manage, Spree::StockMovement
-          can :manage, Spree::Tracker
-          can :manage, Spree::RefundReason
-          can :manage, Spree::ReimbursementType
-          can :manage, Spree::ReturnReason
-        end
-
         if user.has_spree_role? :configuration_display
           can [:edit, :admin], :general_settings
           can [:display, :admin], Spree::TaxCategory
