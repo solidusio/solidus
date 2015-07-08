@@ -33,38 +33,6 @@ describe Spree::Admin::Ability do
       end
     end
 
-    context "displaying users" do
-      let(:role) { :user_display }
-
-      context "when the user has the user_display role" do
-        let(:has_role) { true }
-
-        it { should be_able_to(:display, Spree.user_class) }
-        it { should be_able_to(:admin, Spree.user_class) }
-        it { should be_able_to(:edit, Spree.user_class) }
-        it { should be_able_to(:addresses, Spree.user_class) }
-        it { should be_able_to(:orders, Spree.user_class) }
-        it { should be_able_to(:items, Spree.user_class) }
-        it { should be_able_to(:display, Spree::StoreCredit) }
-        it { should be_able_to(:admin, Spree::StoreCredit) }
-        it { should be_able_to(:display, Spree::Role) }
-      end
-
-      context "when the user does not have the user_display role" do
-        let(:has_role) { false }
-
-        it { should_not be_able_to(:display, Spree.user_class) }
-        it { should_not be_able_to(:admin, Spree.user_class) }
-        it { should_not be_able_to(:edit, Spree.user_class) }
-        it { should_not be_able_to(:addresses, Spree.user_class) }
-        it { should_not be_able_to(:orders, Spree.user_class) }
-        it { should_not be_able_to(:items, Spree.user_class) }
-        it { should_not be_able_to(:display, Spree::StoreCredit) }
-        it { should_not be_able_to(:admin, Spree::StoreCredit) }
-        it { should_not be_able_to(:display, Spree::Role) }
-      end
-    end
-
     context "managing settings" do
       let(:role) { :configuration_management }
 

@@ -9,12 +9,6 @@ module Spree
           can [:admin, :home], :dashboards
         end
 
-        if user.has_spree_role? :user_display
-          can [:display, :admin, :edit, :addresses, :orders, :items], Spree.user_class
-          can [:display, :admin], Spree::StoreCredit
-          can :display, Spree::Role
-        end
-
         if user.has_spree_role? :configuration_management
           can :manage, :general_settings
           can :manage, Spree::TaxCategory
