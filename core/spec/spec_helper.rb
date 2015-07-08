@@ -36,6 +36,7 @@ require 'spree/testing_support/factories'
 require 'spree/testing_support/rspec-activemodel-mocks_patch'
 require 'spree/testing_support/preferences'
 require 'spree/testing_support/mail'
+require 'cancan/matchers'
 
 RSpec.configure do |config|
   config.color = true
