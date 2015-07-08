@@ -1,5 +1,5 @@
 module Spree::Admin::StoreCreditEventsHelper
-  def admin_action_name(store_credit_event)
+  def store_credit_event_admin_action_name(store_credit_event)
     if Spree::StoreCreditEvent::NON_EXPOSED_ACTIONS.include?(store_credit_event.action) ||
       store_credit_event.action == Spree::StoreCredit::VOID_ACTION
       Spree.t("store_credit.display_action.admin.#{store_credit_event.action}")
@@ -8,7 +8,7 @@ module Spree::Admin::StoreCreditEventsHelper
     end
   end
 
-  def originator_link(store_credit_event)
+  def store_credit_event_originator_link(store_credit_event)
     originator = store_credit_event.originator
     return unless originator
 

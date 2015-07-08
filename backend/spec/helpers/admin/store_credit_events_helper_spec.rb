@@ -1,10 +1,10 @@
 require 'spec_helper'
 
 describe Spree::Admin::StoreCreditEventsHelper, type: :helper do
-  describe "#admin_action_name" do
+  describe "#store_credit_event_admin_action_name" do
     let(:store_credit_event) { create(:store_credit_event, action: action) }
 
-    subject { admin_action_name(store_credit_event) }
+    subject { store_credit_event_admin_action_name(store_credit_event) }
 
     context "capture event" do
       let(:action) { Spree::StoreCredit::CAPTURE_ACTION }
@@ -55,10 +55,10 @@ describe Spree::Admin::StoreCreditEventsHelper, type: :helper do
     end
   end
 
-  describe "#originator_link" do
+  describe "#store_credit_event_originator_link" do
     let(:store_credit_event) { create(:store_credit_adjustment_event, originator: originator) }
 
-    subject { originator_link(store_credit_event) }
+    subject { store_credit_event_originator_link(store_credit_event) }
 
     context "originator is a user" do
       let(:originator) { create(:user) }

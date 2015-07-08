@@ -98,9 +98,9 @@
           <td data-hook="admin_show_store_credit_date_cell">
             <%= event.created_at %>
           </td>
-          <td><%= admin_action_name(event) %></td>
+          <td><%= store_credit_event_admin_action_name(event) %></td>
           <td class='align-right'><%= event.display_amount %></td>
-          <td><%= originator_link(event) %></td>
+          <td><%= store_credit_event_originator_link(event) %></td>
           <td class='align-right'><%= event.display_user_total_amount %></td>
           <td><%= event.update_reason.try!(:name) %></td>
         </tr>
