@@ -19,17 +19,15 @@ describe "Order Line Items", type: :feature, js: true do
   it "can edit a line item's quantity" do
     visit spree.edit_admin_order_path(order)
     within(".line-items") do
-      within_row(1) do
-        find(".edit-line-item").click
-        fill_in "quantity", :with => 10
-        find(".save-line-item").click
-        within '.line-item-qty-show' do
-          expect(page).to have_content("10")
-        end
-        within '.line-item-total' do
-          expect(page).to have_content("$100.00")
-        end
-      end
+      find(".edit-line-item").click
+      fill_in "quantity", :with => 10
+      find(".save-line-item").click
+    end
+    within '.line-item-qty-show' do
+      expect(page).to have_content("10")
+    end
+    within '.line-item-total' do
+      expect(page).to have_content("$100.00")
     end
   end
 
@@ -46,6 +44,7 @@ describe "Order Line Items", type: :feature, js: true do
       end
     end
 
+    expect(find('#order_total')).to have_content("$0.00")
     expect(page).not_to have_content(product_name)
   end
 end
