@@ -9,13 +9,6 @@ module Spree
           can [:admin, :home], :dashboards
         end
 
-        if user.has_spree_role? :promotion_management
-          can :manage, Spree::Promotion
-          can :manage, Spree::PromotionRule
-          can :manage, Spree::PromotionAction
-          can :manage, Spree::PromotionCategory
-        end
-
         if user.has_spree_role? :promotion_display
           can [:display, :admin], Spree::Promotion
           can [:display, :admin], Spree::PromotionRule

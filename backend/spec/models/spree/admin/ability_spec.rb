@@ -33,28 +33,6 @@ describe Spree::Admin::Ability do
       end
     end
 
-    context "managing promotions" do
-      let(:role) { :promotion_management}
-
-      context "when the user has the promotion_management role" do
-        let(:has_role) { true }
-
-        it { should be_able_to(:manage, Spree::Promotion) }
-        it { should be_able_to(:manage, Spree::PromotionRule) }
-        it { should be_able_to(:manage, Spree::PromotionAction) }
-        it { should be_able_to(:manage, Spree::PromotionCategory) }
-      end
-
-      context "when the user does not have the promotion_management role" do
-        let(:has_role) { false }
-
-        it { should_not be_able_to(:manage, Spree::Promotion) }
-        it { should_not be_able_to(:manage, Spree::PromotionRule) }
-        it { should_not be_able_to(:manage, Spree::PromotionAction) }
-        it { should_not be_able_to(:manage, Spree::PromotionCategory) }
-      end
-    end
-
     context "displaying promotions" do
       let(:role) { :promotion_display }
 
