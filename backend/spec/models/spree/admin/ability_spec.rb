@@ -33,52 +33,6 @@ describe Spree::Admin::Ability do
       end
     end
 
-    context "displaying orders" do
-      let(:role) { :order_display }
-
-      context "when the user has the order_display role" do
-        let(:has_role) { true }
-
-        it { should be_able_to(:display, Spree::Order) }
-        it { should be_able_to(:display, Spree::Payment) }
-        it { should be_able_to(:display, Spree::Shipment) }
-        it { should be_able_to(:display, Spree::Adjustment) }
-        it { should be_able_to(:display, Spree::LineItem) }
-        it { should be_able_to(:display, Spree::ReturnAuthorization) }
-        it { should be_able_to(:display, Spree::CustomerReturn) }
-        it { should be_able_to(:admin, Spree::Order) }
-        it { should be_able_to(:admin, Spree::Payment) }
-        it { should be_able_to(:admin, Spree::Shipment) }
-        it { should be_able_to(:admin, Spree::Adjustment) }
-        it { should be_able_to(:admin, Spree::LineItem) }
-        it { should be_able_to(:admin, Spree::ReturnAuthorization) }
-        it { should be_able_to(:admin, Spree::CustomerReturn) }
-        it { should be_able_to(:edit, Spree::Order) }
-        it { should be_able_to(:cart, Spree::Order) }
-      end
-
-      context "when the user does not have the order_display role" do
-        let(:has_role) { false }
-
-        it { should_not be_able_to(:display, Spree::Order) }
-        it { should_not be_able_to(:display, Spree::Payment) }
-        it { should_not be_able_to(:display, Spree::Shipment) }
-        it { should_not be_able_to(:display, Spree::Adjustment) }
-        it { should_not be_able_to(:display, Spree::LineItem) }
-        it { should_not be_able_to(:display, Spree::ReturnAuthorization) }
-        it { should_not be_able_to(:display, Spree::CustomerReturn) }
-        it { should_not be_able_to(:admin, Spree::Order) }
-        it { should_not be_able_to(:admin, Spree::Payment) }
-        it { should_not be_able_to(:admin, Spree::Shipment) }
-        it { should_not be_able_to(:admin, Spree::Adjustment) }
-        it { should_not be_able_to(:admin, Spree::LineItem) }
-        it { should_not be_able_to(:admin, Spree::ReturnAuthorization) }
-        it { should_not be_able_to(:admin, Spree::CustomerReturn) }
-        it { should_not be_able_to(:edit, Spree::Order) }
-        it { should_not be_able_to(:cart, Spree::Order) }
-      end
-    end
-
     context "displaying reports" do
       let(:role) { :report_display }
 

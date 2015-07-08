@@ -9,16 +9,6 @@ module Spree
           can [:admin, :home], :dashboards
         end
 
-        if user.has_spree_role? :order_display
-          can [:display, :admin, :edit, :cart], Spree::Order
-          can [:display, :admin], Spree::Payment
-          can [:display, :admin], Spree::Shipment
-          can [:display, :admin], Spree::Adjustment
-          can [:display, :admin], Spree::LineItem
-          can [:display, :admin], Spree::ReturnAuthorization
-          can [:display, :admin], Spree::CustomerReturn
-        end
-
         if user.has_spree_role? :report_display
           can [:display, :admin, :sales_total], :reports
         end
