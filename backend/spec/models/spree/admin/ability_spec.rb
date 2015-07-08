@@ -33,26 +33,6 @@ describe Spree::Admin::Ability do
       end
     end
 
-    context "managing users" do
-      let(:role) { :user_management }
-
-      context "when the user has the user_management role" do
-        let(:has_role) { true }
-
-        it { should be_able_to(:manage, Spree.user_class) }
-        it { should be_able_to(:manage, Spree::StoreCredit) }
-        it { should be_able_to(:display, Spree::Role) }
-      end
-
-      context "when the user does not have the user_management role" do
-        let(:has_role) { false }
-
-        it { should_not be_able_to(:manage, Spree.user_class) }
-        it { should_not be_able_to(:manage, Spree::StoreCredit) }
-        it { should_not be_able_to(:display, Spree::Role) }
-      end
-    end
-
     context "displaying users" do
       let(:role) { :user_display }
 
