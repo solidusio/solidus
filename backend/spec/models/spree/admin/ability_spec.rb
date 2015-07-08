@@ -33,26 +33,6 @@ describe Spree::Admin::Ability do
       end
     end
 
-    context "managing stock" do
-      let(:role) { :stock_management }
-
-      context "when the user has the stock_management role" do
-        let(:has_role) { true }
-
-        it { should be_able_to(:manage, Spree::StockItem) }
-        it { should be_able_to(:manage, Spree::StockTransfer) }
-        it { should be_able_to(:manage, Spree::TransferItem) }
-      end
-
-      context "when the user does not have the stock_management role" do
-        let(:has_role) { false }
-
-        it { should_not be_able_to(:manage, Spree::StockItem) }
-        it { should_not be_able_to(:manage, Spree::StockTransfer) }
-        it { should_not be_able_to(:manage, Spree::TransferItem) }
-      end
-    end
-
     context "displaying stock" do
       let(:role) { :stock_display }
 
