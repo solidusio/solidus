@@ -276,8 +276,8 @@ describe Spree::StoreCreditEvent do
     context "authorize event" do
       let(:event) { create(:store_credit_auth_event) }
 
-      it "returns an empty string" do
-        expect(subject).to eq ""
+      it "returns nil" do
+        expect(subject).to be_nil
       end
     end
 
