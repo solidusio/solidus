@@ -1,7 +1,6 @@
 module Spree
   module UserMethods
     extend ActiveSupport::Concern
-    extend Spree::DisplayMoney
 
     include Spree::UserApiAuthentication
     include Spree::UserReporting
@@ -9,6 +8,8 @@ module Spree
     include Spree::UserPaymentSource
 
     included do
+      extend Spree::DisplayMoney
+
       has_many :role_users, foreign_key: "user_id", class_name: "Spree::RoleUser"
       has_many :spree_roles, through: :role_users, source: :role
 
