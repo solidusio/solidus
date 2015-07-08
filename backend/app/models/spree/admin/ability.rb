@@ -9,11 +9,6 @@ module Spree
           can [:admin, :home], :dashboards
         end
 
-        if user.has_spree_role? :stock_display
-          can [:display, :admin], Spree::StockItem
-          can [:display, :admin], Spree::StockTransfer
-        end
-
         if user.has_spree_role? :product_management
           can :manage, Spree::Product
           can :manage, Spree::Image
