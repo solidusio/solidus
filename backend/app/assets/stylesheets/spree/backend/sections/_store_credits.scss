@@ -1,0 +1,24 @@
+#sc_memo_edit_form {
+  #store_credit_memo {
+    width: 100%;
+  }
+}
+
+#sc-detail-table {
+  tr {
+    &:hover {
+      td {
+        background-color: inherit;
+      }
+    }
+    td {
+      border: none;
+    }
+  }
+}
+
+#sc-current-balance {
+  width: 100%;
+  padding: 20px 5px;
+  text-align: right;
+}
