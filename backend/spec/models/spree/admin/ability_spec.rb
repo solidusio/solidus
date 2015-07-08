@@ -33,34 +33,6 @@ describe Spree::Admin::Ability do
       end
     end
 
-    context "managing orders" do
-      let(:role) { :order_management }
-
-      context "when the user has the order_management role" do
-        let(:has_role) { true }
-
-        it { should be_able_to(:manage, Spree::Order) }
-        it { should be_able_to(:manage, Spree::Payment) }
-        it { should be_able_to(:manage, Spree::Shipment) }
-        it { should be_able_to(:manage, Spree::Adjustment) }
-        it { should be_able_to(:manage, Spree::LineItem) }
-        it { should be_able_to(:manage, Spree::ReturnAuthorization) }
-        it { should be_able_to(:manage, Spree::CustomerReturn) }
-      end
-
-      context "when the user does not have the order_management role" do
-        let(:has_role) { false }
-
-        it { should_not be_able_to(:manage, Spree::Order) }
-        it { should_not be_able_to(:manage, Spree::Payment) }
-        it { should_not be_able_to(:manage, Spree::Shipment) }
-        it { should_not be_able_to(:manage, Spree::Adjustment) }
-        it { should_not be_able_to(:manage, Spree::LineItem) }
-        it { should_not be_able_to(:manage, Spree::ReturnAuthorization) }
-        it { should_not be_able_to(:manage, Spree::CustomerReturn) }
-      end
-    end
-
     context "displaying orders" do
       let(:role) { :order_display }
 
