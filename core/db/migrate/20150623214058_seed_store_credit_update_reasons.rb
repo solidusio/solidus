@@ -4,6 +4,6 @@ class SeedStoreCreditUpdateReasons < ActiveRecord::Migration
   end
 
   def down
-    # intentionally left blank
+    Spree::StoreCreditUpdateReason.find_by(name: 'Credit Given In Error').try!(:destroy)
   end
 end
