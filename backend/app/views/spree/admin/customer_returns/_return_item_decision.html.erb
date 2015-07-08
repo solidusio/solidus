@@ -53,10 +53,10 @@
         <% if show_decision %>
           <td class='actions'>
             <%= button_to [:admin, return_item], { class: 'fa fa-thumbs-up icon_link no-text with-tip', params: { "return_item[acceptance_status]" => 'accepted' }, "data-action" => 'save', title: Spree.t(:accept), method: 'put' } do %>
-              Spree.t(:accept)
+              <%= Spree.t(:accept) %>
             <% end %>
             <%= button_to [:admin, return_item], { class: 'fa fa-thumbs-down icon_link no-text with-tip', params: { "return_item[acceptance_status]" => 'rejected' }, "data-action" => 'remove', title: Spree.t(:reject), method: 'put' } do %>
-              Spree.t(:reject)
+              <%= Spree.t(:reject) %>
             <% end %>
           </td>
         <% end %>
