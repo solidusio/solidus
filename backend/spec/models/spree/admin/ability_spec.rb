@@ -33,36 +33,6 @@ describe Spree::Admin::Ability do
       end
     end
 
-    context "displaying promotions" do
-      let(:role) { :promotion_display }
-
-      context "when the user has the promotion_display role" do
-        let(:has_role) { true }
-
-        it { should be_able_to(:display, Spree::Promotion) }
-        it { should be_able_to(:display, Spree::PromotionRule) }
-        it { should be_able_to(:display, Spree::PromotionAction) }
-        it { should be_able_to(:display, Spree::PromotionCategory) }
-        it { should be_able_to(:admin, Spree::Promotion) }
-        it { should be_able_to(:admin, Spree::PromotionRule) }
-        it { should be_able_to(:admin, Spree::PromotionAction) }
-        it { should be_able_to(:admin, Spree::PromotionCategory) }
-      end
-
-      context "when the user does not have the promotion_display role" do
-        let(:has_role) { false }
-
-        it { should_not be_able_to(:display, Spree::Promotion) }
-        it { should_not be_able_to(:display, Spree::PromotionRule) }
-        it { should_not be_able_to(:display, Spree::PromotionAction) }
-        it { should_not be_able_to(:display, Spree::PromotionCategory) }
-        it { should_not be_able_to(:admin, Spree::Promotion) }
-        it { should_not be_able_to(:admin, Spree::PromotionRule) }
-        it { should_not be_able_to(:admin, Spree::PromotionAction) }
-        it { should_not be_able_to(:admin, Spree::PromotionCategory) }
-      end
-    end
-
     context "managing orders" do
       let(:role) { :order_management }
 
