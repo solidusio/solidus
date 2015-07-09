@@ -119,9 +119,6 @@ handle_delete = (e, data) ->
           .bind "loaded.jstree", ->
             $(this).jstree("core").toggle_node($('.jstree-icon').first())
 
-    $("#taxonomy_tree a").on "dblclick", (e) ->
-      $("#taxonomy_tree").jstree("rename", this)
-
     # surpress form submit on enter/return
     $(document).keypress (e) ->
       if e.keyCode == 13
