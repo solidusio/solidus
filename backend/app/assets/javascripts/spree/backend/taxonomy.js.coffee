@@ -60,16 +60,15 @@ handle_delete = (e, data) ->
   last_rollback = data.rlbk
   node = data.rslt.obj
   delete_url = "#{base_url}/#{node.prop("id")}"
-  jConfirm Spree.translations.are_you_sure_delete, Spree.translations.confirm_delete, (r) ->
-    if r
-      Spree.ajax
-        type: "DELETE",
-        dataType: "json",
-        url: delete_url,
-        error: handle_ajax_error
-    else
-      $.jstree.rollback(last_rollback)
-      last_rollback = null
+  if confirm(Spree.translations.are_you_sure_delete)
+    Spree.ajax
+      type: "DELETE",
+      dataType: "json",
+      url: delete_url,
+      error: handle_ajax_error
+  else
+    $.jstree.rollback(last_rollback)
+    last_rollback = null
 
 root = exports ? this
 root.setup_taxonomy_tree = (taxonomy_id) ->
