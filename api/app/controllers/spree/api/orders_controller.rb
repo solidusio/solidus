@@ -110,46 +110,47 @@ module Spree
       end
 
       private
-        def order_params
-          if params[:order]
-            normalize_params
-            params.require(:order).permit(permitted_order_attributes)
-          else
-            {}
-          end
-        end
 
-        def normalize_params
-          params[:order][:payments_attributes] = params[:order].delete(:payments) if params[:order][:payments]
-          params[:order][:shipments_attributes] = params[:order].delete(:shipments) if params[:order][:shipments]
-          params[:order][:line_items_attributes] = params[:order].delete(:line_items) if params[:order][:line_items]
-          params[:order][:ship_address_attributes] = params[:order].delete(:ship_address) if params[:order][:ship_address].present?
-          params[:order][:bill_address_attributes] = params[:order].delete(:bill_address) if params[:order][:bill_address].present?
+      def order_params
+        if params[:order]
+          normalize_params
+          params.require(:order).permit(permitted_order_attributes)
+        else
+          {}
         end
+      end
 
-        def permitted_order_attributes
-          if is_admin?
-            super + admin_order_attributes
-          else
-            super
-          end
-        end
+      def normalize_params
+        params[:order][:payments_attributes] = params[:order].delete(:payments) if params[:order][:payments]
+        params[:order][:shipments_attributes] = params[:order].delete(:shipments) if params[:order][:shipments]
+        params[:order][:line_items_attributes] = params[:order].delete(:line_items) if params[:order][:line_items]
+        params[:order][:ship_address_attributes] = params[:order].delete(:ship_address) if params[:order][:ship_address].present?
+        params[:order][:bill_address_attributes] = params[:order].delete(:bill_address) if params[:order][:bill_address].present?
+      end
 
-        def permitted_shipment_attributes
-          if is_admin?
-            super + admin_shipment_attributes
-          else
-            super
-          end
+      def permitted_order_attributes
+        if is_admin?
+          super + admin_order_attributes
+        else
+          super
         end
+      end
 
-        def find_order(lock = false)
-          @order = Spree::Order.find_by!(number: params[:id])
+      def permitted_shipment_attributes
+        if is_admin?
+          super + admin_shipment_attributes
+        else
+          super
         end
+      end
 
-        def order_id
-          super || params[:id]
-        end
+      def find_order(lock = false)
+        @order = Spree::Order.find_by!(number: params[:id])
+      end
+
+      def order_id
+        super || params[:id]
+      end
     end
   end
 end
