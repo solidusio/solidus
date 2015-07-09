@@ -26,7 +26,6 @@ describe Spree::UserMethods do
       let(:last_incomplete_order) { create :order, user: test_user }
 
       before do
-        create(:order, user: test_user)
         create(:order, user: test_user, created_at: 1.day.ago)
         create(:order, user: create(:user))
         last_incomplete_order
