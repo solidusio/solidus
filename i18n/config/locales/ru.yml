@@ -1174,6 +1174,7 @@ ru:
     select_a_stock_location: "Выбрать адрес склада"
     select_from_prototype: "Выбрать из прототипов"
     select_stock: "Выбрать склад"
+    selected_quantity_not_available: 'товара %{item} недостаточно.'
     send_copy_of_all_mails_to: "Отсылать копии всех писем на"
     send_mails_as: "Отсылать почту как"
     server: "Сервер"
@@ -1217,7 +1218,7 @@ ru:
     shipping_method: "Способ доставки"
     shipping_methods: "Способы доставки"
     shipping_price_sack: "Подсчет стоимости доставки"
-    shipping_total: "Итого (доставка):"
+    shipping_total: "Итого (доставка)"
     shop_by_taxonomy: "%{taxonomy}"
     shopping_cart: "Корзина"
     show: "Показать"
