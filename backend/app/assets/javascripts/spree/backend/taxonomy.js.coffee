@@ -1,3 +1,5 @@
+last_rollback = null
+
 handle_ajax_error = (XMLHttpRequest, textStatus, errorThrown) ->
   $.jstree.rollback(last_rollback)
   $("#ajax_error").show().html("<strong>" + server_error + "</strong><br />" + taxonomy_tree_error)
