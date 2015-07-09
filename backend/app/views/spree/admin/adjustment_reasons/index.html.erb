@@ -1,0 +1,50 @@
+<%= render partial: 'spree/admin/shared/configuration_menu' %>
+
+<% content_for :page_title do %>
+  <%= Spree.t(:adjustment_reasons) %>
+<% end %>
+
+<% content_for :page_actions do %>
+  <ul class="actions inline-menu">
+    <li>
+      <%= button_link_to Spree.t(:new_adjustment_reason), new_object_url, { icon: 'plus', id: 'admin_new_named_type' } %>
+    </li>
+  </ul>
+<% end %>
+
+<% if @adjustment_reasons.any? %>
+  <table class="index" id='listing_adjustment_reasons'>
+    <colgroup>
+      <col style="width: 65%" />
+      <col style="width: 20%" />
+      <col style="width: 15%" />
+    </colgroup>
+    <thead>
+      <tr data-hook="adjustment_reasons_header">
+        <th><%= Spree.t(:name) %></th>
+        <th><%= Spree.t(:state) %></th>
+        <th class="actions"></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @adjustment_reasons.each do |adjustment_reason| %>
+        <tr id="<%= spree_dom_id adjustment_reason %>" data-hook="adjustment_reason_row" class="<%= cycle('odd', 'even')%>">
+          <td class="align-center">
+            <%= adjustment_reason.name %>
+          </td>
+          <td class="align-center">
+            <%= Spree.t(adjustment_reason.active? ? :active : :inactive) %>
+          </td>
+          <td class="actions">
+            <%= link_to_edit adjustment_reason, no_text: true %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% else %>
+  <div class="alpha twelve columns no-objects-found">
+    <%= Spree.t(:no_resource_found, resource: I18n.t(:other, scope: 'activerecord.models.spree/adjustment_reason')) %>,
+    <%= link_to Spree.t(:add_one), new_object_url %>!
+  </div>
+<% end %>

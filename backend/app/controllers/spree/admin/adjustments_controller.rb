@@ -12,6 +12,8 @@ module Spree
 
       before_action :find_adjustment, only: [:destroy, :edit, :update]
 
+      helper_method :reasons_for
+
       def index
         @adjustments = @order.all_adjustments.order("created_at ASC")
       end
@@ -33,6 +35,12 @@ module Spree
         parent.adjustments.build(order: parent)
       end
 
+      def reasons_for(adjustment)
+        [
+          AdjustmentReason.active.to_a,
+          @adjustment.adjustment_reason,
+        ].flatten.compact.uniq.sort_by { |r| r.name.downcase }
+      end
     end
   end
 end
