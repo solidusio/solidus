@@ -7,7 +7,6 @@
 //= require modernizr
 //= require jquery.cookie
 //= require jquery.jstree/jquery.jstree
-//= require jquery.alerts/jquery.alerts
 //= require jquery.powertip
 //= require jquery.vAlign
 //= require equalize
