@@ -1,4 +1,5 @@
 last_rollback = null
+base_url = null
 
 handle_ajax_error = (XMLHttpRequest, textStatus, errorThrown) ->
   $.jstree.rollback(last_rollback)
@@ -70,11 +71,10 @@ handle_delete = (e, data) ->
     $.jstree.rollback(last_rollback)
     last_rollback = null
 
-root = exports ? this
-root.setup_taxonomy_tree = (taxonomy_id) ->
+@setup_taxonomy_tree = (taxonomy_id) ->
   if taxonomy_id != undefined
     # this is defined within admin/taxonomies/edit
-    root.base_url = Spree.routes.taxonomy_taxons_path
+    base_url = Spree.routes.taxonomy_taxons_path
 
     Spree.ajax
       url: base_url.replace("/taxons", "/jstree"),
