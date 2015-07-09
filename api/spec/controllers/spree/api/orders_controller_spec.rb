@@ -359,16 +359,6 @@ module Spree
 
       before { allow_any_instance_of(Order).to receive_messages user: current_api_user }
 
-      context "line_items hash not present in request" do
-        it "responds successfully" do
-          api_put :update, :id => order.to_param, :order => {
-            :email => "hublock@spreecommerce.com"
-          }
-
-          expect(response).to be_success
-        end
-      end
-
       it "updates quantities of existing line items" do
         api_put :update, :id => order.to_param, :order => {
           :line_items => {
