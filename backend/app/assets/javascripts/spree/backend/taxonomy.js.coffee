@@ -10,10 +10,10 @@ handle_move = (e, data) ->
 
   url = "#{base_url}/#{node.prop("id")}"
   Spree.ajax
-    type: "POST",
+    type: "PUT",
     dataType: "json",
     url: url,
-    data: ({_method: "put", "taxon[parent_id]": new_parent.prop("id"), "taxon[child_index]": position }),
+    data: ({"taxon[parent_id]": new_parent.prop("id"), "taxon[child_index]": position }),
     error: handle_ajax_error
 
   true
@@ -46,11 +46,10 @@ handle_rename = (e, data) ->
   url = "#{base_url}/#{node.prop("id")}"
 
   Spree.ajax
-    type: "POST",
+    type: "PUT",
     dataType: "json",
     url: url,
     data: {
-      _method: "put",
       "taxon[name]": name,
     },
     error: handle_ajax_error
@@ -62,12 +61,9 @@ handle_delete = (e, data) ->
   jConfirm Spree.translations.are_you_sure_delete, Spree.translations.confirm_delete, (r) ->
     if r
       Spree.ajax
-        type: "POST",
+        type: "DELETE",
         dataType: "json",
         url: delete_url,
-        data: {
-          _method: "delete",
-        },
         error: handle_ajax_error
     else
       $.jstree.rollback(last_rollback)
