@@ -1,4 +1,0 @@
-@mixin border-radius ($radii) {
-  border-radius: $radii;
-  @warn 'DEPRECATION WARNING: border-radius does not require vendor prefixing';
-}
