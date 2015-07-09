@@ -27,6 +27,67 @@ module Spree
       stub_authentication!
     end
 
+    describe "PUT update" do
+      let(:user) { create :user }
+      let(:order_params) { { number: "anothernumber", user_id: user.id, email: "foo@foobar.com" } }
+      let(:can_admin) { false }
+      subject { api_put :update, id: order.to_param, order: order_params }
+
+      before do
+        allow_any_instance_of(Spree::Ability).to receive(:can?).
+          and_return(true)
+
+        allow(Spree::Order).to receive(:find_by!).
+          with(number: order.number).
+          and_return(order)
+
+        allow(Spree.user_class).to receive(:find).
+          with(user.id).
+          and_return(user)
+
+        allow_any_instance_of(Spree::Ability).to receive(:can?).
+          with(:admin, Spree::Order).
+          and_return(can_admin)
+      end
+
+      it "updates the cart contents" do
+        expect(order.contents).to receive(:update_cart).
+          once.
+          with({"email" => "foo@foobar.com"})
+        subject
+      end
+
+      it { should be_success }
+
+      context "when the user can administer the order" do
+        let(:can_admin) { true }
+
+        it "will associate users" do
+          expect(order).to receive(:associate_user!).
+            once.
+            with(user)
+
+          subject
+        end
+
+        it "updates the otherwise forbidden attributes" do
+          expect{subject}.to change{order.reload.number}.
+            to("anothernumber")
+        end
+      end
+
+      context "when the user cannot administer the order" do
+        it "does not associate users" do
+          expect(order).to_not receive(:associate_user!)
+          subject
+        end
+
+        it "does not change forbidden attributes" do
+          expect{subject}.to_not change{order.reload.number}
+        end
+      end
+    end
+
     it "cannot view all orders" do
       api_get :index
       assert_unauthorized!

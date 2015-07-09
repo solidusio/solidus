@@ -5,7 +5,7 @@ module Spree
       self.admin_shipment_attributes = [:shipping_method, :stock_location, :inventory_units => [:variant_id, :sku]]
 
       class_attribute :admin_order_attributes
-      self.admin_order_attributes = [:import, :number, :completed_at, :locked_at, :channel]
+      self.admin_order_attributes = [:import, :number, :completed_at, :locked_at, :channel, :user_id]
 
       skip_before_action :authenticate_user, only: :apply_coupon_code
 
@@ -67,7 +67,7 @@ module Spree
 
         if @order.contents.update_cart(order_params)
           user_id = params[:order][:user_id]
-          if current_api_user.has_spree_role?('admin') && user_id
+          if can?(:admin, @order) && user_id
             @order.associate_user!(Spree.user_class.find(user_id))
           end
           respond_with(@order, default_template: :show)
@@ -120,11 +120,7 @@ module Spree
       end
 
       def permitted_order_attributes
-        if is_admin?
-          super + admin_order_attributes
-        else
-          super
-        end
+        can?(:admin, Spree::Order) ? (super + admin_order_attributes) : super
       end
 
       def permitted_shipment_attributes
