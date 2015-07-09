@@ -1,12 +1,12 @@
-last_rollback = null
 base_url = null
 
-handle_ajax_error = (XMLHttpRequest, textStatus, errorThrown) ->
-  $.jstree.rollback(last_rollback)
-  $("#ajax_error").show().html("<strong>" + server_error + "</strong><br />" + taxonomy_tree_error)
+tree_error_handler = (data) ->
+  rollback = data.rlbk
+  (XMLHttpRequest, textStatus, errorThrown) ->
+    $.jstree.rollback(rollback)
+    $("#ajax_error").show().html("<strong>#{server_error}</strong><br />" + taxonomy_tree_error)
 
 handle_move = (e, data) ->
-  last_rollback = data.rlbk
   position = data.rslt.cp
   node = data.rslt.o
   new_parent = data.rslt.np
@@ -17,12 +17,11 @@ handle_move = (e, data) ->
     dataType: "json",
     url: url,
     data: ({"taxon[parent_id]": new_parent.prop("id"), "taxon[child_index]": position }),
-    error: handle_ajax_error
+    error: tree_error_handler(data)
 
   true
 
 handle_create = (e, data) ->
-  last_rollback = data.rlbk
   node = data.rslt.obj
   name = data.rslt.name
   position = data.rslt.position
@@ -37,12 +36,11 @@ handle_create = (e, data) ->
       "taxon[parent_id]": new_parent.prop("id"),
       "taxon[child_index]": position,
     },
-    error: handle_ajax_error,
+    error: tree_error_handler(data)
     success: (data,result) ->
       node.prop('id', data.id)
 
 handle_rename = (e, data) ->
-  last_rollback = data.rlbk
   node = data.rslt.obj
   name = data.rslt.new_name
 
@@ -55,10 +53,9 @@ handle_rename = (e, data) ->
     data: {
       "taxon[name]": name,
     },
-    error: handle_ajax_error
+    error: tree_error_handler(data)
 
 handle_delete = (e, data) ->
-  last_rollback = data.rlbk
   node = data.rslt.obj
   delete_url = "#{base_url}/#{node.prop("id")}"
   if confirm(Spree.translations.are_you_sure_delete)
@@ -66,10 +63,9 @@ handle_delete = (e, data) ->
       type: "DELETE",
       dataType: "json",
       url: delete_url,
-      error: handle_ajax_error
+      error: tree_error_handler(data)
   else
-    $.jstree.rollback(last_rollback)
-    last_rollback = null
+    $.jstree.rollback(data.rlbk)
 
 @setup_taxonomy_tree = (taxonomy_id) ->
   if taxonomy_id != undefined
