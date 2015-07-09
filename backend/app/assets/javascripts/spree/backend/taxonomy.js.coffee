@@ -118,8 +118,3 @@ handle_delete = (e, data) ->
           .bind("rename.jstree", handle_rename)
           .bind "loaded.jstree", ->
             $(this).jstree("core").toggle_node($('.jstree-icon').first())
-
-    # surpress form submit on enter/return
-    $(document).keypress (e) ->
-      if e.keyCode == 13
-        e.preventDefault()
