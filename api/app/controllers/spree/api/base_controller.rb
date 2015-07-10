@@ -51,7 +51,7 @@ module Spree
 
       # users should be able to set price when importing orders via api
       def permitted_line_item_attributes
-        if is_admin?
+        if can?(:admin, Spree::LineItem)
           super + admin_line_item_attributes
         else
           super
