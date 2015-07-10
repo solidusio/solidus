@@ -27,6 +27,52 @@ module Spree
       stub_authentication!
     end
 
+    describe "POST create" do
+      let(:target_user) { create :user }
+      let(:date_override) { 3.days.ago }
+
+      before do
+        allow_any_instance_of(Spree::Ability).to receive(:can?).
+          and_return(true)
+
+        allow_any_instance_of(Spree::Ability).to receive(:can?).
+          with(:admin, Spree::Order).
+          and_return(can_admin)
+
+        allow(Spree.user_class).to receive(:find).
+          with(target_user.id).
+          and_return(target_user)
+      end
+
+      subject { api_post :create, order: { user_id: target_user.id, created_at: date_override, email: target_user.email } }
+
+      context "when the current user cannot administrate the order" do
+        let(:can_admin) { false }
+
+        it "does not include unpermitted params, or allow overriding the user", focus: true do
+          expect(Spree::Core::Importer::Order).to receive(:import).
+            once.
+            with(current_api_user, { "email" => target_user.email })
+          subject
+        end
+
+        it { should be_success }
+      end
+
+      context "when the current user can administrate the order" do
+        let(:can_admin) { true }
+
+        it "it permits all params and allows overriding the user" do
+          expect(Spree::Core::Importer::Order).to receive(:import).
+            once.
+            with(target_user, { "user_id" => target_user.id, "created_at" => date_override, "email" => target_user.email})
+          subject
+        end
+
+        it { should be_success }
+      end
+    end
+
     describe "PUT update" do
       let(:user) { create :user }
       let(:order_params) { { number: "anothernumber", user_id: user.id, email: "foo@foobar.com" } }
