@@ -42,12 +42,7 @@ module Spree
         end.with_indifferent_access
       end
 
-
       private
-
-      def is_admin?
-        current_api_user && current_api_user.has_spree_role?("admin")
-      end
 
       # users should be able to set price when importing orders via api
       def permitted_line_item_attributes
