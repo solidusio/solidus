@@ -9,9 +9,7 @@ module Spree
 
       skip_before_action :authenticate_user, only: :apply_coupon_code
 
-      before_action :find_order, except: [:create, :mine, :current, :index, :update]
-
-      before_filter :find_order, except: [:create, :mine, :current, :index]
+      before_action :find_order, except: [:create, :mine, :current, :index]
       around_filter :lock_order, except: [:create, :mine, :current, :index]
 
       # Dynamically defines our stores checkout steps to ensure we check authorization on each step.
