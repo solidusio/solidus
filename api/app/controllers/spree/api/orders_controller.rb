@@ -125,7 +125,7 @@ module Spree
       end
 
       def permitted_shipment_attributes
-        if is_admin?
+        if can?(:admin, Spree::Shipment)
           super + admin_shipment_attributes
         else
           super
