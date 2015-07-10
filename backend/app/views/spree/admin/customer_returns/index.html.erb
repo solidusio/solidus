@@ -1,9 +1,11 @@
 <%= render :partial => 'spree/admin/shared/order_tabs', :locals => { :current => 'Customer Returns' } %>
 
 <% content_for :page_actions do %>
-  <li>
-    <%= button_link_to Spree.t(:new_customer_return), spree.new_admin_order_customer_return_path(@order), icon: 'plus' %>
-  </li>
+  <% if can? :create, Spree::CustomerReturn %>
+    <li>
+      <%= button_link_to Spree.t(:new_customer_return), spree.new_admin_order_customer_return_path(@order), icon: 'plus' %>
+    </li>
+  <% end %>
   <li><%= button_link_to Spree.t(:back_to_orders_list), spree.admin_orders_path, :icon => 'arrow-left' %></li>
 <% end %>
 
@@ -46,7 +48,9 @@
   </table>
 <% else %>
   <div class="alpha twelve columns no-objects-found">
-    <%= Spree.t(:no_resource_found, resource: I18n.t(:other, scope: 'activerecord.models.spree/customer_return')) %>,
-    <%= link_to Spree.t(:add_one), spree.new_admin_order_customer_return_path(@order) %>!
+    <%= Spree.t(:no_resource_found, resource: I18n.t(:other, scope: 'activerecord.models.spree/customer_return')) %>
+    <% if can? :create, Spree::CustomerReturn %>
+      <%= link_to Spree.t(:add_one), spree.new_admin_order_customer_return_path(@order) %>!
+    <% end %>
   </div>
 <% end %>

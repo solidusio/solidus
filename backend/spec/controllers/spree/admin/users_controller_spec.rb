@@ -66,10 +66,30 @@ describe Spree::Admin::UsersController, :type => :controller do
   end
 
   describe "#create" do
+    let(:dummy_role) { Spree::Role.create(name: "dummyrole") }
+
     before do
       use_mock_user
       allow(mock_user).to receive_messages(:spree_roles= => true, :stock_locations= => true)
       user.spree_roles << Spree::Role.find_or_create_by(name: 'admin')
+    end
+
+    context "when the user can manage roles" do
+      it "can set roles" do
+        expect(mock_user).to receive(:spree_roles=).with([dummy_role])
+        spree_post :create, { user: { spree_role_ids: [dummy_role.id] } }
+      end
+    end
+
+    context "when the user cannot manage roles" do
+      before do
+        user.spree_roles = [Spree::Role.find_or_create_by(name: "user_management")]
+      end
+
+      it "cannot set roles" do
+        expect(mock_user).to_not receive(:spree_roles=)
+        spree_post :create, { user: { spree_role_ids: [dummy_role.id] } }
+      end
     end
 
     it "can create a shipping_address" do
@@ -86,13 +106,6 @@ describe Spree::Admin::UsersController, :type => :controller do
       spree_post :create, { :user => { :bill_address_attributes => { :city => "New York" } } }
     end
 
-    it "can set roles" do
-      role = Spree::Role.create(name: "my_role")
-      role_2 = Spree::Role.create(name: "my_role_2")
-      expect(mock_user).to receive(:spree_roles=).with([role, role_2])
-      spree_post :create, { user: { spree_role_ids: [role.id, role_2.id] } }
-    end
-
     it "can set stock locations" do
       location = Spree::StockLocation.create(name: "my_location")
       location_2 = Spree::StockLocation.create(name: "my_location_2")
@@ -102,10 +115,29 @@ describe Spree::Admin::UsersController, :type => :controller do
   end
 
   describe "#update" do
+    let(:dummy_role) { Spree::Role.create(name: "dummyrole") }
     before do
       use_mock_user
       allow(mock_user).to receive_messages(:spree_roles= => true, :stock_locations= => true)
       user.spree_roles << Spree::Role.find_or_create_by(name: 'admin')
+    end
+
+    context "when the user can manage roles" do
+      it "can set roles" do
+        expect(mock_user).to receive(:spree_roles=).with([dummy_role])
+        spree_put :update, { id: mock_user.id, user: { spree_role_ids: [dummy_role.id] } }
+      end
+    end
+
+    context "when the user cannot manage roles" do
+      before do
+        user.spree_roles = [Spree::Role.find_or_create_by(name: "user_management")]
+      end
+
+      it "cannot set roles" do
+        expect(mock_user).to_not receive(:spree_roles=)
+        spree_put :update, { id: mock_user.id, user: { spree_role_ids: [dummy_role.id] } }
+      end
     end
 
     it "allows shipping address attributes through" do
@@ -120,13 +152,6 @@ describe Spree::Admin::UsersController, :type => :controller do
         "bill_address_attributes" => { "city" => "New York" }
       ))
       spree_put :update, { :id => mock_user.id, :user => { :bill_address_attributes => { :city => "New York" } } }
-    end
-
-    it "can set roles" do
-      role = Spree::Role.create(name: "my_role")
-      role_2 = Spree::Role.create(name: "my_role_2")
-      expect(mock_user).to receive(:spree_roles=).with([role, role_2])
-      spree_put :update, { id: mock_user.id, user: { spree_role_ids: [role.id, role_2.id] } }
     end
 
     it "can set stock locations" do

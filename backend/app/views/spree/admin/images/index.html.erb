@@ -3,7 +3,9 @@
 <%= render :partial => 'spree/admin/shared/product_tabs', :locals => {:current => 'Images'} %>
 
 <% content_for :page_actions do %>
-  <li><%= link_to_with_icon('plus', Spree.t(:new_image), new_admin_product_image_url(@product), :id => 'new_image_link', :class => 'button') %></li>
+  <% if can?(:create, Spree::Image) %>
+    <li><%= link_to_with_icon('plus', Spree.t(:new_image), new_admin_product_image_url(@product), :id => 'new_image_link', :class => 'button') %></li>
+  <% end %>
 <% end %>
 
 <div id="images" data-hook></div>
@@ -38,7 +40,9 @@
       <% (@product.variant_images).each do |image| %>
         <tr id="<%= spree_dom_id image %>" data-hook="images_row" class="<%= cycle('odd', 'even')%>">
           <td class="no-border">
-            <span class="handle"></span>
+            <% if can?(:update_positions, Spree::Image) %>
+              <span class="handle"></span>
+            <% end %>
           </td>
           <td>
             <%= link_to image_tag(image.attachment.url(:mini)), image.attachment.url(:product) %>
@@ -48,8 +52,12 @@
           <% end %>
           <td><%= image.alt %></td>
           <td class="actions">
-            <%= link_to_with_icon 'edit', Spree.t(:edit), edit_admin_product_image_url(@product, image), :no_text => true, :data => {:action => 'edit'} %>
-            <%= link_to_delete image, { :url => admin_product_image_url(@product, image), :no_text => true } %>
+            <% if can?(:update, image) %>
+              <%= link_to_with_icon 'edit', Spree.t(:edit), edit_admin_product_image_url(@product, image), :no_text => true, :data => {:action => 'edit'} %>
+            <% end %>
+            <% if can?(:destroy, image) %>
+              <%= link_to_delete image, { :url => admin_product_image_url(@product, image), :no_text => true } %>
+            <% end %>
           </td>
         </tr>
       <% end %>

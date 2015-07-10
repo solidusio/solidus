@@ -31,7 +31,13 @@
       <% @orders.each do |order| %>
         <tr data-hook="admin_orders_index_rows" class="state-<%= order.state.downcase %> <%= cycle('odd', 'even') %>">
           <td class="align-center order-completed-at"><%= l(order.completed_at.to_date) if order.completed_at %></td>
-          <td class="align-center order-number"><%= link_to order.number, edit_admin_order_path(order) %></td>
+          <td class="align-center order-number">
+            <% if can?([:admin, :edit], order) %>
+              <%= link_to order.number, edit_admin_order_path(order) %>
+            <% else %>
+              <%= order.number %>
+            <% end %>
+          </td>
           <td class="align-center order-state">
             <div class="state <%= order.state.downcase %>"><%= Spree.t("order_state.#{order.state.downcase}") %></div>
             <% if order.payment_state %>
@@ -48,8 +54,10 @@
     </table>
   <% else %>
     <div class="alpha twelve columns no-objects-found">
-      <%= Spree.t(:no_resource_found, resource: I18n.t(:other, scope: 'activerecord.models.spree/order')) %>,
-      <%= link_to Spree.t(:add_one), spree.new_admin_order_path %>!
+      <%= Spree.t(:no_resource_found, resource: I18n.t(:other, scope: 'activerecord.models.spree/order')) %>
+      <% if can?([:admin, :create], Spree::Order) %>
+        <%= link_to Spree.t(:add_one), spree.new_admin_order_path %>!
+      <% end %>
     </div>
   <% end %>
 

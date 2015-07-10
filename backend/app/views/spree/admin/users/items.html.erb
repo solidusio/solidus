@@ -59,15 +59,23 @@
                   <div class="state <%= order.shipment_state %>"><%= Spree.t("shipment_states.#{order.shipment_state}") %></div>
                 <% end %>
               </td>
-              <td class="align-center order-number"><%= link_to order.number, edit_admin_order_url(order) %></td>
+              <td class="align-center order-number">
+                <% if can?([:admin, :edit], order) %>
+                  <%= link_to order.number, edit_admin_order_url(order) %>
+                <% else %>
+                  <%= order.number %>
+                <% end %>
+              </td>
             </tr>
           <% end %>
         <% end %>
     </table>
   <% else %>
     <div class="alpha twelve columns no-objects-found">
-      <%= Spree.t(:no_resource_found, resource: I18n.t(:other, scope: 'activerecord.models.spree/order')) %>,
-      <%= link_to Spree.t(:add_one), spree.new_admin_order_path %>!
+      <%= Spree.t(:no_resource_found, resource: I18n.t(:other, scope: 'activerecord.models.spree/order')) %>
+      <% if can?([:admin, :create], Spree::Order) %>
+        <%= link_to Spree.t(:add_one), spree.new_admin_order_path %>!
+      <% end %>
     </div>
   <% end %>
   <%= paginate @orders %>

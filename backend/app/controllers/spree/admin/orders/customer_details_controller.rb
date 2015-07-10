@@ -6,7 +6,6 @@ module Spree
 
         def show
           edit
-          render :action => :edit
         end
 
         def edit

@@ -3,9 +3,11 @@
 <% end %>
 
 <% content_for :page_actions do %>
-  <li id="new_property_link">
-    <%= button_link_to Spree.t(:new_property), new_admin_property_url, { :remote => true, :icon => 'plus', 'data-update' => 'new_property', :id => 'new_property_link' } %>
-  </li>
+  <% if can?(:create, Spree::Property) %>
+    <li id="new_property_link">
+      <%= button_link_to Spree.t(:new_property), new_admin_property_url, { :remote => true, :icon => 'plus', 'data-update' => 'new_property', :id => 'new_property_link' } %>
+    </li>
+  <% end %>
 <% end %>
 
 <%= render 'spree/admin/shared/product_sub_menu' %>
@@ -61,8 +63,12 @@
         <td style="padding-left:1em"><%= property.name %></td>
         <td style="padding-left:1em"><%= property.presentation %></td>
         <td class="actions">
-          <%= link_to_edit(property, :no_text => true) %>
-          <%= link_to_delete(property, :no_text => true) %>
+          <% if can?(:update, property) %>
+            <%= link_to_edit(property, :no_text => true) %>
+          <% end %>
+          <% if can?(:destroy, property) %>
+            <%= link_to_delete(property, :no_text => true) %>
+          <% end %>
         </td>
       </tr>
     <% end %>
@@ -70,8 +76,10 @@
 </table>
 <% else %>
   <div class="alpha twelve columns no-objects-found">
-    <%= Spree.t(:no_resource_found, resource: I18n.t(:other, scope: 'activerecord.models.spree/property')) %>,
-    <%= link_to Spree.t(:add_one), spree.new_admin_property_path %>!
+    <%= Spree.t(:no_resource_found, resource: I18n.t(:other, scope: 'activerecord.models.spree/property')) %>
+    <% if can?(:create, Spree::Property) %>
+      <%= link_to Spree.t(:add_one), spree.new_admin_property_path %>!
+    <% end %>
   </div>
 <% end %>
 

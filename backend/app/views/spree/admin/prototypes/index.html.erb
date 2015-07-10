@@ -3,9 +3,11 @@
 <% end %>
 
 <% content_for :page_actions do %>
-  <li id="new_prototype_link">
-    <%= button_link_to Spree.t(:new_prototype), new_admin_prototype_url, {:remote => true, :icon => 'plus', 'data-update' => 'new_prototype', :id => 'new_prototype_link'} %>
-  </li>
+  <% if can?(:create, Spree::Prototype) %>
+    <li id="new_prototype_link">
+      <%= button_link_to Spree.t(:new_prototype), new_admin_prototype_url, {:remote => true, :icon => 'plus', 'data-update' => 'new_prototype', :id => 'new_prototype_link'} %>
+    </li>
+  <% end %>
 <% end %>
 
 <%= render 'spree/admin/shared/product_sub_menu' %>
@@ -32,8 +34,12 @@
       <tr id="<%= spree_dom_id prototype %>" data-hook="prototypes_row" class="<%= cycle('odd', 'even')%>">
         <td style="padding-left:1em"><%= prototype.name %></td>
         <td class="actions">
-          <%= link_to_edit(prototype, :no_text => true, :class => 'admin_edit_prototype') %>
-          <%= link_to_delete(prototype, :no_text => true) %>
+          <% if can?(:update, prototype) %>
+            <%= link_to_edit(prototype, :no_text => true, :class => 'admin_edit_prototype') %>
+          <% end %>
+          <% if can?(:destroy, prototype) %>
+            <%= link_to_delete(prototype, :no_text => true) %>
+          <% end %>
         </td>
       </tr>
     <% end %>
@@ -41,7 +47,9 @@
 </table>
 <% else %>
   <div class="alpha twelve columns no-objects-found">
-    <%= Spree.t(:no_resource_found, resource: I18n.t(:other, scope: 'activerecord.models.spree/prototype')) %>,
-    <%= link_to Spree.t(:add_one), spree.new_admin_prototype_path %>!
+    <%= Spree.t(:no_resource_found, resource: I18n.t(:other, scope: 'activerecord.models.spree/prototype')) %>
+    <% if can?(:create, Spree::Prototype) %>
+      <%= link_to Spree.t(:add_one), spree.new_admin_prototype_path %>!
+    <% end %>
   </div>
 <% end %>

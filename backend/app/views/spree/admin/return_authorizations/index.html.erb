@@ -3,7 +3,9 @@
 <% content_for :page_actions do %>
   <% if @order.shipments.any? &:shipped? %>
     <li>
-      <%= button_link_to Spree.t(:new_return_authorization), new_admin_order_return_authorization_url(@order), :icon => 'plus' %>
+      <% unless can? :create, Spree::ReturnAuthorization %>
+        <%= button_link_to Spree.t(:new_return_authorization), new_admin_order_return_authorization_url(@order), :icon => 'plus' %>
+      <% end %>
     </li>
   <% end %>
   <li><%= button_link_to Spree.t(:back_to_orders_list), spree.admin_orders_path, :icon => 'arrow-left' %></li>
@@ -32,12 +34,13 @@
           <td><%= return_authorization.display_pre_tax_total.to_html %></td>
           <td><%= pretty_time(return_authorization.created_at) %></td>
           <td class="actions">
-            <%= link_to_edit return_authorization, :no_text => true, :class => 'edit' %>
-            <% unless return_authorization.customer_returned_items? %>
+            <% if can? :update, return_authorization %>
+              <%= link_to_edit return_authorization, :no_text => true, :class => 'edit' %>
+            <% end %>
+            <% if can?(:destroy, return_authorization) && !return_authorization.customer_returned_items? %>
               <%= link_to_delete return_authorization, :no_text => true %>
             <% end %>
           </td>
-
         </tr>
       <% end %>
     </tbody>

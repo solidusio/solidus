@@ -5,24 +5,67 @@
 <% content_for :sidebar do %>
   <nav class="menu">
     <ul class="sidebar" data-hook="admin_configurations_sidebar_menu">
-      <%= configurations_sidebar_menu_item Spree.t(:general_settings), edit_admin_general_settings_path %>
-      <%= configurations_sidebar_menu_item Spree.t(:tax_categories), admin_tax_categories_path %>
-      <%= configurations_sidebar_menu_item Spree.t(:tax_rates), admin_tax_rates_path %>
-      <%= configurations_sidebar_menu_item Spree.t(:zones), admin_zones_path %>
-      <%= configurations_sidebar_menu_item Spree.t(:countries), admin_countries_path %>
-      <% if country = Spree::Country.find_by_id(Spree::Config[:default_country_id]) || Spree::Country.first %>
-        <%= configurations_sidebar_menu_item Spree.t(:states), admin_country_states_path(country) %>
+      <% if can? :edit, :general_settings %>
+        <%= configurations_sidebar_menu_item Spree.t(:general_settings), edit_admin_general_settings_path %>
       <% end %>
-      <%= configurations_sidebar_menu_item Spree.t(:payment_methods), admin_payment_methods_path %>
-      <%= configurations_sidebar_menu_item Spree.t(:taxonomies), admin_taxonomies_path %>
-      <%= configurations_sidebar_menu_item Spree.t(:shipping_methods), admin_shipping_methods_path %>
-      <%= configurations_sidebar_menu_item Spree.t(:shipping_categories), admin_shipping_categories_path %>
-      <%= configurations_sidebar_menu_item Spree.t(:stock_locations), spree.admin_stock_locations_path %>
-      <%= configurations_sidebar_menu_item Spree.t(:analytics_trackers), admin_trackers_path %>
-      <%= configurations_sidebar_menu_item Spree.t(:adjustment_reasons), admin_adjustment_reasons_path %>
-      <%= configurations_sidebar_menu_item Spree.t(:refund_reasons), admin_refund_reasons_path %>
-      <%= configurations_sidebar_menu_item Spree.t(:reimbursement_types), admin_reimbursement_types_path %>
-      <%= configurations_sidebar_menu_item Spree.t(:return_reasons), admin_return_reasons_path %>
+
+      <% if can? :display, Spree::TaxCategory %>
+        <%= configurations_sidebar_menu_item Spree.t(:tax_categories), admin_tax_categories_path %>
+      <% end %>
+
+      <% if can? :display, Spree::TaxRate %>
+        <%= configurations_sidebar_menu_item Spree.t(:tax_rates), admin_tax_rates_path %>
+      <% end %>
+
+      <% if can? :display, Spree::Zone %>
+        <%= configurations_sidebar_menu_item Spree.t(:zones), admin_zones_path %>
+      <% end %>
+
+      <% if can? :display, Spree::Country %>
+        <%= configurations_sidebar_menu_item Spree.t(:countries), admin_countries_path %>
+      <% end %>
+
+      <% if can?(:display, Spree::State) %>
+        <% if country = Spree::Country.find_by_id(Spree::Config[:default_country_id]) || Spree::Country.first %>
+          <%= configurations_sidebar_menu_item Spree.t(:states), admin_country_states_path(country) %>
+        <% end %>
+      <% end %>
+
+      <% if can?(:display, Spree::PaymentMethod) %>
+        <%= configurations_sidebar_menu_item Spree.t(:payment_methods), admin_payment_methods_path %>
+      <% end %>
+
+      <% if can?(:display, Spree::Taxonomy) %>
+        <%= configurations_sidebar_menu_item Spree.t(:taxonomies), admin_taxonomies_path %>
+      <% end %>
+
+      <% if can?(:display, Spree::ShippingMethod) %>
+        <%= configurations_sidebar_menu_item Spree.t(:shipping_methods), admin_shipping_methods_path %>
+      <% end %>
+
+      <% if can?(:display, Spree::ShippingCategory) %>
+        <%= configurations_sidebar_menu_item Spree.t(:shipping_categories), admin_shipping_categories_path %>
+      <% end %>
+
+      <% if can?(:display, Spree::StockLocation) %>
+        <%= configurations_sidebar_menu_item Spree.t(:stock_locations), spree.admin_stock_locations_path %>
+      <% end %>
+
+      <% if can?(:display, Spree::Tracker) %>
+        <%= configurations_sidebar_menu_item Spree.t(:analytics_trackers), admin_trackers_path %>
+      <% end %>
+
+      <% if can?(:display, Spree::RefundReason) %>
+        <%= configurations_sidebar_menu_item Spree.t(:refund_reasons), admin_refund_reasons_path %>
+      <% end %>
+
+      <% if can?(:display, Spree::ReimbursementType) %>
+        <%= configurations_sidebar_menu_item Spree.t(:reimbursement_types), admin_reimbursement_types_path %>
+      <% end %>
+
+      <% if can?(:display, Spree::ReturnReason) %>
+        <%= configurations_sidebar_menu_item Spree.t(:return_reasons), admin_return_reasons_path %>
+      <% end %>
     </ul>
   </nav>
 <% end %>

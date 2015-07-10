@@ -465,8 +465,6 @@ describe "Order Details", type: :feature, js: true do
       expect(page).not_to have_button('Resend')
 
       # Order Tabs
-      expect(page).not_to have_link('Order Details')
-      expect(page).not_to have_link('Customer Details')
       expect(page).not_to have_link('Adjustments')
       expect(page).not_to have_link('Payments')
       expect(page).not_to have_link('Return Authorizations')
@@ -501,8 +499,6 @@ describe "Order Details", type: :feature, js: true do
       # Order Form
       expect(page).not_to have_css('.edit-item')
       # Order Tabs
-      expect(page).not_to have_link('Order Details')
-      expect(page).not_to have_link('Customer Details')
       expect(page).not_to have_link('Adjustments')
       expect(page).not_to have_link('Payments')
       expect(page).not_to have_link('Return Authorizations')

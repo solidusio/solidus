@@ -16,9 +16,11 @@
     <%= form_for [:admin, @user], as: :user, url: addresses_admin_user_url(@user), method: :put do |f| %>
       <%= render :partial => 'addresses_form', :locals => { :f => f } %>
 
-      <div data-hook="admin_user_edit_form_button">
-        <%= render :partial => 'spree/admin/shared/edit_resource_links', :locals => { :collection_url => admin_users_url } %>
-      </div>
+      <% if can?(:update, @user) %>
+        <div data-hook="admin_user_edit_form_button">
+          <%= render :partial => 'spree/admin/shared/edit_resource_links', :locals => { :collection_url => admin_users_url } %>
+        </div>
+      <% end %>
     <% end %>
   </div>
 </fieldset>

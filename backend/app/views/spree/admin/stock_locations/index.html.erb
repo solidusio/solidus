@@ -6,12 +6,17 @@
 
 <% content_for :page_actions do %>
   <ul class="actions inline-menu">
-    <li>
-      <%= button_link_to Spree.t(:new_stock_location), new_object_url, { :icon => 'plus', :id => 'admin_new_stock_location' } %>
-    </li>
-    <li>
-      <%= button_link_to Spree.t(:new_stock_transfer), new_admin_stock_transfer_path, { :icon => 'forward' } %>
-    </li>
+    <% if can?(:create, Spree::StockLocation) %>
+      <li>
+        <%= button_link_to Spree.t(:new_stock_location), new_object_url, { :icon => 'plus', :id => 'admin_new_stock_location' } %>
+      </li>
+    <% end %>
+
+    <% if can?(:create, Spree::StockTransfer) %>
+      <li>
+        <%= button_link_to Spree.t(:new_stock_transfer), new_admin_stock_transfer_path, { :icon => 'forward' } %>
+      </li>
+    <% end %>
   </ul>
 <% end %>
 
@@ -39,13 +44,27 @@
            @delete_url = admin_stock_location_path(stock_location)
       %>
         <tr id="<%= spree_dom_id stock_location %>" data-hook="stock_location_row" class="<%= cycle('odd', 'even')%>">
-          <td class="no-border"><span class="handle"></span></td>
+          <td class="no-border">
+            <% if can?(:update_positions, Spree::StockLocation) %>
+              <span class="handle"></span>
+            <% end %>
+          </td>
           <td class="align-center"><%= display_name(stock_location) %></td>
           <td class="align-center"><span class="state <%= state(stock_location) %>"><%= Spree.t(state(stock_location)) %></span></td>
-          <td class="align-center"><%= link_to Spree.t(:stock_movements), admin_stock_location_stock_movements_path(stock_location.id) %> </td>
+          <td class="align-center">
+            <% if can?(:display, Spree::StockMovement) %>
+              <%= link_to Spree.t(:stock_movements), admin_stock_location_stock_movements_path(stock_location.id) %>
+            <% else %>
+              Stock Movements
+            <% end %>
+          </td>
           <td class="actions">
-            <%= link_to_edit stock_location, :no_text => true %>
-            <%= link_to_delete stock_location, :no_text => true %>
+            <% if can?(:update, stock_location) %>
+              <%= link_to_edit stock_location, :no_text => true %>
+            <% end %>
+            <% if can?(:destroy, stock_location) %>
+              <%= link_to_delete stock_location, :no_text => true %>
+            <% end %>
           </td>
         </tr>
       <% end %>
@@ -53,7 +72,9 @@
   </table>
 <% else %>
   <div class="alpha twelve columns no-objects-found">
-    <%= Spree.t(:no_resource_found, resource: I18n.t(:other, scope: 'activerecord.models.spree/stock_location')) %>,
-    <%= link_to Spree.t(:add_one), spree.new_admin_stock_location_path %>!
+    <%= Spree.t(:no_resource_found, resource: I18n.t(:other, scope: 'activerecord.models.spree/stock_location')) %>
+    <% if can?(:create, Spree::StockLocation) %>
+      <%= link_to Spree.t(:add_one), spree.new_admin_stock_location_path %>!
+    <% end %>
   </div>
 <% end %>

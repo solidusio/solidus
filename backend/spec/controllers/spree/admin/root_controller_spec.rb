@@ -11,7 +11,7 @@ describe Spree::Admin::RootController do
     it "redirects to orders path by default" do
       get :index
 
-      expect(response).to redirect_to '/admin/orders'
+      expect(response).to redirect_to '/admin/dashboards/home'
     end
   end
 
@@ -21,7 +21,7 @@ describe Spree::Admin::RootController do
     it "redirects to orders path by default" do
       get :index
 
-      expect(response).to redirect_to '/admin/orders'
+      expect(response).to redirect_to '/admin/dashboards/home'
     end
 
     it "redirects to wherever admin_root_redirects_path tells it to" do

@@ -3,6 +3,12 @@ Spree::Core::Engine.add_routes do
     get '/search/users', to: "search#users", as: :search_users
     get '/search/products', :to => "search#products", :as => :search_products
 
+    resources :dashboards, only: [] do
+      collection do
+        get :home
+      end
+    end
+
     resources :promotions do
       resources :promotion_rules
       resources :promotion_actions
