@@ -42,14 +42,6 @@ module Spree
         end.with_indifferent_access
       end
 
-      # users should be able to set price when importing orders via api
-      def permitted_line_item_attributes
-        if is_admin?
-          super + admin_line_item_attributes
-        else
-          super
-        end
-      end
 
       protected
 
@@ -58,6 +50,14 @@ module Spree
       end
 
       private
+      # users should be able to set price when importing orders via api
+      def permitted_line_item_attributes
+        if is_admin?
+          super + admin_line_item_attributes
+        else
+          super
+        end
+      end
 
       def set_content_type
         content_type = case params[:format]
