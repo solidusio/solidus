@@ -147,7 +147,7 @@ module Spree
       end
 
       def product_scope
-        if is_admin?
+        if can?(:admin, Spree::Product)
           scope = Product.with_deleted.accessible_by(current_ability, :read).includes(*product_includes)
 
           unless params[:show_deleted]
