@@ -40,9 +40,7 @@ module Spree
       applicable_permissions = Set.new
 
       spree_roles.each do |role_name|
-        if roles.key?(role_name)
-          applicable_permissions |= roles[role_name].permission_sets
-        end
+        applicable_permissions |= roles[role_name].permission_sets
       end
 
       applicable_permissions.each do |permission_set|
