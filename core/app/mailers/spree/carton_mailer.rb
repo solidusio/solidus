@@ -6,7 +6,7 @@ module Spree
       @carton = Spree::Carton.find(carton_id)
       subject = (resend ? "[#{Spree.t(:resend).upcase}] " : '')
       subject += "#{Spree::Store.current.name} #{Spree.t('shipment_mailer.shipped_email.subject')} ##{@carton.order_numbers.join(', ')}"
-      mail(to: @carton.order_emails, from: from_address, subject: subject)
+      mail(to: @carton.order_emails, from: from_address(Spree::Store.current), subject: subject)
     end
   end
 end

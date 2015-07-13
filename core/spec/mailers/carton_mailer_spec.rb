@@ -7,13 +7,6 @@ describe Spree::CartonMailer do
 
   let(:carton) { create(:carton) }
 
-  context ":from not set explicitly" do
-    it "falls back to spree config" do
-      message = Spree::CartonMailer.shipped_email(carton.id)
-      message.from.should == [Spree::Config[:mails_from]]
-    end
-  end
-
   # Regression test for #2196
   it "doesn't include out of stock in the email body" do
     shipment_email = Spree::CartonMailer.shipped_email(carton.id)
