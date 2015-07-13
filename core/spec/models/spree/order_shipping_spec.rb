@@ -115,7 +115,6 @@ describe Spree::OrderShipping do
         expect(emails.size).to eq(0)
       end
     end
-
   end
 
   describe "#ship_shipment" do
@@ -224,6 +223,24 @@ describe Spree::OrderShipping do
 
       it "does not send a shipment email" do
         expect(emails.size).to eq(0)
+      end
+    end
+
+    context "with stale inventory units (regression test)" do
+      let(:order) { FactoryGirl.create(:order_ready_to_ship, line_items_count: 1) }
+      let(:shipment) do
+        FactoryGirl.create(
+          :shipment,
+          order: order,
+          address: FactoryGirl.create(:address)
+        )
+      end
+
+      before { shipment.ready! }
+
+      it "updates the state to shipped" do
+        order.shipping.ship_shipment(shipment)
+        expect(shipment.reload.state).to eq "shipped"
       end
     end
   end
