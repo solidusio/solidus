@@ -10,7 +10,11 @@ module Spree
       protected
 
       def admin_root_redirect_path
-        spree.home_admin_dashboards_path
+        if can?(:display, Spree::Order) && can?(:admin, Spree::Order)
+          spree.admin_orders_path
+        else
+          spree.home_admin_dashboards_path
+        end
       end
     end
   end
