@@ -171,7 +171,7 @@ describe Spree::Order, :type => :model do
         let(:ship_address) { nil }
 
         it "does not transition without a ship address" do
-          expect { order.next! }.to raise_error
+          expect { order.next! }.to raise_error StateMachines::InvalidTransition
         end
       end
 
@@ -850,7 +850,7 @@ describe Spree::Order, :type => :model do
 
         expect {
           order.update_from_params(params, permitted_params)
-        }.to raise_error
+        }.to raise_error Spree::Core::GatewayError
       end
     end
 
