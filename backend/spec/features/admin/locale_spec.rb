@@ -25,7 +25,6 @@ describe "setting locale", :type => :feature do
 
   it "should be in french" do
     visit spree.admin_path
-    click_link "Ordres"
     expect(page).to have_content("Ordres")
   end
 end
