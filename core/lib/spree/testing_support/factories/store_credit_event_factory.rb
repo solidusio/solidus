@@ -11,5 +11,15 @@ FactoryGirl.define do
     factory :store_credit_capture_event do
       action             { Spree::StoreCredit::CAPTURE_ACTION }
     end
+
+    factory :store_credit_adjustment_event do
+      action             { Spree::StoreCredit::ADJUSTMENT_ACTION }
+      update_reason      { create(:store_credit_update_reason) }
+    end
+
+    factory :store_credit_invalidate_event do
+      action             { Spree::StoreCredit::INVALIDATE_ACTION }
+      update_reason      { create(:store_credit_update_reason) }
+    end
   end
 end

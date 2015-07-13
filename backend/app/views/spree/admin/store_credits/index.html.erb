@@ -11,6 +11,10 @@
 <% end %>
 
 <% if @store_credits.any? %>
+  <div id='sc-current-balance'>
+    <strong><%= Spree.t("admin.store_credits.current_balance") %>: </strong><%= @user.display_total_available_store_credit %>
+  </div>
+
   <table>
     <thead>
       <th><%= Spree.t("admin.store_credits.credited_html_header") %></th>
@@ -47,12 +51,8 @@
             <span><%= store_credit.invalidated? %></span>
           </td>
           <td class="actions" data-hook="admin_store_credits_index_row_actions">
-            <% if store_credit.editable? && can?(:edit, store_credit) %>
-              <%= link_to_edit_url edit_admin_user_store_credit_path(@user, store_credit), { no_text: true, class: 'edit' } %>
-            <% end %>
-
-            <% if store_credit.invalidateable? && can?(:invalidate, store_credit) %>
-              <%= link_to_with_icon 'ban', Spree.t("store_credit.invalidate"), invalidate_admin_user_store_credit_path(@user, store_credit), { no_text: true, class: 'edit', method: "PUT" } %>
+            <% if can?(:show, store_credit) %>
+              <%= link_to_edit_url admin_user_store_credit_path(@user, store_credit), { no_text: true, class: 'edit' } %>
             <% end %>
           </td>
         </tr>
