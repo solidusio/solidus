@@ -7,7 +7,7 @@
   <li><%= link_to_with_icon 'arrow-left', Spree.t("admin.store_credits.back_to_edit"), admin_user_store_credit_path(@user, @store_credit), class: 'button' %></li>
 <% end %>
 
-<%= form_for [:admin, @user, @store_credit], url: update_amount_admin_user_store_credit_path, method: :put do |f| %>
+<%= form_for [:admin, @user, @store_credit], url: update_amount_admin_user_store_credit_path do |f| %>
   <fieldset>
     <legend align="center"><%= Spree.t("admin.store_credits.edit_amount") %></legend>
     <div data-hook="admin_store_credit_form_fields" class="row">

@@ -35,14 +35,12 @@ module Spree
         @store_credit.created_by = try_spree_current_user
 
         if @store_credit.save
-          flash[:success] = flash_message_for(@store_credit, :successfully_updated)
-          respond_with(@store_credit) do |format|
-            format.js { render partial: '/spree/admin/store_credits/update' }
+          respond_to do |format|
+            format.json { render json: { message: flash_message_for(@store_credit, :successfully_updated) }, status: :ok }
           end
         else
-          flash[:error] = "#{Spree.t("admin.store_credits.unable_to_update")} #{@store_credit.errors.full_messages}"
-          respond_with(@store_credit) do |format|
-            format.js { render partial: '/spree/admin/store_credits/update' }
+          respond_to do |format|
+            format.json { render json: { message: "#{Spree.t("admin.store_credits.unable_to_update")} #{@store_credit.errors.full_messages}" }, status: :bad_request }
           end
         end
       end

@@ -1,5 +1,0 @@
-<% if success = flash.discard(:success) %>
-  show_flash('success', "<%= success %>")
-<% elsif error = flash.discard(:error) %>
-  show_flash('error', "<%= error %>")
-<% end %>

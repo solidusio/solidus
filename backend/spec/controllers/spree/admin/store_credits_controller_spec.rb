@@ -120,7 +120,7 @@ describe Spree::Admin::StoreCreditsController do
     let(:memo)          { "New memo" }
     let!(:store_credit) { create(:store_credit, user: user) }
 
-    subject { spree_put :update, parameters.merge(format: :js) }
+    subject { spree_put :update, parameters.merge(format: :json) }
 
     before  { allow(controller).to receive_messages(try_spree_current_user: admin_user) }
 
@@ -139,9 +139,10 @@ describe Spree::Admin::StoreCreditsController do
         expect { subject }.to change { store_credit.reload.memo }.to(memo)
       end
 
-      it "sets a success message in the flash" do
+      it "returns a success message" do
         subject
-        expect(flash.now[:success]).to match "Store credit has been successfully updated!"
+        expect(response).to have_http_status(:ok)
+        expect(JSON.parse(response.body)['message']).to match("Store credit has been successfully updated!")
       end
     end
 
@@ -159,14 +160,10 @@ describe Spree::Admin::StoreCreditsController do
         expect { subject }.to_not change { store_credit.reload.category }
       end
 
-      it "renders the update partial" do
+      it "returns an error message" do
         subject
-        expect(response).to render_template partial: '_update'
-      end
-
-      it "sets an error message in the flash" do
-        subject
-        expect(flash.now[:error]).to match "Unable to update store credit"
+        expect(response).to have_http_status(:bad_request)
+        expect(JSON.parse(response.body)['message']).to match("Unable to update store credit")
       end
     end
   end
