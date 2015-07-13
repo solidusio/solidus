@@ -35,7 +35,7 @@ describe Spree::OrderCancellations do
     it "sends a cancellation email" do
       mail_double = double
       expect(Spree::OrderMailer).to receive(:inventory_cancellation_email).with(order, [inventory_unit]).and_return(mail_double)
-      expect(mail_double).to receive(:deliver)
+      expect(mail_double).to receive(:deliver_later)
       subject
     end
 
