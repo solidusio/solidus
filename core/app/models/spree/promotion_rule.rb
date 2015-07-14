@@ -13,11 +13,11 @@ module Spree
     end
 
     def applicable?(promotable)
-      raise 'applicable? should be implemented in a sub-class of Spree::PromotionRule'
+      raise NotImplementedError, "applicable? should be implemented in a sub-class of Spree::PromotionRule"
     end
 
     def eligible?(promotable, options = {})
-      raise 'eligible? should be implemented in a sub-class of Spree::PromotionRule'
+      raise NotImplementedError, "eligible? should be implemented in a sub-class of Spree::PromotionRule"
     end
 
     # This states if a promotion can be applied to the specified line item

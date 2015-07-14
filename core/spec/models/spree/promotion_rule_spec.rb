@@ -1,18 +1,18 @@
 require 'spec_helper'
 
 module Spree
-  describe Spree::PromotionRule, :type => :model do
+  describe Spree::PromotionRule, type: :model do
 
     class BadTestRule < Spree::PromotionRule; end
 
     class TestRule < Spree::PromotionRule
-      def eligible?
+      def eligible?(promotable, options = {})
         true
       end
     end
 
-    it "should force developer to implement eligible? method" do
-      expect { BadTestRule.new.eligible? }.to raise_error ArgumentError
+    it "forces developer to implement eligible? method" do
+      expect { BadTestRule.new.eligible?("promotable") }.to raise_error NotImplementedError
     end
 
     it "validates unique rules for a promotion" do
@@ -24,6 +24,5 @@ module Spree
       p2.promotion_id = 1
       expect(p2).not_to be_valid
     end
-
   end
 end
