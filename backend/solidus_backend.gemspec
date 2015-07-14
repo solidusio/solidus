@@ -21,6 +21,7 @@ Gem::Specification.new do |s|
   s.add_dependency 'solidus_api', version
   s.add_dependency 'solidus_core', version
 
+  s.add_dependency 'bourbon'
   s.add_dependency 'jquery-rails'
   s.add_dependency 'jquery-ui-rails', '~> 5.0.0'
   s.add_dependency 'select2-rails',   '3.5.9.1' # 3.5.9.2 breaks forms

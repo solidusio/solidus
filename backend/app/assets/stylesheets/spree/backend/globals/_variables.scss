@@ -34,6 +34,9 @@ $color-success:                  $color-2 !default;
 $color-notice:                   $color-6 !default;
 $color-error:                    $color-5 !default;
 
+// Color for spinner
+$color-spinner: #fff;
+
 // Table colors
 $color-tbl-odd:                  $color-1 !default;
 $color-tbl-even:                 very-light($color-3, 4) !default;

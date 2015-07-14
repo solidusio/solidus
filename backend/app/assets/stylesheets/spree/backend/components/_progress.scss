@@ -8,7 +8,6 @@
 
   .wrapper {
     border-radius: 10px;
-    top: -10px;
     position: absolute;
     left: 50%;
     width: 200px;
@@ -20,10 +19,7 @@
   }
 
   #spinner {
-    position: absolute;
-    top: 10px;
-    left: 50%;
-    margin-left: -5px;
+    margin: auto;
   }
 
   .progress-message {
@@ -31,5 +27,24 @@
     font-weight: $font-weight-bold;
     margin-top: 20px;
     text-transform: uppercase;
+  }
+}
+
+.spinner {
+  position: relative;
+  width: 30px;
+  height: 30px;
+  border: 6px solid rgba($color-spinner, 0.2);
+  border-left-color: rgba($color-spinner, 1);
+  @include animation(spinner 1s infinite linear);
+  border-radius: 50%;
+}
+
+@include keyframes(spinner) {
+  from {
+    @include transform(rotate(0));
+  }
+  to {
+    @include transform(rotate(360deg));
   }
 }

@@ -10,7 +10,6 @@
 //= require jquery.alerts/jquery.alerts
 //= require jquery.powertip
 //= require jquery.vAlign
-//= require spin
 //= require equalize
 //= require responsive-tables
 //= require underscore-min
