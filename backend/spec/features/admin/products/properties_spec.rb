@@ -99,14 +99,17 @@ describe "Properties", :type => :feature do
     it "successfully remove and create a product property at the same time" do
       fill_in_property
 
-      fill_in "product_product_properties_attributes_1_property_name", :with => "New Property"
-      fill_in "product_product_properties_attributes_1_value", :with => "New Value"
+      expect(page).to have_css('tr.product_property', count: 2)
+
+      within '#spree_new_product_property' do
+        find('[id$=_property_name]').set("New Property")
+        find('[id$=_value]').set("New Value")
+      end
 
       delete_product_property
 
       # Give fadeOut time to complete
-      expect(page).not_to have_selector("#product_product_properties_attributes_0_property_name")
-      expect(page).not_to have_selector("#product_product_properties_attributes_0_value")
+      expect(page).to have_css('tr.product_property', count: 1)
 
       click_button "Update"
 
@@ -124,15 +127,14 @@ describe "Properties", :type => :feature do
     end
 
     def delete_product_property
-      page.evaluate_script('window.confirm = function() { return true; }')
-      click_icon :trash
-      wait_for_ajax # delete action must finish before reloading
+      accept_alert do
+        click_icon :trash
+      end
     end
 
     def check_property_row_count(expected_row_count)
       click_link "Product Properties"
-      expect(page).to have_css("tbody#product_properties")
-      expect(all("tbody#product_properties tr").count).to eq(expected_row_count)
+      expect(page).to have_css("tbody#product_properties tr", count: expected_row_count)
     end
   end
 end
