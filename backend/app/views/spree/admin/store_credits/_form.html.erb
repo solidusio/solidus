@@ -8,7 +8,7 @@
   </div>
   <div class="alpha twelve columns">
     <%= f.field_container :category do %>
-      <%= f.label :category, Spree.t(:reason) %> <span class="required">*</span><br />
+      <%= f.label :category, Spree.t(:credit_type) %> <span class="required">*</span><br />
       <%= f.select :category_id, options_from_collection_for_select(@credit_categories, :id, :name, f.object.category.try(:id)),
         { include_blank: true }, { class: 'select2 fullwidth', placeholder: Spree.t("admin.store_credits.select_reason") } %>
       <%= f.error_message_on :category %>

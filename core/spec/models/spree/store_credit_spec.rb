@@ -17,7 +17,7 @@ describe Spree::StoreCredit do
       it 'can not delete the store credit' do
         subject
         expect(store_credit.reload).to eq store_credit
-        expect(store_credit.errors[:amount_used]).to include(Spree.t('admin.store_credits.errors.amount_used_not_zero'))
+        expect(store_credit.errors[:amount_used]).to include("is greater than zero. Can not delete store credit")
       end
     end
 
@@ -71,10 +71,7 @@ describe Spree::StoreCredit do
 
         it "should set the correct error message" do
           invalid_store_credit.valid?
-          attribute_name = I18n.t('activerecord.attributes.spree/store_credit.amount_used')
-          validation_message = Spree.t('admin.store_credits.errors.amount_used_cannot_be_greater')
-          expected_error_message = "#{attribute_name} #{validation_message}"
-          expect(invalid_store_credit.errors.full_messages).to include(expected_error_message)
+          expect(invalid_store_credit.errors.full_messages).to include("Amount used cannot be greater than the credited amount")
         end
       end
 
@@ -97,7 +94,7 @@ describe Spree::StoreCredit do
 
       it "adds an error message about the invalid amount used" do
         subject.valid?
-        expect(subject.errors[:amount_used]).to include(Spree.t('admin.store_credits.errors.amount_used_cannot_be_greater'))
+        expect(subject.errors[:amount_used]).to include("cannot be greater than the credited amount")
       end
     end
 
@@ -110,7 +107,27 @@ describe Spree::StoreCredit do
 
       it "adds an error message about the invalid authorized amount" do
         subject.valid?
-        expect(subject.errors[:amount_authorized]).to include(Spree.t('admin.store_credits.errors.amount_authorized_exceeds_total_credit'))
+        expect(subject.errors[:amount_authorized]).to include(" exceeds the available credit")
+      end
+    end
+
+    describe "editing category" do
+      let!(:store_credit) { create(:store_credit) }
+      let!(:test_category) { create(:store_credit_category, name: "Testing") }
+
+      subject { store_credit.update_attributes(category: test_category) }
+
+      it "returns false" do
+        expect(subject).to eq false
+      end
+
+      it "category doesn't change" do
+        expect { subject }.not_to change { store_credit.reload.category }
+      end
+
+      it "adds an error message about not being able to edit the category" do
+        subject
+        expect(store_credit.errors[:category]).to include("cannot be modified")
       end
     end
   end
@@ -238,7 +255,7 @@ describe Spree::StoreCredit do
 
       it "adds an error to the model" do
         subject
-        expect(store_credit.errors.full_messages).to include(Spree.t('store_credit.insufficient_funds'))
+        expect(store_credit.errors.full_messages).to include("Store credit amount remaining is not sufficient")
       end
     end
 
@@ -251,7 +268,7 @@ describe Spree::StoreCredit do
 
       it "adds an error to the model" do
         subject
-        expect(store_credit.errors.full_messages).to include(Spree.t('store_credit.currency_mismatch'))
+        expect(store_credit.errors.full_messages).to include("Store credit currency does not match order currency")
       end
     end
 
@@ -291,7 +308,7 @@ describe Spree::StoreCredit do
 
       it "adds an error to the model" do
         subject
-        expect(store_credit.errors.full_messages).to include(Spree.t('store_credit.insufficient_authorized_amount'))
+        expect(store_credit.errors.full_messages).to include("Unable to capture more than authorized amount")
       end
 
       it "does not update the store credit model" do
@@ -308,7 +325,7 @@ describe Spree::StoreCredit do
 
       it "adds an error to the model" do
         subject
-        expect(store_credit.errors.full_messages).to include(Spree.t('store_credit.currency_mismatch'))
+        expect(store_credit.errors.full_messages).to include("Store credit currency does not match order currency")
       end
 
       it "does not update the store credit model" do
@@ -364,7 +381,7 @@ describe Spree::StoreCredit do
 
       it "adds an error to the model" do
         subject
-        expect(store_credit.errors.full_messages).to include(Spree.t('store_credit.unable_to_void', auth_code: auth_code))
+        expect(store_credit.errors.full_messages).to include("Unable to void code: #{auth_code}")
       end
     end
 
@@ -438,7 +455,7 @@ describe Spree::StoreCredit do
 
       it "adds an error message about the currency mismatch" do
         subject
-        expect(store_credit.errors.full_messages).to include(Spree.t('store_credit.currency_mismatch'))
+        expect(store_credit.errors.full_messages).to include("Store credit currency does not match order currency")
       end
     end
 
@@ -454,7 +471,7 @@ describe Spree::StoreCredit do
 
       it "adds an error message about the currency mismatch" do
         subject
-        expect(store_credit.errors.full_messages).to include(Spree.t('store_credit.unable_to_credit', auth_code: auth_code))
+        expect(store_credit.errors.full_messages).to include("Unable to credit code: #{auth_code}")
       end
     end
 
@@ -470,7 +487,7 @@ describe Spree::StoreCredit do
 
       it "adds an error message about the currency mismatch" do
         subject
-        expect(store_credit.errors.full_messages).to include(Spree.t('store_credit.unable_to_credit', auth_code: auth_code))
+        expect(store_credit.errors.full_messages).to include("Unable to credit code: #{auth_code}")
       end
     end
 
@@ -766,18 +783,71 @@ describe Spree::StoreCredit do
     end
   end
 
+  describe "#update_amount" do
+    let(:invalidation_user) { create(:user) }
+    let(:invalidation_reason) { create(:store_credit_update_reason) }
+
+    subject { store_credit.update_amount(amount, invalidation_reason, invalidation_user) }
+
+    context "amount is valid" do
+      let(:amount) { 10.0 }
+
+      before { store_credit.update_attributes!(amount: 30.0) }
+
+      it "returns true" do
+        expect(subject).to eq true
+      end
+
+      it "creates an adjustment store credit event" do
+        expect { subject }.to change { store_credit.store_credit_events.where(action: Spree::StoreCredit::ADJUSTMENT_ACTION).count }.from(0).to(1)
+      end
+
+      it "sets the adjustment amount on the store credit event correctly" do
+        subject
+        expect(store_credit.store_credit_events.find_by(action: Spree::StoreCredit::ADJUSTMENT_ACTION).amount).to eq -20
+      end
+
+      it "sets the originator on the store credit event correctly" do
+        subject
+        expect(store_credit.store_credit_events.find_by(action: Spree::StoreCredit::ADJUSTMENT_ACTION).originator).to eq invalidation_user
+      end
+    end
+
+    context "amount is invalid" do
+      let(:amount) { -10.0 }
+
+      it "returns false" do
+        expect(subject).to eq false
+      end
+
+      it "doesn't create an adjustment store credit event" do
+        expect { subject }.to_not change { store_credit.store_credit_events.where(action: Spree::StoreCredit::ADJUSTMENT_ACTION).count }
+      end
+    end
+  end
+
   describe "#invalidate" do
-    before { allow(store_credit).to receive(:touch) }
+    let(:invalidation_user) { create(:user) }
+    let(:invalidation_reason) { create(:store_credit_update_reason) }
+
+    before do
+      store_credit.save!
+    end
+
+    subject { store_credit.invalidate(invalidation_reason, invalidation_user) }
+
     it "sets the invalidated_at field to the current time" do
-      store_credit.invalidate
-      expect(store_credit).to have_received(:touch).with(:invalidated_at)
+      invalidated_at = Time.now
+      Timecop.freeze(invalidated_at) do
+        subject
+        expect(store_credit.invalidated_at).to eq invalidated_at
+      end
     end
 
     context "there is an uncaptured authorization" do
       before { store_credit.authorize(5.0, "USD") }
       it "prevents invalidation" do
-        store_credit.invalidate
-        expect(store_credit).not_to have_received(:touch)
+        expect { subject }.to_not change { store_credit.reload.invalidated_at }
         expect(store_credit.errors[:invalidated_at].join).to match /uncaptured authorization/
       end
     end
@@ -789,9 +859,17 @@ describe Spree::StoreCredit do
       end
 
       it "can invalidate the rest of the store credit" do
-        store_credit.invalidate
-        expect(store_credit).to have_received(:touch).with(:invalidated_at)
+        expect { subject }.to change { store_credit.reload.invalidated_at }
         expect(store_credit.errors).to be_blank
+      end
+
+      it "creates a store credit event for the invalidation" do
+        expect { subject }.to change { store_credit.store_credit_events.where(action: Spree::StoreCredit::INVALIDATE_ACTION).count }.from(0).to(1)
+      end
+
+      it "assigns the originator as the user that is performing the invalidation" do
+        subject
+        expect(store_credit.store_credit_events.find_by(action: Spree::StoreCredit::INVALIDATE_ACTION).originator).to eq invalidation_user
       end
     end
   end

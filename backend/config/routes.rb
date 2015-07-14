@@ -198,6 +198,9 @@ Spree::Core::Engine.add_routes do
       end
       resources :store_credits, except: [:destroy] do
         member do
+          get :edit_amount
+          put :update_amount
+          get :edit_validity
           put :invalidate
         end
       end

@@ -4,10 +4,16 @@ module Spree
 
     belongs_to :store_credit
     belongs_to :originator, polymorphic: true
+    belongs_to :update_reason, class_name: "Spree::StoreCreditUpdateReason"
+
+    validates_presence_of :update_reason, if: :action_requires_reason?
+
+    NON_EXPOSED_ACTIONS = [Spree::StoreCredit::ELIGIBLE_ACTION, Spree::StoreCredit::AUTHORIZE_ACTION]
 
     scope :exposed_events, -> { exposable_actions.not_invalidated }
-    scope :exposable_actions, -> { where.not(action: [Spree::StoreCredit::ELIGIBLE_ACTION, Spree::StoreCredit::AUTHORIZE_ACTION]) }
+    scope :exposable_actions, -> { where.not(action: NON_EXPOSED_ACTIONS) }
     scope :not_invalidated, -> { joins(:store_credit).where(spree_store_credits: { invalidated_at: nil }) }
+    scope :chronological, -> { order(:created_at) }
     scope :reverse_chronological, -> { order(created_at: :desc) }
 
     delegate :currency, to: :store_credit
@@ -18,6 +24,10 @@ module Spree
 
     def authorization_action?
       action == Spree::StoreCredit::AUTHORIZE_ACTION
+    end
+
+    def action_requires_reason?
+      [Spree::StoreCredit::ADJUSTMENT_ACTION, Spree::StoreCredit::INVALIDATE_ACTION].include?(action)
     end
 
     def display_amount
@@ -33,16 +43,8 @@ module Spree
     end
 
     def display_action
-      case action
-      when Spree::StoreCredit::CAPTURE_ACTION
-        Spree.t('store_credit.captured')
-      when Spree::StoreCredit::AUTHORIZE_ACTION
-        Spree.t('store_credit.authorized')
-      when Spree::StoreCredit::ALLOCATION_ACTION
-        Spree.t('store_credit.allocated')
-      when Spree::StoreCredit::VOID_ACTION, Spree::StoreCredit::CREDIT_ACTION
-        Spree.t('store_credit.credit')
-      end
+      return if NON_EXPOSED_ACTIONS.include?(action)
+      Spree.t("store_credit.display_action.#{action}")
     end
 
     def order

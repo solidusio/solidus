@@ -7,6 +7,8 @@ class Spree::StoreCredit < ActiveRecord::Base
   ELIGIBLE_ACTION   = 'eligible'
   AUTHORIZE_ACTION  = 'authorize'
   ALLOCATION_ACTION = 'allocation'
+  ADJUSTMENT_ACTION = 'adjustment'
+  INVALIDATE_ACTION = 'invalidate'
 
   DEFAULT_CREATED_BY_EMAIL = "spree@example.com"
 
@@ -27,11 +29,12 @@ class Spree::StoreCredit < ActiveRecord::Base
 
   scope :order_by_priority, -> { includes(:credit_type).order('spree_store_credit_types.priority ASC') }
 
-  before_validation :associate_credit_type
   after_save :store_event
+  before_validation :associate_credit_type
+  before_validation :validate_category_unchanged, on: :update
   before_destroy :validate_no_amount_used
 
-  attr_accessor :action, :action_amount, :action_originator, :action_authorization_code
+  attr_accessor :action, :action_amount, :action_originator, :action_authorization_code, :update_reason
 
   extend Spree::DisplayMoney
   money_methods :amount, :amount_used, :amount_authorized
@@ -174,9 +177,23 @@ class Spree::StoreCredit < ActiveRecord::Base
     !!invalidated_at
   end
 
-  def invalidate
+  def update_amount(amount, reason, user_performing_update)
+    previous_amount = self.amount
+    self.amount = amount
+    self.action_amount = self.amount - previous_amount
+    self.action = ADJUSTMENT_ACTION
+    self.update_reason = reason
+    self.action_originator = user_performing_update
+    save
+  end
+
+  def invalidate(reason, user_performing_invalidation)
     if invalidateable?
-      touch(:invalidated_at)
+      self.action = INVALIDATE_ACTION
+      self.update_reason = reason
+      self.action_originator = user_performing_invalidation
+      self.invalidated_at = Time.now
+      save
     else
       errors.add(:invalidated_at, Spree.t("store_credit.errors.cannot_invalidate_uncaptured_authorization"))
       return false
@@ -222,7 +239,7 @@ class Spree::StoreCredit < ActiveRecord::Base
   end
 
   def store_event
-    return unless amount_changed? || amount_used_changed? || amount_authorized_changed? || action == ELIGIBLE_ACTION
+    return unless amount_changed? || amount_used_changed? || amount_authorized_changed? || [ELIGIBLE_ACTION, INVALIDATE_ACTION].include?(action)
 
     event = if action
       store_credit_events.build(action: action)
@@ -235,6 +252,7 @@ class Spree::StoreCredit < ActiveRecord::Base
       authorization_code: action_authorization_code || event.authorization_code || generate_authorization_code,
       user_total_amount: user.total_available_store_credit,
       originator: action_originator,
+      update_reason: update_reason,
     })
   end
 
@@ -249,6 +267,12 @@ class Spree::StoreCredit < ActiveRecord::Base
   def amount_authorized_less_than_or_equal_to_amount
     if (amount_used + amount_authorized) > amount
       errors.add(:amount_authorized, Spree.t('admin.store_credits.errors.amount_authorized_exceeds_total_credit'))
+    end
+  end
+
+  def validate_category_unchanged
+    if category_id_changed?
+      errors.add(:category, Spree.t('admin.store_credits.errors.cannot_be_modified'))
     end
   end
 

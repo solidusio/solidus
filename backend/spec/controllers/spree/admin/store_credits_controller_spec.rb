@@ -1,5 +1,11 @@
 require 'spec_helper'
 
+shared_examples "update reason loader" do
+  it "sets the update_reasons variable to a list of categories sorted by category name " do
+    expect(assigns(:update_reasons)).to eq [update_reason]
+  end
+end
+
 describe Spree::Admin::StoreCreditsController do
   stub_authorization!
 
@@ -8,6 +14,23 @@ describe Spree::Admin::StoreCreditsController do
 
   let!(:b_credit_category) { create(:store_credit_category, name: "B category") }
   let!(:a_credit_category) { create(:store_credit_category, name: "A category") }
+  let!(:update_reason)     { create(:store_credit_update_reason) }
+
+  describe "#show" do
+    let!(:store_credit) { create(:store_credit, user: user, category: a_credit_category) }
+    let!(:event)        { create(:store_credit_auth_event, store_credit: store_credit, created_at: 5.days.ago) }
+
+    before { spree_get :show, user_id: user.id, id: store_credit.id }
+
+    it "sets the store_credit variable to a new store credit model" do
+      expect(assigns(:store_credit)).to eq store_credit
+    end
+
+    it "sets the store_credit_events variable to the store credit's events in chronological order" do
+      allocation_event = store_credit.store_credit_events.find_by(action: Spree::StoreCredit::ALLOCATION_ACTION)
+      expect(assigns(:store_credit_events)).to eq [event, allocation_event]
+    end
+  end
 
   describe "#new" do
     before { spree_get :new, user_id: create(:user).id }
@@ -69,86 +92,57 @@ describe Spree::Admin::StoreCreditsController do
     end
   end
 
-  describe "#edit" do
-    let!(:store_credit) { create(:store_credit, user: user, category: a_credit_category) }
-    before { spree_get :edit, user_id: user.id, id: store_credit.id }
+  describe "#edit_amount" do
+    let!(:store_credit)      { create(:store_credit, user: user, category: a_credit_category) }
 
-    it { expect(assigns(:credit_categories)).to eq [a_credit_category, b_credit_category] }
+    before { spree_get :edit_amount, user_id: user.id, id: store_credit.id }
+
+    it_behaves_like "update reason loader"
+
+    it "sets the store_credit variable to the persisted store credit" do
+      expect(assigns(:store_credit)).to eq store_credit
+    end
+  end
+
+  describe "#edit_validity" do
+    let!(:store_credit)      { create(:store_credit, user: user, category: a_credit_category) }
+
+    before { spree_get :edit_validity, user_id: user.id, id: store_credit.id }
+
+    it_behaves_like "update reason loader"
+
+    it "sets the store_credit variable to the persisted store credit" do
+      expect(assigns(:store_credit)).to eq store_credit
+    end
   end
 
   describe "#update" do
-    let!(:store_credit) { create(:store_credit, user: user, category: b_credit_category) }
+    let(:memo)          { "New memo" }
+    let!(:store_credit) { create(:store_credit, user: user) }
 
-    subject { spree_put :update, parameters }
+    subject { spree_put :update, parameters.merge(format: :json) }
 
     before  { allow(controller).to receive_messages(try_spree_current_user: admin_user) }
 
     context "the passed parameters are valid" do
-      let(:updated_amount) { 300.0 }
-
       let(:parameters) do
         {
           user_id: user.id,
           id: store_credit.id,
           store_credit: {
-            amount: updated_amount,
-            category_id: a_credit_category.id
+            memo: memo
           }
         }
       end
 
-      context "the store credit has been partially used" do
-        before { store_credit.update_attributes(amount_used: 10.0) }
-
-        context "the new amount is greater than the used amount" do
-          let(:updated_amount) { 11.0 }
-          it "updates the amount to be the passed in amount" do
-            subject
-            expect(store_credit.reload.amount).to eq updated_amount
-          end
-        end
-
-        context "the new amount is less than the used amount" do
-          let(:updated_amount) { 9.0 }
-          it "does not update the amount" do
-            expect { subject }.not_to change { store_credit.reload.amount }
-          end
-
-          it "responds with an error message" do
-            subject
-            expect(flash.now[:error]).to match "greater than the credited amount"
-          end
-        end
+      it "updates the memo to be the passed in value" do
+        expect { subject }.to change { store_credit.reload.memo }.to(memo)
       end
 
-      context "the store credit has not been used" do
-        it "redirects to index" do
-          expect(subject).to redirect_to spree.admin_user_store_credits_path(user)
-        end
-
-        it "does not create a new store credit" do
-          expect { subject }.to_not change(Spree::StoreCredit, :count)
-        end
-
-        it "assigns the store credit's created by to the current user" do
-          subject
-          expect(store_credit.reload.created_by).to eq admin_user
-        end
-
-        it "updates passed amount" do
-          subject
-          expect(store_credit.reload.amount).to eq updated_amount
-        end
-
-        it "updates passed category" do
-          subject
-          expect(store_credit.reload.category).to eq a_credit_category
-        end
-
-        it "maintains the user association" do
-          subject
-          expect(store_credit.reload.user).to eq user
-        end
+      it "returns a success message" do
+        subject
+        expect(response).to have_http_status(:ok)
+        expect(JSON.parse(response.body)['message']).to match("Store credit has been successfully updated!")
       end
     end
 
@@ -157,19 +151,132 @@ describe Spree::Admin::StoreCreditsController do
         {
           user_id: user.id,
           id: store_credit.id,
-          store_credit: { amount: -1.00, category_id: a_credit_category.id }
+          store_credit: {
+            category_id: b_credit_category.id
+          }
         }
       end
+      it "doesn't update the store credit's category" do
+        expect { subject }.to_not change { store_credit.reload.category }
+      end
 
-      it { expect { subject }.not_to change { store_credit.reload.amount } }
+      it "returns an error message" do
+        subject
+        expect(response).to have_http_status(:bad_request)
+        expect(JSON.parse(response.body)['message']).to match("Unable to update store credit")
+      end
+    end
+  end
+
+  describe "#update_amount" do
+    let(:original_amount) { 100.0 }
+    let!(:store_credit)   { create(:store_credit, user: user, amount: original_amount) }
+    let!(:update_reason)  { create(:store_credit_update_reason) }
+    let(:parameters) do
+      {
+        user_id: user.id,
+        id: store_credit.id,
+        update_reason_id: update_reason.id,
+        store_credit: {
+          amount: updated_amount
+        }
+      }
+    end
+
+    subject { spree_put :update_amount, parameters }
+
+    before  { allow(controller).to receive_messages(try_spree_current_user: admin_user) }
+
+    context "the passed parameters are valid" do
+      let(:updated_amount) { 300.0 }
+
+      context "the store credit has been partially used" do
+        before { store_credit.update_attributes(amount_used: 10.0) }
+
+        context "the new amount is greater than the used amount" do
+          let(:updated_amount) { 11.0 }
+
+          before { subject }
+
+          it "updates the amount to be the passed in amount" do
+            expect(store_credit.reload.amount).to eq updated_amount
+          end
+        end
+
+        context "the new amount is less than the used amount" do
+          let(:updated_amount) { 9.0 }
+
+          before { subject }
+
+          it "does not update the amount" do
+            expect(store_credit.reload.amount).to eq original_amount
+          end
+
+          it "renders the edit_amount template" do
+            expect(response).to render_template :edit_amount
+          end
+
+          it "adds an error message to the flash" do
+            expect(flash.now[:error]).to match "Unable to update"
+          end
+
+          it_behaves_like "update reason loader"
+        end
+      end
+
+      context "the store credit has not been used" do
+        it "sets a success message in the flash" do
+          subject
+          expect(flash.now[:success]).to match "Store credit has been successfully updated!"
+        end
+
+        it "does not create a new store credit" do
+          expect { subject }.to_not change(Spree::StoreCredit, :count)
+        end
+
+        it "updates passed amount" do
+          subject
+          expect(store_credit.reload.amount).to eq updated_amount
+        end
+      end
+    end
+
+    context "the passed parameters are invalid" do
+      let(:updated_amount) { -1.00 }
+
+      before { subject }
+
+      it "does not update the amount" do
+        expect(store_credit.reload.amount).to eq original_amount
+      end
+
+      it "renders the edit_amount template" do
+        expect(response).to render_template :edit_amount
+      end
+
+      it "adds an error message to the flash" do
+        expect(flash.now[:error]).to match "Unable to update"
+      end
+
+      it_behaves_like "update reason loader"
     end
   end
 
   describe "#invalidate" do
     let!(:store_credit) { create(:store_credit, user: user, category: b_credit_category) }
 
+    let(:parameters) do
+      {
+        user_id: user.id,
+        id: store_credit.id,
+        update_reason_id: update_reason.id
+      }
+    end
+
+    subject { spree_put :invalidate, parameters }
+
     it "attempts to invalidate the store credit" do
-      expect { spree_put :invalidate, user_id: user.id, id: store_credit.id }.to change { store_credit.reload.invalidated_at }.from(nil)
+      expect { subject  }.to change { store_credit.reload.invalidated_at }.from(nil)
     end
 
     context "the invalidation is unsuccessful" do
@@ -178,27 +285,24 @@ describe Spree::Admin::StoreCreditsController do
         subject
       end
 
-      subject { spree_put :invalidate, user_id: user.id, id: store_credit.id }
-
-      it "redirects to index" do
-        expect(response).to redirect_to spree.admin_user_store_credits_path(user)
+      it "doesn't invalidate the store credit" do
+        expect(store_credit.reload.invalidated_at).to be_nil
       end
+
+      it "renders the edit_validity template" do
+        expect(response).to render_template :edit_validity
+      end
+
+      it "sets an error message in the flash" do
+        expect(flash.now[:error]).to match "Unable to invalidate store credit"
+      end
+
+      it_behaves_like "update reason loader"
     end
 
-    context "html request" do
-      subject { spree_put :invalidate, user_id: user.id, id: store_credit.id }
-
+    context "the invalidation is successful" do
       it "redirects to index" do
-        expect(subject).to redirect_to spree.admin_user_store_credits_path(user)
-      end
-    end
-
-    context "js request" do
-      subject { spree_put :invalidate, user_id: user.id, id: store_credit.id, format: :js }
-
-      it "returns a 200 status code" do
-        subject
-        expect(response.code).to eq "200"
+        expect(subject).to redirect_to spree.admin_user_store_credit_path(user, store_credit)
       end
     end
   end
