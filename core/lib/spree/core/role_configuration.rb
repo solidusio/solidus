@@ -7,7 +7,7 @@ module Spree
   #
   # @example Adding order, product, and user display to customer service users.
   #   Spree::RoleConfiguration.configure do |config|
-  #     config.register_role :customer_service, [
+  #     config.assign_permissions :customer_service, [
   #       Spree::PermissionSets::OrderDisplay,
   #       Spree::PermissionSets::UserDisplay,
   #       Spree::PermissionSets::ProductDisplay
@@ -27,10 +27,11 @@ module Spree
       yield(instance)
     end
 
-    # Given an ability, and a user, determine what permissions sets can be activated
-    # on the ability, then activate them.
+    # Given a CanCan::Ability, and a user, determine what permissions sets can
+    # be activated on the ability, then activate them.
     #
-    # This performs can/cannot declarations on the ability, and can modify it's internal permissions
+    # This performs can/cannot declarations on the ability, and can modify its
+    # internal permissions.
     #
     # @param ability [CanCan::Ability] the ability to invoke declarations on
     # @param user [#spree_roles] the user that holds the spree_roles association.
@@ -39,9 +40,7 @@ module Spree
       applicable_permissions = Set.new
 
       spree_roles.each do |role_name|
-        if roles.key?(role_name)
-          applicable_permissions |= roles[role_name].permission_sets
-        end
+        applicable_permissions |= roles[role_name].permission_sets
       end
 
       applicable_permissions.each do |permission_set|
