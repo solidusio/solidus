@@ -85,10 +85,8 @@ describe "Properties", :type => :feature do
     # Regression test for #2279
     it "successfully create and then remove product property" do
       fill_in_property
-      # Sometimes the page doesn't load before the all check is done
-      # lazily finding the element gives the page 10 seconds
-      expect(page).to have_css("tbody#product_properties tr:nth-child(2)")
-      expect(all("tbody#product_properties tr").count).to eq(2)
+
+      check_property_row_count(2)
 
       delete_product_property
 
@@ -130,6 +128,7 @@ describe "Properties", :type => :feature do
       accept_alert do
         click_icon :trash
       end
+      expect(page).to have_content 'successfully removed'
     end
 
     def check_property_row_count(expected_row_count)
