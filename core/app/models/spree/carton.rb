@@ -12,6 +12,7 @@ class Spree::Carton < ActiveRecord::Base
   validates :shipping_method, presence: true
   validates :inventory_units, presence: true
   validates :shipped_at, presence: true
+  validate :validate_one_store_per_carton
 
   make_permalink field: :number, length: 11, prefix: 'C'
 
@@ -39,6 +40,10 @@ class Spree::Carton < ActiveRecord::Base
     shipments.map(&:number)
   end
 
+  def store
+    orders.first.store
+  end
+
   def display_shipped_at
     shipped_at.to_s(:rfc822)
   end
@@ -53,5 +58,13 @@ class Spree::Carton < ActiveRecord::Base
 
   def any_exchanges?
     inventory_units.any?(&:original_return_item)
+  end
+
+  private
+
+  def validate_one_store_per_carton
+    if orders.map(&:store).uniq.size > 1
+      errors.add(:base, "Cartons cannot contain items from multiple stores") # TODO: use Spree.t
+    end
   end
 end
