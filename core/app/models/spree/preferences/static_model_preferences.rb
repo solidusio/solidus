@@ -34,12 +34,13 @@ module Spree
       end
 
       def add(klass, name, preferences)
-        raise "Static model preference '#{name}' on #{klass} is already defined" if @store[klass][name]
-        @store[klass][name] = Definition.new(klass, preferences)
+        # We use class name instead of class to allow reloading in dev
+        raise "Static model preference '#{name}' on #{klass} is already defined" if @store[klass.to_s][name]
+        @store[klass.to_s][name] = Definition.new(klass, preferences)
       end
 
       def for_class(klass)
-        @store[klass]
+        @store[klass.to_s]
       end
     end
   end
