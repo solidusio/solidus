@@ -5,7 +5,7 @@ class CreateAdjustmentReason < ActiveRecord::Migration
       t.string   "code"
       t.boolean  "active",     default: true
 
-      t.timestamps
+      t.timestamps null: true
     end
 
     add_index :spree_adjustment_reasons, :code

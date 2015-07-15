@@ -7,13 +7,6 @@ describe Spree::ReimbursementMailer, :type => :mailer do
 
   let(:reimbursement) { create(:reimbursement) }
 
-  context ":from not set explicitly" do
-    it "falls back to spree config" do
-      message = Spree::ReimbursementMailer.reimbursement_email(reimbursement)
-      expect(message.from).to eq [Spree::Config[:mails_from]]
-    end
-  end
-
   it "accepts a reimbursement id as an alternative to a Reimbursement object" do
     expect(Spree::Reimbursement).to receive(:find).with(reimbursement.id).and_return(reimbursement)
 

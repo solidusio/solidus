@@ -4,7 +4,8 @@ describe Spree::Order, :type => :model do
   let(:order) { stub_model("Spree::Order") }
 
   context "#finalize!" do
-    let(:order) { Spree::Order.create(email: 'test@example.com') }
+    let(:order) { Spree::Order.create(email: 'test@example.com', store: store) }
+    let(:store) { FactoryGirl.build(:store) }
 
     before do
       order.update_column :state, 'complete'
@@ -85,7 +86,7 @@ describe Spree::Order, :type => :model do
       end
 
       context "and order is approved" do
-        before do 
+        before do
           allow(order).to receive_messages :approved? => true
         end
 

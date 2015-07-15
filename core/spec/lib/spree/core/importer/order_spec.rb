@@ -228,7 +228,7 @@ module Spree
           hash = { sku: variant.sku }
           expect {
             Importer::Order.ensure_variant_id_from_params(hash)
-          }.to raise_error
+          }.to raise_error ActiveRecord::RecordNotFound
         end
       end
 
@@ -297,7 +297,7 @@ module Spree
           params[:shipments_attributes][0][:stock_location] = "doesnt exist"
           expect {
             order = Importer::Order.import(user,params)
-          }.to raise_error
+          }.to raise_error ActiveRecord::RecordNotFound
         end
 
         context 'when completed_at and shipped_at present' do
@@ -421,7 +421,7 @@ module Spree
           params = { :payments_attributes => [{ payment_method: "XXX" }] }
           count = Order.count
 
-          expect { order = Importer::Order.import(user,params) }.to raise_error
+          expect { order = Importer::Order.import(user,params) }.to raise_error ActiveRecord::RecordNotFound
           expect(Order.count).to eq count
         end
       end

@@ -171,7 +171,7 @@ describe Spree::Order, :type => :model do
         let(:ship_address) { nil }
 
         it "does not transition without a ship address" do
-          expect { order.next! }.to raise_error
+          expect { order.next! }.to raise_error StateMachines::InvalidTransition
         end
       end
 
@@ -420,6 +420,7 @@ describe Spree::Order, :type => :model do
       context "without confirmation required" do
         before do
           order.email = "spree@example.com"
+          order.store = FactoryGirl.build(:store)
           allow(order).to receive_messages :payment_required? => true
           order.payments << FactoryGirl.create(:payment, state: payment_state, order: order)
         end
@@ -547,6 +548,7 @@ describe Spree::Order, :type => :model do
       context 'when the line items are not available' do
         before do
           order.line_items << FactoryGirl.create(:line_item)
+          order.store = FactoryGirl.build(:store)
           Spree::OrderUpdater.new(order).update
 
           order.save!
@@ -576,6 +578,7 @@ describe Spree::Order, :type => :model do
     context "default credit card" do
       before do
         order.user = FactoryGirl.create(:user)
+        order.store = FactoryGirl.create(:store)
         order.email = 'spree@example.org'
         order.payments << FactoryGirl.create(:payment)
 
@@ -697,6 +700,7 @@ describe Spree::Order, :type => :model do
 
     it "does not attempt to process payments" do
       order.email = 'user@example.com'
+      order.store = FactoryGirl.build(:store)
       order.stub(:ensure_available_shipping_rates).and_return(true)
       order.stub(:ensure_promotions_eligible).and_return(true)
       order.stub(:ensure_line_item_variants_are_not_deleted).and_return(true)
@@ -850,7 +854,7 @@ describe Spree::Order, :type => :model do
 
         expect {
           order.update_from_params(params, permitted_params)
-        }.to raise_error
+        }.to raise_error Spree::Core::GatewayError
       end
     end
 
