@@ -4,7 +4,11 @@ module Spree
       module Auth
         extend ActiveSupport::Concern
 
+        mattr_accessor(:login_redirector) { Spree::Core::ControllerHelpers::LoginRedirector }
+
         included do
+          include Spree::Core::ControllerHelpers::Auth.login_redirector
+
           before_filter :set_guest_token
           helper_method :try_spree_current_user
 
@@ -57,23 +61,6 @@ module Spree
             current_spree_user
           else
             nil
-          end
-        end
-
-        # Redirect as appropriate when an access request fails.  The default action is to redirect to the login screen.
-        # Override this method in your controllers if you want to have special behavior in case the user is not authorized
-        # to access the requested action.  For example, a popup window might simply close itself.
-        def redirect_unauthorized_access
-          if try_spree_current_user
-            flash[:error] = Spree.t(:authorization_failure)
-            redirect_to '/unauthorized'
-          else
-            store_location
-            if respond_to?(:spree_login_path)
-              redirect_to spree_login_path
-            else
-              redirect_to '/unauthorized'
-            end
           end
         end
 
