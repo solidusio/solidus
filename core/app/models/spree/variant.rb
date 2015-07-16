@@ -304,8 +304,13 @@ module Spree
       self.track_inventory? && Spree::Config.track_inventory_levels
     end
 
+    # Image that can be used for the variant.
+    #
+    # Will first search for images on the variant, then all images from the
+    # products' variants. If all else fails, will return a new image object.
+    # @return [Spree::Image] the image to display
     def display_image
-      images.first || Spree::Image.new
+      images.first || product.variant_images.first || Spree::Image.new
     end
 
     private
