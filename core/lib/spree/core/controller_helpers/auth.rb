@@ -8,8 +8,20 @@ module Spree
           before_filter :set_guest_token
           helper_method :try_spree_current_user
 
-          rescue_from CanCan::AccessDenied do |exception|
-            redirect_unauthorized_access
+          # @!attribute [rw] unauthorized_redirect
+          #   @!scope class
+          #   Extension point for overriding behaviour of access denied errors.
+          #   Default behaviour is to redirect to "/unauthorized" with a flash
+          #   message.
+          #   @return [Proc] action to take when access denied error is raised.
+          class_attribute :unauthorized_redirect
+          self.unauthorized_redirect = -> do
+            flash[:error] = Spree.t(:authorization_failure)
+            redirect_to "/unauthorized"
+          end
+
+          rescue_from CanCan::AccessDenied do
+            instance_exec &unauthorized_redirect
           end
         end
 
@@ -59,24 +71,6 @@ module Spree
             nil
           end
         end
-
-        # Redirect as appropriate when an access request fails.  The default action is to redirect to the login screen.
-        # Override this method in your controllers if you want to have special behavior in case the user is not authorized
-        # to access the requested action.  For example, a popup window might simply close itself.
-        def redirect_unauthorized_access
-          if try_spree_current_user
-            flash[:error] = Spree.t(:authorization_failure)
-            redirect_to '/unauthorized'
-          else
-            store_location
-            if respond_to?(:spree_login_path)
-              redirect_to spree_login_path
-            else
-              redirect_to '/unauthorized'
-            end
-          end
-        end
-
       end
     end
   end
