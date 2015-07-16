@@ -5,6 +5,7 @@ module Spree
     before { Spree::Api::Config[:requires_authentication] = false }
     let!(:promotion) { FactoryGirl.create(:promotion, :with_order_adjustment, code: 'foo', weighted_order_adjustment_amount: 10) }
     let(:promotion_code) { promotion.codes.first }
+    let!(:store) { FactoryGirl.create(:store) }
     let(:bill_address) { FactoryGirl.create(:address) }
     let(:ship_address) { FactoryGirl.create(:address) }
     let(:variant_1) { FactoryGirl.create(:variant, price: 100.00) }
