@@ -63,7 +63,7 @@ describe "Order Details", type: :feature, js: true do
           end
         end
 
-        # Click "ok" on confirmation dialog
+        expect(page).to have_content("YOUR ORDER IS EMPTY") # wait for page refresh
         expect(page).not_to have_content("spree t-shirt")
       end
 
