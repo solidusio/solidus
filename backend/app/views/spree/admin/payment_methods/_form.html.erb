@@ -11,12 +11,12 @@
 
         <div class="field js-preference-source-wrapper">
           <%= label_tag :preference_source, 'Preference Source' %>
-          <%= f.select(:preference_source, [["Custom", nil]] + @object.class.available_preference_sources, {}, class: 'select2 fullwidth js-preference-source') %>
+          <%= f.select(:preference_source, [[Spree.t(:preference_source_none), nil]] + @object.class.available_preference_sources, {}, class: 'select2 fullwidth js-preference-source') %>
         </div>
 
         <div class="gateway-settings js-gateway-settings">
           <% if @object.preference_source.present? %>
-            Using static preferences "<%= @object.preference_source %>"
+            <%= Spree.t :preference_source_using, name: @object.preference_source %>
           <% elsif !@object.new_record? %>
             <%= preference_fields(@object, f) %>
           <% end %>

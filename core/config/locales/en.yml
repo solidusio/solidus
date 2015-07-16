@@ -570,7 +570,7 @@ en:
     both: Both
     calculated_reimbursements: Calculated Reimbursements
     calculator: Calculator
-    calculator_settings_warning: If you are changing the calculator type, you must save first before you can edit the calculator settings
+    calculator_settings_warning: If you are changing the calculator type or preference source, you must save first before you can edit the calculator settings
     cancel: cancel
     cancel_inventory: 'Cancel Inventory'
     canceled: canceled
@@ -1149,6 +1149,8 @@ en:
     price: Price
     price_range: Price Range
     price_sack: Price Sack
+    preference_source_none: '(custom)'
+    preference_source_using: 'Using static preferences "%{name}"'
     process: Process
     product: Product
     product_details: Product Details
