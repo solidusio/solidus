@@ -4,16 +4,17 @@ module Spree
       module Auth
         extend ActiveSupport::Concern
 
+        # @!attribute [rw] unauthorized_redirect
+        #   @!scope class
+        #   Extension point for overriding behaviour of access denied errors.
+        #   Default behaviour is to redirect to "/unauthorized" with a flash
+        #   message.
+        #   @return [Proc] action to take when access denied error is raised.
+
         included do
           before_filter :set_guest_token
           helper_method :try_spree_current_user
 
-          # @!attribute [rw] unauthorized_redirect
-          #   @!scope class
-          #   Extension point for overriding behaviour of access denied errors.
-          #   Default behaviour is to redirect to "/unauthorized" with a flash
-          #   message.
-          #   @return [Proc] action to take when access denied error is raised.
           class_attribute :unauthorized_redirect
           self.unauthorized_redirect = -> do
             flash[:error] = Spree.t(:authorization_failure)
