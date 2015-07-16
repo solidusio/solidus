@@ -42,7 +42,7 @@ ja:
       spree/order:
         checkout_complete: "注文の受け付けを完了しました"
         completed_at: "完了日時"
-        considered_risky:
+        considered_risky: "リスク"
         coupon_code: "クーポンコード"
         created_at: "注文日"
         email: "メールアドレス"
@@ -1019,7 +1019,7 @@ ja:
     quantity:
     quantity_returned: "返送された数"
     quantity_shipped: "発送された数"
-    quick_search:
+    quick_search: "検索"
     rate: "比率"
     reason: "理由"
     receive: "受信"
