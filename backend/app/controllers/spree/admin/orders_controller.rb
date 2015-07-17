@@ -174,7 +174,8 @@ module Spree
         def extra_order_params
           {
             created_by_id: try_spree_current_user.try(:id),
-            frontend_viewable: false
+            frontend_viewable: false,
+            store_id: current_store.try(:id)
           }
         end
 
