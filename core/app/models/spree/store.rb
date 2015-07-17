@@ -10,8 +10,8 @@ module Spree
 
     scope :by_url, lambda { |url| where("url like ?", "%#{url}%") }
 
-    def self.current(domain = nil)
-      current_store = domain ? Store.by_url(domain).first : nil
+    def self.current(store_key = nil)
+      current_store = Store.find_by(code: store_key) || Store.by_url(store_key).first
       current_store || Store.default
     end
 

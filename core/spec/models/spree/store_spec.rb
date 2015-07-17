@@ -19,6 +19,7 @@ describe Spree::Store, :type => :model do
     let!(:store_1) { Spree::Store.first || create(:store) }
 
     let!(:store_2) { create(:store, default: false, url: 'www.subdomain.com') }
+    let!(:store_3) { create(:store, default: false, url: 'www.another.com', code: 'CODE')}
 
     it 'should return default when no domain' do
       expect(subject.class.current).to eql(store_1)
@@ -27,6 +28,10 @@ describe Spree::Store, :type => :model do
     it 'should return store for domain' do
       expect(subject.class.current('spreecommerce.com')).to eql(store_1)
       expect(subject.class.current('www.subdomain.com')).to eql(store_2)
+    end
+
+    it 'should return store by code' do
+      expect(subject.class.current('CODE')).to eql(store_3)
     end
   end
 
