@@ -87,6 +87,13 @@ describe Spree::Admin::OrdersController, :type => :controller do
         spree_get :new
       end
 
+      it "should associate the order with a store" do
+        Spree::Core::Importer::Order.should_receive(:import)
+          .with(user, hash_including(store_id: controller.current_store.id))
+          .and_return(order)
+        spree_get :new, { user_id: user.id }
+      end
+
       context "when a user_id is passed as a parameter" do
         let(:user)  { mock_model(Spree.user_class) }
         before { Spree.user_class.stub :find_by_id => user }
