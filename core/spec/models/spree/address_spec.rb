@@ -161,7 +161,7 @@ describe Spree::Address, :type => :model do
     end
   end
 
-  context ".default" do
+  context ".build_default" do
     context "no user given" do
       let!(:default_country) { create(:country) }
 
@@ -171,31 +171,129 @@ describe Spree::Address, :type => :model do
         end
 
         it "sets up a new record with Spree::Config[:default_country_id]" do
-          expect(Spree::Address.default.country).to eq default_country
+          expect(Spree::Address.build_default.country).to eq default_country
         end
       end
 
       # Regression test for #1142
       it "uses the first available country if :default_country_id is set to an invalid value" do
         Spree::Config[:default_country_id] = "0"
-        expect(Spree::Address.default.country).to eq default_country
+        expect(Spree::Address.build_default.country).to eq default_country
+      end
+    end
+  end
+
+  context ".immutable_merge" do
+    RSpec::Matchers.define :be_address_equivalent_attributes do |expected|
+      fields_of_interest = [:firstname, :lastname, :company, :address1, :address2, :city, :zipcode, :phone, :alternative_phone]
+      match do |actual|
+        expected_attrs = expected.symbolize_keys.slice(*fields_of_interest)
+        actual_attrs = actual.symbolize_keys.slice(*fields_of_interest)
+        expected_attrs == actual_attrs
       end
     end
 
-    context "user given" do
-      let(:bill_address) { Spree::Address.new(phone: '123-456-7890') }
-      let(:user) { double("User", bill_address: bill_address) }
+    let(:new_address_attributes) { attributes_for(:address) }
+    subject { Spree::Address.immutable_merge(existing_address, new_address_attributes) }
 
-      it "returns a copy of that user bill address" do
-        expect(described_class.default(user).phone).to eq '123-456-7890'
+    context "no existing address supplied" do
+      let(:existing_address) { nil }
+
+      context 'and there is not a matching address in the database' do
+        it "returns new Address matching attributes given" do
+          expect(subject.attributes).to be_address_equivalent_attributes(new_address_attributes)
+        end
       end
 
-      context 'has no address' do
-        let(:bill_address) { nil }
+      context 'and there is a matching address in the database' do
+        let(:new_address_attributes) { Spree::Address.value_attributes(matching_address.attributes) }
+        let!(:matching_address) { create(:address, firstname: 'Jordan') }
 
-        it "falls back to build default when user has no address" do
-          expect(described_class.default(user)).to eq described_class.build_default
+        it "returns the matching address" do
+          expect(subject.attributes).to be_address_equivalent_attributes(new_address_attributes)
+          expect(subject.id).to eq(matching_address.id)
         end
+      end
+    end
+
+    context "with existing address" do
+      let(:existing_address) { create(:address) }
+
+      it "returns a new Address of merged data" do
+        merged_attributes = subject.attributes.merge(new_address_attributes.symbolize_keys)
+        expect(subject.attributes).to be_address_equivalent_attributes merged_attributes
+        expect(subject.id).not_to eq existing_address.id
+      end
+
+      context "and no changes to attributes" do
+        let(:new_address_attributes) { existing_address.attributes }
+
+        it "returns existing address" do
+          expect(subject).to eq existing_address
+          expect(subject.id).to eq existing_address.id
+        end
+      end
+
+      context 'and changed address matches an existing address' do
+        let(:new_address_attributes) { Spree::Address.value_attributes(matching_address.attributes) }
+        let!(:matching_address) { create(:address, firstname: 'Jordan') }
+
+        it 'returns the matching address' do
+          expect(subject.attributes).to be_address_equivalent_attributes(new_address_attributes)
+          expect(subject.id).to eq(matching_address.id)
+        end
+      end
+    end
+  end
+
+
+  describe '.value_attributes' do
+    subject do
+      Spree::Address.value_attributes(base_attributes, merge_attributes)
+    end
+
+    context 'with symbols and strings' do
+      let(:base_attributes) { {'address1' => '1234 way', 'address2' => 'apt 2'} }
+      let(:merge_attributes) { {:address1 => '5678 way'} }
+
+      it 'stringifies and merges the keys' do
+        expect(subject).to eq('address1' => '5678 way', 'address2' => 'apt 2')
+      end
+    end
+
+    context 'with database-only attributes' do
+      let(:base_attributes) do
+        {
+          'id' => 1,
+          'created_at' => Time.now,
+          'updated_at' => Time.now,
+          'address1' => '1234 way',
+        }
+      end
+      let(:merge_attributes) do
+        {
+          'updated_at' => Time.now,
+          'address2' => 'apt 2',
+        }
+      end
+
+      it 'removes the database-only addresses' do
+        expect(subject).to eq('address1' => '1234 way', 'address2' => 'apt 2')
+      end
+    end
+
+    context 'with aliased attributes' do
+      let(:base_attributes) { {'first_name' => 'Jordan'} }
+      let(:merge_attributes) { {'last_name' => 'Brough'} }
+
+      it 'renames them to the normalized value' do
+        expect(subject).to eq('firstname' => 'Jordan', 'lastname' => 'Brough')
+      end
+
+      it 'does not modify the original hashes' do
+        subject
+        expect(base_attributes).to eq('first_name' => 'Jordan')
+        expect(merge_attributes).to eq('last_name' => 'Brough')
       end
     end
   end

@@ -6,5 +6,6 @@ FactoryGirl.define do
     number '4111111111111111'
     name 'Spree Commerce'
     association(:payment_method, factory: :credit_card_payment_method)
+    association(:address)
   end
 end

@@ -273,12 +273,21 @@ module Spree
             success
           end
 
+          def bill_address_attributes=(attributes)
+            self.bill_address = Address.immutable_merge(bill_address, attributes)
+          end
+
+          def ship_address_attributes=(attributes)
+            self.ship_address = Address.immutable_merge(ship_address, attributes)
+          end
+
           def assign_default_addresses!
             if self.user
-              self.bill_address = user.bill_address.try!(:dup) if !self.bill_address_id && user.bill_address.try!(:valid?)
+              # this is one of 2 places still using User#bill_address
+              self.bill_address ||= user.bill_address if user.bill_address.try!(:valid?)
               # Skip setting ship address if order doesn't have a delivery checkout step
               # to avoid triggering validations on shipping address
-              self.ship_address = user.ship_address.try!(:dup) if !self.ship_address_id && user.ship_address.try!(:valid?) && self.checkout_steps.include?("delivery")
+              self.ship_address ||= user.ship_address if user.ship_address.try!(:valid?) && self.checkout_steps.include?("delivery")
             end
           end
 
@@ -291,6 +300,7 @@ module Spree
           def persist_user_credit_card
             if !self.temporary_credit_card && self.user_id && self.valid_credit_cards.present?
               default_cc = self.valid_credit_cards.first
+              # TODO target for refactoring -- why is order checkout responsible for the user -> credit_card relationship?
               default_cc.user_id = self.user_id
               default_cc.default = true
               default_cc.save
@@ -301,7 +311,8 @@ module Spree
             if self.payments.from_credit_card.count == 0 && self.user && self.user.default_credit_card.try(:valid?)
               cc = self.user.default_credit_card
               self.payments.create!(payment_method_id: cc.payment_method_id, source: cc)
-              self.bill_address ||= self.user.bill_address.try!(:dup) if self.user.bill_address.try!(:valid?)
+              # this is one of 2 places still using User#bill_address
+              self.bill_address ||= user.default_credit_card.address || user.bill_address
             end
           end
 
