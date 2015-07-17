@@ -2,11 +2,14 @@ module Spree
   class CreditCard < Spree::Base
     belongs_to :payment_method
     belongs_to :user, class_name: Spree.user_class, foreign_key: 'user_id'
+    belongs_to :address, inverse_of: :credit_cards
     has_many :payments, as: :source
 
     before_save :set_last_digits
 
     after_save :ensure_one_default
+
+    accepts_nested_attributes_for :address
 
     attr_accessor :encrypted_data,
                     :number,
