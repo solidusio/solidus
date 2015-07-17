@@ -1,6 +1,8 @@
 Spree::Sample.load_sample("addresses")
+Spree::Sample.load_sample("stores")
 
 payment_method = Spree::PaymentMethod::Check.first!
+store = Spree::Store.first!
 
 orders = []
 orders << Spree::Order.create!(
@@ -33,6 +35,7 @@ orders[1].line_items.create!(
 
 orders.each do |order|
   order.payments.create!(payment_method: payment_method)
+  order.update_attributes(store: store)
 
   order.next! while !order.can_complete?
   order.complete!
