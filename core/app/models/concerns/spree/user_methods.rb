@@ -4,7 +4,7 @@ module Spree
 
     include Spree::UserApiAuthentication
     include Spree::UserReporting
-    include Spree::UserAddress
+    include Spree::UserAddressBook
     include Spree::UserPaymentSource
 
     included do
@@ -22,9 +22,6 @@ module Spree
       has_many :store_credits, -> { includes(:credit_type) }, foreign_key: "user_id", class_name: "Spree::StoreCredit"
       has_many :store_credit_events, through: :store_credits
       money_methods :total_available_store_credit
-
-      belongs_to :ship_address, class_name: 'Spree::Address'
-      belongs_to :bill_address, class_name: 'Spree::Address'
     end
 
     # has_spree_role? simply needs to return true or false whether a user has a role or not.

@@ -12,6 +12,12 @@ module Spree
       states_required
     end
 
+    def self.default
+      find(Spree::Config[:default_country_id])
+    rescue ActiveRecord::RecordNotFound
+      first
+    end
+
     def <=>(other)
       name <=> other.name
     end

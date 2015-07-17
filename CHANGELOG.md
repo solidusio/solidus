@@ -1,3 +1,17 @@
+## Solidus (not yet versioned)
+
+*   Address is immutable (Address#readonly? is always true)
+
+    This allows us to minimize cloning addresses, while still ensuring historical
+    data is preserved.
+
+*   PUT /api/addresses without an order no longer works
+
+    Since addresses are immutable, they become value objects and only
+    make sense in relation to some containing entity
+
+*   UserAddressBook module added to manage a user's multiple addresses
+
 ## Solidus 1.0
 
 *   Replace ShipmentMailer with CartonMailer
