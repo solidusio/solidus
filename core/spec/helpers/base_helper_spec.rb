@@ -60,7 +60,9 @@ describe Spree::BaseHelper, :type => :helper do
     end
 
     it "should not raise errors when style exists" do
-      expect { very_strange_image(product) }.not_to raise_error
+      ActiveSupport::Deprecation.silence do
+        expect { very_strange_image(product) }.not_to raise_error
+      end
     end
 
     it "should raise NoMethodError when style is not exists" do
@@ -152,7 +154,9 @@ describe Spree::BaseHelper, :type => :helper do
     end
 
     it "should not raise errors when helper method called" do
-      expect { foobar_image(product) }.not_to raise_error
+      ActiveSupport::Deprecation.silence do
+        expect { foobar_image(product) }.not_to raise_error
+      end
     end
 
     it "should raise NoMethodError when statement with name equal to style name called" do
