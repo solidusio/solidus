@@ -306,11 +306,14 @@ module Spree
 
     # Image that can be used for the variant.
     #
-    # Will first search for images on the variant, then all images from the
-    # products' variants. If all else fails, will return a new image object.
+    # Will first search for images on the variant. If it doesn't find any,
+    # it'll fallback to any variant image (unless +fallback+ is +false+) or to
+    # a new {Spree::Image}.
+    # @param fallback [Boolean] whether or not we should fallback to an image
+    #   not from this variant
     # @return [Spree::Image] the image to display
-    def display_image
-      images.first || product.variant_images.first || Spree::Image.new
+    def display_image(fallback: true)
+      images.first || (fallback && product.variant_images.first) || Spree::Image.new
     end
 
     private
