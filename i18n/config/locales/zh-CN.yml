@@ -95,7 +95,8 @@ zh-CN:
         starts_at: "开始日期"
         usage_limit: "使用次数限制"
       spree/promotion_category:
-        name:
+        name: "名称"
+        code: "编号"
       spree/property:
         name: "名称"
         presentation: "描述"
@@ -109,13 +110,13 @@ zh-CN:
         abbr: "缩写"
         name: "名称"
       spree/state_change:
-        state_changes:
+        state_changes: "状态变更"
         state_from:
         state_to:
-        timestamp:
-        type:
+        timestamp: "时间"
+        type: "类型"
         updated:
-        user:
+        user: "用户"
       spree/store:
         mail_from_address:
         meta_description:
@@ -216,6 +217,8 @@ zh-CN:
         one: "单项"
         other: "单项"
       spree/option_type:
+        one: "选项类型"
+        other: "选项类型"
       spree/option_value:
       spree/order:
         one: "订单"
@@ -224,11 +227,15 @@ zh-CN:
         one: "支付"
         other: "支付"
       spree/payment_method:
+        one: "支付方式"
+        other: "支付方式"
       spree/product:
         one: "产品"
         other: "产品"
       spree/promotion: "促销"
       spree/promotion_category:
+        one: "促销分类"
+        other: "促销分类"
       spree/property:
         one: "属性"
         other: "属性"
@@ -252,6 +259,8 @@ zh-CN:
         one: "物流分类"
         other: "物流分类"
       spree/shipping_method:
+        one: "配送方式"
+        other: "配送方式"
       spree/state:
         one: "省份"
         other: "省份"
@@ -377,28 +386,29 @@ zh-CN:
     admin:
       tab:
         configuration: "配置"
-        option_types:
+        option_types: "选项类型"
         orders: "订单"
         overview: "概览"
         products: "产品"
         promotions: "促销"
-        properties:
-        prototypes:
+        promotion_categories: "促销分类"
+        properties: "属性"
+        prototypes: "原型"
         reports: "报告"
-        taxonomies:
-        taxons:
+        taxonomies: "分类层级"
+        taxons: "分类"
         users: "用户"
       user:
-        account:
-        addresses:
+        account: "账户"
+        addresses: "地址"
         items:
         items_purchased:
         order_history:
         order_num:
-        orders:
+        orders: "订单"
         user_information:
     administration: "管理"
-    advertise:
+    advertise: "推广"
     agree_to_privacy_policy: "同意隐私政策"
     agree_to_terms_of_service: "同意服务条款"
     all: "全部"
@@ -576,7 +586,7 @@ zh-CN:
     description: "描述"
     destination: "目的地"
     destroy: "删除"
-    details:
+    details: "详情"
     discount_amount: "折扣金额"
     dismiss_banner: "不，谢谢！我对此不感兴趣，请不要再显示此信息。"
     display: "显示"
@@ -642,10 +652,11 @@ zh-CN:
     failed_payment_attempts:
     filename: "文件名"
     fill_in_customer_info: "请填写顾客信息"
+    filter: "过滤"
     filter_results: "过滤结果"
     finalize: "完成"
     finalized:
-    find_a_taxon:
+    find_a_taxon: "查找一种分类"
     first_item: "首件产品价格??"
     first_name: "名"
     first_name_begins_with: "名的开始"
@@ -674,6 +685,7 @@ zh-CN:
       language: "语言"
       localization_settings:
       this_file_language: "中文(简体)"
+      translations: "翻译"
     icon: "图标"
     identifier:
     image: "图片"
@@ -779,7 +791,7 @@ zh-CN:
     new_payment_method: "新建支付方式"
     new_product: "新建产品"
     new_promotion: "新建促销活动"
-    new_promotion_category:
+    new_promotion_category: "新建促销分类"
     new_property: "新建属性"
     new_prototype: "新建原型"
     new_refund:
@@ -806,7 +818,7 @@ zh-CN:
     no_payment_found:
     no_pending_payments:
     no_products_found: "找不到产品"
-    no_resource_found:
+    no_resource_found: "找不到资源"
     no_results: "无任何结果"
     no_returns_found:
     no_rules_added: "未添加规则"
@@ -936,7 +948,7 @@ zh-CN:
     preferred_reimbursement_type:
     presentation: "描述"
     previous: "上一页"
-    previous_state_missing:
+    previous_state_missing: "状态未知"
     price: "价格"
     price_range: "价格范围"
     price_sack: "袋价格"
@@ -1019,7 +1031,7 @@ zh-CN:
     quantity: "数量"
     quantity_returned: "返回的数量"
     quantity_shipped: "已发货数量"
-    quick_search:
+    quick_search: "快速搜索"
     rate: "费率"
     reason: "原因"
     receive: "收到"
@@ -1089,7 +1101,7 @@ zh-CN:
     rma_value: "退货价值"
     roles: "角色"
     rules: Rules
-    safe:
+    safe: "安全"
     sales_total: "销售总计"
     sales_total_description: "所有订单总销量"
     sales_totals: "总销量"
@@ -1207,7 +1219,7 @@ zh-CN:
     states: "省份"
     states_required:
     status: "状态"
-    stock:
+    stock: "库存"
     stock_location: "库存区域"
     stock_location_info: "库存区域资讯"
     stock_locations: "库存区域"
