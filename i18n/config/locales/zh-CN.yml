@@ -602,7 +602,7 @@ zh-CN:
         no_user_specified:
         not_first_order:
     email: "电子邮件"
-    empty: Empty
+    empty: "空"
     empty_cart: "清空购物车"
     enable_mail_delivery: "开启邮件发送"
     end: "结束"
@@ -1094,7 +1094,7 @@ zh-CN:
     sales_total_description: "所有订单总销量"
     sales_totals: "总销量"
     save_and_continue: "保存并继续"
-    save_my_address:
+    save_my_address: "保存我的地址"
     say_no: "不"
     say_yes: "是的"
     scope: "范围"
