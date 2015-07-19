@@ -766,7 +766,7 @@ da:
     my_account: Min konto
     my_orders: Mine ordrer
     name: Navn
-    name_on_card:
+    name_on_card: Navn på kortet
     name_or_sku: navn eller varenummer
     new: Ny
     new_adjustment: Ny justering
@@ -835,7 +835,7 @@ da:
     open: "Åben"
     open_all_adjustments: "Åbn alle justeringer"
     option_type: Alternativ udgave
-    option_type_placeholder:
+    option_type_placeholder: Vælg en alternativ udgave
     option_types: Alternative udgaver
     option_value: Alternativ værdi
     option_values: Alternative værdier
@@ -1120,7 +1120,7 @@ da:
     ship_total: Leveret total
     shipment: Levering
     shipment_adjustments:
-    shipment_details:
+    shipment_details: Forsendelsesdetaljer
     shipment_mailer:
       shipped_email:
         dear_customer: Dear Customer,\n
@@ -1298,7 +1298,7 @@ da:
     update: Opdater
     updating: Opdaterer
     usage_limit: Brugsgrænse
-    use_app_default:
+    use_app_default: Brug programmets standard
     use_billing_address: Brug faktureringsadresse
     use_new_cc: Brug et nyt kort
     use_s3: Brug Amazon S3 til varebilleder
