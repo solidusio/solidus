@@ -8,8 +8,7 @@ module Spree
         #   @!scope class
         #   Extension point for overriding how the current store is chosen.
         #   Defaults to checking headers and server name
-        #   @return [class] that has an initializer with 1 request argument
-        #     and an instance method 'store'
+        #   @return [#store] class used to help find the current store
         included do
           class_attribute :current_store_class
           self.current_store_class = Spree::Core::CurrentStore
