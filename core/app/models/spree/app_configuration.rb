@@ -128,6 +128,11 @@ module Spree
     #   @return [String] URL of logo used on frontend (default: +'logo/solidus_logo.png'+)
     preference :logo, :string, default: 'logo/solidus_logo.png'
 
+    # @!attribute [rw] order_bill_address_used
+    #   @return [Boolean] Use the order's bill address, as opposed to storing
+    #   bill addresses on payment sources. (default: +true+)
+    preference :order_bill_address_used, :boolean, default: true
+
     # @!attribute [rw] order_capturing_time_window
     #   @return [Integer] the number of days to look back for fully-shipped/cancelled orders in order to charge for them
     preference :order_capturing_time_window, :integer, default: 14

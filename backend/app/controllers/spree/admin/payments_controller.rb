@@ -5,7 +5,7 @@ module Spree
       before_filter :load_payment, :except => [:create, :new, :index, :fire]
       before_filter :load_payment_for_fire, :only => :fire
       before_filter :load_data
-      before_filter :can_not_transition_without_customer_info
+      before_filter :require_bill_address, only: [:index]
 
       respond_to :html
 
@@ -101,6 +101,13 @@ module Spree
 
       def model_class
         Spree::Payment
+      end
+
+      def require_bill_address
+        if Spree::Config[:order_bill_address_used] && @order.bill_address.nil?
+          flash[:notice] = Spree.t(:fill_in_customer_info)
+          redirect_to edit_admin_order_customer_url(@order)
+        end
       end
     end
   end

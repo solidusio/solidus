@@ -64,7 +64,7 @@ module Spree
       end
 
       def edit
-        can_not_transition_without_customer_info
+        require_ship_address
 
         unless @order.completed?
           @order.refresh_shipment_rates
@@ -196,6 +196,13 @@ module Spree
         def insufficient_stock_error
           flash[:error] = Spree.t(:insufficient_stock_for_order)
           redirect_to cart_admin_order_url(@order)
+        end
+
+        def require_ship_address
+          if @order.ship_address.nil?
+            flash[:notice] = Spree.t(:fill_in_customer_info)
+            redirect_to edit_admin_order_customer_url(@order)
+          end
         end
     end
   end
