@@ -4,13 +4,19 @@ module Spree
       module Store
         extend ActiveSupport::Concern
 
+        # @!attribute [rw] current_store_class
+        #   @!scope class
+        #   Extension point for overriding how the current store is chosen.
+        #   Defaults to checking headers and server name
+        #   @return [#store] class used to help find the current store
         included do
+          class_attribute :current_store_class
+          self.current_store_class = Spree::Core::CurrentStore
 
           def current_store
-            @current_store ||= Spree::Store.current(request.env['SERVER_NAME'])
+            @current_store ||= current_store_class.new(request).store
           end
           helper_method :current_store
-
         end
 
       end
