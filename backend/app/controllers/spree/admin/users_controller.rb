@@ -29,7 +29,10 @@ module Spree
           flash[:success] = Spree.t(:created_successfully)
           redirect_to edit_admin_user_url(@user)
         else
-          redirect_to new_admin_user_url
+          load_roles
+          load_stock_locations
+
+          render :new, status: :unprocessable_entity
         end
       end
 
