@@ -238,6 +238,8 @@ describe "Checkout", type: :feature, inaccessible: true do
         click_on "Save and Continue"
       }.to change { Spree::CreditCard.count }.by 1
 
+      expect(Spree::CreditCard.last.address).to be_present
+
       click_on "Place Order"
       expect(current_path).to eql(spree.order_path(Spree::Order.last))
     end
