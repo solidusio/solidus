@@ -52,5 +52,13 @@
     </div>
 
     <div class="clear"></div>
+
+    <%= label_tag "card_address#{payment_method.id}", Spree.t(:billing_address) %>
+    <% address = @order.bill_address || @order.ship_address || Spree::Address.build_default %>
+    <%= fields_for "#{param_prefix}[address_attributes]", address do |f| %>
+      <%= render :partial => 'spree/admin/shared/address_form', :locals => { :f => f, :type => "billing" } %>
+    <% end %>
+
+    <div class="clear"></div>
   </div>
 </fieldset>

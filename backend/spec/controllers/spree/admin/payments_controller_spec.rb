@@ -13,9 +13,8 @@ module Spree
       context "with a valid credit card" do
         let(:order) { create(:order_with_line_items, :state => "payment") }
         let(:payment_method) { create(:credit_card_payment_method, :display_on => "back_end") }
-
-        before do
-          attributes = {
+        let(:attributes) do
+          {
             :order_id => order.number,
             :card => "new",
             :payment => {
@@ -29,6 +28,9 @@ module Spree
               }
             }
           }
+        end
+
+        before do
           spree_post :create, attributes
         end
 
@@ -37,6 +39,35 @@ module Spree
           expect(order.payments.last.state).to eq 'checkout'
           expect(response).to redirect_to(spree.admin_order_payments_path(order))
           expect(order.reload.state).to eq('confirm')
+        end
+
+        context 'with credit card address fields' do
+          let(:address) { build(:address) }
+
+          let(:attributes) do
+            attrs = super()
+            attrs[:payment][:source_attributes][:address_attributes] = address_attributes
+            attrs
+          end
+
+          let(:address_attributes) do
+            {
+              'firstname' => address.firstname,
+              'lastname' => address.lastname,
+              'address1' => address.address1,
+              'city' => address.city,
+              'country_id' => address.country_id,
+              'state_id' => address.state_id,
+              'zipcode' => address.zipcode,
+              'phone' => address.phone,
+            }
+          end
+
+          it 'associates the address' do
+            order.payments.count.should == 1
+            credit_card = order.payments.last.source
+            expect(credit_card.address.attributes).to include(address_attributes)
+          end
         end
       end
 
