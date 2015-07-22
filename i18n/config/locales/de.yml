@@ -429,6 +429,11 @@ de:
         taxonomies: Klassifikationen
         taxons: Klassifikation
         users: Benutzer
+      order:
+        events:
+          approve: approve
+          cancel: cancel
+          resume: resume
       user:
         account: Konto
         addresses: Adressen
