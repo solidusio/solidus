@@ -27,7 +27,16 @@ module Spree
     def initialize(current_user)
       @user = current_user || Spree.user_class.new
 
-      self.clear_aliased_actions
+      alias_actions
+      grant_default_permissions
+      register_extension_abilities
+      activate_permission_sets
+    end
+
+    private
+
+    def alias_actions
+      clear_aliased_actions
 
       # override cancan default aliasing (we don't want to differentiate between read and index)
       alias_action :delete, to: :destroy
@@ -36,41 +45,54 @@ module Spree
       alias_action :new_action, to: :create
       alias_action :show, to: :read
       alias_action :index, :read, to: :display
+    end
 
+    def grant_default_permissions
+      # if the user is a "super user" give them full permissions, otherwise give them the permissions
+      # required to checkout and use the frontend.
       if user.respond_to?(:has_spree_role?) && user.has_spree_role?('admin')
         can :manage, :all
       else
-        can :display, Country
-        can :display, OptionType
-        can :display, OptionValue
-        can :create, Order
-        can [:read, :update], Order do |order, token|
-          order.user == user || order.guest_token && token == order.guest_token
-        end
-        can :create, ReturnAuthorization do |return_authorization|
-          return_authorization.order.user == user
-        end
-        can :display, CreditCard, user_id: user.id
-        can :display, Product
-        can :display, ProductProperty
-        can :display, Property
-        can :create, Spree.user_class
-        can [:read, :update, :destroy], Spree.user_class, id: user.id
-        can :display, State
-        can :display, StockItem, stock_location: { active: true }
-        can :display, StockLocation, active: true
-        can :display, Taxon
-        can :display, Taxonomy
-        can [:display, :view_out_of_stock], Variant
-        can :display, Zone
+        grant_generic_user_permissions
       end
+    end
 
-      # Include any abilities registered by extensions, etc.
+    def grant_generic_user_permissions
+      can :display, Country
+      can :display, OptionType
+      can :display, OptionValue
+      can :create, Order
+      can [:read, :update], Order do |order, token|
+        order.user == user || order.guest_token && token == order.guest_token
+      end
+      can :create, ReturnAuthorization do |return_authorization|
+        return_authorization.order.user == user
+      end
+      can :display, CreditCard, user_id: user.id
+      can :display, Product
+      can :display, ProductProperty
+      can :display, Property
+      can :create, Spree.user_class
+      can [:read, :update, :destroy], Spree.user_class, id: user.id
+      can :display, State
+      can :display, StockItem, stock_location: { active: true }
+      can :display, StockLocation, active: true
+      can :display, Taxon
+      can :display, Taxonomy
+      can [:display, :view_out_of_stock], Variant
+      can :display, Zone
+    end
+
+    # Before, this was the only way to extend this ability. Permission sets have been added since.
+    # It is recommended to use them instead for extension purposes if possible.
+    def register_extension_abilities
       Ability.abilities.each do |clazz|
         ability = clazz.send(:new, user)
         @rules = rules + ability.send(:rules)
       end
+    end
 
+    def activate_permission_sets
       Spree::RoleConfiguration.instance.activate_permissions! self, user
     end
   end
