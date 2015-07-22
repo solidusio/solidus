@@ -63,6 +63,7 @@ describe Spree::Order, :type => :model do
     before { allow(order).to receive_messages shipments: [shipment] }
 
     it "update and persist totals" do
+      expect(shipment).to receive :reload
       expect(shipment).to receive :update_amounts
       expect(order.updater).to receive :update_shipment_total
       expect(order.updater).to receive :persist_totals
