@@ -64,4 +64,19 @@ describe Spree::Gateway, :type => :model do
       end
     end
   end
+
+  context 'using preference_source' do
+    let(:klass){ Spree::Gateway::Bogus }
+    before do
+      Spree::Config.static_model_preferences.add(klass, 'test_preference_source', server: 'bar')
+    end
+    after do
+      Spree::Config.static_model_preferences.for_class(klass).clear
+    end
+    let(:payment_method){ create(:credit_card_payment_method, preference_source: 'test_preference_source') }
+
+    it "reads static preferences" do
+      expect(payment_method.options).to eq({:server=>"bar"})
+    end
+  end
 end
