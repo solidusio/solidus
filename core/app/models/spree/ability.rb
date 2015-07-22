@@ -10,6 +10,8 @@ module Spree
     class_attribute :abilities
     self.abilities = Set.new
 
+    attr_reader :user
+
     # Allows us to go beyond the standard cancan initialize method which makes it difficult for engines to
     # modify the default +Ability+ of an application.  The +ability+ argument must be a class that includes
     # the +CanCan::Ability+ module.  The registered ability should behave properly as a stand-alone class
@@ -22,7 +24,9 @@ module Spree
       self.abilities.delete(ability)
     end
 
-    def initialize(user)
+    def initialize(current_user)
+      @user = current_user || Spree.user_class.new
+
       self.clear_aliased_actions
 
       # override cancan default aliasing (we don't want to differentiate between read and index)
@@ -32,9 +36,6 @@ module Spree
       alias_action :new_action, to: :create
       alias_action :show, to: :read
       alias_action :index, :read, to: :display
-
-
-      user ||= Spree.user_class.new
 
       if user.respond_to?(:has_spree_role?) && user.has_spree_role?('admin')
         can :manage, :all
