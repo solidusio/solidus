@@ -42,22 +42,16 @@ module Spree
         end.with_indifferent_access
       end
 
+      private
+
       # users should be able to set price when importing orders via api
       def permitted_line_item_attributes
-        if is_admin?
+        if can?(:admin, Spree::LineItem)
           super + admin_line_item_attributes
         else
           super
         end
       end
-
-      protected
-
-      def is_admin?
-        current_api_user && current_api_user.has_spree_role?("admin")
-      end
-
-      private
 
       def set_content_type
         content_type = case params[:format]
@@ -148,7 +142,7 @@ module Spree
       end
 
       def product_scope
-        if is_admin?
+        if can?(:admin, Spree::Product)
           scope = Product.with_deleted.accessible_by(current_ability, :read).includes(*product_includes)
 
           unless params[:show_deleted]

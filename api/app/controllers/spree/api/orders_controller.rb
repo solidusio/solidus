@@ -5,14 +5,11 @@ module Spree
       self.admin_shipment_attributes = [:shipping_method, :stock_location, :inventory_units => [:variant_id, :sku]]
 
       class_attribute :admin_order_attributes
-      self.admin_order_attributes = [:import, :number, :completed_at, :locked_at, :channel]
+      self.admin_order_attributes = [:import, :number, :completed_at, :locked_at, :channel, :user_id]
 
-      skip_before_action :check_for_user_or_api_key, only: :apply_coupon_code
       skip_before_action :authenticate_user, only: :apply_coupon_code
 
-      before_action :find_order, except: [:create, :mine, :current, :index, :update]
-
-      before_filter :find_order, except: [:create, :mine, :current, :index]
+      before_action :find_order, except: [:create, :mine, :current, :index]
       around_filter :lock_order, except: [:create, :mine, :current, :index]
 
       # Dynamically defines our stores checkout steps to ensure we check authorization on each step.
@@ -30,13 +27,14 @@ module Spree
 
       def create
         authorize! :create, Order
-        order_user = if @current_user_roles.include?('admin') && order_params[:user_id]
+
+        order_user = if order_params[:user_id]
           Spree.user_class.find(order_params[:user_id])
         else
           current_api_user
         end
 
-        import_params = if @current_user_roles.include?("admin")
+        import_params = if can?(:admin, Spree::Order)
           params[:order].present? ? params[:order].permit! : {}
         else
           order_params
@@ -66,17 +64,9 @@ module Spree
       def update
         authorize! :update, @order, order_token
 
-        result = if request.patch?
-          # This will update the order without a checkout reset.
-          @order.update_attributes(order_params)
-        else
-          # This will reset checkout back to address and delete all shipments.
-          @order.contents.update_cart(order_params)
-        end
-
-        if result
+        if @order.contents.update_cart(order_params)
           user_id = params[:order][:user_id]
-          if current_api_user.has_spree_role?('admin') && user_id
+          if can?(:admin, @order) && user_id
             @order.associate_user!(Spree.user_class.find(user_id))
           end
           respond_with(@order, default_template: :show)
@@ -110,46 +100,43 @@ module Spree
       end
 
       private
-        def order_params
-          if params[:order]
-            normalize_params
-            params.require(:order).permit(permitted_order_attributes)
-          else
-            {}
-          end
-        end
 
-        def normalize_params
-          params[:order][:payments_attributes] = params[:order].delete(:payments) if params[:order][:payments]
-          params[:order][:shipments_attributes] = params[:order].delete(:shipments) if params[:order][:shipments]
-          params[:order][:line_items_attributes] = params[:order].delete(:line_items) if params[:order][:line_items]
-          params[:order][:ship_address_attributes] = params[:order].delete(:ship_address) if params[:order][:ship_address].present?
-          params[:order][:bill_address_attributes] = params[:order].delete(:bill_address) if params[:order][:bill_address].present?
+      def order_params
+        if params[:order]
+          normalize_params
+          params.require(:order).permit(permitted_order_attributes)
+        else
+          {}
         end
+      end
 
-        def permitted_order_attributes
-          if is_admin?
-            super + admin_order_attributes
-          else
-            super
-          end
-        end
+      def normalize_params
+        params[:order][:payments_attributes] = params[:order].delete(:payments) if params[:order][:payments]
+        params[:order][:shipments_attributes] = params[:order].delete(:shipments) if params[:order][:shipments]
+        params[:order][:line_items_attributes] = params[:order].delete(:line_items) if params[:order][:line_items]
+        params[:order][:ship_address_attributes] = params[:order].delete(:ship_address) if params[:order][:ship_address].present?
+        params[:order][:bill_address_attributes] = params[:order].delete(:bill_address) if params[:order][:bill_address].present?
+      end
 
-        def permitted_shipment_attributes
-          if is_admin?
-            super + admin_shipment_attributes
-          else
-            super
-          end
-        end
+      def permitted_order_attributes
+        can?(:admin, Spree::Order) ? (super + admin_order_attributes) : super
+      end
 
-        def find_order(lock = false)
-          @order = Spree::Order.find_by!(number: params[:id])
+      def permitted_shipment_attributes
+        if can?(:admin, Spree::Shipment)
+          super + admin_shipment_attributes
+        else
+          super
         end
+      end
 
-        def order_id
-          super || params[:id]
-        end
+      def find_order(lock = false)
+        @order = Spree::Order.find_by!(number: params[:id])
+      end
+
+      def order_id
+        super || params[:id]
+      end
     end
   end
 end
