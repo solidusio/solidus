@@ -551,6 +551,8 @@ module Spree
     end
 
     def restart_checkout_flow
+      return if self.state == 'cart'
+
       self.update_columns(
         state: 'cart',
         updated_at: Time.now,

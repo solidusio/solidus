@@ -325,7 +325,7 @@ module Spree
 
       expect(json_response['number']).to be_present
       expect(json_response["token"]).not_to be_blank
-      expect(json_response["state"]).to eq("address")
+      expect(json_response["state"]).to eq("cart")
       expect(order.user).to eq(current_api_user)
       expect(order.email).to eq(current_api_user.email)
       expect(json_response["user_id"]).to eq(current_api_user.id)
@@ -575,6 +575,7 @@ module Spree
           end
 
           before do
+            order.next!
             order.next!
             order.save
           end

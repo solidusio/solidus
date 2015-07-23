@@ -481,6 +481,13 @@ describe Spree::Order, :type => :model do
   end
 
   describe "#restart_checkout_flow" do
+    context "when in cart state" do
+      let(:order)  { create(:order_with_totals, state: "cart") }
+
+      it "remains in cart state" do
+        expect { order.restart_checkout_flow }.not_to change { order.state }
+      end
+    end
     it "updates the state column to the first checkout_steps value" do
       order = create(:order_with_totals, state: "delivery")
       expect(order.checkout_steps).to eql ["address", "delivery", "confirm", "complete"]
