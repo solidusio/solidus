@@ -256,8 +256,6 @@ module Spree
         self.class.unscoped.where(id: id).update_all(attrs_to_set)
       end
 
-      attrs_to_set[:ship_address_attributes] = user.ship_address.attributes.except('id', 'updated_at', 'created_at') if user.try(:ship_address)
-      attrs_to_set[:bill_address_attributes] = user.bill_address.attributes.except('id', 'updated_at', 'created_at') if user.try(:bill_address)
       assign_attributes(attrs_to_set)
     end
 
