@@ -893,8 +893,8 @@ de:
     order: Bestellung
     order_adjustments: Bestellanpassungen
     order_already_updated: Bestellung bereits geändert
-    order_approved: Bestellung akzeptiert
-    order_canceled: Bestellung abgebrochen
+    order_approved: Bestellung freigegeben
+    order_canceled: Bestellung storniert
     order_details: Details der Bestellung
     order_email_resent: Bestellbestätigung erneut versendet
     order_information: Bestellinformationen
@@ -921,7 +921,7 @@ de:
     order_state:
       address: Adresse
       awaiting_return: erwartet Erstattung
-      canceled: Abgebrochen
+      canceled: Storniert
       cart: Warenkorb
       complete: Abgeschlossen
       confirm: Bestätigt
