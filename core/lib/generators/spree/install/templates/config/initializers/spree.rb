@@ -36,6 +36,18 @@ Spree.config do |config|
 
   # Custom logo for the admin
   # config.admin_interface_logo = "logo/solidus_logo.png"
+
+  # Gateway credentials can be configured statically here and referenced from
+  # the admin. They can also be fully configured from the admin.
+  #
+  # config.static_model_preferences.add(
+  #   Spree::Gateway::StripeGateway,
+  #   'stripe_env_credentials',
+  #   secret_key: ENV['STRIPE_SECRET_KEY'],
+  #   publishable_key: ENV['STRIPE_PUBLISHABLE_KEY'],
+  #   server: Rails.env.production? ? 'production' : 'test',
+  #   test: !Rails.env.production?
+  # )
 end
 
 Spree.user_class = <%= (options[:user_class].blank? ? "Spree::LegacyUser" : options[:user_class]).inspect %>

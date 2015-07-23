@@ -1,6 +1,10 @@
 class CreateSpreeStoreCreditPaymentMethod < ActiveRecord::Migration
+  class PaymentMethod < ActiveRecord::Base
+    self.table_name = 'spree_payment_methods'
+    self.inheritance_column = :_type_disabled
+  end
   def up
-    Spree::PaymentMethod.create_with(
+    PaymentMethod.create_with(
       name: Spree.t("store_credit.store_credit"),
       description: Spree.t("store_credit.store_credit"),
       active: true,

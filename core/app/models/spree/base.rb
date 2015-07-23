@@ -2,7 +2,9 @@ class Spree::Base < ActiveRecord::Base
   include Spree::Preferences::Preferable
   serialize :preferences, Hash
   after_initialize do
-    self.preferences = default_preferences.merge(preferences) if has_attribute?(:preferences)
+    if has_attribute?(:preferences)
+      self.preferences = default_preferences.merge(preferences)
+    end
   end
 
   if Kaminari.config.page_method_name != :page

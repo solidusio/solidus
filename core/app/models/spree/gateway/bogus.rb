@@ -13,10 +13,6 @@ module Spree
       self.class
     end
 
-    def preferences
-      {}
-    end
-
     def create_profile(payment)
       return if payment.source.has_payment_profile?
       # simulate the storage of credit card profile using remote service

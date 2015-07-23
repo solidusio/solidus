@@ -26,7 +26,7 @@ module Spree
     end
 
     def options
-      self.preferences.inject({}){ |memo, (key, value)| memo[key.to_sym] = value; memo }
+      preferences.to_hash
     end
 
     def method_missing(method, *args)
