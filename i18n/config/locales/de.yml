@@ -434,6 +434,7 @@ de:
           approve: freigeben
           cancel: stornieren
           resume: wiederaufnehmen
+          resend: Neu senden
       user:
         account: Konto
         addresses: Adressen
@@ -1108,7 +1109,6 @@ de:
     rename: Rename
     report: Bericht
     reports: Berichte
-    resend: Neu senden
     reset_password: Mein Passwort zurücksetzen
     response_code: Rückgabewert
     resume: Fortsetzen
