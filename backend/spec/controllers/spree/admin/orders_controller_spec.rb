@@ -23,7 +23,7 @@ describe Spree::Admin::OrdersController, :type => :controller do
         total:           100,
         number:          'R123456789',
         all_adjustments: adjustments,
-        billing_address: mock_model(Spree::Address)
+        ship_address: mock_model(Spree::Address),
       )
     end
 
@@ -119,6 +119,30 @@ describe Spree::Admin::OrdersController, :type => :controller do
         allow(order).to receive_messages :completed? => false
         expect(order).to receive :refresh_shipment_rates
         spree_get :edit, :id => order.number
+      end
+
+      context "when order does not have a ship address" do
+        before do
+          order.stub :ship_address => nil
+        end
+
+        context 'when order_bill_address_used is true' do
+          before { Spree::Config[:order_bill_address_used] = true }
+
+          it "should redirect to the customer details page" do
+            spree_get :edit, :id => order.number
+            expect(response).to redirect_to(spree.edit_admin_order_customer_path(order))
+          end
+        end
+
+        context 'when order_bill_address_used is false' do
+          before { Spree::Config[:order_bill_address_used] = false }
+
+          it "should redirect to the customer details page" do
+            spree_get :edit, :id => order.number
+            expect(response).to redirect_to(spree.edit_admin_order_customer_path(order))
+          end
+        end
       end
     end
 

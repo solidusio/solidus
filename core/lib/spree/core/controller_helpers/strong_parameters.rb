@@ -16,6 +16,12 @@ module Spree
           ]
         end
 
+        def permitted_source_attributes
+          permitted_attributes.source_attributes + [
+            address_attributes: permitted_address_attributes,
+          ]
+        end
+
         def permitted_checkout_attributes
           permitted_attributes.checkout_attributes + [
             bill_address_attributes: permitted_address_attributes,
