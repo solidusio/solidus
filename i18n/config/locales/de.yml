@@ -431,9 +431,9 @@ de:
         users: Benutzer
       order:
         events:
-          approve: approve
-          cancel: cancel
-          resume: resume
+          approve: freigeben
+          cancel: stornieren
+          resume: wiederaufnehmen
       user:
         account: Konto
         addresses: Adressen
