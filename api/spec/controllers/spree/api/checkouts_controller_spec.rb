@@ -308,7 +308,11 @@ module Spree
       context "#{action}" do
         context "with order in confirm state" do
           subject do
-            ActiveSupport::Deprecation.silence do
+            if action == :next
+              ActiveSupport::Deprecation.silence do
+                api_put action, params
+              end
+            else
               api_put action, params
             end
           end
