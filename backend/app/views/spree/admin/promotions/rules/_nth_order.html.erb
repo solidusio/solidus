@@ -1,0 +1,7 @@
+<div class="field alpha four columns">
+  <%= Spree.t(:form_text, scope: "promotion_rule_types.nth_order")  %>
+</div>
+
+<div class="field omega four columns">
+  <%= number_field_tag "#{param_prefix}[preferred_nth_order]", promotion_rule.preferred_nth_order, :class => 'fullwidth' %>
+</div>
