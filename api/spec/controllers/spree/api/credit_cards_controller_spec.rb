@@ -78,5 +78,35 @@ module Spree
         end
       end
     end
+
+    describe '#update' do
+      let(:credit_card) { create(:credit_card, name: 'Joe Shmoe', user: credit_card_user) }
+      let(:credit_card_user) { create(:user) }
+
+      before do
+        stub_authentication!
+      end
+
+      context 'when the user is authorized' do
+        let(:current_api_user) { credit_card_user }
+
+        it 'updates the credit card' do
+          expect {
+            api_put :update, id: credit_card.to_param, credit_card: {name: 'Jordan Brough'}
+          }.to change {
+            credit_card.reload.name
+          }.from('Joe Shmoe').to('Jordan Brough')
+        end
+      end
+
+      context 'when the user is not authorized' do
+        let(:current_api_user) { create(:user) }
+
+        it 'rejects the request' do
+          api_put :update, id: credit_card.to_param, credit_card: {name: 'Jordan Brough'}
+          expect(response.status).to eq(401)
+        end
+      end
+    end
   end
 end

@@ -10,6 +10,10 @@ module Spree
                  to: :permitted_attributes,
                  prefix: :permitted
 
+        def permitted_credit_card_attributes
+          permitted_source_attributes
+        end
+
         def permitted_payment_attributes
           permitted_attributes.payment_attributes + [
             source_attributes: permitted_source_attributes

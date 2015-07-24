@@ -108,6 +108,8 @@ Spree::Core::Engine.add_routes do
       resources :credit_cards, only: [:index]
     end
 
+    resources :credit_cards, only: [:update]
+
     resources :properties
     resources :stock_locations do
       resources :stock_movements
