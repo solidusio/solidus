@@ -15,7 +15,6 @@
             <%= form.text_field :email %>
           </p>
         <% end %>
-        <%= form.hidden_field :state_lock_version %>
         <%= render @order.state, :form => form %>
       <% end %>
     </div>
