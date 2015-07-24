@@ -19,7 +19,7 @@ module Spree
       end
 
       def preferences
-        if preference_source.present?
+        if respond_to?(:preference_source) && preference_source
           self.class.preference_sources[preference_source] || {}
         else
           super
@@ -27,7 +27,7 @@ module Spree
       end
 
       def preferences=(val)
-        if preference_source
+        if respond_to?(:preference_source) && preference_source
         else
           super
         end
