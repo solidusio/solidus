@@ -42,7 +42,7 @@ describe Spree::LegacyUser, :type => :model do
     context "persists order address" do
       let!(:order) { create(:order, bill_address: create(:address), ship_address: create(:address)) }
 
-      it "copies over order addresses" do
+      def addresses_were_cloned
         expect {
           user.persist_order_address(order)
         }.to change { Spree::Address.count }.by(2)
@@ -51,21 +51,36 @@ describe Spree::LegacyUser, :type => :model do
         expect(user.ship_address).to eq order.ship_address
       end
 
-      it "doesnt create new addresses if user has already" do
+      it "clones over order addresses" do
+        addresses_were_cloned
+      end
+
+      it "clones the addresses even if user has already" do
         user.update_column(:bill_address_id, create(:address))
         user.update_column(:ship_address_id, create(:address))
         user.reload
 
+        addresses_were_cloned
+      end
+
+      it "doesn't clone the address again if it is idential" do
+        bill_address_clone = order.bill_address.dup
+        ship_address_clone = order.ship_address.dup
+        bill_address_clone.save!; ship_address_clone.save!
+
+        user.update_column(:bill_address_id, bill_address_clone)
+        user.update_column(:ship_address_id, ship_address_clone)
+        user.reload
+
+        expect(user.bill_address).to eq order.bill_address
+        expect(user.ship_address).to eq order.ship_address
+
         expect {
           user.persist_order_address(order)
         }.not_to change { Spree::Address.count }
-      end
 
-      it "set both bill and ship address id on subject" do
-        user.persist_order_address(order)
-
-        expect(user.bill_address_id).not_to be_blank
-        expect(user.ship_address_id).not_to be_blank
+        expect(user.bill_address_id).to eq bill_address_clone.id
+        expect(user.ship_address_id).to eq ship_address_clone.id
       end
     end
 
