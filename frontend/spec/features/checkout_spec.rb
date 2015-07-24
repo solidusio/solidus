@@ -74,20 +74,6 @@ describe "Checkout", type: :feature, inaccessible: true do
         end
       end
     end
-
-    # Regression test for #4190
-    it "updates state_lock_version on form submission", js: true do
-      add_mug_to_cart
-      click_button "Checkout"
-
-      expect(find('input#order_state_lock_version', visible: false).value).to eq "0"
-
-      fill_in "order_email", with: "test@example.com"
-      fill_in_address
-      click_button "Save and Continue"
-
-      expect(find('input#order_state_lock_version', visible: false).value).to eq "1"
-    end
   end
 
   # Regression test for #2694 and #4117
