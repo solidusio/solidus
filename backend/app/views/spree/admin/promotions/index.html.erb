@@ -93,8 +93,12 @@
           <td class="align-center"><%= Spree.t(:current_promotion_usage, :count => promotion.usage_count) %></td>
           <td class="align-center"><%= promotion.expires_at.to_date.to_s(:short_date) if promotion.expires_at %></td>
           <td class="actions">
-            <%= link_to_edit promotion, :no_text => true %>
-            <%= link_to_delete promotion, :no_text => true %>
+            <% if can?(:update, promotion) %>
+              <%= link_to_edit promotion, :no_text => true %>
+            <% end %>
+            <% if can?(:destroy, promotion) %>
+              <%= link_to_delete promotion, :no_text => true %>
+            <% end %>
           </td>
         </tr>
       <% end %>

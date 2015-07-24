@@ -26,17 +26,25 @@
       </div>
     <% end %>
 
-    <div data-hook="admin_user_form_stock_locations" class="field">
-      <%= label_tag nil, Spree.t(:stock_locations) %>
-      <ul>
-        <% @stock_locations.each do |stock_location| %>
-          <li>
-            <%= check_box_tag 'user[stock_location_ids][]', stock_location.id, @user.stock_locations.include?(stock_location), :id => "user_spree_stock_locations_#{stock_location.name}" %>
-            <%= label_tag stock_location.name %>
-          </li>
-        <% end %>
-      </ul>
-    </div>
+    <% if can?(:display, Spree::StockLocation) %>
+      <div data-hook="admin_user_form_stock_locations" class="field">
+        <%= label_tag nil, Spree.t(:stock_locations) %>
+        <ul>
+          <% if can?(:manage, Spree::UserStockLocation) %>
+            <% @stock_locations.each do |stock_location| %>
+              <li>
+                <%= check_box_tag 'user[stock_location_ids][]', stock_location.id, @user.stock_locations.include?(stock_location), :id => "user_spree_stock_locations_#{stock_location.name}" %>
+                <%= label_tag stock_location.name %>
+              </li>
+            <% end %>
+          <% else %>
+            <% @stock_locations.select{|sl| @user.stock_locations.include?(sl)}.each do |stock_location| %>
+              <%= stock_location.name %>
+            <% end %>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
 
   </div>
 
