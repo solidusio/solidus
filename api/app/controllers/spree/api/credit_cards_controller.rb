@@ -35,7 +35,7 @@ module Spree
         end
 
         def credit_card_params
-          params.require(:credit_card).permit(permitted_credit_card_attributes)
+          params.require(:credit_card).permit(permitted_credit_card_update_attributes)
         end
     end
   end

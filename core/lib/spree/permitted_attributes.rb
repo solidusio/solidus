@@ -6,6 +6,7 @@ module Spree
     ATTRIBUTES = [
       :address_attributes,
       :checkout_attributes,
+      :credit_card_update_attributes,
       :customer_return_attributes,
       :image_attributes,
       :inventory_unit_attributes,
@@ -42,6 +43,10 @@ module Spree
 
     @@checkout_attributes = [
       :coupon_code, :email, :shipping_method_id, :special_instructions, :use_billing
+    ]
+
+    @@credit_card_update_attributes = [
+      :month, :year, :expiry, :first_name, :last_name, :name,
     ]
 
     @@customer_return_attributes = [:stock_location_id, return_items_attributes: [:id, :inventory_unit_id, :return_authorization_id, :returned, :pre_tax_amount, :reception_status_event, :acceptance_status, :exchange_variant_id, :resellable]]
