@@ -308,7 +308,13 @@ module Spree
       context "#{action}" do
         context "with order in confirm state" do
           subject do
-            api_put action, params
+            if action == :next
+              ActiveSupport::Deprecation.silence do
+                api_put action, params
+              end
+            else
+              api_put action, params
+            end
           end
 
           let(:params) { {id: order.to_param, order_token: order.guest_token} }
@@ -316,10 +322,6 @@ module Spree
 
           before do
             order.update_column(:state, "confirm")
-
-            if action == :next
-              #ActiveSupport::Deprecation.should_receive(:warn).once
-            end
           end
 
           it "can transition from confirm to complete" do

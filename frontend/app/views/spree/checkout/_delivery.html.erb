@@ -26,7 +26,7 @@
             <tbody>
               <% ship_form.object.manifest.each do |item| %>
                 <tr class="stock-item">
-                  <td class="item-image"><%= mini_image(item.variant) %></td>
+                  <td class="item-image"><%= image_tag item.variant.display_image.attachment(:mini) %></td>
                   <td class="item-name"><%= item.variant.name %></td>
                   <td class="item-qty"><%= item.quantity %></td>
                   <td class="item-price"><%= display_price(item.variant) %></td>
@@ -72,7 +72,7 @@
             <tbody>
               <% @differentiator.missing.each do |variant, quantity| %>
                 <tr class="stock-item">
-                  <td class="item-image"><%= mini_image(variant) %></td>
+                  <td class="item-image"><%= image_tag variant.display_image.attachment(:mini) %></td>
                   <td class="item-name"><%= variant.name %></td>
                   <td class="item-qty"><%= quantity %></td>
                   <td class="item-price"><%= display_price(variant) %></td>

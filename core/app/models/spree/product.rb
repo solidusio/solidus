@@ -237,6 +237,15 @@ module Spree
       super || variants_including_master.with_deleted.where(is_master: true).first
     end
 
+    # Image that can be used for the product.
+    #
+    # Will first search for images on the product, then those belonging to the
+    # variants. If all else fails, will return a new image object.
+    # @return [Spree::Image] the image to display
+    def display_image
+      images.first || variant_images.first || Spree::Image.new
+    end
+
     private
 
     def add_associations_from_prototype

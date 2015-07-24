@@ -1,10 +1,10 @@
 require 'spec_helper'
 
 module Spree
-  describe "Countries", :type => :feature do
+  describe "Countries", type: :feature do
     stub_authorization!
 
-    it "deletes a state", js: true do
+    it "deletes a country", js: true do
       visit spree.admin_countries_path
       click_link "New Country"
 
@@ -15,9 +15,8 @@ module Spree
       accept_alert do
         click_icon :trash
       end
-      wait_for_ajax
 
-      expect { Country.find(country.id) }.to raise_error
+      expect(page).to have_content 'Country "Brazil" has been successfully removed!'
     end
   end
 end

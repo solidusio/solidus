@@ -15,7 +15,10 @@ class OrderWalkthrough
       end
     end
 
-    order = Spree::Order.create!(email: "spree@example.com")
+    order = Spree::Order.create!(
+      email: "spree@example.com",
+      store: Spree::Store.first || FactoryGirl.create(:store)
+    )
     add_line_item!(order)
     order.next!
 
