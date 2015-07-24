@@ -889,7 +889,7 @@ it:
     or_over_price: "%{price} o maggiore"
     order: Ordine
     order_adjustments: Variazioni dell'ordine
-    order_already_updated:
+    order_already_updated: L'ordine è già stato aggiornato.
     order_approved: Ordine Approvato
     order_canceled: Ordine Annullato
     order_details: Dettagli Ordine
