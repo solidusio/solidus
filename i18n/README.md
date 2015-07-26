@@ -63,12 +63,14 @@ gem 'spree_globalize', github: 'spree-contrib/spree_globalize', branch: 'master'
 ### 2. Remove Assets
 
 From `vendor/assets/javascripts/spree/backend/all.js`
-
-    //= require spree/backend/spree_i18n
+```
+//= require spree/backend/spree_i18n
+```
 
 and from `vendor/assets/stylesheets/spree/backend/all.css`
-
-    *= require spree/backend/spree_i18n
+```
+*= require spree/backend/spree_i18n
+```
 
 ### 3. Remove Configuration
 
