@@ -41,7 +41,7 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'pry-rails', '>= 0.3.0'
   s.add_development_dependency 'rubocop', '>= 0.24.1'
   s.add_development_dependency 'rspec-rails', '~> 3.1.0'
-  s.add_development_dependency 'sass-rails', '~> 4.0.0'
+  s.add_development_dependency 'sass-rails', '~> 5.0.0'
   s.add_development_dependency 'sqlite3', '~> 1.3.10'
   s.add_development_dependency 'selenium-webdriver', '>= 2.41'
   s.add_development_dependency 'simplecov', '~> 0.9.0'
