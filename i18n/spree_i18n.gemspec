@@ -43,8 +43,6 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'rspec-rails', '~> 3.1'
   s.add_development_dependency 'sass-rails', '~> 5.0.0'
   s.add_development_dependency 'sqlite3', '~> 1.3.10'
-  s.add_development_dependency 'selenium-webdriver', '>= 2.41'
   s.add_development_dependency 'simplecov', '~> 0.9'
   s.add_development_dependency 'guard-rspec', '>= 4.2.0'
-  s.add_development_dependency 'launchy'
 end
