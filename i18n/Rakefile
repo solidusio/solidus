@@ -26,12 +26,12 @@ end
 
 namespace :spree_i18n do
 
-  desc "Update by retrieving the latest Spree locale files"
+  desc 'Update by retrieving the latest Spree locale files'
   task :update_default do
     puts "Fetching latest Spree locale file to #{locales_dir}"
-    require "uri"; require "net/https"
+    require 'uri'; require 'net/https'
 
-    location = "https://raw.github.com/spree/spree/master/core/config/locales/en.yml"
+    location = 'https://raw.github.com/spree/spree/master/core/config/locales/en.yml'
     begin
       uri = URI.parse(location)
       http = Net::HTTP.new(uri.host, uri.port)
@@ -52,9 +52,9 @@ namespace :spree_i18n do
     File.open("#{default_dir}/spree_core.yml", 'w') { |file| file << response.body }
   end
 
-  desc "Syncronize translation files with latest en (adds comments with fallback en value)"
+  desc 'Syncronize translation files with latest en (adds comments with fallback en value)'
   task :sync do
-    puts "Starting syncronization..."
+    puts 'Starting syncronization...'
     words = translation_keys
 
     Dir["#{locales_dir}/*.yml"].each do |filename|
@@ -67,16 +67,16 @@ namespace :spree_i18n do
   end
 
   def translation_keys
-    (dummy_comments, words) = Spree::I18nUtils.read_file(File.dirname(__FILE__) + "/default/spree_core.yml", "en")
+    (dummy_comments, words) = Spree::I18nUtils.read_file(File.dirname(__FILE__) + '/default/spree_core.yml', 'en')
       words
   end
 
   def locales_dir
-    File.join File.dirname(__FILE__), "config/locales"
+    File.join File.dirname(__FILE__), 'config/locales'
   end
 
   def default_dir
-    File.join File.dirname(__FILE__), "default"
+    File.join File.dirname(__FILE__), 'default'
   end
 
   def env_locale

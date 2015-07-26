@@ -1,22 +1,22 @@
 # encoding: utf-8
 
-RSpec.describe "Translation" do
+RSpec.describe 'Translation' do
   def translation
-    I18n.t("activerecord.attributes.spree/address.zipcode")
+    I18n.t('activerecord.attributes.spree/address.zipcode')
   end
 
-  context "when current locale is en" do
-    it "translation is available" do
+  context 'when current locale is en' do
+    it 'translation is available' do
       I18n.locale = :en
-      expect(translation).to eq "Zip Code"
+      expect(translation).to eq 'Zip Code'
     end
   end
 
   # German is chosen as an example of language whose translations are found in a file.
-  context "when current locale is German" do
-    it "translation is available" do
+  context 'when current locale is German' do
+    it 'translation is available' do
       I18n.locale = :de
-      expect(translation).to eq "PLZ"
+      expect(translation).to eq 'PLZ'
     end
   end
 

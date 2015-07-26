@@ -6,7 +6,7 @@ module SpreeI18n
       end
 
       def dir
-        File.join(File.dirname(__FILE__), "/../../config/locales")
+        File.join(File.dirname(__FILE__), '/../../config/locales')
       end
     end
   end

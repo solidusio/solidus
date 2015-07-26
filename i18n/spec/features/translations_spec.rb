@@ -1,5 +1,5 @@
 # encoding: utf-8
-RSpec.feature "Translations", :js do
+RSpec.feature 'Translations', :js do
   given(:language) { Spree.t(:this_file_language, scope: 'i18n', locale: 'pt-BR') }
 
   background do

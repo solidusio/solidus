@@ -32,22 +32,22 @@ module I18nData
   private
   def self.normal_to_region_code(normal)
     country_mappings = {
-      "DE-CH" => "de",
-      "FR-CH" => "fr",
-      "EN-AU" => "en",
-      "EN-GB" => "en",
-      "EN-US" => "en",
-      "EN-IN" => "en",
-      "EN-NZ" => "en",
-      "ES-CL" => "es",
-      "ES-EC" => "es",
-      "ES-MX" => "es",
-      "PT-BR" => "pt",
-      "SL-SI" => "sl",
-      "ZH-TW" => "zh_TW",
-      "ZH-CN" => "zh_CN",
-      "ZH" => "zh_CN",
-      "BN" => "bn_IN",
+      'DE-CH' => 'de',
+      'FR-CH' => 'fr',
+      'EN-AU' => 'en',
+      'EN-GB' => 'en',
+      'EN-US' => 'en',
+      'EN-IN' => 'en',
+      'EN-NZ' => 'en',
+      'ES-CL' => 'es',
+      'ES-EC' => 'es',
+      'ES-MX' => 'es',
+      'PT-BR' => 'pt',
+      'SL-SI' => 'sl',
+      'ZH-TW' => 'zh_TW',
+      'ZH-CN' => 'zh_CN',
+      'ZH' => 'zh_CN',
+      'BN' => 'bn_IN',
       }
     country_mappings[normal] || normal
   end
