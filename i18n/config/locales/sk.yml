@@ -391,7 +391,8 @@ sk:
         orders: "Objednávky"
         overview: "Prahľad"
         products: "Produkty"
-        promotions: 
+        promotions:
+        promotion_categories:
         properties: "Vlastnosti"
         prototypes: "Prototypy"
         reports: "Výkazy"
@@ -438,7 +439,7 @@ sk:
     are_you_sure_delete: "Ste si istí, že chcete zmazať tento záznam?"
     associated_adjustment_closed:
     authorization_failure: "Chyba pri autorizácii"
-    authorized: 
+    authorized:
     auto_capture:
     available_on: Prístupný dňa
     average_order_value: "Priemerná hodnota objednávky"
@@ -577,7 +578,7 @@ sk:
     date_range: "Obdobie"
     default:
     default_refund_amount:
-    default_tax: 
+    default_tax:
     default_tax_zone:
     delete: "Zmazať"
     deleted_variants_present:

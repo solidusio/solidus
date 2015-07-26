@@ -396,6 +396,7 @@ fi:
         overview: Yleiskatsaus
         products: Tuotteet
         promotions: Kampanjat
+        promotion_categories:
         properties:
         prototypes:
         reports: Raportit

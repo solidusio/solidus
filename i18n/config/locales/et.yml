@@ -366,6 +366,7 @@ et:
         overview:
         products: Tooted
         promotions:
+        promotion_categories:
         properties:
         prototypes:
         reports: Raportid

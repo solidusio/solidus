@@ -338,6 +338,7 @@ tr:
         overview: "Ön izleme"
         products: "Ürünler"
         promotions: Promosyonlar
+        promotion_categories:
         properties: "Özellikler"
         prototypes: Prototipler
         reports: Raporlar
@@ -438,7 +439,7 @@ tr:
     choose_location: Yer Seç
     city: "Şehir"
     clear_cache: Önbelleği Temizle
-    clear_cache_ok: 
+    clear_cache_ok:
     clear_cache_warning:
     click_and_drag_on_the_products_to_sort_them:
     clone: "Çoğalt"
@@ -554,7 +555,7 @@ tr:
         missing_taxon: Sınıflandırma bulunamadı
         no_applicable_products:
         no_matching_taxons: Eşleşen ürün yok
-        no_user_or_email_specified: 
+        no_user_or_email_specified:
         no_user_specified:
         not_first_order: İlk sipariş değil
     email: E-posta

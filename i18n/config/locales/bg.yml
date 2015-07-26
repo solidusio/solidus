@@ -378,6 +378,7 @@ bg:
         overview: "Прегледай"
         products: "Продукти"
         promotions: "Промоции"
+        promotion_categories:
         properties:
         prototypes:
         reports: "Доклади"

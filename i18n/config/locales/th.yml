@@ -378,6 +378,7 @@ th:
         overview: "ภาพรวม"
         products: "สินค้า"
         promotions: "โปรโมชั่น"
+        promotion_categories:
         properties:
         prototypes:
         reports: "รายงาน"

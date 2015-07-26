@@ -407,6 +407,7 @@ cs:
         overview:
         products:
         promotions:
+        promotion_categories:
         properties:
         prototypes:
         reports:
@@ -895,7 +896,7 @@ cs:
         thanks: Děkujeme za Váš nákup.
         total:
     order_not_found: Nemůžeme nalézt Vaši objednávku. Zkuste prosím akci provést později.
-    order_number: 
+    order_number:
     order_processed_successfully: Vaše objednávka byla úspěšně zpracována
     order_resumed:
     order_state:
