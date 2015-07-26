@@ -1,10 +1,9 @@
 require 'fileutils'
 
 namespace :spree_i18n do
-
   desc 'Upgrades to version without globalize.'
-  task upgrade: :environment do |t|
-    files = %w[
+  task upgrade: :environment do
+    files = %w(
       add_translations_to_main_models
       add_translations_to_product_permalink
       add_translations_to_option_value
@@ -14,7 +13,7 @@ namespace :spree_i18n do
       remove_null_constraints_from_spree_tables
       add_deleted_at_to_translation_tables
       add_translations_to_store
-    ].collect do |file_name|
+    ).collect do |file_name|
       Dir.glob Rails.root.join('db', 'migrate', "*_#{file_name}*.rb")
     end.flatten
 

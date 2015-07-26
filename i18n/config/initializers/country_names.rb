@@ -10,7 +10,7 @@ module I18n
           I18nData.languages.keys.map(&:to_sym)
         end
 
-        def lookup(locale, key, scope=[], options={})
+        def lookup(locale, key, scope = [], options = {})
           I18nData.countries(locale)[key]
         rescue I18nData::NoTranslationAvailable
           # rescue failed lookup to fall back to this extensions locale files.
@@ -24,10 +24,9 @@ end
 
 I18n.backend = I18n::Backend::Chain.new(I18n::Backend::I18nDataBackend.new, I18n.backend)
 
-
 module I18nData
-
   private
+
   def self.normal_to_region_code(normal)
     country_mappings = {
       'DE-CH' => 'de',
@@ -45,8 +44,8 @@ module I18nData
       'ZH-TW' => 'zh_TW',
       'ZH-CN' => 'zh_CN',
       'ZH' => 'zh_CN',
-      'BN' => 'bn_IN',
-      }
+      'BN' => 'bn_IN'
+    }
     country_mappings[normal] || normal
   end
 end

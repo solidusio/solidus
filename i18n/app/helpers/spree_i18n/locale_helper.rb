@@ -25,7 +25,7 @@ module SpreeI18n
     end
 
     def common_options
-      {class: 'fullwidth' , multiple: 'true'}
+      { class: 'fullwidth', multiple: 'true' }
     end
   end
 end

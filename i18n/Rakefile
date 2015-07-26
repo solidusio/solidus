@@ -15,7 +15,7 @@ task default: :spec
 spec = eval(File.read('spree_i18n.gemspec'))
 
 Gem::PackageTask.new(spec) do |p|
-    p.gem_spec = spec
+  p.gem_spec = spec
 end
 
 desc 'Generates a dummy app for testing'
@@ -25,11 +25,11 @@ task :test_app do
 end
 
 namespace :spree_i18n do
-
   desc 'Update by retrieving the latest Spree locale files'
   task :update_default do
     puts "Fetching latest Spree locale file to #{locales_dir}"
-    require 'uri'; require 'net/https'
+    require 'uri'
+    require 'net/https'
 
     location = 'https://raw.github.com/spree/spree/master/core/config/locales/en.yml'
     begin
@@ -40,14 +40,12 @@ namespace :spree_i18n do
       puts "Getting from #{uri}"
       request = Net::HTTP::Get.new(uri.request_uri)
       case response = http.request(request)
-        when Net::HTTPRedirection then location = response['location']
-        when Net::HTTPClientError, Net::HTTPServerError then response.error!
+      when Net::HTTPRedirection then location = response['location']
+      when Net::HTTPClientError, Net::HTTPServerError then response.error!
       end
-    end until Net::HTTPSuccess === response
+    end until Net::HTTPSuccess == response
 
-    unless File.directory?(default_dir)
-      FileUtils.mkdir_p(default_dir)
-    end
+    FileUtils.mkdir_p(default_dir) unless File.directory?(default_dir)
 
     File.open("#{default_dir}/spree_core.yml", 'w') { |file| file << response.body }
   end
@@ -60,8 +58,10 @@ namespace :spree_i18n do
     Dir["#{locales_dir}/*.yml"].each do |filename|
       basename = File.basename(filename, '.yml')
       (comments, other) = Spree::I18nUtils.read_file(filename, basename)
-      words.each { |k,v| other[k] ||= "#{words[k]}" }  #Initializing hash variable as en fallback if it does not exist
-      other.delete_if { |k,v| !words[k] } #Remove if not defined in en locale
+      # Initializing hash variable as en fallback if it does not exist
+      words.each { |k, _v| other[k] ||= "#{words[k]}" }
+      # Remove if not defined in en locale
+      other.delete_if { |k, _v| !words[k] }
       Spree::I18nUtils.write_file(filename, basename, comments, other, false)
     end
   end

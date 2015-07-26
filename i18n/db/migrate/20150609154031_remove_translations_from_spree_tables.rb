@@ -3,7 +3,7 @@ class RemoveTranslationsFromSpreeTables < ActiveRecord::Migration
     # Don't migrate if we still use Globalize, i.e. through spree_globalize Gem
     return if defined?(Globalize)
 
-    %w[
+    %w(
       OptionType
       OptionValue
       ProductProperty
@@ -13,7 +13,7 @@ class RemoveTranslationsFromSpreeTables < ActiveRecord::Migration
       Store
       Taxon
       Taxonomy
-    ].each do |class_name|
+    ).each do |class_name|
       migrate_translation_data!(class_name)
     end
   end
@@ -51,10 +51,10 @@ class RemoveTranslationsFromSpreeTables < ActiveRecord::Migration
         'updated_at'
       )
       object = if klass.respond_to?(:with_deleted)
-        klass.with_deleted.find(id)
-      else
-        klass.find(id)
-      end
+                 klass.with_deleted.find(id)
+               else
+                 klass.find(id)
+               end
       object.update_columns(attributes)
     end
 
