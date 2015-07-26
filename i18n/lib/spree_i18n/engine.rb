@@ -28,7 +28,7 @@ module SpreeI18n
       end
     end
 
-    config.to_prepare &method(:activate).to_proc
+    config.to_prepare(&method(:activate).to_proc)
 
     protected
 
