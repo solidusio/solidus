@@ -487,7 +487,8 @@ uk:
         orders: "Замовлення"
         overview: "Перегляд"
         products: "Товари"
-        promotions: "А��ції"
+        promotions: "Промо-акції"
+        promotion_categories:
         properties: "Властивості"
         prototypes: "Прототипи"
         reports: "Звіти"
@@ -1172,7 +1173,7 @@ uk:
     remove: "Видалити"
     rename: "Переіменувати"
     report:
-    reports: "��віти"
+    reports: "Звіти"
     resend: "Відправити повторно"
     reset_password: "Скинути мій пароль"
     response_code: "Код відповіді"
