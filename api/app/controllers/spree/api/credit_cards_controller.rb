@@ -14,7 +14,7 @@ module Spree
       end
 
       def update
-        if @credit_card.update_attributes(credit_card_params)
+        if @credit_card.update_attributes(credit_card_update_params)
           respond_with(@credit_card, default_template: :show)
         else
           invalid_resource!(@credit_card)
@@ -34,7 +34,7 @@ module Spree
           authorize! :update, @credit_card
         end
 
-        def credit_card_params
+        def credit_card_update_params
           params.require(:credit_card).permit(permitted_credit_card_update_attributes)
         end
     end
