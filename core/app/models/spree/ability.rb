@@ -68,7 +68,7 @@ module Spree
       can :create, ReturnAuthorization do |return_authorization|
         return_authorization.order.user == user
       end
-      can :display, CreditCard, user_id: user.id
+      can [:display, :update], CreditCard, user_id: user.id
       can :display, Product
       can :display, ProductProperty
       can :display, Property
