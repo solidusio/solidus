@@ -21,4 +21,11 @@ describe "Taxonomies and taxons", :type => :feature do
     click_button "Update"
     expect(page).to have_content("Taxon \"Shirt\" has been successfully updated!")
   end
+
+  it "can see taxon tree", js: true do
+    taxonomy = create :taxonomy
+
+    visit spree.edit_admin_taxonomy_path(taxonomy)
+    expect(page).to have_content('Brand')
+  end
 end
