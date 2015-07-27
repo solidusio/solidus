@@ -259,6 +259,20 @@ module Spree
           expect(shipment['adjustments'][0]['label']).to eq(adjustment.label)
         end
       end
+
+      context 'when credit cards are present' do
+        let!(:payment) { create(:credit_card_payment, order: order, source: credit_card) }
+        let(:credit_card) { create(:credit_card, address: create(:address)) }
+
+        it 'contains the credit cards' do
+          subject
+
+          credit_cards = json_response['credit_cards']
+          expect(credit_cards.size).to eq 1
+          expect(credit_cards[0]['id']).to eq payment.source.id
+          expect(credit_cards[0]['address']['id']).to eq credit_card.address_id
+        end
+      end
     end
 
     it "orders contain the basic checkout steps" do
