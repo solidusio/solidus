@@ -160,9 +160,13 @@ adjustShipmentItems = function(shipment_number, variant_id, quantity){
         data: {
           variant_id: variant_id,
           quantity: new_quantity,
+        },
+        success: function(response) {
+          window.location.reload();
+        },
+        error: function(response) {
+          show_flash('error', response.responseJSON.message);
         }
-      }).done(function( msg ) {
-        window.location.reload();
       });
     }
 }
