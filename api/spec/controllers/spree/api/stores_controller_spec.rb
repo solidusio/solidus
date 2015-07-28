@@ -25,7 +25,7 @@ module Spree
 
       it "I can list the available stores" do
         api_get :index
-        expect(json_response["stores"]).to eq([
+        expect(json_response["stores"]).to match_array([
           {
             "id" => store.id,
             "name" => "My Spree Store",
