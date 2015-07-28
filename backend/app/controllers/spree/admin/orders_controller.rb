@@ -60,7 +60,7 @@ module Spree
       def new
         user = Spree.user_class.find_by_id(params[:user_id]) if params[:user_id]
         @order = Spree::Core::Importer::Order.import(user, order_params)
-        redirect_to edit_admin_order_url(@order)
+        redirect_to cart_admin_order_url(@order)
       end
 
       def edit

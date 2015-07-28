@@ -105,6 +105,11 @@ describe Spree::Admin::OrdersController, :type => :controller do
           spree_get :new, { user_id: user.id }
         end
       end
+
+      it "should redirect to cart" do
+        spree_get :new
+        expect(response).to redirect_to(spree.cart_admin_order_path(Spree::Order.last))
+      end
     end
 
     # Regression test for #3684
