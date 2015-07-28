@@ -26,7 +26,7 @@
 <p class="field" data-hook="card_code">
   <%= label_tag "card_code", Spree.t(:card_code) %><span class="required">*</span><br />
   <%= text_field_tag "#{param_prefix}[verification_value]", '', options_hash.merge(:id => 'card_code', :class => 'required cardCode', :size => 5) %>
-  <%= link_to "(#{Spree.t(:what_is_this)})", spree.content_path('cvv'), :target => '_blank', "data-hook" => "cvv_link", :id => "cvv_link" %>
+  <%= link_to "(#{Spree.t(:what_is_this)})", spree.cvv_path, :target => '_blank', "data-hook" => "cvv_link", :id => "cvv_link" %>
 </p>
 
 <% if @order.bill_address %>
