@@ -1,8 +1,8 @@
 Spree::StoreCreditCategory.find_or_create_by!(name: Spree.t("store_credit_category.default"))
 
 Spree::PaymentMethod.create_with(
-  name: Spree.t("store_credit.store_credit"),
-  description: Spree.t("store_credit.store_credit"),
+  name: "Store Credit",
+  description: "Store credit",
   active: true,
   display_on: 'none',
 ).find_or_create_by!(
@@ -10,7 +10,11 @@ Spree::PaymentMethod.create_with(
   environment: Rails.env,
 )
 
-Spree::StoreCreditType.create_with(priority: 1).find_or_create_by!(name: Spree.t("store_credit.expiring"))
-Spree::StoreCreditType.create_with(priority: 2).find_or_create_by!(name: Spree.t("store_credit.non_expiring"))
+Spree::StoreCreditType.create_with(priority: 1).find_or_create_by!(name: 'Expiring')
+Spree::StoreCreditType.create_with(priority: 2).find_or_create_by!(name: 'Non-expiring')
 
-Spree::ReimbursementType.create_with(name: Spree.t("store_credit.store_credit")).find_or_create_by!(type: 'Spree::ReimbursementType::StoreCredit')
+Spree::ReimbursementType.create_with(name: "Store Credit").find_or_create_by!(type: 'Spree::ReimbursementType::StoreCredit')
+
+Spree::StoreCreditCategory.find_or_create_by(name: 'Gift Card')
+
+Spree::StoreCreditUpdateReason.find_or_create_by(name: 'Credit Given In Error')
