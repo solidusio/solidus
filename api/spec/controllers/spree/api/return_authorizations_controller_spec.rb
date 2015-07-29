@@ -22,9 +22,9 @@ module Spree
                        :return_reason_id => reason.id,
                        :memo => "Defective" }
         api_post :create, :order_id => order.number, :return_authorization => rma_params
-        response.status.should == 201
-        json_response.should have_attributes(attributes)
-        json_response["state"].should_not be_blank
+        expect(response.status).to eq(201)
+        expect(json_response).to have_attributes(attributes)
+        expect(json_response["state"]).not_to be_blank
       end
     end
 
@@ -63,7 +63,7 @@ module Spree
 
     context "as another non-admin user that's not the order's owner" do
       before do
-        Order.any_instance.stub :user => create(:user)
+        allow_any_instance_of(Order).to receive_messages :user => create(:user)
       end
 
       it "cannot create a new return authorization" do

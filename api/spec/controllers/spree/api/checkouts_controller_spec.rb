@@ -155,7 +155,7 @@ module Spree
 
       it "can update payment method and transition from payment to confirm" do
         order.update_column(:state, "payment")
-        Spree::Gateway::Bogus.any_instance.stub(:source_required?).and_return(false)
+        allow_any_instance_of(Spree::Gateway::Bogus).to receive(:source_required?).and_return(false)
         api_put :update, id: order.to_param, order_token: order.guest_token,
           order: { payments_attributes: [{ payment_method_id: @payment_method.id }] }
         expect(json_response['state']).to eq('confirm')
@@ -168,9 +168,9 @@ module Spree
         order.update_column(:state, "payment")
         api_put :update, :id => order.to_param, :order_token => order.guest_token,
           :order => { :payments_attributes => [{ :payment_method_id => @payment_method.id }] }
-        response.status.should == 422
+        expect(response.status).to eq(422)
         source_errors = json_response['errors']['payments.source']
-        source_errors.should include("can't be blank")
+        expect(source_errors).to include("can't be blank")
       end
 
       it "can update payment method with source and transition from payment to confirm" do
@@ -325,16 +325,16 @@ module Spree
           end
 
           it "can transition from confirm to complete" do
-            Spree::Order.any_instance.stub(:payment_required? => false)
+            allow_any_instance_of(Spree::Order).to receive_messages(:payment_required? => false)
             subject
-            json_response['state'].should == 'complete'
-            response.status.should == 200
+            expect(json_response['state']).to eq('complete')
+            expect(response.status).to eq(200)
           end
 
           it "returns a sensible error when no payment method is specified" do
             # api_put :complete, :id => order.to_param, :order_token => order.token, :order => {}
             subject
-            json_response["errors"]["base"].should include(Spree.t(:no_payment_found))
+            expect(json_response["errors"]["base"]).to include(Spree.t(:no_payment_found))
           end
 
           context "with mismatched expected_total" do
@@ -343,8 +343,8 @@ module Spree
             it "returns an error if expected_total is present and does not match actual total" do
               # api_put :complete, :id => order.to_param, :order_token => order.token, :expected_total => order.total + 1
               subject
-              response.status.should == 400
-              json_response['errors']['expected_total'].should include(Spree.t(:expected_total_mismatch, :scope => 'api.order'))
+              expect(response.status).to eq(400)
+              expect(json_response['errors']['expected_total']).to include(Spree.t(:expected_total_mismatch, :scope => 'api.order'))
             end
           end
         end

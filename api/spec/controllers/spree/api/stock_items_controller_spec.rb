@@ -18,8 +18,8 @@ module Spree
         it "can list stock items for an active stock location" do
           api_get :index, stock_location_id: stock_location.to_param
           expect(response).to be_success
-          json_response['stock_items'].first.should have_attributes(attributes)
-          json_response['stock_items'].first['variant']['sku'].should match /\ASKU-\d+\z/
+          expect(json_response['stock_items'].first).to have_attributes(attributes)
+          expect(json_response['stock_items'].first['variant']['sku']).to match /\ASKU-\d+\z/
         end
 
         it "cannot list stock items for an inactive stock location" do
@@ -32,14 +32,14 @@ module Spree
       describe "#show" do
         it "can see a stock item for an active stock location" do
           api_get :show, stock_location_id: stock_location.to_param, id: stock_item.to_param
-          json_response.should have_attributes(attributes)
-          json_response['count_on_hand'].should eq stock_item.count_on_hand
+          expect(json_response).to have_attributes(attributes)
+          expect(json_response['count_on_hand']).to eq stock_item.count_on_hand
         end
 
         it "cannot see a stock item for an inactive stock location" do
           stock_location.update_attributes!(active: false)
           api_get :show, stock_location_id: stock_location.to_param, id: stock_item.to_param
-          response.status.should == 404
+          expect(response.status).to eq(404)
         end
       end
 
@@ -55,21 +55,21 @@ module Spree
           }
 
           api_post :create, params
-          response.status.should == 404
+          expect(response.status).to eq(404)
         end
       end
 
       describe "#update" do
         it "cannot update a stock item" do
           api_put :update, stock_location_id: stock_location.to_param, id: stock_item.to_param
-          response.status.should == 404
+          expect(response.status).to eq(404)
         end
       end
 
       describe "#destroy" do
         it "cannot destroy a stock item" do
           api_delete :destroy, stock_location_id: stock_location.to_param, id: stock_item.to_param
-          response.status.should == 404
+          expect(response.status).to eq(404)
         end
       end
     end

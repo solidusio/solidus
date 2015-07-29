@@ -125,13 +125,13 @@ describe Spree::Api::ShipmentsController, :type => :controller do
 
       it 'adds a variant to a shipment' do
         api_put :add, { variant_id: variant.to_param, quantity: 2 }
-        response.status.should == 200
-        json_response['manifest'].detect { |h| h['variant']['id'] == variant.id }["quantity"].should == 2
+        expect(response.status).to eq(200)
+        expect(json_response['manifest'].detect { |h| h['variant']['id'] == variant.id }["quantity"]).to eq(2)
       end
 
       it 'cannot remove a variant from a shipment' do
         api_put :remove, { variant_id: variant.to_param, quantity: 1 }
-        response.status.should == 422
+        expect(response.status).to eq(422)
         expect(json_response['errors']['base'].join).to match /Cannot remove items/
       end
 

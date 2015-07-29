@@ -135,8 +135,8 @@ describe Spree::Api::BaseController, :type => :controller do
 
   context 'insufficient stock' do
     before do
-      subject.should_receive(:authenticate_user).and_return(true)
-      subject.should_receive(:index).and_raise(Spree::Order::InsufficientStock)
+      expect(subject).to receive(:authenticate_user).and_return(true)
+      expect(subject).to receive(:index).and_raise(Spree::Order::InsufficientStock)
       get :index, :token => "fake_key"
     end
 
@@ -165,7 +165,7 @@ describe Spree::Api::BaseController, :type => :controller do
     context 'without an existing lock' do
       it 'succeeds' do
         api_get :index, order_token: order.guest_token, order_id: order.number
-        response.status.should == 200
+        expect(response.status).to eq(200)
       end
     end
 
@@ -176,7 +176,7 @@ describe Spree::Api::BaseController, :type => :controller do
 
       it 'returns a 409 conflict' do
         api_get :index, order_token: order.guest_token, order_id: order.number
-        response.status.should == 409
+        expect(response.status).to eq(409)
       end
     end
   end
