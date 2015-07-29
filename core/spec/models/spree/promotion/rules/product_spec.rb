@@ -103,12 +103,12 @@ describe Spree::Promotion::Rules::Product, :type => :model do
 
       context 'for product in rule' do
         let(:line_item) { rule_line_item }
-        it { should be_truthy }
+        it { is_expected.to be_truthy }
       end
 
       context 'for product not in rule' do
         let(:line_item) { other_line_item }
-        it { should be_falsey }
+        it { is_expected.to be_falsey }
       end
     end
 
@@ -117,12 +117,12 @@ describe Spree::Promotion::Rules::Product, :type => :model do
 
       context 'for product in rule' do
         let(:line_item) { rule_line_item }
-        it { should be_truthy }
+        it { is_expected.to be_truthy }
       end
 
       context 'for product not in rule' do
         let(:line_item) { other_line_item }
-        it { should be_falsey }
+        it { is_expected.to be_falsey }
       end
     end
 
@@ -131,12 +131,12 @@ describe Spree::Promotion::Rules::Product, :type => :model do
 
       context 'for product in rule' do
         let(:line_item) { rule_line_item }
-        it { should be_falsey }
+        it { is_expected.to be_falsey }
       end
 
       context 'for product not in rule' do
         let(:line_item) { other_line_item }
-        it { should be_truthy }
+        it { is_expected.to be_truthy }
       end
     end
   end

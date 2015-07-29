@@ -43,7 +43,7 @@ module Spree
           let!(:another_location) { create(:stock_location, propagate_all_variants: false) }
 
           it "builds packages only for valid active stock locations" do
-            subject.build_packages.count.should == (StockLocation.count - 1)
+            expect(subject.build_packages.count).to eq(StockLocation.count - 1)
           end
         end
       end

@@ -131,7 +131,7 @@ describe Spree::Payment, :type => :model do
       it "transitions to invalid" do
         payment.state = 'checkout'
         payment.invalidate
-        payment.state.should eq ('invalid')
+        expect(payment.state).to eq ('invalid')
       end
     end
   end

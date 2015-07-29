@@ -160,8 +160,8 @@ module Spree
 
         subject.update
 
-        line_item.adjustments.promotion.eligible.count.should == 1
-        line_item.adjustments.promotion.eligible.first.label.should == 'Promotion B'
+        expect(line_item.adjustments.promotion.eligible.count).to eq(1)
+        expect(line_item.adjustments.promotion.eligible.first.label).to eq('Promotion B')
       end
 
       context "when previously ineligible promotions become available" do

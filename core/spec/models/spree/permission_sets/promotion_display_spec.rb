@@ -10,25 +10,25 @@ describe Spree::PermissionSets::PromotionDisplay do
       described_class.new(ability).activate!
     end
 
-    it { should be_able_to(:display, Spree::Promotion) }
-    it { should be_able_to(:display, Spree::PromotionRule) }
-    it { should be_able_to(:display, Spree::PromotionAction) }
-    it { should be_able_to(:display, Spree::PromotionCategory) }
-    it { should be_able_to(:admin, Spree::Promotion) }
-    it { should be_able_to(:admin, Spree::PromotionRule) }
-    it { should be_able_to(:admin, Spree::PromotionAction) }
-    it { should be_able_to(:admin, Spree::PromotionCategory) }
+    it { is_expected.to be_able_to(:display, Spree::Promotion) }
+    it { is_expected.to be_able_to(:display, Spree::PromotionRule) }
+    it { is_expected.to be_able_to(:display, Spree::PromotionAction) }
+    it { is_expected.to be_able_to(:display, Spree::PromotionCategory) }
+    it { is_expected.to be_able_to(:admin, Spree::Promotion) }
+    it { is_expected.to be_able_to(:admin, Spree::PromotionRule) }
+    it { is_expected.to be_able_to(:admin, Spree::PromotionAction) }
+    it { is_expected.to be_able_to(:admin, Spree::PromotionCategory) }
   end
 
   context "when not activated" do
-    it { should_not be_able_to(:display, Spree::Promotion) }
-    it { should_not be_able_to(:display, Spree::PromotionRule) }
-    it { should_not be_able_to(:display, Spree::PromotionAction) }
-    it { should_not be_able_to(:display, Spree::PromotionCategory) }
-    it { should_not be_able_to(:admin, Spree::Promotion) }
-    it { should_not be_able_to(:admin, Spree::PromotionRule) }
-    it { should_not be_able_to(:admin, Spree::PromotionAction) }
-    it { should_not be_able_to(:admin, Spree::PromotionCategory) }
+    it { is_expected.not_to be_able_to(:display, Spree::Promotion) }
+    it { is_expected.not_to be_able_to(:display, Spree::PromotionRule) }
+    it { is_expected.not_to be_able_to(:display, Spree::PromotionAction) }
+    it { is_expected.not_to be_able_to(:display, Spree::PromotionCategory) }
+    it { is_expected.not_to be_able_to(:admin, Spree::Promotion) }
+    it { is_expected.not_to be_able_to(:admin, Spree::PromotionRule) }
+    it { is_expected.not_to be_able_to(:admin, Spree::PromotionAction) }
+    it { is_expected.not_to be_able_to(:admin, Spree::PromotionCategory) }
   end
 end
 

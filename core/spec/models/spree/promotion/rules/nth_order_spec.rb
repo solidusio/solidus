@@ -7,13 +7,13 @@ describe Spree::Promotion::Rules::NthOrder do
     context "when the promotable is an order" do
       let(:promotable) { Spree::Order.new }
 
-      it { should be true }
+      it { is_expected.to be true }
     end
 
     context "when the promotable is not a order" do
       let(:promotable) { "not an order" }
 
-      it { should be false }
+      it { is_expected.to be false }
     end
   end
 
@@ -28,7 +28,7 @@ describe Spree::Promotion::Rules::NthOrder do
     context "when the order does not have a user" do
       let(:order) { Spree::Order.new }
 
-      it { should be false }
+      it { is_expected.to be false }
     end
 
     context "when the order has a user" do
@@ -42,7 +42,7 @@ describe Spree::Promotion::Rules::NthOrder do
         end
 
         context "when this order will be the 'nth' order" do
-          it { should be true }
+          it { is_expected.to be true }
         end
 
         context "when this order is completed and is still the 'nth' order" do
@@ -50,7 +50,7 @@ describe Spree::Promotion::Rules::NthOrder do
             order.update_attributes(completed_at: Time.now)
           end
 
-          it { should be true }
+          it { is_expected.to be true }
         end
 
         context "when this order will not be the 'nth' order" do
@@ -58,12 +58,12 @@ describe Spree::Promotion::Rules::NthOrder do
             instance.preferred_nth_order = 100
           end
 
-          it { should be false }
+          it { is_expected.to be false }
         end
       end
 
       context "when the user has no completed orders " do
-        it { should be false }
+        it { is_expected.to be false }
       end
     end
   end

@@ -10,40 +10,40 @@ describe Spree::PermissionSets::OrderDisplay do
       described_class.new(ability).activate!
     end
 
-    it { should be_able_to(:display, Spree::Order) }
-    it { should be_able_to(:display, Spree::Payment) }
-    it { should be_able_to(:display, Spree::Shipment) }
-    it { should be_able_to(:display, Spree::Adjustment) }
-    it { should be_able_to(:display, Spree::LineItem) }
-    it { should be_able_to(:display, Spree::ReturnAuthorization) }
-    it { should be_able_to(:display, Spree::CustomerReturn) }
-    it { should be_able_to(:admin, Spree::Order) }
-    it { should be_able_to(:admin, Spree::Payment) }
-    it { should be_able_to(:admin, Spree::Shipment) }
-    it { should be_able_to(:admin, Spree::Adjustment) }
-    it { should be_able_to(:admin, Spree::LineItem) }
-    it { should be_able_to(:admin, Spree::ReturnAuthorization) }
-    it { should be_able_to(:admin, Spree::CustomerReturn) }
-    it { should be_able_to(:edit, Spree::Order) }
-    it { should be_able_to(:cart, Spree::Order) }
+    it { is_expected.to be_able_to(:display, Spree::Order) }
+    it { is_expected.to be_able_to(:display, Spree::Payment) }
+    it { is_expected.to be_able_to(:display, Spree::Shipment) }
+    it { is_expected.to be_able_to(:display, Spree::Adjustment) }
+    it { is_expected.to be_able_to(:display, Spree::LineItem) }
+    it { is_expected.to be_able_to(:display, Spree::ReturnAuthorization) }
+    it { is_expected.to be_able_to(:display, Spree::CustomerReturn) }
+    it { is_expected.to be_able_to(:admin, Spree::Order) }
+    it { is_expected.to be_able_to(:admin, Spree::Payment) }
+    it { is_expected.to be_able_to(:admin, Spree::Shipment) }
+    it { is_expected.to be_able_to(:admin, Spree::Adjustment) }
+    it { is_expected.to be_able_to(:admin, Spree::LineItem) }
+    it { is_expected.to be_able_to(:admin, Spree::ReturnAuthorization) }
+    it { is_expected.to be_able_to(:admin, Spree::CustomerReturn) }
+    it { is_expected.to be_able_to(:edit, Spree::Order) }
+    it { is_expected.to be_able_to(:cart, Spree::Order) }
   end
 
   context "when not activated" do
-    it { should_not be_able_to(:display, Spree::Order) }
-    it { should_not be_able_to(:display, Spree::Payment) }
-    it { should_not be_able_to(:display, Spree::Shipment) }
-    it { should_not be_able_to(:display, Spree::Adjustment) }
-    it { should_not be_able_to(:display, Spree::LineItem) }
-    it { should_not be_able_to(:display, Spree::ReturnAuthorization) }
-    it { should_not be_able_to(:display, Spree::CustomerReturn) }
-    it { should_not be_able_to(:admin, Spree::Order) }
-    it { should_not be_able_to(:admin, Spree::Payment) }
-    it { should_not be_able_to(:admin, Spree::Shipment) }
-    it { should_not be_able_to(:admin, Spree::Adjustment) }
-    it { should_not be_able_to(:admin, Spree::LineItem) }
-    it { should_not be_able_to(:admin, Spree::ReturnAuthorization) }
-    it { should_not be_able_to(:admin, Spree::CustomerReturn) }
-    it { should_not be_able_to(:cart, Spree::Order) }
+    it { is_expected.not_to be_able_to(:display, Spree::Order) }
+    it { is_expected.not_to be_able_to(:display, Spree::Payment) }
+    it { is_expected.not_to be_able_to(:display, Spree::Shipment) }
+    it { is_expected.not_to be_able_to(:display, Spree::Adjustment) }
+    it { is_expected.not_to be_able_to(:display, Spree::LineItem) }
+    it { is_expected.not_to be_able_to(:display, Spree::ReturnAuthorization) }
+    it { is_expected.not_to be_able_to(:display, Spree::CustomerReturn) }
+    it { is_expected.not_to be_able_to(:admin, Spree::Order) }
+    it { is_expected.not_to be_able_to(:admin, Spree::Payment) }
+    it { is_expected.not_to be_able_to(:admin, Spree::Shipment) }
+    it { is_expected.not_to be_able_to(:admin, Spree::Adjustment) }
+    it { is_expected.not_to be_able_to(:admin, Spree::LineItem) }
+    it { is_expected.not_to be_able_to(:admin, Spree::ReturnAuthorization) }
+    it { is_expected.not_to be_able_to(:admin, Spree::CustomerReturn) }
+    it { is_expected.not_to be_able_to(:cart, Spree::Order) }
   end
 end
 

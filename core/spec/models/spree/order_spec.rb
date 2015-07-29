@@ -917,11 +917,11 @@ describe Spree::Order, :type => :model do
     context "the order does not have a shipment" do
       before { order.shipments.destroy_all }
 
-      it { should be false }
+      it { is_expected.to be false }
     end
 
     context "shipment created after order" do
-      it { should be false }
+      it { is_expected.to be false }
     end
 
     context "shipment created before order" do
@@ -929,7 +929,7 @@ describe Spree::Order, :type => :model do
         order.shipments.first.update_attributes!(created_at: order.created_at - 1.day)
       end
 
-      it { should be true }
+      it { is_expected.to be true }
     end
   end
 

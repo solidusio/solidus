@@ -174,20 +174,20 @@ describe Spree::Variant, :type => :model do
       end
 
       it "the default stays the same" do
-        variant.default_price.amount.should == 19.99
+        expect(variant.default_price.amount).to eq(19.99)
       end
 
       it "displays default price" do
-        variant.price_in("USD").display_amount.to_s.should == "$19.99"
-        variant.price_in("EUR").display_amount.to_s.should == "€29.99"
+        expect(variant.price_in("USD").display_amount.to_s).to eq("$19.99")
+        expect(variant.price_in("EUR").display_amount.to_s).to eq("€29.99")
       end
     end
 
     context "when adding multiple prices" do
       it "it can reassign a default price" do
-        variant.default_price.amount.should == 19.99
+        expect(variant.default_price.amount).to eq(19.99)
         variant.prices << create(:price, :variant => variant, :currency => "USD", :amount => 12.12)
-        variant.reload.default_price.amount.should == 12.12
+        expect(variant.reload.default_price.amount).to eq(12.12)
       end
     end
   end

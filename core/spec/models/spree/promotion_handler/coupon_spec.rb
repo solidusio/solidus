@@ -217,7 +217,7 @@ module Spree
             end
 
             context "when the coupon fails to activate" do
-              before { Spree::Promotion.any_instance.stub(:activate).and_return false }
+              before { allow_any_instance_of(Spree::Promotion).to receive(:activate).and_return false }
 
               it "is not successful" do
                 subject.apply

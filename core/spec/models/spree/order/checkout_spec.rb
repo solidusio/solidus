@@ -161,7 +161,7 @@ describe Spree::Order, :type => :model do
       before do
         order.state = 'address'
         order.ship_address = ship_address
-        order.stub(:has_available_payment)
+        allow(order).to receive(:has_available_payment)
         shipment = FactoryGirl.create(:shipment, :order => order, :cost => 10)
         order.email = "user@example.com"
         order.save!
@@ -275,7 +275,7 @@ describe Spree::Order, :type => :model do
           end
           specify do
             transition = lambda { order.next! }
-            transition.should raise_error(StateMachines::InvalidTransition, /#{Spree.t(:items_cannot_be_shipped)}/)
+            expect(transition).to raise_error(StateMachines::InvalidTransition, /#{Spree.t(:items_cannot_be_shipped)}/)
           end
         end
       end
@@ -494,7 +494,7 @@ describe Spree::Order, :type => :model do
         order.user = FactoryGirl.create(:user)
         order.email = 'spree@example.org'
         order.payments << FactoryGirl.create(:payment)
-        order.stub(payment_required?: true)
+        allow(order).to receive_messages(payment_required?: true)
         order.line_items << FactoryGirl.create(:line_item)
         order.line_items.first.variant.stock_items.each do |si|
           si.set_count_on_hand(0)
@@ -520,7 +520,7 @@ describe Spree::Order, :type => :model do
         order.user = FactoryGirl.create(:user)
         order.email = 'spree@example.com'
         order.payments << FactoryGirl.create(:payment)
-        order.stub(payment_required?: true)
+        allow(order).to receive_messages(payment_required?: true)
         allow(order).to receive(:ensure_available_shipping_rates) { true }
         order.line_items << FactoryGirl.create(:line_item)
 
@@ -541,8 +541,8 @@ describe Spree::Order, :type => :model do
         order.email = 'spree@example.org'
         order.payments << FactoryGirl.create(:payment)
         order.shipments.create!
-        order.stub(payment_required?: true)
-        order.stub(:ensure_available_shipping_rates).and_return(true)
+        allow(order).to receive_messages(payment_required?: true)
+        allow(order).to receive(:ensure_available_shipping_rates).and_return(true)
       end
 
       context 'when the line items are not available' do
@@ -611,14 +611,14 @@ describe Spree::Order, :type => :model do
         order.user = FactoryGirl.create(:user)
         order.email = 'spree@example.org'
         payment = FactoryGirl.create(:payment)
-        payment.stub(:process!).and_raise(Spree::Core::GatewayError.new('processing failed'))
+        allow(payment).to receive(:process!).and_raise(Spree::Core::GatewayError.new('processing failed'))
         order.line_items.each { |li| li.inventory_units.create! }
         order.payments << payment
 
         # make sure we will actually capture a payment
-        order.stub(payment_required?: true)
-        order.stub(ensure_available_shipping_rates: true)
-        order.stub(validate_line_item_availability: true)
+        allow(order).to receive_messages(payment_required?: true)
+        allow(order).to receive_messages(ensure_available_shipping_rates: true)
+        allow(order).to receive_messages(validate_line_item_availability: true)
         order.line_items << FactoryGirl.create(:line_item)
         order.create_proposed_shipments
         Spree::OrderUpdater.new(order).update
@@ -701,13 +701,13 @@ describe Spree::Order, :type => :model do
     it "does not attempt to process payments" do
       order.email = 'user@example.com'
       order.store = FactoryGirl.build(:store)
-      order.stub(:ensure_available_shipping_rates).and_return(true)
-      order.stub(:ensure_promotions_eligible).and_return(true)
-      order.stub(:ensure_line_item_variants_are_not_deleted).and_return(true)
-      order.stub_chain(:line_items, :present?).and_return(true)
-      order.stub(validate_line_item_availability: true)
-      order.should_not_receive(:payment_required?)
-      order.should_not_receive(:process_payments!)
+      allow(order).to receive(:ensure_available_shipping_rates).and_return(true)
+      allow(order).to receive(:ensure_promotions_eligible).and_return(true)
+      allow(order).to receive(:ensure_line_item_variants_are_not_deleted).and_return(true)
+      allow(order).to receive_message_chain(:line_items, :present?).and_return(true)
+      allow(order).to receive_messages(validate_line_item_availability: true)
+      expect(order).not_to receive(:payment_required?)
+      expect(order).not_to receive(:process_payments!)
       order.next!
       assert_state_changed(order, 'cart', 'complete')
     end

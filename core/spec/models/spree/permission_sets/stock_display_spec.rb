@@ -10,17 +10,17 @@ describe Spree::PermissionSets::StockDisplay do
       described_class.new(ability).activate!
     end
 
-    it { should be_able_to(:display, Spree::StockItem) }
-    it { should be_able_to(:display, Spree::StockTransfer) }
-    it { should be_able_to(:admin, Spree::StockItem) }
-    it { should be_able_to(:admin, Spree::StockTransfer) }
+    it { is_expected.to be_able_to(:display, Spree::StockItem) }
+    it { is_expected.to be_able_to(:display, Spree::StockTransfer) }
+    it { is_expected.to be_able_to(:admin, Spree::StockItem) }
+    it { is_expected.to be_able_to(:admin, Spree::StockTransfer) }
   end
 
   context "when not activated" do
-    it { should_not be_able_to(:display, Spree::StockItem) }
-    it { should_not be_able_to(:display, Spree::StockTransfer) }
-    it { should_not be_able_to(:admin, Spree::StockItem) }
-    it { should_not be_able_to(:admin, Spree::StockTransfer) }
+    it { is_expected.not_to be_able_to(:display, Spree::StockItem) }
+    it { is_expected.not_to be_able_to(:display, Spree::StockTransfer) }
+    it { is_expected.not_to be_able_to(:admin, Spree::StockItem) }
+    it { is_expected.not_to be_able_to(:admin, Spree::StockTransfer) }
   end
 end
 
