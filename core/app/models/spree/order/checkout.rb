@@ -103,7 +103,7 @@ module Spree
               end
 
               before_transition to: :resumed, do: :ensure_line_item_variants_are_not_deleted
-              before_transition to: :resumed, do: :ensure_line_items_are_in_stock
+              before_transition to: :resumed, do: :validate_line_item_availability
 
               # Sequence of before_transition to: :complete
               # calls matter so that we do not process payments
@@ -112,7 +112,6 @@ module Spree
               before_transition to: :complete, do: :ensure_available_shipping_rates
               before_transition to: :complete, do: :ensure_promotions_eligible
               before_transition to: :complete, do: :ensure_line_item_variants_are_not_deleted
-              before_transition to: :complete, do: :ensure_line_items_are_in_stock
               before_transition to: :complete, do: :ensure_inventory_units, unless: :unreturned_exchange?
 
               after_transition to: :complete, do: :finalize!
