@@ -1,8 +1,8 @@
 object @order
 extends "spree/api/orders/order"
 
-if lookup_context.find_all("spree/api/orders/#{root_object.state}").present?
-  extends "spree/api/orders/#{root_object.state}"
+child :available_payment_methods => :payment_methods do
+  attributes :id, :name, :environment, :method_type
 end
 
 child :billing_address => :bill_address do
