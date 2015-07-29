@@ -31,7 +31,7 @@ describe Spree::Admin::OrdersController, :type => :controller do
 
     before do
       allow(Spree::Order).to receive_messages(find_by_number!: order)
-      order.stub(contents: Spree::OrderContents.new(order))
+      allow(order).to receive_messages(contents: Spree::OrderContents.new(order))
     end
 
     context "#approve" do
@@ -74,21 +74,21 @@ describe Spree::Admin::OrdersController, :type => :controller do
       end
 
       it "imports a new order and sets the current user as a creator" do
-        Spree::Core::Importer::Order.should_receive(:import)
+        expect(Spree::Core::Importer::Order).to receive(:import)
           .with(nil, hash_including(created_by_id: controller.try_spree_current_user.id))
           .and_return(order)
         spree_get :new
       end
 
       it "sets frontend_viewable to false" do
-        Spree::Core::Importer::Order.should_receive(:import)
+        expect(Spree::Core::Importer::Order).to receive(:import)
           .with(nil, hash_including(frontend_viewable: false ))
           .and_return(order)
         spree_get :new
       end
 
       it "should associate the order with a store" do
-        Spree::Core::Importer::Order.should_receive(:import)
+        expect(Spree::Core::Importer::Order).to receive(:import)
           .with(user, hash_including(store_id: controller.current_store.id))
           .and_return(order)
         spree_get :new, { user_id: user.id }
@@ -96,10 +96,10 @@ describe Spree::Admin::OrdersController, :type => :controller do
 
       context "when a user_id is passed as a parameter" do
         let(:user)  { mock_model(Spree.user_class) }
-        before { Spree.user_class.stub :find_by_id => user }
+        before { allow(Spree.user_class).to receive_messages :find_by_id => user }
 
         it "imports a new order and assigns the user to the order" do
-          Spree::Core::Importer::Order.should_receive(:import)
+          expect(Spree::Core::Importer::Order).to receive(:import)
             .with(user, hash_including(created_by_id: controller.try_spree_current_user.id))
             .and_return(order)
           spree_get :new, { user_id: user.id }
@@ -128,7 +128,7 @@ describe Spree::Admin::OrdersController, :type => :controller do
 
       context "when order does not have a ship address" do
         before do
-          order.stub :ship_address => nil
+          allow(order).to receive_messages :ship_address => nil
         end
 
         context 'when order_bill_address_used is true' do
@@ -158,12 +158,12 @@ describe Spree::Admin::OrdersController, :type => :controller do
 
       context 'when incomplete' do
         before do
-          order.stub(:completed?).and_return(false, true)
-          order.stub(:next).and_return(true, false)
+          allow(order).to receive(:completed?).and_return(false, true)
+          allow(order).to receive(:next).and_return(true, false)
         end
 
         context 'when successful' do
-          before { order.stub(:confirm?).and_return(true) }
+          before { allow(order).to receive(:confirm?).and_return(true) }
 
           it 'messages and redirects' do
             subject
@@ -174,8 +174,8 @@ describe Spree::Admin::OrdersController, :type => :controller do
 
         context 'when unsuccessful' do
           before do
-            order.stub(:confirm?).and_return(false)
-            order.stub(:errors).and_return(double(full_messages: ['failed']))
+            allow(order).to receive(:confirm?).and_return(false)
+            allow(order).to receive(:errors).and_return(double(full_messages: ['failed']))
           end
 
           it 'messages and redirects' do
@@ -187,7 +187,7 @@ describe Spree::Admin::OrdersController, :type => :controller do
       end
 
       context 'when already completed' do
-        before { order.stub :completed? => true }
+        before { allow(order).to receive_messages :completed? => true }
 
         it 'messages and redirects' do
           subject
@@ -203,7 +203,7 @@ describe Spree::Admin::OrdersController, :type => :controller do
       end
 
       context 'when incomplete' do
-        before { order.stub :completed? => false }
+        before { allow(order).to receive_messages :completed? => false }
 
         it 'is successful' do
           subject
@@ -212,7 +212,7 @@ describe Spree::Admin::OrdersController, :type => :controller do
       end
 
       context 'when already completed' do
-        before { order.stub :completed? => true }
+        before { allow(order).to receive_messages :completed? => true }
 
         it 'redirects to edit' do
           subject
@@ -227,7 +227,7 @@ describe Spree::Admin::OrdersController, :type => :controller do
       end
 
       context 'when successful' do
-        before { order.stub(:complete!) }
+        before { allow(order).to receive(:complete!) }
 
         it 'completes the order' do
           expect(order).to receive(:complete!)
@@ -253,7 +253,7 @@ describe Spree::Admin::OrdersController, :type => :controller do
 
       context 'insufficient stock to complete the order' do
         before do
-          order.should_receive(:complete!).and_raise Spree::Order::InsufficientStock
+          expect(order).to receive(:complete!).and_raise Spree::Order::InsufficientStock
         end
 
         it 'messages and redirects' do
