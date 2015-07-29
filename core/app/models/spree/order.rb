@@ -425,16 +425,6 @@ module Spree
       end
     end
 
-    def ensure_line_items_are_in_stock
-      if insufficient_stock_lines.present?
-        errors.add(:base, Spree.t(:insufficient_stock_lines_present))
-        restart_checkout_flow
-        false
-      else
-        true
-      end
-    end
-
     def merge!(order, user = nil)
       order.line_items.each do |other_order_line_item|
         next unless other_order_line_item.currency == currency
