@@ -1,6 +1,6 @@
 module Spree
   class OptionValue < Spree::Base
-    belongs_to :option_type, class_name: 'Spree::OptionType', touch: true, inverse_of: :option_values
+    belongs_to :option_type, class_name: 'Spree::OptionType', inverse_of: :option_values
     acts_as_list scope: :option_type
 
     has_many :option_values_variants, dependent: :destroy
@@ -9,12 +9,13 @@ module Spree
     validates :name, presence: true, uniqueness: { scope: :option_type_id }
     validates :presentation, presence: true
 
+    after_save :touch
     after_touch :touch_all_variants
 
     # Updates the updated_at column on all the variants associated with this
     # option value.
     def touch_all_variants
-      variants.update_all(updated_at: Time.current)
+      variants.find_each(&:touch)
     end
 
     # @return [String] a string representation of all option value and its
