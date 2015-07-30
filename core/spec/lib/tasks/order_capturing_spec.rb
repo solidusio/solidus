@@ -1,7 +1,16 @@
 require 'spec_helper'
 
 describe "order_capturing:capture_payments" do
-  include_context "rake"
+  let(:task) do
+    Rake::Task['order_capturing:capture_payments']
+  end
+
+  before do
+    Rails.application.load_tasks
+    task.reenable
+  end
+
+  subject { task }
 
   describe '#prerequisites' do
     subject { super().prerequisites }
