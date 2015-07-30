@@ -265,15 +265,15 @@ describe Spree::CheckoutController, :type => :controller do
 
       context "when the order is invalid" do
         before do
-          order.stub :update_attributes => true, :next => nil
+          allow(order).to receive_messages :update_attributes => true, :next => nil
           order.errors.add :base, 'Base error'
           order.errors.add :adjustments, 'error'
         end
 
         it "due to the order having errors" do
           spree_put :update, :state => order.state, :order => {}
-          flash[:error].should == "Base error\nAdjustments error"
-          response.should redirect_to(spree.checkout_state_path('address'))
+          expect(flash[:error]).to eq("Base error\nAdjustments error")
+          expect(response).to redirect_to(spree.checkout_state_path('address'))
         end
       end
     end
@@ -286,8 +286,8 @@ describe Spree::CheckoutController, :type => :controller do
       end
 
       before do
-        controller.stub :current_order => order
-        controller.stub :check_authorization => true
+        allow(controller).to receive_messages :current_order => order
+        allow(controller).to receive_messages :check_authorization => true
       end
 
       context "when the country is not a shippable country" do
@@ -309,8 +309,8 @@ describe Spree::CheckoutController, :type => :controller do
           order.shipments.first.shipping_rates.delete_all
           order.update_attributes(state: 'confirm')
           spree_put :update, state: order.state, :order => {}
-          flash[:error].should == Spree.t(:items_cannot_be_shipped)
-          response.should redirect_to(spree.checkout_state_path('confirm'))
+          expect(flash[:error]).to eq(Spree.t(:items_cannot_be_shipped))
+          expect(response).to redirect_to(spree.checkout_state_path('confirm'))
         end
       end
     end

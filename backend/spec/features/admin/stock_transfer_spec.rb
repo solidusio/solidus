@@ -7,7 +7,7 @@ describe 'Stock Transfers', :type => :feature, :js => true do
   let(:description) { 'Test stock transfer' }
 
   before do
-    Spree::Admin::BaseController.any_instance.stub(:spree_current_user).and_return(admin_user)
+    allow_any_instance_of(Spree::Admin::BaseController).to receive(:spree_current_user).and_return(admin_user)
   end
 
   describe 'create stock transfer' do

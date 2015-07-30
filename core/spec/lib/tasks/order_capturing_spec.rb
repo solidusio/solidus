@@ -3,7 +3,10 @@ require 'spec_helper'
 describe "order_capturing:capture_payments" do
   include_context "rake"
 
-  its(:prerequisites) { should include("environment") }
+  describe '#prerequisites' do
+    subject { super().prerequisites }
+    it { is_expected.to include("environment") }
+  end
   let(:order) { create(:completed_order_with_pending_payment, line_items_count: 2) }
   let(:payment) { order.payments.first }
 
@@ -24,7 +27,7 @@ describe "order_capturing:capture_payments" do
 
     context "when there is an error capturing payment" do
       before do
-        Spree::OrderCapturing.any_instance.stub(:capture_payments).and_raise(StateMachines::InvalidTransition)
+        allow_any_instance_of(Spree::OrderCapturing).to receive(:capture_payments).and_raise(StateMachines::InvalidTransition)
       end
 
       it "raises a OrderCapturingFailures" do

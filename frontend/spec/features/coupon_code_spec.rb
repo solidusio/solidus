@@ -101,7 +101,7 @@ describe "Coupon code promotions", type: :feature, js: true do
       end
 
       it "informs the user about a coupon code which has exceeded its usage" do
-        Spree::Promotion.any_instance.should_receive(:usage_limit_exceeded?).and_return(true)
+        expect_any_instance_of(Spree::Promotion).to receive(:usage_limit_exceeded?).and_return(true)
 
         fill_in "order_coupon_code", :with => "onetwo"
         click_button "Update"

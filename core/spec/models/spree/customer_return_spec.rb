@@ -93,8 +93,8 @@ describe Spree::CustomerReturn, :type => :model do
     let(:customer_return) { Spree::CustomerReturn.new }
 
     it "returns a Spree::Money" do
-      customer_return.stub(total: 21.22)
-      customer_return.display_total.should == Spree::Money.new(21.22)
+      allow(customer_return).to receive_messages(total: 21.22)
+      expect(customer_return.display_total).to eq(Spree::Money.new(21.22))
     end
   end
 

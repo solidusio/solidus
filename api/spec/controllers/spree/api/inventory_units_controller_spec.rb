@@ -21,7 +21,7 @@ module Spree
       it "updates an inventory unit" do
         api_put :update, :id => @inventory_unit.id,
                          :inventory_unit => { variant_id: variant.id }
-        json_response['variant_id'].should eq variant.id
+        expect(json_response['variant_id']).to eq variant.id
       end
 
       context 'fires state event' do

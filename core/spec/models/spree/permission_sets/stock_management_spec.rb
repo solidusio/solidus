@@ -10,15 +10,15 @@ describe Spree::PermissionSets::StockManagement do
       described_class.new(ability).activate!
     end
 
-    it { should be_able_to(:manage, Spree::StockItem) }
-    it { should be_able_to(:manage, Spree::StockTransfer) }
-    it { should be_able_to(:manage, Spree::TransferItem) }
+    it { is_expected.to be_able_to(:manage, Spree::StockItem) }
+    it { is_expected.to be_able_to(:manage, Spree::StockTransfer) }
+    it { is_expected.to be_able_to(:manage, Spree::TransferItem) }
   end
 
   context "when not activated" do
-    it { should_not be_able_to(:manage, Spree::StockItem) }
-    it { should_not be_able_to(:manage, Spree::StockTransfer) }
-    it { should_not be_able_to(:manage, Spree::TransferItem) }
+    it { is_expected.not_to be_able_to(:manage, Spree::StockItem) }
+    it { is_expected.not_to be_able_to(:manage, Spree::StockTransfer) }
+    it { is_expected.not_to be_able_to(:manage, Spree::TransferItem) }
   end
 end
 

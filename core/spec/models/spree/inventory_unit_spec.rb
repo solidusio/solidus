@@ -254,12 +254,12 @@ describe Spree::InventoryUnit, :type => :model do
     context "return item contains inventory unit and was for an exchange" do
       let(:exchange_return_item) { create(:exchange_return_item) }
       let(:inventory_unit) { exchange_return_item.inventory_unit }
-      it { should eq true }
+      it { is_expected.to eq true }
     end
 
     context "return item does not contain inventory unit" do
       let(:inventory_unit) { create(:inventory_unit) }
-      it { should eq false }
+      it { is_expected.to eq false }
     end
   end
 

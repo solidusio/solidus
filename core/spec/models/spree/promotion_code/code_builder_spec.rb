@@ -15,7 +15,7 @@ describe Spree::PromotionCode::CodeBuilder do
 
       it "builds a single promotion code" do
         subject
-        expect(builder.promotion.codes).to have(num_codes).items
+        expect(builder.promotion.codes.size).to eq(num_codes)
       end
 
       it "creates the promotion code with the correct value" do
@@ -29,12 +29,12 @@ describe Spree::PromotionCode::CodeBuilder do
 
       it "builds the correct number of codes" do
         subject
-        expect(builder.promotion.codes).to have(num_codes).items
+        expect(builder.promotion.codes.size).to eq(num_codes)
       end
 
       it "builds codes with distinct values" do
         subject
-        expect(builder.promotion.codes.map(&:value).uniq).to have(num_codes).items
+        expect(builder.promotion.codes.map(&:value).uniq.size).to eq(num_codes)
       end
 
       it "builds codes with the same base prefix" do
@@ -54,7 +54,7 @@ describe Spree::PromotionCode::CodeBuilder do
 
         it "resolves the collision" do
           subject
-          expect(builder.promotion.codes.map(&:value).uniq).to have(num_codes).items
+          expect(builder.promotion.codes.map(&:value).uniq.size).to eq(num_codes)
         end
       end
 
@@ -69,7 +69,7 @@ describe Spree::PromotionCode::CodeBuilder do
 
         it "resolves the collisions and returns the correct number of codes" do
           subject
-          expect(builder.promotion.codes.map(&:value).uniq).to have(num_codes).items
+          expect(builder.promotion.codes.map(&:value).uniq.size).to eq(num_codes)
         end
       end
 

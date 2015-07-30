@@ -245,6 +245,6 @@ describe Spree::Address, :type => :model do
   context '#requires_phone' do
     subject { described_class.new }
 
-    it { should be_require_phone  }
+    it { is_expected.to be_require_phone  }
   end
 end
