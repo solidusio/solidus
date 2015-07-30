@@ -86,16 +86,11 @@ module Spree
 
         def load_order
           @order = Spree::Order.find_by!(number: params[:id])
-          raise_insufficient_quantity and return if @order.insufficient_stock_lines.present?
         end
 
         def update_order_state
           @order.state = params[:state] if params[:state]
           state_callback(:before)
-        end
-
-        def raise_insufficient_quantity
-          respond_with(@order, default_template: 'spree/api/orders/insufficient_quantity')
         end
 
         def state_callback(before_or_after = :before)
