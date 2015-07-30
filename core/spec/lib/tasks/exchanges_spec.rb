@@ -1,7 +1,16 @@
 require 'spec_helper'
 
 describe "exchanges:charge_unreturned_items" do
-  include_context "rake"
+  let(:task) do
+    Rake::Task['exchanges:charge_unreturned_items']
+  end
+
+  before do
+    Rails.application.load_tasks
+    task.reenable
+  end
+
+  subject { task }
 
   describe '#prerequisites' do
     it { expect(subject.prerequisites).to include("environment") }
