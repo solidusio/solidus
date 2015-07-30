@@ -38,7 +38,7 @@ class RemoveTranslationsFromSpreeTables < ActiveRecord::Migration
 
     # We can't rely on Globalize drop_translation_table! here,
     # because the Gem has been already removed, so we need to run custom SQL
-    records = execute("SELECT * FROM #{singular_table_name}_translations WHERE locale = '#{current_locale}';")
+    records = exec_query("SELECT * FROM #{singular_table_name}_translations WHERE locale = '#{current_locale}';")
 
     records.each do |record|
       id = record["#{singular_table_name}_id"]
