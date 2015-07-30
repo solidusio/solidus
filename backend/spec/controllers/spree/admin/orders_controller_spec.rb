@@ -202,17 +202,28 @@ describe Spree::Admin::OrdersController, :type => :controller do
         spree_get :confirm, id: order.number
       end
 
-      context 'when incomplete' do
-        before { allow(order).to receive_messages :completed? => false }
+      context 'when in confirm' do
+        before { allow(order).to receive_messages completed?: false, confirm?: true }
 
-        it 'is successful' do
+        it 'renders the confirm page' do
           subject
           expect(response.status).to eq 200
+          expect(response).to render_template(:confirm)
+        end
+      end
+
+      context 'when before confirm' do
+        before { order.stub completed?: false, confirm?: false }
+
+        it 'renders the confirm_advance template (to allow refreshing of the order)' do
+          subject
+          expect(response.status).to eq 200
+          expect(response).to render_template(:confirm_advance)
         end
       end
 
       context 'when already completed' do
-        before { allow(order).to receive_messages :completed? => true }
+        before { allow(order).to receive_messages completed?: true }
 
         it 'redirects to edit' do
           subject

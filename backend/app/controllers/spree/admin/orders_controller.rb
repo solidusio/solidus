@@ -111,6 +111,8 @@ module Spree
       def confirm
         if @order.completed?
           redirect_to edit_admin_order_url(@order)
+        elsif !@order.confirm?
+          render template: 'spree/admin/orders/confirm_advance'
         end
       end
 
