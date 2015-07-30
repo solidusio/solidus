@@ -24,7 +24,7 @@ module Spree
     after_touch :touch_all_products
 
     def touch_all_products
-      products.update_all(updated_at: Time.current)
+      products.find_each(&:touch)
     end
   end
 end
