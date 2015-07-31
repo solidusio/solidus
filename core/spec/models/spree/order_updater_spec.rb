@@ -70,9 +70,6 @@ module Spree
     context "updating shipment state" do
       before do
         allow(order).to receive_messages backordered?: false
-        allow(order).to receive_message_chain(:shipments, :shipped, :count).and_return(0)
-        allow(order).to receive_message_chain(:shipments, :ready, :count).and_return(0)
-        allow(order).to receive_message_chain(:shipments, :pending, :count).and_return(0)
       end
 
       it "is backordered" do
@@ -83,9 +80,6 @@ module Spree
       end
 
       it "is nil" do
-        allow(order).to receive_message_chain(:shipments, :states).and_return([])
-        allow(order).to receive_message_chain(:shipments, :count).and_return(0)
-
         updater.update_shipment_state
         expect(order.shipment_state).to be_nil
       end
@@ -93,14 +87,15 @@ module Spree
 
       ["shipped", "ready", "pending"].each do |state|
         it "is #{state}" do
-          allow(order).to receive_message_chain(:shipments, :states).and_return([state])
+          create(:shipment, order: order, state: state)
           updater.update_shipment_state
-          expect(order.shipment_state).to eq(state.to_s)
+          expect(order.shipment_state).to eq(state)
         end
       end
 
       it "is partial" do
-        allow(order).to receive_message_chain(:shipments, :states).and_return(["pending", "ready"])
+        create(:shipment, order: order, state: 'pending')
+        create(:shipment, order: order, state: 'ready')
         updater.update_shipment_state
         expect(order.shipment_state).to eq('partial')
       end
@@ -113,7 +108,7 @@ module Spree
 
       context 'no valid payments with non-zero order total' do
         it "is failed" do
-          allow(order).to receive_message_chain(:payments, :valid, :size).and_return(0)
+          create(:payment, order: order, state: 'invalid')
           order.total = 1
           order.payment_total = 0
 
@@ -188,8 +183,7 @@ module Spree
           it "is credit_owed" do
             order.payment_total = 30
             order.total = 30
-            allow(order).to receive_message_chain(:payments, :valid, :size).and_return(1)
-            allow(order).to receive_message_chain(:payments, :completed, :size).and_return(1)
+            create(:payment, order: order, state: 'completed', amount: 30)
             expect {
               updater.update_payment_state
             }.to change { order.payment_state }.to 'credit_owed'
@@ -237,35 +231,24 @@ module Spree
         updater.update
       end
 
-      it "updates each shipment" do
-        shipment = stub_model(Spree::Shipment, order: order)
-        shipments = [shipment]
-        allow(order).to receive_messages shipments: shipments
-        allow(shipments).to receive_messages states: []
-        allow(shipments).to receive_messages ready: []
-        allow(shipments).to receive_messages pending: []
-        allow(shipments).to receive_messages shipped: []
+      context 'with a shipment' do
+        before { create(:shipment, order: order) }
+        let(:shipment){ order.shipments[0] }
 
-        expect(shipment).to receive(:update!).with(order)
-        updater.update_shipments
-      end
+        it "updates each shipment" do
+          expect(shipment).to receive(:update!)
+          updater.update_shipments
+        end
 
-      it "refreshes shipment rates" do
-        shipment = stub_model(Spree::Shipment, order: order)
-        shipments = [shipment]
-        allow(order).to receive_messages shipments: shipments
+        it "refreshes shipment rates" do
+          expect(shipment).to receive(:refresh_rates)
+          updater.update_shipments
+        end
 
-        expect(shipment).to receive(:refresh_rates)
-        updater.update_shipments
-      end
-
-      it "updates the shipment amount" do
-        shipment = stub_model(Spree::Shipment, order: order)
-        shipments = [shipment]
-        allow(order).to receive_messages shipments: shipments
-
-        expect(shipment).to receive(:update_amounts)
-        updater.update_shipments
+        it "updates the shipment amount" do
+          expect(shipment).to receive(:update_amounts)
+          updater.update_shipments
+        end
       end
     end
 
