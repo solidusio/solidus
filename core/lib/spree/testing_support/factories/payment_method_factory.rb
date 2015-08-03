@@ -17,7 +17,6 @@ FactoryGirl.define do
     name          "Store Credit"
     description   "Store Credit"
     active        true
-    environment   "test"
     display_on    'none'
     auto_capture  true
   end

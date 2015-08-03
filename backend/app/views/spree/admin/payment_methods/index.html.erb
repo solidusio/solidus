@@ -26,7 +26,6 @@
       <tr data-hook="admin_payment_methods_index_headers">
         <th><%= Spree.t(:name) %></th>
         <th><%= Spree.t(:provider) %></th>
-        <th><%= Spree.t(:environment) %></th>
         <th><%= Spree.t(:display) %></th>
         <th><%= Spree.t(:active) %></th>
         <th data-hook="admin_payment_methods_index_header_actions" class="actions"></th>
@@ -37,7 +36,6 @@
         <tr id="<%= spree_dom_id method %>" data-hook="admin_payment_methods_index_rows" class="<%= cycle('odd', 'even')%>">
           <td class="align-center"><%= method.name %></td>
           <td class="align-center"><%= method.type %></td>
-          <td class="align-center"><%= method.environment.to_s.titleize %></td>
           <td class="align-center"><%= method.display_on.blank? ? Spree.t(:both) : Spree.t(method.display_on) %></td>
           <td class="align-center"><%= method.active ? Spree.t(:say_yes) : Spree.t(:say_no) %></td>
           <td data-hook="admin_payment_methods_index_row_actions" class="actions">
