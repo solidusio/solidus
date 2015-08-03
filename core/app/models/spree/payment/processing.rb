@@ -106,8 +106,13 @@ module Spree
                          :discount => order.promo_total * 100,
                          :currency => currency })
 
-        options.merge!({ :billing_address  => order.bill_address.try(:active_merchant_hash),
-                        :shipping_address => order.ship_address.try(:active_merchant_hash) })
+        bill_address = source.is_a?(Spree::CreditCard) && source.address
+        bill_address ||= order.bill_address
+
+        options.merge!(
+          billing_address: bill_address.try(:active_merchant_hash),
+          shipping_address: order.ship_address.try(:active_merchant_hash),
+        )
 
         options
       end
