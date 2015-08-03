@@ -327,22 +327,25 @@ module Spree
     end
 
     def outstanding_balance
+      # If reimbursement has happened add it back to total to prevent balance_due payment state
+      # See: https://github.com/spree/spree/issues/6229
+      adjusted_payment_total = payment_total + refund_total
+
       if state == 'canceled'
-        -1 * payment_total
-      elsif reimbursements.includes(:refunds).size > 0
-        reimbursed = reimbursements.includes(:refunds).inject(0) do |sum, reimbursement|
-          sum + reimbursement.refunds.sum(:amount)
-        end
-        # If reimbursement has happened add it back to total to prevent balance_due payment state
-        # See: https://github.com/spree/spree/issues/6229
-        total - (payment_total + reimbursed)
+        -1 * adjusted_payment_total
       else
-        total - payment_total
+        total - adjusted_payment_total
       end
     end
 
     def outstanding_balance?
       self.outstanding_balance != 0
+    end
+
+    def refund_total
+      reimbursements.includes(:refunds).inject(0) do |sum, reimbursement|
+        sum + reimbursement.refunds.sum(:amount)
+      end
     end
 
     def name

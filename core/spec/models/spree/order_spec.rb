@@ -803,6 +803,17 @@ describe Spree::Order, :type => :model do
     end
   end
 
+  context "#refund_total" do
+    let(:order)  { reimbursement.order.reload }
+    let(:reimbursement) { create(:reimbursement) }
+    let!(:refund) { create(:refund, reimbursement: reimbursement, amount: 5) }
+    let!(:refund2) { create(:refund, reimbursement: reimbursement, amount: 3) }
+
+    it "sums the reimbursment refunds on the order" do
+      expect(order.refund_total).to eq(8.0)
+    end
+  end
+
   describe '#quantity' do
     # Uses a persisted record, as the quantity is retrieved via a DB count
     let(:order) { create :order_with_line_items, line_items_count: 3 }
