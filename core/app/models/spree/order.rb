@@ -343,9 +343,7 @@ module Spree
     end
 
     def refund_total
-      reimbursements.includes(:refunds).inject(0) do |sum, reimbursement|
-        sum + reimbursement.refunds.sum(:amount)
-      end
+      payments.flat_map(&:refunds).sum(&:amount)
     end
 
     def name
