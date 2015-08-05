@@ -14,7 +14,8 @@ module Spree
         can [:display, :admin], Spree::StockTransfer
 
         if user.stock_locations.any?
-          can :transfer, Spree::StockLocation, id: location_ids
+          # We need display here, as by default users cannot see inactive stock locations.
+          can [:display, :transfer], Spree::StockLocation, id: location_ids
           can :update, Spree::StockItem, stock_location_id: location_ids
           can :manage, Spree::StockTransfer, source_location_id: location_ids, destination_location_id: location_ids
           can :manage, Spree::TransferItem, stock_transfer: {
