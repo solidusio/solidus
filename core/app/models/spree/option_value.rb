@@ -9,7 +9,7 @@ module Spree
     validates :name, presence: true, uniqueness: { scope: :option_type_id }
     validates :presentation, presence: true
 
-    after_save :touch
+    after_save :touch, if: :changed?
     after_touch :touch_all_variants
 
     # Updates the updated_at column on all the variants associated with this
