@@ -2,12 +2,35 @@ require 'spec_helper'
 
 describe Spree::OptionValue, :type => :model do
   context "touching" do
+    let!(:variant) do
+      Timecop.freeze(1.day.ago) do
+        create(:variant)
+      end
+    end
+    let(:option_value) { variant.option_values.first }
+
     it "should touch a variant" do
-      variant = create(:variant)
-      option_value = variant.option_values.first
-      variant.update_column(:updated_at, 1.day.ago)
-      option_value.touch
-      expect(variant.reload.updated_at).to be_within(3.seconds).of(Time.now)
+      Timecop.freeze do
+        option_value.touch
+        expect(variant.reload.updated_at).to eq(Time.now)
+      end
+    end
+
+    context "from the after_save hook" do
+      it "should not touch the variant if there are no changes" do
+        Timecop.freeze do
+          option_value.save!
+          expect(variant.reload.updated_at).to be <= 1.day.ago
+        end
+      end
+
+      it "should touch the variant if there are changes" do
+        Timecop.freeze do
+          option_value.name += "--1"
+          option_value.save!
+          expect(variant.reload.updated_at).to eq(Time.now)
+        end
+      end
     end
   end
 
