@@ -5,8 +5,10 @@ describe Spree::PermissionSets::RestrictedTransferManagement do
 
   subject { ability }
 
-  let!(:source_location) { create :stock_location }
-  let!(:destination_location) { create :stock_location }
+  # Inactive stock locations will default to not being visible
+  # for users without explicit permissions.
+  let!(:source_location) { create :stock_location, active: false }
+  let!(:destination_location) { create :stock_location, active: false }
 
   # This has the side effect of creating a stock item for each stock location above,
   # which is what we actually want.
@@ -60,6 +62,9 @@ describe Spree::PermissionSets::RestrictedTransferManagement do
       it { is_expected.to be_able_to(:transfer, source_location) }
       it { is_expected.not_to be_able_to(:transfer, destination_location) }
 
+      it { is_expected.to be_able_to(:display, source_location) }
+      it { is_expected.not_to be_able_to(:display, destination_location) }
+
       it { is_expected.to be_able_to(:manage, transfer_with_source) }
       it { is_expected.not_to be_able_to(:manage, transfer_with_destination) }
       it { is_expected.not_to be_able_to(:manage, transfer_with_source_and_destination) }
@@ -78,6 +83,9 @@ describe Spree::PermissionSets::RestrictedTransferManagement do
 
       it { is_expected.to be_able_to(:transfer, source_location) }
       it { is_expected.to be_able_to(:transfer, destination_location) }
+
+      it { is_expected.to be_able_to(:display, source_location) }
+      it { is_expected.to be_able_to(:display, destination_location) }
 
       it { is_expected.to be_able_to(:manage, transfer_with_source) }
       it { is_expected.to be_able_to(:manage, transfer_with_destination) }
@@ -119,6 +127,10 @@ describe Spree::PermissionSets::RestrictedTransferManagement do
 
     it { is_expected.not_to be_able_to(:transfer, source_location) }
     it { is_expected.not_to be_able_to(:transfer, destination_location) }
+
+    it { is_expected.not_to be_able_to(:display, source_location) }
+    it { is_expected.not_to be_able_to(:display, destination_location) }
+
 
     it { is_expected.not_to be_able_to(:manage, transfer_with_source) }
     it { is_expected.not_to be_able_to(:manage, transfer_with_destination) }
