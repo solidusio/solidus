@@ -5,7 +5,7 @@ module Spree
       self.admin_shipment_attributes = [:shipping_method, :stock_location, :inventory_units => [:variant_id, :sku]]
 
       class_attribute :admin_order_attributes
-      self.admin_order_attributes = [:import, :number, :completed_at, :locked_at, :channel, :user_id]
+      self.admin_order_attributes = [:import, :number, :completed_at, :locked_at, :channel, :user_id, :created_at]
 
       skip_before_action :authenticate_user, only: :apply_coupon_code
 
