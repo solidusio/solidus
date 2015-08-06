@@ -51,7 +51,7 @@ module Spree
         return user_address.address if user_address && (!default || user_address.default)
 
         first_one = user_addresses.empty?
-        user_address ||= user_addresses.build(address: Address.immutable_merge(nil, address_attributes))
+        user_address ||= user_addresses.build(address: Address.new(Address.value_attributes(address_attributes)))
         mark_default_user_address(user_address) if default || first_one
 
         user_address.save! unless new_record?

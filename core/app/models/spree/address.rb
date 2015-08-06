@@ -18,11 +18,10 @@ module Spree
     alias_attribute :first_name, :firstname
     alias_attribute :last_name, :lastname
 
-    UNCOPIED_ATTRS = ['id', 'updated_at']
-    EQUALITY_IRRELEVANT_ATTRS = ['id', 'updated_at', 'created_at']
+    DB_ONLY_ATTRS = %w(id updated_at created_at)
 
     scope :with_values, ->(attributes) do
-      where(attributes.stringify_keys.except(*EQUALITY_IRRELEVANT_ATTRS))
+      where(value_attributes(attributes))
     end
 
     def self.build_default
@@ -30,7 +29,7 @@ module Spree
     end
 
     def self.default(user = nil, kind = "bill")
-      ActiveSupport::Deprecation.warn("Address.default is deprecated. You should either use Country.default explicitly, or User.default_address", caller)
+      ActiveSupport::Deprecation.warn("Address.default is deprecated. Use User.default_address or Address.build_default", caller)
       if user
         user.send(:"#{kind}_address") || build_default
       else
@@ -41,16 +40,24 @@ module Spree
     # @return [Address] address from existing address plus new_attributes as diff
     # @note, this may return existing_address if there are no changes to value equality
     def self.immutable_merge(existing_address, new_attributes)
-      return self.new(new_attributes.stringify_keys.except(*UNCOPIED_ATTRS)) unless existing_address
+      return self.new(value_attributes(new_attributes)) unless existing_address
 
       new_attributes ||= {}
-      merged_attributes = existing_address.attributes.merge(new_attributes.stringify_keys).except(*UNCOPIED_ATTRS)
+      merged_attributes = existing_address.attributes.merge(new_attributes.stringify_keys).except(*DB_ONLY_ATTRS)
       new_address = self.new(merged_attributes)
       if existing_address == new_address
         existing_address
       else
         new_address
       end
+    end
+
+    def self.value_attributes(attributes_hash)
+      (attributes_hash || {}).stringify_keys.except(*DB_ONLY_ATTRS)
+    end
+
+    def value_attributes
+      self.class.value_attributes(attributes)
     end
 
     # @return [String] the full name on this address
@@ -68,13 +75,11 @@ module Spree
     end
 
     # @note This compares the addresses based on only the fields that make up
-    #   the logical "address" and excludes their ids.
+    #   the logical "address" and excludes the database specific fields (id, created_at, updated_at).
     # @return [Boolean] true if the two addresses have the same address fields
     def ==(other_address)
-      self_attrs = self.attributes.except(*EQUALITY_IRRELEVANT_ATTRS)
-      other_attrs = (other_address.try(:attributes) || {}).except(*EQUALITY_IRRELEVANT_ATTRS)
-
-      self_attrs == other_attrs
+      return false unless other_address && other_address.respond_to?(:value_attributes)
+      self.value_attributes == other_address.value_attributes
     end
 
     def same_as?(other_address)

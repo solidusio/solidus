@@ -126,8 +126,8 @@ describe Spree::Order, :type => :model do
 
           shared_examples "it references the user's the default address" do
             it do
-              default_attributes = default_address.reload.attributes.except(*Spree::Address::EQUALITY_IRRELEVANT_ATTRS)
-              order_attributes = (order.send("#{address_kind}_address".to_sym).try(:attributes) || {}).except(*Spree::Address::EQUALITY_IRRELEVANT_ATTRS)
+              default_attributes = default_address.reload.value_attributes
+              order_attributes = Spree::Address.value_attributes(order.send("#{address_kind}_address".to_sym).try(:attributes))
 
               expect(order_attributes).to eq(default_attributes)
             end
