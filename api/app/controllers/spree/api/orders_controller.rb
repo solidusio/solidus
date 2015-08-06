@@ -34,13 +34,7 @@ module Spree
           current_api_user
         end
 
-        import_params = if can?(:admin, Spree::Order)
-          params[:order].present? ? params[:order].permit! : {}
-        else
-          order_params
-        end
-
-        @order = Spree::Core::Importer::Order.import(order_user, import_params)
+        @order = Spree::Core::Importer::Order.import(order_user, order_params)
         respond_with(@order, default_template: :show, status: 201)
       end
 
