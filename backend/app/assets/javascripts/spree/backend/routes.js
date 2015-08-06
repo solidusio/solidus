@@ -25,7 +25,7 @@ Spree.routes.stock_items_api = function(stock_location_id) {
   return Spree.pathFor('api/stock_locations/' + stock_location_id + '/stock_items')
 }
 
-Spree.routes.receive_transfer_items_api = function(stockTransferNumber) {
+Spree.routes.receive_stock_transfer_api = function(stockTransferNumber) {
   return Spree.pathFor('api/stock_transfers/' + stockTransferNumber + '/receive')
 }
 
