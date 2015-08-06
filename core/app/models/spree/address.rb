@@ -21,6 +21,10 @@ module Spree
     UNCOPIED_ATTRS = ['id', 'updated_at']
     EQUALITY_IRRELEVANT_ATTRS = ['id', 'updated_at', 'created_at']
 
+    scope :with_values, ->(attributes) do
+      where(attributes.stringify_keys.except(*EQUALITY_IRRELEVANT_ATTRS))
+    end
+
     def self.build_default
       new(country: Spree::Country.default)
     end

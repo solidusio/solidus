@@ -3,17 +3,7 @@ module Spree
     extend ActiveSupport::Concern
 
     included do
-      has_many :user_addresses, foreign_key: "user_id", class_name: "Spree::UserAddress" do
-        def find_by_address_values(address_attributes)
-          # finds by value, not id
-          # since Address is immutable, we treat it like a value object rather than an entity.
-          # If your database does not do case sensitive matching on varchar types, then you'll
-          # have trouble trying to correct an address field's case
-          self.joins(:address).readonly(false).where(
-            spree_addresses: address_attributes.stringify_keys.except(*Address::EQUALITY_IRRELEVANT_ATTRS)
-          ).first
-        end
-      end
+      has_many :user_addresses, foreign_key: "user_id", class_name: "Spree::UserAddress"
 
       has_many :addresses, through: :user_addresses
 
@@ -57,7 +47,7 @@ module Spree
 
       def save_in_address_book(address_attributes, default = false)
         return nil unless address_attributes.present?
-        user_address = user_addresses.find_by_address_values(address_attributes)
+        user_address = user_addresses.with_address_values(address_attributes).first
         return user_address.address if user_address && (!default || user_address.default)
 
         first_one = user_addresses.empty?
