@@ -3,6 +3,9 @@ module Spree
   class ItemAdjustments
     attr_reader :item
 
+    class_attribute :promotion_chooser_class
+    self.promotion_chooser_class = Spree::PromotionChooser::BestPromotion
+
     # @param item [Order, LineItem, Shipment] the item whose adjustments should be updated
     def initialize(item)
       @item = item
@@ -41,7 +44,7 @@ module Spree
       promotion_adjustments = adjustments.select(&:promotion?)
       promotion_adjustments.each(&:update!)
 
-      promo_total = PromotionChooser.new(promotion_adjustments).update
+      promo_total = promotion_chooser_class.new(promotion_adjustments).update
 
       # Calculating the totals for the order here would be incorrect. Order's
       # totals are the sum of the adjustments on all child models, as well as
