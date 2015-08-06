@@ -253,6 +253,70 @@ describe Spree::Payment, :type => :model do
         payment.authorize!
       end
 
+      describe 'billing_address option' do
+        context 'when the source is a credit card with an address' do
+          let(:card) { create(:credit_card, address: address) }
+          let(:address) { create(:address) }
+
+          it 'sends the credit card address' do
+            expect(payment.payment_method).to(
+              receive(:authorize).
+                with(
+                  amount_in_cents,
+                  card,
+                  hash_including(billing_address: card.address.active_merchant_hash)
+                ).
+                and_return(success_response)
+            )
+            payment.authorize!
+          end
+        end
+
+        context 'when the source is a credit card without an address' do
+          let(:card) { create(:credit_card, address: nil) }
+          before { order.update_attributes!(bill_address: address) }
+          let(:address) { create(:address) }
+
+          it 'send the order bill address' do
+            expect(payment.payment_method).to(
+              receive(:authorize).
+                with(
+                  amount_in_cents,
+                  card,
+                  hash_including(billing_address: order.bill_address.active_merchant_hash)
+                ).
+                and_return(success_response)
+            )
+            payment.authorize!
+          end
+        end
+
+        context 'when the source is not a credit card' do
+          before do
+            payment.source = store_credit_payment
+            payment.payment_method = store_credit_payment_method
+          end
+
+          let(:store_credit_payment) { create(:store_credit_payment) }
+          let(:store_credit_payment_method) { create(:store_credit_payment_method) }
+          before { order.update_attributes!(bill_address: address) }
+          let(:address) { create(:address) }
+
+          it 'send the order bill address' do
+            expect(payment.payment_method).to(
+              receive(:authorize).
+                with(
+                  amount_in_cents,
+                  store_credit_payment,
+                  hash_including(billing_address: order.bill_address.active_merchant_hash)
+                ).
+                and_return(success_response)
+            )
+            payment.authorize!
+          end
+        end
+      end
+
       context "when gateway does not match the environment" do
         it "should raise an exception" do
           allow(gateway).to receive_messages :environment => "foo"
