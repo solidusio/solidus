@@ -23,10 +23,6 @@ module Spree
       # bill_address is only minimally used now, but we can't get rid of it without a major version release
       belongs_to :bill_address, class_name: 'Spree::Address'
 
-      def default_address
-        super
-      end
-
       def ship_address
         default_address
       end
@@ -61,7 +57,6 @@ module Spree
 
       def save_in_address_book(address_attributes, default = false)
         return nil unless address_attributes.present?
-        #user_address = find_user_address_by_address(address_attributes)
         user_address = user_addresses.find_by_address_values(address_attributes)
         return user_address.address if user_address && (!default || user_address.default)
 

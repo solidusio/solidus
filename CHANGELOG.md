@@ -5,12 +5,10 @@
     This allows us to minimize cloning addresses, while still ensuring historical
     data is preserved.
 
-*   PUT /api/addresses without an order no longer works
-
-    Since addresses are immutable, they become value objects and only
-    make sense in relation to some containing entity
-
 *   UserAddressBook module added to manage a user's multiple addresses
+
+*   GET /admin/search/users searches all of a user's addresses, not
+    just current bill and ship addresss
 
 ## Solidus 1.0
 
