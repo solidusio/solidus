@@ -10,7 +10,7 @@ module Spree
     included do
       extend Spree::DisplayMoney
 
-      has_many :role_users, foreign_key: "user_id", class_name: "Spree::RoleUser"
+      has_many :role_users, foreign_key: "user_id", class_name: "Spree::RoleUser", dependent: :destroy
       has_many :spree_roles, through: :role_users, source: :role
 
       has_many :user_stock_locations, foreign_key: "user_id", class_name: "Spree::UserStockLocation"
