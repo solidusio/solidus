@@ -56,6 +56,7 @@ describe Spree::LegacyUser, :type => :model do
 
       it "associates both the bill and ship address to the user" do
         user.persist_order_address(order)
+        user.save!
         user.user_addresses.reload
 
         expect(user.user_addresses.with_address_values(order.bill_address.attributes).first).to_not be_nil

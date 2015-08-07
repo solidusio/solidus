@@ -71,6 +71,7 @@ module Spree
             before { user.user_addresses.create!(address: create(:address)) }
             it "sets the UserAddress default flag to false" do
               subject
+              user.save!
               expect(user_address.default).to eq false
             end
           end

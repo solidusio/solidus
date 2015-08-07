@@ -45,6 +45,12 @@ module Spree
         save_in_address_book(order.bill_address.attributes, order.ship_address.nil?) if order.bill_address
       end
 
+      # Add an address to the user's list of saved addresses for future autofill
+      # @note this method enforce one-and-only-one default address per user
+      # @param address_attributes Hash of attributes that will be
+      # treated as value equality to de-dup among existing Addresses
+      # @param default set whether or not this address will show up from
+      # #default_address or not
       def save_in_address_book(address_attributes, default = false)
         return nil unless address_attributes.present?
         user_address = user_addresses.with_address_values(address_attributes).first
@@ -52,9 +58,17 @@ module Spree
 
         first_one = user_addresses.empty?
         user_address ||= user_addresses.build(address: Address.new(Address.value_attributes(address_attributes)))
-        mark_default_user_address(user_address) if default || first_one
+        if !new_record?
+          if (default || first_one)
+            ActiveRecord::Base.transaction do
+              mark_default_user_address(user_address)
+              user_address.save!
+            end
+          end
+        elsif (default || first_one)
+          mark_default_user_address(user_address)
+        end
 
-        user_address.save! unless new_record?
         user_address.address
       end
 
