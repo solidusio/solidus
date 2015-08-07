@@ -72,13 +72,15 @@ module Spree
                   transition to: :payment, from: :confirm
                 end
 
-                before_transition to: :complete, do: :process_payments_before_complete
                 after_transition to: :complete, do: :persist_user_credit_card
                 before_transition to: :payment, do: :set_shipments_cost
                 before_transition to: :payment, do: :create_tax_charge!
                 before_transition to: :payment, do: :assign_default_credit_card
 
                 before_transition to: :confirm, do: :add_store_credit_payments
+
+                # see also process_payments_before_complete below which needs to
+                # be added in the correct sequence.
 
                 event :complete do
                   transition to: :complete, from: :confirm
@@ -113,6 +115,9 @@ module Spree
               before_transition to: :complete, do: :ensure_promotions_eligible
               before_transition to: :complete, do: :ensure_line_item_variants_are_not_deleted
               before_transition to: :complete, do: :ensure_inventory_units, unless: :unreturned_exchange?
+              if states[:payment]
+                before_transition to: :complete, do: :process_payments_before_complete
+              end
 
               after_transition to: :complete, do: :finalize!
               after_transition to: :resumed,  do: :after_resume

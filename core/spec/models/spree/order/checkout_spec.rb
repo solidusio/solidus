@@ -512,6 +512,7 @@ describe Spree::Order, :type => :model do
 
         expect(order.state).to eq 'confirm'
         expect(order.line_items.first.errors[:quantity]).to be_present
+        expect(order.payments.first.state).to eq('checkout')
       end
     end
 
@@ -533,6 +534,7 @@ describe Spree::Order, :type => :model do
 
         expect(order.state).to eq 'confirm'
         expect(order.line_items.first.errors[:inventory]).to be_present
+        expect(order.payments.first.state).to eq('checkout')
       end
     end
 
@@ -570,6 +572,7 @@ describe Spree::Order, :type => :model do
         context 'when the exchange is not for an unreturned item' do
           it 'does not allow the order to completed' do
             expect { order.complete! }.to raise_error  Spree::Order::InsufficientStock
+            expect(order.payments.first.state).to eq('checkout')
           end
         end
       end
