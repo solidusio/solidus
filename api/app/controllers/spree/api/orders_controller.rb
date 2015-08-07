@@ -5,7 +5,7 @@ module Spree
       self.admin_shipment_attributes = [:shipping_method, :stock_location, :inventory_units => [:variant_id, :sku]]
 
       class_attribute :admin_order_attributes
-      self.admin_order_attributes = [:import, :number, :completed_at, :locked_at, :channel, :user_id]
+      self.admin_order_attributes = [:import, :number, :completed_at, :locked_at, :channel, :user_id, :created_at]
 
       skip_before_action :authenticate_user, only: :apply_coupon_code
 
@@ -34,13 +34,7 @@ module Spree
           current_api_user
         end
 
-        import_params = if can?(:admin, Spree::Order)
-          params[:order].present? ? params[:order].permit! : {}
-        else
-          order_params
-        end
-
-        @order = Spree::Core::Importer::Order.import(order_user, import_params)
+        @order = Spree::Core::Importer::Order.import(order_user, order_params)
         respond_with(@order, default_template: :show, status: 201)
       end
 
