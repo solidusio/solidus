@@ -71,7 +71,9 @@ namespace :gem do
   desc "Install all solidus gems"
   task :install => :build do
     for_each_gem do |gem_path|
-      sh "gem install #{gem_path}"
+      Bundler.with_clean_env do
+        sh "gem install #{gem_path}"
+      end
     end
   end
 
