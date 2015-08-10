@@ -27,13 +27,15 @@ $.fn.productAutocomplete = function (options) {
             sku_cont: term
           },
           m: 'OR',
-          token: Spree.api_key
+          token: Spree.api_key,
+          page: page
         };
       },
       results: function (data, page) {
         var products = data.products ? data.products : [];
         return {
-          results: products
+          results: products,
+          more: (data.current_page * data.per_page) < data.total_count
         };
       }
     },
