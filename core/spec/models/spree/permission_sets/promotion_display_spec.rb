@@ -14,10 +14,13 @@ describe Spree::PermissionSets::PromotionDisplay do
     it { is_expected.to be_able_to(:display, Spree::PromotionRule) }
     it { is_expected.to be_able_to(:display, Spree::PromotionAction) }
     it { is_expected.to be_able_to(:display, Spree::PromotionCategory) }
+    it { is_expected.to be_able_to(:display, Spree::PromotionCode) }
     it { is_expected.to be_able_to(:admin, Spree::Promotion) }
     it { is_expected.to be_able_to(:admin, Spree::PromotionRule) }
     it { is_expected.to be_able_to(:admin, Spree::PromotionAction) }
     it { is_expected.to be_able_to(:admin, Spree::PromotionCategory) }
+    it { is_expected.to be_able_to(:admin, Spree::PromotionCode) }
+    it { is_expected.to be_able_to(:edit, Spree::Promotion) }
   end
 
   context "when not activated" do
@@ -25,10 +28,13 @@ describe Spree::PermissionSets::PromotionDisplay do
     it { is_expected.not_to be_able_to(:display, Spree::PromotionRule) }
     it { is_expected.not_to be_able_to(:display, Spree::PromotionAction) }
     it { is_expected.not_to be_able_to(:display, Spree::PromotionCategory) }
+    it { is_expected.not_to be_able_to(:display, Spree::PromotionCode) }
     it { is_expected.not_to be_able_to(:admin, Spree::Promotion) }
     it { is_expected.not_to be_able_to(:admin, Spree::PromotionRule) }
     it { is_expected.not_to be_able_to(:admin, Spree::PromotionAction) }
     it { is_expected.not_to be_able_to(:admin, Spree::PromotionCategory) }
+    it { is_expected.not_to be_able_to(:admin, Spree::PromotionCode) }
+    it { is_expected.not_to be_able_to(:edit, Spree::Promotion) }
   end
 end
 
