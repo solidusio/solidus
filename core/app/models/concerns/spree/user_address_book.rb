@@ -57,7 +57,8 @@ module Spree
         return user_address.address if user_address && (!default || user_address.default)
 
         first_one = user_addresses.empty?
-        user_address ||= user_addresses.build(address: Address.new(Address.value_attributes(address_attributes)))
+        filtered_attrs = Address.value_attributes(address_attributes)
+        user_address ||= user_addresses.build(address: Address.find_or_create_by(filtered_attrs))
         if !new_record?
           if (default || first_one)
             ActiveRecord::Base.transaction do

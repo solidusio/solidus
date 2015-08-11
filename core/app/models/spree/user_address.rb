@@ -7,7 +7,7 @@ module Spree
     validates_uniqueness_of :user_id, conditions: -> { where(default: true) }, message: :default_address_exists, if: :default?
 
     scope :with_address_values, ->(address_attributes) do
-      joins(:address).readonly(false).merge(
+      joins(:address).merge(
         Spree::Address.with_values(address_attributes)
       )
     end
