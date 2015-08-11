@@ -7,8 +7,7 @@ module Spree
         { translation_key: :name, attr_name: :name }
       ]
 
-      before_filter :load_readable_stock_locations, only: :index
-      before_filter :load_transferable_stock_locations, only: :new
+      before_filter :load_transferable_stock_locations, only: [:index, :new]
       before_filter :load_variant_display_attributes, only: [:receive, :edit, :show, :tracking_info]
       before_filter :load_destination_stock_locations, only: :edit
       before_filter :ensure_access_to_stock_location, only: :create
@@ -102,16 +101,8 @@ module Spree
         authorize! :create, duplicate
       end
 
-      def accessible_stock_locations
-        Spree::StockLocation.accessible_by(current_ability, :index)
-      end
-
       def transferable_stock_locations
-        accessible_stock_locations.accessible_by(current_ability, :transfer)
-      end
-
-      def load_readable_stock_locations
-        @stock_locations = accessible_stock_locations
+        Spree::StockLocation.accessible_by(current_ability, :transfer)
       end
 
       def load_transferable_stock_locations
