@@ -114,8 +114,7 @@ module Spree
                             :source     => source,
                             :amount     => amount,
                             :state      => "closed",
-                            :label      => label,
-                            :mandatory  => false)
+                            :label      => label)
       end
 
       it "should make all but the most valuable promotion adjustment ineligible, leaving non promotion adjustments alone" do
