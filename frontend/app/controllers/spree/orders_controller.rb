@@ -17,7 +17,7 @@ module Spree
     end
 
     def update
-      if @order.contents.update_cart(order_params)
+      if @order.contents.update_cart(order_params, current_user: try_spree_current_user)
         respond_with(@order) do |format|
           format.html do
             if params.has_key?(:checkout)

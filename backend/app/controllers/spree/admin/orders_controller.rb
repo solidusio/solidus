@@ -81,7 +81,7 @@ module Spree
       end
 
       def update
-        @order.contents.update_cart(params[:order])
+        @order.contents.update_cart(params[:order], current_user: try_spree_current_user)
         @order.errors.add(:line_items, Spree.t('errors.messages.blank')) if @order.line_items.empty?
         if @order.completed?
           render :action => :edit

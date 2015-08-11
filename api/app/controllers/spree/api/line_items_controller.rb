@@ -27,7 +27,7 @@ module Spree
 
       def update
         @line_item = find_line_item
-        if @order.contents.update_cart(line_items_attributes)
+        if @order.contents.update_cart(line_items_attributes, current_user: current_api_user)
           @line_item.reload
           respond_with(@line_item, default_template: :show)
         else
