@@ -26,21 +26,11 @@ module Spree
     validates :amount, numericality: true
     validates :promotion_code, presence: true, if: :require_promotion_code?
 
-    state_machine :state, initial: :open do
-      event :close do
-        transition from: :open, to: :closed
-      end
-
-      event :open do
-        transition from: :closed, to: :open
-      end
-    end
-
     after_create :update_adjustable_adjustment_total
     after_destroy :update_adjustable_adjustment_total
 
-    scope :open, -> { where(state: 'open') }
-    scope :closed, -> { where(state: 'closed') }
+    scope :open, -> { where(finalized: false) }
+    scope :closed, -> { where(finalized: true) }
     scope :cancellation, -> { where(source_type: 'Spree::UnitCancel') }
     scope :tax, -> { where(source_type: 'Spree::TaxRate') }
     scope :non_tax, -> do
@@ -62,9 +52,49 @@ module Spree
     extend DisplayMoney
     money_methods :amount
 
-    def closed?
-      state == "closed"
+    def finalize!
+      update_attributes!(finalized: true)
     end
+
+    def unfinalize!
+      update_attributes!(finalized: false)
+    end
+
+
+    # Deprecated methods
+    def state
+      finalized?? "closed" : "open"
+    end
+
+    def state=(new_state)
+      case new_state
+      when "open"
+        self.finalized = false
+      when "closed"
+        self.finalized = true
+      else
+        raise "invaliid adjustment state #{new_state}"
+      end
+    end
+
+    def open?
+      !closed?
+    end
+
+    def closed?
+      finalized?
+    end
+
+    def open
+      unfinalize!
+    end
+    alias_method :open!, :open
+
+    def close
+      finalize!
+    end
+    alias_method :close!, :close
+    # Deprecated methods
 
     def currency
       adjustable ? adjustable.currency : Spree::Config[:currency]
