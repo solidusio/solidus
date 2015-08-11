@@ -218,7 +218,7 @@ startItemSplit = function(event){
   });
 
   var max_quantity = link.closest('tr').data('item-quantity');
-  var split_item_template = Handlebars.compile($('#variant_split_template').text());
+  var split_item_template = HandlebarsTemplates['variants/split'];
   link.closest('tr').after(split_item_template({ variant: variant, shipments: shipments, max_quantity: max_quantity }));
   $('a.cancel-split').click(cancelItemSplit);
   $('a.save-split').click(completeItemSplit);
