@@ -7,20 +7,36 @@ module Spree
     #
     # Users can be associated with stock locations via the admin user interface.
     #
+    # The logic here is unfortunately rather complex and boils down to:
+    # - A user has read only access to all stock locations (including inactive ones)
+    # - A user can see all stock transfers for their associated stock locations regardless of the
+    #   fact that they may not be associated with both the destination and the source, as long as
+    #   they are associated with at least one of the two.
+    # - A user can manage stock transfers only if they are associated with both the destination and the source,
+    #   or if the user is associated with the source, and the transfer has not yet been assigned a destination.
+    #
     # @see Spree::PermissionSets::Base
     class RestrictedTransferManagement < PermissionSets::Base
       def activate!
         can [:display, :admin], Spree::StockItem
-        can [:display, :admin], Spree::StockTransfer
+        # We need display here, as by default users cannot see inactive stock locations.
+        can :display, Spree::StockLocation
 
         if user.stock_locations.any?
-          # We need display here, as by default users cannot see inactive stock locations.
-          can [:display, :transfer], Spree::StockLocation, id: location_ids
+          can [:admin, :create], Spree::StockTransfer
+          can :display, Spree::StockTransfer, source_location_id: location_ids
+          can :display, Spree::StockTransfer, destination_location_id: location_ids
+          can :manage, Spree::StockTransfer,
+            source_location_id: location_ids,
+            destination_location_id: destination_location_ids
+
+          can :transfer, Spree::StockLocation, id: location_ids
+
           can :update, Spree::StockItem, stock_location_id: location_ids
-          can :manage, Spree::StockTransfer, source_location_id: location_ids, destination_location_id: location_ids
+
           can :manage, Spree::TransferItem, stock_transfer: {
             source_location_id: location_ids,
-            destination_location_id: location_ids
+            destination_location_id: destination_location_ids
           }
         end
       end
@@ -29,7 +45,11 @@ module Spree
 
       def location_ids
         # either source_location_id or destination_location_id can be nil.
-        @ids ||= user.stock_locations.pluck(:id) + [nil]
+        @ids ||= user.stock_locations.pluck(:id)
+      end
+
+      def destination_location_ids
+        location_ids + [nil]
       end
     end
   end
