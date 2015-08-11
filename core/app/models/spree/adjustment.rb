@@ -63,12 +63,12 @@ module Spree
 
     # Deprecated methods
     def state
-      ActiveSupport::Deprecation.warn "Adjustment#state is deprecated. Instead use Adjustment#finalized?"
+      ActiveSupport::Deprecation.warn "Adjustment#state is deprecated. Instead use Adjustment#finalized?", caller
       finalized?? "closed" : "open"
     end
 
     def state=(new_state)
-      ActiveSupport::Deprecation.warn "Adjustment#state= is deprecated. Instead use Adjustment#finalized="
+      ActiveSupport::Deprecation.warn "Adjustment#state= is deprecated. Instead use Adjustment#finalized=", caller
       case new_state
       when "open"
         self.finalized = false
@@ -80,22 +80,23 @@ module Spree
     end
 
     def open?
+      ActiveSupport::Deprecation.warn "Adjustment#open? is deprecated. Instead use Adjustment#finalized?", caller
       !closed?
     end
 
     def closed?
-      ActiveSupport::Deprecation.warn "Adjustment#open? and Adjustment#closed? are deprecated. Instead use Adjustment#finalized?"
+      ActiveSupport::Deprecation.warn "Adjustment#closed? is deprecated. Instead use Adjustment#finalized?", caller
       finalized?
     end
 
     def open
-      ActiveSupport::Deprecation.warn "Adjustment#open is deprecated. Instead use Adjustment#unfinalize!"
+      ActiveSupport::Deprecation.warn "Adjustment#open is deprecated. Instead use Adjustment#unfinalize!", caller
       unfinalize!
     end
     alias_method :open!, :open
 
     def close
-      ActiveSupport::Deprecation.warn "Adjustment#close is deprecated. Instead use Adjustment#finalize!"
+      ActiveSupport::Deprecation.warn "Adjustment#close is deprecated. Instead use Adjustment#finalize!", caller
       finalize!
     end
     alias_method :close!, :close
@@ -132,7 +133,7 @@ module Spree
       if target
         ActiveSupport::Deprecation.warn("Passing a target to Adjustment#update! is deprecated. The adjustment will use the correct target from it's adjustable association.", caller)
       end
-      return amount if closed?
+      return amount if finalized?
 
       # If the adjustment has no source, do not attempt to re-calculate the amount.
       # Chances are likely that this was a manually created adjustment in the admin backend.

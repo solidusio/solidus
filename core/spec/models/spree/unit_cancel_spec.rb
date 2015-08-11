@@ -15,8 +15,8 @@ describe Spree::UnitCancel do
       expect(adjustment.amount).to eq -10.0
       expect(adjustment.order).to eq inventory_unit.order
       expect(adjustment.label).to eq "Cancellation - Short Ship"
-      expect(adjustment.eligible).to eq true
-      expect(adjustment.state).to eq 'closed'
+      expect(adjustment).to be_eligible
+      expect(adjustment).to be_finalized
     end
 
     context "when an adjustment has already been created" do

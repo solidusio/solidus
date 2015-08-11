@@ -370,7 +370,7 @@ module Spree
     # Called after transition to complete state when payments will have been processed
     def finalize!
       # lock all adjustments (coupon promotions, etc.)
-      all_adjustments.each{|a| a.close}
+      all_adjustments.each(&:finalize!)
 
       # update payment and shipment(s) states, and save
       updater.update_payment_state

@@ -82,7 +82,7 @@ describe Spree::OrderCancellations do
           adjustable: line_item,
           amount: 0.01,
           label: 'some fake tax',
-          state: 'closed',
+          finalized: true
         )
         order.update!
       end

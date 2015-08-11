@@ -113,7 +113,7 @@ module Spree
                             :adjustable => line_item,
                             :source     => source,
                             :amount     => amount,
-                            :state      => "closed",
+                            :finalized  => true,
                             :label      => label)
       end
 
@@ -125,7 +125,7 @@ module Spree
                             :adjustable => line_item,
                             :source => nil,
                             :amount => -500,
-                            :state => "closed",
+                            :finalized => true,
                             :label => "Some other credit")
         line_item.adjustments.each {|a| a.update_column(:eligible, true)}
 
