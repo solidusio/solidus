@@ -3,7 +3,8 @@
     var Spree = {}
   }
   Spree.translations = <%==
-  { :date_picker                  => Spree.t(:js_format,
+  I18n.t("spree").merge({
+    :date_picker                  => Spree.t(:js_format,
                                             :scope => 'date_picker',
                                             :default => 'yy/mm/dd'),
     :abbr_day_names               => I18n.t(:abbr_day_names, :scope => :date),
