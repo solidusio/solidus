@@ -63,10 +63,12 @@ module Spree
 
     # Deprecated methods
     def state
+      ActiveSupport::Deprecation.warn "Adjustment#state is deprecated. Instead use Adjustment#finalized?"
       finalized?? "closed" : "open"
     end
 
     def state=(new_state)
+      ActiveSupport::Deprecation.warn "Adjustment#state= is deprecated. Instead use Adjustment#finalized="
       case new_state
       when "open"
         self.finalized = false
@@ -82,19 +84,22 @@ module Spree
     end
 
     def closed?
+      ActiveSupport::Deprecation.warn "Adjustment#open? and Adjustment#closed? are deprecated. Instead use Adjustment#finalized?"
       finalized?
     end
 
     def open
+      ActiveSupport::Deprecation.warn "Adjustment#open is deprecated. Instead use Adjustment#unfinalize!"
       unfinalize!
     end
     alias_method :open!, :open
 
     def close
+      ActiveSupport::Deprecation.warn "Adjustment#close is deprecated. Instead use Adjustment#finalize!"
       finalize!
     end
     alias_method :close!, :close
-    # Deprecated methods
+    # End deprecated methods
 
     def currency
       adjustable ? adjustable.currency : Spree::Config[:currency]
