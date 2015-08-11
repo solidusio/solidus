@@ -4,13 +4,15 @@
     <% options = options_for_select(  Rails.application.config.spree.promotions.actions.map(&:name).map {|name| [ Spree.t("promotion_action_types.#{name.demodulize.underscore}.name"), name] } ) %>
     <fieldset>
       <legend align="center"><%= Spree.t(:promotion_actions) %></legend>
-      <div class="field">
-        <%= label_tag :action_type, Spree.t(:add_action_of_type)%>
-        <%= select_tag 'action_type', options, :class => 'select2 fullwidth' %>  
-      </div>
-      <div class="filter-actions actions">
-        <%= button Spree.t(:add), 'plus' %>
-      </div>
+      <% if can?(:update, @promotion) %>
+        <div class="field">
+          <%= label_tag :action_type, Spree.t(:add_action_of_type)%>
+          <%= select_tag 'action_type', options, :class => 'select2 fullwidth' %>
+        </div>
+        <div class="filter-actions actions">
+          <%= button Spree.t(:add), 'plus' %>
+        </div>
+      <% end %>
     </fieldset>
   <% end %>
 
@@ -24,9 +26,11 @@
         </div>
       <% end %>
     </div>
-    <div class="filter-actions actions promotion-update">
-      <%= button Spree.t('actions.update'), 'refresh' %>
-    </div>
+    <% if can?(:update, @promotion) %>
+      <div class="filter-actions actions promotion-update">
+        <%= button Spree.t('actions.update'), 'refresh' %>
+      </div>
+    <% end %>
   <% end %>
 
 </fieldset>
