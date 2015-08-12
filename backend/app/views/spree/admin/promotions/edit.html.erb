@@ -7,14 +7,18 @@
 <% content_for :page_actions do %>
   <li>
     <%= button_link_to Spree.t(:back_to_promotions_list), admin_promotions_path, :icon => 'arrow-left' %>
-    <%= button_link_to Spree.t(:download_promotion_code_list), admin_promotion_promotion_codes_path(promotion_id: @promotion.id, format: :csv), :icon => 'arrow-down' %>
+    <% if can?(:display, Spree::PromotionCode) %>
+      <%= button_link_to Spree.t(:download_promotion_code_list), admin_promotion_promotion_codes_path(promotion_id: @promotion.id, format: :csv), :icon => 'arrow-down' %>
+    <% end %>
   </li>
 <% end %>
 
 <%= form_for @promotion, :url => object_url, :method => :put do |f| %>
   <fieldset class="no-border-top">
     <%= render :partial => 'form', :locals => { :f => f } %>
-    <%= render :partial => 'spree/admin/shared/edit_resource_links' %>
+    <% if can?(:update, @promotion) %>
+      <%= render :partial => 'spree/admin/shared/edit_resource_links' %>
+    <% end %>
   </fieldset>
 <% end %>
 
