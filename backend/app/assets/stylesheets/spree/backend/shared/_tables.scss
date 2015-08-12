@@ -41,15 +41,15 @@ table {
         font-size: $body-font-size;
       }
 
-      [class*='fa-'].no-text {
+      .icon_link.no-text {
         font-size: 120%;
         background-color: very-light($color-3);
         border: 1px solid $color-border;
         border-radius: 15px;
         width: 29px;
         height: 29px;
+        line-height: 27px;
         display: inline-block;
-        padding-top: 6px;
 
         &:before {
           text-align: center !important;
@@ -62,12 +62,7 @@ table {
         }
       }
 
-      button[class*='fa-'] {
-        color: $color-link;
-        padding: 0 !important;
-      }
-
-      .fa-envelope-alt, .fa-eye-open {
+      .icon_link-envelope-alt, .icon_link-eye-open {
         color: $color-link;
         padding-left: 0px;
 
@@ -76,27 +71,27 @@ table {
           color: $color-1;
         }
       }
-      .fa-trash:hover, .fa-void:hover, .fa-failure:hover {
+      .icon_link-trash:hover, .icon_link-void:hover, .icon_link-failure:hover {
         background-color: $color-error;
         color: $color-1;
       }
-      .fa-cancel:hover {
+      .icon_link-cancel:hover {
         background-color: $color-notice;
         color: $color-1;
       }
-      .fa-edit:hover, .fa-capture:hover, .fa-ok:hover, .fa-plus:hover, .fa-save:hover {
+      .icon_link-edit:hover, .icon_link-capture:hover, .icon_link-ok:hover, .icon_link-plus:hover, .icon_link-save:hover {
         background-color: $color-success;
         color: $color-1;
       }
-      .fa-copy:hover {
+      .icon_link-copy:hover {
         background-color: $color-notice;
         color: $color-1;
       }
-      .fa-thumbs-up:hover {
+      .icon_link-thumbs-up:hover {
         background-color: $color-success;
         color: $color-1;
       }
-      .fa-thumbs-down:hover {
+      .icon_link-thumbs-down:hover {
         background-color: $color-error;
         color: $color-1;
       }
