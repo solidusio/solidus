@@ -97,7 +97,27 @@ module Spree
       end
     end
 
-    context "best promotion is always applied" do
+    context "promotion chooser customization" do
+      before do
+        class Spree::TestPromotionChooser
+          def initialize(adjustments)
+            raise "Custom promotion chooser"
+          end
+        end
+
+        Spree::Config.promotion_chooser_class = Spree::TestPromotionChooser
+      end
+
+      after do
+        Spree::Config.promotion_chooser_class = Spree::PromotionChooser
+      end
+
+      it "uses the defined promotion chooser" do
+        expect { subject.update }.to raise_error("Custom promotion chooser")
+      end
+    end
+
+    context "default promotion chooser (best promotion is always applied)" do
       let(:calculator) { Calculator::FlatRate.new(:preferred_amount => 10) }
 
       let(:source) do
