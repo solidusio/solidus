@@ -417,41 +417,6 @@ describe Spree::Order, :type => :model do
         end
       end
 
-      context "without confirmation required" do
-        before do
-          order.email = "spree@example.com"
-          order.store = FactoryGirl.build(:store)
-          allow(order).to receive_messages :payment_required? => true
-          order.payments << FactoryGirl.create(:payment, state: payment_state, order: order)
-        end
-
-        context 'when there is at least one valid payment' do
-          let(:payment_state) { 'checkout' }
-
-          before do
-            expect(order).to receive(:process_payments!).once { true }
-          end
-
-          it "transitions to complete" do
-            order.complete!
-            assert_state_changed(order, 'payment', 'complete')
-            expect(order.state).to eq('complete')
-          end
-        end
-
-        context 'when there is only an invalid payment' do
-          let(:payment_state) { 'failed' }
-
-          it "raises a StateMachines::InvalidTransition" do
-            expect {
-              order.complete!
-            }.to raise_error(StateMachines::InvalidTransition, /#{Spree.t(:no_payment_found)}/)
-
-            expect(order.errors[:base]).to include(Spree.t(:no_payment_found))
-          end
-        end
-      end
-
       # Regression test for #2028
       context "when payment is not required" do
         before do

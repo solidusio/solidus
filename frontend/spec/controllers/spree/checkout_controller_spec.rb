@@ -172,7 +172,6 @@ describe Spree::CheckoutController, :type => :controller do
 
       context "when in the confirm state" do
         before do
-          allow(order).to receive_messages :confirmation_required? => true
           order.update_column(:state, "confirm")
           allow(order).to receive_messages :user => user
           # An order requires a payment to reach the complete state

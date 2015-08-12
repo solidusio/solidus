@@ -67,6 +67,10 @@ module Spree
                 transition to: :awaiting_return
               end
 
+              event :complete do
+                transition to: :complete, from: :confirm
+              end
+
               if states[:payment]
                 event :payment_failed do
                   transition to: :payment, from: :confirm
@@ -81,11 +85,6 @@ module Spree
 
                 # see also process_payments_before_complete below which needs to
                 # be added in the correct sequence.
-
-                event :complete do
-                  transition to: :complete, from: :confirm
-                  transition to: :complete, from: :payment
-                end
               end
 
               before_transition from: :cart, do: :ensure_line_items_present

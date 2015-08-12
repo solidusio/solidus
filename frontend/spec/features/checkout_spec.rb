@@ -80,7 +80,6 @@ describe "Checkout", type: :feature, inaccessible: true do
   context "doesn't allow bad credit card numbers" do
     before(:each) do
       order = OrderWalkthrough.up_to(:delivery)
-      allow(order).to receive_messages :confirmation_required? => true
       allow(order).to receive_messages(:available_payment_methods => [ create(:credit_card_payment_method, :environment => 'test') ])
 
       user = create(:user)
@@ -110,7 +109,6 @@ describe "Checkout", type: :feature, inaccessible: true do
 
     let!(:order) do
       order = OrderWalkthrough.up_to(:delivery)
-      allow(order).to receive_messages :confirmation_required? => true
 
       order.reload
       order.user = user
