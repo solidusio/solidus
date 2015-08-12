@@ -16,7 +16,7 @@ module Spree
       after_add_or_remove(line_item, options)
     end
 
-    def update_cart(params)
+    def update_cart(params, current_user:nil)
       if order.update_attributes(params)
         unless order.completed?
           order.line_items = order.line_items.select {|li| li.quantity > 0 }

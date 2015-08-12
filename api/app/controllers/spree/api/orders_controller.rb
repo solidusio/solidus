@@ -58,7 +58,7 @@ module Spree
       def update
         authorize! :update, @order, order_token
 
-        if @order.contents.update_cart(order_params)
+        if @order.contents.update_cart(order_params, current_user: current_api_user)
           user_id = params[:order][:user_id]
           if can?(:admin, @order) && user_id
             @order.associate_user!(Spree.user_class.find(user_id))

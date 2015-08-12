@@ -439,7 +439,7 @@ describe Spree::Admin::OrdersController, :type => :controller do
     subject { spree_put :update, payload }
 
     it "attempts to update the order" do
-      expect(order.contents).to receive(:update_cart).with(payload[:order])
+      expect(order.contents).to receive(:update_cart).with(payload[:order], current_user: nil)
       subject
     end
 

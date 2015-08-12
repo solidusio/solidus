@@ -101,7 +101,7 @@ module Spree
       it "updates the cart contents" do
         expect(order.contents).to receive(:update_cart).
           once.
-          with({"email" => "foo@foobar.com"})
+          with({"email" => "foo@foobar.com"}, current_user: current_api_user)
         subject
       end
 

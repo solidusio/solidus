@@ -18,7 +18,7 @@ module Spree
         end
 
         def update
-          if @order.contents.update_cart(order_params)
+          if @order.contents.update_cart(order_params, current_user: try_spree_current_user)
 
             if should_associate_user?
               requested_user = Spree.user_class.find(params[:user_id])
