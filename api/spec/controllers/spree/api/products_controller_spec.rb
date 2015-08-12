@@ -395,13 +395,13 @@ module Spree
         # Regression test for #4123
         it "puts the created product in the given taxon" do
           api_put :update, :id => product.to_param, :product => {:taxon_ids => taxon_1.id.to_s}
-          expect(json_response["taxon_ids"]).to eq([taxon_1.id,])
+          expect(json_response["taxon_ids"]).to eq([taxon_1.id])
         end
 
         # Regression test for #4123
         it "puts the created product in the given taxons" do
           api_put :update, :id => product.to_param, :product => {:taxon_ids => [taxon_1.id, taxon_2.id].join(',')}
-          expect(json_response["taxon_ids"]).to eq([taxon_1.id, taxon_2.id])
+          expect(json_response["taxon_ids"]).to match_array([taxon_1.id, taxon_2.id])
         end
       end
 
