@@ -6,14 +6,11 @@
   type: calculator.preference_type(:base_percent)) %>
 
 <%= label_tag nil, Spree.t(:tiers) %>
-<%= content_tag :div, nil, class: "hidden js-original-tiers",
-  data: { :'original-tiers' => Hash[calculator.preferred_tiers.sort] } %>
-<div class="js-tiers"></div>
+<%= content_tag :div, nil, class: "js-tiers", data: {
+  'original-tiers' => Hash[calculator.preferred_tiers.sort],
+  'form-prefix' => prefix
+} %>
 <button class="fa fa-plus button js-add-tier"><%= Spree.t(:add) %></button>
-
-<script type="text/x-handlebars-template" id="tier-input-name">
-  <%= prefix %>[calculator_attributes][preferred_tiers][{{base}}]
-</script>
 
 <script type="text/x-handlebars-template" id="tier-fields-template">
   <div class="fullwidth tier">

@@ -28,17 +28,21 @@ window.initProductActions = ->
   #
   # Tiered Calculator
   #
-  if $('#tier-fields-template').length and $('#tier-input-name').length
+  if $('.js-tiers').length
     tierFieldsTemplate = Handlebars.compile($('#tier-fields-template').html())
-    tierInputNameTemplate = Handlebars.compile($('#tier-input-name').html())
-    originalTiers = $('.js-original-tiers').data('original-tiers')
+    originalTiers = $('.js-tiers').data('original-tiers')
+    formPrefix = $('.js-tiers').data('form-prefix')
+
+    tierInputName = (base) ->
+      "#{formPrefix}[calculator_attributes][preferred_tiers][#{base}]"
+
     $.each originalTiers, (base, value) ->
-      fieldName = tierInputNameTemplate(base: base).trim()
-      $('.js-tiers').append tierFieldsTemplate(
-        baseField: value: base
+      $('.js-tiers').append tierFieldsTemplate
+        baseField:
+          value: base
         valueField:
-          name: fieldName
-          value: value)
+          name: tierInputName(base)
+          value: value
 
     $(document).on 'click', '.js-add-tier', (event) ->
       event.preventDefault()
@@ -50,6 +54,6 @@ window.initProductActions = ->
 
     $(document).on 'change', '.js-base-input', (event) ->
       valueInput = $(this).parents('.tier').find('.js-value-input')
-      valueInput.attr 'name', tierInputNameTemplate(base: $(this).val()).trim()
+      valueInput.attr 'name', tierInputName($(this).val())
 
 $ initProductActions
