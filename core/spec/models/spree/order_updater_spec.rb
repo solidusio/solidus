@@ -10,12 +10,13 @@ module Spree
         2.times do
           create(:line_item, order: order, price: 10)
         end
+        Spree::OrderUpdater.new(order).update
       end
 
       it "updates payment totals" do
         create(:payment_with_refund, order: order)
         Spree::OrderUpdater.new(order).update_payment_total
-        expect(order.payment_total).to eq(40.75)
+        expect(order.payment_total).to eq(15)
       end
 
       it "update item total" do
