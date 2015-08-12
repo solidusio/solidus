@@ -1405,4 +1405,33 @@ describe Spree::Order, :type => :model do
       end
     end
   end
+
+  describe '#covered_by_valid_payments?' do
+    let(:order) do
+      create(
+        :order_with_line_items,
+        line_items_count: 3,
+        line_items_price: 10,
+        shipment_cost: 5,
+        payments: [credit_card_payment, store_credit_payment])
+    end
+
+    context "valid paymenets match order's total" do
+      let(:credit_card_payment) { create(:payment, amount: 25) }
+      let(:store_credit_payment) { create(:store_credit_payment, amount: 10 )}
+
+      it "is true" do
+        expect(order.covered_by_valid_payments?).to be_truthy
+      end
+    end
+
+    context "valid payments do not match order's total" do
+      let(:credit_card_payment) { create(:payment, amount: 25, state: "failed") }
+      let(:store_credit_payment) { create(:store_credit_payment, amount: 10 )}
+
+      it "is false" do
+        expect(order.covered_by_valid_payments?).to be_falsey
+      end
+    end
+  end
 end

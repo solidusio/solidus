@@ -337,6 +337,11 @@ module Spree
               return false
             end
 
+            if !covered_by_valid_payments?
+              errors.add(:base, Spree.t(:payments_do_not_cover_order_total))
+              return false
+            end
+
             if process_payments!
               true
             else

@@ -407,9 +407,6 @@ describe Spree::Order, :type => :model do
       end
 
       context "with confirmation required" do
-        before do
-        end
-
         it "transitions to confirm" do
           order.next!
           assert_state_changed(order, 'payment', 'confirm')
@@ -506,7 +503,6 @@ describe Spree::Order, :type => :model do
     context "exchange order completion" do
       before do
         order.email = 'spree@example.org'
-        order.payments << FactoryGirl.create(:payment)
         order.shipments.create!
         allow(order).to receive_messages(payment_required?: true)
         allow(order).to receive(:ensure_available_shipping_rates).and_return(true)
@@ -519,6 +515,7 @@ describe Spree::Order, :type => :model do
           Spree::OrderUpdater.new(order).update
 
           order.save!
+          order.payments << FactoryGirl.create(:payment, order: order)
         end
 
         context 'when the exchange is for an unreturned item' do
@@ -548,7 +545,6 @@ describe Spree::Order, :type => :model do
         order.user = FactoryGirl.create(:user)
         order.store = FactoryGirl.create(:store)
         order.email = 'spree@example.org'
-        order.payments << FactoryGirl.create(:payment)
 
         # make sure we will actually capture a payment
         allow(order).to receive_messages(payment_required?: true)
@@ -559,6 +555,7 @@ describe Spree::Order, :type => :model do
         Spree::OrderUpdater.new(order).update
 
         order.save!
+        order.payments << FactoryGirl.create(:payment, order: order)
       end
 
       it "makes the current credit card a user's default credit card" do
@@ -578,10 +575,7 @@ describe Spree::Order, :type => :model do
       before do
         order.user = FactoryGirl.create(:user)
         order.email = 'spree@example.org'
-        payment = FactoryGirl.create(:payment)
-        allow(payment).to receive(:process!).and_raise(Spree::Core::GatewayError.new('processing failed'))
         order.line_items.each { |li| li.inventory_units.create! }
-        order.payments << payment
 
         # make sure we will actually capture a payment
         allow(order).to receive_messages(payment_required?: true)
@@ -590,6 +584,10 @@ describe Spree::Order, :type => :model do
         order.line_items << FactoryGirl.create(:line_item)
         order.create_proposed_shipments
         Spree::OrderUpdater.new(order).update
+
+        payment = FactoryGirl.create(:payment, order: order)
+        allow(payment).to receive(:process!).and_raise(Spree::Core::GatewayError.new('processing failed'))
+        order.payments << payment
       end
 
       it "transitions to the payment state" do

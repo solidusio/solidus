@@ -10,6 +10,7 @@ module Spree
         2.times do
           create(:line_item, order: order, price: 10)
         end
+        Spree::OrderUpdater.new(order).update
       end
 
       context 'with refund' do
