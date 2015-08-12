@@ -83,6 +83,7 @@ describe Spree::UnitCancel do
         order.contents.advance
         create(:payment, order: order, amount: order.total)
         order.payments.reload
+        order.contents.advance
         order.complete!
         order.reload
 
