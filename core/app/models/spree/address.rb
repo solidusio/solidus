@@ -37,14 +37,19 @@ module Spree
       end
     end
 
+    # @return [Address] an equal address already in the database or a newly created one
+    def self.factory(attributes)
+      full_attributes = value_attributes(column_defaults, attributes)
+      find_or_create_by(full_attributes)
+    end
+
     # @return [Address] address from existing address plus new_attributes as diff
     # @note, this may return existing_address if there are no changes to value equality
     def self.immutable_merge(existing_address, new_attributes)
       return self.new(value_attributes(new_attributes)) unless existing_address
 
-      new_attributes ||= {}
-      merged_attributes = existing_address.attributes.merge(new_attributes.stringify_keys).except(*DB_ONLY_ATTRS)
-      new_address = self.new(merged_attributes)
+      merged_attributes = value_attributes(existing_address.attributes, new_attributes)
+      new_address = new(merged_attributes)
       if existing_address == new_address
         existing_address
       else
@@ -52,10 +57,17 @@ module Spree
       end
     end
 
-    def self.value_attributes(attributes_hash)
-      (attributes_hash || {}).stringify_keys.except(*DB_ONLY_ATTRS)
+    # @return [Hash] hash of attributes contributing to value equality with optional merge
+    def self.value_attributes(base_attributes, merge_attributes = nil)
+      base = if merge_attributes
+        base_attributes.merge(merge_attributes.stringify_keys)
+      else
+        base_attributes.stringify_keys
+      end
+      base.except(*DB_ONLY_ATTRS)
     end
 
+    # @return [Hash] hash of attributes contributing to value equality
     def value_attributes
       self.class.value_attributes(attributes)
     end

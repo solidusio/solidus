@@ -57,17 +57,17 @@ module Spree
         return user_address.address if user_address && (!default || user_address.default)
 
         first_one = user_addresses.empty?
-        filtered_attrs = Address.value_attributes(address_attributes)
-        user_address ||= user_addresses.build(address: Address.find_or_create_by(filtered_attrs))
-        if !new_record?
-          if (default || first_one)
+        user_address ||= user_addresses.build(address: Address.factory(address_attributes))
+
+        if (default || first_one)
+          if new_record?
+            mark_default_user_address(user_address)
+          else
             ActiveRecord::Base.transaction do
               mark_default_user_address(user_address)
               user_address.save!
             end
           end
-        elsif (default || first_one)
-          mark_default_user_address(user_address)
         end
 
         user_address.address
