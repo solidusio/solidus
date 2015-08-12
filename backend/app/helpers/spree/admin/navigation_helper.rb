@@ -80,7 +80,7 @@ module Spree
         else
           text = content_tag(:span, text, class: 'text')
         end
-        link_to(icon + text, url, options)
+        link_to(icon + ' ' + text, url, options)
       end
 
       def icon(icon_name)

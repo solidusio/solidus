@@ -131,6 +131,10 @@ nav.menu {
       }
     }
 
+    &.tab-with-icon {
+      white-space: nowrap;
+    }
+
     &.selected a {
       @extend a:hover;
     }
