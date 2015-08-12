@@ -2,12 +2,12 @@ var initProductActions = function () {
   'use strict';
 
   // Add classes on promotion items for design
-  $(document).on('mouseover mouseout', 'a.delete', function (event) {
-    if (event.type === 'mouseover') {
-      $(this).parent().addClass('action-remove');
-    } else {
-      $(this).parent().removeClass('action-remove');
-    }
+  $(document).on('mouseover', 'a.delete', function (event) {
+    $(this).parent().addClass('action-remove');
+  });
+
+  $(document).on('mouseout', 'a.delete', function (event) {
+    $(this).parent().addClass('action-remove');
   });
 
   $('#promotion-filters').find('.variant_autocomplete').variantAutocomplete();
@@ -55,6 +55,7 @@ var initProductActions = function () {
     });
 
     $(document).on('click', '.js-remove-tier', function(event) {
+      event.preventDefault();
       $(this).parents('.tier').remove();
     });
 
@@ -66,8 +67,6 @@ var initProductActions = function () {
 
 };
 
-$(document).ready(function () {
-
+$(function () {
   initProductActions();
-
 });
