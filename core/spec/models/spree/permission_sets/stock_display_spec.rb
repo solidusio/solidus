@@ -12,11 +12,13 @@ describe Spree::PermissionSets::StockDisplay do
 
     it { is_expected.to be_able_to(:display, Spree::StockItem) }
     it { is_expected.to be_able_to(:admin, Spree::StockItem) }
+    it { is_expected.to be_able_to(:display, Spree::StockLocation) }
   end
 
   context "when not activated" do
     it { is_expected.not_to be_able_to(:display, Spree::StockItem) }
     it { is_expected.not_to be_able_to(:admin, Spree::StockItem) }
+    it { is_expected.not_to be_able_to(:display, Spree::StockLocation) }
   end
 end
 

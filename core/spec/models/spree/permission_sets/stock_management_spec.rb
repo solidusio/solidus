@@ -11,10 +11,12 @@ describe Spree::PermissionSets::StockManagement do
     end
 
     it { is_expected.to be_able_to(:manage, Spree::StockItem) }
+    it { is_expected.to be_able_to(:display, Spree::StockLocation) }
   end
 
   context "when not activated" do
     it { is_expected.not_to be_able_to(:manage, Spree::StockItem) }
+    it { is_expected.not_to be_able_to(:display, Spree::StockLocation) }
   end
 end
 

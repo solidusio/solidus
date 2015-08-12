@@ -12,11 +12,13 @@ describe Spree::PermissionSets::StockTransferManagement do
 
     it { is_expected.to be_able_to(:manage, Spree::StockTransfer) }
     it { is_expected.to be_able_to(:manage, Spree::TransferItem) }
+    it { is_expected.to be_able_to(:display, Spree::StockLocation) }
   end
 
   context "when not activated" do
     it { is_expected.to_not be_able_to(:manage, Spree::StockTransfer) }
     it { is_expected.to_not be_able_to(:manage, Spree::TransferItem) }
+    it { is_expected.not_to be_able_to(:display, Spree::StockLocation) }
   end
 end
 
