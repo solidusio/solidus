@@ -238,6 +238,12 @@ module Spree
       @searcher_class ||= Spree::Core::Search::Base
     end
 
+    # promotion_chooser_class allows extensions to provide their own PromotionChooser
+    attr_writer :promotion_chooser_class
+    def promotion_chooser_class
+      @promotion_chooser_class ||= Spree::PromotionChooser
+    end
+
     def static_model_preferences
       @static_model_preferences ||= Spree::Preferences::StaticModelPreferences.new
     end
