@@ -31,7 +31,6 @@ module Spree
       end
 
       before(:each) do
-        allow_any_instance_of(Order).to receive_messages(confirmation_required?: true)
         allow_any_instance_of(Order).to receive_messages(payment_required?: true)
       end
 

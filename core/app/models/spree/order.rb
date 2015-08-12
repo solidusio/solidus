@@ -188,6 +188,7 @@ module Spree
     end
 
     def confirmation_required?
+      ActiveSupport::Deprecation.warn "Order#confirmation_required is deprecated.", caller
       true
     end
 
