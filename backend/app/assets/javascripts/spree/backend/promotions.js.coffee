@@ -29,7 +29,8 @@ window.initProductActions = ->
   # Tiered Calculator
   #
   if $('.js-tiers').length
-    tierFieldsTemplate = Handlebars.compile($('#tier-fields-template').html())
+    calculatorName = $('.js-tiers').data('calculator')
+    tierFieldsTemplate = HandlebarsTemplates["promotions/calculators/fields/#{calculatorName}"]
     originalTiers = $('.js-tiers').data('original-tiers')
     formPrefix = $('.js-tiers').data('form-prefix')
 

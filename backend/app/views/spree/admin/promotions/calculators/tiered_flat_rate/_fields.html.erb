@@ -8,27 +8,7 @@
 <%= label_tag nil, Spree.t(:tiers) %>
 <%= content_tag :div, nil, class: "js-tiers", data: {
   'original-tiers' => Hash[calculator.preferred_tiers.sort],
-  'form-prefix' => prefix
+  'form-prefix' => prefix,
+  'calculator' => 'tiered_flat_rate'
 } %>
 <button class="fa fa-plus button js-add-tier"><%= Spree.t(:add) %></button>
-
-<script type="text/x-handlebars-template" id="tier-fields-template">
-  <div class="fullwidth tier">
-    <a class="fa fa-trash remove js-remove-tier"></a>
-    <div class="two columns alpha omega">
-      <div class="input-group">
-        <span class="input-group-addon">$</span>
-        <input class="js-base-input form-control" type="text" value={{baseField.value}}>
-      </div>
-    </div>
-    <div class="two columns alpha omega right">
-      <div class="input-group">
-        <span class="input-group-addon">$</span>
-        <input class="js-value-input form-control"
-          name="{{valueField.name}}" type="text" value={{valueField.value}}>
-      </div>
-    </div>
-    <div class="clear"></div>
-  </div>
-</script>
-
