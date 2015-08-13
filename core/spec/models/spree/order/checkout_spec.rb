@@ -407,10 +407,30 @@ describe Spree::Order, :type => :model do
       end
 
       context "with confirmation required" do
-        it "transitions to confirm" do
-          order.next!
-          assert_state_changed(order, 'payment', 'confirm')
-          expect(order.state).to eq("confirm")
+        context "the order is not covered by its payments" do
+          let(:first_payment) { build(:payment, amount: 5) }
+          let(:second_payment) { build(:payment, amount: 10) }
+          let(:order) do
+            create(
+            :order_with_line_items,
+            line_items_count: 3,
+            line_items_price: 10,
+            shipment_cost: 5,
+            payments: [first_payment, second_payment])
+          end
+
+          it "stays in the payment state" do
+            expect{ order.next! }.to raise_error(StateMachines::InvalidTransition, /Cannot transition/)
+            expect(order.state).to eq("payment")
+          end
+        end
+
+        context "the order is covered by its valid payments" do
+          it "transitions to confirm" do
+            order.next!
+            assert_state_changed(order, 'payment', 'confirm')
+            expect(order.state).to eq("confirm")
+          end
         end
       end
 
@@ -568,6 +588,30 @@ describe Spree::Order, :type => :model do
         order.temporary_credit_card = true
         order.complete!
         expect(order.user.reload.default_credit_card).to be_nil
+      end
+    end
+
+    context "the order is not covered by its payments" do
+      let(:first_payment) { build(:payment, amount: 5) }
+      let(:second_payment) { build(:payment, amount: 10) }
+      let(:order) do
+        create(
+        :order_with_line_items,
+        line_items_count: 3,
+        line_items_price: 10,
+        shipment_cost: 5,
+        payments: [first_payment, second_payment])
+      end
+
+      before do
+        allow(order).to receive_messages(payment_required?: true)
+        allow(order).to receive_messages(ensure_available_shipping_rates: true)
+        allow(order).to receive_messages(validate_line_item_availability: true)
+      end
+
+      it "stays in the confirm state" do
+        expect{ order.next! }.to raise_error(StateMachines::InvalidTransition, /Cannot transition/)
+        expect(order.state).to eq("confirm")
       end
     end
 

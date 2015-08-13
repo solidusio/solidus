@@ -82,6 +82,7 @@ module Spree
                 before_transition to: :payment, do: :assign_default_credit_card
 
                 before_transition to: :confirm, do: :add_store_credit_payments
+                before_transition to: :confirm, do: :ensure_sufficient_payment
 
                 # see also process_payments_before_complete below which needs to
                 # be added in the correct sequence.
@@ -115,6 +116,7 @@ module Spree
               before_transition to: :complete, do: :ensure_line_item_variants_are_not_deleted
               before_transition to: :complete, do: :ensure_inventory_units, unless: :unreturned_exchange?
               if states[:payment]
+                before_transition to: :complete, do: :ensure_sufficient_payment
                 before_transition to: :complete, do: :process_payments_before_complete
               end
 
@@ -307,7 +309,7 @@ module Spree
 
           private
 
-          def process_payments_before_complete
+          def ensure_sufficient_payment
             return if !payment_required?
 
             if payments.valid.empty?
@@ -319,6 +321,12 @@ module Spree
               errors.add(:base, Spree.t(:payments_do_not_cover_order_total))
               return false
             end
+
+            true
+          end
+
+          def process_payments_before_complete
+            return if !payment_required?
 
             if process_payments!
               true
