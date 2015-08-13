@@ -1,3 +1,15 @@
+## Solidus (not yet versioned)
+
+*   Address is immutable (Address#readonly? is always true)
+
+    This allows us to minimize cloning addresses, while still ensuring historical
+    data is preserved.
+
+*   UserAddressBook module added to manage a user's multiple addresses
+
+*   GET /admin/search/users searches all of a user's addresses, not
+    just current bill and ship addresss
+
 ## Solidus 1.0
 
 *   Replace ShipmentMailer with CartonMailer

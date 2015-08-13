@@ -248,6 +248,8 @@ describe "Checkout", type: :feature, inaccessible: true do
       click_button "add-to-cart-button"
 
       click_on "Checkout"
+      # edit an address field
+      fill_in "order_bill_address_attributes_firstname", :with => "Ryann"
       click_on "Save and Continue"
       click_on "Save and Continue"
       click_on "Save and Continue"

@@ -124,27 +124,32 @@ describe Spree::Order, :type => :model do
         context "with default addresses" do
           let(:default_address) { FactoryGirl.create(:address) }
 
-          before do
-            order.user = FactoryGirl.create(:user, "#{address_kind}_address" => default_address)
-            order.next!
-            order.reload
-          end
-
-          shared_examples "it cloned the default address" do
+          shared_examples "it references the user's the default address" do
             it do
-              default_attributes = default_address.attributes
-              order_attributes = order.send("#{address_kind}_address".to_sym).try(:attributes) || {}
+              default_attributes = default_address.reload.value_attributes
+              order_attributes = Spree::Address.value_attributes(order.send("#{address_kind}_address".to_sym).try(:attributes))
 
-              expect(order_attributes.except('id', 'created_at', 'updated_at')).to eql(default_attributes.except('id', 'created_at', 'updated_at'))
+              expect(order_attributes).to eq(default_attributes)
             end
           end
 
-          it_behaves_like "it cloned the default address" do
-            let(:address_kind) { 'ship' }
+          it_behaves_like "it references the user's the default address" do
+            let(:address_kind) { :ship }
+            before do
+              order.user = FactoryGirl.create(:user)
+              order.user.default_address = default_address
+              order.next!
+              order.reload
+            end
           end
 
-          it_behaves_like "it cloned the default address" do
-            let(:address_kind) { 'bill' }
+          it_behaves_like "it references the user's the default address" do
+            let(:address_kind) { :bill }
+            before do
+              order.user = FactoryGirl.create(:user, bill_address: default_address)
+              order.next!
+              order.reload
+            end
           end
         end
       end
@@ -364,9 +369,8 @@ describe Spree::Order, :type => :model do
       let(:default_credit_card) { create(:credit_card) }
 
       before do
-        @default_credit_card = FactoryGirl.create(:credit_card)
         user = Spree::LegacyUser.new(email: 'spree@example.org', bill_address: user_bill_address)
-        allow(user).to receive(:default_credit_card) { @default_credit_card }
+        allow(user).to receive(:default_credit_card) { default_credit_card }
         order.user = user
 
         allow(order).to receive_messages(payment_required?: true)
@@ -380,7 +384,7 @@ describe Spree::Order, :type => :model do
       it "assigns the user's default credit card" do
         expect(order.state).to eq 'payment'
         expect(order.payments.count).to eq 1
-        expect(order.payments.first.source).to eq @default_credit_card
+        expect(order.payments.first.source).to eq default_credit_card
       end
 
       context "order already has a billing address" do
@@ -392,10 +396,8 @@ describe Spree::Order, :type => :model do
       end
 
       context "order doesn't have a billing address" do
-        let(:user_bill_address) { create(:address) }
-
-        it "assigns the user's billing address to the order" do
-          expect(order.bill_address).to eq user_bill_address
+        it "assigns the user's default_credit_card's address to the order" do
+          expect(order.bill_address).to eq default_credit_card.address
         end
       end
     end

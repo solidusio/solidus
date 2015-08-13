@@ -10,20 +10,33 @@ module Spree
       @order = create(:order, :bill_address => @address)
     end
 
-    context "with their own address" do
+    context "with order" do
       before do
         allow_any_instance_of(Order).to receive_messages :user => current_api_user
       end
 
-      it "gets an address" do
-        api_get :show, :id => @address.id, :order_id => @order.number
-        expect(json_response['address1']).to eq @address.address1
-      end
+      context "with their own address" do
 
-      it "updates an address" do
-        api_put :update, :id => @address.id, :order_id => @order.number,
-                         :address => { :address1 => "123 Test Lane" }
-        expect(json_response['address1']).to eq '123 Test Lane'
+        it "gets an address" do
+          api_get :show, :id => @address.id, :order_id => @order.number
+          expect(json_response['address1']).to eq @address.address1
+        end
+
+        it "update replaces the readonly Address associated to the Order" do
+          api_put :update, :id => @address.id, :order_id => @order.number,
+                           :address => { :address1 => "123 Test Lane" }
+          expect(Order.find(@order.id).bill_address_id).not_to eq @address.id
+          expect(json_response['address1']).to eq '123 Test Lane'
+        end
+
+        it "receives the errors object if address is invalid" do
+          api_put :update, :id => @address.id, :order_id => @order.number,
+                           :address => { :address1 => "" }
+
+          expect(json_response['error']).not_to be_nil
+          expect(json_response['errors']).not_to be_nil
+          expect(json_response['errors']['address1'].first).to eq "can't be blank"
+        end
       end
 
       it "receives the errors object if address is invalid" do
