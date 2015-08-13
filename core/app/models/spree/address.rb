@@ -59,12 +59,20 @@ module Spree
 
     # @return [Hash] hash of attributes contributing to value equality with optional merge
     def self.value_attributes(base_attributes, merge_attributes = nil)
-      base = if merge_attributes
-        base_attributes.merge(merge_attributes.stringify_keys)
-      else
-        base_attributes.stringify_keys
+      # dup because we may modify firstname/lastname.
+      base = base_attributes.dup
+
+      base.stringify_keys!
+
+      if merge_attributes
+        base.merge!(merge_attributes.stringify_keys)
       end
-      base.except(*DB_ONLY_ATTRS)
+
+      # TODO: Deprecate these aliased attributes
+      base['firstname'] = base.delete('first_name') if base.key?('first_name')
+      base['lastname'] = base.delete('last_name') if base.key?('last_name')
+
+      base.except!(*DB_ONLY_ATTRS)
     end
 
     # @return [Hash] hash of attributes contributing to value equality

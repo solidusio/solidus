@@ -246,6 +246,58 @@ describe Spree::Address, :type => :model do
     end
   end
 
+
+  describe '.value_attributes' do
+    subject do
+      Spree::Address.value_attributes(base_attributes, merge_attributes)
+    end
+
+    context 'with symbols and strings' do
+      let(:base_attributes) { {'address1' => '1234 way', 'address2' => 'apt 2'} }
+      let(:merge_attributes) { {:address1 => '5678 way'} }
+
+      it 'stringifies and merges the keys' do
+        expect(subject).to eq('address1' => '5678 way', 'address2' => 'apt 2')
+      end
+    end
+
+    context 'with database-only attributes' do
+      let(:base_attributes) do
+        {
+          'id' => 1,
+          'created_at' => Time.now,
+          'updated_at' => Time.now,
+          'address1' => '1234 way',
+        }
+      end
+      let(:merge_attributes) do
+        {
+          'updated_at' => Time.now,
+          'address2' => 'apt 2',
+        }
+      end
+
+      it 'removes the database-only addresses' do
+        expect(subject).to eq('address1' => '1234 way', 'address2' => 'apt 2')
+      end
+    end
+
+    context 'with aliased attributes' do
+      let(:base_attributes) { {'first_name' => 'Jordan'} }
+      let(:merge_attributes) { {'last_name' => 'Brough'} }
+
+      it 'renames them to the normalized value' do
+        expect(subject).to eq('firstname' => 'Jordan', 'lastname' => 'Brough')
+      end
+
+      it 'does not modify the original hashes' do
+        subject
+        expect(base_attributes).to eq('first_name' => 'Jordan')
+        expect(merge_attributes).to eq('last_name' => 'Brough')
+      end
+    end
+  end
+
   context '#full_name' do
     context 'both first and last names are present' do
       let(:address) { stub_model(Spree::Address, :firstname => 'Michael', :lastname => 'Jackson') }
