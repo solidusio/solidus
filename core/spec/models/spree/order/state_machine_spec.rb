@@ -15,6 +15,7 @@ describe Spree::Order, :type => :model do
         order.state = "confirm"
         order.run_callbacks(:create)
         allow(order).to receive_messages :payment_required? => true
+        allow(order).to receive_messages :ensure_sufficient_payment => true
         allow(order).to receive_messages :process_payments! => true
         allow(order).to receive_messages :ensure_available_shipping_rates => true
       end

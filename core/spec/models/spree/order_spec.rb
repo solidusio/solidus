@@ -1042,13 +1042,6 @@ describe Spree::Order, :type => :model do
             expect(order.payments.first.amount).to eq order_total
           end
         end
-
-        context "there are no other payments" do
-          it "adds an error to the model" do
-            expect(subject).to be false
-            expect(order.errors.full_messages).to include(Spree.t("store_credit.errors.unable_to_fund"))
-          end
-        end
       end
 
       context "there is enough store credit to pay for the entire order" do
@@ -1082,13 +1075,6 @@ describe Spree::Order, :type => :model do
         let(:store_credit_total) { order_total - 100 }
         let(:store_credit)       { create(:store_credit, amount: store_credit_total) }
         let(:order) { create(:order_with_totals, user: store_credit.user, line_items_price: order_total).tap(&:update!) }
-
-        context "there are no other payments" do
-          it "adds an error to the model" do
-            expect(subject).to be false
-            expect(order.errors.full_messages).to include(Spree.t("store_credit.errors.unable_to_fund"))
-          end
-        end
 
         context "there is a credit card payment" do
           let!(:cc_payment) { create(:payment, order: order, state: "checkout") }
@@ -1413,12 +1399,13 @@ describe Spree::Order, :type => :model do
         line_items_count: 3,
         line_items_price: 10,
         shipment_cost: 5,
-        payments: [credit_card_payment, store_credit_payment])
+        payments: payments)
     end
 
-    context "valid paymenets match order's total" do
+    context "valid payments match order's total" do
       let(:credit_card_payment) { create(:payment, amount: 25) }
       let(:store_credit_payment) { create(:store_credit_payment, amount: 10 )}
+      let(:payments) { [credit_card_payment, store_credit_payment] }
 
       it "is true" do
         expect(order.covered_by_valid_payments?).to be_truthy
@@ -1426,8 +1413,11 @@ describe Spree::Order, :type => :model do
     end
 
     context "valid payments do not match order's total" do
-      let(:credit_card_payment) { create(:payment, amount: 25, state: "failed") }
-      let(:store_credit_payment) { create(:store_credit_payment, amount: 10 )}
+      let(:failed_payment) { create(:payment, amount: 10, state: "failed") }
+      let(:voided_payment) { create(:payment, amount: 10, state: "void") }
+      let(:invalid_payment) { create(:payment, amount: 10, state: "invalid") }
+      let(:store_credit_payment) { create(:store_credit_payment, amount: 5 )}
+      let(:payments) { [failed_payment, voided_payment, invalid_payment, store_credit_payment] }
 
       it "is false" do
         expect(order.covered_by_valid_payments?).to be_falsey

@@ -1461,7 +1461,6 @@ en:
           eligible: "Eligibility Verified"
           void: "Voided"
       errors:
-        unable_to_fund: "Unable to pay for order using store credits"
         cannot_invalidate_uncaptured_authorization: "Cannot invalidate a store credit with an uncaptured authorization"
       expiring: Expiring
       insufficient_authorized_amount: "Unable to capture more than authorized amount"
