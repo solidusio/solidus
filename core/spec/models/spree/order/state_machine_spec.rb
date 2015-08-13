@@ -140,7 +140,7 @@ describe Spree::Order, :type => :model do
         order_id = args[0]
         mail_message
       }
-      expect(mail_message).to receive :deliver_now
+      expect(mail_message).to receive :deliver_later
       order.cancel!
       expect(order_id).to eq(order.id)
     end
@@ -150,7 +150,7 @@ describe Spree::Order, :type => :model do
         allow(shipment).to receive(:ensure_correct_adjustment)
         allow(shipment).to receive(:update_order)
         allow(Spree::OrderMailer).to receive(:cancel_email).and_return(mail_message = double)
-        allow(mail_message).to receive :deliver_now
+        allow(mail_message).to receive :deliver_later
 
         allow(order).to receive :has_available_shipment
       end
@@ -164,7 +164,7 @@ describe Spree::Order, :type => :model do
         # TODO: This is ugly :(
         # Stubs methods that cause unwanted side effects in this test
         allow(Spree::OrderMailer).to receive(:cancel_email).and_return(mail_message = double)
-        allow(mail_message).to receive :deliver_now
+        allow(mail_message).to receive :deliver_later
         allow(order).to receive :has_available_shipment
         allow(order).to receive :restock_items!
         allow(shipment).to receive(:cancel!)
