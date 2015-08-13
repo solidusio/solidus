@@ -70,8 +70,7 @@ module Spree
           context "it is not the first address" do
             before { user.user_addresses.create!(address: create(:address)) }
             it "sets the UserAddress default flag to false" do
-              subject
-              user.save!
+              expect { subject }.to change { Spree::UserAddress.count }.by(1)
               expect(user_address.default).to eq false
             end
           end

@@ -46,7 +46,7 @@ module Spree
       end
 
       # Add an address to the user's list of saved addresses for future autofill
-      # @note this method enforce one-and-only-one default address per user
+      # @note this method enforces one-and-only-one default address per user
       # @param address_attributes Hash of attributes that will be
       # treated as value equality to de-dup among existing Addresses
       # @param default set whether or not this address will show up from
@@ -68,6 +68,8 @@ module Spree
               user_address.save!
             end
           end
+        elsif persisted?
+          user_address.save!
         end
 
         user_address.address
