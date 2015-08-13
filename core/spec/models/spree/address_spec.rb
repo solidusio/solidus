@@ -187,7 +187,7 @@ describe Spree::Address, :type => :model do
     RSpec::Matchers.define :be_address_equivalent_attributes do |expected|
       fields_of_interest = [:firstname, :lastname, :company, :address1, :address2, :city, :zipcode, :phone, :alternative_phone]
       match do |actual|
-        expected_attrs = expected.slice(*fields_of_interest)
+        expected_attrs = expected.symbolize_keys.slice(*fields_of_interest)
         actual_attrs = actual.symbolize_keys.slice(*fields_of_interest)
         expected_attrs == actual_attrs
       end
@@ -196,11 +196,23 @@ describe Spree::Address, :type => :model do
     let(:new_address_attributes) { attributes_for(:address) }
     subject { Spree::Address.immutable_merge(existing_address, new_address_attributes) }
 
-    context "no existing address" do
+    context "no existing address supplied" do
       let(:existing_address) { nil }
 
-      it "returns new Address matching attributes given" do
-        expect(subject.attributes).to be_address_equivalent_attributes(new_address_attributes)
+      context 'and there is not a matching address in the database' do
+        it "returns new Address matching attributes given" do
+          expect(subject.attributes).to be_address_equivalent_attributes(new_address_attributes)
+        end
+      end
+
+      context 'and there is a matching address in the database' do
+        let(:new_address_attributes) { Spree::Address.value_attributes(matching_address.attributes) }
+        let!(:matching_address) { create(:address, firstname: 'Jordan') }
+
+        it "returns the matching address" do
+          expect(subject.attributes).to be_address_equivalent_attributes(new_address_attributes)
+          expect(subject.id).to eq(matching_address.id)
+        end
       end
     end
 
@@ -219,6 +231,16 @@ describe Spree::Address, :type => :model do
         it "returns existing address" do
           expect(subject).to eq existing_address
           expect(subject.id).to eq existing_address.id
+        end
+      end
+
+      context 'and changed address matches an existing address' do
+        let(:new_address_attributes) { Spree::Address.value_attributes(matching_address.attributes) }
+        let!(:matching_address) { create(:address, firstname: 'Jordan') }
+
+        it 'returns the matching address' do
+          expect(subject.attributes).to be_address_equivalent_attributes(new_address_attributes)
+          expect(subject.id).to eq(matching_address.id)
         end
       end
     end

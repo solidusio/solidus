@@ -40,16 +40,16 @@ module Spree
     # @return [Address] an equal address already in the database or a newly created one
     def self.factory(attributes)
       full_attributes = value_attributes(column_defaults, attributes)
-      find_or_create_by(full_attributes)
+      find_or_initialize_by(full_attributes)
     end
 
     # @return [Address] address from existing address plus new_attributes as diff
     # @note, this may return existing_address if there are no changes to value equality
     def self.immutable_merge(existing_address, new_attributes)
-      return self.new(value_attributes(new_attributes)) unless existing_address
+      return factory(new_attributes) if existing_address.nil?
 
       merged_attributes = value_attributes(existing_address.attributes, new_attributes)
-      new_address = new(merged_attributes)
+      new_address = factory(merged_attributes)
       if existing_address == new_address
         existing_address
       else
