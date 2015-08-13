@@ -42,7 +42,7 @@ class IndexAddForms
     stockLocationName = selectedStockLocationOption.text().trim()
     selectedStockLocationOption.remove()
 
-    rowTemplate = Handlebars.compile($('#stock-item-count-for-location-template').html())
+    rowTemplate = HandlebarsTemplates['stock_items/stock_location_stock_item']
     $("tr[data-variant-id='#{variantId}']:last").before(
       rowTemplate
         id: stockItem.id
