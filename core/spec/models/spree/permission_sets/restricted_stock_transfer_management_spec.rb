@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Spree::PermissionSets::RestrictedTransferManagement do
+describe Spree::PermissionSets::RestrictedStockTransferManagement do
   let(:ability) { Spree::Ability.new(user) }
 
   subject { ability }
@@ -13,9 +13,6 @@ describe Spree::PermissionSets::RestrictedTransferManagement do
   # This has the side effect of creating a stock item for each stock location above,
   # which is what we actually want.
   let!(:variant) { create :variant }
-
-  let(:source_stock_item) { source_location.stock_items.first }
-  let(:destination_stock_item) { destination_location.stock_items.first }
 
   let(:transfer_with_source) { create :stock_transfer, source_location: source_location }
   let(:transfer_with_destination) { create :stock_transfer, source_location: destination_location  }
@@ -48,21 +45,15 @@ describe Spree::PermissionSets::RestrictedTransferManagement do
       described_class.new(ability).activate!
     end
 
-    it { is_expected.to be_able_to(:display, Spree::StockItem) }
-    it { is_expected.to be_able_to(:admin, Spree::StockItem) }
-
-    it { is_expected.to be_able_to(:display, source_location) }
-    it { is_expected.to be_able_to(:display, destination_location) }
-
     context "when the user is associated with one of the locations" do
       let(:stock_locations) {[source_location]}
+
+      it { is_expected.to be_able_to(:display, source_location) }
+      it { is_expected.to_not be_able_to(:display, destination_location) }
 
       it { is_expected.to be_able_to(:display, Spree::StockTransfer) }
       it { is_expected.to be_able_to(:admin, Spree::StockTransfer) }
       it { is_expected.to be_able_to(:create, Spree::StockTransfer) }
-
-      it { is_expected.to be_able_to(:update, source_stock_item) }
-      it { is_expected.not_to be_able_to(:update, destination_stock_item) }
 
       it { is_expected.to be_able_to(:transfer, source_location) }
       it { is_expected.not_to be_able_to(:transfer, destination_location) }
@@ -84,12 +75,12 @@ describe Spree::PermissionSets::RestrictedTransferManagement do
     context "when the user is associated with both locations" do
       let(:stock_locations) {[source_location, destination_location]}
 
+      it { is_expected.to be_able_to(:display, source_location) }
+      it { is_expected.to be_able_to(:display, destination_location) }
+
       it { is_expected.to be_able_to(:display, Spree::StockTransfer) }
       it { is_expected.to be_able_to(:admin, Spree::StockTransfer) }
       it { is_expected.to be_able_to(:create, Spree::StockTransfer) }
-
-      it { is_expected.to be_able_to(:update, source_stock_item) }
-      it { is_expected.to be_able_to(:update, destination_stock_item) }
 
       it { is_expected.to be_able_to(:transfer, source_location) }
       it { is_expected.to be_able_to(:transfer, destination_location) }
@@ -110,12 +101,12 @@ describe Spree::PermissionSets::RestrictedTransferManagement do
     context "when the user is associated with neither location" do
       let(:stock_locations) {[]}
 
+      it { is_expected.to_not be_able_to(:display, source_location) }
+      it { is_expected.to_not be_able_to(:display, destination_location) }
+
       it { is_expected.not_to be_able_to(:display, Spree::StockTransfer) }
       it { is_expected.not_to be_able_to(:admin, Spree::StockTransfer) }
       it { is_expected.not_to be_able_to(:create, Spree::StockTransfer) }
-
-      it { is_expected.not_to be_able_to(:update, source_stock_item) }
-      it { is_expected.not_to be_able_to(:update, destination_stock_item) }
 
       it { is_expected.not_to be_able_to(:transfer, source_location) }
       it { is_expected.not_to be_able_to(:transfer, destination_location) }
@@ -137,8 +128,8 @@ describe Spree::PermissionSets::RestrictedTransferManagement do
     it { is_expected.not_to be_able_to(:admin, Spree::StockTransfer) }
     it { is_expected.not_to be_able_to(:create, Spree::StockTransfer) }
 
-    it { is_expected.not_to be_able_to(:update, source_stock_item) }
-    it { is_expected.not_to be_able_to(:update, destination_stock_item) }
+    it { is_expected.to_not be_able_to(:display, source_location) }
+    it { is_expected.to_not be_able_to(:display, destination_location) }
 
     it { is_expected.not_to be_able_to(:transfer, source_location) }
     it { is_expected.not_to be_able_to(:transfer, destination_location) }
