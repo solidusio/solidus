@@ -1,4 +1,4 @@
-class RenameHabtmTablesToHmtConvention < ActiveRecord::Migration
+class ConvertHabtmTablesToHmt < ActiveRecord::Migration
   def up
     add_columns :spree_option_types_prototypes
     add_columns :spree_products_promotion_rules
