@@ -23,7 +23,7 @@ class RenameHabtmTablesToHmtConvention < ActiveRecord::Migration
     remove_columns :spree_taxons_prototypes, remove_id: false
     remove_columns :spree_shipping_methods_zones
 
-    rename_table :spree_option_type_prototypes, :spree_option_types_prototypes,
+    rename_table :spree_option_type_prototypes, :spree_option_types_prototypes
     rename_table :spree_product_promotion_rules, :spree_products_promotion_rules
     rename_table :spree_promotion_rule_taxons, :spree_taxons_promotion_rules
     rename_table :spree_property_prototypes, :spree_properties_prototypes
