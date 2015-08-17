@@ -5,8 +5,7 @@ module Spree
         belongs_to :user, class_name: Spree::UserClassHandle.new
 
         has_many :promotion_rule_users, class_name: 'Spree::PromotionRuleUser',
-                                        foreign_key: :promotion_rule_id,
-                                        association_foreign_key: :user_id
+                                        foreign_key: :promotion_rule_id
         has_many :users, through: :promotion_rule_users, class_name: Spree::UserClassHandle.new
 
         def applicable?(promotable)
