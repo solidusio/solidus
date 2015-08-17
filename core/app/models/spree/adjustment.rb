@@ -60,6 +60,13 @@ module Spree
       update_attributes!(finalized: false)
     end
 
+    def finalize
+      update_attributes(finalized: true)
+    end
+
+    def unfinalize
+      update_attributes(finalized: false)
+    end
 
     # Deprecated methods
     def state
@@ -90,16 +97,24 @@ module Spree
     end
 
     def open
-      ActiveSupport::Deprecation.warn "Adjustment#open is deprecated. Instead use Adjustment#unfinalize!", caller
+      ActiveSupport::Deprecation.warn "Adjustment#open is deprecated. Instead use Adjustment#unfinalize", caller
+      unfinalize
+    end
+
+    def open
+      ActiveSupport::Deprecation.warn "Adjustment#open! is deprecated. Instead use Adjustment#unfinalize!", caller
       unfinalize!
     end
-    alias_method :open!, :open
 
     def close
-      ActiveSupport::Deprecation.warn "Adjustment#close is deprecated. Instead use Adjustment#finalize!", caller
+      ActiveSupport::Deprecation.warn "Adjustment#close is deprecated. Instead use Adjustment#finalize", caller
+      finalize
+    end
+
+    def close!
+      ActiveSupport::Deprecation.warn "Adjustment#close! is deprecated. Instead use Adjustment#finalize!", caller
       finalize!
     end
-    alias_method :close!, :close
     # End deprecated methods
 
     def currency
