@@ -1,4 +1,4 @@
-class Spree::PromotionCode < ActiveRecord::Base
+class Spree::PromotionCode < Spree::Base
   belongs_to :promotion, inverse_of: :codes
   has_many :adjustments
 
@@ -6,6 +6,8 @@ class Spree::PromotionCode < ActiveRecord::Base
   validates :promotion, presence: true
 
   before_save :downcase_value
+
+  self.whitelisted_ransackable_attributes = ['value']
 
   # Whether the promotion code has exceeded its usage restrictions
   #

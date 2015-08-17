@@ -72,6 +72,8 @@ module Spree
       end
     end
 
+    self.whitelisted_ransackable_attributes = ['number']
+
     def can_transition_from_pending_to_shipped?
       !requires_shipment?
     end
