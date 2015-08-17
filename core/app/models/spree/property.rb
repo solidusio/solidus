@@ -1,7 +1,7 @@
 module Spree
   class Property < Spree::Base
-    has_many :prototype_properties
-    has_many :prototypes, through: :prototype_properties
+    has_many :property_prototypes
+    has_many :prototypes, through: :property_prototypes
 
     has_many :product_properties, dependent: :delete_all, inverse_of: :property
     has_many :products, through: :product_properties
