@@ -20,9 +20,9 @@ module Spree
 
     def selection_sql
       [
-        Arel::Nodes::DistinctOn.new(Spree::Product.arel_table[:id]),
-        Spree::Product.arel_table[:*],
-        Spree::Classification.arel_table[:position]
+        "DISTINCT (spree_products.id)",
+        "spree_products.*",
+        "spree_classifications.position"
       ]
     end
   end
