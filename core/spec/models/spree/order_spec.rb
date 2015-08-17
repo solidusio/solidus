@@ -121,22 +121,33 @@ describe Spree::Order, :type => :model do
   end
 
   context "empty!" do
-    let(:order) { stub_model(Spree::Order, item_count: 2) }
+    let!(:order) { create(:order) }
 
     before do
-      allow(order).to receive_messages(:line_items => line_items = [1, 2])
-      allow(order).to receive_messages(:adjustments => adjustments = [])
+      create(:line_item, order: order)
+      create(:shipment, order: order)
+      create(:adjustment, adjustable: order, order: order)
+      order.update!
+
+      # Make sure we are asserting changes
+      expect(order.line_items).not_to be_empty
+      expect(order.shipments).not_to be_empty
+      expect(order.adjustments).not_to be_empty
+      expect(order.item_total).not_to eq 0
+      expect(order.item_count).not_to eq 0
+      expect(order.shipment_total).not_to eq 0
+      expect(order.adjustment_total).not_to eq 0
     end
 
     it "clears out line items, adjustments and update totals" do
-      expect(order.line_items).to receive(:destroy_all)
-      expect(order.adjustments).to receive(:destroy_all)
-      expect(order.shipments).to receive(:destroy_all)
-      expect(order.updater).to receive(:update_totals)
-      expect(order.updater).to receive(:persist_totals)
-
       order.empty!
+      expect(order.line_items).to be_empty
+      expect(order.shipments).to be_empty
+      expect(order.adjustments).to be_empty
       expect(order.item_total).to eq 0
+      expect(order.item_count).to eq 0
+      expect(order.shipment_total).to eq 0
+      expect(order.adjustment_total).to eq 0
     end
   end
 
