@@ -71,7 +71,7 @@ module Spree
     # Deprecated methods
     def state
       ActiveSupport::Deprecation.warn "Adjustment#state is deprecated. Instead use Adjustment#finalized?", caller
-      finalized?? "closed" : "open"
+      finalized? ? "closed" : "open"
     end
 
     def state=(new_state)
