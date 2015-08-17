@@ -64,7 +64,19 @@ module Spree
 
     after_touch :clear_in_stock_cache
 
-    scope :in_stock, -> { joins(:stock_items).where('count_on_hand > ? OR track_inventory = ?', 0, false) }
+    # Returns variants that are in stock. When stock locations are provided as
+    # a parameter, the scope is limited to variants that are in stock in the
+    # provided stock locations.
+    #
+    # @param stock_locations [Array<Spree::StockLocation>] the stock locations to check
+    # @return [ActiveRecord::Relation]
+    def self.in_stock(stock_locations = nil)
+      in_stock_variants = joins(:stock_items).where('count_on_hand > ? OR track_inventory = ?', 0, false)
+      if stock_locations.present?
+        in_stock_variants = in_stock_variants.where('spree_stock_items.stock_location_id IN (?)', stock_locations.map(&:id))
+      end
+      in_stock_variants
+    end
 
     # Returns variants that are not deleted and have a price in the given
     # currency.
