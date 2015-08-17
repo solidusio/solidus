@@ -2,6 +2,7 @@ module Spree
   module PermissionSets
     class OrderManagement < PermissionSets::Base
       def activate!
+        can :display, Spree::ReimbursementType
         can :manage, Spree::Order
         can :manage, Spree::Payment
         can :manage, Spree::Shipment
