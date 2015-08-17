@@ -204,8 +204,8 @@ describe Spree::Admin::UsersController, :type => :controller do
 end
 
 def use_mock_user
-  mock_user.stub(:save).and_return(true)
-  mock_user.stub(:update_attributes).and_return(true)
-  Spree.user_class.stub(:find).with(mock_user.id.to_s).and_return(mock_user)
-  Spree.user_class.stub(:new).and_return(mock_user)
+  allow(mock_user).to receive(:save).and_return(true)
+  allow(mock_user).to receive(:update_attributes).and_return(true)
+  allow(Spree.user_class).to receive(:find).with(mock_user.id.to_s).and_return(mock_user)
+  allow(Spree.user_class).to receive(:new).and_return(mock_user)
 end

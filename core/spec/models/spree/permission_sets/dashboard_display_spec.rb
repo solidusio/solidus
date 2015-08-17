@@ -10,13 +10,13 @@ describe Spree::PermissionSets::DashboardDisplay do
       described_class.new(ability).activate!
     end
 
-    it { should be_able_to(:admin, :dashboards) }
-    it { should be_able_to(:home, :dashboards) }
+    it { is_expected.to be_able_to(:admin, :dashboards) }
+    it { is_expected.to be_able_to(:home, :dashboards) }
   end
 
   context "when not activated" do
-    it { should_not be_able_to(:admin, :dashboards) }
-    it { should_not be_able_to(:home, :dashboards) }
+    it { is_expected.not_to be_able_to(:admin, :dashboards) }
+    it { is_expected.not_to be_able_to(:home, :dashboards) }
   end
 end
 

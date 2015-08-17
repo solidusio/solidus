@@ -1,6 +1,10 @@
 
 ![](https://raw.githubusercontent.com/solidusio/solidus/master/solidus.png)
 
+* [solidus.io](http://solidus.io/)
+* [#solidus.io](http://webchat.freenode.net/?channels=solidus.io) on freenode
+* [solidus-security](https://groups.google.com/forum/#!forum/solidus-security) mailing list
+
 Summary
 -------
 

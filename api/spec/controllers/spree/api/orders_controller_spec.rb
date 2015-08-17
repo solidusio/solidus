@@ -57,7 +57,7 @@ module Spree
           subject
         end
 
-        it { should be_success }
+        it { is_expected.to be_success }
       end
 
       context "when the current user can administrate the order" do
@@ -71,7 +71,7 @@ module Spree
           subject
         end
 
-        it { should be_success }
+        it { is_expected.to be_success }
       end
     end
 
@@ -105,7 +105,7 @@ module Spree
         subject
       end
 
-      it { should be_success }
+      it { is_expected.to be_success }
 
       context "when the user can administer the order" do
         let(:can_admin) { true }
@@ -792,7 +792,7 @@ module Spree
       let(:promo_code) { promo.codes.first }
 
       before do
-        Order.any_instance.stub :user => current_api_user
+        allow_any_instance_of(Order).to receive_messages :user => current_api_user
       end
 
       context 'when successful' do

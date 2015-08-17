@@ -15,11 +15,11 @@ describe Spree::Promotion::Rules::OptionValue do
     subject { rule.applicable?(promotable) }
     context "when promotable is an order" do
       let(:promotable) { Spree::Order.new }
-      it { should be true }
+      it { is_expected.to be true }
     end
     context "when promotable is not an order" do
       let(:promotable) { Spree::LineItem.new }
-      it { should be false }
+      it { is_expected.to be false }
     end
   end
 
@@ -34,13 +34,13 @@ describe Spree::Promotion::Rules::OptionValue do
           line_item.variant.option_values.pluck(:id).first
         ]]
       end
-      it { should be true }
+      it { is_expected.to be true }
     end
     context "when there are no applicable line items" do
       before do
         rule.preferred_eligible_values = Hash[99 => [99]]
       end
-      it { should be false }
+      it { is_expected.to be false }
     end
   end
 
@@ -74,21 +74,21 @@ describe Spree::Promotion::Rules::OptionValue do
       let(:product_id) { line_item.product.id }
       context "when all of the option values match" do
         let(:option_value_ids) { [option_value_blue.id] }
-        it { should be true }
+        it { is_expected.to be true }
       end
       context "when any of the option values match" do
         let(:option_value_ids) { [option_value_blue.id, option_value_medium.id] }
-        it { should be true }
+        it { is_expected.to be true }
       end
       context "when none of the option values match" do
         let(:option_value_ids) { [option_value_medium.id] }
-        it { should be false }
+        it { is_expected.to be false }
       end
     end
     context "when the line item's product doesn't match" do
       let(:product_id) { 99 }
       let(:option_value_ids) { [99] }
-      it { should be false }
+      it { is_expected.to be false }
     end
   end
 end

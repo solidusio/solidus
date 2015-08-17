@@ -26,8 +26,8 @@ module Spree
 
       it "searches by stock location" do
         spree_get :index, :q => { :source_location_id_or_destination_location_id_eq => ny_store.id }
-        assigns(:stock_transfers).count.should eq 1
-        assigns(:stock_transfers).should include(stock_transfer1)
+        expect(assigns(:stock_transfers).count).to eq 1
+        expect(assigns(:stock_transfers)).to include(stock_transfer1)
       end
 
       it "filters the closed stock transfers" do

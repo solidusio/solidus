@@ -176,13 +176,7 @@ describe Spree::StockItem, :type => :model do
       subject.variant.update_column(:updated_at, 1.day.ago)
     end
 
-    before do
-      Spree::Config.binary_inventory_cache = binary_inventory_cache
-    end
-
-    context "binary_inventory_cache is set to false (default)" do
-      let(:binary_inventory_cache) { false }
-
+    context "inventory_cache_threshold is not set (default)" do
       context "in_stock? changes" do
         it "touches its variant" do
           expect do
@@ -200,39 +194,63 @@ describe Spree::StockItem, :type => :model do
       end
     end
 
-    context "binary_inventory_cache is set to true" do
-      let(:binary_inventory_cache) { true }
+    context "inventory_cache_threshold is set" do
+      before do
+        Spree::Config.inventory_cache_threshold = inventory_cache_threshold
+      end
 
-      context "in_stock? changes" do
-        it "touches its variant" do
-          expect do
-            subject.set_count_on_hand(0)
-          end.to change { subject.variant.updated_at }
-        end
+      let(:inventory_cache_threshold) { 5 }
 
-        # Regression spec
-        context "stock changes to below zero" do
-          it "touches its variant" do
-            expect do
-              subject.set_count_on_hand(-1)
-            end.to change { subject.variant.updated_at }
-          end
+      it "count on hand falls below threshold" do
+        expect do
+          subject.set_count_on_hand(3)
+        end.to change { subject.variant.updated_at }
+      end
+
+      it "count on hand rises above threshold" do
+        subject.set_count_on_hand(2)
+        expect do
+          subject.set_count_on_hand(7)
+        end.to change { subject.variant.updated_at }
+      end
+
+      it "count on hand stays below threshold" do
+        subject.set_count_on_hand(2)
+        expect do
+          subject.set_count_on_hand(3)
+        end.to change { subject.variant.updated_at }
+      end
+
+      it "count on hand stays above threshold" do
+        expect do
+          subject.set_count_on_hand(8)
+        end.not_to change { subject.variant.updated_at }
+      end
+    end
+
+    context "when deprecated binary_inventory_cache is used" do
+      before do
+        Spree::Config.binary_inventory_cache = binary_inventory_cache
+        allow(ActiveSupport::Deprecation).to receive(:warn)
+        subject.set_count_on_hand(9)
+      end
+
+      context "binary_inventory_cache is set to true" do
+        let(:binary_inventory_cache) { true }
+
+        it "logs a deprecation warning" do
+          expect(ActiveSupport::Deprecation).to have_received(:warn)
         end
       end
 
-      context "in_stock? does not change" do
-        it "does not touch its variant" do
-          expect do
-            subject.set_count_on_hand(1)
-          end.not_to change { subject.reload.variant.updated_at }
+      context "binary_inventory_cache is set to false" do
+        let(:binary_inventory_cache) { false }
+        it "inventory_cache_threshold remains nil" do
+          expect(Spree::Config.inventory_cache_threshold).to be_nil
         end
-      end
 
-      context "when a new stock location is added" do
-        it "touches its variant" do
-          expect do
-            create(:stock_location)
-          end.to change { subject.variant.reload.updated_at }
+        it "does not log a deprecation warning" do
+          expect(ActiveSupport::Deprecation).not_to have_received(:warn)
         end
       end
     end

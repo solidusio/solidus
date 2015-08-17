@@ -174,6 +174,7 @@ describe Spree::Order, :type => :model do
         allow(order).to receive_message_chain(:payments, :completed, :includes).and_return([payment])
         allow(order).to receive_message_chain(:payments, :last).and_return(payment)
         allow(order).to receive_message_chain(:payments, :store_credits, :pending).and_return([payment])
+        allow(order).to receive(:refund_total).and_return(0)
       end
 
       context "without shipped items" do

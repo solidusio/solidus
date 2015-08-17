@@ -428,7 +428,7 @@ describe Spree::Promotion, :type => :model do
 
     let(:promotable) { create :order }
 
-    it { should be true }
+    it { is_expected.to be true }
 
     context "when promotion is expired" do
       before { promotion.expires_at = Time.now - 10.days }
@@ -504,7 +504,7 @@ describe Spree::Promotion, :type => :model do
           before do
             line_item.product.update_column(:promotionable, false)
           end
-          it { should be false }
+          it { is_expected.to be false }
         end
 
         context "and the items are all non-promotionable" do

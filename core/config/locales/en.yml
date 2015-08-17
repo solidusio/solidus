@@ -322,6 +322,10 @@ en:
           attributes:
             base:
               cannot_destroy_default_store: Cannot destroy the default Store.
+        spree/user_address:
+          attributes:
+            user_id:
+              default_address_exists: "already has a default address"
 
   devise:
     confirmations:

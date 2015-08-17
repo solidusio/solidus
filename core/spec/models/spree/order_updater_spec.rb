@@ -109,6 +109,7 @@ module Spree
     context "updating payment state" do
       let(:order) { Order.new }
       let(:updater) { order.updater }
+      before { order.stub(:refund_total).and_return(0) }
 
       context 'no valid payments with non-zero order total' do
         it "is failed" do

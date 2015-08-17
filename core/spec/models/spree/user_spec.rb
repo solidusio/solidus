@@ -40,20 +40,13 @@ describe Spree::LegacyUser, :type => :model do
     end
 
     context "persists order address" do
-      let!(:order) { create(:order, bill_address: create(:address), ship_address: create(:address)) }
+      let(:bill_address) { create(:address) }
+      let(:ship_address) { create(:address) }
+      let(:order) { create(:order, user: user, bill_address: bill_address, ship_address: ship_address) }
 
-      it "copies over order addresses" do
-        expect {
-          user.persist_order_address(order)
-        }.to change { Spree::Address.count }.by(2)
-
-        expect(user.bill_address).to eq order.bill_address
-        expect(user.ship_address).to eq order.ship_address
-      end
-
-      it "doesnt create new addresses if user has already" do
-        user.update_column(:bill_address_id, create(:address))
-        user.update_column(:ship_address_id, create(:address))
+      it "doesn't create new addresses" do
+        user.user_addresses.create(address: bill_address)
+        user.user_addresses.create(address: ship_address)
         user.reload
 
         expect {
@@ -61,11 +54,13 @@ describe Spree::LegacyUser, :type => :model do
         }.not_to change { Spree::Address.count }
       end
 
-      it "set both bill and ship address id on subject" do
+      it "associates both the bill and ship address to the user" do
         user.persist_order_address(order)
+        user.save!
+        user.user_addresses.reload
 
-        expect(user.bill_address_id).not_to be_blank
-        expect(user.ship_address_id).not_to be_blank
+        expect(user.user_addresses.with_address_values(order.bill_address.attributes).first).to_not be_nil
+        expect(user.user_addresses.with_address_values(order.ship_address.attributes).first).to_not be_nil
       end
     end
 

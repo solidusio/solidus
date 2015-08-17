@@ -12,8 +12,15 @@ module Spree
 
     subject { stock_transfer }
 
-    its(:description) { should eq 'PO123' }
-    its(:to_param) { should match /T\d+/ }
+    describe '#description' do
+      subject { super().description }
+      it { is_expected.to eq 'PO123' }
+    end
+
+    describe '#to_param' do
+      subject { super().to_param }
+      it { is_expected.to match /T\d+/ }
+    end
 
     describe "transfer item building" do
       let(:stock_transfer) do

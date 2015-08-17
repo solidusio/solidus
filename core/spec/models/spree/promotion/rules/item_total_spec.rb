@@ -10,14 +10,14 @@ describe Spree::Promotion::Rules::ItemTotal, :type => :model do
     before { rule.preferred_operator = 'gt' }
 
     it "should be eligible when item total is greater than preferred amount" do
-      order.stub :item_total => 51
-      rule.should be_eligible(order)
+      allow(order).to receive_messages :item_total => 51
+      expect(rule).to be_eligible(order)
     end
 
     context "when item total is equal to preferred amount" do
-      before { order.stub item_total: 50 }
+      before { allow(order).to receive_messages item_total: 50 }
       it "is not eligible" do
-        rule.should_not be_eligible(order)
+        expect(rule).not_to be_eligible(order)
       end
       it "set an error message" do
         rule.eligible?(order)
@@ -27,9 +27,9 @@ describe Spree::Promotion::Rules::ItemTotal, :type => :model do
     end
 
     context "when item total is lower than preferred amount" do
-      before { order.stub item_total: 49 }
+      before { allow(order).to receive_messages item_total: 49 }
       it "is not eligible" do
-        rule.should_not be_eligible(order)
+        expect(rule).not_to be_eligible(order)
       end
       it "set an error message" do
         rule.eligible?(order)
@@ -43,19 +43,19 @@ describe Spree::Promotion::Rules::ItemTotal, :type => :model do
     before { rule.preferred_operator = 'gte' }
 
     it "should be eligible when item total is greater than preferred amount" do
-      order.stub :item_total => 51
-      rule.should be_eligible(order)
+      allow(order).to receive_messages :item_total => 51
+      expect(rule).to be_eligible(order)
     end
 
     it "should be eligible when item total is equal to preferred amount" do
-      order.stub :item_total => 50
-      rule.should be_eligible(order)
+      allow(order).to receive_messages :item_total => 50
+      expect(rule).to be_eligible(order)
     end
 
     context "when item total is lower than preferred amount" do
-      before { order.stub item_total: 49 }
+      before { allow(order).to receive_messages item_total: 49 }
       it "is not eligible" do
-        rule.should_not be_eligible(order)
+        expect(rule).not_to be_eligible(order)
       end
       it "set an error message" do
         rule.eligible?(order)

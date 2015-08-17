@@ -124,27 +124,32 @@ describe Spree::Order, :type => :model do
         context "with default addresses" do
           let(:default_address) { FactoryGirl.create(:address) }
 
-          before do
-            order.user = FactoryGirl.create(:user, "#{address_kind}_address" => default_address)
-            order.next!
-            order.reload
-          end
-
-          shared_examples "it cloned the default address" do
+          shared_examples "it references the user's the default address" do
             it do
-              default_attributes = default_address.attributes
-              order_attributes = order.send("#{address_kind}_address".to_sym).try(:attributes) || {}
+              default_attributes = default_address.reload.value_attributes
+              order_attributes = Spree::Address.value_attributes(order.send("#{address_kind}_address".to_sym).try(:attributes))
 
-              expect(order_attributes.except('id', 'created_at', 'updated_at')).to eql(default_attributes.except('id', 'created_at', 'updated_at'))
+              expect(order_attributes).to eq(default_attributes)
             end
           end
 
-          it_behaves_like "it cloned the default address" do
-            let(:address_kind) { 'ship' }
+          it_behaves_like "it references the user's the default address" do
+            let(:address_kind) { :ship }
+            before do
+              order.user = FactoryGirl.create(:user)
+              order.user.default_address = default_address
+              order.next!
+              order.reload
+            end
           end
 
-          it_behaves_like "it cloned the default address" do
-            let(:address_kind) { 'bill' }
+          it_behaves_like "it references the user's the default address" do
+            let(:address_kind) { :bill }
+            before do
+              order.user = FactoryGirl.create(:user, bill_address: default_address)
+              order.next!
+              order.reload
+            end
           end
         end
       end
@@ -161,7 +166,7 @@ describe Spree::Order, :type => :model do
       before do
         order.state = 'address'
         order.ship_address = ship_address
-        order.stub(:has_available_payment)
+        allow(order).to receive(:has_available_payment)
         shipment = FactoryGirl.create(:shipment, :order => order, :cost => 10)
         order.email = "user@example.com"
         order.save!
@@ -275,7 +280,7 @@ describe Spree::Order, :type => :model do
           end
           specify do
             transition = lambda { order.next! }
-            transition.should raise_error(StateMachines::InvalidTransition, /#{Spree.t(:items_cannot_be_shipped)}/)
+            expect(transition).to raise_error(StateMachines::InvalidTransition, /#{Spree.t(:items_cannot_be_shipped)}/)
           end
         end
       end
@@ -364,9 +369,8 @@ describe Spree::Order, :type => :model do
       let(:default_credit_card) { create(:credit_card) }
 
       before do
-        @default_credit_card = FactoryGirl.create(:credit_card)
         user = Spree::LegacyUser.new(email: 'spree@example.org', bill_address: user_bill_address)
-        allow(user).to receive(:default_credit_card) { @default_credit_card }
+        allow(user).to receive(:default_credit_card) { default_credit_card }
         order.user = user
 
         allow(order).to receive_messages(payment_required?: true)
@@ -380,7 +384,7 @@ describe Spree::Order, :type => :model do
       it "assigns the user's default credit card" do
         expect(order.state).to eq 'payment'
         expect(order.payments.count).to eq 1
-        expect(order.payments.first.source).to eq @default_credit_card
+        expect(order.payments.first.source).to eq default_credit_card
       end
 
       context "order already has a billing address" do
@@ -392,10 +396,8 @@ describe Spree::Order, :type => :model do
       end
 
       context "order doesn't have a billing address" do
-        let(:user_bill_address) { create(:address) }
-
-        it "assigns the user's billing address to the order" do
-          expect(order.bill_address).to eq user_bill_address
+        it "assigns the user's default_credit_card's address to the order" do
+          expect(order.bill_address).to eq default_credit_card.address
         end
       end
     end
@@ -414,41 +416,6 @@ describe Spree::Order, :type => :model do
           order.next!
           assert_state_changed(order, 'payment', 'confirm')
           expect(order.state).to eq("confirm")
-        end
-      end
-
-      context "without confirmation required" do
-        before do
-          order.email = "spree@example.com"
-          order.store = FactoryGirl.build(:store)
-          allow(order).to receive_messages :payment_required? => true
-          order.payments << FactoryGirl.create(:payment, state: payment_state, order: order)
-        end
-
-        context 'when there is at least one valid payment' do
-          let(:payment_state) { 'checkout' }
-
-          before do
-            expect(order).to receive(:process_payments!).once { true }
-          end
-
-          it "transitions to complete" do
-            order.complete!
-            assert_state_changed(order, 'payment', 'complete')
-            expect(order.state).to eq('complete')
-          end
-        end
-
-        context 'when there is only an invalid payment' do
-          let(:payment_state) { 'failed' }
-
-          it "raises a StateMachines::InvalidTransition" do
-            expect {
-              order.complete!
-            }.to raise_error(StateMachines::InvalidTransition, /#{Spree.t(:no_payment_found)}/)
-
-            expect(order.errors[:base]).to include(Spree.t(:no_payment_found))
-          end
         end
       end
 
@@ -494,7 +461,7 @@ describe Spree::Order, :type => :model do
         order.user = FactoryGirl.create(:user)
         order.email = 'spree@example.org'
         order.payments << FactoryGirl.create(:payment)
-        order.stub(payment_required?: true)
+        allow(order).to receive_messages(payment_required?: true)
         order.line_items << FactoryGirl.create(:line_item)
         order.line_items.first.variant.stock_items.each do |si|
           si.set_count_on_hand(0)
@@ -512,6 +479,7 @@ describe Spree::Order, :type => :model do
 
         expect(order.state).to eq 'confirm'
         expect(order.line_items.first.errors[:quantity]).to be_present
+        expect(order.payments.first.state).to eq('checkout')
       end
     end
 
@@ -520,7 +488,7 @@ describe Spree::Order, :type => :model do
         order.user = FactoryGirl.create(:user)
         order.email = 'spree@example.com'
         order.payments << FactoryGirl.create(:payment)
-        order.stub(payment_required?: true)
+        allow(order).to receive_messages(payment_required?: true)
         allow(order).to receive(:ensure_available_shipping_rates) { true }
         order.line_items << FactoryGirl.create(:line_item)
 
@@ -533,6 +501,7 @@ describe Spree::Order, :type => :model do
 
         expect(order.state).to eq 'confirm'
         expect(order.line_items.first.errors[:inventory]).to be_present
+        expect(order.payments.first.state).to eq('checkout')
       end
     end
 
@@ -541,8 +510,8 @@ describe Spree::Order, :type => :model do
         order.email = 'spree@example.org'
         order.payments << FactoryGirl.create(:payment)
         order.shipments.create!
-        order.stub(payment_required?: true)
-        order.stub(:ensure_available_shipping_rates).and_return(true)
+        allow(order).to receive_messages(payment_required?: true)
+        allow(order).to receive(:ensure_available_shipping_rates).and_return(true)
       end
 
       context 'when the line items are not available' do
@@ -570,6 +539,7 @@ describe Spree::Order, :type => :model do
         context 'when the exchange is not for an unreturned item' do
           it 'does not allow the order to completed' do
             expect { order.complete! }.to raise_error  Spree::Order::InsufficientStock
+            expect(order.payments.first.state).to eq('checkout')
           end
         end
       end
@@ -611,14 +581,14 @@ describe Spree::Order, :type => :model do
         order.user = FactoryGirl.create(:user)
         order.email = 'spree@example.org'
         payment = FactoryGirl.create(:payment)
-        payment.stub(:process!).and_raise(Spree::Core::GatewayError.new('processing failed'))
+        allow(payment).to receive(:process!).and_raise(Spree::Core::GatewayError.new('processing failed'))
         order.line_items.each { |li| li.inventory_units.create! }
         order.payments << payment
 
         # make sure we will actually capture a payment
-        order.stub(payment_required?: true)
-        order.stub(ensure_available_shipping_rates: true)
-        order.stub(validate_line_item_availability: true)
+        allow(order).to receive_messages(payment_required?: true)
+        allow(order).to receive_messages(ensure_available_shipping_rates: true)
+        allow(order).to receive_messages(validate_line_item_availability: true)
         order.line_items << FactoryGirl.create(:line_item)
         order.create_proposed_shipments
         Spree::OrderUpdater.new(order).update
@@ -701,13 +671,13 @@ describe Spree::Order, :type => :model do
     it "does not attempt to process payments" do
       order.email = 'user@example.com'
       order.store = FactoryGirl.build(:store)
-      order.stub(:ensure_available_shipping_rates).and_return(true)
-      order.stub(:ensure_promotions_eligible).and_return(true)
-      order.stub(:ensure_line_item_variants_are_not_deleted).and_return(true)
-      order.stub_chain(:line_items, :present?).and_return(true)
-      order.stub(validate_line_item_availability: true)
-      order.should_not_receive(:payment_required?)
-      order.should_not_receive(:process_payments!)
+      allow(order).to receive(:ensure_available_shipping_rates).and_return(true)
+      allow(order).to receive(:ensure_promotions_eligible).and_return(true)
+      allow(order).to receive(:ensure_line_item_variants_are_not_deleted).and_return(true)
+      allow(order).to receive_message_chain(:line_items, :present?).and_return(true)
+      allow(order).to receive_messages(validate_line_item_availability: true)
+      expect(order).not_to receive(:payment_required?)
+      expect(order).not_to receive(:process_payments!)
       order.next!
       assert_state_changed(order, 'cart', 'complete')
     end

@@ -80,8 +80,16 @@ module Spree
     #   quantity. Setting this to true should make operations on inventory
     #   faster.
     #   (default: +false+)
+    #   @deprecated - use inventory_cache_threshold instead
     #   @return [Boolean]
     preference :binary_inventory_cache, :boolean, default: false
+
+    # @!attribute [rw] inventory_cache_threshold
+    #   Only invalidate product caches when the count on hand for a stock item
+    #   falls below or rises about the inventory_cache_threshold.  When undefined, the
+    #   product caches will be invalidated anytime the count on hand is changed.
+    #   @return [Integer]
+    preference :inventory_cache_threshold, :integer
 
     # @!attribute [rw] checkout_zone
     #   @return [String] Name of a {Zone}, which limits available countries to those included in that zone. (default: +nil+)
@@ -228,6 +236,12 @@ module Spree
     attr_writer :searcher_class
     def searcher_class
       @searcher_class ||= Spree::Core::Search::Base
+    end
+
+    # promotion_chooser_class allows extensions to provide their own PromotionChooser
+    attr_writer :promotion_chooser_class
+    def promotion_chooser_class
+      @promotion_chooser_class ||= Spree::PromotionChooser
     end
 
     def static_model_preferences

@@ -14,7 +14,7 @@ describe Spree::OrderCapturing do
       let!(:shipping_method) { create(:free_shipping_method) }
       let(:tax_rate) { create(:tax_rate, amount: 0.1, zone: create(:global_zone, name: "Some Tax Zone")) }
       let(:secondary_total) { 10.0 }
-      let(:bogus_total) { order.total }
+      let(:bogus_total) { order.total - secondary_total }
 
       before do
         order.contents.add(variant, 3)
@@ -35,6 +35,7 @@ describe Spree::OrderCapturing do
           let(:payment_methods) { [SecondaryBogusPaymentMethod, Spree::Gateway::Bogus] }
 
           it "captures SecondaryBogusPaymentMethod payments first" do
+            @bogus_payment.update!(amount: bogus_total + 100)
             subject
             expect(@secondary_bogus_payment.reload.capture_events.sum(:amount)).to eq(10.0)
             expect(@bogus_payment.reload.capture_events.sum(:amount)).to eq(order.total - 10.0)
@@ -45,9 +46,10 @@ describe Spree::OrderCapturing do
           let(:payment_methods) { [Spree::Gateway::Bogus, SecondaryBogusPaymentMethod] }
 
           it "captures Bogus payments first" do
+            @secondary_bogus_payment.update!(amount: secondary_total + 100)
             subject
-            expect(@secondary_bogus_payment.reload.capture_events.sum(:amount)).to eq(0.0)
-            expect(@bogus_payment.reload.capture_events.sum(:amount)).to eq(order.total)
+            expect(@bogus_payment.reload.capture_events.sum(:amount)).to eq(order.total - 10.0)
+            expect(@secondary_bogus_payment.reload.capture_events.sum(:amount)).to eq(10.0)
           end
         end
 
@@ -71,9 +73,12 @@ describe Spree::OrderCapturing do
       end
 
       context "when a payment is not needed to capture the entire order" do
-        let(:bogus_total) { order.total }
         let(:secondary_payment_method) { SecondaryBogusPaymentMethod }
         let(:payment_methods) { [Spree::Gateway::Bogus, SecondaryBogusPaymentMethod] }
+
+        before do
+          @bogus_payment.update!(amount: order.total)
+        end
 
         context "when void_unused_payments is true" do
           before { allow(Spree::OrderCapturing).to receive(:void_unused_payments).and_return(true) }

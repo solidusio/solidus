@@ -5,10 +5,6 @@ FactoryGirl.define do
     price 19.99
     cost_price 17.00
     sku    { generate(:sku) }
-    weight { generate(:random_float) }
-    height { generate(:random_float) }
-    width  { generate(:random_float) }
-    depth  { generate(:random_float) }
     is_master 0
     track_inventory true
 

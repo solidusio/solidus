@@ -46,6 +46,6 @@ describe Spree::Calculator::Returns::DefaultRefundAmount, :type => :model do
 
   context "pre_tax_amount is zero" do
     let(:pre_tax_amount)  { 0.0 }
-    it { should eq 0.0 }
+    it { is_expected.to eq 0.0 }
   end
 end

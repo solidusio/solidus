@@ -4,27 +4,29 @@
     <fieldset>
       <legend align="center"><%= Spree.t(:rules) %></legend>
 
-      <div class="field">
-        <%= label_tag :promotion_rule_type, Spree.t(:add_rule_of_type) %>  
-        <%= select_tag('promotion_rule[type]', options_for_promotion_rule_types(@promotion), :class => 'select2 fullwidth') %>
-      </div>
-      <div class="filter-actions actions">
-        <%= button Spree.t(:add), 'plus' %>
-      </div>
+      <% if can?(:update, @promotion) %>
+        <div class="field">
+          <%= label_tag :promotion_rule_type, Spree.t(:add_rule_of_type) %>
+          <%= select_tag('promotion_rule[type]', options_for_promotion_rule_types(@promotion), :class => 'select2 fullwidth') %>
+        </div>
+        <div class="filter-actions actions">
+          <%= button Spree.t(:add), 'plus' %>
+        </div>
+      <% end %>
     </fieldset>
   <% end %>
 
-  
+
     <%= form_for @promotion, :url => object_url, :method => :put do |f| %>
       <fieldset class="no-border-top">
         <div id="promotion-pilicy-select" class="align-center row">
           <% Spree::Promotion::MATCH_POLICIES.each do |policy| %>
             <div class="alpha four columns">
-              <label><%= f.radio_button :match_policy, policy %> <%= Spree.t "promotion_form.match_policies.#{policy}" %></label>  
+              <label><%= f.radio_button :match_policy, policy %> <%= Spree.t "promotion_form.match_policies.#{policy}" %></label>
             </div>
           <% end %>
         </div>
-        
+
         <div id="rules" class="filter_list row">
           <% if @promotion.rules.any? %>
             <%= render :partial => 'promotion_rule', :collection => @promotion.rules, :locals => {} %>
@@ -35,11 +37,13 @@
           <% end %>
         </div>
 
-        <div class="promotion-update filter-actions actions">
-          <%= button Spree.t('actions.update'), 'refresh' %>
-        </div>
+        <% if can?(:update, @promotion) %>
+          <div class="promotion-update filter-actions actions">
+            <%= button Spree.t('actions.update'), 'refresh' %>
+          </div>
+        <% end %>
       </fieldset>
     <% end %>
-  
+
 
 </fieldset>

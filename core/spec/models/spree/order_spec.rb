@@ -803,6 +803,16 @@ describe Spree::Order, :type => :model do
     end
   end
 
+  context "#refund_total" do
+    let(:order) { create(:order_with_line_items) }
+    let!(:payment) { create(:payment_with_refund, order: order) }
+    let!(:payment2) { create(:payment_with_refund, order: order) }
+
+    it "sums the reimbursment refunds on the order" do
+      expect(order.refund_total).to eq(10.0)
+    end
+  end
+
   describe '#quantity' do
     # Uses a persisted record, as the quantity is retrieved via a DB count
     let(:order) { create :order_with_line_items, line_items_count: 3 }
@@ -917,11 +927,11 @@ describe Spree::Order, :type => :model do
     context "the order does not have a shipment" do
       before { order.shipments.destroy_all }
 
-      it { should be false }
+      it { is_expected.to be false }
     end
 
     context "shipment created after order" do
-      it { should be false }
+      it { is_expected.to be false }
     end
 
     context "shipment created before order" do
@@ -929,7 +939,7 @@ describe Spree::Order, :type => :model do
         order.shipments.first.update_attributes!(created_at: order.created_at - 1.day)
       end
 
-      it { should be true }
+      it { is_expected.to be true }
     end
   end
 

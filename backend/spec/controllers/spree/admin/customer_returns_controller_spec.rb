@@ -78,7 +78,7 @@ module Spree
             end
 
             it "loads the correct return authorization reasons" do
-              assigns(:reasons).should =~ [return_reason_1, return_reason_2, return_reason_3]
+              expect(assigns(:reasons)).to match_array([return_reason_1, return_reason_2, return_reason_3])
             end
           end
 
@@ -110,7 +110,7 @@ module Spree
             end
 
             it "loads the correct return authorization reasons" do
-              assigns(:reasons).should =~ [return_reason_1, return_reason_2, return_reason_3]
+              expect(assigns(:reasons)).to match_array([return_reason_1, return_reason_2, return_reason_3])
             end
           end
         end
@@ -167,7 +167,7 @@ module Spree
 
         it "loads the correct return authorization reasons" do
           subject
-          assigns(:reasons).should =~ Spree::ReturnReason.active
+          expect(assigns(:reasons)).to match(Spree::ReturnReason.active)
         end
 
         context "a return item has an inactive return authorization reason" do
@@ -177,7 +177,7 @@ module Spree
 
           it "includes the inactive return authorization reason" do
             subject
-            assigns(:reasons).should =~ Spree::ReturnReason.active + [inactive_rma_reason]
+            expect(assigns(:reasons)).to match(Spree::ReturnReason.active + [inactive_rma_reason])
           end
         end
       end

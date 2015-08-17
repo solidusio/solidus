@@ -4,7 +4,7 @@ module Spree
   module Admin
     describe PaymentsController, :type => :controller do
       before do
-        controller.stub :spree_current_user => user
+        allow(controller).to receive_messages :spree_current_user => user
       end
 
       let(:user) { create(:admin_user) }
@@ -64,7 +64,7 @@ module Spree
           end
 
           it 'associates the address' do
-            order.payments.count.should == 1
+            expect(order.payments.count).to eq(1)
             credit_card = order.payments.last.source
             expect(credit_card.address.attributes).to include(address_attributes)
           end

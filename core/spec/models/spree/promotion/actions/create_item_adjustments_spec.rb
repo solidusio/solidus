@@ -53,10 +53,10 @@ module Spree
             context "with products rules" do
               let(:rule) { double Spree::Promotion::Rules::Product }
 
-              before { promotion.stub(:eligible_rules) { [rule] } }
+              before { allow(promotion).to receive(:eligible_rules) { [rule] } }
 
               context "when the rule is actionable" do
-                before { rule.stub(:actionable?).and_return(true) }
+                before { allow(rule).to receive(:actionable?).and_return(true) }
 
                 it "creates an adjustment" do
                   expect {
@@ -70,7 +70,7 @@ module Spree
               end
 
               context "when the rule is not actionable" do
-                before { rule.stub(:actionable?).and_return(false) }
+                before { allow(rule).to receive(:actionable?).and_return(false) }
 
                 it "does not create an adjustment" do
                   expect {

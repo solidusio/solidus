@@ -9,7 +9,7 @@ module Spree
     has_many :cartons, inverse_of: :address
     has_many :credit_cards, inverse_of: :address
 
-    validates :firstname, :lastname, :address1, :city, :country, presence: true
+    validates :firstname, :lastname, :address1, :city, :country_id, presence: true
     validates :zipcode, presence: true, if: :require_zipcode?
     validates :phone, presence: true, if: :require_phone?
 
@@ -18,17 +18,66 @@ module Spree
     alias_attribute :first_name, :firstname
     alias_attribute :last_name, :lastname
 
+    DB_ONLY_ATTRS = %w(id updated_at created_at)
+
+    scope :with_values, ->(attributes) do
+      where(value_attributes(attributes))
+    end
+
     def self.build_default
-      country = Spree::Country.find(Spree::Config[:default_country_id]) rescue Spree::Country.first
-      new(country: country)
+      new(country: Spree::Country.default)
     end
 
     def self.default(user = nil, kind = "bill")
-      if user && user_address = user.send(:"#{kind}_address")
-        user_address.dup
+      ActiveSupport::Deprecation.warn("Address.default is deprecated. Use User.default_address or Address.build_default", caller)
+      if user
+        user.send(:"#{kind}_address") || build_default
       else
         build_default
       end
+    end
+
+    # @return [Address] an equal address already in the database or a newly created one
+    def self.factory(attributes)
+      full_attributes = value_attributes(column_defaults, attributes)
+      find_or_initialize_by(full_attributes)
+    end
+
+    # @return [Address] address from existing address plus new_attributes as diff
+    # @note, this may return existing_address if there are no changes to value equality
+    def self.immutable_merge(existing_address, new_attributes)
+      return factory(new_attributes) if existing_address.nil?
+
+      merged_attributes = value_attributes(existing_address.attributes, new_attributes)
+      new_address = factory(merged_attributes)
+      if existing_address == new_address
+        existing_address
+      else
+        new_address
+      end
+    end
+
+    # @return [Hash] hash of attributes contributing to value equality with optional merge
+    def self.value_attributes(base_attributes, merge_attributes = nil)
+      # dup because we may modify firstname/lastname.
+      base = base_attributes.dup
+
+      base.stringify_keys!
+
+      if merge_attributes
+        base.merge!(merge_attributes.stringify_keys)
+      end
+
+      # TODO: Deprecate these aliased attributes
+      base['firstname'] = base.delete('first_name') if base.key?('first_name')
+      base['lastname'] = base.delete('last_name') if base.key?('last_name')
+
+      base.except!(*DB_ONLY_ATTRS)
+    end
+
+    # @return [Hash] hash of attributes contributing to value equality
+    def value_attributes
+      self.class.value_attributes(attributes)
     end
 
     # @return [String] the full name on this address
@@ -41,45 +90,30 @@ module Spree
       state.try(:abbr) || state.try(:name) || state_name
     end
 
-    # @param other [Spree::Address, nil] the address we are comparing with
-    # @return [Boolean] true if this fields on this address match the fields on
-    #   the other address
-    def same_as?(other)
-      return false if other.nil?
-      attributes.except('id', 'updated_at', 'created_at') == other.attributes.except('id', 'updated_at', 'created_at')
-    end
-
-    alias same_as same_as?
-
-    # @return [String] the full name on the address followed by the first line
-    #   of the address
     def to_s
       "#{full_name}: #{address1}"
     end
 
-    # @return [Spree::Address] a new address that is the same_as? this address
-    def clone
-      ActiveSupport::Deprecation.warn "Spree::Address.clone is deprecated and may be removed from future releases, Use Spree::Address.dup instead", caller
-      self.dup
-    end
-
     # @note This compares the addresses based on only the fields that make up
-    #   the logical "address" and excludes their order IDs. Use #same_as? to
-    #   include the order IDs in the comparison
+    #   the logical "address" and excludes the database specific fields (id, created_at, updated_at).
     # @return [Boolean] true if the two addresses have the same address fields
     def ==(other_address)
-      self_attrs = self.attributes
-      other_attrs = other_address.respond_to?(:attributes) ? other_address.attributes : {}
-
-      [self_attrs, other_attrs].each { |attrs| attrs.except!('id', 'created_at', 'updated_at', 'order_id') }
-
-      self_attrs == other_attrs
+      return false unless other_address && other_address.respond_to?(:value_attributes)
+      self.value_attributes == other_address.value_attributes
     end
 
-    # @return [Boolean] true if the order is missing all of the address fields
-    #   are nil
+    def same_as?(other_address)
+      ActiveSupport::Deprecation.warn("Address.same_as? is deprecated. It's equivalent to Address.==", caller)
+      self == other_address
+    end
+
+    def same_as(other_address)
+      ActiveSupport::Deprecation.warn("Address.same_as is deprecated. It's equivalent to Address.==", caller)
+      self == other_address
+    end
+
     def empty?
-      attributes.except('id', 'created_at', 'updated_at', 'order_id', 'country_id').all? { |_, v| v.nil? }
+      attributes.except('id', 'created_at', 'updated_at', 'country_id').all? { |_, v| v.nil? }
     end
 
     # @return [Hash] an ActiveMerchant compatible address hash
@@ -107,6 +141,13 @@ module Spree
     # @return [true] whether or not the address requires a zipcode to be valid
     def require_zipcode?
       true
+    end
+
+    # This is set in order to preserve immutability of Addresses. Use #dup to create
+    # new records as required, but it probably won't be required as often as you think.
+    # Since addresses do not change, you won't accidentally alter historical data.
+    def readonly?
+      persisted?
     end
 
     private

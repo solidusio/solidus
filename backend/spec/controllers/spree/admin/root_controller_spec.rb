@@ -18,7 +18,7 @@ describe Spree::Admin::RootController do
         ability.can :display, Spree::Order
       end
 
-      it { should redirect_to(spree.admin_orders_path) }
+      it { is_expected.to redirect_to(spree.admin_orders_path) }
     end
 
     context "when a user cannot admin and display spree orders" do
@@ -28,13 +28,13 @@ describe Spree::Admin::RootController do
           ability.can :home, :dashboards
         end
 
-        it { should redirect_to(spree.home_admin_dashboards_path) }
+        it { is_expected.to redirect_to(spree.home_admin_dashboards_path) }
       end
 
       context "when a user cannot admin and home dashboards" do
         # The default exception handler redirects to /unauthorized.
         # Extensions may change this.
-        it { should redirect_to('/unauthorized') }
+        it { is_expected.to redirect_to('/unauthorized') }
       end
     end
   end
