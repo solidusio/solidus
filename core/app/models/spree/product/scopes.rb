@@ -77,7 +77,7 @@ module Spree
     #   SELECT COUNT(*) ...
     add_search_scope :in_taxon do |taxon|
       includes(:classifications).
-      where(Spree::Classification.arel_table[:taxon_id] => taxon.self_and_descendants.pluck(:id)).
+      where("spree_classifications.taxon_id" => taxon.self_and_descendants.pluck(:id)).
       order(Spree::Classification.arel_table[:position])
     end
 
