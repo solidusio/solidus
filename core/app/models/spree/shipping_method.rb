@@ -12,9 +12,8 @@ module Spree
     has_many :shipments, :through => :shipping_rates
     has_many :cartons, inverse_of: :shipping_method
 
-    has_and_belongs_to_many :zones, :join_table => 'spree_shipping_methods_zones',
-                                    :class_name => 'Spree::Zone',
-                                    :foreign_key => 'shipping_method_id'
+    has_many :shipping_method_zones
+    has_many :zones, through: :shipping_method_zones
 
     belongs_to :tax_category, :class_name => 'Spree::TaxCategory'
 
