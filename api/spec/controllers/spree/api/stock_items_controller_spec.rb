@@ -55,7 +55,7 @@ module Spree
           }
 
           api_post :create, params
-          expect(response.status).to eq(404)
+          expect(response.status).to eq(401)
         end
       end
 
