@@ -13,6 +13,8 @@ class RenameHabtmTablesToHmtConvention < ActiveRecord::Migration
     rename_table :spree_properties_prototypes, :spree_property_prototypes
     rename_table :spree_taxons_prototypes, :spree_prototype_taxons
     rename_table :spree_shipping_methods_zones, :spree_shipping_method_zones
+
+    rename_table :spree_products_taxons, :spree_classifications
   end
 
   def down
@@ -29,6 +31,8 @@ class RenameHabtmTablesToHmtConvention < ActiveRecord::Migration
     rename_table :spree_property_prototypes, :spree_properties_prototypes
     rename_table :spree_prototype_taxons, :spree_taxons_prototypes
     rename_table :spree_shipping_method_zones, :spree_shipping_methods_zones
+
+    rename_table :spree_classifications, :spree_products_taxons
   end
 
   private
