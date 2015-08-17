@@ -3,7 +3,25 @@ module Spree
     extend ActiveSupport::Concern
 
     included do
-      has_many :user_addresses, foreign_key: "user_id", class_name: "Spree::UserAddress"
+      has_many :user_addresses, foreign_key: "user_id", class_name: "Spree::UserAddress" do
+
+        def find_first_by_address_values(address_attrs)
+          sql_record = with_address_values(address_attrs).first
+          return nil unless sql_record.present?
+          detect { |ua| ua.id == sql_record.id } #ensures we use a cached version
+        end
+
+        # @note this method enforces one-and-only-one default address per user
+        def mark_default(user_address)
+          # the checks of persisted? allow us to build a User and associate Addresses at once
+          ActiveRecord::Base.transaction do
+            (self - [user_address]).each do |ua| #update_all would be nice, but it bypasses ActiveRecord callbacks
+              ua.persisted? ? ua.update!(default: false) : ua.default = false
+            end
+            user_address.persisted? ? user_address.update!(default: true) : user_address.default = true
+          end
+        end
+      end
 
       has_many :addresses, through: :user_addresses
 
@@ -46,44 +64,25 @@ module Spree
       end
 
       # Add an address to the user's list of saved addresses for future autofill
-      # @note this method enforces one-and-only-one default address per user
       # @param address_attributes Hash of attributes that will be
       # treated as value equality to de-dup among existing Addresses
       # @param default set whether or not this address will show up from
       # #default_address or not
       def save_in_address_book(address_attributes, default = false)
         return nil unless address_attributes.present?
-        user_address = user_addresses.with_address_values(address_attributes).first
+        user_address = user_addresses.find_first_by_address_values(address_attributes)
         return user_address.address if user_address && (!default || user_address.default)
 
         first_one = user_addresses.empty?
         user_address ||= user_addresses.build(address: Address.factory(address_attributes))
-
-        if (default || first_one)
-          if new_record?
-            mark_default_user_address(user_address)
-          else
-            ActiveRecord::Base.transaction do
-              mark_default_user_address(user_address)
-              user_address.save!
-            end
-          end
-        elsif persisted?
-          user_address.save!
-        end
+        user_addresses.mark_default(user_address) if (default || first_one)
+        save! if persisted?
 
         user_address.address
       end
 
       def mark_default_address(address)
-        mark_default_user_address(user_addresses.find_by(address: address))
-      end
-
-      private
-
-      def mark_default_user_address(user_address)
-        (user_addresses - [user_address]).each {|a| a.update!(default: false)} #update_all would be nice, but it bypasses ActiveRecord callbacks
-        user_address.default = true
+        user_addresses.mark_default(user_addresses.find_by(address: address))
       end
     end
   end

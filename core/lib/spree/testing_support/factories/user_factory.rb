@@ -14,9 +14,11 @@ FactoryGirl.define do
       spree_roles { [Spree::Role.find_by(name: 'admin') || create(:role, name: 'admin')] }
     end
 
-    factory :user_with_addreses do
-      ship_address
+    factory :user_with_addreses do |u|
       bill_address
+      after(:create) do |user, evaluator|
+        user.save_in_address_book(create(:ship_address).attributes, true)
+      end
     end
   end
 end

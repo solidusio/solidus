@@ -59,8 +59,8 @@ describe Spree::LegacyUser, :type => :model do
         user.save!
         user.user_addresses.reload
 
-        expect(user.user_addresses.with_address_values(order.bill_address.attributes).first).to_not be_nil
-        expect(user.user_addresses.with_address_values(order.ship_address.attributes).first).to_not be_nil
+        expect(user.user_addresses.find_first_by_address_values(order.bill_address.attributes)).to_not be_nil
+        expect(user.user_addresses.find_first_by_address_values(order.ship_address.attributes)).to_not be_nil
       end
     end
 
