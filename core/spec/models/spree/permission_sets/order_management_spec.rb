@@ -17,6 +17,7 @@ describe Spree::PermissionSets::OrderManagement do
     it { is_expected.to be_able_to(:manage, Spree::LineItem) }
     it { is_expected.to be_able_to(:manage, Spree::ReturnAuthorization) }
     it { is_expected.to be_able_to(:manage, Spree::CustomerReturn) }
+    it { is_expected.to be_able_to(:display, Spree::ReimbursementType) }
   end
 
   context "when not activated" do
@@ -27,6 +28,7 @@ describe Spree::PermissionSets::OrderManagement do
     it { is_expected.not_to be_able_to(:manage, Spree::LineItem) }
     it { is_expected.not_to be_able_to(:manage, Spree::ReturnAuthorization) }
     it { is_expected.not_to be_able_to(:manage, Spree::CustomerReturn) }
+    it { is_expected.not_to be_able_to(:display, Spree::ReimbursementType) }
   end
 end
 
