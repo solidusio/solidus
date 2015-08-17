@@ -78,7 +78,7 @@ module Spree
     add_search_scope :in_taxon do |taxon|
       includes(:classifications).
       where("spree_classifications.taxon_id" => taxon.self_and_descendants.pluck(:id)).
-      order(Spree::Classification.arel_table[:position])
+      order("spree_classifications.position ASC")
     end
 
     # This scope selects products in all taxons AND all its descendants
