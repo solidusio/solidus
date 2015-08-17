@@ -37,6 +37,9 @@ module Spree
 
     attr_accessor :target_shipment
 
+    self.whitelisted_ransackable_associations = ['variant']
+    self.whitelisted_ransackable_attributes = ['variant_id']
+
     # Sets this line item's price, cost price, and currency from this line
     # item's variant if they are nil and a variant is present.
     def copy_price

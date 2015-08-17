@@ -20,6 +20,8 @@ module Spree
 
     before_destroy :ensure_not_finalized
 
+    self.whitelisted_ransackable_attributes = %w[source_location_id destination_location_id closed_at created_at number]
+
     def to_param
       number
     end

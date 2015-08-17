@@ -25,6 +25,14 @@ module Spree
 
       belongs_to :ship_address, class_name: 'Spree::Address'
       belongs_to :bill_address, class_name: 'Spree::Address'
+
+      def self.ransackable_associations(auth_object=nil)
+        %w[bill_address ship_address]
+      end
+
+      def self.ransackable_attributes(auth_object=nil)
+        %w[id email]
+      end
     end
 
     # has_spree_role? simply needs to return true or false whether a user has a role or not.
