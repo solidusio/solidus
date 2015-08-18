@@ -6,9 +6,7 @@ module Spree
       has_many :user_addresses, foreign_key: "user_id", class_name: "Spree::UserAddress" do
 
         def find_first_by_address_values(address_attrs)
-          sql_record = with_address_values(address_attrs).first
-          return nil unless sql_record.present?
-          detect { |ua| ua.id == sql_record.id } #ensures we use a cached version
+          detect { |ua| ua.address == Address.new(address_attrs) }
         end
 
         # @note this method enforces one-and-only-one default address per user
