@@ -20,6 +20,7 @@ gem 'sass-rails'
 
 group :test do
   gem 'capybara', '~> 2.4'
+  gem 'capybara-screenshot'
   gem 'database_cleaner', '~> 1.3'
   gem 'email_spec'
   gem 'factory_girl_rails', '~> 4.5.0'
