@@ -51,7 +51,7 @@ describe Spree::Order, :type => :model do
     it "should send an order confirmation email" do
       mail_message = double "Mail::Message"
       expect(Spree::OrderMailer).to receive(:confirm_email).with(order.id).and_return mail_message
-      expect(mail_message).to receive :deliver_now
+      expect(mail_message).to receive :deliver_later
       order.finalize!
     end
 
@@ -71,7 +71,7 @@ describe Spree::Order, :type => :model do
       # Stub this method as it's called due to a callback
       # and it's irrelevant to this test
       allow(order).to receive :has_available_shipment
-      allow(Spree::OrderMailer).to receive_message_chain :confirm_email, :deliver_now
+      allow(Spree::OrderMailer).to receive_message_chain :confirm_email, :deliver_later
       adjustments = [double]
       expect(order).to receive(:all_adjustments).and_return(adjustments)
       adjustments.each do |adj|
