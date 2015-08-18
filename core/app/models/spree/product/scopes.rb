@@ -9,24 +9,6 @@ module Spree
       search_scopes << name.to_sym
     end
 
-    def self.simple_scopes
-      [
-        :ascend_by_updated_at,
-        :descend_by_updated_at,
-        :ascend_by_name,
-        :descend_by_name
-      ]
-    end
-
-    def self.add_simple_scopes(scopes)
-      scopes.each do |name|
-        # We should not define price scopes here, as they require something slightly different
-        next if name.to_s.include?("master_price")
-        parts = name.to_s.match(/(.*)_by_(.*)/)
-        self.scope(name.to_s, -> { order("#{Product.quoted_table_name}.#{parts[2]} #{parts[1] == 'ascend' ?  "ASC" : "DESC"}") })
-      end
-    end
-
     def self.property_conditions(property)
       properties = Property.table_name
       conditions = case property
@@ -36,7 +18,10 @@ module Spree
       end
     end
 
-    add_simple_scopes simple_scopes
+    scope :ascend_by_updated_at, -> { order(updated_at: :asc) }
+    scope :descend_by_updated_at, -> { order(updated_at: :desc) }
+    scope :ascend_by_name, -> { order(name: :asc) }
+    scope :descend_by_name, -> { order(name: :desc) }
 
     add_search_scope :ascend_by_master_price do
       joins(:master => :default_price).order(Spree::Price.arel_table[:amount].asc)
