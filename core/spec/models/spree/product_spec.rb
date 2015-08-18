@@ -162,15 +162,27 @@ describe Spree::Product, :type => :model do
     end
 
     describe 'Variants sorting' do
+      let(:master){ product.master }
+
+      let!(:second) { create(:variant, product: product) }
+      let!(:third)  { create(:variant, product: product) }
+      let!(:first)  { create(:variant, product: product) }
+
+      before do
+        first.update_columns(position: 2)
+        second.update_columns(position: 3)
+        third.update_columns(position: 4)
+      end
+
       context 'without master variant' do
         it 'sorts variants by position' do
-          expect(product.variants.to_sql).to match(/ORDER BY (\`|\")spree_variants(\`|\").position ASC/)
+          expect(product.variants).to eq([first, second, third])
         end
       end
 
       context 'with master variant' do
         it 'sorts variants by position' do
-          expect(product.variants_including_master.to_sql).to match(/ORDER BY (\`|\")spree_variants(\`|\").position ASC/)
+          expect(product.variants_including_master).to eq([master, first, second, third])
         end
       end
     end
