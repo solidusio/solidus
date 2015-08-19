@@ -7,7 +7,6 @@ Spree::PaymentMethod.create_with(
   display_on: 'none',
 ).find_or_create_by!(
   type: "Spree::PaymentMethod::StoreCredit",
-  environment: Rails.env,
 )
 
 Spree::StoreCreditType.create_with(priority: 1).find_or_create_by!(name: 'Expiring')
