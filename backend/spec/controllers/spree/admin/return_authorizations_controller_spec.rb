@@ -131,6 +131,20 @@ describe Spree::Admin::ReturnAuthorizationsController, :type => :controller do
     end
   end
 
+  describe "#load_stock_locations" do
+    let!(:active_stock_location)   { create(:stock_location, active: true) }
+    let!(:inactive_stock_location) { create(:stock_location, active: false) }
+
+    before do
+      spree_get :new, order_id: order.to_param
+    end
+
+    it "loads all the active stock locations" do
+      expect(assigns(:stock_locations)).to include(active_stock_location)
+      expect(assigns(:stock_locations)).not_to include(inactive_stock_location)
+    end
+  end
+
   context '#create' do
     let(:stock_location) { create(:stock_location) }
 
