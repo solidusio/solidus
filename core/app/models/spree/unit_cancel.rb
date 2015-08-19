@@ -20,7 +20,7 @@ class Spree::UnitCancel < ActiveRecord::Base
       order: inventory_unit.order,
       label: "#{Spree.t(:cancellation)} - #{reason}",
       eligible: true,
-      state: 'closed',
+      finalized: true
     )
   end
 

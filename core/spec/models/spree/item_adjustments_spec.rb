@@ -133,9 +133,8 @@ module Spree
                             :adjustable => line_item,
                             :source     => source,
                             :amount     => amount,
-                            :state      => "closed",
-                            :label      => label,
-                            :mandatory  => false)
+                            :finalized  => true,
+                            :label      => label)
       end
 
       it "should make all but the most valuable promotion adjustment ineligible, leaving non promotion adjustments alone" do
@@ -146,7 +145,7 @@ module Spree
                             :adjustable => line_item,
                             :source => nil,
                             :amount => -500,
-                            :state => "closed",
+                            :finalized => true,
                             :label => "Some other credit")
         line_item.adjustments.each {|a| a.update_column(:eligible, true)}
 

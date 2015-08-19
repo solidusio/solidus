@@ -2,9 +2,8 @@ module Spree
   module Admin
     module AdjustmentsHelper
       def adjustment_state(adjustment)
-        state = adjustment.state.to_sym
-        icon = { closed: 'lock', open: 'unlock' }
-        content_tag(:span, '', class: "fa fa-#{ icon[state] }")
+        icon = adjustment.finalized? ? 'lock' : 'unlock'
+        content_tag(:span, '', class: "fa fa-#{icon}")
       end
 
       def display_adjustable(adjustable)

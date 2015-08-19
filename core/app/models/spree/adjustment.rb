@@ -7,16 +7,7 @@ module Spree
   #
   # == Boolean attributes
   #
-  # 1. *mandatory*
-  #
-  #    If this flag is set to true then it means the the charge is required and
-  #    will not be removed from the order, even if the amount is zero. In other
-  #    words a record will be created even if the amount is zero. This is
-  #    useful for representing things such as shipping and tax charges where
-  #    you may want to make it explicitly clear that no charge was made for
-  #    such things.
-  #
-  # 2. *eligible?*
+  # 1. *eligible?*
   #
   #    This boolean attributes stores whether this adjustment is currently
   #    eligible for its order. Only eligible adjustments count towards the
@@ -35,21 +26,11 @@ module Spree
     validates :amount, numericality: true
     validates :promotion_code, presence: true, if: :require_promotion_code?
 
-    state_machine :state, initial: :open do
-      event :close do
-        transition from: :open, to: :closed
-      end
-
-      event :open do
-        transition from: :closed, to: :open
-      end
-    end
-
     after_create :update_adjustable_adjustment_total
     after_destroy :update_adjustable_adjustment_total
 
-    scope :open, -> { where(state: 'open') }
-    scope :closed, -> { where(state: 'closed') }
+    scope :open, -> { where(finalized: false) }
+    scope :closed, -> { where(finalized: true) }
     scope :cancellation, -> { where(source_type: 'Spree::UnitCancel') }
     scope :tax, -> { where(source_type: 'Spree::TaxRate') }
     scope :non_tax, -> do
@@ -58,7 +39,6 @@ module Spree
     end
     scope :price, -> { where(adjustable_type: 'Spree::LineItem') }
     scope :shipping, -> { where(adjustable_type: 'Spree::Shipment') }
-    scope :optional, -> { where(mandatory: false) }
     scope :eligible, -> { where(eligible: true) }
     scope :charge, -> { where("#{quoted_table_name}.amount >= 0") }
     scope :credit, -> { where("#{quoted_table_name}.amount < 0") }
@@ -72,9 +52,70 @@ module Spree
     extend DisplayMoney
     money_methods :amount
 
-    def closed?
-      state == "closed"
+    def finalize!
+      update_attributes!(finalized: true)
     end
+
+    def unfinalize!
+      update_attributes!(finalized: false)
+    end
+
+    def finalize
+      update_attributes(finalized: true)
+    end
+
+    def unfinalize
+      update_attributes(finalized: false)
+    end
+
+    # Deprecated methods
+    def state
+      ActiveSupport::Deprecation.warn "Adjustment#state is deprecated. Instead use Adjustment#finalized?", caller
+      finalized? ? "closed" : "open"
+    end
+
+    def state=(new_state)
+      ActiveSupport::Deprecation.warn "Adjustment#state= is deprecated. Instead use Adjustment#finalized=", caller
+      case new_state
+      when "open"
+        self.finalized = false
+      when "closed"
+        self.finalized = true
+      else
+        raise "invaliid adjustment state #{new_state}"
+      end
+    end
+
+    def open?
+      ActiveSupport::Deprecation.warn "Adjustment#open? is deprecated. Instead use Adjustment#finalized?", caller
+      !closed?
+    end
+
+    def closed?
+      ActiveSupport::Deprecation.warn "Adjustment#closed? is deprecated. Instead use Adjustment#finalized?", caller
+      finalized?
+    end
+
+    def open
+      ActiveSupport::Deprecation.warn "Adjustment#open is deprecated. Instead use Adjustment#unfinalize", caller
+      unfinalize
+    end
+
+    def open
+      ActiveSupport::Deprecation.warn "Adjustment#open! is deprecated. Instead use Adjustment#unfinalize!", caller
+      unfinalize!
+    end
+
+    def close
+      ActiveSupport::Deprecation.warn "Adjustment#close is deprecated. Instead use Adjustment#finalize", caller
+      finalize
+    end
+
+    def close!
+      ActiveSupport::Deprecation.warn "Adjustment#close! is deprecated. Instead use Adjustment#finalize!", caller
+      finalize!
+    end
+    # End deprecated methods
 
     def currency
       adjustable ? adjustable.currency : Spree::Config[:currency]
@@ -107,7 +148,7 @@ module Spree
       if target
         ActiveSupport::Deprecation.warn("Passing a target to Adjustment#update! is deprecated. The adjustment will use the correct target from it's adjustable association.", caller)
       end
-      return amount if closed?
+      return amount if finalized?
 
       # If the adjustment has no source, do not attempt to re-calculate the amount.
       # Chances are likely that this was a manually created adjustment in the admin backend.
