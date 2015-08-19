@@ -169,11 +169,6 @@ module Spree
 
       private
         def order_params
-          params.merge!(extra_order_params)
-          params.permit(extra_order_params.keys)
-        end
-
-        def extra_order_params
           {
             created_by_id: try_spree_current_user.try(:id),
             frontend_viewable: false,
