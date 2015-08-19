@@ -35,6 +35,10 @@ module Spree
         @order = Order.find_by_number!(params[:order_id])
         authorize! action, @order
       end
+
+      def model_class
+        Spree::OrderCancellations
+      end
     end
   end
 end
