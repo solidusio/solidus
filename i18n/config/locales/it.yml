@@ -54,6 +54,7 @@ it:
         special_instructions: Istruzioni Aggiuntive
         state: Stato
         total: Totale
+        considered_risky: A rischio
       spree/order/bill_address:
         address1: Indirizzo di fatturazione
         city: Città di fatturazione
@@ -753,7 +754,7 @@ it:
     iso_name: Nome Iso
     item: articolo
     item_description: Descrizione dell'articolo
-    item_total: Totale prodotto
+    item_total: Totale articoli
     item_total_rule:
       operators:
         gt: maggiore di
@@ -1155,6 +1156,7 @@ it:
     select_a_stock_location: Seleziona un Magazzino
     select_from_prototype: Seleziona da Prototipo
     select_stock: Seleziona Scorte
+    selected_quantity_not_available: La quantità selezionata non è disponibile
     send_copy_of_all_mails_to: Invia una Copia di Tutte le Mail a
     send_mails_as: Invia Mail come
     server: Server
