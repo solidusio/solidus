@@ -10,6 +10,7 @@ module Spree
         can :manage, Spree::LineItem
         can :manage, Spree::ReturnAuthorization
         can :manage, Spree::CustomerReturn
+        can :manage, Spree::OrderCancellations
       end
     end
   end
