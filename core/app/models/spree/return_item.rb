@@ -165,7 +165,7 @@ module Spree
     # @return [ActiveRecord::Relation<Spree::Variant>] the variants eligible
     #   for exchange for this return item
     def eligible_exchange_variants(stock_locations = nil)
-      exchange_variant_engine.eligible_variants(variant, stock_locations)
+      exchange_variant_engine.eligible_variants(variant, stock_locations: stock_locations)
     end
 
     # Builds the exchange inventory unit for this return item, only if an
