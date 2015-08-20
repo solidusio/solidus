@@ -132,15 +132,9 @@ describe Spree::Order, :type => :model do
       # Stub methods that cause side-effects in this test
       allow(shipment).to receive(:cancel!)
       allow(order).to receive :restock_items!
-      mail_message = double "Mail::Message"
-      order_id = nil
-      expect(Spree::OrderMailer).to receive(:cancel_email) { |*args|
-        order_id = args[0]
-        mail_message
-      }
+      expect(Spree::OrderMailer).to receive(:cancel_email).with(order).and_return(mail_message = double)
       expect(mail_message).to receive :deliver_later
       order.cancel!
-      expect(order_id).to eq(order.id)
     end
 
     context "restocking inventory" do
