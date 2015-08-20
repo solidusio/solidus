@@ -93,9 +93,11 @@ it:
         expires_at: Scade il
         name: Nome
         path: Percorso
+        promotion_category: Categoria Promozione
         starts_at: Inizia il
         usage_limit: Limite di Utilizzo
       spree/promotion_category:
+        code: Codice
         name: Nome
       spree/property:
         name: Nome
@@ -416,11 +418,12 @@ it:
         orders: Ordini
         overview: Quadro generale
         products: Prodotti
+        promotion_categories: Categorie Promozione
         promotions: Promozioni
         promotion_categories:
         properties: Proprietà
         prototypes: Prototipi
-        reports: Reports
+        reports: Report
         taxonomies: Tassonomie
         taxons: Taxon
         users: Utenti
@@ -827,7 +830,7 @@ it:
     new_payment_method: Nuovo Metodo di Pagamento
     new_product: Nuovo Prodotto
     new_promotion: Nuova Promozione
-    new_promotion_category:
+    new_promotion_category: Nuova Categoria Promozione
     new_property: Nuova Proprietà
     new_prototype: Nuovo Prototipo
     new_refund: Nuovo
@@ -1020,6 +1023,7 @@ it:
         description: Rendi gratuite tutte le spedizioni dell'ordine
         name: Spedizione Gratuita
     promotion_actions: Azioni
+    promotion_category: Categoria Promozione
     promotion_form:
       match_policies:
         all: Rispetta tutte queste regole
