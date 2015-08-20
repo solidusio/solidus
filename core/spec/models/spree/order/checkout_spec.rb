@@ -785,21 +785,15 @@ describe Spree::Order, :type => :model do
     let(:order) { create(:order) }
 
     let(:params) do
-      ActionController::Parameters.new(
-        order: {
-          payments_attributes: [
-            {source_attributes: attributes_for(:credit_card)},
-          ],
-        }
-      )
-    end
-    let(:permitted_params) do
-      Spree::PermittedAttributes.checkout_attributes +
-        [payments_attributes: Spree::PermittedAttributes.payment_attributes]
+      {
+        payments_attributes: [
+          {source_attributes: attributes_for(:credit_card)},
+        ],
+      }
     end
 
     it 'sets the payment amount' do
-      order.update_from_params(params, permitted_params)
+      order.update_from_params(params)
       expect(order.payments.last.amount).to eq(order.total)
     end
 
@@ -808,33 +802,15 @@ describe Spree::Order, :type => :model do
         expect_any_instance_of(Spree::Payment).to(
           receive(:request_env=).with({'USER_AGENT' => 'Firefox'}).and_call_original
         )
-        order.update_from_params(params, permitted_params, {'USER_AGENT' => 'Firefox'})
+        order.update_from_params(params, request_env: {'USER_AGENT' => 'Firefox'})
       end
     end
 
     context 'empty params' do
       it 'succeeds' do
-        expect(order.update_from_params({}, permitted_params)).to be_truthy
-      end
-    end
-
-    context 'has params' do
-      let(:permitted_params) { [ :good_param ] }
-      let(:params) { ActionController::Parameters.new(order: {  bad_param: 'okay' } ) }
-
-      it 'does not let through unpermitted attributes' do
-        expect(order).to receive(:update_attributes).with({})
-        order.update_from_params(params, permitted_params)
-      end
-
-      context 'has allowed params' do
-        let(:params) { ActionController::Parameters.new(order: {  good_param: 'okay' } ) }
-
-        it 'accepts permitted attributes' do
-          expect(order).to receive(:update_attributes).with({"good_param" => 'okay'})
-          order.update_from_params(params, permitted_params)
-        end
+        expect(order.update_from_params({})).to be_truthy
       end
     end
   end
+
 end
