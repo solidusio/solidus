@@ -89,6 +89,7 @@ module Spree
       event(:lost) { transition to: :lost_in_transit, from: :awaiting }
       event(:wrong_item_shipped) { transition to: :shipped_wrong_item, from: :awaiting }
       event(:short_shipped) { transition to: :short_shipped, from: :awaiting }
+      event(:in_transit) { transition to: :in_transit, from: :awaiting }
       event(:expired) { transition to: :expired, from: :awaiting }
     end
 
