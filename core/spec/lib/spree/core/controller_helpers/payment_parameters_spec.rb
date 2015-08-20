@@ -5,17 +5,13 @@ class FakeController < ApplicationController
 end
 
 describe Spree::Core::ControllerHelpers::PaymentParameters, type: :controller do
-  subject do
-    controller.move_payment_source_into_payments_attributes(params)
-  end
 
   controller(FakeController) { }
 
   describe '#move_payment_source_into_payments_attributes' do
-    let(:payment_method_1) { create(:credit_card_payment_method) }
-    let(:payment_method_2) { create(:credit_card_payment_method) }
-    let(:credit_card_1_params) { attributes_for(:credit_card, name: 'Jordan1') }
-    let(:credit_card_2_params) { attributes_for(:credit_card, name: 'Jordan2') }
+    subject do
+      controller.move_payment_source_into_payments_attributes(params)
+    end
 
     let(:params) do
       ActionController::Parameters.new(
@@ -34,6 +30,11 @@ describe Spree::Core::ControllerHelpers::PaymentParameters, type: :controller do
         other_param: 2,
       )
     end
+
+    let(:payment_method_1) { create(:credit_card_payment_method) }
+    let(:payment_method_2) { create(:credit_card_payment_method) }
+    let(:credit_card_1_params) { attributes_for(:credit_card, name: 'Jordan1') }
+    let(:credit_card_2_params) { attributes_for(:credit_card, name: 'Jordan2') }
 
     it 'produces the expected hash' do
       expect(subject).to eq(
@@ -76,5 +77,75 @@ describe Spree::Core::ControllerHelpers::PaymentParameters, type: :controller do
       before { params[:order][:payments_attributes][0][:payment_method_id] = -1 }
       it('returns the original hash') { expect(subject).to eq(params) }
     end
+  end
+
+  describe '#move_existing_card_into_payments_attributes' do
+    subject do
+      controller.move_existing_card_into_payments_attributes(params)
+    end
+
+    let(:params) do
+      ActionController::Parameters.new(
+        order: {
+          existing_card: '123',
+          other_order_param: 1,
+        },
+        cvc_confirm: '456',
+        other_param: 2,
+      )
+    end
+
+    it 'produces the expected hash' do
+      expect(subject).to eq(
+        ActionController::Parameters.new(
+          order: {
+            payments_attributes: [
+              {
+                source_attributes: {
+                  existing_card_id: '123',
+                  verification_value: '456'
+                },
+              },
+            ],
+            other_order_param: 1,
+          },
+          other_param: 2,
+        )
+      )
+    end
+
+    context 'when cvc_confirm is missing' do
+      before { params.delete(:cvc_confirm) }
+
+      it 'produces the expected hash' do
+        expect(subject).to eq(
+          ActionController::Parameters.new(
+            order: {
+              payments_attributes: [
+                {
+                  source_attributes: {
+                    existing_card_id: '123',
+                    verification_value: nil,
+                  },
+                },
+              ],
+              other_order_param: 1,
+            },
+            other_param: 2,
+          )
+        )
+      end
+    end
+
+    context 'when order params are missing' do
+      before { params.delete(:order) }
+      it('returns the original hash') { expect(subject).to eq(params) }
+    end
+
+    context 'when existing_card is missing' do
+      before { params[:order].delete(:existing_card) }
+      it('returns the original hash') { expect(subject).to eq(params) }
+    end
+
   end
 end

@@ -1,7 +1,7 @@
 module Spree
   module Core::ControllerHelpers::PaymentParameters
     # This method handles the awkwardness of how the html forms are currently
-    # set up for frontend and admin.
+    # set up for frontend.
     #
     # This method expects a params hash in the format of:
     #
@@ -23,7 +23,7 @@ module Spree
     #    ...other params...
     #  }
     #
-    # And this method returns a new params hash in the format of:
+    # And this method modifies the params into the format of:
     #
     #  {
     #    order: {
@@ -38,9 +38,7 @@ module Spree
     #    ...other params...
     #  }
     #
-    def move_payment_source_into_payments_attributes(original_params)
-      params = original_params.deep_dup
-
+    def move_payment_source_into_payments_attributes(params)
       # Step 1: Gather all the information and ensure all the pieces are there.
 
       return params if params[:payment_source].blank?
@@ -63,5 +61,60 @@ module Spree
 
       params
     end
+
+    # This method handles the awkwardness of how the html forms are currently
+    # set up for frontend.
+    #
+    # This method expects a params hash in the format of:
+    #
+    #  {
+    #    order: {
+    #      existing_card: '123',
+    #      ...other params...
+    #    },
+    #    cvc_confirm: '456', # optional
+    #    ...other params...
+    #  }
+    #
+    # And this method modifies the params into the format of:
+    #
+    #  {
+    #    order: {
+    #      payments_attributes: [
+    #        {
+    #          source_attributes: {
+    #            existing_card_id: '123',
+    #            verification_value: '456',
+    #          },
+    #        },
+    #      ]
+    #      ...other params...
+    #    },
+    #    ...other params...
+    #  }
+    #
+    def move_existing_card_into_payments_attributes(params)
+      return params if params[:order].blank?
+
+      card_id = params[:order][:existing_card].presence
+      cvc_confirm = params[:cvc_confirm].presence
+
+      return params if card_id.nil?
+
+      params[:order][:payments_attributes] = [
+        {
+          source_attributes: {
+            existing_card_id: card_id,
+            verification_value: cvc_confirm,
+          }
+        },
+      ]
+
+      params[:order].delete(:existing_card)
+      params.delete(:cvc_confirm)
+
+      params
+    end
+
   end
 end
