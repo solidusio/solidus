@@ -25,7 +25,7 @@ module Spree
 
     # Updates the order and advances to the next state (when possible.)
     def update
-      if @order.update_from_params(massaged_params, permitted_checkout_attributes, request.headers.env)
+      if @order.update_from_params(update_params, request_env: request.headers.env)
         @order.temporary_address = !params[:save_user_address]
         success = if @order.state == 'confirm'
           @order.complete
@@ -51,6 +51,15 @@ module Spree
     end
 
     private
+
+      def update_params
+        if update_params = massaged_params[:order]
+          update_params.permit(permitted_checkout_attributes)
+        else
+          # We current allow update requests without any parameters in them.
+          {}
+        end
+      end
 
       def massaged_params
         massaged_params = params.deep_dup

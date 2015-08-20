@@ -54,7 +54,7 @@ module Spree
       def update
         authorize! :update, @order, order_token
 
-        if @order.update_from_params(massaged_params, permitted_checkout_attributes, request.headers.env)
+        if @order.update_from_params(update_params, request_env: request.headers.env)
           if can?(:admin, @order) && user_id.present?
             @order.associate_user!(Spree.user_class.find(user_id))
           end
@@ -75,6 +75,15 @@ module Spree
       private
         def user_id
           params[:order][:user_id] if params[:order]
+        end
+
+        def update_params
+          if update_params = massaged_params[:order]
+            update_params.permit(permitted_checkout_attributes)
+          else
+            # We current allow update requests without any parameters in them.
+            {}
+          end
         end
 
         def massaged_params

@@ -234,11 +234,7 @@ module Spree
             checkout_step_index(state) > checkout_step_index(self.state)
           end
 
-          def update_from_params(params, permitted_params, request_env = {})
-            return true if params[:order].blank?
-
-            attributes = params[:order].permit(permitted_params).delete_if { |k,v| v.nil? }
-
+          def update_from_params(attributes, request_env: {})
             if attributes[:payments_attributes]
               attributes[:payments_attributes].first[:amount] = self.total
               attributes[:payments_attributes].first[:request_env] = request_env
