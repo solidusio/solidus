@@ -2,11 +2,13 @@ module Spree
   class CartonMailer < BaseMailer
     # Send an email to customers to notify that an individual carton has been
     # shipped.
-    def shipped_email(carton_id, resend: false)
-      @carton = Spree::Carton.find(carton_id)
+    def shipped_email(order, carton, resend: false)
+      @order = order
+      @store = order.store
+      @carton = carton
       subject = (resend ? "[#{Spree.t(:resend).upcase}] " : '')
-      subject += "#{Spree::Store.current.name} #{Spree.t('shipment_mailer.shipped_email.subject')} ##{@carton.order_numbers.join(', ')}"
-      mail(to: @carton.order_emails, from: from_address(Spree::Store.current), subject: subject)
+      subject += "#{@store.name} #{Spree.t('shipment_mailer.shipped_email.subject')} ##{@order.number}"
+      mail(to: @order.email, from: from_address(@store), subject: subject)
     end
   end
 end
