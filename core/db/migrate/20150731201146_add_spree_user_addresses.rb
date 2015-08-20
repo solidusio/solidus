@@ -5,7 +5,7 @@ class AddSpreeUserAddresses < ActiveRecord::Migration
       t.integer :address_id, null: false
       t.boolean :default, default: false
       t.boolean :archived, default: false
-      t.timestamps
+      t.timestamps null: false
     end
 
     add_index :spree_user_addresses, :user_id
