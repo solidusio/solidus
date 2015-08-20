@@ -1,17 +1,11 @@
 require 'spec_helper'
 
 describe Spree::PaymentMethod, :type => :model do
-  describe "#available" do
-    before do
-      [nil, 'both', 'front_end', 'back_end'].each do |display_on|
-        Spree::Gateway::Test.create(
-          :name => 'Display Both',
-          :display_on => display_on,
-          :active => true,
-          :description => 'foofah'
-        )
-      end
-    end
+  describe ".available" do
+    let!(:payment_method_nil_display)  { create(:payment_method, active: true, display_on: nil) }
+    let!(:payment_method_both_display) { create(:payment_method, active: true, display_on: 'both') }
+    let!(:payment_method_front_display){ create(:payment_method, active: true, display_on: 'front_end') }
+    let!(:payment_method_back_display) { create(:payment_method, active: true, display_on: 'back_end') }
 
     it "should have 4 total methods" do
       expect(Spree::PaymentMethod.all.size).to eq(4)
@@ -31,6 +25,64 @@ describe Spree::PaymentMethod, :type => :model do
 
     it "should return all methods available to back-end when display_on = :back_end" do
       expect(Spree::PaymentMethod.available(:back_end).size).to eq(2)
+    end
+
+    context 'with stores' do
+      let!(:store_1) do
+        create(:store,
+          payment_methods: [
+            payment_method_nil_display,
+            payment_method_both_display,
+            payment_method_front_display,
+            payment_method_back_display,
+          ]
+        )
+      end
+
+      let!(:store_2) do
+        create(:store, payment_methods: [store_2_payment_method])
+      end
+
+      let!(:store_3) { create(:store) }
+
+      let!(:store_2_payment_method) { create(:payment_method, active: true) }
+      let!(:no_store_payment_method) { create(:payment_method, active: true) }
+
+      context 'when the store is specified' do
+        context 'when the store has payment methods' do
+          it 'finds the payment methods for the store' do
+            expect(Spree::PaymentMethod.available(:both, store: store_1)).to match_array(
+              [payment_method_nil_display, payment_method_both_display]
+            )
+          end
+        end
+
+        context "when store does not have payment_methods" do
+          it "returns all matching payment methods regardless of store" do
+            expect(Spree::PaymentMethod.available(:both)).to match_array(
+              [
+                payment_method_nil_display,
+                payment_method_both_display,
+                store_2_payment_method,
+                no_store_payment_method,
+              ]
+            )
+          end
+        end
+      end
+
+      context 'when the store is not specified' do
+        it "returns all matching payment methods regardless of store" do
+          expect(Spree::PaymentMethod.available(:both)).to match_array(
+            [
+              payment_method_nil_display,
+              payment_method_both_display,
+              store_2_payment_method,
+              no_store_payment_method,
+            ]
+          )
+        end
+      end
     end
   end
 
