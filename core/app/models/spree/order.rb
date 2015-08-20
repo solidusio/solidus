@@ -405,7 +405,10 @@ module Spree
     end
 
     def available_payment_methods
-      @available_payment_methods ||= (PaymentMethod.available(:front_end) + PaymentMethod.available(:both)).uniq
+      @available_payment_methods ||= (
+        PaymentMethod.available(:front_end, store: store) +
+        PaymentMethod.available(:both, store: store)
+      ).uniq
     end
 
     def billing_firstname

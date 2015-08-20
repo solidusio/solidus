@@ -539,6 +539,39 @@ describe Spree::Order, :type => :model do
       expect(order.available_payment_methods.count).to eq(1)
       expect(order.available_payment_methods).to include(payment_method)
     end
+
+    context 'when the order has a store' do
+      let(:order) { create(:order) }
+
+      let!(:store_with_payment_methods) do
+        create(:store,
+          payment_methods: [payment_method_with_store],
+        )
+      end
+      let!(:payment_method_with_store) { create(:payment_method) }
+      let!(:store_without_payment_methods) { create(:store) }
+      let!(:payment_method_without_store) { create(:payment_method) }
+
+      context 'when the store has payment methods' do
+        before { order.update_attributes!(store: store_with_payment_methods) }
+
+        it 'returns only the matching payment methods for that store' do
+          expect(order.available_payment_methods).to match_array(
+            [payment_method_with_store]
+          )
+        end
+      end
+
+      context 'when the store does not have payment methods' do
+        before { order.update_attributes!(store: store_without_payment_methods) }
+
+        it 'returns all matching payment methods regardless of store' do
+          expect(order.available_payment_methods).to match_array(
+            [payment_method_with_store, payment_method_without_store]
+          )
+        end
+      end
+    end
   end
 
   context "#apply_free_shipping_promotions" do
