@@ -78,9 +78,9 @@ module Spree
         assert_not_found!
       end
 
-      it "can delete itself" do
+      it "cannot delete itself" do
         api_delete :destroy, id: user.id, token: user.spree_api_key
-        expect(response.status).to eq(204)
+        expect(response.status).to eq(401)
       end
 
       it "cannot delete other user" do
