@@ -74,7 +74,6 @@ module DelegateBelongsTo
   end
 
   def delegator_for(association, attr, *args)
-    return if self.class.column_names.include?(attr.to_s)
     send "build_#{association}" if send(association).nil?
     if args.empty?
       send(association).send(attr)
@@ -84,7 +83,6 @@ module DelegateBelongsTo
   end
 
   def delegator_for_setter(association, attr, val)
-    return if self.class.column_names.include?(attr.to_s)
     send "build_#{association}" if send(association).nil?
     send(association).send("#{attr}=", val)
   end
