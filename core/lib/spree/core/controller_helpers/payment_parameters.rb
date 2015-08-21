@@ -116,5 +116,11 @@ module Spree
       params
     end
 
+    def set_payment_parameters_amount(params)
+      if params[:payments_attributes]
+        params[:payments_attributes].first[:amount] = self.total
+      end
+    end
+
   end
 end

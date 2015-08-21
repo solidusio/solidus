@@ -99,6 +99,8 @@ module Spree
             move_existing_card_into_payments_attributes(massaged_params)
           end
 
+          set_payment_parameters_amount(massaged_params)
+
           massaged_params
         end
 

@@ -236,7 +236,6 @@ module Spree
 
           def update_from_params(attributes, request_env: {})
             if attributes[:payments_attributes]
-              attributes[:payments_attributes].first[:amount] = self.total
               attributes[:payments_attributes].first[:request_env] = request_env
             end
 
