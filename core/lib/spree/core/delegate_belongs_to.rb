@@ -40,11 +40,11 @@ module DelegateBelongsTo
       end
       attrs.each do |attr|
         define_method attr do |*args|
-          send(:delegator_for, association, attr, *args)
+          delegator_for(association, attr, *args)
         end
 
         define_method "#{attr}=" do |val|
-          send(:delegator_for, association, "#{attr}=", val)
+          delegator_for(association, "#{attr}=", val)
         end
       end
     end
