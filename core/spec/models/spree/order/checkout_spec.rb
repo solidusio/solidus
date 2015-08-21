@@ -792,11 +792,6 @@ describe Spree::Order, :type => :model do
       }
     end
 
-    it 'sets the payment amount' do
-      order.update_from_params(params)
-      expect(order.payments.last.amount).to eq(order.total)
-    end
-
     context 'with a request_env' do
       it 'sets the request_env on the payment' do
         expect_any_instance_of(Spree::Payment).to(
