@@ -236,7 +236,9 @@ module Spree
 
           def update_from_params(attributes, request_env: {})
             if attributes[:payments_attributes]
-              attributes[:payments_attributes].first[:request_env] = request_env
+              attributes[:payments_attributes].each do |payment_attributes|
+                payment_attributes[:request_env] = request_env
+              end
             end
 
             if update_attributes(attributes)
