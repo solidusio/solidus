@@ -44,7 +44,7 @@ module DelegateBelongsTo
         end
 
         define_method "#{attr}=" do |val|
-          send(:delegator_for_setter, association, attr, val)
+          send(:delegator_for, association, "#{attr}=", val)
         end
       end
     end
@@ -78,12 +78,7 @@ module DelegateBelongsTo
     send(association).send(attr, *args)
   end
 
-  def delegator_for_setter(association, attr, val)
-    send "build_#{association}" if send(association).nil?
-    send(association).send("#{attr}=", val)
-  end
   protected :delegator_for
-  protected :delegator_for_setter
 end
 
 ActiveRecord::Base.send :include, DelegateBelongsTo
