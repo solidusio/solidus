@@ -166,7 +166,6 @@ describe Spree::Order, :type => :model do
       before do
         order.state = 'address'
         order.ship_address = ship_address
-        allow(order).to receive(:has_available_payment)
         shipment = FactoryGirl.create(:shipment, :order => order, :cost => 10)
         order.email = "user@example.com"
         order.save!
@@ -256,7 +255,6 @@ describe Spree::Order, :type => :model do
           order.email = "user@example.com"
           order.save!
 
-          allow(order).to receive(:has_available_payment)
           allow(order).to receive(:create_proposed_shipments)
           allow(order).to receive(:ensure_available_shipping_rates) { true }
         end

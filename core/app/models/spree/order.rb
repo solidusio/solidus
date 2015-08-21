@@ -93,7 +93,6 @@ module Spree
     validates :email, presence: true, if: :require_email
     validates :email, email: true, if: :require_email, allow_blank: true
     validates :number, presence: true, uniqueness: { allow_blank: true }
-    validate :has_available_shipment
 
     make_permalink field: :number
 
@@ -759,13 +758,6 @@ module Spree
       unless line_items.present?
         errors.add(:base, Spree.t(:there_are_no_items_for_this_order)) and return false
       end
-    end
-
-    def has_available_shipment
-      return unless has_step?("delivery")
-      return unless has_step?(:address) && address?
-      return unless ship_address && ship_address.valid?
-      # errors.add(:base, :no_shipping_methods_available) if available_shipping_methods.empty?
     end
 
     def ensure_available_shipping_rates
