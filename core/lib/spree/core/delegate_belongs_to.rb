@@ -75,11 +75,7 @@ module DelegateBelongsTo
 
   def delegator_for(association, attr, *args)
     send "build_#{association}" if send(association).nil?
-    if args.empty?
-      send(association).send(attr)
-    else
-      send(association).send(attr, *args)
-    end
+    send(association).send(attr, *args)
   end
 
   def delegator_for_setter(association, attr, val)
