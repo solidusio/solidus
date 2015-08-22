@@ -20,6 +20,8 @@ module Spree
 
     DB_ONLY_ATTRS = %w(id updated_at created_at)
 
+    self.whitelisted_ransackable_attributes = %w[firstname lastname]
+
     scope :with_values, ->(attributes) do
       where(value_attributes(attributes))
     end

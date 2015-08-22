@@ -16,13 +16,10 @@ module Spree
     #   or if the user is associated with the source, and the transfer has not yet been assigned a destination.
     #
     # @see Spree::PermissionSets::Base
-    class RestrictedTransferManagement < PermissionSets::Base
+    class RestrictedStockTransferManagement < PermissionSets::Base
       def activate!
-        can [:display, :admin], Spree::StockItem
-        # We need display here, as by default users cannot see inactive stock locations.
-        can :display, Spree::StockLocation
-
         if user.stock_locations.any?
+          can :display, Spree::StockLocation, id: location_ids
           can [:admin, :create], Spree::StockTransfer
           can :display, Spree::StockTransfer, source_location_id: location_ids
           can :display, Spree::StockTransfer, destination_location_id: location_ids
@@ -31,8 +28,6 @@ module Spree
             destination_location_id: destination_location_ids
 
           can :transfer, Spree::StockLocation, id: location_ids
-
-          can :update, Spree::StockItem, stock_location_id: location_ids
 
           can :manage, Spree::TransferItem, stock_transfer: {
             source_location_id: location_ids,

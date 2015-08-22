@@ -508,7 +508,7 @@ describe Spree::Shipment, :type => :model do
         label:    "Additional",
         amount:   5,
         included: false,
-        state:    "closed"
+        finalized: true
       )
       shipment.update_amounts
       expect(shipment.reload.adjustment_total).to eq(5)
@@ -520,7 +520,7 @@ describe Spree::Shipment, :type => :model do
         label:    "Included",
         amount:   5,
         included: true,
-        state:    "closed"
+        finalized: true
       )
       shipment.update_amounts
       expect(shipment.reload.adjustment_total).to eq(0)

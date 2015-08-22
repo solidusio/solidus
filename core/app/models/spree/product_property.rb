@@ -7,7 +7,9 @@ module Spree
     validates :property, presence: true
     validates_with Spree::Validations::DbMaximumLengthValidator, field: :value
 
-    default_scope -> { order("#{self.table_name}.position") }
+    default_scope -> { order(:position) }
+
+    self.whitelisted_ransackable_attributes = ['value']
 
     # virtual attributes for use with AJAX completion stuff
     def property_name

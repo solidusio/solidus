@@ -93,7 +93,7 @@ module Spree
 
       @@payment_attributes = [
         :id, :source_type, :source_id, :amount, :display_amount,
-        :payment_method_id, :response_code, :state, :avs_response, :created_at,
+        :payment_method_id, :state, :avs_response, :created_at,
         :updated_at
       ]
 
@@ -129,7 +129,7 @@ module Spree
 
       @@adjustment_attributes = [
         :id, :source_type, :source_id, :adjustable_type, :adjustable_id,
-        :originator_type, :originator_id, :amount, :label, :mandatory, :promotion_code,
+        :originator_type, :originator_id, :amount, :label, :promotion_code,
         :locked, :eligible,  :created_at, :updated_at
       ]
 

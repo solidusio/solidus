@@ -1,6 +1,9 @@
 class Spree::Base < ActiveRecord::Base
   include Spree::Preferences::Preferable
   serialize :preferences, Hash
+
+  include Spree::RansackableAttributes
+
   after_initialize do
     if has_attribute?(:preferences)
       self.preferences = default_preferences.merge(preferences)

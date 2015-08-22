@@ -13,6 +13,8 @@ module Spree
     alias :members :zone_members
     accepts_nested_attributes_for :zone_members, allow_destroy: true, reject_if: proc { |a| a['zoneable_id'].blank? }
 
+    self.whitelisted_ransackable_attributes = ['description']
+
     def self.default_tax
       where(default_tax: true).first
     end
@@ -21,7 +23,7 @@ module Spree
     # Returns nil in the case of no matches.
     def self.match(address)
       return unless address and matches = self.includes(:zone_members).
-        order('spree_zones.zone_members_count', 'spree_zones.created_at', 'spree_zones.id').
+        order(:zone_members_count, :created_at, :id).
         where("(spree_zone_members.zoneable_type = 'Spree::Country' AND spree_zone_members.zoneable_id = ?) OR (spree_zone_members.zoneable_type = 'Spree::State' AND spree_zone_members.zoneable_id = ?)", address.country_id, address.state_id).
         references(:zones)
 

@@ -8,7 +8,9 @@ module Spree
     validates :stock_item, presence: true
     validates :quantity, presence: true
 
-    scope :recent, -> { order('created_at DESC') }
+    scope :recent, -> { order(created_at: :desc) }
+
+    self.whitelisted_ransackable_attributes = ['quantity']
 
     def readonly?
       !new_record?

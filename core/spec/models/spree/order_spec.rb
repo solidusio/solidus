@@ -121,22 +121,33 @@ describe Spree::Order, :type => :model do
   end
 
   context "empty!" do
-    let(:order) { stub_model(Spree::Order, item_count: 2) }
+    let!(:order) { create(:order) }
 
     before do
-      allow(order).to receive_messages(:line_items => line_items = [1, 2])
-      allow(order).to receive_messages(:adjustments => adjustments = [])
+      create(:line_item, order: order)
+      create(:shipment, order: order)
+      create(:adjustment, adjustable: order, order: order)
+      order.update!
+
+      # Make sure we are asserting changes
+      expect(order.line_items).not_to be_empty
+      expect(order.shipments).not_to be_empty
+      expect(order.adjustments).not_to be_empty
+      expect(order.item_total).not_to eq 0
+      expect(order.item_count).not_to eq 0
+      expect(order.shipment_total).not_to eq 0
+      expect(order.adjustment_total).not_to eq 0
     end
 
     it "clears out line items, adjustments and update totals" do
-      expect(order.line_items).to receive(:destroy_all)
-      expect(order.adjustments).to receive(:destroy_all)
-      expect(order.shipments).to receive(:destroy_all)
-      expect(order.updater).to receive(:update_totals)
-      expect(order.updater).to receive(:persist_totals)
-
       order.empty!
+      expect(order.line_items).to be_empty
+      expect(order.shipments).to be_empty
+      expect(order.adjustments).to be_empty
       expect(order.item_total).to eq 0
+      expect(order.item_count).to eq 0
+      expect(order.shipment_total).to eq 0
+      expect(order.adjustment_total).to eq 0
     end
   end
 
@@ -506,7 +517,6 @@ describe Spree::Order, :type => :model do
         :name => "Fake",
         :active => true,
         :display_on => "front_end",
-        :environment => Rails.env
       })
       expect(order.available_payment_methods).to include(payment_method)
     end
@@ -516,7 +526,6 @@ describe Spree::Order, :type => :model do
         :name => "Fake",
         :active => true,
         :display_on => "both",
-        :environment => Rails.env
       })
       expect(order.available_payment_methods).to include(payment_method)
     end
@@ -526,10 +535,42 @@ describe Spree::Order, :type => :model do
         :name => "Fake",
         :active => true,
         :display_on => "both",
-        :environment => Rails.env
       })
       expect(order.available_payment_methods.count).to eq(1)
       expect(order.available_payment_methods).to include(payment_method)
+    end
+
+    context 'when the order has a store' do
+      let(:order) { create(:order) }
+
+      let!(:store_with_payment_methods) do
+        create(:store,
+          payment_methods: [payment_method_with_store],
+        )
+      end
+      let!(:payment_method_with_store) { create(:payment_method) }
+      let!(:store_without_payment_methods) { create(:store) }
+      let!(:payment_method_without_store) { create(:payment_method) }
+
+      context 'when the store has payment methods' do
+        before { order.update_attributes!(store: store_with_payment_methods) }
+
+        it 'returns only the matching payment methods for that store' do
+          expect(order.available_payment_methods).to match_array(
+            [payment_method_with_store]
+          )
+        end
+      end
+
+      context 'when the store does not have payment methods' do
+        before { order.update_attributes!(store: store_without_payment_methods) }
+
+        it 'returns all matching payment methods regardless of store' do
+          expect(order.available_payment_methods).to match_array(
+            [payment_method_with_store, payment_method_without_store]
+          )
+        end
+      end
     end
   end
 

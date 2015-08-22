@@ -38,9 +38,9 @@ describe Spree::Api::ShipmentsController, :type => :controller do
           shipment: { order_id: order.number },
           stock_location_id: stock_location.to_param
         }
-      end 
-      
-      subject do 
+      end
+
+      subject do
         api_post :create, params
       end
 
@@ -139,18 +139,17 @@ describe Spree::Api::ShipmentsController, :type => :controller do
 
     describe '#mine' do
       subject do
-        api_get :mine, format: 'json', params: params
+        api_get :mine, params
       end
 
       let(:params) { {} }
-
-      before { subject }
 
       context "the current api user is authenticated and has orders" do
         let(:current_api_user) { shipped_order.user }
         let(:shipped_order) { create(:shipped_order) }
 
         it 'succeeds' do
+          subject
           expect(response.status).to eq 200
         end
 
@@ -160,6 +159,7 @@ describe Spree::Api::ShipmentsController, :type => :controller do
           let(:rendered_shipment_ids) { json_response['shipments'].map { |s| s['id'] } }
 
           it 'contains the shipments' do
+            subject
             expect(rendered_shipment_ids).to match_array current_api_user.orders.flat_map(&:shipments).map(&:id)
           end
         end
@@ -167,9 +167,10 @@ describe Spree::Api::ShipmentsController, :type => :controller do
         context 'with filtering' do
           let(:params) { {q: {order_completed_at_not_null: 1}} }
 
-          let!(:incomplete_order) { create(:order, user: current_api_user) }
+          let!(:incomplete_order) { create(:order_with_line_items, user: current_api_user) }
 
           it 'filters' do
+            subject
             expect(assigns(:shipments).map(&:id)).to match_array current_api_user.orders.complete.flat_map(&:shipments).map(&:id)
           end
         end
@@ -179,6 +180,7 @@ describe Spree::Api::ShipmentsController, :type => :controller do
         let(:current_api_user) { nil }
 
         it "returns a 401" do
+          subject
           expect(response.status).to eq(401)
         end
       end

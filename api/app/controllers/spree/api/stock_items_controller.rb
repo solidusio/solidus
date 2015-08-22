@@ -15,7 +15,6 @@ module Spree
 
       def create
         authorize! :create, StockItem
-
         @stock_item = scope.new(stock_item_params)
 
         Spree::StockItem.transaction do
@@ -56,7 +55,7 @@ module Spree
 
       def load_stock_location
         render 'spree/api/shared/stock_location_required', status: 422 and return unless params[:stock_location_id]
-        @stock_location ||= StockLocation.accessible_by(current_ability, action_name.to_sym).find(params[:stock_location_id])
+        @stock_location ||= StockLocation.accessible_by(current_ability).find(params[:stock_location_id])
       end
 
       def scope

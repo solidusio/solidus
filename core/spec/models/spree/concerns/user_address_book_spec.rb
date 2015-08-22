@@ -11,7 +11,7 @@ module Spree
 
     describe "#save_in_address_book" do
       context "saving a default address" do
-        let(:user_address) { user.user_addresses.with_address_values(address.attributes).first }
+        let(:user_address) { user.user_addresses.find_first_by_address_values(address.attributes) }
 
         subject { user.save_in_address_book(address.attributes, true) }
 
@@ -38,8 +38,8 @@ module Spree
 
         context "user already has a default address" do
           let(:address) { create(:address) }
-          let(:original_default_address) { create(:address) }
-          let(:original_user_address) { user.user_addresses.with_address_values(original_default_address.attributes).first }
+          let(:original_default_address) { create(:ship_address) }
+          let(:original_user_address) { user.user_addresses.find_first_by_address_values(original_default_address.attributes) }
 
           before do
             user.user_addresses.create(address: original_default_address, default: true)
@@ -48,11 +48,26 @@ module Spree
           it "makes all the other associated addresses not be the default" do
             expect { subject }.to change { original_user_address.reload.default }.from(true).to(false)
           end
+
+          context "an odd flip-flop corner case discovered running backfill rake task" do
+
+            before do
+              user.save_in_address_book(original_default_address.attributes, true)
+              user.save_in_address_book(address.attributes, true)
+            end
+
+            it "handles setting 2 addresses as default without a reload of user" do
+              user.save_in_address_book(original_default_address.attributes, true)
+              user.save_in_address_book(address.attributes, true)
+              expect(user.addresses.count).to eq 2
+              expect(user.default_address.address1).to eq address.address1
+            end
+          end
         end
       end
 
       context "saving a non-default address" do
-        let(:user_address) { user.user_addresses.with_address_values(address.attributes).first }
+        let(:user_address) { user.user_addresses.find_first_by_address_values(address.attributes) }
 
         subject { user.save_in_address_book(address.attributes) }
 

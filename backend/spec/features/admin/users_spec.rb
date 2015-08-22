@@ -161,10 +161,6 @@ describe 'Users', :type => :feature do
         end
 
         expect(user_a.reload.spree_api_key).to be_present
-
-        within("#admin_user_edit_api_key") do
-          expect(find("#current-api-key").text).to match /Key: #{user_a.spree_api_key}/
-        end
       end
     end
 
@@ -193,10 +189,6 @@ describe 'Users', :type => :feature do
 
         expect(user_a.reload.spree_api_key).to be_present
         expect(user_a.reload.spree_api_key).not_to eq old_key
-
-        within("#admin_user_edit_api_key") do
-          expect(find("#current-api-key").text).to match /Key: #{user_a.spree_api_key}/
-        end
       end
     end
   end

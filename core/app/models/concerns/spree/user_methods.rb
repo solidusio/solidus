@@ -22,6 +22,14 @@ module Spree
       has_many :store_credits, -> { includes(:credit_type) }, foreign_key: "user_id", class_name: "Spree::StoreCredit"
       has_many :store_credit_events, through: :store_credits
       money_methods :total_available_store_credit
+
+      def self.ransackable_associations(auth_object=nil)
+        %w[addresses]
+      end
+
+      def self.ransackable_attributes(auth_object=nil)
+        %w[id email]
+      end
     end
 
     # has_spree_role? simply needs to return true or false whether a user has a role or not.

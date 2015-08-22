@@ -145,7 +145,7 @@ module Spree
       end
 
       def resend
-        OrderMailer.confirm_email(@order.id, true).deliver_now
+        OrderMailer.confirm_email(@order.id, true).deliver_later
         flash[:success] = Spree.t(:order_email_resent)
 
         redirect_to :back
@@ -169,11 +169,6 @@ module Spree
 
       private
         def order_params
-          params.merge!(extra_order_params)
-          params.permit(extra_order_params.keys)
-        end
-
-        def extra_order_params
           {
             created_by_id: try_spree_current_user.try(:id),
             frontend_viewable: false,
