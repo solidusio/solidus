@@ -1,9 +1,7 @@
 class ConvertHabtmTablesToHmt < ActiveRecord::Migration
   def up
-    add_columns :spree_taxons_prototypes, add_id: false
     add_columns :spree_shipping_methods_zones
 
-    rename_table :spree_taxons_prototypes, :spree_prototype_taxons
     rename_table :spree_shipping_methods_zones, :spree_shipping_method_zones
 
     rename_table :spree_products_taxons, :spree_classifications
@@ -13,10 +11,8 @@ class ConvertHabtmTablesToHmt < ActiveRecord::Migration
   end
 
   def down
-    remove_columns :spree_taxons_prototypes, remove_id: false
     remove_columns :spree_shipping_methods_zones
 
-    rename_table :spree_prototype_taxons, :spree_taxons_prototypes
     rename_table :spree_shipping_method_zones, :spree_shipping_methods_zones
 
     rename_table :spree_classifications, :spree_products_taxons
