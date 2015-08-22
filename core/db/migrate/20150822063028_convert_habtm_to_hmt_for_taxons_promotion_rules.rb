@@ -3,7 +3,7 @@ class ConvertHabtmToHmtForTaxonsPromotionRules < ActiveRecord::Migration
     add_column :spree_taxons_promotion_rules, :created_at, :datetime
     add_column :spree_taxons_promotion_rules, :updated_at, :datetime
 
-    rename_table :spree_products_taxons, :spree_classifications
+    rename_table :spree_taxons_promotion_rules, :spree_promotion_rule_taxons
   end
 
   def down
