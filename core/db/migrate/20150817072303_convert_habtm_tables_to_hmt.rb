@@ -1,9 +1,5 @@
 class ConvertHabtmTablesToHmt < ActiveRecord::Migration
   def up
-    add_columns :spree_shipping_methods_zones
-
-    rename_table :spree_shipping_methods_zones, :spree_shipping_method_zones
-
     rename_table :spree_products_taxons, :spree_classifications
     rename_table :spree_roles_users, :spree_role_users
     rename_table :spree_promotion_rules_users, :spree_promotion_rule_users
@@ -11,27 +7,9 @@ class ConvertHabtmTablesToHmt < ActiveRecord::Migration
   end
 
   def down
-    remove_columns :spree_shipping_methods_zones
-
-    rename_table :spree_shipping_method_zones, :spree_shipping_methods_zones
-
     rename_table :spree_classifications, :spree_products_taxons
     rename_table :spree_role_users, :spree_roles_users
     rename_table :spree_promotion_rule_users, :spree_promotion_rules_users
     rename_table :spree_order_promotions, :spree_orders_promotions
-  end
-
-  private
-
-  def add_columns(table, add_id: true)
-    add_column table, :id, :primary_key if add_id
-    add_column table, :created_at, :datetime
-    add_column table, :updated_at, :datetime
-  end
-
-  def remove_columns(table, remove_id: true)
-    remove_column table, :updated_at
-    remove_column table, :created_at
-    remove_column table, :id if remove_id
   end
 end
