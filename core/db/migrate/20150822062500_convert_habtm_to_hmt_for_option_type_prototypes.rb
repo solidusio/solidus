@@ -8,10 +8,10 @@ class ConvertHabtmToHmtForOptionTypePrototypes < ActiveRecord::Migration
   end
 
   def down
+    rename_table :spree_option_type_prototypes, :spree_option_types_prototypes
+
     remove_column :spree_option_types_prototypes, :id
     remove_column :spree_option_types_prototypes, :created_at
     remove_column :spree_option_types_prototypes, :updated_at
-
-    rename_table :spree_option_type_prototypes, :spree_option_types_prototypes
   end
 end
