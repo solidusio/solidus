@@ -1,13 +1,11 @@
 class ConvertHabtmTablesToHmt < ActiveRecord::Migration
   def up
-    add_columns :spree_option_types_prototypes
     add_columns :spree_products_promotion_rules
     add_columns :spree_taxons_promotion_rules, add_id: false
     add_columns :spree_properties_prototypes
     add_columns :spree_taxons_prototypes, add_id: false
     add_columns :spree_shipping_methods_zones
 
-    rename_table :spree_option_types_prototypes, :spree_option_type_prototypes
     rename_table :spree_products_promotion_rules, :spree_product_promotion_rules
     rename_table :spree_taxons_promotion_rules, :spree_promotion_rule_taxons
     rename_table :spree_properties_prototypes, :spree_property_prototypes
@@ -21,14 +19,12 @@ class ConvertHabtmTablesToHmt < ActiveRecord::Migration
   end
 
   def down
-    remove_columns :spree_option_types_prototypes
     remove_columns :spree_products_promotion_rules
     remove_columns :spree_taxons_promotion_rules, remove_id: false
     remove_columns :spree_properties_prototypes
     remove_columns :spree_taxons_prototypes, remove_id: false
     remove_columns :spree_shipping_methods_zones
 
-    rename_table :spree_option_type_prototypes, :spree_option_types_prototypes
     rename_table :spree_product_promotion_rules, :spree_products_promotion_rules
     rename_table :spree_promotion_rule_taxons, :spree_taxons_promotion_rules
     rename_table :spree_property_prototypes, :spree_properties_prototypes
