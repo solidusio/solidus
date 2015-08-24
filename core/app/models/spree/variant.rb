@@ -38,13 +38,6 @@ module Spree
 
     has_many :images, -> { order(:position) }, as: :viewable, dependent: :destroy, class_name: "Spree::Image"
 
-    has_one :default_price,
-      -> { where(currency: Spree::Config[:currency], is_default: true) },
-      class_name: 'Spree::Price',
-      dependent: :destroy
-
-    delegate_belongs_to :default_price, :display_price, :display_amount, :price, :price=, :currency
-
     has_many :prices,
       class_name: 'Spree::Price',
       dependent: :destroy,
