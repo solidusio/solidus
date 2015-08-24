@@ -2,7 +2,13 @@ class Spree::ShippingManifest
   ManifestItem = Struct.new(:line_item, :variant, :quantity, :states)
 
   def initialize(inventory_units:)
-    @inventory_units = inventory_units
+    @inventory_units = inventory_units.to_a
+  end
+
+  def for_order(order)
+    Spree::ShippingManifest.new(
+      inventory_units: @inventory_units.select {|iu| iu.order_id == order.id }
+    )
   end
 
   def items
