@@ -160,7 +160,8 @@ THIS IS THE BEST PRODUCT EVER!
 
     end
 
-    shared_examples_for "line item descriptions" do
+    context '#line_item_description_text' do
+      subject { line_item_description_text description }
       context 'variant has a blank description' do
         let(:description) { nil }
         it { is_expected.to eq(Spree.t(:product_has_no_description)) }
@@ -173,12 +174,6 @@ THIS IS THE BEST PRODUCT EVER!
         let(:description) { 'test&nbsp;desc' }
         it { is_expected.to eq('test desc') }
       end
-    end
-
-    context '#line_item_description_text' do
-      subject { line_item_description_text description }
-
-      it_should_behave_like "line item descriptions"
     end
 
     context '#cache_key_for_products' do
