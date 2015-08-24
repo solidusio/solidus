@@ -24,7 +24,7 @@ describe Spree::Variant, :type => :model do
 
     it "propagate to stock items" do
       expect_any_instance_of(Spree::StockLocation).to receive(:propagate_variant)
-      product.variants.create(:name => "Foobar")
+      product.variants.create!
     end
 
     context "stock location has disable propagate all variants" do
@@ -32,7 +32,7 @@ describe Spree::Variant, :type => :model do
 
       it "propagate to stock items" do
         expect_any_instance_of(Spree::StockLocation).not_to receive(:propagate_variant)
-        product.variants.create(:name => "Foobar")
+        product.variants.create!
       end
     end
 
@@ -46,7 +46,7 @@ describe Spree::Variant, :type => :model do
 
       context 'when a variant is created' do
         before(:each) do
-          product.variants.create!(:name => 'any-name')
+          product.variants.create!
         end
 
         it { expect(product.master).to_not be_in_stock }
