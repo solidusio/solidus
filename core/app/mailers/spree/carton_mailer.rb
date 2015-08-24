@@ -8,8 +8,10 @@ module Spree
         ActiveSupport::Deprecation.warn "Calling shipped_email with a carton_id is DEPRECATED. Instead use CartonMailer.shipped_email(order, carton)"
         @carton = Carton.find(args[0])
         @order = @carton.orders.first # assume first order
+        @manifest = @carton.manifest # use the entire manifest, since we don't know the precise order
       else
         @order, @carton = args
+        @manifest = @carton.manifest_for_order(@order)
       end
       @store = @order.store
       subject = (options[:resend] ? "[#{Spree.t(:resend).upcase}] " : '')
