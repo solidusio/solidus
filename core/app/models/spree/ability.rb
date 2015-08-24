@@ -73,7 +73,7 @@ module Spree
       can :display, ProductProperty
       can :display, Property
       can :create, Spree.user_class
-      can [:read, :update, :destroy], Spree.user_class, id: user.id
+      can [:read, :update], Spree.user_class, id: user.id
       can :display, State
       can :display, StockItem, stock_location: { active: true }
       can :display, StockLocation, active: true
