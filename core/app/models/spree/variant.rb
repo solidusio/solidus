@@ -119,7 +119,7 @@ module Spree
     #
     # @return [String] a sentence-ified string of option values.
     def options_text
-      values = self.option_values.sort do |a, b|
+      values = self.option_values.includes(:option_type).sort do |a, b|
         a.option_type.position <=> b.option_type.position
       end
 
