@@ -16,7 +16,12 @@ require 'spree_sample'
 RSpec.configure do |config|
   config.color = true
   config.infer_spec_type_from_file_location!
-  config.mock_with :rspec
+  config.expect_with :rspec do |c|
+    c.syntax = :expect
+  end
+  config.mock_with :rspec do |c|
+    c.syntax = :expect
+  end
 
   # If you're not using ActiveRecord, or you'd prefer not to run each of your
   # examples within a transaction, comment the following line or assign false

@@ -61,7 +61,12 @@ end
 RSpec.configure do |config|
   config.color = true
   config.infer_spec_type_from_file_location!
-  config.mock_with :rspec
+  config.expect_with :rspec do |c|
+    c.syntax = :expect
+  end
+  config.mock_with :rspec do |c|
+    c.syntax = :expect
+  end
 
   config.fixture_path = File.join(File.expand_path(File.dirname(__FILE__)), "fixtures")
 
