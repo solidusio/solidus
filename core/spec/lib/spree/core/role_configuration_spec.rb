@@ -100,6 +100,30 @@ describe Spree::RoleConfiguration do
         instance.roles.merge!({ role_name => described_class::Role.new(role_name, [DummyPermissionSet])})
       end
 
+      context "default_role" do
+        let(:role_name) { 'default' }
+
+        context "when the user has no roles" do
+          let(:user_roles) {[]}
+
+          it "activates the applicable permissions on the ability" do
+            expect{subject}.to change{ability.can? :manage, :things}.
+              from(false).
+              to(true)
+          end
+        end
+
+        context "when the user has a different role" do
+          let(:user_roles) {[]}
+
+          it "activates the applicable permissions on the ability" do
+            expect{subject}.to change{ability.can? :manage, :things}.
+              from(false).
+              to(true)
+          end
+        end
+      end
+
       context "when the configuration has applicable roles" do
         let(:user_roles) {[role_name, "someotherrandomrole"]}
 
