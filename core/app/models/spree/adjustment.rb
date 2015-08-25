@@ -101,7 +101,7 @@ module Spree
       unfinalize
     end
 
-    def open
+    def open!
       ActiveSupport::Deprecation.warn "Adjustment#open! is deprecated. Instead use Adjustment#unfinalize!", caller
       unfinalize!
     end

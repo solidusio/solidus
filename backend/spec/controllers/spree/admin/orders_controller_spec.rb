@@ -296,19 +296,12 @@ describe Spree::Admin::OrdersController, :type => :controller do
     end
 
     context "#open_adjustments" do
-      let(:closed) { double('closed_adjustments') }
-      let(:closed_adjustment) { double }
-
-      before do
-        allow(adjustments).to receive(:where).and_return(closed)
-        allow(closed).to receive(:each).and_return([])
-      end
+      let(:order) { create(:order) }
+      let!(:closed_adjustment) { create(:adjustment, finalized: true, adjustable: order, order: order) }
 
       it "changes all the closed adjustments to open" do
-        expect(adjustments).to receive(:where).with(state: 'closed')
-          .and_return([closed_adjustment])
-        expect(closed_adjustment).to receive(:open!)
         spree_post :open_adjustments, id: order.number
+        expect(closed_adjustment.reload.finalized).to eq(false)
       end
 
       it "sets the flash success message" do
@@ -323,19 +316,12 @@ describe Spree::Admin::OrdersController, :type => :controller do
     end
 
     context "#close_adjustments" do
-      let(:open) { double('open_adjustments') }
-      let(:open_adjustment) { double }
-
-      before do
-        allow(adjustments).to receive(:where).and_return(open)
-        allow(open).to receive(:each).and_return([])
-      end
+      let(:order) { create(:order) }
+      let!(:open_adjustment) { create(:adjustment, finalized: false, adjustable: order, order: order) }
 
       it "changes all the open adjustments to closed" do
-        expect(adjustments).to receive(:where).with(state: 'open')
-          .and_return([open_adjustment])
-        expect(open_adjustment).to receive(:close!)
         spree_post :close_adjustments, id: order.number
+        expect(open_adjustment.reload.finalized).to eq(true)
       end
 
       it "sets the flash success message" do
