@@ -52,14 +52,6 @@ module Spree
       end
     end
 
-    # Deprecated and may be removed from future releases; use
-    # line_item_description_text(line_item.description) instead.
-    def line_item_description(variant)
-      ActiveSupport::Deprecation.warn "line_item_description(variant) is deprecated and may be removed from future releases, use line_item_description_text(line_item.description) instead.", caller
-
-      line_item_description_text(variant.product.description)
-    end
-
     # Filters and truncates the given description.
     #
     # @param description_text [String] the text to filter

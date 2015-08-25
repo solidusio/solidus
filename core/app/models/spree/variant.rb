@@ -21,9 +21,9 @@ module Spree
     belongs_to :product, touch: true, class_name: 'Spree::Product', inverse_of: :variants
     belongs_to :tax_category, class_name: 'Spree::TaxCategory'
 
-    delegate_belongs_to :product, :name, :description, :slug, :available_on,
-                        :shipping_category_id, :meta_description, :meta_keywords,
-                        :shipping_category
+    delegate :name, :description, :slug, :available_on, :shipping_category_id,
+             :meta_description, :meta_keywords, :shipping_category,
+             to: :product
 
     has_many :inventory_units, inverse_of: :variant
     has_many :line_items, inverse_of: :variant
@@ -37,13 +37,6 @@ module Spree
     has_many :option_values, through: :option_values_variants
 
     has_many :images, -> { order(:position) }, as: :viewable, dependent: :destroy, class_name: "Spree::Image"
-
-    has_one :default_price,
-      -> { where(currency: Spree::Config[:currency], is_default: true) },
-      class_name: 'Spree::Price',
-      dependent: :destroy
-
-    delegate_belongs_to :default_price, :display_price, :display_amount, :price, :price=, :currency
 
     has_many :prices,
       class_name: 'Spree::Price',
