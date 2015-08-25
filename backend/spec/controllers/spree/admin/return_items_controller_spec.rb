@@ -19,7 +19,7 @@ describe Spree::Admin::ReturnItemsController, :type => :controller do
       }.to change { return_item.reload.acceptance_status }.from(old_acceptance_status).to(new_acceptance_status)
     end
 
-    it 'redirects to the custome return' do
+    it 'redirects to the customer return' do
       subject
       expect(response).to redirect_to spree.edit_admin_order_customer_return_path(customer_return.order, customer_return)
     end
