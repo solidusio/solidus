@@ -295,13 +295,13 @@ describe Spree::Admin::OrdersController, :type => :controller do
       end
     end
 
-    context "#open_adjustments" do
+    context "#not_finalized_adjustments" do
       let(:order) { create(:order) }
-      let!(:closed_adjustment) { create(:adjustment, finalized: true, adjustable: order, order: order) }
+      let!(:finalized_adjustment) { create(:adjustment, finalized: true, adjustable: order, order: order) }
 
       it "changes all the closed adjustments to open" do
         spree_post :open_adjustments, id: order.number
-        expect(closed_adjustment.reload.finalized).to eq(false)
+        expect(finalized_adjustment.reload.finalized).to eq(false)
       end
 
       it "sets the flash success message" do
@@ -317,11 +317,11 @@ describe Spree::Admin::OrdersController, :type => :controller do
 
     context "#close_adjustments" do
       let(:order) { create(:order) }
-      let!(:open_adjustment) { create(:adjustment, finalized: false, adjustable: order, order: order) }
+      let!(:not_finalized_adjustment) { create(:adjustment, finalized: false, adjustable: order, order: order) }
 
       it "changes all the open adjustments to closed" do
         spree_post :close_adjustments, id: order.number
-        expect(open_adjustment.reload.finalized).to eq(true)
+        expect(not_finalized_adjustment.reload.finalized).to eq(true)
       end
 
       it "sets the flash success message" do
