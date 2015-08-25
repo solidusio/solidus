@@ -7,6 +7,23 @@ describe Spree::Admin::ReimbursementsController, :type => :controller do
     Spree::RefundReason.find_or_create_by!(name: Spree::RefundReason::RETURN_PROCESSING_REASON, mutable: false)
   end
 
+  describe '#edit' do
+    let(:reimbursement) { create(:reimbursement) }
+    let(:order) { reimbursement.order }
+    let!(:active_stock_location) { create(:stock_location, active: true) }
+    let!(:inactive_stock_location) { create(:stock_location, active: false) }
+
+    subject do
+      spree_get :edit, order_id: order.to_param, id: reimbursement.to_param
+    end
+
+    it "loads all the active stock locations" do
+      subject
+      expect(assigns(:stock_locations)).to include(active_stock_location)
+      expect(assigns(:stock_locations)).not_to include(inactive_stock_location)
+    end
+  end
+
   describe '#create' do
     let(:customer_return)  { create(:customer_return, line_items_count: 1) }
     let(:order) { customer_return.order }

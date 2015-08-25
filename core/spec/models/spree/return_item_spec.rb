@@ -549,7 +549,7 @@ describe Spree::ReturnItem, :type => :model do
   describe "#eligible_exchange_variants" do
     it "uses the exchange variant calculator to compute possible variants to exchange for" do
       return_item = build(:return_item)
-      expect(Spree::ReturnItem.exchange_variant_engine).to receive(:eligible_variants).with(return_item.variant)
+      expect(Spree::ReturnItem.exchange_variant_engine).to receive(:eligible_variants).with(return_item.variant, stock_locations: nil)
       return_item.eligible_exchange_variants
     end
   end
