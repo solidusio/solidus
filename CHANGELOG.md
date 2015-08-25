@@ -10,6 +10,10 @@
 *   GET /admin/search/users searches all of a user's addresses, not
     just current bill and ship addresss
 
+*   Adjustment state column has been replaced with a finalized boolean column.
+    This includes a migration replacing the column, which may cause some
+    downtime for large stores.
+
 ## Solidus 1.0.1 (2015-08-19)
 
 See https://github.com/solidusio/solidus/releases/tag/v1.0.1
