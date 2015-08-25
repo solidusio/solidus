@@ -34,15 +34,17 @@ module DelegateBelongsTo
     def delegate_belongs_to(association, *attrs)
       opts = attrs.extract_options!
       initialize_association :belongs_to, association, opts
-      attrs = get_association_column_names(association) if attrs.empty?
-      attrs.concat get_association_column_names(association) if attrs.delete :defaults
+      if attrs.empty? || attrs.delete(:defaults)
+        ActiveSupport::Deprecation.warn "delegate_belongs_to with defaults is DEPRECATED. You should specify the attributes you want delegated."
+        attrs += get_association_column_names(association)
+      end
       attrs.each do |attr|
-        class_def attr do |*args|
-          send(:delegator_for, association, attr, *args)
+        define_method attr do |*args|
+          delegator_for(association, attr, *args)
         end
 
-        class_def "#{attr}=" do |val|
-          send(:delegator_for_setter, association, attr, val)
+        define_method "#{attr}=" do |val|
+          delegator_for(association, "#{attr}=", val)
         end
       end
     end
@@ -64,32 +66,19 @@ module DelegateBelongsTo
       # initialize_association :belongs_to, :contact
       def initialize_association(type, association, opts={})
         raise 'Illegal or unimplemented association type.' unless [:belongs_to].include?(type.to_s.to_sym)
-        send type, association, opts if reflect_on_association(association).nil?
-      end
-
-    private
-      def class_def(name, method=nil, &blk)
-        class_eval { method.nil? ? define_method(name, &blk) : define_method(name, method) }
+        if reflect_on_association(association).nil?
+          ActiveSupport::Deprecation.warn "delegate_belongs_to was called with an undefined association which is DEPRECATED. You should declare `belongs_to #{association.inspect}` yourself."
+          send type, association, opts
+        end
       end
   end
 
   def delegator_for(association, attr, *args)
-    return if self.class.column_names.include?(attr.to_s)
-    send("#{association}=", self.class.reflect_on_association(association).klass.new) if send(association).nil?
-    if args.empty?
-      send(association).send(attr)
-    else
-      send(association).send(attr, *args)
-    end
+    send "build_#{association}" if send(association).nil?
+    send(association).send(attr, *args)
   end
 
-  def delegator_for_setter(association, attr, val)
-    return if self.class.column_names.include?(attr.to_s)
-    send("#{association}=", self.class.reflect_on_association(association).klass.new) if send(association).nil?
-    send(association).send("#{attr}=", val)
-  end
   protected :delegator_for
-  protected :delegator_for_setter
 end
 
 ActiveRecord::Base.send :include, DelegateBelongsTo
