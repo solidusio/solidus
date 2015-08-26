@@ -17,11 +17,11 @@ describe Spree::RoleConfiguration do
 
   describe ".configure" do
     it "yields with the instance" do
-      expect { |b| described_class.configure &b }.to yield_with_args(described_class.instance)
+      expect { |b| described_class.configure(&b) }.to yield_with_args(described_class.instance)
     end
 
     it "only yields once" do
-      expect { |b| described_class.configure &b }.to yield_control.once
+      expect { |b| described_class.configure(&b) }.to yield_control.once
     end
   end
 
