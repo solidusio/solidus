@@ -13,6 +13,12 @@ module Spree
         Spree::Config = app.config.spree.preferences #legacy access
       end
 
+      initializer "spree.default_permissions" do |app|
+        Spree::RoleConfiguration.configure do |config|
+          config.assign_permissions :default, [Spree::PermissionSets::DefaultCustomer]
+        end
+      end
+
       initializer "spree.register.calculators" do |app|
         app.config.spree.calculators.shipping_methods = [
             Spree::Calculator::Shipping::FlatPercentItemTotal,

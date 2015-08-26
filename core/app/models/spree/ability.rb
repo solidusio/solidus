@@ -52,35 +52,7 @@ module Spree
       # required to checkout and use the frontend.
       if user.respond_to?(:has_spree_role?) && user.has_spree_role?('admin')
         can :manage, :all
-      else
-        grant_generic_user_permissions
       end
-    end
-
-    def grant_generic_user_permissions
-      can :display, Country
-      can :display, OptionType
-      can :display, OptionValue
-      can :create, Order
-      can [:read, :update], Order do |order, token|
-        order.user == user || order.guest_token && token == order.guest_token
-      end
-      can :create, ReturnAuthorization do |return_authorization|
-        return_authorization.order.user == user
-      end
-      can [:display, :update], CreditCard, user_id: user.id
-      can :display, Product
-      can :display, ProductProperty
-      can :display, Property
-      can :create, Spree.user_class
-      can [:read, :update], Spree.user_class, id: user.id
-      can :display, State
-      can :display, StockItem, stock_location: { active: true }
-      can :display, StockLocation, active: true
-      can :display, Taxon
-      can :display, Taxonomy
-      can [:display, :view_out_of_stock], Variant
-      can :display, Zone
     end
 
     # Before, this was the only way to extend this ability. Permission sets have been added since.
