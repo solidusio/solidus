@@ -29,8 +29,8 @@ module Spree
 
       alias_actions
       grant_default_permissions
-      register_extension_abilities
       activate_permission_sets
+      register_extension_abilities
     end
 
     private
