@@ -313,10 +313,7 @@ module Spree
       after { Spree::Ability.remove_ability(::BarAbility) }
 
       it "can view an order" do
-        user = build(:user)
-        allow(user).to receive_message_chain(:spree_roles, :pluck).and_return(["bar"])
-        allow(user).to receive(:has_spree_role?).with('bar').and_return(true)
-        allow(user).to receive(:has_spree_role?).with('admin').and_return(false)
+        user = build(:user, spree_roles: [Spree::Role.new(name: 'bar')])
         allow(Spree.user_class).to receive_messages find_by: user
         api_get :show, :id => order.to_param
         expect(response.status).to eq(200)
@@ -385,10 +382,7 @@ module Spree
     end
 
     context "admin user imports order" do
-      before do
-        allow(current_api_user).to receive_messages has_spree_role?: true
-        allow(current_api_user).to receive_message_chain :spree_roles, pluck: ["admin"]
-      end
+      let!(:current_api_user) { create :admin_user }
 
       it "is able to set any default unpermitted attribute" do
         api_post :create, :order => { number: "WOW" }
@@ -400,7 +394,6 @@ module Spree
     it "can create an order without any parameters" do
       expect { api_post :create }.not_to raise_error
       expect(response.status).to eq(201)
-      order = Order.last
       expect(json_response["state"]).to eq("cart")
     end
 
