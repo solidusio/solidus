@@ -32,6 +32,7 @@ module DelegateBelongsTo
     # delegate_belongs_to :contact, [:defaults, :address, :fullname], :class_name => 'VCard'
     ##
     def delegate_belongs_to(association, *attrs)
+      ActiveSupport::Deprecation.warn "delegate_belongs_to is deprecated. Instead use rails built in delegates.", caller
       opts = attrs.extract_options!
       initialize_association :belongs_to, association, opts
       attrs = get_association_column_names(association) if attrs.empty?

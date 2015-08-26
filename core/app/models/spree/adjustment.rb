@@ -29,8 +29,16 @@ module Spree
     after_create :update_adjustable_adjustment_total
     after_destroy :update_adjustable_adjustment_total
 
-    scope :open, -> { where(finalized: false) }
-    scope :closed, -> { where(finalized: true) }
+    scope :not_finalized, -> { where(finalized: false) }
+    scope :open, -> do
+      ActiveSupport::Deprecation.warn "Adjustment.open is deprecated. Instead use Adjustment.not_finalized", caller
+      where(finalized: false)
+    end
+    scope :finalized, -> { where(finalized: true) }
+    scope :closed, -> do
+      ActiveSupport::Deprecation.warn "Adjustment.closed is deprecated. Instead use Adjustment.finalized", caller
+      where(finalized: true)
+    end
     scope :cancellation, -> { where(source_type: 'Spree::UnitCancel') }
     scope :tax, -> { where(source_type: 'Spree::TaxRate') }
     scope :non_tax, -> do
@@ -101,7 +109,7 @@ module Spree
       unfinalize
     end
 
-    def open
+    def open!
       ActiveSupport::Deprecation.warn "Adjustment#open! is deprecated. Instead use Adjustment#unfinalize!", caller
       unfinalize!
     end

@@ -19,6 +19,8 @@ describe Spree::PermissionSets::UserDisplay do
     it { is_expected.to be_able_to(:display, Spree::StoreCredit) }
     it { is_expected.to be_able_to(:admin, Spree::StoreCredit) }
     it { is_expected.to be_able_to(:display, Spree::Role) }
+    it { is_expected.not_to be_able_to(:delete, Spree.user_class) }
+    it { is_expected.not_to be_able_to(:destroy, Spree.user_class) }
   end
 
   context "when not activated" do

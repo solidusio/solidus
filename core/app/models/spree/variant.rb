@@ -21,9 +21,9 @@ module Spree
     belongs_to :product, touch: true, class_name: 'Spree::Product', inverse_of: :variants
     belongs_to :tax_category, class_name: 'Spree::TaxCategory'
 
-    delegate_belongs_to :product, :name, :description, :slug, :available_on,
-                        :shipping_category_id, :meta_description, :meta_keywords,
-                        :shipping_category
+    delegate :name, :description, :slug, :available_on, :shipping_category_id,
+             :meta_description, :meta_keywords, :shipping_category,
+             to: :product
 
     has_many :inventory_units, inverse_of: :variant
     has_many :line_items, inverse_of: :variant
@@ -37,13 +37,6 @@ module Spree
     has_many :option_values, through: :option_values_variants
 
     has_many :images, -> { order(:position) }, as: :viewable, dependent: :destroy, class_name: "Spree::Image"
-
-    has_one :default_price,
-      -> { where(currency: Spree::Config[:currency], is_default: true) },
-      class_name: 'Spree::Price',
-      dependent: :destroy
-
-    delegate_belongs_to :default_price, :display_price, :display_amount, :price, :price=, :currency
 
     has_many :prices,
       class_name: 'Spree::Price',
@@ -64,7 +57,19 @@ module Spree
 
     after_touch :clear_in_stock_cache
 
-    scope :in_stock, -> { joins(:stock_items).where('count_on_hand > ? OR track_inventory = ?', 0, false) }
+    # Returns variants that are in stock. When stock locations are provided as
+    # a parameter, the scope is limited to variants that are in stock in the
+    # provided stock locations.
+    #
+    # @param stock_locations [Array<Spree::StockLocation>] the stock locations to check
+    # @return [ActiveRecord::Relation]
+    def self.in_stock(stock_locations = nil)
+      in_stock_variants = joins(:stock_items).where(Spree::StockItem.arel_table[:count_on_hand].gt(0).or(arel_table[:track_inventory].eq(false)))
+      if stock_locations.present?
+        in_stock_variants = in_stock_variants.where(spree_stock_items: { stock_location_id: stock_locations.map(&:id) })
+      end
+      in_stock_variants
+    end
 
     self.whitelisted_ransackable_associations = %w[option_values product prices default_price]
     self.whitelisted_ransackable_attributes = %w[weight sku]
@@ -119,7 +124,7 @@ module Spree
     #
     # @return [String] a sentence-ified string of option values.
     def options_text
-      values = self.option_values.sort do |a, b|
+      values = self.option_values.includes(:option_type).sort do |a, b|
         a.option_type.position <=> b.option_type.position
       end
 

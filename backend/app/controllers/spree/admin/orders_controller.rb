@@ -152,16 +152,16 @@ module Spree
       end
 
       def open_adjustments
-        adjustments = @order.all_adjustments.where(state: 'closed')
-        adjustments.each &:open!
+        adjustments = @order.all_adjustments.finalized
+        adjustments.each(&:unfinalize!)
         flash[:success] = Spree.t(:all_adjustments_opened)
 
         respond_with(@order) { |format| format.html { redirect_to :back } }
       end
 
       def close_adjustments
-        adjustments = @order.all_adjustments.where(state: 'open')
-        adjustments.each &:close!
+        adjustments = @order.all_adjustments.not_finalized
+        adjustments.each(&:finalize!)
         flash[:success] = Spree.t(:all_adjustments_closed)
 
         respond_with(@order) { |format| format.html { redirect_to :back } }
