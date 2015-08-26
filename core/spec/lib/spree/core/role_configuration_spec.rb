@@ -9,10 +9,12 @@ describe Spree::RoleConfiguration do
   class OtherDummyPermissionSet < Spree::PermissionSets::Base; end
 
   let(:instance) { described_class.instance }
-  let!(:default_roles) do
-    Hash.new do |h, name|
-      h[name] = described_class::Role.new(name, Set.new)
-    end
+
+  around do |example|
+    @original_roles = instance.roles.dup
+    instance.roles.clear
+    example.run
+    instance.roles = @original_roles
   end
 
   describe ".configure" do
@@ -28,10 +30,6 @@ describe Spree::RoleConfiguration do
   describe "#assign_permissions" do
     let(:name) { "thing" }
     subject { instance.assign_permissions name, [DummyPermissionSet]}
-
-    after do
-      instance.roles = default_roles
-    end
 
     context "when a role for the name exists" do
       before do
@@ -93,10 +91,6 @@ describe Spree::RoleConfiguration do
     before do
       allow(user).to receive(:spree_roles).and_return(roles_double)
       allow(user).to receive(:has_spree_role?).with("admin").and_return(false)
-    end
-
-    after do
-      instance.roles = default_roles
     end
 
     subject { described_class.instance.activate_permissions! ability, user }
