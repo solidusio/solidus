@@ -213,7 +213,7 @@ describe Spree::Admin::OrdersController, :type => :controller do
       end
 
       context 'when before confirm' do
-        before { order.stub completed?: false, confirm?: false }
+        before { allow(order).to receive_messages completed?: false, confirm?: false }
 
         it 'renders the confirm_advance template (to allow refreshing of the order)' do
           subject
