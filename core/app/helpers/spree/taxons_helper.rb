@@ -22,7 +22,7 @@ module Spree
       [
         "DISTINCT (spree_products.id)",
         "spree_products.*",
-        "spree_products_taxons.position"
+        "spree_classifications.position"
       ]
     end
   end
