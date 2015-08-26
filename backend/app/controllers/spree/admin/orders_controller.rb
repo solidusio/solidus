@@ -173,7 +173,7 @@ module Spree
             created_by_id: try_spree_current_user.try(:id),
             frontend_viewable: false,
             store_id: current_store.try(:id)
-          }
+          }.with_indifferent_access
         end
 
         def load_order
