@@ -8,6 +8,9 @@ module Spree
       rescue_from Spree::Order::InsufficientStock, with: :insufficient_stock_error
 
       include Spree::Core::ControllerHelpers::Order
+      # TODO: Remove this after deprecated usage in #update is removed
+      include Spree::Core::ControllerHelpers::PaymentParameters
+
       # This before_filter comes from Spree::Core::ControllerHelpers::Order
       skip_before_action :set_current_order
 
@@ -51,7 +54,14 @@ module Spree
       def update
         authorize! :update, @order, order_token
 
-        if @order.update_from_params(params, permitted_checkout_attributes, request.headers.env)
+        update_params = if params[:payment_source].present?
+          ActiveSupport::Deprecation.warn("Passing payment_source is deprecated. Send source parameters inside payments_attributes[:source_attributes].", caller)
+          move_payment_source_into_payments_attributes(params)
+        else
+          params
+        end
+
+        if @order.update_from_params(update_params, permitted_checkout_attributes, request.headers.env)
           if can?(:admin, @order) && user_id.present?
             @order.associate_user!(Spree.user_class.find(user_id))
           end

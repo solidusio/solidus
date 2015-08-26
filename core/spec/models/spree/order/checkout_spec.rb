@@ -779,15 +779,16 @@ describe Spree::Order, :type => :model do
 
       let(:params) do
         ActionController::Parameters.new(
-          order: { payments_attributes: [{payment_method_id: 1}], existing_card: credit_card.id },
+          order: {
+            payments_attributes: [
+              {
+                payment_method_id: 1,
+                source_attributes: attributes_for(:credit_card),
+              },
+            ],
+            existing_card: credit_card.id,
+          },
           cvc_confirm: "737",
-          payment_source: {
-            "1" => { name: "Luis Braga",
-                     number: "4111 1111 1111 1111",
-                     expiry: "06 / 2016",
-                     verification_value: "737",
-                     cc_type: "" }
-          }
         )
       end
 

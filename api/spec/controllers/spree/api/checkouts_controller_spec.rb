@@ -172,40 +172,118 @@ module Spree
         expect(source_errors).to include("can't be blank")
       end
 
-      it "can update payment method with source and transition from payment to confirm" do
-        order.update_column(:state, "payment")
-        source_attributes = {
-          number: "4111111111111111",
-          month: 1.month.from_now.month,
-          year: 1.month.from_now.year,
-          verification_value: "123",
-          name: "Spree Commerce"
-        }
+      describe 'payment method with source and transition from payment to confirm' do
+        before do
+          order.update_column(:state, "payment")
+        end
 
-        api_put :update, id: order.to_param, order_token: order.guest_token,
-          order: { payments_attributes: [{ payment_method_id: @payment_method.id.to_s }]},
-                      payment_source: { @payment_method.id.to_s => source_attributes }
-        expect(json_response['payments'][0]['payment_method']['name']).to eq(@payment_method.name)
-        expect(json_response['payments'][0]['amount']).to eq(order.total.to_s)
-        expect(response.status).to eq(200)
+        let(:params) do
+          {
+            id: order.to_param,
+            order_token: order.guest_token,
+            order: {
+              payments_attributes: [
+                {
+                  payment_method_id: @payment_method.id.to_s,
+                  source_attributes: attributes_for(:credit_card),
+                },
+              ],
+            },
+          }
+        end
+
+        it 'succeeds' do
+          api_put(:update, params)
+          expect(response.status).to eq(200)
+          expect(json_response['payments'][0]['payment_method']['name']).to eq(@payment_method.name)
+          expect(json_response['payments'][0]['amount']).to eq(order.total.to_s)
+        end
+
+        context 'with deprecated payment_source parameters' do
+          let(:params) do
+            {
+              id: order.to_param,
+              order_token: order.guest_token,
+              order: {
+                payments_attributes: [
+                  { payment_method_id: @payment_method.id.to_s },
+                ],
+              },
+              payment_source: { @payment_method.id.to_s => attributes_for(:credit_card) },
+            }
+          end
+
+          it "succeeds" do
+            ActiveSupport::Deprecation.silence do
+              api_put(:update, params)
+            end
+            expect(response.status).to eq(200)
+            expect(json_response['payments'][0]['payment_method']['name']).to eq(@payment_method.name)
+            expect(json_response['payments'][0]['amount']).to eq(order.total.to_s)
+          end
+        end
       end
 
-      it "returns errors when source is missing attributes" do
-        order.update_column(:state, "payment")
-        api_put :update, id: order.to_param, order_token: order.guest_token,
-          order: {
-            payments_attributes: [{ payment_method_id: @payment_method.id }]
-          },
-          payment_source: {
-            @payment_method.id.to_s => { name: "Spree" }
-          }
+      context 'when source is missing attributes' do
+        before do
+          order.update_column(:state, "payment")
+        end
 
-        expect(response.status).to eq(422)
-        cc_errors = json_response['errors']['payments.Credit Card']
-        expect(cc_errors).to include("Number can't be blank")
-        expect(cc_errors).to include("Month is not a number")
-        expect(cc_errors).to include("Year is not a number")
-        expect(cc_errors).to include("Verification Value can't be blank")
+        let(:params) do
+          {
+            id: order.to_param,
+            order_token: order.guest_token,
+            order: {
+              payments_attributes: [
+                {
+                  payment_method_id: @payment_method.id.to_s,
+                  source_attributes: {name: "Spree"},
+                },
+              ],
+            },
+          }
+        end
+
+        it 'returns errors' do
+          api_put(:update, params)
+
+          expect(response.status).to eq(422)
+          cc_errors = json_response['errors']['payments.Credit Card']
+          expect(cc_errors).to include("Number can't be blank")
+          expect(cc_errors).to include("Month is not a number")
+          expect(cc_errors).to include("Year is not a number")
+          expect(cc_errors).to include("Verification Value can't be blank")
+        end
+
+        context 'with deprecated payment_source parameters' do
+          let(:params) do
+            {
+              id: order.to_param,
+              order_token: order.guest_token,
+              order: {
+                payments_attributes: [
+                  {payment_method_id: @payment_method.id.to_s},
+                ],
+              },
+              payment_source: {
+                @payment_method.id.to_s => {name: "Spree"},
+              },
+            }
+          end
+
+          it 'returns errors' do
+            ActiveSupport::Deprecation.silence do
+              api_put(:update, params)
+            end
+
+            expect(response.status).to eq(422)
+            cc_errors = json_response['errors']['payments.Credit Card']
+            expect(cc_errors).to include("Number can't be blank")
+            expect(cc_errors).to include("Month is not a number")
+            expect(cc_errors).to include("Year is not a number")
+            expect(cc_errors).to include("Verification Value can't be blank")
+          end
+        end
       end
 
       it "allow users to reuse a credit card" do

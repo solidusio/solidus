@@ -336,10 +336,6 @@ module Spree
             end
           end
 
-          # For payment step, filter order parameters to produce the expected nested
-          # attributes for a single payment and its source, discarding attributes
-          # for payment methods other than the one selected
-          #
           # In case a existing credit card is provided it needs to build the payment
           # attributes from scratch so we can set the amount. example payload:
           #
@@ -350,14 +346,6 @@ module Spree
           #   }
           #
           def update_params_payment_source
-            if @updating_params[:payment_source].present?
-              source_params = @updating_params.delete(:payment_source)[@updating_params[:order][:payments_attributes].first[:payment_method_id].to_s]
-
-              if source_params
-                @updating_params[:order][:payments_attributes].first[:source_attributes] = source_params
-              end
-            end
-
             if @updating_params[:order] && (@updating_params[:order][:payments_attributes] || @updating_params[:order][:existing_card])
               @updating_params[:order][:payments_attributes] ||= [{}]
               @updating_params[:order][:payments_attributes].first[:amount] = self.total
