@@ -84,13 +84,13 @@ describe Spree::RoleConfiguration do
 
   describe "#activate_permissions!" do
     let(:user) { build :user }
-    let(:roles_double) { double pluck: user_roles, any?: true }
     let(:role_name) { "testrole" }
     let(:ability) { DummyAbility.new }
 
     before do
-      allow(user).to receive(:spree_roles).and_return(roles_double)
-      allow(user).to receive(:has_spree_role?).with("admin").and_return(false)
+      user.spree_roles = user_roles.map do |role|
+        Spree::Role.create!(name: role)
+      end
     end
 
     subject { described_class.instance.activate_permissions! ability, user }
