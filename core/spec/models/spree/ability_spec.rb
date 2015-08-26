@@ -53,7 +53,7 @@ describe Spree::Ability, :type => :model do
     let(:resource) { Object.new }
 
     context 'with admin user' do
-      before(:each) { allow(user).to receive(:has_spree_role?).and_return(true) }
+      let(:user) { build :admin_user }
       it_should_behave_like 'access granted'
       it_should_behave_like 'index allowed'
     end

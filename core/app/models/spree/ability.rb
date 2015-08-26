@@ -28,7 +28,6 @@ module Spree
       @user = current_user || Spree.user_class.new
 
       alias_actions
-      grant_default_permissions
       activate_permission_sets
       register_extension_abilities
     end
@@ -45,14 +44,6 @@ module Spree
       alias_action :new_action, to: :create
       alias_action :show, to: :read
       alias_action :index, :read, to: :display
-    end
-
-    def grant_default_permissions
-      # if the user is a "super user" give them full permissions, otherwise give them the permissions
-      # required to checkout and use the frontend.
-      if user.respond_to?(:has_spree_role?) && user.has_spree_role?('admin')
-        can :manage, :all
-      end
     end
 
     # Before, this was the only way to extend this ability. Permission sets have been added since.

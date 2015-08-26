@@ -16,6 +16,7 @@ module Spree
       initializer "spree.default_permissions" do |app|
         Spree::RoleConfiguration.configure do |config|
           config.assign_permissions :default, [Spree::PermissionSets::DefaultCustomer]
+          config.assign_permissions :admin, [Spree::PermissionSets::SuperUser]
         end
       end
 
