@@ -3,9 +3,6 @@ require 'spree/api/responders'
 module Spree
   module Api
     class BaseController < ActionController::Base
-      prepend_view_path Rails.root + "app/views"
-      append_view_path File.expand_path("../../../app/views", File.dirname(__FILE__))
-
       self.responder = Spree::Api::Responders::AppResponder
       respond_to :json
 
