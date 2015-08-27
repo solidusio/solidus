@@ -40,7 +40,10 @@ module Spree
 
       def zone_params
         attrs = params.require(:zone).permit!
-        map_nested_attributes_keys(Spree::Zone, attrs)
+        if attrs[:zone_members]
+          attrs[:zone_members_attributes] = attrs.delete(:zone_members)
+        end
+        attrs
       end
 
       def zone
