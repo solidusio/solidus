@@ -3,9 +3,6 @@ require 'spree/api/responders'
 module Spree
   module Api
     class BaseController < ActionController::Base
-      prepend_view_path Rails.root + "app/views"
-      append_view_path File.expand_path("../../../app/views", File.dirname(__FILE__))
-
       self.responder = Spree::Api::Responders::AppResponder
       respond_to :json
 
@@ -20,7 +17,6 @@ module Spree
 
       class_attribute :error_notifier
 
-      before_action :set_content_type
       before_action :load_user
       before_action :authorize_for_order, if: Proc.new { order_token.present? }
       before_action :authenticate_user
@@ -53,16 +49,6 @@ module Spree
         end
       end
 
-      def set_content_type
-        content_type = case params[:format]
-        when "json"
-          "application/json; charset=utf-8"
-        when "xml"
-          "text/xml; charset=utf-8"
-        end
-        headers["Content-Type"] = content_type
-      end
-
       def load_user
         @current_api_user ||= Spree.user_class.find_by(spree_api_key: api_key.to_s)
       end
@@ -70,9 +56,9 @@ module Spree
       def authenticate_user
         unless @current_api_user
           if requires_authentication? && api_key.blank? && order_token.blank?
-            render "spree/api/errors/must_specify_api_key", :status => 401 and return
+            render "spree/api/errors/must_specify_api_key", :status => 401
           elsif order_token.blank? && (requires_authentication? || api_key.present?)
-            render "spree/api/errors/invalid_api_key", :status => 401 and return
+            render "spree/api/errors/invalid_api_key", :status => 401
           end
         end
       end
@@ -86,7 +72,7 @@ module Spree
       end
 
       def unauthorized
-        render "spree/api/errors/unauthorized", status: 401 and return
+        render "spree/api/errors/unauthorized", status: 401
       end
 
       def error_during_processing(exception)
@@ -96,7 +82,7 @@ module Spree
         error_notifier.call(exception, self) if error_notifier
 
         render text: { exception: exception.message }.to_json,
-          status: 422 and return
+          status: 422
       end
 
       def gateway_error(exception)
@@ -109,7 +95,7 @@ module Spree
       end
 
       def not_found
-        render "spree/api/errors/not_found", status: 404 and return
+        render "spree/api/errors/not_found", status: 404
       end
 
       def current_ability
