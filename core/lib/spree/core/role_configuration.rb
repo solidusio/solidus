@@ -36,7 +36,7 @@ module Spree
     # @param ability [CanCan::Ability] the ability to invoke declarations on
     # @param user [#spree_roles] the user that holds the spree_roles association.
     def activate_permissions! ability, user
-      spree_roles = user.spree_roles.pluck(:name)
+      spree_roles = ['default'] | user.spree_roles.map(&:name)
       applicable_permissions = Set.new
 
       spree_roles.each do |role_name|

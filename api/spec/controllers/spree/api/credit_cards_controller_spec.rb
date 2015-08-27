@@ -6,16 +6,11 @@ module Spree
       render_views
 
       let!(:admin_user) do
-        user = Spree.user_class.new(:email => "spree@example.com", :id => 1)
-        user.generate_spree_api_key!
-        allow(user).to receive(:has_spree_role?).with('admin').and_return(true)
-        user
+        create(:admin_user)
       end
 
       let!(:normal_user) do
-        user = Spree.user_class.new(:email => "spree2@example.com", :id => 2)
-        user.generate_spree_api_key!
-        user
+        create(:user, :with_api_key)
       end
 
       let!(:card) { create(:credit_card, :user_id => admin_user.id, gateway_customer_profile_id: "random") }
@@ -31,8 +26,7 @@ module Spree
 
       context "calling user is in admin role" do
         let(:current_api_user) do
-          user = admin_user
-          user
+          admin_user
         end
 
         it "no credit cards exist for user" do
@@ -55,8 +49,7 @@ module Spree
 
       context "calling user is not in admin role" do
         let(:current_api_user) do
-          user = normal_user
-          user
+          normal_user
         end
 
         let!(:card) { create(:credit_card, :user_id => normal_user.id, gateway_customer_profile_id: "random") }

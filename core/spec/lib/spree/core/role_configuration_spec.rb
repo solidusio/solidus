@@ -9,29 +9,27 @@ describe Spree::RoleConfiguration do
   class OtherDummyPermissionSet < Spree::PermissionSets::Base; end
 
   let(:instance) { described_class.instance }
-  let!(:default_roles) do
-    Hash.new do |h, name|
-      h[name] = described_class::Role.new(name, Set.new)
-    end
+
+  around do |example|
+    @original_roles = instance.roles.dup
+    instance.roles.clear
+    example.run
+    instance.roles = @original_roles
   end
 
   describe ".configure" do
     it "yields with the instance" do
-      expect { |b| described_class.configure &b }.to yield_with_args(described_class.instance)
+      expect { |b| described_class.configure(&b) }.to yield_with_args(described_class.instance)
     end
 
     it "only yields once" do
-      expect { |b| described_class.configure &b }.to yield_control.once
+      expect { |b| described_class.configure(&b) }.to yield_control.once
     end
   end
 
   describe "#assign_permissions" do
     let(:name) { "thing" }
     subject { instance.assign_permissions name, [DummyPermissionSet]}
-
-    after do
-      instance.roles = default_roles
-    end
 
     context "when a role for the name exists" do
       before do
@@ -86,17 +84,13 @@ describe Spree::RoleConfiguration do
 
   describe "#activate_permissions!" do
     let(:user) { build :user }
-    let(:roles_double) { double pluck: user_roles, any?: true }
     let(:role_name) { "testrole" }
     let(:ability) { DummyAbility.new }
 
     before do
-      allow(user).to receive(:spree_roles).and_return(roles_double)
-      allow(user).to receive(:has_spree_role?).with("admin").and_return(false)
-    end
-
-    after do
-      instance.roles = default_roles
+      user.spree_roles = user_roles.map do |role|
+        Spree::Role.create!(name: role)
+      end
     end
 
     subject { described_class.instance.activate_permissions! ability, user }
@@ -104,6 +98,30 @@ describe Spree::RoleConfiguration do
     context "when the configuration has roles" do
       before do
         instance.roles.merge!({ role_name => described_class::Role.new(role_name, [DummyPermissionSet])})
+      end
+
+      context "default_role" do
+        let(:role_name) { 'default' }
+
+        context "when the user has no roles" do
+          let(:user_roles) {[]}
+
+          it "activates the applicable permissions on the ability" do
+            expect{subject}.to change{ability.can? :manage, :things}.
+              from(false).
+              to(true)
+          end
+        end
+
+        context "when the user has a different role" do
+          let(:user_roles) {[]}
+
+          it "activates the applicable permissions on the ability" do
+            expect{subject}.to change{ability.can? :manage, :things}.
+              from(false).
+              to(true)
+          end
+        end
       end
 
       context "when the configuration has applicable roles" do
