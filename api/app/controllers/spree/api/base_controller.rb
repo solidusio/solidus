@@ -17,7 +17,6 @@ module Spree
 
       class_attribute :error_notifier
 
-      before_action :set_content_type
       before_action :load_user
       before_action :authorize_for_order, if: Proc.new { order_token.present? }
       before_action :authenticate_user
@@ -48,16 +47,6 @@ module Spree
         else
           super
         end
-      end
-
-      def set_content_type
-        content_type = case params[:format]
-        when "json"
-          "application/json; charset=utf-8"
-        when "xml"
-          "text/xml; charset=utf-8"
-        end
-        headers["Content-Type"] = content_type
       end
 
       def load_user
