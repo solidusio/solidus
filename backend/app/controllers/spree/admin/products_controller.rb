@@ -66,7 +66,7 @@ module Spree
         redirect_to edit_admin_product_url(@new)
       end
 
-      protected
+      private
 
       def find_resource
         Product.with_deleted.friendly.find(params[:id])
@@ -121,8 +121,6 @@ module Spree
       def clone_object_url(resource)
         clone_admin_product_url resource
       end
-
-      private
 
       def variant_stock_includes
         [:images, stock_items: :stock_location, option_values: :option_type]

@@ -51,7 +51,7 @@ module Spree
         end
       end
 
-      protected
+      private
 
       def collection
         params[:q] = params[:q] || {}
@@ -92,8 +92,6 @@ module Spree
           :back
         end
       end
-
-      private
 
       def authorize_transfer_attributes!
         duplicate = @object.dup
