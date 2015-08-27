@@ -29,15 +29,6 @@ module Spree
 
       helper Spree::Api::ApiHelpers
 
-      def map_nested_attributes_keys(klass, attributes)
-        nested_keys = klass.nested_attributes_options.keys
-        attributes.inject({}) do |h, (k,v)|
-          key = nested_keys.include?(k.to_sym) ? "#{k}_attributes" : k
-          h[key] = v
-          h
-        end.with_indifferent_access
-      end
-
       private
 
       # users should be able to set price when importing orders via api
