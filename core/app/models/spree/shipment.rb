@@ -131,6 +131,7 @@ module Spree
     end
 
     def finalize!
+      return if order.unreturned_exchange?
       InventoryUnit.finalize_units!(inventory_units)
       manifest.each { |item| manifest_unstock(item) }
     end

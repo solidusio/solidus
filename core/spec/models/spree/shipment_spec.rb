@@ -706,4 +706,38 @@ describe Spree::Shipment, :type => :model do
       expect { shipment.reload }.not_to raise_error
     end
   end
+
+  describe "#finalize!" do
+    let(:inventory_unit) { shipment.inventory_units.first }
+    let(:stock_item) { inventory_unit.variant.stock_items.find_by(stock_location: stock_location) }
+
+    before do
+      stock_item.set_count_on_hand(10)
+      stock_item.update_attributes!(backorderable: false)
+    end
+
+    subject { shipment.finalize! }
+
+    it "updates the associated inventory units" do
+      expect { subject }.to change { inventory_unit.reload.updated_at }
+    end
+
+    it "unstocks the variant" do
+      expect { subject }.to change { stock_item.reload.count_on_hand }.from(10).to(9)
+    end
+
+    context "exchange shipment from an unreturned exchange order" do
+      before do
+        order.update_attributes!(created_at: 5.days.from_now)
+      end
+
+      it "doesn't update the associated inventory units" do
+        expect { subject }.to_not change { inventory_unit.reload.updated_at }
+      end
+
+      it "doesn't unstock the variant" do
+        expect { subject }.to_not change { stock_item.reload.count_on_hand }
+      end
+    end
+  end
 end
