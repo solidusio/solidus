@@ -22,7 +22,7 @@ module Spree
         end
       end
 
-      protected
+      private
 
         def new_before
           @object.attributes = @object.product.master.attributes.except('id', 'created_at', 'deleted_at',

@@ -7,7 +7,7 @@ module Spree
 
       before_action :authorize_admin
 
-      protected
+      private
 
         def action
           params[:action].to_sym

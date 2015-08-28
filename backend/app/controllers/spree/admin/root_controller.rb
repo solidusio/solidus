@@ -7,7 +7,7 @@ module Spree
         redirect_to admin_root_redirect_path
       end
 
-      protected
+      private
 
       def admin_root_redirect_path
         if can?(:display, Spree::Order) && can?(:admin, Spree::Order)

@@ -24,7 +24,8 @@ module Spree
         end
       end
 
-      protected
+      private
+
         def load_bulk_code_information
           @promotion_builder = Spree::PromotionBuilder.new(
             base_code: @promotion.codes.first.try!(:value),

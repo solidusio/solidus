@@ -14,7 +14,7 @@ module Spree
         end
       end
 
-      protected
+      private
 
         def location_after_save
           if @option_type.created_at == @option_type.updated_at
@@ -24,8 +24,6 @@ module Spree
           end
         end
 
-
-      private
         def load_product
           @product = Product.find_by_param!(params[:product_id])
         end

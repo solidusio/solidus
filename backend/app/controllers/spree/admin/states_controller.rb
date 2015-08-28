@@ -11,7 +11,7 @@ module Spree
         end
       end
 
-      protected
+      private
 
         def location_after_save
           admin_country_states_url(@country)

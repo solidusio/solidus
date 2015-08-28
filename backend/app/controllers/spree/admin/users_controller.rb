@@ -89,7 +89,7 @@ module Spree
         Spree.user_class
       end
 
-      protected
+      private
 
         def collection
           return @collection if @collection.present?
@@ -108,7 +108,6 @@ module Spree
           end
         end
 
-      private
         def user_params
           attributes = permitted_user_attributes | [
             ship_address_attributes: permitted_address_attributes,
