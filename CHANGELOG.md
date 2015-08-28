@@ -14,6 +14,9 @@
     This includes a migration replacing the column, which may cause some
     downtime for large stores.
 
+*   Handlebars templates in the admin are now stored in assets and precompiled
+    with the rest of the admin js.
+
 ## Solidus 1.0.1 (2015-08-19)
 
 See https://github.com/solidusio/solidus/releases/tag/v1.0.1

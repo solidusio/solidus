@@ -1,0 +1,51 @@
+<fieldset>
+  <legend align="center">{{ t "select_stock" }}</legend>
+    <table class="stock-levels" data-hook="stock-levels">
+      <colgroup>
+        <col style="width: 30%;" />
+        <col style="width: 40%;" />
+        <col style="width: 20%;" />
+        <col style="width: 10%;" />
+      </colgroup>
+      <thead>
+        <th>{{ t "location" }}</th>
+        <th>{{ t "count_on_hand" }}</th>
+        <th>{{ t "quantity" }}</th>
+        <th class="actions"></th>
+      </thead>
+      <tbody>
+        {{#each variant.stock_items}}
+          <tr>
+            <td>{{this.stock_location_name}}</td>
+            {{#unless ../variant.track_inventory}}
+              <td>
+                It doesn't track inventory
+              </td>
+              <td>
+                <input class="quantity" id="stock_item_quantity" data-stock-location-id="{{this.stock_location_id}}" type="number" min="1" value="1">
+              </td>
+              <td class="actions">
+                <button class="add_variant no-text fa fa-plus icon_link with-tip" data-stock-location-id="{{this.stock_location_id}}" title="{{ t "add" }}" data-action="add"></button>
+              </td>
+            {{else}}
+              {{#if this.available}}
+                <td>
+                  {{this.count_on_hand}}
+                  {{#if this.backorderable}} ({{ t "backorders_allowed" }}) {{/if}}
+                </td>
+                <td>
+                  <input class="quantity" id="stock_item_quantity" data-stock-location-id="{{this.stock_location_id}}" type="number" min="1" value="1">
+                </td>
+                <td class="actions">
+                  <button class="add_variant no-text fa fa-plus icon_link with-tip" data-stock-location-id="{{this.stock_location_id}}" title="{{ t "add" }}" data-action="add"></button>
+                </td>
+              {{else}}
+              <td>{{ t "out_of_stock" }}</td>
+                <td>0</td>
+              {{/if}}
+            {{/unless}}
+          </tr>
+        {{/each}}
+      </tbody>
+    </table>
+</fieldset>
