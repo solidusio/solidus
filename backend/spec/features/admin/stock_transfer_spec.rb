@@ -33,6 +33,24 @@ describe 'Stock Transfers', :type => :feature, :js => true do
     end
   end
 
+  describe 'view a stock transfer' do
+    let(:stock_transfer) do
+      create(:stock_transfer_with_items,
+             source_location: source_location,
+             destination_location: nil,
+             description: "Test stock transfer")
+    end
+    let(:source_location) { create(:stock_location, name: 'SF') }
+
+    context "stock transfer does not have a destination" do
+      it 'displays the stock transfer details' do
+        visit spree.admin_stock_transfer_path(stock_transfer)
+        expect(page).to have_content("SF")
+        expect(page).to have_content("Test stock transfer")
+      end
+    end
+  end
+
   describe 'ship stock transfer' do
     let(:stock_transfer) { create(:stock_transfer_with_items) }
 
