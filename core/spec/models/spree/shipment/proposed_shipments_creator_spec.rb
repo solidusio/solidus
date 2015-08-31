@@ -38,11 +38,11 @@ describe Spree::Shipment::ProposedShipmentsCreator do
 
     context "shipping method handler is defined" do
       before do
-        Spree::Shipment::ProposedShipmentsCreator.shipping_method_handler = -> (proposed_shipments, original_shipping_methods) { raise "TestError" }
+        Spree::Config.proposed_shipments_shipping_method_handler = -> (proposed_shipments, original_shipping_methods) { raise "TestError" }
       end
 
       after do
-        Spree::Shipment::ProposedShipmentsCreator.shipping_method_handler = -> (proposed_shipments, original_shipping_methods) { }
+        Spree::Config.proposed_shipments_shipping_method_handler = -> (proposed_shipments, original_shipping_methods) { }
       end
 
       it "calls the shipping method handler after the shipments are created" do

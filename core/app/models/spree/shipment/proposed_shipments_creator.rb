@@ -3,11 +3,6 @@ class Spree::Shipment::ProposedShipmentsCreator
 
   class CannotRebuildShipments < StandardError; end
 
-  class_attribute :shipping_method_handler
-  # Customization hook to allow stores to manipulate
-  # the generated shipments' shipping method
-  self.shipping_method_handler = ->(proposed_shipments, original_shipping_methods) { }
-
   def initialize(order)
     @order = order
     @original_shipping_methods = order.shipments.map(&:shipping_method).compact.uniq
@@ -22,7 +17,7 @@ class Spree::Shipment::ProposedShipmentsCreator
       order.adjustments.shipping.destroy_all
       order.shipments.destroy_all
       proposed_shipments = Spree::Stock::Coordinator.new(order).shipments
-      self.shipping_method_handler.call(proposed_shipments, original_shipping_methods)
+      Spree::Config.proposed_shipments_shipping_method_handler.call(proposed_shipments, original_shipping_methods)
       proposed_shipments
     end
   end

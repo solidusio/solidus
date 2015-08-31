@@ -244,6 +244,12 @@ module Spree
       @promotion_chooser_class ||= Spree::PromotionChooser
     end
 
+    # Allow stores to manipulate the generated shipments' shipping method
+    attr_writer :proposed_shipments_shipping_method_handler
+    def proposed_shipments_shipping_method_handler
+      @proposed_shipments_shipping_method_handler ||= ->(proposed_shipments, original_shipping_methods) { }
+    end
+
     def static_model_preferences
       @static_model_preferences ||= Spree::Preferences::StaticModelPreferences.new
     end
