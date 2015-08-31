@@ -36,6 +36,7 @@ table {
       background-color: transparent;
       border: none !important;
       text-align: center;
+      white-space: nowrap;
 
       span.text {
         font-size: $body-font-size;

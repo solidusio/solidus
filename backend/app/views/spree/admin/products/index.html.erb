@@ -83,9 +83,7 @@
             <td class="align-center"><%= product.display_price.to_html rescue '' %></td>
             <td class="actions" data-hook="admin_products_index_row_actions">
               <%= link_to_edit product, :no_text => true, :class => 'edit' if can?(:edit, product) && !product.deleted? %>
-              &nbsp;
               <%= link_to_clone product, :no_text => true, :class => 'clone' if can?(:clone, product) %>
-              &nbsp;
               <%= link_to_delete product, :no_text => true if can?(:delete, product) && !product.deleted? %>
             </td>
           </tr>
