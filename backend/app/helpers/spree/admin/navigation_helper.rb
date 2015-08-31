@@ -87,6 +87,10 @@ module Spree
         icon_name ? content_tag(:i, '', :class => icon_name) : ''
       end
 
+      def fa_icon(icon_name)
+        content_tag(:i, '', class: "fa fa-#{icon_name}")
+      end
+
       def button(text, icon_name = nil, button_type = 'submit', options={})
         button_tag(text, options.merge(:type => button_type, :class => "fa fa-#{icon_name} button"))
       end
