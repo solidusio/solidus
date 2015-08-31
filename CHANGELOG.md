@@ -17,6 +17,9 @@
 *   Handlebars templates in the admin are now stored in assets and precompiled
     with the rest of the admin js.
 
+*   Removed `map_nested_attributes_keys` from the Api::BaseController. This
+    method was only used in one place and was oblivious of strong_params.
+
 ## Solidus 1.0.1 (2015-08-19)
 
 See https://github.com/solidusio/solidus/releases/tag/v1.0.1
