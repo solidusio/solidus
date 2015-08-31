@@ -242,9 +242,26 @@ describe Spree::Product, :type => :model do
 
         expect(product2.slug).to eq 'test-456'
       end
-
     end
 
+    context "associations" do
+      describe "product_option_types" do
+        it "touches the product instance when an option type is added" do
+          expect {
+            product.product_option_types.create(option_type: create(:option_type, name: 'new-option-type'))
+            product.reload
+          }.to change { product.updated_at }
+        end
+
+        it "touches product instance when an option type is removed" do
+          product.product_option_types.create(option_type: create(:option_type, name: 'new-option-type'))
+          expect {
+            product.product_option_types = []
+            product.reload
+          }.to change { product.updated_at }
+        end
+      end
+    end
   end
 
   context "properties" do
@@ -432,7 +449,7 @@ describe Spree::Product, :type => :model do
       expect(product.reload.total_on_hand).to eql(5)
     end
   end
-  
+
   # Regression spec for https://github.com/spree/spree/issues/5588
   context '#validate_master when duplicate SKUs entered' do
     let!(:first_product) { create(:product, sku: 'a-sku') }
