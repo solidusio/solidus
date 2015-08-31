@@ -36,7 +36,13 @@ module Spree
 
         private
 
+        # Returns an array of search term symbols that will be passed to Ransack
+        # to query the DB for the given word.
         # Subclasses may override this to allow conditional filtering, etc.
+        #
+        # @param word [String] One of the search words provided by the user.
+        #   e.g. a SKU
+        # @return [Array<Symbol>] the list of search terms to use for this word
         def search_terms(word)
           self.class.search_terms
         end
