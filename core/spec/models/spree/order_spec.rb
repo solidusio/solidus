@@ -901,33 +901,11 @@ describe Spree::Order, :type => :model do
   end
 
   describe "#create_proposed_shipments" do
-    it "assigns the coordinator returned shipments to its shipments" do
+    it "assigns the proposed shipment creator returned shipments to its shipments" do
       shipment = build(:shipment)
-      allow_any_instance_of(Spree::Stock::Coordinator).to receive(:shipments).and_return([shipment])
+      allow_any_instance_of(Spree::Shipment::ProposedShipmentsCreator).to receive(:shipments).and_return([shipment])
       subject.create_proposed_shipments
       expect(subject.shipments).to eq [shipment]
-    end
-
-    it "raises an error if any shipments are ready" do
-      shipment = create(:shipment, order: subject, state: "ready")
-      expect {
-        expect {
-          subject.create_proposed_shipments
-        }.to raise_error(Spree::Order::CannotRebuildShipments)
-      }.not_to change { subject.reload.shipments }
-
-      expect { shipment.reload }.not_to raise_error
-    end
-
-    it "raises an error if any shipments are shipped" do
-      shipment = create(:shipment, order: subject, state: "shipped")
-      expect {
-        expect {
-          subject.create_proposed_shipments
-        }.to raise_error(Spree::Order::CannotRebuildShipments)
-      }.not_to change { subject.reload.shipments }
-
-      expect { shipment.reload }.not_to raise_error
     end
   end
 
