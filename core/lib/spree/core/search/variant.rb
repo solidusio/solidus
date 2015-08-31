@@ -28,7 +28,7 @@ module Spree
           return @scope if @query_string.blank?
 
           matches = @query_string.split.map do |word|
-            @scope.ransack(search_terms(word)).result.pluck(:id)
+            @scope.ransack(search_term_params(word)).result.pluck(:id)
           end
 
           Spree::Variant.where(id: matches.inject(:&))
@@ -36,8 +36,13 @@ module Spree
 
         private
 
+        # Subclasses may override this to allow conditional filtering, etc.
         def search_terms(word)
-          terms = Hash[self.class.search_terms.map { |t| [t, word] }]
+          self.class.search_terms
+        end
+
+        def search_term_params(word)
+          terms = Hash[search_terms(word).map { |t| [t, word] }]
           terms.merge(m: 'or')
         end
       end
