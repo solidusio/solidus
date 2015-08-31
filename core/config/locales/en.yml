@@ -812,6 +812,8 @@ en:
       no_longer_change_items: You will no longer be able to add or edit any transfer items
     find_a_taxon: Find a Taxon
     finalized: Finalized
+    finalized_at: Finalized at
+    finalized_by: Finalized by
     close_stock_transfer:
       will_cause: Closing a stock transfer will cause the following
       no_longer_edit: You will no longer be able to edit the stock transfer in any way
