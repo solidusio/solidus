@@ -238,6 +238,11 @@ module Spree
       @searcher_class ||= Spree::Core::Search::Base
     end
 
+    attr_writer :variant_search_class
+    def variant_search_class
+      @variant_search_class ||= Spree::Core::Search::Variant
+    end
+
     # promotion_chooser_class allows extensions to provide their own PromotionChooser
     attr_writer :promotion_chooser_class
     def promotion_chooser_class
