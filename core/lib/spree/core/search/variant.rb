@@ -40,6 +40,7 @@ module Spree
         # to query the DB for the given word.
         # Subclasses may override this to allow conditional filtering, etc.
         #
+        # @api public
         # @param word [String] One of the search words provided by the user.
         #   e.g. a SKU
         # @return [Array<Symbol>] the list of search terms to use for this word
