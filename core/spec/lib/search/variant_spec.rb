@@ -88,5 +88,25 @@ module Spree
         it { assert_found("5000", variant) }
       end
     end
+
+    describe '#search_terms' do
+      # Only search by SKU if the search word is a number
+      class NumericSkuSearcher < Core::Search::Variant
+        protected
+        def search_terms(word)
+          if word =~ /\A\d+\z/
+            super
+          else
+            super - [:sku_cont]
+          end
+        end
+      end
+
+      let!(:numeric_sku_variant) { FactoryGirl.create(:variant, product: product, sku: "123") }
+      let!(:non_numeric_sku_variant) { FactoryGirl.create(:variant, product: product, sku: "abc") }
+
+      it { expect(NumericSkuSearcher.new('123').results).to include numeric_sku_variant }
+      it { expect(NumericSkuSearcher.new('abc').results).not_to include non_numeric_sku_variant }
+    end
   end
 end

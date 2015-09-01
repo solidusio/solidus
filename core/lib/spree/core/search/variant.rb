@@ -28,7 +28,7 @@ module Spree
           return @scope if @query_string.blank?
 
           matches = @query_string.split.map do |word|
-            @scope.ransack(search_terms(word)).result.pluck(:id)
+            @scope.ransack(search_term_params(word)).result.pluck(:id)
           end
 
           Spree::Variant.where(id: matches.inject(:&))
@@ -36,8 +36,20 @@ module Spree
 
         private
 
+        # Returns an array of search term symbols that will be passed to Ransack
+        # to query the DB for the given word.
+        # Subclasses may override this to allow conditional filtering, etc.
+        #
+        # @api public
+        # @param word [String] One of the search words provided by the user.
+        #   e.g. a SKU
+        # @return [Array<Symbol>] the list of search terms to use for this word
         def search_terms(word)
-          terms = Hash[self.class.search_terms.map { |t| [t, word] }]
+          self.class.search_terms
+        end
+
+        def search_term_params(word)
+          terms = Hash[search_terms(word).map { |t| [t, word] }]
           terms.merge(m: 'or')
         end
       end
