@@ -148,4 +148,33 @@ describe Spree::Core::ControllerHelpers::PaymentParameters, type: :controller do
     end
 
   end
+
+  describe '#set_payment_parameters_amount' do
+    subject do
+      controller.set_payment_parameters_amount(params, order)
+    end
+
+    let(:params) do
+      ActionController::Parameters.new(
+        order: {
+          payments_attributes: [{}],
+          other_order_param: 1,
+        },
+        other_param: 2,
+      )
+    end
+    let(:order) { create(:order_with_line_items, line_items_price: 101.00, line_items_count: 1, shipment_cost: 0) }
+
+    it 'produces the expected hash' do
+      expect(subject).to eq(
+        ActionController::Parameters.new(
+          order: {
+            payments_attributes: [{amount: 101}],
+            other_order_param: 1,
+          },
+          other_param: 2,
+        )
+      )
+    end
+  end
 end
