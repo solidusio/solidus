@@ -116,10 +116,50 @@ module Spree
       params
     end
 
-    def set_payment_parameters_amount(params)
-      if params[:payments_attributes]
-        params[:payments_attributes].first[:amount] = self.total
-      end
+    # This is a strange thing to do since an order can have multiple payments
+    # but we always assume that it only has a single payment and that its
+    # amount should be the current order total.  Also, this is pretty much
+    # overridden when the order transitions to confirm by the logic inside of
+    # Order#add_store_credit_payments.
+    # We should reconsider this method and its usage at some point.
+    #
+    # This method expects a params hash in the format of:
+    #
+    #  {
+    #    order: {
+    #      # Note that only a single entry is expected/handled in this array
+    #      payments_attributes: [
+    #        {
+    #          ...params...
+    #        },
+    #      ],
+    #      ...other params...
+    #    },
+    #    ...other params...
+    #  }
+    #
+    # And this method modifies the params into the format of:
+    #
+    #  {
+    #    order: {
+    #      payments_attributes: [
+    #        {
+    #          ...params...
+    #          amount: <the order total>,
+    #        },
+    #      ],
+    #      ...other params...
+    #    },
+    #    ...other params...
+    #  }
+    #
+    def set_payment_parameters_amount(params, order)
+      return params if params[:order].blank?
+      return params if params[:order][:payments_attributes].blank?
+
+      params[:order][:payments_attributes].first[:amount] = order.total
+
+      params
     end
 
   end

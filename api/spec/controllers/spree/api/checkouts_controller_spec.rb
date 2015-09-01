@@ -172,6 +172,29 @@ module Spree
         expect(source_errors).to include("can't be blank")
       end
 
+      describe 'setting the payment amount' do
+        let(:params) do
+          {
+            id: order.to_param,
+            order_token: order.guest_token,
+            order: {
+              payments_attributes: [
+                {
+                  payment_method_id: @payment_method.id.to_s,
+                  source_attributes: attributes_for(:credit_card),
+                },
+              ],
+            },
+          }
+        end
+
+        it 'sets the payment amount to the order total' do
+          api_put(:update, params)
+          expect(response.status).to eq(200)
+          expect(json_response['payments'][0]['amount']).to eq(order.total.to_s)
+        end
+      end
+
       describe 'payment method with source and transition from payment to confirm' do
         before do
           order.update_column(:state, "payment")
