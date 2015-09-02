@@ -7,6 +7,7 @@ module Spree
       @payments_attributes = @attributes.delete(:payments_attributes) || []
       @request = request
       @request_env = request_env
+      @request_env ||= request ? request.headers.env : {}
     end
 
     def update
@@ -28,13 +29,8 @@ module Spree
 
     def assign_payments_attributes
       @payments_attributes.each do |payment_attributes|
-        payment_attributes = payment_attributes.merge(request_env: request_env)
-        order.payments.new(payment_attributes)
+        PaymentCreate.new(order, payment_attributes, request_env: @request_env).build
       end
-    end
-
-    def request_env
-      @request_env ||= request ? request.headers.env : {}
     end
   end
 end

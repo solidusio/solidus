@@ -155,11 +155,7 @@ module Spree
       return unless new_record?
       return if source_attributes.blank?
 
-      if source_attributes[:existing_card_id].present?
-        build_existing_card
-      else
-        build_source
-      end
+      PaymentCreate.new(order, {source_attributes: source_attributes}, payment: self, request_env: request_env).build
     end
 
     # @return [Array<String>] the actions available on this payment
@@ -205,29 +201,6 @@ module Spree
     end
 
     private
-
-      def build_source
-        if source_attributes.present? && source.blank? && payment_method.try(:payment_source_class)
-          self.source = payment_method.payment_source_class.new(source_attributes)
-          self.source.payment_method_id = payment_method.id
-          self.source.user_id = self.order.user_id if self.order
-        end
-      end
-
-      # TODO: Move this into upcoming CartUpdate class
-      def build_existing_card
-        credit_card = CreditCard.
-          where(user_id: order.user_id).
-          where.not(user_id: nil).
-          find(source_attributes[:existing_card_id])
-
-        if source_attributes[:verification_value]
-          credit_card.verification_value = source_attributes[:verification_value]
-        end
-
-        self.source = credit_card
-        self.payment_method_id = credit_card.payment_method_id
-      end
 
       def source_actions
         return [] unless payment_source and payment_source.respond_to? :actions
