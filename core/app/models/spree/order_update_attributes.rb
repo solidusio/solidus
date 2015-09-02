@@ -15,7 +15,8 @@ module Spree
         end
       end
 
-      if order.update_attributes(attributes)
+      order.attributes = attributes
+      if order.save
         order.set_shipments_cost if order.shipments.any?
         true
       else
