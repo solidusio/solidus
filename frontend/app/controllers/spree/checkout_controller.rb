@@ -25,7 +25,7 @@ module Spree
 
     # Updates the order and advances to the next state (when possible.)
     def update
-      if @order.update_from_params(update_params, request_env: request.headers.env)
+      if OrderUpdateAttributes.new(@order, update_params, request: request).update
         @order.temporary_address = !params[:save_user_address]
         success = if @order.state == 'confirm'
           @order.complete

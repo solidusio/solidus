@@ -244,18 +244,7 @@ module Spree
           end
 
           def update_from_params(attributes, request_env: {})
-            if attributes[:payments_attributes]
-              attributes[:payments_attributes].each do |payment_attributes|
-                payment_attributes[:request_env] = request_env
-              end
-            end
-
-            if update_attributes(attributes)
-              set_shipments_cost if self.shipments.any?
-              true
-            else
-              false
-            end
+            OrderUpdateAttributes.new(self, attributes).update
           end
 
           def bill_address_attributes=(attributes)
