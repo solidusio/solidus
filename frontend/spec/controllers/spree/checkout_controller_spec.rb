@@ -91,8 +91,8 @@ describe Spree::CheckoutController, :type => :controller do
 
       context "with the order in the cart state" do
         before do
+          order.update_attributes! user: user
           order.update_column(:state, "cart")
-          allow(order).to receive_messages :user => user
         end
 
         it "should assign order" do
@@ -142,8 +142,8 @@ describe Spree::CheckoutController, :type => :controller do
 
       context "with the order in the address state" do
         before do
+          order.update_attributes! user: user
           order.update_columns(ship_address_id: create(:address).id, state: "address")
-          allow(order).to receive_messages user: user
         end
 
         context "with a billing and shipping address" do
@@ -206,7 +206,7 @@ describe Spree::CheckoutController, :type => :controller do
         end
 
         before do
-          allow(order).to receive_messages(user: user)
+          order.update_attributes! user: user
           3.times { order.next! } # should put us in the payment state
         end
 
@@ -221,8 +221,8 @@ describe Spree::CheckoutController, :type => :controller do
 
       context "when in the confirm state" do
         before do
+          order.update_attributes! user: user
           order.update_column(:state, "confirm")
-          allow(order).to receive_messages :user => user
           # An order requires a payment to reach the complete state
           # This is because payment_required? is true on the order
           create(:payment, :amount => order.total, :order => order)
@@ -251,12 +251,12 @@ describe Spree::CheckoutController, :type => :controller do
 
     context "save unsuccessful" do
       before do
-        allow(order).to receive_messages :user => user
+        order.update_attributes! user: user
         allow(order).to receive_messages :update_from_params => false
       end
 
       it "should not assign order" do
-        spree_post :update, {:state => "address"}
+        spree_post :update, {:state => "address", email: ''}
         expect(assigns[:order]).not_to be_nil
       end
 
@@ -286,7 +286,7 @@ describe Spree::CheckoutController, :type => :controller do
 
     context "Spree::Core::GatewayError" do
       before do
-        allow(order).to receive_messages :user => user
+        order.update_attributes! user: user
         allow(order).to receive(:update_from_params).and_raise(Spree::Core::GatewayError.new("Invalid something or other."))
         spree_post :update, {:state => "address"}
       end
