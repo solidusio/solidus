@@ -782,73 +782,39 @@ describe Spree::Order, :type => :model do
   end
 
   describe 'update_from_params' do
-    let(:permitted_params) { {} }
-    let(:params) { {} }
+    let(:order) { create(:order) }
 
-    it 'calls update_atributes without order params' do
-      expect(order).to receive(:update_attributes).with({})
-      order.update_from_params( params, permitted_params)
+    let(:params) do
+      ActionController::Parameters.new(
+        order: {
+          payments_attributes: [
+            {source_attributes: attributes_for(:credit_card)},
+          ],
+        }
+      )
+    end
+    let(:permitted_params) do
+      Spree::PermittedAttributes.checkout_attributes +
+        [payments_attributes: Spree::PermittedAttributes.payment_attributes]
     end
 
-    it 'runs the callbacks' do
-      expect(order).to receive(:run_callbacks).with(:updating_from_params)
-      order.update_from_params( params, permitted_params)
+    it 'sets the payment amount' do
+      order.update_from_params(params, permitted_params)
+      expect(order.payments.last.amount).to eq(order.total)
     end
 
-    context "passing a credit card" do
-      let(:permitted_params) do
-        Spree::PermittedAttributes.checkout_attributes +
-          [payments_attributes: Spree::PermittedAttributes.payment_attributes]
-      end
-
-      let(:credit_card) { create(:credit_card, user_id: order.user_id) }
-
-      let(:params) do
-        ActionController::Parameters.new(
-          order: {
-            payments_attributes: [
-              {
-                payment_method_id: 1,
-                source_attributes: attributes_for(:credit_card),
-              },
-            ],
-            existing_card: credit_card.id,
-          },
-          cvc_confirm: "737",
+    context 'with a request_env' do
+      it 'sets the request_env on the payment' do
+        expect_any_instance_of(Spree::Payment).to(
+          receive(:request_env=).with({'USER_AGENT' => 'Firefox'}).and_call_original
         )
+        order.update_from_params(params, permitted_params, {'USER_AGENT' => 'Firefox'})
       end
+    end
 
-      before { order.user_id = 3 }
-
-      it "sets confirmation value when its available via :cvc_confirm" do
-        allow(Spree::CreditCard).to receive_messages find: credit_card
-        expect(credit_card).to receive(:verification_value=)
-        order.update_from_params(params, permitted_params)
-      end
-
-      it "sets existing card as source for new payment" do
-        expect {
-          order.update_from_params(params, permitted_params)
-        }.to change { Spree::Payment.count }.by(1)
-
-        expect(Spree::Payment.last.source).to eq credit_card
-      end
-
-      it "sets request_env on payment" do
-        request_env = { "USER_AGENT" => "Firefox" }
-
-        expected_hash = { "payments_attributes" => [hash_including("request_env" => request_env)] }
-        expect(order).to receive(:update_attributes).with expected_hash
-
-        order.update_from_params(params, permitted_params, request_env)
-      end
-
-      it "dont let users mess with others users cards" do
-        credit_card.update_column :user_id, 5
-
-        expect {
-          order.update_from_params(params, permitted_params)
-        }.to raise_error Spree::Core::GatewayError
+    context 'empty params' do
+      it 'succeeds' do
+        expect(order.update_from_params({}, permitted_params)).to be_truthy
       end
     end
 
@@ -866,16 +832,6 @@ describe Spree::Order, :type => :model do
 
         it 'accepts permitted attributes' do
           expect(order).to receive(:update_attributes).with({"good_param" => 'okay'})
-          order.update_from_params(params, permitted_params)
-        end
-      end
-
-      context 'callbacks halt' do
-        before do
-          expect(order).to receive(:update_params_payment_source).and_return false
-        end
-        it 'does not let through unpermitted attributes' do
-          expect(order).not_to receive(:update_attributes).with({})
           order.update_from_params(params, permitted_params)
         end
       end

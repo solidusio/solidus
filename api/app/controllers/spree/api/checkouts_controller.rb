@@ -56,14 +56,7 @@ module Spree
       def update
         authorize! :update, @order, order_token
 
-        update_params = if params[:payment_source].present?
-          ActiveSupport::Deprecation.warn("Passing payment_source is deprecated. Send source parameters inside payments_attributes[:source_attributes].", caller)
-          move_payment_source_into_payments_attributes(params)
-        else
-          params
-        end
-
-        if @order.update_from_params(update_params, permitted_checkout_attributes, request.headers.env)
+        if @order.update_from_params(massaged_params, permitted_checkout_attributes, request.headers.env)
           if can?(:admin, @order) && user_id.present?
             @order.associate_user!(Spree.user_class.find(user_id))
           end
@@ -85,6 +78,22 @@ module Spree
       private
         def user_id
           params[:order][:user_id] if params[:order]
+        end
+
+        def massaged_params
+          massaged_params = params.deep_dup
+
+          if params[:payment_source].present?
+            ActiveSupport::Deprecation.warn("Passing payment_source is deprecated. Send source parameters inside payments_attributes[:source_attributes].", caller)
+            move_payment_source_into_payments_attributes(massaged_params)
+          end
+
+          if params[:order] && params[:order][:existing_card].present?
+            ActiveSupport::Deprecation.warn("Passing order[:existing_card] is deprecated. Send existing_card_id inside of payments_attributes[:source_attributes].", caller)
+            move_existing_card_into_payments_attributes(massaged_params)
+          end
+
+          massaged_params
         end
 
         # Should be overriden if you have areas of your checkout that don't match

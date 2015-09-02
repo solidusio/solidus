@@ -203,7 +203,7 @@ describe Spree::CheckoutController, :type => :controller do
     context "save unsuccessful" do
       before do
         allow(order).to receive_messages :user => user
-        allow(order).to receive_messages :update_attributes => false
+        allow(order).to receive_messages :update_from_params => false
       end
 
       it "should not assign order" do
@@ -238,7 +238,7 @@ describe Spree::CheckoutController, :type => :controller do
     context "Spree::Core::GatewayError" do
       before do
         allow(order).to receive_messages :user => user
-        allow(order).to receive(:update_attributes).and_raise(Spree::Core::GatewayError.new("Invalid something or other."))
+        allow(order).to receive(:update_from_params).and_raise(Spree::Core::GatewayError.new("Invalid something or other."))
         spree_post :update, {:state => "address"}
       end
 

@@ -25,7 +25,6 @@ module Spree
 
     # Updates the order and advances to the next state (when possible.)
     def update
-      massaged_params = move_payment_source_into_payments_attributes(params)
       if @order.update_from_params(massaged_params, permitted_checkout_attributes, request.headers.env)
         @order.temporary_address = !params[:save_user_address]
         success = if @order.state == 'confirm'
@@ -52,6 +51,16 @@ module Spree
     end
 
     private
+
+      def massaged_params
+        massaged_params = params.deep_dup
+
+        move_payment_source_into_payments_attributes(massaged_params)
+        move_existing_card_into_payments_attributes(massaged_params)
+
+        massaged_params
+      end
+
       def ensure_valid_state
         unless skip_state_validation?
           if (params[:state] && !@order.has_checkout_step?(params[:state])) ||
