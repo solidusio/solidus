@@ -1,10 +1,11 @@
 module Spree
   class OrderUpdateAttributes
     attr_reader :attributes, :order, :request
-    def initialize(order, attributes, request: nil)
+    def initialize(order, attributes, request_env: nil, request: nil)
       @order = order
       @attributes = attributes
       @request = request
+      @request_env = request_env
     end
 
     def update
@@ -25,7 +26,7 @@ module Spree
     private
 
     def request_env
-      request.headers.env
+      @request_env ||= request ? request.headers.env : {}
     end
   end
 end

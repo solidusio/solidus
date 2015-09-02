@@ -244,7 +244,7 @@ module Spree
           end
 
           def update_from_params(attributes, request_env: {})
-            OrderUpdateAttributes.new(self, attributes).update
+            OrderUpdateAttributes.new(self, attributes, request_env: request_env).update
           end
 
           def bill_address_attributes=(attributes)
