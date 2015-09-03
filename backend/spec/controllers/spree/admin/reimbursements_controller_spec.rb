@@ -44,6 +44,38 @@ describe Spree::Admin::ReimbursementsController, :type => :controller do
       subject
       expect(response).to redirect_to(spree.edit_admin_order_reimbursement_path(order, assigns(:reimbursement)))
     end
+
+    context 'when create fails' do
+      before do
+        allow_any_instance_of(Spree::Reimbursement).to receive(:valid?) do |reimbursement, *args|
+          reimbursement.errors.add(:base, 'something bad happened')
+          false
+        end
+      end
+
+      context 'when a referer header is present' do
+        let(:referer) { spree.edit_admin_order_customer_return_path(order, customer_return) }
+
+        it 'redirects to the referer' do
+          request.env["HTTP_REFERER"] = referer
+          expect {
+            spree_post :create, order_id: order.to_param
+          }.to_not change { Spree::Reimbursement.count }
+          expect(response).to redirect_to(referer)
+          expect(flash[:error]).to eq("something bad happened")
+        end
+      end
+
+      context 'when a referer header is not present' do
+        it 'redirects to the admin root' do
+          expect {
+            spree_post :create, order_id: order.to_param
+          }.to_not change { Spree::Reimbursement.count }
+          expect(response).to redirect_to(spree.admin_path)
+          expect(flash[:error]).to eq("something bad happened")
+        end
+      end
+    end
   end
 
   describe "#perform" do
