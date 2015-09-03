@@ -1,6 +1,12 @@
 module Spree
   module Core
     module Search
+
+      #
+      # NOTE: Use Spree::Config.variant_search_class rather than referencing this
+      # directly.
+      #
+
       class Variant
 
         class_attribute :search_terms
