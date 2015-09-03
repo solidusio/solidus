@@ -9,6 +9,10 @@ module Spree
         can [:display, :admin], Spree::LineItem
         can [:display, :admin], Spree::ReturnAuthorization
         can [:display, :admin], Spree::CustomerReturn
+        can [:display, :admin], Spree::OrderCancellations
+        can [:display, :admin], Spree::Reimbursement
+        can [:display, :admin], Spree::ReturnItem
+        can [:display, :admin], Spree::Refund
       end
     end
   end

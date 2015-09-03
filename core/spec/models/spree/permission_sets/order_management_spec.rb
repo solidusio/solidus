@@ -19,6 +19,9 @@ describe Spree::PermissionSets::OrderManagement do
     it { is_expected.to be_able_to(:manage, Spree::CustomerReturn) }
     it { is_expected.to be_able_to(:display, Spree::ReimbursementType) }
     it { is_expected.to be_able_to(:manage, Spree::OrderCancellations) }
+    it { is_expected.to be_able_to(:manage, Spree::Reimbursement) }
+    it { is_expected.to be_able_to(:manage, Spree::ReturnItem) }
+    it { is_expected.to be_able_to(:manage, Spree::Refund) }
   end
 
   context "when not activated" do
@@ -31,6 +34,9 @@ describe Spree::PermissionSets::OrderManagement do
     it { is_expected.not_to be_able_to(:manage, Spree::CustomerReturn) }
     it { is_expected.not_to be_able_to(:display, Spree::ReimbursementType) }
     it { is_expected.not_to be_able_to(:manage, Spree::OrderCancellations) }
+    it { is_expected.not_to be_able_to(:manage, Spree::Reimbursement) }
+    it { is_expected.not_to be_able_to(:manage, Spree::ReturnItem) }
+    it { is_expected.not_to be_able_to(:manage, Spree::Refund) }
   end
 end
 

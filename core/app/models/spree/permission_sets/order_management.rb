@@ -11,6 +11,9 @@ module Spree
         can :manage, Spree::ReturnAuthorization
         can :manage, Spree::CustomerReturn
         can :manage, Spree::OrderCancellations
+        can :manage, Spree::Reimbursement
+        can :manage, Spree::ReturnItem
+        can :manage, Spree::Refund
       end
     end
   end

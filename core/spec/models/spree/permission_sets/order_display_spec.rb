@@ -26,6 +26,9 @@ describe Spree::PermissionSets::OrderDisplay do
     it { is_expected.to be_able_to(:admin, Spree::CustomerReturn) }
     it { is_expected.to be_able_to(:edit, Spree::Order) }
     it { is_expected.to be_able_to(:cart, Spree::Order) }
+    it { is_expected.to be_able_to(:display, Spree::Reimbursement) }
+    it { is_expected.to be_able_to(:display, Spree::ReturnItem) }
+    it { is_expected.to be_able_to(:display, Spree::Refund) }
   end
 
   context "when not activated" do
@@ -44,6 +47,9 @@ describe Spree::PermissionSets::OrderDisplay do
     it { is_expected.not_to be_able_to(:admin, Spree::ReturnAuthorization) }
     it { is_expected.not_to be_able_to(:admin, Spree::CustomerReturn) }
     it { is_expected.not_to be_able_to(:cart, Spree::Order) }
+    it { is_expected.not_to be_able_to(:display, Spree::Reimbursement) }
+    it { is_expected.not_to be_able_to(:display, Spree::ReturnItem) }
+    it { is_expected.not_to be_able_to(:display, Spree::Refund) }
   end
 end
 
