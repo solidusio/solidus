@@ -8,7 +8,9 @@ describe Spree::Preferences::ScopedStore, :type => :model do
 
   describe '#store' do
     subject{ scoped_store.store }
-    it{ is_expected.to be Spree::Preferences::Store.instance }
+    it "uses the global preferences instance" do
+      is_expected.to be Spree::Preferences::Store.instance
+    end
   end
 
   context 'stubbed store' do
