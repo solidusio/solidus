@@ -1,5 +1,5 @@
 class CreateSpreeStoreCreditPaymentMethod < ActiveRecord::Migration
-  class PaymentMethod < ActiveRecord::Base
+  class PaymentMethod < Spree::Base
     self.table_name = 'spree_payment_methods'
     self.inheritance_column = :_type_disabled
   end

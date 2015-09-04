@@ -1,5 +1,5 @@
 module Spree
-  class UserAddress < ActiveRecord::Base
+  class UserAddress < Spree::Base
     belongs_to :user, class_name: UserClassHandle.new, foreign_key: "user_id"
     belongs_to :address, class_name: "Spree::Address"
 
