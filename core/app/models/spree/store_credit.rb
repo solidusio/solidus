@@ -1,4 +1,4 @@
-class Spree::StoreCredit < ActiveRecord::Base
+class Spree::StoreCredit < Spree::Base
   acts_as_paranoid
 
   VOID_ACTION       = 'void'

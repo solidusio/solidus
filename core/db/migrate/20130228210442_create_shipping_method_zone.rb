@@ -1,5 +1,5 @@
 class CreateShippingMethodZone < ActiveRecord::Migration
-  class ShippingMethodZone < ActiveRecord::Base
+  class ShippingMethodZone < Spree::Base
     self.table_name = 'shipping_methods_zones'
   end
   def up

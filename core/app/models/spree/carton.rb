@@ -1,4 +1,4 @@
-class Spree::Carton < ActiveRecord::Base
+class Spree::Carton < Spree::Base
   belongs_to :address, class_name: 'Spree::Address'
   belongs_to :stock_location, class_name: 'Spree::StockLocation', inverse_of: :cartons
   belongs_to :shipping_method, class_name: 'Spree::ShippingMethod', inverse_of: :cartons

@@ -1,5 +1,5 @@
 module Spree
-  class AdjustmentReason < ActiveRecord::Base
+  class AdjustmentReason < Spree::Base
     has_many :adjustments, inverse_of: :adjustment_reason
 
     validates :name, presence: true

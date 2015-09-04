@@ -1,4 +1,4 @@
-class Spree::StoreCreditCategory < ActiveRecord::Base
+class Spree::StoreCreditCategory < Spree::Base
   class_attribute :non_expiring_credit_types
   self.non_expiring_credit_types = [Spree.t("store_credit.non_expiring")]
 
