@@ -7,7 +7,7 @@ module Spree
       @payments_attributes = @attributes.delete(:payments_attributes) || []
       @request = request
       @request_env = request_env
-      @request_env ||= request ? request.headers.env : {}
+      @request_env ||= request.headers.env if request
     end
 
     def update

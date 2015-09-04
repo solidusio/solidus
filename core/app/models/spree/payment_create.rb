@@ -11,7 +11,7 @@ module Spree
 
     def build
       @payment ||= order.payments.new
-      @payment.request_env = @request_env
+      @payment.request_env = @request_env if @request_env
       @payment.attributes = @attributes
 
       if source_attributes[:existing_card_id].present?
