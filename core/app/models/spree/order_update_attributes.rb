@@ -1,6 +1,5 @@
 module Spree
   class OrderUpdateAttributes
-    attr_reader :attributes, :payments_attributes, :order, :request
     def initialize(order, attributes, request_env: nil, request: nil)
       @order = order
       @attributes = attributes.dup
@@ -23,6 +22,9 @@ module Spree
     end
 
     private
+
+    attr_reader :attributes, :payments_attributes, :order, :request
+
     def assign_order_attributes
       order.attributes = attributes
     end
