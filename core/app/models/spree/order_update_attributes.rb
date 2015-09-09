@@ -7,7 +7,7 @@ module Spree
       @request_env = request_env
     end
 
-    def update
+    def apply
       assign_payments_attributes
       assign_order_attributes
 
