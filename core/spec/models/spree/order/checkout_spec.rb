@@ -783,29 +783,107 @@ describe Spree::Order, :type => :model do
 
   describe 'update_from_params' do
     let(:order) { create(:order) }
+    let(:permitted_params) { {} }
+    let(:params) { {} }
 
-    let(:params) do
-      {
-        payments_attributes: [
-          {source_attributes: attributes_for(:credit_card)},
-        ],
-      }
+    around do |example|
+      ActiveSupport::Deprecation.silence { example.run }
     end
 
-    context 'with a request_env' do
-      it 'sets the request_env on the payment' do
-        expect_any_instance_of(Spree::Payment).to(
-          receive(:request_env=).with({'USER_AGENT' => 'Firefox'}).and_call_original
+    it 'calls update_atributes without order params' do
+      expect {
+        order.update_from_params( params, permitted_params)
+      }.not_to change{order.attributes}
+    end
+
+    it 'runs the callbacks' do
+      expect(order).to receive(:run_callbacks).with(:updating_from_params)
+      order.update_from_params( params, permitted_params)
+    end
+
+    context "passing a credit card" do
+      let(:permitted_params) do
+        Spree::PermittedAttributes.checkout_attributes +
+          [payments_attributes: Spree::PermittedAttributes.payment_attributes]
+      end
+
+      let(:credit_card) { create(:credit_card, user_id: order.user_id) }
+
+      let(:params) do
+        ActionController::Parameters.new(
+          order: {
+            payments_attributes: [
+              {
+                payment_method_id: 1,
+                source_attributes: attributes_for(:credit_card),
+              },
+            ],
+            existing_card: credit_card.id,
+          },
+          cvc_confirm: "737",
         )
-        order.update_from_params(params, request_env: {'USER_AGENT' => 'Firefox'})
+      end
+
+      before { order.user_id = 3 }
+
+      it "sets confirmation value when its available via :cvc_confirm" do
+        allow(Spree::CreditCard).to receive_messages find: credit_card
+        expect(credit_card).to receive(:verification_value=)
+        order.update_from_params(params, permitted_params)
+      end
+
+      it "sets existing card as source for new payment" do
+        expect {
+          order.update_from_params(params, permitted_params)
+        }.to change { Spree::Payment.count }.by(1)
+
+        expect(Spree::Payment.last.source).to eq credit_card
+      end
+
+      it "sets request_env on payment" do
+        request_env = { "USER_AGENT" => "Firefox" }
+
+        order.update_from_params(params, permitted_params, request_env)
+        expect(order.payments[0].request_env).to eq request_env
+      end
+
+      it "dont let users mess with others users cards" do
+        credit_card.update_column :user_id, 5
+
+        expect {
+          order.update_from_params(params, permitted_params)
+        }.to raise_error Spree::Core::GatewayError
       end
     end
 
-    context 'empty params' do
-      it 'succeeds' do
-        expect(order.update_from_params({})).to be_truthy
+    context 'has params' do
+      let(:permitted_params) { [ :good_param ] }
+      let(:params) { ActionController::Parameters.new(order: {  bad_param: 'okay' } ) }
+
+      it 'does not let through unpermitted attributes' do
+        expect(order).to receive(:attributes=).with({})
+        order.update_from_params(params, permitted_params)
+      end
+
+      context 'has allowed params' do
+        let(:params) { ActionController::Parameters.new(order: {  good_param: 'okay' } ) }
+
+        it 'accepts permitted attributes' do
+          expect(order).to receive(:attributes=).with({"good_param" => 'okay'})
+          order.update_from_params(params, permitted_params)
+        end
+      end
+
+      context 'callbacks halt' do
+        before do
+          expect(order).to receive(:update_params_payment_source).and_return false
+        end
+        it 'does not let through unpermitted attributes' do
+          expect(order).not_to receive(:attributes=)
+          expect(order).not_to receive(:save)
+          order.update_from_params(params, permitted_params)
+        end
       end
     end
   end
-
 end

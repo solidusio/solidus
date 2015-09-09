@@ -243,8 +243,44 @@ module Spree
             checkout_step_index(state) > checkout_step_index(self.state)
           end
 
-          def update_from_params(attributes, request_env: {})
-            OrderUpdateAttributes.new(self, attributes, request_env: request_env).update
+          define_callbacks :updating_from_params, terminator: ->(target, result) { result == false }
+
+          set_callback :updating_from_params, :before, :update_params_payment_source
+
+          def update_from_params(params, permitted_params, request_env = {})
+            ActiveSupport::Deprecation.warn "update_from_params is deprecated. Use the OrderUpdateAttributes class instead"
+            success = false
+            @updating_params = params
+            run_callbacks :updating_from_params do
+              attributes = @updating_params[:order] ? @updating_params[:order].permit(permitted_params).delete_if { |k,v| v.nil? } : {}
+
+              # Set existing card after setting permitted parameters because
+              # rails would slice parameters containg ruby objects, apparently
+              existing_card_id = @updating_params[:order] ? @updating_params[:order][:existing_card] : nil
+
+              if existing_card_id.present?
+                credit_card = CreditCard.find existing_card_id
+                if credit_card.user_id != self.user_id || credit_card.user_id.blank?
+                  raise Core::GatewayError.new Spree.t(:invalid_credit_card)
+                end
+
+                credit_card.verification_value = params[:cvc_confirm] if params[:cvc_confirm].present?
+
+                attributes[:payments_attributes].first[:source] = credit_card
+                attributes[:payments_attributes].first[:payment_method_id] = credit_card.payment_method_id
+                attributes[:payments_attributes].first.delete :source_attributes
+              end
+
+              if attributes[:payments_attributes]
+                attributes[:payments_attributes].first[:request_env] = request_env
+              end
+
+              update = OrderUpdateAttributes.new(self, attributes, request_env: request_env)
+              success = update.update
+            end
+
+            @updating_params = nil
+            success
           end
 
           def bill_address_attributes=(attributes)
@@ -310,6 +346,21 @@ module Spree
             end
           end
 
+          # In case a existing credit card is provided it needs to build the payment
+          # attributes from scratch so we can set the amount. example payload:
+          #
+          #   {
+          #     "order": {
+          #       "existing_card": "2"
+          #     }
+          #   }
+          #
+          def update_params_payment_source
+            if @updating_params[:order] && (@updating_params[:order][:payments_attributes] || @updating_params[:order][:existing_card])
+              @updating_params[:order][:payments_attributes] ||= [{}]
+              @updating_params[:order][:payments_attributes].first[:amount] = self.total
+            end
+          end
         end
       end
     end
