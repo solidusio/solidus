@@ -3,7 +3,12 @@ fadeOutTime = 500
 
 $ ->
   # Make flash messages dissapear
-  setTimeout('$(".flash").fadeOut()', 5000)
+  # We only want to target the flash messages which are initially on the page.
+  # Otherwise we risk hiding messages added by show_flash
+  $initialFlash = $(".flash")
+  setTimeout (->
+    $initialFlash.fadeOut(fadeOutTime)
+  ), showTime
 
 window.show_flash = (type, message) ->
   $flashWrapper = $(".js-flash-wrapper")
