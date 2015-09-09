@@ -15,8 +15,12 @@ module Spree
 
     has_many :product_option_types, dependent: :destroy, inverse_of: :product
     has_many :option_types, through: :product_option_types
+
     has_many :product_properties, dependent: :destroy, inverse_of: :product
     has_many :properties, through: :product_properties
+    has_many :variant_property_rules
+    has_many :variant_property_rule_values, through: :variant_property_rules, source: :values
+    has_many :variant_property_rule_conditions, through: :variant_property_rules, source: :conditions
 
     has_many :classifications, dependent: :delete_all, inverse_of: :product
     has_many :taxons, through: :classifications, before_remove: :remove_taxon
@@ -91,6 +95,7 @@ module Spree
 
     attr_accessor :option_values_hash
 
+    accepts_nested_attributes_for :variant_property_rules, allow_destroy: true
     accepts_nested_attributes_for :product_properties, allow_destroy: true, reject_if: lambda { |pp| pp[:property_name].blank? }
 
     alias :options :product_option_types
@@ -188,6 +193,24 @@ module Spree
       end
     end
 
+    # Groups all of the option values that are associated to the product's variants, grouped by
+    # option type.
+    #
+    # @param variant_scope [ActiveRecord_Associations_CollectionProxy] scope to filter the variants
+    # used to determine the applied option_types
+    # @return [Hash<Spree::OptionType, Array<Spree::OptionValue>>] all option types and option values
+    # associated with the products variants grouped by option type
+    def variant_option_values_by_option_type(variant_scope = nil)
+      option_value_ids = Spree::OptionValuesVariant.joins(:variant)
+        .where(spree_variants: { product_id: self.id})
+        .merge(variant_scope)
+        .distinct.pluck(:option_value_id)
+      Spree::OptionValue.where(id: option_value_ids).
+        includes(:option_type).
+        order("#{Spree::OptionType.table_name}.position, #{Spree::OptionValue.table_name}.position").
+        group_by(&:option_type)
+    end
+
     # @return [Boolean] true if there are no option values
     def empty_option_values?
       options.empty? || options.any? do |opt|
@@ -248,6 +271,16 @@ module Spree
     # @return [Spree::Image] the image to display
     def display_image
       images.first || variant_images.first || Spree::Image.new
+    end
+
+    # Finds the variant property rule that matches the provided option value ids.
+    #
+    # @param [Array<Integer>] list of option value ids
+    # @return [Spree::VariantPropertyRule] the matching variant property rule
+    def find_variant_property_rule(option_value_ids)
+      variant_property_rules.find do |rule|
+        rule.matches_option_value_ids?(option_value_ids)
+      end
     end
 
     private

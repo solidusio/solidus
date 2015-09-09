@@ -112,8 +112,9 @@ $(document).ready(function(){
     new_table_row.find("input, select").each(function () {
       var el = $(this);
       el.val("");
-      el.prop("id", el.prop("id").replace(/\d+/, new_id))
-      el.prop("name", el.prop("name").replace(/\d+/, new_id))
+      // Replace last occurrence of a number
+      el.prop("id", el.prop("id").replace(/\d+(?=[^\d]*$)/, new_id))
+      el.prop("name", el.prop("name").replace(/\d+(?=[^\d]*$)/, new_id))
     })
     // When cloning a new row, set the href of all icons to be an empty "#"
     // This is so that clicking on them does not perform the actions for the
@@ -204,18 +205,21 @@ $(document).ready(function(){
         placeholder: 'ui-sortable-placeholder',
         update: function(event, ui) {
           $("#progress").show();
+          tableEl = $(ui.item).closest("table.sortable")
           positions = {};
-          $.each($('table.sortable tbody tr'), function(position, obj){
-            reg = /spree_(\w+_?)+_(\d+)/;
-            parts = reg.exec($(obj).prop('id'));
-            if (parts) {
-              positions['positions['+parts[2]+']'] = position;
+          $.each(tableEl.find('tbody tr'), function(position, obj){
+            idAttr = $(obj).prop('id');
+            if (idAttr) {
+              objId = idAttr.split('_').slice(-1);
+              if (!isNaN(objId)) {
+                positions['positions['+objId+']'] = position;
+              }
             }
           });
           Spree.ajax({
             type: 'POST',
             dataType: 'script',
-            url: $(ui.item).closest("table.sortable").data("sortable-link"),
+            url: tableEl.data("sortable-link"),
             data: positions,
             success: function(data){ $("#progress").hide(); }
           });
@@ -227,9 +231,10 @@ $(document).ready(function(){
           ui.placeholder.html("<td colspan='"+(td_count-1)+"'></td><td class='actions'></td>")
         },
         stop: function (event, ui) {
+          tableEl = $(ui.item).closest("table.sortable")
           // Fix odd/even classes after reorder
-          $("table.sortable tr:even").removeClass("odd even").addClass("even");
-          $("table.sortable tr:odd").removeClass("odd even").addClass("odd");
+          tableEl.find("tr:even").removeClass("odd even").addClass("even");
+          tableEl.find("tr:odd").removeClass("odd even").addClass("odd");
         }
 
       });

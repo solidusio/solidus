@@ -409,6 +409,7 @@ en:
     add_option_value: Add Option Value
     add_product: Add Product
     add_product_properties: Add Product Properties
+    add_variant_properties: Add Variant Properties
     add_rule_of_type: Add rule of type
     add_state: Add State
     add_stock: Add Stock
@@ -1567,6 +1568,7 @@ en:
     value: Value
     variant: Variant
     variant_placeholder: Choose a variant
+    variant_properties: Variant Properties
     variant_search: Variant Search
     variant_search_placeholder: "SKU or Option Value"
     variant_to_add: Variant to add
