@@ -56,7 +56,7 @@ module Spree
       def update
         authorize! :update, @order, order_token
 
-        if OrderUpdateAttributes.new(@order, update_params, request: request).update
+        if OrderUpdateAttributes.new(@order, update_params, request_env: request.headers.env).update
           if can?(:admin, @order) && user_id.present?
             @order.associate_user!(Spree.user_class.find(user_id))
           end

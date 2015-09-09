@@ -1,12 +1,10 @@
 module Spree
   class OrderUpdateAttributes
-    def initialize(order, attributes, request_env: nil, request: nil)
+    def initialize(order, attributes, request_env: nil)
       @order = order
       @attributes = attributes.dup
       @payments_attributes = @attributes.delete(:payments_attributes) || []
-      @request = request
       @request_env = request_env
-      @request_env ||= request.headers.env if request
     end
 
     def update
@@ -23,7 +21,7 @@ module Spree
 
     private
 
-    attr_reader :attributes, :payments_attributes, :order, :request
+    attr_reader :attributes, :payments_attributes, :order
 
     def assign_order_attributes
       order.attributes = attributes
