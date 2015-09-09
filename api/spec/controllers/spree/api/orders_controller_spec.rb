@@ -641,19 +641,6 @@ module Spree
         end
       end
 
-      it "responds with orders updated_at with miliseconds precision" do
-        if ActiveRecord::Base.connection.adapter_name == "Mysql2"
-          skip "MySQL does not support millisecond timestamps."
-        else
-          skip "Probable need to make it call as_json. See https://github.com/rails/rails/commit/0f33d70e89991711ff8b3dde134a61f4a5a0ec06"
-        end
-
-        api_get :index
-        milisecond = order.updated_at.strftime("%L")
-        updated_at = json_response["orders"].first["updated_at"]
-        expect(updated_at.split("T").last).to have_content(milisecond)
-      end
-
       context "caching enabled" do
         before do
           ActionController::Base.perform_caching = true
