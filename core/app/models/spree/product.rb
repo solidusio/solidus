@@ -105,11 +105,7 @@ module Spree
 
     # @return [Spree::TaxCategory] tax category for this product, or the default tax category
     def tax_category
-      if self[:tax_category_id].nil?
-        TaxCategory.where(is_default: true).first
-      else
-        TaxCategory.find(self[:tax_category_id])
-      end
+      super || TaxCategory.find_by(is_default: true)
     end
 
     # Overrides the prototype_id setter in order to ensure it is cast to an
@@ -178,11 +174,10 @@ module Spree
     # @param values [Array{String}] strings to search through fields for
     # @return [ActiveRecord::Relation] scope with WHERE clause for search applied
     def self.like_any(fields, values)
-      where fields.map { |field|
-        values.map { |value|
-          arel_table[field].matches("%#{value}%")
-        }.inject(:or)
-      }.inject(:or)
+      conditions = fields.product(values).map do |(field, value)|
+        arel_table[field].matches("%#{value}%")
+      end
+      where conditions.inject(:or)
     end
 
     # @param current_currency [String] currency to filter variants by; defaults to Spree's default
@@ -215,7 +210,7 @@ module Spree
       ActiveRecord::Base.transaction do
         # Works around spree_i18n #301
         property = if Property.exists?(name: property_name)
-          Property.where(name: property_name).first
+          Property.find_by(name: property_name)
         else
           Property.create(name: property_name, presentation: property_name)
         end
@@ -247,7 +242,7 @@ module Spree
     #
     # @return [Spree::Variant] the master variant
     def master
-      super || variants_including_master.with_deleted.where(is_master: true).first
+      super || variants_including_master.with_deleted.find_by(is_master: true)
     end
 
     # Image that can be used for the product.
@@ -275,7 +270,7 @@ module Spree
       if variants_including_master.loaded?
         variants_including_master.any? { |v| !v.should_track_inventory? }
       else
-        !Spree::Config.track_inventory_levels || variants_including_master.where(track_inventory: false).any?
+        !Spree::Config.track_inventory_levels || variants_including_master.where(track_inventory: false).exists?
       end
     end
 
@@ -286,7 +281,7 @@ module Spree
       values = values.inject(values.shift) { |memo, value| memo.product(value).map(&:flatten) }
 
       values.each do |ids|
-        variant = variants.create(
+        variants.create(
           option_value_ids: ids,
           price: master.price
         )
