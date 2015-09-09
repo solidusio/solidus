@@ -248,7 +248,7 @@ module Spree
           set_callback :updating_from_params, :before, :update_params_payment_source
 
           def update_from_params(params, permitted_params, request_env = {})
-            ActiveSupport::Deprecation.warn "update_from_params is deprecated. Use the OrderUpdateAttributes class instead"
+            ActiveSupport::Deprecation.warn "update_from_params is deprecated. Use the OrderUpdateAttributes class instead", caller
             success = false
             @updating_params = params
             run_callbacks :updating_from_params do
