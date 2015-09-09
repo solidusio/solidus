@@ -25,14 +25,17 @@
   }
 }
 
-.flash, .alert {
+.flash-wrapper {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
+  z-index: 1000;
+}
+
+.flash {
   padding: 16px;
   text-align: center;
-  z-index: 1000;
   font-size: 120%;
   color: $color-1;
   font-weight: $font-weight-bold;
