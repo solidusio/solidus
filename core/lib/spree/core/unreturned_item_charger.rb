@@ -25,9 +25,9 @@ module Spree
       set_shipment_for_new_order
 
       new_order.reload.update!
-      while new_order.state != new_order.checkout_steps[-2] && new_order.next; end
-
       set_order_payment
+
+      while new_order.state != new_order.checkout_steps[-2] && new_order.next; end
 
       new_order.contents.approve(name: self.class.name)
       new_order.reload.complete!
@@ -61,7 +61,6 @@ module Spree
     def set_shipment_for_new_order
       new_order.shipments.destroy_all
       @shipment.update_attributes!(order_id: new_order.id)
-      new_order.update_attributes!(state: "confirm")
     end
 
     def set_order_payment
