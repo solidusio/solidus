@@ -27,6 +27,7 @@ module Spree
       new_order.reload.update!
       set_order_payment
 
+      # Transitions will call update_totals on the order
       while new_order.state != new_order.checkout_steps[-2] && new_order.next; end
 
       new_order.contents.approve(name: self.class.name)
