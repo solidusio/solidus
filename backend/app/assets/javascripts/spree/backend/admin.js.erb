@@ -34,9 +34,6 @@ jQuery(function($) {
       $('#powerTip').removeClass($(this).data('action'));
     })
 
-  // Make flash messages dissapear
-  setTimeout('$(".flash").fadeOut()', 5000);
-
   // Highlight hovered table column
   $('table tbody tr td.actions').find('a, button').hover(function(){
     var tr = $(this).closest('tr');
@@ -57,16 +54,6 @@ jQuery(function($) {
 
 
 $.fn.visible = function(cond) { this[cond ? 'show' : 'hide' ]() };
-
-show_flash = function(type, message) {
-  var flash_div = $('.flash.' + type);
-  if (flash_div.length == 0) {
-    flash_div = $('<div class="flash ' + type + '" />');
-    $('#wrapper').prepend(flash_div);
-  }
-  flash_div.html(message).show().delay(5000).fadeOut(500);
-}
-
 
 // Apply to individual radio button that makes another element visible when checked
 $.fn.radioControlsVisibilityOfElement = function(dependentElementSelector){
