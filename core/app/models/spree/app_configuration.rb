@@ -84,6 +84,14 @@ module Spree
     #   @return [Boolean]
     preference :binary_inventory_cache, :boolean, default: false
 
+    # @!attribute [rw] completable_order_created_cutoff
+    #   @return [Integer] the number of days to look back for created orders which get returned to the user as last completed
+    preference :completable_order_created_cutoff_days, :integer, default: nil
+
+    # @!attribute [rw] completable_order_created_cutoff
+    #   @return [Integer] the number of days to look back for updated orders which get returned to the user as last completed
+    preference :completable_order_updated_cutoff_days, :integer, default: nil
+
     # @!attribute [rw] inventory_cache_threshold
     #   Only invalidate product caches when the count on hand for a stock item
     #   falls below or rises about the inventory_cache_threshold.  When undefined, the
