@@ -4,6 +4,8 @@
 source 'https://rubygems.org'
 
 platforms :ruby do
+  # Version restriction because AR will not use mysql2 0.4.0
+  # This can be removed when a future version of rails is released
   gem 'mysql2', '~> 0.3.20'
   gem 'pg'
   gem 'sqlite3'
