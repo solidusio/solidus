@@ -1144,7 +1144,7 @@ pl:
     shipment_state: Stan wysyłki
     shipment_states:
       backorder: cofnięcie zamówienia
-      canceled:
+      canceled: anulowane
       partial: częściowe
       pending: oczekujące
       ready: gotowe
