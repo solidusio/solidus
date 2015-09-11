@@ -875,7 +875,7 @@ it:
     none: Niente
     none_selected: Nessuno selezionato
     normal_amount: Quantità Normale
-    not: no
+    not: 'no'
     not_available: Non disponibile
     not_enough_stock: Non ci sono abbastanza scorte nel magazzino di partenza per completare questo trasferimento.
     not_found: "%{resource} non trovato"
@@ -1155,7 +1155,7 @@ it:
     sales_totals: Totali Vendite
     save_and_continue: Salva e Continua
     save_my_address: Salva il mio indirizzo
-    say_no: No
+    say_no: 'No'
     say_yes: Sì
     scope: Campo
     search: Cerca

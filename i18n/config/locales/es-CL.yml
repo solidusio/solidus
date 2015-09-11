@@ -862,7 +862,7 @@ es-CL:
     none: Ninguno
     none_selected: Ninguno seleccionado
     normal_amount: Valor normal
-    not: No
+    not: 'No'
     not_available: No disponible
     not_enough_stock: No hay suficiente stock en la Ubicación para completar esta transferencia
     not_found: No se encontró %{resource}
@@ -1148,7 +1148,7 @@ es-CL:
     sales_totals: Totales de ventas
     save_and_continue: Guardar y Continuar
     save_my_address: Guardar mi dirección
-    say_no: No
+    say_no: 'No'
     say_yes: Si
     scope: Alcance
     search: Buscar
