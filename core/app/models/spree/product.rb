@@ -105,11 +105,7 @@ module Spree
 
     # @return [Spree::TaxCategory] tax category for this product, or the default tax category
     def tax_category
-      if self[:tax_category_id].nil?
-        TaxCategory.where(is_default: true).first
-      else
-        TaxCategory.find(self[:tax_category_id])
-      end
+      super || TaxCategory.find_by(is_default: true)
     end
 
     # Overrides the prototype_id setter in order to ensure it is cast to an
@@ -129,9 +125,10 @@ module Spree
     # @return [Array] the option_values
     def ensure_option_types_exist_for_values_hash
       return if option_values_hash.nil?
-      option_values_hash.keys.map(&:to_i).each do |id|
-        self.option_type_ids << id unless option_type_ids.include?(id)
-        product_option_types.create(option_type_id: id) unless product_option_types.pluck(:option_type_id).include?(id)
+      required_option_type_ids = option_values_hash.keys.map(&:to_i)
+      missing_option_type_ids = required_option_type_ids - option_type_ids
+      missing_option_type_ids.each do |id|
+        product_option_types.create(option_type_id: id)
       end
     end
 
@@ -177,11 +174,10 @@ module Spree
     # @param values [Array{String}] strings to search through fields for
     # @return [ActiveRecord::Relation] scope with WHERE clause for search applied
     def self.like_any(fields, values)
-      where fields.map { |field|
-        values.map { |value|
-          arel_table[field].matches("%#{value}%")
-        }.inject(:or)
-      }.inject(:or)
+      conditions = fields.product(values).map do |(field, value)|
+        arel_table[field].matches("%#{value}%")
+      end
+      where conditions.inject(:or)
     end
 
     # @param current_currency [String] currency to filter variants by; defaults to Spree's default
@@ -213,11 +209,7 @@ module Spree
     def set_property(property_name, property_value)
       ActiveRecord::Base.transaction do
         # Works around spree_i18n #301
-        property = if Property.exists?(name: property_name)
-          Property.where(name: property_name).first
-        else
-          Property.create(name: property_name, presentation: property_name)
-        end
+        property = Property.create_with(presentation: property_name).find_or_create_by(name: property_name)
         product_property = ProductProperty.where(product: self, property: property).first_or_initialize
         product_property.value = property_value
         product_property.save!
@@ -246,7 +238,7 @@ module Spree
     #
     # @return [Spree::Variant] the master variant
     def master
-      super || variants_including_master.with_deleted.where(is_master: true).first
+      super || variants_including_master.with_deleted.find_by(is_master: true)
     end
 
     # Image that can be used for the product.
@@ -274,7 +266,7 @@ module Spree
       if variants_including_master.loaded?
         variants_including_master.any? { |v| !v.should_track_inventory? }
       else
-        !Spree::Config.track_inventory_levels || variants_including_master.where(track_inventory: false).any?
+        !Spree::Config.track_inventory_levels || variants_including_master.where(track_inventory: false).exists?
       end
     end
 
@@ -285,7 +277,7 @@ module Spree
       values = values.inject(values.shift) { |memo, value| memo.product(value).map(&:flatten) }
 
       values.each do |ids|
-        variant = variants.create(
+        variants.create(
           option_value_ids: ids,
           price: master.price
         )
