@@ -384,6 +384,7 @@ ko:
     are_you_sure: "확실합니까?"
     are_you_sure_delete: "기록을 삭제하시겠습니까?"
     associated_adjustment_closed:
+    at_symbol: '@'
     authorization_failure: "인증 실패"
     authorized:
     auto_capture:

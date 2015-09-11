@@ -428,6 +428,7 @@ nb:
     are_you_sure: Er du sikker
     are_you_sure_delete: Er du sikker på at du vil slette denne?
     associated_adjustment_closed:
+    at_symbol: '@'
     authorization_failure: Autorisering feilet
     authorized:
     auto_capture:

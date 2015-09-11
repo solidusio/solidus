@@ -473,6 +473,7 @@ it:
     are_you_sure: Sei sicuro?
     are_you_sure_delete: Sei sicuro di voler eliminare questo record?
     associated_adjustment_closed: La variazione associata è chiusa e non verrà ricalcolata. Vuoi riaprirla?
+    at_symbol: '@'
     authorization_failure: Autorizzazione Fallita
     authorized: Autorizzato
     auto_capture: Riscossione Automatica

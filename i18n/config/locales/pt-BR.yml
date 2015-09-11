@@ -456,6 +456,7 @@ pt-BR:
     are_you_sure: Tem Certeza?
     are_you_sure_delete: Tem certeza que deseja remover este registro?
     associated_adjustment_closed: O ajuste relacionado está fechado e não será recalculado. Você que deixar o ajuste em aberto?
+    at_symbol: '@'
     authorization_failure: Falha na Autorização
     authorized: Autorizado
     auto_capture: Captura automática

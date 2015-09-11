@@ -438,6 +438,7 @@ sk:
     are_you_sure: "Ste si istí?"
     are_you_sure_delete: "Ste si istí, že chcete zmazať tento záznam?"
     associated_adjustment_closed:
+    at_symbol: '@'
     authorization_failure: "Chyba pri autorizácii"
     authorized:
     auto_capture:

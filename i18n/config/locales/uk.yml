@@ -534,6 +534,7 @@ uk:
     are_you_sure: "Ви впевнені"
     are_you_sure_delete: "Ви впевнені, що хочете видалити цей запис?"
     associated_adjustment_closed: "Пов’язане коригування закрито, і не буде перераховано. Чи бажаєте відкрити її?"
+    at_symbol: '@'
     authorization_failure: "Помилка авторизації"
     authorized: "Авторизовано"
     auto_capture: "Автозахоплення"

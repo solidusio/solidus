@@ -474,6 +474,7 @@ es-CL:
     are_you_sure: "¿Estás seguro?"
     are_you_sure_delete: "¿Estás seguro de que quieres borrar este registro?"
     associated_adjustment_closed: El ajuste asociado está cerrado y no será recalculado. ¿Quieres abrirlo?
+    at_symbol: '@'
     authorization_failure: Fallo en la autorización
     authorized: Autorizado
     auto_capture: Captura automática

@@ -424,6 +424,7 @@ th:
     are_you_sure: "แน่ใจหรือไม่"
     are_you_sure_delete: "คุณแน่ใจที่จะลบข้อมูลนี้หรือไม่?"
     associated_adjustment_closed: "รายการที่เกี่ยวข้อกับรายการปรับปรุงนั้นได้ปิดแล้ว และจะไม่นำมาคำนวนใหม่ คุณต้องการที่จะเปิดหรือไม่?"
+    at_symbol: '@'
     authorization_failure: "การขออนุญาต ไม่สำเร็จ"
     authorized:
     auto_capture:

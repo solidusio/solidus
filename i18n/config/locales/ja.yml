@@ -428,6 +428,7 @@ ja:
     are_you_sure: "これで宜しいですか?"
     are_you_sure_delete: "削除しますか?"
     associated_adjustment_closed:
+    at_symbol: '@'
     authorization_failure: "認証に失敗しました"
     authorized:
     auto_capture:

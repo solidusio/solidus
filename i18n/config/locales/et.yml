@@ -412,6 +412,7 @@ et:
     are_you_sure: Kas oled kindel?
     are_you_sure_delete: Kas oled kindel, et soovid seda kirjet kustutada?
     associated_adjustment_closed:
+    at_symbol: '@'
     authorization_failure: Tõrge autoriseerimisel
     authorized:
     auto_capture:

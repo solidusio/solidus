@@ -384,6 +384,7 @@ pt:
     are_you_sure: Tem a certeza?
     are_you_sure_delete: Tem a certeza que deseja remover este registo?
     associated_adjustment_closed:
+    at_symbol: '@'
     authorization_failure: Falha na autorização
     authorized:
     auto_capture:

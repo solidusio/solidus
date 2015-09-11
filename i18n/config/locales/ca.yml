@@ -428,6 +428,7 @@ ca:
     are_you_sure: Està segur?
     are_you_sure_delete: Està segur que vol eliminar aquesta entrada?
     associated_adjustment_closed:
+    at_symbol: '@'
     authorization_failure: Fallada d'autorització
     authorized:
     auto_capture:

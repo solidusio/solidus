@@ -408,6 +408,7 @@ fa:
     attachment_path: Attachments Path
     attachment_styles: Paperclip Styles
     attachment_url:
+    at_symbol: '@'
     authorization_failure: خرابی در صدور مجوز
     available_on: موجود است در
     back: برگشت

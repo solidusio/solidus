@@ -422,6 +422,7 @@ lv:
     are_you_sure: Vai esiet pārliecināts?
     are_you_sure_delete: Vai esiet pārliecināts, ka vēlaties dzēst šo ierakstu?
     associated_adjustment_closed:
+    at_symbol: '@'
     authorization_failure: Autorizācija neizdevās
     authorized:
     auto_capture:

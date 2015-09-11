@@ -427,6 +427,7 @@ id:
     are_you_sure: Anda yakin?
     are_you_sure_delete: Anda yakin mau menghilangkan record berikut?
     associated_adjustment_closed: Penyesuaian yang dimaksud telah ditutup. Apakah Anda mau membukanya?
+    at_symbol: '@'
     authorization_failure: Gagal Otorisasi
     authorized: Otorisasi
     auto_capture: auto capture

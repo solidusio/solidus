@@ -384,6 +384,7 @@ vi:
     are_you_sure: Bạn có chắn chắn không?
     are_you_sure_delete: Bạn có chắc bạn muốn xóa hồ sơ này không?
     associated_adjustment_closed: "Điều chỉnh liên đới đã bị đóng và không thể tính lại. Bạn có muốn mở nó không?"
+    at_symbol: '@'
     authorization_failure: Không được ủy quyền truy cập
     authorized:
     auto_capture:

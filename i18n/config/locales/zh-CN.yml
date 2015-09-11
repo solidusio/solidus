@@ -437,6 +437,7 @@ zh-CN:
     are_you_sure: "你确定么？"
     are_you_sure_delete: "你确定你要删除这条记录么?"
     associated_adjustment_closed: "相关联的价格调整已被关闭，并且不会被重复计算。您需要启用它吗？"
+    at_symbol: '@'
     authorization_failure: "认证失败"
     authorized:
     auto_capture:

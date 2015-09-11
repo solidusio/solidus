@@ -430,6 +430,7 @@ es-MX:
     are_you_sure: "¿Está seguro?"
     are_you_sure_delete: "¿Está seguro de que quiere eliminar esta entrada?"
     associated_adjustment_closed: El ajuste relacionado está cerrado, y no será recalculado. ¿Deseas abrirlo?
+    at_symbol: '@'
     authorization_failure: Fallo de autorización
     authorized:
     auto_capture:

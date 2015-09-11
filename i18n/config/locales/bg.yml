@@ -424,6 +424,7 @@ bg:
     are_you_sure: "Сигурни ли сте"
     are_you_sure_delete: "Сигурни ли сте, че искате да изтриете този запис?"
     associated_adjustment_closed:
+    at_symbol: '@'
     authorization_failure:
     authorized:
     auto_capture:

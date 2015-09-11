@@ -475,6 +475,7 @@ de:
     are_you_sure: Sind Sie sicher
     are_you_sure_delete: "Sind sie sich sicher, dass Sie diesen Eintrag löschen möchten?"
     associated_adjustment_closed: Die verknüpfte Anpassung ist geschlossen und wird nicht neu berechnet. Möchten Sie die Anpassung öffnen?
+    at_symbol: '@'
     authorization_failure: Bitte authentifizieren Sie sich.
     authorized: Autorisiert
     auto_capture: automatische Erfassung

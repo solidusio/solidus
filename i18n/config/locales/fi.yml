@@ -442,6 +442,7 @@ fi:
     are_you_sure: Oletko varma?
     are_you_sure_delete: Haluatko varmasti poistaa tämän tiedon?
     associated_adjustment_closed: Tähän liitetty hintamuutos on suljettu, joten sitä ei huomioida laskuissa. Haluatko avata sen?
+    at_symbol: '@'
     authorization_failure: Valtuutus epäonnistui
     authorized:
     auto_capture:

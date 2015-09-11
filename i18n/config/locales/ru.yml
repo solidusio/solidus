@@ -490,6 +490,7 @@ ru:
     are_you_sure: "Вы уверены"
     are_you_sure_delete: "Вы уверены, что хотите удалить эту запись?"
     associated_adjustment_closed: "Связанная корректировка закрыта, и не будет пересчитана. Хотите ли вы открыть её?"
+    at_symbol: '@'
     authorization_failure: "Ошибка авторизации"
     authorized:
     auto_capture: "Автозахват"

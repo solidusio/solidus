@@ -432,6 +432,7 @@ nl:
     are_you_sure: Weet je het zeker
     are_you_sure_delete: Wilt je dit record echt verwijderen?
     associated_adjustment_closed: De bijbehorende aanpassing is gesloten, en wordt niet herberekend. Wil je de aanpassing openen?
+    at_symbol: '@'
     authorization_failure: Autorisatie mislukt
     authorized:
     auto_capture:

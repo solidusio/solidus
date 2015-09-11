@@ -430,6 +430,7 @@ da:
     are_you_sure: Er du sikker?
     are_you_sure_delete: Er du sikker på at du vil slette denne post?
     associated_adjustment_closed: Den tilhørende justering er lukket, og vil ikke blive genberegnet. Vil du åben den?
+    at_symbol: '@'
     authorization_failure: Autorisation fejlede
     authorized:
     auto_capture:

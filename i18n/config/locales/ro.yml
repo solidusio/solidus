@@ -430,6 +430,7 @@ ro:
     are_you_sure: Ești sigur(ă)
     are_you_sure_delete: Ești sigur(ă) că vrei să ștergi această înregistrare?
     associated_adjustment_closed: Ajustarea asociată este închisă și nu va fi recalculată. Doriți să o deschideți?
+    at_symbol: '@'
     authorization_failure: Autorizare nereușită
     authorized:
     auto_capture:

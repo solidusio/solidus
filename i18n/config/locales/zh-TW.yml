@@ -387,6 +387,7 @@ zh-TW:
     are_you_sure: "你確定嗎?"
     are_you_sure_delete: "你確定要刪除?"
     associated_adjustment_closed: "這個關聯的調整項目已經停用, 而且不會被重複計算, 您要啓用它嗎?"
+    at_symbol: '@'
     authorization_failure: "認証失敗"
     authorized:
     auto_capture:

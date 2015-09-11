@@ -384,6 +384,7 @@ de-CH:
     are_you_sure: Sind Sie sicher
     are_you_sure_delete: Sind sie sicher, dass Sie diesen Eintrag löschen möchten?
     associated_adjustment_closed:
+    at_symbol: '@'
     authorization_failure: Anmeldung fehlgeschlagen
     authorized:
     auto_capture:

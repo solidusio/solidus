@@ -462,6 +462,7 @@ fr:
     are_you_sure: En êtes-vous sûr ?
     are_you_sure_delete: "Êtes-vous sûr de vouloir supprimer cet enregistrement ?"
     associated_adjustment_closed: L'ajustement associé est fermé, et ne sera pas recalculé. Voulez-vous l'ouvrir?
+    at_symbol: '@'
     authorization_failure: Vous n'avez pas les droits nécessaires pour afficher cette section
     authorized: Autorisé
     auto_capture: Acceptation automatique

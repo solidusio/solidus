@@ -384,6 +384,7 @@ tr:
     are_you_sure: Emin misiniz?
     are_you_sure_delete: Bu kaydı silmek istediğnizden emin misiniz?
     associated_adjustment_closed: Bağlı kredi kapatıldı ve tekrar hesaplanmayacak. Tekrar açmak ister misiniz?
+    at_symbol: '@'
     authorization_failure: Yetkilendirme Hatası
     authorized:
     auto_capture:

@@ -460,6 +460,7 @@ sv:
     are_you_sure: "Är du säker?"
     are_you_sure_delete: "Är du säker på att du vill ta bort denna post?"
     associated_adjustment_closed: Den tillhörande justeringen är stängd, och blir inte omräknad. Vill du öppna den?
+    at_symbol: '@'
     authorization_failure: Auktorisationen misslyckades
     authorized: Auktoriserad
     auto_capture: Auto-capture
