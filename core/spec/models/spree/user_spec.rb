@@ -33,6 +33,34 @@ describe Spree::LegacyUser, :type => :model do
       expect(user.last_incomplete_spree_order).to eq nil
     end
 
+    context "with completable_order_created_cutoff set" do
+      before do
+        @original_order_cutoff_preference = Spree::Config.completable_order_created_cutoff_days
+        Spree::Config.completable_order_created_cutoff_days = 1
+      end
+
+      after { Spree::Config.completable_order_created_cutoff_days = @original_order_cutoff_preference }
+
+      it "excludes orders updated outside of the cutoff date" do
+        incomplete_order = create(:order, user: user, created_by: user, created_at: 3.days.ago, updated_at: 2.days.ago)
+        expect(user.last_incomplete_spree_order).to eq nil
+      end
+    end
+
+    context "with completable_order_created_cutoff set" do
+      before do
+        @original_order_cutoff_preference = Spree::Config.completable_order_updated_cutoff_days
+        Spree::Config.completable_order_updated_cutoff_days = 1
+      end
+
+      after { Spree::Config.completable_order_updated_cutoff_days = @original_order_cutoff_preference }
+
+      it "excludes orders updated outside of the cutoff date" do
+        incomplete_order = create(:order, user: user, created_by: user, created_at: 3.days.ago, updated_at: 2.days.ago)
+        expect(user.last_incomplete_spree_order).to eq nil
+      end
+    end
+
     it "chooses the most recently created incomplete order" do
       order_1 = create(:order, user: user, created_at: 1.second.ago)
       order_2 = create(:order, user: user)
