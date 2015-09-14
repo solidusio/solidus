@@ -3,8 +3,8 @@ module Spree
     def initialize(order, attributes, payment: nil, request_env: {})
       @order = order
       @payment = payment
-      @attributes = attributes.dup
-      @source_attributes = attributes.delete(:source_attributes) || {}
+      @attributes = attributes.dup.with_indifferent_access
+      @source_attributes = @attributes.delete(:source_attributes) || {}
       @request_env = request_env
     end
 
