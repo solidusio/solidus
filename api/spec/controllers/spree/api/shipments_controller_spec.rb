@@ -207,8 +207,7 @@ describe Spree::Api::ShipmentsController, :type => :controller do
 
       context "send_mailer not present" do
         it "sends the shipped shipments mailer" do
-          with_test_mail { subject }
-          expect(ActionMailer::Base.deliveries.size).to eq 1
+          expect { subject }.to change { ActionMailer::Base.deliveries.size }.by(1)
           expect(ActionMailer::Base.deliveries.last.subject).to match /Shipment Notification/
         end
       end
@@ -216,16 +215,14 @@ describe Spree::Api::ShipmentsController, :type => :controller do
       context "send_mailer set to false" do
         let(:send_mailer) { 'false' }
         it "does not send the shipped shipments mailer" do
-          with_test_mail { subject }
-          expect(ActionMailer::Base.deliveries.size).to eq 0
+          expect { subject }.to_not change { ActionMailer::Base.deliveries.size }
         end
       end
 
       context "send_mailer set to true" do
         let(:send_mailer) { 'true' }
         it "sends the shipped shipments mailer" do
-          with_test_mail { subject }
-          expect(ActionMailer::Base.deliveries.size).to eq 1
+          expect { subject }.to change { ActionMailer::Base.deliveries.size }.by(1)
           expect(ActionMailer::Base.deliveries.last.subject).to match /Shipment Notification/
         end
       end
