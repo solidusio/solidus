@@ -929,6 +929,38 @@ describe Spree::Order, :type => :model do
 
       expect { shipment.reload }.not_to raise_error
     end
+
+    context "unreturned exchange" do
+      let!(:first_shipment) do
+        create(:shipment, order: subject, state: first_shipment_state, created_at: 5.days.ago)
+      end
+      let!(:second_shipment) do
+        create(:shipment, order: subject, state: second_shipment_state, created_at: 5.days.ago)
+      end
+
+      context "some shipments are shipped" do
+        let(:first_shipment_state) { "shipped" }
+        let(:second_shipment_state) { "ready" }
+
+        it "raises an error" do
+          expect {
+            expect {
+              subject.create_proposed_shipments
+            }.to raise_error(Spree::Order::CannotRebuildShipments)
+          }.not_to change { subject.reload.shipments }
+        end
+      end
+
+      context "all shipments are shipped" do
+        let(:first_shipment_state) { "shipped" }
+        let(:second_shipment_state) { "shipped" }
+
+        it "returns the shipments" do
+          subject.create_proposed_shipments
+          expect(subject.shipments).to match_array [first_shipment, second_shipment]
+        end
+      end
+    end
   end
 
   describe "#all_inventory_units_returned?" do
