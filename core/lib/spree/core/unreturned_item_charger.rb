@@ -27,8 +27,18 @@ module Spree
       new_order.reload.update!
       set_order_payment
 
+      # There are several checks in the order state machine to skip
+      # certain transitions when an order is an unreturned exchange
+      if !new_order.unreturned_exchange?
+        raise ChargeFailure.new('order is not an unreturned exchange', new_order)
+      end
+
       # Transitions will call update_totals on the order
       while new_order.state != new_order.checkout_steps[-2] && new_order.next; end
+
+      if new_order.state != new_order.checkout_steps[-2]
+        raise ChargeFailure.new("order did not reach the #{new_order.checkout_steps[-2]} state", new_order)
+      end
 
       new_order.contents.approve(name: self.class.name)
       new_order.reload.complete!

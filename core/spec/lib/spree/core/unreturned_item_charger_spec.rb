@@ -34,6 +34,26 @@ describe Spree::UnreturnedItemCharger do
 
     subject { unreturned_item_charger.charge_for_items }
 
+    context "new order is not an unreturned exchange" do
+      before do
+        allow_any_instance_of(Spree::Shipment).to receive(:update_attributes!)
+      end
+
+      it "raises an error" do
+        expect { subject }.to raise_error(Spree::UnreturnedItemCharger::ChargeFailure, 'order is not an unreturned exchange')
+      end
+    end
+
+    context "there's an error transitioning the new order's state" do
+      before do
+        allow_any_instance_of(Spree::Order).to receive(:next).and_return(false)
+      end
+
+      it "raises an error" do
+        expect { subject }.to raise_error(Spree::UnreturnedItemCharger::ChargeFailure, 'order did not reach the confirm state')
+      end
+    end
+
     context "item is now out of stock" do
       before do
         original_variant.stock_items.map { |si| si.set_count_on_hand(0) }
