@@ -130,10 +130,17 @@ module Spree
       item_cost + final_price
     end
 
+    # Decrement the stock counts for all pending inventory units in this
+    # shipment and mark.
+    # Any previous non-pending inventory units are skipped as their stock had
+    # already been allocated.
     def finalize!
-      return if order.unreturned_exchange?
-      InventoryUnit.finalize_units!(inventory_units)
-      manifest.each { |item| manifest_unstock(item) }
+      transaction do
+        pending_units = inventory_units.select(&:pending?)
+        pending_manifest = ShippingManifest.new(inventory_units: pending_units)
+        pending_manifest.items.each { |item| manifest_unstock(item) }
+        InventoryUnit.finalize_units!(pending_units)
+      end
     end
 
     def include?(variant)

@@ -23,6 +23,7 @@ describe Spree::UnreturnedItemCharger do
   let!(:unreturned_item_charger) { Spree::UnreturnedItemCharger.new(exchange_shipment, [return_item]) }
 
   before do
+    exchange_shipment.finalize!
     exchange_inventory_unit.ship!
   end
 
