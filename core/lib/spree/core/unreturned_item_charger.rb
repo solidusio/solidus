@@ -100,9 +100,9 @@ module Spree
         bill_address: @original_order.bill_address,
         ship_address: @original_order.ship_address,
         email: @original_order.email,
+        store_id: @original_order.store_id,
         frontend_viewable: false
       }
-      order_attributes[:store_id] = @original_order.store_id if @original_order.respond_to?(:store_id)
       order_attributes
     end
   end
