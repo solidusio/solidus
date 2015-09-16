@@ -34,10 +34,8 @@ module Spree
       end
 
       # Transitions will call update_totals on the order
-      while new_order.state != new_order.checkout_steps[-2] && new_order.next; end
-
-      if new_order.state != new_order.checkout_steps[-2]
-        raise ChargeFailure.new("order did not reach the #{new_order.checkout_steps[-2]} state", new_order)
+      until new_order.can_complete?
+        new_order.next!
       end
 
       new_order.contents.approve(name: self.class.name)
