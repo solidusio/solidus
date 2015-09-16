@@ -21,7 +21,7 @@ module SpreeI18n
     private
 
     def locale_presentation(locale)
-      [Spree.t(:this_file_language, scope: 'i18n', locale: locale), locale]
+      [Spree.t(:'i18n.this_file_language', locale: locale), locale]
     end
 
     def common_options
