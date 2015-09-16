@@ -37,7 +37,7 @@ module Spree
 
     # @return [Address] an equal address already in the database or a newly created one
     def self.factory(attributes)
-      full_attributes = value_attributes(column_defaults, attributes)
+      full_attributes = value_attributes(column_defaults, new(attributes).attributes)
       find_or_initialize_by(full_attributes)
     end
 
@@ -146,6 +146,13 @@ module Spree
     # Since addresses do not change, you won't accidentally alter historical data.
     def readonly?
       persisted?
+    end
+
+    # @param iso [String] 2 letter Country ISO
+    # @return [Country] setter that sets self.country to the Country with a matching 2 letter iso
+    # @raise [ActiveRecord::RecordNotFound] if country with the iso doesn't exist
+    def country_iso=(iso)
+      self.country = Country.find_by!(iso: iso)
     end
 
     private
