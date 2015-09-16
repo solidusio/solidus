@@ -24,7 +24,7 @@ module Spree
       add_exchange_variants_to_order
       set_shipment_for_new_order
 
-      new_order.reload.update!
+      new_order.update!
       set_order_payment
 
       # There are several checks in the order state machine to skip
@@ -69,6 +69,7 @@ module Spree
 
     def set_shipment_for_new_order
       @shipment.update_attributes!(order_id: new_order.id)
+      new_order.shipments.reset
     end
 
     def set_order_payment
