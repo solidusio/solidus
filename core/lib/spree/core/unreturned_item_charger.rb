@@ -22,15 +22,23 @@ module Spree
       new_order.associate_user!(@original_order.user) if @original_order.user
 
       add_exchange_variants_to_order
+      set_shipment_for_new_order
 
       new_order.reload.update!
-      while new_order.state != new_order.checkout_steps[-2] && new_order.next; end
-
       set_order_payment
 
-      # the order builds a shipment on its own on transition to delivery, but we want
-      # the original exchange shipment, not the built one
-      set_shipment_for_new_order
+      # There are several checks in the order state machine to skip
+      # certain transitions when an order is an unreturned exchange
+      if !new_order.unreturned_exchange?
+        raise ChargeFailure.new('order is not an unreturned exchange', new_order)
+      end
+
+      # Transitions will call update_totals on the order
+      while new_order.state != new_order.checkout_steps[-2] && new_order.next; end
+
+      if new_order.state != new_order.checkout_steps[-2]
+        raise ChargeFailure.new("order did not reach the #{new_order.checkout_steps[-2]} state", new_order)
+      end
 
       new_order.contents.approve(name: self.class.name)
       new_order.reload.complete!
@@ -64,7 +72,6 @@ module Spree
     def set_shipment_for_new_order
       new_order.shipments.destroy_all
       @shipment.update_attributes!(order_id: new_order.id)
-      new_order.update_attributes!(state: "confirm")
     end
 
     def set_order_payment
