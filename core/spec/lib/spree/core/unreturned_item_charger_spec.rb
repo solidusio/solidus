@@ -77,6 +77,10 @@ describe Spree::UnreturnedItemCharger do
       expect(new_order.payments.first.response_code).to be_present
     end
 
+    it "delivers confirmation email" do
+      expect { subject }.to change { ActionMailer::Base.deliveries.count }.by(1)
+    end
+
     context 'with auto_capture_exchanges' do
       before { Spree::Config[:auto_capture_exchanges] = true }
 
