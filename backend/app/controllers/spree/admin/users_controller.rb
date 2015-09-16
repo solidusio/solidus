@@ -134,7 +134,7 @@ module Spree
           when 'basic'
             collection.map { |u| { 'id' => u.id, 'name' => u.email } }.to_json
           else
-            address_fields = [:firstname, :lastname, :address1, :address2, :city, :zipcode, :phone, :state_name, :state_id, :country_id]
+            address_fields = [:firstname, :lastname, :address1, :address2, :city, :zipcode, :phone, :state_name, :state_id, :country_id, :country_iso]
             includes = { :only => address_fields , :include => { :state => { :only => :name }, :country => { :only => :name } } }
 
             collection.to_json(:only => [:id, :email], :include =>

@@ -183,6 +183,18 @@ describe Spree::Address, :type => :model do
     end
   end
 
+
+  context '.factory' do
+    context 'with attributes that use setters defined in Address' do
+      let(:address_attributes) { attributes_for(:address, country_id: nil, country_iso: country.iso) }
+      let(:country) { create(:country, iso: 'ZZ') }
+
+      it 'uses the setters' do
+        expect(subject.factory(address_attributes).country_id).to eq(country.id)
+      end
+    end
+  end
+
   context ".immutable_merge" do
     RSpec::Matchers.define :be_address_equivalent_attributes do |expected|
       fields_of_interest = [:firstname, :lastname, :company, :address1, :address2, :city, :zipcode, :phone, :alternative_phone]
@@ -295,6 +307,22 @@ describe Spree::Address, :type => :model do
         expect(base_attributes).to eq('first_name' => 'Jordan')
         expect(merge_attributes).to eq('last_name' => 'Brough')
       end
+    end
+  end
+
+  context '#country_iso=' do
+    let(:address) { build(:address, :country_id => nil) }
+    let(:country) { create(:country, iso: 'ZZ') }
+
+    it 'sets the country to the country with the matching iso code' do
+      address.country_iso = country.iso
+      expect(address.country_id).to eq(country.id)
+    end
+
+    it 'raises an exception if the iso is not found' do
+      expect {
+        address.country_iso = "NOCOUNTRY"
+      }.to raise_error(::ActiveRecord::RecordNotFound, "Couldn't find Spree::Country")
     end
   end
 
