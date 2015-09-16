@@ -95,14 +95,13 @@ module Spree
     end
 
     def exchange_order_attributes
-      order_attributes = {
+      {
         bill_address: @original_order.bill_address,
         ship_address: @original_order.ship_address,
         email: @original_order.email,
         store_id: @original_order.store_id,
         frontend_viewable: false
       }
-      order_attributes
     end
   end
 end
