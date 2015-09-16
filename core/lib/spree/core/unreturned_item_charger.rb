@@ -41,7 +41,7 @@ module Spree
       end
 
       new_order.contents.approve(name: self.class.name)
-      new_order.reload.complete!
+      new_order.complete!
       Spree::OrderCapturing.new(new_order).capture_payments if (Spree::Config[:auto_capture_exchanges] && !Spree::Config[:auto_capture])
 
       @return_items.each(&:expired!)
