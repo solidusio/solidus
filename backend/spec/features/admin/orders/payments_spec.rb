@@ -66,6 +66,12 @@ describe 'Payments', :type => :feature do
       # end
     end
 
+    it 'displays the address for a credit card when present' do
+      payment.source.update!(address: create(:address, address1: 'my cc address'))
+      visit spree.admin_order_payment_path(order, payment)
+      expect(page).to have_content 'my cc address'
+    end
+
     it 'lists and create payments for an order', js: true do
       within_row(1) do
         expect(column_text(3)).to eq('$150.00')
