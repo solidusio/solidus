@@ -49,6 +49,5 @@ module Spree
       payment.source = credit_card
       payment.payment_method_id = credit_card.payment_method_id
     end
-
   end
 end

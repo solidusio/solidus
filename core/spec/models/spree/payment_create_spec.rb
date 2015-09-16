@@ -7,13 +7,12 @@ module Spree
     let(:request_env) { {} }
     let(:payment_create) { described_class.new(order, attributes, request_env: request_env) }
     let(:payment_method) { create(:payment_method) }
-    let!(:new_payment) { payment_create.build }
+    let(:new_payment) { payment_create.build }
 
     context 'empty attributes' do
       let(:attributes){ {} }
       it "builds a new empty payment" do
         expect(new_payment).to be_a Spree::Payment
-        expect(new_payment).not_to be_persisted
         expect(new_payment.order).to eq order
         expect(new_payment.source).to be_nil
       end
@@ -55,6 +54,8 @@ module Spree
         end
         it "errors when payment source not valid" do
           expect(new_payment).not_to be_valid
+          expect(new_payment).not_to be_persisted
+          expect(new_payment.source).not_to be_persisted
           expect(new_payment.source).not_to be_valid
           expect(new_payment.source.error_on(:number)).to be_present
           expect(new_payment.source.error_on(:verification_value).size).to be_present
@@ -98,21 +99,21 @@ module Spree
         let(:other_user) { create(:user) }
         before { credit_card.update!(user: other_user) }
         it 'errors' do
-          expect { payment_create.build }.to raise_error(ActiveRecord::RecordNotFound)
+          expect { new_payment }.to raise_error(ActiveRecord::RecordNotFound)
         end
       end
 
       context 'the credit card has no user' do
         before { credit_card.update!(user_id: nil) }
         it 'errors' do
-          expect { payment_create.build }.to raise_error(ActiveRecord::RecordNotFound)
+          expect { new_payment }.to raise_error(ActiveRecord::RecordNotFound)
         end
       end
 
       context 'the order has no user' do
         before { order.update_attributes!(user_id: nil) }
         it 'errors' do
-          expect { payment_create.build }.to raise_error(ActiveRecord::RecordNotFound)
+          expect { new_payment }.to raise_error(ActiveRecord::RecordNotFound)
         end
       end
 
@@ -122,7 +123,7 @@ module Spree
           credit_card.update!(user_id: nil)
         end
         it 'errors' do
-          expect { payment_create.build }.to raise_error(ActiveRecord::RecordNotFound)
+          expect { new_payment }.to raise_error(ActiveRecord::RecordNotFound)
         end
       end
     end
