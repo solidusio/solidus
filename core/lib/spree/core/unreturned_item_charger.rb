@@ -68,7 +68,6 @@ module Spree
     end
 
     def set_shipment_for_new_order
-      new_order.shipments.destroy_all
       @shipment.update_attributes!(order_id: new_order.id)
     end
 
