@@ -724,6 +724,7 @@ it:
       available_locales: Lingue Disponibili
       fields: Campi
       language: Lingua
+      locales_displayed_on_frontend_select_box: Lingue selezionabili nel frontend
       localization_settings: Impostazioni Localizzazione
       only_complete: Solo complete
       only_incomplete: Solo incomplete
