@@ -3,7 +3,7 @@ class Spree::Api::UsersController < Spree::Api::ResourceController
   private
 
   def user
-  	@user
+    @user
   end
 
   def model_class
@@ -11,7 +11,7 @@ class Spree::Api::UsersController < Spree::Api::ResourceController
   end
 
   def user_params
-  	permitted_resource_params
+    permitted_resource_params
   end
 
   def permitted_resource_attributes
