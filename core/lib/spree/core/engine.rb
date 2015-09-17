@@ -92,7 +92,8 @@ module Spree
           Spree::Promotion::Rules::UserLoggedIn,
           Spree::Promotion::Rules::OneUsePerUser,
           Spree::Promotion::Rules::Taxon,
-          Spree::Promotion::Rules::NthOrder
+          Spree::Promotion::Rules::NthOrder,
+          Spree::Promotion::Rules::OptionValue
         ]
       end
 
