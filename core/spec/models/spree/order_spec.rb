@@ -938,19 +938,6 @@ describe Spree::Order, :type => :model do
         create(:shipment, order: subject, state: second_shipment_state, created_at: 5.days.ago)
       end
 
-      context "some shipments are shipped" do
-        let(:first_shipment_state) { "shipped" }
-        let(:second_shipment_state) { "ready" }
-
-        it "raises an error" do
-          expect {
-            expect {
-              subject.create_proposed_shipments
-            }.to raise_error(Spree::Order::CannotRebuildShipments)
-          }.not_to change { subject.reload.shipments }
-        end
-      end
-
       context "all shipments are shipped" do
         let(:first_shipment_state) { "shipped" }
         let(:second_shipment_state) { "shipped" }

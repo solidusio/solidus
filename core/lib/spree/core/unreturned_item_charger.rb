@@ -24,7 +24,7 @@ module Spree
       add_exchange_variants_to_order
       set_shipment_for_new_order
 
-      new_order.reload.update!
+      new_order.update!
       set_order_payment
 
       # There are several checks in the order state machine to skip
@@ -34,14 +34,12 @@ module Spree
       end
 
       # Transitions will call update_totals on the order
-      while new_order.state != new_order.checkout_steps[-2] && new_order.next; end
-
-      if new_order.state != new_order.checkout_steps[-2]
-        raise ChargeFailure.new("order did not reach the #{new_order.checkout_steps[-2]} state", new_order)
+      until new_order.can_complete?
+        new_order.next!
       end
 
       new_order.contents.approve(name: self.class.name)
-      new_order.reload.complete!
+      new_order.complete!
       Spree::OrderCapturing.new(new_order).capture_payments if (Spree::Config[:auto_capture_exchanges] && !Spree::Config[:auto_capture])
 
       @return_items.each(&:expired!)
@@ -70,18 +68,19 @@ module Spree
     end
 
     def set_shipment_for_new_order
-      new_order.shipments.destroy_all
       @shipment.update_attributes!(order_id: new_order.id)
+      new_order.shipments.reset
     end
 
     def set_order_payment
       unless new_order.payments.present?
         card_to_reuse = @original_order.valid_credit_cards.first
         card_to_reuse = @original_order.user.credit_cards.default.first if !card_to_reuse && @original_order.user
-        Spree::Payment.create!(order: new_order,
-                               payment_method_id: card_to_reuse.try(:payment_method_id),
-                               source: card_to_reuse,
-                               amount: new_order.total)
+        new_order.payments.create!(
+          payment_method_id: card_to_reuse.try(:payment_method_id),
+          source: card_to_reuse,
+          amount: new_order.total
+        )
       end
     end
 
@@ -96,14 +95,13 @@ module Spree
     end
 
     def exchange_order_attributes
-      order_attributes = {
+      {
         bill_address: @original_order.bill_address,
         ship_address: @original_order.ship_address,
         email: @original_order.email,
+        store_id: @original_order.store_id,
         frontend_viewable: false
       }
-      order_attributes[:store_id] = @original_order.store_id if @original_order.respond_to?(:store_id)
-      order_attributes
     end
   end
 end

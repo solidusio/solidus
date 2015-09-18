@@ -726,9 +726,9 @@ describe Spree::Shipment, :type => :model do
       expect { subject }.to change { stock_item.reload.count_on_hand }.from(10).to(9)
     end
 
-    context "exchange shipment from an unreturned exchange order" do
+    context "inventory unit already finalized" do
       before do
-        order.update_attributes!(created_at: 5.days.from_now)
+        inventory_unit.update_attributes!(pending: false)
       end
 
       it "doesn't update the associated inventory units" do

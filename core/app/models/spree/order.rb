@@ -516,7 +516,7 @@ module Spree
     end
 
     def create_proposed_shipments
-      return self.shipments if unreturned_exchange? && shipments.all?(&:shipped?)
+      return self.shipments if unreturned_exchange?
 
       if completed?
         raise CannotRebuildShipments.new(Spree.t(:cannot_rebuild_shipments_order_completed))

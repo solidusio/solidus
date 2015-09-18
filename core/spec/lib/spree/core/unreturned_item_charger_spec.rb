@@ -23,6 +23,7 @@ describe Spree::UnreturnedItemCharger do
   let!(:unreturned_item_charger) { Spree::UnreturnedItemCharger.new(exchange_shipment, [return_item]) }
 
   before do
+    exchange_shipment.finalize!
     exchange_inventory_unit.ship!
   end
 
@@ -76,6 +77,10 @@ describe Spree::UnreturnedItemCharger do
       expect(new_order.payments.first.response_code).to be_present
     end
 
+    it "delivers confirmation email" do
+      expect { subject }.to change { ActionMailer::Base.deliveries.count }.by(1)
+    end
+
     context 'with auto_capture_exchanges' do
       before { Spree::Config[:auto_capture_exchanges] = true }
 
@@ -103,16 +108,6 @@ describe Spree::UnreturnedItemCharger do
 
       it "raises an error" do
         expect { subject }.to raise_error(Spree::UnreturnedItemCharger::ChargeFailure, 'order is not an unreturned exchange')
-      end
-    end
-
-    context "there's an error transitioning the new order's state" do
-      before do
-        allow_any_instance_of(Spree::Order).to receive(:next).and_return(false)
-      end
-
-      it "raises an error" do
-        expect { subject }.to raise_error(Spree::UnreturnedItemCharger::ChargeFailure, 'order did not reach the confirm state')
       end
     end
 
