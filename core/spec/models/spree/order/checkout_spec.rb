@@ -632,6 +632,16 @@ describe Spree::Order, :type => :model do
         expect(order.reload.state).to eq 'payment'
       end
     end
+
+    context 'the order is already paid' do
+      let(:order) { create(:order_with_line_items) }
+
+      it 'can complete the order' do
+        payment = create(:payment, state: 'completed', order: order, amount: order.total)
+        order.update!
+        expect(order.complete).to eq(true)
+      end
+    end
   end
 
   context "subclassed order" do
