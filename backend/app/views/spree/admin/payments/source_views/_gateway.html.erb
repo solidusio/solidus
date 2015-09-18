@@ -16,6 +16,9 @@
         <dt><%= Spree.t(:expiration) %>:</dt>
         <dd><%= payment.source.month %>/<%= payment.source.year %></dd>
       </dl>
+      <% if payment.source.address %>
+        <%= render partial: 'spree/admin/shared/address', locals: {address: payment.source.address} %>
+      <% end %>
     </div>
   </div>
 </fieldset>
