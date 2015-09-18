@@ -53,6 +53,20 @@ module Spree
       end
     end
 
+    context "with no payments" do
+      it "should return falsy" do
+        expect(order).to receive_messages total: 100
+        expect(order.process_payments!).to be_falsy
+      end
+    end
+
+    context "with payments completed" do
+      it "should not fail transitioning to complete when paid" do
+        expect(order).to receive_messages total: 100, payment_total: 100
+        expect(order.process_payments!).to be_truthy
+      end
+    end
+
     context "ensure source attributes stick around" do
       # For the reason of this test, please see spree/spree_gateway#132
       it "does not have inverse_of defined" do
