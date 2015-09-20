@@ -1,4 +1,213 @@
 fr:
+  date:
+    abbr_day_names:
+      - dim
+      - lun
+      - mar
+      - mer
+      - jeu
+      - ven
+      - sam
+    abbr_month_names:
+      -
+      - jan.
+      - fév.
+      - mar.
+      - avr.
+      - mai
+      - juin
+      - juil.
+      - août
+      - sept.
+      - oct.
+      - nov.
+      - déc.
+    day_names:
+      - dimanche
+      - lundi
+      - mardi
+      - mercredi
+      - jeudi
+      - vendredi
+      - samedi
+    formats:
+      default: "%d/%m/%Y"
+      short: "%e %b"
+      long: "%e %B %Y"
+    month_names:
+      -
+      - janvier
+      - février
+      - mars
+      - avril
+      - mai
+      - juin
+      - juillet
+      - août
+      - septembre
+      - octobre
+      - novembre
+      - décembre
+    order:
+      - :day
+      - :month
+      - :year
+    datetime:
+      distance_in_words:
+        about_x_hours:
+          one: environ une heure
+          other: environ %{count} heures
+        about_x_months:
+          one: environ un mois
+          other: environ %{count} mois
+        about_x_years:
+          one: environ un an
+          other: environ %{count} ans
+        almost_x_years:
+          one: presqu'un an
+          other: presque %{count} ans
+        half_a_minute: une demi-minute
+        less_than_x_minutes:
+          zero: moins d'une minute
+          one: moins d'une minute
+          other: moins de %{count} minutes
+        less_than_x_seconds:
+          zero: moins d'une seconde
+          one: moins d'une seconde
+          other: moins de %{count} secondes
+        over_x_years:
+          one: plus d'un an
+          other: plus de %{count} ans
+        x_days:
+          one: 1 jour
+          other: "%{count} jours"
+        x_minutes:
+          one: 1 minute
+          other: "%{count} minutes"
+        x_months:
+          one: 1 mois
+          other: "%{count} mois"
+        x_seconds:
+          one: 1 seconde
+          other: "%{count} secondes"
+      prompts:
+        day: Jour
+        hour: Heure
+        minute: Minute
+        month: Mois
+        second: Seconde
+        year: Année
+    errors:
+      format: "%{attribute} %{message}"
+      messages:
+        accepted: doit être accepté(e)
+        blank: doit être rempli(e)
+        present: doit être vide
+        confirmation: ne concorde pas avec %{attribute}
+        empty: doit être rempli(e)
+        equal_to: doit être égal à %{count}
+        even: doit être pair
+        exclusion: n'est pas disponible
+        greater_than: doit être supérieur à %{count}
+        greater_than_or_equal_to: doit être supérieur ou égal à %{count}
+        inclusion: n'est pas inclus(e) dans la liste
+        invalid: n'est pas valide
+        less_than: doit être inférieur à %{count}
+        less_than_or_equal_to: doit être inférieur ou égal à %{count}
+        not_a_number: n'est pas un nombre
+        not_an_integer: doit être un nombre entier
+        odd: doit être impair
+        record_invalid: 'La validation a échoué : %{errors}'
+        restrict_dependent_destroy:
+          one: 'Suppression impossible: un autre enregistrement est lié'
+          many: 'Suppression impossible: d''autres enregistrements sont liés'
+        taken: n'est pas disponible
+        too_long:
+          one: est trop long (pas plus d'un caractère)
+          other: est trop long (pas plus de %{count} caractères)
+        too_short:
+          one: est trop court (au moins un caractère)
+          other: est trop court (au moins %{count} caractères)
+        wrong_length:
+          one: ne fait pas la bonne longueur (doit comporter un seul caractère)
+          other: ne fait pas la bonne longueur (doit comporter %{count} caractères)
+        other_than: doit être différent de %{count}
+      template:
+        body: 'Veuillez vérifier les champs suivants : '
+        header:
+          one: 'Impossible d''enregistrer ce(tte) %{model} : 1 erreur'
+          other: 'Impossible d''enregistrer ce(tte) %{model} : %{count} erreurs'
+    helpers:
+      select:
+        prompt: Veuillez sélectionner
+      submit:
+        create: Créer un(e) %{model}
+        submit: Enregistrer ce(tte) %{model}
+        update: Modifier ce(tte) %{model}
+    number:
+      currency:
+        format:
+          delimiter: " "
+          format: "%n %u"
+          precision: 2
+          separator: ","
+          significant: false
+          strip_insignificant_zeros: false
+          unit: "€"
+      format:
+        delimiter: " "
+        precision: 3
+        separator: ","
+        significant: false
+        strip_insignificant_zeros: false
+      human:
+        decimal_units:
+          format: "%n %u"
+          units:
+            billion: milliard
+            million: million
+            quadrillion: million de milliards
+            thousand: millier
+            trillion: billion
+            unit: ''
+        format:
+          delimiter: ''
+          precision: 2
+          significant: true
+          strip_insignificant_zeros: true
+        storage_units:
+          format: "%n %u"
+          units:
+            byte:
+              one: octet
+              other: octets
+            gb: Go
+            kb: ko
+            mb: Mo
+            tb: To
+      percentage:
+        format:
+          delimiter: ''
+          format: "%n%"
+      precision:
+        format:
+          delimiter: ''
+    support:
+      array:
+        last_word_connector: " et "
+        two_words_connector: " et "
+        words_connector: ", "
+    time:
+      am: am
+      formats:
+        default: "%d %B %Y %Hh %Mmin %Ss"
+        long: "%A %d %B %Y %Hh%M"
+        short: "%d %b %Hh%M"
+      pm: pm
+
+
+#SPREE TRANSLATION
+
   activerecord:
     attributes:
       spree/address:
@@ -52,7 +261,7 @@ fr:
         payment_state: "État du paiement"
         shipment_state: "État du colis"
         special_instructions: Instructions spéciales
-        state: Province / Région / État
+        state: État de la commande
         total: Total
       spree/order/bill_address:
         address1: Rue de l'adresse de facturation
@@ -230,8 +439,8 @@ fr:
         one: Paiement
         other: Paiements
       spree/payment_method:
-        one: Méthode de paiment
-        other: Méthodes de paiment
+        one: Méthode de paiement
+        other: Méthodes de paiement
       spree/product:
         one: Produit
         other: Produits
@@ -388,7 +597,7 @@ fr:
     add_coupon_code: Ajouter un code promo
     add_new_header: Ajouter une nouvelle en-tête
     add_new_style: Ajouter un nouveau style
-    add_one: Ajouter un
+    add_one: Ajouter une
     add_option_value: Ajouter la valeur de l'option
     add_product: Ajouter un produit
     add_product_properties: Ajouter des propriétés au produit
@@ -416,7 +625,6 @@ fr:
         overview: Vue d'ensemble
         products: Produits
         promotions: Promotions
-        promotion_categories:
         properties: Propriétés
         prototypes: Prototypes
         reports: Statistiques
@@ -462,7 +670,6 @@ fr:
     are_you_sure: En êtes-vous sûr ?
     are_you_sure_delete: "Êtes-vous sûr de vouloir supprimer cet enregistrement ?"
     associated_adjustment_closed: L'ajustement associé est fermé, et ne sera pas recalculé. Voulez-vous l'ouvrir?
-    at_symbol: '@'
     authorization_failure: Vous n'avez pas les droits nécessaires pour afficher cette section
     authorized: Autorisé
     auto_capture: Acceptation automatique
@@ -623,7 +830,7 @@ fr:
     editing_option_type: Édition du type d'option
     editing_payment_method: Édition de la méthode de paiement
     editing_product: Édition du produit
-    editing_promotion: Édition de la Promotion
+    editing_promotion: Édition de la promotion
     editing_property: Édition de la propriété
     editing_prototype: Édition du prototype
     editing_shipping_category: Édition de la catégorie de livraison
@@ -677,6 +884,7 @@ fr:
     failed_payment_attempts: Tentatives de paiement échouées
     filename: Nom du fichier
     fill_in_customer_info: Merci de remplir les informations client.
+    filter: Filtrer
     filter_results: Filtrer les resultats
     finalize: Finaliser
     finalized: Finaliser
@@ -706,8 +914,14 @@ fr:
     home: Accueil
     i18n:
       available_locales: Paramètres régionaux disponibles
+      fields: Champs
       language: Langue
       localization_settings: Réglages régionaux
+      only_complete: Commandes traitées seulement
+      only_incomplete: Commandes incomplètes seulement
+      select_locale: Sélectionnez vos paramètres régionaux
+      show_only: Afficher seulement
+      supported_locales: Paramètres régionaux supportés
       this_file_language: Français (FR)
       translations: Traductions
     icon: Icône
@@ -812,7 +1026,7 @@ fr:
     new_image: Nouvelle image
     new_option_type: Nouveau type d'option
     new_order: Nouvelle commande
-    new_order_completed: Nouvelle commande complétée
+    new_order_completed: Nouvelle commande traité
     new_payment: Nouveau paiement
     new_payment_method: Nouvelle méthode de paiement
     new_product: Nouveau produit
@@ -823,7 +1037,7 @@ fr:
     new_refund: Nouveau remboursement
     new_refund_reason: Nouvelle raison pour un remboursement
     new_return_authorization: Nouveau retour d'autorisation
-    new_rma_reason:
+    new_rma_reason: Nouvelle raison de retour d'autorisation
     new_shipment_at_location: Nouvel envoi de livrasion
     new_shipping_category: Nouvelle catégorie de livraison
     new_shipping_method: Nouvelle méthode de livraison
@@ -841,10 +1055,10 @@ fr:
     new_zone: Nouvelle zone
     next: Suivant
     no_actions_added: Aucune action ajoutée
-    no_payment_found: Aucun paiment trouvé
+    no_payment_found: Aucun paiement trouvé
     no_pending_payments: Aucun paiement en attente
     no_products_found: Aucun article trouvé
-    no_resource_found: Aucun ressource trouvée
+    no_resource_found: Aucune ressource trouvée
     no_results: Aucun résultat
     no_returns_found: Aucun retour trouvé
     no_rules_added: Aucune règle ajoutée
@@ -866,7 +1080,7 @@ fr:
       product_not_deleted: Le produit n'a pas pu être supprimé
       variant_deleted: La variante a été supprimée
       variant_not_deleted: La variante n'a pas pu être supprimée
-    num_orders:
+    num_orders: Nombre de commandes
     on_hand: Disponible
     open: Ouvrir
     open_all_adjustments: Ouvrir tous les ajustements
@@ -912,7 +1126,7 @@ fr:
       awaiting_return: en attente du retour
       canceled: annulée
       cart: panier
-      complete: valider
+      complete: traité
       confirm: confirmation
       considered_risky: Considérée à risque
       delivery: livraison
@@ -950,7 +1164,7 @@ fr:
     payment_states:
       balance_due: solde dû
       checkout: commandé
-      completed: complété
+      completed: terminé
       credit_owed: crédit dû
       failed: "échec"
       paid: payé
@@ -959,7 +1173,7 @@ fr:
       void: vide
     payment_updated: Paiement mis à jour
     payments: Paiements
-    pending:
+    pending: En attente
     percent: Pourcent
     percent_per_item: Pourcent par article
     permalink: Permalien
@@ -971,6 +1185,7 @@ fr:
     pre_tax_amount:
     pre_tax_refund_amount:
     pre_tax_total:
+    preferred_reimbursement_type:
     preferred_reimbursement_type:
     presentation: Présentation
     previous: Précédent
@@ -1017,7 +1232,7 @@ fr:
       match_policies:
         all: Répond à toutes ces règles
         any: Répond à une des règles
-    promotion_rule: Règle de Promotion
+    promotion_rule: Règle de promotion
     promotion_rule_types:
       first_order:
         description: Doit être la première commande de l'utilisateur
@@ -1066,18 +1281,18 @@ fr:
     receive: recevoir
     receive_stock: Recevoir le stock
     received: Reçu
-    reception_status:
+    reception_status: Statut de réception
     reference: Référence
     refund: Remboursement
     refund_amount_must_be_greater_than_zero:
-    refund_reasons:
-    refunded_amount:
-    refunds:
+    refund_reasons: Raisons de remboursement
+    refunded_amount: Montant du remboursement
+    refunds: Remboursements
     register: S'inscrire comme nouvel utilisateur
     registration: Enregistrement
-    reimburse:
-    reimbursed:
-    reimbursement:
+    reimburse: Rembourser
+    reimbursed: Remboursé
+    reimbursement: Remboursement
     reimbursement_mailer:
       reimbursement_email:
         days_to_send:
@@ -1092,8 +1307,8 @@ fr:
     reimbursement_status:
     reimbursement_type:
     reimbursement_type_override:
-    reimbursement_types:
-    reimbursements:
+    reimbursement_types: Types de remboursement
+    reimbursements: Remboursements
     reject:
     rejected:
     remember_me: Se souvenir de moi
@@ -1108,7 +1323,7 @@ fr:
     resumed: repris
     return: retourner
     return_authorization: Retour d'autorisation
-    return_authorization_reasons:
+    return_authorization_reasons: Raisons de retour d'autorisation
     return_authorization_updated: Retour d'autorisation mis à jour
     return_authorizations: Retour d'autorisations
     return_item_inventory_unit_ineligible:
@@ -1117,25 +1332,25 @@ fr:
     return_item_time_period_ineligible:
     return_items:
     return_items_cannot_be_associated_with_multiple_orders:
-    return_number:
+    return_number: N° de retour
     return_quantity: Quantité de retour
     returned: Retourner
-    returns:
+    returns: Retours
     review: Examen
-    risk:
-    risk_analysis:
-    risky:
+    risk: Risque
+    risk_analysis: Analyse du risque
+    risky: Risqué
     rma_credit: Credit RMA
     rma_number: Numéro RMA
     rma_value: Valeur RMA
     roles: Rôles
     rules: Règles
-    safe:
+    safe: sûr
     sales_total: Total de ventes
     sales_total_description: Vente total pour toutes les commandes
     sales_totals: Ventes totales
     save_and_continue: Continuer
-    save_my_address:
+    save_my_address: Enregistrer mon adresse
     say_no: Non
     say_yes: Oui
     scope: Scope
@@ -1171,12 +1386,12 @@ fr:
         track_link: 'Lien du traqueur: %{url}'
     shipment_state: "État de livraison"
     shipment_states:
-      backorder: rupture de stock
-      canceled:
-      partial: partiel
-      pending: en attente
-      ready: prêt
-      shipped: expédié
+      backorder: Rupture de stock
+      canceled: Annulé
+      partial: Partiel
+      pending: En attente
+      ready: Prêt
+      shipped: Expédié
     shipment_transfer_error:
     shipment_transfer_success:
     shipments: Livraisons
@@ -1192,18 +1407,18 @@ fr:
     shipping_method: Méthode de livraison
     shipping_methods: Méthodes de livraison
     shipping_price_sack: Prix groupé
-    shipping_total:
+    shipping_total: Total livraison
     shop_by_taxonomy: Acheter par %{taxonomy}
     shopping_cart: Panier
     show: Afficher
     show_active: Afficher les éléments actifs
     show_deleted: Afficher les éléments supprimés
-    show_only_complete_orders: Afficher seulement les commandes complètes
+    show_only_complete_orders: Afficher seulement les commandes traitées
     show_only_considered_risky: Afficher seulement les commandes considérées à risque
     show_rate_in_label: Montrer les taux dans les legendes
     sku: Code barre
     skus:
-    slug:
+    slug: Identifiant
     source: Origine
     special_instructions: Instructions spéciales
     split: Diviser
@@ -1214,36 +1429,36 @@ fr:
     state: Province / Région / État
     state_based: Basé sur une région
     state_machine_states:
-      accepted:
-      address:
-      authorized:
-      awaiting:
-      awaiting_return:
-      backordered:
-      canceled:
-      cart:
-      checkout:
-      closed:
-      complete:
-      completed:
-      confirm:
-      delivery:
-      errored:
-      failed:
+      accepted: Accepté
+      address: Addresse
+      authorized: Autorisé
+      awaiting: En attente
+      awaiting_return: En attente de retour
+      backordered: Rupture de stock
+      canceled: Annulé
+      cart: Panier
+      checkout: Paiement
+      closed: Fermé
+      complete: Traité
+      completed: Terminé
+      confirm: Confirmer
+      delivery: Livraison
+      errored: Erroné
+      failed: Échoué
       given_to_customer:
-      invalid:
-      manual_intervention_required:
+      invalid: Invalide
+      manual_intervention_required: Intervention manuelle requis
       on_hand:
-      open:
-      order:
-      payment:
-      pending:
-      processing:
-      ready:
-      reimbursed:
+      open: Ouvert
+      order: Commande
+      payment: Paiement
+      pending: En attente
+      processing: Traitement en cours
+      ready: Prêt
+      reimbursed: Remboursé
       resumed:
-      returned:
-      shipped:
+      returned: Renvoyé
+      shipped: Expédié
       void:
     states: Régions
     states_required: Etat / province obligatoire
@@ -1272,7 +1487,7 @@ fr:
     successfully_removed: "%{resource} a été supprimé avec succès!"
     successfully_signed_up_for_analytics: Vous avez été enregistré avec succès à Spree Analytics.
     successfully_updated: "%{resource} a été modifié avec succès!"
-    summary:
+    summary: Résumé
     tax: TVA
     tax_categories: Catégories de taxes
     tax_category: Catégorie de taxe
@@ -1315,7 +1530,7 @@ fr:
     total_per_item:
     total_pre_tax_refund:
     total_price:
-    total_sales:
+    total_sales: Somme des ventes
     track_inventory:
     tracking: Localiser
     tracking_number: Numéro de suivi
