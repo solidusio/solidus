@@ -49,7 +49,6 @@ $ ->
         else
           stateSelect.removeClass('required')
           stateSpanRequired.hide()
-        end
         stateSelect.removeClass('hidden')
         stateInput.removeClass('required')
       else
