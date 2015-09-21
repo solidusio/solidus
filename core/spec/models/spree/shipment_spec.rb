@@ -719,6 +719,7 @@ describe Spree::Shipment, :type => :model do
     subject { shipment.finalize! }
 
     it "updates the associated inventory units" do
+      inventory_unit.update_columns(updated_at: 1.hour.ago)
       expect { subject }.to change { inventory_unit.reload.updated_at }
     end
 
