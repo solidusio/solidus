@@ -240,6 +240,14 @@ module Spree
     #   @return [Boolean] Creates a new allocation anytime {StoreCredit#credit} is called
     preference :credit_to_new_allocation, :boolean, default: false
 
+    # @!attribute [rw] automatic_default_address
+    #   The default value of true preserves existing backwards compatible feature of
+    #   treating the most recently used address in checkout as the user's default address.
+    #   Setting to false means that the user should manage their own default via some
+    #   custom UI that uses AddressBookController.
+    #   @return [Boolean] Whether use of an address in checkout marks it as user's default
+    preference :automatic_default_address, :boolean, default: true
+
     # searcher_class allows spree extension writers to provide their own Search class
     attr_writer :searcher_class
     def searcher_class

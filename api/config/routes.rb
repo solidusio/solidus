@@ -133,6 +133,8 @@ Spree::Core::Engine.add_routes do
       end
     end
 
+    resource :address_book, only: [:show, :update, :destroy]
+
     get '/config/money', to: 'config#money'
     get '/config', to: 'config#show'
     put '/classifications', to: 'classifications#update', as: :classifications

@@ -3,47 +3,29 @@ module Spree
     extend ActiveSupport::Concern
 
     included do
-      has_many :user_addresses, foreign_key: "user_id", class_name: "Spree::UserAddress" do
+      has_many :user_addresses, -> { active }, {foreign_key: "user_id", class_name: "Spree::UserAddress"} do
 
         def find_first_by_address_values(address_attrs)
           detect { |ua| ua.address == Address.new(address_attrs) }
         end
 
-        # @note this method enforces one-and-only-one default address per user
+        # @note this method enforces only one default address per user
         def mark_default(user_address)
           # the checks of persisted? allow us to build a User and associate Addresses at once
           ActiveRecord::Base.transaction do
             (self - [user_address]).each do |ua| #update_all would be nice, but it bypasses ActiveRecord callbacks
               ua.persisted? ? ua.update!(default: false) : ua.default = false
             end
-            user_address.persisted? ? user_address.update!(default: true) : user_address.default = true
+            user_address.persisted? ? user_address.update!(default: true, archived: false) : user_address.default = true
           end
+          reset
         end
       end
 
       has_many :addresses, through: :user_addresses
 
-      has_one :default_user_address, -> { where default: true}, foreign_key: "user_id", class_name: 'Spree::UserAddress'
-      has_one :default_address, through: :default_user_address, source: :address
-
       # bill_address is only minimally used now, but we can't get rid of it without a major version release
       belongs_to :bill_address, class_name: 'Spree::Address'
-
-      def ship_address
-        default_address
-      end
-
-      def ship_address=(address)
-        # TODO default = true for now to preserve existing behavior until MyAccount UI created
-        save_in_address_book(address.attributes, true) if address
-      end
-
-      def ship_address_attributes=(attributes)
-        # see "Nested Attributes Examples" section of http://apidock.com/rails/ActionView/Helpers/FormHelper/fields_for
-        # this #{fieldname}_attributes= method works with fields_for in the views
-        # even without declaring accepts_nested_attributes_for
-        self.ship_address = Address.immutable_merge(ship_address, attributes)
-      end
 
       def bill_address=(address)
         # stow a copy in our address book too
@@ -55,32 +37,85 @@ module Spree
         self.bill_address = Address.immutable_merge(bill_address, attributes)
       end
 
+      def default_address
+        user_addresses.default.first.try(:address)
+      end
+
+      def default_address=(address)
+        save_in_address_book(address.attributes, true) if address
+      end
+
+      def default_address_attributes=(attributes)
+        # see "Nested Attributes Examples" section of http://apidock.com/rails/ActionView/Helpers/FormHelper/fields_for
+        # this #{fieldname}_attributes= method works with fields_for in the views
+        # even without declaring accepts_nested_attributes_for
+        self.default_address = Address.immutable_merge(default_address, attributes)
+      end
+
+      alias_method :ship_address, :default_address
+      alias_method :ship_address_attributes=, :default_address_attributes=
+
+      def ship_address=(address)
+        be_default = Spree::Config.automatic_default_address
+        save_in_address_book(address.attributes, be_default) if address
+      end
+
       def persist_order_address(order)
-        #TODO the 'true' there needs to change once we have MyAccount UI
-        save_in_address_book(order.ship_address.attributes, true) if order.ship_address
-        save_in_address_book(order.bill_address.attributes, order.ship_address.nil?) if order.bill_address
+        if Spree::Config.automatic_default_address
+          save_in_address_book(order.ship_address.attributes, true) if order.ship_address
+          save_in_address_book(order.bill_address.attributes, order.ship_address.nil?) if order.bill_address
+        else
+          save_in_address_book(order.ship_address.attributes) if order.ship_address
+          save_in_address_book(order.bill_address.attributes) if order.bill_address
+        end
       end
 
       # Add an address to the user's list of saved addresses for future autofill
-      # @param address_attributes Hash of attributes that will be
+      # @param address_attributes HashWithIndifferentAccess of attributes that will be
       # treated as value equality to de-dup among existing Addresses
       # @param default set whether or not this address will show up from
       # #default_address or not
       def save_in_address_book(address_attributes, default = false)
         return nil unless address_attributes.present?
-        user_address = user_addresses.find_first_by_address_values(address_attributes)
-        return user_address.address if user_address && (!default || user_address.default)
+
+        new_address = Address.factory(address_attributes)
+        return new_address unless new_address.valid?
 
         first_one = user_addresses.empty?
-        user_address ||= user_addresses.build(address: Address.factory(address_attributes))
+
+        if address_attributes[:id].present? && new_address.id != address_attributes[:id]
+          remove_from_address_book(address_attributes["id"])
+        end
+
+        user_address = prepare_user_address(new_address)
         user_addresses.mark_default(user_address) if (default || first_one)
-        save! if persisted?
+        user_address.save! if persisted?
 
         user_address.address
       end
 
       def mark_default_address(address)
         user_addresses.mark_default(user_addresses.find_by(address: address))
+      end
+
+      def remove_from_address_book(address_id)
+        user_address = user_addresses.find_by(address_id: address_id)
+        if user_address
+          user_address.update_attributes(archived: true, default: false)
+          user_addresses.reset
+        else
+          false
+        end
+      end
+
+      private
+
+      def prepare_user_address(new_address)
+        user_address = user_addresses.all_historical.find_first_by_address_values(new_address.attributes)
+        user_address ||= user_addresses.build
+        user_address.address = new_address
+        user_address.archived = false
+        user_address
       end
     end
   end
