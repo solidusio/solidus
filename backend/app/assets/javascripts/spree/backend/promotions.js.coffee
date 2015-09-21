@@ -28,14 +28,16 @@ window.initProductActions = ->
   #
   # Option Value Promo Rule
   #
-  if $('#promo-rule-option-value-template').length
-    optionValueSelectNameTemplate = Handlebars.compile($('#promo-rule-option-value-option-values-select-name-template').html())
-    optionValueTemplate = Handlebars.compile($('#promo-rule-option-value-template').html())
+  if $('.promo-rule-option-values').length
+    optionValueSelectNameTemplate = HandlebarsTemplates['promotions/rules/option_values_select']
+    optionValueTemplate = HandlebarsTemplates['promotions/rules/option_values']
 
     addOptionValue = (product, values) ->
+      paramPrefix = $('.promo-rule-option-values').find('.param-prefix').data('param-prefix')
       $('.js-promo-rule-option-values').append optionValueTemplate(
         productSelect: value: product
-        optionValuesSelect: value: values)
+        optionValuesSelect: value: values
+        paramPrefix: paramPrefix)
       optionValue = $('.js-promo-rule-option-values .promo-rule-option-value').last()
       optionValue.find('.js-promo-rule-option-value-product-select').productAutocomplete multiple: false
       optionValue.find('.js-promo-rule-option-value-option-values-select').optionValueAutocomplete productSelect: '.js-promo-rule-option-value-product-select'
@@ -59,7 +61,8 @@ window.initProductActions = ->
       return
     $(document).on 'change', '.js-promo-rule-option-value-product-select', ->
       optionValueSelect = $(this).parents('.promo-rule-option-value').find('input.js-promo-rule-option-value-option-values-select')
-      optionValueSelect.attr 'name', optionValueSelectNameTemplate(product_id: $(this).val()).trim()
+      paramPrefix = $('.promo-rule-option-values').find('.param-prefix').data('param-prefix')
+      optionValueSelect.attr 'name', optionValueSelectNameTemplate(product_id: $(this).val(), param_prefix: paramPrefix).trim()
       optionValueSelect.prop('disabled', $(this).val() == '').select2 'val', ''
       return
 
