@@ -228,6 +228,7 @@ en:
       spree/state:
         one: State
         other: States
+      spree/stock: stock
       spree/stock_movement:
         one: Stock Movement
         other: Stock Movements
@@ -1359,6 +1360,7 @@ en:
         track_information: ! 'Tracking Information: %{tracking}'
         track_link: ! 'Tracking Link: %{url}'
     shipment_date: Shipment date
+    shipment_number: Shipment Number
     shipment_numbers: Shipment numbers
     shipment_state: Shipment State
     shipment_states:
