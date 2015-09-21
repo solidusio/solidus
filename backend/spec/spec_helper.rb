@@ -73,7 +73,7 @@ RSpec.configure do |config|
     Rails.cache.clear
     reset_spree_preferences
     WebMock.disable!
-    if RSpec.current_example.metadata[:js] || RSpec.current_example.metadata[:truncation]
+    if RSpec.current_example.metadata[:js]
       DatabaseCleaner.strategy = :truncation
     else
       DatabaseCleaner.strategy = :transaction

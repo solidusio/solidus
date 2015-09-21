@@ -22,7 +22,7 @@ module Spree
       Rails.application.reload_routes!
     end
 
-    with_model 'Widget' do
+    with_model 'Widget', scope: :all do
       table do |t|
         t.string :name
         t.integer :position
