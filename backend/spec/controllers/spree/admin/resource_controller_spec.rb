@@ -12,7 +12,7 @@ module Spree
   end
 end
 
-describe Spree::Admin::WidgetsController, :type => :controller, :truncation => true do
+describe Spree::Admin::WidgetsController, :type => :controller do
   stub_authorization!
 
   after(:all) do
@@ -20,7 +20,7 @@ describe Spree::Admin::WidgetsController, :type => :controller, :truncation => t
     Rails.application.reload_routes!
   end
 
-  with_model 'Widget' do
+  with_model 'Widget', scope: :all do
     table do |t|
       t.string :name
       t.integer :position
