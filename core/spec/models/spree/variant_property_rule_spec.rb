@@ -4,6 +4,10 @@ describe Spree::VariantPropertyRule, type: :model do
   context "touching" do
     let(:rule) { create(:variant_property_rule) }
 
+    before do
+      rule.product.update_columns(updated_at: 1.day.ago)
+    end
+
     it "should update the product" do
       expect { rule.touch }.to change { rule.reload.product.updated_at }
     end

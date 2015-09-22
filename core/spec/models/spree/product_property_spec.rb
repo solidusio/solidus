@@ -5,6 +5,10 @@ describe Spree::ProductProperty, type: :model do
     let(:product_property) { create(:product_property) }
     let(:product) { product_property.product }
 
+    before do
+      product.update_columns(updated_at: 1.day.ago)
+    end
+
     subject { product_property.touch }
 
     it "touches the product" do
