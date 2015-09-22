@@ -13,7 +13,7 @@ module Spree
       context "saving a default address" do
         let(:user_address) { user.user_addresses.find_first_by_address_values(address.attributes) }
 
-        subject { user.save_in_address_book(address.attributes.with_indifferent_access, true) }
+        subject { user.save_in_address_book(address.attributes, true) }
 
         context "the address is a new record" do
           let(:address) { build(:address) }
@@ -52,13 +52,13 @@ module Spree
           context "an odd flip-flop corner case discovered running backfill rake task" do
 
             before do
-              user.save_in_address_book(original_default_address.attributes.with_indifferent_access, true)
-              user.save_in_address_book(address.attributes.with_indifferent_access, true)
+              user.save_in_address_book(original_default_address.attributes, true)
+              user.save_in_address_book(address.attributes, true)
             end
 
             it "handles setting 2 addresses as default without a reload of user" do
-              user.save_in_address_book(original_default_address.attributes.with_indifferent_access, true)
-              user.save_in_address_book(address.attributes.with_indifferent_access, true)
+              user.save_in_address_book(original_default_address.attributes, true)
+              user.save_in_address_book(address.attributes, true)
               expect(user.addresses.count).to eq 2
               expect(user.default_address.address1).to eq address.address1
             end
@@ -77,7 +77,7 @@ module Spree
           end
 
           context "and changing another address field at the same time" do
-            let(:updated_address_attributes) { address.attributes.with_indifferent_access.tap {|a| a[:first_name] = "Newbie"} }
+            let(:updated_address_attributes) { address.attributes.tap {|a| a[:first_name] = "Newbie"} }
 
             subject { user.save_in_address_book(updated_address_attributes, true) }
 
@@ -100,10 +100,28 @@ module Spree
         end
       end
 
+      context "updating an address and making default at once" do
+        let(:address1) { create(:address) }
+        let(:address2) { create(:address, firstname: "Different") }
+        let(:updated_attrs) do
+          address2.attributes.tap {|a| a[:firstname] = "Johnny" }
+        end
+
+        before do
+          user.save_in_address_book(address1.attributes, true)
+          user.save_in_address_book(address2.attributes, false)
+        end
+
+        it "returns the edit as the first address" do
+          user.save_in_address_book(updated_attrs, true)
+          expect(user.user_addresses.first.address.firstname).to eq "Johnny"
+        end
+      end
+
       context "saving a non-default address" do
         let(:user_address) { user.user_addresses.find_first_by_address_values(address.attributes) }
 
-        subject { user.save_in_address_book(address.attributes.with_indifferent_access) }
+        subject { user.save_in_address_book(address.attributes) }
 
         context "the address is a new record" do
           let(:address) { build(:address) }
@@ -140,10 +158,10 @@ module Spree
       context "resurrecting a previously saved (but now archived) address" do
         let(:address) { create(:address) }
         before do
-          user.save_in_address_book(address.attributes.with_indifferent_access, true)
+          user.save_in_address_book(address.attributes, true)
           user.remove_from_address_book(address.id)
         end
-        subject { user.save_in_address_book(address.attributes.with_indifferent_access, true) }
+        subject { user.save_in_address_book(address.attributes, true) }
 
         it "returns the address" do
           expect(subject).to eq address
@@ -158,12 +176,12 @@ module Spree
           let(:address2) { create(:address, firstname: "Different") }
           let(:edited_attributes) do
             # conceptually edit address2 to match the values of address
-            edited_attributes = address.attributes.with_indifferent_access
+            edited_attributes = address.attributes
             edited_attributes[:id] = address2.id
             edited_attributes
           end
 
-          before { user.save_in_address_book(address2.attributes.with_indifferent_access, true) }
+          before { user.save_in_address_book(address2.attributes, true) }
 
           subject { user.save_in_address_book(edited_attributes) }
 
@@ -179,7 +197,7 @@ module Spree
 
           context "via a new address that matches an archived one" do
             let(:added_attributes) do
-              added_attributes = address.attributes.with_indifferent_access
+              added_attributes = address.attributes
               added_attributes.delete(:id)
               added_attributes
             end
@@ -206,8 +224,8 @@ module Spree
       subject { user.remove_from_address_book(remove_id) }
 
       before do
-        user.save_in_address_book(address1.attributes.with_indifferent_access)
-        user.save_in_address_book(address2.attributes.with_indifferent_access)
+        user.save_in_address_book(address1.attributes)
+        user.save_in_address_book(address2.attributes)
       end
 
       it "removes the address from user_addresses" do
@@ -252,6 +270,19 @@ module Spree
           user.persist_order_address(order)
         end
       end
+    end
+  end
+
+  context "generating a new user with a ship_address at once" do
+    let(:ship_address) { build(:ship_address) }
+    subject { create(:user, ship_address: ship_address) }
+
+    it "stores the ship_address" do
+      expect(subject.ship_address).to eq ship_address
+    end
+
+    it "is also available as default_address" do
+      expect(subject.default_address).to eq ship_address
     end
   end
 end
