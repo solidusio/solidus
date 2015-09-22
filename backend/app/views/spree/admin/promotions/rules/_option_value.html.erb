@@ -1,0 +1,13 @@
+<div class="field alpha omega eight columns promo-rule-option-values">
+  <div class="param-prefix hidden" data-param-prefix="<%= param_prefix %>"></div>
+  <div class="four columns alpha"><%= label_tag nil, Spree.t(:product) %></div>
+  <div class="three columns omega"><%= label_tag nil, Spree.t(:option_values) %></div>
+  <div class="clear"></div>
+
+  <div class="js-promo-rule-option-values"></div>
+
+  <button class="fa fa-plus button js-add-promo-rule-option-value"><%= Spree.t(:add) %></button>
+</div>
+
+<%= content_tag :div, nil, class: "hidden js-original-promo-rule-option-values",
+  data: { :'original-option-values' => promotion_rule.preferred_eligible_values } %>
