@@ -1,5 +1,7 @@
 module Spree
   class Store < Spree::Base
+    has_many :orders, dependent: :destroy
+
     has_many :store_payment_methods, inverse_of: :store
     has_many :payment_methods, through: :store_payment_methods
 
