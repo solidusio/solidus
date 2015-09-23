@@ -10,7 +10,7 @@ module Spree
 
     class_attribute :failure_handler
 
-    attr_reader :original_order
+    attr_reader :original_order, :new_order
 
     def initialize(shipment, return_items)
       @shipment = shipment
@@ -19,6 +19,8 @@ module Spree
     end
 
     def charge_for_items
+      self.new_order = Spree::Order.create!(exchange_order_attributes)
+
       new_order.associate_user!(@original_order.user) if @original_order.user
 
       add_exchange_variants_to_order
@@ -53,11 +55,9 @@ module Spree
 
     end
 
-    def new_order
-      @new_order ||= Spree::Order.create!(exchange_order_attributes)
-    end
-
     private
+
+    attr_writer :new_order
 
     def add_exchange_variants_to_order
       @return_items.group_by(&:exchange_variant).map do |variant, variant_return_items|
