@@ -53,11 +53,11 @@ module Spree
 
     end
 
-    private
-
     def new_order
       @new_order ||= Spree::Order.create!(exchange_order_attributes)
     end
+
+    private
 
     def add_exchange_variants_to_order
       @return_items.group_by(&:exchange_variant).map do |variant, variant_return_items|

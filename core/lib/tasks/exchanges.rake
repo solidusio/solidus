@@ -20,12 +20,13 @@ namespace :exchanges do
       begin
         item_charger.charge_for_items
       rescue Spree::UnreturnedItemCharger::ChargeFailure => e
-        failure = {message: e.message, new_order: e.new_order.try(:number)}
+        failure = { message: e.message }
       rescue Exception => e
-        failure = {message: "#{e.class}: #{e.message}"}
+        failure = { message: "#{e.class}: #{e.message}" }
       end
 
       if failure
+        failure[:new_order] = item_charger.new_order.number if item_charger.new_order
         failures << failure.merge({
           order: item_charger.original_order.number,
           shipment: shipment.number,
