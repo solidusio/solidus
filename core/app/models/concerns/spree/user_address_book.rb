@@ -75,11 +75,8 @@ module Spree
       # @param default set whether or not this address will show up from
       # #default_address or not
       def save_in_address_book(address_attributes, default = false)
-        if address_attributes.present?
-          address_attributes = address_attributes.with_indifferent_access
-        else
-          return nil
-        end
+        return nil unless address_attributes.present?
+        address_attributes = address_attributes.with_indifferent_access
 
         new_address = Address.factory(address_attributes)
         return new_address unless new_address.valid?
