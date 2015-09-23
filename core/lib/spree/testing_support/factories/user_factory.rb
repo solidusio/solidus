@@ -22,9 +22,7 @@ FactoryGirl.define do
 
     factory :user_with_addreses do |u|
       bill_address
-      after(:create) do |user, evaluator|
-        user.save_in_address_book(create(:ship_address).attributes, true)
-      end
+      ship_address
     end
   end
 end

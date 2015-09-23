@@ -18,7 +18,6 @@ module Spree
             end
             user_address.persisted? ? user_address.update!(default: true, archived: false) : user_address.default = true
           end
-          reset
         end
       end
 
@@ -57,16 +56,16 @@ module Spree
 
       def ship_address=(address)
         be_default = Spree::Config.automatic_default_address
-        save_in_address_book(address.attributes, be_default) if address
+        save_in_address_book(address.attributes, be_default)
       end
 
       def persist_order_address(order)
         if Spree::Config.automatic_default_address
-          save_in_address_book(order.ship_address.attributes, true) if order.ship_address
-          save_in_address_book(order.bill_address.attributes, order.ship_address.nil?) if order.bill_address
+          save_in_address_book(order.ship_address.attributes, true)
+          save_in_address_book(order.bill_address.attributes, order.ship_address.nil?)
         else
-          save_in_address_book(order.ship_address.attributes) if order.ship_address
-          save_in_address_book(order.bill_address.attributes) if order.bill_address
+          save_in_address_book(order.ship_address.attributes)
+          save_in_address_book(order.bill_address.attributes)
         end
       end
 
@@ -77,6 +76,7 @@ module Spree
       # #default_address or not
       def save_in_address_book(address_attributes, default = false)
         return nil unless address_attributes.present?
+        address_attributes = address_attributes.with_indifferent_access
 
         new_address = Address.factory(address_attributes)
         return new_address unless new_address.valid?
@@ -84,12 +84,16 @@ module Spree
         first_one = user_addresses.empty?
 
         if address_attributes[:id].present? && new_address.id != address_attributes[:id]
-          remove_from_address_book(address_attributes["id"])
+          remove_from_address_book(address_attributes[:id])
         end
 
         user_address = prepare_user_address(new_address)
         user_addresses.mark_default(user_address) if (default || first_one)
-        user_address.save! if persisted?
+
+        if persisted?
+          user_address.save!
+          user_addresses.reset #ensures proper ordering
+        end
 
         user_address.address
       end
@@ -102,7 +106,6 @@ module Spree
         user_address = user_addresses.find_by(address_id: address_id)
         if user_address
           user_address.update_attributes(archived: true, default: false)
-          user_addresses.reset
         else
           false
         end
