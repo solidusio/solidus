@@ -19,15 +19,6 @@ module Spree
             user_address.persisted? ? user_address.update!(default: true, archived: false) : user_address.default = true
           end
         end
-
-        def merge_one(user_address)
-          if(user_address.id)
-            # this happens if someone adds back an old address they had previously soft deleted
-            new_assoc = self.to_a.reject {|ua| ua.id == user_address.id} + [user_address]
-            replace(new_assoc)
-          end
-          # else this was created with user_addresses.build and the association already tracks it
-        end
       end
 
       has_many :addresses, through: :user_addresses
@@ -101,7 +92,6 @@ module Spree
 
         user_address = prepare_user_address(new_address)
         user_addresses.mark_default(user_address) if (default || first_one)
-        user_addresses.merge_one(user_address)
 
         if persisted?
           user_address.save!
