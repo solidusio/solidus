@@ -74,7 +74,7 @@ class Spree::OrderShipping
 
     send_shipment_email(carton) if stock_location.fulfillable? && !suppress_mailer # e.g. digital gift cards that aren't actually shipped
     fulfill_order_stock_locations(stock_location)
-    update_order_state
+    @order.update!
 
     carton
   end
@@ -83,14 +83,6 @@ class Spree::OrderShipping
 
   def fulfill_order_stock_locations(stock_location)
     Spree::OrderStockLocation.fulfill_for_order_with_stock_location(@order, stock_location)
-  end
-
-  def update_order_state
-    new_state = Spree::OrderUpdater.new(@order).update_shipment_state
-    @order.update_columns(
-      shipment_state: new_state,
-      updated_at: Time.now,
-    )
   end
 
   def send_shipment_email(carton)

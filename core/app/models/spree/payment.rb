@@ -243,18 +243,8 @@ module Spree
       end
 
       def update_order
-        if completed? || void?
-          order.updater.update_payment_total
-        end
-
-        if order.completed?
-          order.updater.update_payment_state
-          order.updater.update_shipments
-          order.updater.update_shipment_state
-        end
-
-        if self.completed? || order.completed?
-          order.persist_totals
+        if order.completed? || completed? || void?
+          order.update!
         end
       end
 
