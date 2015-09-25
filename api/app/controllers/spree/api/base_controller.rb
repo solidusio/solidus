@@ -99,6 +99,7 @@ module Spree
       helper_method :current_currency
 
       def invalid_resource!(resource)
+        Rails.logger.error "invalid_resouce_errors=#{resource.errors.full_messages}"
         @resource = resource
         render "spree/api/errors/invalid_resource", :status => 422
       end
