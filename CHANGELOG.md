@@ -20,6 +20,15 @@
 *   Removed `map_nested_attributes_keys` from the Api::BaseController. This
     method was only used in one place and was oblivious of strong_params.
 
+*   Change all mails deliveries to `#deliver_later`. Emails will now be sent in
+    the background if you configure active\_job to do so. See [the rails guides](http://guides.rubyonrails.org/active_job_basics.html#job-execution)
+    for more information.
+
+*   Cartons deliveries now send one email per-order, instead of one per-carton.
+    This allows setting `@order` and `@store` correctly for the template. For
+    most stores, which don't combine multiple orders into a carton, this will
+    behave the same.
+
 ## Solidus 1.0.1 (2015-08-19)
 
 See https://github.com/solidusio/solidus/releases/tag/v1.0.1
