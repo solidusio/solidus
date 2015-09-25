@@ -50,7 +50,7 @@ describe Spree::Order, :type => :model do
 
     it "should send an order confirmation email" do
       mail_message = double "Mail::Message"
-      expect(Spree::OrderMailer).to receive(:confirm_email).with(order.id).and_return mail_message
+      expect(Spree::OrderMailer).to receive(:confirm_email).with(order).and_return mail_message
       expect(mail_message).to receive :deliver_later
       order.finalize!
     end

@@ -5,7 +5,7 @@
 ============================================================
 <%= Spree.t('shipment_mailer.shipped_email.shipment_summary') %>
 ============================================================
-<% @carton.manifest.each do |item| %>
+<% @manifest.each do |item| %>
   <%= item.variant.sku %> <%= item.variant.product.name %> <%= item.variant.options_text %>
 <% end %>
 ============================================================
