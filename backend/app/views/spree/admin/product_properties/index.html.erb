@@ -72,7 +72,7 @@
 <%= form_for @product, url: admin_product_url(@product), method: :put do |f| %>
   <%= f.fields_for :variant_property_rules, @variant_property_rule do |rule_form| %>
     <%= rule_form.hidden_field 'id', value: @variant_property_rule.id %>
-    <%= rule_form.hidden_field 'option_value_ids', value: @option_value_ids %>
+    <%= rule_form.hidden_field 'option_value_ids', value: @option_value_ids.join(',') %>
     <% if @option_value_ids.present? %>
       <fieldset class='no-border-top'>
         <table class="index sortable" data-hook data-sortable-link="<%= update_positions_admin_product_variant_property_rule_values_url %>">
