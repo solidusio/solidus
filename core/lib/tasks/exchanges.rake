@@ -21,7 +21,7 @@ namespace :exchanges do
         item_charger.charge_for_items
       rescue Spree::UnreturnedItemCharger::ChargeFailure => e
         failure = { message: e.message }
-      rescue Exception => e
+      rescue => e
         failure = { message: "#{e.class}: #{e.message}" }
       end
 
