@@ -147,13 +147,6 @@ module Spree
       def updating_variant_property_rules?
         params[:product][:variant_property_rules_attributes].present?
       end
-
-      def variant_property_rules_for_option_value_ids(current_rule_id, option_value_ids)
-        @product.variant_property_rules.
-          joins(:conditions).
-          where.not(id: current_rule_id).
-          where(Spree::VariantPropertyRuleCondition.arel_table[:option_value_id].in(option_value_ids))
-      end
     end
   end
 end
