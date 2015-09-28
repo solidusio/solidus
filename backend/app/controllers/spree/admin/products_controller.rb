@@ -27,7 +27,7 @@ module Spree
         end
         if updating_variant_property_rules?
           params[:product][:variant_property_rules_attributes].each do |index, param_attrs|
-            param_attrs[:option_value_ids] = param_attrs[:option_value_ids].split
+            param_attrs[:option_value_ids] = param_attrs[:option_value_ids].split(',')
           end
         end
         invoke_callbacks(:update, :before)
