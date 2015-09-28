@@ -25,5 +25,4 @@ en:
         update_forbidden: "This payment cannot be updated because it is %{state}."
       shipment:
         cannot_ready: "Cannot ready shipment."
-      stock_location_required: "A stock_location_id parameter must be provided in order to retrieve stock movements."
       invalid_taxonomy_id: "Invalid taxonomy id."
