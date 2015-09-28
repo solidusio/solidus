@@ -6,14 +6,24 @@ module Spree
 
     it "can generate an API key" do
       expect(user).to receive(:save!)
-      user.generate_spree_api_key!
-      expect(user.spree_api_key).not_to be_blank
+      expect { user.generate_spree_api_key! }.to change(user, :spree_api_key).to be_present
+    end
+
+    it "can generate an API key without persisting" do
+      expect(user).not_to receive(:save!)
+      expect { user.generate_spree_api_key }.to change(user, :spree_api_key).to be_present
     end
 
     it "can clear an API key" do
+      user.spree_api_key = 'abc123'
       expect(user).to receive(:save!)
-      user.clear_spree_api_key!
-      expect(user.spree_api_key).to be_blank
+      expect { user.clear_spree_api_key! }.to change(user, :spree_api_key).to be_blank
+    end
+
+    it "can clear an api key without persisting" do
+      user.spree_api_key = 'abc123'
+      expect(user).not_to receive(:save!)
+      expect { user.clear_spree_api_key }.to change(user, :spree_api_key).to be_blank
     end
 
     context "admin role auto-api-key grant" do # so the admin user can do admin api actions
