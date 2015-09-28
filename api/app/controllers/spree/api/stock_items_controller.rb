@@ -54,7 +54,11 @@ module Spree
       private
 
       def load_stock_location
-        render 'spree/api/shared/stock_location_required', status: 422 and return unless params[:stock_location_id]
+        if !params[:stock_location_id]
+          logger.error("stock_location_id missing")
+          render 'spree/api/shared/stock_location_required', status: 422
+          return
+        end
         @stock_location ||= StockLocation.accessible_by(current_ability).find(params[:stock_location_id])
       end
 
