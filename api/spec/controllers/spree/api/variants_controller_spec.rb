@@ -12,7 +12,7 @@ module Spree
     end
 
     let!(:base_attributes) { Api::ApiHelpers.variant_attributes }
-    let!(:show_attributes) { base_attributes.dup.push(:in_stock, :display_price) }
+    let!(:show_attributes) { base_attributes.dup.push(:in_stock, :display_price, :variant_properties) }
     let!(:new_attributes) { base_attributes }
 
     before do
@@ -143,8 +143,10 @@ module Spree
 
     describe "#show" do
 
+      subject { api_get :show, id: variant.to_param }
+
       it "can see a single variant" do
-        api_get :show, :id => variant.to_param
+        subject
         expect(json_response).to have_attributes(show_attributes)
         expect(json_response["stock_items"]).to be_present
         option_values = json_response["option_values"]
@@ -157,7 +159,7 @@ module Spree
       it "can see a single variant with images" do
         variant.images.create!(:attachment => image("thinking-cat.jpg"))
 
-        api_get :show, :id => variant.to_param
+        subject
 
         expect(json_response).to have_attributes(show_attributes + [:images])
         option_values = json_response["option_values"]
@@ -165,6 +167,33 @@ module Spree
                                                    :presentation,
                                                    :option_type_name,
                                                    :option_type_id])
+      end
+
+      context "variant doesn't have variant properties" do
+        before { subject }
+
+        it "contains the expected attributes" do
+          expect(json_response).to have_attributes(show_attributes)
+        end
+
+        it "variant properties is an empty list" do
+          expect(json_response["variant_properties"]).to eq []
+        end
+      end
+
+      context "variant has variant properties" do
+        let!(:rule) { create(:variant_property_rule, product: variant.product, option_value: variant.option_values.first) }
+
+        before { subject }
+
+        it "contains the expected attributes" do
+          expect(json_response).to have_attributes(show_attributes)
+        end
+
+        it "variant properties is an array of variant property values" do
+          expected_attrs = [:id, :property_id, :value, :property_name]
+          expect(json_response["variant_properties"].first).to have_attributes(expected_attrs)
+        end
       end
     end
 

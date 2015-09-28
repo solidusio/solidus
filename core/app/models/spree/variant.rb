@@ -324,6 +324,16 @@ module Spree
       images.first || (fallback && product.variant_images.first) || Spree::Image.new
     end
 
+    # Determines the variant's property values by verifying which of the product's
+    # variant property rules apply to itself.
+    #
+    # @return [Array<Spree::VariantPropertyRuleValue>] variant_properties
+    def variant_properties
+      self.product.variant_property_rules.map do |rule|
+        rule.values if rule.applies_to_variant?(self)
+      end.flatten.compact
+    end
+
     private
 
       def set_master_out_of_stock

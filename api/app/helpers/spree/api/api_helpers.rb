@@ -33,7 +33,8 @@ module Spree
         :store_credit_history_attributes,
         :stock_transfer_attributes,
         :transfer_item_attributes,
-        :transfer_item_variant_attributes
+        :transfer_item_variant_attributes,
+        :variant_property_attributes
       ]
 
       mattr_reader *ATTRIBUTES
@@ -63,6 +64,10 @@ module Spree
       @@variant_attributes = [
         :id, :name, :sku, :price, :weight, :height, :width, :depth, :is_master,
         :slug, :description, :track_inventory
+      ]
+
+      @@variant_property_attributes = [
+        :id, :property_id, :value, :property_name
       ]
 
       @@image_attributes = [
