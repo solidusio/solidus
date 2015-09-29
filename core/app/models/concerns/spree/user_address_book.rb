@@ -54,19 +54,29 @@ module Spree
       alias_method :ship_address, :default_address
       alias_method :ship_address_attributes=, :default_address_attributes=
 
+      # saves address in address book
+      # sets address to the default if automatic_default_address is set to true
+      # if address is nil, does nothing and returns nil
       def ship_address=(address)
         be_default = Spree::Config.automatic_default_address
-        save_in_address_book(address.attributes, be_default)
+        save_in_address_book(address.attributes, be_default) if address
       end
 
+      # saves order.ship_address and order.bill_address in address book
+      # sets ship_address to the default if automatic_default_address is set to true
+      # sets bill_address to the default if automatic_default_address is set to true and there is no ship_address
+      # if one address is nil, does not save that address
+      # if both do not save, returns nil
       def persist_order_address(order)
-        if Spree::Config.automatic_default_address
-          save_in_address_book(order.ship_address.attributes, true)
-          save_in_address_book(order.bill_address.attributes, order.ship_address.nil?)
-        else
-          save_in_address_book(order.ship_address.attributes)
-          save_in_address_book(order.bill_address.attributes)
-        end
+        save_in_address_book(
+          order.ship_address.attributes,
+          Spree::Config.automatic_default_address
+        ) if order.ship_address
+
+        save_in_address_book(
+          order.bill_address.attributes,
+          order.ship_address.nil? && Spree::Config.automatic_default_address
+        ) if order.bill_address
       end
 
       # Add an address to the user's list of saved addresses for future autofill
