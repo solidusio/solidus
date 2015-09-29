@@ -107,6 +107,7 @@ Spree::Core::Engine.add_routes do
 
     resources :users do
       resources :credit_cards, only: [:index]
+      resource :address_book, only: [:show, :update, :destroy]
     end
 
     resources :credit_cards, only: [:update]
@@ -133,8 +134,6 @@ Spree::Core::Engine.add_routes do
         get :mine
       end
     end
-
-    resource :address_book, only: [:show, :update, :destroy]
 
     get '/config/money', to: 'config#money'
     get '/config', to: 'config#show'

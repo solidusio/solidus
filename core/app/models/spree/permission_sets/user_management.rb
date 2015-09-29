@@ -6,6 +6,7 @@ module Spree
         cannot [:delete, :destroy], Spree.user_class
         can :manage, Spree::StoreCredit
         can :display, Spree::Role
+        can :manage, Spree::UserAddress
       end
     end
   end
