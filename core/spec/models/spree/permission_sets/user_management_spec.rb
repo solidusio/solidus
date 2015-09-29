@@ -15,6 +15,7 @@ describe Spree::PermissionSets::UserManagement do
     it { is_expected.not_to be_able_to(:destroy, Spree.user_class) }
     it { is_expected.to be_able_to(:manage, Spree::StoreCredit) }
     it { is_expected.to be_able_to(:display, Spree::Role) }
+    it { is_expected.to be_able_to(:manage, Spree::UserAddress) }
   end
 
   context "when not activated" do
@@ -23,6 +24,7 @@ describe Spree::PermissionSets::UserManagement do
     it { is_expected.not_to be_able_to(:destroy, Spree.user_class) }
     it { is_expected.not_to be_able_to(:manage, Spree::StoreCredit) }
     it { is_expected.not_to be_able_to(:display, Spree::Role) }
+    it { is_expected.not_to be_able_to(:manage, Spree::UserAddress) }
   end
 end
 
