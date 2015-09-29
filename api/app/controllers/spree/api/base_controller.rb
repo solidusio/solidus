@@ -157,6 +157,7 @@ module Spree
       end
 
       def insufficient_stock_error(exception)
+        logger.error "insufficient_stock_error #{exception.inspect}"
         render(
           json: {
             errors: [I18n.t(:quantity_is_not_available, :scope => "spree.api.order")],

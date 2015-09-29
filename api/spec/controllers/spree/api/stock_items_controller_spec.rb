@@ -85,7 +85,7 @@ module Spree
 
       it 'requires a stock_location_id to be passed as a parameter' do
         api_get :index
-        expect(json_response['error']).to match(/stock_location_id parameter must be provided/)
+        expect(json_response['exception']).to eq('param is missing or the value is empty: stock_location_id')
         expect(response.status).to eq(422)
       end
 
