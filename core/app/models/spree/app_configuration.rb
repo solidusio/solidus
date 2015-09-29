@@ -265,6 +265,15 @@ module Spree
       @promotion_chooser_class ||= Spree::PromotionChooser
     end
 
+    # @!attribute [rw] carton_shipped_email_class
+    #   @return [Class] The returned class should respond to:
+    #     `shipped_email(carton:, order:, resend: false)`
+    #     and should return a Mail::Message object.
+    attr_writer :carton_shipped_email_class
+    def carton_shipped_email_class
+      @carton_shipped_email_class ||= Spree::CartonMailer
+    end
+
     def static_model_preferences
       @static_model_preferences ||= Spree::Preferences::StaticModelPreferences.new
     end
