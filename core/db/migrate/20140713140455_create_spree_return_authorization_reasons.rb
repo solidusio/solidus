@@ -1,4 +1,8 @@
 class CreateSpreeReturnAuthorizationReasons < ActiveRecord::Migration
+  class ReturnAuthorizationReason < ActiveRecord::Base
+    self.table_name = 'spree_return_authorization_reasons'
+  end
+
   def change
     create_table :spree_return_authorization_reasons do |t|
       t.string :name
@@ -10,17 +14,15 @@ class CreateSpreeReturnAuthorizationReasons < ActiveRecord::Migration
 
     reversible do |direction|
       direction.up do
-        if defined?(Spree::ReturnAuthorizationReason)
-          Spree::ReturnAuthorizationReason.create!(name: 'Better price available')
-          Spree::ReturnAuthorizationReason.create!(name: 'Missed estimated delivery date')
-          Spree::ReturnAuthorizationReason.create!(name: 'Missing parts or accessories')
-          Spree::ReturnAuthorizationReason.create!(name: 'Damaged/Defective')
-          Spree::ReturnAuthorizationReason.create!(name: 'Different from what was ordered')
-          Spree::ReturnAuthorizationReason.create!(name: 'Different from description')
-          Spree::ReturnAuthorizationReason.create!(name: 'No longer needed/wanted')
-          Spree::ReturnAuthorizationReason.create!(name: 'Accidental order')
-          Spree::ReturnAuthorizationReason.create!(name: 'Unauthorized purchase')
-        end
+        ReturnAuthorizationReason.create!(name: 'Better price available')
+        ReturnAuthorizationReason.create!(name: 'Missed estimated delivery date')
+        ReturnAuthorizationReason.create!(name: 'Missing parts or accessories')
+        ReturnAuthorizationReason.create!(name: 'Damaged/Defective')
+        ReturnAuthorizationReason.create!(name: 'Different from what was ordered')
+        ReturnAuthorizationReason.create!(name: 'Different from description')
+        ReturnAuthorizationReason.create!(name: 'No longer needed/wanted')
+        ReturnAuthorizationReason.create!(name: 'Accidental order')
+        ReturnAuthorizationReason.create!(name: 'Unauthorized purchase')
       end
     end
 
