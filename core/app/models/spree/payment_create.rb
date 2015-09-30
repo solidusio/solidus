@@ -36,10 +36,7 @@ module Spree
     end
 
     def build_existing_card
-      credit_card = CreditCard.
-        where(user_id: order.user_id).
-        where.not(user_id: nil).
-        find(source_attributes[:existing_card_id])
+      credit_card = available_cards.find(source_attributes[:existing_card_id])
 
       # FIXME: does this work?
       if source_attributes[:verification_value]
@@ -48,6 +45,14 @@ module Spree
 
       payment.source = credit_card
       payment.payment_method_id = credit_card.payment_method_id
+    end
+
+    def available_cards
+      if user_id = order.user_id
+        CreditCard.where(user_id: user_id)
+      else
+        CreditCard.none
+      end
     end
   end
 end
