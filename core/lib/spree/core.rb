@@ -92,6 +92,7 @@ require 'spree/core/controller_helpers/store'
 require 'spree/core/controller_helpers/strong_parameters'
 require 'spree/core/unreturned_item_charger'
 require 'spree/core/role_configuration'
+require 'spree/permission_sets'
 
 require 'spree/mailer_previews/order_preview'
 require 'spree/mailer_previews/carton_preview'
