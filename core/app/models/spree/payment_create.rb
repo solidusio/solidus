@@ -1,5 +1,13 @@
 module Spree
+  # Service object for creating new payments on an Order
   class PaymentCreate
+    # @param order [Order] The order for the new payment
+    # @param attributes [Hash] attributes which are assigned to the new payment
+    #   * :payment_method_id Id of payment method used for this payment
+    #   * :source_attributes Attributes used to build the source of this payment. Usually a {CreditCard}
+    #     * :existing_card_id (Integer) The id of an existing {CreditCard} object to use
+    # @param request_env [Hash] rack env of user creating the payment
+    # @param payment [Payment] Internal use only. Instead of making a new payment, change the attributes for an existing one.
     def initialize(order, attributes, payment: nil, request_env: {})
       @order = order
       @payment = payment
@@ -8,6 +16,8 @@ module Spree
       @request_env = request_env
     end
 
+    # Build the new Payment
+    # @return [Payment] a new (unpersisted) Payment
     def build
       @payment ||= order.payments.new
       @payment.request_env = @request_env if @request_env
