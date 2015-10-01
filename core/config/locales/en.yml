@@ -1228,6 +1228,10 @@ en:
         description: Apply a promotion to every nth order a user has completed.
         name: Nth Order
         form_text: "Apply this promotion on the users Nth order: "
+      first_repeat_purchase_since:
+        description: Available only to user who have not purchased in a while
+        name: First Repeat Purchase Since
+        form_text: "Apply this promotion to users whose last order was more than X days ago: "
     promotions: Promotions
     promotion_successfully_created: Promotion has been successfully created!
     promotion_total_changed_before_complete: "One or more of the promotions on your order have become ineligible and were removed. Please check the new order amounts and try again."
