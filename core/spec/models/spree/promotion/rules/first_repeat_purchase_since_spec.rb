@@ -46,14 +46,14 @@ describe Spree::Promotion::Rules::FirstRepeatPurchaseSince do
           old_order_2.update_attributes(completed_at: order_completion_date_2)
         end
 
-        context "the last completed order was greater than the preferred months ago" do
+        context "the last completed order was greater than the preferred days ago" do
           let(:order_completion_date_1) { 14.months.ago }
           let(:order_completion_date_2) { 13.months.ago }
 
           it { is_expected.to be true }
         end
 
-        context "the last completed order was less than the preferred months ago" do
+        context "the last completed order was less than the preferred days ago" do
           let(:order_completion_date_1) { 14.months.ago }
           let(:order_completion_date_2) { 11.months.ago }
 
