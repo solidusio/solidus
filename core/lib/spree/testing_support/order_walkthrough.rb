@@ -1,18 +1,21 @@
 class OrderWalkthrough
   def self.up_to(state)
+    new.up_to(state)
+  end
+
+  def up_to(state)
     # Need to create a valid zone too...
-    zone = FactoryGirl.create(:zone)
-    country = FactoryGirl.create(:country)
-    zone.members << Spree::ZoneMember.create(:zoneable => country)
-    country.states << FactoryGirl.create(:state, :country => country)
+    @zone = FactoryGirl.create(:zone)
+    @country = FactoryGirl.create(:country)
+    @state = FactoryGirl.create(:state, :country => @country)
+
+    @zone.members << Spree::ZoneMember.create(:zoneable => @country)
 
     # A shipping method must exist for rates to be displayed on checkout page
-    unless Spree::ShippingMethod.exists?
-      FactoryGirl.create(:shipping_method).tap do |sm|
-        sm.calculator.preferred_amount = 10
-        sm.calculator.preferred_currency = Spree::Config[:currency]
-        sm.calculator.save
-      end
+    FactoryGirl.create(:shipping_method, zones: [@zone]).tap do |sm|
+      sm.calculator.preferred_amount = 10
+      sm.calculator.preferred_currency = Spree::Config[:currency]
+      sm.calculator.save
     end
 
     order = Spree::Order.create!(
@@ -38,22 +41,22 @@ class OrderWalkthrough
 
   private
 
-  def self.add_line_item!(order)
+  def add_line_item!(order)
     FactoryGirl.create(:line_item, order: order)
     order.reload
   end
 
-  def self.address(order)
-    order.bill_address = FactoryGirl.create(:address, :country_id => Spree::Zone.global.members.first.zoneable.id)
-    order.ship_address = FactoryGirl.create(:address, :country_id => Spree::Zone.global.members.first.zoneable.id)
+  def address(order)
+    order.bill_address = FactoryGirl.create(:address, :country => @country, state: @state)
+    order.ship_address = FactoryGirl.create(:address, :country => @country, state: @state)
     order.next!
   end
 
-  def self.delivery(order)
+  def delivery(order)
     order.next!
   end
 
-  def self.payment(order)
+  def payment(order)
     credit_card = FactoryGirl.create(:credit_card)
     order.payments.create!(:payment_method => credit_card.payment_method, :amount => order.total, source: credit_card)
     # TODO: maybe look at some way of making this payment_state change automatic
@@ -61,15 +64,15 @@ class OrderWalkthrough
     order.next!
   end
 
-  def self.confirm(order)
+  def confirm(order)
     order.complete!
   end
 
-  def self.complete(order)
+  def complete(order)
     #noop?
   end
 
-  def self.states
+  def states
     [:address, :delivery, :payment, :confirm]
   end
 
