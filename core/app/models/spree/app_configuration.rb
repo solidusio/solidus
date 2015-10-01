@@ -265,6 +265,17 @@ module Spree
       @promotion_chooser_class ||= Spree::PromotionChooser
     end
 
+    # Allows providing your own Mailer for shipped cartons.
+    #
+    # @!attribute [rw] carton_shipped_email_class
+    # @return [ActionMailer::Base] an object that responds to "shipped_email"
+    #   (e.g. an ActionMailer with a "shipped_email" method) with the same
+    #   signature as Spree::CartonMailer.shipped_email.
+    attr_writer :carton_shipped_email_class
+    def carton_shipped_email_class
+      @carton_shipped_email_class ||= Spree::CartonMailer
+    end
+
     def static_model_preferences
       @static_model_preferences ||= Spree::Preferences::StaticModelPreferences.new
     end

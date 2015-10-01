@@ -87,7 +87,7 @@ class Spree::OrderShipping
 
   def send_shipment_emails(carton)
     carton.orders.each do |order|
-      Spree::CartonMailer.shipped_email(order: order, carton: carton).deliver_later
+      Spree::Config.carton_shipped_email_class.shipped_email(order: order, carton: carton).deliver_later
     end
   end
 end
