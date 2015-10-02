@@ -54,17 +54,8 @@ taken straight from the Ruby on Rails guide:
 * Update the documentation, the surrounding one, examples elsewhere, guides,
   whatever is affected by your contribution
 
-Syntax:
+### Follow the Coding Conventions
 
-* Two spaces, no tabs.
-* No trailing whitespace. Blank lines should not have any space.
-* Prefer &&/|| over and/or.
-* `MyClass.my_method(my_arg)` not `my_method( my_arg )` or `my_method my_arg`.
-* `a = b` and not `a=b`.
-* `a_method { |block| ... }` and not `a_method { | block | ... }`
-* Follow the conventions you see used in the source already.
-* -> symbol over lambda
-* Ruby 1.9 hash syntax `{ key: value }` over Ruby 1.8 hash syntax `{ :key => value }`
-* Alphabetize the class methods to keep them organized
+This is a Rails-based framework.  See the [Rails coding conventions](http://guides.rubyonrails.org/contributing_to_ruby_on_rails.html#follow-the-coding-conventions).
 
 And in case we didn't emphasize it enough: we love tests!
