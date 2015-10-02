@@ -23,6 +23,7 @@ module Spree
         can :display, StockLocation, active: true
         can :display, Taxon
         can :display, Taxonomy
+        can [:save_in_address_book, :remove_from_address_book], Spree.user_class, id: user.id
         can [:display, :view_out_of_stock], Variant
         can :display, Zone
       end
