@@ -4,6 +4,35 @@ describe Spree::OrderCapturing do
   describe '#capture_payments' do
     subject { Spree::OrderCapturing.new(order, payment_methods).capture_payments }
 
+    # Regression for the order.update! in the ensure block.
+    # See the comment there.
+    context "updating the order" do
+      let(:order) { create :completed_order_with_totals }
+      let(:payment_methods) { [] }
+      let!(:payment) { create(:payment, order: order, amount: order.total) }
+      let(:changes_spy) { spy('changes_spy') }
+
+      before do
+        payment.pend!
+
+        allow_any_instance_of(Spree::Order).to receive(:thingamajig) do |order|
+          changes_spy.change_callback_occured if order.changes.any?
+        end
+
+        @update_hooks = Spree::Order.update_hooks.dup
+        Spree::Order.register_update_hook :thingamajig
+      end
+
+      after do
+        Spree::Order.update_hooks = @update_hooks
+      end
+
+      it "keeps the order up to date when updating and only changes it once" do
+        subject
+        expect(changes_spy).to have_received(:change_callback_occured).once
+      end
+    end
+
     context "payment methods specified" do
       let!(:order) { create(:order, ship_address: create(:address)) }
 

@@ -33,7 +33,10 @@ class Spree::OrderCapturing
           end
         end
       ensure
-        @order.update!
+        # FIXME: Adding the inverse_of on the payments relation for orders -should- fix this,
+        # however it only appears to make it worse (calling with changes three times instead of once.
+        # Warrants an investigation. Reloading for now.
+        @order.reload.update!
       end
     end
   end
