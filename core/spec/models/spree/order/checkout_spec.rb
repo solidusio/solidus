@@ -861,7 +861,7 @@ describe Spree::Order, :type => :model do
       let(:params) { ActionController::Parameters.new(order: {  bad_param: 'okay' } ) }
 
       it 'does not let through unpermitted attributes' do
-        expect(order).to receive(:attributes=).with({})
+        expect(order).to receive(:assign_attributes).with({})
         order.update_from_params(params, permitted_params)
       end
 
@@ -869,7 +869,7 @@ describe Spree::Order, :type => :model do
         let(:params) { ActionController::Parameters.new(order: {  good_param: 'okay' } ) }
 
         it 'accepts permitted attributes' do
-          expect(order).to receive(:attributes=).with({"good_param" => 'okay'})
+          expect(order).to receive(:assign_attributes).with({"good_param" => 'okay'})
           order.update_from_params(params, permitted_params)
         end
       end
@@ -879,7 +879,7 @@ describe Spree::Order, :type => :model do
           expect(order).to receive(:update_params_payment_source).and_return false
         end
         it 'does not let through unpermitted attributes' do
-          expect(order).not_to receive(:attributes=)
+          expect(order).not_to receive(:assign_attributes)
           expect(order).not_to receive(:save)
           order.update_from_params(params, permitted_params)
         end

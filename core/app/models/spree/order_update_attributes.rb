@@ -30,7 +30,7 @@ module Spree
     attr_reader :attributes, :payments_attributes, :order
 
     def assign_order_attributes
-      order.attributes = attributes
+      order.assign_attributes attributes
     end
 
     def assign_payments_attributes
