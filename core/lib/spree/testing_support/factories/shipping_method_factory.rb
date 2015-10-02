@@ -29,6 +29,21 @@ FactoryGirl.define do
       end
     end
 
+    after(:create) do |shipping_method, evaluator|
+      if shipping_method.stock_locations.empty?
+        shipping_method.stock_locations << (Spree::StockLocation.all.to_a)
+      end
+    end
+
+    factory :shipping_method, class: Spree::ShippingMethod do
+      transient do
+        cost 10.0
+      end
+
+      calculator { |s| s.association(:shipping_calculator, strategy: :build, preferred_amount: s.cost) }
+    end
+
+>>>>>>> Implication inferred in existing Spree shops
     factory :free_shipping_method, class: Spree::ShippingMethod do
       cost nil
       association(:calculator, factory: :shipping_no_amount_calculator, strategy: :build)
