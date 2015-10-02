@@ -51,8 +51,8 @@ module Spree
       it 'builds a list of shipping methods common to all categories' do
         category1 = create(:shipping_category)
         category2 = create(:shipping_category)
-        method1   = create(:shipping_method)
-        method2   = create(:shipping_method)
+        method1   = create(:shipping_method, stock_locations: [stock_location])
+        method2   = create(:shipping_method, stock_locations: [stock_location])
         method1.shipping_categories = [category1, category2]
         method2.shipping_categories = [category1]
         variant1 = mock_model(Variant, shipping_category: category1)

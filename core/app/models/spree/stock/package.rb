@@ -108,7 +108,10 @@ module Spree
       # @return [Array<Spree::ShippingMethod>] the shipping methods available
       #   for this pacakges shipping categories
       def shipping_methods
-        shipping_categories.map(&:shipping_methods).reduce(:&).to_a
+        shipping_methods = stock_location.shipping_methods
+        shipping_methods.select do |sm|
+          (shipping_categories - sm.shipping_categories).empty?
+        end
       end
 
       # @return [Spree::Shipment] a new shipment containing this package's
