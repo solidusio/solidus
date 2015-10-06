@@ -126,6 +126,15 @@ module Spree
                 order.update_totals
                 order.persist_totals
               end
+
+              after_transition do |order, transition|
+                order.logger.debug "Order #{order.number} transitioned from #{transition.from} to #{transition.to} via #{transition.event}"
+              end
+
+
+              after_failure do |order, transition|
+                order.logger.debug "Order #{order.number} halted transition on event #{transition.event} state #{transition.from}"
+              end
             end
 
             alias_method :save_state, :save
