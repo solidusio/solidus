@@ -51,7 +51,7 @@ module Spree
     def register_extension_abilities
       Ability.abilities.each do |clazz|
         ability = clazz.send(:new, user)
-        @rules = rules + ability.send(:rules)
+        merge(ability)
       end
     end
 
