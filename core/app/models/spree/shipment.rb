@@ -41,6 +41,8 @@ module Spree
       event :ready do
         transition from: :pending, to: :shipped, if: :can_transition_from_pending_to_shipped?
         transition from: :pending, to: :ready, if: :can_transition_from_pending_to_ready?
+        transition from: :shipped, to: :shipped
+        transition from: :ready,   to: :ready
       end
 
       event :pend do
