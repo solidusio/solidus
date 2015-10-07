@@ -21,7 +21,7 @@ module Spree
     private
 
     def ensure_stock_transfer_not_closed
-      if stock_transfer_closed?
+      if stock_transfer.closed?
         errors.add(:base, Spree.t('errors.messages.cannot_modify_transfer_item_closed_stock_transfer'))
       end
     end
@@ -47,12 +47,8 @@ module Spree
       end
     end
 
-    def stock_transfer_closed?
-      stock_transfer.closed?
-    end
-
     def check_stock?
-      !stock_transfer_closed? && stock_transfer.source_location.check_stock_on_transfer?
+      !stock_transfer.shipped? && stock_transfer.source_location.check_stock_on_transfer?
     end
   end
 end
