@@ -261,12 +261,56 @@ module Spree
       context "when automatic_default_address preference is false" do
         before do
           Spree::Config.automatic_default_address = false
-          expect(user).to receive(:save_in_address_book).with(kind_of(Hash)).twice
+          expect(user).to receive(:save_in_address_book).with(kind_of(Hash),false).twice
             #and not the optional 2nd argument
         end
 
         it "does not set the default: true flag" do
           order = build(:order)
+          user.persist_order_address(order)
+        end
+      end
+
+      context "when address is nil" do
+        context "when automatic_default_address preference is at a default of true" do
+          before do
+            Spree::Config.automatic_default_address = true
+            expect(user).to receive(:save_in_address_book).with(kind_of(Hash), true).once
+          end
+
+          it "does not call save_in_address_book on ship address" do
+            order = build(:order)
+            order.ship_address = nil
+
+            user.persist_order_address(order)
+          end
+
+          it "does not call save_in_address_book on bill address" do
+            order = build(:order)
+            order.bill_address = nil
+
+            user.persist_order_address(order)
+          end
+        end
+      end
+
+      context "when automatic_default_address preference is false" do
+        before do
+          Spree::Config.automatic_default_address = false
+          expect(user).to receive(:save_in_address_book).with(kind_of(Hash), false).once
+        end
+
+        it "does not call save_in_address_book on ship address" do
+          order = build(:order)
+          order.ship_address = nil
+
+          user.persist_order_address(order)
+        end
+
+          it "does not call save_in_address_book on bill address" do
+          order = build(:order)
+          order.bill_address = nil
+
           user.persist_order_address(order)
         end
       end
