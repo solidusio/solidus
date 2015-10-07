@@ -53,7 +53,7 @@ module Spree
 
           line_items = order.line_items
           shipments_hash.each do |s|
-            shipment = order.shipments.build
+            shipment = Shipment.new
             shipment.tracking       = s[:tracking]
             shipment.stock_location = Spree::StockLocation.find_by_admin_name(s[:stock_location]) || Spree::StockLocation.find_by_name!(s[:stock_location])
 
@@ -61,19 +61,19 @@ module Spree
             inventory_units.each do |iu|
               ensure_variant_id_from_params(iu)
 
-              unit = shipment.inventory_units.build
-              unit.order = order
+              unless line_item = order.line_items.find_by(variant_id: iu[:variant_id])
+                line_item = order.contents.add(Spree::Variant.find(iu[:variant_id]), 1)
+              end
 
               # Spree expects a Inventory Unit to always reference a line
               # item and variant otherwise users might get exceptions when
               # trying to view these units. Note the Importer might not be
               # able to find the line item if line_item.variant_id |= iu.variant_id
-              unit.variant_id = iu[:variant_id]
-              if line_item = order.line_items.find_by(variant_id: iu[:variant_id])
-                unit.line_item = line_item
-              else
-                unit.line_item = order.contents.add(Spree::Variant.find(iu[:variant_id]), 1)
-              end
+              shipment.inventory_units.new(
+                order: order,
+                variant_id: iu[:variant_id],
+                line_item: line_item
+              )
             end
 
             # Mark shipped if it should be.
@@ -85,6 +85,7 @@ module Spree
               end
             end
 
+            order.shipments << shipment
             shipment.save!
 
             shipping_method = Spree::ShippingMethod.find_by_name(s[:shipping_method]) || Spree::ShippingMethod.find_by_admin_name!(s[:shipping_method])
