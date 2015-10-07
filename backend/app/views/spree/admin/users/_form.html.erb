@@ -2,7 +2,7 @@
   <div class="alpha six columns">
     <%= f.field_container :email do %>
       <%= f.label :email, Spree.t(:email) %>
-      <%= f.email_field :email, :class => 'fullwidth' %>
+      <%= f.email_field :email, :class => 'fullwidth', disabled: cannot?(:update_email, @user) %>
       <%= error_message_on :user, :email %>
     <% end %>
 

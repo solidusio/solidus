@@ -48,6 +48,13 @@ module Spree
             product_properties_attributes: permitted_product_properties_attributes
           ]
         end
+
+        def permitted_user_attributes
+          permitted_attributes.user_attributes + [
+            bill_address_attributes: permitted_address_attributes,
+            ship_address_attributes: permitted_address_attributes
+          ]
+        end
       end
     end
   end

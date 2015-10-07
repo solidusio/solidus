@@ -15,6 +15,10 @@ class Spree::Api::UsersController < Spree::Api::ResourceController
   end
 
   def permitted_resource_attributes
-    super | [bill_address_attributes: permitted_address_attributes, ship_address_attributes: permitted_address_attributes]
+    if action_name == "create" || can?(:update_email, user)
+      super | [:email]
+    else
+      super
+    end
   end
 end

@@ -10,7 +10,13 @@ describe Spree::PermissionSets::UserManagement do
       described_class.new(ability).activate!
     end
 
-    it { is_expected.to be_able_to(:manage, Spree.user_class) }
+    it { is_expected.to be_able_to(:admin, Spree.user_class) }
+    it { is_expected.to be_able_to(:display, Spree.user_class) }
+    it { is_expected.to be_able_to(:create, Spree.user_class) }
+    it { is_expected.to be_able_to(:update, Spree.user_class) }
+    it { is_expected.to be_able_to(:update_email, Spree.user_class.new(spree_roles: [])) }
+
+    it { is_expected.not_to be_able_to(:update_email, Spree.user_class.new(spree_roles: [create(:role)])) }
     it { is_expected.not_to be_able_to(:delete, Spree.user_class) }
     it { is_expected.not_to be_able_to(:destroy, Spree.user_class) }
     it { is_expected.to be_able_to(:manage, Spree::StoreCredit) }
