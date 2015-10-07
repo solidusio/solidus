@@ -490,6 +490,18 @@ describe Spree::Shipment, :type => :model do
       expect(order).to receive_messages(paid?: false)
       expect(shipment).not_to be_can_ready
     end
+
+    it "is treated as a no-op for a shipped order" do
+      shipment.state = 'shipped'
+      shipment.ready!
+      expect(shipment.state).to eq 'shipped'
+    end
+
+    it "is treated as a no-op for a ready order" do
+      shipment.state = 'ready'
+      shipment.ready!
+      expect(shipment.state).to eq 'ready'
+    end
   end
 
   context "updates cost when selected shipping rate is present" do
