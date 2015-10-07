@@ -4,7 +4,7 @@ module Spree
       class Order
 
         def self.import(user, params)
-          begin
+          ActiveRecord::Base.transaction do
             ensure_country_id_from_params params[:ship_address_attributes]
             ensure_state_id_from_params params[:ship_address_attributes]
             ensure_country_id_from_params params[:bill_address_attributes]
@@ -45,9 +45,6 @@ module Spree
               end
             end
             order.reload
-          rescue
-            order.destroy if order && order.persisted?
-            raise
           end
         end
 
