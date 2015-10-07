@@ -66,7 +66,6 @@ module Spree
       # sets ship_address to the default if automatic_default_address is set to true
       # sets bill_address to the default if automatic_default_address is set to true and there is no ship_address
       # if one address is nil, does not save that address
-      # if both do not save, returns nil
       def persist_order_address(order)
         save_in_address_book(
           order.ship_address.attributes,
