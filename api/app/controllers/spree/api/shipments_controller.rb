@@ -43,15 +43,12 @@ module Spree
       end
 
       def ready
-        unless @shipment.ready?
-          if @shipment.can_ready?
-            @shipment.ready!
-          else
-            logger.error("cannot_ready_shipment shipment_state=#{@shipment.state}")
-            render 'spree/api/shipments/cannot_ready_shipment', status: 422 and return
-          end
+        if @shipment.ready_to_ship
+          respond_with(@shipment, default_template: :show)
+        else
+          logger.error("cannot_ready_shipment shipment_state=#{@shipment.state}")
+          render 'spree/api/shipments/cannot_ready_shipment', status: 422 and return
         end
-        respond_with(@shipment, default_template: :show)
       end
 
       def ship
