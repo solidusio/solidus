@@ -1024,7 +1024,7 @@ es-MX:
     quantity: Cantidad
     quantity_returned: Cantidad devuelta
     quantity_shipped: Cantidad enviada
-    quick_search:
+    quick_search: Búsqueda rápida
     rate: Tarifa
     reason: Razón
     receive: recibir
