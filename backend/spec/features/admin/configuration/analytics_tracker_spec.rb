@@ -18,14 +18,12 @@ describe "Analytics Tracker", :type => :feature do
     it "should have the right tabular values displayed" do
       within_row(1) do
         expect(column_text(1)).to eq("A100")
-        expect(column_text(2)).to eq("Test")
-        expect(column_text(3)).to eq("Yes")
+        expect(column_text(2)).to eq("Yes")
       end
 
       within_row(2) do
         expect(column_text(1)).to eq("A100")
-        expect(column_text(2)).to eq("Test")
-        expect(column_text(3)).to eq("Yes")
+        expect(column_text(2)).to eq("Yes")
       end
     end
    end
