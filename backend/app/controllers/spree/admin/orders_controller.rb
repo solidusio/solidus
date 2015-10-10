@@ -2,7 +2,7 @@ module Spree
   module Admin
     class OrdersController < Spree::Admin::BaseController
       before_action :initialize_order_events
-      before_action :load_order, only: [:edit, :update, :complete, :advance, :cancel, :resume, :approve, :resend, :open_adjustments, :close_adjustments, :cart, :confirm]
+      before_action :load_order, only: [:edit, :update, :complete, :advance, :cancel, :resume, :approve, :resend, :unfinalize_adjustments, :finalize_adjustments, :cart, :confirm]
       around_filter :lock_order, :only => [:update, :advance, :complete, :confirm, :cancel, :resume, :approve, :resend]
 
       rescue_from Spree::Order::InsufficientStock, with: :insufficient_stock_error
@@ -151,18 +151,18 @@ module Spree
         redirect_to :back
       end
 
-      def open_adjustments
+      def unfinalize_adjustments
         adjustments = @order.all_adjustments.finalized
         adjustments.each(&:unfinalize!)
-        flash[:success] = Spree.t(:all_adjustments_opened)
+        flash[:success] = Spree.t(:all_adjustments_unfinalized)
 
         respond_with(@order) { |format| format.html { redirect_to :back } }
       end
 
-      def close_adjustments
+      def finalize_adjustments
         adjustments = @order.all_adjustments.not_finalized
         adjustments.each(&:finalize!)
-        flash[:success] = Spree.t(:all_adjustments_closed)
+        flash[:success] = Spree.t(:all_adjustments_finalized)
 
         respond_with(@order) { |format| format.html { redirect_to :back } }
       end
