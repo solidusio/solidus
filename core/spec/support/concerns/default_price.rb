@@ -21,8 +21,14 @@ shared_examples_for "default_price" do
   describe '#default_price' do
     subject { instance.default_price }
 
-    its(:class) { should eql Spree::Price }
+    describe '#class' do
+      subject { super().class }
+      it { is_expected.to eql Spree::Price }
+    end
   end
 
-  its(:has_default_price?) { should be_truthy }
+  describe '#has_default_price?' do
+    subject { super().has_default_price? }
+    it { is_expected.to be_truthy }
+  end
 end

@@ -5,9 +5,11 @@ describe Spree::Gateway, :type => :model do
     def initialize(options)
     end
 
-    def imaginary_method
-      'imaginary!'
-    end
+    def authorize; 'authorize'; end
+    def purchase; 'purchase'; end
+    def capture; 'capture'; end
+    def void; 'void'; end
+    def credit; 'credit'; end
   end
 
   class TestGateway < Spree::Gateway
@@ -16,8 +18,28 @@ describe Spree::Gateway, :type => :model do
     end
   end
 
-  it "passes through all arguments on a method_missing call" do
-    expect(TestGateway.new.imaginary_method).to eq 'imaginary!'
+  describe 'ActiveMerchant methods' do
+    let(:gateway) { TestGateway.new }
+
+    it "passes through authorize" do
+      expect(gateway.authorize).to eq 'authorize'
+    end
+
+    it "passes through purchase" do
+      expect(gateway.purchase).to eq 'purchase'
+    end
+
+    it "passes through capture" do
+      expect(gateway.capture).to eq 'capture'
+    end
+
+    it "passes through void" do
+      expect(gateway.void).to eq 'void'
+    end
+
+    it "passes through credit" do
+      expect(gateway.credit).to eq 'credit'
+    end
   end
 
   context "fetching payment sources" do

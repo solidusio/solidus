@@ -111,6 +111,8 @@ module Spree
       def confirm
         if @order.completed?
           redirect_to edit_admin_order_url(@order)
+        elsif !@order.confirm?
+          render template: 'spree/admin/orders/confirm_advance'
         end
       end
 
@@ -143,23 +145,23 @@ module Spree
       end
 
       def resend
-        OrderMailer.confirm_email(@order.id, true).deliver_now
+        OrderMailer.confirm_email(@order.id, true).deliver_later
         flash[:success] = Spree.t(:order_email_resent)
 
         redirect_to :back
       end
 
       def open_adjustments
-        adjustments = @order.all_adjustments.where(state: 'closed')
-        adjustments.update_all(state: 'open')
+        adjustments = @order.all_adjustments.finalized
+        adjustments.each(&:unfinalize!)
         flash[:success] = Spree.t(:all_adjustments_opened)
 
         respond_with(@order) { |format| format.html { redirect_to :back } }
       end
 
       def close_adjustments
-        adjustments = @order.all_adjustments.where(state: 'open')
-        adjustments.update_all(state: 'closed')
+        adjustments = @order.all_adjustments.not_finalized
+        adjustments.each(&:finalize!)
         flash[:success] = Spree.t(:all_adjustments_closed)
 
         respond_with(@order) { |format| format.html { redirect_to :back } }
@@ -167,16 +169,11 @@ module Spree
 
       private
         def order_params
-          params.merge!(extra_order_params)
-          params.permit(extra_order_params.keys)
-        end
-
-        def extra_order_params
           {
             created_by_id: try_spree_current_user.try(:id),
             frontend_viewable: false,
             store_id: current_store.try(:id)
-          }
+          }.with_indifferent_access
         end
 
         def load_order

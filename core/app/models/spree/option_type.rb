@@ -17,14 +17,15 @@ module Spree
     validates :name, presence: true, uniqueness: true
     validates :presentation, presence: true
 
-    default_scope -> { order("#{self.table_name}.position") }
+    default_scope -> { order(:position) }
 
     accepts_nested_attributes_for :option_values, reject_if: lambda { |ov| ov[:name].blank? || ov[:presentation].blank? }, allow_destroy: true
 
     after_touch :touch_all_products
+    after_save :touch_all_products
 
     def touch_all_products
-      products.update_all(updated_at: Time.current)
+      products.find_each(&:touch)
     end
   end
 end

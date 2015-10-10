@@ -161,16 +161,66 @@ describe Spree::Product, :type => :model do
       end
     end
 
+    describe "#variant_option_values_by_option_type" do
+      let(:size) { create(:option_type, name: 'size') }
+      let(:length) { create(:option_type, name: 'length') }
+      let(:product) { create(:product, option_types: [size, length]) }
+      let(:size_small) { create(:option_value, name: 'small', option_type: size, position: 3) }
+      let(:size_medium) { create(:option_value, name: 'medium', option_type: size, position: 1) }
+      let(:size_large) { create(:option_value, name: 'large', option_type: size, position: 2) }
+      let!(:variant) { create(:variant, product: product, option_values: [size_small, size_medium]) }
+
+      subject { product.variant_option_values_by_option_type }
+
+      it "returns the option values associated with the product's variants grouped by option type" do
+        expect(subject).to eq({ size => [size_medium, size_small] })
+      end
+    end
+
+    describe "#find_variant_property_rule" do
+      let(:option_value) { create(:option_value) }
+
+      subject { product.find_variant_property_rule([option_value.id]) }
+
+      context "a matching rule exists" do
+        let!(:rule) do
+          create(:variant_property_rule, product: product, option_value: option_value)
+        end
+
+        it "returns the rule" do
+          expect(subject).to eq rule
+        end
+      end
+
+      context "a matching rule doesn't exist" do
+        it "returns nil" do
+          expect(subject).to be_nil
+        end
+      end
+    end
+
     describe 'Variants sorting' do
+      let(:master){ product.master }
+
+      let!(:second) { create(:variant, product: product) }
+      let!(:third)  { create(:variant, product: product) }
+      let!(:first)  { create(:variant, product: product) }
+
+      before do
+        first.update_columns(position: 2)
+        second.update_columns(position: 3)
+        third.update_columns(position: 4)
+      end
+
       context 'without master variant' do
         it 'sorts variants by position' do
-          expect(product.variants.to_sql).to match(/ORDER BY (\`|\")spree_variants(\`|\").position ASC/)
+          expect(product.variants).to eq([first, second, third])
         end
       end
 
       context 'with master variant' do
         it 'sorts variants by position' do
-          expect(product.variants_including_master.to_sql).to match(/ORDER BY (\`|\")spree_variants(\`|\").position ASC/)
+          expect(product.variants_including_master).to eq([master, first, second, third])
         end
       end
     end
@@ -230,9 +280,26 @@ describe Spree::Product, :type => :model do
 
         expect(product2.slug).to eq 'test-456'
       end
-
     end
 
+    context "associations" do
+      describe "product_option_types" do
+        it "touches the product instance when an option type is added" do
+          expect {
+            product.product_option_types.create(option_type: create(:option_type, name: 'new-option-type'))
+            product.reload
+          }.to change { product.updated_at }
+        end
+
+        it "touches product instance when an option type is removed" do
+          product.product_option_types.create(option_type: create(:option_type, name: 'new-option-type'))
+          expect {
+            product.product_option_types = []
+            product.reload
+          }.to change { product.updated_at }
+        end
+      end
+    end
   end
 
   context "properties" do
@@ -420,7 +487,7 @@ describe Spree::Product, :type => :model do
       expect(product.reload.total_on_hand).to eql(5)
     end
   end
-  
+
   # Regression spec for https://github.com/spree/spree/issues/5588
   context '#validate_master when duplicate SKUs entered' do
     let!(:first_product) { create(:product, sku: 'a-sku') }

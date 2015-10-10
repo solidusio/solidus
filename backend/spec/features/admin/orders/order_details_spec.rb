@@ -152,9 +152,9 @@ describe "Order Details", type: :feature, js: true do
         it "doesn't display the out of stock variant in the search results" do
           select2_search_without_selection product.name, from: ".variant_autocomplete"
 
-          page.should have_selector('.select2-no-results')
+          expect(page).to have_selector('.select2-no-results')
           within(".select2-no-results") do
-            page.should have_content("NO MATCHES FOUND")
+            expect(page).to have_content("NO MATCHES FOUND")
           end
         end
       end
@@ -526,7 +526,7 @@ describe "Order Details", type: :feature, js: true do
       wait_for_ajax
 
       within '.carton-state' do
-        page.should have_content('SHIPPED')
+        expect(page).to have_content('SHIPPED')
       end
     end
   end

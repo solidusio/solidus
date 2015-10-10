@@ -8,6 +8,9 @@ module Spree
       rescue_from Spree::Order::InsufficientStock, with: :insufficient_stock_error
 
       include Spree::Core::ControllerHelpers::Order
+      # TODO: Remove this after deprecated usage in #update is removed
+      include Spree::Core::ControllerHelpers::PaymentParameters
+
       # This before_filter comes from Spree::Core::ControllerHelpers::Order
       skip_before_action :set_current_order
 
@@ -26,7 +29,8 @@ module Spree
         authorize! :update, @order, order_token
         @order.next!
         respond_with(@order, default_template: 'spree/api/orders/show', status: 200)
-      rescue StateMachines::InvalidTransition
+      rescue StateMachines::InvalidTransition => e
+        logger.error("invalid_transition #{e.event} from #{e.from} for #{e.object.class.name}. Error: #{e.inspect}")
         respond_with(@order, default_template: 'spree/api/orders/could_not_transition', status: 422)
       end
 
@@ -44,14 +48,22 @@ module Spree
           @order.complete!
           respond_with(@order, default_template: 'spree/api/orders/show', status: 200)
         end
-      rescue StateMachines::InvalidTransition
+      rescue StateMachines::InvalidTransition => e
+        logger.error("invalid_transition #{e.event} from #{e.from} for #{e.object.class.name}. Error: #{e.inspect}")
         respond_with(@order, default_template: 'spree/api/orders/could_not_transition', status: 422)
       end
 
       def update
         authorize! :update, @order, order_token
 
-        if @order.update_from_params(params, permitted_checkout_attributes, request.headers.env)
+        update_params = if params[:payment_source].present?
+          ActiveSupport::Deprecation.warn("Passing payment_source is deprecated. Send source parameters inside payments_attributes[:source_attributes].", caller)
+          move_payment_source_into_payments_attributes(params)
+        else
+          params
+        end
+
+        if @order.update_from_params(update_params, permitted_checkout_attributes, request.headers.env)
           if can?(:admin, @order) && user_id.present?
             @order.associate_user!(Spree.user_class.find(user_id))
           end
@@ -62,6 +74,7 @@ module Spree
             state_callback(:after)
             respond_with(@order, default_template: 'spree/api/orders/show')
           else
+            logger.error("failed_to_transition_errors=#{@order.errors.full_messages}")
             respond_with(@order, default_template: 'spree/api/orders/could_not_transition', status: 422)
           end
         else
@@ -74,10 +87,6 @@ module Spree
           params[:order][:user_id] if params[:order]
         end
 
-        def nested_params
-          map_nested_attributes_keys Order, params[:order] || {}
-        end
-
         # Should be overriden if you have areas of your checkout that don't match
         # up to a step within checkout_steps, such as a registration step
         def skip_state_validation?
@@ -86,16 +95,11 @@ module Spree
 
         def load_order
           @order = Spree::Order.find_by!(number: params[:id])
-          raise_insufficient_quantity and return if @order.insufficient_stock_lines.present?
         end
 
         def update_order_state
           @order.state = params[:state] if params[:state]
           state_callback(:before)
-        end
-
-        def raise_insufficient_quantity
-          respond_with(@order, default_template: 'spree/api/orders/insufficient_quantity')
         end
 
         def state_callback(before_or_after = :before)
@@ -104,7 +108,7 @@ module Spree
         end
 
         def after_update_attributes
-          if nested_params && nested_params[:coupon_code].present?
+          if params[:order] && params[:order][:coupon_code].present?
             handler = PromotionHandler::Coupon.new(@order).apply
 
             if handler.error.present?

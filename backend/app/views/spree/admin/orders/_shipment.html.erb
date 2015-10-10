@@ -2,7 +2,6 @@
 
 <% unless manifest_items.empty? %>
   <div id="<%= "shipment_#{shipment.id}" %>" data-hook="admin_shipment_form">
-    <%= render :partial => "spree/admin/variants/split", :formats => :js %>
     <fieldset class="no-border-bottom">
       <legend align="center" class="stock-location" data-hook="stock-location">
         <span class="shipment-number"><%= shipment.number %></span>

@@ -13,6 +13,13 @@ module Spree
         Spree::Config = app.config.spree.preferences #legacy access
       end
 
+      initializer "spree.default_permissions" do |app|
+        Spree::RoleConfiguration.configure do |config|
+          config.assign_permissions :default, [Spree::PermissionSets::DefaultCustomer]
+          config.assign_permissions :admin, [Spree::PermissionSets::SuperUser]
+        end
+      end
+
       initializer "spree.register.calculators" do |app|
         app.config.spree.calculators.shipping_methods = [
             Spree::Calculator::Shipping::FlatPercentItemTotal,
@@ -85,7 +92,9 @@ module Spree
           Spree::Promotion::Rules::UserLoggedIn,
           Spree::Promotion::Rules::OneUsePerUser,
           Spree::Promotion::Rules::Taxon,
-          Spree::Promotion::Rules::NthOrder
+          Spree::Promotion::Rules::NthOrder,
+          Spree::Promotion::Rules::OptionValue,
+          Spree::Promotion::Rules::FirstRepeatPurchaseSince,
         ]
       end
 

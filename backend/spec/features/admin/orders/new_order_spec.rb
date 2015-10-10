@@ -56,7 +56,7 @@ describe "New Order", :type => :feature do
     click_on "ship"
 
     within '.carton-state' do
-      page.should have_content('SHIPPED')
+      expect(page).to have_content('SHIPPED')
     end
   end
 

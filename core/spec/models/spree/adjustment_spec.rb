@@ -44,22 +44,6 @@ describe Spree::Adjustment, :type => :model do
     end
   end
 
-  context "adjustment state" do
-    subject { build(:adjustment, order: order, state: state) }
-
-    context "#closed?" do
-      context 'is closed' do
-        let(:state) { 'closed' }
-        it { is_expected.to be_closed }
-      end
-
-      context 'is open' do
-        let(:state) { 'open' }
-        it { is_expected.to_not be_closed }
-      end
-    end
-  end
-
   context '#currency' do
     let(:order) { Spree::Order.new currency: 'JPY' }
 
@@ -96,13 +80,13 @@ describe Spree::Adjustment, :type => :model do
   end
 
   context '#update!' do
-    let(:adjustment) { Spree::Adjustment.create!(label: 'Adjustment', order: order, adjustable: order, amount: 5, state: state, source: source) }
+    let(:adjustment) { Spree::Adjustment.create!(label: 'Adjustment', order: order, adjustable: order, amount: 5, finalized: finalized, source: source) }
     let(:source) { mock_model(Spree::TaxRate, compute_amount: 10) }
 
     subject { adjustment.update! }
 
     context "when adjustment is closed" do
-      let(:state) { 'closed' }
+      let(:finalized) { true }
 
       it "does not update the adjustment" do
         expect(adjustment).to_not receive(:update_column)
@@ -110,8 +94,8 @@ describe Spree::Adjustment, :type => :model do
       end
     end
 
-    context "when adjustment is open" do
-      let(:state) { 'open' }
+    context "when adjustment isn't finalized" do
+      let(:finalized) { false }
 
       it "updates the amount" do
         expect { subject }.to change { adjustment.amount }.to(10)

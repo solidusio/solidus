@@ -33,6 +33,34 @@ describe Spree::LegacyUser, :type => :model do
       expect(user.last_incomplete_spree_order).to eq nil
     end
 
+    context "with completable_order_created_cutoff set" do
+      before do
+        @original_order_cutoff_preference = Spree::Config.completable_order_created_cutoff_days
+        Spree::Config.completable_order_created_cutoff_days = 1
+      end
+
+      after { Spree::Config.completable_order_created_cutoff_days = @original_order_cutoff_preference }
+
+      it "excludes orders updated outside of the cutoff date" do
+        incomplete_order = create(:order, user: user, created_by: user, created_at: 3.days.ago, updated_at: 2.days.ago)
+        expect(user.last_incomplete_spree_order).to eq nil
+      end
+    end
+
+    context "with completable_order_created_cutoff set" do
+      before do
+        @original_order_cutoff_preference = Spree::Config.completable_order_updated_cutoff_days
+        Spree::Config.completable_order_updated_cutoff_days = 1
+      end
+
+      after { Spree::Config.completable_order_updated_cutoff_days = @original_order_cutoff_preference }
+
+      it "excludes orders updated outside of the cutoff date" do
+        incomplete_order = create(:order, user: user, created_by: user, created_at: 3.days.ago, updated_at: 2.days.ago)
+        expect(user.last_incomplete_spree_order).to eq nil
+      end
+    end
+
     it "chooses the most recently created incomplete order" do
       order_1 = create(:order, user: user, created_at: 1.second.ago)
       order_2 = create(:order, user: user)
@@ -40,20 +68,13 @@ describe Spree::LegacyUser, :type => :model do
     end
 
     context "persists order address" do
-      let!(:order) { create(:order, bill_address: create(:address), ship_address: create(:address)) }
+      let(:bill_address) { create(:address) }
+      let(:ship_address) { create(:address) }
+      let(:order) { create(:order, user: user, bill_address: bill_address, ship_address: ship_address) }
 
-      it "copies over order addresses" do
-        expect {
-          user.persist_order_address(order)
-        }.to change { Spree::Address.count }.by(2)
-
-        expect(user.bill_address).to eq order.bill_address
-        expect(user.ship_address).to eq order.ship_address
-      end
-
-      it "doesnt create new addresses if user has already" do
-        user.update_column(:bill_address_id, create(:address))
-        user.update_column(:ship_address_id, create(:address))
+      it "doesn't create new addresses" do
+        user.user_addresses.create(address: bill_address)
+        user.user_addresses.create(address: ship_address)
         user.reload
 
         expect {
@@ -61,11 +82,13 @@ describe Spree::LegacyUser, :type => :model do
         }.not_to change { Spree::Address.count }
       end
 
-      it "set both bill and ship address id on subject" do
+      it "associates both the bill and ship address to the user" do
         user.persist_order_address(order)
+        user.save!
+        user.user_addresses.reload
 
-        expect(user.bill_address_id).not_to be_blank
-        expect(user.ship_address_id).not_to be_blank
+        expect(user.user_addresses.find_first_by_address_values(order.bill_address.attributes)).to_not be_nil
+        expect(user.user_addresses.find_first_by_address_values(order.ship_address.attributes)).to_not be_nil
       end
     end
 

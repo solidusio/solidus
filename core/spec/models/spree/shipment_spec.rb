@@ -82,7 +82,7 @@ describe Spree::Shipment, :type => :model do
   context "display_amount" do
     it "retuns a Spree::Money" do
       shipment.cost = 21.22
-      shipment.display_amount.should == Spree::Money.new(21.22)
+      expect(shipment.display_amount).to eq(Spree::Money.new(21.22))
     end
   end
 
@@ -268,7 +268,7 @@ describe Spree::Shipment, :type => :model do
       end
 
       it "should result in a 'ready' state" do
-        shipment.should_receive(:update_columns).with(state: 'ready', updated_at: kind_of(Time))
+        expect(shipment).to receive(:update_columns).with(state: 'ready', updated_at: kind_of(Time))
         shipment.update!(order)
       end
       it_should_behave_like 'immutable once shipped'
@@ -398,18 +398,18 @@ describe Spree::Shipment, :type => :model do
     before { shipment.state = 'canceled' }
 
     context "when order cannot ship" do
-      before { order.stub(can_ship?: false) }
+      before { allow(order).to receive_messages(can_ship?: false) }
       it "should result in a 'pending' state" do
         shipment.resume!
-        shipment.state.should eq 'pending'
+        expect(shipment.state).to eq 'pending'
       end
     end
 
     context "when order is not paid" do
-      before { order.stub(paid?: false) }
+      before { allow(order).to receive_messages(paid?: false) }
       it "should result in a 'ready' state" do
         shipment.resume!
-        shipment.state.should eq 'pending'
+        expect(shipment.state).to eq 'pending'
       end
     end
 
@@ -417,20 +417,20 @@ describe Spree::Shipment, :type => :model do
       before { allow_any_instance_of(Spree::InventoryUnit).to receive(:backordered?).and_return(true) }
       it "should result in a 'ready' state" do
         shipment.resume!
-        shipment.state.should eq 'pending'
+        expect(shipment.state).to eq 'pending'
       end
     end
 
     context "when the order is paid, shippable, and not backordered" do
       before do
-        order.stub(can_ship?: true)
-        order.stub(paid?: true)
+        allow(order).to receive_messages(can_ship?: true)
+        allow(order).to receive_messages(paid?: true)
         allow_any_instance_of(Spree::InventoryUnit).to receive(:backordered?).and_return(false)
       end
 
       it "should result in a 'ready' state" do
         shipment.resume!
-        shipment.state.should eq 'ready'
+        expect(shipment.state).to eq 'ready'
       end
     end
 
@@ -454,7 +454,7 @@ describe Spree::Shipment, :type => :model do
       end
 
       it 'unstocks them items' do
-        shipment_with_inventory_units.stock_location.should_receive(:unstock).with(an_instance_of(Spree::Variant), 1, shipment_with_inventory_units)
+        expect(shipment_with_inventory_units.stock_location).to receive(:unstock).with(an_instance_of(Spree::Variant), 1, shipment_with_inventory_units)
         subject
       end
     end
@@ -508,7 +508,7 @@ describe Spree::Shipment, :type => :model do
         label:    "Additional",
         amount:   5,
         included: false,
-        state:    "closed"
+        finalized: true
       )
       shipment.update_amounts
       expect(shipment.reload.adjustment_total).to eq(5)
@@ -520,7 +520,7 @@ describe Spree::Shipment, :type => :model do
         label:    "Included",
         amount:   5,
         included: true,
-        state:    "closed"
+        finalized: true
       )
       shipment.update_amounts
       expect(shipment.reload.adjustment_total).to eq(0)
@@ -662,7 +662,7 @@ describe Spree::Shipment, :type => :model do
       )
     end
 
-    before { order.stub paid?: true }
+    before { allow(order).to receive_messages paid?: true }
 
     it 'proceeds automatically to shipped state' do
       unshippable_shipment.ready!
@@ -670,11 +670,12 @@ describe Spree::Shipment, :type => :model do
     end
 
     it 'does not send a confirmation email' do
-      expect(unshippable_shipment).to_not receive(:send_shipment_email)
-      unshippable_shipment.ready!
-      unshippable_shipment.inventory_units(true).each do |unit|
-        expect(unit.state).to eq('shipped')
-      end
+      expect {
+        unshippable_shipment.ready!
+        unshippable_shipment.inventory_units(true).each do |unit|
+          expect(unit.state).to eq('shipped')
+        end
+      }.not_to change{ ActionMailer::Base.deliveries.count }
     end
   end
 
@@ -704,6 +705,41 @@ describe Spree::Shipment, :type => :model do
       expect(shipment.destroy).to eq false
       expect(shipment.errors.full_messages.join).to match /Cannot destroy/
       expect { shipment.reload }.not_to raise_error
+    end
+  end
+
+  describe "#finalize!" do
+    let(:inventory_unit) { shipment.inventory_units.first }
+    let(:stock_item) { inventory_unit.variant.stock_items.find_by(stock_location: stock_location) }
+
+    before do
+      stock_item.set_count_on_hand(10)
+      stock_item.update_attributes!(backorderable: false)
+    end
+
+    subject { shipment.finalize! }
+
+    it "updates the associated inventory units" do
+      inventory_unit.update_columns(updated_at: 1.hour.ago)
+      expect { subject }.to change { inventory_unit.reload.updated_at }
+    end
+
+    it "unstocks the variant" do
+      expect { subject }.to change { stock_item.reload.count_on_hand }.from(10).to(9)
+    end
+
+    context "inventory unit already finalized" do
+      before do
+        inventory_unit.update_attributes!(pending: false)
+      end
+
+      it "doesn't update the associated inventory units" do
+        expect { subject }.to_not change { inventory_unit.reload.updated_at }
+      end
+
+      it "doesn't unstock the variant" do
+        expect { subject }.to_not change { stock_item.reload.count_on_hand }
+      end
     end
   end
 end

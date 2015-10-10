@@ -13,7 +13,8 @@ module Spree
       fresh_when(simple_current_order)
     end
 
-    protected
+    private
+
       # This method is placed here so that the CheckoutController
       # and OrdersController can both reference it (or any other controller
       # which needs it)

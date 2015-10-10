@@ -28,6 +28,9 @@ module Spree
       go_to_state :confirm
     end
 
+    self.whitelisted_ransackable_associations = %w[shipments user promotions bill_address ship_address line_items]
+    self.whitelisted_ransackable_attributes =  %w[completed_at created_at email number state payment_state shipment_state total]
+
     attr_reader :coupon_code
     attr_accessor :temporary_address, :temporary_credit_card
 
@@ -45,11 +48,11 @@ module Spree
 
     belongs_to :store, class_name: 'Spree::Store'
     has_many :state_changes, as: :stateful
-    has_many :line_items, -> { order('created_at', 'id') }, dependent: :destroy, inverse_of: :order
+    has_many :line_items, -> { order(:created_at, :id) }, dependent: :destroy, inverse_of: :order
     has_many :payments, dependent: :destroy
     has_many :return_authorizations, dependent: :destroy, inverse_of: :order
     has_many :reimbursements, inverse_of: :order
-    has_many :adjustments, -> { order("#{Adjustment.table_name}.created_at ASC") }, as: :adjustable, inverse_of: :adjustable, dependent: :destroy
+    has_many :adjustments, -> { order(:created_at) }, as: :adjustable, inverse_of: :adjustable, dependent: :destroy
     has_many :line_item_adjustments, through: :line_items, source: :adjustments
     has_many :shipment_adjustments, through: :shipments, source: :adjustments
     has_many :inventory_units, inverse_of: :order
@@ -79,7 +82,7 @@ module Spree
     # Needs to happen before save_permalink is called
     before_validation :set_currency
     before_validation :generate_order_number, on: :create
-    before_validation :clone_billing_address, if: :use_billing?
+    before_validation :assign_billing_to_shipping_address, if: :use_billing?
     attr_accessor :use_billing
 
 
@@ -90,7 +93,6 @@ module Spree
     validates :email, presence: true, if: :require_email
     validates :email, email: true, if: :require_email, allow_blank: true
     validates :number, presence: true, uniqueness: { allow_blank: true }
-    validate :has_available_shipment
 
     make_permalink field: :number
 
@@ -188,6 +190,7 @@ module Spree
     end
 
     def confirmation_required?
+      ActiveSupport::Deprecation.warn "Order#confirmation_required is deprecated.", caller
       true
     end
 
@@ -214,12 +217,8 @@ module Spree
       updater.update
     end
 
-    def clone_billing_address
-      if bill_address and self.ship_address.nil?
-        self.ship_address = bill_address.dup
-      else
-        self.ship_address.attributes = bill_address.attributes.except('id', 'updated_at', 'created_at')
-      end
+    def assign_billing_to_shipping_address
+      self.ship_address = bill_address if bill_address
       true
     end
 
@@ -269,7 +268,7 @@ module Spree
 
       self.number ||= loop do
         # Make a random number.
-        random = "#{options[:prefix]}#{(0...options[:length]).map { possible.shuffle.first }.join}"
+        random = "#{options[:prefix]}#{(0...options[:length]).map { possible.sample }.join}"
         # Use the random  number if no other order exists with it.
         if self.class.exists?(number: random)
           # If over half of all possible options are taken add another digit.
@@ -327,15 +326,23 @@ module Spree
     end
 
     def outstanding_balance
+      # If reimbursement has happened add it back to total to prevent balance_due payment state
+      # See: https://github.com/spree/spree/issues/6229
+      adjusted_payment_total = payment_total + refund_total
+
       if state == 'canceled'
-        -1 * payment_total
+        -1 * adjusted_payment_total
       else
-        total - payment_total
+        total - adjusted_payment_total
       end
     end
 
     def outstanding_balance?
       self.outstanding_balance != 0
+    end
+
+    def refund_total
+      payments.flat_map(&:refunds).sum(&:amount)
     end
 
     def name
@@ -362,7 +369,7 @@ module Spree
     # Called after transition to complete state when payments will have been processed
     def finalize!
       # lock all adjustments (coupon promotions, etc.)
-      all_adjustments.each{|a| a.close}
+      all_adjustments.each(&:finalize!)
 
       # update payment and shipment(s) states, and save
       updater.update_payment_state
@@ -387,7 +394,7 @@ module Spree
     end
 
     def deliver_order_confirmation_email
-      OrderMailer.confirm_email(self.id).deliver_now
+      OrderMailer.confirm_email(self).deliver_later
       update_column(:confirmation_delivered, true)
     end
 
@@ -397,7 +404,10 @@ module Spree
     end
 
     def available_payment_methods
-      @available_payment_methods ||= (PaymentMethod.available(:front_end) + PaymentMethod.available(:both)).uniq
+      @available_payment_methods ||= (
+        PaymentMethod.available(:front_end, store: store) +
+        PaymentMethod.available(:both, store: store)
+      ).uniq
     end
 
     def billing_firstname
@@ -506,6 +516,8 @@ module Spree
     end
 
     def create_proposed_shipments
+      return self.shipments if unreturned_exchange?
+
       if completed?
         raise CannotRebuildShipments.new(Spree.t(:cannot_rebuild_shipments_order_completed))
       elsif shipments.any? { |s| !s.pending? }
@@ -553,7 +565,7 @@ module Spree
     end
 
     def shipping_eq_billing_address?
-      (bill_address.empty? && ship_address.empty?) || bill_address.same_as?(ship_address)
+      bill_address == ship_address
     end
 
     def set_shipments_cost
@@ -582,19 +594,6 @@ module Spree
 
     def can_approve?
       !approved?
-    end
-
-    # moved from api order_decorator. This is a better place for it.
-    def update_line_items(line_item_params)
-      return if line_item_params.blank?
-      line_item_params.each_value do |attributes|
-        if attributes[:id].present?
-          self.line_items.find(attributes[:id]).update_attributes!(attributes)
-        else
-          self.line_items.create!(attributes)
-        end
-      end
-      self.ensure_updated_shipments
     end
 
     def reload(options=nil)
@@ -750,18 +749,11 @@ module Spree
       end
     end
 
-    def has_available_shipment
-      return unless has_step?("delivery")
-      return unless has_step?(:address) && address?
-      return unless ship_address && ship_address.valid?
-      # errors.add(:base, :no_shipping_methods_available) if available_shipping_methods.empty?
-    end
-
     def ensure_available_shipping_rates
       if shipments.empty? || shipments.any? { |shipment| shipment.shipping_rates.blank? }
         # After this point, order redirects back to 'address' state and asks user to pick a proper address
         # Therefore, shipments are not necessary at this point.
-        shipments.delete_all
+        shipments.destroy_all
         errors.add(:base, Spree.t(:items_cannot_be_shipped)) and return false
       end
     end
@@ -776,7 +768,7 @@ module Spree
     end
 
     def send_cancel_email
-      OrderMailer.cancel_email(self.id).deliver_now
+      OrderMailer.cancel_email(self).deliver_later
     end
 
     def after_resume

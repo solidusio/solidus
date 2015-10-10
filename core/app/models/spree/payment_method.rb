@@ -4,12 +4,12 @@ module Spree
     DISPLAY = [:both, :front_end, :back_end]
     default_scope -> { where(deleted_at: nil) }
 
-    scope :production, -> { where(environment: 'production') }
-
     validates :name, presence: true
 
     has_many :payments, class_name: "Spree::Payment", inverse_of: :payment_method
     has_many :credit_cards, class_name: "Spree::CreditCard"
+    has_many :store_payment_methods, inverse_of: :payment_method
+    has_many :payment_methods, through: :store_payment_methods
 
     include Spree::Preferences::StaticallyConfigurable
 
@@ -28,16 +28,16 @@ module Spree
       raise ::NotImplementedError, "You must implement payment_source_class method for #{self.class}."
     end
 
-    def self.available(display_on = 'both')
+    def self.available(display_on = 'both', store: nil)
       all.select do |p|
         p.active &&
         (p.display_on == display_on.to_s || p.display_on.blank?) &&
-        (p.environment == Rails.env || p.environment.blank?)
+        (store.nil? || store.payment_methods.empty? || store.payment_methods.include?(p))
       end
     end
 
     def self.active?
-      where(type: self.to_s, environment: Rails.env, active: true).count > 0
+      where(type: self.to_s, active: true).count > 0
     end
 
     def method_type

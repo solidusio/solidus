@@ -25,7 +25,8 @@ module Spree
 
     # Updates the order and advances to the next state (when possible.)
     def update
-      if @order.update_from_params(params, permitted_checkout_attributes, request.headers.env)
+      massaged_params = move_payment_source_into_payments_attributes(params)
+      if @order.update_from_params(massaged_params, permitted_checkout_attributes, request.headers.env)
         @order.temporary_address = !params[:save_user_address]
         success = if @order.state == 'confirm'
           @order.complete
@@ -116,8 +117,9 @@ module Spree
       def before_address
         # if the user has a default address, a callback takes care of setting
         # that; but if he doesn't, we need to build an empty one here
-        @order.bill_address ||= Address.build_default
-        @order.ship_address ||= Address.build_default if @order.checkout_steps.include?('delivery')
+        default = {country_id: Country.default.id}
+        @order.build_bill_address(default) unless @order.bill_address
+        @order.build_ship_address(default) if @order.checkout_steps.include?('delivery') && !@order.ship_address
       end
 
       def before_delivery

@@ -9,7 +9,7 @@ $.fn.productAutocomplete = function (options) {
     minimumInputLength: 3,
     multiple: multiple,
     initSelection: function (element, callback) {
-      $.get(Spree.routes.product_search, {
+      $.get(Spree.routes.admin_product_search, {
         ids: element.val().split(','),
         token: Spree.api_key
       }, function (data) {
@@ -17,7 +17,7 @@ $.fn.productAutocomplete = function (options) {
       });
     },
     ajax: {
-      url: Spree.routes.product_search,
+      url: Spree.routes.admin_product_search,
       datatype: 'json',
       params: { "headers": { "X-Spree-Token": Spree.api_key } },
       data: function (term, page) {
@@ -27,13 +27,15 @@ $.fn.productAutocomplete = function (options) {
             sku_cont: term
           },
           m: 'OR',
-          token: Spree.api_key
+          token: Spree.api_key,
+          page: page
         };
       },
       results: function (data, page) {
         var products = data.products ? data.products : [];
         return {
-          results: products
+          results: products,
+          more: (data.current_page * data.per_page) < data.total_count
         };
       }
     },

@@ -25,6 +25,11 @@ module Spree
         if params[:product][:option_type_ids].present?
           params[:product][:option_type_ids] = params[:product][:option_type_ids].split(',')
         end
+        if updating_variant_property_rules?
+          params[:product][:variant_property_rules_attributes].each do |index, param_attrs|
+            param_attrs[:option_value_ids] = param_attrs[:option_value_ids].split(',')
+          end
+        end
         invoke_callbacks(:update, :before)
         if @object.update_attributes(permitted_resource_params)
           invoke_callbacks(:update, :after)
@@ -66,14 +71,23 @@ module Spree
         redirect_to edit_admin_product_url(@new)
       end
 
-      protected
+      private
 
       def find_resource
         Product.with_deleted.friendly.find(params[:id])
       end
 
       def location_after_save
-        spree.edit_admin_product_url(@product)
+        if updating_variant_property_rules?
+          url_params = {}
+          url_params[:ovi] = []
+          params[:product][:variant_property_rules_attributes].each do |index, param_attrs|
+            url_params[:ovi] += param_attrs[:option_value_ids]
+          end
+          spree.admin_product_product_properties_url(@product, url_params)
+        else
+          spree.edit_admin_product_url(@product)
+        end
       end
 
       def load_data
@@ -122,15 +136,16 @@ module Spree
         clone_admin_product_url resource
       end
 
-      private
-
       def variant_stock_includes
         [:images, stock_items: :stock_location, option_values: :option_type]
       end
 
-
       def variant_scope
         @product.variants
+      end
+
+      def updating_variant_property_rules?
+        params[:product][:variant_property_rules_attributes].present?
       end
     end
   end

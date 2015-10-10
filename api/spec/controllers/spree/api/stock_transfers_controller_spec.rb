@@ -46,6 +46,21 @@ module Spree
           end
         end
 
+        context "transfer item does not have stock in source location after ship" do
+          let(:variant_id) { transfer_item.variant.to_param }
+          let(:user) { create :user }
+
+          before do
+            stock_transfer.finalize(user)
+            stock_transfer.ship(shipped_at: Time.now)
+            stock_transfer.source_location.stock_item(transfer_item.variant_id).set_count_on_hand(0)
+          end
+
+          it "can still receive item" do
+            expect { subject }.to change { transfer_item.reload.received_quantity }.by(1)
+          end
+        end
+
         context "transfer item has been fully received" do
           let(:variant_id) { transfer_item.variant.to_param }
 

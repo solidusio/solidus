@@ -4,6 +4,7 @@ require 'jquery-ui-rails'
 require 'bourbon'
 require 'deface'
 require 'select2-rails'
+require 'handlebars_assets'
 
 require 'spree_core'
 require 'spree_api'

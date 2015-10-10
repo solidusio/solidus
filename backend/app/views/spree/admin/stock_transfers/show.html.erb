@@ -15,7 +15,7 @@
     <h6>
       <span><%= @stock_transfer.source_location.admin_name %></span>
       <span class='arrow'>&rarr;</span>
-      <span><%= @stock_transfer.destination_location.admin_name %></span>
+      <span><%= @stock_transfer.destination_location.try!(:admin_name) %></span>
     </h6>
   </div>
 

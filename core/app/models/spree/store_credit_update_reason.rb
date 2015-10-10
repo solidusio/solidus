@@ -1,2 +1,2 @@
-class Spree::StoreCreditUpdateReason < ActiveRecord::Base
+class Spree::StoreCreditUpdateReason < Spree::Base
 end

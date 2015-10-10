@@ -7,7 +7,7 @@ module Spree
         @zone.zone_members.build
       end
 
-      protected
+      private
 
         def collection
           params[:q] ||= {}

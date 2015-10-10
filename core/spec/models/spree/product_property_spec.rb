@@ -1,20 +1,18 @@
 require 'spec_helper'
 
-describe Spree::ProductProperty, :type => :model do
-
-  context "validations" do
-    it "should validate length of value" do
-      pp = create(:product_property)
-      pp.value = "x" * 256
-      expect(pp).not_to be_valid
-    end
-  end
-
+describe Spree::ProductProperty, type: :model do
   context "touching" do
-    it "should update product" do
-      pp = create(:product_property)
-      expect(pp.product).to receive(:touch)
-      pp.touch
+    let(:product_property) { create(:product_property) }
+    let(:product) { product_property.product }
+
+    before do
+      product.update_columns(updated_at: 1.day.ago)
+    end
+
+    subject { product_property.touch }
+
+    it "touches the product" do
+      expect { subject }.to change { product.reload.updated_at }
     end
   end
 end

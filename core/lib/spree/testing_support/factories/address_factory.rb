@@ -1,5 +1,5 @@
 FactoryGirl.define do
-  factory :address, aliases: [:bill_address, :ship_address], class: Spree::Address do
+  factory :address, class: Spree::Address do
     firstname 'John'
     lastname 'Doe'
     company 'Company'
@@ -18,5 +18,13 @@ FactoryGirl.define do
         address.association(:country)
       end
     end
+  end
+
+  factory :ship_address, parent: :address do
+    address1 'A Different Road'
+  end
+
+  factory :bill_address, parent: :address do
+    address1 'PO Box 1337'
   end
 end

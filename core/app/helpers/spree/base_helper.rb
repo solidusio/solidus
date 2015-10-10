@@ -13,11 +13,11 @@ module Spree
     end
 
     def link_to_cart(text = nil)
-      text = text ? h(text) : Spree.t('cart')
+      text = text ? h(text) : Spree.t(:cart)
       css_class = nil
 
       if simple_current_order.nil? or simple_current_order.item_count.zero?
-        text = "#{text}: (#{Spree.t('empty')})"
+        text = "#{text}: (#{Spree.t(:empty)})"
         css_class = 'empty'
       else
         text = "#{text}: (#{simple_current_order.item_count})  <span class='amount'>#{simple_current_order.display_total.to_html}</span>"

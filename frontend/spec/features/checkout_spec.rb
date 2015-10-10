@@ -80,8 +80,7 @@ describe "Checkout", type: :feature, inaccessible: true do
   context "doesn't allow bad credit card numbers" do
     before(:each) do
       order = OrderWalkthrough.up_to(:delivery)
-      allow(order).to receive_messages :confirmation_required? => true
-      allow(order).to receive_messages(:available_payment_methods => [ create(:credit_card_payment_method, :environment => 'test') ])
+      allow(order).to receive_messages(:available_payment_methods => [ create(:credit_card_payment_method) ])
 
       user = create(:user)
       order.user = user
@@ -110,7 +109,6 @@ describe "Checkout", type: :feature, inaccessible: true do
 
     let!(:order) do
       order = OrderWalkthrough.up_to(:delivery)
-      allow(order).to receive_messages :confirmation_required? => true
 
       order.reload
       order.user = user
@@ -149,8 +147,8 @@ describe "Checkout", type: :feature, inaccessible: true do
   end
 
   context "when several payment methods are available" do
-    let(:credit_cart_payment) {create(:credit_card_payment_method, :environment => 'test') }
-    let(:check_payment) {create(:check_payment_method, :environment => 'test') }
+    let(:credit_cart_payment) {create(:credit_card_payment_method) }
+    let(:check_payment) {create(:check_payment_method) }
 
     after do
       Capybara.ignore_hidden_elements = true
@@ -250,6 +248,8 @@ describe "Checkout", type: :feature, inaccessible: true do
       click_button "add-to-cart-button"
 
       click_on "Checkout"
+      # edit an address field
+      fill_in "order_bill_address_attributes_firstname", :with => "Ryann"
       click_on "Save and Continue"
       click_on "Save and Continue"
       click_on "Save and Continue"

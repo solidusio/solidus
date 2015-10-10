@@ -9,6 +9,9 @@ node :total_on_hand do
   root_object.total_on_hand
 end
 
+child :variant_properties => :variant_properties do
+  attributes *variant_property_attributes
+end
 
 child(root_object.stock_items.accessible_by(current_ability) => :stock_items) do
   attributes :id, :count_on_hand, :stock_location_id, :backorderable

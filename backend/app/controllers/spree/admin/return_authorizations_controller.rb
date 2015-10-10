@@ -19,6 +19,7 @@ module Spree
         load_return_items
         load_reimbursement_types
         load_return_reasons
+        load_stock_locations
       end
 
       # To satisfy how nested attributes works we want to create placeholder ReturnItems for
@@ -40,6 +41,10 @@ module Spree
 
       def load_return_reasons
         @reasons = Spree::ReturnReason.reasons_for_return_items(@return_authorization.return_items)
+      end
+
+      def load_stock_locations
+        @stock_locations = Spree::StockLocation.order_default.active
       end
     end
   end

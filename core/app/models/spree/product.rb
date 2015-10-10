@@ -15,12 +15,18 @@ module Spree
 
     has_many :product_option_types, dependent: :destroy, inverse_of: :product
     has_many :option_types, through: :product_option_types
+
     has_many :product_properties, dependent: :destroy, inverse_of: :product
     has_many :properties, through: :product_properties
+    has_many :variant_property_rules
+    has_many :variant_property_rule_values, through: :variant_property_rules, source: :values
+    has_many :variant_property_rule_conditions, through: :variant_property_rules, source: :conditions
 
     has_many :classifications, dependent: :delete_all, inverse_of: :product
-    has_many :taxons, through: :classifications
-    has_and_belongs_to_many :promotion_rules, join_table: :spree_products_promotion_rules
+    has_many :taxons, through: :classifications, before_remove: :remove_taxon
+
+    has_many :product_promotion_rules
+    has_many :promotion_rules, through: :product_promotion_rules
 
     belongs_to :tax_category, class_name: 'Spree::TaxCategory'
     belongs_to :shipping_category, class_name: 'Spree::ShippingCategory', inverse_of: :products
@@ -31,26 +37,33 @@ module Spree
       class_name: 'Spree::Variant'
 
     has_many :variants,
-      -> { where(is_master: false).order("#{::Spree::Variant.quoted_table_name}.position ASC") },
+      -> { where(is_master: false).order(:position) },
       inverse_of: :product,
       class_name: 'Spree::Variant'
 
     has_many :variants_including_master,
-      -> { order("#{::Spree::Variant.quoted_table_name}.position ASC") },
+      -> { order(:position) },
       inverse_of: :product,
       class_name: 'Spree::Variant',
       dependent: :destroy
 
-    has_many :prices, -> { order('spree_variants.position, spree_variants.id, currency') }, through: :variants
+    has_many :prices, -> { order(Spree::Variant.arel_table[:position].asc, Spree::Variant.arel_table[:id].asc, :currency) }, through: :variants
 
     has_many :stock_items, through: :variants_including_master
 
     has_many :line_items, through: :variants_including_master
     has_many :orders, through: :line_items
 
-    delegate_belongs_to :master, :sku, :price, :currency, :display_amount, :display_price, :weight, :height, :width, :depth, :is_master, :has_default_price?, :cost_currency, :price_in, :amount_in
+    def find_or_build_master
+      master || build_master
+    end
 
-    delegate_belongs_to :master, :cost_price
+    MASTER_ATTRIBUTES = [:sku, :price, :currency, :display_amount, :display_price, :weight, :height, :width, :depth, :cost_currency, :price_in, :amount_in, :cost_price]
+    MASTER_ATTRIBUTES.each do |attr|
+      delegate :"#{attr}", :"#{attr}=", to: :find_or_build_master
+    end
+
+    delegate :display_amount, :display_price, :has_default_price?, to: :find_or_build_master
 
     delegate :images, to: :master, prefix: true
     alias_method :images, :master_images
@@ -82,9 +95,13 @@ module Spree
 
     attr_accessor :option_values_hash
 
+    accepts_nested_attributes_for :variant_property_rules, allow_destroy: true
     accepts_nested_attributes_for :product_properties, allow_destroy: true, reject_if: lambda { |pp| pp[:property_name].blank? }
 
     alias :options :product_option_types
+
+    self.whitelisted_ransackable_associations = %w[stores variants_including_master master variants]
+    self.whitelisted_ransackable_attributes = %w[slug]
 
     # @return [Boolean] true if there are any variants
     def has_variants?
@@ -93,11 +110,7 @@ module Spree
 
     # @return [Spree::TaxCategory] tax category for this product, or the default tax category
     def tax_category
-      if self[:tax_category_id].nil?
-        TaxCategory.where(is_default: true).first
-      else
-        TaxCategory.find(self[:tax_category_id])
-      end
+      super || TaxCategory.find_by(is_default: true)
     end
 
     # Overrides the prototype_id setter in order to ensure it is cast to an
@@ -117,9 +130,10 @@ module Spree
     # @return [Array] the option_values
     def ensure_option_types_exist_for_values_hash
       return if option_values_hash.nil?
-      option_values_hash.keys.map(&:to_i).each do |id|
-        self.option_type_ids << id unless option_type_ids.include?(id)
-        product_option_types.create(option_type_id: id) unless product_option_types.pluck(:option_type_id).include?(id)
+      required_option_type_ids = option_values_hash.keys.map(&:to_i)
+      missing_option_type_ids = required_option_type_ids - option_type_ids
+      missing_option_type_ids.each do |id|
+        product_option_types.create(option_type_id: id)
       end
     end
 
@@ -165,11 +179,10 @@ module Spree
     # @param values [Array{String}] strings to search through fields for
     # @return [ActiveRecord::Relation] scope with WHERE clause for search applied
     def self.like_any(fields, values)
-      where fields.map { |field|
-        values.map { |value|
-          arel_table[field].matches("%#{value}%")
-        }.inject(:or)
-      }.inject(:or)
+      conditions = fields.product(values).map do |(field, value)|
+        arel_table[field].matches("%#{value}%")
+      end
+      where conditions.inject(:or)
     end
 
     # @param current_currency [String] currency to filter variants by; defaults to Spree's default
@@ -178,6 +191,24 @@ module Spree
       variants.includes(:option_values).active(current_currency).select do |variant|
         variant.option_values.any?
       end
+    end
+
+    # Groups all of the option values that are associated to the product's variants, grouped by
+    # option type.
+    #
+    # @param variant_scope [ActiveRecord_Associations_CollectionProxy] scope to filter the variants
+    # used to determine the applied option_types
+    # @return [Hash<Spree::OptionType, Array<Spree::OptionValue>>] all option types and option values
+    # associated with the products variants grouped by option type
+    def variant_option_values_by_option_type(variant_scope = nil)
+      option_value_ids = Spree::OptionValuesVariant.joins(:variant)
+        .where(spree_variants: { product_id: self.id})
+        .merge(variant_scope)
+        .distinct.pluck(:option_value_id)
+      Spree::OptionValue.where(id: option_value_ids).
+        includes(:option_type).
+        order("#{Spree::OptionType.table_name}.position, #{Spree::OptionValue.table_name}.position").
+        group_by(&:option_type)
     end
 
     # @return [Boolean] true if there are no option values
@@ -201,11 +232,7 @@ module Spree
     def set_property(property_name, property_value)
       ActiveRecord::Base.transaction do
         # Works around spree_i18n #301
-        property = if Property.exists?(name: property_name)
-          Property.where(name: property_name).first
-        else
-          Property.create(name: property_name, presentation: property_name)
-        end
+        property = Property.create_with(presentation: property_name).find_or_create_by(name: property_name)
         product_property = ProductProperty.where(product: self, property: property).first_or_initialize
         product_property.value = property_value
         product_property.save!
@@ -234,7 +261,7 @@ module Spree
     #
     # @return [Spree::Variant] the master variant
     def master
-      super || variants_including_master.with_deleted.where(is_master: true).first
+      super || variants_including_master.with_deleted.find_by(is_master: true)
     end
 
     # Image that can be used for the product.
@@ -244,6 +271,16 @@ module Spree
     # @return [Spree::Image] the image to display
     def display_image
       images.first || variant_images.first || Spree::Image.new
+    end
+
+    # Finds the variant property rule that matches the provided option value ids.
+    #
+    # @param [Array<Integer>] list of option value ids
+    # @return [Spree::VariantPropertyRule] the matching variant property rule
+    def find_variant_property_rule(option_value_ids)
+      variant_property_rules.find do |rule|
+        rule.matches_option_value_ids?(option_value_ids)
+      end
     end
 
     private
@@ -262,7 +299,7 @@ module Spree
       if variants_including_master.loaded?
         variants_including_master.any? { |v| !v.should_track_inventory? }
       else
-        !Spree::Config.track_inventory_levels || variants_including_master.where(track_inventory: false).any?
+        !Spree::Config.track_inventory_levels || variants_including_master.where(track_inventory: false).exists?
       end
     end
 
@@ -273,7 +310,7 @@ module Spree
       values = values.inject(values.shift) { |memo, value| memo.product(value).map(&:flatten) }
 
       values.each do |ids|
-        variant = variants.create(
+        variants.create(
           option_value_ids: ids,
           price: master.price
         )
@@ -350,6 +387,10 @@ module Spree
       Spree::Taxonomy.where(id: taxonomy_ids_to_touch).update_all(updated_at: Time.current)
     end
 
+    def remove_taxon(taxon)
+      removed_classifications = classifications.where(taxon: taxon)
+      removed_classifications.each &:remove_from_list
+    end
   end
 end
 

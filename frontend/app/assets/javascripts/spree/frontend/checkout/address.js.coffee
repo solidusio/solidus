@@ -43,8 +43,12 @@ $ ->
         stateSelect.prop('disabled', false).show()
         stateInput.hide().prop 'disabled', true
         statePara.show()
-        stateSpanRequired.show()
-        stateSelect.addClass('required') if statesRequired
+        if statesRequired
+          stateSelect.addClass('required')
+          stateSpanRequired.show()
+        else
+          stateSelect.removeClass('required')
+          stateSpanRequired.hide()
         stateSelect.removeClass('hidden')
         stateInput.removeClass('required')
       else

@@ -2,7 +2,7 @@ module Spree
   class CreditCard < Spree::Base
     belongs_to :payment_method
     belongs_to :user, class_name: Spree.user_class, foreign_key: 'user_id'
-    belongs_to :address, inverse_of: :credit_cards
+    belongs_to :address
     has_many :payments, as: :source
 
     before_save :set_last_digits
@@ -35,6 +35,10 @@ module Spree
       discover: /^6(?:011|5[0-9]{2})[0-9]{12}$/,
       jcb: /^(?:2131|1800|35\d{3})\d{11}$/
     }
+
+    def address_attributes=(attributes)
+      self.address = Address.immutable_merge(address, attributes)
+    end
 
     # Sets the expiry date on this credit card.
     #

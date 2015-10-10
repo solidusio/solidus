@@ -69,9 +69,9 @@ describe Spree::TransferItem do
         end
       end
 
-      context "transfer order is closed" do
+      context "transfer order is shipped" do
         before do
-          stock_transfer.update_attributes!(closed_at: Time.now)
+          stock_transfer.update_attributes!(shipped_at: Time.now)
         end
 
         context "variant is not available" do

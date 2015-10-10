@@ -24,7 +24,7 @@ describe Spree::Variant, :type => :model do
 
     it "propagate to stock items" do
       expect_any_instance_of(Spree::StockLocation).to receive(:propagate_variant)
-      product.variants.create(:name => "Foobar")
+      product.variants.create!
     end
 
     context "stock location has disable propagate all variants" do
@@ -32,7 +32,7 @@ describe Spree::Variant, :type => :model do
 
       it "propagate to stock items" do
         expect_any_instance_of(Spree::StockLocation).not_to receive(:propagate_variant)
-        product.variants.create(:name => "Foobar")
+        product.variants.create!
       end
     end
 
@@ -46,7 +46,7 @@ describe Spree::Variant, :type => :model do
 
       context 'when a variant is created' do
         before(:each) do
-          product.variants.create!(:name => 'any-name')
+          product.variants.create!
         end
 
         it { expect(product.master).to_not be_in_stock }
@@ -174,20 +174,20 @@ describe Spree::Variant, :type => :model do
       end
 
       it "the default stays the same" do
-        variant.default_price.amount.should == 19.99
+        expect(variant.default_price.amount).to eq(19.99)
       end
 
       it "displays default price" do
-        variant.price_in("USD").display_amount.to_s.should == "$19.99"
-        variant.price_in("EUR").display_amount.to_s.should == "€29.99"
+        expect(variant.price_in("USD").display_amount.to_s).to eq("$19.99")
+        expect(variant.price_in("EUR").display_amount.to_s).to eq("€29.99")
       end
     end
 
     context "when adding multiple prices" do
       it "it can reassign a default price" do
-        variant.default_price.amount.should == 19.99
+        expect(variant.default_price.amount).to eq(19.99)
         variant.prices << create(:price, :variant => variant, :currency => "USD", :amount => 12.12)
-        variant.reload.default_price.amount.should == 12.12
+        expect(variant.reload.default_price.amount).to eq(12.12)
       end
     end
   end
@@ -510,13 +510,45 @@ describe Spree::Variant, :type => :model do
   end
 
   describe "in_stock scope" do
-    it "returns all in stock variants" do
-      in_stock_variant = create(:variant)
-      out_of_stock_variant = create(:variant)
+    let!(:in_stock_variant) { create(:variant) }
+    let!(:out_of_stock_variant) { create(:variant) }
+    let!(:stock_location) { create(:stock_location) }
 
-      in_stock_variant.stock_items.first.update_column(:count_on_hand, 10)
+    context "a stock location is provided" do
+      subject { Spree::Variant.in_stock([stock_location]) }
 
-      expect(Spree::Variant.in_stock).to eq [in_stock_variant]
+      context "there's stock in the location" do
+        before do
+          in_stock_variant.
+            stock_items.find_by(stock_location: stock_location).
+            update_column(:count_on_hand, 10)
+          out_of_stock_variant.
+            stock_items.where.not(stock_location: stock_location).first.
+            update_column(:count_on_hand, 10)
+        end
+
+        it "returns all in stock variants in the provided stock location" do
+          expect(subject).to eq [in_stock_variant]
+        end
+      end
+
+      context "there's no stock in the location" do
+        it "returns an empty list" do
+          expect(subject).to eq []
+        end
+      end
+    end
+
+    context "a stock location is not provided" do
+      subject { Spree::Variant.in_stock }
+
+      before do
+        in_stock_variant.stock_items.first.update_column(:count_on_hand, 10)
+      end
+
+      it "returns all in stock variants" do
+        expect(subject).to eq [in_stock_variant]
+      end
     end
   end
 
@@ -540,6 +572,29 @@ describe Spree::Variant, :type => :model do
       end
       it "returns unpersisted record" do
         expect(subject).to be_new_record
+      end
+    end
+  end
+
+  describe "#variant_properties" do
+    let(:option_value_1) { create(:option_value) }
+    let(:option_value_2) { create(:option_value) }
+    let(:variant) { create(:variant, option_values: [option_value_1, option_value_2]) }
+
+    subject { variant.variant_properties }
+
+    context "variant has properties" do
+      let!(:rule_1) { create(:variant_property_rule, product: variant.product, option_value: option_value_1) }
+      let!(:rule_2) { create(:variant_property_rule, product: variant.product, option_value: option_value_2) }
+
+      it "returns the variant property rule's values" do
+        expect(subject).to match_array rule_1.values + rule_2.values
+      end
+    end
+
+    context "variant doesn't have any properties" do
+      it "returns an empty list" do
+        expect(subject).to eq []
       end
     end
   end

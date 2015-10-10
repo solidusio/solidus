@@ -29,14 +29,6 @@ module Spree
       preferences.to_hash
     end
 
-    def method_missing(method, *args)
-      if provider.nil? || !provider.respond_to?(method)
-        super
-      else
-        provider.send(method, *args)
-      end
-    end
-
     def payment_profiles_supported?
       false
     end

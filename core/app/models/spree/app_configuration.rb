@@ -80,8 +80,24 @@ module Spree
     #   quantity. Setting this to true should make operations on inventory
     #   faster.
     #   (default: +false+)
+    #   @deprecated - use inventory_cache_threshold instead
     #   @return [Boolean]
     preference :binary_inventory_cache, :boolean, default: false
+
+    # @!attribute [rw] completable_order_created_cutoff
+    #   @return [Integer] the number of days to look back for created orders which get returned to the user as last completed
+    preference :completable_order_created_cutoff_days, :integer, default: nil
+
+    # @!attribute [rw] completable_order_created_cutoff
+    #   @return [Integer] the number of days to look back for updated orders which get returned to the user as last completed
+    preference :completable_order_updated_cutoff_days, :integer, default: nil
+
+    # @!attribute [rw] inventory_cache_threshold
+    #   Only invalidate product caches when the count on hand for a stock item
+    #   falls below or rises about the inventory_cache_threshold.  When undefined, the
+    #   product caches will be invalidated anytime the count on hand is changed.
+    #   @return [Integer]
+    preference :inventory_cache_threshold, :integer
 
     # @!attribute [rw] checkout_zone
     #   @return [String] Name of a {Zone}, which limits available countries to those included in that zone. (default: +nil+)
@@ -224,10 +240,40 @@ module Spree
     #   @return [Boolean] Creates a new allocation anytime {StoreCredit#credit} is called
     preference :credit_to_new_allocation, :boolean, default: false
 
+    # @!attribute [rw] automatic_default_address
+    #   The default value of true preserves existing backwards compatible feature of
+    #   treating the most recently used address in checkout as the user's default address.
+    #   Setting to false means that the user should manage their own default via some
+    #   custom UI that uses AddressBookController.
+    #   @return [Boolean] Whether use of an address in checkout marks it as user's default
+    preference :automatic_default_address, :boolean, default: true
+
     # searcher_class allows spree extension writers to provide their own Search class
     attr_writer :searcher_class
     def searcher_class
       @searcher_class ||= Spree::Core::Search::Base
+    end
+
+    attr_writer :variant_search_class
+    def variant_search_class
+      @variant_search_class ||= Spree::Core::Search::Variant
+    end
+
+    # promotion_chooser_class allows extensions to provide their own PromotionChooser
+    attr_writer :promotion_chooser_class
+    def promotion_chooser_class
+      @promotion_chooser_class ||= Spree::PromotionChooser
+    end
+
+    # Allows providing your own Mailer for shipped cartons.
+    #
+    # @!attribute [rw] carton_shipped_email_class
+    # @return [ActionMailer::Base] an object that responds to "shipped_email"
+    #   (e.g. an ActionMailer with a "shipped_email" method) with the same
+    #   signature as Spree::CartonMailer.shipped_email.
+    attr_writer :carton_shipped_email_class
+    def carton_shipped_email_class
+      @carton_shipped_email_class ||= Spree::CartonMailer
     end
 
     def static_model_preferences

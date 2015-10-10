@@ -1,5 +1,5 @@
-$(document).ready ->
-  window.productTemplate = Handlebars.compile($('#product_template_sortable').text());
+$ ->
+  productTemplate = HandlebarsTemplates['products/sortable']
 
   productListTemplate = (products) ->
     products.map(productTemplate).join('') ||
@@ -60,9 +60,9 @@ $(document).ready ->
         results: data['taxons'],
         more: data.current_page < data.pages
     formatResult: (taxon) ->
-      taxon.pretty_name;
+      taxon.pretty_name
     formatSelection: (taxon) ->
-      taxon.pretty_name;
+      taxon.pretty_name
 
   $('#taxon_id').on "change", (e) ->
     Spree.ajax

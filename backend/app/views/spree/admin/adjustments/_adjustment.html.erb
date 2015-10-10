@@ -8,7 +8,7 @@
   <td class="align-center"><%= adjustment.display_amount.to_html %></td>
   <td class="align-center"><%= adjustment_state(adjustment) %></td>
   <td class='actions'>
-    <% if adjustment.open? %>
+    <% unless adjustment.finalized? %>
       <% if can?(:update, adjustment) %>
         <%= link_to_edit adjustment, :no_text => true %>
       <% end %>

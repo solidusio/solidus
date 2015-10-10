@@ -1,5 +1,5 @@
-class Spree::Carton < ActiveRecord::Base
-  belongs_to :address, class_name: 'Spree::Address', inverse_of: :cartons
+class Spree::Carton < Spree::Base
+  belongs_to :address, class_name: 'Spree::Address'
   belongs_to :stock_location, class_name: 'Spree::StockLocation', inverse_of: :cartons
   belongs_to :shipping_method, class_name: 'Spree::ShippingMethod', inverse_of: :cartons
 
@@ -48,7 +48,7 @@ class Spree::Carton < ActiveRecord::Base
   end
 
   def manifest_for_order(order)
-    Spree::ShippingManifest.new(inventory_units: (inventory_units & order.inventory_units)).items
+    Spree::ShippingManifest.new(inventory_units: inventory_units).for_order(order).items
   end
 
   def any_exchanges?

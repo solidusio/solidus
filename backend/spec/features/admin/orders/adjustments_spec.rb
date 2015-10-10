@@ -14,7 +14,7 @@ describe "Adjustments", :type => :feature do
   let!(:tax_adjustment) do
     create(:tax_adjustment,
       :adjustable => line_item,
-      :state => 'closed',
+      :finalized => true,
       :order => order,
       :label => "VAT 5%",
       :amount => 10)

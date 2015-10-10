@@ -77,7 +77,12 @@ describe Spree::Admin::UsersController, :type => :controller do
     context "when the user can manage roles" do
       it "can set roles" do
         expect(mock_user).to receive(:spree_roles=).with([dummy_role])
-        spree_post :create, { user: { spree_role_ids: [dummy_role.id] } }
+        spree_post :create, { id: mock_user.id, user: { first_name: "Bob", spree_role_ids: [dummy_role.id] } }
+      end
+
+      it "can clear roles" do
+        expect(mock_user).to receive(:spree_roles=).with([])
+        spree_post :create, { id: mock_user.id, user: { first_name: "Bob"}  }
       end
     end
 
@@ -89,6 +94,16 @@ describe Spree::Admin::UsersController, :type => :controller do
       it "cannot set roles" do
         expect(mock_user).to_not receive(:spree_roles=)
         spree_post :create, { user: { spree_role_ids: [dummy_role.id] } }
+      end
+
+      it "cannot set roles" do
+        expect(mock_user).to_not receive(:spree_roles=)
+        spree_post :create, { id: mock_user.id, user: { first_name: "Bob", spree_role_ids: [dummy_role.id] } }
+      end
+
+      it "cannot clear roles" do
+        expect(mock_user).to_not receive(:spree_roles=)
+        spree_post :create, { id: mock_user.id, user: { first_name: "Bob"}  }
       end
     end
 
@@ -125,7 +140,12 @@ describe Spree::Admin::UsersController, :type => :controller do
     context "when the user can manage roles" do
       it "can set roles" do
         expect(mock_user).to receive(:spree_roles=).with([dummy_role])
-        spree_put :update, { id: mock_user.id, user: { spree_role_ids: [dummy_role.id] } }
+        spree_put :update, { id: mock_user.id, user: { first_name: "Bob", spree_role_ids: [dummy_role.id] } }
+      end
+
+      it "can clear roles" do
+        expect(mock_user).to receive(:spree_roles=).with([])
+        spree_put :update, { id: mock_user.id, user: { first_name: "Bob"}  }
       end
     end
 
@@ -136,7 +156,12 @@ describe Spree::Admin::UsersController, :type => :controller do
 
       it "cannot set roles" do
         expect(mock_user).to_not receive(:spree_roles=)
-        spree_put :update, { id: mock_user.id, user: { spree_role_ids: [dummy_role.id] } }
+        spree_put :update, { id: mock_user.id, user: { first_name: "Bob", spree_role_ids: [dummy_role.id] } }
+      end
+
+      it "cannot clear roles" do
+        expect(mock_user).to_not receive(:spree_roles=)
+        spree_put :update, { id: mock_user.id, user: { first_name: "Bob" }  }
       end
     end
 
@@ -204,8 +229,8 @@ describe Spree::Admin::UsersController, :type => :controller do
 end
 
 def use_mock_user
-  mock_user.stub(:save).and_return(true)
-  mock_user.stub(:update_attributes).and_return(true)
-  Spree.user_class.stub(:find).with(mock_user.id.to_s).and_return(mock_user)
-  Spree.user_class.stub(:new).and_return(mock_user)
+  allow(mock_user).to receive(:save).and_return(true)
+  allow(mock_user).to receive(:update_attributes).and_return(true)
+  allow(Spree.user_class).to receive(:find).with(mock_user.id.to_s).and_return(mock_user)
+  allow(Spree.user_class).to receive(:new).and_return(mock_user)
 end

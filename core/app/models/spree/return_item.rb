@@ -1,5 +1,5 @@
 module Spree
-  class ReturnItem < ActiveRecord::Base
+  class ReturnItem < Spree::Base
 
     INTERMEDIATE_RECEPTION_STATUSES = %i(given_to_customer lost_in_transit shipped_wrong_item short_shipped in_transit)
     COMPLETED_RECEPTION_STATUSES = INTERMEDIATE_RECEPTION_STATUSES + [:received]
@@ -89,6 +89,7 @@ module Spree
       event(:lost) { transition to: :lost_in_transit, from: :awaiting }
       event(:wrong_item_shipped) { transition to: :shipped_wrong_item, from: :awaiting }
       event(:short_shipped) { transition to: :short_shipped, from: :awaiting }
+      event(:in_transit) { transition to: :in_transit, from: :awaiting }
       event(:expired) { transition to: :expired, from: :awaiting }
     end
 
@@ -161,10 +162,11 @@ module Spree
     end
 
     # @note This uses the exchange_variant_engine configured on the class.
+    # @param stock_locations [Array<Spree::StockLocation>] the stock locations to check
     # @return [ActiveRecord::Relation<Spree::Variant>] the variants eligible
     #   for exchange for this return item
-    def eligible_exchange_variants
-      exchange_variant_engine.eligible_variants(variant)
+    def eligible_exchange_variants(stock_locations = nil)
+      exchange_variant_engine.eligible_variants(variant, stock_locations: stock_locations)
     end
 
     # Builds the exchange inventory unit for this return item, only if an

@@ -4,6 +4,35 @@ describe Spree::OrderCapturing do
   describe '#capture_payments' do
     subject { Spree::OrderCapturing.new(order, payment_methods).capture_payments }
 
+    # Regression for the order.update! in the ensure block.
+    # See the comment there.
+    context "updating the order" do
+      let(:order) { create :completed_order_with_totals }
+      let(:payment_methods) { [] }
+      let!(:payment) { create(:payment, order: order, amount: order.total) }
+      let(:changes_spy) { spy('changes_spy') }
+
+      before do
+        payment.pend!
+
+        allow_any_instance_of(Spree::Order).to receive(:thingamajig) do |order|
+          changes_spy.change_callback_occured if order.changes.any?
+        end
+
+        @update_hooks = Spree::Order.update_hooks.dup
+        Spree::Order.register_update_hook :thingamajig
+      end
+
+      after do
+        Spree::Order.update_hooks = @update_hooks
+      end
+
+      it "keeps the order up to date when updating and only changes it once" do
+        subject
+        expect(changes_spy).to have_received(:change_callback_occured).once
+      end
+    end
+
     context "payment methods specified" do
       let!(:order) { create(:order, ship_address: create(:address)) }
 
@@ -14,12 +43,12 @@ describe Spree::OrderCapturing do
       let!(:shipping_method) { create(:free_shipping_method) }
       let(:tax_rate) { create(:tax_rate, amount: 0.1, zone: create(:global_zone, name: "Some Tax Zone")) }
       let(:secondary_total) { 10.0 }
-      let(:bogus_total) { order.total }
+      let(:bogus_total) { order.total - secondary_total }
 
       before do
         order.contents.add(variant, 3)
         order.update!
-        @secondary_bogus_payment = create(:payment, order: order, amount: secondary_total, payment_method: secondary_payment_method.create!(name: 'So bogus', environment: 'test'))
+        @secondary_bogus_payment = create(:payment, order: order, amount: secondary_total, payment_method: secondary_payment_method.create!(name: 'So bogus'))
         @bogus_payment = create(:payment, order: order, amount: bogus_total)
         order.contents.advance
         order.complete!
@@ -35,6 +64,7 @@ describe Spree::OrderCapturing do
           let(:payment_methods) { [SecondaryBogusPaymentMethod, Spree::Gateway::Bogus] }
 
           it "captures SecondaryBogusPaymentMethod payments first" do
+            @bogus_payment.update!(amount: bogus_total + 100)
             subject
             expect(@secondary_bogus_payment.reload.capture_events.sum(:amount)).to eq(10.0)
             expect(@bogus_payment.reload.capture_events.sum(:amount)).to eq(order.total - 10.0)
@@ -45,9 +75,10 @@ describe Spree::OrderCapturing do
           let(:payment_methods) { [Spree::Gateway::Bogus, SecondaryBogusPaymentMethod] }
 
           it "captures Bogus payments first" do
+            @secondary_bogus_payment.update!(amount: secondary_total + 100)
             subject
-            expect(@secondary_bogus_payment.reload.capture_events.sum(:amount)).to eq(0.0)
-            expect(@bogus_payment.reload.capture_events.sum(:amount)).to eq(order.total)
+            expect(@bogus_payment.reload.capture_events.sum(:amount)).to eq(order.total - 10.0)
+            expect(@secondary_bogus_payment.reload.capture_events.sum(:amount)).to eq(10.0)
           end
         end
 
@@ -71,9 +102,12 @@ describe Spree::OrderCapturing do
       end
 
       context "when a payment is not needed to capture the entire order" do
-        let(:bogus_total) { order.total }
         let(:secondary_payment_method) { SecondaryBogusPaymentMethod }
         let(:payment_methods) { [Spree::Gateway::Bogus, SecondaryBogusPaymentMethod] }
+
+        before do
+          @bogus_payment.update!(amount: order.total)
+        end
 
         context "when void_unused_payments is true" do
           before { allow(Spree::OrderCapturing).to receive(:void_unused_payments).and_return(true) }

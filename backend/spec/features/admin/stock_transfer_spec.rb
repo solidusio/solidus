@@ -7,7 +7,7 @@ describe 'Stock Transfers', :type => :feature, :js => true do
   let(:description) { 'Test stock transfer' }
 
   before do
-    Spree::Admin::BaseController.any_instance.stub(:spree_current_user).and_return(admin_user)
+    allow_any_instance_of(Spree::Admin::BaseController).to receive(:spree_current_user).and_return(admin_user)
   end
 
   describe 'create stock transfer' do
@@ -30,6 +30,24 @@ describe 'Stock Transfers', :type => :feature, :js => true do
       expect(page).to have_content('Stock Transfer has been successfully updated')
       expect(page).to have_css(:div, '#finalize-stock-transfer-warning')
       expect(page).to have_content("NY")
+    end
+  end
+
+  describe 'view a stock transfer' do
+    let(:stock_transfer) do
+      create(:stock_transfer_with_items,
+             source_location: source_location,
+             destination_location: nil,
+             description: "Test stock transfer")
+    end
+    let(:source_location) { create(:stock_location, name: 'SF') }
+
+    context "stock transfer does not have a destination" do
+      it 'displays the stock transfer details' do
+        visit spree.admin_stock_transfer_path(stock_transfer)
+        expect(page).to have_content("SF")
+        expect(page).to have_content("Test stock transfer")
+      end
     end
   end
 

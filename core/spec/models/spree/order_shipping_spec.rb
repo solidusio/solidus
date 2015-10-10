@@ -19,11 +19,9 @@ describe Spree::OrderShipping do
     end
 
     describe "shipment email" do
-      before { with_test_mail { subject } }
-
       it "should send a shipment email" do
-        expect(emails.size).to eq(1)
-        expect(emails.first.subject).to eq("#{order.store.name} Shipment Notification ##{order.number}")
+        expect { subject }.to change { emails.size }.by(1)
+        expect(emails.last.subject).to eq("#{order.store.name} Shipment Notification ##{order.number}")
       end
     end
 
@@ -99,8 +97,6 @@ describe Spree::OrderShipping do
     end
 
     context "when told to suppress the mailer" do
-      before { with_test_mail { subject } }
-
       subject do
         order.shipping.ship(
           inventory_units: inventory_units,
@@ -112,7 +108,7 @@ describe Spree::OrderShipping do
       end
 
       it "does not send a shipment email" do
-        expect(emails.size).to eq(0)
+        expect { subject }.to_not change { emails.size }
       end
     end
   end
@@ -212,8 +208,6 @@ describe Spree::OrderShipping do
     end
 
     context "when told to suppress the mailer" do
-      before { with_test_mail { subject } }
-
       subject do
         order.shipping.ship_shipment(
           shipment,
@@ -222,7 +216,7 @@ describe Spree::OrderShipping do
       end
 
       it "does not send a shipment email" do
-        expect(emails.size).to eq(0)
+        expect { subject }.to_not change { emails.size }
       end
     end
 

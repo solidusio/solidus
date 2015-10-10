@@ -77,7 +77,7 @@ class VariantForm
 
   successHandler = (transferItem, isReceiving) =>
     resetVariantAutocomplete()
-    rowTemplate = Handlebars.compile($('#transfer-item-template').html())
+    rowTemplate = HandlebarsTemplates['stock_transfers/transfer_item']
     templateAttributes =
       id: transferItem.id
       isReceiving: isReceiving

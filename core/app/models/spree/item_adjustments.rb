@@ -41,7 +41,7 @@ module Spree
       promotion_adjustments = adjustments.select(&:promotion?)
       promotion_adjustments.each(&:update!)
 
-      promo_total = PromotionChooser.new(promotion_adjustments).update
+      promo_total = Spree::Config.promotion_chooser_class.new(promotion_adjustments).update
 
       # Calculating the totals for the order here would be incorrect. Order's
       # totals are the sum of the adjustments on all child models, as well as

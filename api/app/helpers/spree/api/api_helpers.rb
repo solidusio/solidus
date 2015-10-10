@@ -33,7 +33,8 @@ module Spree
         :store_credit_history_attributes,
         :stock_transfer_attributes,
         :transfer_item_attributes,
-        :transfer_item_variant_attributes
+        :transfer_item_variant_attributes,
+        :variant_property_attributes
       ]
 
       mattr_reader *ATTRIBUTES
@@ -65,6 +66,10 @@ module Spree
         :slug, :description, :track_inventory
       ]
 
+      @@variant_property_attributes = [
+        :id, :property_id, :value, :property_name
+      ]
+
       @@image_attributes = [
         :id, :position, :attachment_content_type, :attachment_file_name, :type,
         :attachment_updated_at, :attachment_width, :attachment_height, :alt
@@ -93,7 +98,7 @@ module Spree
 
       @@payment_attributes = [
         :id, :source_type, :source_id, :amount, :display_amount,
-        :payment_method_id, :response_code, :state, :avs_response, :created_at,
+        :payment_method_id, :state, :avs_response, :created_at,
         :updated_at
       ]
 
@@ -119,8 +124,8 @@ module Spree
 
       @@address_attributes = [
         :id, :firstname, :lastname, :full_name, :address1, :address2, :city,
-        :zipcode, :phone, :company, :alternative_phone, :country_id, :state_id,
-        :state_name, :state_text
+        :zipcode, :phone, :company, :alternative_phone, :country_id, :country_iso,
+        :state_id, :state_name, :state_text
       ]
 
       @@country_attributes = [:id, :iso_name, :iso, :iso3, :name, :numcode]
@@ -129,7 +134,7 @@ module Spree
 
       @@adjustment_attributes = [
         :id, :source_type, :source_id, :adjustable_type, :adjustable_id,
-        :originator_type, :originator_id, :amount, :label, :mandatory, :promotion_code,
+        :originator_type, :originator_id, :amount, :label, :promotion_code,
         :locked, :eligible,  :created_at, :updated_at
       ]
 

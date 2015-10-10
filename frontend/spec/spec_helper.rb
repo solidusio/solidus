@@ -18,8 +18,8 @@ ENV["RAILS_ENV"] ||= 'test'
 begin
   require File.expand_path("../dummy/config/environment", __FILE__)
 rescue LoadError
-  puts "Could not load dummy application. Please ensure you have run `bundle exec rake test_app`"
-  exit
+  $stderr.puts "Could not load dummy application. Please ensure you have run `bundle exec rake test_app`"
+  exit 1
 end
 
 require 'rspec/rails'
@@ -47,6 +47,9 @@ require 'spree/testing_support/caching'
 
 require 'paperclip/matchers'
 
+require 'capybara-screenshot/rspec'
+Capybara.save_and_open_page_path = ENV['CIRCLE_ARTIFACTS'] if ENV['CIRCLE_ARTIFACTS']
+
 if ENV['WEBDRIVER'] == 'accessible'
   require 'capybara/accessible'
   Capybara.javascript_driver = :accessible
@@ -58,7 +61,12 @@ end
 RSpec.configure do |config|
   config.color = true
   config.infer_spec_type_from_file_location!
-  config.mock_with :rspec
+  config.expect_with :rspec do |c|
+    c.syntax = :expect
+  end
+  config.mock_with :rspec do |c|
+    c.syntax = :expect
+  end
 
   config.fixture_path = File.join(File.expand_path(File.dirname(__FILE__)), "fixtures")
 

@@ -16,24 +16,24 @@ describe Spree::Promotion::Actions::FreeShipping, :type => :model do
 
     context "when valid" do
       it "should create a discount with correct negative amount" do
-        order.shipments.count.should == 2
-        order.shipments.first.cost.should == 100
-        order.shipments.last.cost.should == 100
-        action.perform(payload).should be true
-        promotion.usage_count.should == 1
-        order.shipment_adjustments.count.should == 2
-        order.shipment_adjustments.first.amount.to_i.should == -100
-        order.shipment_adjustments.last.amount.to_i.should == -100
+        expect(order.shipments.count).to eq(2)
+        expect(order.shipments.first.cost).to eq(100)
+        expect(order.shipments.last.cost).to eq(100)
+        expect(action.perform(payload)).to be true
+        expect(promotion.usage_count).to eq(1)
+        expect(order.shipment_adjustments.count).to eq(2)
+        expect(order.shipment_adjustments.first.amount.to_i).to eq(-100)
+        expect(order.shipment_adjustments.last.amount.to_i).to eq(-100)
         expect(order.shipment_adjustments.map(&:promotion_code)).to eq [promotion_code, promotion_code]
       end
     end
 
     context "when order already has one from this promotion" do
       it "should not create a discount" do
-        action.perform(payload).should be true
-        action.perform(payload).should be false
-        promotion.usage_count.should == 1
-        order.shipment_adjustments.count.should == 2
+        expect(action.perform(payload)).to be true
+        expect(action.perform(payload)).to be false
+        expect(promotion.usage_count).to eq(1)
+        expect(order.shipment_adjustments.count).to eq(2)
       end
     end
   end

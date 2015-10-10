@@ -14,10 +14,6 @@ describe Spree::CreditCard, type: :model do
     Spree::Payment.state_machine.states.keys
   end
 
-  def stub_rails_env(environment)
-    allow(Rails).to receive_messages(env: ActiveSupport::StringInquirer.new(environment))
-  end
-
   let(:credit_card) { Spree::CreditCard.new }
 
   before(:each) do
@@ -35,7 +31,6 @@ describe Spree::CreditCard, type: :model do
       capture: @success_response,
       void: @success_response,
       credit: @success_response,
-      environment: 'test'
     )
 
     allow(@payment).to receive_messages payment_method: @payment_gateway
@@ -122,6 +117,10 @@ describe Spree::CreditCard, type: :model do
     end
 
     let!(:persisted_card) { Spree::CreditCard.find(credit_card.id) }
+    let (:valid_address_attributes) { {firstname: "Hugo", lastname: "Furst",
+                                       address1: "123 Main", city: "Somewhere",
+                                       country_id: 1, zipcode: 55555,
+                                       phone: "1234567890"} }
 
     it "should not actually store the number" do
       expect(persisted_card.number).to be_blank
@@ -129,6 +128,14 @@ describe Spree::CreditCard, type: :model do
 
     it "should not actually store the security code" do
       expect(persisted_card.verification_value).to be_blank
+    end
+
+    it "should save and update addresses through nested attributes" do
+      persisted_card.update_attributes({address_attributes: valid_address_attributes})
+      persisted_card.save!
+      updated_attributes = {id: persisted_card.address.id, address1: "123 Main St."}
+      persisted_card.update_attributes({address_attributes: updated_attributes})
+      expect(persisted_card.address.address1).to eq "123 Main St."
     end
   end
 

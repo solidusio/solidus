@@ -59,9 +59,9 @@ describe Spree::OrderContents, :type => :model do
     it "should create stock location associations if provided" do
       line_item = subject.add(variant, 3, stock_location_quantities: {stock_location.id => 1, stock_location_2.id => 2})
       order_stock_locations = line_item.order.order_stock_locations
-      order_stock_locations.count.should == 2
-      order_stock_locations.map(&:quantity).should == [1, 2]
-      order_stock_locations.map(&:stock_location_id).should == [stock_location.id, stock_location_2.id]
+      expect(order_stock_locations.count).to eq(2)
+      expect(order_stock_locations.map(&:quantity)).to eq([1, 2])
+      expect(order_stock_locations.map(&:stock_location_id)).to eq([stock_location.id, stock_location_2.id])
     end
 
     context "running promotions" do

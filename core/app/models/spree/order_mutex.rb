@@ -1,5 +1,5 @@
 module Spree
-  class OrderMutex < ActiveRecord::Base
+  class OrderMutex < Spree::Base
 
     class LockFailed < StandardError; end
 

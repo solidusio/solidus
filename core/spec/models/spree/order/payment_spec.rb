@@ -53,6 +53,20 @@ module Spree
       end
     end
 
+    context "with no payments" do
+      it "should return falsy" do
+        expect(order).to receive_messages total: 100
+        expect(order.process_payments!).to be_falsy
+      end
+    end
+
+    context "with payments completed" do
+      it "should not fail transitioning to complete when paid" do
+        expect(order).to receive_messages total: 100, payment_total: 100
+        expect(order.process_payments!).to be_truthy
+      end
+    end
+
     context "ensure source attributes stick around" do
       # For the reason of this test, please see spree/spree_gateway#132
       it "does not have inverse_of defined" do
@@ -160,6 +174,39 @@ module Spree
         order.total = 8.20
         order.payment_total = 10.20
         expect(order.outstanding_balance).to be_within(0.001).of(-2.00)
+      end
+
+      context "with reimburesements on the order" do
+        let(:amount) { 10.0 }
+        let(:reimbursement) { create(:reimbursement) }
+        let(:order) { reimbursement.order.reload }
+
+        before do
+          # Set the payment amount to actually be the order total of 110
+          reimbursement.order.payments.first.update_column :amount, amount
+          # Creates a refund of 110
+          create :refund, amount: amount,
+                          payment: reimbursement.order.payments.first,
+                          reimbursement: reimbursement
+          # Update the order totals so payment_total goes to 0 reflecting the refund..
+          order.update!
+        end
+
+        context "for canceled orders" do
+          before { order.update_attributes(state: 'canceled') }
+
+          it "it should be a negative amount incorporating reimbursements" do
+            expect(order.outstanding_balance).to eq -10
+          end
+        end
+
+        context "for non-canceled orders" do
+          it 'should incorporate refund reimbursements' do
+            # Order Total - (Payment Total + Reimbursed)
+            # 110 - (0 + 10) = 100
+            expect(order.outstanding_balance).to eq 100
+          end
+        end
       end
     end
 

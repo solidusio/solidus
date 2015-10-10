@@ -79,18 +79,6 @@ describe Spree::Api::BaseController, :type => :controller do
     }.to raise_error(Exception, "no joy")
   end
 
-  it "maps semantic keys to nested_attributes keys" do
-    klass = double(:nested_attributes_options => { :line_items => {},
-                                                  :bill_address => {} })
-    attributes = { 'line_items' => { :id => 1 },
-                   'bill_address' => { :id => 2 },
-                   'name' => 'test order' }
-
-    mapped = subject.map_nested_attributes_keys(klass, attributes)
-    expect(mapped.has_key?('line_items_attributes')).to be true
-    expect(mapped.has_key?('name')).to be true
-  end
-
   it "lets a subclass override the product associations that are eager-loaded" do
     expect(controller.respond_to?(:product_includes, true)).to be
   end
@@ -135,8 +123,8 @@ describe Spree::Api::BaseController, :type => :controller do
 
   context 'insufficient stock' do
     before do
-      subject.should_receive(:authenticate_user).and_return(true)
-      subject.should_receive(:index).and_raise(Spree::Order::InsufficientStock)
+      expect(subject).to receive(:authenticate_user).and_return(true)
+      expect(subject).to receive(:index).and_raise(Spree::Order::InsufficientStock)
       get :index, :token => "fake_key"
     end
 
@@ -165,7 +153,7 @@ describe Spree::Api::BaseController, :type => :controller do
     context 'without an existing lock' do
       it 'succeeds' do
         api_get :index, order_token: order.guest_token, order_id: order.number
-        response.status.should == 200
+        expect(response.status).to eq(200)
       end
     end
 
@@ -176,7 +164,7 @@ describe Spree::Api::BaseController, :type => :controller do
 
       it 'returns a 409 conflict' do
         api_get :index, order_token: order.guest_token, order_id: order.number
-        response.status.should == 409
+        expect(response.status).to eq(409)
       end
     end
   end

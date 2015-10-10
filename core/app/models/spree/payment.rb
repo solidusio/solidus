@@ -36,7 +36,7 @@ module Spree
     validates :amount, numericality: true
     validates :source, presence: true, if: :source_required?
 
-    default_scope -> { order("#{self.table_name}.created_at") }
+    default_scope -> { order(:created_at) }
 
     scope :from_credit_card, -> { where(source_type: 'Spree::CreditCard') }
     scope :with_state, ->(s) { where(state: s.to_s) }
@@ -243,18 +243,8 @@ module Spree
       end
 
       def update_order
-        if completed? || void?
-          order.updater.update_payment_total
-        end
-
-        if order.completed?
-          order.updater.update_payment_state
-          order.updater.update_shipments
-          order.updater.update_shipment_state
-        end
-
-        if self.completed? || order.completed?
-          order.persist_totals
+        if order.completed? || completed? || void?
+          order.update!
         end
       end
 

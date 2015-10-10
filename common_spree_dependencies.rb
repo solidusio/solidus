@@ -4,7 +4,9 @@
 source 'https://rubygems.org'
 
 platforms :ruby do
-  gem 'mysql2'
+  # Version restriction because AR will not use mysql2 0.4.0
+  # This can be removed when a future version of rails is released
+  gem 'mysql2', '~> 0.3.20'
   gem 'pg'
   gem 'sqlite3'
   gem 'fast_sqlite'
@@ -20,11 +22,12 @@ gem 'sass-rails'
 
 group :test do
   gem 'capybara', '~> 2.4'
+  gem 'capybara-screenshot'
   gem 'database_cleaner', '~> 1.3'
   gem 'email_spec'
   gem 'factory_girl_rails', '~> 4.5.0'
   gem 'launchy'
-  gem 'rspec-activemodel-mocks'
+  gem 'rspec-activemodel-mocks', '~>1.0.2'
   gem 'rspec-collection_matchers'
   gem 'rspec-its'
   gem 'rspec-rails', '~> 3.3.0'

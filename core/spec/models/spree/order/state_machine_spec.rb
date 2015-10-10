@@ -17,7 +17,6 @@ describe Spree::Order, :type => :model do
         allow(order).to receive_messages :payment_required? => true
         allow(order).to receive_messages :process_payments! => true
         allow(order).to receive_messages :ensure_available_shipping_rates => true
-        allow(order).to receive :has_available_shipment
       end
 
       context "when payment processing succeeds" do
@@ -132,17 +131,10 @@ describe Spree::Order, :type => :model do
 
       # Stub methods that cause side-effects in this test
       allow(shipment).to receive(:cancel!)
-      allow(order).to receive :has_available_shipment
       allow(order).to receive :restock_items!
-      mail_message = double "Mail::Message"
-      order_id = nil
-      expect(Spree::OrderMailer).to receive(:cancel_email) { |*args|
-        order_id = args[0]
-        mail_message
-      }
-      expect(mail_message).to receive :deliver_now
+      expect(Spree::OrderMailer).to receive(:cancel_email).with(order).and_return(mail_message = double)
+      expect(mail_message).to receive :deliver_later
       order.cancel!
-      expect(order_id).to eq(order.id)
     end
 
     context "restocking inventory" do
@@ -150,9 +142,8 @@ describe Spree::Order, :type => :model do
         allow(shipment).to receive(:ensure_correct_adjustment)
         allow(shipment).to receive(:update_order)
         allow(Spree::OrderMailer).to receive(:cancel_email).and_return(mail_message = double)
-        allow(mail_message).to receive :deliver_now
+        allow(mail_message).to receive :deliver_later
 
-        allow(order).to receive :has_available_shipment
       end
     end
 
@@ -164,8 +155,7 @@ describe Spree::Order, :type => :model do
         # TODO: This is ugly :(
         # Stubs methods that cause unwanted side effects in this test
         allow(Spree::OrderMailer).to receive(:cancel_email).and_return(mail_message = double)
-        allow(mail_message).to receive :deliver_now
-        allow(order).to receive :has_available_shipment
+        allow(mail_message).to receive :deliver_later
         allow(order).to receive :restock_items!
         allow(shipment).to receive(:cancel!)
         allow(payment).to receive(:cancel!)
@@ -174,6 +164,7 @@ describe Spree::Order, :type => :model do
         allow(order).to receive_message_chain(:payments, :completed, :includes).and_return([payment])
         allow(order).to receive_message_chain(:payments, :last).and_return(payment)
         allow(order).to receive_message_chain(:payments, :store_credits, :pending).and_return([payment])
+        allow(order).to receive(:refund_total).and_return(0)
       end
 
       context "without shipped items" do
@@ -213,9 +204,6 @@ describe Spree::Order, :type => :model do
       allow(order).to receive_messages email: "user@spreecommerce.com"
       allow(order).to receive_messages state: "canceled"
       allow(order).to receive_messages allow_resume?: true
-
-      # Stubs method that cause unwanted side effects in this test
-      allow(order).to receive :has_available_shipment
     end
   end
 end

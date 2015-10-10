@@ -145,7 +145,7 @@ describe Spree::Reimbursement, type: :model do
     end
 
     it "triggers the reimbursement mailer to be sent" do
-      expect(Spree::ReimbursementMailer).to receive(:reimbursement_email).with(reimbursement.id) { double(deliver_now: true) }
+      expect(Spree::ReimbursementMailer).to receive(:reimbursement_email).with(reimbursement.id) { double(deliver_later: true) }
       subject
     end
 
@@ -162,13 +162,13 @@ describe Spree::Reimbursement, type: :model do
   describe "#all_exchanges?" do
     it "returns true if all of the return items processed an exchange" do
       return_items = [double(exchange_processed?: true), double(exchange_processed?: true)]
-      subject.stub(:return_items) { return_items }
+      allow(subject).to receive(:return_items) { return_items }
       expect(subject.all_exchanges?).to be true
     end
 
     it "returns false if any of the return items processed an exchange" do
       return_items = [double(exchange_processed?: true), double(exchange_processed?: false)]
-      subject.stub(:return_items) { return_items }
+      allow(subject).to receive(:return_items) { return_items }
       expect(subject.all_exchanges?).to be false
     end
   end
@@ -176,13 +176,13 @@ describe Spree::Reimbursement, type: :model do
   describe "#any_exchanges?" do
     it "returns true if any of the return items processed an exchange" do
       return_items = [double(exchange_processed?: true), double(exchange_processed?: false)]
-      subject.stub(:return_items) { return_items }
+      allow(subject).to receive(:return_items) { return_items }
       expect(subject.any_exchanges?).to be true
     end
 
     it "returns false if none of the return items processed an exchange" do
       return_items = [double(exchange_processed?: false), double(exchange_processed?: false)]
-      subject.stub(:return_items) { return_items }
+      allow(subject).to receive(:return_items) { return_items }
       expect(subject.any_exchanges?).to be false
     end
   end

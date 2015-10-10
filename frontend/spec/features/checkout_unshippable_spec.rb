@@ -5,10 +5,11 @@ describe "checkout with unshippable items", type: :feature, inaccessible: true d
   let(:order) { OrderWalkthrough.up_to(:address) }
 
   before do
-    OrderWalkthrough.add_line_item!(order)
+    create(:line_item, order: order)
+    order.reload
     line_item = order.line_items.last
     stock_item = stock_location.stock_item(line_item.variant)
-    stock_item.adjust_count_on_hand -999
+    stock_item.adjust_count_on_hand(-999)
     stock_item.backorderable = false
     stock_item.save!
 

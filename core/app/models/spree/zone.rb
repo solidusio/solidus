@@ -2,7 +2,9 @@ module Spree
   class Zone < Spree::Base
     has_many :zone_members, dependent: :destroy, class_name: "Spree::ZoneMember", inverse_of: :zone
     has_many :tax_rates, dependent: :destroy, inverse_of: :zone
-    has_and_belongs_to_many :shipping_methods, :join_table => 'spree_shipping_methods_zones'
+
+    has_many :shipping_method_zones
+    has_many :shipping_methods, through: :shipping_method_zones
 
     validates :name, presence: true, uniqueness: { allow_blank: true }
     after_save :remove_defunct_members
@@ -10,6 +12,8 @@ module Spree
 
     alias :members :zone_members
     accepts_nested_attributes_for :zone_members, allow_destroy: true, reject_if: proc { |a| a['zoneable_id'].blank? }
+
+    self.whitelisted_ransackable_attributes = ['description']
 
     def self.default_tax
       where(default_tax: true).first
@@ -19,7 +23,7 @@ module Spree
     # Returns nil in the case of no matches.
     def self.match(address)
       return unless address and matches = self.includes(:zone_members).
-        order('spree_zones.zone_members_count', 'spree_zones.created_at', 'spree_zones.id').
+        order(:zone_members_count, :created_at, :id).
         where("(spree_zone_members.zoneable_type = 'Spree::Country' AND spree_zone_members.zoneable_id = ?) OR (spree_zone_members.zoneable_type = 'Spree::State' AND spree_zone_members.zoneable_id = ?)", address.country_id, address.state_id).
         references(:zones)
 

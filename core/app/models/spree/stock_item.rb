@@ -15,6 +15,8 @@ module Spree
     after_save :conditional_variant_touch, if: :changed?
     after_touch { variant.touch }
 
+    self.whitelisted_ransackable_attributes = ['count_on_hand', 'stock_location_id']
+
     # @return [Array<Spree::InventoryUnit>] the backordered inventory units
     #   associated with this stock item
     def backordered_inventory_units
@@ -96,11 +98,23 @@ module Spree
       end
 
       def conditional_variant_touch
-        # the variant_id changes from nil when a new stock location is added
-        stock_changed = (count_on_hand_changed? && count_on_hand_change.any? { |c| c < 1 }) || variant_id_changed?
+        variant.touch if inventory_cache_threshold.nil? || should_touch_variant?
+      end
 
-        if !Spree::Config.binary_inventory_cache || stock_changed
-          variant.touch
+      def should_touch_variant?
+        # the variant_id changes from nil when a new stock location is added
+        inventory_cache_threshold &&
+        (count_on_hand_changed? && count_on_hand_change.any? { |c| c < inventory_cache_threshold }) ||
+        variant_id_changed?
+      end
+
+      def inventory_cache_threshold
+        # only warn if store is setting binary_inventory_cache (default = false)
+        @cache_threshold ||= if Spree::Config.binary_inventory_cache
+          ActiveSupport::Deprecation.warn "Spree::Config.binary_inventory_cache=true is DEPRECATED. Instead use Spree::Config.inventory_cache_threshold=1"
+          1
+        else
+          Spree::Config.inventory_cache_threshold
         end
       end
   end

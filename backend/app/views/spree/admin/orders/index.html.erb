@@ -40,7 +40,7 @@
         </div>
 
         <div class="field">
-          <%= label_tag nil, "Shipment Number" %>
+          <%= label_tag nil, Spree.t(:shipment_number) %>
           <%= f.text_field :shipments_number_cont %>
         </div>
 
@@ -55,11 +55,6 @@
         <div class="field">
           <%= label_tag :q_email_cont, Spree.t(:email) %>
           <%= f.text_field :email_cont %>
-        </div>
-
-        <div class="field" data-hook="sku-select">
-          <%= label_tag :q_line_items_variant_id_in, Spree.t(:sku) %>
-          <%= f.select :line_items_variant_id_in, Spree::Variant.pluck(:sku, :id), {:include_blank => true}, :class => 'select2' %>
         </div>
       </div>
 
@@ -80,6 +75,13 @@
             <%= f.check_box :completed_at_not_null, {:checked => @show_only_completed}, '1', '0' %>
             <%= Spree.t(:show_only_complete_orders) %>
           </label>
+        </div>
+      </div>
+
+      <div class="omega eight columns">
+        <div class="field" data-hook="sku-select">
+          <%= label_tag :q_line_items_variant_id_in, Spree.t(:variant) %>
+          <%= f.text_field :line_items_variant_id_in, class: "variant_autocomplete fullwidth" %>
         </div>
       </div>
 

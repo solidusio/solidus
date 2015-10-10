@@ -1,5 +1,5 @@
 module Spree
-  class ReturnReason < ActiveRecord::Base
+  class ReturnReason < Spree::Base
     include Spree::NamedType
 
     has_many :return_authorizations

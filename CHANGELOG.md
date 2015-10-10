@@ -1,56 +1,39 @@
-## Solidus 1.0
+## Solidus 1.1.0 (unreleased)
 
-*   Replace ShipmentMailer with CartonMailer
+*   Address is immutable (Address#readonly? is always true)
 
-    IMPORTANT: Appliction and extension code targeting ShipmentMailer needs to
-    be updated to target CartonMailer instead.
+    This allows us to minimize cloning addresses, while still ensuring historical
+    data is preserved.
 
-    Issue https://github.com/bonobos/spree/pull/299
+*   UserAddressBook module added to manage a user's multiple addresses
 
-*   Add Carton concept to Spree
+*   GET /admin/search/users searches all of a user's addresses, not
+    just current bill and ship addresss
 
-    Cartons represent containers of inventory units that have been shipped. See
-    carton.rb for details.
+*   Adjustment state column has been replaced with a finalized boolean column.
+    This includes a migration replacing the column, which may cause some
+    downtime for large stores.
 
-*   Remove Promotion::Actions::CreateLineItems
+*   Handlebars templates in the admin are now stored in assets and precompiled
+    with the rest of the admin js.
 
-    They were broken in a couple ways.
+*   Removed `map_nested_attributes_keys` from the Api::BaseController. This
+    method was only used in one place and was oblivious of strong_params.
 
-    Issue https://github.com/bonobos/spree/pull/259
+*   Change all mails deliveries to `#deliver_later`. Emails will now be sent in
+    the background if you configure active\_job to do so. See [the rails guides](http://guides.rubyonrails.org/active_job_basics.html#job-execution)
+    for more information.
 
-    *Phillip Birtcher* *Jordan Brough*
+*   Cartons deliveries now send one email per-order, instead of one per-carton.
+    This allows setting `@order` and `@store` correctly for the template. For
+    most stores, which don't combine multiple orders into a carton, this will
+    behave the same.
 
-*   Remove Api::CheckoutsController
+## Solidus 1.0.1 (2015-08-19)
 
-    Issue https://github.com/bonobos/spree/pull/229
+See https://github.com/solidusio/solidus/releases/tag/v1.0.1
 
-    *Jordan Brough*
+## Solidus 1.0.0 (2015-08-11)
 
-*   Remove the Spree::Alert system
+See https://github.com/solidusio/solidus/releases/tag/v1.0.0
 
-    Issue https://github.com/bonobos/spree/pull/222
-
-    *Jordan Brough*
-
-*   Remove Spree::Money preferences
-
-    Removes Spree::Config's `symbol_position`, `no_cents`, `decimal_mark`, and
-    `thousands_separator`. This allows us to use the better defaults provided
-    by RubyMoney. For the same functionality of the existing preferences,
-    `Spree::Money.default_formatting_rules` can be used.
-
-    https://github.com/solidusio/solidus/pull/47
-
-    *John Hawthorn*
-
-*   Remove SSL preferences and controller helpers
-
-    In production any ecommerce site should use SSL for all connections. It is
-    both a security necessity and an SEO gain. Instead of the existing
-    configuration, SSL should be configured by the web server, load balancer,
-    or through rails.
-
-    For information on configuring rails for SSL see
-    http://api.rubyonrails.org/classes/ActionController/ForceSSL/ClassMethods.html
-
-    *Clarke Brunsdon*

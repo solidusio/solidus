@@ -10,51 +10,51 @@ describe Spree::PermissionSets::ProductDisplay do
       described_class.new(ability).activate!
     end
 
-    it { should be_able_to(:display, Spree::Product) }
-    it { should be_able_to(:display, Spree::Image) }
-    it { should be_able_to(:display, Spree::Variant) }
-    it { should be_able_to(:display, Spree::OptionValue) }
-    it { should be_able_to(:display, Spree::ProductProperty) }
-    it { should be_able_to(:display, Spree::OptionType) }
-    it { should be_able_to(:display, Spree::Property) }
-    it { should be_able_to(:display, Spree::Prototype) }
-    it { should be_able_to(:display, Spree::Taxonomy) }
-    it { should be_able_to(:display, Spree::Taxon) }
-    it { should be_able_to(:admin, Spree::Product) }
-    it { should be_able_to(:admin, Spree::Image) }
-    it { should be_able_to(:admin, Spree::Variant) }
-    it { should be_able_to(:admin, Spree::OptionValue) }
-    it { should be_able_to(:admin, Spree::ProductProperty) }
-    it { should be_able_to(:admin, Spree::OptionType) }
-    it { should be_able_to(:admin, Spree::Property) }
-    it { should be_able_to(:admin, Spree::Prototype) }
-    it { should be_able_to(:admin, Spree::Taxonomy) }
-    it { should be_able_to(:admin, Spree::Taxon) }
-    it { should be_able_to(:edit, Spree::Product) }
+    it { is_expected.to be_able_to(:display, Spree::Product) }
+    it { is_expected.to be_able_to(:display, Spree::Image) }
+    it { is_expected.to be_able_to(:display, Spree::Variant) }
+    it { is_expected.to be_able_to(:display, Spree::OptionValue) }
+    it { is_expected.to be_able_to(:display, Spree::ProductProperty) }
+    it { is_expected.to be_able_to(:display, Spree::OptionType) }
+    it { is_expected.to be_able_to(:display, Spree::Property) }
+    it { is_expected.to be_able_to(:display, Spree::Prototype) }
+    it { is_expected.to be_able_to(:display, Spree::Taxonomy) }
+    it { is_expected.to be_able_to(:display, Spree::Taxon) }
+    it { is_expected.to be_able_to(:admin, Spree::Product) }
+    it { is_expected.to be_able_to(:admin, Spree::Image) }
+    it { is_expected.to be_able_to(:admin, Spree::Variant) }
+    it { is_expected.to be_able_to(:admin, Spree::OptionValue) }
+    it { is_expected.to be_able_to(:admin, Spree::ProductProperty) }
+    it { is_expected.to be_able_to(:admin, Spree::OptionType) }
+    it { is_expected.to be_able_to(:admin, Spree::Property) }
+    it { is_expected.to be_able_to(:admin, Spree::Prototype) }
+    it { is_expected.to be_able_to(:admin, Spree::Taxonomy) }
+    it { is_expected.to be_able_to(:admin, Spree::Taxon) }
+    it { is_expected.to be_able_to(:edit, Spree::Product) }
   end
 
   context "when not activated" do
-    it { should_not be_able_to(:display, Spree::Product) }
-    it { should_not be_able_to(:display, Spree::Image) }
-    it { should_not be_able_to(:display, Spree::Variant) }
-    it { should_not be_able_to(:display, Spree::OptionValue) }
-    it { should_not be_able_to(:display, Spree::ProductProperty) }
-    it { should_not be_able_to(:display, Spree::OptionType) }
-    it { should_not be_able_to(:display, Spree::Property) }
-    it { should_not be_able_to(:display, Spree::Prototype) }
-    it { should_not be_able_to(:display, Spree::Taxonomy) }
-    it { should_not be_able_to(:display, Spree::Taxon) }
-    it { should_not be_able_to(:admin, Spree::Product) }
-    it { should_not be_able_to(:admin, Spree::Image) }
-    it { should_not be_able_to(:admin, Spree::Variant) }
-    it { should_not be_able_to(:admin, Spree::OptionValue) }
-    it { should_not be_able_to(:admin, Spree::ProductProperty) }
-    it { should_not be_able_to(:admin, Spree::OptionType) }
-    it { should_not be_able_to(:admin, Spree::Property) }
-    it { should_not be_able_to(:admin, Spree::Prototype) }
-    it { should_not be_able_to(:admin, Spree::Taxonomy) }
-    it { should_not be_able_to(:admin, Spree::Taxon) }
-    it { should_not be_able_to(:edit, Spree::Product) }
+    it { is_expected.not_to be_able_to(:display, Spree::Product) }
+    it { is_expected.not_to be_able_to(:display, Spree::Image) }
+    it { is_expected.not_to be_able_to(:display, Spree::Variant) }
+    it { is_expected.not_to be_able_to(:display, Spree::OptionValue) }
+    it { is_expected.not_to be_able_to(:display, Spree::ProductProperty) }
+    it { is_expected.not_to be_able_to(:display, Spree::OptionType) }
+    it { is_expected.not_to be_able_to(:display, Spree::Property) }
+    it { is_expected.not_to be_able_to(:display, Spree::Prototype) }
+    it { is_expected.not_to be_able_to(:display, Spree::Taxonomy) }
+    it { is_expected.not_to be_able_to(:display, Spree::Taxon) }
+    it { is_expected.not_to be_able_to(:admin, Spree::Product) }
+    it { is_expected.not_to be_able_to(:admin, Spree::Image) }
+    it { is_expected.not_to be_able_to(:admin, Spree::Variant) }
+    it { is_expected.not_to be_able_to(:admin, Spree::OptionValue) }
+    it { is_expected.not_to be_able_to(:admin, Spree::ProductProperty) }
+    it { is_expected.not_to be_able_to(:admin, Spree::OptionType) }
+    it { is_expected.not_to be_able_to(:admin, Spree::Property) }
+    it { is_expected.not_to be_able_to(:admin, Spree::Prototype) }
+    it { is_expected.not_to be_able_to(:admin, Spree::Taxonomy) }
+    it { is_expected.not_to be_able_to(:admin, Spree::Taxon) }
+    it { is_expected.not_to be_able_to(:edit, Spree::Product) }
   end
 end
 

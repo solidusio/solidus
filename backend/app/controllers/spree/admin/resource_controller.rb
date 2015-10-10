@@ -100,7 +100,7 @@ class Spree::Admin::ResourceController < Spree::Admin::BaseController
     end
   end
 
-  protected
+  private
 
     class << self
       attr_accessor :parent_data

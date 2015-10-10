@@ -89,7 +89,7 @@ module Spree
         Spree.user_class
       end
 
-      protected
+      private
 
         def collection
           return @collection if @collection.present?
@@ -108,7 +108,6 @@ module Spree
           end
         end
 
-      private
         def user_params
           attributes = permitted_user_attributes | [
             ship_address_attributes: permitted_address_attributes,
@@ -135,7 +134,7 @@ module Spree
           when 'basic'
             collection.map { |u| { 'id' => u.id, 'name' => u.email } }.to_json
           else
-            address_fields = [:firstname, :lastname, :address1, :address2, :city, :zipcode, :phone, :state_name, :state_id, :country_id]
+            address_fields = [:firstname, :lastname, :address1, :address2, :city, :zipcode, :phone, :state_name, :state_id, :country_id, :country_iso]
             includes = { :only => address_fields , :include => { :state => { :only => :name }, :country => { :only => :name } } }
 
             collection.to_json(:only => [:id, :email], :include =>
@@ -159,9 +158,16 @@ module Spree
         end
 
         def set_roles
-          return unless user_params[:spree_role_ids]
-
-          @user.spree_roles = Spree::Role.where(id: user_params[:spree_role_ids])
+          # FIXME: user_params permits the roles that can be set, if spree_role_ids is set.
+          # when submitting a user with no roles, the param is not present. Because users can be updated
+          # with some users being able to set roles, and some users not being able to set roles, we have to check
+          # if the roles should be cleared, or unchanged again here. The roles form should probably hit a seperate
+          # action or controller to remedy this.
+          if user_params[:spree_role_ids]
+            @user.spree_roles = Spree::Role.where(id: user_params[:spree_role_ids])
+          elsif can?(:manage, Spree::Role)
+            @user.spree_roles = []
+          end
         end
 
         def set_stock_locations

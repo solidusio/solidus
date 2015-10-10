@@ -17,4 +17,8 @@ describe Spree::AppConfiguration, :type => :model do
     expect(prefs.searcher_class).to eq Spree::Core::Search::Base
   end
 
+  it "uses variant search class by default" do
+    expect(prefs.variant_search_class).to eq Spree::Core::Search::Variant
+  end
+
 end

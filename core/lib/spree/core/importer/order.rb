@@ -122,7 +122,7 @@ module Spree
               label:  a[:label]
             )
             adjustment.save!
-            adjustment.close!
+            adjustment.finalize!
           end
         end
 

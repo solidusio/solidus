@@ -61,6 +61,7 @@ Spree::Core::Engine.add_routes do
     resources :option_types do
       resources :option_values
     end
+    resources :option_values
 
     resources :option_values, only: :index
     get '/orders/mine', to: 'orders#mine', as: 'my_orders'
@@ -106,6 +107,7 @@ Spree::Core::Engine.add_routes do
 
     resources :users do
       resources :credit_cards, only: [:index]
+      resource :address_book, only: [:show, :update, :destroy]
     end
 
     resources :credit_cards, only: [:update]

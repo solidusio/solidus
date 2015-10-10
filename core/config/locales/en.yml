@@ -228,6 +228,7 @@ en:
       spree/state:
         one: State
         other: States
+      spree/stock: stock
       spree/stock_movement:
         one: Stock Movement
         other: Stock Movements
@@ -322,6 +323,10 @@ en:
           attributes:
             base:
               cannot_destroy_default_store: Cannot destroy the default Store.
+        spree/user_address:
+          attributes:
+            user_id:
+              default_address_exists: "already has a default address"
 
   devise:
     confirmations:
@@ -404,6 +409,7 @@ en:
     add_option_value: Add Option Value
     add_product: Add Product
     add_product_properties: Add Product Properties
+    add_variant_properties: Add Variant Properties
     add_rule_of_type: Add rule of type
     add_state: Add State
     add_stock: Add Stock
@@ -807,6 +813,8 @@ en:
       no_longer_change_items: You will no longer be able to add or edit any transfer items
     find_a_taxon: Find a Taxon
     finalized: Finalized
+    finalized_at: Finalized at
+    finalized_by: Finalized by
     close_stock_transfer:
       will_cause: Closing a stock transfer will cause the following
       no_longer_edit: You will no longer be able to edit the stock transfer in any way
@@ -1200,6 +1208,9 @@ en:
       one_use_per_user:
         description: Only One Use Per User
         name: One Use Per User
+      option_value:
+        description: Order includes specified product(s) with matching option value(s)
+        name: Option Value(s)
       product:
         description: Order includes specified product(s)
         name: Product(s)
@@ -1216,6 +1227,10 @@ en:
         description: Apply a promotion to every nth order a user has completed.
         name: Nth Order
         form_text: "Apply this promotion on the users Nth order: "
+      first_repeat_purchase_since:
+        description: Available only to user who have not purchased in a while
+        name: First Repeat Purchase Since
+        form_text: "Apply this promotion to users whose last order was more than X days ago: "
     promotions: Promotions
     promotion_successfully_created: Promotion has been successfully created!
     promotion_total_changed_before_complete: "One or more of the promotions on your order have become ineligible and were removed. Please check the new order amounts and try again."
@@ -1352,6 +1367,7 @@ en:
         track_information: ! 'Tracking Information: %{tracking}'
         track_link: ! 'Tracking Link: %{url}'
     shipment_date: Shipment date
+    shipment_number: Shipment Number
     shipment_numbers: Shipment numbers
     shipment_state: Shipment State
     shipment_states:
@@ -1555,6 +1571,7 @@ en:
     value: Value
     variant: Variant
     variant_placeholder: Choose a variant
+    variant_properties: Variant Properties
     variant_search: Variant Search
     variant_search_placeholder: "SKU or Option Value"
     variant_to_add: Variant to add

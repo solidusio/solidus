@@ -26,7 +26,7 @@ describe Spree::Admin::RefundsController do
         expect(flash[:error]).to eq 'An error has occurred'
       end
 
-      it { should render_template(:new) }
+      it { is_expected.to render_template(:new) }
     end
   end
 end

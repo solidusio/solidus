@@ -3,12 +3,12 @@ require 'ostruct'
 module Spree
   class Shipment < Spree::Base
     belongs_to :order, class_name: 'Spree::Order', touch: true, inverse_of: :shipments
-    belongs_to :address, class_name: 'Spree::Address', inverse_of: :shipments
+    belongs_to :address, class_name: 'Spree::Address'
     belongs_to :stock_location, class_name: 'Spree::StockLocation'
 
     has_many :adjustments, as: :adjustable, inverse_of: :adjustable, dependent: :delete_all
     has_many :inventory_units, dependent: :destroy, inverse_of: :shipment
-    has_many :shipping_rates, -> { order('cost ASC') }, dependent: :delete_all
+    has_many :shipping_rates, -> { order(:cost) }, dependent: :delete_all
     has_many :shipping_methods, through: :shipping_rates
     has_many :state_changes, as: :stateful
     has_many :cartons, -> { uniq }, through: :inventory_units
@@ -72,6 +72,9 @@ module Spree
       end
     end
 
+    self.whitelisted_ransackable_associations = ['order']
+    self.whitelisted_ransackable_attributes = ['number']
+
     def can_transition_from_pending_to_shipped?
       !requires_shipment?
     end
@@ -127,9 +130,17 @@ module Spree
       item_cost + final_price
     end
 
+    # Decrement the stock counts for all pending inventory units in this
+    # shipment and mark.
+    # Any previous non-pending inventory units are skipped as their stock had
+    # already been allocated.
     def finalize!
-      InventoryUnit.finalize_units!(inventory_units)
-      manifest.each { |item| manifest_unstock(item) }
+      transaction do
+        pending_units = inventory_units.select(&:pending?)
+        pending_manifest = ShippingManifest.new(inventory_units: pending_units)
+        pending_manifest.items.each { |item| manifest_unstock(item) }
+        InventoryUnit.finalize_units!(pending_units)
+      end
     end
 
     def include?(variant)

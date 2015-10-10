@@ -22,8 +22,6 @@ describe Spree::Order, :type => :model do
     end
 
     before do
-      # Don't care about available payment methods in this test
-      allow(persisted_order).to receive_messages(:has_available_payment => false)
       persisted_order.line_items << line_item
       create(:adjustment, amount: -line_item.amount, label: "Promotion", adjustable: line_item, order: persisted_order)
       persisted_order.state = 'delivery'

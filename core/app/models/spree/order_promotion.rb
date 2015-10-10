@@ -3,7 +3,7 @@ module Spree
   #
   # 1. A promotion that a user attempted to apply to their order
   # 2. The specific code that they used
-  class OrderPromotion < ActiveRecord::Base
+  class OrderPromotion < Spree::Base
     self.table_name = 'spree_orders_promotions'
 
     belongs_to :order, class_name: 'Spree::Order'

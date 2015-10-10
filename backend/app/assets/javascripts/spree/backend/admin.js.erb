@@ -1,10 +1,11 @@
 //= require_self
-//= require spree/backend/handlebar_extensions
+//= require spree/backend/handlebars_extensions
 //= require spree/backend/variant_autocomplete
 //= require spree/backend/taxon_autocomplete
 //= require spree/backend/option_type_autocomplete
 //= require spree/backend/user_picker
 //= require spree/backend/product_picker
+//= require spree/backend/option_value_picker
 //= require spree/backend/taxons
 
 /**
@@ -34,9 +35,6 @@ jQuery(function($) {
       $('#powerTip').removeClass($(this).data('action'));
     })
 
-  // Make flash messages dissapear
-  setTimeout('$(".flash").fadeOut()', 5000);
-
   // Highlight hovered table column
   $('table tbody tr td.actions').find('a, button').hover(function(){
     var tr = $(this).closest('tr');
@@ -57,16 +55,6 @@ jQuery(function($) {
 
 
 $.fn.visible = function(cond) { this[cond ? 'show' : 'hide' ]() };
-
-show_flash = function(type, message) {
-  var flash_div = $('.flash.' + type);
-  if (flash_div.length == 0) {
-    flash_div = $('<div class="flash ' + type + '" />');
-    $('#wrapper').prepend(flash_div);
-  }
-  flash_div.html(message).show().delay(5000).fadeOut(500);
-}
-
 
 // Apply to individual radio button that makes another element visible when checked
 $.fn.radioControlsVisibilityOfElement = function(dependentElementSelector){
@@ -124,8 +112,9 @@ $(document).ready(function(){
     new_table_row.find("input, select").each(function () {
       var el = $(this);
       el.val("");
-      el.prop("id", el.prop("id").replace(/\d+/, new_id))
-      el.prop("name", el.prop("name").replace(/\d+/, new_id))
+      // Replace last occurrence of a number
+      el.prop("id", el.prop("id").replace(/\d+(?=[^\d]*$)/, new_id))
+      el.prop("name", el.prop("name").replace(/\d+(?=[^\d]*$)/, new_id))
     })
     // When cloning a new row, set the href of all icons to be an empty "#"
     // This is so that clicking on them does not perform the actions for the
@@ -216,18 +205,21 @@ $(document).ready(function(){
         placeholder: 'ui-sortable-placeholder',
         update: function(event, ui) {
           $("#progress").show();
+          tableEl = $(ui.item).closest("table.sortable")
           positions = {};
-          $.each($('table.sortable tbody tr'), function(position, obj){
-            reg = /spree_(\w+_?)+_(\d+)/;
-            parts = reg.exec($(obj).prop('id'));
-            if (parts) {
-              positions['positions['+parts[2]+']'] = position;
+          $.each(tableEl.find('tbody tr'), function(position, obj){
+            idAttr = $(obj).prop('id');
+            if (idAttr) {
+              objId = idAttr.split('_').slice(-1);
+              if (!isNaN(objId)) {
+                positions['positions['+objId+']'] = position;
+              }
             }
           });
           Spree.ajax({
             type: 'POST',
             dataType: 'script',
-            url: $(ui.item).closest("table.sortable").data("sortable-link"),
+            url: tableEl.data("sortable-link"),
             data: positions,
             success: function(data){ $("#progress").hide(); }
           });
@@ -239,9 +231,10 @@ $(document).ready(function(){
           ui.placeholder.html("<td colspan='"+(td_count-1)+"'></td><td class='actions'></td>")
         },
         stop: function (event, ui) {
+          tableEl = $(ui.item).closest("table.sortable")
           // Fix odd/even classes after reorder
-          $("table.sortable tr:even").removeClass("odd even").addClass("even");
-          $("table.sortable tr:odd").removeClass("odd even").addClass("odd");
+          tableEl.find("tr:even").removeClass("odd even").addClass("even");
+          tableEl.find("tr:odd").removeClass("odd even").addClass("odd");
         }
 
       });

@@ -1,6 +1,6 @@
 module Spree
   class Country < Spree::Base
-    has_many :states, -> { order('name ASC') }, dependent: :destroy
+    has_many :states, -> { order(:name) }, dependent: :destroy
     has_many :addresses, dependent: :nullify
 
     validates :name, :iso_name, presence: true
@@ -10,6 +10,12 @@ module Spree
       states_required = Hash.new(true)
       all.each { |country| states_required[country.id.to_s]= country.states_required }
       states_required
+    end
+
+    def self.default
+      find(Spree::Config[:default_country_id])
+    rescue ActiveRecord::RecordNotFound
+      first
     end
 
     def <=>(other)

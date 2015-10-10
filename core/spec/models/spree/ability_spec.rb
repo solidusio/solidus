@@ -45,7 +45,7 @@ describe Spree::Ability, :type => :model do
 
     it 'should apply the registered abilities permissions' do
       Spree::Ability.register_ability(FooAbility)
-      expect(Spree::Ability.new(user).can?(:update, mock_model(Spree::Order, :id => 1))).to be true
+      expect(Spree::Ability.new(user).can?(:update, mock_model(Spree::Order, user: nil, :id => 1))).to be true
     end
   end
 
@@ -53,7 +53,7 @@ describe Spree::Ability, :type => :model do
     let(:resource) { Object.new }
 
     context 'with admin user' do
-      before(:each) { allow(user).to receive(:has_spree_role?).and_return(true) }
+      let(:user) { build :admin_user }
       it_should_behave_like 'access granted'
       it_should_behave_like 'index allowed'
     end

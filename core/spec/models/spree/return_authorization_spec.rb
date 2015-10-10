@@ -30,7 +30,7 @@ describe Spree::ReturnAuthorization, :type => :model do
 
       it "should be invalid" do
         return_authorization.save
-        return_authorization.errors['base'].should include('Return items cannot be created for inventory units that are already awaiting exchange.')
+        expect(return_authorization.errors['base']).to include('Return items cannot be created for inventory units that are already awaiting exchange.')
       end
     end
 
@@ -41,7 +41,7 @@ describe Spree::ReturnAuthorization, :type => :model do
 
       it "is valid" do
         return_authorization.save
-        return_authorization.errors['base'].size.should eq 0
+        expect(return_authorization.errors['base'].size).to eq 0
       end
     end
 
@@ -169,13 +169,13 @@ describe Spree::ReturnAuthorization, :type => :model do
     end
 
     it "should allow_receive when inventory units assigned" do
-      return_authorization.stub(:inventory_units => [1,2,3])
-      return_authorization.can_receive?.should be true
+      allow(return_authorization).to receive_messages(:inventory_units => [1,2,3])
+      expect(return_authorization.can_receive?).to be true
     end
 
     it "should not allow_receive with no inventory units" do
-      return_authorization.stub(:inventory_units => [])
-      return_authorization.can_receive?.should be false
+      allow(return_authorization).to receive_messages(:inventory_units => [])
+      expect(return_authorization.can_receive?).to be false
     end
   end
 
@@ -271,20 +271,20 @@ describe Spree::ReturnAuthorization, :type => :model do
     context 'at least one return item can be cancelled' do
       let(:return_item_2) { create(:return_item, reception_status: 'received') }
 
-      it { should eq true }
+      it { is_expected.to eq true }
     end
 
     context 'no items can be cancelled' do
       let(:return_item_1) { create(:return_item, reception_status: 'received') }
       let(:return_item_2) { create(:return_item, reception_status: 'received') }
 
-      it { should eq false }
+      it { is_expected.to eq false }
     end
 
     context 'when return_authorization has no return_items' do
       let(:return_items) { [] }
 
-      it { should eq true }
+      it { is_expected.to eq true }
     end
   end
 end

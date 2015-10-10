@@ -5,7 +5,7 @@ describe Spree::Payment, :type => :model do
   let(:refund_reason) { create(:refund_reason) }
 
   let(:gateway) do
-    gateway = Spree::Gateway::Bogus.new(:environment => 'test', :active => true, :name => 'Bogus gateway')
+    gateway = Spree::Gateway::Bogus.new(:active => true, :name => 'Bogus gateway')
     allow(gateway).to receive_messages :source_required => true
     gateway
   end
@@ -131,7 +131,7 @@ describe Spree::Payment, :type => :model do
       it "transitions to invalid" do
         payment.state = 'checkout'
         payment.invalidate
-        payment.state.should eq ('invalid')
+        expect(payment.state).to eq ('invalid')
       end
     end
   end
@@ -253,10 +253,67 @@ describe Spree::Payment, :type => :model do
         payment.authorize!
       end
 
-      context "when gateway does not match the environment" do
-        it "should raise an exception" do
-          allow(gateway).to receive_messages :environment => "foo"
-          expect { payment.authorize! }.to raise_error(Spree::Core::GatewayError)
+      describe 'billing_address option' do
+        context 'when the source is a credit card with an address' do
+          let(:card) { create(:credit_card, address: address) }
+          let(:address) { create(:address) }
+
+          it 'sends the credit card address' do
+            expect(payment.payment_method).to(
+              receive(:authorize).
+                with(
+                  amount_in_cents,
+                  card,
+                  hash_including(billing_address: card.address.active_merchant_hash)
+                ).
+                and_return(success_response)
+            )
+            payment.authorize!
+          end
+        end
+
+        context 'when the source is a credit card without an address' do
+          let(:card) { create(:credit_card, address: nil) }
+          before { order.update_attributes!(bill_address: address) }
+          let(:address) { create(:address) }
+
+          it 'send the order bill address' do
+            expect(payment.payment_method).to(
+              receive(:authorize).
+                with(
+                  amount_in_cents,
+                  card,
+                  hash_including(billing_address: order.bill_address.active_merchant_hash)
+                ).
+                and_return(success_response)
+            )
+            payment.authorize!
+          end
+        end
+
+        context 'when the source is not a credit card' do
+          before do
+            payment.source = store_credit_payment
+            payment.payment_method = store_credit_payment_method
+          end
+
+          let(:store_credit_payment) { create(:store_credit_payment) }
+          let(:store_credit_payment_method) { create(:store_credit_payment_method) }
+          before { order.update_attributes!(bill_address: address) }
+          let(:address) { create(:address) }
+
+          it 'send the order bill address' do
+            expect(payment.payment_method).to(
+              receive(:authorize).
+                with(
+                  amount_in_cents,
+                  store_credit_payment,
+                  hash_including(billing_address: order.bill_address.active_merchant_hash)
+                ).
+                and_return(success_response)
+            )
+            payment.authorize!
+          end
         end
       end
 
@@ -303,13 +360,6 @@ describe Spree::Payment, :type => :model do
         payment.save!
         expect(payment.log_entries).to receive(:create!).with(details: anything)
         payment.purchase!
-      end
-
-      context "when gateway does not match the environment" do
-        it "should raise an exception" do
-          allow(gateway).to receive_messages :environment => "foo"
-          expect { payment.purchase!  }.to raise_error(Spree::Core::GatewayError)
-        end
       end
 
       context "if successful" do
@@ -489,13 +539,6 @@ describe Spree::Payment, :type => :model do
       it "should log the response" do
         expect(payment.log_entries).to receive(:create!).with(:details => anything)
         payment.void_transaction!
-      end
-
-      context "when gateway does not match the environment" do
-        it "should raise an exception" do
-          allow(gateway).to receive_messages :environment => "foo"
-          expect { payment.void_transaction! }.to raise_error(Spree::Core::GatewayError)
-        end
       end
 
       context "if successful" do
