@@ -5,7 +5,7 @@ describe "Analytics Tracker", :type => :feature do
 
   context "index" do
     before(:each) do
-      2.times { create(:tracker, :environment => "test") }
+      2.times { create(:tracker) }
       visit spree.admin_path
       click_link "Settings"
       click_link "Analytics Tracker"
