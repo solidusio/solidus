@@ -13,7 +13,8 @@ module Spree
           if promotion.present? && promotion.actions.exists?
             handle_present_promotion(promotion)
           else
-            if promotion_code && promotion_code.promotion.expired?
+            if promotion_code && promotion_code.promotion &&
+               promotion_code.promotion.expired?
               set_error_code :coupon_code_expired
             else
               set_error_code :coupon_code_not_found
@@ -36,7 +37,8 @@ module Spree
 
       def promotion
         @promotion ||= begin
-          if promotion_code && promotion_code.promotion.active?
+          if promotion_code && promotion_code.promotion &&
+             promotion_code.promotion.active?
             promotion_code.promotion
           end
         end
