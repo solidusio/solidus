@@ -47,30 +47,6 @@ describe Spree::Promotion, :type => :model do
     end
   end
 
-  describe "#destroy" do
-    let(:promotion) { Spree::Promotion.create(:name => "delete me") }
-
-    before(:each) do
-      promotion.actions << Spree::Promotion::Actions::CreateAdjustment.new
-      promotion.rules << Spree::Promotion::Rules::FirstOrder.new
-      promotion.codes << Spree::PromotionCode.new(value: "Test")
-      promotion.save!
-      promotion.destroy
-    end
-
-    it "should delete actions" do
-      expect(Spree::PromotionAction.count).to eq(0)
-    end
-
-    it "should delete rules" do
-      expect(Spree::PromotionRule.count).to eq(0)
-    end
-
-    it "should delete codes" do
-      expect(Spree::PromotionCode.count).to eq(0)
-    end
-  end
-
   describe "#save" do
     let(:promotion) { Spree::Promotion.create(:name => "delete me") }
 
