@@ -62,6 +62,37 @@ module Spree
           expect(JSON.parse(response.body).first).to include(harry_address_attributes)
         end
 
+        context 'when creating an address' do
+          it 'marks the update_target' do
+            user = create(:user, spree_api_key: 'galleon')
+
+            expect {
+              put "/api/users/#{user.id}/address_book", { address_book: harry_address_attributes }, { 'X-SPREE-TOKEN' => 'galleon' }
+            }.to change { UserAddress.count }.by(1)
+
+            user_address = UserAddress.last
+
+            expect(response.status).to eq(200)
+            update_target_ids = JSON.parse(response.body).select { |a| a['update_target'] }.map { |a| a['id'] }
+            expect(update_target_ids).to eq([user_address.address_id])
+          end
+        end
+
+        context 'when updating an address' do
+          it 'marks the update_target' do
+            user = create(:user, spree_api_key: 'galleon')
+            address = user.save_in_address_book(harry_address_attributes, true)
+
+            expect {
+              put "/api/users/#{user.id}/address_book", { address_book: harry_address_attributes }, { 'X-SPREE-TOKEN' => 'galleon' }
+            }.to_not change { UserAddress.count }
+
+            expect(response.status).to eq(200)
+            update_target_ids = JSON.parse(response.body).select { |a| a['update_target'] }.map { |a| a['id'] }
+            expect(update_target_ids).to eq([address.id])
+          end
+        end
+
         it 'archives my address' do
           address = create(:address)
           user = create(:user, spree_api_key: 'galleon')
