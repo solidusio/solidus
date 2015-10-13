@@ -16,7 +16,7 @@ module Spree
     has_many :order_promotions, class_name: "Spree::OrderPromotion"
     has_many :orders, through: :order_promotions
 
-    has_many :codes, class_name: "Spree::PromotionCode", inverse_of: :promotion
+    has_many :codes, class_name: "Spree::PromotionCode", inverse_of: :promotion, dependent: :destroy
     alias_method :promotion_codes, :codes
 
     accepts_nested_attributes_for :promotion_actions, :promotion_rules
