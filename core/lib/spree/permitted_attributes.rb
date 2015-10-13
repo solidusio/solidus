@@ -80,8 +80,8 @@ module Spree
     @@return_authorization_attributes = [:memo, :stock_location_id, :return_reason_id, return_items_attributes: [:inventory_unit_id, :exchange_variant_id, :return_reason_id]]
 
     @@shipment_attributes = [
-      :order, :special_instructions, :stock_location_id, :id,
-      :tracking, :address, :inventory_units, :selected_shipping_rate_id]
+      :special_instructions, :stock_location_id, :id, :tracking,
+      :selected_shipping_rate_id]
 
     # month / year may be provided by some sources, or others may elect to use one field
     @@source_attributes = [
