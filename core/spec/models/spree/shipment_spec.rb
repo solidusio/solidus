@@ -494,12 +494,14 @@ describe Spree::Shipment, :type => :model do
     it "is treated as a no-op for a shipped order" do
       shipment.state = 'shipped'
       shipment.ready_to_ship!
+      expect(shipment).to receive(:after_ship).never
       expect(shipment.state).to eq 'shipped'
     end
 
     it "is treated as a no-op for a ready order" do
       shipment.state = 'ready'
       shipment.ready_to_ship!
+      expect(shipment).to receive(:after_ship).never
       expect(shipment.state).to eq 'ready'
     end
   end
