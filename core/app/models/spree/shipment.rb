@@ -389,7 +389,8 @@ module Spree
 
     private
 
-      def after_ship
+      def after_ship(transition)
+        return if transition.from_name == :shipped
         order.shipping.ship_shipment(self, suppress_mailer: suppress_mailer)
       end
 
