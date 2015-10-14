@@ -23,7 +23,6 @@
     <thead>
       <tr data-hook="admin_trackers_index_headers">
         <th><%= Spree.t(:google_analytics_id) %></th>
-        <th><%= Spree.t(:environment) %></th>
         <th><%= Spree.t(:active) %></th>
         <th class="actions"></th>
       </tr>
@@ -32,7 +31,6 @@
       <% @trackers.each do |tracker|%>
         <tr id="<%= spree_dom_id tracker %>" data-hook="admin_trackers_index_rows" class="<%= cycle('odd', 'even')%>">
           <td class="align-center"><%= tracker.analytics_id %></td>
-          <td class="align-center"><%= tracker.environment.to_s.titleize %></td>
           <td class="align-center"><%= tracker.active ? Spree.t(:say_yes) : Spree.t(:say_no) %></td>
           <td class="actions">
             <% if can?(:update, tracker) %>
