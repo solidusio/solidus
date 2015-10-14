@@ -589,6 +589,7 @@ en:
     cannot_rebuild_shipments_shipments_not_pending: Cannot rebuild shipments for an order with non-pending shipments.
     cannot_perform_operation: Cannot perform requested operation
     cannot_set_shipping_method_without_address: Cannot set shipping method until customer details are provided.
+    cannot_update_email: You do not have access to update this user's email address. <br />Please contact a superuser if you need to perform this action.
     capture: Capture
     capture_events: Capture events
     card_code: Card Code
