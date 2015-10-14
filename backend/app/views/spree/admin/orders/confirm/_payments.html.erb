@@ -15,7 +15,7 @@
       <% payments.each do |payment| %>
         <tr>
           <td>
-            <%= link_to payment.identifier, spree.admin_order_payment_path(@order, payment) %>
+            <%= link_to payment.number, spree.admin_order_payment_path(@order, payment) %>
           </td>
           <td>
             <%= pretty_time(payment.created_at) %>
