@@ -14,11 +14,4 @@ describe Spree::Admin::BaseHelper, :type => :helper do
       expect(datepicker_field_value(date)).to eq("2013/08/14")
     end
   end
-
-  context "rails environments" do
-    it "returns the existing environments" do
-      expect(rails_environments).to eql ["development","production", "test"]
-    end
-  end
-
 end
