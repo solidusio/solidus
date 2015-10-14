@@ -110,8 +110,11 @@ module Spree
 
     @@transfer_item_attributes = [:variant_id, :expected_quantity, :received_quantity]
 
-    # TODO Should probably use something like Spree.user_class.attributes
-    @@user_attributes = [:email, :password, :password_confirmation]
+    # intentionally leaving off email here to prevent privilege escalation
+    # by changing a user with higher priveleges' email to one a lower-priveleged
+    # admin owns. creating a user with an email is handled separate at the
+    # controller level
+    @@user_attributes = [:password, :password_confirmation]
 
     @@variant_attributes = [
       :name, :presentation, :cost_price, :lock_version,

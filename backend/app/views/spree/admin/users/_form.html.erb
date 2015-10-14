@@ -2,7 +2,12 @@
   <div class="alpha six columns">
     <%= f.field_container :email do %>
       <%= f.label :email, Spree.t(:email) %>
-      <%= f.email_field :email, :class => 'fullwidth' %>
+      <% if can?(:update_email, @user) %>
+        <%= f.email_field :email, :class => 'fullwidth' %>
+      <% else %>
+        <span title="<%= Spree.t(:cannot_update_email) %>" class="fa fa-question-circle icon_link no-text with-tip"></span>
+        <%= f.email_field :email, :class => 'fullwidth', disabled: true %>
+      <% end %>
       <%= error_message_on :user, :email %>
     <% end %>
 

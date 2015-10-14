@@ -131,13 +131,17 @@ describe Spree::Admin::UsersController, :type => :controller do
 
   describe "#update" do
     let(:dummy_role) { Spree::Role.create(name: "dummyrole") }
+    let(:ability) { Spree::Ability.new(user) }
     before do
       use_mock_user
       allow(mock_user).to receive_messages(:spree_roles= => true, :stock_locations= => true)
-      user.spree_roles << Spree::Role.find_or_create_by(name: 'admin')
+      allow(controller).to receive(:current_ability) { ability }
+      Spree::PermissionSets::UserManagement.new(ability).activate!
     end
 
-    context "when the user can manage roles" do
+    context "as a superuser" do
+      before { Spree::PermissionSets::SuperUser.new(ability).activate! }
+
       it "can set roles" do
         expect(mock_user).to receive(:spree_roles=).with([dummy_role])
         spree_put :update, { id: mock_user.id, user: { first_name: "Bob", spree_role_ids: [dummy_role.id] } }
@@ -145,24 +149,40 @@ describe Spree::Admin::UsersController, :type => :controller do
 
       it "can clear roles" do
         expect(mock_user).to receive(:spree_roles=).with([])
-        spree_put :update, { id: mock_user.id, user: { first_name: "Bob"}  }
+        spree_put :update, { id: mock_user.id, user: { first_name: "Bob" }  }
+      end
+
+      it "can change email of a user with no roles" do
+        expect(mock_user).to receive(:update_attributes).with({ email: "bob@example.com" })
+        spree_put :update, { id: mock_user.id, user: { email: "bob@example.com" } }
+      end
+
+      it "can change email of a user with roles" do
+        allow(mock_user).to receive(:spree_roles) { [dummy_role] }
+        expect(mock_user).to receive(:update_attributes).with({ email: "bob@example.com" })
+        spree_put :update, { id: mock_user.id, user: { email: "bob@example.com" } }
       end
     end
 
-    context "when the user cannot manage roles" do
-      before do
-        user.spree_roles = [Spree::Role.find_or_create_by(name: "user_management")]
-      end
+    it "cannot set roles" do
+      expect(mock_user).to_not receive(:spree_roles=)
+      spree_put :update, { id: mock_user.id, user: { first_name: "Bob", spree_role_ids: [dummy_role.id] } }
+    end
 
-      it "cannot set roles" do
-        expect(mock_user).to_not receive(:spree_roles=)
-        spree_put :update, { id: mock_user.id, user: { first_name: "Bob", spree_role_ids: [dummy_role.id] } }
-      end
+    it "cannot clear roles" do
+      expect(mock_user).to_not receive(:spree_roles=)
+      spree_put :update, { id: mock_user.id, user: { first_name: "Bob" }  }
+    end
 
-      it "cannot clear roles" do
-        expect(mock_user).to_not receive(:spree_roles=)
-        spree_put :update, { id: mock_user.id, user: { first_name: "Bob" }  }
-      end
+    it "can change email of a user with no roles" do
+      expect(mock_user).to receive(:update_attributes).with({ email: "bob@example.com" })
+      spree_put :update, { id: mock_user.id, user: { email: "bob@example.com" } }
+    end
+
+    it "cannot change email of a user with roles" do
+      allow(mock_user).to receive(:spree_roles) { [dummy_role] }
+      expect(mock_user).to receive(:update_attributes).with({})
+      spree_put :update, { id: mock_user.id, user: { email: "bob@example.com" } }
     end
 
     it "allows shipping address attributes through" do
@@ -231,6 +251,7 @@ end
 def use_mock_user
   allow(mock_user).to receive(:save).and_return(true)
   allow(mock_user).to receive(:update_attributes).and_return(true)
+  allow(mock_user).to receive(:spree_roles).and_return([])
   allow(Spree.user_class).to receive(:find).with(mock_user.id.to_s).and_return(mock_user)
   allow(Spree.user_class).to receive(:new).and_return(mock_user)
 end
