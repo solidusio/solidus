@@ -41,6 +41,13 @@ child order: :order do
 
   child payments: :payments do
     attributes :id, :amount, :display_amount, :state
+    child source: :source do |s|
+      if s.is_a?(Spree::CreditCard)
+        attributes :id, :cc_type
+      else
+        attributes :id
+      end
+    end
     child payment_method: :payment_method do
       attributes :id, :name
     end

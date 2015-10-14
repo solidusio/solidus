@@ -162,6 +162,25 @@ describe Spree::Api::ShipmentsController, :type => :controller do
             subject
             expect(rendered_shipment_ids).to match_array current_api_user.orders.flat_map(&:shipments).map(&:id)
           end
+
+          context "credit card payment" do
+            before { subject }
+
+            it 'contains the id and cc_type of the credit card' do
+              expect(json_response['shipments'][0]['order']['payments'][0]['source'].keys).to match_array ["id", "cc_type"]
+            end
+          end
+
+          context "store credit payment" do
+            let(:current_api_user) { shipped_order.user }
+            let(:shipped_order)    { create(:shipped_order, payment_type: :store_credit_payment) }
+
+            before { subject }
+
+            it 'only contains the id of the payment source' do
+              expect(json_response['shipments'][0]['order']['payments'][0]['source'].keys).to match_array ["id"]
+            end
+          end
         end
 
         context 'with filtering' do
