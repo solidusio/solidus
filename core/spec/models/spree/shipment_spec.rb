@@ -488,7 +488,20 @@ describe Spree::Shipment, :type => :model do
     # Regression test for #2040
     it "cannot ready a shipment for an order if the order is unpaid" do
       expect(order).to receive_messages(paid?: false)
-      expect(shipment).not_to be_can_ready
+      expect(shipment).not_to be_can_ready_to_ship
+    end
+
+    it "is treated as a no-op for a shipped order" do
+      shipment.state = 'shipped'
+      expect(order.shipping).to receive(:ship_shipment).never
+      shipment.ready_to_ship!
+      expect(shipment.state).to eq 'shipped'
+    end
+
+    it "is treated as a no-op for a ready order" do
+      shipment.state = 'ready'
+      shipment.ready_to_ship!
+      expect(shipment.state).to eq 'ready'
     end
   end
 
@@ -643,7 +656,7 @@ describe Spree::Shipment, :type => :model do
 
     it "are logged to the database" do
       expect(shipment.state_changes).to be_empty
-      expect(shipment.ready!).to be true
+      expect(shipment.ready_to_ship!).to be true
       expect(shipment.state_changes.count).to eq(1)
       state_change = shipment.state_changes.first
       expect(state_change.previous_state).to eq('pending')
@@ -665,13 +678,13 @@ describe Spree::Shipment, :type => :model do
     before { allow(order).to receive_messages paid?: true }
 
     it 'proceeds automatically to shipped state' do
-      unshippable_shipment.ready!
+      unshippable_shipment.ready_to_ship!
       expect(unshippable_shipment.state).to eq('shipped')
     end
 
     it 'does not send a confirmation email' do
       expect {
-        unshippable_shipment.ready!
+        unshippable_shipment.ready_to_ship!
         unshippable_shipment.inventory_units(true).each do |unit|
           expect(unit.state).to eq('shipped')
         end

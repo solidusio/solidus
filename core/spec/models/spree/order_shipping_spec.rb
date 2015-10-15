@@ -230,7 +230,7 @@ describe Spree::OrderShipping do
         )
       end
 
-      before { shipment.ready! }
+      before { shipment.ready_to_ship! }
 
       it "updates the state to shipped" do
         order.shipping.ship_shipment(shipment)

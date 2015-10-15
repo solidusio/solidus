@@ -38,9 +38,11 @@ module Spree
 
     # shipment state machine (see http://github.com/pluginaweek/state_machine/tree/master for details)
     state_machine initial: :pending, use_transactions: false do
-      event :ready do
+      event :ready_to_ship do
         transition from: :pending, to: :shipped, if: :can_transition_from_pending_to_shipped?
         transition from: :pending, to: :ready, if: :can_transition_from_pending_to_ready?
+        transition from: :shipped, to: :shipped
+        transition from: :ready,   to: :ready
       end
 
       event :pend do
@@ -74,6 +76,21 @@ module Spree
 
     self.whitelisted_ransackable_associations = ['order']
     self.whitelisted_ransackable_attributes = ['number']
+
+    def ready
+      ActiveSupport::Deprecation.warn "Use the #ready_to_ship event on Shipment instead", caller
+      ready_to_ship
+    end
+
+    def ready!
+      ActiveSupport::Deprecation.warn "Use the #ready_to_ship! event on Shipment instead", caller
+      ready_to_ship!
+    end
+
+    def can_ready?
+      ActiveSupport::Deprecation.warn "Use #can_ready_to_ship? on Shipment instead", caller
+      can_ready_to_ship?
+    end
 
     def can_transition_from_pending_to_shipped?
       !requires_shipment?
@@ -372,7 +389,8 @@ module Spree
 
     private
 
-      def after_ship
+      def after_ship(transition)
+        return if transition.from_name == :shipped
         order.shipping.ship_shipment(self, suppress_mailer: suppress_mailer)
       end
 
