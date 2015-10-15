@@ -25,7 +25,7 @@ module Spree
     has_many :classifications, dependent: :delete_all, inverse_of: :product
     has_many :taxons, through: :classifications, before_remove: :remove_taxon
 
-    has_many :product_promotion_rules
+    has_many :product_promotion_rules, dependent: :destroy
     has_many :promotion_rules, through: :product_promotion_rules
 
     belongs_to :tax_category, class_name: 'Spree::TaxCategory'
