@@ -41,6 +41,13 @@ child order: :order do
 
   child payments: :payments do
     attributes :id, :amount, :display_amount, :state
+    child source: :source do |s|
+      attrs = [:id]
+      if s.respond_to?(:cc_type)
+        attrs << :cc_type
+      end
+      attributes *attrs
+    end
     child payment_method: :payment_method do
       attributes :id, :name
     end
