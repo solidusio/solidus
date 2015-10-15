@@ -2,6 +2,9 @@ module Spree
   class Payment < Spree::Base
     include Spree::Payment::Processing
 
+    alias_attribute :identifier, :number
+    deprecate :identifier, :identifier=, deprecator: Spree::Deprecation
+
     IDENTIFIER_CHARS    = (('A'..'Z').to_a + ('0'..'9').to_a - %w(0 1 I O)).freeze
     NON_RISKY_AVS_CODES = ['B', 'D', 'H', 'J', 'M', 'Q', 'T', 'V', 'X', 'Y'].freeze
     RISKY_AVS_CODES     = ['A', 'C', 'E', 'F', 'G', 'I', 'K', 'L', 'N', 'O', 'P', 'R', 'S', 'U', 'W', 'Z'].freeze
@@ -255,8 +258,8 @@ module Spree
       # See https://github.com/spree/spree/issues/1998#issuecomment-12869105
       def set_unique_identifier
         begin
-          self.identifier = generate_identifier
-        end while self.class.exists?(identifier: self.identifier)
+          self.number = generate_identifier
+        end while self.class.exists?(number: self.number)
       end
 
       def generate_identifier
