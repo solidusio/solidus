@@ -354,42 +354,21 @@ describe "Products", :type => :feature do
     end
   end
 
-  context 'with only product permissions' do
-
-    before do
-      allow_any_instance_of(Spree::Admin::BaseController).to receive(:spree_current_user).and_return(nil)
-    end
-
-    custom_authorization! do |user|
-      can [:admin, :update, :index, :read], Spree::Product
-    end
+  context 'with only product display permissions' do
+    stub_authorization!(permission_sets: [Spree::PermissionSets::ProductDisplay])
     let!(:product) { create(:product) }
 
     it "should only display accessible links on index" do
       visit spree.admin_products_path
       expect(page).to have_link('Products')
-      expect(page).not_to have_link('Option Types')
-      expect(page).not_to have_link('Properties')
-      expect(page).not_to have_link('Prototypes')
+      expect(page).to have_link('Option Types')
+      expect(page).to have_link('Properties')
+      expect(page).to have_link('Prototypes')
 
       expect(page).not_to have_link('New Product')
       expect(page).not_to have_css('a.clone')
       expect(page).to have_css('a.edit')
       expect(page).not_to have_css('a.delete-resource')
-    end
-
-    it "should only display accessible links on edit" do
-      visit spree.admin_product_path(product)
-
-      # product tabs should be hidden
-      expect(page).to have_link('Product Details')
-      expect(page).not_to have_link('Images')
-      expect(page).not_to have_link('Variants')
-      expect(page).not_to have_link('Product Properties')
-      expect(page).not_to have_link('Stock Management')
-
-      # no create permission
-      expect(page).not_to have_link('New Product')
     end
   end
 end

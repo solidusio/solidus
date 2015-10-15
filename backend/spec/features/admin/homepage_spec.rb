@@ -55,15 +55,7 @@ describe "Homepage", :type => :feature do
   end
 
   context 'as fakedispatch user' do
-
-    before do
-      allow_any_instance_of(Spree::Admin::BaseController).to receive(:spree_current_user).and_return(nil)
-    end
-
-    custom_authorization! do |user|
-      can [:admin, :home], :dashboards
-      can [:admin, :edit, :index, :read], Spree::Order
-    end
+    stub_authorization!(permission_sets: [Spree::PermissionSets::OrderDisplay])
 
     it 'should only display tabs fakedispatch has access to' do
       visit spree.admin_path

@@ -376,25 +376,6 @@ describe Spree::Admin::OrdersController, :type => :controller do
       spree_post :index
       expect(response).to redirect_to('/unauthorized')
     end
-
-    context 'with only permissions on Order' do
-      stub_authorization! do |ability|
-        can [:admin, :manage], Spree::Order, :number => 'R987654321'
-      end
-
-      it 'should restrict returned order(s) on index when using OrderSpecificAbility' do
-        number = order.number
-
-        3.times { create(:completed_order_with_totals) }
-        expect(Spree::Order.complete.count).to eq 4
-
-        allow(user).to receive_messages :has_spree_role? => false
-        spree_get :index
-        expect(response).to render_template :index
-        expect(assigns['orders'].size).to eq 1
-        expect(assigns['orders'].first.number).to eq number
-      end
-    end
   end
 
   context "order number not given" do

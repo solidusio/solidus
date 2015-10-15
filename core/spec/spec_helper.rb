@@ -33,6 +33,7 @@ if ENV["CHECK_TRANSLATIONS"]
   require "spree/testing_support/i18n"
 end
 
+require 'spree/testing_support/dummy_ability'
 require 'spree/testing_support/factories'
 require 'spree/testing_support/preferences'
 require 'cancan/matchers'
