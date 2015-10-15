@@ -29,7 +29,9 @@
     most stores, which don't combine multiple orders into a carton, this will
     behave the same.
 
-*   Some HABTM associations have been removed from Solidus. Specifically:
+*   Some HABTM associations have been converted to HMT associations.
+    Referential integrity has also been added as well.
+    Specifically:
 
     * Prototype <=> Taxon
     * ShippingMethod <=> Zone
