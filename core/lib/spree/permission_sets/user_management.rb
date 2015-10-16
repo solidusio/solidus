@@ -2,7 +2,7 @@ module Spree
   module PermissionSets
     class UserManagement < PermissionSets::Base
       def activate!
-        can [:admin, :display, :create, :update, :save_in_address_book, :remove_from_address_book], Spree.user_class
+        can [:admin, :display, :create, :update, :save_in_address_book, :remove_from_address_book, :addresses, :orders, :items], Spree.user_class
 
         # due to how cancancan filters by associations,
         # we have to define this twice, once for `accessible_by`
