@@ -7,8 +7,9 @@ module Spree
         { translation_key: :name, attr_name: :name }
       ]
 
-      before_filter :load_transferable_stock_locations, only: [:index, :new]
+      before_filter :load_transferable_stock_locations, only: :index
       before_filter :load_variant_display_attributes, only: [:receive, :edit, :show, :tracking_info]
+      before_filter :load_source_stock_locations, only: :new
       before_filter :load_destination_stock_locations, only: :edit
       before_filter :ensure_access_to_stock_location, only: :create
       before_filter :ensure_receivable_stock_transfer, only: :receive
@@ -99,16 +100,16 @@ module Spree
         authorize! :create, duplicate
       end
 
-      def transferable_stock_locations
-        Spree::StockLocation.accessible_by(current_ability, :transfer)
+      def load_transferable_stock_locations
+        @stock_locations = accessible_source_stock_locations | accessible_destination_stock_locations
       end
 
-      def load_transferable_stock_locations
-        @stock_locations = transferable_stock_locations
+      def load_source_stock_locations
+        @source_stock_locations = accessible_source_stock_locations
       end
 
       def load_destination_stock_locations
-        @destination_stock_locations = transferable_stock_locations.where.not(id: @stock_transfer.source_location_id)
+        @destination_stock_locations = accessible_destination_stock_locations.where.not(id: @stock_transfer.source_location_id)
       end
 
       def load_variant_display_attributes
@@ -140,6 +141,14 @@ module Spree
         @stock_movements = @stock_transfer.transfer_items.received.map do |transfer_item|
           @stock_transfer.destination_location.move(transfer_item.variant, transfer_item.received_quantity, @stock_transfer)
         end
+      end
+
+      def accessible_source_stock_locations
+        @source_locations ||= Spree::StockLocation.accessible_by(current_ability, :transfer_from)
+      end
+
+      def accessible_destination_stock_locations
+        @destination_locations ||= Spree::StockLocation.accessible_by(current_ability, :transfer_to)
       end
     end
   end

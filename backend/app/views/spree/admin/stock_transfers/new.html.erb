@@ -14,7 +14,7 @@
   <fieldset class="no-border-top">
     <%= f.field_container :source_location do %>
       <%= f.label nil, Spree.t(:source_location) %>
-      <%= f.select :source_location_id, options_from_collection_for_select(@stock_locations, :id, :name), {include_blank: true}, {class: 'select2 fullwidth', "data-placeholder" => Spree.t(:select_a_stock_location)} %>
+      <%= f.select :source_location_id, options_from_collection_for_select(@source_stock_locations, :id, :name), {include_blank: true}, {class: 'select2 fullwidth', "data-placeholder" => Spree.t(:select_a_stock_location)} %>
       <%= f.error_message_on :source_location %>
     <% end %>
     <%= f.field_container :description do %>
