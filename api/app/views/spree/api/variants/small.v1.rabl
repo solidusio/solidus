@@ -1,4 +1,4 @@
-cache [I18n.locale, @current_user_roles.include?('admin'), 'small_variant', root_object]
+cache [I18n.locale, 'small_variant', root_object]
 
 attributes *variant_attributes
 

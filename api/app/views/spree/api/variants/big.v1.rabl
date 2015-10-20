@@ -1,7 +1,7 @@
 object @variant
 attributes *variant_attributes
 
-cache [I18n.locale, @current_user_roles.include?('admin'), 'big_variant', root_object]
+cache [I18n.locale, Spree::StockLocation.accessible_by(current_ability).pluck(:id).sort.join(":"), 'big_variant', root_object]
 
 extends "spree/api/variants/small"
 
