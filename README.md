@@ -50,7 +50,7 @@ After installing gems, you'll have to run the generators to create necessary
 configuration files and migrations.
 
 ```
-bundle exec rails g spree:install
+rails g spree:install
 bundle exec rake railties:install:migrations
 ```
 
@@ -63,7 +63,7 @@ bundle exec rake db:migrate
 Finally start the rails server
 
 ```
-bundle exec rails s
+rails s
 ````
 
 The solidus_frontend storefront will be accessible at http://localhost:3000/
