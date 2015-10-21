@@ -47,9 +47,9 @@ describe Spree::Promotion, :type => :model do
     end
   end
 
-  describe "#sale" do
+  describe "#apply_automatically" do
     it "defaults to false" do
-      expect(subject.sale).to eq(false)
+      expect(subject.apply_automatically).to eq(false)
     end
   end
 

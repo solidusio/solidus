@@ -1,7 +1,7 @@
 class ConvertSalePromotions < ActiveRecord::Migration
   def up
     sale_promotions.find_each do |promotion|
-      promotion.update_column(:sale, true)
+      promotion.update_column(:apply_automatically, true)
     end
   end
 

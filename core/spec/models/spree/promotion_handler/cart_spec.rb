@@ -5,7 +5,7 @@ module Spree
     describe Cart, :type => :model do
       let(:line_item) { create(:line_item) }
       let(:order) { line_item.order }
-      let(:promotion) { create(:promotion, sale: true) }
+      let(:promotion) { create(:promotion, apply_automatically: true) }
       let(:calculator) { Calculator::FlatPercentItemTotal.new(preferred_flat_percent: 10) }
 
       subject { Cart.new(order, line_item) }
@@ -35,7 +35,7 @@ module Spree
           include_context "creates an order promotion"
 
           context "for a non-sale promotion" do
-            let(:promotion) { create(:promotion, sale: false) }
+            let(:promotion) { create(:promotion, apply_automatically: false) }
 
             it "doesn't connect the promotion to the order" do
               expect {
