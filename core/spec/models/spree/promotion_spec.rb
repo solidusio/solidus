@@ -47,6 +47,12 @@ describe Spree::Promotion, :type => :model do
     end
   end
 
+  describe "#sale" do
+    it "defaults to false" do
+      expect(subject.sale).to eq(false)
+    end
+  end
+
   describe "#save" do
     let(:promotion) { Spree::Promotion.create(:name => "delete me") }
 
