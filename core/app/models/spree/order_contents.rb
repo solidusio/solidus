@@ -72,7 +72,7 @@ module Spree
       end
 
       def add_to_line_item(variant, quantity, options = {})
-        line_item = grab_line_item_by_variant(variant, false, options)
+        line_item = grab_line_item_by_variant(variant, false, options.merge(operation: 'add'))
 
         if line_item
           line_item.quantity += quantity.to_i
@@ -91,7 +91,7 @@ module Spree
       end
 
       def remove_from_line_item(variant, quantity, options = {})
-        line_item = grab_line_item_by_variant(variant, true, options)
+        line_item = grab_line_item_by_variant(variant, true, options.merge(operation: 'remove'))
         line_item.quantity -= quantity
         line_item.target_shipment= options[:shipment]
 
