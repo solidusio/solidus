@@ -1,8 +1,6 @@
 class ConvertSalePromotions < ActiveRecord::Migration
   def up
-    sale_promotions.find_each do |promotion|
-      promotion.update_column(:apply_automatically, true)
-    end
+    sale_promotions.update_all(apply_automatically: true)
   end
 
   def down
