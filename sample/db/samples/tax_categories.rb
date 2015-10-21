@@ -1,1 +1,1 @@
-Spree::TaxCategory.create!(:name => "Default")
+Spree::TaxCategory.find_or_create_by!(:name => "Default")
