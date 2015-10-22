@@ -6,7 +6,8 @@ module Spree
       # either come from assigned product group or are assingned directly to
       # the rule.
       class Product < PromotionRule
-        has_many :product_promotion_rules, class_name: 'Spree::ProductPromotionRule', foreign_key: :promotion_rule_id
+        has_many :product_promotion_rules, dependent: :destroy, foreign_key: :promotion_rule_id,
+                                           class_name: 'Spree::ProductPromotionRule'
         has_many :products, class_name: 'Spree::Product', through: :product_promotion_rules
 
         MATCH_POLICIES = %w(any all none)
