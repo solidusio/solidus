@@ -17,7 +17,7 @@ module Spree
     end
 
     def remove_line_item(line_item, options = {})
-      line_item.destroy
+      line_item.destroy!
       after_add_or_remove(line_item, options)
     end
 
