@@ -48,8 +48,30 @@ describe Spree::Promotion, :type => :model do
   end
 
   describe "#apply_automatically" do
+    subject { build(:promotion) }
+
     it "defaults to false" do
       expect(subject.apply_automatically).to eq(false)
+    end
+
+    context "when set to true" do
+      before { subject.apply_automatically = true }
+
+      it "should remain valid" do
+        expect(subject).to be_valid
+      end
+
+      it "invalidates the promotion when it has a code" do
+        subject.codes.build(value: "foo")
+        expect(subject).to_not be_valid
+        expect(subject.errors).to include(:apply_automatically)
+      end
+
+      it "invalidates the promotion when it has a path" do
+        subject.path = "foo"
+        expect(subject).to_not be_valid
+        expect(subject.errors).to include(:apply_automatically)
+      end
     end
   end
 

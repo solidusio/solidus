@@ -28,6 +28,7 @@ module Spree
     validates :usage_limit, numericality: { greater_than: 0, allow_nil: true }
     validates :per_code_usage_limit, numericality: { greater_than_or_equal_to: 0, allow_nil: true }
     validates :description, length: { maximum: 255 }
+    validate :apply_automatically_disallowed_with_codes_or_paths
 
     before_save :normalize_blank_values
 
@@ -228,6 +229,12 @@ module Spree
 
     def match_all?
       match_policy == "all"
+    end
+
+    def apply_automatically_disallowed_with_codes_or_paths
+      return unless apply_automatically
+      errors.add(:apply_automatically, :disallowed_with_code) if codes.any?
+      errors.add(:apply_automatically, :disallowed_with_path) if path.present?
     end
   end
 end
