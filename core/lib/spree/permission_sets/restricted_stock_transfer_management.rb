@@ -19,32 +19,42 @@ module Spree
     class RestrictedStockTransferManagement < PermissionSets::Base
       def activate!
         if user.stock_locations.any?
-          can :display, Spree::StockLocation, id: location_ids
+          can :display, Spree::StockLocation, id: user_location_ids
           can [:admin, :create], Spree::StockTransfer
-          can :display, Spree::StockTransfer, source_location_id: location_ids
-          can :display, Spree::StockTransfer, destination_location_id: location_ids
+          can :display, Spree::StockTransfer, source_location_id: source_location_ids
+          can :display, Spree::StockTransfer, destination_location_id: destination_location_ids
           can :manage, Spree::StockTransfer,
-            source_location_id: location_ids,
-            destination_location_id: destination_location_ids
+            source_location_id: source_location_ids,
+            destination_location_id: destination_location_ids_with_undefined_destination
 
-          can :transfer, Spree::StockLocation, id: location_ids
+          can :transfer_from, Spree::StockLocation, id: source_location_ids
+          can :transfer_to, Spree::StockLocation, id: destination_location_ids
 
           can :manage, Spree::TransferItem, stock_transfer: {
-            source_location_id: location_ids,
-            destination_location_id: destination_location_ids
+            source_location_id: source_location_ids,
+            destination_location_id: destination_location_ids_with_undefined_destination
           }
         end
       end
 
       private
 
-      def location_ids
-        # either source_location_id or destination_location_id can be nil.
-        @ids ||= user.stock_locations.pluck(:id)
+      def user_location_ids
+        @user_location_ids ||= user.stock_locations.pluck(:id)
       end
 
+      # @note Meant to facilitate extension - override to define custom ids
+      def source_location_ids
+        user_location_ids
+      end
+
+      # @note Meant to facilitate extension - override to define custom ids
       def destination_location_ids
-        location_ids + [nil]
+        user_location_ids
+      end
+
+      def destination_location_ids_with_undefined_destination
+        destination_location_ids + [nil]
       end
     end
   end

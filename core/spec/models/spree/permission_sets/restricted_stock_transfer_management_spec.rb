@@ -45,7 +45,7 @@ describe Spree::PermissionSets::RestrictedStockTransferManagement do
       described_class.new(ability).activate!
     end
 
-    context "when the user is associated with one of the locations" do
+    context "when the user is only associated with the source location" do
       let(:stock_locations) {[source_location]}
 
       it { is_expected.to be_able_to(:display, source_location) }
@@ -55,8 +55,11 @@ describe Spree::PermissionSets::RestrictedStockTransferManagement do
       it { is_expected.to be_able_to(:admin, Spree::StockTransfer) }
       it { is_expected.to be_able_to(:create, Spree::StockTransfer) }
 
-      it { is_expected.to be_able_to(:transfer, source_location) }
-      it { is_expected.not_to be_able_to(:transfer, destination_location) }
+      it { is_expected.to be_able_to(:transfer_from, source_location) }
+      it { is_expected.to be_able_to(:transfer_to, source_location) }
+
+      it { is_expected.not_to be_able_to(:transfer_from, destination_location) }
+      it { is_expected.not_to be_able_to(:transfer_to, destination_location) }
 
       it { is_expected.to be_able_to(:display, transfer_with_source) }
       it { is_expected.to be_able_to(:display, transfer_with_source_and_destination) }
@@ -82,8 +85,11 @@ describe Spree::PermissionSets::RestrictedStockTransferManagement do
       it { is_expected.to be_able_to(:admin, Spree::StockTransfer) }
       it { is_expected.to be_able_to(:create, Spree::StockTransfer) }
 
-      it { is_expected.to be_able_to(:transfer, source_location) }
-      it { is_expected.to be_able_to(:transfer, destination_location) }
+      it { is_expected.to be_able_to(:transfer_from, source_location) }
+      it { is_expected.to be_able_to(:transfer_to, source_location) }
+
+      it { is_expected.to be_able_to(:transfer_from, destination_location) }
+      it { is_expected.to be_able_to(:transfer_to, destination_location) }
 
       it { is_expected.to be_able_to(:display, transfer_with_source) }
       it { is_expected.to be_able_to(:display, transfer_with_source_and_destination) }
@@ -108,8 +114,11 @@ describe Spree::PermissionSets::RestrictedStockTransferManagement do
       it { is_expected.not_to be_able_to(:admin, Spree::StockTransfer) }
       it { is_expected.not_to be_able_to(:create, Spree::StockTransfer) }
 
-      it { is_expected.not_to be_able_to(:transfer, source_location) }
-      it { is_expected.not_to be_able_to(:transfer, destination_location) }
+      it { is_expected.not_to be_able_to(:transfer_from, source_location) }
+      it { is_expected.not_to be_able_to(:transfer_to, source_location) }
+
+      it { is_expected.not_to be_able_to(:transfer_from, destination_location) }
+      it { is_expected.not_to be_able_to(:transfer_to, destination_location) }
 
       it { is_expected.not_to be_able_to(:manage, transfer_with_source) }
       it { is_expected.not_to be_able_to(:manage, transfer_with_destination) }
@@ -131,8 +140,11 @@ describe Spree::PermissionSets::RestrictedStockTransferManagement do
     it { is_expected.to_not be_able_to(:display, source_location) }
     it { is_expected.to_not be_able_to(:display, destination_location) }
 
-    it { is_expected.not_to be_able_to(:transfer, source_location) }
-    it { is_expected.not_to be_able_to(:transfer, destination_location) }
+    it { is_expected.not_to be_able_to(:transfer_from, source_location) }
+    it { is_expected.not_to be_able_to(:transfer_to, source_location) }
+
+    it { is_expected.not_to be_able_to(:transfer_from, destination_location) }
+    it { is_expected.not_to be_able_to(:transfer_to, destination_location) }
 
     it { is_expected.to_not be_able_to(:display, source_location) }
     it { is_expected.to_not be_able_to(:display, destination_location) }
@@ -146,4 +158,3 @@ describe Spree::PermissionSets::RestrictedStockTransferManagement do
     it { is_expected.not_to be_able_to(:manage, source_and_destination_transfer_item) }
   end
 end
-
