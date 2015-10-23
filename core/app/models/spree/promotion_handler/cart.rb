@@ -40,7 +40,7 @@ module Spree
         end
 
         def sale_promotions
-          Promotion.applied_automatically.active.includes(:promotion_rules)
+          Promotion.where(apply_automatically: true).active.includes(:promotion_rules)
         end
 
         def promotion_code(promotion)
