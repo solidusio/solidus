@@ -15,6 +15,7 @@ module Spree
 
     belongs_to :tax_category, -> { with_deleted }, :class_name => 'Spree::TaxCategory'
     has_many :shipping_method_stock_locations, class_name: Spree::ShippingMethodStockLocation
+    has_many :shipping_method_stock_locations, dependent: :destroy, class_name: "Spree::ShippingMethodStockLocation"
     has_many :stock_locations, through: :shipping_method_stock_locations
 
     validates :name, presence: true
