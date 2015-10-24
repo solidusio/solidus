@@ -40,20 +40,7 @@ module Spree
         end
 
         def sale_promotions
-          promo_table = Promotion.arel_table
-          code_table  = PromotionCode.arel_table
-
-          promotion_code_join = promo_table.join(code_table, Arel::Nodes::OuterJoin).on(
-            promo_table[:id].eq(code_table[:promotion_id])
-          ).join_sources
-
-          Promotion.active.includes(:promotion_rules).
-            joins(promotion_code_join).
-            where(
-              code_table[:value].eq(nil).and(
-                promo_table[:path].eq(nil)
-              )
-            ).distinct
+          Promotion.where(apply_automatically: true).active.includes(:promotion_rules)
         end
 
         def promotion_code(promotion)

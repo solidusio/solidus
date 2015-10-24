@@ -9,7 +9,7 @@ describe "Automatic promotions", :type => :feature, :js => true do
   let!(:product) { create(:product, :name => "RoR Mug", :price => 20) }
 
   let!(:promotion) do
-    promotion = Spree::Promotion.create!(:name => "$10 off when you spend more than $100")
+    promotion = Spree::Promotion.create!(name: "$10 off when you spend more than $100", apply_automatically: true)
 
    calculator = Spree::Calculator::FlatRate.new
    calculator.preferred_amount = 10

@@ -6,7 +6,7 @@ module Spree
     let(:shirt) { create(:variant) }
 
     context "adds item to cart and activates promo" do
-      let(:promotion) { Promotion.create name: 'Huhu' }
+      let(:promotion) { Promotion.create name: 'Huhu', apply_automatically: true }
       let(:calculator) { Calculator::FlatPercentItemTotal.new(:preferred_flat_percent => 10) }
       let!(:action) { Promotion::Actions::CreateAdjustment.create(promotion: promotion, calculator: calculator) }
 

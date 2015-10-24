@@ -299,6 +299,11 @@ en:
           attributes:
             currency:
               must_match_order_currency: "Must match order currency"
+        spree/promotion:
+          attributes:
+            apply_automatically:
+              disallowed_with_code: Disallowed for promotions with a code
+              disallowed_with_path: Disallowed for promotions with a path
         spree/refund:
           attributes:
             amount:
