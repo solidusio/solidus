@@ -64,6 +64,11 @@ describe Spree::OrderContents, :type => :model do
       expect(order_stock_locations.map(&:stock_location_id)).to eq([stock_location.id, stock_location_2.id])
     end
 
+    it "should pass the add operation when looking up line item" do
+      expect(order).to receive(:find_line_item_by_variant).with(variant, { operation: 'add' })
+      subject.add(variant, 1)
+    end
+
     context "running promotions" do
       let(:promotion) { create(:promotion, apply_automatically: true) }
       let(:calculator) { Spree::Calculator::FlatRate.new(:preferred_amount => 10) }
@@ -159,6 +164,13 @@ describe Spree::OrderContents, :type => :model do
       subject.remove(variant,1)
       expect(order.item_total.to_f).to eq(19.99)
       expect(order.total.to_f).to eq(19.99)
+    end
+
+    it "should pass the remove operation when looking up line item" do
+      expect(order).to receive(:find_line_item_by_variant).once.with(variant, { operation: 'add' }).and_call_original
+      expect(order).to receive(:find_line_item_by_variant).once.with(variant, { operation: 'remove' }).and_call_original
+      subject.add(variant, 1)
+      subject.remove(variant, 1)
     end
   end
 
