@@ -106,8 +106,8 @@ describe Spree::Reimbursement, type: :model do
         return_item.reload
         expect(return_item.additional_tax_total).to be > 0
         expect(return_item.additional_tax_total).to eq line_item.additional_tax_total
-        expect(reimbursement.total).to eq line_item.pre_tax_amount + line_item.additional_tax_total
-        expect(Spree::Refund.last.amount).to eq line_item.pre_tax_amount + line_item.additional_tax_total
+        expect(reimbursement.total).to eq line_item.amount + line_item.additional_tax_total
+        expect(Spree::Refund.last.amount).to eq line_item.amount + line_item.additional_tax_total
       end
     end
 
@@ -192,8 +192,8 @@ describe Spree::Reimbursement, type: :model do
       subject { reimbursement.calculated_total }
 
       before do
-        reimbursement.return_items << Spree::ReturnItem.new(pre_tax_amount: 10.003)
-        reimbursement.return_items << Spree::ReturnItem.new(pre_tax_amount: 10.003)
+        reimbursement.return_items << Spree::ReturnItem.new(amount: 10.003)
+        reimbursement.return_items << Spree::ReturnItem.new(amount: 10.003)
       end
 
       it 'rounds down' do

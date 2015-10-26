@@ -184,7 +184,7 @@ en:
         exchange_variant: Exchange for
         inventory_unit_state: State
         item_received?: "Item Received?"
-        pre_tax_amount: Pre-Tax Amount
+        pre_tax_amount: Amount before sales tax
         preferred_reimbursement_type_id: Preferred Reimbursement Type
         reception_status: Reception Status
         resellable: "Resellable?"

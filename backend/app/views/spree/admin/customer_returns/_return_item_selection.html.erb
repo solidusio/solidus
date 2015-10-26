@@ -6,7 +6,7 @@
       </th>
       <th><%= Spree::Product.model_name.human %></th>
       <th><%= Spree::Variant.human_attribute_name(:sku) %></th>
-      <th><%= Spree::ReturnItem.human_attribute_name(:pre_tax_amount) %></th>
+      <th><%= Spree::ReturnItem.human_attribute_name(:amount) %></th>
       <th><%= Spree::ReturnItem.human_attribute_name(:inventory_unit_state) %></th>
       <th><%= Spree::ReturnItem.human_attribute_name(:exchange_variant) %></th>
       <th><%= Spree::ReturnItem.human_attribute_name(:resellable) %></th>
@@ -23,9 +23,9 @@
           <div style="display:none">
             <%= item_fields.hidden_field :inventory_unit_id %>
             <%= item_fields.hidden_field :return_authorization_id %>
-            <%= item_fields.hidden_field :pre_tax_amount %>
+            <%= item_fields.hidden_field :amount %>
           </div>
-          <%= item_fields.check_box :returned, {checked: false, class: 'add-item', "data-price" => return_item.pre_tax_amount}, '1', '0' %>
+          <%= item_fields.check_box :returned, {checked: false, class: 'add-item', "data-price" => return_item.amount}, '1', '0' %>
         </td>
         <td>
           <div class="variant-name"><%= return_item.inventory_unit.variant.name %></div>
@@ -35,7 +35,7 @@
           <%= return_item.inventory_unit.variant.sku %>
         </td>
         <td class="align-center">
-          <%= return_item.display_pre_tax_amount %>
+          <%= return_item.display_amount %>
         </td>
         <td class="align-center">
           <%= return_item.inventory_unit.state %>

@@ -193,7 +193,7 @@ module Spree
               return_items_attributes: {
                 "0" => {
                   returned: "1",
-                  "pre_tax_amount" => "15.99",
+                  amount: "15.99",
                   inventory_unit_id: order.inventory_units.shipped.last.id,
                   reception_status_event: reception_status_event
                 }

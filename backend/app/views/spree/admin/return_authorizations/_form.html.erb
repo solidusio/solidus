@@ -27,7 +27,7 @@
           <td class="return-item-checkbox align-center inventory-unit-checkbox">
             <% if editable %>
               <%= item_fields.hidden_field :inventory_unit_id %>
-              <%= item_fields.check_box :_destroy, {checked: return_item.persisted?, class: 'add-item', "data-price" => return_item.pre_tax_amount}, '0', '1' %>
+              <%= item_fields.check_box :_destroy, {checked: return_item.persisted?, class: 'add-item', "data-price" => return_item.amount}, '0', '1' %>
             <% end %>
           </td>
           <td class="return-item-product">
@@ -36,13 +36,13 @@
           </td>
           <td class="return-item-state align-center"><%= inventory_unit.state.humanize %></td>
           <td class="return-item-charged align-center">
-            <%= return_item.display_pre_tax_amount %>
+            <%= return_item.display_amount %>
           </td>
           <td class="return-item-pre-tax-refund-amount align-center">
             <% if editable %>
-              <%= item_fields.text_field :pre_tax_amount, { class: 'refund-amount-input' } %>
+              <%= item_fields.text_field :amount, { class: 'refund-amount-input' } %>
             <% else %>
-              <%= return_item.display_pre_tax_amount %>
+              <%= return_item.display_amount %>
             <% end %>
           </td>
           <td class="return-item-reimbursement-type">
