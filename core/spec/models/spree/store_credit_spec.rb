@@ -6,7 +6,6 @@ describe Spree::StoreCredit do
   let(:store_credit) { build(:store_credit, store_credit_attrs) }
   let(:store_credit_attrs) { {} }
 
-
   describe "callbacks" do
     subject { store_credit.save }
 
@@ -56,6 +55,39 @@ describe Spree::StoreCredit do
 
       it "doesn't overwrite the type" do
         expect{ subject }.to_not change{ store_credit.credit_type }
+      end
+    end
+
+    ['cart', 'address', 'delivery', 'payment'].each do |order_state|
+      context "completing order in the #{order_state} step" do
+        let(:order) { create(:order_with_line_items, state: order_state) }
+        let(:store_credit_attrs) { { user: order.user, amount: order.total } }
+
+        before do
+          subject
+          order.next! until order.can_complete?
+          order.complete!
+        end
+
+        it "creates a payment using the user's store credit" do
+          expect(order.payments.valid.store_credits).to_not be_empty
+        end
+      end
+    end
+
+    context "completing an order in the confirm step" do
+      let(:order) { create(:order_with_line_items, state: "payment") }
+      let!(:payment) { create(:payment, order: order) }
+      let(:store_credit_attrs) { { user: order.user } }
+
+      before do
+        order.next!
+        subject
+        order.complete!
+      end
+
+      it "creates a payment using the user's store credit" do
+        expect(order.reload.payments.valid.store_credits).to_not be_empty
       end
     end
   end

@@ -30,6 +30,7 @@ class Spree::StoreCredit < Spree::Base
   scope :order_by_priority, -> { includes(:credit_type).order('spree_store_credit_types.priority ASC') }
 
   after_save :store_event
+  after_create :apply_to_orders_in_confirm_state
   before_validation :associate_credit_type
   before_validation :validate_category_unchanged, on: :update
   before_destroy :validate_no_amount_used
@@ -286,6 +287,13 @@ class Spree::StoreCredit < Spree::Base
     unless self.type_id
       credit_type_name = category.try(:non_expiring?) ? Spree.t("store_credit.non_expiring") : Spree.t("store_credit.expiring")
       self.credit_type = Spree::StoreCreditType.find_by_name(credit_type_name)
+    end
+  end
+
+  def apply_to_orders_in_confirm_state
+    user.orders.by_state("confirm").each do |order|
+      order.update_attributes!(state: "payment")
+      order.next!
     end
   end
 end
