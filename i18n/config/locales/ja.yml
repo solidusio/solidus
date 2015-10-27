@@ -984,8 +984,8 @@ ja:
         description: "最初の注文である"
         name: "最初の注文"
       item_total:
-        description: "合計個数"
-        name: "合計個数"
+        description: "商品金額合計"
+        name: "商品金額合計"
       landing_page:
         description: "お客様が特定のページを訪問済みである"
         name: "ランディングページ"
