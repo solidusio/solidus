@@ -318,13 +318,16 @@ describe "Products", :type => :feature do
         expect(page).to have_content("SELECT FROM PROTOTYPE")
         click_link "Select From Prototype"
 
-        within(:css, "#prototypes tr#row_1") do
-          click_link 'Select'
-          wait_for_ajax
-        end
+        row = find('#prototypes tr', text: 'Size')
+        row.click_link 'Select'
 
-        within(:css, "tr.product_property:first-child") do
-          expect(first('input[type=text]').value).to eq('baseball_cap_color')
+        # The following is unfortunate.
+        # It is tough to distinguish between the different fields, so we assert
+        # that there are two rows (ensuring one has been added) and then
+        # inspect the first one.
+        expect(page).to have_css('#product_properties .product_property', count: 2)
+        within('#product_properties .product_property:nth-child(1)') do
+          expect(find('input[type=text]').value).to eq('baseball_cap_color')
         end
       end
     end
