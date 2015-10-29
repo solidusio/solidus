@@ -226,7 +226,7 @@ module Spree
 
     describe 'GET #show' do
       let(:order) { create :order_with_line_items }
-      let(:adjustment) { FactoryGirl.create(:adjustment, order: order) }
+      let(:adjustment) { FactoryGirl.create(:adjustment, adjustable: order, order: order) }
 
       subject { api_get :show, id: order.to_param }
 

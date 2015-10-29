@@ -33,9 +33,17 @@ describe Spree::Adjustment, :type => :model do
       Spree::Adjustment.non_tax.to_a
     end
 
-    let!(:tax_adjustment) { create(:adjustment, order: order, source: create(:tax_rate))                   }
-    let!(:non_tax_adjustment_with_source) { create(:adjustment, order: order, source_type: 'Spree::Order', source_id: nil) }
-    let!(:non_tax_adjustment_without_source) { create(:adjustment, order: order, source: nil)                                 }
+    let!(:tax_adjustment) do
+      create(:adjustment, adjustable: order, order: order, source: create(:tax_rate))
+    end
+
+    let!(:non_tax_adjustment_with_source) do
+      create(:adjustment, adjustable: order, order: order, source_type: 'Spree::Order', source_id: nil)
+    end
+
+    let!(:non_tax_adjustment_without_source) do
+      create(:adjustment, adjustable: order, order: order, source: nil)
+    end
 
     it 'select non-tax adjustments' do
       expect(subject).to_not include tax_adjustment
