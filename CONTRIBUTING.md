@@ -46,6 +46,12 @@ At this point you're waiting on us. We like to at least comment on, if not
 accept, pull requests within three business days (and, typically, one business
 day). We may suggest some changes or improvements or alternatives.
 
+If any changes to this PR are deemed necessary, please add them as extra commits.
+This ensures that the reviewer can see what has changed since they last reviewed
+the code. Due to the way GitHub handles out-of-date commits, this should also
+make it reasonably obvious what issues have or haven't been addressed. Large or
+tricky changes may require several passes of review and changes.
+
 Some things that will increase the chance that your pull request is accepted,
 taken straight from the Ruby on Rails guide:
 
