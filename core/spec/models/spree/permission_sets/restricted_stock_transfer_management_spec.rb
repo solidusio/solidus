@@ -58,22 +58,70 @@ describe Spree::PermissionSets::RestrictedStockTransferManagement do
       it { is_expected.to be_able_to(:transfer_from, source_location) }
       it { is_expected.to be_able_to(:transfer_to, source_location) }
 
-      it { is_expected.not_to be_able_to(:transfer_from, destination_location) }
-      it { is_expected.not_to be_able_to(:transfer_to, destination_location) }
+      it { is_expected.to_not be_able_to(:transfer_from, destination_location) }
+      it { is_expected.to_not be_able_to(:transfer_to, destination_location) }
 
       it { is_expected.to be_able_to(:display, transfer_with_source) }
       it { is_expected.to be_able_to(:display, transfer_with_source_and_destination) }
-      it { is_expected.not_to be_able_to(:display, transfer_with_destination) }
+      it { is_expected.to_not be_able_to(:display, transfer_with_destination) }
 
       it { is_expected.to be_able_to(:manage, transfer_with_source) }
-      it { is_expected.not_to be_able_to(:manage, transfer_with_destination) }
-      it { is_expected.not_to be_able_to(:manage, transfer_with_source_and_destination) }
+      it { is_expected.to be_able_to(:manage, transfer_with_source_and_destination) }
+      it { is_expected.to_not be_able_to(:manage, transfer_with_destination) }
 
       it { is_expected.to be_able_to(:manage, source_transfer_item) }
-      it { is_expected.not_to be_able_to(:manage, destination_transfer_item) }
-      it { is_expected.not_to be_able_to(:manage, source_and_destination_transfer_item) }
+      it { is_expected.to be_able_to(:manage, source_and_destination_transfer_item) }
+      it { is_expected.to_not be_able_to(:manage, destination_transfer_item) }
+
+      context "stock transfer has been shipped" do
+        before do
+          transfer_with_source_and_destination.update_attributes!(shipped_at: Time.now)
+          described_class.new(ability).activate!
+        end
+
+        it { is_expected.to_not be_able_to(:manage, transfer_with_source_and_destination) }
+        it { is_expected.to_not be_able_to(:manage, source_and_destination_transfer_item) }
+      end
     end
 
+    context "when the user is only associated with the destination location" do
+      let(:stock_locations) {[destination_location]}
+
+      it { is_expected.to be_able_to(:display, destination_location) }
+      it { is_expected.to_not be_able_to(:display, source_location) }
+
+      it { is_expected.to be_able_to(:display, Spree::StockTransfer) }
+      it { is_expected.to be_able_to(:admin, Spree::StockTransfer) }
+      it { is_expected.to be_able_to(:create, Spree::StockTransfer) }
+
+      it { is_expected.to_not be_able_to(:transfer_from, source_location) }
+      it { is_expected.to_not be_able_to(:transfer_to, source_location) }
+
+      it { is_expected.to be_able_to(:transfer_from, destination_location) }
+      it { is_expected.to be_able_to(:transfer_to, destination_location) }
+
+      it { is_expected.to be_able_to(:display, transfer_with_destination) }
+      it { is_expected.to_not be_able_to(:display, transfer_with_source) }
+      it { is_expected.to_not be_able_to(:display, transfer_with_source_and_destination) }
+
+      it { is_expected.to be_able_to(:manage, transfer_with_destination) }
+      it { is_expected.to_not be_able_to(:manage, transfer_with_source) }
+      it { is_expected.to_not be_able_to(:manage, transfer_with_source_and_destination) }
+
+      it { is_expected.to be_able_to(:manage, destination_transfer_item) }
+      it { is_expected.to_not be_able_to(:manage, source_transfer_item) }
+      it { is_expected.to_not be_able_to(:manage, source_and_destination_transfer_item) }
+
+      context "stock transfer has been shipped" do
+        before do
+          transfer_with_source_and_destination.update_attributes!(shipped_at: Time.now)
+          described_class.new(ability).activate!
+        end
+
+        it { is_expected.to be_able_to(:manage, transfer_with_source_and_destination) }
+        it { is_expected.to be_able_to(:manage, source_and_destination_transfer_item) }
+      end
+    end
 
     context "when the user is associated with both locations" do
       let(:stock_locations) {[source_location, destination_location]}
@@ -102,6 +150,16 @@ describe Spree::PermissionSets::RestrictedStockTransferManagement do
       it { is_expected.to be_able_to(:manage, source_transfer_item) }
       it { is_expected.to be_able_to(:manage, destination_transfer_item) }
       it { is_expected.to be_able_to(:manage, source_and_destination_transfer_item) }
+
+      context "stock transfer has been shipped" do
+        before do
+          transfer_with_source_and_destination.update_attributes!(shipped_at: Time.now)
+          described_class.new(ability).activate!
+        end
+
+        it { is_expected.to be_able_to(:manage, transfer_with_source_and_destination) }
+        it { is_expected.to be_able_to(:manage, source_and_destination_transfer_item) }
+      end
     end
 
     context "when the user is associated with neither location" do
@@ -110,51 +168,51 @@ describe Spree::PermissionSets::RestrictedStockTransferManagement do
       it { is_expected.to_not be_able_to(:display, source_location) }
       it { is_expected.to_not be_able_to(:display, destination_location) }
 
-      it { is_expected.not_to be_able_to(:display, Spree::StockTransfer) }
-      it { is_expected.not_to be_able_to(:admin, Spree::StockTransfer) }
-      it { is_expected.not_to be_able_to(:create, Spree::StockTransfer) }
+      it { is_expected.to_not be_able_to(:display, Spree::StockTransfer) }
+      it { is_expected.to_not be_able_to(:admin, Spree::StockTransfer) }
+      it { is_expected.to_not be_able_to(:create, Spree::StockTransfer) }
 
-      it { is_expected.not_to be_able_to(:transfer_from, source_location) }
-      it { is_expected.not_to be_able_to(:transfer_to, source_location) }
+      it { is_expected.to_not be_able_to(:transfer_from, source_location) }
+      it { is_expected.to_not be_able_to(:transfer_to, source_location) }
 
-      it { is_expected.not_to be_able_to(:transfer_from, destination_location) }
-      it { is_expected.not_to be_able_to(:transfer_to, destination_location) }
+      it { is_expected.to_not be_able_to(:transfer_from, destination_location) }
+      it { is_expected.to_not be_able_to(:transfer_to, destination_location) }
 
-      it { is_expected.not_to be_able_to(:manage, transfer_with_source) }
-      it { is_expected.not_to be_able_to(:manage, transfer_with_destination) }
-      it { is_expected.not_to be_able_to(:manage, transfer_with_source_and_destination) }
+      it { is_expected.to_not be_able_to(:manage, transfer_with_source) }
+      it { is_expected.to_not be_able_to(:manage, transfer_with_destination) }
+      it { is_expected.to_not be_able_to(:manage, transfer_with_source_and_destination) }
 
-      it { is_expected.not_to be_able_to(:manage, source_transfer_item) }
-      it { is_expected.not_to be_able_to(:manage, destination_transfer_item) }
-      it { is_expected.not_to be_able_to(:manage, source_and_destination_transfer_item) }
+      it { is_expected.to_not be_able_to(:manage, source_transfer_item) }
+      it { is_expected.to_not be_able_to(:manage, destination_transfer_item) }
+      it { is_expected.to_not be_able_to(:manage, source_and_destination_transfer_item) }
     end
   end
 
   context "when not activated" do
     let(:user) { create :user }
 
-    it { is_expected.not_to be_able_to(:display, Spree::StockTransfer) }
-    it { is_expected.not_to be_able_to(:admin, Spree::StockTransfer) }
-    it { is_expected.not_to be_able_to(:create, Spree::StockTransfer) }
+    it { is_expected.to_not be_able_to(:display, Spree::StockTransfer) }
+    it { is_expected.to_not be_able_to(:admin, Spree::StockTransfer) }
+    it { is_expected.to_not be_able_to(:create, Spree::StockTransfer) }
 
     it { is_expected.to_not be_able_to(:display, source_location) }
     it { is_expected.to_not be_able_to(:display, destination_location) }
 
-    it { is_expected.not_to be_able_to(:transfer_from, source_location) }
-    it { is_expected.not_to be_able_to(:transfer_to, source_location) }
+    it { is_expected.to_not be_able_to(:transfer_from, source_location) }
+    it { is_expected.to_not be_able_to(:transfer_to, source_location) }
 
-    it { is_expected.not_to be_able_to(:transfer_from, destination_location) }
-    it { is_expected.not_to be_able_to(:transfer_to, destination_location) }
+    it { is_expected.to_not be_able_to(:transfer_from, destination_location) }
+    it { is_expected.to_not be_able_to(:transfer_to, destination_location) }
 
     it { is_expected.to_not be_able_to(:display, source_location) }
     it { is_expected.to_not be_able_to(:display, destination_location) }
 
-    it { is_expected.not_to be_able_to(:manage, transfer_with_source) }
-    it { is_expected.not_to be_able_to(:manage, transfer_with_destination) }
-    it { is_expected.not_to be_able_to(:manage, transfer_with_source_and_destination) }
+    it { is_expected.to_not be_able_to(:manage, transfer_with_source) }
+    it { is_expected.to_not be_able_to(:manage, transfer_with_destination) }
+    it { is_expected.to_not be_able_to(:manage, transfer_with_source_and_destination) }
 
-    it { is_expected.not_to be_able_to(:manage, source_transfer_item) }
-    it { is_expected.not_to be_able_to(:manage, destination_transfer_item) }
-    it { is_expected.not_to be_able_to(:manage, source_and_destination_transfer_item) }
+    it { is_expected.to_not be_able_to(:manage, source_transfer_item) }
+    it { is_expected.to_not be_able_to(:manage, destination_transfer_item) }
+    it { is_expected.to_not be_able_to(:manage, source_and_destination_transfer_item) }
   end
 end

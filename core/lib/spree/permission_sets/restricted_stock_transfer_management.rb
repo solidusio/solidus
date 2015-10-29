@@ -20,20 +20,21 @@ module Spree
       def activate!
         if user.stock_locations.any?
           can :display, Spree::StockLocation, id: user_location_ids
-          can [:admin, :create], Spree::StockTransfer
-          can :display, Spree::StockTransfer, source_location_id: source_location_ids
-          can :display, Spree::StockTransfer, destination_location_id: destination_location_ids
-          can :manage, Spree::StockTransfer,
-            source_location_id: source_location_ids,
-            destination_location_id: destination_location_ids_with_undefined_destination
 
-          can :transfer_from, Spree::StockLocation, id: source_location_ids
-          can :transfer_to, Spree::StockLocation, id: destination_location_ids
+          can :transfer_from, Spree::StockLocation, id: user_location_ids
+          can :transfer_to, Spree::StockLocation, id: user_location_ids
 
-          can :manage, Spree::TransferItem, stock_transfer: {
-            source_location_id: source_location_ids,
-            destination_location_id: destination_location_ids_with_undefined_destination
-          }
+          can :display, Spree::StockTransfer, source_location_id: user_location_ids
+          can :manage, Spree::StockTransfer, source_location_id: user_location_ids + [nil], shipped_at: nil
+          can :manage, Spree::StockTransfer, destination_location_id: user_location_ids
+          # Do not allow managing transfers to a permitted destination_location_id from an
+          # unauthorized stock location until it's been shipped to the permitted location.
+          cannot :manage, Spree::StockTransfer, source_location_id: not_permitted_location_ids, shipped_at: nil
+
+          can :display, Spree::TransferItem, stock_transfer: { source_location_id: user_location_ids }
+          can :manage, Spree::TransferItem, stock_transfer: { source_location_id: user_location_ids + [nil], shipped_at: nil }
+          can :manage, Spree::TransferItem, stock_transfer: { destination_location_id: user_location_ids }
+          cannot :manage, Spree::TransferItem, stock_transfer: { source_location_id: not_permitted_location_ids, shipped_at: nil }
         end
       end
 
@@ -43,18 +44,8 @@ module Spree
         @user_location_ids ||= user.stock_locations.pluck(:id)
       end
 
-      # @note Meant to facilitate extension - override to define custom ids
-      def source_location_ids
-        user_location_ids
-      end
-
-      # @note Meant to facilitate extension - override to define custom ids
-      def destination_location_ids
-        user_location_ids
-      end
-
-      def destination_location_ids_with_undefined_destination
-        destination_location_ids + [nil]
+      def not_permitted_location_ids
+        @not_permitted_location_ids ||= Spree::StockLocation.where.not(id: user_location_ids).pluck(:id)
       end
     end
   end
