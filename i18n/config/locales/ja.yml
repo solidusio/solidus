@@ -48,6 +48,7 @@ ja:
         email: "メールアドレス"
         ip_address: IPアドレス
         item_total: "合計個数"
+        name: "注文"
         number: "注文番号"
         payment_state: "支払い状態"
         shipment_state: "配送状態"
@@ -378,17 +379,17 @@ ja:
       tab:
         configuration:
         option_types:
-        orders:
+        orders: "注文"
         overview:
-        products:
+        products: "商品"
         promotions:
         promotion_categories:
         properties:
         prototypes:
-        reports:
+        reports: "リポート"
         taxonomies:
         taxons:
-        users:
+        users: "ユーザー"
       user:
         account:
         addresses:
@@ -644,6 +645,7 @@ ja:
     failed_payment_attempts:
     filename: "ファイル名"
     fill_in_customer_info:
+    filter: "フィルタ"
     filter_results: "検索結果"
     finalize: "確定"
     finalized:
@@ -868,7 +870,7 @@ ja:
         thanks:
         total:
     order_not_found:
-    order_number:
+    order_number: "注文"
     order_processed_successfully: "注文が完了しました。"
     order_resumed:
     order_state:
