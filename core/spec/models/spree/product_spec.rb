@@ -177,6 +177,74 @@ describe Spree::Product, :type => :model do
       end
     end
 
+    describe "#display_image" do
+      let(:variant) { create(:variant) }
+      let(:product) { variant.product }
+
+      subject { product.display_image }
+
+      context "product image, variant image rule and variant image exist" do
+        let!(:product_image) { create(:image, viewable: product.master) }
+        let!(:variant_image_rule) { create(:variant_image_rule, product: product) }
+        let!(:variant_image) { create(:image, viewable: variant) }
+
+        it "returns the product image" do
+          expect(subject).to eq product_image
+        end
+      end
+
+      context "variant image rule and variant image exist" do
+        let!(:variant_image_rule) { create(:variant_image_rule, product: product) }
+        let(:rule_image) { variant_image_rule.images.first }
+        let!(:variant_image) { create(:image, viewable: variant) }
+
+        it "returns the image associated with the variant rule" do
+          expect(subject).to eq rule_image
+        end
+      end
+
+      context "variant image exists" do
+        let!(:variant_image) { create(:image, viewable: variant) }
+
+        it "returns the variant image" do
+          expect(subject).to eq variant_image
+        end
+      end
+
+      context "no images exist" do
+        it "returns an image" do
+          expect(subject).to be_a(Spree::Image)
+        end
+        it "returns unpersisted record" do
+          expect(subject).to be_new_record
+        end
+      end
+    end
+
+    describe "#display_variant_images" do
+      let(:variant) { create(:variant) }
+      let(:product) { variant.product }
+
+      subject { product.display_variant_images }
+
+      context "variant image rule and variant image exist" do
+        let!(:variant_image_rule) { create(:variant_image_rule, product: product) }
+        let!(:variant_image) { create(:image, viewable: variant) }
+
+        it "returns the images associated with the variant rule" do
+          expect(subject).to eq variant_image_rule.images
+        end
+      end
+
+      context "variant image exists" do
+        let!(:variant_image) { create(:image, viewable: variant) }
+
+        it "returns the images associated with the variant" do
+          expect(subject).to eq [variant_image]
+        end
+      end
+    end
+
     describe "#find_variant_property_rule" do
       let(:option_value) { create(:option_value) }
 
@@ -185,6 +253,28 @@ describe Spree::Product, :type => :model do
       context "a matching rule exists" do
         let!(:rule) do
           create(:variant_property_rule, product: product, option_value: option_value)
+        end
+
+        it "returns the rule" do
+          expect(subject).to eq rule
+        end
+      end
+
+      context "a matching rule doesn't exist" do
+        it "returns nil" do
+          expect(subject).to be_nil
+        end
+      end
+    end
+
+    describe "#find_variant_image_rule" do
+      let(:option_value) { create(:option_value) }
+
+      subject { product.find_variant_image_rule([option_value.id]) }
+
+      context "a matching rule exists" do
+        let!(:rule) do
+          create(:variant_image_rule, product: product, option_value: option_value)
         end
 
         it "returns the rule" do
