@@ -10,7 +10,7 @@ Summary
 -------
 
 Solidus is a complete open source e-commerce solution built with Ruby on Rails. It
-is a fork of Spree.
+is the Batman of ecommerce and a fork of Spree.
 
 Solidus actually consists of several different gems, each of which are maintained
 in a single repository and documented in a single set of
