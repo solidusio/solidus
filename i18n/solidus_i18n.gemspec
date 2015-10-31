@@ -2,18 +2,18 @@
 lib = File.expand_path('../lib/', __FILE__)
 $LOAD_PATH.unshift lib unless $LOAD_PATH.include?(lib)
 
-require 'spree_i18n/version'
+require 'solidus_i18n/version'
 
 Gem::Specification.new do |s|
   s.platform    = Gem::Platform::RUBY
-  s.name        = 'spree_i18n'
-  s.version     = SpreeI18n.version
-  s.summary     = 'Provides locale information for use in Spree.'
+  s.name        = 'solidus_i18n'
+  s.version     = SolidusI18n.version
+  s.summary     = 'Provides locale information for use in Solidus.'
   s.description = s.summary
 
-  s.author      = 'Sean Schofield'
-  s.email       = 'sean.schofield@gmail.com'
-  s.homepage    = 'http://spreecommerce.com'
+  s.author      = 'Thomas von Deyen'
+  s.email       = 'tvd@magiclabs.de'
+  s.homepage    = 'https://solidus.io'
   s.license     = 'BSD-3'
 
   s.files        = `git ls-files`.split("\n")
@@ -27,7 +27,7 @@ Gem::Specification.new do |s|
   s.add_runtime_dependency 'rails-i18n', '~> 4.0.1'
   s.add_runtime_dependency 'kaminari-i18n', '~> 0.3.2'
   s.add_runtime_dependency 'routing-filter', '~> 0.5.0'
-  s.add_runtime_dependency 'spree_core', '~> 3.1.0.beta'
+  s.add_runtime_dependency 'solidus_core', '~> 1.0'
 
   s.add_development_dependency 'byebug'
   s.add_development_dependency 'capybara', '~> 2.4.4'

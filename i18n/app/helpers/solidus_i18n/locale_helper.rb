@@ -1,4 +1,4 @@
-module SpreeI18n
+module SolidusI18n
   module LocaleHelper
 
     def select_available_locales
@@ -13,7 +13,7 @@ module SpreeI18n
     end
 
     # Need to manually add en to the array because the en.yml was moved from
-    # this project. spree/spree now has those keys.
+    # this project. solidusio/solidus now has those keys.
     def all_locales_options
       Locale.all.map { |locale| locale_presentation(locale) }.push(['English (EN)', :en])
     end

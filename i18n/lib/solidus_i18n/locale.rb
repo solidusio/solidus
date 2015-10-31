@@ -1,4 +1,4 @@
-module SpreeI18n
+module SolidusI18n
   class Locale
     class << self
       def all

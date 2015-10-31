@@ -1,3 +1,3 @@
 Spree::Api::BaseController.class_eval do
-  include SpreeI18n::ControllerLocaleHelper
+  include SolidusI18n::ControllerLocaleHelper
 end

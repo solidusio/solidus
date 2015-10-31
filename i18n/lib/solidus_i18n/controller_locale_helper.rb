@@ -1,4 +1,4 @@
-module SpreeI18n
+module SolidusI18n
   # The fact this logic is in a single module also helps to apply a custom
   # locale on the spree/api context since api base controller inherits from
   # MetalController instead of Spree::BaseController
@@ -11,7 +11,7 @@ module SpreeI18n
       private
 
       # Overrides the Spree::Core::ControllerHelpers::Common logic so that only
-      # supported locales defined by SpreeI18n::Config.supported_locales can
+      # supported locales defined by SolidusI18n::Config.supported_locales can
       # actually be set
       def set_user_language
         # params[:locale] can be added by routing-filter gem

@@ -1,4 +1,4 @@
-module SpreeI18n
+module SolidusI18n
   class Configuration < Spree::Preferences::Configuration
     # These configs intend to, respectively:
     #

@@ -1,5 +1,5 @@
 source 'https://rubygems.org'
 
-gem 'spree', github: 'spree/spree', branch: 'master'
+gem 'solidus', github: 'solidusio/solidus', branch: 'master'
 
 gemspec

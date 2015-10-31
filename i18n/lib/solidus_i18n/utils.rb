@@ -1,7 +1,7 @@
 require 'active_support/core_ext'
 
-module Spree
-  module I18nUtils
+module SolidusI18n
+  module Utils
     # Retrieve comments, translation data in hash form
     def read_file(filename, basename)
       # Add error checking for failed file read?

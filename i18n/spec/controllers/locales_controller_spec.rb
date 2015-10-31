@@ -3,7 +3,7 @@ RSpec.describe Spree::HomeController, type: :controller do
 
   before do
     reset_spree_preferences
-    SpreeI18n::Config.available_locales = [:en, :es]
+    SolidusI18n::Config.available_locales = [:en, :es]
   end
 
   context 'tries not supported fr locale' do

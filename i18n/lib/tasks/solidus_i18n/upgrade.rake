@@ -1,6 +1,6 @@
 require 'fileutils'
 
-namespace :spree_i18n do
+namespace :solidus_i18n do
   desc 'Upgrades to version without globalize.'
   task upgrade: :environment do
     files = %w(
@@ -21,7 +21,7 @@ namespace :spree_i18n do
     FileUtils.rm files
 
     # Install new migrations
-    Rake::Task['spree_i18n:install:migrations'].invoke
+    Rake::Task['solidus_i18n:install:migrations'].invoke
 
     puts <<-DESC
 Upgraded migrations successfully.

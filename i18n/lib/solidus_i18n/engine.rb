@@ -1,14 +1,14 @@
 require 'routing_filter'
 require 'kaminari-i18n/engine'
 
-module SpreeI18n
+module SolidusI18n
   class Engine < Rails::Engine
-    engine_name 'spree_i18n'
+    engine_name 'solidus_i18n'
 
     config.autoload_paths += %W(#{config.root}/lib)
 
-    initializer 'spree-i18n' do |app|
-      SpreeI18n::Engine.instance_eval do
+    initializer 'solidus.i18n' do |app|
+      SolidusI18n::Engine.instance_eval do
         pattern = pattern_from app.config.i18n.available_locales
 
         add("config/locales/#{pattern}/*.{rb,yml}")
@@ -16,10 +16,10 @@ module SpreeI18n
       end
     end
 
-    initializer 'spree_i18n.environment', before: :load_config_initializers do |app|
+    initializer 'solidus.i18n.environment', before: :load_config_initializers do |app|
       app.config.i18n.fallbacks = true
       I18n.locale = app.config.i18n.default_locale if app.config.i18n.default_locale
-      SpreeI18n::Config = SpreeI18n::Configuration.new
+      SolidusI18n::Config = SolidusI18n::Configuration.new
     end
 
     def self.activate

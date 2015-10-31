@@ -4,7 +4,7 @@ RSpec.feature 'Translations', :js do
 
   background do
     reset_spree_preferences
-    SpreeI18n::Config.available_locales = [:en, :'pt-BR']
+    SolidusI18n::Config.available_locales = [:en, :'pt-BR']
   end
 
   context 'page' do
