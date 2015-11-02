@@ -14,11 +14,18 @@ describe Spree::PermissionSets::UserManagement do
     it { is_expected.to be_able_to(:display, Spree.user_class) }
     it { is_expected.to be_able_to(:create, Spree.user_class) }
     it { is_expected.to be_able_to(:update, Spree.user_class) }
-    it { is_expected.to be_able_to(:update_email, Spree.user_class.new(spree_roles: [])) }
+    it { is_expected.to be_able_to(:save_in_address_book, Spree.user_class) }
+    it { is_expected.to be_able_to(:remove_from_address_book, Spree.user_class) }
+    it { is_expected.to be_able_to(:addresses, Spree.user_class) }
+    it { is_expected.to be_able_to(:orders, Spree.user_class) }
+    it { is_expected.to be_able_to(:items, Spree.user_class) }
 
+    it { is_expected.to be_able_to(:update_email, Spree.user_class.new(spree_roles: [])) }
     it { is_expected.not_to be_able_to(:update_email, Spree.user_class.new(spree_roles: [create(:role)])) }
+
     it { is_expected.not_to be_able_to(:delete, Spree.user_class) }
     it { is_expected.not_to be_able_to(:destroy, Spree.user_class) }
+
     it { is_expected.to be_able_to(:manage, Spree::StoreCredit) }
     it { is_expected.to be_able_to(:display, Spree::Role) }
   end
@@ -26,6 +33,13 @@ describe Spree::PermissionSets::UserManagement do
   context "when not activated" do
     it { is_expected.not_to be_able_to(:manage, Spree.user_class) }
     it { is_expected.not_to be_able_to(:delete, Spree.user_class) }
+    it { is_expected.not_to be_able_to(:destroy, Spree.user_class) }
+    it { is_expected.not_to be_able_to(:update, Spree.user_class) }
+    it { is_expected.not_to be_able_to(:save_in_address_book, Spree.user_class) }
+    it { is_expected.not_to be_able_to(:remove_from_address_book, Spree.user_class) }
+    it { is_expected.not_to be_able_to(:addresses, Spree.user_class) }
+    it { is_expected.not_to be_able_to(:orders, Spree.user_class) }
+    it { is_expected.not_to be_able_to(:items, Spree.user_class) }
     it { is_expected.not_to be_able_to(:destroy, Spree.user_class) }
     it { is_expected.not_to be_able_to(:manage, Spree::StoreCredit) }
     it { is_expected.not_to be_able_to(:display, Spree::Role) }
