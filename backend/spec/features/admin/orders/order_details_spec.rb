@@ -15,7 +15,7 @@ describe "Order Details", type: :feature, js: true do
     order.contents.add(product.master, 2)
   end
 
-  context 'as Admin' do
+  context 'with management ability' do
     stub_authorization!
 
 
@@ -448,61 +448,6 @@ describe "Order Details", type: :feature, js: true do
         end
       end
     end
-  end
-
-  context 'with only read permissions' do
-    before do
-      allow_any_instance_of(Spree::Admin::BaseController).to receive(:spree_current_user).and_return(nil)
-    end
-
-    custom_authorization! do |user|
-      can [:admin, :index, :read, :edit], Spree::Order
-    end
-    it "should not display forbidden links" do
-      visit spree.edit_admin_order_path(order)
-
-      expect(page).not_to have_button('cancel')
-      expect(page).not_to have_button('Resend')
-
-      # Order Tabs
-      expect(page).not_to have_link('Adjustments')
-      expect(page).not_to have_link('Payments')
-      expect(page).not_to have_link('Return Authorizations')
-
-      # Order item actions
-      expect(page).not_to have_css('.delete-item')
-      expect(page).not_to have_css('.split-item')
-      expect(page).not_to have_css('.edit-item')
-      expect(page).not_to have_css('.edit-tracking')
-
-      expect(page).not_to have_css('#add-line-item')
-    end
-  end
-
-  context 'as Fakedispatch' do
-    custom_authorization! do |user|
-      # allow dispatch to :admin, :index, and :edit on Spree::Order
-      can [:admin, :edit, :index, :read], Spree::Order
-      # allow dispatch to :index, :show, :create and :update shipments on the admin
-      can [:admin, :manage, :read, :ship], Spree::Shipment
-    end
-
-    before do
-      allow(Spree.user_class).to receive(:find_by).
-                                   with(hash_including(:spree_api_key)).
-                                   and_return(Spree.user_class.new)
-    end
-
-    it 'should not display order tabs or edit buttons without ability' do
-      visit spree.edit_admin_order_path(order)
-
-      # Order Form
-      expect(page).not_to have_css('.edit-item')
-      # Order Tabs
-      expect(page).not_to have_link('Adjustments')
-      expect(page).not_to have_link('Payments')
-      expect(page).not_to have_link('Return Authorizations')
-    end
 
     it "can change the shipping method" do
       order = create(:completed_order_with_totals)
@@ -528,6 +473,25 @@ describe "Order Details", type: :feature, js: true do
       within '.carton-state' do
         expect(page).to have_content('SHIPPED')
       end
+    end
+  end
+
+  context 'with only read permissions' do
+    stub_authorization!(permission_sets: [Spree::PermissionSets::OrderDisplay])
+
+    it "should not display forbidden links" do
+      visit spree.edit_admin_order_path(order)
+
+      expect(page).not_to have_button('cancel')
+      expect(page).not_to have_button('Resend')
+
+      # Order item actions
+      expect(page).not_to have_css('.delete-item')
+      expect(page).not_to have_css('.split-item')
+      expect(page).not_to have_css('.edit-item')
+      expect(page).not_to have_css('.edit-tracking')
+
+      expect(page).not_to have_css('#add-line-item')
     end
   end
 end
