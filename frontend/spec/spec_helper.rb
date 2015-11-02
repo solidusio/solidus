@@ -35,7 +35,6 @@ if ENV["CHECK_TRANSLATIONS"]
   require "spree/testing_support/i18n"
 end
 
-require 'spree/testing_support/dummy_ability'
 require 'spree/testing_support/authorization_helpers'
 require 'spree/testing_support/capybara_ext'
 require 'spree/testing_support/factories'

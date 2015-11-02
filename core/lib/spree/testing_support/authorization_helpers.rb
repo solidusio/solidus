@@ -2,53 +2,54 @@ module Spree
   module TestingSupport
     module AuthorizationHelpers
       module CustomAbility
-        def stub_permissions!(permission_sets: [Spree::PermissionSets::SuperUser])
-          # Since we cannot reliably stub the user or ability for capybara specs,
-          # we change the permissions for the default user, and change them back in the after(:all).
-          before(:all) { Spree::RoleConfiguration.instance.assign_permissions "default", permission_sets }
-          after(:all)  { Spree::RoleConfiguration.instance.unassign_permissions "default", permission_sets }
-        end
-        def custom_authorization!(&block)
-          ActiveSupport::Deprecation.warn "custom_authorization! will be deprecated in the next release, please use stub_authorization!", caller
-          stub_authorization!(&block)
+        def build_ability(&block)
+          block ||= proc{ |u| can :manage, :all }
+          Class.new do
+            include CanCan::Ability
+            define_method(:initialize, block)
+          end
         end
       end
 
       module Controller
         include CustomAbility
-        def stub_authorization!(permission_sets: [Spree::PermissionSets::SuperUser])
-          if block_given?
-            ability = Class.new do
-              include CanCan::Ability
-              define_method(:initialize, yield)
-            end
-            before(:all) { Spree::Ability.register_ability(ability) }
-            after(:all)  { Spree::Ability.remove_ability(ability) }
-          else
-            stub_permissions!(permission_sets: permission_sets)
-          end
 
+        def stub_authorization!(&block)
+          ability_class = build_ability(&block)
           before do
-            # This is used in admin controller specs.
-            allow(controller).to receive(:current_ability).and_return(Spree::Ability.new(nil))
+            allow(controller).to receive(:current_ability).and_return(ability_class.new(nil))
           end
         end
-
       end
 
       module Request
         include CustomAbility
-        def stub_authorization!(permission_sets: [Spree::PermissionSets::SuperUser])
-          if block_given?
-            ActiveSupport::Deprecation.warn "stub_authorization! with a block will be deprecated in the next release, please use permission sets to specify authorization instead", caller
+
+        def stub_authorization!
+          ability = build_ability
+
+          after(:all) do
+            Spree::Ability.remove_ability(ability)
           end
-          stub_permissions!(permission_sets: permission_sets)
+
+          before(:all) do
+            Spree::Ability.register_ability(ability)
+          end
 
           before do
-            # This is used in admin feature specs to stub ajax calls to the api.
             allow(Spree.user_class).to receive(:find_by).
-              with(hash_including(:spree_api_key)).
-              and_return(Spree.user_class.new)
+                                         with(hash_including(:spree_api_key)).
+                                         and_return(Spree.user_class.new)
+          end
+        end
+
+        def custom_authorization!(&block)
+          ability = build_ability(&block)
+          after(:all) do
+            Spree::Ability.remove_ability(ability)
+          end
+          before(:all) do
+            Spree::Ability.register_ability(ability)
           end
         end
       end
