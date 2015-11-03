@@ -1,4 +1,6 @@
 # encoding: utf-8
+require 'spec_helper'
+
 RSpec.feature 'Translations', :js do
   given(:language) { Spree.t(:this_file_language, scope: 'i18n', locale: 'pt-BR') }
 

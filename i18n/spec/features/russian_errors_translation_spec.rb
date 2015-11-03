@@ -1,4 +1,5 @@
 # encoding: utf-8
+require 'spec_helper'
 
 RSpec.describe 'Russian errors translations' do
   def translation(count)

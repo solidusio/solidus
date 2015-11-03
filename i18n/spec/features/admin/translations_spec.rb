@@ -1,3 +1,5 @@
+require 'spec_helper'
+
 RSpec.feature 'Translations', :js do
   stub_authorization!
 

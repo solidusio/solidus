@@ -1,3 +1,5 @@
+require 'spec_helper'
+
 RSpec.describe Spree::HomeController, type: :controller do
   routes { Spree::Core::Engine.routes }
 
