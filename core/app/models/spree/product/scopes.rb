@@ -211,27 +211,28 @@ module Spree
       end
     end
 
-    private
+    class << self
+      private
 
-      def self.price_table_name
+      def price_table_name
         Price.quoted_table_name
       end
 
       # specifically avoid having an order for taxon search (conflicts with main order)
-      def self.prepare_taxon_conditions(taxons)
+      def prepare_taxon_conditions(taxons)
         ids = taxons.map { |taxon| taxon.self_and_descendants.pluck(:id) }.flatten.uniq
         joins(:taxons).where("#{Taxon.table_name}.id" => ids)
       end
 
       # Produce an array of keywords for use in scopes.
       # Always return array with at least an empty string to avoid SQL errors
-      def self.prepare_words(words)
+      def prepare_words(words)
         return [''] if words.blank?
         a = words.split(/[,\s]/).map(&:strip)
         a.any? ? a : ['']
       end
 
-      def self.get_taxons(*ids_or_records_or_names)
+      def get_taxons(*ids_or_records_or_names)
         taxons = Taxon.table_name
         ids_or_records_or_names.flatten.map { |t|
           case t
@@ -244,4 +245,5 @@ module Spree
         }.compact.flatten.uniq
       end
     end
+  end
 end
