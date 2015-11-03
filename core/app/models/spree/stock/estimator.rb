@@ -20,18 +20,15 @@ module Spree
         rates = calculate_shipping_rates(package)
         rates.select! { |rate| rate.shipping_method.frontend? } if frontend_only
         choose_default_shipping_rate(rates)
-        sort_shipping_rates(rates)
+        Spree::Config.shipping_rate_sorter_class.new(rates).sort
       end
 
       private
       def choose_default_shipping_rate(shipping_rates)
         unless shipping_rates.empty?
-          shipping_rates.min_by(&:cost).selected = true
+          default_shipping_rate = Spree::Config.shipping_rate_selector_class.new(shipping_rates).find_default
+          default_shipping_rate.selected = true
         end
-      end
-
-      def sort_shipping_rates(shipping_rates)
-        shipping_rates.sort_by!(&:cost)
       end
 
       def calculate_shipping_rates(package)

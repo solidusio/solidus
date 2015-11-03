@@ -140,6 +140,40 @@ module Spree
             expect(shipping_rates.first.tax_rate).to eq(tax_rate)
           end
         end
+
+        it 'uses the configured shipping rate selector' do
+          shipping_rate = Spree::ShippingRate.new
+          allow(Spree::ShippingRate).to receive(:new).and_return(shipping_rate)
+
+          selector_class = Class.new do
+            def initialize(_); end;
+
+            def find_default
+              Spree::ShippingRate.new
+            end
+          end
+          Spree::Config.shipping_rate_selector_class = selector_class
+
+          subject.shipping_rates(package)
+
+          expect(shipping_rate.selected).to eq(true)
+
+          Spree::Config.shipping_rate_selector_class = nil
+        end
+
+        it 'uses the configured shipping rate sorter' do
+          class Spree::Stock::TestSorter; end;
+          Spree::Config.shipping_rate_sorter_class = Spree::Stock::TestSorter
+
+          sorter = double(:sorter, sort: nil)
+          allow(Spree::Stock::TestSorter).to receive(:new).and_return(sorter)
+
+          subject.shipping_rates(package)
+
+          expect(sorter).to have_received(:sort)
+
+          Spree::Config.shipping_rate_sorter_class = nil
+        end
       end
     end
   end
