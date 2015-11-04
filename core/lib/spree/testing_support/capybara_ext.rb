@@ -46,8 +46,7 @@ module CapybaraExt
     find("#{options[:from]}:not(.select2-container-disabled)").click
 
     within_entire_page do
-      select2input = first("#select2-drop input.select2-input") || find("input.select2-input")
-      select2input.set(value)
+      find("input.select2-input.select2-focused").set(value)
     end
   end
 
