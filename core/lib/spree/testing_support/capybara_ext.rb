@@ -43,18 +43,16 @@ module CapybaraExt
   end
 
   def select2_search_without_selection(value, options)
-    page.execute_script "$('#{options[:from]}').select2('open');"
-    page.execute_script "$('input.select2-input').val('#{value}').trigger('keyup-change');"
-  end
-
-  def targetted_select2_search(value, options)
     find("#{options[:from]}:not(.select2-container-disabled)").click
 
     within_entire_page do
       select2input = first("#select2-drop input.select2-input") || find("input.select2-input")
       select2input.set(value)
     end
+  end
 
+  def targetted_select2_search(value, options)
+    select2_search_without_selection(value, from: options[:from])
     select_select2_result(value)
   end
 
