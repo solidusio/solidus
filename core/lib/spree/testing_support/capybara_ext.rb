@@ -13,19 +13,11 @@ module CapybaraExt
   end
 
   def within_row(num, &block)
-    if RSpec.current_example.metadata[:js]
-      within("table.index tbody tr:nth-child(#{num})", &block)
-    else
-      within(:xpath, all("table.index tbody tr")[num-1].path, &block)
-    end
+    within("table.index tbody tr:nth-of-type(#{num})", &block)
   end
 
   def column_text(num)
-    if RSpec.current_example.metadata[:js]
-      find("td:nth-child(#{num})").text
-    else
-      all("td")[num-1].text
-    end
+    find("td:nth-of-type(#{num})").text
   end
 
   def fill_in_quantity(table_column, selector, quantity)
