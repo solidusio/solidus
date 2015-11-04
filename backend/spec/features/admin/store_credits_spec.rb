@@ -24,7 +24,7 @@ describe "Store credits admin" do
       expect(page.current_path).to eq spree.admin_user_store_credits_path(store_credit.user)
 
       store_credit_table = page.find(".twelve.columns > table")
-      expect(store_credit_table.all('tr').count).to eq 1
+      expect(store_credit_table).to have_css('tr', count: 1)
       expect(store_credit_table).to have_content(Spree::Money.new(store_credit.amount).to_s)
       expect(store_credit_table).to have_content(Spree::Money.new(store_credit.amount_used).to_s)
       expect(store_credit_table).to have_content(store_credit.category_name)
@@ -49,7 +49,7 @@ describe "Store credits admin" do
 
       expect(page.current_path).to eq spree.admin_user_store_credits_path(store_credit.user)
       store_credit_table = page.find(".twelve.columns > table")
-      expect(store_credit_table.all('tr').count).to eq 2
+      expect(store_credit_table).to have_css('tr', count: 2)
       expect(Spree::StoreCredit.count).to eq 2
     end
   end

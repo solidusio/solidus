@@ -13,10 +13,9 @@ describe "Tax Rates", :type => :feature do
   # Regression test for #535
   it "can see a tax rate in the list if the tax category has been deleted" do
     tax_rate.tax_category.update_column(:deleted_at, Time.now)
-    expect { click_link "Tax Rates" }.not_to raise_error
-    within(:xpath, all("table tbody td")[2].path) do
-      expect(page).to have_content("N/A")
-    end
+    click_link "Tax Rates"
+
+    expect(find("table tbody td:nth-child(3)")).to have_content('N/A')
   end
 
   # Regression test for #1422
