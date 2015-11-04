@@ -197,6 +197,41 @@ describe Spree::Order, :type => :model do
     end
   end
 
+  describe '#merge!' do
+    let(:order1) { create(:order_with_line_items) }
+    let(:order2) { create(:order_with_line_items) }
+
+    it 'merges the orders' do
+      order1.merge!(order2)
+      expect(order1.line_items.count).to eq(2)
+      expect(order2.destroyed?).to be_truthy
+    end
+
+    describe 'order_merger_class customization' do
+      before do
+        class TestOrderMerger
+          def initialize(order)
+            @order = order
+          end
+          def merge!(other_order, user = nil)
+            [@order, other_order, user]
+          end
+        end
+        Spree::Config.order_merger_class = TestOrderMerger
+      end
+
+      after do
+        Spree::Config.order_merger_class = Spree::PromotionChooser
+      end
+
+      let(:user) { build(:user) }
+
+      it 'uses the configured order merger' do
+        expect(order1.merge!(order2, user)).to eq([order1, order2, user])
+      end
+    end
+  end
+
   context "add_update_hook" do
     before do
       Spree::Order.class_eval do

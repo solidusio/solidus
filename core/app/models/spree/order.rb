@@ -102,7 +102,6 @@ module Spree
     make_permalink field: :number
 
     delegate :update_totals, :persist_totals, :to => :updater
-    delegate :merge!, to: :merger
 
     class_attribute :update_hooks
     self.update_hooks = Set.new
@@ -436,8 +435,8 @@ module Spree
       end
     end
 
-    def merger
-      @merger ||= Spree::OrderMerger.new(self)
+    def merge!(*args)
+      Spree::Config.order_merger_class.new(self).merge!(*args)
     end
 
     def empty!
