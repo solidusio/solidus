@@ -9,7 +9,6 @@
 //= require jquery.cookie
 //= require jquery.jstree/jquery.jstree
 //= require jquery.powertip
-//= require equalize
 //= require responsive-tables
 //= require underscore-min
 //= require backbone
