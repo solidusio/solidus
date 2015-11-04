@@ -77,7 +77,7 @@ describe 'Stock Transfers', :type => :feature, :js => true do
         visit spree.tracking_info_admin_stock_transfer_path(stock_transfer)
         click_link 'ship'
 
-        first('#confirm-ship-link', visible: false).click
+        find('#confirm-ship-link', visible: false).click
         expect(current_path).to eq spree.admin_stock_transfers_path
         expect(stock_transfer.reload.shipped_at).to_not be_nil
       end
@@ -95,7 +95,7 @@ describe 'Stock Transfers', :type => :feature, :js => true do
 
         click_link 'ship'
 
-        first('#confirm-ship-link', visible: false).click
+        find('#confirm-ship-link', visible: false).click
         expect(current_path).to eq spree.tracking_info_admin_stock_transfer_path(stock_transfer)
         expect(stock_transfer.reload.shipped_at).to be_nil
       end
