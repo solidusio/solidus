@@ -750,4 +750,18 @@ describe Spree::Shipment, :type => :model do
       end
     end
   end
+
+  describe ".by_store" do
+    it "returns shipments by store" do
+      olivanders_store = create(:store, name: 'Olivanders')
+      wizard_shipment = create(:shipment, order: create(:order, store: olivanders_store))
+      create(:shipment, order: build(:order, store: create(:store, name: 'Target')))
+
+      shipments = Spree::Shipment.by_store(olivanders_store)
+
+      expect(Spree::Shipment.count).to eq(2)
+      expect(shipments.count).to eq(1)
+      expect(shipments.first).to eq(wizard_shipment)
+    end
+  end
 end
