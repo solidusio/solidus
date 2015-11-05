@@ -435,35 +435,8 @@ module Spree
       end
     end
 
-    def merge!(order, user = nil)
-      order.line_items.each do |other_order_line_item|
-        next unless other_order_line_item.currency == currency
-
-        # Compare the line items of the other order with mine.
-        # Make sure you allow any extensions to chime in on whether or
-        # not the extension-specific parts of the line item match
-        current_line_item = self.line_items.detect { |my_li|
-                      my_li.variant == other_order_line_item.variant &&
-                      self.line_item_comparison_hooks.all? { |hook|
-                        self.send(hook, my_li, other_order_line_item.serializable_hash)
-                      }
-                    }
-        if current_line_item
-          current_line_item.quantity += other_order_line_item.quantity
-          current_line_item.save!
-        else
-          other_order_line_item.order_id = self.id
-          other_order_line_item.save!
-        end
-      end
-
-      self.associate_user!(user) if !self.user && !user.blank?
-
-      updater.update
-
-      # So that the destroy doesn't take out line items which may have been re-assigned
-      order.line_items.reload
-      order.destroy
+    def merge!(*args)
+      Spree::Config.order_merger_class.new(self).merge!(*args)
     end
 
     def empty!

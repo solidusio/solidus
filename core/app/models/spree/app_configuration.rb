@@ -276,6 +276,16 @@ module Spree
       @carton_shipped_email_class ||= Spree::CartonMailer
     end
 
+    # Allows providing your own class for merging two orders.
+    #
+    # @!attribute [rw] order_merger_class
+    # @return [Class] a class with the same public interfaces
+    #   as Spree::OrderMerger.
+    attr_writer :order_merger_class
+    def order_merger_class
+      @order_merger_class ||= Spree::OrderMerger
+    end
+
     def static_model_preferences
       @static_model_preferences ||= Spree::Preferences::StaticModelPreferences.new
     end
