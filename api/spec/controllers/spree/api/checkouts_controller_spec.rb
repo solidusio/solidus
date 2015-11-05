@@ -172,6 +172,29 @@ module Spree
         expect(source_errors).to include("can't be blank")
       end
 
+      describe 'setting the payment amount' do
+        let(:params) do
+          {
+            id: order.to_param,
+            order_token: order.guest_token,
+            order: {
+              payments_attributes: [
+                {
+                  payment_method_id: @payment_method.id.to_s,
+                  source_attributes: attributes_for(:credit_card),
+                },
+              ],
+            },
+          }
+        end
+
+        it 'sets the payment amount to the order total' do
+          api_put(:update, params)
+          expect(response.status).to eq(200)
+          expect(json_response['payments'][0]['amount']).to eq(order.total.to_s)
+        end
+      end
+
       describe 'payment method with source and transition from payment to confirm' do
         before do
           order.update_column(:state, "payment")
@@ -286,15 +309,74 @@ module Spree
         end
       end
 
-      it "allow users to reuse a credit card" do
-        order.update_column(:state, "payment")
-        credit_card = create(:credit_card, user_id: order.user_id, payment_method_id: @payment_method.id)
+      context 'reusing a credit card' do
+        before do
+          order.update_column(:state, "payment")
+        end
 
-        api_put :update, id: order.to_param, order_token: order.guest_token,
-          order: { existing_card: credit_card.id }
+        let(:params) do
+          {
+            id: order.to_param,
+            order_token: order.guest_token,
+            order: {
+              payments_attributes: [
+                {
+                  source_attributes: {
+                    existing_card_id: credit_card.id.to_s,
+                    verification_value: '456',
+                  }
+                },
+              ],
+            },
+          }
+        end
 
-        expect(response.status).to eq 200
-        expect(order.credit_cards).to match_array [credit_card]
+        let!(:credit_card) do
+          create(:credit_card, user_id: order.user_id, payment_method_id: @payment_method.id)
+        end
+
+        it 'succeeds' do
+          # unfortunately the credit card gets reloaded by `@order.next` before
+          # the controller action finishes so this is the best way I could think
+          # of to test that the verification_value gets set.
+          expect_any_instance_of(Spree::CreditCard).to(
+            receive(:verification_value=).with('456').and_call_original
+          )
+
+          api_put(:update, params)
+
+          expect(response.status).to eq 200
+          expect(order.credit_cards).to match_array [credit_card]
+        end
+
+        context 'with deprecated existing_card parameters' do
+          let(:params) do
+            {
+              id: order.to_param,
+              order_token: order.guest_token,
+              order: {
+                existing_card: credit_card.id.to_s,
+              },
+              cvc_confirm: '456',
+            }
+          end
+
+          it 'succeeds' do
+            # unfortunately the credit card gets reloaded by `@order.next` before
+            # the controller action finishes so this is the best way I could think
+            # of to test that the verification_value gets set.
+            expect_any_instance_of(Spree::CreditCard).to(
+              receive(:verification_value=).with('456').and_call_original
+            )
+
+            ActiveSupport::Deprecation.silence do
+              api_put(:update, params)
+            end
+
+            expect(response.status).to eq 200
+            expect(order.credit_cards).to match_array [credit_card]
+          end
+        end
       end
 
       it "can transition from confirm to complete" do

@@ -91,8 +91,8 @@ describe Spree::CheckoutController, :type => :controller do
 
       context "with the order in the cart state" do
         before do
+          order.update_attributes! user: user
           order.update_column(:state, "cart")
-          allow(order).to receive_messages :user => user
         end
 
         it "should assign order" do
@@ -142,8 +142,8 @@ describe Spree::CheckoutController, :type => :controller do
 
       context "with the order in the address state" do
         before do
+          order.update_attributes! user: user
           order.update_columns(ship_address_id: create(:address).id, state: "address")
-          allow(order).to receive_messages user: user
         end
 
         context "with a billing and shipping address" do
@@ -170,10 +170,59 @@ describe Spree::CheckoutController, :type => :controller do
         end
       end
 
+      # This is the only time that we need the 'set_payment_parameters_amount'
+      # controller code, because otherwise the transition to 'confirm' will
+      # trigger the 'add_store_credit_payments' transition code which will do
+      # the same thing here.
+      # Perhaps we can just remove 'set_payment_parameters_amount' entirely at
+      # some point?
+      context "when there is a checkout step between payment and confirm" do
+        before do
+          @old_checkout_flow = Spree::Order.checkout_flow
+          Spree::Order.class_eval do
+            insert_checkout_step :new_step, after: :payment
+          end
+        end
+
+        after do
+          Spree::Order.checkout_flow(&@old_checkout_flow)
+        end
+
+        let(:order) { create(:order_with_line_items) }
+        let(:payment_method) { create(:credit_card_payment_method) }
+
+        let(:params) do
+          {
+            state: 'payment',
+            order: {
+              payments_attributes: [
+                {
+                  payment_method_id: payment_method.id.to_s,
+                  source_attributes: attributes_for(:credit_card),
+                },
+              ],
+            },
+          }
+        end
+
+        before do
+          order.update_attributes! user: user
+          3.times { order.next! } # should put us in the payment state
+        end
+
+        it 'sets the payment amount' do
+          spree_post :update, params
+          order.reload
+          expect(order.state).to eq('new_step')
+          expect(order.payments.size).to eq(1)
+          expect(order.payments.first.amount).to eq(order.total)
+        end
+      end
+
       context "when in the confirm state" do
         before do
+          order.update_attributes! user: user
           order.update_column(:state, "confirm")
-          allow(order).to receive_messages :user => user
           # An order requires a payment to reach the complete state
           # This is because payment_required? is true on the order
           create(:payment, :amount => order.total, :order => order)
@@ -202,12 +251,12 @@ describe Spree::CheckoutController, :type => :controller do
 
     context "save unsuccessful" do
       before do
-        allow(order).to receive_messages :user => user
-        allow(order).to receive_messages :update_attributes => false
+        order.update_attributes! user: user
+        allow(order).to receive_messages valid?: false
       end
 
       it "should not assign order" do
-        spree_post :update, {:state => "address"}
+        spree_post :update, {:state => "address", email: ''}
         expect(assigns[:order]).not_to be_nil
       end
 
@@ -237,8 +286,8 @@ describe Spree::CheckoutController, :type => :controller do
 
     context "Spree::Core::GatewayError" do
       before do
-        allow(order).to receive_messages :user => user
-        allow(order).to receive(:update_attributes).and_raise(Spree::Core::GatewayError.new("Invalid something or other."))
+        order.update_attributes! user: user
+        allow(order).to receive(:next).and_raise(Spree::Core::GatewayError.new("Invalid something or other."))
         spree_post :update, {:state => "address"}
       end
 
@@ -264,7 +313,7 @@ describe Spree::CheckoutController, :type => :controller do
 
       context "when the order is invalid" do
         before do
-          allow(order).to receive_messages :update_attributes => true, :next => nil
+          allow(order).to receive_messages :valid? => true, :next => nil
           order.errors.add :base, 'Base error'
           order.errors.add :adjustments, 'error'
         end

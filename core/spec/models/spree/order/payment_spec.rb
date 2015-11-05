@@ -68,30 +68,32 @@ module Spree
     end
 
     context "ensure source attributes stick around" do
-      # For the reason of this test, please see spree/spree_gateway#132
-      it "does not have inverse_of defined" do
-        expect(Spree::Order.reflections['payments'].options[:inverse_of]).to be_nil
+      let(:order){ Spree::Order.create }
+      let(:payment_method){ create(:credit_card_payment_method) }
+      let(:payment_attributes) do
+        {
+          :payment_method_id => payment_method.id,
+          :source_attributes => {
+            :name => "Ryan Bigg",
+            :number => "41111111111111111111",
+            :expiry => "01 / 15",
+            :verification_value => "123"
+          }
+        }
       end
 
-      it "keeps source attributes after updating" do
-        persisted_order = Spree::Order.create
-        credit_card_payment_method = create(:credit_card_payment_method)
-        attributes = {
-          :payments_attributes => [
-            {
-              :payment_method_id => credit_card_payment_method.id,
-              :source_attributes => {
-                :name => "Ryan Bigg",
-                :number => "41111111111111111111",
-                :expiry => "01 / 15",
-                :verification_value => "123"
-              }
-            }
-          ]
-        }
+      # For the reason of this test, please see spree/spree_gateway#132
+      it "keeps source attributes on assignment" do
+        ActiveSupport::Deprecation.silence do
+          order.update_attributes(payments_attributes: [payment_attributes])
+        end
+        expect(order.unprocessed_payments.last.source.number).to be_present
+      end
 
-        persisted_order.update_attributes(attributes)
-        expect(persisted_order.unprocessed_payments.last.source.number).to be_present
+      # For the reason of this test, please see spree/spree_gateway#132
+      it "keeps source attributes through OrderUpdateAttributes" do
+        OrderUpdateAttributes.new(order, payments_attributes: [payment_attributes]).apply
+        expect(order.unprocessed_payments.last.source.number).to be_present
       end
     end
 

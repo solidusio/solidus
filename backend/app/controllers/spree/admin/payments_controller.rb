@@ -20,7 +20,7 @@ module Spree
       end
 
       def create
-        @payment ||= @order.payments.build(object_params)
+        @payment = PaymentCreate.new(@order, object_params).build
         if @payment.payment_method.source_required? && params[:card].present? and params[:card] != 'new'
           @payment.source = @payment.payment_method.payment_source_class.find_by_id(params[:card])
         end
