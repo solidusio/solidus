@@ -14,12 +14,27 @@ describe Spree::Api::ShipmentsController, :type => :controller do
   context "as a non-admin" do
     it "cannot make a shipment ready" do
       api_put :ready
-      assert_not_found!
+      assert_unauthorized!
     end
 
     it "cannot make a shipment shipped" do
       api_put :ship
-      assert_not_found!
+      assert_unauthorized!
+    end
+
+    it "cannot remove order contents from shipment" do
+      api_put :remove
+      assert_unauthorized!
+    end
+
+    it "cannot add contents to the shipment" do
+      api_put :add
+      assert_unauthorized!
+    end
+
+    it "cannot update the shipment" do
+      api_put :update
+      assert_unauthorized!
     end
   end
 
@@ -279,9 +294,9 @@ describe Spree::Api::ShipmentsController, :type => :controller do
         }.not_to change(shipment, :shipped_at)
       end
 
-      it "responds with a 404" do
+      it "responds with a 401" do
         subject
-        expect(response).to be_not_found
+        expect(response).to be_unauthorized
       end
     end
   end

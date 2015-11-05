@@ -116,11 +116,12 @@ module Spree
 
       def find_shipment
         if @order.present?
-          @shipment = @order.shipments.accessible_by(current_ability, :update).find_by!(number: params[:id])
+          @shipment = @order.shipments.find_by!(number: params[:id])
         else
-          @shipment = Spree::Shipment.accessible_by(current_ability, :update).readonly(false).find_by!(number: params[:id])
+          @shipment = Spree::Shipment.readonly(false).find_by!(number: params[:id])
           @order = @shipment.order
         end
+        authorize! :update, @shipment
       end
 
       def update_shipment
