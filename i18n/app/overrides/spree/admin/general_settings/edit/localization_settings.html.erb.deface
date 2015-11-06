@@ -1,4 +1,4 @@
-<!-- insert_after '.row .security' -->
+<!-- insert_after '[data-hook=admin_general_setting_mail_from_address]'-->
 <div class="panel panel-default panel-localization">
   <div class="panel-heading">
     <h1 class="panel-title">
