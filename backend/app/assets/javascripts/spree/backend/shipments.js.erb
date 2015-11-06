@@ -50,11 +50,10 @@ $(document).ready(function () {
   $('a.delete-item').click(function(event){
     if (confirm(Spree.translations.are_you_sure_delete)) {
       var del = $(this);
-      var shipment_number = del.data('shipment-number');
-      var variant_id = del.data('variant-id');
+      var line_item_id = del.data('line-item-id');
 
       toggleItemEdit();
-      adjustShipmentItems(shipment_number, variant_id, 0);
+      deleteLineItem(line_item_id);
     }
     return false;
   });
@@ -169,6 +168,21 @@ adjustShipmentItems = function(shipment_number, variant_id, quantity){
         }
       });
     }
+}
+
+deleteLineItem = function(line_item_id){
+  var url = Spree.routes.line_items_api(order_number) + "/" + line_item_id + ".json";
+
+  Spree.ajax({
+    type: "DELETE",
+    url: Spree.url(url),
+    success: function(response) {
+      window.location.reload();
+    },
+    error: function(response) {
+      show_flash('error', response.responseJSON.message);
+    }
+  });
 }
 
 toggleMethodEdit = function(){
