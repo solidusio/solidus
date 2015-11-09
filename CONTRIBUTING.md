@@ -46,6 +46,19 @@ At this point you're waiting on us. We like to at least comment on, if not
 accept, pull requests within three business days (and, typically, one business
 day). We may suggest some changes or improvements or alternatives.
 
+### Pull Request Guidelines
+
+* The specs must pass for each individual commit.
+* Each individual commit should make sense by itself as far as possible.
+* Breaking up a large change into smaller (coherent) commits is encouraged.
+* We do not currently have a policy about whether or not to force-push while
+people are reviewing your pull request.
+* Good commit messages are also encouraged. Here are some resources on writing
+good commit messages:
+  * [Notes from Linus](https://github.com/torvalds/subsurface/commit/b6590150d68df528efd40c889ba6eea476b39873)
+  * [Erlang's guide](https://github.com/erlang/otp/wiki/Writing-good-commit-messages)
+  * [An often-cited post](http://tbaggery.com/2008/04/19/a-note-about-git-commit-messages.html)
+
 Some things that will increase the chance that your pull request is accepted,
 taken straight from the Ruby on Rails guide:
 
