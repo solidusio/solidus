@@ -164,10 +164,6 @@ module Spree
       inventory_units.includes(:line_item).map(&:line_item).uniq
     end
 
-    def line_items
-      inventory_units.includes(:line_item).map(&:line_item).uniq
-    end
-
     def ready_or_pending?
       self.ready? || self.pending?
     end
