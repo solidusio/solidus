@@ -82,7 +82,7 @@ module Spree
         (expires_at.nil? || expires_at > Time.current)
     end
 
-    def activate(order:, line_item: nil, user: nil, path: nil, promotion_code: nil)
+    def activate(order: nil, line_item: nil, user: nil, path: nil, promotion_code: nil)
       return unless self.class.order_activatable?(order)
 
       payload = {
