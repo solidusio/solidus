@@ -136,6 +136,16 @@ module Spree
       return_items.all?(&:exchange_processed?)
     end
 
+    # Accepts all return items, saves the reimbursement, and performs the reimbursement
+    #
+    # @api public
+    # @return [void]
+    def return_all
+      return_items.each(&:accept!)
+      save!
+      perform!
+    end
+
     private
 
     def generate_number
