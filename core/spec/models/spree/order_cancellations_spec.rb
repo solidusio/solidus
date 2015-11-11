@@ -1,6 +1,69 @@
 require 'spec_helper'
 
 describe Spree::OrderCancellations do
+  describe "#cancel_unit" do
+    subject { Spree::OrderCancellations.new(order).cancel_unit(inventory_unit) }
+    let(:order) { create(:shipped_order, line_items_count: 1) }
+    let(:inventory_unit) { order.inventory_units.first }
+
+    it "creates a UnitCancel record" do
+      expect { subject }.to change { Spree::UnitCancel.count }.by(1)
+      expect(subject.inventory_unit).to eq inventory_unit
+    end
+
+    it "cancels the inventory unit" do
+      expect { subject }.to change { inventory_unit.state }.to "canceled"
+    end
+
+    context "when a reason is specified" do
+      subject { order.cancellations.cancel_unit(inventory_unit, reason: "some reason") }
+
+      it "sets the reason on the UnitCancel" do
+        expect(subject.reason).to eq("some reason")
+      end
+    end
+
+    context "when a reason is not specified" do
+      it "sets a default reason on the UnitCancel" do
+        expect(subject.reason).to eq Spree::UnitCancel::DEFAULT_REASON
+      end
+    end
+
+    context "when a whodunnit is specified" do
+      subject { order.cancellations.cancel_unit(inventory_unit, whodunnit: "some automated system") }
+
+      it "sets the user on the UnitCancel" do
+        expect(subject.created_by).to eq("some automated system")
+      end
+    end
+
+    context "when a whodunnit is not specified" do
+      it "does not set created_by on the UnitCancel" do
+        expect(subject.created_by).to be_nil
+      end
+    end
+  end
+
+  describe "#reimburse_units" do
+    subject { Spree::OrderCancellations.new(order).reimburse_units(inventory_units) }
+    let(:order) { create(:shipped_order, line_items_count: 2) }
+    let(:inventory_units) { order.inventory_units }
+    let!(:default_refund_reason) { Spree::RefundReason.find_or_create_by!(name: Spree::RefundReason::RETURN_PROCESSING_REASON, mutable: false) }
+
+    it "creates and performs a reimbursement" do
+      expect { subject }.to change { Spree::Reimbursement.count }.by(1)
+      expect(subject.refunds.size).to eq 1
+    end
+
+    it "creates return items for the inventory units and accepts them" do
+      expect { subject }.to change { Spree::ReturnItem.count }.by(inventory_units.count)
+
+      return_items = subject.return_items
+      expect(return_items.map(&:acceptance_status)).to all eq "accepted"
+      expect(return_items.map(&:inventory_unit)).to match_array(inventory_units)
+    end
+  end
+
   describe "#short_ship" do
     subject { Spree::OrderCancellations.new(order).short_ship([inventory_unit]) }
 
