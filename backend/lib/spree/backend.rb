@@ -2,7 +2,6 @@ require 'rails/all'
 require 'jquery-rails'
 require 'jquery-ui-rails'
 require 'bourbon'
-require 'deface'
 require 'select2-rails'
 require 'handlebars_assets'
 

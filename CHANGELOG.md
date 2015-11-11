@@ -1,3 +1,11 @@
+## Solidus 1.2.0 (unreleased)
+
+*   Removed deface from core
+
+    If projects or extensions rely on deface they'll need to add it to their
+    dependencies rather than counting on solidus to pull it in. Core does not
+    need to deface anything.
+
 ## Solidus 1.1.0 (unreleased)
 
 *   Address is immutable (Address#readonly? is always true)
