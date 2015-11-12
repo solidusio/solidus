@@ -22,19 +22,34 @@ describe Spree::OrderMutex do
     end
   end
 
-  context "with an existing lock on the same order" do
-    it "raises a LockFailed error and then releases the lock" do
+  context "with a nested lock on the same order" do
+    it "continues to hold the lock for both blocks and releases it" do
       Spree::OrderMutex.with_lock!(order) do
-        expect {
-          expect { |b|
-            Spree::OrderMutex.with_lock!(order, &b)
-          }.not_to yield_control
-        }.to raise_error(Spree::OrderMutex::LockFailed)
+        expect { |b|
+          Spree::OrderMutex.with_lock!(order, &b)
+        }.to yield_control.once
       end
 
       expect { |b|
         Spree::OrderMutex.with_lock!(order, &b)
       }.to yield_control.once
+    end
+  end
+
+  context "when another thread requests lock on already locked order" do
+    it "throws exception" do
+      Thread.new do
+        Spree::OrderMutex.with_lock!(order) {|o| sleep(3) }
+      end
+
+      # Allows the other thread to obtain the order lock
+      sleep(1)
+
+      expect {
+        expect { |b|
+          Spree::OrderMutex.with_lock!(order)
+        }.not_to yield_control
+      }.to raise_error(Spree::OrderMutex::LockFailed)
     end
   end
 

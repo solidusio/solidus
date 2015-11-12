@@ -14,20 +14,25 @@ module Spree
       def with_lock!(order)
         raise ArgumentError, "order must be supplied" if order.nil?
 
-        # limit the maximum lock time just in case a lock is somehow left in place accidentally
-        expired.where(order: order).delete_all
+        if @orderMutexThreadId ==  Thread.current.object_id
+          yield
+        else
+          # limit the maximum lock time just in case a lock is somehow left in place accidentally
+          expired.where(order: order).delete_all
 
-        begin
-          order_mutex = create!(order: order)
-        rescue ActiveRecord::RecordNotUnique
-          error = LockFailed.new("Could not obtain lock on order #{order.id}")
-          logger.error error.inspect
-          raise error
+          begin
+            order_mutex = create!(order: order)
+            @orderMutexThreadId = Thread.current.object_id
+          rescue ActiveRecord::RecordNotUnique
+            error = LockFailed.new("Could not obtain lock on order #{order.id}")
+            logger.error error.inspect
+            raise error
+          end
+
+          yield
         end
-
-        yield
-
       ensure
+        @orderMutexThreadId = nil
         order_mutex.destroy if order_mutex
       end
     end
