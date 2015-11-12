@@ -1,3 +1,0 @@
-<!-- insert_top "body" -->
-<%= javascript_tag do %>
-<% end %>
