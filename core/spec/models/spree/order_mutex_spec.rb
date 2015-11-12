@@ -37,7 +37,7 @@ describe Spree::OrderMutex do
   end
 
   context "when another thread requests lock on already locked order" do
-    it "throws exception" do
+    it "raises a LockFailed error" do
       Thread.new do
         Spree::OrderMutex.with_lock!(order) {|o| sleep(3) }
       end
@@ -47,7 +47,7 @@ describe Spree::OrderMutex do
 
       expect {
         expect { |b|
-          Spree::OrderMutex.with_lock!(order)
+          Spree::OrderMutex.with_lock!(order, &b)
         }.not_to yield_control
       }.to raise_error(Spree::OrderMutex::LockFailed)
     end
