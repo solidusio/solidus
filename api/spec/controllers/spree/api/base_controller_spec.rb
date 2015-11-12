@@ -158,9 +158,7 @@ describe Spree::Api::BaseController, :type => :controller do
     end
 
     context 'with an existing lock' do
-      around do |example|
-        Spree::OrderMutex.with_lock!(order) { example.run }
-      end
+      before { Spree::OrderMutex.create!(order: order) }
 
       it 'returns a 409 conflict' do
         api_get :index, order_token: order.guest_token, order_id: order.number
