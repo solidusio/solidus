@@ -58,9 +58,9 @@ describe "Stock Management", :type => :feature do
     end
 
     def adjust_count_on_hand(count_on_hand)
-      find(:css, ".fa-edit[data-id='#{stock_item.id}']").click
+      find(:css, ".fa-edit[data-id='#{stock_item.id}']").trigger('click')
       find(:css, "[data-variant-id='#{variant.id}'] input[type='number']").set(count_on_hand)
-      find(:css, ".fa-check[data-id='#{stock_item.id}']").click
+      find(:css, ".fa-check[data-id='#{stock_item.id}']").trigger('click')
       expect(page).to have_content('Updated successfully')
     end
 
