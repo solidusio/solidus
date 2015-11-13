@@ -333,7 +333,7 @@ module Spree
     #
     # @return [Spree::Image] images associated with the variant
     def display_images
-      applicable_variant_image_rule.try(:images) || images
+      applicable_variant_image_rule.try!(:images) || images
     end
 
     # Determines the variant's property values by verifying which of the product's
