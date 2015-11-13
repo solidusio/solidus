@@ -59,7 +59,7 @@
 //---------------------------------------------------
 .sidebar-left-header {
   padding: 15px;
-  height: 64px;
+  height: 64px; // height of .page-title
   box-sizing: content-box;
   background-color: $color-1;
   border-bottom: 1px solid $color-border;
@@ -69,7 +69,11 @@
     line-height: 64px;
   }
 
-#logo { height: 40px }
+  img {
+    vertical-align: middle;
+    margin-top: -12px; // hand-tweaking because the solid logo is bottom heavy
+  }
+}
 
 [data-hook="admin-title"] { font-size: 14px }
 
