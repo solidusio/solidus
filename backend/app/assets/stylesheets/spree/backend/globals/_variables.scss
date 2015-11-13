@@ -18,6 +18,9 @@ $color-5:                        #C60F13 !default;    // Red
 $color-6:                        #FF9300 !default;    // Yellow
 $color-7:                        #F4F4F4 !default;    // Light Gray
 
+// Basic accents for admin
+$box-shadow:                     0px 3px 3px -2px hsla(0, 0%, 0%, 0.2);
+
 // Body base colors
 $color-body-bg:                  $color-1 !default;
 $color-body-text:                $color-4 !default;
@@ -28,6 +31,14 @@ $color-link-active:              $color-2 !default;
 $color-link-focus:               $color-2 !default;
 $color-link-visited:             $color-3 !default;
 $color-border:                   very-light($color-3, 12) !default;
+
+// Basic navigation colors
+$color-sidebar-bg:              $color-body-bg !default;
+$color-sidebar-border:          $color-border   !default;
+$color-navbar-bg:               $color-3 !default;
+$color-navbar-active-bg:        $color-2 !default;
+$color-navbar-submenu-bg:       very-light($color-navbar-bg, 4) !default;
+$color-navbar-text:             $color-1 !default;
 
 // Basic flash colors
 $color-success:                  $color-2 !default;

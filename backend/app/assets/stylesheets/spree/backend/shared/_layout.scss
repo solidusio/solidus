@@ -43,12 +43,31 @@
   }
 }
 
+// Page Layout
+//---------------------------------------------------
+.sidebar {
+  @include position(absolute, 0 null 0 0);
+  width: $width-sidebar;
+}
+
+.main-content {
+  margin-left: $width-sidebar;
+  @include clearfix;
+}
+
 // Header
 //---------------------------------------------------
-#header {
+.sidebar-left-header {
+  padding: 15px;
+  height: 64px;
+  box-sizing: content-box;
   background-color: $color-1;
-  padding: 5px 0;
-}
+  border-bottom: 1px solid $color-border;
+
+  a {
+    display: inline-block;
+    line-height: 64px;
+  }
 
 #logo { height: 40px }
 
