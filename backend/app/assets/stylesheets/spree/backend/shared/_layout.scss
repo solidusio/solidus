@@ -45,8 +45,18 @@
 
 // Page Layout
 //---------------------------------------------------
+
+html {
+  height: 100%;
+}
+
+body {
+  position: relative;
+  min-height: 100%;
+}
+
 .sidebar {
-  @include position(absolute, 0 null 0 0);
+  @include position(fixed, 0 null 0 0);
   width: $width-sidebar;
 }
 
@@ -59,14 +69,14 @@
 //---------------------------------------------------
 .sidebar-left-header {
   padding: 15px;
-  height: 64px; // height of .page-title
+  height: 58px; // height of .page-title
   box-sizing: content-box;
   background-color: $color-1;
   border-bottom: 1px solid $color-border;
 
   a {
     display: inline-block;
-    line-height: 64px;
+    line-height: 58px;
   }
 
   img {

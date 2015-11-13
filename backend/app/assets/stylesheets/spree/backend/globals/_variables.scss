@@ -188,3 +188,10 @@ $border-radius:                  3px !default;
 
 $font-weight-bold:               600 !default;
 $font-weight-normal:             400 !default;
+
+$width-sidebar:                  200px !default;
+$width-sidebar-flyout:           225px !default;
+
+// Stacking
+//--------------------------------------------------------------
+$z-index-navbar-flyout:          1000;

@@ -62,6 +62,8 @@ h6 { font-size: $h6-size; line-height: $h1-size }
 //--------------------------------------------------------------
 ul {
   &.inline-menu {
+    margin: 0;
+
     li {
       display: inline-block;
     }
