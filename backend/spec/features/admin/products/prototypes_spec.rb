@@ -32,7 +32,7 @@ describe "Prototypes", :type => :feature do
       end
 
       visit spree.admin_path
-      click_link "Products"
+      click_nav "Products"
       click_link "Prototypes"
 
       within_row(1) { expect(column_text(1)).to eq "Shirt" }
@@ -44,7 +44,7 @@ describe "Prototypes", :type => :feature do
   context "creating a prototype" do
     it "should allow an admin to create a new product prototype", :js => true do
       visit spree.admin_path
-      click_link "Products"
+      click_nav "Products"
       click_link "Prototypes"
       click_link "new_prototype_link"
       within('#new_prototype') do
@@ -73,7 +73,7 @@ describe "Prototypes", :type => :feature do
       end
 
       visit spree.admin_path
-      click_link "Products"
+      click_nav "Products"
       click_link "Prototypes"
 
       click_on "Edit"
@@ -96,7 +96,7 @@ describe "Prototypes", :type => :feature do
     shirt_prototype.taxons << create(:taxon)
 
     visit spree.admin_path
-    click_link "Products"
+    click_nav "Products"
     click_link "Prototypes"
 
     within("#spree_prototype_#{shirt_prototype.id}") do

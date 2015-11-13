@@ -23,7 +23,7 @@ describe "Product Taxons", :type => :feature do
       product.taxons << taxon_1
 
       visit spree.admin_path
-      click_link "Products"
+      click_nav "Products"
       within("table.index") do
         click_icon :edit
       end
