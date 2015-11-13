@@ -17,7 +17,9 @@
 <% end %>
 
 <% if can? :admin, Spree::Promotion %>
-  <%= tab *Spree::BackendConfiguration::PROMOTION_TABS, url: spree.admin_promotions_path, icon: 'bullhorn' %>
+  <%= tab *Spree::BackendConfiguration::PROMOTION_TABS, url: spree.admin_promotions_path, icon: 'bullhorn' do %>
+    <%- render partial: 'spree/admin/shared/promotion_sub_menu' %>
+  <%- end %>
 <% end %>
 
 <% if can? :admin, Spree::StockItem %>
