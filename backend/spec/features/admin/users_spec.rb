@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe 'Users', :type => :feature do
-  stub_authorization!
+  stub_authorization!(permission_sets: [Spree::PermissionSets::UserManagement, Spree::PermissionSets::OrderManagement])
   let!(:country) { create(:country) }
   let!(:user_a) { create(:user_with_addreses, email: 'a@example.com') }
   let!(:user_b) { create(:user_with_addreses, email: 'b@example.com') }
@@ -119,16 +119,6 @@ describe 'Users', :type => :feature do
       expect(page).to have_text 'Account updated'
     end
 
-    it 'can edit user roles' do
-      Spree::Role.create name: "admin"
-      click_link user_a.email
-
-      check 'user_spree_role_admin'
-      click_button 'Update'
-      expect(page).to have_text 'Account updated'
-      expect(find_field('user_spree_role_admin')['checked']).to be true
-    end
-
     it 'can edit user shipping address' do
       click_link "Addresses"
 
@@ -153,42 +143,56 @@ describe 'Users', :type => :feature do
       expect(user_a.reload.bill_address.address1).to eq "1313 Mockingbird Ln"
     end
 
-    context 'no api key exists' do
-      it 'can generate a new api key' do
-        within("#admin_user_edit_api_key") do
-          expect(user_a.spree_api_key).to be_blank
-          click_button Spree.t('generate_key', :scope => 'api')
-        end
 
-        expect(user_a.reload.spree_api_key).to be_present
+    context "superuser" do
+      stub_authorization!
+
+      it 'can edit user roles' do
+        Spree::Role.create name: "admin"
+        click_link user_a.email
+
+        check 'user_spree_role_admin'
+        click_button 'Update'
+        expect(page).to have_text 'Account updated'
+        expect(find_field('user_spree_role_admin')['checked']).to be true
       end
-    end
+      context 'no api key exists' do
+        it 'can generate a new api key' do
+          within("#admin_user_edit_api_key") do
+            expect(user_a.spree_api_key).to be_blank
+            click_button Spree.t('generate_key', :scope => 'api')
+          end
 
-    context 'an api key exists' do
-      before do
-        user_a.generate_spree_api_key!
-        expect(user_a.reload.spree_api_key).to be_present
-        visit current_path
-      end
-
-      it 'can clear an api key' do
-        within("#admin_user_edit_api_key") do
-          click_button Spree.t('clear_key', :scope => 'api')
+          expect(user_a.reload.spree_api_key).to be_present
         end
-
-        expect(user_a.reload.spree_api_key).to be_blank
-        expect { find("#current-api-key") }.to raise_error Capybara::ElementNotFound
       end
 
-      it 'can regenerate an api key' do
-        old_key = user_a.spree_api_key
-
-        within("#admin_user_edit_api_key") do
-          click_button Spree.t('regenerate_key', :scope => 'api')
+      context 'an api key exists' do
+        before do
+          user_a.generate_spree_api_key!
+          expect(user_a.reload.spree_api_key).to be_present
+          visit current_path
         end
 
-        expect(user_a.reload.spree_api_key).to be_present
-        expect(user_a.reload.spree_api_key).not_to eq old_key
+        it 'can clear an api key' do
+          within("#admin_user_edit_api_key") do
+            click_button Spree.t('clear_key', :scope => 'api')
+          end
+
+          expect(user_a.reload.spree_api_key).to be_blank
+          expect { find("#current-api-key") }.to raise_error Capybara::ElementNotFound
+        end
+
+        it 'can regenerate an api key' do
+          old_key = user_a.spree_api_key
+
+          within("#admin_user_edit_api_key") do
+            click_button Spree.t('regenerate_key', :scope => 'api')
+          end
+
+          expect(user_a.reload.spree_api_key).to be_present
+          expect(user_a.reload.spree_api_key).not_to eq old_key
+        end
       end
     end
   end
