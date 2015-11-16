@@ -23,7 +23,7 @@ nav.menu {
   }
 }
 
-.sidebar {
+.admin-nav {
   @include display(flex);
   @include flex-direction(column);
   border-right: 1px solid $color-sidebar-border;
@@ -31,7 +31,7 @@ nav.menu {
   z-index: $z-index-navbar-flyout;
 }
 
-.admin-menu {
+.admin-nav-menu {
   @include flex(1);
   text-transform: uppercase;
 

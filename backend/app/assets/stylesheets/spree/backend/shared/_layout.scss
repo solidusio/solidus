@@ -55,7 +55,7 @@ body {
   min-height: 100%;
 }
 
-.sidebar {
+.admin-nav {
   @include position(fixed, 0 null 0 0);
   width: $width-sidebar;
 }
@@ -67,7 +67,7 @@ body {
 
 // Header
 //---------------------------------------------------
-.sidebar-left-header {
+.admin-nav-header {
   padding: 15px;
   height: 58px; // height of .page-title
   box-sizing: content-box;
