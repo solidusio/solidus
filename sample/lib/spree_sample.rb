@@ -26,5 +26,9 @@ module SpreeSample
       Spree::Sample.load_sample("orders")
       Spree::Sample.load_sample("payments")
     end
+
+    def self.load_performance_samples
+      Spree::Sample.load_sample("product_with_many_variants")
+    end
   end
 end

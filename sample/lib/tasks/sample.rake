@@ -21,4 +21,9 @@ Migrations have been run. Please run "rake spree_sample:load" by itself now.
   end
 end
 
-
+namespace :performance_sample do
+  desc 'Loads sample data useful for performance testing'
+  task load: :environment do
+    SpreeSample::Engine.load_performance_samples
+  end
+end
