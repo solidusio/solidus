@@ -1,5 +1,6 @@
 Spree::Sample.load_sample("products")
 Spree::Sample.load_sample("variants")
+Spree::Sample.load_sample("image_helpers")
 
 products = {}
 products[:ror_baseball_jersey] = Spree::Product.find_by_name!("Ruby on Rails Baseball Jersey")
@@ -11,14 +12,6 @@ products[:ror_ringer] = Spree::Product.find_by_name!("Ruby on Rails Ringer T-Shi
 products[:ror_stein] = Spree::Product.find_by_name!("Ruby on Rails Stein")
 products[:ruby_baseball_jersey] = Spree::Product.find_by_name!("Ruby Baseball Jersey")
 products[:apache_baseball_jersey] = Spree::Product.find_by_name!("Apache Baseball Jersey")
-
-
-def image(name, type="jpeg")
-  images_path = Pathname.new(File.dirname(__FILE__)) + "images"
-  path = images_path + "#{name}.#{type}"
-  return false if !File.exist?(path)
-  path
-end
 
 images = {
   products[:ror_tote].master => [

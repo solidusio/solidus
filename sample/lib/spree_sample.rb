@@ -28,7 +28,7 @@ module SpreeSample
     end
 
     def self.load_performance_samples
-      Spree::Sample.load_sample("product_with_many_variants")
+      Spree::Sample.load_sample("products_with_many_variants")
     end
   end
 end
