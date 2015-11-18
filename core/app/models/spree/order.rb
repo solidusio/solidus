@@ -588,11 +588,6 @@ module Spree
       guest_token
     end
 
-    def fully_discounted?
-      adjustment_total + line_items.map(&:final_amount).sum == 0.0
-    end
-    alias_method :fully_discounted, :fully_discounted?
-
     def unreturned_exchange?
       # created_at - 1 is a hack to ensure that this doesn't blow up on MySQL,
       # records loaded from the DB on MySQL will have a precision of 1 second,
