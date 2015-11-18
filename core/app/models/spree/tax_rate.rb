@@ -1,14 +1,4 @@
 module Spree
-  class DefaultTaxZoneValidator < ActiveModel::Validator
-    def validate(record)
-      if record.included_in_price
-        record.errors.add(:included_in_price, Spree.t(:included_price_validation)) unless Zone.default_tax
-      end
-    end
-  end
-end
-
-module Spree
   class TaxRate < Spree::Base
     acts_as_paranoid
 
@@ -25,7 +15,6 @@ module Spree
 
     validates :amount, presence: true, numericality: true
     validates :tax_category_id, presence: true
-    validates_with DefaultTaxZoneValidator
 
     # Finds geographically matching tax rates for a tax zone.
     # We do not know if they are/aren't applicable until we attempt to apply these rates to
