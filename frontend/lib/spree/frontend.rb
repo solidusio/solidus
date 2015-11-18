@@ -1,7 +1,6 @@
 require 'rails/all'
 require 'jquery-rails'
 require 'canonical-rails'
-require 'deface'
 
 require 'spree/core'
 
