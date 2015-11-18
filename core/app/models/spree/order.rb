@@ -589,6 +589,7 @@ module Spree
     end
 
     def fully_discounted?
+      ActiveSupport::Deprecation.warn("Spree::Order#fully_discounted? is deprecated.", caller)
       adjustment_total + line_items.map(&:final_amount).sum == 0.0
     end
     alias_method :fully_discounted, :fully_discounted?
