@@ -89,26 +89,31 @@ describe Spree::LineItem, :type => :model do
     end
   end
 
-  # Test for https://github.com/spree/spree/issues/3391
-  context '#copy_price' do
-    it "copies over a variant's prices" do
-      line_item.price = nil
-      line_item.cost_price = nil
-      line_item.currency = nil
-      line_item.copy_price
-      variant = line_item.variant
-      expect(line_item.price).to eq(variant.price)
-      expect(line_item.cost_price).to eq(variant.cost_price)
-      expect(line_item.currency).to eq(variant.currency)
-    end
-  end
+  describe 'line item creation' do
+    let(:variant) { create :variant }
 
-  # Test for https://github.com/spree/spree/issues/3481
-  context '#copy_tax_category' do
-    it "copies over a variant's tax category" do
-      line_item.tax_category = nil
-      line_item.copy_tax_category
-      expect(line_item.tax_category).to eq(line_item.variant.tax_category)
+    subject(:line_item) { Spree::LineItem.new(variant: variant, order: order) }
+
+    # Tests for https://github.com/spree/spree/issues/3391
+    context 'before validation' do
+      before { line_item.valid? }
+
+      it 'copies the variants price' do
+        expect(line_item.price).to eq(variant.price)
+      end
+
+      it 'copies the variants cost_price' do
+        expect(line_item.cost_price).to eq(variant.cost_price)
+      end
+
+      it 'copies the variants currency' do
+        expect(line_item.currency).to eq(variant.currency)
+      end
+
+      # Test for https://github.com/spree/spree/issues/3481
+      it 'copies the variants tax category' do
+        expect(line_item.tax_category).to eq(line_item.variant.tax_category)
+      end
     end
   end
 
