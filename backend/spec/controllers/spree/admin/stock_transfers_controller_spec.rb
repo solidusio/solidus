@@ -31,8 +31,8 @@ module Spree
 
         before do
           ability.cannot :manage, Spree::StockLocation
-          ability.can :transfer_from, Spree::StockLocation, id: [warehouse.id]
-          ability.can :transfer_to, Spree::StockLocation, id: [ny_store.id, la_store.id]
+          ability.can :display, Spree::StockLocation, id: [warehouse.id]
+          ability.can :display, Spree::StockLocation, id: [ny_store.id, la_store.id]
 
           allow_any_instance_of(Spree::Admin::BaseController).to receive(:spree_current_user).and_return(user)
           allow_any_instance_of(Spree::Admin::BaseController).to receive(:current_ability).and_return(ability)
