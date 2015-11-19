@@ -128,6 +128,7 @@ describe Spree::LineItem, :type => :model do
 
   describe "#discounted_money" do
     it "should return a money object with the discounted amount" do
+      expect(line_item.discounted_amount).to eq(10.00)
       expect(line_item.discounted_money.to_s).to eq "$10.00"
     end
   end

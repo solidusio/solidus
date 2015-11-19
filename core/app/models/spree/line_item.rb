@@ -13,8 +13,7 @@ module Spree
     has_many :actions, through: :line_item_actions
 
     before_validation :invalid_quantity_check
-    before_validation :copy_price
-    before_validation :copy_tax_category
+    before_validation :copy_variant_attributes
 
     validates :variant, presence: true
     validates :quantity, numericality: {
@@ -127,22 +126,14 @@ module Spree
       self.quantity = 0 if quantity.nil? || quantity < 0
     end
 
-    # Sets this line item's price, cost price, and currency from this line
-    # item's variant if they are nil and a variant is present.
-    def copy_price
-      if variant
-        self.price = variant.price if price.nil?
-        self.cost_price = variant.cost_price if cost_price.nil?
-        self.currency = variant.currency if currency.nil?
-      end
-    end
-
-    # Sets this line item's tax category from this line item's variant if a
-    # variant is present.
-    def copy_tax_category
-      if variant
-        self.tax_category = variant.tax_category
-      end
+    # Sets this line item's  tax category, price, cost price, and currency from
+    # its variant if they are nil and a variant is present.
+    def copy_variant_attributes
+      return unless variant
+      self.tax_category ||= variant.tax_category
+      self.currency ||= variant.currency
+      self.cost_price ||= variant.cost_price
+      self.price ||= variant.price
     end
 
     def update_inventory
