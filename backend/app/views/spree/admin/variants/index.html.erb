@@ -81,7 +81,6 @@
             <%= link_to_edit(variant, :no_text => true) unless variant.deleted? %>
           <% end %>
           <% if can?(:destroy, variant) %>
-            &nbsp;
             <%= link_to_delete(variant, :no_text => true) unless variant.deleted? %>
           <% end %>
         </td>

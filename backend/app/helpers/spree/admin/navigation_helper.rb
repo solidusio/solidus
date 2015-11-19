@@ -71,16 +71,24 @@ module Spree
       end
 
       def link_to_with_icon(icon_name, text, url, options = {})
-        options[:class] = (options[:class].to_s + " fa fa-#{icon_name} icon_link with-tip").strip
-        options[:class] += ' no-text' if options[:no_text]
-        options[:title] = text if options[:no_text]
-        text = options[:no_text] ? '' : raw("<span class='text'>#{text}</span>")
-        options.delete(:no_text)
-        link_to(text, url, options)
+        options[:class] = "#{options[:class]} icon_link icon_link-#{icon_name} with-tip"
+        icon = content_tag(:span, '', class: "fa fa-#{icon_name}")
+        if options.delete(:no_text)
+          options[:class] += ' no-text'
+          options[:title] = text
+          text = ''
+        else
+          text = content_tag(:span, text, class: 'text')
+        end
+        link_to(icon + ' ' + text, url, options)
       end
 
       def icon(icon_name)
         icon_name ? content_tag(:i, '', :class => icon_name) : ''
+      end
+
+      def fa_icon(icon_name)
+        content_tag(:i, '', class: "fa fa-#{icon_name}")
       end
 
       def button(text, icon_name = nil, button_type = 'submit', options={})
