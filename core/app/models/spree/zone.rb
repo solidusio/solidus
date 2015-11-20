@@ -3,6 +3,11 @@ module Spree
     has_many :zone_members, dependent: :destroy, class_name: "Spree::ZoneMember", inverse_of: :zone
     has_many :tax_rates, dependent: :destroy, inverse_of: :zone
 
+    with_options through: :zone_members, source: :zoneable do
+      has_many :countries, source_type: "Spree::Country"
+      has_many :states, source_type: "Spree::State"
+    end
+
     has_many :shipping_method_zones
     has_many :shipping_methods, through: :shipping_method_zones
 
@@ -33,6 +38,24 @@ module Spree
         end
       end
       matches.first
+    end
+
+    # The class method `.with_shared_members` returns all zones that also
+    # contain any of the zone members of the zone passed in. This also includes
+    # any country zones that contain the state of the current zone, if it's a state zone.
+    # It will also return itself.
+    def self.with_shared_members(zone)
+      joins('LEFT OUTER JOIN "spree_zone_members"
+              ON "spree_zone_members"."zone_id" = "spree_zones"."id"')
+        .where("(spree_zone_members.zoneable_type = 'Spree::State' AND
+                  spree_zone_members.zoneable_id IN (?))
+                OR (spree_zone_members.zoneable_type = 'Spree::Country' AND
+                  spree_zone_members.zoneable_id IN (?))
+                OR (spree_zones.id = ?)",
+        zone.states.pluck(:id),
+        zone.states.pluck(:country_id) + zone.countries.pluck(:id),
+        zone.id
+      ).uniq
     end
 
     def kind
