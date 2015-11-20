@@ -35,7 +35,7 @@ module CapybaraExt
   end
 
   def select2_search_without_selection(value, options)
-    find("#{options[:from]}:not(.select2-container-disabled)").click
+    find("#{options[:from]}:not(.select2-container-disabled):not(.select2-offscreen)").click
 
     within_entire_page do
       find("input.select2-input.select2-focused").set(value)
