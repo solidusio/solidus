@@ -6,6 +6,14 @@
     dependencies rather than counting on solidus to pull it in. Core does not
     need to deface anything.
 
+*   `testing_support/capybara_ext.rb` no longer changes capybara's matching
+    mode to `:prefer_exact`, and instead uses capybara's default, `:smart`.
+
+    You can restore the old behaviour (not recommended) by adding
+    `Capybara.match = :prefer_exact` to your `spec_helper.rb`.
+
+    More information can be found in [capybara's README](https://github.com/jnicklas/capybara#matching)
+
 ## Solidus 1.1.0 (unreleased)
 
 *   Address is immutable (Address#readonly? is always true)
