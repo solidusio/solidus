@@ -83,7 +83,7 @@ module CapybaraExt
   def select_select2_result(value)
     # results are in a div appended to the end of the document
     within_entire_page do
-      page.find("div.select2-result-label", text: %r{#{Regexp.escape(value)}}i).click
+      page.find("div.select2-result-label", text: %r{#{Regexp.escape(value)}}i, match: :prefer_exact).click
     end
   end
 
