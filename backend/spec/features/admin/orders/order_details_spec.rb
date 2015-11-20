@@ -373,12 +373,12 @@ describe "Order Details", type: :feature, js: true do
             fill_in 'item_quantity', with: 1
             click_icon :ok
 
-            wait_for_ajax
-
-            within_row(1) { click_icon 'arrows-h' }
-            targetted_select2 @shipment2.number, from: '#s2id_item_stock_location'
-            fill_in 'item_quantity', with: 200
-            click_icon :ok
+            within(all('.stock-contents', count: 2).first) do
+              within_row(1) { click_icon 'arrows-h' }
+              targetted_select2 @shipment2.number, from: '#s2id_item_stock_location'
+              fill_in 'item_quantity', with: 200
+              click_icon :ok
+            end
 
             wait_for_ajax
 

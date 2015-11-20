@@ -327,7 +327,7 @@ describe "Products", :type => :feature do
         # inspect the first one.
         expect(page).to have_css('#product_properties .product_property', count: 2)
         within('#product_properties .product_property:nth-child(1)') do
-          expect(find('input[type=text]').value).to eq('baseball_cap_color')
+          expect(find('input[type=text]', match: :first).value).to eq('baseball_cap_color')
         end
       end
     end

@@ -46,7 +46,9 @@ describe "Option Types", :type => :feature do
       create(:option_type, :name => "tshirt-color", :presentation => "Color")
       create(:option_type, :name => "tshirt-size", :presentation => "Size")
       click_link "Option Types"
-      within('table#listing_option_types') { click_link "Edit" }
+      within('table#listing_option_types') do
+        find('tr', text: 'Size').click_link "Edit"
+      end
       fill_in "option_type_name", :with => "foo-size 99"
       click_button "Update"
       expect(page).to have_content("successfully updated!")
@@ -90,7 +92,9 @@ describe "Option Types", :type => :feature do
 
     # Remove default option type
     within("tbody#option_values") do
-      find('.fa-trash').click
+      within_row(1) do
+        find('.fa-trash').click
+      end
     end
     # Assert that the field is hidden automatically
     expect(page).to have_css("tbody#option_values tr", count: 1)

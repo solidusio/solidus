@@ -6,7 +6,7 @@ describe "Customer Details", type: :feature, js: true do
   let(:country) { create(:country, name: "Kangaland") }
   let(:state) { create(:state, name: "Alabama", country: country) }
   let!(:shipping_method) { create(:shipping_method, display_on: "front_end") }
-  let!(:order) { create(:order, state: 'complete', completed_at: "2011-02-01 12:36:15") }
+  let!(:order) { create(:order, ship_address: ship_address, bill_address: bill_address, state: 'complete', completed_at: "2011-02-01 12:36:15") }
   let!(:product) { create(:product_in_stock) }
 
   # We need a unique name that will appear for the customer dropdown
@@ -69,6 +69,7 @@ describe "Customer Details", type: :feature, js: true do
         end
 
         click_button "Update"
+        expect(page).to have_content "Customer Details Updated"
         click_link "Customer Details"
         expect(find_field("order_bill_address_attributes_state_name").value).to eq("Piaui")
       end

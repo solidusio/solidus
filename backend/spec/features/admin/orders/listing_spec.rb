@@ -85,7 +85,7 @@ describe "Orders Listing", type: :feature, js: true do
         click_on 'Filter'
         uncheck "q_completed_at_not_null"
         click_on 'Filter Results'
-        within(".pagination") do
+        within(".pagination", match: :first) do
           click_link "2"
         end
         expect(page).to have_content("incomplete@example.com")
