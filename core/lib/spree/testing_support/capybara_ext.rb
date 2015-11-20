@@ -88,7 +88,12 @@ module CapybaraExt
   end
 
   def find_label_by_text(text)
-    find(:xpath, "//label[text()[contains(.,'#{text}')]]")
+    # This used to find the label by it's text using an xpath query, so we use
+    # a case insensitive search to avoid breakage with existing usage.
+    # We need to select labels which are not .select2-offscreen, as select2
+    # makes a duplicate label with the same text, and we want to be sure to
+    # find the original.
+    find('label:not(.select2-offscreen)', text: %r{#{Regexp.escape(text)}}i, match: :one)
   end
 
   def wait_for_ajax
