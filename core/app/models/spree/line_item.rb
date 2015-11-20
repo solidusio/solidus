@@ -12,7 +12,7 @@ module Spree
     has_many :line_item_actions, dependent: :destroy
     has_many :actions, through: :line_item_actions
 
-    before_validation :invalid_quantity_check
+    before_validation :normalize_quantity
     before_validation :copy_variant_attributes
 
     validates :variant, presence: true
@@ -121,8 +121,9 @@ module Spree
     end
 
     private
+
     # Sets the quantity to zero if it is nil or less than zero.
-    def invalid_quantity_check
+    def normalize_quantity
       self.quantity = 0 if quantity.nil? || quantity < 0
     end
 
