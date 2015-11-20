@@ -40,6 +40,21 @@ module Spree
       matches.first
     end
 
+    # Returns all zones that also contain any of the zone members of the zone
+    # passed in. This also includes any country zones that contain any states of
+    # the current zone, if it's a state zone. If the zone passed in has members,
+    # those will also be returned.
+    def self.with_shared_members(zone)
+      joins(:zone_members)
+        .where("(spree_zone_members.zoneable_type = 'Spree::State' AND
+                  spree_zone_members.zoneable_id IN (?))
+                OR (spree_zone_members.zoneable_type = 'Spree::Country' AND
+                  spree_zone_members.zoneable_id IN (?))",
+        zone.states.pluck(:id),
+        zone.states.pluck(:country_id) + zone.countries.pluck(:id)
+      ).uniq
+    end
+
     def kind
       if members.any? && !members.any? { |member| member.try(:zoneable_type).nil? }
         members.last.zoneable_type.demodulize.underscore
