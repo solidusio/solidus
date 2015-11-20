@@ -310,14 +310,6 @@ describe Spree::Zone, :type => :model do
 
     subject(:zones_with_shared_members) { Spree::Zone.with_shared_members(zone) }
 
-    context 'when passing a zone with no members' do
-      let!(:zone) { create :zone }
-
-      it 'will return itself' do
-        expect(subject).to include(zone)
-      end
-    end
-
     context "finding potential matches for a country zone" do
       let!(:zone) do
         create(:zone).tap do |z|
