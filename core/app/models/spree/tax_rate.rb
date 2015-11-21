@@ -18,14 +18,19 @@ module Spree
 
     scope :by_zone, ->(zone) { where(zone_id: zone) }
 
+    scope :for_zone, -> (zone) do
+      where(zone_id: Spree::Zone.with_shared_members(zone).pluck(:id))
+    end
+
     # Gets the array of TaxRates appropriate for the specified order
     def self.match(order_tax_zone)
       return [] unless order_tax_zone
-      rates = includes(zone: { zone_members: :zoneable }).load.select do |rate|
+      for_zone(order_tax_zone)
+      # rates = includes(zone: { zone_members: :zoneable }).load.select do |rate|
         # Why "potentially"?
         # Go see the documentation for that method.
-        rate.potentially_applicable?(order_tax_zone)
-      end
+        # rate.potentially_applicable?(order_tax_zone)
+      # end
 
       # Imagine with me this scenario:
       # You are living in Spain and you have a store which ships to France.
@@ -40,10 +45,10 @@ module Spree
       # This little bit of code at the end stops the Spanish refund from appearing.
       #
       # For further discussion, see #4397 and #4327.
-      rates.delete_if do |rate|
-        rate.included_in_price? &&
-        (rates - [rate]).map(&:tax_category).include?(rate.tax_category)
-      end
+      # rates.delete_if do |rate|
+        # rate.included_in_price? &&
+        # (rates - [rate]).map(&:tax_category).include?(rate.tax_category)
+      # end
     end
 
     # Pre-tax amounts must be stored so that we can calculate
