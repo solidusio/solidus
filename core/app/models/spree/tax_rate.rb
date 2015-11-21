@@ -131,14 +131,7 @@ module Spree
     # Under no circumstances should negative adjustments be applied for the Spanish tax rates.
     #
     # Those rates should never come into play at all and only the French rates should apply.
-    def potentially_applicable?(order_tax_zone)
-      # If the rate's zone matches the order's tax zone, then it's applicable.
-      self.zone == order_tax_zone ||
-      # If the rate's zone *contains* the order's tax zone, then it's applicable.
-      self.zone.contains?(order_tax_zone) ||
-      # 1) The rate's zone is the default zone, then it's always applicable.
-      (self.included_in_price? && self.zone.default_tax)
-    end
+
 
     # Creates necessary tax adjustments for the order.
     def adjust(order_tax_zone, item)
