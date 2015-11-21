@@ -70,23 +70,23 @@ module Spree
 
     # This method is best described by the documentation on #potentially_applicable?
     def self.adjust(order_tax_zone, items)
-      rates = self.match(order_tax_zone)
+      rates = match(order_tax_zone)
       tax_categories = rates.map(&:tax_category)
-      relevant_items, non_relevant_items = items.partition { |item| tax_categories.include?(item.tax_category) }
-      unless relevant_items.empty?
-        Spree::Adjustment.where(adjustable: relevant_items).tax.destroy_all # using destroy_all to ensure adjustment destroy callback fires.
+
+      # using destroy_all to ensure adjustment destroy callback fires.
+      Spree::Adjustment.where(adjustable: items).tax.destroy_all
+
+      relevant_items = items.select do |item|
+        tax_categories.include?(item.tax_category)
       end
+
       relevant_items.each do |item|
-        relevant_rates = rates.select { |rate| rate.tax_category == item.tax_category }
+        relevant_rates = rates.select do |rate|
+          rate.tax_category == item.tax_category
+        end
         store_pre_tax_amount(item, relevant_rates)
         relevant_rates.each do |rate|
           rate.adjust(order_tax_zone, item)
-        end
-      end
-      non_relevant_items.each do |item|
-        if item.adjustments.tax.present?
-          item.adjustments.tax.destroy_all # using destroy_all to ensure adjustment destroy callback fires.
-          item.update_columns pre_tax_amount: 0
         end
       end
     end
