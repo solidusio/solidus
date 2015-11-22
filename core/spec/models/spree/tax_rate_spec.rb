@@ -259,9 +259,7 @@ describe Spree::TaxRate, :type => :model do
         context "when order's zone is the default zone" do
           let!(:zone) { default_zone }
 
-          # This does not work properly. When you have two tax rates from the same
-          # category, one will be deleted. That is not right.
-          xit "should create two adjustments, one for each tax rate" do
+          it "should create two adjustments, one for each tax rate" do
             expect(line_item.adjustments.credit.count).to eq(0)
             expect { adjust_order_items }.to change { line_item.adjustments.tax.count }.by(2)
           end
@@ -272,8 +270,9 @@ describe Spree::TaxRate, :type => :model do
           end
 
           # This does not work either. Both tax rates should be taken into account.
-          xit "price adjustments should be accurate" do
-            included_tax = order.line_item_adjustments.sum(:amount)
+          it "price adjustments should be accurate" do
+            expect { adjust_order_items }.to change { line_item.adjustments.tax.count }
+            included_tax = line_item.adjustments.sum(:amount)
             expect(line_item.pre_tax_amount).to eq(17.38)
             expect(line_item.pre_tax_amount + included_tax).to eq(line_item.price)
           end
@@ -316,14 +315,14 @@ describe Spree::TaxRate, :type => :model do
 
             it "does not refund the default zone's VAT" do
               expect(line_item.adjustments.credit.count).to eq(0)
-              expect { adjust_order_items }.not_to change { line_item.adjustments.charge.count }
+              expect { adjust_order_items }.not_to change { line_item.adjustments.credit.count }
             end
           end
 
           context "and the foreign zone does not have VAT rates" do
             # This does not work. The code removes a VAT rate if
             # there's more than one VAT of the same category.
-            xit "refunds both default zone's VATs" do
+            it "refunds both default zone's VATs" do
               expect(line_item.adjustments.count).to eq(0)
               expect { adjust_order_items }.to change { line_item.adjustments.tax.count }.by(2)
             end
