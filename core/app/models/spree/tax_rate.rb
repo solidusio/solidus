@@ -68,29 +68,6 @@ module Spree
       item.update_column(:pre_tax_amount, pre_tax_amount.round(2))
     end
 
-    # This method is best described by the documentation on #potentially_applicable?
-    def self.adjust(order_tax_zone, items)
-      rates = match(order_tax_zone)
-      tax_categories = rates.map(&:tax_category)
-
-      # using destroy_all to ensure adjustment destroy callback fires.
-      Spree::Adjustment.where(adjustable: items).tax.destroy_all
-
-      relevant_items = items.select do |item|
-        tax_categories.include?(item.tax_category)
-      end
-
-      relevant_items.each do |item|
-        relevant_rates = rates.select do |rate|
-          rate.tax_category == item.tax_category
-        end
-        store_pre_tax_amount(item, relevant_rates)
-        relevant_rates.each do |rate|
-          rate.adjust(order_tax_zone, item)
-        end
-      end
-    end
-
     # Tax rates can *potentially* be applicable to an order.
     # We do not know if they are/aren't until we attempt to apply these rates to
     # the items contained within the Order itself.
@@ -131,7 +108,36 @@ module Spree
     # Under no circumstances should negative adjustments be applied for the Spanish tax rates.
     #
     # Those rates should never come into play at all and only the French rates should apply.
+    def self.adjust(order_tax_zone, items)
+      # Destroy all tax adjustments using destroy_all to ensure adjustment destroy callback fires.
+      Spree::Adjustment.where(adjustable: items).tax.destroy_all
+      items.each { |item| item.update_column(:pre_tax_amount, 0) }
 
+      # Find tax rates matching the order's tax zone
+      rates = match(order_tax_zone)
+      # Get all tax categories for which we have tax rates
+      tax_categories = rates.map(&:tax_category)
+      # Identify which items have to have a tax rate applied
+      # I think this could be done with an `items.join(:tax_category)` How?
+      relevant_items = items.select do |item|
+        tax_categories.include?(item.tax_category)
+      end
+
+      # For each item,
+      relevant_items.each do |item|
+        # Select the rates with the same tax category
+        relevant_rates = rates.select do |rate|
+          rate.tax_category == item.tax_category
+        end
+        # Store the pre_tax_amount on the item
+        # (incredibly inelegant, this line should go)
+        store_pre_tax_amount(item, relevant_rates)
+        # Have all the relevant rates adjust the item.
+        relevant_rates.each do |rate|
+          rate.adjust(order_tax_zone, item)
+        end
+      end
+    end
 
     # Creates necessary tax adjustments for the order.
     def adjust(order_tax_zone, item)
