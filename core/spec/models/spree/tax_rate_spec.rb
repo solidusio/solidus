@@ -142,51 +142,6 @@ describe Spree::TaxRate, :type => :model do
   end
 
   context ".adjust" do
-    let(:order) { stub_model(Spree::Order) }
-    let(:tax_category_1) { stub_model(Spree::TaxCategory) }
-    let(:tax_category_2) { stub_model(Spree::TaxCategory) }
-    let(:rate_1) { stub_model(Spree::TaxRate, :tax_category => tax_category_1) }
-    let(:rate_2) { stub_model(Spree::TaxRate, :tax_category => tax_category_2) }
-
-    context "with line items" do
-      let(:line_item) do
-        stub_model(Spree::LineItem,
-          :price => 10.0,
-          :quantity => 1,
-          :tax_category => tax_category_1,
-          :variant => stub_model(Spree::Variant)
-        )
-      end
-
-      let(:line_items) { [line_item] }
-
-      before do
-        allow(Spree::TaxRate).to receive_messages :match => [rate_1, rate_2]
-      end
-
-      it "should apply adjustments for two tax rates to the order" do
-        expect(rate_1).to receive(:adjust)
-        expect(rate_2).not_to receive(:adjust)
-        Spree::TaxRate.adjust(order.tax_zone, line_items)
-      end
-    end
-
-    context "with shipments" do
-      let(:shipments) { [stub_model(Spree::Shipment, :cost => 10.0, :tax_category => tax_category_1)] }
-
-      before do
-        allow(Spree::TaxRate).to receive_messages :match => [rate_1, rate_2]
-      end
-
-      it "should apply adjustments for two tax rates to the order" do
-        expect(rate_1).to receive(:adjust)
-        expect(rate_2).not_to receive(:adjust)
-        Spree::TaxRate.adjust(order.tax_zone, shipments)
-      end
-    end
-  end
-
-  context "#adjust" do
     let!(:country) { create(:country) }
     let!(:taxables_category) { create(:tax_category, name: "Taxable Foo") }
     let!(:non_taxables_category) { create(:tax_category, name: "Non Taxable") }
@@ -213,6 +168,31 @@ describe Spree::TaxRate, :type => :model do
     let(:line_item) { order.line_items.last }
 
     subject(:adjust_order_items) { Spree::TaxRate.adjust(order.tax_zone, order.line_items) }
+
+    context "with shipments" do
+      let(:shipments) do
+        [stub_model(Spree::Shipment, cost: 10.0, tax_category: taxables_category)]
+      end
+
+      let!(:rate2) do
+        create(
+          :tax_rate,
+          tax_category: non_taxables_category,
+          zone: zone,
+          amount: 0.05
+        )
+      end
+
+      before do
+        allow(Spree::TaxRate).to receive(:for_zone).and_return([rate1, rate2])
+      end
+
+      it "should apply adjustments for two tax rates to the order" do
+        expect(rate1).to receive(:adjust)
+        expect(rate2).not_to receive(:adjust)
+        Spree::TaxRate.adjust(zone, shipments)
+      end
+    end
 
     context "not taxable line item " do
       before { order.contents.add(non_taxable.master, 1) }
