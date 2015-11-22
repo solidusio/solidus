@@ -235,7 +235,7 @@ describe Spree::TaxRate, :type => :model do
         end
 
         context "when zone is contained by default tax zone" do
-          xit "should create two adjustments, one for each tax rate" do
+          it "should create two adjustments, one for each tax rate" do
             Spree::TaxRate.adjust(@order.tax_zone, @order.line_items)
             expect(line_item.adjustments.count).to eq(1)
           end
@@ -253,6 +253,10 @@ describe Spree::TaxRate, :type => :model do
             # Zone.stub_chain :default_tax, :contains? => false
             @zone.zone_members.delete_all
           end
+
+          # The test setup for this one is just plain bizarre, and I suspect
+          # that's why it fails. Xited for now.
+          # TODO: Rewrite the test setup for all of these.
           xit "should create an adjustment" do
             Spree::TaxRate.adjust(@order.tax_zone, @order.line_items)
             expect(line_item.adjustments.charge.count).to eq(1)
@@ -278,7 +282,7 @@ describe Spree::TaxRate, :type => :model do
             expect(line_item.adjustments.charge.count).to eq(0)
           end
 
-          xit "should create a tax refund for each tax rate" do
+          it "should create a tax refund for each tax rate" do
             Spree::TaxRate.adjust(@order.tax_zone, @order.line_items)
             expect(line_item.adjustments.credit.count).to eq(1)
           end
