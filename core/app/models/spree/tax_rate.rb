@@ -18,17 +18,12 @@ module Spree
 
     scope :by_zone, ->(zone) { where(zone_id: zone) }
 
+    # Gets the array of TaxRates appropriate for the specified order
     scope :for_zone, -> (zone) do
       where(zone_id: Spree::Zone.with_shared_members(zone).pluck(:id))
     end
 
     scope :included_in_price, -> { where(included_in_price: true) }
-
-    # Gets the array of TaxRates appropriate for the specified order
-    def self.match(order_tax_zone)
-      return [] unless order_tax_zone
-      for_zone(order_tax_zone)
-    end
 
     # Pre-tax amounts must be stored so that we can calculate
     # correct rate amounts in the future. For example:

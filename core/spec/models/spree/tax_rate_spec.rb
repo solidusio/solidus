@@ -1,18 +1,13 @@
 require 'spec_helper'
 
 describe Spree::TaxRate, :type => :model do
-  context ".match" do
+  context ".for_zone" do
     let(:order) { create(:order) }
     let(:country) { create(:country) }
     let(:tax_category) { create(:tax_category) }
     let(:calculator) { Spree::Calculator::FlatRate.new }
 
-    subject(:tax_rates_for_order) { Spree::TaxRate.match(order.tax_zone) }
-
-    it "should return an empty array when tax_zone is nil" do
-      allow(order).to receive_messages :tax_zone => nil
-      expect(tax_rates_for_order).to eq([])
-    end
+    subject(:tax_rates_for_order) { Spree::TaxRate.for_zone(order.tax_zone) }
 
     context "when no rate zones match the tax zone" do
       before do
@@ -363,7 +358,10 @@ describe Spree::TaxRate, :type => :model do
           end
 
           describe "when the order's tax zone is nil" do
-            before { allow(order).to receive(:tax_zone).and_return(nil) }
+            before do
+              line_item.adjustments.tax.destroy_all
+              allow(order).to receive(:tax_zone).and_return(nil)
+            end
 
             it 'does not apply any adjustments' do
               Spree::TaxRate.adjust(order.tax_zone, order.line_items)
