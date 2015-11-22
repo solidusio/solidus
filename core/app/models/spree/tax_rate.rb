@@ -48,11 +48,8 @@ module Spree
     end
 
     # Tax rates can *potentially* be applicable to an order.
-    # We do not know if they are/aren't until we attempt to apply these rates to
-    # the items contained within the Order itself.
-    # For instance, if a rate passes the criteria outlined in this method,
-    # but then has a tax category that doesn't match against any of the line items
-    # inside of the order, then that tax rate will not be applicable to anything.
+    # We do not know if they are/aren't until we check their tax categories - if
+    # they match any of the line item's, they are applicable.
     # For instance:
     #
     # Zones:
@@ -88,12 +85,17 @@ module Spree
     #
     # Those rates should never come into play at all and only the French rates should apply.
     def self.adjust(order_tax_zone, items)
+      # Early return to make sure nothing happens if there's no tax zone on
+      # the order.
+      return unless order_tax_zone
+
       # Destroy all tax adjustments using destroy_all to ensure adjustment destroy callback fires.
       Spree::Adjustment.where(adjustable: items).tax.destroy_all
       # TODO: Make sure items is always an AR relation and use `update_columns`
+      # TODO: Also: The whole pre_tax_amount stuff is so unnecessary once prices are right.
       # I think the main thing to be done here is adapting the tests, which use arrays.
-      items.each { |item| item.update_column(:pre_tax_amount, 0) }
-      return unless order_tax_zone
+      items.each { |item| item.update_column(:pre_tax_amount, item.discounted_amount) }
+
       # Find tax rates matching the order's tax zone
       rates = for_zone(order_tax_zone)
 
