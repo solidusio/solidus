@@ -5,13 +5,9 @@
 //= require jquery-ui/datepicker
 //= require jquery-ui/sortable
 //= require jquery-ui/autocomplete
-//= require modernizr
 //= require jquery.cookie
 //= require jquery.jstree/jquery.jstree
 //= require jquery.powertip
-//= require jquery.vAlign
-//= require equalize
-//= require responsive-tables
 //= require underscore-min
 //= require backbone
 //= require spree

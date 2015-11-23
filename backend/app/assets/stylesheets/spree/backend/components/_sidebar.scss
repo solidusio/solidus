@@ -23,4 +23,10 @@
       -moz-osx-font-smoothing: grayscale;
     }
   }
+
+  dl {
+    dt, dd {
+      min-height: 3em;
+    }
+  }
 }

@@ -98,6 +98,7 @@ dl {
     padding-left: 0;
     text-transform: uppercase;
     font-size: 85%;
+    clear: left;
   }
 
   dd {
@@ -105,12 +106,6 @@ dl {
     padding-right: 0;
     margin-left: 0;
   }
-
-  dd:after {
-    content: '';
-    clear: both;
-  }
-
 }
 
 .dl-collapse {
