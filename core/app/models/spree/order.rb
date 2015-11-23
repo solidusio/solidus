@@ -109,8 +109,11 @@ module Spree
     class_attribute :line_item_comparison_hooks
     self.line_item_comparison_hooks = Set.new
 
-    def self.by_number(number)
-      where(number: number)
+    class << self
+      def by_number(number)
+        where(number: number)
+      end
+      deprecate :by_number, deprecator: Spree::Deprecation
     end
 
     scope :created_between, ->(start_date, end_date) { where(created_at: start_date..end_date) }
