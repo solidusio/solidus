@@ -953,6 +953,12 @@ describe Spree::Order, :type => :model do
     let(:shipment) { Spree::Shipment.new(cost: 10) }
     let(:payment) { Spree::Payment.new(amount: 10) }
 
+    around do |example|
+      ActiveSupport::Deprecation.silence do
+        example.run
+      end
+    end
+
     before do
       allow(order).to receive(:line_items) { [line_item] }
       allow(order).to receive(:shipments) { [shipment] }

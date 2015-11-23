@@ -588,6 +588,7 @@ module Spree
       guest_token
     end
 
+    # @deprecated Do not use this method. Behaviour is unreliable.
     def fully_discounted?
       ActiveSupport::Deprecation.warn("Spree::Order#fully_discounted? is deprecated.", caller)
       adjustment_total + line_items.map(&:final_amount).sum == 0.0
