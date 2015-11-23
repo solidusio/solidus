@@ -193,9 +193,9 @@ module Spree
     end
 
     def confirmation_required?
-      ActiveSupport::Deprecation.warn "Order#confirmation_required is deprecated.", caller
       true
     end
+    deprecate :confirmation_required?, deprecator: Spree::Deprecation
 
     def backordered?
       shipments.any?(&:backordered?)
@@ -593,10 +593,10 @@ module Spree
 
     # @deprecated Do not use this method. Behaviour is unreliable.
     def fully_discounted?
-      ActiveSupport::Deprecation.warn("Spree::Order#fully_discounted? is deprecated.", caller)
       adjustment_total + line_items.map(&:final_amount).sum == 0.0
     end
     alias_method :fully_discounted, :fully_discounted?
+    deprecate :fully_discounted, deprecator: Spree::Deprecation
 
     def unreturned_exchange?
       # created_at - 1 is a hack to ensure that this doesn't blow up on MySQL,
