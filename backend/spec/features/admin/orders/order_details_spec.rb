@@ -373,12 +373,12 @@ describe "Order Details", type: :feature, js: true do
             fill_in 'item_quantity', with: 1
             click_icon :ok
 
-            wait_for_ajax
-
-            within_row(1) { click_icon 'arrows-h' }
-            targetted_select2 @shipment2.number, from: '#s2id_item_stock_location'
-            fill_in 'item_quantity', with: 200
-            click_icon :ok
+            within(all('.stock-contents', count: 2).first) do
+              within_row(1) { click_icon 'arrows-h' }
+              targetted_select2 @shipment2.number, from: '#s2id_item_stock_location'
+              fill_in 'item_quantity', with: 200
+              click_icon :ok
+            end
 
             wait_for_ajax
 
@@ -424,26 +424,23 @@ describe "Order Details", type: :feature, js: true do
             product.master.stock_items.last.update_column(:count_on_hand, 0)
             expect(@shipment2.reload.backordered?).to eq(false)
 
-
             within_row(1) { click_icon 'arrows-h' }
             targetted_select2 @shipment2.number, from: '#s2id_item_stock_location'
             fill_in 'item_quantity', with: 1
             click_icon :ok
 
-            wait_for_ajax
+            expect(page).to have_content("1 x backordered")
 
-            expect(@shipment2.reload.backordered?).to eq(true)
+            within('.stock-contents', text: "1 x on hand") do
+              within_row(1) { click_icon 'arrows-h' }
+              targetted_select2 @shipment2.number, from: '#s2id_item_stock_location'
+              fill_in 'item_quantity', with: 1
+              click_icon :ok
+            end
 
-            within_row(1) { click_icon 'arrows-h' }
-            targetted_select2 @shipment2.number, from: '#s2id_item_stock_location'
-            fill_in 'item_quantity', with: 1
-            click_icon :ok
-
-            wait_for_ajax
-
-            expect(order.shipments.count).to eq(1)
-            expect(order.shipments.last.inventory_units_for(product.master).count).to eq(2)
-            expect(@shipment2.reload.backordered?).to eq(true)
+            # Empty shipment should be removed
+            expect(page).to have_css('.stock-contents', count: 1)
+            expect(page).to have_content("2 x backordered")
           end
         end
       end

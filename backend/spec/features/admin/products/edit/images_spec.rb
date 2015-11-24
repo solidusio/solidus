@@ -27,7 +27,9 @@ describe "Product Images", :type => :feature do
       click_button "Update"
       expect(page).to have_content("successfully created!")
 
-      click_icon(:edit)
+      within_row(1) do
+        click_icon(:edit)
+      end
       fill_in "image_alt", :with => "ruby on rails t-shirt"
       click_button "Update"
       expect(page).to have_content("successfully updated!")

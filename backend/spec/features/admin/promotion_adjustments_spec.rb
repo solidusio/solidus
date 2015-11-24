@@ -136,7 +136,7 @@ describe "Promotion Adjustments", :type => :feature do
       expect(first_action_calculator.preferred_percent).to eq(10)
     end
 
-    xit "should allow an admin to create an automatic promotion with free shipping (no code)" do
+    it "should allow an admin to create an automatic promotion with free shipping (no code)" do
       fill_in "Name", :with => "Promotion"
       click_button "Create"
       expect(page).to have_content("Editing Promotion")
@@ -146,21 +146,14 @@ describe "Promotion Adjustments", :type => :feature do
       find('[id$=_preferred_amount]').set(30)
       within('#rule_fields') { click_button "Update" }
 
-      select2 "Create whole-order adjustment", :from => "Add action of type"
+      select2 "Free shipping", :from => "Add action of type"
       within('#action_fields') { click_button "Add" }
-      select2 "Free Shipping", :from => "Calculator"
-      within('#actions_container') { click_button "Update" }
+      expect(page).to have_content('MAKES ALL SHIPMENTS FOR THE ORDER FREE')
 
       promotion = Spree::Promotion.find_by_name("Promotion")
-      expect(promotion.code.first.value).to be_blank
-
-      first_rule = promotion.rules.first
-      expect(first_rule.class).to eq(Spree::Promotion::Rules::ItemTotal)
-
-      first_action = promotion.actions.first
-      expect(first_action.class).to eq(Spree::Promotion::Actions::CreateAdjustment)
-      first_action_calculator = first_action.calculator
-      expect(first_action_calculator.class).to eq(Spree::Calculator::FreeShipping)
+      expect(promotion.codes).to be_empty
+      expect(promotion.rules.first).to be_a(Spree::Promotion::Rules::ItemTotal)
+      expect(promotion.actions.first).to be_a(Spree::Promotion::Actions::FreeShipping)
     end
 
     it "should allow an admin to create an automatic promo requiring a landing page to be visited" do

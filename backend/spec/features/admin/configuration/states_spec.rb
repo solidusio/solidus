@@ -46,7 +46,7 @@ describe "States", :type => :feature do
       click_button "Create"
       expect(page).to have_content("successfully created!")
       expect(page).to have_content("Pest megye")
-      expect(find("#s2id_country span").text).to eq("Hungary")
+      expect(find("#s2id_country")).to have_content("Hungary")
     end
 
     it "should show validation errors", :js => true do
