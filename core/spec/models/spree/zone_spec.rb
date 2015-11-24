@@ -302,4 +302,29 @@ describe Spree::Zone, :type => :model do
       end
     end
   end
+
+  context "state and country associations" do
+    let!(:country)  { create(:country) }
+
+    context "has countries associated" do
+      let!(:zone) do
+        create(:zone, countries: [country])
+      end
+
+      it "can access associated countries" do
+        expect(zone.countries).to eq([country])
+      end
+    end
+
+    context "has states associated" do
+      let!(:state)  { create(:state, country: country) }
+      let!(:zone) do
+        create(:zone, states: [state])
+      end
+
+      it "can access associated states" do
+        expect(zone.states).to eq([state])
+      end
+    end
+  end
 end
