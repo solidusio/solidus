@@ -56,7 +56,7 @@ body {
 }
 
 .admin-nav {
-  @include position(fixed, 0 null 0 0);
+  @include position(absolute, 0 null 0 0);
   width: $width-sidebar;
 }
 
