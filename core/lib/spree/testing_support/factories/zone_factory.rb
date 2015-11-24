@@ -13,5 +13,9 @@ FactoryGirl.define do
   factory :zone, class: Spree::Zone do
     name { generate(:random_string) }
     description { generate(:random_string) }
+
+    trait :with_country do
+      countries { [create(:country)] }
+    end
   end
 end
