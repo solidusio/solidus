@@ -140,7 +140,7 @@ testing purposes.
 This sandbox includes solidus\_auth\_devise and generates with seed and sample
 data already loaded.
 
-* Create the sandbox application (`DB=mysql` or `DB=postgres` can be specified
+* Create the sandbox application (`DB=mysql` or `DB=postgresql` can be specified
   to override the default sqlite)
 
   ```shell
@@ -192,7 +192,7 @@ bundle exec rspec spec
 If you would like to run specs against a particular database you may specify the
 dummy apps database, which defaults to sqlite3.
 ```shell
-DB=postgres bundle exec rake test_app
+DB=postgresql bundle exec rake test_app
 ```
 
 You can also enable fail fast in order to stop tests at the first failure
