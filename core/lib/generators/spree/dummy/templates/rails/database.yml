@@ -26,7 +26,7 @@ production:
   adapter: mysql2
   database: <%= database_prefix %><%= options[:lib_name] %>_spree_production
   encoding: utf8
-<% when 'postgres' %>
+<% when 'postgres', 'postgresql' %>
 <% db_host = ENV['DB_HOST'] -%>
 development:
   adapter: postgresql

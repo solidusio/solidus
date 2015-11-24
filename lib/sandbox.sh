@@ -2,7 +2,7 @@
 # Used in the sandbox rake task in Rakefile
 
 case "$DB" in
-postgres)
+postgres|postgresql)
 	RAILSDB="postgresql"
 	;;
 mysql)
