@@ -24,3 +24,19 @@
   border-radius: 4px;
   opacity: 0.6;
 }
+
+input#override_recipient_checkbox:checked {
+  & ~ fieldset {
+    .reimbursement-type-col, .exchange-for-col {
+      display: none;
+    }
+  }
+
+  & ~ .recipient-user-search {
+    display: block;
+  }
+}
+
+.recipient-user-search {
+  display: none;
+}

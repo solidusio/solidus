@@ -13,8 +13,8 @@
         <th><%= Spree.t(:state) %></th>
         <th><%= Spree.t(:charged) %></th>
         <th><%= Spree.t(:pre_tax_refund_amount) %></th>
-        <th><%= Spree.t(:reimbursement_type) %></th>
-        <th><%= Spree.t(:exchange_for) %></th>
+        <th class="reimbursement-type-col"><%= Spree.t(:reimbursement_type) %></th>
+        <th class="exchange-for-col"><%= Spree.t(:exchange_for) %></th>
         <th><%= Spree.t(:reason) %></th>
       </tr>
     </thead>
@@ -45,14 +45,14 @@
               <%= return_item.display_pre_tax_amount %>
             <% end %>
           </td>
-          <td>
+          <td class="reimbursement-type-col">
             <% if editable %>
               <%= item_fields.select :preferred_reimbursement_type_id, @reimbursement_types.collect{|r|[r.name.humanize, r.id]}, {include_blank: true}, {class: 'select2 fullwidth'} %>
             <% else %>
               <%= return_item.preferred_reimbursement_type.try(:name) %>
             <% end %>
           </td>
-          <td class="align-center">
+          <td class="exchange-for-col align-center">
             <% if editable %>
               <%= item_fields.collection_select :exchange_variant_id, return_item.eligible_exchange_variants(@stock_locations), :id, :options_text, { include_blank: true }, { class: "select2 fullwidth return-item-exchange-selection" } %>
             <% elsif return_item.exchange_processed? %>

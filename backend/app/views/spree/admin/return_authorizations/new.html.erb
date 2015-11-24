@@ -10,6 +10,18 @@
 
 <%= render :partial => 'spree/shared/error_messages', :locals => { :target => @return_authorization } %>
 <%= form_for [:admin, @order, @return_authorization] do |f| %>
+  <input type='checkbox' id='override_recipient_checkbox' name='return_authorization[override_recipient]' value='true' />
+  <label class="override_recipient_checkbox" for='override_recipient_checkbox'>
+    <%= Spree.t(:override_recipient) %>
+  </label>
+
+  <div class="recipient-user-search">
+    <label><%= Spree.t(:reimbursement_recipient) %></label>
+    <%= hidden_field_tag :customer_search,  nil, :class => 'fullwidth title' %>
+    <%= hidden_field_tag :user_id, nil, :name => 'return_authorization[recipient_id]' %>
+  </div>
+
+
   <fieldset class="no-border-top">
     <%= render :partial => 'form', :locals => { :f => f } %>
 

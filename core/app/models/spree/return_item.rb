@@ -43,6 +43,7 @@ module Spree
     validate :validate_acceptance_status_for_reimbursement
     validates :inventory_unit, presence: true
     validate :validate_no_other_completed_return_items
+    validate :eligible_recipient_override
 
     after_create :cancel_others, unless: :cancelled?
 
@@ -167,6 +168,12 @@ module Spree
     #   for exchange for this return item
     def eligible_exchange_variants(stock_locations = nil)
       exchange_variant_engine.eligible_variants(variant, stock_locations: stock_locations)
+    end
+
+    def eligible_recipient_override
+      if return_authorization.recipient && exchange_requested?
+        errors.add(:exchange_variant, :cannot_have_override_recipient)
+      end
     end
 
     # Builds the exchange inventory unit for this return item, only if an
