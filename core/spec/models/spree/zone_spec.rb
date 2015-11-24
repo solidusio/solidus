@@ -312,7 +312,7 @@ describe Spree::Zone, :type => :model do
       end
 
       it "can access associated countries" do
-        expect(zone.countries).to include(country)
+        expect(zone.countries).to eq([country])
       end
     end
 
@@ -323,7 +323,7 @@ describe Spree::Zone, :type => :model do
       end
 
       it "can access associated states" do
-        expect(zone.states).to include(state)
+        expect(zone.states).to eq([state])
       end
     end
   end
