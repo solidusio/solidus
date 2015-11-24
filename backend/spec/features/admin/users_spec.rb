@@ -161,6 +161,8 @@ describe 'Users', :type => :feature do
         end
 
         expect(user_a.reload.spree_api_key).to be_present
+
+        expect(page).to have_content('Key: (hidden)')
       end
     end
 
@@ -172,12 +174,13 @@ describe 'Users', :type => :feature do
       end
 
       it 'can clear an api key' do
-        within("#admin_user_edit_api_key") do
-          click_button Spree.t('clear_key', :scope => 'api')
-        end
+        expect(page).to have_css('#current-api-key')
+
+        click_button Spree.t('clear_key', :scope => 'api')
+
+        expect(page).to have_no_css('#current-api-key')
 
         expect(user_a.reload.spree_api_key).to be_blank
-        expect { find("#current-api-key") }.to raise_error Capybara::ElementNotFound
       end
 
       it 'can regenerate an api key' do
@@ -189,6 +192,8 @@ describe 'Users', :type => :feature do
 
         expect(user_a.reload.spree_api_key).to be_present
         expect(user_a.reload.spree_api_key).not_to eq old_key
+
+        expect(page).to have_content('Key: (hidden)')
       end
     end
   end
