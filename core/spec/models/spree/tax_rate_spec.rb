@@ -181,7 +181,7 @@ describe Spree::TaxRate, :type => :model do
         allow(Spree::TaxRate).to receive_messages :match => [rate_1, rate_2]
       end
 
-      it "should apply adjustments for two tax rates to the order" do
+      it "should only apply adjustments for matching rates" do
         expect(rate_1).to receive(:adjust)
         expect(rate_2).not_to receive(:adjust)
         Spree::TaxRate.adjust(order.tax_zone, line_items)
@@ -195,7 +195,7 @@ describe Spree::TaxRate, :type => :model do
         allow(Spree::TaxRate).to receive_messages :match => [rate_1, rate_2]
       end
 
-      it "should apply adjustments for two tax rates to the order" do
+      it "should apply adjustments for matching rates" do
         expect(rate_1).to receive(:adjust)
         expect(rate_2).not_to receive(:adjust)
         Spree::TaxRate.adjust(order.tax_zone, shipments)
@@ -203,7 +203,121 @@ describe Spree::TaxRate, :type => :model do
     end
   end
 
-  context "#adjust" do
+  # While the above test is nice and fast - let me tell you a story or two here.
+  context ".adjust" do
+    let(:order) { create :order }
+    let(:book_product) { create :product, price: 20, name: "Book", tax_category: books_category }
+    let(:download_product) { create :product, price: 10, name: "Download", tax_category: digital_category }
+    let(:sweater_product) { create :product, price: 30, name: "Download", tax_category: normal_category }
+    let(:book) { book_product.master }
+    let(:download) { download_product.master }
+    let(:sweater) { sweater_product.master }
+    let(:books_category) { create :tax_category, name: "Books" }
+    let(:normal_category) { create :tax_category, name: "Normal" }
+    let(:digital_category) { create :tax_category, name: "Digital Goods" }
+
+    context 'selling from germany' do
+      let(:germany) { create :country, iso: "DE" }
+      let!(:germany_zone) { create :zone, countries: [germany], default_tax: true }
+      let!(:german_book_vat) do
+        create(
+          :tax_rate,
+          included_in_price: true,
+          amount: 0.07,
+          tax_category: books_category,
+          zone: germany_zone
+        )
+      end
+      let!(:german_normal_vat) do
+        create(
+          :tax_rate,
+          included_in_price: true,
+          amount: 0.19,
+          tax_category: normal_category,
+          zone: germany_zone
+        )
+      end
+      let!(:german_digital_vat) do
+        create(
+          :tax_rate,
+          included_in_price: true,
+          amount: 0.19,
+          tax_category: digital_category,
+          zone: germany_zone
+        )
+      end
+
+      let(:line_item) { order.line_items.first }
+
+      context 'to germany' do
+        before do
+          allow(order).to receive(:tax_zone) { germany_zone }
+        end
+
+        context 'an order with a book' do
+          before do
+            order.contents.add(book)
+          end
+
+          it 'still has the original price' do
+            expect(line_item.price).to eq(20)
+          end
+
+          it 'has one tax adjustment' do
+            expect(line_item.adjustments.tax.count).to eq(1)
+          end
+
+          it 'has 1.13 cents of included tax' do
+            expect(line_item.included_tax_total).to eq(1.31)
+          end
+        end
+
+        context 'an order with a sweater' do
+          before do
+            order.contents.add(sweater)
+          end
+
+          it 'still has the original price' do
+            expect(line_item.price).to eq(30)
+          end
+
+          it 'has one tax adjustment' do
+            expect(line_item.adjustments.tax.count).to eq(1)
+          end
+
+          it 'has 4,78 of included tax' do
+            expect(line_item.included_tax_total).to eq(4.79)
+          end
+        end
+
+        context 'an order with a download' do
+          before do
+            order.contents.add(download)
+          end
+
+          it 'still has the original price' do
+            expect(line_item.price).to eq(10)
+          end
+
+          it 'has one tax adjustment' do
+            expect(line_item.adjustments.tax.count).to eq(1)
+          end
+
+          it 'has 3,19 of included tax' do
+            expect(line_item.included_tax_total).to eq(1.60)
+          end
+        end
+      end
+    end
+
+    context 'with additional tax' do
+    end
+
+    context 'with both additional and included tax' do
+    end
+  end
+
+  context 'old tests' do
     before do
       @country = create(:country)
       @zone = create(:zone, :name => "Country Zone", :default_tax => true, :zone_members => [])
