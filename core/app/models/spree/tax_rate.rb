@@ -27,9 +27,12 @@ module Spree
     validates :tax_category_id, presence: true
     validates_with DefaultTaxZoneValidator
 
-    scope :by_zone, ->(zone) { where(zone_id: zone) }
-
     # Gets the array of TaxRates appropriate for the specified order
+    scope :for_zone,
+          ->(zone) do
+            where(zone_id: Spree::Zone.with_shared_members(zone).pluck(:id))
+          end
+
     def self.match(order_tax_zone)
       return [] unless order_tax_zone
       rates = includes(zone: { zone_members: :zoneable }).load.select do |rate|
