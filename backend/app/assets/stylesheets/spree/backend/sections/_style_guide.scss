@@ -26,6 +26,11 @@
     @include flex(1);
   }
 
+  ul {
+    list-style: none;
+    padding-left: 0;
+  }
+
   &-nav {
     text-transform: capitalize;
 
@@ -53,5 +58,52 @@
       }
     }
   }
+
+  &-intro,
+  &-section:not(:last-child) {
+    margin: 4rem 0;
+  }
+
+  &-section {
+    @include clearfix;
+  }
+
+  &-section-header {
+    @include margin(7rem 0 3rem);
+    border-bottom: 1px solid darken($color-7, 10%);
+    font-size: 1.5rem;
+    font-weight: bold;
+    line-height: 0.2;
+    text-align: center;
+    text-transform: capitalize;
+
+    span {
+      background: $color-body-bg;
+      @include padding(null 0.5em);
+    }
+
+    a {
+      color: darken($color-7, 65%);
+    }
+  }
+
+  .half {
+    width: 50%;
+    float: left;
+    padding-right: 1rem;
+
+    + .half {
+      float: none;
+      margin-left: 50%;
+      padding-right: 0;
+      padding-left: 1rem;
+    }
+  }
+
+  &-code {
+    pre {
+      margin: 0;
+      border: 1px solid darken($color-7, 10%);
+    }
   }
 }

@@ -34,8 +34,22 @@
     </div>
 
     <div class="style-guide-main-content">
-      <div class="style-guide-intro">
-        <%= yield %>
+      <div class="container">
+        <div class="style-guide-intro">
+          <%= yield %>
+        </div>
+
+        <%- @topics.each do |topic, subjects| %>
+          <h2><%= link_to '', "#", id: "#{topic}" %></h2>
+          <%- subjects.each do |subject| %>
+            <section class="style-guide-section">
+              <h3 class="style-guide-section-header">
+                <span><%= link_to subject.titleize, "#", id: "#{subject}" %></span>
+              </h3>
+              <%= render partial: "spree/admin/style_guide/topics/#{topic}/#{subject}" %>
+            </section>
+          <%- end %>
+        <%- end %>
       </div>
     </div>
   </body>
