@@ -9,6 +9,7 @@
  *= require jquery-ui/autocomplete
  *= require jquery.powertip
  *= require select2
+ *= require prism
 
  *= require spree/backend/spree_admin
 */

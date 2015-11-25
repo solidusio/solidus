@@ -11,6 +11,7 @@
 //= require jquery.sticky-kit.min
 //= require underscore-min
 //= require backbone
+//= require prism
 //= require spree
 //= require ./backend/backbone-overrides
 //= require spree/backend/spree-select2
