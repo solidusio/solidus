@@ -1,4 +1,4 @@
-## Solidus 1.1.0 (unreleased)
+## Solidus 1.1.0 (2015-11-25)
 
 *   Address is immutable (Address#readonly? is always true)
 
