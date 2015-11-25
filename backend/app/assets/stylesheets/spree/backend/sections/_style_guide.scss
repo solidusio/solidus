@@ -25,4 +25,33 @@
   &-main-content {
     @include flex(1);
   }
+
+  &-nav {
+    text-transform: capitalize;
+
+    > li {
+      @include margin(0.5rem null);
+      @include padding(0.75rem null);
+
+      &:not(:first-of-type) {
+        border-top: 1px solid darken($color-7, 5%);
+      }
+
+      > a {
+        font-size: 1.2rem;
+        font-weight: 300;
+      }
+    }
+
+    a {
+      display: block;
+      color: darken($color-7, 65%);
+      padding: 0.3rem 0.5rem;
+
+      &:hover {
+        background: darken($color-7, 5%);
+      }
+    }
+  }
+  }
 }

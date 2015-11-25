@@ -17,6 +17,20 @@
           <%- image_tag('solidus-style-guide-logo.png') %>
         <%- end %>
       </header>
+      <ul class="style-guide-nav" data-sticky>
+        <%- @topics.each do |topic, subjects| %>
+          <li>
+            <%= link_to topic, "##{topic}" %>
+            <ul>
+              <%- subjects.each do |subject| %>
+                <li>
+                  <%= link_to subject.titleize, "##{subject}" %>
+                </li>
+              <%- end %>
+            </ul>
+          </li>
+        <%- end %>
+      </ul>
     </div>
 
     <div class="style-guide-main-content">
