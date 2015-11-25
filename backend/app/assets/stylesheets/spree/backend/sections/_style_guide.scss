@@ -1,0 +1,28 @@
+.style-guide {
+  @include display(flex);
+
+  &-sidebar {
+    width: 225px;
+    background: $color-7;
+    padding: 1.5rem;
+
+    .brand-link {
+      margin-top: 2rem;
+
+      img {
+        display: block;
+        width: 100px;
+        margin: 0 auto;
+      }
+    }
+
+    ul {
+      list-style: none;
+      padding-left: 0;
+    }
+  }
+
+  &-main-content {
+    @include flex(1);
+  }
+}

@@ -10,6 +10,15 @@
   </head>
 
   <body class="admin style-guide">
+
+    <div class="style-guide-sidebar">
+      <header>
+        <%= link_to spree.admin_path, class: 'brand-link' do %>
+          <%- image_tag('solidus-style-guide-logo.png') %>
+        <%- end %>
+      </header>
+    </div>
+
     <div class="style-guide-main-content">
       <div class="style-guide-intro">
         <%= yield %>
