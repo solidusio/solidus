@@ -14,6 +14,12 @@
 
     More information can be found in [capybara's README](https://github.com/jnicklas/capybara#matching)
 
+*   Admin menu has been moved from top of the page to the left side.
+
+    * Submenu items are accessible from any page. See [the wiki](https://github.com/solidusio/solidus/wiki/Upgrading-Admin-Navigation-to-1.2)
+    for more information and instructions on upgrading.
+    * [Solidus_auth_devise](https://github.com/solidusio/solidus_auth_devise) has been updated to override the new login nav location.
+
 ## Solidus 1.1.0 (unreleased)
 
 *   Address is immutable (Address#readonly? is always true)
@@ -60,4 +66,3 @@ See https://github.com/solidusio/solidus/releases/tag/v1.0.1
 ## Solidus 1.0.0 (2015-08-11)
 
 See https://github.com/solidusio/solidus/releases/tag/v1.0.0
-
