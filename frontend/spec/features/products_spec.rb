@@ -134,10 +134,6 @@ describe "Visiting Products", type: :feature, inaccessible: true do
       variant.option_values << option_value
     end
 
-    it "should be displayed" do
-      expect { click_link product.name }.to_not raise_error
-    end
-
     it "displays price of first variant listed", js: true do
       click_link product.name
       within("#product-price") do
