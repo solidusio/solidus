@@ -9,6 +9,9 @@ module Spree
         can [:read, :update], Order do |order, token|
           order.user == user || order.guest_token && token == order.guest_token
         end
+        cannot :update, Order do |order|
+          order.completed?
+        end
         can :create, ReturnAuthorization do |return_authorization|
           return_authorization.order.user == user
         end
