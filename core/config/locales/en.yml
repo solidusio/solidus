@@ -41,6 +41,7 @@ en:
         iso_name: ISO Name
         name: Name
         numcode: ISO Code
+        states_required: States Required
       spree/credit_card:
         base: ''
         cc_type: Type
@@ -668,7 +669,6 @@ en:
     countries: Countries
     country: Country
     country_based: Country Based
-    country_name: Name
     country_names:
       CA: Canada
       FRA: France
