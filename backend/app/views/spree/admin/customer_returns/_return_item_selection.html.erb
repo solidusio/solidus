@@ -5,13 +5,13 @@
         <%= check_box_tag 'select-all' %>
       </th>
       <th><%= Spree::Product.model_name.human %></th>
-      <th><%= Spree.t(:sku) %></th>
-      <th><%= Spree.t(:pre_tax_amount) %></th>
-      <th><%= Spree.t(:state) %></th>
-      <th><%= Spree.t(:exchange_for) %></th>
-      <th><%= Spree.t(:resellable?) %></th>
-      <th><%= Spree.t(:reception_status) %></th>
-      <th><%= Spree.t(:reason) %></th>
+      <th><%= Spree::Variant.human_attribute_name(:sku) %></th>
+      <th><%= Spree::ReturnItem.human_attribute_name(:pre_tax_amount) %></th>
+      <th><%= Spree::ReturnItem.human_attribute_name(:inventory_unit_state) %></th>
+      <th><%= Spree::ReturnItem.human_attribute_name(:exchange_variant) %></th>
+      <th><%= Spree::ReturnItem.human_attribute_name(:resellable) %></th>
+      <th><%= Spree::ReturnItem.human_attribute_name(:reception_status) %></th>
+      <th><%= Spree::ReturnItem.human_attribute_name(:return_reason) %></th>
     </tr>
   </thead>
   <tbody>

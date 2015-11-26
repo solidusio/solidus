@@ -51,6 +51,12 @@ en:
         number: Number
         verification_value: Verification Value
         year: Year
+      spree/customer_return:
+        number: Return Number
+        pre_tax_total: Pre-Tax Total
+        total: Total
+        created_at: "Date/Time"
+        reimbursement_status: Reimbursement status
         name: Name
       spree/image:
         alt: Alternative Text
@@ -160,11 +166,27 @@ en:
         active: Active
         name: Name
         code: Code
+      spree/reimbursement:
+        created_at: "Date/Time"
+        number: Number
+        reimbursement_status: Status
+        total: Total
       spree/reimbursement_type:
         name: Name
         type: Type
       spree/return_authorization:
         amount: Amount
+      spree/return_item:
+        acceptance_status: Acceptance status
+        acceptance_status_errors: Acceptance errors
+        exchange_variant: Exchange for
+        inventory_unit_state: State
+        item_received?: "Item Received?"
+        pre_tax_amount: Pre-Tax Amount
+        preferred_reimbursement_type: Preferred Reimbursement Type
+        reception_status: Reception Status
+        resellable: "Resellable?"
+        return_reason: Reason
       spree/return_reason:
         name: Name
         active: Active

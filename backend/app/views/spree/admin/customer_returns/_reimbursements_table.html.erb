@@ -1,10 +1,10 @@
 <table class="index customer-return-reimbursements">
   <thead data-hook="customer_return_header">
     <tr>
-      <th><%= Spree.t(:number) %></th>
-      <th><%= Spree.t(:total) %></th>
-      <th><%= Spree.t(:status) %></th>
-      <th><%= "#{Spree.t('date')}/#{Spree.t('time')}" %></th>
+      <th><%= Spree::Reimbursement.human_attribute_name(:number) %></th>
+      <th><%= Spree::Reimbursement.human_attribute_name(:total) %></th>
+      <th><%= Spree::Reimbursement.human_attribute_name(:reimbursement_status) %></th>
+      <th><%= Spree::Reimbursement.human_attribute_name(:created_at) %></th>
       <th class="actions"></th>
     </tr>
   </thead>
