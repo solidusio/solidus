@@ -1,10 +1,10 @@
 <table class="index adjustments" data-hook="adjustments">
   <thead data-hook="adjustmment_head">
     <tr>
-      <th><%= Spree.t(:adjustable) %></th>
-      <th><%= Spree.t(:description) %></th>
-      <th><%= Spree.t(:amount) %></th>
-      <th><%= Spree.t(:state) %></th>
+      <th><%= Spree::Adjustment.human_attribute_name(:adjustable) %></th>
+      <th><%= Spree::Adjustment.human_attribute_name(:label) %></th>
+      <th><%= Spree::Adjustment.human_attribute_name(:amount) %></th>
+      <th><%= Spree::Adjustment.human_attribute_name(:state) %></th>
       <th class="actions"></th>
     </tr>
   </thead>

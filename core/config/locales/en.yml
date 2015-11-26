@@ -11,6 +11,17 @@ en:
         phone: Phone
         state: State
         zipcode: Zip Code
+      spree/adjustment:
+        adjustable: Adjustable
+        amount: Amount
+        label: Description
+        state: State
+        adjustment_reason_id: Reason
+      spree/adjustment_reason:
+        active: Active
+        code: Code
+        name: Name
+        state: State
       spree/calculator/tiered_flat_rate:
         preferred_base_amount: Base Amount
         preferred_tiers: Tiers
