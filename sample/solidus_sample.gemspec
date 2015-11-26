@@ -14,7 +14,7 @@ Gem::Specification.new do |s|
   s.homepage    = 'http://solidus.io/'
   s.license     = %q{BSD-3}
 
-  s.files        = Dir['LICENSE', 'README.md', 'lib/**/*', 'db/**/*']
+  s.files        = `git ls-files`.split("\n")
   s.require_path = 'lib'
   s.requirements << 'none'
 
