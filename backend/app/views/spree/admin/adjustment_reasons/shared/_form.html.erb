@@ -2,19 +2,19 @@
   <div class="row">
     <div class="alpha four columns">
       <%= f.field_container :name do %>
-        <%= f.label :name, Spree.t(:name), class: 'required' %><br />
+        <%= f.label :name, class: 'required' %><br />
         <%= f.text_field :name, :class => 'fullwidth' %>
       <% end %>
 
       <%= f.field_container :code do %>
-        <%= f.label :code, Spree.t(:code), class: 'required' %><br />
+        <%= f.label :code, class: 'required' %><br />
         <%= f.text_field :code, :class => 'fullwidth' %>
       <% end %>
 
       <div class="checkbox">
         <label>
           <%= f.check_box :active %>
-          <%= Spree.t(:active) %>
+          <%= Spree::AdjustmentReason.human_attribute_name(:active) %>
         </label>
       </div>
     </div>
