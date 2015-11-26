@@ -11,7 +11,7 @@ describe 'orders', :type => :feature do
 
   it "can visit an order" do
     # Regression test for current_user call on orders/show
-    expect { visit spree.order_path(order) }.not_to raise_error
+    visit spree.order_path(order)
   end
 
   it "should display line item price" do

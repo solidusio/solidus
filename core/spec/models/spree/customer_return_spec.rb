@@ -202,7 +202,7 @@ describe Spree::CustomerReturn, :type => :model do
 
       it "should NOT raise an error when no stock item exists in the stock location" do
         inventory_unit.find_stock_item.destroy
-        expect { create(:customer_return_without_return_items, return_items: [return_item], stock_location_id: new_stock_location.id) }.not_to raise_error
+        create(:customer_return_without_return_items, return_items: [return_item], stock_location_id: new_stock_location.id)
       end
 
       it "should not update the stock item counts in the original stock location" do

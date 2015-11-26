@@ -12,7 +12,7 @@ describe "Switching currencies in backend", :type => :feature do
     click_button "Add To Cart"
     # Now that we have an order...
     Spree::Config[:currency] = "AUD"
-    expect { visit spree.root_path }.not_to raise_error
+    visit spree.root_path
   end
 
 end

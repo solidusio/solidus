@@ -11,7 +11,7 @@ describe 'product filters', :type => :model do
     end
 
     it "does not attempt to call value method on Arel::Table" do
-      expect { Spree::Core::ProductFilters.brand_filter }.not_to raise_error
+      Spree::Core::ProductFilters.brand_filter
     end
 
     it "can find products in the 'Nike' brand" do
@@ -20,7 +20,7 @@ describe 'product filters', :type => :model do
     it "sorts products without brand specified" do
       product.set_property("brand", "Nike")
       create(:product).set_property("brand", nil)
-      expect { Spree::Core::ProductFilters.brand_filter[:labels] }.not_to raise_error
+      Spree::Core::ProductFilters.brand_filter[:labels]
     end
   end
 end

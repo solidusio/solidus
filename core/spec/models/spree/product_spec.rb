@@ -232,7 +232,7 @@ describe Spree::Product, :type => :model do
 
       it "doesnt raise ReadOnlyRecord error" do
         Spree::StockMovement.create!(stock_item: stock_item, quantity: 1)
-        expect { product.destroy }.not_to raise_error
+        product.destroy
       end
     end
 

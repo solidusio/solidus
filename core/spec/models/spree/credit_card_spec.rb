@@ -193,12 +193,12 @@ describe Spree::CreditCard, type: :model do
     end
 
     it "does not blow up when passed an empty string" do
-      expect { credit_card.expiry = '' }.not_to raise_error
+      credit_card.expiry = ''
     end
 
     # Regression test for #4725
     it "does not blow up when passed one number" do
-      expect { credit_card.expiry = '12' }.not_to raise_error
+      credit_card.expiry = '12'
     end
 
   end
@@ -254,7 +254,7 @@ describe Spree::CreditCard, type: :model do
 
   context "#associations" do
     it "should be able to access its payments" do
-      expect { credit_card.payments.to_a }.not_to raise_error
+      credit_card.payments.to_a
     end
   end
 
@@ -327,7 +327,7 @@ describe Spree::CreditCard, type: :model do
     second = FactoryGirl.create(:credit_card, user: user, default: false)
     first.update_columns(year: DateTime.now.year, month: 1.month.ago.month)
 
-    expect { second.update_attributes!(default: true) }.not_to raise_error
+    second.update_attributes!(default: true)
   end
 
   it 'allows this card to save even if the previously default card has expired' do
@@ -336,6 +336,6 @@ describe Spree::CreditCard, type: :model do
     second = FactoryGirl.create(:credit_card, user: user, default: false)
     first.update_columns(year: DateTime.now.year, month: 1.month.ago.month)
 
-    expect { second.update_attributes!(default: true) }.not_to raise_error
+    second.update_attributes!(default: true)
   end
 end

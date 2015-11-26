@@ -392,7 +392,7 @@ module Spree
     end
 
     it "can create an order without any parameters" do
-      expect { api_post :create }.not_to raise_error
+      api_post :create
       expect(response.status).to eq(201)
       expect(json_response["state"]).to eq("cart")
     end
@@ -715,7 +715,7 @@ module Spree
 
       context "creation" do
         it "can create an order without any parameters" do
-          expect { api_post :create }.not_to raise_error
+          api_post :create
           expect(response.status).to eq(201)
           order = Order.last
           expect(json_response["state"]).to eq("cart")

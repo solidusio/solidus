@@ -15,7 +15,7 @@ describe "Shipments", :type => :feature do
     end
 
     it "can still be displayed" do
-      expect { visit spree.edit_admin_order_path(order) }.not_to raise_error
+      visit spree.edit_admin_order_path(order)
     end
   end
 

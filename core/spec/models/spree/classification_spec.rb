@@ -7,7 +7,7 @@ module Spree
       product = create(:product)
       taxon = create(:taxon)
       add_taxon = lambda { product.taxons << taxon }
-      expect(add_taxon).not_to raise_error
+      add_taxon.call
       expect(add_taxon).to raise_error(ActiveRecord::RecordInvalid)
     end
 

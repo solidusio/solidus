@@ -6,7 +6,9 @@ describe Spree::Carton do
   describe "#create" do
     subject { carton }
 
-    it { expect { subject }.to_not raise_error }
+    it "raises no errors" do
+      subject
+    end
   end
 
   describe "#tracking_url" do

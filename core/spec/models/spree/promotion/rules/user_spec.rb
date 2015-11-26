@@ -31,7 +31,7 @@ describe Spree::Promotion::Rules::User, :type => :model do
     it "can assign to user_ids" do
       user1 = Spree::LegacyUser.create!(:email => "test1@example.com")
       user2 = Spree::LegacyUser.create!(:email => "test2@example.com")
-      expect { rule.user_ids = "#{user1.id}, #{user2.id}" }.not_to raise_error
+      rule.user_ids = "#{user1.id}, #{user2.id}"
     end
   end
 end

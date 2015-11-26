@@ -660,7 +660,7 @@ describe Spree::ReturnItem, :type => :model do
       let(:old_reception_status) { 'cancelled' }
 
       it 'succeeds' do
-        expect { subject.save! }.to_not raise_error
+        subject.save!
       end
     end
 

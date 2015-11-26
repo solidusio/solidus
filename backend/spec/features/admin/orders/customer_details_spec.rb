@@ -145,7 +145,7 @@ describe "Customer Details", type: :feature, js: true do
 
         page.select('Alabama', from: 'order_ship_address_attributes_state_id')
         fill_in "order_ship_address_attributes_phone", with: "123-456-7890"
-        expect { click_button "Update" }.not_to raise_error
+        click_button "Update"
       end
     end
   end

@@ -126,16 +126,14 @@ describe Spree::CheckoutController, :type => :controller do
 
         context "current_user doesnt respond to persist_order_address" do
           it "doesnt raise any error" do
-            expect {
-              spree_post :update, {
-                :state => "address",
-                :order => {
-                  :bill_address_attributes => address_params,
-                  :use_billing => true
-                },
-                :save_user_address => "1"
-              }
-            }.to_not raise_error
+            spree_post :update, {
+              :state => "address",
+              :order => {
+                :bill_address_attributes => address_params,
+                :use_billing => true
+              },
+              :save_user_address => "1"
+            }
           end
         end
       end

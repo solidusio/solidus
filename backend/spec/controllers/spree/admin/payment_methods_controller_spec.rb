@@ -22,9 +22,7 @@ module Spree
 
     context "tries to save invalid payment" do
       it "doesn't break, responds nicely" do
-        expect {
-          spree_post :create, :payment_method => { :name => "", :type => "Spree::Gateway::Bogus" }
-        }.not_to raise_error
+        spree_post :create, :payment_method => { :name => "", :type => "Spree::Gateway::Bogus" }
       end
     end
 
