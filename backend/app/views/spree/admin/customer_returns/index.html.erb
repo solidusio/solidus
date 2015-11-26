@@ -17,11 +17,11 @@
   <table class="index">
     <thead data-hook="customer_return_header">
       <tr>
-        <th><%= Spree.t(:return_number) %></th>
-        <th><%= Spree.t(:pre_tax_total) %></th>
-        <th><%= Spree.t(:total) %></th>
-        <th><%= "#{Spree.t('date')}/#{Spree.t('time')}" %></th>
-        <th><%= Spree.t(:reimbursement_status) %></th>
+        <th><%= Spree::CustomerReturn.human_attribute_name(:number) %></th>
+        <th><%= Spree::CustomerReturn.human_attribute_name(:pre_tax_total) %></th>
+        <th><%= Spree::CustomerReturn.human_attribute_name(:total) %></th>
+        <th><%= Spree::CustomerReturn.human_attribute_name(:created_at) %></th>
+        <th><%= Spree::CustomerReturn.human_attribute_name(:reimbursement_status) %></th>
         <th class="actions"></th>
       </tr>
     </thead>

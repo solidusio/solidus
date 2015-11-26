@@ -50,6 +50,13 @@ en:
         verification_value: Verification Value
         year: Year
         name: Name
+      spree/customer_return:
+        number: Return Number
+        pre_tax_total: Pre-Tax Total
+        total: Total
+        created_at: "Date/Time"
+        reimbursement_status: Reimbursement status
+        stock_location_id: Stock Location
       spree/inventory_unit:
         state: State
       spree/line_item:
@@ -121,8 +128,23 @@ en:
         presentation: Presentation
       spree/prototype:
         name: Name
+      spree/reimbursement:
+        created_at: "Date/Time"
+        number: Number
+        reimbursement_status: Status
+        total: Total
       spree/return_authorization:
         amount: Amount
+      spree/return_item:
+        acceptance_status: Acceptance status
+        acceptance_status_errors: Acceptance errors
+        exchange_variant: Exchange for
+        inventory_unit_state: State
+        pre_tax_amount: Pre-Tax Amount
+        preferred_reimbursement_type: Preferred Reimbursement Type
+        reception_status: Reception Status
+        resellable: "Resellable?"
+        return_reason: Reason
       spree/role:
         name: Name
       spree/state:
@@ -402,8 +424,6 @@ en:
   spree:
     abbreviation: Abbreviation
     accept: Accept
-    acceptance_status: Acceptance status
-    acceptance_errors: Acceptance errors
     accepted: Accepted
     account: Account
     account_updated: Account updated
@@ -819,7 +839,6 @@ en:
           signup: User signup
     exceptions:
       count_on_hand_setter: Cannot set count_on_hand manually, as it is set automatically by the recalculate_count_on_hand callback. Please use `update_column(:count_on_hand, value)` instead.
-    exchange_for: Exchange for
     expedited_exchanges_warning: "Any specified exchanges will ship to the customer immediately upon saving. The customer will be charged the full amount of the item if they do not return the original item within %{days_window} days."
     excl: excl.
     expected: Expected
@@ -1174,7 +1193,6 @@ en:
     pre_tax_refund_amount: Pre-Tax Refund Amount
     pre_tax_amount: Pre-Tax Amount
     pre_tax_total: Pre-Tax Total
-    preferred_reimbursement_type: Preferred Reimbursement Type
     presentation: Presentation
     previous: Previous
     price: Price
@@ -1281,7 +1299,6 @@ en:
     received_successfully: Received Successfully
     receiving: Receiving
     receiving_match: Receiving match
-    reception_status: Reception Status
     reference: Reference
     refund: Refund
     refund_amount_must_be_greater_than_zero: Refund amount must be greater than zero
@@ -1295,7 +1312,6 @@ en:
     reimbursed: Reimbursed
     reimbursement: Reimbursement
     reimbursement_perform_failed: "Reimbursement could not be performed.  Error: %{error}"
-    reimbursement_status: Reimbursement status
     reimbursement_type: Reimbursement type
     reimbursement_type_override: Reimbursement Type Override
     reimbursement_types: Reimbursement Types
@@ -1334,7 +1350,6 @@ en:
         refund_summary: Refund Summary
         subject: Reimbursement Notification
         total_refunded: ! 'Total refunded: %{total}'
-    return_number: Return Number
     return_quantity: Return Quantity
     returned: Returned
     review: Review
