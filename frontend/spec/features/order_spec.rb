@@ -57,9 +57,7 @@ describe 'orders', :type => :feature do
 
     specify do
       visit spree.order_path(order)
-      within '.payment-info' do
-        expect { find("img") }.to raise_error(Capybara::ElementNotFound)
-      end
+      expect(find('.payment-info')).to have_no_css('img')
     end
   end
 
