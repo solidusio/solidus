@@ -13,11 +13,11 @@
   </colgroup>
 
   <thead>
-    <th colspan="2"><%= Spree.t(:item_description) %></th>
-    <th><%= Spree.t(:quantity) %></th>
-    <th><%= Spree.t(:state) %></th>
-    <th><%= Spree.t(:shipment) %></th>
-    <th><%= Spree.t(:cancel) %></th>
+    <th colspan="2"><%= Spree::LineItem.human_attribute_name(:description) %></th>
+    <th><%= Spree::OrderCancellations.human_attribute_name(:quantity) %></th>
+    <th><%= Spree::OrderCancellations.human_attribute_name(:state) %></th>
+    <th><%= Spree::OrderCancellations.human_attribute_name(:shipment) %></th>
+    <th><%= Spree::OrderCancellations.human_attribute_name(:cancel) %></th>
   </thead>
 
   <tbody>

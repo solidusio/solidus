@@ -1,4 +1,11 @@
 en:
+  activemodel:
+    attributes:
+      spree/order_cancellations:
+        quantity: Quantity
+        state: State
+        shipment: Shipment
+        cancel: Cancel
   activerecord:
     attributes:
       spree/address:
@@ -45,6 +52,7 @@ en:
       spree/inventory_unit:
         state: State
       spree/line_item:
+        description: Item Description
         price: Price
         quantity: Quantity
       spree/option_type:
@@ -909,7 +917,6 @@ en:
     is_not_available_to_shipment_address: is not available to shipment address
     iso_name: Iso Name
     item: Item
-    item_description: Item Description
     item_not_in_stock_transfer: Item is not part of the stock transfer
     item_total: Item Total
     item_total_rule:
