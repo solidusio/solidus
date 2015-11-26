@@ -88,7 +88,7 @@ describe Spree::Admin::StoreCreditEventsHelper, type: :helper do
       let(:originator) { create(:store_credit_update_reason) }
 
       it "raises an error" do
-        expect { subject }.to raise_error(RuntimeError)
+        expect { subject }.to raise_error(RuntimeError, "Unexpected originator type Spree::StoreCreditUpdateReason")
       end
     end
   end
