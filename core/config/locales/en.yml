@@ -432,16 +432,12 @@ en:
     account_updated: Account updated
     action: Action
     actions:
+      add: Add
       cancel: Cancel
       continue: Continue
       create: Create
       delete: Delete
-      destroy: Destroy
       edit: Edit
-      list: List
-      listing: Listing
-      new: New
-      refund: Refund
       receive: Receive
       save: Save
       update: Update
@@ -449,7 +445,6 @@ en:
       ship: ship
     activate: Activate
     active: Active
-    add: Add
     added: Added
     add_action_of_type: Add action of type
     add_country: Add Country
