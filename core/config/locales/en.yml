@@ -439,6 +439,7 @@ en:
       delete: Delete
       edit: Edit
       receive: Receive
+      remove: Remove
       save: Save
       update: Update
       split: Split
@@ -1316,7 +1317,6 @@ en:
     reject: Reject
     rejected: Rejected
     remember_me: Remember me
-    remove: Remove
     rename: Rename
     reports: Reports
     resend: Resend
