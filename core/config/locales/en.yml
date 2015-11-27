@@ -473,6 +473,7 @@ en:
       cancel: Cancel
       continue: Continue
       create: Create
+      delete: Delete
       destroy: Destroy
       edit: Edit
       list: List
@@ -483,6 +484,8 @@ en:
       remove: Remove
       save: Save
       update: Update
+      split: Split
+      ship: ship
     activate: Activate
     active: Active
     add: Add

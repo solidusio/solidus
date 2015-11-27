@@ -54,17 +54,17 @@ module Spree
       def link_to_edit(resource, options = {})
         url = options[:url] || edit_object_url(resource)
         options[:data] = { action: 'edit' }
-        link_to_with_icon('edit', Spree.t(:edit), url, options)
+        link_to_with_icon('edit', Spree.t('actions.edit'), url, options)
       end
 
       def link_to_edit_url(url, options = {})
         options[:data] = { action: 'edit' }
-        link_to_with_icon('edit', Spree.t(:edit), url, options)
+        link_to_with_icon('edit', Spree.t('actions.edit'), url, options)
       end
 
       def link_to_delete(resource, options = {})
         url = options[:url] || object_url(resource)
-        name = options[:name] || Spree.t(:delete)
+        name = options[:name] || Spree.t('actions.delete')
         options[:class] = "delete-resource"
         options[:data] = { confirm: Spree.t(:are_you_sure), action: 'remove' }
         link_to_with_icon 'trash', name, url, options
