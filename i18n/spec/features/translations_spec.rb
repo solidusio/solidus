@@ -15,11 +15,11 @@ RSpec.feature 'Translations', :js do
       end
 
       scenario 'selected translation is applied' do
-        expect(page).to have_content(Spree.t(:home, locale: 'pt-BR'))
+        expect(page).to have_content(/#{Spree.t(:home, locale: 'pt-BR')}/i)
       end
 
       scenario 'JS cart link is translated' do
-        expect(page).to have_content(Spree.t(:cart, locale: 'pt-BR'))
+        expect(page).to have_content(/#{Spree.t(:cart, locale: 'pt-BR')}/i)
       end
     end
   end

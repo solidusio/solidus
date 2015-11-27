@@ -1,6 +1,5 @@
-Spree.fetch_cart = ->
-  $.ajax
-    url: Spree.pathFor("/cart_link"),
-    cache: false,
+Spree.fetch_cart = (cartLinkUrl) ->
+  Spree.ajax
+    url: cartLinkUrl || Spree.pathFor("cart_link"),
     success: (data) ->
       $('#link-to-cart').html data
