@@ -29,7 +29,7 @@
         <% if @product.has_variants? %>
           <th><%= Spree::Variant.model_name.human %></th>
         <% end %>
-        <th><%= Spree.t(:alt_text) %></th>
+        <th><%= Spree::Image.human_attribute_name(:alt) %></th>
         <th class="actions"></th>
       </tr>
     </thead>

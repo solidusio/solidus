@@ -31,6 +31,9 @@ en:
         verification_value: Verification Value
         year: Year
         name: Name
+      spree/image:
+        alt: Alternative Text
+        attachment: Filename
       spree/inventory_unit:
         state: State
       spree/line_item:
