@@ -2,7 +2,7 @@
 
 <% content_for :page_title do %>
   <i class="fa fa-arrow-right"></i>
-  <%= I18n.t(:one, scope: "activerecord.models.spree/payment") %>
+  <%= Spree::Payment.model_name.human %>
   <i class="fa fa-arrow-right"></i>
   <%= Spree.t(:log_entries) %>
 <% end %>
