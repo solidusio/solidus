@@ -23,8 +23,8 @@
   <thead>
     <tr data-hook="option_header">
       <th class="no-border"></th>
-      <th><%= Spree.t(:name) %></th>
-      <th><%= Spree.t(:presentation) %></th>
+      <th><%= Spree::OptionType.human_attribute_name(:name) %></th>
+      <th><%= Spree::OptionType.human_attribute_name(:presentation) %></th>
       <th class="actions"></th>
     </tr>
   </thead>
