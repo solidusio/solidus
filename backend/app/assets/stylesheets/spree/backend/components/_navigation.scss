@@ -140,6 +140,13 @@ nav.menu {
     padding: 0.3rem 1.2rem;
   }
 
+  a {
+    display: inline-block;
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
 
   i {
     margin-right: 0.5rem;
