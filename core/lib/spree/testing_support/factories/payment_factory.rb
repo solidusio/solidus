@@ -1,6 +1,5 @@
 FactoryGirl.define do
   factory :payment, aliases: [:credit_card_payment], class: Spree::Payment do
-    amount 45.75
     association(:payment_method, factory: :credit_card_payment_method)
     association(:source, factory: :credit_card)
     order
@@ -19,7 +18,6 @@ FactoryGirl.define do
   end
 
   factory :check_payment, class: Spree::Payment do
-    amount 45.75
     association(:payment_method, factory: :check_payment_method)
     order
   end
