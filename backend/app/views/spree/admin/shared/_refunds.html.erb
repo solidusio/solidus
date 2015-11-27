@@ -23,7 +23,7 @@
         <td class="align-center"><%= truncate(refund.reason.name, length: 100) %></td>
         <% if show_actions %>
           <td class="actions">
-            <%= link_to_with_icon 'edit', Spree.t(:edit), edit_admin_order_payment_refund_path(refund.payment.order, refund.payment, refund), no_text: true %>
+            <%= link_to_with_icon 'edit', Spree.t('actions.edit'), edit_admin_order_payment_refund_path(refund.payment.order, refund.payment, refund), no_text: true %>
           </td>
         <% end %>
       </tr>

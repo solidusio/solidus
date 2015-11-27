@@ -435,6 +435,7 @@ en:
       cancel: Cancel
       continue: Continue
       create: Create
+      delete: Delete
       destroy: Destroy
       edit: Edit
       list: List
@@ -444,6 +445,8 @@ en:
       receive: Receive
       save: Save
       update: Update
+      split: Split
+      ship: ship
     activate: Activate
     active: Active
     add: Add
@@ -752,7 +755,6 @@ en:
     default_refund_amount: Default Refund Amount
     default_tax: Default Tax
     default_tax_zone: Default Tax Zone
-    delete: Delete
     deleted_variants_present: Some line items in this order have products that are no longer available.
     deleted_successfully: Deleted successfully
     delivery: Delivery
@@ -766,7 +768,6 @@ en:
     dismiss_banner: No. Thanks! I'm not interested, do not display this message again
     display: Display
     download_promotion_code_list: Download Code List
-    edit: Edit
     editing_country: Editing Country
     editing_adjustment_reason: Editing Adjustment Reason
     editing_option_type: Editing Option Type
@@ -1449,7 +1450,6 @@ en:
     source: Source
     source_location: Source location
     special_instructions: Special Instructions
-    split: Split
     spree_gateway_error_flash_for_checkout: There was a problem with your payment information. Please check your information and try again.
     ssl:
       change_protocol: "Please switch to using HTTP (rather than HTTPS) and retry this request."
