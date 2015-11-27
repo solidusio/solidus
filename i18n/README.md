@@ -58,7 +58,7 @@ gem 'solidus_globalize', github: 'solidusio-contrib/solidus_globalize', branch: 
 
 ### 1. Migrate your database
 
-    bin/rake solidus:i18n:upgrade
+    bin/rake solidus_i18n:upgrade
     bin/rake db:migrate
 
 *Note:* The migration automatically skips the removal of the translations tables. So it's safe to run the migration without data loss. But be sure to have the `solidus_globalize` gem in your `Gemfile`, if you want to keep them.
