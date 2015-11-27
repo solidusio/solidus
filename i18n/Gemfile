@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 
 gemspec
 
-gem 'solidus', github: 'solidusio/solidus', branch: 'master'
+gem 'solidus', github: 'solidusio/solidus', branch: 'v1.0'
 
 if ENV['DB'] == 'mysql'
   gem 'mysql2', '~> 0.3.20'
