@@ -8,10 +8,13 @@ FactoryGirl.define do
     response_code '12345'
 
     factory :payment_with_refund do
-      state 'completed'
-      after :create do |payment|
-        create(:refund, amount: 5, payment: payment)
+      transient do
+        refund_amount 5
       end
+
+      state 'completed'
+
+      refunds { build_list :refund, 1, amount: refund_amount }
     end
   end
 
