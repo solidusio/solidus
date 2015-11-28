@@ -219,13 +219,17 @@ describe Spree::TaxRate, :type => :model do
     context 'selling from germany' do
       let(:germany) { create :country, iso: "DE" }
       let!(:germany_zone) { create :zone, countries: [germany], default_tax: true }
+      let(:romania) { create(:country, iso: "RO") }
+      let(:romania_zone) { create(:zone, countries: [romania] ) }
+      let(:eu_zone)  { create(:zone, countries: [romania, germany]) }
+
       let!(:german_book_vat) do
         create(
           :tax_rate,
           included_in_price: true,
           amount: 0.07,
           tax_category: books_category,
-          zone: germany_zone
+          zone: eu_zone
         )
       end
       let!(:german_normal_vat) do
@@ -234,7 +238,7 @@ describe Spree::TaxRate, :type => :model do
           included_in_price: true,
           amount: 0.19,
           tax_category: normal_category,
-          zone: germany_zone
+          zone: eu_zone
         )
       end
       let!(:german_digital_vat) do
@@ -246,18 +250,29 @@ describe Spree::TaxRate, :type => :model do
           zone: germany_zone
         )
       end
+      let!(:romanian_digital_vat) do
+        create(
+          :tax_rate,
+          included_in_price: true,
+          amount: 0.24,
+          tax_category: digital_category,
+          zone: romania_zone
+        )
+      end
 
       let(:line_item) { order.line_items.first }
 
+      before do
+        allow(order).to receive(:tax_zone) { tax_zone }
+        order.contents.add(variant)
+        Spree::TaxRate.adjust(order.tax_zone, order.line_items)
+      end
+
       context 'to germany' do
-        before do
-          allow(order).to receive(:tax_zone) { germany_zone }
-        end
+        let(:tax_zone) { germany_zone }
 
         context 'an order with a book' do
-          before do
-            order.contents.add(book)
-          end
+          let(:variant) { book }
 
           it 'still has the original price' do
             expect(line_item.price).to eq(20)
@@ -273,9 +288,7 @@ describe Spree::TaxRate, :type => :model do
         end
 
         context 'an order with a sweater' do
-          before do
-            order.contents.add(sweater)
-          end
+          let(:variant) { sweater }
 
           it 'still has the original price' do
             expect(line_item.price).to eq(30)
@@ -291,9 +304,7 @@ describe Spree::TaxRate, :type => :model do
         end
 
         context 'an order with a download' do
-          before do
-            order.contents.add(download)
-          end
+          let(:variant) { download }
 
           it 'still has the original price' do
             expect(line_item.price).to eq(10)
@@ -303,8 +314,80 @@ describe Spree::TaxRate, :type => :model do
             expect(line_item.adjustments.tax.count).to eq(1)
           end
 
-          it 'has 3,19 of included tax' do
+          it 'has 1.60 of included tax' do
             expect(line_item.included_tax_total).to eq(1.60)
+          end
+        end
+      end
+
+      context 'to romania' do
+        let(:tax_zone) { romania_zone }
+
+        context 'an order with a book' do
+          let(:variant) { book }
+
+          it 'still has the original price' do
+            expect(line_item.price).to eq(20)
+          end
+
+          it 'is adjusted to the original price' do
+            expect(line_item.total).to eq(20)
+          end
+
+          it 'has one tax adjustment' do
+            expect(line_item.adjustments.tax.count).to eq(1)
+          end
+
+          it 'has 1.13 cents of included tax' do
+            expect(line_item.included_tax_total).to eq(1.31)
+          end
+
+          it 'has a constant amount pre tax' do
+            expect(line_item.pre_tax_amount).to eq(18.69)
+          end
+        end
+
+        context 'an order with a sweater' do
+          let(:variant) { sweater }
+
+          it 'still has the original price' do
+            expect(line_item.price).to eq(30)
+          end
+
+          it 'has one tax adjustment' do
+            expect(line_item.adjustments.tax.count).to eq(1)
+          end
+
+          # This test fails intermittently - it's a matter of luck
+          xit 'has 4.79 of included tax' do
+            expect(line_item.included_tax_total).to eq(4.79)
+          end
+
+          it 'has a constant amount pre tax' do
+            expect(line_item.pre_tax_amount).to eq(25.21)
+          end
+        end
+
+        context 'an order with a download' do
+          let(:variant) { download }
+
+          it 'still has an adjusted price for romania' do
+            pending "waiting for the MOSS refactoring"
+            expect(line_item.price).to eq(10.42)
+          end
+
+          it 'has one tax adjustment' do
+            expect(line_item.adjustments.tax.count).to eq(1)
+          end
+
+          # Fails intermittently - xit'ed for the time being
+          xit 'has 2.02 of included tax' do
+            expect(line_item.included_tax_total).to eq(2.02)
+          end
+
+          it 'has a constant amount pre tax' do
+            pending 'but it changes to 8.06, because Spree thinks both VATs apply'
+            expect(line_item.pre_tax_amount).to eq(8.40)
           end
         end
       end
