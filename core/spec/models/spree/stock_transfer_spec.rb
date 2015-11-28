@@ -48,7 +48,7 @@ module Spree
 
       context "finalized" do
         before do
-          stock_transfer.update_attributes(finalized_at: Time.now)
+          stock_transfer.update_attributes(finalized_at: Time.current)
         end
 
         it { is_expected.to eq false }
@@ -56,7 +56,7 @@ module Spree
 
       context "shipped" do
         before do
-          stock_transfer.update_attributes(shipped_at: Time.now)
+          stock_transfer.update_attributes(shipped_at: Time.current)
         end
 
         it { is_expected.to eq false }
@@ -64,7 +64,7 @@ module Spree
 
       context "closed" do
         before do
-          stock_transfer.update_attributes(closed_at: Time.now)
+          stock_transfer.update_attributes(closed_at: Time.current)
         end
 
         it { is_expected.to eq false }
@@ -72,7 +72,7 @@ module Spree
 
       context "finalized and closed" do
         before do
-          stock_transfer.update_attributes(finalized_at: Time.now, closed_at: Time.now)
+          stock_transfer.update_attributes(finalized_at: Time.current, closed_at: Time.current)
         end
 
         it { is_expected.to eq false }
@@ -80,7 +80,7 @@ module Spree
 
       context "shipped and closed" do
         before do
-          stock_transfer.update_attributes(shipped_at: Time.now, closed_at: Time.now)
+          stock_transfer.update_attributes(shipped_at: Time.current, closed_at: Time.current)
         end
 
         it { is_expected.to eq false }
@@ -88,7 +88,7 @@ module Spree
 
       context "finalized and shipped" do
         before do
-          stock_transfer.update_attributes(finalized_at: Time.now, shipped_at: Time.now)
+          stock_transfer.update_attributes(finalized_at: Time.current, shipped_at: Time.current)
         end
 
         it { is_expected.to eq true }
@@ -100,7 +100,7 @@ module Spree
 
       context "finalized" do
         before do
-          stock_transfer.update_attributes(finalized_at: Time.now)
+          stock_transfer.update_attributes(finalized_at: Time.current)
         end
 
         it { is_expected.to eq false }
@@ -108,7 +108,7 @@ module Spree
 
       context "shipped" do
         before do
-          stock_transfer.update_attributes(shipped_at: Time.now)
+          stock_transfer.update_attributes(shipped_at: Time.current)
         end
 
         it { is_expected.to eq false }
@@ -116,7 +116,7 @@ module Spree
 
       context "closed" do
         before do
-          stock_transfer.update_attributes(closed_at: Time.now)
+          stock_transfer.update_attributes(closed_at: Time.current)
         end
 
         it { is_expected.to eq false }
@@ -124,7 +124,7 @@ module Spree
 
       context "finalized and closed" do
         before do
-          stock_transfer.update_attributes(finalized_at: Time.now, closed_at: Time.now)
+          stock_transfer.update_attributes(finalized_at: Time.current, closed_at: Time.current)
         end
 
         it { is_expected.to eq false }
@@ -132,7 +132,7 @@ module Spree
 
       context "shipped and closed" do
         before do
-          stock_transfer.update_attributes(shipped_at: Time.now, closed_at: Time.now)
+          stock_transfer.update_attributes(shipped_at: Time.current, closed_at: Time.current)
         end
 
         it { is_expected.to eq false }
@@ -165,7 +165,7 @@ module Spree
 
       context "can't be finalized" do
         before do
-          stock_transfer.update_attributes(finalized_at: Time.now)
+          stock_transfer.update_attributes(finalized_at: Time.current)
         end
 
         it "doesn't set a finalized_at date" do
@@ -225,7 +225,7 @@ module Spree
 
       context "stock transfer is finalized" do
         before do
-          stock_transfer.update_attributes!(finalized_at: Time.now)
+          stock_transfer.update_attributes!(finalized_at: Time.current)
         end
 
         it "doesn't destroy the stock transfer" do

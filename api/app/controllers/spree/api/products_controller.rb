@@ -5,7 +5,7 @@ module Spree
       def index
         if params[:ids]
           ids = params[:ids].split(",").flatten
-          @products = product_scope.where(:id => ids)
+          @products = product_scope.where(id: ids)
         else
           @products = product_scope.ransack(params[:q]).result
         end
@@ -59,14 +59,14 @@ module Spree
       #
       def create
         authorize! :create, Product
-        params[:product][:available_on] ||= Time.now
+        params[:product][:available_on] ||= Time.current
         set_up_shipping_category
 
         options = { variants_attrs: variants_params, options_attrs: option_types_params }
         @product = Core::Importer::Product.new(nil, product_params, options).create
 
         if @product.persisted?
-          respond_with(@product, :status => 201, :default_template => :show)
+          respond_with(@product, status: 201, default_template: :show)
         else
           invalid_resource!(@product)
         end
@@ -80,7 +80,7 @@ module Spree
         @product = Core::Importer::Product.new(@product, product_params, options).update
 
         if @product.errors.empty?
-          respond_with(@product.reload, :status => 200, :default_template => :show)
+          respond_with(@product.reload, status: 200, default_template: :show)
         else
           invalid_resource!(@product)
         end

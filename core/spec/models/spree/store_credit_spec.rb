@@ -837,7 +837,7 @@ describe Spree::StoreCredit do
     subject { store_credit.invalidate(invalidation_reason, invalidation_user) }
 
     it "sets the invalidated_at field to the current time" do
-      invalidated_at = Time.now
+      invalidated_at = Time.current
       Timecop.freeze(invalidated_at) do
         subject
         expect(store_credit.invalidated_at).to eq invalidated_at

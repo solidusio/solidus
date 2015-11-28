@@ -134,7 +134,7 @@ module Spree
 
         context "has been finalized" do
           before do
-            stock_transfer.update_attributes(finalized_at: Time.now)
+            stock_transfer.update_attributes(finalized_at: Time.current)
           end
 
           it "returns an error status code" do

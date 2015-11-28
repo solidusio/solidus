@@ -65,7 +65,7 @@ class Spree::OrderCancellations
 
     shipments.each do |shipment|
       if shipment.inventory_units.all? {|iu| iu.shipped? || iu.canceled? }
-        shipment.update_attributes!(state: 'shipped', shipped_at: Time.now)
+        shipment.update_attributes!(state: 'shipped', shipped_at: Time.current)
       end
     end
   end

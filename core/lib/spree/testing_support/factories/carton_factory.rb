@@ -3,7 +3,7 @@ FactoryGirl.define do
     address
     stock_location
     shipping_method
-    shipped_at { Time.now }
+    shipped_at { Time.current }
     inventory_units do
       [
         build(

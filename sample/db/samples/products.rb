@@ -5,8 +5,8 @@ tax_category = Spree::TaxCategory.find_by_name!("Default")
 shipping_category = Spree::ShippingCategory.find_by_name!("Default")
 
 default_attrs = {
-  :description => Faker::Lorem.paragraph,
-  :available_on => Time.zone.now
+  description: Faker::Lorem.paragraph,
+  available_on: Time.current
 }
 
 products = [

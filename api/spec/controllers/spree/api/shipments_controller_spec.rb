@@ -235,7 +235,7 @@ describe Spree::Api::ShipmentsController, :type => :controller do
           subject
           shipment.reload
           expect(shipment.state).to eq 'shipped'
-          expect(shipment.shipped_at.to_i).to eq Time.now.to_i
+          expect(shipment.shipped_at.to_i).to eq Time.current.to_i
         end
       end
 

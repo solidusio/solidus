@@ -51,7 +51,7 @@ module Spree
       order.update_attributes!(
         approver: user,
         approver_name: name,
-        approved_at: Time.now,
+        approved_at: Time.current,
       )
     end
 

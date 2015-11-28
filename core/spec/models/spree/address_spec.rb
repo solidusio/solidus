@@ -277,14 +277,14 @@ describe Spree::Address, :type => :model do
       let(:base_attributes) do
         {
           'id' => 1,
-          'created_at' => Time.now,
-          'updated_at' => Time.now,
+          'created_at' => Time.current,
+          'updated_at' => Time.current,
           'address1' => '1234 way',
         }
       end
       let(:merge_attributes) do
         {
-          'updated_at' => Time.now,
+          'updated_at' => Time.current,
           'address2' => 'apt 2',
         }
       end

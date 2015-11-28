@@ -11,8 +11,8 @@ class MovePromotionCodeToPromotionCodeValue < ActiveRecord::Migration
         select
           spree_promotions.id,
           spree_promotions.code,
-          '#{Time.now.to_s(:db)}',
-          '#{Time.now.to_s(:db)}'
+          '#{Time.current.to_s(:db)}',
+          '#{Time.current.to_s(:db)}'
         from spree_promotions
         left join spree_promotion_codes
           on spree_promotion_codes.promotion_id = spree_promotions.id

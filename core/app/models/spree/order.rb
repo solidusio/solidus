@@ -528,7 +528,7 @@ module Spree
 
       self.update_columns(
         state: 'cart',
-        updated_at: Time.now,
+        updated_at: Time.current,
       )
       self.next! if self.line_items.size > 0
     end
@@ -556,7 +556,7 @@ module Spree
         cancel!
         self.update_columns(
           canceler_id: user.id,
-          canceled_at: Time.now,
+          canceled_at: Time.current,
         )
       end
     end

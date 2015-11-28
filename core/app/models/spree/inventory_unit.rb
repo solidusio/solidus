@@ -79,7 +79,7 @@ module Spree
       inventory_units.map do |iu|
         iu.update_columns(
           pending: false,
-          updated_at: Time.now,
+          updated_at: Time.current,
         )
       end
     end

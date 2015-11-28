@@ -30,7 +30,7 @@ module Spree
             user.
             orders.
             complete.
-            where(Spree::Order.arel_table[:completed_at].lt(order.completed_at || Time.now)).
+            where(Spree::Order.arel_table[:completed_at].lt(order.completed_at || Time.current)).
             count
         end
 

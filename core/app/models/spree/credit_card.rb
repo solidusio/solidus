@@ -181,7 +181,7 @@ module Spree
     def ensure_one_default
       if self.user_id && self.default
         CreditCard.where(default: true).where.not(id: self.id).where(user_id: self.user_id).each do |ucc|
-          ucc.update_columns(default: false, updated_at: Time.now)
+          ucc.update_columns(default: false, updated_at: Time.current)
         end
       end
     end

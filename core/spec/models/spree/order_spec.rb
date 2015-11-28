@@ -325,7 +325,7 @@ describe Spree::Order, :type => :model do
     context 'when the order is completed' do
       before do
         order.state = 'complete'
-        order.completed_at = Time.now
+        order.completed_at = Time.current
         order.update_column(:shipment_total, 5)
         order.shipments.create!
       end
@@ -691,7 +691,7 @@ describe Spree::Order, :type => :model do
       order.completed_at = nil
       expect(order.completed?).to be false
 
-      order.completed_at = Time.now
+      order.completed_at = Time.current
       expect(order.completed?).to be true
     end
   end
@@ -730,14 +730,14 @@ describe Spree::Order, :type => :model do
     it "should be false for completed order in the canceled state" do
       order.state = 'canceled'
       order.shipment_state = 'ready'
-      order.completed_at = Time.now
+      order.completed_at = Time.current
       expect(order.can_cancel?).to be false
     end
 
     it "should be true for completed order with no shipment" do
       order.state = 'complete'
       order.shipment_state = nil
-      order.completed_at = Time.now
+      order.completed_at = Time.current
       expect(order.can_cancel?).to be true
     end
   end

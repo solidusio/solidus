@@ -16,7 +16,7 @@ module Spree
         if root
           root.update_columns(
             name: name,
-            updated_at: Time.now,
+            updated_at: Time.current,
           )
         else
           self.root = Taxon.create!(taxonomy_id: id, name: name)

@@ -19,7 +19,7 @@ class Spree::OrderShipping
       stock_location: shipment.stock_location,
       address: shipment.address,
       shipping_method: shipment.shipping_method,
-      shipped_at: Time.now,
+      shipped_at: Time.current,
       external_number: external_number,
       # TODO: Remove the `|| shipment.tracking` once Shipment#ship! is called by
       # OrderShipping#ship rather than vice versa
@@ -41,7 +41,7 @@ class Spree::OrderShipping
   # @param tracking_number An option tracking number.
   # @return The carton created.
   def ship(inventory_units:, stock_location:, address:, shipping_method:,
-           shipped_at: Time.now, external_number: nil, tracking_number: nil, suppress_mailer: false)
+           shipped_at: Time.current, external_number: nil, tracking_number: nil, suppress_mailer: false)
 
     carton = nil
 
@@ -68,7 +68,7 @@ class Spree::OrderShipping
         # TODO: make OrderShipping#ship_shipment call Shipment#ship! rather than
         # having Shipment#ship! call OrderShipping#ship_shipment. We only really
         # need this `update_columns` for the specs, until we make that change.
-        shipment.update_columns(state: 'shipped', shipped_at: Time.now)
+        shipment.update_columns(state: 'shipped', shipped_at: Time.current)
       end
     end
 

@@ -12,7 +12,7 @@ describe Spree::OptionValue, :type => :model do
     it "should touch a variant" do
       Timecop.freeze do
         option_value.touch
-        expect(variant.reload.updated_at).to be_within(1.second).of(Time.now)
+        expect(variant.reload.updated_at).to be_within(1.second).of(Time.current)
       end
     end
 
@@ -28,7 +28,7 @@ describe Spree::OptionValue, :type => :model do
         Timecop.freeze do
           option_value.name += "--1"
           option_value.save!
-          expect(variant.reload.updated_at).to be_within(1.second).of(Time.now)
+          expect(variant.reload.updated_at).to be_within(1.second).of(Time.current)
         end
       end
     end

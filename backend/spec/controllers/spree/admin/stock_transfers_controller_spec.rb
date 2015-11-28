@@ -20,8 +20,8 @@ module Spree
         StockTransfer.create do |transfer|
           transfer.source_location_id = warehouse.id
           transfer.destination_location_id = la_store.id
-          transfer.finalized_at = DateTime.now
-          transfer.closed_at = DateTime.now
+          transfer.finalized_at = DateTime.current
+          transfer.closed_at = DateTime.current
         end }
 
       describe "stock location filtering" do
@@ -163,7 +163,7 @@ module Spree
 
       context 'stock transfer is not finalizable' do
         before do
-          transfer_with_items.update_attributes(finalized_at: Time.now)
+          transfer_with_items.update_attributes(finalized_at: Time.current)
         end
 
         it 'redirects back to edit' do

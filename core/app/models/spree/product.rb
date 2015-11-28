@@ -328,7 +328,7 @@ module Spree
     end
 
     def punch_slug
-      update_column :slug, "#{Time.now.to_i}_#{slug}" # punch slug with date prefix to allow reuse of original
+      update_column :slug, "#{Time.current.to_i}_#{slug}" # punch slug with date prefix to allow reuse of original
     end
 
     def anything_changed?

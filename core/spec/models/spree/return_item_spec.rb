@@ -18,7 +18,7 @@ describe Spree::ReturnItem, :type => :model do
   end
 
   describe '#receive!' do
-    let(:now)            { Time.now }
+    let(:now)            { Time.current }
     let(:order)          { create(:shipped_order)}
     let(:inventory_unit) { create(:inventory_unit, order: order,state: 'shipped') }
     let!(:customer_return) { create(:customer_return_without_return_items, return_items: [return_item], stock_location_id: inventory_unit.shipment.stock_location_id) }
