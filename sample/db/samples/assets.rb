@@ -17,7 +17,7 @@ def image(name, type="jpeg")
   images_path = Pathname.new(File.dirname(__FILE__)) + "images"
   path = images_path + "#{name}.#{type}"
   return false if !File.exist?(path)
-  File.open(path)
+  path
 end
 
 images = {
@@ -26,7 +26,7 @@ images = {
       :attachment => image("ror_tote")
     },
     {
-      :attachment => image("ror_tote_back") 
+      :attachment => image("ror_tote_back")
     }
   ],
   products[:ror_bag].master => [
@@ -86,17 +86,23 @@ images = {
 products[:ror_baseball_jersey].variants.each do |variant|
   color = variant.option_value("tshirt-color").downcase
   main_image = image("ror_baseball_jersey_#{color}", "png")
-  variant.images.create!(:attachment => main_image)
+  File.open(main_image) do |f|
+    variant.images.create!(:attachment => f)
+  end
   back_image = image("ror_baseball_jersey_back_#{color}", "png")
   if back_image
-    variant.images.create!(:attachment => back_image)
+    File.open(back_image) do |f|
+      variant.images.create!(:attachment => f)
+    end
   end
 end
 
 images.each do |variant, attachments|
   puts "Loading images for #{variant.product.name}"
   attachments.each do |attachment|
-    variant.images.create!(attachment)
+    File.open(attachment[:attachment]) do |f|
+      variant.images.create!(attachment: f)
+    end
   end
 end
 
