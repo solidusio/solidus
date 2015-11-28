@@ -5,8 +5,8 @@ module Spree
     belongs_to :variant
 
     validate :stock_availability, if: :check_stock?
-    validates_presence_of :stock_transfer, :variant
-    validates_uniqueness_of :variant_id, scope: :stock_transfer_id
+    validates :stock_transfer, :variant, presence: true
+    validates :variant_id, uniqueness: { scope: :stock_transfer_id }, allow_blank: true
     validates :expected_quantity, numericality: { greater_than: 0 }
     validates :received_quantity, numericality: { greater_than_or_equal_to: 0, less_than_or_equal_to: :expected_quantity }
 
