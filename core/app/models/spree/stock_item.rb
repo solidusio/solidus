@@ -12,6 +12,9 @@ module Spree
 
     delegate :weight, :should_track_inventory?, to: :variant
 
+    # @return [String] the name of this stock item's variant
+    delegate :name, to: :variant, prefix: true
+
     after_save :conditional_variant_touch, if: :changed?
     after_touch { variant.touch }
 
@@ -21,11 +24,6 @@ module Spree
     #   associated with this stock item
     def backordered_inventory_units
       Spree::InventoryUnit.backordered_for_stock_item(self)
-    end
-
-    # @return [String] the name of this stock item's variant
-    def variant_name
-      variant.name
     end
 
     # Adjusts the count on hand by a given value.
