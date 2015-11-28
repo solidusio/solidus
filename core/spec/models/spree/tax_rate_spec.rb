@@ -222,6 +222,7 @@ describe Spree::TaxRate, :type => :model do
       let(:romania) { create(:country, iso: "RO") }
       let(:romania_zone) { create(:zone, countries: [romania] ) }
       let(:eu_zone)  { create(:zone, countries: [romania, germany]) }
+      let(:world_zone) { create(:zone, :with_country) }
 
       let!(:german_book_vat) do
         create(
@@ -387,6 +388,96 @@ describe Spree::TaxRate, :type => :model do
 
           it 'has a constant amount pre tax' do
             pending 'but it changes to 8.06, because Spree thinks both VATs apply'
+            expect(line_item.pre_tax_amount).to eq(8.40)
+          end
+        end
+      end
+
+      # International delivery, no tax applies whatsoever
+      context 'to anywhere else in the world' do
+        let(:tax_zone) { world_zone }
+
+        context 'an order with a book' do
+          let(:variant) { book }
+
+          it 'should sell at the net price' do
+            pending "Prices have to be adjusted"
+            expect(line_item.price).to eq(18.69)
+          end
+
+          it 'is adjusted to the net price' do
+            expect(line_item.total).to eq(18.69)
+          end
+
+          it 'has no tax adjustments' do
+            pending "Right now it gets a refund"
+            expect(line_item.adjustments.tax.count).to eq(0)
+          end
+
+          it 'has no included tax' do
+            expect(line_item.included_tax_total).to eq(0)
+          end
+
+          it 'has no additional tax' do
+            pending 'but there is a refund, still'
+            expect(line_item.additional_tax_total).to eq(0)
+          end
+
+          it 'has a constant amount pre tax' do
+            expect(line_item.pre_tax_amount).to eq(18.69)
+          end
+        end
+
+        context 'an order with a sweater' do
+          let(:variant) { sweater }
+
+          it 'should sell at the net price' do
+            pending 'but prices are not adjusted according to the zone yet'
+            expect(line_item.price).to eq(25.21)
+          end
+
+          it 'has no tax adjustments' do
+            pending 'but it has a refund'
+            expect(line_item.adjustments.tax.count).to eq(0)
+          end
+
+          it 'has no included tax' do
+            expect(line_item.included_tax_total).to eq(0)
+          end
+
+          it 'has no additional tax' do
+            pending 'but it has a refund for included taxes wtf'
+            expect(line_item.additional_tax_total).to eq(0)
+          end
+
+          it 'has a constant amount pre tax' do
+            expect(line_item.pre_tax_amount).to eq(25.21)
+          end
+        end
+
+        context 'an order with a download' do
+          let(:variant) { download }
+
+          it 'should sell at the net price' do
+            pending 'but prices are not adjusted yet'
+            expect(line_item.price).to eq(8.40)
+          end
+
+          it 'has no tax adjustments' do
+            pending 'but a refund is created'
+            expect(line_item.adjustments.tax.count).to eq(0)
+          end
+
+          it 'has no included tax' do
+            expect(line_item.included_tax_total).to eq(0)
+          end
+
+          it 'has no additional tax' do
+            pending 'but an tax refund that disguises as additional tax is created'
+            expect(line_item.additional_tax_total).to eq(0)
+          end
+
+          it 'has a constant amount pre tax' do
             expect(line_item.pre_tax_amount).to eq(8.40)
           end
         end
