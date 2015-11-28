@@ -218,6 +218,7 @@ describe Spree::TaxRate, :type => :model do
 
     context 'selling from germany' do
       let(:germany) { create :country, iso: "DE" }
+      # The weird default_tax boolean is what makes this context one with default included taxes
       let!(:germany_zone) { create :zone, countries: [germany], default_tax: true }
       let(:romania) { create(:country, iso: "RO") }
       let(:romania_zone) { create(:zone, countries: [romania] ) }
@@ -261,13 +262,13 @@ describe Spree::TaxRate, :type => :model do
         )
       end
 
-      let(:line_item) { order.line_items.first }
-
       before do
         allow(order).to receive(:tax_zone) { tax_zone }
         order.contents.add(variant)
         Spree::TaxRate.adjust(order.tax_zone, order.line_items)
       end
+
+      let(:line_item) { order.line_items.first }
 
       context 'to germany' do
         let(:tax_zone) { germany_zone }
@@ -484,10 +485,130 @@ describe Spree::TaxRate, :type => :model do
       end
     end
 
-    context 'with additional tax' do
-    end
+    # Choosing New York here because in the US, states matter
+    context 'selling from new york' do
+      let(:new_york) { create(:state) }
+      let(:united_states) { create(:country, states: [new_york]) }
+      let(:new_york_zone) { create(:zone, states: [new_york]) }
+      let(:unites_states_zone) { create(:zone, countries: [united_states])}
+      # Creating two rates for books here to
+      # mimick the existing specs
+      let!(:new_york_books_tax) do
+        create(
+          :tax_rate,
+          tax_category: books_category,
+          zone: new_york_zone,
+          included_in_price: false,
+          amount: 0.05
+        )
+      end
 
-    context 'with both additional and included tax' do
+      let!(:federal_books_tax) do
+        create(
+          :tax_rate,
+          tax_category: books_category,
+          zone: unites_states_zone,
+          included_in_price: false,
+          amount: 0.10
+        )
+      end
+
+      let!(:federal_digital_tax) do
+        create(
+          :tax_rate,
+          tax_category: digital_category,
+          zone: unites_states_zone,
+          included_in_price: false,
+          amount: 0.20
+        )
+      end
+
+      before do
+        allow(order).to receive(:tax_zone) { tax_zone }
+        order.contents.add(variant)
+        Spree::TaxRate.adjust(order.tax_zone, order.line_items)
+      end
+
+      let(:line_item) { order.line_items.first }
+
+      context 'to new york' do
+        let(:tax_zone) { new_york_zone }
+
+        # A fictional case for an item with two applicable rates
+        context 'an order with a book' do
+          let(:variant) { book }
+
+          it 'still has the original price' do
+            expect(line_item.price).to eq(20)
+          end
+
+          it 'sells for the line items amount plus additional tax' do
+            expect(line_item.total).to eq(23)
+          end
+
+          it 'has two tax adjustments' do
+            expect(line_item.adjustments.tax.count).to eq(2)
+          end
+
+          it 'has no included tax' do
+            expect(line_item.included_tax_total).to eq(0)
+          end
+
+          it 'has 15% additional tax' do
+            expect(line_item.additional_tax_total).to eq(3)
+          end
+        end
+
+        # This is a fictional case for when no taxes apply at all.
+        context 'an order with a sweater' do
+          let(:variant) { sweater }
+
+          it 'still has the original price' do
+            expect(line_item.price).to eq(30)
+          end
+
+          it 'sells for the line items amount plus additional tax' do
+            expect(line_item.total).to eq(30)
+          end
+
+          it 'has no tax adjustments' do
+            expect(line_item.adjustments.tax.count).to eq(0)
+          end
+
+          it 'has no included tax' do
+            expect(line_item.included_tax_total).to eq(0)
+          end
+
+          it 'has no additional tax' do
+            expect(line_item.additional_tax_total).to eq(0)
+          end
+        end
+
+        # A fictional case with one applicable rate
+        context 'an order with a download' do
+          let(:variant) { download }
+
+          it 'still has the original price' do
+            expect(line_item.price).to eq(10)
+          end
+
+          it 'sells for the line items amount plus additional tax' do
+            expect(line_item.total).to eq(12)
+          end
+
+          it 'has one tax adjustments' do
+            expect(line_item.adjustments.tax.count).to eq(1)
+          end
+
+          it 'has no included tax' do
+            expect(line_item.included_tax_total).to eq(0)
+          end
+
+          it 'has 15% additional tax' do
+            expect(line_item.additional_tax_total).to eq(2)
+          end
+        end
+      end
     end
   end
 
