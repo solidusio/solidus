@@ -11,8 +11,8 @@ module Spree
 
     accepts_nested_attributes_for :address
 
+    attr_reader :number
     attr_accessor :encrypted_data,
-                    :number,
                     :imported,
                     :verification_value
 
