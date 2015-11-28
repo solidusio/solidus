@@ -22,7 +22,7 @@ module Spree
 
       def products
         if params[:ids]
-          @products = Product.where(:id => params[:ids].split(","))
+          @products = Product.where(:id => params[:ids].split(",").flatten)
         else
           @products = Product.ransack(params[:q]).result
         end
