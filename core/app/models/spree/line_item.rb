@@ -34,6 +34,11 @@ module Spree
     after_create :update_tax_charge
 
     delegate :name, :description, :sku, :should_track_inventory?, to: :variant
+    # @note This will return the product even if it has been deleted.
+    # @return [Spree::Product, nil] the product associated with this line
+    #   item, if there is one
+    delegate :product, to: :variant
+
 
     attr_accessor :target_shipment
 
@@ -112,13 +117,6 @@ module Spree
     #   quantity of stock of this line item's variant
     def insufficient_stock?
       !sufficient_stock?
-    end
-
-    # @note This will return the product even if it has been deleted.
-    # @return [Spree::Product, nil] the product associated with this line
-    #   item, if there is one
-    def product
-      variant.product
     end
 
     # Sets the options on the line item according to the order's currency or
