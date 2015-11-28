@@ -19,6 +19,9 @@ module Spree
     money_methods pre_tax_total: { currency: Spree::Config[:currency] },
                   total: { currency: Spree::Config[:currency] }
 
+
+    delegate :id, to: :order, prefix: true, allow_nil: true
+
     def total
       return_items.map(&:total).sum
     end
@@ -31,10 +34,6 @@ module Spree
     def order
       return nil if return_items.blank?
       return_items.first.inventory_unit.order
-    end
-
-    def order_id
-      order.try(:id)
     end
 
     def fully_reimbursed?
