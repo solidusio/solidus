@@ -9,6 +9,7 @@ module Spree
           typography: [
             'fonts',
             'colors',
+            'lists',
             'tags'
           ]
         }
