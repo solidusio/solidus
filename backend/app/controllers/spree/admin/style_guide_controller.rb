@@ -10,6 +10,7 @@ module Spree
             'fonts',
             'colors',
             'lists',
+            'icons',
             'tags'
           ]
         }
