@@ -18,6 +18,7 @@ module Spree
             'validation'
           ],
           messaging: [
+            'loading',
             'tooltips'
           ]
         }

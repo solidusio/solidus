@@ -1,0 +1,20 @@
+<%- snippet = capture do %>
+  <div id="progress">
+    <div class="wrapper">
+      <div id="spinner" class="spinner"></div>
+      <div class="progress-message"><%= Spree.t(:loading) %>...</div>
+    </div>
+  </div>
+<%- end %>
+
+<div class="style-guide-result">
+  <%= snippet %>
+</div>
+
+<button id="loading-test-button">Toggle Loading</button>
+
+<script>
+  $('#loading-test-button').on('click', function(){
+    $("#progress").toggle()
+  });
+</script>
