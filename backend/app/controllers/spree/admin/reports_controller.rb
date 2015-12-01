@@ -29,9 +29,9 @@ module Spree
         params[:q] = {} unless params[:q]
 
         if params[:q][:completed_at_gt].blank?
-          params[:q][:completed_at_gt] = Time.zone.now.beginning_of_month
+          params[:q][:completed_at_gt] = Time.current.beginning_of_month
         else
-          params[:q][:completed_at_gt] = Time.zone.parse(params[:q][:completed_at_gt]).beginning_of_day rescue Time.zone.now.beginning_of_month
+          params[:q][:completed_at_gt] = Time.zone.parse(params[:q][:completed_at_gt]).beginning_of_day rescue Time.current.beginning_of_month
         end
 
         if params[:q] && !params[:q][:completed_at_lt].blank?

@@ -80,14 +80,14 @@ FactoryGirl.define do
             after(:create) do |order, evaluator|
               order.shipments.each do |shipment|
                 shipment.inventory_units.update_all state: 'shipped'
-                shipment.update_columns(state: 'shipped', shipped_at: Time.now)
+                shipment.update_columns(state: 'shipped', shipped_at: Time.current)
                 if evaluator.with_cartons
                   Spree::Carton.create!(
                     stock_location: shipment.stock_location,
                     address: shipment.address,
                     shipping_method: shipment.shipping_method,
                     inventory_units: shipment.inventory_units,
-                    shipped_at: Time.now,
+                    shipped_at: Time.current,
                   )
                 end
               end

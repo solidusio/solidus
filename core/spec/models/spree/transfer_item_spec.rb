@@ -71,7 +71,7 @@ describe Spree::TransferItem do
 
       context "transfer order is shipped" do
         before do
-          stock_transfer.update_attributes!(shipped_at: Time.now)
+          stock_transfer.update_attributes!(shipped_at: Time.current)
         end
 
         context "variant is not available" do
@@ -153,7 +153,7 @@ describe Spree::TransferItem do
 
       context "stock_transfer is closed" do
         before do
-          stock_transfer.update_attributes!(closed_at: Time.now)
+          stock_transfer.update_attributes!(closed_at: Time.current)
         end
 
         it { is_expected.to eq false }
@@ -173,7 +173,7 @@ describe Spree::TransferItem do
 
     context "stock transfer is finalized" do
       before do
-        stock_transfer.update_attributes(finalized_at: Time.now)
+        stock_transfer.update_attributes(finalized_at: Time.current)
       end
 
       it "adds an error message" do
@@ -206,7 +206,7 @@ describe Spree::TransferItem do
 
     context "stock transfer is finalized" do
       before do
-        stock_transfer.update_attributes(finalized_at: Time.now)
+        stock_transfer.update_attributes(finalized_at: Time.current)
       end
 
       it "does not destroy the transfer item" do

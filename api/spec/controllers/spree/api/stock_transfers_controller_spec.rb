@@ -52,7 +52,7 @@ module Spree
 
           before do
             stock_transfer.finalize(user)
-            stock_transfer.ship(shipped_at: Time.now)
+            stock_transfer.ship(shipped_at: Time.current)
             stock_transfer.source_location.stock_item(transfer_item.variant_id).set_count_on_hand(0)
           end
 

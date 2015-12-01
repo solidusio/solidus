@@ -43,7 +43,7 @@ module Spree
 
       def ship
         if @stock_transfer.transfer
-          @stock_transfer.ship(shipped_at: DateTime.now)
+          @stock_transfer.ship(shipped_at: DateTime.current)
           flash[:success] = Spree.t(:stock_transfer_complete)
           redirect_to admin_stock_transfers_path
         else

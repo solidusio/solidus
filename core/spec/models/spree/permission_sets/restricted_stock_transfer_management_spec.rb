@@ -75,7 +75,7 @@ describe Spree::PermissionSets::RestrictedStockTransferManagement do
 
       context "stock transfer has been shipped" do
         before do
-          transfer_with_source_and_destination.update_attributes!(shipped_at: Time.now)
+          transfer_with_source_and_destination.update_attributes!(shipped_at: Time.current)
           described_class.new(ability).activate!
         end
 
@@ -114,7 +114,7 @@ describe Spree::PermissionSets::RestrictedStockTransferManagement do
 
       context "stock transfer has been shipped" do
         before do
-          transfer_with_source_and_destination.update_attributes!(shipped_at: Time.now)
+          transfer_with_source_and_destination.update_attributes!(shipped_at: Time.current)
           described_class.new(ability).activate!
         end
 
@@ -153,7 +153,7 @@ describe Spree::PermissionSets::RestrictedStockTransferManagement do
 
       context "stock transfer has been shipped" do
         before do
-          transfer_with_source_and_destination.update_attributes!(shipped_at: Time.now)
+          transfer_with_source_and_destination.update_attributes!(shipped_at: Time.current)
           described_class.new(ability).activate!
         end
 

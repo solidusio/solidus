@@ -170,7 +170,7 @@ module Spree
         # Persist only if changed
         # This is only not a save! to avoid the extra queries to load the order
         # (for validations) and to touch the adjustment.
-        update_columns(eligible: eligible, amount: amount, updated_at: Time.now) if changed?
+        update_columns(eligible: eligible, amount: amount, updated_at: Time.current) if changed?
       end
       amount
     end

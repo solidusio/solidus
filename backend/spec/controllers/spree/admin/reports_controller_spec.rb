@@ -31,10 +31,10 @@ describe Spree::Admin::ReportsController, :type => :controller do
 
     before do
       # can't set completed_at during factory creation
-      order_complete_start_of_month.completed_at = Time.zone.now.beginning_of_month + 1.minute
+      order_complete_start_of_month.completed_at = Time.current.beginning_of_month + 1.minute
       order_complete_start_of_month.save!
 
-      order_complete_mid_month.completed_at = Time.zone.now.beginning_of_month + 15.days
+      order_complete_mid_month.completed_at = Time.current.beginning_of_month + 15.days
       order_complete_mid_month.save!
     end
 
@@ -84,7 +84,7 @@ describe Spree::Admin::ReportsController, :type => :controller do
     end
 
     context 'when params has a completed_at_gt' do
-      let(:params) { { q: { completed_at_gt: Time.zone.now.beginning_of_month + 1.day } } }
+      let(:params) { { q: { completed_at_gt: Time.current.beginning_of_month + 1.day } } }
 
       it_behaves_like 'sales total report' do
         let(:expected_returned_orders) { [order_complete_mid_month] }
@@ -101,7 +101,7 @@ describe Spree::Admin::ReportsController, :type => :controller do
     end
 
     context 'when params has a compeleted_at_lt' do
-      let(:params) { { q: { completed_at_lt: Time.zone.now.beginning_of_month } } }
+      let(:params) { { q: { completed_at_lt: Time.current.beginning_of_month } } }
 
       it_behaves_like 'sales total report' do
         let(:expected_returned_orders) { [order_complete_start_of_month] }

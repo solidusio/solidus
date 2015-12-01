@@ -104,7 +104,7 @@ describe Spree::Promotion, :type => :model do
       promotion.created_at = 2.days.ago
 
       @user = create(:user)
-      @order = create(:order, user: @user, created_at: DateTime.now)
+      @order = create(:order, user: @user, created_at: DateTime.current)
       @payload = { :order => @order, :user => @user }
     end
 
@@ -131,7 +131,7 @@ describe Spree::Promotion, :type => :model do
 
     it "does activate if newer then order" do
       expect(@action1).to receive(:perform).with(hash_including(@payload))
-      promotion.created_at = DateTime.now + 2
+      promotion.created_at = DateTime.current + 2
       expect(promotion.activate(@payload)).to be true
     end
 
@@ -301,28 +301,28 @@ describe Spree::Promotion, :type => :model do
     end
 
     it "should be expired if it hasn't started yet" do
-      promotion.starts_at = Time.now + 1.day
+      promotion.starts_at = Time.current + 1.day
       expect(promotion).to be_expired
     end
 
     it "should be expired if it has already ended" do
-      promotion.expires_at = Time.now - 1.day
+      promotion.expires_at = Time.current - 1.day
       expect(promotion).to be_expired
     end
 
     it "should not be expired if it has started already" do
-      promotion.starts_at = Time.now - 1.day
+      promotion.starts_at = Time.current - 1.day
       expect(promotion).not_to be_expired
     end
 
     it "should not be expired if it has not ended yet" do
-      promotion.expires_at = Time.now + 1.day
+      promotion.expires_at = Time.current + 1.day
       expect(promotion).not_to be_expired
     end
 
     it "should not be expired if current time is within starts_at and expires_at range" do
-      promotion.starts_at = Time.now - 1.day
-      promotion.expires_at = Time.now + 1.day
+      promotion.starts_at = Time.current - 1.day
+      promotion.expires_at = Time.current + 1.day
       expect(promotion).not_to be_expired
     end
   end
@@ -333,28 +333,28 @@ describe Spree::Promotion, :type => :model do
     end
 
     it "should not be active if it hasn't started yet" do
-      promotion.starts_at = Time.now + 1.day
+      promotion.starts_at = Time.current + 1.day
       expect(promotion.active?).to eq(false)
     end
 
     it "should not be active if it has already ended" do
-      promotion.expires_at = Time.now - 1.day
+      promotion.expires_at = Time.current - 1.day
       expect(promotion.active?).to eq(false)
     end
 
     it "should be active if it has started already" do
-      promotion.starts_at = Time.now - 1.day
+      promotion.starts_at = Time.current - 1.day
       expect(promotion.active?).to eq(true)
     end
 
     it "should be active if it has not ended yet" do
-      promotion.expires_at = Time.now + 1.day
+      promotion.expires_at = Time.current + 1.day
       expect(promotion.active?).to eq(true)
     end
 
     it "should be active if current time is within starts_at and expires_at range" do
-      promotion.starts_at = Time.now - 1.day
-      promotion.expires_at = Time.now + 1.day
+      promotion.starts_at = Time.current - 1.day
+      promotion.expires_at = Time.current + 1.day
       expect(promotion.active?).to eq(true)
     end
 
@@ -440,7 +440,7 @@ describe Spree::Promotion, :type => :model do
     it { is_expected.to be true }
 
     context "when promotion is expired" do
-      before { promotion.expires_at = Time.now - 10.days }
+      before { promotion.expires_at = Time.current - 10.days }
       it { is_expected.to be false }
     end
 
@@ -714,7 +714,7 @@ describe Spree::Promotion, :type => :model do
       before do
         promotion.activate(order: order)
         order.update!
-        order.completed_at = Time.now
+        order.completed_at = Time.current
         order.save!
       end
 

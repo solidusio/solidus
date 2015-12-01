@@ -28,7 +28,7 @@ describe Spree::StoreCreditEvent do
     end
 
     it "excludes invalidated store credit events" do
-      invalidated_store_credit = create(:store_credit, invalidated_at: Time.now)
+      invalidated_store_credit = create(:store_credit, invalidated_at: Time.current)
       event = create(:store_credit_event, action: Spree::StoreCredit::VOID_ACTION, store_credit: invalidated_store_credit)
       expect(described_class.exposed_events).not_to include event
     end

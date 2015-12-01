@@ -47,7 +47,7 @@ describe Spree::Promotion::Rules::NthOrder do
 
         context "when this order is completed and is still the 'nth' order" do
           before do
-            order.update_attributes(completed_at: Time.now)
+            order.update_attributes(completed_at: Time.current)
           end
 
           it { is_expected.to be true }

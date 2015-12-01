@@ -70,7 +70,7 @@ module Spree
 
     def finalize(finalized_by)
       if finalizable?
-        self.update_attributes({ finalized_at: Time.now, finalized_by: finalized_by })
+        self.update_attributes({ finalized_at: Time.current, finalized_by: finalized_by })
       else
         errors.add(:base, Spree.t(:stock_transfer_cannot_be_finalized))
         false
@@ -91,7 +91,7 @@ module Spree
 
     def close(closed_by)
       if receivable?
-        self.update_attributes({ closed_at: Time.now, closed_by: closed_by })
+        self.update_attributes({ closed_at: Time.current, closed_by: closed_by })
       else
         errors.add(:base, Spree.t(:stock_transfer_must_be_receivable))
         false

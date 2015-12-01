@@ -240,7 +240,7 @@ module Spree
 
     def shipped=(value)
       return unless value == '1' && shipped_at.nil?
-      self.shipped_at = Time.now
+      self.shipped_at = Time.current
     end
 
     def shipping_method
@@ -279,7 +279,7 @@ module Spree
         self.update_columns(
           cost: selected_shipping_rate.cost,
           adjustment_total: adjustments.additional.map(&:update!).compact.sum,
-          updated_at: Time.now,
+          updated_at: Time.current,
         )
       end
     end
@@ -301,7 +301,7 @@ module Spree
           # (via Order#paid?) affects the shipment state (YAY)
           self.update_columns(
             state: determine_state(order),
-            updated_at: Time.now
+            updated_at: Time.current
           )
 
           # And then it's time to update shipment states and finally persist
@@ -322,7 +322,7 @@ module Spree
       new_state = determine_state(order)
       update_columns(
         state: new_state,
-        updated_at: Time.now,
+        updated_at: Time.current,
       )
       after_ship if new_state == 'shipped' and old_state != 'shipped'
     end

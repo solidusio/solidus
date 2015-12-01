@@ -168,12 +168,12 @@ module Spree
     end
 
     add_search_scope :not_deleted do
-      where("#{Product.quoted_table_name}.deleted_at IS NULL or #{Product.quoted_table_name}.deleted_at >= ?", Time.zone.now)
+      where("#{Product.quoted_table_name}.deleted_at IS NULL or #{Product.quoted_table_name}.deleted_at >= ?", Time.current)
     end
 
     # Can't use add_search_scope for this as it needs a default argument
     def self.available(available_on = nil, currency = nil)
-      joins(:master => :prices).where("#{Product.quoted_table_name}.available_on <= ?", available_on || Time.now)
+      joins(:master => :prices).where("#{Product.quoted_table_name}.available_on <= ?", available_on || Time.current)
     end
     search_scopes << :available
 

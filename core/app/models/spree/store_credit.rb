@@ -162,7 +162,7 @@ class Spree::StoreCredit < Spree::Base
   end
 
   def generate_authorization_code
-    "#{self.id}-SC-#{Time.now.utc.strftime("%Y%m%d%H%M%S%6N")}"
+    "#{self.id}-SC-#{Time.current.utc.strftime("%Y%m%d%H%M%S%6N")}"
   end
 
   def editable?
@@ -192,7 +192,7 @@ class Spree::StoreCredit < Spree::Base
       self.action = INVALIDATE_ACTION
       self.update_reason = reason
       self.action_originator = user_performing_invalidation
-      self.invalidated_at = Time.now
+      self.invalidated_at = Time.current
       save
     else
       errors.add(:invalidated_at, Spree.t("store_credit.errors.cannot_invalidate_uncaptured_authorization"))
