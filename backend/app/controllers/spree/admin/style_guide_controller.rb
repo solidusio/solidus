@@ -7,6 +7,7 @@ module Spree
       def index
         @topics = {
           typography: [
+            'fonts',
             'tags'
           ]
         }
