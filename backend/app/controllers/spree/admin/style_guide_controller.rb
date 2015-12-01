@@ -14,6 +14,7 @@ module Spree
             'tags'
           ],
           forms: [
+            'building_forms',
             'validation'
           ]
         }
