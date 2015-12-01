@@ -99,10 +99,16 @@ module Spree
         order.currency
       end
 
+      # @return [Array<Fixnum>] the unique ids of all shipping categories of
+      #   variants in this package
+      def shipping_category_ids
+        contents.map { |item| item.variant.shipping_category_id }.compact.uniq
+      end
+
       # @return [Array<Spree::ShippingCategory>] the shipping categories of the
       #   variants in this package
       def shipping_categories
-        contents.map { |item| item.variant.shipping_category }.compact.uniq
+        ShippingCategory.where(id: shipping_category_ids)
       end
 
       # @return [Array<Spree::ShippingMethod>] the shipping methods available
