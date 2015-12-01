@@ -71,7 +71,9 @@ images = [
     image_rule.conditions.build(option_value: color_ov)
     images.each do |image|
       image_rule_value = image_rule.values.build
-      image_rule_value.image_attachment = image
+      File.open(image) do |f|
+        image_rule_value.image_attachment = f
+      end
     end
     image_rule.save!
   end
