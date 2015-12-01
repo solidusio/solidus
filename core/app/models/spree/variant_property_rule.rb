@@ -1,14 +1,3 @@
-# The reason for variant properties not being associated with variants
-# (either directly or through an association table) is performance.
-#
-# Variant properties are intended to be applied to a group of variants based
-# on their option values. If there were thousands of variants that shared the
-# same option value, attempting to associate a variant property with that
-# group of variants would be problematic in terms of performance.
-#
-# An added benefit to this approach is not having to associate existing variant
-# properties with newly created variants. If the variant has the option values
-# targeted by the rule, the properties will automatically apply to the variant.
 module Spree
   class VariantPropertyRule < Spree::Base
     include Spree::VariantRule

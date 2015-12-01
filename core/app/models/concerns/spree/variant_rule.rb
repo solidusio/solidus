@@ -1,3 +1,11 @@
+# Variant rules are useful when there is common data intended to be applied
+# to a group of variants based on their option values. If there were thousands
+# of variants that share the same option value, attempting to associate data
+# with that group of variants would be problematic in terms of performance.
+#
+# Besides performance benefits, an added advantage to this approach is not having
+# to associate existing data with newly created variants. If the variant has the
+# option values targeted by the rule, the data will automatically apply to the variant.
 module Spree::VariantRule
   extend ActiveSupport::Concern
 
