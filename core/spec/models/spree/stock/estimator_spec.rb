@@ -127,11 +127,7 @@ module Spree
           let!(:tax_rate) { create(:tax_rate, zone: order.tax_zone) }
 
           before do
-            Spree::ShippingMethod.all.each do |sm|
-              sm.tax_category_id = tax_rate.tax_category_id
-              sm.save
-            end
-            package.shipping_methods.map(&:reload)
+            shipping_method.update!(tax_category: tax_rate.tax_category)
           end
 
           it "links the shipping rate and the tax rate" do
