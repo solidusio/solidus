@@ -91,6 +91,11 @@ describe Spree::TaxRate, :type => :model do
     let(:rate_1) { stub_model(Spree::TaxRate, :tax_category => tax_category_1) }
     let(:rate_2) { stub_model(Spree::TaxRate, :tax_category => tax_category_2) }
 
+    before do
+      allow(Spree::TaxRate).to receive_messages :for_zone => [rate_1, rate_2]
+      allow(order).to receive(:tax_zone).and_return(build(:zone))
+    end
+
     context "with line items" do
       let(:line_item) do
         stub_model(Spree::LineItem,
@@ -103,10 +108,6 @@ describe Spree::TaxRate, :type => :model do
 
       let(:line_items) { [line_item] }
 
-      before do
-        allow(Spree::TaxRate).to receive_messages :match => [rate_1, rate_2]
-      end
-
       it "should only apply adjustments for matching rates" do
         expect(rate_1).to receive(:adjust)
         expect(rate_2).not_to receive(:adjust)
@@ -116,10 +117,6 @@ describe Spree::TaxRate, :type => :model do
 
     context "with shipments" do
       let(:shipments) { [stub_model(Spree::Shipment, :cost => 10.0, :tax_category => tax_category_1)] }
-
-      before do
-        allow(Spree::TaxRate).to receive_messages :match => [rate_1, rate_2]
-      end
 
       it "should apply adjustments for matching rates" do
         expect(rate_1).to receive(:adjust)
@@ -286,8 +283,7 @@ describe Spree::TaxRate, :type => :model do
             expect(line_item.adjustments.tax.count).to eq(1)
           end
 
-          # This test fails intermittently - it's a matter of luck
-          xit 'has 4.79 of included tax' do
+          it 'has 4.79 of included tax' do
             expect(line_item.included_tax_total).to eq(4.79)
           end
 
@@ -308,8 +304,8 @@ describe Spree::TaxRate, :type => :model do
             expect(line_item.adjustments.tax.count).to eq(1)
           end
 
-          # Fails intermittently - xit'ed for the time being
-          xit 'has 2.02 of included tax' do
+          it 'has 2.02 of included tax' do
+            pending 'but it calculates the tax base on the german gross price'
             expect(line_item.included_tax_total).to eq(2.02)
           end
 
