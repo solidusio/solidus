@@ -21,6 +21,9 @@ module Spree
             'loading',
             'flashes',
             'tooltips'
+          ],
+          tables: [
+            'pagination'
           ]
         }
       end
