@@ -12,6 +12,9 @@ module Spree
             'lists',
             'icons',
             'tags'
+          ],
+          forms: [
+            'validation'
           ]
         }
       end
