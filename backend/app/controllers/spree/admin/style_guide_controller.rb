@@ -19,6 +19,7 @@ module Spree
           ],
           messaging: [
             'loading',
+            'flashes',
             'tooltips'
           ]
         }
