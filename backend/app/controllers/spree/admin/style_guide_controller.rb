@@ -23,6 +23,7 @@ module Spree
             'tooltips'
           ],
           tables: [
+            'building_tables',
             'pagination'
           ]
         }
