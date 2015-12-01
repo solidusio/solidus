@@ -16,6 +16,9 @@ module Spree
           forms: [
             'building_forms',
             'validation'
+          ],
+          messaging: [
+            'tooltips'
           ]
         }
       end
