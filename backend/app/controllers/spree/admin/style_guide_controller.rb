@@ -8,6 +8,7 @@ module Spree
         @topics = {
           typography: [
             'fonts',
+            'colors',
             'tags'
           ]
         }

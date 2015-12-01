@@ -108,6 +108,22 @@
   }
 }
 
+.color-variables {
+  @include display(flex);
+  @include flex-wrap(wrap);
+}
+
+.color-variable {
+  @include flex-shrink(0);
+  width: 240px;
+  padding: 1rem;
+
+  .color-swatch {
+    height: 50px;
+    border: 1px solid darken($color-7, 10%);
+  }
+}
+
 .tags {
   .state {
     width: 33%;
