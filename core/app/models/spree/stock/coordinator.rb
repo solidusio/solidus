@@ -55,9 +55,8 @@ module Spree
       #
       # Returns an array of Package instances
       def build_packages(packages = Array.new)
-        StockLocation.active.each do |stock_location|
+        stock_locations_with_requested_variants.each do |stock_location|
           units_for_location = unallocated_inventory_units.select { |unit| stock_location.stock_item(unit.variant) }
-          next unless units_for_location.any?
           packer = build_packer(stock_location, units_for_location)
           packages += packer.packages
         end
@@ -68,6 +67,15 @@ module Spree
 
       def unallocated_inventory_units
         inventory_units - @preallocated_inventory_units
+      end
+
+      def stock_locations_with_requested_variants
+        Spree::StockLocation.active.joins(:stock_items).
+          where(spree_stock_items: { variant_id: unallocated_variant_ids }).uniq
+      end
+
+      def unallocated_variant_ids
+        unallocated_inventory_units.map(&:variant_id).uniq
       end
 
       def prioritize_packages(packages)
