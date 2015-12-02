@@ -4,14 +4,12 @@ module Spree
     belongs_to :role, class_name: "Spree::Role"
     belongs_to :user, class_name: Spree::UserClassHandle.new
 
-    after_save :generate_admin_api_key
+    after_create :auto_generate_spree_api_key
 
     private
 
-    def generate_admin_api_key
-      if role.admin? && user.respond_to?(:spree_api_key) && !user.spree_api_key
-        user.generate_spree_api_key!
-      end
+    def auto_generate_spree_api_key
+      user.try!(:auto_generate_spree_api_key)
     end
   end
 end

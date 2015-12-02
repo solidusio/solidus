@@ -23,6 +23,8 @@ module Spree
       has_many :store_credit_events, through: :store_credits
       money_methods :total_available_store_credit
 
+      after_create :auto_generate_spree_api_key
+
       include Spree::RansackableAttributes unless included_modules.include?(Spree::RansackableAttributes)
 
       self.whitelisted_ransackable_associations = %w[addresses]
@@ -32,6 +34,14 @@ module Spree
     # has_spree_role? simply needs to return true or false whether a user has a role or not.
     def has_spree_role?(role_in_question)
       spree_roles.any? { |role| role.name == role_in_question.to_s }
+    end
+
+    def auto_generate_spree_api_key
+      return if !respond_to?(:spree_api_key) || spree_api_key.present?
+
+      if Spree::Config.generate_api_key_for_all_roles || (spree_roles.map(&:name) & Spree::Config.roles_for_auto_api_key).any?
+        generate_spree_api_key!
+      end
     end
 
     # @return [Spree::Order] the most-recently-created incomplete order
