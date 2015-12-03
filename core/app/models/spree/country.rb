@@ -13,9 +13,9 @@ module Spree
     end
 
     def self.default
-      find(Spree::Config[:default_country_id])
-    rescue ActiveRecord::RecordNotFound
-      first
+      if default_country_id = Spree::Config[:default_country_id]
+        find_by_id(default_country_id)
+      end || first
     end
 
     def <=>(other)
