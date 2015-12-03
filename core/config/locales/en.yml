@@ -45,8 +45,10 @@ en:
       spree/inventory_unit:
         state: State
       spree/line_item:
+        description: Item Description
         price: Price
         quantity: Quantity
+        total: Total price
       spree/option_type:
         name: Name
         presentation: Presentation

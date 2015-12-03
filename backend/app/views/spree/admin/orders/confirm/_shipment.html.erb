@@ -11,11 +11,11 @@
   <table class="stock-contents index" data-hook="stock-contents">
     <thead>
       <th colspan="2">
-        <%= Spree.t(:item_description) %>
+        <%= Spree::LineItem.human_attribute_name(:description) %>
       </th>
-      <th><%= Spree.t(:price) %></th>
-      <th><%= Spree.t(:quantity) %></th>
-      <th><%= Spree.t(:total) %></th>
+      <th><%= Spree::LineItem.human_attribute_name(:price) %></th>
+      <th><%= Spree::LineItem.human_attribute_name(:quantity) %></th>
+      <th><%= Spree::LineItem.human_attribute_name(:total) %></th>
     </thead>
 
     <tbody data-shipment-number="<%= shipment.number %>" data-order-number="<%= order.number %>">
