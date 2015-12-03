@@ -118,7 +118,7 @@ module Spree
     end
 
     def available_countries
-      checkout_zone = Zone.find_by(name: Spree::Config[:checkout_zone])
+      checkout_zone = Zone.find_by(name: Spree::Config[:checkout_zone]) if Spree::Config[:checkout_zone]
 
       if checkout_zone && checkout_zone.kind == 'country'
         countries = checkout_zone.country_list
@@ -126,10 +126,7 @@ module Spree
         countries = Country.all
       end
 
-      countries.collect do |country|
-        country.name = Spree.t(country.iso, scope: 'country_names', default: country.name)
-        country
-      end.sort_by { |c| c.name.parameterize }
+      countries.to_a.sort_by(&:name)
     end
 
     def seo_url(taxon)
