@@ -22,6 +22,13 @@ update_taxon = ({id, parent_id, child_index}) ->
       taxon: {parent_id, child_index}
     error: redraw_tree
 
+delete_taxon = ({id}) ->
+  Spree.ajax
+    type: "DELETE"
+    dataType: "json"
+    url: "#{Spree.routes.taxonomy_taxons_path}/#{id}"
+    error: redraw_tree
+
 draw_tree = (taxonomy) ->
   $('#taxonomy_tree')
     .html( taxons_template({ taxons: [taxonomy.root] }) )
@@ -52,6 +59,12 @@ handle_move = (el) ->
     parent_id: el.parent().closest('li').data('taxon-id')
     child_index: el.index()
 
+handle_delete = (e) ->
+  el = $(e.target).closest('li')
+  if confirm(Spree.translations.are_you_sure_delete)
+    delete_taxon({id: el.data('taxon-id')})
+    el.remove()
+
 get_create_handler = (taxonomy_id) ->
   handle_create = (e) ->
     e.preventDefault()
@@ -74,4 +87,5 @@ get_create_handler = (taxonomy_id) ->
       sortstop: restore_sort_targets
       sortupdate: (e, ui) ->
         handle_move(ui.item) unless ui.sender?
+    .on('click', '.delete-taxon-button', handle_delete)
   $('.add-taxon-button').on('click', get_create_handler(taxonomy_id))

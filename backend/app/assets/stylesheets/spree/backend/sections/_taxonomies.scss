@@ -40,6 +40,14 @@
     font-weight: $font-weight-bold;
     padding: 0.5em;
     cursor: move;
+
+    i {
+      @include margin(null 4px 0 6px);
+    }
+
+    .actions a {
+      margin-left: 8px;
+    }
   }
 
   .ui-sortable-over {
