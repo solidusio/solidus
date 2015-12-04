@@ -17,9 +17,16 @@ draw_tree = (taxonomy) ->
 redraw_tree = ->
   get_taxonomy().done(draw_tree)
 
+resize_placeholder = (ui) ->
+  handleHeight = ui.helper.find('.sortable-handle').outerHeight()
+  ui.placeholder.height(handleHeight)
+
 @setup_taxonomy_tree = (taxonomy_id) ->
   return unless taxonomy_id?
   taxons_template_text = $('#taxons-list-template').text()
   taxons_template = Handlebars.compile(taxons_template_text)
   Handlebars.registerPartial( 'taxons', taxons_template_text )
   redraw_tree()
+  $('#taxonomy_tree').on
+      sortstart: (e, ui) ->
+        resize_placeholder(ui)
