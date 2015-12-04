@@ -9,7 +9,6 @@ module Spree
       helper_method :clone_object_url
 
       def show
-        session[:return_to] ||= request.referer
         redirect_to action: :edit
       end
 
