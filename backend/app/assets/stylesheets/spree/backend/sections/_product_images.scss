@@ -1,0 +1,26 @@
+.image-row-img img {
+  max-width: 250px;
+}
+
+#variant-image-deprecation-warning {
+  width: 100%;
+  padding: 10px 20px;
+  border-radius: 4px;
+  margin-bottom: 15px;
+  color: $color-notice;
+  border: 1px solid $color-notice;
+  background-color: very-light($color-notice, 1);
+  .warning-title {
+    width: 100%;
+    text-align: center;
+    span {
+      bottom: 5px;
+      font-size: 15px;
+      position: relative;
+      margin-left: 10px;
+    }
+  }
+  .preferred-action {
+    padding: 20px 20px;
+  }
+}

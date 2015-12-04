@@ -13,43 +13,6 @@ describe Spree::VariantPropertyRule, type: :model do
     end
   end
 
-  describe "#matches_option_value_ids?" do
-    let(:first_condition_option_value) { create(:option_value) }
-    let(:second_condition_option_value) { create(:option_value) }
-    let!(:second_condition) do
-      create(:variant_property_rule_condition,
-        variant_property_rule: rule,
-        option_value: second_condition_option_value)
-    end
-    let(:rule) { create(:variant_property_rule, option_value: first_condition_option_value) }
-
-    context "provided ids are the same as the rule's condition's option value ids" do
-      subject do
-        rule.matches_option_value_ids?([second_condition_option_value.id, first_condition_option_value.id])
-      end
-
-      it { is_expected.to eq true }
-    end
-
-    context "some of the provided ids are the same as the rule's condition's option value ids" do
-      subject do
-        rule.matches_option_value_ids?([first_condition_option_value.id])
-      end
-
-      it { is_expected.to eq false }
-    end
-
-    context "none of the provided ids are the same as the rule's condition's option value ids" do
-      let(:other_option_value) { create(:option_value) }
-
-      subject do
-        rule.matches_option_value_ids?([other_option_value.id])
-      end
-
-      it { is_expected.to eq false }
-    end
-  end
-
   describe "#applies_to_variant?" do
     let(:variant_option_value_1) { create(:option_value) }
     let(:variant_option_value_2) { create(:option_value) }
@@ -65,7 +28,7 @@ describe Spree::VariantPropertyRule, type: :model do
     context "variant matches some of the rule's conditions" do
       let(:option_values) { [variant_option_value_1, variant_option_value_2] }
 
-      it { is_expected.to eq true }
+      it { is_expected.to eq false }
     end
 
     context "variant matches none of the rule's conditions" do
@@ -78,6 +41,13 @@ describe Spree::VariantPropertyRule, type: :model do
       let(:option_values) { [rule_option_value, variant_option_value_1, variant_option_value_2] }
 
       it { is_expected.to eq true }
+    end
+
+    context "rule doesn't have any conditions" do
+      let(:option_values) { [create(:option_value)] }
+      let(:rule) { create(:variant_property_rule, option_value: nil) }
+
+      it { is_expected.to eq false }
     end
   end
 end

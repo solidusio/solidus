@@ -559,10 +559,33 @@ describe Spree::Variant, :type => :model do
       let(:attachment) { File.open(File.expand_path('../../../fixtures/thinking-cat.jpg', __FILE__)) }
       let(:image_params) { { viewable_id: variant.id, viewable_type: 'Spree::Variant', attachment: attachment, alt: "position 1", position: 1 } }
       let!(:first_image) { Spree::Image.create(image_params) }
-      let!(:second_image) { image_params.merge(alt: "position 2", position: 2) }
+      let!(:second_image) { Spree::Image.create(image_params.merge(alt: "position 2", position: 2)) }
 
-      it "returns the first image" do
-        expect(subject).to eq first_image
+      context "variant's product has variant image rules" do
+        let(:third_image) { create(:image) }
+        let!(:variant_image_rule) { create(:variant_image_rule, product: variant.product, option_value: option_value, image: third_image) }
+
+        context "the rule applies to the variant" do
+          let(:option_value) { variant.option_values.first }
+
+          it "returns the first variant_image_rule value" do
+            expect(subject).to eq third_image
+          end
+        end
+
+        context "the rule doesn't apply to the variant" do
+          let(:option_value) { create(:option_value) }
+
+          it "returns the first variant_image" do
+            expect(subject).to eq first_image
+          end
+        end
+      end
+
+      context "variant's product doesn't have variant image rules" do
+        it "returns the first image" do
+          expect(subject).to eq first_image
+        end
       end
     end
 
@@ -572,6 +595,50 @@ describe Spree::Variant, :type => :model do
       end
       it "returns unpersisted record" do
         expect(subject).to be_new_record
+      end
+    end
+  end
+
+  describe "#display_images" do
+    subject { variant.display_images }
+
+    context "variant has associated images" do
+      let(:attachment) { File.open(File.expand_path('../../../fixtures/thinking-cat.jpg', __FILE__)) }
+      let(:image_params) { { viewable_id: variant.id, viewable_type: 'Spree::Variant', attachment: attachment, alt: "position 1", position: 1 } }
+      let!(:first_image) { Spree::Image.create(image_params) }
+      let!(:second_image) { Spree::Image.create(image_params.merge(alt: "position 2", position: 2)) }
+
+      context "variant's product has variant image rules" do
+        let(:third_image) { create(:image) }
+        let!(:variant_image_rule) { create(:variant_image_rule, product: variant.product, option_value: option_value, image: third_image) }
+
+        context "the rule applies to the variant" do
+          let(:option_value) { variant.option_values.first }
+
+          it "returns the variant_image_rule's associated images" do
+            expect(subject).to eq [third_image]
+          end
+        end
+
+        context "the rule doesn't apply to the variant" do
+          let(:option_value) { create(:option_value) }
+
+          it "returns the images associated with the variant" do
+            expect(subject).to eq [first_image, second_image]
+          end
+        end
+      end
+
+      context "variant's product doesn't have variant image rules" do
+        it "returns the images associated with the variant" do
+          expect(subject).to eq [first_image, second_image]
+        end
+      end
+    end
+
+    context "variant does not have any associated images" do
+      it "returns an empty list" do
+        expect(subject).to eq []
       end
     end
   end

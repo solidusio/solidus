@@ -22,6 +22,10 @@ module Spree
     has_many :variant_property_rule_values, through: :variant_property_rules, source: :values
     has_many :variant_property_rule_conditions, through: :variant_property_rules, source: :conditions
 
+    has_many :variant_image_rules
+    has_many :variant_image_rule_values, through: :variant_image_rules, source: :values
+    has_many :variant_image_rule_conditions, through: :variant_image_rules, source: :conditions
+
     has_many :classifications, dependent: :delete_all, inverse_of: :product
     has_many :taxons, through: :classifications, before_remove: :remove_taxon
 
@@ -95,6 +99,7 @@ module Spree
 
     attr_accessor :option_values_hash
 
+    accepts_nested_attributes_for :variant_image_rules, allow_destroy: true
     accepts_nested_attributes_for :variant_property_rules, allow_destroy: true
     accepts_nested_attributes_for :product_properties, allow_destroy: true, reject_if: lambda { |pp| pp[:property_name].blank? }
 
@@ -270,7 +275,22 @@ module Spree
     # variants. If all else fails, will return a new image object.
     # @return [Spree::Image] the image to display
     def display_image
-      images.first || variant_images.first || Spree::Image.new
+      images.first || display_variant_images.first || Spree::Image.new
+    end
+
+    # This method is meant to be used while the direct association between
+    # images and variants is being deprecated (in favor of variant image
+    # rules). This method will favor images determined by the variant image
+    # rules but will fallback to the associated images when none are present
+    # for the sake of backwards compatability.
+    #
+    # @return [Spree::Image] images associated with the product's variants
+    def display_variant_images
+      if variant_image_rules.any?
+        variant_image_rules.flat_map(&:images)
+      else
+        variant_images
+      end
     end
 
     # Finds the variant property rule that matches the provided option value ids.
@@ -278,10 +298,22 @@ module Spree
     # @param [Array<Integer>] list of option value ids
     # @return [Spree::VariantPropertyRule] the matching variant property rule
     def find_variant_property_rule(option_value_ids)
-      variant_property_rules.find do |rule|
-        rule.matches_option_value_ids?(option_value_ids)
-      end
+      find_variant_rule(variant_property_rules, option_value_ids)
     end
+
+    # Finds the variant image rule that matches the provided option value ids.
+    #
+    # @param [Array<Integer>] list of option value ids
+    # @return [Spree::VariantImageRule] the matching variant image rule
+    def find_variant_image_rule(option_value_ids)
+      find_variant_rule(variant_image_rules, option_value_ids)
+    end
+
+    def variant_images_with_deprecation
+      ActiveSupport::Deprecation.warn "Define variant images through variant image rules; variant_images will no longer be supported", caller
+      variant_images_without_deprecation
+    end
+    alias_method_chain :variant_images, :deprecation
 
     private
 
@@ -390,6 +422,12 @@ module Spree
     def remove_taxon(taxon)
       removed_classifications = classifications.where(taxon: taxon)
       removed_classifications.each &:remove_from_list
+    end
+
+    def find_variant_rule(rule_set, option_value_ids)
+      rule_set.find do |rule|
+        rule.matches_option_value_ids?(option_value_ids)
+      end
     end
   end
 end

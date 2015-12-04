@@ -1,8 +1,9 @@
 Spree::Sample.load_sample("products")
 Spree::Sample.load_sample("variants")
+Spree::Sample.load_sample("image_helpers")
 
 products = {}
-products[:ror_baseball_jersey] = Spree::Product.find_by_name!("Ruby on Rails Baseball Jersey") 
+products[:ror_baseball_jersey] = Spree::Product.find_by_name!("Ruby on Rails Baseball Jersey")
 products[:ror_tote] = Spree::Product.find_by_name!("Ruby on Rails Tote")
 products[:ror_bag] = Spree::Product.find_by_name!("Ruby on Rails Bag")
 products[:ror_jr_spaghetti] = Spree::Product.find_by_name!("Ruby on Rails Jr. Spaghetti")
@@ -11,14 +12,6 @@ products[:ror_ringer] = Spree::Product.find_by_name!("Ruby on Rails Ringer T-Shi
 products[:ror_stein] = Spree::Product.find_by_name!("Ruby on Rails Stein")
 products[:ruby_baseball_jersey] = Spree::Product.find_by_name!("Ruby Baseball Jersey")
 products[:apache_baseball_jersey] = Spree::Product.find_by_name!("Apache Baseball Jersey")
-
-
-def image(name, type="jpeg")
-  images_path = Pathname.new(File.dirname(__FILE__)) + "images"
-  path = images_path + "#{name}.#{type}"
-  return false if !File.exist?(path)
-  path
-end
 
 images = {
   products[:ror_tote].master => [
@@ -83,18 +76,33 @@ images = {
   ]
 }
 
+color_option_type = Spree::OptionType.find_by(name: "tshirt-color")
 products[:ror_baseball_jersey].variants.each do |variant|
-  color = variant.option_value("tshirt-color").downcase
+  color_option_value = variant.option_values.find_by(option_type: color_option_type)
+  color = color_option_value.presentation.downcase
   main_image = image("ror_baseball_jersey_#{color}", "png")
-  File.open(main_image) do |f|
-    variant.images.create!(:attachment => f)
+
+  next if products[:ror_baseball_jersey].variant_image_rules.any? do |rule|
+    rule.applies_to_variant?(variant)
   end
+
+  image_rule = products[:ror_baseball_jersey].variant_image_rules.build
+  image_rule.conditions.build(option_value: color_option_value)
+
+  main_image_rule_image = image_rule.values.build
+  File.open(main_image) do |f|
+    main_image_rule_image.image_attachment = f
+  end
+
   back_image = image("ror_baseball_jersey_back_#{color}", "png")
   if back_image
+    back_image_rule_image = image_rule.values.build
     File.open(back_image) do |f|
-      variant.images.create!(:attachment => f)
+      back_image_rule_image.image_attachment = f
     end
   end
+
+  image_rule.save!
 end
 
 images.each do |variant, attachments|
@@ -105,4 +113,3 @@ images.each do |variant, attachments|
     end
   end
 end
-

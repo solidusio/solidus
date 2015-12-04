@@ -867,6 +867,7 @@ en:
     icon: Icon
     identifier: Identifier
     image: Image
+    image_management_will_be_removed: This form of image management will soon be removed
     images: Images
     implement_eligible_for_return: "Must implement #eligible_for_return? for your EligibilityValidator."
     implement_requires_manual_intervention: "Must implement #requires_manual_intervention? for your EligibilityValidator."
@@ -944,6 +945,7 @@ en:
     manage_promotion_categories: Manage Promotion Categories
     manage_stock: Manage Stock
     manual_intervention_required: Manual intervention required
+    manage_images_using_rules: Manage all images associated with the product using variant image rules instead.
     manage_variants: Manage Variants
     master_price: Master Price
     match_choices:
@@ -1049,6 +1051,7 @@ en:
     option_type_placeholder: Choose an option type
     option_types: Option Types
     option_value: Option Value
+    option_value_filters: Option Value Filters
     option_values: Option Values
     optional: Optional
     options: Options
@@ -1169,6 +1172,7 @@ en:
     product: Product
     product_details: Product Details
     product_has_no_description: This product has no description
+    product_images: Product Images
     product_not_available_in_this_currency: This product is not available in the selected currency.
     product_properties: Product Properties
     product_rule:
@@ -1578,6 +1582,8 @@ en:
       must_be_non_negative: must be a non-negative value
     value: Value
     variant: Variant
+    variant_image_rules: Variant Image Rules
+    variant_images: Variant Images
     variant_placeholder: Choose a variant
     variant_properties: Variant Properties
     variant_search: Variant Search

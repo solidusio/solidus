@@ -4,7 +4,7 @@ module Spree
     before_action :load_taxon, only: :index
 
     rescue_from ActiveRecord::RecordNotFound, :with => :render_404
-    helper 'spree/taxons'
+    helper 'spree/taxons', 'spree/image'
 
     respond_to :html
 

@@ -321,7 +321,19 @@ module Spree
     #   not from this variant
     # @return [Spree::Image] the image to display
     def display_image(fallback: true)
-      images.first || (fallback && product.variant_images.first) || Spree::Image.new
+      image_list = applicable_variant_image_rule.nil? ? images : applicable_variant_image_rule.images
+      image_list.first || (fallback && product.variant_images.first) || Spree::Image.new
+    end
+
+    # This method is meant to be used while the direct association between
+    # images and variants is being deprecated (in favor of variant image
+    # rules). This method will favor images determined by the variant image
+    # rules but will fallback to the associated images when none are present
+    # for the sake of backwards compatability.
+    #
+    # @return [Spree::Image] images associated with the variant
+    def display_images
+      applicable_variant_image_rule.try!(:images) || images
     end
 
     # Determines the variant's property values by verifying which of the product's
@@ -335,6 +347,13 @@ module Spree
     end
 
     private
+
+      def applicable_variant_image_rule
+        @rule ||= begin
+          ids = self.option_value_ids
+          product.variant_image_rules.find { |rule| rule.applies_to_option_value_ids?(ids) }
+        end
+      end
 
       def set_master_out_of_stock
         if product.master && product.master.in_stock?
