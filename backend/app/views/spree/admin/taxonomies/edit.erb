@@ -11,6 +11,9 @@
   <li>
     <%= button_link_to Spree.t(:back_to_taxonomies_list), spree.admin_taxonomies_path, :icon => 'arrow-left' %>
   </li>
+  <li>
+    <%= button_link_to Spree.t(:add_taxon), spree.admin_taxonomies_path, { icon: 'plus', class: 'add-taxon-button' } %>
+  </li>
 <% end %>
 
 <div id="ajax_error" class="errorExplanation" style="display:none;"></div>

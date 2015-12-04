@@ -4,6 +4,15 @@ get_taxonomy = ->
   Spree.ajax
     url: "#{Spree.routes.taxonomy_path}?set=nested"
 
+create_taxon = ({name, parent_id, child_index}) ->
+  Spree.ajax
+    type: "POST",
+    dataType: "json",
+    url: Spree.routes.taxonomy_taxons_path,
+    data:
+      taxon: {name, parent_id, child_index}
+    complete: redraw_tree
+
 update_taxon = ({id, parent_id, child_index}) ->
   Spree.ajax
     type: "PUT"
@@ -43,6 +52,14 @@ handle_move = (el) ->
     parent_id: el.parent().closest('li').data('taxon-id')
     child_index: el.index()
 
+get_create_handler = (taxonomy_id) ->
+  handle_create = (e) ->
+    e.preventDefault()
+    name = 'New node'
+    parent_id = taxonomy_id
+    child_index = 0
+    create_taxon({name, parent_id, child_index})
+
 @setup_taxonomy_tree = (taxonomy_id) ->
   return unless taxonomy_id?
   taxons_template_text = $('#taxons-list-template').text()
@@ -57,3 +74,4 @@ handle_move = (el) ->
       sortstop: restore_sort_targets
       sortupdate: (e, ui) ->
         handle_move(ui.item) unless ui.sender?
+  $('.add-taxon-button').on('click', get_create_handler(taxonomy_id))
