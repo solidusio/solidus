@@ -88,6 +88,7 @@ module Spree
       end
 
       def button_link_to(text, url, html_options = {})
+        html_options = {class: ''}.merge(html_options)
         if (html_options[:method] &&
             html_options[:method].to_s.downcase != 'get' &&
             !html_options[:remote])
