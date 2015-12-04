@@ -4,6 +4,15 @@ get_taxonomy = ->
   Spree.ajax
     url: "#{Spree.routes.taxonomy_path}?set=nested"
 
+update_taxon = ({id, parent_id, child_index}) ->
+  Spree.ajax
+    type: "PUT"
+    dataType: "json"
+    url: "#{Spree.routes.taxonomy_taxons_path}/#{id}"
+    data:
+      taxon: {parent_id, child_index}
+    error: redraw_tree
+
 draw_tree = (taxonomy) ->
   $('#taxonomy_tree')
     .html( taxons_template({ taxons: [taxonomy.root] }) )
@@ -28,6 +37,12 @@ highlight_sort_targets = (ui) ->
   restore_sort_targets()
   ui.placeholder.parents('ul').addClass('ui-sortable-over')
 
+handle_move = (el) ->
+  update_taxon
+    id: el.data('taxon-id')
+    parent_id: el.parent().closest('li').data('taxon-id')
+    child_index: el.index()
+
 @setup_taxonomy_tree = (taxonomy_id) ->
   return unless taxonomy_id?
   taxons_template_text = $('#taxons-list-template').text()
@@ -40,3 +55,5 @@ highlight_sort_targets = (ui) ->
       sortover: (e, ui) ->
         highlight_sort_targets(ui)
       sortstop: restore_sort_targets
+      sortupdate: (e, ui) ->
+        handle_move(ui.item) unless ui.sender?
