@@ -1,4 +1,6 @@
 taxons_template = null
+Handlebars.registerHelper 'isRootTaxon', ->
+  !@parent_id?
 
 get_taxonomy = ->
   Spree.ajax
