@@ -3,6 +3,9 @@
   <li data-taxon-id="{{id}}" data-taxon-taxonomy-id="{{taxonomy_id}}">
     <div class="sortable-handle">
       <i class="fa fa-arrows"></i> {{name}}
+      <div class="actions right">
+        <a href="/admin/taxonomies/{{taxonomy_id}}/taxons/{{id}}/edit" class="fa fa-edit icon_link with-tip no-text"></a>
+      </div>
     </div>
     <ul>
       {{> taxons}}
