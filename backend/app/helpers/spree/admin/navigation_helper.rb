@@ -103,7 +103,7 @@ module Spree
 
           html_options.delete('data-update') unless html_options['data-update']
 
-          html_options[:class] = 'button'
+          html_options[:class] += ' button'
 
           if html_options[:icon]
             html_options[:class] += " fa fa-#{html_options[:icon]}"
