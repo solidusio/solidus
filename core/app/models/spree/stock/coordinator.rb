@@ -20,6 +20,8 @@ module Spree
         packages = build_packages(packages)
         packages = prioritize_packages(packages)
         packages = estimate_packages(packages)
+        validate_packages(packages)
+        packages
       end
 
       # Build packages for the inventory units that have preferred stock locations first
@@ -125,6 +127,15 @@ module Spree
           package.shipping_rates = estimator.shipping_rates(package)
         end
         packages
+      end
+
+      def validate_packages(packages)
+        desired_quantity = inventory_units.size
+        packaged_quantity = packages.sum(&:quantity)
+        if packaged_quantity != desired_quantity
+          raise Spree::Order::InsufficientStock,
+            "Was only able to package #{packaged_quantity} inventory units of #{desired_quantity} requested"
+        end
       end
 
       def build_packer(stock_location, inventory_units)
