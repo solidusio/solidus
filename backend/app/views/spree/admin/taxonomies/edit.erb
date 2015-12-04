@@ -1,5 +1,6 @@
 <%= render :partial => 'spree/admin/shared/configuration_menu' %>
 
+<%= render :partial => 'spree/admin/taxons/list_template' %>
 <%= render :partial => 'js_head' %>
 
 <% content_for :page_title do %>
@@ -28,11 +29,10 @@
   <div>
     <%= label_tag nil, Spree.t(:tree) %><br />
     <script>
+      Spree.routes.taxonomy_path = "<%= spree.api_taxonomy_path(@taxonomy) %>";
       Spree.routes.taxonomy_taxons_path = "<%= spree.api_taxonomy_taxons_path(@taxonomy) %>";
       Spree.routes.admin_taxonomy_taxons_path = "<%= spree.admin_taxonomy_taxons_path(@taxonomy) %>";
     </script>
     <div id="taxonomy_tree" class="tree"></div>
-
-    <div class="info"><%= Spree.t(:taxonomy_tree_instruction) %></div>
   </div>
 <% end %>
