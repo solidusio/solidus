@@ -42,6 +42,10 @@
     cursor: move;
   }
 
+  .ui-sortable-over {
+    padding-bottom: 1em;
+  }
+
   .ui-sortable-handle:first-child {
     margin-top: 1em;
   }

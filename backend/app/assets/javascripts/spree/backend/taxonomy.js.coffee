@@ -21,6 +21,13 @@ resize_placeholder = (ui) ->
   handleHeight = ui.helper.find('.sortable-handle').outerHeight()
   ui.placeholder.height(handleHeight)
 
+restore_sort_targets = ->
+  $('.ui-sortable-over').removeClass('ui-sortable-over')
+
+highlight_sort_targets = (ui) ->
+  restore_sort_targets()
+  ui.placeholder.parents('ul').addClass('ui-sortable-over')
+
 @setup_taxonomy_tree = (taxonomy_id) ->
   return unless taxonomy_id?
   taxons_template_text = $('#taxons-list-template').text()
@@ -30,3 +37,6 @@ resize_placeholder = (ui) ->
   $('#taxonomy_tree').on
       sortstart: (e, ui) ->
         resize_placeholder(ui)
+      sortover: (e, ui) ->
+        highlight_sort_targets(ui)
+      sortstop: restore_sort_targets
