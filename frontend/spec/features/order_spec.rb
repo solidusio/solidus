@@ -11,7 +11,7 @@ describe 'orders', :type => :feature do
 
   it "can visit an order" do
     # Regression test for current_user call on orders/show
-    expect { visit spree.order_path(order) }.not_to raise_error
+    visit spree.order_path(order)
   end
 
   it "should display line item price" do
@@ -57,9 +57,7 @@ describe 'orders', :type => :feature do
 
     specify do
       visit spree.order_path(order)
-      within '.payment-info' do
-        expect { find("img") }.to raise_error(Capybara::ElementNotFound)
-      end
+      expect(find('.payment-info')).to have_no_css('img')
     end
   end
 

@@ -68,7 +68,7 @@ describe Spree::Taxon, :type => :model do
     let(:taxonomy) { create(:taxonomy) }
 
     it "does not error out" do
-      expect { taxonomy.root.children.unscoped.where(:name => "Some name").first_or_create }.not_to raise_error
+      taxonomy.root.children.unscoped.where(:name => "Some name").first_or_create
     end
   end
 end

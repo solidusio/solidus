@@ -322,7 +322,7 @@ describe Spree::Shipment, :type => :model do
 
         it "transitions to shipped" do
           shipment.update_column(:state, "ready")
-          expect { shipment.ship! }.not_to raise_error
+          shipment.ship!
         end
       end
     end

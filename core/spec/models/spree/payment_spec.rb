@@ -601,7 +601,7 @@ describe Spree::Payment, :type => :model do
       end
 
       specify do
-        expect { payment.process! }.not_to raise_error
+        payment.process!
       end
     end
   end

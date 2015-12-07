@@ -30,7 +30,7 @@ describe Spree::ProductsController, :type => :controller do
     request.env['HTTP_REFERER'] = "not|a$url"
 
     # Previously a URI::InvalidURIError exception was being thrown
-    expect { spree_get :show, :id => product.to_param }.not_to raise_error
+    spree_get :show, :id => product.to_param
   end
 
 end

@@ -40,7 +40,7 @@ describe Spree::InventoryUnit, :type => :model do
     # Regression for #3066
     it "returns modifiable objects" do
       units = Spree::InventoryUnit.backordered_for_stock_item(stock_item)
-      expect { units.first.save! }.to_not raise_error
+      units.first.save!
     end
 
     it "finds inventory units from its stock location when the unit's variant matches the stock item's variant" do

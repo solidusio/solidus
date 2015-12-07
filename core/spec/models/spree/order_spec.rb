@@ -755,7 +755,7 @@ describe Spree::Order, :type => :model do
     let(:order) { Spree::Order.create } # need a persisted in order to test locking
 
     it 'can lock' do
-      expect { order.with_lock {} }.to_not raise_error
+      order.with_lock {}
     end
   end
 

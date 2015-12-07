@@ -27,7 +27,7 @@ describe Spree::Admin::ReimbursementsHelper, type: :helper do
       let(:status) { 'noop' }
 
       it 'should raise an error' do
-        expect{ subject }.to raise_error(RuntimeError)
+        expect{ subject }.to raise_error(RuntimeError, "unknown reimbursement status: noop")
       end
     end
   end

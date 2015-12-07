@@ -52,7 +52,7 @@ describe Spree::UnitCancel do
       let(:line_item) { create(:line_item) }
 
       it "raises an error" do
-        expect { subject }.to raise_error RuntimeError
+        expect { subject }.to raise_error RuntimeError, "Adjustable does not match line item"
       end
     end
 

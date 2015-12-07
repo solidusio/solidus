@@ -149,7 +149,7 @@ describe Spree::StockItem, :type => :model do
     before { Spree::StockMovement.create(stock_item: subject, quantity: 1) }
 
     it "doesnt raise ReadOnlyRecord error" do
-      expect { subject.destroy }.not_to raise_error
+      subject.destroy
     end
   end
 
@@ -157,9 +157,7 @@ describe Spree::StockItem, :type => :model do
     before { subject.destroy }
 
     it "recreates stock item just fine" do
-      expect {
-        stock_location.stock_items.create!(variant: subject.variant)
-      }.not_to raise_error
+      stock_location.stock_items.create!(variant: subject.variant)
     end
 
     it "doesnt allow recreating more than one stock item at once" do
