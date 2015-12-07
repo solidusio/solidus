@@ -692,10 +692,17 @@ describe Spree::Order, :type => :model do
       Spree::Order.checkout_flow(&@old_checkout_flow)
     end
 
+    it "does not attempt to check shipping rates" do
+      order.email = 'user@example.com'
+      order.store = FactoryGirl.build(:store)
+      expect(order).not_to receive(:ensure_available_shipping_rates)
+      order.next!
+      assert_state_changed(order, 'cart', 'complete')
+    end
+
     it "does not attempt to process payments" do
       order.email = 'user@example.com'
       order.store = FactoryGirl.build(:store)
-      allow(order).to receive(:ensure_available_shipping_rates).and_return(true)
       allow(order).to receive(:ensure_promotions_eligible).and_return(true)
       allow(order).to receive(:ensure_line_item_variants_are_not_deleted).and_return(true)
       allow(order).to receive_message_chain(:line_items, :present?).and_return(true)
