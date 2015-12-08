@@ -55,8 +55,9 @@ module Spree
       #
       # Returns an array of Package instances
       def build_packages(packages = Array.new)
-        stock_locations_with_requested_variants.each do |stock_location|
-          units_for_location = unallocated_inventory_units.select { |unit| stock_location.stock_item(unit.variant) }
+        requested_stock_items.group_by(&:stock_location).each do |stock_location, stock_items|
+          variant_ids_in_stock_location = stock_items.map(&:variant_id)
+          units_for_location = unallocated_inventory_units.select { |unit| variant_ids_in_stock_location.include?(unit.variant_id) }
           packer = build_packer(stock_location, units_for_location)
           packages += packer.packages
         end
@@ -69,9 +70,8 @@ module Spree
         inventory_units - @preallocated_inventory_units
       end
 
-      def stock_locations_with_requested_variants
-        Spree::StockLocation.active.joins(:stock_items).
-          where(spree_stock_items: { variant_id: unallocated_variant_ids }).uniq
+      def requested_stock_items
+        Spree::StockItem.where(variant_id: unallocated_variant_ids).joins(:stock_location).merge(StockLocation.active).includes(:stock_location)
       end
 
       def unallocated_variant_ids
