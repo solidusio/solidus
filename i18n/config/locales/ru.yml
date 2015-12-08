@@ -1383,6 +1383,7 @@ ru:
     value: "Значение"
     variant: "Вариант"
     variant_placeholder: "Выберите вариант"
+    variant_search_placeholder: "Выберите артикул или вариант"
     variants: "Варианты"
     version: "Версия"
     void: "Аннулировать"
