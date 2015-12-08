@@ -772,11 +772,11 @@ describe Spree::Order, :type => :model do
 
   context "#refund_total" do
     let(:order) { create(:order_with_line_items) }
-    let!(:payment) { create(:payment_with_refund, order: order) }
-    let!(:payment2) { create(:payment_with_refund, order: order) }
+    let!(:payment) { create(:payment_with_refund, order: order, amount: 5, refund_amount: 3) }
+    let!(:payment2) { create(:payment_with_refund, order: order, amount: 5, refund_amount: 2.5) }
 
     it "sums the reimbursment refunds on the order" do
-      expect(order.refund_total).to eq(10.0)
+      expect(order.refund_total).to eq(5.5)
     end
   end
 
@@ -820,7 +820,7 @@ describe Spree::Order, :type => :model do
 
     context 'a reimbursement related refund exists' do
       let(:order) { refund.payment.order }
-      let(:refund) { create(:refund, reimbursement_id: 123, amount: 5)}
+      let(:refund) { create(:refund, reimbursement_id: 123, amount: 5, payment_amount: 14)}
 
       it { is_expected.to eq false }
     end
