@@ -4,18 +4,18 @@
   <table class="index return-items-table">
     <thead>
       <tr data-hook="rma_header">
-        <th>
+        <th class="return-item-checkbox">
           <% if allow_return_item_changes %>
             <%= check_box_tag 'select-all' %>
           <% end %>
         </th>
-        <th><%= Spree.t(:product) %></th>
-        <th><%= Spree.t(:state) %></th>
-        <th><%= Spree.t(:charged) %></th>
-        <th><%= Spree.t(:pre_tax_refund_amount) %></th>
-        <th><%= Spree.t(:reimbursement_type) %></th>
-        <th><%= Spree.t(:exchange_for) %></th>
-        <th><%= Spree.t(:reason) %></th>
+        <th class="return-item-product"><%= Spree.t(:product) %></th>
+        <th class="return-item-state"><%= Spree.t(:state) %></th>
+        <th class="return-item-charged"><%= Spree.t(:charged) %></th>
+        <th class="return-item-pre-tax-refund-amount"><%= Spree.t(:pre_tax_refund_amount) %></th>
+        <th class="return-item-reimbursement-type"><%= Spree.t(:reimbursement_type) %></th>
+        <th class="return-item-exchange-for"><%= Spree.t(:exchange_for) %></th>
+        <th class="return-item-reason"><%= Spree.t(:reason) %></th>
       </tr>
     </thead>
     <tbody>
@@ -24,42 +24,42 @@
         <% inventory_unit = return_item.inventory_unit %>
         <% editable = inventory_unit.shipped? && !inventory_unit.exchange_requested? && allow_return_item_changes && return_item.reimbursement.nil? %>
         <tr>
-          <td class="align-center" class="inventory-unit-checkbox">
+          <td class="return-item-checkbox align-center inventory-unit-checkbox">
             <% if editable %>
               <%= item_fields.hidden_field :inventory_unit_id %>
               <%= item_fields.check_box :_destroy, {checked: return_item.persisted?, class: 'add-item', "data-price" => return_item.pre_tax_amount}, '0', '1' %>
             <% end %>
           </td>
-          <td>
+          <td class="return-item-product">
             <div class="variant-name"><%= inventory_unit.variant.name %></div>
             <div class="variant-options"><%= inventory_unit.variant.options_text %></div>
           </td>
-          <td class="align-center"><%= inventory_unit.state.humanize %></td>
-          <td class="align-center">
+          <td class="return-item-state align-center"><%= inventory_unit.state.humanize %></td>
+          <td class="return-item-charged align-center">
             <%= return_item.display_pre_tax_amount %>
           </td>
-          <td class="align-center">
+          <td class="return-item-pre-tax-refund-amount align-center">
             <% if editable %>
               <%= item_fields.text_field :pre_tax_amount, { class: 'refund-amount-input' } %>
             <% else %>
               <%= return_item.display_pre_tax_amount %>
             <% end %>
           </td>
-          <td>
+          <td class="return-item-reimbursement-type">
             <% if editable %>
               <%= item_fields.select :preferred_reimbursement_type_id, @reimbursement_types.collect{|r|[r.name.humanize, r.id]}, {include_blank: true}, {class: 'select2 fullwidth'} %>
             <% else %>
               <%= return_item.preferred_reimbursement_type.try(:name) %>
             <% end %>
           </td>
-          <td class="align-center">
+          <td class="return-item-exchange-for align-center">
             <% if editable %>
               <%= item_fields.collection_select :exchange_variant_id, return_item.eligible_exchange_variants(@stock_locations), :id, :options_text, { include_blank: true }, { class: "select2 fullwidth return-item-exchange-selection" } %>
             <% elsif return_item.exchange_processed? %>
               <%= return_item.exchange_variant.options_text %>
             <% end %>
           </td>
-          <td>
+          <td class="return-item-reason">
             <% if editable %>
               <%= item_fields.select :return_reason_id, @reasons.collect{|r|[r.name, r.id]}, {include_blank: true}, {class: 'select2 fullwidth'} %>
             <% else %>
