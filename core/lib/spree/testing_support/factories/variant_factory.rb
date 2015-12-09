@@ -17,6 +17,17 @@ FactoryGirl.define do
     factory :variant do
       # on_hand 5
       product { |p| p.association(:product) }
+
+      factory :variant_in_stock do
+
+        transient do
+          count_on_hand 1
+        end
+
+        after(:create) do |variant, evaluator|
+          variant.stock_locations.first.stock_items.where(:variant_id => variant.id).first.adjust_count_on_hand(evaluator.count_on_hand)
+        end
+      end
     end
 
     factory :master_variant do

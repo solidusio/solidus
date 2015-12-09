@@ -318,6 +318,8 @@ en:
               cannot_be_associated_unless_accepted: cannot be associated to a return item that is not accepted.
             inventory_unit:
               other_completed_return_item_exists: "%{inventory_unit_id} has already been taken by return item %{return_item_id}"
+            exchange_variant:
+              cannot_have_override_recipient: cannot have an override recipient
         spree/shipment:
           attributes:
             state:
@@ -1111,6 +1113,7 @@ en:
     orders: Orders
     other_items_in_other: Other Items in Order
     out_of_stock: Out of Stock
+    override_recipient: Override Recipient
     overview: Overview
     package_from: package from
     pagination:
@@ -1278,6 +1281,7 @@ en:
     reimbursed: Reimbursed
     reimbursement: Reimbursement
     reimbursement_perform_failed: "Reimbursement could not be performed.  Error: %{error}"
+    reimbursement_recipient: Reimbursement Recipient
     reimbursement_status: Reimbursement status
     reimbursement_type: Reimbursement type
     reimbursement_type_override: Reimbursement Type Override

@@ -8,6 +8,7 @@ module Spree
 
     belongs_to :stock_location
     belongs_to :reason, class_name: 'Spree::ReturnReason', foreign_key: :return_reason_id
+    belongs_to :recipient, class_name: Spree::UserClassHandle.new
 
     before_create :generate_number
 
@@ -20,6 +21,8 @@ module Spree
     validate :must_have_shipped_units, on: :create
     validate :no_previously_exchanged_inventory_units, on: :create
 
+    validates :recipient, presence: true, if: :override_recipient
+    attr_accessor :override_recipient
 
     # These are called prior to generating expedited exchanges shipments.
     # Should respond to a "call" method that takes the list of return items
