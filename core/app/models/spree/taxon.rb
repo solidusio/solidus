@@ -9,6 +9,9 @@ module Spree
     has_many :prototype_taxons, dependent: :destroy
     has_many :prototypes, through: :prototype_taxons
 
+    has_many :promotion_rule_taxons
+    has_many :promotion_rules, through: :promotion_rule_taxons
+
     before_create :set_permalink
 
     validates :name, presence: true
