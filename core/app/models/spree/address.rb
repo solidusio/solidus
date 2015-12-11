@@ -157,11 +157,17 @@ module Spree
 
     private
       def state_validate
-        # Skip state validation without country (also required)
-        # or when disabled by preference
-        return if country.blank? || !Spree::Config[:address_requires_state]
-        return unless country.states_required
+        # Skip state validation without country
+        return if country.blank?
 
+        # If states are not required we still check if state belongs to country
+        # If it doesn't we just remove it without adding state errors
+        unless country.states_required || readonly?
+          self.state = nil if state.present? && state.country != country
+        end
+
+        return unless country.states_required &&
+                  Spree::Config[:address_requires_state]
         # ensure associated state belongs to country
         if state.present?
           if state.country == country
@@ -188,7 +194,6 @@ module Spree
             end
           end
         end
-
         # ensure at least one state field is populated
         errors.add :state, :blank if state.blank? && state_name.blank?
       end
