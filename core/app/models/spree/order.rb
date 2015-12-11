@@ -109,8 +109,11 @@ module Spree
     class_attribute :line_item_comparison_hooks
     self.line_item_comparison_hooks = Set.new
 
-    def self.by_number(number)
-      where(number: number)
+    class << self
+      def by_number(number)
+        where(number: number)
+      end
+      deprecate :by_number, deprecator: Spree::Deprecation
     end
 
     scope :created_between, ->(start_date, end_date) { where(created_at: start_date..end_date) }
@@ -190,9 +193,9 @@ module Spree
     end
 
     def confirmation_required?
-      ActiveSupport::Deprecation.warn "Order#confirmation_required is deprecated.", caller
       true
     end
+    deprecate :confirmation_required?, deprecator: Spree::Deprecation
 
     def backordered?
       shipments.any?(&:backordered?)
@@ -588,11 +591,12 @@ module Spree
       guest_token
     end
 
+    # @deprecated Do not use this method. Behaviour is unreliable.
     def fully_discounted?
-      ActiveSupport::Deprecation.warn("Spree::Order#fully_discounted? is deprecated.", caller)
       adjustment_total + line_items.map(&:final_amount).sum == 0.0
     end
     alias_method :fully_discounted, :fully_discounted?
+    deprecate :fully_discounted, deprecator: Spree::Deprecation
 
     def unreturned_exchange?
       # created_at - 1 is a hack to ensure that this doesn't blow up on MySQL,
