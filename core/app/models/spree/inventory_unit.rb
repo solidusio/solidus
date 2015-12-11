@@ -35,6 +35,16 @@ module Spree
         .where('spree_orders.completed_at is not null')
         .backordered.order(Spree::Order.arel_table[:completed_at].asc)
     end
+
+    # @param stock_item [Spree::StockItem] the stock item of the desired
+    #   inventory units
+    # @return [ActiveRecord::Relation<Spree::InventoryUnit>] backordered
+    # inventory units for the given stock item
+    scope :backordered_for_stock_item, ->(stock_item) do
+      backordered_per_variant(stock_item)
+        .where(spree_shipments: { stock_location_id: stock_item.stock_location_id })
+    end
+
     scope :shippable, -> { on_hand }
 
     # state machine (see http://github.com/pluginaweek/state_machine/tree/master for details)
@@ -54,20 +64,6 @@ module Spree
 
       event :cancel do
         transition to: :canceled, from: CANCELABLE_STATES.map(&:to_sym)
-      end
-    end
-
-    # @param stock_item [Spree::StockItem] the stock item of the desired
-    #   inventory units
-    # @return [Array<Spree::InventoryUnit>] an array of backordered inventory
-    #   units for the given stock item
-    def self.backordered_for_stock_item(stock_item)
-      # This was refactored from a simpler query because the previous
-      # implementation led to issues once users tried to modify the objects
-      # returned. That's due to ActiveRecord `joins(shipment: :stock_location)`
-      # only returning readonly objects
-      backordered_per_variant(stock_item).select do |unit|
-        unit.shipment.stock_location == stock_item.stock_location
       end
     end
 
