@@ -299,38 +299,38 @@ describe Spree::Admin::OrdersController, :type => :controller do
       let(:order) { create(:order) }
       let!(:finalized_adjustment) { create(:adjustment, finalized: true, adjustable: order, order: order) }
 
-      it "changes all the closed adjustments to open" do
-        spree_post :open_adjustments, id: order.number
+      it "changes all the finalized adjustments to unfinalized" do
+        spree_post :unfinalize_adjustments, id: order.number
         expect(finalized_adjustment.reload.finalized).to eq(false)
       end
 
       it "sets the flash success message" do
-        spree_post :open_adjustments, id: order.number
-        expect(flash[:success]).to eql('All adjustments successfully opened!')
+        spree_post :unfinalize_adjustments, id: order.number
+        expect(flash[:success]).to eql('All adjustments successfully unfinalized!')
       end
 
       it "redirects back" do
-        spree_post :open_adjustments, id: order.number
+        spree_post :unfinalize_adjustments, id: order.number
         expect(response).to redirect_to(:back)
       end
     end
 
-    context "#close_adjustments" do
+    context "#finalize_adjustments" do
       let(:order) { create(:order) }
       let!(:not_finalized_adjustment) { create(:adjustment, finalized: false, adjustable: order, order: order) }
 
-      it "changes all the open adjustments to closed" do
-        spree_post :close_adjustments, id: order.number
+      it "changes all the unfinalized adjustments to finalized" do
+        spree_post :finalize_adjustments, id: order.number
         expect(not_finalized_adjustment.reload.finalized).to eq(true)
       end
 
       it "sets the flash success message" do
-        spree_post :close_adjustments, id: order.number
-        expect(flash[:success]).to eql('All adjustments successfully closed!')
+        spree_post :finalize_adjustments, id: order.number
+        expect(flash[:success]).to eql('All adjustments successfully finalized!')
       end
 
       it "redirects back" do
-        spree_post :close_adjustments, id: order.number
+        spree_post :finalize_adjustments, id: order.number
         expect(response).to redirect_to(:back)
       end
     end

@@ -502,8 +502,8 @@ en:
     agree_to_privacy_policy: Agree to Privacy Policy
     agree_to_terms_of_service: Agree to Terms of Service
     all: All
-    all_adjustments_closed: All adjustments successfully closed!
-    all_adjustments_opened: All adjustments successfully opened!
+    all_adjustments_finalized: All adjustments successfully finalized!
+    all_adjustments_unfinalized: All adjustments successfully unfinalized!
     all_departments: All departments
     all_items_have_been_returned: All items have been returned
     already_signed_up_for_analytics: You have already signed up for Spree Analytics
@@ -624,7 +624,6 @@ en:
     clear_cache_warning: Clearing cache will temporarily reduce the performance of your store.
     clone: Clone
     close: Close
-    close_all_adjustments: Close All Adjustments
     close_stock_transfer:
       will_cause: Closing a stock transfer will cause the following
       no_longer_edit: You will no longer be able to edit the stock transfer in any way
@@ -815,6 +814,7 @@ en:
     fill_in_customer_info: Please fill in customer info
     filter_results: Filter Results
     finalize: Finalize
+    finalize_all_adjustments: Finalize All Adjustments
     finalize_stock_transfer:
       will_cause: Finalizing a stock transfer will cause the following
       no_longer_change_items: You will no longer be able to add or edit any transfer items
@@ -1044,7 +1044,6 @@ en:
     number_of_codes: ! '%{count} codes'
     on_hand: On Hand
     open: Open
-    open_all_adjustments: Open All Adjustments
     option_type: Option Type
     option_type_placeholder: Choose an option type
     option_types: Option Types
@@ -1550,6 +1549,7 @@ en:
     unable_to_connect_to_gateway: Unable to connect to gateway.
     unable_to_create_reimbursements: Unable to create reimbursements because there are items pending manual intervention.
     unable_to_create_stock_transfer: Unable to create the stock transfer
+    unfinalize_all_adjustments: Unfinalize All Adjustments
     under_price: Under %{price}
     unlock: Unlock
     unrecognized_card_type: Unrecognized card type
