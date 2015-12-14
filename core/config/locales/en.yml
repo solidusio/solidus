@@ -910,6 +910,12 @@ en:
     inventory_canceled: Inventory canceled
     inventory_error_flash_for_insufficient_quantity: An item in your cart has become unavailable.
     inventory_state: Inventory State
+    inventory_states:
+      backordered: backordered
+      canceled: canceled
+      on_hand: on hand
+      returned: returned
+      shipped: shipped
     is_not_available_to_shipment_address: is not available to shipment address
     iso_name: Iso Name
     item: Item
