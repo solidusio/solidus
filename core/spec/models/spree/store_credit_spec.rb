@@ -83,7 +83,7 @@ describe Spree::StoreCredit do
       before do
         order.next!
         subject
-        order.complete!
+        order.reload.complete!
       end
 
       it "creates a payment using the user's store credit" do

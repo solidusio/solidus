@@ -292,8 +292,8 @@ class Spree::StoreCredit < Spree::Base
 
   def apply_to_orders_in_confirm_state
     user.orders.by_state("confirm").each do |order|
-      order.update_attributes!(state: "payment")
-      order.next!
+      order.restart_checkout_flow
+      order.contents.advance
     end
   end
 end
