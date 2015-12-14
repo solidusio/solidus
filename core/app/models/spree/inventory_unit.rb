@@ -2,7 +2,7 @@ module Spree
   class InventoryUnit < Spree::Base
     PRE_SHIPMENT_STATES = %w(backordered on_hand)
     POST_SHIPMENT_STATES = %w(returned)
-    CANCELABLE_STATES = ['on_hand', 'backordered']
+    CANCELABLE_STATES = ['on_hand', 'backordered', 'shipped']
 
     belongs_to :variant, class_name: "Spree::Variant", inverse_of: :inventory_units
     belongs_to :order, class_name: "Spree::Order", inverse_of: :inventory_units

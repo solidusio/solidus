@@ -3,6 +3,8 @@
 # This class should encapsulate logic related to canceling inventory after order complete
 class Spree::UnitCancel < Spree::Base
   SHORT_SHIP = 'Short Ship'
+  DEFAULT_REASON = 'Cancel'
+
   belongs_to :inventory_unit
   has_one :adjustment, as: :source, dependent: :destroy
 

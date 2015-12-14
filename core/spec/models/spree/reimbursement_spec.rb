@@ -228,4 +228,26 @@ describe Spree::Reimbursement, type: :model do
       expect(subject.customer_return).to eq customer_return
     end
   end
+
+  describe "#return_all" do
+    subject { reimbursement.return_all }
+
+    let!(:default_refund_reason) { Spree::RefundReason.find_or_create_by!(name: Spree::RefundReason::RETURN_PROCESSING_REASON, mutable: false) }
+    let(:order)                  { create(:shipped_order, line_items_count: 1) }
+    let(:inventory_unit)         { order.inventory_units.first }
+    let(:return_item)            { build(:return_item, inventory_unit: inventory_unit) }
+    let(:reimbursement)          { build(:reimbursement, order: order, return_items: [return_item]) }
+
+    it "accepts all the return items" do
+      expect { subject }.to change { return_item.acceptance_status }.to "accepted"
+    end
+
+    it "persists the reimbursement" do
+      expect { subject }.to change { reimbursement.persisted? }.to true
+    end
+
+    it "performs a reimbursment" do
+      expect { subject }.to change { reimbursement.refunds.count }.by(1)
+    end
+  end
 end
