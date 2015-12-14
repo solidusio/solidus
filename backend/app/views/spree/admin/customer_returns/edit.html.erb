@@ -16,7 +16,7 @@
 <% end %>
 
 <% if @pending_return_items.any? %>
-  <fieldset data-hook="accepted_return_items" class="no-border-bottom">
+  <fieldset data-hook="pending_return_items" class="no-border-bottom">
     <legend align="center"><%= Spree.t(:pending) %></legend>
     <%= render partial: 'return_item_decision', locals: {return_items: @pending_return_items, show_decision: true} %>
   </fieldset>
