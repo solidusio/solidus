@@ -162,7 +162,7 @@ module Spree
 
         # If states are not required we still check if state belongs to country
         # If it doesn't we just remove it without adding state errors
-        unless country.states_required || readonly?
+        unless country.states_required
           self.state = nil if state.present? && state.country != country
         end
 
