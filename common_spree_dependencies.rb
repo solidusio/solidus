@@ -36,6 +36,7 @@ group :test do
   gem 'poltergeist'
   gem 'timecop'
   gem 'with_model'
+  gem 'rspec_junit_formatter'
 end
 
 group :test, :development do

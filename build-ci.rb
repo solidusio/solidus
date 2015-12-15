@@ -82,7 +82,15 @@ private
   # @return [Boolean]
   #   the success of the tests
   def run_tests
-    system(%w[bundle exec rspec spec])
+    system(%w[bundle exec rspec] + rspec_arguments)
+  end
+
+  def rspec_arguments
+    if report_dir = ENV['CIRCLE_TEST_REPORTS']
+      %W[-r rspec_junit_formatter --format RspecJunitFormatter -o #{report_dir}/rspec/junit.xml]
+    else
+      []
+    end
   end
 
   # Execute system command via execve
