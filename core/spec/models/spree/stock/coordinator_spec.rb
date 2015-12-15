@@ -175,10 +175,22 @@ module Spree
             it_behaves_like "a fulfillable package"
           end
 
-          context "with sufficient inventory across both locations" do
+          context "with sufficient inventory only across both locations" do
             let(:location_1_inventory) { 2 }
             let(:location_2_inventory) { 3 }
             before { pending "This is broken. The coordinator packages this incorrectly" }
+            it_behaves_like "a fulfillable package"
+          end
+
+          context "has sufficient inventory in the second location and some in the first" do
+            let(:location_1_inventory) { 2 }
+            let(:location_2_inventory) { 5 }
+            it_behaves_like "a fulfillable package"
+          end
+
+          context "has sufficient inventory in the first location and some in the second" do
+            let(:location_1_inventory) { 5 }
+            let(:location_2_inventory) { 2 }
             it_behaves_like "a fulfillable package"
           end
 
