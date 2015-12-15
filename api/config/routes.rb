@@ -24,7 +24,7 @@ Spree::Core::Engine.add_routes do
         put :apply_coupon_code
       end
 
-      resources :line_items
+      resources :line_items, only: [:create, :update, :destroy]
       resources :payments do
         member do
           put :authorize
