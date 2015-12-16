@@ -86,11 +86,12 @@ private
   end
 
   def rspec_arguments
+    args = []
+    args += %W[--format documentation --profile 10]
     if report_dir = ENV['CIRCLE_TEST_REPORTS']
-      %W[-r rspec_junit_formatter --format RspecJunitFormatter -o #{report_dir}/rspec/junit.xml]
-    else
-      []
+      args += %W[-r rspec_junit_formatter --format RspecJunitFormatter -o #{report_dir}/rspec/junit.xml]
     end
+    args
   end
 
   # Execute system command via execve
