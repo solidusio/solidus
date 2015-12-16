@@ -21,4 +21,8 @@ describe Spree::AppConfiguration, :type => :model do
     expect(prefs.variant_search_class).to eq Spree::Core::Search::Variant
   end
 
+  describe '#stock' do
+    subject { prefs.stock }
+    it { is_expected.to eq Spree::StockConfiguration }
+  end
 end
