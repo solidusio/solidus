@@ -70,7 +70,11 @@ module Spree
 
     def finalize(finalized_by)
       if finalizable?
-        self.update_attributes({ finalized_at: Time.current, finalized_by: finalized_by })
+        if ensure_transfer_items_valid
+          update_attributes(finalized_at: Time.current, finalized_by: finalized_by)
+        else
+          false
+        end
       else
         errors.add(:base, Spree.t(:stock_transfer_cannot_be_finalized))
         false
@@ -78,15 +82,15 @@ module Spree
     end
 
     def transfer
-      transaction do
-        transfer_items.each do |item|
-          raise InvalidTransferMovement unless item.valid?
-          source_location.unstock(item.variant, item.expected_quantity, self)
+      if ensure_transfer_items_valid
+        transaction do
+          transfer_items.each do |item|
+            source_location.unstock(item.variant, item.expected_quantity, self)
+          end
         end
+      else
+        false
       end
-    rescue InvalidTransferMovement
-      errors.add(:base, Spree.t(:not_enough_stock))
-      false
     end
 
     def close(closed_by)
@@ -99,6 +103,18 @@ module Spree
     end
 
     private
+
+    def ensure_transfer_items_valid
+      invalid_items = transfer_items.select(&:invalid?)
+
+      if invalid_items.blank?
+        true
+      else
+        error_messages = invalid_items.flat_map { |i| i.errors.messages }
+        errors.add(:base, Spree.t(:not_enough_stock, errors: error_messages))
+        false
+      end
+    end
 
     def ensure_not_finalized
       if finalized?

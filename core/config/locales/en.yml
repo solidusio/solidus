@@ -1029,7 +1029,7 @@ en:
     normal_amount: Normal Amount
     not: not
     not_available: N/A
-    not_enough_stock: There is not enough inventory at the source location to complete this transfer.
+    not_enough_stock: "There is not enough inventory at the source location to complete this transfer. Errors: %{errors}."
     not_found: ! '%{resource} is not found'
     note: Note
     notice_messages:
