@@ -27,14 +27,7 @@ module Spree
 
       def create
         authorize! :create, Order
-
-        order_user = if order_params[:user_id]
-          Spree.user_class.find(order_params[:user_id])
-        else
-          current_api_user
-        end
-
-        @order = Spree::Core::Importer::Order.import(order_user, order_params)
+        @order = Spree::Core::Importer::Order.import(determine_order_user, order_params)
         respond_with(@order, default_template: :show, status: 201)
       end
 
@@ -114,6 +107,15 @@ module Spree
         params[:order][:line_items_attributes] = params[:order].delete(:line_items) if params[:order][:line_items]
         params[:order][:ship_address_attributes] = params[:order].delete(:ship_address) if params[:order][:ship_address].present?
         params[:order][:bill_address_attributes] = params[:order].delete(:bill_address) if params[:order][:bill_address].present?
+      end
+
+      # @api public
+      def determine_order_user
+        if order_params[:user_id].present?
+          Spree.user_class.find(order_params[:user_id])
+        else
+          current_api_user
+        end
       end
 
       def permitted_order_attributes
