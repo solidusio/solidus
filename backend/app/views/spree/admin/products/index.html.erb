@@ -8,8 +8,6 @@
   </li>
 <% end if can?(:create, Spree::Product) %>
 
-<%= render :partial => 'spree/admin/shared/product_sub_menu' %>
-
 <% content_for :table_filter_title do %>
   <%= Spree.t(:search) %>
 <% end %>

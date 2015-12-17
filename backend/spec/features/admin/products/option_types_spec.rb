@@ -5,7 +5,7 @@ describe "Option Types", :type => :feature do
 
   before(:each) do
     visit spree.admin_path
-    click_link "Products"
+    click_nav "Products"
   end
 
   context "listing option types" do

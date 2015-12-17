@@ -8,6 +8,7 @@
 //= require jquery.cookie
 //= require jquery.jstree/jquery.jstree
 //= require jquery.powertip
+//= require jquery.sticky-kit.min
 //= require underscore-min
 //= require backbone
 //= require spree
@@ -15,4 +16,3 @@
 //= require spree/backend/spree-select2
 //= require_tree ./backend/templates
 //= require_tree .
-

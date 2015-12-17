@@ -1,5 +1,3 @@
-<%= render :partial => 'spree/admin/shared/product_sub_menu' %>
-
 <%= render :partial => 'spree/admin/shared/product_tabs', :locals => { :current => 'Images' } %>
 
 <%= render :partial => 'spree/shared/error_messages', :locals => { :target => @image } %>
@@ -16,7 +14,7 @@
       <%= link_to image_tag(@image.attachment.url(:small)), @image.attachment.url(:product) %>
     </div>
     <div class="nine columns omega">
-      <%= render :partial => 'form', :locals => { :f => f } %>  
+      <%= render :partial => 'form', :locals => { :f => f } %>
     </div>
     <div class="clear"></div>
     <div class="form-buttons filter-actions actions" data-hook="buttons">

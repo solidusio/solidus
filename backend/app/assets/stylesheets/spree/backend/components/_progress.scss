@@ -4,7 +4,7 @@
   top: 0;
   z-index: 1000;
   opacity: 0.8;
-  width: 100%;
+  @include calc(width, "100% - #{$width-sidebar}");
 
   .wrapper {
     border-radius: 10px;

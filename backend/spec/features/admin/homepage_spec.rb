@@ -11,7 +11,7 @@ describe "Homepage", :type => :feature do
       end
 
       it "should have a link to overview" do
-        within(:xpath, ".//figure[@data-hook='logo-wrapper']") { page.find(:xpath, "a[@href='/admin']") }
+        within(".admin-nav-header") { page.find(:xpath, "a[@href='/admin']") }
       end
 
       it "should have a link to orders" do
@@ -19,7 +19,7 @@ describe "Homepage", :type => :feature do
       end
 
       it "should have a link to products" do
-        page.find_link("Products")['/admin/products']
+        page.assert_selector(:link, text: "Products", count: 2)
       end
 
       it "should have a link to reports" do
@@ -37,19 +37,19 @@ describe "Homepage", :type => :feature do
       end
 
       it "should have a link to products" do
-        within('#sub-menu') { page.find_link("Products")['/admin/products'] }
+        within('.selected .admin-subnav') { page.find_link("Products")['/admin/products'] }
       end
 
       it "should have a link to option types" do
-        within('#sub-menu') { page.find_link("Option Types")['/admin/option_types'] }
+        within('.selected .admin-subnav') { page.find_link("Option Types")['/admin/option_types'] }
       end
 
       it "should have a link to properties" do
-        within('#sub-menu') { page.find_link("Properties")['/admin/properties'] }
+        within('.selected .admin-subnav') { page.find_link("Properties")['/admin/properties'] }
       end
 
       it "should have a link to prototypes" do
-        within('#sub-menu') { page.find_link("Prototypes")['/admin/prototypes'] }
+        within('.selected .admin-subnav') { page.find_link("Prototypes")['/admin/prototypes'] }
       end
     end
   end

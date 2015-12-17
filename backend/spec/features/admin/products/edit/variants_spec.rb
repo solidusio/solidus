@@ -11,7 +11,7 @@ describe "Product Variants", :type => :feature do
     let!(:product) { create(:product) }
 
     it "should allow an admin to create option types for a variant" do
-      click_link "Products"
+      click_nav "Products"
 
       within_row(1) { click_icon :edit }
 
@@ -20,7 +20,7 @@ describe "Product Variants", :type => :feature do
     end
 
     it "allows admin to create a variant if there are option types" do
-      click_link "Products"
+      click_nav "Products"
       click_link "Option Types"
       click_link "new_option_type_link"
       fill_in "option_type_name", :with => "shirt colors"
@@ -34,7 +34,7 @@ describe "Product Variants", :type => :feature do
       expect(page).to have_content("successfully updated!")
 
       visit spree.admin_path
-      click_link "Products"
+      click_nav "Products"
       within('table.index tbody tr:nth-child(1)') do
         click_icon :edit
       end

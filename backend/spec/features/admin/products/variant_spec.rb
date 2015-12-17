@@ -13,7 +13,7 @@ describe "Variants", :type => :feature do
       end
 
       visit spree.admin_path
-      click_link "Products"
+      click_nav "Products"
       within_row(1) { click_icon :edit }
       click_link "Variants"
       click_on "New Variant"

@@ -3,7 +3,9 @@
 <% end %>
 
 <% if can? :admin, Spree::Product %>
-  <%= tab *Spree::BackendConfiguration::PRODUCT_TABS, icon: 'th-large' %>
+  <%= tab *Spree::BackendConfiguration::PRODUCT_TABS, icon: 'th-large' do %>
+    <%- render partial: 'spree/admin/shared/product_sub_menu' %>
+  <%- end %>
 <% end %>
 
 <% if can? :admin, :reports %>
@@ -15,11 +17,15 @@
 <% end %>
 
 <% if can? :admin, Spree::Promotion %>
-  <%= tab *Spree::BackendConfiguration::PROMOTION_TABS, url: spree.admin_promotions_path, icon: 'bullhorn' %>
+  <%= tab *Spree::BackendConfiguration::PROMOTION_TABS, url: spree.admin_promotions_path, icon: 'bullhorn' do %>
+    <%- render partial: 'spree/admin/shared/promotion_sub_menu' %>
+  <%- end %>
 <% end %>
 
 <% if can? :admin, Spree::StockItem %>
-  <%= tab(:stock_items, :stock_transfers, :url => spree.admin_stock_items_path, :label => Spree.t(:stock), :icon => 'cubes', match_path: %r(^/admin/stock)) %>
+  <%= tab(:stock_items, :stock_transfers, url: spree.admin_stock_items_path, label: Spree.t(:stock), icon: 'cubes', match_path: %r(^/admin/stock)) do %>
+    <%- render partial: 'spree/admin/shared/stock_sub_menu' %>
+  <%- end %>
 <% end %>
 
 <% if Spree.user_class && can?(:admin, Spree.user_class) %>

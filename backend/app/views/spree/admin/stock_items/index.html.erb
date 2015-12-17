@@ -3,11 +3,10 @@
     <li><%= button_link_to Spree.t(:back_to_products_list), session[:return_to] || admin_products_url, :icon => 'arrow-left' %></li>
   <% end %>
 
-  <%= render :partial => 'spree/admin/shared/product_sub_menu' %>
   <%= render :partial => 'spree/admin/shared/product_tabs', :locals => { :current => 'Stock Management' } %>
   <%= render :partial => 'spree/shared/error_messages', :locals => { :target => @product } %>
 <% else %>
-  <%= render :partial => 'spree/admin/shared/stock_sub_menu' %>
+
   <% content_for :page_title do %>
     <%= Spree.t(:manage_stock) %>
   <% end %>

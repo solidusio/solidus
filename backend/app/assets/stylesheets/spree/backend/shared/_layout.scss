@@ -43,14 +43,46 @@
   }
 }
 
-// Header
+// Page Layout
 //---------------------------------------------------
-#header {
-  background-color: $color-1;
-  padding: 5px 0;
+
+html {
+  height: 100%;
 }
 
-#logo { height: 40px }
+body {
+  position: relative;
+  min-height: 100%;
+}
+
+.admin-nav {
+  @include position(absolute, 0 null 0 0);
+  width: $width-sidebar;
+}
+
+.main-content {
+  margin-left: $width-sidebar;
+  @include clearfix;
+}
+
+// Header
+//---------------------------------------------------
+.admin-nav-header {
+  padding: 15px;
+  height: 58px; // height of .page-title
+  box-sizing: content-box;
+  background-color: $color-1;
+  border-bottom: 1px solid $color-border;
+
+  a {
+    display: inline-block;
+    line-height: 58px;
+  }
+
+  img {
+    vertical-align: middle;
+  }
+}
 
 [data-hook="admin-title"] { font-size: 14px }
 

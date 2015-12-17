@@ -19,7 +19,7 @@ describe "Product Images", :type => :feature do
       create(:product)
 
       visit spree.admin_path
-      click_link "Products"
+      click_nav "Products"
       click_icon(:edit)
       click_link "Images"
       click_link "new_image_link"

@@ -6,7 +6,7 @@ module Spree
       #   * :label to override link text, otherwise based on the first resource name (translated)
       #   * :route to override automatically determining the default route
       #   * :match_path as an alternative way to control when the tab is active, /products would match /admin/products, /admin/products/5/variants etc.
-      def tab(*args)
+      def tab(*args, &block)
         options = {:label => args.first.to_s}
 
         if args.last.is_a?(Hash)
@@ -38,7 +38,7 @@ module Spree
         if options[:css_class]
           css_classes << options[:css_class]
         end
-        content_tag('li', link, :class => css_classes.join(' '))
+        content_tag('li', link + (yield if block_given?), class: css_classes.join(' ') )
       end
 
       def link_to_clone(resource, options={})

@@ -4,6 +4,8 @@
 @import 'spree/backend/globals/variables_override';
 @import 'spree/backend/globals/variables';
 
+@import 'spree/backend/globals/mixins/caret';
+
 @import 'spree/backend/shared/typography';
 @import 'spree/backend/shared/tables';
 @import 'spree/backend/shared/icons';

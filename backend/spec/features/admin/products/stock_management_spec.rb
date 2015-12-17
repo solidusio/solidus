@@ -16,7 +16,7 @@ describe "Stock Management", :type => :feature do
     before do
       stock_location.stock_item(variant).update_column(:count_on_hand, 10)
 
-      click_link "Products"
+      click_nav "Products"
       within_row(1) { click_icon :edit }
       click_link "Stock Management"
     end

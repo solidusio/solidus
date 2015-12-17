@@ -69,5 +69,10 @@ describe Spree::Admin::NavigationHelper, :type => :helper do
         end
       end
     end
+
+    it "should accept a block of content to append" do
+      admin_tab = helper.tab(:orders){ 'foo' }
+      expect(admin_tab).to end_with("foo</li>")
+    end
   end
 end

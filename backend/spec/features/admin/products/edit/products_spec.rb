@@ -10,7 +10,7 @@ describe 'Product Details', :type => :feature do
               :description => 'lorem ipsum', :available_on => '2013-08-14 01:02:03')
 
       visit spree.admin_path
-      click_link 'Products'
+      click_nav "Products"
       within_row(1) { click_icon :edit }
 
       click_link 'Product Details'
@@ -30,7 +30,7 @@ describe 'Product Details', :type => :feature do
               :description => 'lorem ipsum', :available_on => '2011-01-01 01:01:01')
 
       visit spree.admin_path
-      click_link 'Products'
+      click_nav "Products"
       within('table.index tbody tr:nth-child(1)') do
         click_icon(:edit)
       end

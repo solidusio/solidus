@@ -12,7 +12,7 @@ describe "Taxonomies", :type => :feature do
     it "should display existing taxonomies" do
       create(:taxonomy, :name => 'Brand')
       create(:taxonomy, :name => 'Categories')
-      click_link "Taxonomies"
+      click_nav "Products", "Taxonomies"
       within_row(1) { expect(page).to have_content("Brand") }
       within_row(2) { expect(page).to have_content("Categories") }
     end
@@ -20,7 +20,7 @@ describe "Taxonomies", :type => :feature do
 
   context "create" do
     before(:each) do
-      click_link "Taxonomies"
+      click_nav "Products", "Taxonomies"
       click_link "admin_new_taxonomy_link"
     end
 
@@ -41,7 +41,7 @@ describe "Taxonomies", :type => :feature do
   context "edit" do
     it "should allow an admin to update an existing taxonomy" do
       create(:taxonomy)
-      click_link "Taxonomies"
+      click_nav "Products", "Taxonomies"
       within_row(1) { click_icon :edit }
       fill_in "taxonomy_name", :with => "sports 99"
       click_button "Update"

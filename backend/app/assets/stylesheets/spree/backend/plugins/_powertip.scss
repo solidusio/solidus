@@ -2,6 +2,7 @@
   background-color: $color-3;
   padding: 5px 15px;
   border-radius: $border-radius;
+  pointer-events: none;
 
   &.n:before, &.ne:before, &.nw:before {
     border-top-width: 5px;
