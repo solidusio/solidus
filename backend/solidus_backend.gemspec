@@ -27,4 +27,5 @@ Gem::Specification.new do |s|
   s.add_dependency 'select2-rails',   '3.5.9.1' # 3.5.9.2 breaks forms
 
   s.add_dependency 'handlebars_assets'
+  s.add_dependency 'sprockets-rails', '~> 2.0' # 3.0 breaks handlebars_assets
 end
