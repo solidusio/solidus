@@ -210,6 +210,11 @@ describe Spree::Shipment, :type => :model do
         expect(shipment.refresh_rates).to eq([])
       end
 
+      it 'uses the pluggable estimator class' do
+        expect(Spree::StockConfiguration).to receive(:estimator_class).and_call_original
+        shipment.refresh_rates
+      end
+
       context 'to_package' do
         let(:inventory_units) do
           [build(:inventory_unit, line_item: line_item, variant: variant, state: 'on_hand'),

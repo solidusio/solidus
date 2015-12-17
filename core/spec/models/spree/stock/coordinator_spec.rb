@@ -15,6 +15,11 @@ module Spree
           expect(subject).to receive(:estimate_packages).ordered
           subject.packages
         end
+
+        it 'uses the pluggable estimator class' do
+          expect(Spree::StockConfiguration).to receive(:estimator_class).and_call_original
+          subject.packages
+        end
       end
 
       describe "#shipments" do
