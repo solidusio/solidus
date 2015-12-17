@@ -25,4 +25,5 @@ Gem::Specification.new do |s|
   s.add_dependency 'jquery-rails'
 
   s.add_development_dependency 'capybara-accessible'
+  s.add_development_dependency 'sprockets-rails', '~> 2.0'
 end
