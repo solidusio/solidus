@@ -32,7 +32,7 @@ module Spree
     belongs_to :shipping_category, class_name: 'Spree::ShippingCategory', inverse_of: :products
 
     has_one :master,
-      -> { where is_master: true },
+      -> { where(is_master: true).with_deleted },
       inverse_of: :product,
       class_name: 'Spree::Variant'
 
@@ -255,13 +255,6 @@ module Spree
       else
         stock_items.sum(:count_on_hand)
       end
-    end
-
-    # Override so if the master variant is deleted, we can still find it.
-    #
-    # @return [Spree::Variant] the master variant
-    def master
-      super || variants_including_master.with_deleted.find_by(is_master: true)
     end
 
     # Image that can be used for the product.
