@@ -2,7 +2,7 @@ module Spree
   class LineItem < Spree::Base
     before_validation :invalid_quantity_check
     belongs_to :order, class_name: "Spree::Order", inverse_of: :line_items, touch: true
-    belongs_to :variant, class_name: "Spree::Variant", inverse_of: :line_items
+    belongs_to :variant, -> { with_deleted }, class_name: "Spree::Variant", inverse_of: :line_items
     belongs_to :tax_category, class_name: "Spree::TaxCategory"
 
     has_one :product, through: :variant
@@ -119,13 +119,6 @@ module Spree
     #   item, if there is one
     def product
       variant.product
-    end
-
-    # @note This will return the variant even if it has been deleted.
-    # @return [Spree::Variant, nil] the variant associated with this line
-    #   item, if there is one
-    def variant
-      Spree::Variant.unscoped { super }
     end
 
     # Sets the options on the line item according to the order's currency or

@@ -4,7 +4,7 @@ module Spree
     POST_SHIPMENT_STATES = %w(returned)
     CANCELABLE_STATES = ['on_hand', 'backordered', 'shipped']
 
-    belongs_to :variant, class_name: "Spree::Variant", inverse_of: :inventory_units
+    belongs_to :variant, -> { with_deleted }, class_name: "Spree::Variant", inverse_of: :inventory_units
     belongs_to :order, class_name: "Spree::Order", inverse_of: :inventory_units
     belongs_to :shipment, class_name: "Spree::Shipment", touch: true, inverse_of: :inventory_units
     belongs_to :return_authorization, class_name: "Spree::ReturnAuthorization", inverse_of: :inventory_units
@@ -85,13 +85,6 @@ module Spree
     def find_stock_item
       Spree::StockItem.where(stock_location_id: shipment.stock_location_id,
         variant_id: variant_id).first
-    end
-
-    # @note This returns the variant regardless of whether it was soft
-    #   deleted.
-    # @return [Spree::Variant] this inventory unit's variant.
-    def variant
-      Spree::Variant.unscoped { super }
     end
 
     # @return [Spree::ReturnItem] a valid return item for this inventory unit
