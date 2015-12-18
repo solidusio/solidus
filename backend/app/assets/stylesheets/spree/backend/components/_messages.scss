@@ -45,10 +45,12 @@
 
   &.success {
     @include flash-variant($color-success);
+    @include prepend-icon($character-check);
   }
 
   &.error   {
     @include flash-variant($color-error);
+    @include prepend-icon($character-exclamation);
   }
 
   &:before {
