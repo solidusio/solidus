@@ -46,7 +46,7 @@ module Spree
       finalized? && shipped? && !closed?
     end
 
-    def ship(tracking_number: nil, shipped_at: nil)
+    def ship(tracking_number: self.tracking_number, shipped_at: nil)
       update_attributes!(tracking_number: tracking_number, shipped_at: shipped_at)
     end
 
