@@ -1,3 +1,7 @@
+$padding-x-navbar: 26px;
+$padding-y-navbar: 13px;
+$padding-y-navbar-submenu: 9px;
+
 nav.menu {
   ul {
     list-style: none;
@@ -30,8 +34,6 @@ nav.menu {
 }
 
 .admin-nav-menu {
-  text-transform: uppercase;
-
   ul {
     margin: 0;
     padding: 0;
@@ -75,7 +77,6 @@ nav.menu {
         left: 100%;
         width: $width-sidebar-flyout;
         margin-left: 0;
-        padding: 1em 0;
         border: $border-sidebar;
         background: $color-navbar-submenu-bg;
         box-shadow: $box-shadow;
@@ -83,7 +84,7 @@ nav.menu {
 
       &:before {
         z-index: 1;
-        top: 2em;
+        top: 1.5em;
       }
      }
     }
@@ -91,7 +92,7 @@ nav.menu {
 
   a {
     display: block;
-    padding: 1.5em 2em;
+    padding: $padding-y-navbar $padding-x-navbar;
     color: $color-navbar;
     font-weight: normal;
   }
@@ -115,13 +116,15 @@ nav.menu {
 
   .admin-subnav {
     background: $color-navbar-submenu-bg;
+    @include padding($padding-y-navbar - $padding-y-navbar-submenu null);
+
     li {
       background: $color-navbar-submenu-bg;
     }
 
     a {
-      @include padding(1em null);
       color: $color-navbar-submenu;
+      @include padding($padding-y-navbar-submenu null);
 
       &:hover {
         color: $color-navbar-submenu-active;
