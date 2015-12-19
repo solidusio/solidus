@@ -49,7 +49,8 @@ module Spree
 
     validates :cost_price, numericality: { greater_than_or_equal_to: 0, allow_nil: true }
     validates :price,      numericality: { greater_than_or_equal_to: 0, allow_nil: true }
-    validates_uniqueness_of :sku, allow_blank: true, conditions: -> { where(deleted_at: nil) }
+    # TODO: Drop the `conditions` once we require paranoia >= 2.1.4
+    validates_uniqueness_of :sku, allow_blank: true, unless: :deleted_at, conditions: -> { where(deleted_at: nil) }
 
     after_create :create_stock_items
     after_create :set_position
