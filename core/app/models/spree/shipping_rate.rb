@@ -1,8 +1,8 @@
 module Spree
   class ShippingRate < Spree::Base
     belongs_to :shipment, class_name: 'Spree::Shipment'
-    belongs_to :shipping_method, class_name: 'Spree::ShippingMethod', inverse_of: :shipping_rates
-    belongs_to :tax_rate, class_name: 'Spree::TaxRate'
+    belongs_to :shipping_method, -> { with_deleted }, class_name: 'Spree::ShippingMethod', inverse_of: :shipping_rates
+    belongs_to :tax_rate, -> { with_deleted }, class_name: 'Spree::TaxRate'
 
     delegate :order, :currency, to: :shipment
     delegate :name, to: :shipping_method
@@ -42,16 +42,8 @@ module Spree
       Spree::Money.new(tax_amount, currency: currency)
     end
 
-    def shipping_method
-      Spree::ShippingMethod.unscoped { super }
-    end
-
     def shipping_method_code
       shipping_method.code
-    end
-
-    def tax_rate
-      Spree::TaxRate.unscoped { super }
     end
   end
 end

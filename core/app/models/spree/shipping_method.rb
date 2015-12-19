@@ -4,8 +4,6 @@ module Spree
     include Spree::CalculatedAdjustments
     DISPLAY = [:both, :front_end, :back_end]
 
-    default_scope -> { where(deleted_at: nil) }
-
     has_many :shipping_method_categories, :dependent => :destroy
     has_many :shipping_categories, through: :shipping_method_categories
     has_many :shipping_rates, inverse_of: :shipping_method
@@ -15,7 +13,7 @@ module Spree
     has_many :shipping_method_zones
     has_many :zones, through: :shipping_method_zones
 
-    belongs_to :tax_category, :class_name => 'Spree::TaxCategory'
+    belongs_to :tax_category, -> { with_deleted }, :class_name => 'Spree::TaxCategory'
 
     validates :name, presence: true
 
@@ -40,10 +38,6 @@ module Spree
     # Some shipping methods are only meant to be set via backend
     def frontend?
       self.display_on != "back_end"
-    end
-
-    def tax_category
-      Spree::TaxCategory.unscoped { super }
     end
 
     private

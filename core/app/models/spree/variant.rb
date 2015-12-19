@@ -18,7 +18,7 @@ module Spree
 
     include Spree::DefaultPrice
 
-    belongs_to :product, touch: true, class_name: 'Spree::Product', inverse_of: :variants
+    belongs_to :product, -> { with_deleted }, touch: true, class_name: 'Spree::Product', inverse_of: :variants
     belongs_to :tax_category, class_name: 'Spree::TaxCategory'
 
     delegate :name, :description, :slug, :available_on, :shipping_category_id,
@@ -156,14 +156,6 @@ module Spree
     # @return [Boolean] true if this variant has been deleted
     def deleted?
       !!deleted_at
-    end
-
-    # Override ActiveRecord finder to function even if the product has been
-    # deleted.
-    #
-    # @return [Spree::Product]
-    def product
-      Spree::Product.unscoped { super }
     end
 
     # Assign given options hash to option values.

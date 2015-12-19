@@ -1,7 +1,7 @@
 module Spree
   class Price < Spree::Base
     acts_as_paranoid
-    belongs_to :variant, class_name: 'Spree::Variant', inverse_of: :prices, touch: true
+    belongs_to :variant, -> { with_deleted }, class_name: 'Spree::Variant', inverse_of: :prices, touch: true
 
     validate :check_price
     validates :amount, numericality: { greater_than_or_equal_to: 0 }, allow_nil: true
@@ -29,13 +29,6 @@ module Spree
     # @param price [String, #to_d] a new amount
     def price=(price)
       self[:amount] = Spree::LocalizedNumber.parse(price)
-    end
-
-    # @note This returns the variant regardless of whether it was soft
-    #   deleted.
-    # @return [Spree::Variant] this price's variant.
-    def variant
-      Spree::Variant.unscoped { super }
     end
 
     private
