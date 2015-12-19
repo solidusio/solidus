@@ -22,7 +22,7 @@ module Spree
         inventory_units.group_by(&:variant).each do |variant, variant_inventory_units|
           units = variant_inventory_units.clone
           if variant.should_track_inventory?
-            stock_item = stock_item_lookup[variant.id]
+            stock_item = stock_item_for(variant.id)
             next unless stock_item
 
             on_hand, backordered = stock_item.fill_status(units.count)
@@ -39,18 +39,18 @@ module Spree
 
       private
 
+      def stock_item_for(variant_id)
+        stock_item_lookup[variant_id]
+      end
+
       # Returns a lookup table in the form of:
       #   {<variant_id> => <stock_item>, ...}
       def stock_item_lookup
-        @stock_item_lookup ||= begin
-          Spree::StockItem.
-            where(variant_id: inventory_units.map(&:variant_id).uniq).
-            where(stock_location_id: stock_location.id).
-            order(:id).
-            each_with_object({}) do |stock_item, hash|
-              hash[stock_item.variant_id] ||= stock_item
-            end
-        end
+        @stock_item_lookup ||= Spree::StockItem.
+          where(variant_id: inventory_units.map(&:variant_id).uniq).
+          where(stock_location_id: stock_location.id).
+          map { |stock_item| [stock_item.variant_id, stock_item] }.
+          to_h # there is only one stock item per variant in a stock location
       end
 
       def build_splitter
