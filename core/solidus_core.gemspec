@@ -44,4 +44,5 @@ Gem::Specification.new do |s|
   s.add_dependency 'twitter_cldr', '~> 3.0'
 
   s.add_development_dependency 'email_spec', '~> 1.6'
+  s.add_dependency 'sprockets-rails', '~> 2.0'
 end
