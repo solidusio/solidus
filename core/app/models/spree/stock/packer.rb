@@ -22,9 +22,10 @@ module Spree
         inventory_units.group_by(&:variant).each do |variant, variant_inventory_units|
           units = variant_inventory_units.clone
           if variant.should_track_inventory?
-            next unless stock_location.stock_item(variant)
+            stock_item = stock_item_lookup[variant.id]
+            next unless stock_item
 
-            on_hand, backordered = stock_location.fill_status(variant, units.count)
+            on_hand, backordered = stock_item.fill_status(units.count)
             raise Spree::Order::InsufficientStock unless on_hand > 0 || backordered > 0
             package.add_multiple units.slice!(0, on_hand), :on_hand if on_hand > 0
             package.add_multiple units.slice!(0, backordered), :backordered if backordered > 0
@@ -37,6 +38,21 @@ module Spree
       end
 
       private
+
+      # Returns a lookup table in the form of:
+      #   {<variant_id> => <stock_item>, ...}
+      def stock_item_lookup
+        @stock_item_lookup ||= begin
+          Spree::StockItem.
+            where(variant_id: inventory_units.map(&:variant_id).uniq).
+            where(stock_location_id: stock_location.id).
+            order(:id).
+            each_with_object({}) do |stock_item, hash|
+              hash[stock_item.variant_id] ||= stock_item
+            end
+        end
+      end
+
       def build_splitter
         splitter = nil
         splitters.reverse.each do |klass|
