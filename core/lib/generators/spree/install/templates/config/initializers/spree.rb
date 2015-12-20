@@ -6,6 +6,8 @@ Spree.config do |config|
   # changes them to be stored in memory.
   # This will be the default in a future version.
   config.use_static_preferences!
+  Spree::Frontend::Config.use_static_preferences!
+  Spree::Backend::Config.use_static_preferences!
 
   # Core:
 
