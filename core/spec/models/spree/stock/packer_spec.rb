@@ -28,9 +28,8 @@ module Spree
         end
 
         it 'variants are added as backordered without enough on_hand' do
-          expect(stock_location).to receive(:fill_status).exactly(5).times.and_return(
-            *(Array.new(3, [1,0]) + Array.new(2, [0,1]))
-          )
+          inventory_units[0..2].each { |iu| stock_location.stock_item(iu.variant_id).set_count_on_hand(1) }
+          inventory_units[3..4].each { |iu| stock_location.stock_item(iu.variant_id).set_count_on_hand(0) }
 
           package = subject.default_package
           expect(package.on_hand.size).to eq 3
