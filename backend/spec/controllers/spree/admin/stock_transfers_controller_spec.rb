@@ -302,11 +302,13 @@ module Spree
       end
     end
 
-    context "#finish" do
-      let(:stock_transfer) { Spree::StockTransfer.create(source_location: warehouse, destination_location: ny_store, created_by: create(:admin_user))}
+    context "#ship" do
+      let(:stock_transfer) { Spree::StockTransfer.create(source_location: warehouse, destination_location: ny_store, created_by: create(:admin_user)) }
       let(:transfer_variant) { create(:variant) }
       let(:warehouse_stock_item) { warehouse.stock_items.find_by(variant: transfer_variant) }
       let(:ny_stock_item) { ny_store.stock_items.find_by(variant: transfer_variant) }
+
+      subject { spree_put :ship, id: stock_transfer.number }
 
       before do
         warehouse_stock_item.set_count_on_hand(1)
@@ -316,14 +318,14 @@ module Spree
       context "with transferable items" do
 
         it "marks the transfer shipped" do
-          spree_put :ship, :id => stock_transfer.number
+          subject
 
           expect(stock_transfer.reload.shipped_at).to_not be_nil
           expect(flash[:success]).to be_present
         end
 
         it "makes stock movements for the transferred items" do
-          spree_put :ship, :id => stock_transfer.number
+          subject
 
           expect(Spree::StockMovement.count).to eq 1
           expect(warehouse_stock_item.reload.count_on_hand).to eq 0
@@ -334,13 +336,13 @@ module Spree
         before { warehouse_stock_item.set_count_on_hand(0) }
 
         it "does not mark the transfer shipped" do
-          spree_put :ship, :id => stock_transfer.number
+          subject
 
           expect(stock_transfer.reload.shipped_at).to be_nil
         end
 
         it "errors and redirects to tracking_info page" do
-          spree_put :ship, :id => stock_transfer.number
+          subject
 
           expect(flash[:error]).to match /not enough inventory/
           expect(response).to redirect_to(spree.tracking_info_admin_stock_transfer_path(stock_transfer))

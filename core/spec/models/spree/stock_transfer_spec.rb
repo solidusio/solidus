@@ -249,6 +249,26 @@ module Spree
       end
     end
 
+    describe '#ship' do
+      let(:stock_transfer) { create(:stock_transfer, tracking_number: "ABC123") }
+
+      context "tracking number is provided" do
+        subject { stock_transfer.ship(tracking_number: "XYZ123") }
+
+        it "updates the tracking number" do
+          expect { subject }.to change { stock_transfer.tracking_number }.from("ABC123").to("XYZ123")
+        end
+      end
+
+      context "tracking number is not provided" do
+        subject { stock_transfer.ship }
+
+        it "preserves the existing tracking number" do
+          expect { subject }.to_not change { stock_transfer.tracking_number }.from("ABC123")
+        end
+      end
+    end
+
     describe '#transfer' do
       let(:stock_transfer) { create(:stock_transfer_with_items) }
 
