@@ -1,0 +1,25 @@
+$cerulean:                       hsl(216, 57, 47);
+
+$white:                          hsl(220, 0, 100);
+$gray-light:                     hsl(220, 9, 71);
+$gray:                           hsl(220, 8, 23);
+$gray-dark:                      hsl(220, 12, 18);
+$black:                          hsl(220, 19, 13);
+
+$color-primary:                  $cerulean;
+
+$color-sidebar-bg:              $gray;
+$color-sidebar-border:          very-light(#5498DA, 12); // $color-border
+$color-navbar:                  $gray-light;
+$color-navbar-bg:               $gray;
+$color-navbar-active:           $white;
+$color-navbar-active-bg:        $color-primary;
+$color-navbar-submenu:          tint($gray-light, 40%);
+$color-navbar-submenu-bg:       $gray-dark;
+$color-navbar-submenu-active:   tint($color-primary, 20%);
+$color-navbar-footer:           $color-navbar;
+$color-navbar-footer-active:    $color-navbar-active;
+
+// Sidebar
+//--------------------------------------------------------------
+$border-sidebar:                 none;
