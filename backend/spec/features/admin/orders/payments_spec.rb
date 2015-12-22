@@ -95,8 +95,8 @@ describe 'Payments', :type => :feature do
       expect(page).to have_content('successfully created!')
 
       click_icon(:capture)
-      expect(find('#payment_status').text).to eq('PAID')
 
+      expect(page).to have_selector('#payment_status', text: 'PAID')
       expect(page).not_to have_selector('#new_payment_section')
     end
 
