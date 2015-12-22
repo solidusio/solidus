@@ -124,6 +124,18 @@ nav.menu {
   }
 }
 
+.admin-nav-footer {
+  background-color: $color-navbar-footer-bg;
+
+  a {
+    color: $color-navbar-footer;
+
+    &:hover {
+      color: $color-navbar-footer-active;
+    }
+  }
+}
+
 .admin-nav.fits .admin-nav-footer {
   position: fixed;
   bottom: 0;
