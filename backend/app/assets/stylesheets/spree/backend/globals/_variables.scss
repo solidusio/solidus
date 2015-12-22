@@ -39,6 +39,9 @@ $color-navbar-bg:               $color-3 !default;
 $color-navbar-active-bg:        $color-2 !default;
 $color-navbar-submenu-bg:       very-light($color-navbar-bg, 4) !default;
 $color-navbar-text:             $color-1 !default;
+$color-navbar-footer:           $color-3 !default;
+$color-navbar-footer-bg:        $color-sidebar-bg !default;
+$color-navbar-footer-active:    $color-2 !default;
 
 // Basic flash colors
 $color-success:                  $color-2 !default;
