@@ -80,7 +80,7 @@ describe 'Payments', :type => :feature do
       end
 
       click_icon :void
-      expect(find('#payment_status').text).to eq('BALANCE DUE')
+      expect(page).to have_css('#payment_status', text: 'BALANCE DUE')
       expect(page).to have_content('Payment Updated')
 
       within_row(1) do
