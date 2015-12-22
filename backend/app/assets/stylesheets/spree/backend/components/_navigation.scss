@@ -24,7 +24,7 @@ nav.menu {
 }
 
 .admin-nav {
-  border-right: 1px solid $color-sidebar-border;
+  border-right: $border-sidebar;
   background: $color-sidebar-bg;
   z-index: $z-index-navbar-flyout;
 }
@@ -65,7 +65,7 @@ nav.menu {
         width: $width-sidebar-flyout;
         margin-left: 0;
         padding: 1em 0;
-        border: 1px solid $color-sidebar-border;
+        border: $border-sidebar;
         background: $color-navbar-submenu-bg;
         box-shadow: $box-shadow;
         @include caret($direction: left, $color-caret: $color-navbar-submenu-bg);
@@ -128,7 +128,7 @@ nav.menu {
   position: fixed;
   bottom: 0;
   width: $width-sidebar;
-  border-top: 1px solid $color-sidebar-border;
+  border-top: $border-sidebar;
 }
 
 .admin-login-nav {
