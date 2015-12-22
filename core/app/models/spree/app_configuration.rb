@@ -276,6 +276,16 @@ module Spree
       @promotion_chooser_class ||= Spree::PromotionChooser
     end
 
+    attr_writer :shipping_rate_sorter_class
+    def shipping_rate_sorter_class
+      @shipping_rate_sorter_class ||= Spree::Stock::ShippingRateSorter
+    end
+
+    attr_writer :shipping_rate_selector_class
+    def shipping_rate_selector_class
+      @shipping_rate_selector_class ||= Spree::Stock::ShippingRateSelector
+    end
+
     # Allows providing your own Mailer for shipped cartons.
     #
     # @!attribute [rw] carton_shipped_email_class
