@@ -41,9 +41,20 @@ nav.menu {
   li {
     background: $color-navbar-bg;
 
-    &:hover,
+    &:hover {
+      background: $color-navbar-active-bg;
+
+      > a {
+        color: $color-navbar-active;
+      }
+    }
+
     &.selected {
       background: $color-navbar-active-bg;
+
+      > a {
+        color: $color-navbar-active;
+      }
     }
 
     &.selected li {
@@ -81,7 +92,7 @@ nav.menu {
   a {
     display: block;
     padding: 1.5em 2em;
-    color: $color-navbar-text;
+    color: $color-navbar;
     font-weight: normal;
   }
 
@@ -103,22 +114,23 @@ nav.menu {
   }
 
   .admin-subnav {
+    background: $color-navbar-submenu-bg;
     li {
       background: $color-navbar-submenu-bg;
     }
 
     a {
-      color: $color-navbar-bg;
       @include padding(1em null);
+      color: $color-navbar-submenu;
 
       &:hover {
-        color: $color-navbar-active-bg;
+        color: $color-navbar-submenu-active;
       }
     }
 
     .selected {
       a {
-        color: $color-navbar-active-bg;
+        color: $color-navbar-submenu-active;
       }
     }
   }
@@ -141,6 +153,7 @@ nav.menu {
   bottom: 0;
   width: $width-sidebar;
   border-top: $border-sidebar;
+  border-right: $border-sidebar;
 }
 
 .admin-login-nav {
