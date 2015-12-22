@@ -55,9 +55,8 @@ module Spree
       #
       # Returns an array of Package instances
       def build_packages(packages = Array.new)
-        requested_stock_items.group_by(&:stock_location).each do |stock_location, stock_items|
-          variant_ids_in_stock_location = stock_items.map(&:variant_id)
-          units_for_location = unallocated_inventory_units.select { |unit| variant_ids_in_stock_location.include?(unit.variant_id) }
+        stock_location_variant_ids.each do |stock_location, variant_ids|
+          units_for_location = unallocated_inventory_units.select { |unit| variant_ids.include?(unit.variant_id) }
           packer = build_packer(stock_location, units_for_location)
           packages += packer.packages
         end
@@ -66,12 +65,49 @@ module Spree
 
       private
 
-      def unallocated_inventory_units
-        inventory_units - @preallocated_inventory_units
+      # This finds the variants we're looking for in each active stock location.
+      # It returns a hash like:
+      #   {
+      #     <stock location> => <set of variant ids>,
+      #     <stock location> => <set of variant ids>,
+      #     ...,
+      #   }
+      # This is done in an awkward way for performance reasons.  It uses two
+      # queries that are kept as performant as possible, and only loads the
+      # minimum required ActiveRecord objects.
+      def stock_location_variant_ids
+        # associate the variant ids we're interested in with stock location ids
+        location_variant_ids = StockItem.
+          where(variant_id: unallocated_variant_ids).
+          joins(:stock_location).
+          merge(StockLocation.active).
+          pluck(:stock_location_id, :variant_id)
+
+        # load activerecord objects for the stock location ids and turn them
+        # into a lookup hash like:
+        #   {
+        #     <stock location id> => <stock location>,
+        #     ...,
+        #   }
+        location_lookup = StockLocation.
+          where(id: location_variant_ids.map(&:first).uniq).
+          map { |l| [l.id, l] }.
+          to_h
+
+        # build the final lookup hash of
+        #   {<stock location> => <set of variant ids>, ...}
+        # using the previous results
+        hash = location_variant_ids.each_with_object({}) do |(location_id, variant_id), hash|
+          location = location_lookup[location_id]
+          hash[location] ||= Set.new
+          hash[location] << variant_id
+        end
+
+        hash
       end
 
-      def requested_stock_items
-        Spree::StockItem.where(variant_id: unallocated_variant_ids).joins(:stock_location).merge(StockLocation.active).includes(:stock_location)
+      def unallocated_inventory_units
+        inventory_units - @preallocated_inventory_units
       end
 
       def unallocated_variant_ids
