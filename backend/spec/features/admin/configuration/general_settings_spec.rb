@@ -3,9 +3,12 @@ require 'spec_helper'
 describe "General Settings", type: :feature, js: true do
   stub_authorization!
 
+  let!(:store) do
+    create(:store, name: 'Test Store', url: 'test.example.org',
+           mail_from_address: 'test@example.org')
+  end
+
   before(:each) do
-    store = create(:store, name: 'Test Store', url: 'test.example.org',
-                           mail_from_address: 'test@example.org')
     visit spree.admin_path
     click_link "Settings"
     click_link "General Settings"
@@ -14,9 +17,9 @@ describe "General Settings", type: :feature, js: true do
   context "visiting general settings (admin)" do
     it "should have the right content" do
       expect(page).to have_content("General Settings")
-      expect(find("#store_name").value).to eq("Test Store")
-      expect(find("#store_url").value).to eq("test.example.org")
-      expect(find("#store_mail_from_address").value).to eq("test@example.org")
+      expect(page).to have_field("store_name", with: "Test Store")
+      expect(page).to have_field("store_url", with: "test.example.org")
+      expect(page).to have_field("store_mail_from_address", with: "test@example.org")
     end
   end
 
@@ -27,8 +30,8 @@ describe "General Settings", type: :feature, js: true do
       click_button "Update"
 
       assert_successful_update_message(:general_settings)
-      expect(find("#store_name").value).to eq("Spree Demo Site99")
-      expect(find("#store_mail_from_address").value).to eq("spree@example.org")
+      expect(page).to have_field("store_name", with: "Spree Demo Site99")
+      expect(page).to have_field("store_mail_from_address", with: "spree@example.org")
     end
   end
 

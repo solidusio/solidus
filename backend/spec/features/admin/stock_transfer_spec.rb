@@ -20,7 +20,7 @@ describe 'Stock Transfers', :type => :feature, :js => true do
       fill_in 'stock_transfer_description', with: description
       click_button 'Continue'
 
-      expect(page.find('#stock_transfer_description').value).to eq description
+      expect(page).to have_field('stock_transfer_description', with: description)
 
       select "NY", from: 'stock_transfer[destination_location_id]'
       within "form.edit_stock_transfer" do

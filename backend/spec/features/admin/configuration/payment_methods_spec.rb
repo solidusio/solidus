@@ -52,7 +52,7 @@ describe "Payment Methods", :type => :feature do
       fill_in "payment_method_name", :with => "Payment 99"
       click_button "Update"
       expect(page).to have_content("successfully updated!")
-      expect(find_field("payment_method_name").value).to eq("Payment 99")
+      expect(page).to have_field("payment_method_name", with: "Payment 99")
     end
 
     it "should display validation errors" do
