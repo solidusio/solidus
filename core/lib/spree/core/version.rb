@@ -7,4 +7,8 @@ module Spree
   def self.solidus_version
     "1.2.0.alpha"
   end
+
+  def self.solidus_gem_version
+    Gem::Version.new(solidus_version)
+  end
 end
