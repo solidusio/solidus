@@ -51,4 +51,28 @@ Spree.config do |config|
   # )
 end
 
+<% if defined?(Spree::Frontend::Engine) -%>
+Spree::Frontend::Config.configure do |config|
+  config.use_static_preferences!
+
+  config.locale = 'en'
+end
+<% end -%>
+
+<% if defined?(Spree::Backend::Engine) -%>
+Spree::Backend::Config.configure do |config|
+  config.use_static_preferences!
+
+  config.locale = 'en'
+end
+<% end -%>
+
+<% if defined?(Spree::Api::Engine) -%>
+Spree::Api::Config.configure do |config|
+  config.use_static_preferences!
+
+  config.requires_authentication = true
+end
+<% end -%>
+
 Spree.user_class = <%= (options[:user_class].blank? ? "Spree::LegacyUser" : options[:user_class]).inspect %>
