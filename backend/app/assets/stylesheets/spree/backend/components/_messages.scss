@@ -30,16 +30,32 @@
   z-index: 1000;
 }
 
-.flash {
-  padding: 16px;
-  text-align: center;
-  font-size: 120%;
-  color: $color-1;
-  font-weight: $font-weight-bold;
+@mixin flash-variant($color) {
+  color: $color;
+  background-color: rgba($color, 0.3);
+}
 
-  &.notice  { background-color: rgba($color-notice,  0.8) }
-  &.success { background-color: rgba($color-success, 0.8) }
-  &.error   { background-color: rgba($color-error,   0.8) }
+.flash {
+  padding: 1em;
+  font-size: 120%;
+
+  &.notice  {
+    @include flash-variant($color-notice);
+  }
+
+  &.success {
+    @include flash-variant($color-success);
+    @include prepend-icon($character-check);
+  }
+
+  &.error   {
+    @include flash-variant($color-error);
+    @include prepend-icon($character-exclamation);
+  }
+
+  &:before {
+    margin-right: 1em;
+  }
 }
 
 .alert {
