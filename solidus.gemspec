@@ -1,5 +1,5 @@
 # encoding: UTF-8
-require File.expand_path('../core/lib/spree/core/version.rb', __FILE__)
+require_relative 'core/lib/spree/core/version.rb'
 
 Gem::Specification.new do |s|
   s.platform    = Gem::Platform::RUBY
