@@ -1,6 +1,0 @@
-@mixin prepend-icon($character) {
-  &:before {
-    @extend .fa;
-    content: $character;
-  }
-}

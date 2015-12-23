@@ -10,10 +10,6 @@ $base-font-family: "Open Sans", "Helvetica Neue", "Helvetica", Helvetica, Arial,
 //--------------------------------------------------------------
 
 // Basic color palette for admin
-$apple:                          hsl(105, 48, 37) !default;
-$old-brick:                      hsl(5, 67, 36) !default;
-$pirate-gold:                    hsl(45, 100, 37) !default;
-
 $color-1:                        #FFFFFF !default;    // White
 $color-2:                        #9FC820 !default;    // Green
 $color-3:                        #5498DA !default;    // Light Blue
@@ -45,9 +41,9 @@ $color-navbar-submenu-bg:       very-light($color-navbar-bg, 4) !default;
 $color-navbar-text:             $color-1 !default;
 
 // Basic flash colors
-$color-success:                  $apple !default;
-$color-notice:                   $pirate-gold !default;
-$color-error:                    $old-brick !default;
+$color-success:                  $color-2 !default;
+$color-notice:                   $color-6 !default;
+$color-error:                    $color-5 !default;
 
 // Color for spinner
 $color-spinner: #fff;
@@ -199,8 +195,3 @@ $width-sidebar-flyout:           225px !default;
 // Stacking
 //--------------------------------------------------------------
 $z-index-navbar-flyout:          1000;
-
-// Characters
-//--------------------------------------------------------------
-$character-check:           "\f00c";
-$character-exclamation:     "\f12a";
