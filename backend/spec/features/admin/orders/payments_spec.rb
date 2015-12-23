@@ -80,7 +80,7 @@ describe 'Payments', :type => :feature do
       end
 
       click_icon :void
-      expect(find('#payment_status').text).to eq('BALANCE DUE')
+      expect(page).to have_css('#payment_status', text: 'BALANCE DUE')
       expect(page).to have_content('Payment Updated')
 
       within_row(1) do
@@ -150,10 +150,10 @@ describe 'Payments', :type => :feature do
         within_row(1) do
           click_icon(:edit)
           fill_in('amount', with: 'invalid')
-          expect(find('td.amount input').value).to eq('invalid')
-          expect(payment.reload.amount).to eq(150.00)
         end
         expect(page).to have_selector('.flash.error', text: 'Invalid resource. Please fix errors and try again.')
+        expect(page).to have_field('amount', with: 'invalid')
+        expect(payment.reload.amount).to eq(150.00)
       end
     end
 

@@ -71,7 +71,7 @@ describe "Customer Details", type: :feature, js: true do
         click_button "Update"
         expect(page).to have_content "Customer Details Updated"
         click_link "Customer Details"
-        expect(find_field("order_bill_address_attributes_state_name").value).to eq("Piaui")
+        expect(page).to have_field("order_bill_address_attributes_state_name", with: "Piaui")
       end
     end
 
@@ -122,7 +122,7 @@ describe "Customer Details", type: :feature, js: true do
 
       it "sets default country when displaying form" do
         click_link "Customer Details"
-        expect(find_field("order_bill_address_attributes_country_id").value.to_i).to eq brazil.id
+        expect(page).to have_field("order_bill_address_attributes_country_id", with: brazil.id)
       end
     end
 

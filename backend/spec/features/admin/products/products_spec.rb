@@ -241,9 +241,12 @@ describe "Products", :type => :feature do
         end
 
         it "should show localized price value on validation errors", :js => true do
+          fill_in "Name", :with => " "
+          select @shipping_category.name, from: "product_shipping_category_id"
           fill_in "product_price", :with => "19,99"
           click_button "Create"
-          expect(find('input#product_price').value).to eq('19,99')
+          expect(page).to have_content("Name can't be blank")
+          expect(page).to have_field('product_price', with: '19,99')
         end
       end
 

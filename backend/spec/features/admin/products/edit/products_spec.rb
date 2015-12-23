@@ -15,14 +15,14 @@ describe 'Product Details', :type => :feature do
 
       click_link 'Product Details'
 
-      expect(find('.page-title').text.strip).to eq('Editing Product “Bún thịt nướng”')
-      expect(find('input#product_name').value).to eq('Bún thịt nướng')
-      expect(find('input#product_slug').value).to eq('bun-th-t-n-ng')
-      expect(find('textarea#product_description').text.strip).to eq('lorem ipsum')
-      expect(find('input#product_price').value).to eq('19.99')
-      expect(find('input#product_cost_price').value).to eq('17.00')
-      expect(find('input#product_available_on').value).to eq("2013/08/14")
-      expect(find('input#product_sku').value).to eq('A100')
+      expect(page).to have_css('.page-title', text: 'Editing Product “Bún thịt nướng”')
+      expect(page).to have_field('product_name', with: 'Bún thịt nướng')
+      expect(page).to have_field('product_slug', with: 'bun-th-t-n-ng')
+      expect(page).to have_field('product_description', with: 'lorem ipsum')
+      expect(page).to have_field('product_price', with: '19.99')
+      expect(page).to have_field('product_cost_price', with: '17.00')
+      expect(page).to have_field('product_available_on', with: "2013/08/14")
+      expect(page).to have_field('product_sku', with: 'A100')
     end
 
     it "should handle slug changes" do

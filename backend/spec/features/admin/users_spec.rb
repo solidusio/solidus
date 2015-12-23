@@ -108,7 +108,7 @@ describe 'Users', :type => :feature do
 
       expect(user_a.reload.email).to eq 'a@example.com99'
       expect(page).to have_text 'Account updated'
-      expect(find_field('user_email').value).to eq 'a@example.com99'
+      expect(page).to have_field('user_email', with: 'a@example.com99')
     end
 
     it 'can edit the user password' do
@@ -126,7 +126,7 @@ describe 'Users', :type => :feature do
       check 'user_spree_role_admin'
       click_button 'Update'
       expect(page).to have_text 'Account updated'
-      expect(find_field('user_spree_role_admin')['checked']).to be true
+      expect(find_field('user_spree_role_admin')).to be_checked
     end
 
     it 'can edit user shipping address' do
@@ -135,7 +135,7 @@ describe 'Users', :type => :feature do
       within("#admin_user_edit_addresses") do
         fill_in "user_ship_address_attributes_address1", with: "1313 Mockingbird Ln"
         click_button 'Update'
-        expect(find_field('user_ship_address_attributes_address1').value).to eq "1313 Mockingbird Ln"
+        expect(page).to have_field('user_ship_address_attributes_address1', with: "1313 Mockingbird Ln")
       end
 
       expect(user_a.reload.ship_address.address1).to eq "1313 Mockingbird Ln"
@@ -147,7 +147,7 @@ describe 'Users', :type => :feature do
       within("#admin_user_edit_addresses") do
         fill_in "user_bill_address_attributes_address1", with: "1313 Mockingbird Ln"
         click_button 'Update'
-        expect(find_field('user_bill_address_attributes_address1').value).to eq "1313 Mockingbird Ln"
+        expect(page).to have_field('user_bill_address_attributes_address1', with: "1313 Mockingbird Ln")
       end
 
       expect(user_a.reload.bill_address.address1).to eq "1313 Mockingbird Ln"
