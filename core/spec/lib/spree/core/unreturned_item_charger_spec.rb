@@ -43,7 +43,7 @@ describe Spree::UnreturnedItemCharger do
     end
 
     context 'in tax zone' do
-      let!(:tax_zone) { Spree::Zone.global }
+      let!(:tax_zone) { Spree::Zone.find_by(name: 'GlobalZone') || FactoryGirl.create(:global_zone) }
       let!(:tax_rate) { create(:tax_rate, zone: tax_zone, tax_category: original_variant.tax_category) }
       before { tax_zone.update_attributes!(default_tax: true) }
 
