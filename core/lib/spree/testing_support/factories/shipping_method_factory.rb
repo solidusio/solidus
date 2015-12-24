@@ -1,3 +1,7 @@
+require 'spree/testing_support/factories/calculator_factory'
+require 'spree/testing_support/factories/shipping_category_factory'
+require 'spree/testing_support/factories/zone_factory'
+
 FactoryGirl.define do
   factory(
     :shipping_method,
