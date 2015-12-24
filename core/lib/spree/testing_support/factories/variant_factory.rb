@@ -1,3 +1,5 @@
+require 'spree/testing_support/sequences'
+
 FactoryGirl.define do
   sequence(:random_float) { BigDecimal.new("#{rand(200)}.#{rand(99)}") }
 
