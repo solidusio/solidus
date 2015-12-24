@@ -1,6 +1,8 @@
 FactoryGirl.define do
   factory :base_shipping_method, class: Spree::ShippingMethod do
-    zones { |a| [Spree::Zone.global] }
+    zones do
+      [Spree::Zone.find_by(name: 'GlobalZone') || FactoryGirl.create(:global_zone)]
+    end
     name 'UPS Ground'
     code 'UPS_GROUND'
 
