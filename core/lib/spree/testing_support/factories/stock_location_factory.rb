@@ -1,3 +1,7 @@
+require 'spree/testing_support/factories/country_factory'
+require 'spree/testing_support/factories/state_factory'
+require 'spree/testing_support/factories/product_factory'
+
 FactoryGirl.define do
   factory :stock_location, class: Spree::StockLocation do
     name 'NY Warehouse'

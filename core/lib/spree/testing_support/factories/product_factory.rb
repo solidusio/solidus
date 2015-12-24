@@ -1,4 +1,7 @@
 require 'spree/testing_support/sequences'
+require 'spree/testing_support/factories/shipping_category_factory'
+require 'spree/testing_support/factories/stock_location_factory'
+require 'spree/testing_support/factories/tax_category_factory'
 
 FactoryGirl.define do
   factory :base_product, class: Spree::Product do
