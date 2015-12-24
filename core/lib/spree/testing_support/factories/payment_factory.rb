@@ -11,6 +11,8 @@ FactoryGirl.define do
         refund_amount 5
       end
 
+      amount { refund_amount }
+
       state 'completed'
 
       refunds { build_list :refund, 1, amount: refund_amount }
