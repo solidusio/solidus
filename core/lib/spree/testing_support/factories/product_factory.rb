@@ -1,3 +1,5 @@
+require 'spree/testing_support/sequences'
+
 FactoryGirl.define do
   factory :base_product, class: Spree::Product do
     sequence(:name) { |n| "Product ##{n} - #{Kernel.rand(9999)}" }
