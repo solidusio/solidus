@@ -598,4 +598,13 @@ describe Spree::Variant, :type => :model do
       end
     end
   end
+
+  describe '#gallery' do
+    let(:variant) { Spree::Variant.new }
+    subject { variant.gallery }
+
+    it 'is a Spree::Gallery::Base' do
+      expect(subject).to be_a Spree::Gallery::Base
+    end
+  end
 end

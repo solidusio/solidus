@@ -326,6 +326,18 @@ module Spree
       end.flatten.compact
     end
 
+    # Returns the gallery for the variant, which represents all the images
+    # associated to this variant
+    #
+    # The class initialized can be configured by a store using
+    # the config setting {Spree::AppConfiguration#variant_gallery_class}
+    #
+    # @return [Spree::Gallery::Base] this variants gallery
+    # @see Spree::AppConfiguration#variant_gallery_class
+    def gallery
+      @gallery ||= Spree::Config.variant_gallery_class.new(self)
+    end
+
     private
 
       def set_master_out_of_stock
