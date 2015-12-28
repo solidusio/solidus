@@ -3,16 +3,6 @@ ENV['NO_FACTORIES'] = "NO FACTORIES"
 require 'spec_helper'
 require 'spree/testing_support/factories/order_factory'
 
-RSpec.shared_examples_for 'a working factory' do
-  it "builds" do
-    expect(build factory).to be_a(factory_class)
-  end
-
-  it "creates" do
-    expect(create factory).to be_a(factory_class)
-  end
-end
-
 RSpec.describe 'order factory', type: :model do
   let(:factory_class) { Spree::Order }
 
