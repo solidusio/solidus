@@ -15,6 +15,7 @@ FactoryGirl.define do
   end
 
   factory :tax_adjustment, class: Spree::Adjustment do
+    order { adjustable.order }
     association(:adjustable, factory: :line_item)
     amount 10.0
     label 'VAT 5%'
