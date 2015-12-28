@@ -1,3 +1,6 @@
+require 'spree/testing_support/factories/shipment_factory'
+require 'spree/testing_support/factories/inventory_unit_factory'
+
 FactoryGirl.define do
   factory :carton, class: Spree::Carton do
     address
