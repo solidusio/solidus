@@ -5,15 +5,16 @@ require 'spree/testing_support/factories/order_factory'
 
 RSpec.shared_examples_for 'an order factory' do
   it "builds" do
-    expect(build factory).to be_a(Spree::Order)
+    expect(build factory).to be_a(factory_class)
   end
 
   it "creates" do
-    expect(create factory).to be_a(Spree::Order)
+    expect(create factory).to be_a(factory_class)
   end
 end
 
 RSpec.describe 'order factory', type: :model do
+  let(:factory_class) { Spree::Order }
 
   describe 'plain order' do
     let(:factory) { :order }
