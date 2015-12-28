@@ -13,8 +13,4 @@ FactoryGirl.define do
     end
     association(:reason, factory: :refund_reason)
   end
-
-  factory :refund_reason, class: Spree::RefundReason do
-    sequence(:name) { |n| "Refund for return ##{n}" }
-  end
 end
