@@ -1,3 +1,6 @@
+require 'spree/testing_support/factories/store_credit_category_factory'
+require 'spree/testing_support/factories/store_credit_type_factory'
+
 FactoryGirl.define do
   factory :store_credit, class: Spree::StoreCredit do
     user             { create(:user) }

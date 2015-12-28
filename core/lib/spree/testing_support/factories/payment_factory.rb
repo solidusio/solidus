@@ -1,5 +1,7 @@
 require 'spree/testing_support/factories/payment_method_factory'
 require 'spree/testing_support/factories/credit_card_factory'
+require 'spree/testing_support/factories/order_factory'
+require 'spree/testing_support/factories/store_credit_factory'
 
 FactoryGirl.define do
   factory :payment, aliases: [:credit_card_payment], class: Spree::Payment do
