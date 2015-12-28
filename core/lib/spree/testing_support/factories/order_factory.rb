@@ -2,6 +2,7 @@ require 'spree/testing_support/factories/address_factory'
 require 'spree/testing_support/factories/shipment_factory'
 require 'spree/testing_support/factories/store_factory'
 require 'spree/testing_support/factories/user_factory'
+require 'spree/testing_support/factories/line_item_factory'
 
 FactoryGirl.define do
   factory :order, class: Spree::Order do
