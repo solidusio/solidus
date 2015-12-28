@@ -1,3 +1,7 @@
+require 'spree/testing_support/factories/order_factory'
+require 'spree/testing_support/factories/stock_location_factory'
+require 'spree/testing_support/factories/return_reason_factory'
+
 FactoryGirl.define do
   factory :return_authorization, class: Spree::ReturnAuthorization do
     association(:order, factory: :shipped_order)
@@ -10,9 +14,5 @@ FactoryGirl.define do
     association(:order, factory: :shipped_order)
     association(:stock_location, factory: :stock_location)
     association(:reason, factory: :return_reason)
-  end
-
-  factory :return_reason, class: Spree::ReturnReason do
-    sequence(:name) { |n| "Defect ##{n}" }
   end
 end
