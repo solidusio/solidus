@@ -42,7 +42,8 @@ end
 
 namespace :gem do
   def version
-    File.read(File.expand_path("../SOLIDUS_VERSION", __FILE__)).strip
+    require 'spree/core/version'
+    Spree.solidus_version
   end
 
   def for_each_gem

@@ -1,10 +1,10 @@
 # encoding: UTF-8
-version = File.read(File.expand_path("../../SOLIDUS_VERSION", __FILE__)).strip
+require_relative '../core/lib/spree/core/version.rb'
 
 Gem::Specification.new do |s|
   s.platform    = Gem::Platform::RUBY
   s.name        = 'solidus_frontend'
-  s.version     = version
+  s.version     = Spree.solidus_version
   s.summary     = 'Cart and storefront for the Solidus e-commerce project.'
   s.description = s.summary
 
@@ -18,8 +18,8 @@ Gem::Specification.new do |s|
   s.require_path = 'lib'
   s.requirements << 'none'
 
-  s.add_dependency 'solidus_api', version
-  s.add_dependency 'solidus_core', version
+  s.add_dependency 'solidus_api', s.version
+  s.add_dependency 'solidus_core', s.version
 
   s.add_dependency 'canonical-rails', '~> 0.0.4'
   s.add_dependency 'jquery-rails'
