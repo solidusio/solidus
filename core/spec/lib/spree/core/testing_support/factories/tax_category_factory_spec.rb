@@ -1,5 +1,3 @@
-ENV['NO_FACTORIES'] = "NO FACTORIES"
-
 require 'spec_helper'
 require 'spree/testing_support/factories/tax_category_factory'
 
