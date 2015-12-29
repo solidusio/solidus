@@ -17,6 +17,10 @@ FactoryGirl.define do
       stock_location.country.states.first || stock_location.association(:state, :country => stock_location.country)
     end
 
+    factory :stock_location_without_variant_propagation do
+      propagate_all_variants false
+    end
+
     factory :stock_location_with_items do
       after(:create) do |stock_location, evaluator|
         # variant will add itself to all stock_locations in an after_create
