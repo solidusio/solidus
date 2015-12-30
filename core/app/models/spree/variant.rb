@@ -313,6 +313,13 @@ module Spree
     #   not from this variant
     # @return [Spree::Image] the image to display
     def display_image(fallback: true)
+      ActiveSupport::Deprecation.warn(<<WARN.squish)
+Spree::Variant#display_image is being deprecated in favor of
+Spree::Variant#gallery.primary_image and #Spree::Variant#gallery.best_image
+to select an image, and Spree::ImagesHelper#image_or_default
+to handle displaying a fallback
+WARN
+
       images.first || (fallback && product.variant_images.first) || Spree::Image.new
     end
 
