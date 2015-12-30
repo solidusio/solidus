@@ -206,7 +206,7 @@ $(document).ready(function(){
             if (idAttr) {
               objId = idAttr.split('_').slice(-1);
               if (!isNaN(objId)) {
-                positions['positions['+objId+']'] = position;
+                positions['positions['+objId+']'] = position+1;
               }
             }
           });
