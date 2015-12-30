@@ -497,8 +497,30 @@ describe Spree::Product, :type => :model do
     it { is_expected.to be_invalid }
   end
 
-  it "initializes a master variant when building a product" do
-    product = Spree::Product.new
-    expect(product.master.is_master).to be true
+  describe '.new' do
+    let(:product) { Spree::Product.new(attributes) }
+
+    shared_examples "new product with master" do
+      it "initializes master correctly" do
+        expect(product.master.is_master).to be true
+        expect(product.master.product).to be product
+      end
+    end
+
+    context 'no attributes' do
+      let(:attributes) { {} }
+      it_behaves_like "new product with master"
+    end
+
+    context 'initializing with variant attributes' do
+      let(:attributes) { {sku: 'FOO'} }
+
+      it_behaves_like "new product with master"
+
+      it "initializes the variant with the correct attributes" do
+        expect(product.master.sku).to eq 'FOO'
+        expect(product.sku).to eq 'FOO'
+      end
+    end
   end
 end
