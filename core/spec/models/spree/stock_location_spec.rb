@@ -88,7 +88,7 @@ module Spree
     end
 
     it 'returns nil when stock_item is not found for variant' do
-      stock_item = subject.stock_item(100)
+      stock_item = subject.stock_item(0)
       expect(stock_item).to be_nil
     end
 
