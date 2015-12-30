@@ -26,5 +26,5 @@ Gem::Specification.new do |s|
   s.add_dependency 'jquery-ui-rails', '~> 5.0.0'
   s.add_dependency 'select2-rails',   '3.5.9.1' # 3.5.9.2 breaks forms
 
-  s.add_dependency 'handlebars_assets'
+  s.add_dependency 'handlebars_assets', '~> 0.23'
 end
