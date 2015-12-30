@@ -18,4 +18,39 @@ RSpec.describe Spree::ImagesHelper, type: :helper do
       end
     end
   end
+  describe '#spree_image_tag' do
+    subject { helper.spree_image_tag image, style, options}
+
+    let(:image) { nil }
+    let(:style) { :mini }
+    let(:options) { {} }
+
+    it 'uses default image' do
+      expect(subject).to eq '<img src="/assets/noimage/mini.png" alt="Mini" />'
+    end
+
+    context 'given an image' do
+      let(:image) { Spree::Image.new attachment_file_name: 'legit_image.png' }
+
+      it 'uses the provided image' do
+        expect(subject).to eq '<img src="/spree/products//mini/legit_image.png" alt="Legit image" />'
+      end
+    end
+
+    context 'large style used' do
+      let(:style) { :large }
+
+      it 'uses default image with large style' do
+        expect(subject).to eq '<img src="/assets/noimage/large.png" alt="Large" />'
+      end
+    end
+
+    context 'with options provided' do
+      let(:options) { { itemprop: 'image' } }
+
+      it 'passes the options to image_tag' do
+        expect(subject).to eq '<img itemprop="image" src="/assets/noimage/mini.png" alt="Mini" />'
+      end
+    end
+  end
 end
