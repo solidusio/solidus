@@ -1,3 +1,5 @@
+require 'spree/testing_support/sequences'
+
 FactoryGirl.define do
   factory :global_zone, class: Spree::Zone do
     name 'GlobalZone'

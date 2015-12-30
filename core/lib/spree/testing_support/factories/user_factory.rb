@@ -1,3 +1,6 @@
+require 'spree/testing_support/sequences'
+require 'spree/testing_support/factories/role_factory'
+
 FactoryGirl.define do
   sequence :user_authentication_token do |n|
     "xxxx#{Time.current.to_i}#{rand(1000)}#{n}xxxxxxxxxxxxx"
