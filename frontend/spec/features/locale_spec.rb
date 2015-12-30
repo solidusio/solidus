@@ -28,34 +28,41 @@ describe 'setting locale', :type => :feature do
     end
   end
 
-  context 'checkout form validation messages' do
+  shared_examples "localized error message" do
     include_context 'checkout setup'
-
-    let(:error_messages) do
-      {
-        'en' => 'This field is required.',
-        'fr' => 'Ce champ est obligatoire.',
-        'de' => 'Dieses Feld ist ein Pflichtfeld.',
-      }
-    end
-
-    def check_error_text(text)
-      %w(firstname lastname address1 city).each do |attr|
-        expect(find(".field#b#{attr} label.error").text).to eq(text)
-      end
-    end
 
     it 'shows translated jquery.validate error messages', js: true do
       visit spree.root_path
       click_link mug.name
       click_button 'add-to-cart-button'
-      error_messages.each do |locale, message|
-        with_locale(locale) do
-          visit '/checkout/address'
-          find('.form-buttons input[type=submit]').click
-          check_error_text message
+      with_locale(locale) do
+        visit '/checkout/address'
+        find('.form-buttons input[type=submit]').click
+
+        %w(firstname lastname address1 city).each do |attr|
+          expect(find(".field#b#{attr} label.error")).to have_text(message)
         end
       end
+    end
+  end
+
+  context 'checkout form validation messages' do
+    context 'en' do
+      let(:locale) { 'en' }
+      let(:message) { 'This field is required.' }
+      it_behaves_like "localized error message"
+    end
+
+    context 'fr' do
+      let(:locale) { 'fr' }
+      let(:message) { 'Ce champ est obligatoire.' }
+      it_behaves_like "localized error message"
+    end
+
+    context 'de' do
+      let(:locale) { 'de' }
+      let(:message) { 'Dieses Feld ist ein Pflichtfeld.' }
+      it_behaves_like "localized error message"
     end
   end
 end
