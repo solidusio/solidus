@@ -283,6 +283,18 @@ module Spree
       end
     end
 
+    # Returns the gallery for the product, which represents all the images
+    # associated to this product, by default including through its variants
+    #
+    # The class initialized can be configured by a store using
+    # the config setting {Spree::AppConfiguration#product_gallery_class}
+    #
+    # @return [Spree::Gallery::Base] this products gallery
+    # @see Spree::AppConfiguration#product_gallery_class
+    def gallery
+      @gallery ||= Spree::Config.product_gallery_class.new(self)
+    end
+
     private
 
     def add_associations_from_prototype
