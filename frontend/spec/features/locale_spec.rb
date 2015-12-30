@@ -5,6 +5,7 @@ describe 'setting locale', :type => :feature do
     I18n.locale = locale
     Spree::Frontend::Config[:locale] = locale
     yield
+  ensure
     I18n.locale = I18n.default_locale
     Spree::Frontend::Config[:locale] = 'en'
   end
