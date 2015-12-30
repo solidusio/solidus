@@ -2,11 +2,7 @@
 <%= order_form.fields_for :line_items, line_item do |item_form| -%>
   <tr class="<%= cycle('', 'alt') %> line-item">
     <td class="cart-item-image" data-hook="cart_item_image">
-      <% if variant.images.length == 0 %>
-        <%= link_to image_tag(variant.product.display_image.attachment(:small)), variant.product %>
-      <% else %>
-        <%= link_to image_tag(variant.images.first.attachment.url(:small)), variant.product %>
-      <% end %>
+      <%= link_to spree_image_tag(variant.gallery.best_image, :small), variant.product  %>
     </td>
     <td class="cart-item-description" data-hook="cart_item_description">
       <h4><%= link_to line_item.name, product_path(variant.product) %></h4>
