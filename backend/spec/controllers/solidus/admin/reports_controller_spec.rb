@@ -38,7 +38,7 @@ describe Solidus::Admin::ReportsController, :type => :controller do
       order_complete_mid_month.save!
     end
 
-    subject { spree_get :sales_total, params }
+    subject { solidus_get :sales_total, params }
 
     shared_examples 'sales total report' do
       it 'should respond with success' do
@@ -120,7 +120,7 @@ describe Solidus::Admin::ReportsController, :type => :controller do
 
   describe 'GET index' do
     it 'should be ok' do
-      spree_get :index
+      solidus_get :index
       expect(response).to be_ok
     end
   end

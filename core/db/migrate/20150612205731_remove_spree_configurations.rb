@@ -1,15 +1,15 @@
 class RemoveSpreeConfigurations < ActiveRecord::Migration
   def up
-    drop_table :spree_configurations
+    drop_table :solidus_configurations
   end
 
   def down
-    create_table :spree_configurations do |t|
+    create_table :solidus_configurations do |t|
       t.string     :name
       t.string     :type, :limit => 50
       t.timestamps null: true
     end
 
-    add_index :spree_configurations, [:name, :type], :name => 'index_spree_configurations_on_name_and_type'
+    add_index :solidus_configurations, [:name, :type], :name => 'index_solidus_configurations_on_name_and_type'
   end
 end

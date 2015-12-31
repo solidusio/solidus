@@ -71,7 +71,7 @@ module Spree
   end
 
   def self.translations
-    @translations ||= I18n.backend.send(:translations)[I18n.locale][:spree]
+    @translations ||= I18n.backend.send(:translations)[I18n.locale][:solidus]
   end
 end
 

@@ -6,10 +6,10 @@ class AddShippingRatesToShipments < ActiveRecord::Migration
                                      :selected => true)
     end
 
-    remove_column :spree_shipments, :shipping_method_id
+    remove_column :solidus_shipments, :shipping_method_id
   end
 
   def down
-    add_column :spree_shipments, :shipping_method_id, :integer
+    add_column :solidus_shipments, :shipping_method_id, :integer
   end
 end

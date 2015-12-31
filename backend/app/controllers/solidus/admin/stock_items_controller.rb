@@ -24,7 +24,7 @@ module Spree
           variant = Variant.accessible_by(current_ability, :read).find(params[:variant_id])
           stock_location = StockLocation.accessible_by(current_ability, :read).find(params[:stock_location_id])
           stock_location.stock_movements.build(stock_movement_params).tap do |stock_movement|
-            stock_movement.originator = try_spree_current_user
+            stock_movement.originator = try_solidus_current_user
             stock_movement.stock_item = stock_location.set_up_stock_item(variant)
           end
         end

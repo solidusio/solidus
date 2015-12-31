@@ -8,7 +8,7 @@ module Spree
       validates :calculator, presence: true
 
       def self.calculators
-        spree_calculators.send model_name_without_spree_namespace
+        solidus_calculators.send model_name_without_solidus_namespace
       end
 
       def calculator_type
@@ -21,12 +21,12 @@ module Spree
       end
 
       private
-      def self.model_name_without_spree_namespace
-        self.to_s.tableize.gsub('/', '_').sub('spree_', '')
+      def self.model_name_without_solidus_namespace
+        self.to_s.tableize.gsub('/', '_').sub('solidus_', '')
       end
 
-      def self.spree_calculators
-        Rails.application.config.spree.calculators
+      def self.solidus_calculators
+        Rails.application.config.solidus.calculators
       end
     end
   end

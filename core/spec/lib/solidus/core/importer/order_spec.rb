@@ -63,7 +63,7 @@ module Spree
         let(:other_user) { stub_model(LegacyUser, :email => 'dana@scully.com') }
 
         context "as an admin" do
-          before { allow(user).to receive_messages :has_spree_role? => true }
+          before { allow(user).to receive_messages :has_solidus_role? => true }
 
           context "a user's id is not provided" do
             context "nil user id is provided" do
@@ -93,7 +93,7 @@ module Spree
         end
 
         context "as a user" do
-          before { allow(user).to receive_messages :has_spree_role? => false }
+          before { allow(user).to receive_messages :has_solidus_role? => false }
           it "does not assign the order to the other user" do
             params = { user_id: other_user.id }
             order = Importer::Order.import(user, params)

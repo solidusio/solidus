@@ -4,7 +4,7 @@ class BarAbility
 
   def initialize(user)
     user ||= Solidus::User.new
-    if user.has_spree_role? 'bar'
+    if user.has_solidus_role? 'bar'
       # allow dispatch to :admin, :index, and :show on Solidus::Order
       can [:admin, :index, :show], Solidus::Order
       # allow dispatch to :index, :show, :create and :update shipments on the admin

@@ -21,7 +21,7 @@ module Spree
 
     helper 'solidus/orders'
 
-    rescue_from Solidus::Core::GatewayError, :with => :rescue_from_spree_gateway_error
+    rescue_from Solidus::Core::GatewayError, :with => :rescue_from_solidus_gateway_error
 
     # Updates the order and advances to the next state (when possible.)
     def update
@@ -96,7 +96,7 @@ module Spree
 
       def load_order
         @order = current_order
-        redirect_to spree.cart_path and return unless @order
+        redirect_to solidus.cart_path and return unless @order
       end
 
       def set_state_if_present
@@ -108,24 +108,24 @@ module Spree
 
       def ensure_checkout_allowed
         unless @order.checkout_allowed?
-          redirect_to spree.cart_path
+          redirect_to solidus.cart_path
         end
       end
 
       def ensure_order_not_completed
-        redirect_to spree.cart_path if @order.completed?
+        redirect_to solidus.cart_path if @order.completed?
       end
 
       def ensure_sufficient_stock_lines
         if @order.insufficient_stock_lines.present?
           flash[:error] = Solidus.t(:inventory_error_flash_for_insufficient_quantity)
-          redirect_to spree.cart_path
+          redirect_to solidus.cart_path
         end
       end
 
       # Provides a route to redirect after order completion
       def completion_route
-        spree.order_path(@order)
+        solidus.order_path(@order)
       end
 
       def setup_for_current_state
@@ -157,13 +157,13 @@ module Spree
           end
         end
 
-        if try_spree_current_user && try_spree_current_user.respond_to?(:payment_sources)
-          @payment_sources = try_spree_current_user.payment_sources
+        if try_solidus_current_user && try_solidus_current_user.respond_to?(:payment_sources)
+          @payment_sources = try_solidus_current_user.payment_sources
         end
       end
 
-      def rescue_from_spree_gateway_error(exception)
-        flash.now[:error] = Solidus.t(:spree_gateway_error_flash_for_checkout)
+      def rescue_from_solidus_gateway_error(exception)
+        flash.now[:error] = Solidus.t(:solidus_gateway_error_flash_for_checkout)
         @order.errors.add(:base, exception.message)
         render :edit
       end

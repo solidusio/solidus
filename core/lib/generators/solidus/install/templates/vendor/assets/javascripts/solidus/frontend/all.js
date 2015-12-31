@@ -7,7 +7,7 @@
 //= require jquery
 //= require jquery_ujs
 //= require solidus/frontend
-<% unless options[:lib_name] == 'spree' || options[:lib_name] == 'solidus/frontend' %>
+<% unless options[:lib_name] == 'solidus' || options[:lib_name] == 'solidus/frontend' %>
 //= require solidus/frontend/<%= options[:lib_name].gsub("/", "_") %>
 <% end %>
 //= require_tree .

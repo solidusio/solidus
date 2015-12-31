@@ -1,9 +1,9 @@
-require 'spree_core'
+require 'solidus_core'
 require 'solidus/sample'
 
 module SpreeSample
   class Engine < Rails::Engine
-    engine_name 'spree_sample'
+    engine_name 'solidus_sample'
 
     # Needs to be here so we can access it inside the tests
     def self.load_samples

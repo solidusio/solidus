@@ -32,7 +32,7 @@ module Spree
         taxonomy = Solidus::Taxonomy.find_by(id: params[:taxonomy_id])
 
         if taxonomy.nil?
-          @taxon.errors[:taxonomy_id] = I18n.t(:invalid_taxonomy_id, scope: 'spree.api')
+          @taxon.errors[:taxonomy_id] = I18n.t(:invalid_taxonomy_id, scope: 'solidus.api')
           invalid_resource!(@taxon) and return
         end
 

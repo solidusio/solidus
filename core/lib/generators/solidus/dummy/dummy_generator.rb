@@ -54,9 +54,9 @@ module Spree
     def test_dummy_inject_extension_requirements
       if DummyGeneratorHelper.inject_extension_requirements
         inside dummy_path do
-          inject_require_for('spree_frontend')
-          inject_require_for('spree_backend')
-          inject_require_for('spree_api')
+          inject_require_for('solidus_frontend')
+          inject_require_for('solidus_backend')
+          inject_require_for('solidus_api')
         end
       end
     end

@@ -1,7 +1,7 @@
 module Spree
   module TestingSupport
     module UrlHelpers
-      def spree
+      def solidus
         Solidus::Core::Engine.routes.url_helpers
       end
     end

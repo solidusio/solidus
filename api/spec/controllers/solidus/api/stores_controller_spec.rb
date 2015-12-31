@@ -5,7 +5,7 @@ module Spree
     render_views
 
     let!(:store) do
-      create(:store, name: "My Spree Store", url: "spreestore.example.com")
+      create(:store, name: "My Spree Store", url: "solidusstore.example.com")
     end
 
     before do
@@ -18,7 +18,7 @@ module Spree
       let!(:non_default_store) do
         create(:store,
           name: "Extra Store",
-          url: "spreestore-5.example.com",
+          url: "solidusstore-5.example.com",
           default: false
         )
       end
@@ -29,11 +29,11 @@ module Spree
           {
             "id" => store.id,
             "name" => "My Spree Store",
-            "url" => "spreestore.example.com",
+            "url" => "solidusstore.example.com",
             "meta_description" => nil,
             "meta_keywords" => nil,
             "seo_title" => nil,
-            "mail_from_address" => "spree@example.org",
+            "mail_from_address" => "solidus@example.org",
             "default_currency" => nil,
             "code" => store.code,
             "default" => true
@@ -41,11 +41,11 @@ module Spree
           {
             "id" => non_default_store.id,
             "name" => "Extra Store",
-            "url" => "spreestore-5.example.com",
+            "url" => "solidusstore-5.example.com",
             "meta_description" => nil,
             "meta_keywords" => nil,
             "seo_title" => nil,
-            "mail_from_address" => "spree@example.org",
+            "mail_from_address" => "solidus@example.org",
             "default_currency" => nil,
             "code" => non_default_store.code,
             "default" => false
@@ -58,11 +58,11 @@ module Spree
         expect(json_response).to eq(
           "id" => store.id,
           "name" => "My Spree Store",
-          "url" => "spreestore.example.com",
+          "url" => "solidusstore.example.com",
           "meta_description" => nil,
           "meta_keywords" => nil,
           "seo_title" => nil,
-          "mail_from_address" => "spree@example.org",
+          "mail_from_address" => "solidus@example.org",
           "default_currency" => nil,
           "code" => store.code,
           "default" => true
@@ -71,9 +71,9 @@ module Spree
 
       it "I can create a new store" do
         store_hash = {
-          code: "spree123",
+          code: "solidus123",
           name: "Hack0rz",
-          url: "spree123.example.com",
+          url: "solidus123.example.com",
           mail_from_address: "me@example.com"
         }
         api_post :create, store: store_hash
@@ -82,12 +82,12 @@ module Spree
 
       it "I can update an existing store" do
         store_hash = {
-          url: "spree123.example.com",
+          url: "solidus123.example.com",
           mail_from_address: "me@example.com"
         }
         api_put :update, id: store.id, store: store_hash
         expect(response.status).to eq(200)
-        expect(store.reload.url).to eql "spree123.example.com"
+        expect(store.reload.url).to eql "solidus123.example.com"
         expect(store.reload.mail_from_address).to eql "me@example.com"
       end
 

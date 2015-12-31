@@ -6,7 +6,7 @@ module Spree
     let(:variant) { create(:variant) }
     let(:order_1) { Solidus::Order.create }
     let(:order_2) { Solidus::Order.create }
-    let(:user) { stub_model(Solidus::LegacyUser, email: "spree@example.com") }
+    let(:user) { stub_model(Solidus::LegacyUser, email: "solidus@example.com") }
     let(:subject) { Solidus::OrderMerger.new(order_1) }
 
     it "destroys the other order" do

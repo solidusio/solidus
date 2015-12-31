@@ -30,7 +30,7 @@
   </thead>
   <tbody>
     <% @option_types.each do |option_type| %>
-      <tr class="spree_option_type <%= cycle('odd', 'even')%>" id="<%= spree_dom_id option_type %>" data-hook="option_row">
+      <tr class="solidus_option_type <%= cycle('odd', 'even')%>" id="<%= solidus_dom_id option_type %>" data-hook="option_row">
         <td class="no-border"><span class="handle"></span></td>
         <td class="align-center"><%= option_type.name %></td>
         <td class="align-center presentation"><%= option_type.presentation %></td>
@@ -50,7 +50,7 @@
   <div class="alpha twelve columns no-objects-found">
     <%= Solidus.t(:no_resource_found, resource: I18n.t(:other, scope: 'activerecord.models.solidus/option_type')) %>
     <% if can?(:create, Solidus::OptionType) %>
-      <%= link_to Solidus.t(:add_one), spree.new_admin_option_type_path %>!
+      <%= link_to Solidus.t(:add_one), solidus.new_admin_option_type_path %>!
     <% end %>
   </div>
 <% end %>

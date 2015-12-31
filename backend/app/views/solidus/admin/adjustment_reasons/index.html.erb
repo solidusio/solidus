@@ -28,7 +28,7 @@
     </thead>
     <tbody>
       <% @adjustment_reasons.each do |adjustment_reason| %>
-        <tr id="<%= spree_dom_id adjustment_reason %>" data-hook="adjustment_reason_row" class="<%= cycle('odd', 'even')%>">
+        <tr id="<%= solidus_dom_id adjustment_reason %>" data-hook="adjustment_reason_row" class="<%= cycle('odd', 'even')%>">
           <td class="align-center">
             <%= adjustment_reason.name %>
           </td>

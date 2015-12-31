@@ -7,7 +7,7 @@ describe 'Stock Transfers', :type => :feature, :js => true do
   let(:description) { 'Test stock transfer' }
 
   before do
-    allow_any_instance_of(Solidus::Admin::BaseController).to receive(:spree_current_user).and_return(admin_user)
+    allow_any_instance_of(Solidus::Admin::BaseController).to receive(:solidus_current_user).and_return(admin_user)
   end
 
   describe 'create stock transfer' do
@@ -15,7 +15,7 @@ describe 'Stock Transfers', :type => :feature, :js => true do
       source_location = create(:stock_location_with_items, :name => 'NY')
       destination_location = create(:stock_location, :name => 'SF')
 
-      visit spree.new_admin_stock_transfer_path
+      visit solidus.new_admin_stock_transfer_path
       select "SF", from: 'stock_transfer[source_location_id]'
       fill_in 'stock_transfer_description', with: description
       click_button 'Continue'
@@ -44,7 +44,7 @@ describe 'Stock Transfers', :type => :feature, :js => true do
 
     context "stock transfer does not have a destination" do
       it 'displays the stock transfer details' do
-        visit spree.admin_stock_transfer_path(stock_transfer)
+        visit solidus.admin_stock_transfer_path(stock_transfer)
         expect(page).to have_content("SF")
         expect(page).to have_content("Test stock transfer")
       end
@@ -62,7 +62,7 @@ describe 'Stock Transfers', :type => :feature, :js => true do
 
     describe "tracking info" do
       it 'adds tracking number' do
-        visit spree.tracking_info_admin_stock_transfer_path(stock_transfer)
+        visit solidus.tracking_info_admin_stock_transfer_path(stock_transfer)
 
         fill_in 'stock_transfer_tracking_number', :with => "12345"
         click_button 'Save'
@@ -74,11 +74,11 @@ describe 'Stock Transfers', :type => :feature, :js => true do
 
     describe 'with enough stock' do
       it 'ships stock transfer' do
-        visit spree.tracking_info_admin_stock_transfer_path(stock_transfer)
+        visit solidus.tracking_info_admin_stock_transfer_path(stock_transfer)
         click_link 'ship'
 
         find('#confirm-ship-link', visible: false).click
-        expect(current_path).to eq spree.admin_stock_transfers_path
+        expect(current_path).to eq solidus.admin_stock_transfers_path
         expect(stock_transfer.reload.shipped_at).to_not be_nil
       end
     end
@@ -91,12 +91,12 @@ describe 'Stock Transfers', :type => :feature, :js => true do
       end
 
       it 'does not ship stock transfer' do
-        visit spree.tracking_info_admin_stock_transfer_path(stock_transfer)
+        visit solidus.tracking_info_admin_stock_transfer_path(stock_transfer)
 
         click_link 'ship'
 
         find('#confirm-ship-link', visible: false).click
-        expect(current_path).to eq spree.tracking_info_admin_stock_transfer_path(stock_transfer)
+        expect(current_path).to eq solidus.tracking_info_admin_stock_transfer_path(stock_transfer)
         expect(stock_transfer.reload.shipped_at).to be_nil
       end
     end

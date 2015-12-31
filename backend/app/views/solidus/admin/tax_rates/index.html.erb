@@ -38,7 +38,7 @@
     </thead>
     <tbody>
       <% @tax_rates.each do |tax_rate|%>
-      <tr id="<%= spree_dom_id tax_rate %>" data-hook="rate_row" class="<%= cycle('odd', 'even')%>">
+      <tr id="<%= solidus_dom_id tax_rate %>" data-hook="rate_row" class="<%= cycle('odd', 'even')%>">
         <td class="align-center"><%=tax_rate.zone.try(:name) || Solidus.t(:not_available) %></td>
         <td class="align-center"><%=tax_rate.name %></td>
         <td class="align-center"><%=tax_rate.tax_category.try(:name) || Solidus.t(:not_available) %></td>
@@ -62,7 +62,7 @@
   <div class="alpha twelve columns no-objects-found">
     <%= Solidus.t(:no_resource_found, resource: I18n.t(:other, scope: 'activerecord.models.solidus/tax_rate')) %>
     <% if can?(:create, Solidus::TaxRate) %>
-      <%= link_to Solidus.t(:add_one), spree.new_admin_tax_rate_path %>!
+      <%= link_to Solidus.t(:add_one), solidus.new_admin_tax_rate_path %>!
     <% end %>
   </div>
 <% end %>

@@ -10,7 +10,7 @@ describe Solidus::Admin::ReturnItemsController, :type => :controller do
     let(:new_acceptance_status) { 'rejected' }
 
     subject do
-      spree_put :update, id: return_item.to_param, return_item: {acceptance_status: new_acceptance_status}
+      solidus_put :update, id: return_item.to_param, return_item: {acceptance_status: new_acceptance_status}
     end
 
     it 'updates the return item' do
@@ -21,7 +21,7 @@ describe Solidus::Admin::ReturnItemsController, :type => :controller do
 
     it 'redirects to the customer return' do
       subject
-      expect(response).to redirect_to spree.edit_admin_order_customer_return_path(customer_return.order, customer_return)
+      expect(response).to redirect_to solidus.edit_admin_order_customer_return_path(customer_return.order, customer_return)
     end
   end
 end

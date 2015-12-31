@@ -7,7 +7,7 @@ module Spree
     #
     #  {
     #    payment_source: {
-    #      # The keys here are spree_payment_method.id's
+    #      # The keys here are solidus_payment_method.id's
     #      '1' => {...source attributes for payment method 1...},
     #      '2' => {...source attributes for payment method 2...},
     #    },

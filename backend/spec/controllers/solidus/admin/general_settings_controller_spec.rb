@@ -4,12 +4,12 @@ describe Solidus::Admin::GeneralSettingsController, type: :controller do
   let(:user) { create(:user) }
 
   before do
-    allow(controller).to receive_messages :spree_current_user => user
-    user.spree_roles << Solidus::Role.find_or_create_by(name: 'admin')
+    allow(controller).to receive_messages :solidus_current_user => user
+    user.solidus_roles << Solidus::Role.find_or_create_by(name: 'admin')
   end
 
   describe '#clear_cache' do
-    subject { spree_post :clear_cache }
+    subject { solidus_post :clear_cache }
 
     shared_examples 'a HTTP 204 response' do
       it 'grant access to users with an admin role' do

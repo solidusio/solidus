@@ -3,14 +3,14 @@ require 'spec_helper'
 describe Solidus::UserMethods do
   let(:test_user)        { create :user }
 
-  describe '#has_spree_role?' do
-    subject { test_user.has_spree_role? name }
+  describe '#has_solidus_role?' do
+    subject { test_user.has_solidus_role? name }
 
     let(:role) { Solidus::Role.create(name: name) }
     let(:name) { 'test' }
 
     context 'with a role' do
-      before { test_user.spree_roles << role }
+      before { test_user.solidus_roles << role }
       it     { is_expected.to be_truthy }
     end
 
@@ -19,8 +19,8 @@ describe Solidus::UserMethods do
     end
   end
 
-  describe '#last_incomplete_spree_order' do
-    subject { test_user.last_incomplete_spree_order }
+  describe '#last_incomplete_solidus_order' do
+    subject { test_user.last_incomplete_solidus_order }
 
     context 'with an incomplete order' do
       let(:last_incomplete_order) { create :order, user: test_user }

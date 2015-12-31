@@ -6,7 +6,7 @@ module Spree
 
       helper_method :refund_reasons
 
-      rescue_from Solidus::Core::GatewayError, with: :spree_core_gateway_error, only: :create
+      rescue_from Solidus::Core::GatewayError, with: :solidus_core_gateway_error, only: :create
 
       private
 
@@ -29,7 +29,7 @@ module Spree
         end
       end
 
-      def spree_core_gateway_error(error)
+      def solidus_core_gateway_error(error)
         flash[:error] = error.message
         render :new
       end

@@ -1,12 +1,12 @@
 <nav class="columns sixteen">
   <ul id="main-nav-bar" class="inline" data-hook>
-    <li id="home-link" data-hook><%= link_to Solidus.t(:home), spree.root_path %></li>
+    <li id="home-link" data-hook><%= link_to Solidus.t(:home), solidus.root_path %></li>
     <li id="link-to-cart" data-hook>
       <noscript>
         <%= link_to Solidus.t(:cart), '/cart' %>
       </noscript>
       &nbsp;
     </li>
-    <script>Solidus.fetch_cart('<%= j spree.cart_link_url %>')</script>
+    <script>Solidus.fetch_cart('<%= j solidus.cart_link_url %>')</script>
   </ul>
 </nav>

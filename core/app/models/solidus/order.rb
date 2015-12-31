@@ -122,8 +122,8 @@ module Spree
     scope :by_store, ->(store) { where(store_id: store.id) }
 
     # shows completed orders first, by their completed_at date, then uncompleted orders by their created_at
-    scope :reverse_chronological, -> { order('spree_orders.completed_at IS NULL', completed_at: :desc, created_at: :desc) }
-    scope :unreturned_exchange, -> { joins(:shipments).where('spree_orders.created_at > spree_shipments.created_at') }
+    scope :reverse_chronological, -> { order('solidus_orders.completed_at IS NULL', completed_at: :desc, created_at: :desc) }
+    scope :unreturned_exchange, -> { joins(:shipments).where('solidus_orders.created_at > solidus_shipments.created_at') }
 
     def self.by_customer(customer)
       joins(:user).where("#{Solidus.user_class.table_name}.email" => customer)
@@ -583,7 +583,7 @@ module Spree
 
     def has_non_reimbursement_related_refunds?
       refunds.non_reimbursement.exists? ||
-        payments.offset_payment.exists? # how old versions of spree stored refunds
+        payments.offset_payment.exists? # how old versions of solidus stored refunds
     end
 
     def token

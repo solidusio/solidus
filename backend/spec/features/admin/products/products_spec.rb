@@ -6,7 +6,7 @@ describe "Products", :type => :feature do
     stub_authorization!
 
     before(:each) do
-      visit spree.admin_path
+      visit solidus.admin_path
     end
 
     def build_option_type_with_values(name, values)
@@ -63,7 +63,7 @@ describe "Products", :type => :feature do
           # Regression test for #2737
           context "uses руб as the currency symbol" do
             it "on the products listing page" do
-              visit spree.admin_products_path
+              visit solidus.admin_products_path
               within_row(1) { expect(page).to have_content("19.99 ₽") }
             end
           end
@@ -308,7 +308,7 @@ describe "Products", :type => :feature do
       end
 
       it 'should parse correctly available_on' do
-        visit spree.admin_product_path(product)
+        visit solidus.admin_product_path(product)
         fill_in "product_available_on", :with => "2012/12/25"
         click_button "Update"
         expect(page).to have_content("successfully updated!")
@@ -316,7 +316,7 @@ describe "Products", :type => :feature do
       end
 
       it 'should add option_types when selecting a prototype' do
-        visit spree.admin_product_path(product)
+        visit solidus.admin_product_path(product)
         click_link 'Product Properties'
         expect(page).to have_content("SELECT FROM PROTOTYPE")
         click_link "Select From Prototype"
@@ -339,7 +339,7 @@ describe "Products", :type => :feature do
       let!(:product) { create(:product) }
 
       it "is still viewable" do
-        visit spree.admin_products_path
+        visit solidus.admin_products_path
 
         expect(page).to have_content(product.name)
         accept_alert do
@@ -360,7 +360,7 @@ describe "Products", :type => :feature do
   context 'with only product permissions' do
 
     before do
-      allow_any_instance_of(Solidus::Admin::BaseController).to receive(:spree_current_user).and_return(nil)
+      allow_any_instance_of(Solidus::Admin::BaseController).to receive(:solidus_current_user).and_return(nil)
     end
 
     custom_authorization! do |user|
@@ -369,7 +369,7 @@ describe "Products", :type => :feature do
     let!(:product) { create(:product) }
 
     it "should only display accessible links on index" do
-      visit spree.admin_products_path
+      visit solidus.admin_products_path
       expect(page).to have_link('Products')
       expect(page).not_to have_link('Option Types')
       expect(page).not_to have_link('Properties')
@@ -382,7 +382,7 @@ describe "Products", :type => :feature do
     end
 
     it "should only display accessible links on edit" do
-      visit spree.admin_product_path(product)
+      visit solidus.admin_product_path(product)
 
       # product tabs should be hidden
       expect(page).to have_link('Product Details')

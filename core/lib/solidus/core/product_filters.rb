@@ -5,10 +5,10 @@ module Spree
     #   the current contents are mainly for testing and documentation
 
     # To override this file...
-    #   1) Make a copy of it in your sites local /lib/spree folder
+    #   1) Make a copy of it in your sites local /lib/solidus folder
     #   2) Add it to the config load path, or require it in an initializer, e.g...
     #
-    #      # config/initializers/spree.rb
+    #      # config/initializers/solidus.rb
     #      require 'solidus/product_filters'
     #
 

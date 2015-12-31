@@ -50,14 +50,14 @@ module Spree
       let!(:widget) { Widget.create!(name: "a widget") }
 
       it "returns no widgets" do
-        api_get :index, token: user.spree_api_key
+        api_get :index, token: user.solidus_api_key
         expect(response).to be_success
         expect(json_response['widgets']).to be_blank
       end
 
       context "it has authorization to read widgets" do
         it "returns widgets" do
-          api_get :index, token: admin_user.spree_api_key
+          api_get :index, token: admin_user.solidus_api_key
           expect(response).to be_success
           expect(json_response['widgets']).to include(
             'name' => 'a widget',
@@ -71,13 +71,13 @@ module Spree
       let(:widget) { Widget.create!(name: "a widget") }
 
       it "returns not found" do
-        api_get :show, id: widget.to_param, token: user.spree_api_key
+        api_get :show, id: widget.to_param, token: user.solidus_api_key
         assert_not_found!
       end
 
       context "it has authorization read widgets" do
         it "returns widget details" do
-          api_get :show, id: widget.to_param, token: admin_user.spree_api_key
+          api_get :show, id: widget.to_param, token: admin_user.solidus_api_key
           expect(response).to be_success
           expect(json_response['name']).to eq 'a widget'
         end
@@ -86,13 +86,13 @@ module Spree
 
     describe "#new" do
       it "returns unauthorized" do
-        api_get :new, token: user.spree_api_key
+        api_get :new, token: user.solidus_api_key
         expect(response).to be_unauthorized
       end
 
       context "it is allowed to view a new widget" do
         it "can learn how to create a new widget" do
-          api_get :new, token: admin_user.spree_api_key
+          api_get :new, token: admin_user.solidus_api_key
           expect(response).to be_success
           expect(json_response["attributes"]).to eq(['name'])
         end
@@ -102,7 +102,7 @@ module Spree
     describe "#create" do
       it "returns unauthorized" do
         expect {
-          api_post :create, widget: { name: "a widget" }, token: user.spree_api_key
+          api_post :create, widget: { name: "a widget" }, token: user.solidus_api_key
         }.not_to change(Widget, :count)
         expect(response).to be_unauthorized
       end
@@ -110,7 +110,7 @@ module Spree
       context "it is authorized to create widgets" do
         it "can create a widget" do
           expect {
-            api_post :create, widget: { name: "a widget" }, token: admin_user.spree_api_key
+            api_post :create, widget: { name: "a widget" }, token: admin_user.solidus_api_key
           }.to change(Widget, :count).by(1)
           expect(response).to be_created
           expect(json_response['name']).to eq 'a widget'
@@ -122,14 +122,14 @@ module Spree
     describe "#update" do
       let!(:widget) { Widget.create!(name: "a widget") }
       it "returns unauthorized" do
-        api_put :update, id: widget.to_param, widget: { name: "another widget" }, token: user.spree_api_key
+        api_put :update, id: widget.to_param, widget: { name: "another widget" }, token: user.solidus_api_key
         assert_not_found!
         expect(widget.reload.name).to eq 'a widget'
       end
 
       context "it is authorized to update widgets" do
         it "can update a widget" do
-          api_put :update, id: widget.to_param, widget: { name: "another widget" }, token: admin_user.spree_api_key
+          api_put :update, id: widget.to_param, widget: { name: "another widget" }, token: admin_user.solidus_api_key
           expect(response).to be_success
           expect(json_response['name']).to eq 'another widget'
           expect(widget.reload.name).to eq 'another widget'
@@ -140,14 +140,14 @@ module Spree
     describe "#destroy" do
       let!(:widget) { Widget.create!(name: "a widget") }
       it "returns unauthorized" do
-        api_delete :destroy, id: widget.to_param, token: user.spree_api_key
+        api_delete :destroy, id: widget.to_param, token: user.solidus_api_key
         assert_not_found!
         expect { widget.reload }.not_to raise_error
       end
 
       context "it is authorized to destroy widgets" do
         it "can destroy a widget" do
-          api_delete :destroy, id: widget.to_param, token: admin_user.spree_api_key
+          api_delete :destroy, id: widget.to_param, token: admin_user.solidus_api_key
           expect(response.status).to eq 204
           expect { widget.reload }.to raise_error(ActiveRecord::RecordNotFound)
         end

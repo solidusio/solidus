@@ -23,7 +23,7 @@ module Spree
             create_adjustments_from_params(params.delete(:adjustments_attributes), order)
             create_payments_from_params(params.delete(:payments_attributes), order)
 
-            params.delete(:user_id) unless user.try(:has_spree_role?, "admin") && params.key?(:user_id)
+            params.delete(:user_id) unless user.try(:has_solidus_role?, "admin") && params.key?(:user_id)
 
             completed_at = params.delete(:completed_at)
 
@@ -132,7 +132,7 @@ module Spree
             payment = order.payments.build order: order
             payment.amount = p[:amount].to_f
             # Order API should be using state as that's the normal payment field.
-            # spree_wombat serializes payment state as status so imported orders should fall back to status field.
+            # solidus_wombat serializes payment state as status so imported orders should fall back to status field.
             payment.state = p[:state] || p[:status] || 'completed'
             payment.payment_method = Solidus::PaymentMethod.find_by_name!(p[:payment_method])
             payment.source = create_source_payment_from_params(p[:source], payment) if p[:source]

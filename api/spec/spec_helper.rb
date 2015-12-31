@@ -57,7 +57,7 @@ RSpec.configure do |config|
 
   config.before(:each) do
     Rails.cache.clear
-    reset_spree_preferences
+    reset_solidus_preferences
     Solidus::Api::Config[:requires_authentication] = true
   end
 

@@ -9,7 +9,7 @@ describe "setting locale", :type => :feature do
       :date => {
         :month_names => [],
       },
-      :spree => {
+      :solidus => {
         :admin => {
           :tab => { :orders => "Ordres" }
         },
@@ -24,7 +24,7 @@ describe "setting locale", :type => :feature do
   end
 
   it "should be in french" do
-    visit spree.admin_path
+    visit solidus.admin_path
     expect(page).to have_content("Ordres")
   end
 end

@@ -1,7 +1,7 @@
 class CreateDefaultStock < ActiveRecord::Migration
   def up
-    unless column_exists? :spree_stock_locations, :default
-      add_column :spree_stock_locations, :default, :boolean, null: false, default: false
+    unless column_exists? :solidus_stock_locations, :default
+      add_column :solidus_stock_locations, :default, :boolean, null: false, default: false
     end
 
     Solidus::StockLocation.skip_callback(:create, :after, :create_stock_items)
@@ -18,11 +18,11 @@ class CreateDefaultStock < ActiveRecord::Migration
       stock_item.save! validate: false
     end
 
-    remove_column :spree_variants, :count_on_hand
+    remove_column :solidus_variants, :count_on_hand
   end
 
   def down
-    add_column :spree_variants, :count_on_hand, :integer
+    add_column :solidus_variants, :count_on_hand, :integer
 
     Solidus::StockItem.find_each do |stock_item|
       stock_item.variant.update_column :count_on_hand, stock_item.count_on_hand

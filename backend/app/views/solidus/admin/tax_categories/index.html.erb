@@ -37,7 +37,7 @@
          @edit_url = edit_admin_tax_category_path(tax_category)
          @delete_url = admin_tax_category_path(tax_category)
     %>
-      <tr id="<%= spree_dom_id tax_category %>" data-hook="tax_row" class="<%= cycle('odd', 'even')%>">
+      <tr id="<%= solidus_dom_id tax_category %>" data-hook="tax_row" class="<%= cycle('odd', 'even')%>">
         <td class="align-center"><%= tax_category.name %></td>
         <td class="align-center"><%= tax_category.tax_code %></td>
         <td class="align-center"><%= tax_category.description %></td>
@@ -57,7 +57,7 @@
   <div class="alpha twelve columns no-objects-found">
     <%= Solidus.t(:no_resource_found, resource: I18n.t(:other, scope: 'activerecord.models.solidus/tax_category')) %>
     <% if can?(:create, Solidus::TaxCategory) %>
-      <%= link_to Solidus.t(:add_one), spree.new_admin_tax_category_path %>!
+      <%= link_to Solidus.t(:add_one), solidus.new_admin_tax_category_path %>!
     <% end %>
   </div>
 <% end %>

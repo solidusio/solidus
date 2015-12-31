@@ -14,7 +14,7 @@ module Spree
         end
         options[:route] ||=  "admin_#{args.first}"
 
-        destination_url = options[:url] || spree.send("#{options[:route]}_path")
+        destination_url = options[:url] || solidus.send("#{options[:route]}_path")
         titleized_label = Solidus.t(options[:label], :default => options[:label], :scope => [:admin, :tab]).titleize
 
         css_classes = []

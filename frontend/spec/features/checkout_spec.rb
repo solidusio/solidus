@@ -87,11 +87,11 @@ describe "Checkout", type: :feature, inaccessible: true do
       order.update!
 
       allow_any_instance_of(Solidus::CheckoutController).to receive_messages(:current_order => order)
-      allow_any_instance_of(Solidus::CheckoutController).to receive_messages(:try_spree_current_user => user)
+      allow_any_instance_of(Solidus::CheckoutController).to receive_messages(:try_solidus_current_user => user)
     end
 
     it "redirects to payment page", inaccessible: true do
-      visit spree.checkout_state_path(:delivery)
+      visit solidus.checkout_state_path(:delivery)
       click_button "Save and Continue"
       choose "Credit Card"
       fill_in "Card Number", :with => '123'
@@ -118,12 +118,12 @@ describe "Checkout", type: :feature, inaccessible: true do
 
     before(:each) do
       allow_any_instance_of(Solidus::CheckoutController).to receive_messages(:current_order => order)
-      allow_any_instance_of(Solidus::CheckoutController).to receive_messages(:try_spree_current_user => user)
+      allow_any_instance_of(Solidus::CheckoutController).to receive_messages(:try_solidus_current_user => user)
       allow_any_instance_of(Solidus::CheckoutController).to receive_messages(:skip_state_validation? => true)
     end
 
     it "prevents double clicking the payment button on checkout", :js => true do
-      visit spree.checkout_state_path(:payment)
+      visit solidus.checkout_state_path(:payment)
 
       # prevent form submit to verify button is disabled
       page.execute_script("$('#checkout_form_payment').submit(function(){return false;})")
@@ -135,7 +135,7 @@ describe "Checkout", type: :feature, inaccessible: true do
 
     it "prevents double clicking the confirm button on checkout", :js => true do
       order.payments << create(:payment)
-      visit spree.checkout_state_path(:confirm)
+      visit solidus.checkout_state_path(:confirm)
 
       # prevent form submit to verify button is disabled
       page.execute_script("$('#checkout_form_confirm').submit(function(){return false;})")
@@ -162,9 +162,9 @@ describe "Checkout", type: :feature, inaccessible: true do
       order.update!
 
       allow_any_instance_of(Solidus::CheckoutController).to receive_messages(current_order: order)
-      allow_any_instance_of(Solidus::CheckoutController).to receive_messages(try_spree_current_user: order.user)
+      allow_any_instance_of(Solidus::CheckoutController).to receive_messages(try_solidus_current_user: order.user)
 
-      visit spree.checkout_state_path(:payment)
+      visit solidus.checkout_state_path(:payment)
     end
 
     it "the first payment method should be selected", :js => true do
@@ -193,10 +193,10 @@ describe "Checkout", type: :feature, inaccessible: true do
       allow(order).to receive_messages(:available_payment_methods => [bogus])
 
       allow_any_instance_of(Solidus::CheckoutController).to receive_messages(current_order: order)
-      allow_any_instance_of(Solidus::CheckoutController).to receive_messages(try_spree_current_user: user)
-      allow_any_instance_of(Solidus::OrdersController).to receive_messages(try_spree_current_user: user)
+      allow_any_instance_of(Solidus::CheckoutController).to receive_messages(try_solidus_current_user: user)
+      allow_any_instance_of(Solidus::OrdersController).to receive_messages(try_solidus_current_user: user)
 
-      visit spree.checkout_state_path(:payment)
+      visit solidus.checkout_state_path(:payment)
     end
 
     it "selects first source available and customer moves on" do
@@ -207,7 +207,7 @@ describe "Checkout", type: :feature, inaccessible: true do
       }.not_to change { Solidus::CreditCard.count }
 
       click_on "Place Order"
-      expect(current_path).to eql(spree.order_path(Solidus::Order.last))
+      expect(current_path).to eql(solidus.order_path(Solidus::Order.last))
     end
 
     it "allows user to enter a new source" do
@@ -225,7 +225,7 @@ describe "Checkout", type: :feature, inaccessible: true do
       expect(Solidus::CreditCard.last.address).to be_present
 
       click_on "Place Order"
-      expect(current_path).to eql(spree.order_path(Solidus::Order.last))
+      expect(current_path).to eql(solidus.order_path(Solidus::Order.last))
     end
   end
 
@@ -241,9 +241,9 @@ describe "Checkout", type: :feature, inaccessible: true do
       fill_in_address
       click_on "Save and Continue"
       click_on "Save and Continue"
-      expect(current_path).to eql(spree.checkout_state_path("payment"))
+      expect(current_path).to eql(solidus.checkout_state_path("payment"))
 
-      visit spree.root_path
+      visit solidus.root_path
       click_link bag.name
       click_button "add-to-cart-button"
 
@@ -255,7 +255,7 @@ describe "Checkout", type: :feature, inaccessible: true do
       click_on "Save and Continue"
       click_on "Place Order"
 
-      expect(current_path).to eql(spree.order_path(Solidus::Order.last))
+      expect(current_path).to eql(solidus.order_path(Solidus::Order.last))
     end
   end
 
@@ -267,12 +267,12 @@ describe "Checkout", type: :feature, inaccessible: true do
       fill_in_address
       click_on "Save and Continue"
       click_on "Save and Continue"
-      expect(current_path).to eql(spree.checkout_state_path("payment"))
+      expect(current_path).to eql(solidus.checkout_state_path("payment"))
     end
 
     context "and updates line item quantity and try to reach payment page" do
       before do
-        visit spree.cart_path
+        visit solidus.cart_path
         within ".cart-item-quantity" do
           fill_in first("input")["name"], with: 3
         end
@@ -281,12 +281,12 @@ describe "Checkout", type: :feature, inaccessible: true do
       end
 
       it "redirects user back to address step" do
-        visit spree.checkout_state_path("payment")
-        expect(current_path).to eql(spree.checkout_state_path("address"))
+        visit solidus.checkout_state_path("payment")
+        expect(current_path).to eql(solidus.checkout_state_path("address"))
       end
 
       it "updates shipments properly through step address -> delivery transitions" do
-        visit spree.checkout_state_path("payment")
+        visit solidus.checkout_state_path("payment")
         click_on "Save and Continue"
         click_on "Save and Continue"
 
@@ -298,18 +298,18 @@ describe "Checkout", type: :feature, inaccessible: true do
       let!(:bag) { create(:product, :name => "RoR Bag") }
 
       before do
-        visit spree.root_path
+        visit solidus.root_path
         click_link bag.name
         click_button "add-to-cart-button"
       end
 
       it "redirects user back to address step" do
-        visit spree.checkout_state_path("payment")
-        expect(current_path).to eql(spree.checkout_state_path("address"))
+        visit solidus.checkout_state_path("payment")
+        expect(current_path).to eql(solidus.checkout_state_path("address"))
       end
 
       it "updates shipments properly through step address -> delivery transitions" do
-        visit spree.checkout_state_path("payment")
+        visit solidus.checkout_state_path("payment")
         click_on "Save and Continue"
         click_on "Save and Continue"
 
@@ -334,7 +334,7 @@ describe "Checkout", type: :feature, inaccessible: true do
       click_on "Save and Continue"
 
       click_on "Save and Continue"
-      expect(current_path).to eql(spree.checkout_state_path("payment"))
+      expect(current_path).to eql(solidus.checkout_state_path("payment"))
     end
 
     it "makes sure payment reflects order total with discounts" do
@@ -358,7 +358,7 @@ describe "Checkout", type: :feature, inaccessible: true do
     context "doesn't fill in coupon code input" do
       it "advances just fine" do
         click_on "Save and Continue"
-        expect(current_path).to eql(spree.checkout_state_path("confirm"))
+        expect(current_path).to eql(solidus.checkout_state_path("confirm"))
       end
     end
   end
@@ -374,7 +374,7 @@ describe "Checkout", type: :feature, inaccessible: true do
         end
       end
 
-      allow_any_instance_of(Solidus::Order).to receive_messages email: "spree@commerce.com"
+      allow_any_instance_of(Solidus::Order).to receive_messages email: "solidus@commerce.com"
 
       add_mug_to_cart
       click_on "Checkout"
@@ -385,7 +385,7 @@ describe "Checkout", type: :feature, inaccessible: true do
     end
 
     it "goes right payment step and place order just fine" do
-      expect(current_path).to eq spree.checkout_state_path('payment')
+      expect(current_path).to eq solidus.checkout_state_path('payment')
 
       choose "Credit Card"
       fill_in "Name on card", :with => 'Spree Commerce'
@@ -394,7 +394,7 @@ describe "Checkout", type: :feature, inaccessible: true do
       fill_in "Card Code", :with => '123'
       click_button "Save and Continue"
 
-      expect(current_path).to eq spree.checkout_state_path('confirm')
+      expect(current_path).to eq solidus.checkout_state_path('confirm')
       click_button "Place Order"
     end
   end
@@ -421,8 +421,8 @@ describe "Checkout", type: :feature, inaccessible: true do
       before do
         user = create(:user)
         Solidus::Order.last.update_column :user_id, user.id
-        allow_any_instance_of(Solidus::OrdersController).to receive_messages(try_spree_current_user: user)
-        allow_any_instance_of(Solidus::CheckoutController).to receive_messages(try_spree_current_user: user)
+        allow_any_instance_of(Solidus::OrdersController).to receive_messages(try_solidus_current_user: user)
+        allow_any_instance_of(Solidus::CheckoutController).to receive_messages(try_solidus_current_user: user)
         click_button "Checkout"
       end
 
@@ -438,10 +438,10 @@ describe "Checkout", type: :feature, inaccessible: true do
 
     before(:each) do
       allow_any_instance_of(Solidus::CheckoutController).to receive_messages(:current_order => order)
-      allow_any_instance_of(Solidus::CheckoutController).to receive_messages(:try_spree_current_user => user)
-      allow_any_instance_of(Solidus::OrdersController).to receive_messages(:try_spree_current_user => user)
+      allow_any_instance_of(Solidus::CheckoutController).to receive_messages(:try_solidus_current_user => user)
+      allow_any_instance_of(Solidus::OrdersController).to receive_messages(:try_solidus_current_user => user)
 
-      visit spree.checkout_state_path(:delivery)
+      visit solidus.checkout_state_path(:delivery)
       click_button "Save and Continue"
       click_button "Save and Continue"
       click_button "Place Order"
@@ -452,7 +452,7 @@ describe "Checkout", type: :feature, inaccessible: true do
     end
 
     it "does not display a thank you message on that order future visits" do
-      visit spree.order_path(order)
+      visit solidus.order_path(order)
       expect(page).to_not have_content(Solidus.t(:thank_you_for_your_order))
     end
   end
@@ -470,7 +470,7 @@ describe "Checkout", type: :feature, inaccessible: true do
   end
 
   def add_mug_to_cart
-    visit spree.root_path
+    visit solidus.root_path
     click_link mug.name
     click_button "add-to-cart-button"
   end

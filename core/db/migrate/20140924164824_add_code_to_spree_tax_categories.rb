@@ -1,5 +1,5 @@
 class AddCodeToSpreeTaxCategories < ActiveRecord::Migration
   def change
-    add_column :spree_tax_categories, :tax_code, :string
+    add_column :solidus_tax_categories, :tax_code, :string
   end
 end

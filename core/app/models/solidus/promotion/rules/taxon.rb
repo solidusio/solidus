@@ -44,7 +44,7 @@ module Spree
 
         # All taxons in an order
         def order_taxons(order)
-          Solidus::Taxon.joins(products: {variants_including_master: :line_items}).where(spree_line_items: {order_id: order.id}).uniq
+          Solidus::Taxon.joins(products: {variants_including_master: :line_items}).where(solidus_line_items: {order_id: order.id}).uniq
         end
 
         # ids of taxons rules and taxons rules children
@@ -62,7 +62,7 @@ module Spree
         end
 
         def taxon_product_ids
-          Solidus::Product.joins(:taxons).where(spree_taxons: {id: taxons.pluck(:id)}).pluck(:id).uniq
+          Solidus::Product.joins(:taxons).where(solidus_taxons: {id: taxons.pluck(:id)}).pluck(:id).uniq
         end
       end
     end

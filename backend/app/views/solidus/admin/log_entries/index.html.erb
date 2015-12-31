@@ -8,8 +8,8 @@
 <% end %>
 
 <% content_for :page_actions do %>
-  <li><%= button_link_to Solidus.t(:logs), spree.admin_order_payment_log_entries_url(@order, @payment), :icon => 'archive' %></li>
-  <li><%= button_link_to Solidus.t(:back_to_payment), spree.admin_order_payment_url(@order, @payment), :icon => 'arrow-left' %></li>
+  <li><%= button_link_to Solidus.t(:logs), solidus.admin_order_payment_log_entries_url(@order, @payment), :icon => 'archive' %></li>
+  <li><%= button_link_to Solidus.t(:back_to_payment), solidus.admin_order_payment_url(@order, @payment), :icon => 'arrow-left' %></li>
 <% end %>
 
 <table class='index' id='listing_log_entries'>

@@ -1,10 +1,10 @@
 <% content_for :page_actions do %>
   <li>
-    <%= button_link_to Solidus.t(:back_to_users_list), spree.admin_users_path, :icon => 'arrow-left' %>
+    <%= button_link_to Solidus.t(:back_to_users_list), solidus.admin_users_path, :icon => 'arrow-left' %>
   </li>
   <% if can?([:admin, :create], Solidus::Order) %>
     <li>
-      <%= button_link_to Solidus.t(:create_new_order), spree.new_admin_order_path(user_id: @user.id), :icon => 'plus' %>
+      <%= button_link_to Solidus.t(:create_new_order), solidus.new_admin_order_path(user_id: @user.id), :icon => 'plus' %>
     </li>
   <% end %>
 <% end %>

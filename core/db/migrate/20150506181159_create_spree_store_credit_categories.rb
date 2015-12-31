@@ -1,6 +1,6 @@
 class CreateSpreeStoreCreditCategories < ActiveRecord::Migration
   def change
-    create_table :spree_store_credit_categories do |t|
+    create_table :solidus_store_credit_categories do |t|
       t.string :name
       t.timestamps null: true
     end

@@ -30,7 +30,7 @@ Solidus.config do |config|
   # config.logo = "logo/solidus_logo.png"
 
   # Template to use when rendering layout
-  # config.layout = "solidus/layouts/spree_application"
+  # config.layout = "solidus/layouts/solidus_application"
 
 
   # Admin:

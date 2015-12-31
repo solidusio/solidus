@@ -13,7 +13,7 @@ describe Solidus::Admin::BaseController, :type => :controller do
 
   context "unauthorized request" do
     before do
-      allow_any_instance_of(Solidus::Admin::BaseController).to receive(:spree_current_user).and_return(nil)
+      allow_any_instance_of(Solidus::Admin::BaseController).to receive(:solidus_current_user).and_return(nil)
     end
 
     it "redirects to unauthorized" do

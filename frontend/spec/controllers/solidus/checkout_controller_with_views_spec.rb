@@ -9,7 +9,7 @@ describe Solidus::CheckoutController, type: :controller do
   let(:user) { stub_model(Solidus::LegacyUser) }
 
   before do
-    allow(controller).to receive_messages try_spree_current_user: user
+    allow(controller).to receive_messages try_solidus_current_user: user
   end
 
   # Regression test for #3246
@@ -27,7 +27,7 @@ describe Solidus::CheckoutController, type: :controller do
       end
 
       it "displays rate cost in correct currency" do
-        spree_get :edit
+        solidus_get :edit
         html = Nokogiri::HTML(response.body)
         expect(html.css('.rate-cost').text).to eq "£10.00"
       end

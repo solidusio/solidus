@@ -55,14 +55,14 @@ module Spree
     #
     # This is so that the count query is distinct'd:
     #
-    #   SELECT COUNT(DISTINCT "spree_products"."id") ...
+    #   SELECT COUNT(DISTINCT "solidus_products"."id") ...
     #
     #   vs.
     #
     #   SELECT COUNT(*) ...
     add_search_scope :in_taxon do |taxon|
       includes(:classifications).
-      where("spree_products_taxons.taxon_id" => taxon.self_and_descendants.pluck(:id)).
+      where("solidus_products_taxons.taxon_id" => taxon.self_and_descendants.pluck(:id)).
       order(Solidus::Classification.arel_table[:position].asc)
     end
 
@@ -108,7 +108,7 @@ module Spree
       end
 
       conditions = "#{option_values}.name = ? AND #{option_values}.option_type_id = ?", value, option_type_id
-      group('spree_products.id').joins(variants_including_master: :option_values).where(conditions)
+      group('solidus_products.id').joins(variants_including_master: :option_values).where(conditions)
     end
 
     # Finds all products which have either:
@@ -183,7 +183,7 @@ module Spree
     search_scopes << :active
 
     add_search_scope :taxons_name_eq do |name|
-      group("spree_products.id").joins(:taxons).where(Taxon.arel_table[:name].eq(name))
+      group("solidus_products.id").joins(:taxons).where(Taxon.arel_table[:name].eq(name))
     end
 
     def self.distinct_by_product_ids(sort_order = nil)
@@ -195,12 +195,12 @@ module Spree
       #   PG::InvalidColumnReference: ERROR:  for SELECT DISTINCT, ORDER BY
       #   expressions must appear in select list. e.g.
       #
-      #   SELECT  DISTINCT "spree_products".* FROM "spree_products" LEFT OUTER JOIN
-      #   "spree_variants" ON "spree_variants"."product_id" = "spree_products"."id" AND "spree_variants"."is_master" = 't'
-      #   AND "spree_variants"."deleted_at" IS NULL LEFT OUTER JOIN "spree_prices" ON
-      #   "spree_prices"."variant_id" = "spree_variants"."id" AND "spree_prices"."currency" = 'USD'
-      #   AND "spree_prices"."deleted_at" IS NULL WHERE "spree_products"."deleted_at" IS NULL AND ('t'='t')
-      #   ORDER BY "spree_prices"."amount" ASC LIMIT 10 OFFSET 0
+      #   SELECT  DISTINCT "solidus_products".* FROM "solidus_products" LEFT OUTER JOIN
+      #   "solidus_variants" ON "solidus_variants"."product_id" = "solidus_products"."id" AND "solidus_variants"."is_master" = 't'
+      #   AND "solidus_variants"."deleted_at" IS NULL LEFT OUTER JOIN "solidus_prices" ON
+      #   "solidus_prices"."variant_id" = "solidus_variants"."id" AND "solidus_prices"."currency" = 'USD'
+      #   AND "solidus_prices"."deleted_at" IS NULL WHERE "solidus_products"."deleted_at" IS NULL AND ('t'='t')
+      #   ORDER BY "solidus_prices"."amount" ASC LIMIT 10 OFFSET 0
       #
       # Don't allow sort_column, a variable coming from params,
       # to be anything but a column in the database

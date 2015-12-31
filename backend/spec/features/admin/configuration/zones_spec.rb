@@ -5,7 +5,7 @@ describe "Zones", :type => :feature do
 
   before(:each) do
     Solidus::Zone.delete_all
-    visit spree.admin_path
+    visit solidus.admin_path
     click_link "Settings"
   end
 

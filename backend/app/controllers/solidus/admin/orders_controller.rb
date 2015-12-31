@@ -40,7 +40,7 @@ module Spree
         @search = Order.accessible_by(current_ability, :index).ransack(params[:q])
 
         # lazy loading other models here (via includes) may result in an invalid query
-        # e.g. SELECT  DISTINCT DISTINCT "spree_orders".id, "spree_orders"."created_at" AS alias_0 FROM "spree_orders"
+        # e.g. SELECT  DISTINCT DISTINCT "solidus_orders".id, "solidus_orders"."created_at" AS alias_0 FROM "solidus_orders"
         # see https://github.com/solidus/solidus/pull/3919
         @orders = if query_present
           @search.result(distinct: true)
@@ -127,7 +127,7 @@ module Spree
       end
 
       def cancel
-        @order.canceled_by(try_spree_current_user)
+        @order.canceled_by(try_solidus_current_user)
         flash[:success] = Solidus.t(:order_canceled)
         redirect_to :back
       end
@@ -139,7 +139,7 @@ module Spree
       end
 
       def approve
-        @order.contents.approve(user: try_spree_current_user)
+        @order.contents.approve(user: try_solidus_current_user)
         flash[:success] = Solidus.t(:order_approved)
         redirect_to :back
       end
@@ -170,7 +170,7 @@ module Spree
       private
         def order_params
           {
-            created_by_id: try_spree_current_user.try(:id),
+            created_by_id: try_solidus_current_user.try(:id),
             frontend_viewable: false,
             store_id: current_store.try(:id)
           }.with_indifferent_access

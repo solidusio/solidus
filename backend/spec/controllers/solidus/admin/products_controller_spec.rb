@@ -4,12 +4,12 @@ describe Solidus::Admin::ProductsController, :type => :controller do
   stub_authorization!
 
   context "#index" do
-    let(:ability_user) { stub_model(Solidus::LegacyUser, :has_spree_role? => true) }
+    let(:ability_user) { stub_model(Solidus::LegacyUser, :has_solidus_role? => true) }
 
     # Regression test for #1259
     it "can find a product by SKU" do
       product = create(:product, :sku => "ABC123")
-      spree_get :index, :q => { :sku_start => "ABC123" }
+      solidus_get :index, :q => { :sku_start => "ABC123" }
       expect(assigns[:collection]).not_to be_empty
       expect(assigns[:collection]).to include(product)
     end
@@ -19,7 +19,7 @@ describe Solidus::Admin::ProductsController, :type => :controller do
   context "adding properties to a product" do
     let!(:product) { create(:product) }
     specify do
-      spree_put :update, :id => product.to_param, :product => { :product_properties_attributes => { "1" => { :property_name => "Foo", :value => "bar" } } }
+      solidus_put :update, :id => product.to_param, :product => { :product_properties_attributes => { "1" => { :property_name => "Foo", :value => "bar" } } }
       expect(flash[:success]).to eq("Product #{product.name.inspect} has been successfully updated!")
     end
   end
@@ -53,7 +53,7 @@ describe Solidus::Admin::ProductsController, :type => :controller do
       }
     end
 
-    subject { spree_put :update, payload }
+    subject { solidus_put :update, payload }
 
     it "creates a variant property rule" do
       expect { subject }.to change { product.variant_property_rules.count }.by(1)
@@ -75,7 +75,7 @@ describe Solidus::Admin::ProductsController, :type => :controller do
 
     it "redirects to the product properties page" do
       subject
-      expect(response).to redirect_to(spree.admin_product_product_properties_path(product, ovi: [option_value.id]))
+      expect(response).to redirect_to(solidus.admin_product_product_properties_path(product, ovi: [option_value.id]))
     end
   end
 
@@ -113,7 +113,7 @@ describe Solidus::Admin::ProductsController, :type => :controller do
       }
     end
 
-    subject { spree_put :update, payload }
+    subject { solidus_put :update, payload }
 
     it "does not create any new rules" do
       expect { subject }.to_not change { Solidus::VariantPropertyRule.count }
@@ -139,7 +139,7 @@ describe Solidus::Admin::ProductsController, :type => :controller do
 
     it "redirects to the product properties page" do
       subject
-      expect(response).to redirect_to(spree.admin_product_product_properties_path(product, ovi: [option_value.id]))
+      expect(response).to redirect_to(solidus.admin_product_product_properties_path(product, ovi: [option_value.id]))
     end
   end
 
@@ -152,7 +152,7 @@ describe Solidus::Admin::ProductsController, :type => :controller do
     end
 
     it "deletes all the variants (including master) for the product" do
-      spree_delete :destroy, :id => product
+      solidus_delete :destroy, :id => product
       expect(product.reload.deleted_at).not_to be_nil
       product.variants_including_master.each do |variant|
         expect(variant.reload.deleted_at).not_to be_nil

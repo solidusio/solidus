@@ -4,7 +4,7 @@ module Spree
   module Admin
     describe PaymentsController, :type => :controller do
       before do
-        allow(controller).to receive_messages :spree_current_user => user
+        allow(controller).to receive_messages :solidus_current_user => user
       end
 
       let(:user) { create(:admin_user) }
@@ -31,13 +31,13 @@ module Spree
         end
 
         before do
-          spree_post :create, attributes
+          solidus_post :create, attributes
         end
 
         it "should process payment correctly" do
           expect(order.payments.count).to eq(1)
           expect(order.payments.last.state).to eq 'checkout'
-          expect(response).to redirect_to(spree.admin_order_payments_path(order))
+          expect(response).to redirect_to(solidus.admin_order_payments_path(order))
           expect(order.reload.state).to eq('confirm')
         end
 
@@ -78,7 +78,7 @@ module Spree
         end
 
         it "loads backend payment methods" do
-          spree_get :new, :order_id => order.number
+          solidus_get :new, :order_id => order.number
           expect(response.status).to eq(200)
           expect(assigns[:payment_methods]).to include(@payment_method)
         end
@@ -92,8 +92,8 @@ module Spree
 
         context "order does not have payments" do
           it "redirect to new payments page" do
-            spree_get :index, { amount: 100, order_id: order.number }
-            expect(response).to redirect_to(spree.new_admin_order_payment_path(order))
+            solidus_get :index, { amount: 100, order_id: order.number }
+            expect(response).to redirect_to(solidus.new_admin_order_payment_path(order))
           end
         end
 
@@ -103,7 +103,7 @@ module Spree
           end
 
           it "shows the payments page" do
-            spree_get :index, { amount: 100, order_id: order.number }
+            solidus_get :index, { amount: 100, order_id: order.number }
             expect(response.code).to eq "200"
           end
         end
@@ -117,8 +117,8 @@ module Spree
         end
 
         it "should redirect to the customer details page" do
-          spree_get :index, { amount: 100, order_id: order.number }
-          expect(response).to redirect_to(spree.edit_admin_order_customer_path(order))
+          solidus_get :index, { amount: 100, order_id: order.number }
+          expect(response).to redirect_to(solidus.edit_admin_order_customer_path(order))
         end
       end
 
@@ -142,7 +142,7 @@ module Spree
 
             it 'allows the action' do
               expect {
-                spree_post(:fire, id: payment.to_param, e: 'capture', order_id: order.to_param)
+                solidus_post(:fire, id: payment.to_param, e: 'capture', order_id: order.to_param)
               }.to change { payment.reload.state }.from('checkout').to('completed')
             end
           end
@@ -162,7 +162,7 @@ module Spree
 
             it 'does not allow the action' do
               expect {
-                spree_post(:fire, id: payment.to_param, e: 'capture', order_id: order.to_param)
+                solidus_post(:fire, id: payment.to_param, e: 'capture', order_id: order.to_param)
               }.to_not change { payment.reload.state }
               expect(flash[:error]).to eq('Authorization Failure')
             end

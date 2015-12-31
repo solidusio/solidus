@@ -10,7 +10,7 @@ feature 'Promotion with option value rule' do
   given(:promotion) { create :promotion }
 
   background do
-    visit spree.edit_admin_promotion_path(promotion)
+    visit solidus.edit_admin_promotion_path(promotion)
   end
 
   scenario "adding an option value rule", js: true do
@@ -48,7 +48,7 @@ feature 'Promotion with option value rule' do
       ]
       rule.save!
 
-      visit spree.edit_admin_promotion_path(promotion)
+      visit solidus.edit_admin_promotion_path(promotion)
     end
 
     scenario "deleting a product", js: true do

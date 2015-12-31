@@ -54,8 +54,8 @@ describe Solidus::Promotion::Rules::FirstOrder, :type => :model do
     end
 
     context "for a guest user" do
-      let(:email) { 'user@spreecommerce.com' }
-      before { allow(order).to receive_messages :email => 'user@spreecommerce.com' }
+      let(:email) { 'user@soliduscommerce.com' }
+      before { allow(order).to receive_messages :email => 'user@soliduscommerce.com' }
 
       context "with no other orders" do
         it { expect(rule).to be_eligible(order) }

@@ -31,7 +31,7 @@
   </thead>
   <tbody>
     <% @countries.each do |country| %>
-      <tr id="<%= spree_dom_id country %>" data-hook="country_row" class="<%= cycle('odd', 'even')%>">
+      <tr id="<%= solidus_dom_id country %>" data-hook="country_row" class="<%= cycle('odd', 'even')%>">
         <td><%= country.name %></td>
         <td><%= country.iso_name %></td>
         <td class="align-center"><%= country.states_required? ? Solidus.t(:say_yes) : Solidus.t(:say_no) %></td>

@@ -2,12 +2,12 @@ module Spree
   module BaseHelper
 
     # Defined because Rails' current_page? helper is not working when Spree is mounted at root.
-    def current_spree_page?(url)
+    def current_solidus_page?(url)
       path = request.fullpath.gsub(/^\/\//, '/')
       if url.is_a?(String)
         return path == url
       elsif url.is_a?(Hash)
-        return path == spree.url_for(url)
+        return path == solidus.url_for(url)
       end
       return false
     end
@@ -24,7 +24,7 @@ module Spree
         css_class = 'full'
       end
 
-      link_to text.html_safe, spree.cart_path, :class => "cart-info #{css_class}"
+      link_to text.html_safe, solidus.cart_path, :class => "cart-info #{css_class}"
     end
 
     # human readable list of variant options
@@ -64,7 +64,7 @@ module Spree
     end
 
     def logo(image_path=Solidus::Config[:logo])
-      link_to image_tag(image_path), spree.root_path
+      link_to image_tag(image_path), solidus.root_path
     end
 
     def flash_messages(opts = {})
@@ -81,12 +81,12 @@ module Spree
     def breadcrumbs(taxon, separator="&nbsp;&raquo;&nbsp;", breadcrumb_class="inline")
       return "" if current_page?("/") || taxon.nil?
 
-      crumbs = [[Solidus.t(:home), spree.root_path]]
+      crumbs = [[Solidus.t(:home), solidus.root_path]]
 
       if taxon
         crumbs << [Solidus.t(:products), products_path]
-        crumbs += taxon.ancestors.collect { |a| [a.name, spree.nested_taxons_path(a.permalink)] } unless taxon.ancestors.empty?
-        crumbs << [taxon.name, spree.nested_taxons_path(taxon.permalink)]
+        crumbs += taxon.ancestors.collect { |a| [a.name, solidus.nested_taxons_path(a.permalink)] } unless taxon.ancestors.empty?
+        crumbs << [taxon.name, solidus.nested_taxons_path(taxon.permalink)]
       else
         crumbs << [Solidus.t(:products), products_path]
       end
@@ -133,7 +133,7 @@ module Spree
     end
 
     def seo_url(taxon)
-      return spree.nested_taxons_path(taxon.permalink)
+      return solidus.nested_taxons_path(taxon.permalink)
     end
 
     def gem_available?(name)

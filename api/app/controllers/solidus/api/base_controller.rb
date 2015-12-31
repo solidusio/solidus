@@ -41,7 +41,7 @@ module Spree
       end
 
       def load_user
-        @current_api_user ||= Solidus.user_class.find_by(spree_api_key: api_key.to_s)
+        @current_api_user ||= Solidus.user_class.find_by(solidus_api_key: api_key.to_s)
       end
 
       def authenticate_user
@@ -56,7 +56,7 @@ module Spree
 
       def load_user_roles
         @current_user_roles = if @current_api_user
-          @current_api_user.spree_roles.pluck(:name)
+          @current_api_user.solidus_roles.pluck(:name)
         else
           []
         end
@@ -160,7 +160,7 @@ module Spree
         logger.error "insufficient_stock_error #{exception.inspect}"
         render(
           json: {
-            errors: [I18n.t(:quantity_is_not_available, :scope => "spree.api.order")],
+            errors: [I18n.t(:quantity_is_not_available, :scope => "solidus.api.order")],
             type: 'insufficient_stock',
           },
           status: 422,

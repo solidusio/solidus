@@ -7,7 +7,7 @@ class FakeCalculator < Solidus::Calculator
 end
 
 describe Solidus::Order, :type => :model do
-  let(:user) { stub_model(Solidus::LegacyUser, :email => "spree@example.com") }
+  let(:user) { stub_model(Solidus::LegacyUser, :email => "solidus@example.com") }
   let(:order) { stub_model(Solidus::Order, :user => user) }
 
   before do
@@ -152,28 +152,28 @@ describe Solidus::Order, :type => :model do
   end
 
   context "#display_outstanding_balance" do
-    it "returns the value as a spree money" do
+    it "returns the value as a solidus money" do
       allow(order).to receive(:outstanding_balance) { 10.55 }
       expect(order.display_outstanding_balance).to eq(Solidus::Money.new(10.55))
     end
   end
 
   context "#display_item_total" do
-    it "returns the value as a spree money" do
+    it "returns the value as a solidus money" do
       allow(order).to receive(:item_total) { 10.55 }
       expect(order.display_item_total).to eq(Solidus::Money.new(10.55))
     end
   end
 
   context "#display_adjustment_total" do
-    it "returns the value as a spree money" do
+    it "returns the value as a solidus money" do
       order.adjustment_total = 10.55
       expect(order.display_adjustment_total).to eq(Solidus::Money.new(10.55))
     end
   end
 
   context "#display_total" do
-    it "returns the value as a spree money" do
+    it "returns the value as a solidus money" do
       order.total = 10.55
       expect(order.display_total).to eq(Solidus::Money.new(10.55))
     end

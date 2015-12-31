@@ -23,7 +23,7 @@
   </thead>
   <tbody>
     <% @users.each do |user|%>
-      <tr id="<%= spree_dom_id user %>" data-hook="admin_users_index_rows" class="<%= cycle('odd', 'even')%>">
+      <tr id="<%= solidus_dom_id user %>" data-hook="admin_users_index_rows" class="<%= cycle('odd', 'even')%>">
         <td class='user_email'><%=link_to user.email, edit_admin_user_url(user) %></td>
         <td data-hook="admin_users_index_row_actions" class="actions">
           <% if can?(:edit, user) %>

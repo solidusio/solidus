@@ -18,8 +18,8 @@ module Spree
     let(:address_params) { { :country_id => Country.first.id, :state_id => State.first.id } }
 
     let(:current_api_user) do
-      user = Solidus.user_class.new(:email => "spree@example.com")
-      user.generate_spree_api_key!
+      user = Solidus.user_class.new(:email => "solidus@example.com")
+      user.generate_solidus_api_key!
       user
     end
 
@@ -210,8 +210,8 @@ module Spree
       let(:current_api_user) { order.user }
       let!(:order) { create(:order, line_items: [line_item]) }
 
-      it "uses the user's last_incomplete_spree_order logic with the current store" do
-        expect(current_api_user).to receive(:last_incomplete_spree_order).with(store: controller.current_store)
+      it "uses the user's last_incomplete_solidus_order logic with the current store" do
+        expect(current_api_user).to receive(:last_incomplete_solidus_order).with(store: controller.current_store)
         api_get :current, format: 'json'
       end
     end
@@ -313,7 +313,7 @@ module Spree
       after { Solidus::Ability.remove_ability(::BarAbility) }
 
       it "can view an order" do
-        user = build(:user, spree_roles: [Solidus::Role.new(name: 'bar')])
+        user = build(:user, solidus_roles: [Solidus::Role.new(name: 'bar')])
         allow(Solidus.user_class).to receive_messages find_by: user
         api_get :show, :id => order.to_param
         expect(response.status).to eq(200)
@@ -345,9 +345,9 @@ module Spree
     end
 
     it "assigns email when creating a new order" do
-      api_post :create, :order => { :email => "guest@spreecommerce.com" }
+      api_post :create, :order => { :email => "guest@soliduscommerce.com" }
       expect(json_response['email']).not_to eq controller.current_api_user
-      expect(json_response['email']).to eq "guest@spreecommerce.com"
+      expect(json_response['email']).to eq "guest@soliduscommerce.com"
     end
 
     # Regression test for #3404
@@ -697,13 +697,13 @@ module Spree
       context "search" do
         before do
           create(:order)
-          Solidus::Order.last.update_attribute(:email, 'spree@spreecommerce.com')
+          Solidus::Order.last.update_attribute(:email, 'solidus@soliduscommerce.com')
         end
 
         let(:expected_result) { Solidus::Order.last }
 
         it "can query the results through a parameter" do
-          api_get :index, :q => { :email_cont => 'spree' }
+          api_get :index, :q => { :email_cont => 'solidus' }
           expect(json_response["orders"].count).to eq(1)
           expect(json_response["orders"].first).to have_attributes(attributes)
           expect(json_response["orders"].first["email"]).to eq(expected_result.email)
@@ -752,7 +752,7 @@ module Spree
 
       context "can cancel an order" do
         before do
-          Solidus::Config[:mails_from] = "spree@example.com"
+          Solidus::Config[:mails_from] = "solidus@example.com"
 
           order.completed_at = Time.current
           order.state = 'complete'

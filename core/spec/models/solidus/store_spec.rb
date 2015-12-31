@@ -26,7 +26,7 @@ describe Solidus::Store, :type => :model do
     end
 
     it 'should return store for domain' do
-      expect(subject.class.current('spreecommerce.com')).to eql(store_1)
+      expect(subject.class.current('soliduscommerce.com')).to eql(store_1)
       expect(subject.class.current('www.subdomain.com')).to eql(store_2)
     end
 

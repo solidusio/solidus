@@ -1,5 +1,5 @@
 class AddCodeToRefundReason < ActiveRecord::Migration
   def change
-    add_column :spree_refund_reasons, :code, :string
+    add_column :solidus_refund_reasons, :code, :string
   end
 end

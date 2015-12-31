@@ -11,8 +11,8 @@
 //= require jquery.sticky-kit.min
 //= require underscore-min
 //= require backbone
-//= require spree
+//= require solidus
 //= require ./backend/backbone-overrides
-//= require solidus/backend/spree-select2
+//= require solidus/backend/solidus-select2
 //= require_tree ./backend/templates
 //= require_tree .

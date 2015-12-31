@@ -64,7 +64,7 @@ describe "viewing products", type: :feature, inaccessible: true do
   context "taxon pages" do
     include_context "custom products"
     before do
-      visit spree.root_path
+      visit solidus.root_path
     end
 
     it "should be able to visit brand Ruby on Rails" do

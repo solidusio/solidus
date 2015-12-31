@@ -30,9 +30,9 @@ module Spree
     scope :cancelable, -> { where(state: Solidus::InventoryUnit::CANCELABLE_STATES) }
     scope :backordered_per_variant, ->(stock_item) do
       includes(:shipment, :order)
-        .where("spree_shipments.state != 'canceled'").references(:shipment)
+        .where("solidus_shipments.state != 'canceled'").references(:shipment)
         .where(variant_id: stock_item.variant_id)
-        .where('spree_orders.completed_at is not null')
+        .where('solidus_orders.completed_at is not null')
         .backordered.order(Solidus::Order.arel_table[:completed_at].asc)
     end
 
@@ -42,7 +42,7 @@ module Spree
     # inventory units for the given stock item
     scope :backordered_for_stock_item, ->(stock_item) do
       backordered_per_variant(stock_item)
-        .where(spree_shipments: { stock_location_id: stock_item.stock_location_id })
+        .where(solidus_shipments: { stock_location_id: stock_item.stock_location_id })
     end
 
     scope :shippable, -> { on_hand }

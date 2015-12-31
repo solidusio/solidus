@@ -208,18 +208,18 @@ class Solidus::Admin::ResourceController < Solidus::Admin::BaseController
 
     def new_object_url(options = {})
       if parent_data.present?
-        spree.new_polymorphic_url([:admin, parent, model_class], options)
+        solidus.new_polymorphic_url([:admin, parent, model_class], options)
       else
-        spree.new_polymorphic_url([:admin, model_class], options)
+        solidus.new_polymorphic_url([:admin, model_class], options)
       end
     end
 
     def edit_object_url(object, options = {})
 
       if parent_data.present?
-        spree.polymorphic_url([:edit, :admin, parent, object], options)
+        solidus.polymorphic_url([:edit, :admin, parent, object], options)
       else
-        spree.polymorphic_url([:edit, :admin, object], options)
+        solidus.polymorphic_url([:edit, :admin, object], options)
       end
     end
 
@@ -227,17 +227,17 @@ class Solidus::Admin::ResourceController < Solidus::Admin::BaseController
       target = object ? object : @object
 
       if parent_data.present?
-        spree.polymorphic_url([:admin, parent, target], options)
+        solidus.polymorphic_url([:admin, parent, target], options)
       else
-        spree.polymorphic_url([:admin, target], options)
+        solidus.polymorphic_url([:admin, target], options)
       end
     end
 
     def collection_url(options = {})
       if parent_data.present?
-        spree.polymorphic_url([:admin, parent, model_class], options)
+        solidus.polymorphic_url([:admin, parent, model_class], options)
       else
-        spree.polymorphic_url([:admin, model_class], options)
+        solidus.polymorphic_url([:admin, model_class], options)
       end
     end
 

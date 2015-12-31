@@ -36,7 +36,7 @@
 
     <tbody>
       <% (@product.variant_images).each do |image| %>
-        <tr id="<%= spree_dom_id image %>" data-hook="images_row" class="<%= cycle('odd', 'even')%>">
+        <tr id="<%= solidus_dom_id image %>" data-hook="images_row" class="<%= cycle('odd', 'even')%>">
           <td class="no-border">
             <% if can?(:update_positions, Solidus::Image) %>
               <span class="handle"></span>

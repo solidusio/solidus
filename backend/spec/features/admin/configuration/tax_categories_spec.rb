@@ -4,7 +4,7 @@ describe "Tax Categories", :type => :feature do
   stub_authorization!
 
   before(:each) do
-    visit spree.admin_path
+    visit solidus.admin_path
     click_link "Settings"
   end
 

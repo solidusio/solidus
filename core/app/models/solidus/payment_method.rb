@@ -13,7 +13,7 @@ module Spree
     include Solidus::Preferences::StaticallyConfigurable
 
     def self.providers
-      Rails.application.config.spree.payment_methods
+      Rails.application.config.solidus.payment_methods
     end
 
     def provider_class

@@ -29,7 +29,7 @@
     </thead>
     <tbody>
       <% @trackers.each do |tracker|%>
-        <tr id="<%= spree_dom_id tracker %>" data-hook="admin_trackers_index_rows" class="<%= cycle('odd', 'even')%>">
+        <tr id="<%= solidus_dom_id tracker %>" data-hook="admin_trackers_index_rows" class="<%= cycle('odd', 'even')%>">
           <td class="align-center"><%= tracker.analytics_id %></td>
           <td class="align-center"><%= tracker.active ? Solidus.t(:say_yes) : Solidus.t(:say_no) %></td>
           <td class="actions">

@@ -7,30 +7,30 @@ describe Solidus::LegacyUser, :type => :model do
 
     it "excludes orders that are not frontend_viewable" do
       order = create(:order, user: user, frontend_viewable: false)
-      expect(user.last_incomplete_spree_order).to eq nil
+      expect(user.last_incomplete_solidus_order).to eq nil
     end
 
     it "can include orders that are not frontend viewable" do
       order = create(:order, user: user, frontend_viewable: false)
-      expect(user.last_incomplete_spree_order(only_frontend_viewable: false)).to eq order
+      expect(user.last_incomplete_solidus_order(only_frontend_viewable: false)).to eq order
     end
 
     it "can scope to a store" do
       store = create(:store)
       store_1_order = create(:order, user: user, store: store)
       store_2_order = create(:order, user: user, store: create(:store))
-      expect(user.last_incomplete_spree_order(store: store)).to eq store_1_order
+      expect(user.last_incomplete_solidus_order(store: store)).to eq store_1_order
     end
 
     it "excludes completed orders" do
       order = create(:completed_order_with_totals, user: user, created_by: user)
-      expect(user.last_incomplete_spree_order).to eq nil
+      expect(user.last_incomplete_solidus_order).to eq nil
     end
 
     it "excludes orders created prior to the user's last completed order" do
       incomplete_order = create(:order, user: user, created_by: user, created_at: 1.second.ago)
       completed_order = create(:completed_order_with_totals, user: user, created_by: user)
-      expect(user.last_incomplete_spree_order).to eq nil
+      expect(user.last_incomplete_solidus_order).to eq nil
     end
 
     context "with completable_order_created_cutoff set" do
@@ -43,7 +43,7 @@ describe Solidus::LegacyUser, :type => :model do
 
       it "excludes orders updated outside of the cutoff date" do
         incomplete_order = create(:order, user: user, created_by: user, created_at: 3.days.ago, updated_at: 2.days.ago)
-        expect(user.last_incomplete_spree_order).to eq nil
+        expect(user.last_incomplete_solidus_order).to eq nil
       end
     end
 
@@ -57,14 +57,14 @@ describe Solidus::LegacyUser, :type => :model do
 
       it "excludes orders updated outside of the cutoff date" do
         incomplete_order = create(:order, user: user, created_by: user, created_at: 3.days.ago, updated_at: 2.days.ago)
-        expect(user.last_incomplete_spree_order).to eq nil
+        expect(user.last_incomplete_solidus_order).to eq nil
       end
     end
 
     it "chooses the most recently created incomplete order" do
       order_1 = create(:order, user: user, created_at: 1.second.ago)
       order_2 = create(:order, user: user)
-      expect(user.last_incomplete_spree_order).to eq order_2
+      expect(user.last_incomplete_solidus_order).to eq order_2
     end
 
     context "persists order address" do
@@ -122,7 +122,7 @@ describe Solidus.user_class, :type => :model do
     end
 
     def load_orders
-      allow(subject).to receive(:spree_orders).and_return(double(complete: orders))
+      allow(subject).to receive(:solidus_orders).and_return(double(complete: orders))
     end
 
     describe "#lifetime_value" do

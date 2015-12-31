@@ -85,7 +85,7 @@
     </thead>
     <tbody>
       <% @stock_transfers.each do |stock_transfer| %>
-        <tr id="<%= spree_dom_id stock_transfer %>" class="<%= cycle('odd', 'even') %>">
+        <tr id="<%= solidus_dom_id stock_transfer %>" class="<%= cycle('odd', 'even') %>">
           <td><%= handle_stock_transfer(stock_transfer) %></td>
           <td><%= stock_transfer.source_location.name %></td>
           <td><%= stock_transfer.destination_location.try(:name) %></td>

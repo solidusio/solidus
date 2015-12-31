@@ -1,5 +1,5 @@
 <% content_for :page_title do %>
-  <%= link_to Solidus.t(:order_number, number: @order.number), spree.edit_admin_order_path(@order) %> - <%= Solidus.t(:cancel_inventory) %>
+  <%= link_to Solidus.t(:order_number, number: @order.number), solidus.edit_admin_order_path(@order) %> - <%= Solidus.t(:cancel_inventory) %>
 <% end %>
 
 <table class="stock-contents index">

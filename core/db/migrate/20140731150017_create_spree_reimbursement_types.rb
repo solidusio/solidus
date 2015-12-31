@@ -1,6 +1,6 @@
 class CreateSpreeReimbursementTypes < ActiveRecord::Migration
   def change
-    create_table :spree_reimbursement_types do |t|
+    create_table :solidus_reimbursement_types do |t|
       t.string :name
       t.boolean :active, default: true
       t.boolean :mutable, default: true
@@ -14,7 +14,7 @@ class CreateSpreeReimbursementTypes < ActiveRecord::Migration
       end
     end
 
-    add_column :spree_return_items, :preferred_reimbursement_type_id, :integer
-    add_column :spree_return_items, :override_reimbursement_type_id, :integer
+    add_column :solidus_return_items, :preferred_reimbursement_type_id, :integer
+    add_column :solidus_return_items, :override_reimbursement_type_id, :integer
   end
 end

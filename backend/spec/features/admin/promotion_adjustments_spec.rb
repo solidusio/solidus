@@ -5,7 +5,7 @@ describe "Promotion Adjustments", :type => :feature do
 
   context "coupon promotions", :js => true do
     before(:each) do
-      visit spree.admin_path
+      visit solidus.admin_path
       click_link "Promotions"
       click_link "New Promotion"
     end

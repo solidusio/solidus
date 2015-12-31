@@ -18,7 +18,7 @@ describe "Product Images", :type => :feature do
 
       create(:product)
 
-      visit spree.admin_path
+      visit solidus.admin_path
       click_nav "Products"
       click_icon(:edit)
       click_link "Images"
@@ -46,7 +46,7 @@ describe "Product Images", :type => :feature do
   it "should see variant images" do
     variant = create(:variant)
     variant.images.create!(:attachment => File.open(file_path))
-    visit spree.admin_product_images_path(variant.product)
+    visit solidus.admin_product_images_path(variant.product)
 
     expect(page).not_to have_content("No Images Found.")
     within("table.index") do
@@ -70,7 +70,7 @@ describe "Product Images", :type => :feature do
   it "should not see variant column when product has no variants" do
     product = create(:product)
     product.images.create!(:attachment => File.open(file_path))
-    visit spree.admin_product_images_path(product)
+    visit solidus.admin_product_images_path(product)
 
     expect(page).not_to have_content("No Images Found.")
     within("table.index") do

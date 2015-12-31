@@ -34,7 +34,7 @@ module Spree
           joins(promotion_code_join).
           where({
             id: Solidus::Promotion::Actions::FreeShipping.pluck(:promotion_id), # This would probably be more efficient by joining instead
-            spree_promotion_codes: { id: nil },
+            solidus_promotion_codes: { id: nil },
             path: nil
           })
       end

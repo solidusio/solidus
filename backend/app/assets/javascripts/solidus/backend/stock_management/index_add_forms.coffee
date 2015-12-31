@@ -76,7 +76,7 @@ class IndexAddForms
 
   resetParentRowspan = (variantId) ->
     newRowspan = $("tr[data-variant-id='#{variantId}']").length + 1
-    $("#spree_variant_#{variantId} > td").attr('rowspan', newRowspan)
+    $("#solidus_variant_#{variantId} > td").attr('rowspan', newRowspan)
 
 Solidus.StockManagement ?= {}
 Solidus.StockManagement.IndexAddForms = IndexAddForms

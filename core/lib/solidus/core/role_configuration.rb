@@ -34,12 +34,12 @@ module Spree
     # internal permissions.
     #
     # @param ability [CanCan::Ability] the ability to invoke declarations on
-    # @param user [#spree_roles] the user that holds the spree_roles association.
+    # @param user [#solidus_roles] the user that holds the solidus_roles association.
     def activate_permissions! ability, user
-      spree_roles = ['default'] | user.spree_roles.map(&:name)
+      solidus_roles = ['default'] | user.solidus_roles.map(&:name)
       applicable_permissions = Set.new
 
-      spree_roles.each do |role_name|
+      solidus_roles.each do |role_name|
         applicable_permissions |= roles[role_name].permission_sets
       end
 

@@ -15,7 +15,7 @@ class Solidus::Admin::PromotionRulesController < Solidus::Admin::BaseController
       flash[:success] = Solidus.t(:successfully_created, :resource => Solidus.t(:promotion_rule))
     end
     respond_to do |format|
-      format.html { redirect_to spree.edit_admin_promotion_path(@promotion)}
+      format.html { redirect_to solidus.edit_admin_promotion_path(@promotion)}
       format.js   { render :layout => false }
     end
   end
@@ -26,7 +26,7 @@ class Solidus::Admin::PromotionRulesController < Solidus::Admin::BaseController
       flash[:success] = Solidus.t(:successfully_removed, :resource => Solidus.t(:promotion_rule))
     end
     respond_to do |format|
-      format.html { redirect_to spree.edit_admin_promotion_path(@promotion)}
+      format.html { redirect_to solidus.edit_admin_promotion_path(@promotion)}
       format.js   { render :layout => false }
     end
   end
@@ -38,11 +38,11 @@ class Solidus::Admin::PromotionRulesController < Solidus::Admin::BaseController
   end
 
   def validate_promotion_rule_type
-    valid_promotion_rule_types = Rails.application.config.spree.promotions.rules.map(&:to_s)
+    valid_promotion_rule_types = Rails.application.config.solidus.promotions.rules.map(&:to_s)
     if !valid_promotion_rule_types.include?(params[:promotion_rule][:type])
       flash[:error] = Solidus.t(:invalid_promotion_rule)
       respond_to do |format|
-        format.html { redirect_to spree.edit_admin_promotion_path(@promotion)}
+        format.html { redirect_to solidus.edit_admin_promotion_path(@promotion)}
         format.js   { render :layout => false }
       end
     end

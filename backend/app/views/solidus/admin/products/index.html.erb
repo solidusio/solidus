@@ -74,7 +74,7 @@
     </thead>
     <tbody>
       <% @collection.each do |product| %>
-          <tr <%== "style='color: red;'" if product.deleted? %> id="<%= spree_dom_id product %>" data-hook="admin_products_index_rows" class="<%= cycle('odd', 'even') %>">
+          <tr <%== "style='color: red;'" if product.deleted? %> id="<%= solidus_dom_id product %>" data-hook="admin_products_index_rows" class="<%= cycle('odd', 'even') %>">
             <td class="align-center"><%= product.sku rescue '' %></td>
             <td class="align-center"><%= image_tag product.display_image.attachment(:mini) %></td>
             <td><%= link_to product.try(:name), edit_admin_product_path(product) %></td>
@@ -93,7 +93,7 @@
 <% else %>
   <div class="alpha twelve columns no-objects-found">
     <%= Solidus.t(:no_resource_found, resource: I18n.t(:other, scope: 'activerecord.models.solidus/product')) %>,
-    <%= link_to Solidus.t(:add_one), spree.new_admin_product_path %>!
+    <%= link_to Solidus.t(:add_one), solidus.new_admin_product_path %>!
   </div>
 <% end %>
 

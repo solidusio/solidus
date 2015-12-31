@@ -35,7 +35,7 @@ module Spree
     end
 
     def self.param_key
-      "spree_exchange"
+      "solidus_exchange"
     end
 
     def self.model_name

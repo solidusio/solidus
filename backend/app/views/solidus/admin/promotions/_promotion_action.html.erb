@@ -2,7 +2,7 @@
   <% type_name = promotion_action.class.name.demodulize.underscore %>
   <h6 class="promotion-title"><%= Solidus.t("promotion_action_types.#{type_name}.description") %></h6>
   <% if can?(:destroy, promotion_action) %>
-    <%= link_to_with_icon 'trash', '', spree.admin_promotion_promotion_action_path(@promotion, promotion_action), :remote => true, :method => :delete, :class => 'delete' %>
+    <%= link_to_with_icon 'trash', '', solidus.admin_promotion_promotion_action_path(@promotion, promotion_action), :remote => true, :method => :delete, :class => 'delete' %>
   <% end %>
 
   <% param_prefix = "promotion[promotion_actions_attributes][#{promotion_action.id}]" %>

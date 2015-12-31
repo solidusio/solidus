@@ -4,7 +4,7 @@ describe Solidus::Admin::SearchController, :type => :controller do
   stub_authorization!
 
   # Regression test for ernie/ransack#176
-  let(:user) { create(:user, email: "spree_commerce@example.com") }
+  let(:user) { create(:user, email: "solidus_commerce@example.com") }
 
   before do
     user.ship_address = create(:address)
@@ -13,7 +13,7 @@ describe Solidus::Admin::SearchController, :type => :controller do
   end
 
   describe 'GET #users' do
-    subject { spree_xhr_get :users, params }
+    subject { solidus_xhr_get :users, params }
 
     shared_examples_for 'user found by search' do
       it "should include users matching query" do
@@ -66,7 +66,7 @@ describe Solidus::Admin::SearchController, :type => :controller do
     let!(:product_one) { create(:product, name: 'jersey') }
     let!(:product_two) { create(:product, name: 'better jersey') }
 
-    subject { spree_get :products, params }
+    subject { solidus_get :products, params }
 
     shared_examples_for 'product search' do
       it 'should respond with http success' do

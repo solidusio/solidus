@@ -10,7 +10,7 @@
   </thead>
   <tbody>
     <% reimbursements.each do |reimbursement| %>
-      <tr id="<%= spree_dom_id(reimbursement) %>" data-hook="reimbursement_row" class="<%= cycle('odd', 'even')%>">
+      <tr id="<%= solidus_dom_id(reimbursement) %>" data-hook="reimbursement_row" class="<%= cycle('odd', 'even')%>">
         <td>
           <% if reimbursement.reimbursed? %>
             <%= link_to reimbursement.number, url_for([:admin, @order, reimbursement]) %>

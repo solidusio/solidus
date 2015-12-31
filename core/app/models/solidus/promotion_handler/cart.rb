@@ -36,7 +36,7 @@ module Spree
         def connected_order_promotions
           Promotion.active.includes(:promotion_rules).
             joins(:order_promotions).
-            where(spree_orders_promotions: { order_id: order.id }).readonly(false).to_a
+            where(solidus_orders_promotions: { order_id: order.id }).readonly(false).to_a
         end
 
         def sale_promotions

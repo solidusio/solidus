@@ -1,7 +1,7 @@
-# This is the primary location for defining spree preferences
+# This is the primary location for defining solidus preferences
 #
 # The expectation is that this is created once and stored in
-# the spree environment
+# the solidus environment
 #
 # setters:
 # a.color = :blue
@@ -142,8 +142,8 @@ module Spree
     preference :generate_api_key_for_all_roles, :boolean, default: false
 
     # @!attribute [rw] layout
-    #   @return [String] template to use for layout on the frontend (default: +"solidus/layouts/spree_application"+)
-    preference :layout, :string, default: 'solidus/layouts/spree_application'
+    #   @return [String] template to use for layout on the frontend (default: +"solidus/layouts/solidus_application"+)
+    preference :layout, :string, default: 'solidus/layouts/solidus_application'
 
     # @!attribute [rw] logo
     #   @return [String] URL of logo used on frontend (default: +'logo/solidus_logo.png'+)
@@ -243,7 +243,7 @@ module Spree
 
     # @!attribute [rw] mails_from
     #   @return [String] Email address used as +From:+ field in transactional emails.
-    preference :mails_from, :string, :default => 'spree@example.com'
+    preference :mails_from, :string, :default => 'solidus@example.com'
 
     # Store credits configurations
 
@@ -259,7 +259,7 @@ module Spree
     #   @return [Boolean] Whether use of an address in checkout marks it as user's default
     preference :automatic_default_address, :boolean, default: true
 
-    # searcher_class allows spree extension writers to provide their own Search class
+    # searcher_class allows solidus extension writers to provide their own Search class
     attr_writer :searcher_class
     def searcher_class
       @searcher_class ||= Solidus::Core::Search::Base

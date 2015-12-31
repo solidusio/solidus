@@ -10,7 +10,7 @@ class Solidus::StoreCredit < Solidus::Base
   ADJUSTMENT_ACTION = 'adjustment'
   INVALIDATE_ACTION = 'invalidate'
 
-  DEFAULT_CREATED_BY_EMAIL = "spree@example.com"
+  DEFAULT_CREATED_BY_EMAIL = "solidus@example.com"
 
   belongs_to :user, class_name: Solidus::UserClassHandle.new
   belongs_to :created_by, class_name: Solidus::UserClassHandle.new
@@ -27,7 +27,7 @@ class Solidus::StoreCredit < Solidus::Base
   delegate :name, to: :category, prefix: true
   delegate :email, to: :created_by, prefix: true
 
-  scope :order_by_priority, -> { includes(:credit_type).order('spree_store_credit_types.priority ASC') }
+  scope :order_by_priority, -> { includes(:credit_type).order('solidus_store_credit_types.priority ASC') }
 
   after_save :store_event
   before_validation :associate_credit_type

@@ -19,7 +19,7 @@ class OrderWalkthrough
     end
 
     order = Solidus::Order.create!(
-      email: "spree@example.com",
+      email: "solidus@example.com",
       store: Solidus::Store.first || FactoryGirl.create(:store)
     )
     add_line_item!(order)

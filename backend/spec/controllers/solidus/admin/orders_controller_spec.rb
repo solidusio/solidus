@@ -11,8 +11,8 @@ describe Solidus::Admin::OrdersController, :type => :controller do
       request.env["HTTP_REFERER"] = "http://localhost:3000"
 
       # ensure no respond_overrides are in effect
-      if Solidus::BaseController.spree_responders[:OrdersController].present?
-        Solidus::BaseController.spree_responders[:OrdersController].clear
+      if Solidus::BaseController.solidus_responders[:OrdersController].present?
+        Solidus::BaseController.solidus_responders[:OrdersController].clear
       end
     end
 
@@ -36,16 +36,16 @@ describe Solidus::Admin::OrdersController, :type => :controller do
 
     context "#approve" do
       it "approves an order" do
-        expect(order.contents).to receive(:approve).with(user: controller.try_spree_current_user)
-        spree_put :approve, id: order.number
+        expect(order.contents).to receive(:approve).with(user: controller.try_solidus_current_user)
+        solidus_put :approve, id: order.number
         expect(flash[:success]).to eq Solidus.t(:order_approved)
       end
     end
 
     context "#cancel" do
       it "cancels an order" do
-        expect(order).to receive(:canceled_by).with(controller.try_spree_current_user)
-        spree_put :cancel, id: order.number
+        expect(order).to receive(:canceled_by).with(controller.try_solidus_current_user)
+        solidus_put :cancel, id: order.number
         expect(flash[:success]).to eq Solidus.t(:order_canceled)
       end
     end
@@ -53,14 +53,14 @@ describe Solidus::Admin::OrdersController, :type => :controller do
     context "#resume" do
       it "resumes an order" do
         expect(order).to receive(:resume!)
-        spree_put :resume, id: order.number
+        solidus_put :resume, id: order.number
         expect(flash[:success]).to eq Solidus.t(:order_resumed)
       end
     end
 
     context "pagination" do
       it "can page through the orders" do
-        spree_get :index, :page => 2, :per_page => 10
+        solidus_get :index, :page => 2, :per_page => 10
         expect(assigns[:orders].offset_value).to eq(10)
         expect(assigns[:orders].limit_value).to eq(10)
       end
@@ -70,28 +70,28 @@ describe Solidus::Admin::OrdersController, :type => :controller do
     context "#new" do
       let(:user) { create(:user) }
       before do
-        allow(controller).to receive_messages :spree_current_user => user
+        allow(controller).to receive_messages :solidus_current_user => user
       end
 
       it "imports a new order and sets the current user as a creator" do
         expect(Solidus::Core::Importer::Order).to receive(:import)
-          .with(nil, hash_including(created_by_id: controller.try_spree_current_user.id))
+          .with(nil, hash_including(created_by_id: controller.try_solidus_current_user.id))
           .and_return(order)
-        spree_get :new
+        solidus_get :new
       end
 
       it "sets frontend_viewable to false" do
         expect(Solidus::Core::Importer::Order).to receive(:import)
           .with(nil, hash_including(frontend_viewable: false ))
           .and_return(order)
-        spree_get :new
+        solidus_get :new
       end
 
       it "should associate the order with a store" do
         expect(Solidus::Core::Importer::Order).to receive(:import)
           .with(user, hash_including(store_id: controller.current_store.id))
           .and_return(order)
-        spree_get :new, { user_id: user.id }
+        solidus_get :new, { user_id: user.id }
       end
 
       context "when a user_id is passed as a parameter" do
@@ -100,15 +100,15 @@ describe Solidus::Admin::OrdersController, :type => :controller do
 
         it "imports a new order and assigns the user to the order" do
           expect(Solidus::Core::Importer::Order).to receive(:import)
-            .with(user, hash_including(created_by_id: controller.try_spree_current_user.id))
+            .with(user, hash_including(created_by_id: controller.try_solidus_current_user.id))
             .and_return(order)
-          spree_get :new, { user_id: user.id }
+          solidus_get :new, { user_id: user.id }
         end
       end
 
       it "should redirect to cart" do
-        spree_get :new
-        expect(response).to redirect_to(spree.cart_admin_order_path(Solidus::Order.last))
+        solidus_get :new
+        expect(response).to redirect_to(solidus.cart_admin_order_path(Solidus::Order.last))
       end
     end
 
@@ -117,13 +117,13 @@ describe Solidus::Admin::OrdersController, :type => :controller do
       it "does not refresh rates if the order is completed" do
         allow(order).to receive_messages :completed? => true
         expect(order).not_to receive :refresh_shipment_rates
-        spree_get :edit, :id => order.number
+        solidus_get :edit, :id => order.number
       end
 
       it "does refresh the rates if the order is incomplete" do
         allow(order).to receive_messages :completed? => false
         expect(order).to receive :refresh_shipment_rates
-        spree_get :edit, :id => order.number
+        solidus_get :edit, :id => order.number
       end
 
       context "when order does not have a ship address" do
@@ -135,8 +135,8 @@ describe Solidus::Admin::OrdersController, :type => :controller do
           before { Solidus::Config[:order_bill_address_used] = true }
 
           it "should redirect to the customer details page" do
-            spree_get :edit, :id => order.number
-            expect(response).to redirect_to(spree.edit_admin_order_customer_path(order))
+            solidus_get :edit, :id => order.number
+            expect(response).to redirect_to(solidus.edit_admin_order_customer_path(order))
           end
         end
 
@@ -144,8 +144,8 @@ describe Solidus::Admin::OrdersController, :type => :controller do
           before { Solidus::Config[:order_bill_address_used] = false }
 
           it "should redirect to the customer details page" do
-            spree_get :edit, :id => order.number
-            expect(response).to redirect_to(spree.edit_admin_order_customer_path(order))
+            solidus_get :edit, :id => order.number
+            expect(response).to redirect_to(solidus.edit_admin_order_customer_path(order))
           end
         end
       end
@@ -153,7 +153,7 @@ describe Solidus::Admin::OrdersController, :type => :controller do
 
     describe '#advance' do
       subject do
-        spree_put :advance, id: order.number
+        solidus_put :advance, id: order.number
       end
 
       context 'when incomplete' do
@@ -168,7 +168,7 @@ describe Solidus::Admin::OrdersController, :type => :controller do
           it 'messages and redirects' do
             subject
             expect(flash[:success]).to eq Solidus.t('order_ready_for_confirm')
-            expect(response).to redirect_to(spree.confirm_admin_order_path(order))
+            expect(response).to redirect_to(solidus.confirm_admin_order_path(order))
           end
         end
 
@@ -181,7 +181,7 @@ describe Solidus::Admin::OrdersController, :type => :controller do
           it 'messages and redirects' do
             subject
             expect(flash[:error]) == order.errors.full_messages
-            expect(response).to redirect_to(spree.confirm_admin_order_path(order))
+            expect(response).to redirect_to(solidus.confirm_admin_order_path(order))
           end
         end
       end
@@ -192,14 +192,14 @@ describe Solidus::Admin::OrdersController, :type => :controller do
         it 'messages and redirects' do
           subject
           expect(flash[:notice]).to eq Solidus.t('order_already_completed')
-          expect(response).to redirect_to(spree.edit_admin_order_path(order))
+          expect(response).to redirect_to(solidus.edit_admin_order_path(order))
         end
       end
     end
 
     context '#confirm' do
       subject do
-        spree_get :confirm, id: order.number
+        solidus_get :confirm, id: order.number
       end
 
       context 'when in confirm' do
@@ -227,14 +227,14 @@ describe Solidus::Admin::OrdersController, :type => :controller do
 
         it 'redirects to edit' do
           subject
-          expect(response).to redirect_to(spree.edit_admin_order_path(order))
+          expect(response).to redirect_to(solidus.edit_admin_order_path(order))
         end
       end
     end
 
     context "#complete" do
       subject do
-        spree_put :complete, id: order.number
+        solidus_put :complete, id: order.number
       end
 
       context 'when successful' do
@@ -248,7 +248,7 @@ describe Solidus::Admin::OrdersController, :type => :controller do
         it 'messages and redirects' do
           subject
           expect(flash[:success]).to eq Solidus.t(:order_completed)
-          expect(response).to redirect_to(spree.edit_admin_order_path(order))
+          expect(response).to redirect_to(solidus.edit_admin_order_path(order))
         end
       end
 
@@ -257,7 +257,7 @@ describe Solidus::Admin::OrdersController, :type => :controller do
 
         it 'messages and redirects' do
           subject
-          expect(response).to redirect_to(spree.confirm_admin_order_path(order))
+          expect(response).to redirect_to(solidus.confirm_admin_order_path(order))
           expect(flash[:error].to_s).to include("Cannot transition state via :complete from :cart")
         end
       end
@@ -269,7 +269,7 @@ describe Solidus::Admin::OrdersController, :type => :controller do
 
         it 'messages and redirects' do
           subject
-          expect(response).to redirect_to(spree.cart_admin_order_path(order))
+          expect(response).to redirect_to(solidus.cart_admin_order_path(order))
           expect(flash[:error].to_s).to eq Solidus.t(:insufficient_stock_for_order)
         end
       end
@@ -280,15 +280,15 @@ describe Solidus::Admin::OrdersController, :type => :controller do
       let(:user) { create(:user) }
 
       before do
-        allow(controller).to receive_messages :spree_current_user => user
-        user.spree_roles << Solidus::Role.find_or_create_by(name: 'admin')
+        allow(controller).to receive_messages :solidus_current_user => user
+        user.solidus_roles << Solidus::Role.find_or_create_by(name: 'admin')
 
         create(:completed_order_with_totals)
         expect(Solidus::Order.count).to eq 1
       end
 
       it "does not display duplicated results" do
-        spree_get :index, q: {
+        solidus_get :index, q: {
           line_items_variant_id_in: Solidus::Order.first.variants.map(&:id)
         }
         expect(assigns[:orders].map { |o| o.number }.count).to eq 1
@@ -300,17 +300,17 @@ describe Solidus::Admin::OrdersController, :type => :controller do
       let!(:finalized_adjustment) { create(:adjustment, finalized: true, adjustable: order, order: order) }
 
       it "changes all the finalized adjustments to unfinalized" do
-        spree_post :unfinalize_adjustments, id: order.number
+        solidus_post :unfinalize_adjustments, id: order.number
         expect(finalized_adjustment.reload.finalized).to eq(false)
       end
 
       it "sets the flash success message" do
-        spree_post :unfinalize_adjustments, id: order.number
+        solidus_post :unfinalize_adjustments, id: order.number
         expect(flash[:success]).to eql('All adjustments successfully unfinalized!')
       end
 
       it "redirects back" do
-        spree_post :unfinalize_adjustments, id: order.number
+        solidus_post :unfinalize_adjustments, id: order.number
         expect(response).to redirect_to(:back)
       end
     end
@@ -320,17 +320,17 @@ describe Solidus::Admin::OrdersController, :type => :controller do
       let!(:not_finalized_adjustment) { create(:adjustment, finalized: false, adjustable: order, order: order) }
 
       it "changes all the unfinalized adjustments to finalized" do
-        spree_post :finalize_adjustments, id: order.number
+        solidus_post :finalize_adjustments, id: order.number
         expect(not_finalized_adjustment.reload.finalized).to eq(true)
       end
 
       it "sets the flash success message" do
-        spree_post :finalize_adjustments, id: order.number
+        solidus_post :finalize_adjustments, id: order.number
         expect(flash[:success]).to eql('All adjustments successfully finalized!')
       end
 
       it "redirects back" do
-        spree_post :finalize_adjustments, id: order.number
+        solidus_post :finalize_adjustments, id: order.number
         expect(response).to redirect_to(:back)
       end
     end
@@ -342,19 +342,19 @@ describe Solidus::Admin::OrdersController, :type => :controller do
 
     before do
       allow(Solidus::Order).to receive_messages :find_by_number! => order
-      allow(controller).to receive_messages :spree_current_user => user
+      allow(controller).to receive_messages :solidus_current_user => user
     end
 
     it 'should grant access to users with an admin role' do
-      user.spree_roles << Solidus::Role.find_or_create_by(name: 'admin')
-      spree_post :index
+      user.solidus_roles << Solidus::Role.find_or_create_by(name: 'admin')
+      solidus_post :index
       expect(response).to render_template :index
     end
 
     it 'should grant access to users with an bar role' do
-      user.spree_roles << Solidus::Role.find_or_create_by(name: 'bar')
+      user.solidus_roles << Solidus::Role.find_or_create_by(name: 'bar')
       Solidus::Ability.register_ability(BarAbility)
-      spree_post :index
+      solidus_post :index
       expect(response).to render_template :index
       Solidus::Ability.remove_ability(BarAbility)
     end
@@ -363,17 +363,17 @@ describe Solidus::Admin::OrdersController, :type => :controller do
       allow(order).to receive(:update_attributes).and_return true
       allow(order).to receive(:user).and_return Solidus.user_class.new
       allow(order).to receive(:token).and_return nil
-      user.spree_roles.clear
-      user.spree_roles << Solidus::Role.find_or_create_by(name: 'bar')
+      user.solidus_roles.clear
+      user.solidus_roles << Solidus::Role.find_or_create_by(name: 'bar')
       Solidus::Ability.register_ability(BarAbility)
-      spree_put :update, { :id => 'R123' }
+      solidus_put :update, { :id => 'R123' }
       expect(response).to redirect_to('/unauthorized')
       Solidus::Ability.remove_ability(BarAbility)
     end
 
     it 'should deny access to users without an admin role' do
-      allow(user).to receive_messages :has_spree_role? => false
-      spree_post :index
+      allow(user).to receive_messages :has_solidus_role? => false
+      solidus_post :index
       expect(response).to redirect_to('/unauthorized')
     end
 
@@ -388,8 +388,8 @@ describe Solidus::Admin::OrdersController, :type => :controller do
         3.times { create(:completed_order_with_totals) }
         expect(Solidus::Order.complete.count).to eq 4
 
-        allow(user).to receive_messages :has_spree_role? => false
-        spree_get :index
+        allow(user).to receive_messages :has_solidus_role? => false
+        solidus_get :index
         expect(response).to render_template :index
         expect(assigns['orders'].size).to eq 1
         expect(assigns['orders'].first.number).to eq number
@@ -402,7 +402,7 @@ describe Solidus::Admin::OrdersController, :type => :controller do
 
     it "raise active record not found" do
       expect {
-        spree_get :edit, id: 0
+        solidus_get :edit, id: 0
       }.to raise_error ActiveRecord::RecordNotFound
     end
   end
@@ -422,7 +422,7 @@ describe Solidus::Admin::OrdersController, :type => :controller do
       allow(order.contents).to receive(:update_cart)
       expect(Solidus::Order).to receive(:find_by_number!) { order }
     end
-    subject { spree_put :update, payload }
+    subject { solidus_put :update, payload }
 
     it "attempts to update the order" do
       expect(order.contents).to receive(:update_cart).with(payload[:order])
@@ -443,7 +443,7 @@ describe Solidus::Admin::OrdersController, :type => :controller do
 
       it "redirects to the customer path" do
         subject
-        expect(response).to redirect_to(spree.admin_order_customer_path(order))
+        expect(response).to redirect_to(solidus.admin_order_customer_path(order))
       end
     end
 

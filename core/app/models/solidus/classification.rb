@@ -1,6 +1,6 @@
 module Spree
   class Classification < Solidus::Base
-    self.table_name = 'spree_products_taxons'
+    self.table_name = 'solidus_products_taxons'
     acts_as_list scope: :taxon
     belongs_to :product, class_name: "Solidus::Product", inverse_of: :classifications
     belongs_to :taxon, class_name: "Solidus::Taxon", inverse_of: :classifications, touch: true

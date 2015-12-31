@@ -10,7 +10,7 @@ module Spree
         let(:customer_return) { create(:customer_return) }
 
         subject do
-          spree_get :index, { order_id: customer_return.order.to_param }
+          solidus_get :index, { order_id: customer_return.order.to_param }
         end
 
         before { subject }
@@ -31,7 +31,7 @@ module Spree
         let!(:second_active_reimbursement_type) { create(:reimbursement_type) }
 
         subject do
-          spree_get :new, { order_id: order.to_param }
+          solidus_get :new, { order_id: order.to_param }
         end
 
         it "loads the order" do
@@ -127,7 +127,7 @@ module Spree
         let!(:manual_intervention_return_item) { customer_return.return_items.order('id').third.tap(&:require_manual_intervention!) }
 
         subject do
-          spree_get :edit, { order_id: order.to_param, id: customer_return.to_param }
+          solidus_get :edit, { order_id: order.to_param, id: customer_return.to_param }
         end
 
         it "loads the order" do
@@ -203,12 +203,12 @@ module Spree
           }
         end
 
-        subject { spree_post :create, customer_return_params }
+        subject { solidus_post :create, customer_return_params }
 
         it { expect { subject }.to change { Solidus::CustomerReturn.count }.by(1) }
         it do
           subject
-          expect(response).to redirect_to spree.edit_admin_order_customer_return_path(order, id: Solidus::CustomerReturn.last.id)
+          expect(response).to redirect_to solidus.edit_admin_order_customer_return_path(order, id: Solidus::CustomerReturn.last.id)
         end
 
         it 'executes the reception status event on the return items' do
@@ -226,7 +226,7 @@ module Spree
         context "missing reception status event" do
           let(:reception_status_event) { '' }
           it { expect{ subject }.to_not change { Solidus::CustomerReturn.count } }
-          it { subject; expect(response).to redirect_to spree.new_admin_order_customer_return_path(order) }
+          it { subject; expect(response).to redirect_to solidus.new_admin_order_customer_return_path(order) }
         end
       end
     end

@@ -12,11 +12,11 @@ module Spree
     #
     # First split:
     #
-    #   ["20131128203548", "update_name_fields_on_spree_credit_cards.spree.rb"]
+    #   ["20131128203548", "update_name_fields_on_solidus_credit_cards.solidus.rb"]
     #
     # Second split should give the engine_name of the migration
     #
-    #   ["update_name_fields_on_spree_credit_cards", "spree.rb"]
+    #   ["update_name_fields_on_solidus_credit_cards", "solidus.rb"]
     #
     # Shouldn't run on test mode because migrations inside engine don't have
     # engine name on the file name
@@ -65,9 +65,9 @@ module Spree
       end
 
       def match_engine?(engine)
-        if engine_name == "spree"
+        if engine_name == "solidus"
           # Avoid stores upgrading from 1.3 getting wrong warnings
-          ["spree.rb", "spree_promo.rb"].include? engine
+          ["solidus.rb", "solidus_promo.rb"].include? engine
         else
           engine == "#{engine_name}.rb"
         end

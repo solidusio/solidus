@@ -88,7 +88,7 @@ describe Solidus::RoleConfiguration do
     let(:ability) { DummyAbility.new }
 
     before do
-      user.spree_roles = user_roles.map do |role|
+      user.solidus_roles = user_roles.map do |role|
         Solidus::Role.create!(name: role)
       end
     end

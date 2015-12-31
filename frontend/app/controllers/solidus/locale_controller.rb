@@ -10,7 +10,7 @@ module Spree
       else
         flash[:error] = Solidus.t(:locale_not_changed)
       end
-      redirect_back_or_default(spree.root_path)
+      redirect_back_or_default(solidus.root_path)
     end
   end
 end

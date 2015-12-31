@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe 'spree:migrations:copy_shipped_shipments_to_cartons' do
+describe 'solidus:migrations:copy_shipped_shipments_to_cartons' do
   before do
     Rails.application.load_tasks
     task.reenable
@@ -8,7 +8,7 @@ describe 'spree:migrations:copy_shipped_shipments_to_cartons' do
 
   describe 'up' do
     let(:task) do
-      Rake::Task['spree:migrations:copy_shipped_shipments_to_cartons:up']
+      Rake::Task['solidus:migrations:copy_shipped_shipments_to_cartons:up']
     end
 
     # should generate a carton
@@ -87,7 +87,7 @@ describe 'spree:migrations:copy_shipped_shipments_to_cartons' do
 
   describe 'down' do
     let(:task) do
-      Rake::Task['spree:migrations:copy_shipped_shipments_to_cartons:down']
+      Rake::Task['solidus:migrations:copy_shipped_shipments_to_cartons:down']
     end
 
     let!(:migrated_carton) { create(:carton) }

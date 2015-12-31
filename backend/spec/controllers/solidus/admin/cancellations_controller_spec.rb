@@ -4,7 +4,7 @@ describe Solidus::Admin::CancellationsController do
   stub_authorization!
 
   describe "#index" do
-    subject { spree_get :index, order_id: order.number }
+    subject { solidus_get :index, order_id: order.number }
 
     let(:order) { create(:order_ready_to_ship, line_items_count: 1)}
 
@@ -18,17 +18,17 @@ describe Solidus::Admin::CancellationsController do
   end
 
   describe "#cancel" do
-    subject { spree_post :short_ship, order_id: order.number, inventory_unit_ids: inventory_units.map(&:id) }
+    subject { solidus_post :short_ship, order_id: order.number, inventory_unit_ids: inventory_units.map(&:id) }
 
     let(:order) { order = create(:order_ready_to_ship, :number => "R100", :state => "complete", line_items_count: 1) }
     let(:referer) { "order_admin_page" }
 
     context "no inventory unit ids are provided" do
-      subject { spree_post :short_ship, order_id: order.number }
+      subject { solidus_post :short_ship, order_id: order.number }
 
       it "redirects back" do
         subject
-        expect(response).to redirect_to(spree.admin_order_cancellations_path(order))
+        expect(response).to redirect_to(solidus.admin_order_cancellations_path(order))
       end
 
       it "sets an error message" do
@@ -42,7 +42,7 @@ describe Solidus::Admin::CancellationsController do
 
       it "redirects back" do
         subject
-        expect(response).to redirect_to(spree.admin_order_cancellations_path(order))
+        expect(response).to redirect_to(solidus.admin_order_cancellations_path(order))
       end
 
       it "sets an error message" do
@@ -56,7 +56,7 @@ describe Solidus::Admin::CancellationsController do
 
       it "redirects to admin order edit" do
         subject
-        expect(response).to redirect_to(spree.edit_admin_order_path(order))
+        expect(response).to redirect_to(solidus.edit_admin_order_path(order))
       end
 
       it "sets an success message" do

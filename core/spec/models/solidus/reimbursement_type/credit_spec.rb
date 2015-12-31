@@ -11,7 +11,7 @@ module Spree
 
     class DummyCreditable < Solidus::Base
       attr_accessor :amount
-      self.table_name = 'spree_payments' # Your creditable class should not use this table
+      self.table_name = 'solidus_payments' # Your creditable class should not use this table
     end
 
     subject { Solidus::ReimbursementType::Credit.reimburse(reimbursement, [return_item], simulate)}

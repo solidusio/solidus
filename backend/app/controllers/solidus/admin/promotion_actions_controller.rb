@@ -10,7 +10,7 @@ class Solidus::Admin::PromotionActionsController < Solidus::Admin::BaseControlle
       flash[:success] = Solidus.t(:successfully_created, :resource => Solidus.t(:promotion_action))
     end
     respond_to do |format|
-      format.html { redirect_to spree.edit_admin_promotion_path(@promotion)}
+      format.html { redirect_to solidus.edit_admin_promotion_path(@promotion)}
       format.js   { render :layout => false }
     end
   end
@@ -21,7 +21,7 @@ class Solidus::Admin::PromotionActionsController < Solidus::Admin::BaseControlle
       flash[:success] = Solidus.t(:successfully_removed, :resource => Solidus.t(:promotion_action))
     end
     respond_to do |format|
-      format.html { redirect_to spree.edit_admin_promotion_path(@promotion)}
+      format.html { redirect_to solidus.edit_admin_promotion_path(@promotion)}
       format.js   { render :layout => false }
     end
   end
@@ -33,11 +33,11 @@ class Solidus::Admin::PromotionActionsController < Solidus::Admin::BaseControlle
   end
 
   def validate_promotion_action_type
-    valid_promotion_action_types = Rails.application.config.spree.promotions.actions.map(&:to_s)
+    valid_promotion_action_types = Rails.application.config.solidus.promotions.actions.map(&:to_s)
     if !valid_promotion_action_types.include?(params[:action_type])
       flash[:error] = Solidus.t(:invalid_promotion_action)
       respond_to do |format|
-        format.html { redirect_to spree.edit_admin_promotion_path(@promotion)}
+        format.html { redirect_to solidus.edit_admin_promotion_path(@promotion)}
         format.js   { render :layout => false }
       end
     end

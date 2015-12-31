@@ -115,7 +115,7 @@ module Spree
               bill_address_attributes: address,
               ship_address_attributes: address
             }
-          expect(json_response['error']).to eq(I18n.t(:could_not_transition, scope: "spree.api.order"))
+          expect(json_response['error']).to eq(I18n.t(:could_not_transition, scope: "solidus.api.order"))
           expect(response.status).to eq(422)
         end
 
@@ -408,7 +408,7 @@ module Spree
           user = create(:user)
           # Need to pass email as well so that validations succeed
           api_put :update, id: order.to_param, order_token: order.guest_token,
-            order: { user_id: user.id, email: "guest@spreecommerce.com" }
+            order: { user_id: user.id, email: "guest@soliduscommerce.com" }
           expect(response.status).to eq(200)
           expect(json_response['user_id']).to eq(user.id)
         end
@@ -416,8 +416,8 @@ module Spree
 
       it "can assign an email to the order" do
         api_put :update, id: order.to_param, order_token: order.guest_token,
-          order: { email: "guest@spreecommerce.com" }
-        expect(json_response['email']).to eq("guest@spreecommerce.com")
+          order: { email: "guest@soliduscommerce.com" }
+        expect(json_response['email']).to eq("guest@soliduscommerce.com")
         expect(response.status).to eq(200)
       end
 
@@ -433,14 +433,14 @@ module Spree
       let!(:order) { create(:order_with_line_items) }
       it "cannot transition to address without a line item" do
         order.line_items.delete_all
-        order.update_column(:email, "spree@example.com")
+        order.update_column(:email, "solidus@example.com")
         api_put :next, id: order.to_param, order_token: order.guest_token
         expect(response.status).to eq(422)
         expect(json_response["errors"]["base"]).to include(Solidus.t(:there_are_no_items_for_this_order))
       end
 
       it "can transition an order to the next state" do
-        order.update_column(:email, "spree@example.com")
+        order.update_column(:email, "solidus@example.com")
 
         api_put :next, id: order.to_param, order_token: order.guest_token
         expect(response.status).to eq(200)

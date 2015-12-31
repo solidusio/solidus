@@ -4,7 +4,7 @@ describe "Product Variants", :type => :feature do
   stub_authorization!
 
   before(:each) do
-    visit spree.admin_path
+    visit solidus.admin_path
   end
 
   context "editing variant option types", :js => true do
@@ -33,7 +33,7 @@ describe "Product Variants", :type => :feature do
       click_button "Update"
       expect(page).to have_content("successfully updated!")
 
-      visit spree.admin_path
+      visit solidus.admin_path
       click_nav "Products"
       within('table.index tbody tr:nth-child(1)') do
         click_icon :edit

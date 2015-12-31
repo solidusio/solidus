@@ -34,7 +34,7 @@
   </thead>
   <tbody>
     <% @stock_movements.each do |stock_movement|%>
-      <tr id="<%= spree_dom_id stock_movement %>" data-hook="admin_stock_movements_index_rows" class="<%= cycle('odd', 'even')%>">
+      <tr id="<%= solidus_dom_id stock_movement %>" data-hook="admin_stock_movements_index_rows" class="<%= cycle('odd', 'even')%>">
         <td class="align-center">
           <%= display_variant(stock_movement) %>
         </td>
@@ -48,7 +48,7 @@
   <div class="alpha twelve columns no-objects-found">
     <%= Solidus.t(:no_resource_found, resource: I18n.t(:other, scope: 'activerecord.models.solidus/stock_movement')) %>
     <% if can?(:create, Solidus::StockMovement) %>
-      <%= link_to Solidus.t(:add_one), spree.new_admin_stock_location_stock_movement_path(@stock_location) %>!
+      <%= link_to Solidus.t(:add_one), solidus.new_admin_stock_location_stock_movement_path(@stock_location) %>!
     <% end %>
   </div>
 <% end %>

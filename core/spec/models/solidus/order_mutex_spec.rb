@@ -18,7 +18,7 @@ describe Solidus::OrderMutex do
     end
 
     it "returns the value of the block" do
-      expect(Solidus::OrderMutex.with_lock!(order) { 'yay for spree' }).to eq 'yay for spree'
+      expect(Solidus::OrderMutex.with_lock!(order) { 'yay for solidus' }).to eq 'yay for solidus'
     end
   end
 

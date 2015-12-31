@@ -32,7 +32,7 @@
     </thead>
     <tbody>
       <% @shipping_methods.includes(:zones, :calculator).each do |shipping_method|%>
-        <tr id="<%= spree_dom_id shipping_method %>" data-hook="admin_shipping_methods_index_rows" class="<%= cycle('odd', 'even')%>">
+        <tr id="<%= solidus_dom_id shipping_method %>" data-hook="admin_shipping_methods_index_rows" class="<%= cycle('odd', 'even')%>">
           <td class="align-center"><%= shipping_method.admin_name + ' / ' if shipping_method.admin_name.present? %><%= shipping_method.name %></td>
           <td class="align-center"><%= shipping_method.zones.collect(&:name).join(", ") if shipping_method.zones %></td>
           <td class="align-center"><%= shipping_method.calculator.description %></td>
@@ -54,7 +54,7 @@
   <div class="alpha twelve columns no-objects-found">
     <%= Solidus.t(:no_resource_found, resource: I18n.t(:other, scope: 'activerecord.models.solidus/shipping_method')) %>
     <% if can?(:create, Solidus::ShippingMethod) %>
-      <%= link_to Solidus.t(:add_one), spree.new_admin_shipping_method_path %>!
+      <%= link_to Solidus.t(:add_one), solidus.new_admin_shipping_method_path %>!
     <% end %>
   </div>
 <% end %>

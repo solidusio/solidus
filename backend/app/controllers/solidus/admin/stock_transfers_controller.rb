@@ -21,7 +21,7 @@ module Spree
       end
 
       def finalize
-        if @stock_transfer.finalize(try_spree_current_user)
+        if @stock_transfer.finalize(try_solidus_current_user)
           redirect_to tracking_info_admin_stock_transfer_path(@stock_transfer)
         else
           flash[:error] = @stock_transfer.errors.full_messages.join(", ")
@@ -31,7 +31,7 @@ module Spree
 
       def close
         Solidus::StockTransfer.transaction do
-          if @stock_transfer.close(try_spree_current_user)
+          if @stock_transfer.close(try_solidus_current_user)
             adjust_inventory
             redirect_to admin_stock_transfers_path
           else
@@ -72,7 +72,7 @@ module Spree
       def permitted_resource_params
         resource_params = super
         if action == :create
-          resource_params.merge!(created_by: try_spree_current_user)
+          resource_params.merge!(created_by: try_solidus_current_user)
         end
         resource_params
       end

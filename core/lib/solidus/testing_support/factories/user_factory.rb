@@ -12,12 +12,12 @@ FactoryGirl.define do
 
     trait :with_api_key do
       after(:create) do |user, _|
-        user.generate_spree_api_key!
+        user.generate_solidus_api_key!
       end
     end
 
     factory :admin_user do
-      spree_roles { [Solidus::Role.find_by(name: 'admin') || create(:role, name: 'admin')] }
+      solidus_roles { [Solidus::Role.find_by(name: 'admin') || create(:role, name: 'admin')] }
     end
 
     factory :user_with_addreses do |u|

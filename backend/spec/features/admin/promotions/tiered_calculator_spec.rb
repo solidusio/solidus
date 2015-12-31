@@ -6,7 +6,7 @@ feature "Tiered Calculator Promotions" do
   let(:promotion) { create :promotion }
 
   background do
-    visit spree.edit_admin_promotion_path(promotion)
+    visit solidus.edit_admin_promotion_path(promotion)
   end
 
   scenario "adding a tiered percent calculator", js: true do
@@ -52,7 +52,7 @@ feature "Tiered Calculator Promotions" do
       action.calculator.preferred_tiers = Hash[100 => 10, 200 => 15, 300 => 20]
       action.calculator.save!
 
-      visit spree.edit_admin_promotion_path(promotion)
+      visit solidus.edit_admin_promotion_path(promotion)
     end
 
     scenario "deleting a tier", js: true do

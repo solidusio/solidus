@@ -3,17 +3,17 @@ module Spree
     class Engine < ::Rails::Engine
       config.middleware.use "Solidus::Backend::Middleware::SeoAssist"
 
-      initializer "spree.backend.environment", :before => :load_config_initializers do |app|
+      initializer "solidus.backend.environment", :before => :load_config_initializers do |app|
         Solidus::Backend::Config = Solidus::BackendConfiguration.new
       end
 
       # filter sensitive information during logging
-      initializer "spree.params.filter" do |app|
+      initializer "solidus.params.filter" do |app|
         app.config.filter_parameters += [:password, :password_confirmation, :number]
       end
 
       # sets the manifests / assets to be precompiled, even when initialize_on_precompile is false
-      initializer "spree.assets.precompile", :group => :all do |app|
+      initializer "solidus.assets.precompile", :group => :all do |app|
         app.config.assets.precompile += %w[
           solidus/backend/all*
           solidus/backend/orders/edit_form.js

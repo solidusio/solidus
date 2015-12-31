@@ -367,7 +367,7 @@ describe Solidus::Order, :type => :model do
       let(:default_credit_card) { create(:credit_card) }
 
       before do
-        user = Solidus::LegacyUser.new(email: 'spree@example.org', bill_address: user_bill_address)
+        user = Solidus::LegacyUser.new(email: 'solidus@example.org', bill_address: user_bill_address)
         allow(user).to receive(:default_credit_card) { default_credit_card }
         order.user = user
 
@@ -457,7 +457,7 @@ describe Solidus::Order, :type => :model do
     context "out of stock" do
       before do
         order.user = FactoryGirl.create(:user)
-        order.email = 'spree@example.org'
+        order.email = 'solidus@example.org'
         order.payments << FactoryGirl.create(:payment)
         allow(order).to receive_messages(payment_required?: true)
         order.line_items << FactoryGirl.create(:line_item)
@@ -484,7 +484,7 @@ describe Solidus::Order, :type => :model do
     context "no inventory units" do
       before do
         order.user = FactoryGirl.create(:user)
-        order.email = 'spree@example.com'
+        order.email = 'solidus@example.com'
         order.payments << FactoryGirl.create(:payment)
         allow(order).to receive_messages(payment_required?: true)
         allow(order).to receive(:ensure_available_shipping_rates) { true }
@@ -505,7 +505,7 @@ describe Solidus::Order, :type => :model do
 
     context "exchange order completion" do
       before do
-        order.email = 'spree@example.org'
+        order.email = 'solidus@example.org'
         order.payments << FactoryGirl.create(:payment)
         order.shipments.create!
         allow(order).to receive_messages(payment_required?: true)
@@ -547,7 +547,7 @@ describe Solidus::Order, :type => :model do
       before do
         order.user = FactoryGirl.create(:user)
         order.store = FactoryGirl.create(:store)
-        order.email = 'spree@example.org'
+        order.email = 'solidus@example.org'
         order.payments << FactoryGirl.create(:payment)
 
         # make sure we will actually capture a payment
@@ -577,7 +577,7 @@ describe Solidus::Order, :type => :model do
     context "a payment fails during processing" do
       before do
         order.user = FactoryGirl.create(:user)
-        order.email = 'spree@example.org'
+        order.email = 'solidus@example.org'
         payment = FactoryGirl.create(:payment)
         allow(payment).to receive(:process!).and_raise(Solidus::Core::GatewayError.new('processing failed'))
         order.line_items.each { |li| li.inventory_units.create! }

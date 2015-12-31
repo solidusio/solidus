@@ -38,7 +38,7 @@ module Solidus::Preferences
     end
 
     # Replace the default legacy preference store, which stores preferences in
-    # the spree_preferences table, with a plain in memory hash. This is faster
+    # the solidus_preferences table, with a plain in memory hash. This is faster
     # and less error prone.
     #
     # This will set all preferences to their default values.

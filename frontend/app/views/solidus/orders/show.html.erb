@@ -11,10 +11,10 @@
     <br class="clear" />
 
     <p data-hook="links">
-      <%= link_to Solidus.t(:back_to_store), spree.root_path, :class => "button" %>
+      <%= link_to Solidus.t(:back_to_store), solidus.root_path, :class => "button" %>
       <% unless order_just_completed?(@order) %>
-        <% if try_spree_current_user && respond_to?(:spree_account_path) %>
-          <%= link_to Solidus.t(:my_account), spree_account_path, :class => "button" %>
+        <% if try_solidus_current_user && respond_to?(:solidus_account_path) %>
+          <%= link_to Solidus.t(:my_account), solidus_account_path, :class => "button" %>
         <% end %>
       <% end %>
     </p>

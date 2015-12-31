@@ -30,7 +30,7 @@ module Spree
       @user = Solidus.user_class.find(parsed['id'])
 
       # copied from api testing helpers support since we can't really sign in
-      allow(Solidus::LegacyUser).to receive(:find_by).with(hash_including(:spree_api_key)) { @user }
+      allow(Solidus::LegacyUser).to receive(:find_by).with(hash_including(:solidus_api_key)) { @user }
     end
 
     def create_order(order_params: {})

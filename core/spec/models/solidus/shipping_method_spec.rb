@@ -8,7 +8,7 @@ describe Solidus::ShippingMethod, :type => :model do
 
   context 'calculators' do
     it "Should reject calculators that don't inherit from Solidus::ShippingCalculator" do
-      allow(Solidus::ShippingMethod).to receive_message_chain(:spree_calculators, :shipping_methods).and_return([
+      allow(Solidus::ShippingMethod).to receive_message_chain(:solidus_calculators, :shipping_methods).and_return([
         Solidus::Calculator::Shipping::FlatPercentItemTotal,
         Solidus::Calculator::Shipping::PriceSack,
         Solidus::Calculator::DefaultTax,

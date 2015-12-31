@@ -6,7 +6,7 @@ module Spree
   # off the entire order.
   #
   #
-  # TODO Should be deprecated now that we have adjustments at the line item level in spree core
+  # TODO Should be deprecated now that we have adjustments at the line item level in solidus core
 
   class Calculator::PercentPerItem < Calculator
     preference :percent, :decimal, default: 0

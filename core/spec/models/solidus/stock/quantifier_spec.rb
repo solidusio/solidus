@@ -26,7 +26,7 @@ module Spree
         end
 
         context 'when track_inventory_levels is false' do
-          before { configure_spree_preferences { |config| config.track_inventory_levels = false } }
+          before { configure_solidus_preferences { |config| config.track_inventory_levels = false } }
 
           specify { expect(subject.total_on_hand).to eq(Float::INFINITY) }
 

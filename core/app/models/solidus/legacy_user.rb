@@ -2,11 +2,11 @@ module Spree
   # Default implementation of User.
   #
   # @note This class is intended to be modified by extensions (ex.
-  #   spree_auth_devise)
+  #   solidus_auth_devise)
   class LegacyUser < Solidus::Base
     include UserMethods
 
-    self.table_name = 'spree_users'
+    self.table_name = 'solidus_users'
 
     # for url generation
     def self.model_name

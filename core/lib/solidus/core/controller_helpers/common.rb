@@ -61,7 +61,7 @@ module Spree
           #
           # You can set the layout you want to render inside your Spree configuration with the +:layout+ option.
           #
-          # Default layout is: +app/views/solidus/layouts/spree_application+
+          # Default layout is: +app/views/solidus/layouts/solidus_application+
           #
           def get_layout
             layout ||= Solidus::Config[:layout]

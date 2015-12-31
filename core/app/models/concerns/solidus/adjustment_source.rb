@@ -7,7 +7,7 @@ module Spree
         adjustment_scope = self.adjustments.joins(:order)
 
         # For incomplete orders, remove the adjustment completely.
-        adjustment_scope.where(spree_orders: { completed_at: nil }).destroy_all
+        adjustment_scope.where(solidus_orders: { completed_at: nil }).destroy_all
 
         # For complete orders, the source will be invalid.
         # Therefore we nullify the source_id, leaving the adjustment in place.
@@ -16,7 +16,7 @@ module Spree
           source_id: nil,
           updated_at: Time.current
         }
-        adjustment_scope.where.not(spree_orders: { completed_at: nil }).update_all(attrs)
+        adjustment_scope.where.not(solidus_orders: { completed_at: nil }).update_all(attrs)
       end
     end
   end

@@ -65,7 +65,7 @@
     </thead>
     <tbody>
     <% @variants.each do |variant| %>
-      <tr id="<%= spree_dom_id variant %>" <%= 'style="color:red;"' if variant.deleted? %> data-hook="variants_row" class="<%= cycle('odd', 'even')%>">
+      <tr id="<%= solidus_dom_id variant %>" <%= 'style="color:red;"' if variant.deleted? %> data-hook="variants_row" class="<%= cycle('odd', 'even')%>">
         <td class="no-border">
           <% if can? :update_positions, Solidus::Variant %>
             <span class="handle"></span>
@@ -95,7 +95,7 @@
   <div class="alpha twelve columns no-objects-found">
     <%= Solidus.t(:no_resource_found, resource: I18n.t(:other, scope: 'activerecord.models.solidus/variant')) %>
     <% if can?(:create, Solidus::Variant) %>
-      <%= link_to Solidus.t(:add_one), spree.new_admin_product_variant_path(@product) %>!
+      <%= link_to Solidus.t(:add_one), solidus.new_admin_product_variant_path(@product) %>!
     <% end %>
   </div>
 <% end %>

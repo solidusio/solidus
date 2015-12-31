@@ -128,7 +128,7 @@ module Spree
         product.master.images.create!(:attachment => image("thinking-cat.jpg"))
         product.variants.create!
         product.variants.first.images.create!(:attachment => image("thinking-cat.jpg"))
-        product.set_property("spree", "rocks")
+        product.set_property("solidus", "rocks")
         product.taxons << create(:taxon)
 
         api_get :show, :id => product.to_param

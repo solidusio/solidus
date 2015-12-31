@@ -5,7 +5,7 @@ module Spree
 
       after_action :sign_in_if_change_own_password, only: :update
 
-      # http://spreecommerce.com/blog/2010/11/02/json-hijacking-vulnerability/
+      # http://soliduscommerce.com/blog/2010/11/02/json-hijacking-vulnerability/
       before_action :check_json_authenticity, only: :index
       before_filter :load_roles, :load_stock_locations, only: [:edit, :new]
 
@@ -72,14 +72,14 @@ module Spree
       end
 
       def generate_api_key
-        if @user.generate_spree_api_key!
+        if @user.generate_solidus_api_key!
           flash[:success] = Solidus.t('api.key_generated')
         end
         redirect_to edit_admin_user_path(@user)
       end
 
       def clear_api_key
-        if @user.clear_spree_api_key!
+        if @user.clear_solidus_api_key!
           flash[:success] = Solidus.t('api.key_cleared')
         end
         redirect_to edit_admin_user_path(@user)
@@ -95,11 +95,11 @@ module Spree
           return @collection if @collection.present?
           if request.xhr? && params[:q].present?
             @collection = Solidus.user_class.includes(:bill_address, :ship_address)
-                              .where("spree_users.email #{LIKE} :search
-                                     OR (spree_addresses.firstname #{LIKE} :search AND spree_addresses.id = spree_users.bill_address_id)
-                                     OR (spree_addresses.lastname  #{LIKE} :search AND spree_addresses.id = spree_users.bill_address_id)
-                                     OR (spree_addresses.firstname #{LIKE} :search AND spree_addresses.id = spree_users.ship_address_id)
-                                     OR (spree_addresses.lastname  #{LIKE} :search AND spree_addresses.id = spree_users.ship_address_id)",
+                              .where("solidus_users.email #{LIKE} :search
+                                     OR (solidus_addresses.firstname #{LIKE} :search AND solidus_addresses.id = solidus_users.bill_address_id)
+                                     OR (solidus_addresses.lastname  #{LIKE} :search AND solidus_addresses.id = solidus_users.bill_address_id)
+                                     OR (solidus_addresses.firstname #{LIKE} :search AND solidus_addresses.id = solidus_users.ship_address_id)
+                                     OR (solidus_addresses.lastname  #{LIKE} :search AND solidus_addresses.id = solidus_users.ship_address_id)",
                                     { :search => "#{params[:q].strip}%" })
                               .limit(params[:limit] || 100)
           else
@@ -116,7 +116,7 @@ module Spree
           end
 
           if can? :manage, Solidus::Role
-            attributes += [{ spree_role_ids: [] }]
+            attributes += [{ solidus_role_ids: [] }]
           end
 
           params.require(:user).permit(attributes)
@@ -144,14 +144,14 @@ module Spree
         end
 
         def sign_in_if_change_own_password
-          if try_spree_current_user == @user && @user.password.present?
+          if try_solidus_current_user == @user && @user.password.present?
             sign_in(@user, :event => :authentication, :bypass => true)
           end
         end
 
         def load_roles
           @roles = Solidus::Role.all
-          @user_roles = @user.spree_roles
+          @user_roles = @user.solidus_roles
         end
 
         def load_stock_locations
@@ -159,15 +159,15 @@ module Spree
         end
 
         def set_roles
-          # FIXME: user_params permits the roles that can be set, if spree_role_ids is set.
+          # FIXME: user_params permits the roles that can be set, if solidus_role_ids is set.
           # when submitting a user with no roles, the param is not present. Because users can be updated
           # with some users being able to set roles, and some users not being able to set roles, we have to check
           # if the roles should be cleared, or unchanged again here. The roles form should probably hit a seperate
           # action or controller to remedy this.
-          if user_params[:spree_role_ids]
-            @user.spree_roles = Solidus::Role.where(id: user_params[:spree_role_ids])
+          if user_params[:solidus_role_ids]
+            @user.solidus_roles = Solidus::Role.where(id: user_params[:solidus_role_ids])
           elsif can?(:manage, Solidus::Role)
-            @user.spree_roles = []
+            @user.solidus_roles = []
           end
         end
 

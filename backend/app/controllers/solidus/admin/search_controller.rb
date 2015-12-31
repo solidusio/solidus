@@ -1,7 +1,7 @@
 module Spree
   module Admin
     class SearchController < Solidus::Admin::BaseController
-      # http://spreecommerce.com/blog/2010/11/02/json-hijacking-vulnerability/
+      # http://soliduscommerce.com/blog/2010/11/02/json-hijacking-vulnerability/
       before_action :check_json_authenticity, only: :index
       respond_to :json
 

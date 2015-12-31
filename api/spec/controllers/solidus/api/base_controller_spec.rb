@@ -92,7 +92,7 @@ describe Solidus::Api::BaseController, :type => :controller do
       end
     end
 
-    # What would be placed in config/initializers/spree.rb
+    # What would be placed in config/initializers/solidus.rb
     Solidus::Api::BaseController.error_notifier = Proc.new do |e, controller|
       MockHoneybadger.notify_or_ignore(e, rack_env: controller.request.env)
     end
@@ -106,8 +106,8 @@ describe Solidus::Api::BaseController, :type => :controller do
     end
 
     before do
-      user = double(email: "spree@example.com")
-      allow(user).to receive_message_chain :spree_roles, pluck: []
+      user = double(email: "solidus@example.com")
+      allow(user).to receive_message_chain :solidus_roles, pluck: []
       allow(Solidus.user_class).to receive_messages find_by: user
       @routes = ActionDispatch::Routing::RouteSet.new.tap do |r|
         r.draw { get 'foo' => 'fakes#foo' }

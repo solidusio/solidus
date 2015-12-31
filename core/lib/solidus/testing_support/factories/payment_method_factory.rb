@@ -7,7 +7,7 @@ FactoryGirl.define do
     name 'Check'
   end
 
-  # authorize.net was moved to spree_gateway.
+  # authorize.net was moved to solidus_gateway.
   # Leaving this factory in place with bogus in case anyone is using it.
   factory :simple_credit_card_payment_method, class: Solidus::Gateway::BogusSimple do
     name 'Credit Card'

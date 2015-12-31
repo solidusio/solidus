@@ -36,7 +36,7 @@ describe Solidus::CartonMailer do
     context "shipped_email" do
       context "pt-BR locale" do
         before do
-          pt_br_shipped_email = { :spree => { :shipment_mailer => { :shipped_email => { :dear_customer => 'Caro Cliente,' } } } }
+          pt_br_shipped_email = { :solidus => { :shipment_mailer => { :shipped_email => { :dear_customer => 'Caro Cliente,' } } } }
           I18n.backend.store_translations :'pt-BR', pt_br_shipped_email
           I18n.locale = :'pt-BR'
         end

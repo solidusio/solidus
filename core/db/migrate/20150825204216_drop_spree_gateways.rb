@@ -1,10 +1,10 @@
 class DropSpreeGateways < ActiveRecord::Migration
   def up
-    drop_table :spree_gateways
+    drop_table :solidus_gateways
   end
 
   def down
-    create_table "spree_gateways" do |t|
+    create_table "solidus_gateways" do |t|
       t.string   "type"
       t.string   "name"
       t.text     "description"

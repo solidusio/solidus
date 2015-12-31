@@ -7,12 +7,12 @@ describe "Switching currencies in backend", :type => :feature do
 
   # Regression test for #2340
   it "does not cause current_order to become nil", inaccessible: true do
-    visit spree.root_path
+    visit solidus.root_path
     click_link "RoR Mug"
     click_button "Add To Cart"
     # Now that we have an order...
     Solidus::Config[:currency] = "AUD"
-    visit spree.root_path
+    visit solidus.root_path
   end
 
 end

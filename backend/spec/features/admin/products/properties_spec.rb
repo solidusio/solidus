@@ -4,7 +4,7 @@ describe "Properties", :type => :feature do
   stub_authorization!
 
   before(:each) do
-    visit spree.admin_path
+    visit solidus.admin_path
     click_nav "Products"
   end
 
@@ -77,7 +77,7 @@ describe "Properties", :type => :feature do
   context "linking a property to a product", :js => true do
     before do
       create(:product)
-      visit spree.admin_products_path
+      visit solidus.admin_products_path
       click_icon :edit
       click_link "Product Properties"
     end
@@ -99,7 +99,7 @@ describe "Properties", :type => :feature do
 
       expect(page).to have_css('tr.product_property', count: 2)
 
-      within '#spree_new_product_property' do
+      within '#solidus_new_product_property' do
         find('[id$=_property_name]').set("New Property")
         find('[id$=_value]').set("New Value")
       end

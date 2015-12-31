@@ -63,7 +63,7 @@ module Spree
       end
 
       def current
-        if current_api_user && @order = current_api_user.last_incomplete_spree_order(store: current_store)
+        if current_api_user && @order = current_api_user.last_incomplete_solidus_order(store: current_store)
           respond_with(@order, default_template: :show, locals: { root_object: @order })
         else
           head :no_content

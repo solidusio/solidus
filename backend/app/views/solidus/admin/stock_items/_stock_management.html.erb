@@ -26,7 +26,7 @@
       <%- row_count = (variant.stock_items.map(&:stock_location) & @stock_item_stock_locations).size %>
       <%- row_count += display_add_row ? 2 : 1 %>
 
-      <tr id="<%= spree_dom_id variant %>">
+      <tr id="<%= solidus_dom_id variant %>">
         <td class="align-center no-padding" rowspan="<%= row_count %>">
           <div class='variant-container'>
             <div class='variant-image'>

@@ -133,7 +133,7 @@ module Spree
 
       def splitters(stock_location)
         # extension point to return custom splitters for a location
-        Rails.application.config.spree.stock_splitters
+        Rails.application.config.solidus.stock_splitters
       end
     end
   end

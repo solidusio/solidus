@@ -1,10 +1,10 @@
 class CreateSpreeReturnAuthorizationReasons < ActiveRecord::Migration
   class ReturnAuthorizationReason < ActiveRecord::Base
-    self.table_name = 'spree_return_authorization_reasons'
+    self.table_name = 'solidus_return_authorization_reasons'
   end
 
   def change
-    create_table :spree_return_authorization_reasons do |t|
+    create_table :solidus_return_authorization_reasons do |t|
       t.string :name
       t.boolean :active, default: true
       t.boolean :mutable, default: true
@@ -26,7 +26,7 @@ class CreateSpreeReturnAuthorizationReasons < ActiveRecord::Migration
       end
     end
 
-    add_column :spree_return_authorizations, :return_authorization_reason_id, :integer
-    add_index :spree_return_authorizations, :return_authorization_reason_id, name: 'index_return_authorizations_on_return_authorization_reason_id'
+    add_column :solidus_return_authorizations, :return_authorization_reason_id, :integer
+    add_index :solidus_return_authorizations, :return_authorization_reason_id, name: 'index_return_authorizations_on_return_authorization_reason_id'
   end
 end

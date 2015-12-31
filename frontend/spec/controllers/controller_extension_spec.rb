@@ -49,7 +49,7 @@ describe Solidus::CustomController, :type => :controller do
 
         describe "GET" do
           it "has value success" do
-            spree_get :index
+            solidus_get :index
             expect(response).to be_success
             assert (response.body =~ /success!!!/)
           end
@@ -66,7 +66,7 @@ describe Solidus::CustomController, :type => :controller do
 
         describe "GET" do
           it "has value success" do
-            spree_get :index
+            solidus_get :index
             expect(response).to be_success
             assert (response.body =~ /success!!!/)
           end
@@ -83,7 +83,7 @@ describe Solidus::CustomController, :type => :controller do
 
         describe "GET" do
           it "has value success" do
-            spree_get :index
+            solidus_get :index
             expect(response).to be_redirect
           end
         end
@@ -100,7 +100,7 @@ describe Solidus::CustomController, :type => :controller do
 
         describe "POST" do
           it "has value success" do
-            spree_post :create
+            solidus_post :create
             expect(response).to be_success
             assert (response.body =~ /success!/)
           end
@@ -116,7 +116,7 @@ describe Solidus::CustomController, :type => :controller do
 
         describe "POST" do
           it "should not effect the wrong controller" do
-            spree_get :index
+            solidus_get :index
             assert (response.body =~ /neutral/)
           end
         end

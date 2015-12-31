@@ -57,7 +57,7 @@ module Spree
       end
 
       def validate_payment_method_provider
-        valid_payment_methods = Rails.application.config.spree.payment_methods.map(&:to_s)
+        valid_payment_methods = Rails.application.config.solidus.payment_methods.map(&:to_s)
         if !valid_payment_methods.include?(params[:payment_method][:type])
           flash[:error] = Solidus.t(:invalid_payment_provider)
           redirect_to new_admin_payment_method_path

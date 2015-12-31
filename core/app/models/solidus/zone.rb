@@ -29,7 +29,7 @@ module Spree
     def self.match(address)
       return unless address and matches = self.includes(:zone_members).
         order(:zone_members_count, :created_at, :id).
-        where("(spree_zone_members.zoneable_type = 'Solidus::Country' AND spree_zone_members.zoneable_id = ?) OR (spree_zone_members.zoneable_type = 'Solidus::State' AND spree_zone_members.zoneable_id = ?)", address.country_id, address.state_id).
+        where("(solidus_zone_members.zoneable_type = 'Solidus::Country' AND solidus_zone_members.zoneable_id = ?) OR (solidus_zone_members.zoneable_type = 'Solidus::State' AND solidus_zone_members.zoneable_id = ?)", address.country_id, address.state_id).
         references(:zones)
 
       ['state', 'country'].each do |zone_kind|

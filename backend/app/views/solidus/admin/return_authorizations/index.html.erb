@@ -8,7 +8,7 @@
       <% end %>
     </li>
   <% end %>
-  <li><%= button_link_to Solidus.t(:back_to_orders_list), spree.admin_orders_path, :icon => 'arrow-left' %></li>
+  <li><%= button_link_to Solidus.t(:back_to_orders_list), solidus.admin_orders_path, :icon => 'arrow-left' %></li>
 <% end %>
 
 <% content_for :page_title do %>
@@ -28,7 +28,7 @@
     </thead>
     <tbody>
       <% @return_authorizations.each do |return_authorization| %>
-        <tr id="<%= spree_dom_id(return_authorization) %>" data-hook="rma_row" class="<%= cycle('odd', 'even')%>">
+        <tr id="<%= solidus_dom_id(return_authorization) %>" data-hook="rma_row" class="<%= cycle('odd', 'even')%>">
           <td><%= return_authorization.number %></td>
           <td><%= Solidus.t(return_authorization.state.downcase) %></td>
           <td><%= return_authorization.display_pre_tax_total.to_html %></td>

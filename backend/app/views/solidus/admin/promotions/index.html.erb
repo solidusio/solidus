@@ -5,7 +5,7 @@
 <% content_for :page_actions do %>
   <% if can? :create, Solidus::Promotion %>
     <li>
-      <%= button_link_to Solidus.t(:new_promotion), spree.new_admin_promotion_path, :icon => 'plus' %>
+      <%= button_link_to Solidus.t(:new_promotion), solidus.new_admin_promotion_path, :icon => 'plus' %>
     </li>
   <% end %>
 <% end %>
@@ -83,7 +83,7 @@
     </thead>
     <tbody>
       <% @promotions.each do |promotion| %>
-        <tr id="<%= spree_dom_id promotion %>" class="<%= cycle('odd', 'even')%>">
+        <tr id="<%= solidus_dom_id promotion %>" class="<%= cycle('odd', 'even')%>">
           <td><%= promotion.name %></td>
           <td class="align-center"><%= (promotion.codes.size == 1) ? promotion.codes.first.try!(:value) : Solidus.t(:number_of_codes, count: promotion.codes.size) %></td>
           <td><%= promotion.description %></td>
@@ -106,7 +106,7 @@
   <div class="alpha twelve columns no-objects-found">
     <%= Solidus.t(:no_resource_found, resource: I18n.t(:other, scope: 'activerecord.models.solidus/promotion')) %>
     <% if can? :create, Solidus::Promotion %>
-      <%= link_to Solidus.t(:add_one), spree.new_admin_promotion_path %>!
+      <%= link_to Solidus.t(:add_one), solidus.new_admin_promotion_path %>!
     <% end %>
   </div>
 <% end %>

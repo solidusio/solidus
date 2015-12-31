@@ -82,7 +82,7 @@ module Spree
         }
       end
 
-      # For the reason of this test, please see solidus/spree_gateway#132
+      # For the reason of this test, please see solidus/solidus_gateway#132
       it "keeps source attributes on assignment" do
         ActiveSupport::Deprecation.silence do
           order.update_attributes(payments_attributes: [payment_attributes])
@@ -90,7 +90,7 @@ module Spree
         expect(order.unprocessed_payments.last.source.number).to be_present
       end
 
-      # For the reason of this test, please see solidus/spree_gateway#132
+      # For the reason of this test, please see solidus/solidus_gateway#132
       it "keeps source attributes through OrderUpdateAttributes" do
         OrderUpdateAttributes.new(order, payments_attributes: [payment_attributes]).apply
         expect(order.unprocessed_payments.last.source.number).to be_present

@@ -4,7 +4,7 @@ namespace :exchanges do
   task charge_unreturned_items: :environment do
 
     unreturned_return_items =  Solidus::ReturnItem.expecting_return.exchange_processed.includes(:exchange_inventory_unit).where([
-      "spree_inventory_units.created_at < :days_ago AND spree_inventory_units.state = :iu_state",
+      "solidus_inventory_units.created_at < :days_ago AND solidus_inventory_units.state = :iu_state",
       days_ago: Solidus::Config[:expedited_exchanges_days_window].days.ago, iu_state: "shipped"
     ]).references(:exchange_inventory_units).to_a
 

@@ -1,6 +1,6 @@
 class CreateSpreeCartons < ActiveRecord::Migration
   def change
-    create_table "spree_cartons" do |t|
+    create_table "solidus_cartons" do |t|
       t.string "number"
 
       t.string "external_number"
@@ -16,9 +16,9 @@ class CreateSpreeCartons < ActiveRecord::Migration
       t.timestamps null: true
     end
 
-    add_index "spree_cartons", "number", unique: true
-    add_index "spree_cartons", "external_number"
+    add_index "solidus_cartons", "number", unique: true
+    add_index "solidus_cartons", "external_number"
 
-    add_column "spree_inventory_units", "carton_id", :integer
+    add_column "solidus_inventory_units", "carton_id", :integer
   end
 end

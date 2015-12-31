@@ -34,7 +34,7 @@ module Spree
     context 'as address book owner' do
       context 'with ability' do
         it 'returns my address book' do
-          user = create(:user, spree_api_key: 'galleon')
+          user = create(:user, solidus_api_key: 'galleon')
           user.save_in_address_book(harry_address_attributes, true)
           user.save_in_address_book(ron_address_attributes, false)
 
@@ -50,7 +50,7 @@ module Spree
         end
 
         it 'updates my address book' do
-          user = create(:user, spree_api_key: 'galleon')
+          user = create(:user, solidus_api_key: 'galleon')
           address = user.save_in_address_book(harry_address_attributes, true)
           harry_address_attributes['firstname'] = 'Ron'
 
@@ -64,7 +64,7 @@ module Spree
 
         context 'when creating an address' do
           it 'marks the update_target' do
-            user = create(:user, spree_api_key: 'galleon')
+            user = create(:user, solidus_api_key: 'galleon')
 
             expect {
               put "/api/users/#{user.id}/address_book", { address_book: harry_address_attributes }, { 'X-SPREE-TOKEN' => 'galleon' }
@@ -80,7 +80,7 @@ module Spree
 
         context 'when updating an address' do
           it 'marks the update_target' do
-            user = create(:user, spree_api_key: 'galleon')
+            user = create(:user, solidus_api_key: 'galleon')
             address = user.save_in_address_book(harry_address_attributes, true)
 
             expect {
@@ -95,7 +95,7 @@ module Spree
 
         it 'archives my address' do
           address = create(:address)
-          user = create(:user, spree_api_key: 'galleon')
+          user = create(:user, solidus_api_key: 'galleon')
           user.save_in_address_book(address.attributes, false)
 
           expect {
@@ -113,7 +113,7 @@ module Spree
           Solidus::RoleConfiguration.configure do |config|
             config.assign_permissions 'Prefect', [Solidus::PermissionSets::UserManagement]
           end
-          create(:user, spree_api_key: 'galleon', spree_roles: [build(:role, name: 'Prefect')])
+          create(:user, solidus_api_key: 'galleon', solidus_roles: [build(:role, name: 'Prefect')])
         end
 
         it "returns another user's address book" do
@@ -160,7 +160,7 @@ module Spree
 
       context 'without ability' do
         it 'does not return another user address book' do
-          create(:user, spree_api_key: 'galleon')
+          create(:user, solidus_api_key: 'galleon')
           other_user = create(:user)
           other_user.save_in_address_book(harry_address_attributes, true)
 
@@ -173,7 +173,7 @@ module Spree
           address = create(:address)
           other_user = create(:user)
           other_user_address = other_user.save_in_address_book(address.attributes, true)
-          create(:user, spree_api_key: 'galleon')
+          create(:user, solidus_api_key: 'galleon')
 
           expect {
             put "/api/users/#{other_user.id}/address_book", { address_book: other_user_address.attributes.merge('address1' => 'Hogwarts') }, { 'X-SPREE-TOKEN' => 'galleon' }
@@ -186,7 +186,7 @@ module Spree
           address = create(:address)
           other_user = create(:user)
           other_user.save_in_address_book(address.attributes, true)
-          create(:user, spree_api_key: 'galleon')
+          create(:user, solidus_api_key: 'galleon')
 
           expect {
             delete "/api/users/#{other_user.id}/address_book", { address_id: address.id }, { 'X-SPREE-TOKEN' => 'galleon' }

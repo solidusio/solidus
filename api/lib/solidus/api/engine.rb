@@ -4,7 +4,7 @@ module Spree
   module Api
     class Engine < Rails::Engine
       isolate_namespace Spree
-      engine_name 'spree_api'
+      engine_name 'solidus_api'
 
       Rabl.configure do |config|
         config.include_json_root = false
@@ -19,7 +19,7 @@ module Spree
       config.view_versions = [1]
       config.view_version_extraction_strategy = :http_header
 
-      initializer "spree.api.environment", :before => :load_config_initializers do |app|
+      initializer "solidus.api.environment", :before => :load_config_initializers do |app|
         Solidus::Api::Config = Solidus::ApiConfiguration.new
       end
 

@@ -33,19 +33,19 @@ describe 'Users', :type => :feature do
     end
 
     it 'can go back to the users list' do
-      expect(page).to have_link Solidus.t(:back_to_users_list), href: spree.admin_users_path
+      expect(page).to have_link Solidus.t(:back_to_users_list), href: solidus.admin_users_path
     end
 
     it 'can navigate to the account page' do
-      expect(page).to have_link Solidus.t(:"admin.user.account"), href: spree.edit_admin_user_path(user_a)
+      expect(page).to have_link Solidus.t(:"admin.user.account"), href: solidus.edit_admin_user_path(user_a)
     end
 
     it 'can navigate to the order history' do
-      expect(page).to have_link Solidus.t(:"admin.user.orders"), href: spree.orders_admin_user_path(user_a)
+      expect(page).to have_link Solidus.t(:"admin.user.orders"), href: solidus.orders_admin_user_path(user_a)
     end
 
     it 'can navigate to the items purchased' do
-      expect(page).to have_link Solidus.t(:"admin.user.items"), href: spree.items_admin_user_path(user_a)
+      expect(page).to have_link Solidus.t(:"admin.user.items"), href: solidus.items_admin_user_path(user_a)
     end
   end
 
@@ -72,7 +72,7 @@ describe 'Users', :type => :feature do
   end
 
   before do
-    visit spree.admin_path
+    visit solidus.admin_path
     click_link 'Users'
   end
 
@@ -123,10 +123,10 @@ describe 'Users', :type => :feature do
       Solidus::Role.create name: "admin"
       click_link user_a.email
 
-      check 'user_spree_role_admin'
+      check 'user_solidus_role_admin'
       click_button 'Update'
       expect(page).to have_text 'Account updated'
-      expect(find_field('user_spree_role_admin')).to be_checked
+      expect(find_field('user_solidus_role_admin')).to be_checked
     end
 
     it 'can edit user shipping address' do
@@ -156,11 +156,11 @@ describe 'Users', :type => :feature do
     context 'no api key exists' do
       it 'can generate a new api key' do
         within("#admin_user_edit_api_key") do
-          expect(user_a.spree_api_key).to be_blank
+          expect(user_a.solidus_api_key).to be_blank
           click_button Solidus.t('generate_key', :scope => 'api')
         end
 
-        expect(user_a.reload.spree_api_key).to be_present
+        expect(user_a.reload.solidus_api_key).to be_present
 
         expect(page).to have_content('Key: (hidden)')
       end
@@ -168,8 +168,8 @@ describe 'Users', :type => :feature do
 
     context 'an api key exists' do
       before do
-        user_a.generate_spree_api_key!
-        expect(user_a.reload.spree_api_key).to be_present
+        user_a.generate_solidus_api_key!
+        expect(user_a.reload.solidus_api_key).to be_present
         visit current_path
       end
 
@@ -180,18 +180,18 @@ describe 'Users', :type => :feature do
 
         expect(page).to have_no_css('#current-api-key')
 
-        expect(user_a.reload.spree_api_key).to be_blank
+        expect(user_a.reload.solidus_api_key).to be_blank
       end
 
       it 'can regenerate an api key' do
-        old_key = user_a.spree_api_key
+        old_key = user_a.solidus_api_key
 
         within("#admin_user_edit_api_key") do
           click_button Solidus.t('regenerate_key', :scope => 'api')
         end
 
-        expect(user_a.reload.spree_api_key).to be_present
-        expect(user_a.reload.spree_api_key).not_to eq old_key
+        expect(user_a.reload.solidus_api_key).to be_present
+        expect(user_a.reload.solidus_api_key).not_to eq old_key
 
         expect(page).to have_content('Key: (hidden)')
       end

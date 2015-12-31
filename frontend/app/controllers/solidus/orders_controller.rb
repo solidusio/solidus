@@ -58,7 +58,7 @@ module Spree
 
       if error
         flash[:error] = error
-        redirect_back_or_default(spree.root_path)
+        redirect_back_or_default(solidus.root_path)
       else
         respond_with(order) do |format|
           format.html { redirect_to cart_path }
@@ -71,7 +71,7 @@ module Spree
         @order.empty!
       end
 
-      redirect_to spree.cart_path
+      redirect_to solidus.cart_path
     end
 
     def accurate_title

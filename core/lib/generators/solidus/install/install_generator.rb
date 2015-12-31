@@ -12,7 +12,7 @@ module Spree
     class_option :user_class, :type => :string
     class_option :admin_email, :type => :string
     class_option :admin_password, :type => :string
-    class_option :lib_name, :type => :string, :default => 'spree'
+    class_option :lib_name, :type => :string, :default => 'solidus'
     class_option :enforce_available_locales, :type => :boolean, :default => nil
 
     def self.source_paths
@@ -35,7 +35,7 @@ module Spree
     end
 
     def add_files
-      template 'config/initializers/spree.rb', 'config/initializers/spree.rb'
+      template 'config/initializers/solidus.rb', 'config/initializers/solidus.rb'
     end
 
     def additional_tweaks
@@ -53,7 +53,7 @@ Disallow: /password
     end
 
     def setup_assets
-      @lib_name = 'spree'
+      @lib_name = 'solidus'
       %w{javascripts stylesheets images}.each do |path|
         empty_directory "vendor/assets/#{path}/solidus/frontend" if defined? Solidus::Frontend || Rails.env.test?
         empty_directory "vendor/assets/#{path}/solidus/backend" if defined? Solidus::Backend || Rails.env.test?
@@ -153,9 +153,9 @@ Solidus::Auth::Engine.load_seed if defined?(Solidus::Auth)
     def load_sample_data
       if @load_sample_data
         say_status :loading, "sample data"
-        quietly { rake 'spree_sample:load' }
+        quietly { rake 'solidus_sample:load' }
       else
-        say_status :skipping, "sample data (you can always run rake spree_sample:load)"
+        say_status :skipping, "sample data (you can always run rake solidus_sample:load)"
       end
     end
 
@@ -166,7 +166,7 @@ Solidus::Auth::Engine.load_seed if defined?(Solidus::Auth)
   # This means, any requests to URLs such as /products, will go to Solidus::ProductsController.
   # If you would like to change where this engine is mounted, simply change the :at option to something different.
   #
-  # We ask that you don't use the :as option here, as Spree relies on it being the default of "spree"
+  # We ask that you don't use the :as option here, as Spree relies on it being the default of "solidus"
   mount Solidus::Core::Engine, :at => '/'
         }
       end

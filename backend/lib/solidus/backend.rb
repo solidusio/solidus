@@ -5,8 +5,8 @@ require 'bourbon'
 require 'select2-rails'
 require 'handlebars_assets'
 
-require 'spree_core'
-require 'spree_api'
+require 'solidus_core'
+require 'solidus_api'
 
 require 'solidus/responder'
 require 'solidus/backend/action_callbacks'

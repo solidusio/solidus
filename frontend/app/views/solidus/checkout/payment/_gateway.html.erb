@@ -25,7 +25,7 @@
 <p class="field" data-hook="card_code">
   <%= label_tag "card_code", Solidus.t(:card_code) %><span class="required">*</span><br />
   <%= text_field_tag "#{param_prefix}[verification_value]", '', {:id => 'card_code', :class => 'required cardCode', :size => 5, type: "tel", autocomplete: "off"} %>
-  <%= link_to "(#{Solidus.t(:what_is_this)})", spree.cvv_path, :target => '_blank', "data-hook" => "cvv_link", :id => "cvv_link" %>
+  <%= link_to "(#{Solidus.t(:what_is_this)})", solidus.cvv_path, :target => '_blank', "data-hook" => "cvv_link", :id => "cvv_link" %>
 </p>
 
 <% if @order.bill_address %>

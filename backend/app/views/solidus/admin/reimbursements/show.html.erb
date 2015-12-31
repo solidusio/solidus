@@ -64,7 +64,7 @@
     </thead>
     <tbody>
       <% @reimbursement.refunds.each do |refund| %>
-        <tr id="<%= spree_dom_id(refund) %>" data-hook="reimbursement_refund_row" class="reimbursement-refund <%= cycle('odd', 'even')%>">
+        <tr id="<%= solidus_dom_id(refund) %>" data-hook="reimbursement_refund_row" class="reimbursement-refund <%= cycle('odd', 'even')%>">
           <td class="reimbursement-refund-description"><%= refund.description %></td>
           <td class="reimbursement-refund-amount"><%= refund.display_amount %></td>
         </tr>
@@ -84,7 +84,7 @@
     </thead>
     <tbody>
       <% @reimbursement.credits.each do |credit| %>
-        <tr id="<%= spree_dom_id(credit) %>" data-hook="reimbursement_refund_row" class="reimbursement-credit <%= cycle('odd', 'even')%>">
+        <tr id="<%= solidus_dom_id(credit) %>" data-hook="reimbursement_refund_row" class="reimbursement-credit <%= cycle('odd', 'even')%>">
           <td class="reimbursement-credit-description"><%= credit.description %></td>
           <td class="reimbursement-credit-amount"><%= credit.display_amount %></td>
         </tr>

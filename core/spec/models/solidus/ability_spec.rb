@@ -75,7 +75,7 @@ describe Solidus::Ability, :type => :model do
 
     context 'with admin user' do
       it 'should be able to admin' do
-        user.spree_roles << Solidus::Role.find_or_create_by(name: 'admin')
+        user.solidus_roles << Solidus::Role.find_or_create_by(name: 'admin')
         expect(ability).to be_able_to :admin, resource
         expect(ability).to be_able_to :index, resource_order
         expect(ability).to be_able_to :show, resource_product
@@ -85,7 +85,7 @@ describe Solidus::Ability, :type => :model do
 
     context 'with fakedispatch user' do
       it 'should be able to admin on the order and shipment pages' do
-        user.spree_roles << Solidus::Role.find_or_create_by(name: 'bar')
+        user.solidus_roles << Solidus::Role.find_or_create_by(name: 'bar')
 
         Solidus::Ability.register_ability(BarAbility)
 

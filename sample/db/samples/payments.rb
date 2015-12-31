@@ -8,9 +8,9 @@ Solidus::Gateway.class_eval do
   end
 end
 
-# This table was previously called spree_creditcards, and older migrations
+# This table was previously called solidus_creditcards, and older migrations
 # reference it as such. Make it explicit here that this table has been renamed.
-Solidus::CreditCard.table_name = 'spree_credit_cards'
+Solidus::CreditCard.table_name = 'solidus_credit_cards'
 
 creditcard = Solidus::CreditCard.create(:cc_type => 'visa', :month => 12, :year => 2.years.from_now.year, :last_digits => '1111',
                                       :name => 'Sean Schofield', :gateway_customer_profile_id => 'BGS-1234')

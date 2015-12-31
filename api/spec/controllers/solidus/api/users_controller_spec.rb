@@ -4,40 +4,40 @@ module Spree
   describe Api::UsersController, :type => :controller do
     render_views
 
-    let(:user) { create(:user, spree_api_key: SecureRandom.hex) }
+    let(:user) { create(:user, solidus_api_key: SecureRandom.hex) }
     let(:stranger) { create(:user, :email => 'stranger@example.com') }
     let(:attributes) { [:id, :email, :created_at, :updated_at] }
 
     context "as a normal user" do
       it "can get own details" do
-        api_get :show, id: user.id, token: user.spree_api_key
+        api_get :show, id: user.id, token: user.solidus_api_key
 
         expect(json_response['email']).to eq user.email
       end
 
       it "cannot get other users details" do
-        api_get :show, id: stranger.id, token: user.spree_api_key
+        api_get :show, id: stranger.id, token: user.solidus_api_key
 
         assert_not_found!
       end
 
       it "can learn how to create a new user" do
-        api_get :new, token: user.spree_api_key
+        api_get :new, token: user.solidus_api_key
         expect(json_response["attributes"]).to eq(attributes.map(&:to_s))
       end
 
       it "can create a new user" do
         user_params = {
-          :email => 'new@example.com', :password => 'spree123', :password_confirmation => 'spree123'
+          :email => 'new@example.com', :password => 'solidus123', :password_confirmation => 'solidus123'
         }
 
-        api_post :create, :user => user_params, token: user.spree_api_key
+        api_post :create, :user => user_params, token: user.solidus_api_key
         expect(json_response['email']).to eq 'new@example.com'
       end
 
       # there's no validations on LegacyUser?
       xit "cannot create a new user with invalid attributes" do
-        api_post :create, :user => {}, token: user.spree_api_key
+        api_post :create, :user => {}, token: user.solidus_api_key
         expect(response.status).to eq(422)
         expect(json_response["error"]).to eq("Invalid resource. Please fix errors and try again.")
         errors = json_response["errors"]
@@ -45,7 +45,7 @@ module Spree
 
       it "can update own details" do
         country = create(:country)
-        api_put :update, id: user.id, token: user.spree_api_key, user: {
+        api_put :update, id: user.id, token: user.solidus_api_key, user: {
           email: "mine@example.com",
           bill_address_attributes: {
             first_name: 'First',
@@ -74,23 +74,23 @@ module Spree
       end
 
       it "cannot update other users details" do
-        api_put :update, id: stranger.id, token: user.spree_api_key, user: { :email => "mine@example.com" }
+        api_put :update, id: stranger.id, token: user.solidus_api_key, user: { :email => "mine@example.com" }
         assert_not_found!
       end
 
       it "cannot delete itself" do
-        api_delete :destroy, id: user.id, token: user.spree_api_key
+        api_delete :destroy, id: user.id, token: user.solidus_api_key
         expect(response.status).to eq(401)
       end
 
       it "cannot delete other user" do
-        api_delete :destroy, id: stranger.id, token: user.spree_api_key
+        api_delete :destroy, id: stranger.id, token: user.solidus_api_key
         assert_not_found!
       end
 
       it "should only get own details on index" do
         2.times { create(:user) }
-        api_get :index, token: user.spree_api_key
+        api_get :index, token: user.solidus_api_key
 
         expect(Solidus.user_class.count).to eq 3
         expect(json_response['count']).to eq 1
@@ -104,7 +104,7 @@ module Spree
       sign_in_as_admin!
 
       it "gets all users" do
-        allow(Solidus::LegacyUser).to receive(:find_by).with(hash_including(:spree_api_key)) { current_api_user }
+        allow(Solidus::LegacyUser).to receive(:find_by).with(hash_including(:solidus_api_key)) { current_api_user }
 
         2.times { create(:user) }
 
@@ -123,14 +123,14 @@ module Spree
       end
 
       it 'can query the results through a paramter' do
-        expected_result = create(:user, :email => 'brian@spreecommerce.com')
+        expected_result = create(:user, :email => 'brian@soliduscommerce.com')
         api_get :index, :q => { :email_cont => 'brian' }
         expect(json_response['count']).to eq(1)
         expect(json_response['users'].first['email']).to eq expected_result.email
       end
 
       it "can create" do
-        api_post :create, :user => { :email => "new@example.com", :password => 'spree123', :password_confirmation => 'spree123' }
+        api_post :create, :user => { :email => "new@example.com", :password => 'solidus123', :password_confirmation => 'solidus123' }
         expect(json_response).to have_attributes(attributes)
         expect(response.status).to eq(201)
       end

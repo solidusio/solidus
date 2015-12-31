@@ -20,8 +20,8 @@ describe Solidus::PermissionSets::UserManagement do
     it { is_expected.to be_able_to(:orders, Solidus.user_class) }
     it { is_expected.to be_able_to(:items, Solidus.user_class) }
 
-    it { is_expected.to be_able_to(:update_email, Solidus.user_class.new(spree_roles: [])) }
-    it { is_expected.not_to be_able_to(:update_email, Solidus.user_class.new(spree_roles: [create(:role)])) }
+    it { is_expected.to be_able_to(:update_email, Solidus.user_class.new(solidus_roles: [])) }
+    it { is_expected.not_to be_able_to(:update_email, Solidus.user_class.new(solidus_roles: [create(:role)])) }
 
     it { is_expected.not_to be_able_to(:delete, Solidus.user_class) }
     it { is_expected.not_to be_able_to(:destroy, Solidus.user_class) }

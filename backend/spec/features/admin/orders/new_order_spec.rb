@@ -11,7 +11,7 @@ describe "New Order", :type => :feature do
   stub_authorization!
 
   before do
-    visit spree.admin_path
+    visit solidus.admin_path
     click_on "Orders"
     click_on "New Order"
   end
@@ -19,7 +19,7 @@ describe "New Order", :type => :feature do
   it "does check if you have a billing address before letting you add shipments" do
     click_on "Shipments"
     expect(page).to have_content 'Please fill in customer info'
-    expect(current_path).to eql(spree.edit_admin_order_customer_path(Solidus::Order.last))
+    expect(current_path).to eql(solidus.edit_admin_order_customer_path(Solidus::Order.last))
   end
 
   it "completes new order succesfully without using the cart", js: true do
@@ -42,12 +42,12 @@ describe "New Order", :type => :feature do
     click_on "Payments"
     click_on "Update"
 
-    expect(current_path).to eql(spree.admin_order_payments_path(Solidus::Order.last))
+    expect(current_path).to eql(solidus.admin_order_payments_path(Solidus::Order.last))
 
     click_on "Confirm"
     click_on "Complete"
 
-    expect(current_path).to eql(spree.edit_admin_order_path(Solidus::Order.last))
+    expect(current_path).to eql(solidus.edit_admin_order_path(Solidus::Order.last))
 
     click_on "Payments"
     click_icon "capture"

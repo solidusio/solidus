@@ -87,7 +87,7 @@ RSpec.configure do |config|
 
   config.before(:each) do
     Rails.cache.clear
-    reset_spree_preferences
+    reset_solidus_preferences
     WebMock.disable!
     if RSpec.current_example.metadata[:js]
       DatabaseCleaner.strategy = :truncation

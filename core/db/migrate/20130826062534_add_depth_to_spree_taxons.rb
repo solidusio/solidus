@@ -1,7 +1,7 @@
 class AddDepthToSpreeTaxons < ActiveRecord::Migration
   def up
     if !Solidus::Taxon.column_names.include?('depth')
-      add_column :spree_taxons, :depth, :integer
+      add_column :solidus_taxons, :depth, :integer
 
       say_with_time 'Update depth on all taxons' do
         Solidus::Taxon.reset_column_information
@@ -11,6 +11,6 @@ class AddDepthToSpreeTaxons < ActiveRecord::Migration
   end
 
   def down
-    remove_column :spree_taxons, :depth
+    remove_column :solidus_taxons, :depth
   end
 end

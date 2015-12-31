@@ -14,7 +14,7 @@ describe Solidus::Admin::ReimbursementsController, :type => :controller do
     let!(:inactive_stock_location) { create(:stock_location, active: false) }
 
     subject do
-      spree_get :edit, order_id: order.to_param, id: reimbursement.to_param
+      solidus_get :edit, order_id: order.to_param, id: reimbursement.to_param
     end
 
     it "loads all the active stock locations" do
@@ -32,7 +32,7 @@ describe Solidus::Admin::ReimbursementsController, :type => :controller do
     before { return_item.receive! }
 
     subject do
-      spree_post :create, order_id: order.to_param, build_from_customer_return_id: customer_return.id
+      solidus_post :create, order_id: order.to_param, build_from_customer_return_id: customer_return.id
     end
 
     it 'creates the reimbursement' do
@@ -42,7 +42,7 @@ describe Solidus::Admin::ReimbursementsController, :type => :controller do
 
     it 'redirects to the edit page' do
       subject
-      expect(response).to redirect_to(spree.edit_admin_order_reimbursement_path(order, assigns(:reimbursement)))
+      expect(response).to redirect_to(solidus.edit_admin_order_reimbursement_path(order, assigns(:reimbursement)))
     end
 
     context 'when create fails' do
@@ -54,12 +54,12 @@ describe Solidus::Admin::ReimbursementsController, :type => :controller do
       end
 
       context 'when a referer header is present' do
-        let(:referer) { spree.edit_admin_order_customer_return_path(order, customer_return) }
+        let(:referer) { solidus.edit_admin_order_customer_return_path(order, customer_return) }
 
         it 'redirects to the referer' do
           request.env["HTTP_REFERER"] = referer
           expect {
-            spree_post :create, order_id: order.to_param
+            solidus_post :create, order_id: order.to_param
           }.to_not change { Solidus::Reimbursement.count }
           expect(response).to redirect_to(referer)
           expect(flash[:error]).to eq("something bad happened")
@@ -69,9 +69,9 @@ describe Solidus::Admin::ReimbursementsController, :type => :controller do
       context 'when a referer header is not present' do
         it 'redirects to the admin root' do
           expect {
-            spree_post :create, order_id: order.to_param
+            solidus_post :create, order_id: order.to_param
           }.to_not change { Solidus::Reimbursement.count }
-          expect(response).to redirect_to(spree.admin_path)
+          expect(response).to redirect_to(solidus.admin_path)
           expect(flash[:error]).to eq("something bad happened")
         end
       end
@@ -86,12 +86,12 @@ describe Solidus::Admin::ReimbursementsController, :type => :controller do
     let(:payment) { order.payments.first }
 
     subject do
-      spree_post :perform, order_id: order.to_param, id: reimbursement.to_param
+      solidus_post :perform, order_id: order.to_param, id: reimbursement.to_param
     end
 
     it 'redirects to customer return page' do
       subject
-      expect(response).to redirect_to spree.admin_order_reimbursement_path(order, reimbursement)
+      expect(response).to redirect_to solidus.admin_order_reimbursement_path(order, reimbursement)
     end
 
     it 'performs the reimbursement' do
@@ -116,7 +116,7 @@ describe Solidus::Admin::ReimbursementsController, :type => :controller do
 
       it 'redirects to the edit page' do
         subject
-        redirect_path = spree.edit_admin_order_reimbursement_path(order, assigns(:reimbursement))
+        redirect_path = solidus.edit_admin_order_reimbursement_path(order, assigns(:reimbursement))
         expect(response).to redirect_to(redirect_path)
       end
     end

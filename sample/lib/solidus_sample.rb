@@ -1,1 +1,1 @@
-require 'spree_sample'
+require 'solidus_sample'

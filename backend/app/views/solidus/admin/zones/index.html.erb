@@ -34,7 +34,7 @@
     </thead>
     <tbody>
       <% @zones.each do |zone| %>
-        <tr id="<%= spree_dom_id zone %>" data-hook="zones_row" class="<%= cycle('odd', 'even')%>">
+        <tr id="<%= solidus_dom_id zone %>" data-hook="zones_row" class="<%= cycle('odd', 'even')%>">
           <td class="align-center"><%= zone.name %></td>
           <td><%= zone.description %></td>
           <td class="align-center"><%= zone.default_tax? ? Solidus.t(:say_yes) : Solidus.t(:say_no) %></td>
@@ -54,7 +54,7 @@
   <div class="alpha twelve columns no-objects-found">
     <%= Solidus.t(:no_resource_found, resource: I18n.t(:other, scope: 'activerecord.models.solidus/zone')) %>
     <% if can?(:create, Solidus::Zone) %>
-      <%= link_to Solidus.t(:add_one), spree.new_admin_zone_path %>!
+      <%= link_to Solidus.t(:add_one), solidus.new_admin_zone_path %>!
     <% end %>
   </div>
 <% end %>

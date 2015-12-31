@@ -20,7 +20,7 @@ describe "Product Taxons", :type => :feature do
       product = create(:product)
       product.taxons << taxon_1
 
-      visit spree.edit_admin_product_path(product)
+      visit solidus.edit_admin_product_path(product)
 
       assert_selected_taxons([taxon_1])
 

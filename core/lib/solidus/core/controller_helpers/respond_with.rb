@@ -3,7 +3,7 @@ require 'solidus/responder'
 module ActionController
   class Base
     def respond_with(*resources, &block)
-      if Solidus::BaseController.spree_responders.keys.include?(self.class.to_s.to_sym)
+      if Solidus::BaseController.solidus_responders.keys.include?(self.class.to_s.to_sym)
         # Checkout AS Array#extract_options! and original respond_with
         # implementation for a better picture of this hack
         if resources.last.is_a? Hash
@@ -25,14 +25,14 @@ module Spree
         extend ActiveSupport::Concern
 
         included do
-          cattr_accessor :spree_responders
-          self.spree_responders = {}
+          cattr_accessor :solidus_responders
+          self.solidus_responders = {}
           self.responder = Solidus::Responder
         end
 
         module ClassMethods
           def clear_overrides!
-            self.spree_responders = {}
+            self.solidus_responders = {}
           end
 
           def respond_override(options={})
@@ -55,7 +55,7 @@ module Spree
                 options = {action_name.to_sym => {format_name.to_sym => {:success => format_value}}}
               end
 
-              self.spree_responders.deep_merge!(self.name.to_sym => options)
+              self.solidus_responders.deep_merge!(self.name.to_sym => options)
             end
           end
         end

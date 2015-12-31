@@ -13,7 +13,7 @@ RSpec.describe 'Store credits', type: :feature do
   end
 
   it "viewing a store credit payment" do
-    visit spree.admin_order_payment_path(order, payment)
+    visit solidus.admin_order_payment_path(order, payment)
 
     expect(page).to have_content "Store Credit"
     expect(page).to have_content "Amount: $20.00"

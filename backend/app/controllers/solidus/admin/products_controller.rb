@@ -83,9 +83,9 @@ module Spree
           params[:product][:variant_property_rules_attributes].each do |index, param_attrs|
             url_params[:ovi] += param_attrs[:option_value_ids]
           end
-          spree.admin_product_product_properties_url(@product, url_params)
+          solidus.admin_product_product_properties_url(@product, url_params)
         else
-          spree.edit_admin_product_url(@product)
+          solidus.edit_admin_product_url(@product)
         end
       end
 

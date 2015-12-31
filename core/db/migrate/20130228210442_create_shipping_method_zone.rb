@@ -11,11 +11,11 @@ class CreateShippingMethodZone < ActiveRecord::Migration
       ShippingMethodZone.create!(zone_id: sm.zone_id, shipping_method_id: sm.id)
     end
 
-    remove_column :spree_shipping_methods, :zone_id
+    remove_column :solidus_shipping_methods, :zone_id
   end
 
   def down
     drop_table :shipping_methods_zones
-    add_column :spree_shipping_methods, :zone_id, :integer
+    add_column :solidus_shipping_methods, :zone_id, :integer
   end
 end

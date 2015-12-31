@@ -3,11 +3,11 @@ class CopyShippedShipmentsToCartons < ActiveRecord::Migration
   disable_ddl_transaction!
 
   def up
-    Rake::Task["spree:migrations:copy_shipped_shipments_to_cartons:up"].invoke
+    Rake::Task["solidus:migrations:copy_shipped_shipments_to_cartons:up"].invoke
   end
 
   def down
-    Rake::Task["spree:migrations:copy_shipped_shipments_to_cartons:down"].invoke
+    Rake::Task["solidus:migrations:copy_shipped_shipments_to_cartons:down"].invoke
   end
 
 end

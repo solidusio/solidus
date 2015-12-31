@@ -8,9 +8,9 @@ module Spree
       # Regression for #4272
       context "with no countries present" do
         it "cannot create a new stock location" do
-          spree_get :new
+          solidus_get :new
           expect(flash[:error]).to eq(Solidus.t(:stock_locations_need_a_default_country))
-          expect(response).to redirect_to(spree.admin_stock_locations_path)
+          expect(response).to redirect_to(solidus.admin_stock_locations_path)
         end
       end
 
@@ -21,7 +21,7 @@ module Spree
         end
 
         it "can create a new stock location" do
-          spree_get :new
+          solidus_get :new
           expect(response).to be_success
         end
       end
@@ -32,7 +32,7 @@ module Spree
         end
 
         it "can create a new stock location" do
-          spree_get :new
+          solidus_get :new
           expect(response).to be_success
         end 
       end

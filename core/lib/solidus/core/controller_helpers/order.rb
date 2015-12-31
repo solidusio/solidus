@@ -37,9 +37,9 @@ module Spree
 
           if options[:create_order_if_necessary] && (@current_order.nil? || @current_order.completed?)
             @current_order = Solidus::Order.new(current_order_params)
-            @current_order.user ||= try_spree_current_user
+            @current_order.user ||= try_solidus_current_user
             # See issue #3346 for reasons why this line is here
-            @current_order.created_by ||= try_spree_current_user
+            @current_order.created_by ||= try_solidus_current_user
             @current_order.save!
           end
 
@@ -51,15 +51,15 @@ module Spree
 
         def associate_user
           @order ||= current_order
-          if try_spree_current_user && @order
-            @order.associate_user!(try_spree_current_user) if @order.user.blank? || @order.email.blank?
+          if try_solidus_current_user && @order
+            @order.associate_user!(try_solidus_current_user) if @order.user.blank? || @order.email.blank?
           end
         end
 
         def set_current_order
-          if try_spree_current_user && current_order
-            try_spree_current_user.orders.incomplete.where('id != ?', current_order.id).each do |order|
-              current_order.merge!(order, try_spree_current_user)
+          if try_solidus_current_user && current_order
+            try_solidus_current_user.orders.incomplete.where('id != ?', current_order.id).each do |order|
+              current_order.merge!(order, try_solidus_current_user)
             end
           end
         end
@@ -75,11 +75,11 @@ module Spree
         private
 
         def last_incomplete_order
-          @last_incomplete_order ||= try_spree_current_user.last_incomplete_spree_order(store: current_store)
+          @last_incomplete_order ||= try_solidus_current_user.last_incomplete_solidus_order(store: current_store)
         end
 
         def current_order_params
-          { currency: current_currency, guest_token: cookies.signed[:guest_token], store_id: current_store.id, user_id: try_spree_current_user.try(:id) }
+          { currency: current_currency, guest_token: cookies.signed[:guest_token], store_id: current_store.id, user_id: try_solidus_current_user.try(:id) }
         end
 
         def find_order_by_token_or_user(options={}, with_adjustments = false)
@@ -93,7 +93,7 @@ module Spree
           end
 
           # Find any incomplete orders for the current user
-          if order.nil? && try_spree_current_user
+          if order.nil? && try_solidus_current_user
             order = last_incomplete_order
           end
 

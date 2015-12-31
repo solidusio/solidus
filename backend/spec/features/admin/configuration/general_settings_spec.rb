@@ -9,7 +9,7 @@ describe "General Settings", type: :feature, js: true do
   end
 
   before(:each) do
-    visit spree.admin_path
+    visit solidus.admin_path
     click_link "Settings"
     click_link "General Settings"
   end
@@ -26,12 +26,12 @@ describe "General Settings", type: :feature, js: true do
   context "editing general settings (admin)" do
     it "should be able to update the site name" do
       fill_in "store_name", with: "Spree Demo Site99"
-      fill_in "store_mail_from_address", with: "spree@example.org"
+      fill_in "store_mail_from_address", with: "solidus@example.org"
       click_button "Update"
 
       assert_successful_update_message(:general_settings)
       expect(page).to have_field("store_name", with: "Spree Demo Site99")
-      expect(page).to have_field("store_mail_from_address", with: "spree@example.org")
+      expect(page).to have_field("store_mail_from_address", with: "solidus@example.org")
     end
   end
 

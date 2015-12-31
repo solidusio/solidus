@@ -4,7 +4,7 @@ describe "Stock Management", :type => :feature do
   stub_authorization!
 
   before(:each) do
-    visit spree.admin_path
+    visit solidus.admin_path
   end
 
   context "given a product with a variant and a stock location" do

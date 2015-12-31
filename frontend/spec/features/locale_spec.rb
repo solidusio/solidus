@@ -12,7 +12,7 @@ describe 'setting locale', :type => :feature do
   context 'shopping cart link and page' do
     before do
       I18n.backend.store_translations(:fr,
-       :spree => {
+       :solidus => {
          :cart => 'Panier',
          :shopping_cart => 'Panier'
       })
@@ -20,7 +20,7 @@ describe 'setting locale', :type => :feature do
 
     it 'should be in french' do
       with_locale('fr') do
-        visit spree.root_path
+        visit solidus.root_path
         click_link 'Panier'
         expect(page).to have_content('Panier')
       end
@@ -45,7 +45,7 @@ describe 'setting locale', :type => :feature do
     end
 
     it 'shows translated jquery.validate error messages', js: true do
-      visit spree.root_path
+      visit solidus.root_path
       click_link mug.name
       click_button 'add-to-cart-button'
       error_messages.each do |locale, message|

@@ -32,7 +32,7 @@ module Spree
     end
 
     def self.calculators
-      spree_calculators.send(model_name_without_spree_namespace).select{ |c| c < Solidus::ShippingCalculator }
+      solidus_calculators.send(model_name_without_solidus_namespace).select{ |c| c < Solidus::ShippingCalculator }
     end
 
     # Some shipping methods are only meant to be set via backend

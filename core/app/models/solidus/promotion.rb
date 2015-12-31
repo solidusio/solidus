@@ -199,7 +199,7 @@ module Spree
         :shipment_adjustments
       ].any? do |adjustment_type|
         user.orders.complete.joins(adjustment_type).where(
-          spree_adjustments: {
+          solidus_adjustments: {
             source_type: "Solidus::PromotionAction",
             source_id: actions.map(&:id),
             eligible: true
@@ -218,7 +218,7 @@ module Spree
         !promotable.product.promotionable?
       when Solidus::Order
         promotable.line_items.any? &&
-          promotable.line_items.joins(:product).where(spree_products: {promotionable: false}).any?
+          promotable.line_items.joins(:product).where(solidus_products: {promotionable: false}).any?
       end
     end
 

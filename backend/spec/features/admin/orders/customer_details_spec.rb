@@ -18,7 +18,7 @@ describe "Customer Details", type: :feature, js: true do
   context "brand new order" do
     # Regression test for #3335 & #5317
     it "associates a user when not using guest checkout" do
-      visit spree.admin_path
+      visit solidus.admin_path
       click_link "Orders"
       click_link "New Order"
       click_on 'Cart'
@@ -47,12 +47,12 @@ describe "Customer Details", type: :feature, js: true do
 
   context "editing an order" do
     before do
-      configure_spree_preferences do |config|
+      configure_solidus_preferences do |config|
         config.default_country_id = country.id
         config.company = true
       end
 
-      visit spree.admin_path
+      visit solidus.admin_path
       click_link "Orders"
       within('table#listing_orders') { click_icon(:edit) }
     end
@@ -115,7 +115,7 @@ describe "Customer Details", type: :feature, js: true do
 
       before do
         order.bill_address.country.destroy
-        configure_spree_preferences do |config|
+        configure_solidus_preferences do |config|
           config.default_country_id = brazil.id
         end
       end

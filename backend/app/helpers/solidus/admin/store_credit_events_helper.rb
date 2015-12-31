@@ -41,28 +41,28 @@ module Solidus::Admin::StoreCreditEventsHelper
     when :user
       link_to(
         Solidus.t(link_options[:translation_key], { email: originator.email }),
-        spree.edit_admin_user_path(originator),
+        solidus.edit_admin_user_path(originator),
         options
       )
     when :line_item
       order = originator.line_item.order
       link_to(
         Solidus.t(link_options[:translation_key], { order_number: order.number }),
-        spree.edit_admin_order_path(order),
+        solidus.edit_admin_order_path(order),
         options
       )
     when :payment
       order = originator.order
       link_to(
         Solidus.t(link_options[:translation_key], { order_number: order.number }),
-        spree.admin_order_payment_path(order, originator),
+        solidus.admin_order_payment_path(order, originator),
         options
       )
     when :payments
       order = originator.payment.order
       link_to(
         Solidus.t(link_options[:translation_key], { order_number: order.number }),
-        spree.admin_order_payments_path(order),
+        solidus.admin_order_payments_path(order),
         options
       )
     end

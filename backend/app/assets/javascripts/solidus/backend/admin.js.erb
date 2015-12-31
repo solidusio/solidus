@@ -10,7 +10,7 @@
 
 /**
 This is a collection of javascript functions and whatnot
-under the spree namespace that do stuff we find helpful.
+under the solidus namespace that do stuff we find helpful.
 Hopefully, this will evolve into a propper class.
 **/
 
@@ -99,7 +99,7 @@ $(document).ready(function(){
     });
   });
   var uniqueId = 1;
-  $('.spree_add_fields').click(function() {
+  $('.solidus_add_fields').click(function() {
     var target = $(this).data("target");
     var new_table_row = $(target + ' tr:visible:last').clone();
     var new_id = new Date().getTime() + (uniqueId++);
@@ -144,7 +144,7 @@ $(document).ready(function(){
     return false;
   });
 
-  $('body').on('click', 'a.spree_remove_fields', function() {
+  $('body').on('click', 'a.solidus_remove_fields', function() {
     el = $(this);
     el.prev("input[type=hidden]").val("1");
     el.closest(".fields").hide();

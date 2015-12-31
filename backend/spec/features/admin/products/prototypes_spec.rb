@@ -31,7 +31,7 @@ describe "Prototypes", :type => :feature do
         p.properties << Solidus::Property.find_by_name(prop)
       end
 
-      visit spree.admin_path
+      visit solidus.admin_path
       click_nav "Products"
       click_link "Prototypes"
 
@@ -43,7 +43,7 @@ describe "Prototypes", :type => :feature do
 
   context "creating a prototype" do
     it "should allow an admin to create a new product prototype", :js => true do
-      visit spree.admin_path
+      visit solidus.admin_path
       click_nav "Products"
       click_link "Prototypes"
       click_link "new_prototype_link"
@@ -72,7 +72,7 @@ describe "Prototypes", :type => :feature do
         shirt_prototype.properties << Solidus::Property.find_by_name(prop)
       end
 
-      visit spree.admin_path
+      visit solidus.admin_path
       click_nav "Products"
       click_link "Prototypes"
 
@@ -95,11 +95,11 @@ describe "Prototypes", :type => :feature do
     shirt_prototype = create(:prototype, name: "Shirt", properties: [])
     shirt_prototype.taxons << create(:taxon)
 
-    visit spree.admin_path
+    visit solidus.admin_path
     click_nav "Products"
     click_link "Prototypes"
 
-    within("#spree_prototype_#{shirt_prototype.id}") do
+    within("#solidus_prototype_#{shirt_prototype.id}") do
       page.find('.delete-resource').click
     end
 

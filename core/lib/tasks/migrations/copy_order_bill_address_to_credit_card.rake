@@ -1,4 +1,4 @@
-namespace 'spree:migrations:copy_order_bill_address_to_credit_card' do
+namespace 'solidus:migrations:copy_order_bill_address_to_credit_card' do
   # This copies the billing address from the order associated with a
   # credit card's most recent payment to the credit card.
 
@@ -84,16 +84,16 @@ namespace 'spree:migrations:copy_order_bill_address_to_credit_card' do
 
   def postgres_sql(start_id:, end_id:, payment_state:)
     <<-SQL
-      update spree_credit_cards c
+      update solidus_credit_cards c
       set address_id = o.bill_address_id
-      from spree_payments p
-      inner join spree_orders o
+      from solidus_payments p
+      inner join solidus_orders o
         on  o.id = p.order_id
         and o.bill_address_id is not null
       left join (
         select p2.*
-        from spree_payments p2
-        inner join spree_orders o2
+        from solidus_payments p2
+        inner join solidus_orders o2
           on  o2.id = p2.order_id
           and o2.bill_address_id is not null
       ) more_recent_payment

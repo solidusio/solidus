@@ -48,7 +48,7 @@
       <% end %>
 
       <% if can?(:display, Solidus::StockLocation) %>
-        <%= configurations_sidebar_menu_item Solidus.t(:stock_locations), spree.admin_stock_locations_path %>
+        <%= configurations_sidebar_menu_item Solidus.t(:stock_locations), solidus.admin_stock_locations_path %>
       <% end %>
 
       <% if can?(:display, Solidus::Tracker) %>

@@ -10,7 +10,7 @@ module Spree
 
       def create
         @promotion_builder = Solidus::PromotionBuilder.new(
-          permitted_promo_builder_params.merge(user: try_spree_current_user),
+          permitted_promo_builder_params.merge(user: try_solidus_current_user),
           permitted_resource_params,
         )
         @promotion = @promotion_builder.promotion
@@ -34,11 +34,11 @@ module Spree
         end
 
         def location_after_save
-          spree.edit_admin_promotion_url(@promotion)
+          solidus.edit_admin_promotion_url(@promotion)
         end
 
         def load_data
-          @calculators = Rails.application.config.spree.calculators.promotion_actions_create_adjustments
+          @calculators = Rails.application.config.solidus.calculators.promotion_actions_create_adjustments
           @promotion_categories = Solidus::PromotionCategory.order(:name)
         end
 

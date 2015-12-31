@@ -1,6 +1,6 @@
 class CreateSpreePromotionCodes < ActiveRecord::Migration
   def change
-    create_table :spree_promotion_codes do |t|
+    create_table :solidus_promotion_codes do |t|
       t.references :promotion, index: true, null: false
       t.string :value, null: false
       t.integer :usage_limit
@@ -8,6 +8,6 @@ class CreateSpreePromotionCodes < ActiveRecord::Migration
       t.timestamps null: true
     end
 
-    add_index :spree_promotion_codes, :value, unique: true
+    add_index :solidus_promotion_codes, :value, unique: true
   end
 end

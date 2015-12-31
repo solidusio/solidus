@@ -60,12 +60,12 @@ module Spree
 
     def source_movements
       stock_movements.joins(:stock_item)
-        .where('spree_stock_items.stock_location_id' => source_location_id)
+        .where('solidus_stock_items.stock_location_id' => source_location_id)
     end
 
     def destination_movements
       stock_movements.joins(:stock_item)
-        .where('spree_stock_items.stock_location_id' => destination_location_id)
+        .where('solidus_stock_items.stock_location_id' => destination_location_id)
     end
 
     def finalize(finalized_by)

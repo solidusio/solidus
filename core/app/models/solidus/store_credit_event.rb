@@ -12,7 +12,7 @@ module Spree
 
     scope :exposed_events, -> { exposable_actions.not_invalidated }
     scope :exposable_actions, -> { where.not(action: NON_EXPOSED_ACTIONS) }
-    scope :not_invalidated, -> { joins(:store_credit).where(spree_store_credits: { invalidated_at: nil }) }
+    scope :not_invalidated, -> { joins(:store_credit).where(solidus_store_credits: { invalidated_at: nil }) }
     scope :chronological, -> { order(:created_at) }
     scope :reverse_chronological, -> { order(created_at: :desc) }
 

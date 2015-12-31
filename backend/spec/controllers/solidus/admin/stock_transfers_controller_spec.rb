@@ -34,29 +34,29 @@ module Spree
           ability.can :display, Solidus::StockLocation, id: [warehouse.id]
           ability.can :display, Solidus::StockLocation, id: [ny_store.id, la_store.id]
 
-          allow_any_instance_of(Solidus::Admin::BaseController).to receive(:spree_current_user).and_return(user)
+          allow_any_instance_of(Solidus::Admin::BaseController).to receive(:solidus_current_user).and_return(user)
           allow_any_instance_of(Solidus::Admin::BaseController).to receive(:current_ability).and_return(ability)
         end
 
         it "doesn't display stock locations the user doesn't have access to" do
-          spree_get :index
+          solidus_get :index
           expect(assigns(:stock_locations)).to match_array [warehouse, ny_store, la_store]
         end
       end
 
       it "searches by stock location" do
-        spree_get :index, :q => { :source_location_id_or_destination_location_id_eq => ny_store.id }
+        solidus_get :index, :q => { :source_location_id_or_destination_location_id_eq => ny_store.id }
         expect(assigns(:stock_transfers).count).to eq 1
         expect(assigns(:stock_transfers)).to include(stock_transfer1)
       end
 
       it "filters the closed stock transfers" do
-        spree_get :index, :q => { :closed_at_null => '1' }
+        solidus_get :index, :q => { :closed_at_null => '1' }
         expect(assigns(:stock_transfers)).to match_array [stock_transfer1]
       end
 
       it "doesn't filter any stock transfers" do
-        spree_get :index, :q => { :closed_at_null => '0' }
+        solidus_get :index, :q => { :closed_at_null => '0' }
         expect(assigns(:stock_transfers)).to match_array [stock_transfer1, stock_transfer2]
       end
     end
@@ -65,7 +65,7 @@ module Spree
       let(:warehouse) { StockLocation.create(name: "Warehouse", active: false)}
 
       subject do
-        spree_post :create, stock_transfer: { source_location_id: warehouse.id, description: nil }
+        solidus_post :create, stock_transfer: { source_location_id: warehouse.id, description: nil }
       end
 
       context "user doesn't have read access to the selected stock location" do
@@ -83,12 +83,12 @@ module Spree
         let!(:user) { create(:user) }
 
         before do
-          allow(controller).to receive(:try_spree_current_user) { user }
+          allow(controller).to receive(:try_solidus_current_user) { user }
         end
 
         it "redirects to the edit page" do
           subject
-          expect(response).to redirect_to(spree.edit_admin_stock_transfer_path(assigns(:stock_transfer)))
+          expect(response).to redirect_to(solidus.edit_admin_stock_transfer_path(assigns(:stock_transfer)))
         end
 
         it "sets the created_by to the current user" do
@@ -105,7 +105,7 @@ module Spree
       let(:parameters)           { { id: transfer_with_items.to_param } }
 
       subject do
-        spree_get :receive, parameters
+        solidus_get :receive, parameters
       end
 
       context 'stock transfer is not receivable' do
@@ -116,7 +116,7 @@ module Spree
         it 'redirects back to index' do
           subject
           expect(flash[:error]).to eq Solidus.t(:stock_transfer_must_be_receivable)
-          expect(response).to redirect_to(spree.admin_stock_transfers_path)
+          expect(response).to redirect_to(solidus.admin_stock_transfers_path)
         end
       end
 
@@ -154,11 +154,11 @@ module Spree
       let!(:transfer_with_items) { create(:receivable_stock_transfer_with_items, finalized_at: nil, shipped_at: nil) }
 
       before do
-        allow(controller).to receive(:try_spree_current_user) { user }
+        allow(controller).to receive(:try_solidus_current_user) { user }
       end
 
       subject do
-        spree_put :finalize, id: transfer_with_items.to_param
+        solidus_put :finalize, id: transfer_with_items.to_param
       end
 
       context 'stock transfer is not finalizable' do
@@ -169,14 +169,14 @@ module Spree
         it 'redirects back to edit' do
           subject
           expect(flash[:error]).to eq Solidus.t(:stock_transfer_cannot_be_finalized)
-          expect(response).to redirect_to(spree.edit_admin_stock_transfer_path(transfer_with_items))
+          expect(response).to redirect_to(solidus.edit_admin_stock_transfer_path(transfer_with_items))
         end
       end
 
       context "successfully finalized" do
         it "redirects to tracking_info" do
           subject
-          expect(response).to redirect_to(spree.tracking_info_admin_stock_transfer_path(transfer_with_items))
+          expect(response).to redirect_to(solidus.tracking_info_admin_stock_transfer_path(transfer_with_items))
         end
 
         it "sets the finalized_by to the current user" do
@@ -197,7 +197,7 @@ module Spree
 
         it "redirects back to edit" do
           subject
-          expect(response).to redirect_to(spree.edit_admin_stock_transfer_path(transfer_with_items))
+          expect(response).to redirect_to(solidus.edit_admin_stock_transfer_path(transfer_with_items))
         end
 
         it "displays a flash error message" do
@@ -212,11 +212,11 @@ module Spree
       let!(:transfer_with_items) { create(:receivable_stock_transfer_with_items) }
 
       before do
-        allow(controller).to receive(:try_spree_current_user) { user }
+        allow(controller).to receive(:try_solidus_current_user) { user }
       end
 
       subject do
-        spree_put :close, id: transfer_with_items.to_param
+        solidus_put :close, id: transfer_with_items.to_param
       end
 
       context 'stock transfer is not receivable' do
@@ -227,14 +227,14 @@ module Spree
         it 'redirects back to receive' do
           subject
           expect(flash[:error]).to eq Solidus.t(:stock_transfer_must_be_receivable)
-          expect(response).to redirect_to(spree.receive_admin_stock_transfer_path(transfer_with_items))
+          expect(response).to redirect_to(solidus.receive_admin_stock_transfer_path(transfer_with_items))
         end
       end
 
       context "successfully closed" do
         it "redirects back to index" do
           subject
-          expect(response).to redirect_to(spree.admin_stock_transfers_path)
+          expect(response).to redirect_to(solidus.admin_stock_transfers_path)
         end
 
         it "sets the closed_by to the current user" do
@@ -292,7 +292,7 @@ module Spree
 
         it "redirects back to receive" do
           subject
-          expect(response).to redirect_to(spree.receive_admin_stock_transfer_path(transfer_with_items))
+          expect(response).to redirect_to(solidus.receive_admin_stock_transfer_path(transfer_with_items))
         end
 
         it "displays a flash error message" do
@@ -308,7 +308,7 @@ module Spree
       let(:warehouse_stock_item) { warehouse.stock_items.find_by(variant: transfer_variant) }
       let(:ny_stock_item) { ny_store.stock_items.find_by(variant: transfer_variant) }
 
-      subject { spree_put :ship, id: stock_transfer.number }
+      subject { solidus_put :ship, id: stock_transfer.number }
 
       before do
         warehouse_stock_item.set_count_on_hand(1)
@@ -345,7 +345,7 @@ module Spree
           subject
 
           expect(flash[:error]).to match /not enough inventory/
-          expect(response).to redirect_to(spree.tracking_info_admin_stock_transfer_path(stock_transfer))
+          expect(response).to redirect_to(solidus.tracking_info_admin_stock_transfer_path(stock_transfer))
         end
       end
     end

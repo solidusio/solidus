@@ -7,10 +7,10 @@ module Spree
   end
 
   class << self
-    # Add spree namespace and delegate to Rails TranslationHelper for some nice
+    # Add solidus namespace and delegate to Rails TranslationHelper for some nice
     # extra functionality. e.g return reasonable strings for missing translations
     def translate(key, options={})
-      options[:scope] = [:spree, *options[:scope]]
+      options[:scope] = [:solidus, *options[:scope]]
       TranslationHelperWrapper.new.translate(key, options)
     end
 

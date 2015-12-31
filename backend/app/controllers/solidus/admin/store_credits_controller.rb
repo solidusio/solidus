@@ -15,8 +15,8 @@ module Spree
       def create
         @store_credit = @user.store_credits.build(
           permitted_resource_params.merge({
-            created_by: try_spree_current_user,
-            action_originator: try_spree_current_user,
+            created_by: try_solidus_current_user,
+            action_originator: try_solidus_current_user,
           })
         )
 
@@ -32,7 +32,7 @@ module Spree
 
       def update
         @store_credit.assign_attributes(permitted_resource_params)
-        @store_credit.created_by = try_spree_current_user
+        @store_credit.created_by = try_solidus_current_user
 
         if @store_credit.save
           respond_to do |format|
@@ -48,7 +48,7 @@ module Spree
       def update_amount
         @store_credit = @user.store_credits.find(params[:id])
         amount = params.require(:store_credit).require(:amount)
-        if @store_credit.update_amount(amount, @update_reason, try_spree_current_user)
+        if @store_credit.update_amount(amount, @update_reason, try_solidus_current_user)
           flash[:success] = flash_message_for(@store_credit, :successfully_updated)
           redirect_to admin_user_store_credit_path(@user, @store_credit)
         else
@@ -58,7 +58,7 @@ module Spree
 
       def invalidate
         @store_credit = @user.store_credits.find(params[:id])
-        if @store_credit.invalidate(@update_reason, try_spree_current_user)
+        if @store_credit.invalidate(@update_reason, try_solidus_current_user)
           redirect_to admin_user_store_credit_path(@user, @store_credit)
         else
           render_edit_page
@@ -69,7 +69,7 @@ module Spree
 
       def permitted_resource_params
         params.require(:store_credit).permit([:amount, :category_id, :memo]).
-          merge(currency: Solidus::Config[:currency], created_by: try_spree_current_user)
+          merge(currency: Solidus::Config[:currency], created_by: try_solidus_current_user)
       end
 
       def collection

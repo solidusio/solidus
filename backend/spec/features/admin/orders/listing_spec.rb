@@ -10,7 +10,7 @@ describe "Orders Listing", type: :feature, js: true do
     allow_any_instance_of(Solidus::OrderInventory).to receive(:add_to_shipment)
     @order1 = create(:order_with_line_items, created_at: 1.day.from_now, completed_at: 1.day.from_now, number: "R100")
     @order2 = create(:order, created_at: 1.day.ago, completed_at: 1.day.ago, number: "R200")
-    visit spree.admin_orders_path
+    visit solidus.admin_orders_path
   end
 
   context "listing orders" do
@@ -115,7 +115,7 @@ describe "Orders Listing", type: :feature, js: true do
           promotion_code: promotion_code,
         )
         @order1.save
-        visit spree.admin_orders_path
+        visit solidus.admin_orders_path
       end
 
       it "only shows the orders with the selected promotion" do

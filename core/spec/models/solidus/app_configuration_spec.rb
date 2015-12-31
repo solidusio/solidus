@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe Solidus::AppConfiguration, :type => :model do
 
-  let (:prefs) { Rails.application.config.spree.preferences }
+  let (:prefs) { Rails.application.config.solidus.preferences }
 
   it "should be available from the environment" do
     prefs.layout = "my/layout"

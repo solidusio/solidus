@@ -6,7 +6,7 @@ describe "i18n" do
   before do
     I18n.backend.store_translations(:en,
     {
-      :spree => {
+      :solidus => {
         :foo => "bar",
         :bar => {
           :foo => "bar within bar scope",
@@ -19,7 +19,7 @@ describe "i18n" do
     })
   end
 
-  it "translates within the spree scope" do
+  it "translates within the solidus scope" do
     expect(Solidus.normal_t(:foo)).to eql("bar")
     expect(Solidus.translate(:foo)).to eql("bar")
   end

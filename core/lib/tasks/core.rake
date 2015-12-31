@@ -23,8 +23,8 @@ use rake db:load_file[/absolute/path/to/sample/filename.rb]}
     end
     ruby_files.sort.each do |fixture , ruby_file|
       # If file is exists within application it takes precendence.
-      if File.exists?(File.join(Rails.root, "db/default/spree", "#{fixture}.rb"))
-        ruby_file = File.expand_path(File.join(Rails.root, "db/default/spree", "#{fixture}.rb"))
+      if File.exists?(File.join(Rails.root, "db/default/solidus", "#{fixture}.rb"))
+        ruby_file = File.expand_path(File.join(Rails.root, "db/default/solidus", "#{fixture}.rb"))
       end
       # an invoke will only execute the task once
       Rake::Task["db:load_file"].execute( Rake::TaskArguments.new([:file], [ruby_file]) )
@@ -92,7 +92,7 @@ use rake db:load_file[/absolute/path/to/sample/filename.rb]}
     if load_sample
       # Reload models' attributes in case they were loaded in old migrations with wrong attributes
       ActiveRecord::Base.descendants.each(&:reset_column_information)
-      Rake::Task["spree_sample:load"].invoke
+      Rake::Task["solidus_sample:load"].invoke
     end
 
     puts "Bootstrap Complete.\n\n"

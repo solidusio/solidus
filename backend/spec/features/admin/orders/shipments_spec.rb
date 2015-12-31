@@ -15,13 +15,13 @@ describe "Shipments", :type => :feature do
     end
 
     it "can still be displayed" do
-      visit spree.edit_admin_order_path(order)
+      visit solidus.edit_admin_order_path(order)
     end
   end
 
   context "shipping an order", js: true do
     before(:each) do
-      visit spree.admin_path
+      visit solidus.admin_path
       click_link "Orders"
       within_row(1) do
         click_link "R100"
@@ -41,7 +41,7 @@ describe "Shipments", :type => :feature do
     let!(:order) { create(:completed_order_with_pending_payment, :number => "R100", :state => "complete", :line_items_count => 5) }
     let!(:la) { create(:stock_location, name: "LA") }
     before(:each) do
-      visit spree.admin_path
+      visit solidus.admin_path
       click_link "Orders"
       within_row(1) do
         click_link "R100"

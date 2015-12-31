@@ -59,7 +59,7 @@ module Spree
         def product_property
           if @product
             @product_property ||= @product.product_properties.find_by(id: params[:id])
-            @product_property ||= @product.product_properties.includes(:property).where(spree_properties: { name: params[:id] }).first
+            @product_property ||= @product.product_properties.includes(:property).where(solidus_properties: { name: params[:id] }).first
             authorize! :read, @product_property
           end
         end

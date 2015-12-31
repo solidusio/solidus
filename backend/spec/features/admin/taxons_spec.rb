@@ -5,14 +5,14 @@ describe "Taxonomies and taxons", :type => :feature do
 
   it "admin should be able to edit taxon" do
 
-    visit spree.new_admin_taxonomy_path
+    visit solidus.new_admin_taxonomy_path
 
     fill_in "Name", :with => "Hello"
     click_button "Create"
 
     @taxonomy = Solidus::Taxonomy.last
 
-    visit spree.edit_admin_taxonomy_taxon_path(@taxonomy, @taxonomy.root.id)
+    visit solidus.edit_admin_taxonomy_taxon_path(@taxonomy, @taxonomy.root.id)
 
     fill_in "taxon_name", :with => "Shirt"
     fill_in "taxon_description", :with => "Discover our new rails shirts"
@@ -25,7 +25,7 @@ describe "Taxonomies and taxons", :type => :feature do
   it "can see taxon tree", js: true do
     taxonomy = create :taxonomy
 
-    visit spree.edit_admin_taxonomy_path(taxonomy)
+    visit solidus.edit_admin_taxonomy_path(taxonomy)
     expect(page).to have_content('Brand')
   end
 end

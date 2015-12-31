@@ -3,7 +3,7 @@ require 'spec_helper'
 
 describe Solidus::Money do
   before do
-    configure_spree_preferences do |config|
+    configure_solidus_preferences do |config|
       config.currency = "USD"
     end
   end
@@ -79,7 +79,7 @@ describe Solidus::Money do
 
   context "JPY" do
     before do
-      configure_spree_preferences do |config|
+      configure_solidus_preferences do |config|
         config.currency = "JPY"
       end
     end
@@ -92,7 +92,7 @@ describe Solidus::Money do
 
   context "EUR" do
     before do
-      configure_spree_preferences do |config|
+      configure_solidus_preferences do |config|
         config.currency = "EUR"
       end
     end

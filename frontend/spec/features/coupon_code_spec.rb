@@ -35,11 +35,11 @@ describe "Coupon code promotions", type: :feature, js: true do
     context "on the payment page" do
       before do
 
-        visit spree.root_path
+        visit solidus.root_path
         click_link "RoR Mug"
         click_button "add-to-cart-button"
         click_button "Checkout"
-        fill_in "order_email", :with => "spree@example.com"
+        fill_in "order_email", :with => "solidus@example.com"
         fill_in "First Name", :with => "John"
         fill_in "Last Name", :with => "Smith"
         fill_in "Street Address", :with => "1 John Street"
@@ -83,7 +83,7 @@ describe "Coupon code promotions", type: :feature, js: true do
     context "on the cart page" do
 
       before do
-        visit spree.root_path
+        visit solidus.root_path
         click_link "RoR Mug"
         click_button "add-to-cart-button"
       end
@@ -117,7 +117,7 @@ describe "Coupon code promotions", type: :feature, js: true do
         end
 
         specify do
-          visit spree.cart_path
+          visit solidus.cart_path
 
           fill_in "order_coupon_code", :with => "onetwo"
           click_button "Update"
@@ -145,11 +145,11 @@ describe "Coupon code promotions", type: :feature, js: true do
         end
 
         specify do
-          visit spree.root_path
+          visit solidus.root_path
           click_link "Spree Mug"
           click_button "add-to-cart-button"
 
-          visit spree.cart_path
+          visit solidus.cart_path
           fill_in "order_coupon_code", :with => "onetwo"
           click_button "Update"
 
@@ -188,11 +188,11 @@ describe "Coupon code promotions", type: :feature, js: true do
         end
 
         specify do
-          visit spree.root_path
+          visit solidus.root_path
           click_link "Spree Mug"
           click_button "add-to-cart-button"
 
-          visit spree.cart_path
+          visit solidus.cart_path
 
           within '.cart-total' do
             expect(page).to have_content("$30.00")

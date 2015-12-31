@@ -18,7 +18,7 @@ describe Solidus::ReimbursementMailer, :type => :mailer do
       context "pt-BR locale" do
         before do
           I18n.enforce_available_locales = false
-          pt_br_shipped_email = { :spree => { :reimbursement_mailer => { :reimbursement_email => { :dear_customer => 'Caro Cliente,' } } } }
+          pt_br_shipped_email = { :solidus => { :reimbursement_mailer => { :reimbursement_email => { :dear_customer => 'Caro Cliente,' } } } }
           I18n.backend.store_translations :'pt-BR', pt_br_shipped_email
           I18n.locale = :'pt-BR'
         end

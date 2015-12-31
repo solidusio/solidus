@@ -6,7 +6,7 @@ module Spree
       before_action :load_stock_locations, only: :edit
       before_action :load_simulated_refunds, only: :edit
 
-      rescue_from Solidus::Core::GatewayError, with: :spree_core_gateway_error, only: :perform
+      rescue_from Solidus::Core::GatewayError, with: :solidus_core_gateway_error, only: :perform
 
       def perform
         @reimbursement.perform!
@@ -56,7 +56,7 @@ module Spree
         @reimbursement_objects = @reimbursement.simulate
       end
 
-      def spree_core_gateway_error(error)
+      def solidus_core_gateway_error(error)
         flash[:error] = error.message
         redirect_to edit_admin_order_reimbursement_path(parent, @reimbursement)
       end

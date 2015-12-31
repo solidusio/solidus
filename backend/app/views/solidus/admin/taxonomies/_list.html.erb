@@ -13,7 +13,7 @@
   </thead>
   <tbody>
     <% @taxonomies.each do |taxonomy| %>
-      <tr id="<%= spree_dom_id taxonomy %>" data-hook="taxonomies_row" class="<%= cycle('odd', 'even')%>">
+      <tr id="<%= solidus_dom_id taxonomy %>" data-hook="taxonomies_row" class="<%= cycle('odd', 'even')%>">
         <td class="no-border">
           <% if can?(:update_positions, Solidus::Taxonomy) %>
             <span class="handle"></span>

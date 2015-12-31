@@ -379,7 +379,7 @@ en:
       not_saved:
         one: ! '1 error prohibited this %{resource} from being saved:'
         other: ! '%{count} errors prohibited this %{resource} from being saved:'
-  spree:
+  solidus:
     abbreviation: Abbreviation
     accept: Accept
     acceptance_status: Acceptance status
@@ -786,7 +786,7 @@ en:
       other: ! '%{count} errors prohibited this record from being saved'
     event: Event
     events:
-      spree:
+      solidus:
         cart:
           add: Add to cart
         checkout:
@@ -1416,7 +1416,7 @@ en:
     source_location: Source location
     special_instructions: Special Instructions
     split: Split
-    spree_gateway_error_flash_for_checkout: There was a problem with your payment information. Please check your information and try again.
+    solidus_gateway_error_flash_for_checkout: There was a problem with your payment information. Please check your information and try again.
     ssl:
       change_protocol: "Please switch to using HTTP (rather than HTTPS) and retry this request."
     start: Start

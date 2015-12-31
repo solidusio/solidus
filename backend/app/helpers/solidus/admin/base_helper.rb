@@ -142,7 +142,7 @@ module Spree
 
       def link_to_add_fields(name, target, options = {})
         name = '' if options[:no_text]
-        css_classes = options[:class] ? options[:class] + " spree_add_fields" : "spree_add_fields"
+        css_classes = options[:class] ? options[:class] + " solidus_add_fields" : "solidus_add_fields"
         link_to_with_icon('plus', name, 'javascript:', :data => { :target => target }, :class => css_classes)
       end
 
@@ -152,11 +152,11 @@ module Spree
         options[:class] = '' unless options[:class]
         options[:class] += 'no-text with-tip' if options[:no_text]
         url = f.object.persisted? ? [:admin, f.object] : '#'
-        link_to_with_icon('trash', name, url, :class => "spree_remove_fields #{options[:class]}", :data => {:action => 'remove'}, :title => Solidus.t(:remove)) + f.hidden_field(:_destroy)
+        link_to_with_icon('trash', name, url, :class => "solidus_remove_fields #{options[:class]}", :data => {:action => 'remove'}, :title => Solidus.t(:remove)) + f.hidden_field(:_destroy)
       end
 
-      def spree_dom_id(record)
-        dom_id(record, 'spree')
+      def solidus_dom_id(record)
+        dom_id(record, 'solidus')
       end
 
       private

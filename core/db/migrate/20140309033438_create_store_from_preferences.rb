@@ -1,6 +1,6 @@
 class CreateStoreFromPreferences < ActiveRecord::Migration
   class Store < ActiveRecord::Base
-    self.table_name = 'spree_stores'
+    self.table_name = 'solidus_stores'
   end
   def change
     preference_store = Solidus::Preferences::Store.instance
@@ -26,7 +26,7 @@ class CreateStoreFromPreferences < ActiveRecord::Migration
         s.meta_keywords    = preference_store.get('solidus/app_configuration/default_meta_keywords') {}
         s.seo_title        = preference_store.get('solidus/app_configuration/default_seo_title') {}
         s.default_currency = preference_store.get('solidus/app_configuration/currency') {}
-        s.code             = 'spree'
+        s.code             = 'solidus'
       end.save!
     end
   end

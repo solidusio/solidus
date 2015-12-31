@@ -11,7 +11,7 @@ end
 
 require 'rspec/rails'
 require 'ffaker'
-require 'spree_sample'
+require 'solidus_sample'
 
 RSpec.configure do |config|
   config.color = true

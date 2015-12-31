@@ -1,12 +1,12 @@
 class CreateSpreeStoreCreditPaymentMethod < ActiveRecord::Migration
   class PaymentMethod < Solidus::Base
-    self.table_name = 'spree_payment_methods'
+    self.table_name = 'solidus_payment_methods'
     self.inheritance_column = :_type_disabled
   end
   def up
     # If migrating from Spree 3.0, the environment column is already gone.
-    # We remove it in a later migration if upgrading from spree <= 2.4 to soldius
-    if column_exists?(:spree_payment_methods, :environment)
+    # We remove it in a later migration if upgrading from solidus <= 2.4 to soldius
+    if column_exists?(:solidus_payment_methods, :environment)
       attributes = {type: "Solidus::PaymentMethod::StoreCredit", environment: Rails.env}
     else
       attributes = {type: "Solidus::PaymentMethod::StoreCredit"}

@@ -1,4 +1,4 @@
-<%= search_form_for @search, :url => spree.sales_total_admin_reports_path  do |s| %>
+<%= search_form_for @search, :url => solidus.sales_total_admin_reports_path  do |s| %>
   <div class="date-range-filter field align-center">
     <%= label_tag :q_completed_at_gt, Solidus.t(:start), :class => 'inline' %>
     <%= s.text_field :completed_at_gt, :class => 'datepicker datepicker-from', :value => datepicker_field_value(params[:q][:completed_at_gt]) %>

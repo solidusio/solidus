@@ -19,7 +19,7 @@
           <table class="existing-credit-card-list">
             <tbody>
               <% @payment_sources.each do |card| %>
-                <tr id="<%= dom_id(card,'spree')%>" class="<%= cycle('even', 'odd') %>">
+                <tr id="<%= dom_id(card,'solidus')%>" class="<%= cycle('even', 'odd') %>">
                   <td><%= card.name %></td>
                   <td><%= card.display_number %></td>
                   <td><%= card.month %></td>

@@ -83,7 +83,7 @@
     </thead>
     <tbody>
       <% @reimbursement_objects.each do |reimbursement_object| %>
-        <tr id="<%= spree_dom_id(reimbursement_object) %>" data-hook="reimbursement_reimbursement_object_row" class="<%= cycle('odd', 'even')%>">
+        <tr id="<%= solidus_dom_id(reimbursement_object) %>" data-hook="reimbursement_reimbursement_object_row" class="<%= cycle('odd', 'even')%>">
           <td><%= reimbursement_object.class.name.demodulize %></td>
           <td><%= reimbursement_object.description %></td>
           <td><%= reimbursement_object.display_amount %></td>

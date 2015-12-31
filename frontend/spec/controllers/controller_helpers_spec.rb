@@ -19,7 +19,7 @@ describe Solidus::ProductsController, :type => :controller do
   # Regression test for #1184
   it "sets the default locale based off Solidus::Frontend::Config[:locale]" do
     expect(I18n.locale).to eq(:en)
-    spree_get :index
+    solidus_get :index
     expect(I18n.locale).to eq(:de)
   end
 end

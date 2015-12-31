@@ -1,4 +1,4 @@
-namespace :spree do
+namespace :solidus do
   desc "Resets all taxon permalinks"
   task :reset_taxon_permalinks => :environment do
     Solidus::Taxon.where(:parent_id => nil).each {|taxon| redo_permalinks(taxon) }

@@ -10,7 +10,7 @@
   <% end %>
 <% end %>
 
-<%= image_tag 'select2-spinner.gif', :plugin => 'spree', :style => 'display: none', :id => 'busy_indicator' %>
+<%= image_tag 'select2-spinner.gif', :plugin => 'solidus', :style => 'display: none', :id => 'busy_indicator' %>
 
 <%# Placeholder for new prototype form %>
 <div id="new_prototype"></div>
@@ -29,7 +29,7 @@
   </thead>
   <tbody>
     <% @prototypes.each do |prototype| %>
-      <tr id="<%= spree_dom_id prototype %>" data-hook="prototypes_row" class="<%= cycle('odd', 'even')%>">
+      <tr id="<%= solidus_dom_id prototype %>" data-hook="prototypes_row" class="<%= cycle('odd', 'even')%>">
         <td style="padding-left:1em"><%= prototype.name %></td>
         <td class="actions">
           <% if can?(:update, prototype) %>
@@ -47,7 +47,7 @@
   <div class="alpha twelve columns no-objects-found">
     <%= Solidus.t(:no_resource_found, resource: I18n.t(:other, scope: 'activerecord.models.solidus/prototype')) %>
     <% if can?(:create, Solidus::Prototype) %>
-      <%= link_to Solidus.t(:add_one), spree.new_admin_prototype_path %>!
+      <%= link_to Solidus.t(:add_one), solidus.new_admin_prototype_path %>!
     <% end %>
   </div>
 <% end %>

@@ -28,7 +28,7 @@ module Spree
       private
 
       def whodunnit
-        try_spree_current_user.try(:email)
+        try_solidus_current_user.try(:email)
       end
 
       def load_order

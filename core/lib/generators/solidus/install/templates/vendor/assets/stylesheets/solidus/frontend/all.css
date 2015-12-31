@@ -4,7 +4,7 @@
  * the top of the compiled file, but it's generally better to create a new file per style scope.
  *
  *= require solidus/frontend
-<% unless options[:lib_name] == 'spree' || options[:lib_name] == 'solidus/frontend' %>
+<% unless options[:lib_name] == 'solidus' || options[:lib_name] == 'solidus/frontend' %>
  *= require solidus/frontend/<%= options[:lib_name].gsub("/", "_") %>
 <% end %>
  *= require_self

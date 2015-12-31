@@ -6,7 +6,7 @@ describe "Tax Rates", :type => :feature do
   let!(:tax_rate) { create(:tax_rate, :calculator => stub_model(Solidus::Calculator)) }
 
   before do
-    visit spree.admin_path
+    visit solidus.admin_path
     click_link "Settings"
   end
 

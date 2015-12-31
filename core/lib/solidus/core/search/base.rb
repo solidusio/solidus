@@ -17,7 +17,7 @@ module Spree
           curr_page = page || 1
 
           unless Solidus::Config.show_products_without_price
-            @products = @products.where("spree_prices.amount IS NOT NULL").where("spree_prices.currency" => current_currency)
+            @products = @products.where("solidus_prices.amount IS NOT NULL").where("solidus_prices.currency" => current_currency)
           end
           @products = @products.page(curr_page).per(per_page)
         end

@@ -3,7 +3,7 @@ require 'spec_helper'
 
 describe "Order Details", type: :feature, js: true do
   let!(:stock_location) { create(:stock_location_with_items) }
-  let!(:product) { create(:product, :name => 'spree t-shirt', :price => 20.00) }
+  let!(:product) { create(:product, :name => 'solidus t-shirt', :price => 20.00) }
   let!(:tote) { create(:product, :name => "Tote", :price => 15.00) }
   let(:order) { create(:order, :state => 'complete', :completed_at => "2011-02-01 12:36:15", :number => "R100") }
   let(:state) { create(:state) }
@@ -22,12 +22,12 @@ describe "Order Details", type: :feature, js: true do
     context "cart edit page" do
       before do
         product.master.stock_items.first.update_column(:count_on_hand, 100)
-        visit spree.cart_admin_order_path(order)
+        visit solidus.cart_admin_order_path(order)
       end
 
 
       it "should allow me to edit order details" do
-        expect(page).to have_content("spree t-shirt")
+        expect(page).to have_content("solidus t-shirt")
         expect(page).to have_content("$40.00")
 
         within_row(1) do
@@ -42,7 +42,7 @@ describe "Order Details", type: :feature, js: true do
       end
 
       it "can add an item to a shipment" do
-        select2_search "spree t-shirt", :from => Solidus.t(:name_or_sku)
+        select2_search "solidus t-shirt", :from => Solidus.t(:name_or_sku)
         within("table.stock-levels") do
           fill_in "quantity_0", :with => 2
         end
@@ -55,7 +55,7 @@ describe "Order Details", type: :feature, js: true do
       end
 
       it "can remove an item from a shipment" do
-        expect(page).to have_content("spree t-shirt")
+        expect(page).to have_content("solidus t-shirt")
 
         within_row(1) do
           accept_alert do
@@ -64,12 +64,12 @@ describe "Order Details", type: :feature, js: true do
         end
 
         expect(page).to have_content("YOUR ORDER IS EMPTY") # wait for page refresh
-        expect(page).not_to have_content("spree t-shirt")
+        expect(page).not_to have_content("solidus t-shirt")
       end
 
       # Regression test for #3862
       it "can cancel removing an item from a shipment" do
-        expect(page).to have_content("spree t-shirt")
+        expect(page).to have_content("solidus t-shirt")
 
         within_row(1) do
           # Click "cancel" on confirmation dialog
@@ -78,11 +78,11 @@ describe "Order Details", type: :feature, js: true do
           end
         end
 
-        expect(page).to have_content("spree t-shirt")
+        expect(page).to have_content("solidus t-shirt")
       end
 
       it "can add tracking information" do
-        visit spree.edit_admin_order_path(order)
+        visit solidus.edit_admin_order_path(order)
 
         within(".show-tracking") do
           click_icon :edit
@@ -96,7 +96,7 @@ describe "Order Details", type: :feature, js: true do
 
       it "can change the shipping method" do
         order = create(:completed_order_with_totals)
-        visit spree.edit_admin_order_path(order)
+        visit solidus.edit_admin_order_path(order)
         within("table.index tr.show-method") do
           click_icon :edit
         end
@@ -109,7 +109,7 @@ describe "Order Details", type: :feature, js: true do
 
       it "will show the variant sku" do
         order = create(:completed_order_with_totals)
-        visit spree.edit_admin_order_path(order)
+        visit solidus.edit_admin_order_path(order)
         sku = order.line_items.first.variant.sku
         expect(page).to have_content("SKU: #{sku}")
       end
@@ -117,7 +117,7 @@ describe "Order Details", type: :feature, js: true do
       context "with special_instructions present" do
         let(:order) { create(:order, :state => 'complete', :completed_at => "2011-02-01 12:36:15", :number => "R100", :special_instructions => "Very special instructions here") }
         it "will show the special_instructions" do
-          visit spree.edit_admin_order_path(order)
+          visit solidus.edit_admin_order_path(order)
           expect(page).to have_content("Very special instructions here")
         end
       end
@@ -171,7 +171,7 @@ describe "Order Details", type: :feature, js: true do
       end
 
       context 'splitting to location' do
-        before { visit spree.edit_admin_order_path(order) }
+        before { visit solidus.edit_admin_order_path(order) }
         # can not properly implement until poltergeist supports checking alert text
         # see https://github.com/teampoltergeist/poltergeist/pull/516
         it 'should warn you if you have not selected a location or shipment'
@@ -271,9 +271,9 @@ describe "Order Details", type: :feature, js: true do
               order = create(:order, :state => 'payment', :number => "R100")
               order.shipments.create!(stock_location_id: stock_location.id, state: 'shipped')
 
-              visit spree.cart_admin_order_path(order)
+              visit solidus.cart_admin_order_path(order)
 
-              expect(page.current_path).to eq(spree.edit_admin_order_path(order))
+              expect(page.current_path).to eq(solidus.edit_admin_order_path(order))
               expect(page).not_to have_text 'Cart'
               expect(page).not_to have_selector('.fa-arrows-h')
               expect(page).not_to have_selector('.fa-trash')
@@ -345,7 +345,7 @@ describe "Order Details", type: :feature, js: true do
       context 'splitting to shipment' do
         before do
           @shipment2 = order.shipments.create(stock_location_id: stock_location2.id)
-          visit spree.edit_admin_order_path(order)
+          visit solidus.edit_admin_order_path(order)
         end
 
         it 'should delete the old shipment if enough are split off' do
@@ -449,14 +449,14 @@ describe "Order Details", type: :feature, js: true do
 
   context 'with only read permissions' do
     before do
-      allow_any_instance_of(Solidus::Admin::BaseController).to receive(:spree_current_user).and_return(nil)
+      allow_any_instance_of(Solidus::Admin::BaseController).to receive(:solidus_current_user).and_return(nil)
     end
 
     custom_authorization! do |user|
       can [:admin, :index, :read, :edit], Solidus::Order
     end
     it "should not display forbidden links" do
-      visit spree.edit_admin_order_path(order)
+      visit solidus.edit_admin_order_path(order)
 
       expect(page).not_to have_button('cancel')
       expect(page).not_to have_button('Resend')
@@ -486,12 +486,12 @@ describe "Order Details", type: :feature, js: true do
 
     before do
       allow(Solidus.user_class).to receive(:find_by).
-                                   with(hash_including(:spree_api_key)).
+                                   with(hash_including(:solidus_api_key)).
                                    and_return(Solidus.user_class.new)
     end
 
     it 'should not display order tabs or edit buttons without ability' do
-      visit spree.edit_admin_order_path(order)
+      visit solidus.edit_admin_order_path(order)
 
       # Order Form
       expect(page).not_to have_css('.edit-item')
@@ -503,7 +503,7 @@ describe "Order Details", type: :feature, js: true do
 
     it "can change the shipping method" do
       order = create(:completed_order_with_totals)
-      visit spree.edit_admin_order_path(order)
+      visit solidus.edit_admin_order_path(order)
       within("table.index tr.show-method") do
         click_icon :edit
       end
@@ -517,7 +517,7 @@ describe "Order Details", type: :feature, js: true do
     it 'can ship' do
       order = create(:order_ready_to_ship)
       order.refresh_shipment_rates
-      visit spree.edit_admin_order_path(order)
+      visit solidus.edit_admin_order_path(order)
 
       find(".ship-shipment-button").click
       wait_for_ajax
