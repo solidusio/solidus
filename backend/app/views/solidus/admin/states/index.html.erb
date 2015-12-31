@@ -5,7 +5,7 @@
 <% end %>
 
 <% content_for :page_actions do %>
-  <% if can?(:create, Spree::State) %>
+  <% if can?(:create, Solidus::State) %>
     <li>
       <%= button_link_to Spree.t(:new_state), new_admin_country_state_url(@country), { :icon => 'plus', :id => 'new_state_link' } %>
     </li>
@@ -20,7 +20,7 @@
 </div>
 
 <div id="new_state" data-hook>
-  <%= form_for [:admin, @country, Spree::State.new] do |f| %>
+  <%= form_for [:admin, @country, Solidus::State.new] do |f| %>
     <fieldset>
       <legend><%= Spree.t(:new_state) %></legend>
       <%= render :partial => 'form', :locals => { :f => f } %>

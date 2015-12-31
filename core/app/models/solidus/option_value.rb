@@ -1,6 +1,6 @@
 module Spree
-  class OptionValue < Spree::Base
-    belongs_to :option_type, class_name: 'Spree::OptionType', inverse_of: :option_values
+  class OptionValue < Solidus::Base
+    belongs_to :option_type, class_name: 'Solidus::OptionType', inverse_of: :option_values
     acts_as_list scope: :option_type
 
     has_many :option_values_variants, dependent: :destroy

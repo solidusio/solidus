@@ -1,9 +1,9 @@
 module Spree
-  class LineItem < Spree::Base
+  class LineItem < Solidus::Base
     before_validation :invalid_quantity_check
-    belongs_to :order, class_name: "Spree::Order", inverse_of: :line_items, touch: true
-    belongs_to :variant, -> { with_deleted }, class_name: "Spree::Variant", inverse_of: :line_items
-    belongs_to :tax_category, class_name: "Spree::TaxCategory"
+    belongs_to :order, class_name: "Solidus::Order", inverse_of: :line_items, touch: true
+    belongs_to :variant, -> { with_deleted }, class_name: "Solidus::Variant", inverse_of: :line_items
+    belongs_to :tax_category, class_name: "Solidus::TaxCategory"
 
     has_one :product, through: :variant
 
@@ -71,10 +71,10 @@ module Spree
       amount + promo_total
     end
 
-    # @return [Spree::Money] the amount of this line item, taking into
+    # @return [Solidus::Money] the amount of this line item, taking into
     #   consideration line item promotions.
     def discounted_money
-      Spree::Money.new(discounted_amount, { currency: currency })
+      Solidus::Money.new(discounted_amount, { currency: currency })
     end
 
     # @return [BigDecimal] the amount of this line item, taking into
@@ -84,15 +84,15 @@ module Spree
     end
     alias total final_amount
 
-    # @return [Spree::Money] the price of this line item
+    # @return [Solidus::Money] the price of this line item
     def single_money
-      Spree::Money.new(price, { currency: currency })
+      Solidus::Money.new(price, { currency: currency })
     end
     alias single_display_amount single_money
 
-    # @return [Spree::Moeny] the amount of this line item
+    # @return [Solidus::Moeny] the amount of this line item
     def money
-      Spree::Money.new(amount, { currency: currency })
+      Solidus::Money.new(amount, { currency: currency })
     end
     alias display_total money
     alias display_amount money
@@ -115,7 +115,7 @@ module Spree
     end
 
     # @note This will return the product even if it has been deleted.
-    # @return [Spree::Product, nil] the product associated with this line
+    # @return [Solidus::Product, nil] the product associated with this line
     #   item, if there is one
     def product
       variant.product
@@ -147,7 +147,7 @@ module Spree
     private
       def update_inventory
         if (changed? || target_shipment.present?) && self.order.has_checkout_step?("delivery")
-          Spree::OrderInventory.new(self.order, self).verify(target_shipment)
+          Solidus::OrderInventory.new(self.order, self).verify(target_shipment)
         end
       end
 
@@ -163,11 +163,11 @@ module Spree
       end
 
       def recalculate_adjustments
-        Spree::ItemAdjustments.new(self).update
+        Solidus::ItemAdjustments.new(self).update
       end
 
       def update_tax_charge
-        Spree::TaxRate.adjust(order.tax_zone, [self])
+        Solidus::TaxRate.adjust(order.tax_zone, [self])
       end
 
       def ensure_proper_currency

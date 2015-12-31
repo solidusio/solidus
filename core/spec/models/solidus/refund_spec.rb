@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Spree::Refund, :type => :model do
+describe Solidus::Refund, :type => :model do
 
   describe 'create' do
     let(:amount) { 100.0 }
@@ -32,7 +32,7 @@ describe Spree::Refund, :type => :model do
     before do
       allow(payment.payment_method)
         .to receive(:credit)
-        .with(amount_in_cents, payment.source, payment.transaction_id, {originator: an_instance_of(Spree::Refund)})
+        .with(amount_in_cents, payment.source, payment.transaction_id, {originator: an_instance_of(Solidus::Refund)})
         .and_return(gateway_response)
     end
 
@@ -41,7 +41,7 @@ describe Spree::Refund, :type => :model do
       subject { create(:refund, payment: payment, amount: amount, reason: refund_reason, transaction_id: transaction_id) }
 
       it "creates a refund record" do
-        expect{ subject }.to change { Spree::Refund.count }.by(1)
+        expect{ subject }.to change { Solidus::Refund.count }.by(1)
       end
 
       it "maintains the transaction id" do
@@ -67,11 +67,11 @@ describe Spree::Refund, :type => :model do
       let(:gateway_response_options) { { authorization: authorization } }
 
       it 'should create a refund' do
-        expect{ subject }.to change{ Spree::Refund.count }.by(1)
+        expect{ subject }.to change{ Solidus::Refund.count }.by(1)
       end
 
       it 'return the newly created refund' do
-        expect(subject).to be_a(Spree::Refund)
+        expect(subject).to be_a(Solidus::Refund)
       end
 
       it 'should save the returned authorization value' do
@@ -104,8 +104,8 @@ describe Spree::Refund, :type => :model do
 
       it 'should raise error and not create a refund' do
         expect do
-          expect { subject }.to raise_error(Spree::Core::GatewayError, gateway_response_message)
-        end.to_not change{ Spree::Refund.count }
+          expect { subject }.to raise_error(Solidus::Core::GatewayError, gateway_response_message)
+        end.to_not change{ Solidus::Refund.count }
       end
     end
 
@@ -117,7 +117,7 @@ describe Spree::Refund, :type => :model do
       it 'should not supply the payment source' do
         expect(payment.payment_method)
           .to receive(:credit)
-          .with(amount * 100, payment.transaction_id, {originator: an_instance_of(Spree::Refund)})
+          .with(amount * 100, payment.transaction_id, {originator: an_instance_of(Solidus::Refund)})
           .and_return(gateway_response)
 
         subject
@@ -132,7 +132,7 @@ describe Spree::Refund, :type => :model do
       it 'should supply the payment source' do
         expect(payment.payment_method)
           .to receive(:credit)
-          .with(amount_in_cents, payment.source, payment.transaction_id, {originator: an_instance_of(Spree::Refund)})
+          .with(amount_in_cents, payment.source, payment.transaction_id, {originator: an_instance_of(Solidus::Refund)})
           .and_return(gateway_response)
 
         subject
@@ -143,12 +143,12 @@ describe Spree::Refund, :type => :model do
       before do
         expect(payment.payment_method)
           .to receive(:credit)
-          .with(amount_in_cents, payment.source, payment.transaction_id, {originator: an_instance_of(Spree::Refund)})
+          .with(amount_in_cents, payment.source, payment.transaction_id, {originator: an_instance_of(Solidus::Refund)})
           .and_raise(ActiveMerchant::ConnectionError.new("foo", nil))
       end
 
-      it 'raises Spree::Core::GatewayError' do
-        expect { subject }.to raise_error(Spree::Core::GatewayError, Spree.t(:unable_to_connect_to_gateway))
+      it 'raises Solidus::Core::GatewayError' do
+        expect { subject }.to raise_error(Solidus::Core::GatewayError, Spree.t(:unable_to_connect_to_gateway))
       end
     end
 
@@ -168,15 +168,15 @@ describe Spree::Refund, :type => :model do
   describe 'total_amount_reimbursed_for' do
     let(:customer_return) { reimbursement.customer_return}
     let(:reimbursement) { create(:reimbursement) }
-    let!(:default_refund_reason) { Spree::RefundReason.find_or_create_by!(name: Spree::RefundReason::RETURN_PROCESSING_REASON, mutable: false) }
+    let!(:default_refund_reason) { Solidus::RefundReason.find_or_create_by!(name: Solidus::RefundReason::RETURN_PROCESSING_REASON, mutable: false) }
 
-    subject { Spree::Refund.total_amount_reimbursed_for(reimbursement) }
+    subject { Solidus::Refund.total_amount_reimbursed_for(reimbursement) }
 
     context 'with reimbursements performed' do
       before { reimbursement.perform! }
 
       it 'returns the total amount' do
-        amount = Spree::Refund.total_amount_reimbursed_for(reimbursement)
+        amount = Solidus::Refund.total_amount_reimbursed_for(reimbursement)
         expect(amount).to be > 0
         expect(amount).to eq reimbursement.total
       end
@@ -184,7 +184,7 @@ describe Spree::Refund, :type => :model do
 
     context 'without reimbursements performed' do
       it 'returns zero' do
-        amount = Spree::Refund.total_amount_reimbursed_for(reimbursement)
+        amount = Solidus::Refund.total_amount_reimbursed_for(reimbursement)
         expect(amount).to eq 0
       end
     end

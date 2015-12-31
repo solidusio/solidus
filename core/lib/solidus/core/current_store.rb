@@ -1,5 +1,5 @@
 # Default class for deciding what the current store is, given an HTTP request
-# This is an extension point used in Spree::Core::ControllerHelpers::Store
+# This is an extension point used in Solidus::Core::ControllerHelpers::Store
 # Custom versions of this class must respond to a store instance method
 module Spree
   module Core
@@ -11,9 +11,9 @@ module Spree
       # Chooses the current store based on a request.
       # Checks request headers for HTTP_SPREE_STORE and falls back to
       # looking up by the requesting server's name.
-      # @return [Spree::Store]
+      # @return [Solidus::Store]
       def store
-        Spree::Store.current(store_key)
+        Solidus::Store.current(store_key)
       end
 
       private

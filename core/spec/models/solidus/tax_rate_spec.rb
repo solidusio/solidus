@@ -1,20 +1,20 @@
 require 'spec_helper'
 
-describe Spree::TaxRate, :type => :model do
+describe Solidus::TaxRate, :type => :model do
   context "match" do
     let(:order) { create(:order) }
     let(:country) { create(:country) }
     let(:tax_category) { create(:tax_category) }
-    let(:calculator) { Spree::Calculator::FlatRate.new }
+    let(:calculator) { Solidus::Calculator::FlatRate.new }
 
     it "should return an empty array when tax_zone is nil" do
       allow(order).to receive_messages :tax_zone => nil
-      expect(Spree::TaxRate.match(order.tax_zone)).to eq([])
+      expect(Solidus::TaxRate.match(order.tax_zone)).to eq([])
     end
 
     context "when no rate zones match the tax zone" do
       before do
-        Spree::TaxRate.create(:amount => 1, :zone => create(:zone))
+        Solidus::TaxRate.create(:amount => 1, :zone => create(:zone))
       end
 
       context "when there is no default tax zone" do
@@ -25,11 +25,11 @@ describe Spree::TaxRate, :type => :model do
 
         it "should return an empty array" do
           allow(order).to receive_messages :tax_zone => @zone
-          expect(Spree::TaxRate.match(order.tax_zone)).to eq([])
+          expect(Solidus::TaxRate.match(order.tax_zone)).to eq([])
         end
 
         it "should return the rate that matches the rate zone" do
-          rate = Spree::TaxRate.create(
+          rate = Solidus::TaxRate.create(
             :amount => 1,
             :zone => @zone,
             :tax_category => tax_category,
@@ -37,26 +37,26 @@ describe Spree::TaxRate, :type => :model do
           )
 
           allow(order).to receive_messages :tax_zone => @zone
-          expect(Spree::TaxRate.match(order.tax_zone)).to eq([rate])
+          expect(Solidus::TaxRate.match(order.tax_zone)).to eq([rate])
         end
 
         it "should return all rates that match the rate zone" do
-          rate1 = Spree::TaxRate.create(
+          rate1 = Solidus::TaxRate.create(
             :amount => 1,
             :zone => @zone,
             :tax_category => tax_category,
             :calculator => calculator
           )
 
-          rate2 = Spree::TaxRate.create(
+          rate2 = Solidus::TaxRate.create(
             :amount => 2,
             :zone => @zone,
             :tax_category => tax_category,
-            :calculator => Spree::Calculator::FlatRate.new
+            :calculator => Solidus::Calculator::FlatRate.new
           )
 
           allow(order).to receive_messages :tax_zone => @zone
-          expect(Spree::TaxRate.match(order.tax_zone)).to match_array([rate1, rate2])
+          expect(Solidus::TaxRate.match(order.tax_zone)).to match_array([rate1, rate2])
         end
 
         context "when the tax_zone is contained within a rate zone" do
@@ -64,7 +64,7 @@ describe Spree::TaxRate, :type => :model do
             sub_zone = create(:zone, :name => "State Zone", :zone_members => [])
             sub_zone.zone_members.create(:zoneable => create(:state, :country => country))
             allow(order).to receive_messages :tax_zone => sub_zone
-            @rate = Spree::TaxRate.create(
+            @rate = Solidus::TaxRate.create(
               :amount => 1,
               :zone => @zone,
               :tax_category => tax_category,
@@ -73,7 +73,7 @@ describe Spree::TaxRate, :type => :model do
           end
 
           it "should return the rate zone" do
-            expect(Spree::TaxRate.match(order.tax_zone)).to eq([@rate])
+            expect(Solidus::TaxRate.match(order.tax_zone)).to eq([@rate])
           end
         end
       end
@@ -86,14 +86,14 @@ describe Spree::TaxRate, :type => :model do
 
         let(:included_in_price) { false }
         let!(:rate) do
-          Spree::TaxRate.create(:amount => 1,
+          Solidus::TaxRate.create(:amount => 1,
                                 :zone => @zone,
                                 :tax_category => tax_category,
                                 :calculator => calculator,
                                 :included_in_price => included_in_price)
         end
 
-        subject { Spree::TaxRate.match(order.tax_zone) }
+        subject { Solidus::TaxRate.match(order.tax_zone) }
 
         context "when the order has the same tax zone" do
           before do
@@ -101,7 +101,7 @@ describe Spree::TaxRate, :type => :model do
             allow(order).to receive_messages :tax_address => tax_address
           end
 
-          let(:tax_address) { stub_model(Spree::Address) }
+          let(:tax_address) { stub_model(Solidus::Address) }
 
           context "when the tax is not a VAT" do
             it { is_expected.to eq([rate]) }
@@ -120,7 +120,7 @@ describe Spree::TaxRate, :type => :model do
           end
 
           context "when the order has a tax_address" do
-            let(:tax_address) { stub_model(Spree::Address) }
+            let(:tax_address) { stub_model(Solidus::Address) }
 
             context "when the tax is a VAT" do
               let(:included_in_price) { true }
@@ -159,46 +159,46 @@ describe Spree::TaxRate, :type => :model do
   end
 
   context ".adjust" do
-    let(:order) { stub_model(Spree::Order) }
-    let(:tax_category_1) { stub_model(Spree::TaxCategory) }
-    let(:tax_category_2) { stub_model(Spree::TaxCategory) }
-    let(:rate_1) { stub_model(Spree::TaxRate, :tax_category => tax_category_1) }
-    let(:rate_2) { stub_model(Spree::TaxRate, :tax_category => tax_category_2) }
+    let(:order) { stub_model(Solidus::Order) }
+    let(:tax_category_1) { stub_model(Solidus::TaxCategory) }
+    let(:tax_category_2) { stub_model(Solidus::TaxCategory) }
+    let(:rate_1) { stub_model(Solidus::TaxRate, :tax_category => tax_category_1) }
+    let(:rate_2) { stub_model(Solidus::TaxRate, :tax_category => tax_category_2) }
 
     context "with line items" do
       let(:line_item) do
-        stub_model(Spree::LineItem,
+        stub_model(Solidus::LineItem,
           :price => 10.0,
           :quantity => 1,
           :tax_category => tax_category_1,
-          :variant => stub_model(Spree::Variant)
+          :variant => stub_model(Solidus::Variant)
         )
       end
 
       let(:line_items) { [line_item] }
 
       before do
-        allow(Spree::TaxRate).to receive_messages :match => [rate_1, rate_2]
+        allow(Solidus::TaxRate).to receive_messages :match => [rate_1, rate_2]
       end
 
       it "should apply adjustments for two tax rates to the order" do
         expect(rate_1).to receive(:adjust)
         expect(rate_2).not_to receive(:adjust)
-        Spree::TaxRate.adjust(order.tax_zone, line_items)
+        Solidus::TaxRate.adjust(order.tax_zone, line_items)
       end
     end
 
     context "with shipments" do
-      let(:shipments) { [stub_model(Spree::Shipment, :cost => 10.0, :tax_category => tax_category_1)] }
+      let(:shipments) { [stub_model(Solidus::Shipment, :cost => 10.0, :tax_category => tax_category_1)] }
 
       before do
-        allow(Spree::TaxRate).to receive_messages :match => [rate_1, rate_2]
+        allow(Solidus::TaxRate).to receive_messages :match => [rate_1, rate_2]
       end
 
       it "should apply adjustments for two tax rates to the order" do
         expect(rate_1).to receive(:adjust)
         expect(rate_2).not_to receive(:adjust)
-        Spree::TaxRate.adjust(order.tax_zone, shipments)
+        Solidus::TaxRate.adjust(order.tax_zone, shipments)
       end
     end
   end
@@ -208,21 +208,21 @@ describe Spree::TaxRate, :type => :model do
       @country = create(:country)
       @zone = create(:zone, :name => "Country Zone", :default_tax => true, :zone_members => [])
       @zone.zone_members.create(:zoneable => @country)
-      @category    = Spree::TaxCategory.create :name => "Taxable Foo"
-      @category2   = Spree::TaxCategory.create(:name => "Non Taxable")
-      @rate1        = Spree::TaxRate.create(
+      @category    = Solidus::TaxCategory.create :name => "Taxable Foo"
+      @category2   = Solidus::TaxCategory.create(:name => "Non Taxable")
+      @rate1        = Solidus::TaxRate.create(
         :amount => 0.10,
-        :calculator => Spree::Calculator::DefaultTax.create,
+        :calculator => Solidus::Calculator::DefaultTax.create,
         :tax_category => @category,
         :zone => @zone
       )
-      @rate2       = Spree::TaxRate.create(
+      @rate2       = Solidus::TaxRate.create(
         :amount => 0.05,
-        :calculator => Spree::Calculator::DefaultTax.create,
+        :calculator => Solidus::Calculator::DefaultTax.create,
         :tax_category => @category,
         :zone => @zone
       )
-      @order       = Spree::Order.create!
+      @order       = Solidus::Order.create!
       @taxable     = create(:product, :tax_category => @category)
       @nontaxable  = create(:product, :tax_category => @category2)
     end
@@ -231,12 +231,12 @@ describe Spree::TaxRate, :type => :model do
       let!(:line_item) { @order.contents.add(@nontaxable.master, 1) }
 
       it "should not create a tax adjustment" do
-        Spree::TaxRate.adjust(@order.tax_zone, @order.line_items)
+        Solidus::TaxRate.adjust(@order.tax_zone, @order.line_items)
         expect(line_item.adjustments.tax.charge.count).to eq(0)
       end
 
       it "should not create a refund" do
-        Spree::TaxRate.adjust(@order.tax_zone, @order.line_items)
+        Solidus::TaxRate.adjust(@order.tax_zone, @order.line_items)
         expect(line_item.adjustments.credit.count).to eq(0)
       end
     end
@@ -248,17 +248,17 @@ describe Spree::TaxRate, :type => :model do
         before do
           @rate1.update_column(:included_in_price, true)
           @rate2.update_column(:included_in_price, true)
-          Spree::TaxRate.store_pre_tax_amount(line_item, [@rate1, @rate2])
+          Solidus::TaxRate.store_pre_tax_amount(line_item, [@rate1, @rate2])
         end
 
         context "when zone is contained by default tax zone" do
           it "should create two adjustments, one for each tax rate" do
-            Spree::TaxRate.adjust(@order.tax_zone, @order.line_items)
+            Solidus::TaxRate.adjust(@order.tax_zone, @order.line_items)
             expect(line_item.adjustments.count).to eq(1)
           end
 
           it "should not create a tax refund" do
-            Spree::TaxRate.adjust(@order.tax_zone, @order.line_items)
+            Solidus::TaxRate.adjust(@order.tax_zone, @order.line_items)
             expect(line_item.adjustments.credit.count).to eq(0)
           end
         end
@@ -271,12 +271,12 @@ describe Spree::TaxRate, :type => :model do
             @zone.zone_members.delete_all
           end
           it "should create an adjustment" do
-            Spree::TaxRate.adjust(@order.tax_zone, @order.line_items)
+            Solidus::TaxRate.adjust(@order.tax_zone, @order.line_items)
             expect(line_item.adjustments.charge.count).to eq(1)
           end
 
           it "should not create a tax refund for each tax rate" do
-            Spree::TaxRate.adjust(@order.tax_zone, @order.line_items)
+            Solidus::TaxRate.adjust(@order.tax_zone, @order.line_items)
             expect(line_item.adjustments.credit.count).to eq(0)
           end
         end
@@ -291,12 +291,12 @@ describe Spree::TaxRate, :type => :model do
           end
 
           it "should not create positive adjustments" do
-            Spree::TaxRate.adjust(@order.tax_zone, @order.line_items)
+            Solidus::TaxRate.adjust(@order.tax_zone, @order.line_items)
             expect(line_item.adjustments.charge.count).to eq(0)
           end
 
           it "should create a tax refund for each tax rate" do
-            Spree::TaxRate.adjust(@order.tax_zone, @order.line_items)
+            Solidus::TaxRate.adjust(@order.tax_zone, @order.line_items)
             expect(line_item.adjustments.credit.count).to eq(1)
           end
         end
@@ -309,7 +309,7 @@ describe Spree::TaxRate, :type => :model do
               rate.zone = @zone
               rate.save
             end
-            Spree::TaxRate.adjust(@order.tax_zone, @order.line_items)
+            Solidus::TaxRate.adjust(@order.tax_zone, @order.line_items)
           end
 
           it "should delete adjustments for open order when taxrate is deleted" do
@@ -334,7 +334,7 @@ describe Spree::TaxRate, :type => :model do
           end
 
           describe 'tax adjustments' do
-            before { Spree::TaxRate.adjust(@order.tax_zone, @order.line_items) }
+            before { Solidus::TaxRate.adjust(@order.tax_zone, @order.line_items) }
 
             it "should apply adjustments when a tax zone is present" do
               expect(line_item.adjustments.count).to eq(2)
@@ -344,7 +344,7 @@ describe Spree::TaxRate, :type => :model do
               before { allow(@order).to receive_messages :tax_zone => nil }
 
               it 'does not apply any adjustments' do
-                Spree::TaxRate.adjust(@order.tax_zone, @order.line_items)
+                Solidus::TaxRate.adjust(@order.tax_zone, @order.line_items)
                 expect(line_item.adjustments.count).to eq(0)
               end
             end

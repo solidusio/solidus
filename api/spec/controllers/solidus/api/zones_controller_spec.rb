@@ -47,7 +47,7 @@ module Spree
             :name => "North Pole",
             :zone_members => [
               {
-                :zoneable_type => "Spree::Country",
+                :zoneable_type => "Solidus::Country",
                 :zoneable_id => 1
               }
             ]
@@ -66,7 +66,7 @@ module Spree
             :name => "North Pole",
             :zone_members => [
               {
-                :zoneable_type => "Spree::Country",
+                :zoneable_type => "Solidus::Country",
                 :zoneable_id => 1
               }
             ]

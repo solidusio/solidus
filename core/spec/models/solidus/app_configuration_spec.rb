@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Spree::AppConfiguration, :type => :model do
+describe Solidus::AppConfiguration, :type => :model do
 
   let (:prefs) { Rails.application.config.spree.preferences }
 
@@ -9,16 +9,16 @@ describe Spree::AppConfiguration, :type => :model do
     expect(prefs.layout).to eq "my/layout"
   end
 
-  it "should be available as Spree::Config for legacy access" do
-    expect(Spree::Config).to be_a Spree::AppConfiguration
+  it "should be available as Solidus::Config for legacy access" do
+    expect(Solidus::Config).to be_a Solidus::AppConfiguration
   end
 
   it "uses base searcher class by default" do
-    expect(prefs.searcher_class).to eq Spree::Core::Search::Base
+    expect(prefs.searcher_class).to eq Solidus::Core::Search::Base
   end
 
   it "uses variant search class by default" do
-    expect(prefs.variant_search_class).to eq Spree::Core::Search::Variant
+    expect(prefs.variant_search_class).to eq Solidus::Core::Search::Variant
   end
 
 end

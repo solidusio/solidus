@@ -7,7 +7,7 @@ module Spree
         attr_accessor :current_currency
 
         def initialize(params)
-          self.current_currency = Spree::Config[:currency]
+          self.current_currency = Solidus::Config[:currency]
           @properties = {}
           prepare(params)
         end
@@ -16,7 +16,7 @@ module Spree
           @products = get_base_scope
           curr_page = page || 1
 
-          unless Spree::Config.show_products_without_price
+          unless Solidus::Config.show_products_without_price
             @products = @products.where("spree_prices.amount IS NOT NULL").where("spree_prices.currency" => current_currency)
           end
           @products = @products.page(curr_page).per(per_page)
@@ -32,7 +32,7 @@ module Spree
 
         protected
           def get_base_scope
-            base_scope = Spree::Product.active
+            base_scope = Solidus::Product.active
             base_scope = base_scope.in_taxon(taxon) unless taxon.blank?
             base_scope = get_products_conditions_for(base_scope, keywords)
             base_scope = add_search_scopes(base_scope)
@@ -67,7 +67,7 @@ module Spree
               if base_scope.respond_to?(:search_scopes) && base_scope.search_scopes.include?(scope_name.to_sym)
                 base_scope = base_scope.send(scope_name, *scope_attribute)
               else
-                base_scope = base_scope.merge(Spree::Product.ransack({scope_name => scope_attribute}).result)
+                base_scope = base_scope.merge(Solidus::Product.ransack({scope_name => scope_attribute}).result)
               end
             end if search
             base_scope
@@ -82,13 +82,13 @@ module Spree
           end
 
           def prepare(params)
-            @properties[:taxon] = params[:taxon].blank? ? nil : Spree::Taxon.find(params[:taxon])
+            @properties[:taxon] = params[:taxon].blank? ? nil : Solidus::Taxon.find(params[:taxon])
             @properties[:keywords] = params[:keywords]
             @properties[:search] = params[:search]
             @properties[:include_images] = params[:include_images]
 
             per_page = params[:per_page].to_i
-            @properties[:per_page] = per_page > 0 ? per_page : Spree::Config[:products_per_page]
+            @properties[:per_page] = per_page > 0 ? per_page : Solidus::Config[:products_per_page]
             @properties[:page] = (params[:page].to_i <= 0) ? 1 : params[:page].to_i
           end
       end

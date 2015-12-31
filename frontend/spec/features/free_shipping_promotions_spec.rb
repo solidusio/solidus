@@ -14,11 +14,11 @@ describe "Free shipping promotions", :type => :feature, :js => true do
   let!(:payment_method) { create(:check_payment_method) }
   let!(:product) { create(:product, :name => "RoR Mug", :price => 20) }
   let!(:promotion) do
-    promotion = Spree::Promotion.create!(:name       => "Free Shipping",
+    promotion = Solidus::Promotion.create!(:name       => "Free Shipping",
                                          :starts_at  => 1.day.ago,
                                          :expires_at => 1.day.from_now)
 
-    action = Spree::Promotion::Actions::FreeShipping.new
+    action = Solidus::Promotion::Actions::FreeShipping.new
     action.promotion = promotion
     action.save
 

@@ -1,10 +1,10 @@
 require 'spec_helper'
 
-describe Spree::Order, :type => :model do
-  let(:order) { Spree::Order.new }
+describe Solidus::Order, :type => :model do
+  let(:order) { Solidus::Order.new }
   before do
     # Ensure state machine has been re-defined correctly
-    Spree::Order.define_state_machine!
+    Solidus::Order.define_state_machine!
     # We don't care about this validation here
     allow(order).to receive(:require_email)
   end
@@ -59,7 +59,7 @@ describe Spree::Order, :type => :model do
 
       it "adjusts tax rates when transitioning to delivery" do
         # Once for the line items
-        expect(Spree::TaxRate).to receive(:adjust).once
+        expect(Solidus::TaxRate).to receive(:adjust).once
         allow(order).to receive :set_shipments_cost
         order.next!
       end
@@ -67,7 +67,7 @@ describe Spree::Order, :type => :model do
       it "adjusts tax rates twice if there are any shipments" do
         # Once for the line items, once for the shipments
         order.shipments.build
-        expect(Spree::TaxRate).to receive(:adjust).twice
+        expect(Solidus::TaxRate).to receive(:adjust).twice
         allow(order).to receive :set_shipments_cost
         order.next!
       end
@@ -85,7 +85,7 @@ describe Spree::Order, :type => :model do
       end
     end
 
-    (Spree::Shipment.state_machine.states.keys - states).each do |shipment_state|
+    (Solidus::Shipment.state_machine.states.keys - states).each do |shipment_state|
       it "should be false if shipment_state is #{shipment_state}" do
         allow(order).to receive_messages :completed? => true
         order.shipment_state = shipment_state
@@ -96,11 +96,11 @@ describe Spree::Order, :type => :model do
   end
 
   context "#cancel" do
-    let!(:variant) { stub_model(Spree::Variant) }
-    let!(:inventory_units) { [stub_model(Spree::InventoryUnit, :variant => variant),
-                              stub_model(Spree::InventoryUnit, :variant => variant) ]}
+    let!(:variant) { stub_model(Solidus::Variant) }
+    let!(:inventory_units) { [stub_model(Solidus::InventoryUnit, :variant => variant),
+                              stub_model(Solidus::InventoryUnit, :variant => variant) ]}
     let!(:shipment) do
-      shipment = stub_model(Spree::Shipment)
+      shipment = stub_model(Solidus::Shipment)
       allow(shipment).to receive_messages :inventory_units => inventory_units, :order => order
       allow(order).to receive_messages :shipments => [shipment]
       shipment
@@ -124,7 +124,7 @@ describe Spree::Order, :type => :model do
       allow(shipments).to receive_messages :pending => []
       allow(shipments).to receive_messages :shipped => []
 
-      allow_any_instance_of(Spree::OrderUpdater).to receive(:update_adjustment_total) { 10 }
+      allow_any_instance_of(Solidus::OrderUpdater).to receive(:update_adjustment_total) { 10 }
     end
 
     it "should send a cancel email" do
@@ -132,7 +132,7 @@ describe Spree::Order, :type => :model do
       # Stub methods that cause side-effects in this test
       allow(shipment).to receive(:cancel!)
       allow(order).to receive :restock_items!
-      expect(Spree::OrderMailer).to receive(:cancel_email).with(order).and_return(mail_message = double)
+      expect(Solidus::OrderMailer).to receive(:cancel_email).with(order).and_return(mail_message = double)
       expect(mail_message).to receive :deliver_later
       order.cancel!
     end
@@ -141,7 +141,7 @@ describe Spree::Order, :type => :model do
       before do
         allow(shipment).to receive(:ensure_correct_adjustment)
         allow(shipment).to receive(:update_order)
-        allow(Spree::OrderMailer).to receive(:cancel_email).and_return(mail_message = double)
+        allow(Solidus::OrderMailer).to receive(:cancel_email).and_return(mail_message = double)
         allow(mail_message).to receive :deliver_later
 
       end
@@ -154,7 +154,7 @@ describe Spree::Order, :type => :model do
       before do
         # TODO: This is ugly :(
         # Stubs methods that cause unwanted side effects in this test
-        allow(Spree::OrderMailer).to receive(:cancel_email).and_return(mail_message = double)
+        allow(Solidus::OrderMailer).to receive(:cancel_email).and_return(mail_message = double)
         allow(mail_message).to receive :deliver_later
         allow(order).to receive :restock_items!
         allow(shipment).to receive(:cancel!)

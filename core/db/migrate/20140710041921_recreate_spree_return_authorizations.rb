@@ -4,7 +4,7 @@ class RecreateSpreeReturnAuthorizations < ActiveRecord::Migration
     # for the spree_legacy_return_authorizations extension to pick up with.
     # Otherwise just drop the tables/columns as they are no longer used in stock spree.  The spree_legacy_return_authorizations
     # extension will recreate these tables for dev environments & etc as needed.
-    if Spree::ReturnAuthorization.exists?
+    if Solidus::ReturnAuthorization.exists?
       rename_table :spree_return_authorizations, :spree_legacy_return_authorizations
       rename_column :spree_inventory_units, :return_authorization_id, :legacy_return_authorization_id
     else
@@ -12,7 +12,7 @@ class RecreateSpreeReturnAuthorizations < ActiveRecord::Migration
       remove_column :spree_inventory_units, :return_authorization_id
     end
 
-    Spree::Adjustment.where(source_type: 'Spree::ReturnAuthorization').update_all(source_type: 'Spree::LegacyReturnAuthorization')
+    Solidus::Adjustment.where(source_type: 'Solidus::ReturnAuthorization').update_all(source_type: 'Solidus::LegacyReturnAuthorization')
 
     # For now just recreate the table as it was.  Future changes to the schema (including dropping "amount") will be coming in a
     # separate commit.
@@ -32,7 +32,7 @@ class RecreateSpreeReturnAuthorizations < ActiveRecord::Migration
   def down
     drop_table :spree_return_authorizations
 
-    Spree::Adjustment.where(source_type: 'Spree::LegacyReturnAuthorization').update_all(source_type: 'Spree::ReturnAuthorization')
+    Solidus::Adjustment.where(source_type: 'Solidus::LegacyReturnAuthorization').update_all(source_type: 'Solidus::ReturnAuthorization')
 
     if table_exists?(:spree_legacy_return_authorizations)
       rename_table :spree_legacy_return_authorizations, :spree_return_authorizations

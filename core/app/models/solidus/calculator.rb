@@ -1,12 +1,12 @@
 module Spree
-  class Calculator < Spree::Base
+  class Calculator < Solidus::Base
     belongs_to :calculable, polymorphic: true
 
     # This method calls a compute_<computable> method. must be overriden in concrete calculator.
     #
     # It should return amount computed based on #calculable and the computable parameter
     def compute(computable)
-      # Spree::LineItem -> :compute_line_item
+      # Solidus::LineItem -> :compute_line_item
       computable_name = computable.class.name.demodulize.underscore
       method = "compute_#{computable_name}".to_sym
       calculator_class = self.class

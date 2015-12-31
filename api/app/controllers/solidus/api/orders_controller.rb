@@ -1,6 +1,6 @@
 module Spree
   module Api
-    class OrdersController < Spree::Api::BaseController
+    class OrdersController < Solidus::Api::BaseController
       class_attribute :admin_shipment_attributes
       self.admin_shipment_attributes = [:shipping_method, :stock_location, :inventory_units => [:variant_id, :sku]]
 
@@ -27,7 +27,7 @@ module Spree
 
       def create
         authorize! :create, Order
-        @order = Spree::Core::Importer::Order.import(determine_order_user, order_params)
+        @order = Solidus::Core::Importer::Order.import(determine_order_user, order_params)
         respond_with(@order, default_template: :show, status: 201)
       end
 
@@ -119,11 +119,11 @@ module Spree
       end
 
       def permitted_order_attributes
-        can?(:admin, Spree::Order) ? (super + admin_order_attributes) : super
+        can?(:admin, Solidus::Order) ? (super + admin_order_attributes) : super
       end
 
       def permitted_shipment_attributes
-        if can?(:admin, Spree::Shipment)
+        if can?(:admin, Solidus::Shipment)
           super + admin_shipment_attributes
         else
           super
@@ -131,7 +131,7 @@ module Spree
       end
 
       def find_order(lock = false)
-        @order = Spree::Order.find_by!(number: params[:id])
+        @order = Solidus::Order.find_by!(number: params[:id])
       end
 
       def order_id

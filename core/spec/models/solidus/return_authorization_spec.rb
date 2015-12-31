@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Spree::ReturnAuthorization, :type => :model do
+describe Solidus::ReturnAuthorization, :type => :model do
   let(:order) { create(:shipped_order) }
   let(:stock_location) { create(:stock_location) }
   let(:rma_reason) { create(:return_reason) }
@@ -8,13 +8,13 @@ describe Spree::ReturnAuthorization, :type => :model do
 
   let(:variant) { order.variants.first }
   let(:return_authorization) do
-    Spree::ReturnAuthorization.new(order: order,
+    Solidus::ReturnAuthorization.new(order: order,
       stock_location_id: stock_location.id,
       return_reason_id: rma_reason.id)
   end
 
   context "save" do
-    let(:order) { Spree::Order.create }
+    let(:order) { Solidus::Order.create }
 
     it "should be invalid when order has no inventory units" do
       order.inventory_units.each(&:delete)
@@ -52,13 +52,13 @@ describe Spree::ReturnAuthorization, :type => :model do
       subject                    { create(:return_authorization, order: order, return_items: [exchange_return_item, return_item]) }
 
       before do
-        @expediteted_exchanges_config = Spree::Config[:expedited_exchanges]
-        Spree::Config[:expedited_exchanges] = true
+        @expediteted_exchanges_config = Solidus::Config[:expedited_exchanges]
+        Solidus::Config[:expedited_exchanges] = true
         @pre_exchange_hooks = subject.class.pre_expedited_exchange_hooks
       end
 
       after do
-        Spree::Config[:expedited_exchanges] = @expediteted_exchanges_config
+        Solidus::Config[:expedited_exchanges] = @expediteted_exchanges_config
         subject.class.pre_expedited_exchange_hooks = @pre_exchange_hooks
       end
 
@@ -66,7 +66,7 @@ describe Spree::ReturnAuthorization, :type => :model do
         subject { create(:return_authorization, order: order) }
 
         it "does not create a reimbursement" do
-          expect{subject.save}.to_not change { Spree::Reimbursement.count }
+          expect{subject.save}.to_not change { Solidus::Reimbursement.count }
         end
       end
 
@@ -86,7 +86,7 @@ describe Spree::ReturnAuthorization, :type => :model do
 
         it "performs an exchange reimbursement for the exchange return items" do
           subject.save
-          reimbursement = Spree::Reimbursement.last
+          reimbursement = Solidus::Reimbursement.last
           expect(reimbursement.order).to eq subject.order
           expect(reimbursement.return_items).to eq [exchange_return_item]
           expect(exchange_return_item.reload.exchange_shipment).to be_present
@@ -94,8 +94,8 @@ describe Spree::ReturnAuthorization, :type => :model do
 
         context "the reimbursement fails" do
           before do
-            allow_any_instance_of(Spree::Reimbursement).to receive(:save) { false }
-            allow_any_instance_of(Spree::Reimbursement).to receive(:errors) { double(full_messages: "foo") }
+            allow_any_instance_of(Solidus::Reimbursement).to receive(:save) { false }
+            allow_any_instance_of(Solidus::Reimbursement).to receive(:errors) { double(full_messages: "foo") }
           end
 
           it "puts errors on the return authorization" do
@@ -111,7 +111,7 @@ describe Spree::ReturnAuthorization, :type => :model do
   describe ".before_create" do
     describe "#generate_number" do
       context "number is assigned" do
-        let(:return_authorization) { Spree::ReturnAuthorization.new(number: '123') }
+        let(:return_authorization) { Solidus::ReturnAuthorization.new(number: '123') }
 
         it "should return the assigned number" do
           return_authorization.save
@@ -120,7 +120,7 @@ describe Spree::ReturnAuthorization, :type => :model do
       end
 
       context "number is not assigned" do
-        let(:return_authorization) { Spree::ReturnAuthorization.new(number: nil) }
+        let(:return_authorization) { Solidus::ReturnAuthorization.new(number: nil) }
 
         before { allow(return_authorization).to receive_messages valid?: true }
 
@@ -157,9 +157,9 @@ describe Spree::ReturnAuthorization, :type => :model do
   end
 
   describe "#display_pre_tax_total" do
-    it "returns a Spree::Money" do
+    it "returns a Solidus::Money" do
       allow(return_authorization).to receive_messages(pre_tax_total: 21.22)
-      expect(return_authorization.display_pre_tax_total).to eq(Spree::Money.new(21.22))
+      expect(return_authorization.display_pre_tax_total).to eq(Solidus::Money.new(21.22))
     end
   end
 
@@ -207,7 +207,7 @@ describe Spree::ReturnAuthorization, :type => :model do
 
   describe "#customer_returned_items?" do
     before do
-      allow_any_instance_of(Spree::Order).to receive_messages(return!: true)
+      allow_any_instance_of(Solidus::Order).to receive_messages(return!: true)
     end
 
     subject { return_authorization.customer_returned_items? }

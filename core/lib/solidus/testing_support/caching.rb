@@ -24,7 +24,7 @@ module Spree
 end
 
 RSpec.configure do |config|
-  config.include Spree::TestingSupport::Caching, :caching => true
+  config.include Solidus::TestingSupport::Caching, :caching => true
 
   config.before(:each, :caching => true) do
     ActionController::Base.perform_caching = true

@@ -262,28 +262,28 @@ module Spree
     # searcher_class allows spree extension writers to provide their own Search class
     attr_writer :searcher_class
     def searcher_class
-      @searcher_class ||= Spree::Core::Search::Base
+      @searcher_class ||= Solidus::Core::Search::Base
     end
 
     attr_writer :variant_search_class
     def variant_search_class
-      @variant_search_class ||= Spree::Core::Search::Variant
+      @variant_search_class ||= Solidus::Core::Search::Variant
     end
 
     # promotion_chooser_class allows extensions to provide their own PromotionChooser
     attr_writer :promotion_chooser_class
     def promotion_chooser_class
-      @promotion_chooser_class ||= Spree::PromotionChooser
+      @promotion_chooser_class ||= Solidus::PromotionChooser
     end
 
     attr_writer :shipping_rate_sorter_class
     def shipping_rate_sorter_class
-      @shipping_rate_sorter_class ||= Spree::Stock::ShippingRateSorter
+      @shipping_rate_sorter_class ||= Solidus::Stock::ShippingRateSorter
     end
 
     attr_writer :shipping_rate_selector_class
     def shipping_rate_selector_class
-      @shipping_rate_selector_class ||= Spree::Stock::ShippingRateSelector
+      @shipping_rate_selector_class ||= Solidus::Stock::ShippingRateSelector
     end
 
     # Allows providing your own Mailer for shipped cartons.
@@ -291,24 +291,24 @@ module Spree
     # @!attribute [rw] carton_shipped_email_class
     # @return [ActionMailer::Base] an object that responds to "shipped_email"
     #   (e.g. an ActionMailer with a "shipped_email" method) with the same
-    #   signature as Spree::CartonMailer.shipped_email.
+    #   signature as Solidus::CartonMailer.shipped_email.
     attr_writer :carton_shipped_email_class
     def carton_shipped_email_class
-      @carton_shipped_email_class ||= Spree::CartonMailer
+      @carton_shipped_email_class ||= Solidus::CartonMailer
     end
 
     # Allows providing your own class for merging two orders.
     #
     # @!attribute [rw] order_merger_class
     # @return [Class] a class with the same public interfaces
-    #   as Spree::OrderMerger.
+    #   as Solidus::OrderMerger.
     attr_writer :order_merger_class
     def order_merger_class
-      @order_merger_class ||= Spree::OrderMerger
+      @order_merger_class ||= Solidus::OrderMerger
     end
 
     def static_model_preferences
-      @static_model_preferences ||= Spree::Preferences::StaticModelPreferences.new
+      @static_model_preferences ||= Solidus::Preferences::StaticModelPreferences.new
     end
 
     # all the following can be deprecated when store prefs are no longer supported
@@ -328,7 +328,7 @@ module Spree
 
       # support all the old preference methods with a warning
       define_method "preferred_#{old_preference_name}" do
-        ActiveSupport::Deprecation.warn("#{old_preference_name} is no longer supported on Spree::Config, please access it through #{store_method} on Spree::Store", bc.clean(caller))
+        ActiveSupport::Deprecation.warn("#{old_preference_name} is no longer supported on Solidus::Config, please access it through #{store_method} on Solidus::Store", bc.clean(caller))
         Store.default.send(store_method)
       end
     end

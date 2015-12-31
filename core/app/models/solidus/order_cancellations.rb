@@ -1,5 +1,5 @@
 # This class represents all of the actions one can take to modify an Order after it is complete
-class Spree::OrderCancellations
+class Solidus::OrderCancellations
 
   # If you need to message a third party service when an item is canceled then
   # set short_ship_tax_notifier to an object that responds to:
@@ -30,15 +30,15 @@ class Spree::OrderCancellations
 
     unit_cancels = []
 
-    Spree::OrderMutex.with_lock!(@order) do
+    Solidus::OrderMutex.with_lock!(@order) do
 
-      Spree::InventoryUnit.transaction do
+      Solidus::InventoryUnit.transaction do
         inventory_units.each do |iu|
           unit_cancels << short_ship_unit(iu, whodunnit: whodunnit)
         end
 
         update_shipped_shipments(inventory_units)
-        Spree::OrderMailer.inventory_cancellation_email(@order, inventory_units.to_a).deliver_later if Spree::OrderCancellations.send_cancellation_mailer
+        Solidus::OrderMailer.inventory_cancellation_email(@order, inventory_units.to_a).deliver_later if Solidus::OrderCancellations.send_cancellation_mailer
       end
 
       @order.update!
@@ -60,11 +60,11 @@ class Spree::OrderCancellations
   # @param [String] whodunnit the system or person that is canceling the inventory unit
   #
   # @return [UnitCancel] the unit that has been canceled
-  def cancel_unit(inventory_unit, reason: Spree::UnitCancel::DEFAULT_REASON, whodunnit:nil)
+  def cancel_unit(inventory_unit, reason: Solidus::UnitCancel::DEFAULT_REASON, whodunnit:nil)
     unit_cancel = nil
 
-    Spree::OrderMutex.with_lock!(@order) do
-      unit_cancel = Spree::UnitCancel.create!(
+    Solidus::OrderMutex.with_lock!(@order) do
+      unit_cancel = Solidus::UnitCancel.create!(
         inventory_unit: inventory_unit,
         reason: reason,
         created_by: whodunnit,
@@ -84,9 +84,9 @@ class Spree::OrderCancellations
   def reimburse_units(inventory_units)
     reimbursement = nil
 
-    Spree::OrderMutex.with_lock!(@order) do
+    Solidus::OrderMutex.with_lock!(@order) do
       return_items = inventory_units.map(&:current_or_new_return_item)
-      reimbursement = Spree::Reimbursement.new(order: @order, return_items: return_items)
+      reimbursement = Solidus::Reimbursement.new(order: @order, return_items: return_items)
       reimbursement.return_all
     end
 
@@ -96,9 +96,9 @@ class Spree::OrderCancellations
   private
 
   def short_ship_unit(inventory_unit, whodunnit:nil)
-    unit_cancel = Spree::UnitCancel.create!(
+    unit_cancel = Solidus::UnitCancel.create!(
       inventory_unit: inventory_unit,
-      reason: Spree::UnitCancel::SHORT_SHIP,
+      reason: Solidus::UnitCancel::SHORT_SHIP,
       created_by: whodunnit,
     )
     unit_cancel.adjust!
@@ -109,7 +109,7 @@ class Spree::OrderCancellations
 
   # if any shipments are now fully shipped then mark them as such
   def update_shipped_shipments(inventory_units)
-    shipments = Spree::Shipment.
+    shipments = Solidus::Shipment.
       includes(:inventory_units).
       where(id: inventory_units.map(&:shipment_id)).
       to_a

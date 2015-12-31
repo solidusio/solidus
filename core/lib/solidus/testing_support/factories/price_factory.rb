@@ -1,5 +1,5 @@
 FactoryGirl.define do
-  factory :price, class: Spree::Price do
+  factory :price, class: Solidus::Price do
     variant
     amount 19.99
     currency 'USD'

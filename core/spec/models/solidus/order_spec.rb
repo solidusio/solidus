@@ -1,17 +1,17 @@
 require 'spec_helper'
 
-class FakeCalculator < Spree::Calculator
+class FakeCalculator < Solidus::Calculator
   def compute(computable)
     5
   end
 end
 
-describe Spree::Order, :type => :model do
-  let(:user) { stub_model(Spree::LegacyUser, :email => "spree@example.com") }
-  let(:order) { stub_model(Spree::Order, :user => user) }
+describe Solidus::Order, :type => :model do
+  let(:user) { stub_model(Solidus::LegacyUser, :email => "spree@example.com") }
+  let(:order) { stub_model(Solidus::Order, :user => user) }
 
   before do
-    allow(Spree::LegacyUser).to receive_messages(:current => mock_model(Spree::LegacyUser, :id => 123))
+    allow(Solidus::LegacyUser).to receive_messages(:current => mock_model(Solidus::LegacyUser, :id => 123))
   end
 
   context "#canceled_by" do
@@ -46,7 +46,7 @@ describe Spree::Order, :type => :model do
   end
 
   context "#create" do
-    let(:order) { Spree::Order.create }
+    let(:order) { Solidus::Order.create }
 
     it "should assign an order number" do
       expect(order.number).not_to be_nil
@@ -72,7 +72,7 @@ describe Spree::Order, :type => :model do
   end
 
   context "insufficient_stock_lines" do
-    let(:line_item) { mock_model Spree::LineItem, :insufficient_stock? => true }
+    let(:line_item) { mock_model Solidus::LineItem, :insufficient_stock? => true }
 
     before { allow(order).to receive_messages(:line_items => [line_item]) }
 
@@ -154,28 +154,28 @@ describe Spree::Order, :type => :model do
   context "#display_outstanding_balance" do
     it "returns the value as a spree money" do
       allow(order).to receive(:outstanding_balance) { 10.55 }
-      expect(order.display_outstanding_balance).to eq(Spree::Money.new(10.55))
+      expect(order.display_outstanding_balance).to eq(Solidus::Money.new(10.55))
     end
   end
 
   context "#display_item_total" do
     it "returns the value as a spree money" do
       allow(order).to receive(:item_total) { 10.55 }
-      expect(order.display_item_total).to eq(Spree::Money.new(10.55))
+      expect(order.display_item_total).to eq(Solidus::Money.new(10.55))
     end
   end
 
   context "#display_adjustment_total" do
     it "returns the value as a spree money" do
       order.adjustment_total = 10.55
-      expect(order.display_adjustment_total).to eq(Spree::Money.new(10.55))
+      expect(order.display_adjustment_total).to eq(Solidus::Money.new(10.55))
     end
   end
 
   context "#display_total" do
     it "returns the value as a spree money" do
       order.total = 10.55
-      expect(order.display_total).to eq(Spree::Money.new(10.55))
+      expect(order.display_total).to eq(Solidus::Money.new(10.55))
     end
   end
 
@@ -217,11 +217,11 @@ describe Spree::Order, :type => :model do
             [@order, other_order, user]
           end
         end
-        Spree::Config.order_merger_class = TestOrderMerger
+        Solidus::Config.order_merger_class = TestOrderMerger
       end
 
       after do
-        Spree::Config.order_merger_class = Spree::PromotionChooser
+        Solidus::Config.order_merger_class = Solidus::PromotionChooser
       end
 
       let(:user) { build(:user) }
@@ -234,13 +234,13 @@ describe Spree::Order, :type => :model do
 
   context "add_update_hook" do
     before do
-      Spree::Order.class_eval do
+      Solidus::Order.class_eval do
         register_update_hook :add_awesome_sauce
       end
     end
 
     after do
-      Spree::Order.update_hooks = Set.new
+      Solidus::Order.update_hooks = Set.new
     end
 
     it "calls hook during update" do
@@ -258,7 +258,7 @@ describe Spree::Order, :type => :model do
 
   context "ensure shipments will be updated" do
     before do
-      Spree::Shipment.create!(order: order)
+      Solidus::Shipment.create!(order: order)
     end
 
     ['payment', 'confirm'].each do |order_state|
@@ -372,7 +372,7 @@ describe Spree::Order, :type => :model do
   end
 
   describe "#tax_address" do
-    before { Spree::Config[:tax_using_ship_address] = tax_using_ship_address }
+    before { Solidus::Config[:tax_using_ship_address] = tax_using_ship_address }
     subject { order.tax_address }
 
     context "when tax_using_ship_address is true" do
@@ -439,7 +439,7 @@ describe Spree::Order, :type => :model do
   # Regression test for #4199
   context "#available_payment_methods" do
     it "includes frontend payment methods" do
-      payment_method = Spree::PaymentMethod.create!({
+      payment_method = Solidus::PaymentMethod.create!({
         :name => "Fake",
         :active => true,
         :display_on => "front_end",
@@ -448,7 +448,7 @@ describe Spree::Order, :type => :model do
     end
 
     it "includes 'both' payment methods" do
-      payment_method = Spree::PaymentMethod.create!({
+      payment_method = Solidus::PaymentMethod.create!({
         :name => "Fake",
         :active => true,
         :display_on => "both",
@@ -457,7 +457,7 @@ describe Spree::Order, :type => :model do
     end
 
     it "does not include a payment method twice if display_on is blank" do
-      payment_method = Spree::PaymentMethod.create!({
+      payment_method = Solidus::PaymentMethod.create!({
         :name => "Fake",
         :active => true,
         :display_on => "both",
@@ -504,10 +504,10 @@ describe Spree::Order, :type => :model do
     it "calls out to the FreeShipping promotion handler" do
       shipment = double('Shipment')
       allow(order).to receive_messages :shipments => [shipment]
-      expect(Spree::PromotionHandler::FreeShipping).to receive(:new).and_return(handler = double)
+      expect(Solidus::PromotionHandler::FreeShipping).to receive(:new).and_return(handler = double)
       expect(handler).to receive(:activate)
 
-      expect(Spree::ItemAdjustments).to receive(:new).with(shipment).and_return(adjuster = double)
+      expect(Solidus::ItemAdjustments).to receive(:new).with(shipment).and_return(adjuster = double)
       expect(adjuster).to receive(:update)
 
       expect(order.updater).to receive(:update_shipment_total)
@@ -519,10 +519,10 @@ describe Spree::Order, :type => :model do
 
   context "#products" do
     before :each do
-      @variant1 = mock_model(Spree::Variant, :product => "product1")
-      @variant2 = mock_model(Spree::Variant, :product => "product2")
-      @line_items = [mock_model(Spree::LineItem, :product => "product1", :variant => @variant1, :variant_id => @variant1.id, :quantity => 1),
-                     mock_model(Spree::LineItem, :product => "product2", :variant => @variant2, :variant_id => @variant2.id, :quantity => 2)]
+      @variant1 = mock_model(Solidus::Variant, :product => "product1")
+      @variant2 = mock_model(Solidus::Variant, :product => "product2")
+      @line_items = [mock_model(Solidus::LineItem, :product => "product1", :variant => @variant1, :variant_id => @variant1.id, :quantity => 1),
+                     mock_model(Solidus::LineItem, :product => "product2", :variant => @variant2, :variant_id => @variant2.id, :quantity => 2)]
       allow(order).to receive_messages(:line_items => @line_items)
     end
 
@@ -533,23 +533,23 @@ describe Spree::Order, :type => :model do
     it "gets the quantity of a given variant" do
       expect(order.quantity_of(@variant1)).to eq(1)
 
-      @variant3 = mock_model(Spree::Variant, :product => "product3")
+      @variant3 = mock_model(Solidus::Variant, :product => "product3")
       expect(order.quantity_of(@variant3)).to eq(0)
     end
 
     it "can find a line item matching a given variant" do
       expect(order.find_line_item_by_variant(@variant1)).not_to be_nil
-      expect(order.find_line_item_by_variant(mock_model(Spree::Variant))).to be_nil
+      expect(order.find_line_item_by_variant(mock_model(Solidus::Variant))).to be_nil
     end
 
     context "match line item with options" do
       before do
-        Spree::Order.register_line_item_comparison_hook(:foos_match)
+        Solidus::Order.register_line_item_comparison_hook(:foos_match)
       end
 
       after do
         # reset to avoid test pollution
-        Spree::Order.line_item_comparison_hooks = Set.new
+        Solidus::Order.line_item_comparison_hooks = Set.new
       end
 
       it "matches line item when options match" do
@@ -566,7 +566,7 @@ describe Spree::Order, :type => :model do
 
   context "#generate_order_number" do
     context "when no configure" do
-      let(:default_length) { Spree::Order::ORDER_NUMBER_LENGTH + Spree::Order::ORDER_NUMBER_PREFIX.length }
+      let(:default_length) { Solidus::Order::ORDER_NUMBER_LENGTH + Solidus::Order::ORDER_NUMBER_PREFIX.length }
       subject(:order_number) { order.generate_order_number }
 
       describe '#class' do
@@ -578,11 +578,11 @@ describe Spree::Order, :type => :model do
         subject { super().length }
         it { is_expected.to eq default_length }
       end
-      it { is_expected.to match /^#{Spree::Order::ORDER_NUMBER_PREFIX}/ }
+      it { is_expected.to match /^#{Solidus::Order::ORDER_NUMBER_PREFIX}/ }
     end
 
     context "when length option is 5" do
-      let(:option_length) { 5 + Spree::Order::ORDER_NUMBER_PREFIX.length }
+      let(:option_length) { 5 + Solidus::Order::ORDER_NUMBER_PREFIX.length }
       it "should be option length for order number" do
         expect(order.generate_order_number(length: 5).length).to eq option_length
       end
@@ -639,7 +639,7 @@ describe Spree::Order, :type => :model do
     end
 
     it "should associate a user with a non-persisted order" do
-      order = Spree::Order.new
+      order = Solidus::Order.new
 
       expect do
         order.associate_user!(user)
@@ -647,7 +647,7 @@ describe Spree::Order, :type => :model do
     end
 
     it "should not persist an invalid address" do
-      address = Spree::Address.new
+      address = Solidus::Address.new
       order.user = nil
       order.email = nil
       order.ship_address = address
@@ -658,7 +658,7 @@ describe Spree::Order, :type => :model do
   end
 
   context "#can_ship?" do
-    let(:order) { Spree::Order.create }
+    let(:order) { Solidus::Order.create }
 
     it "should be true for order in the 'complete' state" do
       allow(order).to receive_messages(:complete? => true)
@@ -720,8 +720,8 @@ describe Spree::Order, :type => :model do
 
   context "#backordered?" do
     it 'is backordered if one of the shipments is backordered' do
-      allow(order).to receive_messages(:shipments => [mock_model(Spree::Shipment, :backordered? => false),
-                                mock_model(Spree::Shipment, :backordered? => true)])
+      allow(order).to receive_messages(:shipments => [mock_model(Solidus::Shipment, :backordered? => false),
+                                mock_model(Solidus::Shipment, :backordered? => true)])
       expect(order).to be_backordered
     end
   end
@@ -752,7 +752,7 @@ describe Spree::Order, :type => :model do
 
   # Regression test for #4923
   context "locking" do
-    let(:order) { Spree::Order.create } # need a persisted in order to test locking
+    let(:order) { Solidus::Order.create } # need a persisted in order to test locking
 
     it 'can lock' do
       order.with_lock {}
@@ -762,8 +762,8 @@ describe Spree::Order, :type => :model do
   describe "#pre_tax_item_amount" do
     it "sums all of the line items' pre tax amounts" do
       subject.line_items = [
-        Spree::LineItem.new(price: 10, quantity: 2, pre_tax_amount: 5.0),
-        Spree::LineItem.new(price: 30, quantity: 1, pre_tax_amount: 14.0),
+        Solidus::LineItem.new(price: 10, quantity: 2, pre_tax_amount: 5.0),
+        Solidus::LineItem.new(price: 30, quantity: 1, pre_tax_amount: 14.0),
       ]
 
       expect(subject.pre_tax_item_amount).to eq 19.0
@@ -829,7 +829,7 @@ describe Spree::Order, :type => :model do
   describe "#create_proposed_shipments" do
     it "assigns the coordinator returned shipments to its shipments" do
       shipment = build(:shipment)
-      allow_any_instance_of(Spree::Stock::Coordinator).to receive(:shipments).and_return([shipment])
+      allow_any_instance_of(Solidus::Stock::Coordinator).to receive(:shipments).and_return([shipment])
       subject.create_proposed_shipments
       expect(subject.shipments).to eq [shipment]
     end
@@ -839,7 +839,7 @@ describe Spree::Order, :type => :model do
       expect {
         expect {
           subject.create_proposed_shipments
-        }.to raise_error(Spree::Order::CannotRebuildShipments)
+        }.to raise_error(Solidus::Order::CannotRebuildShipments)
       }.not_to change { subject.reload.shipments }
 
       expect { shipment.reload }.not_to raise_error
@@ -850,7 +850,7 @@ describe Spree::Order, :type => :model do
       expect {
         expect {
           subject.create_proposed_shipments
-        }.to raise_error(Spree::Order::CannotRebuildShipments)
+        }.to raise_error(Solidus::Order::CannotRebuildShipments)
       }.not_to change { subject.reload.shipments }
 
       expect { shipment.reload }.not_to raise_error
@@ -949,9 +949,9 @@ describe Spree::Order, :type => :model do
   end
 
   describe "#fully_discounted?" do
-    let(:line_item) { Spree::LineItem.new(price: 10, quantity: 1) }
-    let(:shipment) { Spree::Shipment.new(cost: 10) }
-    let(:payment) { Spree::Payment.new(amount: 10) }
+    let(:line_item) { Solidus::LineItem.new(price: 10, quantity: 1) }
+    let(:shipment) { Solidus::Shipment.new(cost: 10) }
+    let(:payment) { Solidus::Payment.new(amount: 10) }
 
     around do |example|
       ActiveSupport::Deprecation.silence do
@@ -1044,7 +1044,7 @@ describe Spree::Order, :type => :model do
           it "charges the outstanding balance to the credit card" do
             expect(order.errors.messages).to be_empty
             expect(order.payments.count).to eq 1
-            expect(order.payments.first.source).to be_a(Spree::CreditCard)
+            expect(order.payments.first.source).to be_a(Solidus::CreditCard)
             expect(order.payments.first.amount).to eq order_total
           end
         end
@@ -1106,7 +1106,7 @@ describe Spree::Order, :type => :model do
           it "charges the outstanding balance to the credit card" do
             expect(order.errors.messages).to be_empty
             expect(order.payments.count).to eq 2
-            expect(order.payments.first.source).to be_a(Spree::CreditCard)
+            expect(order.payments.first.source).to be_a(Solidus::CreditCard)
             expect(order.payments.first.amount).to eq 100
           end
 
@@ -1120,7 +1120,7 @@ describe Spree::Order, :type => :model do
             it "charges the outstanding balance to the credit card" do
               expect(order.errors.messages).to be_empty
               expect(order.payments.count).to eq 2
-              expect(order.payments.first.source).to be_a(Spree::CreditCard)
+              expect(order.payments.first.source).to be_a(Solidus::CreditCard)
               expect(order.payments.first.amount).to eq 100
             end
           end
@@ -1309,7 +1309,7 @@ describe Spree::Order, :type => :model do
       before { allow(subject).to receive_messages(total_applicable_store_credit: total_applicable_store_credit) }
 
       it "returns a money instance" do
-        expect(subject.display_total_applicable_store_credit).to be_a(Spree::Money)
+        expect(subject.display_total_applicable_store_credit).to be_a(Solidus::Money)
       end
 
       it "returns a negative amount" do
@@ -1325,7 +1325,7 @@ describe Spree::Order, :type => :model do
       before { allow(subject).to receive_messages(order_total_after_store_credit: order_total_after_store_credit) }
 
       it "returns a money instance" do
-        expect(subject.display_order_total_after_store_credit).to be_a(Spree::Money)
+        expect(subject.display_order_total_after_store_credit).to be_a(Solidus::Money)
       end
 
       it "returns the order_total_after_store_credit amount" do
@@ -1341,7 +1341,7 @@ describe Spree::Order, :type => :model do
       before { allow(subject).to receive_messages(total_available_store_credit: total_available_store_credit) }
 
       it "returns a money instance" do
-        expect(subject.display_total_available_store_credit).to be_a(Spree::Money)
+        expect(subject.display_total_available_store_credit).to be_a(Solidus::Money)
       end
 
       it "returns the total_available_store_credit amount" do
@@ -1361,7 +1361,7 @@ describe Spree::Order, :type => :model do
       end
 
       it "returns a money instance" do
-        expect(subject.display_store_credit_remaining_after_capture).to be_a(Spree::Money)
+        expect(subject.display_store_credit_remaining_after_capture).to be_a(Solidus::Money)
       end
 
       it "returns all of the user's available store credit minus what's applied to the order amount" do

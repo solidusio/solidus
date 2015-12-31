@@ -1,16 +1,16 @@
 require 'spec_helper'
 
-describe Spree::Calculator::PriceSack, :type => :model do
+describe Solidus::Calculator::PriceSack, :type => :model do
   let(:calculator) do
-    calculator = Spree::Calculator::PriceSack.new
+    calculator = Solidus::Calculator::PriceSack.new
     calculator.preferred_minimal_amount = 5
     calculator.preferred_normal_amount = 10
     calculator.preferred_discount_amount = 1
     calculator
   end
 
-  let(:order) { stub_model(Spree::Order) }
-  let(:shipment) { stub_model(Spree::Shipment, :amount => 10) }
+  let(:order) { stub_model(Solidus::Order) }
+  let(:shipment) { stub_model(Solidus::Shipment, :amount => 10) }
 
   # Regression test for #714 and #739
   it "computes with an order object" do

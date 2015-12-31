@@ -5,18 +5,18 @@ module Spree
       if store
         store.mail_from_address
       else
-        ActiveSupport::Deprecation.warn "A Spree::Store should be provided to determine the from address.", caller
-        Spree::Config[:mails_from]
+        ActiveSupport::Deprecation.warn "A Solidus::Store should be provided to determine the from address.", caller
+        Solidus::Config[:mails_from]
       end
     end
 
-    def money(amount, currency = Spree::Config[:currency])
-      Spree::Money.new(amount, currency: currency).to_s
+    def money(amount, currency = Solidus::Config[:currency])
+      Solidus::Money.new(amount, currency: currency).to_s
     end
     helper_method :money
 
     def mail(headers={}, &block)
-      super if Spree::Config[:send_core_emails]
+      super if Solidus::Config[:send_core_emails]
     end
 
   end

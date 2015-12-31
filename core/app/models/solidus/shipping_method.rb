@@ -1,7 +1,7 @@
 module Spree
-  class ShippingMethod < Spree::Base
+  class ShippingMethod < Solidus::Base
     acts_as_paranoid
-    include Spree::CalculatedAdjustments
+    include Solidus::CalculatedAdjustments
     DISPLAY = [:both, :front_end, :back_end]
 
     has_many :shipping_method_categories, :dependent => :destroy
@@ -13,7 +13,7 @@ module Spree
     has_many :shipping_method_zones
     has_many :zones, through: :shipping_method_zones
 
-    belongs_to :tax_category, -> { with_deleted }, :class_name => 'Spree::TaxCategory'
+    belongs_to :tax_category, -> { with_deleted }, :class_name => 'Solidus::TaxCategory'
 
     validates :name, presence: true
 
@@ -32,7 +32,7 @@ module Spree
     end
 
     def self.calculators
-      spree_calculators.send(model_name_without_spree_namespace).select{ |c| c < Spree::ShippingCalculator }
+      spree_calculators.send(model_name_without_spree_namespace).select{ |c| c < Solidus::ShippingCalculator }
     end
 
     # Some shipping methods are only meant to be set via backend

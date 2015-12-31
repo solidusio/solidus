@@ -3,15 +3,15 @@
 
 require 'spec_helper'
 
-describe Spree::Adjustment, :type => :model do
+describe Solidus::Adjustment, :type => :model do
 
-  let(:order) { Spree::Order.new }
+  let(:order) { Solidus::Order.new }
   let(:line_item) { create :line_item, order: order }
 
-  let(:adjustment) { Spree::Adjustment.create!(label: 'Adjustment', adjustable: order, order: order, amount: 5) }
+  let(:adjustment) { Solidus::Adjustment.create!(label: 'Adjustment', adjustable: order, order: order, amount: 5) }
 
   context '#create & #destroy' do
-    let(:adjustment) { Spree::Adjustment.new(label: "Adjustment", amount: 5, order: order, adjustable: line_item) }
+    let(:adjustment) { Solidus::Adjustment.new(label: "Adjustment", amount: 5, order: order, adjustable: line_item) }
 
     it 'calls #update_adjustable_adjustment_total' do
       expect(adjustment).to receive(:update_adjustable_adjustment_total).twice
@@ -21,7 +21,7 @@ describe Spree::Adjustment, :type => :model do
   end
 
   context '#save' do
-    let(:adjustment) { Spree::Adjustment.create(label: "Adjustment", amount: 5, order: order, adjustable: line_item) }
+    let(:adjustment) { Solidus::Adjustment.create(label: "Adjustment", amount: 5, order: order, adjustable: line_item) }
 
     it 'touches the adjustable' do
       expect { adjustment.save }.to change { line_item.updated_at }
@@ -30,7 +30,7 @@ describe Spree::Adjustment, :type => :model do
 
   describe 'non_tax scope' do
     subject do
-      Spree::Adjustment.non_tax.to_a
+      Solidus::Adjustment.non_tax.to_a
     end
 
     let!(:tax_adjustment) do
@@ -38,7 +38,7 @@ describe Spree::Adjustment, :type => :model do
     end
 
     let!(:non_tax_adjustment_with_source) do
-      create(:adjustment, adjustable: order, order: order, source_type: 'Spree::Order', source_id: nil)
+      create(:adjustment, adjustable: order, order: order, source_type: 'Solidus::Order', source_id: nil)
     end
 
     let!(:non_tax_adjustment_without_source) do
@@ -53,7 +53,7 @@ describe Spree::Adjustment, :type => :model do
   end
 
   context '#currency' do
-    let(:order) { Spree::Order.new currency: 'JPY' }
+    let(:order) { Solidus::Order.new currency: 'JPY' }
 
     it 'returns the adjustables currency' do
       expect(adjustment.currency).to eq 'JPY'
@@ -77,7 +77,7 @@ describe Spree::Adjustment, :type => :model do
     end
 
     context "with currency set to JPY" do
-      let(:order) { Spree::Order.new currency: 'JPY' }
+      let(:order) { Solidus::Order.new currency: 'JPY' }
 
       context "when adjustable is set to an order" do
         it "displays in JPY" do
@@ -88,8 +88,8 @@ describe Spree::Adjustment, :type => :model do
   end
 
   context '#update!' do
-    let(:adjustment) { Spree::Adjustment.create!(label: 'Adjustment', order: order, adjustable: order, amount: 5, finalized: finalized, source: source) }
-    let(:source) { mock_model(Spree::TaxRate, compute_amount: 10) }
+    let(:adjustment) { Solidus::Adjustment.create!(label: 'Adjustment', order: order, adjustable: order, amount: 5, finalized: finalized, source: source) }
+    let(:source) { mock_model(Solidus::TaxRate, compute_amount: 10) }
 
     subject { adjustment.update! }
 

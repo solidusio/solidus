@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Spree::CreditCard, type: :model do
+describe Solidus::CreditCard, type: :model do
   let(:valid_credit_card_attributes) do
     {
       number: '4111111111111111',
@@ -11,20 +11,20 @@ describe Spree::CreditCard, type: :model do
   end
 
   def self.payment_states
-    Spree::Payment.state_machine.states.keys
+    Solidus::Payment.state_machine.states.keys
   end
 
-  let(:credit_card) { Spree::CreditCard.new }
+  let(:credit_card) { Solidus::CreditCard.new }
 
   before(:each) do
 
     @order = create(:order)
-    @payment = Spree::Payment.create(:amount => 100, :order => @order)
+    @payment = Solidus::Payment.create(:amount => 100, :order => @order)
 
     @success_response = double('gateway_response', success?: true, authorization: '123', avs_result: { 'code' => 'avs-code' })
     @fail_response = double('gateway_response', success?: false)
 
-    @payment_gateway = mock_model(Spree::PaymentMethod,
+    @payment_gateway = mock_model(Solidus::PaymentMethod,
       payment_profiles_supported?: true,
       authorize: @success_response,
       purchase: @success_response,
@@ -38,31 +38,31 @@ describe Spree::CreditCard, type: :model do
 
   context "#can_capture?" do
     it "should be true if payment is pending" do
-      payment = mock_model(Spree::Payment, pending?: true, created_at: Time.current)
+      payment = mock_model(Solidus::Payment, pending?: true, created_at: Time.current)
       expect(credit_card.can_capture?(payment)).to be true
     end
 
     it "should be true if payment is checkout" do
-      payment = mock_model(Spree::Payment, pending?: false, checkout?: true, created_at: Time.current)
+      payment = mock_model(Solidus::Payment, pending?: false, checkout?: true, created_at: Time.current)
       expect(credit_card.can_capture?(payment)).to be true
     end
   end
 
   context "#can_void?" do
     it "should be true if payment is not void" do
-      payment = mock_model(Spree::Payment, failed?: false, void?: false)
+      payment = mock_model(Solidus::Payment, failed?: false, void?: false)
       expect(credit_card.can_void?(payment)).to be true
     end
   end
 
   context "#can_credit?" do
     it "should be false if payment is not completed" do
-      payment = mock_model(Spree::Payment, completed?: false)
+      payment = mock_model(Solidus::Payment, completed?: false)
       expect(credit_card.can_credit?(payment)).to be false
     end
 
     it "should be false when credit_allowed is zero" do
-      payment = mock_model(Spree::Payment, completed?: true, credit_allowed: 0, order: mock_model(Spree::Order, payment_state: 'credit_owed'))
+      payment = mock_model(Solidus::Payment, completed?: true, credit_allowed: 0, order: mock_model(Solidus::Order, payment_state: 'credit_owed'))
       expect(credit_card.can_credit?(payment)).to be false
     end
   end
@@ -116,7 +116,7 @@ describe Spree::CreditCard, type: :model do
       credit_card.save!
     end
 
-    let!(:persisted_card) { Spree::CreditCard.find(credit_card.id) }
+    let!(:persisted_card) { Solidus::CreditCard.find(credit_card.id) }
     let (:valid_address_attributes) { {firstname: "Hugo", lastname: "Furst",
                                        address1: "123 Main", city: "Somewhere",
                                        country_id: 1, zipcode: 55555,

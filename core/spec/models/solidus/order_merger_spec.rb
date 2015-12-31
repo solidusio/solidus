@@ -4,10 +4,10 @@ require 'spec_helper'
 module Spree
   describe OrderMerger, type: :model do
     let(:variant) { create(:variant) }
-    let(:order_1) { Spree::Order.create }
-    let(:order_2) { Spree::Order.create }
-    let(:user) { stub_model(Spree::LegacyUser, email: "spree@example.com") }
-    let(:subject) { Spree::OrderMerger.new(order_1) }
+    let(:order_1) { Solidus::Order.create }
+    let(:order_2) { Solidus::Order.create }
+    let(:user) { stub_model(Solidus::LegacyUser, email: "spree@example.com") }
+    let(:subject) { Solidus::OrderMerger.new(order_1) }
 
     it "destroys the other order" do
       subject.merge!(order_2)
@@ -44,13 +44,13 @@ module Spree
 
     context "merging using extension-specific line_item_comparison_hooks" do
       before do
-        Spree::Order.register_line_item_comparison_hook(:foos_match)
-        allow(Spree::Variant).to receive(:price_modifier_amount).and_return(0.00)
+        Solidus::Order.register_line_item_comparison_hook(:foos_match)
+        allow(Solidus::Variant).to receive(:price_modifier_amount).and_return(0.00)
       end
 
       after do
         # reset to avoid test pollution
-        Spree::Order.line_item_comparison_hooks = Set.new
+        Solidus::Order.line_item_comparison_hooks = Set.new
       end
 
       context "2 equal line items" do

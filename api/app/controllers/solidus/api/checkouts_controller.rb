@@ -1,22 +1,22 @@
 module Spree
   module Api
-    class CheckoutsController < Spree::Api::BaseController
+    class CheckoutsController < Solidus::Api::BaseController
       before_filter :load_order, only: [:next, :advance, :update, :complete]
       around_filter :lock_order, only: [:next, :advance, :update, :complete]
       before_filter :update_order_state, only: [:next, :advance, :update, :complete]
 
-      rescue_from Spree::Order::InsufficientStock, with: :insufficient_stock_error
+      rescue_from Solidus::Order::InsufficientStock, with: :insufficient_stock_error
 
-      include Spree::Core::ControllerHelpers::Order
+      include Solidus::Core::ControllerHelpers::Order
       # TODO: Remove this after deprecated usage in #update is removed
-      include Spree::Core::ControllerHelpers::PaymentParameters
+      include Solidus::Core::ControllerHelpers::PaymentParameters
 
-      # This before_filter comes from Spree::Core::ControllerHelpers::Order
+      # This before_filter comes from Solidus::Core::ControllerHelpers::Order
       skip_before_action :set_current_order
 
       def next
         if @order.confirm?
-          ActiveSupport::Deprecation.warn "Using Spree::Api::CheckoutsController#next to transition to complete is deprecated. Please use #complete instead of #next.", caller
+          ActiveSupport::Deprecation.warn "Using Solidus::Api::CheckoutsController#next to transition to complete is deprecated. Please use #complete instead of #next.", caller
           complete
           return
         end
@@ -114,7 +114,7 @@ module Spree
         end
 
         def load_order
-          @order = Spree::Order.find_by!(number: params[:id])
+          @order = Solidus::Order.find_by!(number: params[:id])
         end
 
         def update_order_state

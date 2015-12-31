@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 module Spree
-  describe Spree::Api::PromotionsController, :type => :controller do
+  describe Solidus::Api::PromotionsController, :type => :controller do
     render_views
 
     shared_examples "a JSON response" do
@@ -12,7 +12,7 @@ module Spree
       it 'should return JSON' do
         payload = HashWithIndifferentAccess.new(JSON.parse(subject.body))
         expect(payload).to_not be_nil
-        Spree::Api::ApiHelpers.promotion_attributes.each do |attribute|
+        Solidus::Api::ApiHelpers.promotion_attributes.each do |attribute|
           expect(payload).to be_has_key(attribute)
         end
       end

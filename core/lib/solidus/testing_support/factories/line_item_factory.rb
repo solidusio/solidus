@@ -1,5 +1,5 @@
 FactoryGirl.define do
-  factory :line_item, class: Spree::LineItem do
+  factory :line_item, class: Solidus::LineItem do
     quantity 1
     price { BigDecimal.new('10.00') }
     pre_tax_amount { price }

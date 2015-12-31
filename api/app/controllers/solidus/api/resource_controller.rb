@@ -1,4 +1,4 @@
-class Spree::Api::ResourceController < Spree::Api::BaseController
+class Solidus::Api::ResourceController < Solidus::Api::BaseController
   before_action :load_resource, only: [:show, :update, :destroy]
 
   def index
@@ -66,7 +66,7 @@ class Spree::Api::ResourceController < Spree::Api::BaseController
   end
 
   def model_class
-    "Spree::#{controller_name.classify}".constantize
+    "Solidus::#{controller_name.classify}".constantize
   end
 
   def object_name

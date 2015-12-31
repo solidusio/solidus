@@ -23,7 +23,7 @@ module Spree
             @simple_current_order.last_ip_address = ip_address
             return @simple_current_order
           else
-            @simple_current_order = Spree::Order.new
+            @simple_current_order = Solidus::Order.new
           end
         end
 
@@ -36,7 +36,7 @@ module Spree
           @current_order = find_order_by_token_or_user(options, true)
 
           if options[:create_order_if_necessary] && (@current_order.nil? || @current_order.completed?)
-            @current_order = Spree::Order.new(current_order_params)
+            @current_order = Solidus::Order.new(current_order_params)
             @current_order.user ||= try_spree_current_user
             # See issue #3346 for reasons why this line is here
             @current_order.created_by ||= try_spree_current_user
@@ -65,7 +65,7 @@ module Spree
         end
 
         def current_currency
-          Spree::Config[:currency]
+          Solidus::Config[:currency]
         end
 
         def ip_address
@@ -87,9 +87,9 @@ module Spree
 
           # Find any incomplete orders for the guest_token
           if with_adjustments
-            order = Spree::Order.incomplete.includes(:adjustments).lock(options[:lock]).find_by(current_order_params)
+            order = Solidus::Order.incomplete.includes(:adjustments).lock(options[:lock]).find_by(current_order_params)
           else
-            order = Spree::Order.incomplete.lock(options[:lock]).find_by(current_order_params)
+            order = Solidus::Order.incomplete.lock(options[:lock]).find_by(current_order_params)
           end
 
           # Find any incomplete orders for the current user

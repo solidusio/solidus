@@ -30,14 +30,14 @@ module Spree
       if order.respond_to?(:id)
         order
       else
-        ActiveSupport::Deprecation.warn("Calling OrderMailer with an id is deprecated. Pass the Spree::Order object instead.")
-        Spree::Order.find(order)
+        ActiveSupport::Deprecation.warn("Calling OrderMailer with an id is deprecated. Pass the Solidus::Order object instead.")
+        Solidus::Order.find(order)
       end
     end
 
     def build_subject(subject_text, resend)
       subject = (resend ? "[#{Spree.t(:resend).upcase}] " : '')
-      subject += "#{Spree::Store.current.name} #{subject_text} ##{@order.number}"
+      subject += "#{Solidus::Store.current.name} #{subject_text} ##{@order.number}"
     end
   end
 end

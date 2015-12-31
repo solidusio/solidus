@@ -5,7 +5,7 @@
   <% if can?(:resend, @order) && @order.completed? %>
     <li><%= button_link_to Spree.t(:resend), resend_admin_order_url(@order), method: :post, icon: 'email' %></li>
   <% end %>
-  <% if can?(:admin, Spree::Order) %>
+  <% if can?(:admin, Solidus::Order) %>
     <li><%= button_link_to Spree.t(:back_to_orders_list), admin_orders_path, icon: 'arrow-left' %></li>
   <% end %>
 <% end %>
@@ -20,7 +20,7 @@
   <%= render 'spree/admin/orders/risk_analysis', latest_payment: @order.payments.order("created_at DESC").first %>
 <% end %>
 
-<% if can?(:update, Spree::Shipment) && can?(:update, @order) && @order.shipment_state != "shipped" %>
+<% if can?(:update, Solidus::Shipment) && can?(:update, @order) && @order.shipment_state != "shipped" %>
   <%= render partial: 'add_product' %>
 <% end %>
 

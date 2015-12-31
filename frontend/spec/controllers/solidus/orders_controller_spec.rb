@@ -1,11 +1,11 @@
 require 'spec_helper'
 
-describe Spree::OrdersController, :type => :controller do
+describe Solidus::OrdersController, :type => :controller do
   let(:user) { create(:user) }
 
   context "Order model mock" do
     let(:order) do
-      Spree::Order.create!
+      Solidus::Order.create!
     end
     let(:variant) { create(:variant) }
 
@@ -17,7 +17,7 @@ describe Spree::OrdersController, :type => :controller do
       it "should create a new order when none specified" do
         spree_post :populate, {}, {}
         expect(cookies.signed[:guest_token]).not_to be_blank
-        expect(Spree::Order.find_by_guest_token(cookies.signed[:guest_token])).to be_persisted
+        expect(Solidus::Order.find_by_guest_token(cookies.signed[:guest_token])).to be_persisted
       end
 
       context "with Variant" do
@@ -35,10 +35,10 @@ describe Spree::OrdersController, :type => :controller do
 
         it "shows an error when population fails" do
           request.env["HTTP_REFERER"] = spree.root_path
-          allow_any_instance_of(Spree::LineItem).to(
+          allow_any_instance_of(Solidus::LineItem).to(
             receive(:valid?).and_return(false)
           )
-          allow_any_instance_of(Spree::LineItem).to(
+          allow_any_instance_of(Solidus::LineItem).to(
             receive_message_chain(:errors, :full_messages).
               and_return(["Order population failed"])
           )
@@ -116,7 +116,7 @@ describe Spree::OrdersController, :type => :controller do
   end
 
   context "line items quantity is 0" do
-    let(:order) { Spree::Order.create }
+    let(:order) { Solidus::Order.create }
     let(:variant) { create(:variant) }
     let!(:line_item) { order.contents.add(variant, 1) }
 

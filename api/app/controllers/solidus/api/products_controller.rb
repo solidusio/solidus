@@ -1,6 +1,6 @@
 module Spree
   module Api
-    class ProductsController < Spree::Api::BaseController
+    class ProductsController < Solidus::Api::BaseController
 
       def index
         if params[:ids]

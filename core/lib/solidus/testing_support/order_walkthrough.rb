@@ -9,18 +9,18 @@ class OrderWalkthrough
     @country = FactoryGirl.create(:country)
     @state = FactoryGirl.create(:state, :country => @country)
 
-    @zone.members << Spree::ZoneMember.create(:zoneable => @country)
+    @zone.members << Solidus::ZoneMember.create(:zoneable => @country)
 
     # A shipping method must exist for rates to be displayed on checkout page
     FactoryGirl.create(:shipping_method, zones: [@zone]).tap do |sm|
       sm.calculator.preferred_amount = 10
-      sm.calculator.preferred_currency = Spree::Config[:currency]
+      sm.calculator.preferred_currency = Solidus::Config[:currency]
       sm.calculator.save
     end
 
-    order = Spree::Order.create!(
+    order = Solidus::Order.create!(
       email: "spree@example.com",
-      store: Spree::Store.first || FactoryGirl.create(:store)
+      store: Solidus::Store.first || FactoryGirl.create(:store)
     )
     add_line_item!(order)
     order.next!

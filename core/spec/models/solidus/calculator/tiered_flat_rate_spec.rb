@@ -1,7 +1,7 @@
 require 'spec_helper'
 
-describe Spree::Calculator::TieredFlatRate, :type => :model do
-  let(:calculator) { Spree::Calculator::TieredFlatRate.new }
+describe Solidus::Calculator::TieredFlatRate, :type => :model do
+  let(:calculator) { Solidus::Calculator::TieredFlatRate.new }
 
   describe "#valid?" do
     subject { calculator.valid? }
@@ -14,7 +14,7 @@ describe Spree::Calculator::TieredFlatRate, :type => :model do
   end
 
   describe "#compute" do
-    let(:line_item) { mock_model Spree::LineItem, amount: amount }
+    let(:line_item) { mock_model Solidus::LineItem, amount: amount }
     before do
       calculator.preferred_base_amount = 10
       calculator.preferred_tiers = {

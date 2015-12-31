@@ -1,4 +1,4 @@
-module Spree::Preferences
+module Solidus::Preferences
   # This takes the preferrable methods and adds some
   # syntatic sugar to access the preferences
   #
@@ -23,7 +23,7 @@ module Spree::Preferences
   #   a.preferred_color
   #
   class Configuration
-    include Spree::Preferences::Preferable
+    include Solidus::Preferences::Preferable
 
     # @yield [config] Yields this configuration object to a block
     def configure

@@ -1,11 +1,11 @@
 module Spree
-  class Zone < Spree::Base
-    has_many :zone_members, dependent: :destroy, class_name: "Spree::ZoneMember", inverse_of: :zone
+  class Zone < Solidus::Base
+    has_many :zone_members, dependent: :destroy, class_name: "Solidus::ZoneMember", inverse_of: :zone
     has_many :tax_rates, dependent: :destroy, inverse_of: :zone
 
     with_options through: :zone_members, source: :zoneable do
-      has_many :countries, source_type: "Spree::Country"
-      has_many :states, source_type: "Spree::State"
+      has_many :countries, source_type: "Solidus::Country"
+      has_many :states, source_type: "Solidus::State"
     end
 
     has_many :shipping_method_zones
@@ -29,7 +29,7 @@ module Spree
     def self.match(address)
       return unless address and matches = self.includes(:zone_members).
         order(:zone_members_count, :created_at, :id).
-        where("(spree_zone_members.zoneable_type = 'Spree::Country' AND spree_zone_members.zoneable_id = ?) OR (spree_zone_members.zoneable_type = 'Spree::State' AND spree_zone_members.zoneable_id = ?)", address.country_id, address.state_id).
+        where("(spree_zone_members.zoneable_type = 'Solidus::Country' AND spree_zone_members.zoneable_id = ?) OR (spree_zone_members.zoneable_type = 'Solidus::State' AND spree_zone_members.zoneable_id = ?)", address.country_id, address.state_id).
         references(:zones)
 
       ['state', 'country'].each do |zone_kind|
@@ -55,9 +55,9 @@ module Spree
 
       members.any? do |zone_member|
         case zone_member.zoneable_type
-        when 'Spree::Country'
+        when 'Solidus::Country'
           zone_member.zoneable_id == address.country_id
-        when 'Spree::State'
+        when 'Solidus::State'
           zone_member.zoneable_id == address.state_id
         else
           false
@@ -101,11 +101,11 @@ module Spree
     end
 
     def country_ids=(ids)
-      set_zone_members(ids, 'Spree::Country')
+      set_zone_members(ids, 'Solidus::Country')
     end
 
     def state_ids=(ids)
-      set_zone_members(ids, 'Spree::State')
+      set_zone_members(ids, 'Solidus::State')
     end
 
     # Indicates whether the specified zone falls entirely within the zone performing
@@ -126,12 +126,12 @@ module Spree
 
       def remove_defunct_members
         if zone_members.any?
-          zone_members.where('zoneable_id IS NULL OR zoneable_type != ?', "Spree::#{kind.classify}").destroy_all
+          zone_members.where('zoneable_id IS NULL OR zoneable_type != ?', "Solidus::#{kind.classify}").destroy_all
         end
       end
 
       def remove_previous_default
-        Spree::Zone.where('id != ?', self.id).update_all(default_tax: false) if default_tax
+        Solidus::Zone.where('id != ?', self.id).update_all(default_tax: false) if default_tax
       end
 
       def set_zone_members(ids, type)

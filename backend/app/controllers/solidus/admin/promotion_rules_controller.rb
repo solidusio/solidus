@@ -1,4 +1,4 @@
-class Spree::Admin::PromotionRulesController < Spree::Admin::BaseController
+class Solidus::Admin::PromotionRulesController < Solidus::Admin::BaseController
   helper 'spree/promotion_rules'
 
   before_action :load_promotion, only: [:create, :destroy]
@@ -34,7 +34,7 @@ class Spree::Admin::PromotionRulesController < Spree::Admin::BaseController
   private
 
   def load_promotion
-    @promotion = Spree::Promotion.find(params[:promotion_id])
+    @promotion = Solidus::Promotion.find(params[:promotion_id])
   end
 
   def validate_promotion_rule_type

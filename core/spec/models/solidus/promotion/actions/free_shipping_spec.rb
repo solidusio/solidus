@@ -1,10 +1,10 @@
 require 'spec_helper'
 
-describe Spree::Promotion::Actions::FreeShipping, :type => :model do
+describe Solidus::Promotion::Actions::FreeShipping, :type => :model do
   let(:order) { create(:completed_order_with_totals) }
   let(:promotion_code) { create(:promotion_code, value: 'somecode') }
   let(:promotion) { promotion_code.promotion }
-  let(:action) { Spree::Promotion::Actions::FreeShipping.create }
+  let(:action) { Solidus::Promotion::Actions::FreeShipping.create }
   let(:payload) { { order: order, promotion_code: promotion_code } }
 
   # From promotion spec:

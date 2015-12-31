@@ -449,11 +449,11 @@ describe "Order Details", type: :feature, js: true do
 
   context 'with only read permissions' do
     before do
-      allow_any_instance_of(Spree::Admin::BaseController).to receive(:spree_current_user).and_return(nil)
+      allow_any_instance_of(Solidus::Admin::BaseController).to receive(:spree_current_user).and_return(nil)
     end
 
     custom_authorization! do |user|
-      can [:admin, :index, :read, :edit], Spree::Order
+      can [:admin, :index, :read, :edit], Solidus::Order
     end
     it "should not display forbidden links" do
       visit spree.edit_admin_order_path(order)
@@ -478,10 +478,10 @@ describe "Order Details", type: :feature, js: true do
 
   context 'as Fakedispatch' do
     custom_authorization! do |user|
-      # allow dispatch to :admin, :index, and :edit on Spree::Order
-      can [:admin, :edit, :index, :read], Spree::Order
+      # allow dispatch to :admin, :index, and :edit on Solidus::Order
+      can [:admin, :edit, :index, :read], Solidus::Order
       # allow dispatch to :index, :show, :create and :update shipments on the admin
-      can [:admin, :manage, :read, :ship], Spree::Shipment
+      can [:admin, :manage, :read, :ship], Solidus::Shipment
     end
 
     before do

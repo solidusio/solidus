@@ -25,7 +25,7 @@ module Spree
     describe "transfer item building" do
       let(:stock_transfer) do
         variant = source_location.stock_items.first.variant
-        stock_transfer = Spree::StockTransfer.new(
+        stock_transfer = Solidus::StockTransfer.new(
           number: "T123",
           source_location: source_location,
           destination_location: destination_location
@@ -39,7 +39,7 @@ module Spree
       it { is_expected.to eq true }
 
       it "creates the associated transfer item" do
-        expect { subject }.to change { Spree::TransferItem.count }.by(1)
+        expect { subject }.to change { Solidus::TransferItem.count }.by(1)
       end
     end
 
@@ -229,7 +229,7 @@ module Spree
         end
 
         it "doesn't destroy the stock transfer" do
-          expect { subject }.to_not change { Spree::StockTransfer.count }
+          expect { subject }.to_not change { Solidus::StockTransfer.count }
         end
 
         it "adds an error message to the model" do
@@ -244,7 +244,7 @@ module Spree
         end
 
         it "destroys the stock transfer" do
-          expect { subject }.to change { Spree::StockTransfer.count }.by(-1)
+          expect { subject }.to change { Solidus::StockTransfer.count }.by(-1)
         end
       end
     end
@@ -281,7 +281,7 @@ module Spree
       context 'with enough stock' do
 
         it 'creates stock movements for transfer items' do
-          expect{ subject }.to change{ Spree::StockMovement.count }.by(stock_transfer.transfer_items.count)
+          expect{ subject }.to change{ Solidus::StockMovement.count }.by(stock_transfer.transfer_items.count)
         end
       end
 
@@ -292,7 +292,7 @@ module Spree
         end
 
         it 'rollsback the transaction' do
-          expect{ subject }.to_not change{ Spree::StockMovement.count }
+          expect{ subject }.to_not change{ Solidus::StockMovement.count }
         end
 
         it 'adds errors' do

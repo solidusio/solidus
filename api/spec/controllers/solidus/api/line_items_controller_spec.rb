@@ -10,7 +10,7 @@ module Spree
   end
 
   # This should go in an initializer
-  Spree::Api::LineItemsController.line_item_options += [:some_option]
+  Solidus::Api::LineItemsController.line_item_options += [:some_option]
 
   describe Api::LineItemsController, :type => :controller do
     render_views

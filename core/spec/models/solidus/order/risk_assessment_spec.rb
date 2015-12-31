@@ -1,7 +1,7 @@
 require 'spec_helper'
 
-describe Spree::Order, :type => :model do
-  let(:order) { stub_model('Spree::Order') }
+describe Solidus::Order, :type => :model do
+  let(:order) { stub_model('Solidus::Order') }
 
   describe ".is_risky?" do
     context "Not risky order" do

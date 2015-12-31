@@ -1,5 +1,5 @@
 module Spree
-  class ReturnItem::EligibilityValidator::InventoryShipped < Spree::ReturnItem::EligibilityValidator::BaseValidator
+  class ReturnItem::EligibilityValidator::InventoryShipped < Solidus::ReturnItem::EligibilityValidator::BaseValidator
     def eligible_for_return?
       if @return_item.inventory_unit.shipped?
         return true

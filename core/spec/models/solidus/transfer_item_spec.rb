@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Spree::TransferItem do
+describe Solidus::TransferItem do
   let(:stock_location) { create(:stock_location, name: "Warehouse") }
   let(:stock_transfer) { create(:stock_transfer_with_items, source_location: stock_location) }
   let(:transfer_item)  { stock_transfer.transfer_items.first }
@@ -210,7 +210,7 @@ describe Spree::TransferItem do
       end
 
       it "does not destroy the transfer item" do
-        expect { subject }.to_not change { Spree::TransferItem.count }
+        expect { subject }.to_not change { Solidus::TransferItem.count }
       end
 
       it "adds an error message" do
@@ -225,7 +225,7 @@ describe Spree::TransferItem do
       end
 
       it "destroys the transfer item" do
-        expect { subject }.to change { Spree::TransferItem.count }.by(-1)
+        expect { subject }.to change { Solidus::TransferItem.count }.by(-1)
       end
     end
 
@@ -244,19 +244,19 @@ describe Spree::TransferItem do
 
       context '.received' do
         it 'only returns items that have received quantity greater than 0' do
-          expect(Spree::TransferItem.received).to match_array [fully_received, partially_received]
+          expect(Solidus::TransferItem.received).to match_array [fully_received, partially_received]
         end
       end
 
       context '.fully_received' do
         it 'returns only items that have not been fully received' do
-          expect(Spree::TransferItem.fully_received).to eq [fully_received]
+          expect(Solidus::TransferItem.fully_received).to eq [fully_received]
         end
       end
 
       context '.partially_received' do
         it 'returns only items where received quantity is less that expected' do
-          expect(Spree::TransferItem.partially_received).to eq [partially_received]
+          expect(Solidus::TransferItem.partially_received).to eq [partially_received]
         end
       end
     end

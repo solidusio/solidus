@@ -1,6 +1,6 @@
 # Possibly already created by a migration.
-unless Spree::Store.where(code: 'spree').exists?
-  Spree::Store.new do |s|
+unless Solidus::Store.where(code: 'spree').exists?
+  Solidus::Store.new do |s|
     s.code              = 'spree'
     s.name              = 'Spree Demo Site'
     s.url               = 'demo.spreecommerce.com'

@@ -56,7 +56,7 @@ module Spree
     end
 
     def activate_permission_sets
-      Spree::RoleConfiguration.instance.activate_permissions! self, user
+      Solidus::RoleConfiguration.instance.activate_permissions! self, user
     end
   end
 end

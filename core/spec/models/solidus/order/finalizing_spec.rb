@@ -1,10 +1,10 @@
 require 'spec_helper'
 
-describe Spree::Order, :type => :model do
-  let(:order) { stub_model("Spree::Order") }
+describe Solidus::Order, :type => :model do
+  let(:order) { stub_model("Solidus::Order") }
 
   context "#finalize!" do
-    let(:order) { Spree::Order.create(email: 'test@example.com', store: store) }
+    let(:order) { Solidus::Order.create(email: 'test@example.com', store: store) }
     let(:store) { FactoryGirl.build(:store) }
 
     before do
@@ -32,7 +32,7 @@ describe Spree::Order, :type => :model do
     end
 
     it "should change the shipment state to ready if order is paid" do
-      Spree::Shipment.create(order: order)
+      Solidus::Shipment.create(order: order)
       order.shipments.reload
 
       allow(order).to receive_messages(:paid? => true, :complete? => true)
@@ -41,16 +41,16 @@ describe Spree::Order, :type => :model do
       expect(order.shipment_state).to eq('ready')
     end
 
-    after { Spree::Config.set :track_inventory_levels => true }
+    after { Solidus::Config.set :track_inventory_levels => true }
     it "should not sell inventory units if track_inventory_levels is false" do
-      Spree::Config.set :track_inventory_levels => false
-      expect(Spree::InventoryUnit).not_to receive(:sell_units)
+      Solidus::Config.set :track_inventory_levels => false
+      expect(Solidus::InventoryUnit).not_to receive(:sell_units)
       order.finalize!
     end
 
     it "should send an order confirmation email" do
       mail_message = double "Mail::Message"
-      expect(Spree::OrderMailer).to receive(:confirm_email).with(order).and_return mail_message
+      expect(Solidus::OrderMailer).to receive(:confirm_email).with(order).and_return mail_message
       expect(mail_message).to receive :deliver_later
       order.finalize!
     end
@@ -63,14 +63,14 @@ describe Spree::Order, :type => :model do
 
     it "should not send duplicate confirmation emails" do
       allow(order).to receive_messages(:confirmation_delivered? => true)
-      expect(Spree::OrderMailer).not_to receive(:confirm_email)
+      expect(Solidus::OrderMailer).not_to receive(:confirm_email)
       order.finalize!
     end
 
     it "should freeze all adjustments" do
       # Stub this method as it's called due to a callback
       # and it's irrelevant to this test
-      allow(Spree::OrderMailer).to receive_message_chain :confirm_email, :deliver_later
+      allow(Solidus::OrderMailer).to receive_message_chain :confirm_email, :deliver_later
       adjustments = [double]
       expect(order).to receive(:all_adjustments).and_return(adjustments)
       adjustments.each do |adj|

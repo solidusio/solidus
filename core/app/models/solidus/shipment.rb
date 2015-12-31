@@ -1,10 +1,10 @@
 require 'ostruct'
 
 module Spree
-  class Shipment < Spree::Base
-    belongs_to :order, class_name: 'Spree::Order', touch: true, inverse_of: :shipments
-    belongs_to :address, class_name: 'Spree::Address'
-    belongs_to :stock_location, class_name: 'Spree::StockLocation'
+  class Shipment < Solidus::Base
+    belongs_to :order, class_name: 'Solidus::Order', touch: true, inverse_of: :shipments
+    belongs_to :address, class_name: 'Solidus::Address'
+    belongs_to :stock_location, class_name: 'Solidus::StockLocation'
 
     has_many :adjustments, as: :adjustable, inverse_of: :adjustable, dependent: :delete_all
     has_many :inventory_units, dependent: :destroy, inverse_of: :shipment
@@ -35,7 +35,7 @@ module Spree
     scope :with_state, ->(*s) { where(state: s) }
     # sort by most recent shipped_at, falling back to created_at. add "id desc" to make specs that involve this scope more deterministic.
     scope :reverse_chronological, -> { order('coalesce(spree_shipments.shipped_at, spree_shipments.created_at) desc', id: :desc) }
-    scope :by_store, ->(store) { joins(:order).merge(Spree::Order.by_store(store)) }
+    scope :by_store, ->(store) { joins(:order).merge(Solidus::Order.by_store(store)) }
 
     # shipment state machine (see http://github.com/pluginaweek/state_machine/tree/master for details)
     state_machine initial: :pending, use_transactions: false do
@@ -82,7 +82,7 @@ module Spree
 
     def can_transition_from_pending_to_ready?
       order.can_ship? && !inventory_units.any?(&:backordered?) &&
-        (order.paid? || !Spree::Config[:require_payment_to_ship])
+        (order.paid? || !Solidus::Config[:require_payment_to_ship])
     end
 
     def can_transition_from_canceled_to_ready?
@@ -110,7 +110,7 @@ module Spree
     end
 
     def currency
-      order ? order.currency : Spree::Config[:currency]
+      order ? order.currency : Solidus::Config[:currency]
     end
 
     def discounted_cost
@@ -198,7 +198,7 @@ module Spree
     end
 
     def manifest
-      @manifest ||= Spree::ShippingManifest.new(inventory_units: inventory_units).items
+      @manifest ||= Solidus::ShippingManifest.new(inventory_units: inventory_units).items
     end
 
     def selected_shipping_rate_id
@@ -222,7 +222,7 @@ module Spree
       return 'pending' unless order.can_ship?
       return 'pending' if inventory_units.any? &:backordered?
       return 'shipped' if state == 'shipped'
-      if order.paid? || !Spree::Config[:require_payment_to_ship]
+      if order.paid? || !Solidus::Config[:require_payment_to_ship]
         'ready'
       else
         'pending'
@@ -392,7 +392,7 @@ module Spree
       end
 
       def recalculate_adjustments
-        Spree::ItemAdjustments.new(self).update
+        Solidus::ItemAdjustments.new(self).update
       end
 
       def set_cost_zero_when_nil

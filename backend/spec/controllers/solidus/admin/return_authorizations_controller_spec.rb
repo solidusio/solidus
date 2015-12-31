@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Spree::Admin::ReturnAuthorizationsController, :type => :controller do
+describe Solidus::Admin::ReturnAuthorizationsController, :type => :controller do
   stub_authorization!
 
   # Regression test for #1370 #3
@@ -199,7 +199,7 @@ describe Spree::Admin::ReturnAuthorizationsController, :type => :controller do
 
       context 'without existing items' do
         it 'creates a new item' do
-          expect { subject }.to change { Spree::ReturnItem.count }.by(1)
+          expect { subject }.to change { Solidus::ReturnItem.count }.by(1)
         end
       end
 
@@ -213,7 +213,7 @@ describe Spree::Admin::ReturnAuthorizationsController, :type => :controller do
         end
 
         it 'does not create new items' do
-          expect { subject }.to_not change { Spree::ReturnItem.count }
+          expect { subject }.to_not change { Solidus::ReturnItem.count }
           expect(assigns[:return_authorization].errors['return_items.inventory_unit']).to eq ["#{inventory_unit_1.id} has already been taken by return item #{completed_return_item.id}"]
         end
       end
@@ -232,7 +232,7 @@ describe Spree::Admin::ReturnAuthorizationsController, :type => :controller do
 
       context 'with existing items' do
         it 'removes the item' do
-          expect { subject }.to change { Spree::ReturnItem.count }.by(-1)
+          expect { subject }.to change { Solidus::ReturnItem.count }.by(-1)
         end
       end
     end

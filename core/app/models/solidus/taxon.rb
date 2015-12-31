@@ -1,8 +1,8 @@
 module Spree
-  class Taxon < Spree::Base
+  class Taxon < Solidus::Base
     acts_as_nested_set dependent: :destroy
 
-    belongs_to :taxonomy, class_name: 'Spree::Taxonomy', inverse_of: :taxons
+    belongs_to :taxonomy, class_name: 'Solidus::Taxonomy', inverse_of: :taxons
     has_many :classifications, -> { order(:position) }, dependent: :delete_all, inverse_of: :taxon
     has_many :products, through: :classifications
 
@@ -39,8 +39,8 @@ module Spree
       # fs << ProductFilters.taxons_below(self)
       ## unless it's a root taxon? left open for demo purposes
 
-      fs << Spree::Core::ProductFilters.price_filter if Spree::Core::ProductFilters.respond_to?(:price_filter)
-      fs << Spree::Core::ProductFilters.brand_filter if Spree::Core::ProductFilters.respond_to?(:brand_filter)
+      fs << Solidus::Core::ProductFilters.price_filter if Solidus::Core::ProductFilters.respond_to?(:price_filter)
+      fs << Solidus::Core::ProductFilters.brand_filter if Solidus::Core::ProductFilters.respond_to?(:brand_filter)
       fs
     end
 
@@ -69,7 +69,7 @@ module Spree
       permalink
     end
 
-    # @return [ActiveRecord::Relation<Spree::Product>] the active products the
+    # @return [ActiveRecord::Relation<Solidus::Product>] the active products the
     #   belong to this taxon
     def active_products
       products.active

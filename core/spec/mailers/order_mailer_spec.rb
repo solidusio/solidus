@@ -1,17 +1,17 @@
 require 'spec_helper'
 require 'email_spec'
 
-describe Spree::OrderMailer, :type => :mailer do
+describe Solidus::OrderMailer, :type => :mailer do
   include EmailSpec::Helpers
   include EmailSpec::Matchers
 
   let(:order) do
     order = create(:order)
-    product = stub_model(Spree::Product, :name => %Q{The "BEST" product})
-    variant = stub_model(Spree::Variant, :product => product)
-    price = stub_model(Spree::Price, :variant => variant, :amount => 5.00)
+    product = stub_model(Solidus::Product, :name => %Q{The "BEST" product})
+    variant = stub_model(Solidus::Variant, :product => product)
+    price = stub_model(Solidus::Price, :variant => variant, :amount => 5.00)
     store = FactoryGirl.build :store, mail_from_address: "store@example.com"
-    line_item = stub_model(Spree::LineItem, :variant => variant, :order => order, :quantity => 1, :price => 4.99)
+    line_item = stub_model(Solidus::LineItem, :variant => variant, :order => order, :quantity => 1, :price => 4.99)
     allow(variant).to receive_messages(:default_price => price)
     allow(order).to receive_messages(:line_items => [line_item])
     allow(order).to receive(:store).and_return(store)
@@ -19,26 +19,26 @@ describe Spree::OrderMailer, :type => :mailer do
   end
 
   it "uses the order's store for the from address" do
-    message = Spree::OrderMailer.confirm_email(order)
+    message = Solidus::OrderMailer.confirm_email(order)
     expect(message.from).to eq ["store@example.com"]
   end
 
   it "doesn't aggressively escape double quotes in confirmation body" do
-    confirmation_email = Spree::OrderMailer.confirm_email(order)
+    confirmation_email = Solidus::OrderMailer.confirm_email(order)
     expect(confirmation_email.body).not_to include("&quot;")
   end
 
   it "confirm_email accepts an order id as an alternative to an Order object" do
-    expect(Spree::Order).to receive(:find).with(order.id).and_return(order)
+    expect(Solidus::Order).to receive(:find).with(order.id).and_return(order)
     ActiveSupport::Deprecation.silence do
-      Spree::OrderMailer.confirm_email(order.id).body
+      Solidus::OrderMailer.confirm_email(order.id).body
     end
   end
 
   it "cancel_email accepts an order id as an alternative to an Order object" do
-    expect(Spree::Order).to receive(:find).with(order.id).and_return(order)
+    expect(Solidus::Order).to receive(:find).with(order.id).and_return(order)
     ActiveSupport::Deprecation.silence do
-      Spree::OrderMailer.cancel_email(order.id).body
+      Solidus::OrderMailer.cancel_email(order.id).body
     end
   end
 
@@ -61,8 +61,8 @@ describe Spree::OrderMailer, :type => :mailer do
       )
     end
 
-    let!(:confirmation_email) { Spree::OrderMailer.confirm_email(order) }
-    let!(:cancel_email) { Spree::OrderMailer.cancel_email(order) }
+    let!(:confirmation_email) { Solidus::OrderMailer.confirm_email(order) }
+    let!(:cancel_email) { Solidus::OrderMailer.cancel_email(order) }
 
     specify do
       expect(confirmation_email.body).not_to include("Ineligible Adjustment")
@@ -78,14 +78,14 @@ describe Spree::OrderMailer, :type => :mailer do
 
     # Tests mailer view spree/order_mailer/confirm_email.text.erb
     specify do
-      confirmation_email = Spree::OrderMailer.confirm_email(order)
+      confirmation_email = Solidus::OrderMailer.confirm_email(order)
       expect(confirmation_email).to have_body_text("4.99")
       expect(confirmation_email).to_not have_body_text("5.00")
     end
 
     # Tests mailer view spree/order_mailer/cancel_email.text.erb
     specify do
-      cancel_email = Spree::OrderMailer.cancel_email(order)
+      cancel_email = Solidus::OrderMailer.cancel_email(order)
       expect(cancel_email).to have_body_text("4.99")
       expect(cancel_email).to_not have_body_text("5.00")
     end
@@ -110,14 +110,14 @@ describe Spree::OrderMailer, :type => :mailer do
 
       context "confirm_email" do
         specify do
-          confirmation_email = Spree::OrderMailer.confirm_email(order)
+          confirmation_email = Solidus::OrderMailer.confirm_email(order)
           expect(confirmation_email).to have_body_text("Caro Cliente,")
         end
       end
 
       context "cancel_email" do
         specify do
-          cancel_email = Spree::OrderMailer.cancel_email(order)
+          cancel_email = Solidus::OrderMailer.cancel_email(order)
           expect(cancel_email).to have_body_text("Resumo da Pedido [CANCELADA]")
         end
       end
@@ -126,8 +126,8 @@ describe Spree::OrderMailer, :type => :mailer do
 
   context "with preference :send_core_emails set to false" do
     it "sends no email" do
-      Spree::Config.send_core_emails = false
-      message = Spree::OrderMailer.confirm_email(order)
+      Solidus::Config.send_core_emails = false
+      message = Solidus::OrderMailer.confirm_email(order)
       expect(message.body).to be_blank
     end
   end

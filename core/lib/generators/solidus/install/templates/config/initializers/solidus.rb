@@ -42,7 +42,7 @@ Spree.config do |config|
   # the admin. They can also be fully configured from the admin.
   #
   # config.static_model_preferences.add(
-  #   Spree::Gateway::StripeGateway,
+  #   Solidus::Gateway::StripeGateway,
   #   'stripe_env_credentials',
   #   secret_key: ENV['STRIPE_SECRET_KEY'],
   #   publishable_key: ENV['STRIPE_PUBLISHABLE_KEY'],
@@ -51,28 +51,28 @@ Spree.config do |config|
   # )
 end
 
-<% if defined?(Spree::Frontend::Engine) -%>
-Spree::Frontend::Config.configure do |config|
+<% if defined?(Solidus::Frontend::Engine) -%>
+Solidus::Frontend::Config.configure do |config|
   config.use_static_preferences!
 
   config.locale = 'en'
 end
 <% end -%>
 
-<% if defined?(Spree::Backend::Engine) -%>
-Spree::Backend::Config.configure do |config|
+<% if defined?(Solidus::Backend::Engine) -%>
+Solidus::Backend::Config.configure do |config|
   config.use_static_preferences!
 
   config.locale = 'en'
 end
 <% end -%>
 
-<% if defined?(Spree::Api::Engine) -%>
-Spree::Api::Config.configure do |config|
+<% if defined?(Solidus::Api::Engine) -%>
+Solidus::Api::Config.configure do |config|
   config.use_static_preferences!
 
   config.requires_authentication = true
 end
 <% end -%>
 
-Spree.user_class = <%= (options[:user_class].blank? ? "Spree::LegacyUser" : options[:user_class]).inspect %>
+Spree.user_class = <%= (options[:user_class].blank? ? "Solidus::LegacyUser" : options[:user_class]).inspect %>

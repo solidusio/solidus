@@ -1,7 +1,7 @@
 require 'spec_helper'
 
-describe Spree::Promotion::Rules::Taxon, :type => :model do
-  let(:rule) { Spree::Promotion::Rules::Taxon.create!(promotion: create(:promotion)) }
+describe Solidus::Promotion::Rules::Taxon, :type => :model do
+  let(:rule) { Solidus::Promotion::Rules::Taxon.create!(promotion: create(:promotion)) }
 
   context '#elegible?(order)' do
     let(:taxon){ create :taxon, name: 'first' }

@@ -2,7 +2,7 @@ require 'spec_helper'
 require 'cancan'
 require 'spree/testing_support/bar_ability'
 
-describe Spree::Admin::OrdersController, :type => :controller do
+describe Solidus::Admin::OrdersController, :type => :controller do
 
   context "with authorization" do
     stub_authorization!
@@ -11,27 +11,27 @@ describe Spree::Admin::OrdersController, :type => :controller do
       request.env["HTTP_REFERER"] = "http://localhost:3000"
 
       # ensure no respond_overrides are in effect
-      if Spree::BaseController.spree_responders[:OrdersController].present?
-        Spree::BaseController.spree_responders[:OrdersController].clear
+      if Solidus::BaseController.spree_responders[:OrdersController].present?
+        Solidus::BaseController.spree_responders[:OrdersController].clear
       end
     end
 
     let(:order) do
       mock_model(
-        Spree::Order,
+        Solidus::Order,
         completed?:      true,
         total:           100,
         number:          'R123456789',
         all_adjustments: adjustments,
-        ship_address: mock_model(Spree::Address),
+        ship_address: mock_model(Solidus::Address),
       )
     end
 
     let(:adjustments) { double('adjustments') }
 
     before do
-      allow(Spree::Order).to receive_messages(find_by_number!: order)
-      allow(order).to receive_messages(contents: Spree::OrderContents.new(order))
+      allow(Solidus::Order).to receive_messages(find_by_number!: order)
+      allow(order).to receive_messages(contents: Solidus::OrderContents.new(order))
     end
 
     context "#approve" do
@@ -74,21 +74,21 @@ describe Spree::Admin::OrdersController, :type => :controller do
       end
 
       it "imports a new order and sets the current user as a creator" do
-        expect(Spree::Core::Importer::Order).to receive(:import)
+        expect(Solidus::Core::Importer::Order).to receive(:import)
           .with(nil, hash_including(created_by_id: controller.try_spree_current_user.id))
           .and_return(order)
         spree_get :new
       end
 
       it "sets frontend_viewable to false" do
-        expect(Spree::Core::Importer::Order).to receive(:import)
+        expect(Solidus::Core::Importer::Order).to receive(:import)
           .with(nil, hash_including(frontend_viewable: false ))
           .and_return(order)
         spree_get :new
       end
 
       it "should associate the order with a store" do
-        expect(Spree::Core::Importer::Order).to receive(:import)
+        expect(Solidus::Core::Importer::Order).to receive(:import)
           .with(user, hash_including(store_id: controller.current_store.id))
           .and_return(order)
         spree_get :new, { user_id: user.id }
@@ -99,7 +99,7 @@ describe Spree::Admin::OrdersController, :type => :controller do
         before { allow(Spree.user_class).to receive_messages :find_by_id => user }
 
         it "imports a new order and assigns the user to the order" do
-          expect(Spree::Core::Importer::Order).to receive(:import)
+          expect(Solidus::Core::Importer::Order).to receive(:import)
             .with(user, hash_including(created_by_id: controller.try_spree_current_user.id))
             .and_return(order)
           spree_get :new, { user_id: user.id }
@@ -108,7 +108,7 @@ describe Spree::Admin::OrdersController, :type => :controller do
 
       it "should redirect to cart" do
         spree_get :new
-        expect(response).to redirect_to(spree.cart_admin_order_path(Spree::Order.last))
+        expect(response).to redirect_to(spree.cart_admin_order_path(Solidus::Order.last))
       end
     end
 
@@ -132,7 +132,7 @@ describe Spree::Admin::OrdersController, :type => :controller do
         end
 
         context 'when order_bill_address_used is true' do
-          before { Spree::Config[:order_bill_address_used] = true }
+          before { Solidus::Config[:order_bill_address_used] = true }
 
           it "should redirect to the customer details page" do
             spree_get :edit, :id => order.number
@@ -141,7 +141,7 @@ describe Spree::Admin::OrdersController, :type => :controller do
         end
 
         context 'when order_bill_address_used is false' do
-          before { Spree::Config[:order_bill_address_used] = false }
+          before { Solidus::Config[:order_bill_address_used] = false }
 
           it "should redirect to the customer details page" do
             spree_get :edit, :id => order.number
@@ -264,7 +264,7 @@ describe Spree::Admin::OrdersController, :type => :controller do
 
       context 'insufficient stock to complete the order' do
         before do
-          expect(order).to receive(:complete!).and_raise Spree::Order::InsufficientStock
+          expect(order).to receive(:complete!).and_raise Solidus::Order::InsufficientStock
         end
 
         it 'messages and redirects' do
@@ -281,15 +281,15 @@ describe Spree::Admin::OrdersController, :type => :controller do
 
       before do
         allow(controller).to receive_messages :spree_current_user => user
-        user.spree_roles << Spree::Role.find_or_create_by(name: 'admin')
+        user.spree_roles << Solidus::Role.find_or_create_by(name: 'admin')
 
         create(:completed_order_with_totals)
-        expect(Spree::Order.count).to eq 1
+        expect(Solidus::Order.count).to eq 1
       end
 
       it "does not display duplicated results" do
         spree_get :index, q: {
-          line_items_variant_id_in: Spree::Order.first.variants.map(&:id)
+          line_items_variant_id_in: Solidus::Order.first.variants.map(&:id)
         }
         expect(assigns[:orders].map { |o| o.number }.count).to eq 1
       end
@@ -341,22 +341,22 @@ describe Spree::Admin::OrdersController, :type => :controller do
     let(:order) { create(:completed_order_with_totals, :number => 'R987654321') }
 
     before do
-      allow(Spree::Order).to receive_messages :find_by_number! => order
+      allow(Solidus::Order).to receive_messages :find_by_number! => order
       allow(controller).to receive_messages :spree_current_user => user
     end
 
     it 'should grant access to users with an admin role' do
-      user.spree_roles << Spree::Role.find_or_create_by(name: 'admin')
+      user.spree_roles << Solidus::Role.find_or_create_by(name: 'admin')
       spree_post :index
       expect(response).to render_template :index
     end
 
     it 'should grant access to users with an bar role' do
-      user.spree_roles << Spree::Role.find_or_create_by(name: 'bar')
-      Spree::Ability.register_ability(BarAbility)
+      user.spree_roles << Solidus::Role.find_or_create_by(name: 'bar')
+      Solidus::Ability.register_ability(BarAbility)
       spree_post :index
       expect(response).to render_template :index
-      Spree::Ability.remove_ability(BarAbility)
+      Solidus::Ability.remove_ability(BarAbility)
     end
 
     it 'should deny access to users with an bar role' do
@@ -364,11 +364,11 @@ describe Spree::Admin::OrdersController, :type => :controller do
       allow(order).to receive(:user).and_return Spree.user_class.new
       allow(order).to receive(:token).and_return nil
       user.spree_roles.clear
-      user.spree_roles << Spree::Role.find_or_create_by(name: 'bar')
-      Spree::Ability.register_ability(BarAbility)
+      user.spree_roles << Solidus::Role.find_or_create_by(name: 'bar')
+      Solidus::Ability.register_ability(BarAbility)
       spree_put :update, { :id => 'R123' }
       expect(response).to redirect_to('/unauthorized')
-      Spree::Ability.remove_ability(BarAbility)
+      Solidus::Ability.remove_ability(BarAbility)
     end
 
     it 'should deny access to users without an admin role' do
@@ -379,14 +379,14 @@ describe Spree::Admin::OrdersController, :type => :controller do
 
     context 'with only permissions on Order' do
       stub_authorization! do |ability|
-        can [:admin, :manage], Spree::Order, :number => 'R987654321'
+        can [:admin, :manage], Solidus::Order, :number => 'R987654321'
       end
 
       it 'should restrict returned order(s) on index when using OrderSpecificAbility' do
         number = order.number
 
         3.times { create(:completed_order_with_totals) }
-        expect(Spree::Order.complete.count).to eq 4
+        expect(Solidus::Order.complete.count).to eq 4
 
         allow(user).to receive_messages :has_spree_role? => false
         spree_get :index
@@ -420,7 +420,7 @@ describe Spree::Admin::OrdersController, :type => :controller do
 
     before do
       allow(order.contents).to receive(:update_cart)
-      expect(Spree::Order).to receive(:find_by_number!) { order }
+      expect(Solidus::Order).to receive(:find_by_number!) { order }
     end
     subject { spree_put :update, payload }
 
@@ -448,7 +448,7 @@ describe Spree::Admin::OrdersController, :type => :controller do
     end
 
     context "the order has no line items" do
-      let(:order) { Spree::Order.new(:number => "1234") }
+      let(:order) { Solidus::Order.new(:number => "1234") }
 
       it "includes an error on the order" do
         subject

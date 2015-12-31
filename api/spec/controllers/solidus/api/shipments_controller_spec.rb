@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Spree::Api::ShipmentsController, :type => :controller do
+describe Solidus::Api::ShipmentsController, :type => :controller do
   render_views
   let!(:shipment) { create(:shipment, address: create(:address), inventory_units: [build(:inventory_unit, shipment: nil)]) }
   let!(:attributes) { [:id, :tracking, :number, :cost, :shipped_at, :stock_location_name, :order_id, :shipping_rates, :shipping_methods] }
@@ -92,7 +92,7 @@ describe Spree::Api::ShipmentsController, :type => :controller do
     end
 
     it "can make a shipment ready" do
-      allow_any_instance_of(Spree::Order).to receive_messages(:paid? => true, :complete? => true)
+      allow_any_instance_of(Solidus::Order).to receive_messages(:paid? => true, :complete? => true)
       api_put :ready
       expect(json_response).to have_attributes(attributes)
       expect(json_response["state"]).to eq("ready")
@@ -100,7 +100,7 @@ describe Spree::Api::ShipmentsController, :type => :controller do
     end
 
     it "cannot make a shipment ready if the order is unpaid" do
-      allow_any_instance_of(Spree::Order).to receive_messages(:paid? => false)
+      allow_any_instance_of(Solidus::Order).to receive_messages(:paid? => false)
       api_put :ready
       expect(json_response["error"]).to eq("Cannot ready shipment.")
       expect(response.status).to eq(422)
@@ -266,8 +266,8 @@ describe Spree::Api::ShipmentsController, :type => :controller do
       sign_in_as_admin!
 
       before do
-        ability = Spree::Ability.new(current_api_user)
-        ability.cannot :ship, Spree::Shipment
+        ability = Solidus::Ability.new(current_api_user)
+        ability.cannot :ship, Solidus::Shipment
         allow(controller).to receive(:current_ability) { ability }
       end
 

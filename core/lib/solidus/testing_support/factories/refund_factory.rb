@@ -1,7 +1,7 @@
 FactoryGirl.define do
   sequence(:refund_transaction_id) { |n| "fake-refund-transaction-#{n}"}
 
-  factory :refund, class: Spree::Refund do
+  factory :refund, class: Solidus::Refund do
     transient do
       payment_amount 100
     end
@@ -14,7 +14,7 @@ FactoryGirl.define do
     association(:reason, factory: :refund_reason)
   end
 
-  factory :refund_reason, class: Spree::RefundReason do
+  factory :refund_reason, class: Solidus::RefundReason do
     sequence(:name) { |n| "Refund for return ##{n}" }
   end
 end

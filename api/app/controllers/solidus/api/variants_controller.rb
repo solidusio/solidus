@@ -1,6 +1,6 @@
 module Spree
   module Api
-    class VariantsController < Spree::Api::BaseController
+    class VariantsController < Solidus::Api::BaseController
       before_action :product
 
       def create
@@ -48,7 +48,7 @@ module Spree
 
       private
         def product
-          @product ||= Spree::Product.accessible_by(current_ability, :read).friendly.find(params[:product_id]) if params[:product_id]
+          @product ||= Solidus::Product.accessible_by(current_ability, :read).friendly.find(params[:product_id]) if params[:product_id]
         end
 
         def scope
@@ -63,7 +63,7 @@ module Spree
           end
 
           variants = variants.accessible_by(current_ability, :read)
-          variants = variants.in_stock if params[:in_stock_only] || cannot?(:view_out_of_stock, Spree::Variant)
+          variants = variants.in_stock if params[:in_stock_only] || cannot?(:view_out_of_stock, Solidus::Variant)
           variants
         end
 

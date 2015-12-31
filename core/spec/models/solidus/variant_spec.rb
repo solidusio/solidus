@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe Spree::Variant, :type => :model do
+describe Solidus::Variant, :type => :model do
   let!(:variant) { create(:variant) }
 
   it_behaves_like 'default_price'
@@ -23,15 +23,15 @@ describe Spree::Variant, :type => :model do
     let!(:product) { create(:product) }
 
     it "propagate to stock items" do
-      expect_any_instance_of(Spree::StockLocation).to receive(:propagate_variant)
+      expect_any_instance_of(Solidus::StockLocation).to receive(:propagate_variant)
       product.variants.create!
     end
 
     context "stock location has disable propagate all variants" do
-      before { Spree::StockLocation.update_all propagate_all_variants: false }
+      before { Solidus::StockLocation.update_all propagate_all_variants: false }
 
       it "propagate to stock items" do
-        expect_any_instance_of(Spree::StockLocation).not_to receive(:propagate_variant)
+        expect_any_instance_of(Solidus::StockLocation).not_to receive(:propagate_variant)
         product.variants.create!
       end
     end
@@ -122,21 +122,21 @@ describe Spree::Variant, :type => :model do
 
   context "#cost_price=" do
     it "should use LocalizedNumber.parse" do
-      expect(Spree::LocalizedNumber).to receive(:parse).with('1,599.99')
+      expect(Solidus::LocalizedNumber).to receive(:parse).with('1,599.99')
       subject.cost_price = '1,599.99'
     end
   end
 
   context "#price=" do
     it "should use LocalizedNumber.parse" do
-      expect(Spree::LocalizedNumber).to receive(:parse).with('1,599.99')
+      expect(Solidus::LocalizedNumber).to receive(:parse).with('1,599.99')
       subject.price = '1,599.99'
     end
   end
 
   context "#weight=" do
     it "should use LocalizedNumber.parse" do
-      expect(Spree::LocalizedNumber).to receive(:parse).with('1,599.99')
+      expect(Solidus::LocalizedNumber).to receive(:parse).with('1,599.99')
       subject.weight = '1,599.99'
     end
   end
@@ -148,7 +148,7 @@ describe Spree::Variant, :type => :model do
   end
 
   context "#display_amount" do
-    it "returns a Spree::Money" do
+    it "returns a Solidus::Money" do
       variant.price = 21.22
       expect(variant.display_amount.to_s).to eql "$21.22"
     end
@@ -360,12 +360,12 @@ describe Spree::Variant, :type => :model do
 
   describe '#in_stock?' do
     before do
-      Spree::Config.track_inventory_levels = true
+      Solidus::Config.track_inventory_levels = true
     end
 
     context 'when stock_items are not backorderable' do
       before do
-        allow_any_instance_of(Spree::StockItem).to receive_messages(backorderable: false)
+        allow_any_instance_of(Solidus::StockItem).to receive_messages(backorderable: false)
       end
 
       context 'when stock_items in stock' do
@@ -380,8 +380,8 @@ describe Spree::Variant, :type => :model do
 
       context 'when stock_items out of stock' do
         before do
-          allow_any_instance_of(Spree::StockItem).to receive_messages(backorderable: false)
-          allow_any_instance_of(Spree::StockItem).to receive_messages(count_on_hand: 0)
+          allow_any_instance_of(Solidus::StockItem).to receive_messages(backorderable: false)
+          allow_any_instance_of(Solidus::StockItem).to receive_messages(count_on_hand: 0)
         end
 
         it 'return false if stock_items out of stock' do
@@ -392,7 +392,7 @@ describe Spree::Variant, :type => :model do
 
     describe "#can_supply?" do
       it "calls out to quantifier" do
-        expect(Spree::Stock::Quantifier).to receive(:new).and_return(quantifier = double)
+        expect(Solidus::Stock::Quantifier).to receive(:new).and_return(quantifier = double)
         expect(quantifier).to receive(:can_supply?).with(10)
         variant.can_supply?(10)
       end
@@ -400,12 +400,12 @@ describe Spree::Variant, :type => :model do
 
     context 'when stock_items are backorderable' do
       before do
-        allow_any_instance_of(Spree::StockItem).to receive_messages(backorderable: true)
+        allow_any_instance_of(Solidus::StockItem).to receive_messages(backorderable: true)
       end
 
       context 'when stock_items out of stock' do
         before do
-          allow_any_instance_of(Spree::StockItem).to receive_messages(count_on_hand: 0)
+          allow_any_instance_of(Solidus::StockItem).to receive_messages(count_on_hand: 0)
         end
 
         it 'in_stock? returns false' do
@@ -423,21 +423,21 @@ describe Spree::Variant, :type => :model do
     let(:variant) { build(:variant) }
     subject { variant.is_backorderable? }
 
-    it 'should invoke Spree::Stock::Quantifier' do
-      expect_any_instance_of(Spree::Stock::Quantifier).to receive(:backorderable?) { true }
+    it 'should invoke Solidus::Stock::Quantifier' do
+      expect_any_instance_of(Solidus::Stock::Quantifier).to receive(:backorderable?) { true }
       subject
     end
   end
 
   describe '#total_on_hand' do
     it 'should be infinite if track_inventory_levels is false' do
-      Spree::Config[:track_inventory_levels] = false
+      Solidus::Config[:track_inventory_levels] = false
       expect(build(:variant).total_on_hand).to eql(Float::INFINITY)
     end
 
     it 'should match quantifier total_on_hand' do
       variant = build(:variant)
-      expect(variant.total_on_hand).to eq(Spree::Stock::Quantifier.new(variant).total_on_hand)
+      expect(variant.total_on_hand).to eq(Solidus::Stock::Quantifier.new(variant).total_on_hand)
     end
   end
 
@@ -475,19 +475,19 @@ describe Spree::Variant, :type => :model do
   describe "#should_track_inventory?" do
 
     it 'should not track inventory when global setting is off' do
-      Spree::Config[:track_inventory_levels] = false
+      Solidus::Config[:track_inventory_levels] = false
 
       expect(build(:variant).should_track_inventory?).to eq(false)
     end
 
     it 'should not track inventory when variant is turned off' do
-      Spree::Config[:track_inventory_levels] = true
+      Solidus::Config[:track_inventory_levels] = true
 
       expect(build(:on_demand_variant).should_track_inventory?).to eq(false)
     end
 
     it 'should track inventory when global and variant are on' do
-      Spree::Config[:track_inventory_levels] = true
+      Solidus::Config[:track_inventory_levels] = true
 
       expect(build(:variant).should_track_inventory?).to eq(true)
     end
@@ -515,7 +515,7 @@ describe Spree::Variant, :type => :model do
     let!(:stock_location) { create(:stock_location) }
 
     context "a stock location is provided" do
-      subject { Spree::Variant.in_stock([stock_location]) }
+      subject { Solidus::Variant.in_stock([stock_location]) }
 
       context "there's stock in the location" do
         before do
@@ -540,7 +540,7 @@ describe Spree::Variant, :type => :model do
     end
 
     context "a stock location is not provided" do
-      subject { Spree::Variant.in_stock }
+      subject { Solidus::Variant.in_stock }
 
       before do
         in_stock_variant.stock_items.first.update_column(:count_on_hand, 10)
@@ -557,8 +557,8 @@ describe Spree::Variant, :type => :model do
 
     context "variant has associated images" do
       let(:attachment) { File.open(File.expand_path('../../../fixtures/thinking-cat.jpg', __FILE__)) }
-      let(:image_params) { { viewable_id: variant.id, viewable_type: 'Spree::Variant', attachment: attachment, alt: "position 1", position: 1 } }
-      let!(:first_image) { Spree::Image.create(image_params) }
+      let(:image_params) { { viewable_id: variant.id, viewable_type: 'Solidus::Variant', attachment: attachment, alt: "position 1", position: 1 } }
+      let!(:first_image) { Solidus::Image.create(image_params) }
       let!(:second_image) { image_params.merge(alt: "position 2", position: 2) }
 
       it "returns the first image" do
@@ -568,7 +568,7 @@ describe Spree::Variant, :type => :model do
 
     context "variant does not have any associated images" do
       it "returns an image" do
-        expect(subject).to be_a(Spree::Image)
+        expect(subject).to be_a(Solidus::Image)
       end
       it "returns unpersisted record" do
         expect(subject).to be_new_record

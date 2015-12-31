@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Spree::LegacyUser, :type => :model do
+describe Solidus::LegacyUser, :type => :model do
   context "#last_incomplete_order" do
     let!(:user) { create(:user) }
 
@@ -35,11 +35,11 @@ describe Spree::LegacyUser, :type => :model do
 
     context "with completable_order_created_cutoff set" do
       before do
-        @original_order_cutoff_preference = Spree::Config.completable_order_created_cutoff_days
-        Spree::Config.completable_order_created_cutoff_days = 1
+        @original_order_cutoff_preference = Solidus::Config.completable_order_created_cutoff_days
+        Solidus::Config.completable_order_created_cutoff_days = 1
       end
 
-      after { Spree::Config.completable_order_created_cutoff_days = @original_order_cutoff_preference }
+      after { Solidus::Config.completable_order_created_cutoff_days = @original_order_cutoff_preference }
 
       it "excludes orders updated outside of the cutoff date" do
         incomplete_order = create(:order, user: user, created_by: user, created_at: 3.days.ago, updated_at: 2.days.ago)
@@ -49,11 +49,11 @@ describe Spree::LegacyUser, :type => :model do
 
     context "with completable_order_created_cutoff set" do
       before do
-        @original_order_cutoff_preference = Spree::Config.completable_order_updated_cutoff_days
-        Spree::Config.completable_order_updated_cutoff_days = 1
+        @original_order_cutoff_preference = Solidus::Config.completable_order_updated_cutoff_days
+        Solidus::Config.completable_order_updated_cutoff_days = 1
       end
 
-      after { Spree::Config.completable_order_updated_cutoff_days = @original_order_cutoff_preference }
+      after { Solidus::Config.completable_order_updated_cutoff_days = @original_order_cutoff_preference }
 
       it "excludes orders updated outside of the cutoff date" do
         incomplete_order = create(:order, user: user, created_by: user, created_at: 3.days.ago, updated_at: 2.days.ago)
@@ -79,7 +79,7 @@ describe Spree::LegacyUser, :type => :model do
 
         expect {
           user.persist_order_address(order)
-        }.not_to change { Spree::Address.count }
+        }.not_to change { Solidus::Address.count }
       end
 
       it "associates both the bill and ship address to the user" do
@@ -140,10 +140,10 @@ describe Spree.user_class, :type => :model do
     end
 
     describe "#display_lifetime_value" do
-      it "returns a Spree::Money version of lifetime_value" do
+      it "returns a Solidus::Money version of lifetime_value" do
         value = BigDecimal("500.05")
         allow(subject).to receive(:lifetime_value).and_return(value)
-        expect(subject.display_lifetime_value).to eq Spree::Money.new(value)
+        expect(subject.display_lifetime_value).to eq Solidus::Money.new(value)
       end
     end
 
@@ -170,10 +170,10 @@ describe Spree.user_class, :type => :model do
 
     describe "#display_average_order_value" do
       before { load_orders }
-      it "returns a Spree::Money version of average_order_value" do
+      it "returns a Solidus::Money version of average_order_value" do
         value = BigDecimal("500.05")
         allow(subject).to receive(:average_order_value).and_return(value)
-        expect(subject.display_average_order_value).to eq Spree::Money.new(value)
+        expect(subject.display_average_order_value).to eq Solidus::Money.new(value)
       end
     end
   end

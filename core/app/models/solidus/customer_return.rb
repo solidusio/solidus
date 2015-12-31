@@ -1,5 +1,5 @@
 module Spree
-  class CustomerReturn < Spree::Base
+  class CustomerReturn < Solidus::Base
     belongs_to :stock_location
 
     has_many :return_items, inverse_of: :customer_return
@@ -16,8 +16,8 @@ module Spree
     accepts_nested_attributes_for :return_items
 
     extend DisplayMoney
-    money_methods pre_tax_total: { currency: Spree::Config[:currency] },
-                  total: { currency: Spree::Config[:currency] }
+    money_methods pre_tax_total: { currency: Solidus::Config[:currency] },
+                  total: { currency: Solidus::Config[:currency] }
 
     def total
       return_items.map(&:total).sum

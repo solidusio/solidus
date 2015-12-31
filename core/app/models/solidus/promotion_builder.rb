@@ -1,4 +1,4 @@
-class Spree::PromotionBuilder
+class Solidus::PromotionBuilder
   include ActiveModel::Model
 
   attr_reader :promotion
@@ -11,13 +11,13 @@ class Spree::PromotionBuilder
   validate :promotion_validity
 
   class_attribute :code_builder_class
-  self.code_builder_class = ::Spree::PromotionCode::CodeBuilder
+  self.code_builder_class = ::Solidus::PromotionCode::CodeBuilder
 
   # @param promotion_attrs [Hash] The desired attributes for the newly promotion
   # @param attributes [Hash] The desired attributes for this builder
-  # @param user [Spree::User] The user who triggered this promotion build
+  # @param user [Solidus::User] The user who triggered this promotion build
   def initialize(attributes={}, promotion_attributes={})
-    @promotion = Spree::Promotion.new(promotion_attributes)
+    @promotion = Solidus::Promotion.new(promotion_attributes)
     super(attributes)
   end
 

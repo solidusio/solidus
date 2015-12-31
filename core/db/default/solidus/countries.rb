@@ -13,7 +13,7 @@ Carmen::Country.all.each do |country|
 end
 
 ActiveRecord::Base.transaction do
-  Spree::Country.create!(countries)
+  Solidus::Country.create!(countries)
 end
 
-Spree::Config[:default_country_id] ||= Spree::Country.find_by(iso: "US").id
+Solidus::Config[:default_country_id] ||= Solidus::Country.find_by(iso: "US").id

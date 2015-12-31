@@ -22,7 +22,7 @@
   <tbody>
     <% variants.each do |variant| %>
       <%- locations_without_items = @stock_item_stock_locations - variant.stock_items.flat_map(&:stock_location) %>
-      <%- display_add_row = locations_without_items.any? && can?(:create, Spree::StockItem) %>
+      <%- display_add_row = locations_without_items.any? && can?(:create, Solidus::StockItem) %>
       <%- row_count = (variant.stock_items.map(&:stock_location) & @stock_item_stock_locations).size %>
       <%- row_count += display_add_row ? 2 : 1 %>
 
@@ -89,7 +89,7 @@
             <%= number_field_tag :count_on_hand, "", class: 'fullwidth', id: "variant-count-on-hand-#{variant.id}" %>
           </td>
           <td class="actions">
-            <%= link_to_with_icon 'plus', Spree.t('actions.create'), '#', :no_text => true, :data => {:action => 'green', :variant_id => variant.id } if can?(:create, Spree::StockItem) %>
+            <%= link_to_with_icon 'plus', Spree.t('actions.create'), '#', :no_text => true, :data => {:action => 'green', :variant_id => variant.id } if can?(:create, Solidus::StockItem) %>
           </td>
         </tr>
       <% end %>

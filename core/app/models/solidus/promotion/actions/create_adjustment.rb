@@ -2,8 +2,8 @@ module Spree
   class Promotion
     module Actions
       class CreateAdjustment < PromotionAction
-        include Spree::CalculatedAdjustments
-        include Spree::AdjustmentSource
+        include Solidus::CalculatedAdjustments
+        include Solidus::AdjustmentSource
 
         has_many :adjustments, as: :source
 
@@ -23,7 +23,7 @@ module Spree
 
           amount = compute_amount(order)
           return if amount == 0
-          Spree::Adjustment.create!(
+          Solidus::Adjustment.create!(
             amount: amount,
             order: order,
             adjustable: order,

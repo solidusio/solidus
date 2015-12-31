@@ -1,10 +1,10 @@
 require 'spec_helper'
 
-describe Spree::Admin::ProductsController, :type => :controller do
+describe Solidus::Admin::ProductsController, :type => :controller do
   stub_authorization!
 
   context "#index" do
-    let(:ability_user) { stub_model(Spree::LegacyUser, :has_spree_role? => true) }
+    let(:ability_user) { stub_model(Solidus::LegacyUser, :has_spree_role? => true) }
 
     # Regression test for #1259
     it "can find a product by SKU" do
@@ -116,7 +116,7 @@ describe Spree::Admin::ProductsController, :type => :controller do
     subject { spree_put :update, payload }
 
     it "does not create any new rules" do
-      expect { subject }.to_not change { Spree::VariantPropertyRule.count }
+      expect { subject }.to_not change { Solidus::VariantPropertyRule.count }
     end
 
     it "replaces the rule's condition" do

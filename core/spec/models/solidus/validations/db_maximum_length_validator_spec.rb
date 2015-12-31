@@ -1,14 +1,14 @@
 require 'spec_helper'
 
-describe Spree::Validations::DbMaximumLengthValidator, type: :model do
-  context 'when Spree::Product' do
-    Spree::Product.class_eval do
+describe Solidus::Validations::DbMaximumLengthValidator, type: :model do
+  context 'when Solidus::Product' do
+    Solidus::Product.class_eval do
       attribute :slug, ActiveRecord::Type::String.new(limit: 255)
       # Slug currently has no validation for maximum length
-      validates_with Spree::Validations::DbMaximumLengthValidator, field: :slug
+      validates_with Solidus::Validations::DbMaximumLengthValidator, field: :slug
     end
     let(:limit) { 255 }
-    let(:product) { Spree::Product.new }
+    let(:product) { Solidus::Product.new }
     let(:slug) { "x" * (limit + 1)}
 
     before do

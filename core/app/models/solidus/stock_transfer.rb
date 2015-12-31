@@ -1,5 +1,5 @@
 module Spree
-  class StockTransfer < Spree::Base
+  class StockTransfer < Solidus::Base
     class InvalidTransferMovement < StandardError; end
 
     acts_as_paranoid
@@ -7,11 +7,11 @@ module Spree
     has_many :stock_movements, :as => :originator
     has_many :transfer_items, inverse_of: :stock_transfer
 
-    belongs_to :created_by, :class_name => Spree::UserClassHandle.new
-    belongs_to :finalized_by, :class_name => Spree::UserClassHandle.new
-    belongs_to :closed_by, :class_name => Spree::UserClassHandle.new
-    belongs_to :source_location, :class_name => 'Spree::StockLocation'
-    belongs_to :destination_location, :class_name => 'Spree::StockLocation'
+    belongs_to :created_by, :class_name => Solidus::UserClassHandle.new
+    belongs_to :finalized_by, :class_name => Solidus::UserClassHandle.new
+    belongs_to :closed_by, :class_name => Solidus::UserClassHandle.new
+    belongs_to :source_location, :class_name => 'Solidus::StockLocation'
+    belongs_to :destination_location, :class_name => 'Solidus::StockLocation'
 
     validates_presence_of :source_location
     validates_presence_of :destination_location, if: :finalized?

@@ -3,7 +3,7 @@ class CreateStoreFromPreferences < ActiveRecord::Migration
     self.table_name = 'spree_stores'
   end
   def change
-    preference_store = Spree::Preferences::Store.instance
+    preference_store = Solidus::Preferences::Store.instance
     if store = Store.where(default: true).first
       store.meta_description = preference_store.get('spree/app_configuration/default_meta_description') {}
       store.meta_keywords    = preference_store.get('spree/app_configuration/default_meta_keywords') {}

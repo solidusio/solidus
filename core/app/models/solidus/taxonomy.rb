@@ -1,11 +1,11 @@
 module Spree
-  class Taxonomy < Spree::Base
+  class Taxonomy < Solidus::Base
     acts_as_list
 
     validates :name, presence: true
 
     has_many :taxons, inverse_of: :taxonomy
-    has_one :root, -> { where parent_id: nil }, class_name: "Spree::Taxon", dependent: :destroy
+    has_one :root, -> { where parent_id: nil }, class_name: "Solidus::Taxon", dependent: :destroy
 
     after_save :set_name
 

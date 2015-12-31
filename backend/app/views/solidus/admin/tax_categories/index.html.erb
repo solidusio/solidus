@@ -6,7 +6,7 @@
 
 <% content_for :page_actions do %>
   <ul class="actions inline-menu">
-    <% if can?(:create, Spree::TaxCategory) %>
+    <% if can?(:create, Solidus::TaxCategory) %>
       <li>
         <%= button_link_to Spree.t(:new_tax_category), new_object_url, :icon => 'plus', :id => 'admin_new_tax_categories_link' %>
       </li>
@@ -56,7 +56,7 @@
 <% else %>
   <div class="alpha twelve columns no-objects-found">
     <%= Spree.t(:no_resource_found, resource: I18n.t(:other, scope: 'activerecord.models.spree/tax_category')) %>
-    <% if can?(:create, Spree::TaxCategory) %>
+    <% if can?(:create, Solidus::TaxCategory) %>
       <%= link_to Spree.t(:add_one), spree.new_admin_tax_category_path %>!
     <% end %>
   </div>

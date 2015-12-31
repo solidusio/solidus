@@ -9,73 +9,73 @@ module Spree
       end
 
       initializer "spree.environment", :before => :load_config_initializers do |app|
-        app.config.spree = Spree::Core::Environment.new
-        Spree::Config = app.config.spree.preferences #legacy access
+        app.config.spree = Solidus::Core::Environment.new
+        Solidus::Config = app.config.spree.preferences #legacy access
       end
 
       initializer "spree.default_permissions" do |app|
-        Spree::RoleConfiguration.configure do |config|
-          config.assign_permissions :default, [Spree::PermissionSets::DefaultCustomer]
-          config.assign_permissions :admin, [Spree::PermissionSets::SuperUser]
+        Solidus::RoleConfiguration.configure do |config|
+          config.assign_permissions :default, [Solidus::PermissionSets::DefaultCustomer]
+          config.assign_permissions :admin, [Solidus::PermissionSets::SuperUser]
         end
       end
 
       initializer "spree.register.calculators" do |app|
         app.config.spree.calculators.shipping_methods = [
-            Spree::Calculator::Shipping::FlatPercentItemTotal,
-            Spree::Calculator::Shipping::FlatRate,
-            Spree::Calculator::Shipping::FlexiRate,
-            Spree::Calculator::Shipping::PerItem,
-            Spree::Calculator::Shipping::PriceSack]
+            Solidus::Calculator::Shipping::FlatPercentItemTotal,
+            Solidus::Calculator::Shipping::FlatRate,
+            Solidus::Calculator::Shipping::FlexiRate,
+            Solidus::Calculator::Shipping::PerItem,
+            Solidus::Calculator::Shipping::PriceSack]
 
          app.config.spree.calculators.tax_rates = [
-            Spree::Calculator::DefaultTax]
+            Solidus::Calculator::DefaultTax]
       end
 
       initializer "spree.register.stock_splitters" do |app|
         app.config.spree.stock_splitters = [
-          Spree::Stock::Splitter::ShippingCategory,
-          Spree::Stock::Splitter::Backordered
+          Solidus::Stock::Splitter::ShippingCategory,
+          Solidus::Stock::Splitter::Backordered
         ]
       end
 
       initializer "spree.register.payment_methods" do |app|
         app.config.spree.payment_methods = [
-            Spree::Gateway::Bogus,
-            Spree::Gateway::BogusSimple,
-            Spree::PaymentMethod::StoreCredit,
-            Spree::PaymentMethod::Check ]
+            Solidus::Gateway::Bogus,
+            Solidus::Gateway::BogusSimple,
+            Solidus::PaymentMethod::StoreCredit,
+            Solidus::PaymentMethod::Check ]
       end
 
       # We need to define promotions rules here so extensions and existing apps
       # can add their custom classes on their initializer files
       initializer 'spree.promo.environment' do |app|
         app.config.spree.add_class('promotions')
-        app.config.spree.promotions = Spree::Promo::Environment.new
+        app.config.spree.promotions = Solidus::Promo::Environment.new
         app.config.spree.promotions.rules = []
       end
 
       initializer 'spree.promo.register.promotion.calculators' do |app|
         app.config.spree.calculators.add_class('promotion_actions_create_adjustments')
         app.config.spree.calculators.promotion_actions_create_adjustments = [
-          Spree::Calculator::FlatPercentItemTotal,
-          Spree::Calculator::FlatRate,
-          Spree::Calculator::FlexiRate,
-          Spree::Calculator::TieredPercent,
-          Spree::Calculator::TieredFlatRate
+          Solidus::Calculator::FlatPercentItemTotal,
+          Solidus::Calculator::FlatRate,
+          Solidus::Calculator::FlexiRate,
+          Solidus::Calculator::TieredPercent,
+          Solidus::Calculator::TieredFlatRate
         ]
 
         app.config.spree.calculators.add_class('promotion_actions_create_item_adjustments')
         app.config.spree.calculators.promotion_actions_create_item_adjustments = [
-          Spree::Calculator::PercentOnLineItem,
-          Spree::Calculator::FlatRate,
-          Spree::Calculator::FlexiRate
+          Solidus::Calculator::PercentOnLineItem,
+          Solidus::Calculator::FlatRate,
+          Solidus::Calculator::FlexiRate
         ]
 
         app.config.spree.calculators.add_class('promotion_actions_create_quantity_adjustments')
         app.config.spree.calculators.promotion_actions_create_item_adjustments = [
-          Spree::Calculator::PercentOnLineItem,
-          Spree::Calculator::FlatRate
+          Solidus::Calculator::PercentOnLineItem,
+          Solidus::Calculator::FlatRate
         ]
       end
 
@@ -85,16 +85,16 @@ module Spree
       # the app initializer)
       config.after_initialize do
         Rails.application.config.spree.promotions.rules.concat [
-          Spree::Promotion::Rules::ItemTotal,
-          Spree::Promotion::Rules::Product,
-          Spree::Promotion::Rules::User,
-          Spree::Promotion::Rules::FirstOrder,
-          Spree::Promotion::Rules::UserLoggedIn,
-          Spree::Promotion::Rules::OneUsePerUser,
-          Spree::Promotion::Rules::Taxon,
-          Spree::Promotion::Rules::NthOrder,
-          Spree::Promotion::Rules::OptionValue,
-          Spree::Promotion::Rules::FirstRepeatPurchaseSince,
+          Solidus::Promotion::Rules::ItemTotal,
+          Solidus::Promotion::Rules::Product,
+          Solidus::Promotion::Rules::User,
+          Solidus::Promotion::Rules::FirstOrder,
+          Solidus::Promotion::Rules::UserLoggedIn,
+          Solidus::Promotion::Rules::OneUsePerUser,
+          Solidus::Promotion::Rules::Taxon,
+          Solidus::Promotion::Rules::NthOrder,
+          Solidus::Promotion::Rules::OptionValue,
+          Solidus::Promotion::Rules::FirstRepeatPurchaseSince,
         ]
       end
 

@@ -5,7 +5,7 @@ module Spree
 
       class_methods do
         def preference_sources
-          Spree::Config.static_model_preferences.for_class(self)
+          Solidus::Config.static_model_preferences.for_class(self)
         end
 
         def available_preference_sources

@@ -1,8 +1,8 @@
-united_states = Spree::Country.find_by_iso!("US")
-new_york = Spree::State.find_by_name!("New York")
+united_states = Solidus::Country.find_by_iso!("US")
+new_york = Solidus::State.find_by_name!("New York")
 
 # Billing address
-Spree::Address.create!(
+Solidus::Address.create!(
   :firstname => Faker::Name.first_name,
   :lastname => Faker::Name.last_name,
   :address1 => Faker::Address.street_address,
@@ -14,7 +14,7 @@ Spree::Address.create!(
   :phone => Faker::PhoneNumber.phone_number)
 
 #Shipping address
-Spree::Address.create!(
+Solidus::Address.create!(
   :firstname => Faker::Name.first_name,
   :lastname => Faker::Name.last_name,
   :address1 => Faker::Address.street_address,

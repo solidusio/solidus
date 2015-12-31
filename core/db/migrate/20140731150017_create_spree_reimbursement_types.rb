@@ -10,7 +10,7 @@ class CreateSpreeReimbursementTypes < ActiveRecord::Migration
 
     reversible do |direction|
       direction.up do
-        Spree::ReimbursementType.create!(name: Spree::ReimbursementType::ORIGINAL)
+        Solidus::ReimbursementType.create!(name: Solidus::ReimbursementType::ORIGINAL)
       end
     end
 

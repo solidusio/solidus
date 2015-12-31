@@ -12,7 +12,7 @@ module Spree
     context 'empty attributes' do
       let(:attributes){ {} }
       it "builds a new empty payment" do
-        expect(new_payment).to be_a Spree::Payment
+        expect(new_payment).to be_a Solidus::Payment
         expect(new_payment.order).to eq order
         expect(new_payment.source).to be_nil
       end

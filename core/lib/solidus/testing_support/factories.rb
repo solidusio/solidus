@@ -1,6 +1,6 @@
 require 'factory_girl'
 
-Spree::Zone.class_eval do
+Solidus::Zone.class_eval do
   def self.global
     find_by(name: 'GlobalZone') || FactoryGirl.create(:global_zone)
   end

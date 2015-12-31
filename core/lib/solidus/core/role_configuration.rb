@@ -1,16 +1,16 @@
 require 'singleton'
 
 module Spree
-  # A class responsible for associating {Spree::Role} with a list of permission sets.
+  # A class responsible for associating {Solidus::Role} with a list of permission sets.
   #
-  # @see Spree::PermissionSets
+  # @see Solidus::PermissionSets
   #
   # @example Adding order, product, and user display to customer service users.
-  #   Spree::RoleConfiguration.configure do |config|
+  #   Solidus::RoleConfiguration.configure do |config|
   #     config.assign_permissions :customer_service, [
-  #       Spree::PermissionSets::OrderDisplay,
-  #       Spree::PermissionSets::UserDisplay,
-  #       Spree::PermissionSets::ProductDisplay
+  #       Solidus::PermissionSets::OrderDisplay,
+  #       Solidus::PermissionSets::UserDisplay,
+  #       Solidus::PermissionSets::ProductDisplay
   #     ]
   #   end
   class RoleConfiguration
@@ -22,7 +22,7 @@ module Spree
     attr_accessor :roles
 
     # Yields the instance of the singleton, used for configuration
-    # @yield_param instance [Spree::RoleConfiguration]
+    # @yield_param instance [Solidus::RoleConfiguration]
     def self.configure
       yield(instance)
     end
@@ -56,9 +56,9 @@ module Spree
       end
     end
 
-    # Assign permission sets for a {Spree::Role} that has the name of role_name
+    # Assign permission sets for a {Solidus::Role} that has the name of role_name
     # @param role_name [Symbol, String] The name of the role to associate permissions with
-    # @param permission_sets [Array<Spree::PermissionSets::Base>, Set<Spree::PermissionSets::Base>]
+    # @param permission_sets [Array<Solidus::PermissionSets::Base>, Set<Solidus::PermissionSets::Base>]
     #   A list of permission sets to activate if the user has the role indicated by role_name
     def assign_permissions role_name, permission_sets
       name = role_name.to_s

@@ -110,8 +110,8 @@ module Spree
     context 'on behalf of address book owner' do
       context 'with ability' do
         before do
-          Spree::RoleConfiguration.configure do |config|
-            config.assign_permissions 'Prefect', [Spree::PermissionSets::UserManagement]
+          Solidus::RoleConfiguration.configure do |config|
+            config.assign_permissions 'Prefect', [Solidus::PermissionSets::UserManagement]
           end
           create(:user, spree_api_key: 'galleon', spree_roles: [build(:role, name: 'Prefect')])
         end

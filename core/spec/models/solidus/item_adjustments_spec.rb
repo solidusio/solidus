@@ -26,7 +26,7 @@ module Spree
       end
 
       let!(:promotion) do
-        Spree::Promotion.create(:name => "$10 off")
+        Solidus::Promotion.create(:name => "$10 off")
       end
 
       let!(:promotion_action) do
@@ -99,17 +99,17 @@ module Spree
 
     context "promotion chooser customization" do
       before do
-        class Spree::TestPromotionChooser
+        class Solidus::TestPromotionChooser
           def initialize(adjustments)
             raise "Custom promotion chooser"
           end
         end
 
-        Spree::Config.promotion_chooser_class = Spree::TestPromotionChooser
+        Solidus::Config.promotion_chooser_class = Solidus::TestPromotionChooser
       end
 
       after do
-        Spree::Config.promotion_chooser_class = Spree::PromotionChooser
+        Solidus::Config.promotion_chooser_class = Solidus::PromotionChooser
       end
 
       it "uses the defined promotion chooser" do

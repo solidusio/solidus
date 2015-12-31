@@ -26,16 +26,16 @@ module Spree
 
       describe "stock location filtering" do
         let(:user) { create(:admin_user) }
-        let(:ability) { Spree::Ability.new(user) }
+        let(:ability) { Solidus::Ability.new(user) }
         let!(:sf_store) { StockLocation.create(name: "SF Store")}
 
         before do
-          ability.cannot :manage, Spree::StockLocation
-          ability.can :display, Spree::StockLocation, id: [warehouse.id]
-          ability.can :display, Spree::StockLocation, id: [ny_store.id, la_store.id]
+          ability.cannot :manage, Solidus::StockLocation
+          ability.can :display, Solidus::StockLocation, id: [warehouse.id]
+          ability.can :display, Solidus::StockLocation, id: [ny_store.id, la_store.id]
 
-          allow_any_instance_of(Spree::Admin::BaseController).to receive(:spree_current_user).and_return(user)
-          allow_any_instance_of(Spree::Admin::BaseController).to receive(:current_ability).and_return(ability)
+          allow_any_instance_of(Solidus::Admin::BaseController).to receive(:spree_current_user).and_return(user)
+          allow_any_instance_of(Solidus::Admin::BaseController).to receive(:current_ability).and_return(ability)
         end
 
         it "doesn't display stock locations the user doesn't have access to" do
@@ -303,7 +303,7 @@ module Spree
     end
 
     context "#ship" do
-      let(:stock_transfer) { Spree::StockTransfer.create(source_location: warehouse, destination_location: ny_store, created_by: create(:admin_user)) }
+      let(:stock_transfer) { Solidus::StockTransfer.create(source_location: warehouse, destination_location: ny_store, created_by: create(:admin_user)) }
       let(:transfer_variant) { create(:variant) }
       let(:warehouse_stock_item) { warehouse.stock_items.find_by(variant: transfer_variant) }
       let(:ny_stock_item) { ny_store.stock_items.find_by(variant: transfer_variant) }
@@ -327,7 +327,7 @@ module Spree
         it "makes stock movements for the transferred items" do
           subject
 
-          expect(Spree::StockMovement.count).to eq 1
+          expect(Solidus::StockMovement.count).to eq 1
           expect(warehouse_stock_item.reload.count_on_hand).to eq 0
         end
       end

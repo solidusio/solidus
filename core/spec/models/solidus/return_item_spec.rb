@@ -8,13 +8,13 @@ shared_examples "an invalid state transition" do |status, expected_status|
   end
 end
 
-describe Spree::ReturnItem, :type => :model do
+describe Solidus::ReturnItem, :type => :model do
 
-  all_reception_statuses = Spree::ReturnItem.state_machines[:reception_status].states.map(&:name).map(&:to_s)
-  all_acceptance_statuses = Spree::ReturnItem.state_machines[:acceptance_status].states.map(&:name).map(&:to_s)
+  all_reception_statuses = Solidus::ReturnItem.state_machines[:reception_status].states.map(&:name).map(&:to_s)
+  all_acceptance_statuses = Solidus::ReturnItem.state_machines[:acceptance_status].states.map(&:name).map(&:to_s)
 
   before do
-    allow_any_instance_of(Spree::Order).to receive(:return!).and_return(true)
+    allow_any_instance_of(Solidus::Order).to receive(:return!).and_return(true)
   end
 
   describe '#receive!' do
@@ -116,15 +116,15 @@ describe Spree::ReturnItem, :type => :model do
         before { inventory_unit.variant.stock_items.destroy_all }
 
         it "creates a new stock item for the inventory unit with a count of 1" do
-          expect { subject }.to change(Spree::StockItem, :count).by(1)
-          stock_item = Spree::StockItem.last
+          expect { subject }.to change(Solidus::StockItem, :count).by(1)
+          stock_item = Solidus::StockItem.last
           expect(stock_item.variant).to eq inventory_unit.variant
           expect(stock_item.count_on_hand).to eq 1
         end
 
       end
 
-      Spree::ReturnItem::INTERMEDIATE_RECEPTION_STATUSES.each do |status|
+      Solidus::ReturnItem::INTERMEDIATE_RECEPTION_STATUSES.each do |status|
         context "when the item was #{status}" do
           before { return_item.update_attributes!(reception_status: status) }
 
@@ -147,14 +147,14 @@ describe Spree::ReturnItem, :type => :model do
     let(:pre_tax_amount) { 21.22 }
     let(:return_item) { build(:return_item, pre_tax_amount: pre_tax_amount) }
 
-    it "returns a Spree::Money" do
-      expect(return_item.display_pre_tax_amount).to eq Spree::Money.new(pre_tax_amount)
+    it "returns a Solidus::Money" do
+      expect(return_item.display_pre_tax_amount).to eq Solidus::Money.new(pre_tax_amount)
     end
   end
 
   describe ".default_refund_amount_calculator" do
     it "defaults to the default refund amount calculator" do
-      expect(Spree::ReturnItem.refund_amount_calculator).to eq Spree::Calculator::Returns::DefaultRefundAmount
+      expect(Solidus::ReturnItem.refund_amount_calculator).to eq Solidus::Calculator::Returns::DefaultRefundAmount
     end
   end
 
@@ -166,7 +166,7 @@ describe Spree::ReturnItem, :type => :model do
       subject { build(:return_item, inventory_unit: inventory_unit) }
 
       context "not an exchange" do
-        it { expect(subject.pre_tax_amount).to eq Spree::Calculator::Returns::DefaultRefundAmount.new.compute(subject) }
+        it { expect(subject.pre_tax_amount).to eq Solidus::Calculator::Returns::DefaultRefundAmount.new.compute(subject) }
       end
 
       context "an exchange" do
@@ -186,7 +186,7 @@ describe Spree::ReturnItem, :type => :model do
   describe ".from_inventory_unit" do
     let(:inventory_unit) { build(:inventory_unit) }
 
-    subject { Spree::ReturnItem.from_inventory_unit(inventory_unit) }
+    subject { Solidus::ReturnItem.from_inventory_unit(inventory_unit) }
 
     context "with a cancelled return item" do
       let!(:return_item) { create(:return_item, inventory_unit: inventory_unit, reception_status: 'cancelled') }
@@ -487,7 +487,7 @@ describe Spree::ReturnItem, :type => :model do
 
   describe "#part_of_exchange?" do
     context "exchange variant exists, unexchanged sibling does not" do
-      before { allow(subject).to receive(:exchange_variant).and_return(mock_model(Spree::Variant)) }
+      before { allow(subject).to receive(:exchange_variant).and_return(mock_model(Solidus::Variant)) }
       it { expect(subject.part_of_exchange?).to eq true }
     end
     context "exchange variant does not exist, but unexchagned sibling does" do
@@ -502,7 +502,7 @@ describe Spree::ReturnItem, :type => :model do
 
   describe "#exchange_requested?" do
     context "exchange variant exists" do
-      before { allow(subject).to receive(:exchange_variant).and_return(mock_model(Spree::Variant)) }
+      before { allow(subject).to receive(:exchange_variant).and_return(mock_model(Solidus::Variant)) }
       it { expect(subject.exchange_requested?).to eq true }
     end
     context "exchange variant does not exist" do
@@ -513,7 +513,7 @@ describe Spree::ReturnItem, :type => :model do
 
   describe "#exchange_processed?" do
     context "exchange inventory unit exists" do
-      before { allow(subject).to receive(:exchange_inventory_unit).and_return(mock_model(Spree::InventoryUnit)) }
+      before { allow(subject).to receive(:exchange_inventory_unit).and_return(mock_model(Solidus::InventoryUnit)) }
       it { expect(subject.exchange_processed?).to eq true }
     end
     context "exchange inventory unit does not exist" do
@@ -549,14 +549,14 @@ describe Spree::ReturnItem, :type => :model do
   describe "#eligible_exchange_variants" do
     it "uses the exchange variant calculator to compute possible variants to exchange for" do
       return_item = build(:return_item)
-      expect(Spree::ReturnItem.exchange_variant_engine).to receive(:eligible_variants).with(return_item.variant, stock_locations: nil)
+      expect(Solidus::ReturnItem.exchange_variant_engine).to receive(:eligible_variants).with(return_item.variant, stock_locations: nil)
       return_item.eligible_exchange_variants
     end
   end
 
   describe ".exchange_variant_engine" do
     it "defaults to the same product calculator" do
-      expect(Spree::ReturnItem.exchange_variant_engine).to eq Spree::ReturnItem::ExchangeVariantEligibility::SameProduct
+      expect(Solidus::ReturnItem.exchange_variant_engine).to eq Solidus::ReturnItem::ExchangeVariantEligibility::SameProduct
     end
   end
 
@@ -590,10 +590,10 @@ describe Spree::ReturnItem, :type => :model do
     subject { return_item.build_exchange_inventory_unit }
 
     context "the return item is intended to be exchanged" do
-      before { allow(return_item).to receive(:exchange_variant).and_return(mock_model(Spree::Variant)) }
+      before { allow(return_item).to receive(:exchange_variant).and_return(mock_model(Solidus::Variant)) }
 
       context "an exchange inventory unit already exists" do
-        before { allow(return_item).to receive(:exchange_inventory_unit).and_return(mock_model(Spree::InventoryUnit)) }
+        before { allow(return_item).to receive(:exchange_inventory_unit).and_return(mock_model(Solidus::InventoryUnit)) }
         it { expect(subject).to be_nil }
       end
 

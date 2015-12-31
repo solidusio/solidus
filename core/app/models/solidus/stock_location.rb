@@ -1,5 +1,5 @@
 module Spree
-  class StockLocation < Spree::Base
+  class StockLocation < Solidus::Base
     class InvalidMovementError < StandardError; end
 
     has_many :shipments
@@ -9,8 +9,8 @@ module Spree
     has_many :user_stock_locations, dependent: :delete_all
     has_many :users, through: :user_stock_locations
 
-    belongs_to :state, class_name: 'Spree::State'
-    belongs_to :country, class_name: 'Spree::Country'
+    belongs_to :state, class_name: 'Solidus::State'
+    belongs_to :country, class_name: 'Solidus::Country'
 
     validates_presence_of :name
     validates_uniqueness_of :code, allow_blank: true, case_sensitive: false

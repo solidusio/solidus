@@ -40,7 +40,7 @@
     <fieldset class="no-border-bottom">
       <legend align="center"><%= Spree.t(:shipping_address) %></legend>
       <%= f.fields_for :ship_address do |sa_form| %>
-        <% if Spree::Config[:order_bill_address_used] %>
+        <% if Solidus::Config[:order_bill_address_used] %>
           <div class="field" style="position: absolute;margin-top: -15px;left: 0;">
             <span data-hook="use_billing">
               <%= check_box_tag 'order[use_billing]', '1', ((@order.bill_address.empty? && @order.ship_address.empty?) && @order.bill_address == @order.ship_address) %>
@@ -54,7 +54,7 @@
     </fieldset>
   </div>
 
-  <% if Spree::Config[:order_bill_address_used] %>
+  <% if Solidus::Config[:order_bill_address_used] %>
     <div class="omega six columns" data-hook="bill_address_wrapper">
       <fieldset class="no-border-bottom">
         <legend align="center"><%= Spree.t(:billing_address) %></legend>

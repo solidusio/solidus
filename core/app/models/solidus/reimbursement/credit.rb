@@ -1,7 +1,7 @@
 module Spree
-  class Reimbursement::Credit < Spree::Base
+  class Reimbursement::Credit < Solidus::Base
     class_attribute :default_creditable_class
-    self.default_creditable_class = Spree::StoreCredit
+    self.default_creditable_class = Solidus::StoreCredit
 
     belongs_to :reimbursement, inverse_of: :credits
     belongs_to :creditable, polymorphic: true
@@ -19,7 +19,7 @@ module Spree
     end
 
     def display_amount
-      Spree::Money.new(amount, { currency: creditable.try(:currency) || "USD" })
+      Solidus::Money.new(amount, { currency: creditable.try(:currency) || "USD" })
     end
   end
 end

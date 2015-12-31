@@ -1,7 +1,7 @@
 module Spree
   module Admin
     class UsersController < ResourceController
-      rescue_from Spree::Core::DestroyWithOrdersError, with: :user_destroy_with_orders_error
+      rescue_from Solidus::Core::DestroyWithOrdersError, with: :user_destroy_with_orders_error
 
       after_action :sign_in_if_change_own_password, only: :update
 
@@ -58,17 +58,17 @@ module Spree
 
       def orders
         params[:q] ||= {}
-        @search = Spree::Order.reverse_chronological.ransack(params[:q].merge(user_id_eq: @user.id))
-        @orders = @search.result.page(params[:page]).per(Spree::Config[:admin_products_per_page])
+        @search = Solidus::Order.reverse_chronological.ransack(params[:q].merge(user_id_eq: @user.id))
+        @orders = @search.result.page(params[:page]).per(Solidus::Config[:admin_products_per_page])
       end
 
       def items
         params[:q] ||= {}
-        @search = Spree::Order.includes(
+        @search = Solidus::Order.includes(
           line_items: {
             variant: [:product, { option_values: :option_type }]
           }).ransack(params[:q].merge(user_id_eq: @user.id))
-        @orders = @search.result.page(params[:page]).per(Spree::Config[:admin_products_per_page])
+        @orders = @search.result.page(params[:page]).per(Solidus::Config[:admin_products_per_page])
       end
 
       def generate_api_key
@@ -104,7 +104,7 @@ module Spree
                               .limit(params[:limit] || 100)
           else
             @search = Spree.user_class.ransack(params[:q])
-            @collection = @search.result.page(params[:page]).per(Spree::Config[:admin_products_per_page])
+            @collection = @search.result.page(params[:page]).per(Solidus::Config[:admin_products_per_page])
           end
         end
 
@@ -115,14 +115,14 @@ module Spree
             attributes |= [:email]
           end
 
-          if can? :manage, Spree::Role
+          if can? :manage, Solidus::Role
             attributes += [{ spree_role_ids: [] }]
           end
 
           params.require(:user).permit(attributes)
         end
 
-        # handling raise from Spree::Admin::ResourceController#destroy
+        # handling raise from Solidus::Admin::ResourceController#destroy
         def user_destroy_with_orders_error
           invoke_callbacks(:destroy, :fails)
           render :status => :forbidden, :text => Spree.t(:error_user_destroy_with_orders)
@@ -150,12 +150,12 @@ module Spree
         end
 
         def load_roles
-          @roles = Spree::Role.all
+          @roles = Solidus::Role.all
           @user_roles = @user.spree_roles
         end
 
         def load_stock_locations
-          @stock_locations = Spree::StockLocation.all
+          @stock_locations = Solidus::StockLocation.all
         end
 
         def set_roles
@@ -165,14 +165,14 @@ module Spree
           # if the roles should be cleared, or unchanged again here. The roles form should probably hit a seperate
           # action or controller to remedy this.
           if user_params[:spree_role_ids]
-            @user.spree_roles = Spree::Role.where(id: user_params[:spree_role_ids])
-          elsif can?(:manage, Spree::Role)
+            @user.spree_roles = Solidus::Role.where(id: user_params[:spree_role_ids])
+          elsif can?(:manage, Solidus::Role)
             @user.spree_roles = []
           end
         end
 
         def set_stock_locations
-          @user.stock_locations = Spree::StockLocation.where(id: (params[:user][:stock_location_ids] || []))
+          @user.stock_locations = Solidus::StockLocation.where(id: (params[:user][:stock_location_ids] || []))
         end
     end
   end

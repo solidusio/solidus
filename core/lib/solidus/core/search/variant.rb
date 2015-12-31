@@ -3,7 +3,7 @@ module Spree
     module Search
 
       #
-      # NOTE: Use Spree::Config.variant_search_class rather than referencing this
+      # NOTE: Use Solidus::Config.variant_search_class rather than referencing this
       # directly.
       #
 
@@ -18,7 +18,7 @@ module Spree
           :option_values_name_cont,
         ]
 
-        def initialize(query_string, scope: Spree::Variant.all)
+        def initialize(query_string, scope: Solidus::Variant.all)
           @query_string = query_string
           @scope = scope
         end
@@ -37,7 +37,7 @@ module Spree
             @scope.ransack(search_term_params(word)).result.pluck(:id)
           end
 
-          Spree::Variant.where(id: matches.inject(:&))
+          Solidus::Variant.where(id: matches.inject(:&))
         end
 
         private

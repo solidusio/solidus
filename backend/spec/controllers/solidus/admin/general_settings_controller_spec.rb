@@ -1,11 +1,11 @@
 require 'spec_helper'
 
-describe Spree::Admin::GeneralSettingsController, type: :controller do
+describe Solidus::Admin::GeneralSettingsController, type: :controller do
   let(:user) { create(:user) }
 
   before do
     allow(controller).to receive_messages :spree_current_user => user
-    user.spree_roles << Spree::Role.find_or_create_by(name: 'admin')
+    user.spree_roles << Solidus::Role.find_or_create_by(name: 'admin')
   end
 
   describe '#clear_cache' do
@@ -23,7 +23,7 @@ describe Spree::Admin::GeneralSettingsController, type: :controller do
     end
 
     context 'when callback implemented' do
-      Spree::Admin::GeneralSettingsController.class_eval do
+      Solidus::Admin::GeneralSettingsController.class_eval do
         custom_callback(:clear_cache).after :foo
 
         def foo

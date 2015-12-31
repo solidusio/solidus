@@ -55,16 +55,16 @@ Disallow: /password
     def setup_assets
       @lib_name = 'spree'
       %w{javascripts stylesheets images}.each do |path|
-        empty_directory "vendor/assets/#{path}/spree/frontend" if defined? Spree::Frontend || Rails.env.test?
-        empty_directory "vendor/assets/#{path}/spree/backend" if defined? Spree::Backend || Rails.env.test?
+        empty_directory "vendor/assets/#{path}/spree/frontend" if defined? Solidus::Frontend || Rails.env.test?
+        empty_directory "vendor/assets/#{path}/spree/backend" if defined? Solidus::Backend || Rails.env.test?
       end
 
-      if defined? Spree::Frontend || Rails.env.test?
+      if defined? Solidus::Frontend || Rails.env.test?
         template "vendor/assets/javascripts/spree/frontend/all.js"
         template "vendor/assets/stylesheets/spree/frontend/all.css"
       end
 
-      if defined? Spree::Backend || Rails.env.test?
+      if defined? Solidus::Backend || Rails.env.test?
         template "vendor/assets/javascripts/spree/backend/all.js"
         template "vendor/assets/stylesheets/spree/backend/all.css"
       end
@@ -101,8 +101,8 @@ Disallow: /password
     def include_seed_data
       append_file "db/seeds.rb", <<-SEEDS
 \n
-Spree::Core::Engine.load_seed if defined?(Spree::Core)
-Spree::Auth::Engine.load_seed if defined?(Spree::Auth)
+Solidus::Core::Engine.load_seed if defined?(Solidus::Core)
+Solidus::Auth::Engine.load_seed if defined?(Solidus::Auth)
       SEEDS
     end
 
@@ -163,11 +163,11 @@ Spree::Auth::Engine.load_seed if defined?(Spree::Auth)
       insert_into_file File.join('config', 'routes.rb'), :after => "Rails.application.routes.draw do\n" do
         %Q{
   # This line mounts Spree's routes at the root of your application.
-  # This means, any requests to URLs such as /products, will go to Spree::ProductsController.
+  # This means, any requests to URLs such as /products, will go to Solidus::ProductsController.
   # If you would like to change where this engine is mounted, simply change the :at option to something different.
   #
   # We ask that you don't use the :as option here, as Spree relies on it being the default of "spree"
-  mount Spree::Core::Engine, :at => '/'
+  mount Solidus::Core::Engine, :at => '/'
         }
       end
 
@@ -175,7 +175,7 @@ Spree::Auth::Engine.load_seed if defined?(Spree::Auth)
         puts "*" * 50
         puts "We added the following line to your application's config/routes.rb file:"
         puts " "
-        puts "    mount Spree::Core::Engine, :at => '/'"
+        puts "    mount Solidus::Core::Engine, :at => '/'"
       end
     end
 

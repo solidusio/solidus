@@ -8,9 +8,9 @@
 #
 # Examples:
 #
-#   # Spree::Base includes Preferable and defines preferences as a serialized
+#   # Solidus::Base includes Preferable and defines preferences as a serialized
 #   # column.
-#   class Settings < Spree::Base
+#   class Settings < Solidus::Base
 #     preference :color,       :string,  default: 'red'
 #     preference :temperature, :integer, default: 21
 #   end
@@ -31,11 +31,11 @@
 #
 #   # Save the changes. All handled by activerecord
 #   s.save!
-module Spree::Preferences::Preferable
+module Solidus::Preferences::Preferable
   extend ActiveSupport::Concern
 
   included do
-    extend Spree::Preferences::PreferableClassMethods
+    extend Solidus::Preferences::PreferableClassMethods
   end
 
   # Get a preference

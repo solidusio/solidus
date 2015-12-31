@@ -1,5 +1,5 @@
 module Spree
-  class TaxonsController < Spree::StoreController
+  class TaxonsController < Solidus::StoreController
     rescue_from ActiveRecord::RecordNotFound, :with => :render_404
     helper 'spree/products'
 
@@ -11,7 +11,7 @@ module Spree
 
       @searcher = build_searcher(params.merge(taxon: @taxon.id, include_images: true))
       @products = @searcher.retrieve_products
-      @taxonomies = Spree::Taxonomy.includes(root: :children)
+      @taxonomies = Solidus::Taxonomy.includes(root: :children)
     end
 
     private

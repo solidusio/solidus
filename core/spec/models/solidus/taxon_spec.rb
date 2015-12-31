@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe Spree::Taxon, :type => :model do
+describe Solidus::Taxon, :type => :model do
   let(:taxon) { FactoryGirl.build(:taxon, :name => "Ruby on Rails") }
 
   describe '#to_param' do

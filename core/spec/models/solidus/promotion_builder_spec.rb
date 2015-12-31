@@ -1,11 +1,11 @@
 require 'spec_helper'
 
-describe Spree::PromotionBuilder do
+describe Solidus::PromotionBuilder do
   let(:promotion) { build(:promotion) }
   let(:base_code) { 'abc' }
   let(:number_of_codes) { 1 }
   let(:promotion_attrs) { { name: 'some promo' } }
-  let(:builder) { Spree::PromotionBuilder.new(
+  let(:builder) { Solidus::PromotionBuilder.new(
     {
       base_code: base_code,
       number_of_codes: number_of_codes

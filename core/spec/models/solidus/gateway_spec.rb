@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Spree::Gateway, :type => :model do
+describe Solidus::Gateway, :type => :model do
   class Provider
     def initialize(options)
     end
@@ -12,7 +12,7 @@ describe Spree::Gateway, :type => :model do
     def credit; 'credit'; end
   end
 
-  class TestGateway < Spree::Gateway
+  class TestGateway < Solidus::Gateway
     def provider_class
       Provider
     end
@@ -44,7 +44,7 @@ describe Spree::Gateway, :type => :model do
 
   context "fetching payment sources" do
     let(:user) { create :user }
-    let(:order) { Spree::Order.create(user: user, completed_at: completed_at) }
+    let(:order) { Solidus::Order.create(user: user, completed_at: completed_at) }
 
     let(:payment_method) { create(:credit_card_payment_method) }
 
@@ -88,12 +88,12 @@ describe Spree::Gateway, :type => :model do
   end
 
   context 'using preference_source' do
-    let(:klass){ Spree::Gateway::Bogus }
+    let(:klass){ Solidus::Gateway::Bogus }
     before do
-      Spree::Config.static_model_preferences.add(klass, 'test_preference_source', server: 'bar')
+      Solidus::Config.static_model_preferences.add(klass, 'test_preference_source', server: 'bar')
     end
     after do
-      Spree::Config.static_model_preferences.for_class(klass).clear
+      Solidus::Config.static_model_preferences.for_class(klass).clear
     end
     let(:payment_method){ create(:credit_card_payment_method, preference_source: 'test_preference_source') }
 

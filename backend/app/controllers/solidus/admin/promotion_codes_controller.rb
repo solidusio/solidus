@@ -1,10 +1,10 @@
 module Spree
   module Admin
-    class PromotionCodesController < Spree::Admin::BaseController
+    class PromotionCodesController < Solidus::Admin::BaseController
       require 'csv'
 
       def index
-        @promotion = Spree::Promotion.accessible_by(current_ability, :read).find(params[:promotion_id])
+        @promotion = Solidus::Promotion.accessible_by(current_ability, :read).find(params[:promotion_id])
 
         respond_to do |format|
           format.csv do

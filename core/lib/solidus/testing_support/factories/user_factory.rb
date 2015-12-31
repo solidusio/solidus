@@ -17,7 +17,7 @@ FactoryGirl.define do
     end
 
     factory :admin_user do
-      spree_roles { [Spree::Role.find_by(name: 'admin') || create(:role, name: 'admin')] }
+      spree_roles { [Solidus::Role.find_by(name: 'admin') || create(:role, name: 'admin')] }
     end
 
     factory :user_with_addreses do |u|

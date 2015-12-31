@@ -64,7 +64,7 @@ module Spree
             end
 
             it "creates a transfer item" do
-              expect { subject }.to change { Spree::TransferItem.count }.by(1)
+              expect { subject }.to change { Solidus::TransferItem.count }.by(1)
             end
           end
 
@@ -79,7 +79,7 @@ module Spree
             end
 
             it "does not create a transfer item" do
-              expect { subject }.to_not change { Spree::TransferItem.count }
+              expect { subject }.to_not change { Solidus::TransferItem.count }
             end
           end
         end
@@ -128,7 +128,7 @@ module Spree
           end
 
           it "deletes the transfer item" do
-            expect { subject }.to change { Spree::TransferItem.count }.by(-1)
+            expect { subject }.to change { Solidus::TransferItem.count }.by(-1)
           end
         end
 
@@ -143,7 +143,7 @@ module Spree
           end
 
           it "does not delete the transfer item" do
-            expect { subject }.to_not change { Spree::TransferItem.count }
+            expect { subject }.to_not change { Solidus::TransferItem.count }
           end
         end
       end

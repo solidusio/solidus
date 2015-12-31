@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-module Spree::Api
+module Solidus::Api
   describe OrdersController, :type => :controller do
     render_views
 
@@ -12,8 +12,8 @@ module Spree::Api
       let!(:order) { create(:order_with_line_items, :line_items_count => 1) }
       let!(:promotion) do
         promotion = create(:promotion, name: "10% off", code: "10off")
-        calculator = Spree::Calculator::FlatPercentItemTotal.create(preferred_flat_percent: "10")
-        action = Spree::Promotion::Actions::CreateItemAdjustments.create(calculator: calculator)
+        calculator = Solidus::Calculator::FlatPercentItemTotal.create(preferred_flat_percent: "10")
+        action = Solidus::Promotion::Actions::CreateItemAdjustments.create(calculator: calculator)
         promotion.actions << action
         promotion
       end

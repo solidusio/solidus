@@ -8,14 +8,14 @@ module Spree
     #
     #   require 'spree/testing_support/controller_requests'
     #   RSpec.configure do |c|
-    #     c.include Spree::TestingSupport::ControllerRequests, :type => :controller
+    #     c.include Solidus::TestingSupport::ControllerRequests, :type => :controller
     #   end
     #
     # Then, in your controller tests, you can access spree routes like this:
     #
     #   require 'spec_helper'
     #
-    #   describe Spree::ProductsController do
+    #   describe Solidus::ProductsController do
     #     it "can see all the products" do
     #       spree_get :index
     #     end
@@ -28,7 +28,7 @@ module Spree
       extend ActiveSupport::Concern
 
       included do
-        routes { Spree::Core::Engine.routes }
+        routes { Solidus::Core::Engine.routes }
       end
 
       def spree_get(action, parameters = nil, session = nil, flash = nil)

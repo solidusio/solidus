@@ -9,7 +9,7 @@ module Spree
       helper 'spree/promotion_rules'
 
       def create
-        @promotion_builder = Spree::PromotionBuilder.new(
+        @promotion_builder = Solidus::PromotionBuilder.new(
           permitted_promo_builder_params.merge(user: try_spree_current_user),
           permitted_resource_params,
         )
@@ -27,7 +27,7 @@ module Spree
       private
 
         def load_bulk_code_information
-          @promotion_builder = Spree::PromotionBuilder.new(
+          @promotion_builder = Solidus::PromotionBuilder.new(
             base_code: @promotion.codes.first.try!(:value),
             number_of_codes: @promotion.codes.count,
           )
@@ -39,7 +39,7 @@ module Spree
 
         def load_data
           @calculators = Rails.application.config.spree.calculators.promotion_actions_create_adjustments
-          @promotion_categories = Spree::PromotionCategory.order(:name)
+          @promotion_categories = Solidus::PromotionCategory.order(:name)
         end
 
         def collection
@@ -52,7 +52,7 @@ module Spree
           @collection = @search.result(distinct: true).
             includes(promotion_includes).
             page(params[:page]).
-            per(params[:per_page] || Spree::Config[:promotions_per_page])
+            per(params[:per_page] || Solidus::Config[:promotions_per_page])
 
           @collection
         end

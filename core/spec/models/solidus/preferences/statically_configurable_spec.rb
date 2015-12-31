@@ -29,7 +29,7 @@ module Spree
     end
 
     before do
-      Spree::Config.static_model_preferences.add(klass, 'credentials', color: 'red')
+      Solidus::Config.static_model_preferences.add(klass, 'credentials', color: 'red')
     end
 
     describe "available_preference_sources" do

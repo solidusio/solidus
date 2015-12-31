@@ -1,6 +1,6 @@
 class UniqueShippingMethodCategories < ActiveRecord::Migration
   def change
-    klass   = Spree::ShippingMethodCategory
+    klass   = Solidus::ShippingMethodCategory
     columns = %w[shipping_category_id shipping_method_id]
 
     say "Find duplicate #{klass} records"

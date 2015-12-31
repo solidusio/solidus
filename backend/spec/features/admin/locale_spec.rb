@@ -15,12 +15,12 @@ describe "setting locale", :type => :feature do
         },
         :listing_orders => "Ordres",
       })
-    Spree::Backend::Config[:locale] = "fr"
+    Solidus::Backend::Config[:locale] = "fr"
   end
 
   after do
     I18n.locale = I18n.default_locale
-    Spree::Backend::Config[:locale] = "en"
+    Solidus::Backend::Config[:locale] = "en"
   end
 
   it "should be in french" do

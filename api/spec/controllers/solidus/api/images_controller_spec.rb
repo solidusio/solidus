@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 module Spree
-  describe Spree::Api::ImagesController, :type => :controller do
+  describe Solidus::Api::ImagesController, :type => :controller do
     render_views
 
     let!(:product) { create(:product) }
@@ -20,7 +20,7 @@ module Spree
         expect do
           api_post :create,
                    :image => { :attachment => upload_image('thinking-cat.jpg'),
-                               :viewable_type => 'Spree::Variant',
+                               :viewable_type => 'Solidus::Variant',
                                :viewable_id => product.master.to_param  },
                    :product_id => product.id
           expect(response.status).to eq(201)

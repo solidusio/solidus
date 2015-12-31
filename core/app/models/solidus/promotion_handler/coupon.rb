@@ -49,7 +49,7 @@ module Spree
       private
 
       def promotion_code
-        @promotion_code ||= Spree::PromotionCode.where(value: order.coupon_code.downcase).first
+        @promotion_code ||= Solidus::PromotionCode.where(value: order.coupon_code.downcase).first
       end
 
       def handle_present_promotion(promotion)
@@ -97,7 +97,7 @@ module Spree
         discount ||= order.adjustments.promotion.detect(&detector)
 
         # Check for applied line items.
-        created_line_items = promotion.actions.detect { |a| a.type == 'Spree::Promotion::Actions::CreateLineItems' }
+        created_line_items = promotion.actions.detect { |a| a.type == 'Solidus::Promotion::Actions::CreateLineItems' }
 
         if (discount && discount.eligible) || created_line_items
           order.update_totals

@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Spree::StockMovement, :type => :model do
+describe Solidus::StockMovement, :type => :model do
   let(:stock_location) { create(:stock_location_with_items) }
   let(:stock_item) { stock_location.stock_items.order(:id).first }
   subject { build(:stock_movement, stock_item: stock_item) }
@@ -17,7 +17,7 @@ describe Spree::StockMovement, :type => :model do
   end
 
   it 'does not update count on hand when track inventory levels is false' do
-    Spree::Config[:track_inventory_levels] = false
+    Solidus::Config[:track_inventory_levels] = false
     subject.quantity = 1
     subject.save
     stock_item.reload

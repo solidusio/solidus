@@ -1,5 +1,5 @@
 module Spree
-  class Order < Spree::Base
+  class Order < Solidus::Base
     module CurrencyUpdater
       extend ActiveSupport::Concern
 

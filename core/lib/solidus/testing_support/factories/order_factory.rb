@@ -1,5 +1,5 @@
 FactoryGirl.define do
-  factory :order, class: Spree::Order do
+  factory :order, class: Solidus::Order do
     user
     bill_address
     ship_address
@@ -82,7 +82,7 @@ FactoryGirl.define do
                 shipment.inventory_units.update_all state: 'shipped'
                 shipment.update_columns(state: 'shipped', shipped_at: Time.current)
                 if evaluator.with_cartons
-                  Spree::Carton.create!(
+                  Solidus::Carton.create!(
                     stock_location: shipment.stock_location,
                     address: shipment.address,
                     shipping_method: shipment.shipping_method,
@@ -99,7 +99,7 @@ FactoryGirl.define do
     end
   end
 
-  factory :completed_order_with_promotion, parent: :completed_order_with_totals, class: "Spree::Order" do
+  factory :completed_order_with_promotion, parent: :completed_order_with_totals, class: "Solidus::Order" do
     transient do
       promotion nil
       promotion_code nil

@@ -3,8 +3,8 @@
 require 'money'
 
 module Spree
-  # Spree::Money is a relatively thin wrapper around Monetize which handles
-  # formatting via Spree::Config.
+  # Solidus::Money is a relatively thin wrapper around Monetize which handles
+  # formatting via Solidus::Config.
   class Money
     class <<self
       attr_accessor :default_formatting_rules
@@ -33,8 +33,8 @@ module Spree
     # @option options [:before, :after] symbol_position the position of the
     #   currency symbol
     def initialize(amount, options={})
-      @money = Monetize.parse([amount, (options[:currency] || Spree::Config[:currency])].join)
-      @options = Spree::Money.default_formatting_rules.merge(options)
+      @money = Monetize.parse([amount, (options[:currency] || Solidus::Config[:currency])].join)
+      @options = Solidus::Money.default_formatting_rules.merge(options)
     end
 
     # @return [String] the value of this money object formatted according to

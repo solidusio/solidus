@@ -22,14 +22,14 @@ module Spree
 
     context "tries to save invalid payment" do
       it "doesn't break, responds nicely" do
-        spree_post :create, :payment_method => { :name => "", :type => "Spree::Gateway::Bogus" }
+        spree_post :create, :payment_method => { :name => "", :type => "Solidus::Gateway::Bogus" }
       end
     end
 
     it "can create a payment method of a valid type" do
       expect {
-        spree_post :create, :payment_method => { :name => "Test Method", :type => "Spree::Gateway::Bogus" }
-      }.to change(Spree::PaymentMethod, :count).by(1)
+        spree_post :create, :payment_method => { :name => "Test Method", :type => "Solidus::Gateway::Bogus" }
+      }.to change(Solidus::PaymentMethod, :count).by(1)
 
       expect(response).to be_redirect
       expect(response).to redirect_to spree.edit_admin_payment_method_path(assigns(:payment_method))
@@ -37,8 +37,8 @@ module Spree
 
     it "can not create a payment method of an invalid type" do
       expect {
-        spree_post :create, :payment_method => { :name => "Invalid Payment Method", :type => "Spree::InvalidType" }
-      }.to change(Spree::PaymentMethod, :count).by(0)
+        spree_post :create, :payment_method => { :name => "Invalid Payment Method", :type => "Solidus::InvalidType" }
+      }.to change(Solidus::PaymentMethod, :count).by(0)
 
       expect(response).to be_redirect
       expect(response).to redirect_to spree.new_admin_payment_method_path

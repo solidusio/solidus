@@ -1,6 +1,6 @@
 module Spree
   module Admin
-    class CancellationsController < Spree::Admin::BaseController
+    class CancellationsController < Solidus::Admin::BaseController
       before_filter :load_order, :only => [:index, :short_ship]
 
       def index
@@ -9,7 +9,7 @@ module Spree
 
       def short_ship
         inventory_unit_ids = params[:inventory_unit_ids] || []
-        inventory_units = Spree::InventoryUnit.where(id: inventory_unit_ids)
+        inventory_units = Solidus::InventoryUnit.where(id: inventory_unit_ids)
 
         if inventory_units.size != inventory_unit_ids.size
           flash[:error] = Spree.t(:unable_to_find_all_inventory_units)
@@ -37,7 +37,7 @@ module Spree
       end
 
       def model_class
-        Spree::OrderCancellations
+        Solidus::OrderCancellations
       end
     end
   end

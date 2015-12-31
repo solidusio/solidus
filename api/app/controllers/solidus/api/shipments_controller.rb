@@ -1,6 +1,6 @@
 module Spree
   module Api
-    class ShipmentsController < Spree::Api::BaseController
+    class ShipmentsController < Solidus::Api::BaseController
       before_filter :find_order_on_create, only: :create
       before_filter :find_shipment, only: [:update, :ship, :ready, :add, :remove]
       before_action :load_transfer_params, only: [:transfer_to_location, :transfer_to_shipment]
@@ -9,7 +9,7 @@ module Spree
 
       def mine
         if current_api_user
-          @shipments = Spree::Shipment
+          @shipments = Solidus::Shipment
             .reverse_chronological
             .joins(:order)
             .where(spree_orders: {user_id: current_api_user.id})
@@ -23,7 +23,7 @@ module Spree
       def create
         # TODO Can remove conditional here once deprecated #find_order is removed.
         unless @order.present?
-          @order = Spree::Order.find_by!(number: params[:shipment][:order_id])
+          @order = Solidus::Order.find_by!(number: params[:shipment][:order_id])
           authorize! :read, @order
         end
         authorize! :create, Shipment
@@ -84,13 +84,13 @@ module Spree
       end
 
       def transfer_to_location
-        @stock_location = Spree::StockLocation.find(params[:stock_location_id])
+        @stock_location = Solidus::StockLocation.find(params[:stock_location_id])
         @original_shipment.transfer_to_location(@variant, @quantity, @stock_location)
         render json: {success: true, message: Spree.t(:shipment_transfer_success)}, status: 201
       end
 
       def transfer_to_shipment
-        @target_shipment = Spree::Shipment.find_by!(number: params[:target_shipment_number])
+        @target_shipment = Solidus::Shipment.find_by!(number: params[:target_shipment_number])
         @original_shipment.transfer_to_shipment(@variant, @quantity, @target_shipment)
         render json: {success: true, message: Spree.t(:shipment_transfer_success)}, status: 201
       end
@@ -98,9 +98,9 @@ module Spree
       private
 
       def load_transfer_params
-        @original_shipment         = Spree::Shipment.where(number: params[:original_shipment_number]).first
+        @original_shipment         = Solidus::Shipment.where(number: params[:original_shipment_number]).first
         @order                     = @original_shipment.order
-        @variant                   = Spree::Variant.find(params[:variant_id])
+        @variant                   = Solidus::Variant.find(params[:variant_id])
         @quantity                  = params[:quantity].to_i
         authorize! :read, @original_shipment
         authorize! :create, Shipment
@@ -109,7 +109,7 @@ module Spree
       def find_order_on_create
         # TODO Can remove conditional here once deprecated #find_order is removed.
         unless @order.present?
-          @order = Spree::Order.find_by!(number: params[:shipment][:order_id])
+          @order = Solidus::Order.find_by!(number: params[:shipment][:order_id])
           authorize! :read, @order
         end
       end
@@ -118,7 +118,7 @@ module Spree
         if @order.present?
           @shipment = @order.shipments.find_by!(number: params[:id])
         else
-          @shipment = Spree::Shipment.readonly(false).find_by!(number: params[:id])
+          @shipment = Solidus::Shipment.readonly(false).find_by!(number: params[:id])
           @order = @shipment.order
         end
         authorize! :update, @shipment
@@ -138,7 +138,7 @@ module Spree
       end
 
       def variant
-        @variant ||= Spree::Variant.unscoped.find(params.fetch(:variant_id))
+        @variant ||= Solidus::Variant.unscoped.find(params.fetch(:variant_id))
       end
 
       def mine_includes

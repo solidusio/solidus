@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Spree::PermissionSets::UserManagement do
+describe Solidus::PermissionSets::UserManagement do
   let(:ability) { DummyAbility.new }
 
   subject { ability }
@@ -26,8 +26,8 @@ describe Spree::PermissionSets::UserManagement do
     it { is_expected.not_to be_able_to(:delete, Spree.user_class) }
     it { is_expected.not_to be_able_to(:destroy, Spree.user_class) }
 
-    it { is_expected.to be_able_to(:manage, Spree::StoreCredit) }
-    it { is_expected.to be_able_to(:display, Spree::Role) }
+    it { is_expected.to be_able_to(:manage, Solidus::StoreCredit) }
+    it { is_expected.to be_able_to(:display, Solidus::Role) }
   end
 
   context "when not activated" do
@@ -41,8 +41,8 @@ describe Spree::PermissionSets::UserManagement do
     it { is_expected.not_to be_able_to(:orders, Spree.user_class) }
     it { is_expected.not_to be_able_to(:items, Spree.user_class) }
     it { is_expected.not_to be_able_to(:destroy, Spree.user_class) }
-    it { is_expected.not_to be_able_to(:manage, Spree::StoreCredit) }
-    it { is_expected.not_to be_able_to(:display, Spree::Role) }
+    it { is_expected.not_to be_able_to(:manage, Solidus::StoreCredit) }
+    it { is_expected.not_to be_able_to(:display, Solidus::Role) }
   end
 end
 

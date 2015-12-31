@@ -1,8 +1,8 @@
 require 'spec_helper'
 
-describe Spree::Calculator::FlatPercentItemTotal, :type => :model do
-  let(:calculator) { Spree::Calculator::FlatPercentItemTotal.new }
-  let(:line_item) { mock_model Spree::LineItem }
+describe Solidus::Calculator::FlatPercentItemTotal, :type => :model do
+  let(:calculator) { Solidus::Calculator::FlatPercentItemTotal.new }
+  let(:line_item) { mock_model Solidus::LineItem }
 
   before { allow(calculator).to receive_messages preferred_flat_percent: 10 }
 

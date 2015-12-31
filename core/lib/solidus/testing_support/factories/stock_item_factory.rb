@@ -1,5 +1,5 @@
 FactoryGirl.define do
-  factory :stock_item, class: Spree::StockItem do
+  factory :stock_item, class: Solidus::StockItem do
     backorderable true
     stock_location
     variant

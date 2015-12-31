@@ -1,5 +1,5 @@
-class Spree::Admin::ResourceController < Spree::Admin::BaseController
-  include Spree::Backend::Callbacks
+class Solidus::Admin::ResourceController < Solidus::Admin::BaseController
+  include Solidus::Backend::Callbacks
 
   helper_method :new_object_url, :edit_object_url, :object_url, :collection_url
   before_action :load_resource, except: :update_positions
@@ -119,7 +119,7 @@ class Spree::Admin::ResourceController < Spree::Admin::BaseController
     end
 
     def model_class
-      "Spree::#{controller_name.classify}".constantize
+      "Solidus::#{controller_name.classify}".constantize
     end
 
     def model_name

@@ -5,7 +5,7 @@ module Spree
         attr_reader :product, :product_attrs, :variants_attrs, :options_attrs
 
         def initialize(product, product_params, options = {})
-          @product = product || Spree::Product.new(product_params)
+          @product = product || Solidus::Product.new(product_params)
 
           @product_attrs = product_params
           @variants_attrs = options[:variants_attrs] || []
@@ -46,7 +46,7 @@ module Spree
         private
           def set_up_options
             options_attrs.each do |name|
-              option_type = Spree::OptionType.where(name: name).first_or_initialize do |option_type|
+              option_type = Solidus::OptionType.where(name: name).first_or_initialize do |option_type|
                 option_type.presentation = name
                 option_type.save!
               end

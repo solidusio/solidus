@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Spree::ReimbursementTaxCalculator, :type => :model do
+describe Solidus::ReimbursementTaxCalculator, :type => :model do
 
   let!(:tax_rate) { nil }
 
@@ -9,7 +9,7 @@ describe Spree::ReimbursementTaxCalculator, :type => :model do
   let(:line_item) { return_item.inventory_unit.line_item }
 
   subject do
-    Spree::ReimbursementTaxCalculator.call(reimbursement)
+    Solidus::ReimbursementTaxCalculator.call(reimbursement)
   end
 
   context 'without taxes' do

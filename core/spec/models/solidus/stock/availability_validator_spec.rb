@@ -3,7 +3,7 @@ require 'spec_helper'
 module Spree
   module Stock
     describe AvailabilityValidator do
-      let(:validator) { Spree::Stock::AvailabilityValidator.new }
+      let(:validator) { Solidus::Stock::AvailabilityValidator.new }
 
       subject { validator.validate(line_item) }
 
@@ -35,7 +35,7 @@ module Spree
 
         context "has stock in all stock locations" do
           before do
-            Spree::StockItem.where(variant_id: line_item.variant_id).update_all(count_on_hand: 10, backorderable: false)
+            Solidus::StockItem.where(variant_id: line_item.variant_id).update_all(count_on_hand: 10, backorderable: false)
           end
 
           include_examples "passes validation"
@@ -43,7 +43,7 @@ module Spree
 
         context "doesn't have stock in any stock location" do
           before do
-            Spree::StockItem.where(variant_id: line_item.variant_id).update_all(count_on_hand: 0, backorderable: false)
+            Solidus::StockItem.where(variant_id: line_item.variant_id).update_all(count_on_hand: 0, backorderable: false)
           end
 
           include_examples "fails validation"
@@ -58,7 +58,7 @@ module Spree
 
           before do
             variant_ids = order.line_items.map(&:variant_id)
-            Spree::StockItem.where(variant_id: variant_ids).update_all(count_on_hand: 10, backorderable: false)
+            Solidus::StockItem.where(variant_id: variant_ids).update_all(count_on_hand: 10, backorderable: false)
           end
 
           include_examples "passes validation"

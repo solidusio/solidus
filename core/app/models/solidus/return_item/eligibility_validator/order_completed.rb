@@ -1,5 +1,5 @@
 module Spree
-  class ReturnItem::EligibilityValidator::OrderCompleted < Spree::ReturnItem::EligibilityValidator::BaseValidator
+  class ReturnItem::EligibilityValidator::OrderCompleted < Solidus::ReturnItem::EligibilityValidator::BaseValidator
     def eligible_for_return?
       if @return_item.inventory_unit.order.completed?
         return true

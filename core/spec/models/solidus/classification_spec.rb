@@ -27,7 +27,7 @@ module Spree
 
     it "has a valid fixtures" do
       expect positions_to_be_valid(taxon_with_5_products)
-      expect(Spree::Classification.count).to eq 5
+      expect(Solidus::Classification.count).to eq 5
     end
 
     context "removing product from taxon" do

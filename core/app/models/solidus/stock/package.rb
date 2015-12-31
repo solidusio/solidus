@@ -4,8 +4,8 @@ module Spree
       attr_reader :stock_location, :contents
       attr_accessor :shipping_rates
 
-      # @param stock_location [Spree::StockLocation] the stock location this package originates from
-      # @param contents [Array<Spree::Stock::ContentItem>] the contents of this package
+      # @param stock_location [Solidus::StockLocation] the stock location this package originates from
+      # @param contents [Array<Solidus::Stock::ContentItem>] the contents of this package
       def initialize(stock_location, contents=[])
         @stock_location = stock_location
         @contents = contents
@@ -14,7 +14,7 @@ module Spree
 
       # Adds an inventory unit to this package.
       #
-      # @param inventory_unit [Spree::InventoryUnit] an inventory unit to be
+      # @param inventory_unit [Solidus::InventoryUnit] an inventory unit to be
       #   added to this package
       # @param state [:on_hand, :backordered] the state of the item to be
       #   added to this package
@@ -24,7 +24,7 @@ module Spree
 
       # Adds multiple inventory units to this package.
       #
-      # @param inventory_units [Array<Spree::InventoryUnit>] a collection of
+      # @param inventory_units [Array<Solidus::InventoryUnit>] a collection of
       #   inventory units to be added to this package
       # @param state [:on_hand, :backordered] the state of the items to be
       #   added to this package
@@ -34,14 +34,14 @@ module Spree
 
       # Removes a given inventory unit from this package.
       #
-      # @param inventory_unit [Spree::InventoryUnit] the inventory unit to be
+      # @param inventory_unit [Solidus::InventoryUnit] the inventory unit to be
       #   removed from this package
       def remove(inventory_unit)
         item = find_item(inventory_unit)
         @contents -= [item] if item
       end
 
-      # @return [Spree::Order] the order associated with this package
+      # @return [Solidus::Order] the order associated with this package
       def order
         # Fix regression that removed package.order.
         # Find it dynamically through an inventory_unit.
@@ -53,13 +53,13 @@ module Spree
         contents.sum(&:weight)
       end
 
-      # @return [Array<Spree::Stock::ContentItem>] the content items in this
+      # @return [Array<Solidus::Stock::ContentItem>] the content items in this
       #   package which are on hand
       def on_hand
         contents.select(&:on_hand?)
       end
 
-      # @return [Array<Spree::Stock::ContentItem>] the content items in this
+      # @return [Array<Solidus::Stock::ContentItem>] the content items in this
       #   package which are backordered
       def backordered
         contents.select(&:backordered?)
@@ -68,7 +68,7 @@ module Spree
       # Find a content item in this package by inventory unit and optionally
       # state.
       #
-      # @param inventory_unit [Spree::InventoryUnit] the desired inventory
+      # @param inventory_unit [Solidus::InventoryUnit] the desired inventory
       #   unit
       # @param state [:backordered, :on_hand, nil] the state of the desired
       #   content item, or nil for any state
@@ -99,19 +99,19 @@ module Spree
         order.currency
       end
 
-      # @return [Array<Spree::ShippingCategory>] the shipping categories of the
+      # @return [Array<Solidus::ShippingCategory>] the shipping categories of the
       #   variants in this package
       def shipping_categories
         contents.map { |item| item.variant.shipping_category }.compact.uniq
       end
 
-      # @return [Array<Spree::ShippingMethod>] the shipping methods available
+      # @return [Array<Solidus::ShippingMethod>] the shipping methods available
       #   for this pacakges shipping categories
       def shipping_methods
         shipping_categories.map(&:shipping_methods).reduce(:&).to_a
       end
 
-      # @return [Spree::Shipment] a new shipment containing this package's
+      # @return [Solidus::Shipment] a new shipment containing this package's
       #   inventory units, with the appropriate shipping rates and associated
       #   with the correct stock location
       def to_shipment
@@ -120,7 +120,7 @@ module Spree
         # been taken care of by the Prioritizer
         contents.each { |content_item| content_item.inventory_unit.state = content_item.state.to_s }
 
-        Spree::Shipment.new(
+        Solidus::Shipment.new(
           stock_location: stock_location,
           shipping_rates: shipping_rates,
           inventory_units: contents.map(&:inventory_unit)

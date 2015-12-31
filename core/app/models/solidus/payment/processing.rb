@@ -1,5 +1,5 @@
 module Spree
-  class Payment < Spree::Base
+  class Payment < Solidus::Base
     module Processing
       # "process!" means:
       #   - Do nothing when:
@@ -95,7 +95,7 @@ module Spree
                     # Need to pass in a unique identifier here to make some
                     # payment gateways happy.
                     #
-                    # For more information, please see Spree::Payment#set_unique_identifier
+                    # For more information, please see Solidus::Payment#set_unique_identifier
                     :order_id    => gateway_order_id }
 
         options.merge!({ :shipping => order.ship_total * 100,

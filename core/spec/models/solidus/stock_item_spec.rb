@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Spree::StockItem, :type => :model do
+describe Solidus::StockItem, :type => :model do
   let(:stock_location) { create(:stock_location_with_items) }
 
   subject { stock_location.stock_items.order(:id).first }
@@ -58,7 +58,7 @@ describe Spree::StockItem, :type => :model do
     let!(:current_on_hand) { subject.count_on_hand }
 
     it 'is updated pessimistically' do
-      copy = Spree::StockItem.find(subject.id)
+      copy = Solidus::StockItem.find(subject.id)
 
       subject.adjust_count_on_hand(5)
       expect(subject.count_on_hand).to eq(current_on_hand + 5)
@@ -111,7 +111,7 @@ describe Spree::StockItem, :type => :model do
     let!(:current_on_hand) { subject.count_on_hand }
 
     it 'is updated pessimistically' do
-      copy = Spree::StockItem.find(subject.id)
+      copy = Solidus::StockItem.find(subject.id)
 
       subject.set_count_on_hand(5)
       expect(subject.count_on_hand).to eq(5)
@@ -146,7 +146,7 @@ describe Spree::StockItem, :type => :model do
   end
 
   context "with stock movements" do
-    before { Spree::StockMovement.create(stock_item: subject, quantity: 1) }
+    before { Solidus::StockMovement.create(stock_item: subject, quantity: 1) }
 
     it "doesnt raise ReadOnlyRecord error" do
       subject.destroy
@@ -194,7 +194,7 @@ describe Spree::StockItem, :type => :model do
 
     context "inventory_cache_threshold is set" do
       before do
-        Spree::Config.inventory_cache_threshold = inventory_cache_threshold
+        Solidus::Config.inventory_cache_threshold = inventory_cache_threshold
       end
 
       let(:inventory_cache_threshold) { 5 }
@@ -228,7 +228,7 @@ describe Spree::StockItem, :type => :model do
 
     context "when deprecated binary_inventory_cache is used" do
       before do
-        Spree::Config.binary_inventory_cache = binary_inventory_cache
+        Solidus::Config.binary_inventory_cache = binary_inventory_cache
         allow(ActiveSupport::Deprecation).to receive(:warn)
         subject.set_count_on_hand(9)
       end
@@ -244,7 +244,7 @@ describe Spree::StockItem, :type => :model do
       context "binary_inventory_cache is set to false" do
         let(:binary_inventory_cache) { false }
         it "inventory_cache_threshold remains nil" do
-          expect(Spree::Config.inventory_cache_threshold).to be_nil
+          expect(Solidus::Config.inventory_cache_threshold).to be_nil
         end
 
         it "does not log a deprecation warning" do

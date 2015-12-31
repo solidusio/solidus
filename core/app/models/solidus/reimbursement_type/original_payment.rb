@@ -1,5 +1,5 @@
-class Spree::ReimbursementType::OriginalPayment < Spree::ReimbursementType
-  extend Spree::ReimbursementType::ReimbursementHelpers
+class Solidus::ReimbursementType::OriginalPayment < Solidus::ReimbursementType
+  extend Solidus::ReimbursementType::ReimbursementHelpers
 
   class << self
     def reimburse(reimbursement, return_items, simulate)

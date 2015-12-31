@@ -1,9 +1,9 @@
 module Spree
-  class StockItem < Spree::Base
+  class StockItem < Solidus::Base
     acts_as_paranoid
 
-    belongs_to :stock_location, class_name: 'Spree::StockLocation', inverse_of: :stock_items
-    belongs_to :variant, -> { with_deleted }, class_name: 'Spree::Variant', inverse_of: :stock_items
+    belongs_to :stock_location, class_name: 'Solidus::StockLocation', inverse_of: :stock_items
+    belongs_to :variant, -> { with_deleted }, class_name: 'Solidus::Variant', inverse_of: :stock_items
     has_many :stock_movements, inverse_of: :stock_item
 
     validates_presence_of :stock_location, :variant
@@ -17,10 +17,10 @@ module Spree
 
     self.whitelisted_ransackable_attributes = ['count_on_hand', 'stock_location_id']
 
-    # @return [Array<Spree::InventoryUnit>] the backordered inventory units
+    # @return [Array<Solidus::InventoryUnit>] the backordered inventory units
     #   associated with this stock item
     def backordered_inventory_units
-      Spree::InventoryUnit.backordered_for_stock_item(self)
+      Solidus::InventoryUnit.backordered_for_stock_item(self)
     end
 
     # @return [String] the name of this stock item's variant
@@ -116,11 +116,11 @@ module Spree
 
       def inventory_cache_threshold
         # only warn if store is setting binary_inventory_cache (default = false)
-        @cache_threshold ||= if Spree::Config.binary_inventory_cache
-          ActiveSupport::Deprecation.warn "Spree::Config.binary_inventory_cache=true is DEPRECATED. Instead use Spree::Config.inventory_cache_threshold=1"
+        @cache_threshold ||= if Solidus::Config.binary_inventory_cache
+          ActiveSupport::Deprecation.warn "Solidus::Config.binary_inventory_cache=true is DEPRECATED. Instead use Solidus::Config.inventory_cache_threshold=1"
           1
         else
-          Spree::Config.inventory_cache_threshold
+          Solidus::Config.inventory_cache_threshold
         end
       end
   end

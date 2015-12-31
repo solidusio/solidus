@@ -1,5 +1,5 @@
 module Spree
-  class Promotion < Spree::Base
+  class Promotion < Solidus::Base
     MATCH_POLICIES = %w(all any)
     UNACTIVATABLE_ORDER_STATES = ["complete", "awaiting_return", "returned"]
 
@@ -13,10 +13,10 @@ module Spree
     has_many :promotion_actions, autosave: true, dependent: :destroy
     alias_method :actions, :promotion_actions
 
-    has_many :order_promotions, class_name: "Spree::OrderPromotion"
+    has_many :order_promotions, class_name: "Solidus::OrderPromotion"
     has_many :orders, through: :order_promotions
 
-    has_many :codes, class_name: "Spree::PromotionCode", inverse_of: :promotion, dependent: :destroy
+    has_many :codes, class_name: "Solidus::PromotionCode", inverse_of: :promotion, dependent: :destroy
     alias_method :promotion_codes, :codes
 
     accepts_nested_attributes_for :promotion_actions, :promotion_rules
@@ -55,11 +55,11 @@ module Spree
     end
 
     def code
-      raise "Attempted to call code on a Spree::Promotion. Promotions are now tied to multiple code records"
+      raise "Attempted to call code on a Solidus::Promotion. Promotions are now tied to multiple code records"
     end
 
     def code=(val)
-      raise "Attempted to call code= on a Spree::Promotion. Promotions are now tied to multiple code records"
+      raise "Attempted to call code= on a Solidus::Promotion. Promotions are now tied to multiple code records"
     end
 
     def self.with_coupon_code(val)
@@ -151,7 +151,7 @@ module Spree
     end
 
     def products
-      rules.where(type: "Spree::Promotion::Rules::Product").map(&:products).flatten.uniq
+      rules.where(type: "Solidus::Promotion::Rules::Product").map(&:products).flatten.uniq
     end
 
     # Whether the promotion has exceeded it's usage restrictions.
@@ -167,11 +167,11 @@ module Spree
     #
     # @return [Integer] usage count
     def usage_count
-      Spree::Adjustment.eligible.
+      Solidus::Adjustment.eligible.
         promotion.
         where(source_id: actions.map(&:id)).
         joins(:order).
-        merge(Spree::Order.complete).
+        merge(Solidus::Order.complete).
         distinct.
         count(:order_id)
     end
@@ -200,7 +200,7 @@ module Spree
       ].any? do |adjustment_type|
         user.orders.complete.joins(adjustment_type).where(
           spree_adjustments: {
-            source_type: "Spree::PromotionAction",
+            source_type: "Solidus::PromotionAction",
             source_id: actions.map(&:id),
             eligible: true
           }
@@ -214,9 +214,9 @@ module Spree
 
     def blacklisted?(promotable)
       case promotable
-      when Spree::LineItem
+      when Solidus::LineItem
         !promotable.product.promotionable?
-      when Spree::Order
+      when Solidus::Order
         promotable.line_items.any? &&
           promotable.line_items.joins(:product).where(spree_products: {promotionable: false}).any?
       end

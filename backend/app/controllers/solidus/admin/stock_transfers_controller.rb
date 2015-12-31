@@ -30,7 +30,7 @@ module Spree
       end
 
       def close
-        Spree::StockTransfer.transaction do
+        Solidus::StockTransfer.transaction do
           if @stock_transfer.close(try_spree_current_user)
             adjust_inventory
             redirect_to admin_stock_transfers_path
@@ -66,7 +66,7 @@ module Spree
         @search.sorts = 'created_at desc'
         @search.result.
           page(params[:page]).
-          per(params[:per_page] || Spree::Config[:orders_per_page])
+          per(params[:per_page] || Solidus::Config[:orders_per_page])
       end
 
       def permitted_resource_params
@@ -101,15 +101,15 @@ module Spree
       end
 
       def load_viewable_stock_locations
-        @stock_locations = Spree::StockLocation.accessible_by(current_ability, :read)
+        @stock_locations = Solidus::StockLocation.accessible_by(current_ability, :read)
       end
 
       def load_source_stock_locations
-        @source_stock_locations ||= Spree::StockLocation.accessible_by(current_ability, :transfer_from)
+        @source_stock_locations ||= Solidus::StockLocation.accessible_by(current_ability, :transfer_from)
       end
 
       def load_destination_stock_locations
-        @destination_stock_locations ||= Spree::StockLocation.accessible_by(current_ability, :transfer_to).where.not(id: @stock_transfer.source_location_id)
+        @destination_stock_locations ||= Solidus::StockLocation.accessible_by(current_ability, :transfer_to).where.not(id: @stock_transfer.source_location_id)
       end
 
       def load_variant_display_attributes
@@ -125,7 +125,7 @@ module Spree
 
       def ensure_access_to_stock_location
         return unless permitted_resource_params[:source_location_id].present?
-        authorize! :read, Spree::StockLocation.find(permitted_resource_params[:source_location_id])
+        authorize! :read, Solidus::StockLocation.find(permitted_resource_params[:source_location_id])
       end
 
       def source_location

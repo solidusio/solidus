@@ -1,15 +1,15 @@
 require 'spec_helper'
 
 class FakesController < ApplicationController
-  include Spree::Core::ControllerHelpers::StrongParameters
+  include Solidus::Core::ControllerHelpers::StrongParameters
 end
 
-describe Spree::Core::ControllerHelpers::StrongParameters, type: :controller do
+describe Solidus::Core::ControllerHelpers::StrongParameters, type: :controller do
   controller(FakesController) {}
 
   describe '#permitted_attributes' do
-    it 'returns Spree::PermittedAttributes module' do
-      expect(controller.permitted_attributes).to eq Spree::PermittedAttributes
+    it 'returns Solidus::PermittedAttributes module' do
+      expect(controller.permitted_attributes).to eq Solidus::PermittedAttributes
     end
   end
 

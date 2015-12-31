@@ -1,4 +1,4 @@
-class Spree::Api::UsersController < Spree::Api::ResourceController
+class Solidus::Api::UsersController < Solidus::Api::ResourceController
 
   private
 

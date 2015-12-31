@@ -1,6 +1,6 @@
 module Spree
   module Admin
-    class PaymentsController < Spree::Admin::BaseController
+    class PaymentsController < Solidus::Admin::BaseController
       before_filter :load_order, :only => [:create, :new, :index, :fire]
       before_filter :load_payment, :except => [:create, :new, :index, :fire]
       before_filter :load_payment_for_fire, :only => :fire
@@ -42,7 +42,7 @@ module Spree
             flash[:error] = Spree.t(:payment_could_not_be_created)
             render :new
           end
-        rescue Spree::Core::GatewayError => e
+        rescue Solidus::Core::GatewayError => e
           flash[:error] = "#{e.message}"
           redirect_to new_admin_order_payment_path(@order)
         end
@@ -58,7 +58,7 @@ module Spree
         else
           flash[:error] = Spree.t(:cannot_perform_operation)
         end
-      rescue Spree::Core::GatewayError => ge
+      rescue Solidus::Core::GatewayError => ge
         flash[:error] = "#{ge.message}"
       ensure
         redirect_to admin_order_payments_path(@order)
@@ -100,11 +100,11 @@ module Spree
       end
 
       def model_class
-        Spree::Payment
+        Solidus::Payment
       end
 
       def require_bill_address
-        if Spree::Config[:order_bill_address_used] && @order.bill_address.nil?
+        if Solidus::Config[:order_bill_address_used] && @order.bill_address.nil?
           flash[:notice] = Spree.t(:fill_in_customer_info)
           redirect_to edit_admin_order_customer_url(@order)
         end

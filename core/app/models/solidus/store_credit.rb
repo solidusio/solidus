@@ -1,4 +1,4 @@
-class Spree::StoreCredit < Spree::Base
+class Solidus::StoreCredit < Solidus::Base
   acts_as_paranoid
 
   VOID_ACTION       = 'void'
@@ -12,10 +12,10 @@ class Spree::StoreCredit < Spree::Base
 
   DEFAULT_CREATED_BY_EMAIL = "spree@example.com"
 
-  belongs_to :user, class_name: Spree::UserClassHandle.new
-  belongs_to :created_by, class_name: Spree::UserClassHandle.new
-  belongs_to :category, class_name: "Spree::StoreCreditCategory"
-  belongs_to :credit_type, class_name: 'Spree::StoreCreditType', :foreign_key => 'type_id'
+  belongs_to :user, class_name: Solidus::UserClassHandle.new
+  belongs_to :created_by, class_name: Solidus::UserClassHandle.new
+  belongs_to :category, class_name: "Solidus::StoreCreditCategory"
+  belongs_to :credit_type, class_name: 'Solidus::StoreCreditType', :foreign_key => 'type_id'
   has_many :store_credit_events
 
   validates_presence_of :user_id, :category_id, :type_id, :created_by_id, :currency
@@ -36,7 +36,7 @@ class Spree::StoreCredit < Spree::Base
 
   attr_accessor :action, :action_amount, :action_originator, :action_authorization_code, :update_reason
 
-  extend Spree::DisplayMoney
+  extend Solidus::DisplayMoney
   money_methods :amount, :amount_used, :amount_authorized
 
   def amount_remaining
@@ -211,8 +211,8 @@ class Spree::StoreCredit < Spree::Base
   def create_credit_record(amount, action_attributes={})
     # Setting credit_to_new_allocation to true will create a new allocation anytime #credit is called
     # If it is not set, it will update the store credit's amount in place
-    credit = if Spree::Config[:credit_to_new_allocation]
-      Spree::StoreCredit.new(create_credit_record_params(amount))
+    credit = if Solidus::Config[:credit_to_new_allocation]
+      Solidus::StoreCredit.new(create_credit_record_params(amount))
     else
       self.amount_used = amount_used - amount
       self
@@ -285,7 +285,7 @@ class Spree::StoreCredit < Spree::Base
   def associate_credit_type
     unless self.type_id
       credit_type_name = category.try(:non_expiring?) ? Spree.t("store_credit.non_expiring") : Spree.t("store_credit.expiring")
-      self.credit_type = Spree::StoreCreditType.find_by_name(credit_type_name)
+      self.credit_type = Solidus::StoreCreditType.find_by_name(credit_type_name)
     end
   end
 end

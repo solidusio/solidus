@@ -3,13 +3,13 @@
 require 'spec_helper'
 
 module ThirdParty
-  class Extension < Spree::Base
+  class Extension < Solidus::Base
     # nasty hack so we don't have to create a table to back this fake model
     self.table_name = 'spree_products'
   end
 end
 
-describe Spree::Product, :type => :model do
+describe Solidus::Product, :type => :model do
 
   context 'product instance' do
     let(:product) { create(:product) }
@@ -29,7 +29,7 @@ describe Spree::Product, :type => :model do
       end
 
       it 'calls #duplicate_extra' do
-        expect_any_instance_of(Spree::Product).to receive(:duplicate_extra) do |product, old_product|
+        expect_any_instance_of(Solidus::Product).to receive(:duplicate_extra) do |product, old_product|
           product.name = old_product.name.reverse
         end
 
@@ -121,7 +121,7 @@ describe Spree::Product, :type => :model do
         before do
           product.master.default_price.currency = 'JPY'
           product.master.default_price.save!
-          Spree::Config[:currency] = 'JPY'
+          Solidus::Config[:currency] = 'JPY'
         end
 
         it "displays the currency in yen" do
@@ -231,7 +231,7 @@ describe Spree::Product, :type => :model do
       let(:stock_item) { variant.stock_items.first }
 
       it "doesnt raise ReadOnlyRecord error" do
-        Spree::StockMovement.create!(stock_item: stock_item, quantity: 1)
+        Solidus::StockMovement.create!(stock_item: stock_item, quantity: 1)
         product.destroy
       end
     end
@@ -330,11 +330,11 @@ describe Spree::Product, :type => :model do
 
     # Regression test for #2455
     it "should not overwrite properties' presentation names" do
-      Spree::Property.where(:name => 'foo').first_or_create!(:presentation => "Foo's Presentation Name")
+      Solidus::Property.where(:name => 'foo').first_or_create!(:presentation => "Foo's Presentation Name")
       product.set_property('foo', 'value1')
       product.set_property('bar', 'value2')
-      expect(Spree::Property.where(:name => 'foo').first.presentation).to eq("Foo's Presentation Name")
-      expect(Spree::Property.where(:name => 'bar').first.presentation).to eq("bar")
+      expect(Solidus::Property.where(:name => 'foo').first.presentation).to eq("Foo's Presentation Name")
+      expect(Solidus::Property.where(:name => 'bar').first.presentation).to eq("bar")
     end
 
     # Regression test for #4416
@@ -343,7 +343,7 @@ describe Spree::Product, :type => :model do
         create(:promotion, advertise: true, starts_at: 1.day.ago)
       end
       let!(:rule) do
-        Spree::Promotion::Rules::Product.create(
+        Solidus::Promotion::Rules::Product.create(
           promotion: promotion,
           products: [product]
         )
@@ -357,7 +357,7 @@ describe Spree::Product, :type => :model do
 
   context '#create' do
     let!(:prototype) { create(:prototype) }
-    let!(:product) { Spree::Product.new(name: "Foo", price: 1.99, shipping_category_id: create(:shipping_category).id) }
+    let!(:product) { Solidus::Product.new(name: "Foo", price: 1.99, shipping_category_id: create(:shipping_category).id) }
 
     before { product.prototype_id = prototype.id }
 
@@ -433,12 +433,12 @@ describe Spree::Product, :type => :model do
   context "#images" do
     let(:product) { create(:product) }
     let(:image) { File.open(File.expand_path('../../../fixtures/thinking-cat.jpg', __FILE__)) }
-    let(:params) { {:viewable_id => product.master.id, :viewable_type => 'Spree::Variant', :attachment => image, :alt => "position 2", :position => 2} }
+    let(:params) { {:viewable_id => product.master.id, :viewable_type => 'Solidus::Variant', :attachment => image, :alt => "position 2", :position => 2} }
 
     before do
-      Spree::Image.create(params)
-      Spree::Image.create(params.merge({:alt => "position 1", :position => 1}))
-      Spree::Image.create(params.merge({:viewable_type => 'ThirdParty::Extension', :alt => "position 1", :position => 2}))
+      Solidus::Image.create(params)
+      Solidus::Image.create(params.merge({:alt => "position 1", :position => 1}))
+      Solidus::Image.create(params.merge({:viewable_type => 'ThirdParty::Extension', :alt => "position 1", :position => 2}))
     end
 
     it "only looks for variant images" do
@@ -453,24 +453,24 @@ describe Spree::Product, :type => :model do
   # Regression tests for #2352
   context "classifications and taxons" do
     it "is joined through classifications" do
-      reflection = Spree::Product.reflect_on_association(:taxons)
+      reflection = Solidus::Product.reflect_on_association(:taxons)
       expect(reflection.options[:through]).to eq(:classifications)
     end
 
     it "will delete all classifications" do
-      reflection = Spree::Product.reflect_on_association(:classifications)
+      reflection = Solidus::Product.reflect_on_association(:classifications)
       expect(reflection.options[:dependent]).to eq(:delete_all)
     end
   end
 
   context '#total_on_hand' do
     it 'should be infinite if track_inventory_levels is false' do
-      Spree::Config[:track_inventory_levels] = false
+      Solidus::Config[:track_inventory_levels] = false
       expect(build(:product, :variants_including_master => [build(:master_variant)]).total_on_hand).to eql(Float::INFINITY)
     end
 
     it 'should be infinite if variant is on demand' do
-      Spree::Config[:track_inventory_levels] = true
+      Solidus::Config[:track_inventory_levels] = true
       expect(build(:product, :variants_including_master => [build(:on_demand_master_variant)]).total_on_hand).to eql(Float::INFINITY)
     end
 
@@ -498,7 +498,7 @@ describe Spree::Product, :type => :model do
   end
 
   it "initializes a master variant when building a product" do
-    product = Spree::Product.new
+    product = Solidus::Product.new
     expect(product.master.is_master).to be true
   end
 end

@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Spree::PermissionSets::DashboardDisplay do
+describe Solidus::PermissionSets::DashboardDisplay do
   let(:ability) { DummyAbility.new }
 
   subject { ability }

@@ -3,7 +3,7 @@
 <% end %>
 
 <% content_for :page_actions do %>
-  <% if can?(:create, Spree::OptionType) %>
+  <% if can?(:create, Solidus::OptionType) %>
     <li id="new_ot_link">
       <%= button_link_to Spree.t(:new_option_type), new_admin_option_type_url, { :remote => true, :icon => 'plus', :id => 'new_option_type_link' } %>
     </li>
@@ -49,7 +49,7 @@
 <% else %>
   <div class="alpha twelve columns no-objects-found">
     <%= Spree.t(:no_resource_found, resource: I18n.t(:other, scope: 'activerecord.models.spree/option_type')) %>
-    <% if can?(:create, Spree::OptionType) %>
+    <% if can?(:create, Solidus::OptionType) %>
       <%= link_to Spree.t(:add_one), spree.new_admin_option_type_path %>!
     <% end %>
   </div>

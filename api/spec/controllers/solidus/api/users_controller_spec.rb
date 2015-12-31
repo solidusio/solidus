@@ -104,7 +104,7 @@ module Spree
       sign_in_as_admin!
 
       it "gets all users" do
-        allow(Spree::LegacyUser).to receive(:find_by).with(hash_including(:spree_api_key)) { current_api_user }
+        allow(Solidus::LegacyUser).to receive(:find_by).with(hash_including(:spree_api_key)) { current_api_user }
 
         2.times { create(:user) }
 
@@ -144,7 +144,7 @@ module Spree
       it "cannot destroy user with orders" do
         create(:completed_order_with_totals, :user => user)
         api_delete :destroy, :id => user.id
-        expect(json_response["exception"]).to eq "Spree::Core::DestroyWithOrdersError"
+        expect(json_response["exception"]).to eq "Solidus::Core::DestroyWithOrdersError"
         expect(response.status).to eq(422)
       end
 

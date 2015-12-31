@@ -8,10 +8,10 @@ module Spree
 
       def set_country
         begin
-          if Spree::Config[:default_country_id].present?
-            @stock_location.country = Spree::Country.find(Spree::Config[:default_country_id])
+          if Solidus::Config[:default_country_id].present?
+            @stock_location.country = Solidus::Country.find(Solidus::Config[:default_country_id])
           else
-            @stock_location.country = Spree::Country.find_by!(iso: 'US')
+            @stock_location.country = Solidus::Country.find_by!(iso: 'US')
           end
 
         rescue ActiveRecord::RecordNotFound

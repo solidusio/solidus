@@ -7,7 +7,7 @@ module Spree
   # @note this model uses {https://github.com/radar/paranoia paranoia}.
   #   +#destroy+ will only soft-destroy records and the default scope hides
   #   soft-destroyed records using +WHERE deleted_at IS NULL+.
-  class Product < Spree::Base
+  class Product < Solidus::Base
     extend FriendlyId
     friendly_id :slug_candidates, use: :history
 
@@ -28,26 +28,26 @@ module Spree
     has_many :product_promotion_rules, dependent: :destroy
     has_many :promotion_rules, through: :product_promotion_rules
 
-    belongs_to :tax_category, class_name: 'Spree::TaxCategory'
-    belongs_to :shipping_category, class_name: 'Spree::ShippingCategory', inverse_of: :products
+    belongs_to :tax_category, class_name: 'Solidus::TaxCategory'
+    belongs_to :shipping_category, class_name: 'Solidus::ShippingCategory', inverse_of: :products
 
     has_one :master,
       -> { where is_master: true },
       inverse_of: :product,
-      class_name: 'Spree::Variant'
+      class_name: 'Solidus::Variant'
 
     has_many :variants,
       -> { where(is_master: false).order(:position) },
       inverse_of: :product,
-      class_name: 'Spree::Variant'
+      class_name: 'Solidus::Variant'
 
     has_many :variants_including_master,
       -> { order(:position) },
       inverse_of: :product,
-      class_name: 'Spree::Variant',
+      class_name: 'Solidus::Variant',
       dependent: :destroy
 
-    has_many :prices, -> { order(Spree::Variant.arel_table[:position].asc, Spree::Variant.arel_table[:id].asc, :currency) }, through: :variants
+    has_many :prices, -> { order(Solidus::Variant.arel_table[:position].asc, Solidus::Variant.arel_table[:id].asc, :currency) }, through: :variants
 
     has_many :stock_items, through: :variants_including_master
 
@@ -89,7 +89,7 @@ module Spree
     validates :meta_keywords, length: { maximum: 255 }
     validates :meta_title, length: { maximum: 255 }
     validates :name, presence: true
-    validates :price, presence: true, if: proc { Spree::Config[:require_master_price] }
+    validates :price, presence: true, if: proc { Solidus::Config[:require_master_price] }
     validates :shipping_category_id, presence: true
     validates :slug, length: { minimum: 3 }, uniqueness: { allow_blank: true }
 
@@ -108,7 +108,7 @@ module Spree
       variants.any?
     end
 
-    # @return [Spree::TaxCategory] tax category for this product, or the default tax category
+    # @return [Solidus::TaxCategory] tax category for this product, or the default tax category
     def tax_category
       super || TaxCategory.find_by(is_default: true)
     end
@@ -139,7 +139,7 @@ module Spree
 
     # Creates a new product with the same attributes, variants, etc.
     #
-    # @return [Spree::Product] the duplicate
+    # @return [Solidus::Product] the duplicate
     def duplicate
       duplicator = ProductDuplicator.new(self)
       duplicator.duplicate
@@ -186,7 +186,7 @@ module Spree
     end
 
     # @param current_currency [String] currency to filter variants by; defaults to Spree's default
-    # @return [Array<Spree::Variant>] all variants with at least one option value
+    # @return [Array<Solidus::Variant>] all variants with at least one option value
     def variants_and_option_values(current_currency = nil)
       variants.includes(:option_values).active(current_currency).select do |variant|
         variant.option_values.any?
@@ -198,16 +198,16 @@ module Spree
     #
     # @param variant_scope [ActiveRecord_Associations_CollectionProxy] scope to filter the variants
     # used to determine the applied option_types
-    # @return [Hash<Spree::OptionType, Array<Spree::OptionValue>>] all option types and option values
+    # @return [Hash<Solidus::OptionType, Array<Solidus::OptionValue>>] all option types and option values
     # associated with the products variants grouped by option type
     def variant_option_values_by_option_type(variant_scope = nil)
-      option_value_ids = Spree::OptionValuesVariant.joins(:variant)
+      option_value_ids = Solidus::OptionValuesVariant.joins(:variant)
         .where(spree_variants: { product_id: self.id})
         .merge(variant_scope)
         .distinct.pluck(:option_value_id)
-      Spree::OptionValue.where(id: option_value_ids).
+      Solidus::OptionValue.where(id: option_value_ids).
         includes(:option_type).
-        order("#{Spree::OptionType.table_name}.position, #{Spree::OptionValue.table_name}.position").
+        order("#{Solidus::OptionType.table_name}.position, #{Solidus::OptionValue.table_name}.position").
         group_by(&:option_type)
     end
 
@@ -242,7 +242,7 @@ module Spree
     # @return [Array] all advertised and not-rejected promotions
     def possible_promotions
       promotion_ids = promotion_rules.map(&:promotion_id).uniq
-      Spree::Promotion.advertised.where(id: promotion_ids).reject(&:expired?)
+      Solidus::Promotion.advertised.where(id: promotion_ids).reject(&:expired?)
     end
 
     # The number of on-hand stock items; Infinity if any variant does not track
@@ -259,7 +259,7 @@ module Spree
 
     # Override so if the master variant is deleted, we can still find it.
     #
-    # @return [Spree::Variant] the master variant
+    # @return [Solidus::Variant] the master variant
     def master
       super || variants_including_master.with_deleted.find_by(is_master: true)
     end
@@ -268,15 +268,15 @@ module Spree
     #
     # Will first search for images on the product, then those belonging to the
     # variants. If all else fails, will return a new image object.
-    # @return [Spree::Image] the image to display
+    # @return [Solidus::Image] the image to display
     def display_image
-      images.first || variant_images.first || Spree::Image.new
+      images.first || variant_images.first || Solidus::Image.new
     end
 
     # Finds the variant property rule that matches the provided option value ids.
     #
     # @param [Array<Integer>] list of option value ids
-    # @return [Spree::VariantPropertyRule] the matching variant property rule
+    # @return [Solidus::VariantPropertyRule] the matching variant property rule
     def find_variant_property_rule(option_value_ids)
       variant_property_rules.find do |rule|
         rule.matches_option_value_ids?(option_value_ids)
@@ -286,7 +286,7 @@ module Spree
     private
 
     def add_associations_from_prototype
-      if prototype_id && prototype = Spree::Prototype.find_by(id: prototype_id)
+      if prototype_id && prototype = Solidus::Prototype.find_by(id: prototype_id)
         prototype.properties.each do |property|
           product_properties.create(property: property)
         end
@@ -299,7 +299,7 @@ module Spree
       if variants_including_master.loaded?
         variants_including_master.any? { |v| !v.should_track_inventory? }
       else
-        !Spree::Config.track_inventory_levels || variants_including_master.where(track_inventory: false).exists?
+        !Solidus::Config.track_inventory_levels || variants_including_master.where(track_inventory: false).exists?
       end
     end
 
@@ -381,10 +381,10 @@ module Spree
     # Iterate through this products taxons and taxonomies and touch their timestamps in a batch
     def touch_taxons
       taxons_to_touch = taxons.map(&:self_and_ancestors).flatten.uniq
-      Spree::Taxon.where(id: taxons_to_touch.map(&:id)).update_all(updated_at: Time.current)
+      Solidus::Taxon.where(id: taxons_to_touch.map(&:id)).update_all(updated_at: Time.current)
 
       taxonomy_ids_to_touch = taxons_to_touch.map(&:taxonomy_id).flatten.uniq
-      Spree::Taxonomy.where(id: taxonomy_ids_to_touch).update_all(updated_at: Time.current)
+      Solidus::Taxonomy.where(id: taxonomy_ids_to_touch).update_all(updated_at: Time.current)
     end
 
     def remove_taxon(taxon)

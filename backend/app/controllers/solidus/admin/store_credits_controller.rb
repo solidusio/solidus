@@ -6,7 +6,7 @@ module Spree
       before_action :load_update_reasons, only: [:edit_amount, :edit_validity]
       before_action :ensure_update_reason, only: [:update_amount, :invalidate]
 
-      helper Spree::Admin::StoreCreditEventsHelper
+      helper Solidus::Admin::StoreCreditEventsHelper
 
       def show
         @store_credit_events = @store_credit.store_credit_events.chronological
@@ -69,7 +69,7 @@ module Spree
 
       def permitted_resource_params
         params.require(:store_credit).permit([:amount, :category_id, :memo]).
-          merge(currency: Spree::Config[:currency], created_by: try_spree_current_user)
+          merge(currency: Solidus::Config[:currency], created_by: try_spree_current_user)
       end
 
       def collection
@@ -77,15 +77,15 @@ module Spree
       end
 
       def load_update_reasons
-        @update_reasons = Spree::StoreCreditUpdateReason.all.order(:name)
+        @update_reasons = Solidus::StoreCreditUpdateReason.all.order(:name)
       end
 
       def load_categories
-        @credit_categories = Spree::StoreCreditCategory.all.order(:name)
+        @credit_categories = Solidus::StoreCreditCategory.all.order(:name)
       end
 
       def ensure_update_reason
-        @update_reason = Spree::StoreCreditUpdateReason.find_by(id: params[:update_reason_id])
+        @update_reason = Solidus::StoreCreditUpdateReason.find_by(id: params[:update_reason_id])
         unless @update_reason
           @store_credit.errors.add(:base, Spree.t("admin.store_credits.errors.update_reason_required"))
           render_edit_page

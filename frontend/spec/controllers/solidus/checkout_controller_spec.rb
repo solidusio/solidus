@@ -1,8 +1,8 @@
 require 'spec_helper'
 
-describe Spree::CheckoutController, :type => :controller do
+describe Solidus::CheckoutController, :type => :controller do
   let(:token) { 'some_token' }
-  let(:user) { stub_model(Spree::LegacyUser) }
+  let(:user) { stub_model(Solidus::LegacyUser) }
   let(:order) { FactoryGirl.create(:order_with_totals) }
 
   let(:address_params) do
@@ -83,8 +83,8 @@ describe Spree::CheckoutController, :type => :controller do
 
       before do
         # Must have *a* shipping method and a payment method so updating from address works
-        allow(order).to receive_messages :available_shipping_methods => [stub_model(Spree::ShippingMethod)]
-        allow(order).to receive_messages :available_payment_methods => [stub_model(Spree::PaymentMethod)]
+        allow(order).to receive_messages :available_shipping_methods => [stub_model(Solidus::ShippingMethod)]
+        allow(order).to receive_messages :available_payment_methods => [stub_model(Solidus::PaymentMethod)]
         allow(order).to receive_messages :ensure_available_shipping_rates => true
         order.line_items << FactoryGirl.create(:line_item)
       end
@@ -176,14 +176,14 @@ describe Spree::CheckoutController, :type => :controller do
       # some point?
       context "when there is a checkout step between payment and confirm" do
         before do
-          @old_checkout_flow = Spree::Order.checkout_flow
-          Spree::Order.class_eval do
+          @old_checkout_flow = Solidus::Order.checkout_flow
+          Solidus::Order.class_eval do
             insert_checkout_step :new_step, after: :payment
           end
         end
 
         after do
-          Spree::Order.checkout_flow(&@old_checkout_flow)
+          Solidus::Order.checkout_flow(&@old_checkout_flow)
         end
 
         let(:order) { create(:order_with_line_items) }
@@ -282,10 +282,10 @@ describe Spree::CheckoutController, :type => :controller do
       end
     end
 
-    context "Spree::Core::GatewayError" do
+    context "Solidus::Core::GatewayError" do
       before do
         order.update_attributes! user: user
-        allow(order).to receive(:next).and_raise(Spree::Core::GatewayError.new("Invalid something or other."))
+        allow(order).to receive(:next).and_raise(Solidus::Core::GatewayError.new("Invalid something or other."))
         spree_post :update, {:state => "address"}
       end
 
@@ -381,7 +381,7 @@ describe Spree::CheckoutController, :type => :controller do
       end
 
       it "fails to transition from payment to complete" do
-        allow_any_instance_of(Spree::Payment).to receive(:process!).and_raise(Spree::Core::GatewayError.new(Spree.t(:payment_processing_failed)))
+        allow_any_instance_of(Solidus::Payment).to receive(:process!).and_raise(Solidus::Core::GatewayError.new(Spree.t(:payment_processing_failed)))
         spree_put :update, state: order.state, :order => {}
         expect(flash[:error]).to eq(Spree.t(:payment_processing_failed))
       end
@@ -389,9 +389,9 @@ describe Spree::CheckoutController, :type => :controller do
   end
 
   context "When last inventory item has been purchased" do
-    let(:product) { mock_model(Spree::Product, :name => "Amazing Object") }
-    let(:variant) { mock_model(Spree::Variant) }
-    let(:line_item) { mock_model Spree::LineItem, :insufficient_stock? => true, :amount => 0 }
+    let(:product) { mock_model(Solidus::Product, :name => "Amazing Object") }
+    let(:variant) { mock_model(Solidus::Variant) }
+    let(:line_item) { mock_model Solidus::LineItem, :insufficient_stock? => true, :amount => 0 }
     let(:order) { create(:order) }
 
     before do

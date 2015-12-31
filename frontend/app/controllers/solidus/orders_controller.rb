@@ -1,5 +1,5 @@
 module Spree
-  class OrdersController < Spree::StoreController
+  class OrdersController < Solidus::StoreController
     before_action :check_authorization
     rescue_from ActiveRecord::RecordNotFound, :with => :render_404
     helper 'spree/products', 'spree/orders'
@@ -42,7 +42,7 @@ module Spree
     # Adds a new item to the order (creating a new order if none already exists)
     def populate
       order    = current_order(create_order_if_necessary: true)
-      variant  = Spree::Variant.find(params[:variant_id])
+      variant  = Solidus::Variant.find(params[:variant_id])
       quantity = params[:quantity].to_i
 
       # 2,147,483,647 is crazy. See issue #2695.
@@ -84,12 +84,12 @@ module Spree
 
     def check_authorization
       cookies.permanent.signed[:guest_token] = params[:token] if params[:token]
-      order = Spree::Order.find_by_number(params[:id]) || current_order
+      order = Solidus::Order.find_by_number(params[:id]) || current_order
 
       if order
         authorize! :edit, order, cookies.signed[:guest_token]
       else
-        authorize! :create, Spree::Order
+        authorize! :create, Solidus::Order
       end
     end
 

@@ -1,5 +1,5 @@
 FactoryGirl.define do
-  factory :carton, class: Spree::Carton do
+  factory :carton, class: Solidus::Carton do
     address
     stock_location
     shipping_method

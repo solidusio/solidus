@@ -1,5 +1,5 @@
 module Spree
-  class ReturnItem < Spree::Base
+  class ReturnItem < Solidus::Base
 
     INTERMEDIATE_RECEPTION_STATUSES = %i(given_to_customer lost_in_transit shipped_wrong_item short_shipped in_transit)
     COMPLETED_RECEPTION_STATUSES = INTERMEDIATE_RECEPTION_STATUSES + [:received]
@@ -30,13 +30,13 @@ module Spree
 
     belongs_to :return_authorization, inverse_of: :return_items
     belongs_to :inventory_unit, inverse_of: :return_items
-    belongs_to :exchange_variant, class_name: 'Spree::Variant'
-    belongs_to :exchange_inventory_unit, class_name: 'Spree::InventoryUnit', inverse_of: :original_return_item
+    belongs_to :exchange_variant, class_name: 'Solidus::Variant'
+    belongs_to :exchange_inventory_unit, class_name: 'Solidus::InventoryUnit', inverse_of: :original_return_item
     belongs_to :customer_return, inverse_of: :return_items
     belongs_to :reimbursement, inverse_of: :return_items
-    belongs_to :preferred_reimbursement_type, class_name: 'Spree::ReimbursementType'
-    belongs_to :override_reimbursement_type, class_name: 'Spree::ReimbursementType'
-    belongs_to :return_reason, class_name: 'Spree::ReturnReason', foreign_key: :return_reason_id
+    belongs_to :preferred_reimbursement_type, class_name: 'Solidus::ReimbursementType'
+    belongs_to :override_reimbursement_type, class_name: 'Solidus::ReimbursementType'
+    belongs_to :return_reason, class_name: 'Solidus::ReturnReason', foreign_key: :return_reason_id
 
     validate :eligible_exchange_variant
     validate :belongs_to_same_customer_order
@@ -128,9 +128,9 @@ module Spree
       after_transition any => any, :do => :persist_acceptance_status_errors
     end
 
-    # @param inventory_unit [Spree::InventoryUnit] the inventory for which we
+    # @param inventory_unit [Solidus::InventoryUnit] the inventory for which we
     #   want a return item
-    # @return [Spree::ReturnItem] a valid return item for the given inventory
+    # @return [Solidus::ReturnItem] a valid return item for the given inventory
     #   unit if one exists, or a new one if one does not
     def self.from_inventory_unit(inventory_unit)
       valid.find_by(inventory_unit: inventory_unit) ||
@@ -162,8 +162,8 @@ module Spree
     end
 
     # @note This uses the exchange_variant_engine configured on the class.
-    # @param stock_locations [Array<Spree::StockLocation>] the stock locations to check
-    # @return [ActiveRecord::Relation<Spree::Variant>] the variants eligible
+    # @param stock_locations [Array<Solidus::StockLocation>] the stock locations to check
+    # @return [ActiveRecord::Relation<Solidus::Variant>] the variants eligible
     #   for exchange for this return item
     def eligible_exchange_variants(stock_locations = nil)
       exchange_variant_engine.eligible_variants(variant, stock_locations: stock_locations)
@@ -181,7 +181,7 @@ module Spree
       super(variant: exchange_variant, line_item: inventory_unit.line_item, order: inventory_unit.order) if exchange_required?
     end
 
-    # @return [Spree::Shipment, nil] the exchange inventory unit's shipment if it exists
+    # @return [Solidus::Shipment, nil] the exchange inventory unit's shipment if it exists
     def exchange_shipment
       exchange_inventory_unit.try(:shipment)
     end
@@ -220,7 +220,7 @@ module Spree
     end
 
     def currency
-      return_authorization.try(:currency) || Spree::Config[:currency]
+      return_authorization.try(:currency) || Solidus::Config[:currency]
     end
 
     def process_inventory_unit!
@@ -282,7 +282,7 @@ module Spree
     end
 
     def validate_no_other_completed_return_items
-      other_return_item = Spree::ReturnItem.where({
+      other_return_item = Solidus::ReturnItem.where({
         inventory_unit_id: inventory_unit_id,
         reception_status: COMPLETED_RECEPTION_STATUSES,
       }).where.not(id: self.id).first
@@ -296,7 +296,7 @@ module Spree
     end
 
     def cancel_others
-      Spree::ReturnItem.where(inventory_unit_id: inventory_unit_id)
+      Solidus::ReturnItem.where(inventory_unit_id: inventory_unit_id)
                        .where.not(id: id)
                        .valid
                        .each do |return_item|

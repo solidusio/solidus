@@ -1,6 +1,6 @@
 module Spree
   module Admin
-    class TaxonsController < Spree::Admin::BaseController
+    class TaxonsController < Solidus::Admin::BaseController
 
       respond_to :html, :json, :js
 
@@ -10,9 +10,9 @@ module Spree
 
       def search
         if params[:ids]
-          @taxons = Spree::Taxon.where(:id => params[:ids].split(','))
+          @taxons = Solidus::Taxon.where(:id => params[:ids].split(','))
         else
-          @taxons = Spree::Taxon.limit(20).ransack(:name_cont => params[:q]).result
+          @taxons = Solidus::Taxon.limit(20).ransack(:name_cont => params[:q]).result
         end
       end
 

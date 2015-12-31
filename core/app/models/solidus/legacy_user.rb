@@ -3,7 +3,7 @@ module Spree
   #
   # @note This class is intended to be modified by extensions (ex.
   #   spree_auth_devise)
-  class LegacyUser < Spree::Base
+  class LegacyUser < Solidus::Base
     include UserMethods
 
     self.table_name = 'spree_users'
@@ -16,7 +16,7 @@ module Spree
     before_destroy :check_completed_orders
 
     def self.model_name
-      ActiveModel::Name.new Spree::LegacyUser, Spree, 'user'
+      ActiveModel::Name.new Solidus::LegacyUser, Spree, 'user'
     end
 
     attr_accessor :password
@@ -24,7 +24,7 @@ module Spree
 
     private
     def check_completed_orders
-      raise Spree::Core::DestroyWithOrdersError if orders.complete.present?
+      raise Solidus::Core::DestroyWithOrdersError if orders.complete.present?
     end
   end
 end

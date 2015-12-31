@@ -2,8 +2,8 @@ require 'spec_helper'
 
 module Spree
   describe OrderUpdater, type: :model do
-    let(:order) { Spree::Order.create }
-    let(:updater) { Spree::OrderUpdater.new(order) }
+    let(:order) { Solidus::Order.create }
+    let(:updater) { Solidus::OrderUpdater.new(order) }
 
     context "order totals" do
       before do
@@ -15,7 +15,7 @@ module Spree
       context 'with refund' do
         it "updates payment totals" do
           create(:payment_with_refund, order: order, amount: 33.25, refund_amount: 3)
-          Spree::OrderUpdater.new(order).update_payment_total
+          Solidus::OrderUpdater.new(order).update_payment_total
           expect(order.payment_total).to eq(30.25)
         end
       end
@@ -32,7 +32,7 @@ module Spree
       end
 
       context 'with order promotion followed by line item addition' do
-        let(:promotion) { Spree::Promotion.create!(name: "10% off") }
+        let(:promotion) { Solidus::Promotion.create!(name: "10% off") }
         let(:calculator) { Calculator::FlatPercentItemTotal.new(preferred_flat_percent: 10) }
 
         let(:promotion_action) do
@@ -121,7 +121,7 @@ module Spree
 
       context 'invalid payments are present but order total is zero' do
         it 'is paid' do
-          order.payments << Spree::Payment.new(state: 'invalid')
+          order.payments << Solidus::Payment.new(state: 'invalid')
           order.total = 0
           order.payment_total = 0
 
@@ -268,7 +268,7 @@ module Spree
       end
 
       it "doesnt update each shipment" do
-        shipment = stub_model(Spree::Shipment)
+        shipment = stub_model(Solidus::Shipment)
         shipments = [shipment]
         allow(order).to receive_messages shipments: shipments
         allow(shipments).to receive_messages states: []

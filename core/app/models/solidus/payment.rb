@@ -1,22 +1,22 @@
 module Spree
-  class Payment < Spree::Base
-    include Spree::Payment::Processing
+  class Payment < Solidus::Base
+    include Solidus::Payment::Processing
 
     alias_attribute :identifier, :number
-    deprecate :identifier, :identifier=, deprecator: Spree::Deprecation
+    deprecate :identifier, :identifier=, deprecator: Solidus::Deprecation
 
     IDENTIFIER_CHARS    = (('A'..'Z').to_a + ('0'..'9').to_a - %w(0 1 I O)).freeze
     NON_RISKY_AVS_CODES = ['B', 'D', 'H', 'J', 'M', 'Q', 'T', 'V', 'X', 'Y'].freeze
     RISKY_AVS_CODES     = ['A', 'C', 'E', 'F', 'G', 'I', 'K', 'L', 'N', 'O', 'P', 'R', 'S', 'U', 'W', 'Z'].freeze
 
-    belongs_to :order, class_name: 'Spree::Order', touch: true, inverse_of: :payments
+    belongs_to :order, class_name: 'Solidus::Order', touch: true, inverse_of: :payments
     belongs_to :source, polymorphic: true
-    belongs_to :payment_method, class_name: 'Spree::PaymentMethod', inverse_of: :payments
+    belongs_to :payment_method, class_name: 'Solidus::PaymentMethod', inverse_of: :payments
 
-    has_many :offsets, -> { offset_payment }, class_name: "Spree::Payment", foreign_key: :source_id
+    has_many :offsets, -> { offset_payment }, class_name: "Solidus::Payment", foreign_key: :source_id
     has_many :log_entries, as: :source
     has_many :state_changes, as: :stateful
-    has_many :capture_events, :class_name => 'Spree::PaymentCaptureEvent'
+    has_many :capture_events, :class_name => 'Solidus::PaymentCaptureEvent'
     has_many :refunds, inverse_of: :payment
 
     before_validation :validate_source, unless: :invalid?
@@ -42,10 +42,10 @@ module Spree
 
     default_scope -> { order(:created_at) }
 
-    scope :from_credit_card, -> { where(source_type: 'Spree::CreditCard') }
+    scope :from_credit_card, -> { where(source_type: 'Solidus::CreditCard') }
     scope :with_state, ->(s) { where(state: s.to_s) }
     # "offset" is reserved by activerecord
-    scope :offset_payment, -> { where("source_type = 'Spree::Payment' AND amount < 0 AND state = 'completed'") }
+    scope :offset_payment, -> { where("source_type = 'Solidus::Payment' AND amount < 0 AND state = 'completed'") }
 
     scope :checkout, -> { with_state('checkout') }
     scope :completed, -> { with_state('completed') }
@@ -56,8 +56,8 @@ module Spree
     scope :risky, -> { where("avs_response IN (?) OR (cvv_response_code IS NOT NULL and cvv_response_code != 'M') OR state = 'failed'", RISKY_AVS_CODES) }
     scope :valid, -> { where.not(state: %w(failed invalid)) }
 
-    scope :store_credits, -> { where(source_type: Spree::StoreCredit.to_s) }
-    scope :not_store_credits, -> { where(arel_table[:source_type].not_eq(Spree::StoreCredit.to_s).or(arel_table[:source_type].eq(nil))) }
+    scope :store_credits, -> { where(source_type: Solidus::StoreCredit.to_s) }
+    scope :not_store_credits, -> { where(arel_table[:source_type].not_eq(Solidus::StoreCredit.to_s).or(arel_table[:source_type].eq(nil))) }
 
     # order state machine (see http://github.com/pluginaweek/state_machine/tree/master for details)
     state_machine initial: :checkout do
@@ -106,9 +106,9 @@ module Spree
     # @return [String] this payment's currency
     delegate :currency, to: :order
 
-    # @return [Spree::Money] this amount of this payment as money object
+    # @return [Solidus::Money] this amount of this payment as money object
     def money
-      Spree::Money.new(amount, { currency: currency })
+      Solidus::Money.new(amount, { currency: currency })
     end
     alias display_amount money
 
@@ -276,12 +276,12 @@ WARN
       def create_eligible_credit_event
         # When cancelling an order, a payment with the negative amount
         # of the payment total is created to refund the customer. That
-        # payment has a source of itself (Spree::Payment) no matter the
+        # payment has a source of itself (Solidus::Payment) no matter the
         # type of payment getting refunded, hence the additional check
         # if the source is a store credit.
-        if store_credit? && source.is_a?(Spree::StoreCredit)
+        if store_credit? && source.is_a?(Solidus::StoreCredit)
           source.update_attributes!({
-            action: Spree::StoreCredit::ELIGIBLE_ACTION,
+            action: Solidus::StoreCredit::ELIGIBLE_ACTION,
             action_amount: amount,
             action_authorization_code: response_code,
           })

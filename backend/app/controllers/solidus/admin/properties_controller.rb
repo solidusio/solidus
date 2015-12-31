@@ -16,7 +16,7 @@ module Spree
         @search = @collection.ransack(params[:q])
         @collection = @search.result.
               page(params[:page]).
-              per(Spree::Config[:properties_per_page])
+              per(Solidus::Config[:properties_per_page])
 
         @collection
       end

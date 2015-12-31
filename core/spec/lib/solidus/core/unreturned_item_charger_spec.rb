@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Spree::UnreturnedItemCharger do
+describe Solidus::UnreturnedItemCharger do
   let(:shipped_order) { create(:shipped_order, line_items_count: 1, with_cartons: false) }
   let(:original_shipment) { shipped_order.shipments.first }
   let(:original_stock_location) { original_shipment.stock_location }
@@ -20,7 +20,7 @@ describe Spree::UnreturnedItemCharger do
            exchange_inventory_unit: exchange_inventory_unit)
   end
 
-  let!(:unreturned_item_charger) { Spree::UnreturnedItemCharger.new(exchange_shipment, [return_item]) }
+  let!(:unreturned_item_charger) { Solidus::UnreturnedItemCharger.new(exchange_shipment, [return_item]) }
 
   before do
     exchange_shipment.finalize!
@@ -34,16 +34,16 @@ describe Spree::UnreturnedItemCharger do
     end
 
     it "reuses the same inventory unit" do
-      expect { subject }.not_to change { Spree::InventoryUnit.count }
+      expect { subject }.not_to change { Solidus::InventoryUnit.count }
     end
 
     it "reuses the same shipment" do
-      expect { subject }.not_to change { Spree::Shipment.count }
+      expect { subject }.not_to change { Solidus::Shipment.count }
       expect(new_order.shipments.count).to eq 1
     end
 
     context 'in tax zone' do
-      let!(:tax_zone) { Spree::Zone.global }
+      let!(:tax_zone) { Solidus::Zone.global }
       let!(:tax_rate) { create(:tax_rate, zone: tax_zone, tax_category: original_variant.tax_category) }
       before { tax_zone.update_attributes!(default_tax: true) }
 
@@ -65,13 +65,13 @@ describe Spree::UnreturnedItemCharger do
     end
 
     it "creates a new completed order" do
-      expect { subject }.to change { Spree::Order.count }.by(1)
+      expect { subject }.to change { Solidus::Order.count }.by(1)
       expect(new_order).to_not eq(shipped_order)
       expect(new_order).to be_completed
     end
 
     it "authorizes payment" do
-      expect { subject }.to change { Spree::Payment.count }.by(1)
+      expect { subject }.to change { Solidus::Payment.count }.by(1)
       expect(new_order.payments.count).to eq 1
       expect(new_order.payments.first).to be_pending
       expect(new_order.payments.first.response_code).to be_present
@@ -82,10 +82,10 @@ describe Spree::UnreturnedItemCharger do
     end
 
     context 'with auto_capture_exchanges' do
-      before { Spree::Config[:auto_capture_exchanges] = true }
+      before { Solidus::Config[:auto_capture_exchanges] = true }
 
       it "captures payment" do
-        expect { subject }.to change { Spree::Payment.count }.by(1)
+        expect { subject }.to change { Solidus::Payment.count }.by(1)
         expect(new_order.payments.count).to eq 1
         expect(new_order.payments.first).to be_completed
         expect(new_order.payment_state).to eq "paid"
@@ -103,11 +103,11 @@ describe Spree::UnreturnedItemCharger do
 
     context "new order is not an unreturned exchange" do
       before do
-        allow_any_instance_of(Spree::Shipment).to receive(:update_attributes!)
+        allow_any_instance_of(Solidus::Shipment).to receive(:update_attributes!)
       end
 
       it "raises an error" do
-        expect { subject }.to raise_error(Spree::UnreturnedItemCharger::ChargeFailure, 'order is not an unreturned exchange')
+        expect { subject }.to raise_error(Solidus::UnreturnedItemCharger::ChargeFailure, 'order is not an unreturned exchange')
       end
     end
 

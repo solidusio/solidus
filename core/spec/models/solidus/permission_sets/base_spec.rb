@@ -1,7 +1,7 @@
 require 'spec_helper'
 
-describe Spree::PermissionSets::Base do
-  let(:ability) { Spree::Ability.new nil }
+describe Solidus::PermissionSets::Base do
+  let(:ability) { Solidus::Ability.new nil }
   subject { described_class.new(ability).activate! }
 
   describe "activate!" do

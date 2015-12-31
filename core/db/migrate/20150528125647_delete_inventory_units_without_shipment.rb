@@ -3,8 +3,8 @@ class DeleteInventoryUnitsWithoutShipment < ActiveRecord::Migration
   disable_ddl_transaction!
 
   def up
-    order_ids = Spree::InventoryUnit.where(shipment_id: nil).pluck(:order_id).uniq.compact
-    Spree::Order.where(id: order_ids).find_each do |order|
+    order_ids = Solidus::InventoryUnit.where(shipment_id: nil).pluck(:order_id).uniq.compact
+    Solidus::Order.where(id: order_ids).find_each do |order|
       # Order may not be completed but have shipped
       # shipments if it has a pending unreturned exchange
       next if order.completed?

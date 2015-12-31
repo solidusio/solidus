@@ -3,10 +3,10 @@ module Spree
   #
   # PromotionActions perform the necessary tasks when a promotion is activated
   # by an event and determined to be eligible.
-  class PromotionAction < Spree::Base
+  class PromotionAction < Solidus::Base
     acts_as_paranoid
 
-    belongs_to :promotion, class_name: 'Spree::Promotion'
+    belongs_to :promotion, class_name: 'Solidus::Promotion'
 
     scope :of_type, ->(t) { where(type: t) }
 

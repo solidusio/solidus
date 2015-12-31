@@ -1,10 +1,10 @@
 require 'spec_helper'
 
-describe Spree::Preferences::Preferable, :type => :model do
+describe Solidus::Preferences::Preferable, :type => :model do
 
   before :all do
     class A
-      include Spree::Preferences::Preferable
+      include Solidus::Preferences::Preferable
       attr_reader :id
 
       def initialize
@@ -246,7 +246,7 @@ describe Spree::Preferences::Preferable, :type => :model do
       ActiveRecord::Migration.verbose = false
       CreatePrefTest.migrate(:up)
 
-      class PrefTest < Spree::Base
+      class PrefTest < Solidus::Base
         preference :pref_test_pref, :string, :default => 'abc'
         preference :pref_test_any, :any, :default => []
       end

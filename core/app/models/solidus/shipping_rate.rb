@@ -1,14 +1,14 @@
 module Spree
-  class ShippingRate < Spree::Base
-    belongs_to :shipment, class_name: 'Spree::Shipment'
-    belongs_to :shipping_method, -> { with_deleted }, class_name: 'Spree::ShippingMethod', inverse_of: :shipping_rates
-    belongs_to :tax_rate, -> { with_deleted }, class_name: 'Spree::TaxRate'
+  class ShippingRate < Solidus::Base
+    belongs_to :shipment, class_name: 'Solidus::Shipment'
+    belongs_to :shipping_method, -> { with_deleted }, class_name: 'Solidus::ShippingMethod', inverse_of: :shipping_rates
+    belongs_to :tax_rate, -> { with_deleted }, class_name: 'Solidus::TaxRate'
 
     delegate :order, :currency, to: :shipment
     delegate :name, to: :shipping_method
 
     def display_base_price
-      Spree::Money.new(cost, currency: currency)
+      Solidus::Money.new(cost, currency: currency)
     end
 
     def calculate_tax_amount
@@ -39,7 +39,7 @@ module Spree
     alias_method :display_cost, :display_price
 
     def display_tax_amount(tax_amount)
-      Spree::Money.new(tax_amount, currency: currency)
+      Solidus::Money.new(tax_amount, currency: currency)
     end
 
     def shipping_method_code

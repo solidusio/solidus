@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Spree::StoreCredit do
+describe Solidus::StoreCredit do
 
   let(:currency) { "TEST" }
   let(:store_credit) { build(:store_credit, store_credit_attrs) }
@@ -133,20 +133,20 @@ describe Spree::StoreCredit do
   end
 
   describe "#display_amount" do
-    it "returns a Spree::Money instance" do
-      expect(store_credit.display_amount).to be_instance_of(Spree::Money)
+    it "returns a Solidus::Money instance" do
+      expect(store_credit.display_amount).to be_instance_of(Solidus::Money)
     end
   end
 
   describe "#display_amount_used" do
-    it "returns a Spree::Money instance" do
-      expect(store_credit.display_amount_used).to be_instance_of(Spree::Money)
+    it "returns a Solidus::Money instance" do
+      expect(store_credit.display_amount_used).to be_instance_of(Solidus::Money)
     end
   end
 
   describe "#display_amount_authorized" do
-    it "returns a Spree::Money instance" do
-      expect(store_credit.display_amount_authorized).to be_instance_of(Spree::Money)
+    it "returns a Solidus::Money instance" do
+      expect(store_credit.display_amount_authorized).to be_instance_of(Solidus::Money)
     end
   end
 
@@ -221,8 +221,8 @@ describe Spree::StoreCredit do
           subject { store_credit.authorize(added_authorization_amount, store_credit.currency, action_originator: originator) }
 
           it "records the originator" do
-            expect { subject }.to change { Spree::StoreCreditEvent.count }.by(1)
-            expect(Spree::StoreCreditEvent.last.originator).to eq originator
+            expect { subject }.to change { Solidus::StoreCreditEvent.count }.by(1)
+            expect(Solidus::StoreCreditEvent.last.originator).to eq originator
           end
         end
       end
@@ -357,8 +357,8 @@ describe Spree::StoreCredit do
         let(:originator) { create(:user) } # won't actually be a user. just giving it a valid model here
 
         it "records the originator" do
-          expect { subject }.to change { Spree::StoreCreditEvent.count }.by(1)
-          expect(Spree::StoreCreditEvent.last.originator).to eq originator
+          expect { subject }.to change { Solidus::StoreCreditEvent.count }.by(1)
+          expect(Solidus::StoreCreditEvent.last.originator).to eq originator
         end
       end
     end
@@ -388,7 +388,7 @@ describe Spree::StoreCredit do
     context "capture event found for auth_code" do
       let(:captured_amount) { 10.0 }
       let!(:capture_event) { create(:store_credit_auth_event,
-                                    action: Spree::StoreCredit::CAPTURE_ACTION,
+                                    action: Solidus::StoreCredit::CAPTURE_ACTION,
                                     authorization_code: auth_code,
                                     amount: captured_amount,
                                     store_credit: store_credit) }
@@ -423,8 +423,8 @@ describe Spree::StoreCredit do
         let(:originator) { create(:user) } # won't actually be a user. just giving it a valid model here
 
         it "records the originator" do
-          expect { subject }.to change { Spree::StoreCreditEvent.count }.by(1)
-          expect(Spree::StoreCreditEvent.last.originator).to eq originator
+          expect { subject }.to change { Solidus::StoreCreditEvent.count }.by(1)
+          expect(Solidus::StoreCreditEvent.last.originator).to eq originator
         end
       end
     end
@@ -435,7 +435,7 @@ describe Spree::StoreCredit do
     let(:amount_used)     { 10.0 }
     let(:store_credit)    { create(:store_credit, amount_used: amount_used) }
     let!(:capture_event)  { create(:store_credit_auth_event,
-                                   action: Spree::StoreCredit::CAPTURE_ACTION,
+                                   action: Solidus::StoreCredit::CAPTURE_ACTION,
                                    authorization_code: event_auth_code,
                                    amount: captured_amount,
                                    store_credit: store_credit) }
@@ -498,14 +498,14 @@ describe Spree::StoreCredit do
       let(:auth_code)       { event_auth_code }
 
       context "credit_to_new_allocation is set" do
-        before { Spree::Config[:credit_to_new_allocation] = true }
+        before { Solidus::Config[:credit_to_new_allocation] = true }
 
         it "returns true" do
           expect(subject).to be true
         end
 
         it "creates a new store credit record" do
-          expect { subject }.to change { Spree::StoreCredit.count }.by(1)
+          expect { subject }.to change { Solidus::StoreCredit.count }.by(1)
         end
 
         it "does not create a new store credit event on the parent store credit" do
@@ -515,7 +515,7 @@ describe Spree::StoreCredit do
         context "credits the passed amount to a new store credit record" do
           before do
             subject
-            @new_store_credit = Spree::StoreCredit.last
+            @new_store_credit = Solidus::StoreCredit.last
           end
 
           it "does not set the amount used on hte originating store credit" do
@@ -541,8 +541,8 @@ describe Spree::StoreCredit do
           let(:originator) { create(:user) } # won't actually be a user. just giving it a valid model here
 
           it "records the originator" do
-            expect { subject }.to change { Spree::StoreCreditEvent.count }.by(1)
-            expect(Spree::StoreCreditEvent.last.originator).to eq originator
+            expect { subject }.to change { Solidus::StoreCreditEvent.count }.by(1)
+            expect(Solidus::StoreCreditEvent.last.originator).to eq originator
           end
         end
       end
@@ -566,7 +566,7 @@ describe Spree::StoreCredit do
 
   describe "#amount_used" do
     context "amount used is not defined" do
-      subject { Spree::StoreCredit.new }
+      subject { Solidus::StoreCredit.new }
 
       it "returns zero" do
         expect(subject.amount_used).to be_zero
@@ -586,7 +586,7 @@ describe Spree::StoreCredit do
 
   describe "#amount_authorized" do
     context "amount authorized is not defined" do
-      subject { Spree::StoreCredit.new }
+      subject { Solidus::StoreCredit.new }
 
       it "returns zero" do
         expect(subject.amount_authorized).to be_zero
@@ -627,7 +627,7 @@ describe Spree::StoreCredit do
     end
 
     context "void payment" do
-      let(:payment_state) { Spree::StoreCredit::VOID_ACTION }
+      let(:payment_state) { Solidus::StoreCredit::VOID_ACTION }
 
       it "returns false" do
         expect(subject).to be false
@@ -674,7 +674,7 @@ describe Spree::StoreCredit do
     end
 
     context "void payment" do
-      let(:payment_state) { Spree::StoreCredit::VOID_ACTION }
+      let(:payment_state) { Solidus::StoreCredit::VOID_ACTION }
 
       it "returns false" do
         expect(subject).to be false
@@ -744,11 +744,11 @@ describe Spree::StoreCredit do
           subject { create(:store_credit, amount: store_credit_amount) }
 
           it "creates a store credit event" do
-            expect { subject }.to change { Spree::StoreCreditEvent.count }.by(1)
+            expect { subject }.to change { Solidus::StoreCreditEvent.count }.by(1)
           end
 
           it "makes the store credit event an allocation event" do
-            expect(subject.store_credit_events.first.action).to eq Spree::StoreCredit::ALLOCATION_ACTION
+            expect(subject.store_credit_events.first.action).to eq Solidus::StoreCredit::ALLOCATION_ACTION
           end
 
           it "saves the user's total store credit in the event" do
@@ -773,10 +773,10 @@ describe Spree::StoreCredit do
         context "an action is specified" do
           it "creates an event with the set action" do
             store_credit = build(:store_credit)
-            store_credit.action = Spree::StoreCredit::VOID_ACTION
+            store_credit.action = Solidus::StoreCredit::VOID_ACTION
             store_credit.action_authorization_code = "1-SC-TEST"
 
-            expect { store_credit.save! }.to change { Spree::StoreCreditEvent.where(action: Spree::StoreCredit::VOID_ACTION).count }.by(1)
+            expect { store_credit.save! }.to change { Solidus::StoreCreditEvent.where(action: Solidus::StoreCredit::VOID_ACTION).count }.by(1)
           end
         end
       end
@@ -799,17 +799,17 @@ describe Spree::StoreCredit do
       end
 
       it "creates an adjustment store credit event" do
-        expect { subject }.to change { store_credit.store_credit_events.where(action: Spree::StoreCredit::ADJUSTMENT_ACTION).count }.from(0).to(1)
+        expect { subject }.to change { store_credit.store_credit_events.where(action: Solidus::StoreCredit::ADJUSTMENT_ACTION).count }.from(0).to(1)
       end
 
       it "sets the adjustment amount on the store credit event correctly" do
         subject
-        expect(store_credit.store_credit_events.find_by(action: Spree::StoreCredit::ADJUSTMENT_ACTION).amount).to eq -20
+        expect(store_credit.store_credit_events.find_by(action: Solidus::StoreCredit::ADJUSTMENT_ACTION).amount).to eq -20
       end
 
       it "sets the originator on the store credit event correctly" do
         subject
-        expect(store_credit.store_credit_events.find_by(action: Spree::StoreCredit::ADJUSTMENT_ACTION).originator).to eq invalidation_user
+        expect(store_credit.store_credit_events.find_by(action: Solidus::StoreCredit::ADJUSTMENT_ACTION).originator).to eq invalidation_user
       end
     end
 
@@ -821,7 +821,7 @@ describe Spree::StoreCredit do
       end
 
       it "doesn't create an adjustment store credit event" do
-        expect { subject }.to_not change { store_credit.store_credit_events.where(action: Spree::StoreCredit::ADJUSTMENT_ACTION).count }
+        expect { subject }.to_not change { store_credit.store_credit_events.where(action: Solidus::StoreCredit::ADJUSTMENT_ACTION).count }
       end
     end
   end
@@ -864,12 +864,12 @@ describe Spree::StoreCredit do
       end
 
       it "creates a store credit event for the invalidation" do
-        expect { subject }.to change { store_credit.store_credit_events.where(action: Spree::StoreCredit::INVALIDATE_ACTION).count }.from(0).to(1)
+        expect { subject }.to change { store_credit.store_credit_events.where(action: Solidus::StoreCredit::INVALIDATE_ACTION).count }.from(0).to(1)
       end
 
       it "assigns the originator as the user that is performing the invalidation" do
         subject
-        expect(store_credit.store_credit_events.find_by(action: Spree::StoreCredit::INVALIDATE_ACTION).originator).to eq invalidation_user
+        expect(store_credit.store_credit_events.find_by(action: Solidus::StoreCredit::INVALIDATE_ACTION).originator).to eq invalidation_user
       end
     end
   end

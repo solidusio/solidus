@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Spree::Admin::CancellationsController do
+describe Solidus::Admin::CancellationsController do
   stub_authorization!
 
   describe "#index" do
@@ -38,7 +38,7 @@ describe Spree::Admin::CancellationsController do
     end
 
     context "unable to find all the inventory" do
-      let(:inventory_units) { [Spree::InventoryUnit.new(id: -1)] }
+      let(:inventory_units) { [Solidus::InventoryUnit.new(id: -1)] }
 
       it "redirects back" do
         subject
@@ -65,7 +65,7 @@ describe Spree::Admin::CancellationsController do
       end
 
       it "creates a unit cancel" do
-        expect { subject }.to change { Spree::UnitCancel.count }.by(1)
+        expect { subject }.to change { Solidus::UnitCancel.count }.by(1)
       end
 
       it "cancels the inventory" do

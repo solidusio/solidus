@@ -7,13 +7,13 @@ module Spree
 
         # This promotion is applicable to orders only.
         def applicable?(promotable)
-          promotable.is_a?(Spree::Order)
+          promotable.is_a?(Solidus::Order)
         end
 
         # This is never eligible if the order does not have a user, and that user does not have any previous completed orders.
         #
         # This is eligible if the user's most recently completed order is more than the preferred days ago
-        # @param order [Spree::Order]
+        # @param order [Solidus::Order]
         # @option options
         def eligible?(order, options = {})
           return false unless order.user

@@ -55,7 +55,7 @@
                 <% if order.payment_state %>
                   <div class="state <%= order.payment_state %>"><%= link_to Spree.t("payment_states.#{order.payment_state}"), admin_order_payments_path(order) %></div>
                 <% end %>
-                <% if Spree::Order.checkout_step_names.include?(:delivery) && order.shipment_state %>
+                <% if Solidus::Order.checkout_step_names.include?(:delivery) && order.shipment_state %>
                   <div class="state <%= order.shipment_state %>"><%= Spree.t("shipment_states.#{order.shipment_state}") %></div>
                 <% end %>
               </td>
@@ -73,7 +73,7 @@
   <% else %>
     <div class="alpha twelve columns no-objects-found">
       <%= Spree.t(:no_resource_found, resource: I18n.t(:other, scope: 'activerecord.models.spree/order')) %>
-      <% if can?([:admin, :create], Spree::Order) %>
+      <% if can?([:admin, :create], Solidus::Order) %>
         <%= link_to Spree.t(:add_one), spree.new_admin_order_path %>!
       <% end %>
     </div>

@@ -1,6 +1,6 @@
 module Spree
   module Api
-    class TaxonomiesController < Spree::Api::BaseController
+    class TaxonomiesController < Solidus::Api::BaseController
 
       def index
         respond_with(taxonomies)

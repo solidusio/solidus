@@ -2,7 +2,7 @@ module Spree
   class PaymentMethod::StoreCredit < PaymentMethod
 
     def payment_source_class
-      ::Spree::StoreCredit
+      ::Solidus::StoreCredit
     end
 
     def can_capture?(payment)
@@ -42,10 +42,10 @@ module Spree
     end
 
     def purchase(amount_in_cents, store_credit, gateway_options = {})
-      eligible_events = store_credit.store_credit_events.where(amount: amount_in_cents / 100.0.to_d, action: Spree::StoreCredit::ELIGIBLE_ACTION)
+      eligible_events = store_credit.store_credit_events.where(amount: amount_in_cents / 100.0.to_d, action: Solidus::StoreCredit::ELIGIBLE_ACTION)
       event = eligible_events.find do |eligible_event|
         store_credit.store_credit_events.where(authorization_code: eligible_event.authorization_code)
-                                        .where.not(action: Spree::StoreCredit::ELIGIBLE_ACTION).empty?
+                                        .where.not(action: Solidus::StoreCredit::ELIGIBLE_ACTION).empty?
       end
 
       if event.blank?
@@ -119,8 +119,8 @@ module Spree
     end
 
     def auth_or_capture_event(auth_code)
-      capture_event = StoreCreditEvent.find_by(authorization_code: auth_code, action: Spree::StoreCredit::CAPTURE_ACTION)
-      auth_event = StoreCreditEvent.find_by(authorization_code: auth_code, action: Spree::StoreCredit::AUTHORIZE_ACTION)
+      capture_event = StoreCreditEvent.find_by(authorization_code: auth_code, action: Solidus::StoreCredit::CAPTURE_ACTION)
+      auth_event = StoreCreditEvent.find_by(authorization_code: auth_code, action: Solidus::StoreCredit::AUTHORIZE_ACTION)
       return capture_event || auth_event
     end
   end

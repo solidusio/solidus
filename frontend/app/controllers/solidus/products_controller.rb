@@ -1,5 +1,5 @@
 module Spree
-  class ProductsController < Spree::StoreController
+  class ProductsController < Solidus::StoreController
     before_action :load_product, only: :show
     before_action :load_taxon, only: :index
 
@@ -11,13 +11,13 @@ module Spree
     def index
       @searcher = build_searcher(params.merge(include_images: true))
       @products = @searcher.retrieve_products
-      @taxonomies = Spree::Taxonomy.includes(root: :children)
+      @taxonomies = Solidus::Taxonomy.includes(root: :children)
     end
 
     def show
       @variants = @product.variants_including_master.active(current_currency).includes([:option_values, :images])
       @product_properties = @product.product_properties.includes(:property)
-      @taxon = Spree::Taxon.find(params[:taxon_id]) if params[:taxon_id]
+      @taxon = Solidus::Taxon.find(params[:taxon_id]) if params[:taxon_id]
     end
 
     private
@@ -39,7 +39,7 @@ module Spree
       end
 
       def load_taxon
-        @taxon = Spree::Taxon.find(params[:taxon]) if params[:taxon].present?
+        @taxon = Solidus::Taxon.find(params[:taxon]) if params[:taxon].present?
       end
   end
 end

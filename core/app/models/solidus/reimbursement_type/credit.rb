@@ -1,6 +1,6 @@
 module Spree
-  class ReimbursementType::Credit < Spree::ReimbursementType
-    extend Spree::ReimbursementType::ReimbursementHelpers
+  class ReimbursementType::Credit < Solidus::ReimbursementType
+    extend Solidus::ReimbursementType::ReimbursementHelpers
 
     class << self
       def reimburse(reimbursement, return_items, simulate)

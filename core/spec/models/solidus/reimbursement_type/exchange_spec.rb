@@ -8,11 +8,11 @@ module Spree
       let(:new_exchange)  { double("Exchange") }
       let(:simulate)      { true }
 
-      subject { Spree::ReimbursementType::Exchange.reimburse(reimbursement, return_items, simulate)}
+      subject { Solidus::ReimbursementType::Exchange.reimburse(reimbursement, return_items, simulate)}
 
       context 'return items are supplied' do
         before do
-          expect(Spree::Exchange).to receive(:new).with(reimbursement.order, return_items).and_return(new_exchange)
+          expect(Solidus::Exchange).to receive(:new).with(reimbursement.order, return_items).and_return(new_exchange)
         end
 
         context "simulate is true" do

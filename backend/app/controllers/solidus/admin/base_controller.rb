@@ -1,6 +1,6 @@
 module Spree
   module Admin
-    class BaseController < Spree::BaseController
+    class BaseController < Solidus::BaseController
       helper 'spree/admin/navigation'
       helper 'spree/admin/tables'
       layout '/spree/layouts/admin'
@@ -52,12 +52,12 @@ module Spree
         end
 
         def config_locale
-          Spree::Backend::Config[:locale]
+          Solidus::Backend::Config[:locale]
         end
 
         def lock_order
           OrderMutex.with_lock!(@order) { yield }
-        rescue Spree::OrderMutex::LockFailed => e
+        rescue Solidus::OrderMutex::LockFailed => e
           flash[:error] = Spree.t(:order_mutex_admin_error)
           redirect_to order_mutex_redirect_path
         end

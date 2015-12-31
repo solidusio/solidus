@@ -6,7 +6,7 @@
 
 <% content_for :page_actions do %>
   <ul class="actions inline-menu">
-    <% if can?(:create, Spree::ReturnReason) %>
+    <% if can?(:create, Solidus::ReturnReason) %>
       <li>
         <%= button_link_to new_button_text, new_object_url, { icon: 'plus', id: 'admin_new_named_type' } %>
       </li>
@@ -49,7 +49,7 @@
 <% else %>
   <div class="alpha twelve columns no-objects-found">
     <%= Spree.t(:no_resource_found, resource: resource_name) %>
-    <% if can?(:create, Spree::ReturnReason) %>
+    <% if can?(:create, Solidus::ReturnReason) %>
       <%= link_to Spree.t(:add_one), new_object_url %>!
     <% end %>
   </div>

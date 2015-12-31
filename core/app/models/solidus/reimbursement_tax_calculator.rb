@@ -5,7 +5,7 @@ module Spree
   # rather than one at a time.
   #
   # To use an alternative tax calculator do this:
-  #    Spree::ReturnAuthorization.reimbursement_tax_calculator = calculator_object
+  #    Solidus::ReturnAuthorization.reimbursement_tax_calculator = calculator_object
   # where `calculator_object` is an object that responds to "call" and accepts a reimbursement object
 
   class ReimbursementTaxCalculator
@@ -21,7 +21,7 @@ module Spree
       private
 
       def set_tax!(return_item)
-        percent_of_tax = (return_item.pre_tax_amount <= 0) ? 0 : return_item.pre_tax_amount / Spree::ReturnItem.refund_amount_calculator.new.compute(return_item)
+        percent_of_tax = (return_item.pre_tax_amount <= 0) ? 0 : return_item.pre_tax_amount / Solidus::ReturnItem.refund_amount_calculator.new.compute(return_item)
 
         additional_tax_total = percent_of_tax * return_item.inventory_unit.additional_tax_total
         included_tax_total   = percent_of_tax * return_item.inventory_unit.included_tax_total

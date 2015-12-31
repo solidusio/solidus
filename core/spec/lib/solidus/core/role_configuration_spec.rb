@@ -1,12 +1,12 @@
 require 'spec_helper'
 
-describe Spree::RoleConfiguration do
-  class DummyPermissionSet < Spree::PermissionSets::Base
+describe Solidus::RoleConfiguration do
+  class DummyPermissionSet < Solidus::PermissionSets::Base
     def activate!
       can :manage, :things
     end
   end
-  class OtherDummyPermissionSet < Spree::PermissionSets::Base; end
+  class OtherDummyPermissionSet < Solidus::PermissionSets::Base; end
 
   let(:instance) { described_class.instance }
 
@@ -89,7 +89,7 @@ describe Spree::RoleConfiguration do
 
     before do
       user.spree_roles = user_roles.map do |role|
-        Spree::Role.create!(name: role)
+        Solidus::Role.create!(name: role)
       end
     end
 

@@ -1,5 +1,5 @@
 FactoryGirl.define do
-  factory :store_credit, class: Spree::StoreCredit do
+  factory :store_credit, class: Solidus::StoreCredit do
     user             { create(:user) }
     created_by       { create(:user) }
     category         { create(:store_credit_category) }

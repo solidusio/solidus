@@ -1,6 +1,6 @@
 module Spree
   module Api
-    class PromotionsController < Spree::Api::BaseController
+    class PromotionsController < Solidus::Api::BaseController
       before_filter :requires_admin
       before_filter :load_promotion
 
@@ -19,7 +19,7 @@ module Spree
         end
 
         def load_promotion
-          @promotion = Spree::Promotion.find_by_id(params[:id]) || Spree::Promotion.with_coupon_code(params[:id])
+          @promotion = Solidus::Promotion.find_by_id(params[:id]) || Solidus::Promotion.with_coupon_code(params[:id])
         end
     end
   end

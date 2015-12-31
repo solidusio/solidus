@@ -51,7 +51,7 @@ module Spree
             end
 
             context "with products rules" do
-              let(:rule) { double Spree::Promotion::Rules::Product }
+              let(:rule) { double Solidus::Promotion::Rules::Product }
 
               before { allow(promotion).to receive(:eligible_rules) { [rule] } }
 

@@ -1,9 +1,9 @@
 module Spree
-  class Address < Spree::Base
+  class Address < Solidus::Base
     require 'twitter_cldr'
 
-    belongs_to :country, class_name: "Spree::Country"
-    belongs_to :state, class_name: "Spree::State"
+    belongs_to :country, class_name: "Solidus::Country"
+    belongs_to :state, class_name: "Solidus::State"
 
     validates :firstname, :lastname, :address1, :city, :country_id, presence: true
     validates :zipcode, presence: true, if: :require_zipcode?
@@ -23,7 +23,7 @@ module Spree
     end
 
     def self.build_default
-      new(country: Spree::Country.default)
+      new(country: Solidus::Country.default)
     end
 
     def self.default(user = nil, kind = "bill")
@@ -159,7 +159,7 @@ module Spree
       def state_validate
         # Skip state validation without country (also required)
         # or when disabled by preference
-        return if country.blank? || !Spree::Config[:address_requires_state]
+        return if country.blank? || !Solidus::Config[:address_requires_state]
         return unless country.states_required
 
         # ensure associated state belongs to country

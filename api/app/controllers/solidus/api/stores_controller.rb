@@ -1,6 +1,6 @@
 module Spree
   module Api
-    class StoresController < Spree::Api::BaseController
+    class StoresController < Solidus::Api::BaseController
 
       before_filter :get_store, except: [:index, :create]
 

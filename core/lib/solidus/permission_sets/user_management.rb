@@ -13,8 +13,8 @@ module Spree
         end
 
         cannot [:delete, :destroy], Spree.user_class
-        can :manage, Spree::StoreCredit
-        can :display, Spree::Role
+        can :manage, Solidus::StoreCredit
+        can :display, Solidus::Role
       end
     end
   end

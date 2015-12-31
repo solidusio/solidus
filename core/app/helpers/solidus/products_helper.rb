@@ -3,10 +3,10 @@ module Spree
     # Returns the formatted price for the specified variant as a full price or
     # a difference depending on configuration
     #
-    # @param variant [Spree::Variant] the variant
-    # @return [Spree::Money] the price or price diff
+    # @param variant [Solidus::Variant] the variant
+    # @return [Solidus::Money] the price or price diff
     def variant_price(variant)
-      if Spree::Config[:show_variant_full_price]
+      if Solidus::Config[:show_variant_full_price]
         variant_full_price(variant)
       else
         variant_price_diff(variant)
@@ -16,14 +16,14 @@ module Spree
     # Returns the formatted price for the specified variant as a difference
     # from product price
     #
-    # @param variant [Spree::Variant] the variant
+    # @param variant [Solidus::Variant] the variant
     # @return [String] formatted string with label and amount
     def variant_price_diff(variant)
       variant_amount = variant.amount_in(current_currency)
       product_amount = variant.product.amount_in(current_currency)
       return if variant_amount == product_amount || product_amount.nil?
       diff   = variant.amount_in(current_currency) - product_amount
-      amount = Spree::Money.new(diff.abs, currency: current_currency).to_html
+      amount = Solidus::Money.new(diff.abs, currency: current_currency).to_html
       label  = diff > 0 ? :add : :subtract
       "(#{Spree.t(label)}: #{amount})".html_safe
     end
@@ -31,21 +31,21 @@ module Spree
     # Returns the formatted full price for the variant, if at least one variant
     # price differs from product price.
     #
-    # @param variant [Spree::Variant] the variant
-    # @return [Spree::Money] the full price
+    # @param variant [Solidus::Variant] the variant
+    # @return [Solidus::Money] the full price
     def variant_full_price(variant)
       product = variant.product
       unless product.variants.active(current_currency).all? { |v| v.price == product.price }
-        Spree::Money.new(variant.price, { currency: current_currency }).to_html
+        Solidus::Money.new(variant.price, { currency: current_currency }).to_html
       end
     end
 
     # Converts line breaks in product description into <p> tags.
     #
-    # @param product [Spree::Product] the product whose description you want to filter
+    # @param product [Solidus::Product] the product whose description you want to filter
     # @return [String] the generated HTML
     def product_description(product)
-      if Spree::Config[:show_raw_product_description]
+      if Solidus::Config[:show_raw_product_description]
         raw(product.description)
       else
         raw(product.description.gsub(/(.*?)\r?\n\r?\n/m, '<p>\1</p>'))

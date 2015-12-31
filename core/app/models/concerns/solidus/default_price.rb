@@ -4,8 +4,8 @@ module Spree
 
     included do
       has_one :default_price,
-        -> { where currency: Spree::Config[:currency], is_default: true },
-        class_name: 'Spree::Price',
+        -> { where currency: Solidus::Config[:currency], is_default: true },
+        class_name: 'Solidus::Price',
         dependent: :destroy
 
       def find_or_build_default_price
@@ -19,7 +19,7 @@ module Spree
       after_save :save_default_price
 
       def default_price
-        Spree::Price.unscoped { super }
+        Solidus::Price.unscoped { super }
       end
 
       def has_default_price?

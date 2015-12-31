@@ -1,14 +1,14 @@
 require 'spec_helper'
 
 module Spree
-  describe Spree::Order, :type => :model do
-    let(:order) { stub_model(Spree::Order) }
-    let(:updater) { Spree::OrderUpdater.new(order) }
+  describe Solidus::Order, :type => :model do
+    let(:order) { stub_model(Solidus::Order) }
+    let(:updater) { Solidus::OrderUpdater.new(order) }
 
     context "processing payments" do
       before do
         # So that Payment#purchase! is called during processing
-        Spree::Config[:auto_capture] = true
+        Solidus::Config[:auto_capture] = true
 
         allow(order).to receive_message_chain(:line_items, :empty?).and_return(false)
         allow(order).to receive_messages :total => 100
@@ -68,7 +68,7 @@ module Spree
     end
 
     context "ensure source attributes stick around" do
-      let(:order){ Spree::Order.create }
+      let(:order){ Solidus::Order.create }
       let(:payment_method){ create(:credit_card_payment_method) }
       let(:payment_attributes) do
         {
@@ -110,7 +110,7 @@ module Spree
     end
 
     context "#process_payments!" do
-      let(:payment) { stub_model(Spree::Payment) }
+      let(:payment) { stub_model(Solidus::Payment) }
       before { allow(order).to receive_messages unprocessed_payments: [payment], total: 10 }
 
       it "should process the payments" do
@@ -126,22 +126,22 @@ module Spree
       end
 
       context "when a payment raises a GatewayError" do
-        before { expect(payment).to receive(:process!).and_raise(Spree::Core::GatewayError) }
+        before { expect(payment).to receive(:process!).and_raise(Solidus::Core::GatewayError) }
 
         it "should return true when configured to allow checkout on gateway failures" do
-          Spree::Config.set :allow_checkout_on_gateway_error => true
+          Solidus::Config.set :allow_checkout_on_gateway_error => true
           expect(order.process_payments!).to be true
         end
 
         it "should return false when not configured to allow checkout on gateway failures" do
-          Spree::Config.set :allow_checkout_on_gateway_error => false
+          Solidus::Config.set :allow_checkout_on_gateway_error => false
           expect(order.process_payments!).to be false
         end
       end
     end
 
     context "#authorize_payments!" do
-      let(:payment) { stub_model(Spree::Payment) }
+      let(:payment) { stub_model(Solidus::Payment) }
       before { allow(order).to receive_messages :unprocessed_payments => [payment], :total => 10 }
       subject { order.authorize_payments! }
 
@@ -154,7 +154,7 @@ module Spree
     end
 
     context "#capture_payments!" do
-      let(:payment) { stub_model(Spree::Payment) }
+      let(:payment) { stub_model(Solidus::Payment) }
       before { allow(order).to receive_messages :unprocessed_payments => [payment], :total => 10 }
       subject { order.capture_payments! }
 

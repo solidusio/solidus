@@ -1,6 +1,6 @@
 module Spree
-  class ReturnReason < Spree::Base
-    include Spree::NamedType
+  class ReturnReason < Solidus::Base
+    include Solidus::NamedType
 
     has_many :return_authorizations
 

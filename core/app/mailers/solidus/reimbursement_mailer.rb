@@ -1,7 +1,7 @@
 module Spree
   class ReimbursementMailer < BaseMailer
       def reimbursement_email(reimbursement, resend = false)
-        @reimbursement = reimbursement.respond_to?(:id) ? reimbursement : Spree::Reimbursement.find(reimbursement)
+        @reimbursement = reimbursement.respond_to?(:id) ? reimbursement : Solidus::Reimbursement.find(reimbursement)
         store = @reimbursement.order.store
         subject = (resend ? "[#{Spree.t(:resend).upcase}] " : '')
         subject += "#{store.name} #{Spree.t('reimbursement_mailer.reimbursement_email.subject')} ##{@reimbursement.order.number}"

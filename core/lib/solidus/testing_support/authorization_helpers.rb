@@ -29,11 +29,11 @@ module Spree
           ability = build_ability
 
           after(:all) do
-            Spree::Ability.remove_ability(ability)
+            Solidus::Ability.remove_ability(ability)
           end
 
           before(:all) do
-            Spree::Ability.register_ability(ability)
+            Solidus::Ability.register_ability(ability)
           end
 
           before do
@@ -46,10 +46,10 @@ module Spree
         def custom_authorization!(&block)
           ability = build_ability(&block)
           after(:all) do
-            Spree::Ability.remove_ability(ability)
+            Solidus::Ability.remove_ability(ability)
           end
           before(:all) do
-            Spree::Ability.register_ability(ability)
+            Solidus::Ability.register_ability(ability)
           end
         end
       end
@@ -58,6 +58,6 @@ module Spree
 end
 
 RSpec.configure do |config|
-  config.extend Spree::TestingSupport::AuthorizationHelpers::Controller, type: :controller
-  config.extend Spree::TestingSupport::AuthorizationHelpers::Request, type: :feature
+  config.extend Solidus::TestingSupport::AuthorizationHelpers::Controller, type: :controller
+  config.extend Solidus::TestingSupport::AuthorizationHelpers::Request, type: :feature
 end

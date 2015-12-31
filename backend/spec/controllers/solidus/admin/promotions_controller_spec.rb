@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Spree::Admin::PromotionsController, :type => :controller do
+describe Solidus::Admin::PromotionsController, :type => :controller do
   stub_authorization!
 
   let!(:promotion1) { create(:promotion, name: "name1", code: "code1", path: "path1") }
@@ -48,7 +48,7 @@ describe Spree::Admin::PromotionsController, :type => :controller do
 
     context "it succeeds" do
       it "creates a promotion" do
-        expect { subject }.to change { Spree::Promotion.count }.by(1)
+        expect { subject }.to change { Solidus::Promotion.count }.by(1)
       end
 
       it "sets the flash message" do
@@ -70,8 +70,8 @@ describe Spree::Admin::PromotionsController, :type => :controller do
           expect {
             expect {
               subject
-            }.to change { Spree::Promotion.count }.by(1)
-          }.to change { Spree::PromotionCode.count }.by(1)
+            }.to change { Solidus::Promotion.count }.by(1)
+          }.to change { Solidus::PromotionCode.count }.by(1)
 
           expect(assigns(:promotion).codes.first.value).to eq ('abc')
         end
@@ -86,8 +86,8 @@ describe Spree::Admin::PromotionsController, :type => :controller do
           expect {
             expect {
               subject
-            }.to change { Spree::Promotion.count }.by(1)
-          }.to change { Spree::PromotionCode.count }.by(2)
+            }.to change { Solidus::Promotion.count }.by(1)
+          }.to change { Solidus::PromotionCode.count }.by(2)
 
           codes = assigns(:promotion).codes.map(&:value).sort
           expect(codes.length).to be 2
@@ -103,7 +103,7 @@ describe Spree::Admin::PromotionsController, :type => :controller do
       it "does not create a promotion" do
         expect {
           subject
-        }.not_to change { Spree::Promotion.count }
+        }.not_to change { Solidus::Promotion.count }
       end
 
       it "sets the flash error" do

@@ -1,14 +1,14 @@
 module Spree
-  class StoreCreditEvent < Spree::Base
+  class StoreCreditEvent < Solidus::Base
     acts_as_paranoid
 
     belongs_to :store_credit
     belongs_to :originator, polymorphic: true
-    belongs_to :update_reason, class_name: "Spree::StoreCreditUpdateReason"
+    belongs_to :update_reason, class_name: "Solidus::StoreCreditUpdateReason"
 
     validates_presence_of :update_reason, if: :action_requires_reason?
 
-    NON_EXPOSED_ACTIONS = [Spree::StoreCredit::ELIGIBLE_ACTION, Spree::StoreCredit::AUTHORIZE_ACTION]
+    NON_EXPOSED_ACTIONS = [Solidus::StoreCredit::ELIGIBLE_ACTION, Solidus::StoreCredit::AUTHORIZE_ACTION]
 
     scope :exposed_events, -> { exposable_actions.not_invalidated }
     scope :exposable_actions, -> { where.not(action: NON_EXPOSED_ACTIONS) }
@@ -19,23 +19,23 @@ module Spree
     delegate :currency, to: :store_credit
 
     def capture_action?
-      action == Spree::StoreCredit::CAPTURE_ACTION
+      action == Solidus::StoreCredit::CAPTURE_ACTION
     end
 
     def authorization_action?
-      action == Spree::StoreCredit::AUTHORIZE_ACTION
+      action == Solidus::StoreCredit::AUTHORIZE_ACTION
     end
 
     def action_requires_reason?
-      [Spree::StoreCredit::ADJUSTMENT_ACTION, Spree::StoreCredit::INVALIDATE_ACTION].include?(action)
+      [Solidus::StoreCredit::ADJUSTMENT_ACTION, Solidus::StoreCredit::INVALIDATE_ACTION].include?(action)
     end
 
     def display_amount
-      Spree::Money.new(amount, { currency: currency })
+      Solidus::Money.new(amount, { currency: currency })
     end
 
     def display_user_total_amount
-      Spree::Money.new(user_total_amount, { currency: currency })
+      Solidus::Money.new(user_total_amount, { currency: currency })
     end
 
     def display_event_date
@@ -48,7 +48,7 @@ module Spree
     end
 
     def order
-      Spree::Payment.find_by_response_code(authorization_code).try(:order)
+      Solidus::Payment.find_by_response_code(authorization_code).try(:order)
     end
   end
 end

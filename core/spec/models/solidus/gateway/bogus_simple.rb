@@ -1,8 +1,8 @@
 require 'spec_helper'
 
-describe Spree::Gateway::BogusSimple, :type => :model do
+describe Solidus::Gateway::BogusSimple, :type => :model do
 
-  subject { Spree::Gateway::BogusSimple.new }
+  subject { Solidus::Gateway::BogusSimple.new }
 
   # regression test for #3824
   describe "#capture" do

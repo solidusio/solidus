@@ -1,22 +1,22 @@
 require 'spec_helper'
 
-class DummyShippingCalculator < Spree::ShippingCalculator
+class DummyShippingCalculator < Solidus::ShippingCalculator
 end
 
-describe Spree::ShippingMethod, :type => :model do
+describe Solidus::ShippingMethod, :type => :model do
   let(:shipping_method){ create(:shipping_method) }
 
   context 'calculators' do
-    it "Should reject calculators that don't inherit from Spree::ShippingCalculator" do
-      allow(Spree::ShippingMethod).to receive_message_chain(:spree_calculators, :shipping_methods).and_return([
-        Spree::Calculator::Shipping::FlatPercentItemTotal,
-        Spree::Calculator::Shipping::PriceSack,
-        Spree::Calculator::DefaultTax,
+    it "Should reject calculators that don't inherit from Solidus::ShippingCalculator" do
+      allow(Solidus::ShippingMethod).to receive_message_chain(:spree_calculators, :shipping_methods).and_return([
+        Solidus::Calculator::Shipping::FlatPercentItemTotal,
+        Solidus::Calculator::Shipping::PriceSack,
+        Solidus::Calculator::DefaultTax,
         DummyShippingCalculator # included as regression test for https://github.com/spree/spree/issues/3109
       ])
 
-      expect(Spree::ShippingMethod.calculators).to eq([Spree::Calculator::Shipping::FlatPercentItemTotal, Spree::Calculator::Shipping::PriceSack, DummyShippingCalculator ])
-      expect(Spree::ShippingMethod.calculators).not_to eq([Spree::Calculator::DefaultTax])
+      expect(Solidus::ShippingMethod.calculators).to eq([Solidus::Calculator::Shipping::FlatPercentItemTotal, Solidus::Calculator::Shipping::PriceSack, DummyShippingCalculator ])
+      expect(Solidus::ShippingMethod.calculators).not_to eq([Solidus::Calculator::DefaultTax])
     end
   end
 

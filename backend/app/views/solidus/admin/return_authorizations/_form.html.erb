@@ -88,6 +88,6 @@
   <% end %>
 </div>
 
-<% if Spree::Config[:expedited_exchanges] %>
-  <div class="expedited-exchanges-warning"><%= Spree.t(:expedited_exchanges_warning, days_window: Spree::Config[:expedited_exchanges_days_window]) %></div>
+<% if Solidus::Config[:expedited_exchanges] %>
+  <div class="expedited-exchanges-warning"><%= Spree.t(:expedited_exchanges_warning, days_window: Solidus::Config[:expedited_exchanges_days_window]) %></div>
 <% end %>

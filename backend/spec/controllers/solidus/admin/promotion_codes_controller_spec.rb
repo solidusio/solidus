@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Spree::Admin::PromotionCodesController do
+describe Solidus::Admin::PromotionCodesController do
   stub_authorization!
   render_views
 

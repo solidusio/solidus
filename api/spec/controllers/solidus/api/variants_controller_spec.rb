@@ -252,7 +252,7 @@ module Spree
       it "can delete a variant" do
         api_delete :destroy, :id => variant.to_param
         expect(response.status).to eq(204)
-        expect { Spree::Variant.find(variant.id) }.to raise_error(ActiveRecord::RecordNotFound)
+        expect { Solidus::Variant.find(variant.id) }.to raise_error(ActiveRecord::RecordNotFound)
       end
 
       it 'variants returned contain cost price data' do

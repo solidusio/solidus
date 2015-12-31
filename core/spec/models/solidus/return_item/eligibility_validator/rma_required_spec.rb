@@ -1,8 +1,8 @@
 require 'spec_helper'
 
-describe Spree::ReturnItem::EligibilityValidator::RMARequired, :type => :model do
+describe Solidus::ReturnItem::EligibilityValidator::RMARequired, :type => :model do
   let(:return_item) { create(:return_item) }
-  let(:validator) { Spree::ReturnItem::EligibilityValidator::RMARequired.new(return_item) }
+  let(:validator) { Solidus::ReturnItem::EligibilityValidator::RMARequired.new(return_item) }
 
   describe "#eligible_for_return?" do
     subject { validator.eligible_for_return? }

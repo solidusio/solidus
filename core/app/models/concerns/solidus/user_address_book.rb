@@ -3,7 +3,7 @@ module Spree
     extend ActiveSupport::Concern
 
     included do
-      has_many :user_addresses, -> { active }, {foreign_key: "user_id", class_name: "Spree::UserAddress"} do
+      has_many :user_addresses, -> { active }, {foreign_key: "user_id", class_name: "Solidus::UserAddress"} do
 
         def find_first_by_address_values(address_attrs)
           detect { |ua| ua.address == Address.new(address_attrs) }
@@ -24,7 +24,7 @@ module Spree
       has_many :addresses, through: :user_addresses
 
       # bill_address is only minimally used now, but we can't get rid of it without a major version release
-      belongs_to :bill_address, class_name: 'Spree::Address'
+      belongs_to :bill_address, class_name: 'Solidus::Address'
 
       def bill_address=(address)
         # stow a copy in our address book too
@@ -58,7 +58,7 @@ module Spree
       # sets address to the default if automatic_default_address is set to true
       # if address is nil, does nothing and returns nil
       def ship_address=(address)
-        be_default = Spree::Config.automatic_default_address
+        be_default = Solidus::Config.automatic_default_address
         save_in_address_book(address.attributes, be_default) if address
       end
 
@@ -69,12 +69,12 @@ module Spree
       def persist_order_address(order)
         save_in_address_book(
           order.ship_address.attributes,
-          Spree::Config.automatic_default_address
+          Solidus::Config.automatic_default_address
         ) if order.ship_address
 
         save_in_address_book(
           order.bill_address.attributes,
-          order.ship_address.nil? && Spree::Config.automatic_default_address
+          order.ship_address.nil? && Solidus::Config.automatic_default_address
         ) if order.bill_address
       end
 

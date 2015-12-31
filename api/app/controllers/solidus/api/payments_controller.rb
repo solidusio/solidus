@@ -1,6 +1,6 @@
 module Spree
   module Api
-    class PaymentsController < Spree::Api::BaseController
+    class PaymentsController < Solidus::Api::BaseController
 
       before_filter :find_order
       around_filter :lock_order, only: [:create, :update, :destroy, :authorize, :capture, :purchase, :void, :credit]
@@ -12,7 +12,7 @@ module Spree
       end
 
       def new
-        @payment_methods = Spree::PaymentMethod.available
+        @payment_methods = Solidus::PaymentMethod.available
         respond_with(@payment_method)
       end
 
@@ -59,7 +59,7 @@ module Spree
       private
 
         def find_order
-          @order = Spree::Order.find_by(number: order_id)
+          @order = Solidus::Order.find_by(number: order_id)
           authorize! :read, @order, order_token
         end
 

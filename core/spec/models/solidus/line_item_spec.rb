@@ -1,22 +1,22 @@
 require 'spec_helper'
 
-describe Spree::LineItem, :type => :model do
+describe Solidus::LineItem, :type => :model do
   let(:order) { create :order_with_line_items, line_items_count: 1 }
   let(:line_item) { order.line_items.first }
 
   context '#destroy' do
     it "fetches deleted products" do
       line_item.product.destroy
-      expect(line_item.reload.product).to be_a Spree::Product
+      expect(line_item.reload.product).to be_a Solidus::Product
     end
 
     it "fetches deleted variants" do
       line_item.variant.destroy
-      expect(line_item.reload.variant).to be_a Spree::Variant
+      expect(line_item.reload.variant).to be_a Solidus::Variant
     end
 
     it "returns inventory when a line item is destroyed" do
-      expect_any_instance_of(Spree::OrderInventory).to receive(:verify)
+      expect_any_instance_of(Solidus::OrderInventory).to receive(:verify)
       line_item.destroy
     end
 
@@ -47,8 +47,8 @@ describe Spree::LineItem, :type => :model do
 
     context "target_shipment is provided" do
       it "verifies inventory" do
-        line_item.target_shipment = Spree::Shipment.new
-        expect_any_instance_of(Spree::OrderInventory).to receive(:verify)
+        line_item.target_shipment = Solidus::Shipment.new
+        expect_any_instance_of(Solidus::OrderInventory).to receive(:verify)
         line_item.save
       end
     end
@@ -139,14 +139,14 @@ describe Spree::LineItem, :type => :model do
       line_item.quantity = 2
     end
 
-    it "returns a Spree::Money representing the total for this line item" do
+    it "returns a Solidus::Money representing the total for this line item" do
       expect(line_item.money.to_s).to eq("$7.00")
     end
   end
 
   describe '.single_money' do
     before { line_item.price = 3.50 }
-    it "returns a Spree::Money representing the price for one variant" do
+    it "returns a Solidus::Money representing the price for one variant" do
       expect(line_item.single_money.to_s).to eq("$3.50")
     end
   end

@@ -1,18 +1,18 @@
 module Spree
   module Admin
-    class OrdersController < Spree::Admin::BaseController
+    class OrdersController < Solidus::Admin::BaseController
       before_action :initialize_order_events
       before_action :load_order, only: [:edit, :update, :complete, :advance, :cancel, :resume, :approve, :resend, :unfinalize_adjustments, :finalize_adjustments, :cart, :confirm]
       around_filter :lock_order, :only => [:update, :advance, :complete, :confirm, :cancel, :resume, :approve, :resend]
 
-      rescue_from Spree::Order::InsufficientStock, with: :insufficient_stock_error
+      rescue_from Solidus::Order::InsufficientStock, with: :insufficient_stock_error
 
       respond_to :html
 
       def index
         query_present = params[:q]
         params[:q] ||= {}
-        params[:q][:completed_at_not_null] ||= '1' if Spree::Config[:show_only_complete_orders_by_default]
+        params[:q][:completed_at_not_null] ||= '1' if Solidus::Config[:show_only_complete_orders_by_default]
         @show_only_completed = params[:q][:completed_at_not_null] == '1'
         params[:q][:s] ||= @show_only_completed ? 'completed_at desc' : 'created_at desc'
 
@@ -50,7 +50,7 @@ module Spree
 
         @orders = @orders.
           page(params[:page]).
-          per(params[:per_page] || Spree::Config[:orders_per_page])
+          per(params[:per_page] || Solidus::Config[:orders_per_page])
 
         # Restore dates
         params[:q][:created_at_gt] = created_at_gt
@@ -59,7 +59,7 @@ module Spree
 
       def new
         user = Spree.user_class.find_by_id(params[:user_id]) if params[:user_id]
-        @order = Spree::Core::Importer::Order.import(user, order_params)
+        @order = Solidus::Core::Importer::Order.import(user, order_params)
         redirect_to cart_admin_order_url(@order)
       end
 
@@ -187,7 +187,7 @@ module Spree
         end
 
         def model_class
-          Spree::Order
+          Solidus::Order
         end
 
         def insufficient_stock_error

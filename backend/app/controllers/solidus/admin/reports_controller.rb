@@ -1,6 +1,6 @@
 module Spree
   module Admin
-    class ReportsController < Spree::Admin::BaseController
+    class ReportsController < Solidus::Admin::BaseController
       respond_to :html
 
       class << self

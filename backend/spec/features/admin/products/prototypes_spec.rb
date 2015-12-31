@@ -20,15 +20,15 @@ describe "Prototypes", :type => :feature do
       create(:property, name: "shirt_type", presentation: "Type")
       p = create(:prototype, :name => "Shirt")
       %w( brand gender manufacturer model shirt_fabric shirt_fit shirt_sleeve_length shirt_type ).each do |prop|
-        p.properties << Spree::Property.find_by_name(prop)
+        p.properties << Solidus::Property.find_by_name(prop)
       end
       p = create(:prototype, name: "Mug")
       %w( mug_size mug_type ).each do |prop|
-        p.properties << Spree::Property.find_by_name(prop)
+        p.properties << Solidus::Property.find_by_name(prop)
       end
       p = create(:prototype, name: "Bag")
       %w( bag_type bag_material ).each do |prop|
-        p.properties << Spree::Property.find_by_name(prop)
+        p.properties << Solidus::Property.find_by_name(prop)
       end
 
       visit spree.admin_path
@@ -69,7 +69,7 @@ describe "Prototypes", :type => :feature do
 
       shirt_prototype = create(:prototype, name: "Shirt", properties: [])
       %w( brand model ).each do |prop|
-        shirt_prototype.properties << Spree::Property.find_by_name(prop)
+        shirt_prototype.properties << Solidus::Property.find_by_name(prop)
       end
 
       visit spree.admin_path

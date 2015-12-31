@@ -1,5 +1,5 @@
 FactoryGirl.define do
-  factory :address, class: Spree::Address do
+  factory :address, class: Solidus::Address do
     firstname 'John'
     lastname 'Doe'
     company 'Company'

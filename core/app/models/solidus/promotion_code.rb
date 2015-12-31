@@ -1,4 +1,4 @@
-class Spree::PromotionCode < Spree::Base
+class Solidus::PromotionCode < Solidus::Base
   belongs_to :promotion, inverse_of: :codes
   has_many :adjustments
 
@@ -24,7 +24,7 @@ class Spree::PromotionCode < Spree::Base
   def usage_count
     adjustments.eligible.
       joins(:order).
-      merge(Spree::Order.complete).
+      merge(Solidus::Order.complete).
       distinct.
       count(:order_id)
   end

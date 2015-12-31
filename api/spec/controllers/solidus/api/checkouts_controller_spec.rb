@@ -6,7 +6,7 @@ module Spree
 
     before(:each) do
       stub_authentication!
-      Spree::Config[:track_inventory_levels] = false
+      Solidus::Config[:track_inventory_levels] = false
       country_zone = create(:zone, name: 'CountryZone')
       @state = create(:state)
       @country = @state.country
@@ -18,7 +18,7 @@ module Spree
     end
 
     after do
-      Spree::Config[:track_inventory_levels] = true
+      Solidus::Config[:track_inventory_levels] = true
     end
 
     context "PUT 'update'" do
@@ -108,7 +108,7 @@ module Spree
 
         # Regression Spec for #5389 & #5880
         it "can update addresses but not transition to delivery w/o shipping setup" do
-          Spree::ShippingMethod.destroy_all
+          Solidus::ShippingMethod.destroy_all
           api_put :update,
             id: order.to_param, order_token: order.guest_token,
             order: {
@@ -154,7 +154,7 @@ module Spree
 
       it "can update payment method and transition from payment to confirm" do
         order.update_column(:state, "payment")
-        allow_any_instance_of(Spree::Gateway::Bogus).to receive(:source_required?).and_return(false)
+        allow_any_instance_of(Solidus::Gateway::Bogus).to receive(:source_required?).and_return(false)
         api_put :update, id: order.to_param, order_token: order.guest_token,
           order: { payments_attributes: [{ payment_method_id: @payment_method.id }] }
         expect(json_response['state']).to eq('confirm')
@@ -339,7 +339,7 @@ module Spree
           # unfortunately the credit card gets reloaded by `@order.next` before
           # the controller action finishes so this is the best way I could think
           # of to test that the verification_value gets set.
-          expect_any_instance_of(Spree::CreditCard).to(
+          expect_any_instance_of(Solidus::CreditCard).to(
             receive(:verification_value=).with('456').and_call_original
           )
 
@@ -365,7 +365,7 @@ module Spree
             # unfortunately the credit card gets reloaded by `@order.next` before
             # the controller action finishes so this is the best way I could think
             # of to test that the verification_value gets set.
-            expect_any_instance_of(Spree::CreditCard).to(
+            expect_any_instance_of(Solidus::CreditCard).to(
               receive(:verification_value=).with('456').and_call_original
             )
 
@@ -381,7 +381,7 @@ module Spree
 
       it "can transition from confirm to complete" do
         order.update_columns(completed_at: Time.current, state: 'complete')
-        allow_any_instance_of(Spree::Order).to receive_messages(payment_required?: false)
+        allow_any_instance_of(Solidus::Order).to receive_messages(payment_required?: false)
         api_put :update, id: order.to_param, order_token: order.guest_token
         expect(json_response['state']).to eq('complete')
         expect(response.status).to eq(200)
@@ -482,7 +482,7 @@ module Spree
           end
 
           it "can transition from confirm to complete" do
-            allow_any_instance_of(Spree::Order).to receive_messages(:payment_required? => false)
+            allow_any_instance_of(Solidus::Order).to receive_messages(:payment_required? => false)
             subject
             expect(json_response['state']).to eq('complete')
             expect(response.status).to eq(200)
@@ -512,7 +512,7 @@ module Spree
       let!(:order) { create(:order_with_line_items) }
 
       it 'continues to advance advances an order while it can move forward' do
-        expect_any_instance_of(Spree::Order).to receive(:next).exactly(3).times.and_return(true, true, false)
+        expect_any_instance_of(Solidus::Order).to receive(:next).exactly(3).times.and_return(true, true, false)
         api_put :advance, id: order.to_param, order_token: order.guest_token
       end
 

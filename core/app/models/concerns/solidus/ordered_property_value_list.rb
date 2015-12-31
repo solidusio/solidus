@@ -6,7 +6,7 @@ module Spree
       acts_as_list
 
       validates :property, presence: true
-      validates_with Spree::Validations::DbMaximumLengthValidator, field: :value
+      validates_with Solidus::Validations::DbMaximumLengthValidator, field: :value
 
       default_scope -> { order(:position) }
 

@@ -1,6 +1,6 @@
 module Spree
   module Api
-    class OptionValuesController < Spree::Api::BaseController
+    class OptionValuesController < Solidus::Api::BaseController
       def index
         if params[:ids]
           @option_values = scope.where(:id => params[:ids])
@@ -16,7 +16,7 @@ module Spree
       end
 
       def create
-        authorize! :create, Spree::OptionValue
+        authorize! :create, Solidus::OptionValue
         @option_value = scope.new(option_value_params)
         if @option_value.save
           render :show, :status => 201
@@ -44,9 +44,9 @@ module Spree
 
         def scope
           if params[:option_type_id]
-            @scope ||= Spree::OptionType.find(params[:option_type_id]).option_values.accessible_by(current_ability, :read)
+            @scope ||= Solidus::OptionType.find(params[:option_type_id]).option_values.accessible_by(current_ability, :read)
           else
-            @scope ||= Spree::OptionValue.accessible_by(current_ability, :read).load
+            @scope ||= Solidus::OptionValue.accessible_by(current_ability, :read).load
           end
         end
 

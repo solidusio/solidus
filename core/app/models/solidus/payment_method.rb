@@ -1,16 +1,16 @@
 module Spree
-  class PaymentMethod < Spree::Base
+  class PaymentMethod < Solidus::Base
     acts_as_paranoid
     DISPLAY = [:both, :front_end, :back_end]
 
     validates :name, presence: true
 
-    has_many :payments, class_name: "Spree::Payment", inverse_of: :payment_method
-    has_many :credit_cards, class_name: "Spree::CreditCard"
+    has_many :payments, class_name: "Solidus::Payment", inverse_of: :payment_method
+    has_many :credit_cards, class_name: "Solidus::CreditCard"
     has_many :store_payment_methods, inverse_of: :payment_method
     has_many :payment_methods, through: :store_payment_methods
 
-    include Spree::Preferences::StaticallyConfigurable
+    include Solidus::Preferences::StaticallyConfigurable
 
     def self.providers
       Rails.application.config.spree.payment_methods
@@ -62,7 +62,7 @@ module Spree
     end
 
     def auto_capture?
-      self.auto_capture.nil? ? Spree::Config[:auto_capture] : self.auto_capture
+      self.auto_capture.nil? ? Solidus::Config[:auto_capture] : self.auto_capture
     end
 
     def supports?(source)
@@ -74,7 +74,7 @@ module Spree
     end
 
     def store_credit?
-      is_a? Spree::PaymentMethod::StoreCredit
+      is_a? Solidus::PaymentMethod::StoreCredit
     end
   end
 end

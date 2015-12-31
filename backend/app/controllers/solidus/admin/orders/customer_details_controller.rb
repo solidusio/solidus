@@ -1,7 +1,7 @@
 module Spree
   module Admin
     module Orders
-      class CustomerDetailsController < Spree::Admin::BaseController
+      class CustomerDetailsController < Solidus::Admin::BaseController
         before_action :load_order
 
         def show
@@ -53,7 +53,7 @@ module Spree
           end
 
           def model_class
-            Spree::Order
+            Solidus::Order
           end
 
           def should_associate_user?

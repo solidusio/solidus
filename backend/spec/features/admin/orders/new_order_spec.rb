@@ -19,7 +19,7 @@ describe "New Order", :type => :feature do
   it "does check if you have a billing address before letting you add shipments" do
     click_on "Shipments"
     expect(page).to have_content 'Please fill in customer info'
-    expect(current_path).to eql(spree.edit_admin_order_customer_path(Spree::Order.last))
+    expect(current_path).to eql(spree.edit_admin_order_customer_path(Solidus::Order.last))
   end
 
   it "completes new order succesfully without using the cart", js: true do
@@ -42,12 +42,12 @@ describe "New Order", :type => :feature do
     click_on "Payments"
     click_on "Update"
 
-    expect(current_path).to eql(spree.admin_order_payments_path(Spree::Order.last))
+    expect(current_path).to eql(spree.admin_order_payments_path(Solidus::Order.last))
 
     click_on "Confirm"
     click_on "Complete"
 
-    expect(current_path).to eql(spree.edit_admin_order_path(Spree::Order.last))
+    expect(current_path).to eql(spree.edit_admin_order_path(Solidus::Order.last))
 
     click_on "Payments"
     click_icon "capture"
@@ -94,7 +94,7 @@ describe "New Order", :type => :feature do
   # Regression test for #3958
   context "without a delivery step", js: true do
     before do
-      allow(Spree::Order).to receive_messages checkout_step_names: [:address, :payment, :confirm, :complete]
+      allow(Solidus::Order).to receive_messages checkout_step_names: [:address, :payment, :confirm, :complete]
     end
 
     it "can still see line items" do
@@ -168,7 +168,7 @@ describe "New Order", :type => :feature do
       click_link "Customer Details"
       targetted_select2 user.email, from: "#s2id_customer_search"
       click_button "Update"
-      expect(Spree::Order.last.state).to eq 'delivery'
+      expect(Solidus::Order.last.state).to eq 'delivery'
     end
   end
 

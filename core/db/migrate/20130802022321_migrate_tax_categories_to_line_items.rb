@@ -1,6 +1,6 @@
 class MigrateTaxCategoriesToLineItems < ActiveRecord::Migration
   def change
-    Spree::LineItem.find_each do |line_item|
+    Solidus::LineItem.find_each do |line_item|
       next if line_item.variant.nil?
       next if line_item.variant.product.nil?
       next if line_item.product.nil?

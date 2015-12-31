@@ -1,11 +1,11 @@
 require 'spec_helper'
 
-describe Spree::Calculator::FlatRate, type: :model do
-  let(:calculator) { Spree::Calculator::FlatRate.new }
+describe Solidus::Calculator::FlatRate, type: :model do
+  let(:calculator) { Solidus::Calculator::FlatRate.new }
 
   let(:order) do
     mock_model(
-      Spree::Order, quantity: 10, currency: "USD"
+      Solidus::Order, quantity: 10, currency: "USD"
     )
   end
 

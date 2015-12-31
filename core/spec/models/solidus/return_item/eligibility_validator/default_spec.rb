@@ -1,8 +1,8 @@
 require 'spec_helper'
 
-describe Spree::ReturnItem::EligibilityValidator::Default, :type => :model do
+describe Solidus::ReturnItem::EligibilityValidator::Default, :type => :model do
   let(:return_item) { create(:return_item) }
-  let(:validator) { Spree::ReturnItem::EligibilityValidator::Default.new(return_item) }
+  let(:validator) { Solidus::ReturnItem::EligibilityValidator::Default.new(return_item) }
 
   let(:time_eligibility_class) { double("TimeEligibilityValidatorClass") }
   let(:rma_eligibility_class)  { double("RMAEligibilityValidatorClass") }

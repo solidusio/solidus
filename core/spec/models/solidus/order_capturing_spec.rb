@@ -1,8 +1,8 @@
 require 'spec_helper'
 
-describe Spree::OrderCapturing do
+describe Solidus::OrderCapturing do
   describe '#capture_payments' do
-    subject { Spree::OrderCapturing.new(order, payment_methods).capture_payments }
+    subject { Solidus::OrderCapturing.new(order, payment_methods).capture_payments }
 
     # Regression for the order.update! in the ensure block.
     # See the comment there.
@@ -15,16 +15,16 @@ describe Spree::OrderCapturing do
       before do
         payment.pend!
 
-        allow_any_instance_of(Spree::Order).to receive(:thingamajig) do |order|
+        allow_any_instance_of(Solidus::Order).to receive(:thingamajig) do |order|
           changes_spy.change_callback_occured if order.changes.any?
         end
 
-        @update_hooks = Spree::Order.update_hooks.dup
-        Spree::Order.register_update_hook :thingamajig
+        @update_hooks = Solidus::Order.update_hooks.dup
+        Solidus::Order.register_update_hook :thingamajig
       end
 
       after do
-        Spree::Order.update_hooks = @update_hooks
+        Solidus::Order.update_hooks = @update_hooks
       end
 
       it "keeps the order up to date when updating and only changes it once" do
@@ -58,10 +58,10 @@ describe Spree::OrderCapturing do
       context "payment method ordering" do
         let(:secondary_payment_method) { SecondaryBogusPaymentMethod }
 
-        class SecondaryBogusPaymentMethod < Spree::Gateway::Bogus; end
+        class SecondaryBogusPaymentMethod < Solidus::Gateway::Bogus; end
 
         context "SecondaryBogusPaymentMethod payments are prioritized" do
-          let(:payment_methods) { [SecondaryBogusPaymentMethod, Spree::Gateway::Bogus] }
+          let(:payment_methods) { [SecondaryBogusPaymentMethod, Solidus::Gateway::Bogus] }
 
           it "captures SecondaryBogusPaymentMethod payments first" do
             @bogus_payment.update!(amount: bogus_total + 100)
@@ -72,7 +72,7 @@ describe Spree::OrderCapturing do
         end
 
         context "Bogus payments are prioritized" do
-          let(:payment_methods) { [Spree::Gateway::Bogus, SecondaryBogusPaymentMethod] }
+          let(:payment_methods) { [Solidus::Gateway::Bogus, SecondaryBogusPaymentMethod] }
 
           it "captures Bogus payments first" do
             @secondary_bogus_payment.update!(amount: secondary_total + 100)
@@ -83,13 +83,13 @@ describe Spree::OrderCapturing do
         end
 
         context "when the payment method ordering is configured" do
-          subject { Spree::OrderCapturing.new(order, payment_methods).capture_payments }
+          subject { Solidus::OrderCapturing.new(order, payment_methods).capture_payments }
 
           let(:payment_methods) { nil }
 
           before do
-            allow(Spree::OrderCapturing).to receive(:sorted_payment_method_classes).and_return(
-              [SecondaryBogusPaymentMethod, Spree::Gateway::Bogus]
+            allow(Solidus::OrderCapturing).to receive(:sorted_payment_method_classes).and_return(
+              [SecondaryBogusPaymentMethod, Solidus::Gateway::Bogus]
             )
           end
 
@@ -103,14 +103,14 @@ describe Spree::OrderCapturing do
 
       context "when a payment is not needed to capture the entire order" do
         let(:secondary_payment_method) { SecondaryBogusPaymentMethod }
-        let(:payment_methods) { [Spree::Gateway::Bogus, SecondaryBogusPaymentMethod] }
+        let(:payment_methods) { [Solidus::Gateway::Bogus, SecondaryBogusPaymentMethod] }
 
         before do
           @bogus_payment.update!(amount: order.total)
         end
 
         context "when void_unused_payments is true" do
-          before { allow(Spree::OrderCapturing).to receive(:void_unused_payments).and_return(true) }
+          before { allow(Solidus::OrderCapturing).to receive(:void_unused_payments).and_return(true) }
 
           it "captures for the order and voids the unused payment" do
             subject
@@ -132,16 +132,16 @@ describe Spree::OrderCapturing do
         let(:secondary_payment_method) { ExceptionallyBogusPaymentMethod }
         let(:bogus_total) { order.total - 1 }
         let(:secondary_total) { 1 }
-        let(:payment_methods) { [Spree::Gateway::Bogus, ExceptionallyBogusPaymentMethod] }
+        let(:payment_methods) { [Solidus::Gateway::Bogus, ExceptionallyBogusPaymentMethod] }
 
-        class ExceptionallyBogusPaymentMethod < Spree::Gateway::Bogus
+        class ExceptionallyBogusPaymentMethod < Solidus::Gateway::Bogus
           def capture(*args)
             raise ActiveMerchant::ConnectionError.new("foo", nil)
           end
         end
 
         it "raises an error and leaves the order in a reasonable state" do
-          expect { subject }.to raise_error(Spree::Core::GatewayError)
+          expect { subject }.to raise_error(Solidus::Core::GatewayError)
           expect(order.payments.to_a.sum(&:uncaptured_amount)).to eq 1.0
         end
       end

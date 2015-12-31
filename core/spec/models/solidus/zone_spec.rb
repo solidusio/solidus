@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Spree::Zone, :type => :model do
+describe Solidus::Zone, :type => :model do
   context "#match" do
     let(:country_zone) { create(:zone, name: 'CountryZone') }
     let(:country) do
@@ -16,7 +16,7 @@ describe Spree::Zone, :type => :model do
       let(:address) { create(:address, country: country, state: country.states.first) }
 
       it "should return the qualifying zone" do
-        expect(Spree::Zone.match(address)).to eq(country_zone)
+        expect(Solidus::Zone.match(address)).to eq(country_zone)
       end
     end
 
@@ -28,7 +28,7 @@ describe Spree::Zone, :type => :model do
 
       context "when both zones have the same number of members" do
         it "should return the zone that was created first" do
-          expect(Spree::Zone.match(address)).to eq(country_zone)
+          expect(Solidus::Zone.match(address)).to eq(country_zone)
         end
       end
 
@@ -38,7 +38,7 @@ describe Spree::Zone, :type => :model do
         before { country_zone.members.create(zoneable: country2) }
 
         it "should return the zone with fewer members" do
-          expect(Spree::Zone.match(address)).to eq(second_zone)
+          expect(Solidus::Zone.match(address)).to eq(second_zone)
         end
       end
     end
@@ -50,13 +50,13 @@ describe Spree::Zone, :type => :model do
       before { state_zone.members.create(zoneable: country.states.first) }
 
       it "should return the zone with the more specific member type" do
-        expect(Spree::Zone.match(address)).to eq(state_zone)
+        expect(Solidus::Zone.match(address)).to eq(state_zone)
       end
     end
 
     context "when there are no qualifying zones" do
       it "should return nil" do
-        expect(Spree::Zone.match(Spree::Address.new)).to be_nil
+        expect(Solidus::Zone.match(Solidus::Address.new)).to be_nil
       end
     end
   end
@@ -116,13 +116,13 @@ describe Spree::Zone, :type => :model do
 
       it "should be the correct zone" do
         foo_zone = create(:zone, name: 'foo')
-        expect(Spree::Zone.default_tax).to eq(@foo_zone)
+        expect(Solidus::Zone.default_tax).to eq(@foo_zone)
       end
     end
 
     context "when there is no default tax zone specified" do
       it "should be nil" do
-        expect(Spree::Zone.default_tax).to be_nil
+        expect(Solidus::Zone.default_tax).to be_nil
       end
     end
   end

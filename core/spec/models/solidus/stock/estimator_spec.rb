@@ -127,7 +127,7 @@ module Spree
           let!(:tax_rate) { create(:tax_rate, zone: order.tax_zone) }
 
           before do
-            Spree::ShippingMethod.all.each do |sm|
+            Solidus::ShippingMethod.all.each do |sm|
               sm.tax_category_id = tax_rate.tax_category_id
               sm.save
             end
@@ -142,37 +142,37 @@ module Spree
         end
 
         it 'uses the configured shipping rate selector' do
-          shipping_rate = Spree::ShippingRate.new
-          allow(Spree::ShippingRate).to receive(:new).and_return(shipping_rate)
+          shipping_rate = Solidus::ShippingRate.new
+          allow(Solidus::ShippingRate).to receive(:new).and_return(shipping_rate)
 
           selector_class = Class.new do
             def initialize(_); end;
 
             def find_default
-              Spree::ShippingRate.new
+              Solidus::ShippingRate.new
             end
           end
-          Spree::Config.shipping_rate_selector_class = selector_class
+          Solidus::Config.shipping_rate_selector_class = selector_class
 
           subject.shipping_rates(package)
 
           expect(shipping_rate.selected).to eq(true)
 
-          Spree::Config.shipping_rate_selector_class = nil
+          Solidus::Config.shipping_rate_selector_class = nil
         end
 
         it 'uses the configured shipping rate sorter' do
-          class Spree::Stock::TestSorter; end;
-          Spree::Config.shipping_rate_sorter_class = Spree::Stock::TestSorter
+          class Solidus::Stock::TestSorter; end;
+          Solidus::Config.shipping_rate_sorter_class = Solidus::Stock::TestSorter
 
           sorter = double(:sorter, sort: nil)
-          allow(Spree::Stock::TestSorter).to receive(:new).and_return(sorter)
+          allow(Solidus::Stock::TestSorter).to receive(:new).and_return(sorter)
 
           subject.shipping_rates(package)
 
           expect(sorter).to have_received(:sort)
 
-          Spree::Config.shipping_rate_sorter_class = nil
+          Solidus::Config.shipping_rate_sorter_class = nil
         end
       end
     end

@@ -41,7 +41,7 @@ module Spree
         meta[:description] = object.meta_description if object[:meta_description].present?
       end
 
-      if meta[:description].blank? && object.kind_of?(Spree::Product)
+      if meta[:description].blank? && object.kind_of?(Solidus::Product)
         meta[:description] = strip_tags(truncate(object.description, length: 160, separator: ' '))
       end
 
@@ -63,7 +63,7 @@ module Spree
       @body_class
     end
 
-    def logo(image_path=Spree::Config[:logo])
+    def logo(image_path=Solidus::Config[:logo])
       link_to image_tag(image_path), spree.root_path
     end
 
@@ -118,7 +118,7 @@ module Spree
     end
 
     def available_countries
-      checkout_zone = Zone.find_by(name: Spree::Config[:checkout_zone])
+      checkout_zone = Zone.find_by(name: Solidus::Config[:checkout_zone])
 
       if checkout_zone && checkout_zone.kind == 'country'
         countries = checkout_zone.country_list
@@ -177,7 +177,7 @@ module Spree
     # Returns style of image or nil
     def image_style_from_method_name(method_name)
       if method_name.to_s.match(/_image$/) && style = method_name.to_s.sub(/_image$/, '')
-        possible_styles = Spree::Image.attachment_definitions[:attachment][:styles]
+        possible_styles = Solidus::Image.attachment_definitions[:attachment][:styles]
         style if style.in? possible_styles.with_indifferent_access
       end
     end
@@ -192,7 +192,7 @@ module Spree
         ActiveSupport::Deprecation.warn "Spree image helpers will be deprecated in the near future. Use the provided resource to access the intendend image directly.", caller
         options = options.first || {}
         if product.images.empty?
-          if !product.is_a?(Spree::Variant) && !product.variant_images.empty?
+          if !product.is_a?(Solidus::Variant) && !product.variant_images.empty?
             create_product_image_tag(product.variant_images.first, product, options, style)
           else
             if product.is_a?(Variant) && !product.product.variant_images.empty?

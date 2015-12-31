@@ -1,7 +1,7 @@
 require 'spec_helper'
 
-describe Spree::ReturnItem::EligibilityValidator::NoReimbursements do
-  let(:validator) { Spree::ReturnItem::EligibilityValidator::NoReimbursements.new(return_item) }
+describe Solidus::ReturnItem::EligibilityValidator::NoReimbursements do
+  let(:validator) { Solidus::ReturnItem::EligibilityValidator::NoReimbursements.new(return_item) }
 
   describe "#eligible_for_return?" do
 

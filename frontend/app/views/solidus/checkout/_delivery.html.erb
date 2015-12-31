@@ -84,7 +84,7 @@
       <% end %>
 
     </div>
-    <% if Spree::Config[:shipping_instructions] %>
+    <% if Solidus::Config[:shipping_instructions] %>
       <p id="minstrs" data-hook>
         <%= form.label :special_instructions, Spree.t(:shipping_instructions) %><br />
         <%= form.text_area :special_instructions, :cols => 40, :rows => 7 %>

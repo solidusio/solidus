@@ -1,5 +1,5 @@
 module Spree
-  class AdjustmentReason < Spree::Base
+  class AdjustmentReason < Solidus::Base
     has_many :adjustments, inverse_of: :adjustment_reason
 
     validates :name, presence: true

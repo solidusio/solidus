@@ -1,9 +1,9 @@
-class Spree::Carton < Spree::Base
-  belongs_to :address, class_name: 'Spree::Address'
-  belongs_to :stock_location, class_name: 'Spree::StockLocation', inverse_of: :cartons
-  belongs_to :shipping_method, class_name: 'Spree::ShippingMethod', inverse_of: :cartons
+class Solidus::Carton < Solidus::Base
+  belongs_to :address, class_name: 'Solidus::Address'
+  belongs_to :stock_location, class_name: 'Solidus::StockLocation', inverse_of: :cartons
+  belongs_to :shipping_method, class_name: 'Solidus::ShippingMethod', inverse_of: :cartons
 
-  has_many :inventory_units, class_name: "Spree::InventoryUnit", inverse_of: :carton, dependent: :nullify
+  has_many :inventory_units, class_name: "Solidus::InventoryUnit", inverse_of: :carton, dependent: :nullify
   has_many :orders, -> { uniq }, through: :inventory_units
   has_many :shipments, -> { uniq }, through: :inventory_units
 
@@ -44,11 +44,11 @@ class Spree::Carton < Spree::Base
   end
 
   def manifest
-    @manifest ||= Spree::ShippingManifest.new(inventory_units: inventory_units).items
+    @manifest ||= Solidus::ShippingManifest.new(inventory_units: inventory_units).items
   end
 
   def manifest_for_order(order)
-    Spree::ShippingManifest.new(inventory_units: inventory_units).for_order(order).items
+    Solidus::ShippingManifest.new(inventory_units: inventory_units).for_order(order).items
   end
 
   def any_exchanges?

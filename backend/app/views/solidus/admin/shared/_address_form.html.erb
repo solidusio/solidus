@@ -11,7 +11,7 @@
     <%= f.text_field :lastname, :class => 'fullwidth' %>
   </div>
 
-  <% if Spree::Config[:company] %>
+  <% if Solidus::Config[:company] %>
     <div class="field <%= "#{type}-row" %>">
       <%= f.label :company, Spree.t(:company) %>
       <%= f.text_field :company, :class => 'fullwidth' %>

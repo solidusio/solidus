@@ -6,7 +6,7 @@ module Spree
   #
   # A product can be assigned many option types, but must be assigned at least
   # one if you wish to create variants for that product.
-  class OptionType < Spree::Base
+  class OptionType < Solidus::Base
     acts_as_list
 
     has_many :option_values, -> { order(:position) }, dependent: :destroy, inverse_of: :option_type

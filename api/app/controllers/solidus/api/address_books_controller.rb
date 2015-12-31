@@ -1,6 +1,6 @@
 module Spree
   module Api
-    class AddressBooksController < Spree::Api::BaseController
+    class AddressBooksController < Solidus::Api::BaseController
       # Note: the AddressBook is the resource to think about here, not individual addresses
       before_filter :load_user_addresses
 

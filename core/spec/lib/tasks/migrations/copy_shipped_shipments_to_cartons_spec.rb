@@ -41,9 +41,9 @@ describe 'spree:migrations:copy_shipped_shipments_to_cartons' do
     it 'creates the expected carton' do
       expect {
         task.invoke
-      }.to change { Spree::Carton.count }.by(1)
+      }.to change { Solidus::Carton.count }.by(1)
 
-      carton = Spree::Carton.last
+      carton = Solidus::Carton.last
 
       expect(carton).to be_valid
 
@@ -75,9 +75,9 @@ describe 'spree:migrations:copy_shipped_shipments_to_cartons' do
       it 'creates only a carton for the second shipment' do
         expect {
           task.invoke
-        }.to change { Spree::Carton.count }.by(1)
+        }.to change { Solidus::Carton.count }.by(1)
 
-        carton = Spree::Carton.last
+        carton = Solidus::Carton.last
 
         expect(carton.imported_from_shipment_id).to eq second_shipped_shipment.id
         expect(carton.orders).to eq [second_shipped_order]
@@ -103,9 +103,9 @@ describe 'spree:migrations:copy_shipped_shipments_to_cartons' do
     it 'clears out the correct carton' do
       expect {
         task.invoke
-      }.to change { Spree::Carton.count }.by(-1)
+      }.to change { Solidus::Carton.count }.by(-1)
 
-      expect(Spree::Carton.find_by(id: migrated_carton.id)).to be_nil
+      expect(Solidus::Carton.find_by(id: migrated_carton.id)).to be_nil
 
       expect(migrated_carton_inventory_units.map(&:reload).map(&:carton_id)).to all(be_nil)
       expect(preexisting_carton_inventory_units.map(&:reload).map(&:carton_id)).to all(eq preexisting_carton.id)

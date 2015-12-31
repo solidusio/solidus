@@ -20,7 +20,7 @@ module Spree
         end
 
         def build_package(contents=[])
-          Spree::Stock::Package.new(stock_location, contents)
+          Solidus::Stock::Package.new(stock_location, contents)
         end
       end
     end

@@ -1,8 +1,8 @@
 require 'spec_helper'
 
-describe Spree::ReturnItem::EligibilityValidator::InventoryShipped do
+describe Solidus::ReturnItem::EligibilityValidator::InventoryShipped do
   let(:return_item) { create(:return_item) }
-  let(:validator)   { Spree::ReturnItem::EligibilityValidator::InventoryShipped.new(return_item) }
+  let(:validator)   { Solidus::ReturnItem::EligibilityValidator::InventoryShipped.new(return_item) }
 
   describe "#eligible_for_return?" do
     before { allow(return_item.inventory_unit).to receive(:shipped?).and_return(true) }

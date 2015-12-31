@@ -8,7 +8,7 @@ module Spree
 
       def initialize
         @calculators = Calculators.new
-        @preferences = Spree::AppConfiguration.new
+        @preferences = Solidus::AppConfiguration.new
       end
     end
   end

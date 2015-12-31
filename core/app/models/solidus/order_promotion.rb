@@ -1,14 +1,14 @@
 module Spree
-  # Spree::OrderPromotion represents the relationship between:
+  # Solidus::OrderPromotion represents the relationship between:
   #
   # 1. A promotion that a user attempted to apply to their order
   # 2. The specific code that they used
-  class OrderPromotion < Spree::Base
+  class OrderPromotion < Solidus::Base
     self.table_name = 'spree_orders_promotions'
 
-    belongs_to :order, class_name: 'Spree::Order'
-    belongs_to :promotion, class_name: 'Spree::Promotion'
-    belongs_to :promotion_code, class_name: 'Spree::PromotionCode'
+    belongs_to :order, class_name: 'Solidus::Order'
+    belongs_to :promotion, class_name: 'Solidus::Promotion'
+    belongs_to :promotion_code, class_name: 'Solidus::PromotionCode'
 
     validates :order, presence: true
     validates :promotion, presence: true

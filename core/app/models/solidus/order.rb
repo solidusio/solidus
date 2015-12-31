@@ -2,20 +2,20 @@ require 'spree/core/validators/email'
 require 'spree/order/checkout'
 
 module Spree
-  class Order < Spree::Base
+  class Order < Solidus::Base
 
     ORDER_NUMBER_LENGTH  = 9
     ORDER_NUMBER_LETTERS = false
     ORDER_NUMBER_PREFIX  = 'R'
 
-    include Spree::Order::Checkout
-    include Spree::Order::CurrencyUpdater
-    include Spree::Order::Payments
+    include Solidus::Order::Checkout
+    include Solidus::Order::CurrencyUpdater
+    include Solidus::Order::Payments
 
     class InsufficientStock < StandardError; end
     class CannotRebuildShipments < StandardError; end
 
-    extend Spree::DisplayMoney
+    extend Solidus::DisplayMoney
     money_methods :outstanding_balance, :item_total, :adjustment_total,
       :included_tax_total, :additional_tax_total, :tax_total,
       :shipment_total, :total, :order_total_after_store_credit, :total_available_store_credit
@@ -34,19 +34,19 @@ module Spree
     attr_reader :coupon_code
     attr_accessor :temporary_address, :temporary_credit_card
 
-    belongs_to :user, class_name: Spree::UserClassHandle.new
-    belongs_to :created_by, class_name: Spree::UserClassHandle.new
-    belongs_to :approver, class_name: Spree::UserClassHandle.new
-    belongs_to :canceler, class_name: Spree::UserClassHandle.new
+    belongs_to :user, class_name: Solidus::UserClassHandle.new
+    belongs_to :created_by, class_name: Solidus::UserClassHandle.new
+    belongs_to :approver, class_name: Solidus::UserClassHandle.new
+    belongs_to :canceler, class_name: Solidus::UserClassHandle.new
 
-    belongs_to :bill_address, foreign_key: :bill_address_id, class_name: 'Spree::Address'
+    belongs_to :bill_address, foreign_key: :bill_address_id, class_name: 'Solidus::Address'
     alias_attribute :billing_address, :bill_address
 
-    belongs_to :ship_address, foreign_key: :ship_address_id, class_name: 'Spree::Address'
+    belongs_to :ship_address, foreign_key: :ship_address_id, class_name: 'Solidus::Address'
     alias_attribute :shipping_address, :ship_address
     alias_attribute :ship_total, :shipment_total
 
-    belongs_to :store, class_name: 'Spree::Store'
+    belongs_to :store, class_name: 'Solidus::Store'
     has_many :state_changes, as: :stateful
     has_many :line_items, -> { order(:created_at, :id) }, dependent: :destroy, inverse_of: :order
     has_many :payments, dependent: :destroy
@@ -60,15 +60,15 @@ module Spree
     has_many :variants, through: :line_items
     has_many :refunds, through: :payments
     has_many :all_adjustments,
-             class_name: 'Spree::Adjustment',
+             class_name: 'Solidus::Adjustment',
              foreign_key: :order_id,
              dependent: :destroy,
              inverse_of: :order
 
-    has_many :order_stock_locations, class_name: "Spree::OrderStockLocation"
+    has_many :order_stock_locations, class_name: "Solidus::OrderStockLocation"
     has_many :stock_locations, through: :order_stock_locations
 
-    has_many :order_promotions, class_name: 'Spree::OrderPromotion'
+    has_many :order_promotions, class_name: 'Solidus::OrderPromotion'
     has_many :promotions, through: :order_promotions
 
     has_many :cartons, -> { uniq }, through: :inventory_units
@@ -113,7 +113,7 @@ module Spree
       def by_number(number)
         where(number: number)
       end
-      deprecate :by_number, deprecator: Spree::Deprecation
+      deprecate :by_number, deprecator: Solidus::Deprecation
     end
 
     scope :created_between, ->(start_date, end_date) { where(created_at: start_date..end_date) }
@@ -164,7 +164,7 @@ module Spree
     end
 
     def currency
-      self[:currency] || Spree::Config[:currency]
+      self[:currency] || Solidus::Config[:currency]
     end
 
     def shipping_discount
@@ -195,7 +195,7 @@ module Spree
     def confirmation_required?
       true
     end
-    deprecate :confirmation_required?, deprecator: Spree::Deprecation
+    deprecate :confirmation_required?, deprecator: Solidus::Deprecation
 
     def backordered?
       shipments.any?(&:backordered?)
@@ -209,7 +209,7 @@ module Spree
 
     # Returns the address for taxation based on configuration
     def tax_address
-      Spree::Config[:tax_using_ship_address] ? ship_address : bill_address
+      Solidus::Config[:tax_using_ship_address] ? ship_address : bill_address
     end
 
     def updater
@@ -235,15 +235,15 @@ module Spree
     end
 
     def contents
-      @contents ||= Spree::OrderContents.new(self)
+      @contents ||= Solidus::OrderContents.new(self)
     end
 
     def shipping
-      @shipping ||= Spree::OrderShipping.new(self)
+      @shipping ||= Solidus::OrderShipping.new(self)
     end
 
     def cancellations
-      @cancellations ||= Spree::OrderCancellations.new(self)
+      @cancellations ||= Solidus::OrderCancellations.new(self)
     end
 
     # Associates the specified user with the order.
@@ -324,8 +324,8 @@ module Spree
     def create_tax_charge!
       # We want to only look up the applicable tax zone once and pass it to TaxRate calculation to avoid duplicated lookups.
       order_tax_zone = self.tax_zone
-      Spree::TaxRate.adjust(order_tax_zone, line_items)
-      Spree::TaxRate.adjust(order_tax_zone, shipments) if shipments.any?
+      Solidus::TaxRate.adjust(order_tax_zone, line_items)
+      Solidus::TaxRate.adjust(order_tax_zone, shipments) if shipments.any?
     end
 
     def outstanding_balance
@@ -439,7 +439,7 @@ module Spree
     end
 
     def merge!(*args)
-      Spree::Config.order_merger_class.new(self).merge!(*args)
+      Solidus::Config.order_merger_class.new(self).merge!(*args)
     end
 
     def empty!
@@ -477,7 +477,7 @@ module Spree
     end
 
     def can_add_coupon?
-      Spree::Promotion.order_activatable?(self)
+      Solidus::Promotion.order_activatable?(self)
     end
 
 
@@ -501,12 +501,12 @@ module Spree
       else
         adjustments.shipping.destroy_all
         shipments.destroy_all
-        self.shipments = Spree::Stock::Coordinator.new(self).shipments
+        self.shipments = Solidus::Stock::Coordinator.new(self).shipments
       end
     end
 
     def apply_free_shipping_promotions
-      Spree::PromotionHandler::FreeShipping.new(self).activate
+      Solidus::PromotionHandler::FreeShipping.new(self).activate
       shipments.each { |shipment| ItemAdjustments.new(shipment).update }
       updater.update_shipment_total
       persist_totals
@@ -587,7 +587,7 @@ module Spree
     end
 
     def token
-      ActiveSupport::Deprecation.warn("Spree::Order#token is DEPRECATED, please use #guest_token instead.", caller)
+      ActiveSupport::Deprecation.warn("Solidus::Order#token is DEPRECATED, please use #guest_token instead.", caller)
       guest_token
     end
 
@@ -596,7 +596,7 @@ module Spree
       adjustment_total + line_items.map(&:final_amount).sum == 0.0
     end
     alias_method :fully_discounted, :fully_discounted?
-    deprecate :fully_discounted, deprecator: Spree::Deprecation
+    deprecate :fully_discounted, deprecator: Solidus::Deprecation
 
     def unreturned_exchange?
       # created_at - 1 is a hack to ensure that this doesn't blow up on MySQL,
@@ -625,7 +625,7 @@ module Spree
       remaining_total = outstanding_balance - authorized_total
 
       if user && user.store_credits.any?
-        payment_method = Spree::PaymentMethod::StoreCredit.first
+        payment_method = Solidus::PaymentMethod::StoreCredit.first
 
         user.store_credits.order_by_priority.each do |credit|
           break if remaining_total.zero?
@@ -680,11 +680,11 @@ module Spree
     end
 
     def display_total_applicable_store_credit
-      Spree::Money.new(-total_applicable_store_credit, { currency: currency })
+      Solidus::Money.new(-total_applicable_store_credit, { currency: currency })
     end
 
     def display_store_credit_remaining_after_capture
-      Spree::Money.new(total_available_store_credit - total_applicable_store_credit, { currency: currency })
+      Solidus::Money.new(total_available_store_credit - total_applicable_store_credit, { currency: currency })
     end
 
     private
@@ -700,7 +700,7 @@ module Spree
 
     def ensure_inventory_units
       if has_step?("delivery")
-        inventory_validator = Spree::Stock::InventoryValidator.new
+        inventory_validator = Solidus::Stock::InventoryValidator.new
 
         errors = line_items.map { |line_item| inventory_validator.validate(line_item) }.compact
         raise InsufficientStock if errors.any?
@@ -717,7 +717,7 @@ module Spree
     end
 
     def validate_line_item_availability
-      availability_validator = Spree::Stock::AvailabilityValidator.new
+      availability_validator = Solidus::Stock::AvailabilityValidator.new
       raise InsufficientStock unless line_items.all? { |line_item| availability_validator.validate(line_item) }
     end
 
@@ -758,7 +758,7 @@ module Spree
     end
 
     def set_currency
-      self.currency = Spree::Config[:currency] if self[:currency].nil?
+      self.currency = Solidus::Config[:currency] if self[:currency].nil?
     end
 
     def create_token

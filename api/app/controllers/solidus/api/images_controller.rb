@@ -1,6 +1,6 @@
 module Spree
   module Api
-    class ImagesController < Spree::Api::BaseController
+    class ImagesController < Solidus::Api::BaseController
 
       def index
         @images = scope.images.accessible_by(current_ability, :read)
@@ -37,9 +37,9 @@ module Spree
 
         def scope
           if params[:product_id]
-            scope = Spree::Product.friendly.find(params[:product_id])
+            scope = Solidus::Product.friendly.find(params[:product_id])
           elsif params[:variant_id]
-            scope = Spree::Variant.find(params[:variant_id])
+            scope = Solidus::Variant.find(params[:variant_id])
           end
         end
     end

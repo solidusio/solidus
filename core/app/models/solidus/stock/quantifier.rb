@@ -9,9 +9,9 @@ module Spree
         if stock_location
           where_args.merge!(stock_location: stock_location)
         else
-          where_args.merge!(Spree::StockLocation.table_name => { active: true })
+          where_args.merge!(Solidus::StockLocation.table_name => { active: true })
         end
-        @stock_items = Spree::StockItem.joins(:stock_location).where(where_args)
+        @stock_items = Solidus::StockItem.joins(:stock_location).where(where_args)
       end
 
       # Returns the total number of inventory units on hand for the variant.

@@ -3,7 +3,7 @@ module Spree
     module Rules
       class UserLoggedIn < PromotionRule
         def applicable?(promotable)
-          promotable.is_a?(Spree::Order)
+          promotable.is_a?(Solidus::Order)
         end
 
         def eligible?(order, options = {})

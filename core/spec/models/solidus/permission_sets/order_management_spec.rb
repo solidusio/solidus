@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Spree::PermissionSets::OrderManagement do
+describe Solidus::PermissionSets::OrderManagement do
   let(:ability) { DummyAbility.new }
 
   subject { ability }
@@ -10,33 +10,33 @@ describe Spree::PermissionSets::OrderManagement do
       described_class.new(ability).activate!
     end
 
-    it { is_expected.to be_able_to(:manage, Spree::Order) }
-    it { is_expected.to be_able_to(:manage, Spree::Payment) }
-    it { is_expected.to be_able_to(:manage, Spree::Shipment) }
-    it { is_expected.to be_able_to(:manage, Spree::Adjustment) }
-    it { is_expected.to be_able_to(:manage, Spree::LineItem) }
-    it { is_expected.to be_able_to(:manage, Spree::ReturnAuthorization) }
-    it { is_expected.to be_able_to(:manage, Spree::CustomerReturn) }
-    it { is_expected.to be_able_to(:display, Spree::ReimbursementType) }
-    it { is_expected.to be_able_to(:manage, Spree::OrderCancellations) }
-    it { is_expected.to be_able_to(:manage, Spree::Reimbursement) }
-    it { is_expected.to be_able_to(:manage, Spree::ReturnItem) }
-    it { is_expected.to be_able_to(:manage, Spree::Refund) }
+    it { is_expected.to be_able_to(:manage, Solidus::Order) }
+    it { is_expected.to be_able_to(:manage, Solidus::Payment) }
+    it { is_expected.to be_able_to(:manage, Solidus::Shipment) }
+    it { is_expected.to be_able_to(:manage, Solidus::Adjustment) }
+    it { is_expected.to be_able_to(:manage, Solidus::LineItem) }
+    it { is_expected.to be_able_to(:manage, Solidus::ReturnAuthorization) }
+    it { is_expected.to be_able_to(:manage, Solidus::CustomerReturn) }
+    it { is_expected.to be_able_to(:display, Solidus::ReimbursementType) }
+    it { is_expected.to be_able_to(:manage, Solidus::OrderCancellations) }
+    it { is_expected.to be_able_to(:manage, Solidus::Reimbursement) }
+    it { is_expected.to be_able_to(:manage, Solidus::ReturnItem) }
+    it { is_expected.to be_able_to(:manage, Solidus::Refund) }
   end
 
   context "when not activated" do
-    it { is_expected.not_to be_able_to(:manage, Spree::Order) }
-    it { is_expected.not_to be_able_to(:manage, Spree::Payment) }
-    it { is_expected.not_to be_able_to(:manage, Spree::Shipment) }
-    it { is_expected.not_to be_able_to(:manage, Spree::Adjustment) }
-    it { is_expected.not_to be_able_to(:manage, Spree::LineItem) }
-    it { is_expected.not_to be_able_to(:manage, Spree::ReturnAuthorization) }
-    it { is_expected.not_to be_able_to(:manage, Spree::CustomerReturn) }
-    it { is_expected.not_to be_able_to(:display, Spree::ReimbursementType) }
-    it { is_expected.not_to be_able_to(:manage, Spree::OrderCancellations) }
-    it { is_expected.not_to be_able_to(:manage, Spree::Reimbursement) }
-    it { is_expected.not_to be_able_to(:manage, Spree::ReturnItem) }
-    it { is_expected.not_to be_able_to(:manage, Spree::Refund) }
+    it { is_expected.not_to be_able_to(:manage, Solidus::Order) }
+    it { is_expected.not_to be_able_to(:manage, Solidus::Payment) }
+    it { is_expected.not_to be_able_to(:manage, Solidus::Shipment) }
+    it { is_expected.not_to be_able_to(:manage, Solidus::Adjustment) }
+    it { is_expected.not_to be_able_to(:manage, Solidus::LineItem) }
+    it { is_expected.not_to be_able_to(:manage, Solidus::ReturnAuthorization) }
+    it { is_expected.not_to be_able_to(:manage, Solidus::CustomerReturn) }
+    it { is_expected.not_to be_able_to(:display, Solidus::ReimbursementType) }
+    it { is_expected.not_to be_able_to(:manage, Solidus::OrderCancellations) }
+    it { is_expected.not_to be_able_to(:manage, Solidus::Reimbursement) }
+    it { is_expected.not_to be_able_to(:manage, Solidus::ReturnItem) }
+    it { is_expected.not_to be_able_to(:manage, Solidus::Refund) }
   end
 end
 

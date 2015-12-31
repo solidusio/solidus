@@ -1,6 +1,6 @@
 require 'spec_helper'
 module Spree
-  describe Spree::Api::PropertiesController, :type => :controller do
+  describe Solidus::Api::PropertiesController, :type => :controller do
     render_views
 
     let!(:property_1) { Property.create!(:name => "foo", :presentation => "Foo") }
@@ -80,11 +80,11 @@ module Spree
       sign_in_as_admin!
 
       it "can create a new property" do
-        expect(Spree::Property.count).to eq(2)
+        expect(Solidus::Property.count).to eq(2)
         api_post :create, :property => { :name => "My Property 3", :presentation => "my value 3" }
         expect(json_response).to have_attributes(attributes)
         expect(response.status).to eq(201)
-        expect(Spree::Property.count).to eq(3)
+        expect(Solidus::Property.count).to eq(3)
       end
 
       it "can update a property" do

@@ -1,7 +1,7 @@
 module Spree
-  class Refund < Spree::Base
+  class Refund < Solidus::Base
     belongs_to :payment, inverse_of: :refunds
-    belongs_to :reason, class_name: 'Spree::RefundReason', foreign_key: :refund_reason_id
+    belongs_to :reason, class_name: 'Solidus::RefundReason', foreign_key: :refund_reason_id
     belongs_to :reimbursement, inverse_of: :refunds
 
     has_many :log_entries, as: :source
@@ -19,7 +19,7 @@ module Spree
     scope :non_reimbursement, -> { where(reimbursement_id: nil) }
 
     def money
-      Spree::Money.new(amount, { currency: payment.currency })
+      Solidus::Money.new(amount, { currency: payment.currency })
     end
     alias display_amount money
 
@@ -40,7 +40,7 @@ module Spree
     def perform!
       return true if transaction_id.present?
 
-      credit_cents = Spree::Money.new(amount.to_f, currency: payment.currency).money.cents
+      credit_cents = Solidus::Money.new(amount.to_f, currency: payment.currency).money.cents
 
       @response = process!(credit_cents)
 

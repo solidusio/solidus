@@ -1,5 +1,5 @@
 FactoryGirl.define do
-  factory :shipment, class: Spree::Shipment do
+  factory :shipment, class: Solidus::Shipment do
     tracking 'U10000'
     cost 100.00
     state 'pending'

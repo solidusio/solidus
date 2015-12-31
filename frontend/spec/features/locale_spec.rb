@@ -3,10 +3,10 @@ require 'spec_helper'
 describe 'setting locale', :type => :feature do
   def with_locale(locale)
     I18n.locale = locale
-    Spree::Frontend::Config[:locale] = locale
+    Solidus::Frontend::Config[:locale] = locale
     yield
     I18n.locale = I18n.default_locale
-    Spree::Frontend::Config[:locale] = 'en'
+    Solidus::Frontend::Config[:locale] = 'en'
   end
 
   context 'shopping cart link and page' do

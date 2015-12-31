@@ -19,7 +19,7 @@ module Spree
     end
 
     def charge_for_items
-      self.new_order = Spree::Order.create!(exchange_order_attributes)
+      self.new_order = Solidus::Order.create!(exchange_order_attributes)
 
       new_order.associate_user!(@original_order.user) if @original_order.user
 
@@ -42,10 +42,10 @@ module Spree
 
       new_order.contents.approve(name: self.class.name)
       new_order.complete!
-      Spree::OrderCapturing.new(new_order).capture_payments if (Spree::Config[:auto_capture_exchanges] && !Spree::Config[:auto_capture])
+      Solidus::OrderCapturing.new(new_order).capture_payments if (Solidus::Config[:auto_capture_exchanges] && !Solidus::Config[:auto_capture])
 
       @return_items.each(&:expired!)
-      create_new_rma if Spree::Config[:create_rma_for_unreturned_exchange]
+      create_new_rma if Solidus::Config[:create_rma_for_unreturned_exchange]
 
       if !new_order.completed?
         raise ChargeFailure.new('order not complete', new_order)
@@ -62,7 +62,7 @@ module Spree
     def add_exchange_variants_to_order
       @return_items.group_by(&:exchange_variant).map do |variant, variant_return_items|
         variant_inventory_units = variant_return_items.map(&:exchange_inventory_unit)
-        line_item = Spree::LineItem.create!(variant: variant, quantity: variant_return_items.count, order: new_order)
+        line_item = Solidus::LineItem.create!(variant: variant, quantity: variant_return_items.count, order: new_order)
         variant_inventory_units.each { |i| i.update_attributes!(line_item_id: line_item.id, order_id: new_order.id) }
       end
     end
@@ -86,8 +86,8 @@ module Spree
 
     def create_new_rma
       @return_items.group_by(&:return_authorization).each do |rma, return_items|
-        new_return_items = return_items.map { |ri| Spree::ReturnItem.create!(inventory_unit: ri.inventory_unit) }
-        Spree::ReturnAuthorization.create!(order: rma.order,
+        new_return_items = return_items.map { |ri| Solidus::ReturnItem.create!(inventory_unit: ri.inventory_unit) }
+        Solidus::ReturnAuthorization.create!(order: rma.order,
                                            reason: rma.reason,
                                            stock_location: rma.stock_location,
                                            return_items: new_return_items)

@@ -67,7 +67,7 @@
     <% @variants.each do |variant| %>
       <tr id="<%= spree_dom_id variant %>" <%= 'style="color:red;"' if variant.deleted? %> data-hook="variants_row" class="<%= cycle('odd', 'even')%>">
         <td class="no-border">
-          <% if can? :update_positions, Spree::Variant %>
+          <% if can? :update_positions, Solidus::Variant %>
             <span class="handle"></span>
           <% end %>
         </td>
@@ -94,7 +94,7 @@
 <% else %>
   <div class="alpha twelve columns no-objects-found">
     <%= Spree.t(:no_resource_found, resource: I18n.t(:other, scope: 'activerecord.models.spree/variant')) %>
-    <% if can?(:create, Spree::Variant) %>
+    <% if can?(:create, Solidus::Variant) %>
       <%= link_to Spree.t(:add_one), spree.new_admin_product_variant_path(@product) %>!
     <% end %>
   </div>
@@ -103,7 +103,7 @@
 <% if @product.empty_option_values? %>
   <p class='first_add_option_types no-objects-found' data-hook="first_add_option_types">
     <%= Spree.t(:to_add_variants_you_must_first_define) %>
-    <% if can?(:display, Spree::OptionType) %>
+    <% if can?(:display, Solidus::OptionType) %>
       <%= link_to Spree.t(:option_types), admin_option_types_path%>
     <% else %>
       <%= Spree.t(:option_types) %>
@@ -112,7 +112,7 @@
 <% else %>
   <% content_for :page_actions do %>
     <ul class="inline-menu" data-hook="toolbar">
-      <% if can?(:create, Spree::Variant) %>
+      <% if can?(:create, Solidus::Variant) %>
         <li id="new_var_link" data-hook>
           <%= link_to_with_icon('plus',
                                 Spree.t(:new_variant),

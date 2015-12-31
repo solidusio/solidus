@@ -1,8 +1,8 @@
-class Spree::Base < ActiveRecord::Base
-  include Spree::Preferences::Preferable
+class Solidus::Base < ActiveRecord::Base
+  include Solidus::Preferences::Preferable
   serialize :preferences, Hash
 
-  include Spree::RansackableAttributes
+  include Solidus::RansackableAttributes
 
   after_initialize do
     if has_attribute?(:preferences)

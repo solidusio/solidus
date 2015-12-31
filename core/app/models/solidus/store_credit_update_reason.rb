@@ -1,2 +1,2 @@
-class Spree::StoreCreditUpdateReason < Spree::Base
+class Solidus::StoreCreditUpdateReason < Solidus::Base
 end

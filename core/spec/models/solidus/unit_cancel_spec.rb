@@ -1,16 +1,16 @@
 require 'spec_helper'
 
-describe Spree::UnitCancel do
-  let(:unit_cancel) { Spree::UnitCancel.create!(inventory_unit: inventory_unit, reason: Spree::UnitCancel::SHORT_SHIP) }
+describe Solidus::UnitCancel do
+  let(:unit_cancel) { Solidus::UnitCancel.create!(inventory_unit: inventory_unit, reason: Solidus::UnitCancel::SHORT_SHIP) }
   let(:inventory_unit) { create(:inventory_unit) }
 
   describe '#adjust!' do
     subject { unit_cancel.adjust! }
 
     it "creates an adjustment with the correct attributes" do
-      expect { subject }.to change{ Spree::Adjustment.count }.by(1)
+      expect { subject }.to change{ Solidus::Adjustment.count }.by(1)
 
-      adjustment = Spree::Adjustment.last
+      adjustment = Solidus::Adjustment.last
       expect(adjustment.adjustable).to eq inventory_unit.line_item
       expect(adjustment.amount).to eq -10.0
       expect(adjustment.order).to eq inventory_unit.order
@@ -68,11 +68,11 @@ describe Spree::UnitCancel do
       end
 
       before do
-        @old_expedited_exchanges_value = Spree::Config[:expedited_exchanges]
-        Spree::Config[:expedited_exchanges] = true
+        @old_expedited_exchanges_value = Solidus::Config[:expedited_exchanges]
+        Solidus::Config[:expedited_exchanges] = true
       end
       after do
-        Spree::Config[:expedited_exchanges] = @old_expedited_exchanges_value
+        Solidus::Config[:expedited_exchanges] = @old_expedited_exchanges_value
       end
 
       # This sets up an order with one shipped inventory unit, one unshipped
@@ -100,12 +100,12 @@ describe Spree::UnitCancel do
 
         # Create an expedited exchange for the shipped inventory unit.
         # This generates a new inventory unit attached to the existing line item.
-        Spree::ReturnAuthorization.create!(
+        Solidus::ReturnAuthorization.create!(
           order: order,
           stock_location: @shipment.stock_location,
           reason: create(:return_reason),
           return_items: [
-            Spree::ReturnItem.new(
+            Solidus::ReturnItem.new(
               inventory_unit: @shipped_inventory_unit,
               exchange_variant: exchange_variant,
             ),
@@ -120,9 +120,9 @@ describe Spree::UnitCancel do
         end
 
         let(:unit_cancel) do
-          Spree::UnitCancel.create!(
+          Solidus::UnitCancel.create!(
             inventory_unit: @unshipped_inventory_unit,
-            reason: Spree::UnitCancel::SHORT_SHIP,
+            reason: Solidus::UnitCancel::SHORT_SHIP,
           )
         end
 
@@ -135,9 +135,9 @@ describe Spree::UnitCancel do
         end
 
         let(:unit_cancel) do
-          Spree::UnitCancel.create!(
+          Solidus::UnitCancel.create!(
             inventory_unit: @exchange_inventory_unit,
-            reason: Spree::UnitCancel::SHORT_SHIP,
+            reason: Solidus::UnitCancel::SHORT_SHIP,
           )
         end
 

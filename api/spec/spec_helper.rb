@@ -47,9 +47,9 @@ RSpec.configure do |config|
   end
 
   config.include FactoryGirl::Syntax::Methods
-  config.include Spree::Api::TestingSupport::Helpers, :type => :controller
-  config.extend Spree::Api::TestingSupport::Setup, :type => :controller
-  config.include Spree::TestingSupport::Preferences
+  config.include Solidus::Api::TestingSupport::Helpers, :type => :controller
+  config.extend Solidus::Api::TestingSupport::Setup, :type => :controller
+  config.include Solidus::TestingSupport::Preferences
 
   config.extend WithModel
 
@@ -58,7 +58,7 @@ RSpec.configure do |config|
   config.before(:each) do
     Rails.cache.clear
     reset_spree_preferences
-    Spree::Api::Config[:requires_authentication] = true
+    Solidus::Api::Config[:requires_authentication] = true
   end
 
   config.use_transactional_fixtures = true

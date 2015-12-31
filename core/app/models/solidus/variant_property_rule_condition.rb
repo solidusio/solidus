@@ -1,5 +1,5 @@
 module Spree
-  class VariantPropertyRuleCondition < Spree::Base
+  class VariantPropertyRuleCondition < Solidus::Base
     belongs_to :option_value
     belongs_to :variant_property_rule, touch: true
 

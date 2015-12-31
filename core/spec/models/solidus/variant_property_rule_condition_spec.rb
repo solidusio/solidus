@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Spree::VariantPropertyRuleCondition, type: :model do
+describe Solidus::VariantPropertyRuleCondition, type: :model do
   context "touching" do
     let(:rule_condition) { create(:variant_property_rule_condition) }
 

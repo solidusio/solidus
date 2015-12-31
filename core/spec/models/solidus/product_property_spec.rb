@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Spree::ProductProperty, type: :model do
+describe Solidus::ProductProperty, type: :model do
   context "touching" do
     let(:product_property) { create(:product_property) }
     let(:product) { product_property.product }

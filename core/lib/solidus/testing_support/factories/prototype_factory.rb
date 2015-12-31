@@ -1,5 +1,5 @@
 FactoryGirl.define do
-  factory :prototype, class: Spree::Prototype do
+  factory :prototype, class: Solidus::Prototype do
     name 'Baseball Cap'
     properties { [create(:property)] }
   end

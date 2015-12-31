@@ -1,5 +1,5 @@
 FactoryGirl.define do
-  factory :variant_property_rule, class: Spree::VariantPropertyRule do
+  factory :variant_property_rule, class: Solidus::VariantPropertyRule do
     product
 
     transient do

@@ -1,9 +1,9 @@
 require 'spec_helper'
 
-describe Spree::Order, :type => :model do
-  let(:order) { stub_model(Spree::Order) }
+describe Solidus::Order, :type => :model do
+  let(:order) { stub_model(Solidus::Order) }
   before do
-    Spree::Order.define_state_machine!
+    Solidus::Order.define_state_machine!
   end
 
   context "validations" do

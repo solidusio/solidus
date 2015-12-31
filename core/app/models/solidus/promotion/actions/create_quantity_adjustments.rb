@@ -1,6 +1,6 @@
-module Spree::Promotion::Actions
+module Solidus::Promotion::Actions
   class CreateQuantityAdjustments < CreateItemAdjustments
-    include Spree::CalculatedAdjustments
+    include Solidus::CalculatedAdjustments
 
     preference :group_size, :integer, default: 1
 

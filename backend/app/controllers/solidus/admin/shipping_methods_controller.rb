@@ -20,14 +20,14 @@ module Spree
 
       def set_shipping_category
         return true if params["shipping_method"][:shipping_categories] == ""
-        @shipping_method.shipping_categories = Spree::ShippingCategory.where(:id => params["shipping_method"][:shipping_categories])
+        @shipping_method.shipping_categories = Solidus::ShippingCategory.where(:id => params["shipping_method"][:shipping_categories])
         @shipping_method.save
         params[:shipping_method].delete(:shipping_categories)
       end
 
       def set_zones
         return true if params["shipping_method"][:zones] == ""
-        @shipping_method.zones = Spree::Zone.where(:id => params["shipping_method"][:zones])
+        @shipping_method.zones = Solidus::Zone.where(:id => params["shipping_method"][:zones])
         @shipping_method.save
         params[:shipping_method].delete(:zones)
       end
@@ -38,7 +38,7 @@ module Spree
 
       def load_data
         @available_zones = Zone.order(:name)
-        @tax_categories = Spree::TaxCategory.order(:name)
+        @tax_categories = Solidus::TaxCategory.order(:name)
         @calculators = ShippingMethod.calculators.sort_by(&:name)
       end
     end

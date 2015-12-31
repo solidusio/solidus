@@ -1,6 +1,6 @@
 module Spree
   module Api
-    class AddressesController < Spree::Api::BaseController
+    class AddressesController < Solidus::Api::BaseController
       before_action :find_order
 
       def show
@@ -28,7 +28,7 @@ module Spree
       end
 
       def find_order
-        @order = Spree::Order.find_by!(number: order_id)
+        @order = Solidus::Order.find_by!(number: order_id)
       end
 
       def find_address

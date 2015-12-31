@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Spree::AdjustmentReason do
+describe Solidus::AdjustmentReason do
 
   describe 'creation' do
     it 'is successful' do

@@ -1,5 +1,5 @@
 module Spree
-  class PromotionRuleTaxon < Spree::Base
+  class PromotionRuleTaxon < Solidus::Base
     belongs_to :promotion_rule
     belongs_to :taxon
   end

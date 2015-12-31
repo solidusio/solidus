@@ -1,5 +1,5 @@
 module Spree
-  class StateChange < Spree::Base
+  class StateChange < Solidus::Base
     belongs_to :user
     belongs_to :stateful, polymorphic: true
     before_create :assign_user

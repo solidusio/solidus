@@ -74,7 +74,7 @@ use rake db:load_file[/absolute/path/to/sample/filename.rb]}
       model.reset_column_information
     end
 
-    load_defaults  = Spree::Country.count == 0
+    load_defaults  = Solidus::Country.count == 0
     unless load_defaults    # ask if there are already Countries => default data hass been loaded
       load_defaults = agree('Countries present, load sample data anyways? [y/n]: ')
     end
@@ -82,7 +82,7 @@ use rake db:load_file[/absolute/path/to/sample/filename.rb]}
       Rake::Task["db:seed"].invoke
     end
 
-    if Rails.env.production? and Spree::Product.count > 0
+    if Rails.env.production? and Solidus::Product.count > 0
       load_sample = agree("WARNING: In Production and products exist in database, load sample data anyways? [y/n]:" )
     else
       load_sample = true if ENV['AUTO_ACCEPT']

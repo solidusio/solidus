@@ -3,9 +3,9 @@ require 'spec_helper'
 # This test tests the functionality within
 # spree/core/controller_helpers/respond_with.rb
 # Rather than duck-punching the existing controllers, let's define a custom one:
-class Spree::CustomController < Spree::BaseController
+class Solidus::CustomController < Solidus::BaseController
   def index
-    respond_with(Spree::Address.new) do |format|
+    respond_with(Solidus::Address.new) do |format|
       format.html { render :text => "neutral" }
     end
   end
@@ -13,14 +13,14 @@ class Spree::CustomController < Spree::BaseController
   def create
     # Just need a model with validations
     # Address is good enough, so let's go with that
-    address = Spree::Address.new(params[:address])
+    address = Solidus::Address.new(params[:address])
     respond_with(address)
   end
 end
 
-describe Spree::CustomController, :type => :controller do
+describe Solidus::CustomController, :type => :controller do
   after do
-    Spree::CustomController.clear_overrides!
+    Solidus::CustomController.clear_overrides!
   end
 
   before do
@@ -36,7 +36,7 @@ describe Spree::CustomController, :type => :controller do
     context "index" do
       context "specify symbol for handler instead of Proc" do
         before do
-          Spree::CustomController.class_eval do
+          Solidus::CustomController.class_eval do
             respond_override({:index => {:html => {:success => :success_method}}})
 
             private
@@ -58,7 +58,7 @@ describe Spree::CustomController, :type => :controller do
 
       context "render" do
         before do
-          Spree::CustomController.instance_eval do
+          Solidus::CustomController.instance_eval do
             respond_override({:index => {:html => {:success => lambda { render(:text => 'success!!!') }}}})
             respond_override({:index => {:html => {:failure => lambda { render(:text => 'failure!!!') }}}})
           end
@@ -75,7 +75,7 @@ describe Spree::CustomController, :type => :controller do
 
       context "redirect" do
         before do
-          Spree::CustomController.instance_eval do
+          Solidus::CustomController.instance_eval do
             respond_override({:index => {:html => {:success => lambda { redirect_to('/cart') }}}})
             respond_override({:index => {:html => {:failure => lambda { render(:text => 'failure!!!') }}}})
           end
@@ -91,7 +91,7 @@ describe Spree::CustomController, :type => :controller do
 
       context "validation error" do
         before do
-          Spree::CustomController.instance_eval do
+          Solidus::CustomController.instance_eval do
             respond_to :html
             respond_override({:create => {:html => {:success => lambda { render(:text => 'success!!!') }}}})
             respond_override({:create => {:html => {:failure => lambda { render(:text => 'failure!!!') }}}})
@@ -109,7 +109,7 @@ describe Spree::CustomController, :type => :controller do
 
       context 'A different controllers respond_override. Regression test for #1301' do
         before do
-          Spree::CheckoutController.instance_eval do
+          Solidus::CheckoutController.instance_eval do
             respond_override({:index => {:html => {:success => lambda { render(:text => 'success!!!') }}}})
           end
         end

@@ -134,7 +134,7 @@ end
   end
 end
 
-module Spree::DummyGeneratorHelper
+module Solidus::DummyGeneratorHelper
   mattr_accessor :inject_extension_requirements
   self.inject_extension_requirements = false
 end

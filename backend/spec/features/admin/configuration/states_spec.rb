@@ -6,7 +6,7 @@ describe "States", :type => :feature do
   let!(:country) { create(:country) }
 
   let!(:hungary) do
-    Spree::Country.create!(:name => "Hungary", :iso_name => "Hungary")
+    Solidus::Country.create!(:name => "Hungary", :iso_name => "Hungary")
   end
 
   def go_to_states_page

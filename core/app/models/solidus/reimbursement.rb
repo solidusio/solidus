@@ -1,12 +1,12 @@
 module Spree
-  class Reimbursement < Spree::Base
+  class Reimbursement < Solidus::Base
     class IncompleteReimbursementError < StandardError; end
 
     belongs_to :order, inverse_of: :reimbursements
     belongs_to :customer_return, inverse_of: :reimbursements, touch: true
 
     has_many :refunds, inverse_of: :reimbursement
-    has_many :credits, inverse_of: :reimbursement, class_name: 'Spree::Reimbursement::Credit'
+    has_many :credits, inverse_of: :reimbursement, class_name: 'Solidus::Reimbursement::Credit'
 
     has_many :return_items, inverse_of: :reimbursement
 
@@ -79,7 +79,7 @@ module Spree
     end
 
     def display_total
-      Spree::Money.new(total, { currency: order.currency })
+      Solidus::Money.new(total, { currency: order.currency })
     end
 
     def calculated_total
@@ -162,7 +162,7 @@ module Spree
     end
 
     def send_reimbursement_email
-      Spree::ReimbursementMailer.reimbursement_email(self.id).deliver_later
+      Solidus::ReimbursementMailer.reimbursement_email(self.id).deliver_later
     end
 
     # If there are multiple different reimbursement types for a single

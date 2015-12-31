@@ -17,7 +17,7 @@ module Spree
       context "with a default country present" do
         before do
           country = FactoryGirl.create(:country)
-          Spree::Config[:default_country_id] = country.id
+          Solidus::Config[:default_country_id] = country.id
         end
 
         it "can create a new stock location" do

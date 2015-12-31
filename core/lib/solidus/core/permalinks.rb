@@ -67,5 +67,5 @@ module Spree
   end
 end
 
-ActiveRecord::Base.send :include, Spree::Core::Permalinks
-ActiveRecord::Relation.send :include, Spree::Core::Permalinks
+ActiveRecord::Base.send :include, Solidus::Core::Permalinks
+ActiveRecord::Relation.send :include, Solidus::Core::Permalinks

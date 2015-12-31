@@ -4,8 +4,8 @@ module Spree
     # shipped. If a carton contains items from multiple orders then this will be
     # called with that carton one time for each order.
     #
-    # @param carton [Spree::Carton] the shipped carton
-    # @param order [Spree::Order] one of the orders with items in the carton
+    # @param carton [Solidus::Carton] the shipped carton
+    # @param order [Solidus::Order] one of the orders with items in the carton
     # @param resend [Boolean] indicates whether the email is a 'resend' (e.g.
     #        triggered by the admin "resend" button)
     # @return [Mail::Message]

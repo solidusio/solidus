@@ -31,7 +31,7 @@ describe "Variants", :type => :feature do
     context "currency displaying" do
       context "using Russian Rubles" do
         before do
-          Spree::Config[:currency] = "RUB"
+          Solidus::Config[:currency] = "RUB"
         end
 
         let!(:variant) do

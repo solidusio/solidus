@@ -1,5 +1,5 @@
 module Spree
-  class CreditCard < Spree::Base
+  class CreditCard < Solidus::Base
     belongs_to :payment_method
     belongs_to :user, class_name: Spree.user_class, foreign_key: 'user_id'
     belongs_to :address
@@ -113,13 +113,13 @@ module Spree
       %w{capture void credit}
     end
 
-    # @param payment [Spree::Payment] the payment we want to know if can be captured
+    # @param payment [Solidus::Payment] the payment we want to know if can be captured
     # @return [Boolean] true when the payment is in the pending or checkout states
     def can_capture?(payment)
       payment.pending? || payment.checkout?
     end
 
-    # @param payment [Spree::Payment] the payment we want to know if can be voided
+    # @param payment [Solidus::Payment] the payment we want to know if can be voided
     # @return [Boolean] true when the payment is not failed or voided
     def can_void?(payment)
       !payment.failed? && !payment.void?
@@ -129,7 +129,7 @@ module Spree
     # gateways require that the payment be settled first which generally
     # happens within 12-24 hours of the transaction.
     #
-    # @param payment [Spree::Payment] the payment we want to know if can be credited
+    # @param payment [Solidus::Payment] the payment we want to know if can be credited
     # @return [Boolean] true when the payment is completed and can be credited
     def can_credit?(payment)
       payment.completed? && payment.credit_allowed > 0
@@ -142,7 +142,7 @@ module Spree
     end
 
     # @note ActiveMerchant needs first_name/last_name because we pass it a
-    #   Spree::CreditCard and it calls those methods on it.
+    #   Solidus::CreditCard and it calls those methods on it.
     # @todo We should probably be calling #to_active_merchant before passing
     #   the object to ActiveMerchant.
     # @return [String] the first name on this credit card
@@ -151,7 +151,7 @@ module Spree
     end
 
     # @note ActiveMerchant needs first_name/last_name because we pass it a
-    #   Spree::CreditCard and it calls those methods on it.
+    #   Solidus::CreditCard and it calls those methods on it.
     # @todo We should probably be calling #to_active_merchant before passing
     #   the object to ActiveMerchant.
     # @return [String] the last name on this credit card

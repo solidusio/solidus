@@ -1,9 +1,9 @@
 module Spree
-  class PaymentCaptureEvent < Spree::Base
-    belongs_to :payment, class_name: 'Spree::Payment'
+  class PaymentCaptureEvent < Solidus::Base
+    belongs_to :payment, class_name: 'Solidus::Payment'
 
     def display_amount
-      Spree::Money.new(amount, { currency: payment.currency })
+      Solidus::Money.new(amount, { currency: payment.currency })
     end
   end
 end

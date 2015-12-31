@@ -1,6 +1,6 @@
 module Spree
   module Api
-    class StockItemsController < Spree::Api::BaseController
+    class StockItemsController < Solidus::Api::BaseController
       before_filter :load_stock_location, only: [:index, :show, :create]
 
       def index
@@ -17,7 +17,7 @@ module Spree
         authorize! :create, StockItem
         @stock_item = scope.new(stock_item_params)
 
-        Spree::StockItem.transaction do
+        Solidus::StockItem.transaction do
           if @stock_item.save
             adjust_stock_item_count_on_hand(count_on_hand_adjustment)
             respond_with(@stock_item, status: 201, default_template: :show)
@@ -35,7 +35,7 @@ module Spree
         params[:stock_item].delete(:count_on_hand)
         adjustment -= @stock_item.count_on_hand if params[:stock_item][:force]
 
-        Spree::StockItem.transaction do
+        Solidus::StockItem.transaction do
           if @stock_item.update_attributes(stock_item_params)
             adjust_stock_item_count_on_hand(adjustment)
             respond_with(@stock_item, status: 200, default_template: :show)

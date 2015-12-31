@@ -25,7 +25,7 @@ module Spree
         end
 
         def set_viewable
-          @image.viewable_type = 'Spree::Variant'
+          @image.viewable_type = 'Solidus::Variant'
           @image.viewable_id = params[:image][:viewable_id]
         end
 

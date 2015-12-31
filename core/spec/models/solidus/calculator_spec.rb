@@ -1,9 +1,9 @@
 require 'spec_helper'
 
 
-describe Spree::Calculator, :type => :model do
+describe Solidus::Calculator, :type => :model do
 
-  class SimpleCalculator < Spree::Calculator
+  class SimpleCalculator < Solidus::Calculator
     def compute_simple_computable line_item
       'computed'
     end
@@ -25,7 +25,7 @@ describe Spree::Calculator, :type => :model do
     end
 
     context 'computable does not implement right function name' do
-      let(:computable) { Spree::LineItem.new }
+      let(:computable) { Solidus::LineItem.new }
 
       it 'raises an error' do
         expect { subject }.to raise_error NotImplementedError, /Please implement \'compute_line_item\(line_item\)\' in your calculator/

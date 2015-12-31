@@ -1,5 +1,5 @@
 module Spree
-  class LogEntry < Spree::Base
+  class LogEntry < Solidus::Base
     belongs_to :source, polymorphic: true
 
     # Fix for #1767
@@ -7,7 +7,7 @@ module Spree
     after_rollback :save_anyway
 
     def save_anyway
-      log = Spree::LogEntry.new
+      log = Solidus::LogEntry.new
       log.source  = source
       log.details = details
       log.save!

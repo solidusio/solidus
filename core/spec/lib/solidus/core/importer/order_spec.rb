@@ -12,7 +12,7 @@ module Spree
       let(:shipping_method) { create(:shipping_method) }
       let(:payment_method) { create(:check_payment_method) }
 
-      let(:product) { product = Spree::Product.create(:name => 'Test',
+      let(:product) { product = Solidus::Product.create(:name => 'Test',
                                              :sku => 'TEST-1',
                                              :price => 33.22)
                       product.shipping_category = create(:shipping_category)

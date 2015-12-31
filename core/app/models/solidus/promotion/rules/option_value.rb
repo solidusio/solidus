@@ -7,7 +7,7 @@ module Spree
         preference :eligible_values, :hash
 
         def applicable?(promotable)
-          promotable.is_a?(Spree::Order)
+          promotable.is_a?(Solidus::Order)
         end
 
         def eligible?(promotable, options = {})

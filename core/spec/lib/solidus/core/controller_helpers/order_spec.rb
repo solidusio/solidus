@@ -1,10 +1,10 @@
 require 'spec_helper'
 
 class FakesController < ApplicationController
-  include Spree::Core::ControllerHelpers::Order
+  include Solidus::Core::ControllerHelpers::Order
 end
 
-describe Spree::Core::ControllerHelpers::Order, type: :controller do
+describe Solidus::Core::ControllerHelpers::Order, type: :controller do
   controller(FakesController) {}
 
   let(:user) { create(:user) }
@@ -20,7 +20,7 @@ describe Spree::Core::ControllerHelpers::Order, type: :controller do
     it "returns an empty order" do
       expect(controller.simple_current_order.item_count).to eq 0
     end
-    it 'returns Spree::Order instance' do
+    it 'returns Solidus::Order instance' do
       allow(controller).to receive_messages(cookies: double(signed: { guest_token: order.guest_token }))
       expect(controller.simple_current_order).to eq order
     end
@@ -37,12 +37,12 @@ describe Spree::Core::ControllerHelpers::Order, type: :controller do
       it 'creates new order' do
         expect {
           controller.current_order(create_order_if_necessary: true)
-        }.to change(Spree::Order, :count).to(1)
+        }.to change(Solidus::Order, :count).to(1)
       end
 
       it 'assigns the current_store id' do
         controller.current_order(create_order_if_necessary: true)
-        expect(Spree::Order.last.store_id).to eq store.id
+        expect(Solidus::Order.last.store_id).to eq store.id
       end
     end
   end
@@ -51,14 +51,14 @@ describe Spree::Core::ControllerHelpers::Order, type: :controller do
     before { allow(controller).to receive_messages(current_order: order) }
     context "user's email is blank" do
       let(:user) { create(:user, email: '') }
-      it 'calls Spree::Order#associate_user! method' do
-        expect_any_instance_of(Spree::Order).to receive(:associate_user!)
+      it 'calls Solidus::Order#associate_user! method' do
+        expect_any_instance_of(Solidus::Order).to receive(:associate_user!)
         controller.associate_user
       end
     end
     context "user isn't blank" do
-      it 'does not calls Spree::Order#associate_user! method' do
-        expect_any_instance_of(Spree::Order).not_to receive(:associate_user!)
+      it 'does not calls Solidus::Order#associate_user! method' do
+        expect_any_instance_of(Solidus::Order).not_to receive(:associate_user!)
         controller.associate_user
       end
     end
@@ -70,7 +70,7 @@ describe Spree::Core::ControllerHelpers::Order, type: :controller do
     context 'when current order not equal to users incomplete orders' do
       before { allow(controller).to receive_messages(current_order: order, last_incomplete_order: incomplete_order, cookies: double(signed: { guest_token: 'guest_token' })) }
 
-      it 'calls Spree::Order#merge! method' do
+      it 'calls Solidus::Order#merge! method' do
         expect(order).to receive(:merge!).with(incomplete_order, user)
         controller.set_current_order
       end
@@ -79,7 +79,7 @@ describe Spree::Core::ControllerHelpers::Order, type: :controller do
 
   describe '#current_currency' do
     it 'returns current currency' do
-      Spree::Config[:currency] = 'USD'
+      Solidus::Config[:currency] = 'USD'
       expect(controller.current_currency).to eq 'USD'
     end
   end

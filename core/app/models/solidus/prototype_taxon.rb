@@ -1,5 +1,5 @@
 module Spree
-  class PrototypeTaxon < Spree::Base
+  class PrototypeTaxon < Solidus::Base
     belongs_to :prototype
     belongs_to :taxon
   end

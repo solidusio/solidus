@@ -11,7 +11,7 @@ describe "Switching currencies in backend", :type => :feature do
     click_link "RoR Mug"
     click_button "Add To Cart"
     # Now that we have an order...
-    Spree::Config[:currency] = "AUD"
+    Solidus::Config[:currency] = "AUD"
     visit spree.root_path
   end
 

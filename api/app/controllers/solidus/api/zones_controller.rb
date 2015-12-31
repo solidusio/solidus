@@ -1,6 +1,6 @@
 module Spree
   module Api
-    class ZonesController < Spree::Api::BaseController
+    class ZonesController < Solidus::Api::BaseController
 
       def create
         authorize! :create, Zone
@@ -47,7 +47,7 @@ module Spree
       end
 
       def zone
-        @zone ||= Spree::Zone.accessible_by(current_ability, :read).find(params[:id])
+        @zone ||= Solidus::Zone.accessible_by(current_ability, :read).find(params[:id])
       end
     end
   end

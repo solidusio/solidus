@@ -9,17 +9,17 @@ module Spree
 end
 
 module Spree
-  class TaxRate < Spree::Base
+  class TaxRate < Solidus::Base
     acts_as_paranoid
 
     # Need to deal with adjustments before calculator is destroyed.
     before_destroy :deals_with_adjustments_for_deleted_source
 
-    include Spree::CalculatedAdjustments
-    include Spree::AdjustmentSource
+    include Solidus::CalculatedAdjustments
+    include Solidus::AdjustmentSource
 
-    belongs_to :zone, class_name: "Spree::Zone", inverse_of: :tax_rates
-    belongs_to :tax_category, class_name: "Spree::TaxCategory", inverse_of: :tax_rates
+    belongs_to :zone, class_name: "Solidus::Zone", inverse_of: :tax_rates
+    belongs_to :tax_category, class_name: "Solidus::TaxCategory", inverse_of: :tax_rates
 
     has_many :adjustments, as: :source
 
@@ -62,8 +62,8 @@ module Spree
     # https://github.com/spree/spree/issues/4318#issuecomment-34723428
     def self.store_pre_tax_amount(item, rates)
       pre_tax_amount = case item
-        when Spree::LineItem then item.discounted_amount
-        when Spree::Shipment then item.discounted_cost
+        when Solidus::LineItem then item.discounted_amount
+        when Solidus::Shipment then item.discounted_cost
         end
 
       included_rates = rates.select(&:included_in_price)
@@ -80,7 +80,7 @@ module Spree
       tax_categories = rates.map(&:tax_category)
       relevant_items, non_relevant_items = items.partition { |item| tax_categories.include?(item.tax_category) }
       unless relevant_items.empty?
-        Spree::Adjustment.where(adjustable: relevant_items).tax.destroy_all # using destroy_all to ensure adjustment destroy callback fires.
+        Solidus::Adjustment.where(adjustable: relevant_items).tax.destroy_all # using destroy_all to ensure adjustment destroy callback fires.
       end
       relevant_items.each do |item|
         relevant_rates = rates.select { |rate| rate.tax_category == item.tax_category }

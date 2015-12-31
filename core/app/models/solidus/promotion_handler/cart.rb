@@ -44,7 +44,7 @@ module Spree
         end
 
         def promotion_code(promotion)
-          order_promotion = Spree::OrderPromotion.where(order: order, promotion: promotion).first
+          order_promotion = Solidus::OrderPromotion.where(order: order, promotion: promotion).first
           order_promotion.present? ? order_promotion.promotion_code : nil
         end
     end

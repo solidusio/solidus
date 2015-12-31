@@ -1,5 +1,5 @@
 module Spree
-  class ContentController < Spree::StoreController
+  class ContentController < Solidus::StoreController
     respond_to :html
 
     def cvv

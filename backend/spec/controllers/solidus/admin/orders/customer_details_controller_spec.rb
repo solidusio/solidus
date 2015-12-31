@@ -2,14 +2,14 @@ require "spec_helper"
 require "cancan"
 require "spree/testing_support/bar_ability"
 
-describe Spree::Admin::Orders::CustomerDetailsController, type: :controller do
+describe Solidus::Admin::Orders::CustomerDetailsController, type: :controller do
 
   context "with authorization" do
     stub_authorization!
 
     let(:order) { create(:order, number: "R123456789") }
 
-    before { allow(Spree::Order).to receive(:find_by_number!) { order } }
+    before { allow(Solidus::Order).to receive(:find_by_number!) { order } }
 
     context "#update" do
       it "updates + progresses the order" do

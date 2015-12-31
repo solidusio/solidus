@@ -26,7 +26,7 @@
       <div data-hook="new_product_prototype" class="four columns">
         <%= f.field_container :prototype do %>
           <%= f.label :prototype_id, Spree.t(:prototype) %><br />
-          <%= f.collection_select :prototype_id, Spree::Prototype.all, :id, :name, {:include_blank => true}, {:class => 'select2 fullwidth'} %>
+          <%= f.collection_select :prototype_id, Solidus::Prototype.all, :id, :name, {:include_blank => true}, {:class => 'select2 fullwidth'} %>
         <% end %>
       </div>
 

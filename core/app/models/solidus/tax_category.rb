@@ -1,5 +1,5 @@
 module Spree
-  class TaxCategory < Spree::Base
+  class TaxCategory < Solidus::Base
     acts_as_paranoid
     validates :name, presence: true
     validates_uniqueness_of :name, unless: :deleted_at
@@ -13,7 +13,7 @@ module Spree
 
     def ensure_one_default
       if is_default
-        Spree::TaxCategory.where(is_default: true).where.not(id: self.id).update_all(is_default: false, updated_at: Time.current)
+        Solidus::TaxCategory.where(is_default: true).where.not(id: self.id).update_all(is_default: false, updated_at: Time.current)
       end
     end
   end

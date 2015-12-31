@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Spree::PermissionSets::StockTransferDisplay do
+describe Solidus::PermissionSets::StockTransferDisplay do
   let(:ability) { DummyAbility.new }
 
   subject { ability }
@@ -10,15 +10,15 @@ describe Spree::PermissionSets::StockTransferDisplay do
       described_class.new(ability).activate!
     end
 
-    it { is_expected.to be_able_to(:display, Spree::StockTransfer) }
-    it { is_expected.to be_able_to(:admin, Spree::StockTransfer) }
-    it { is_expected.to be_able_to(:display, Spree::StockLocation) }
+    it { is_expected.to be_able_to(:display, Solidus::StockTransfer) }
+    it { is_expected.to be_able_to(:admin, Solidus::StockTransfer) }
+    it { is_expected.to be_able_to(:display, Solidus::StockLocation) }
   end
 
   context "when not activated" do
-    it { is_expected.not_to be_able_to(:display, Spree::StockTransfer) }
-    it { is_expected.not_to be_able_to(:admin, Spree::StockTransfer) }
-    it { is_expected.not_to be_able_to(:display, Spree::StockLocation) }
+    it { is_expected.not_to be_able_to(:display, Solidus::StockTransfer) }
+    it { is_expected.not_to be_able_to(:admin, Solidus::StockTransfer) }
+    it { is_expected.not_to be_able_to(:display, Solidus::StockLocation) }
   end
 end
 

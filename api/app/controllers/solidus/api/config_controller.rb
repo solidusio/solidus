@@ -1,6 +1,6 @@
 module Spree
   module Api
-    class ConfigController < Spree::Api::BaseController
+    class ConfigController < Solidus::Api::BaseController
     end
   end
 end

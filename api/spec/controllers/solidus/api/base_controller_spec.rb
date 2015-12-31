@@ -1,12 +1,12 @@
 require 'spec_helper'
 
-class FakesController < Spree::Api::BaseController
+class FakesController < Solidus::Api::BaseController
 end
 
-describe Spree::Api::BaseController, :type => :controller do
+describe Solidus::Api::BaseController, :type => :controller do
   render_views
-  controller(Spree::Api::BaseController) do
-    rescue_from Spree::Order::InsufficientStock, with: :insufficient_stock_error
+  controller(Solidus::Api::BaseController) do
+    rescue_from Solidus::Order::InsufficientStock, with: :insufficient_stock_error
 
     def index
       render :text => { "products" => [] }.to_json
@@ -93,7 +93,7 @@ describe Spree::Api::BaseController, :type => :controller do
     end
 
     # What would be placed in config/initializers/spree.rb
-    Spree::Api::BaseController.error_notifier = Proc.new do |e, controller|
+    Solidus::Api::BaseController.error_notifier = Proc.new do |e, controller|
       MockHoneybadger.notify_or_ignore(e, rack_env: controller.request.env)
     end
 
@@ -124,7 +124,7 @@ describe Spree::Api::BaseController, :type => :controller do
   context 'insufficient stock' do
     before do
       expect(subject).to receive(:authenticate_user).and_return(true)
-      expect(subject).to receive(:index).and_raise(Spree::Order::InsufficientStock)
+      expect(subject).to receive(:index).and_raise(Solidus::Order::InsufficientStock)
       get :index, :token => "fake_key"
     end
 
@@ -142,7 +142,7 @@ describe Spree::Api::BaseController, :type => :controller do
   context 'lock_order' do
     let!(:order) { create :order }
 
-    controller(Spree::Api::BaseController) do
+    controller(Solidus::Api::BaseController) do
       around_filter :lock_order
 
       def index
@@ -159,7 +159,7 @@ describe Spree::Api::BaseController, :type => :controller do
 
     context 'with an existing lock' do
       around do |example|
-        Spree::OrderMutex.with_lock!(order) { example.run }
+        Solidus::OrderMutex.with_lock!(order) { example.run }
       end
 
       it 'returns a 409 conflict' do

@@ -1,10 +1,10 @@
 require 'spec_helper'
 
 class FakeController < ApplicationController
-  include Spree::Core::ControllerHelpers::PaymentParameters
+  include Solidus::Core::ControllerHelpers::PaymentParameters
 end
 
-describe Spree::Core::ControllerHelpers::PaymentParameters, type: :controller do
+describe Solidus::Core::ControllerHelpers::PaymentParameters, type: :controller do
 
   controller(FakeController) { }
 

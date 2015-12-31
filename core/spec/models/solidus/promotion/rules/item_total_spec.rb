@@ -1,7 +1,7 @@
 require 'spec_helper'
 
-describe Spree::Promotion::Rules::ItemTotal, :type => :model do
-  let(:rule) { Spree::Promotion::Rules::ItemTotal.new }
+describe Solidus::Promotion::Rules::ItemTotal, :type => :model do
+  let(:rule) { Solidus::Promotion::Rules::ItemTotal.new }
   let(:order) { double(:order) }
 
   before { rule.preferred_amount = 50 }

@@ -1,7 +1,7 @@
 # coding: UTF-8
 require 'spec_helper'
 
-describe Spree::Admin::NavigationHelper, :type => :helper do
+describe Solidus::Admin::NavigationHelper, :type => :helper do
 
   describe "#tab" do
     context "creating an admin tab" do

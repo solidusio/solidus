@@ -2,17 +2,17 @@ module Spree
   module PermissionSets
     class ProductManagement < PermissionSets::Base
       def activate!
-        can :manage, Spree::Product
-        can :manage, Spree::Image
-        can :manage, Spree::Variant
-        can :manage, Spree::OptionValue
-        can :manage, Spree::ProductProperty
-        can :manage, Spree::OptionType
-        can :manage, Spree::Property
-        can :manage, Spree::Prototype
-        can :manage, Spree::Taxonomy
-        can :manage, Spree::Taxon
-        can :manage, Spree::Classification
+        can :manage, Solidus::Product
+        can :manage, Solidus::Image
+        can :manage, Solidus::Variant
+        can :manage, Solidus::OptionValue
+        can :manage, Solidus::ProductProperty
+        can :manage, Solidus::OptionType
+        can :manage, Solidus::Property
+        can :manage, Solidus::Prototype
+        can :manage, Solidus::Taxonomy
+        can :manage, Solidus::Taxon
+        can :manage, Solidus::Classification
       end
     end
   end

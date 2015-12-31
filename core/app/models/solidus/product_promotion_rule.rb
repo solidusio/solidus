@@ -1,5 +1,5 @@
 module Spree
-  class ProductPromotionRule < Spree::Base
+  class ProductPromotionRule < Solidus::Base
     belongs_to :product
     belongs_to :promotion_rule
   end

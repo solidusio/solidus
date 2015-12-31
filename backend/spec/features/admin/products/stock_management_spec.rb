@@ -27,7 +27,7 @@ describe "Stock Management", :type => :feature do
       before do
         @product = create(:product, name: 'apache baseball cap', price: 10)
         v = @product.variants.create!(sku: 'FOOBAR')
-        Spree::StockLocation.destroy_all
+        Solidus::StockLocation.destroy_all
         click_link "Back To Products List"
         within_row(1) do
           click_icon :edit

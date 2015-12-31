@@ -16,7 +16,7 @@ namespace 'spree:migrations:copy_shipped_shipments_to_cartons' do
   # large stores so we do them in batches.
 
   task up: :environment do
-    bad_shipping_rate = Spree::ShippingRate.
+    bad_shipping_rate = Solidus::ShippingRate.
       select(:shipment_id).
       where(selected: true).
       group(:shipment_id).
@@ -34,12 +34,12 @@ namespace 'spree:migrations:copy_shipped_shipments_to_cartons' do
 
     say_with_time 'generating cartons' do
 
-      last_id = Spree::Shipment.last.try!(:id) || 0
+      last_id = Solidus::Shipment.last.try!(:id) || 0
 
       in_batches(last_id: last_id) do |start_id, end_id|
 
         say_with_time "processing shipment #{start_id} to #{end_id}" do
-          Spree::Carton.connection.execute(<<-SQL.strip_heredoc)
+          Solidus::Carton.connection.execute(<<-SQL.strip_heredoc)
             insert into spree_cartons
               (
                 number, imported_from_shipment_id, stock_location_id,
@@ -60,7 +60,7 @@ namespace 'spree:migrations:copy_shipped_shipments_to_cartons' do
             from spree_shipments
             left join spree_shipping_rates
               on spree_shipping_rates.shipment_id = spree_shipments.id
-              and spree_shipping_rates.selected = #{Spree::Carton.connection.quoted_true}
+              and spree_shipping_rates.selected = #{Solidus::Carton.connection.quoted_true}
             left join spree_inventory_units
               on spree_inventory_units.shipment_id = spree_shipments.id
               and spree_inventory_units.carton_id is not null
@@ -85,12 +85,12 @@ namespace 'spree:migrations:copy_shipped_shipments_to_cartons' do
 
     say_with_time 'linking inventory units to cartons' do
 
-      last_id = Spree::InventoryUnit.last.try!(:id) || 0
+      last_id = Solidus::InventoryUnit.last.try!(:id) || 0
 
       in_batches(last_id: last_id) do |start_id, end_id|
 
         say_with_time "processing inventory units #{start_id} to #{end_id}" do
-          Spree::InventoryUnit.connection.execute(<<-SQL.strip_heredoc)
+          Solidus::InventoryUnit.connection.execute(<<-SQL.strip_heredoc)
             update spree_inventory_units
             set carton_id = (
               select spree_cartons.id
@@ -112,13 +112,13 @@ namespace 'spree:migrations:copy_shipped_shipments_to_cartons' do
   end
 
   task down: :environment do
-    last_id = Spree::InventoryUnit.last.try!(:id) || 0
+    last_id = Solidus::InventoryUnit.last.try!(:id) || 0
 
     say_with_time 'unlinking inventory units from cartons' do
 
       in_batches(last_id: last_id) do |start_id, end_id|
         say_with_time "processing inventory units #{start_id} to #{end_id}" do
-          Spree::InventoryUnit.connection.execute(<<-SQL.strip_heredoc)
+          Solidus::InventoryUnit.connection.execute(<<-SQL.strip_heredoc)
             update spree_inventory_units
             set carton_id = null
             where carton_id is not null
@@ -137,12 +137,12 @@ namespace 'spree:migrations:copy_shipped_shipments_to_cartons' do
     end
 
     say_with_time "clearing carton imported_from_shipment_ids" do
-      Spree::Carton.where.not(imported_from_shipment_id: nil).delete_all
+      Solidus::Carton.where.not(imported_from_shipment_id: nil).delete_all
     end
   end
 
   def db_concat(*args)
-    case Spree::Shipment.connection.adapter_name
+    case Solidus::Shipment.connection.adapter_name
     when /mysql/i
       "concat(#{args.join(', ')})"
     else

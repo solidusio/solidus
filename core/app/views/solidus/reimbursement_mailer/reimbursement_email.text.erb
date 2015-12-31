@@ -16,7 +16,7 @@
 <% end %>
 
 
-<% if @reimbursement.return_items.awaiting_return.present? && Spree::Config[:expedited_exchanges] %>
-<%= Spree.t('reimbursement_mailer.reimbursement_email.days_to_send', days: Spree::Config[:expedited_exchanges_days_window]) %>
+<% if @reimbursement.return_items.awaiting_return.present? && Solidus::Config[:expedited_exchanges] %>
+<%= Spree.t('reimbursement_mailer.reimbursement_email.days_to_send', days: Solidus::Config[:expedited_exchanges_days_window]) %>
 <% end %>
 <% end %>

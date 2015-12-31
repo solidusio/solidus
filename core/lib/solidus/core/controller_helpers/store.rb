@@ -11,7 +11,7 @@ module Spree
         #   @return [#store] class used to help find the current store
         included do
           class_attribute :current_store_class
-          self.current_store_class = Spree::Core::CurrentStore
+          self.current_store_class = Solidus::Core::CurrentStore
 
           def current_store
             @current_store ||= current_store_class.new(request).store

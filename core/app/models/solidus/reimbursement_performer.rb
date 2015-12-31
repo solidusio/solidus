@@ -4,7 +4,7 @@ module Spree
 
     class << self
       class_attribute :reimbursement_type_engine
-      self.reimbursement_type_engine = Spree::Reimbursement::ReimbursementTypeEngine
+      self.reimbursement_type_engine = Solidus::Reimbursement::ReimbursementTypeEngine
 
       # Simulate performing the reimbursement without actually saving anything or refunding money, etc.
       # This must return an array of objects that respond to the following methods:
@@ -32,7 +32,7 @@ module Spree
 
       def calculate_reimbursement_types(reimbursement)
         # Engine returns hash of preferred reimbursement types pointing at return items
-        # {Spree::ReimbursementType::OriginalPayment => [ReturnItem, ...], Spree::ReimbursementType::Exchange => [ReturnItem, ...]}
+        # {Solidus::ReimbursementType::OriginalPayment => [ReturnItem, ...], Solidus::ReimbursementType::Exchange => [ReturnItem, ...]}
         reimbursement_type_engine.new(reimbursement.return_items).calculate_reimbursement_types
       end
 

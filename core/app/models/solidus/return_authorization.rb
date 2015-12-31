@@ -1,13 +1,13 @@
 module Spree
-  class ReturnAuthorization < Spree::Base
-    belongs_to :order, class_name: 'Spree::Order', inverse_of: :return_authorizations
+  class ReturnAuthorization < Solidus::Base
+    belongs_to :order, class_name: 'Solidus::Order', inverse_of: :return_authorizations
 
     has_many :return_items, inverse_of: :return_authorization, dependent: :destroy
     has_many :inventory_units, through: :return_items, dependent: :nullify
     has_many :customer_returns, through: :return_items
 
     belongs_to :stock_location
-    belongs_to :reason, class_name: 'Spree::ReturnReason', foreign_key: :return_reason_id
+    belongs_to :reason, class_name: 'Solidus::ReturnReason', foreign_key: :return_reason_id
 
     before_create :generate_number
 
@@ -45,7 +45,7 @@ module Spree
     end
 
     def currency
-      order.nil? ? Spree::Config[:currency] : order.currency
+      order.nil? ? Solidus::Config[:currency] : order.currency
     end
 
     def refundable_amount
@@ -86,7 +86,7 @@ module Spree
       end
 
       def generate_expedited_exchange_reimbursements
-        return unless Spree::Config[:expedited_exchanges]
+        return unless Solidus::Config[:expedited_exchanges]
 
         items_to_exchange = return_items.select(&:exchange_required?)
         items_to_exchange.each(&:attempt_accept)

@@ -2,8 +2,8 @@ module Spree
   module PermissionSets
     class StockTransferDisplay < PermissionSets::Base
       def activate!
-        can [:display, :admin], Spree::StockTransfer
-        can :display, Spree::StockLocation
+        can [:display, :admin], Solidus::StockTransfer
+        can :display, Solidus::StockLocation
       end
     end
   end

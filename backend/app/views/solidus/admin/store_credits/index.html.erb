@@ -5,7 +5,7 @@
 <%= render :partial => 'spree/admin/users/sidebar', :locals => { :current => :store_credits } %>
 <% content_for :page_actions do %>
   <li><%= link_to_with_icon 'arrow-left', Spree.t("admin.store_credits.back_to_user_list"), admin_users_path, class: 'button' %></li>
-  <% if can?(:create, Spree::StoreCredit) %>
+  <% if can?(:create, Solidus::StoreCredit) %>
     <li><%= link_to_with_icon 'plus', Spree.t("admin.store_credits.add"), new_admin_user_store_credit_path(@user), class: 'button' %></li>
   <% end %>
 <% end %>
@@ -62,7 +62,7 @@
 <% else %>
   <div class="alpha twelve columns no-objects-found">
     <%= Spree.t(:no_resource_found, resource: Spree.t("admin.store_credits.resource_name")) %>
-    <% if can?(:create, Spree::StoreCredit) %>
+    <% if can?(:create, Solidus::StoreCredit) %>
       <%= link_to Spree.t(:add_one), spree.new_admin_user_store_credit_path(@user) %>!
     <% end %>
   </div>

@@ -3,12 +3,12 @@ require 'spree/api/responders'
 module Spree
   module Api
     class BaseController < ActionController::Base
-      self.responder = Spree::Api::Responders::AppResponder
+      self.responder = Solidus::Api::Responders::AppResponder
       respond_to :json
 
       include CanCan::ControllerAdditions
-      include Spree::Core::ControllerHelpers::Store
-      include Spree::Core::ControllerHelpers::StrongParameters
+      include Solidus::Core::ControllerHelpers::Store
+      include Solidus::Core::ControllerHelpers::StrongParameters
 
       class_attribute :admin_line_item_attributes
       self.admin_line_item_attributes = [:price, :variant_id, :sku]
@@ -25,15 +25,15 @@ module Spree
       rescue_from StandardError, with: :error_during_processing
       rescue_from ActiveRecord::RecordNotFound, with: :not_found
       rescue_from CanCan::AccessDenied, with: :unauthorized
-      rescue_from Spree::Core::GatewayError, with: :gateway_error
+      rescue_from Solidus::Core::GatewayError, with: :gateway_error
 
-      helper Spree::Api::ApiHelpers
+      helper Solidus::Api::ApiHelpers
 
       private
 
       # users should be able to set price when importing orders via api
       def permitted_line_item_attributes
-        if can?(:admin, Spree::LineItem)
+        if can?(:admin, Solidus::LineItem)
           super + admin_line_item_attributes
         else
           super
@@ -82,7 +82,7 @@ module Spree
       end
 
       def requires_authentication?
-        Spree::Api::Config[:requires_authentication]
+        Solidus::Api::Config[:requires_authentication]
       end
 
       def not_found
@@ -90,11 +90,11 @@ module Spree
       end
 
       def current_ability
-        Spree::Ability.new(current_api_user)
+        Solidus::Ability.new(current_api_user)
       end
 
       def current_currency
-        Spree::Config[:currency]
+        Solidus::Config[:currency]
       end
       helper_method :current_currency
 
@@ -120,7 +120,7 @@ module Spree
       end
 
       def product_scope
-        if can?(:admin, Spree::Product)
+        if can?(:admin, Solidus::Product)
           scope = Product.with_deleted.accessible_by(current_ability, :read).includes(*product_includes)
 
           unless params[:show_deleted]
@@ -146,13 +146,13 @@ module Spree
       end
 
       def authorize_for_order
-        @order = Spree::Order.find_by(number: order_id)
+        @order = Solidus::Order.find_by(number: order_id)
         authorize! :read, @order, order_token
       end
 
       def lock_order
         OrderMutex.with_lock!(@order) { yield }
-      rescue Spree::OrderMutex::LockFailed => e
+      rescue Solidus::OrderMutex::LockFailed => e
         render text: e.message, status: 409
       end
 

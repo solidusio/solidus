@@ -1,6 +1,6 @@
 module Spree
   module Api
-    class ProductPropertiesController < Spree::Api::BaseController
+    class ProductPropertiesController < Solidus::Api::BaseController
 
       before_action :find_product
       before_action :product_property, only: [:show, :update, :destroy]

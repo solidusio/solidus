@@ -1,6 +1,6 @@
 module Spree
   module Api
-    class TransferItemsController < Spree::Api::BaseController
+    class TransferItemsController < Solidus::Api::BaseController
       def create
         authorize! :create, TransferItem
         stock_transfer = StockTransfer.accessible_by(current_ability, :update).find_by(number: params[:stock_transfer_id])

@@ -53,7 +53,7 @@ describe "Products", :type => :feature do
       context "currency displaying" do
         context "using Russian Rubles" do
           before do
-            Spree::Config[:currency] = "RUB"
+            Solidus::Config[:currency] = "RUB"
           end
 
           let!(:product) do
@@ -158,7 +158,7 @@ describe "Products", :type => :feature do
         select @shipping_category.name, from: "product_shipping_category_id"
         click_button "Create"
         expect(page).to have_content("successfully created!")
-        expect(Spree::Product.last.variants.length).to eq(1)
+        expect(Solidus::Product.last.variants.length).to eq(1)
       end
 
       it "should not display variants when prototype does not contain option types", :js => true do
@@ -312,7 +312,7 @@ describe "Products", :type => :feature do
         fill_in "product_available_on", :with => "2012/12/25"
         click_button "Update"
         expect(page).to have_content("successfully updated!")
-        expect(Spree::Product.last.available_on).to eq('Tue, 25 Dec 2012 00:00:00 UTC +00:00')
+        expect(Solidus::Product.last.available_on).to eq('Tue, 25 Dec 2012 00:00:00 UTC +00:00')
       end
 
       it 'should add option_types when selecting a prototype' do
@@ -360,11 +360,11 @@ describe "Products", :type => :feature do
   context 'with only product permissions' do
 
     before do
-      allow_any_instance_of(Spree::Admin::BaseController).to receive(:spree_current_user).and_return(nil)
+      allow_any_instance_of(Solidus::Admin::BaseController).to receive(:spree_current_user).and_return(nil)
     end
 
     custom_authorization! do |user|
-      can [:admin, :update, :index, :read], Spree::Product
+      can [:admin, :update, :index, :read], Solidus::Product
     end
     let!(:product) { create(:product) }
 

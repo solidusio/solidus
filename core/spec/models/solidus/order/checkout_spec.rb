@@ -1,8 +1,8 @@
 require 'spec_helper'
 require 'spree/testing_support/order_walkthrough'
 
-describe Spree::Order, :type => :model do
-  let(:order) { Spree::Order.new }
+describe Solidus::Order, :type => :model do
+  let(:order) { Solidus::Order.new }
 
   def assert_state_changed(order, from, to)
     state_change_exists = order.state_changes.where(:previous_state => from, :next_state => to).exists?
@@ -19,28 +19,28 @@ describe Spree::Order, :type => :model do
 
     transitions.each do |transition|
       it "transitions from #{transition.keys.first} to #{transition.values.first}" do
-        transition = Spree::Order.find_transition(:from => transition.keys.first, :to => transition.values.first)
+        transition = Solidus::Order.find_transition(:from => transition.keys.first, :to => transition.values.first)
         expect(transition).not_to be_nil
       end
     end
 
     it '.find_transition when contract was broken' do
-      expect(Spree::Order.find_transition({foo: :bar, baz: :dog})).to be_falsey
+      expect(Solidus::Order.find_transition({foo: :bar, baz: :dog})).to be_falsey
     end
 
     describe "remove_transition" do
       after do
-        Spree::Order.checkout_flow(&@old_checkout_flow)
+        Solidus::Order.checkout_flow(&@old_checkout_flow)
       end
 
       it '.remove_transition' do
         options = {:from => transitions.first.keys.first, :to => transitions.first.values.first}
-        allow(Spree::Order).to receive(:next_event_transition).and_return([options])
-        expect(Spree::Order.remove_transition(options)).to be_truthy
+        allow(Solidus::Order).to receive(:next_event_transition).and_return([options])
+        expect(Solidus::Order.remove_transition(options)).to be_truthy
       end
 
       it '.remove_transition when contract was broken' do
-        expect(Spree::Order.remove_transition(nil)).to be_falsey
+        expect(Solidus::Order.remove_transition(nil)).to be_falsey
       end
     end
 
@@ -117,7 +117,7 @@ describe Spree::Order, :type => :model do
         end
 
         it "doesn't raise an error if the default address is invalid" do
-          order.user = mock_model(Spree::LegacyUser, ship_address: Spree::Address.new, bill_address: Spree::Address.new)
+          order.user = mock_model(Solidus::LegacyUser, ship_address: Solidus::Address.new, bill_address: Solidus::Address.new)
           order.next!
         end
 
@@ -127,7 +127,7 @@ describe Spree::Order, :type => :model do
           shared_examples "it references the user's the default address" do
             it do
               default_attributes = default_address.reload.value_attributes
-              order_attributes = Spree::Address.value_attributes(order.send("#{address_kind}_address".to_sym).try(:attributes))
+              order_attributes = Solidus::Address.value_attributes(order.send("#{address_kind}_address".to_sym).try(:attributes))
 
               expect(order_attributes).to eq(default_attributes)
             end
@@ -183,7 +183,7 @@ describe Spree::Order, :type => :model do
         line_item = FactoryGirl.create(:line_item, :price => 10, :adjustment_total => 10)
         order.line_items << line_item
         tax_rate = create(:tax_rate, :tax_category => line_item.tax_category, :amount => 0.05)
-        allow(Spree::TaxRate).to receive_messages :match => [tax_rate]
+        allow(Solidus::TaxRate).to receive_messages :match => [tax_rate]
         FactoryGirl.create(:tax_adjustment, :adjustable => line_item, :source => tax_rate, order: order)
         order.email = "user@example.com"
         order.next!
@@ -246,7 +246,7 @@ describe Spree::Order, :type => :model do
         let(:shipment) { create(:shipment, order: order) }
         let(:shipping_method) { create(:shipping_method) }
         let(:shipping_rate) { [
-          Spree::ShippingRate.create!(shipping_method: shipping_method, cost: 10.00, shipment: shipment)
+          Solidus::ShippingRate.create!(shipping_method: shipping_method, cost: 10.00, shipment: shipment)
         ] }
 
         before do
@@ -367,7 +367,7 @@ describe Spree::Order, :type => :model do
       let(:default_credit_card) { create(:credit_card) }
 
       before do
-        user = Spree::LegacyUser.new(email: 'spree@example.org', bill_address: user_bill_address)
+        user = Solidus::LegacyUser.new(email: 'spree@example.org', bill_address: user_bill_address)
         allow(user).to receive(:default_credit_card) { default_credit_card }
         order.user = user
 
@@ -466,14 +466,14 @@ describe Spree::Order, :type => :model do
           si.update_attributes(:backorderable => false)
         end
 
-        Spree::OrderUpdater.new(order).update
+        Solidus::OrderUpdater.new(order).update
         order.save!
       end
 
       it "does not allow the order to complete" do
         expect {
           order.complete!
-        }.to raise_error Spree::Order::InsufficientStock
+        }.to raise_error Solidus::Order::InsufficientStock
 
         expect(order.state).to eq 'confirm'
         expect(order.line_items.first.errors[:quantity]).to be_present
@@ -490,12 +490,12 @@ describe Spree::Order, :type => :model do
         allow(order).to receive(:ensure_available_shipping_rates) { true }
         order.line_items << FactoryGirl.create(:line_item)
 
-        Spree::OrderUpdater.new(order).update
+        Solidus::OrderUpdater.new(order).update
         order.save!
       end
 
       it "does not allow order to complete" do
-        expect { order.complete! }.to raise_error Spree::Order::InsufficientStock
+        expect { order.complete! }.to raise_error Solidus::Order::InsufficientStock
 
         expect(order.state).to eq 'confirm'
         expect(order.line_items.first.errors[:inventory]).to be_present
@@ -516,7 +516,7 @@ describe Spree::Order, :type => :model do
         before do
           order.line_items << FactoryGirl.create(:line_item)
           order.store = FactoryGirl.build(:store)
-          Spree::OrderUpdater.new(order).update
+          Solidus::OrderUpdater.new(order).update
 
           order.save!
         end
@@ -536,7 +536,7 @@ describe Spree::Order, :type => :model do
 
         context 'when the exchange is not for an unreturned item' do
           it 'does not allow the order to completed' do
-            expect { order.complete! }.to raise_error  Spree::Order::InsufficientStock
+            expect { order.complete! }.to raise_error  Solidus::Order::InsufficientStock
             expect(order.payments.first.state).to eq('checkout')
           end
         end
@@ -556,7 +556,7 @@ describe Spree::Order, :type => :model do
         allow(order).to receive_messages(validate_line_item_availability: true)
         order.line_items << FactoryGirl.create(:line_item)
         order.create_proposed_shipments
-        Spree::OrderUpdater.new(order).update
+        Solidus::OrderUpdater.new(order).update
 
         order.save!
       end
@@ -579,7 +579,7 @@ describe Spree::Order, :type => :model do
         order.user = FactoryGirl.create(:user)
         order.email = 'spree@example.org'
         payment = FactoryGirl.create(:payment)
-        allow(payment).to receive(:process!).and_raise(Spree::Core::GatewayError.new('processing failed'))
+        allow(payment).to receive(:process!).and_raise(Solidus::Core::GatewayError.new('processing failed'))
         order.line_items.each { |li| li.inventory_units.create! }
         order.payments << payment
 
@@ -589,7 +589,7 @@ describe Spree::Order, :type => :model do
         allow(order).to receive_messages(validate_line_item_availability: true)
         order.line_items << FactoryGirl.create(:line_item)
         order.create_proposed_shipments
-        Spree::OrderUpdater.new(order).update
+        Solidus::OrderUpdater.new(order).update
       end
 
       it "transitions to the payment state" do
@@ -610,7 +610,7 @@ describe Spree::Order, :type => :model do
         expect(order.complete).to eq(false)
         expect(order.errors[:base]).to include(Spree.t(:items_cannot_be_shipped))
         expect(order.shipments.count).to eq(0)
-        expect(Spree::InventoryUnit.where(shipment_id: shipment.id).count).to eq(0)
+        expect(Solidus::InventoryUnit.where(shipment_id: shipment.id).count).to eq(0)
       end
     end
 
@@ -628,7 +628,7 @@ describe Spree::Order, :type => :model do
   context "subclassed order" do
     # This causes another test above to fail, but fixing this test should make
     #   the other test pass
-    class SubclassedOrder < Spree::Order
+    class SubclassedOrder < Solidus::Order
       checkout_flow do
         go_to_state :payment
         go_to_state :complete
@@ -648,8 +648,8 @@ describe Spree::Order, :type => :model do
 
   context "re-define checkout flow" do
     before do
-      @old_checkout_flow = Spree::Order.checkout_flow
-      Spree::Order.class_eval do
+      @old_checkout_flow = Solidus::Order.checkout_flow
+      Solidus::Order.class_eval do
         checkout_flow do
           go_to_state :payment
           go_to_state :complete
@@ -658,15 +658,15 @@ describe Spree::Order, :type => :model do
     end
 
     after do
-      Spree::Order.checkout_flow(&@old_checkout_flow)
+      Solidus::Order.checkout_flow(&@old_checkout_flow)
     end
 
     it "should not keep old event transitions when checkout_flow is redefined" do
-      expect(Spree::Order.next_event_transitions).to eq([{:cart=>:payment}, {:payment=>:complete}])
+      expect(Solidus::Order.next_event_transitions).to eq([{:cart=>:payment}, {:payment=>:complete}])
     end
 
     it "should not keep old events when checkout_flow is redefined" do
-      state_machine = Spree::Order.state_machine
+      state_machine = Solidus::Order.state_machine
       expect(state_machine.states.any? { |s| s.name == :address }).to be false
       known_states = state_machine.events[:next].branches.map(&:known_states).flatten
       expect(known_states).not_to include(:address)
@@ -680,8 +680,8 @@ describe Spree::Order, :type => :model do
     let!(:line_item){ create :line_item, order: order }
 
     before do
-      @old_checkout_flow = Spree::Order.checkout_flow
-      Spree::Order.class_eval do
+      @old_checkout_flow = Solidus::Order.checkout_flow
+      Solidus::Order.class_eval do
         checkout_flow do
           go_to_state :complete
         end
@@ -689,7 +689,7 @@ describe Spree::Order, :type => :model do
     end
 
     after do
-      Spree::Order.checkout_flow(&@old_checkout_flow)
+      Solidus::Order.checkout_flow(&@old_checkout_flow)
     end
 
     it "does not attempt to process payments" do
@@ -710,46 +710,46 @@ describe Spree::Order, :type => :model do
 
   context "insert checkout step" do
     before do
-      @old_checkout_flow = Spree::Order.checkout_flow
-      Spree::Order.class_eval do
+      @old_checkout_flow = Solidus::Order.checkout_flow
+      Solidus::Order.class_eval do
         remove_transition from: :delivery, to: :confirm
       end
-      Spree::Order.class_eval do
+      Solidus::Order.class_eval do
         insert_checkout_step :new_step, before: :address
       end
     end
 
     after do
-      Spree::Order.checkout_flow(&@old_checkout_flow)
+      Solidus::Order.checkout_flow(&@old_checkout_flow)
     end
 
     it "should maintain removed transitions" do
-      transition = Spree::Order.find_transition(:from => :delivery, :to => :confirm)
+      transition = Solidus::Order.find_transition(:from => :delivery, :to => :confirm)
       expect(transition).to be_nil
     end
 
     context "before" do
       before do
-        Spree::Order.class_eval do
+        Solidus::Order.class_eval do
           insert_checkout_step :before_address, before: :address
         end
       end
 
       specify do
-        order = Spree::Order.new
+        order = Solidus::Order.new
         expect(order.checkout_steps).to eq(%w(new_step before_address address delivery confirm complete))
       end
     end
 
     context "after" do
       before do
-        Spree::Order.class_eval do
+        Solidus::Order.class_eval do
           insert_checkout_step :after_address, after: :address
         end
       end
 
       specify do
-        order = Spree::Order.new
+        order = Solidus::Order.new
         expect(order.checkout_steps).to eq(%w(new_step address after_address delivery confirm complete))
       end
     end
@@ -757,26 +757,26 @@ describe Spree::Order, :type => :model do
 
   context "remove checkout step" do
     before do
-      @old_checkout_flow = Spree::Order.checkout_flow
-      Spree::Order.class_eval do
+      @old_checkout_flow = Solidus::Order.checkout_flow
+      Solidus::Order.class_eval do
         remove_transition from: :delivery, to: :confirm
       end
-      Spree::Order.class_eval do
+      Solidus::Order.class_eval do
         remove_checkout_step :address
       end
     end
 
     after do
-      Spree::Order.checkout_flow(&@old_checkout_flow)
+      Solidus::Order.checkout_flow(&@old_checkout_flow)
     end
 
     it "should maintain removed transitions" do
-      transition = Spree::Order.find_transition(:from => :delivery, :to => :confirm)
+      transition = Solidus::Order.find_transition(:from => :delivery, :to => :confirm)
       expect(transition).to be_nil
     end
 
     specify do
-      order = Spree::Order.new
+      order = Solidus::Order.new
       expect(order.checkout_steps).to eq(%w(delivery confirm complete))
     end
   end
@@ -803,8 +803,8 @@ describe Spree::Order, :type => :model do
 
     context "passing a credit card" do
       let(:permitted_params) do
-        Spree::PermittedAttributes.checkout_attributes +
-          [payments_attributes: Spree::PermittedAttributes.payment_attributes]
+        Solidus::PermittedAttributes.checkout_attributes +
+          [payments_attributes: Solidus::PermittedAttributes.payment_attributes]
       end
 
       let(:credit_card) { create(:credit_card, user_id: order.user_id) }
@@ -827,7 +827,7 @@ describe Spree::Order, :type => :model do
       before { order.user_id = 3 }
 
       it "sets confirmation value when its available via :cvc_confirm" do
-        allow(Spree::CreditCard).to receive_messages find: credit_card
+        allow(Solidus::CreditCard).to receive_messages find: credit_card
         expect(credit_card).to receive(:verification_value=)
         order.update_from_params(params, permitted_params)
       end
@@ -835,9 +835,9 @@ describe Spree::Order, :type => :model do
       it "sets existing card as source for new payment" do
         expect {
           order.update_from_params(params, permitted_params)
-        }.to change { Spree::Payment.count }.by(1)
+        }.to change { Solidus::Payment.count }.by(1)
 
-        expect(Spree::Payment.last.source).to eq credit_card
+        expect(Solidus::Payment.last.source).to eq credit_card
       end
 
       it "sets request_env on payment" do
@@ -852,7 +852,7 @@ describe Spree::Order, :type => :model do
 
         expect {
           order.update_from_params(params, permitted_params)
-        }.to raise_error Spree::Core::GatewayError
+        }.to raise_error Solidus::Core::GatewayError
       end
     end
 

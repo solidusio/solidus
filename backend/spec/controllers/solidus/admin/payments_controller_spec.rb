@@ -132,12 +132,12 @@ module Spree
               include CanCan::Ability
 
               def initialize(user)
-                can :capture, Spree::Payment
+                can :capture, Solidus::Payment
               end
             end
 
             before do
-              Spree::Ability.register_ability(CaptureAllowedAbility)
+              Solidus::Ability.register_ability(CaptureAllowedAbility)
             end
 
             it 'allows the action' do
@@ -152,12 +152,12 @@ module Spree
               include CanCan::Ability
 
               def initialize(user)
-                cannot :capture, Spree::Payment
+                cannot :capture, Solidus::Payment
               end
             end
 
             before do
-              Spree::Ability.register_ability(CaptureNotAllowedAbility)
+              Solidus::Ability.register_ability(CaptureNotAllowedAbility)
             end
 
             it 'does not allow the action' do

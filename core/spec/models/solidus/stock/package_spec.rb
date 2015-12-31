@@ -79,7 +79,7 @@ module Spree
         subject.add build_inventory_unit, :backordered
 
         shipping_method = build(:shipping_method)
-        subject.shipping_rates = [ Spree::ShippingRate.new(shipping_method: shipping_method, cost: 10.00, selected: true) ]
+        subject.shipping_rates = [ Solidus::ShippingRate.new(shipping_method: shipping_method, cost: 10.00, selected: true) ]
 
         shipment = subject.to_shipment
         expect(shipment.stock_location).to eq subject.stock_location
@@ -147,7 +147,7 @@ module Spree
           before { subject.add unit }
 
           it "returns an order" do
-            expect(subject.order).to be_a_kind_of Spree::Order
+            expect(subject.order).to be_a_kind_of Solidus::Order
             expect(subject.order).to eq unit.order
           end
         end

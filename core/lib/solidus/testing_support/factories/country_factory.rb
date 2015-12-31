@@ -1,5 +1,5 @@
 FactoryGirl.define do
-  factory :country, class: Spree::Country do
+  factory :country, class: Solidus::Country do
     iso_name 'UNITED STATES'
     name 'United States of America'
     iso 'US'

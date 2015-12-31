@@ -1,9 +1,9 @@
 require 'spec_helper'
 
-describe Spree::Price, :type => :model do
+describe Solidus::Price, :type => :model do
   describe 'validations' do
-    let(:variant) { stub_model Spree::Variant }
-    subject { Spree::Price.new variant: variant, amount: amount }
+    let(:variant) { stub_model Solidus::Variant }
+    subject { Solidus::Price.new variant: variant, amount: amount }
 
     context 'when the amount is nil' do
       let(:amount) { nil }

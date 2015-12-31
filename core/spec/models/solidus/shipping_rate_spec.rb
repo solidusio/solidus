@@ -2,10 +2,10 @@
 
 require 'spec_helper'
 
-describe Spree::ShippingRate, :type => :model do
+describe Solidus::ShippingRate, :type => :model do
   let(:shipment) { create(:shipment) }
   let(:shipping_method) { create(:shipping_method) }
-  let(:shipping_rate) { Spree::ShippingRate.new(:shipment => shipment,
+  let(:shipping_rate) { Solidus::ShippingRate.new(:shipment => shipment,
                                                 :shipping_method => shipping_method,
                                                 :cost => 10) }
 
@@ -87,7 +87,7 @@ describe Spree::ShippingRate, :type => :model do
     end
 
     context "when the currency is JPY" do
-      let(:shipping_rate) { shipping_rate = Spree::ShippingRate.new(:cost => 205)
+      let(:shipping_rate) { shipping_rate = Solidus::ShippingRate.new(:cost => 205)
                             allow(shipping_rate).to receive_messages(:currency => "JPY")
                             shipping_rate }
 

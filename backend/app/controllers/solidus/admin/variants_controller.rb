@@ -44,7 +44,7 @@ module Spree
 
           # @search needs to be defined as this is passed to search_form_for
           @search = @collection.ransack(params[:q])
-          @collection = @search.result.includes(variant_includes).page(params[:page]).per(Spree::Config[:admin_variants_per_page])
+          @collection = @search.result.includes(variant_includes).page(params[:page]).per(Solidus::Config[:admin_variants_per_page])
         end
 
         def load_option_types_values

@@ -2,8 +2,8 @@ module Spree
   module PermissionSets
     class RestrictedStockManagement < PermissionSets::Base
       def activate!
-        can :manage, Spree::StockItem, stock_location_id: location_ids
-        can :display, Spree::StockLocation, id: location_ids
+        can :manage, Solidus::StockItem, stock_location_id: location_ids
+        can :display, Solidus::StockLocation, id: location_ids
       end
 
       private

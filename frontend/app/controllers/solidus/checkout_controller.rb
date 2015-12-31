@@ -3,7 +3,7 @@ module Spree
   # actually a Checkout object. There's enough distinct logic specific to
   # checkout which has nothing to do with updating an order that this approach
   # is waranted.
-  class CheckoutController < Spree::StoreController
+  class CheckoutController < Solidus::StoreController
     before_filter :load_order
     around_filter :lock_order
     before_filter :set_state_if_present
@@ -21,7 +21,7 @@ module Spree
 
     helper 'spree/orders'
 
-    rescue_from Spree::Core::GatewayError, :with => :rescue_from_spree_gateway_error
+    rescue_from Solidus::Core::GatewayError, :with => :rescue_from_spree_gateway_error
 
     # Updates the order and advances to the next state (when possible.)
     def update
@@ -145,13 +145,13 @@ module Spree
         return if params[:order].present?
 
         packages = @order.shipments.map { |s| s.to_package }
-        @differentiator = Spree::Stock::Differentiator.new(@order, packages)
+        @differentiator = Solidus::Stock::Differentiator.new(@order, packages)
       end
 
       def before_payment
         if @order.checkout_steps.include? "delivery"
           packages = @order.shipments.map { |s| s.to_package }
-          @differentiator = Spree::Stock::Differentiator.new(@order, packages)
+          @differentiator = Solidus::Stock::Differentiator.new(@order, packages)
           @differentiator.missing.each do |variant, quantity|
             @order.contents.remove(variant, quantity)
           end

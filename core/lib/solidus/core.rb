@@ -42,7 +42,7 @@ module Spree
   # This method is defined within the core gem on purpose.
   # Some people may only wish to use the Core part of Spree.
   def self.config(&block)
-    yield(Spree::Config)
+    yield(Solidus::Config)
   end
 
   module Core
@@ -51,7 +51,7 @@ module Spree
     def self.const_missing(name)
       case name
       when :AdjustmentSource, :CalculatedAdjustments, :UserAddress, :UserPaymentSource
-        ActiveSupport::Deprecation.warn("Spree::Core::#{name} is deprecated! Use Spree::#{name} instead.", caller)
+        ActiveSupport::Deprecation.warn("Solidus::Core::#{name} is deprecated! Use Solidus::#{name} instead.", caller)
         Spree.const_get(name)
       else
         super

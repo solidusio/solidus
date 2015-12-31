@@ -10,7 +10,7 @@ module Spree
         OPERATORS = ['gt', 'gte']
 
         def applicable?(promotable)
-          promotable.is_a?(Spree::Order)
+          promotable.is_a?(Solidus::Order)
         end
 
         def eligible?(order, options = {})
@@ -24,7 +24,7 @@ module Spree
 
         private
         def formatted_amount
-          Spree::Money.new(preferred_amount).to_s
+          Solidus::Money.new(preferred_amount).to_s
         end
 
         def ineligible_message

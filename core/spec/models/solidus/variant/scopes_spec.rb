@@ -8,9 +8,9 @@ describe "Variant scopes", :type => :model do
   it ".descend_by_popularity" do
     # Requires a product with at least two variants, where one has a higher number of
     # orders than the other
-    Spree::LineItem.delete_all # FIXME leaky database - too many line_items
+    Solidus::LineItem.delete_all # FIXME leaky database - too many line_items
     create(:line_item, :variant => variant_1)
-    expect(Spree::Variant.descend_by_popularity.first).to eq(variant_1)
+    expect(Solidus::Variant.descend_by_popularity.first).to eq(variant_1)
   end
 
 

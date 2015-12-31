@@ -102,7 +102,7 @@ describe 'Payments', :type => :feature do
 
     # Regression test for #1269
     it 'cannot create a payment for an order with no payment methods' do
-      Spree::PaymentMethod.delete_all
+      Solidus::PaymentMethod.delete_all
       order.payments.delete_all
 
       click_on 'New Payment'

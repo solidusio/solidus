@@ -1,15 +1,15 @@
 require 'spec_helper'
 
-describe Spree::Admin::ReportsController, :type => :controller do
+describe Solidus::Admin::ReportsController, :type => :controller do
   stub_authorization!
 
   describe 'ReportsController.available_reports' do
     it 'should contain sales_total' do
-      expect(Spree::Admin::ReportsController.available_reports.keys.include?(:sales_total)).to be true
+      expect(Solidus::Admin::ReportsController.available_reports.keys.include?(:sales_total)).to be true
     end
 
     it 'should have the proper sales total report description' do
-      expect(Spree::Admin::ReportsController.available_reports[:sales_total][:description]).to eql('Sales Total For All Orders')
+      expect(Solidus::Admin::ReportsController.available_reports[:sales_total][:description]).to eql('Sales Total For All Orders')
     end
 
   end
@@ -17,8 +17,8 @@ describe Spree::Admin::ReportsController, :type => :controller do
   describe 'ReportsController.add_available_report!' do
     context 'when adding the report name' do
       it 'should contain the report' do
-        Spree::Admin::ReportsController.add_available_report!(:some_report)
-        expect(Spree::Admin::ReportsController.available_reports.keys.include?(:some_report)).to be true
+        Solidus::Admin::ReportsController.add_available_report!(:some_report)
+        expect(Solidus::Admin::ReportsController.available_reports.keys.include?(:some_report)).to be true
       end
     end
   end
@@ -126,7 +126,7 @@ describe Spree::Admin::ReportsController, :type => :controller do
   end
 
   after(:each) do
-    Spree::Admin::ReportsController.available_reports.delete_if do |key, value|
+    Solidus::Admin::ReportsController.available_reports.delete_if do |key, value|
       key != :sales_total
     end
   end

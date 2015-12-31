@@ -1,11 +1,11 @@
 require 'spec_helper'
 
 module Spree
-  describe Spree::PromotionRule, type: :model do
+  describe Solidus::PromotionRule, type: :model do
 
-    class BadTestRule < Spree::PromotionRule; end
+    class BadTestRule < Solidus::PromotionRule; end
 
-    class TestRule < Spree::PromotionRule
+    class TestRule < Solidus::PromotionRule
       def eligible?(promotable, options = {})
         true
       end

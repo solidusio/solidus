@@ -12,7 +12,7 @@ module Spree
     subject { ShippingCalculator.new }
 
     it 'computes with a shipment' do
-      shipment = mock_model(Spree::Shipment)
+      shipment = mock_model(Solidus::Shipment)
       expect(subject).to receive(:compute_shipment).with(shipment)
       subject.compute(shipment)
     end

@@ -5,7 +5,7 @@
 <% end %>
 
 <% content_for :page_actions do %>
-  <% if can?(:create, Spree::PaymentMethod) %>
+  <% if can?(:create, Solidus::PaymentMethod) %>
     <li>
       <%= button_link_to Spree.t(:new_payment_method), new_object_url, :icon => 'plus', :id => 'admin_new_payment_methods_link' %>
     </li>
@@ -39,11 +39,11 @@
           <td class="align-center"><%= method.display_on.blank? ? Spree.t(:both) : Spree.t(method.display_on) %></td>
           <td class="align-center"><%= method.active ? Spree.t(:say_yes) : Spree.t(:say_no) %></td>
           <td data-hook="admin_payment_methods_index_row_actions" class="actions">
-            <% if can?(:update, method.becomes(Spree::PaymentMethod)) %>
-              <%= link_to_edit method.becomes(Spree::PaymentMethod), :no_text => true %>
+            <% if can?(:update, method.becomes(Solidus::PaymentMethod)) %>
+              <%= link_to_edit method.becomes(Solidus::PaymentMethod), :no_text => true %>
             <% end %>
-            <% if can?(:destroy, method.becomes(Spree::PaymentMethod)) %>
-              <%= link_to_delete method.becomes(Spree::PaymentMethod), :no_text => true  %>
+            <% if can?(:destroy, method.becomes(Solidus::PaymentMethod)) %>
+              <%= link_to_delete method.becomes(Solidus::PaymentMethod), :no_text => true  %>
             <% end %>
           </td>
         </tr>
@@ -53,7 +53,7 @@
 <% else %>
   <div class="alpha twelve columns no-objects-found">
     <%= Spree.t(:no_resource_found, resource: I18n.t(:other, scope: 'activerecord.models.spree/payment_method')) %>
-    <% if can?(:create, Spree::PaymentMethod) %>
+    <% if can?(:create, Solidus::PaymentMethod) %>
       <%= link_to Spree.t(:add_one), spree.new_admin_payment_method_path %>!
     <% end %>
   </div>

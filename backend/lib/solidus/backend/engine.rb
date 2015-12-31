@@ -1,10 +1,10 @@
 module Spree
   module Backend
     class Engine < ::Rails::Engine
-      config.middleware.use "Spree::Backend::Middleware::SeoAssist"
+      config.middleware.use "Solidus::Backend::Middleware::SeoAssist"
 
       initializer "spree.backend.environment", :before => :load_config_initializers do |app|
-        Spree::Backend::Config = Spree::BackendConfiguration.new
+        Solidus::Backend::Config = Solidus::BackendConfiguration.new
       end
 
       # filter sensitive information during logging

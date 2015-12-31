@@ -5,7 +5,7 @@ class MovePromotionCodeToPromotionCodeValue < ActiveRecord::Migration
     # a difference of minutes vs hours for completion time.
 
     say_with_time 'generating spree_promotion_codes' do
-      Spree::Promotion.connection.execute(<<-SQL.strip_heredoc)
+      Solidus::Promotion.connection.execute(<<-SQL.strip_heredoc)
         insert into spree_promotion_codes
           (promotion_id, value, created_at, updated_at)
         select
@@ -21,13 +21,13 @@ class MovePromotionCodeToPromotionCodeValue < ActiveRecord::Migration
       SQL
     end
 
-    if Spree::PromotionCode.group(:promotion_id).having("count(0) > 1").exists?
+    if Solidus::PromotionCode.group(:promotion_id).having("count(0) > 1").exists?
       raise "Error: You have promotions with multiple promo codes. The
              migration code will not work correctly".squish
     end
 
     say_with_time 'linking order promotions' do
-      Spree::Promotion.connection.execute(<<-SQL.strip_heredoc)
+      Solidus::Promotion.connection.execute(<<-SQL.strip_heredoc)
         update spree_orders_promotions
         set promotion_code_id = (
           select spree_promotion_codes.id
@@ -41,7 +41,7 @@ class MovePromotionCodeToPromotionCodeValue < ActiveRecord::Migration
     end
 
     say_with_time 'linking adjustments' do
-      Spree::Promotion.connection.execute(<<-SQL.strip_heredoc)
+      Solidus::Promotion.connection.execute(<<-SQL.strip_heredoc)
         update spree_adjustments
         set promotion_code_id = (
           select spree_promotion_codes.id
@@ -52,7 +52,7 @@ class MovePromotionCodeToPromotionCodeValue < ActiveRecord::Migration
             on spree_promotion_codes.promotion_id = spree_promotions.id
           where spree_promotion_actions.id = spree_adjustments.source_id
         )
-        where spree_adjustments.source_type = 'Spree::PromotionAction'
+        where spree_adjustments.source_type = 'Solidus::PromotionAction'
           and spree_adjustments.promotion_code_id is null
       SQL
     end

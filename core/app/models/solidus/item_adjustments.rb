@@ -41,7 +41,7 @@ module Spree
       promotion_adjustments = adjustments.select(&:promotion?)
       promotion_adjustments.each(&:update!)
 
-      promo_total = Spree::Config.promotion_chooser_class.new(promotion_adjustments).update
+      promo_total = Solidus::Config.promotion_chooser_class.new(promotion_adjustments).update
 
       # Calculating the totals for the order here would be incorrect. Order's
       # totals are the sum of the adjustments on all child models, as well as
@@ -49,7 +49,7 @@ module Spree
       #
       # We want to select the best promotion for the order, but the remainder
       # of the calculations here are done in the OrderUpdater instead.
-      return if Spree::Order === item
+      return if Solidus::Order === item
 
       @item.promo_total = promo_total
 

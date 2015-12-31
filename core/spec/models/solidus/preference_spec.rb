@@ -1,9 +1,9 @@
 require 'spec_helper'
 
-describe Spree::Preference, :type => :model do
+describe Solidus::Preference, :type => :model do
 
   it "should require a key" do
-    @preference = Spree::Preference.new
+    @preference = Solidus::Preference.new
     @preference.key = :test
     @preference.value = true
     expect(@preference).to be_valid
@@ -11,12 +11,12 @@ describe Spree::Preference, :type => :model do
 
   describe "type coversion for values" do
     def round_trip_preference(key, value)
-      p = Spree::Preference.new
+      p = Solidus::Preference.new
       p.value = value
       p.key = key
       p.save
 
-      Spree::Preference.find_by_key(key)
+      Solidus::Preference.find_by_key(key)
     end
 
     it ":boolean" do

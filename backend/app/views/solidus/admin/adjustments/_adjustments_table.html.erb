@@ -12,7 +12,7 @@
     <%= render :partial => "adjustment", :collection => @adjustments %>
     <tr data-hook="adjustment_buttons">
       <td class="align-center" colspan='4'>
-        <% if can? :update, Spree::Adjustment %>
+        <% if can? :update, Solidus::Adjustment %>
           <div>
             <%= button_to Spree.t(:unfinalize_all_adjustments), adjustments_unfinalize_admin_order_path(@order), method: :get %>
           </div>

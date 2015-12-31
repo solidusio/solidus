@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Spree::Api::StoreCreditEventsController, type: :controller do
+describe Solidus::Api::StoreCreditEventsController, type: :controller do
   render_views
 
   let(:api_user) { create(:user) }

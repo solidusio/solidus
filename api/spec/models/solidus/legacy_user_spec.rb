@@ -52,7 +52,7 @@ module Spree
 
           before {
             user.clear_spree_api_key!
-            Spree::Config.roles_for_auto_api_key = ['hobbit']
+            Solidus::Config.roles_for_auto_api_key = ['hobbit']
           }
 
           it { expect { subject }.to change { user.reload.spree_api_key }.from(nil) }
@@ -67,7 +67,7 @@ module Spree
           before {
             user.clear_spree_api_key!
             other_user.clear_spree_api_key!
-            Spree::Config.generate_api_key_for_all_roles = true
+            Solidus::Config.generate_api_key_for_all_roles = true
           }
 
           it { expect { subject }.to change { user.reload.spree_api_key }.from(nil) }
@@ -87,7 +87,7 @@ module Spree
           end
 
           it "grants an api key on create when set to true" do
-            Spree::Config.generate_api_key_for_all_roles = true
+            Solidus::Config.generate_api_key_for_all_roles = true
 
             expect(user.spree_api_key).to eq(nil)
 

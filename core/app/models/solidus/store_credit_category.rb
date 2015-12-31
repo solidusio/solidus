@@ -1,4 +1,4 @@
-class Spree::StoreCreditCategory < Spree::Base
+class Solidus::StoreCreditCategory < Solidus::Base
   class_attribute :non_expiring_credit_types
   self.non_expiring_credit_types = [Spree.t("store_credit.non_expiring")]
 
@@ -6,8 +6,8 @@ class Spree::StoreCreditCategory < Spree::Base
   self.reimbursement_category_name = Spree.t("store_credit_category.default")
 
   def self.reimbursement_category(reimbursement)
-    Spree::StoreCreditCategory.find_by(name: reimbursement_category_name) ||
-      Spree::StoreCreditCategory.first
+    Solidus::StoreCreditCategory.find_by(name: reimbursement_category_name) ||
+      Solidus::StoreCreditCategory.first
   end
 
   def non_expiring?

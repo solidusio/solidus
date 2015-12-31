@@ -5,7 +5,7 @@ require 'spec_helper'
 # already. Stubs wouldn't work here (the delegation runs before this spec is
 # loaded) and adding a column here might make the test even crazy so here we go
 module Spree
-  class DelegateBelongsToStubModel < Spree::Base
+  class DelegateBelongsToStubModel < Solidus::Base
     self.table_name = "spree_payment_methods"
     belongs_to :product
     ActiveSupport::Deprecation.silence do

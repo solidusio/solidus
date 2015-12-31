@@ -15,26 +15,26 @@ module Spree
     # - A user can manage stock transfers only if they are associated with both the destination and the source,
     #   or if the user is associated with the source, and the transfer has not yet been assigned a destination.
     #
-    # @see Spree::PermissionSets::Base
+    # @see Solidus::PermissionSets::Base
     class RestrictedStockTransferManagement < PermissionSets::Base
       def activate!
         if user.stock_locations.any?
-          can :display, Spree::StockLocation, id: user_location_ids
+          can :display, Solidus::StockLocation, id: user_location_ids
 
-          can :transfer_from, Spree::StockLocation, id: user_location_ids
-          can :transfer_to, Spree::StockLocation, id: user_location_ids
+          can :transfer_from, Solidus::StockLocation, id: user_location_ids
+          can :transfer_to, Solidus::StockLocation, id: user_location_ids
 
-          can :display, Spree::StockTransfer, source_location_id: user_location_ids
-          can :manage, Spree::StockTransfer, source_location_id: user_location_ids + [nil], shipped_at: nil
-          can :manage, Spree::StockTransfer, destination_location_id: user_location_ids
+          can :display, Solidus::StockTransfer, source_location_id: user_location_ids
+          can :manage, Solidus::StockTransfer, source_location_id: user_location_ids + [nil], shipped_at: nil
+          can :manage, Solidus::StockTransfer, destination_location_id: user_location_ids
           # Do not allow managing transfers to a permitted destination_location_id from an
           # unauthorized stock location until it's been shipped to the permitted location.
-          cannot :manage, Spree::StockTransfer, source_location_id: not_permitted_location_ids, shipped_at: nil
+          cannot :manage, Solidus::StockTransfer, source_location_id: not_permitted_location_ids, shipped_at: nil
 
-          can :display, Spree::TransferItem, stock_transfer: { source_location_id: user_location_ids }
-          can :manage, Spree::TransferItem, stock_transfer: { source_location_id: user_location_ids + [nil], shipped_at: nil }
-          can :manage, Spree::TransferItem, stock_transfer: { destination_location_id: user_location_ids }
-          cannot :manage, Spree::TransferItem, stock_transfer: { source_location_id: not_permitted_location_ids, shipped_at: nil }
+          can :display, Solidus::TransferItem, stock_transfer: { source_location_id: user_location_ids }
+          can :manage, Solidus::TransferItem, stock_transfer: { source_location_id: user_location_ids + [nil], shipped_at: nil }
+          can :manage, Solidus::TransferItem, stock_transfer: { destination_location_id: user_location_ids }
+          cannot :manage, Solidus::TransferItem, stock_transfer: { source_location_id: not_permitted_location_ids, shipped_at: nil }
         end
       end
 
@@ -45,7 +45,7 @@ module Spree
       end
 
       def not_permitted_location_ids
-        @not_permitted_location_ids ||= Spree::StockLocation.where.not(id: user_location_ids).pluck(:id)
+        @not_permitted_location_ids ||= Solidus::StockLocation.where.not(id: user_location_ids).pluck(:id)
       end
     end
   end

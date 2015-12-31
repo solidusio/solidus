@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Spree::PermissionSets::ProductManagement do
+describe Solidus::PermissionSets::ProductManagement do
   let(:ability) { DummyAbility.new }
 
   subject { ability }
@@ -10,31 +10,31 @@ describe Spree::PermissionSets::ProductManagement do
       described_class.new(ability).activate!
     end
 
-    it { is_expected.to be_able_to(:manage, Spree::Product) }
-    it { is_expected.to be_able_to(:manage, Spree::Image) }
-    it { is_expected.to be_able_to(:manage, Spree::Variant) }
-    it { is_expected.to be_able_to(:manage, Spree::OptionValue) }
-    it { is_expected.to be_able_to(:manage, Spree::ProductProperty) }
-    it { is_expected.to be_able_to(:manage, Spree::OptionType) }
-    it { is_expected.to be_able_to(:manage, Spree::Property) }
-    it { is_expected.to be_able_to(:manage, Spree::Prototype) }
-    it { is_expected.to be_able_to(:manage, Spree::Taxonomy) }
-    it { is_expected.to be_able_to(:manage, Spree::Taxon) }
-    it { is_expected.to be_able_to(:manage, Spree::Classification) }
+    it { is_expected.to be_able_to(:manage, Solidus::Product) }
+    it { is_expected.to be_able_to(:manage, Solidus::Image) }
+    it { is_expected.to be_able_to(:manage, Solidus::Variant) }
+    it { is_expected.to be_able_to(:manage, Solidus::OptionValue) }
+    it { is_expected.to be_able_to(:manage, Solidus::ProductProperty) }
+    it { is_expected.to be_able_to(:manage, Solidus::OptionType) }
+    it { is_expected.to be_able_to(:manage, Solidus::Property) }
+    it { is_expected.to be_able_to(:manage, Solidus::Prototype) }
+    it { is_expected.to be_able_to(:manage, Solidus::Taxonomy) }
+    it { is_expected.to be_able_to(:manage, Solidus::Taxon) }
+    it { is_expected.to be_able_to(:manage, Solidus::Classification) }
   end
 
   context "when not activated" do
-    it { is_expected.not_to be_able_to(:manage, Spree::Product) }
-    it { is_expected.not_to be_able_to(:manage, Spree::Image) }
-    it { is_expected.not_to be_able_to(:manage, Spree::Variant) }
-    it { is_expected.not_to be_able_to(:manage, Spree::OptionValue) }
-    it { is_expected.not_to be_able_to(:manage, Spree::ProductProperty) }
-    it { is_expected.not_to be_able_to(:manage, Spree::OptionType) }
-    it { is_expected.not_to be_able_to(:manage, Spree::Property) }
-    it { is_expected.not_to be_able_to(:manage, Spree::Prototype) }
-    it { is_expected.not_to be_able_to(:manage, Spree::Taxonomy) }
-    it { is_expected.not_to be_able_to(:manage, Spree::Taxon) }
-    it { is_expected.not_to be_able_to(:manage, Spree::Classification) }
+    it { is_expected.not_to be_able_to(:manage, Solidus::Product) }
+    it { is_expected.not_to be_able_to(:manage, Solidus::Image) }
+    it { is_expected.not_to be_able_to(:manage, Solidus::Variant) }
+    it { is_expected.not_to be_able_to(:manage, Solidus::OptionValue) }
+    it { is_expected.not_to be_able_to(:manage, Solidus::ProductProperty) }
+    it { is_expected.not_to be_able_to(:manage, Solidus::OptionType) }
+    it { is_expected.not_to be_able_to(:manage, Solidus::Property) }
+    it { is_expected.not_to be_able_to(:manage, Solidus::Prototype) }
+    it { is_expected.not_to be_able_to(:manage, Solidus::Taxonomy) }
+    it { is_expected.not_to be_able_to(:manage, Solidus::Taxon) }
+    it { is_expected.not_to be_able_to(:manage, Solidus::Classification) }
   end
 end
 

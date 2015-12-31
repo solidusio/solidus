@@ -1,10 +1,10 @@
 require 'spec_helper'
 
-describe Spree::Admin::ReimbursementsController, :type => :controller do
+describe Solidus::Admin::ReimbursementsController, :type => :controller do
   stub_authorization!
 
   let!(:default_refund_reason) do
-    Spree::RefundReason.find_or_create_by!(name: Spree::RefundReason::RETURN_PROCESSING_REASON, mutable: false)
+    Solidus::RefundReason.find_or_create_by!(name: Solidus::RefundReason::RETURN_PROCESSING_REASON, mutable: false)
   end
 
   describe '#edit' do
@@ -47,7 +47,7 @@ describe Spree::Admin::ReimbursementsController, :type => :controller do
 
     context 'when create fails' do
       before do
-        allow_any_instance_of(Spree::Reimbursement).to receive(:valid?) do |reimbursement, *args|
+        allow_any_instance_of(Solidus::Reimbursement).to receive(:valid?) do |reimbursement, *args|
           reimbursement.errors.add(:base, 'something bad happened')
           false
         end
@@ -60,7 +60,7 @@ describe Spree::Admin::ReimbursementsController, :type => :controller do
           request.env["HTTP_REFERER"] = referer
           expect {
             spree_post :create, order_id: order.to_param
-          }.to_not change { Spree::Reimbursement.count }
+          }.to_not change { Solidus::Reimbursement.count }
           expect(response).to redirect_to(referer)
           expect(flash[:error]).to eq("something bad happened")
         end
@@ -70,7 +70,7 @@ describe Spree::Admin::ReimbursementsController, :type => :controller do
         it 'redirects to the admin root' do
           expect {
             spree_post :create, order_id: order.to_param
-          }.to_not change { Spree::Reimbursement.count }
+          }.to_not change { Solidus::Reimbursement.count }
           expect(response).to redirect_to(spree.admin_path)
           expect(flash[:error]).to eq("something bad happened")
         end
@@ -102,10 +102,10 @@ describe Spree::Admin::ReimbursementsController, :type => :controller do
       expect(payment.refunds.last.amount).to eq return_items.to_a.sum(&:total)
     end
 
-    context "a Spree::Core::GatewayError is raised" do
+    context "a Solidus::Core::GatewayError is raised" do
       before(:each) do
         def controller.perform
-          raise Spree::Core::GatewayError.new('An error has occurred')
+          raise Solidus::Core::GatewayError.new('An error has occurred')
         end
       end
 

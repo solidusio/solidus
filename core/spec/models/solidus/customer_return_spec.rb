@@ -1,8 +1,8 @@
 require 'spec_helper'
 
-describe Spree::CustomerReturn, :type => :model do
+describe Solidus::CustomerReturn, :type => :model do
   before do
-    allow_any_instance_of(Spree::Order).to receive_messages(return!: true)
+    allow_any_instance_of(Solidus::Order).to receive_messages(return!: true)
   end
 
   describe ".validation" do
@@ -49,7 +49,7 @@ describe Spree::CustomerReturn, :type => :model do
   describe ".before_create" do
     describe "#generate_number" do
       context "number is assigned" do
-        let(:customer_return) { Spree::CustomerReturn.new(number: '123') }
+        let(:customer_return) { Solidus::CustomerReturn.new(number: '123') }
 
         it "should return the assigned number" do
           customer_return.save
@@ -58,7 +58,7 @@ describe Spree::CustomerReturn, :type => :model do
       end
 
       context "number is not assigned" do
-        let(:customer_return) { Spree::CustomerReturn.new(number: nil) }
+        let(:customer_return) { Solidus::CustomerReturn.new(number: nil) }
 
         before do
           allow(customer_return).to receive_messages(valid?: true, process_return!: true)
@@ -78,7 +78,7 @@ describe Spree::CustomerReturn, :type => :model do
     let(:customer_return) { create(:customer_return, line_items_count: 2) }
 
     before do
-      Spree::ReturnItem.where(customer_return_id: customer_return.id).update_all(pre_tax_amount: pre_tax_amount, additional_tax_total: tax_amount)
+      Solidus::ReturnItem.where(customer_return_id: customer_return.id).update_all(pre_tax_amount: pre_tax_amount, additional_tax_total: tax_amount)
       customer_return.reload
     end
 
@@ -90,11 +90,11 @@ describe Spree::CustomerReturn, :type => :model do
   end
 
   describe "#display_total" do
-    let(:customer_return) { Spree::CustomerReturn.new }
+    let(:customer_return) { Solidus::CustomerReturn.new }
 
-    it "returns a Spree::Money" do
+    it "returns a Solidus::Money" do
       allow(customer_return).to receive_messages(total: 21.22)
-      expect(customer_return.display_total).to eq(Spree::Money.new(21.22))
+      expect(customer_return.display_total).to eq(Solidus::Money.new(21.22))
     end
   end
 
@@ -103,7 +103,7 @@ describe Spree::CustomerReturn, :type => :model do
     let(:customer_return) { create(:customer_return, line_items_count: 2) }
 
     before do
-      Spree::ReturnItem.where(customer_return_id: customer_return.id).update_all(pre_tax_amount: pre_tax_amount)
+      Solidus::ReturnItem.where(customer_return_id: customer_return.id).update_all(pre_tax_amount: pre_tax_amount)
     end
 
     subject { customer_return.pre_tax_total }
@@ -114,11 +114,11 @@ describe Spree::CustomerReturn, :type => :model do
   end
 
   describe "#display_pre_tax_total" do
-    let(:customer_return) { Spree::CustomerReturn.new }
+    let(:customer_return) { Solidus::CustomerReturn.new }
 
-    it "returns a Spree::Money" do
+    it "returns a Solidus::Money" do
       allow(customer_return).to receive_messages(pre_tax_total: 21.22)
-      expect(customer_return.display_pre_tax_total).to eq(Spree::Money.new(21.22))
+      expect(customer_return.display_pre_tax_total).to eq(Solidus::Money.new(21.22))
     end
   end
 
@@ -175,9 +175,9 @@ describe Spree::CustomerReturn, :type => :model do
 
       context 'with Config.track_inventory_levels == false' do
         before do
-          Spree::Config.track_inventory_levels = false
-          expect(Spree::StockItem).not_to receive(:find_by)
-          expect(Spree::StockMovement).not_to receive(:create!)
+          Solidus::Config.track_inventory_levels = false
+          expect(Solidus::StockItem).not_to receive(:find_by)
+          expect(Solidus::StockMovement).not_to receive(:create!)
         end
 
         it "should NOT update the stock item counts in the stock location" do
@@ -196,7 +196,7 @@ describe Spree::CustomerReturn, :type => :model do
           create(:customer_return_without_return_items, return_items: [return_item], stock_location_id: new_stock_location.id)
           return_item.receive!
         }.to change {
-          Spree::StockItem.where(variant_id: inventory_unit.variant_id, stock_location_id: new_stock_location.id).first.count_on_hand
+          Solidus::StockItem.where(variant_id: inventory_unit.variant_id, stock_location_id: new_stock_location.id).first.count_on_hand
         }.by(1)
       end
 
@@ -234,7 +234,7 @@ describe Spree::CustomerReturn, :type => :model do
   describe '#fully_reimbursed?' do
     let(:customer_return) { create(:customer_return) }
 
-    let!(:default_refund_reason) { Spree::RefundReason.find_or_create_by!(name: Spree::RefundReason::RETURN_PROCESSING_REASON, mutable: false) }
+    let!(:default_refund_reason) { Solidus::RefundReason.find_or_create_by!(name: Solidus::RefundReason::RETURN_PROCESSING_REASON, mutable: false) }
 
     subject { customer_return.fully_reimbursed? }
 

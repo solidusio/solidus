@@ -6,7 +6,7 @@
   <li id="new_product_link">
     <%= button_link_to Spree.t(:new_product), new_object_url, { :remote => true, :icon => 'plus', :id => 'admin_new_product' } %>
   </li>
-<% end if can?(:create, Spree::Product) %>
+<% end if can?(:create, Solidus::Product) %>
 
 <% content_for :table_filter_title do %>
   <%= Spree.t(:search) %>

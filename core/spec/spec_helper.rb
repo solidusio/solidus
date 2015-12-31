@@ -64,7 +64,7 @@ RSpec.configure do |config|
   end
 
   config.include FactoryGirl::Syntax::Methods
-  config.include Spree::TestingSupport::Preferences
+  config.include Solidus::TestingSupport::Preferences
   config.extend WithModel
 
   config.fail_fast = ENV['FAIL_FAST'] || false

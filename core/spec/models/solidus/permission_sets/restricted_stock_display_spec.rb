@@ -1,7 +1,7 @@
 require 'spec_helper'
 
-describe Spree::PermissionSets::RestrictedStockDisplay do
-  let(:ability) { Spree::Ability.new(user) }
+describe Solidus::PermissionSets::RestrictedStockDisplay do
+  let(:ability) { Solidus::Ability.new(user) }
   let(:user) { create :user }
 
   subject { ability }

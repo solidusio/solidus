@@ -1,6 +1,6 @@
 module Spree
   module Api
-    class StockLocationsController < Spree::Api::BaseController
+    class StockLocationsController < Solidus::Api::BaseController
       def index
         authorize! :read, StockLocation
         @stock_locations = StockLocation.accessible_by(current_ability, :read).order('name ASC').ransack(params[:q]).result.page(params[:page]).per(params[:per_page])

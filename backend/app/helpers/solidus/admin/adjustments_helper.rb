@@ -8,11 +8,11 @@ module Spree
 
       def display_adjustable(adjustable)
         case adjustable
-          when Spree::LineItem
+          when Solidus::LineItem
             display_line_item(adjustable)
-          when Spree::Shipment
+          when Solidus::Shipment
             display_shipment(adjustable)
-          when Spree::Order
+          when Solidus::Order
             display_order(adjustable)
         end
 

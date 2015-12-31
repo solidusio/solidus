@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Spree::OrderPromotion do
+describe Solidus::OrderPromotion do
   subject do
     order_promotion
   end

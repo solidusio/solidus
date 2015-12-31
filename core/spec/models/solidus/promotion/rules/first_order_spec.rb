@@ -1,9 +1,9 @@
 require 'spec_helper'
 
-describe Spree::Promotion::Rules::FirstOrder, :type => :model do
-  let(:rule) { Spree::Promotion::Rules::FirstOrder.new }
-  let(:order) { mock_model(Spree::Order, :user => nil, :email => nil) }
-  let(:user) { mock_model(Spree::LegacyUser) }
+describe Solidus::Promotion::Rules::FirstOrder, :type => :model do
+  let(:rule) { Solidus::Promotion::Rules::FirstOrder.new }
+  let(:order) { mock_model(Solidus::Order, :user => nil, :email => nil) }
+  let(:user) { mock_model(Solidus::LegacyUser) }
 
   context "without a user or email" do
     it { expect(rule).not_to be_eligible(order) }
@@ -42,7 +42,7 @@ describe Spree::Promotion::Rules::FirstOrder, :type => :model do
         end
 
         context "with another order" do
-          before { allow(user).to receive_message_chain(:orders, :complete => [mock_model(Spree::Order)]) }
+          before { allow(user).to receive_message_chain(:orders, :complete => [mock_model(Solidus::Order)]) }
           it { expect(rule).not_to be_eligible(order) }
           it "sets an error message" do
             rule.eligible?(order)
@@ -62,7 +62,7 @@ describe Spree::Promotion::Rules::FirstOrder, :type => :model do
       end
 
       context "with another order" do
-        before { allow(rule).to receive_messages(:orders_by_email => [mock_model(Spree::Order)]) }
+        before { allow(rule).to receive_messages(:orders_by_email => [mock_model(Solidus::Order)]) }
         it { expect(rule).not_to be_eligible(order) }
         it "sets an error message" do
           rule.eligible?(order)

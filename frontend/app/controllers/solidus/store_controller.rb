@@ -1,11 +1,11 @@
 module Spree
-  class StoreController < Spree::BaseController
-    include Spree::Core::ControllerHelpers::Order
+  class StoreController < Solidus::BaseController
+    include Solidus::Core::ControllerHelpers::Order
 
     skip_before_action :set_current_order, only: :cart_link
 
     def unauthorized
-      render 'spree/shared/unauthorized', :layout => Spree::Config[:layout], :status => 401
+      render 'spree/shared/unauthorized', :layout => Solidus::Config[:layout], :status => 401
     end
 
     def cart_link
@@ -34,12 +34,12 @@ module Spree
       end
 
       def config_locale
-        Spree::Frontend::Config[:locale]
+        Solidus::Frontend::Config[:locale]
       end
 
       def lock_order
         OrderMutex.with_lock!(@order) { yield }
-      rescue Spree::OrderMutex::LockFailed => e
+      rescue Solidus::OrderMutex::LockFailed => e
         flash[:error] = Spree.t(:order_mutex_error)
         redirect_to spree.cart_path
       end

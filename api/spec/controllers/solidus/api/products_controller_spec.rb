@@ -2,7 +2,7 @@ require 'spec_helper'
 require 'shared_examples/protect_product_actions'
 
 module Spree
-  describe Spree::Api::ProductsController, :type => :controller do
+  describe Solidus::Api::ProductsController, :type => :controller do
     render_views
 
     let!(:product) { create(:product) }
@@ -315,11 +315,11 @@ module Spree
         # Regression test for #2140
         context "with authentication_required set to false" do
           before do
-            Spree::Api::Config.requires_authentication = false
+            Solidus::Api::Config.requires_authentication = false
           end
 
           after do
-            Spree::Api::Config.requires_authentication = true
+            Solidus::Api::Config.requires_authentication = true
           end
 
           it "can still create a product" do

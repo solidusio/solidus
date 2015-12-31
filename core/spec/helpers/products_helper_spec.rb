@@ -74,7 +74,7 @@ module Spree
 
     context "#variant_price_full" do
       before do
-        Spree::Config[:show_variant_full_price] = true
+        Solidus::Config[:show_variant_full_price] = true
         @variant1 = create(:variant, :product => product)
         @variant2 = create(:variant, :product => product)
       end
@@ -153,7 +153,7 @@ THIS IS THE BEST PRODUCT EVER!
 
         product.description = initialDescription
 
-        Spree::Config[:show_raw_product_description] = true
+        Solidus::Config[:show_raw_product_description] = true
         description = product_description(product)
         expect(description).to eq(initialDescription)
       end

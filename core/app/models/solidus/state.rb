@@ -1,6 +1,6 @@
 module Spree
-  class State < Spree::Base
-    belongs_to :country, class_name: 'Spree::Country'
+  class State < Solidus::Base
+    belongs_to :country, class_name: 'Solidus::Country'
     has_many :addresses, dependent: :nullify
 
     validates :country, :name, presence: true

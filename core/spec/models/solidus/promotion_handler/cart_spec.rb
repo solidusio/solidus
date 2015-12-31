@@ -109,7 +109,7 @@ module Spree
         let(:adjustable) { order }
 
         before do
-          Spree::OrderPromotion.create!(promotion: promotion, order: order, promotion_code: promotion_code)
+          Solidus::OrderPromotion.create!(promotion: promotion, order: order, promotion_code: promotion_code)
           order.update!
         end
 
@@ -121,7 +121,7 @@ module Spree
         end
 
         it "checks if the promotion code is eligible" do
-          expect_any_instance_of(Spree::Promotion).to receive(:eligible?).at_least(2).times.with(anything, promotion_code: promotion_code).and_return(false)
+          expect_any_instance_of(Solidus::Promotion).to receive(:eligible?).at_least(2).times.with(anything, promotion_code: promotion_code).and_return(false)
           subject.activate
         end
       end

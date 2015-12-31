@@ -1,6 +1,6 @@
 module Spree
-  class VariantPropertyRuleValue < Spree::Base
-    include Spree::OrderedPropertyValueList
+  class VariantPropertyRuleValue < Solidus::Base
+    include Solidus::OrderedPropertyValueList
 
     belongs_to :property
     belongs_to :variant_property_rule, touch: true

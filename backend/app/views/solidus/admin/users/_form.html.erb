@@ -11,11 +11,11 @@
       <%= error_message_on :user, :email %>
     <% end %>
 
-    <% if can? :display, Spree::Role %>
+    <% if can? :display, Solidus::Role %>
       <div data-hook="admin_user_form_roles" class="field">
         <%= label_tag nil, Spree.t(:roles) %>
         <ul>
-          <% if can? :manage, Spree::Role %>
+          <% if can? :manage, Solidus::Role %>
             <% @roles.each do |role| %>
               <li>
                 <%= check_box_tag 'user[spree_role_ids][]', role.id, @user_roles.include?(role), id: "user_spree_role_#{role.name}" %>
@@ -31,11 +31,11 @@
       </div>
     <% end %>
 
-    <% if can?(:display, Spree::StockLocation) %>
+    <% if can?(:display, Solidus::StockLocation) %>
       <div data-hook="admin_user_form_stock_locations" class="field">
         <%= label_tag nil, Spree.t(:stock_locations) %>
         <ul>
-          <% if can?(:manage, Spree::UserStockLocation) %>
+          <% if can?(:manage, Solidus::UserStockLocation) %>
             <% @stock_locations.each do |stock_location| %>
               <li>
                 <%= check_box_tag 'user[stock_location_ids][]', stock_location.id, @user.stock_locations.include?(stock_location), :id => "user_spree_stock_locations_#{stock_location.name}" %>

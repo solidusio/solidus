@@ -19,11 +19,11 @@ module Spree
           let(:address) { build(:address) }
 
           it "creates a new Address" do
-            expect { subject }.to change { Spree::Address.count }.by(1)
+            expect { subject }.to change { Solidus::Address.count }.by(1)
           end
 
           it "creates a UserAddress" do
-            expect { subject }.to change { Spree::UserAddress.count }.by(1)
+            expect { subject }.to change { Solidus::UserAddress.count }.by(1)
           end
 
           it "sets the UserAddress default flag to true" do
@@ -127,17 +127,17 @@ module Spree
           let(:address) { build(:address) }
 
           it "creates a new Address" do
-            expect { subject }.to change { Spree::Address.count }.by(1)
+            expect { subject }.to change { Solidus::Address.count }.by(1)
           end
 
           it "creates a UserAddress" do
-            expect { subject }.to change { Spree::UserAddress.count }.by(1)
+            expect { subject }.to change { Solidus::UserAddress.count }.by(1)
           end
 
           context "it is not the first address" do
             before { user.user_addresses.create!(address: create(:address)) }
             it "sets the UserAddress default flag to false" do
-              expect { subject }.to change { Spree::UserAddress.count }.by(1)
+              expect { subject }.to change { Solidus::UserAddress.count }.by(1)
               expect(user_address.default).to eq false
             end
           end
@@ -247,7 +247,7 @@ module Spree
     context "#persist_order_address" do
       context "when automatic_default_address preference is at a default of true" do
         before do
-          Spree::Config.automatic_default_address = true
+          Solidus::Config.automatic_default_address = true
           expect(user).to receive(:save_in_address_book).with(kind_of(Hash), true)
           expect(user).to receive(:save_in_address_book).with(kind_of(Hash), false)
         end
@@ -260,7 +260,7 @@ module Spree
 
       context "when automatic_default_address preference is false" do
         before do
-          Spree::Config.automatic_default_address = false
+          Solidus::Config.automatic_default_address = false
           expect(user).to receive(:save_in_address_book).with(kind_of(Hash),false).twice
             #and not the optional 2nd argument
         end
@@ -274,7 +274,7 @@ module Spree
       context "when address is nil" do
         context "when automatic_default_address preference is at a default of true" do
           before do
-            Spree::Config.automatic_default_address = true
+            Solidus::Config.automatic_default_address = true
             expect(user).to receive(:save_in_address_book).with(kind_of(Hash), true).once
           end
 
@@ -296,7 +296,7 @@ module Spree
 
       context "when automatic_default_address preference is false" do
         before do
-          Spree::Config.automatic_default_address = false
+          Solidus::Config.automatic_default_address = false
           expect(user).to receive(:save_in_address_book).with(kind_of(Hash), false).once
         end
 

@@ -14,11 +14,11 @@ module Spree
     end
 
     def display_amount
-      Spree::Money.new @reimbursement_objects.map(&:total).sum
+      Solidus::Money.new @reimbursement_objects.map(&:total).sum
     end
 
     def perform!
-      shipments = Spree::Stock::Coordinator.new(@order, @reimbursement_objects.map(&:build_exchange_inventory_unit)).shipments
+      shipments = Solidus::Stock::Coordinator.new(@order, @reimbursement_objects.map(&:build_exchange_inventory_unit)).shipments
       if shipments.flat_map(&:inventory_units).size != @reimbursement_objects.size
         raise UnableToCreateShipments.new("Could not generate shipments for all items. Out of stock?")
       end
@@ -39,7 +39,7 @@ module Spree
     end
 
     def self.model_name
-      Spree::Exchange
+      Solidus::Exchange
     end
 
     def model_name

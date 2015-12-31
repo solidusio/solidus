@@ -2,30 +2,30 @@ module Spree
   module UserMethods
     extend ActiveSupport::Concern
 
-    include Spree::UserApiAuthentication
-    include Spree::UserReporting
-    include Spree::UserAddressBook
-    include Spree::UserPaymentSource
+    include Solidus::UserApiAuthentication
+    include Solidus::UserReporting
+    include Solidus::UserAddressBook
+    include Solidus::UserPaymentSource
 
     included do
-      extend Spree::DisplayMoney
+      extend Solidus::DisplayMoney
 
-      has_many :role_users, foreign_key: "user_id", class_name: "Spree::RoleUser", dependent: :destroy
+      has_many :role_users, foreign_key: "user_id", class_name: "Solidus::RoleUser", dependent: :destroy
       has_many :spree_roles, through: :role_users, source: :role
 
-      has_many :user_stock_locations, foreign_key: "user_id", class_name: "Spree::UserStockLocation"
+      has_many :user_stock_locations, foreign_key: "user_id", class_name: "Solidus::UserStockLocation"
       has_many :stock_locations, through: :user_stock_locations
 
-      has_many :spree_orders, foreign_key: "user_id", class_name: "Spree::Order"
-      has_many :orders, foreign_key: "user_id", class_name: "Spree::Order"
+      has_many :spree_orders, foreign_key: "user_id", class_name: "Solidus::Order"
+      has_many :orders, foreign_key: "user_id", class_name: "Solidus::Order"
 
-      has_many :store_credits, -> { includes(:credit_type) }, foreign_key: "user_id", class_name: "Spree::StoreCredit"
+      has_many :store_credits, -> { includes(:credit_type) }, foreign_key: "user_id", class_name: "Solidus::StoreCredit"
       has_many :store_credit_events, through: :store_credits
       money_methods :total_available_store_credit
 
       after_create :auto_generate_spree_api_key
 
-      include Spree::RansackableAttributes unless included_modules.include?(Spree::RansackableAttributes)
+      include Solidus::RansackableAttributes unless included_modules.include?(Solidus::RansackableAttributes)
 
       self.whitelisted_ransackable_associations = %w[addresses]
       self.whitelisted_ransackable_attributes = %w[id email]
@@ -39,19 +39,19 @@ module Spree
     def auto_generate_spree_api_key
       return if !respond_to?(:spree_api_key) || spree_api_key.present?
 
-      if Spree::Config.generate_api_key_for_all_roles || (spree_roles.map(&:name) & Spree::Config.roles_for_auto_api_key).any?
+      if Solidus::Config.generate_api_key_for_all_roles || (spree_roles.map(&:name) & Solidus::Config.roles_for_auto_api_key).any?
         generate_spree_api_key!
       end
     end
 
-    # @return [Spree::Order] the most-recently-created incomplete order
+    # @return [Solidus::Order] the most-recently-created incomplete order
     # since the customer's last complete order.
     def last_incomplete_spree_order(store: nil, only_frontend_viewable: true)
       self_orders = self.orders
       self_orders = self_orders.where(frontend_viewable: true) if only_frontend_viewable
       self_orders = self_orders.where(store: store) if store
-      self_orders = self_orders.where('updated_at > ?', Spree::Config.completable_order_updated_cutoff_days.days.ago) if Spree::Config.completable_order_updated_cutoff_days
-      self_orders = self_orders.where('created_at > ?', Spree::Config.completable_order_created_cutoff_days.days.ago) if Spree::Config.completable_order_created_cutoff_days
+      self_orders = self_orders.where('updated_at > ?', Solidus::Config.completable_order_updated_cutoff_days.days.ago) if Solidus::Config.completable_order_updated_cutoff_days
+      self_orders = self_orders.where('created_at > ?', Solidus::Config.completable_order_created_cutoff_days.days.ago) if Solidus::Config.completable_order_created_cutoff_days
       last_order = self_orders.order(:created_at).last
       last_order unless last_order.try!(:completed?)
     end

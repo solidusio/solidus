@@ -1,5 +1,5 @@
 class CreateShippingMethodZone < ActiveRecord::Migration
-  class ShippingMethodZone < Spree::Base
+  class ShippingMethodZone < Solidus::Base
     self.table_name = 'shipping_methods_zones'
   end
   def up
@@ -7,7 +7,7 @@ class CreateShippingMethodZone < ActiveRecord::Migration
       t.integer :shipping_method_id
       t.integer :zone_id
     end
-    Spree::ShippingMethod.all.each do |sm|
+    Solidus::ShippingMethod.all.each do |sm|
       ShippingMethodZone.create!(zone_id: sm.zone_id, shipping_method_id: sm.id)
     end
 

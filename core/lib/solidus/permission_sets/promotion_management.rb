@@ -2,10 +2,10 @@ module Spree
   module PermissionSets
     class PromotionManagement < PermissionSets::Base
       def activate!
-        can :manage, Spree::Promotion
-        can :manage, Spree::PromotionRule
-        can :manage, Spree::PromotionAction
-        can :manage, Spree::PromotionCategory
+        can :manage, Solidus::Promotion
+        can :manage, Solidus::PromotionRule
+        can :manage, Solidus::PromotionAction
+        can :manage, Solidus::PromotionCategory
       end
     end
   end

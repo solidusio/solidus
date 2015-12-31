@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Spree::Carton do
+describe Solidus::Carton do
   let(:carton) { create(:carton) }
 
   describe "#create" do

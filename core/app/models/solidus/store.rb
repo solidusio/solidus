@@ -1,5 +1,5 @@
 module Spree
-  class Store < Spree::Base
+  class Store < Solidus::Base
     has_many :store_payment_methods, inverse_of: :store
     has_many :payment_methods, through: :store_payment_methods
 

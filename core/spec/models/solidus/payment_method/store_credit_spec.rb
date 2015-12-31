@@ -1,13 +1,13 @@
 require 'spec_helper'
 
-describe Spree::PaymentMethod::StoreCredit do
+describe Solidus::PaymentMethod::StoreCredit do
   let(:order)           { create(:order) }
   let(:payment)         { create(:payment, order: order) }
   let(:gateway_options) { payment.gateway_options }
 
   context "#authorize" do
     subject do
-      Spree::PaymentMethod::StoreCredit.new.authorize(auth_amount, store_credit, gateway_options)
+      Solidus::PaymentMethod::StoreCredit.new.authorize(auth_amount, store_credit, gateway_options)
     end
 
     let(:auth_amount) { store_credit.amount_remaining * 100 }
@@ -53,7 +53,7 @@ describe Spree::PaymentMethod::StoreCredit do
         let(:originator) { double('originator') }
 
         it 'passes the originator' do
-          expect_any_instance_of(Spree::StoreCredit).to receive(:authorize)
+          expect_any_instance_of(Solidus::StoreCredit).to receive(:authorize)
             .with(anything, anything, action_originator: originator)
           subject
         end
@@ -63,7 +63,7 @@ describe Spree::PaymentMethod::StoreCredit do
 
   context "#capture" do
     subject do
-      Spree::PaymentMethod::StoreCredit.new.capture(capture_amount, auth_code, gateway_options)
+      Solidus::PaymentMethod::StoreCredit.new.capture(capture_amount, auth_code, gateway_options)
     end
 
     let(:capture_amount) { 10_00 }
@@ -88,7 +88,7 @@ describe Spree::PaymentMethod::StoreCredit do
       let(:authorized_amount) { (capture_amount-1)/100 }
 
       before do
-        allow_any_instance_of(Spree::StoreCredit).to receive_messages(authorize: true)
+        allow_any_instance_of(Solidus::StoreCredit).to receive_messages(authorize: true)
       end
 
       it "declines a store credit" do
@@ -108,7 +108,7 @@ describe Spree::PaymentMethod::StoreCredit do
 
     context 'with a valid request' do
       it "captures the store credit" do
-        expect(subject.message).to include Spree.t('store_credit.successful_action', action: Spree::StoreCredit::CAPTURE_ACTION)
+        expect(subject.message).to include Spree.t('store_credit.successful_action', action: Solidus::StoreCredit::CAPTURE_ACTION)
         expect(subject.success?).to be true
       end
 
@@ -116,7 +116,7 @@ describe Spree::PaymentMethod::StoreCredit do
         let(:originator) { double('originator') }
 
         it 'passes the originator' do
-          expect_any_instance_of(Spree::StoreCredit).to receive(:capture)
+          expect_any_instance_of(Solidus::StoreCredit).to receive(:capture)
             .with(anything, anything, anything, action_originator: originator)
           subject
         end
@@ -126,7 +126,7 @@ describe Spree::PaymentMethod::StoreCredit do
 
   context "#void" do
     subject do
-      Spree::PaymentMethod::StoreCredit.new.void(auth_code, gateway_options)
+      Solidus::PaymentMethod::StoreCredit.new.void(auth_code, gateway_options)
     end
 
     let(:auth_code) { auth_event.authorization_code }
@@ -144,7 +144,7 @@ describe Spree::PaymentMethod::StoreCredit do
     end
 
     context 'when the store credit is not voided successfully' do
-      before { allow_any_instance_of(Spree::StoreCredit).to receive_messages(void: false) }
+      before { allow_any_instance_of(Solidus::StoreCredit).to receive_messages(void: false) }
 
       it "returns an error response" do
         expect(subject.success?).to be false
@@ -153,14 +153,14 @@ describe Spree::PaymentMethod::StoreCredit do
 
     it "voids a valid store credit void request" do
       expect(subject.success?).to be true
-      expect(subject.message).to include Spree.t('store_credit.successful_action', action: Spree::StoreCredit::VOID_ACTION)
+      expect(subject.message).to include Spree.t('store_credit.successful_action', action: Solidus::StoreCredit::VOID_ACTION)
     end
 
     context 'with an originator' do
       let(:originator) { double('originator') }
 
       it 'passes the originator' do
-        expect_any_instance_of(Spree::StoreCredit).to receive(:void)
+        expect_any_instance_of(Solidus::StoreCredit).to receive(:void)
           .with(anything, action_originator: originator)
         subject
       end
@@ -172,10 +172,10 @@ describe Spree::PaymentMethod::StoreCredit do
       amount = 100.0
       store_credit = create(:store_credit)
       auth_code = store_credit.generate_authorization_code
-      store_credit.store_credit_events.create!(action: Spree::StoreCredit::ELIGIBLE_ACTION,
+      store_credit.store_credit_events.create!(action: Solidus::StoreCredit::ELIGIBLE_ACTION,
                                                amount: amount,
                                                authorization_code: auth_code)
-      store_credit.store_credit_events.create!(action: Spree::StoreCredit::CAPTURE_ACTION,
+      store_credit.store_credit_events.create!(action: Solidus::StoreCredit::CAPTURE_ACTION,
                                                amount: amount,
                                                authorization_code: auth_code)
 
@@ -188,19 +188,19 @@ describe Spree::PaymentMethod::StoreCredit do
       amount = 100.0
       store_credit = create(:store_credit)
       auth_code = store_credit.generate_authorization_code
-      store_credit.store_credit_events.create!(action: Spree::StoreCredit::ELIGIBLE_ACTION,
+      store_credit.store_credit_events.create!(action: Solidus::StoreCredit::ELIGIBLE_ACTION,
                                                amount: amount,
                                                authorization_code: auth_code)
 
       resp = subject.purchase(amount * 100.0, store_credit, gateway_options)
       expect(resp.success?).to be true
-      expect(resp.message).to include Spree.t('store_credit.successful_action', action: Spree::StoreCredit::CAPTURE_ACTION)
+      expect(resp.message).to include Spree.t('store_credit.successful_action', action: Solidus::StoreCredit::CAPTURE_ACTION)
     end
   end
 
   context "#credit" do
     subject do
-      Spree::PaymentMethod::StoreCredit.new.credit(credit_amount, auth_code, gateway_options)
+      Solidus::PaymentMethod::StoreCredit.new.credit(credit_amount, auth_code, gateway_options)
     end
 
     let(:credit_amount) { 100.0 }
@@ -219,7 +219,7 @@ describe Spree::PaymentMethod::StoreCredit do
     end
 
     context "when the store credit isn't credited successfully" do
-      before { allow_any_instance_of(Spree::StoreCredit).to receive_messages(credit: false) }
+      before { allow_any_instance_of(Solidus::StoreCredit).to receive_messages(credit: false) }
 
       it "returns an error response" do
         expect(subject.success?).to be false
@@ -227,11 +227,11 @@ describe Spree::PaymentMethod::StoreCredit do
     end
 
     context 'with a valid credit request' do
-      before { allow_any_instance_of(Spree::StoreCredit).to receive_messages(credit: true) }
+      before { allow_any_instance_of(Solidus::StoreCredit).to receive_messages(credit: true) }
 
       it "credits a valid store credit credit request" do
         expect(subject.success?).to be true
-        expect(subject.message).to include Spree.t('store_credit.successful_action', action: Spree::StoreCredit::CREDIT_ACTION)
+        expect(subject.message).to include Spree.t('store_credit.successful_action', action: Solidus::StoreCredit::CREDIT_ACTION)
       end
     end
 
@@ -239,7 +239,7 @@ describe Spree::PaymentMethod::StoreCredit do
       let(:originator) { double('originator') }
 
       it 'passes the originator' do
-        expect_any_instance_of(Spree::StoreCredit).to receive(:credit)
+        expect_any_instance_of(Solidus::StoreCredit).to receive(:credit)
           .with(anything, anything, anything, action_originator: originator)
         subject
       end
@@ -248,7 +248,7 @@ describe Spree::PaymentMethod::StoreCredit do
 
   context "#cancel" do
     subject do
-      Spree::PaymentMethod::StoreCredit.new.cancel(auth_code)
+      Solidus::PaymentMethod::StoreCredit.new.cancel(auth_code)
     end
 
     let(:store_credit) { create(:store_credit, amount_used: captured_amount) }
@@ -262,7 +262,7 @@ describe Spree::PaymentMethod::StoreCredit do
                                         store_credit: store_credit) }
 
       it "creates a store credit for the same amount that was captured" do
-        expect_any_instance_of(Spree::StoreCredit).to receive(:credit).with(captured_amount, auth_code, store_credit.currency)
+        expect_any_instance_of(Solidus::StoreCredit).to receive(:credit).with(captured_amount, auth_code, store_credit.currency)
         subject
       end
     end
@@ -275,14 +275,14 @@ describe Spree::PaymentMethod::StoreCredit do
                                           store_credit: store_credit) }
 
         it "creates a store credit for the same amount that was captured" do
-          expect_any_instance_of(Spree::StoreCredit).to receive(:void).with(auth_code)
+          expect_any_instance_of(Solidus::StoreCredit).to receive(:void).with(auth_code)
           subject
         end
       end
 
       context "store credit event not found" do
         subject do
-          Spree::PaymentMethod::StoreCredit.new.cancel('INVALID')
+          Solidus::PaymentMethod::StoreCredit.new.cancel('INVALID')
         end
 
         it "returns false" do

@@ -1,5 +1,5 @@
 module Spree
-  class Product < Spree::Base
+  class Product < Solidus::Base
     cattr_accessor :search_scopes do
       []
     end
@@ -24,11 +24,11 @@ module Spree
     scope :descend_by_name, -> { order(name: :desc) }
 
     add_search_scope :ascend_by_master_price do
-      joins(:master => :default_price).order(Spree::Price.arel_table[:amount].asc)
+      joins(:master => :default_price).order(Solidus::Price.arel_table[:amount].asc)
     end
 
     add_search_scope :descend_by_master_price do
-      joins(:master => :default_price).order(Spree::Price.arel_table[:amount].desc)
+      joins(:master => :default_price).order(Solidus::Price.arel_table[:amount].desc)
     end
 
     add_search_scope :price_between do |low, high|
@@ -46,12 +46,12 @@ module Spree
     # This scope selects products in taxon AND all its descendants
     # If you need products only within one taxon use
     #
-    #   Spree::Product.joins(:taxons).where(Taxon.table_name => { :id => taxon.id })
+    #   Solidus::Product.joins(:taxons).where(Taxon.table_name => { :id => taxon.id })
     #
     # If you're using count on the result of this scope, you must use the
     # `:distinct` option as well:
     #
-    #   Spree::Product.in_taxon(taxon).count(:distinct => true)
+    #   Solidus::Product.in_taxon(taxon).count(:distinct => true)
     #
     # This is so that the count query is distinct'd:
     #
@@ -63,13 +63,13 @@ module Spree
     add_search_scope :in_taxon do |taxon|
       includes(:classifications).
       where("spree_products_taxons.taxon_id" => taxon.self_and_descendants.pluck(:id)).
-      order(Spree::Classification.arel_table[:position].asc)
+      order(Solidus::Classification.arel_table[:position].asc)
     end
 
     # This scope selects products in all taxons AND all its descendants
     # If you need products only within one taxon use
     #
-    #   Spree::Product.taxons_id_eq([x,y])
+    #   Solidus::Product.taxons_id_eq([x,y])
     add_search_scope :in_taxons do |*taxons|
       taxons = get_taxons(taxons)
       taxons.first ? prepare_taxon_conditions(taxons) : where(nil)

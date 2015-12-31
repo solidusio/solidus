@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Spree::OrderInventory, :type => :model do
+describe Solidus::OrderInventory, :type => :model do
   let(:order) { create :completed_order_with_totals }
   let(:line_item) { order.line_items.first }
 
@@ -44,7 +44,7 @@ describe Spree::OrderInventory, :type => :model do
     context "store doesnt track inventory" do
       let(:variant) { create(:variant) }
 
-      before { Spree::Config.track_inventory_levels = false }
+      before { Solidus::Config.track_inventory_levels = false }
 
       it "creates only on hand inventory units" do
         variant.stock_items.destroy_all
@@ -164,9 +164,9 @@ describe Spree::OrderInventory, :type => :model do
 
       it 'should destroy backordered units first' do
         allow(shipment).to receive_messages(inventory_units_for_item: [
-          mock_model(Spree::InventoryUnit, :variant_id => variant.id, :state => 'backordered'),
-          mock_model(Spree::InventoryUnit, :variant_id => variant.id, :state => 'on_hand'),
-          mock_model(Spree::InventoryUnit, :variant_id => variant.id, :state => 'backordered')
+          mock_model(Solidus::InventoryUnit, :variant_id => variant.id, :state => 'backordered'),
+          mock_model(Solidus::InventoryUnit, :variant_id => variant.id, :state => 'on_hand'),
+          mock_model(Solidus::InventoryUnit, :variant_id => variant.id, :state => 'backordered')
         ])
 
         expect(shipment.inventory_units_for_item[0]).to receive(:destroy)
@@ -178,8 +178,8 @@ describe Spree::OrderInventory, :type => :model do
 
       it 'should destroy unshipped units first' do
         allow(shipment).to receive_messages(inventory_units_for_item: [
-          mock_model(Spree::InventoryUnit, :variant_id => variant.id, :state => 'shipped'),
-          mock_model(Spree::InventoryUnit, :variant_id => variant.id, :state => 'on_hand')
+          mock_model(Solidus::InventoryUnit, :variant_id => variant.id, :state => 'shipped'),
+          mock_model(Solidus::InventoryUnit, :variant_id => variant.id, :state => 'on_hand')
         ])
 
         expect(shipment.inventory_units_for_item[0]).not_to receive(:destroy)
@@ -190,8 +190,8 @@ describe Spree::OrderInventory, :type => :model do
 
       it 'only attempts to destroy as many units as are eligible, and return amount destroyed' do
         allow(shipment).to receive_messages(inventory_units_for_item: [
-          mock_model(Spree::InventoryUnit, :variant_id => variant.id, :state => 'shipped'),
-          mock_model(Spree::InventoryUnit, :variant_id => variant.id, :state => 'on_hand')
+          mock_model(Solidus::InventoryUnit, :variant_id => variant.id, :state => 'shipped'),
+          mock_model(Solidus::InventoryUnit, :variant_id => variant.id, :state => 'on_hand')
         ])
 
         expect(shipment.inventory_units_for_item[0]).not_to receive(:destroy)

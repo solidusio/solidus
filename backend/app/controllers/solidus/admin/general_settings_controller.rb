@@ -1,7 +1,7 @@
 module Spree
   module Admin
-    class GeneralSettingsController < Spree::Admin::BaseController
-      include Spree::Backend::Callbacks
+    class GeneralSettingsController < Solidus::Admin::BaseController
+      include Solidus::Backend::Callbacks
 
       before_action :set_store
 
@@ -10,8 +10,8 @@ module Spree
 
       def update
         params.each do |name, value|
-          next unless Spree::Config.has_preference? name
-          Spree::Config[name] = value
+          next unless Solidus::Config.has_preference? name
+          Solidus::Config[name] = value
         end
 
         current_store.update_attributes store_params
@@ -32,7 +32,7 @@ module Spree
       end
 
       def permitted_params
-        Spree::PermittedAttributes.store_attributes
+        Solidus::PermittedAttributes.store_attributes
       end
 
       def set_store

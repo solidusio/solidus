@@ -1,5 +1,5 @@
 # A class responsible for building PromotionCodes
-class ::Spree::PromotionCode::CodeBuilder
+class ::Solidus::PromotionCode::CodeBuilder
   attr_reader :promotion, :num_codes, :base_code
 
   class_attribute :random_code_length
@@ -7,7 +7,7 @@ class ::Spree::PromotionCode::CodeBuilder
 
   # Requres a +promotion+, +base_code+ and +num_codes+
   #
-  # +promotion+ Must be a Spree::Promotion.
+  # +promotion+ Must be a Solidus::Promotion.
   # +base_code+ Must be a String.
   # +num_codes+ Must be a positive integer greater than zero.
   def initialize promotion, base_code, num_codes
@@ -16,7 +16,7 @@ class ::Spree::PromotionCode::CodeBuilder
     @promotion = promotion
   end
 
-  # Builds and returns an array of Spree::PromotionCode's
+  # Builds and returns an array of Solidus::PromotionCode's
   def build_promotion_codes
     codes.map do |code|
       promotion.codes.build(value: code)
@@ -57,6 +57,6 @@ class ::Spree::PromotionCode::CodeBuilder
   end
 
   def get_unique_codes(code_set)
-    code_set - Spree::PromotionCode.where(value: code_set.to_a).pluck(:value)
+    code_set - Solidus::PromotionCode.where(value: code_set.to_a).pluck(:value)
   end
 end

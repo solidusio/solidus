@@ -54,7 +54,7 @@ module Spree
           end
 
           it "raises an error" do
-            expect { packer.default_package }.to raise_error Spree::Order::InsufficientStock
+            expect { packer.default_package }.to raise_error Solidus::Order::InsufficientStock
           end
         end
 

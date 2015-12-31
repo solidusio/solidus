@@ -2,7 +2,7 @@ require 'spec_helper'
 
 module Spree
   describe Exchange, :type => :model do
-    let(:order) { Spree::Order.new }
+    let(:order) { Solidus::Order.new }
 
     let(:return_item_1) { build(:exchange_return_item) }
     let(:return_item_2) { build(:exchange_return_item) }
@@ -25,7 +25,7 @@ module Spree
 
     describe "#display_amount" do
       it "is the total amount of all return items" do
-        expect(exchange.display_amount).to eq Spree::Money.new(0.0)
+        expect(exchange.display_amount).to eq Solidus::Money.new(0.0)
       end
     end
 
@@ -58,7 +58,7 @@ module Spree
         it 'raises an UnableToCreateShipments error' do
           expect {
             subject
-          }.to raise_error(Spree::Exchange::UnableToCreateShipments)
+          }.to raise_error(Solidus::Exchange::UnableToCreateShipments)
         end
       end
     end
@@ -72,7 +72,7 @@ module Spree
     end
 
     describe ".model_name" do # for dom_id
-      it { expect(Exchange.model_name).to eq Spree::Exchange }
+      it { expect(Exchange.model_name).to eq Solidus::Exchange }
     end
 
   end

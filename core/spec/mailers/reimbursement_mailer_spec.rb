@@ -1,16 +1,16 @@
 require 'spec_helper'
 require 'email_spec'
 
-describe Spree::ReimbursementMailer, :type => :mailer do
+describe Solidus::ReimbursementMailer, :type => :mailer do
   include EmailSpec::Helpers
   include EmailSpec::Matchers
 
   let(:reimbursement) { create(:reimbursement) }
 
   it "accepts a reimbursement id as an alternative to a Reimbursement object" do
-    expect(Spree::Reimbursement).to receive(:find).with(reimbursement.id).and_return(reimbursement)
+    expect(Solidus::Reimbursement).to receive(:find).with(reimbursement.id).and_return(reimbursement)
 
-    Spree::ReimbursementMailer.reimbursement_email(reimbursement.id).body
+    Solidus::ReimbursementMailer.reimbursement_email(reimbursement.id).body
   end
 
   context "emails must be translatable" do
@@ -29,7 +29,7 @@ describe Spree::ReimbursementMailer, :type => :mailer do
         end
 
         specify do
-          reimbursement_email = Spree::ReimbursementMailer.reimbursement_email(reimbursement)
+          reimbursement_email = Solidus::ReimbursementMailer.reimbursement_email(reimbursement)
           expect(reimbursement_email.body).to include("Caro Cliente,")
         end
       end

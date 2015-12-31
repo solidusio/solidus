@@ -20,7 +20,7 @@ module Spree
       config.view_version_extraction_strategy = :http_header
 
       initializer "spree.api.environment", :before => :load_config_initializers do |app|
-        Spree::Api::Config = Spree::ApiConfiguration.new
+        Solidus::Api::Config = Solidus::ApiConfiguration.new
       end
 
       def self.activate

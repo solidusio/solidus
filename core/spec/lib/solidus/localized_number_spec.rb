@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Spree::LocalizedNumber do
+describe Solidus::LocalizedNumber do
 
   context ".parse" do
     before do

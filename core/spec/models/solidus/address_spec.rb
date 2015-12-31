@@ -1,11 +1,11 @@
 require 'spec_helper'
 
-describe Spree::Address, :type => :model do
+describe Solidus::Address, :type => :model do
 
-  subject { Spree::Address }
+  subject { Solidus::Address }
 
   context "aliased attributes" do
-    let(:address) { Spree::Address.new firstname: 'Ryan', lastname: 'Bigg'}
+    let(:address) { Solidus::Address.new firstname: 'Ryan', lastname: 'Bigg'}
 
     it " first_name" do
       expect(address.first_name).to eq("Ryan")
@@ -18,8 +18,8 @@ describe Spree::Address, :type => :model do
 
   context "validation" do
 
-    let(:country) { mock_model(Spree::Country, :states => [state], :states_required => true) }
-    let(:state) { stub_model(Spree::State, :name => 'maryland', :abbr => 'md') }
+    let(:country) { mock_model(Solidus::Country, :states => [state], :states_required => true) }
+    let(:state) { stub_model(Solidus::State, :name => 'maryland', :abbr => 'md') }
     let(:address) { build(:address, :country => country) }
 
     before do
@@ -28,7 +28,7 @@ describe Spree::Address, :type => :model do
 
     context 'address does not require state' do
       before do
-        Spree::Config.address_requires_state = false
+        Solidus::Config.address_requires_state = false
       end
       it "address_requires_state preference is false" do
         address.state = nil
@@ -39,7 +39,7 @@ describe Spree::Address, :type => :model do
 
     context 'address requires state' do
       before do
-        Spree::Config.address_requires_state = true
+        Solidus::Config.address_requires_state = true
       end
 
       it "state_name is not nil and country does not have any states" do
@@ -72,7 +72,7 @@ describe Spree::Address, :type => :model do
 
       it "state is entered but country does not contain that state" do
         address.state = state
-        address.country = stub_model(Spree::Country, :states_required => true)
+        address.country = stub_model(Solidus::Country, :states_required => true)
         address.valid?
         expect(address.errors["state"]).to eq(['is invalid'])
       end
@@ -80,7 +80,7 @@ describe Spree::Address, :type => :model do
       it "both state and state_name are entered but country does not contain the state" do
         address.state = state
         address.state_name = 'maryland'
-        address.country = stub_model(Spree::Country, :states_required => true)
+        address.country = stub_model(Solidus::Country, :states_required => true)
         expect(address).to be_valid
         expect(address.state_id).to be_nil
       end
@@ -167,18 +167,18 @@ describe Spree::Address, :type => :model do
 
       context 'has a default country' do
         before do
-          Spree::Config[:default_country_id] = default_country.id
+          Solidus::Config[:default_country_id] = default_country.id
         end
 
-        it "sets up a new record with Spree::Config[:default_country_id]" do
-          expect(Spree::Address.build_default.country).to eq default_country
+        it "sets up a new record with Solidus::Config[:default_country_id]" do
+          expect(Solidus::Address.build_default.country).to eq default_country
         end
       end
 
       # Regression test for #1142
       it "uses the first available country if :default_country_id is set to an invalid value" do
-        Spree::Config[:default_country_id] = "0"
-        expect(Spree::Address.build_default.country).to eq default_country
+        Solidus::Config[:default_country_id] = "0"
+        expect(Solidus::Address.build_default.country).to eq default_country
       end
     end
   end
@@ -206,7 +206,7 @@ describe Spree::Address, :type => :model do
     end
 
     let(:new_address_attributes) { attributes_for(:address) }
-    subject { Spree::Address.immutable_merge(existing_address, new_address_attributes) }
+    subject { Solidus::Address.immutable_merge(existing_address, new_address_attributes) }
 
     context "no existing address supplied" do
       let(:existing_address) { nil }
@@ -218,7 +218,7 @@ describe Spree::Address, :type => :model do
       end
 
       context 'and there is a matching address in the database' do
-        let(:new_address_attributes) { Spree::Address.value_attributes(matching_address.attributes) }
+        let(:new_address_attributes) { Solidus::Address.value_attributes(matching_address.attributes) }
         let!(:matching_address) { create(:address, firstname: 'Jordan') }
 
         it "returns the matching address" do
@@ -247,7 +247,7 @@ describe Spree::Address, :type => :model do
       end
 
       context 'and changed address matches an existing address' do
-        let(:new_address_attributes) { Spree::Address.value_attributes(matching_address.attributes) }
+        let(:new_address_attributes) { Solidus::Address.value_attributes(matching_address.attributes) }
         let!(:matching_address) { create(:address, firstname: 'Jordan') }
 
         it 'returns the matching address' do
@@ -261,7 +261,7 @@ describe Spree::Address, :type => :model do
 
   describe '.value_attributes' do
     subject do
-      Spree::Address.value_attributes(base_attributes, merge_attributes)
+      Solidus::Address.value_attributes(base_attributes, merge_attributes)
     end
 
     context 'with symbols and strings' do
@@ -322,28 +322,28 @@ describe Spree::Address, :type => :model do
     it 'raises an exception if the iso is not found' do
       expect {
         address.country_iso = "NOCOUNTRY"
-      }.to raise_error(::ActiveRecord::RecordNotFound, "Couldn't find Spree::Country")
+      }.to raise_error(::ActiveRecord::RecordNotFound, "Couldn't find Solidus::Country")
     end
   end
 
   context '#full_name' do
     context 'both first and last names are present' do
-      let(:address) { stub_model(Spree::Address, :firstname => 'Michael', :lastname => 'Jackson') }
+      let(:address) { stub_model(Solidus::Address, :firstname => 'Michael', :lastname => 'Jackson') }
       specify { expect(address.full_name).to eq('Michael Jackson') }
     end
 
     context 'first name is blank' do
-      let(:address) { stub_model(Spree::Address, :firstname => nil, :lastname => 'Jackson') }
+      let(:address) { stub_model(Solidus::Address, :firstname => nil, :lastname => 'Jackson') }
       specify { expect(address.full_name).to eq('Jackson') }
     end
 
     context 'last name is blank' do
-      let(:address) { stub_model(Spree::Address, :firstname => 'Michael', :lastname => nil) }
+      let(:address) { stub_model(Solidus::Address, :firstname => 'Michael', :lastname => nil) }
       specify { expect(address.full_name).to eq('Michael') }
     end
 
     context 'both first and last names are blank' do
-      let(:address) { stub_model(Spree::Address, :firstname => nil, :lastname => nil) }
+      let(:address) { stub_model(Solidus::Address, :firstname => nil, :lastname => nil) }
       specify { expect(address.full_name).to eq('') }
     end
 
@@ -351,19 +351,19 @@ describe Spree::Address, :type => :model do
 
   context '#state_text' do
     context 'state is blank' do
-      let(:address) { stub_model(Spree::Address, :state => nil, :state_name => 'virginia') }
+      let(:address) { stub_model(Solidus::Address, :state => nil, :state_name => 'virginia') }
       specify { expect(address.state_text).to eq('virginia') }
     end
 
     context 'both name and abbr is present' do
-      let(:state) { stub_model(Spree::State, :name => 'virginia', :abbr => 'va') }
-      let(:address) { stub_model(Spree::Address, :state => state) }
+      let(:state) { stub_model(Solidus::State, :name => 'virginia', :abbr => 'va') }
+      let(:address) { stub_model(Solidus::Address, :state => state) }
       specify { expect(address.state_text).to eq('va') }
     end
 
     context 'only name is present' do
-      let(:state) { stub_model(Spree::State, :name => 'virginia', :abbr => nil) }
-      let(:address) { stub_model(Spree::Address, :state => state) }
+      let(:state) { stub_model(Solidus::State, :name => 'virginia', :abbr => nil) }
+      let(:address) { stub_model(Solidus::Address, :state => state) }
       specify { expect(address.state_text).to eq('virginia') }
     end
   end

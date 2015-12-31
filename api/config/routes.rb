@@ -1,4 +1,4 @@
-Spree::Core::Engine.add_routes do
+Solidus::Core::Engine.add_routes do
   namespace :admin do
     resources :users do
       member do

@@ -1,6 +1,6 @@
 require "spec_helper"
 
-module Spree::Promotion::Actions
+module Solidus::Promotion::Actions
   RSpec.describe CreateQuantityAdjustments do
     let(:action) { CreateQuantityAdjustments.create!(calculator: calculator, promotion: promotion) }
 

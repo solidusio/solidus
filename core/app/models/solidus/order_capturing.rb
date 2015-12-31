@@ -1,4 +1,4 @@
-class Spree::OrderCapturing
+class Solidus::OrderCapturing
   # Allows for prioritizing payment methods in the order to be captured
   class_attribute :sorted_payment_method_classes
   self.sorted_payment_method_classes = []
@@ -8,17 +8,17 @@ class Spree::OrderCapturing
   self.void_unused_payments = false
 
   class_attribute :failure_handler
-  self.failure_handler = ->(failures) { raise Spree::OrderCapturingFailures.new(failures.to_json) }
+  self.failure_handler = ->(failures) { raise Solidus::OrderCapturingFailures.new(failures.to_json) }
 
   def initialize(order, sorted_payment_method_classes = nil)
     @order = order
-    @sorted_payment_method_classes = sorted_payment_method_classes || Spree::OrderCapturing.sorted_payment_method_classes
+    @sorted_payment_method_classes = sorted_payment_method_classes || Solidus::OrderCapturing.sorted_payment_method_classes
   end
 
   def capture_payments
     return if @order.paid?
 
-    Spree::OrderMutex.with_lock!(@order) do
+    Solidus::OrderMutex.with_lock!(@order) do
       uncaptured_amount = @order.display_total.cents
 
       begin
@@ -28,7 +28,7 @@ class Spree::OrderCapturing
           if amount > 0
             payment.capture!(amount)
             uncaptured_amount -= amount
-          elsif Spree::OrderCapturing.void_unused_payments
+          elsif Solidus::OrderCapturing.void_unused_payments
             payment.void_transaction!
           end
         end
@@ -49,4 +49,4 @@ class Spree::OrderCapturing
   end
 end
 
-class Spree::OrderCapturingFailures < StandardError; end
+class Solidus::OrderCapturingFailures < StandardError; end

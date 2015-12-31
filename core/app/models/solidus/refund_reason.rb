@@ -1,6 +1,6 @@
 module Spree
-  class RefundReason < Spree::Base
-    include Spree::NamedType
+  class RefundReason < Solidus::Base
+    include Solidus::NamedType
 
     RETURN_PROCESSING_REASON = 'Return processing'
 

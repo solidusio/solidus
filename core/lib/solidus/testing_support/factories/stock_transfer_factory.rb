@@ -1,9 +1,9 @@
 FactoryGirl.define do
-  factory :stock_transfer, class: Spree::StockTransfer do
-    source_location { Spree::StockLocation.create!(name: "Source Location", code: "SRC", admin_name: "Source") }
+  factory :stock_transfer, class: Solidus::StockTransfer do
+    source_location { Solidus::StockLocation.create!(name: "Source Location", code: "SRC", admin_name: "Source") }
 
     factory :stock_transfer_with_items do
-      destination_location { Spree::StockLocation.create!(name: "Destination Location", code: "DEST", admin_name: "Destination") }
+      destination_location { Solidus::StockLocation.create!(name: "Destination Location", code: "DEST", admin_name: "Destination") }
 
       after(:create) do |stock_transfer, evaluator|
         variant_1 = create(:variant)

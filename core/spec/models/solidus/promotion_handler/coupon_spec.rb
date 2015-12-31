@@ -217,7 +217,7 @@ module Spree
             end
 
             context "when the coupon fails to activate" do
-              before { allow_any_instance_of(Spree::Promotion).to receive(:activate).and_return false }
+              before { allow_any_instance_of(Solidus::Promotion).to receive(:activate).and_return false }
 
               it "is not successful" do
                 subject.apply
@@ -256,15 +256,15 @@ module Spree
             @country = create(:country)
             @zone = create(:zone, :name => "Country Zone", :default_tax => true, :zone_members => [])
             @zone.zone_members.create(:zoneable => @country)
-            @category = Spree::TaxCategory.create :name => "Taxable Foo"
-            @rate1 = Spree::TaxRate.create(
+            @category = Solidus::TaxCategory.create :name => "Taxable Foo"
+            @rate1 = Solidus::TaxRate.create(
                 :amount => 0.10,
-                :calculator => Spree::Calculator::DefaultTax.create,
+                :calculator => Solidus::Calculator::DefaultTax.create,
                 :tax_category => @category,
                 :zone => @zone
             )
 
-            @order = Spree::Order.create!
+            @order = Solidus::Order.create!
             allow(@order).to receive_messages :coupon_code => "10off"
           end
           context "and the product price is less than promo discount" do

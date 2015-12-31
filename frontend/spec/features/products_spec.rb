@@ -5,7 +5,7 @@ describe "Visiting Products", type: :feature, inaccessible: true do
   include_context "custom products"
 
   let(:store_name) do
-    ((first_store = Spree::Store.first) && first_store.name).to_s
+    ((first_store = Solidus::Store.first) && first_store.name).to_s
   end
 
   before(:each) do
@@ -21,7 +21,7 @@ describe "Visiting Products", type: :feature, inaccessible: true do
   end
 
   describe 'meta tags and title' do
-    let(:jersey) { Spree::Product.find_by_name('Ruby on Rails Baseball Jersey') }
+    let(:jersey) { Solidus::Product.find_by_name('Ruby on Rails Baseball Jersey') }
     let(:metas) { { :meta_description => 'Brand new Ruby on Rails Jersey', :meta_title => 'Ruby on Rails Baseball Jersey Buy High Quality Geek Apparel', :meta_keywords => 'ror, jersey, ruby' } }
 
     it 'should return the correct title when displaying a single product' do
@@ -65,11 +65,11 @@ describe "Visiting Products", type: :feature, inaccessible: true do
 
   context "using Russian Rubles as a currency" do
     before do
-      Spree::Config[:currency] = "RUB"
+      Solidus::Config[:currency] = "RUB"
     end
 
     let!(:product) do
-      product = Spree::Product.find_by_name("Ruby on Rails Ringer T-Shirt")
+      product = Solidus::Product.find_by_name("Ruby on Rails Ringer T-Shirt")
       product.price = 19.99
       product.tap(&:save)
     end
@@ -120,7 +120,7 @@ describe "Visiting Products", type: :feature, inaccessible: true do
   end
 
   context "a product with variants" do
-    let(:product) { Spree::Product.find_by_name("Ruby on Rails Baseball Jersey") }
+    let(:product) { Solidus::Product.find_by_name("Ruby on Rails Baseball Jersey") }
     let(:option_value) { create(:option_value) }
     let!(:variant) { product.variants.create!(:price => 5.59) }
 
@@ -153,7 +153,7 @@ describe "Visiting Products", type: :feature, inaccessible: true do
   end
 
   context "a product with variants, images only for the variants" do
-    let(:product) { Spree::Product.find_by_name("Ruby on Rails Baseball Jersey") }
+    let(:product) { Solidus::Product.find_by_name("Ruby on Rails Baseball Jersey") }
 
     before do
       image = File.open(File.expand_path('../../fixtures/thinking-cat.jpg', __FILE__))
@@ -171,8 +171,8 @@ describe "Visiting Products", type: :feature, inaccessible: true do
 
   it "should be able to hide products without price" do
     expect(page.all('ul.product-listing li').size).to eq(9)
-    Spree::Config.show_products_without_price = false
-    Spree::Config.currency = "CAN"
+    Solidus::Config.show_products_without_price = false
+    Solidus::Config.currency = "CAN"
     visit spree.root_path
     expect(page.all('ul.product-listing li').size).to eq(0)
   end
@@ -197,7 +197,7 @@ describe "Visiting Products", type: :feature, inaccessible: true do
   end
 
   it "should be able to display products priced between 15 and 18 dollars across multiple pages" do
-    Spree::Config.products_per_page = 2
+    Solidus::Config.products_per_page = 2
     within(:css, '#taxonomies') { click_link "Ruby on Rails" }
     check "Price_Range_$15.00_-_$18.00"
     within(:css, '#sidebar_products_search') { click_button "Search" }
@@ -236,15 +236,15 @@ describe "Visiting Products", type: :feature, inaccessible: true do
 
   it "shouldn't be able to put a product without a current price in the cart" do
     product = FactoryGirl.create(:base_product, :description => nil, :name => 'Sample', :price => '19.99')
-    Spree::Config.currency = "CAN"
-    Spree::Config.show_products_without_price = true
+    Solidus::Config.currency = "CAN"
+    Solidus::Config.show_products_without_price = true
     visit spree.product_path(product)
     expect(page).to have_content "This product is not available in the selected currency."
     expect(page).not_to have_content "add-to-cart-button"
   end
 
   it "should return the correct title when displaying a single product" do
-    product = Spree::Product.find_by_name("Ruby on Rails Baseball Jersey")
+    product = Solidus::Product.find_by_name("Ruby on Rails Baseball Jersey")
     click_link product.name
 
     within("div#product-description") do

@@ -10,7 +10,7 @@
   <div data-hook="admin_shipping_method_form_display_field" class="omega six columns">
     <%= f.field_container :display_on do %>
       <%= f.label :display_on, Spree.t(:display) %><br />
-      <%= select(:shipping_method, :display_on, Spree::ShippingMethod::DISPLAY.collect { |display| [Spree.t(display), display == :both ? nil : display.to_s] }, {}, {:class => 'select2 fullwidth'}) %>
+      <%= select(:shipping_method, :display_on, Solidus::ShippingMethod::DISPLAY.collect { |display| [Spree.t(display), display == :both ? nil : display.to_s] }, {}, {:class => 'select2 fullwidth'}) %>
       <%= error_message_on :shipping_method, :display_on %>
     <% end %>
   </div>
@@ -47,7 +47,7 @@
     <fieldset class="categories no-border-bottom">
       <legend align="center"><%= Spree.t(:shipping_categories) %></legend>
       <%= f.field_container :categories do %>
-        <% Spree::ShippingCategory.all.each do |category| %>
+        <% Solidus::ShippingCategory.all.each do |category| %>
           <%= label_tag do %>
             <%= check_box_tag('shipping_method[shipping_categories][]', category.id, @shipping_method.shipping_categories.include?(category)) %>
             <%= category.name %><br>
@@ -63,7 +63,7 @@
       <legend align="center"><%= Spree.t(:zones) %></legend>
       <%= f.field_container :zones do %>
         <% shipping_method_zones = @shipping_method.zones.to_a %>
-        <% Spree::Zone.all.each do |zone| %>
+        <% Solidus::Zone.all.each do |zone| %>
           <%= label_tag do %>
             <%= check_box_tag('shipping_method[zones][]', zone.id, shipping_method_zones.include?(zone)) %>
             <%= zone.name %>

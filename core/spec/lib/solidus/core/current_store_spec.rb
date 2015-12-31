@@ -1,8 +1,8 @@
 require 'spec_helper'
 
-describe Spree::Core::CurrentStore do
+describe Solidus::Core::CurrentStore do
   describe "#store" do
-    subject { Spree::Core::CurrentStore.new(request).store }
+    subject { Solidus::Core::CurrentStore.new(request).store }
 
     context "with a default" do
       let(:request) { double(headers: {}, env: {}) }

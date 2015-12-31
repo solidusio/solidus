@@ -1,8 +1,8 @@
 module Spree
-  class RoleUser < Spree::Base
+  class RoleUser < Solidus::Base
     self.table_name = "spree_roles_users"
-    belongs_to :role, class_name: "Spree::Role"
-    belongs_to :user, class_name: Spree::UserClassHandle.new
+    belongs_to :role, class_name: "Solidus::Role"
+    belongs_to :user, class_name: Solidus::UserClassHandle.new
 
     after_create :auto_generate_spree_api_key
 

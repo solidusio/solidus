@@ -1,7 +1,7 @@
 require 'spec_helper'
 require 'spree/testing_support/bar_ability'
 
-describe Spree::Admin::UsersController, :type => :controller do
+describe Solidus::Admin::UsersController, :type => :controller do
   let(:user) { create(:user) }
   let(:mock_user) { mock_model Spree.user_class }
 
@@ -12,7 +12,7 @@ describe Spree::Admin::UsersController, :type => :controller do
 
   context "#show" do
     before do
-      user.spree_roles << Spree::Role.find_or_create_by(name: 'admin')
+      user.spree_roles << Solidus::Role.find_or_create_by(name: 'admin')
     end
 
     it "redirects to edit" do
@@ -25,35 +25,35 @@ describe Spree::Admin::UsersController, :type => :controller do
     before { use_mock_user }
 
     it 'grant access to users with an admin role' do
-      user.spree_roles << Spree::Role.find_or_create_by(name: 'admin')
+      user.spree_roles << Solidus::Role.find_or_create_by(name: 'admin')
       spree_post :index
       expect(response).to render_template :index
     end
 
     it "allows admins to update a user's API key" do
-      user.spree_roles << Spree::Role.find_or_create_by(name: 'admin')
+      user.spree_roles << Solidus::Role.find_or_create_by(name: 'admin')
       expect(mock_user).to receive(:generate_spree_api_key!).and_return(true)
       spree_put :generate_api_key, id: mock_user.id
       expect(response).to redirect_to(spree.edit_admin_user_path(mock_user))
     end
 
     it "allows admins to clear a user's API key" do
-      user.spree_roles << Spree::Role.find_or_create_by(name: 'admin')
+      user.spree_roles << Solidus::Role.find_or_create_by(name: 'admin')
       expect(mock_user).to receive(:clear_spree_api_key!).and_return(true)
       spree_put :clear_api_key, id: mock_user.id
       expect(response).to redirect_to(spree.edit_admin_user_path(mock_user))
     end
 
     it 'deny access to users with an bar role' do
-      user.spree_roles << Spree::Role.find_or_create_by(name: 'bar')
-      Spree::Ability.register_ability(BarAbility)
+      user.spree_roles << Solidus::Role.find_or_create_by(name: 'bar')
+      Solidus::Ability.register_ability(BarAbility)
       spree_post :index
       expect(response).to redirect_to '/unauthorized'
     end
 
     it 'deny access to users with an bar role' do
-      user.spree_roles << Spree::Role.find_or_create_by(name: 'bar')
-      Spree::Ability.register_ability(BarAbility)
+      user.spree_roles << Solidus::Role.find_or_create_by(name: 'bar')
+      Solidus::Ability.register_ability(BarAbility)
       spree_post :update, { id: '9' }
       expect(response).to redirect_to '/unauthorized'
     end
@@ -66,12 +66,12 @@ describe Spree::Admin::UsersController, :type => :controller do
   end
 
   describe "#create" do
-    let(:dummy_role) { Spree::Role.create(name: "dummyrole") }
+    let(:dummy_role) { Solidus::Role.create(name: "dummyrole") }
 
     before do
       use_mock_user
       allow(mock_user).to receive_messages(:spree_roles= => true, :stock_locations= => true)
-      user.spree_roles << Spree::Role.find_or_create_by(name: 'admin')
+      user.spree_roles << Solidus::Role.find_or_create_by(name: 'admin')
     end
 
     context "when the user can manage roles" do
@@ -88,7 +88,7 @@ describe Spree::Admin::UsersController, :type => :controller do
 
     context "when the user cannot manage roles" do
       before do
-        user.spree_roles = [Spree::Role.find_or_create_by(name: "user_management")]
+        user.spree_roles = [Solidus::Role.find_or_create_by(name: "user_management")]
       end
 
       it "cannot set roles" do
@@ -122,25 +122,25 @@ describe Spree::Admin::UsersController, :type => :controller do
     end
 
     it "can set stock locations" do
-      location = Spree::StockLocation.create(name: "my_location")
-      location_2 = Spree::StockLocation.create(name: "my_location_2")
+      location = Solidus::StockLocation.create(name: "my_location")
+      location_2 = Solidus::StockLocation.create(name: "my_location_2")
       expect(mock_user).to receive(:stock_locations=).with([location, location_2])
       spree_post :create, { user: { stock_location_ids: [location.id, location_2.id] } }
     end
   end
 
   describe "#update" do
-    let(:dummy_role) { Spree::Role.create(name: "dummyrole") }
-    let(:ability) { Spree::Ability.new(user) }
+    let(:dummy_role) { Solidus::Role.create(name: "dummyrole") }
+    let(:ability) { Solidus::Ability.new(user) }
     before do
       use_mock_user
       allow(mock_user).to receive_messages(:spree_roles= => true, :stock_locations= => true)
       allow(controller).to receive(:current_ability) { ability }
-      Spree::PermissionSets::UserManagement.new(ability).activate!
+      Solidus::PermissionSets::UserManagement.new(ability).activate!
     end
 
     context "as a superuser" do
-      before { Spree::PermissionSets::SuperUser.new(ability).activate! }
+      before { Solidus::PermissionSets::SuperUser.new(ability).activate! }
 
       it "can set roles" do
         expect(mock_user).to receive(:spree_roles=).with([dummy_role])
@@ -200,8 +200,8 @@ describe Spree::Admin::UsersController, :type => :controller do
     end
 
     it "can set stock locations" do
-      location = Spree::StockLocation.create(name: "my_location")
-      location_2 = Spree::StockLocation.create(name: "my_location_2")
+      location = Solidus::StockLocation.create(name: "my_location")
+      location_2 = Solidus::StockLocation.create(name: "my_location_2")
       expect(mock_user).to receive(:stock_locations=).with([location, location_2])
       spree_put :update, { id: mock_user.id, user: { stock_location_ids: [location.id, location_2.id] } }
     end
@@ -211,7 +211,7 @@ describe Spree::Admin::UsersController, :type => :controller do
     let(:order) { create(:order) }
     before do
       user.orders << order
-      user.spree_roles << Spree::Role.find_or_create_by(name: 'admin')
+      user.spree_roles << Solidus::Role.find_or_create_by(name: 'admin')
     end
 
     it "assigns a list of the users orders" do
@@ -220,10 +220,10 @@ describe Spree::Admin::UsersController, :type => :controller do
       expect(assigns[:orders].first).to eq order
     end
 
-    it "assigns a ransack search for Spree::Order" do
+    it "assigns a ransack search for Solidus::Order" do
       spree_get :orders, { :id => user.id }
       expect(assigns[:search]).to be_a Ransack::Search
-      expect(assigns[:search].klass).to eq Spree::Order
+      expect(assigns[:search].klass).to eq Solidus::Order
     end
   end
 
@@ -231,7 +231,7 @@ describe Spree::Admin::UsersController, :type => :controller do
     let(:order) { create(:order) }
     before do
       user.orders << order
-      user.spree_roles << Spree::Role.find_or_create_by(name: 'admin')
+      user.spree_roles << Solidus::Role.find_or_create_by(name: 'admin')
     end
 
     it "assigns a list of the users orders" do
@@ -240,10 +240,10 @@ describe Spree::Admin::UsersController, :type => :controller do
       expect(assigns[:orders].first).to eq order
     end
 
-    it "assigns a ransack search for Spree::Order" do
+    it "assigns a ransack search for Solidus::Order" do
       spree_get :items, { :id => user.id }
       expect(assigns[:search]).to be_a Ransack::Search
-      expect(assigns[:search].klass).to eq Spree::Order
+      expect(assigns[:search].klass).to eq Solidus::Order
     end
   end
 end

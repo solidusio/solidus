@@ -3,10 +3,10 @@ require 'spec_helper'
 
 # This spec is useful for when we just want to make sure a view is rendering correctly
 # Walking through the entire checkout process is rather tedious, don't you think?
-describe Spree::CheckoutController, type: :controller do
+describe Solidus::CheckoutController, type: :controller do
   render_views
   let(:token) { 'some_token' }
-  let(:user) { stub_model(Spree::LegacyUser) }
+  let(:user) { stub_model(Solidus::LegacyUser) }
 
   before do
     allow(controller).to receive_messages try_spree_current_user: user
@@ -15,7 +15,7 @@ describe Spree::CheckoutController, type: :controller do
   # Regression test for #3246
   context "when using GBP" do
     before do
-      Spree::Config[:currency] = "GBP"
+      Solidus::Config[:currency] = "GBP"
     end
 
     context "when order is in delivery" do

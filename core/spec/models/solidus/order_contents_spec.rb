@@ -1,7 +1,7 @@
 require 'spec_helper'
 
-describe Spree::OrderContents, :type => :model do
-  let(:order) { Spree::Order.create }
+describe Solidus::OrderContents, :type => :model do
+  let(:order) { Solidus::Order.create }
   let(:variant) { create(:variant) }
   let!(:stock_location) { variant.stock_locations.first }
   let(:stock_location_2) { create(:stock_location) }
@@ -66,7 +66,7 @@ describe Spree::OrderContents, :type => :model do
 
     context "running promotions" do
       let(:promotion) { create(:promotion, apply_automatically: true) }
-      let(:calculator) { Spree::Calculator::FlatRate.new(:preferred_amount => 10) }
+      let(:calculator) { Solidus::Calculator::FlatRate.new(:preferred_amount => 10) }
 
       shared_context "discount changes order total" do
         before { subject.add(variant, 1) }
@@ -74,7 +74,7 @@ describe Spree::OrderContents, :type => :model do
       end
 
       context "one active order promotion" do
-        let!(:action) { Spree::Promotion::Actions::CreateAdjustment.create(promotion: promotion, calculator: calculator) }
+        let!(:action) { Solidus::Promotion::Actions::CreateAdjustment.create(promotion: promotion, calculator: calculator) }
 
         it "creates valid discount on order" do
           subject.add(variant, 1)
@@ -85,7 +85,7 @@ describe Spree::OrderContents, :type => :model do
       end
 
       context "one active line item promotion" do
-        let!(:action) { Spree::Promotion::Actions::CreateItemAdjustments.create(promotion: promotion, calculator: calculator) }
+        let!(:action) { Solidus::Promotion::Actions::CreateItemAdjustments.create(promotion: promotion, calculator: calculator) }
 
         it "creates valid discount on order" do
           subject.add(variant, 1)
@@ -245,7 +245,7 @@ describe Spree::OrderContents, :type => :model do
   end
 
   context "completed order" do
-    let(:order) { Spree::Order.create! state: 'complete', completed_at: Time.current }
+    let(:order) { Solidus::Order.create! state: 'complete', completed_at: Time.current }
 
     before { order.shipments.create! stock_location_id: variant.stock_location_ids.first }
 

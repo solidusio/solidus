@@ -6,11 +6,11 @@ class SplitPricesFromVariants < ActiveRecord::Migration
       t.string :currency
     end
 
-    Spree::Variant.all.each do |variant|
-      Spree::Price.create!(
+    Solidus::Variant.all.each do |variant|
+      Solidus::Price.create!(
         :variant_id => variant.id,
         :amount => variant[:price],
-        :currency => Spree::Config[:currency]
+        :currency => Solidus::Config[:currency]
       )
     end
 

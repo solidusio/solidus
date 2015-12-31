@@ -2,8 +2,8 @@ module Spree
   class Promotion
     module Actions
       class CreateItemAdjustments < PromotionAction
-        include Spree::CalculatedAdjustments
-        include Spree::AdjustmentSource
+        include Solidus::CalculatedAdjustments
+        include Solidus::AdjustmentSource
 
         has_many :adjustments, as: :source
 
@@ -67,7 +67,7 @@ module Spree
 
         def line_items_to_adjust(promotion, order)
           excluded_ids = self.adjustments.
-            where(adjustable_id: order.line_items.pluck(:id), adjustable_type: 'Spree::LineItem').
+            where(adjustable_id: order.line_items.pluck(:id), adjustable_type: 'Solidus::LineItem').
             pluck(:adjustable_id)
 
           order.line_items.where.not(id: excluded_ids).select do |line_item|

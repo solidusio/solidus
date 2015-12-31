@@ -7,7 +7,7 @@ module Spree
 
       let(:order) { create(:order) }
       let(:stock_location) { create(:stock_location) }
-      let!(:order_stock_location) { Spree::OrderStockLocation.create!(order: order, stock_location: stock_location) }
+      let!(:order_stock_location) { Solidus::OrderStockLocation.create!(order: order, stock_location: stock_location) }
 
       it "fulfills the shipment for the order and stock location combination" do
         subject

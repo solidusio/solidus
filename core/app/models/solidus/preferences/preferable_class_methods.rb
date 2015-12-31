@@ -1,4 +1,4 @@
-module Spree::Preferences
+module Solidus::Preferences
   module PreferableClassMethods
     def defined_preferences
       []

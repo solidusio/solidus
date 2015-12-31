@@ -1,5 +1,5 @@
 module Spree
-  class Order < Spree::Base
+  class Order < Solidus::Base
     module Payments
       extend ActiveSupport::Concern
       included do
@@ -53,7 +53,7 @@ module Spree
             end
           end
         rescue Core::GatewayError => e
-          result = !!Spree::Config[:allow_checkout_on_gateway_error]
+          result = !!Solidus::Config[:allow_checkout_on_gateway_error]
           errors.add(:base, e.message) and return result
         end
       end

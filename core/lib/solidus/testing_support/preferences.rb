@@ -9,7 +9,7 @@ module Spree
       # end
       #
       def reset_spree_preferences(&config_block)
-        Spree::Config.preference_store = Spree::Config.default_preferences
+        Solidus::Config.preference_store = Solidus::Config.default_preferences
 
         configure_spree_preferences(&config_block) if block_given?
       end
@@ -21,7 +21,7 @@ module Spree
 
       def assert_preference_unset(preference)
         find("#preferences_#{preference}")['checked'].should be false
-        Spree::Config[preference].should be false
+        Solidus::Config[preference].should be false
       end
     end
   end

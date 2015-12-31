@@ -6,7 +6,7 @@ module Spree
       before_action :load_stock_locations, only: :edit
       before_action :load_simulated_refunds, only: :edit
 
-      rescue_from Spree::Core::GatewayError, with: :spree_core_gateway_error, only: :perform
+      rescue_from Solidus::Core::GatewayError, with: :spree_core_gateway_error, only: :perform
 
       def perform
         @reimbursement.perform!
@@ -49,7 +49,7 @@ module Spree
       end
 
       def load_stock_locations
-        @stock_locations = Spree::StockLocation.active
+        @stock_locations = Solidus::StockLocation.active
       end
 
       def load_simulated_refunds

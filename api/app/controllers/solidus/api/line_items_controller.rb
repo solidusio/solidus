@@ -1,6 +1,6 @@
 module Spree
   module Api
-    class LineItemsController < Spree::Api::BaseController
+    class LineItemsController < Solidus::Api::BaseController
       class_attribute :line_item_options
 
       self.line_item_options = []
@@ -9,7 +9,7 @@ module Spree
       around_filter :lock_order, only: [:create, :update, :destroy]
 
       def create
-        variant = Spree::Variant.find(params[:line_item][:variant_id])
+        variant = Solidus::Variant.find(params[:line_item][:variant_id])
         @line_item = @order.contents.add(
           variant,
           params[:line_item][:quantity] || 1,
@@ -43,7 +43,7 @@ module Spree
 
       private
         def load_order
-          @order ||= Spree::Order.includes(:line_items).find_by!(number: order_id)
+          @order ||= Solidus::Order.includes(:line_items).find_by!(number: order_id)
           authorize! :update, @order, order_token
         end
 

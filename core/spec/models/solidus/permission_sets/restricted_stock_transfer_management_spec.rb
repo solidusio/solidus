@@ -1,7 +1,7 @@
 require 'spec_helper'
 
-describe Spree::PermissionSets::RestrictedStockTransferManagement do
-  let(:ability) { Spree::Ability.new(user) }
+describe Solidus::PermissionSets::RestrictedStockTransferManagement do
+  let(:ability) { Solidus::Ability.new(user) }
 
   subject { ability }
 
@@ -51,9 +51,9 @@ describe Spree::PermissionSets::RestrictedStockTransferManagement do
       it { is_expected.to be_able_to(:display, source_location) }
       it { is_expected.to_not be_able_to(:display, destination_location) }
 
-      it { is_expected.to be_able_to(:display, Spree::StockTransfer) }
-      it { is_expected.to be_able_to(:admin, Spree::StockTransfer) }
-      it { is_expected.to be_able_to(:create, Spree::StockTransfer) }
+      it { is_expected.to be_able_to(:display, Solidus::StockTransfer) }
+      it { is_expected.to be_able_to(:admin, Solidus::StockTransfer) }
+      it { is_expected.to be_able_to(:create, Solidus::StockTransfer) }
 
       it { is_expected.to be_able_to(:transfer_from, source_location) }
       it { is_expected.to be_able_to(:transfer_to, source_location) }
@@ -90,9 +90,9 @@ describe Spree::PermissionSets::RestrictedStockTransferManagement do
       it { is_expected.to be_able_to(:display, destination_location) }
       it { is_expected.to_not be_able_to(:display, source_location) }
 
-      it { is_expected.to be_able_to(:display, Spree::StockTransfer) }
-      it { is_expected.to be_able_to(:admin, Spree::StockTransfer) }
-      it { is_expected.to be_able_to(:create, Spree::StockTransfer) }
+      it { is_expected.to be_able_to(:display, Solidus::StockTransfer) }
+      it { is_expected.to be_able_to(:admin, Solidus::StockTransfer) }
+      it { is_expected.to be_able_to(:create, Solidus::StockTransfer) }
 
       it { is_expected.to_not be_able_to(:transfer_from, source_location) }
       it { is_expected.to_not be_able_to(:transfer_to, source_location) }
@@ -129,9 +129,9 @@ describe Spree::PermissionSets::RestrictedStockTransferManagement do
       it { is_expected.to be_able_to(:display, source_location) }
       it { is_expected.to be_able_to(:display, destination_location) }
 
-      it { is_expected.to be_able_to(:display, Spree::StockTransfer) }
-      it { is_expected.to be_able_to(:admin, Spree::StockTransfer) }
-      it { is_expected.to be_able_to(:create, Spree::StockTransfer) }
+      it { is_expected.to be_able_to(:display, Solidus::StockTransfer) }
+      it { is_expected.to be_able_to(:admin, Solidus::StockTransfer) }
+      it { is_expected.to be_able_to(:create, Solidus::StockTransfer) }
 
       it { is_expected.to be_able_to(:transfer_from, source_location) }
       it { is_expected.to be_able_to(:transfer_to, source_location) }
@@ -168,9 +168,9 @@ describe Spree::PermissionSets::RestrictedStockTransferManagement do
       it { is_expected.to_not be_able_to(:display, source_location) }
       it { is_expected.to_not be_able_to(:display, destination_location) }
 
-      it { is_expected.to_not be_able_to(:display, Spree::StockTransfer) }
-      it { is_expected.to_not be_able_to(:admin, Spree::StockTransfer) }
-      it { is_expected.to_not be_able_to(:create, Spree::StockTransfer) }
+      it { is_expected.to_not be_able_to(:display, Solidus::StockTransfer) }
+      it { is_expected.to_not be_able_to(:admin, Solidus::StockTransfer) }
+      it { is_expected.to_not be_able_to(:create, Solidus::StockTransfer) }
 
       it { is_expected.to_not be_able_to(:transfer_from, source_location) }
       it { is_expected.to_not be_able_to(:transfer_to, source_location) }
@@ -191,9 +191,9 @@ describe Spree::PermissionSets::RestrictedStockTransferManagement do
   context "when not activated" do
     let(:user) { create :user }
 
-    it { is_expected.to_not be_able_to(:display, Spree::StockTransfer) }
-    it { is_expected.to_not be_able_to(:admin, Spree::StockTransfer) }
-    it { is_expected.to_not be_able_to(:create, Spree::StockTransfer) }
+    it { is_expected.to_not be_able_to(:display, Solidus::StockTransfer) }
+    it { is_expected.to_not be_able_to(:admin, Solidus::StockTransfer) }
+    it { is_expected.to_not be_able_to(:create, Solidus::StockTransfer) }
 
     it { is_expected.to_not be_able_to(:display, source_location) }
     it { is_expected.to_not be_able_to(:display, destination_location) }

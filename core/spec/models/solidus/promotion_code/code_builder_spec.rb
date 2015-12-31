@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Spree::PromotionCode::CodeBuilder do
+describe Solidus::PromotionCode::CodeBuilder do
   let(:promotion) { build_stubbed :promotion }
   let(:base_code) { "abc" }
   let(:builder) do

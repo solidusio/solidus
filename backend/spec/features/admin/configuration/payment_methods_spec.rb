@@ -21,7 +21,7 @@ describe "Payment Methods", :type => :feature do
       end
 
       within('table#listing_payment_methods') do
-        expect(page).to have_content("Spree::PaymentMethod::Check")
+        expect(page).to have_content("Solidus::PaymentMethod::Check")
       end
     end
   end
@@ -65,7 +65,7 @@ describe "Payment Methods", :type => :feature do
   context "changing type and payment_source", js: true do
     after do
       # cleanup
-      Spree::Config.static_model_preferences.for_class(Spree::Gateway::Bogus).clear
+      Solidus::Config.static_model_preferences.for_class(Solidus::Gateway::Bogus).clear
     end
 
     it "displays message when changing type" do
@@ -74,18 +74,18 @@ describe "Payment Methods", :type => :feature do
       click_icon :edit
       expect(page).to have_content('TEST MODE')
 
-      select2_search 'Spree::PaymentMethod::Check', from: 'Provider'
+      select2_search 'Solidus::PaymentMethod::Check', from: 'Provider'
       expect(page).to have_content('you must save first')
       expect(page).to have_no_content('TEST MODE')
 
       # change back
-      select2_search 'Spree::Gateway::Bogus', from: 'Provider'
+      select2_search 'Solidus::Gateway::Bogus', from: 'Provider'
       expect(page).to have_no_content('you must save first')
       expect(page).to have_content('TEST MODE')
     end
 
     it "displays message when changing preference source" do
-      Spree::Config.static_model_preferences.add(Spree::Gateway::Bogus, 'my_prefs', {})
+      Solidus::Config.static_model_preferences.add(Solidus::Gateway::Bogus, 'my_prefs', {})
 
       create(:credit_card_payment_method)
       click_link "Payment Methods"
@@ -103,7 +103,7 @@ describe "Payment Methods", :type => :feature do
     end
 
     it "updates successfully and keeps secrets" do
-      Spree::Config.static_model_preferences.add(Spree::Gateway::Bogus, 'my_prefs', {server: 'secret'})
+      Solidus::Config.static_model_preferences.add(Solidus::Gateway::Bogus, 'my_prefs', {server: 'secret'})
 
       create(:credit_card_payment_method)
       click_link "Payment Methods"

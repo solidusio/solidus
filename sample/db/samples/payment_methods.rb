@@ -1,4 +1,4 @@
-Spree::Gateway::Bogus.create!(
+Solidus::Gateway::Bogus.create!(
   {
     :name => "Credit Card",
     :description => "Bogus payment gateway",
@@ -6,7 +6,7 @@ Spree::Gateway::Bogus.create!(
   }
 )
 
-Spree::PaymentMethod::Check.create!(
+Solidus::PaymentMethod::Check.create!(
   {
     :name => "Check",
     :description => "Pay by check.",

@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Spree::TaxCategory, :type => :model do
+describe Solidus::TaxCategory, :type => :model do
   context 'default tax category' do
     let(:tax_category) { create(:tax_category) }
     let(:new_tax_category) { create(:tax_category) }

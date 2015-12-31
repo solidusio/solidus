@@ -1,7 +1,7 @@
 module Spree
-  class Price < Spree::Base
+  class Price < Solidus::Base
     acts_as_paranoid
-    belongs_to :variant, -> { with_deleted }, class_name: 'Spree::Variant', inverse_of: :prices, touch: true
+    belongs_to :variant, -> { with_deleted }, class_name: 'Solidus::Variant', inverse_of: :prices, touch: true
 
     validate :check_price
     validates :amount, numericality: { greater_than_or_equal_to: 0 }, allow_nil: true
@@ -13,9 +13,9 @@ module Spree
 
     self.whitelisted_ransackable_attributes = ['amount']
 
-    # @return [Spree::Money] this price as a Spree::Money object
+    # @return [Solidus::Money] this price as a Solidus::Money object
     def money
-      Spree::Money.new(amount || 0, { currency: currency })
+      Solidus::Money.new(amount || 0, { currency: currency })
     end
 
     # An alias for #amount
@@ -28,13 +28,13 @@ module Spree
     #
     # @param price [String, #to_d] a new amount
     def price=(price)
-      self[:amount] = Spree::LocalizedNumber.parse(price)
+      self[:amount] = Solidus::LocalizedNumber.parse(price)
     end
 
     private
 
     def check_price
-      self.currency ||= Spree::Config[:currency]
+      self.currency ||= Solidus::Config[:currency]
     end
 
     def maximum_amount

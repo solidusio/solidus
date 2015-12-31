@@ -32,11 +32,11 @@ module Spree
       let(:date_override) { 3.days.ago }
 
       before do
-        allow_any_instance_of(Spree::Ability).to receive(:can?).
+        allow_any_instance_of(Solidus::Ability).to receive(:can?).
           and_return(true)
 
-        allow_any_instance_of(Spree::Ability).to receive(:can?).
-          with(:admin, Spree::Order).
+        allow_any_instance_of(Solidus::Ability).to receive(:can?).
+          with(:admin, Solidus::Order).
           and_return(can_admin)
 
         allow(Spree.user_class).to receive(:find).
@@ -50,7 +50,7 @@ module Spree
         let(:can_admin) { false }
 
         it "does not include unpermitted params, or allow overriding the user", focus: true do
-          expect(Spree::Core::Importer::Order).to receive(:import).
+          expect(Solidus::Core::Importer::Order).to receive(:import).
             once.
             with(current_api_user, { "email" => target_user.email }).
             and_call_original
@@ -64,7 +64,7 @@ module Spree
         let(:can_admin) { true }
 
         it "it permits all params and allows overriding the user" do
-          expect(Spree::Core::Importer::Order).to receive(:import).
+          expect(Solidus::Core::Importer::Order).to receive(:import).
             once.
             with(target_user, { "user_id" => target_user.id, "created_at" => date_override, "email" => target_user.email}).
             and_call_original
@@ -82,10 +82,10 @@ module Spree
       subject { api_put :update, id: order.to_param, order: order_params }
 
       before do
-        allow_any_instance_of(Spree::Ability).to receive(:can?).
+        allow_any_instance_of(Solidus::Ability).to receive(:can?).
           and_return(true)
 
-        allow(Spree::Order).to receive(:find_by!).
+        allow(Solidus::Order).to receive(:find_by!).
           with(number: order.number).
           and_return(order)
 
@@ -93,8 +93,8 @@ module Spree
           with(user.id).
           and_return(user)
 
-        allow_any_instance_of(Spree::Ability).to receive(:can?).
-          with(:admin, Spree::Order).
+        allow_any_instance_of(Solidus::Ability).to receive(:can?).
+          with(:admin, Solidus::Order).
           and_return(can_admin)
       end
 
@@ -292,7 +292,7 @@ module Spree
     end
 
     it "can not view someone else's order" do
-      allow_any_instance_of(Order).to receive_messages :user => stub_model(Spree::LegacyUser)
+      allow_any_instance_of(Order).to receive_messages :user => stub_model(Solidus::LegacyUser)
       api_get :show, :id => order.to_param
       assert_unauthorized!
     end
@@ -309,11 +309,11 @@ module Spree
     end
 
     context "with BarAbility registered" do
-      before { Spree::Ability.register_ability(::BarAbility) }
-      after { Spree::Ability.remove_ability(::BarAbility) }
+      before { Solidus::Ability.register_ability(::BarAbility) }
+      after { Solidus::Ability.remove_ability(::BarAbility) }
 
       it "can view an order" do
-        user = build(:user, spree_roles: [Spree::Role.new(name: 'bar')])
+        user = build(:user, spree_roles: [Solidus::Role.new(name: 'bar')])
         allow(Spree.user_class).to receive_messages find_by: user
         api_get :show, :id => order.to_param
         expect(response.status).to eq(200)
@@ -352,7 +352,7 @@ module Spree
 
     # Regression test for #3404
     it "can specify additional parameters for a line item" do
-      expect(Order).to receive(:create!).and_return(order = Spree::Order.new)
+      expect(Order).to receive(:create!).and_return(order = Solidus::Order.new)
       allow(order).to receive(:associate_user!)
       allow(order).to receive_message_chain(:contents, :add).and_return(line_item = double('LineItem'))
       expect(line_item).to receive(:update_attributes!).with("special" => true)
@@ -634,7 +634,7 @@ module Spree
       sign_in_as_admin!
 
       context "with no orders" do
-        before { Spree::Order.delete_all }
+        before { Solidus::Order.delete_all }
         it "still returns a root :orders key" do
           api_get :index
           expect(json_response["orders"]).to eq([])
@@ -697,10 +697,10 @@ module Spree
       context "search" do
         before do
           create(:order)
-          Spree::Order.last.update_attribute(:email, 'spree@spreecommerce.com')
+          Solidus::Order.last.update_attribute(:email, 'spree@spreecommerce.com')
         end
 
-        let(:expected_result) { Spree::Order.last }
+        let(:expected_result) { Solidus::Order.last }
 
         it "can query the results through a parameter" do
           api_get :index, :q => { :email_cont => 'spree' }
@@ -752,7 +752,7 @@ module Spree
 
       context "can cancel an order" do
         before do
-          Spree::Config[:mails_from] = "spree@example.com"
+          Solidus::Config[:mails_from] = "spree@example.com"
 
           order.completed_at = Time.current
           order.state = 'complete'
