@@ -9,7 +9,7 @@ module Solidus
       end
 
       # Chooses the current store based on a request.
-      # Checks request headers for HTTP_SPREE_STORE and falls back to
+      # Checks request headers for HTTP_SOLIDUS_STORE and falls back to
       # looking up by the requesting server's name.
       # @return [Solidus::Store]
       def store
@@ -19,7 +19,7 @@ module Solidus
       private
 
       def store_key
-        @request.headers['HTTP_SPREE_STORE'] || @request.env['SERVER_NAME']
+        @request.headers['HTTP_SOLIDUS_STORE'] || @request.env['SERVER_NAME']
       end
     end
   end

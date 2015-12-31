@@ -22,7 +22,7 @@ describe Solidus::Core::CurrentStore do
         end
 
         context "with headers" do
-          let(:request) { double(headers: { "HTTP_SPREE_STORE" => headers_code }, env: {}) }
+          let(:request) { double(headers: { "HTTP_SOLIDUS_STORE" => headers_code }, env: {}) }
           let(:headers_code) { "HEADERS" }
           let!(:store_3) { create :store, code: headers_code, default: false }
 
