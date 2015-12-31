@@ -44,7 +44,7 @@ module Spree
       private
 
       def address_book_user
-        @address_book_user ||= Spree.user_class.find(params[:user_id])
+        @address_book_user ||= Solidus.user_class.find(params[:user_id])
       end
 
       def load_user_addresses

@@ -4,7 +4,7 @@
 <div id="new_variant" data-hook></div>
 
 <% content_for :table_filter_title do %>
-  <%= Spree.t(:search) %>
+  <%= Solidus.t(:search) %>
 <% end %>
 
 <% content_for :table_filter do %>
@@ -16,7 +16,7 @@
 
       <div class="three columns">
         <div class="field">
-          <%= f.label :sku_cont, Spree.t(:sku) %>
+          <%= f.label :sku_cont, Solidus.t(:sku) %>
           <%= f.text_field :sku_cont, :size => 15 %>
         </div>
       </div>
@@ -28,7 +28,7 @@
               <% option_values = @option_values.select { |ov| ov.option_type_id == option_type.id } %>
               <%= f.label :option_values_presentation_in, option_type.presentation %>
               <br />
-              <%= f.collection_select :option_values_presentation_in, option_values.sort_by(&:presentation), :presentation, :presentation, { :include_blank => Spree.t('match_choices.none') }, { class: "select2 fullwidth" } %>
+              <%= f.collection_select :option_values_presentation_in, option_values.sort_by(&:presentation), :presentation, :presentation, { :include_blank => Solidus.t('match_choices.none') }, { class: "select2 fullwidth" } %>
             </div>
           </div>
         </div>
@@ -37,7 +37,7 @@
       <div class="clear"></div>
 
       <div class="form-buttons actions filter-actions" data-hook="admin_products_index_search_buttons">
-        <%= button Spree.t(:search), 'search' %>
+        <%= button Solidus.t(:search), 'search' %>
       </div>
     <% end %>
   </div>
@@ -57,9 +57,9 @@
     </colgroup>
     <thead data-hook="variants_header">
       <tr>
-        <th colspan="2"><%= Spree.t(:options) %></th>
-        <th><%= Spree.t(:price) %></th>
-        <th><%= Spree.t(:sku) %></th>
+        <th colspan="2"><%= Solidus.t(:options) %></th>
+        <th><%= Solidus.t(:price) %></th>
+        <th><%= Solidus.t(:sku) %></th>
         <th class="actions"></th>
       </tr>
     </thead>
@@ -86,27 +86,27 @@
       </tr>
       <% end %>
       <% unless @product.has_variants? %>
-        <tr><td colspan="5"><%= Spree.t(:none) %></td></tr>
+        <tr><td colspan="5"><%= Solidus.t(:none) %></td></tr>
       <% end %>
     </tbody>
   </table>
   <%= paginate @variants %>
 <% else %>
   <div class="alpha twelve columns no-objects-found">
-    <%= Spree.t(:no_resource_found, resource: I18n.t(:other, scope: 'activerecord.models.solidus/variant')) %>
+    <%= Solidus.t(:no_resource_found, resource: I18n.t(:other, scope: 'activerecord.models.solidus/variant')) %>
     <% if can?(:create, Solidus::Variant) %>
-      <%= link_to Spree.t(:add_one), spree.new_admin_product_variant_path(@product) %>!
+      <%= link_to Solidus.t(:add_one), spree.new_admin_product_variant_path(@product) %>!
     <% end %>
   </div>
 <% end %>
 
 <% if @product.empty_option_values? %>
   <p class='first_add_option_types no-objects-found' data-hook="first_add_option_types">
-    <%= Spree.t(:to_add_variants_you_must_first_define) %>
+    <%= Solidus.t(:to_add_variants_you_must_first_define) %>
     <% if can?(:display, Solidus::OptionType) %>
-      <%= link_to Spree.t(:option_types), admin_option_types_path%>
+      <%= link_to Solidus.t(:option_types), admin_option_types_path%>
     <% else %>
-      <%= Spree.t(:option_types) %>
+      <%= Solidus.t(:option_types) %>
     <% end %>
   </p>
 <% else %>
@@ -115,7 +115,7 @@
       <% if can?(:create, Solidus::Variant) %>
         <li id="new_var_link" data-hook>
           <%= link_to_with_icon('plus',
-                                Spree.t(:new_variant),
+                                Solidus.t(:new_variant),
                                 new_admin_product_variant_url(@product),
                                 :remote => :true,
                                 :'data-update' => 'new_variant',
@@ -123,7 +123,7 @@
                                ) %>
         </li>
       <% end %>
-      <li><%= link_to_with_icon('filter', @deleted.blank? ? Spree.t(:show_deleted) : Spree.t(:show_active), admin_product_variants_url(@product, :deleted => @deleted.blank? ? "on" : "off"), :class => 'button') %></li>
+      <li><%= link_to_with_icon('filter', @deleted.blank? ? Solidus.t(:show_deleted) : Solidus.t(:show_active), admin_product_variants_url(@product, :deleted => @deleted.blank? ? "on" : "off"), :class => 'button') %></li>
     </ul>
   <% end %>
 <% end %>

@@ -3,8 +3,8 @@ jQuery ($) ->
   order_id = $('#payments').data('order-id')
   class Payment
     constructor: (id) ->
-      @url  = "#{Spree.routes.payments_api(order_id)}/#{id}.json"
-      @json = Spree.getJSON @url, (data) =>
+      @url  = "#{Solidus.routes.payments_api(order_id)}/#{id}.json"
+      @json = Solidus.getJSON @url, (data) =>
         @data = data
 
     if_pending: (callback) ->
@@ -12,7 +12,7 @@ jQuery ($) ->
         callback() if data.state is 'pending'
 
     update: (attributes, success) ->
-      jqXHR = Spree.ajax
+      jqXHR = Solidus.ajax
         type: 'PUT'
         url:  @url
         data: { payment: attributes }
@@ -51,7 +51,7 @@ jQuery ($) ->
       $('<a />')
         .attr
           class: "fa fa-#{action} icon_link no-text with-tip"
-          title: Spree.translations[action]
+          title: Solidus.translations[action]
         .data
           action: action
         .one
@@ -139,7 +139,7 @@ jQuery ($) ->
       @$amount().find('input')
 
     @normalize_amount: (amount) ->
-      separator = Spree.translations.currency_separator
+      separator = Solidus.translations.currency_separator
       amount.replace(///[^\d#{separator}]///g, '')
 
   # Attach ShowPaymentView to each pending payment in the table

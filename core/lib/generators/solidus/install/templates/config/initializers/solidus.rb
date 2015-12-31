@@ -1,7 +1,7 @@
 # Configure Solidus Preferences
 # See http://docs.solidus.io/Spree/AppConfiguration.html for details
 
-Spree.config do |config|
+Solidus.config do |config|
   # Without this preferences are loaded and persisted to the database. This
   # changes them to be stored in memory.
   # This will be the default in a future version.
@@ -75,4 +75,4 @@ Solidus::Api::Config.configure do |config|
 end
 <% end -%>
 
-Spree.user_class = <%= (options[:user_class].blank? ? "Solidus::LegacyUser" : options[:user_class]).inspect %>
+Solidus.user_class = <%= (options[:user_class].blank? ? "Solidus::LegacyUser" : options[:user_class]).inspect %>

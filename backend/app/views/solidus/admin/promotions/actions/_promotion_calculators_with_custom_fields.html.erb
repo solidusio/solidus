@@ -2,12 +2,12 @@
 
   <div class="field alpha four columns">
     <% field_name = "#{param_prefix}[calculator_type]" %>
-    <%= label_tag field_name, Spree.t(:calculator) %>
+    <%= label_tag field_name, Solidus.t(:calculator) %>
     <%= select_tag field_name,
                    options_from_collection_for_select(calculators, :to_s, :description, promotion_action.calculator.type),
                    :class => 'type-select select2 fullwidth' %>
     <% if promotion_action.calculator.respond_to?(:preferences) %>
-      <span class="warning info"><%= Spree.t(:calculator_settings_warning) %></span>
+      <span class="warning info"><%= Solidus.t(:calculator_settings_warning) %></span>
     <% end %>
   </div>
 

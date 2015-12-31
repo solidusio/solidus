@@ -3,25 +3,25 @@
 <% content_for :page_actions do %>
   <% if can? :create, Solidus::CustomerReturn %>
     <li>
-      <%= button_link_to Spree.t(:new_customer_return), spree.new_admin_order_customer_return_path(@order), icon: 'plus' %>
+      <%= button_link_to Solidus.t(:new_customer_return), spree.new_admin_order_customer_return_path(@order), icon: 'plus' %>
     </li>
   <% end %>
-  <li><%= button_link_to Spree.t(:back_to_orders_list), spree.admin_orders_path, :icon => 'arrow-left' %></li>
+  <li><%= button_link_to Solidus.t(:back_to_orders_list), spree.admin_orders_path, :icon => 'arrow-left' %></li>
 <% end %>
 
 <% content_for :page_title do %>
-  <i class="fa fa-arrow-right"></i> <%= Spree.t(:customer_returns) %>
+  <i class="fa fa-arrow-right"></i> <%= Solidus.t(:customer_returns) %>
 <% end %>
 
 <% if @customer_returns.any? %>
   <table class="index">
     <thead data-hook="customer_return_header">
       <tr>
-        <th><%= Spree.t(:return_number) %></th>
-        <th><%= Spree.t(:pre_tax_total) %></th>
-        <th><%= Spree.t(:total) %></th>
-        <th><%= "#{Spree.t('date')}/#{Spree.t('time')}" %></th>
-        <th><%= Spree.t(:reimbursement_status) %></th>
+        <th><%= Solidus.t(:return_number) %></th>
+        <th><%= Solidus.t(:pre_tax_total) %></th>
+        <th><%= Solidus.t(:total) %></th>
+        <th><%= "#{Solidus.t('date')}/#{Solidus.t('time')}" %></th>
+        <th><%= Solidus.t(:reimbursement_status) %></th>
         <th class="actions"></th>
       </tr>
     </thead>
@@ -34,9 +34,9 @@
           <td><%= pretty_time(customer_return.created_at) %></td>
           <td>
             <% if customer_return.fully_reimbursed? %>
-              <span class="state success"><%= Spree.t(:reimbursed) %></span>
+              <span class="state success"><%= Solidus.t(:reimbursed) %></span>
             <% else %>
-              <span class="state notice"><%= Spree.t(:incomplete) %></span>
+              <span class="state notice"><%= Solidus.t(:incomplete) %></span>
             <% end %>
           </td>
           <td class='actions align-center' data-hook="admin_orders_customer_returns_index_row_actions">
@@ -48,9 +48,9 @@
   </table>
 <% else %>
   <div class="alpha twelve columns no-objects-found">
-    <%= Spree.t(:no_resource_found, resource: I18n.t(:other, scope: 'activerecord.models.solidus/customer_return')) %>
+    <%= Solidus.t(:no_resource_found, resource: I18n.t(:other, scope: 'activerecord.models.solidus/customer_return')) %>
     <% if can? :create, Solidus::CustomerReturn %>
-      <%= link_to Spree.t(:add_one), spree.new_admin_order_customer_return_path(@order) %>!
+      <%= link_to Solidus.t(:add_one), spree.new_admin_order_customer_return_path(@order) %>!
     <% end %>
   </div>
 <% end %>

@@ -16,7 +16,7 @@ module Solidus::Admin::StoreCreditEventsHelper
   def store_credit_event_admin_action_name(store_credit_event)
     if Solidus::StoreCreditEvent::NON_EXPOSED_ACTIONS.include?(store_credit_event.action) ||
       store_credit_event.action == Solidus::StoreCredit::VOID_ACTION
-      Spree.t("store_credit.display_action.admin.#{store_credit_event.action}")
+      Solidus.t("store_credit.display_action.admin.#{store_credit_event.action}")
     else
       store_credit_event.display_action
     end
@@ -40,28 +40,28 @@ module Solidus::Admin::StoreCreditEventsHelper
     case link_options[:href_type]
     when :user
       link_to(
-        Spree.t(link_options[:translation_key], { email: originator.email }),
+        Solidus.t(link_options[:translation_key], { email: originator.email }),
         spree.edit_admin_user_path(originator),
         options
       )
     when :line_item
       order = originator.line_item.order
       link_to(
-        Spree.t(link_options[:translation_key], { order_number: order.number }),
+        Solidus.t(link_options[:translation_key], { order_number: order.number }),
         spree.edit_admin_order_path(order),
         options
       )
     when :payment
       order = originator.order
       link_to(
-        Spree.t(link_options[:translation_key], { order_number: order.number }),
+        Solidus.t(link_options[:translation_key], { order_number: order.number }),
         spree.admin_order_payment_path(order, originator),
         options
       )
     when :payments
       order = originator.payment.order
       link_to(
-        Spree.t(link_options[:translation_key], { order_number: order.number }),
+        Solidus.t(link_options[:translation_key], { order_number: order.number }),
         spree.admin_order_payments_path(order),
         options
       )
@@ -71,11 +71,11 @@ module Solidus::Admin::StoreCreditEventsHelper
   private
 
   # Cannot set the value for a user originator
-  # because Spree.user_class is not defined at that time.
+  # because Solidus.user_class is not defined at that time.
   # Solidus::UserClassHandle does not work here either as
   # the assignment is evaluated before user_class is set
   def add_user_originator_link
-    self.originator_links[Spree.user_class.to_s] = {
+    self.originator_links[Solidus.user_class.to_s] = {
       new_tab: true,
       href_type: :user,
       translation_key: 'admin.store_credits.user_originator'

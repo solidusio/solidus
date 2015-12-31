@@ -87,7 +87,7 @@ module Spree
 
     def move(variant, quantity, originator = nil)
       if quantity < 1 && !stock_item(variant)
-        raise InvalidMovementError.new(Spree.t(:negative_movement_absent_item))
+        raise InvalidMovementError.new(Solidus.t(:negative_movement_absent_item))
       end
       stock_item_or_create(variant).stock_movements.create!(quantity: quantity,
                                                             originator: originator)

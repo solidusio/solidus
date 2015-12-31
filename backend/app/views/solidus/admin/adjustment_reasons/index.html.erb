@@ -1,13 +1,13 @@
 <%= render partial: 'solidus/admin/shared/configuration_menu' %>
 
 <% content_for :page_title do %>
-  <%= Spree.t(:adjustment_reasons) %>
+  <%= Solidus.t(:adjustment_reasons) %>
 <% end %>
 
 <% content_for :page_actions do %>
   <ul class="actions inline-menu">
     <li>
-      <%= button_link_to Spree.t(:new_adjustment_reason), new_object_url, { icon: 'plus', id: 'admin_new_named_type' } %>
+      <%= button_link_to Solidus.t(:new_adjustment_reason), new_object_url, { icon: 'plus', id: 'admin_new_named_type' } %>
     </li>
   </ul>
 <% end %>
@@ -21,8 +21,8 @@
     </colgroup>
     <thead>
       <tr data-hook="adjustment_reasons_header">
-        <th><%= Spree.t(:name) %></th>
-        <th><%= Spree.t(:state) %></th>
+        <th><%= Solidus.t(:name) %></th>
+        <th><%= Solidus.t(:state) %></th>
         <th class="actions"></th>
       </tr>
     </thead>
@@ -33,7 +33,7 @@
             <%= adjustment_reason.name %>
           </td>
           <td class="align-center">
-            <%= Spree.t(adjustment_reason.active? ? :active : :inactive) %>
+            <%= Solidus.t(adjustment_reason.active? ? :active : :inactive) %>
           </td>
           <td class="actions">
             <%= link_to_edit adjustment_reason, no_text: true %>
@@ -44,7 +44,7 @@
   </table>
 <% else %>
   <div class="alpha twelve columns no-objects-found">
-    <%= Spree.t(:no_resource_found, resource: I18n.t(:other, scope: 'activerecord.models.solidus/adjustment_reason')) %>,
-    <%= link_to Spree.t(:add_one), new_object_url %>!
+    <%= Solidus.t(:no_resource_found, resource: I18n.t(:other, scope: 'activerecord.models.solidus/adjustment_reason')) %>,
+    <%= link_to Solidus.t(:add_one), new_object_url %>!
   </div>
 <% end %>

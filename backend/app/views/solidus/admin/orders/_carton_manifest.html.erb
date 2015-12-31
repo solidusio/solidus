@@ -6,13 +6,13 @@
     <td class="item-name">
       <%= item.variant.product.name %><br><%= "(" + variant_options(item.variant) + ")" unless item.variant.option_values.empty? %>
       <% if item.variant.sku.present? %>
-        <strong><%= Spree.t(:sku) %>:</strong> <%= item.variant.sku %>
+        <strong><%= Solidus.t(:sku) %>:</strong> <%= item.variant.sku %>
       <% end %>
     </td>
     <td class="item-price align-center"><%= item.line_item.single_money.to_html %></td>
     <td class="item-qty-show align-center">
         <% item.states.each do |state,count| %>
-          <%= count %> x <%= Spree.t(state).downcase %>
+          <%= count %> x <%= Solidus.t(state).downcase %>
         <% end %>
     </td>
     <td class="item-qty-edit hidden">

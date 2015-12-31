@@ -43,7 +43,7 @@ end
 namespace :gem do
   def version
     require 'solidus/core/version'
-    Spree.solidus_version
+    Solidus.solidus_version
   end
 
   def for_each_gem

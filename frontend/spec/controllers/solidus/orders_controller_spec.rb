@@ -59,7 +59,7 @@ describe Solidus::OrdersController, :type => :controller do
 
           expect(response).to redirect_to(spree.root_path)
           expect(flash[:error]).to eq(
-            Spree.t(:please_enter_reasonable_quantity)
+            Solidus.t(:please_enter_reasonable_quantity)
           )
         end
       end
@@ -109,7 +109,7 @@ describe Solidus::OrdersController, :type => :controller do
 
       it "cannot update a blank order" do
         spree_put :update, :order => { :email => "foo" }
-        expect(flash[:error]).to eq(Spree.t(:order_not_found))
+        expect(flash[:error]).to eq(Solidus.t(:order_not_found))
         expect(response).to redirect_to(spree.root_path)
       end
     end

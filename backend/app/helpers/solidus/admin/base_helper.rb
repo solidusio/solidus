@@ -24,7 +24,7 @@ module Spree
 
       def datepicker_field_value(date)
         unless date.blank?
-          l(date, :format => Spree.t('date_picker.format', default: '%Y/%m/%d'))
+          l(date, :format => Solidus.t('date_picker.format', default: '%Y/%m/%d'))
         else
           nil
         end
@@ -134,7 +134,7 @@ module Spree
         return unless object.respond_to?(:preferences)
         object.preferences.keys.map{ |key|
 
-          form.label("preferred_#{key}", Spree.t(key) + ": ") +
+          form.label("preferred_#{key}", Solidus.t(key) + ": ") +
             preference_field_for(form, "preferred_#{key}", :type => object.preference_type(key))
 
         }.join("<br />").html_safe
@@ -152,7 +152,7 @@ module Spree
         options[:class] = '' unless options[:class]
         options[:class] += 'no-text with-tip' if options[:no_text]
         url = f.object.persisted? ? [:admin, f.object] : '#'
-        link_to_with_icon('trash', name, url, :class => "spree_remove_fields #{options[:class]}", :data => {:action => 'remove'}, :title => Spree.t(:remove)) + f.hidden_field(:_destroy)
+        link_to_with_icon('trash', name, url, :class => "spree_remove_fields #{options[:class]}", :data => {:action => 'remove'}, :title => Solidus.t(:remove)) + f.hidden_field(:_destroy)
       end
 
       def spree_dom_id(record)

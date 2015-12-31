@@ -30,11 +30,11 @@ module Spree
       end
 
       def display_shipment(shipment)
-        "#{Spree.t(:shipment)} ##{shipment.number}<br>#{shipment.display_cost}".html_safe
+        "#{Solidus.t(:shipment)} ##{shipment.number}<br>#{shipment.display_cost}".html_safe
       end
 
       def display_order(order)
-        Spree.t(:order)
+        Solidus.t(:order)
       end
     end
   end

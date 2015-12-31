@@ -1,19 +1,19 @@
 <fieldset data-hook="credit_card">
-  <legend align="center"><%= Spree.t(:credit_card) %></legend>
+  <legend align="center"><%= Solidus.t(:credit_card) %></legend>
 
   <div class="row">
     <div class="alpha six columns">
       <dl>
-        <dt><%= Spree.t(:name_on_card) %>:</dt>
+        <dt><%= Solidus.t(:name_on_card) %>:</dt>
         <dd><%= payment.source.name %></dd>
 
-        <dt><%= Spree.t(:card_type) %>:</dt>
+        <dt><%= Solidus.t(:card_type) %>:</dt>
         <dd><%= payment.source.cc_type %></dd>
 
-        <dt><%= Spree.t(:card_number) %>:</dt>
+        <dt><%= Solidus.t(:card_number) %>:</dt>
         <dd><%= payment.source.display_number %></dd>
 
-        <dt><%= Spree.t(:expiration) %>:</dt>
+        <dt><%= Solidus.t(:expiration) %>:</dt>
         <dd><%= payment.source.month %>/<%= payment.source.year %></dd>
       </dl>
       <% if payment.source.address %>

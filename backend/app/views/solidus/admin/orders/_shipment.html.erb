@@ -6,8 +6,8 @@
       <legend align="center" class="stock-location" data-hook="stock-location">
         <span class="shipment-number"><%= shipment.number %></span>
         -
-        <span class="shipment-state"><%= Spree.t("shipment_states.#{shipment.state}") %></span>
-        <%= Spree.t(:package_from) %>
+        <span class="shipment-state"><%= Solidus.t("shipment_states.#{shipment.state}") %></span>
+        <%= Solidus.t(:package_from) %>
         <strong class="stock-location-name" data-hook="stock-location-name">'<%= shipment.stock_location.name %>'</strong>
       </legend>
 
@@ -15,8 +15,8 @@
         <%= form_tag(spree.ship_api_shipment_path(shipment), { method: "PUT", remote: true, id: "admin-ship-shipment" }) do %>
           <%= hidden_field_tag :send_mailer, false %>
           <%= check_box_tag :send_mailer, true, true %>
-          <%= label_tag :send_mailer, Spree.t(:send_mailer) %>
-          <%= submit_tag Spree.t(:ship), class: "ship-shipment-button" %>
+          <%= label_tag :send_mailer, Solidus.t(:send_mailer) %>
+          <%= submit_tag Solidus.t(:ship), class: "ship-shipment-button" %>
         <% end %>
       <% end %>
     </fieldset>
@@ -32,10 +32,10 @@
       </colgroup>
 
       <thead>
-        <th colspan="2"><%= Spree.t(:item_description) %></th>
-        <th><%= Spree.t(:price) %></th>
-        <th><%= Spree.t(:quantity) %></th>
-        <th><%= Spree.t(:total) %></th>
+        <th colspan="2"><%= Solidus.t(:item_description) %></th>
+        <th><%= Solidus.t(:price) %></th>
+        <th><%= Solidus.t(:quantity) %></th>
+        <th><%= Solidus.t(:total) %></th>
         <th class="orders-actions actions" data-hook="admin_order_form_line_items_header_actions"></th>
       </thead>
 
@@ -46,7 +46,7 @@
           <tr class="edit-method hidden total">
             <td colspan="5">
               <div class="field alpha five columns">
-                <%= label_tag 'selected_shipping_rate_id', Spree.t(:shipping_method) %>
+                <%= label_tag 'selected_shipping_rate_id', Solidus.t(:shipping_method) %>
                 <%= select_tag :selected_shipping_rate_id,
                       options_for_select(shipment.shipping_rates.map {|sr| ["#{sr.name} #{sr.display_price}", sr.id] }, shipment.selected_shipping_rate_id),
                       {:class => 'select2 fullwidth', :data => {'shipment-number' => shipment.number } } %>
@@ -55,9 +55,9 @@
             <td class="actions">
               <% if can? :update, shipment %>
                 <%= link_to '', '#', :class => 'save-method fa fa-check no-text with-tip',
-                  :data => {'shipment-number' => shipment.number, :action => 'save'}, title: Spree.t('actions.save') %>
+                  :data => {'shipment-number' => shipment.number, :action => 'save'}, title: Solidus.t('actions.save') %>
                 <%= link_to '', '#', :class => 'cancel-method fa fa-cancel no-text with-tip',
-                  :data => {:action => 'cancel'}, :title => Spree.t('actions.cancel') %>
+                  :data => {:action => 'cancel'}, :title => Solidus.t('actions.cancel') %>
               <% end %>
             </td>
           </tr>
@@ -72,25 +72,25 @@
                 <span><%= shipment.display_cost %></span>
               </td>
             <% else %>
-              <td colspan='5'><%= Spree.t(:no_shipping_method_selected) %></td>
+              <td colspan='5'><%= Solidus.t(:no_shipping_method_selected) %></td>
             <% end %>
 
             <td class="actions">
               <% if( (can? :update, shipment) and !shipment.shipped?) %>
-                <%= link_to '', '#', :class => 'edit-method fa fa-edit no-text with-tip', :data => {:action => 'edit'}, :title => Spree.t('edit') %>
+                <%= link_to '', '#', :class => 'edit-method fa fa-edit no-text with-tip', :data => {:action => 'edit'}, :title => Solidus.t('edit') %>
               <% end %>
             </td>
           </tr>
 
         <tr class="edit-tracking hidden total">
           <td colspan="5">
-            <label><%= Spree.t(:tracking_number) %>:</label>
+            <label><%= Solidus.t(:tracking_number) %>:</label>
             <%= text_field_tag :tracking, shipment.tracking %>
           </td>
           <td class="actions">
             <% if can? :update, shipment %>
-              <%= link_to '', '#', :class => 'save-tracking fa fa-check no-text with-tip', :data => {'shipment-number' => shipment.number, :action => 'save'}, :title => Spree.t('actions.save') %>
-              <%= link_to '', '#', :class => 'cancel-tracking fa fa-cancel no-text with-tip', :data => {:action => 'cancel'}, :title => Spree.t('actions.cancel') %>
+              <%= link_to '', '#', :class => 'save-tracking fa fa-check no-text with-tip', :data => {'shipment-number' => shipment.number, :action => 'save'}, :title => Solidus.t('actions.save') %>
+              <%= link_to '', '#', :class => 'cancel-tracking fa fa-cancel no-text with-tip', :data => {:action => 'cancel'}, :title => Solidus.t('actions.cancel') %>
             <% end %>
           </td>
         </tr>
@@ -98,7 +98,7 @@
         <% if order.special_instructions.present? %>
           <tr class='special_instructions'>
             <td colspan="5">
-              <strong><%= Spree.t(:special_instructions) %>:&nbsp;</strong><%= order.special_instructions %>
+              <strong><%= Solidus.t(:special_instructions) %>:&nbsp;</strong><%= order.special_instructions %>
             </td>
           </tr>
         <% end %>
@@ -106,14 +106,14 @@
         <tr class="show-tracking total">
           <td colspan="5" class="tracking-value">
             <% if shipment.tracking.present? %>
-              <strong><%= Spree.t(:tracking) %>:</strong> <%= shipment.tracking %>
+              <strong><%= Solidus.t(:tracking) %>:</strong> <%= shipment.tracking %>
             <% else %>
-              <%= Spree.t(:no_tracking_present) %>
+              <%= Solidus.t(:no_tracking_present) %>
             <% end %>
           </td>
           <td class="actions">
             <% if can? :update, shipment %>
-              <%= link_to '', '#', :class => 'edit-tracking fa fa-edit no-text with-tip', :data => {:action => 'edit'}, :title => Spree.t('edit') %>
+              <%= link_to '', '#', :class => 'edit-tracking fa fa-edit no-text with-tip', :data => {:action => 'edit'}, :title => Solidus.t('edit') %>
             <% end %>
           </td>
         </tr>

@@ -6,7 +6,7 @@ module Spree
     preference :currency, :string, default: ->{ Solidus::Config[:currency] }
 
     def self.description
-      Spree.t(:flat_rate_per_order)
+      Solidus.t(:flat_rate_per_order)
     end
 
     def compute(object=nil)

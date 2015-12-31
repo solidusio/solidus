@@ -19,7 +19,7 @@ module Spree
     validate :preferred_tiers_content
 
     def self.description
-      Spree.t(:tiered_percent)
+      Solidus.t(:tiered_percent)
     end
 
     def compute(object)

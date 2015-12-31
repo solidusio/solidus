@@ -1,16 +1,16 @@
 <fieldset id="action_fields" class="eight columns omega no-border-top">
 
   <%= form_tag spree.admin_promotion_promotion_actions_path(@promotion), :remote => true, :id => 'new_promotion_action_form' do %>
-    <% options = options_for_select(  Rails.application.config.spree.promotions.actions.map(&:name).map {|name| [ Spree.t("promotion_action_types.#{name.demodulize.underscore}.name"), name] } ) %>
+    <% options = options_for_select(  Rails.application.config.spree.promotions.actions.map(&:name).map {|name| [ Solidus.t("promotion_action_types.#{name.demodulize.underscore}.name"), name] } ) %>
     <fieldset>
-      <legend align="center"><%= Spree.t(:promotion_actions) %></legend>
+      <legend align="center"><%= Solidus.t(:promotion_actions) %></legend>
       <% if can?(:update, @promotion) %>
         <div class="field">
-          <%= label_tag :action_type, Spree.t(:add_action_of_type)%>
+          <%= label_tag :action_type, Solidus.t(:add_action_of_type)%>
           <%= select_tag 'action_type', options, :class => 'select2 fullwidth' %>
         </div>
         <div class="filter-actions actions">
-          <%= button Spree.t(:add), 'plus' %>
+          <%= button Solidus.t(:add), 'plus' %>
         </div>
       <% end %>
     </fieldset>
@@ -22,13 +22,13 @@
         <%= render :partial => 'promotion_action',  :collection => @promotion.actions %>
       <% else %>
         <div class="no-objects-found">
-          <%= Spree.t(:no_actions_added) %>
+          <%= Solidus.t(:no_actions_added) %>
         </div>
       <% end %>
     </div>
     <% if can?(:update, @promotion) %>
       <div class="filter-actions actions promotion-update">
-        <%= button Spree.t('actions.update'), 'refresh' %>
+        <%= button Solidus.t('actions.update'), 'refresh' %>
       </div>
     <% end %>
   <% end %>

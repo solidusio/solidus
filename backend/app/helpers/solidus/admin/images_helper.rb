@@ -4,12 +4,12 @@ module Spree
       def options_text_for(image)
         if image.viewable.is_a?(Solidus::Variant)
           if image.viewable.is_master?
-            Spree.t(:all)
+            Solidus.t(:all)
           else
             image.viewable.sku_and_options_text
           end
         else
-          Spree.t(:all)
+          Solidus.t(:all)
         end
       end
     end

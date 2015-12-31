@@ -3,9 +3,9 @@
 //= require solidus/frontend/checkout/address
 //= require solidus/frontend/checkout/payment
 
-Spree.disableSaveOnClick = ->
+Solidus.disableSaveOnClick = ->
   ($ 'form.edit_order').submit ->
     ($ this).find(':submit, :image').attr('disabled', true).removeClass('primary').addClass 'disabled'
 
-Spree.ready ($) ->
-  Spree.Checkout = {}
+Solidus.ready ($) ->
+  Solidus.Checkout = {}

@@ -6,8 +6,8 @@
   </colgroup>
   <thead>
     <tr data-hook="states_header">
-      <th><%= Spree.t(:name) %></th>
-      <th><%= Spree.t(:abbreviation) %></th>
+      <th><%= Solidus.t(:name) %></th>
+      <th><%= Solidus.t(:abbreviation) %></th>
       <th class="actions"></th>
     </tr>
   </thead>
@@ -18,7 +18,7 @@
         <td class="align-center"><%= state.abbr %></td>
         <td class="actions">
           <% if can?(:update, state) %>
-            <%= link_to_with_icon 'edit', Spree.t(:edit), edit_admin_country_state_url(@country, state), :no_text => true %>
+            <%= link_to_with_icon 'edit', Solidus.t(:edit), edit_admin_country_state_url(@country, state), :no_text => true %>
           <% end %>
           <% if can?(:destroy, state) %>
             <%= link_to_delete state, :no_text => true %>
@@ -27,7 +27,7 @@
       </tr>
     <% end %>
     <% if @states.empty? %>
-      <tr><td colspan="3"><%= Spree.t(:none) %></td></tr>
+      <tr><td colspan="3"><%= Solidus.t(:none) %></td></tr>
     <% end %>
   </tbody>
 </table>

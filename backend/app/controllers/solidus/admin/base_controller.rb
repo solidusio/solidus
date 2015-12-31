@@ -34,7 +34,7 @@ module Spree
         def flash_message_for(object, event_sym)
           resource_desc  = object.class.model_name.human
           resource_desc += " \"#{object.name}\"" if object.respond_to?(:name) && object.name.present?
-          Spree.t(event_sym, :resource => resource_desc)
+          Solidus.t(event_sym, :resource => resource_desc)
         end
 
         def render_js_for_destroy
@@ -58,7 +58,7 @@ module Spree
         def lock_order
           OrderMutex.with_lock!(@order) { yield }
         rescue Solidus::OrderMutex::LockFailed => e
-          flash[:error] = Spree.t(:order_mutex_admin_error)
+          flash[:error] = Solidus.t(:order_mutex_admin_error)
           redirect_to order_mutex_redirect_path
         end
 

@@ -115,7 +115,7 @@ module Spree
 
         it 'redirects back to index' do
           subject
-          expect(flash[:error]).to eq Spree.t(:stock_transfer_must_be_receivable)
+          expect(flash[:error]).to eq Solidus.t(:stock_transfer_must_be_receivable)
           expect(response).to redirect_to(spree.admin_stock_transfers_path)
         end
       end
@@ -168,7 +168,7 @@ module Spree
 
         it 'redirects back to edit' do
           subject
-          expect(flash[:error]).to eq Spree.t(:stock_transfer_cannot_be_finalized)
+          expect(flash[:error]).to eq Solidus.t(:stock_transfer_cannot_be_finalized)
           expect(response).to redirect_to(spree.edit_admin_stock_transfer_path(transfer_with_items))
         end
       end
@@ -226,7 +226,7 @@ module Spree
 
         it 'redirects back to receive' do
           subject
-          expect(flash[:error]).to eq Spree.t(:stock_transfer_must_be_receivable)
+          expect(flash[:error]).to eq Solidus.t(:stock_transfer_must_be_receivable)
           expect(response).to redirect_to(spree.receive_admin_stock_transfer_path(transfer_with_items))
         end
       end

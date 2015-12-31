@@ -588,7 +588,7 @@ describe Solidus::Payment, :type => :model do
       end
 
       specify do
-        expect { payment.process! }.to raise_error(Solidus::Core::GatewayError, Spree.t(:payment_processing_failed))
+        expect { payment.process! }.to raise_error(Solidus::Core::GatewayError, Solidus.t(:payment_processing_failed))
       end
     end
   end

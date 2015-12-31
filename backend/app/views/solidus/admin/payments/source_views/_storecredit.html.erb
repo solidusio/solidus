@@ -1,19 +1,19 @@
 <fieldset data-hook="store-credit">
-  <legend align="center"><%= Spree.t(:store_credit, scope: :store_credit) %></legend>
+  <legend align="center"><%= Solidus.t(:store_credit, scope: :store_credit) %></legend>
 
   <div class="row">
     <div class="alpha six columns">
       <dl>
-        <dt><%= Spree.t(:category) %>:</dt>
+        <dt><%= Solidus.t(:category) %>:</dt>
         <dd><%= payment.source.category.name%></dd>
 
-        <dt><%= Spree.t(:memo) %>:</dt>
+        <dt><%= Solidus.t(:memo) %>:</dt>
         <dd><%= payment.source.memo %></dd>
 
-        <dt><%= Spree.t(:created_by) %>:</dt>
+        <dt><%= Solidus.t(:created_by) %>:</dt>
         <dd><%= payment.source.created_by.email %></dd>
 
-        <dt><%= Spree.t(:issued_on, scope: [:admin, :store_credits]) %>:</dt>
+        <dt><%= Solidus.t(:issued_on, scope: [:admin, :store_credits]) %>:</dt>
         <dd><%= l payment.source.created_at.to_date %></dd>
       </dl>
     </div>

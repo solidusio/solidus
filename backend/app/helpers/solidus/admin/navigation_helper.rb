@@ -15,7 +15,7 @@ module Spree
         options[:route] ||=  "admin_#{args.first}"
 
         destination_url = options[:url] || spree.send("#{options[:route]}_path")
-        titleized_label = Spree.t(options[:label], :default => options[:label], :scope => [:admin, :tab]).titleize
+        titleized_label = Solidus.t(options[:label], :default => options[:label], :scope => [:admin, :tab]).titleize
 
         css_classes = []
 
@@ -43,30 +43,30 @@ module Spree
 
       def link_to_clone(resource, options={})
         options[:data] = {:action => 'clone'}
-        link_to_with_icon('copy', Spree.t(:clone), clone_object_url(resource), options)
+        link_to_with_icon('copy', Solidus.t(:clone), clone_object_url(resource), options)
       end
 
       def link_to_new(resource)
         options[:data] = {:action => 'new'}
-        link_to_with_icon('plus', Spree.t(:new), edit_object_url(resource))
+        link_to_with_icon('plus', Solidus.t(:new), edit_object_url(resource))
       end
 
       def link_to_edit(resource, options={})
         url = options[:url] || edit_object_url(resource)
         options[:data] = {:action => 'edit'}
-        link_to_with_icon('edit', Spree.t(:edit), url, options)
+        link_to_with_icon('edit', Solidus.t(:edit), url, options)
       end
 
       def link_to_edit_url(url, options={})
         options[:data] = {:action => 'edit'}
-        link_to_with_icon('edit', Spree.t(:edit), url, options)
+        link_to_with_icon('edit', Solidus.t(:edit), url, options)
       end
 
       def link_to_delete(resource, options={})
         url = options[:url] || object_url(resource)
-        name = options[:name] || Spree.t(:delete)
+        name = options[:name] || Solidus.t(:delete)
         options[:class] = "delete-resource"
-        options[:data] = { :confirm => Spree.t(:are_you_sure), :action => 'remove' }
+        options[:data] = { :confirm => Solidus.t(:are_you_sure), :action => 'remove' }
         link_to_with_icon 'trash', name, url, options
       end
 

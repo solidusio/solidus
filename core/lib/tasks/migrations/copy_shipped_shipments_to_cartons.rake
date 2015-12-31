@@ -1,6 +1,6 @@
 namespace 'spree:migrations:copy_shipped_shipments_to_cartons' do
   # This copies data from shipments into cartons from previous versions of
-  # Spree.
+  # Solidus.
 
   # Used in the migration CopyShippedShipmentsToCartons and made available as a
   # rake task to allow running it a second time after deploying the new code, in

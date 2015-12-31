@@ -21,12 +21,12 @@ module Spree
       end
 
       def create
-        @user = Spree.user_class.new(user_params)
+        @user = Solidus.user_class.new(user_params)
         if @user.save
           set_roles
           set_stock_locations
 
-          flash[:success] = Spree.t(:created_successfully)
+          flash[:success] = Solidus.t(:created_successfully)
           redirect_to edit_admin_user_url(@user)
         else
           load_roles
@@ -40,7 +40,7 @@ module Spree
         if @user.update_attributes(user_params)
           set_roles
           set_stock_locations
-          flash[:success] = Spree.t(:account_updated)
+          flash[:success] = Solidus.t(:account_updated)
         end
 
         redirect_to edit_admin_user_url(@user)
@@ -49,7 +49,7 @@ module Spree
       def addresses
         if request.put?
           if @user.update_attributes(user_params)
-            flash.now[:success] = Spree.t(:account_updated)
+            flash.now[:success] = Solidus.t(:account_updated)
           end
 
           render :addresses
@@ -73,20 +73,20 @@ module Spree
 
       def generate_api_key
         if @user.generate_spree_api_key!
-          flash[:success] = Spree.t('api.key_generated')
+          flash[:success] = Solidus.t('api.key_generated')
         end
         redirect_to edit_admin_user_path(@user)
       end
 
       def clear_api_key
         if @user.clear_spree_api_key!
-          flash[:success] = Spree.t('api.key_cleared')
+          flash[:success] = Solidus.t('api.key_cleared')
         end
         redirect_to edit_admin_user_path(@user)
       end
 
       def model_class
-        Spree.user_class
+        Solidus.user_class
       end
 
       private
@@ -94,7 +94,7 @@ module Spree
         def collection
           return @collection if @collection.present?
           if request.xhr? && params[:q].present?
-            @collection = Spree.user_class.includes(:bill_address, :ship_address)
+            @collection = Solidus.user_class.includes(:bill_address, :ship_address)
                               .where("spree_users.email #{LIKE} :search
                                      OR (spree_addresses.firstname #{LIKE} :search AND spree_addresses.id = spree_users.bill_address_id)
                                      OR (spree_addresses.lastname  #{LIKE} :search AND spree_addresses.id = spree_users.bill_address_id)
@@ -103,7 +103,7 @@ module Spree
                                     { :search => "#{params[:q].strip}%" })
                               .limit(params[:limit] || 100)
           else
-            @search = Spree.user_class.ransack(params[:q])
+            @search = Solidus.user_class.ransack(params[:q])
             @collection = @search.result.page(params[:page]).per(Solidus::Config[:admin_products_per_page])
           end
         end
@@ -125,7 +125,7 @@ module Spree
         # handling raise from Solidus::Admin::ResourceController#destroy
         def user_destroy_with_orders_error
           invoke_callbacks(:destroy, :fails)
-          render :status => :forbidden, :text => Spree.t(:error_user_destroy_with_orders)
+          render :status => :forbidden, :text => Solidus.t(:error_user_destroy_with_orders)
         end
 
         # Allow different formats of json data to suit different ajax calls

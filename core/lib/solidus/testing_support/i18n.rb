@@ -38,8 +38,8 @@ module Spree
           processed_keys << key.to_sym
         rescue KeyError
           error = "#{(processed_keys << key).join('.')} (#{I18n.locale})"
-          unless Spree.missing_translation_messages.include?(error)
-            Spree.missing_translation_messages << error
+          unless Solidus.missing_translation_messages.include?(error)
+            Solidus.missing_translation_messages << error
           end
         end
       end
@@ -53,7 +53,7 @@ module Spree
     self.load_translations(translations)
     translation_diff = unused_translations - used_translations
     translation_diff.each do |translation|
-      Spree.unused_translation_messages << "#{translation} (#{I18n.locale})"
+      Solidus.unused_translation_messages << "#{translation} (#{I18n.locale})"
     end
   end
 
@@ -79,17 +79,17 @@ RSpec.configure do |config|
   # Need to check here again because this is used in i18n_spec too.
   if ENV['CHECK_TRANSLATIONS']
     config.after :suite do
-      Spree.check_missing_translations
-      if Spree.missing_translation_messages.any?
+      Solidus.check_missing_translations
+      if Solidus.missing_translation_messages.any?
         puts "\nThere are missing translations within Spree:"
-        puts Spree.missing_translation_messages.sort
+        puts Solidus.missing_translation_messages.sort
         exit(1)
       end
 
-      Spree.check_unused_translations
-      if false && Spree.unused_translation_messages.any?
+      Solidus.check_unused_translations
+      if false && Solidus.unused_translation_messages.any?
         puts "\nThere are unused translations within Spree:"
-        puts Spree.unused_translation_messages.sort
+        puts Solidus.unused_translation_messages.sort
         exit(1)
       end
     end

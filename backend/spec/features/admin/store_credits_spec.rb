@@ -7,7 +7,7 @@ describe "Store credits admin" do
   let(:user)          { store_credit.user }
 
   before do
-    allow(Spree.user_class).to receive(:find_by).
+    allow(Solidus.user_class).to receive(:find_by).
       with(hash_including(:id)).
       and_return(store_credit.user)
   end

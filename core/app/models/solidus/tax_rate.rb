@@ -2,7 +2,7 @@ module Spree
   class DefaultTaxZoneValidator < ActiveModel::Validator
     def validate(record)
       if record.included_in_price
-        record.errors.add(:included_in_price, Spree.t(:included_price_validation)) unless Zone.default_tax
+        record.errors.add(:included_in_price, Solidus.t(:included_price_validation)) unless Zone.default_tax
       end
     end
   end
@@ -154,7 +154,7 @@ module Spree
       included = included_in_price && default_zone_or_zone_match?(order_tax_zone)
 
       if amount < 0
-        label = Spree.t(:refund) + ' ' + create_label
+        label = Solidus.t(:refund) + ' ' + create_label
       end
 
       self.adjustments.create!({
@@ -191,7 +191,7 @@ module Spree
         label = ""
         label << (name.present? ? name : tax_category.name) + " "
         label << (show_rate_in_label? ? "#{amount * 100}%" : "")
-        label << " (#{Spree.t(:included_in_price)})" if included_in_price?
+        label << " (#{Solidus.t(:included_in_price)})" if included_in_price?
         label
       end
 

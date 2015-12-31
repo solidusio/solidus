@@ -4,7 +4,7 @@ module Spree
       if @return_item.inventory_unit.shipped?
         return true
       else
-        add_error(:inventory_unit_shipped, Spree.t('return_item_inventory_unit_ineligible'))
+        add_error(:inventory_unit_shipped, Solidus.t('return_item_inventory_unit_ineligible'))
         return false
       end
     end

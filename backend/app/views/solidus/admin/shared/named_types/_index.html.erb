@@ -23,8 +23,8 @@
     </colgroup>
     <thead>
       <tr data-hook="named_types_header">
-        <th><%= Spree.t(:name) %></th>
-        <th><%= Spree.t(:active) %></th>
+        <th><%= Solidus.t(:name) %></th>
+        <th><%= Solidus.t(:active) %></th>
         <th class="actions"></th>
       </tr>
     </thead>
@@ -35,7 +35,7 @@
             <%= named_type.name %>
           </td>
           <td class="align-center">
-            <%= Spree.t(named_type.active? ? :say_yes : :say_no) %>
+            <%= Solidus.t(named_type.active? ? :say_yes : :say_no) %>
           </td>
           <td class="actions">
             <% if named_type.mutable? && can?(:update, named_type) %>
@@ -48,9 +48,9 @@
   </table>
 <% else %>
   <div class="alpha twelve columns no-objects-found">
-    <%= Spree.t(:no_resource_found, resource: resource_name) %>
+    <%= Solidus.t(:no_resource_found, resource: resource_name) %>
     <% if can?(:create, Solidus::ReturnReason) %>
-      <%= link_to Spree.t(:add_one), new_object_url %>!
+      <%= link_to Solidus.t(:add_one), new_object_url %>!
     <% end %>
   </div>
 <% end %>

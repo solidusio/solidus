@@ -11,7 +11,7 @@ $(document).ready ->
 
   $('.js-save-memo').on('click', (ev) ->
     ev.preventDefault()
-    Spree.ajax(
+    Solidus.ajax(
       $('#sc_memo_edit_form').attr('url'), {
         data: $('#sc_memo_edit_form').serialize(),
         dataType: 'json',

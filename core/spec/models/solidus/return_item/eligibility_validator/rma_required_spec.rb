@@ -22,7 +22,7 @@ describe Solidus::ReturnItem::EligibilityValidator::RMARequired, :type => :model
 
       it "sets an error" do
         subject
-        expect(validator.errors[:rma_required]).to eq Spree.t('return_item_rma_ineligible')
+        expect(validator.errors[:rma_required]).to eq Solidus.t('return_item_rma_ineligible')
       end
     end
   end

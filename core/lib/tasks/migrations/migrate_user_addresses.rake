@@ -8,7 +8,7 @@ namespace 'spree:migrations:migrate_user_addresses' do
   # to the user's address book. This will catch up all the historical data.
 
   task up: :environment do
-    Spree.user_class.find_each(batch_size: 500) do |user|
+    Solidus.user_class.find_each(batch_size: 500) do |user|
       ship_address = Solidus::Address.find_by_id(user.ship_address_id)
       bill_address = Solidus::Address.find_by_id(user.bill_address_id)
 

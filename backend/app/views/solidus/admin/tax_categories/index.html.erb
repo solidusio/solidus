@@ -1,14 +1,14 @@
 <%= render 'solidus/admin/shared/configuration_menu' %>
 
 <% content_for :page_title do %>
-  <%= Spree.t(:listing_tax_categories) %>
+  <%= Solidus.t(:listing_tax_categories) %>
 <% end %>
 
 <% content_for :page_actions do %>
   <ul class="actions inline-menu">
     <% if can?(:create, Solidus::TaxCategory) %>
       <li>
-        <%= button_link_to Spree.t(:new_tax_category), new_object_url, :icon => 'plus', :id => 'admin_new_tax_categories_link' %>
+        <%= button_link_to Solidus.t(:new_tax_category), new_object_url, :icon => 'plus', :id => 'admin_new_tax_categories_link' %>
       </li>
     <% end %>
   </ul>
@@ -25,10 +25,10 @@
   </colgroup>
   <thead>
     <tr data-hook="tax_header">
-      <th><%= Spree.t(:name) %></th>
-      <th><%= Spree.t(:tax_code) %></th>
-      <th><%= Spree.t(:description) %></th>
-      <th><%= Spree.t(:default) %></th>
+      <th><%= Solidus.t(:name) %></th>
+      <th><%= Solidus.t(:tax_code) %></th>
+      <th><%= Solidus.t(:description) %></th>
+      <th><%= Solidus.t(:default) %></th>
       <th class="actions"></th>
     </tr>
   </thead>
@@ -41,7 +41,7 @@
         <td class="align-center"><%= tax_category.name %></td>
         <td class="align-center"><%= tax_category.tax_code %></td>
         <td class="align-center"><%= tax_category.description %></td>
-        <td class="align-center"><%= tax_category.is_default? ? Spree.t(:say_yes) : Spree.t(:say_no) %></td>
+        <td class="align-center"><%= tax_category.is_default? ? Solidus.t(:say_yes) : Solidus.t(:say_no) %></td>
         <td class="actions">
           <% if can?(:update, tax_category) %>
             <%= link_to_edit tax_category, :no_text => true %>
@@ -55,9 +55,9 @@
 </table>
 <% else %>
   <div class="alpha twelve columns no-objects-found">
-    <%= Spree.t(:no_resource_found, resource: I18n.t(:other, scope: 'activerecord.models.solidus/tax_category')) %>
+    <%= Solidus.t(:no_resource_found, resource: I18n.t(:other, scope: 'activerecord.models.solidus/tax_category')) %>
     <% if can?(:create, Solidus::TaxCategory) %>
-      <%= link_to Spree.t(:add_one), spree.new_admin_tax_category_path %>!
+      <%= link_to Solidus.t(:add_one), spree.new_admin_tax_category_path %>!
     <% end %>
   </div>
 <% end %>

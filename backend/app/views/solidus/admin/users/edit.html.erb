@@ -1,12 +1,12 @@
 <% content_for :page_title do %>
-  <%= link_to "#{Spree.t(:editing_user)} #{@user.email}", edit_admin_user_url(@user) %>
+  <%= link_to "#{Solidus.t(:editing_user)} #{@user.email}", edit_admin_user_url(@user) %>
 <% end %>
 
 <%= render :partial => 'solidus/admin/users/sidebar', :locals => { :current => :account } %>
 <%= render :partial => 'solidus/admin/users/user_page_actions' %>
 
 <fieldset data-hook="admin_user_edit_general_settings" class="alpha twelve columns">
-  <legend><%= Spree.t(:general_settings) %></legend>
+  <legend><%= Solidus.t(:general_settings) %></legend>
 
   <div data-hook="admin_user_edit_form_header">
     <%= render :partial => 'solidus/shared/error_messages', :locals => { :target => @user } %>
@@ -27,31 +27,31 @@
 
 <% if can?(:update, @user) %>
   <fieldset data-hook="admin_user_api_key" id="admin_user_edit_api_key" class="alpha twelve columns">
-    <legend><%= Spree.t('access', :scope => 'api') %></legend>
+    <legend><%= Solidus.t('access', :scope => 'api') %></legend>
 
     <% if @user.spree_api_key.present? %>
       <div class="field">
-        <div id="current-api-key"><%= Spree.t('key', :scope => 'api') %>: (<%= Spree.t('hidden') %>)</div>
+        <div id="current-api-key"><%= Solidus.t('key', :scope => 'api') %>: (<%= Solidus.t('hidden') %>)</div>
       </div>
       <div class="filter-actions actions">
         <%= form_tag spree.clear_api_key_admin_user_path(@user), :method => :put do %>
-          <%= button Spree.t('clear_key', :scope => 'api'), 'trash' %>
+          <%= button Solidus.t('clear_key', :scope => 'api'), 'trash' %>
         <% end %>
 
-        <span class="or"><%= Spree.t(:or)%></span>
+        <span class="or"><%= Solidus.t(:or)%></span>
 
         <%= form_tag spree.generate_api_key_admin_user_path(@user), :method => :put do %>
-          <%= button Spree.t('regenerate_key', :scope => 'api'), 'refresh' %>
+          <%= button Solidus.t('regenerate_key', :scope => 'api'), 'refresh' %>
         <% end %>
       </div>
 
     <% else %>
 
-      <div class="no-objects-found"><%= Spree.t('no_key', :scope => 'api') %></div>
+      <div class="no-objects-found"><%= Solidus.t('no_key', :scope => 'api') %></div>
 
       <div class="filter-actions actions">
         <%= form_tag spree.generate_api_key_admin_user_path(@user), :method => :put do %>
-          <%= button Spree.t('generate_key', :scope => 'api'), 'key' %>
+          <%= button Solidus.t('generate_key', :scope => 'api'), 'key' %>
         <% end %>
       </div>
     <% end %>

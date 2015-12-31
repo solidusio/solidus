@@ -58,14 +58,14 @@ describe Solidus::TransferItem do
       shared_examples_for 'availability check fails' do
         it "validates the availability" do
           subject
-          expect(transfer_item.errors.full_messages).to include Spree.t('errors.messages.transfer_item_insufficient_stock')
+          expect(transfer_item.errors.full_messages).to include Solidus.t('errors.messages.transfer_item_insufficient_stock')
         end
       end
 
       shared_examples_for 'availability check passes' do
         it "doesn't validate the availability" do
           subject
-          expect(transfer_item.errors.full_messages).to_not include Spree.t('errors.messages.transfer_item_insufficient_stock')
+          expect(transfer_item.errors.full_messages).to_not include Solidus.t('errors.messages.transfer_item_insufficient_stock')
         end
       end
 
@@ -160,7 +160,7 @@ describe Solidus::TransferItem do
 
         it "adds an error message" do
           subject
-          expect(transfer_item.errors.full_messages).to include Spree.t('errors.messages.cannot_modify_transfer_item_closed_stock_transfer')
+          expect(transfer_item.errors.full_messages).to include Solidus.t('errors.messages.cannot_modify_transfer_item_closed_stock_transfer')
         end
       end
     end
@@ -178,7 +178,7 @@ describe Solidus::TransferItem do
 
       it "adds an error message" do
         subject
-        expect(transfer_item.errors.full_messages).to include Spree.t('errors.messages.cannot_update_expected_transfer_item_with_finalized_stock_transfer')
+        expect(transfer_item.errors.full_messages).to include Solidus.t('errors.messages.cannot_update_expected_transfer_item_with_finalized_stock_transfer')
       end
 
       context "updating received_quantity" do
@@ -215,7 +215,7 @@ describe Solidus::TransferItem do
 
       it "adds an error message" do
         subject
-        expect(transfer_item.errors.full_messages).to include Spree.t('errors.messages.cannot_delete_transfer_item_with_finalized_stock_transfer')
+        expect(transfer_item.errors.full_messages).to include Solidus.t('errors.messages.cannot_delete_transfer_item_with_finalized_stock_transfer')
       end
     end
 

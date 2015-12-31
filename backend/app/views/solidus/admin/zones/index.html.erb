@@ -1,13 +1,13 @@
 <%= render 'solidus/admin/shared/configuration_menu' %>
 
 <% content_for :page_title do %>
-  <%= Spree.t(:zones) %>
+  <%= Solidus.t(:zones) %>
 <% end %>
 
 <% content_for :page_actions do %>
   <% if can?(:create, Solidus::Zone) %>
     <li>
-      <%= button_link_to Spree.t(:new_zone), new_object_url, :icon => 'plus', :id => 'admin_new_zone_link' %>
+      <%= button_link_to Solidus.t(:new_zone), new_object_url, :icon => 'plus', :id => 'admin_new_zone_link' %>
     </li>
   <% end %>
 <% end %>
@@ -24,11 +24,11 @@
     </colgroup>
     <thead>
       <tr data-hook="zones_header">
-        <th><%= sort_link @search,:name, Spree.t(:name), :title => 'zones_order_by_name_title' %></th>
+        <th><%= sort_link @search,:name, Solidus.t(:name), :title => 'zones_order_by_name_title' %></th>
         <th>
-          <%= sort_link @search,:description, Spree.t(:description), {}, {:title => 'zones_order_by_description_title'} %>
+          <%= sort_link @search,:description, Solidus.t(:description), {}, {:title => 'zones_order_by_description_title'} %>
         </th>
-        <th><%= Spree.t(:default_tax) %></th>
+        <th><%= Solidus.t(:default_tax) %></th>
         <th class="actions"></th>
       </tr>
     </thead>
@@ -37,7 +37,7 @@
         <tr id="<%= spree_dom_id zone %>" data-hook="zones_row" class="<%= cycle('odd', 'even')%>">
           <td class="align-center"><%= zone.name %></td>
           <td><%= zone.description %></td>
-          <td class="align-center"><%= zone.default_tax? ? Spree.t(:say_yes) : Spree.t(:say_no) %></td>
+          <td class="align-center"><%= zone.default_tax? ? Solidus.t(:say_yes) : Solidus.t(:say_no) %></td>
           <td class="actions">
             <% if can?(:update, zone) %>
               <%= link_to_edit zone, :no_text => true %>
@@ -52,9 +52,9 @@
   </table>
 <% else %>
   <div class="alpha twelve columns no-objects-found">
-    <%= Spree.t(:no_resource_found, resource: I18n.t(:other, scope: 'activerecord.models.solidus/zone')) %>
+    <%= Solidus.t(:no_resource_found, resource: I18n.t(:other, scope: 'activerecord.models.solidus/zone')) %>
     <% if can?(:create, Solidus::Zone) %>
-      <%= link_to Spree.t(:add_one), spree.new_admin_zone_path %>!
+      <%= link_to Solidus.t(:add_one), spree.new_admin_zone_path %>!
     <% end %>
   </div>
 <% end %>

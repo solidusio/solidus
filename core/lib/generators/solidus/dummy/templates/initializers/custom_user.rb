@@ -1,1 +1,1 @@
-# Spree.user_class = "User"
+# Solidus.user_class = "User"

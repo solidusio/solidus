@@ -156,7 +156,7 @@ describe Solidus::Order, :type => :model do
 
       it "cannot transition to address without any line items" do
         expect(order.line_items).to be_blank
-        expect { order.next! }.to raise_error(StateMachines::InvalidTransition, /#{Spree.t(:there_are_no_items_for_this_order)}/)
+        expect { order.next! }.to raise_error(StateMachines::InvalidTransition, /#{Solidus.t(:there_are_no_items_for_this_order)}/)
       end
     end
 
@@ -278,7 +278,7 @@ describe Solidus::Order, :type => :model do
           end
           specify do
             transition = lambda { order.next! }
-            expect(transition).to raise_error(StateMachines::InvalidTransition, /#{Spree.t(:items_cannot_be_shipped)}/)
+            expect(transition).to raise_error(StateMachines::InvalidTransition, /#{Solidus.t(:items_cannot_be_shipped)}/)
           end
         end
       end
@@ -608,7 +608,7 @@ describe Solidus::Order, :type => :model do
 
       it 'clears the shipments and fails the transition' do
         expect(order.complete).to eq(false)
-        expect(order.errors[:base]).to include(Spree.t(:items_cannot_be_shipped))
+        expect(order.errors[:base]).to include(Solidus.t(:items_cannot_be_shipped))
         expect(order.shipments.count).to eq(0)
         expect(Solidus::InventoryUnit.where(shipment_id: shipment.id).count).to eq(0)
       end

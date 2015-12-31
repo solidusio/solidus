@@ -1,14 +1,14 @@
 <%= render 'solidus/admin/shared/configuration_menu' %>
 
 <% content_for :page_title do %>
-  <%= Spree.t(:listing_countries) %>
+  <%= Solidus.t(:listing_countries) %>
 <% end %>
 
 <% content_for :page_actions do %>
   <ul class="actions inline-menu">
     <% if can?(:create, Solidus::Country) %>
       <li>
-        <%= button_link_to Spree.t(:new_country), new_object_url, { :icon => 'plus', :id => 'admin_new_country' } %>
+        <%= button_link_to Solidus.t(:new_country), new_object_url, { :icon => 'plus', :id => 'admin_new_country' } %>
       </li>
     <% end %>
   </ul>
@@ -23,9 +23,9 @@
   </colgroup>
   <thead>
     <tr data-hook="tax_header">
-      <th><%= Spree.t(:country_name) %></th>
-      <th><%= Spree.t(:iso_name) %></th>
-      <th><%= Spree.t(:states_required) %></th>
+      <th><%= Solidus.t(:country_name) %></th>
+      <th><%= Solidus.t(:iso_name) %></th>
+      <th><%= Solidus.t(:states_required) %></th>
       <th class="actions"></th>
     </tr>
   </thead>
@@ -34,7 +34,7 @@
       <tr id="<%= spree_dom_id country %>" data-hook="country_row" class="<%= cycle('odd', 'even')%>">
         <td><%= country.name %></td>
         <td><%= country.iso_name %></td>
-        <td class="align-center"><%= country.states_required? ? Spree.t(:say_yes) : Spree.t(:say_no) %></td>
+        <td class="align-center"><%= country.states_required? ? Solidus.t(:say_yes) : Solidus.t(:say_no) %></td>
         <td class="actions">
           <% if can?(:edit, country) %>
             <%= link_to_edit country, :no_text => true %>

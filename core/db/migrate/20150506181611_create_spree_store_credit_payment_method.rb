@@ -12,8 +12,8 @@ class CreateSpreeStoreCreditPaymentMethod < ActiveRecord::Migration
       attributes = {type: "Solidus::PaymentMethod::StoreCredit"}
     end
     PaymentMethod.create_with(
-      name: Spree.t("store_credit.store_credit"),
-      description: Spree.t("store_credit.store_credit"),
+      name: Solidus.t("store_credit.store_credit"),
+      description: Solidus.t("store_credit.store_credit"),
       active: true,
       display_on: 'none',
     ).find_or_create_by!(attributes)

@@ -1,9 +1,9 @@
 <% content_for :page_title do %>
-  <%= link_to "#{Spree.t(:order)} ##{@order.number}", spree.edit_admin_order_path(@order) %>
+  <%= link_to "#{Solidus.t(:order)} ##{@order.number}", spree.edit_admin_order_path(@order) %>
 <% end %>
 
 <% content_for :sidebar_title do %>
-  <%= Spree.t(:order_information) %>
+  <%= Solidus.t(:order_information) %>
 <% end %>
 
 <% content_for :sidebar do %>

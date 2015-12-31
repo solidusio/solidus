@@ -1,2 +1,2 @@
 object false
-node(:error) { Spree.t(:item_not_in_stock_transfer) }
+node(:error) { Solidus.t(:item_not_in_stock_transfer) }

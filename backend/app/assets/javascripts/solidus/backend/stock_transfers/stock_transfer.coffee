@@ -4,8 +4,8 @@ class StockTransfer
     @transferItems = options.transferItems
 
   receive: (variantId, successHandler, errorHandler) ->
-    Spree.ajax
-      url: Spree.routes.receive_stock_transfer_api(@number)
+    Solidus.ajax
+      url: Solidus.routes.receive_stock_transfer_api(@number)
       type: "POST"
       data:
         variant_id: variantId
@@ -14,4 +14,4 @@ class StockTransfer
       error: (errorData) ->
         errorHandler(errorData)
 
-Spree.StockTransfer = StockTransfer
+Solidus.StockTransfer = StockTransfer

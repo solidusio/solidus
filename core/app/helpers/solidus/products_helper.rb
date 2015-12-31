@@ -25,7 +25,7 @@ module Spree
       diff   = variant.amount_in(current_currency) - product_amount
       amount = Solidus::Money.new(diff.abs, currency: current_currency).to_html
       label  = diff > 0 ? :add : :subtract
-      "(#{Spree.t(label)}: #{amount})".html_safe
+      "(#{Solidus.t(label)}: #{amount})".html_safe
     end
 
     # Returns the formatted full price for the variant, if at least one variant
@@ -60,7 +60,7 @@ module Spree
       if description_text.present?
         truncate(strip_tags(description_text.gsub('&nbsp;', ' ')), length: 100)
       else
-        Spree.t(:product_has_no_description)
+        Solidus.t(:product_has_no_description)
       end
     end
 

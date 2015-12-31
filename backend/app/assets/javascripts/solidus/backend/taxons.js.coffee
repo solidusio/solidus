@@ -3,7 +3,7 @@ $ ->
 
   productListTemplate = (products) ->
     products.map(productTemplate).join('') ||
-    "<h4>#{Spree.translations.no_results}</h4>"
+    "<h4>#{Solidus.translations.no_results}</h4>"
 
   raiseDraggable = (draggable) ->
     draggable.prev().insertAfter(draggable)
@@ -23,8 +23,8 @@ $ ->
       lowerDraggable $(e.currentTarget)
 
   saveSort = (event, ui) ->
-   Spree.ajax
-     url: Spree.routes.classifications_api,
+   Solidus.ajax
+     url: Solidus.routes.classifications_api,
      method: 'PUT',
      data:
        product_id: ui.item.data('product-id'),
@@ -47,10 +47,10 @@ $ ->
 
   $('#taxon_id').select2
     dropdownCssClass: "taxon_select_box",
-    placeholder: Spree.translations.find_a_taxon,
+    placeholder: Solidus.translations.find_a_taxon,
     ajax:
-      url: Spree.routes.taxons_search,
-      params: { "headers": { "X-Spree-Token": Spree.api_key } },
+      url: Solidus.routes.taxons_search,
+      params: { "headers": { "X-Spree-Token": Solidus.api_key } },
       data: (term, page) ->
         per_page: 50,
         page: page,
@@ -65,8 +65,8 @@ $ ->
       taxon.pretty_name
 
   $('#taxon_id').on "change", (e) ->
-    Spree.ajax
-      url: Spree.routes.taxon_products_api,
+    Solidus.ajax
+      url: Solidus.routes.taxon_products_api,
       data: { id: e.val }
       success: (data) ->
         sortable.html productListTemplate(data.products)

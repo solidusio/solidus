@@ -23,10 +23,10 @@ module Spree
           if tax_rate.included_in_price?
             if tax_amount > 0
               amount = "#{display_tax_amount(tax_amount)} #{tax_rate.name}"
-              price += " (#{Spree.t(:incl)} #{amount})"
+              price += " (#{Solidus.t(:incl)} #{amount})"
             else
               amount = "#{display_tax_amount(tax_amount*-1)} #{tax_rate.name}"
-              price += " (#{Spree.t(:excl)} #{amount})"
+              price += " (#{Solidus.t(:excl)} #{amount})"
             end
           else
             amount = "#{display_tax_amount(tax_amount)} #{tax_rate.name}"

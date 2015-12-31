@@ -1,1 +1,1 @@
-Spree.user_class = "<%= class_name %>"
+Solidus.user_class = "<%= class_name %>"

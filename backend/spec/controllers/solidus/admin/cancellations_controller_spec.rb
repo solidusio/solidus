@@ -33,7 +33,7 @@ describe Solidus::Admin::CancellationsController do
 
       it "sets an error message" do
         subject
-        expect(flash[:error]).to eq Spree.t(:no_inventory_selected)
+        expect(flash[:error]).to eq Solidus.t(:no_inventory_selected)
       end
     end
 
@@ -47,7 +47,7 @@ describe Solidus::Admin::CancellationsController do
 
       it "sets an error message" do
         subject
-        expect(flash[:error]).to eq Spree.t(:unable_to_find_all_inventory_units)
+        expect(flash[:error]).to eq Solidus.t(:unable_to_find_all_inventory_units)
       end
     end
 
@@ -61,7 +61,7 @@ describe Solidus::Admin::CancellationsController do
 
       it "sets an success message" do
         subject
-        expect(flash[:success]).to eq Spree.t(:inventory_canceled)
+        expect(flash[:success]).to eq Solidus.t(:inventory_canceled)
       end
 
       it "creates a unit cancel" do

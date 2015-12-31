@@ -70,7 +70,7 @@ describe Solidus::Ability, :type => :model do
     let(:resource_product) { Solidus::Product.new }
     let(:resource_user) { create :user }
     let(:resource_order) { Solidus::Order.new }
-    let(:fakedispatch_user) { Spree.user_class.create }
+    let(:fakedispatch_user) { Solidus.user_class.create }
     let(:fakedispatch_ability) { Solidus::Ability.new(fakedispatch_user) }
 
     context 'with admin user' do
@@ -159,7 +159,7 @@ describe Solidus::Ability, :type => :model do
       end
 
       context 'requested by other user' do
-        before(:each) { resource.user = Spree.user_class.new }
+        before(:each) { resource.user = Solidus.user_class.new }
         it_should_behave_like 'create only'
       end
 
@@ -252,7 +252,7 @@ describe Solidus::Ability, :type => :model do
         it_should_behave_like 'no index allowed'
       end
       context 'requested by other user' do
-        let(:resource) { Spree.user_class.create }
+        let(:resource) { Solidus.user_class.create }
         it_should_behave_like 'create only'
       end
     end

@@ -37,12 +37,12 @@ describe "General Settings", type: :feature, js: true do
 
   context "clearing the cache" do
     it "should clear the cache" do
-      expect(page).to_not have_content(Spree.t(:clear_cache_ok))
-      expect(page).to have_content(Spree.t(:clear_cache_warning))
+      expect(page).to_not have_content(Solidus.t(:clear_cache_ok))
+      expect(page).to have_content(Solidus.t(:clear_cache_warning))
 
       click_button "Clear Cache"
 
-      expect(page).to have_content(Spree.t(:clear_cache_ok))
+      expect(page).to have_content(Solidus.t(:clear_cache_ok))
     end
   end
 end

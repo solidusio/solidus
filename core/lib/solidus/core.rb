@@ -25,22 +25,22 @@ module Spree
 
   def self.user_class
     if @@user_class.is_a?(Class)
-      raise "Spree.user_class MUST be a String or Symbol object, not a Class object."
+      raise "Solidus.user_class MUST be a String or Symbol object, not a Class object."
     elsif @@user_class.is_a?(String) || @@user_class.is_a?(Symbol)
       @@user_class.to_s.constantize
     end
   end
 
-  # Used to configure Spree.
+  # Used to configure Solidus.
   #
   # Example:
   #
-  #   Spree.config do |config|
+  #   Solidus.config do |config|
   #     config.track_inventory_levels = false
   #   end
   #
   # This method is defined within the core gem on purpose.
-  # Some people may only wish to use the Core part of Spree.
+  # Some people may only wish to use the Core part of Solidus.
   def self.config(&block)
     yield(Solidus::Config)
   end
@@ -52,7 +52,7 @@ module Spree
       case name
       when :AdjustmentSource, :CalculatedAdjustments, :UserAddress, :UserPaymentSource
         ActiveSupport::Deprecation.warn("Solidus::Core::#{name} is deprecated! Use Solidus::#{name} instead.", caller)
-        Spree.const_get(name)
+        Solidus.const_get(name)
       else
         super
       end

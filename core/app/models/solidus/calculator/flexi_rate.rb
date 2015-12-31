@@ -8,7 +8,7 @@ module Spree
     preference :currency,        :string,  default: ->{ Solidus::Config[:currency] }
 
     def self.description
-      Spree.t(:flexible_rate)
+      Solidus.t(:flexible_rate)
     end
 
     def self.available?(object)

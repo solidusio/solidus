@@ -9,7 +9,7 @@ module Spree
       preference :currency, :string, default: ->{ Solidus::Config[:currency] }
 
       def self.description
-        Spree.t(:shipping_price_sack)
+        Solidus.t(:shipping_price_sack)
       end
 
       def compute_package(package)

@@ -1,10 +1,10 @@
 <% content_for :page_title do %>
-  <%= Spree.t('stock_transfer') %> <%= @stock_transfer.number %>
+  <%= Solidus.t('stock_transfer') %> <%= @stock_transfer.number %>
 <% end %>
 
 <% content_for :page_actions do %>
   <li>
-    <%= button_link_to Spree.t(:back_to_stock_transfers_list), admin_stock_transfers_path, :icon => 'arrow-left' %>
+    <%= button_link_to Solidus.t(:back_to_stock_transfers_list), admin_stock_transfers_path, :icon => 'arrow-left' %>
   </li>
 <% end %>
 
@@ -18,37 +18,37 @@
   </div>
 
   <div>
-    <label><%= Spree.t(:description) %></label>
+    <label><%= Solidus.t(:description) %></label>
     <p><%= @stock_transfer.description %></p>
   </div>
 
   <div class='field-block alpha three columns'>
-    <label><%= Spree.t(:created_by) %></label>
+    <label><%= Solidus.t(:created_by) %></label>
     <p><%= @stock_transfer.created_by.email %></p>
   </div>
 
   <div class='field-block alpha three columns'>
-    <label><%= Spree.t(:created_at) %></label>
+    <label><%= Solidus.t(:created_at) %></label>
     <p><%= @stock_transfer.created_at.try(:to_date) %></p>
   </div>
 
   <div class='field-block alpha three columns'>
-    <label><%= Spree.t(:finalized_at) %></label>
+    <label><%= Solidus.t(:finalized_at) %></label>
     <p><%= @stock_transfer.finalized_at.try(:to_date) %></p>
   </div>
 
   <div class='field-block alpha three columns'>
-    <label><%= Spree.t(:finalized_by) %></label>
+    <label><%= Solidus.t(:finalized_by) %></label>
     <p><%= @stock_transfer.finalized_by.try(:email) %></p>
   </div>
 
   <div class='field-block alpha three columns'>
-    <label><%= Spree.t(:shipped_at) %></label>
+    <label><%= Solidus.t(:shipped_at) %></label>
     <p><%= @stock_transfer.shipped_at.try(:to_date) %></p>
   </div>
 </fieldset>
 
 <fieldset>
-  <legend><%= Spree.t(:transfer_items) %></legend>
+  <legend><%= Solidus.t(:transfer_items) %></legend>
   <%= render partial: 'transfer_item_table', locals: { transfer_items: @stock_transfer.transfer_items, show_expected: true, show_received: true, show_actions: false } %>
 </fieldset>

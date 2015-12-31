@@ -4,25 +4,25 @@
   <% if @order.shipments.any? &:shipped? %>
     <li>
       <% if can? :create, Solidus::ReturnAuthorization %>
-        <%= button_link_to Spree.t(:new_return_authorization), new_admin_order_return_authorization_url(@order), :icon => 'plus' %>
+        <%= button_link_to Solidus.t(:new_return_authorization), new_admin_order_return_authorization_url(@order), :icon => 'plus' %>
       <% end %>
     </li>
   <% end %>
-  <li><%= button_link_to Spree.t(:back_to_orders_list), spree.admin_orders_path, :icon => 'arrow-left' %></li>
+  <li><%= button_link_to Solidus.t(:back_to_orders_list), spree.admin_orders_path, :icon => 'arrow-left' %></li>
 <% end %>
 
 <% content_for :page_title do %>
-  <i class="fa fa-arrow-right"></i> <%= Spree.t(:return_authorizations) %>
+  <i class="fa fa-arrow-right"></i> <%= Solidus.t(:return_authorizations) %>
 <% end %>
 
 <% if @order.shipments.any?(&:shipped?) || @order.return_authorizations.any? %>
   <table class="index">
     <thead data-hook="rma_header">
       <tr>
-        <th><%= Spree.t(:rma_number) %></th>
-        <th><%= Spree.t(:status) %></th>
-        <th><%= Spree.t(:pre_tax_total) %></th>
-        <th><%= "#{Spree.t('date')}/#{Spree.t('time')}" %></th>
+        <th><%= Solidus.t(:rma_number) %></th>
+        <th><%= Solidus.t(:status) %></th>
+        <th><%= Solidus.t(:pre_tax_total) %></th>
+        <th><%= "#{Solidus.t('date')}/#{Solidus.t('time')}" %></th>
         <th class="actions"></th>
       </tr>
     </thead>
@@ -30,7 +30,7 @@
       <% @return_authorizations.each do |return_authorization| %>
         <tr id="<%= spree_dom_id(return_authorization) %>" data-hook="rma_row" class="<%= cycle('odd', 'even')%>">
           <td><%= return_authorization.number %></td>
-          <td><%= Spree.t(return_authorization.state.downcase) %></td>
+          <td><%= Solidus.t(return_authorization.state.downcase) %></td>
           <td><%= return_authorization.display_pre_tax_total.to_html %></td>
           <td><%= pretty_time(return_authorization.created_at) %></td>
           <td class="actions">
@@ -47,6 +47,6 @@
   </table>
 <% else %>
   <div data-hook="rma_cannot_create" class="no-objects-found">
-    <%= Spree.t(:cannot_create_returns) %>
+    <%= Solidus.t(:cannot_create_returns) %>
   </div>
 <% end %>

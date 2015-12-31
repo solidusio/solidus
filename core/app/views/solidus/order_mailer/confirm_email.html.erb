@@ -2,13 +2,13 @@
   <tr>
     <td>
       <p class="lede">
-        <%= Spree.t('order_mailer.confirm_email.dear_customer') %>
+        <%= Solidus.t('order_mailer.confirm_email.dear_customer') %>
       </p>
       <p>
-        <%= Spree.t('order_mailer.confirm_email.instructions') %>
+        <%= Solidus.t('order_mailer.confirm_email.instructions') %>
       </p>
       <p>
-        <%= Spree.t('order_mailer.confirm_email.order_summary') %>
+        <%= Solidus.t('order_mailer.confirm_email.order_summary') %>
       </p>
       <table>
         <% @order.line_items.each do |item| %>
@@ -24,7 +24,7 @@
         <tr>
           <td></td>
           <td>
-            <%= Spree.t('order_mailer.confirm_email.subtotal') %>
+            <%= Solidus.t('order_mailer.confirm_email.subtotal') %>
           </td>
           <td>
             <%= @order.display_item_total %>
@@ -35,7 +35,7 @@
             <% @order.all_adjustments.promotion.eligible.group_by(&:label).each do |label, adjustments| %>
               <tr>
                 <td></td>
-                <td><%= Spree.t(:promotion) %> <%= label %>:</td>
+                <td><%= Solidus.t(:promotion) %> <%= label %>:</td>
                 <td><%= Solidus::Money.new(adjustments.sum(&:amount), currency: @order.currency) %></td>
               </tr>
             <% end %>
@@ -44,7 +44,7 @@
         <% @order.shipments.group_by { |s| s.selected_shipping_rate.try(:name) }.each do |name, shipments| %>
           <tr>
             <td></td>
-            <td><%= Spree.t(:shipping) %> <%= name %>:</td>
+            <td><%= Solidus.t(:shipping) %> <%= name %>:</td>
             <td><%= Solidus::Money.new(shipments.sum(&:discounted_cost), currency: @order.currency) %></td>
           </tr>
         <% end %>
@@ -52,7 +52,7 @@
           <% @order.all_adjustments.eligible.tax.group_by(&:label).each do |label, adjustments| %>
             <tr>
               <td></td>
-              <td><%= Spree.t(:tax) %> <%= label %>:</td>
+              <td><%= Solidus.t(:tax) %> <%= label %>:</td>
               <td><%= Solidus::Money.new(adjustments.sum(&:amount), currency: @order.currency) %></td>
             </tr>
           <% end %>
@@ -68,7 +68,7 @@
         <tr>
           <td></td>
           <td>
-            <%= Spree.t('order_mailer.confirm_email.total') %>
+            <%= Solidus.t('order_mailer.confirm_email.total') %>
           </td>
           <td>
             <%= @order.display_total %>
@@ -76,7 +76,7 @@
         </tr>
       </table>
       <p>
-        <%= Spree.t('order_mailer.confirm_email.thanks') %>
+        <%= Solidus.t('order_mailer.confirm_email.thanks') %>
       </p>
     </td>
     <td class="expander"></td>

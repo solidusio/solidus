@@ -80,8 +80,8 @@ module Spree
       end
 
       # Promotion rules need to be evaluated on after initialize otherwise
-      # Spree.user_class would be nil and users might experience errors related
-      # to malformed model associations (Spree.user_class is only defined on
+      # Solidus.user_class would be nil and users might experience errors related
+      # to malformed model associations (Solidus.user_class is only defined on
       # the app initializer)
       config.after_initialize do
         Rails.application.config.spree.promotions.rules.concat [

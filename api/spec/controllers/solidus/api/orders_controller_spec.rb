@@ -18,7 +18,7 @@ module Spree
     let(:address_params) { { :country_id => Country.first.id, :state_id => State.first.id } }
 
     let(:current_api_user) do
-      user = Spree.user_class.new(:email => "spree@example.com")
+      user = Solidus.user_class.new(:email => "spree@example.com")
       user.generate_spree_api_key!
       user
     end
@@ -39,7 +39,7 @@ module Spree
           with(:admin, Solidus::Order).
           and_return(can_admin)
 
-        allow(Spree.user_class).to receive(:find).
+        allow(Solidus.user_class).to receive(:find).
           with(target_user.id).
           and_return(target_user)
       end
@@ -89,7 +89,7 @@ module Spree
           with(number: order.number).
           and_return(order)
 
-        allow(Spree.user_class).to receive(:find).
+        allow(Solidus.user_class).to receive(:find).
           with(user.id).
           and_return(user)
 
@@ -314,7 +314,7 @@ module Spree
 
       it "can view an order" do
         user = build(:user, spree_roles: [Solidus::Role.new(name: 'bar')])
-        allow(Spree.user_class).to receive_messages find_by: user
+        allow(Solidus.user_class).to receive_messages find_by: user
         api_get :show, :id => order.to_param
         expect(response.status).to eq(200)
       end
@@ -492,7 +492,7 @@ module Spree
       end
 
       it "cannot set the user_id for the order" do
-        user = Spree.user_class.create
+        user = Solidus.user_class.create
         original_id = order.user_id
         api_post :update, :id => order.to_param, :order => { user_id: user.id }
         expect(response.status).to eq 200
@@ -734,7 +734,7 @@ module Spree
         end
 
         it "can set the user_id for the order" do
-          user = Spree.user_class.create
+          user = Solidus.user_class.create
           api_post :create, :order => { user_id: user.id }
           expect(response.status).to eq 201
           expect(json_response["user_id"]).to eq(user.id)
@@ -743,7 +743,7 @@ module Spree
 
       context "updating" do
         it "can set the user_id for the order" do
-          user = Spree.user_class.create
+          user = Solidus.user_class.create
           api_post :update, :id => order.number, :order => { user_id: user.id }
           expect(response.status).to eq 200
           expect(json_response["user_id"]).to eq(user.id)
@@ -784,7 +784,7 @@ module Spree
           expect(response.status).to eq 200
           expect(order.reload.promotions).to eq [promo]
           expect(json_response).to eq({
-            "success" => Spree.t(:coupon_code_applied),
+            "success" => Solidus.t(:coupon_code_applied),
             "error" => nil,
             "successful" => true,
             "status_code" => "coupon_code_applied",
@@ -802,7 +802,7 @@ module Spree
           expect(order.reload.promotions).to eq []
           expect(json_response).to eq({
             "success" => nil,
-            "error" => Spree.t(:coupon_code_unknown_error),
+            "error" => Solidus.t(:coupon_code_unknown_error),
             "successful" => false,
             "status_code" => "coupon_code_unknown_error",
           })

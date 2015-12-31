@@ -1,39 +1,39 @@
-Spree.routes.checkouts_api = Spree.pathFor('api/checkouts')
-Spree.routes.classifications_api = Spree.pathFor('api/classifications')
-Spree.routes.clear_cache = Spree.pathFor('admin/general_settings/clear_cache')
-Spree.routes.option_value_search = Spree.pathFor('api/option_values')
-Spree.routes.option_type_search = Spree.pathFor('api/option_types')
-Spree.routes.orders_api = Spree.pathFor('api/orders')
-Spree.routes.product_search = Spree.pathFor('api/products')
-Spree.routes.admin_product_search = Spree.pathFor('admin/search/products')
-Spree.routes.shipments_api = Spree.pathFor('api/shipments')
-Spree.routes.checkouts_api = Spree.pathFor('api/checkouts')
-Spree.routes.stock_locations_api = Spree.pathFor('api/stock_locations')
-Spree.routes.taxon_products_api = Spree.pathFor('api/taxons/products')
-Spree.routes.taxons_search = Spree.pathFor('api/taxons')
-Spree.routes.user_search = Spree.pathFor('admin/search/users')
-Spree.routes.variants_api = Spree.pathFor('api/variants')
+Solidus.routes.checkouts_api = Solidus.pathFor('api/checkouts')
+Solidus.routes.classifications_api = Solidus.pathFor('api/classifications')
+Solidus.routes.clear_cache = Solidus.pathFor('admin/general_settings/clear_cache')
+Solidus.routes.option_value_search = Solidus.pathFor('api/option_values')
+Solidus.routes.option_type_search = Solidus.pathFor('api/option_types')
+Solidus.routes.orders_api = Solidus.pathFor('api/orders')
+Solidus.routes.product_search = Solidus.pathFor('api/products')
+Solidus.routes.admin_product_search = Solidus.pathFor('admin/search/products')
+Solidus.routes.shipments_api = Solidus.pathFor('api/shipments')
+Solidus.routes.checkouts_api = Solidus.pathFor('api/checkouts')
+Solidus.routes.stock_locations_api = Solidus.pathFor('api/stock_locations')
+Solidus.routes.taxon_products_api = Solidus.pathFor('api/taxons/products')
+Solidus.routes.taxons_search = Solidus.pathFor('api/taxons')
+Solidus.routes.user_search = Solidus.pathFor('admin/search/users')
+Solidus.routes.variants_api = Solidus.pathFor('api/variants')
 
-Spree.routes.line_items_api = function(order_id) {
-  return Spree.pathFor('api/orders/' + order_id + '/line_items')
+Solidus.routes.line_items_api = function(order_id) {
+  return Solidus.pathFor('api/orders/' + order_id + '/line_items')
 }
 
-Spree.routes.payments_api = function(order_id) {
-  return Spree.pathFor('api/orders/' + order_id + '/payments')
+Solidus.routes.payments_api = function(order_id) {
+  return Solidus.pathFor('api/orders/' + order_id + '/payments')
 }
 
-Spree.routes.stock_items_api = function(stock_location_id) {
-  return Spree.pathFor('api/stock_locations/' + stock_location_id + '/stock_items')
+Solidus.routes.stock_items_api = function(stock_location_id) {
+  return Solidus.pathFor('api/stock_locations/' + stock_location_id + '/stock_items')
 }
 
-Spree.routes.receive_stock_transfer_api = function(stockTransferNumber) {
-  return Spree.pathFor('api/stock_transfers/' + stockTransferNumber + '/receive')
+Solidus.routes.receive_stock_transfer_api = function(stockTransferNumber) {
+  return Solidus.pathFor('api/stock_transfers/' + stockTransferNumber + '/receive')
 }
 
-Spree.routes.create_transfer_items_api = function(stockTransferNumber) {
-  return Spree.pathFor('api/stock_transfers/' + stockTransferNumber + '/transfer_items')
+Solidus.routes.create_transfer_items_api = function(stockTransferNumber) {
+  return Solidus.pathFor('api/stock_transfers/' + stockTransferNumber + '/transfer_items')
 }
 
-Spree.routes.update_transfer_items_api = function(stockTransferNumber, itemId) {
-  return Spree.pathFor('api/stock_transfers/' + stockTransferNumber + '/transfer_items/' + itemId)
+Solidus.routes.update_transfer_items_api = function(stockTransferNumber, itemId) {
+  return Solidus.pathFor('api/stock_transfers/' + stockTransferNumber + '/transfer_items/' + itemId)
 }

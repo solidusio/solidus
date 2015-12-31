@@ -8,7 +8,7 @@ module Spree
     preference :currency, :string, default: ->{ Solidus::Config[:currency] }
 
     def self.description
-      Spree.t(:price_sack)
+      Solidus.t(:price_sack)
     end
 
     # as object we always get line items, as calculable we have Coupon, ShippingMethod

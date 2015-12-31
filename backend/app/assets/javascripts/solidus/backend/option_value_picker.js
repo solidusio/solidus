@@ -10,14 +10,14 @@ $.fn.optionValueAutocomplete = function (options) {
     minimumInputLength: 3,
     multiple: multiple,
     initSelection: function (element, callback) {
-      $.get(Spree.routes.option_value_search, {
+      $.get(Solidus.routes.option_value_search, {
         ids: element.val().split(',')
       }, function (data) {
         callback(multiple ? data : data[0]);
       });
     },
     ajax: {
-      url: Spree.routes.option_value_search,
+      url: Solidus.routes.option_value_search,
       datatype: 'json',
       data: function (term, page) {
         var productId = typeof(productSelect) !== 'undefined' ? $(productSelect).select2('val') : null;
@@ -26,7 +26,7 @@ $.fn.optionValueAutocomplete = function (options) {
             name_cont: term,
             variants_product_id_eq: productId
           },
-          token: Spree.api_key
+          token: Solidus.api_key
         };
       },
       results: function (data, page) {

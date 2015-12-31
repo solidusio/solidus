@@ -236,7 +236,7 @@ describe Solidus::CheckoutController, :type => :controller do
 
         it "should populate the flash message" do
           spree_post :update, {:state => "confirm"}
-          expect(flash.notice).to eq(Spree.t(:order_processed_successfully))
+          expect(flash.notice).to eq(Solidus.t(:order_processed_successfully))
         end
 
         it "should remove completed order from current_order" do
@@ -291,7 +291,7 @@ describe Solidus::CheckoutController, :type => :controller do
 
       it "should render the edit template and display exception message" do
         expect(response).to render_template :edit
-        expect(flash.now[:error]).to eq(Spree.t(:spree_gateway_error_flash_for_checkout))
+        expect(flash.now[:error]).to eq(Solidus.t(:spree_gateway_error_flash_for_checkout))
         expect(assigns(:order).errors[:base]).to include("Invalid something or other.")
       end
     end
@@ -355,7 +355,7 @@ describe Solidus::CheckoutController, :type => :controller do
           order.shipments.first.shipping_rates.delete_all
           order.update_attributes(state: 'confirm')
           spree_put :update, state: order.state, :order => {}
-          expect(flash[:error]).to eq(Spree.t(:items_cannot_be_shipped))
+          expect(flash[:error]).to eq(Solidus.t(:items_cannot_be_shipped))
           expect(response).to redirect_to(spree.checkout_state_path('confirm'))
         end
       end
@@ -381,9 +381,9 @@ describe Solidus::CheckoutController, :type => :controller do
       end
 
       it "fails to transition from payment to complete" do
-        allow_any_instance_of(Solidus::Payment).to receive(:process!).and_raise(Solidus::Core::GatewayError.new(Spree.t(:payment_processing_failed)))
+        allow_any_instance_of(Solidus::Payment).to receive(:process!).and_raise(Solidus::Core::GatewayError.new(Solidus.t(:payment_processing_failed)))
         spree_put :update, state: order.state, :order => {}
-        expect(flash[:error]).to eq(Spree.t(:payment_processing_failed))
+        expect(flash[:error]).to eq(Solidus.t(:payment_processing_failed))
       end
     end
   end
@@ -412,7 +412,7 @@ describe Solidus::CheckoutController, :type => :controller do
       end
 
       it "should set flash message for no inventory" do
-        expect(flash[:error]).to eq(Spree.t(:inventory_error_flash_for_insufficient_quantity , :names => "'#{product.name}'" ))
+        expect(flash[:error]).to eq(Solidus.t(:inventory_error_flash_for_insufficient_quantity , :names => "'#{product.name}'" ))
       end
     end
   end

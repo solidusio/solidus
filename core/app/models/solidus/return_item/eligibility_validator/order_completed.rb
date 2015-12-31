@@ -4,7 +4,7 @@ module Spree
       if @return_item.inventory_unit.order.completed?
         return true
       else
-        add_error(:order_not_completed, Spree.t('return_item_order_not_completed'))
+        add_error(:order_not_completed, Solidus.t('return_item_order_not_completed'))
         return false
       end
     end

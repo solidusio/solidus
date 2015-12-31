@@ -7,7 +7,7 @@ $(document).ready(function () {
 
       var id = '#' + $(this).prop('id').replace('_quantity', '_id');
 
-      Spree.ajax({
+      Solidus.ajax({
         url: "/admin/orders/" + $('input#order_number').val() + '/line_items/' + $(id).val(),
         method: "PUT",
         data: { "line_item": { "quantity": $(this).val() } },

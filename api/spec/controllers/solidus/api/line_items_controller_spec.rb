@@ -159,7 +159,7 @@ module Spree
     context "as just another user" do
       before do
         user = create(:user)
-        allow(Spree.user_class).to receive(:find_by).
+        allow(Solidus.user_class).to receive(:find_by).
                                      and_return(user)
       end
 

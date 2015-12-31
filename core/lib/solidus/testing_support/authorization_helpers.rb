@@ -37,9 +37,9 @@ module Spree
           end
 
           before do
-            allow(Spree.user_class).to receive(:find_by).
+            allow(Solidus.user_class).to receive(:find_by).
                                          with(hash_including(:spree_api_key)).
-                                         and_return(Spree.user_class.new)
+                                         and_return(Solidus.user_class.new)
           end
         end
 

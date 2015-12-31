@@ -1,12 +1,12 @@
 <% @body_id = 'cart' %>
 <div data-hook="cart_container">
-  <h1><%= Spree.t(:shopping_cart) %></h1>
+  <h1><%= Solidus.t(:shopping_cart) %></h1>
 
   <% if @order.line_items.empty? %>
 
     <div data-hook="empty_cart">
-      <p><%= Spree.t(:your_cart_is_empty) %></p>
-      <p><%= link_to Spree.t(:continue_shopping), products_path, :class => 'button continue' %></p>
+      <p><%= Solidus.t(:your_cart_is_empty) %></p>
+      <p><%= link_to Solidus.t(:continue_shopping), products_path, :class => 'button continue' %></p>
     </div>
 
   <% else %>
@@ -20,12 +20,12 @@
           </div>
 
           <div class="links columns sixteen alpha omega" data-hook="cart_buttons">
-            <%= order_form.text_field :coupon_code, :size => 10, :placeholder => Spree.t(:coupon_code) %>
+            <%= order_form.text_field :coupon_code, :size => 10, :placeholder => Solidus.t(:coupon_code) %>
             <%= button_tag :class => 'primary', :id => 'update-button' do %>
-              <%= Spree.t(:update) %>
+              <%= Solidus.t(:update) %>
             <% end %>
             <%= button_tag :class => 'button checkout primary', :id => 'checkout-link', :name => 'checkout' do %>
-              <%= Spree.t(:checkout) %>
+              <%= Solidus.t(:checkout) %>
             <% end %>
           </div>
 
@@ -36,9 +36,9 @@
     <div id="empty-cart" data-hook>
       <%= form_tag empty_cart_path, :method => :put do %>
         <p id="clear_cart_link" data-hook>
-        <%= submit_tag Spree.t(:empty_cart), :class => 'button gray' %>
-        <%= Spree.t(:or) %>
-        <%= link_to Spree.t(:continue_shopping), products_path, :class => 'continue button gray' %>
+        <%= submit_tag Solidus.t(:empty_cart), :class => 'button gray' %>
+        <%= Solidus.t(:or) %>
+        <%= link_to Solidus.t(:continue_shopping), products_path, :class => 'continue button gray' %>
         </p>
       <% end %>
     </div>

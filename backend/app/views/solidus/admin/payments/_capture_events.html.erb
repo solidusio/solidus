@@ -1,10 +1,10 @@
 <% if @payment.capture_events.exists? %>
-  <h3><%= Spree.t(:capture_events) %></h3>
+  <h3><%= Solidus.t(:capture_events) %></h3>
   <table class="index" id="capture_events">
     <thead>
       <tr data-hook="payments_header">
-        <th><%= "#{Spree.t('date')}/#{Spree.t('time')}" %></th>
-        <th><%= Spree.t(:amount) %></th>
+        <th><%= "#{Solidus.t('date')}/#{Solidus.t('time')}" %></th>
+        <th><%= Solidus.t(:amount) %></th>
       </tr>
     </thead>
     <tbody>

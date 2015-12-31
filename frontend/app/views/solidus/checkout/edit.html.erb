@@ -2,7 +2,7 @@
   <%= render :partial => 'solidus/shared/error_messages', :locals => { :target => @order } %>
 
   <div class="row" data-hook="checkout_header">
-    <h1 class="columns three alpha" data-hook="checkout_title"><%= Spree.t(:checkout) %></h1>
+    <h1 class="columns three alpha" data-hook="checkout_title"><%= Solidus.t(:checkout) %></h1>
     <div class="columns thirteen omega" data-hook="checkout_progress"><%= checkout_progress %></div>
   </div>
 
@@ -27,8 +27,8 @@
 </div>
 
 <script>
-Spree.current_order_id = "<%= @order.number %>"
-Spree.current_order_token = "<%= @order.guest_token %>"
+Solidus.current_order_id = "<%= @order.number %>"
+Solidus.current_order_token = "<%= @order.guest_token %>"
 </script>
 
 <% if I18n.locale != :en %>

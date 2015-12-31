@@ -1,6 +1,6 @@
 # By placing all of Spree's shared dependencies in this file and then loading
 # it for each component's Gemfile, we can be sure that we're only testing just
-# the one component of Spree.
+# the one component of Solidus.
 source 'https://rubygems.org'
 
 platforms :ruby do

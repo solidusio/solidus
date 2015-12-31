@@ -1,29 +1,29 @@
 <% content_for :page_title do %>
-  <%= Spree.t(:new_stock_transfer) %>
+  <%= Solidus.t(:new_stock_transfer) %>
 <% end %>
 
 <% content_for :page_actions do %>
   <li>
-    <%= button_link_to Spree.t(:back_to_stock_transfers_list), admin_stock_transfers_path, icon: 'arrow-left' %>
+    <%= button_link_to Solidus.t(:back_to_stock_transfers_list), admin_stock_transfers_path, icon: 'arrow-left' %>
   </li>
 <% end %>
 
 <%= form_for [:admin, @stock_transfer] do |f| %>
   <fieldset class="no-border-top">
     <%= f.field_container :source_location do %>
-      <%= f.label nil, Spree.t(:source_location) %>
-      <%= f.select :source_location_id, options_from_collection_for_select(@source_stock_locations, :id, :name), {include_blank: true}, {class: 'select2 fullwidth', "data-placeholder" => Spree.t(:select_a_stock_location)} %>
+      <%= f.label nil, Solidus.t(:source_location) %>
+      <%= f.select :source_location_id, options_from_collection_for_select(@source_stock_locations, :id, :name), {include_blank: true}, {class: 'select2 fullwidth', "data-placeholder" => Solidus.t(:select_a_stock_location)} %>
       <%= f.error_message_on :source_location %>
     <% end %>
     <%= f.field_container :description do %>
-      <%= f.label nil, Spree.t(:description) %>
+      <%= f.label nil, Solidus.t(:description) %>
       <%= f.text_field :description, maxlength: 255, size: 0, class: 'fullwidth' %>
       <%= f.error_message_on :description %>
     <% end %>
     <div class="filter-actions actions" data-hook="buttons">
-      <%= button Spree.t(:continue), 'arrow-right' %>
-      <span class="or"><%= Spree.t(:or) %></span>
-      <%= link_to_with_icon 'remove', Spree.t('actions.cancel'), admin_stock_transfers_path, class: 'button' %>
+      <%= button Solidus.t(:continue), 'arrow-right' %>
+      <span class="or"><%= Solidus.t(:or) %></span>
+      <%= link_to_with_icon 'remove', Solidus.t('actions.cancel'), admin_stock_transfers_path, class: 'button' %>
     </div>
   </fieldset>
 <% end %>

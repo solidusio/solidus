@@ -86,13 +86,13 @@ module Spree
       def transfer_to_location
         @stock_location = Solidus::StockLocation.find(params[:stock_location_id])
         @original_shipment.transfer_to_location(@variant, @quantity, @stock_location)
-        render json: {success: true, message: Spree.t(:shipment_transfer_success)}, status: 201
+        render json: {success: true, message: Solidus.t(:shipment_transfer_success)}, status: 201
       end
 
       def transfer_to_shipment
         @target_shipment = Solidus::Shipment.find_by!(number: params[:target_shipment_number])
         @original_shipment.transfer_to_shipment(@variant, @quantity, @target_shipment)
-        render json: {success: true, message: Spree.t(:shipment_transfer_success)}, status: 201
+        render json: {success: true, message: Solidus.t(:shipment_transfer_success)}, status: 201
       end
 
       private

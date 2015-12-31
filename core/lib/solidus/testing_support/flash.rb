@@ -10,7 +10,7 @@ module Spree
       end
 
       def assert_successful_update_message(resource)
-        flash = Spree.t(:successfully_updated, resource: Spree.t(resource))
+        flash = Solidus.t(:successfully_updated, resource: Solidus.t(resource))
         assert_flash_success(flash)
       end
 
@@ -18,7 +18,7 @@ module Spree
 
       def convert_flash(flash)
         if flash.is_a?(Symbol)
-          flash = Spree.t(flash)
+          flash = Solidus.t(flash)
         end
         flash
       end

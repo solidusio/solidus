@@ -1,5 +1,5 @@
 $ ->
-  Spree.addImageHandlers = ->
+  Solidus.addImageHandlers = ->
     thumbnails = ($ '#product-images ul.thumbnails')
     ($ '#main-image').data 'selectedThumb', ($ '#main-image img').attr('src')
     thumbnails.find('li').eq(0).addClass 'selected'
@@ -16,7 +16,7 @@ $ ->
     thumbnails.find('li').on 'mouseleave', (event) ->
       ($ '#main-image img').attr 'src', ($ '#main-image').data('selectedThumb')
 
-  Spree.showVariantImages = (variantId) ->
+  Solidus.showVariantImages = (variantId) ->
     ($ 'li.vtmb').hide()
     ($ 'li.tmb-' + variantId).show()
     currentThumb = ($ '#' + ($ '#main-image').data('selectedThumbId'))
@@ -30,18 +30,18 @@ $ ->
       ($ '#main-image').data 'selectedThumb', newImg
       ($ '#main-image').data 'selectedThumbId', thumb.attr('id')
 
-  Spree.updateVariantPrice = (variant) ->
+  Solidus.updateVariantPrice = (variant) ->
     variantPrice = variant.data('price')
     ($ '.price.selling').text(variantPrice) if variantPrice
   radios = ($ '#product-variants input[type="radio"]')
 
   if radios.length > 0
     selectedRadio = ($ '#product-variants input[type="radio"][checked="checked"]')
-    Spree.showVariantImages selectedRadio.attr('value')
-    Spree.updateVariantPrice selectedRadio
+    Solidus.showVariantImages selectedRadio.attr('value')
+    Solidus.updateVariantPrice selectedRadio
 
-  Spree.addImageHandlers()
+  Solidus.addImageHandlers()
 
   radios.click (event) ->
-    Spree.showVariantImages @value
-    Spree.updateVariantPrice ($ this)
+    Solidus.showVariantImages @value
+    Solidus.updateVariantPrice ($ this)

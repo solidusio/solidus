@@ -1,9 +1,9 @@
 <div id="<%= "shipment_#{shipment.id}" %>" data-hook="admin_shipment_form">
   <fieldset class="no-border-bottom">
     <legend align="center" class="stock-location" data-hook="stock-location">
-      <%= Spree.t(:shipment) %>
+      <%= Solidus.t(:shipment) %>
       <span class="shipment-number"><%= shipment.number %></span>
-      <%= Spree.t(:from) %>
+      <%= Solidus.t(:from) %>
       <strong class="stock-location-name" data-hook="stock-location-name">"<%= shipment.stock_location.name %>"</strong>
     </legend>
   </fieldset>
@@ -11,11 +11,11 @@
   <table class="stock-contents index" data-hook="stock-contents">
     <thead>
       <th colspan="2">
-        <%= Spree.t(:item_description) %>
+        <%= Solidus.t(:item_description) %>
       </th>
-      <th><%= Spree.t(:price) %></th>
-      <th><%= Spree.t(:quantity) %></th>
-      <th><%= Spree.t(:total) %></th>
+      <th><%= Solidus.t(:price) %></th>
+      <th><%= Solidus.t(:quantity) %></th>
+      <th><%= Solidus.t(:total) %></th>
     </thead>
 
     <tbody data-shipment-number="<%= shipment.number %>" data-order-number="<%= order.number %>">
@@ -30,13 +30,13 @@
             <span><%= shipment.display_cost %></span>
           </td>
         <% else %>
-          <td colspan='5'><%= Spree.t(:no_shipping_method_selected) %></td>
+          <td colspan='5'><%= Solidus.t(:no_shipping_method_selected) %></td>
         <% end %>
       </tr>
 
       <tr class="edit-tracking hidden total">
         <td colspan="5">
-          <label><%= Spree.t(:tracking_number) %>:</label>
+          <label><%= Solidus.t(:tracking_number) %>:</label>
           <%= text_field_tag :tracking, shipment.tracking %>
         </td>
       </tr>
@@ -44,7 +44,7 @@
       <% if order.special_instructions.present? %>
         <tr class='special_instructions'>
           <td colspan="5">
-            <strong><%= Spree.t(:special_instructions) %>:&nbsp;</strong><%= order.special_instructions %>
+            <strong><%= Solidus.t(:special_instructions) %>:&nbsp;</strong><%= order.special_instructions %>
           </td>
         </tr>
       <% end %>

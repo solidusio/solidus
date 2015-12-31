@@ -1,7 +1,7 @@
 module Spree
   module Admin
     class StoreCreditsController < ResourceController
-      belongs_to 'solidus/user', model_class: Spree.user_class
+      belongs_to 'solidus/user', model_class: Solidus.user_class
       before_action :load_categories, only: [:new]
       before_action :load_update_reasons, only: [:edit_amount, :edit_validity]
       before_action :ensure_update_reason, only: [:update_amount, :invalidate]
@@ -25,7 +25,7 @@ module Spree
           redirect_to admin_user_store_credits_path(@user)
         else
           load_categories
-          flash[:error] = "#{Spree.t("admin.store_credits.unable_to_create")} #{@store_credit.errors.full_messages}"
+          flash[:error] = "#{Solidus.t("admin.store_credits.unable_to_create")} #{@store_credit.errors.full_messages}"
           render :new
         end
       end
@@ -40,7 +40,7 @@ module Spree
           end
         else
           respond_to do |format|
-            format.json { render json: { message: "#{Spree.t("admin.store_credits.unable_to_update")} #{@store_credit.errors.full_messages}" }, status: :bad_request }
+            format.json { render json: { message: "#{Solidus.t("admin.store_credits.unable_to_update")} #{@store_credit.errors.full_messages}" }, status: :bad_request }
           end
         end
       end
@@ -87,7 +87,7 @@ module Spree
       def ensure_update_reason
         @update_reason = Solidus::StoreCreditUpdateReason.find_by(id: params[:update_reason_id])
         unless @update_reason
-          @store_credit.errors.add(:base, Spree.t("admin.store_credits.errors.update_reason_required"))
+          @store_credit.errors.add(:base, Solidus.t("admin.store_credits.errors.update_reason_required"))
           render_edit_page
         end
       end
@@ -102,7 +102,7 @@ module Spree
         end
 
         load_update_reasons
-        flash[:error] = "#{Spree.t("admin.store_credits.unable_to_#{translation_key}")}: #{@store_credit.errors.full_messages.join(', ')}"
+        flash[:error] = "#{Solidus.t("admin.store_credits.unable_to_#{translation_key}")}: #{@store_credit.errors.full_messages.join(', ')}"
         render template and return
       end
     end

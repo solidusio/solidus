@@ -3,8 +3,8 @@
     <legend><%= title %></legend>
     <table>
       <thead>
-        <th><%= Spree.t('name')%></th>
-        <th><%= Spree.t('amount')%></th>
+        <th><%= Solidus.t('name')%></th>
+        <th><%= Solidus.t('amount')%></th>
       </thead>
       <tbody id="order-charges" data-hook="order_details_adjustments"  class="with-border">
         <% adjustments.eligible.group_by(&:label).each do |label, adjustments| %>

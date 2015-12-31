@@ -25,9 +25,9 @@ module Spree
     def login
       expect {
         post '/api/users', user: { email: "featurecheckoutuser@example.com", password: "featurecheckoutuser" }
-      }.to change { Spree.user_class.count }.by 1
+      }.to change { Solidus.user_class.count }.by 1
       expect(response).to have_http_status(:created)
-      @user = Spree.user_class.find(parsed['id'])
+      @user = Solidus.user_class.find(parsed['id'])
 
       # copied from api testing helpers support since we can't really sign in
       allow(Solidus::LegacyUser).to receive(:find_by).with(hash_including(:spree_api_key)) { @user }

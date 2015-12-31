@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 # In this file, we want to test that the controller helpers function correctly
-# So we need to use one of the controllers inside Spree.
+# So we need to use one of the controllers inside Solidus.
 # ProductsController is good.
 describe Solidus::ProductsController, :type => :controller do
 

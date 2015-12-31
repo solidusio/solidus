@@ -5,20 +5,20 @@ $.fn.userAutocomplete = function () {
     minimumInputLength: 1,
     multiple: true,
     initSelection: function (element, callback) {
-      $.get(Spree.routes.user_search, {
+      $.get(Solidus.routes.user_search, {
         ids: element.val()
       }, function (data) {
         callback(data);
       });
     },
     ajax: {
-      url: Spree.routes.user_search,
+      url: Solidus.routes.user_search,
       datatype: 'json',
-      params: { "headers": { "X-Spree-Token": Spree.api_key } },
+      params: { "headers": { "X-Spree-Token": Solidus.api_key } },
       data: function (term) {
         return {
           q: term,
-          token: Spree.api_key
+          token: Solidus.api_key
         };
       },
       results: function (data) {

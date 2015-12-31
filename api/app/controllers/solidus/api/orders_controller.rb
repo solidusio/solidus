@@ -54,7 +54,7 @@ module Spree
         if @order.contents.update_cart(order_params)
           user_id = params[:order][:user_id]
           if can?(:admin, @order) && user_id
-            @order.associate_user!(Spree.user_class.find(user_id))
+            @order.associate_user!(Solidus.user_class.find(user_id))
           end
           respond_with(@order, default_template: :show)
         else
@@ -112,7 +112,7 @@ module Spree
       # @api public
       def determine_order_user
         if order_params[:user_id].present?
-          Spree.user_class.find(order_params[:user_id])
+          Solidus.user_class.find(order_params[:user_id])
         else
           current_api_user
         end

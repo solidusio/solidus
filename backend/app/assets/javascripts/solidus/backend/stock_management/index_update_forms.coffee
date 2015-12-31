@@ -5,7 +5,7 @@ class IndexUpdateForms
       ev.preventDefault()
       stockItemId = $(ev.currentTarget).data('id')
       storeBackorderableState(stockItemId)
-      Spree.NumberFieldUpdater.hideReadOnly(stockItemId)
+      Solidus.NumberFieldUpdater.hideReadOnly(stockItemId)
       showEditForm(stockItemId)
 
     # Cancel
@@ -13,7 +13,7 @@ class IndexUpdateForms
       ev.preventDefault()
       stockItemId = $(ev.currentTarget).data('id')
       restoreBackorderableState(stockItemId)
-      Spree.NumberFieldUpdater.hideForm(stockItemId)
+      Solidus.NumberFieldUpdater.hideForm(stockItemId)
       showReadOnlyElements(stockItemId)
 
     # Submit
@@ -24,7 +24,7 @@ class IndexUpdateForms
       backorderable = $("#backorderable-#{stockItemId}").prop("checked")
       countOnHand = parseInt($("#number-update-#{stockItemId} input[type='number']").val(), 10)
 
-      stockItem = new Spree.StockItem
+      stockItem = new Solidus.StockItem
         id: stockItemId
         countOnHand: countOnHand
         backorderable: backorderable
@@ -33,11 +33,11 @@ class IndexUpdateForms
 
   showReadOnlyElements = (stockItemId) ->
     toggleBackorderable(stockItemId, false)
-    Spree.NumberFieldUpdater.showReadOnly(stockItemId)
+    Solidus.NumberFieldUpdater.showReadOnly(stockItemId)
 
   showEditForm = (stockItemId) ->
     toggleBackorderable(stockItemId, true)
-    Spree.NumberFieldUpdater.showForm(stockItemId)
+    Solidus.NumberFieldUpdater.showForm(stockItemId)
 
   toggleBackorderable = (stockItemId, show) ->
     disabledValue = if show then null else 'disabled'
@@ -54,11 +54,11 @@ class IndexUpdateForms
 
   successHandler = (stockItem) =>
     toggleBackorderable(stockItem.id, false)
-    Spree.NumberFieldUpdater.successHandler(stockItem.id, stockItem.count_on_hand)
-    show_flash("success", Spree.translations.updated_successfully)
+    Solidus.NumberFieldUpdater.successHandler(stockItem.id, stockItem.count_on_hand)
+    show_flash("success", Solidus.translations.updated_successfully)
 
   errorHandler = (errorData) ->
     show_flash("error", errorData.responseText)
 
-Spree.StockManagement ?= {}
-Spree.StockManagement.IndexUpdateForms = IndexUpdateForms
+Solidus.StockManagement ?= {}
+Solidus.StockManagement.IndexUpdateForms = IndexUpdateForms

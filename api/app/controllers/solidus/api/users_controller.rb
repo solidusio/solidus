@@ -7,7 +7,7 @@ class Solidus::Api::UsersController < Solidus::Api::ResourceController
   end
 
   def model_class
-    Spree.user_class
+    Solidus.user_class
   end
 
   def user_params

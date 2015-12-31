@@ -7,7 +7,7 @@ var update_state = function (region, done) {
 
   state_select.select2('disable');
 
-  $.get(Spree.routes.states_search + '?country_id=' + country, function (data) {
+  $.get(Solidus.routes.states_search + '?country_id=' + country, function (data) {
     var states = data.states;
     if (states.length > 0) {
       state_select.html('');

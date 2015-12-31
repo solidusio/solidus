@@ -1,5 +1,5 @@
-Spree.ready ($) ->
-  Spree.onPayment = () ->
+Solidus.ready ($) ->
+  Solidus.onPayment = () ->
     if ($ '#checkout_form_payment').is('*')
 
       if ($ '#existing_cards').is('*')
@@ -53,15 +53,15 @@ Spree.ready ($) ->
           else
             coupon_status = $("#coupon_status")
 
-          url = Spree.url(Spree.routes.apply_coupon_code(Spree.current_order_id),
+          url = Solidus.url(Solidus.routes.apply_coupon_code(Solidus.current_order_id),
             {
-              order_token: Spree.current_order_token,
+              order_token: Solidus.current_order_token,
               coupon_code: coupon_code
             }
           )
 
           coupon_status.removeClass();
-          Spree.ajax({
+          Solidus.ajax({
             async: false,
             method: "PUT",
             url: url,
@@ -76,4 +76,4 @@ Spree.ready ($) ->
               return false
           })
 
-  Spree.onPayment()
+  Solidus.onPayment()

@@ -72,7 +72,7 @@ module Spree
       if finalizable?
         self.update_attributes({ finalized_at: Time.current, finalized_by: finalized_by })
       else
-        errors.add(:base, Spree.t(:stock_transfer_cannot_be_finalized))
+        errors.add(:base, Solidus.t(:stock_transfer_cannot_be_finalized))
         false
       end
     end
@@ -85,7 +85,7 @@ module Spree
         end
       end
     rescue InvalidTransferMovement
-      errors.add(:base, Spree.t(:not_enough_stock))
+      errors.add(:base, Solidus.t(:not_enough_stock))
       false
     end
 
@@ -93,7 +93,7 @@ module Spree
       if receivable?
         self.update_attributes({ closed_at: Time.current, closed_by: closed_by })
       else
-        errors.add(:base, Spree.t(:stock_transfer_must_be_receivable))
+        errors.add(:base, Solidus.t(:stock_transfer_must_be_receivable))
         false
       end
     end
@@ -102,7 +102,7 @@ module Spree
 
     def ensure_not_finalized
       if finalized?
-        errors.add(:base, Spree.t('errors.messages.cannot_delete_finalized_stock_transfer'))
+        errors.add(:base, Solidus.t('errors.messages.cannot_delete_finalized_stock_transfer'))
         return false
       end
     end

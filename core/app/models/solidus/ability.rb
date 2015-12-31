@@ -25,7 +25,7 @@ module Spree
     end
 
     def initialize(current_user)
-      @user = current_user || Spree.user_class.new
+      @user = current_user || Solidus.user_class.new
 
       alias_actions
       activate_permission_sets

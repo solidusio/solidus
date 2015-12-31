@@ -20,7 +20,7 @@ class Solidus::UnitCancel < Solidus::Base
       adjustable: inventory_unit.line_item,
       amount: amount,
       order: inventory_unit.order,
-      label: "#{Spree.t(:cancellation)} - #{reason}",
+      label: "#{Solidus.t(:cancellation)} - #{reason}",
       eligible: true,
       finalized: true
     )

@@ -24,7 +24,7 @@ describe "New Order", :type => :feature do
 
   it "completes new order succesfully without using the cart", js: true do
     click_on 'Cart'
-    select2_search product.name, from: Spree.t(:name_or_sku)
+    select2_search product.name, from: Solidus.t(:name_or_sku)
 
     fill_in_quantity("table.stock-levels", "quantity_0", 2)
 
@@ -63,7 +63,7 @@ describe "New Order", :type => :feature do
   context "adding new item to the order", js: true do
     it "inventory items show up just fine and are also registered as shipments" do
       click_on 'Cart'
-      select2_search product.name, from: Spree.t(:name_or_sku)
+      select2_search product.name, from: Solidus.t(:name_or_sku)
 
       fill_in_quantity('table.stock-levels', 'quantity_0', 2)
 
@@ -99,7 +99,7 @@ describe "New Order", :type => :feature do
 
     it "can still see line items" do
       click_on 'Cart'
-      select2_search product.name, from: Spree.t(:name_or_sku)
+      select2_search product.name, from: Solidus.t(:name_or_sku)
 
       fill_in_quantity('table.stock-levels', 'quantity_0', 1)
 
@@ -134,7 +134,7 @@ describe "New Order", :type => :feature do
 
       click_on "Shipments"
 
-      select2_search product.name, from: Spree.t(:name_or_sku)
+      select2_search product.name, from: Solidus.t(:name_or_sku)
 
       click_icon :plus
 
@@ -156,7 +156,7 @@ describe "New Order", :type => :feature do
     end
     it "transitions to delivery not to complete" do
       click_on 'Cart'
-      select2_search product.name, from: Spree.t(:name_or_sku)
+      select2_search product.name, from: Solidus.t(:name_or_sku)
       within("table.stock-levels") do
         find('.variant_quantity').set(1)
       end

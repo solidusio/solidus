@@ -12,15 +12,15 @@ $(document).ready(function() {
 
   if ($("#customer_search").length > 0) {
     $("#customer_search").select2({
-      placeholder: Spree.translations.choose_a_customer,
+      placeholder: Solidus.translations.choose_a_customer,
       ajax: {
-        url: Spree.routes.user_search,
-        params: { "headers": { "X-Spree-Token": Spree.api_key } },
+        url: Solidus.routes.user_search,
+        params: { "headers": { "X-Spree-Token": Solidus.api_key } },
         datatype: 'json',
         data: function(term, page) {
           return {
             q: term,
-            token: Spree.api_key
+            token: Solidus.api_key
           }
         },
         results: function(data, page) {

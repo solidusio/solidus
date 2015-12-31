@@ -18,7 +18,7 @@ module Spree
       end
 
       def stock_transfer_status(stock_transfer)
-        stock_transfer.closed? ? Spree.t(:closed) : Spree.t(:open)
+        stock_transfer.closed? ? Solidus.t(:closed) : Solidus.t(:open)
       end
     end
   end

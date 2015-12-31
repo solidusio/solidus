@@ -1,11 +1,11 @@
 <%= render :partial => 'solidus/admin/shared/order_tabs', :locals => { :current => 'Payments' } %>
 
 <% content_for :page_title do %>
-  <i class="fa fa-arrow-right"></i> <%= Spree.t(:new_payment) %>
+  <i class="fa fa-arrow-right"></i> <%= Solidus.t(:new_payment) %>
 <% end %>
 
 <% content_for :page_actions do %>
-  <li><%= button_link_to Spree.t(:back_to_payments_list), spree.admin_order_payments_url(@order), :icon => 'arrow-left' %></li>
+  <li><%= button_link_to Solidus.t(:back_to_payments_list), spree.admin_order_payments_url(@order), :icon => 'arrow-left' %></li>
 <% end %>
 
 <% if @payment_methods.any? %>
@@ -16,11 +16,11 @@
       <%= render :partial => 'form', :locals => { :f => f } %>
 
       <div class="filter-actions actions" data-hook="buttons">
-        <%= button @order.cart? ? Spree.t('actions.continue') : Spree.t('actions.update'), @order.cart? ? 'arrow-right' : 'refresh' %>
+        <%= button @order.cart? ? Solidus.t('actions.continue') : Solidus.t('actions.update'), @order.cart? ? 'arrow-right' : 'refresh' %>
       </div>
     </fieldset>
   <% end %>
 <% else %>
-  <%= Spree.t(:cannot_create_payment_without_payment_methods) %>
-  <%= link_to Spree.t(:please_define_payment_methods), admin_payment_methods_url %>
+  <%= Solidus.t(:cannot_create_payment_without_payment_methods) %>
+  <%= link_to Solidus.t(:please_define_payment_methods), admin_payment_methods_url %>
 <% end %>

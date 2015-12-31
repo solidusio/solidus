@@ -1,4 +1,4 @@
-Solidus::StoreCreditCategory.find_or_create_by!(name: Spree.t("store_credit_category.default"))
+Solidus::StoreCreditCategory.find_or_create_by!(name: Solidus.t("store_credit_category.default"))
 
 Solidus::PaymentMethod.create_with(
   name: "Store Credit",

@@ -1,17 +1,17 @@
 <% content_for :page_title do %>
-  <%= Spree.t(:stock_transfers) %>
+  <%= Solidus.t(:stock_transfers) %>
 <% end %>
 
 <% content_for :page_actions do %>
   <% if can? :create, Solidus::StockTransfer %>
     <li>
-      <%= button_link_to Spree.t(:new_stock_transfer), new_admin_stock_transfer_path, icon: 'plus' %>
+      <%= button_link_to Solidus.t(:new_stock_transfer), new_admin_stock_transfer_path, icon: 'plus' %>
     </li>
   <% end %>
 <% end %>
 
 <% content_for :table_filter_title do %>
-  <%= Spree.t(:search) %>
+  <%= Solidus.t(:search) %>
 <% end %>
 
 <% content_for :table_filter do %>
@@ -19,29 +19,29 @@
     <%= search_form_for [:admin, @search] do |f| %>
       <div class="field-block alpha four columns">
         <div class="field">
-          <%= f.label nil, Spree.t(:stock_location) %>
+          <%= f.label nil, Solidus.t(:stock_location) %>
           <%= f.select :source_location_id_or_destination_location_id_eq, options_from_collection_for_select(@stock_locations, :id, :name, params[:q][:source_location_id_or_destination_location_id_eq]), {include_blank: true}, {class: 'select2 fullwidth'} %>
         </div>
       </div>
 
       <div class="field-block alpha four columns">
         <div class="date-range-filter field">
-          <%= f.label nil, Spree.t(:date_range) %>
+          <%= f.label nil, Solidus.t(:date_range) %>
           <div class="date-range-fields">
-            <%= f.text_field :created_at_gt, class: 'datepicker datepicker-from', include_blank: true, value: params[:q][:created_at_gt], placeholder: Spree.t(:start) %>
+            <%= f.text_field :created_at_gt, class: 'datepicker datepicker-from', include_blank: true, value: params[:q][:created_at_gt], placeholder: Solidus.t(:start) %>
 
             <span class="range-divider">
               <i class="fa fa-arrow-right"></i>
             </span>
 
-            <%= f.text_field :created_at_lt, class: 'datepicker datepicker-to', include_blank: true, value: params[:q][:created_at_lt], placeholder: Spree.t(:stop) %>
+            <%= f.text_field :created_at_lt, class: 'datepicker datepicker-to', include_blank: true, value: params[:q][:created_at_lt], placeholder: Solidus.t(:stop) %>
           </div>
         </div>
       </div>
 
       <div class="field-block alpha four columns">
         <div class="field">
-          <%= f.label nil, Spree.t(:transfer_number) %>
+          <%= f.label nil, Solidus.t(:transfer_number) %>
           <%= f.text_field :number_cont, value: params[:q][:number_cont] %>
         </div>
       </div>
@@ -50,7 +50,7 @@
         <div class="field checkbox">
           <label>
             <%= f.check_box :closed_at_null, { checked: @show_only_open }, '1', '0' %>
-            <%= Spree.t(:show_only_open_transfers) %>
+            <%= Solidus.t(:show_only_open_transfers) %>
           </label>
         </div>
       </div>
@@ -59,7 +59,7 @@
 
       <div class="actions filter-actions">
         <div data-hook="admin_stock_transfers_index_search_buttons">
-          <%= button Spree.t(:filter_results), 'search' %>
+          <%= button Solidus.t(:filter_results), 'search' %>
         </div>
       </div>
     <% end %>
@@ -73,13 +73,13 @@
   <table class="index" id="listing_stock_transfers">
     <thead>
       <tr>
-        <th><%= sort_link @search, :number,          Spree.t(:number) %></th>
-        <th><%= sort_link @search, :from,            Spree.t(:from) %></th>
-        <th><%= sort_link @search, :to,              Spree.t(:to) %></th>
-        <th><%= sort_link @search, :expected_items,  Spree.t(:expected) %></th>
-        <th><%= sort_link @search, :received_items,  Spree.t(:received) %></th>
-        <th><%= sort_link @search, :shipped_at,      Spree.t(:shipped) %></th>
-        <th><%= sort_link @search, :status,          Spree.t(:status) %></th>
+        <th><%= sort_link @search, :number,          Solidus.t(:number) %></th>
+        <th><%= sort_link @search, :from,            Solidus.t(:from) %></th>
+        <th><%= sort_link @search, :to,              Solidus.t(:to) %></th>
+        <th><%= sort_link @search, :expected_items,  Solidus.t(:expected) %></th>
+        <th><%= sort_link @search, :received_items,  Solidus.t(:received) %></th>
+        <th><%= sort_link @search, :shipped_at,      Solidus.t(:shipped) %></th>
+        <th><%= sort_link @search, :status,          Solidus.t(:status) %></th>
         <th class="actions"></th>
       </tr>
     </thead>
@@ -95,11 +95,11 @@
           <td><%= stock_transfer_status(stock_transfer) %></td>
           <td class="actions">
             <% if stock_transfer.receivable? && can?(:edit, stock_transfer) %>
-              <%= link_to_with_icon 'download', Spree.t('actions.receive'), receive_admin_stock_transfer_path(stock_transfer), no_text: true, data: { action: 'green' } %>
+              <%= link_to_with_icon 'download', Solidus.t('actions.receive'), receive_admin_stock_transfer_path(stock_transfer), no_text: true, data: { action: 'green' } %>
             <% elsif !stock_transfer.closed? && can?(:edit, stock_transfer) %>
-              <%= link_to_with_icon 'edit', Spree.t('actions.edit'), stock_transfer_edit_or_ship_path(stock_transfer), no_text: true, data: { action: 'edit' } %>
+              <%= link_to_with_icon 'edit', Solidus.t('actions.edit'), stock_transfer_edit_or_ship_path(stock_transfer), no_text: true, data: { action: 'edit' } %>
             <% elsif can?(:show, stock_transfer) %>
-              <%= link_to_with_icon 'eye', Spree.t(:show), admin_stock_transfer_path(stock_transfer), no_text: true, data: { action: 'green' } %>
+              <%= link_to_with_icon 'eye', Solidus.t(:show), admin_stock_transfer_path(stock_transfer), no_text: true, data: { action: 'green' } %>
             <% end %>
           </td>
         </tr>
@@ -108,7 +108,7 @@
   </table>
 <% else %>
   <div class="alpha sixteen columns no-objects-found">
-    <%= Spree.t(:no_resource_found, resource: I18n.t(:other, scope: 'activerecord.models.solidus/stock_transfer')) %>
+    <%= Solidus.t(:no_resource_found, resource: I18n.t(:other, scope: 'activerecord.models.solidus/stock_transfer')) %>
   </div>
 <% end %>
 

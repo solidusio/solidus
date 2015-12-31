@@ -12,7 +12,7 @@ class IndexAddForms
 
       stockLocationId = locationSelect.val()
       backorderable = $("#variant-backorderable-#{variantId}").prop("checked")
-      stockItem = new Spree.StockItem
+      stockItem = new Solidus.StockItem
         variantId: variantId
         backorderable: backorderable
         countOnHand: countInput.val()
@@ -62,7 +62,7 @@ class IndexAddForms
       $("#variant-backorderable-#{variantId}").prop("checked", false)
 
     resetParentRowspan(variantId)
-    show_flash("success", Spree.translations.created_successfully)
+    show_flash("success", Solidus.translations.created_successfully)
 
   errorHandler = (errorData) =>
     show_flash("error", errorData.responseText)
@@ -78,5 +78,5 @@ class IndexAddForms
     newRowspan = $("tr[data-variant-id='#{variantId}']").length + 1
     $("#spree_variant_#{variantId} > td").attr('rowspan', newRowspan)
 
-Spree.StockManagement ?= {}
-Spree.StockManagement.IndexAddForms = IndexAddForms
+Solidus.StockManagement ?= {}
+Solidus.StockManagement.IndexAddForms = IndexAddForms

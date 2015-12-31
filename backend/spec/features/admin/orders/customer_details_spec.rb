@@ -22,7 +22,7 @@ describe "Customer Details", type: :feature, js: true do
       click_link "Orders"
       click_link "New Order"
       click_on 'Cart'
-      select2_search product.name, from: Spree.t(:name_or_sku)
+      select2_search product.name, from: Solidus.t(:name_or_sku)
       within("table.stock-levels") do
         find('.variant_quantity').set(1)
       end

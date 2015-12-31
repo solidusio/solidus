@@ -3,7 +3,7 @@ require 'solidus/testing_support/bar_ability'
 
 describe Solidus::Admin::UsersController, :type => :controller do
   let(:user) { create(:user) }
-  let(:mock_user) { mock_model Spree.user_class }
+  let(:mock_user) { mock_model Solidus.user_class }
 
   before do
     allow(controller).to receive_messages :spree_current_user => user
@@ -108,14 +108,14 @@ describe Solidus::Admin::UsersController, :type => :controller do
     end
 
     it "can create a shipping_address" do
-      expect(Spree.user_class).to receive(:new).with(hash_including(
+      expect(Solidus.user_class).to receive(:new).with(hash_including(
         "ship_address_attributes" => { "city" => "New York" }
       ))
       spree_post :create, { :user => { :ship_address_attributes => { :city => "New York" } } }
     end
 
     it "can create a billing_address" do
-      expect(Spree.user_class).to receive(:new).with(hash_including(
+      expect(Solidus.user_class).to receive(:new).with(hash_including(
         "bill_address_attributes" => { "city" => "New York" }
       ))
       spree_post :create, { :user => { :bill_address_attributes => { :city => "New York" } } }
@@ -252,6 +252,6 @@ def use_mock_user
   allow(mock_user).to receive(:save).and_return(true)
   allow(mock_user).to receive(:update_attributes).and_return(true)
   allow(mock_user).to receive(:spree_roles).and_return([])
-  allow(Spree.user_class).to receive(:find).with(mock_user.id.to_s).and_return(mock_user)
-  allow(Spree.user_class).to receive(:new).and_return(mock_user)
+  allow(Solidus.user_class).to receive(:find).with(mock_user.id.to_s).and_return(mock_user)
+  allow(Solidus.user_class).to receive(:new).and_return(mock_user)
 end

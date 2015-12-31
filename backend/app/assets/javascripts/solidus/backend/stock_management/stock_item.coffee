@@ -7,8 +7,8 @@ class StockItem
     @stockLocationId = options.stockLocationId
 
   save: (successHandler, errorHandler) ->
-    Spree.ajax
-      url: Spree.routes.stock_items_api(@stockLocationId)
+    Solidus.ajax
+      url: Solidus.routes.stock_items_api(@stockLocationId)
       type: "POST"
       data:
         stock_item:
@@ -21,8 +21,8 @@ class StockItem
         errorHandler(errorData)
 
   update: (successHandler, errorHandler) ->
-    Spree.ajax
-      url: "#{Spree.routes.stock_items_api(@stockLocationId)}/#{@id}"
+    Solidus.ajax
+      url: "#{Solidus.routes.stock_items_api(@stockLocationId)}/#{@id}"
       type: "PUT"
       data:
         stock_item:
@@ -34,4 +34,4 @@ class StockItem
       error: (errorData) ->
         errorHandler(errorData)
 
-Spree.StockItem = StockItem
+Solidus.StockItem = StockItem

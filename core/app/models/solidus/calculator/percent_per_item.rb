@@ -12,7 +12,7 @@ module Spree
     preference :percent, :decimal, default: 0
 
     def self.description
-      Spree.t(:percent_per_item)
+      Solidus.t(:percent_per_item)
     end
 
     def compute(object=nil)

@@ -148,7 +148,7 @@ describe Solidus::Refund, :type => :model do
       end
 
       it 'raises Solidus::Core::GatewayError' do
-        expect { subject }.to raise_error(Solidus::Core::GatewayError, Spree.t(:unable_to_connect_to_gateway))
+        expect { subject }.to raise_error(Solidus::Core::GatewayError, Solidus.t(:unable_to_connect_to_gateway))
       end
     end
 

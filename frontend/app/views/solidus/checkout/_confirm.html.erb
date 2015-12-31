@@ -1,12 +1,12 @@
 <fieldset id="order_details" data-hook>
   <div class="clear"></div>
-  <legend align="center"><%= Spree.t(:confirm) %></legend>
+  <legend align="center"><%= Solidus.t(:confirm) %></legend>
   <%= render :partial => 'solidus/shared/order_details', :locals => { :order => @order } %>
 </fieldset>
 
 <br />
 
 <div class="form-buttons" data-hook="buttons">
-  <%= submit_tag Spree.t(:place_order), :class => 'continue button primary' %>
-  <script>Spree.disableSaveOnClick();</script>
+  <%= submit_tag Solidus.t(:place_order), :class => 'continue button primary' %>
+  <script>Solidus.disableSaveOnClick();</script>
 </div>

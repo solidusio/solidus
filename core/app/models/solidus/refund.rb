@@ -58,15 +58,15 @@ module Spree
       end
 
       if !response.success?
-        logger.error(Spree.t(:gateway_error) + "  #{response.to_yaml}")
+        logger.error(Solidus.t(:gateway_error) + "  #{response.to_yaml}")
         text = response.params['message'] || response.params['response_reason_text'] || response.message
         raise Core::GatewayError.new(text)
       end
 
       response
     rescue ActiveMerchant::ConnectionError => e
-      logger.error(Spree.t(:gateway_error) + "  #{e.inspect}")
-      raise Core::GatewayError.new(Spree.t(:unable_to_connect_to_gateway))
+      logger.error(Solidus.t(:gateway_error) + "  #{e.inspect}")
+      raise Core::GatewayError.new(Solidus.t(:unable_to_connect_to_gateway))
     end
 
     def create_log_entry

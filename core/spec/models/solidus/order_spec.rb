@@ -100,7 +100,7 @@ describe Solidus::Order, :type => :model do
 
       it 'should have error message' do
         subject
-        expect(order.errors[:base]).to include(Spree.t(:deleted_variants_present))
+        expect(order.errors[:base]).to include(Solidus.t(:deleted_variants_present))
       end
 
       it 'should be false' do
@@ -1052,7 +1052,7 @@ describe Solidus::Order, :type => :model do
         context "there are no other payments" do
           it "adds an error to the model" do
             expect(subject).to be false
-            expect(order.errors.full_messages).to include(Spree.t("store_credit.errors.unable_to_fund"))
+            expect(order.errors.full_messages).to include(Solidus.t("store_credit.errors.unable_to_fund"))
           end
         end
       end
@@ -1092,7 +1092,7 @@ describe Solidus::Order, :type => :model do
         context "there are no other payments" do
           it "adds an error to the model" do
             expect(subject).to be false
-            expect(order.errors.full_messages).to include(Spree.t("store_credit.errors.unable_to_fund"))
+            expect(order.errors.full_messages).to include(Solidus.t("store_credit.errors.unable_to_fund"))
           end
         end
 

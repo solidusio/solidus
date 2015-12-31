@@ -3,9 +3,9 @@
     <legend align="center" class="stock-location" data-hook="stock-location">
       <span class="carton-number"><%= carton.number %></span>
       -
-      <span class="carton-state"><%= Spree.t("shipment_states.shipped") %></span>
-      <span class="carton-exchange"><%= Spree.t(:exchange) if carton.any_exchanges? %></span>
-      <%= Spree.t(:package_from) %>
+      <span class="carton-state"><%= Solidus.t("shipment_states.shipped") %></span>
+      <span class="carton-exchange"><%= Solidus.t(:exchange) if carton.any_exchanges? %></span>
+      <%= Solidus.t(:package_from) %>
       <strong class="stock-location-name" data-hook="stock-location-name">'<%= carton.stock_location.name %>'</strong>
     </legend>
   </fieldset>
@@ -20,10 +20,10 @@
     </colgroup>
 
     <thead>
-      <th colspan="2"><%= Spree.t(:item_description) %></th>
-      <th><%= Spree.t(:price) %></th>
-      <th><%= Spree.t(:quantity) %></th>
-      <th><%= Spree.t(:total) %></th>
+      <th colspan="2"><%= Solidus.t(:item_description) %></th>
+      <th><%= Solidus.t(:price) %></th>
+      <th><%= Solidus.t(:quantity) %></th>
+      <th><%= Solidus.t(:total) %></th>
     </thead>
 
     <tbody data-hook="carton-details" data-shipment-number="<%= carton.number %>" data-order-number="<%= order.number %>">
@@ -35,14 +35,14 @@
             <strong><%= method.name %></strong>
           </td>
         <% else %>
-          <td colspan='5'><%= Spree.t(:no_shipping_method_selected) %></td>
+          <td colspan='5'><%= Solidus.t(:no_shipping_method_selected) %></td>
         <% end %>
       </tr>
 
       <% if order.special_instructions.present? %>
         <tr class='special_instructions'>
           <td colspan="5">
-            <strong><%= Spree.t(:special_instructions) %>:&nbsp;</strong><%= order.special_instructions %>
+            <strong><%= Solidus.t(:special_instructions) %>:&nbsp;</strong><%= order.special_instructions %>
           </td>
         </tr>
       <% end %>
@@ -50,29 +50,29 @@
       <tr class="show-tracking total">
         <td colspan="5">
           <% if carton.tracking.present? %>
-            <strong><%= Spree.t(:tracking) %>:</strong> <%= carton.tracking %>
+            <strong><%= Solidus.t(:tracking) %>:</strong> <%= carton.tracking %>
           <% else %>
-            <%= Spree.t(:no_tracking_present) %>
+            <%= Solidus.t(:no_tracking_present) %>
           <% end %>
         </td>
       </tr>
 
       <tr class='shipment-numbers'>
         <td colspan="5">
-          <strong><%= Spree.t(:shipment_numbers) %>:&nbsp;</strong><%= carton.shipment_numbers.join(", ") %>
+          <strong><%= Solidus.t(:shipment_numbers) %>:&nbsp;</strong><%= carton.shipment_numbers.join(", ") %>
         </td>
       </tr>
 
       <tr class='ship-date'>
         <td colspan="5">
-          <strong><%= Spree.t(:shipment_date) %>:&nbsp;</strong><%= carton.display_shipped_at %>
+          <strong><%= Solidus.t(:shipment_date) %>:&nbsp;</strong><%= carton.display_shipped_at %>
         </td>
       </tr>
 
       <% if carton.orders.size > 1 %>
         <tr class='order-numbers'>
           <td colspan="5">
-            <strong><%= Spree.t(:carton_orders) %>:&nbsp;</strong>
+            <strong><%= Solidus.t(:carton_orders) %>:&nbsp;</strong>
             <% (carton.orders - [order]).each do |order| %>
               <%= link_to order.number, edit_admin_order_path(order) %>
             <% end %>
@@ -83,7 +83,7 @@
       <% if carton.external_number.present? %>
         <tr class="external-number">
           <td colspan="5">
-            <strong><%= Spree.t(:carton_external_number) %>:&nbsp;</strong><%= carton.external_number %>
+            <strong><%= Solidus.t(:carton_external_number) %>:&nbsp;</strong><%= carton.external_number %>
           </td>
         </tr>
       <% end %>

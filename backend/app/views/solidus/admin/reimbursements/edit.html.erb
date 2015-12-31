@@ -1,27 +1,27 @@
 <%= render :partial => 'solidus/admin/shared/order_tabs', :locals => { :current => 'Customer Returns' } %>
 
 <% content_for :page_title do %>
-  <i class="fa fa-arrow-right"></i> <%= Spree.t(:editing_reimbursement) %> #<%= @reimbursement.number %>
+  <i class="fa fa-arrow-right"></i> <%= Solidus.t(:editing_reimbursement) %> #<%= @reimbursement.number %>
 <% end %>
 
 <% content_for :page_actions do %>
-  <li><%= button_link_to Spree.t(:back_to_customer_return), url_for([:edit, :admin, @order, @reimbursement.customer_return]), :icon => 'arrow-left' %></li>
+  <li><%= button_link_to Solidus.t(:back_to_customer_return), url_for([:edit, :admin, @order, @reimbursement.customer_return]), :icon => 'arrow-left' %></li>
 <% end %>
 
 <%= render :partial => 'solidus/shared/error_messages', :locals => { :target => @reimbursement } %>
 
 <%= form_for [:admin, @order, @reimbursement] do |f| %>
   <fieldset class='no-border-bottom'>
-    <legend align='center'><%= Spree.t(:items_to_be_reimbursed) %></legend>
+    <legend align='center'><%= Solidus.t(:items_to_be_reimbursed) %></legend>
     <table class="index reimbursement-return-items">
       <thead>
         <tr>
-          <th><%= Spree.t(:product) %></th>
-          <th><%= Spree.t(:preferred_reimbursement_type) %></th>
-          <th><%= Spree.t(:reimbursement_type_override) %></th>
-          <th><%= Spree.t(:pre_tax_refund_amount) %></th>
-          <th><%= Spree.t(:total) %></th>
-          <th><%= Spree.t(:exchange_for) %></th>
+          <th><%= Solidus.t(:product) %></th>
+          <th><%= Solidus.t(:preferred_reimbursement_type) %></th>
+          <th><%= Solidus.t(:reimbursement_type_override) %></th>
+          <th><%= Solidus.t(:pre_tax_refund_amount) %></th>
+          <th><%= Solidus.t(:total) %></th>
+          <th><%= Solidus.t(:exchange_for) %></th>
         </tr>
       </thead>
       <tbody>
@@ -65,20 +65,20 @@
 
   <div class="form-buttons filter-actions actions" data-hook="buttons">
     <%= f.button do %>
-      <%= Spree.t(:update) %>
+      <%= Solidus.t(:update) %>
     <% end %>
   </div>
   <br/>
 <% end %>
 
 <fieldset>
-  <legend align='center'><%= Spree.t(:calculated_reimbursements) %></legend>
+  <legend align='center'><%= Solidus.t(:calculated_reimbursements) %></legend>
   <table class="index calculated-reimbursements">
     <thead data-hook="customer_return_header">
       <tr>
-        <th><%= Spree.t(:reimbursement_type) %></th>
-        <th><%= Spree.t(:description) %></th>
-        <th><%= Spree.t(:amount) %></th>
+        <th><%= Solidus.t(:reimbursement_type) %></th>
+        <th><%= Solidus.t(:description) %></th>
+        <th><%= Solidus.t(:amount) %></th>
       </tr>
     </thead>
     <tbody>
@@ -93,16 +93,16 @@
   </table>
   <% if @order.has_non_reimbursement_related_refunds? %>
     <span class="red">
-      <%= "#{Spree.t('note')}: #{Spree.t('this_order_has_already_received_a_refund')}. #{Spree.t('make_sure_the_above_reimbursement_amount_is_correct')}." %>
+      <%= "#{Solidus.t('note')}: #{Solidus.t('this_order_has_already_received_a_refund')}. #{Solidus.t('make_sure_the_above_reimbursement_amount_is_correct')}." %>
     </span>
   <% end %>
   <div class="form-buttons filter-actions actions" data-hook="reimburse-buttons">
     <% if !@reimbursement.reimbursed? %>
       <%= button_to [:perform, :admin, @order, @reimbursement], {class: 'button fa fa-reply', method: 'post'} do %>
-        <%= Spree.t(:reimburse) %>
+        <%= Solidus.t(:reimburse) %>
       <% end %>
-      <span class="or"><%= Spree.t(:or) %></span>
-      <%= button_link_to Spree.t('actions.cancel'), url_for([:admin, @order, @reimbursement.customer_return]), :icon => 'remove' %>
+      <span class="or"><%= Solidus.t(:or) %></span>
+      <%= button_link_to Solidus.t('actions.cancel'), url_for([:admin, @order, @reimbursement.customer_return]), :icon => 'remove' %>
     <% end %>
   </div>
 </fieldset>

@@ -16,7 +16,7 @@ module Spree
         @promotion = @promotion_builder.promotion
 
         if @promotion_builder.perform
-          flash[:success] = Spree.t(:promotion_successfully_created)
+          flash[:success] = Solidus.t(:promotion_successfully_created)
           redirect_to location_after_save
         else
           flash[:error] = @promotion_builder.errors.full_messages.join(", ")

@@ -14,8 +14,8 @@ class window.Spree
   # Uses the JSUri library from here: https://github.com/derek-watson/jsUri
   # Thanks to Jake Moffat for the suggestion: https://twitter.com/jakeonrails/statuses/321776992221544449
   @url: (uri, query) ->
-    if Spree.env == 'development'
-      console.warn 'Spree.url is deprecated, please use Spree.ajax for your request instead.'
+    if Solidus.env == 'development'
+      console.warn 'Solidus.url is deprecated, please use Solidus.ajax for your request instead.'
     if uri.path == undefined
       uri = new Uri(uri)
     if query
@@ -27,13 +27,13 @@ class window.Spree
   # for the user to the end of any URL.
   # Immediately after, this string is then passed to jQuery.ajax.
   #
-  # Spree.ajax works in two ways to support common jQuery syntax:
+  # Solidus.ajax works in two ways to support common jQuery syntax:
   #
-  # Spree.ajax("url", {settings: 'go here'})
+  # Solidus.ajax("url", {settings: 'go here'})
   # or:
-  # Spree.ajax({url: "url", settings: 'go here'})
+  # Solidus.ajax({url: "url", settings: 'go here'})
   #
-  # Spree.getJSON has the same method signature as $.getJSON
+  # Solidus.getJSON has the same method signature as $.getJSON
   @ajax: (url, options) ->
     if typeof(url) == "object"
       options = url
@@ -41,13 +41,13 @@ class window.Spree
 
     options = options || {}
 
-    options = $.extend(options, { headers: { "X-Spree-Token": Spree.api_key } })
+    options = $.extend(options, { headers: { "X-Spree-Token": Solidus.api_key } })
     $.ajax(url, options)
 
   @routes:
     states_search: @pathFor('api/states')
     apply_coupon_code: (order_id) ->
-      Spree.pathFor("api/orders/#{order_id}/apply_coupon_code")
+      Solidus.pathFor("api/orders/#{order_id}/apply_coupon_code")
 
   @getJSON: (url, data, success) ->
     if typeof data is 'function'

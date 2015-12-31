@@ -24,7 +24,7 @@ describe Solidus::ReturnItem::EligibilityValidator::InventoryShipped do
 
       it "sets an error" do
         subject
-        expect(validator.errors[:inventory_unit_shipped]).to eq Spree.t('return_item_inventory_unit_ineligible')
+        expect(validator.errors[:inventory_unit_shipped]).to eq Solidus.t('return_item_inventory_unit_ineligible')
       end
     end
   end

@@ -1,14 +1,14 @@
 <fieldset class="no-border-bottom">
-  <legend><%= Spree.t(:payments) %></legend>
+  <legend><%= Solidus.t(:payments) %></legend>
   <table class="index">
     <thead>
       <tr data-hook="payments_header">
-        <th><%= Spree.t(:identifier) %></th>
-        <th><%= "#{Spree.t('date')}/#{Spree.t('time')}" %></th>
-        <th><%= Spree.t(:amount) %></th>
-        <th><%= Spree.t(:payment_method) %></th>
-        <th><%= Spree.t(:transaction_id) %></th>
-        <th><%= Spree.t(:payment_state) %></th>
+        <th><%= Solidus.t(:identifier) %></th>
+        <th><%= "#{Solidus.t('date')}/#{Solidus.t('time')}" %></th>
+        <th><%= Solidus.t(:amount) %></th>
+        <th><%= Solidus.t(:payment_method) %></th>
+        <th><%= Solidus.t(:transaction_id) %></th>
+        <th><%= Solidus.t(:payment_state) %></th>
       </tr>
     </thead>
     <tbody>
@@ -31,7 +31,7 @@
           </td>
           <td class="align-center">
             <span class="state <%= payment.state %>">
-              <%= Spree.t(payment.state, :scope => :payment_states, :default => payment.state.capitalize) %>
+              <%= Solidus.t(payment.state, :scope => :payment_states, :default => payment.state.capitalize) %>
             </span>
           </td>
         </tr>

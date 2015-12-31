@@ -29,7 +29,7 @@ module Spree
             adjustable: order,
             source: self,
             promotion_code: options[:promotion_code],
-            label: "#{Spree.t(:promotion)} (#{promotion.name})"
+            label: "#{Solidus.t(:promotion)} (#{promotion.name})"
           )
           true
         end

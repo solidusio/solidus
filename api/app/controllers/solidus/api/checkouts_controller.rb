@@ -58,7 +58,7 @@ module Spree
 
         if OrderUpdateAttributes.new(@order, update_params, request_env: request.headers.env).apply
           if can?(:admin, @order) && user_id.present?
-            @order.associate_user!(Spree.user_class.find(user_id))
+            @order.associate_user!(Solidus.user_class.find(user_id))
           end
 
           return if after_update_attributes

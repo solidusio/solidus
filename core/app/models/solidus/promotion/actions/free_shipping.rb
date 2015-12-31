@@ -23,7 +23,7 @@ module Spree
         end
 
         def label
-          "#{Spree.t(:promotion)} (#{promotion.name})"
+          "#{Solidus.t(:promotion)} (#{promotion.name})"
         end
 
         def compute_amount(shipment)

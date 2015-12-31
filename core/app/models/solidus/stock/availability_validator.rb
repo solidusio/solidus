@@ -24,7 +24,7 @@ module Spree
           display_name = %Q{#{variant.name}}
           display_name += %Q{ (#{variant.options_text})} unless variant.options_text.blank?
 
-          line_item.errors[:quantity] << Spree.t(
+          line_item.errors[:quantity] << Solidus.t(
             :selected_quantity_not_available,
             item: display_name.inspect
           )

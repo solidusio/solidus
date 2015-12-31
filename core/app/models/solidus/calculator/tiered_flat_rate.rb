@@ -15,7 +15,7 @@ module Spree
     validate :preferred_tiers_content
 
     def self.description
-      Spree.t(:tiered_flat_rate)
+      Solidus.t(:tiered_flat_rate)
     end
 
     def compute(object)

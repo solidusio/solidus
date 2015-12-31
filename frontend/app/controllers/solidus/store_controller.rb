@@ -40,7 +40,7 @@ module Spree
       def lock_order
         OrderMutex.with_lock!(@order) { yield }
       rescue Solidus::OrderMutex::LockFailed => e
-        flash[:error] = Spree.t(:order_mutex_error)
+        flash[:error] = Solidus.t(:order_mutex_error)
         redirect_to spree.cart_path
       end
   end

@@ -26,12 +26,12 @@ module Spree
 
       def set_success_code(c)
         @status_code = c
-        @success = Spree.t(c)
+        @success = Solidus.t(c)
       end
 
       def set_error_code(c)
         @status_code = c
-        @error = Spree.t(c)
+        @error = Solidus.t(c)
       end
 
       def promotion

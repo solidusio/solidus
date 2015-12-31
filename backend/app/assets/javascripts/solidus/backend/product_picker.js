@@ -9,17 +9,17 @@ $.fn.productAutocomplete = function (options) {
     minimumInputLength: 3,
     multiple: multiple,
     initSelection: function (element, callback) {
-      $.get(Spree.routes.admin_product_search, {
+      $.get(Solidus.routes.admin_product_search, {
         ids: element.val().split(','),
-        token: Spree.api_key
+        token: Solidus.api_key
       }, function (data) {
         callback(multiple ? data.products : data.products[0]);
       });
     },
     ajax: {
-      url: Spree.routes.admin_product_search,
+      url: Solidus.routes.admin_product_search,
       datatype: 'json',
-      params: { "headers": { "X-Spree-Token": Spree.api_key } },
+      params: { "headers": { "X-Spree-Token": Solidus.api_key } },
       data: function (term, page) {
         return {
           q: {
@@ -27,7 +27,7 @@ $.fn.productAutocomplete = function (options) {
             sku_cont: term
           },
           m: 'OR',
-          token: Spree.api_key,
+          token: Solidus.api_key,
           page: page
         };
       },

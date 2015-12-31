@@ -1,11 +1,11 @@
 <%= render :partial => 'solidus/admin/shared/order_tabs', :locals => { :current => 'Reimbursements' } %>
 
 <% content_for :page_title do %>
-  <i class="fa fa-arrow-right"></i> <%= Spree.t(:edit_reimbursement) %>
+  <i class="fa fa-arrow-right"></i> <%= Solidus.t(:edit_reimbursement) %>
 <% end %>
 
 <% content_for :page_actions do %>
-  <li><%= button_link_to Spree.t(:back_to_customer_return_list), spree.admin_order_customer_returns_url(@order), :icon => 'arrow-left' %></li>
+  <li><%= button_link_to Solidus.t(:back_to_customer_return_list), spree.admin_order_customer_returns_url(@order), :icon => 'arrow-left' %></li>
 <% end %>
 
 <%= render :partial => 'solidus/shared/error_messages', :locals => { :target => @customer_return } %>
@@ -13,10 +13,10 @@
 <table class="index">
   <thead data-hook="customer_return_header">
     <tr>
-      <th><%= Spree.t(:id) %></th>
-      <th><%= Spree.t(:total) %></th>
-      <th><%= Spree.t(:status) %></th>
-      <th><%= "#{Spree.t('date')}/#{Spree.t('time')}" %></th>
+      <th><%= Solidus.t(:id) %></th>
+      <th><%= Solidus.t(:total) %></th>
+      <th><%= Solidus.t(:status) %></th>
+      <th><%= "#{Solidus.t('date')}/#{Solidus.t('time')}" %></th>
       <th class="actions"></th>
     </tr>
   </thead>

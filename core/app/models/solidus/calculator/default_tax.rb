@@ -3,7 +3,7 @@ require_dependency 'solidus/calculator'
 module Spree
   class Calculator::DefaultTax < Calculator
     def self.description
-      Spree.t(:default_tax)
+      Solidus.t(:default_tax)
     end
 
     # Default tax calculator still needs to support orders for legacy reasons

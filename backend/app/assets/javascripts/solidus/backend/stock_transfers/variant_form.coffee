@@ -34,18 +34,18 @@ class VariantForm
 
   createTransferItem = (variantId) ->
     stockTransferNumber = $("#stock_transfer_number").val()
-    $(".select2-results").html("<li class='select2-no-results'>#{Spree.translations.adding_match}</li>")
+    $(".select2-results").html("<li class='select2-no-results'>#{Solidus.translations.adding_match}</li>")
     transferItemRow = $("[data-variant-id='#{variantId}']")
     if transferItemRow.length > 0
       transferItemId = transferItemRow.parents('tr:first').data('transfer-item-id')
       expectedQuantity = parseInt($("#number-update-#{transferItemId}").find('.js-number-update-text').text().trim(), 10)
-      transferItem = new Spree.TransferItem
+      transferItem = new Solidus.TransferItem
         id: transferItemId
         stockTransferNumber: stockTransferNumber
         expectedQuantity: expectedQuantity + 1
       transferItem.update(updateSuccessHandler, errorHandler)
     else
-      transferItem = new Spree.TransferItem
+      transferItem = new Solidus.TransferItem
         stockTransferNumber: stockTransferNumber
         variantId: variantId
         expectedQuantity: 1
@@ -53,18 +53,18 @@ class VariantForm
 
   receiveTransferItem = (variantId) ->
     stockTransferNumber = $("#stock_transfer_number").val()
-    $(".select2-results").html("<li class='select2-no-results'>#{Spree.translations.receiving_match}</li>")
-    stockTransfer = new Spree.StockTransfer
+    $(".select2-results").html("<li class='select2-no-results'>#{Solidus.translations.receiving_match}</li>")
+    stockTransfer = new Solidus.StockTransfer
       number: stockTransferNumber
     stockTransfer.receive(variantId, receiveSuccessHandler, errorHandler)
 
   createSuccessHandler = (transferItem) =>
     successHandler(transferItem, false)
-    show_flash('success', Spree.translations.created_successfully)
+    show_flash('success', Solidus.translations.created_successfully)
 
   updateSuccessHandler = (transferItem) =>
     successHandler(transferItem, false)
-    show_flash('success', Spree.translations.updated_successfully)
+    show_flash('success', Solidus.translations.updated_successfully)
 
   receiveSuccessHandler = (stockTransfer, variantId) =>
     receivedItem =
@@ -72,8 +72,8 @@ class VariantForm
       variant: stockTransfer.received_item.variant
       received_quantity: stockTransfer.received_item.received_quantity
     successHandler(receivedItem, true)
-    Spree.StockTransfers.ReceivedCounter.updateTotal()
-    show_flash('success', Spree.translations.received_successfully)
+    Solidus.StockTransfers.ReceivedCounter.updateTotal()
+    show_flash('success', Solidus.translations.received_successfully)
 
   successHandler = (transferItem, isReceiving) =>
     resetVariantAutocomplete()
@@ -112,7 +112,7 @@ class VariantForm
   formatVariantDisplayAttributes = (variant) ->
     displayAttributes = JSON.parse($("#variant_display_attributes").val())
     _.map(displayAttributes, (attribute) =>
-      label: Spree.translations[attribute.translation_key]
+      label: Solidus.translations[attribute.translation_key]
       value: variant[attribute.attr_name]
     )
 
@@ -124,5 +124,5 @@ class VariantForm
       option_value: optionValue.presentation
     )
 
-Spree.StockTransfers ?= {}
-Spree.StockTransfers.VariantForm = VariantForm
+Solidus.StockTransfers ?= {}
+Solidus.StockTransfers.VariantForm = VariantForm

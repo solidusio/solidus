@@ -39,7 +39,7 @@ module Spree
 
         if @order.completed?
           @current_order = nil
-          flash.notice = Spree.t(:order_processed_successfully)
+          flash.notice = Solidus.t(:order_processed_successfully)
           flash['order_completed'] = true
           redirect_to completion_route
         else
@@ -118,7 +118,7 @@ module Spree
 
       def ensure_sufficient_stock_lines
         if @order.insufficient_stock_lines.present?
-          flash[:error] = Spree.t(:inventory_error_flash_for_insufficient_quantity)
+          flash[:error] = Solidus.t(:inventory_error_flash_for_insufficient_quantity)
           redirect_to spree.cart_path
         end
       end
@@ -163,7 +163,7 @@ module Spree
       end
 
       def rescue_from_spree_gateway_error(exception)
-        flash.now[:error] = Spree.t(:spree_gateway_error_flash_for_checkout)
+        flash.now[:error] = Solidus.t(:spree_gateway_error_flash_for_checkout)
         @order.errors.add(:base, exception.message)
         render :edit
       end

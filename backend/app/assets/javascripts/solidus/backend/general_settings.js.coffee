@@ -2,7 +2,7 @@ $(@).ready( ->
   $('[data-hook=general_settings_clear_cache] #clear_cache').click ->
     $.ajax
       type: 'POST'
-      url: Spree.routes.clear_cache
+      url: Solidus.routes.clear_cache
       success: ->
         show_flash 'success', "Cache was flushed."
       error: (msg) ->

@@ -4,7 +4,7 @@ require_relative '../core/lib/solidus/core/version.rb'
 Gem::Specification.new do |s|
   s.platform    = Gem::Platform::RUBY
   s.name        = 'solidus_sample'
-  s.version     = Spree.solidus_version
+  s.version     = Solidus.solidus_version
   s.summary     = 'Sample data (including images) for use with Solidus.'
   s.description = s.summary
 

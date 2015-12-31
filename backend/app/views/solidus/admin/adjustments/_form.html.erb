@@ -1,7 +1,7 @@
 <div data-hook="admin_adjustment_form_fields" class="row">
   <div class="alpha three columns">
     <%= f.field_container :amount do %>
-      <%= f.label :amount, raw(Spree.t(:amount) + content_tag(:span, " *", :class => "required")) %>
+      <%= f.label :amount, raw(Solidus.t(:amount) + content_tag(:span, " *", :class => "required")) %>
       <%= text_field :adjustment, :amount, :class => 'fullwidth' %>
       <%= f.error_message_on :amount %>
     <% end %>
@@ -9,7 +9,7 @@
 
   <div class="six columns">
     <%= f.field_container :label do %>
-      <%= f.label :label, raw(Spree.t(:description) + content_tag(:span, " *", :class => "required")) %>
+      <%= f.label :label, raw(Solidus.t(:description) + content_tag(:span, " *", :class => "required")) %>
       <%= text_field :adjustment, :label, :class => 'fullwidth' %>
       <%= f.error_message_on :label %>
     <% end %>
@@ -17,8 +17,8 @@
 
   <div class="omega three columns">
     <%= f.field_container :label do %>
-      <%= f.label :adjustment_reason_id, Spree.t(:reason) %><br/>
-      <%= f.collection_select(:adjustment_reason_id, reasons_for(@adjustment), :id, :name, {include_blank: true}, {"data-placeholder" => Spree.t(:select_a_reason), class: 'select2 fullwidth'}) %>
+      <%= f.label :adjustment_reason_id, Solidus.t(:reason) %><br/>
+      <%= f.collection_select(:adjustment_reason_id, reasons_for(@adjustment), :id, :name, {include_blank: true}, {"data-placeholder" => Solidus.t(:select_a_reason), class: 'select2 fullwidth'}) %>
     <% end %>
   </div>
 </div>

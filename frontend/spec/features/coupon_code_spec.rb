@@ -58,13 +58,13 @@ describe "Coupon code promotions", type: :feature, js: true do
       it "informs about an invalid coupon code" do
         fill_in "order_coupon_code", :with => "coupon_codes_rule_man"
         click_button "Save and Continue"
-        expect(page).to have_content(Spree.t(:coupon_code_not_found))
+        expect(page).to have_content(Solidus.t(:coupon_code_not_found))
       end
 
       it "can enter an invalid coupon code, then a real one" do
         fill_in "order_coupon_code", :with => "coupon_codes_rule_man"
         click_button "Save and Continue"
-        expect(page).to have_content(Spree.t(:coupon_code_not_found))
+        expect(page).to have_content(Solidus.t(:coupon_code_not_found))
         fill_in "order_coupon_code", :with => "onetwo"
         click_button "Save and Continue"
         expect(page).to have_content("Promotion (Onetwo)   -$10.00")
@@ -91,13 +91,13 @@ describe "Coupon code promotions", type: :feature, js: true do
       it "can enter a coupon code and receives success notification" do
         fill_in "order_coupon_code", :with => "onetwo"
         click_button "Update"
-        expect(page).to have_content(Spree.t(:coupon_code_applied))
+        expect(page).to have_content(Solidus.t(:coupon_code_applied))
       end
 
       it "can enter a promotion code with both upper and lower case letters" do
         fill_in "order_coupon_code", :with => "ONETwO"
         click_button "Update"
-        expect(page).to have_content(Spree.t(:coupon_code_applied))
+        expect(page).to have_content(Solidus.t(:coupon_code_applied))
       end
 
       it "informs the user about a coupon code which has exceeded its usage" do
@@ -105,7 +105,7 @@ describe "Coupon code promotions", type: :feature, js: true do
 
         fill_in "order_coupon_code", :with => "onetwo"
         click_button "Update"
-        expect(page).to have_content(Spree.t(:coupon_code_max_usage))
+        expect(page).to have_content(Solidus.t(:coupon_code_max_usage))
       end
 
       context "informs the user if the coupon code is not eligible" do
@@ -121,7 +121,7 @@ describe "Coupon code promotions", type: :feature, js: true do
 
           fill_in "order_coupon_code", :with => "onetwo"
           click_button "Update"
-          expect(page).to have_content(Spree.t(:item_total_less_than_or_equal, scope: [:eligibility_errors, :messages], amount: "$100.00"))
+          expect(page).to have_content(Solidus.t(:item_total_less_than_or_equal, scope: [:eligibility_errors, :messages], amount: "$100.00"))
         end
       end
 
@@ -131,7 +131,7 @@ describe "Coupon code promotions", type: :feature, js: true do
         promotion.save!
         fill_in "order_coupon_code", :with => "onetwo"
         click_button "Update"
-        expect(page).to have_content(Spree.t(:coupon_code_expired))
+        expect(page).to have_content(Solidus.t(:coupon_code_expired))
       end
 
       context "calculates the correct amount of money saved with flat percent promotions" do

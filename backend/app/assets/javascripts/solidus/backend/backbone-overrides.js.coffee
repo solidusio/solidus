@@ -1,4 +1,4 @@
-Backbone.ajax = Spree.ajax
+Backbone.ajax = Solidus.ajax
 
 oldSync = Backbone.sync
 Backbone.sync = (method, model, options) ->

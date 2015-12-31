@@ -3,7 +3,7 @@ module Spree
     def confirm_email(order, resend = false)
       @order = find_order(order)
       @store = @order.store
-      subject = build_subject(Spree.t('order_mailer.confirm_email.subject'), resend)
+      subject = build_subject(Solidus.t('order_mailer.confirm_email.subject'), resend)
 
       mail(to: @order.email, from: from_address(@store), subject: subject)
     end
@@ -11,7 +11,7 @@ module Spree
     def cancel_email(order, resend = false)
       @order = find_order(order)
       @store = @order.store
-      subject = build_subject(Spree.t('order_mailer.cancel_email.subject'), resend)
+      subject = build_subject(Solidus.t('order_mailer.cancel_email.subject'), resend)
 
       mail(to: @order.email, from: from_address(@store), subject: subject)
     end
@@ -19,7 +19,7 @@ module Spree
     def inventory_cancellation_email(order, inventory_units, resend = false)
       @order, @inventory_units = find_order(order), inventory_units
       @store = @order.store
-      subject = build_subject(Spree.t('order_mailer.inventory_cancellation.subject'), resend)
+      subject = build_subject(Solidus.t('order_mailer.inventory_cancellation.subject'), resend)
 
       mail(to: @order.email, from: from_address(@store), subject: subject)
     end
@@ -36,7 +36,7 @@ module Spree
     end
 
     def build_subject(subject_text, resend)
-      subject = (resend ? "[#{Spree.t(:resend).upcase}] " : '')
+      subject = (resend ? "[#{Solidus.t(:resend).upcase}] " : '')
       subject += "#{Solidus::Store.current.name} #{subject_text} ##{@order.number}"
     end
   end

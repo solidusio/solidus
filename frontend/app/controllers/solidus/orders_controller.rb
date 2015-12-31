@@ -53,7 +53,7 @@ module Spree
           error = e.record.errors.full_messages.join(", ")
         end
       else
-        error = Spree.t(:please_enter_reasonable_quantity)
+        error = Solidus.t(:please_enter_reasonable_quantity)
       end
 
       if error
@@ -76,9 +76,9 @@ module Spree
 
     def accurate_title
       if @order && @order.completed?
-        Spree.t(:order_number, :number => @order.number)
+        Solidus.t(:order_number, :number => @order.number)
       else
-        Spree.t(:shopping_cart)
+        Solidus.t(:shopping_cart)
       end
     end
 
@@ -106,7 +106,7 @@ module Spree
       def assign_order
         @order = current_order
         unless @order
-          flash[:error] = Spree.t(:order_not_found)
+          flash[:error] = Solidus.t(:order_not_found)
           redirect_to root_path and return
         end
       end

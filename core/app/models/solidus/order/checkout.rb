@@ -262,7 +262,7 @@ module Spree
               if existing_card_id.present?
                 credit_card = CreditCard.find existing_card_id
                 if credit_card.user_id != self.user_id || credit_card.user_id.blank?
-                  raise Core::GatewayError.new Spree.t(:invalid_credit_card)
+                  raise Core::GatewayError.new Solidus.t(:invalid_credit_card)
                 end
 
                 credit_card.verification_value = params[:cvc_confirm] if params[:cvc_confirm].present?
@@ -333,7 +333,7 @@ module Spree
             return if !payment_required?
 
             if payments.valid.empty?
-              errors.add(:base, Spree.t(:no_payment_found))
+              errors.add(:base, Solidus.t(:no_payment_found))
               return false
             end
 

@@ -2,7 +2,7 @@ begin
 north_america = Solidus::Zone.find_by_name!("North America")
 rescue ActiveRecord::RecordNotFound
   puts "Couldn't find 'North America' zone. Did you run `rake db:seed` first?"
-  puts "That task will set up the countries, states and zones required for Spree."
+  puts "That task will set up the countries, states and zones required for Solidus."
   exit
 end
 

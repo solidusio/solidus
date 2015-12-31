@@ -178,7 +178,7 @@ module Spree
 
         it "adds an error message" do
           subject
-          expect(stock_transfer.errors.full_messages).to include Spree.t(:stock_transfer_cannot_be_finalized)
+          expect(stock_transfer.errors.full_messages).to include Solidus.t(:stock_transfer_cannot_be_finalized)
         end
       end
     end
@@ -215,7 +215,7 @@ module Spree
 
         it "adds an error message" do
           subject
-          expect(stock_transfer.errors.full_messages).to include Spree.t(:stock_transfer_must_be_receivable)
+          expect(stock_transfer.errors.full_messages).to include Solidus.t(:stock_transfer_must_be_receivable)
         end
       end
     end
@@ -234,7 +234,7 @@ module Spree
 
         it "adds an error message to the model" do
           subject
-          expect(stock_transfer.errors.full_messages).to include Spree.t('errors.messages.cannot_delete_finalized_stock_transfer')
+          expect(stock_transfer.errors.full_messages).to include Solidus.t('errors.messages.cannot_delete_finalized_stock_transfer')
         end
       end
 

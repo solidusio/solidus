@@ -10,9 +10,9 @@ module Spree
       def users
         if params[:ids]
           # split here may be String#split or Array#split, so we must flatten the results
-          @users = Spree.user_class.where(id: params[:ids].split(',').flatten)
+          @users = Solidus.user_class.where(id: params[:ids].split(',').flatten)
         else
-          @users = Spree.user_class.ransack({
+          @users = Solidus.user_class.ransack({
             m: 'or',
             email_start: params[:q],
             addresses_firstname_start: params[:q],

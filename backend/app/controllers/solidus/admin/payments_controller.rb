@@ -39,7 +39,7 @@ module Spree
             flash[:success] = flash_message_for(@payment, :successfully_created)
             redirect_to admin_order_payments_path(@order)
           else
-            flash[:error] = Spree.t(:payment_could_not_be_created)
+            flash[:error] = Solidus.t(:payment_could_not_be_created)
             render :new
           end
         rescue Solidus::Core::GatewayError => e
@@ -54,9 +54,9 @@ module Spree
         # Because we have a transition method also called void, we do this to avoid conflicts.
         event = "void_transaction" if event == "void"
         if @payment.send("#{event}!")
-          flash[:success] = Spree.t(:payment_updated)
+          flash[:success] = Solidus.t(:payment_updated)
         else
-          flash[:error] = Spree.t(:cannot_perform_operation)
+          flash[:error] = Solidus.t(:cannot_perform_operation)
         end
       rescue Solidus::Core::GatewayError => ge
         flash[:error] = "#{ge.message}"
@@ -105,7 +105,7 @@ module Spree
 
       def require_bill_address
         if Solidus::Config[:order_bill_address_used] && @order.bill_address.nil?
-          flash[:notice] = Spree.t(:fill_in_customer_info)
+          flash[:notice] = Solidus.t(:fill_in_customer_info)
           redirect_to edit_admin_order_customer_url(@order)
         end
       end

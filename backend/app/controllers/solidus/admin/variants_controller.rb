@@ -11,9 +11,9 @@ module Spree
       def destroy
         @variant = Variant.find(params[:id])
         if @variant.destroy
-          flash[:success] = Spree.t('notice_messages.variant_deleted')
+          flash[:success] = Solidus.t('notice_messages.variant_deleted')
         else
-          flash[:success] = Spree.t('notice_messages.variant_not_deleted')
+          flash[:success] = Solidus.t('notice_messages.variant_not_deleted')
         end
 
         respond_with(@variant) do |format|

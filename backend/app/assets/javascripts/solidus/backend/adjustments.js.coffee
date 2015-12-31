@@ -1,12 +1,12 @@
 $(@).ready( ->
   $('[data-hook=adjustments_new_coupon_code] #add_coupon_code').click ->
     return if $("#coupon_code").val().length == 0
-    Spree.ajax
+    Solidus.ajax
       type: 'PUT'
-      url: Spree.url(Spree.routes.apply_coupon_code(order_number))
+      url: Solidus.url(Solidus.routes.apply_coupon_code(order_number))
       data:
         coupon_code: $("#coupon_code").val()
-        token: Spree.api_key
+        token: Solidus.api_key
       success: ->
         window.location.reload()
       error: (msg) ->

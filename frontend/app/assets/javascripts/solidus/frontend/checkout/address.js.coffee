@@ -11,7 +11,7 @@ $ ->
       countryId = getCountryId(region)
       if countryId?
         unless statesByCountry[countryId]?
-          $.get Spree.routes.states_search, {country_id: countryId}, (data) ->
+          $.get Solidus.routes.states_search, {country_id: countryId}, (data) ->
             statesByCountry[countryId] =
               states: data.states
               states_required: data.states_required

@@ -8,10 +8,10 @@
     </colgroup>
     <thead>
       <tr>
-        <th><%= Spree.t(:item) %></th>
-        <th><%= Spree.t(:options) %></th>
-        <% if show_expected %><th><%= Spree.t(:expected) %></th><% end %>
-        <% if show_received %><th><%= Spree.t(:received) %></th><% end %>
+        <th><%= Solidus.t(:item) %></th>
+        <th><%= Solidus.t(:options) %></th>
+        <% if show_expected %><th><%= Solidus.t(:expected) %></th><% end %>
+        <% if show_received %><th><%= Solidus.t(:received) %></th><% end %>
         <% if show_actions %><th class='actions'></th><% end %>
       </tr>
     </thead>
@@ -29,7 +29,7 @@
                   <tbody>
                     <% @variant_display_attributes.each do |display_attribute| %>
                       <tr>
-                        <td><%= Spree.t(display_attribute[:translation_key]) %></td>
+                        <td><%= Solidus.t(display_attribute[:translation_key]) %></td>
                         <td class="fullwidth">
                           <%= variant.send(display_attribute[:attr_name]) %>
                         </td>
@@ -59,5 +59,5 @@
     </tbody>
   </table>
   <div class="no-objects-found" <%= 'hidden' if @stock_transfer.transfer_items.any? %>>
-    <%= Spree.t(:no_resource_found, resource: I18n.t(:other, scope: 'activerecord.models.solidus/transfer_item')) %>
+    <%= Solidus.t(:no_resource_found, resource: I18n.t(:other, scope: 'activerecord.models.solidus/transfer_item')) %>
   </div>

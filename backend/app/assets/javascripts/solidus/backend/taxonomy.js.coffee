@@ -12,7 +12,7 @@ handle_move = (e, data) ->
   new_parent = data.rslt.np
 
   url = "#{base_url}/#{node.prop("id")}"
-  Spree.ajax
+  Solidus.ajax
     type: "PUT",
     dataType: "json",
     url: url,
@@ -27,7 +27,7 @@ handle_create = (e, data) ->
   position = data.rslt.position
   new_parent = data.rslt.parent
 
-  Spree.ajax
+  Solidus.ajax
     type: "POST",
     dataType: "json",
     url: base_url,
@@ -46,7 +46,7 @@ handle_rename = (e, data) ->
 
   url = "#{base_url}/#{node.prop("id")}"
 
-  Spree.ajax
+  Solidus.ajax
     type: "PUT",
     dataType: "json",
     url: url,
@@ -58,8 +58,8 @@ handle_rename = (e, data) ->
 handle_delete = (e, data) ->
   node = data.rslt.obj
   delete_url = "#{base_url}/#{node.prop("id")}"
-  if confirm(Spree.translations.are_you_sure_delete)
-    Spree.ajax
+  if confirm(Solidus.translations.are_you_sure_delete)
+    Solidus.ajax
       type: "DELETE",
       dataType: "json",
       url: delete_url,
@@ -70,9 +70,9 @@ handle_delete = (e, data) ->
 @setup_taxonomy_tree = (taxonomy_id) ->
   if taxonomy_id != undefined
     # this is defined within admin/taxonomies/edit
-    base_url = Spree.routes.taxonomy_taxons_path
+    base_url = Solidus.routes.taxonomy_taxons_path
 
-    Spree.ajax
+    Solidus.ajax
       url: base_url.replace("/taxons", "/jstree"),
       success: (taxonomy) ->
         last_rollback = null
@@ -81,15 +81,15 @@ handle_delete = (e, data) ->
           json_data:
             data: taxonomy,
             ajax:
-              headers: { "X-Spree-Token": Spree.api_key }
+              headers: { "X-Spree-Token": Solidus.api_key }
               url: (e) ->
                 "#{base_url}/#{e.prop('id')}/jstree"
           themes:
             theme: "apple",
-            url: Spree.routes.jstree_theme_path
+            url: Solidus.routes.jstree_theme_path
           strings:
             new_node: new_taxon,
-            loading: Spree.translations.loading + "..."
+            loading: Solidus.translations.loading + "..."
           crrm:
             move:
               check_move: (m) ->

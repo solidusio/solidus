@@ -38,7 +38,7 @@ describe Solidus::Admin::OrdersController, :type => :controller do
       it "approves an order" do
         expect(order.contents).to receive(:approve).with(user: controller.try_spree_current_user)
         spree_put :approve, id: order.number
-        expect(flash[:success]).to eq Spree.t(:order_approved)
+        expect(flash[:success]).to eq Solidus.t(:order_approved)
       end
     end
 
@@ -46,7 +46,7 @@ describe Solidus::Admin::OrdersController, :type => :controller do
       it "cancels an order" do
         expect(order).to receive(:canceled_by).with(controller.try_spree_current_user)
         spree_put :cancel, id: order.number
-        expect(flash[:success]).to eq Spree.t(:order_canceled)
+        expect(flash[:success]).to eq Solidus.t(:order_canceled)
       end
     end
 
@@ -54,7 +54,7 @@ describe Solidus::Admin::OrdersController, :type => :controller do
       it "resumes an order" do
         expect(order).to receive(:resume!)
         spree_put :resume, id: order.number
-        expect(flash[:success]).to eq Spree.t(:order_resumed)
+        expect(flash[:success]).to eq Solidus.t(:order_resumed)
       end
     end
 
@@ -95,8 +95,8 @@ describe Solidus::Admin::OrdersController, :type => :controller do
       end
 
       context "when a user_id is passed as a parameter" do
-        let(:user)  { mock_model(Spree.user_class) }
-        before { allow(Spree.user_class).to receive_messages :find_by_id => user }
+        let(:user)  { mock_model(Solidus.user_class) }
+        before { allow(Solidus.user_class).to receive_messages :find_by_id => user }
 
         it "imports a new order and assigns the user to the order" do
           expect(Solidus::Core::Importer::Order).to receive(:import)
@@ -167,7 +167,7 @@ describe Solidus::Admin::OrdersController, :type => :controller do
 
           it 'messages and redirects' do
             subject
-            expect(flash[:success]).to eq Spree.t('order_ready_for_confirm')
+            expect(flash[:success]).to eq Solidus.t('order_ready_for_confirm')
             expect(response).to redirect_to(spree.confirm_admin_order_path(order))
           end
         end
@@ -191,7 +191,7 @@ describe Solidus::Admin::OrdersController, :type => :controller do
 
         it 'messages and redirects' do
           subject
-          expect(flash[:notice]).to eq Spree.t('order_already_completed')
+          expect(flash[:notice]).to eq Solidus.t('order_already_completed')
           expect(response).to redirect_to(spree.edit_admin_order_path(order))
         end
       end
@@ -247,7 +247,7 @@ describe Solidus::Admin::OrdersController, :type => :controller do
 
         it 'messages and redirects' do
           subject
-          expect(flash[:success]).to eq Spree.t(:order_completed)
+          expect(flash[:success]).to eq Solidus.t(:order_completed)
           expect(response).to redirect_to(spree.edit_admin_order_path(order))
         end
       end
@@ -270,7 +270,7 @@ describe Solidus::Admin::OrdersController, :type => :controller do
         it 'messages and redirects' do
           subject
           expect(response).to redirect_to(spree.cart_admin_order_path(order))
-          expect(flash[:error].to_s).to eq Spree.t(:insufficient_stock_for_order)
+          expect(flash[:error].to_s).to eq Solidus.t(:insufficient_stock_for_order)
         end
       end
     end
@@ -361,7 +361,7 @@ describe Solidus::Admin::OrdersController, :type => :controller do
 
     it 'should deny access to users with an bar role' do
       allow(order).to receive(:update_attributes).and_return true
-      allow(order).to receive(:user).and_return Spree.user_class.new
+      allow(order).to receive(:user).and_return Solidus.user_class.new
       allow(order).to receive(:token).and_return nil
       user.spree_roles.clear
       user.spree_roles << Solidus::Role.find_or_create_by(name: 'bar')
@@ -452,7 +452,7 @@ describe Solidus::Admin::OrdersController, :type => :controller do
 
       it "includes an error on the order" do
         subject
-        expect(order.errors[:line_items]).to include Spree.t('errors.messages.blank')
+        expect(order.errors[:line_items]).to include Solidus.t('errors.messages.blank')
       end
     end
 

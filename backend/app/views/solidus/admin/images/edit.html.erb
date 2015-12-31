@@ -3,14 +3,14 @@
 <%= render :partial => 'solidus/shared/error_messages', :locals => { :target => @image } %>
 
 <% content_for :page_actions do %>
-  <li><%= button_link_to Spree.t(:back_to_images_list), admin_product_images_url(@product), :icon => 'arrow-left' %></li>
+  <li><%= button_link_to Solidus.t(:back_to_images_list), admin_product_images_url(@product), :icon => 'arrow-left' %></li>
 <% end %>
 
 <%= form_for [:admin, @product, @image], :html => { :multipart => true } do |f| %>
   <fieldset data-hook="edit_image">
     <legend align="center"><%= @image.attachment_file_name%></legend>
     <div data-hook="thumbnail" class="field alpha three columns align-center">
-      <%= f.label Spree.t(:thumbnail) %><br>
+      <%= f.label Solidus.t(:thumbnail) %><br>
       <%= link_to image_tag(@image.attachment.url(:small)), @image.attachment.url(:product) %>
     </div>
     <div class="nine columns omega">
@@ -18,9 +18,9 @@
     </div>
     <div class="clear"></div>
     <div class="form-buttons filter-actions actions" data-hook="buttons">
-      <%= button Spree.t('actions.update'), 'refresh' %>
-      <span class="or"><%= Spree.t(:or) %></span>
-      <%= link_to Spree.t('actions.cancel'), admin_product_images_url(@product), :id => 'cancel_link', :class => 'button remove' %>
+      <%= button Solidus.t('actions.update'), 'refresh' %>
+      <span class="or"><%= Solidus.t(:or) %></span>
+      <%= link_to Solidus.t('actions.cancel'), admin_product_images_url(@product), :id => 'cancel_link', :class => 'button remove' %>
     </div>
   </fieldset>
 <% end %>

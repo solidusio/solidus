@@ -6,8 +6,8 @@
   <% if content_for? :title %>
     <%= yield :title %>
   <% else %>
-    <%= "Solidus #{Spree.t('administration')}: " %>
-    <%= Spree.t(controller.controller_name, :default => controller.controller_name.titleize) %>
+    <%= "Solidus #{Solidus.t('administration')}: " %>
+    <%= Solidus.t(controller.controller_name, :default => controller.controller_name.titleize) %>
   <% end %>
 </title>
 
@@ -33,8 +33,8 @@
 
 <%= javascript_tag do -%>
   var AUTH_TOKEN = "<%= form_authenticity_token %>";
-  Spree.api_key = "<%= try_spree_current_user.try(:spree_api_key) %>";
-  Spree.env = "<%= Rails.env %>";
+  Solidus.api_key = "<%= try_spree_current_user.try(:spree_api_key) %>";
+  Solidus.env = "<%= Rails.env %>";
 <% end %>
 
 <%= yield :head %>

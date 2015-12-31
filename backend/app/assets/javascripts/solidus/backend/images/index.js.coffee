@@ -5,7 +5,7 @@ $ ->
     ($ '.no-objects-found').hide()
 
     ($ this).hide()
-    Spree.ajax
+    Solidus.ajax
       type: 'GET'
       url: @href
       data: (

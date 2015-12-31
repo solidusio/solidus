@@ -108,7 +108,7 @@ describe Solidus::Api::BaseController, :type => :controller do
     before do
       user = double(email: "spree@example.com")
       allow(user).to receive_message_chain :spree_roles, pluck: []
-      allow(Spree.user_class).to receive_messages find_by: user
+      allow(Solidus.user_class).to receive_messages find_by: user
       @routes = ActionDispatch::Routing::RouteSet.new.tap do |r|
         r.draw { get 'foo' => 'fakes#foo' }
       end

@@ -6,10 +6,10 @@ module Spree
         links = []
         @order_events.sort.each do |event|
           if @order.send("can_#{event}?")
-            links << button_link_to(Spree.t(event), [event, :admin, @order],
+            links << button_link_to(Solidus.t(event), [event, :admin, @order],
                                     :method => :put,
                                     :icon => "#{event}",
-                                    :data => { :confirm => Spree.t(:order_sure_want_to, :event => Spree.t(event)) })
+                                    :data => { :confirm => Solidus.t(:order_sure_want_to, :event => Solidus.t(event)) })
           end
         end
         links.join('&nbsp;').html_safe

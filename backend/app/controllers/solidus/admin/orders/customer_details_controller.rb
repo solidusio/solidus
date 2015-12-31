@@ -21,8 +21,8 @@ module Spree
           if @order.contents.update_cart(order_params)
 
             if should_associate_user?
-              requested_user = Spree.user_class.find(params[:user_id])
-              @order.associate_user!(Spree.user_class.find(params[:user_id]), @order.email.blank?)
+              requested_user = Solidus.user_class.find(params[:user_id])
+              @order.associate_user!(Solidus.user_class.find(params[:user_id]), @order.email.blank?)
             end
 
             unless @order.completed?
@@ -30,7 +30,7 @@ module Spree
               @order.refresh_shipment_rates
             end
 
-            flash[:success] = Spree.t('customer_details_updated')
+            flash[:success] = Solidus.t('customer_details_updated')
             redirect_to edit_admin_order_url(@order)
           else
             render :action => :edit

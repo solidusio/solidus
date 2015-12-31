@@ -5,5 +5,5 @@ class ReceivedCounter
     , 0)
     $('#total-received-quantity').text(newTotal)
 
-Spree.StockTransfers ?= {}
-Spree.StockTransfers.ReceivedCounter = ReceivedCounter
+Solidus.StockTransfers ?= {}
+Solidus.StockTransfers.ReceivedCounter = ReceivedCounter

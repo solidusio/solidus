@@ -1,29 +1,29 @@
 <% content_for :page_title do %>
-  <%= link_to "#{Spree.t(:editing_user)} #{@user.email}", edit_admin_user_url(@user) %>
+  <%= link_to "#{Solidus.t(:editing_user)} #{@user.email}", edit_admin_user_url(@user) %>
 <% end %>
 
 <%= render :partial => 'solidus/admin/users/sidebar', :locals => { :current => :store_credits } %>
 <% content_for :page_actions do %>
-  <li><%= link_to_with_icon 'arrow-left', Spree.t("admin.store_credits.back_to_user_list"), admin_users_path, class: 'button' %></li>
+  <li><%= link_to_with_icon 'arrow-left', Solidus.t("admin.store_credits.back_to_user_list"), admin_users_path, class: 'button' %></li>
   <% if can?(:create, Solidus::StoreCredit) %>
-    <li><%= link_to_with_icon 'plus', Spree.t("admin.store_credits.add"), new_admin_user_store_credit_path(@user), class: 'button' %></li>
+    <li><%= link_to_with_icon 'plus', Solidus.t("admin.store_credits.add"), new_admin_user_store_credit_path(@user), class: 'button' %></li>
   <% end %>
 <% end %>
 
 <% if @store_credits.any? %>
   <div id='sc-current-balance'>
-    <strong><%= Spree.t("admin.store_credits.current_balance") %>: </strong><%= @user.display_total_available_store_credit %>
+    <strong><%= Solidus.t("admin.store_credits.current_balance") %>: </strong><%= @user.display_total_available_store_credit %>
   </div>
 
   <table>
     <thead>
-      <th><%= Spree.t("admin.store_credits.credited_html_header") %></th>
-      <th><%= Spree.t("admin.store_credits.used_html_header") %></th>
-      <th><%= Spree.t("admin.store_credits.authed_html_header") %></th>
-      <th><%= Spree.t("admin.store_credits.type_html_header") %></th>
-      <th><%= Spree.t("admin.store_credits.created_by") %></th>
-      <th><%= Spree.t("admin.store_credits.issued_on") %></th>
-      <th><%= Spree.t("admin.store_credits.invalidated") %></th>
+      <th><%= Solidus.t("admin.store_credits.credited_html_header") %></th>
+      <th><%= Solidus.t("admin.store_credits.used_html_header") %></th>
+      <th><%= Solidus.t("admin.store_credits.authed_html_header") %></th>
+      <th><%= Solidus.t("admin.store_credits.type_html_header") %></th>
+      <th><%= Solidus.t("admin.store_credits.created_by") %></th>
+      <th><%= Solidus.t("admin.store_credits.issued_on") %></th>
+      <th><%= Solidus.t("admin.store_credits.invalidated") %></th>
       <th data-hook="admin_store_credits_index_header_actions" class="actions"></th>
     <thead>
     <tbody>
@@ -61,9 +61,9 @@
   </table>
 <% else %>
   <div class="alpha twelve columns no-objects-found">
-    <%= Spree.t(:no_resource_found, resource: Spree.t("admin.store_credits.resource_name")) %>
+    <%= Solidus.t(:no_resource_found, resource: Solidus.t("admin.store_credits.resource_name")) %>
     <% if can?(:create, Solidus::StoreCredit) %>
-      <%= link_to Spree.t(:add_one), spree.new_admin_user_store_credit_path(@user) %>!
+      <%= link_to Solidus.t(:add_one), spree.new_admin_user_store_credit_path(@user) %>!
     <% end %>
   </div>
 <% end %>

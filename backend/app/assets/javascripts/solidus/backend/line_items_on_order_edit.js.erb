@@ -49,11 +49,11 @@ addVariant = function() {
 }
 
 adjustLineItems = function(order_number, variant_id, quantity, stock_location_quantities){
-    var url = Spree.routes.orders_api + "/" + order_number + '/line_items';
+    var url = Solidus.routes.orders_api + "/" + order_number + '/line_items';
 
-    Spree.ajax({
+    Solidus.ajax({
         type: "POST",
-        url: Spree.url(url),
+        url: Solidus.url(url),
         data: {
           line_item: {
             variant_id: variant_id,
@@ -62,7 +62,7 @@ adjustLineItems = function(order_number, variant_id, quantity, stock_location_qu
           },
         }
     }).done(function( msg ) {
-        window.Spree.advanceOrder();
+        window.Solidus.advanceOrder();
         window.location.reload();
     });
 

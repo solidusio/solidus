@@ -38,4 +38,4 @@ class NumberFieldUpdater
     countText = tableCell.find('span').text().trim()
     tableCell.find("input[type='number']").val(countText)
 
-Spree.NumberFieldUpdater = NumberFieldUpdater
+Solidus.NumberFieldUpdater = NumberFieldUpdater

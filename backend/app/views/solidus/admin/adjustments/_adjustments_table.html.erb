@@ -1,10 +1,10 @@
 <table class="index adjustments" data-hook="adjustments">
   <thead data-hook="adjustmment_head">
     <tr>
-      <th><%= Spree.t(:adjustable) %></th>
-      <th><%= Spree.t(:description) %></th>
-      <th><%= Spree.t(:amount) %></th>
-      <th><%= Spree.t(:state) %></th>
+      <th><%= Solidus.t(:adjustable) %></th>
+      <th><%= Solidus.t(:description) %></th>
+      <th><%= Solidus.t(:amount) %></th>
+      <th><%= Solidus.t(:state) %></th>
       <th class="actions"></th>
     </tr>
   </thead>
@@ -14,10 +14,10 @@
       <td class="align-center" colspan='4'>
         <% if can? :update, Solidus::Adjustment %>
           <div>
-            <%= button_to Spree.t(:unfinalize_all_adjustments), adjustments_unfinalize_admin_order_path(@order), method: :get %>
+            <%= button_to Solidus.t(:unfinalize_all_adjustments), adjustments_unfinalize_admin_order_path(@order), method: :get %>
           </div>
           <div>
-            <%= button_to Spree.t(:finalize_all_adjustments), adjustments_finalize_admin_order_path(@order), method: :get %>
+            <%= button_to Solidus.t(:finalize_all_adjustments), adjustments_finalize_admin_order_path(@order), method: :get %>
           </div>
         <% end %>
       </td>

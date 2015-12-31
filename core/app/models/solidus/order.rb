@@ -126,7 +126,7 @@ module Spree
     scope :unreturned_exchange, -> { joins(:shipments).where('spree_orders.created_at > spree_shipments.created_at') }
 
     def self.by_customer(customer)
-      joins(:user).where("#{Spree.user_class.table_name}.email" => customer)
+      joins(:user).where("#{Solidus.user_class.table_name}.email" => customer)
     end
 
     def self.by_state(state)
@@ -430,7 +430,7 @@ module Spree
     # If so add error and restart checkout.
     def ensure_line_item_variants_are_not_deleted
       if line_items.any? { |li| li.variant.paranoia_destroyed? }
-        errors.add(:base, Spree.t(:deleted_variants_present))
+        errors.add(:base, Solidus.t(:deleted_variants_present))
         restart_checkout_flow
         false
       else
@@ -487,7 +487,7 @@ module Spree
 
     def ensure_shipping_address
       unless ship_address && ship_address.valid?
-        errors.add(:base, Spree.t(:ship_address_required)) and return false
+        errors.add(:base, Solidus.t(:ship_address_required)) and return false
       end
     end
 
@@ -495,9 +495,9 @@ module Spree
       return self.shipments if unreturned_exchange?
 
       if completed?
-        raise CannotRebuildShipments.new(Spree.t(:cannot_rebuild_shipments_order_completed))
+        raise CannotRebuildShipments.new(Solidus.t(:cannot_rebuild_shipments_order_completed))
       elsif shipments.any? { |s| !s.pending? }
-        raise CannotRebuildShipments.new(Spree.t(:cannot_rebuild_shipments_shipments_not_pending))
+        raise CannotRebuildShipments.new(Solidus.t(:cannot_rebuild_shipments_shipments_not_pending))
       else
         adjustments.shipping.destroy_all
         shipments.destroy_all
@@ -651,7 +651,7 @@ module Spree
       payments.reset
 
       if payments.where(state: %w(checkout pending)).sum(:amount) != total
-        errors.add(:base, Spree.t("store_credit.errors.unable_to_fund")) and return false
+        errors.add(:base, Solidus.t("store_credit.errors.unable_to_fund")) and return false
       end
 
     end
@@ -711,7 +711,7 @@ module Spree
       updater.update_adjustment_total
       if promo_total_changed?
         restart_checkout_flow
-        errors.add(:base, Spree.t(:promotion_total_changed_before_complete))
+        errors.add(:base, Solidus.t(:promotion_total_changed_before_complete))
       end
       errors.empty?
     end
@@ -723,7 +723,7 @@ module Spree
 
     def ensure_line_items_present
       unless line_items.present?
-        errors.add(:base, Spree.t(:there_are_no_items_for_this_order)) and return false
+        errors.add(:base, Solidus.t(:there_are_no_items_for_this_order)) and return false
       end
     end
 
@@ -732,7 +732,7 @@ module Spree
         # After this point, order redirects back to 'address' state and asks user to pick a proper address
         # Therefore, shipments are not necessary at this point.
         shipments.destroy_all
-        errors.add(:base, Spree.t(:items_cannot_be_shipped)) and return false
+        errors.add(:base, Solidus.t(:items_cannot_be_shipped)) and return false
       end
     end
 

@@ -1,20 +1,20 @@
 <%= render :partial => 'solidus/admin/shared/configuration_menu' %>
 
 <% content_for :page_title do %>
-  <%= Spree.t(:stock_locations) %>
+  <%= Solidus.t(:stock_locations) %>
 <% end %>
 
 <% content_for :page_actions do %>
   <ul class="actions inline-menu">
     <% if can?(:create, Solidus::StockLocation) %>
       <li>
-        <%= button_link_to Spree.t(:new_stock_location), new_object_url, { :icon => 'plus', :id => 'admin_new_stock_location' } %>
+        <%= button_link_to Solidus.t(:new_stock_location), new_object_url, { :icon => 'plus', :id => 'admin_new_stock_location' } %>
       </li>
     <% end %>
 
     <% if can?(:create, Solidus::StockTransfer) %>
       <li>
-        <%= button_link_to Spree.t(:new_stock_transfer), new_admin_stock_transfer_path, { :icon => 'forward' } %>
+        <%= button_link_to Solidus.t(:new_stock_transfer), new_admin_stock_transfer_path, { :icon => 'forward' } %>
       </li>
     <% end %>
   </ul>
@@ -32,9 +32,9 @@
     <thead>
       <tr data-hook="stock_locations_header">
         <th class="no-border"></th>
-        <th><%= Spree.t(:name) %></th>
-        <th><%= Spree.t(:state) %></th>
-        <th><%= Spree.t(:stock_movements) %></th>
+        <th><%= Solidus.t(:name) %></th>
+        <th><%= Solidus.t(:state) %></th>
+        <th><%= Solidus.t(:stock_movements) %></th>
         <th class="actions"></th>
       </tr>
     </thead>
@@ -50,10 +50,10 @@
             <% end %>
           </td>
           <td class="align-center"><%= display_name(stock_location) %></td>
-          <td class="align-center"><span class="state <%= state(stock_location) %>"><%= Spree.t(state(stock_location)) %></span></td>
+          <td class="align-center"><span class="state <%= state(stock_location) %>"><%= Solidus.t(state(stock_location)) %></span></td>
           <td class="align-center">
             <% if can?(:display, Solidus::StockMovement) %>
-              <%= link_to Spree.t(:stock_movements), admin_stock_location_stock_movements_path(stock_location.id) %>
+              <%= link_to Solidus.t(:stock_movements), admin_stock_location_stock_movements_path(stock_location.id) %>
             <% else %>
               Stock Movements
             <% end %>
@@ -72,9 +72,9 @@
   </table>
 <% else %>
   <div class="alpha twelve columns no-objects-found">
-    <%= Spree.t(:no_resource_found, resource: I18n.t(:other, scope: 'activerecord.models.solidus/stock_location')) %>
+    <%= Solidus.t(:no_resource_found, resource: I18n.t(:other, scope: 'activerecord.models.solidus/stock_location')) %>
     <% if can?(:create, Solidus::StockLocation) %>
-      <%= link_to Spree.t(:add_one), spree.new_admin_stock_location_path %>!
+      <%= link_to Solidus.t(:add_one), spree.new_admin_stock_location_path %>!
     <% end %>
   </div>
 <% end %>

@@ -1,70 +1,70 @@
 <% content_for :sidebar_title do %>
-  <%= Spree.t(:configurations) %>
+  <%= Solidus.t(:configurations) %>
 <% end %>
 
 <% content_for :sidebar do %>
   <nav class="menu">
     <ul class="sidebar" data-hook="admin_configurations_sidebar_menu">
       <% if can? :edit, :general_settings %>
-        <%= configurations_sidebar_menu_item Spree.t(:general_settings), edit_admin_general_settings_path %>
+        <%= configurations_sidebar_menu_item Solidus.t(:general_settings), edit_admin_general_settings_path %>
       <% end %>
 
       <% if can? :display, Solidus::TaxCategory %>
-        <%= configurations_sidebar_menu_item Spree.t(:tax_categories), admin_tax_categories_path %>
+        <%= configurations_sidebar_menu_item Solidus.t(:tax_categories), admin_tax_categories_path %>
       <% end %>
 
       <% if can? :display, Solidus::TaxRate %>
-        <%= configurations_sidebar_menu_item Spree.t(:tax_rates), admin_tax_rates_path %>
+        <%= configurations_sidebar_menu_item Solidus.t(:tax_rates), admin_tax_rates_path %>
       <% end %>
 
       <% if can? :display, Solidus::Zone %>
-        <%= configurations_sidebar_menu_item Spree.t(:zones), admin_zones_path %>
+        <%= configurations_sidebar_menu_item Solidus.t(:zones), admin_zones_path %>
       <% end %>
 
       <% if can? :display, Solidus::Country %>
-        <%= configurations_sidebar_menu_item Spree.t(:countries), admin_countries_path %>
+        <%= configurations_sidebar_menu_item Solidus.t(:countries), admin_countries_path %>
       <% end %>
 
       <% if can?(:display, Solidus::State) %>
         <% if country = Solidus::Country.find_by_id(Solidus::Config[:default_country_id]) || Solidus::Country.first %>
-          <%= configurations_sidebar_menu_item Spree.t(:states), admin_country_states_path(country) %>
+          <%= configurations_sidebar_menu_item Solidus.t(:states), admin_country_states_path(country) %>
         <% end %>
       <% end %>
 
       <% if can?(:display, Solidus::PaymentMethod) %>
-        <%= configurations_sidebar_menu_item Spree.t(:payment_methods), admin_payment_methods_path %>
+        <%= configurations_sidebar_menu_item Solidus.t(:payment_methods), admin_payment_methods_path %>
       <% end %>
 
       <% if can?(:display, Solidus::Taxonomy) %>
-        <%= configurations_sidebar_menu_item Spree.t(:taxonomies), admin_taxonomies_path %>
+        <%= configurations_sidebar_menu_item Solidus.t(:taxonomies), admin_taxonomies_path %>
       <% end %>
 
       <% if can?(:display, Solidus::ShippingMethod) %>
-        <%= configurations_sidebar_menu_item Spree.t(:shipping_methods), admin_shipping_methods_path %>
+        <%= configurations_sidebar_menu_item Solidus.t(:shipping_methods), admin_shipping_methods_path %>
       <% end %>
 
       <% if can?(:display, Solidus::ShippingCategory) %>
-        <%= configurations_sidebar_menu_item Spree.t(:shipping_categories), admin_shipping_categories_path %>
+        <%= configurations_sidebar_menu_item Solidus.t(:shipping_categories), admin_shipping_categories_path %>
       <% end %>
 
       <% if can?(:display, Solidus::StockLocation) %>
-        <%= configurations_sidebar_menu_item Spree.t(:stock_locations), spree.admin_stock_locations_path %>
+        <%= configurations_sidebar_menu_item Solidus.t(:stock_locations), spree.admin_stock_locations_path %>
       <% end %>
 
       <% if can?(:display, Solidus::Tracker) %>
-        <%= configurations_sidebar_menu_item Spree.t(:analytics_trackers), admin_trackers_path %>
+        <%= configurations_sidebar_menu_item Solidus.t(:analytics_trackers), admin_trackers_path %>
       <% end %>
 
       <% if can?(:display, Solidus::RefundReason) %>
-        <%= configurations_sidebar_menu_item Spree.t(:refund_reasons), admin_refund_reasons_path %>
+        <%= configurations_sidebar_menu_item Solidus.t(:refund_reasons), admin_refund_reasons_path %>
       <% end %>
 
       <% if can?(:display, Solidus::ReimbursementType) %>
-        <%= configurations_sidebar_menu_item Spree.t(:reimbursement_types), admin_reimbursement_types_path %>
+        <%= configurations_sidebar_menu_item Solidus.t(:reimbursement_types), admin_reimbursement_types_path %>
       <% end %>
 
       <% if can?(:display, Solidus::ReturnReason) %>
-        <%= configurations_sidebar_menu_item Spree.t(:return_reasons), admin_return_reasons_path %>
+        <%= configurations_sidebar_menu_item Solidus.t(:return_reasons), admin_return_reasons_path %>
       <% end %>
     </ul>
   </nav>

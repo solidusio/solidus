@@ -48,7 +48,7 @@ $(document).ready(function () {
 
   //handle delete click
   $('a.delete-item').click(function(event){
-    if (confirm(Spree.translations.are_you_sure_delete)) {
+    if (confirm(Solidus.translations.are_you_sure_delete)) {
       var del = $(this);
       var line_item_id = del.data('line-item-id');
 
@@ -60,7 +60,7 @@ $(document).ready(function () {
 
   // add header to ship ujs ajax call
   $("form#admin-ship-shipment").on("ajax:beforeSend", function(event, xhr, settings) {
-    xhr.setRequestHeader("X-Spree-Token", Spree.api_key);
+    xhr.setRequestHeader("X-Spree-Token", Solidus.api_key);
   });
 
   $("form#admin-ship-shipment").on("ajax:success", function(event, xhr, settings) {
@@ -78,16 +78,16 @@ $(document).ready(function () {
     var link = $(this);
     var shipment_number = link.data('shipment-number');
     var selected_shipping_rate_id = link.parents('tbody').find("select#selected_shipping_rate_id[data-shipment-number='" + shipment_number + "']").val();
-    var url = Spree.routes.shipments_api + '/' + shipment_number + '.json';
+    var url = Solidus.routes.shipments_api + '/' + shipment_number + '.json';
 
-    Spree.ajax({
+    Solidus.ajax({
       type: 'PUT',
       url: url,
       data: {
         shipment: {
           selected_shipping_rate_id: selected_shipping_rate_id,
         },
-        token: Spree.api_key
+        token: Solidus.api_key
       }
     }).done(function () {
       window.location.reload();
@@ -115,23 +115,23 @@ $(document).ready(function () {
     var link = $(this);
     var shipment_number = link.data('shipment-number');
     var tracking = link.parents('tbody').find('input#tracking').val();
-    var url = Spree.routes.shipments_api + '/' + shipment_number + '.json';
+    var url = Solidus.routes.shipments_api + '/' + shipment_number + '.json';
 
-    Spree.ajax({
+    Solidus.ajax({
       type: 'PUT',
       url: url,
       data: {
         shipment: {
           tracking: tracking
         },
-        token: Spree.api_key
+        token: Solidus.api_key
       }
     }).done(function (data) {
       link.parents('tbody').find('tr.edit-tracking').toggle();
 
       var show = link.parents('tbody').find('tr.show-tracking');
       show.toggle();
-      show.find('.tracking-value').html($("<strong>").html(Spree.translations.tracking + ": ")).append(data.tracking);
+      show.find('.tracking-value').html($("<strong>").html(Solidus.translations.tracking + ": ")).append(data.tracking);
     });
   });
 });
@@ -140,7 +140,7 @@ adjustShipmentItems = function(shipment_number, variant_id, quantity){
     var shipment = _.findWhere(shipments, {number: shipment_number + ''});
     var inventory_units = _.where(shipment.inventory_units, {variant_id: variant_id});
 
-    var url = Spree.routes.shipments_api + "/" + shipment_number;
+    var url = Solidus.routes.shipments_api + "/" + shipment_number;
 
     var new_quantity = 0;
     if(inventory_units.length<quantity){
@@ -153,9 +153,9 @@ adjustShipmentItems = function(shipment_number, variant_id, quantity){
     url += '.json';
 
     if(new_quantity!=0){
-      Spree.ajax({
+      Solidus.ajax({
         type: "PUT",
-        url: Spree.url(url),
+        url: Solidus.url(url),
         data: {
           variant_id: variant_id,
           quantity: new_quantity,
@@ -171,11 +171,11 @@ adjustShipmentItems = function(shipment_number, variant_id, quantity){
 }
 
 deleteLineItem = function(line_item_id){
-  var url = Spree.routes.line_items_api(order_number) + "/" + line_item_id + ".json";
+  var url = Solidus.routes.line_items_api(order_number) + "/" + line_item_id + ".json";
 
-  Spree.ajax({
+  Solidus.ajax({
     type: "DELETE",
-    url: Spree.url(url),
+    url: Solidus.url(url),
     success: function(response) {
       window.location.reload();
     },
@@ -215,15 +215,15 @@ startItemSplit = function(event){
   var variant_id = link.data('variant-id');
 
   var variant = {};
-  Spree.ajax({
+  Solidus.ajax({
     type: "GET",
     async: false,
-    url: Spree.routes.variants_api,
+    url: Solidus.routes.variants_api,
     data: {
       q: {
         "id_eq": variant_id
       },
-      token: Spree.api_key
+      token: Solidus.api_key
     }
   }).success(function( data ) {
     variant = data['variants'][0];
@@ -244,7 +244,7 @@ startItemSplit = function(event){
     fadeOutTime: 50,
     intentPollInterval: 300
   });
-  $('#item_stock_location').select2({ width: 'resolve', placeholder: Spree.translations.item_stock_placeholder });
+  $('#item_stock_location').select2({ width: 'resolve', placeholder: Solidus.translations.item_stock_placeholder });
 }
 
 completeItemSplit = function(event) {
@@ -270,39 +270,39 @@ completeItemSplit = function(event) {
   if (stock_location_id != 'new_shipment') {
     if (new_shipment != undefined) {
       // TRANSFER TO A NEW LOCATION
-      Spree.ajax({
+      Solidus.ajax({
         type: "POST",
         async: false,
-        url: Spree.routes.shipments_api + "/transfer_to_location",
+        url: Solidus.routes.shipments_api + "/transfer_to_location",
         data: {
             original_shipment_number: original_shipment_number,
             variant_id: variant_id,
             quantity: quantity,
             stock_location_id: stock_location_id,
-            token: Spree.api_key
+            token: Solidus.api_key
         }
       }).error(function(msg) {
           alert(msg.responseJSON['message']);
       }).done(function(msg) {
-        window.Spree.advanceOrder();
+        window.Solidus.advanceOrder();
       });
     } else {
         // TRANSFER TO AN EXISTING SHIPMENT
-        Spree.ajax({
+        Solidus.ajax({
             type: "POST",
             async: false,
-            url: Spree.routes.shipments_api + "/transfer_to_shipment",
+            url: Solidus.routes.shipments_api + "/transfer_to_shipment",
             data: {
                 original_shipment_number: original_shipment_number,
                 target_shipment_number: target_shipment_number,
                 variant_id: variant_id,
                 quantity: quantity,
-                token: Spree.api_key
+                token: Solidus.api_key
             }
         }).error(function(msg) {
             alert(msg.responseJSON['message']);
         }).done(function(msg) {
-            window.Spree.advanceOrder();
+            window.Solidus.advanceOrder();
         });
     }
   }
@@ -332,9 +332,9 @@ addVariantFromStockLocation = function(event) {
   });
 
   if(shipment==undefined){
-    Spree.ajax({
+    Solidus.ajax({
       type: "POST",
-      url: Spree.routes.shipments_api + "?shipment[order_id]=" + order_number,
+      url: Solidus.routes.shipments_api + "?shipment[order_id]=" + order_number,
       data: {
         variant_id: variant_id,
         quantity: quantity,

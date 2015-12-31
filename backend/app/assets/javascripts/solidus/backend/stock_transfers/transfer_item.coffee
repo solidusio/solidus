@@ -7,8 +7,8 @@ class TransferItem
     @stockTransferNumber = options.stockTransferNumber
 
   create: (successHandler, errorHandler) ->
-    Spree.ajax
-      url: Spree.routes.create_transfer_items_api(@stockTransferNumber)
+    Solidus.ajax
+      url: Solidus.routes.create_transfer_items_api(@stockTransferNumber)
       type: "POST"
       data:
         transfer_item:
@@ -26,8 +26,8 @@ class TransferItem
       { expected_quantity: @expectedQuantity }
     else
       {}
-    Spree.ajax
-      url: Spree.routes.update_transfer_items_api(@stockTransferNumber, @id)
+    Solidus.ajax
+      url: Solidus.routes.update_transfer_items_api(@stockTransferNumber, @id)
       type: "PUT"
       data:
         transfer_item: itemAttrs
@@ -37,12 +37,12 @@ class TransferItem
         errorHandler(errorData)
 
   destroy: (successHandler, errorHandler) ->
-    Spree.ajax
-      url: Spree.routes.update_transfer_items_api(@stockTransferNumber, @id)
+    Solidus.ajax
+      url: Solidus.routes.update_transfer_items_api(@stockTransferNumber, @id)
       type: "DELETE"
       success: (transferItem) ->
         successHandler(transferItem)
       error: (errorData) ->
         errorHandler(errorData)
 
-Spree.TransferItem = TransferItem
+Solidus.TransferItem = TransferItem

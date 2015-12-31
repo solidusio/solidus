@@ -1,5 +1,5 @@
 <% content_for :page_title do %>
-  <%= link_to Spree.t(:order_number, number: @order.number), spree.edit_admin_order_path(@order) %> - <%= Spree.t(:cancel_inventory) %>
+  <%= link_to Solidus.t(:order_number, number: @order.number), spree.edit_admin_order_path(@order) %> - <%= Solidus.t(:cancel_inventory) %>
 <% end %>
 
 <table class="stock-contents index">
@@ -13,11 +13,11 @@
   </colgroup>
 
   <thead>
-    <th colspan="2"><%= Spree.t(:item_description) %></th>
-    <th><%= Spree.t(:quantity) %></th>
-    <th><%= Spree.t(:state) %></th>
-    <th><%= Spree.t(:shipment) %></th>
-    <th><%= Spree.t(:cancel) %></th>
+    <th colspan="2"><%= Solidus.t(:item_description) %></th>
+    <th><%= Solidus.t(:quantity) %></th>
+    <th><%= Solidus.t(:state) %></th>
+    <th><%= Solidus.t(:shipment) %></th>
+    <th><%= Solidus.t(:cancel) %></th>
   </thead>
 
   <tbody>
@@ -30,7 +30,7 @@
           <td class="inventory-unit-name">
             <%= inventory_unit.variant.product.name %><br><%= "(" + variant_options(inventory_unit.variant) + ")" unless inventory_unit.variant.option_values.empty? %>
             <% if inventory_unit.variant.sku.present? %>
-              <strong><%= Spree.t(:sku) %>:</strong> <%= inventory_unit.variant.sku %>
+              <strong><%= Solidus.t(:sku) %>:</strong> <%= inventory_unit.variant.sku %>
             <% end %>
           </td>
           <td class="inventory-unit-quantity align-center">1</td>
@@ -43,7 +43,7 @@
       <% end %>
       <tr class="submit-cancellation">
         <td colspan="6" class="align-center">
-          <%= f.submit Spree.t(:cancel_inventory) %>
+          <%= f.submit Solidus.t(:cancel_inventory) %>
         </td>
       </tr>
     <% end %>

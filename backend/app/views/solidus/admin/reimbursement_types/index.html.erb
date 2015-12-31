@@ -1,14 +1,14 @@
 <%= render partial: 'solidus/admin/shared/configuration_menu' %>
 
 <% content_for :page_title do %>
-  <%= Spree.t(:reimbursement_types) %>
+  <%= Solidus.t(:reimbursement_types) %>
 <% end %>
 
 <table class="index" id='listing_reimbursement_types' data-hook>
   <thead>
     <tr data-hook="reimbursement_types_header">
-      <th><%= Spree.t(:name) %></th>
-      <th><%= Spree.t(:type) %></th>
+      <th><%= Solidus.t(:name) %></th>
+      <th><%= Solidus.t(:type) %></th>
     </tr>
   </thead>
   <tbody>

@@ -42,7 +42,7 @@ describe "Order Details", type: :feature, js: true do
       end
 
       it "can add an item to a shipment" do
-        select2_search "spree t-shirt", :from => Spree.t(:name_or_sku)
+        select2_search "spree t-shirt", :from => Solidus.t(:name_or_sku)
         within("table.stock-levels") do
           fill_in "quantity_0", :with => 2
         end
@@ -130,7 +130,7 @@ describe "Order Details", type: :feature, js: true do
         end
 
         it "adds variant to order just fine" do
-          select2_search tote.name, :from => Spree.t(:name_or_sku)
+          select2_search tote.name, :from => Solidus.t(:name_or_sku)
           within("table.stock-levels") do
             fill_in "variant_quantity", :with => 1
           end
@@ -485,9 +485,9 @@ describe "Order Details", type: :feature, js: true do
     end
 
     before do
-      allow(Spree.user_class).to receive(:find_by).
+      allow(Solidus.user_class).to receive(:find_by).
                                    with(hash_including(:spree_api_key)).
-                                   and_return(Spree.user_class.new)
+                                   and_return(Solidus.user_class.new)
     end
 
     it 'should not display order tabs or edit buttons without ability' do

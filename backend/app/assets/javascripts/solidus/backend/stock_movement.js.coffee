@@ -4,14 +4,14 @@ jQuery ->
     el.select2
       placeholder: "Find a stock item" # translate
       ajax:
-        url: Spree.url(Spree.routes.stock_items_api(el.data('stock-location-id')))
-        params: { "headers": { "X-Spree-Token": Spree.api_key } }
+        url: Solidus.url(Solidus.routes.stock_items_api(el.data('stock-location-id')))
+        params: { "headers": { "X-Spree-Token": Solidus.api_key } }
         data: (term, page) ->
           q:
             variant_product_name_cont: term
           per_page: 50
           page: page
-          token: Spree.api_key
+          token: Solidus.api_key
         results: (data, page) ->
           more = (page * 50) < data.count
           return { results: data.stock_items, more: more }

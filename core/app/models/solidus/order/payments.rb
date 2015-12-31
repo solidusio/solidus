@@ -41,7 +41,7 @@ module Spree
           # Don't run if there is nothing to pay.
           return true if payment_total >= total
           # Prevent orders from transitioning to complete without a successfully processed payment.
-          raise Core::GatewayError.new(Spree.t(:no_payment_found)) if unprocessed_payments.empty?
+          raise Core::GatewayError.new(Solidus.t(:no_payment_found)) if unprocessed_payments.empty?
 
           unprocessed_payments.each do |payment|
             break if payment_total >= total

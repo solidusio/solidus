@@ -58,7 +58,7 @@ module Spree
       end
 
       def new
-        user = Spree.user_class.find_by_id(params[:user_id]) if params[:user_id]
+        user = Solidus.user_class.find_by_id(params[:user_id]) if params[:user_id]
         @order = Solidus::Core::Importer::Order.import(user, order_params)
         redirect_to cart_admin_order_url(@order)
       end
@@ -82,7 +82,7 @@ module Spree
 
       def update
         @order.contents.update_cart(params[:order])
-        @order.errors.add(:line_items, Spree.t('errors.messages.blank')) if @order.line_items.empty?
+        @order.errors.add(:line_items, Solidus.t('errors.messages.blank')) if @order.line_items.empty?
         if @order.completed?
           render :action => :edit
         else
@@ -92,13 +92,13 @@ module Spree
 
       def advance
         if @order.completed?
-          flash[:notice] = Spree.t('order_already_completed')
+          flash[:notice] = Solidus.t('order_already_completed')
           redirect_to edit_admin_order_url(@order)
         else
           @order.contents.advance
 
           if @order.confirm?
-            flash[:success] = Spree.t('order_ready_for_confirm')
+            flash[:success] = Solidus.t('order_ready_for_confirm')
             redirect_to confirm_admin_order_url(@order)
           else
             flash[:error] = @order.errors.full_messages
@@ -119,7 +119,7 @@ module Spree
       # PUT
       def complete
         @order.complete!
-        flash[:success] = Spree.t(:order_completed)
+        flash[:success] = Solidus.t(:order_completed)
         redirect_to edit_admin_order_url(@order)
       rescue StateMachines::InvalidTransition => e
         flash[:error] = e.message
@@ -128,25 +128,25 @@ module Spree
 
       def cancel
         @order.canceled_by(try_spree_current_user)
-        flash[:success] = Spree.t(:order_canceled)
+        flash[:success] = Solidus.t(:order_canceled)
         redirect_to :back
       end
 
       def resume
         @order.resume!
-        flash[:success] = Spree.t(:order_resumed)
+        flash[:success] = Solidus.t(:order_resumed)
         redirect_to :back
       end
 
       def approve
         @order.contents.approve(user: try_spree_current_user)
-        flash[:success] = Spree.t(:order_approved)
+        flash[:success] = Solidus.t(:order_approved)
         redirect_to :back
       end
 
       def resend
         OrderMailer.confirm_email(@order.id, true).deliver_later
-        flash[:success] = Spree.t(:order_email_resent)
+        flash[:success] = Solidus.t(:order_email_resent)
 
         redirect_to :back
       end
@@ -154,7 +154,7 @@ module Spree
       def unfinalize_adjustments
         adjustments = @order.all_adjustments.finalized
         adjustments.each(&:unfinalize!)
-        flash[:success] = Spree.t(:all_adjustments_unfinalized)
+        flash[:success] = Solidus.t(:all_adjustments_unfinalized)
 
         respond_with(@order) { |format| format.html { redirect_to :back } }
       end
@@ -162,7 +162,7 @@ module Spree
       def finalize_adjustments
         adjustments = @order.all_adjustments.not_finalized
         adjustments.each(&:finalize!)
-        flash[:success] = Spree.t(:all_adjustments_finalized)
+        flash[:success] = Solidus.t(:all_adjustments_finalized)
 
         respond_with(@order) { |format| format.html { redirect_to :back } }
       end
@@ -191,13 +191,13 @@ module Spree
         end
 
         def insufficient_stock_error
-          flash[:error] = Spree.t(:insufficient_stock_for_order)
+          flash[:error] = Solidus.t(:insufficient_stock_for_order)
           redirect_to cart_admin_order_url(@order)
         end
 
         def require_ship_address
           if @order.ship_address.nil?
-            flash[:notice] = Spree.t(:fill_in_customer_info)
+            flash[:notice] = Solidus.t(:fill_in_customer_info)
             redirect_to edit_admin_order_customer_url(@order)
           end
         end

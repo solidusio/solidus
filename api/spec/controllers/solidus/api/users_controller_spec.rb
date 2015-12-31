@@ -92,7 +92,7 @@ module Spree
         2.times { create(:user) }
         api_get :index, token: user.spree_api_key
 
-        expect(Spree.user_class.count).to eq 3
+        expect(Solidus.user_class.count).to eq 3
         expect(json_response['count']).to eq 1
         expect(json_response['users'].size).to eq 1
       end
@@ -109,7 +109,7 @@ module Spree
         2.times { create(:user) }
 
         api_get :index
-        expect(Spree.user_class.count).to eq 2
+        expect(Solidus.user_class.count).to eq 2
         expect(json_response['count']).to eq 2
         expect(json_response['users'].size).to eq 2
       end

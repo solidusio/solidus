@@ -20,7 +20,7 @@ module Spree
     validates :quantity, numericality: {
       only_integer: true,
       greater_than: -1,
-      message: Spree.t('validation.must_be_int')
+      message: Solidus.t('validation.must_be_int')
     }
     validates :price, numericality: true
 

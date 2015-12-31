@@ -8,11 +8,11 @@ module Spree
     end
 
     def eligible_for_return?
-      raise NotImplementedError, Spree.t(:implement_eligible_for_return)
+      raise NotImplementedError, Solidus.t(:implement_eligible_for_return)
     end
 
     def requires_manual_intervention?
-      raise NotImplementedError, Spree.t(:implement_requires_manual_intervention)
+      raise NotImplementedError, Solidus.t(:implement_requires_manual_intervention)
     end
 
     private

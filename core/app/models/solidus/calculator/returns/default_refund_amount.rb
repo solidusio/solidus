@@ -5,7 +5,7 @@ module Spree
     class DefaultRefundAmount < ReturnsCalculator
 
       def self.description
-        Spree.t(:default_refund_amount)
+        Solidus.t(:default_refund_amount)
       end
 
       def compute(return_item)

@@ -13,11 +13,11 @@ module Spree
     end
 
     def link_to_cart(text = nil)
-      text = text ? h(text) : Spree.t(:cart)
+      text = text ? h(text) : Solidus.t(:cart)
       css_class = nil
 
       if simple_current_order.nil? or simple_current_order.item_count.zero?
-        text = "#{text}: (#{Spree.t(:empty)})"
+        text = "#{text}: (#{Solidus.t(:empty)})"
         css_class = 'empty'
       else
         text = "#{text}: (#{simple_current_order.item_count})  <span class='amount'>#{simple_current_order.display_total.to_html}</span>"
@@ -81,14 +81,14 @@ module Spree
     def breadcrumbs(taxon, separator="&nbsp;&raquo;&nbsp;", breadcrumb_class="inline")
       return "" if current_page?("/") || taxon.nil?
 
-      crumbs = [[Spree.t(:home), spree.root_path]]
+      crumbs = [[Solidus.t(:home), spree.root_path]]
 
       if taxon
-        crumbs << [Spree.t(:products), products_path]
+        crumbs << [Solidus.t(:products), products_path]
         crumbs += taxon.ancestors.collect { |a| [a.name, spree.nested_taxons_path(a.permalink)] } unless taxon.ancestors.empty?
         crumbs << [taxon.name, spree.nested_taxons_path(taxon.permalink)]
       else
-        crumbs << [Spree.t(:products), products_path]
+        crumbs << [Solidus.t(:products), products_path]
       end
 
       separator = raw(separator)
@@ -127,7 +127,7 @@ module Spree
       end
 
       countries.collect do |country|
-        country.name = Spree.t(country.iso, scope: 'country_names', default: country.name)
+        country.name = Solidus.t(country.iso, scope: 'country_names', default: country.name)
         country
       end.sort_by { |c| c.name.parameterize }
     end

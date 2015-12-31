@@ -17,7 +17,7 @@ describe Solidus::ReturnItem::EligibilityValidator::NoReimbursements do
 
       it "sets an error" do
         subject
-        expect(validator.errors[:inventory_unit_reimbursed]).to eq Spree.t('return_item_inventory_unit_reimbursed')
+        expect(validator.errors[:inventory_unit_reimbursed]).to eq Solidus.t('return_item_inventory_unit_reimbursed')
       end
 
       context "but the return item has been expired" do
