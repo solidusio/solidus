@@ -346,7 +346,7 @@ module Spree
     def validate_master
       # We call master.default_price here to ensure price is initialized.
       # Required to avoid Variant#check_price validation failing on create.
-      unless master.default_price && master.valid?
+      unless master.valid?
         master.errors.each do |att, error|
           self.errors.add(att, error)
         end
