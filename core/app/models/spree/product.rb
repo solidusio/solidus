@@ -312,7 +312,7 @@ module Spree
 
     def ensure_master
       return unless new_record?
-      self.master ||= build_master
+      find_or_build_master
     end
 
     def normalize_slug
