@@ -1,4 +1,4 @@
-class CreateSpreeStoreCredits < ActiveRecord::Migration
+class CreateSolidusStoreCredits < ActiveRecord::Migration
   def change
     create_table :solidus_store_credits do |t|
       t.references :user

@@ -1,5 +1,5 @@
 # Make redirects for SEO needs
-module Spree
+module Solidus
   module Frontend
     module Middleware
       class SeoAssist

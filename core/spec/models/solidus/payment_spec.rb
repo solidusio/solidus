@@ -769,7 +769,7 @@ describe Solidus::Payment, :type => :model do
             :expiry =>"01 / 99",
             :number => '1234567890123',
             :verification_value => '123',
-            :name => 'Spree Commerce'
+            :name => 'Solidus Commerce'
           }
         }
       end

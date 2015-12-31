@@ -1,4 +1,4 @@
-class CreateSpreeUserStockLocations < ActiveRecord::Migration
+class CreateSolidusUserStockLocations < ActiveRecord::Migration
   def change
     create_table :solidus_user_stock_locations do |t|
       t.integer :user_id

@@ -1,4 +1,4 @@
-module Spree
+module Solidus
   module Admin
     class PaymentMethodsController < ResourceController
       skip_before_action :load_resource, only: :create

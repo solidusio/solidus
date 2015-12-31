@@ -1,6 +1,6 @@
 require 'ostruct'
 
-module Spree
+module Solidus
   class Shipment < Solidus::Base
     belongs_to :order, class_name: 'Solidus::Order', touch: true, inverse_of: :shipments
     belongs_to :address, class_name: 'Solidus::Address'

@@ -1,4 +1,4 @@
-module Spree
+module Solidus
   # Default implementation of User.
   #
   # @note This class is intended to be modified by extensions (ex.
@@ -16,7 +16,7 @@ module Spree
     before_destroy :check_completed_orders
 
     def self.model_name
-      ActiveModel::Name.new Solidus::LegacyUser, Spree, 'user'
+      ActiveModel::Name.new Solidus::LegacyUser, Solidus, 'user'
     end
 
     attr_accessor :password

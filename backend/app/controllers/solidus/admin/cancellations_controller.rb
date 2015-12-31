@@ -1,4 +1,4 @@
-module Spree
+module Solidus
   module Admin
     class CancellationsController < Solidus::Admin::BaseController
       before_filter :load_order, :only => [:index, :short_ship]

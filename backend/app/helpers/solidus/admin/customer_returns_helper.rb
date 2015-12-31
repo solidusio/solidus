@@ -1,4 +1,4 @@
-module Spree
+module Solidus
   module Admin
     module CustomerReturnsHelper
       def reimbursement_types

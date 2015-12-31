@@ -4,7 +4,7 @@ Solidus::Order.class_eval do
   attr_accessor :did_transition
 end
 
-module Spree
+module Solidus
   describe OrdersController, :type => :controller do
     # Regression test for #2004
     context "with a transition callback on first state" do

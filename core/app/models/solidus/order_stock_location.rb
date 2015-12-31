@@ -1,4 +1,4 @@
-module Spree
+module Solidus
   class OrderStockLocation < Solidus::Base
     belongs_to :variant, class_name: "Solidus::Variant"
     belongs_to :stock_location, class_name: "Solidus::StockLocation"

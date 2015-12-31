@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-module Spree
+module Solidus
   module Stock
     describe Differentiator, :type => :model do
       let(:variant1) { mock_model(Variant) }

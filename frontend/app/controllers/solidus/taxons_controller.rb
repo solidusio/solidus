@@ -1,4 +1,4 @@
-module Spree
+module Solidus
   class TaxonsController < Solidus::StoreController
     rescue_from ActiveRecord::RecordNotFound, :with => :render_404
     helper 'solidus/products'

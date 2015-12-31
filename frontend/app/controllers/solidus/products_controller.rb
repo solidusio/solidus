@@ -1,4 +1,4 @@
-module Spree
+module Solidus
   class ProductsController < Solidus::StoreController
     before_action :load_product, only: :show
     before_action :load_taxon, only: :index

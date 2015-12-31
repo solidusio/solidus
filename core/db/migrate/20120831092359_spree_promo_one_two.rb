@@ -1,4 +1,4 @@
-class SpreePromoOneTwo < ActiveRecord::Migration
+class SolidusPromoOneTwo < ActiveRecord::Migration
   def up
     # This migration is just a compressed migration for all previous versions of solidus_promo
     return if table_exists?(:solidus_products_promotion_rules)

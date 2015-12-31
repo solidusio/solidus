@@ -1,4 +1,4 @@
-module Spree
+module Solidus
   module Frontend
     class Engine < ::Rails::Engine
       config.middleware.use "Solidus::Frontend::Middleware::SeoAssist"

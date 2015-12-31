@@ -1,4 +1,4 @@
-module Spree
+module Solidus
   module PermissionSets
     class StockManagement < PermissionSets::Base
       def activate!

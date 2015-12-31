@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-module Spree
+module Solidus
   PermittedAttributes.module_eval do
     mattr_writer :line_item_attributes
   end
@@ -41,7 +41,7 @@ module Spree
       end
 
       it "can add a new line item to an existing order with token in header" do
-        request.headers["X-Spree-Order-Token"] = order.guest_token
+        request.headers["X-Solidus-Order-Token"] = order.guest_token
         api_post :create, :line_item => { :variant_id => product.master.to_param, :quantity => 1 }
         expect(response.status).to eq(201)
         expect(json_response).to have_attributes(attributes)

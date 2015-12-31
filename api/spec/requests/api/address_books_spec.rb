@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-module Spree
+module Solidus
   describe Api::AddressBooksController, :type => :request do
     let!(:state) { create(:state) }
     let!(:harry_address_attributes) do

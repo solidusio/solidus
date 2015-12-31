@@ -1,4 +1,4 @@
-module Spree
+module Solidus
   class PaymentMethod::StoreCredit < PaymentMethod
 
     def payment_source_class

@@ -1,4 +1,4 @@
-module Spree
+module Solidus
   module Stock
     module Splitter
       class ShippingCategory < Solidus::Stock::Splitter::Base

@@ -1,4 +1,4 @@
-class AddFinalizedToSpreeAdjustments < ActiveRecord::Migration
+class AddFinalizedToSolidusAdjustments < ActiveRecord::Migration
   # This migration replaces the open/closed state column of solidus_adjustments
   # with a finalized boolean.
   # This may cause a few minutes of downtime on very large stores as the

@@ -1,4 +1,4 @@
-module Spree
+module Solidus
   class ReimbursementType < Solidus::Base
     include Solidus::NamedType
 

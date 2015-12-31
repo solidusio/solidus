@@ -1,7 +1,7 @@
 require 'spec_helper'
 require 'shared_examples/protect_product_actions'
 
-module Spree
+module Solidus
   describe Solidus::Api::ProductsController, :type => :controller do
     render_views
 

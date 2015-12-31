@@ -1,4 +1,4 @@
-class AddSkuIndexToSpreeVariants < ActiveRecord::Migration
+class AddSkuIndexToSolidusVariants < ActiveRecord::Migration
   def change
     add_index :solidus_variants, :sku
   end

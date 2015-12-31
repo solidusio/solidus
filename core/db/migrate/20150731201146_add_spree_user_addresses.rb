@@ -1,4 +1,4 @@
-class AddSpreeUserAddresses < ActiveRecord::Migration
+class AddSolidusUserAddresses < ActiveRecord::Migration
   def change
     create_table :solidus_user_addresses do |t|
       t.integer :user_id, null: false

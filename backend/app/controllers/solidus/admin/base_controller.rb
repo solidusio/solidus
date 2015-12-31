@@ -1,4 +1,4 @@
-module Spree
+module Solidus
   module Admin
     class BaseController < Solidus::BaseController
       helper 'solidus/admin/navigation'
@@ -24,7 +24,7 @@ module Spree
         end
 
         # Need to generate an API key for a user due to some backend actions
-        # requiring authentication to the Spree API
+        # requiring authentication to the Solidus API
         def generate_admin_api_key
           if (user = try_solidus_current_user) && user.solidus_api_key.blank?
             user.generate_solidus_api_key!

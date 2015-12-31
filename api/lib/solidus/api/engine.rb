@@ -1,9 +1,9 @@
 require 'rails/engine'
 
-module Spree
+module Solidus
   module Api
     class Engine < Rails::Engine
-      isolate_namespace Spree
+      isolate_namespace Solidus
       engine_name 'solidus_api'
 
       Rabl.configure do |config|

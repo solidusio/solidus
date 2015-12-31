@@ -1,4 +1,4 @@
-class ChangeSpreePriceAmountPrecision < ActiveRecord::Migration
+class ChangeSolidusPriceAmountPrecision < ActiveRecord::Migration
   def change
     change_column :solidus_prices, :amount,  :decimal, :precision => 10, :scale => 2
     change_column :solidus_line_items, :price,  :decimal, :precision => 10, :scale => 2

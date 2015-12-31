@@ -141,12 +141,12 @@ describe "Coupon code promotions", type: :feature, js: true do
           promotion.actions.first.calculator = calculator
           promotion.save
 
-          create(:product, :name => "Spree Mug", :price => 10)
+          create(:product, :name => "Solidus Mug", :price => 10)
         end
 
         specify do
           visit solidus.root_path
-          click_link "Spree Mug"
+          click_link "Solidus Mug"
           click_button "add-to-cart-button"
 
           visit solidus.cart_path
@@ -184,12 +184,12 @@ describe "Coupon code promotions", type: :feature, js: true do
           promotion.promotion_actions = [action]
           promotion.save
 
-          create(:product, name: "Spree Mug", price: 10)
+          create(:product, name: "Solidus Mug", price: 10)
         end
 
         specify do
           visit solidus.root_path
-          click_link "Spree Mug"
+          click_link "Solidus Mug"
           click_button "add-to-cart-button"
 
           visit solidus.cart_path

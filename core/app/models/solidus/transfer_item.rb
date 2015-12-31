@@ -1,4 +1,4 @@
-module Spree
+module Solidus
   class TransferItem < Solidus::Base
     acts_as_paranoid
     belongs_to :stock_transfer, inverse_of: :transfer_items

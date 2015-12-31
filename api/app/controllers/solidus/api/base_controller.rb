@@ -1,6 +1,6 @@
 require 'solidus/api/responders'
 
-module Spree
+module Solidus
   module Api
     class BaseController < ActionController::Base
       self.responder = Solidus::Api::Responders::AppResponder
@@ -105,12 +105,12 @@ module Spree
       end
 
       def api_key
-        request.headers["X-Spree-Token"] || params[:token]
+        request.headers["X-Solidus-Token"] || params[:token]
       end
       helper_method :api_key
 
       def order_token
-        request.headers["X-Spree-Order-Token"] || params[:order_token]
+        request.headers["X-Solidus-Order-Token"] || params[:order_token]
       end
 
       def find_product(id)

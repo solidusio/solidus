@@ -1,4 +1,4 @@
-module Spree
+module Solidus
   module ReturnItem::ExchangeVariantEligibility
     class SameProduct
       def self.eligible_variants(variant, stock_locations: nil)

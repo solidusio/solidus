@@ -1,4 +1,4 @@
-module Spree
+module Solidus
   class ShippingCategory < Solidus::Base
     validates :name, presence: true
     has_many :products, inverse_of: :shipping_category

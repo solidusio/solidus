@@ -1,4 +1,4 @@
-module Spree
+module Solidus
   class StoreController < Solidus::BaseController
     include Solidus::Core::ControllerHelpers::Order
 

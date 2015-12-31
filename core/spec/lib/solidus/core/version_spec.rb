@@ -1,4 +1,4 @@
-describe Spree do
+describe Solidus do
   describe '.solidus_version' do
     it "returns a string" do
       expect(Solidus.solidus_version).to be_a(String)

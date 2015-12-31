@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-module Spree
+module Solidus
   describe Solidus::PromotionRule, type: :model do
 
     class BadTestRule < Solidus::PromotionRule; end

@@ -1,4 +1,4 @@
-module Spree
+module Solidus
   module Api
     class ClassificationsController < Solidus::Api::BaseController
       def update

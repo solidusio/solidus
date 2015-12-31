@@ -1,4 +1,4 @@
-module Spree
+module Solidus
   class StoreCreditEvent < Solidus::Base
     acts_as_paranoid
 

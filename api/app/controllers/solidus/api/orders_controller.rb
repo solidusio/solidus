@@ -1,4 +1,4 @@
-module Spree
+module Solidus
   module Api
     class OrdersController < Solidus::Api::BaseController
       class_attribute :admin_shipment_attributes

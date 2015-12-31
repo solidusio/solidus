@@ -1,4 +1,4 @@
-module Spree
+module Solidus
   module NamedType
     extend ActiveSupport::Concern
 

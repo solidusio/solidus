@@ -1,4 +1,4 @@
-module Spree
+module Solidus
   module Api
     class CreditCardsController < Solidus::Api::BaseController
       before_action :user, only: [:index]

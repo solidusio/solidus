@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-module Spree
+module Solidus
   describe 'Api Feature Specs', type: :request do
     before { Solidus::Api::Config[:requires_authentication] = false }
     let!(:promotion) { FactoryGirl.create(:promotion, :with_order_adjustment, code: 'foo', weighted_order_adjustment_amount: 10) }

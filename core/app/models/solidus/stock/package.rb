@@ -1,4 +1,4 @@
-module Spree
+module Solidus
   module Stock
     class Package
       attr_reader :stock_location, :contents

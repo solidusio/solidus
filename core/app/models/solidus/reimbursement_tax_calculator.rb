@@ -1,4 +1,4 @@
-module Spree
+module Solidus
 
   # Tax calculation is broken out at this level to allow easy integration with 3rd party
   # taxation systems.  Those systems are usually geared toward calculating all items at once

@@ -1,7 +1,7 @@
 require 'truncate_html'
 require 'app/helpers/truncate_html_helper'
 
-module Spree
+module Solidus
   module OrdersHelper
     include TruncateHtmlHelper
 

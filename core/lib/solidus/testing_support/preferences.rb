@@ -1,4 +1,4 @@
-module Spree
+module Solidus
   module TestingSupport
     module Preferences
       # Resets all preferences to default values, you can

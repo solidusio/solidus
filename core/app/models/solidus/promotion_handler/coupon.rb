@@ -1,4 +1,4 @@
-module Spree
+module Solidus
   module PromotionHandler
     class Coupon
       attr_reader :order

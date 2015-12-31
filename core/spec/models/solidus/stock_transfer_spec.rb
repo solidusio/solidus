@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-module Spree
+module Solidus
   describe StockTransfer, :type => :model do
     let(:destination_location) { create(:stock_location_with_items) }
     let(:source_location) { create(:stock_location_with_items) }

@@ -1,4 +1,4 @@
-module Spree
+module Solidus
   class VariantPropertyRuleValue < Solidus::Base
     include Solidus::OrderedPropertyValueList
 

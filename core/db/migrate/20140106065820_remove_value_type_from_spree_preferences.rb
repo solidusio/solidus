@@ -1,4 +1,4 @@
-class RemoveValueTypeFromSpreePreferences < ActiveRecord::Migration
+class RemoveValueTypeFromSolidusPreferences < ActiveRecord::Migration
   def up
     remove_column :solidus_preferences, :value_type
   end

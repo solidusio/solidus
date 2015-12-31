@@ -1,4 +1,4 @@
-module Spree
+module Solidus
   class Image < Asset
     validate :no_attachment_errors
 

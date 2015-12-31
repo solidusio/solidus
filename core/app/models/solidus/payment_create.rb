@@ -1,4 +1,4 @@
-module Spree
+module Solidus
   # Service object for creating new payments on an Order
   class PaymentCreate
     # @param order [Order] The order for the new payment

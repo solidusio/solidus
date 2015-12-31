@@ -1,11 +1,11 @@
 require "spec_helper"
 
-module Spree
+module Solidus
   describe Api::StoresController, type: :controller do
     render_views
 
     let!(:store) do
-      create(:store, name: "My Spree Store", url: "solidusstore.example.com")
+      create(:store, name: "My Solidus Store", url: "solidusstore.example.com")
     end
 
     before do
@@ -28,7 +28,7 @@ module Spree
         expect(json_response["stores"]).to match_array([
           {
             "id" => store.id,
-            "name" => "My Spree Store",
+            "name" => "My Solidus Store",
             "url" => "solidusstore.example.com",
             "meta_description" => nil,
             "meta_keywords" => nil,
@@ -57,7 +57,7 @@ module Spree
         api_get :show, id: store.id
         expect(json_response).to eq(
           "id" => store.id,
-          "name" => "My Spree Store",
+          "name" => "My Solidus Store",
           "url" => "solidusstore.example.com",
           "meta_description" => nil,
           "meta_keywords" => nil,

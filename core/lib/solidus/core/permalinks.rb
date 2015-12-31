@@ -1,6 +1,6 @@
 require 'stringex'
 
-module Spree
+module Solidus
   module Core
     module Permalinks
       extend ActiveSupport::Concern

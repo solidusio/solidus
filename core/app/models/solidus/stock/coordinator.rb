@@ -1,4 +1,4 @@
-module Spree
+module Solidus
   module Stock
     class Coordinator
       attr_reader :order, :inventory_units

@@ -1,4 +1,4 @@
-module Spree
+module Solidus
   class MailerPreviews
     class OrderPreview < ActionMailer::Preview
       def confirm

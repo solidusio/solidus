@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-module Spree
+module Solidus
   describe Solidus::Order, :type => :model do
     let(:order) { stub_model(Solidus::Order) }
 

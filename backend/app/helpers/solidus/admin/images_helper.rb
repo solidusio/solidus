@@ -1,4 +1,4 @@
-module Spree
+module Solidus
   module Admin
     module ImagesHelper
       def options_text_for(image)

@@ -1,4 +1,4 @@
-module Spree
+module Solidus
   module TestingSupport
     module Flash
       def assert_flash_success(flash)

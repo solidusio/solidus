@@ -50,7 +50,7 @@ $ ->
     placeholder: Solidus.translations.find_a_taxon,
     ajax:
       url: Solidus.routes.taxons_search,
-      params: { "headers": { "X-Spree-Token": Solidus.api_key } },
+      params: { "headers": { "X-Solidus-Token": Solidus.api_key } },
       data: (term, page) ->
         per_page: 50,
         page: page,

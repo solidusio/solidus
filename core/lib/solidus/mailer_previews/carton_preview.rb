@@ -1,4 +1,4 @@
-module Spree
+module Solidus
   class MailerPreviews
     class CartonPreview < ActionMailer::Preview
       def shipped

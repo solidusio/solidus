@@ -1,5 +1,5 @@
 require 'solidus_core'
-module Spree
+module Solidus
   module Sample
     def self.load_sample(file)
       # If file is exists within application it takes precendence.

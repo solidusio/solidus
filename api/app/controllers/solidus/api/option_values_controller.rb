@@ -1,4 +1,4 @@
-module Spree
+module Solidus
   module Api
     class OptionValuesController < Solidus::Api::BaseController
       def index

@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-module Spree
+module Solidus
   describe Core::Search::Variant do
     def assert_found(query_string, variant)
       expect(described_class.new(query_string).results).to include variant

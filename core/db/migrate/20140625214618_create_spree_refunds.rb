@@ -1,4 +1,4 @@
-class CreateSpreeRefunds < ActiveRecord::Migration
+class CreateSolidusRefunds < ActiveRecord::Migration
   def change
     create_table :solidus_refunds do |t|
       t.integer :payment_id

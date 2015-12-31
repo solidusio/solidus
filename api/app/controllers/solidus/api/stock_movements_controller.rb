@@ -1,4 +1,4 @@
-module Spree
+module Solidus
   module Api
     class StockMovementsController < Solidus::Api::BaseController
       before_action :stock_location, except: [:update, :destroy]

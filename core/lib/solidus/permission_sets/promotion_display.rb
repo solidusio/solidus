@@ -1,4 +1,4 @@
-module Spree
+module Solidus
   module PermissionSets
     class PromotionDisplay < PermissionSets::Base
       def activate!

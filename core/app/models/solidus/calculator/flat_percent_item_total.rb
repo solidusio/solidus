@@ -1,6 +1,6 @@
 require_dependency 'solidus/calculator'
 
-module Spree
+module Solidus
   class Calculator::FlatPercentItemTotal < Calculator
     preference :flat_percent, :decimal, default: 0
 

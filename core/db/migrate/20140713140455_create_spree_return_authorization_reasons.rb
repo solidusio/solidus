@@ -1,4 +1,4 @@
-class CreateSpreeReturnAuthorizationReasons < ActiveRecord::Migration
+class CreateSolidusReturnAuthorizationReasons < ActiveRecord::Migration
   class ReturnAuthorizationReason < ActiveRecord::Base
     self.table_name = 'solidus_return_authorization_reasons'
   end

@@ -1,4 +1,4 @@
-module Spree
+module Solidus
   class Gateway < PaymentMethod
     delegate :authorize, :purchase, :capture, :void, :credit, to: :provider
 

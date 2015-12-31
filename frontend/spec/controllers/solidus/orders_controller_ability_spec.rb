@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-module Spree
+module Solidus
   describe OrdersController, :type => :controller do
     ORDER_TOKEN = 'ORDER_TOKEN'
 

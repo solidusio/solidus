@@ -1,4 +1,4 @@
-module Spree
+module Solidus
   class Calculator
     class PercentOnLineItem < Calculator
       preference :percent, :decimal, default: 0

@@ -3,7 +3,7 @@
 #
 # See http://github.com/ryanb/cancan for more details on cancan.
 require 'cancan'
-module Spree
+module Solidus
   class Ability
     include CanCan::Ability
 

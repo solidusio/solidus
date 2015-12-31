@@ -1,4 +1,4 @@
-module Spree
+module Solidus
   module Api
     class StatesController < Solidus::Api::BaseController
       skip_before_action :authenticate_user

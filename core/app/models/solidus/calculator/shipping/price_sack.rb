@@ -1,6 +1,6 @@
 require_dependency 'solidus/shipping_calculator'
 
-module Spree
+module Solidus
   module Calculator::Shipping
     class PriceSack < ShippingCalculator
       preference :minimal_amount, :decimal, default: 0

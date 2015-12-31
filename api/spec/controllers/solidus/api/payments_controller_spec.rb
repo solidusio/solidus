@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-module Spree
+module Solidus
   describe Solidus::Api::PaymentsController, :type => :controller do
     render_views
     let!(:order) { create(:order) }

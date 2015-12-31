@@ -1,4 +1,4 @@
-module Spree
+module Solidus
   class ReimbursementMailer < BaseMailer
       def reimbursement_email(reimbursement, resend = false)
         @reimbursement = reimbursement.respond_to?(:id) ? reimbursement : Solidus::Reimbursement.find(reimbursement)

@@ -1,4 +1,4 @@
-module Spree
+module Solidus
   class Tracker < Solidus::Base
     def self.current
       tracker = where(active: true).first

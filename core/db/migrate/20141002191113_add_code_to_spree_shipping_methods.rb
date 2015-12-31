@@ -1,4 +1,4 @@
-class AddCodeToSpreeShippingMethods < ActiveRecord::Migration
+class AddCodeToSolidusShippingMethods < ActiveRecord::Migration
   def change
     add_column :solidus_shipping_methods, :code, :string
   end

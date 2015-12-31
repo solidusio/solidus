@@ -19,7 +19,7 @@ $.fn.productAutocomplete = function (options) {
     ajax: {
       url: Solidus.routes.admin_product_search,
       datatype: 'json',
-      params: { "headers": { "X-Spree-Token": Solidus.api_key } },
+      params: { "headers": { "X-Solidus-Token": Solidus.api_key } },
       data: function (term, page) {
         return {
           q: {

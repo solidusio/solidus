@@ -1,4 +1,4 @@
-module Spree
+module Solidus
   module Admin
     class ImagesController < ResourceController
       before_action :load_data

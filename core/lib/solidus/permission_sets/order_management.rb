@@ -1,4 +1,4 @@
-module Spree
+module Solidus
   module PermissionSets
     class OrderManagement < PermissionSets::Base
       def activate!

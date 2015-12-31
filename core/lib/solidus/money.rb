@@ -2,7 +2,7 @@
 
 require 'money'
 
-module Spree
+module Solidus
   # Solidus::Money is a relatively thin wrapper around Monetize which handles
   # formatting via Solidus::Config.
   class Money

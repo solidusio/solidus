@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-module Spree
+module Solidus
   describe ReimbursementType::StoreCredit do
     let(:reimbursement)           { create(:reimbursement, return_items_count: 2) }
     let(:return_item)             { reimbursement.return_items.first }

@@ -1,4 +1,4 @@
-module Spree
+module Solidus
   module TaxonsHelper
     # Retrieves the collection of products to display when "previewing" a taxon.  This is abstracted into a helper so
     # that we can use configurations as well as make it easier for end users to override this determination.  One idea is

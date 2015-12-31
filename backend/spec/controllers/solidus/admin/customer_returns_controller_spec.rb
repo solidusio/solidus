@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-module Spree
+module Solidus
   module Admin
     describe CustomerReturnsController, :type => :controller do
       stub_authorization!

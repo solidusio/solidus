@@ -1,4 +1,4 @@
-module Spree
+module Solidus
   class CreditCard < Solidus::Base
     belongs_to :payment_method
     belongs_to :user, class_name: Solidus.user_class, foreign_key: 'user_id'

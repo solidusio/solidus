@@ -1,4 +1,4 @@
-module Spree
+module Solidus
   class Classification < Solidus::Base
     self.table_name = 'solidus_products_taxons'
     acts_as_list scope: :taxon

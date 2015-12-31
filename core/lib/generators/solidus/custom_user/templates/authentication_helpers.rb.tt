@@ -1,4 +1,4 @@
-module Spree
+module Solidus
   module CurrentUserHelpers
     def self.included(receiver)
       receiver.send :helper_method, :solidus_current_user

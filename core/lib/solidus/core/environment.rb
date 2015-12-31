@@ -1,4 +1,4 @@
-module Spree
+module Solidus
   module Core
     class Environment
       include EnvironmentExtension

@@ -1,4 +1,4 @@
-module Spree
+module Solidus
   class HomeController < Solidus::StoreController
     helper 'solidus/products'
     respond_to :html

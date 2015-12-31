@@ -1,6 +1,6 @@
 require_dependency 'solidus/calculator'
 
-module Spree
+module Solidus
   class Calculator::TieredFlatRate < Calculator
     preference :base_amount, :decimal, default: 0
     preference :tiers, :hash, default: {}

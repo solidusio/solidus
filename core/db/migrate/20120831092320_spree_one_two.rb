@@ -1,4 +1,4 @@
-class SpreeOneTwo < ActiveRecord::Migration
+class SolidusOneTwo < ActiveRecord::Migration
   def up
     # This migration is just a compressed version of all the previous
     # migrations for solidus_core. Do not run it if one of the core tables

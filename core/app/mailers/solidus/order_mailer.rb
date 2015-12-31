@@ -1,4 +1,4 @@
-module Spree
+module Solidus
   class OrderMailer < BaseMailer
     def confirm_email(order, resend = false)
       @order = find_order(order)

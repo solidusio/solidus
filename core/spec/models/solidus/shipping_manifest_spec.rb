@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-module Spree
+module Solidus
   describe ShippingManifest, :type => :model do
     let(:order) { Order.create! }
     let(:variant) { create :variant }

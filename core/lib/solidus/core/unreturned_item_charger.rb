@@ -1,4 +1,4 @@
-module Spree
+module Solidus
   class UnreturnedItemCharger
     class ChargeFailure < StandardError
       attr_accessor :new_order

@@ -1,4 +1,4 @@
-module Spree
+module Solidus
   module PromotionHandler
     # Used for activating promotions with shipping rules
     class FreeShipping

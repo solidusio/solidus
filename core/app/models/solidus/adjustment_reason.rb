@@ -1,4 +1,4 @@
-module Spree
+module Solidus
   class AdjustmentReason < Solidus::Base
     has_many :adjustments, inverse_of: :adjustment_reason
 

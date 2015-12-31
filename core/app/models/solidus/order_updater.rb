@@ -1,4 +1,4 @@
-module Spree
+module Solidus
   class OrderUpdater
     attr_reader :order
     delegate :payments, :line_items, :adjustments, :all_adjustments, :shipments, :update_hooks, :quantity, to: :order

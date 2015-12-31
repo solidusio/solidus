@@ -1,4 +1,4 @@
-module Spree
+module Solidus
   module Stock
     class ContentItem
       attr_accessor :inventory_unit, :state

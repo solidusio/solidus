@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-module Spree
+module Solidus
   describe OrderUpdater, type: :model do
     let(:order) { Solidus::Order.create }
     let(:updater) { Solidus::OrderUpdater.new(order) }

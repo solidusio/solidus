@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-module Spree
+module Solidus
   module PromotionHandler
     describe FreeShipping, type: :model do
       let(:order) { create(:order) }

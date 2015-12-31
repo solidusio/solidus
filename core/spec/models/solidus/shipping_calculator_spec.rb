@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-module Spree
+module Solidus
   describe ShippingCalculator, :type => :model do
     let(:variant1) { build(:variant, :price => 10) }
     let(:variant2) { build(:variant, :price => 20) }

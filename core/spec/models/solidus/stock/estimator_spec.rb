@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-module Spree
+module Solidus
   module Stock
     describe Estimator, :type => :model do
       let!(:shipping_method) { create(:shipping_method) }

@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-module Spree
+module Solidus
   class GatewayWithPassword < PaymentMethod
     preference :password, :string, :default => "password"
   end

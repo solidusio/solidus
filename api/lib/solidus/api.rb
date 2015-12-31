@@ -2,7 +2,7 @@ require 'solidus/core'
 
 require 'rabl'
 
-module Spree
+module Solidus
   module Api
   end
 end

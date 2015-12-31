@@ -1,4 +1,4 @@
-class CreateSpreeStores < ActiveRecord::Migration
+class CreateSolidusStores < ActiveRecord::Migration
   def change
     if table_exists?(:solidus_stores)
       rename_column :solidus_stores, :domains, :url

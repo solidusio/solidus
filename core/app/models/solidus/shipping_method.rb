@@ -1,4 +1,4 @@
-module Spree
+module Solidus
   class ShippingMethod < Solidus::Base
     acts_as_paranoid
     include Solidus::CalculatedAdjustments

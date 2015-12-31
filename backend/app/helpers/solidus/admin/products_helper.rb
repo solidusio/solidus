@@ -1,4 +1,4 @@
-module Spree
+module Solidus
   module Admin
     module ProductsHelper
       def taxon_options_for(product)

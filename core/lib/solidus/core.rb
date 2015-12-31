@@ -19,7 +19,7 @@ require 'responders'
 # invalid state of a Payment. In the future this should be removed.
 StateMachines::Machine.ignore_method_conflicts = true
 
-module Spree
+module Solidus
 
   mattr_accessor :user_class
 

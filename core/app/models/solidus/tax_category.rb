@@ -1,4 +1,4 @@
-module Spree
+module Solidus
   class TaxCategory < Solidus::Base
     acts_as_paranoid
     validates :name, presence: true

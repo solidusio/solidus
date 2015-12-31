@@ -1,4 +1,4 @@
-module Spree
+module Solidus
   class OrderContents
     attr_accessor :order, :currency
 

@@ -1,4 +1,4 @@
-module Spree
+module Solidus
   # Bogus Gateway that doesn't support payment profiles.
   class Gateway::BogusSimple < Gateway::Bogus
 

@@ -1,4 +1,4 @@
-module Spree
+module Solidus
   class PaymentMethod < Solidus::Base
     acts_as_paranoid
     DISPLAY = [:both, :front_end, :back_end]

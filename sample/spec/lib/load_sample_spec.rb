@@ -10,7 +10,7 @@ describe "Load samples" do
         load Rails.root + 'db/seeds.rb'
       end
 
-      SpreeSample::Engine.load_samples
+      SolidusSample::Engine.load_samples
     }.to output.to_stdout
   end
 end

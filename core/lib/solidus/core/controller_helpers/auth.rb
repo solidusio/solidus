@@ -1,4 +1,4 @@
-module Spree
+module Solidus
   module Core
     module ControllerHelpers
       module Auth
@@ -26,7 +26,7 @@ module Spree
           end
         end
 
-        # Needs to be overriden so that we use Spree's Ability rather than anyone else's.
+        # Needs to be overriden so that we use Solidus's Ability rather than anyone else's.
         def current_ability
           @current_ability ||= Solidus::Ability.new(try_solidus_current_user)
         end
@@ -61,7 +61,7 @@ module Spree
         # proxy method to *possible* solidus_current_user method
         # Authentication extensions (such as solidus_auth_devise) are meant to provide solidus_current_user
         def try_solidus_current_user
-          # This one will be defined by apps looking to hook into Spree
+          # This one will be defined by apps looking to hook into Solidus
           # As per authentication_helpers.rb
           if respond_to?(:solidus_current_user)
             solidus_current_user

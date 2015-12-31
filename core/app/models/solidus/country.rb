@@ -1,4 +1,4 @@
-module Spree
+module Solidus
   class Country < Solidus::Base
     has_many :states, -> { order(:name) }, dependent: :destroy
     has_many :addresses, dependent: :nullify

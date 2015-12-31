@@ -1,4 +1,4 @@
-module Spree
+module Solidus
   module Admin
     module OrdersHelper
       # Renders all the extension partials that may have been specified in the extensions

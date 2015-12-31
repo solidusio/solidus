@@ -8,7 +8,7 @@ shared_examples_for 'unlimited supply' do
   end
 end
 
-module Spree
+module Solidus
   module Stock
     describe Quantifier, :type => :model do
 

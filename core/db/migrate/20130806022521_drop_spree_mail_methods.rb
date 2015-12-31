@@ -1,4 +1,4 @@
-class DropSpreeMailMethods < ActiveRecord::Migration
+class DropSolidusMailMethods < ActiveRecord::Migration
   def up
     drop_table :solidus_mail_methods
   end

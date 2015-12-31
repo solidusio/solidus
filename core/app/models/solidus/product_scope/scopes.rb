@@ -1,4 +1,4 @@
-module Spree
+module Solidus
   class ProductScope < Solidus::Base
     before_validation(:on => :create) do
       # Add default empty arguments so scope validates and errors aren't caused when previewing it

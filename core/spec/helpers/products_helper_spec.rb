@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-module Spree
+module Solidus
   describe ProductsHelper, :type => :helper do
     include ProductsHelper
 

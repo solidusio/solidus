@@ -1,7 +1,7 @@
 require 'solidus_core'
 require 'solidus/sample'
 
-module SpreeSample
+module SolidusSample
   class Engine < Rails::Engine
     engine_name 'solidus_sample'
 

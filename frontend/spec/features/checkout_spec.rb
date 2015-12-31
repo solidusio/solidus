@@ -213,7 +213,7 @@ describe "Checkout", type: :feature, inaccessible: true do
     it "allows user to enter a new source" do
       choose "use_existing_card_no"
 
-      fill_in "Name on card", :with => 'Spree Commerce'
+      fill_in "Name on card", :with => 'Solidus Commerce'
       fill_in "Card Number", :with => '4111111111111111'
       fill_in "card_expiry", :with => '04 / 20'
       fill_in "Card Code", :with => '123'
@@ -388,7 +388,7 @@ describe "Checkout", type: :feature, inaccessible: true do
       expect(current_path).to eq solidus.checkout_state_path('payment')
 
       choose "Credit Card"
-      fill_in "Name on card", :with => 'Spree Commerce'
+      fill_in "Name on card", :with => 'Solidus Commerce'
       fill_in "Card Number", :with => '4111111111111111'
       fill_in "card_expiry", :with => '04 / 20'
       fill_in "Card Code", :with => '123'

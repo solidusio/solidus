@@ -1,4 +1,4 @@
-module Spree
+module Solidus
   class CustomerReturn < Solidus::Base
     belongs_to :stock_location
 

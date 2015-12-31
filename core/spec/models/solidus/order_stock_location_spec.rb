@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-module Spree
+module Solidus
   describe OrderStockLocation do
     describe ".fulfill_for_order_with_stock_location" do
       subject { OrderStockLocation.fulfill_for_order_with_stock_location(order, stock_location) }

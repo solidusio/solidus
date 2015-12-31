@@ -1,4 +1,4 @@
-module Spree
+module Solidus
   module Api
     class ShipmentsController < Solidus::Api::BaseController
       before_filter :find_order_on_create, only: :create

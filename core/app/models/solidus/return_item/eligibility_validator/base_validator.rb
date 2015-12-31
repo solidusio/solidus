@@ -1,4 +1,4 @@
-module Spree
+module Solidus
   class Solidus::ReturnItem::EligibilityValidator::BaseValidator
     attr_reader :errors
 

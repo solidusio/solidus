@@ -1,4 +1,4 @@
-module Spree
+module Solidus
   module Api
     module TestingSupport
       module Setup

@@ -1,4 +1,4 @@
-module Spree
+module Solidus
   class OrderInventory
     attr_accessor :order, :line_item, :variant
 

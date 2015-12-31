@@ -1,4 +1,4 @@
-module Spree
+module Solidus
   module Admin
     class LogEntriesController < Solidus::Admin::BaseController
       before_action :find_order_and_payment

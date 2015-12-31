@@ -1,4 +1,4 @@
-module Spree
+module Solidus
   class PaymentCaptureEvent < Solidus::Base
     belongs_to :payment, class_name: 'Solidus::Payment'
 

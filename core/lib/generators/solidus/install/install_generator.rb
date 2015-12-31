@@ -3,9 +3,9 @@ require 'highline/import'
 require 'bundler'
 require 'bundler/cli'
 
-module Spree
+module Solidus
   class InstallGenerator < Rails::Generators::Base
-    class_option :migrate, :type => :boolean, :default => true, :banner => 'Run Spree migrations'
+    class_option :migrate, :type => :boolean, :default => true, :banner => 'Run Solidus migrations'
     class_option :seed, :type => :boolean, :default => true, :banner => 'load seed data (migrations must be run)'
     class_option :sample, :type => :boolean, :default => true, :banner => 'load sample data (migrations must be run)'
     class_option :auto_accept, :type => :boolean
@@ -162,11 +162,11 @@ Solidus::Auth::Engine.load_seed if defined?(Solidus::Auth)
     def notify_about_routes
       insert_into_file File.join('config', 'routes.rb'), :after => "Rails.application.routes.draw do\n" do
         %Q{
-  # This line mounts Spree's routes at the root of your application.
+  # This line mounts Solidus's routes at the root of your application.
   # This means, any requests to URLs such as /products, will go to Solidus::ProductsController.
   # If you would like to change where this engine is mounted, simply change the :at option to something different.
   #
-  # We ask that you don't use the :as option here, as Spree relies on it being the default of "solidus"
+  # We ask that you don't use the :as option here, as Solidus relies on it being the default of "solidus"
   mount Solidus::Core::Engine, :at => '/'
         }
       end
@@ -182,7 +182,7 @@ Solidus::Auth::Engine.load_seed if defined?(Solidus::Auth)
     def complete
       unless options[:quiet]
         puts "*" * 50
-        puts "Spree has been installed successfully. You're all ready to go!"
+        puts "Solidus has been installed successfully. You're all ready to go!"
         puts " "
         puts "Enjoy!"
       end

@@ -1,4 +1,4 @@
-module Spree
+module Solidus
   module Admin
     module GeneralSettingsHelper
       def currency_options

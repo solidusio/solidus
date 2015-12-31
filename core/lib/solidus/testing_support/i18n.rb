@@ -1,6 +1,6 @@
-module Spree
+module Solidus
   # This file exists solely to test whether or not there are missing translations
-  # within the code that Spree's test suite covers.
+  # within the code that Solidus's test suite covers.
   #
   # If there is a translation referenced which has no corresponding key within the
   # .yml file, then there will be a message output at the end of the suite showing
@@ -81,14 +81,14 @@ RSpec.configure do |config|
     config.after :suite do
       Solidus.check_missing_translations
       if Solidus.missing_translation_messages.any?
-        puts "\nThere are missing translations within Spree:"
+        puts "\nThere are missing translations within Solidus:"
         puts Solidus.missing_translation_messages.sort
         exit(1)
       end
 
       Solidus.check_unused_translations
       if false && Solidus.unused_translation_messages.any?
-        puts "\nThere are unused translations within Spree:"
+        puts "\nThere are unused translations within Solidus:"
         puts Solidus.unused_translation_messages.sort
         exit(1)
       end

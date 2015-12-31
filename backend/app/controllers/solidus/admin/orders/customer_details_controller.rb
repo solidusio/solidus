@@ -1,4 +1,4 @@
-module Spree
+module Solidus
   module Admin
     module Orders
       class CustomerDetailsController < Solidus::Admin::BaseController

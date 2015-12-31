@@ -1,4 +1,4 @@
-module Spree
+module Solidus
   module OrderedPropertyValueList
     extend ActiveSupport::Concern
 

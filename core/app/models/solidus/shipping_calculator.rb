@@ -1,4 +1,4 @@
-module Spree
+module Solidus
   class ShippingCalculator < Calculator
 
     def compute_shipment(shipment)

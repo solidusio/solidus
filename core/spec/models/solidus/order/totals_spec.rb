@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-module Spree
+module Solidus
   describe Order, :type => :model do
     let(:order) { Order.create }
     let(:shirt) { create(:variant) }

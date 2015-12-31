@@ -1,4 +1,4 @@
-module Spree
+module Solidus
   module Admin
     class RootController < Solidus::Admin::BaseController
       skip_before_filter :authorize_admin

@@ -1,4 +1,4 @@
-module Spree
+module Solidus
   class ShippingRate < Solidus::Base
     belongs_to :shipment, class_name: 'Solidus::Shipment'
     belongs_to :shipping_method, -> { with_deleted }, class_name: 'Solidus::ShippingMethod', inverse_of: :shipping_rates

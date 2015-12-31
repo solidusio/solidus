@@ -1,4 +1,4 @@
-module Spree
+module Solidus
   module Preferences
     class StaticModelPreferences
       class Definition

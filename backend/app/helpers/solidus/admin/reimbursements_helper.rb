@@ -1,4 +1,4 @@
-module Spree
+module Solidus
   module Admin
     module ReimbursementsHelper
       def reimbursement_status_color(reimbursement)

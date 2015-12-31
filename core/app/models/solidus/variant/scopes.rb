@@ -1,4 +1,4 @@
-module Spree
+module Solidus
   class Variant < Solidus::Base
     #FIXME WARNING tested only under sqlite and postgresql
     scope :descend_by_popularity, -> {

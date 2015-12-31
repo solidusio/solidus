@@ -1,4 +1,4 @@
-module Spree
+module Solidus
   module Admin
     class ReturnAuthorizationsController < ResourceController
       belongs_to 'solidus/order', :find_by => :number

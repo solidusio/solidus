@@ -1,4 +1,4 @@
-module Spree
+module Solidus
   module Admin
     class ProductsController < ResourceController
       helper 'solidus/products'

@@ -1,4 +1,4 @@
-class CreateSpreeShippingRates < ActiveRecord::Migration
+class CreateSolidusShippingRates < ActiveRecord::Migration
   def up
     create_table :solidus_shipping_rates do |t|
       t.belongs_to :shipment

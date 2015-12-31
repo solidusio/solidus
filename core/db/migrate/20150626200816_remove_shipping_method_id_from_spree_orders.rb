@@ -1,4 +1,4 @@
-class RemoveShippingMethodIdFromSpreeOrders < ActiveRecord::Migration
+class RemoveShippingMethodIdFromSolidusOrders < ActiveRecord::Migration
   def up
     remove_column :solidus_orders, :shipping_method_id, :integer
   end

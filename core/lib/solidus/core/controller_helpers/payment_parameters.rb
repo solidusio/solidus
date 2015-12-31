@@ -1,4 +1,4 @@
-module Spree
+module Solidus
   module Core::ControllerHelpers::PaymentParameters
     # This method handles the awkwardness of how the html forms are currently
     # set up for frontend.

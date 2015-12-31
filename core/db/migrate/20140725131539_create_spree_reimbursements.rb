@@ -1,4 +1,4 @@
-class CreateSpreeReimbursements < ActiveRecord::Migration
+class CreateSolidusReimbursements < ActiveRecord::Migration
   def change
     create_table :solidus_reimbursements do |t|
       t.string :number

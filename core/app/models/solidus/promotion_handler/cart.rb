@@ -1,4 +1,4 @@
-module Spree
+module Solidus
   module PromotionHandler
     # Decides which promotion should be activated given the current order context
     #

@@ -1,4 +1,4 @@
-module Spree
+module Solidus
   module Stock
     # Used by Prioritizer to adjust item quantities.
     #

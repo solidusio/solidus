@@ -1,4 +1,4 @@
-module Spree
+module Solidus
   class Calculator < Solidus::Base
     belongs_to :calculable, polymorphic: true
 

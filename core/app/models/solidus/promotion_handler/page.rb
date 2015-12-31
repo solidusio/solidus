@@ -1,4 +1,4 @@
-module Spree
+module Solidus
   module PromotionHandler
     class Page
       attr_reader :order, :path

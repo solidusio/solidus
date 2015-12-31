@@ -1,4 +1,4 @@
-module Spree
+module Solidus
   module Admin
     class GeneralSettingsController < Solidus::Admin::BaseController
       include Solidus::Backend::Callbacks

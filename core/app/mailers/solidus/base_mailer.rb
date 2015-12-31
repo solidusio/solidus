@@ -1,4 +1,4 @@
-module Spree
+module Solidus
   class BaseMailer < ActionMailer::Base
 
     def from_address(store = nil)

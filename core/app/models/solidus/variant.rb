@@ -1,4 +1,4 @@
-module Spree
+module Solidus
   # == Master Variant
   #
   # Every product has one master variant, which stores master price and SKU,
@@ -77,7 +77,7 @@ module Spree
     # Returns variants that are not deleted and have a price in the given
     # currency.
     #
-    # @param currency [String] the currency to filter by; defaults to Spree's default
+    # @param currency [String] the currency to filter by; defaults to Solidus's default
     # @return [ActiveRecord::Relation]
     def self.active(currency = nil)
       joins(:prices).where(deleted_at: nil).where('solidus_prices.currency' => currency || Solidus::Config[:currency]).where('solidus_prices.amount IS NOT NULL')

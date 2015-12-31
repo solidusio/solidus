@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-module Spree
+module Solidus
   class Calculator
     describe PercentOnLineItem, :type => :model do
       let(:line_item) { double("LineItem", amount: 100) }

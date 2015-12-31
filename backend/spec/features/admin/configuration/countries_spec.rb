@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-module Spree
+module Solidus
   describe "Countries", type: :feature do
     stub_authorization!
 

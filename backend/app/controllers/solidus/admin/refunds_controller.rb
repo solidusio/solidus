@@ -1,4 +1,4 @@
-module Spree
+module Solidus
   module Admin
     class RefundsController < ResourceController
       belongs_to 'solidus/payment'

@@ -1,4 +1,4 @@
-module Spree
+module Solidus
   module PromotionRulesHelper
 
     def options_for_promotion_rule_types(promotion)

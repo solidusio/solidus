@@ -1,4 +1,4 @@
-module Spree
+module Solidus
   class Payment < Solidus::Base
     module Processing
       # "process!" means:

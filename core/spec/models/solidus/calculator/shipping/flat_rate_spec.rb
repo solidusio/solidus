@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-module Spree
+module Solidus
   module Calculator::Shipping
     describe FlatRate, :type => :model do
       subject { Calculator::Shipping::FlatRate.new(:preferred_amount => 4.00) }

@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-module Spree
+module Solidus
   RSpec.describe PaymentCreate do
     let(:user) { nil }
     let(:order) { create :order, user: user }

@@ -1,6 +1,6 @@
 require_dependency 'solidus/calculator'
 
-module Spree
+module Solidus
   class Calculator::FlexiRate < Calculator
     preference :first_item,      :decimal, default: 0.0
     preference :additional_item, :decimal, default: 0.0

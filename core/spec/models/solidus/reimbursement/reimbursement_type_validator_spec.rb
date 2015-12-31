@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-module Spree
+module Solidus
   describe Reimbursement::ReimbursementTypeValidator, :type => :model do
     class DummyClass
       include Solidus::Reimbursement::ReimbursementTypeValidator

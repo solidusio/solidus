@@ -1,4 +1,4 @@
-module Spree
+module Solidus
   class Taxon < Solidus::Base
     acts_as_nested_set dependent: :destroy
 

@@ -1,4 +1,4 @@
-module Spree
+module Solidus
   class PaymentMethod::Check < PaymentMethod
     def actions
       %w{capture void}

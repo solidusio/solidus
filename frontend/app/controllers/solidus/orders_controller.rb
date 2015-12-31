@@ -1,4 +1,4 @@
-module Spree
+module Solidus
   class OrdersController < Solidus::StoreController
     before_action :check_authorization
     rescue_from ActiveRecord::RecordNotFound, :with => :render_404

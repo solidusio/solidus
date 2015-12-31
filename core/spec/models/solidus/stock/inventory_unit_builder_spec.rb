@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-module Spree
+module Solidus
   module Stock
     describe InventoryUnitBuilder, :type => :model do
       let(:line_item_1) { build(:line_item) }

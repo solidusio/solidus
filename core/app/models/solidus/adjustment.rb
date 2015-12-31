@@ -1,4 +1,4 @@
-module Spree
+module Solidus
   # Adjustments represent a change to the +item_total+ of an Order. Each
   # adjustment has an +amount+ that can be either positive or negative.
   #

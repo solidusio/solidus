@@ -1,4 +1,4 @@
-module Spree
+module Solidus
   class PromotionChooser
     def initialize(adjustments)
       @adjustments = adjustments

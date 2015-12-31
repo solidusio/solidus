@@ -1,4 +1,4 @@
-module Spree
+module Solidus
   class Zone < Solidus::Base
     has_many :zone_members, dependent: :destroy, class_name: "Solidus::ZoneMember", inverse_of: :zone
     has_many :tax_rates, dependent: :destroy, inverse_of: :zone

@@ -1,6 +1,6 @@
 require_dependency 'solidus/shipping_calculator'
 
-module Spree
+module Solidus
   module Calculator::Shipping
     class FlexiRate < ShippingCalculator
       preference :first_item,      :decimal, default: 0.0

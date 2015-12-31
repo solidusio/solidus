@@ -1,4 +1,4 @@
-class RecreateSpreeReturnAuthorizations < ActiveRecord::Migration
+class RecreateSolidusReturnAuthorizations < ActiveRecord::Migration
   def up
     # If the app has any legacy return authorizations then rename the table & columns and leave them there
     # for the solidus_legacy_return_authorizations extension to pick up with.

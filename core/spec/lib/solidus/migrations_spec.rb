@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-module Spree
+module Solidus
   describe Migrations do
     let(:app_migrations) { [".", "34_add_title.rb", "52_add_text.rb"] }
     let(:engine_migrations) { [".", "334_create_orders.solidus.rb", "777_create_products.solidus.rb"] }

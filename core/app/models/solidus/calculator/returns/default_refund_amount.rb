@@ -1,6 +1,6 @@
 require_dependency 'solidus/returns_calculator'
 
-module Spree
+module Solidus
   module Calculator::Returns
     class DefaultRefundAmount < ReturnsCalculator
 

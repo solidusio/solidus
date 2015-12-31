@@ -1,4 +1,4 @@
-module Spree
+module Solidus
   module Admin
     module TaxonsHelper
       def taxon_path(taxon)

@@ -27,7 +27,7 @@ class UpgradeAdjustments < ActiveRecord::Migration
         if adjustment.source.calculator_type == "Solidus::Calculator::FreeShipping"
           # Previously this was a Solidus::Promotion::Actions::CreateAdjustment
           # And it had a calculator to work out FreeShipping
-          # In Spree 2.2, the "calculator" is now the action itself.
+          # In Solidus 2.2, the "calculator" is now the action itself.
           adjustment.source.becomes(Solidus::Promotion::Actions::FreeShipping)
         end
       rescue

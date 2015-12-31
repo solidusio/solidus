@@ -1,4 +1,4 @@
-module Spree
+module Solidus
   class ContentController < Solidus::StoreController
     respond_to :html
 

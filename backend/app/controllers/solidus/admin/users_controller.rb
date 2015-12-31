@@ -1,4 +1,4 @@
-module Spree
+module Solidus
   module Admin
     class UsersController < ResourceController
       rescue_from Solidus::Core::DestroyWithOrdersError, with: :user_destroy_with_orders_error

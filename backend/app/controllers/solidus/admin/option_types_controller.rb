@@ -1,4 +1,4 @@
-module Spree
+module Solidus
   module Admin
     class OptionTypesController < ResourceController
       before_action :setup_new_option_value, only: :edit

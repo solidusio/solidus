@@ -1,4 +1,4 @@
-module Spree
+module Solidus
   module Api
     class StoresController < Solidus::Api::BaseController
 

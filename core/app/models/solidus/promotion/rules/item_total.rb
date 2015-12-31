@@ -1,4 +1,4 @@
-module Spree
+module Solidus
   class Promotion
     module Rules
       # A rule to apply to an order greater than (or greater than or equal to)

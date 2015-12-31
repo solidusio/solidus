@@ -1,7 +1,7 @@
-module Spree
+module Solidus
   module TestingSupport
-    # Use this module to easily test Spree actions within Spree components or
-    # inside your application to test routes for the mounted Spree engine.
+    # Use this module to easily test Solidus actions within Solidus components or
+    # inside your application to test routes for the mounted Solidus engine.
     #
     # Inside your spec_helper.rb, include this module inside the
     # RSpec.configure block by doing this:
@@ -22,7 +22,7 @@ module Spree
     #   end
     #
     # Use solidus_get, solidus_post, solidus_put or solidus_delete to make requests to
-    # the Spree engine, and use regular get, post, put or delete to make
+    # the Solidus engine, and use regular get, post, put or delete to make
     # requests to your application.
     module ControllerRequests
       extend ActiveSupport::Concern

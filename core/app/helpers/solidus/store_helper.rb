@@ -1,4 +1,4 @@
-module Spree
+module Solidus
   # Methods added to this helper will be available to all templates in the
   # frontend.
   module StoreHelper

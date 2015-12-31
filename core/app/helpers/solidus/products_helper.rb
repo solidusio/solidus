@@ -1,4 +1,4 @@
-module Spree
+module Solidus
   module ProductsHelper
     # Returns the formatted price for the specified variant as a full price or
     # a difference depending on configuration

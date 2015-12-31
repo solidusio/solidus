@@ -9,7 +9,7 @@ end
 
 task default: :test
 
-desc "Runs all tests in all Spree engines"
+desc "Runs all tests in all Solidus engines"
 task :test => :test_app do
   %w(api backend core frontend sample).each do |gem_name|
     Dir.chdir("#{File.dirname(__FILE__)}/#{gem_name}") do
@@ -18,7 +18,7 @@ task :test => :test_app do
   end
 end
 
-desc "Generates a dummy app for testing for every Spree engine"
+desc "Generates a dummy app for testing for every Solidus engine"
 task :test_app do
   %w(api backend core frontend sample).each do |engine|
     ENV['LIB_NAME'] = File.join('solidus', engine)
@@ -88,7 +88,7 @@ namespace :gem do
   end
 end
 
-desc "Creates a sandbox application for simulating the Spree code in a deployed Rails app"
+desc "Creates a sandbox application for simulating the Solidus code in a deployed Rails app"
 task :sandbox do
   Bundler.with_clean_env do
     exec("lib/sandbox.sh")

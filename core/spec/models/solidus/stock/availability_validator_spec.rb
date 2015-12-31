@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-module Spree
+module Solidus
   module Stock
     describe AvailabilityValidator do
       let(:validator) { Solidus::Stock::AvailabilityValidator.new }

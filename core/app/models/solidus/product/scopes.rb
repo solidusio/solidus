@@ -1,4 +1,4 @@
-module Spree
+module Solidus
   class Product < Solidus::Base
     cattr_accessor :search_scopes do
       []

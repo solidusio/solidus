@@ -1,4 +1,4 @@
-module Spree
+module Solidus
   module Admin
     class OrdersController < Solidus::Admin::BaseController
       before_action :initialize_order_events

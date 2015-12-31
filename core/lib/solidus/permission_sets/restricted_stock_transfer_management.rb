@@ -1,4 +1,4 @@
-module Spree
+module Solidus
   module PermissionSets
     # This is a permission set that offers an alternative to {StockManagement}.
     #

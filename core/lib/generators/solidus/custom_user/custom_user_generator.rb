@@ -1,10 +1,10 @@
-module Spree
+module Solidus
   class CustomUserGenerator < Rails::Generators::NamedBase
     include Rails::Generators::ResourceHelpers
     include Rails::Generators::Migration
 
 
-    desc "Set up a Spree installation with a custom User class"
+    desc "Set up a Solidus installation with a custom User class"
 
     def self.source_paths
       paths = self.superclass.source_paths

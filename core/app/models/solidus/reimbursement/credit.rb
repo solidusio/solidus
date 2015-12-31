@@ -1,4 +1,4 @@
-module Spree
+module Solidus
   class Reimbursement::Credit < Solidus::Base
     class_attribute :default_creditable_class
     self.default_creditable_class = Solidus::StoreCredit

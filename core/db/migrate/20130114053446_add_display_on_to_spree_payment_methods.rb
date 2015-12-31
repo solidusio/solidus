@@ -1,4 +1,4 @@
-class AddDisplayOnToSpreePaymentMethods < ActiveRecord::Migration
+class AddDisplayOnToSolidusPaymentMethods < ActiveRecord::Migration
   def self.up
     add_column :solidus_payment_methods, :display_on, :string
   end

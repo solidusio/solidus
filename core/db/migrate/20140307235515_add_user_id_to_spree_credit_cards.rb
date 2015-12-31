@@ -1,4 +1,4 @@
-class AddUserIdToSpreeCreditCards < ActiveRecord::Migration
+class AddUserIdToSolidusCreditCards < ActiveRecord::Migration
   def change
     unless Solidus::CreditCard.column_names.include? "user_id"
       add_column :solidus_credit_cards, :user_id, :integer

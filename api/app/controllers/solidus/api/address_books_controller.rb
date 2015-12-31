@@ -1,4 +1,4 @@
-module Spree
+module Solidus
   module Api
     class AddressBooksController < Solidus::Api::BaseController
       # Note: the AddressBook is the resource to think about here, not individual addresses

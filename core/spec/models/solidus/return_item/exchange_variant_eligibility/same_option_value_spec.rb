@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-module Spree
+module Solidus
   module ReturnItem::ExchangeVariantEligibility
     describe SameOptionValue, :type => :model do
       describe ".eligible_variants" do

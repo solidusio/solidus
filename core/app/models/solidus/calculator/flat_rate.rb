@@ -1,6 +1,6 @@
 require_dependency 'solidus/calculator'
 
-module Spree
+module Solidus
   class Calculator::FlatRate < Calculator
     preference :amount, :decimal, default: 0
     preference :currency, :string, default: ->{ Solidus::Config[:currency] }

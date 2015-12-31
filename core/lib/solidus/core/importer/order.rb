@@ -1,4 +1,4 @@
-module Spree
+module Solidus
   module Core
     module Importer
       class Order
@@ -67,7 +67,7 @@ module Spree
               unit = shipment.inventory_units.build
               unit.order = order
 
-              # Spree expects a Inventory Unit to always reference a line
+              # Solidus expects a Inventory Unit to always reference a line
               # item and variant otherwise users might get exceptions when
               # trying to view these units. Note the Importer might not be
               # able to find the line item if line_item.variant_id |= iu.variant_id

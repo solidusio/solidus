@@ -1,4 +1,4 @@
-class CreateSpreePaymentCaptureEvents < ActiveRecord::Migration
+class CreateSolidusPaymentCaptureEvents < ActiveRecord::Migration
   def change
     create_table :solidus_payment_capture_events do |t|
       t.decimal :amount, precision: 10, scale: 2, default: 0.0

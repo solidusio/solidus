@@ -15,7 +15,7 @@ $(document).ready(function() {
       placeholder: Solidus.translations.choose_a_customer,
       ajax: {
         url: Solidus.routes.user_search,
-        params: { "headers": { "X-Spree-Token": Solidus.api_key } },
+        params: { "headers": { "X-Solidus-Token": Solidus.api_key } },
         datatype: 'json',
         data: function(term, page) {
           return {

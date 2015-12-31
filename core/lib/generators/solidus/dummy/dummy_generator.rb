@@ -2,9 +2,9 @@ require "rails/generators/rails/app/app_generator"
 require 'active_support/core_ext/hash'
 require 'solidus/core/version'
 
-module Spree
+module Solidus
   class DummyGenerator < Rails::Generators::Base
-    desc "Creates blank Rails application, installs Spree and all sample data"
+    desc "Creates blank Rails application, installs Solidus and all sample data"
 
     class_option :lib_name, :default => ''
     class_option :database, :default => ''

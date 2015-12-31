@@ -1,4 +1,4 @@
-module Spree
+module Solidus
   module PermissionSets
     class UserManagement < PermissionSets::Base
       def activate!

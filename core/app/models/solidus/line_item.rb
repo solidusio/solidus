@@ -1,4 +1,4 @@
-module Spree
+module Solidus
   class LineItem < Solidus::Base
     before_validation :invalid_quantity_check
     belongs_to :order, class_name: "Solidus::Order", inverse_of: :line_items, touch: true

@@ -1,4 +1,4 @@
-module Spree
+module Solidus
   class Promotion < Solidus::Base
     MATCH_POLICIES = %w(all any)
     UNACTIVATABLE_ORDER_STATES = ["complete", "awaiting_return", "returned"]

@@ -1,4 +1,4 @@
-# Spree's rpsec controller tests get the Solidus::ControllerHacks
+# Solidus's rpsec controller tests get the Solidus::ControllerHacks
 # we don't need those for the anonymous controller here, so
 # we call process directly instead of get
 require 'spec_helper'

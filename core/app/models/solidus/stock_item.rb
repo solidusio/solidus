@@ -1,4 +1,4 @@
-module Spree
+module Solidus
   class StockItem < Solidus::Base
     acts_as_paranoid
 

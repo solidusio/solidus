@@ -1,4 +1,4 @@
-module Spree
+module Solidus
   module Admin
     module StockLocationsHelper
       def display_name(stock_location)

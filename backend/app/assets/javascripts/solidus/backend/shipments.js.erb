@@ -60,7 +60,7 @@ $(document).ready(function () {
 
   // add header to ship ujs ajax call
   $("form#admin-ship-shipment").on("ajax:beforeSend", function(event, xhr, settings) {
-    xhr.setRequestHeader("X-Spree-Token", Solidus.api_key);
+    xhr.setRequestHeader("X-Solidus-Token", Solidus.api_key);
   });
 
   $("form#admin-ship-shipment").on("ajax:success", function(event, xhr, settings) {

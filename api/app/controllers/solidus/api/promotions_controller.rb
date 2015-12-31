@@ -1,4 +1,4 @@
-module Spree
+module Solidus
   module Api
     class PromotionsController < Solidus::Api::BaseController
       before_filter :requires_admin

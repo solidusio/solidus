@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-module Spree
+module Solidus
   module Admin
     class WidgetsController < Solidus::Admin::ResourceController
       prepend_view_path('spec/test_views')

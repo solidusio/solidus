@@ -1,4 +1,4 @@
-module Spree
+module Solidus
   # Solidus::OrderMerger is responsible for taking two orders and merging them
   # together by adding the line items from additional orders to the order
   # that the OrderMerger is initialized with.

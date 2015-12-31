@@ -1,4 +1,4 @@
-module Spree
+module Solidus
   module Stock
     class Packer
       attr_reader :stock_location, :inventory_units, :splitters

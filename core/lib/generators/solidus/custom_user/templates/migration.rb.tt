@@ -1,4 +1,4 @@
-class AddSpreeFieldsToCustomUserTable < ActiveRecord::Migration
+class AddSolidusFieldsToCustomUserTable < ActiveRecord::Migration
   def up
     add_column <%= table_name.inspect %>, :solidus_api_key, :string, :limit => 48
     add_column <%= table_name.inspect %>, :ship_address_id, :integer

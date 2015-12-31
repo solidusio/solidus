@@ -1,4 +1,4 @@
-module Spree
+module Solidus
   class Reimbursement < Solidus::Base
     class IncompleteReimbursementError < StandardError; end
 
@@ -32,7 +32,7 @@ module Spree
 
     # The reimbursement_models property should contain an array of all models that provide
     # reimbursements.
-    # This allows a store to incorporate custom reimbursement methods that Spree doesn't know about.
+    # This allows a store to incorporate custom reimbursement methods that Solidus doesn't know about.
     # Each model must implement a "total_amount_reimbursed_for" method.
     # Example:
     #   Refund.total_amount_reimbursed_for(reimbursement)

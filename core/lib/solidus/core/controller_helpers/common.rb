@@ -1,4 +1,4 @@
-module Spree
+module Solidus
   module Core
     module ControllerHelpers
       module Common
@@ -59,7 +59,7 @@ module Spree
 
           # Returns which layout to render.
           #
-          # You can set the layout you want to render inside your Spree configuration with the +:layout+ option.
+          # You can set the layout you want to render inside your Solidus configuration with the +:layout+ option.
           #
           # Default layout is: +app/views/solidus/layouts/solidus_application+
           #

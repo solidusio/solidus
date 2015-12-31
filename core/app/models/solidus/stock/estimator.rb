@@ -1,4 +1,4 @@
-module Spree
+module Solidus
   module Stock
     class Estimator
       attr_reader :order, :currency

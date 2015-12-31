@@ -18,7 +18,7 @@
 require "solidus/core/search/base"
 require "solidus/core/search/variant"
 
-module Spree
+module Solidus
   class AppConfiguration < Preferences::Configuration
     # Alphabetized to more easily lookup particular preferences
 

@@ -1,4 +1,4 @@
-module Spree
+module Solidus
   module Admin
     module NavigationHelper
       # Make an admin tab that coveres one or more resources supplied by symbols

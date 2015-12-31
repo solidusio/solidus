@@ -1,4 +1,4 @@
-module Spree
+module Solidus
   module Api
     class LineItemsController < Solidus::Api::BaseController
       class_attribute :line_item_options

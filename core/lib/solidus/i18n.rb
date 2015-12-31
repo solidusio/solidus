@@ -1,7 +1,7 @@
 require 'i18n'
 require 'active_support/core_ext/array/extract_options'
 
-module Spree
+module Solidus
   class TranslationHelperWrapper # :nodoc:
     include ActionView::Helpers::TranslationHelper
   end

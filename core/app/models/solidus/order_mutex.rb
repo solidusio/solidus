@@ -1,4 +1,4 @@
-module Spree
+module Solidus
   class OrderMutex < Solidus::Base
 
     class LockFailed < StandardError; end

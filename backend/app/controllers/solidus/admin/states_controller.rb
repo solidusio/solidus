@@ -1,4 +1,4 @@
-module Spree
+module Solidus
   module Admin
     class StatesController < ResourceController
       belongs_to 'solidus/country'

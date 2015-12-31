@@ -1,4 +1,4 @@
-module Spree
+module Solidus
   class StockMovement < Solidus::Base
     belongs_to :stock_item, class_name: 'Solidus::StockItem', inverse_of: :stock_movements
     belongs_to :originator, polymorphic: true

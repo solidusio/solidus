@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-module Spree
+module Solidus
   module Admin
     describe PaymentsController, :type => :controller do
       before do

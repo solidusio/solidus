@@ -81,7 +81,7 @@ handle_delete = (e, data) ->
           json_data:
             data: taxonomy,
             ajax:
-              headers: { "X-Spree-Token": Solidus.api_key }
+              headers: { "X-Solidus-Token": Solidus.api_key }
               url: (e) ->
                 "#{base_url}/#{e.prop('id')}/jstree"
           themes:

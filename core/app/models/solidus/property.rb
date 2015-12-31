@@ -1,4 +1,4 @@
-module Spree
+module Solidus
   class Property < Solidus::Base
     has_many :property_prototypes
     has_many :prototypes, through: :property_prototypes

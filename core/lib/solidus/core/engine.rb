@@ -1,7 +1,7 @@
-module Spree
+module Solidus
   module Core
     class Engine < ::Rails::Engine
-      isolate_namespace Spree
+      isolate_namespace Solidus
       engine_name 'solidus'
 
       rake_tasks do

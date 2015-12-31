@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-module Spree
+module Solidus
   describe Api::CheckoutsController, type: :controller do
     render_views
 
@@ -44,7 +44,7 @@ module Spree
       it "should transition a recently created order from cart to address with order token in header" do
         expect(order.state).to eq "cart"
         expect(order.email).not_to be_nil
-        request.headers["X-Spree-Order-Token"] = order.guest_token
+        request.headers["X-Solidus-Order-Token"] = order.guest_token
         api_put :update, :id => order.to_param
         expect(order.reload.state).to eq "address"
       end
@@ -260,7 +260,7 @@ module Spree
               payments_attributes: [
                 {
                   payment_method_id: @payment_method.id.to_s,
-                  source_attributes: {name: "Spree"},
+                  source_attributes: {name: "Solidus"},
                 },
               ],
             },
@@ -289,7 +289,7 @@ module Spree
                 ],
               },
               payment_source: {
-                @payment_method.id.to_s => {name: "Spree"},
+                @payment_method.id.to_s => {name: "Solidus"},
               },
             }
           end

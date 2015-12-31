@@ -1,4 +1,4 @@
-class CreateSpreeStockTransfers < ActiveRecord::Migration
+class CreateSolidusStockTransfers < ActiveRecord::Migration
   def change
     create_table :solidus_stock_transfers do |t|
       t.string :type

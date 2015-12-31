@@ -1,4 +1,4 @@
-module Spree
+module Solidus
   module Stock
     class Prioritizer
       attr_reader :packages, :inventory_units

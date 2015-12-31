@@ -1,4 +1,4 @@
-module Spree
+module Solidus
   module Api
     class StockItemsController < Solidus::Api::BaseController
       before_filter :load_stock_location, only: [:index, :show, :create]

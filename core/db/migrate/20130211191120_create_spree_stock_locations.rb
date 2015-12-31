@@ -1,4 +1,4 @@
-class CreateSpreeStockLocations < ActiveRecord::Migration
+class CreateSolidusStockLocations < ActiveRecord::Migration
   def change
     create_table :solidus_stock_locations do |t|
       t.string :name

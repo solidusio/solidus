@@ -1,4 +1,4 @@
-module Spree
+module Solidus
   class ReturnsCalculator < Calculator
 
     def compute(return_item)

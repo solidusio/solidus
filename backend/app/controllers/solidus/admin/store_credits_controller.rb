@@ -1,4 +1,4 @@
-module Spree
+module Solidus
   module Admin
     class StoreCreditsController < ResourceController
       belongs_to 'solidus/user', model_class: Solidus.user_class

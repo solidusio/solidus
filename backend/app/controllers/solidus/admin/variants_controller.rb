@@ -1,4 +1,4 @@
-module Spree
+module Solidus
   module Admin
     class VariantsController < ResourceController
       belongs_to 'solidus/product', :find_by => :slug

@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-module Spree
+module Solidus
   describe ReimbursementType::Exchange, :type => :model do
     describe '.reimburse' do
       let(:reimbursement) { create(:reimbursement, return_items_count: 1) }

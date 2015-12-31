@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-module Spree
+module Solidus
   describe Exchange, :type => :model do
     let(:order) { Solidus::Order.new }
 

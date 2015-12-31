@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-module Spree
+module Solidus
   RSpec.describe OrderUpdateAttributes do
     let(:order) { create(:order) }
     let(:request_env) { nil }

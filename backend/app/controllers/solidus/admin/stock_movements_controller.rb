@@ -1,4 +1,4 @@
-module Spree
+module Solidus
   module Admin
     class StockMovementsController < ResourceController
       belongs_to 'solidus/stock_location'

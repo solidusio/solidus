@@ -9,7 +9,7 @@
 # An added benefit to this approach is not having to associate existing variant
 # properties with newly created variants. If the variant has the option values
 # targeted by the rule, the properties will automatically apply to the variant.
-module Spree
+module Solidus
   class VariantPropertyRule < Solidus::Base
     belongs_to :product, touch: true
 

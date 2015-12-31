@@ -1,4 +1,4 @@
-module Spree
+module Solidus
   # @deprecated This calculator will be removed in future versions of Solidus.
   #   The only case where it was used was for Free Shipping Promotions.  There is
   #   now a Promotion Action which deals with these types of promotions instead.

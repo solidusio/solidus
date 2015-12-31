@@ -1,4 +1,4 @@
-module Spree
+module Solidus
   module PermissionSets
     # This is the base class used for crafting permission sets.
     #

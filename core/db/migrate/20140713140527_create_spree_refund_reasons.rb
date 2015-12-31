@@ -1,4 +1,4 @@
-class CreateSpreeRefundReasons < ActiveRecord::Migration
+class CreateSolidusRefundReasons < ActiveRecord::Migration
   def change
     create_table :solidus_refund_reasons do |t|
       t.string :name

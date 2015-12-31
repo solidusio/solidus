@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-module Spree
+module Solidus
   describe Solidus::OrdersHelper, :type => :helper do
     # Regression test for #2518 + #2323
     it "truncates HTML correctly in product description" do

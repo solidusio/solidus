@@ -1,4 +1,4 @@
-module Spree
+module Solidus
   module Core
     class Engine < ::Rails::Engine
       def self.add_routes(&block)

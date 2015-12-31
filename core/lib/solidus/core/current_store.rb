@@ -1,7 +1,7 @@
 # Default class for deciding what the current store is, given an HTTP request
 # This is an extension point used in Solidus::Core::ControllerHelpers::Store
 # Custom versions of this class must respond to a store instance method
-module Spree
+module Solidus
   module Core
     class CurrentStore
       def initialize(request)

@@ -1,4 +1,4 @@
-module Spree
+module Solidus
   class UserAddress < Solidus::Base
     belongs_to :user, class_name: UserClassHandle.new, foreign_key: "user_id"
     belongs_to :address, class_name: "Solidus::Address"

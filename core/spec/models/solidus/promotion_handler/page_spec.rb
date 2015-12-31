@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-module Spree
+module Solidus
   module PromotionHandler
     describe Page, :type => :model do
       let(:order) { create(:order_with_line_items, :line_items_count => 1) }

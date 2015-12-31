@@ -1,4 +1,4 @@
-module Spree
+module Solidus
   module Admin
     class StockTransfersController < ResourceController
       class_attribute :variant_display_attributes

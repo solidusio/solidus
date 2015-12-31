@@ -1,4 +1,4 @@
-module Spree
+module Solidus
   # Solidus::OrderPromotion represents the relationship between:
   #
   # 1. A promotion that a user attempted to apply to their order

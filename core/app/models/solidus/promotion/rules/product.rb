@@ -1,4 +1,4 @@
-module Spree
+module Solidus
   class Promotion
     module Rules
       # A rule to limit a promotion based on products in the order.  Can

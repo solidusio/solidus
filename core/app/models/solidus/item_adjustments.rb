@@ -1,4 +1,4 @@
-module Spree
+module Solidus
   # Manage (recalculate) item (LineItem or Shipment) adjustments
   class ItemAdjustments
     attr_reader :item

@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 # Regression tests for #2179
-module Spree
+module Solidus
   describe OrderMerger, type: :model do
     let(:variant) { create(:variant) }
     let(:order_1) { Solidus::Order.create }

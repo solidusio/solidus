@@ -1,6 +1,6 @@
 require 'singleton'
 
-module Spree
+module Solidus
   # A class responsible for associating {Solidus::Role} with a list of permission sets.
   #
   # @see Solidus::PermissionSets

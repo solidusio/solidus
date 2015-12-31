@@ -1,4 +1,4 @@
-module Spree
+module Solidus
   module Admin
     class TaxonomiesController < ResourceController
       respond_to :json, :only => [:get_children]

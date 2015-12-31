@@ -1,4 +1,4 @@
-module Spree
+module Solidus
   # Base class for all promotion rules
   class PromotionRule < Solidus::Base
     belongs_to :promotion, class_name: 'Solidus::Promotion', inverse_of: :promotion_rules

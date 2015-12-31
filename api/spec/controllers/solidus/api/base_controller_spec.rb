@@ -50,7 +50,7 @@ describe Solidus::Api::BaseController, :type => :controller do
     end
 
     it "with an invalid API key" do
-      request.headers["X-Spree-Token"] = "fake_key"
+      request.headers["X-Solidus-Token"] = "fake_key"
       get :index, {}
       expect(json_response).to eq({ "error" => "Invalid API key (fake_key) specified." })
       expect(response.status).to eq(401)

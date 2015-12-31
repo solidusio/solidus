@@ -1,4 +1,4 @@
-module Spree
+module Solidus
   module Api
     class CheckoutsController < Solidus::Api::BaseController
       before_filter :load_order, only: [:next, :advance, :update, :complete]

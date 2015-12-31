@@ -1,4 +1,4 @@
-module Spree
+module Solidus
   module Admin
     class SearchController < Solidus::Admin::BaseController
       # http://soliduscommerce.com/blog/2010/11/02/json-hijacking-vulnerability/

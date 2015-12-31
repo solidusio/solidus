@@ -1,4 +1,4 @@
-module Spree
+module Solidus
   module UserMethods
     extend ActiveSupport::Concern
 

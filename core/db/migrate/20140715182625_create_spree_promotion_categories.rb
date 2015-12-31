@@ -1,4 +1,4 @@
-class CreateSpreePromotionCategories < ActiveRecord::Migration
+class CreateSolidusPromotionCategories < ActiveRecord::Migration
   def change
     create_table :solidus_promotion_categories do |t|
       t.string :name

@@ -1,4 +1,4 @@
-module Spree
+module Solidus
   module Api
     class ReturnAuthorizationsController < Solidus::Api::BaseController
       before_filter :load_order

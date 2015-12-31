@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-module Spree
+module Solidus
   RSpec.describe Preferences::StaticallyConfigurable do
     let(:superklass) do
       # Same interface activerecord's serialization would provide

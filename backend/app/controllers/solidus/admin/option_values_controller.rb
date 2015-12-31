@@ -1,4 +1,4 @@
-module Spree
+module Solidus
   module Admin
     class OptionValuesController < Solidus::Admin::BaseController
       def destroy

@@ -1,4 +1,4 @@
-module Spree
+module Solidus
   class StateChange < Solidus::Base
     belongs_to :user
     belongs_to :stateful, polymorphic: true

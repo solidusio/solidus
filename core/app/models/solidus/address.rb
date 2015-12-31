@@ -1,4 +1,4 @@
-module Spree
+module Solidus
   class Address < Solidus::Base
     require 'twitter_cldr'
 

@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-module Spree
+module Solidus
   describe Api::ClassificationsController, type: :controller do
     let(:taxon) do
       taxon = create(:taxon)

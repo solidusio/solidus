@@ -1,4 +1,4 @@
-class RemoveSpreeConfigurations < ActiveRecord::Migration
+class RemoveSolidusConfigurations < ActiveRecord::Migration
   def up
     drop_table :solidus_configurations
   end

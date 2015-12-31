@@ -1,5 +1,5 @@
 #= require jsuri
-class window.Spree
+class window.Solidus
   @ready: (callback) ->
     jQuery(document).ready(callback)
 
@@ -41,7 +41,7 @@ class window.Spree
 
     options = options || {}
 
-    options = $.extend(options, { headers: { "X-Spree-Token": Solidus.api_key } })
+    options = $.extend(options, { headers: { "X-Solidus-Token": Solidus.api_key } })
     $.ajax(url, options)
 
   @routes:

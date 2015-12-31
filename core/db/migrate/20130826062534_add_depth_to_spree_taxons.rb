@@ -1,4 +1,4 @@
-class AddDepthToSpreeTaxons < ActiveRecord::Migration
+class AddDepthToSolidusTaxons < ActiveRecord::Migration
   def up
     if !Solidus::Taxon.column_names.include?('depth')
       add_column :solidus_taxons, :depth, :integer

@@ -1,4 +1,4 @@
-module Spree
+module Solidus
   class LocaleController < Solidus::StoreController
     def set
       if request.referer && request.referer.starts_with?('http://' + request.host)

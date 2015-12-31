@@ -1,4 +1,4 @@
-module Spree
+module Solidus
   # Products represent an entity for sale in a store. Products can have
   # variations, called variants. Product properties include description,
   # permalink, availability, shipping category, etc. that do not change by
@@ -185,7 +185,7 @@ module Spree
       where conditions.inject(:or)
     end
 
-    # @param current_currency [String] currency to filter variants by; defaults to Spree's default
+    # @param current_currency [String] currency to filter variants by; defaults to Solidus's default
     # @return [Array<Solidus::Variant>] all variants with at least one option value
     def variants_and_option_values(current_currency = nil)
       variants.includes(:option_values).active(current_currency).select do |variant|

@@ -1,7 +1,7 @@
 require 'solidus/core/validators/email'
 require 'solidus/order/checkout'
 
-module Spree
+module Solidus
   class Order < Solidus::Base
 
     ORDER_NUMBER_LENGTH  = 9

@@ -1,4 +1,4 @@
-module Spree
+module Solidus
   module Admin
     module StockTransfersHelper
       def handle_stock_transfer(stock_transfer)

@@ -1,4 +1,4 @@
-module Spree
+module Solidus
   class StockTransfer < Solidus::Base
     class InvalidTransferMovement < StandardError; end
 

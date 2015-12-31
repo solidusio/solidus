@@ -1,4 +1,4 @@
-module Spree
+module Solidus
   class ProductProperty < Solidus::Base
     include Solidus::OrderedPropertyValueList
 

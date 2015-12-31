@@ -1,4 +1,4 @@
-module Spree
+module Solidus
   class CartonMailer < BaseMailer
     # Send an email to customers to notify that an individual carton has been
     # shipped. If a carton contains items from multiple orders then this will be

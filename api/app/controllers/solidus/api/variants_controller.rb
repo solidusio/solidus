@@ -1,4 +1,4 @@
-module Spree
+module Solidus
   module Api
     class VariantsController < Solidus::Api::BaseController
       before_action :product

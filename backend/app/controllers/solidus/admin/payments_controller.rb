@@ -1,4 +1,4 @@
-module Spree
+module Solidus
   module Admin
     class PaymentsController < Solidus::Admin::BaseController
       before_filter :load_order, :only => [:create, :new, :index, :fire]

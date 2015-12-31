@@ -1,4 +1,4 @@
-module Spree
+module Solidus
   class State < Solidus::Base
     belongs_to :country, class_name: 'Solidus::Country'
     has_many :addresses, dependent: :nullify

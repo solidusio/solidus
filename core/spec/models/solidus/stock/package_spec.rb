@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-module Spree
+module Solidus
   module Stock
     describe Package, :type => :model do
       let(:variant) { build(:variant, weight: 25.0) }

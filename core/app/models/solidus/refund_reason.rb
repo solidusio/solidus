@@ -1,4 +1,4 @@
-module Spree
+module Solidus
   class RefundReason < Solidus::Base
     include Solidus::NamedType
 

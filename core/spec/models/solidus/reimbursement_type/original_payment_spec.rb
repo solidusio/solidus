@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-module Spree
+module Solidus
   describe ReimbursementType::OriginalPayment, :type => :model do
     let(:reimbursement)           { create(:reimbursement, return_items_count: 1) }
     let(:return_item)             { reimbursement.return_items.first }

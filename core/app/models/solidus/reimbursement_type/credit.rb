@@ -1,4 +1,4 @@
-module Spree
+module Solidus
   class ReimbursementType::Credit < Solidus::ReimbursementType
     extend Solidus::ReimbursementType::ReimbursementHelpers
 

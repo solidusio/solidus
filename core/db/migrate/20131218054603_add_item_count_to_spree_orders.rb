@@ -1,4 +1,4 @@
-class AddItemCountToSpreeOrders < ActiveRecord::Migration
+class AddItemCountToSolidusOrders < ActiveRecord::Migration
   def change
     add_column :solidus_orders, :item_count, :integer, :default => 0
   end

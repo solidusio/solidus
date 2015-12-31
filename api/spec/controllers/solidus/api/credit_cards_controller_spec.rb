@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-module Spree
+module Solidus
   describe Api::CreditCardsController, :type => :controller do
     describe '#index' do
       render_views

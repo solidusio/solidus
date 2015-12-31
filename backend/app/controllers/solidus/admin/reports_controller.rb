@@ -1,4 +1,4 @@
-module Spree
+module Solidus
   module Admin
     class ReportsController < Solidus::Admin::BaseController
       respond_to :html

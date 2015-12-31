@@ -1,4 +1,4 @@
-module Spree
+module Solidus
   module ReimbursementType::ReimbursementHelpers
     # Ordered list of payment methods that are valid for the reimbursement
     # type to use for reimbursing. Leaving this nil allows anything.

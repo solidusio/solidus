@@ -1,7 +1,7 @@
 require 'spec_helper'
 require 'solidus/testing_support/bar_ability'
 
-module Spree
+module Solidus
   describe Api::OrdersController, :type => :controller do
     render_views
     let!(:order) { create(:order) }
@@ -303,7 +303,7 @@ module Spree
     end
 
     it "can view an order if the token is passed in header" do
-      request.headers["X-Spree-Order-Token"] = order.guest_token
+      request.headers["X-Solidus-Order-Token"] = order.guest_token
       api_get :show, :id => order.to_param
       expect(response.status).to eq(200)
     end

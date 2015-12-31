@@ -1,4 +1,4 @@
-module Spree
+module Solidus
   class ReturnItem::EligibilityValidator::RMARequired < Solidus::ReturnItem::EligibilityValidator::BaseValidator
     def eligible_for_return?
       if @return_item.return_authorization.present?

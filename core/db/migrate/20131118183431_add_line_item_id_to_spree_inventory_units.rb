@@ -1,4 +1,4 @@
-class AddLineItemIdToSpreeInventoryUnits < ActiveRecord::Migration
+class AddLineItemIdToSolidusInventoryUnits < ActiveRecord::Migration
   def change
     # Stores running the product-assembly extension already have a line_item_id column
     unless column_exists? Solidus::InventoryUnit.table_name, :line_item_id

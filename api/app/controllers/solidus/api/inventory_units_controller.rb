@@ -1,4 +1,4 @@
-module Spree
+module Solidus
   module Api
     class InventoryUnitsController < Solidus::Api::BaseController
       before_action :prepare_event, only: :update

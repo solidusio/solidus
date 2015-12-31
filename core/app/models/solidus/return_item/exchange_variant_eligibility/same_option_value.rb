@@ -1,4 +1,4 @@
-module Spree
+module Solidus
   module ReturnItem::ExchangeVariantEligibility
     class SameOptionValue
       class_attribute :option_type_restrictions

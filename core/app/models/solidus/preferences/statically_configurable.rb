@@ -1,4 +1,4 @@
-module Spree
+module Solidus
   module Preferences
     module StaticallyConfigurable
       extend ActiveSupport::Concern

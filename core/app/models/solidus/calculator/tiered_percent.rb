@@ -1,6 +1,6 @@
 require_dependency 'solidus/calculator'
 
-module Spree
+module Solidus
   class Calculator::TieredPercent < Calculator
     preference :base_percent, :decimal, default: 0
     preference :tiers, :hash, default: {}

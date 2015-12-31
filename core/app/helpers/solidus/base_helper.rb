@@ -1,7 +1,7 @@
-module Spree
+module Solidus
   module BaseHelper
 
-    # Defined because Rails' current_page? helper is not working when Spree is mounted at root.
+    # Defined because Rails' current_page? helper is not working when Solidus is mounted at root.
     def current_solidus_page?(url)
       path = request.fullpath.gsub(/^\/\//, '/')
       if url.is_a?(String)
@@ -189,7 +189,7 @@ module Spree
 
     def define_image_method(style)
       self.class.send :define_method, "#{style}_image" do |product, *options|
-        ActiveSupport::Deprecation.warn "Spree image helpers will be deprecated in the near future. Use the provided resource to access the intendend image directly.", caller
+        ActiveSupport::Deprecation.warn "Solidus image helpers will be deprecated in the near future. Use the provided resource to access the intendend image directly.", caller
         options = options.first || {}
         if product.images.empty?
           if !product.is_a?(Solidus::Variant) && !product.variant_images.empty?

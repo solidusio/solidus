@@ -1,4 +1,4 @@
-module Spree
+module Solidus
   class Responder < ::ActionController::Responder #:nodoc:
 
     attr_accessor :on_success, :on_failure

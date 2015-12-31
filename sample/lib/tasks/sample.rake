@@ -17,7 +17,7 @@ Migrations have been run. Please run "rake solidus_sample:load" by itself now.
       exit(1)
     end
 
-    SpreeSample::Engine.load_samples
+    SolidusSample::Engine.load_samples
   end
 end
 

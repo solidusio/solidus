@@ -1,4 +1,4 @@
-module Spree
+module Solidus
   module Admin
     class TaxRatesController < ResourceController
       before_action :load_data

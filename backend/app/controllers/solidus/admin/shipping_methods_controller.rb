@@ -1,4 +1,4 @@
-module Spree
+module Solidus
   module Admin
     class ShippingMethodsController < ResourceController
       before_action :load_data, except: :index

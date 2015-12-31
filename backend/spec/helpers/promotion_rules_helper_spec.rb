@@ -1,5 +1,5 @@
 require 'spec_helper'
-module Spree
+module Solidus
  describe Solidus::PromotionRulesHelper, :type => :helper do
    it "does not include existing rules in options" do
      promotion = Solidus::Promotion.new

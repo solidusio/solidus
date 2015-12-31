@@ -1,4 +1,4 @@
-module Spree
+module Solidus
   class OrderUpdateAttributes
     # @param order [Order] existing (persisted) order
     # @param attributes [Hash] attributes which are assigned to the new order.

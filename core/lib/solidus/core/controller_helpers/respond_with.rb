@@ -18,7 +18,7 @@ module ActionController
   end
 end
 
-module Spree
+module Solidus
   module Core
     module ControllerHelpers
       module RespondWith

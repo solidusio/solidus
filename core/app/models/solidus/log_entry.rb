@@ -1,4 +1,4 @@
-module Spree
+module Solidus
   class LogEntry < Solidus::Base
     belongs_to :source, polymorphic: true
 

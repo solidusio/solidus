@@ -1,4 +1,4 @@
-module Spree
+module Solidus
   # Option types denote the different options for a variant. A typical option
   # type would be a size, with that option type’s values being something such
   # as "Small", "Medium" and "Large". Another typical option type could be a

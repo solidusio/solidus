@@ -1,4 +1,4 @@
-module Spree
+module Solidus
   module CheckoutHelper
     def checkout_states
       @order.checkout_steps

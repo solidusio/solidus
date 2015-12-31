@@ -1,4 +1,4 @@
-module Spree
+module Solidus
   class Refund < Solidus::Base
     belongs_to :payment, inverse_of: :refunds
     belongs_to :reason, class_name: 'Solidus::RefundReason', foreign_key: :refund_reason_id

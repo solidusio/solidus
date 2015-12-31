@@ -1,4 +1,4 @@
-module Spree
+module Solidus
   class ReturnItem::EligibilityValidator::Default < Solidus::ReturnItem::EligibilityValidator::BaseValidator
     class_attribute :permitted_eligibility_validators
     self.permitted_eligibility_validators = [

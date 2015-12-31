@@ -1,4 +1,4 @@
-module Spree
+module Solidus
   module TestingSupport
     module UrlHelpers
       def solidus

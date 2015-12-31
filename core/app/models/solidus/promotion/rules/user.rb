@@ -1,4 +1,4 @@
-module Spree
+module Solidus
   class Promotion
     module Rules
       class User < PromotionRule

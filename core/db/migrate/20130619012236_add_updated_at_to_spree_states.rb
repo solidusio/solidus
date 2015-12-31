@@ -1,4 +1,4 @@
-class AddUpdatedAtToSpreeStates < ActiveRecord::Migration
+class AddUpdatedAtToSolidusStates < ActiveRecord::Migration
   def up
     add_column :solidus_states, :updated_at, :datetime
   end

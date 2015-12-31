@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-module Spree
+module Solidus
   describe Admin::StockTransfersController, :type => :controller do
     stub_authorization!
 

@@ -1,4 +1,4 @@
-module Spree
+module Solidus
   module Api
     class PropertiesController < Solidus::Api::BaseController
 

@@ -1,4 +1,4 @@
-module Spree
+module Solidus
   class PromotionRuleUser < Solidus::Base
     self.table_name = 'solidus_promotion_rules_users'
 

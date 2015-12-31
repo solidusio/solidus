@@ -1,4 +1,4 @@
-module Spree
+module Solidus
   module Admin
     class ReturnReasonsController < ResourceController
     end

@@ -1,4 +1,4 @@
-class DropSpreeGateways < ActiveRecord::Migration
+class DropSolidusGateways < ActiveRecord::Migration
   def up
     drop_table :solidus_gateways
   end

@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-module Spree
+module Solidus
 
   describe DisplayMoney do
     let(:test_class) do

@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-module Spree
+module Solidus
   class Promotion
     module Actions
       describe CreateItemAdjustments, :type => :model do

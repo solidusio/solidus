@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-module Spree
+module Solidus
   describe Api::CountriesController, :type => :controller do
     render_views
 

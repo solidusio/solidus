@@ -1,4 +1,4 @@
-module Spree
+module Solidus
   module Core
     # THIS FILE SHOULD BE OVER-RIDDEN IN YOUR SITE EXTENSION!
     #   the exact code probably won't be useful, though you're welcome to modify and reuse

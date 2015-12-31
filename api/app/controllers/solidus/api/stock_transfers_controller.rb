@@ -1,4 +1,4 @@
-module Spree
+module Solidus
   module Api
     class StockTransfersController < Solidus::Api::BaseController
       def receive

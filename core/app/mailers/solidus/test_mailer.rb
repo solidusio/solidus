@@ -1,4 +1,4 @@
-module Spree
+module Solidus
   class TestMailer < BaseMailer
     def test_email(email)
       subject = "#{Solidus::Store.current.name} #{Solidus.t('test_mailer.test_email.subject')}"

@@ -1,4 +1,4 @@
-module Spree
+module Solidus
   class StockLocation < Solidus::Base
     class InvalidMovementError < StandardError; end
 

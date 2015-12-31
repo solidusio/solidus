@@ -1,4 +1,4 @@
-module Spree
+module Solidus
   class OptionValue < Solidus::Base
     belongs_to :option_type, class_name: 'Solidus::OptionType', inverse_of: :option_values
     acts_as_list scope: :option_type

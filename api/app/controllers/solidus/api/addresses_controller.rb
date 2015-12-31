@@ -1,4 +1,4 @@
-module Spree
+module Solidus
   module Api
     class AddressesController < Solidus::Api::BaseController
       before_action :find_order

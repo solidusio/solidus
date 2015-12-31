@@ -1,4 +1,4 @@
-module Spree
+module Solidus
   module Reimbursement::ReimbursementTypeValidator
     def valid_preferred_reimbursement_type?(return_item)
       preferred_type = return_item.preferred_reimbursement_type.class

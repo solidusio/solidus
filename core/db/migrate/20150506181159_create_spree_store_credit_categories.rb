@@ -1,4 +1,4 @@
-class CreateSpreeStoreCreditCategories < ActiveRecord::Migration
+class CreateSolidusStoreCreditCategories < ActiveRecord::Migration
   def change
     create_table :solidus_store_credit_categories do |t|
       t.string :name

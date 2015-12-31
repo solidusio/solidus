@@ -1,4 +1,4 @@
-module Spree
+module Solidus
   class ProductDuplicator
     attr_accessor :product
 

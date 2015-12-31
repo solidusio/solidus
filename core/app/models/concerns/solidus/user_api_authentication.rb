@@ -1,4 +1,4 @@
-module Spree
+module Solidus
   module UserApiAuthentication
     def generate_solidus_api_key!
       generate_solidus_api_key

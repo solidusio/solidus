@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-module Spree
+module Solidus
   module Calculator::Shipping
     describe FlatPercentItemTotal, :type => :model do
       let(:variant1) { build(:variant, :price => 10.11) }

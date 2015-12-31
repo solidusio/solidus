@@ -1,4 +1,4 @@
-module Spree
+module Solidus
   class Order < Solidus::Base
     module Checkout
       def self.included(klass)

@@ -1,4 +1,4 @@
-module Spree
+module Solidus
   module Backend
     module Callbacks
       extend ActiveSupport::Concern

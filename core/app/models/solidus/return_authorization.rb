@@ -1,4 +1,4 @@
-module Spree
+module Solidus
   class ReturnAuthorization < Solidus::Base
     belongs_to :order, class_name: 'Solidus::Order', inverse_of: :return_authorizations
 

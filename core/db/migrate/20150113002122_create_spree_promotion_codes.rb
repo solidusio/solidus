@@ -1,4 +1,4 @@
-class CreateSpreePromotionCodes < ActiveRecord::Migration
+class CreateSolidusPromotionCodes < ActiveRecord::Migration
   def change
     create_table :solidus_promotion_codes do |t|
       t.references :promotion, index: true, null: false

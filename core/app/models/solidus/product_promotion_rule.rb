@@ -1,4 +1,4 @@
-module Spree
+module Solidus
   class ProductPromotionRule < Solidus::Base
     belongs_to :product
     belongs_to :promotion_rule

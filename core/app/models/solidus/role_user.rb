@@ -1,4 +1,4 @@
-module Spree
+module Solidus
   class RoleUser < Solidus::Base
     self.table_name = "solidus_roles_users"
     belongs_to :role, class_name: "Solidus::Role"

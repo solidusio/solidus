@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-module Spree
+module Solidus
   module Stock
     module Splitter
       describe ShippingCategory, :type => :model do

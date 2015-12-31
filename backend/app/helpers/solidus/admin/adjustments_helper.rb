@@ -1,4 +1,4 @@
-module Spree
+module Solidus
   module Admin
     module AdjustmentsHelper
       def adjustment_state(adjustment)

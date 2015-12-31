@@ -1,4 +1,4 @@
-module Spree
+module Solidus
   module DisplayMoney
     ##
     # Takes a list of methods that the base object wants to be able to use

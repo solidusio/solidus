@@ -1,4 +1,4 @@
-module Spree
+module Solidus
   class Price < Solidus::Base
     acts_as_paranoid
     belongs_to :variant, -> { with_deleted }, class_name: 'Solidus::Variant', inverse_of: :prices, touch: true

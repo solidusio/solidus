@@ -1,4 +1,4 @@
-module Spree
+module Solidus
   class DefaultTaxZoneValidator < ActiveModel::Validator
     def validate(record)
       if record.included_in_price
@@ -8,7 +8,7 @@ module Spree
   end
 end
 
-module Spree
+module Solidus
   class TaxRate < Solidus::Base
     acts_as_paranoid
 
@@ -44,7 +44,7 @@ module Spree
       # When you ship to Spain, you want the Spanish rate to apply.
       # When you ship to France, you want the French rate to apply.
       #
-      # Normally, Spree would notice that you have two potentially applicable
+      # Normally, Solidus would notice that you have two potentially applicable
       # tax rates for one particular item.
       # When you ship to Spain, only the Spanish one will apply.
       # When you ship to France, you'll see a Spanish refund AND a French tax.

@@ -1,4 +1,4 @@
-module Spree
+module Solidus
   class Taxonomy < Solidus::Base
     acts_as_list
 

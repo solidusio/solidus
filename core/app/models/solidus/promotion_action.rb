@@ -1,4 +1,4 @@
-module Spree
+module Solidus
   # Base class for all types of promotion action.
   #
   # PromotionActions perform the necessary tasks when a promotion is activated

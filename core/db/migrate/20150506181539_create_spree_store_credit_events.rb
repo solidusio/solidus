@@ -1,4 +1,4 @@
-class CreateSpreeStoreCreditEvents < ActiveRecord::Migration
+class CreateSolidusStoreCreditEvents < ActiveRecord::Migration
   def change
     create_table :solidus_store_credit_events do |t|
       t.integer :store_credit_id,    null: false

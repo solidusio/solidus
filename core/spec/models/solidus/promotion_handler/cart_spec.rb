@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-module Spree
+module Solidus
   module PromotionHandler
     describe Cart, :type => :model do
       let(:line_item) { create(:line_item) }

@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-module Spree
+module Solidus
   describe Api::OptionValuesController, :type => :controller do
     render_views
 

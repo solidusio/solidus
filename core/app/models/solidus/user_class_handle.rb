@@ -1,4 +1,4 @@
-module Spree
+module Solidus
   # Placeholder for name of Solidus.user_class to ensure later evaluation at
   # runtime.
   #
