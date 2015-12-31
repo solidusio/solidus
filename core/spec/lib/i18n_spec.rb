@@ -1,6 +1,6 @@
 require 'rspec/expectations'
-require 'spree/i18n'
-require 'spree/testing_support/i18n'
+require 'solidus/i18n'
+require 'solidus/testing_support/i18n'
 
 describe "i18n" do
   before do

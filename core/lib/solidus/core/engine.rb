@@ -122,4 +122,4 @@ module Spree
   end
 end
 
-require 'spree/core/routes'
+require 'solidus/core/routes'

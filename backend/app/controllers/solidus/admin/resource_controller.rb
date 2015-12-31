@@ -90,7 +90,7 @@ class Solidus::Admin::ResourceController < Solidus::Admin::BaseController
       flash[:success] = flash_message_for(@object, :successfully_removed)
       respond_with(@object) do |format|
         format.html { redirect_to location_after_destroy }
-        format.js   { render :partial => "spree/admin/shared/destroy" }
+        format.js   { render :partial => "solidus/admin/shared/destroy" }
       end
     else
       invoke_callbacks(:destroy, :fails)
@@ -123,7 +123,7 @@ class Solidus::Admin::ResourceController < Solidus::Admin::BaseController
     end
 
     def model_name
-      parent_data[:model_name].gsub('spree/', '')
+      parent_data[:model_name].gsub('solidus/', '')
     end
 
     def object_name

@@ -4,13 +4,13 @@
 
     <div class="columns alpha four" data-hook="order-bill-address">
       <h6><%= Spree.t(:billing_address) %> <%= link_to "(#{Spree.t(:edit)})", checkout_state_path(:address) unless order.completed? %></h6>
-      <%= render :partial => 'spree/shared/address', :locals => { :address => order.bill_address } %>
+      <%= render :partial => 'solidus/shared/address', :locals => { :address => order.bill_address } %>
     </div>
 
     <% if order.has_step?("delivery") %>
       <div class="columns alpha four" data-hook="order-ship-address">
         <h6><%= Spree.t(:shipping_address) %> <%= link_to "(#{Spree.t(:edit)})", checkout_state_path(:address) unless order.completed? %></h6>
-        <%= render :partial => 'spree/shared/address', :locals => { :address => order.ship_address } %>
+        <%= render :partial => 'solidus/shared/address', :locals => { :address => order.ship_address } %>
       </div>
 
       <div class="columns alpha four" data-hook="order-shipment">
@@ -23,7 +23,7 @@
             </div>
           <% end %>
         </div>
-        <%= render(:partial => 'spree/shared/shipment_tracking', :locals => {:order => order}) if order.shipped? %>
+        <%= render(:partial => 'solidus/shared/shipment_tracking', :locals => {:order => order}) if order.shipped? %>
       </div>
     <% end %>
   <% end %>

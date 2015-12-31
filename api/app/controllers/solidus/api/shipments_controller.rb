@@ -16,7 +16,7 @@ module Spree
             .includes(mine_includes)
             .ransack(params[:q]).result.page(params[:page]).per(params[:per_page])
         else
-          render "spree/api/errors/unauthorized", status: :unauthorized
+          render "solidus/api/errors/unauthorized", status: :unauthorized
         end
       end
 
@@ -48,7 +48,7 @@ module Spree
             @shipment.ready!
           else
             logger.error("cannot_ready_shipment shipment_state=#{@shipment.state}")
-            render 'spree/api/shipments/cannot_ready_shipment', status: 422 and return
+            render 'solidus/api/shipments/cannot_ready_shipment', status: 422 and return
           end
         end
         respond_with(@shipment, default_template: :show)

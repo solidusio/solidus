@@ -3,7 +3,7 @@ class Solidus::Api::StoreCreditEventsController < Solidus::Api::BaseController
     if current_api_user
       @store_credit_events = current_api_user.store_credit_events.exposed_events.page(params[:page]).per(params[:per_page]).reverse_chronological
     else
-      render "spree/api/errors/unauthorized", status: :unauthorized
+      render "solidus/api/errors/unauthorized", status: :unauthorized
     end
   end
 end

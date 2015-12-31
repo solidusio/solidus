@@ -15,11 +15,11 @@ module Spree
       # sets the manifests / assets to be precompiled, even when initialize_on_precompile is false
       initializer "spree.assets.precompile", :group => :all do |app|
         app.config.assets.precompile += %w[
-          spree/backend/all*
-          spree/backend/orders/edit_form.js
-          spree/backend/address_states.js
+          solidus/backend/all*
+          solidus/backend/orders/edit_form.js
+          solidus/backend/address_states.js
           jqPlot/excanvas.min.js
-          spree/backend/images/new.js
+          solidus/backend/images/new.js
           jquery.jstree/themes/apple/*
           fontawesome-webfont*
           select2_locale*

@@ -1,4 +1,4 @@
-<%= render :partial => 'spree/admin/shared/configuration_menu' %>
+<%= render :partial => 'solidus/admin/shared/configuration_menu' %>
 
 <% content_for :page_title do %>
   <%= Spree.t(:stock_locations) %>
@@ -72,7 +72,7 @@
   </table>
 <% else %>
   <div class="alpha twelve columns no-objects-found">
-    <%= Spree.t(:no_resource_found, resource: I18n.t(:other, scope: 'activerecord.models.spree/stock_location')) %>
+    <%= Spree.t(:no_resource_found, resource: I18n.t(:other, scope: 'activerecord.models.solidus/stock_location')) %>
     <% if can?(:create, Solidus::StockLocation) %>
       <%= link_to Spree.t(:add_one), spree.new_admin_stock_location_path %>!
     <% end %>

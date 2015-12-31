@@ -7,11 +7,11 @@
   <li><%= link_to_with_icon 'arrow-left', back_button_text, collection_url, :class => 'button' %></li>
 <% end %>
 
-<%= render :partial => 'spree/shared/error_messages', :locals => { :target => @object } %>
+<%= render :partial => 'solidus/shared/error_messages', :locals => { :target => @object } %>
 
 <%= form_for [:admin, @object] do |f| %>
   <fieldset class="no-border-top">
-    <%= render :partial => 'spree/admin/shared/named_types/form', :locals => { :f => f } %>
-    <%= render :partial => 'spree/admin/shared/edit_resource_links' %>
+    <%= render :partial => 'solidus/admin/shared/named_types/form', :locals => { :f => f } %>
+    <%= render :partial => 'solidus/admin/shared/edit_resource_links' %>
   </fieldset>
 <% end %>

@@ -1,4 +1,4 @@
-require 'spree/api/responders/rabl_template'
+require 'solidus/api/responders/rabl_template'
 
 module Spree
   module Api

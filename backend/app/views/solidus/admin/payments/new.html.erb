@@ -1,4 +1,4 @@
-<%= render :partial => 'spree/admin/shared/order_tabs', :locals => { :current => 'Payments' } %>
+<%= render :partial => 'solidus/admin/shared/order_tabs', :locals => { :current => 'Payments' } %>
 
 <% content_for :page_title do %>
   <i class="fa fa-arrow-right"></i> <%= Spree.t(:new_payment) %>
@@ -9,7 +9,7 @@
 <% end %>
 
 <% if @payment_methods.any? %>
-  <%= render :partial => 'spree/shared/error_messages', :locals => { :target => @payment } %>
+  <%= render :partial => 'solidus/shared/error_messages', :locals => { :target => @payment } %>
 
   <%= form_for @payment, :url => admin_order_payments_path(@order) do |f| %>
     <fieldset class="no-border-top">

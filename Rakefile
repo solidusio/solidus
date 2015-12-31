@@ -1,9 +1,9 @@
 require 'rake'
 require 'thor/group'
 begin
-  require 'spree/testing_support/common_rake'
+  require 'solidus/testing_support/common_rake'
 rescue LoadError
-  raise "Could not find spree/testing_support/common_rake. You need to run this command using Bundler."
+  raise "Could not find solidus/testing_support/common_rake. You need to run this command using Bundler."
   exit
 end
 
@@ -42,7 +42,7 @@ end
 
 namespace :gem do
   def version
-    require 'spree/core/version'
+    require 'solidus/core/version'
     Spree.solidus_version
   end
 

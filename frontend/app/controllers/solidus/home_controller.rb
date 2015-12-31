@@ -1,6 +1,6 @@
 module Spree
   class HomeController < Solidus::StoreController
-    helper 'spree/products'
+    helper 'solidus/products'
     respond_to :html
 
     def index

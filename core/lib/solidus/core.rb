@@ -46,7 +46,7 @@ module Spree
   end
 
   module Core
-    autoload :ProductFilters, "spree/core/product_filters"
+    autoload :ProductFilters, "solidus/core/product_filters"
 
     def self.const_missing(name)
       case name
@@ -63,37 +63,37 @@ module Spree
   end
 end
 
-require 'spree/core/version'
+require 'solidus/core/version'
 
-require 'spree/core/environment_extension'
-require 'spree/core/environment/calculators'
-require 'spree/core/environment'
-require 'spree/promo/environment'
-require 'spree/migrations'
-require 'spree/core/engine'
+require 'solidus/core/environment_extension'
+require 'solidus/core/environment/calculators'
+require 'solidus/core/environment'
+require 'solidus/promo/environment'
+require 'solidus/migrations'
+require 'solidus/core/engine'
 
-require 'spree/i18n'
-require 'spree/localized_number'
-require 'spree/money'
-require 'spree/permitted_attributes'
+require 'solidus/i18n'
+require 'solidus/localized_number'
+require 'solidus/money'
+require 'solidus/permitted_attributes'
 
-require 'spree/core/delegate_belongs_to'
-require 'spree/core/importer'
-require 'spree/core/permalinks'
-require 'spree/core/product_duplicator'
-require 'spree/core/current_store'
-require 'spree/core/controller_helpers/auth'
-require 'spree/core/controller_helpers/common'
-require 'spree/core/controller_helpers/order'
-require 'spree/core/controller_helpers/payment_parameters'
-require 'spree/core/controller_helpers/respond_with'
-require 'spree/core/controller_helpers/search'
-require 'spree/core/controller_helpers/store'
-require 'spree/core/controller_helpers/strong_parameters'
-require 'spree/core/unreturned_item_charger'
-require 'spree/core/role_configuration'
-require 'spree/permission_sets'
-require 'spree/deprecation'
+require 'solidus/core/delegate_belongs_to'
+require 'solidus/core/importer'
+require 'solidus/core/permalinks'
+require 'solidus/core/product_duplicator'
+require 'solidus/core/current_store'
+require 'solidus/core/controller_helpers/auth'
+require 'solidus/core/controller_helpers/common'
+require 'solidus/core/controller_helpers/order'
+require 'solidus/core/controller_helpers/payment_parameters'
+require 'solidus/core/controller_helpers/respond_with'
+require 'solidus/core/controller_helpers/search'
+require 'solidus/core/controller_helpers/store'
+require 'solidus/core/controller_helpers/strong_parameters'
+require 'solidus/core/unreturned_item_charger'
+require 'solidus/core/role_configuration'
+require 'solidus/permission_sets'
+require 'solidus/deprecation'
 
-require 'spree/mailer_previews/order_preview'
-require 'spree/mailer_previews/carton_preview'
+require 'solidus/mailer_previews/order_preview'
+require 'solidus/mailer_previews/carton_preview'

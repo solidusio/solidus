@@ -1,4 +1,4 @@
-require 'spree/testing_support/common_rake'
+require 'solidus/testing_support/common_rake'
 
 desc "Generates a dummy app for testing an extension"
 namespace :extension do

@@ -1,11 +1,11 @@
 require 'rake'
 require 'rake/testtask'
 require 'rspec/core/rake_task'
-require 'spree/testing_support/common_rake'
+require 'solidus/testing_support/common_rake'
 
 desc "Generates a dummy app for testing"
 task :test_app do
-  ENV['LIB_NAME'] = 'spree/sample'
+  ENV['LIB_NAME'] = 'solidus/sample'
   Rake::Task['common:test_app'].invoke
   Rake::Task['common:seed'].invoke
 end

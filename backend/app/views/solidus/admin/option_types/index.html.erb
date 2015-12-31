@@ -48,7 +48,7 @@
 </table>
 <% else %>
   <div class="alpha twelve columns no-objects-found">
-    <%= Spree.t(:no_resource_found, resource: I18n.t(:other, scope: 'activerecord.models.spree/option_type')) %>
+    <%= Spree.t(:no_resource_found, resource: I18n.t(:other, scope: 'activerecord.models.solidus/option_type')) %>
     <% if can?(:create, Solidus::OptionType) %>
       <%= link_to Spree.t(:add_one), spree.new_admin_option_type_path %>!
     <% end %>

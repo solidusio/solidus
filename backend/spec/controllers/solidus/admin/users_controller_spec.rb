@@ -1,5 +1,5 @@
 require 'spec_helper'
-require 'spree/testing_support/bar_ability'
+require 'solidus/testing_support/bar_ability'
 
 describe Solidus::Admin::UsersController, :type => :controller do
   let(:user) { create(:user) }

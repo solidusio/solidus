@@ -6,7 +6,7 @@ module Spree
     # Inside your spec_helper.rb, include this module inside the
     # RSpec.configure block by doing this:
     #
-    #   require 'spree/testing_support/controller_requests'
+    #   require 'solidus/testing_support/controller_requests'
     #   RSpec.configure do |c|
     #     c.include Solidus::TestingSupport::ControllerRequests, :type => :controller
     #   end

@@ -7,6 +7,6 @@ node(:pages) { @taxons.num_pages }
 child @taxons => :taxons do
   attributes *taxon_attributes
   unless params[:without_children]
-    extends "spree/api/taxons/taxons"
+    extends "solidus/api/taxons/taxons"
   end
 end

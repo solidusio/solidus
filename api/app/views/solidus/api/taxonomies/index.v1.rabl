@@ -1,6 +1,6 @@
 object false
 child(@taxonomies => :taxonomies) do
-  extends "spree/api/taxonomies/show"
+  extends "solidus/api/taxonomies/show"
 end
 node(:count) { @taxonomies.count }
 node(:current_page) { params[:page] || 1 }

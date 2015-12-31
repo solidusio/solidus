@@ -1,3 +1,3 @@
 collection @option_types
 
-extends "spree/api/option_types/show"
+extends "solidus/api/option_types/show"

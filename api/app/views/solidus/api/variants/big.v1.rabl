@@ -3,7 +3,7 @@ attributes *variant_attributes
 
 cache [I18n.locale, Solidus::StockLocation.accessible_by(current_ability).pluck(:id).sort.join(":"), 'big_variant', root_object]
 
-extends "spree/api/variants/small"
+extends "solidus/api/variants/small"
 
 node :total_on_hand do
   root_object.total_on_hand

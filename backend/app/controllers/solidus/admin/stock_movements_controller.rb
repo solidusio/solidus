@@ -1,7 +1,7 @@
 module Spree
   module Admin
     class StockMovementsController < ResourceController
-      belongs_to 'spree/stock_location'
+      belongs_to 'solidus/stock_location'
       before_action :parent
 
       private

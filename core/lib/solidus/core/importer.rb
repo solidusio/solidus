@@ -5,5 +5,5 @@ module Spree
   end
 end
 
-require 'spree/core/importer/order'
-require 'spree/core/importer/product'
+require 'solidus/core/importer/order'
+require 'solidus/core/importer/product'

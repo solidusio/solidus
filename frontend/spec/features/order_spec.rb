@@ -23,7 +23,7 @@ describe 'orders', :type => :feature do
 
     visit spree.order_path(order)
 
-    # Tests view spree/shared/_order_details
+    # Tests view solidus/shared/_order_details
     within 'td.price' do
       expect(page).to have_content "19.00"
     end

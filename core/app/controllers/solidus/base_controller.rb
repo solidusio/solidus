@@ -1,5 +1,5 @@
 require 'cancan'
-require_dependency 'spree/core/controller_helpers/strong_parameters'
+require_dependency 'solidus/core/controller_helpers/strong_parameters'
 
 class Solidus::BaseController < ApplicationController
   include Solidus::Core::ControllerHelpers::Auth

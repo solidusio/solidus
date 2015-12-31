@@ -1,5 +1,5 @@
 # -*- encoding: utf-8 -*-
-require_relative '../core/lib/spree/core/version.rb'
+require_relative '../core/lib/solidus/core/version.rb'
 
 Gem::Specification.new do |gem|
   gem.author        = 'Solidus Team'

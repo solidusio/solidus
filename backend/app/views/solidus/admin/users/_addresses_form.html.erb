@@ -3,7 +3,7 @@
     <legend align="center"><%= Spree.t(:billing_address) %></legend>
     <%= f.fields_for :bill_address, @user.bill_address do |ba_form| %>
       <% ba_form.object ||= Solidus::Address.build_default %>
-      <%= render :partial => 'spree/admin/shared/address_form', :locals => { :f => ba_form, :type => "billing" } %>
+      <%= render :partial => 'solidus/admin/shared/address_form', :locals => { :f => ba_form, :type => "billing" } %>
     <% end %>
   </fieldset>
 </div>
@@ -13,7 +13,7 @@
     <legend align="center"><%= Spree.t(:shipping_address) %></legend>
     <%= f.fields_for :ship_address, @user.ship_address do |sa_form| %>
       <% sa_form.object ||= Solidus::Address.build_default  %>
-      <%= render :partial => 'spree/admin/shared/address_form', :locals => { :f => sa_form, :type => "shipping" } %>
+      <%= render :partial => 'solidus/admin/shared/address_form', :locals => { :f => sa_form, :type => "shipping" } %>
     <% end %>
   </fieldset>
 </div>

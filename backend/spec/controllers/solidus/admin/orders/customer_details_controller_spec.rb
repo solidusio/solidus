@@ -1,6 +1,6 @@
 require "spec_helper"
 require "cancan"
-require "spree/testing_support/bar_ability"
+require "solidus/testing_support/bar_ability"
 
 describe Solidus::Admin::Orders::CustomerDetailsController, type: :controller do
 

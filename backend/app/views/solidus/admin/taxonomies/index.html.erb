@@ -1,4 +1,4 @@
-<%= render 'spree/admin/shared/configuration_menu' %>
+<%= render 'solidus/admin/shared/configuration_menu' %>
 
 <% content_for :page_title do %>
   <%= Spree.t(:taxonomies) %>
@@ -18,7 +18,7 @@
 </div>
 <% else %>
   <div class="alpha twelve columns no-objects-found">
-    <%= Spree.t(:no_resource_found, resource: I18n.t(:other, scope: 'activerecord.models.spree/taxonomy')) %>
+    <%= Spree.t(:no_resource_found, resource: I18n.t(:other, scope: 'activerecord.models.solidus/taxonomy')) %>
     <% if can?(:create, Solidus::Taxonomy) %>
       <%= link_to Spree.t(:add_one), spree.new_admin_taxonomy_path %>!
     <% end %>

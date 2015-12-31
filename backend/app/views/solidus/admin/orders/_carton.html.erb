@@ -27,7 +27,7 @@
     </thead>
 
     <tbody data-hook="carton-details" data-shipment-number="<%= carton.number %>" data-order-number="<%= order.number %>">
-      <%= render 'spree/admin/orders/carton_manifest', carton: carton, order: order %>
+      <%= render 'solidus/admin/orders/carton_manifest', carton: carton, order: order %>
 
       <tr class="show-method total">
         <% if method = carton.shipping_method %>

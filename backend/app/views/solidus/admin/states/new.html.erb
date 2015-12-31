@@ -1,6 +1,6 @@
-<%= render :partial => 'spree/admin/shared/configuration_menu' %>
+<%= render :partial => 'solidus/admin/shared/configuration_menu' %>
 
-<%= render :partial => 'spree/shared/error_messages', :locals => { :target => @state } %>
+<%= render :partial => 'solidus/shared/error_messages', :locals => { :target => @state } %>
 
 <% content_for :page_title do %>
   <%= Spree.t(:new_state) %>
@@ -10,6 +10,6 @@
   <fieldset>
     <legend><%= Spree.t(:new_state) %></legend>
     <%= render :partial => 'form', :locals => { :f => f } %>
-    <%= render :partial => 'spree/admin/shared/new_resource_links' %>
+    <%= render :partial => 'solidus/admin/shared/new_resource_links' %>
   </fieldset>
 <% end %>

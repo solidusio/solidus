@@ -12,7 +12,7 @@ describe Solidus::ShippingMethod, :type => :model do
         Solidus::Calculator::Shipping::FlatPercentItemTotal,
         Solidus::Calculator::Shipping::PriceSack,
         Solidus::Calculator::DefaultTax,
-        DummyShippingCalculator # included as regression test for https://github.com/spree/spree/issues/3109
+        DummyShippingCalculator # included as regression test for https://github.com/solidus/solidus/issues/3109
       ])
 
       expect(Solidus::ShippingMethod.calculators).to eq([Solidus::Calculator::Shipping::FlatPercentItemTotal, Solidus::Calculator::Shipping::PriceSack, DummyShippingCalculator ])

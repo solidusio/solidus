@@ -9,7 +9,7 @@
 <% end %>
 
 <div data-hook="admin_user_new_form_header">
-  <%= render :partial => 'spree/shared/error_messages', :locals => { :target => @user } %>
+  <%= render :partial => 'solidus/shared/error_messages', :locals => { :target => @user } %>
 </div>
 
 <div data-hook="admin_user_new_form">
@@ -17,7 +17,7 @@
     <%= render :partial => 'form', :locals => { :f => f } %>
 
     <div data-hook="admin_user_new_form_buttons">
-      <%= render :partial => 'spree/admin/shared/new_resource_links' %>
+      <%= render :partial => 'solidus/admin/shared/new_resource_links' %>
     </div>
   <% end %>
 </div>

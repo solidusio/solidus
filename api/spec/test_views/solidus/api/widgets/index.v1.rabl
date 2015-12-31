@@ -1,6 +1,6 @@
 object false
 child(@collection => :widgets) do
-  extends "spree/api/widgets/show"
+  extends "solidus/api/widgets/show"
 end
 node(:count) { @collection.count }
 node(:current_page) { params[:page] || 1 }

@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 # This test tests the functionality within
-# spree/core/controller_helpers/respond_with.rb
+# solidus/core/controller_helpers/respond_with.rb
 # Rather than duck-punching the existing controllers, let's define a custom one:
 class Solidus::CustomController < Solidus::BaseController
   def index
@@ -26,8 +26,8 @@ describe Solidus::CustomController, :type => :controller do
   before do
     @routes = ActionDispatch::Routing::RouteSet.new.tap do |r|
       r.draw {
-        get 'index', to: 'spree/custom#index'
-        post 'create', to: 'spree/custom#create'
+        get 'index', to: 'solidus/custom#index'
+        post 'create', to: 'solidus/custom#create'
       }
     end
   end

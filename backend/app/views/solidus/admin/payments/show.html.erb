@@ -1,8 +1,8 @@
-<%= render :partial => 'spree/admin/shared/order_tabs', :locals => { :current => 'Payments' } %>
+<%= render :partial => 'solidus/admin/shared/order_tabs', :locals => { :current => 'Payments' } %>
 
 <% content_for :page_title do %>
   <i class="fa fa-arrow-right"></i>
-  <%= I18n.t(:one, scope: "activerecord.models.spree/payment") %>
+  <%= I18n.t(:one, scope: "activerecord.models.solidus/payment") %>
   <i class="fa fa-arrow-right"></i>
   <%= payment_method_name(@payment) %>
   &nbsp;
@@ -16,10 +16,10 @@
   <li><%= button_link_to Spree.t(:back_to_payments_list), spree.admin_order_payments_url(@order), :icon => 'arrow-left' %></li>
 <% end %>
 
-<%= render :partial => "spree/admin/payments/source_views/#{@payment.payment_method.method_type}", :locals => { :payment => @payment.source.is_a?(Solidus::Payment) ? @payment.source : @payment } %>
+<%= render :partial => "solidus/admin/payments/source_views/#{@payment.payment_method.method_type}", :locals => { :payment => @payment.source.is_a?(Solidus::Payment) ? @payment.source : @payment } %>
 
 <div data-hook="amount" class="align-center">
   <h5><%= label_tag nil, Spree.t(:amount) %>: <span class="green"><%= @payment.display_amount.to_html %></span> </h5>
 </div>
 
-<%= render 'spree/admin/payments/capture_events' %>
+<%= render 'solidus/admin/payments/capture_events' %>

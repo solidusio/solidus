@@ -1,5 +1,5 @@
 require 'spec_helper'
-require 'spree/core/product_filters'
+require 'solidus/core/product_filters'
 
 describe 'product filters', :type => :model do
   # Regression test for #1709

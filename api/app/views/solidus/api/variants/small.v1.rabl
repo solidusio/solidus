@@ -14,4 +14,4 @@ child :option_values => :option_values do
   attributes *option_value_attributes
 end
 
-child(:images => :images) { extends "spree/api/images/show" }
+child(:images => :images) { extends "solidus/api/images/show" }

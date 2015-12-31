@@ -1,4 +1,4 @@
-<%= render 'spree/admin/shared/configuration_menu' %>
+<%= render 'solidus/admin/shared/configuration_menu' %>
 
 <% content_for :page_title do %>
   <%= Spree.t(:analytics_trackers) %>
@@ -47,7 +47,7 @@
   </table>
 <% else %>
   <div class="no-objects-found">
-    <%= Spree.t(:no_resource_found, resource: I18n.t(:other, scope: 'activerecord.models.spree/tracker')) %>
+    <%= Spree.t(:no_resource_found, resource: I18n.t(:other, scope: 'activerecord.models.solidus/tracker')) %>
     <% if can?(:create, Solidus::Tracker) %>
       <%= link_to Spree.t(:add_one), new_object_url %>!
     <% end %>

@@ -1,4 +1,4 @@
-<%= render :partial => 'spree/admin/shared/configuration_menu' %>
+<%= render :partial => 'solidus/admin/shared/configuration_menu' %>
 
 <% content_for :page_title do %>
   <%= Spree.t(:editing_payment_method) %> <i class="fa fa-arrow-right"></i> <%= @payment_method.name %>
@@ -10,7 +10,7 @@
   </li>  
 <% end %>
 
-<%= render :partial => 'spree/shared/error_messages', :locals => { :target => @payment_method } %>
+<%= render :partial => 'solidus/shared/error_messages', :locals => { :target => @payment_method } %>
 
 <%= form_for @payment_method, :url => admin_payment_method_path(@payment_method) do |f| %>
   <fieldset class="no-border-top">

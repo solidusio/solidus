@@ -66,7 +66,7 @@ module Spree
         taxon = Solidus::Taxon.find(params[:id])
         @products = taxon.products.ransack(params[:q]).result
         @products = @products.page(params[:page]).per(params[:per_page] || 500)
-        render "spree/api/products/index"
+        render "solidus/api/products/index"
       end
 
       private

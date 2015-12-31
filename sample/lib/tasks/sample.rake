@@ -1,6 +1,6 @@
 require 'ffaker'
 require 'pathname'
-require 'spree/sample'
+require 'solidus/sample'
 
 namespace :spree_sample do
   desc 'Loads sample data'

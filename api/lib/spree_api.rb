@@ -1,3 +1,3 @@
-require 'spree/api'
-require 'spree/api/responders'
+require 'solidus/api'
+require 'solidus/api/responders'
 require 'versioncake'

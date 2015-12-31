@@ -92,7 +92,7 @@
   </table>
 <% else %>
   <div class="alpha twelve columns no-objects-found">
-    <%= Spree.t(:no_resource_found, resource: I18n.t(:other, scope: 'activerecord.models.spree/product')) %>,
+    <%= Spree.t(:no_resource_found, resource: I18n.t(:other, scope: 'activerecord.models.solidus/product')) %>,
     <%= link_to Spree.t(:add_one), spree.new_admin_product_path %>!
   </div>
 <% end %>

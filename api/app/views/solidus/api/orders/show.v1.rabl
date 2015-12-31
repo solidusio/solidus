@@ -1,20 +1,20 @@
 object @order
-extends "spree/api/orders/order"
+extends "solidus/api/orders/order"
 
 child :available_payment_methods => :payment_methods do
   attributes :id, :name, :method_type
 end
 
 child :billing_address => :bill_address do
-  extends "spree/api/addresses/show"
+  extends "solidus/api/addresses/show"
 end
 
 child :shipping_address => :ship_address do
-  extends "spree/api/addresses/show"
+  extends "solidus/api/addresses/show"
 end
 
 child :line_items => :line_items do
-  extends "spree/api/line_items/show"
+  extends "solidus/api/line_items/show"
 end
 
 child :payments => :payments do
@@ -35,11 +35,11 @@ child :payments => :payments do
 end
 
 child :shipments => :shipments do
-  extends "spree/api/shipments/small"
+  extends "solidus/api/shipments/small"
 end
 
 child :adjustments => :adjustments do
-  extends "spree/api/adjustments/show"
+  extends "solidus/api/adjustments/show"
 end
 
 # Necessary for backend's order interface
@@ -48,5 +48,5 @@ node :permissions do
 end
 
 child :valid_credit_cards => :credit_cards do
-  extends "spree/api/credit_cards/show"
+  extends "solidus/api/credit_cards/show"
 end

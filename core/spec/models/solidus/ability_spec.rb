@@ -1,7 +1,7 @@
 require 'spec_helper'
 require 'cancan/matchers'
-require 'spree/testing_support/ability_helpers'
-require 'spree/testing_support/bar_ability'
+require 'solidus/testing_support/ability_helpers'
+require 'solidus/testing_support/bar_ability'
 
 # Fake ability for testing registration of additional abilities
 class FooAbility

@@ -6,7 +6,7 @@ module Spree
 
       create.before :build_promotion_codes
 
-      helper 'spree/promotion_rules'
+      helper 'solidus/promotion_rules'
 
       def create
         @promotion_builder = Solidus::PromotionBuilder.new(

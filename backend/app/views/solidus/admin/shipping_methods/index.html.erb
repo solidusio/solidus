@@ -1,4 +1,4 @@
-<%= render 'spree/admin/shared/configuration_menu' %>
+<%= render 'solidus/admin/shared/configuration_menu' %>
 
 <% content_for :page_title do %>
   <%= Spree.t(:shipping_methods) %>
@@ -52,7 +52,7 @@
   </table>
 <% else %>
   <div class="alpha twelve columns no-objects-found">
-    <%= Spree.t(:no_resource_found, resource: I18n.t(:other, scope: 'activerecord.models.spree/shipping_method')) %>
+    <%= Spree.t(:no_resource_found, resource: I18n.t(:other, scope: 'activerecord.models.solidus/shipping_method')) %>
     <% if can?(:create, Solidus::ShippingMethod) %>
       <%= link_to Spree.t(:add_one), spree.new_admin_shipping_method_path %>!
     <% end %>

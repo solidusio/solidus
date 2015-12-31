@@ -1,4 +1,4 @@
-<%= render partial: 'spree/admin/shared/configuration_menu' %>
+<%= render partial: 'solidus/admin/shared/configuration_menu' %>
 
 <% content_for :page_title do %>
   <%= Spree.t(:refund_reasons) %>
@@ -48,7 +48,7 @@
   </table>
 <% else %>
   <div class="alpha twelve columns no-objects-found">
-    <%= Spree.t(:no_resource_found, resource: I18n.t(:other, scope: 'activerecord.models.spree/refund_reason')) %>
+    <%= Spree.t(:no_resource_found, resource: I18n.t(:other, scope: 'activerecord.models.solidus/refund_reason')) %>
     <% if can?(:create, Solidus::RefundReason) %>
       <%= link_to Spree.t(:add_one), new_object_url %>!
     <% end %>

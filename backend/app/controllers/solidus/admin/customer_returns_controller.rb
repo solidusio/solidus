@@ -1,7 +1,7 @@
 module Spree
   module Admin
     class CustomerReturnsController < ResourceController
-      belongs_to 'spree/order', find_by: :number
+      belongs_to 'solidus/order', find_by: :number
 
       before_action :parent # ensure order gets loaded to support our pseudo parent-child relationship
       before_action :load_form_data, only: [:new, :edit]

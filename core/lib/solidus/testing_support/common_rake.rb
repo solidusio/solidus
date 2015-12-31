@@ -1,8 +1,8 @@
 unless defined?(Solidus::InstallGenerator)
-  require 'generators/spree/install/install_generator'
+  require 'generators/solidus/install/install_generator'
 end
 
-require 'generators/spree/dummy/dummy_generator'
+require 'generators/solidus/dummy/dummy_generator'
 
 desc "Generates a dummy app for testing"
 namespace :common do

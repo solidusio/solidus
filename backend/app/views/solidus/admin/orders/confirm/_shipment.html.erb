@@ -19,7 +19,7 @@
     </thead>
 
     <tbody data-shipment-number="<%= shipment.number %>" data-order-number="<%= order.number %>">
-      <%= render 'spree/admin/orders/confirm/shipment_manifest', shipment: shipment %>
+      <%= render 'solidus/admin/orders/confirm/shipment_manifest', shipment: shipment %>
 
       <tr class="show-method total">
         <% if rate = shipment.selected_shipping_rate %>

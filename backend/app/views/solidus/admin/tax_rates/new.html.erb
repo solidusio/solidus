@@ -1,4 +1,4 @@
-<%= render :partial => 'spree/admin/shared/configuration_menu' %>
+<%= render :partial => 'solidus/admin/shared/configuration_menu' %>
 
 <% content_for :page_title do %>
   <%= Spree.t(:new_tax_rate) %>
@@ -10,7 +10,7 @@
   </li>
 <% end %>
 
-<%= render :partial => 'spree/shared/error_messages', :locals => { :target => @tax_rate } %>
+<%= render :partial => 'solidus/shared/error_messages', :locals => { :target => @tax_rate } %>
 
 <%= form_for [:admin, @tax_rate] do |f| %>
   <fieldset class="no-border-top">
@@ -19,7 +19,7 @@
 
     <div class="clear"></div>
 
-    <%= render :partial => 'spree/admin/shared/new_resource_links' %>
+    <%= render :partial => 'solidus/admin/shared/new_resource_links' %>
 
   </fieldset>
 <% end %>

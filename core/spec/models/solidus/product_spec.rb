@@ -488,7 +488,7 @@ describe Solidus::Product, :type => :model do
     end
   end
 
-  # Regression spec for https://github.com/spree/spree/issues/5588
+  # Regression spec for https://github.com/solidus/solidus/issues/5588
   context '#validate_master when duplicate SKUs entered' do
     let!(:first_product) { create(:product, sku: 'a-sku') }
     let(:second_product) { build(:product, sku: 'a-sku') }

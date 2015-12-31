@@ -2,7 +2,7 @@ module Spree
   class OrdersController < Solidus::StoreController
     before_action :check_authorization
     rescue_from ActiveRecord::RecordNotFound, :with => :render_404
-    helper 'spree/products', 'spree/orders'
+    helper 'solidus/products', 'solidus/orders'
 
     respond_to :html
 

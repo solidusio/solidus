@@ -1,4 +1,4 @@
-<%= render :partial => 'spree/admin/shared/order_tabs', :locals => { :current => 'Customer Returns' } %>
+<%= render :partial => 'solidus/admin/shared/order_tabs', :locals => { :current => 'Customer Returns' } %>
 
 <% content_for :page_actions do %>
   <% if can? :create, Solidus::CustomerReturn %>
@@ -48,7 +48,7 @@
   </table>
 <% else %>
   <div class="alpha twelve columns no-objects-found">
-    <%= Spree.t(:no_resource_found, resource: I18n.t(:other, scope: 'activerecord.models.spree/customer_return')) %>
+    <%= Spree.t(:no_resource_found, resource: I18n.t(:other, scope: 'activerecord.models.solidus/customer_return')) %>
     <% if can? :create, Solidus::CustomerReturn %>
       <%= link_to Spree.t(:add_one), spree.new_admin_order_customer_return_path(@order) %>!
     <% end %>

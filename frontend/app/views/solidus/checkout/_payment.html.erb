@@ -50,7 +50,7 @@
       <% @order.available_payment_methods.each do |method| %>
         <li id="payment_method_<%= method.id %>" class="<%= 'last' if method == @order.available_payment_methods.last %>" data-hook>
           <fieldset>
-            <%= render :partial => "spree/checkout/payment/#{method.method_type}", :locals => { :payment_method => method } %>
+            <%= render :partial => "solidus/checkout/payment/#{method.method_type}", :locals => { :payment_method => method } %>
           </fieldset>
         </li>
       <% end %>

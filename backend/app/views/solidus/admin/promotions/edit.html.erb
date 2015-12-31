@@ -15,7 +15,7 @@
   <fieldset class="no-border-top">
     <%= render :partial => 'form', :locals => { :f => f } %>
     <% if can?(:update, @promotion) %>
-      <%= render :partial => 'spree/admin/shared/edit_resource_links' %>
+      <%= render :partial => 'solidus/admin/shared/edit_resource_links' %>
     <% end %>
   </fieldset>
 <% end %>

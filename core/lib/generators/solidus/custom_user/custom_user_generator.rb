@@ -23,13 +23,13 @@ module Spree
 
     def generate
       migration_template 'migration.rb.tt', "db/migrate/add_spree_fields_to_custom_user_table.rb"
-      template 'authentication_helpers.rb.tt', "lib/spree/authentication_helpers.rb"
+      template 'authentication_helpers.rb.tt', "lib/solidus/authentication_helpers.rb"
 
       file_action = File.exist?('config/initializers/spree.rb') ? :append_file : :create_file
       send(file_action, 'config/initializers/spree.rb') do
         %Q{
           Rails.application.config.to_prepare do
-            require_dependency 'spree/authentication_helpers'
+            require_dependency 'solidus/authentication_helpers'
           end\n}
       end
     end

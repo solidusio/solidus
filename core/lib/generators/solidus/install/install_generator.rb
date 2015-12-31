@@ -55,18 +55,18 @@ Disallow: /password
     def setup_assets
       @lib_name = 'spree'
       %w{javascripts stylesheets images}.each do |path|
-        empty_directory "vendor/assets/#{path}/spree/frontend" if defined? Solidus::Frontend || Rails.env.test?
-        empty_directory "vendor/assets/#{path}/spree/backend" if defined? Solidus::Backend || Rails.env.test?
+        empty_directory "vendor/assets/#{path}/solidus/frontend" if defined? Solidus::Frontend || Rails.env.test?
+        empty_directory "vendor/assets/#{path}/solidus/backend" if defined? Solidus::Backend || Rails.env.test?
       end
 
       if defined? Solidus::Frontend || Rails.env.test?
-        template "vendor/assets/javascripts/spree/frontend/all.js"
-        template "vendor/assets/stylesheets/spree/frontend/all.css"
+        template "vendor/assets/javascripts/solidus/frontend/all.js"
+        template "vendor/assets/stylesheets/solidus/frontend/all.css"
       end
 
       if defined? Solidus::Backend || Rails.env.test?
-        template "vendor/assets/javascripts/spree/backend/all.js"
-        template "vendor/assets/stylesheets/spree/backend/all.css"
+        template "vendor/assets/javascripts/solidus/backend/all.js"
+        template "vendor/assets/stylesheets/solidus/backend/all.css"
       end
     end
 

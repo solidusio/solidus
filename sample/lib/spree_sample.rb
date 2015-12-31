@@ -1,5 +1,5 @@
 require 'spree_core'
-require 'spree/sample'
+require 'solidus/sample'
 
 module SpreeSample
   class Engine < Rails::Engine

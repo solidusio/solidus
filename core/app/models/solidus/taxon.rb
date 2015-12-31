@@ -25,8 +25,8 @@ module Spree
     has_attached_file :icon,
       styles: { mini: '32x32>', normal: '128x128>' },
       default_style: :mini,
-      url: '/spree/taxons/:id/:style/:basename.:extension',
-      path: ':rails_root/public/spree/taxons/:id/:style/:basename.:extension',
+      url: '/solidus/taxons/:id/:style/:basename.:extension',
+      path: ':rails_root/public/solidus/taxons/:id/:style/:basename.:extension',
       default_url: '/assets/default_taxon.png'
 
     validates_attachment :icon,
@@ -84,7 +84,7 @@ module Spree
       ancestor_chain + "#{name}"
     end
 
-    # @see https://github.com/spree/spree/issues/3390
+    # @see https://github.com/solidus/solidus/issues/3390
     def child_index=(idx)
       # awesome_nested_set sorts by :lft and :rgt. This call re-inserts the
       # child node so that its resulting position matches the observable

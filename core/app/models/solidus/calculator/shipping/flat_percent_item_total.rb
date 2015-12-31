@@ -1,4 +1,4 @@
-require_dependency 'spree/shipping_calculator'
+require_dependency 'solidus/shipping_calculator'
 
 module Spree
   module Calculator::Shipping

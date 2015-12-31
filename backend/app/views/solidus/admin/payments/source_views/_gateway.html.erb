@@ -17,7 +17,7 @@
         <dd><%= payment.source.month %>/<%= payment.source.year %></dd>
       </dl>
       <% if payment.source.address %>
-        <%= render partial: 'spree/admin/shared/address', locals: {address: payment.source.address} %>
+        <%= render partial: 'solidus/admin/shared/address', locals: {address: payment.source.address} %>
       <% end %>
     </div>
   </div>

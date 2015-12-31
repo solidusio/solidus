@@ -1,4 +1,4 @@
-require_dependency 'spree/calculator'
+require_dependency 'solidus/calculator'
 
 module Spree
   class Calculator::TieredPercent < Calculator

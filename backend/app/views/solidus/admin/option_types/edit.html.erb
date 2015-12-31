@@ -13,7 +13,7 @@
   </li>
 <% end %>
 
-<%= render :partial => 'spree/shared/error_messages', :locals => { :target => @option_type } %>
+<%= render :partial => 'solidus/shared/error_messages', :locals => { :target => @option_type } %>
 
 <%= form_for [:admin, @option_type] do |f| %>
   <fieldset>
@@ -36,6 +36,6 @@
       </tbody>
     </table>
 
-    <%= render :partial => 'spree/admin/shared/edit_resource_links' %>
+    <%= render :partial => 'solidus/admin/shared/edit_resource_links' %>
   </fieldset>
 <% end %>

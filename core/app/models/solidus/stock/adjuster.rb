@@ -2,7 +2,7 @@ module Spree
   module Stock
     # Used by Prioritizer to adjust item quantities.
     #
-    # See spec/models/spree/stock/prioritizer_spec.rb for use cases.
+    # See spec/models/solidus/stock/prioritizer_spec.rb for use cases.
     class Adjuster
       attr_accessor :inventory_unit, :status, :fulfilled
 

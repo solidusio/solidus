@@ -76,14 +76,14 @@ describe Solidus::OrderMailer, :type => :mailer do
   context "displays unit costs from line item" do
     # Regression test for #2772
 
-    # Tests mailer view spree/order_mailer/confirm_email.text.erb
+    # Tests mailer view solidus/order_mailer/confirm_email.text.erb
     specify do
       confirmation_email = Solidus::OrderMailer.confirm_email(order)
       expect(confirmation_email).to have_body_text("4.99")
       expect(confirmation_email).to_not have_body_text("5.00")
     end
 
-    # Tests mailer view spree/order_mailer/cancel_email.text.erb
+    # Tests mailer view solidus/order_mailer/cancel_email.text.erb
     specify do
       cancel_email = Solidus::OrderMailer.cancel_email(order)
       expect(cancel_email).to have_body_text("4.99")

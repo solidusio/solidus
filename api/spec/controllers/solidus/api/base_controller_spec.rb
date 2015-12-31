@@ -15,7 +15,7 @@ describe Solidus::Api::BaseController, :type => :controller do
 
   before do
     @routes = ActionDispatch::Routing::RouteSet.new.tap do |r|
-      r.draw { get 'index', to: 'spree/api/base#index' }
+      r.draw { get 'index', to: 'solidus/api/base#index' }
     end
   end
 

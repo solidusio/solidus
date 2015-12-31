@@ -1,5 +1,5 @@
 require 'spec_helper'
-require 'spree/testing_support/order_walkthrough'
+require 'solidus/testing_support/order_walkthrough'
 
 describe Solidus::Order, :type => :model do
   let(:order) { Solidus::Order.new }

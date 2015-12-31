@@ -1,9 +1,9 @@
 module Spree
   module Admin
     class BaseController < Solidus::BaseController
-      helper 'spree/admin/navigation'
-      helper 'spree/admin/tables'
-      layout '/spree/layouts/admin'
+      helper 'solidus/admin/navigation'
+      helper 'solidus/admin/tables'
+      layout '/solidus/layouts/admin'
 
       before_action :authorize_admin
 
@@ -38,7 +38,7 @@ module Spree
         end
 
         def render_js_for_destroy
-          render :partial => '/spree/admin/shared/destroy'
+          render :partial => '/solidus/admin/shared/destroy'
         end
 
         # Index request for JSON needs to pass a CSRF token in order to prevent JSON Hijacking

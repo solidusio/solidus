@@ -1,6 +1,6 @@
 require "rails/generators/rails/app/app_generator"
 require 'active_support/core_ext/hash'
-require 'spree/core/version'
+require 'solidus/core/version'
 
 module Spree
   class DummyGenerator < Rails::Generators::Base
@@ -123,7 +123,7 @@ end
     end
 
     def gemfile_path
-      core_gems = ["spree/core", "spree/api", "spree/backend", "spree/frontend"]
+      core_gems = ["solidus/core", "solidus/api", "solidus/backend", "solidus/frontend"]
 
       if core_gems.include?(lib_name)
         '../../../../../Gemfile'

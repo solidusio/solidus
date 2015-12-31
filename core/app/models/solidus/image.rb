@@ -6,8 +6,8 @@ module Spree
                       styles: { mini: '48x48>', small: '100x100>', product: '240x240>', large: '600x600>' },
                       default_style: :product,
                       default_url: 'noimage/:style.png',
-                      url: '/spree/products/:id/:style/:basename.:extension',
-                      path: ':rails_root/public/spree/products/:id/:style/:basename.:extension',
+                      url: '/solidus/products/:id/:style/:basename.:extension',
+                      path: ':rails_root/public/solidus/products/:id/:style/:basename.:extension',
                       convert_options: { all: '-strip -auto-orient -colorspace sRGB' }
     validates_attachment :attachment,
       :presence => true,

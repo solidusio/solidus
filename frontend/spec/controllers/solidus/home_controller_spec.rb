@@ -12,7 +12,7 @@ describe Solidus::HomeController, :type => :controller do
   context "layout" do
     it "renders default layout" do
       spree_get :index
-      expect(response).to render_template(layout: 'spree/layouts/spree_application')
+      expect(response).to render_template(layout: 'solidus/layouts/spree_application')
     end
 
     context "different layout specified in config" do

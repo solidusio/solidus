@@ -15,8 +15,8 @@
 # a.get :color
 # a.preferred_color
 #
-require "spree/core/search/base"
-require "spree/core/search/variant"
+require "solidus/core/search/base"
+require "solidus/core/search/variant"
 
 module Spree
   class AppConfiguration < Preferences::Configuration
@@ -142,8 +142,8 @@ module Spree
     preference :generate_api_key_for_all_roles, :boolean, default: false
 
     # @!attribute [rw] layout
-    #   @return [String] template to use for layout on the frontend (default: +"spree/layouts/spree_application"+)
-    preference :layout, :string, default: 'spree/layouts/spree_application'
+    #   @return [String] template to use for layout on the frontend (default: +"solidus/layouts/spree_application"+)
+    preference :layout, :string, default: 'solidus/layouts/spree_application'
 
     # @!attribute [rw] logo
     #   @return [String] URL of logo used on frontend (default: +'logo/solidus_logo.png'+)
@@ -324,7 +324,7 @@ module Spree
     DEPRECATED_STORE_PREFERENCES.each do |old_preference_name, store_method|
       # Avoid warning about implementation details
       bc = ActiveSupport::BacktraceCleaner.new
-      bc.add_silencer { |line| line =~ %r{spree/preferences} }
+      bc.add_silencer { |line| line =~ %r{solidus/preferences} }
 
       # support all the old preference methods with a warning
       define_method "preferred_#{old_preference_name}" do

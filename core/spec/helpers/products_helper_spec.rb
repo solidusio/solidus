@@ -190,7 +190,7 @@ THIS IS THE BEST PRODUCT EVER!
           allow(@products).to receive(:maximum).with(:updated_at) { updated_at }
         end
 
-        it { is_expected.to eq('en/USD/spree/products/all-10-20111213-5') }
+        it { is_expected.to eq('en/USD/solidus/products/all-10-20111213-5') }
       end
 
       context 'when there is no considered maximum updated date' do
@@ -201,7 +201,7 @@ THIS IS THE BEST PRODUCT EVER!
           allow(Date).to receive(:today) { today }
         end
 
-        it { is_expected.to eq('en/USD/spree/products/all-10-20131211-1234567') }
+        it { is_expected.to eq('en/USD/solidus/products/all-10-20131211-1234567') }
       end
     end
   end

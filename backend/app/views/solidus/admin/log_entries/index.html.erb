@@ -1,8 +1,8 @@
-<%= render :partial => 'spree/admin/shared/order_tabs', locals: { current: 'Payments' }%>
+<%= render :partial => 'solidus/admin/shared/order_tabs', locals: { current: 'Payments' }%>
 
 <% content_for :page_title do %>
   <i class="fa fa-arrow-right"></i>
-  <%= I18n.t(:one, scope: "activerecord.models.spree/payment") %>
+  <%= I18n.t(:one, scope: "activerecord.models.solidus/payment") %>
   <i class="fa fa-arrow-right"></i>
   <%= Spree.t(:log_entries) %>
 <% end %>

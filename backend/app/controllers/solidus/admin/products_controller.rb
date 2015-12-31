@@ -1,7 +1,7 @@
 module Spree
   module Admin
     class ProductsController < ResourceController
-      helper 'spree/products'
+      helper 'solidus/products'
 
       before_filter :load_data, :except => [:index]
       create.before :create_before

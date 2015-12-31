@@ -49,7 +49,7 @@
           </div>
         <% end %>
 
-        <%= render :partial => 'spree/admin/shared/address_form', :locals => { :f => sa_form, :type => 'shipping' } %>
+        <%= render :partial => 'solidus/admin/shared/address_form', :locals => { :f => sa_form, :type => 'shipping' } %>
       <% end %>
     </fieldset>
   </div>
@@ -59,7 +59,7 @@
       <fieldset class="no-border-bottom">
         <legend align="center"><%= Spree.t(:billing_address) %></legend>
         <%= f.fields_for :bill_address do |ba_form| %>
-          <%= render :partial => 'spree/admin/shared/address_form', :locals => { :f => ba_form, :type => "billing" } %>
+          <%= render :partial => 'solidus/admin/shared/address_form', :locals => { :f => ba_form, :type => "billing" } %>
         <% end %>
       </fieldset>
     </div>
@@ -72,6 +72,6 @@
   </div>
 
   <% content_for :head do %>
-    <%= javascript_include_tag 'spree/backend/address_states.js' %>
+    <%= javascript_include_tag 'solidus/backend/address_states.js' %>
   <% end %>
 </fieldset>

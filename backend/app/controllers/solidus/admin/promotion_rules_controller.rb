@@ -1,5 +1,5 @@
 class Solidus::Admin::PromotionRulesController < Solidus::Admin::BaseController
-  helper 'spree/promotion_rules'
+  helper 'solidus/promotion_rules'
 
   before_action :load_promotion, only: [:create, :destroy]
   before_action :validate_promotion_rule_type, only: :create

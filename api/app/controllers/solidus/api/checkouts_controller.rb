@@ -23,34 +23,34 @@ module Spree
 
         authorize! :update, @order, order_token
         if !expected_total_ok?(params[:expected_total])
-          respond_with(@order, default_template: 'spree/api/orders/expected_total_mismatch', status: 400)
+          respond_with(@order, default_template: 'solidus/api/orders/expected_total_mismatch', status: 400)
           return
         end
         authorize! :update, @order, order_token
         @order.next!
-        respond_with(@order, default_template: 'spree/api/orders/show', status: 200)
+        respond_with(@order, default_template: 'solidus/api/orders/show', status: 200)
       rescue StateMachines::InvalidTransition => e
         logger.error("invalid_transition #{e.event} from #{e.from} for #{e.object.class.name}. Error: #{e.inspect}")
-        respond_with(@order, default_template: 'spree/api/orders/could_not_transition', status: 422)
+        respond_with(@order, default_template: 'solidus/api/orders/could_not_transition', status: 422)
       end
 
       def advance
         authorize! :update, @order, order_token
         @order.contents.advance
-        respond_with(@order, default_template: 'spree/api/orders/show', status: 200)
+        respond_with(@order, default_template: 'solidus/api/orders/show', status: 200)
       end
 
       def complete
         authorize! :update, @order, order_token
         if !expected_total_ok?(params[:expected_total])
-          respond_with(@order, default_template: 'spree/api/orders/expected_total_mismatch', status: 400)
+          respond_with(@order, default_template: 'solidus/api/orders/expected_total_mismatch', status: 400)
         else
           @order.complete!
-          respond_with(@order, default_template: 'spree/api/orders/show', status: 200)
+          respond_with(@order, default_template: 'solidus/api/orders/show', status: 200)
         end
       rescue StateMachines::InvalidTransition => e
         logger.error("invalid_transition #{e.event} from #{e.from} for #{e.object.class.name}. Error: #{e.inspect}")
-        respond_with(@order, default_template: 'spree/api/orders/could_not_transition', status: 422)
+        respond_with(@order, default_template: 'solidus/api/orders/could_not_transition', status: 422)
       end
 
       def update
@@ -65,10 +65,10 @@ module Spree
 
           if @order.completed? || @order.next
             state_callback(:after)
-            respond_with(@order, default_template: 'spree/api/orders/show')
+            respond_with(@order, default_template: 'solidus/api/orders/show')
           else
             logger.error("failed_to_transition_errors=#{@order.errors.full_messages}")
-            respond_with(@order, default_template: 'spree/api/orders/could_not_transition', status: 422)
+            respond_with(@order, default_template: 'solidus/api/orders/could_not_transition', status: 422)
           end
         else
           invalid_resource!(@order)
@@ -133,7 +133,7 @@ module Spree
 
             if handler.error.present?
               @coupon_message = handler.error
-              respond_with(@order, default_template: 'spree/api/orders/could_not_apply_coupon')
+              respond_with(@order, default_template: 'solidus/api/orders/could_not_apply_coupon')
               return true
             end
           end

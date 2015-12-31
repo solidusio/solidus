@@ -8,7 +8,7 @@
     <fieldset class="no-border-bottom">
       <legend align="center"><%= Spree.t(:billing_address) %></legend>
       <% if order.bill_address %>
-        <%= render partial: 'spree/admin/shared/address', locals: {address: order.bill_address} %>
+        <%= render partial: 'solidus/admin/shared/address', locals: {address: order.bill_address} %>
       <% end %>
     </fieldset>
   </div>
@@ -17,7 +17,7 @@
     <fieldset class="no-border-bottom">
       <legend align="center"><%= Spree.t(:shipping_address) %></legend>
       <% if order.ship_address %>
-        <%= render partial: 'spree/admin/shared/address', locals: {address: order.ship_address} %>
+        <%= render partial: 'solidus/admin/shared/address', locals: {address: order.ship_address} %>
       <% end %>
     </fieldset>
   </div>

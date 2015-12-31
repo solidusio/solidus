@@ -28,12 +28,12 @@ require 'ffaker'
 # in spec/support/ and its subdirectories.
 Dir[File.dirname(__FILE__) + "/support/**/*.rb"].each {|f| require f}
 
-require 'spree/testing_support/factories'
-require 'spree/testing_support/preferences'
+require 'solidus/testing_support/factories'
+require 'solidus/testing_support/preferences'
 
-require 'spree/api/testing_support/caching'
-require 'spree/api/testing_support/helpers'
-require 'spree/api/testing_support/setup'
+require 'solidus/api/testing_support/caching'
+require 'solidus/api/testing_support/helpers'
+require 'solidus/api/testing_support/setup'
 
 RSpec.configure do |config|
   config.backtrace_exclusion_patterns = [/gems\/activesupport/, /gems\/actionpack/, /gems\/rspec/]

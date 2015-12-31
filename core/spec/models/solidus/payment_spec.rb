@@ -98,7 +98,7 @@ describe Solidus::Payment, :type => :model do
     end
   end
 
-  # Regression test for https://github.com/spree/spree/pull/2224
+  # Regression test for https://github.com/solidus/solidus/pull/2224
   context 'failure' do
     it 'should transition to failed from pending state' do
       payment.state = 'pending'

@@ -1,6 +1,6 @@
 object false
 child(@stock_items => :stock_items) do
-  extends 'spree/api/stock_items/show'
+  extends 'solidus/api/stock_items/show'
 end
 node(:count) { @stock_items.count }
 node(:current_page) { params[:page] || 1 }

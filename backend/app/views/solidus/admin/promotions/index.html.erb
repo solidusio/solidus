@@ -104,7 +104,7 @@
   </table>
 <% else %>
   <div class="alpha twelve columns no-objects-found">
-    <%= Spree.t(:no_resource_found, resource: I18n.t(:other, scope: 'activerecord.models.spree/promotion')) %>
+    <%= Spree.t(:no_resource_found, resource: I18n.t(:other, scope: 'activerecord.models.solidus/promotion')) %>
     <% if can? :create, Solidus::Promotion %>
       <%= link_to Spree.t(:add_one), spree.new_admin_promotion_path %>!
     <% end %>

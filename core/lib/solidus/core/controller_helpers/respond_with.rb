@@ -1,4 +1,4 @@
-require 'spree/responder'
+require 'solidus/responder'
 
 module ActionController
   class Base

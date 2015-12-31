@@ -41,7 +41,7 @@ module Spree
 
         # lazy loading other models here (via includes) may result in an invalid query
         # e.g. SELECT  DISTINCT DISTINCT "spree_orders".id, "spree_orders"."created_at" AS alias_0 FROM "spree_orders"
-        # see https://github.com/spree/spree/pull/3919
+        # see https://github.com/solidus/solidus/pull/3919
         @orders = if query_present
           @search.result(distinct: true)
         else
@@ -112,7 +112,7 @@ module Spree
         if @order.completed?
           redirect_to edit_admin_order_url(@order)
         elsif !@order.confirm?
-          render template: 'spree/admin/orders/confirm_advance'
+          render template: 'solidus/admin/orders/confirm_advance'
         end
       end
 

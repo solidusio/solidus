@@ -1,5 +1,5 @@
 require 'spec_helper'
-require 'spree/testing_support/bar_ability'
+require 'solidus/testing_support/bar_ability'
 
 module Spree
   describe Api::OrdersController, :type => :controller do

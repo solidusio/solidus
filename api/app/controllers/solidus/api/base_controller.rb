@@ -1,4 +1,4 @@
-require 'spree/api/responders'
+require 'solidus/api/responders'
 
 module Spree
   module Api
@@ -47,9 +47,9 @@ module Spree
       def authenticate_user
         unless @current_api_user
           if requires_authentication? && api_key.blank? && order_token.blank?
-            render "spree/api/errors/must_specify_api_key", :status => 401
+            render "solidus/api/errors/must_specify_api_key", :status => 401
           elsif order_token.blank? && (requires_authentication? || api_key.present?)
-            render "spree/api/errors/invalid_api_key", :status => 401
+            render "solidus/api/errors/invalid_api_key", :status => 401
           end
         end
       end
@@ -63,7 +63,7 @@ module Spree
       end
 
       def unauthorized
-        render "spree/api/errors/unauthorized", status: 401
+        render "solidus/api/errors/unauthorized", status: 401
       end
 
       def error_during_processing(exception)
@@ -86,7 +86,7 @@ module Spree
       end
 
       def not_found
-        render "spree/api/errors/not_found", status: 404
+        render "solidus/api/errors/not_found", status: 404
       end
 
       def current_ability
@@ -101,7 +101,7 @@ module Spree
       def invalid_resource!(resource)
         Rails.logger.error "invalid_resouce_errors=#{resource.errors.full_messages}"
         @resource = resource
-        render "spree/api/errors/invalid_resource", :status => 422
+        render "solidus/api/errors/invalid_resource", :status => 422
       end
 
       def api_key

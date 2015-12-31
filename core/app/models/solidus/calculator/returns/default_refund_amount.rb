@@ -1,4 +1,4 @@
-require_dependency 'spree/returns_calculator'
+require_dependency 'solidus/returns_calculator'
 
 module Spree
   module Calculator::Returns

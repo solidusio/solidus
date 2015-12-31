@@ -4,7 +4,7 @@
 
 <% if can? :admin, Solidus::Product %>
   <%= tab *Solidus::BackendConfiguration::PRODUCT_TABS, icon: 'th-large' do %>
-    <%- render partial: 'spree/admin/shared/product_sub_menu' %>
+    <%- render partial: 'solidus/admin/shared/product_sub_menu' %>
   <%- end %>
 <% end %>
 
@@ -18,13 +18,13 @@
 
 <% if can? :admin, Solidus::Promotion %>
   <%= tab *Solidus::BackendConfiguration::PROMOTION_TABS, url: spree.admin_promotions_path, icon: 'bullhorn' do %>
-    <%- render partial: 'spree/admin/shared/promotion_sub_menu' %>
+    <%- render partial: 'solidus/admin/shared/promotion_sub_menu' %>
   <%- end %>
 <% end %>
 
 <% if can? :admin, Solidus::StockItem %>
   <%= tab(:stock_items, :stock_transfers, url: spree.admin_stock_items_path, label: Spree.t(:stock), icon: 'cubes', match_path: %r(^/admin/stock)) do %>
-    <%- render partial: 'spree/admin/shared/stock_sub_menu' %>
+    <%- render partial: 'solidus/admin/shared/stock_sub_menu' %>
   <%- end %>
 <% end %>
 

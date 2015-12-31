@@ -148,7 +148,7 @@ module Spree
     # When this is a new record without a source, builds a new source based on
     # this payment's payment method and associates it correctly.
     #
-    # @see https://github.com/spree/spree/issues/981
+    # @see https://github.com/solidus/solidus/issues/981
     #
     # TODO: Move this into upcoming CartUpdate class
     def apply_source_attributes
@@ -262,7 +262,7 @@ WARN
       # duplicate IDs. We *were* using the Order number, but that's set once and
       # is unchanging. What we need is a unique identifier on a per-payment basis,
       # and this is it. Related to #1998.
-      # See https://github.com/spree/spree/issues/1998#issuecomment-12869105
+      # See https://github.com/solidus/solidus/issues/1998#issuecomment-12869105
       def set_unique_identifier
         begin
           self.number = generate_identifier

@@ -19,7 +19,7 @@ module Spree
 
     before_action :setup_for_current_state
 
-    helper 'spree/orders'
+    helper 'solidus/orders'
 
     rescue_from Solidus::Core::GatewayError, :with => :rescue_from_spree_gateway_error
 

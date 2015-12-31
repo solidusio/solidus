@@ -8,11 +8,11 @@
   </li>
 <% end %>
 
-<%= render :partial => 'spree/shared/error_messages', :locals => { :target => @prototype } %>
+<%= render :partial => 'solidus/shared/error_messages', :locals => { :target => @prototype } %>
 
 <%= form_for [:admin, @prototype] do |f| %>
   <fieldset class="no-border-top">
     <%= render :partial => 'form', :locals => { :f => f } %>
-    <%= render :partial => 'spree/admin/shared/edit_resource_links' %>
+    <%= render :partial => 'solidus/admin/shared/edit_resource_links' %>
   </fieldset>
 <% end %>

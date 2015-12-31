@@ -6,8 +6,8 @@
 //
 //= require jquery
 //= require jquery_ujs
-//= require spree/backend
-<% unless options[:lib_name] == 'spree' || options[:lib_name] == 'spree/backend' %>
-//= require spree/backend/<%= options[:lib_name].gsub("/", "_") %>
+//= require solidus/backend
+<% unless options[:lib_name] == 'spree' || options[:lib_name] == 'solidus/backend' %>
+//= require solidus/backend/<%= options[:lib_name].gsub("/", "_") %>
 <% end %>
 //= require_tree .

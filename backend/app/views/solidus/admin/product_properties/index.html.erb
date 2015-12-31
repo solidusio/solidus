@@ -1,5 +1,5 @@
-<%= render 'spree/admin/shared/product_tabs', :current => 'Product Properties' %>
-<%= render 'spree/shared/error_messages', :target => @product %>
+<%= render 'solidus/admin/shared/product_tabs', :current => 'Product Properties' %>
+<%= render 'solidus/shared/error_messages', :target => @product %>
 
 <% content_for :page_actions do %>
   <% if can?(:create, Solidus::ProductProperty) %>
@@ -40,7 +40,7 @@
     </table>
 
     <% if can?([:create, :update], Solidus::ProductProperty) %>
-      <%= render 'spree/admin/shared/edit_resource_links' %>
+      <%= render 'solidus/admin/shared/edit_resource_links' %>
     <% end %>
 
     <%= hidden_field_tag 'clear_product_properties', 'true' %>
@@ -89,7 +89,7 @@
           </tbody>
         </table>
         <% if can?([:create, :update], Solidus::VariantPropertyRule) %>
-          <%= render 'spree/admin/shared/edit_resource_links' %>
+          <%= render 'solidus/admin/shared/edit_resource_links' %>
         <% end %>
       </fieldset>
     <% end %>

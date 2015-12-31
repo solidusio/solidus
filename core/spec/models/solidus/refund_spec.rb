@@ -159,7 +159,7 @@ describe Solidus::Refund, :type => :model do
       it 'is invalid' do
         expect { subject }.to raise_error { |error|
           expect(error).to be_a(ActiveRecord::RecordInvalid)
-          expect(error.record.errors.full_messages).to eq ["Amount #{I18n.t('activerecord.errors.models.spree/refund.attributes.amount.greater_than_allowed')}"]
+          expect(error.record.errors.full_messages).to eq ["Amount #{I18n.t('activerecord.errors.models.solidus/refund.attributes.amount.greater_than_allowed')}"]
         }
       end
     end

@@ -2,9 +2,9 @@
 //= depend_on_asset "fontawesome-webfont.woff"
 //= depend_on_asset "fontawesome-webfont.ttf"
 //= depend_on_asset "fontawesome-webfont.svg"
-//= depend_on_asset "spree/frontend/cart.png"
+//= depend_on_asset "solidus/frontend/cart.png"
 
-@import 'spree/frontend/variables';
+@import 'solidus/frontend/variables';
 @import 'font-awesome';
 
 /*--------------------------------------*/
@@ -316,7 +316,7 @@ nav #main-nav-bar {
     &#link-to-cart {
       float: right;
       padding-left: 24px;
-      background: image-url("spree/frontend/cart.png") no-repeat left center;
+      background: image-url("solidus/frontend/cart.png") no-repeat left center;
 
       &:hover {
         border-color: $link_text_color;

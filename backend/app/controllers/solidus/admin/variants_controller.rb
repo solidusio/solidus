@@ -1,7 +1,7 @@
 module Spree
   module Admin
     class VariantsController < ResourceController
-      belongs_to 'spree/product', :find_by => :slug
+      belongs_to 'solidus/product', :find_by => :slug
       new_action.before :new_before
       before_action :load_data, only: [:new, :create, :edit, :update]
       before_action :load_option_types_values, only: [:index]

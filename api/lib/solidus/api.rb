@@ -1,4 +1,4 @@
-require 'spree/core'
+require 'solidus/core'
 
 require 'rabl'
 
@@ -7,4 +7,4 @@ module Spree
   end
 end
 
-require 'spree/api/engine'
+require 'solidus/api/engine'

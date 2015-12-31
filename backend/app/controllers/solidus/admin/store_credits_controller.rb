@@ -1,7 +1,7 @@
 module Spree
   module Admin
     class StoreCreditsController < ResourceController
-      belongs_to 'spree/user', model_class: Spree.user_class
+      belongs_to 'solidus/user', model_class: Spree.user_class
       before_action :load_categories, only: [:new]
       before_action :load_update_reasons, only: [:edit_amount, :edit_validity]
       before_action :ensure_update_reason, only: [:update_amount, :invalidate]

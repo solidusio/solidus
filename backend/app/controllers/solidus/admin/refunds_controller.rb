@@ -1,7 +1,7 @@
 module Spree
   module Admin
     class RefundsController < ResourceController
-      belongs_to 'spree/payment'
+      belongs_to 'solidus/payment'
       before_action :load_order
 
       helper_method :refund_reasons
@@ -15,7 +15,7 @@ module Spree
       end
 
       def load_order
-        # the spree/admin/shared/order_tabs partial expects the @order instance variable to be set
+        # the solidus/admin/shared/order_tabs partial expects the @order instance variable to be set
         @order = @payment.order if @payment
       end
 

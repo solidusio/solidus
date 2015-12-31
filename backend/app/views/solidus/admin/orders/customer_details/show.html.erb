@@ -1,4 +1,4 @@
-<%= render :partial => 'spree/admin/shared/order_tabs', :locals => { :current => 'Customer Details' } %>
+<%= render :partial => 'solidus/admin/shared/order_tabs', :locals => { :current => 'Customer Details' } %>
 
 <% content_for :page_title do %>
   <i class="fa fa-arrow-right"></i> <%= Spree.t(:customer_details) %>
@@ -18,12 +18,12 @@
 
   <section>
     <%= content_tag :h4, Spree.t(:billing_address) %>
-    <%= render "spree/admin/shared/address", address: @order.bill_address %>
+    <%= render "solidus/admin/shared/address", address: @order.bill_address %>
   </section>
 
   <section>
     <%= content_tag :h4, Spree.t(:shipping_address) %>
-    <%= render "spree/admin/shared/address", address: @order.ship_address %>
+    <%= render "solidus/admin/shared/address", address: @order.ship_address %>
   </section>
 </main>
 
