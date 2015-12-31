@@ -6,6 +6,7 @@ module Spree
       has_one :default_price,
         -> { where currency: Spree::Config[:currency], is_default: true },
         class_name: 'Spree::Price',
+        inverse_of: :variant,
         dependent: :destroy
 
       def find_or_build_default_price
