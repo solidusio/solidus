@@ -38,16 +38,44 @@ describe Spree::Product, :type => :model do
       end
     end
 
-    context "master variant" do
+    describe "#save" do
+      before { product.update_columns(updated_at: 1.day.ago) }
+      subject { product.save! }
+
+      shared_examples "a change occurred" do
+        it "should change updated_at" do
+          expect { subject }.to change{ product.updated_at }
+        end
+      end
+
+      shared_examples "no change occurred" do
+        it "should not change updated_at" do
+          expect { subject }.not_to change{ product.updated_at }
+        end
+      end
+
+      context "when nothing has changed" do
+        it_behaves_like "no change occurred"
+      end
+
+      context "when the product itself was changed" do
+        before do
+          product.name = "Perri-air"
+        end
+
+        it_behaves_like "a change occurred"
+      end
 
       context "when master variant changed" do
         before do
           product.master.sku = "Something changed"
         end
 
+        it_behaves_like "a change occurred"
+
         it "saves the master" do
-          expect(product.master).to receive(:save!)
-          product.save
+          product.save!
+          expect(product.reload.master.sku).to eq "Something changed"
         end
       end
 
@@ -59,21 +87,11 @@ describe Spree::Product, :type => :model do
           product.master.default_price.price = 12
         end
 
-        it "saves the master" do
-          expect(product.master).to receive(:save!)
-          product.save
-        end
+        it_behaves_like "a change occurred"
 
-        it "saves the default price" do
-          expect(product.master.default_price).to receive(:save)
-          product.save
-        end
-      end
-
-      context "when master variant and price haven't changed" do
-        it "does not save the master" do
-          expect(product.master).not_to receive(:save!)
-          product.save
+        it "saves the default_price" do
+          product.save!
+          expect(product.reload.master.default_price.price).to eq 12
         end
       end
     end
