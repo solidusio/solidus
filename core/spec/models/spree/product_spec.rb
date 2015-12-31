@@ -46,11 +46,25 @@ describe Spree::Product, :type => :model do
         it "should change updated_at" do
           expect { subject }.to change{ product.updated_at }
         end
+
+        it "should touch taxons" do
+          taxon = create(:taxon, products: [product])
+          taxon.update_columns(updated_at: 1.day.ago)
+          product.taxons.reload
+          expect { subject }.to change{ taxon.reload.updated_at }
+        end
       end
 
       shared_examples "no change occurred" do
         it "should not change updated_at" do
           expect { subject }.not_to change{ product.updated_at }
+        end
+
+        it "should not touch taxons" do
+          taxon = create(:taxon, products: [product])
+          taxon.update_columns(updated_at: 1.day.ago)
+          product.taxons.reload
+          expect { subject }.not_to change{ taxon.reload.updated_at }
         end
       end
 
