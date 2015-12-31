@@ -4,7 +4,7 @@ describe "Stock Management", :type => :feature do
   stub_authorization!
 
   before(:each) do
-    visit spree.admin_path
+    visit solidus.admin_path
   end
 
   context "given a product with a variant and a stock location" do
@@ -27,7 +27,7 @@ describe "Stock Management", :type => :feature do
       before do
         @product = create(:product, name: 'apache baseball cap', price: 10)
         v = @product.variants.create!(sku: 'FOOBAR')
-        Spree::StockLocation.destroy_all
+        Solidus::StockLocation.destroy_all
         click_link "Back To Products List"
         within_row(1) do
           click_icon :edit
@@ -36,7 +36,7 @@ describe "Stock Management", :type => :feature do
       end
 
       it "renders" do
-        expect(page).to have_content(Spree.t(:editing_product))
+        expect(page).to have_content(Solidus.t(:editing_product))
         expect(page.current_url).to match("admin/products/apache-baseball-cap/stock")
       end
     end

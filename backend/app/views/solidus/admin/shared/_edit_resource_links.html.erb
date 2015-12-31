@@ -1,0 +1,5 @@
+<div class="form-buttons filter-actions actions" data-hook="buttons">
+  <%= button Solidus.t('actions.update'), 'refresh' %>
+  <span class="or"><%= Solidus.t(:or) %></span>
+  <%= button_link_to Solidus.t('actions.cancel'), collection_url, :icon => 'remove' %>
+</div>

@@ -1,4 +1,4 @@
-Spree::Core::Engine.add_routes do
+Solidus::Core::Engine.add_routes do
 
   root :to => 'home#index'
 
@@ -12,7 +12,7 @@ Spree::Core::Engine.add_routes do
   get '/checkout', :to => 'checkout#edit' , :as => :checkout
 
   populate_redirect = redirect do |params, request|
-    request.flash[:error] = Spree.t(:populate_get_error)
+    request.flash[:error] = Solidus.t(:populate_get_error)
     request.referer || '/cart'
   end
 

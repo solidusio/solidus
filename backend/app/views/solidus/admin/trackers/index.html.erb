@@ -1,0 +1,55 @@
+<%= render 'solidus/admin/shared/configuration_menu' %>
+
+<% content_for :page_title do %>
+  <%= Solidus.t(:analytics_trackers) %>
+<% end %>
+
+<% content_for :page_actions do %>
+  <% if can?(:create, Solidus::Tracker) %>
+    <li>
+      <%= button_link_to Solidus.t(:new_tracker), new_object_url, :icon => 'plus', :id => 'admin_new_tracker_link' %>
+    </li>
+  <% end %>
+<% end %>
+
+<% if @trackers.any? %>
+  <table class="index">
+    <colgroup>
+      <col style="width: 30%">
+      <col style="width: 40%">
+      <col style="width: 15%">
+      <col style="width: 15%">
+    </colgroup>
+    <thead>
+      <tr data-hook="admin_trackers_index_headers">
+        <th><%= Solidus.t(:google_analytics_id) %></th>
+        <th><%= Solidus.t(:active) %></th>
+        <th class="actions"></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @trackers.each do |tracker|%>
+        <tr id="<%= solidus_dom_id tracker %>" data-hook="admin_trackers_index_rows" class="<%= cycle('odd', 'even')%>">
+          <td class="align-center"><%= tracker.analytics_id %></td>
+          <td class="align-center"><%= tracker.active ? Solidus.t(:say_yes) : Solidus.t(:say_no) %></td>
+          <td class="actions">
+            <% if can?(:update, tracker) %>
+              <%= link_to_edit tracker, :no_text => true %>
+            <% end %>
+
+            <% if can?(:destroy, tracker) %>
+              <%= link_to_delete tracker, :no_text => true %>
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% else %>
+  <div class="no-objects-found">
+    <%= Solidus.t(:no_resource_found, resource: I18n.t(:other, scope: 'activerecord.models.solidus/tracker')) %>
+    <% if can?(:create, Solidus::Tracker) %>
+      <%= link_to Solidus.t(:add_one), new_object_url %>!
+    <% end %>
+  </div>
+<% end %>

@@ -1,10 +1,10 @@
 # encoding: UTF-8
-require_relative '../core/lib/spree/core/version.rb'
+require_relative '../core/lib/solidus/core/version.rb'
 
 Gem::Specification.new do |s|
   s.platform    = Gem::Platform::RUBY
   s.name        = 'solidus_core'
-  s.version     = Spree.solidus_version
+  s.version     = Solidus.solidus_version
   s.summary     = 'Essential models, mailers, and classes for the Solidus e-commerce project.'
   s.description = s.summary
 

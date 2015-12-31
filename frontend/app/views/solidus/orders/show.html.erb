@@ -1,0 +1,22 @@
+<fieldset id="order_summary" data-hook>
+  <legend><%= Solidus.t(:order_number, :number => @order.number) %></legend>
+  <h1><%= accurate_title %></h1>
+  <% if order_just_completed?(@order) %>
+    <strong><%= Solidus.t(:thank_you_for_your_order) %></strong>
+  <% end %>
+
+  <div id="order" data-hook>
+    <%= render :partial => 'solidus/shared/order_details', :locals => { :order => @order } %>
+
+    <br class="clear" />
+
+    <p data-hook="links">
+      <%= link_to Solidus.t(:back_to_store), solidus.root_path, :class => "button" %>
+      <% unless order_just_completed?(@order) %>
+        <% if try_solidus_current_user && respond_to?(:solidus_account_path) %>
+          <%= link_to Solidus.t(:my_account), solidus_account_path, :class => "button" %>
+        <% end %>
+      <% end %>
+    </p>
+  </div>
+</fieldset>

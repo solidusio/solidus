@@ -1,5 +1,5 @@
-class RemoveUncapturedAmountFromSpreePayments < ActiveRecord::Migration
+class RemoveUncapturedAmountFromSolidusPayments < ActiveRecord::Migration
   def change
-    remove_column :spree_payments, :uncaptured_amount
+    remove_column :solidus_payments, :uncaptured_amount
   end
 end

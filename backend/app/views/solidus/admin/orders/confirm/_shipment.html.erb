@@ -1,0 +1,53 @@
+<div id="<%= "shipment_#{shipment.id}" %>" data-hook="admin_shipment_form">
+  <fieldset class="no-border-bottom">
+    <legend align="center" class="stock-location" data-hook="stock-location">
+      <%= Solidus.t(:shipment) %>
+      <span class="shipment-number"><%= shipment.number %></span>
+      <%= Solidus.t(:from) %>
+      <strong class="stock-location-name" data-hook="stock-location-name">"<%= shipment.stock_location.name %>"</strong>
+    </legend>
+  </fieldset>
+
+  <table class="stock-contents index" data-hook="stock-contents">
+    <thead>
+      <th colspan="2">
+        <%= Solidus.t(:item_description) %>
+      </th>
+      <th><%= Solidus.t(:price) %></th>
+      <th><%= Solidus.t(:quantity) %></th>
+      <th><%= Solidus.t(:total) %></th>
+    </thead>
+
+    <tbody data-shipment-number="<%= shipment.number %>" data-order-number="<%= order.number %>">
+      <%= render 'solidus/admin/orders/confirm/shipment_manifest', shipment: shipment %>
+
+      <tr class="show-method total">
+        <% if rate = shipment.selected_shipping_rate %>
+          <td colspan="4">
+            <strong><%= rate.name %></strong>
+          </td>
+          <td class="total" align="center">
+            <span><%= shipment.display_cost %></span>
+          </td>
+        <% else %>
+          <td colspan='5'><%= Solidus.t(:no_shipping_method_selected) %></td>
+        <% end %>
+      </tr>
+
+      <tr class="edit-tracking hidden total">
+        <td colspan="5">
+          <label><%= Solidus.t(:tracking_number) %>:</label>
+          <%= text_field_tag :tracking, shipment.tracking %>
+        </td>
+      </tr>
+
+      <% if order.special_instructions.present? %>
+        <tr class='special_instructions'>
+          <td colspan="5">
+            <strong><%= Solidus.t(:special_instructions) %>:&nbsp;</strong><%= order.special_instructions %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

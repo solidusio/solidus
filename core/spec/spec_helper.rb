@@ -30,11 +30,11 @@ require 'ffaker'
 Dir["./spec/support/**/*.rb"].sort.each { |f| require f }
 
 if ENV["CHECK_TRANSLATIONS"]
-  require "spree/testing_support/i18n"
+  require "solidus/testing_support/i18n"
 end
 
-require 'spree/testing_support/factories'
-require 'spree/testing_support/preferences'
+require 'solidus/testing_support/factories'
+require 'solidus/testing_support/preferences'
 require 'cancan/matchers'
 
 RSpec.configure do |config|
@@ -60,11 +60,11 @@ RSpec.configure do |config|
 
   config.before :each do
     Rails.cache.clear
-    reset_spree_preferences
+    reset_solidus_preferences
   end
 
   config.include FactoryGirl::Syntax::Methods
-  config.include Spree::TestingSupport::Preferences
+  config.include Solidus::TestingSupport::Preferences
   config.extend WithModel
 
   config.fail_fast = ENV['FAIL_FAST'] || false

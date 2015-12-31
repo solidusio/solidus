@@ -7,7 +7,7 @@ describe "Address", type: :feature, inaccessible: true do
   stub_authorization!
 
   before do
-    visit spree.root_path
+    visit solidus.root_path
 
     click_link "RoR Mug"
     click_button "add-to-cart-button"
@@ -22,7 +22,7 @@ describe "Address", type: :feature, inaccessible: true do
     let!(:canada) { create(:country, :name => "Canada", :states_required => true, :iso => "CA") }
     let!(:uk) { create(:country, :name => "United Kingdom", :states_required => true, :iso => "UK") }
 
-    before { Spree::Config[:default_country_id] = uk.id }
+    before { Solidus::Config[:default_country_id] = uk.id }
 
     context "but has no state" do
       it "shows the state input field" do

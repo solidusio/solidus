@@ -1,6 +1,6 @@
-class CreateSpreeStoreCreditEvents < ActiveRecord::Migration
+class CreateSolidusStoreCreditEvents < ActiveRecord::Migration
   def change
-    create_table :spree_store_credit_events do |t|
+    create_table :solidus_store_credit_events do |t|
       t.integer :store_credit_id,    null: false
       t.string  :action,             null: false
       t.decimal :amount,             precision: 8,  scale: 2
@@ -11,7 +11,7 @@ class CreateSpreeStoreCreditEvents < ActiveRecord::Migration
       t.timestamps null: true
     end
 
-    add_index :spree_store_credit_events, :store_credit_id
-    add_index :spree_store_credit_events, :deleted_at
+    add_index :solidus_store_credit_events, :store_credit_id
+    add_index :solidus_store_credit_events, :deleted_at
   end
 end

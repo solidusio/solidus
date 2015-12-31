@@ -3,9 +3,9 @@ namespace :exchanges do
   the customer for not returning them}
   task charge_unreturned_items: :environment do
 
-    unreturned_return_items =  Spree::ReturnItem.expecting_return.exchange_processed.includes(:exchange_inventory_unit).where([
-      "spree_inventory_units.created_at < :days_ago AND spree_inventory_units.state = :iu_state",
-      days_ago: Spree::Config[:expedited_exchanges_days_window].days.ago, iu_state: "shipped"
+    unreturned_return_items =  Solidus::ReturnItem.expecting_return.exchange_processed.includes(:exchange_inventory_unit).where([
+      "solidus_inventory_units.created_at < :days_ago AND solidus_inventory_units.state = :iu_state",
+      days_ago: Solidus::Config[:expedited_exchanges_days_window].days.ago, iu_state: "shipped"
     ]).references(:exchange_inventory_units).to_a
 
     # Determine that a return item has already been deemed unreturned and therefore charged
@@ -15,11 +15,11 @@ namespace :exchanges do
     failures = []
 
     unreturned_return_items.group_by(&:exchange_shipment).each do |shipment, return_items|
-      item_charger = Spree::UnreturnedItemCharger.new(shipment, return_items)
+      item_charger = Solidus::UnreturnedItemCharger.new(shipment, return_items)
 
       begin
         item_charger.charge_for_items
-      rescue Spree::UnreturnedItemCharger::ChargeFailure => e
+      rescue Solidus::UnreturnedItemCharger::ChargeFailure => e
         failure = { message: e.message }
       rescue => e
         failure = { message: "#{e.class}: #{e.message}" }
@@ -37,13 +37,13 @@ namespace :exchanges do
     end
 
     if failures.any?
-      if Spree::UnreturnedItemCharger.failure_handler
-        Spree::UnreturnedItemCharger.failure_handler.call(failures)
+      if Solidus::UnreturnedItemCharger.failure_handler
+        Solidus::UnreturnedItemCharger.failure_handler.call(failures)
       else
-        raise Spree::ChargeUnreturnedItemsFailures.new(failures.to_json)
+        raise Solidus::ChargeUnreturnedItemsFailures.new(failures.to_json)
       end
     end
   end
 end
 
-class Spree::ChargeUnreturnedItemsFailures < StandardError; end
+class Solidus::ChargeUnreturnedItemsFailures < StandardError; end

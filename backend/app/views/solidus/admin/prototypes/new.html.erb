@@ -1,0 +1,9 @@
+<%= render :partial => 'solidus/shared/error_messages', :locals => { :target => @prototype } %>
+
+<%= form_for [:admin, @prototype] do |f| %>
+<fieldset data-hook="new_prototype">
+  <legend align="center"><%= Solidus.t(:new_prototype) %></legend>
+  <%= render :partial => 'form', :locals => { :f => f } %>
+  <%= render :partial => 'solidus/admin/shared/new_resource_links' %>
+</fieldset>
+<% end %>

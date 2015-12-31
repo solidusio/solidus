@@ -4,56 +4,56 @@ class MovePromotionCodeToPromotionCodeValue < ActiveRecord::Migration
     # This is done via SQL for performance reasons. For larger stores it makes
     # a difference of minutes vs hours for completion time.
 
-    say_with_time 'generating spree_promotion_codes' do
-      Spree::Promotion.connection.execute(<<-SQL.strip_heredoc)
-        insert into spree_promotion_codes
+    say_with_time 'generating solidus_promotion_codes' do
+      Solidus::Promotion.connection.execute(<<-SQL.strip_heredoc)
+        insert into solidus_promotion_codes
           (promotion_id, value, created_at, updated_at)
         select
-          spree_promotions.id,
-          spree_promotions.code,
+          solidus_promotions.id,
+          solidus_promotions.code,
           '#{Time.current.to_s(:db)}',
           '#{Time.current.to_s(:db)}'
-        from spree_promotions
-        left join spree_promotion_codes
-          on spree_promotion_codes.promotion_id = spree_promotions.id
-        where (spree_promotions.code is not null and spree_promotions.code <> '') -- promotion has a code
-          and spree_promotion_codes.id is null -- a promotion_code hasn't already been created
+        from solidus_promotions
+        left join solidus_promotion_codes
+          on solidus_promotion_codes.promotion_id = solidus_promotions.id
+        where (solidus_promotions.code is not null and solidus_promotions.code <> '') -- promotion has a code
+          and solidus_promotion_codes.id is null -- a promotion_code hasn't already been created
       SQL
     end
 
-    if Spree::PromotionCode.group(:promotion_id).having("count(0) > 1").exists?
+    if Solidus::PromotionCode.group(:promotion_id).having("count(0) > 1").exists?
       raise "Error: You have promotions with multiple promo codes. The
              migration code will not work correctly".squish
     end
 
     say_with_time 'linking order promotions' do
-      Spree::Promotion.connection.execute(<<-SQL.strip_heredoc)
-        update spree_orders_promotions
+      Solidus::Promotion.connection.execute(<<-SQL.strip_heredoc)
+        update solidus_orders_promotions
         set promotion_code_id = (
-          select spree_promotion_codes.id
-          from spree_promotions
-          inner join spree_promotion_codes
-            on spree_promotion_codes.promotion_id = spree_promotions.id
-          where spree_promotions.id = spree_orders_promotions.promotion_id
+          select solidus_promotion_codes.id
+          from solidus_promotions
+          inner join solidus_promotion_codes
+            on solidus_promotion_codes.promotion_id = solidus_promotions.id
+          where solidus_promotions.id = solidus_orders_promotions.promotion_id
         )
-        where spree_orders_promotions.promotion_code_id is null
+        where solidus_orders_promotions.promotion_code_id is null
       SQL
     end
 
     say_with_time 'linking adjustments' do
-      Spree::Promotion.connection.execute(<<-SQL.strip_heredoc)
-        update spree_adjustments
+      Solidus::Promotion.connection.execute(<<-SQL.strip_heredoc)
+        update solidus_adjustments
         set promotion_code_id = (
-          select spree_promotion_codes.id
-          from spree_promotion_actions
-          inner join spree_promotions
-            on spree_promotions.id = spree_promotion_actions.promotion_id
-          inner join spree_promotion_codes
-            on spree_promotion_codes.promotion_id = spree_promotions.id
-          where spree_promotion_actions.id = spree_adjustments.source_id
+          select solidus_promotion_codes.id
+          from solidus_promotion_actions
+          inner join solidus_promotions
+            on solidus_promotions.id = solidus_promotion_actions.promotion_id
+          inner join solidus_promotion_codes
+            on solidus_promotion_codes.promotion_id = solidus_promotions.id
+          where solidus_promotion_actions.id = solidus_adjustments.source_id
         )
-        where spree_adjustments.source_type = 'Spree::PromotionAction'
-          and spree_adjustments.promotion_code_id is null
+        where solidus_adjustments.source_type = 'Solidus::PromotionAction'
+          and solidus_adjustments.promotion_code_id is null
       SQL
     end
   end

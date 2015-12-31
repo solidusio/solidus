@@ -1,0 +1,17 @@
+<% content_for :page_title do %>
+  <%= Solidus.t(:taxons) %>
+<% end %>
+
+<% content_for :table_filter_title do %>
+  <%= Solidus.t(:choose_a_taxon_to_sort_products_for) %>
+<% end %>
+
+<% content_for :table_filter do %>
+  <div data-hook="admin_orders_index_search" class="columns six">
+    <input type='text' id='taxon_id' />
+  </div>
+<% end %>
+
+<div class='sixteen columns'>
+  <div id='taxon_products' class='list-group'></div>
+</div>

@@ -1,0 +1,69 @@
+<div data-hook="admin_user_form_fields" class="row">
+  <div class="alpha six columns">
+    <%= f.field_container :email do %>
+      <%= f.label :email, Solidus.t(:email) %>
+      <% if can?(:update_email, @user) %>
+        <%= f.email_field :email, :class => 'fullwidth' %>
+      <% else %>
+        <span title="<%= Solidus.t(:cannot_update_email) %>" class="fa fa-question-circle icon_link no-text with-tip"></span>
+        <%= f.email_field :email, :class => 'fullwidth', disabled: true %>
+      <% end %>
+      <%= error_message_on :user, :email %>
+    <% end %>
+
+    <% if can? :display, Solidus::Role %>
+      <div data-hook="admin_user_form_roles" class="field">
+        <%= label_tag nil, Solidus.t(:roles) %>
+        <ul>
+          <% if can? :manage, Solidus::Role %>
+            <% @roles.each do |role| %>
+              <li>
+                <%= check_box_tag 'user[solidus_role_ids][]', role.id, @user_roles.include?(role), id: "user_solidus_role_#{role.name}" %>
+                <%= label_tag "user_solidus_role_#{role.name}", role.name %>
+              </li>
+            <% end %>
+          <% else %>
+            <% @user_roles.each do |role| %>
+              <%= role.name %>
+            <% end %>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <% if can?(:display, Solidus::StockLocation) %>
+      <div data-hook="admin_user_form_stock_locations" class="field">
+        <%= label_tag nil, Solidus.t(:stock_locations) %>
+        <ul>
+          <% if can?(:manage, Solidus::UserStockLocation) %>
+            <% @stock_locations.each do |stock_location| %>
+              <li>
+                <%= check_box_tag 'user[stock_location_ids][]', stock_location.id, @user.stock_locations.include?(stock_location), :id => "user_solidus_stock_locations_#{stock_location.name}" %>
+                <%= label_tag stock_location.name %>
+              </li>
+            <% end %>
+          <% else %>
+            <% @stock_locations.select{|sl| @user.stock_locations.include?(sl)}.each do |stock_location| %>
+              <%= stock_location.name %>
+            <% end %>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+  </div>
+
+  <div data-hook="admin_user_form_password_fields" class="omega six columns">
+    <%= f.field_container :password do %>
+      <%= f.label :password, Solidus.t(:password) %>
+      <%= f.password_field :password, :class => 'fullwidth' %>
+      <%= f.error_message_on :password %>
+    <% end %>
+
+    <%= f.field_container :password do %>
+      <%= f.label :password_confirmation, Solidus.t(:confirm_password) %>
+      <%= f.password_field :password_confirmation, :class => 'fullwidth' %>
+      <%= f.error_message_on :password_confirmation %>
+    <% end %>
+  </div>
+</div>

@@ -1,0 +1,123 @@
+<% manifest_items = Solidus::ShippingManifest.new(inventory_units: shipment.inventory_units.where(carton_id: nil)).items %>
+
+<% unless manifest_items.empty? %>
+  <div id="<%= "shipment_#{shipment.id}" %>" data-hook="admin_shipment_form">
+    <fieldset class="no-border-bottom">
+      <legend align="center" class="stock-location" data-hook="stock-location">
+        <span class="shipment-number"><%= shipment.number %></span>
+        -
+        <span class="shipment-state"><%= Solidus.t("shipment_states.#{shipment.state}") %></span>
+        <%= Solidus.t(:package_from) %>
+        <strong class="stock-location-name" data-hook="stock-location-name">'<%= shipment.stock_location.name %>'</strong>
+      </legend>
+
+      <% if shipment.ready? && can?(:ship, shipment) %>
+        <%= form_tag(solidus.ship_api_shipment_path(shipment), { method: "PUT", remote: true, id: "admin-ship-shipment" }) do %>
+          <%= hidden_field_tag :send_mailer, false %>
+          <%= check_box_tag :send_mailer, true, true %>
+          <%= label_tag :send_mailer, Solidus.t(:send_mailer) %>
+          <%= submit_tag Solidus.t(:ship), class: "ship-shipment-button" %>
+        <% end %>
+      <% end %>
+    </fieldset>
+
+    <table class="stock-contents shipment index" data-hook="stock-contents">
+      <colgroup>
+        <col style="width: 10%;" />
+        <col style="width: 30%;" />
+        <col style="width: 15%;" />
+        <col style="width: 15%;" />
+        <col style="width: 15%;" />
+        <col style="width: 15%;" />
+      </colgroup>
+
+      <thead>
+        <th colspan="2"><%= Solidus.t(:item_description) %></th>
+        <th><%= Solidus.t(:price) %></th>
+        <th><%= Solidus.t(:quantity) %></th>
+        <th><%= Solidus.t(:total) %></th>
+        <th class="orders-actions actions" data-hook="admin_order_form_line_items_header_actions"></th>
+      </thead>
+
+      <tbody data-shipment-number="<%= shipment.number %>" data-order-number="<%= order.number %>">
+        <%= render 'solidus/admin/orders/shipment_manifest', { shipment_number: shipment.number, shipment_manifest: manifest_items } %>
+
+        <% unless shipment.shipped? %>
+          <tr class="edit-method hidden total">
+            <td colspan="5">
+              <div class="field alpha five columns">
+                <%= label_tag 'selected_shipping_rate_id', Solidus.t(:shipping_method) %>
+                <%= select_tag :selected_shipping_rate_id,
+                      options_for_select(shipment.shipping_rates.map {|sr| ["#{sr.name} #{sr.display_price}", sr.id] }, shipment.selected_shipping_rate_id),
+                      {:class => 'select2 fullwidth', :data => {'shipment-number' => shipment.number } } %>
+              </div>
+            </td>
+            <td class="actions">
+              <% if can? :update, shipment %>
+                <%= link_to '', '#', :class => 'save-method fa fa-check no-text with-tip',
+                  :data => {'shipment-number' => shipment.number, :action => 'save'}, title: Solidus.t('actions.save') %>
+                <%= link_to '', '#', :class => 'cancel-method fa fa-cancel no-text with-tip',
+                  :data => {:action => 'cancel'}, :title => Solidus.t('actions.cancel') %>
+              <% end %>
+            </td>
+          </tr>
+          <% end %>
+
+          <tr class="show-method total">
+            <% if rate = shipment.selected_shipping_rate %>
+              <td colspan="4">
+                <strong><%= rate.name %></strong>
+              </td>
+              <td class="total" align="center">
+                <span><%= shipment.display_cost %></span>
+              </td>
+            <% else %>
+              <td colspan='5'><%= Solidus.t(:no_shipping_method_selected) %></td>
+            <% end %>
+
+            <td class="actions">
+              <% if( (can? :update, shipment) and !shipment.shipped?) %>
+                <%= link_to '', '#', :class => 'edit-method fa fa-edit no-text with-tip', :data => {:action => 'edit'}, :title => Solidus.t('edit') %>
+              <% end %>
+            </td>
+          </tr>
+
+        <tr class="edit-tracking hidden total">
+          <td colspan="5">
+            <label><%= Solidus.t(:tracking_number) %>:</label>
+            <%= text_field_tag :tracking, shipment.tracking %>
+          </td>
+          <td class="actions">
+            <% if can? :update, shipment %>
+              <%= link_to '', '#', :class => 'save-tracking fa fa-check no-text with-tip', :data => {'shipment-number' => shipment.number, :action => 'save'}, :title => Solidus.t('actions.save') %>
+              <%= link_to '', '#', :class => 'cancel-tracking fa fa-cancel no-text with-tip', :data => {:action => 'cancel'}, :title => Solidus.t('actions.cancel') %>
+            <% end %>
+          </td>
+        </tr>
+
+        <% if order.special_instructions.present? %>
+          <tr class='special_instructions'>
+            <td colspan="5">
+              <strong><%= Solidus.t(:special_instructions) %>:&nbsp;</strong><%= order.special_instructions %>
+            </td>
+          </tr>
+        <% end %>
+
+        <tr class="show-tracking total">
+          <td colspan="5" class="tracking-value">
+            <% if shipment.tracking.present? %>
+              <strong><%= Solidus.t(:tracking) %>:</strong> <%= shipment.tracking %>
+            <% else %>
+              <%= Solidus.t(:no_tracking_present) %>
+            <% end %>
+          </td>
+          <td class="actions">
+            <% if can? :update, shipment %>
+              <%= link_to '', '#', :class => 'edit-tracking fa fa-edit no-text with-tip', :data => {:action => 'edit'}, :title => Solidus.t('edit') %>
+            <% end %>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+<% end %>

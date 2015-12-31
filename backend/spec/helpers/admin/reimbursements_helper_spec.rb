@@ -1,11 +1,11 @@
 require 'spec_helper'
 
-describe Spree::Admin::ReimbursementsHelper, type: :helper do
+describe Solidus::Admin::ReimbursementsHelper, type: :helper do
   describe '.reimbursement_status_color' do
     subject { helper.reimbursement_status_color(reimbursement) }
 
     let(:reimbursement) do
-      Spree::Reimbursement.new(reimbursement_status: status)
+      Solidus::Reimbursement.new(reimbursement_status: status)
     end
 
     context 'when status is reimbursed' do

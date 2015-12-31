@@ -1,0 +1,15 @@
+<%= form_for [:admin, @product, @image], :html => { :multipart => true } do |f| %>
+  <fieldset data-hook="new_image">
+    <legend align="center"><%= Solidus.t(:new_image) %></legend>
+
+      <%= render :partial => 'form', :locals => { :f => f } %>
+    
+      <div class="form-buttons filter-actions actions" data-hook="buttons">
+        <%= button Solidus.t('actions.update'), 'refresh' %>
+        <span class="or"><%= Solidus.t(:or) %></span>
+        <%= link_to_with_icon 'remove', Solidus.t('actions.cancel'), admin_product_images_url(@product), :id => 'cancel_link', :class => 'button' %>
+      </div>
+  </fieldset>
+<% end %>
+
+<%= javascript_include_tag 'solidus/backend/images/new.js' %>

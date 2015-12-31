@@ -1,0 +1,27 @@
+<table class="index adjustments" data-hook="adjustments">
+  <thead data-hook="adjustmment_head">
+    <tr>
+      <th><%= Solidus.t(:adjustable) %></th>
+      <th><%= Solidus.t(:description) %></th>
+      <th><%= Solidus.t(:amount) %></th>
+      <th><%= Solidus.t(:state) %></th>
+      <th class="actions"></th>
+    </tr>
+  </thead>
+  <tbody>
+    <%= render :partial => "adjustment", :collection => @adjustments %>
+    <tr data-hook="adjustment_buttons">
+      <td class="align-center" colspan='4'>
+        <% if can? :update, Solidus::Adjustment %>
+          <div>
+            <%= button_to Solidus.t(:unfinalize_all_adjustments), adjustments_unfinalize_admin_order_path(@order), method: :get %>
+          </div>
+          <div>
+            <%= button_to Solidus.t(:finalize_all_adjustments), adjustments_finalize_admin_order_path(@order), method: :get %>
+          </div>
+        <% end %>
+      </td>
+      <td class='actions'>&nbsp;</td>
+    </tr>
+  </tbody>
+</table>

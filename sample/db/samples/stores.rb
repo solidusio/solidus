@@ -1,4 +1,4 @@
-Spree::Store.create!(
+Solidus::Store.create!(
   name: "Sample Store",
   code: "sample-store",
   url: "solidus.example.com",

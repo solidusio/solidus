@@ -1,1 +1,1 @@
-Spree::Core::Engine.draw_routes
+Solidus::Core::Engine.draw_routes

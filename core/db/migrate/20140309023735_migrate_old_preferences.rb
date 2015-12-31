@@ -2,9 +2,9 @@ class MigrateOldPreferences < ActiveRecord::Migration
   disable_ddl_transaction!
 
   def up
-    migrate_preferences(Spree::Calculator)
-    migrate_preferences(Spree::PromotionRule)
-    migrate_preferences(Spree::PaymentMethod)
+    migrate_preferences(Solidus::Calculator)
+    migrate_preferences(Solidus::PromotionRule)
+    migrate_preferences(Solidus::PaymentMethod)
   end
 
   def down
@@ -19,7 +19,7 @@ class MigrateOldPreferences < ActiveRecord::Migration
           keys = record.class.defined_preferences
 
           # Batch load preferences for this record.
-          preferences = Hash[Spree::Preference.where(
+          preferences = Hash[Solidus::Preference.where(
             key: keys.map{ |k| cache_key(record, k) }
           ).pluck(:key, :value)]
 

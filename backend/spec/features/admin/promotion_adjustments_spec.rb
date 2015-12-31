@@ -5,7 +5,7 @@ describe "Promotion Adjustments", :type => :feature do
 
   context "coupon promotions", :js => true do
     before(:each) do
-      visit spree.admin_path
+      visit solidus.admin_path
       click_link "Promotions"
       click_link "New Promotion"
     end
@@ -31,17 +31,17 @@ describe "Promotion Adjustments", :type => :feature do
       within('.calculator-fields') { fill_in "Amount", :with => 5 }
       within('#actions_container') { click_button "Update" }
 
-      promotion = Spree::Promotion.find_by_name("Promotion")
+      promotion = Solidus::Promotion.find_by_name("Promotion")
       expect(promotion.codes.first.value).to eq("order")
 
       first_rule = promotion.rules.first
-      expect(first_rule.class).to eq(Spree::Promotion::Rules::ItemTotal)
+      expect(first_rule.class).to eq(Solidus::Promotion::Rules::ItemTotal)
       expect(first_rule.preferred_amount).to eq(30)
 
       first_action = promotion.actions.first
-      expect(first_action.class).to eq(Spree::Promotion::Actions::CreateAdjustment)
+      expect(first_action.class).to eq(Solidus::Promotion::Actions::CreateAdjustment)
       first_action_calculator = first_action.calculator
-      expect(first_action_calculator.class).to eq(Spree::Calculator::FlatRate)
+      expect(first_action_calculator.class).to eq(Solidus::Calculator::FlatRate)
       expect(first_action_calculator.preferred_amount).to eq(5)
     end
 
@@ -60,14 +60,14 @@ describe "Promotion Adjustments", :type => :feature do
       within('#action_fields') { fill_in "Amount", :with => "5" }
       within('#actions_container') { click_button "Update" }
 
-      promotion = Spree::Promotion.find_by_name("Promotion")
+      promotion = Solidus::Promotion.find_by_name("Promotion")
       expect(promotion.usage_limit).to eq(1)
       expect(promotion.codes.first.value).to eq("single_use")
 
       first_action = promotion.actions.first
-      expect(first_action.class).to eq(Spree::Promotion::Actions::CreateAdjustment)
+      expect(first_action.class).to eq(Solidus::Promotion::Actions::CreateAdjustment)
       first_action_calculator = first_action.calculator
-      expect(first_action_calculator.class).to eq(Spree::Calculator::FlatRate)
+      expect(first_action_calculator.class).to eq(Solidus::Calculator::FlatRate)
       expect(first_action_calculator.preferred_amount).to eq(5)
     end
 
@@ -89,17 +89,17 @@ describe "Promotion Adjustments", :type => :feature do
       within('.calculator-fields') { fill_in "Flat Percent", :with => "10" }
       within('#actions_container') { click_button "Update" }
 
-      promotion = Spree::Promotion.find_by_name("Promotion")
+      promotion = Solidus::Promotion.find_by_name("Promotion")
       expect(promotion.codes.first).to be_nil
 
       first_rule = promotion.rules.first
-      expect(first_rule.class).to eq(Spree::Promotion::Rules::ItemTotal)
+      expect(first_rule.class).to eq(Solidus::Promotion::Rules::ItemTotal)
       expect(first_rule.preferred_amount).to eq(30)
 
       first_action = promotion.actions.first
-      expect(first_action.class).to eq(Spree::Promotion::Actions::CreateAdjustment)
+      expect(first_action.class).to eq(Solidus::Promotion::Actions::CreateAdjustment)
       first_action_calculator = first_action.calculator
-      expect(first_action_calculator.class).to eq(Spree::Calculator::FlatPercentItemTotal)
+      expect(first_action_calculator.class).to eq(Solidus::Calculator::FlatPercentItemTotal)
       expect(first_action_calculator.preferred_flat_percent).to eq(10)
     end
 
@@ -122,17 +122,17 @@ describe "Promotion Adjustments", :type => :feature do
       within('.calculator-fields') { fill_in "Percent", :with => "10" }
       within('#actions_container') { click_button "Update" }
 
-      promotion = Spree::Promotion.find_by_name("Promotion")
+      promotion = Solidus::Promotion.find_by_name("Promotion")
       expect(promotion.codes.first).to be_nil
 
       first_rule = promotion.rules.first
-      expect(first_rule.class).to eq(Spree::Promotion::Rules::Product)
+      expect(first_rule.class).to eq(Solidus::Promotion::Rules::Product)
       expect(first_rule.products.map(&:name)).to include("RoR Mug")
 
       first_action = promotion.actions.first
-      expect(first_action.class).to eq(Spree::Promotion::Actions::CreateItemAdjustments)
+      expect(first_action.class).to eq(Solidus::Promotion::Actions::CreateItemAdjustments)
       first_action_calculator = first_action.calculator
-      expect(first_action_calculator.class).to eq(Spree::Calculator::PercentOnLineItem)
+      expect(first_action_calculator.class).to eq(Solidus::Calculator::PercentOnLineItem)
       expect(first_action_calculator.preferred_percent).to eq(10)
     end
 
@@ -150,10 +150,10 @@ describe "Promotion Adjustments", :type => :feature do
       within('#action_fields') { click_button "Add" }
       expect(page).to have_content('MAKES ALL SHIPMENTS FOR THE ORDER FREE')
 
-      promotion = Spree::Promotion.find_by_name("Promotion")
+      promotion = Solidus::Promotion.find_by_name("Promotion")
       expect(promotion.codes).to be_empty
-      expect(promotion.rules.first).to be_a(Spree::Promotion::Rules::ItemTotal)
-      expect(promotion.actions.first).to be_a(Spree::Promotion::Actions::FreeShipping)
+      expect(promotion.rules.first).to be_a(Solidus::Promotion::Rules::ItemTotal)
+      expect(promotion.actions.first).to be_a(Solidus::Promotion::Actions::FreeShipping)
     end
 
     it "should allow an admin to create an automatic promo requiring a landing page to be visited" do
@@ -169,15 +169,15 @@ describe "Promotion Adjustments", :type => :feature do
       within('.calculator-fields') { fill_in "Amount", :with => "4" }
       within('#actions_container') { click_button "Update" }
 
-      promotion = Spree::Promotion.find_by_name("Promotion")
+      promotion = Solidus::Promotion.find_by_name("Promotion")
       expect(promotion.path).to eq("content/cvv")
       expect(promotion.codes.first).to be_nil
       expect(promotion.rules).to be_blank
 
       first_action = promotion.actions.first
-      expect(first_action.class).to eq(Spree::Promotion::Actions::CreateAdjustment)
+      expect(first_action.class).to eq(Solidus::Promotion::Actions::CreateAdjustment)
       first_action_calculator = first_action.calculator
-      expect(first_action_calculator.class).to eq(Spree::Calculator::FlatRate)
+      expect(first_action_calculator.class).to eq(Solidus::Calculator::FlatRate)
       expect(first_action_calculator.preferred_amount).to eq(4)
     end
 
@@ -198,15 +198,15 @@ describe "Promotion Adjustments", :type => :feature do
       within('.calculator-fields') { fill_in "Amount", :with => "5" }
       within('#actions_container') { click_button "Update" }
 
-      promotion = Spree::Promotion.find_by_name("Promotion")
+      promotion = Solidus::Promotion.find_by_name("Promotion")
 
       first_rule = promotion.rules.first
-      expect(first_rule.class).to eq(Spree::Promotion::Rules::ItemTotal)
+      expect(first_rule.class).to eq(Solidus::Promotion::Rules::ItemTotal)
       expect(first_rule.preferred_amount).to eq(50)
 
       first_action = promotion.actions.first
-      expect(first_action.class).to eq(Spree::Promotion::Actions::CreateAdjustment)
-      expect(first_action.calculator.class).to eq(Spree::Calculator::FlatRate)
+      expect(first_action.class).to eq(Solidus::Promotion::Actions::CreateAdjustment)
+      expect(first_action.calculator.class).to eq(Solidus::Calculator::FlatRate)
       expect(first_action.calculator.preferred_amount).to eq(5)
     end
   end

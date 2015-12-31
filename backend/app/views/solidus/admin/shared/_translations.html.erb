@@ -1,0 +1,29 @@
+<script>
+  if (Solidus === undefined) {
+    var Solidus = {}
+  }
+  Solidus.translations = <%==
+    I18n.t("solidus").merge({
+    :date_picker    => Solidus.t(:js_format,
+                              :scope => 'date_picker',
+                              :default => 'yy/mm/dd'),
+    :abbr_day_names           => I18n.t(:abbr_day_names, :scope => :date),
+    :destroy                  => Solidus.t(:destroy, :scope => :actions),
+    :edit                     => Solidus.t(:edit,    :scope => :actions),
+    :save                     => Solidus.t(:save,    :scope => :actions),
+    :cancel                   => Solidus.t(:cancel,  :scope => :actions),
+    :first_day                => Solidus.t(:first_day,
+                                         :scope => 'date_picker',
+                                         :default => 0).to_i,
+    :item_stock_placeholder   => Solidus.t(:choose_location),
+    :month_names              => I18n.t(:month_names, :scope => :date).reject(&:blank?),
+    :currency_separator       => I18n.t('number.currency.format.separator'),
+  }).to_json
+%>
+</script>
+<script data-hook='admin-custom-translations'>
+</script>
+
+<% if I18n.locale != :en %>
+  <%= javascript_include_tag "select2_locale_#{I18n.locale}" %>
+<% end %>

@@ -6,12 +6,12 @@ describe 'orders', :type => :feature do
 
   before do
     order.update_attribute(:user_id, user.id)
-    allow_any_instance_of(Spree::OrdersController).to receive_messages(:try_spree_current_user => user)
+    allow_any_instance_of(Solidus::OrdersController).to receive_messages(:try_solidus_current_user => user)
   end
 
   it "can visit an order" do
     # Regression test for current_user call on orders/show
-    visit spree.order_path(order)
+    visit solidus.order_path(order)
   end
 
   it "should display line item price" do
@@ -21,9 +21,9 @@ describe 'orders', :type => :feature do
     line_item.price = 19.00
     line_item.save!
 
-    visit spree.order_path(order)
+    visit solidus.order_path(order)
 
-    # Tests view spree/shared/_order_details
+    # Tests view solidus/shared/_order_details
     within 'td.price' do
       expect(page).to have_content "19.00"
     end
@@ -31,7 +31,7 @@ describe 'orders', :type => :feature do
 
   it "should have credit card info if paid with credit card" do
     create(:payment, :order => order)
-    visit spree.order_path(order)
+    visit solidus.order_path(order)
     within '.payment-info' do
       expect(page).to have_content "Ending in 1111"
     end
@@ -39,7 +39,7 @@ describe 'orders', :type => :feature do
 
   it "should have payment method name visible if not paid with credit card" do
     create(:check_payment, :order => order)
-    visit spree.order_path(order)
+    visit solidus.order_path(order)
     within '.payment-info' do
       expect(page).to have_content "Check"
     end
@@ -56,16 +56,16 @@ describe 'orders', :type => :feature do
     end
 
     specify do
-      visit spree.order_path(order)
+      visit solidus.order_path(order)
       expect(find('.payment-info')).to have_no_css('img')
     end
   end
 
   it "should return the correct title when displaying a completed order" do
-    visit spree.order_path(order)
+    visit solidus.order_path(order)
 
     within '#order_summary' do
-      expect(page).to have_content("#{Spree.t(:order)} #{order.number}")
+      expect(page).to have_content("#{Solidus.t(:order)} #{order.number}")
     end
   end
 end

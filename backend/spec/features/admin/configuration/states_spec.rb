@@ -6,11 +6,11 @@ describe "States", :type => :feature do
   let!(:country) { create(:country) }
 
   let!(:hungary) do
-    Spree::Country.create!(:name => "Hungary", :iso_name => "Hungary")
+    Solidus::Country.create!(:name => "Hungary", :iso_name => "Hungary")
   end
 
   def go_to_states_page
-    visit spree.admin_country_states_path(country)
+    visit solidus.admin_country_states_path(country)
     expect(page).to have_css("#new_state_link")
   end
 
@@ -18,7 +18,7 @@ describe "States", :type => :feature do
     let!(:state) { create(:state, :country => country) }
 
     it "should correctly display the states" do
-      visit spree.admin_country_states_path(country)
+      visit solidus.admin_country_states_path(country)
       expect(page).to have_content(state.name)
     end
   end

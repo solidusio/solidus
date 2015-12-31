@@ -9,7 +9,7 @@ describe 'Product Details', :type => :feature do
       create(:product, :name => 'Bún thịt nướng', :sku => 'A100',
               :description => 'lorem ipsum', :available_on => '2013-08-14 01:02:03')
 
-      visit spree.admin_path
+      visit solidus.admin_path
       click_nav "Products"
       within_row(1) { click_icon :edit }
 
@@ -29,7 +29,7 @@ describe 'Product Details', :type => :feature do
       create(:product, :name => 'Bún thịt nướng', :sku => 'A100',
               :description => 'lorem ipsum', :available_on => '2011-01-01 01:01:01')
 
-      visit spree.admin_path
+      visit solidus.admin_path
       click_nav "Products"
       within('table.index tbody tr:nth-child(1)') do
         click_icon(:edit)
@@ -54,7 +54,7 @@ describe 'Product Details', :type => :feature do
     it "is still able to find the master variant" do
       create(:product)
 
-      visit spree.admin_products_path
+      visit solidus.admin_products_path
       within_row(1) do
         accept_alert do
           click_icon :trash

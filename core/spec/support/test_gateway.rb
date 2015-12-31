@@ -1,2 +1,2 @@
-class Spree::Gateway::Test < Spree::Gateway
+class Solidus::Gateway::Test < Solidus::Gateway
 end

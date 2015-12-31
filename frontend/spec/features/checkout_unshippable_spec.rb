@@ -17,14 +17,14 @@ describe "checkout with unshippable items", type: :feature, inaccessible: true d
     order.user = user
     order.update!
 
-    allow_any_instance_of(Spree::CheckoutController).to receive_messages(:current_order => order)
-    allow_any_instance_of(Spree::CheckoutController).to receive_messages(:try_spree_current_user => user)
-    allow_any_instance_of(Spree::CheckoutController).to receive_messages(:skip_state_validation? => true)
-    allow_any_instance_of(Spree::CheckoutController).to receive_messages(:ensure_sufficient_stock_lines => true)
+    allow_any_instance_of(Solidus::CheckoutController).to receive_messages(:current_order => order)
+    allow_any_instance_of(Solidus::CheckoutController).to receive_messages(:try_solidus_current_user => user)
+    allow_any_instance_of(Solidus::CheckoutController).to receive_messages(:skip_state_validation? => true)
+    allow_any_instance_of(Solidus::CheckoutController).to receive_messages(:ensure_sufficient_stock_lines => true)
   end
 
   it 'displays and removes' do
-    visit spree.checkout_state_path(:delivery)
+    visit solidus.checkout_state_path(:delivery)
     expect(page).to have_content('Unshippable Items')
 
     click_button "Save and Continue"

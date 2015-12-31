@@ -17,7 +17,7 @@ describe "Adjustments Promotions", :type => :feature do
     # so we can be sure of a determinate price in our assertions
     line_item.update_column(:price, 10)
 
-    visit spree.admin_order_adjustments_path(order)
+    visit solidus.admin_order_adjustments_path(order)
   end
 
   context "admin adding a promotion" do

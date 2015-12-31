@@ -2,7 +2,7 @@ require 'spec_helper'
 
 RSpec.feature "Quantity Promotions" do
   given(:action) do
-    Spree::Promotion::Actions::CreateQuantityAdjustments.create(
+    Solidus::Promotion::Actions::CreateQuantityAdjustments.create(
       calculator: calculator,
       preferred_group_size: 2
     )
@@ -16,7 +16,7 @@ RSpec.feature "Quantity Promotions" do
     FactoryGirl.create(:product, name: "E-11")
     promotion.actions << action
 
-    visit spree.root_path
+    visit solidus.root_path
     click_link "DL-44"
     click_button "Add To Cart"
   end
@@ -28,7 +28,7 @@ RSpec.feature "Quantity Promotions" do
     expect(page).to have_content("This coupon code could not be applied to the cart at this time")
 
     # Add another item to our cart.
-    visit spree.root_path
+    visit solidus.root_path
     click_link "DL-44"
     click_button "Add To Cart"
 
@@ -75,7 +75,7 @@ RSpec.feature "Quantity Promotions" do
     end
 
     # Add a different product to our cart with quantity of 2.
-    visit spree.root_path
+    visit solidus.root_path
     click_link "E-11"
     fill_in "quantity", with: "2"
     click_button "Add To Cart"
@@ -88,7 +88,7 @@ RSpec.feature "Quantity Promotions" do
 
   context "with a group size of 3" do
     given(:action) do
-      Spree::Promotion::Actions::CreateQuantityAdjustments.create(
+      Solidus::Promotion::Actions::CreateQuantityAdjustments.create(
         calculator: calculator,
         preferred_group_size: 3
       )
@@ -109,7 +109,7 @@ RSpec.feature "Quantity Promotions" do
       end
 
       # Add two different products to our cart
-      visit spree.root_path
+      visit solidus.root_path
       click_link "E-11"
       click_button "Add To Cart"
       within("#cart_adjustments") do

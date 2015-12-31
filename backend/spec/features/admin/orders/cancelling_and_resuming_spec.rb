@@ -4,11 +4,11 @@ describe "Cancelling + Resuming", :type => :feature do
 
   stub_authorization!
 
-  let(:user) { build_stubbed(:user, id: 123, spree_api_key: 'fake') }
+  let(:user) { build_stubbed(:user, id: 123, solidus_api_key: 'fake') }
 
   before do
-    allow(user).to receive(:has_spree_role?).and_return(true)
-    allow_any_instance_of(Spree::Admin::BaseController).to receive(:try_spree_current_user).and_return(user)
+    allow(user).to receive(:has_solidus_role?).and_return(true)
+    allow_any_instance_of(Solidus::Admin::BaseController).to receive(:try_solidus_current_user).and_return(user)
   end
 
   let(:order) do
@@ -21,7 +21,7 @@ describe "Cancelling + Resuming", :type => :feature do
   end
 
   it "can cancel an order" do
-    visit spree.edit_admin_order_path(order.number)
+    visit solidus.edit_admin_order_path(order.number)
     click_button 'cancel'
     within(".additional-info") do
       expect(find('dt#order_status + dd')).to have_content("canceled")
@@ -34,7 +34,7 @@ describe "Cancelling + Resuming", :type => :feature do
     end
 
     it "can resume an order" do
-      visit spree.edit_admin_order_path(order.number)
+      visit solidus.edit_admin_order_path(order.number)
       click_button 'resume'
       within(".additional-info") do
         expect(find('dt#order_status + dd')).to have_content("resumed")

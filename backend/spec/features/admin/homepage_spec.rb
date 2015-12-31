@@ -7,7 +7,7 @@ describe "Homepage", :type => :feature do
 
     context "visiting the homepage" do
       before(:each) do
-        visit spree.admin_path
+        visit solidus.admin_path
       end
 
       it "should have a link to overview" do
@@ -33,7 +33,7 @@ describe "Homepage", :type => :feature do
 
     context "visiting the products tab" do
       before(:each) do
-        visit spree.admin_products_path
+        visit solidus.admin_products_path
       end
 
       it "should have a link to products" do
@@ -57,16 +57,16 @@ describe "Homepage", :type => :feature do
   context 'as fakedispatch user' do
 
     before do
-      allow_any_instance_of(Spree::Admin::BaseController).to receive(:spree_current_user).and_return(nil)
+      allow_any_instance_of(Solidus::Admin::BaseController).to receive(:solidus_current_user).and_return(nil)
     end
 
     custom_authorization! do |user|
       can [:admin, :home], :dashboards
-      can [:admin, :edit, :index, :read], Spree::Order
+      can [:admin, :edit, :index, :read], Solidus::Order
     end
 
     it 'should only display tabs fakedispatch has access to' do
-      visit spree.admin_path
+      visit solidus.admin_path
       expect(page).to have_link('Orders')
       expect(page).not_to have_link('Products')
       expect(page).not_to have_link('Promotions')

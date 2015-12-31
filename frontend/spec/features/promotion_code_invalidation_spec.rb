@@ -14,11 +14,11 @@ RSpec.feature "Promotion Code Invalidation" do
     FactoryGirl.create(:product, name: "DL-44")
     FactoryGirl.create(:product, name: "E-11")
 
-    visit spree.root_path
+    visit solidus.root_path
     click_link "DL-44"
     click_button "Add To Cart"
 
-    visit spree.root_path
+    visit solidus.root_path
     click_link "E-11"
     click_button "Add To Cart"
   end
@@ -41,7 +41,7 @@ RSpec.feature "Promotion Code Invalidation" do
     end
 
     # Add it back
-    visit spree.root_path
+    visit solidus.root_path
     click_link "DL-44"
     click_button "Add To Cart"
     within("#cart_adjustments") do

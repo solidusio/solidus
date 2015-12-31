@@ -1,0 +1,56 @@
+<%= render :partial => 'solidus/admin/shared/configuration_menu' %>
+
+<% content_for :page_title do %>
+  <%= Solidus.t(:stock_movements_for_stock_location, stock_location_name: @stock_location.name) %>
+<% end %>
+
+<% content_for :page_actions do %>
+  <% if can?(:create, Solidus::StockMovement) %>
+    <li>
+      <%= button_link_to Solidus.t(:new_stock_movement), new_admin_stock_location_stock_movement_path(@stock_location),  icon: 'plus', id: 'admin_new_stock_movement_link' %>
+    </li>
+  <% end %>
+
+  <% if can?(:display, Solidus::StockLocation) %>
+    <li>
+      <%= link_to_with_icon 'arrow-left', Solidus.t(:back_to_stock_locations_list), admin_stock_locations_path, :class => 'button' %>
+    </li>
+  <% end %>
+<% end %>
+
+<% if @stock_movements.any? %>
+<table class="index" id='listing_stock_movements'>
+  <colgroup>
+    <col style="width: 35%">
+    <col style="width: 20%">
+    <col style="width: 45%">
+  </colgroup>
+  <thead>
+    <tr data-hook="admin_stock_movements_index_headers">
+      <th><%= Solidus.t(:stock_item) %>
+      <th><%= Solidus.t(:quantity) %></th>
+      <th><%= Solidus.t(:action) %></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @stock_movements.each do |stock_movement|%>
+      <tr id="<%= solidus_dom_id stock_movement %>" data-hook="admin_stock_movements_index_rows" class="<%= cycle('odd', 'even')%>">
+        <td class="align-center">
+          <%= display_variant(stock_movement) %>
+        </td>
+        <td class="align-center"><%= stock_movement.quantity %></td>
+        <td class="align-center"><%= pretty_originator(stock_movement) %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<% else %>
+  <div class="alpha twelve columns no-objects-found">
+    <%= Solidus.t(:no_resource_found, resource: I18n.t(:other, scope: 'activerecord.models.solidus/stock_movement')) %>
+    <% if can?(:create, Solidus::StockMovement) %>
+      <%= link_to Solidus.t(:add_one), solidus.new_admin_stock_location_stock_movement_path(@stock_location) %>!
+    <% end %>
+  </div>
+<% end %>
+
+<%= paginate @stock_movements %>

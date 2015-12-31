@@ -1,0 +1,18 @@
+<% content_for :page_title do %>
+  <%= Solidus.t(:editing_prototype) %>
+<% end %>
+
+<% content_for :page_actions do %>
+  <li>
+    <%= button_link_to Solidus.t(:back_to_prototypes_list), solidus.admin_prototypes_path, :icon => 'arrow-left' %>
+  </li>
+<% end %>
+
+<%= render :partial => 'solidus/shared/error_messages', :locals => { :target => @prototype } %>
+
+<%= form_for [:admin, @prototype] do |f| %>
+  <fieldset class="no-border-top">
+    <%= render :partial => 'form', :locals => { :f => f } %>
+    <%= render :partial => 'solidus/admin/shared/edit_resource_links' %>
+  </fieldset>
+<% end %>

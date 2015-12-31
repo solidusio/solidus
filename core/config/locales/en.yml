@@ -1,7 +1,7 @@
 en:
   activerecord:
     attributes:
-      spree/address:
+      solidus/address:
         address1: Address
         address2: Address (contd.)
         city: City
@@ -11,19 +11,19 @@ en:
         phone: Phone
         state: State
         zipcode: Zip Code
-      spree/calculator/tiered_flat_rate:
+      solidus/calculator/tiered_flat_rate:
         preferred_base_amount: Base Amount
         preferred_tiers: Tiers
-      spree/calculator/tiered_percent:
+      solidus/calculator/tiered_percent:
         preferred_base_percent: Base Percent
         preferred_tiers: Tiers
-      spree/country:
+      solidus/country:
         iso: ISO
         iso3: ISO3
         iso_name: ISO Name
         name: Name
         numcode: ISO Code
-      spree/credit_card:
+      solidus/credit_card:
         base: ''
         cc_type: Type
         month: Month
@@ -31,15 +31,15 @@ en:
         verification_value: Verification Value
         year: Year
         name: Name
-      spree/inventory_unit:
+      solidus/inventory_unit:
         state: State
-      spree/line_item:
+      solidus/line_item:
         price: Price
         quantity: Quantity
-      spree/option_type:
+      solidus/option_type:
         name: Name
         presentation: Presentation
-      spree/order:
+      solidus/order:
         checkout_complete: Checkout Complete
         completed_at: Completed At
         coupon_code: Coupon Code
@@ -54,7 +54,7 @@ en:
         state: State
         total: Total
         considered_risky: Risky
-      spree/order/bill_address:
+      solidus/order/bill_address:
         address1: Billing address street
         city: Billing address city
         firstname: Billing address first name
@@ -62,7 +62,7 @@ en:
         phone: Billing address phone
         state: Billing address state
         zipcode: Billing address zipcode
-      spree/order/ship_address:
+      solidus/order/ship_address:
         address1: Shipping address street
         city: Shipping address city
         firstname: Shipping address first name
@@ -70,11 +70,11 @@ en:
         phone: Shipping address phone
         state: Shipping address state
         zipcode: Shipping address zipcode
-      spree/payment:
+      solidus/payment:
         amount: Amount
-      spree/payment_method:
+      solidus/payment_method:
         name: Name
-      spree/product:
+      solidus/product:
         available_on: Available On
         cost_currency: Cost Currency
         cost_price: Cost Price
@@ -84,7 +84,7 @@ en:
         on_hand: On Hand
         shipping_category: Shipping Category
         tax_category: Tax Category
-      spree/promotion:
+      solidus/promotion:
         advertise: Advertise
         code: Code
         description: Description
@@ -94,47 +94,47 @@ en:
         path: Path
         starts_at: Starts At
         usage_limit: Usage Limit
-      spree/promotion_category:
+      solidus/promotion_category:
         name: Name
-      spree/property:
+      solidus/property:
         name: Name
         presentation: Presentation
-      spree/prototype:
+      solidus/prototype:
         name: Name
-      spree/return_authorization:
+      solidus/return_authorization:
         amount: Amount
-      spree/role:
+      solidus/role:
         name: Name
-      spree/state:
+      solidus/state:
         abbr: Abbreviation
         name: Name
-      spree/store:
+      solidus/store:
         url: Site URL
         meta_description: Meta Description
         meta_keywords: Meta Keywords
         seo_title: Seo Title
         name: Site Name
         mail_from_address: Mail From Address
-      spree/store_credit:
+      solidus/store_credit:
         amount_used: Amount used
-      spree/tax_category:
+      solidus/tax_category:
         description: Description
         name: Name
-      spree/tax_rate:
+      solidus/tax_rate:
         amount: Rate
         included_in_price: Included in Price
         show_rate_in_label: Show rate in label
-      spree/taxon:
+      solidus/taxon:
         name: Name
         permalink: Permalink
         position: Position
-      spree/taxonomy:
+      solidus/taxonomy:
         name: Name
-      spree/user:
+      solidus/user:
         email: Email
         password: Password
         password_confirmation: Password Confirmation
-      spree/variant:
+      solidus/variant:
         cost_currency: Cost Currency
         cost_price: Cost Price
         depth: Depth
@@ -143,192 +143,192 @@ en:
         sku: SKU
         weight: Weight
         width: Width
-      spree/zone:
+      solidus/zone:
         description: Description
         name: Name
     models:
-      spree/address:
+      solidus/address:
         one: Address
         other: Addresses
-      spree/adjustment_reason:
+      solidus/adjustment_reason:
         one: Adjustment Reason
         other: Adjustment Reasons
-      spree/country:
+      solidus/country:
         one: Country
         other: Countries
-      spree/credit_card:
+      solidus/credit_card:
         one: Credit Card
         other: Credit Cards
-      spree/customer_return:
+      solidus/customer_return:
         one: Customer Return
         other: Customer Returns
-      spree/inventory_unit:
+      solidus/inventory_unit:
         one: Inventory Unit
         other: Inventory Units
-      spree/line_item:
+      solidus/line_item:
         one: Line Item
         other: Line Items
-      spree/option_type:
+      solidus/option_type:
         one: Option Type
         other: Option Types
-      spree/option_value:
+      solidus/option_value:
         one: Option Value
         other: Option Values
-      spree/order:
+      solidus/order:
         one: Order
         other: Orders
-      spree/payment:
+      solidus/payment:
         one: Payment
         other: Payments
-      spree/payment_method:
+      solidus/payment_method:
         one: Payment Method
         other: Payment Methods
-      spree/product:
+      solidus/product:
         one: Product
         other: Products
-      spree/promotion:
+      solidus/promotion:
         one: Promotion
         other: Promotions
-      spree/promotion_category:
+      solidus/promotion_category:
         one: Promotion Category
         other: Promotion Categories
-      spree/property:
+      solidus/property:
         one: Property
         other: Properties
-      spree/prototype:
+      solidus/prototype:
         one: Prototype
         other: Prototypes
-      spree/refund_reason:
+      solidus/refund_reason:
         one: Refund Reason
         other: Refund Reasons
-      spree/reimbursement:
+      solidus/reimbursement:
         one: Reimbursement
         other: Reimbursements
-      spree/reimbursement_type:
+      solidus/reimbursement_type:
         one: Reimbursement Type
         other: Reimbursement Types
-      spree/return_authorization:
+      solidus/return_authorization:
         one: Return Authorization
         other: Return Authorizations
-      spree/return_reason:
+      solidus/return_reason:
         one: Return Reason
         other: Return Reasons
-      spree/role:
+      solidus/role:
         one: Roles
         other: Roles
-      spree/shipment:
+      solidus/shipment:
         one: Shipment
         other: Shipments
-      spree/shipping_category:
+      solidus/shipping_category:
         one: Shipping Category
         other: Shipping Categories
-      spree/shipping_method:
+      solidus/shipping_method:
         one: Shipping Method
         other: Shipping Methods
-      spree/state:
+      solidus/state:
         one: State
         other: States
-      spree/stock: stock
-      spree/stock_movement:
+      solidus/stock: stock
+      solidus/stock_movement:
         one: Stock Movement
         other: Stock Movements
-      spree/stock_location:
+      solidus/stock_location:
         one: Stock Location
         other: Stock Locations
-      spree/stock_transfer:
+      solidus/stock_transfer:
         one: Stock Transfer
         other: Stock Transfers
-      spree/tax_category:
+      solidus/tax_category:
         one: Tax Category
         other: Tax Categories
-      spree/tax_rate:
+      solidus/tax_rate:
         one: Tax Rate
         other: Tax Rates
-      spree/taxon:
+      solidus/taxon:
         one: Taxon
         other: Taxons
-      spree/taxonomy:
+      solidus/taxonomy:
         one: Taxonomy
         other: Taxonomies
-      spree/tracker:
+      solidus/tracker:
         one: Tracker
         other: Trackers
-      spree/transfer_item:
+      solidus/transfer_item:
         one: Transfer Item
         other: Transfer Items
-      spree/user:
+      solidus/user:
         one: User
         other: Users
-      spree/variant:
+      solidus/variant:
         one: Variant
         other: Variants
-      spree/zone:
+      solidus/zone:
         one: Zone
         other: Zones
     errors:
       models:
-        spree/calculator/tiered_flat_rate:
+        solidus/calculator/tiered_flat_rate:
           attributes:
             base:
               keys_should_be_positive_number: "Tier keys should all be numbers larger than 0"
             preferred_tiers:
               should_be_hash: "should be a hash"
-        spree/calculator/tiered_percent:
+        solidus/calculator/tiered_percent:
           attributes:
             base:
               keys_should_be_positive_number: "Tier keys should all be numbers larger than 0"
               values_should_be_percent: "Tier values should all be percentages between 0% and 100%"
             preferred_tiers:
               should_be_hash: "should be a hash"
-        spree/classification:
+        solidus/classification:
           attributes:
             taxon_id:
               already_linked: "is already linked to this product"
-        spree/credit_card:
+        solidus/credit_card:
           attributes:
             base:
               card_expired: "Card has expired"
               expiry_invalid: "Card expiration is invalid"
-        spree/inventory_unit:
+        solidus/inventory_unit:
           attributes:
             state:
               cannot_destroy: "Cannot destroy a %{state} inventory unit"
             base:
               cannot_destroy_shipment_state: "Cannot destroy an inventory unit for a %{state} shipment"
-        spree/line_item:
+        solidus/line_item:
           attributes:
             currency:
               must_match_order_currency: "Must match order currency"
-        spree/promotion:
+        solidus/promotion:
           attributes:
             apply_automatically:
               disallowed_with_code: Disallowed for promotions with a code
               disallowed_with_path: Disallowed for promotions with a path
-        spree/refund:
+        solidus/refund:
           attributes:
             amount:
               greater_than_allowed: is greater than the allowed amount.
-        spree/reimbursement:
+        solidus/reimbursement:
           attributes:
             base:
               return_items_order_id_does_not_match: One or more of the return items specified do not belong to the same order as the reimbursement.
-        spree/return_item:
+        solidus/return_item:
           attributes:
             reimbursement:
               cannot_be_associated_unless_accepted: cannot be associated to a return item that is not accepted.
             inventory_unit:
               other_completed_return_item_exists: "%{inventory_unit_id} has already been taken by return item %{return_item_id}"
-        spree/shipment:
+        solidus/shipment:
           attributes:
             state:
               cannot_destroy: "Cannot destroy a %{state} shipment"
             base:
               cannot_remove_items_shipment_state: "Cannot remove items from a %{state} shipment"
-        spree/store:
+        solidus/store:
           attributes:
             base:
               cannot_destroy_default_store: Cannot destroy the default Store.
-        spree/user_address:
+        solidus/user_address:
           attributes:
             user_id:
               default_address_exists: "already has a default address"
@@ -379,7 +379,7 @@ en:
       not_saved:
         one: ! '1 error prohibited this %{resource} from being saved:'
         other: ! '%{count} errors prohibited this %{resource} from being saved:'
-  spree:
+  solidus:
     abbreviation: Abbreviation
     accept: Accept
     acceptance_status: Acceptance status
@@ -506,14 +506,14 @@ en:
     all_adjustments_unfinalized: All adjustments successfully unfinalized!
     all_departments: All departments
     all_items_have_been_returned: All items have been returned
-    already_signed_up_for_analytics: You have already signed up for Spree Analytics
+    already_signed_up_for_analytics: You have already signed up for Solidus Analytics
     alt_text: Alternative Text
     alternative_phone: Alternative Phone
     amount: Amount
-    analytics_desc_header_1: Spree Analytics
-    analytics_desc_header_2: Live analytics integrated into your Spree dashboard
+    analytics_desc_header_1: Solidus Analytics
+    analytics_desc_header_2: Live analytics integrated into your Solidus dashboard
     analytics_desc_list_1: Get live sales information as it happens
-    analytics_desc_list_2: Requires only a free Spree account to activate
+    analytics_desc_list_2: Requires only a free Solidus account to activate
     analytics_desc_list_3: Absolutely no code to install
     analytics_desc_list_4: It's completely free!
     analytics_trackers: Analytics Trackers
@@ -694,7 +694,7 @@ en:
       jirafe:
         app_id: App ID
         app_token: App Token
-        currently_unavailable: Jirafe is currently unavailable. Spree will automatically connect to Jirafe once it is available.
+        currently_unavailable: Jirafe is currently unavailable. Solidus will automatically connect to Jirafe once it is available.
         explanation: The fields below may already be populated if you chose to register with Jirafe from the admin dashboard.
         header: Jirafe Analytics Settings
         site_id: Site ID
@@ -786,7 +786,7 @@ en:
       other: ! '%{count} errors prohibited this record from being saved'
     event: Event
     events:
-      spree:
+      solidus:
         cart:
           add: Add to cart
         checkout:
@@ -1416,7 +1416,7 @@ en:
     source_location: Source location
     special_instructions: Special Instructions
     split: Split
-    spree_gateway_error_flash_for_checkout: There was a problem with your payment information. Please check your information and try again.
+    solidus_gateway_error_flash_for_checkout: There was a problem with your payment information. Please check your information and try again.
     ssl:
       change_protocol: "Please switch to using HTTP (rather than HTTPS) and retry this request."
     start: Start
@@ -1483,7 +1483,7 @@ en:
     successfully_created: ! '%{resource} has been successfully created!'
     successfully_refunded: ! '%{resource} has been successfully refunded!'
     successfully_removed: ! '%{resource} has been successfully removed!'
-    successfully_signed_up_for_analytics: Successfully signed up for Spree Analytics
+    successfully_signed_up_for_analytics: Successfully signed up for Solidus Analytics
     successfully_updated: ! '%{resource} has been successfully updated!'
     tax: Tax
     tax_included: "Tax (incl.)"

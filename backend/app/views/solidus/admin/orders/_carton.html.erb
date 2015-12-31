@@ -1,0 +1,92 @@
+<div id="<%= dom_id(carton) %>" data-hook="admin_carton_form">
+  <fieldset class="no-border-bottom">
+    <legend align="center" class="stock-location" data-hook="stock-location">
+      <span class="carton-number"><%= carton.number %></span>
+      -
+      <span class="carton-state"><%= Solidus.t("shipment_states.shipped") %></span>
+      <span class="carton-exchange"><%= Solidus.t(:exchange) if carton.any_exchanges? %></span>
+      <%= Solidus.t(:package_from) %>
+      <strong class="stock-location-name" data-hook="stock-location-name">'<%= carton.stock_location.name %>'</strong>
+    </legend>
+  </fieldset>
+
+  <table class="stock-contents carton index" data-hook="stock-contents">
+    <colgroup>
+      <col style="width: 10%;" />
+      <col style="width: 45%;" />
+      <col style="width: 15%;" />
+      <col style="width: 15%;" />
+      <col style="width: 15%;" />
+    </colgroup>
+
+    <thead>
+      <th colspan="2"><%= Solidus.t(:item_description) %></th>
+      <th><%= Solidus.t(:price) %></th>
+      <th><%= Solidus.t(:quantity) %></th>
+      <th><%= Solidus.t(:total) %></th>
+    </thead>
+
+    <tbody data-hook="carton-details" data-shipment-number="<%= carton.number %>" data-order-number="<%= order.number %>">
+      <%= render 'solidus/admin/orders/carton_manifest', carton: carton, order: order %>
+
+      <tr class="show-method total">
+        <% if method = carton.shipping_method %>
+          <td colspan="5">
+            <strong><%= method.name %></strong>
+          </td>
+        <% else %>
+          <td colspan='5'><%= Solidus.t(:no_shipping_method_selected) %></td>
+        <% end %>
+      </tr>
+
+      <% if order.special_instructions.present? %>
+        <tr class='special_instructions'>
+          <td colspan="5">
+            <strong><%= Solidus.t(:special_instructions) %>:&nbsp;</strong><%= order.special_instructions %>
+          </td>
+        </tr>
+      <% end %>
+
+      <tr class="show-tracking total">
+        <td colspan="5">
+          <% if carton.tracking.present? %>
+            <strong><%= Solidus.t(:tracking) %>:</strong> <%= carton.tracking %>
+          <% else %>
+            <%= Solidus.t(:no_tracking_present) %>
+          <% end %>
+        </td>
+      </tr>
+
+      <tr class='shipment-numbers'>
+        <td colspan="5">
+          <strong><%= Solidus.t(:shipment_numbers) %>:&nbsp;</strong><%= carton.shipment_numbers.join(", ") %>
+        </td>
+      </tr>
+
+      <tr class='ship-date'>
+        <td colspan="5">
+          <strong><%= Solidus.t(:shipment_date) %>:&nbsp;</strong><%= carton.display_shipped_at %>
+        </td>
+      </tr>
+
+      <% if carton.orders.size > 1 %>
+        <tr class='order-numbers'>
+          <td colspan="5">
+            <strong><%= Solidus.t(:carton_orders) %>:&nbsp;</strong>
+            <% (carton.orders - [order]).each do |order| %>
+              <%= link_to order.number, edit_admin_order_path(order) %>
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+
+      <% if carton.external_number.present? %>
+        <tr class="external-number">
+          <td colspan="5">
+            <strong><%= Solidus.t(:carton_external_number) %>:&nbsp;</strong><%= carton.external_number %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

@@ -1,0 +1,32 @@
+<% if @product %>
+  <% content_for :page_actions do %>
+    <li><%= button_link_to Solidus.t(:back_to_products_list), session[:return_to] || admin_products_url, :icon => 'arrow-left' %></li>
+  <% end %>
+
+  <%= render :partial => 'solidus/admin/shared/product_tabs', :locals => { :current => 'Stock Management' } %>
+  <%= render :partial => 'solidus/shared/error_messages', :locals => { :target => @product } %>
+<% else %>
+
+  <% content_for :page_title do %>
+    <%= Solidus.t(:manage_stock) %>
+  <% end %>
+<% end %>
+
+<% content_for :table_filter_title do %>
+  <%= Solidus.t(:search) %>
+<% end %>
+
+<% content_for :table_filter do %>
+  <% form_path = @product ? admin_product_stock_path(product: @product) : admin_stock_items_path %>
+  <%= render :partial => 'solidus/admin/shared/variant_search', :locals => { :form_path => form_path, :stock_locations => @stock_locations } %>
+<% end %>
+
+<% if @variants.any? %>
+  <%= render :partial => 'stock_management', :locals => { :variants => @variants } %>
+<% else %>
+  <div class="fullwidth no-objects-found">
+    <%= Solidus.t(:no_variants_found) %>
+    <br/>
+    <%= Solidus.t(:try_changing_search_values) %>
+  </div>
+<% end %>

@@ -18,10 +18,10 @@ describe "Coupon code promotions", type: :feature, js: true do
         expires_at: 1.day.from_now,
       )
 
-      calculator = Spree::Calculator::FlatRate.new
+      calculator = Solidus::Calculator::FlatRate.new
       calculator.preferred_amount = 10
 
-      action = Spree::Promotion::Actions::CreateItemAdjustments.new
+      action = Solidus::Promotion::Actions::CreateItemAdjustments.new
       action.calculator = calculator
       action.promotion = promotion
       action.save
@@ -35,11 +35,11 @@ describe "Coupon code promotions", type: :feature, js: true do
     context "on the payment page" do
       before do
 
-        visit spree.root_path
+        visit solidus.root_path
         click_link "RoR Mug"
         click_button "add-to-cart-button"
         click_button "Checkout"
-        fill_in "order_email", :with => "spree@example.com"
+        fill_in "order_email", :with => "solidus@example.com"
         fill_in "First Name", :with => "John"
         fill_in "Last Name", :with => "Smith"
         fill_in "Street Address", :with => "1 John Street"
@@ -58,13 +58,13 @@ describe "Coupon code promotions", type: :feature, js: true do
       it "informs about an invalid coupon code" do
         fill_in "order_coupon_code", :with => "coupon_codes_rule_man"
         click_button "Save and Continue"
-        expect(page).to have_content(Spree.t(:coupon_code_not_found))
+        expect(page).to have_content(Solidus.t(:coupon_code_not_found))
       end
 
       it "can enter an invalid coupon code, then a real one" do
         fill_in "order_coupon_code", :with => "coupon_codes_rule_man"
         click_button "Save and Continue"
-        expect(page).to have_content(Spree.t(:coupon_code_not_found))
+        expect(page).to have_content(Solidus.t(:coupon_code_not_found))
         fill_in "order_coupon_code", :with => "onetwo"
         click_button "Save and Continue"
         expect(page).to have_content("Promotion (Onetwo)   -$10.00")
@@ -83,7 +83,7 @@ describe "Coupon code promotions", type: :feature, js: true do
     context "on the cart page" do
 
       before do
-        visit spree.root_path
+        visit solidus.root_path
         click_link "RoR Mug"
         click_button "add-to-cart-button"
       end
@@ -91,37 +91,37 @@ describe "Coupon code promotions", type: :feature, js: true do
       it "can enter a coupon code and receives success notification" do
         fill_in "order_coupon_code", :with => "onetwo"
         click_button "Update"
-        expect(page).to have_content(Spree.t(:coupon_code_applied))
+        expect(page).to have_content(Solidus.t(:coupon_code_applied))
       end
 
       it "can enter a promotion code with both upper and lower case letters" do
         fill_in "order_coupon_code", :with => "ONETwO"
         click_button "Update"
-        expect(page).to have_content(Spree.t(:coupon_code_applied))
+        expect(page).to have_content(Solidus.t(:coupon_code_applied))
       end
 
       it "informs the user about a coupon code which has exceeded its usage" do
-        expect_any_instance_of(Spree::Promotion).to receive(:usage_limit_exceeded?).and_return(true)
+        expect_any_instance_of(Solidus::Promotion).to receive(:usage_limit_exceeded?).and_return(true)
 
         fill_in "order_coupon_code", :with => "onetwo"
         click_button "Update"
-        expect(page).to have_content(Spree.t(:coupon_code_max_usage))
+        expect(page).to have_content(Solidus.t(:coupon_code_max_usage))
       end
 
       context "informs the user if the coupon code is not eligible" do
         before do
-          rule = Spree::Promotion::Rules::ItemTotal.new
+          rule = Solidus::Promotion::Rules::ItemTotal.new
           rule.promotion = promotion
           rule.preferred_amount = 100
           rule.save
         end
 
         specify do
-          visit spree.cart_path
+          visit solidus.cart_path
 
           fill_in "order_coupon_code", :with => "onetwo"
           click_button "Update"
-          expect(page).to have_content(Spree.t(:item_total_less_than_or_equal, scope: [:eligibility_errors, :messages], amount: "$100.00"))
+          expect(page).to have_content(Solidus.t(:item_total_less_than_or_equal, scope: [:eligibility_errors, :messages], amount: "$100.00"))
         end
       end
 
@@ -131,25 +131,25 @@ describe "Coupon code promotions", type: :feature, js: true do
         promotion.save!
         fill_in "order_coupon_code", :with => "onetwo"
         click_button "Update"
-        expect(page).to have_content(Spree.t(:coupon_code_expired))
+        expect(page).to have_content(Solidus.t(:coupon_code_expired))
       end
 
       context "calculates the correct amount of money saved with flat percent promotions" do
         before do
-          calculator = Spree::Calculator::FlatPercentItemTotal.new
+          calculator = Solidus::Calculator::FlatPercentItemTotal.new
           calculator.preferred_flat_percent = 20
           promotion.actions.first.calculator = calculator
           promotion.save
 
-          create(:product, :name => "Spree Mug", :price => 10)
+          create(:product, :name => "Solidus Mug", :price => 10)
         end
 
         specify do
-          visit spree.root_path
-          click_link "Spree Mug"
+          visit solidus.root_path
+          click_link "Solidus Mug"
           click_button "add-to-cart-button"
 
-          visit spree.cart_path
+          visit solidus.cart_path
           fill_in "order_coupon_code", :with => "onetwo"
           click_button "Update"
 
@@ -173,10 +173,10 @@ describe "Coupon code promotions", type: :feature, js: true do
 
       context "calculates the correct amount of money saved with flat 100% promotions on the whole order" do
         before do
-          calculator = Spree::Calculator::FlatPercentItemTotal.new
+          calculator = Solidus::Calculator::FlatPercentItemTotal.new
           calculator.preferred_flat_percent = 100
 
-          action = Spree::Promotion::Actions::CreateAdjustment.new
+          action = Solidus::Promotion::Actions::CreateAdjustment.new
           action.calculator = calculator
           action.promotion = promotion
           action.save
@@ -184,15 +184,15 @@ describe "Coupon code promotions", type: :feature, js: true do
           promotion.promotion_actions = [action]
           promotion.save
 
-          create(:product, name: "Spree Mug", price: 10)
+          create(:product, name: "Solidus Mug", price: 10)
         end
 
         specify do
-          visit spree.root_path
-          click_link "Spree Mug"
+          visit solidus.root_path
+          click_link "Solidus Mug"
           click_button "add-to-cart-button"
 
-          visit spree.cart_path
+          visit solidus.cart_path
 
           within '.cart-total' do
             expect(page).to have_content("$30.00")

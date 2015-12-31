@@ -1,12 +1,12 @@
-# This is named the same as the migration in spree 3.0 so it will not be copied
+# This is named the same as the migration in solidus 3.0 so it will not be copied
 # if that has already been run.
 class RemoveTokenPermissionsTable < ActiveRecord::Migration
   def up
-    drop_table :spree_tokenized_permissions
+    drop_table :solidus_tokenized_permissions
   end
 
   def down
-    create_table "spree_tokenized_permissions" do |t|
+    create_table "solidus_tokenized_permissions" do |t|
       t.integer  "permissable_id"
       t.string   "permissable_type"
       t.string   "token"

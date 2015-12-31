@@ -10,7 +10,7 @@ feature 'Promotion with option value rule' do
   given(:promotion) { create :promotion }
 
   background do
-    visit spree.edit_admin_promotion_path(promotion)
+    visit solidus.edit_admin_promotion_path(promotion)
   end
 
   scenario "adding an option value rule", js: true do
@@ -32,7 +32,7 @@ feature 'Promotion with option value rule' do
     within('#rules_container') { click_button "Update" }
 
     first_rule = promotion.rules(true).first
-    expect(first_rule.class).to eq Spree::Promotion::Rules::OptionValue
+    expect(first_rule.class).to eq Solidus::Promotion::Rules::OptionValue
     expect(first_rule.preferred_eligible_values).to eq Hash[product.id => [option_value.id]]
   end
 
@@ -40,7 +40,7 @@ feature 'Promotion with option value rule' do
     given(:variant1) { create :variant }
     given(:variant2) { create :variant }
     background do
-      rule = Spree::Promotion::Rules::OptionValue.new
+      rule = Solidus::Promotion::Rules::OptionValue.new
       rule.promotion = promotion
       rule.preferred_eligible_values = Hash[
         variant1.product_id => variant1.option_values.pluck(:id),
@@ -48,7 +48,7 @@ feature 'Promotion with option value rule' do
       ]
       rule.save!
 
-      visit spree.edit_admin_promotion_path(promotion)
+      visit solidus.edit_admin_promotion_path(promotion)
     end
 
     scenario "deleting a product", js: true do

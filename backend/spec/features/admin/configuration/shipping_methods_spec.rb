@@ -12,10 +12,10 @@ describe "Shipping Methods", :type => :feature do
   before do
     Capybara.ignore_hidden_elements = false
     # HACK: To work around no email prompting on check out
-    allow_any_instance_of(Spree::Order).to receive_messages(:require_email => false)
+    allow_any_instance_of(Solidus::Order).to receive_messages(:require_email => false)
     create(:check_payment_method)
 
-    visit spree.admin_path
+    visit solidus.admin_path
     click_link "Settings"
     click_link "Shipping Methods"
   end
@@ -42,7 +42,7 @@ describe "Shipping Methods", :type => :feature do
       end
 
       click_on "Create"
-      expect(current_path).to eql(spree.edit_admin_shipping_method_path(Spree::ShippingMethod.last))
+      expect(current_path).to eql(solidus.edit_admin_shipping_method_path(Solidus::ShippingMethod.last))
     end
   end
 

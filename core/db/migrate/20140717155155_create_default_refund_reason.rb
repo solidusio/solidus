@@ -1,9 +1,9 @@
 class CreateDefaultRefundReason < ActiveRecord::Migration
   def up
-    Spree::RefundReason.create!(name: Spree::RefundReason::RETURN_PROCESSING_REASON, mutable: false)
+    Solidus::RefundReason.create!(name: Solidus::RefundReason::RETURN_PROCESSING_REASON, mutable: false)
   end
 
   def down
-    Spree::RefundReason.find_by(name: Spree::RefundReason::RETURN_PROCESSING_REASON, mutable: false).destroy
+    Solidus::RefundReason.find_by(name: Solidus::RefundReason::RETURN_PROCESSING_REASON, mutable: false).destroy
   end
 end

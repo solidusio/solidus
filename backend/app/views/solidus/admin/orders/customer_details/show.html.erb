@@ -1,0 +1,29 @@
+<%= render :partial => 'solidus/admin/shared/order_tabs', :locals => { :current => 'Customer Details' } %>
+
+<% content_for :page_title do %>
+  <i class="fa fa-arrow-right"></i> <%= Solidus.t(:customer_details) %>
+<% end %>
+
+<% content_for :page_actions do %>
+  <li><%= button_link_to Solidus.t(:back_to_orders_list), admin_orders_path, :icon => 'arrow-left' %></li>
+<% end %>
+
+
+<main class="alpha eight columns">
+  <section>
+    <%= content_tag :h4, Solidus.t(:account) %>
+    <%= Solidus.t(:email) %>: <%= @order.email %><br>
+    <%= Solidus.t(:guest_checkout) %>: <%= @order.user ? Solidus.t(:yes) : Solidus.t(:no) %>
+  </section>
+
+  <section>
+    <%= content_tag :h4, Solidus.t(:billing_address) %>
+    <%= render "solidus/admin/shared/address", address: @order.bill_address %>
+  </section>
+
+  <section>
+    <%= content_tag :h4, Solidus.t(:shipping_address) %>
+    <%= render "solidus/admin/shared/address", address: @order.ship_address %>
+  </section>
+</main>
+

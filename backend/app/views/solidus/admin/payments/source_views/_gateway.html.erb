@@ -1,0 +1,24 @@
+<fieldset data-hook="credit_card">
+  <legend align="center"><%= Solidus.t(:credit_card) %></legend>
+
+  <div class="row">
+    <div class="alpha six columns">
+      <dl>
+        <dt><%= Solidus.t(:name_on_card) %>:</dt>
+        <dd><%= payment.source.name %></dd>
+
+        <dt><%= Solidus.t(:card_type) %>:</dt>
+        <dd><%= payment.source.cc_type %></dd>
+
+        <dt><%= Solidus.t(:card_number) %>:</dt>
+        <dd><%= payment.source.display_number %></dd>
+
+        <dt><%= Solidus.t(:expiration) %>:</dt>
+        <dd><%= payment.source.month %>/<%= payment.source.year %></dd>
+      </dl>
+      <% if payment.source.address %>
+        <%= render partial: 'solidus/admin/shared/address', locals: {address: payment.source.address} %>
+      <% end %>
+    </div>
+  </div>
+</fieldset>

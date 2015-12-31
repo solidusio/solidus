@@ -1,0 +1,60 @@
+<%= render :partial => 'solidus/admin/shared/order_tabs', :locals => { :current => 'Customer Returns' } %>
+
+<% content_for :page_title do %>
+  <i class="fa fa-arrow-right"></i> <%= Solidus.t(:new_customer_return) %>
+<% end %>
+
+<% content_for :page_actions do %>
+  <li><%= button_link_to Solidus.t(:back_to_customer_return_list), solidus.admin_order_customer_returns_url(@order), :icon => 'arrow-left' %></li>
+<% end %>
+
+<% if @rma_return_items.any? || @new_return_items.any? %>
+
+  <%= render :partial => 'solidus/shared/error_messages', :locals => { :target => @customer_return } %>
+  <%= form_for [:admin, @order, @customer_return] do |f| %>
+    <fieldset class="no-border-top">
+      <div data-hook="admin_customer_return_form_fields">
+        <fieldset class='no-border-bottom'>
+          <legend align='center'><%= Solidus.t(:items_in_rmas) %></legend>
+          <% if @rma_return_items.any? %>
+            <%= render partial: 'return_item_selection', locals: {f: f, return_items: @rma_return_items} %>
+          <% else %>
+            <div class="alpha twelve columns no-objects-found"><%= Solidus.t(:none) %></div>
+          <% end %>
+        </fieldset>
+
+        <fieldset class='no-border-bottom'>
+          <legend align='center'><%= Solidus.t(:other_items_in_other) %></legend>
+          <% if @new_return_items.any? %>
+            <%= render partial: 'return_item_selection', locals: {f: f, return_items: @new_return_items} %>
+          <% else %>
+            <div class="alpha twelve columns no-objects-found"><%= Solidus.t(:none) %></div>
+          <% end %>
+        </fieldset>
+
+        <%= f.field_container :stock_location do %>
+          <%= f.label :stock_location, Solidus.t(:stock_location) %>
+          <%= f.select :stock_location_id, Solidus::StockLocation.order_default.to_a.collect{|l|[l.name.humanize, l.id]}, {include_blank: true}, {class: 'select2 fullwidth', "data-placeholder" => Solidus.t(:select_a_stock_location)} %>
+          <%= f.error_message_on :stock_location_id %>
+        <% end %>
+
+      </div>
+
+      <div class="form-buttons filter-actions actions" data-hook="buttons">
+        <%= button Solidus.t(:create), 'ok' %>
+        <span class="or"><%= Solidus.t(:or) %></span>
+        <%= button_link_to Solidus.t('actions.cancel'), admin_order_customer_returns_url(@order), :icon => 'remove' %>
+      </div>
+    </fieldset>
+  <% end %>
+
+<% else %>
+
+  <div class="twelve columns">
+    <div class="alpha twelve columns no-objects-found">
+      <%= Solidus.t(:all_items_have_been_returned) %>,
+      <%= link_to Solidus.t(:back_to_customer_return_list), solidus.admin_order_customer_returns_path(@order) %>.
+    </div>
+  </div>
+
+<% end %>

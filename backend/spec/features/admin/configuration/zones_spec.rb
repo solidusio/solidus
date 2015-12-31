@@ -4,8 +4,8 @@ describe "Zones", :type => :feature do
   stub_authorization!
 
   before(:each) do
-    Spree::Zone.delete_all
-    visit spree.admin_path
+    Solidus::Zone.delete_all
+    visit solidus.admin_path
     click_link "Settings"
   end
 

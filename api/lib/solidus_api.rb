@@ -1,1 +1,1 @@
-require 'spree_api'
+require 'solidus_api'

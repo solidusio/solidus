@@ -1,0 +1,22 @@
+<%= render 'solidus/admin/shared/configuration_menu' %>
+
+<% content_for :page_title do %>
+  <%= Solidus.t(:new_taxonomy) %>
+<% end %>
+
+<% content_for :page_actions do %>
+  <li>
+    <%= button_link_to Solidus.t(:back_to_taxonomies_list), solidus.admin_taxonomies_path, :icon => 'arrow-left' %>
+  </li>
+<% end %>
+
+<%= form_for [:admin, @taxonomy] do |f| %>
+
+  <%= render :partial => 'form', :locals => { :f => f } %>
+  <fieldset class="no-border-top">
+    <br>
+    <div class="filter-actions actions" data-hook="buttons">
+      <%= button Solidus.t(:create), 'ok' %>
+    </div>
+  </fieldset>
+<% end %>

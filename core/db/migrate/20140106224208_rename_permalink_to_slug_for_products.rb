@@ -1,5 +1,5 @@
 class RenamePermalinkToSlugForProducts < ActiveRecord::Migration
   def change
-    rename_column :spree_products, :permalink, :slug
+    rename_column :solidus_products, :permalink, :slug
   end
 end

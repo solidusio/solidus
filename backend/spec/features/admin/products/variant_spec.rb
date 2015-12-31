@@ -12,7 +12,7 @@ describe "Variants", :type => :feature do
         create(:option_value, :option_type => option.option_type)
       end
 
-      visit spree.admin_path
+      visit solidus.admin_path
       click_nav "Products"
       within_row(1) { click_icon :edit }
       click_link "Variants"
@@ -31,7 +31,7 @@ describe "Variants", :type => :feature do
     context "currency displaying" do
       context "using Russian Rubles" do
         before do
-          Spree::Config[:currency] = "RUB"
+          Solidus::Config[:currency] = "RUB"
         end
 
         let!(:variant) do
@@ -41,7 +41,7 @@ describe "Variants", :type => :feature do
         # Regression test for #2737
         context "uses руб as the currency symbol" do
           it "on the products listing page" do
-            visit spree.admin_product_variants_path(product)
+            visit solidus.admin_product_variants_path(product)
             within_row(1) { expect(page).to have_content("19.99 ₽") }
           end
         end

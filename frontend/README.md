@@ -1,7 +1,7 @@
 Core
 ====
 
-Core e-commerce functionality for the Spree project
+Core e-commerce functionality for the Solidus project
 
 
 Testing

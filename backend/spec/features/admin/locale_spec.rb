@@ -9,22 +9,22 @@ describe "setting locale", :type => :feature do
       :date => {
         :month_names => [],
       },
-      :spree => {
+      :solidus => {
         :admin => {
           :tab => { :orders => "Ordres" }
         },
         :listing_orders => "Ordres",
       })
-    Spree::Backend::Config[:locale] = "fr"
+    Solidus::Backend::Config[:locale] = "fr"
   end
 
   after do
     I18n.locale = I18n.default_locale
-    Spree::Backend::Config[:locale] = "en"
+    Solidus::Backend::Config[:locale] = "en"
   end
 
   it "should be in french" do
-    visit spree.admin_path
+    visit solidus.admin_path
     expect(page).to have_content("Ordres")
   end
 end

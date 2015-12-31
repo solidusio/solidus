@@ -1,0 +1,18 @@
+<%= render :partial => 'solidus/admin/shared/order_tabs', :locals => { :current => 'Creditcards' } %>
+
+<% content_for :page_title do %>
+  <i class="fa fa-arrow-right"></i> <%= Solidus.t(:refund) %>
+<% end %>
+
+<%= form_tag do %>
+  <h3><%= Solidus.t(:refund) %></h3>
+  <fieldset data-hook="credit">
+    <p>
+      <%= label_tag :amount, Solidus.t(:amount) %>
+      <%= text_field_tag :amount, @payment.amount %>
+    </p>
+    <p class="form-buttons">
+      <%= button Solidus.t(:make_refund) %>
+    </p>
+  </fieldset>
+<% end %>

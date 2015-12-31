@@ -1,0 +1,51 @@
+<%= render 'solidus/admin/shared/configuration_menu' %>
+
+<% content_for :page_title do %>
+  <%= Solidus.t(:shipping_categories) %>
+<% end %>
+
+<% content_for :page_actions do %>
+  <% if can?(:create, Solidus::ShippingCategory) %>
+    <li>
+      <%= button_link_to Solidus.t(:new_shipping_category), new_object_url, :icon => 'plus' %>
+    </li>
+  <% end %>
+<% end %>
+
+<% if @shipping_categories.any? %>
+<table class="index">
+  <colgroup>
+    <col style="width: 85%">
+    <col style="width: 15%">
+  </colgroup>
+  <thead>
+    <tr data-hook="categories_header">
+      <th><%= Solidus.t(:name) %></th>
+      <th class="actions"></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @shipping_categories.each do |shipping_category|%>
+    <tr id="<%= solidus_dom_id shipping_category %>" data-hook="category_row" class="<%= cycle('odd', 'even')%>">
+      <td class="align-center" style="width:350px;"><%= shipping_category.name %></td>
+      <td class="actions">
+        <% if can?(:udpate, shipping_category) %>
+          <%= link_to_edit shipping_category, :no_text => true %>
+        <% end %>
+
+        <% if can?(:destroy, shipping_category) %>
+          <%= link_to_delete shipping_category, :no_text => true %>
+        <% end %>
+      </td>
+    </tr>
+    <% end %>
+  </tbody>
+</table>
+<% else %>
+  <div class="alpha twelve columns no-objects-found">
+    <%= Solidus.t(:no_resource_found, resource: I18n.t(:other, scope: 'activerecord.models.solidus/shipping_category')) %>
+    <% if can?(:create, Solidus::ShippingCategory) %>
+      <%= link_to Solidus.t(:add_one), solidus.new_admin_shipping_category_path %>!
+    <% end %>
+  </div>
+<% end %>

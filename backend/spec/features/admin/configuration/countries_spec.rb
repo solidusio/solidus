@@ -1,11 +1,11 @@
 require 'spec_helper'
 
-module Spree
+module Solidus
   describe "Countries", type: :feature do
     stub_authorization!
 
     it "deletes a country", js: true do
-      visit spree.admin_countries_path
+      visit solidus.admin_countries_path
       click_link "New Country"
 
       fill_in "Name", with: "Brazil"

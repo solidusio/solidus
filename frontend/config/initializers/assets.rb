@@ -1,1 +1,1 @@
-Rails.application.config.assets.precompile += %w( favicon.ico spree/frontend/cart.png )
+Rails.application.config.assets.precompile += %w( favicon.ico solidus/frontend/cart.png )

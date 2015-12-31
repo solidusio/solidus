@@ -1,5 +1,5 @@
-class AddCreatedByIdToSpreeOrders < ActiveRecord::Migration
+class AddCreatedByIdToSolidusOrders < ActiveRecord::Migration
   def change
-    add_column :spree_orders, :created_by_id, :integer
+    add_column :solidus_orders, :created_by_id, :integer
   end
 end

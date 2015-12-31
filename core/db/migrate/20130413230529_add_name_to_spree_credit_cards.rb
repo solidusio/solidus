@@ -1,5 +1,5 @@
-class AddNameToSpreeCreditCards < ActiveRecord::Migration
+class AddNameToSolidusCreditCards < ActiveRecord::Migration
   def change
-    add_column :spree_credit_cards, :name, :string
+    add_column :solidus_credit_cards, :name, :string
   end
 end

@@ -1,0 +1,37 @@
+<% content_for :page_title do %>
+  <%= Solidus.t(:sales_totals) %>
+<% end %>
+
+<% content_for :page_actions do %>
+  <li><%= link_to_with_icon 'arrow-left', Solidus.t(:back_to_reports_list), solidus.admin_reports_url, :class => 'button' %></li>
+<% end %>
+
+
+<% content_for :table_filter_title do %>
+  <%= Solidus.t(:date_range) %>
+<% end %>
+
+<% content_for :table_filter do %>
+  <%= render :partial => 'solidus/admin/shared/report_order_criteria', :locals => {} %>
+<% end %>
+
+<table class="admin-report" data-hook="sales_total">
+  <thead>
+    <tr>
+      <th><%= Solidus.t(:currency) %></th>
+      <th><%= Solidus.t(:item_total) %></th>
+      <th><%= Solidus.t(:adjustment_total) %></th>
+      <th><%= Solidus.t(:sales_total) %></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @totals.each do |key, row| %>
+      <tr class="align-center">
+        <td><%= key %></td>
+        <td><%= row[:item_total].format %></td>
+        <td><%= row[:adjustment_total].format %></td>
+        <td><%= row[:sales_total].format %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

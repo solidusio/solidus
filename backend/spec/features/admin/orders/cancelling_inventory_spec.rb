@@ -13,7 +13,7 @@ describe "Cancelling inventory" do
   end
 
   def visit_order
-    visit spree.admin_path
+    visit solidus.admin_path
     click_link "Orders"
     within_row(1) do
       click_link "R100"

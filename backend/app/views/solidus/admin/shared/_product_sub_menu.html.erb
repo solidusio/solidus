@@ -1,0 +1,20 @@
+<ul id="sub_nav" class="admin-subnav" data-hook="admin_product_sub_tabs">
+  <% if can? :admin, Solidus::Product %>
+    <%= tab :products, match_path: '/products' %>
+  <% end %>
+  <% if can? :admin, Solidus::OptionType %>
+    <%= tab :option_types, match_path: '/option_types' %>
+  <% end %>
+  <% if can? :admin, Solidus::Property %>
+    <%= tab :properties %>
+  <% end %>
+  <% if can? :admin, Solidus::Prototype %>
+    <%= tab :prototypes %>
+  <% end %>
+  <% if can? :admin, Solidus::Taxonomy %>
+    <%= tab :taxonomies %>
+  <% end %>
+  <% if can? :admin, Solidus::Taxon %>
+    <%= tab :taxons %>
+  <% end %>
+</ul>

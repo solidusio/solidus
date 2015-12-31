@@ -1,7 +1,7 @@
 require 'spec_helper'
 
-describe Spree::BaseHelper, :type => :helper do
-  include Spree::BaseHelper
+describe Solidus::BaseHelper, :type => :helper do
+  include Solidus::BaseHelper
 
   let(:current_store){ create :store }
 
@@ -14,11 +14,11 @@ describe Spree::BaseHelper, :type => :helper do
 
     context "with no checkout zone defined" do
       before do
-        Spree::Config[:checkout_zone] = nil
+        Solidus::Config[:checkout_zone] = nil
       end
 
       it "return complete list of countries" do
-        expect(available_countries.count).to eq(Spree::Country.count)
+        expect(available_countries.count).to eq(Solidus::Country.count)
       end
     end
 
@@ -27,7 +27,7 @@ describe Spree::BaseHelper, :type => :helper do
         before do
           @country_zone = create(:zone, :name => "CountryZone")
           @country_zone.members.create(:zoneable => country)
-          Spree::Config[:checkout_zone] = @country_zone.name
+          Solidus::Config[:checkout_zone] = @country_zone.name
         end
 
         it "return only the countries defined by the checkout zone" do
@@ -40,11 +40,11 @@ describe Spree::BaseHelper, :type => :helper do
           state_zone = create(:zone, :name => "StateZone")
           state = create(:state, :country => country)
           state_zone.members.create(:zoneable => state)
-          Spree::Config[:checkout_zone] = state_zone.name
+          Solidus::Config[:checkout_zone] = state_zone.name
         end
 
         it "return complete list of countries" do
-          expect(available_countries.count).to eq(Spree::Country.count)
+          expect(available_countries.count).to eq(Solidus::Country.count)
         end
       end
     end
@@ -52,9 +52,9 @@ describe Spree::BaseHelper, :type => :helper do
 
   # Regression test for #1436
   context "defining custom image helpers" do
-    let(:product) { mock_model(Spree::Product, :images => [], :variant_images => []) }
+    let(:product) { mock_model(Solidus::Product, :images => [], :variant_images => []) }
     before do
-      Spree::Image.class_eval do
+      Solidus::Image.class_eval do
         attachment_definitions[:attachment][:styles].merge!({:very_strange => '1x1'})
       end
     end
@@ -137,7 +137,7 @@ describe Spree::BaseHelper, :type => :helper do
       # controller_name is used by this method to infer what it is supposed
       # to be generating meta_data_tags for
       text = Faker::Lorem.paragraphs(2).join(" ")
-      @test = Spree::Product.new(:description => text)
+      @test = Solidus::Product.new(:description => text)
       tags = Nokogiri::HTML.parse(meta_data_tags)
       content = tags.css("meta[name=description]").first["content"]
       assert content.length <= 160, "content length is not truncated to 160 characters"
@@ -146,9 +146,9 @@ describe Spree::BaseHelper, :type => :helper do
 
   # Regression test for #5384
   context "custom image helpers conflict with inproper statements" do
-    let(:product) { mock_model(Spree::Product, :images => [], :variant_images => []) }
+    let(:product) { mock_model(Solidus::Product, :images => [], :variant_images => []) }
     before do
-      Spree::Image.class_eval do
+      Solidus::Image.class_eval do
         attachment_definitions[:attachment][:styles].merge!({:foobar => '1x1'})
       end
     end

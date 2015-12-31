@@ -1,0 +1,48 @@
+<% if order.line_items.exists? %>
+  <table class="line-items index" data-hook="line-items">
+    <colgroup>
+      <col style="width: 10%;" />
+      <col style="width: 20%;" />
+      <col style="width: 20%;" />
+      <col style="width: 15%;" />
+    </colgroup>
+
+    <thead>
+      <th colspan="2"><%= Solidus.t(:name) %></th>
+      <th><%= Solidus.t(:price) %></th>
+      <th><%= Solidus.t(:quantity) %></th>
+      <th><%= Solidus.t(:total_price) %></th>
+      <th class="orders-actions actions" data-hook="admin_order_form_line_items_header_actions">&nbsp;</th>
+    </thead>
+
+    <tbody>
+      <% order.line_items.each do |item| %>
+        <%= content_tag :tr, class: 'line-item', id: "line-item-#{item.id}", data: { line_item_id: item.id } do %>
+          <td class="line-item-image"><%= image_tag item.variant.display_image.attachment(:mini) %></td>
+          <td class="line-item-name">
+            <%= item.variant.product.name %><br><%= "(" + variant_options(item.variant) + ")" unless item.variant.option_values.empty? %>
+            <% if item.variant.sku.present? %>
+              <strong><%= Solidus.t(:sku) %>:</strong> <%= item.variant.sku %>
+            <% end %>
+          </td>
+          <td class="line-item-price align-center"><%= item.single_money.to_html %></td>
+          <td class="line-item-qty-show align-center">
+            <%= item.quantity %>
+          </td>
+          <td class="line-item-qty-edit">
+            <%= number_field_tag :quantity, item.quantity, :min => 0, :class => "line_item_quantity", :size => 5 %>
+          </td>
+          <td class="line-item-total align-center"><%= line_item_shipment_price(item, item.quantity) %></td>
+          <td class="cart-line-item-delete actions" data-hook="cart_line_item_delete">
+            <% if can? :update, item %>
+              <%= link_to '', '#', :class => 'save-line-item fa fa-ok no-text with-tip',       :title => Solidus.t('actions.save') %>
+              <%= link_to '', '#', :class => 'cancel-line-item fa fa-cancel no-text with-tip', :title => Solidus.t('actions.cancel') %>
+              <%= link_to '', '#', :class => 'edit-line-item fa fa-edit no-text with-tip',     :title => Solidus.t('edit') %>
+              <%= link_to '', '#', :class => 'delete-line-item fa fa-trash no-text with-tip',  :title => Solidus.t('delete') %>
+            <% end %>
+          </td>
+        <% end %>
+      <% end %>
+    </tbody>
+  </table>
+<% end %>

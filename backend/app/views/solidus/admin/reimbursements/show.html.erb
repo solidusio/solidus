@@ -1,0 +1,94 @@
+<%= render :partial => 'solidus/admin/shared/order_tabs', :locals => { :current => 'Customer Returns' } %>
+
+<% content_for :page_title do %>
+  <i class="fa fa-arrow-right"></i> <%= Solidus.t(:reimbursement) %> #<%= @reimbursement.number %>
+<% end %>
+
+<% content_for :page_actions do %>
+  <li><%= button_link_to Solidus.t(:back_to_customer_return), url_for([:edit, :admin, @order, @reimbursement.customer_return]), :icon => 'arrow-left' %></li>
+<% end %>
+
+<%= render :partial => 'solidus/shared/error_messages', :locals => { :target => @reimbursement } %>
+
+<fieldset class='no-border-bottom'>
+  <legend align='center'><%= Solidus.t(:items_reimbursed) %></legend>
+  <table class="index reimbursement-reimbursement-items">
+    <thead>
+      <tr>
+        <th><%= Solidus.t(:product) %></th>
+        <th><%= Solidus.t(:preferred_reimbursement_type) %></th>
+        <th><%= Solidus.t(:reimbursement_type_override) %></th>
+        <th><%= Solidus.t(:exchange_for) %></th>
+        <th><%= Solidus.t(:pre_tax_amount) %></th>
+        <th><%= Solidus.t(:total) %></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @reimbursement.return_items.each do |return_item| %>
+
+        <tr>
+          <td>
+            <div class="variant-name"><%= return_item.inventory_unit.variant.name %></div>
+            <div class="variant-options"><%= return_item.inventory_unit.variant.options_text %></div>
+          </td>
+          <td class="align-center">
+            <%= reimbursement_type_name(return_item.preferred_reimbursement_type) %>
+          </td>
+          <td class='align-center'>
+            <%= reimbursement_type_name(return_item.override_reimbursement_type) %>
+          </td>
+          <td>
+            <%= return_item.exchange_variant.try(:exchange_name) %>
+          </td>
+          <td class="align-center">
+            <%= return_item.display_pre_tax_amount %>
+          </td>
+          <td class="align-center">
+            <%= return_item.display_total %>
+          </td>
+        </tr>
+
+      <% end %>
+    </tbody>
+  </table>
+</fieldset>
+
+<fieldset class="no-border-bottom">
+  <legend align='center'><%= Solidus.t(:refunds) %></legend>
+  <table class="index reimbursement-refunds">
+    <thead data-hook="customer_return_header">
+      <tr>
+        <th><%= Solidus.t(:description) %></th>
+        <th><%= Solidus.t(:amount) %></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @reimbursement.refunds.each do |refund| %>
+        <tr id="<%= solidus_dom_id(refund) %>" data-hook="reimbursement_refund_row" class="reimbursement-refund <%= cycle('odd', 'even')%>">
+          <td class="reimbursement-refund-description"><%= refund.description %></td>
+          <td class="reimbursement-refund-amount"><%= refund.display_amount %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</fieldset>
+
+<fieldset class="no-border-bottom">
+  <legend align='center'><%= Solidus.t(:credits) %></legend>
+  <table class="index reimbursement-credits">
+    <thead data-hook="customer_return_header">
+      <tr>
+        <th><%= Solidus.t(:description) %></th>
+        <th><%= Solidus.t(:amount) %></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @reimbursement.credits.each do |credit| %>
+        <tr id="<%= solidus_dom_id(credit) %>" data-hook="reimbursement_refund_row" class="reimbursement-credit <%= cycle('odd', 'even')%>">
+          <td class="reimbursement-credit-description"><%= credit.description %></td>
+          <td class="reimbursement-credit-amount"><%= credit.display_amount %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</fieldset>

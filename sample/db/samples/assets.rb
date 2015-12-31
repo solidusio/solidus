@@ -1,16 +1,16 @@
-Spree::Sample.load_sample("products")
-Spree::Sample.load_sample("variants")
+Solidus::Sample.load_sample("products")
+Solidus::Sample.load_sample("variants")
 
 products = {}
-products[:ror_baseball_jersey] = Spree::Product.find_by_name!("Ruby on Rails Baseball Jersey") 
-products[:ror_tote] = Spree::Product.find_by_name!("Ruby on Rails Tote")
-products[:ror_bag] = Spree::Product.find_by_name!("Ruby on Rails Bag")
-products[:ror_jr_spaghetti] = Spree::Product.find_by_name!("Ruby on Rails Jr. Spaghetti")
-products[:ror_mug] = Spree::Product.find_by_name!("Ruby on Rails Mug")
-products[:ror_ringer] = Spree::Product.find_by_name!("Ruby on Rails Ringer T-Shirt")
-products[:ror_stein] = Spree::Product.find_by_name!("Ruby on Rails Stein")
-products[:ruby_baseball_jersey] = Spree::Product.find_by_name!("Ruby Baseball Jersey")
-products[:apache_baseball_jersey] = Spree::Product.find_by_name!("Apache Baseball Jersey")
+products[:ror_baseball_jersey] = Solidus::Product.find_by_name!("Ruby on Rails Baseball Jersey") 
+products[:ror_tote] = Solidus::Product.find_by_name!("Ruby on Rails Tote")
+products[:ror_bag] = Solidus::Product.find_by_name!("Ruby on Rails Bag")
+products[:ror_jr_spaghetti] = Solidus::Product.find_by_name!("Ruby on Rails Jr. Spaghetti")
+products[:ror_mug] = Solidus::Product.find_by_name!("Ruby on Rails Mug")
+products[:ror_ringer] = Solidus::Product.find_by_name!("Ruby on Rails Ringer T-Shirt")
+products[:ror_stein] = Solidus::Product.find_by_name!("Ruby on Rails Stein")
+products[:ruby_baseball_jersey] = Solidus::Product.find_by_name!("Ruby Baseball Jersey")
+products[:apache_baseball_jersey] = Solidus::Product.find_by_name!("Apache Baseball Jersey")
 
 
 def image(name, type="jpeg")

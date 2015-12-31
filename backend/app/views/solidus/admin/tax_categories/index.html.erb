@@ -1,0 +1,63 @@
+<%= render 'solidus/admin/shared/configuration_menu' %>
+
+<% content_for :page_title do %>
+  <%= Solidus.t(:listing_tax_categories) %>
+<% end %>
+
+<% content_for :page_actions do %>
+  <ul class="actions inline-menu">
+    <% if can?(:create, Solidus::TaxCategory) %>
+      <li>
+        <%= button_link_to Solidus.t(:new_tax_category), new_object_url, :icon => 'plus', :id => 'admin_new_tax_categories_link' %>
+      </li>
+    <% end %>
+  </ul>
+<% end %>
+
+<% if @tax_categories.any? %>
+<table class="index" id='listing_tax_categories' data-hook>
+  <colgroup>
+    <col style="width: 20%" />
+    <col style="width: 10%" />
+    <col style="width: 40%" />
+    <col style="width: 15%" />
+    <col style="width: 15%" />
+  </colgroup>
+  <thead>
+    <tr data-hook="tax_header">
+      <th><%= Solidus.t(:name) %></th>
+      <th><%= Solidus.t(:tax_code) %></th>
+      <th><%= Solidus.t(:description) %></th>
+      <th><%= Solidus.t(:default) %></th>
+      <th class="actions"></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @tax_categories.each do |tax_category|
+         @edit_url = edit_admin_tax_category_path(tax_category)
+         @delete_url = admin_tax_category_path(tax_category)
+    %>
+      <tr id="<%= solidus_dom_id tax_category %>" data-hook="tax_row" class="<%= cycle('odd', 'even')%>">
+        <td class="align-center"><%= tax_category.name %></td>
+        <td class="align-center"><%= tax_category.tax_code %></td>
+        <td class="align-center"><%= tax_category.description %></td>
+        <td class="align-center"><%= tax_category.is_default? ? Solidus.t(:say_yes) : Solidus.t(:say_no) %></td>
+        <td class="actions">
+          <% if can?(:update, tax_category) %>
+            <%= link_to_edit tax_category, :no_text => true %>
+          <% end %>
+          <% if can?(:destroy, tax_category) %>
+            <%= link_to_delete tax_category, :no_text => true %>
+          <% end %>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<% else %>
+  <div class="alpha twelve columns no-objects-found">
+    <%= Solidus.t(:no_resource_found, resource: I18n.t(:other, scope: 'activerecord.models.solidus/tax_category')) %>
+    <% if can?(:create, Solidus::TaxCategory) %>
+      <%= link_to Solidus.t(:add_one), solidus.new_admin_tax_category_path %>!
+    <% end %>
+  </div>
+<% end %>

@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-module Spree
+module Solidus
   describe ProductsHelper, :type => :helper do
     include ProductsHelper
 
@@ -74,7 +74,7 @@ module Spree
 
     context "#variant_price_full" do
       before do
-        Spree::Config[:show_variant_full_price] = true
+        Solidus::Config[:show_variant_full_price] = true
         @variant1 = create(:variant, :product => product)
         @variant2 = create(:variant, :product => product)
       end
@@ -153,7 +153,7 @@ THIS IS THE BEST PRODUCT EVER!
 
         product.description = initialDescription
 
-        Spree::Config[:show_raw_product_description] = true
+        Solidus::Config[:show_raw_product_description] = true
         description = product_description(product)
         expect(description).to eq(initialDescription)
       end
@@ -164,7 +164,7 @@ THIS IS THE BEST PRODUCT EVER!
       subject { line_item_description_text description }
       context 'variant has a blank description' do
         let(:description) { nil }
-        it { is_expected.to eq(Spree.t(:product_has_no_description)) }
+        it { is_expected.to eq(Solidus.t(:product_has_no_description)) }
       end
       context 'variant has a description' do
         let(:description) { 'test_desc' }
@@ -190,7 +190,7 @@ THIS IS THE BEST PRODUCT EVER!
           allow(@products).to receive(:maximum).with(:updated_at) { updated_at }
         end
 
-        it { is_expected.to eq('en/USD/spree/products/all-10-20111213-5') }
+        it { is_expected.to eq('en/USD/solidus/products/all-10-20111213-5') }
       end
 
       context 'when there is no considered maximum updated date' do
@@ -201,7 +201,7 @@ THIS IS THE BEST PRODUCT EVER!
           allow(Date).to receive(:today) { today }
         end
 
-        it { is_expected.to eq('en/USD/spree/products/all-10-20131211-1234567') }
+        it { is_expected.to eq('en/USD/solidus/products/all-10-20131211-1234567') }
       end
     end
   end

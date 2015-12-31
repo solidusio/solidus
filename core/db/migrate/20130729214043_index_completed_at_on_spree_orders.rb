@@ -1,5 +1,5 @@
-class IndexCompletedAtOnSpreeOrders < ActiveRecord::Migration
+class IndexCompletedAtOnSolidusOrders < ActiveRecord::Migration
   def change
-    add_index :spree_orders, :completed_at
+    add_index :solidus_orders, :completed_at
   end
 end

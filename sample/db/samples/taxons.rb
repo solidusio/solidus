@@ -1,8 +1,8 @@
-Spree::Sample.load_sample("taxonomies")
-Spree::Sample.load_sample("products")
+Solidus::Sample.load_sample("taxonomies")
+Solidus::Sample.load_sample("products")
 
-categories = Spree::Taxonomy.find_by_name!("Categories")
-brands = Spree::Taxonomy.find_by_name!("Brand")
+categories = Solidus::Taxonomy.find_by_name!("Categories")
+brands = Solidus::Taxonomy.find_by_name!("Brand")
 
 products = { 
   :ror_tote => "Ruby on Rails Tote",
@@ -18,7 +18,7 @@ products = {
 
 
 products.each do |key, name|
-  products[key] = Spree::Product.find_by_name!(name)
+  products[key] = Solidus::Product.find_by_name!(name)
 end
 
 taxons = [
@@ -111,7 +111,7 @@ taxons = [
 
 taxons.each do |taxon_attrs|
   if taxon_attrs[:parent]
-    taxon_attrs[:parent] = Spree::Taxon.find_by_name!(taxon_attrs[:parent])
-    Spree::Taxon.create!(taxon_attrs)
+    taxon_attrs[:parent] = Solidus::Taxon.find_by_name!(taxon_attrs[:parent])
+    Solidus::Taxon.create!(taxon_attrs)
   end
 end

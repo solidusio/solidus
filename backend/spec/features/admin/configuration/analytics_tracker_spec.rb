@@ -6,7 +6,7 @@ describe "Analytics Tracker", :type => :feature do
   context "index" do
     before(:each) do
       2.times { create(:tracker) }
-      visit spree.admin_path
+      visit solidus.admin_path
       click_link "Settings"
       click_link "Analytics Tracker"
     end
@@ -30,7 +30,7 @@ describe "Analytics Tracker", :type => :feature do
 
   context "create" do
     before(:each) do
-      visit spree.admin_path
+      visit solidus.admin_path
       click_link "Settings"
       click_link "Analytics Tracker"
     end

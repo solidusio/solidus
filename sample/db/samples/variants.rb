@@ -1,24 +1,24 @@
-Spree::Sample.load_sample("option_values")
-Spree::Sample.load_sample("products")
+Solidus::Sample.load_sample("option_values")
+Solidus::Sample.load_sample("products")
 
-ror_baseball_jersey = Spree::Product.find_by_name!("Ruby on Rails Baseball Jersey")
-ror_tote = Spree::Product.find_by_name!("Ruby on Rails Tote")
-ror_bag = Spree::Product.find_by_name!("Ruby on Rails Bag")
-ror_jr_spaghetti = Spree::Product.find_by_name!("Ruby on Rails Jr. Spaghetti")
-ror_mug = Spree::Product.find_by_name!("Ruby on Rails Mug")
-ror_ringer = Spree::Product.find_by_name!("Ruby on Rails Ringer T-Shirt")
-ror_stein = Spree::Product.find_by_name!("Ruby on Rails Stein")
-ruby_baseball_jersey = Spree::Product.find_by_name!("Ruby Baseball Jersey")
-apache_baseball_jersey = Spree::Product.find_by_name!("Apache Baseball Jersey")
+ror_baseball_jersey = Solidus::Product.find_by_name!("Ruby on Rails Baseball Jersey")
+ror_tote = Solidus::Product.find_by_name!("Ruby on Rails Tote")
+ror_bag = Solidus::Product.find_by_name!("Ruby on Rails Bag")
+ror_jr_spaghetti = Solidus::Product.find_by_name!("Ruby on Rails Jr. Spaghetti")
+ror_mug = Solidus::Product.find_by_name!("Ruby on Rails Mug")
+ror_ringer = Solidus::Product.find_by_name!("Ruby on Rails Ringer T-Shirt")
+ror_stein = Solidus::Product.find_by_name!("Ruby on Rails Stein")
+ruby_baseball_jersey = Solidus::Product.find_by_name!("Ruby Baseball Jersey")
+apache_baseball_jersey = Solidus::Product.find_by_name!("Apache Baseball Jersey")
 
-small = Spree::OptionValue.find_by_name!("Small")
-medium = Spree::OptionValue.find_by_name!("Medium")
-large = Spree::OptionValue.find_by_name!("Large")
-extra_large = Spree::OptionValue.find_by_name!("Extra Large")
+small = Solidus::OptionValue.find_by_name!("Small")
+medium = Solidus::OptionValue.find_by_name!("Medium")
+large = Solidus::OptionValue.find_by_name!("Large")
+extra_large = Solidus::OptionValue.find_by_name!("Extra Large")
 
-red = Spree::OptionValue.find_by_name!("Red")
-blue = Spree::OptionValue.find_by_name!("Blue")
-green = Spree::OptionValue.find_by_name!("Green")
+red = Solidus::OptionValue.find_by_name!("Red")
+blue = Solidus::OptionValue.find_by_name!("Blue")
+green = Solidus::OptionValue.find_by_name!("Green")
 
 variants = [
   {
@@ -122,7 +122,7 @@ masters = {
   }
 }
 
-Spree::Variant.create!(variants)
+Solidus::Variant.create!(variants)
 
 masters.each do |product, variant_attrs|
   product.master.update_attributes!(variant_attrs)

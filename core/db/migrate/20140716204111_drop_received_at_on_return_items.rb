@@ -1,9 +1,9 @@
 class DropReceivedAtOnReturnItems < ActiveRecord::Migration
   def up
-    remove_column :spree_return_items, :received_at
+    remove_column :solidus_return_items, :received_at
   end
 
   def down
-    add_column :spree_return_items, :received_at, :datetime
+    add_column :solidus_return_items, :received_at, :datetime
   end
 end

@@ -11,7 +11,7 @@ describe "viewing products", type: :feature, inaccessible: true do
   end
   let(:metas) { { :meta_description => 'Brand new Ruby on Rails TShirts', :meta_title => "Ruby On Rails TShirt", :meta_keywords => 'ror, tshirt, ruby' } }
   let(:store_name) do
-    ((first_store = Spree::Store.first) && first_store.name).to_s
+    ((first_store = Solidus::Store.first) && first_store.name).to_s
   end
 
   # Regression test for #1796
@@ -64,7 +64,7 @@ describe "viewing products", type: :feature, inaccessible: true do
   context "taxon pages" do
     include_context "custom products"
     before do
-      visit spree.root_path
+      visit solidus.root_path
     end
 
     it "should be able to visit brand Ruby on Rails" do

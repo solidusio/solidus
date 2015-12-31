@@ -1,5 +1,5 @@
-class AddDefaultToSpreeCreditCards < ActiveRecord::Migration
+class AddDefaultToSolidusCreditCards < ActiveRecord::Migration
   def change
-    add_column :spree_credit_cards, :default, :boolean, null: false, default: false
+    add_column :solidus_credit_cards, :default, :boolean, null: false, default: false
   end
 end

@@ -1,1 +1,1 @@
-require 'spree/core'
+require 'solidus/core'

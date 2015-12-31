@@ -1,0 +1,5 @@
+<header id="header" class="row" data-hook>
+  <figure id="logo" class="columns six" data-hook><%= logo %></figure>
+  <%= render :partial => 'solidus/shared/nav_bar' %>
+  <%= render :partial => 'solidus/shared/main_nav_bar' if store_menu? %>
+</header>

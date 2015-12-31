@@ -1,4 +1,4 @@
-Spree::OptionType.create!([
+Solidus::OptionType.create!([
   {
     :name => "tshirt-size",
     :presentation => "Size",

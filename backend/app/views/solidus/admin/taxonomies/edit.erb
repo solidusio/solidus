@@ -1,0 +1,39 @@
+<%= render :partial => 'solidus/admin/shared/configuration_menu' %>
+
+<%= render :partial => 'js_head' %>
+
+<% content_for :page_title do %>
+  <%= Solidus.t(:taxonomy_edit) %>
+<% end %>
+
+<% content_for :page_actions do %>
+  <li>
+    <%= button_link_to Solidus.t(:back_to_taxonomies_list), solidus.admin_taxonomies_path, :icon => 'arrow-left' %>
+  </li>
+<% end %>
+
+<div id="ajax_error" class="errorExplanation" style="display:none;"></div>
+
+<%= form_for [:admin, @taxonomy] do |f| %>
+  <fieldset class="no-border-top">
+    <%= render :partial => 'form', :locals => { :f => f } %>
+    <div class="filter-actions actions">
+      <%= button Solidus.t('actions.update'), 'refresh' %>
+      <span class="or"><%= Solidus.t(:or) %></span>
+      <%= button_link_to Solidus.t('actions.cancel'), admin_taxonomies_path, :icon => 'remove' %>
+    </div>
+  </fieldset>
+
+
+  <div>
+    <%= label_tag nil, Solidus.t(:tree) %><br />
+    <script>
+      Solidus.routes.taxonomy_taxons_path = "<%= solidus.api_taxonomy_taxons_path(@taxonomy) %>";
+      Solidus.routes.admin_taxonomy_taxons_path = "<%= solidus.admin_taxonomy_taxons_path(@taxonomy) %>";
+      Solidus.routes.jstree_theme_path = "<%= stylesheet_path("jquery.jstree/themes/apple/style.css") %>";
+    </script>
+    <div id="taxonomy_tree" class="tree"></div>
+
+    <div class="info"><%= Solidus.t(:taxonomy_tree_instruction) %></div>
+  </div>
+<% end %>

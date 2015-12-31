@@ -7,26 +7,26 @@ describe "Store credits admin" do
   let(:user)          { store_credit.user }
 
   before do
-    allow(Spree.user_class).to receive(:find_by).
+    allow(Solidus.user_class).to receive(:find_by).
       with(hash_including(:id)).
       and_return(store_credit.user)
   end
 
   describe "visiting the store credits page" do
     before do
-      visit spree.admin_path
+      visit solidus.admin_path
       click_link "Users"
     end
 
     it "should be on the store credits page" do
       click_link store_credit.user.email
       click_link "Store Credit"
-      expect(page.current_path).to eq spree.admin_user_store_credits_path(store_credit.user)
+      expect(page.current_path).to eq solidus.admin_user_store_credits_path(store_credit.user)
 
       store_credit_table = page.find(".twelve.columns > table")
       expect(store_credit_table).to have_css('tr', count: 1)
-      expect(store_credit_table).to have_content(Spree::Money.new(store_credit.amount).to_s)
-      expect(store_credit_table).to have_content(Spree::Money.new(store_credit.amount_used).to_s)
+      expect(store_credit_table).to have_content(Solidus::Money.new(store_credit.amount).to_s)
+      expect(store_credit_table).to have_content(Solidus::Money.new(store_credit.amount_used).to_s)
       expect(store_credit_table).to have_content(store_credit.category_name)
       expect(store_credit_table).to have_content(store_credit.created_by_email)
     end
@@ -34,11 +34,11 @@ describe "Store credits admin" do
 
   describe "creating store credit" do
     before do
-      visit spree.admin_path
+      visit solidus.admin_path
       click_link "Users"
       click_link store_credit.user.email
       click_link "Store Credit"
-      allow_any_instance_of(Spree::Admin::StoreCreditsController).to receive_messages(try_spree_current_user: admin_user)
+      allow_any_instance_of(Solidus::Admin::StoreCreditsController).to receive_messages(try_solidus_current_user: admin_user)
     end
 
     it "should create store credit and associate it with the user" do
@@ -47,10 +47,10 @@ describe "Store credits admin" do
       select "Exchange", from: "store_credit_category_id"
       click_button "Create"
 
-      expect(page.current_path).to eq spree.admin_user_store_credits_path(store_credit.user)
+      expect(page.current_path).to eq solidus.admin_user_store_credits_path(store_credit.user)
       store_credit_table = page.find(".twelve.columns > table")
       expect(store_credit_table).to have_css('tr', count: 2)
-      expect(Spree::StoreCredit.count).to eq 2
+      expect(Solidus::StoreCredit.count).to eq 2
     end
   end
 
@@ -59,11 +59,11 @@ describe "Store credits admin" do
     let!(:update_reason) { create(:store_credit_update_reason) }
 
     before do
-      visit spree.admin_path
+      visit solidus.admin_path
       click_link "Users"
       click_link store_credit.user.email
       click_link "Store Credit"
-      allow_any_instance_of(Spree::Admin::StoreCreditsController).to receive_messages(try_spree_current_user: admin_user)
+      allow_any_instance_of(Solidus::Admin::StoreCreditsController).to receive_messages(try_solidus_current_user: admin_user)
     end
 
     it "updates the store credit's amount" do

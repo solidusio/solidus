@@ -1,5 +1,5 @@
-class RemoveConsideredRiskyFromSpreeOrders < ActiveRecord::Migration
+class RemoveConsideredRiskyFromSolidusOrders < ActiveRecord::Migration
   def change
-    remove_column :spree_orders, :considered_risky
+    remove_column :solidus_orders, :considered_risky
   end
 end

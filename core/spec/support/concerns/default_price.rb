@@ -13,8 +13,8 @@ shared_examples_for "default_price" do
       expect(default_price_association.options[:dependent]).to eql :destroy
     end
 
-    it 'should have the class name of Spree::Price' do
-      expect(default_price_association.options[:class_name]).to eql 'Spree::Price'
+    it 'should have the class name of Solidus::Price' do
+      expect(default_price_association.options[:class_name]).to eql 'Solidus::Price'
     end
   end
 
@@ -23,7 +23,7 @@ shared_examples_for "default_price" do
 
     describe '#class' do
       subject { super().class }
-      it { is_expected.to eql Spree::Price }
+      it { is_expected.to eql Solidus::Price }
     end
   end
 

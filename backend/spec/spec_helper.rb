@@ -31,14 +31,14 @@ Dir["#{File.dirname(__FILE__)}/support/**/*.rb"].each {|f| require f}
 require 'database_cleaner'
 require 'ffaker'
 
-require 'spree/testing_support/authorization_helpers'
-require 'spree/testing_support/factories'
-require 'spree/testing_support/preferences'
-require 'spree/testing_support/controller_requests'
-require 'spree/testing_support/flash'
-require 'spree/testing_support/url_helpers'
-require 'spree/testing_support/order_walkthrough'
-require 'spree/testing_support/capybara_ext'
+require 'solidus/testing_support/authorization_helpers'
+require 'solidus/testing_support/factories'
+require 'solidus/testing_support/preferences'
+require 'solidus/testing_support/controller_requests'
+require 'solidus/testing_support/flash'
+require 'solidus/testing_support/url_helpers'
+require 'solidus/testing_support/order_walkthrough'
+require 'solidus/testing_support/capybara_ext'
 
 require 'paperclip/matchers'
 
@@ -69,7 +69,7 @@ RSpec.configure do |config|
 
   config.before(:each) do
     Rails.cache.clear
-    reset_spree_preferences
+    reset_solidus_preferences
     WebMock.disable!
     if RSpec.current_example.metadata[:js]
       DatabaseCleaner.strategy = :truncation
@@ -98,10 +98,10 @@ RSpec.configure do |config|
 
   config.include FactoryGirl::Syntax::Methods
 
-  config.include Spree::TestingSupport::Preferences
-  config.include Spree::TestingSupport::UrlHelpers
-  config.include Spree::TestingSupport::ControllerRequests, type: :controller
-  config.include Spree::TestingSupport::Flash
+  config.include Solidus::TestingSupport::Preferences
+  config.include Solidus::TestingSupport::UrlHelpers
+  config.include Solidus::TestingSupport::ControllerRequests, type: :controller
+  config.include Solidus::TestingSupport::Flash
 
   config.include Paperclip::Shoulda::Matchers
 

@@ -1,6 +1,6 @@
-class AddStateToSpreeAdjustments < ActiveRecord::Migration
+class AddStateToSolidusAdjustments < ActiveRecord::Migration
   def change
-    add_column :spree_adjustments, :state, :string
-    remove_column :spree_adjustments, :locked
+    add_column :solidus_adjustments, :state, :string
+    remove_column :solidus_adjustments, :locked
   end
 end

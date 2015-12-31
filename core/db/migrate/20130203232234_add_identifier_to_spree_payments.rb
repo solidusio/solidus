@@ -1,5 +1,5 @@
-class AddIdentifierToSpreePayments < ActiveRecord::Migration
+class AddIdentifierToSolidusPayments < ActiveRecord::Migration
   def change
-    add_column :spree_payments, :identifier, :string
+    add_column :solidus_payments, :identifier, :string
   end
 end

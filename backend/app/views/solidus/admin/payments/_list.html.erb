@@ -1,0 +1,37 @@
+<table class="index" id='payments' data-order-id='<%= @order.number %>'>
+  <thead>
+    <tr data-hook="payments_header">
+      <th><%= Solidus.t(:identifier) %></th>
+      <th><%= "#{Solidus.t('date')}/#{Solidus.t('time')}" %></th>
+      <th><%= Solidus.t(:amount) %></th>
+      <th><%= Solidus.t(:payment_method) %></th>
+      <th><%= Solidus.t(:transaction_id) %></th>
+      <th><%= Solidus.t(:payment_state) %></th>
+      <th class="actions"></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% payments.each do |payment| %>
+      <tr id="<%= dom_id(payment) %>" data-hook="payments_row" class="<%= cycle('odd', 'even', name: 'payment_table_cycle')%>">
+        <td><%= link_to payment.number, solidus.admin_order_payment_path(@order, payment) %></td>
+        <td><%= pretty_time(payment.created_at) %></td>
+        <td class="align-center amount"><%= payment.display_amount.to_html %></td>
+        <td class="align-center"><%= payment_method_name(payment) %></td>
+        <td class="align-center"><%= payment.transaction_id %></td>
+        <td class="align-center"> <span class="state <%= payment.state %>"><%= Solidus.t(payment.state, :scope => :payment_states, :default => payment.state.capitalize) %></span></td>
+        <td class="actions">
+          <% allowed_actions = payment.actions.select { |a| can?(a.to_sym, payment) } %>
+          <% allowed_actions.each do |action| %>
+            <% if action == 'credit' %>
+              <%= link_to_with_icon 'reply', Solidus.t(:refund), new_admin_order_payment_refund_path(@order, payment), no_text: true %>
+            <% elsif action == 'capture' && !@order.completed? %>
+              <%# no capture prior to completion. payments get captured when the order completes. %>
+            <% else %>
+              <%= link_to_with_icon action, Solidus.t(action), fire_admin_order_payment_path(@order, payment, :e => action), :method => :put, :no_text => true, :data => {:action => action} %>
+            <% end %>
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

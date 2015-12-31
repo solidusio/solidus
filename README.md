@@ -10,7 +10,7 @@ Summary
 -------
 
 Solidus is a complete open source e-commerce solution built with Ruby on Rails. It
-is a fork of Spree.
+is a fork of Solidus.
 
 Solidus actually consists of several different gems, each of which are maintained
 in a single repository and documented in a single set of
@@ -50,7 +50,7 @@ After installing gems, you'll have to run the generators to create necessary
 configuration files and migrations.
 
 ```
-bundle exec rails g spree:install
+bundle exec rails g solidus:install
 bundle exec rake railties:install:migrations
 ```
 
@@ -84,11 +84,11 @@ gem 'solidus', github: 'solidusio/solidus'
 state. It is unwise to use this branch in a production system you care deeply
 about.**
 
-By default, the installation generator (`rails g spree:install`) will run
+By default, the installation generator (`rails g solidus:install`) will run
 migrations as well as adding seed and sample data. This can be disabled using
 
 ```shell
-rails g spree:install --migrate=false --sample=false --seed=false
+rails g solidus:install --migrate=false --sample=false --seed=false
 ```
 
 You can always perform any of these steps later by using these commands.
@@ -97,7 +97,7 @@ You can always perform any of these steps later by using these commands.
 bundle exec rake railties:install:migrations
 bundle exec rake db:migrate
 bundle exec rake db:seed
-bundle exec rake spree_sample:load
+bundle exec rake solidus_sample:load
 ```
 
 There are also options and rake tasks provided by
@@ -214,7 +214,7 @@ Name | Description | Badges |
 :---:|:-----------:|:------------:|
 [Solidus Auth (Devise)](https://github.com/solidusio/solidus_auth_devise) | Provides authentication services for Solidus, using the Devise gem. | [![Circle CI](https://circleci.com/gh/solidusio/solidus_auth_devise/tree/master.svg?style=shield)](https://circleci.com/gh/solidusio/solidus_auth_devise/tree/master) [![Gem](https://img.shields.io/gem/v/solidus_auth_devise.svg)](https://rubygems.org/gems/solidus_auth_devise)
 [Solidus Gateway](https://github.com/solidusio/solidus_gateway) | Community supported Solidus Payment Method Gateways. It works as a wrapper for active_merchant gateway. | [![Circle CI](https://circleci.com/gh/solidusio/solidus_gateway/tree/master.svg?style=shield)](https://circleci.com/gh/solidusio/solidus_gateway/tree/master) [![Gem](https://img.shields.io/gem/v/solidus_gateway.svg)](https://rubygems.org/gems/solidus_gateway)
-[Solidus Legacy Return Authorizations](https://github.com/solidusio/solidus_legacy_return_authorizations) | This is an extension for users migrating from legacy versions of Spree (2.3.x and prior) which had a different representation of and handling for return authorizations. | [![Circle CI](https://circleci.com/gh/solidusio/solidus_legacy_return_authorizations/tree/master.svg?style=shield)](https://circleci.com/gh/solidusio/solidus_legacy_return_authorizations/tree/master) [![Gem](https://img.shields.io/gem/v/solidus_legacy_return_authorizations.svg)](https://rubygems.org/gems/solidus_legacy_return_authorizations)
+[Solidus Legacy Return Authorizations](https://github.com/solidusio/solidus_legacy_return_authorizations) | This is an extension for users migrating from legacy versions of Solidus (2.3.x and prior) which had a different representation of and handling for return authorizations. | [![Circle CI](https://circleci.com/gh/solidusio/solidus_legacy_return_authorizations/tree/master.svg?style=shield)](https://circleci.com/gh/solidusio/solidus_legacy_return_authorizations/tree/master) [![Gem](https://img.shields.io/gem/v/solidus_legacy_return_authorizations.svg)](https://rubygems.org/gems/solidus_legacy_return_authorizations)
 [Solidus Multi Domain Store](https://github.com/solidusio/solidus_multi_domain) | This extension allows a single Solidus instance to have several customer facing stores, with a single shared backend administration system (i.e. multi-store, single-vendor). | [![Circle CI](https://circleci.com/gh/solidusio/solidus_multi_domain/tree/master.svg?style=shield)](https://circleci.com/gh/solidusio/solidus_multi_domain/tree/master) [![Gem](https://img.shields.io/gem/v/solidus_multi_domain.svg)](https://rubygems.org/gems/solidus_multi_domain)
 [Solidus - Virtual Gift Card](https://github.com/solidusio/solidus_virtual_gift_card) | A virtual gift card implementation for Solidus. | [![Circle CI](https://circleci.com/gh/solidusio/solidus_virtual_gift_card/tree/master.svg?style=shield)](https://circleci.com/gh/solidusio/solidus_virtual_gift_card/tree/master) [![Gem](https://img.shields.io/gem/v/solidus_virtual_gift_card.svg)](https://rubygems.org/gems/solidus_virtual_gift_card)
 [Solidus Asset Variant Options](https://github.com/solidusio/solidus_asset_variant_options) | Adds the ability for admins to use the same image asset for multiple variants. | [![Circle CI](https://circleci.com/gh/solidusio/solidus_asset_variant_options/tree/master.svg?style=shield)](https://circleci.com/gh/solidusio/solidus_asset_variant_options/tree/master) [![Gem](https://img.shields.io/gem/v/solidus_asset_variant_options.svg)](https://rubygems.org/gems/solidus_asset_variant_options)

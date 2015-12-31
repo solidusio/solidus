@@ -1,0 +1,66 @@
+require 'spec_helper'
+
+class FakesController < ApplicationController
+  include Solidus::Core::ControllerHelpers::Auth
+  def index; render text: 'index'; end
+end
+
+describe Solidus::Core::ControllerHelpers::Auth, type: :controller do
+  controller(FakesController) {}
+
+  describe '#current_ability' do
+    it 'returns Solidus::Ability instance' do
+      expect(controller.current_ability.class).to eq Solidus::Ability
+    end
+  end
+
+  describe '#redirect_back_or_default' do
+    controller(FakesController) do
+      def index; redirect_back_or_default('/'); end
+    end
+    it 'redirects to session url' do
+      session[:solidus_user_return_to] = '/redirect'
+      get :index
+      expect(response).to redirect_to('/redirect')
+    end
+    it 'redirects to default page' do
+      get :index
+      expect(response).to redirect_to('/')
+    end
+  end
+
+  describe '#set_guest_token' do
+    controller(FakesController) do
+      def index
+        set_guest_token
+        render text: 'index'
+      end
+    end
+    it 'sends cookie header' do
+      get :index
+      expect(response.cookies['guest_token']).not_to be_nil
+    end
+  end
+
+  describe '#store_location' do
+    it 'sets session return url' do
+      allow(controller).to receive_messages(request: double(fullpath: '/redirect'))
+      controller.store_location
+      expect(session[:solidus_user_return_to]).to eq '/redirect'
+    end
+  end
+
+  describe '#try_solidus_current_user' do
+    it 'calls solidus_current_user when define solidus_current_user method' do
+      expect(controller).to receive(:solidus_current_user)
+      controller.try_solidus_current_user
+    end
+    it 'calls current_solidus_user when define current_solidus_user method' do
+      expect(controller).to receive(:current_solidus_user)
+      controller.try_solidus_current_user
+    end
+    it 'returns nil' do
+      expect(controller.try_solidus_current_user).to eq nil
+    end
+  end
+end

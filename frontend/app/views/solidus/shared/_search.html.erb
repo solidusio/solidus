@@ -1,0 +1,11 @@
+<% @taxons = @taxon && @taxon.parent ? @taxon.parent.children : Solidus::Taxon.roots %>
+<%= form_tag solidus.products_path, :method => :get do %>
+  <% cache(cache_key_for_taxons) do %>
+    <%= select_tag :taxon,
+          options_for_select([[Solidus.t(:all_departments), '']] +
+                                @taxons.map {|t| [t.name, t.id]},
+                                @taxon ? @taxon.id : params[:taxon]), 'aria-label' => 'Taxon' %>
+  <% end %>
+  <%= search_field_tag :keywords, params[:keywords], :placeholder => Solidus.t(:search) %>
+  <%= submit_tag Solidus.t(:search), :name => nil %>
+<% end %>

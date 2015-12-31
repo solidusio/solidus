@@ -5,7 +5,7 @@ describe "Reports", :type => :feature do
 
   context "visiting the admin reports page" do
     it "should have the right content" do
-      visit spree.admin_path
+      visit solidus.admin_path
       click_link "Reports"
       click_link "Sales Total"
 
@@ -47,7 +47,7 @@ describe "Reports", :type => :feature do
     end
 
     it "should allow me to search for reports" do
-      visit spree.admin_path
+      visit solidus.admin_path
       click_link "Reports"
       click_link "Sales Total"
 

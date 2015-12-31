@@ -10,14 +10,14 @@ class ConvertSalePromotions < ActiveRecord::Migration
   private
 
   def sale_promotions
-    promo_table = Spree::Promotion.arel_table
-    code_table  = Spree::PromotionCode.arel_table
+    promo_table = Solidus::Promotion.arel_table
+    code_table  = Solidus::PromotionCode.arel_table
 
     promotion_code_join = promo_table.join(code_table, Arel::Nodes::OuterJoin).on(
       promo_table[:id].eq(code_table[:promotion_id])
     ).join_sources
 
-    Spree::Promotion.includes(:promotion_rules).
+    Solidus::Promotion.includes(:promotion_rules).
       joins(promotion_code_join).
       where(
         code_table[:value].eq(nil).and(

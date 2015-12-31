@@ -1,0 +1,20 @@
+<% content_for :page_title do %>
+  <%= Solidus.t(:listing_reports) %>
+<% end %>
+
+<table class="index">
+  <thead>
+    <tr data-hook="reports_header">
+      <th><%= Solidus.t(:name) %></th>
+      <th><%= Solidus.t(:description) %></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @reports.each do |key, value| %>
+    <tr data-hook="reports_row">
+      <td class="align-center"><%= link_to value[:name], send("#{key}_admin_reports_url".to_sym) %></td>
+      <td style="padding-left:1em"><%= value[:description] %></td>
+    </tr>
+    <% end %>
+  </tbody>
+</table>

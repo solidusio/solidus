@@ -1,5 +1,5 @@
-class AddChannelToSpreeOrders < ActiveRecord::Migration
+class AddChannelToSolidusOrders < ActiveRecord::Migration
   def change
-    add_column :spree_orders, :channel, :string, default: "spree"
+    add_column :solidus_orders, :channel, :string, default: "solidus"
   end
 end

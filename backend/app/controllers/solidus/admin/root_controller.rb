@@ -1,0 +1,29 @@
+module Solidus
+  module Admin
+    class RootController < Solidus::Admin::BaseController
+      skip_before_filter :authorize_admin
+
+      def index
+        redirect_to admin_root_redirect_path
+      end
+
+      private
+
+      def admin_root_redirect_path
+        if can?(:display, Solidus::Order) && can?(:admin, Solidus::Order)
+          solidus.admin_orders_path
+        elsif can?(:admin, :dashboards) && can?(:home, :dashboards)
+          solidus.home_admin_dashboards_path
+        else
+          # Invoke the unauthorized redirect, which will ideally go to the login controller
+          # of the users chosen authorization implimentation. For devise this is /admin/login.
+          #
+          # This is done so devise redirects back to this controller, instead of the one specified
+          # below, so this controller can use the user that is required for the path to
+          # be calculated.
+          raise CanCan::AccessDenied
+        end
+      end
+    end
+  end
+end

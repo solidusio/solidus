@@ -1,8 +1,8 @@
 require 'spec_helper'
 
-module Spree
+module Solidus
   describe 'Api Feature Specs', type: :request do
-    before { Spree::Api::Config[:requires_authentication] = false }
+    before { Solidus::Api::Config[:requires_authentication] = false }
     let!(:promotion) { FactoryGirl.create(:promotion, :with_order_adjustment, code: 'foo', weighted_order_adjustment_amount: 10) }
     let(:promotion_code) { promotion.codes.first }
     let!(:store) { FactoryGirl.create(:store) }
@@ -25,12 +25,12 @@ module Spree
     def login
       expect {
         post '/api/users', user: { email: "featurecheckoutuser@example.com", password: "featurecheckoutuser" }
-      }.to change { Spree.user_class.count }.by 1
+      }.to change { Solidus.user_class.count }.by 1
       expect(response).to have_http_status(:created)
-      @user = Spree.user_class.find(parsed['id'])
+      @user = Solidus.user_class.find(parsed['id'])
 
       # copied from api testing helpers support since we can't really sign in
-      allow(Spree::LegacyUser).to receive(:find_by).with(hash_including(:spree_api_key)) { @user }
+      allow(Solidus::LegacyUser).to receive(:find_by).with(hash_including(:solidus_api_key)) { @user }
     end
 
     def create_order(order_params: {})

@@ -1,0 +1,40 @@
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+
+<%= csrf_meta_tags %>
+
+<title>
+  <% if content_for? :title %>
+    <%= yield :title %>
+  <% else %>
+    <%= "Solidus #{Solidus.t('administration')}: " %>
+    <%= Solidus.t(controller.controller_name, :default => controller.controller_name.titleize) %>
+  <% end %>
+</title>
+
+<!-- Get "Open Sans" font from Google -->
+<link href='//fonts.googleapis.com/css?family=Open+Sans:400italic,600italic,400,600&subset=latin,cyrillic,greek,vietnamese' rel='stylesheet' type='text/css'>
+
+<%= stylesheet_link_tag 'solidus/backend/all' %>
+
+<%- if Rails.env.test? %>
+  <style>
+    /* A fixed position notification can intermittently be in the way of click targets.
+    Capybara uses `Element.scrollIntoView()` internally, but this only scrolls as far
+    as it must, which means a bottom of page notification will obstruct interactions.
+    */
+    .flash-wrapper { position: static; }
+  </style>
+<%- end %>
+
+
+<%= javascript_include_tag 'solidus/backend/all' %>
+
+<%= render "solidus/admin/shared/translations" %>
+
+<%= javascript_tag do -%>
+  var AUTH_TOKEN = "<%= form_authenticity_token %>";
+  Solidus.api_key = "<%= try_solidus_current_user.try(:solidus_api_key) %>";
+  Solidus.env = "<%= Rails.env %>";
+<% end %>
+
+<%= yield :head %>

@@ -4,7 +4,7 @@ describe "Option Types", :type => :feature do
   stub_authorization!
 
   before(:each) do
-    visit spree.admin_path
+    visit solidus.admin_path
     click_nav "Products"
   end
 
@@ -64,7 +64,7 @@ describe "Option Types", :type => :feature do
     expect(page).to have_content("Editing Option Type")
     expect(page).to have_css("tbody#option_values tr", count: 1)
     within("tbody#option_values") do
-      find('.spree_remove_fields').click
+      find('.solidus_remove_fields').click
     end
     # Assert that the field is hidden automatically
     expect(page).to have_no_css("tbody#option_values tr")

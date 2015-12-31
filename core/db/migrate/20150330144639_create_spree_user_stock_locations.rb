@@ -1,10 +1,10 @@
-class CreateSpreeUserStockLocations < ActiveRecord::Migration
+class CreateSolidusUserStockLocations < ActiveRecord::Migration
   def change
-    create_table :spree_user_stock_locations do |t|
+    create_table :solidus_user_stock_locations do |t|
       t.integer :user_id
       t.integer :stock_location_id
       t.timestamps null: true
     end
-    add_index :spree_user_stock_locations, :user_id
+    add_index :solidus_user_stock_locations, :user_id
   end
 end

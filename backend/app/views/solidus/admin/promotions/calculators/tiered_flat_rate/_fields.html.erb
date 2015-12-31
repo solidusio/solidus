@@ -1,0 +1,14 @@
+<%= label_tag "#{prefix}[calculator_attributes][preferred_base_amount]",
+  Solidus.t(:base_amount) %>
+<%= preference_field_tag(
+  "#{prefix}[calculator_attributes][preferred_base_amount]",
+  calculator.preferred_base_amount,
+  type: calculator.preference_type(:base_amount)) %>
+
+<%= label_tag nil, Solidus.t(:tiers) %>
+<%= content_tag :div, nil, class: "js-tiers", data: {
+  'original-tiers' => Hash[calculator.preferred_tiers.sort],
+  'form-prefix' => prefix,
+  'calculator' => 'tiered_flat_rate'
+} %>
+<button class="fa fa-plus button js-add-tier"><%= Solidus.t(:add) %></button>

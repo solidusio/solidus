@@ -1,5 +1,5 @@
-class AddPreferenceSourceToSpreePaymentMethods < ActiveRecord::Migration
+class AddPreferenceSourceToSolidusPaymentMethods < ActiveRecord::Migration
   def change
-    add_column :spree_payment_methods, :preference_source, :string
+    add_column :solidus_payment_methods, :preference_source, :string
   end
 end

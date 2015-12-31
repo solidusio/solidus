@@ -7,10 +7,10 @@ describe "Orders Listing", type: :feature, js: true do
   let(:promotion_code) { promotion.codes.first }
 
   before(:each) do
-    allow_any_instance_of(Spree::OrderInventory).to receive(:add_to_shipment)
+    allow_any_instance_of(Solidus::OrderInventory).to receive(:add_to_shipment)
     @order1 = create(:order_with_line_items, created_at: 1.day.from_now, completed_at: 1.day.from_now, number: "R100")
     @order2 = create(:order, created_at: 1.day.ago, completed_at: 1.day.ago, number: "R200")
-    visit spree.admin_orders_path
+    visit solidus.admin_orders_path
   end
 
   context "listing orders" do
@@ -59,7 +59,7 @@ describe "Orders Listing", type: :feature, js: true do
 
     it "should be able to filter on variant_id" do
       click_on 'Filter'
-      select2_search @order1.products.first.sku, from: Spree.t(:variant)
+      select2_search @order1.products.first.sku, from: Solidus.t(:variant)
       click_on 'Filter Results'
 
       within_row(1) do
@@ -71,17 +71,17 @@ describe "Orders Listing", type: :feature, js: true do
 
     context "when pagination is really short" do
       before do
-        @old_per_page = Spree::Config[:orders_per_page]
-        Spree::Config[:orders_per_page] = 1
+        @old_per_page = Solidus::Config[:orders_per_page]
+        Solidus::Config[:orders_per_page] = 1
       end
 
       after do
-        Spree::Config[:orders_per_page] = @old_per_page
+        Solidus::Config[:orders_per_page] = @old_per_page
       end
 
       # Regression test for #4004
       it "should be able to go from page to page for incomplete orders" do
-        10.times { Spree::Order.create email: "incomplete@example.com" }
+        10.times { Solidus::Order.create email: "incomplete@example.com" }
         click_on 'Filter'
         uncheck "q_completed_at_not_null"
         click_on 'Filter Results'
@@ -115,7 +115,7 @@ describe "Orders Listing", type: :feature, js: true do
           promotion_code: promotion_code,
         )
         @order1.save
-        visit spree.admin_orders_path
+        visit solidus.admin_orders_path
       end
 
       it "only shows the orders with the selected promotion" do

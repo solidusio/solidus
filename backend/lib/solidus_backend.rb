@@ -1,1 +1,1 @@
-require 'spree_backend'
+require 'solidus_backend'

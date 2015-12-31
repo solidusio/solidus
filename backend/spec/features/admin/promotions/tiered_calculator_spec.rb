@@ -6,7 +6,7 @@ feature "Tiered Calculator Promotions" do
   let(:promotion) { create :promotion }
 
   background do
-    visit spree.edit_admin_promotion_path(promotion)
+    visit solidus.edit_admin_promotion_path(promotion)
   end
 
   scenario "adding a tiered percent calculator", js: true do
@@ -33,10 +33,10 @@ feature "Tiered Calculator Promotions" do
     within('#actions_container') { click_button "Update" }
 
     first_action = promotion.actions.first
-    expect(first_action.class).to eq Spree::Promotion::Actions::CreateAdjustment
+    expect(first_action.class).to eq Solidus::Promotion::Actions::CreateAdjustment
 
     first_action_calculator = first_action.calculator
-    expect(first_action_calculator.class).to eq Spree::Calculator::TieredPercent
+    expect(first_action_calculator.class).to eq Solidus::Calculator::TieredPercent
     expect(first_action_calculator.preferred_base_percent).to eq 5
     expect(first_action_calculator.preferred_tiers).to eq Hash[100.0 => 10.0]
   end
@@ -47,12 +47,12 @@ feature "Tiered Calculator Promotions" do
     background do
       action = promotion.actions.first
 
-      action.calculator = Spree::Calculator::TieredFlatRate.new
+      action.calculator = Solidus::Calculator::TieredFlatRate.new
       action.calculator.preferred_base_amount = 5
       action.calculator.preferred_tiers = Hash[100 => 10, 200 => 15, 300 => 20]
       action.calculator.save!
 
-      visit spree.edit_admin_promotion_path(promotion)
+      visit solidus.edit_admin_promotion_path(promotion)
     end
 
     scenario "deleting a tier", js: true do

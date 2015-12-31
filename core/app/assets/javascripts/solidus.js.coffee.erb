@@ -1,0 +1,61 @@
+#= require jsuri
+class window.Solidus
+  @ready: (callback) ->
+    jQuery(document).ready(callback)
+
+  @mountedAt: ->
+    "<%= Rails.application.routes.url_helpers.solidus_path(trailing_slash: true) %>"
+
+  @pathFor: (path) ->
+    locationOrigin = "#{window.location.protocol}//#{window.location.hostname}" + (if window.location.port then ":#{window.location.port}" else "")
+    "#{locationOrigin}#{@mountedAt()}#{path}"
+
+  # Helper function to take a URL and add query parameters to it
+  # Uses the JSUri library from here: https://github.com/derek-watson/jsUri
+  # Thanks to Jake Moffat for the suggestion: https://twitter.com/jakeonrails/statuses/321776992221544449
+  @url: (uri, query) ->
+    if Solidus.env == 'development'
+      console.warn 'Solidus.url is deprecated, please use Solidus.ajax for your request instead.'
+    if uri.path == undefined
+      uri = new Uri(uri)
+    if query
+      $.each query, (key, value) ->
+        uri.addQueryParam(key, value)
+    return uri
+
+  # This function automatically appends the API token
+  # for the user to the end of any URL.
+  # Immediately after, this string is then passed to jQuery.ajax.
+  #
+  # Solidus.ajax works in two ways to support common jQuery syntax:
+  #
+  # Solidus.ajax("url", {settings: 'go here'})
+  # or:
+  # Solidus.ajax({url: "url", settings: 'go here'})
+  #
+  # Solidus.getJSON has the same method signature as $.getJSON
+  @ajax: (url, options) ->
+    if typeof(url) == "object"
+      options = url
+      url = undefined
+
+    options = options || {}
+
+    options = $.extend(options, { headers: { "X-Solidus-Token": Solidus.api_key } })
+    $.ajax(url, options)
+
+  @routes:
+    states_search: @pathFor('api/states')
+    apply_coupon_code: (order_id) ->
+      Solidus.pathFor("api/orders/#{order_id}/apply_coupon_code")
+
+  @getJSON: (url, data, success) ->
+    if typeof data is 'function'
+      success = data
+      data = undefined
+    @ajax(
+      dataType: "json",
+      url: url,
+      data: data,
+      success: success
+    )

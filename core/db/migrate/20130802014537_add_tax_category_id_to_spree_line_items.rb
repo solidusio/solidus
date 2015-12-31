@@ -1,5 +1,5 @@
-class AddTaxCategoryIdToSpreeLineItems < ActiveRecord::Migration
+class AddTaxCategoryIdToSolidusLineItems < ActiveRecord::Migration
   def change
-    add_column :spree_line_items, :tax_category_id, :integer
+    add_column :solidus_line_items, :tax_category_id, :integer
   end
 end

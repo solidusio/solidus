@@ -1,5 +1,5 @@
-class AddAdminNameColumnToSpreeShippingMethods < ActiveRecord::Migration
+class AddAdminNameColumnToSolidusShippingMethods < ActiveRecord::Migration
   def change
-    add_column :spree_shipping_methods, :admin_name, :string
+    add_column :solidus_shipping_methods, :admin_name, :string
   end
 end

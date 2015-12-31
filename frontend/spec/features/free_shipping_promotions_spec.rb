@@ -14,11 +14,11 @@ describe "Free shipping promotions", :type => :feature, :js => true do
   let!(:payment_method) { create(:check_payment_method) }
   let!(:product) { create(:product, :name => "RoR Mug", :price => 20) }
   let!(:promotion) do
-    promotion = Spree::Promotion.create!(:name       => "Free Shipping",
+    promotion = Solidus::Promotion.create!(:name       => "Free Shipping",
                                          :starts_at  => 1.day.ago,
                                          :expires_at => 1.day.from_now)
 
-    action = Spree::Promotion::Actions::FreeShipping.new
+    action = Solidus::Promotion::Actions::FreeShipping.new
     action.promotion = promotion
     action.save
 
@@ -28,11 +28,11 @@ describe "Free shipping promotions", :type => :feature, :js => true do
   context "free shipping promotion automatically applied" do
     before do
 
-      visit spree.root_path
+      visit solidus.root_path
       click_link "RoR Mug"
       click_button "add-to-cart-button"
       click_button "Checkout"
-      fill_in "order_email", :with => "spree@example.com"
+      fill_in "order_email", :with => "solidus@example.com"
       fill_in "First Name", :with => "John"
       fill_in "Last Name", :with => "Smith"
       fill_in "Street Address", :with => "1 John Street"

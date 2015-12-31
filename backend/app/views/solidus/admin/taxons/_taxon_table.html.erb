@@ -1,0 +1,23 @@
+<table class="index">
+  <thead>
+    <tr data-hook="taxons_header">
+      <th><%= Solidus.t(:name) %></th>
+      <th><%= Solidus.t(:path) %></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% taxons.each do |taxon| %>
+      <tr id="<%= solidus_dom_id(taxon) %>" data-hook="taxons_row" class="<%= cycle('odd', 'even')%>">
+        <td><%= taxon.name %></td>
+        <td><%= taxon_path taxon %></td>
+        <td class="actions">
+          <%= link_to_delete taxon, :url => remove_admin_product_taxon_url(@product, taxon), :name => icon('delete') + ' ' + Solidus.t(:remove) %>
+        </td>
+      </tr>
+    <% end %>
+    <% if taxons.empty? %>
+      <tr data-hook="taxons_none"><td colspan="3"><%= Solidus.t(:none) %>.</td></tr>
+    <% end %>
+  </tbody>
+</table>

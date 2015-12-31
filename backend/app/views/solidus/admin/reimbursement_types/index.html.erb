@@ -1,0 +1,26 @@
+<%= render partial: 'solidus/admin/shared/configuration_menu' %>
+
+<% content_for :page_title do %>
+  <%= Solidus.t(:reimbursement_types) %>
+<% end %>
+
+<table class="index" id='listing_reimbursement_types' data-hook>
+  <thead>
+    <tr data-hook="reimbursement_types_header">
+      <th><%= Solidus.t(:name) %></th>
+      <th><%= Solidus.t(:type) %></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @reimbursement_types.each do |reimbursement_type| %>
+      <tr id="<%= solidus_dom_id reimbursement_type %>" data-hook="reimbursement_type_row" class="<%= cycle('odd', 'even')%>">
+        <td class="align-center">
+          <%= reimbursement_type.name.humanize %>
+        </td>
+        <td>
+          <%= reimbursement_type.type %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

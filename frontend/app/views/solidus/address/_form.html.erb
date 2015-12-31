@@ -1,0 +1,75 @@
+<% address_id = address_type.chars.first %>
+<div class="inner" data-hook=<%="#{address_type}_inner" %>>
+  <p class="field" id=<%="#{address_id}firstname" %>>
+    <%= form.label :firstname, Solidus.t(:first_name) %><span class="required">*</span><br />
+    <%= form.text_field :firstname, :class => 'required' %>
+  </p>
+  <p class="field" id=<%="#{address_id}lastname" %>>
+    <%= form.label :lastname, Solidus.t(:last_name) %><span class="required">*</span><br />
+    <%= form.text_field :lastname, :class => 'required' %>
+  </p>
+  <% if Solidus::Config[:company] %>
+    <p class="field" id=<%="#{address_id}company" %>>
+      <%= form.label :company, Solidus.t(:company) %><br />
+      <%= form.text_field :company %>
+    </p>
+  <% end %>
+  <p class="field" id=<%="#{address_id}address1" %>>
+    <%= form.label :address1, Solidus.t(:street_address) %><span class="required">*</span><br />
+    <%= form.text_field :address1, :class => 'required' %>
+  </p>
+  <p class="field" id=<%="#{address_id}address2" %>>
+    <%= form.label :address2, Solidus.t(:street_address_2) %><br />
+    <%= form.text_field :address2 %>
+  </p>
+  <p class="field" id=<%="#{address_id}city" %>>
+    <%= form.label :city, Solidus.t(:city) %><span class="required">*</span><br />
+    <%= form.text_field :city, :class => 'required' %>
+  </p>
+  <p class="field" id=<%="#{address_id}country" %>>
+    <%= form.label :country_id, Solidus.t(:country) %><span class="required">*</span><br />
+    <span id=<%="#{address_id}country-selection" %>>
+      <%= form.collection_select :country_id, available_countries, :id, :name, {}, {:class => 'required'} %>
+    </span>
+  </p>
+
+  <% if Solidus::Config[:address_requires_state] %>
+    <p class="field" id=<%="#{address_id}state" %>>
+      <% have_states = !address.country.states.empty? %>
+      <%= form.label :state, Solidus.t(:state) %><span class='required' id=<%="#{address_id}state-required"%>>*</span><br/>
+
+      <% state_elements = [
+         form.collection_select(:state_id, address.country.states,
+                            :id, :name,
+                            {:include_blank => true},
+                            {:class => have_states ? 'required' : 'hidden',
+                            :disabled => !have_states}) +
+         form.text_field(:state_name,
+                            :class => !have_states ? 'required' : 'hidden',
+                            :disabled => have_states)
+         ].join.gsub('"', "'").gsub("\n", "")
+      %>
+      <%= javascript_tag do -%>
+        $('#<%="#{address_id}state" %>').append("<%== state_elements %>");
+      <% end %>
+    </p>
+      <noscript>
+        <%= form.text_field :state_name, :class => 'required' %>
+      </noscript>
+  <% end %>
+
+  <p class="field" id=<%="#{address_id}zipcode" %>>
+    <%= form.label :zipcode, Solidus.t(:zip) %><% if address.require_zipcode? %><span class="required">*</span><% end %><br />
+    <%= form.text_field :zipcode, :class => "#{'required' if address.require_zipcode?}" %>
+  </p>
+  <p class="field" id=<%="#{address_id}phone" %>>
+    <%= form.label :phone, Solidus.t(:phone) %><% if address.require_phone? %><span class="required">*</span><% end %><br />
+    <%= form.phone_field :phone, :class => "#{'required' if address.require_phone?}" %>
+  </p>
+  <% if Solidus::Config[:alternative_shipping_phone] %>
+    <p class="field" id=<%="#{address_id}altphone" %>>
+      <%= form.label :alternative_phone, Solidus.t(:alternative_phone) %><br />
+      <%= form.phone_field :alternative_phone %>
+    </p>
+  <% end %>
+</div>

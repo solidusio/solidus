@@ -9,16 +9,16 @@ describe "Product Images", :type => :feature do
     # Ensure attachment style keys are symbolized before running all tests
     # Otherwise this would result in this error:
     # undefined method `processors' for \"48x48>\
-    Spree::Image.attachment_definitions[:attachment][:styles].symbolize_keys!
+    Solidus::Image.attachment_definitions[:attachment][:styles].symbolize_keys!
   end
 
   context "uploading, editing, and deleting an image", :js => true do
     it "should allow an admin to upload and edit an image for a product" do
-      Spree::Image.attachment_definitions[:attachment].delete :storage
+      Solidus::Image.attachment_definitions[:attachment].delete :storage
 
       create(:product)
 
-      visit spree.admin_path
+      visit solidus.admin_path
       click_nav "Products"
       click_icon(:edit)
       click_link "Images"
@@ -46,7 +46,7 @@ describe "Product Images", :type => :feature do
   it "should see variant images" do
     variant = create(:variant)
     variant.images.create!(:attachment => File.open(file_path))
-    visit spree.admin_product_images_path(variant.product)
+    visit solidus.admin_product_images_path(variant.product)
 
     expect(page).not_to have_content("No Images Found.")
     within("table.index") do
@@ -70,7 +70,7 @@ describe "Product Images", :type => :feature do
   it "should not see variant column when product has no variants" do
     product = create(:product)
     product.images.create!(:attachment => File.open(file_path))
-    visit spree.admin_product_images_path(product)
+    visit solidus.admin_product_images_path(product)
 
     expect(page).not_to have_content("No Images Found.")
     within("table.index") do

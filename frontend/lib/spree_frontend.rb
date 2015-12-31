@@ -1,1 +1,1 @@
-require 'spree/frontend'
+require 'solidus/frontend'

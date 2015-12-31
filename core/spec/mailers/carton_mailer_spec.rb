@@ -1,7 +1,7 @@
 require 'spec_helper'
 require 'email_spec'
 
-describe Spree::CartonMailer do
+describe Solidus::CartonMailer do
   include EmailSpec::Helpers
   include EmailSpec::Matchers
 
@@ -10,7 +10,7 @@ describe Spree::CartonMailer do
 
   # Regression test for #2196
   it "doesn't include out of stock in the email body" do
-    shipment_email = Spree::CartonMailer.shipped_email(order: order, carton: carton)
+    shipment_email = Solidus::CartonMailer.shipped_email(order: order, carton: carton)
     expect(shipment_email.body).not_to include(%Q{Out of Stock})
     expect(shipment_email.body).to include(%Q{Your order has been shipped})
     expect(shipment_email.subject).to eq "#{order.store.name} Shipment Notification ##{order.number}"
@@ -19,7 +19,7 @@ describe Spree::CartonMailer do
   context "deprecated signature" do
     it do
       ActiveSupport::Deprecation.silence do
-        mail = Spree::CartonMailer.shipped_email(carton.id)
+        mail = Solidus::CartonMailer.shipped_email(carton.id)
         expect(mail.subject).to include "Shipment Notification"
       end
     end
@@ -27,7 +27,7 @@ describe Spree::CartonMailer do
 
   context "with resend option" do
     subject do
-      Spree::CartonMailer.shipped_email(order: order, carton: carton, resend: true).subject
+      Solidus::CartonMailer.shipped_email(order: order, carton: carton, resend: true).subject
     end
     it { is_expected.to match /^\[RESEND\] / }
   end
@@ -36,7 +36,7 @@ describe Spree::CartonMailer do
     context "shipped_email" do
       context "pt-BR locale" do
         before do
-          pt_br_shipped_email = { :spree => { :shipment_mailer => { :shipped_email => { :dear_customer => 'Caro Cliente,' } } } }
+          pt_br_shipped_email = { :solidus => { :shipment_mailer => { :shipped_email => { :dear_customer => 'Caro Cliente,' } } } }
           I18n.backend.store_translations :'pt-BR', pt_br_shipped_email
           I18n.locale = :'pt-BR'
         end
@@ -46,7 +46,7 @@ describe Spree::CartonMailer do
         end
 
         specify do
-          shipped_email = Spree::CartonMailer.shipped_email(order: order, carton: carton)
+          shipped_email = Solidus::CartonMailer.shipped_email(order: order, carton: carton)
           expect(shipped_email.body).to include("Caro Cliente,")
         end
       end

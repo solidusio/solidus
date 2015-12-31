@@ -1,0 +1,10 @@
+<% content_for :page_title do %>
+  <%= Solidus.t(:editing_promotion_category) %>
+<% end %>
+
+<%= form_for @promotion_category, :url => object_url, :method => :put do |f| %>
+  <fieldset class="no-border-top">
+    <%= render :partial => 'form', :locals => { :f => f } %>
+    <%= render :partial => 'solidus/admin/shared/edit_resource_links' %>
+  </fieldset>
+<% end %>

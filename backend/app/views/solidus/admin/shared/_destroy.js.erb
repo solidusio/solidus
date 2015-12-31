@@ -1,0 +1,6 @@
+<% success = flash.discard(:success)
+if success %>
+  show_flash('success', "<%= j success %>")
+<% end %>
+
+<%= render :partial => '/solidus/admin/shared/update_order_state' if @order %>

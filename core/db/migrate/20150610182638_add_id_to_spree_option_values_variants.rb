@@ -1,5 +1,5 @@
-class AddIdToSpreeOptionValuesVariants < ActiveRecord::Migration
+class AddIdToSolidusOptionValuesVariants < ActiveRecord::Migration
   def change
-    add_column :spree_option_values_variants, :id, :primary_key
+    add_column :solidus_option_values_variants, :id, :primary_key
   end
 end

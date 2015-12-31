@@ -3,16 +3,16 @@ require 'spec_helper'
 describe 'setting locale', :type => :feature do
   def with_locale(locale)
     I18n.locale = locale
-    Spree::Frontend::Config[:locale] = locale
+    Solidus::Frontend::Config[:locale] = locale
     yield
     I18n.locale = I18n.default_locale
-    Spree::Frontend::Config[:locale] = 'en'
+    Solidus::Frontend::Config[:locale] = 'en'
   end
 
   context 'shopping cart link and page' do
     before do
       I18n.backend.store_translations(:fr,
-       :spree => {
+       :solidus => {
          :cart => 'Panier',
          :shopping_cart => 'Panier'
       })
@@ -20,7 +20,7 @@ describe 'setting locale', :type => :feature do
 
     it 'should be in french' do
       with_locale('fr') do
-        visit spree.root_path
+        visit solidus.root_path
         click_link 'Panier'
         expect(page).to have_content('Panier')
       end
@@ -45,7 +45,7 @@ describe 'setting locale', :type => :feature do
     end
 
     it 'shows translated jquery.validate error messages', js: true do
-      visit spree.root_path
+      visit solidus.root_path
       click_link mug.name
       click_button 'add-to-cart-button'
       error_messages.each do |locale, message|

@@ -1,0 +1,41 @@
+<% content_for :page_actions do %>
+  <% if can?(:fire, @order) %>
+    <li><%= event_links %></li>
+  <% end %>
+  <% if can?(:resend, @order) && @order.completed? %>
+    <li><%= button_link_to Solidus.t(:resend), resend_admin_order_url(@order), method: :post, icon: 'email' %></li>
+  <% end %>
+  <% if can?(:admin, Solidus::Order) %>
+    <li><%= button_link_to Solidus.t(:back_to_orders_list), admin_orders_path, icon: 'arrow-left' %></li>
+  <% end %>
+<% end %>
+
+<%= render :partial => 'solidus/admin/shared/order_tabs', :locals => { :current => 'Shipments' } %>
+
+<div data-hook="admin_order_edit_header">
+  <%= render partial: 'solidus/shared/error_messages', locals: { target: @order } %>
+</div>
+
+<% if @order.payments.exists? && @order.is_risky? %>
+  <%= render 'solidus/admin/orders/risk_analysis', latest_payment: @order.payments.order("created_at DESC").first %>
+<% end %>
+
+<% if can?(:update, Solidus::Shipment) && can?(:update, @order) && @order.shipment_state != "shipped" %>
+  <%= render partial: 'add_product' %>
+<% end %>
+
+<% if @order.line_items.empty? %>
+  <div class="no-objects-found">
+    <%= Solidus.t(:your_order_is_empty_add_product)%>
+  </div>
+<% end %>
+
+<div data-hook="admin_order_edit_form">
+  <div id="order-form-wrapper">
+    <%= render partial: 'form', locals: { order: @order } %>
+  </div>
+</div>
+
+<% content_for :head do %>
+  <%= javascript_tag 'var expand_variants = true;' %>
+<% end %>

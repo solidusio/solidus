@@ -1,4 +1,4 @@
-class AddCounterCacheFromSpreeVariantsToSpreeStockItems < ActiveRecord::Migration
+class AddCounterCacheFromSolidusVariantsToSolidusStockItems < ActiveRecord::Migration
   # This was unnecessary and was removed
   def up
   end

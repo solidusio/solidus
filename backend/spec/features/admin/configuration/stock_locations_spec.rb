@@ -5,7 +5,7 @@ describe "Stock Locations", :type => :feature do
 
   before(:each) do
     country = create(:country)
-    visit spree.admin_path
+    visit solidus.admin_path
     click_link "Settings"
     click_link "Stock Locations"
   end

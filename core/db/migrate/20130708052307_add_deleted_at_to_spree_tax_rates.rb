@@ -1,5 +1,5 @@
-class AddDeletedAtToSpreeTaxRates < ActiveRecord::Migration
+class AddDeletedAtToSolidusTaxRates < ActiveRecord::Migration
   def change
-    add_column :spree_tax_rates, :deleted_at, :datetime
+    add_column :solidus_tax_rates, :deleted_at, :datetime
   end
 end

@@ -1,13 +1,13 @@
-class CreateSpreeStores < ActiveRecord::Migration
+class CreateSolidusStores < ActiveRecord::Migration
   def change
-    if table_exists?(:spree_stores)
-      rename_column :spree_stores, :domains, :url
-      rename_column :spree_stores, :email, :mail_from_address
-      add_column :spree_stores, :meta_description, :text
-      add_column :spree_stores, :meta_keywords, :text
-      add_column :spree_stores, :seo_title, :string
+    if table_exists?(:solidus_stores)
+      rename_column :solidus_stores, :domains, :url
+      rename_column :solidus_stores, :email, :mail_from_address
+      add_column :solidus_stores, :meta_description, :text
+      add_column :solidus_stores, :meta_keywords, :text
+      add_column :solidus_stores, :seo_title, :string
     else
-      create_table :spree_stores do |t|
+      create_table :solidus_stores do |t|
         t.string :name
         t.string :url
         t.text :meta_description

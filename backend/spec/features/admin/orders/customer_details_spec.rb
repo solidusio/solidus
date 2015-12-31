@@ -18,11 +18,11 @@ describe "Customer Details", type: :feature, js: true do
   context "brand new order" do
     # Regression test for #3335 & #5317
     it "associates a user when not using guest checkout" do
-      visit spree.admin_path
+      visit solidus.admin_path
       click_link "Orders"
       click_link "New Order"
       click_on 'Cart'
-      select2_search product.name, from: Spree.t(:name_or_sku)
+      select2_search product.name, from: Solidus.t(:name_or_sku)
       within("table.stock-levels") do
         find('.variant_quantity').set(1)
       end
@@ -41,18 +41,18 @@ describe "Customer Details", type: :feature, js: true do
       expect(page).to have_field('State', with: user.bill_address.state_id)
       expect(page).to have_field('Phone', with: user.bill_address.phone)
       click_button "Update"
-      expect(Spree::Order.last.user).not_to be_nil
+      expect(Solidus::Order.last.user).not_to be_nil
     end
   end
 
   context "editing an order" do
     before do
-      configure_spree_preferences do |config|
+      configure_solidus_preferences do |config|
         config.default_country_id = country.id
         config.company = true
       end
 
-      visit spree.admin_path
+      visit solidus.admin_path
       click_link "Orders"
       within('table#listing_orders') { click_icon(:edit) }
     end
@@ -115,7 +115,7 @@ describe "Customer Details", type: :feature, js: true do
 
       before do
         order.bill_address.country.destroy
-        configure_spree_preferences do |config|
+        configure_solidus_preferences do |config|
           config.default_country_id = brazil.id
         end
       end
@@ -129,7 +129,7 @@ describe "Customer Details", type: :feature, js: true do
     # Regression test for #942
     context "errors when no shipping methods are available" do
       before do
-        Spree::ShippingMethod.delete_all
+        Solidus::ShippingMethod.delete_all
       end
 
       specify do

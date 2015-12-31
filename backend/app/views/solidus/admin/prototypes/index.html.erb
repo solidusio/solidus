@@ -1,0 +1,53 @@
+<% content_for :page_title do %>
+  <%= Solidus.t(:prototypes) %>
+<% end %>
+
+<% content_for :page_actions do %>
+  <% if can?(:create, Solidus::Prototype) %>
+    <li id="new_prototype_link">
+      <%= button_link_to Solidus.t(:new_prototype), new_admin_prototype_url, {:remote => true, :icon => 'plus', 'data-update' => 'new_prototype', :id => 'new_prototype_link'} %>
+    </li>
+  <% end %>
+<% end %>
+
+<%= image_tag 'select2-spinner.gif', :plugin => 'solidus', :style => 'display: none', :id => 'busy_indicator' %>
+
+<%# Placeholder for new prototype form %>
+<div id="new_prototype"></div>
+
+<% if @prototypes.any? %>
+<table class="index" id='listing_prototypes' data-hook>
+  <colgroup>
+    <col style="width: 90%">
+    <col style="width: 10%">
+  </colgroup>
+  <thead>
+    <tr data-hook="prototypes_header">
+      <th><%= Solidus.t(:name) %></th>
+      <th class="actions"></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @prototypes.each do |prototype| %>
+      <tr id="<%= solidus_dom_id prototype %>" data-hook="prototypes_row" class="<%= cycle('odd', 'even')%>">
+        <td style="padding-left:1em"><%= prototype.name %></td>
+        <td class="actions">
+          <% if can?(:update, prototype) %>
+            <%= link_to_edit(prototype, :no_text => true, :class => 'admin_edit_prototype') %>
+          <% end %>
+          <% if can?(:destroy, prototype) %>
+            <%= link_to_delete(prototype, :no_text => true) %>
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<% else %>
+  <div class="alpha twelve columns no-objects-found">
+    <%= Solidus.t(:no_resource_found, resource: I18n.t(:other, scope: 'activerecord.models.solidus/prototype')) %>
+    <% if can?(:create, Solidus::Prototype) %>
+      <%= link_to Solidus.t(:add_one), solidus.new_admin_prototype_path %>!
+    <% end %>
+  </div>
+<% end %>
