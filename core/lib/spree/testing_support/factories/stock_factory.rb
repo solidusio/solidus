@@ -1,6 +1,7 @@
 FactoryGirl.define do
-  # must use build()
   factory :stock_packer, class: Spree::Stock::Packer do
+    skip_create
+
     transient do
       stock_location { build(:stock_location) }
       contents []
@@ -10,6 +11,8 @@ FactoryGirl.define do
   end
 
   factory :stock_package, class: Spree::Stock::Package do
+    skip_create
+
     transient do
       stock_location { build(:stock_location) }
       contents       { [] }
