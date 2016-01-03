@@ -101,7 +101,7 @@ module Spree
 
     make_permalink field: :number
 
-    delegate :update_totals, :persist_totals, :to => :updater
+    delegate :update_totals, :persist_totals, to: :updater
 
     class_attribute :update_hooks
     self.update_hooks = Set.new

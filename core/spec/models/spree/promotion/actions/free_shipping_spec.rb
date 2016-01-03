@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Spree::Promotion::Actions::FreeShipping, :type => :model do
+describe Spree::Promotion::Actions::FreeShipping, type: :model do
   let(:order) { create(:completed_order_with_totals) }
   let(:promotion_code) { create(:promotion_code, value: 'somecode') }
   let(:promotion) { promotion_code.promotion }

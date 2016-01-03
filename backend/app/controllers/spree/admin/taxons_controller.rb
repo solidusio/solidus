@@ -10,9 +10,9 @@ module Spree
 
       def search
         if params[:ids]
-          @taxons = Spree::Taxon.where(:id => params[:ids].split(','))
+          @taxons = Spree::Taxon.where(id: params[:ids].split(','))
         else
-          @taxons = Spree::Taxon.limit(20).ransack(:name_cont => params[:q]).result
+          @taxons = Spree::Taxon.limit(20).ransack(name_cont: params[:q]).result
         end
       end
 
@@ -21,7 +21,7 @@ module Spree
         @taxon = @taxonomy.taxons.build(params[:taxon])
         if @taxon.save
           respond_with(@taxon) do |format|
-            format.json {render :json => @taxon.to_json }
+            format.json {render json: @taxon.to_json }
           end
         else
           flash[:error] = Spree.t('errors.messages.could_not_create_taxon')
@@ -84,14 +84,14 @@ module Spree
 
         respond_with(@taxon) do |format|
           format.html {redirect_to edit_admin_taxonomy_url(@taxonomy) }
-          format.json {render :json => @taxon.to_json }
+          format.json {render json: @taxon.to_json }
         end
       end
 
       def destroy
         @taxon = Taxon.find(params[:id])
         @taxon.destroy
-        respond_with(@taxon) { |format| format.json { render :json => '' } }
+        respond_with(@taxon) { |format| format.json { render json: '' } }
       end
 
       private

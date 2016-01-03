@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Spree::Promotion::Rules::Taxon, :type => :model do
+describe Spree::Promotion::Rules::Taxon, type: :model do
   let(:rule) { Spree::Promotion::Rules::Taxon.create!(promotion: create(:promotion)) }
 
   context '#elegible?(order)' do

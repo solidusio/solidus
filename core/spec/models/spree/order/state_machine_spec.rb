@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Spree::Order, :type => :model do
+describe Spree::Order, type: :model do
   let(:order) { Spree::Order.new }
   before do
     # Ensure state machine has been re-defined correctly
@@ -16,7 +16,7 @@ describe Spree::Order, :type => :model do
         order.run_callbacks(:create)
         allow(order).to receive_messages :payment_required? => true
         allow(order).to receive_messages :process_payments! => true
-        allow(order).to receive_messages :ensure_available_shipping_rates => true
+        allow(order).to receive_messages ensure_available_shipping_rates: true
       end
 
       context "when payment processing succeeds" do
@@ -97,32 +97,32 @@ describe Spree::Order, :type => :model do
 
   context "#cancel" do
     let!(:variant) { stub_model(Spree::Variant) }
-    let!(:inventory_units) { [stub_model(Spree::InventoryUnit, :variant => variant),
-                              stub_model(Spree::InventoryUnit, :variant => variant) ]}
+    let!(:inventory_units) { [stub_model(Spree::InventoryUnit, variant: variant),
+                              stub_model(Spree::InventoryUnit, variant: variant) ]}
     let!(:shipment) do
       shipment = stub_model(Spree::Shipment)
-      allow(shipment).to receive_messages :inventory_units => inventory_units, :order => order
-      allow(order).to receive_messages :shipments => [shipment]
+      allow(shipment).to receive_messages inventory_units: inventory_units, order: order
+      allow(order).to receive_messages shipments: [shipment]
       shipment
     end
 
     before do
 
       2.times do
-        create(:line_item, :order => order, price: 10)
+        create(:line_item, order: order, price: 10)
       end
 
-      allow(order.line_items).to receive_messages :find_by_variant_id => order.line_items.first
+      allow(order.line_items).to receive_messages find_by_variant_id: order.line_items.first
 
       allow(order).to receive_messages :completed? => true
       allow(order).to receive_messages :allow_cancel? => true
 
       shipments = [shipment]
-      allow(order).to receive_messages :shipments => shipments
-      allow(shipments).to receive_messages :states => []
-      allow(shipments).to receive_messages :ready => []
-      allow(shipments).to receive_messages :pending => []
-      allow(shipments).to receive_messages :shipped => []
+      allow(order).to receive_messages shipments: shipments
+      allow(shipments).to receive_messages states: []
+      allow(shipments).to receive_messages ready: []
+      allow(shipments).to receive_messages pending: []
+      allow(shipments).to receive_messages shipped: []
 
       allow_any_instance_of(Spree::OrderUpdater).to receive(:update_adjustment_total) { 10 }
     end

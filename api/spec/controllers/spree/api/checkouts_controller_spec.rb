@@ -45,7 +45,7 @@ module Spree
         expect(order.state).to eq "cart"
         expect(order.email).not_to be_nil
         request.headers["X-Spree-Order-Token"] = order.guest_token
-        api_put :update, :id => order.to_param
+        api_put :update, id: order.to_param
         expect(order.reload.state).to eq "address"
       end
 
@@ -165,8 +165,8 @@ module Spree
 
       it "returns errors when source is required and missing" do
         order.update_column(:state, "payment")
-        api_put :update, :id => order.to_param, :order_token => order.guest_token,
-          :order => { :payments_attributes => [{ :payment_method_id => @payment_method.id }] }
+        api_put :update, id: order.to_param, order_token: order.guest_token,
+          order: { payments_attributes: [{ payment_method_id: @payment_method.id }] }
         expect(response.status).to eq(422)
         source_errors = json_response['errors']['payments.source']
         expect(source_errors).to include("can't be blank")
@@ -425,7 +425,7 @@ module Spree
         order.update_column(:state, "payment")
         expect(PromotionHandler::Coupon).to receive(:new).with(order).and_call_original
         expect_any_instance_of(PromotionHandler::Coupon).to receive(:apply).and_return({ coupon_applied?: true })
-        api_put :update, :id => order.to_param, order_token: order.guest_token, order: { coupon_code: "foobar" }
+        api_put :update, id: order.to_param, order_token: order.guest_token, order: { coupon_code: "foobar" }
       end
     end
 
@@ -453,7 +453,7 @@ module Spree
           email: nil
         )
 
-        api_put :next, :id => order.to_param, :order_token => order.guest_token
+        api_put :next, id: order.to_param, order_token: order.guest_token
         expect(response.status).to eq(422)
         expect(json_response['error']).to match(/could not be transitioned/)
       end
@@ -489,7 +489,7 @@ module Spree
           end
 
           it "returns a sensible error when no payment method is specified" do
-            # api_put :complete, :id => order.to_param, :order_token => order.token, :order => {}
+            # api_put :complete, id: order.to_param, order_token: order.token, order: {}
             subject
             expect(json_response["errors"]["base"]).to include(Spree.t(:no_payment_found))
           end
@@ -498,10 +498,10 @@ module Spree
             let(:params) { super().merge(expected_total: order.total + 1) }
 
             it "returns an error if expected_total is present and does not match actual total" do
-              # api_put :complete, :id => order.to_param, :order_token => order.token, :expected_total => order.total + 1
+              # api_put :complete, id: order.to_param, order_token: order.token, expected_total: order.total + 1
               subject
               expect(response.status).to eq(400)
-              expect(json_response['errors']['expected_total']).to include(Spree.t(:expected_total_mismatch, :scope => 'api.order'))
+              expect(json_response['errors']['expected_total']).to include(Spree.t(:expected_total_mismatch, scope: 'api.order'))
             end
           end
         end

@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Spree::OrderContents, :type => :model do
+describe Spree::OrderContents, type: :model do
   let(:order) { Spree::Order.create }
   let(:variant) { create(:variant) }
   let!(:stock_location) { variant.stock_locations.first }
@@ -66,7 +66,7 @@ describe Spree::OrderContents, :type => :model do
 
     context "running promotions" do
       let(:promotion) { create(:promotion, apply_automatically: true) }
-      let(:calculator) { Spree::Calculator::FlatRate.new(:preferred_amount => 10) }
+      let(:calculator) { Spree::Calculator::FlatRate.new(preferred_amount: 10) }
 
       shared_context "discount changes order total" do
         before { subject.add(variant, 1) }

@@ -5,12 +5,12 @@ module Spree
 
       def update_values_positions
         params[:positions].each do |id, index|
-          OptionValue.where(:id => id).update_all(:position => index)
+          OptionValue.where(id: id).update_all(position: index)
         end
 
         respond_to do |format|
           format.html { redirect_to admin_product_variants_url(params[:product_id]) }
-          format.js  { render :text => 'Ok' }
+          format.js  { render text: 'Ok' }
         end
       end
 

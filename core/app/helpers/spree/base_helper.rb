@@ -24,7 +24,7 @@ module Spree
         css_class = 'full'
       end
 
-      link_to text.html_safe, spree.cart_path, :class => "cart-info #{css_class}"
+      link_to text.html_safe, spree.cart_path, class: "cart-info #{css_class}"
     end
 
     # human readable list of variant options

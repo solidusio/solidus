@@ -47,8 +47,8 @@ RSpec.configure do |config|
   end
 
   config.include FactoryGirl::Syntax::Methods
-  config.include Spree::Api::TestingSupport::Helpers, :type => :controller
-  config.extend Spree::Api::TestingSupport::Setup, :type => :controller
+  config.include Spree::Api::TestingSupport::Helpers, type: :controller
+  config.extend Spree::Api::TestingSupport::Setup, type: :controller
   config.include Spree::TestingSupport::Preferences
 
   config.extend WithModel

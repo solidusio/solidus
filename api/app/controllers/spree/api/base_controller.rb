@@ -47,9 +47,9 @@ module Spree
       def authenticate_user
         unless @current_api_user
           if requires_authentication? && api_key.blank? && order_token.blank?
-            render "spree/api/errors/must_specify_api_key", :status => 401
+            render "spree/api/errors/must_specify_api_key", status: 401
           elsif order_token.blank? && (requires_authentication? || api_key.present?)
-            render "spree/api/errors/invalid_api_key", :status => 401
+            render "spree/api/errors/invalid_api_key", status: 401
           end
         end
       end
@@ -101,7 +101,7 @@ module Spree
       def invalid_resource!(resource)
         Rails.logger.error "invalid_resouce_errors=#{resource.errors.full_messages}"
         @resource = resource
-        render "spree/api/errors/invalid_resource", :status => 422
+        render "spree/api/errors/invalid_resource", status: 422
       end
 
       def api_key
@@ -160,7 +160,7 @@ module Spree
         logger.error "insufficient_stock_error #{exception.inspect}"
         render(
           json: {
-            errors: [I18n.t(:quantity_is_not_available, :scope => "spree.api.order")],
+            errors: [I18n.t(:quantity_is_not_available, scope: "spree.api.order")],
             type: 'insufficient_stock',
           },
           status: 422,

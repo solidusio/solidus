@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe "Properties", :type => :feature do
+describe "Properties", type: :feature do
   stub_authorization!
 
   before(:each) do
@@ -10,8 +10,8 @@ describe "Properties", :type => :feature do
 
   context "Property index" do
     before do
-      create(:property, :name => 'shirt size', :presentation => 'size')
-      create(:property, :name => 'shirt fit', :presentation => 'fit')
+      create(:property, name: 'shirt size', presentation: 'size')
+      create(:property, name: 'shirt fit', presentation: 'fit')
       click_link "Properties"
     end
 
@@ -30,8 +30,8 @@ describe "Properties", :type => :feature do
     end
 
     context "searching properties" do
-      it 'should list properties matching search query', :js => true do
-        fill_in "q_name_cont", :with => "size"
+      it 'should list properties matching search query', js: true do
+        fill_in "q_name_cont", with: "size"
         click_icon :search
 
         expect(page).to have_content("shirt size")
@@ -41,13 +41,13 @@ describe "Properties", :type => :feature do
   end
 
   context "creating a property" do
-    it "should allow an admin to create a new product property", :js => true do
+    it "should allow an admin to create a new product property", js: true do
       click_link "Properties"
       click_link "new_property_link"
       within('#new_property') { expect(page).to have_content("NEW PROPERTY") }
 
-      fill_in "property_name", :with => "color of band"
-      fill_in "property_presentation", :with => "color"
+      fill_in "property_name", with: "color of band"
+      fill_in "property_presentation", with: "color"
       click_button "Create"
       expect(page).to have_content("successfully created!")
     end
@@ -61,20 +61,20 @@ describe "Properties", :type => :feature do
     end
 
     it "should allow an admin to edit an existing product property" do
-      fill_in "property_name", :with => "model 99"
+      fill_in "property_name", with: "model 99"
       click_button "Update"
       expect(page).to have_content("successfully updated!")
       expect(page).to have_content("model 99")
     end
 
     it "should show validation errors" do
-      fill_in "property_name", :with => ""
+      fill_in "property_name", with: ""
       click_button "Update"
       expect(page).to have_content("Name can't be blank")
     end
   end
 
-  context "linking a property to a product", :js => true do
+  context "linking a property to a product", js: true do
     before do
       create(:product)
       visit spree.admin_products_path
@@ -118,8 +118,8 @@ describe "Properties", :type => :feature do
 
     def fill_in_property
       expect(page).to have_content('Editing Product')
-      fill_in "product_product_properties_attributes_0_property_name", :with => "A Property"
-      fill_in "product_product_properties_attributes_0_value", :with => "A Value"
+      fill_in "product_product_properties_attributes_0_property_name", with: "A Property"
+      fill_in "product_product_properties_attributes_0_value", with: "A Value"
       click_button "Update"
       click_link "Product Properties"
     end

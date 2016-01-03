@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe "Prototypes", :type => :feature do
+describe "Prototypes", type: :feature do
   stub_authorization!
 
   context "listing prototypes" do
@@ -18,7 +18,7 @@ describe "Prototypes", :type => :feature do
       create(:property, name: "shirt_fit", presentation: "Fit")
       create(:property, name: "bag_material", presentation: "Material")
       create(:property, name: "shirt_type", presentation: "Type")
-      p = create(:prototype, :name => "Shirt")
+      p = create(:prototype, name: "Shirt")
       %w( brand gender manufacturer model shirt_fabric shirt_fit shirt_sleeve_length shirt_type ).each do |prop|
         p.properties << Spree::Property.find_by_name(prop)
       end
@@ -42,7 +42,7 @@ describe "Prototypes", :type => :feature do
   end
 
   context "creating a prototype" do
-    it "should allow an admin to create a new product prototype", :js => true do
+    it "should allow an admin to create a new product prototype", js: true do
       visit spree.admin_path
       click_nav "Products"
       click_link "Prototypes"

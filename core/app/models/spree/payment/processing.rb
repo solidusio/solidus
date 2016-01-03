@@ -88,21 +88,21 @@ module Spree
 
       def gateway_options
         order.reload
-        options = { :email       => order.email,
-                    :customer    => order.email,
-                    :customer_id => order.user_id,
-                    :ip          => order.last_ip_address,
+        options = { email: order.email,
+                    customer: order.email,
+                    customer_id: order.user_id,
+                    ip: order.last_ip_address,
                     # Need to pass in a unique identifier here to make some
                     # payment gateways happy.
                     #
                     # For more information, please see Spree::Payment#set_unique_identifier
-                    :order_id    => gateway_order_id }
+                    order_id: gateway_order_id }
 
-        options.merge!({ :shipping => order.ship_total * 100,
-                         :tax      => order.additional_tax_total * 100,
-                         :subtotal => order.item_total * 100,
-                         :discount => order.promo_total * 100,
-                         :currency => currency })
+        options.merge!({ shipping: order.ship_total * 100,
+                         tax: order.additional_tax_total * 100,
+                         subtotal: order.item_total * 100,
+                         discount: order.promo_total * 100,
+                         currency: currency })
 
         bill_address = source.try(:address)
         bill_address ||= order.bill_address
@@ -192,7 +192,7 @@ module Spree
       end
 
       def record_response(response)
-        log_entries.create!(:details => response.to_yaml)
+        log_entries.create!(details: response.to_yaml)
       end
 
       def protect_from_connection_error

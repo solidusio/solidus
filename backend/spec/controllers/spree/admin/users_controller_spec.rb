@@ -1,12 +1,12 @@
 require 'spec_helper'
 require 'spree/testing_support/bar_ability'
 
-describe Spree::Admin::UsersController, :type => :controller do
+describe Spree::Admin::UsersController, type: :controller do
   let(:user) { create(:user) }
   let(:mock_user) { mock_model Spree.user_class }
 
   before do
-    allow(controller).to receive_messages :spree_current_user => user
+    allow(controller).to receive_messages spree_current_user: user
     user.spree_roles.clear
   end
 
@@ -111,14 +111,14 @@ describe Spree::Admin::UsersController, :type => :controller do
       expect(Spree.user_class).to receive(:new).with(hash_including(
         "ship_address_attributes" => { "city" => "New York" }
       ))
-      spree_post :create, { :user => { :ship_address_attributes => { :city => "New York" } } }
+      spree_post :create, { user: { ship_address_attributes: { city: "New York" } } }
     end
 
     it "can create a billing_address" do
       expect(Spree.user_class).to receive(:new).with(hash_including(
         "bill_address_attributes" => { "city" => "New York" }
       ))
-      spree_post :create, { :user => { :bill_address_attributes => { :city => "New York" } } }
+      spree_post :create, { user: { bill_address_attributes: { city: "New York" } } }
     end
 
     it "can set stock locations" do
@@ -189,14 +189,14 @@ describe Spree::Admin::UsersController, :type => :controller do
       expect(mock_user).to receive(:update_attributes).with(hash_including(
         "ship_address_attributes" => { "city" => "New York" }
       ))
-      spree_put :update, { :id => mock_user.id, :user => { :ship_address_attributes => { :city => "New York" } } }
+      spree_put :update, { id: mock_user.id, user: { ship_address_attributes: { city: "New York" } } }
     end
 
     it "allows billing address attributes through" do
       expect(mock_user).to receive(:update_attributes).with(hash_including(
         "bill_address_attributes" => { "city" => "New York" }
       ))
-      spree_put :update, { :id => mock_user.id, :user => { :bill_address_attributes => { :city => "New York" } } }
+      spree_put :update, { id: mock_user.id, user: { bill_address_attributes: { city: "New York" } } }
     end
 
     it "can set stock locations" do
@@ -215,13 +215,13 @@ describe Spree::Admin::UsersController, :type => :controller do
     end
 
     it "assigns a list of the users orders" do
-      spree_get :orders, { :id => user.id }
+      spree_get :orders, { id: user.id }
       expect(assigns[:orders].count).to eq 1
       expect(assigns[:orders].first).to eq order
     end
 
     it "assigns a ransack search for Spree::Order" do
-      spree_get :orders, { :id => user.id }
+      spree_get :orders, { id: user.id }
       expect(assigns[:search]).to be_a Ransack::Search
       expect(assigns[:search].klass).to eq Spree::Order
     end
@@ -235,13 +235,13 @@ describe Spree::Admin::UsersController, :type => :controller do
     end
 
     it "assigns a list of the users orders" do
-      spree_get :items, { :id => user.id }
+      spree_get :items, { id: user.id }
       expect(assigns[:orders].count).to eq 1
       expect(assigns[:orders].first).to eq order
     end
 
     it "assigns a ransack search for Spree::Order" do
-      spree_get :items, { :id => user.id }
+      spree_get :items, { id: user.id }
       expect(assigns[:search]).to be_a Ransack::Search
       expect(assigns[:search].klass).to eq Spree::Order
     end

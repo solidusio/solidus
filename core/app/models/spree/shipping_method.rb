@@ -4,16 +4,16 @@ module Spree
     include Spree::CalculatedAdjustments
     DISPLAY = [:both, :front_end, :back_end]
 
-    has_many :shipping_method_categories, :dependent => :destroy
+    has_many :shipping_method_categories, dependent: :destroy
     has_many :shipping_categories, through: :shipping_method_categories
     has_many :shipping_rates, inverse_of: :shipping_method
-    has_many :shipments, :through => :shipping_rates
+    has_many :shipments, through: :shipping_rates
     has_many :cartons, inverse_of: :shipping_method
 
     has_many :shipping_method_zones
     has_many :zones, through: :shipping_method_zones
 
-    belongs_to :tax_category, -> { with_deleted }, :class_name => 'Spree::TaxCategory'
+    belongs_to :tax_category, -> { with_deleted }, class_name: 'Spree::TaxCategory'
 
     validates :name, presence: true
 

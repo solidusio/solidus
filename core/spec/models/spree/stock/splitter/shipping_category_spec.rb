@@ -3,7 +3,7 @@ require 'spec_helper'
 module Spree
   module Stock
     module Splitter
-      describe ShippingCategory, :type => :model do
+      describe ShippingCategory, type: :model do
 
         let(:order) { create(:order_with_line_items, line_items_count: 1) }
         let(:line_item) { order.line_items.first }

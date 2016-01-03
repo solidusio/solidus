@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe "Stock Locations", :type => :feature do
+describe "Stock Locations", type: :feature do
   stub_authorization!
 
   before(:each) do

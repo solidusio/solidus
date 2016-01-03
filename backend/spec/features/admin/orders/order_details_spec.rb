@@ -3,12 +3,12 @@ require 'spec_helper'
 
 describe "Order Details", type: :feature, js: true do
   let!(:stock_location) { create(:stock_location_with_items) }
-  let!(:product) { create(:product, :name => 'spree t-shirt', :price => 20.00) }
-  let!(:tote) { create(:product, :name => "Tote", :price => 15.00) }
-  let(:order) { create(:order, :state => 'complete', :completed_at => "2011-02-01 12:36:15", :number => "R100") }
+  let!(:product) { create(:product, name: 'spree t-shirt', price: 20.00) }
+  let!(:tote) { create(:product, name: "Tote", price: 15.00) }
+  let(:order) { create(:order, state: 'complete', completed_at: "2011-02-01 12:36:15", number: "R100") }
   let(:state) { create(:state) }
-  #let(:shipment) { create(:shipment, :order => order, :stock_location => stock_location) }
-  let!(:shipping_method) { create(:shipping_method, :name => "Default") }
+  #let(:shipment) { create(:shipment, order: order, stock_location: stock_location) }
+  let!(:shipping_method) { create(:shipping_method, name: "Default") }
 
   before do
     order.shipments.create(stock_location_id: stock_location.id)
@@ -32,7 +32,7 @@ describe "Order Details", type: :feature, js: true do
 
         within_row(1) do
           click_icon :edit
-          fill_in "quantity", :with => "1"
+          fill_in "quantity", with: "1"
         end
         click_icon :ok
 
@@ -42,9 +42,9 @@ describe "Order Details", type: :feature, js: true do
       end
 
       it "can add an item to a shipment" do
-        select2_search "spree t-shirt", :from => Spree.t(:name_or_sku)
+        select2_search "spree t-shirt", from: Spree.t(:name_or_sku)
         within("table.stock-levels") do
-          fill_in "quantity_0", :with => 2
+          fill_in "quantity_0", with: 2
         end
 
         click_icon :plus
@@ -87,7 +87,7 @@ describe "Order Details", type: :feature, js: true do
         within(".show-tracking") do
           click_icon :edit
         end
-        fill_in "tracking", :with => "FOOBAR"
+        fill_in "tracking", with: "FOOBAR"
         click_icon :check
 
         expect(page).not_to have_css("input[name=tracking]")
@@ -100,7 +100,7 @@ describe "Order Details", type: :feature, js: true do
         within("table.index tr.show-method") do
           click_icon :edit
         end
-        select2 "Default", :from => "Shipping Method"
+        select2 "Default", from: "Shipping Method"
         click_icon :check
 
         expect(page).not_to have_css('#selected_shipping_rate_id')
@@ -115,7 +115,7 @@ describe "Order Details", type: :feature, js: true do
       end
 
       context "with special_instructions present" do
-        let(:order) { create(:order, :state => 'complete', :completed_at => "2011-02-01 12:36:15", :number => "R100", :special_instructions => "Very special instructions here") }
+        let(:order) { create(:order, state: 'complete', completed_at: "2011-02-01 12:36:15", number: "R100", special_instructions: "Very special instructions here") }
         it "will show the special_instructions" do
           visit spree.edit_admin_order_path(order)
           expect(page).to have_content("Very special instructions here")
@@ -130,9 +130,9 @@ describe "Order Details", type: :feature, js: true do
         end
 
         it "adds variant to order just fine" do
-          select2_search tote.name, :from => Spree.t(:name_or_sku)
+          select2_search tote.name, from: Spree.t(:name_or_sku)
           within("table.stock-levels") do
-            fill_in "variant_quantity", :with => 1
+            fill_in "variant_quantity", with: 1
           end
 
           click_icon :plus
@@ -268,7 +268,7 @@ describe "Order Details", type: :feature, js: true do
           context 'A shipment has shipped' do
 
             it 'should not show or let me back to the cart page, nor show the shipment edit buttons' do
-              order = create(:order, :state => 'payment', :number => "R100")
+              order = create(:order, state: 'payment', number: "R100")
               order.shipments.create!(stock_location_id: stock_location.id, state: 'shipped')
 
               visit spree.cart_admin_order_path(order)
@@ -507,7 +507,7 @@ describe "Order Details", type: :feature, js: true do
       within("table.index tr.show-method") do
         click_icon :edit
       end
-      select2 "Default", :from => "Shipping Method"
+      select2 "Default", from: "Shipping Method"
       click_icon :check
 
       expect(page).not_to have_css('#selected_shipping_rate_id')

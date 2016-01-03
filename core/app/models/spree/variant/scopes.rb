@@ -20,7 +20,7 @@ module Spree
         else                 { "#{option_types}.id"   => option_type }
         end
 
-        relation = joins(:option_values => :option_type).where(option_type_conditions)
+        relation = joins(option_values: :option_type).where(option_type_conditions)
 
         option_values_conditions = option_values.each do |option_value|
           option_value_conditions = case option_value

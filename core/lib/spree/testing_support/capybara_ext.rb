@@ -22,7 +22,7 @@ module CapybaraExt
 
   def fill_in_quantity(table_column, selector, quantity)
     within(table_column) do
-      fill_in selector, :with => quantity
+      fill_in selector, with: quantity
     end
   end
 

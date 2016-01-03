@@ -25,13 +25,13 @@ module Spree
     context 'with a new source' do
       let(:attributes) do
         {
-          :amount => 100,
-          :payment_method => payment_method,
-          :source_attributes => {
-            :expiry =>"01 / 99",
-            :number => '1234567890123',
-            :verification_value => '123',
-            :name => 'Foo Bar'
+          amount: 100,
+          payment_method: payment_method,
+          source_attributes: {
+            expiry:"01 / 99",
+            number: '1234567890123',
+            verification_value: '123',
+            name: 'Foo Bar'
           }
         }
       end

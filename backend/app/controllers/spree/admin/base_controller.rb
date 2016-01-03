@@ -34,11 +34,11 @@ module Spree
         def flash_message_for(object, event_sym)
           resource_desc  = object.class.model_name.human
           resource_desc += " \"#{object.name}\"" if object.respond_to?(:name) && object.name.present?
-          Spree.t(event_sym, :resource => resource_desc)
+          Spree.t(event_sym, resource: resource_desc)
         end
 
         def render_js_for_destroy
-          render :partial => '/spree/admin/shared/destroy'
+          render partial: '/spree/admin/shared/destroy'
         end
 
         # Index request for JSON needs to pass a CSRF token in order to prevent JSON Hijacking

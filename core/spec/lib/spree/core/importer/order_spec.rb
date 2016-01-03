@@ -5,16 +5,16 @@ module Spree
     describe Importer::Order do
 
       let!(:country) { create(:country) }
-      let!(:state) { country.states.first || create(:state, :country => country) }
+      let!(:state) { country.states.first || create(:state, country: country) }
       let!(:stock_location) { create(:stock_location, admin_name: 'Admin Name') }
 
-      let(:user) { stub_model(LegacyUser, :email => 'fox@mudler.com') }
+      let(:user) { stub_model(LegacyUser, email: 'fox@mudler.com') }
       let(:shipping_method) { create(:shipping_method) }
       let(:payment_method) { create(:check_payment_method) }
 
-      let(:product) { product = Spree::Product.create(:name => 'Test',
-                                             :sku => 'TEST-1',
-                                             :price => 33.22)
+      let(:product) { product = Spree::Product.create(name: 'Test',
+                                             sku: 'TEST-1',
+                                             price: 33.22)
                       product.shipping_category = create(:shipping_category)
                       product.save
                       product }
@@ -26,16 +26,16 @@ module Spree
       let(:sku) { variant.sku }
       let(:variant_id) { variant.id }
 
-      let(:line_items) {{ "0" => { :variant_id => variant.id, :quantity => 5 }}}
+      let(:line_items) {{ "0" => { variant_id: variant.id, quantity: 5 }}}
       let(:ship_address) {{
-         :address1 => '123 Testable Way',
-         :firstname => 'Fox',
-         :lastname => 'Mulder',
-         :city => 'Washington',
-         :country_id => country.id,
-         :state_id => state.id,
-         :zipcode => '66666',
-         :phone => '666-666-6666'
+         address1: '123 Testable Way',
+         firstname: 'Fox',
+         lastname: 'Mulder',
+         city: 'Washington',
+         country_id: country.id,
+         state_id: state.id,
+         zipcode: '66666',
+         phone: '666-666-6666'
       }}
 
       it 'can import an order number' do
@@ -60,7 +60,7 @@ module Spree
       end
 
       context "assigning a user to an order" do
-        let(:other_user) { stub_model(LegacyUser, :email => 'dana@scully.com') }
+        let(:other_user) { stub_model(LegacyUser, email: 'dana@scully.com') }
 
         context "as an admin" do
           before { allow(user).to receive_messages :has_spree_role? => true }
@@ -103,7 +103,7 @@ module Spree
       end
 
       it 'can build an order from API with just line items' do
-        params = { :line_items_attributes => line_items }
+        params = { line_items_attributes: line_items }
 
         expect(Importer::Order).to receive(:ensure_variant_id_from_params).and_return({variant_id: variant.id, quantity: 5})
         order = Importer::Order.import(user,params)
@@ -115,7 +115,7 @@ module Spree
 
       it 'handles line_item updating exceptions' do
         line_items['0'][:currency] = 'GBP'
-        params = { :line_items_attributes => line_items }
+        params = { line_items_attributes: line_items }
 
         expect {
           order = Importer::Order.import(user, params)
@@ -123,8 +123,8 @@ module Spree
       end
 
       it 'can build an order from API with variant sku' do
-        params = { :line_items_attributes => {
-                     "0" => { :sku => sku, :quantity => 5 } }}
+        params = { line_items_attributes: {
+                     "0" => { sku: sku, quantity: 5 } }}
 
         order = Importer::Order.import(user,params)
 
@@ -134,8 +134,8 @@ module Spree
       end
 
       it 'can build an order from API shipping address' do
-        params = { :ship_address_attributes => ship_address,
-                   :line_items_attributes => line_items }
+        params = { ship_address_attributes: ship_address,
+                   line_items_attributes: line_items }
 
         order = Importer::Order.import(user,params)
         expect(order.ship_address.address1).to eq '123 Testable Way'
@@ -144,8 +144,8 @@ module Spree
       it 'can build an order from API with country attributes' do
         ship_address.delete(:country_id)
         ship_address[:country] = { 'iso' => 'US' }
-        params = { :ship_address_attributes => ship_address,
-                   :line_items_attributes => line_items }
+        params = { ship_address_attributes: ship_address,
+                   line_items_attributes: line_items }
 
         order = Importer::Order.import(user,params)
         expect(order.ship_address.country.iso).to eq 'US'
@@ -154,8 +154,8 @@ module Spree
       it 'can build an order from API with state attributes' do
         ship_address.delete(:state_id)
         ship_address[:state] = { 'name' => state.name }
-        params = { :ship_address_attributes => ship_address,
-                   :line_items_attributes => line_items }
+        params = { ship_address_attributes: ship_address,
+                   line_items_attributes: line_items }
 
         order = Importer::Order.import(user,params)
         expect(order.ship_address.state.name).to eq 'Alabama'
@@ -187,8 +187,8 @@ module Spree
 
       context "state passed is not associated with country" do
         let(:params) do
-          params = { :ship_address_attributes => ship_address,
-                     :line_items_attributes => line_items }
+          params = { ship_address_attributes: ship_address,
+                     line_items_attributes: line_items }
         end
 
         let(:other_state) { create(:state, name: "Uhuhuh", country: create(:country)) }
@@ -207,8 +207,8 @@ module Spree
       it 'sets state name if state record not found' do
         ship_address.delete(:state_id)
         ship_address[:state] = { 'name' => 'XXX' }
-        params = { :ship_address_attributes => ship_address,
-                   :line_items_attributes => line_items }
+        params = { ship_address_attributes: ship_address,
+                   line_items_attributes: line_items }
 
         order = Importer::Order.import(user,params)
         expect(order.ship_address.state_name).to eq 'XXX'
@@ -234,14 +234,14 @@ module Spree
 
       it 'ensures_country_id for country fields' do
         [:name, :iso, :iso_name, :iso3].each do |field|
-          address = { :country => { field => country.send(field) }}
+          address = { country: { field => country.send(field) }}
           Importer::Order.ensure_country_id_from_params(address)
           expect(address[:country_id]).to eq country.id
         end
       end
 
       it "raises with proper message when cant find country" do
-        address = { :country => { "name" => "NoNoCountry" } }
+        address = { country: { "name" => "NoNoCountry" } }
         expect {
           Importer::Order.ensure_country_id_from_params(address)
         }.to raise_error ActiveRecord::RecordNotFound
@@ -249,7 +249,7 @@ module Spree
 
       it 'ensures_state_id for state fields' do
         [:name, :abbr].each do |field|
-          address = { country_id: country.id, :state => { field => state.send(field) }}
+          address = { country_id: country.id, state: { field => state.send(field) }}
           Importer::Order.ensure_state_id_from_params(address)
           expect(address[:state_id]).to eq state.id
         end
@@ -257,12 +257,12 @@ module Spree
 
       context "shipments" do
         let(:params) do
-          { :shipments_attributes => [
-              { :tracking => '123456789',
-                :cost => '14.99',
-                :shipping_method => shipping_method.name,
-                :stock_location => stock_location.name,
-                :inventory_units => [{ :sku => sku }]
+          { shipments_attributes: [
+              { tracking: '123456789',
+                cost: '14.99',
+                shipping_method: shipping_method.name,
+                stock_location: stock_location.name,
+                inventory_units: [{ sku: sku }]
               }
           ] }
         end
@@ -303,14 +303,14 @@ module Spree
         context 'when completed_at and shipped_at present' do
           let(:params) do
             {
-              :completed_at => 2.days.ago,
-              :shipments_attributes => [
-                { :tracking => '123456789',
-                  :cost => '4.99',
-                  :shipped_at => 1.day.ago,
-                  :shipping_method => shipping_method.name,
-                  :stock_location => stock_location.name,
-                  :inventory_units => [{ :sku => sku }]
+              completed_at: 2.days.ago,
+              shipments_attributes: [
+                { tracking: '123456789',
+                  cost: '4.99',
+                  shipped_at: 1.day.ago,
+                  shipping_method: shipping_method.name,
+                  stock_location: stock_location.name,
+                  inventory_units: [{ sku: sku }]
                 }
               ]
             }
@@ -336,7 +336,7 @@ module Spree
       end
 
       it 'adds adjustments' do
-        params = { :adjustments_attributes => [
+        params = { adjustments_attributes: [
             { label: 'Shipping Discount', amount: -4.99 },
             { label: 'Promotion Discount', amount: -3.00 }] }
 
@@ -366,7 +366,7 @@ module Spree
       end
 
       it 'builds a payment using state' do
-        params = { :payments_attributes => [{ amount: '4.99',
+        params = { payments_attributes: [{ amount: '4.99',
                                               payment_method: payment_method.name,
                                               state: 'completed' }] }
         order = Importer::Order.import(user,params)
@@ -374,7 +374,7 @@ module Spree
       end
 
       it 'builds a payment using status as fallback' do
-        params = { :payments_attributes => [{ amount: '4.99',
+        params = { payments_attributes: [{ amount: '4.99',
                                               payment_method: payment_method.name,
                                               status: 'completed' }] }
         order = Importer::Order.import(user,params)
@@ -382,7 +382,7 @@ module Spree
       end
 
       it 'build a source payment using years and month' do
-        params = { :payments_attributes => [{
+        params = { payments_attributes: [{
                                               amount: '4.99',
                                               payment_method: payment_method.name,
                                               status: 'completed',
@@ -400,7 +400,7 @@ module Spree
       end
 
       it 'handles source building exceptions when do not have years and month' do
-        params = { :payments_attributes => [{
+        params = { payments_attributes: [{
                                               amount: '4.99',
                                               payment_method: payment_method.name,
                                               status: 'completed',
@@ -418,7 +418,7 @@ module Spree
 
       context "raises error" do
         it "clears out order from db" do
-          params = { :payments_attributes => [{ payment_method: "XXX" }] }
+          params = { payments_attributes: [{ payment_method: "XXX" }] }
           count = Order.count
 
           expect { order = Importer::Order.import(user,params) }.to raise_error ActiveRecord::RecordNotFound
