@@ -17,7 +17,7 @@ module Spree
     belongs_to :adjustable, polymorphic: true, touch: true
     belongs_to :source, polymorphic: true
     belongs_to :order, class_name: 'Spree::Order', inverse_of: :all_adjustments
-    belongs_to :promotion_code, :class_name => 'Spree::PromotionCode'
+    belongs_to :promotion_code, class_name: 'Spree::PromotionCode'
     belongs_to :adjustment_reason, class_name: 'Spree::AdjustmentReason', inverse_of: :adjustments
 
     validates :adjustable, presence: true

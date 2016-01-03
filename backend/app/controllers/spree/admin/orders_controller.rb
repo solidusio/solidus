@@ -3,7 +3,7 @@ module Spree
     class OrdersController < Spree::Admin::BaseController
       before_action :initialize_order_events
       before_action :load_order, only: [:edit, :update, :complete, :advance, :cancel, :resume, :approve, :resend, :unfinalize_adjustments, :finalize_adjustments, :cart, :confirm]
-      around_filter :lock_order, :only => [:update, :advance, :complete, :confirm, :cancel, :resume, :approve, :resend]
+      around_filter :lock_order, only: [:update, :advance, :complete, :confirm, :cancel, :resume, :approve, :resend]
 
       rescue_from Spree::Order::InsufficientStock, with: :insufficient_stock_error
 
@@ -84,7 +84,7 @@ module Spree
         @order.contents.update_cart(params[:order])
         @order.errors.add(:line_items, Spree.t('errors.messages.blank')) if @order.line_items.empty?
         if @order.completed?
-          render :action => :edit
+          render action: :edit
         else
           redirect_to admin_order_customer_path(@order)
         end

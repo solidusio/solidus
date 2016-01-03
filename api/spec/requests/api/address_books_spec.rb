@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 module Spree
-  describe Api::AddressBooksController, :type => :request do
+  describe Api::AddressBooksController, type: :request do
     let!(:state) { create(:state) }
     let!(:harry_address_attributes) do
       {

@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe 'Payments', :type => :feature do
+describe 'Payments', type: :feature do
   stub_authorization!
 
   context "with a pre-existing payment" do
@@ -170,7 +170,7 @@ describe 'Payments', :type => :feature do
   end
 
   context "with no prior payments" do
-    let(:order) { create(:order_with_line_items, :line_items_count => 1) }
+    let(:order) { create(:order_with_line_items, line_items_count: 1) }
     let!(:payment_method) { create(:credit_card_payment_method)}
 
     # Regression tests for #4129
@@ -179,11 +179,11 @@ describe 'Payments', :type => :feature do
         visit spree.admin_order_payments_path(order)
       end
 
-      it "is able to create a new credit card payment with valid information", :js => true do
-        fill_in "Card Number", :with => "4111 1111 1111 1111"
-        fill_in "Name *", :with => "Test User"
-        fill_in "Expiration", :with => "09 / #{Time.current.year + 1}"
-        fill_in "Card Code", :with => "007"
+      it "is able to create a new credit card payment with valid information", js: true do
+        fill_in "Card Number", with: "4111 1111 1111 1111"
+        fill_in "Name *", with: "Test User"
+        fill_in "Expiration", with: "09 / #{Time.current.year + 1}"
+        fill_in "Card Code", with: "007"
         # Regression test for #4277
         expect(page).to have_css('.ccType[value="visa"]', visible: false)
         click_button "Continue"
@@ -216,7 +216,7 @@ describe 'Payments', :type => :feature do
     end
 
     context "with a check" do
-      let(:order) { create(:completed_order_with_totals, :line_items_count => 1) }
+      let(:order) { create(:completed_order_with_totals, line_items_count: 1) }
       let!(:payment_method) { create(:check_payment_method) }
 
       before do

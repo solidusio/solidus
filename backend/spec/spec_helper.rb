@@ -86,9 +86,9 @@ RSpec.configure do |config|
     DatabaseCleaner.clean
   end
 
-  config.include BaseFeatureHelper, :type => :feature
+  config.include BaseFeatureHelper, type: :feature
 
-  config.after(:each, :type => :feature) do |example|
+  config.after(:each, type: :feature) do |example|
     missing_translations = page.body.scan(/translation missing: #{I18n.locale}\.(.*?)[\s<\"&]/)
     if missing_translations.any?
       puts "Found missing translations: #{missing_translations.inspect}"

@@ -23,62 +23,62 @@ end
 images = {
   products[:ror_tote].master => [
     {
-      :attachment => image("ror_tote")
+      attachment: image("ror_tote")
     },
     {
-      :attachment => image("ror_tote_back")
+      attachment: image("ror_tote_back")
     }
   ],
   products[:ror_bag].master => [
     {
-      :attachment => image("ror_bag")
+      attachment: image("ror_bag")
     }
   ],
   products[:ror_baseball_jersey].master => [
     {
-      :attachment => image("ror_baseball")
+      attachment: image("ror_baseball")
     },
     {
-      :attachment => image("ror_baseball_back")
+      attachment: image("ror_baseball_back")
     }
   ],
   products[:ror_jr_spaghetti].master => [
     {
-      :attachment => image("ror_jr_spaghetti")
+      attachment: image("ror_jr_spaghetti")
     }
   ],
   products[:ror_mug].master => [
     {
-      :attachment => image("ror_mug")
+      attachment: image("ror_mug")
     },
     {
-      :attachment => image("ror_mug_back")
+      attachment: image("ror_mug_back")
     }
   ],
   products[:ror_ringer].master => [
     {
-      :attachment => image("ror_ringer")
+      attachment: image("ror_ringer")
     },
     {
-      :attachment => image("ror_ringer_back")
+      attachment: image("ror_ringer_back")
     }
   ],
   products[:ror_stein].master => [
     {
-      :attachment => image("ror_stein")
+      attachment: image("ror_stein")
     },
     {
-      :attachment => image("ror_stein_back")
+      attachment: image("ror_stein_back")
     }
   ],
   products[:apache_baseball_jersey].master => [
     {
-      :attachment => image("apache_baseball", "png")
+      attachment: image("apache_baseball", "png")
     },
   ],
   products[:ruby_baseball_jersey].master => [
     {
-      :attachment => image("ruby_baseball", "png")
+      attachment: image("ruby_baseball", "png")
     },
   ]
 }
@@ -87,12 +87,12 @@ products[:ror_baseball_jersey].variants.each do |variant|
   color = variant.option_value("tshirt-color").downcase
   main_image = image("ror_baseball_jersey_#{color}", "png")
   File.open(main_image) do |f|
-    variant.images.create!(:attachment => f)
+    variant.images.create!(attachment: f)
   end
   back_image = image("ror_baseball_jersey_back_#{color}", "png")
   if back_image
     File.open(back_image) do |f|
-      variant.images.create!(:attachment => f)
+      variant.images.create!(attachment: f)
     end
   end
 end

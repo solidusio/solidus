@@ -15,7 +15,7 @@ module Spree
 
         if @order.update_attributes({"#{@order_source}_attributes" => address_params})
           @address = @order.send(@order_source)
-          respond_with(@address, :default_template => :show)
+          respond_with(@address, default_template: :show)
         else
           @address = @order.send(@order_source)
           invalid_resource!(@address)

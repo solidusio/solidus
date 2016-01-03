@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Spree::PaymentMethod, :type => :model do
+describe Spree::PaymentMethod, type: :model do
   describe ".available" do
     let!(:payment_method_nil_display)  { create(:payment_method, active: true, display_on: nil) }
     let!(:payment_method_both_display) { create(:payment_method, active: true, display_on: 'both') }

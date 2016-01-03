@@ -9,7 +9,7 @@ module Spree
 
         if params[:ids]
           ids = params[:ids].split(",").flatten
-          @properties = @properties.where(:id => ids)
+          @properties = @properties.where(id: ids)
         else
           @properties = @properties.ransack(params[:q]).result
         end

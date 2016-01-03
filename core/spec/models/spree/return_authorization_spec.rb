@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Spree::ReturnAuthorization, :type => :model do
+describe Spree::ReturnAuthorization, type: :model do
   let(:order) { create(:shipped_order) }
   let(:stock_location) { create(:stock_location) }
   let(:rma_reason) { create(:return_reason) }
@@ -169,12 +169,12 @@ describe Spree::ReturnAuthorization, :type => :model do
     end
 
     it "should allow_receive when inventory units assigned" do
-      allow(return_authorization).to receive_messages(:inventory_units => [1,2,3])
+      allow(return_authorization).to receive_messages(inventory_units: [1,2,3])
       expect(return_authorization.can_receive?).to be true
     end
 
     it "should not allow_receive with no inventory units" do
-      allow(return_authorization).to receive_messages(:inventory_units => [])
+      allow(return_authorization).to receive_messages(inventory_units: [])
       expect(return_authorization.can_receive?).to be false
     end
   end

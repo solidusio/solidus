@@ -7,7 +7,7 @@ module Spree
       #   * :route to override automatically determining the default route
       #   * :match_path as an alternative way to control when the tab is active, /products would match /admin/products, /admin/products/5/variants etc.
       def tab(*args, &block)
-        options = {:label => args.first.to_s}
+        options = {label: args.first.to_s}
 
         if args.last.is_a?(Hash)
           options = options.merge(args.pop)
@@ -15,7 +15,7 @@ module Spree
         options[:route] ||=  "admin_#{args.first}"
 
         destination_url = options[:url] || spree.send("#{options[:route]}_path")
-        titleized_label = Spree.t(options[:label], :default => options[:label], :scope => [:admin, :tab]).titleize
+        titleized_label = Spree.t(options[:label], default: options[:label], scope: [:admin, :tab]).titleize
 
         css_classes = []
 
@@ -42,23 +42,23 @@ module Spree
       end
 
       def link_to_clone(resource, options={})
-        options[:data] = {:action => 'clone'}
+        options[:data] = {action: 'clone'}
         link_to_with_icon('copy', Spree.t(:clone), clone_object_url(resource), options)
       end
 
       def link_to_new(resource)
-        options[:data] = {:action => 'new'}
+        options[:data] = {action: 'new'}
         link_to_with_icon('plus', Spree.t(:new), edit_object_url(resource))
       end
 
       def link_to_edit(resource, options={})
         url = options[:url] || edit_object_url(resource)
-        options[:data] = {:action => 'edit'}
+        options[:data] = {action: 'edit'}
         link_to_with_icon('edit', Spree.t(:edit), url, options)
       end
 
       def link_to_edit_url(url, options={})
-        options[:data] = {:action => 'edit'}
+        options[:data] = {action: 'edit'}
         link_to_with_icon('edit', Spree.t(:edit), url, options)
       end
 
@@ -66,7 +66,7 @@ module Spree
         url = options[:url] || object_url(resource)
         name = options[:name] || Spree.t(:delete)
         options[:class] = "delete-resource"
-        options[:data] = { :confirm => Spree.t(:are_you_sure), :action => 'remove' }
+        options[:data] = { confirm: Spree.t(:are_you_sure), action: 'remove' }
         link_to_with_icon 'trash', name, url, options
       end
 
@@ -80,18 +80,18 @@ module Spree
       end
 
       def icon(icon_name)
-        icon_name ? content_tag(:i, '', :class => icon_name) : ''
+        icon_name ? content_tag(:i, '', class: icon_name) : ''
       end
 
       def button(text, icon_name = nil, button_type = 'submit', options={})
-        button_tag(text, options.merge(:type => button_type, :class => "fa fa-#{icon_name} button"))
+        button_tag(text, options.merge(type: button_type, class: "fa fa-#{icon_name} button"))
       end
 
       def button_link_to(text, url, html_options = {})
         if (html_options[:method] &&
             html_options[:method].to_s.downcase != 'get' &&
             !html_options[:remote])
-          form_tag(url, :method => html_options.delete(:method)) do
+          form_tag(url, method: html_options.delete(:method)) do
             button(text, html_options.delete(:icon), nil, html_options)
           end
         else
@@ -129,7 +129,7 @@ module Spree
         is_active = url.ends_with?(controller.controller_name) ||
                     url.ends_with?("#{controller.controller_name}/edit") ||
                     url.ends_with?("#{controller.controller_name.singularize}/edit")
-        options.merge!(:class => is_active ? 'active' : nil)
+        options.merge!(class: is_active ? 'active' : nil)
         content_tag(:li, options) do
           link_to(link_text, url)
         end

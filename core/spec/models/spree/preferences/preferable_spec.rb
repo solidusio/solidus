@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Spree::Preferences::Preferable, :type => :model do
+describe Spree::Preferences::Preferable, type: :model do
 
   before :all do
     class A
@@ -15,7 +15,7 @@ describe Spree::Preferences::Preferable, :type => :model do
         @preferences ||= default_preferences
       end
 
-      preference :color, :string, :default => 'green'
+      preference :color, :string, default: 'green'
     end
 
     class B < A
@@ -143,7 +143,7 @@ describe Spree::Preferences::Preferable, :type => :model do
 
     context "converts boolean preferences to boolean values" do
       before do
-        A.preference :is_boolean, :boolean, :default => true
+        A.preference :is_boolean, :boolean, default: true
       end
 
       it "with strings" do
@@ -208,8 +208,8 @@ describe Spree::Preferences::Preferable, :type => :model do
 
     context "converts any preferences to any values" do
       before do
-        A.preference :product_ids, :any, :default => []
-        A.preference :product_attributes, :any, :default => {}
+        A.preference :product_ids, :any, default: []
+        A.preference :product_attributes, :any, default: {}
       end
 
       it "with array" do
@@ -220,8 +220,8 @@ describe Spree::Preferences::Preferable, :type => :model do
 
       it "with hash" do
         expect(@a.preferences[:product_attributes]).to eq({})
-        @a.set_preference(:product_attributes, {:id => 1, :name => 2})
-        expect(@a.preferences[:product_attributes]).to eq({:id => 1, :name => 2})
+        @a.set_preference(:product_attributes, {id: 1, name: 2})
+        expect(@a.preferences[:product_attributes]).to eq({id: 1, name: 2})
       end
     end
 
@@ -247,8 +247,8 @@ describe Spree::Preferences::Preferable, :type => :model do
       CreatePrefTest.migrate(:up)
 
       class PrefTest < Spree::Base
-        preference :pref_test_pref, :string, :default => 'abc'
-        preference :pref_test_any, :any, :default => []
+        preference :pref_test_pref, :string, default: 'abc'
+        preference :pref_test_any, :any, default: []
       end
     end
 
@@ -284,7 +284,7 @@ describe Spree::Preferences::Preferable, :type => :model do
       @pt.preferred_pref_test_pref = 'lmn'
       @pt.save!
       @pt.destroy
-      @pt1 = PrefTest.new(:col => 'aaaa')
+      @pt1 = PrefTest.new(col: 'aaaa')
       @pt1.id = @pt.id
       @pt1.save!
       expect(@pt1.get_preference(:pref_test_pref)).to eq('abc')

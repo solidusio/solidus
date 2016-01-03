@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Spree::Gateway, :type => :model do
+describe Spree::Gateway, type: :model do
   class Provider
     def initialize(options)
     end
@@ -98,7 +98,7 @@ describe Spree::Gateway, :type => :model do
     let(:payment_method){ create(:credit_card_payment_method, preference_source: 'test_preference_source') }
 
     it "reads static preferences" do
-      expect(payment_method.options).to eq({:server=>"bar"})
+      expect(payment_method.options).to eq({server:"bar"})
     end
   end
 end

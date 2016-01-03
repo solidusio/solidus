@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 
-describe Spree::Calculator, :type => :model do
+describe Spree::Calculator, type: :model do
 
   class SimpleCalculator < Spree::Calculator
     def compute_simple_computable line_item

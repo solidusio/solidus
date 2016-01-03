@@ -1,11 +1,11 @@
 require 'spec_helper'
 
-describe Spree::Promotion, :type => :model do
+describe Spree::Promotion, type: :model do
   let(:promotion) { Spree::Promotion.new }
 
   describe "validations" do
     before :each do
-      @valid_promotion = Spree::Promotion.new :name => "A promotion"
+      @valid_promotion = Spree::Promotion.new name: "A promotion"
     end
 
     it "valid_promotion is valid" do
@@ -38,7 +38,7 @@ describe Spree::Promotion, :type => :model do
 
   describe ".advertised" do
     let(:promotion) { create(:promotion) }
-    let(:advertised_promotion) { create(:promotion, :advertise => true) }
+    let(:advertised_promotion) { create(:promotion, advertise: true) }
 
     it "only shows advertised promotions" do
       advertised = Spree::Promotion.advertised
@@ -76,7 +76,7 @@ describe Spree::Promotion, :type => :model do
   end
 
   describe "#save" do
-    let(:promotion) { Spree::Promotion.create(:name => "delete me") }
+    let(:promotion) { Spree::Promotion.create(name: "delete me") }
 
     before(:each) do
       promotion.actions << Spree::Promotion::Actions::CreateAdjustment.new
@@ -105,7 +105,7 @@ describe Spree::Promotion, :type => :model do
 
       @user = create(:user)
       @order = create(:order, user: @user, created_at: DateTime.current)
-      @payload = { :order => @order, :user => @user }
+      @payload = { order: @order, user: @user }
     end
 
     it "should check path if present" do
@@ -376,7 +376,7 @@ describe Spree::Promotion, :type => :model do
 
     let!(:action) do
       calculator = Spree::Calculator::FlatRate.new
-      action_params = { :promotion => promotion, :calculator => calculator }
+      action_params = { promotion: promotion, calculator: calculator }
       action = Spree::Promotion::Actions::CreateAdjustment.create(action_params)
       promotion.actions << action
       action
@@ -586,14 +586,14 @@ describe Spree::Promotion, :type => :model do
     end
 
     context "with 'any' match policy" do
-      let(:promotion) { Spree::Promotion.create(:name => "Promo", :match_policy => 'any') }
+      let(:promotion) { Spree::Promotion.create(name: "Promo", match_policy: 'any') }
       let(:promotable) { double('Promotable') }
 
       it "should have eligible rules if any of the rules are eligible" do
         allow_any_instance_of(Spree::PromotionRule).to receive_messages(:applicable? => true)
-        true_rule = Spree::PromotionRule.create(:promotion => promotion)
+        true_rule = Spree::PromotionRule.create(promotion: promotion)
         allow(true_rule).to receive_messages(:eligible? => true)
-        allow(promotion).to receive_messages(:rules => [true_rule])
+        allow(promotion).to receive_messages(rules: [true_rule])
         allow(promotion).to receive_message_chain(:rules, :for).and_return([true_rule])
         expect(promotion.eligible_rules(promotable)).to eq [true_rule]
       end
@@ -692,7 +692,7 @@ describe Spree::Promotion, :type => :model do
   # admin form posts the code and path as empty string
   describe "normalize blank values for path" do
     it "will save blank value as nil value instead" do
-      promotion = Spree::Promotion.create(:name => "A promotion", :path => "")
+      promotion = Spree::Promotion.create(name: "A promotion", path: "")
       expect(promotion.path).to be_nil
     end
   end

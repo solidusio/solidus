@@ -15,7 +15,7 @@ class Spree::StoreCredit < Spree::Base
   belongs_to :user, class_name: Spree::UserClassHandle.new
   belongs_to :created_by, class_name: Spree::UserClassHandle.new
   belongs_to :category, class_name: "Spree::StoreCreditCategory"
-  belongs_to :credit_type, class_name: 'Spree::StoreCreditType', :foreign_key => 'type_id'
+  belongs_to :credit_type, class_name: 'Spree::StoreCreditType', foreign_key: 'type_id'
   has_many :store_credit_events
 
   validates_presence_of :user_id, :category_id, :type_id, :created_by_id, :currency

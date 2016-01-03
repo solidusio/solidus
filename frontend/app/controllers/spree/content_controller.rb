@@ -3,7 +3,7 @@ module Spree
     respond_to :html
 
     def cvv
-      render :layout => false
+      render layout: false
     end
   end
 end

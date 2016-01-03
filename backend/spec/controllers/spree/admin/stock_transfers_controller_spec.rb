@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 module Spree
-  describe Admin::StockTransfersController, :type => :controller do
+  describe Admin::StockTransfersController, type: :controller do
     stub_authorization!
 
     let(:warehouse) { StockLocation.create(name: "Warehouse")}
@@ -45,18 +45,18 @@ module Spree
       end
 
       it "searches by stock location" do
-        spree_get :index, :q => { :source_location_id_or_destination_location_id_eq => ny_store.id }
+        spree_get :index, q: { source_location_id_or_destination_location_id_eq: ny_store.id }
         expect(assigns(:stock_transfers).count).to eq 1
         expect(assigns(:stock_transfers)).to include(stock_transfer1)
       end
 
       it "filters the closed stock transfers" do
-        spree_get :index, :q => { :closed_at_null => '1' }
+        spree_get :index, q: { closed_at_null: '1' }
         expect(assigns(:stock_transfers)).to match_array [stock_transfer1]
       end
 
       it "doesn't filter any stock transfers" do
-        spree_get :index, :q => { :closed_at_null => '0' }
+        spree_get :index, q: { closed_at_null: '0' }
         expect(assigns(:stock_transfers)).to match_array [stock_transfer1, stock_transfer2]
       end
     end

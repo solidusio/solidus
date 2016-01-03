@@ -19,7 +19,7 @@ module Spree
         authorize! :create, Spree::OptionType
         @option_type = Spree::OptionType.new(option_type_params)
         if @option_type.save
-          render :show, :status => 201
+          render :show, status: 201
         else
           invalid_resource!(@option_type)
         end
@@ -37,7 +37,7 @@ module Spree
       def destroy
         @option_type = Spree::OptionType.accessible_by(current_ability, :destroy).find(params[:id])
         @option_type.destroy
-        render :text => nil, :status => 204
+        render text: nil, status: 204
       end
 
       private

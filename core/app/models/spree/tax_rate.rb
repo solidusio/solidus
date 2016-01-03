@@ -158,11 +158,11 @@ module Spree
       end
 
       self.adjustments.create!({
-        :adjustable => item,
-        :amount => amount,
-        :order_id => item.order_id,
-        :label => label || create_label,
-        :included => included
+        adjustable: item,
+        amount: amount,
+        order_id: item.order_id,
+        label: label || create_label,
+        included: included
       })
     end
 

@@ -1,9 +1,9 @@
 require 'spec_helper'
 
-describe "Tax Rates", :type => :feature do
+describe "Tax Rates", type: :feature do
   stub_authorization!
 
-  let!(:tax_rate) { create(:tax_rate, :calculator => stub_model(Spree::Calculator)) }
+  let!(:tax_rate) { create(:tax_rate, calculator: stub_model(Spree::Calculator)) }
 
   before do
     visit spree.admin_path
@@ -22,7 +22,7 @@ describe "Tax Rates", :type => :feature do
   it "can create a new tax rate" do
     click_link "Tax Rates"
     click_link "New Tax Rate"
-    fill_in "Rate", :with => "0.05"
+    fill_in "Rate", with: "0.05"
     click_button "Create"
     expect(page).to have_content("Tax Rate has been successfully created!")
   end

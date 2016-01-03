@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Spree::Order, :type => :model do
+describe Spree::Order, type: :model do
   let(:order) { stub_model("Spree::Order") }
 
   context "#finalize!" do
@@ -41,9 +41,9 @@ describe Spree::Order, :type => :model do
       expect(order.shipment_state).to eq('ready')
     end
 
-    after { Spree::Config.set :track_inventory_levels => true }
+    after { Spree::Config.set track_inventory_levels: true }
     it "should not sell inventory units if track_inventory_levels is false" do
-      Spree::Config.set :track_inventory_levels => false
+      Spree::Config.set track_inventory_levels: false
       expect(Spree::InventoryUnit).not_to receive(:sell_units)
       order.finalize!
     end

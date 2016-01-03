@@ -10,7 +10,7 @@ end
 
 module Spree
   module Stock
-    describe Quantifier, :type => :model do
+    describe Quantifier, type: :model do
 
       let(:target_stock_location) { nil }
       let!(:stock_location) { create :stock_location_with_items  }

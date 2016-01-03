@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 module Spree
-  describe Api::StockLocationsController, :type => :controller do
+  describe Api::StockLocationsController, type: :controller do
     render_views
 
     let!(:stock_location) { create(:stock_location) }
@@ -59,14 +59,14 @@ module Spree
 
       describe "#update" do
         it "cannot update a stock location" do
-          api_put :update, :stock_location => { :name => "South Pole" }, :id => stock_location.to_param
+          api_put :update, stock_location: { name: "South Pole" }, id: stock_location.to_param
           expect(response.status).to eq(401)
         end
       end
 
       describe "#destroy" do
         it "cannot delete a stock location" do
-          api_put :destroy, :id => stock_location.to_param
+          api_put :destroy, id: stock_location.to_param
           expect(response.status).to eq(401)
         end
       end

@@ -14,7 +14,7 @@ module Spree
           options[:field] ||= :permalink
           self.permalink_options = options
 
-          before_validation(:on => :create) { save_permalink }
+          before_validation(on: :create) { save_permalink }
         end
 
         def find_by_param(value, *args)

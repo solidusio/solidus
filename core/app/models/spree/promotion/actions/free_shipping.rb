@@ -33,7 +33,7 @@ module Spree
         private
 
         def promotion_credit_exists?(shipment)
-          shipment.adjustments.where(:source_id => self.id).exists?
+          shipment.adjustments.where(source_id: self.id).exists?
         end
       end
     end
