@@ -63,7 +63,7 @@ bundle exec rake db:migrate
 Finally start the rails server
 
 ```
-bundle exec rails s
+rails s
 ````
 
 Or if you want to bind it with IP address
