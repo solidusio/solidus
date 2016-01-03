@@ -66,10 +66,10 @@ Finally start the rails server
 rails s
 ````
 
-Or if you want to bind it with IP address
+Or if you want to bind it with IP address (for example `--binding=127.0.0.1`)
 
 ```
-rails s --binding=[IP address]
+rails s --binding
 ````
 
 The solidus_frontend storefront will be accessible at http://localhost:3000/
