@@ -2,7 +2,8 @@ module Spree
   class Taxon < Spree::Base
     has_closure_tree hierarchy_class_name: 'Spree::TaxonHierarchy',
                      hierarchy_table_name: 'spree_taxon_hierarchies',
-                     order: 'position'
+                     order: 'position',
+                     dependent: :destroy
 
     belongs_to :taxonomy, class_name: 'Spree::Taxonomy', inverse_of: :taxons
     has_many :classifications, -> { order(:position) }, dependent: :delete_all, inverse_of: :taxon
