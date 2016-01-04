@@ -184,11 +184,11 @@ describe Spree::Shipment, :type => :model do
       before { allow(shipment).to receive(:can_get_rates?){ true } }
 
       it 'should request new rates, and maintain shipping_method selection' do
-        expect(Spree::Stock::Estimator).to receive(:new).with(shipment.order).and_return(mock_estimator)
-        allow(shipment).to receive_messages(shipping_method: shipping_method2)
+        # select more expensive shipping_method2
+        shipping_method2_rate = shipment.add_shipping_method(shipping_method2)
+        shipment.selected_shipping_rate_id = shipping_method2_rate.id
 
-        expect(shipment.refresh_rates).to eq(shipping_rates)
-        expect(shipment.reload.selected_shipping_rate.shipping_method_id).to eq(shipping_method2.id)
+        expect(shipment.selected_shipping_rate.shipping_method_id).to eq(shipping_method2.id)
       end
 
       it 'should handle no shipping_method selection' do

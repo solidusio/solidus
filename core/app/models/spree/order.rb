@@ -497,8 +497,7 @@ module Spree
         raise CannotRebuildShipments.new(Spree.t(:cannot_rebuild_shipments_shipments_not_pending))
       else
         adjustments.shipping.destroy_all
-        shipments.destroy_all
-        self.shipments = Spree::Stock::Coordinator.new(self).shipments
+        self.shipments.replace(Spree::Stock::Coordinator.new(self).shipments)
       end
     end
 
@@ -516,8 +515,6 @@ module Spree
     # e.g. customer goes back from payment step and changes order items
     def ensure_updated_shipments
       if !completed? && shipments.all?(&:pending?)
-        self.shipments.destroy_all
-        self.update_column(:shipment_total, 0)
         restart_checkout_flow
       end
 
@@ -530,6 +527,7 @@ module Spree
         state: 'cart',
         updated_at: Time.now,
       )
+      # Note: what if this did contents.advance instead of self.next! ?
       self.next! if self.line_items.size > 0
     end
 

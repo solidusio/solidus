@@ -268,20 +268,9 @@ describe Spree::Order, :type => :model do
           order.shipments.create!
         end
 
-        it "destroys current shipments" do
-          order.ensure_updated_shipments
-          expect(order.shipments).to be_empty
-        end
-
         it "puts order back in address state" do
           order.ensure_updated_shipments
           expect(order.state).to eql "cart"
-        end
-
-        it "resets shipment_total" do
-          order.update_column(:shipment_total, 5)
-          order.ensure_updated_shipments
-          expect(order.shipment_total).to eq(0)
         end
 
         it "does nothing if any shipments are ready" do
@@ -303,17 +292,6 @@ describe Spree::Order, :type => :model do
       before do
         order.state = 'address'
         order.shipments.create!
-      end
-
-      it "destroys current shipments" do
-        order.ensure_updated_shipments
-        expect(order.shipments).to be_empty
-      end
-
-      it "resets shipment_total" do
-        order.update_column(:shipment_total, 5)
-        order.ensure_updated_shipments
-        expect(order.shipment_total).to eq(0)
       end
 
       it "puts the order in the cart state" do

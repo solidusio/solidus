@@ -325,7 +325,7 @@ describe Spree::Order, :type => :model do
 
       context "correctly determining payment required based on shipping information" do
         let(:shipment) do
-          FactoryGirl.create(:shipment)
+          FactoryGirl.create(:shipment, select_shipping_rate: true)
         end
 
         before do

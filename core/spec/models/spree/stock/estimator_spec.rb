@@ -4,7 +4,7 @@ module Spree
   module Stock
     describe Estimator, :type => :model do
       let!(:shipping_method) { create(:shipping_method) }
-      let(:package) { build(:stock_package, contents: inventory_units.map { |i| ContentItem.new(inventory_unit) }) }
+      let(:package) { build(:stock_package, contents: inventory_units.map { |i| ContentItem.new(i) }) }
       let(:order) { build(:order_with_line_items) }
       let(:inventory_units) { order.inventory_units }
 
@@ -100,6 +100,21 @@ module Spree
             allow(subject).to receive(:shipping_methods).and_return(shipping_methods)
 
             subject.shipping_rates(package)
+          end
+
+          context "user has a selected shipping rate" do
+            let(:order) { create(:order_with_line_items, select_shipping_rate: true) }
+
+            before do
+              #need to override from parent context
+              allow(package).to receive_messages(:shipping_methods => Spree::ShippingMethod.all.to_a)
+            end
+
+            it "preserves the user's choice" do
+              preselected_rate = order.shipments.first.selected_shipping_rate
+              rates = subject.shipping_rates(package)
+              expect(rates.detect(&:selected).shipping_method_id).to eq preselected_rate.shipping_method_id
+            end
           end
         end
 

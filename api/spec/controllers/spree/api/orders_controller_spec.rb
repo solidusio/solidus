@@ -499,20 +499,6 @@ module Spree
         expect(json_response["user_id"]).to eq(original_id)
       end
 
-      context "order has shipments" do
-        before { order.create_proposed_shipments }
-
-        it "clears out all existing shipments on line item udpate" do
-          previous_shipments = order.shipments
-          api_put :update, :id => order.to_param, :order => {
-            :line_items => {
-              0 => { :id => line_item.id, :quantity => 10 }
-            }
-          }
-          expect(order.reload.shipments).to be_empty
-        end
-      end
-
       context "with a line item" do
         let(:order) { create(:order_with_line_items) }
 

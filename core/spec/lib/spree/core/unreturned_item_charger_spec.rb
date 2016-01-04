@@ -9,6 +9,7 @@ describe Spree::UnreturnedItemCharger do
   let(:exchange_shipment) do
     create(:shipment,
            order: shipped_order,
+           select_shipping_rate: true,
            state: 'shipped',
            stock_location: original_stock_location,
            created_at: 5.days.ago)
