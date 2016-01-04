@@ -1,6 +1,8 @@
 module Spree
   class Taxon < Spree::Base
-    acts_as_nested_set dependent: :destroy
+    has_closure_tree hierarchy_class_name: 'Spree::TaxonHierarchy',
+                     hierarchy_table_name: 'spree_taxon_hierarchies',
+                     order: 'position'
 
     belongs_to :taxonomy, class_name: 'Spree::Taxonomy', inverse_of: :taxons
     has_many :classifications, -> { order(:position) }, dependent: :delete_all, inverse_of: :taxon
@@ -116,6 +118,23 @@ module Spree
         self.permalink = "#{parent.permalink}/#{value}"
       else
         self.permalink = value
+      end
+    end
+
+    def move_to_child_with_index(node, index)
+      # closure_tree does not provide any method that move nodes regarding position
+      # this method overrides move_to_child_with_index offered by awesome_nested_set
+      if node.children.empty? || node.children.count == index
+        node.append_child(self)
+      else
+        my_position = node.children.index(self)
+        if my_position && my_position < index
+          node.children[index].append_sibling(self)
+        elsif my_position && my_position == index
+          # do nothing. already there.
+        else
+          node.children[index].prepend_sibling(self)
+        end
       end
     end
 
