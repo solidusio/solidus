@@ -154,7 +154,7 @@ describe Spree::CreditCard, type: :model do
     end
   end
 
-  # Regression test for https://github.com/spree/spree/issues/3847 & https://github.com/spree/spree/issues/3896
+  # Regression test for https://github.com/spree/spree/issues/3847 and https://github.com/spree/spree/issues/3896
   context "#expiry=" do
     it "can set with a 2-digit month and year" do
       credit_card.expiry = '04 / 15'

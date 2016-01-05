@@ -106,7 +106,7 @@ module Spree
           expect(response.status).to eq(200)
         end
 
-        # Regression Spec for https://github.com/spree/spree/issues/5389 & https://github.com/spree/spree/issues/5880
+        # Regression Spec for https://github.com/spree/spree/issues/5389 and https://github.com/spree/spree/issues/5880
         it "can update addresses but not transition to delivery w/o shipping setup" do
           Spree::ShippingMethod.destroy_all
           api_put :update,

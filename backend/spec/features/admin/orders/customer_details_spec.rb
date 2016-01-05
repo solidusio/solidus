@@ -16,7 +16,7 @@ describe "Customer Details", type: :feature, js: true do
   let!(:user) { create(:user, email: 'foobar@example.com', ship_address: ship_address, bill_address: bill_address) }
 
   context "brand new order" do
-    # Regression test for https://github.com/spree/spree/issues/3335 & https://github.com/spree/spree/issues/5317
+    # Regression test for https://github.com/spree/spree/issues/3335 and https://github.com/spree/spree/issues/5317
     it "associates a user when not using guest checkout" do
       visit spree.admin_path
       click_link "Orders"
@@ -86,7 +86,7 @@ describe "Customer Details", type: :feature, js: true do
       click_button "Update"
       click_link "Customer Details"
 
-      # Regression test for https://github.com/spree/spree/issues/2950 + https://github.com/spree/spree/issues/2433
+      # Regression test for https://github.com/spree/spree/issues/2950 and https://github.com/spree/spree/issues/2433
       # This act should transition the state of the order as far as it will go too
       within("#order_tab_summary") do
         expect(find("dt#order_status + dd")).to have_content("COMPLETE")

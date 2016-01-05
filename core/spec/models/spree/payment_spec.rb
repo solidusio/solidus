@@ -607,7 +607,7 @@ describe Spree::Payment, :type => :model do
   end
 
   describe "#credit_allowed" do
-    # Regression test for https://github.com/spree/spree/issues/4403 & https://github.com/spree/spree/issues/4407
+    # Regression test for https://github.com/spree/spree/issues/4403 and https://github.com/spree/spree/issues/4407
     it "is the difference between offsets total and payment amount" do
       payment.amount = 100
       allow(payment).to receive(:offsets_total).and_return(0)
