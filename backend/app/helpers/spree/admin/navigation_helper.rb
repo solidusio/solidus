@@ -88,6 +88,7 @@ module Spree
       end
 
       def button_link_to(text, url, html_options = {})
+        html_options = {class: ''}.merge(html_options)
         if (html_options[:method] &&
             html_options[:method].to_s.downcase != 'get' &&
             !html_options[:remote])
@@ -102,7 +103,7 @@ module Spree
 
           html_options.delete('data-update') unless html_options['data-update']
 
-          html_options[:class] = 'button'
+          html_options[:class] += ' button'
 
           if html_options[:icon]
             html_options[:class] += " fa fa-#{html_options[:icon]}"

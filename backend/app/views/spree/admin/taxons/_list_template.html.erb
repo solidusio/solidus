@@ -1,0 +1,17 @@
+<script type="text/template" id="taxons-list-template">
+  {{#each taxons}}
+  <li data-taxon-id="{{id}}" data-taxon-taxonomy-id="{{taxonomy_id}}">
+    <div  class="sortable-handle">
+      {{#if (isRootTaxon) }}{{else}}<i class="fa fa-arrows"></i>{{/if}}
+      {{name}}
+      <div class="actions right">
+        <a href="/admin/taxonomies/{{taxonomy_id}}/taxons/{{id}}/edit" class="fa fa-edit icon_link with-tip no-text"></a>
+        <a href="#" class="delete-taxon-button fa fa-trash icon_link with-tip no-text"></a>
+      </div>
+    </div>
+    <ul>
+      {{> taxons}}
+    </ul>
+  </li>
+  {{/each}}
+</script>

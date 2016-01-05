@@ -1,0 +1,60 @@
+#taxonomy_tree {
+  padding: 0 3em;
+
+  &,
+  ul {
+    list-style: none;
+  }
+
+  ul {
+    min-height: 0.5em;
+  }
+
+  .ui-sortable {
+    margin-bottom: 0.5em;
+  }
+
+  > li {
+    > .sortable-handle {
+      text-indent: 2em;
+
+      * {
+        text-indent: 0;
+      }
+    }
+
+    > .ui-sortable {
+      padding-bottom: 5em;
+    }
+  }
+
+  .sortable-handle ,
+  .sortable-placeholder {
+    border-radius: $border-radius;
+  }
+
+  .sortable-handle {
+    background-color: very-light($color-3);
+    border: 1px solid $color-border;
+    color: $color-body-text;
+    font-weight: $font-weight-bold;
+    padding: 0.5em;
+    cursor: move;
+
+    i {
+      @include margin(null 4px 0 6px);
+    }
+
+    .actions a {
+      margin-left: 8px;
+    }
+  }
+
+  .ui-sortable-over {
+    padding-bottom: 1em;
+  }
+
+  .ui-sortable-handle:first-child {
+    margin-top: 1em;
+  }
+}

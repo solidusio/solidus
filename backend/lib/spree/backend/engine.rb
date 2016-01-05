@@ -20,7 +20,6 @@ module Spree
           spree/backend/address_states.js
           jqPlot/excanvas.min.js
           spree/backend/images/new.js
-          jquery.jstree/themes/apple/*
           fontawesome-webfont*
           select2_locale*
         ]
