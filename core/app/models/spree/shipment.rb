@@ -392,7 +392,7 @@ module Spree
       end
 
       def recalculate_adjustments
-        Spree::ItemAdjustments.new(self).update
+        Spree::AdjustableUpdater.update(self)
       end
 
       def set_cost_zero_when_nil
