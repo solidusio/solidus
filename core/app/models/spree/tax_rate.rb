@@ -51,10 +51,17 @@ module Spree
       # This little bit of code at the end stops the Spanish refund from appearing.
       #
       # For further discussion, see #4397 and #4327.
-      rates.delete_if do |rate|
-        rate.included_in_price? &&
-        (rates - [rate]).map(&:tax_category).include?(rate.tax_category)
+
+      remaining_rates = rates.dup
+      rates.each do |rate|
+        if rate.included_in_price?
+          if remaining_rates.any?{|r| r != rate && r.tax_category == rate.tax_category }
+            remaining_rates.delete(rate)
+          end
+        end
       end
+
+      remaining_rates
     end
 
     # Pre-tax amounts must be stored so that we can calculate
