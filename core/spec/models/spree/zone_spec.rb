@@ -155,7 +155,6 @@ describe Spree::Zone, :type => :model do
 
     context "when both zones are the same zone" do
       before do
-        @source.members.create(zoneable: country1)
         @target = @source
       end
 
