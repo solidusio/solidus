@@ -9,7 +9,6 @@ module Spree
     ORDER_NUMBER_PREFIX  = 'R'
 
     include Spree::Order::Checkout
-    include Spree::Order::CurrencyUpdater
     include Spree::Order::Payments
 
     class InsufficientStock < StandardError; end
@@ -93,7 +92,6 @@ module Spree
 
     before_create :create_token
     before_create :link_by_email
-    before_update :homogenize_line_item_currencies, if: :currency_changed?
 
     validates :email, presence: true, if: :require_email
     validates :email, email: true, if: :require_email, allow_blank: true
