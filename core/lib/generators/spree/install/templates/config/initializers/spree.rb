@@ -47,7 +47,7 @@ Spree.config do |config|
   #   secret_key: ENV['STRIPE_SECRET_KEY'],
   #   publishable_key: ENV['STRIPE_PUBLISHABLE_KEY'],
   #   server: Rails.env.production? ? 'production' : 'test',
-  #   test: !Rails.env.production?
+  #   test_mode: !Rails.env.production?
   # )
 end
 
