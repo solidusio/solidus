@@ -38,7 +38,7 @@ module Spree
           if options[:create_order_if_necessary] && (@current_order.nil? || @current_order.completed?)
             @current_order = Spree::Order.new(current_order_params)
             @current_order.user ||= try_spree_current_user
-            # See issue #3346 for reasons why this line is here
+            # See issue https://github.com/spree/spree/issues/3346 for reasons why this line is here
             @current_order.created_by ||= try_spree_current_user
             @current_order.save!
           end

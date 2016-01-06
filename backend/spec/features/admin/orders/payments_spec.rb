@@ -30,7 +30,7 @@ describe 'Payments', :type => :feature do
       visit current_path
     end
 
-    # Regression tests for #1453
+    # Regression tests for https://github.com/spree/spree/issues/1453
     context 'with a check payment' do
       let(:order) { create(:completed_order_with_totals, number: 'R100') }
       let!(:payment) do
@@ -100,7 +100,7 @@ describe 'Payments', :type => :feature do
       expect(page).not_to have_selector('#new_payment_section')
     end
 
-    # Regression test for #1269
+    # Regression test for https://github.com/spree/spree/issues/1269
     it 'cannot create a payment for an order with no payment methods' do
       Spree::PaymentMethod.delete_all
       order.payments.delete_all
@@ -173,7 +173,7 @@ describe 'Payments', :type => :feature do
     let(:order) { create(:order_with_line_items, :line_items_count => 1) }
     let!(:payment_method) { create(:credit_card_payment_method)}
 
-    # Regression tests for #4129
+    # Regression tests for https://github.com/spree/spree/issues/4129
     context "with a credit card payment method" do
       before do
         visit spree.admin_order_payments_path(order)
@@ -184,7 +184,7 @@ describe 'Payments', :type => :feature do
         fill_in "Name *", :with => "Test User"
         fill_in "Expiration", :with => "09 / #{Time.current.year + 1}"
         fill_in "Card Code", :with => "007"
-        # Regression test for #4277
+        # Regression test for https://github.com/spree/spree/issues/4277
         expect(page).to have_css('.ccType[value="visa"]', visible: false)
         click_button "Continue"
         expect(page).to have_content("Payment has been successfully created!")

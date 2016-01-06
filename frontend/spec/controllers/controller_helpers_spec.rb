@@ -16,7 +16,7 @@ describe Spree::ProductsController, :type => :controller do
     I18n.enforce_available_locales = true
   end
 
-  # Regression test for #1184
+  # Regression test for https://github.com/spree/spree/issues/1184
   it "sets the default locale based off Spree::Frontend::Config[:locale]" do
     expect(I18n.locale).to eq(:en)
     spree_get :index

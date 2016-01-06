@@ -2,7 +2,7 @@ module Spree
   class LogEntry < Spree::Base
     belongs_to :source, polymorphic: true
 
-    # Fix for #1767
+    # Fix for https://github.com/spree/spree/issues/1767
     # If a payment fails, we want to make sure we keep the record of it failing
     after_rollback :save_anyway
 

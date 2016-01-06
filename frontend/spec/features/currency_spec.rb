@@ -5,7 +5,7 @@ describe "Switching currencies in backend", :type => :feature do
     create(:base_product, :name => "RoR Mug")
   end
 
-  # Regression test for #2340
+  # Regression test for https://github.com/spree/spree/issues/2340
   it "does not cause current_order to become nil", inaccessible: true do
     visit spree.root_path
     click_link "RoR Mug"

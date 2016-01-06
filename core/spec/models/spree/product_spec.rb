@@ -103,7 +103,7 @@ describe Spree::Product, :type => :model do
     end
 
     context "#price" do
-      # Regression test for #1173
+      # Regression test for https://github.com/spree/spree/issues/1173
       it 'strips non-price characters' do
         product.price = "$10"
         expect(product.price).to eq(10.0)
@@ -236,7 +236,7 @@ describe Spree::Product, :type => :model do
       end
     end
 
-    # Regression test for #3737
+    # Regression test for https://github.com/spree/spree/issues/3737
     context "has stock items" do
       let(:product) { create(:product) }
       it "can retrieve stock items" do
@@ -328,7 +328,7 @@ describe Spree::Product, :type => :model do
       }.to change { product.properties.length }.by(1)
     end
 
-    # Regression test for #2455
+    # Regression test for https://github.com/spree/spree/issues/2455
     it "should not overwrite properties' presentation names" do
       Spree::Property.where(:name => 'foo').first_or_create!(:presentation => "Foo's Presentation Name")
       product.set_property('foo', 'value1')
@@ -337,7 +337,7 @@ describe Spree::Product, :type => :model do
       expect(Spree::Property.where(:name => 'bar').first.presentation).to eq("bar")
     end
 
-    # Regression test for #4416
+    # Regression test for https://github.com/spree/spree/issues/4416
     context "#possible_promotions" do
       let!(:promotion) do
         create(:promotion, advertise: true, starts_at: 1.day.ago)
@@ -450,7 +450,7 @@ describe Spree::Product, :type => :model do
     end
   end
 
-  # Regression tests for #2352
+  # Regression tests for https://github.com/spree/spree/issues/2352
   context "classifications and taxons" do
     it "is joined through classifications" do
       reflection = Spree::Product.reflect_on_association(:taxons)

@@ -5,7 +5,7 @@ describe "Shipments", :type => :feature do
 
   let!(:order) { create(:order_ready_to_ship, :number => "R100", :state => "complete", :line_items_count => 5) }
 
-  # Regression test for #4025
+  # Regression test for https://github.com/spree/spree/issues/4025
   context "a shipment without a shipping method" do
     before do
       order.shipments.each do |s|

@@ -82,7 +82,7 @@ describe "Properties", :type => :feature do
       click_link "Product Properties"
     end
 
-    # Regression test for #2279
+    # Regression test for https://github.com/spree/spree/issues/2279
     it "successfully create and then remove product property" do
       fill_in_property
 
@@ -93,7 +93,7 @@ describe "Properties", :type => :feature do
       check_property_row_count(1)
     end
 
-    # Regression test for #4466
+    # Regression test for https://github.com/spree/spree/issues/4466
     it "successfully remove and create a product property at the same time" do
       fill_in_property
 

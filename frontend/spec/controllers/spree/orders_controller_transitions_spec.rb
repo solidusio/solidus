@@ -6,7 +6,7 @@ end
 
 module Spree
   describe OrdersController, :type => :controller do
-    # Regression test for #2004
+    # Regression test for https://github.com/spree/spree/issues/2004
     context "with a transition callback on first state" do
       let(:order) { Spree::Order.new }
 

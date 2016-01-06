@@ -41,7 +41,7 @@ describe Spree::CheckoutController, :type => :controller do
       expect(response).to redirect_to(spree.cart_path)
     end
 
-    # Regression test for #2280
+    # Regression test for https://github.com/spree/spree/issues/2280
     it "should redirect to current step trying to access a future step" do
       order.update_column(:state, "address")
       spree_get :edit, { :state => "delivery" }
@@ -228,7 +228,7 @@ describe Spree::CheckoutController, :type => :controller do
           order.payments.reload
         end
 
-        # This inadvertently is a regression test for #2694
+        # This inadvertently is a regression test for https://github.com/spree/spree/issues/2694
         it "should redirect to the order view" do
           spree_post :update, {:state => "confirm"}
           expect(response).to redirect_to spree.order_path(order)

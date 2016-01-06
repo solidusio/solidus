@@ -56,7 +56,7 @@ describe "Option Types", :type => :feature do
     end
   end
 
-  # Regression test for #2277
+  # Regression test for https://github.com/spree/spree/issues/2277
   it "can remove an option value from an option type", :js => true do
     create(:option_value)
     click_link "Option Types"
@@ -83,7 +83,7 @@ describe "Option Types", :type => :feature do
     end
   end
 
-  # Regression test for #3204
+  # Regression test for https://github.com/spree/spree/issues/3204
   it "can remove a non-persisted option value from an option type", :js => true do
     create(:option_type)
     click_link "Option Types"

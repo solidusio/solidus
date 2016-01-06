@@ -414,7 +414,7 @@ describe Spree::Order, :type => :model do
     end
   end
 
-  # Regression tests for #4072
+  # Regression tests for https://github.com/spree/spree/issues/4072
   context "#state_changed" do
     let(:order) { FactoryGirl.create(:order) }
 
@@ -436,7 +436,7 @@ describe Spree::Order, :type => :model do
     end
   end
 
-  # Regression test for #4199
+  # Regression test for https://github.com/spree/spree/issues/4199
   context "#available_payment_methods" do
     it "includes frontend payment methods" do
       payment_method = Spree::PaymentMethod.create!({
@@ -750,7 +750,7 @@ describe Spree::Order, :type => :model do
     end
   end
 
-  # Regression test for #4923
+  # Regression test for https://github.com/spree/spree/issues/4923
   context "locking" do
     let(:order) { Spree::Order.create } # need a persisted in order to test locking
 

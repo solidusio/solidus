@@ -175,7 +175,7 @@ describe Spree::Address, :type => :model do
         end
       end
 
-      # Regression test for #1142
+      # Regression test for https://github.com/spree/spree/issues/1142
       it "uses the first available country if :default_country_id is set to an invalid value" do
         Spree::Config[:default_country_id] = "0"
         expect(Spree::Address.build_default.country).to eq default_country

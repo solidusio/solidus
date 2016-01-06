@@ -14,7 +14,7 @@ class AddAddressFieldsToStockLocation < ActiveRecord::Migration
 
     usa = Spree::Country.where(:iso => 'US').first
     # In case USA isn't found.
-    # See #3115
+    # See https://github.com/spree/spree/issues/3115
     country = usa || Spree::Country.first
     Spree::Country.reset_column_information
     Spree::StockLocation.update_all(:country_id => country)

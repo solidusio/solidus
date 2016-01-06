@@ -21,7 +21,7 @@ describe "Cart", type: :feature, inaccessible: true do
     expect(page).to have_selector('button#update-button[disabled]')
   end
 
-  # Regression test for #2006
+  # Regression test for https://github.com/spree/spree/issues/2006
   it "does not error out with a 404 when GET'ing to /orders/populate" do
     visit '/orders/populate'
     within(".error") do
@@ -59,7 +59,7 @@ describe "Cart", type: :feature, inaccessible: true do
     end
   end
 
-  # regression for #2276
+  # regression for https://github.com/spree/spree/issues/2276
   context "product contains variants but no option values" do
     let(:variant) { create(:variant) }
     let(:product) { variant.product }

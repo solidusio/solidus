@@ -3,7 +3,7 @@ require 'spec_helper'
 describe Spree::Admin::ReturnAuthorizationsController, :type => :controller do
   stub_authorization!
 
-  # Regression test for #1370 #3
+  # Regression test for https://github.com/spree/spree/issues/1370 #3
   let!(:order) { create(:shipped_order, line_items_count: 3) }
   let!(:return_reason) { create(:return_reason) }
   let(:inventory_unit_1) { order.inventory_units.order('id asc')[0] }

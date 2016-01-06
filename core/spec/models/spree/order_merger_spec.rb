@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-# Regression tests for #2179
+# Regression tests for https://github.com/spree/spree/issues/2179
 module Spree
   describe OrderMerger, type: :model do
     let(:variant) { create(:variant) }

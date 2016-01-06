@@ -5,7 +5,7 @@ describe "Product Taxons", :type => :feature do
 
   context "managing taxons" do
     def assert_selected_taxons(taxons)
-      # Regression test for #2139
+      # Regression test for https://github.com/spree/spree/issues/2139
       taxons.each do |taxon|
         expect(page).to have_css(".select2-search-choice", text: taxon.name)
       end

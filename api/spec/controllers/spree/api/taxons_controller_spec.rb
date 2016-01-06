@@ -27,7 +27,7 @@ module Spree
         expect(children.first['taxons'].count).to eq 1
       end
 
-      # Regression test for #4112
+      # Regression test for https://github.com/spree/spree/issues/4112
       it "does not include children when asked not to" do
         api_get :index, :taxonomy_id => taxonomy.id, :without_children => 1
 

@@ -111,7 +111,7 @@ module Spree
               end
             end
 
-            # Regression test for #4211
+            # Regression test for https://github.com/spree/spree/issues/4211
             context "with incorrect coupon code casing" do
               before { allow(order).to receive_messages :coupon_code => "10OFF" }
               it "successfully activates promo" do
@@ -140,7 +140,7 @@ module Spree
               order.contents.add create(:variant)
             end
 
-            # regression spec for #4515
+            # regression spec for https://github.com/spree/spree/issues/4515
             it "successfully activates promo" do
               subject.apply
               expect(subject).to be_successful

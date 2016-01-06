@@ -89,7 +89,7 @@ describe Spree::LineItem, :type => :model do
     end
   end
 
-  # Test for #3391
+  # Test for https://github.com/spree/spree/issues/3391
   context '#copy_price' do
     it "copies over a variant's prices" do
       line_item.price = nil
@@ -103,7 +103,7 @@ describe Spree::LineItem, :type => :model do
     end
   end
 
-  # Test for #3481
+  # Test for https://github.com/spree/spree/issues/3481
   context '#copy_tax_category' do
     it "copies over a variant's tax category" do
       line_item.tax_category = nil

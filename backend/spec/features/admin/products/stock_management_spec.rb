@@ -21,7 +21,7 @@ describe "Stock Management", :type => :feature do
       click_link "Stock Management"
     end
 
-    # Regression test for #3304
+    # Regression test for https://github.com/spree/spree/issues/3304
     # It is OK to still render the stock page, ensure no errors in this case
     context "with no stock location" do
       before do

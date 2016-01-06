@@ -46,7 +46,7 @@ describe "Shipping Methods", :type => :feature do
     end
   end
 
-  # Regression test for #1331
+  # Regression test for https://github.com/spree/spree/issues/1331
   context "update" do
     it "can change the calculator", :js => true do
       within("#listing_shipping_methods") do

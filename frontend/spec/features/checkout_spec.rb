@@ -26,7 +26,7 @@ describe "Checkout", type: :feature, inaccessible: true do
       end
     end
 
-    # Regression test for #4079
+    # Regression test for https://github.com/spree/spree/issues/4079
     context "persists state when on address page" do
       before do
         add_mug_to_cart
@@ -39,7 +39,7 @@ describe "Checkout", type: :feature, inaccessible: true do
       end
     end
 
-    # Regression test for #1596
+    # Regression test for https://github.com/spree/spree/issues/1596
     context "full checkout" do
       before do
         shipping_method.calculator.update!(preferred_amount: 10)
@@ -61,7 +61,7 @@ describe "Checkout", type: :feature, inaccessible: true do
       end
     end
 
-    # Regression test for #4306
+    # Regression test for https://github.com/spree/spree/issues/4306
     context "free shipping" do
       before do
         add_mug_to_cart
@@ -76,7 +76,7 @@ describe "Checkout", type: :feature, inaccessible: true do
     end
   end
 
-  # Regression test for #2694 and #4117
+  # Regression test for https://github.com/spree/spree/issues/2694 and https://github.com/spree/spree/issues/4117
   context "doesn't allow bad credit card numbers" do
     before(:each) do
       order = OrderWalkthrough.up_to(:delivery)
@@ -229,7 +229,7 @@ describe "Checkout", type: :feature, inaccessible: true do
     end
   end
 
-  # regression for #2921
+  # regression for https://github.com/spree/spree/issues/2921
   context "goes back from payment to add another item", js: true do
     let!(:store) { FactoryGirl.create(:store) }
     let!(:bag) { create(:product, :name => "RoR Bag") }

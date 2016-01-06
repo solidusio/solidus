@@ -399,7 +399,7 @@ describe Spree::Promotion, :type => :model do
       expect(promotion.usage_count).to eq(0)
     end
 
-    # Regression test for #4112
+    # Regression test for https://github.com/spree/spree/issues/4112
     it "does not count ineligible adjustments" do
       adjustment.update_column(:eligible, false)
       expect(promotion.usage_count).to eq(0)
@@ -688,7 +688,7 @@ describe Spree::Promotion, :type => :model do
     end
   end
 
-  # regression for #4059
+  # regression for https://github.com/spree/spree/issues/4059
   # admin form posts the code and path as empty string
   describe "normalize blank values for path" do
     it "will save blank value as nil value instead" do

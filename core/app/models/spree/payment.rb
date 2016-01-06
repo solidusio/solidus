@@ -261,7 +261,7 @@ WARN
       # Necessary because some payment gateways will refuse payments with
       # duplicate IDs. We *were* using the Order number, but that's set once and
       # is unchanging. What we need is a unique identifier on a per-payment basis,
-      # and this is it. Related to #1998.
+      # and this is it. Related to https://github.com/spree/spree/issues/1998.
       # See https://github.com/spree/spree/issues/1998#issuecomment-12869105
       def set_unique_identifier
         begin

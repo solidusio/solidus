@@ -80,7 +80,7 @@ module Spree
           end
         end
 
-        # Fix for #4117
+        # Fix for https://github.com/spree/spree/issues/4117
         # If confirmation of payment fails, redirect back to payment screen
         if params[:state] == "confirm" && @order.payment_required? && @order.payments.valid.empty?
           flash.keep

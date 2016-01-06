@@ -47,7 +47,7 @@ module Spree
         expect(item.quantity).to eq 1
       end
 
-      # Contains regression test for #2804
+      # Contains regression test for https://github.com/spree/spree/issues/2804
       it 'builds a list of shipping methods common to all categories' do
         category1 = create(:shipping_category)
         category2 = create(:shipping_category)

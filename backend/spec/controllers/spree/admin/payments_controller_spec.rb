@@ -71,7 +71,7 @@ module Spree
         end
       end
 
-      # Regression test for #3233
+      # Regression test for https://github.com/spree/spree/issues/3233
       context "with a backend payment method" do
         before do
           @payment_method = create(:check_payment_method, :display_on => "back_end")

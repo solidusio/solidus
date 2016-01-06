@@ -42,7 +42,7 @@ describe "Product Images", :type => :feature do
     end
   end
 
-  # Regression test for #2228
+  # Regression test for https://github.com/spree/spree/issues/2228
   it "should see variant images" do
     variant = create(:variant)
     variant.images.create!(:attachment => File.open(file_path))

@@ -50,7 +50,7 @@ module Spree
       # When you ship to France, you'll see a Spanish refund AND a French tax.
       # This little bit of code at the end stops the Spanish refund from appearing.
       #
-      # For further discussion, see #4397 and #4327.
+      # For further discussion, see https://github.com/spree/spree/issues/4397 and https://github.com/spree/spree/issues/4327.
 
       remaining_rates = rates.dup
       rates.each do |rate|

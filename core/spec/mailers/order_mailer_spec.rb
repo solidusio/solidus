@@ -74,7 +74,7 @@ describe Spree::OrderMailer, :type => :mailer do
   end
 
   context "displays unit costs from line item" do
-    # Regression test for #2772
+    # Regression test for https://github.com/spree/spree/issues/2772
 
     # Tests mailer view spree/order_mailer/confirm_email.text.erb
     specify do

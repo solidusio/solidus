@@ -231,7 +231,7 @@ module Spree
     # @param property_value [String] the property value
     def set_property(property_name, property_value)
       ActiveRecord::Base.transaction do
-        # Works around spree_i18n #301
+        # Works around spree_i18n https://github.com/spree/spree/issues/301
         property = Property.create_with(presentation: property_name).find_or_create_by(name: property_name)
         product_property = ProductProperty.where(product: self, property: property).first_or_initialize
         product_property.value = property_value
@@ -341,7 +341,7 @@ module Spree
 
     # there's a weird quirk with the delegate stuff that does not automatically save the delegate object
     # when saving so we force a save using a hook
-    # Fix for issue #5306
+    # Fix for issue https://github.com/spree/spree/issues/5306
     def save_master
       if master && (master.changed? || master.new_record? || (master.default_price && (master.default_price.changed? || master.default_price.new_record?)))
         master.save!
