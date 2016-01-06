@@ -16,8 +16,6 @@
   </li>
 <% end %>
 
-<div id="ajax_error" class="errorExplanation" style="display:none;"></div>
-
 <%= form_for [:admin, @taxonomy] do |f| %>
   <fieldset class="no-border-top">
     <%= render :partial => 'form', :locals => { :f => f } %>
