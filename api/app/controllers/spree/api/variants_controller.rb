@@ -72,7 +72,9 @@ module Spree
         end
 
         def include_list
-          [{ option_values: :option_type }, :product, :default_price, :images, { stock_items: :stock_location }]
+          [{ option_values: :option_type }, :product, :default_price,
+           Spree::Config.variant_gallery_class.preload_params,
+           { stock_items: :stock_location }]
         end
     end
   end

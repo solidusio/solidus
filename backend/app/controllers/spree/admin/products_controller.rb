@@ -128,7 +128,7 @@ module Spree
       end
 
       def product_includes
-        [{ variants: [:images], master: [:images, :default_price] }]
+        [{ variants: variant_image_includes, master: (variant_image_includes + [:default_price]) }]
       end
 
       def clone_object_url(resource)
@@ -136,7 +136,7 @@ module Spree
       end
 
       def variant_stock_includes
-        [:images, stock_items: :stock_location, option_values: :option_type]
+        [variant_image_includes, stock_items: :stock_location, option_values: :option_type]
       end
 
       def variant_scope
@@ -145,6 +145,11 @@ module Spree
 
       def updating_variant_property_rules?
         params[:product][:variant_property_rules_attributes].present?
+      end
+
+      private
+      def variant_image_includes
+        Spree::Config.variant_gallery_class.preload_params
       end
     end
   end

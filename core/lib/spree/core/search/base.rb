@@ -57,7 +57,7 @@ module Spree
             # `where` constraints affecting joined tables are added to the search;
             # which is the case as soon as a taxon is added to the base scope.
             scope = scope.preload(master: :prices)
-            scope = scope.preload(master: :images) if include_images
+            scope = scope.preload(master: Spree::Config.variant_gallery_class.preload_params) if include_images
             scope
           end
 
