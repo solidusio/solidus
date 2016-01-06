@@ -8,7 +8,7 @@ describe Spree::CartonMailer do
   let(:carton) { create(:carton) }
   let(:order) { carton.orders.first }
 
-  # Regression test for #2196
+  # Regression test for https://github.com/spree/spree/issues/2196
   it "doesn't include out of stock in the email body" do
     shipment_email = Spree::CartonMailer.shipped_email(order: order, carton: carton)
     expect(shipment_email.body).not_to include(%Q{Out of Stock})

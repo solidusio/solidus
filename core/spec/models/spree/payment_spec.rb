@@ -214,7 +214,7 @@ describe Spree::Payment, :type => :model do
         expect(payment.state).to eq('invalid')
       end
 
-      # Regression test for #4598
+      # Regression test for https://github.com/spree/spree/issues/4598
       it "should allow payments with a gateway_customer_profile_id" do
         allow(payment.source).to receive_messages :gateway_customer_profile_id => "customer_1"
         expect(payment.payment_method).to receive(:supports?).with(payment.source).and_return(false)
@@ -222,7 +222,7 @@ describe Spree::Payment, :type => :model do
         payment.process!
       end
 
-      # Another regression test for #4598
+      # Another regression test for https://github.com/spree/spree/issues/4598
       it "should allow payments with a gateway_payment_profile_id" do
         allow(payment.source).to receive_messages :gateway_payment_profile_id => "customer_1"
         expect(payment.payment_method).to receive(:supports?).with(payment.source).and_return(false)
@@ -471,7 +471,7 @@ describe Spree::Payment, :type => :model do
         end
       end
 
-      # Regression test for #2119
+      # Regression test for https://github.com/spree/spree/issues/2119
       context "when payment is completed" do
         before do
           payment.state = 'completed'
@@ -558,7 +558,7 @@ describe Spree::Payment, :type => :model do
         end
       end
 
-      # Regression test for #2119
+      # Regression test for https://github.com/spree/spree/issues/2119
       context "if payment is already voided" do
         before do
           payment.state = 'void'
@@ -607,7 +607,7 @@ describe Spree::Payment, :type => :model do
   end
 
   describe "#credit_allowed" do
-    # Regression test for #4403 & #4407
+    # Regression test for https://github.com/spree/spree/issues/4403 & https://github.com/spree/spree/issues/4407
     it "is the difference between offsets total and payment amount" do
       payment.amount = 100
       allow(payment).to receive(:offsets_total).and_return(0)
@@ -890,7 +890,7 @@ describe Spree::Payment, :type => :model do
     end
   end
 
-  # Regression test for #2216
+  # Regression test for https://github.com/spree/spree/issues/2216
   describe "#gateway_options" do
     before { allow(order).to receive_messages(:last_ip_address => "192.168.1.1") }
 
@@ -908,7 +908,7 @@ describe Spree::Payment, :type => :model do
   end
 
   describe "#set_unique_identifier" do
-    # Regression test for #1998
+    # Regression test for https://github.com/spree/spree/issues/1998
     it "sets a unique identifier on create" do
       payment.run_callbacks(:create)
       expect(payment.number).not_to be_blank
@@ -916,7 +916,7 @@ describe Spree::Payment, :type => :model do
       expect(payment.number).to be_a(String)
     end
 
-    # Regression test for #3733
+    # Regression test for https://github.com/spree/spree/issues/3733
     it "does not regenerate the identifier on re-save" do
       payment.save!
       old_number = payment.number
@@ -1122,8 +1122,8 @@ describe Spree::Payment, :type => :model do
     end
   end
 
-  # Regression test for #4072 (kinda)
-  # The need for this was discovered in the research for #4072
+  # Regression test for https://github.com/spree/spree/issues/4072 (kinda)
+  # The need for this was discovered in the research for https://github.com/spree/spree/issues/4072
   context "state changes" do
     it "are logged to the database" do
       expect(payment.state_changes).to be_empty

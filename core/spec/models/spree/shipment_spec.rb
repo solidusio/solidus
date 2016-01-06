@@ -33,7 +33,7 @@ describe Spree::Shipment, :type => :model do
     end
   end
 
-  # Regression test for #4063
+  # Regression test for https://github.com/spree/spree/issues/4063
   context "number generation" do
     before do
       allow(order).to receive :update!
@@ -314,7 +314,7 @@ describe Spree::Shipment, :type => :model do
         shipment.update!(order)
       end
 
-      # Regression test for #4347
+      # Regression test for https://github.com/spree/spree/issues/4347
       context "with adjustments" do
         before do
           shipment.adjustments << Spree::Adjustment.create(order: order, label: "Label", amount: 5)
@@ -493,7 +493,7 @@ describe Spree::Shipment, :type => :model do
   end
 
   context "#ready" do
-    # Regression test for #2040
+    # Regression test for https://github.com/spree/spree/issues/2040
     it "cannot ready a shipment for an order if the order is unpaid" do
       expect(order).to receive_messages(paid?: false)
       expect(shipment).not_to be_can_ready
@@ -633,7 +633,7 @@ describe Spree::Shipment, :type => :model do
     end
   end
 
-  # Regression test for #3349
+  # Regression test for https://github.com/spree/spree/issues/3349
   context "#destroy" do
     it "destroys linked shipping_rates" do
       reflection = Spree::Shipment.reflect_on_association(:shipping_rates)
@@ -641,8 +641,8 @@ describe Spree::Shipment, :type => :model do
     end
   end
 
-  # Regression test for #4072 (kinda)
-  # The need for this was discovered in the research for #4702
+  # Regression test for https://github.com/spree/spree/issues/4072 (kinda)
+  # The need for this was discovered in the research for https://github.com/spree/spree/issues/4702
   context "state changes" do
     before do
       # Must be stubbed so transition can succeed

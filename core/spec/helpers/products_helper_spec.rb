@@ -42,7 +42,7 @@ module Spree
           let(:variant_price) { 15 }
 
           it { is_expected.to eq("(Add: $5.00)") }
-          # Regression test for #2737
+          # Regression test for https://github.com/spree/spree/issues/2737
           it { is_expected.to be_html_safe }
         end
 
@@ -119,7 +119,7 @@ module Spree
 
 
     context "#product_description" do
-      # Regression test for #1607
+      # Regression test for https://github.com/spree/spree/issues/1607
       it "renders a product description without excessive paragraph breaks" do
         product.description = %Q{
 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus a ligula leo. Proin eu arcu at ipsum dapibus ullamcorper. Pellentesque egestas orci nec magna condimentum luctus. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Ut ac ante et mauris bibendum ultricies non sed massa. Fusce facilisis dui eget lacus scelerisque eget aliquam urna ultricies. Duis et rhoncus quam. Praesent tellus nisi, ultrices sed iaculis quis, euismod interdum ipsum.</p>

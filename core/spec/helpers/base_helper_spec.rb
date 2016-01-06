@@ -50,7 +50,7 @@ describe Spree::BaseHelper, :type => :helper do
     end
   end
 
-  # Regression test for #1436
+  # Regression test for https://github.com/spree/spree/issues/1436
   context "defining custom image helpers" do
     let(:product) { mock_model(Spree::Product, :images => [], :variant_images => []) }
     before do
@@ -71,7 +71,7 @@ describe Spree::BaseHelper, :type => :helper do
 
   end
 
-  # Regression test for #2034
+  # Regression test for https://github.com/spree/spree/issues/2034
   context "flash_message" do
     let(:flash) { {"notice" => "ok", "foo" => "foo", "bar" => "bar"} }
 
@@ -130,7 +130,7 @@ describe Spree::BaseHelper, :type => :helper do
     end
   end
 
-  # Regression test for #2396
+  # Regression test for https://github.com/spree/spree/issues/2396
   context "meta_data_tags" do
     it "truncates a product description to 160 characters" do
       # Because the controller_name method returns "test"
@@ -144,7 +144,7 @@ describe Spree::BaseHelper, :type => :helper do
     end
   end
 
-  # Regression test for #5384
+  # Regression test for https://github.com/spree/spree/issues/5384
   context "custom image helpers conflict with inproper statements" do
     let(:product) { mock_model(Spree::Product, :images => [], :variant_images => []) }
     before do

@@ -198,7 +198,7 @@ describe Spree::Order, :type => :model do
   end
 
 
-  # Another regression test for #729
+  # Another regression test for https://github.com/spree/spree/issues/729
   context "#resume" do
     before do
       allow(order).to receive_messages email: "user@spreecommerce.com"

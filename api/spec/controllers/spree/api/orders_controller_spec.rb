@@ -284,7 +284,7 @@ module Spree
       expect(json_response["checkout_steps"]).to eq(%w[address delivery confirm complete])
     end
 
-    # Regression test for #1992
+    # Regression test for https://github.com/spree/spree/issues/1992
     it "can view an order not in a standard state" do
       allow_any_instance_of(Order).to receive_messages :user => current_api_user
       order.update_column(:state, 'shipped')
@@ -350,7 +350,7 @@ module Spree
       expect(json_response['email']).to eq "guest@spreecommerce.com"
     end
 
-    # Regression test for #3404
+    # Regression test for https://github.com/spree/spree/issues/3404
     it "can specify additional parameters for a line item" do
       expect(Order).to receive(:create!).and_return(order = Spree::Order.new)
       allow(order).to receive(:associate_user!)
@@ -602,7 +602,7 @@ module Spree
             expect(json_response["shipments"]).not_to be_empty
             shipment = json_response["shipments"][0]
             # Test for correct shipping method attributes
-            # Regression test for #3206
+            # Regression test for https://github.com/spree/spree/issues/3206
             expect(shipment["shipping_methods"]).not_to be_nil
             json_shipping_method = shipment["shipping_methods"][0]
             expect(json_shipping_method["id"]).to eq(shipping_method.id)
@@ -612,7 +612,7 @@ module Spree
             expect(json_shipping_method["shipping_categories"]).not_to be_empty
 
             # Test for correct shipping rates attributes
-            # Regression test for #3206
+            # Regression test for https://github.com/spree/spree/issues/3206
             expect(shipment["shipping_rates"]).not_to be_nil
             shipping_rate = shipment["shipping_rates"][0]
             expect(shipping_rate["name"]).to eq(json_shipping_method["name"])
@@ -683,7 +683,7 @@ module Spree
           expect(json_response["pages"]).to eq(1)
         end
 
-        # Test for #1763
+        # Test for https://github.com/spree/spree/issues/1763
         it "can control the page size through a parameter" do
           api_get :index, :per_page => 1
           expect(json_response["orders"].count).to eq(1)

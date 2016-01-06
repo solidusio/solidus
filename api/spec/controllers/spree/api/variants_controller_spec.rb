@@ -72,7 +72,7 @@ module Spree
 
       end
 
-      # Regression test for #2141
+      # Regression test for https://github.com/spree/spree/issues/2141
       context "a deleted variant" do
         before do
           variant.update_column(:deleted_at, Time.current)
@@ -223,7 +223,7 @@ module Spree
       sign_in_as_admin!
       let(:resource_scoping) { { :product_id => variant.product.to_param } }
 
-      # Test for #2141
+      # Test for https://github.com/spree/spree/issues/2141
       context "deleted variants" do
         before do
           variant.update_column(:deleted_at, Time.current)

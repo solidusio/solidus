@@ -97,7 +97,7 @@ describe Spree::Money do
       end
     end
 
-    # Regression test for #2634
+    # Regression test for https://github.com/spree/spree/issues/2634
     it "formats as plain by default" do
       money = Spree::Money.new(10, symbol_position: :after)
       expect(money.to_s).to eq("10.00 €")

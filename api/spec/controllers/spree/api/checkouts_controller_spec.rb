@@ -106,7 +106,7 @@ module Spree
           expect(response.status).to eq(200)
         end
 
-        # Regression Spec for #5389 & #5880
+        # Regression Spec for https://github.com/spree/spree/issues/5389 & https://github.com/spree/spree/issues/5880
         it "can update addresses but not transition to delivery w/o shipping setup" do
           Spree::ShippingMethod.destroy_all
           api_put :update,
@@ -119,7 +119,7 @@ module Spree
           expect(response.status).to eq(422)
         end
 
-        # Regression test for #4498
+        # Regression test for https://github.com/spree/spree/issues/4498
         it "does not contain duplicate variant data in delivery return" do
           api_put :update,
             id: order.to_param, order_token: order.guest_token,
@@ -394,7 +394,7 @@ module Spree
         expect(response.status).to eq(200)
       end
 
-      # Regression test for #3784
+      # Regression test for https://github.com/spree/spree/issues/3784
       it "can update the special instructions for an order" do
         instructions = "Don't drop it. (Please)"
         api_put :update, id: order.to_param, order_token: order.guest_token,

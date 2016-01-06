@@ -97,7 +97,7 @@ describe Spree::ShippingRate, :type => :model do
     end
   end
 
-  # Regression test for #3829
+  # Regression test for https://github.com/spree/spree/issues/3829
   context "#shipping_method" do
     it "can be retrieved" do
       expect(shipping_rate.shipping_method.reload).to eq(shipping_method)

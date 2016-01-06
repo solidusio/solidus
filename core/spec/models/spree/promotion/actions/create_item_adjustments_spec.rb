@@ -16,7 +16,7 @@ module Spree
         end
 
         context "#perform" do
-          # Regression test for #3966
+          # Regression test for https://github.com/spree/spree/issues/3966
           context "when calculator computes 0" do
             before do
               allow(action).to receive_messages :compute_amount => 0

@@ -417,7 +417,7 @@ describe Spree::Order, :type => :model do
         end
       end
 
-      # Regression test for #2028
+      # Regression test for https://github.com/spree/spree/issues/2028
       context "when payment is not required" do
         before do
           allow(order).to receive_messages :payment_required? => false
@@ -675,7 +675,7 @@ describe Spree::Order, :type => :model do
     end
   end
 
-  # Regression test for #3665
+  # Regression test for https://github.com/spree/spree/issues/3665
   context "with only a complete step" do
     let!(:line_item){ create :line_item, order: order }
 

@@ -10,7 +10,7 @@ module Spree
 
     let(:payment_method) { GatewayWithPassword.create!(:name => "Bogus", :preferred_password => "haxme") }
 
-    # regression test for #2094
+    # regression test for https://github.com/spree/spree/issues/2094
     it "does not clear password on update" do
       expect(payment_method.preferred_password).to eq("haxme")
       spree_put :update, :id => payment_method.id, :payment_method => { :type => payment_method.class.to_s, :preferred_password => "" }

@@ -117,7 +117,7 @@ module Spree
             expect(subject.shipping_rates(package).map(&:shipping_method_id)).to eq([generic_method.id])
           end
 
-          # regression for #3287
+          # regression for https://github.com/spree/spree/issues/3287
           it "doesn't select backend rates even if they're more affordable" do
             expect(subject.shipping_rates(package).map(&:selected)).to eq [true]
           end

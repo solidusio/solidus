@@ -253,7 +253,7 @@ module Spree
           promo_c.update_column(:eligible, false)
         end
 
-        # regression for #3274
+        # regression for https://github.com/spree/spree/issues/3274
         it "still makes the previous best eligible adjustment valid" do
           subject.update
           expect(line_item.adjustments.promotion.eligible.first.label).to eq('Promotion A')

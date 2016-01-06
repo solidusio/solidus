@@ -74,7 +74,7 @@ describe "Visiting Products", type: :feature, inaccessible: true do
       product.tap(&:save)
     end
 
-    # Regression tests for #2737
+    # Regression tests for https://github.com/spree/spree/issues/2737
     context "uses руб as the currency symbol" do
       it "on products page" do
         visit spree.root_path

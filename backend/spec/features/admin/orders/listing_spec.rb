@@ -79,7 +79,7 @@ describe "Orders Listing", type: :feature, js: true do
         Spree::Config[:orders_per_page] = @old_per_page
       end
 
-      # Regression test for #4004
+      # Regression test for https://github.com/spree/spree/issues/4004
       it "should be able to go from page to page for incomplete orders" do
         10.times { Spree::Order.create email: "incomplete@example.com" }
         click_on 'Filter'

@@ -66,7 +66,7 @@ describe Spree::Admin::OrdersController, :type => :controller do
       end
     end
 
-    # Test for #3346
+    # Test for https://github.com/spree/spree/issues/3346
     context "#new" do
       let(:user) { create(:user) }
       before do
@@ -112,7 +112,7 @@ describe Spree::Admin::OrdersController, :type => :controller do
       end
     end
 
-    # Regression test for #3684
+    # Regression test for https://github.com/spree/spree/issues/3684
     context "#edit" do
       it "does not refresh rates if the order is completed" do
         allow(order).to receive_messages :completed? => true
@@ -275,7 +275,7 @@ describe Spree::Admin::OrdersController, :type => :controller do
       end
     end
 
-    # Test for #3919
+    # Test for https://github.com/spree/spree/issues/3919
     context "search" do
       let(:user) { create(:user) }
 

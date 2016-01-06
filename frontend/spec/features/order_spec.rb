@@ -15,7 +15,7 @@ describe 'orders', :type => :feature do
   end
 
   it "should display line item price" do
-    # Regression test for #2772
+    # Regression test for https://github.com/spree/spree/issues/2772
     line_item = order.line_items.first
     line_item.target_shipment = create(:shipment)
     line_item.price = 19.00
@@ -45,7 +45,7 @@ describe 'orders', :type => :feature do
     end
   end
 
-  # Regression test for #2282
+  # Regression test for https://github.com/spree/spree/issues/2282
   context "can support a credit card with blank information" do
     before do
       credit_card = create(:credit_card)

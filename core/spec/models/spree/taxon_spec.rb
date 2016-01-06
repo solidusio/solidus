@@ -44,7 +44,7 @@ describe Spree::Taxon, :type => :model do
         expect(taxon.permalink).to eql "brands/wo"
       end
 
-      # Regression test for #3390
+      # Regression test for https://github.com/spree/spree/issues/3390
       context "setting a new node sibling position via :child_index=" do
         let(:idx) { rand(0..100) }
         before { allow(parent).to receive(:move_to_child_with_index) }
@@ -63,7 +63,7 @@ describe Spree::Taxon, :type => :model do
     end
   end
 
-  # Regression test for #2620
+  # Regression test for https://github.com/spree/spree/issues/2620
   context "creating a child node using first_or_create" do
     let(:taxonomy) { create(:taxonomy) }
 

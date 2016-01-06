@@ -255,7 +255,7 @@ describe Spree::Variant, :type => :model do
     end
   end
 
-  # Regression test for #2432
+  # Regression test for https://github.com/spree/spree/issues/2432
   describe 'options_text' do
     let!(:variant) { create(:variant, option_values: []) }
     let!(:master) { create(:master_variant) }
@@ -350,7 +350,7 @@ describe Spree::Variant, :type => :model do
 
   end
 
-  # Regression test for #2744
+  # Regression test for https://github.com/spree/spree/issues/2744
   describe "set_position" do
     it "sets variant position after creation" do
       variant = create(:variant)

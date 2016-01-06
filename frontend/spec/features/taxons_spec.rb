@@ -14,7 +14,7 @@ describe "viewing products", type: :feature, inaccessible: true do
     ((first_store = Spree::Store.first) && first_store.name).to_s
   end
 
-  # Regression test for #1796
+  # Regression test for https://github.com/spree/spree/issues/1796
   it "can see a taxon's products, even if that taxon has child taxons" do
     visit '/t/category/super-clothing/t-shirts'
     expect(page).to have_content("Superman T-Shirt")
@@ -45,7 +45,7 @@ describe "viewing products", type: :feature, inaccessible: true do
       expect(page).to have_title('Category - T-Shirts - ' + store_name)
     end
 
-    # Regression test for #2814
+    # Regression test for https://github.com/spree/spree/issues/2814
     it "doesn't use meta_title as heading on page" do
       t_shirts.update_attributes metas
       visit '/t/category/super-clothing/t-shirts'

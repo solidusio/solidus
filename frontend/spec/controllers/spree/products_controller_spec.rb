@@ -3,7 +3,7 @@ require 'spec_helper'
 describe Spree::ProductsController, :type => :controller do
   let!(:product) { create(:product, :available_on => 1.year.from_now) }
 
-  # Regression test for #1390
+  # Regression test for https://github.com/spree/spree/issues/1390
   it "allows admins to view non-active products" do
     allow(controller).to receive_messages :spree_current_user => mock_model(Spree.user_class, :has_spree_role? => true, :last_incomplete_spree_order => nil, :spree_api_key => 'fake')
     spree_get :show, :id => product.to_param
@@ -23,7 +23,7 @@ describe Spree::ProductsController, :type => :controller do
     expect(response.status).to eq(200)
   end
 
-  # Regression test for #2249
+  # Regression test for https://github.com/spree/spree/issues/2249
   it "doesn't error when given an invalid referer" do
     current_user = mock_model(Spree.user_class, :has_spree_role? => true, :last_incomplete_spree_order => nil, :generate_spree_api_key! => nil)
     allow(controller).to receive_messages :spree_current_user => current_user

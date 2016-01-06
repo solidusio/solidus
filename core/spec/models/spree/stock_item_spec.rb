@@ -77,7 +77,7 @@ describe Spree::StockItem, :type => :model do
         subject.update_column(:count_on_hand, -2)
       end
 
-      # Regression test for #3755
+      # Regression test for https://github.com/spree/spree/issues/3755
       it "processes existing backorders, even with negative stock" do
         expect(inventory_unit).to receive(:fill_backorder)
         expect(inventory_unit_2).not_to receive(:fill_backorder)
@@ -85,7 +85,7 @@ describe Spree::StockItem, :type => :model do
         expect(subject.count_on_hand).to eq(-1)
       end
 
-      # Test for #3755
+      # Test for https://github.com/spree/spree/issues/3755
       it "does not process backorders when stock is adjusted negatively" do
         expect(inventory_unit).not_to receive(:fill_backorder)
         expect(inventory_unit_2).not_to receive(:fill_backorder)
@@ -262,7 +262,7 @@ describe Spree::StockItem, :type => :model do
     end
   end
 
-  # Regression test for #4651
+  # Regression test for https://github.com/spree/spree/issues/4651
   context "variant" do
     it "can be found even if the variant is deleted" do
       subject.variant.destroy

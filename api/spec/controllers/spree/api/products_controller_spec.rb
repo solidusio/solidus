@@ -222,7 +222,7 @@ module Spree
         expect(json_response["pages"]).to eq(1)
       end
 
-      # Regression test for #1626
+      # Regression test for https://github.com/spree/spree/issues/1626
       context "deleted products" do
         before do
           create(:product, :deleted_at => 1.day.ago)
@@ -305,14 +305,14 @@ module Spree
           expect(json_response["taxon_ids"]).to eq([taxon_1.id,])
         end
 
-        # Regression test for #4123
+        # Regression test for https://github.com/spree/spree/issues/4123
         it "puts the created product in the given taxons" do
           product_data[:taxon_ids] = [taxon_1.id, taxon_2.id].join(',')
           api_post :create, :product => product_data
           expect(json_response["taxon_ids"]).to eq([taxon_1.id, taxon_2.id])
         end
 
-        # Regression test for #2140
+        # Regression test for https://github.com/spree/spree/issues/2140
         context "with authentication_required set to false" do
           before do
             Spree::Api::Config.requires_authentication = false
@@ -392,13 +392,13 @@ module Spree
           expect(json_response["errors"]["name"]).to eq(["can't be blank"])
         end
 
-        # Regression test for #4123
+        # Regression test for https://github.com/spree/spree/issues/4123
         it "puts the created product in the given taxon" do
           api_put :update, :id => product.to_param, :product => {:taxon_ids => taxon_1.id.to_s}
           expect(json_response["taxon_ids"]).to eq([taxon_1.id])
         end
 
-        # Regression test for #4123
+        # Regression test for https://github.com/spree/spree/issues/4123
         it "puts the created product in the given taxons" do
           api_put :update, :id => product.to_param, :product => {:taxon_ids => [taxon_1.id, taxon_2.id].join(',')}
           expect(json_response["taxon_ids"]).to match_array([taxon_1.id, taxon_2.id])

@@ -7,7 +7,7 @@ require 'spec_helper'
 describe Spree::Admin::ProductsController, :type => :controller do
   stub_authorization!
 
-  # Regression test for GH #538
+  # Regression test for GH https://github.com/spree/spree/issues/538
   it "cannot find a non-existent product" do
     spree_get :edit, :id => "non-existent-product"
     expect(response).to redirect_to(spree.admin_products_path)

@@ -5,7 +5,7 @@ module Spree
     describe StockLocationsController, :type => :controller do
       stub_authorization!
       
-      # Regression for #4272
+      # Regression for https://github.com/spree/spree/issues/4272
       context "with no countries present" do
         it "cannot create a new stock location" do
           spree_get :new

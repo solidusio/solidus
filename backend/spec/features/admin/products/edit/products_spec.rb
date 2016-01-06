@@ -49,7 +49,7 @@ describe 'Product Details', :type => :feature do
     end
   end
 
-  # Regression test for #3385
+  # Regression test for https://github.com/spree/spree/issues/3385
   context "deleting a product", :js => true do
     it "is still able to find the master variant" do
       create(:product)

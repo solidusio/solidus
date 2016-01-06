@@ -48,7 +48,7 @@ describe "Free shipping promotions", :type => :feature, :js => true do
       click_button "Save and Continue"
     end
 
-    # Regression test for #4428
+    # Regression test for https://github.com/spree/spree/issues/4428
     it "applies the free shipping promotion" do
       within("#checkout-summary") do
         expect(page).to have_content("Shipping total:  $10.00")

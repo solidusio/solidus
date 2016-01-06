@@ -37,7 +37,7 @@ describe Spree::InventoryUnit, :type => :model do
       stock_item.set_count_on_hand(-2)
     end
 
-    # Regression for #3066
+    # Regression for https://github.com/spree/spree/issues/3066
     it "returns modifiable objects" do
       units = Spree::InventoryUnit.backordered_for_stock_item(stock_item)
       units.first.save!

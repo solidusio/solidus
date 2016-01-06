@@ -10,7 +10,7 @@ describe "Tax Rates", :type => :feature do
     click_link "Settings"
   end
 
-  # Regression test for #535
+  # Regression test for https://github.com/spree/spree/issues/535
   it "can see a tax rate in the list if the tax category has been deleted" do
     tax_rate.tax_category.update_column(:deleted_at, Time.current)
     click_link "Tax Rates"
@@ -18,7 +18,7 @@ describe "Tax Rates", :type => :feature do
     expect(find("table tbody td:nth-child(3)")).to have_content('N/A')
   end
 
-  # Regression test for #1422
+  # Regression test for https://github.com/spree/spree/issues/1422
   it "can create a new tax rate" do
     click_link "Tax Rates"
     click_link "New Tax Rate"

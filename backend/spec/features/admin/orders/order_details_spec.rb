@@ -67,7 +67,7 @@ describe "Order Details", type: :feature, js: true do
         expect(page).not_to have_content("spree t-shirt")
       end
 
-      # Regression test for #3862
+      # Regression test for https://github.com/spree/spree/issues/3862
       it "can cancel removing an item from a shipment" do
         expect(page).to have_content("spree t-shirt")
 

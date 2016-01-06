@@ -100,7 +100,7 @@ describe Spree::OrdersController, :type => :controller do
       end
     end
 
-    # Regression test for #2750
+    # Regression test for https://github.com/spree/spree/issues/2750
     context "#update" do
       before do
         allow(user).to receive :last_incomplete_spree_order
