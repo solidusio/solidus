@@ -145,12 +145,10 @@ module Spree
     #
     # Those rates should never come into play at all and only the French rates should apply.
     def potentially_applicable?(order_tax_zone)
-      # If the rate's zone matches the order's tax zone, then it's applicable.
-      self.zone == order_tax_zone ||
       # If the rate's zone *contains* the order's tax zone, then it's applicable.
       self.zone.contains?(order_tax_zone) ||
-      # 1) The rate's zone is the default zone, then it's always applicable.
-      (self.included_in_price? && self.zone.default_tax)
+      # The rate is a VAT and its zone contains the default zone, then it's applicable.
+      (self.included_in_price? && self.zone.contains?(Spree::Zone.default_tax))
     end
 
     # Creates necessary tax adjustments for the order.
@@ -188,8 +186,7 @@ module Spree
     end
 
     def default_zone_or_zone_match?(order_tax_zone)
-      default_tax = Zone.default_tax
-      (default_tax && default_tax.contains?(order_tax_zone)) || order_tax_zone == self.zone
+      Zone.default_tax.try!(:contains?, order_tax_zone) || self.zone.contains?(order_tax_zone)
     end
 
     private
