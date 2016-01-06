@@ -1,9 +1,12 @@
 require 'spec_helper'
+require 'spree/testing_support/shared_examples/gallery'
 
 RSpec.describe Spree::Gallery::VariantAssociation, type: :model do
   let(:gallery) { described_class.new(variant) }
 
   let(:variant) { Spree::Variant.new }
+
+  include_examples 'is a gallery'
 
   shared_context 'has multiple images' do
     let(:first_image) { Spree::Image.new }
