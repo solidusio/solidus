@@ -1,3 +1,7 @@
+require 'spree/testing_support/factories/stock_location_factory'
+require 'spree/testing_support/factories/order_factory'
+require 'spree/testing_support/factories/return_item_factory'
+
 FactoryGirl.define do
 
   factory :customer_return, class: Spree::CustomerReturn do

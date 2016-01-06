@@ -1,3 +1,6 @@
+require 'spree/testing_support/factories/state_factory'
+require 'spree/testing_support/factories/country_factory'
+
 FactoryGirl.define do
   factory :address, class: Spree::Address do
     firstname 'John'

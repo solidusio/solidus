@@ -1,3 +1,7 @@
+require 'spree/testing_support/factories/calculator_factory'
+require 'spree/testing_support/factories/shipping_category_factory'
+require 'spree/testing_support/factories/zone_factory'
+
 FactoryGirl.define do
   factory(
     :shipping_method,
@@ -6,7 +10,10 @@ FactoryGirl.define do
     ],
     class: Spree::ShippingMethod
   ) do
-    zones { |a| [Spree::Zone.global] }
+    zones do
+      [Spree::Zone.find_by(name: 'GlobalZone') || FactoryGirl.create(:global_zone)]
+    end
+
     name 'UPS Ground'
     code 'UPS_GROUND'
 

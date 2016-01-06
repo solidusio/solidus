@@ -1,3 +1,5 @@
+require 'spree/testing_support/factories/customer_return_factory'
+
 FactoryGirl.define do
   factory :reimbursement, class: Spree::Reimbursement do
     transient do

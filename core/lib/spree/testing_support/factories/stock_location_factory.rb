@@ -1,3 +1,7 @@
+require 'spree/testing_support/factories/country_factory'
+require 'spree/testing_support/factories/state_factory'
+require 'spree/testing_support/factories/product_factory'
+
 FactoryGirl.define do
   factory :stock_location, class: Spree::StockLocation do
     name 'NY Warehouse'
@@ -11,6 +15,10 @@ FactoryGirl.define do
     country  { |stock_location| Spree::Country.first || stock_location.association(:country) }
     state do |stock_location|
       stock_location.country.states.first || stock_location.association(:state, :country => stock_location.country)
+    end
+
+    factory :stock_location_without_variant_propagation do
+      propagate_all_variants false
     end
 
     factory :stock_location_with_items do

@@ -1,15 +1,7 @@
+require 'spree/testing_support/factories/inventory_unit_factory'
+require 'spree/testing_support/factories/variant_factory'
+
 FactoryGirl.define do
-  factory :stock_packer, class: Spree::Stock::Packer do
-    skip_create
-
-    transient do
-      stock_location { build(:stock_location) }
-      contents []
-    end
-
-    initialize_with { new(stock_location, contents) }
-  end
-
   factory :stock_package, class: Spree::Stock::Package do
     skip_create
 

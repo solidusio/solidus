@@ -1,3 +1,9 @@
+require 'spree/testing_support/factories/line_item_factory'
+require 'spree/testing_support/factories/order_factory'
+require 'spree/testing_support/factories/tax_category_factory'
+require 'spree/testing_support/factories/tax_rate_factory'
+require 'spree/testing_support/factories/zone_factory'
+
 FactoryGirl.define do
   factory :adjustment, class: Spree::Adjustment do
     order
@@ -9,6 +15,7 @@ FactoryGirl.define do
   end
 
   factory :tax_adjustment, class: Spree::Adjustment do
+    order { adjustable.order }
     association(:adjustable, factory: :line_item)
     amount 10.0
     label 'VAT 5%'

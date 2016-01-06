@@ -1,3 +1,6 @@
+require 'spree/testing_support/factories/payment_factory'
+require 'spree/testing_support/factories/refund_reason_factory'
+
 FactoryGirl.define do
   sequence(:refund_transaction_id) { |n| "fake-refund-transaction-#{n}"}
 
@@ -12,9 +15,5 @@ FactoryGirl.define do
       association(:payment, state: 'completed', amount: payment_amount)
     end
     association(:reason, factory: :refund_reason)
-  end
-
-  factory :refund_reason, class: Spree::RefundReason do
-    sequence(:name) { |n| "Refund for return ##{n}" }
   end
 end
