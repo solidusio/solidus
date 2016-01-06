@@ -28,6 +28,16 @@ module Spree
         primary_image || products_images.first
       end
 
+      # Return a list of image associations to preload a Spree::Variant's images
+      #
+      # @return An array compatible with ActiveRecord :includes
+      #   for a Spree::Variant images preload
+      #
+      # (see Spree::Galery#preload_params)
+      def self.preload_params
+        [:images]
+      end
+
       private
       attr_reader :variant
 

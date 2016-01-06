@@ -86,4 +86,15 @@ RSpec.describe Spree::Gallery::VariantAssociation, type: :model do
       end
     end
   end
+
+  describe '.preload_params' do
+    it 'uses the right preload_params' do
+      expect(described_class.preload_params).to eq [:images]
+    end
+
+    it 'is valid on products' do
+      create :variant
+      expect(Spree::Variant.includes(described_class.preload_params).first).to be
+    end
+  end
 end
