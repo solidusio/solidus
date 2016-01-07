@@ -1,8 +1,7 @@
 require 'spec_helper'
 require 'benchmark'
 
-describe Spree::Shipment, :type => :model do
-  let(:stock_location) { create(:stock_location) }
+describe Spree::Shipment, type: :model do
   let(:order) { create(:order_ready_to_ship, line_items_count: 1) }
   let(:shipping_method) { create(:shipping_method, name: "UPS") }
   let(:stock_location) { create(:stock_location) }
@@ -35,9 +34,7 @@ describe Spree::Shipment, :type => :model do
 
   # Regression test for https://github.com/spree/spree/issues/4063
   context "number generation" do
-    before do
-      allow(order).to receive :update!
-    end
+    before { allow(order).to receive :update! }
 
     it "generates a number containing a letter + 11 numbers" do
       shipment.save
