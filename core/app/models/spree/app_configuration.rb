@@ -17,6 +17,7 @@
 #
 require "spree/core/search/base"
 require "spree/core/search/variant"
+require 'spree/core/stock_configuration'
 
 module Spree
   class AppConfiguration < Preferences::Configuration
@@ -309,6 +310,10 @@ module Spree
 
     def static_model_preferences
       @static_model_preferences ||= Spree::Preferences::StaticModelPreferences.new
+    end
+
+    def stock
+      Spree::StockConfiguration
     end
 
     # all the following can be deprecated when store prefs are no longer supported
