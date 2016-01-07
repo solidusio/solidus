@@ -18,9 +18,9 @@ describe Spree::OrderContents, :type => :model do
     end
 
     context 'given a shipment' do
-      it "ensure shipment calls update_amounts instead of order calling ensure_updated_shipments" do
+      it "ensure shipment calls update_amounts instead of order calling probably_restart_checkout_flow" do
         shipment = create(:shipment)
-        expect(subject.order).to_not receive(:ensure_updated_shipments)
+        expect(subject.order).to_not receive(:probably_restart_checkout_flow)
         expect(shipment).to receive(:update_amounts)
         subject.add(variant, 1, shipment: shipment)
       end
@@ -28,7 +28,7 @@ describe Spree::OrderContents, :type => :model do
 
     context 'not given a shipment' do
       it "ensures updated shipments" do
-        expect(subject.order).to receive(:ensure_updated_shipments)
+        expect(subject.order).to receive(:probably_restart_checkout_flow)
         subject.add(variant)
       end
     end
@@ -116,10 +116,10 @@ describe Spree::OrderContents, :type => :model do
     end
 
     context 'given a shipment' do
-      it "ensure shipment calls update_amounts instead of order calling ensure_updated_shipments" do
+      it "ensure shipment calls update_amounts instead of order calling probably_restart_checkout_flow" do
         line_item = subject.add(variant, 1)
         shipment = create(:shipment)
-        expect(subject.order).to_not receive(:ensure_updated_shipments)
+        expect(subject.order).to_not receive(:probably_restart_checkout_flow)
         expect(shipment).to receive(:update_amounts)
         subject.remove(variant, 1, shipment: shipment)
       end
@@ -128,7 +128,7 @@ describe Spree::OrderContents, :type => :model do
     context 'not given a shipment' do
       it "ensures updated shipments" do
         line_item = subject.add(variant, 1)
-        expect(subject.order).to receive(:ensure_updated_shipments)
+        expect(subject.order).to receive(:probably_restart_checkout_flow)
         subject.remove(variant)
       end
     end
@@ -164,10 +164,10 @@ describe Spree::OrderContents, :type => :model do
 
   context "#remove_line_item" do
     context 'given a shipment' do
-      it "ensure shipment calls update_amounts instead of order calling ensure_updated_shipments" do
+      it "ensure shipment calls update_amounts instead of order calling probably_restart_checkout_flow" do
         line_item = subject.add(variant, 1)
         shipment = create(:shipment)
-        expect(subject.order).to_not receive(:ensure_updated_shipments)
+        expect(subject.order).to_not receive(:probably_restart_checkout_flow)
         expect(shipment).to receive(:update_amounts)
         subject.remove_line_item(line_item, shipment: shipment)
       end
@@ -176,7 +176,7 @@ describe Spree::OrderContents, :type => :model do
     context 'not given a shipment' do
       it "ensures updated shipments" do
         line_item = subject.add(variant, 1)
-        expect(subject.order).to receive(:ensure_updated_shipments)
+        expect(subject.order).to receive(:probably_restart_checkout_flow)
         subject.remove_line_item(line_item)
       end
     end
@@ -239,7 +239,7 @@ describe Spree::OrderContents, :type => :model do
     end
 
     it "ensures updated shipments" do
-      expect(subject.order).to receive(:ensure_updated_shipments)
+      expect(subject.order).to receive(:probably_restart_checkout_flow)
       subject.update_cart params
     end
   end
