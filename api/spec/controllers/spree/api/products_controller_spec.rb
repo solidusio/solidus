@@ -334,8 +334,7 @@ module Spree
           expect(response.status).to eq(422)
           expect(json_response["error"]).to eq("Invalid resource. Please fix errors and try again.")
           errors = json_response["errors"]
-          errors.delete("slug") # Don't care about this one.
-          expect(errors.keys).to match_array(["name", "price", "shipping_category_id"])
+          expect(errors.keys).to include("name", "price", "shipping_category_id")
         end
       end
 
