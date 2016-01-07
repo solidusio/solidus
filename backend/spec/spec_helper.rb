@@ -72,6 +72,7 @@ RSpec.configure do |config|
     reset_spree_preferences
     WebMock.disable!
     if RSpec.current_example.metadata[:js]
+      page.driver.browser.url_blacklist = ['http://fonts.googleapis.com']
       DatabaseCleaner.strategy = :truncation
     else
       DatabaseCleaner.strategy = :transaction
