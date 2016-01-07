@@ -34,7 +34,8 @@ module Spree
     has_one :master,
       -> { where(is_master: true).with_deleted },
       inverse_of: :product,
-      class_name: 'Spree::Variant'
+      class_name: 'Spree::Variant',
+      autosave: true
 
     has_many :variants,
       -> { where(is_master: false).order(:position) },
@@ -77,9 +78,7 @@ module Spree
 
     after_initialize :ensure_master
 
-    after_save :save_master
-    after_save :run_touch_callbacks, if: :anything_changed?
-    after_save :reset_nested_changes
+    after_save :run_touch_callbacks, if: :changed?
     after_touch :touch_taxons
 
     before_validation :normalize_slug, on: :update
@@ -321,24 +320,6 @@ module Spree
 
     def punch_slug
       update_column :slug, "#{Time.current.to_i}_#{slug}" # punch slug with date prefix to allow reuse of original
-    end
-
-    def anything_changed?
-      changed? || @nested_changes
-    end
-
-    def reset_nested_changes
-      @nested_changes = false
-    end
-
-    # there's a weird quirk with the delegate stuff that does not automatically save the delegate object
-    # when saving so we force a save using a hook
-    # Fix for issue https://github.com/spree/spree/issues/5306
-    def save_master
-      if master && (master.changed? || master.new_record? || (master.default_price && (master.default_price.changed? || master.default_price.new_record?)))
-        master.save!
-        @nested_changes = true
-      end
     end
 
     # If the master is invalid, the Product object will be assigned its errors
