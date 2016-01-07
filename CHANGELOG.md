@@ -20,6 +20,8 @@
     for more information and instructions on upgrading.
     * [Solidus_auth_devise](https://github.com/solidusio/solidus_auth_devise) has been updated to override the new login nav location.
 
+*   Removed `Product#set_master_variant_defaults`, which was unnecessary since master is build with `is_master` already `true`.
+
 ## Solidus 1.1.0 (unreleased)
 
 *   Address is immutable (Address#readonly? is always true)

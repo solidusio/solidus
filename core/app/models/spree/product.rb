@@ -32,7 +32,7 @@ module Spree
     belongs_to :shipping_category, class_name: 'Spree::ShippingCategory', inverse_of: :products
 
     has_one :master,
-      -> { where is_master: true },
+      -> { where(is_master: true).with_deleted },
       inverse_of: :product,
       class_name: 'Spree::Variant'
 
@@ -70,7 +70,6 @@ module Spree
 
     has_many :variant_images, -> { order(:position) }, source: :images, through: :variants_including_master
 
-    after_create :set_master_variant_defaults
     after_create :add_associations_from_prototype
     after_create :build_variants_from_option_values_hash, if: :option_values_hash
 
@@ -257,13 +256,6 @@ module Spree
       end
     end
 
-    # Override so if the master variant is deleted, we can still find it.
-    #
-    # @return [Spree::Variant] the master variant
-    def master
-      super || variants_including_master.with_deleted.find_by(is_master: true)
-    end
-
     # Image that can be used for the product.
     #
     # Will first search for images on the product, then those belonging to the
@@ -320,7 +312,7 @@ module Spree
 
     def ensure_master
       return unless new_record?
-      self.master ||= build_master
+      find_or_build_master
     end
 
     def normalize_slug
@@ -359,11 +351,6 @@ module Spree
           self.errors.add(att, error)
         end
       end
-    end
-
-    # ensures the master variant is flagged as such
-    def set_master_variant_defaults
-      master.is_master = true
     end
 
     # Try building a slug based on the following fields in increasing order of specificity.
