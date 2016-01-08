@@ -5,7 +5,7 @@
 <% content_for :page_actions do %>
   <% if can?(:create, Spree::Property) %>
     <li id="new_property_link">
-      <%= button_link_to Spree.t(:new_property), new_admin_property_url, { :remote => true, :icon => 'plus', 'data-update' => 'new_property', :id => 'new_property_link' } %>
+      <%= button_link_to Spree.t(:new_property), new_admin_property_url, { :remote => true, :icon => 'plus', 'data-update' => 'new_property_container', :id => 'new_property_link' } %>
     </li>
   <% end %>
 <% end %>
@@ -39,7 +39,7 @@
   </div>
 <% end %>
 
-<div id="new_property"></div>
+<div id="new_property_container"></div>
 
 <% if @properties.any? %>
 <table class="index" id='listing_properties' data-hook>
