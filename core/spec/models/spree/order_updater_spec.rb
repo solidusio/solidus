@@ -233,6 +233,11 @@ module Spree
         updater.update
       end
 
+      it "updates promotion usage_count if applicable" do
+        expect(updater).to receive(:update_promotions_usage_count)
+        updater.update
+      end
+
       context 'with a shipment' do
         before { create(:shipment, order: order) }
         let(:shipment){ order.shipments[0] }

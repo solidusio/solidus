@@ -262,39 +262,6 @@ describe Spree::Promotion, :type => :model do
     end
   end
 
-  describe "#usage_count" do
-    let(:promotion) do
-      FactoryGirl.create(
-        :promotion,
-        :with_order_adjustment,
-        code: "discount"
-      )
-    end
-
-    subject { promotion.usage_count }
-
-    context "when the code is applied to a non-complete order" do
-      let(:order) { FactoryGirl.create(:order_with_line_items) }
-      before { promotion.activate(order: order, promotion_code: promotion.codes.first) }
-      it { is_expected.to eq 0 }
-    end
-    context "when the code is applied to a complete order" do
-      let!(:order) do
-        FactoryGirl.create(
-          :completed_order_with_promotion,
-          promotion: promotion
-        )
-      end
-      context "and the promo is eligible" do
-        it { is_expected.to eq 1 }
-      end
-      context "and the promo is ineligible" do
-        before { order.adjustments.promotion.update_all(eligible: false) }
-        it { is_expected.to eq 0 }
-      end
-    end
-  end
-
   context "#expired" do
     it "should not be exipired" do
       expect(promotion).not_to be_expired
@@ -365,12 +332,12 @@ describe Spree::Promotion, :type => :model do
     end
   end
 
-  context "#usage_count" do
+  context "#usage_counter" do
     let!(:promotion) do
-      create(
+      FactoryGirl.create(
         :promotion,
-        name: "Foo",
-        code: "XXX",
+        :with_order_adjustment,
+        code: "discount"
       )
     end
 
@@ -394,15 +361,39 @@ describe Spree::Promotion, :type => :model do
       )
     end
 
+    subject { promotion.usage_counter }
+
+    context "when the code is applied to a non-complete order" do
+      let(:order) { FactoryGirl.create(:order_with_line_items) }
+      before { promotion.activate(order: order, promotion_code: promotion.codes.first) }
+      it { is_expected.to eq 0 }
+    end
+
+    context "when the code is applied to a complete order" do
+      let!(:order) do
+        FactoryGirl.create(
+          :completed_order_with_promotion,
+          promotion: promotion
+        )
+      end
+      context "and the promo is eligible" do
+        it { is_expected.to eq 1 }
+      end
+      context "and the promo is ineligible" do
+        before { order.adjustments.promotion.update_all(eligible: false) }
+        it { is_expected.to eq 0 }
+      end
+    end
+
     it "counts eligible adjustments" do
       adjustment.update_column(:eligible, true)
-      expect(promotion.usage_count).to eq(0)
+      is_expected.to eq 0
     end
 
     # Regression test for #4112
     it "does not count ineligible adjustments" do
       adjustment.update_column(:eligible, false)
-      expect(promotion.usage_count).to eq(0)
+      is_expected.to eq 0
     end
   end
 

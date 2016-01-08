@@ -112,6 +112,7 @@ FactoryGirl.define do
       promotion.actions.each do |action|
         action.perform({order: order, promotion: promotion, promotion_code: promotion_code})
       end
+      promotion.update_usage_count
     end
   end
 end
