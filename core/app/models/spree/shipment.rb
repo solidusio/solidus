@@ -1,5 +1,3 @@
-require 'ostruct'
-
 module Spree
   class Shipment < Spree::Base
     belongs_to :order, class_name: 'Spree::Order', touch: true, inverse_of: :shipments
