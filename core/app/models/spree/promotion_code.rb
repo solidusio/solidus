@@ -2,7 +2,7 @@ class Spree::PromotionCode < Spree::Base
   belongs_to :promotion, inverse_of: :codes
   has_many :adjustments
 
-  validates :value, presence: true, uniqueness: true
+  validates :value, presence: true, uniqueness: { allow_blank: true }
   validates :promotion, presence: true
 
   before_save :downcase_value

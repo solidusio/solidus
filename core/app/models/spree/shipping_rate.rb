@@ -6,6 +6,7 @@ module Spree
 
     delegate :order, :currency, to: :shipment
     delegate :name, to: :shipping_method
+    delegate :code, to: :shipping_method, prefix: true
 
     def display_base_price
       Spree::Money.new(cost, currency: currency)
@@ -40,10 +41,6 @@ module Spree
 
     def display_tax_amount(tax_amount)
       Spree::Money.new(tax_amount, currency: currency)
-    end
-
-    def shipping_method_code
-      shipping_method.code
     end
   end
 end

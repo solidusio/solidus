@@ -6,11 +6,14 @@ module Spree
     belongs_to :variant, -> { with_deleted }, class_name: 'Spree::Variant', inverse_of: :stock_items
     has_many :stock_movements, inverse_of: :stock_item
 
-    validates_presence_of :stock_location, :variant
-    validates_uniqueness_of :variant_id, scope: [:stock_location_id], unless: :deleted_at
+    validates :stock_location, :variant, presence: true
+    validates :variant_id, uniqueness: { scope: [:stock_location_id, :deleted_at] }, allow_blank: true, unless: :deleted_at
     validates :count_on_hand, numericality: { greater_than_or_equal_to: 0 }, if: :verify_count_on_hand?
 
     delegate :weight, :should_track_inventory?, to: :variant
+
+    # @return [String] the name of this stock item's variant
+    delegate :name, to: :variant, prefix: true
 
     after_save :conditional_variant_touch, if: :changed?
     after_touch { variant.touch }
@@ -21,11 +24,6 @@ module Spree
     #   associated with this stock item
     def backordered_inventory_units
       Spree::InventoryUnit.backordered_for_stock_item(self)
-    end
-
-    # @return [String] the name of this stock item's variant
-    def variant_name
-      variant.name
     end
 
     # Adjusts the count on hand by a given value.
