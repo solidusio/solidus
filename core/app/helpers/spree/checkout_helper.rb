@@ -4,10 +4,11 @@ module Spree
       @order.checkout_steps
     end
 
-    def checkout_progress
+    def checkout_progress(numbers: false)
       states = checkout_states
-      items = states.map do |state|
+      items = states.each_with_index.map do |state, i|
         text = Spree.t("order_state.#{state}").titleize
+        text.prepend("#{i.succ}. ") if numbers
 
         css_classes = []
         current_index = states.index(@order.state)
