@@ -1,0 +1,25 @@
+<%- snippet = capture do %>
+  <span class="state ready">ready</span>
+  <span class="state paid">paid</span>
+  <span class="state complete">complete</span>
+  <span class="state completed">completed</span>
+  <span class="state balance_due">balance due</span>
+  <span class="state pending">pending</span>
+  <span class="state checkout">checkout</span>
+  <span class="state credit_owed">credit owed</span>
+  <span class="state void">void</span>
+  <span class="state address">address</span>
+<%- end %>
+
+<div class="half">
+  <p>
+    3 different visual states to describe ok/success, warnings and errors.
+  </p>
+  <p class="tags">
+    <%= snippet %>
+  </p>
+</div>
+
+<div class="style-guide-code half">
+  <pre><code class="language-html"><%= escape_once snippet %></code></pre>
+</div>

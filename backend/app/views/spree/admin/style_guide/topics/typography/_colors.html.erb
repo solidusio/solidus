@@ -1,0 +1,64 @@
+<%- snippet = capture do %>
+  <p>where the html example goes</p>
+<%- end %>
+
+<p>
+  The Solidus UI is made up mostly of a grey color palette with blue being used for interactive elements and red, green and yellow being used to give visual context to messaging.
+</p>
+
+<%-
+colors = [
+  {
+    name: '$color-1',
+    value: '#FFFFFF',
+    used_for: 'Backgrounds.'
+  },
+  {
+    name: '$color-2',
+    value: '#9FC820',
+    used_for: 'Active states.'
+  },
+  {
+    name: '$color-3',
+    value: '#5498DA',
+    used_for: 'Buttons, links, form text.'
+  },
+  {
+    name: '$color-4',
+    value: '#6788A2',
+    used_for: 'Non-interactive text outside of form fields.'
+  },
+  {
+    name: '$color-5',
+    value: '#C60F13',
+    used_for: 'Errors, destructive action warnings.'
+  },
+  {
+    name: '$color-6',
+    value: '#FF9300',
+    used_for: 'Warnings'
+  },
+  {
+    name: '$color-7',
+    value: '#F4F4F4',
+    used_for: 'Disabled states'
+  }
+]
+
+%>
+
+<div class="color-variables">
+  <%- colors.each do |color| %>
+    <div class="color-variable">
+      <div class="color-swatch" style="background-color: <%= color[:value] %>"></div>
+      <dl class="color-variable-details">
+        <dt>Color:</dt>
+        <dd><%= color[:value] %></dd>
+        <dt>Sass:</dt>
+        <dd><code><%= color[:name] %></code></dd>
+        <dt>For:</dt>
+        <dd><%= color[:used_for] %></dd>
+      </dl>
+    </div>
+  <%- end %>
+</div>

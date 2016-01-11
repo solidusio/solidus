@@ -1,0 +1,16 @@
+<%- snippet = capture do %>
+  <a class="with-tip" title="This will be the tooltip text." href="#">Some Link With Tip</a>
+<%- end %>
+
+<p>
+  We are using <a href="http://stevenbenner.github.io/jquery-powertip/">jQuery PowerTip</a>
+  with the class <code>.with-tip</code> as a trigger.
+</p>
+
+<p class="style-guide-result">
+  <%= snippet %>
+</p>
+
+<div class="style-guide-code">
+  <pre><code class="language-html"><%= escape_once snippet %></code></pre>
+</div>

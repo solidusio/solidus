@@ -1,0 +1,132 @@
+.style-guide {
+  @include display(flex);
+
+  &-sidebar {
+    width: 225px;
+    background: $color-7;
+    padding: 1.5rem;
+
+    .brand-link {
+      margin-top: 2rem;
+
+      img {
+        display: block;
+        width: 100px;
+        margin: 0 auto;
+      }
+    }
+
+    ul {
+      list-style: none;
+      padding-left: 0;
+    }
+  }
+
+  &-main-content {
+    @include flex(1);
+  }
+
+  ul {
+    list-style: none;
+    padding-left: 0;
+  }
+
+  &-nav {
+    text-transform: capitalize;
+
+    > li {
+      @include margin(0.5rem null);
+      @include padding(0.75rem null);
+
+      &:not(:first-of-type) {
+        border-top: 1px solid darken($color-7, 5%);
+      }
+
+      > a {
+        font-size: 1.2rem;
+        font-weight: 300;
+      }
+    }
+
+    a {
+      display: block;
+      color: darken($color-7, 65%);
+      padding: 0.3rem 0.5rem;
+
+      &:hover {
+        background: darken($color-7, 5%);
+      }
+    }
+  }
+
+  &-intro,
+  &-section:not(:last-child) {
+    margin: 4rem 0;
+  }
+
+  &-section {
+    @include clearfix;
+  }
+
+  &-section-header {
+    @include margin(7rem 0 3rem);
+    border-bottom: 1px solid darken($color-7, 10%);
+    font-size: 1.5rem;
+    font-weight: bold;
+    line-height: 0.2;
+    text-align: center;
+    text-transform: capitalize;
+
+    span {
+      background: $color-body-bg;
+      @include padding(null 0.5em);
+    }
+
+    a {
+      color: darken($color-7, 65%);
+    }
+  }
+
+  .half {
+    width: 50%;
+    float: left;
+    padding-right: 1rem;
+
+    + .half {
+      float: none;
+      margin-left: 50%;
+      padding-right: 0;
+      padding-left: 1rem;
+    }
+  }
+
+  &-code {
+    pre {
+      margin: 0;
+      border: 1px solid darken($color-7, 10%);
+    }
+  }
+}
+
+.color-variables {
+  @include display(flex);
+  @include flex-wrap(wrap);
+}
+
+.color-variable {
+  @include flex-shrink(0);
+  width: 240px;
+  padding: 1rem;
+
+  .color-swatch {
+    height: 50px;
+    border: 1px solid darken($color-7, 10%);
+  }
+}
+
+.tags {
+  .state {
+    width: 33%;
+    float: left;
+  }
+}

@@ -1,0 +1,44 @@
+<%- snippet = capture do %>
+  <table>
+    <thead>
+      <tr>
+        <th colspan="2">Item Description</th>
+        <th>Price</th>
+        <th>Quantity</th>
+        <th>Total</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr>
+        <td class="item-image">
+          <img src="http://placehold.it/50x50">
+        </td>
+        <td>
+          Ruby on Rails Bag<br>
+          SKU: ROR-00012
+        </td>
+        <td class="align-center">$22.99</td>
+        <td class="align-center">1 x on hand</td>
+        <td class="align-center">$22.99</td>
+      </tr>
+      <tr>
+        <td colspan="4">UPS Ground (USD)</td>
+        <td class="align-center">
+          <span>$5.00</span>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="5">No tracking details provided.</td>
+      </tr>
+    </tbody>
+  </table>
+<%- end %>
+
+<div class="style-guide-result">
+  <%= snippet %>
+</div>
+
+<div class="style-guide-code">
+  <pre><code class="language-html"><%= escape_once snippet %></code></pre>
+</div>
