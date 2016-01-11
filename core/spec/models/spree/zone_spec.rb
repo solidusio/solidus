@@ -137,6 +137,16 @@ describe Spree::Zone, :type => :model do
       @target = create(:zone, name: 'target', zone_members: [])
     end
 
+    it "should contain itself" do
+      expect(@source.contains?(@source)).to be true
+    end
+
+    context "when both source and target have no members" do
+      it "should be false" do
+        expect(@source.contains?(@target)).to be false
+      end
+    end
+
     context "when the target has no members" do
       before { @source.members.create(zoneable: country1) }
 
@@ -155,7 +165,6 @@ describe Spree::Zone, :type => :model do
 
     context "when both zones are the same zone" do
       before do
-        @source.members.create(zoneable: country1)
         @target = @source
       end
 

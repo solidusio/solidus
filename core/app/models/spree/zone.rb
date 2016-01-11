@@ -111,6 +111,7 @@ module Spree
     # Indicates whether the specified zone falls entirely within the zone performing
     # the check.
     def contains?(target)
+      return true if self == target
       return false if kind == 'state' && target.kind == 'country'
       return false if zone_members.empty? || target.zone_members.empty?
 
