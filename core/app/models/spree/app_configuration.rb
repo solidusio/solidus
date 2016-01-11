@@ -271,6 +271,22 @@ module Spree
       @variant_search_class ||= Spree::Core::Search::Variant
     end
 
+    attr_writer :variant_gallery_class
+    # Returns the class to model the variants's gallery
+    #
+    # @return a class implementing {Spree::Gallery::Base}
+    def variant_gallery_class
+      @variant_gallery_class ||= Spree::Gallery::VariantAssociation
+    end
+
+    attr_writer :product_gallery_class
+    # Returns the class to model the products's gallery
+    #
+    # @return a class implementing {Spree::Gallery::Base}
+    def product_gallery_class
+      @product_gallery_class ||= Spree::Gallery::ProductVariantAssociation
+    end
+
     # promotion_chooser_class allows extensions to provide their own PromotionChooser
     attr_writer :promotion_chooser_class
     def promotion_chooser_class

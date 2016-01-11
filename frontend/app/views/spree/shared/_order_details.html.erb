@@ -61,11 +61,7 @@
     <% order.line_items.each do |item| %>
       <tr data-hook="order_details_line_item_row">
         <td data-hook="order_item_image">
-          <% if item.variant.images.length == 0 %>
-            <%= link_to image_tag(item.variant.product.display_image.attachment(:small)), item.variant.product %>
-          <% else %>
-            <%= link_to image_tag(item.variant.images.first.attachment.url(:small)), item.variant.product %>
-          <% end %>
+          <%= link_to spree_image_tag(item.variant.gallery.best_image, :small), item.variant.product %>
         </td>
         <td data-hook="order_item_description">
           <h4><%= item.variant.product.name %></h4>

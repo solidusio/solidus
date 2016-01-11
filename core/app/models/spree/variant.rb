@@ -313,6 +313,13 @@ module Spree
     #   not from this variant
     # @return [Spree::Image] the image to display
     def display_image(fallback: true)
+      ActiveSupport::Deprecation.warn(<<WARN.squish)
+Spree::Variant#display_image is being deprecated in favor of
+Spree::Variant#gallery.primary_image and #Spree::Variant#gallery.best_image
+to select an image, and Spree::ImagesHelper#image_or_default
+to handle displaying a fallback
+WARN
+
       images.first || (fallback && product.variant_images.first) || Spree::Image.new
     end
 
@@ -324,6 +331,18 @@ module Spree
       self.product.variant_property_rules.map do |rule|
         rule.values if rule.applies_to_variant?(self)
       end.flatten.compact
+    end
+
+    # Returns the gallery for the variant, which represents all the images
+    # associated to this variant
+    #
+    # The class initialized can be configured by a store using
+    # the config setting {Spree::AppConfiguration#variant_gallery_class}
+    #
+    # @return [Spree::Gallery::Base] this variants gallery
+    # @see Spree::AppConfiguration#variant_gallery_class
+    def gallery
+      @gallery ||= Spree::Config.variant_gallery_class.new(self)
     end
 
     private
