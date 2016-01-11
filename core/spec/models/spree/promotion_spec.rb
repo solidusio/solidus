@@ -740,6 +740,11 @@ describe Spree::Promotion, :type => :model do
 
       context 'when the order is not complete' do
         let(:order) { create :order, user: user }
+
+        # The before clause above sets the completed at
+        # value for this order
+        before { order.update completed_at: nil }
+
         it { is_expected.to be false }
       end
     end
