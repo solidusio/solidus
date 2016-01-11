@@ -1347,6 +1347,7 @@ pt-BR:
     value: Valor
     variant: Variante
     variant_placeholder: Escolha um produto
+    variant_search_placeholder: Nome da Variante
     variants: Variantes
     version: Versão
     void: Vazio
