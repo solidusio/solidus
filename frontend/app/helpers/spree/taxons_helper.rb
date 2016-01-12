@@ -1,5 +1,11 @@
 module Spree
   module TaxonsHelper
+    def cache_key_for_taxons
+      max_updated_at = @taxons.maximum(:updated_at).to_i
+      parts = [@taxon.try(:id), max_updated_at].compact.join("-")
+      "#{I18n.locale}/taxons/#{parts}"
+    end
+
     # Retrieves the collection of products to display when "previewing" a taxon.  This is abstracted into a helper so
     # that we can use configurations as well as make it easier for end users to override this determination.  One idea is
     # to show the most popular products for a particular taxon (that is an exercise left to the developer.)
