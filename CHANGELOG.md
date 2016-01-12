@@ -1,10 +1,16 @@
 ## Solidus 1.2.0 (unreleased)
 
-*   Removed deface from core
+*   Admin menu has been moved from top of the page to the left side.
 
-    If projects or extensions rely on deface they'll need to add it to their
-    dependencies rather than counting on solidus to pull it in. Core does not
-    need to deface anything.
+    * Submenu items are accessible from any page. See [the wiki](https://github.com/solidusio/solidus/wiki/Upgrading-Admin-Navigation-to-1.2)
+       for more information and instructions on upgrading.
+    * [Solidus_auth_devise](https://github.com/solidusio/solidus_auth_devise)
+      should be updated to '~> 1.3' to support the new menu.
+
+*   Removed deface requirement from core
+
+    Projects and extensions which rely on deface will need to add it explicitly
+    to their dependencies.
 
 *   `testing_support/capybara_ext.rb` no longer changes capybara's matching
     mode to `:prefer_exact`, and instead uses capybara's default, `:smart`.
@@ -14,15 +20,25 @@
 
     More information can be found in [capybara's README](https://github.com/jnicklas/capybara#matching)
 
-*   Admin menu has been moved from top of the page to the left side.
+*   Fixed a bug where sorting in the admin would not save positions correctly.
+    [#632](https://github.com/solidusio/solidus/pull/632)
 
-    * Submenu items are accessible from any page. See [the wiki](https://github.com/solidusio/solidus/wiki/Upgrading-Admin-Navigation-to-1.2)
-    for more information and instructions on upgrading.
-    * [Solidus_auth_devise](https://github.com/solidusio/solidus_auth_devise) has been updated to override the new login nav location.
+*   Included (VAT-style) taxes, will be considered applicable if they are
+    inside the default tax zone, rather than just when they are the defaut tax
+    zone. [#657](https://github.com/solidusio/solidus/pull/657)
+
+*   Update jQuery.payment to v1.3.2 (from 1.0) [#608](https://github.com/solidusio/solidus/pull/608)
+
+*   Removed Order::CurrencyUpdater. [#635](https://github.com/solidusio/solidus/pull/635)
 
 *   Removed `Product#set_master_variant_defaults`, which was unnecessary since master is build with `is_master` already `true`.
 
-## Solidus 1.1.0 (unreleased)
+*   Improved performance of stock packaging [#550](https://github.com/solidusio/solidus/pull/550) [#565](https://github.com/solidusio/solidus/pull/565) [#574](https://github.com/solidusio/solidus/pull/574)
+
+*   Replaced admin taxon management interface [#569](https://github.com/solidusio/solidus/pull/569)
+
+
+## Solidus 1.1.0 (2015-11-25)
 
 *   Address is immutable (Address#readonly? is always true)
 
