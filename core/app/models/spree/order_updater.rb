@@ -21,7 +21,6 @@ module Spree
         update_payment_state
         update_shipments
         update_shipment_state
-        update_promotions_usage_count
       end
       run_hooks
       persist_totals
@@ -169,15 +168,6 @@ module Spree
       end
       order.state_changed('payment') if last_state != order.payment_state
       order.payment_state
-    end
-
-    # Updates the promotion +usage_count+ with promotions already applied
-    # The +usage_count+ acts as a counter cache to avoid expensive query to get
-    # how many times a promotion has been applied
-    def update_promotions_usage_count
-      order.promotions.each do |promotion|
-        promotion.update_usage_count
-      end
     end
 
     private

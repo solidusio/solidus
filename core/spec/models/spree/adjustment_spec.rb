@@ -121,7 +121,7 @@ describe Spree::Adjustment, :type => :model do
         end
 
         context "the promotion is eligible" do
-          it "sets the adjustment elgiible to true" do
+          it "sets the adjustment eligible to true" do
             subject
             expect(adjustment.eligible).to eq true
           end
@@ -135,6 +135,21 @@ describe Spree::Adjustment, :type => :model do
             expect(adjustment.eligible).to eq false
           end
         end
+      end
+    end
+  end
+
+  context "#finalize!" do
+    context "when adjustment is due a promotion" do
+      let(:order) { FactoryGirl.create(:completed_order_with_promotion, promotion: promotion) }
+      let(:promotion) { FactoryGirl.create(:promotion, :with_order_adjustment) }
+
+      let!(:adjustment) do
+        order.adjustments.first
+      end
+      it "updates promotion usage_count counter cache" do
+        adjustment.finalize!
+        expect(promotion.reload.usage_count).to eq(1)
       end
     end
   end

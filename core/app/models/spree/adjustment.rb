@@ -62,6 +62,7 @@ module Spree
 
     def finalize!
       update_attributes!(finalized: true)
+      source.promotion.update_usage_count if promotion?
     end
 
     def unfinalize!
