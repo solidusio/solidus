@@ -13,7 +13,7 @@ module Spree
     has_many :actions, through: :line_item_actions
 
     before_validation :normalize_quantity
-    before_validation :copy_variant_attributes
+    before_validation :set_required_attributes
 
     validates :variant, presence: true
     validates :quantity, numericality: {
@@ -127,14 +127,31 @@ module Spree
       self.quantity = 0 if quantity.nil? || quantity < 0
     end
 
-    # Sets this line item's  tax category, price, cost price, and currency from
+    # Sets tax category, price-related attributes from
     # its variant if they are nil and a variant is present.
-    def copy_variant_attributes
+    def set_required_attributes
       return unless variant
       self.tax_category ||= variant.tax_category
+      set_pricing_attributes
+    end
+
+    # Set price, cost_price and currency. This method used to be called #copy_price, but actually
+    # did more than just setting the price, hence renamed to #set_pricing_attributes
+    def set_pricing_attributes
+      # If the legacy method #copy_price has been overridden, handle that gracefully
+      return handle_copy_price_override if self.respond_to?(:copy_price)
+
       self.currency ||= variant.currency
       self.cost_price ||= variant.cost_price
       self.price ||= variant.price
+    end
+
+    def handle_copy_price_override
+      copy_price
+      ActiveSupport::Deprecation.warn 'You have overridden Spree::LineItem#copy_price. ' + \
+        'This method is now called Spree::LineItem#set_pricing_attributes. ' + \
+        'Please adjust your override.',
+        caller
     end
 
     def update_inventory

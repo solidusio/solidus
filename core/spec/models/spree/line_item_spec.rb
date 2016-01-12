@@ -115,6 +115,37 @@ describe Spree::LineItem, :type => :model do
         expect(line_item.tax_category).to eq(line_item.variant.tax_category)
       end
     end
+
+    # Specs for https://github.com/solidusio/solidus/pull/522#issuecomment-170668125
+    context "with `#copy_price` defined" do
+      before(:context) do
+        Spree::LineItem.class_eval do
+          def copy_price
+            self.currency = "USD"
+            self.cost_price = 10
+            self.price = 20
+          end
+        end
+      end
+
+      after(:context) do
+        Spree::LineItem.class_eval do
+          remove_method :copy_price
+        end
+      end
+
+      it 'should display a deprecation warning' do
+        expect(ActiveSupport::Deprecation).to receive(:warn)
+        Spree::LineItem.new(variant: variant, order: order)
+      end
+
+      it 'should run the user-defined copy_price method' do
+        expect_any_instance_of(Spree::LineItem).to receive(:copy_price).and_call_original
+        ActiveSupport::Deprecation.silence do
+          Spree::LineItem.new(variant: variant, order: order)
+        end
+      end
+    end
   end
 
   describe '.discounted_amount' do
