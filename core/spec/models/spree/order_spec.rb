@@ -268,31 +268,20 @@ describe Spree::Order, :type => :model do
           order.shipments.create!
         end
 
-        it "destroys current shipments" do
-          order.ensure_updated_shipments
-          expect(order.shipments).to be_empty
-        end
-
         it "puts order back in address state" do
-          order.ensure_updated_shipments
+          order.probably_restart_checkout_flow
           expect(order.state).to eql "cart"
-        end
-
-        it "resets shipment_total" do
-          order.update_column(:shipment_total, 5)
-          order.ensure_updated_shipments
-          expect(order.shipment_total).to eq(0)
         end
 
         it "does nothing if any shipments are ready" do
           shipment = create(:shipment, order: subject, state: "ready")
-          expect { subject.ensure_updated_shipments }.not_to change { subject.reload.shipments }
+          expect { subject.probably_restart_checkout_flow }.not_to change { subject.reload.shipments }
           expect { shipment.reload }.not_to raise_error
         end
 
         it "does nothing if any shipments are shipped" do
           shipment = create(:shipment, order: subject, state: "shipped")
-          expect { subject.ensure_updated_shipments }.not_to change { subject.reload.shipments }
+          expect { subject.probably_restart_checkout_flow }.not_to change { subject.reload.shipments }
           expect { shipment.reload }.not_to raise_error
         end
       end
@@ -305,19 +294,8 @@ describe Spree::Order, :type => :model do
         order.shipments.create!
       end
 
-      it "destroys current shipments" do
-        order.ensure_updated_shipments
-        expect(order.shipments).to be_empty
-      end
-
-      it "resets shipment_total" do
-        order.update_column(:shipment_total, 5)
-        order.ensure_updated_shipments
-        expect(order.shipment_total).to eq(0)
-      end
-
       it "puts the order in the cart state" do
-        order.ensure_updated_shipments
+        order.probably_restart_checkout_flow
         expect(order.state).to eq "cart"
       end
     end
@@ -330,21 +308,9 @@ describe Spree::Order, :type => :model do
         order.shipments.create!
       end
 
-      it "does not destroy the current shipments" do
-        expect {
-          order.ensure_updated_shipments
-        }.not_to change { order.shipments }
-      end
-
-      it "does not reset the shipment total" do
-        expect {
-          order.ensure_updated_shipments
-        }.not_to change { order.shipment_total }
-      end
-
       it "does not put the order back in the address state" do
         expect {
-          order.ensure_updated_shipments
+          order.probably_restart_checkout_flow
         }.not_to change { order.state }
       end
     end
@@ -356,15 +322,7 @@ describe Spree::Order, :type => :model do
         order.shipments.create!
 
         expect {
-          order.ensure_updated_shipments
-        }.not_to change { order.shipment_total }
-
-        expect {
-          order.ensure_updated_shipments
-        }.not_to change { order.shipments }
-
-        expect {
-          order.ensure_updated_shipments
+          order.probably_restart_checkout_flow
         }.not_to change { order.state }
       end
     end

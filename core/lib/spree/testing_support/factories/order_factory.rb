@@ -27,6 +27,7 @@ FactoryGirl.define do
         line_items_attributes { [{}] * line_items_count }
         shipment_cost 100
         shipping_method nil
+        select_shipping_rate false
       end
 
       after(:create) do |order, evaluator|
@@ -36,7 +37,9 @@ FactoryGirl.define do
         end
         order.line_items.reload
 
-        create(:shipment, order: order, cost: evaluator.shipment_cost, shipping_method: evaluator.shipping_method, address: evaluator.ship_address)
+        create(:shipment, order: order, cost: evaluator.shipment_cost,
+               shipping_method: evaluator.shipping_method, address: evaluator.ship_address,
+               select_shipping_rate: evaluator.select_shipping_rate)
         order.shipments.reload
 
         order.update!

@@ -94,6 +94,9 @@ module Spree
     alias display_amount display_cost
 
     def add_shipping_method(shipping_method, selected = false)
+      # Note: there's some danger if selected = true that we end up with more than 1
+      # selected shipping rate since this does not clear the flag from others.
+      # #selected_shipping_rate_id= handles that case though.
       shipping_rates.create(shipping_method: shipping_method, selected: selected, cost: cost)
     end
 
@@ -172,22 +175,7 @@ module Spree
       return shipping_rates if shipped? || order.completed?
       return [] unless can_get_rates?
 
-      # StockEstimator.new assigment below will replace the current shipping_method
-      original_shipping_method_id = shipping_method.try!(:id)
-
-      new_rates = Stock::Estimator.new(order).shipping_rates(to_package)
-
-      # If one of the new rates matches the previously selected shipping
-      # method, select that instead of the default provided by the estimator.
-      # Otherwise, keep the default.
-      selected_rate = new_rates.detect{ |rate| rate.shipping_method_id == original_shipping_method_id }
-      if selected_rate
-        new_rates.each do |rate|
-          rate.selected = (rate == selected_rate)
-        end
-      end
-
-      self.shipping_rates = new_rates
+      self.shipping_rates.replace(Stock::Estimator.new(order).shipping_rates(to_package))
       self.save!
 
       shipping_rates

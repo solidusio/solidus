@@ -94,7 +94,7 @@ module Spree
         api_put :update, :id => line_item.id, :line_item => { :quantity => 101 }
         expect(response.status).to eq(200)
         order.reload
-        expect(order.total).to eq(1010) # 10 original due to factory, + 1000 in this test
+        expect(order.total).to eq(1110) # 101 quantity * 10 item price + 100 shipping cost
         expect(json_response).to have_attributes(attributes)
         expect(json_response["quantity"]).to eq(101)
       end
@@ -117,41 +117,17 @@ module Spree
         expect { line_item.reload }.to raise_error(ActiveRecord::RecordNotFound)
       end
 
-      context "order contents changed after shipments were created" do
-        let!(:order) { Order.create }
-        let!(:line_item) { order.contents.add(product.master) }
+      context "order contents changed after shipments were created and order is completed" do
 
-        before { order.create_proposed_shipments }
+        before do
+          allow(order).to receive_messages completed?: true
+          allow(Order).to receive_message_chain :includes, find_by!: order
+        end
 
-        it "clear out shipments on create" do
+        it "doesn't destroy shipments or restart checkout flow" do
           expect(order.reload.shipments).not_to be_empty
           api_post :create, :line_item => { :variant_id => product.master.to_param, :quantity => 1 }
-          expect(order.reload.shipments).to be_empty
-        end
-
-        it "clear out shipments on update" do
           expect(order.reload.shipments).not_to be_empty
-          api_put :update, :id => line_item.id, :line_item => { :quantity => 1000 }
-          expect(order.reload.shipments).to be_empty
-        end
-
-        it "clear out shipments on delete" do
-          expect(order.reload.shipments).not_to be_empty
-          api_delete :destroy, :id => line_item.id
-          expect(order.reload.shipments).to be_empty
-        end
-
-        context "order is completed" do
-          before do
-            allow(order).to receive_messages completed?: true
-            allow(Order).to receive_message_chain :includes, find_by!: order
-          end
-
-          it "doesn't destroy shipments or restart checkout flow" do
-            expect(order.reload.shipments).not_to be_empty
-            api_post :create, :line_item => { :variant_id => product.master.to_param, :quantity => 1 }
-            expect(order.reload.shipments).not_to be_empty
-          end
         end
       end
     end

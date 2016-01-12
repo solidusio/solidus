@@ -497,8 +497,7 @@ module Spree
         raise CannotRebuildShipments.new(Spree.t(:cannot_rebuild_shipments_shipments_not_pending))
       else
         adjustments.shipping.destroy_all
-        shipments.destroy_all
-        self.shipments = Spree::Stock::Coordinator.new(self).shipments
+        self.shipments.replace(Spree::Stock::Coordinator.new(self).shipments)
       end
     end
 
@@ -509,19 +508,22 @@ module Spree
       persist_totals
     end
 
-    # Clean shipments and make order back to address state
-    #
-    # At some point the might need to force the order to transition from address
-    # to delivery again so that proper updated shipments are created.
-    # e.g. customer goes back from payment step and changes order items
-    def ensure_updated_shipments
+    # This method used to be known as ensure_updated_shipments but it stopped
+    # messing with shipments in order to preserve a user's selected shipping method.
+    # That exposed some oddness, which the new name represents.
+    # As of this writing, this method is only called from OrderContents, but is
+    # called every time the order is modified. Which means that we're almost
+    # always restarting the checkout flow at the 'cart' state for every modification
+    # to a pre-completed order.
+    # TODO understand this at a coarser grain and improve it
+    def probably_restart_checkout_flow
       if !completed? && shipments.all?(&:pending?)
-        self.shipments.destroy_all
-        self.update_column(:shipment_total, 0)
+        # NOTE: if there are no shipments, [].all?(&:pending?) is true
+        # which is probably not what we want
         restart_checkout_flow
       end
-
     end
+    alias :ensure_updated_shipments :probably_restart_checkout_flow
 
     def restart_checkout_flow
       return if self.state == 'cart'
@@ -530,6 +532,7 @@ module Spree
         state: 'cart',
         updated_at: Time.now,
       )
+      # Note: what if this did contents.advance instead of self.next! ?
       self.next! if self.line_items.size > 0
     end
 

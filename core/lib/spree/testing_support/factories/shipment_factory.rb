@@ -8,11 +8,12 @@ FactoryGirl.define do
 
     transient do
       shipping_method nil
+      select_shipping_rate false
     end
 
-    after(:create) do |shipment, evalulator|
-      shipping_method = evalulator.shipping_method || create(:shipping_method, cost: evalulator.cost)
-      shipment.add_shipping_method(shipping_method, true)
+    after(:create) do |shipment, evaluator|
+      shipping_method = evaluator.shipping_method || create(:shipping_method, cost: evaluator.cost)
+      shipment.add_shipping_method(shipping_method, evaluator.select_shipping_rate)
 
       shipment.order.line_items.each do |line_item|
         line_item.quantity.times do

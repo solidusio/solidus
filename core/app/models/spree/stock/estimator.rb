@@ -19,14 +19,27 @@ module Spree
       def shipping_rates(package, frontend_only = true)
         rates = calculate_shipping_rates(package)
         rates.select! { |rate| rate.shipping_method.frontend? } if frontend_only
-        choose_default_shipping_rate(rates)
+        choose_selected_shipping_rate(rates)
         sort_shipping_rates(rates)
       end
 
       private
-      def choose_default_shipping_rate(shipping_rates)
-        unless shipping_rates.empty?
-          shipping_rates.min_by(&:cost).selected = true
+      def choose_selected_shipping_rate(shipping_rates)
+        return if shipping_rates.empty?
+        shipping_rate = find_preselected_shipping_rate(shipping_rates) || shipping_rates.min_by(&:cost)
+        shipping_rate.selected = true
+      end
+
+      def find_preselected_shipping_rate(shipping_rates)
+        # TODO this method assumes a single shipment per order.
+        # If we have multiple shipments this will assign one of the preselected
+        # shipping methods to one of the shipments, which is far from ideal, but
+        # no worse than the prior behavior of always resetting to cheapest.
+        if order.shipments.count > 0
+          shipping_method = order.shipments.map {|s| s.selected_shipping_rate.try!(:shipping_method) }.compact.uniq.first
+          if shipping_method
+            shipping_rates.detect {|rate| rate.shipping_method_id == shipping_method.id }
+          end
         end
       end
 
