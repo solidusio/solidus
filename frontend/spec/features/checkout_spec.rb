@@ -207,7 +207,7 @@ describe "Checkout", type: :feature, inaccessible: true do
       }.not_to change { Spree::CreditCard.count }
 
       click_on "Place Order"
-      expect(current_path).to eql(spree.order_path(Spree::Order.last))
+      expect(page).to have_current_path(spree.order_path(Spree::Order.last))
     end
 
     it "allows user to enter a new source" do
@@ -225,7 +225,7 @@ describe "Checkout", type: :feature, inaccessible: true do
       expect(Spree::CreditCard.last.address).to be_present
 
       click_on "Place Order"
-      expect(current_path).to eql(spree.order_path(Spree::Order.last))
+      expect(page).to have_current_path(spree.order_path(Spree::Order.last))
     end
   end
 
@@ -241,7 +241,7 @@ describe "Checkout", type: :feature, inaccessible: true do
       fill_in_address
       click_on "Save and Continue"
       click_on "Save and Continue"
-      expect(current_path).to eql(spree.checkout_state_path("payment"))
+      expect(page).to have_current_path(spree.checkout_state_path("payment"))
 
       visit spree.root_path
       click_link bag.name
@@ -255,7 +255,7 @@ describe "Checkout", type: :feature, inaccessible: true do
       click_on "Save and Continue"
       click_on "Place Order"
 
-      expect(current_path).to eql(spree.order_path(Spree::Order.last))
+      expect(page).to have_current_path(spree.order_path(Spree::Order.last))
     end
   end
 
@@ -267,7 +267,7 @@ describe "Checkout", type: :feature, inaccessible: true do
       fill_in_address
       click_on "Save and Continue"
       click_on "Save and Continue"
-      expect(current_path).to eql(spree.checkout_state_path("payment"))
+      expect(page).to have_current_path(spree.checkout_state_path("payment"))
     end
 
     context "and updates line item quantity and try to reach payment page" do
@@ -282,7 +282,7 @@ describe "Checkout", type: :feature, inaccessible: true do
 
       it "redirects user back to address step" do
         visit spree.checkout_state_path("payment")
-        expect(current_path).to eql(spree.checkout_state_path("address"))
+        expect(page).to have_current_path(spree.checkout_state_path("address"))
       end
 
       it "updates shipments properly through step address -> delivery transitions" do
@@ -305,7 +305,7 @@ describe "Checkout", type: :feature, inaccessible: true do
 
       it "redirects user back to address step" do
         visit spree.checkout_state_path("payment")
-        expect(current_path).to eql(spree.checkout_state_path("address"))
+        expect(page).to have_current_path(spree.checkout_state_path("address"))
       end
 
       it "updates shipments properly through step address -> delivery transitions" do
@@ -334,7 +334,7 @@ describe "Checkout", type: :feature, inaccessible: true do
       click_on "Save and Continue"
 
       click_on "Save and Continue"
-      expect(current_path).to eql(spree.checkout_state_path("payment"))
+      expect(page).to have_current_path(spree.checkout_state_path("payment"))
     end
 
     it "makes sure payment reflects order total with discounts" do
@@ -358,7 +358,7 @@ describe "Checkout", type: :feature, inaccessible: true do
     context "doesn't fill in coupon code input" do
       it "advances just fine" do
         click_on "Save and Continue"
-        expect(current_path).to eql(spree.checkout_state_path("confirm"))
+        expect(page).to have_current_path(spree.checkout_state_path("confirm"))
       end
     end
   end
@@ -385,7 +385,7 @@ describe "Checkout", type: :feature, inaccessible: true do
     end
 
     it "goes right payment step and place order just fine" do
-      expect(current_path).to eq spree.checkout_state_path('payment')
+      expect(page).to have_current_path(spree.checkout_state_path('payment'))
 
       choose "Credit Card"
       fill_in "Name on card", :with => 'Spree Commerce'
