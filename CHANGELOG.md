@@ -39,6 +39,15 @@
 
 *   Replaced admin taxon management interface [#569](https://github.com/solidusio/solidus/pull/569)
 
+*   Fix logic around raising InsufficientStock when creating shipments. [#566](https://github.com/solidusio/solidus/pull/566)
+
+    Previously, `InsufficientStock` was raised if any StockLocations were fully
+    out of inventory. This was incorrect because it was possible other stock
+    locations could have fulfilled the inventory. This was also incorrect because
+    the stock location could have some, but insufficient inventory, and not raise
+    the exception (an incomplete package would be returned). Now the coordinator
+    checks that the package is complete and raises `InsufficientStock` if it is
+    incomplete for any reason.
 
 ## Solidus 1.1.0 (2015-11-25)
 
