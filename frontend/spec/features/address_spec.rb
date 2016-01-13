@@ -20,7 +20,7 @@ describe "Address", type: :feature, inaccessible: true do
 
   context "country requires state", :js => true, :focus => true do
     let!(:canada) { create(:country, :name => "Canada", :states_required => true, :iso => "CA") }
-    let!(:uk) { create(:country, :name => "United Kingdom", :states_required => true, :iso => "UK") }
+    let!(:uk) { create(:country, :name => "United Kingdom", :states_required => true, :iso => "GB") }
 
     before { Spree::Config[:default_country_id] = uk.id }
 
