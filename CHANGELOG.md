@@ -1,3 +1,5 @@
+## Solidus 1.3.0 (unreleased)
+
 ## Solidus 1.2.0 (unreleased)
 
 *   Admin menu has been moved from top of the page to the left side.
