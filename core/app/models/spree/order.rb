@@ -643,11 +643,6 @@ module Spree
       end
 
       payments.reset
-
-      if payments.where(state: %w(checkout pending)).sum(:amount) != total
-        errors.add(:base, Spree.t("store_credit.errors.unable_to_fund")) and return false
-      end
-
     end
 
     def covered_by_store_credit?
@@ -655,6 +650,10 @@ module Spree
       user.total_available_store_credit >= total
     end
     alias_method :covered_by_store_credit, :covered_by_store_credit?
+
+    def covered_by_valid_payments?
+      payments.where(state: %w(checkout completed pending processing)).sum(:amount) >= total
+    end
 
     def total_available_store_credit
       return 0.0 unless user

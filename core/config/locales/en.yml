@@ -1013,6 +1013,7 @@ en:
     no_orders_found: No orders found
     no_payment_methods_found: No payment methods found
     no_payment_found: No payment found
+    payments_do_not_cover_order_total: Payments do not cover order total
     no_pending_payments: No pending payments
     no_products_found: No products found
     no_promotions_found: No promotions found
@@ -1460,7 +1461,6 @@ en:
           eligible: "Eligibility Verified"
           void: "Voided"
       errors:
-        unable_to_fund: "Unable to pay for order using store credits"
         cannot_invalidate_uncaptured_authorization: "Cannot invalidate a store credit with an uncaptured authorization"
       expiring: Expiring
       insufficient_authorized_amount: "Unable to capture more than authorized amount"
