@@ -19,7 +19,7 @@ $color-6:                        #FF9300 !default;    // Yellow
 $color-7:                        #F4F4F4 !default;    // Light Gray
 
 // Basic accents for admin
-$box-shadow:                     0px 3px 3px -2px hsla(0, 0%, 0%, 0.2);
+$box-shadow:                     0px 3px 3px -2px hsla(0, 0%, 0%, 0.2) !default;
 
 // Body base colors
 $color-body-bg:                  $color-1 !default;
@@ -34,11 +34,18 @@ $color-border:                   very-light($color-3, 12) !default;
 
 // Basic navigation colors
 $color-sidebar-bg:              $color-body-bg !default;
-$color-sidebar-border:          $color-border   !default;
+$color-sidebar-border:          $color-border !default;
+$color-navbar:                  $color-1 !default;
 $color-navbar-bg:               $color-3 !default;
+$color-navbar-active:           $color-1 !default;
 $color-navbar-active-bg:        $color-2 !default;
+$color-navbar-submenu:          $color-3 !default;
 $color-navbar-submenu-bg:       very-light($color-navbar-bg, 4) !default;
-$color-navbar-text:             $color-1 !default;
+$color-navbar-submenu-active:   $color-2 !default;
+$color-navbar-submenu-active-bg: $color-navbar-submenu-bg !default;
+$color-navbar-footer:           $color-3 !default;
+$color-navbar-footer-bg:        $color-sidebar-bg !default;
+$color-navbar-footer-active:    $color-2 !default;
 
 // Basic flash colors
 $color-success:                  $color-2 !default;
@@ -194,4 +201,8 @@ $width-sidebar-flyout:           225px !default;
 
 // Stacking
 //--------------------------------------------------------------
-$z-index-navbar-flyout:          1000;
+$z-index-navbar-flyout:          1000 !default;
+
+// Sidebar
+//--------------------------------------------------------------
+$border-sidebar:                 1px solid $color-sidebar-border !default;

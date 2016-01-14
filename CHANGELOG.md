@@ -8,6 +8,9 @@
        for more information and instructions on upgrading.
     * [Solidus_auth_devise](https://github.com/solidusio/solidus_auth_devise)
       should be updated to '~> 1.3' to support the new menu.
+    * Added optional styles to the admin area to advance [admin rebrand](https://github.com/solidusio/solidus/issues/520).
+      To use the new colors, add `@import 'spree/backend/themes/blue_steel/globals/_variables_override';`
+      to your `spree/backend/globals/variables_override`.
 
 *   Removed deface requirement from core
 
