@@ -41,11 +41,11 @@ module Spree
           let(:packer) { Packer.new(stock_location, inventory_units) }
 
           it "builds an empty package" do
-            expect(packer.default_package.contents).to be_empty
+            expect(packer.default_package).to be_empty
           end
         end
 
-        context "not enough on hand and not backorderable" do
+        context "none on hand and not backorderable" do
           let(:packer) { Packer.new(stock_location, inventory_units) }
 
           before do
@@ -53,8 +53,8 @@ module Spree
             stock_location.stock_items.each { |si| si.set_count_on_hand(0) }
           end
 
-          it "raises an error" do
-            expect { packer.default_package }.to raise_error Spree::Order::InsufficientStock
+          it "builds an empty package" do
+            expect(packer.default_package).to be_empty
           end
         end
 
