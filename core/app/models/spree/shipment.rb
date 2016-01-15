@@ -322,11 +322,13 @@ module Spree
     def update!(order)
       old_state = state
       new_state = determine_state(order)
-      update_columns(
-        state: new_state,
-        updated_at: Time.current,
-      )
-      after_ship if new_state == 'shipped' and old_state != 'shipped'
+      if new_state != old_state
+        update_columns(
+          state: new_state,
+          updated_at: Time.current,
+        )
+        after_ship if new_state == 'shipped'
+      end
     end
 
     def transfer_to_location(variant, quantity, stock_location)

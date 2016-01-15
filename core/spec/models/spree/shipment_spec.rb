@@ -234,15 +234,20 @@ describe Spree::Shipment, type: :model do
 
   context "#update!" do
     shared_examples_for "immutable once shipped" do
+      before { shipment.update_columns(state: 'shipped') }
+
       it "should remain in shipped state once shipped" do
-        shipment.state = 'shipped'
-        expect(shipment).to receive(:update_columns).with(state: 'shipped', updated_at: kind_of(Time))
-        shipment.update!(order)
+        expect {
+          shipment.update!(order)
+        }.not_to change { shipment.state }
       end
     end
 
     shared_examples_for "pending if backordered" do
       it "should have a state of pending if backordered" do
+        # Set as ready so we can test for change
+        shipment.update_attributes!(state: 'ready')
+
         allow(shipment).to receive_messages(inventory_units: [mock_model(Spree::InventoryUnit, backordered?: true)])
         expect(shipment).to receive(:update_columns).with(state: 'pending', updated_at: kind_of(Time))
         shipment.update!(order)
@@ -252,6 +257,8 @@ describe Spree::Shipment, type: :model do
     context "when order cannot ship" do
       before { allow(order).to receive_messages can_ship?: false }
       it "should result in a 'pending' state" do
+        # Set as ready so we can test for change
+        shipment.update_attributes!(state: 'ready')
         expect(shipment).to receive(:update_columns).with(state: 'pending', updated_at: kind_of(Time))
         shipment.update!(order)
       end
