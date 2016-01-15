@@ -7,5 +7,9 @@ FactoryGirl.define do
     name 'Spree Commerce'
     association(:payment_method, factory: :credit_card_payment_method)
     association(:address)
+
+    trait :failing do
+      number "0000000000000000"
+    end
   end
 end

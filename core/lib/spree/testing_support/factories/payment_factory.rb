@@ -11,6 +11,11 @@ FactoryGirl.define do
     state 'checkout'
     response_code '12345'
 
+    trait :failing do
+      response_code '00000'
+      association(:source, :failing, {factory: :credit_card})
+    end
+
     factory :payment_with_refund do
       transient do
         refund_amount 5
