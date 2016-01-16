@@ -319,7 +319,8 @@ module Spree
     end
 
     def punch_slug
-      update_column :slug, "#{Time.current.to_i}_#{slug}" # punch slug with date prefix to allow reuse of original
+      # punch slug with date prefix to allow reuse of original
+      update_column :slug, "#{Time.current.to_i}_#{slug}" unless frozen?
     end
 
     # If the master is invalid, the Product object will be assigned its errors
