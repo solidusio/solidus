@@ -29,7 +29,46 @@ module Spree
 
     scope :by_zone, ->(zone) { where(zone_id: zone) }
 
-    # Gets the array of TaxRates appropriate for the specified order
+    # Finds geographically matching tax rates for an order's tax zone.
+    # We do not know if they are/aren't applicable until we attempt to apply these rates to
+    # the items contained within the Order itself.
+    # For instance, if a rate passes the criteria outlined in this method,
+    # but then has a tax category that doesn't match against any of the line items
+    # inside of the order, then that tax rate will not be applicable to anything.
+    # For instance:
+    #
+    # Zones:
+    #   - Spain (default tax zone)
+    #   - France
+    #
+    # Tax rates: (note: amounts below do not actually reflect real VAT rates)
+    #   21% inclusive - "Clothing" - Spain
+    #   18% inclusive - "Clothing" - France
+    #   10% inclusive - "Food" - Spain
+    #   8% inclusive - "Food" - France
+    #   5% inclusive - "Hotels" - Spain
+    #   2% inclusive - "Hotels" - France
+    #
+    # Order has:
+    #   Line Item #1 - Tax Category: Clothing
+    #   Line Item #2 - Tax Category: Food
+    #
+    # Tax rates that should be selected:
+    #
+    #  21% inclusive - "Clothing" - Spain
+    #  10% inclusive - "Food" - Spain
+    #
+    # If the order's address changes to one in France, then the tax will be recalculated:
+    #
+    #  18% inclusive - "Clothing" - France
+    #  8% inclusive - "Food" - France
+    #
+    # Note here that the "Hotels" tax rates will not be used at all.
+    # This is because there are no items which have the tax category of "Hotels".
+    #
+    # Under no circumstances should negative adjustments be applied for the Spanish tax rates.
+    #
+    # Those rates should never come into play at all and only the French rates should apply.
     def self.match(order_tax_zone)
       return [] unless order_tax_zone
       all_rates = includes(zone: { zone_members: :zoneable }).load
@@ -76,7 +115,7 @@ module Spree
       item.update_column(:pre_tax_amount, pre_tax_amount.round(2))
     end
 
-    # This method is best described by the documentation on #potentially_applicable?
+    # This method is best described by the documentation on .match
     def self.adjust(order_tax_zone, items)
       rates = self.match(order_tax_zone)
       tax_categories = rates.map(&:tax_category)
@@ -98,48 +137,6 @@ module Spree
         end
       end
     end
-
-    # Tax rates can *potentially* be applicable to an order.
-    # We do not know if they are/aren't until we attempt to apply these rates to
-    # the items contained within the Order itself.
-    # For instance, if a rate passes the criteria outlined in this method,
-    # but then has a tax category that doesn't match against any of the line items
-    # inside of the order, then that tax rate will not be applicable to anything.
-    # For instance:
-    #
-    # Zones:
-    #   - Spain (default tax zone)
-    #   - France
-    #
-    # Tax rates: (note: amounts below do not actually reflect real VAT rates)
-    #   21% inclusive - "Clothing" - Spain
-    #   18% inclusive - "Clothing" - France
-    #   10% inclusive - "Food" - Spain
-    #   8% inclusive - "Food" - France
-    #   5% inclusive - "Hotels" - Spain
-    #   2% inclusive - "Hotels" - France
-    #
-    # Order has:
-    #   Line Item #1 - Tax Category: Clothing
-    #   Line Item #2 - Tax Category: Food
-    #
-    # Tax rates that should be selected:
-    #
-    #  21% inclusive - "Clothing" - Spain
-    #  10% inclusive - "Food" - Spain
-    #
-    # If the order's address changes to one in France, then the tax will be recalculated:
-    #
-    #  18% inclusive - "Clothing" - France
-    #  8% inclusive - "Food" - France
-    #
-    # Note here that the "Hotels" tax rates will not be used at all.
-    # This is because there are no items which have the tax category of "Hotels".
-    #
-    # Under no circumstances should negative adjustments be applied for the Spanish tax rates.
-    #
-    # Those rates should never come into play at all and only the French rates should apply.
-
 
     # Creates necessary tax adjustments for the order.
     def adjust(order_tax_zone, item)
