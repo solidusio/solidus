@@ -32,11 +32,10 @@ module Spree
     # Gets the array of TaxRates appropriate for the specified order
     def self.match(order_tax_zone)
       return [] unless order_tax_zone
-      rates = includes(zone: { zone_members: :zoneable }).load.select do |rate|
-        # Why "potentially"?
-        # Go see the documentation for that method.
-        rate.potentially_applicable?(order_tax_zone)
-      end
+      all_rates = includes(zone: { zone_members: :zoneable }).load
+
+      rates_for_order_zone = all_rates.select { |rate| rate.zone.contains?(order_tax_zone) }
+      rates_for_default_zone = all_rates.select { |rate| rate.default_vat? }
 
       # Imagine with me this scenario:
       # You are living in Spain and you have a store which ships to France.
@@ -52,16 +51,12 @@ module Spree
       #
       # For further discussion, see https://github.com/spree/spree/issues/4397 and https://github.com/spree/spree/issues/4327.
 
-      remaining_rates = rates.dup
-      rates.each do |rate|
-        if rate.included_in_price?
-          if remaining_rates.any?{|r| r != rate && r.tax_category == rate.tax_category }
-            remaining_rates.delete(rate)
-          end
-        end
+      order_zone_tax_categories = rates_for_order_zone.map(&:tax_category)
+      rates_for_default_zone.delete_if do |default_rate|
+        order_zone_tax_categories.include?(default_rate.tax_category)
       end
 
-      remaining_rates
+      (rates_for_order_zone + rates_for_default_zone).uniq
     end
 
     # Pre-tax amounts must be stored so that we can calculate
@@ -144,12 +139,7 @@ module Spree
     # Under no circumstances should negative adjustments be applied for the Spanish tax rates.
     #
     # Those rates should never come into play at all and only the French rates should apply.
-    def potentially_applicable?(order_tax_zone)
-      # If the rate's zone *contains* the order's tax zone, then it's applicable.
-      self.zone.contains?(order_tax_zone) ||
-      # The rate is a VAT and its zone contains the default zone, then it's applicable.
-      (self.included_in_price? && self.zone.contains?(Spree::Zone.default_tax))
-    end
+
 
     # Creates necessary tax adjustments for the order.
     def adjust(order_tax_zone, item)
@@ -183,6 +173,10 @@ module Spree
 
     def default_zone_or_zone_match?(order_tax_zone)
       Zone.default_tax.try!(:contains?, order_tax_zone) || self.zone.contains?(order_tax_zone)
+    end
+
+    def default_vat?
+      included_in_price && zone.contains?(Spree::Zone.default_tax)
     end
 
     private
