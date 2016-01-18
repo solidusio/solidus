@@ -17,6 +17,12 @@ Style/BracesAroundHashParameters:
 Style/ClassVars:
   Enabled: false
 
+Style/ClassAndModuleChildren:
+  Enabled: false
+
+Style/GuardClause:
+  Enabled: false
+
 
 # From http://relaxed.ruby.style/
 
