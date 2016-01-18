@@ -1,5 +1,13 @@
 # Relaxed.Ruby.Style
 
+AllCops:
+  Exclude:
+    - 'vendor/**/*'
+    - '**/vendor/**/*'
+    - '*/spec/dummy/**/*'
+    - 'sandbox/**/*'
+    - '**/templates/**/*'
+
 Style/Alias:
   Enabled: false
   StyleGuide: http://relaxed.ruby.style/#stylealias
@@ -99,10 +107,6 @@ Style/SpecialGlobalVars:
 Style/StringLiterals:
   Enabled: false
   StyleGuide: http://relaxed.ruby.style/#stylestringliterals
-
-Style/TrailingComma:
-  Enabled: false
-  StyleGuide: http://relaxed.ruby.style/#styletrailingcomma
 
 Style/WhileUntilModifier:
   Enabled: false
