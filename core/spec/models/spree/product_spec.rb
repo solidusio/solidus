@@ -332,6 +332,13 @@ describe Spree::Product, :type => :model do
         end
       end
     end
+
+    context "#really_destroy!" do
+      it "destroy the product" do
+        product.really_destroy!
+        expect(product).not_to be_persisted
+      end
+    end
   end
 
   context "properties" do
