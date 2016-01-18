@@ -1,4 +1,11 @@
 en:
+  activemodel:
+    attributes:
+      spree/order_cancellations:
+        quantity: Quantity
+        state: State
+        shipment: Shipment
+        cancel: Cancel
   activerecord:
     attributes:
       spree/address:
@@ -11,6 +18,18 @@ en:
         phone: Phone
         state: State
         zipcode: Zip Code
+      spree/adjustment:
+        adjustable: Adjustable
+        amount: Amount
+        label: Description
+        name: Name
+        state: State
+        adjustment_reason_id: Reason
+      spree/adjustment_reason:
+        active: Active
+        code: Code
+        name: Name
+        state: State
       spree/calculator/tiered_flat_rate:
         preferred_base_amount: Base Amount
         preferred_tiers: Tiers
@@ -23,6 +42,7 @@ en:
         iso_name: ISO Name
         name: Name
         numcode: ISO Code
+        states_required: States Required
       spree/credit_card:
         base: ''
         cc_type: Type
@@ -31,12 +51,27 @@ en:
         verification_value: Verification Value
         year: Year
         name: Name
+      spree/customer_return:
+        number: Return Number
+        pre_tax_total: Pre-Tax Total
+        total: Total
+        created_at: "Date/Time"
+        reimbursement_status: Reimbursement status
+        stock_location_id: Stock Location
+      spree/image:
+        alt: Alternative Text
+        attachment: Filename
       spree/inventory_unit:
         state: State
       spree/line_item:
+        description: Item Description
         price: Price
         quantity: Quantity
+        total: Total price
       spree/option_type:
+        name: Name
+        presentation: Presentation
+      spree/option_value:
         name: Name
         presentation: Presentation
       spree/order:
@@ -101,8 +136,23 @@ en:
         presentation: Presentation
       spree/prototype:
         name: Name
+      spree/reimbursement:
+        created_at: "Date/Time"
+        number: Number
+        reimbursement_status: Status
+        total: Total
       spree/return_authorization:
         amount: Amount
+      spree/return_item:
+        acceptance_status: Acceptance status
+        acceptance_status_errors: Acceptance errors
+        exchange_variant: Exchange for
+        inventory_unit_state: State
+        pre_tax_amount: Pre-Tax Amount
+        preferred_reimbursement_type: Preferred Reimbursement Type
+        reception_status: Reception Status
+        resellable: "Resellable?"
+        return_reason: Reason
       spree/role:
         name: Name
       spree/state:
@@ -382,28 +432,25 @@ en:
   spree:
     abbreviation: Abbreviation
     accept: Accept
-    acceptance_status: Acceptance status
-    acceptance_errors: Acceptance errors
     accepted: Accepted
     account: Account
     account_updated: Account updated
     action: Action
     actions:
+      add: Add
       cancel: Cancel
       continue: Continue
       create: Create
-      destroy: Destroy
+      delete: Delete
       edit: Edit
-      list: List
-      listing: Listing
-      new: New
-      refund: Refund
       receive: Receive
+      remove: Remove
       save: Save
       update: Update
+      split: Split
+      ship: ship
     activate: Activate
     active: Active
-    add: Add
     added: Added
     add_action_of_type: Add action of type
     add_country: Add Country
@@ -508,7 +555,6 @@ en:
     all_departments: All departments
     all_items_have_been_returned: All items have been returned
     already_signed_up_for_analytics: You have already signed up for Spree Analytics
-    alt_text: Alternative Text
     alternative_phone: Alternative Phone
     amount: Amount
     analytics_desc_header_1: Spree Analytics
@@ -650,7 +696,6 @@ en:
     countries: Countries
     country: Country
     country_based: Country Based
-    country_name: Name
     country_names:
       CA: Canada
       FRA: France
@@ -712,7 +757,6 @@ en:
     default_refund_amount: Default Refund Amount
     default_tax: Default Tax
     default_tax_zone: Default Tax Zone
-    delete: Delete
     deleted_variants_present: Some line items in this order have products that are no longer available.
     deleted_successfully: Deleted successfully
     delivery: Delivery
@@ -726,7 +770,6 @@ en:
     dismiss_banner: No. Thanks! I'm not interested, do not display this message again
     display: Display
     download_promotion_code_list: Download Code List
-    edit: Edit
     editing_country: Editing Country
     editing_adjustment_reason: Editing Adjustment Reason
     editing_option_type: Editing Option Type
@@ -801,7 +844,6 @@ en:
           signup: User signup
     exceptions:
       count_on_hand_setter: Cannot set count_on_hand manually, as it is set automatically by the recalculate_count_on_hand callback. Please use `update_column(:count_on_hand, value)` instead.
-    exchange_for: Exchange for
     expedited_exchanges_warning: "Any specified exchanges will ship to the customer immediately upon saving. The customer will be charged the full amount of the item if they do not return the original item within %{days_window} days."
     excl: excl.
     expected: Expected
@@ -811,7 +853,6 @@ en:
     existing_shipments: Existing shipments
     failed_payment_attempts: Failed Payment Attempts
     failure: Failure
-    filename: Filename
     fill_in_customer_info: Please fill in customer info
     filter_results: Filter Results
     finalize: Finalize
@@ -896,10 +937,15 @@ en:
     inventory_canceled: Inventory canceled
     inventory_error_flash_for_insufficient_quantity: An item in your cart has become unavailable.
     inventory_state: Inventory State
+    inventory_states:
+      backordered: backordered
+      canceled: canceled
+      on_hand: on hand
+      returned: returned
+      shipped: shipped
     is_not_available_to_shipment_address: is not available to shipment address
     iso_name: Iso Name
     item: Item
-    item_description: Item Description
     item_not_in_stock_transfer: Item is not part of the stock transfer
     item_total: Item Total
     item_total_rule:
@@ -1157,7 +1203,6 @@ en:
     pre_tax_refund_amount: Pre-Tax Refund Amount
     pre_tax_amount: Pre-Tax Amount
     pre_tax_total: Pre-Tax Total
-    preferred_reimbursement_type: Preferred Reimbursement Type
     presentation: Presentation
     previous: Previous
     price: Price
@@ -1264,7 +1309,6 @@ en:
     received_successfully: Received Successfully
     receiving: Receiving
     receiving_match: Receiving match
-    reception_status: Reception Status
     reference: Reference
     refund: Refund
     refund_amount_must_be_greater_than_zero: Refund amount must be greater than zero
@@ -1278,7 +1322,6 @@ en:
     reimbursed: Reimbursed
     reimbursement: Reimbursement
     reimbursement_perform_failed: "Reimbursement could not be performed.  Error: %{error}"
-    reimbursement_status: Reimbursement status
     reimbursement_type: Reimbursement type
     reimbursement_type_override: Reimbursement Type Override
     reimbursement_types: Reimbursement Types
@@ -1286,7 +1329,6 @@ en:
     reject: Reject
     rejected: Rejected
     remember_me: Remember me
-    remove: Remove
     rename: Rename
     reports: Reports
     resend: Resend
@@ -1317,7 +1359,6 @@ en:
         refund_summary: Refund Summary
         subject: Reimbursement Notification
         total_refunded: ! 'Total refunded: %{total}'
-    return_number: Return Number
     return_quantity: Return Quantity
     returned: Returned
     review: Review
@@ -1416,7 +1457,6 @@ en:
     source: Source
     source_location: Source location
     special_instructions: Special Instructions
-    split: Split
     spree_gateway_error_flash_for_checkout: There was a problem with your payment information. Please check your information and try again.
     ssl:
       change_protocol: "Please switch to using HTTP (rather than HTTPS) and retry this request."
@@ -1528,7 +1568,6 @@ en:
     total: Total
     total_per_item: Total per item
     total_pre_tax_refund: Total Pre-Tax Refund
-    total_price: Total price
     total_sales: Total Sales
     track_inventory: Track Inventory
     tracking: Tracking
