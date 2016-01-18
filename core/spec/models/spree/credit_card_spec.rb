@@ -117,10 +117,17 @@ describe Spree::CreditCard, type: :model do
     end
 
     let!(:persisted_card) { Spree::CreditCard.find(credit_card.id) }
-    let (:valid_address_attributes) { {firstname: "Hugo", lastname: "Furst",
-                                       address1: "123 Main", city: "Somewhere",
-                                       country_id: 1, zipcode: 55555,
-                                       phone: "1234567890"} }
+    let(:valid_address_attributes) do
+      {
+        firstname: "Hugo",
+        lastname: "Furst",
+        address1: "123 Main",
+        city: "Somewhere",
+        country_id: 1,
+        zipcode: 55_555,
+        phone: "1234567890"
+      }
+    end
 
     it "should not actually store the number" do
       expect(persisted_card.number).to be_blank
