@@ -8,6 +8,13 @@ AllCops:
     - 'sandbox/**/*'
     - '**/templates/**/*'
 
+# Sometimes I believe this reads better
+# This also causes spacing issues on multi-line fixes
+Style/BracesAroundHashParameters:
+  Enabled: false
+
+# From http://relaxed.ruby.style/
+
 Style/Alias:
   Enabled: false
   StyleGuide: http://relaxed.ruby.style/#stylealias
