@@ -115,29 +115,6 @@ module Spree
       item.update_column(:pre_tax_amount, pre_tax_amount.round(2))
     end
 
-    # This method is best described by the documentation on .match
-    def self.adjust(order_tax_zone, items)
-      rates = match(order_tax_zone)
-      tax_categories = rates.map(&:tax_category)
-      relevant_items, non_relevant_items = items.partition { |item| tax_categories.include?(item.tax_category) }
-      unless relevant_items.empty?
-        Spree::Adjustment.where(adjustable: relevant_items).tax.destroy_all # using destroy_all to ensure adjustment destroy callback fires.
-      end
-      relevant_items.each do |item|
-        relevant_rates = rates.select { |rate| rate.tax_category == item.tax_category }
-        store_pre_tax_amount(item, relevant_rates)
-        relevant_rates.each do |rate|
-          rate.adjust(order_tax_zone, item)
-        end
-      end
-      non_relevant_items.each do |item|
-        if item.adjustments.tax.present?
-          item.adjustments.tax.destroy_all # using destroy_all to ensure adjustment destroy callback fires.
-          item.update_columns pre_tax_amount: 0
-        end
-      end
-    end
-
     # Creates necessary tax adjustments for the order.
     def adjust(order_tax_zone, item)
       amount = compute_amount(item)

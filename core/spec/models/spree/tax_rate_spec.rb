@@ -159,7 +159,8 @@ describe Spree::TaxRate, type: :model do
   end
 
   context ".adjust" do
-    let(:order) { stub_model(Spree::Order) }
+    let(:zone) { stub_model(Spree::Zone)}
+    let(:order) { stub_model(Spree::Order, tax_zone: zone) }
     let(:tax_category_1) { stub_model(Spree::TaxCategory) }
     let(:tax_category_2) { stub_model(Spree::TaxCategory) }
     let(:rate_1) { stub_model(Spree::TaxRate, tax_category: tax_category_1) }
@@ -171,34 +172,44 @@ describe Spree::TaxRate, type: :model do
           price: 10.0,
           quantity: 1,
           tax_category: tax_category_1,
-          variant: stub_model(Spree::Variant)
+          variant: stub_model(Spree::Variant),
+          order: order
         )
       end
 
       let(:line_items) { [line_item] }
 
       before do
-        allow(Spree::TaxRate).to receive_messages match: [rate_1, rate_2]
+        allow(Spree::TaxRate).to receive_messages :match => [rate_1, rate_2]
+        allow(order).to receive(:line_items).and_return([line_item])
       end
 
       it "should only apply adjustments for matching rates" do
         expect(rate_1).to receive(:adjust)
         expect(rate_2).not_to receive(:adjust)
-        Spree::TaxRate.adjust(order.tax_zone, line_items)
+        Spree::Tax::OrderAdjuster.new(order).adjust!
       end
     end
 
     context "with shipments" do
-      let(:shipments) { [stub_model(Spree::Shipment, cost: 10.0, tax_category: tax_category_1)] }
+      let(:shipment) do
+        stub_model(
+          Spree::Shipment,
+          :cost => 10.0,
+          :tax_category => tax_category_1,
+          order: order
+        )
+      end
 
       before do
-        allow(Spree::TaxRate).to receive_messages match: [rate_1, rate_2]
+        allow(Spree::TaxRate).to receive_messages :match => [rate_1, rate_2]
+        allow(order).to receive(:shipments).and_return([shipment])
       end
 
       it "should apply adjustments for matching rates" do
         expect(rate_1).to receive(:adjust)
         expect(rate_2).not_to receive(:adjust)
-        Spree::TaxRate.adjust(order.tax_zone, shipments)
+        Spree::Tax::OrderAdjuster.new(order).adjust!
       end
     end
   end
@@ -265,7 +276,7 @@ describe Spree::TaxRate, type: :model do
       before do
         allow(order).to receive(:tax_zone) { tax_zone }
         order.contents.add(variant)
-        Spree::TaxRate.adjust(order.tax_zone, order.line_items)
+        Spree::Tax::OrderAdjuster.new(order).adjust!
       end
 
       let(:line_item) { order.line_items.first }
@@ -525,7 +536,7 @@ describe Spree::TaxRate, type: :model do
       before do
         allow(order).to receive(:tax_zone) { tax_zone }
         order.contents.add(variant)
-        Spree::TaxRate.adjust(order.tax_zone, order.line_items)
+        Spree::Tax::OrderAdjuster.new(order).adjust!
       end
 
       let(:line_item) { order.line_items.first }

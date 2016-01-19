@@ -12,10 +12,22 @@ RSpec.describe Spree::Tax::OrderAdjuster do
   end
 
   describe '#adjust!' do
-    let(:order) { Spree::Order.new }
+    let(:zone) { build_stubbed(:zone) }
+    let(:line_items) { build_stubbed_list(:line_item, 2) }
+    let(:order) { build_stubbed(:order, line_items: line_items) }
+    let(:rates_for_order_zone) { [] }
+    let(:item_adjuster) { Spree::Tax::ItemAdjuster.new(line_items.first) }
 
-    it 'calls the Spree::TaxRate.adjust' do
-      expect(Spree::TaxRate).to receive(:adjust)
+    before do
+      expect(order).to receive(:tax_zone).at_least(:once).and_return(zone)
+      expect(Spree::TaxRate).to receive(:match).and_return(rates_for_order_zone)
+    end
+
+    it 'calls the item adjuster with all line items' do
+      expect(Spree::Tax::ItemAdjuster).to receive(:new).with(line_items.first, rates_for_order_zone: rates_for_order_zone).and_return(item_adjuster)
+      expect(Spree::Tax::ItemAdjuster).to receive(:new).with(line_items.second, rates_for_order_zone: rates_for_order_zone).and_return(item_adjuster)
+
+      expect(item_adjuster).to receive(:adjust!).twice
       adjuster.adjust!
     end
   end
