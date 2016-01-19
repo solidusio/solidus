@@ -51,7 +51,7 @@ describe Spree::CustomController, :type => :controller do
           it "has value success" do
             spree_get :index
             expect(response).to be_success
-            assert (response.body =~ /success!!!/)
+            expect(response.body).to match(/success!!!/)
           end
         end
       end
@@ -68,7 +68,7 @@ describe Spree::CustomController, :type => :controller do
           it "has value success" do
             spree_get :index
             expect(response).to be_success
-            assert (response.body =~ /success!!!/)
+            expect(response.body).to match(/success!!!/)
           end
         end
       end
@@ -102,7 +102,7 @@ describe Spree::CustomController, :type => :controller do
           it "has value success" do
             spree_post :create
             expect(response).to be_success
-            assert (response.body =~ /success!/)
+            expect(response.body).to match(/success!/)
           end
         end
       end
@@ -117,7 +117,7 @@ describe Spree::CustomController, :type => :controller do
         describe "POST" do
           it "should not effect the wrong controller" do
             spree_get :index
-            assert (response.body =~ /neutral/)
+            expect(response.body).to match(/neutral/)
           end
         end
       end
