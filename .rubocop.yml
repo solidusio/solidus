@@ -18,6 +18,10 @@ Style/BracesAroundHashParameters:
 Style/ClassVars:
   Enabled: false
 
+# We need these names for backwards compatability
+Style/PredicateName:
+  Enabled: false
+
 Style/ClassAndModuleChildren:
   Enabled: false
 
