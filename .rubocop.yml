@@ -13,6 +13,11 @@ AllCops:
 Style/BracesAroundHashParameters:
   Enabled: false
 
+# We use class vars and will have to continue doing so for compatability
+Style/ClassVars:
+  Enabled: false
+
+
 # From http://relaxed.ruby.style/
 
 Style/Alias:
