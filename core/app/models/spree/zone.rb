@@ -15,6 +15,18 @@ module Spree
     after_save :remove_defunct_members
     after_save :remove_previous_default
 
+    scope :with_member_ids,
+          ->(state_ids, country_ids) do
+            joins(:zone_members).where(
+              "(spree_zone_members.zoneable_type = 'Spree::State' AND
+                 spree_zone_members.zoneable_id IN (?))
+               OR (spree_zone_members.zoneable_type = 'Spree::Country' AND
+                 spree_zone_members.zoneable_id IN (?))",
+              state_ids,
+              country_ids
+            ).uniq
+          end
+
     alias :members :zone_members
     accepts_nested_attributes_for :zone_members, allow_destroy: true, reject_if: proc { |a| a['zoneable_id'].blank? }
 
@@ -24,12 +36,13 @@ module Spree
       where(default_tax: true).first
     end
 
-    # Returns the matching zone with the highest priority zone type (State, Country, Zone.)
-    # Returns nil in the case of no matches.
+    # Returns the most specific matching zone for an address. Specific means:
+    # A State zone wins over a country zone, and a zone with few members wins
+    # over one with many members. If there is no match, returns nil.
     def self.match(address)
-      return unless address and matches = self.includes(:zone_members).
+      return unless address and matches = self.
+        with_member_ids(address.state_id, address.country_id).
         order(:zone_members_count, :created_at, :id).
-        where("(spree_zone_members.zoneable_type = 'Spree::Country' AND spree_zone_members.zoneable_id = ?) OR (spree_zone_members.zoneable_type = 'Spree::State' AND spree_zone_members.zoneable_id = ?)", address.country_id, address.state_id).
         references(:zones)
 
       ['state', 'country'].each do |zone_kind|
@@ -38,6 +51,20 @@ module Spree
         end
       end
       matches.first
+    end
+
+
+    # Returns all zones that contain any of the zone members of the zone passed
+    # in. This also includes any country zones that contain the state of the
+    # current zone, if it's a state zone. If the passed-in zone has members, it
+    # will also be in the result set.
+    def self.with_shared_members(zone)
+      states_and_state_country_ids = zone.states.pluck(:id, :country_id).to_a
+      state_ids = states_and_state_country_ids.map(&:first)
+      state_country_ids = states_and_state_country_ids.map(&:second)
+      country_ids = zone.countries.pluck(:id).to_a
+
+      with_member_ids(state_ids, country_ids + state_country_ids).uniq
     end
 
     def kind
