@@ -1,9 +1,0 @@
-<!-- replace_contents '#main-nav-bar' -->
-<li id="home-link" data-hook><%= link_to Spree.t(:home), spree.root_path %></li>
-<li id="link-to-cart" data-hook>
-  <noscript>
-    <%= link_to Spree.t(:cart), '/cart' %>
-  </noscript>
-  &nbsp;
-</li>
-<script>Spree.fetch_cart('<%= j cart_link_url %>')</script>

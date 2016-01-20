@@ -27,7 +27,7 @@ Gem::Specification.new do |s|
   s.add_runtime_dependency 'rails-i18n', '~> 4.0.1'
   s.add_runtime_dependency 'kaminari-i18n', '~> 0.3.2'
   s.add_runtime_dependency 'routing-filter', '~> 0.5.0'
-  s.add_runtime_dependency 'solidus_core', '~> 1.0'
+  s.add_runtime_dependency 'solidus_core', '~> 1.1'
   s.add_runtime_dependency 'deface', '~> 1.0'
 
   s.add_development_dependency 'byebug'
