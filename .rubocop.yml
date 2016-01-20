@@ -35,6 +35,9 @@ Style/GuardClause:
 Style/WordArray:
   Enabled: false
 
+Style/ConditionalAssignment:
+  Enabled: false
+
 Lint/EndAlignment:
   Enabled: false
 
