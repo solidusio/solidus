@@ -32,6 +32,9 @@ Style/ClassAndModuleChildren:
 Style/GuardClause:
   Enabled: false
 
+Style/WordArray:
+  Enabled: false
+
 Lint/EndAlignment:
   Enabled: false
 
