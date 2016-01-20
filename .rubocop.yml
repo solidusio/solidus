@@ -32,6 +32,32 @@ Style/ClassAndModuleChildren:
 Style/GuardClause:
   Enabled: false
 
+Lint/EndAlignment:
+  Enabled: false
+
+Style/ElseAlignment:
+  Enabled: false
+
+Style/IndentationWidth:
+  Enabled: false
+
+Style/AlignParameters:
+  Enabled: false
+
+Style/ClosingParenthesisIndentation:
+  Enabled: false
+
+Style/MultilineMethodCallIndentation:
+  Enabled: false
+
+Style/IndentArray:
+  Enabled: false
+
+Style/IndentHash:
+  Enabled: false
+
+Style/AlignHash:
+  Enabled: false
 
 # From http://relaxed.ruby.style/
 
