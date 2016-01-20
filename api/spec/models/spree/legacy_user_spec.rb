@@ -47,7 +47,7 @@ module Spree
         end
 
         context "roles_for_auto_api_key is defined" do
-          let (:role) { create(:role, name: 'hobbit') }
+          let(:role) { create(:role, name: 'hobbit') }
           let(:undesired_role) { create(:role, name: "foo") }
 
           before {
@@ -60,9 +60,9 @@ module Spree
         end
 
         context "for all roles" do
-          let (:role) { create(:role, name: 'hobbit') }
-          let (:other_role) { create(:role, name: 'wizard') }
-          let (:other_user) { create(:user) }
+          let(:role) { create(:role, name: 'hobbit') }
+          let(:other_role) { create(:role, name: 'wizard') }
+          let(:other_user) { create(:user) }
 
           before {
             user.clear_spree_api_key!
