@@ -12,6 +12,9 @@ module Spree
     belongs_to :state, class_name: 'Spree::State'
     belongs_to :country, class_name: 'Spree::Country'
 
+    has_many :shipping_method_stock_locations, dependent: :destroy
+    has_many :shipping_methods, through: :shipping_method_stock_locations
+
     validates_presence_of :name
     validates_uniqueness_of :code, allow_blank: true, case_sensitive: false
 

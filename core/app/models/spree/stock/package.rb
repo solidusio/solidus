@@ -106,9 +106,19 @@ module Spree
       end
 
       # @return [Array<Spree::ShippingMethod>] the shipping methods available
-      #   for this pacakges shipping categories
+      #   for this pacakge based on the stock location that match all of the
+      #   shipping categories + all shipping methods available to all
+      #   that match the shipping categories
       def shipping_methods
-        shipping_categories.map(&:shipping_methods).reduce(:&).to_a
+        sl_methods = stock_location.shipping_methods.select { |sm| (sm.shipping_categories - shipping_categories).empty?}
+
+        sc_methods = shipping_categories.map(&:shipping_methods).each { |cat| cat.select(&:available_to_all) }.reduce(:&).to_a
+
+        # sms = (shipping_categories.map(&:shipping_methods).flatten.select(&:available_to_all) + stock_location.shipping_methods)
+        # sms.select! { |sm| (shipping_categories - sm.shipping_categories).empty?}
+
+        #sms.uniq.sort_by(&:id)
+        (sl_methods + sc_methods).uniq.sort_by(&:id)
       end
 
       # @return [Spree::Shipment] a new shipment containing this package's
