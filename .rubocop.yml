@@ -22,6 +22,10 @@ Style/ClassVars:
 Style/PredicateName:
   Enabled: false
 
+# This has been used for customization
+Style/MutableConstant:
+  Enabled: false
+
 Style/ClassAndModuleChildren:
   Enabled: false
 
