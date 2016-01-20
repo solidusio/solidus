@@ -183,6 +183,16 @@ describe Spree::Variant, :type => :model do
       end
     end
 
+    context "when a default price has been deleted" do
+      it "does not display that price as default" do
+        expect(variant.default_price.amount).to eq(19.99)
+        variant.prices.first.delete
+        variant.prices << create(:price, :variant => variant, :currency => "USD", :amount => 12.12)
+        variant.reload
+        expect(variant.default_price.amount).to eq(12.12)
+      end
+    end
+
     context "when adding multiple prices" do
       it "it can reassign a default price" do
         expect(variant.default_price.amount).to eq(19.99)
