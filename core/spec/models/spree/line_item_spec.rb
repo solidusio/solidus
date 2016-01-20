@@ -89,26 +89,62 @@ describe Spree::LineItem, :type => :model do
     end
   end
 
-  # Test for https://github.com/spree/spree/issues/3391
-  context '#copy_price' do
-    it "copies over a variant's prices" do
-      line_item.price = nil
-      line_item.cost_price = nil
-      line_item.currency = nil
-      line_item.copy_price
-      variant = line_item.variant
-      expect(line_item.price).to eq(variant.price)
-      expect(line_item.cost_price).to eq(variant.cost_price)
-      expect(line_item.currency).to eq(variant.currency)
-    end
-  end
+  describe 'line item creation' do
+    let(:variant) { create :variant }
 
-  # Test for https://github.com/spree/spree/issues/3481
-  context '#copy_tax_category' do
-    it "copies over a variant's tax category" do
-      line_item.tax_category = nil
-      line_item.copy_tax_category
-      expect(line_item.tax_category).to eq(line_item.variant.tax_category)
+    subject(:line_item) { Spree::LineItem.new(variant: variant, order: order) }
+
+    # Tests for https://github.com/spree/spree/issues/3391
+    context 'before validation' do
+      before { line_item.valid? }
+
+      it 'copies the variants price' do
+        expect(line_item.price).to eq(variant.price)
+      end
+
+      it 'copies the variants cost_price' do
+        expect(line_item.cost_price).to eq(variant.cost_price)
+      end
+
+      it 'copies the variants currency' do
+        expect(line_item.currency).to eq(variant.currency)
+      end
+
+      # Test for https://github.com/spree/spree/issues/3481
+      it 'copies the variants tax category' do
+        expect(line_item.tax_category).to eq(line_item.variant.tax_category)
+      end
+    end
+
+    # Specs for https://github.com/solidusio/solidus/pull/522#issuecomment-170668125
+    context "with `#copy_price` defined" do
+      before(:context) do
+        Spree::LineItem.class_eval do
+          def copy_price
+            self.currency = "USD"
+            self.cost_price = 10
+            self.price = 20
+          end
+        end
+      end
+
+      after(:context) do
+        Spree::LineItem.class_eval do
+          remove_method :copy_price
+        end
+      end
+
+      it 'should display a deprecation warning' do
+        expect(ActiveSupport::Deprecation).to receive(:warn)
+        Spree::LineItem.new(variant: variant, order: order)
+      end
+
+      it 'should run the user-defined copy_price method' do
+        expect_any_instance_of(Spree::LineItem).to receive(:copy_price).and_call_original
+        ActiveSupport::Deprecation.silence do
+          Spree::LineItem.new(variant: variant, order: order)
+        end
+      end
     end
   end
 
@@ -123,6 +159,7 @@ describe Spree::LineItem, :type => :model do
 
   describe "#discounted_money" do
     it "should return a money object with the discounted amount" do
+      expect(line_item.discounted_amount).to eq(10.00)
       expect(line_item.discounted_money.to_s).to eq "$10.00"
     end
   end

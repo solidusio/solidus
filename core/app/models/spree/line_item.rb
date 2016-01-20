@@ -1,6 +1,5 @@
 module Spree
   class LineItem < Spree::Base
-    before_validation :invalid_quantity_check
     belongs_to :order, class_name: "Spree::Order", inverse_of: :line_items, touch: true
     belongs_to :variant, -> { with_deleted }, class_name: "Spree::Variant", inverse_of: :line_items
     belongs_to :tax_category, class_name: "Spree::TaxCategory"
@@ -13,8 +12,8 @@ module Spree
     has_many :line_item_actions, dependent: :destroy
     has_many :actions, through: :line_item_actions
 
-    before_validation :copy_price
-    before_validation :copy_tax_category
+    before_validation :normalize_quantity
+    before_validation :set_required_attributes
 
     validates :variant, presence: true
     validates :quantity, numericality: {
@@ -23,15 +22,15 @@ module Spree
       message: Spree.t('validation.must_be_int')
     }
     validates :price, numericality: true
-
     validate :ensure_proper_currency
-    before_destroy :update_inventory
-    before_destroy :destroy_inventory_units
+
+    after_create :update_tax_charge
 
     after_save :update_inventory
     after_save :update_adjustments
 
-    after_create :update_tax_charge
+    before_destroy :update_inventory
+    before_destroy :destroy_inventory_units
 
     delegate :name, :description, :sku, :should_track_inventory?, to: :variant
     # @note This will return the product even if it has been deleted.
@@ -44,24 +43,6 @@ module Spree
 
     self.whitelisted_ransackable_associations = ['variant']
     self.whitelisted_ransackable_attributes = ['variant_id']
-
-    # Sets this line item's price, cost price, and currency from this line
-    # item's variant if they are nil and a variant is present.
-    def copy_price
-      if variant
-        self.price = variant.price if price.nil?
-        self.cost_price = variant.cost_price if cost_price.nil?
-        self.currency = variant.currency if currency.nil?
-      end
-    end
-
-    # Sets this line item's tax category from this line item's variant if a
-    # variant is present.
-    def copy_tax_category
-      if variant
-        self.tax_category = variant.tax_category
-      end
-    end
 
     # @return [BigDecimal] the amount of this line item, which is the line
     #   item's price multiplied by its quantity.
@@ -102,11 +83,6 @@ module Spree
     alias display_total money
     alias display_amount money
 
-    # Sets the quantity to zero if it is nil or less than zero.
-    def invalid_quantity_check
-      self.quantity = 0 if quantity.nil? || quantity < 0
-    end
-
     # @return [Boolean] true when it is possible to supply the required
     #   quantity of stock of this line item's variant
     def sufficient_stock?
@@ -143,35 +119,68 @@ module Spree
     end
 
     private
-      def update_inventory
-        if (changed? || target_shipment.present?) && self.order.has_checkout_step?("delivery")
-          Spree::OrderInventory.new(self.order, self).verify(target_shipment)
-        end
-      end
 
-      def destroy_inventory_units
-        inventory_units.destroy_all
-      end
+    # Sets the quantity to zero if it is nil or less than zero.
+    def normalize_quantity
+      self.quantity = 0 if quantity.nil? || quantity < 0
+    end
 
-      def update_adjustments
-        if quantity_changed?
-          update_tax_charge # Called to ensure pre_tax_amount is updated.
-          recalculate_adjustments
-        end
-      end
+    # Sets tax category, price-related attributes from
+    # its variant if they are nil and a variant is present.
+    def set_required_attributes
+      return unless variant
+      self.tax_category ||= variant.tax_category
+      set_pricing_attributes
+    end
 
-      def recalculate_adjustments
-        Spree::ItemAdjustments.new(self).update
-      end
+    # Set price, cost_price and currency. This method used to be called #copy_price, but actually
+    # did more than just setting the price, hence renamed to #set_pricing_attributes
+    def set_pricing_attributes
+      # If the legacy method #copy_price has been overridden, handle that gracefully
+      return handle_copy_price_override if self.respond_to?(:copy_price)
 
-      def update_tax_charge
-        Spree::TaxRate.adjust(order.tax_zone, [self])
-      end
+      self.currency ||= variant.currency
+      self.cost_price ||= variant.cost_price
+      self.price ||= variant.price
+    end
 
-      def ensure_proper_currency
-        unless currency == order.currency
-          errors.add(:currency, :must_match_order_currency)
-        end
+    def handle_copy_price_override
+      copy_price
+      ActiveSupport::Deprecation.warn 'You have overridden Spree::LineItem#copy_price. ' + \
+        'This method is now called Spree::LineItem#set_pricing_attributes. ' + \
+        'Please adjust your override.',
+        caller
+    end
+
+    def update_inventory
+      if (changed? || target_shipment.present?) && self.order.has_checkout_step?("delivery")
+        Spree::OrderInventory.new(self.order, self).verify(target_shipment)
       end
+    end
+
+    def destroy_inventory_units
+      inventory_units.destroy_all
+    end
+
+    def update_adjustments
+      if quantity_changed?
+        update_tax_charge # Called to ensure pre_tax_amount is updated.
+        recalculate_adjustments
+      end
+    end
+
+    def recalculate_adjustments
+      Spree::ItemAdjustments.new(self).update
+    end
+
+    def update_tax_charge
+      Spree::TaxRate.adjust(order.tax_zone, [self])
+    end
+
+    def ensure_proper_currency
+      unless currency == order.currency
+        errors.add(:currency, :must_match_order_currency)
+      end
+    end
   end
 end
