@@ -360,8 +360,7 @@ describe Spree::TaxRate, :type => :model do
             expect(line_item.adjustments.tax.count).to eq(1)
           end
 
-          # This test fails intermittently - it's a matter of luck
-          xit 'has 4.79 of included tax' do
+          it 'has 4.79 of included tax' do
             expect(line_item.included_tax_total).to eq(4.79)
           end
 
@@ -382,8 +381,8 @@ describe Spree::TaxRate, :type => :model do
             expect(line_item.adjustments.tax.count).to eq(1)
           end
 
-          # Fails intermittently - xit'ed for the time being
-          xit 'has 2.02 of included tax' do
+          it 'has 2.02 of included tax' do
+            pending 'waiting for the MOSS refactoring'
             expect(line_item.included_tax_total).to eq(2.02)
           end
 

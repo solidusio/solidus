@@ -29,83 +29,8 @@ module Spree
 
     scope :by_zone, ->(zone) { where(zone_id: zone) }
 
-    # Gets the array of TaxRates appropriate for the specified order
-    def self.match(order_tax_zone)
-      return [] unless order_tax_zone
-      rates = includes(zone: { zone_members: :zoneable }).load.select do |rate|
-        # Why "potentially"?
-        # Go see the documentation for that method.
-        rate.potentially_applicable?(order_tax_zone)
-      end
-
-      # Imagine with me this scenario:
-      # You are living in Spain and you have a store which ships to France.
-      # Spain is therefore your default tax rate.
-      # When you ship to Spain, you want the Spanish rate to apply.
-      # When you ship to France, you want the French rate to apply.
-      #
-      # Normally, Spree would notice that you have two potentially applicable
-      # tax rates for one particular item.
-      # When you ship to Spain, only the Spanish one will apply.
-      # When you ship to France, you'll see a Spanish refund AND a French tax.
-      # This little bit of code at the end stops the Spanish refund from appearing.
-      #
-      # For further discussion, see https://github.com/spree/spree/issues/4397 and https://github.com/spree/spree/issues/4327.
-
-      remaining_rates = rates.dup
-      rates.each do |rate|
-        if rate.included_in_price?
-          if remaining_rates.any?{|r| r != rate && r.tax_category == rate.tax_category }
-            remaining_rates.delete(rate)
-          end
-        end
-      end
-
-      remaining_rates
-    end
-
-    # Pre-tax amounts must be stored so that we can calculate
-    # correct rate amounts in the future. For example:
-    # https://github.com/spree/spree/issues/4318#issuecomment-34723428
-    def self.store_pre_tax_amount(item, rates)
-      pre_tax_amount = case item
-        when Spree::LineItem then item.discounted_amount
-        when Spree::Shipment then item.discounted_cost
-        end
-
-      included_rates = rates.select(&:included_in_price)
-      if included_rates.any?
-        pre_tax_amount /= (1 + included_rates.map(&:amount).sum)
-      end
-
-      item.update_column(:pre_tax_amount, pre_tax_amount.round(2))
-    end
-
-    # This method is best described by the documentation on #potentially_applicable?
-    def self.adjust(order_tax_zone, items)
-      rates = self.match(order_tax_zone)
-      tax_categories = rates.map(&:tax_category)
-      relevant_items, non_relevant_items = items.partition { |item| tax_categories.include?(item.tax_category) }
-      unless relevant_items.empty?
-        Spree::Adjustment.where(adjustable: relevant_items).tax.destroy_all # using destroy_all to ensure adjustment destroy callback fires.
-      end
-      relevant_items.each do |item|
-        relevant_rates = rates.select { |rate| rate.tax_category == item.tax_category }
-        store_pre_tax_amount(item, relevant_rates)
-        relevant_rates.each do |rate|
-          rate.adjust(order_tax_zone, item)
-        end
-      end
-      non_relevant_items.each do |item|
-        if item.adjustments.tax.present?
-          item.adjustments.tax.destroy_all # using destroy_all to ensure adjustment destroy callback fires.
-          item.update_columns pre_tax_amount: 0
-        end
-      end
-    end
-
-    # Tax rates can *potentially* be applicable to an order.
-    # We do not know if they are/aren't until we attempt to apply these rates to
+    # Finds geographically matching tax rates for an order's tax zone.
+    # We do not know if they are/aren't applicable until we attempt to apply these rates to
     # the items contained within the Order itself.
     # For instance, if a rate passes the criteria outlined in this method,
     # but then has a tax category that doesn't match against any of the line items
@@ -144,11 +69,73 @@ module Spree
     # Under no circumstances should negative adjustments be applied for the Spanish tax rates.
     #
     # Those rates should never come into play at all and only the French rates should apply.
-    def potentially_applicable?(order_tax_zone)
-      # If the rate's zone *contains* the order's tax zone, then it's applicable.
-      self.zone.contains?(order_tax_zone) ||
-      # The rate is a VAT and its zone contains the default zone, then it's applicable.
-      (self.included_in_price? && self.zone.contains?(Spree::Zone.default_tax))
+    def self.match(order_tax_zone)
+      return [] unless order_tax_zone
+      all_rates = includes(zone: { zone_members: :zoneable }).load
+
+      rates_for_order_zone = all_rates.select { |rate| rate.zone.contains?(order_tax_zone) }
+      rates_for_default_zone = all_rates.select { |rate| rate.default_vat? }
+
+      # Imagine with me this scenario:
+      # You are living in Spain and you have a store which ships to France.
+      # Spain is therefore your default tax rate.
+      # When you ship to Spain, you want the Spanish rate to apply.
+      # When you ship to France, you want the French rate to apply.
+      #
+      # Normally, Spree would notice that you have two potentially applicable
+      # tax rates for one particular item.
+      # When you ship to Spain, only the Spanish one will apply.
+      # When you ship to France, you'll see a Spanish refund AND a French tax.
+      # This little bit of code at the end stops the Spanish refund from appearing.
+      #
+      # For further discussion, see https://github.com/spree/spree/issues/4397 and https://github.com/spree/spree/issues/4327.
+
+      order_zone_tax_categories = rates_for_order_zone.map(&:tax_category)
+      rates_for_default_zone.delete_if do |default_rate|
+        order_zone_tax_categories.include?(default_rate.tax_category)
+      end
+
+      (rates_for_order_zone + rates_for_default_zone).uniq
+    end
+
+    # Pre-tax amounts must be stored so that we can calculate
+    # correct rate amounts in the future. For example:
+    # https://github.com/spree/spree/issues/4318#issuecomment-34723428
+    def self.store_pre_tax_amount(item, rates)
+      pre_tax_amount = case item
+        when Spree::LineItem then item.discounted_amount
+        when Spree::Shipment then item.discounted_cost
+        end
+
+      included_rates = rates.select(&:included_in_price)
+      if included_rates.any?
+        pre_tax_amount /= (1 + included_rates.map(&:amount).sum)
+      end
+
+      item.update_column(:pre_tax_amount, pre_tax_amount.round(2))
+    end
+
+    # This method is best described by the documentation on .match
+    def self.adjust(order_tax_zone, items)
+      rates = self.match(order_tax_zone)
+      tax_categories = rates.map(&:tax_category)
+      relevant_items, non_relevant_items = items.partition { |item| tax_categories.include?(item.tax_category) }
+      unless relevant_items.empty?
+        Spree::Adjustment.where(adjustable: relevant_items).tax.destroy_all # using destroy_all to ensure adjustment destroy callback fires.
+      end
+      relevant_items.each do |item|
+        relevant_rates = rates.select { |rate| rate.tax_category == item.tax_category }
+        store_pre_tax_amount(item, relevant_rates)
+        relevant_rates.each do |rate|
+          rate.adjust(order_tax_zone, item)
+        end
+      end
+      non_relevant_items.each do |item|
+        if item.adjustments.tax.present?
+          item.adjustments.tax.destroy_all # using destroy_all to ensure adjustment destroy callback fires.
+          item.update_columns pre_tax_amount: 0
+        end
+      end
     end
 
     # Creates necessary tax adjustments for the order.
@@ -183,6 +170,10 @@ module Spree
 
     def default_zone_or_zone_match?(order_tax_zone)
       Zone.default_tax.try!(:contains?, order_tax_zone) || self.zone.contains?(order_tax_zone)
+    end
+
+    def default_vat?
+      included_in_price && zone.contains?(Spree::Zone.default_tax)
     end
 
     private
