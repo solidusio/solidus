@@ -38,6 +38,9 @@ Style/WordArray:
 Style/ConditionalAssignment:
   Enabled: false
 
+Performance/Count:
+  Enabled: false
+
 Lint/EndAlignment:
   Enabled: false
 
