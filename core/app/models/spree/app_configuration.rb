@@ -17,7 +17,6 @@
 #
 require "spree/core/search/base"
 require "spree/core/search/variant"
-require 'spree/core/stock_configuration'
 
 module Spree
   class AppConfiguration < Preferences::Configuration
