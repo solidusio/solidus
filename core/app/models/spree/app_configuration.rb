@@ -312,7 +312,7 @@ module Spree
     end
 
     def stock
-      Spree::StockConfiguration
+      @stock_configuration ||= Spree::Core::StockConfiguration.new
     end
 
     # all the following can be deprecated when store prefs are no longer supported
