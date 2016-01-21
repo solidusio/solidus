@@ -8,6 +8,15 @@ RSpec.describe 'customer return factory' do
     let(:factory) { :customer_return }
 
     it_behaves_like 'a working factory'
+
+    # Regression test for https://github.com/solidusio/solidus/pull/697
+    it "creates only one of dependent records" do
+      create(:customer_return, line_items_count: 2)
+      aggregate_failures "items created" do
+        expect(Spree::Order.count).to eq(1)
+        expect(Spree::ReturnAuthorization.count).to eq(1)
+      end
+    end
   end
 
   describe 'customer return with accepted items' do
