@@ -131,4 +131,69 @@ describe Spree::ShippingMethod, type: :model do
       end
     end
   end
+
+  describe ".available_in_stock_location" do
+    let!(:stock_location) { create :stock_location }
+    let!(:other_stock_location) { create :stock_location }
+
+    subject { described_class.available_in_stock_location(stock_location) }
+
+    context "when available_to_all" do
+      let!(:shipping_method) { create(:shipping_method, available_to_all: true) }
+
+      it "returns the shipping_method" do
+        is_expected.to eq [shipping_method]
+      end
+    end
+
+    context "when in stock location" do
+      let!(:shipping_method) { create(:shipping_method, available_to_all: false, stock_locations: [stock_location]) }
+
+      it "returns the shipping_method" do
+        is_expected.to eq [shipping_method]
+      end
+    end
+
+    context "when available_to_all and in stock location" do
+      let!(:shipping_method) { create(:shipping_method, available_to_all: true, stock_locations: [stock_location]) }
+
+      it "returns the shipping_method" do
+        is_expected.to eq [shipping_method]
+      end
+    end
+
+    context "when in no stock locations" do
+      let!(:shipping_method) { create(:shipping_method, available_to_all: false) }
+
+      it "returns no results" do
+        is_expected.to be_empty
+      end
+    end
+
+    context "when in another stock location" do
+      let!(:shipping_method) { create(:shipping_method, available_to_all: false, stock_locations: [other_stock_location]) }
+
+      it "returns no results" do
+        is_expected.to be_empty
+      end
+    end
+
+    context "when available_to_all and in another stock location" do
+      let!(:shipping_method) { create(:shipping_method, available_to_all: true, stock_locations: [other_stock_location]) }
+
+      it "returns the shipping_method" do
+        is_expected.to eq [shipping_method]
+      end
+    end
+
+    context "when multiple shipping methods match" do
+      let!(:shipping_method1) { create(:shipping_method, available_to_all: true, stock_locations: [other_stock_location]) }
+      let!(:shipping_method2) { create(:shipping_method, available_to_all: false, stock_locations: [stock_location]) }
+      let!(:shipping_method3) { create(:shipping_method, available_to_all: false, stock_locations: [other_stock_location]) }
+
+      it "returns both matching shipping_methods" do
+        is_expected.to match_array([shipping_method1, shipping_method2])
+      end
+    end
+  end
 end
