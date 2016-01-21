@@ -1,16 +1,21 @@
 require 'spec_helper'
 
-RSpec.describe Spree::StockConfiguration do
-  before(:all) { @estimator_class = described_class.estimator_class.to_s }
-  after(:all)  { described_class.estimator_class = @estimator_class }
+RSpec.describe Spree::Core::StockConfiguration do
+  describe '#estimator_class' do
+    let(:stock_configuration) { described_class.new }
+    subject { stock_configuration.estimator_class }
 
-  describe '.estimator_class' do
-    subject { described_class.estimator_class }
-    let(:foo) { Struct.new :foo }
+    it "returns Spree::Stock::Estimator" do
+      is_expected.to be ::Spree::Stock::Estimator
+    end
 
-    before { described_class.estimator_class = 'Foo' }
-    before { Foo = foo }
+    context "with another constant name assiged" do
+      MyEstimator = Class.new
+      before { stock_configuration.estimator_class = MyEstimator.to_s }
 
-    it { is_expected.to eq foo }
+      it "returns the constant" do
+        is_expected.to be MyEstimator
+      end
+    end
   end
 end
