@@ -92,14 +92,6 @@ module Spree
         expect(json_response['taxons'].count).to eq 1
       end
 
-      it "gets all taxons in JSTree form" do
-        api_get :jstree, :taxonomy_id => taxonomy.id, :id => taxon.id
-        response = json_response.first
-        expect(response["data"]).to eq(taxon2.name)
-        expect(response["attr"]).to eq({ "name" => taxon2.name, "id" => taxon2.id})
-        expect(response["state"]).to eq("closed")
-      end
-
       it "can learn how to create a new taxon" do
         api_get :new, :taxonomy_id => taxonomy.id
         expect(json_response["attributes"]).to eq(attributes.map(&:to_s))

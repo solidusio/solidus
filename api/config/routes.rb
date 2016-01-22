@@ -91,14 +91,7 @@ Spree::Core::Engine.add_routes do
     resources :states, only: [:index, :show]
 
     resources :taxonomies do
-      member do
-        get :jstree
-      end
-      resources :taxons do
-        member do
-          get :jstree
-        end
-      end
+      resources :taxons
     end
 
     resources :taxons, only: [:index]
