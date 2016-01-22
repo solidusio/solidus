@@ -1,11 +1,12 @@
 module Spree
-  module StockConfiguration
-    mattr_accessor :estimator_class do
-      '::Spree::Stock::Estimator'
-    end
+  module Core
+    class StockConfiguration
+      attr_writer :estimator_class
 
-    def self.estimator_class
-      @@estimator_class.constantize
+      def estimator_class
+        @estimator_class ||= '::Spree::Stock::Estimator'
+        @estimator_class.constantize
+      end
     end
   end
 end

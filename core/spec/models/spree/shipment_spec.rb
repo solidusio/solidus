@@ -208,7 +208,7 @@ describe Spree::Shipment, type: :model do
       end
 
       it 'uses the pluggable estimator class' do
-        expect(Spree::StockConfiguration).to receive(:estimator_class).and_call_original
+        expect(Spree::Config.stock).to receive(:estimator_class).and_call_original
         shipment.refresh_rates
       end
 
