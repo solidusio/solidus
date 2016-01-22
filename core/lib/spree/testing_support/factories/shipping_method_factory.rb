@@ -16,6 +16,8 @@ FactoryGirl.define do
 
     name 'UPS Ground'
     code 'UPS_GROUND'
+    carrier 'UPS'
+    service_level '1DAYGROUND'
 
     calculator { |s| s.association(:shipping_calculator, strategy: :build, preferred_amount: s.cost) }
 
