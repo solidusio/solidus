@@ -34,23 +34,32 @@ module Spree::Preferences
     # Storage method for preferences. Default is {ScopedStore}
     attr_writer :preference_store
     def preference_store
-      @preference_store ||= ScopedStore.new(self.class.name.underscore)
+      @preference_store ||= preference_db_store
+    end
+
+    # @!attribute preference_db_store
+    # Storage method for database preferences. Default is {ScopedStore}
+    attr_writer :preference_db_store
+    def preference_db_store
+      @preference_db_store ||= ScopedStore.new(self.class.name.underscore)
     end
 
     # Replace the default legacy preference store, which stores preferences in
     # the spree_preferences table, with a plain in memory hash. This is faster
     # and less error prone.
-    #
-    # This will set all preferences to their default values.
-    #
-    # These won't be loaded from or persisted to the database, so any desired
-    # changes must be made each time the application is started, such as in an
-    # initializer.
+    # This will persist to database, but only reload when initialize.
+    # So you can't update from rails console and see change take effect
+    # in your rails server immediately.
     def use_static_preferences!
-      @preference_store = default_preferences
+      static_preferences = {}
+      default_preferences.each do |key, value|
+        static_preferences[key] = db_preferences.fetch(key) {} || value
+      end
+      @preference_store = static_preferences
     end
 
     alias_method :preferences, :preference_store
+    alias_method :db_preferences, :preference_db_store
 
     # Reset all preferences to their default values.
     def reset
