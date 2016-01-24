@@ -7,8 +7,8 @@ describe Spree::TaxRate, type: :model do
     context "when zone is nil" do
       let(:zone) { nil }
 
-      it "raises an exception" do
-        expect { rates_for_zone }.to raise_error(NameError)
+      it "should return an empty array" do
+        expect(subject).to eq([])
       end
     end
 
