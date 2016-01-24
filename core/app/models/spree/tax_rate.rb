@@ -27,9 +27,7 @@ module Spree
     validates :tax_category_id, presence: true
     validates_with DefaultTaxZoneValidator
 
-    scope :by_zone, ->(zone) { where(zone_id: zone) }
-
-    # Finds geographically matching tax rates for an order's tax zone.
+    # Finds geographically matching tax rates for a tax zone.
     # We do not know if they are/aren't applicable until we attempt to apply these rates to
     # the items contained within the Order itself.
     # For instance, if a rate passes the criteria outlined in this method,
@@ -69,6 +67,8 @@ module Spree
     # Under no circumstances should negative adjustments be applied for the Spanish tax rates.
     #
     # Those rates should never come into play at all and only the French rates should apply.
+    scope :for_zone, ->(zone) { where(zone_id: Spree::Zone.with_shared_members(zone).pluck(:id)) }
+
     def self.match(order_tax_zone)
       return [] unless order_tax_zone
       all_rates = includes(zone: { zone_members: :zoneable }).load
