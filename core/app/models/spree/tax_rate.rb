@@ -70,34 +70,6 @@ module Spree
     scope :for_zone, ->(zone) { where(zone_id: Spree::Zone.with_shared_members(zone).pluck(:id)) }
     scope :included_in_price, -> { where(included_in_price: true) }
 
-    def self.match(order_tax_zone)
-      return [] unless order_tax_zone
-
-      rates_for_order_zone = for_zone(order_tax_zone)
-      rates_for_default_zone = for_zone(Spree::Zone.default_tax).included_in_price
-
-      # Imagine with me this scenario:
-      # You are living in Spain and you have a store which ships to France.
-      # Spain is therefore your default tax rate.
-      # When you ship to Spain, you want the Spanish rate to apply.
-      # When you ship to France, you want the French rate to apply.
-      #
-      # Normally, Spree would notice that you have two potentially applicable
-      # tax rates for one particular item.
-      # When you ship to Spain, only the Spanish one will apply.
-      # When you ship to France, you'll see a Spanish refund AND a French tax.
-      # This little bit of code at the end stops the Spanish refund from appearing.
-      #
-      # For further discussion, see https://github.com/spree/spree/issues/4397 and https://github.com/spree/spree/issues/4327.
-
-      order_zone_tax_categories = rates_for_order_zone.map(&:tax_category)
-      rates_for_default_zone.to_a.delete_if do |default_rate|
-        order_zone_tax_categories.include?(default_rate.tax_category)
-      end
-
-      (rates_for_order_zone + rates_for_default_zone).uniq
-    end
-
     # Pre-tax amounts must be stored so that we can calculate
     # correct rate amounts in the future. For example:
     # https://github.com/spree/spree/issues/4318#issuecomment-34723428

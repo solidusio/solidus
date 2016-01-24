@@ -25,7 +25,7 @@ module Spree
       private
 
       def rates_for_item
-        @rates_for_item ||= rates_for_order_zone.select { |rate| rate.tax_category == item.tax_category }
+        @rates_for_item ||= applicable_rates.select { |rate| rate.tax_category == item.tax_category }
       end
     end
   end

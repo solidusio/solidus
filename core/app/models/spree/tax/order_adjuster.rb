@@ -13,7 +13,7 @@ module Spree
         return unless order_tax_zone
 
         (order.line_items + order.shipments).each do |item|
-          ItemAdjuster.new(item, rates_for_order_zone: rates_for_order_zone).adjust!
+          ItemAdjuster.new(item, rates_for_order_zone: applicable_rates).adjust!
         end
       end
     end

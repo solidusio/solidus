@@ -106,7 +106,8 @@ describe Spree::TaxRate, type: :model do
       let(:line_items) { [line_item] }
 
       before do
-        allow(Spree::TaxRate).to receive_messages match: [rate_1, rate_2]
+        allow(Spree::TaxRate).to receive(:for_zone).with(zone).and_return([rate_1, rate_2])
+        allow(Spree::TaxRate).to receive(:for_zone).with(Spree::Zone.default_tax).and_return([])
         allow(order).to receive(:line_items).and_return([line_item])
       end
 
@@ -128,7 +129,8 @@ describe Spree::TaxRate, type: :model do
       end
 
       before do
-        allow(Spree::TaxRate).to receive_messages match: [rate_1, rate_2]
+        allow(Spree::TaxRate).to receive(:for_zone).with(zone).and_return([rate_1, rate_2])
+        allow(Spree::TaxRate).to receive(:for_zone).with(Spree::Zone.default_tax).and_return([])
         allow(order).to receive(:shipments).and_return([shipment])
       end
 

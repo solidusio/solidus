@@ -20,7 +20,8 @@ RSpec.describe Spree::Tax::OrderAdjuster do
 
     before do
       expect(order).to receive(:tax_zone).at_least(:once).and_return(zone)
-      expect(Spree::TaxRate).to receive(:match).and_return(rates_for_order_zone)
+      expect(Spree::TaxRate).to receive(:for_zone).with(zone).and_return(rates_for_order_zone)
+      expect(Spree::TaxRate).to receive(:for_zone).with(Spree::Zone.default_tax).and_return([])
     end
 
     it 'calls the item adjuster with all line items' do

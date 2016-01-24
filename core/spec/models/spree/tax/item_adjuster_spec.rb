@@ -44,7 +44,8 @@ RSpec.describe Spree::Tax::ItemAdjuster do
       before do
         expect(item).to receive(:update_column)
 
-        expect(Spree::TaxRate).to receive(:match).with(tax_zone).and_return(rates_for_order_zone)
+        expect(Spree::TaxRate).to receive(:for_zone).with(tax_zone).and_return(rates_for_order_zone)
+        expect(Spree::TaxRate).to receive(:for_zone).with(Spree::Zone.default_tax).and_return([])
       end
 
       context 'when there are no matching rates' do
