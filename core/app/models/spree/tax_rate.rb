@@ -68,13 +68,13 @@ module Spree
     #
     # Those rates should never come into play at all and only the French rates should apply.
     scope :for_zone, ->(zone) { where(zone_id: Spree::Zone.with_shared_members(zone).pluck(:id)) }
+    scope :included_in_price, -> { where(included_in_price: true) }
 
     def self.match(order_tax_zone)
       return [] unless order_tax_zone
-      all_rates = includes(zone: { zone_members: :zoneable }).load
 
-      rates_for_order_zone = all_rates.select { |rate| rate.zone.contains?(order_tax_zone) }
-      rates_for_default_zone = all_rates.select(&:default_vat?)
+      rates_for_order_zone = for_zone(order_tax_zone)
+      rates_for_default_zone = for_zone(Spree::Zone.default_tax).included_in_price
 
       # Imagine with me this scenario:
       # You are living in Spain and you have a store which ships to France.
@@ -91,7 +91,7 @@ module Spree
       # For further discussion, see https://github.com/spree/spree/issues/4397 and https://github.com/spree/spree/issues/4327.
 
       order_zone_tax_categories = rates_for_order_zone.map(&:tax_category)
-      rates_for_default_zone.delete_if do |default_rate|
+      rates_for_default_zone.to_a.delete_if do |default_rate|
         order_zone_tax_categories.include?(default_rate.tax_category)
       end
 
@@ -147,10 +147,6 @@ module Spree
 
     def default_zone_or_zone_match?(order_tax_zone)
       Zone.default_tax.try!(:contains?, order_tax_zone) || zone.contains?(order_tax_zone)
-    end
-
-    def default_vat?
-      included_in_price && zone.contains?(Spree::Zone.default_tax)
     end
 
     private
