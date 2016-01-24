@@ -3,6 +3,8 @@ module Spree
     class ItemAdjuster
       attr_reader :item, :order
 
+      include TaxHelpers
+
       def initialize(item, options = {})
         @item = item
         @order = @item.order
@@ -24,14 +26,6 @@ module Spree
 
       def rates_for_item
         @rates_for_item ||= rates_for_order_zone.select { |rate| rate.tax_category == item.tax_category }
-      end
-
-      def rates_for_order_zone
-        @rates_for_order_zone ||= Spree::TaxRate.match(order_tax_zone)
-      end
-
-      def order_tax_zone
-        @order_tax_zone ||= order.tax_zone
       end
     end
   end
