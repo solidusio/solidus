@@ -321,12 +321,10 @@ describe Spree::TaxRate, type: :model do
           end
 
           it 'has 2.02 of included tax' do
-            pending 'waiting for the MOSS refactoring'
             expect(line_item.included_tax_total).to eq(2.02)
           end
 
           it 'has a constant amount pre tax' do
-            pending 'but it changes to 8.06, because Spree thinks both VATs apply'
             expect(line_item.pre_tax_amount).to eq(8.40)
           end
         end

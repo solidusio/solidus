@@ -3,38 +3,30 @@ module Spree
     module TaxHelpers
       private
 
-      # Imagine with me this scenario:
-      # You are living in Spain and you have a store which ships to France.
-      # Spain is therefore your default tax rate.
-      # When you ship to Spain, you want the Spanish rate to apply.
-      # When you ship to France, you want the French rate to apply.
-      #
-      # Normally, Spree would notice that you have two potentially applicable
-      # tax rates for one particular item.
-      # When you ship to Spain, only the Spanish one will apply.
-      # When you ship to France, you'll see a Spanish refund AND a French tax.
-      # This little bit of code at the end stops the Spanish refund from appearing.
-      #
-      # For further discussion, see https://github.com/spree/spree/issues/4397 and https://github.com/spree/spree/issues/4327.
-      def applicable_rates
-        order_zone_tax_categories = rates_for_order_zone.map(&:tax_category)
-        default_rates_with_unmatched_tax_category = rates_for_default_zone.to_a.delete_if do |default_rate|
-          order_zone_tax_categories.include?(default_rate.tax_category)
-        end
-
-        (rates_for_order_zone + default_rates_with_unmatched_tax_category).uniq
-      end
-
       def rates_for_order_zone
         @rates_for_order_zone ||= Spree::TaxRate.for_zone(order_tax_zone)
       end
 
       def rates_for_default_zone
-        @rates_for_default_zone ||= Spree::TaxRate.for_zone(Spree::Zone.default_tax)
+        @rates_for_default_zone ||= Spree::TaxRate.for_zone(default_tax_zone)
       end
 
       def order_tax_zone
         @order_tax_zone ||= order.tax_zone
+      end
+
+      def default_tax_zone
+        # Memoizing values that are potentially `false` can not use the `||=` shorthand
+        @default_tax_zone.nil? ? Spree::Zone.default_tax.presence : @default_tax_zone
+      end
+
+      def outside_default_vat_zone?
+        # Memoizing booleans can not use the `||=` shorthand
+        if @outside_default_vat_zone.nil?
+          @outside_default_vat_zone = default_tax_zone && !default_tax_zone.contains?(order_tax_zone)
+        else
+          @outside_default_vat_zone
+        end
       end
     end
   end
