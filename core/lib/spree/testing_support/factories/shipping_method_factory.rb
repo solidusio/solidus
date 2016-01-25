@@ -3,6 +3,8 @@ FactoryGirl.define do
     zones { |a| [Spree::Zone.global] }
     name 'UPS Ground'
     code 'UPS_GROUND'
+    carrier 'UPS'
+    service_level '1DAYGROUND'
 
     before(:create) do |shipping_method, evaluator|
       if shipping_method.shipping_categories.empty?

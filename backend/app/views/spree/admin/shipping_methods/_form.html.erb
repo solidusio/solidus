@@ -33,6 +33,24 @@
     </div>
   </div>
 
+  <div class="alpha omega twelve columns">
+    <div class="alpha six columns">
+      <%= f.field_container :carrier do %>
+        <%= f.label :carrier %><br />
+        <%= f.text_field :carrier, :class => 'fullwidth', :label => false  %>
+        <%= error_message_on :shipping_method, :carrier %>
+      <% end %>
+    </div>
+
+    <div class="omega six columns">
+      <%= f.field_container :service_level do %>
+        <%= f.label :service_level %><br />
+        <%= f.text_field :service_level, :class => 'fullwidth', :label => false  %>
+        <%= error_message_on :shipping_method, :service_level %>
+      <% end %>
+    </div>
+  </div>
+
   <div data-hook="admin_shipping_method_form_tracking_url_field" class="alpha twelve columns">
     <%= f.field_container :tracking_url do %>
       <%= f.label :tracking_url, Spree.t(:tracking_url) %><br />
