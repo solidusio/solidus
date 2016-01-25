@@ -1,4 +1,5 @@
 require 'spree/testing_support/sequences'
+require 'spree/testing_support/factories/country_factory'
 
 FactoryGirl.define do
   factory :global_zone, class: Spree::Zone do
