@@ -603,17 +603,30 @@ describe Spree::Shipment, type: :model do
   end
 
   context "#tracking_url" do
-    subject do
-      shipment.tracking_url
+    subject { shipment.tracking_url }
+
+    context "when tracking has not yet been set" do
+      it { is_expected.to be nil }
     end
 
-    before do
-      shipping_method.update!(tracking_url: "https://example.com/:tracking")
-      shipment.tracking = '1Z12345'
+    context "when tracking has been set, but a shipping method is not present" do
+      before do
+        shipment.tracking = "12345"
+        shipment.shipping_rates.clear
+      end
+
+      it { is_expected.to be nil }
     end
 
-    it "uses shipping method to determine url" do
-      is_expected.to eq("https://example.com/1Z12345")
+    context "when tracking has been set and a shipping method exists" do
+      before do
+        shipment.tracking = "12345"
+        shipment.shipping_method.update(tracking_url: "https://example.com/:tracking")
+      end
+
+      it "builds the tracking url with the shipping method" do
+        expect(subject).to eql("https://example.com/12345")
+      end
     end
   end
 
