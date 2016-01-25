@@ -63,6 +63,10 @@ module Spree
       delegate :"#{attr}", :"#{attr}=", to: :find_or_build_master
     end
 
+    def price
+      master.price || Spree::Price.unscoped { master.price }
+    end
+
     delegate :display_amount, :display_price, :has_default_price?, to: :find_or_build_master
 
     delegate :images, to: :master, prefix: true
