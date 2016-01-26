@@ -19,6 +19,7 @@ describe Spree::Address, :type => :model do
   context "validation" do
 
     let(:country) { mock_model(Spree::Country, :states => [state], :states_required => true) }
+    let(:country_without_states) { mock_model(Spree::Country, :states_required => false) }
     let(:state) { stub_model(Spree::State, :name => 'maryland', :abbr => 'md') }
     let(:address) { build(:address, :country => country) }
 
@@ -30,10 +31,18 @@ describe Spree::Address, :type => :model do
       before do
         Spree::Config.address_requires_state = false
       end
+
       it "address_requires_state preference is false" do
         address.state = nil
         address.state_name = nil
         expect(address).to be_valid
+      end
+
+      it "removes the state if it doens't belong to the country" do
+        address.state = state        
+        address.country = country_without_states
+        address.save
+        expect(address.state).to be_nil
       end
     end
 
