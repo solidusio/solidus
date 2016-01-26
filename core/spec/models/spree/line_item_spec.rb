@@ -4,6 +4,27 @@ describe Spree::LineItem, type: :model do
   let(:order) { create :order_with_line_items, line_items_count: 1 }
   let(:line_item) { order.line_items.first }
 
+  describe 'initial_price' do
+    it 'is available' do
+      expect(line_item).to respond_to(:initial_price)
+    end
+
+    it 'returns a BigDecimal' do
+      expect(line_item.initial_price).to be_a(BigDecimal)
+    end
+
+    it 'is equal to the initial price' do
+      expect(line_item.initial_price).to eq(line_item.price)
+    end
+
+    it 'does not change even if the price is modified' do
+      new_item = create(:line_item, price: 15)
+      expect(new_item.initial_price).to eq(15)
+      new_item.update(price: 10)
+      expect(new_item.initial_price).to eq(15)
+    end
+  end
+
   context '#destroy' do
     it "fetches deleted products" do
       line_item.product.destroy

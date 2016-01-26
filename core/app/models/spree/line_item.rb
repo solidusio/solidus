@@ -141,6 +141,7 @@ module Spree
       self.currency ||= variant.currency
       self.cost_price ||= variant.cost_price
       self.price ||= variant.price
+      self.initial_price ||= price
     end
 
     def handle_copy_price_override
