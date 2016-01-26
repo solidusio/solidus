@@ -269,6 +269,8 @@ module Spree
     end
 
     def tracking_url
+      return nil unless tracking && shipping_method
+
       @tracking_url ||= shipping_method.build_tracking_url(tracking)
     end
 
