@@ -14,12 +14,10 @@ describe Spree::Promotion::Actions::CreateAdjustment, :type => :model do
       allow(action).to receive_messages(:promotion => promotion)
     end
 
-    # Regression test for https://github.com/spree/spree/issues/3966
-    it "does not apply an adjustment if the amount is 0" do
+    it "does apply an adjustment if the amount is 0" do
       action.calculator.preferred_amount = 0
       action.perform(payload)
-      expect(promotion.usage_count).to eq(0)
-      expect(order.adjustments.count).to eq(0)
+      expect(order.adjustments.count).to eq(1)
     end
 
     it "should create a discount with correct negative amount" do
