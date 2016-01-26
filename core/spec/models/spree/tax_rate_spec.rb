@@ -312,7 +312,6 @@ describe Spree::TaxRate, type: :model do
           let(:variant) { download }
 
           it 'still has an adjusted price for romania' do
-            pending "waiting for the MOSS refactoring"
             expect(line_item.price).to eq(10.42)
           end
 
@@ -338,7 +337,6 @@ describe Spree::TaxRate, type: :model do
           let(:variant) { book }
 
           it 'should sell at the net price' do
-            pending "Prices have to be adjusted"
             expect(line_item.price).to eq(18.69)
           end
 
@@ -347,7 +345,6 @@ describe Spree::TaxRate, type: :model do
           end
 
           it 'has no tax adjustments' do
-            pending "Right now it gets a refund"
             expect(line_item.adjustments.tax.count).to eq(0)
           end
 
@@ -356,7 +353,6 @@ describe Spree::TaxRate, type: :model do
           end
 
           it 'has no additional tax' do
-            pending 'but there is a refund, still'
             expect(line_item.additional_tax_total).to eq(0)
           end
 
@@ -369,12 +365,10 @@ describe Spree::TaxRate, type: :model do
           let(:variant) { sweater }
 
           it 'should sell at the net price' do
-            pending 'but prices are not adjusted according to the zone yet'
             expect(line_item.price).to eq(25.21)
           end
 
           it 'has no tax adjustments' do
-            pending 'but it has a refund'
             expect(line_item.adjustments.tax.count).to eq(0)
           end
 
@@ -383,7 +377,6 @@ describe Spree::TaxRate, type: :model do
           end
 
           it 'has no additional tax' do
-            pending 'but it has a refund for included taxes wtf'
             expect(line_item.additional_tax_total).to eq(0)
           end
 
@@ -396,12 +389,10 @@ describe Spree::TaxRate, type: :model do
           let(:variant) { download }
 
           it 'should sell at the net price' do
-            pending 'but prices are not adjusted yet'
             expect(line_item.price).to eq(8.40)
           end
 
           it 'has no tax adjustments' do
-            pending 'but a refund is created'
             expect(line_item.adjustments.tax.count).to eq(0)
           end
 
@@ -410,7 +401,6 @@ describe Spree::TaxRate, type: :model do
           end
 
           it 'has no additional tax' do
-            pending 'but an tax refund that disguises as additional tax is created'
             expect(line_item.additional_tax_total).to eq(0)
           end
 
