@@ -20,7 +20,6 @@ module Spree
     validate :must_have_shipped_units, on: :create
     validate :no_previously_exchanged_inventory_units, on: :create
 
-
     # These are called prior to generating expedited exchanges shipments.
     # Should respond to a "call" method that takes the list of return items
     class_attribute :pre_expedited_exchange_hooks
@@ -32,7 +31,6 @@ module Spree
       event :cancel do
         transition to: :canceled, from: :authorized, if: lambda { |return_authorization| return_authorization.can_cancel_return_items? }
       end
-
     end
 
     extend DisplayMoney
@@ -62,49 +60,48 @@ module Spree
 
     private
 
-      def must_have_shipped_units
-        if order.nil? || order.inventory_units.shipped.none?
-          errors.add(:order, Spree.t(:has_no_shipped_units))
-        end
+    def must_have_shipped_units
+      if order.nil? || order.inventory_units.shipped.none?
+        errors.add(:order, Spree.t(:has_no_shipped_units))
       end
+    end
 
-      def generate_number
-        self.number ||= loop do
-          random = "RA#{Array.new(9){rand(9)}.join}"
-          break random unless self.class.exists?(number: random)
-        end
+    def generate_number
+      self.number ||= loop do
+        random = "RA#{Array.new(9){ rand(9) }.join}"
+        break random unless self.class.exists?(number: random)
       end
+    end
 
-      def no_previously_exchanged_inventory_units
-        if return_items.map(&:inventory_unit).any?(&:exchange_requested?)
-          errors.add(:base, Spree.t(:return_items_cannot_be_created_for_inventory_units_that_are_already_awaiting_exchange))
-        end
+    def no_previously_exchanged_inventory_units
+      if return_items.map(&:inventory_unit).any?(&:exchange_requested?)
+        errors.add(:base, Spree.t(:return_items_cannot_be_created_for_inventory_units_that_are_already_awaiting_exchange))
       end
+    end
 
-      def cancel_return_items
-        return_items.each { |item| item.cancel! if item.can_cancel? }
+    def cancel_return_items
+      return_items.each { |item| item.cancel! if item.can_cancel? }
+    end
+
+    def generate_expedited_exchange_reimbursements
+      return unless Spree::Config[:expedited_exchanges]
+
+      items_to_exchange = return_items.select(&:exchange_required?)
+      items_to_exchange.each(&:attempt_accept)
+      items_to_exchange.select!(&:accepted?)
+
+      return if items_to_exchange.blank?
+
+      pre_expedited_exchange_hooks.each { |h| h.call items_to_exchange }
+
+      reimbursement = Reimbursement.new(return_items: items_to_exchange, order: order)
+
+      if reimbursement.save
+        reimbursement.perform!
+      else
+        errors.add(:base, reimbursement.errors.full_messages)
+        raise ActiveRecord::RecordInvalid.new(self)
       end
-
-      def generate_expedited_exchange_reimbursements
-        return unless Spree::Config[:expedited_exchanges]
-
-        items_to_exchange = return_items.select(&:exchange_required?)
-        items_to_exchange.each(&:attempt_accept)
-        items_to_exchange.select!(&:accepted?)
-
-        return if items_to_exchange.blank?
-
-        pre_expedited_exchange_hooks.each { |h| h.call items_to_exchange }
-
-        reimbursement = Reimbursement.new(return_items: items_to_exchange, order: order)
-
-        if reimbursement.save
-          reimbursement.perform!
-        else
-          errors.add(:base, reimbursement.errors.full_messages)
-          raise ActiveRecord::RecordInvalid.new(self)
-        end
-
-      end
+    end
   end
 end

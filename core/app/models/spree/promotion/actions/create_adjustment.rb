@@ -36,7 +36,7 @@ module Spree
         # Ensure a negative amount which does not exceed the sum of the order's
         # item_total and ship_total
         def compute_amount(calculable)
-          amount = self.calculator.compute(calculable).to_f.abs
+          amount = calculator.compute(calculable).to_f.abs
           [(calculable.item_total + calculable.ship_total), amount].min * -1
         end
 
@@ -49,11 +49,11 @@ module Spree
         # Receives an adjustment +source+ (here a PromotionAction object) and tells
         # if the order has adjustments from that already
         def promotion_credit_exists?(adjustable)
-          self.adjustments.where(adjustable_id: adjustable.id).exists?
+          adjustments.where(adjustable_id: adjustable.id).exists?
         end
 
         def ensure_action_has_calculator
-          return if self.calculator
+          return if calculator
           self.calculator = Calculator::FlatPercentItemTotal.new
         end
       end

@@ -1,4 +1,5 @@
 #!/usr/bin/env ruby
+# frozen_string_literal: true
 
 require 'pathname'
 
@@ -31,7 +32,7 @@ class Project
   #   otherwise
   def install
     chdir do
-      bundle_check or bundle_install or fail 'Cannot finish gem installation'
+      bundle_check || bundle_install || fail('Cannot finish gem installation')
     end
     self
   end
@@ -47,7 +48,7 @@ class Project
     end
   end
 
-private
+  private
 
   # Check if current bundle is already usable
   #
@@ -74,7 +75,7 @@ private
   #
   # @return [undefined]
   def setup_test_app
-    system(%w[bundle exec rake test_app]) or fail 'Failed to setup the test app'
+    system(%w[bundle exec rake test_app]) || fail('Failed to setup the test app')
   end
 
   # Run tests for subproject
@@ -87,7 +88,7 @@ private
 
   def rspec_arguments
     args = []
-    args += %W[--format documentation --profile 10]
+    args += %w[--format documentation --profile 10]
     if report_dir = ENV['CIRCLE_TEST_REPORTS']
       args += %W[-r rspec_junit_formatter --format RspecJunitFormatter -o #{report_dir}/rspec/junit.xml]
     end

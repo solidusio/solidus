@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe Spree::Variant, :type => :model do
+describe Spree::Variant, type: :model do
   let!(:variant) { create(:variant) }
 
   it_behaves_like 'default_price'
@@ -57,7 +57,7 @@ describe Spree::Variant, :type => :model do
   context "product has other variants" do
     describe "option value accessors" do
       before {
-        @multi_variant = FactoryGirl.create :variant, :product => variant.product
+        @multi_variant = FactoryGirl.create :variant, product: variant.product
         variant.product.reload
       }
 
@@ -89,7 +89,7 @@ describe Spree::Variant, :type => :model do
     context "product has other variants" do
       describe "option value accessors" do
         before {
-          @multi_variant = create(:variant, :product => variant.product)
+          @multi_variant = create(:variant, product: variant.product)
           variant.product.reload
         }
 
@@ -167,9 +167,9 @@ describe Spree::Variant, :type => :model do
   context "#default_price" do
     context "when multiple prices are present in addition to a default price" do
       before do
-        variant.prices << create(:price, :variant => variant, :currency => "USD", :amount => 12.12, :is_default => false)
-        variant.prices << create(:price, :variant => variant, :currency => "EUR", :amount => 29.99)
-        variant.prices << create(:price, :variant => variant, :currency => "EUR", :amount => 10.00, :is_default => false)
+        variant.prices << create(:price, variant: variant, currency: "USD", amount: 12.12, is_default: false)
+        variant.prices << create(:price, variant: variant, currency: "EUR", amount: 29.99)
+        variant.prices << create(:price, variant: variant, currency: "EUR", amount: 10.00, is_default: false)
         variant.reload
       end
 
@@ -186,7 +186,7 @@ describe Spree::Variant, :type => :model do
     context "when adding multiple prices" do
       it "it can reassign a default price" do
         expect(variant.default_price.amount).to eq(19.99)
-        variant.prices << create(:price, :variant => variant, :currency => "USD", :amount => 12.12)
+        variant.prices << create(:price, variant: variant, currency: "USD", amount: 12.12)
         expect(variant.reload.default_price.amount).to eq(12.12)
       end
     end
@@ -194,7 +194,7 @@ describe Spree::Variant, :type => :model do
 
   describe '.price_in' do
     before do
-      variant.prices << create(:price, :variant => variant, :currency => "EUR", :amount => 33.33)
+      variant.prices << create(:price, variant: variant, currency: "EUR", amount: 33.33)
     end
     subject { variant.price_in(currency).display_amount }
 
@@ -225,7 +225,7 @@ describe Spree::Variant, :type => :model do
 
   describe '.amount_in' do
     before do
-      variant.prices << create(:price, :variant => variant, :currency => "EUR", :amount => 33.33)
+      variant.prices << create(:price, variant: variant, currency: "EUR", amount: 33.33)
     end
 
     subject { variant.amount_in(currency) }
@@ -262,14 +262,13 @@ describe Spree::Variant, :type => :model do
 
     before do
       # Order bar than foo
-      variant.option_values << create(:option_value, {name: 'Foo', presentation: 'Foo', option_type: create(:option_type, position: 2, name: 'Foo Type', presentation: 'Foo Type')})
-      variant.option_values << create(:option_value, {name: 'Bar', presentation: 'Bar', option_type: create(:option_type, position: 1, name: 'Bar Type', presentation: 'Bar Type')})
+      variant.option_values << create(:option_value, { name: 'Foo', presentation: 'Foo', option_type: create(:option_type, position: 2, name: 'Foo Type', presentation: 'Foo Type') })
+      variant.option_values << create(:option_value, { name: 'Bar', presentation: 'Bar', option_type: create(:option_type, position: 1, name: 'Bar Type', presentation: 'Bar Type') })
     end
 
     it 'should order by bar than foo' do
       expect(variant.options_text).to eql 'Bar Type: Bar, Foo Type: Foo'
     end
-
   end
 
   describe 'exchange_name' do
@@ -295,7 +294,6 @@ describe Spree::Variant, :type => :model do
         expect(variant.exchange_name).to eql 'Foo Type: Foo'
       end
     end
-
   end
 
   describe 'exchange_name' do
@@ -321,7 +319,6 @@ describe Spree::Variant, :type => :model do
         expect(variant.exchange_name).to eql 'Foo Type: Foo'
       end
     end
-
   end
 
   describe 'descriptive_name' do
@@ -347,7 +344,6 @@ describe Spree::Variant, :type => :model do
         expect(variant.descriptive_name).to eql variant.name + ' - Foo Type: Foo'
       end
     end
-
   end
 
   # Regression test for https://github.com/spree/spree/issues/2744
@@ -473,7 +469,6 @@ describe Spree::Variant, :type => :model do
   end
 
   describe "#should_track_inventory?" do
-
     it 'should not track inventory when global setting is off' do
       Spree::Config[:track_inventory_levels] = false
 

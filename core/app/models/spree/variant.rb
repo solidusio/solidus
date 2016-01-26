@@ -124,7 +124,7 @@ module Spree
     #
     # @return [String] a sentence-ified string of option values.
     def options_text
-      values = self.option_values.includes(:option_type).sort_by do |option_value|
+      values = option_values.includes(:option_type).sort_by do |option_value|
         option_value.option_type.position
       end
 
@@ -173,22 +173,22 @@ module Spree
     # @param opt_value [String] the value to set to the option
     def set_option_value(opt_name, opt_value)
       # no option values on master
-      return if self.is_master
+      return if is_master
 
       option_type = Spree::OptionType.where(name: opt_name).first_or_initialize do |o|
         o.presentation = opt_name
         o.save!
       end
 
-      current_value = self.option_values.detect { |o| o.option_type.name == opt_name }
+      current_value = option_values.detect { |o| o.option_type.name == opt_name }
 
       unless current_value.nil?
         return if current_value.name == opt_value
-        self.option_values.delete(current_value)
+        option_values.delete(current_value)
       else
         # then we have to check to make sure that the product has the option type
-        unless self.product.option_types.include? option_type
-          self.product.option_types << option_type
+        unless product.option_types.include? option_type
+          product.option_types << option_type
         end
       end
 
@@ -197,8 +197,8 @@ module Spree
         o.save!
       end
 
-      self.option_values << option_value
-      self.save
+      option_values << option_value
+      save
     end
 
     # Fetches the option value for the given option name.
@@ -206,7 +206,7 @@ module Spree
     # @param opt_name [String] the name of the option whose value you want
     # @return [String] the option value
     def option_value(opt_name)
-      self.option_values.detect { |o| o.option_type.name == opt_name }.try(:presentation)
+      option_values.detect { |o| o.option_type.name == opt_name }.try(:presentation)
     end
 
     # Converts the variant's price to the given currency.
@@ -214,7 +214,7 @@ module Spree
     # @param currency [String] the desired currency
     # @return [Spree::Price] the price in the desired currency
     def price_in(currency)
-      prices.detect{ |price| price.currency == currency && price.is_default } || Spree::Price.new(variant_id: self.id, currency: currency)
+      prices.detect{ |price| price.currency == currency && price.is_default } || Spree::Price.new(variant_id: id, currency: currency)
     end
 
     # Fetches the price amount in the specified currency.
@@ -236,8 +236,8 @@ module Spree
 
       options.keys.map { |key|
         m = "#{key}_price_modifier_amount_in".to_sym
-        if self.respond_to? m
-          self.send(m, currency, options[key])
+        if respond_to? m
+          send(m, currency, options[key])
         else
           0
         end
@@ -253,8 +253,8 @@ module Spree
 
       options.keys.map { |key|
         m = "#{options[key]}_price_modifier_amount".to_sym
-        if self.respond_to? m
-          self.send(m, options[key])
+        if respond_to? m
+          send(m, options[key])
         else
           0
         end
@@ -284,7 +284,7 @@ module Spree
 
     # @param quantity [Fixnum] how many are desired
     # @return [Boolean] true if the desired quantity can be supplied
-    def can_supply?(quantity=1)
+    def can_supply?(quantity = 1)
       Spree::Stock::Quantifier.new(self).can_supply?(quantity)
     end
 
@@ -301,7 +301,7 @@ module Spree
     #
     # @return [Boolean] true if inventory tracking is enabled
     def should_track_inventory?
-      self.track_inventory? && Spree::Config.track_inventory_levels
+      track_inventory? && Spree::Config.track_inventory_levels
     end
 
     # Image that can be used for the variant.
@@ -321,56 +321,56 @@ module Spree
     #
     # @return [Array<Spree::VariantPropertyRuleValue>] variant_properties
     def variant_properties
-      self.product.variant_property_rules.map do |rule|
+      product.variant_property_rules.map do |rule|
         rule.values if rule.applies_to_variant?(self)
       end.flatten.compact
     end
 
     private
 
-      def set_master_out_of_stock
-        if product.master && product.master.in_stock?
-          product.master.stock_items.update_all(:backorderable => false)
-          product.master.stock_items.each { |item| item.reduce_count_on_hand_to_zero }
+    def set_master_out_of_stock
+      if product.master && product.master.in_stock?
+        product.master.stock_items.update_all(backorderable: false)
+        product.master.stock_items.each(&:reduce_count_on_hand_to_zero)
+      end
+    end
+
+    # Ensures a new variant takes the product master price when price is not supplied
+    def check_price
+      if price.nil? && Spree::Config[:require_master_price]
+        if is_master?
+          errors.add :price, 'Must supply price for variant or master.price for product.'
+        else
+          raise 'No master variant found to infer price' unless product && product.master
+          self.price = product.master.price
         end
       end
-
-      # Ensures a new variant takes the product master price when price is not supplied
-      def check_price
-        if price.nil? && Spree::Config[:require_master_price]
-          if is_master?
-            errors.add :price, 'Must supply price for variant or master.price for product.'
-          else
-            raise 'No master variant found to infer price' unless (product && product.master)
-            self.price = product.master.price
-          end
-        end
-        if currency.nil?
-          self.currency = Spree::Config[:currency]
-        end
+      if currency.nil?
+        self.currency = Spree::Config[:currency]
       end
+    end
 
-      def set_cost_currency
-        self.cost_currency = Spree::Config[:currency] if cost_currency.blank?
-      end
+    def set_cost_currency
+      self.cost_currency = Spree::Config[:currency] if cost_currency.blank?
+    end
 
-      def create_stock_items
-        StockLocation.where(propagate_all_variants: true).each do |stock_location|
-          stock_location.propagate_variant(self)
-        end
+    def create_stock_items
+      StockLocation.where(propagate_all_variants: true).each do |stock_location|
+        stock_location.propagate_variant(self)
       end
+    end
 
-      def set_position
-        self.update_column(:position, product.variants.maximum(:position).to_i + 1)
-      end
+    def set_position
+      update_column(:position, product.variants.maximum(:position).to_i + 1)
+    end
 
-      def in_stock_cache_key
-        "variant-#{id}-in_stock"
-      end
+    def in_stock_cache_key
+      "variant-#{id}-in_stock"
+    end
 
-      def clear_in_stock_cache
-        Rails.cache.delete(in_stock_cache_key)
-      end
+    def clear_in_stock_cache
+      Rails.cache.delete(in_stock_cache_key)
+    end
   end
 end
 

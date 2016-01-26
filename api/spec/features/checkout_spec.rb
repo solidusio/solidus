@@ -52,7 +52,7 @@ module Spree
       expect(response).to have_http_status(:created)
     end
 
-    def add_promotion(promotion)
+    def add_promotion(_promotion)
       expect {
         put "/api/orders/#{@order.number}/apply_coupon_code", coupon_code: promotion_code.value
       }.to change { @order.promotions.count }.by 1

@@ -13,7 +13,7 @@ module Spree
           promotable.is_a?(Spree::Order)
         end
 
-        def eligible?(order, options = {})
+        def eligible?(order, _options = {})
           item_total = order.item_total
           unless item_total.send(preferred_operator == 'gte' ? :>= : :>, BigDecimal.new(preferred_amount.to_s))
             eligibility_errors.add(:base, ineligible_message)
@@ -23,6 +23,7 @@ module Spree
         end
 
         private
+
         def formatted_amount
           Spree::Money.new(preferred_amount).to_s
         end

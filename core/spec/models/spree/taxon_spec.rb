@@ -2,8 +2,8 @@
 
 require 'spec_helper'
 
-describe Spree::Taxon, :type => :model do
-  let(:taxon) { FactoryGirl.build(:taxon, :name => "Ruby on Rails") }
+describe Spree::Taxon, type: :model do
+  let(:taxon) { FactoryGirl.build(:taxon, name: "Ruby on Rails") }
 
   describe '#to_param' do
     subject { super().to_param }
@@ -11,7 +11,6 @@ describe Spree::Taxon, :type => :model do
   end
 
   context "set_permalink" do
-
     it "should set permalink correctly when no parent present" do
       taxon.set_permalink
       expect(taxon.permalink).to eql "ruby-on-rails"
@@ -24,7 +23,7 @@ describe Spree::Taxon, :type => :model do
     end
 
     context "with parent taxon" do
-      let(:parent) { FactoryGirl.build(:taxon, :permalink => "brands") }
+      let(:parent) { FactoryGirl.build(:taxon, permalink: "brands") }
       before       { allow(taxon).to receive_messages parent: parent }
 
       it "should set permalink correctly when taxon has parent" do
@@ -59,7 +58,6 @@ describe Spree::Taxon, :type => :model do
           end
         end
       end
-
     end
   end
 
@@ -68,7 +66,7 @@ describe Spree::Taxon, :type => :model do
     let(:taxonomy) { create(:taxonomy) }
 
     it "does not error out" do
-      taxonomy.root.children.unscoped.where(:name => "Some name").first_or_create
+      taxonomy.root.children.unscoped.where(name: "Some name").first_or_create
     end
   end
 end

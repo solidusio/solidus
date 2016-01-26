@@ -14,7 +14,7 @@ module Spree
     end
 
     context 'with coupon code' do
-      let(:attributes){ {coupon_code: 'abc123'} }
+      let(:attributes){ { coupon_code: 'abc123' } }
       it "sets coupon code" do
         expect(update.apply).to be_truthy
         expect(order.coupon_code).to eq('abc123')
@@ -25,17 +25,17 @@ module Spree
       let(:attributes) do
         {
           payments_attributes: [
-            {source_attributes: attributes_for(:credit_card)}
+            { source_attributes: attributes_for(:credit_card) }
           ]
         }
       end
 
       context 'with params and a request_env' do
-        let(:request_env){ {'USER_AGENT' => 'Firefox'} }
+        let(:request_env){ { 'USER_AGENT' => 'Firefox' } }
         it 'sets the request_env on the payment' do
           expect(update.apply).to be_truthy
           expect(order.payments.length).to eq 1
-          expect(order.payments[0].request_env).to eq({'USER_AGENT' => 'Firefox'})
+          expect(order.payments[0].request_env).to eq({ 'USER_AGENT' => 'Firefox' })
         end
       end
     end
@@ -50,7 +50,7 @@ module Spree
       let(:attributes) do
         {
           shipments_attributes: {
-            0 => {selected_shipping_rate_id: shipping_method2, id: shipment.id }
+            0 => { selected_shipping_rate_id: shipping_method2, id: shipment.id }
           }
         }
       end
@@ -70,7 +70,7 @@ module Spree
         described_class.new(
           order,
           shipments_attributes: {
-            0 => {selected_shipping_rate_id: shipping_rate2.id, id: shipment.id }
+            0 => { selected_shipping_rate_id: shipping_rate2.id, id: shipment.id }
           }
         ).apply
 

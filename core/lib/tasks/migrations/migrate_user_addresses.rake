@@ -2,7 +2,7 @@ namespace 'spree:migrations:migrate_user_addresses' do
   # This creates an entry in the user_addresses table for a user's currently
   # associated shipping and billing addresses.
 
-  # This task should not need to be run more than once. But the de-dup behavior in 
+  # This task should not need to be run more than once. But the de-dup behavior in
   # UserAddressBook should make it safe.
   # When the code (in the same PR) is deployed, each new order's addresses will be added
   # to the user's address book. This will catch up all the historical data.

@@ -11,8 +11,8 @@ describe Spree::CartonMailer do
   # Regression test for https://github.com/spree/spree/issues/2196
   it "doesn't include out of stock in the email body" do
     shipment_email = Spree::CartonMailer.shipped_email(order: order, carton: carton)
-    expect(shipment_email.body).not_to include(%Q{Out of Stock})
-    expect(shipment_email.body).to include(%Q{Your order has been shipped})
+    expect(shipment_email.body).not_to include(%{Out of Stock})
+    expect(shipment_email.body).to include(%{Your order has been shipped})
     expect(shipment_email.subject).to eq "#{order.store.name} Shipment Notification ##{order.number}"
   end
 
@@ -36,7 +36,7 @@ describe Spree::CartonMailer do
     context "shipped_email" do
       context "pt-BR locale" do
         before do
-          pt_br_shipped_email = { :spree => { :shipment_mailer => { :shipped_email => { :dear_customer => 'Caro Cliente,' } } } }
+          pt_br_shipped_email = { spree: { shipment_mailer: { shipped_email: { dear_customer: 'Caro Cliente,' } } } }
           I18n.backend.store_translations :'pt-BR', pt_br_shipped_email
           I18n.locale = :'pt-BR'
         end

@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Spree::Admin::SearchController, :type => :controller do
+describe Spree::Admin::SearchController, type: :controller do
   stub_authorization!
 
   # Regression test for ernie/ransack#176
@@ -94,7 +94,7 @@ describe Spree::Admin::SearchController, :type => :controller do
     end
 
     context 'when idds param is not present' do
-      let(:params) { { q: {name_cont: 'jersey'} } }
+      let(:params) { { q: { name_cont: 'jersey' } } }
 
       it_should_behave_like 'product search' do
         let(:expected_products) { [product_one, product_two] }

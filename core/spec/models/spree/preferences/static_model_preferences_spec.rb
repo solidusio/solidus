@@ -11,7 +11,6 @@ module Spree
     let(:other_class){ Class.new }
     let(:definitions){ subject.for_class(preference_class) }
 
-
     it "is empty by default" do
       expect(definitions).to be_empty
     end
@@ -24,14 +23,14 @@ module Spree
 
     it "errors assigning invalid preferences" do
       expect {
-        subject.add(preference_class, 'my_definition', {ice_cream: 'chocolate'})
+        subject.add(preference_class, 'my_definition', { ice_cream: 'chocolate' })
       }.to raise_error(/\APreference :ice_cream is not defined/)
     end
 
     context "with stored definitions" do
       before do
-        subject.add(preference_class, 'light', {color: 'white'})
-        subject.add(preference_class, 'dark', {color: 'black'})
+        subject.add(preference_class, 'light', { color: 'white' })
+        subject.add(preference_class, 'dark', { color: 'black' })
         subject.add(preference_class, 'no_preference', {})
       end
 
@@ -42,13 +41,13 @@ module Spree
         end
 
         it "can be converted to hash" do
-          expect(definition.to_hash).to eq({color: 'black'})
+          expect(definition.to_hash).to eq({ color: 'black' })
         end
 
         it "ignores assignment" do
           definition[:color] = 'maroon'
           expect(definition.fetch(:color)).to eq 'black'
-          expect(definition.to_hash).to eq({color: 'black'})
+          expect(definition.to_hash).to eq({ color: 'black' })
         end
       end
 

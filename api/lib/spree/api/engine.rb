@@ -19,7 +19,7 @@ module Spree
       config.view_versions = [1]
       config.view_version_extraction_strategy = :http_header
 
-      initializer "spree.api.environment", :before => :load_config_initializers do |app|
+      initializer "spree.api.environment", before: :load_config_initializers do |_app|
         Spree::Api::Config = Spree::ApiConfiguration.new
       end
 

@@ -12,7 +12,7 @@ module Spree
           @shipments = Spree::Shipment
             .reverse_chronological
             .joins(:order)
-            .where(spree_orders: {user_id: current_api_user.id})
+            .where(spree_orders: { user_id: current_api_user.id })
             .includes(mine_includes)
             .ransack(params[:q]).result.page(params[:page]).per(params[:per_page])
         else
@@ -21,7 +21,7 @@ module Spree
       end
 
       def create
-        # TODO Can remove conditional here once deprecated #find_order is removed.
+        # TODO: Can remove conditional here once deprecated #find_order is removed.
         unless @order.present?
           @order = Spree::Order.find_by!(number: params[:shipment][:order_id])
           authorize! :read, @order
@@ -29,7 +29,7 @@ module Spree
         authorize! :create, Shipment
         quantity = params[:quantity].to_i
         @shipment = @order.shipments.create(stock_location_id: params.fetch(:stock_location_id))
-        @order.contents.add(variant, quantity, {shipment: @shipment})
+        @order.contents.add(variant, quantity, { shipment: @shipment })
 
         @shipment.save!
 
@@ -48,7 +48,7 @@ module Spree
             @shipment.ready!
           else
             logger.error("cannot_ready_shipment shipment_state=#{@shipment.state}")
-            render 'spree/api/shipments/cannot_ready_shipment', status: 422 and return
+            render('spree/api/shipments/cannot_ready_shipment', status: 422) && return
           end
         end
         respond_with(@shipment, default_template: :show)
@@ -66,7 +66,7 @@ module Spree
       def add
         quantity = params[:quantity].to_i
 
-        @shipment.order.contents.add(variant, quantity, {shipment: @shipment})
+        @shipment.order.contents.add(variant, quantity, { shipment: @shipment })
         respond_with(@shipment, default_template: :show)
       end
 
@@ -74,7 +74,7 @@ module Spree
         quantity = params[:quantity].to_i
 
         if @shipment.pending?
-          @shipment.order.contents.remove(variant, quantity, {shipment: @shipment})
+          @shipment.order.contents.remove(variant, quantity, { shipment: @shipment })
           @shipment.reload if @shipment.persisted?
           respond_with(@shipment, default_template: :show)
         else
@@ -86,13 +86,13 @@ module Spree
       def transfer_to_location
         @stock_location = Spree::StockLocation.find(params[:stock_location_id])
         @original_shipment.transfer_to_location(@variant, @quantity, @stock_location)
-        render json: {success: true, message: Spree.t(:shipment_transfer_success)}, status: 201
+        render json: { success: true, message: Spree.t(:shipment_transfer_success) }, status: 201
       end
 
       def transfer_to_shipment
         @target_shipment = Spree::Shipment.find_by!(number: params[:target_shipment_number])
         @original_shipment.transfer_to_shipment(@variant, @quantity, @target_shipment)
-        render json: {success: true, message: Spree.t(:shipment_transfer_success)}, status: 201
+        render json: { success: true, message: Spree.t(:shipment_transfer_success) }, status: 201
       end
 
       private
@@ -107,7 +107,7 @@ module Spree
       end
 
       def find_order_on_create
-        # TODO Can remove conditional here once deprecated #find_order is removed.
+        # TODO: Can remove conditional here once deprecated #find_order is removed.
         unless @order.present?
           @order = Spree::Order.find_by!(number: params[:shipment][:order_id])
           authorize! :read, @order
@@ -146,31 +146,31 @@ module Spree
           order: {
             bill_address: {
               state: {},
-              country: {},
+              country: {}
             },
             ship_address: {
               state: {},
-              country: {},
+              country: {}
             },
             adjustments: {},
             payments: {
               order: {},
-              payment_method: {},
-            },
+              payment_method: {}
+            }
           },
           inventory_units: {
             line_item: {
               product: {},
-              variant: {},
+              variant: {}
             },
             variant: {
               product: {},
               default_price: {},
               option_values: {
-                option_type: {},
-              },
-            },
-          },
+                option_type: {}
+              }
+            }
+          }
         }
       end
     end

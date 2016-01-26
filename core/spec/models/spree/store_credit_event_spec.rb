@@ -1,12 +1,10 @@
 require 'spec_helper'
 
 describe Spree::StoreCreditEvent do
-
   describe ".exposed_events" do
-
     [
       Spree::StoreCredit::ELIGIBLE_ACTION,
-      Spree::StoreCredit::AUTHORIZE_ACTION,
+      Spree::StoreCredit::AUTHORIZE_ACTION
     ].each do |action|
       let(:action) { action }
       it "excludes #{action} actions" do
@@ -19,7 +17,7 @@ describe Spree::StoreCreditEvent do
       Spree::StoreCredit::VOID_ACTION,
       Spree::StoreCredit::CREDIT_ACTION,
       Spree::StoreCredit::CAPTURE_ACTION,
-      Spree::StoreCredit::ALLOCATION_ACTION,
+      Spree::StoreCredit::ALLOCATION_ACTION
     ].each do |action|
       it "includes #{action} actions" do
         event = create(:store_credit_event, action: action)
@@ -231,7 +229,7 @@ describe Spree::StoreCreditEvent do
   end
 
   describe "#display_action" do
-    subject { event.display_action  }
+    subject { event.display_action }
 
     context "capture event" do
       let(:event) { create(:store_credit_capture_event) }

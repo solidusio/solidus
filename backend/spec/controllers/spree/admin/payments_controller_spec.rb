@@ -2,29 +2,29 @@ require 'spec_helper'
 
 module Spree
   module Admin
-    describe PaymentsController, :type => :controller do
+    describe PaymentsController, type: :controller do
       before do
-        allow(controller).to receive_messages :spree_current_user => user
+        allow(controller).to receive_messages spree_current_user: user
       end
 
       let(:user) { create(:admin_user) }
       let(:order) { create(:order) }
 
       context "with a valid credit card" do
-        let(:order) { create(:order_with_line_items, :state => "payment") }
-        let(:payment_method) { create(:credit_card_payment_method, :display_on => "back_end") }
+        let(:order) { create(:order_with_line_items, state: "payment") }
+        let(:payment_method) { create(:credit_card_payment_method, display_on: "back_end") }
         let(:attributes) do
           {
-            :order_id => order.number,
-            :card => "new",
-            :payment => {
-              :amount => order.total,
-              :payment_method_id => payment_method.id.to_s,
-              :source_attributes => {
-                :name => "Test User",
-                :number => "4111 1111 1111 1111",
-                :expiry => "09 / #{Time.current.year + 1}",
-                :verification_value => "123"
+            order_id: order.number,
+            card: "new",
+            payment: {
+              amount: order.total,
+              payment_method_id: payment_method.id.to_s,
+              source_attributes: {
+                name: "Test User",
+                number: "4111 1111 1111 1111",
+                expiry: "09 / #{Time.current.year + 1}",
+                verification_value: "123"
               }
             }
           }
@@ -59,7 +59,7 @@ module Spree
               'country_id' => address.country_id,
               'state_id' => address.state_id,
               'zipcode' => address.zipcode,
-              'phone' => address.phone,
+              'phone' => address.phone
             }
           end
 
@@ -74,11 +74,11 @@ module Spree
       # Regression test for https://github.com/spree/spree/issues/3233
       context "with a backend payment method" do
         before do
-          @payment_method = create(:check_payment_method, :display_on => "back_end")
+          @payment_method = create(:check_payment_method, display_on: "back_end")
         end
 
         it "loads backend payment methods" do
-          spree_get :new, :order_id => order.number
+          spree_get :new, order_id: order.number
           expect(response.status).to eq(200)
           expect(assigns[:payment_methods]).to include(@payment_method)
         end
@@ -107,7 +107,6 @@ module Spree
             expect(response.code).to eq "200"
           end
         end
-
       end
 
       context "order does not have a billing address" do
@@ -131,7 +130,7 @@ module Spree
             class CaptureAllowedAbility
               include CanCan::Ability
 
-              def initialize(user)
+              def initialize(_user)
                 can :capture, Spree::Payment
               end
             end
@@ -151,7 +150,7 @@ module Spree
             class CaptureNotAllowedAbility
               include CanCan::Ability
 
-              def initialize(user)
+              def initialize(_user)
                 cannot :capture, Spree::Payment
               end
             end
@@ -169,7 +168,6 @@ module Spree
           end
         end
       end
-
     end
   end
 end

@@ -1,5 +1,5 @@
 eval_gemfile File.expand_path('../../common_spree_dependencies.rb', __FILE__)
 
-gem 'solidus_core', :path => '../core'
+gem 'solidus_core', path: '../core'
 
 gemspec

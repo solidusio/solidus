@@ -68,9 +68,7 @@ module Spree
           # This one will be defined by Devise
           elsif respond_to?(:current_spree_user)
             current_spree_user
-          else
-            nil
-          end
+                    end
         end
       end
     end

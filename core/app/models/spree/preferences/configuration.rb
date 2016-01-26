@@ -69,9 +69,9 @@ module Spree::Preferences
       end
     end
 
-    def self.preference name, type, options={}
+    def self.preference(name, type, options = {})
       super
-      alias_method "#{name}", "preferred_#{name}"
+      alias_method name.to_s, "preferred_#{name}"
       alias_method "#{name}=", "preferred_#{name}="
     end
   end

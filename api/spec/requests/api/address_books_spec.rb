@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 module Spree
-  describe Api::AddressBooksController, :type => :request do
+  describe Api::AddressBooksController, type: :request do
     let!(:state) { create(:state) }
     let!(:harry_address_attributes) do
       {
@@ -38,14 +38,14 @@ module Spree
           user.save_in_address_book(harry_address_attributes, true)
           user.save_in_address_book(ron_address_attributes, false)
 
-          get "/api/users/#{user.id}/address_book", nil, { 'X-SPREE-TOKEN' => 'galleon'}
+          get "/api/users/#{user.id}/address_book", nil, { 'X-SPREE-TOKEN' => 'galleon' }
 
           json_response = JSON.parse(response.body)
           expect(response.status).to eq(200)
           expect(json_response.length).to eq(2)
           expect(json_response).to include(
-              hash_including(harry_address_attributes.merge!('default' => true)),
-              hash_including(ron_address_attributes.merge!('default' => false)),
+            hash_including(harry_address_attributes.merge!('default' => true)),
+              hash_including(ron_address_attributes.merge!('default' => false))
             )
         end
 
@@ -99,7 +99,7 @@ module Spree
           user.save_in_address_book(address.attributes, false)
 
           expect {
-            delete "/api/users/#{user.id}/address_book", { address_id: address.id }, { 'X-SPREE-TOKEN' => 'galleon'}
+            delete "/api/users/#{user.id}/address_book", { address_id: address.id }, { 'X-SPREE-TOKEN' => 'galleon' }
           }.to change { user.reload.user_addresses.count }.from(1).to(0)
 
           expect(response.status).to eq(200)
@@ -121,14 +121,14 @@ module Spree
           other_user.save_in_address_book(harry_address_attributes, true)
           other_user.save_in_address_book(ron_address_attributes, false)
 
-          get "/api/users/#{other_user.id}/address_book", nil, { 'X-SPREE-TOKEN' => 'galleon'}
+          get "/api/users/#{other_user.id}/address_book", nil, { 'X-SPREE-TOKEN' => 'galleon' }
 
           json_response = JSON.parse(response.body)
           expect(response.status).to eq(200)
           expect(json_response.length).to eq(2)
           expect(json_response).to include(
-              hash_including(harry_address_attributes.merge!('default' => true)),
-              hash_including(ron_address_attributes.merge!('default' => false)),
+            hash_including(harry_address_attributes.merge!('default' => true)),
+              hash_including(ron_address_attributes.merge!('default' => false))
             )
         end
 
@@ -151,7 +151,7 @@ module Spree
           other_user.save_in_address_book(address.attributes, false)
 
           expect {
-            delete "/api/users/#{other_user.id}/address_book", { address_id: address.id }, { 'X-SPREE-TOKEN' => 'galleon'}
+            delete "/api/users/#{other_user.id}/address_book", { address_id: address.id }, { 'X-SPREE-TOKEN' => 'galleon' }
           }.to change { other_user.reload.user_addresses.count }.from(1).to(0)
 
           expect(response.status).to eq(200)
@@ -164,7 +164,7 @@ module Spree
           other_user = create(:user)
           other_user.save_in_address_book(harry_address_attributes, true)
 
-          get "/api/users/#{other_user.id}/address_book", nil, { 'X-SPREE-TOKEN' => 'galleon'}
+          get "/api/users/#{other_user.id}/address_book", nil, { 'X-SPREE-TOKEN' => 'galleon' }
 
           expect(response.status).to eq(401)
         end
@@ -196,7 +196,6 @@ module Spree
         end
       end
     end
-
 
     context 'unauthenticated' do
       before do

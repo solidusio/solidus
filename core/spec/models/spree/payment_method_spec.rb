@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Spree::PaymentMethod, :type => :model do
+describe Spree::PaymentMethod, type: :model do
   describe ".available" do
     let!(:payment_method_nil_display)  { create(:payment_method, active: true, display_on: nil) }
     let!(:payment_method_both_display) { create(:payment_method, active: true, display_on: 'both') }
@@ -34,7 +34,7 @@ describe Spree::PaymentMethod, :type => :model do
             payment_method_nil_display,
             payment_method_both_display,
             payment_method_front_display,
-            payment_method_back_display,
+            payment_method_back_display
           ]
         )
       end
@@ -64,7 +64,7 @@ describe Spree::PaymentMethod, :type => :model do
                 payment_method_nil_display,
                 payment_method_both_display,
                 store_2_payment_method,
-                no_store_payment_method,
+                no_store_payment_method
               ]
             )
           end
@@ -78,7 +78,7 @@ describe Spree::PaymentMethod, :type => :model do
               payment_method_nil_display,
               payment_method_both_display,
               store_2_payment_method,
-              no_store_payment_method,
+              no_store_payment_method
             ]
           )
         end
@@ -143,5 +143,4 @@ describe Spree::PaymentMethod, :type => :model do
       end
     end
   end
-
 end

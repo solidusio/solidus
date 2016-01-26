@@ -3,11 +3,11 @@
 # we call process directly instead of get
 require 'spec_helper'
 
-describe Spree::Admin::BaseController, :type => :controller do
+describe Spree::Admin::BaseController, type: :controller do
   controller(Spree::Admin::BaseController) do
     def index
       authorize! :update, Spree::Order
-      render :text => 'test'
+      render text: 'test'
     end
   end
 

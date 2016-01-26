@@ -1,21 +1,19 @@
 module Spree
   module Core
     module Search
-
       #
       # NOTE: Use Spree::Config.variant_search_class rather than referencing this
       # directly.
       #
 
       class Variant
-
         class_attribute :search_terms
         self.search_terms = [
           :sku_cont,
           :product_name_cont,
           :product_slug_cont,
           :option_values_presentation_cont,
-          :option_values_name_cont,
+          :option_values_name_cont
         ]
 
         def initialize(query_string, scope: Spree::Variant.all)
@@ -50,7 +48,7 @@ module Spree
         # @param word [String] One of the search words provided by the user.
         #   e.g. a SKU
         # @return [Array<Symbol>] the list of search terms to use for this word
-        def search_terms(word)
+        def search_terms(_word)
           self.class.search_terms
         end
 

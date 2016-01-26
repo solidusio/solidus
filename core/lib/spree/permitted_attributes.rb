@@ -49,7 +49,7 @@ module Spree
     ]
 
     @@credit_card_update_attributes = [
-      :month, :year, :expiry, :first_name, :last_name, :name,
+      :month, :year, :expiry, :first_name, :last_name, :name
     ]
 
     @@customer_return_attributes = [:stock_location_id, return_items_attributes: [:id, :inventory_unit_id, :return_authorization_id, :returned, :pre_tax_amount, :reception_status_event, :acceptance_status, :exchange_variant_id, :resellable]]
@@ -88,7 +88,7 @@ module Spree
       :number, :month, :year, :expiry, :verification_value,
       :first_name, :last_name, :cc_type, :gateway_customer_profile_id,
       :gateway_payment_profile_id, :last_digits, :name, :encrypted_data,
-      :existing_card_id,
+      :existing_card_id
     ]
 
     @@stock_item_attributes = [:variant, :stock_location, :backorderable, :variant_id]
@@ -102,7 +102,7 @@ module Spree
       :quantity, :stock_item, :stock_item_id, :originator, :action]
 
     @@store_attributes = [:name, :url, :seo_title, :meta_keywords,
-                         :meta_description, :default_currency, :mail_from_address]
+                          :meta_description, :default_currency, :mail_from_address]
 
     @@taxonomy_attributes = [:name]
 
@@ -122,6 +122,6 @@ module Spree
       :name, :presentation, :cost_price, :lock_version,
       :position, :option_value_ids, :track_inventory,
       :product_id, :product, :option_values_attributes, :price,
-      :weight, :height, :width, :depth, :sku, :cost_currency, options: [ :name, :value ]]
+      :weight, :height, :width, :depth, :sku, :cost_currency, options: [:name, :value]]
   end
 end

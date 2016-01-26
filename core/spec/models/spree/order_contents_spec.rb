@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Spree::OrderContents, :type => :model do
+describe Spree::OrderContents, type: :model do
   let(:order) { Spree::Order.create }
   let(:variant) { create(:variant) }
   let!(:stock_location) { variant.stock_locations.first }
@@ -57,7 +57,7 @@ describe Spree::OrderContents, :type => :model do
     end
 
     it "should create stock location associations if provided" do
-      line_item = subject.add(variant, 3, stock_location_quantities: {stock_location.id => 1, stock_location_2.id => 2})
+      line_item = subject.add(variant, 3, stock_location_quantities: { stock_location.id => 1, stock_location_2.id => 2 })
       order_stock_locations = line_item.order.order_stock_locations
       expect(order_stock_locations.count).to eq(2)
       expect(order_stock_locations.map(&:quantity)).to eq([1, 2])
@@ -66,7 +66,7 @@ describe Spree::OrderContents, :type => :model do
 
     context "running promotions" do
       let(:promotion) { create(:promotion, apply_automatically: true) }
-      let(:calculator) { Spree::Calculator::FlatRate.new(:preferred_amount => 10) }
+      let(:calculator) { Spree::Calculator::FlatRate.new(preferred_amount: 10) }
 
       shared_context "discount changes order total" do
         before { subject.add(variant, 1) }
@@ -151,12 +151,12 @@ describe Spree::OrderContents, :type => :model do
       expect(order.item_total.to_f).to eq(0.00)
       expect(order.total.to_f).to eq(0.00)
 
-      subject.add(variant,2)
+      subject.add(variant, 2)
 
       expect(order.item_total.to_f).to eq(39.98)
       expect(order.total.to_f).to eq(39.98)
 
-      subject.remove(variant,1)
+      subject.remove(variant, 1)
       expect(order.item_total.to_f).to eq(19.99)
       expect(order.total.to_f).to eq(19.99)
     end
@@ -192,7 +192,7 @@ describe Spree::OrderContents, :type => :model do
       expect(order.item_total.to_f).to eq(0.00)
       expect(order.total.to_f).to eq(0.00)
 
-      line_item = subject.add(variant,2)
+      line_item = subject.add(variant, 2)
 
       expect(order.item_total.to_f).to eq(39.98)
       expect(order.total.to_f).to eq(39.98)
@@ -202,7 +202,6 @@ describe Spree::OrderContents, :type => :model do
       expect(order.total.to_f).to eq(0.00)
     end
   end
-
 
   context "update cart" do
     let!(:shirt) { subject.add variant, 1 }
@@ -227,7 +226,7 @@ describe Spree::OrderContents, :type => :model do
     context "submits item quantity 0" do
       let(:params) do
         { line_items_attributes: {
-          "0" => { id: shirt.id, quantity: 0 },
+          "0" => { id: shirt.id, quantity: 0 }
         } }
       end
 
@@ -303,5 +302,4 @@ describe Spree::OrderContents, :type => :model do
       end
     end
   end
-
 end

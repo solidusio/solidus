@@ -74,7 +74,7 @@ module Spree
       all_rates = includes(zone: { zone_members: :zoneable }).load
 
       rates_for_order_zone = all_rates.select { |rate| rate.zone.contains?(order_tax_zone) }
-      rates_for_default_zone = all_rates.select { |rate| rate.default_vat? }
+      rates_for_default_zone = all_rates.select(&:default_vat?)
 
       # Imagine with me this scenario:
       # You are living in Spain and you have a store which ships to France.
@@ -103,8 +103,8 @@ module Spree
     # https://github.com/spree/spree/issues/4318#issuecomment-34723428
     def self.store_pre_tax_amount(item, rates)
       pre_tax_amount = case item
-        when Spree::LineItem then item.discounted_amount
-        when Spree::Shipment then item.discounted_cost
+                       when Spree::LineItem then item.discounted_amount
+                       when Spree::Shipment then item.discounted_cost
         end
 
       included_rates = rates.select(&:included_in_price)
@@ -117,7 +117,7 @@ module Spree
 
     # This method is best described by the documentation on .match
     def self.adjust(order_tax_zone, items)
-      rates = self.match(order_tax_zone)
+      rates = match(order_tax_zone)
       tax_categories = rates.map(&:tax_category)
       relevant_items, non_relevant_items = items.partition { |item| tax_categories.include?(item.tax_category) }
       unless relevant_items.empty?
@@ -149,12 +149,12 @@ module Spree
         label = Spree.t(:refund) + ' ' + create_label
       end
 
-      self.adjustments.create!({
-        :adjustable => item,
-        :amount => amount,
-        :order_id => item.order_id,
-        :label => label || create_label,
-        :included => included
+      adjustments.create!({
+        adjustable: item,
+        amount: amount,
+        order_id: item.order_id,
+        label: label || create_label,
+        included: included
       })
     end
 
@@ -169,7 +169,7 @@ module Spree
     end
 
     def default_zone_or_zone_match?(order_tax_zone)
-      Zone.default_tax.try!(:contains?, order_tax_zone) || self.zone.contains?(order_tax_zone)
+      Zone.default_tax.try!(:contains?, order_tax_zone) || zone.contains?(order_tax_zone)
     end
 
     def default_vat?
@@ -178,13 +178,12 @@ module Spree
 
     private
 
-      def create_label
-        label = ""
-        label << (name.present? ? name : tax_category.name) + " "
-        label << (show_rate_in_label? ? "#{amount * 100}%" : "")
-        label << " (#{Spree.t(:included_in_price)})" if included_in_price?
-        label
-      end
-
+    def create_label
+      label = ""
+      label << (name.present? ? name : tax_category.name) + " "
+      label << (show_rate_in_label? ? "#{amount * 100}%" : "")
+      label << " (#{Spree.t(:included_in_price)})" if included_in_price?
+      label
+    end
   end
 end

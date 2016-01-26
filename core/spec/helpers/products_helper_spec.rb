@@ -3,7 +3,7 @@
 require 'spec_helper'
 
 module Spree
-  describe ProductsHelper, :type => :helper do
+  describe ProductsHelper, type: :helper do
     include ProductsHelper
 
     let(:product) { create(:product) }
@@ -18,7 +18,7 @@ module Spree
       let(:variant_price) { 10 }
 
       before do
-        @variant = create(:variant, :product => product)
+        @variant = create(:variant, product: product)
         product.price = 15
         @variant.price = 10
         allow(product).to receive(:amount_in) { product_price }
@@ -75,8 +75,8 @@ module Spree
     context "#variant_price_full" do
       before do
         Spree::Config[:show_variant_full_price] = true
-        @variant1 = create(:variant, :product => product)
-        @variant2 = create(:variant, :product => product)
+        @variant1 = create(:variant, product: product)
+        @variant2 = create(:variant, product: product)
       end
 
       context "when currency is default" do
@@ -117,11 +117,10 @@ module Spree
       end
     end
 
-
     context "#product_description" do
       # Regression test for https://github.com/spree/spree/issues/1607
       it "renders a product description without excessive paragraph breaks" do
-        product.description = %Q{
+        product.description = %{
 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus a ligula leo. Proin eu arcu at ipsum dapibus ullamcorper. Pellentesque egestas orci nec magna condimentum luctus. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Ut ac ante et mauris bibendum ultricies non sed massa. Fusce facilisis dui eget lacus scelerisque eget aliquam urna ultricies. Duis et rhoncus quam. Praesent tellus nisi, ultrices sed iaculis quis, euismod interdum ipsum.</p>
 <ul>
 <li>Lorem ipsum dolor sit amet</li>
@@ -133,17 +132,17 @@ module Spree
       end
 
       it "renders a product description with automatic paragraph breaks" do
-        product.description = %Q{
+        product.description = %{
 THIS IS THE BEST PRODUCT EVER!
 
 "IT CHANGED MY LIFE" - Sue, MD}
 
         description = product_description(product)
-        expect(description.strip).to eq(%Q{<p>\nTHIS IS THE BEST PRODUCT EVER!</p>"IT CHANGED MY LIFE" - Sue, MD})
+        expect(description.strip).to eq(%{<p>\nTHIS IS THE BEST PRODUCT EVER!</p>"IT CHANGED MY LIFE" - Sue, MD})
       end
 
       it "renders a product description without any formatting based on configuration" do
-        initialDescription = %Q{
+        initialDescription = %{
             <p>hello world</p>
 
             <p>tihs is completely awesome and it works</p>
@@ -157,7 +156,6 @@ THIS IS THE BEST PRODUCT EVER!
         description = product_description(product)
         expect(description).to eq(initialDescription)
       end
-
     end
 
     context '#line_item_description_text' do
@@ -180,7 +178,7 @@ THIS IS THE BEST PRODUCT EVER!
       subject { helper.cache_key_for_products }
       before(:each) do
         @products = double('products collection')
-        allow(helper).to receive(:params) { {:page => 10} }
+        allow(helper).to receive(:params) { { page: 10 } }
       end
 
       context 'when there is a maximum updated date' do
@@ -196,7 +194,7 @@ THIS IS THE BEST PRODUCT EVER!
       context 'when there is no considered maximum updated date' do
         let(:today) { Date.new(2013, 12, 11) }
         before :each do
-          allow(@products).to receive(:count) { 1234567 }
+          allow(@products).to receive(:count) { 1_234_567 }
           allow(@products).to receive(:maximum).with(:updated_at) { nil }
           allow(Date).to receive(:today) { today }
         end

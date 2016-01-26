@@ -25,7 +25,7 @@ module Spree
       end
 
       def has_default_price?
-        !self.default_price.nil?
+        !default_price.nil?
       end
 
       private

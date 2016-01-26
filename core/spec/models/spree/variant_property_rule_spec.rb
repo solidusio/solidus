@@ -53,7 +53,7 @@ describe Spree::VariantPropertyRule, type: :model do
   describe "#applies_to_variant?" do
     let(:variant_option_value_1) { create(:option_value) }
     let(:variant_option_value_2) { create(:option_value) }
-    let!(:variant) { create(:variant, option_values: option_values)}
+    let!(:variant) { create(:variant, option_values: option_values) }
 
     let(:rule_option_value) { create(:option_value) }
     let(:rule) { create(:variant_property_rule, option_value: rule_option_value) }

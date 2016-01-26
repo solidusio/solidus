@@ -112,7 +112,7 @@ describe "Orders Listing", type: :feature, js: true do
       before(:each) do
         @order1.order_promotions.build(
           promotion: promotion,
-          promotion_code: promotion_code,
+          promotion_code: promotion_code
         )
         @order1.save
         visit spree.admin_orders_path

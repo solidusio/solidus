@@ -7,7 +7,7 @@ module Spree
 
       def units
         @order.line_items.flat_map do |line_item|
-          line_item.quantity.times.map do |i|
+          line_item.quantity.times.map do |_i|
             @order.inventory_units.build(
               pending: true,
               variant: line_item.variant,

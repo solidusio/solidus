@@ -32,11 +32,11 @@ module Spree
     # @param value [Fixnum] the amount to change the count on hand by, positive
     #   or negative values are valid
     def adjust_count_on_hand(value)
-      self.with_lock do
-        self.count_on_hand = self.count_on_hand + value
+      with_lock do
+        self.count_on_hand = count_on_hand + value
         process_backorders(count_on_hand - count_on_hand_was)
 
-        self.save!
+        save!
       end
     end
 
@@ -48,24 +48,24 @@ module Spree
       self.count_on_hand = value
       process_backorders(count_on_hand - count_on_hand_was)
 
-      self.save!
+      save!
     end
 
     # @return [Boolean] true if this stock item's count on hand is not zero
     def in_stock?
-      self.count_on_hand > 0
+      count_on_hand > 0
     end
 
     # @return [Boolean] true if this stock item can be included in a shipment
     def available?
-      self.in_stock? || self.backorderable?
+      in_stock? || backorderable?
     end
 
     # Sets the count on hand to zero if it not already zero.
     #
     # @note This processes backorders if the count on hand is not zero.
     def reduce_count_on_hand_to_zero
-      self.set_count_on_hand(0) if count_on_hand > 0
+      set_count_on_hand(0) if count_on_hand > 0
     end
 
     def fill_status(quantity)
@@ -82,44 +82,43 @@ module Spree
     end
 
     private
-      def verify_count_on_hand?
-        count_on_hand_changed? && !backorderable? && (count_on_hand < count_on_hand_was) && (count_on_hand < 0)
-      end
 
-      def count_on_hand=(value)
-        write_attribute(:count_on_hand, value)
-      end
+    def verify_count_on_hand?
+      count_on_hand_changed? && !backorderable? && (count_on_hand < count_on_hand_was) && (count_on_hand < 0)
+    end
 
-      # Process backorders based on amount of stock received
-      # If stock was -20 and is now -15 (increase of 5 units), then we should process 5 inventory orders.
-      # If stock was -20 but then was -25 (decrease of 5 units), do nothing.
-      def process_backorders(number)
-        if number > 0
-          backordered_inventory_units.first(number).each do |unit|
-            unit.fill_backorder
-          end
-        end
-      end
+    def count_on_hand=(value)
+      write_attribute(:count_on_hand, value)
+    end
 
-      def conditional_variant_touch
-        variant.touch if inventory_cache_threshold.nil? || should_touch_variant?
+    # Process backorders based on amount of stock received
+    # If stock was -20 and is now -15 (increase of 5 units), then we should process 5 inventory orders.
+    # If stock was -20 but then was -25 (decrease of 5 units), do nothing.
+    def process_backorders(number)
+      if number > 0
+        backordered_inventory_units.first(number).each(&:fill_backorder)
       end
+    end
 
-      def should_touch_variant?
-        # the variant_id changes from nil when a new stock location is added
-        inventory_cache_threshold &&
+    def conditional_variant_touch
+      variant.touch if inventory_cache_threshold.nil? || should_touch_variant?
+    end
+
+    def should_touch_variant?
+      # the variant_id changes from nil when a new stock location is added
+      inventory_cache_threshold &&
         (count_on_hand_changed? && count_on_hand_change.any? { |c| c < inventory_cache_threshold }) ||
         variant_id_changed?
-      end
+    end
 
-      def inventory_cache_threshold
-        # only warn if store is setting binary_inventory_cache (default = false)
-        @cache_threshold ||= if Spree::Config.binary_inventory_cache
-          ActiveSupport::Deprecation.warn "Spree::Config.binary_inventory_cache=true is DEPRECATED. Instead use Spree::Config.inventory_cache_threshold=1"
-          1
-        else
-          Spree::Config.inventory_cache_threshold
-        end
+    def inventory_cache_threshold
+      # only warn if store is setting binary_inventory_cache (default = false)
+      @cache_threshold ||= if Spree::Config.binary_inventory_cache
+        ActiveSupport::Deprecation.warn "Spree::Config.binary_inventory_cache=true is DEPRECATED. Instead use Spree::Config.inventory_cache_threshold=1"
+        1
+      else
+        Spree::Config.inventory_cache_threshold
       end
+    end
   end
 end

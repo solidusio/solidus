@@ -10,10 +10,9 @@ end
 
 module Spree
   module Stock
-    describe Quantifier, :type => :model do
-
+    describe Quantifier, type: :model do
       let(:target_stock_location) { nil }
-      let!(:stock_location) { create :stock_location_with_items  }
+      let!(:stock_location) { create :stock_location_with_items }
       let!(:stock_item) { stock_location.stock_items.order(:id).first }
 
       subject { described_class.new(stock_item.variant, target_stock_location) }
@@ -58,7 +57,6 @@ module Spree
             expect(subject.can_supply?(11)).to be false
           end
         end
-
       end
 
       context 'with multiple stock locations/items' do
@@ -91,7 +89,6 @@ module Spree
             expect(subject.can_supply?(16)).to be false
           end
         end
-
       end
 
       context 'with a specific stock location' do
@@ -109,7 +106,6 @@ module Spree
           expect(subject.can_supply?(6)).to eq false
         end
       end
-
     end
   end
 end

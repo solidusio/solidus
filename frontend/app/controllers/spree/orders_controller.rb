@@ -1,7 +1,7 @@
 module Spree
   class OrdersController < Spree::StoreController
     before_action :check_authorization
-    rescue_from ActiveRecord::RecordNotFound, :with => :render_404
+    rescue_from ActiveRecord::RecordNotFound, with: :render_404
     helper 'spree/products', 'spree/orders'
 
     respond_to :html
@@ -20,7 +20,7 @@ module Spree
       if @order.contents.update_cart(order_params)
         respond_with(@order) do |format|
           format.html do
-            if params.has_key?(:checkout)
+            if params.key?(:checkout)
               @order.next if @order.cart?
               redirect_to checkout_state_path(@order.checkout_steps.first)
             else
@@ -76,7 +76,7 @@ module Spree
 
     def accurate_title
       if @order && @order.completed?
-        Spree.t(:order_number, :number => @order.number)
+        Spree.t(:order_number, number: @order.number)
       else
         Spree.t(:shopping_cart)
       end
@@ -95,21 +95,20 @@ module Spree
 
     private
 
-      def order_params
-        if params[:order]
-          params[:order].permit(*permitted_order_attributes)
-        else
-          {}
-        end
+    def order_params
+      if params[:order]
+        params[:order].permit(*permitted_order_attributes)
+      else
+        {}
       end
+    end
 
-      def assign_order
-        @order = current_order
-        unless @order
-          flash[:error] = Spree.t(:order_not_found)
-          redirect_to root_path and return
-        end
+    def assign_order
+      @order = current_order
+      unless @order
+        flash[:error] = Spree.t(:order_not_found)
+        redirect_to(root_path) && return
       end
-
+    end
   end
 end

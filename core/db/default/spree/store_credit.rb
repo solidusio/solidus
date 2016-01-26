@@ -4,9 +4,9 @@ Spree::PaymentMethod.create_with(
   name: "Store Credit",
   description: "Store credit",
   active: true,
-  display_on: 'none',
+  display_on: 'none'
 ).find_or_create_by!(
-  type: "Spree::PaymentMethod::StoreCredit",
+  type: "Spree::PaymentMethod::StoreCredit"
 )
 
 Spree::StoreCreditType.create_with(priority: 1).find_or_create_by!(name: 'Expiring')

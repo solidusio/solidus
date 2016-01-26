@@ -1,13 +1,12 @@
 module CapybaraExt
   def page!
-    save_and_open_page
   end
 
   def click_icon(type)
     find(".fa-#{type}").click
   end
 
-  def eventually_fill_in(field, options={})
+  def eventually_fill_in(field, options = {})
     expect(page).to have_css('#' + field)
     fill_in field, options
   end
@@ -22,14 +21,14 @@ module CapybaraExt
 
   def fill_in_quantity(table_column, selector, quantity)
     within(table_column) do
-      fill_in selector, :with => quantity
+      fill_in selector, with: quantity
     end
   end
 
   def select2_search(value, options)
     label = find_label_by_text(options[:from])
-    within label.first(:xpath,".//..") do
-      options[:from] = "##{find(".select2-container")["id"]}"
+    within label.first(:xpath, ".//..") do
+      options[:from] = "##{find('.select2-container')['id']}"
     end
     targetted_select2_search(value, options)
   end
@@ -57,14 +56,14 @@ module CapybaraExt
   def select2(value, options)
     label = find_label_by_text(options[:from])
 
-    within label.first(:xpath,".//..") do
-      options[:from] = "##{find(".select2-container")["id"]}"
+    within label.first(:xpath, ".//..") do
+      options[:from] = "##{find('.select2-container')['id']}"
     end
     targetted_select2(value, options)
   end
 
-  def select2_no_label value, options={}
-    raise "Must pass a hash containing 'from'" if not options.is_a?(Hash) or not options.has_key?(:from)
+  def select2_no_label(value, options = {})
+    raise "Must pass a hash containing 'from'" if !options.is_a?(Hash) || !options.key?(:from)
 
     placeholder = options[:from]
     minlength = options[:minlength] || 4
@@ -83,7 +82,7 @@ module CapybaraExt
   def select_select2_result(value)
     # results are in a div appended to the end of the document
     within_entire_page do
-      page.find("div.select2-result-label", text: %r{#{Regexp.escape(value)}}i, match: :prefer_exact).click
+      page.find("div.select2-result-label", text: /#{Regexp.escape(value)}/i, match: :prefer_exact).click
     end
   end
 
@@ -93,7 +92,7 @@ module CapybaraExt
     # We need to select labels which are not .select2-offscreen, as select2
     # makes a duplicate label with the same text, and we want to be sure to
     # find the original.
-    find('label:not(.select2-offscreen)', text: %r{#{Regexp.escape(text)}}i, match: :one)
+    find('label:not(.select2-offscreen)', text: /#{Regexp.escape(text)}/i, match: :one)
   end
 
   def wait_for_ajax
@@ -119,7 +118,7 @@ module CapybaraExt
 end
 
 RSpec::Matchers.define :have_meta do |name, expected|
-  match do |actual|
+  match do |_actual|
     has_css?("meta[name='#{name}'][content='#{expected}']", visible: false)
   end
 

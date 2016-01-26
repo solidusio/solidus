@@ -7,7 +7,7 @@ module Spree
       Class.new do
         attr_accessor :preferences
         def initialize
-          @preferences = {color: 'blue'}
+          @preferences = { color: 'blue' }
         end
       end
     end
@@ -52,7 +52,7 @@ module Spree
       end
 
       it "ignores assignment" do
-        subject.preferences = {color: 'orange'}
+        subject.preferences = { color: 'orange' }
         expect(subject.preferred_color).to eq "red"
       end
     end

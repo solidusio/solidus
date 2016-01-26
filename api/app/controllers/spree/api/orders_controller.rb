@@ -2,7 +2,7 @@ module Spree
   module Api
     class OrdersController < Spree::Api::BaseController
       class_attribute :admin_shipment_attributes
-      self.admin_shipment_attributes = [:shipping_method, :stock_location, :inventory_units => [:variant_id, :sku]]
+      self.admin_shipment_attributes = [:shipping_method, :stock_location, inventory_units: [:variant_id, :sku]]
 
       class_attribute :admin_order_attributes
       self.admin_order_attributes = [:import, :number, :completed_at, :locked_at, :channel, :user_id, :created_at]
@@ -22,7 +22,7 @@ module Spree
       def cancel
         authorize! :update, @order, params[:token]
         @order.cancel!
-        respond_with(@order, :default_template => :show)
+        respond_with(@order, default_template: :show)
       end
 
       def create
@@ -130,7 +130,7 @@ module Spree
         end
       end
 
-      def find_order(lock = false)
+      def find_order(_lock = false)
         @order = Spree::Order.find_by!(number: params[:id])
       end
 

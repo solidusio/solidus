@@ -1,7 +1,6 @@
 module Spree
   module Stock
     class ShippingRateSorter
-
       attr_reader :shipping_rates
 
       def initialize(shipping_rates)

@@ -2,11 +2,10 @@ require 'spec_helper'
 
 module Spree
   describe Spree::PromotionRule, type: :model do
-
     class BadTestRule < Spree::PromotionRule; end
 
     class TestRule < Spree::PromotionRule
-      def eligible?(promotable, options = {})
+      def eligible?(_promotable, _options = {})
         true
       end
     end

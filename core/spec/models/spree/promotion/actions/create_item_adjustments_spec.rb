@@ -3,11 +3,11 @@ require 'spec_helper'
 module Spree
   class Promotion
     module Actions
-      describe CreateItemAdjustments, :type => :model do
+      describe CreateItemAdjustments, type: :model do
         let(:order) { create(:order) }
         let(:promotion) { create(:promotion) }
         let(:action) { CreateItemAdjustments.new }
-        let!(:line_item) { create(:line_item, :order => order) }
+        let!(:line_item) { create(:line_item, order: order) }
         let(:payload) { { order: order, promotion: promotion } }
 
         before do
@@ -19,7 +19,7 @@ module Spree
           # Regression test for https://github.com/spree/spree/issues/3966
           context "when calculator computes 0" do
             before do
-              allow(action).to receive_messages :compute_amount => 0
+              allow(action).to receive_messages compute_amount: 0
             end
 
             it "does not create an adjustment when calculator returns 0" do
@@ -31,7 +31,7 @@ module Spree
           context "when calculator returns a non-zero value" do
             before do
               promotion.promotion_actions = [action]
-              allow(action).to receive_messages :compute_amount => 10
+              allow(action).to receive_messages compute_amount: 10
             end
 
             it "creates adjustment with item as adjustable" do

@@ -9,7 +9,7 @@ module Spree
     end
 
     def assign_user
-      true   # don't stop the filters
+      true # don't stop the filters
     end
   end
 end

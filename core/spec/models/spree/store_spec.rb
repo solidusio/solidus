@@ -1,7 +1,6 @@
 require 'spec_helper'
 
-describe Spree::Store, :type => :model do
-
+describe Spree::Store, type: :model do
   describe ".by_url" do
     let!(:store)    { create(:store, url: "website1.com\nwww.subdomain.com") }
     let!(:store_2)  { create(:store, url: 'freethewhales.com') }
@@ -19,7 +18,7 @@ describe Spree::Store, :type => :model do
     let!(:store_1) { Spree::Store.first || create(:store) }
 
     let!(:store_2) { create(:store, default: false, url: 'www.subdomain.com') }
-    let!(:store_3) { create(:store, default: false, url: 'www.another.com', code: 'CODE')}
+    let!(:store_3) { create(:store, default: false, url: 'www.another.com', code: 'CODE') }
 
     it 'should return default when no domain' do
       expect(subject.class.current).to eql(store_1)
@@ -51,5 +50,4 @@ describe Spree::Store, :type => :model do
       expect(store.default).not_to be true
     end
   end
-
 end

@@ -57,7 +57,7 @@ module Spree
         return promotion_applied if promotion_exists_on_order?(order, promotion)
         unless promotion.eligible?(order, promotion_code: promotion_code)
           self.error = promotion.eligibility_errors.full_messages.first unless promotion.eligibility_errors.blank?
-          return (self.error || ineligible_for_this_order)
+          return (error || ineligible_for_this_order)
         end
 
         # If any of the actions for the promotion return `true`,

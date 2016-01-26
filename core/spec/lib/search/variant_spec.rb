@@ -93,6 +93,7 @@ module Spree
       # Only search by SKU if the search word is a number
       class NumericSkuSearcher < Core::Search::Variant
         protected
+
         def search_terms(word)
           if word =~ /\A\d+\z/
             super

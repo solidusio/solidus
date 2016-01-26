@@ -13,7 +13,7 @@ module Spree
         invoke_callbacks(:create, :before)
         if @payment_method.save
           invoke_callbacks(:create, :after)
-          flash[:success] = Spree.t(:successfully_created, :resource => Spree.t(:payment_method))
+          flash[:success] = Spree.t(:successfully_created, resource: Spree.t(:payment_method))
           redirect_to edit_admin_payment_method_path(@payment_method)
         else
           invoke_callbacks(:create, :fails)
@@ -27,14 +27,14 @@ module Spree
         if @payment_method['type'].to_s != payment_method_type
           @payment_method.update_columns(
             type: payment_method_type,
-            updated_at: Time.current,
+            updated_at: Time.current
           )
           @payment_method = PaymentMethod.find(params[:id])
         end
 
         update_params = params[ActiveModel::Naming.param_key(@payment_method)] || {}
         attributes = payment_method_params.merge(update_params)
-        attributes.each do |k,v|
+        attributes.each do |k, _v|
           if k.include?("password") && attributes[k].blank?
             attributes.delete(k)
           end
@@ -42,7 +42,7 @@ module Spree
 
         if @payment_method.update_attributes(attributes)
           invoke_callbacks(:update, :after)
-          flash[:success] = Spree.t(:successfully_updated, :resource => Spree.t(:payment_method))
+          flash[:success] = Spree.t(:successfully_updated, resource: Spree.t(:payment_method))
           redirect_to edit_admin_payment_method_path(@payment_method)
         else
           invoke_callbacks(:update, :fails)
@@ -53,7 +53,7 @@ module Spree
       private
 
       def load_data
-        @providers = Gateway.providers.sort{|p1, p2| p1.name <=> p2.name }
+        @providers = Gateway.providers.sort{ |p1, p2| p1.name <=> p2.name }
       end
 
       def validate_payment_method_provider

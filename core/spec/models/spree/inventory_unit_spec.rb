@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Spree::InventoryUnit, :type => :model do
+describe Spree::InventoryUnit, type: :model do
   let(:stock_location) { create(:stock_location_with_items) }
   let(:stock_item) { stock_location.stock_items.order(:id).first }
   let(:line_item) { create(:line_item, variant: stock_item.variant) }
@@ -106,9 +106,7 @@ describe Spree::InventoryUnit, :type => :model do
       it "does not find inventory units belonging to incomplete orders" do
         expect(Spree::InventoryUnit.backordered_for_stock_item(stock_item)).not_to include(other_unit)
       end
-
     end
-
   end
 
   context "variants deleted" do
@@ -129,10 +127,12 @@ describe Spree::InventoryUnit, :type => :model do
   context "#finalize_units!" do
     let!(:stock_location) { create(:stock_location) }
     let(:variant) { create(:variant) }
-    let(:inventory_units) { [
+    let(:inventory_units) {
+      [
       create(:inventory_unit, variant: variant),
       create(:inventory_unit, variant: variant)
-    ] }
+    ]
+    }
 
     it "should create a stock movement" do
       Spree::InventoryUnit.finalize_units!(inventory_units)
@@ -173,11 +173,11 @@ describe Spree::InventoryUnit, :type => :model do
 
   describe '#additional_tax_total' do
     let(:quantity) { 2 }
-    let(:line_item_additional_tax_total)  { 10.00 }
+    let(:line_item_additional_tax_total) { 10.00 }
     let(:line_item) do
       build(:line_item, {
         quantity: quantity,
-        additional_tax_total: line_item_additional_tax_total,
+        additional_tax_total: line_item_additional_tax_total
       })
     end
 
@@ -192,11 +192,11 @@ describe Spree::InventoryUnit, :type => :model do
 
   describe '#included_tax_total' do
     let(:quantity) { 2 }
-    let(:line_item_included_tax_total)  { 10.00 }
+    let(:line_item_included_tax_total) { 10.00 }
     let(:line_item) do
       build(:line_item, {
         quantity: quantity,
-        included_tax_total: line_item_included_tax_total,
+        included_tax_total: line_item_included_tax_total
       })
     end
 
@@ -211,11 +211,11 @@ describe Spree::InventoryUnit, :type => :model do
 
   describe '#additional_tax_total' do
     let(:quantity) { 2 }
-    let(:line_item_additional_tax_total)  { 10.00 }
+    let(:line_item_additional_tax_total) { 10.00 }
     let(:line_item) do
       build(:line_item, {
         quantity: quantity,
-        additional_tax_total: line_item_additional_tax_total,
+        additional_tax_total: line_item_additional_tax_total
       })
     end
 
@@ -230,11 +230,11 @@ describe Spree::InventoryUnit, :type => :model do
 
   describe '#included_tax_total' do
     let(:quantity) { 2 }
-    let(:line_item_included_tax_total)  { 10.00 }
+    let(:line_item_included_tax_total) { 10.00 }
     let(:line_item) do
       build(:line_item, {
         quantity: quantity,
-        included_tax_total: line_item_included_tax_total,
+        included_tax_total: line_item_included_tax_total
       })
     end
 
@@ -248,7 +248,6 @@ describe Spree::InventoryUnit, :type => :model do
   end
 
   describe "#exchange_requested?" do
-
     subject { inventory_unit.exchange_requested? }
 
     context "return item contains inventory unit and was for an exchange" do

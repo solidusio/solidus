@@ -38,4 +38,3 @@ describe Spree::PermissionSets::RestrictedStockManagement do
     it { is_expected.to_not be_able_to(:manage, item2) }
   end
 end
-

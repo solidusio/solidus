@@ -1,19 +1,19 @@
 require 'spec_helper'
 require 'email_spec'
 
-describe Spree::OrderMailer, :type => :mailer do
+describe Spree::OrderMailer, type: :mailer do
   include EmailSpec::Helpers
   include EmailSpec::Matchers
 
   let(:order) do
     order = create(:order)
-    product = stub_model(Spree::Product, :name => %Q{The "BEST" product})
-    variant = stub_model(Spree::Variant, :product => product)
-    price = stub_model(Spree::Price, :variant => variant, :amount => 5.00)
+    product = stub_model(Spree::Product, name: %{The "BEST" product})
+    variant = stub_model(Spree::Variant, product: product)
+    price = stub_model(Spree::Price, variant: variant, amount: 5.00)
     store = FactoryGirl.build :store, mail_from_address: "store@example.com"
-    line_item = stub_model(Spree::LineItem, :variant => variant, :order => order, :quantity => 1, :price => 4.99)
-    allow(variant).to receive_messages(:default_price => price)
-    allow(order).to receive_messages(:line_items => [line_item])
+    line_item = stub_model(Spree::LineItem, variant: variant, order: order, quantity: 1, price: 4.99)
+    allow(variant).to receive_messages(default_price: price)
+    allow(order).to receive_messages(line_items: [line_item])
     allow(order).to receive(:store).and_return(store)
     order
   end
@@ -92,12 +92,11 @@ describe Spree::OrderMailer, :type => :mailer do
   end
 
   context "emails must be translatable" do
-
     context "pt-BR locale" do
       before do
         I18n.enforce_available_locales = false
-        pt_br_confirm_mail = { :spree => { :order_mailer => { :confirm_email => { :dear_customer => 'Caro Cliente,' } } } }
-        pt_br_cancel_mail = { :spree => { :order_mailer => { :cancel_email => { :order_summary_canceled => 'Resumo da Pedido [CANCELADA]' } } } }
+        pt_br_confirm_mail = { spree: { order_mailer: { confirm_email: { dear_customer: 'Caro Cliente,' } } } }
+        pt_br_cancel_mail = { spree: { order_mailer: { cancel_email: { order_summary_canceled: 'Resumo da Pedido [CANCELADA]' } } } }
         I18n.backend.store_translations :'pt-BR', pt_br_confirm_mail
         I18n.backend.store_translations :'pt-BR', pt_br_cancel_mail
         I18n.locale = :'pt-BR'
@@ -131,5 +130,4 @@ describe Spree::OrderMailer, :type => :mailer do
       expect(message.body).to be_blank
     end
   end
-
 end

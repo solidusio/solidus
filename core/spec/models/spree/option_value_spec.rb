@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Spree::OptionValue, :type => :model do
+describe Spree::OptionValue, type: :model do
   context "touching" do
     let!(:variant) do
       Timecop.freeze(1.day.ago) do

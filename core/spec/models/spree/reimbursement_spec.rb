@@ -1,7 +1,6 @@
 require 'spec_helper'
 
 describe Spree::Reimbursement, type: :model do
-
   describe ".before_create" do
     describe "#generate_number" do
       context "number is assigned" do
@@ -53,7 +52,7 @@ describe Spree::Reimbursement, type: :model do
     let!(:tax_zone)               { create :zone, default_tax: true }
     let(:shipping_method)         { create :shipping_method, zones: [tax_zone] }
     let(:variant)                 { create :variant }
-    let(:order)                   { create(:order_with_line_items, state: 'payment', line_items_attributes: [{variant: variant, price: line_items_price}], shipment_cost: 0, shipping_method: shipping_method) }
+    let(:order)                   { create(:order_with_line_items, state: 'payment', line_items_attributes: [{ variant: variant, price: line_items_price }], shipment_cost: 0, shipping_method: shipping_method) }
     let(:line_items_price)        { BigDecimal.new(10) }
     let(:line_item)               { order.line_items.first }
     let(:inventory_unit)          { line_item.inventory_units.first }
@@ -148,12 +147,11 @@ describe Spree::Reimbursement, type: :model do
       expect(Spree::ReimbursementMailer).to receive(:reimbursement_email).with(reimbursement.id) { double(deliver_later: true) }
       subject
     end
-
   end
 
   describe "#return_items_requiring_exchange" do
     it "returns only the return items that require an exchange" do
-      return_items = [double(exchange_required?: true), double(exchange_required?: true),double(exchange_required?: false)]
+      return_items = [double(exchange_required?: true), double(exchange_required?: true), double(exchange_required?: false)]
       allow(subject).to receive(:return_items) { return_items }
       expect(subject.return_items_requiring_exchange).to eq return_items.take(2)
     end

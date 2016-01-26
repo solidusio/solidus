@@ -5,7 +5,7 @@ FactoryGirl.define do
     factory :stock_transfer_with_items do
       destination_location { Spree::StockLocation.create!(name: "Destination Location", code: "DEST", admin_name: "Destination") }
 
-      after(:create) do |stock_transfer, evaluator|
+      after(:create) do |stock_transfer, _evaluator|
         variant_1 = create(:variant)
         variant_2 = create(:variant)
 

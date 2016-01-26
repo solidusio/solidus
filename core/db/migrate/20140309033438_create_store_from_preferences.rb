@@ -12,10 +12,10 @@ class CreateStoreFromPreferences < ActiveRecord::Migration
     else
       # we set defaults for the things we now require
       Store.new do |s|
-        s.name              = preference_store.get 'spree/app_configuration/site_name' do
+        s.name = preference_store.get 'spree/app_configuration/site_name' do
           'Sample Store'
         end
-        s.url               = preference_store.get 'spree/app_configuration/site_url' do
+        s.url = preference_store.get 'spree/app_configuration/site_url' do
           'example.com'
         end
         s.mail_from_address = preference_store.get 'spree/app_configuration/mails_from' do

@@ -45,4 +45,3 @@ describe Spree::PermissionSets::UserManagement do
     it { is_expected.not_to be_able_to(:display, Spree::Role) }
   end
 end
-

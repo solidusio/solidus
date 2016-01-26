@@ -10,17 +10,17 @@ describe Spree::Admin::ReimbursementsHelper, type: :helper do
 
     context 'when status is reimbursed' do
       let(:status) { 'reimbursed' }
-      it { is_expected.to eq 'success'}
+      it { is_expected.to eq 'success' }
     end
 
     context 'when status is pending' do
       let(:status) { 'pending' }
-      it { is_expected.to eq 'notice'}
+      it { is_expected.to eq 'notice' }
     end
 
     context 'when status is pending' do
       let(:status) { 'errored' }
-      it { is_expected.to eq 'error'}
+      it { is_expected.to eq 'error' }
     end
 
     context 'when status is not valid' do

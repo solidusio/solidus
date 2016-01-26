@@ -1,8 +1,8 @@
 require 'spec_helper'
 
 describe "Address", type: :feature, inaccessible: true do
-  let!(:product) { create(:product, :name => "RoR Mug") }
-  let!(:order) { create(:order_with_totals, :state => 'cart') }
+  let!(:product) { create(:product, name: "RoR Mug") }
+  let!(:order) { create(:order_with_totals, state: 'cart') }
 
   stub_authorization!
 
@@ -18,9 +18,9 @@ describe "Address", type: :feature, inaccessible: true do
     @state_name_css = "##{address}_state_name"
   end
 
-  context "country requires state", :js => true, :focus => true do
-    let!(:canada) { create(:country, :name => "Canada", :states_required => true, :iso => "CA") }
-    let!(:uk) { create(:country, :name => "United Kingdom", :states_required => true, :iso => "GB") }
+  context "country requires state", js: true, focus: true do
+    let!(:canada) { create(:country, name: "Canada", states_required: true, iso: "CA") }
+    let!(:uk) { create(:country, name: "United Kingdom", states_required: true, iso: "GB") }
 
     before { Spree::Config[:default_country_id] = uk.id }
 
@@ -28,33 +28,33 @@ describe "Address", type: :feature, inaccessible: true do
       it "shows the state input field" do
         click_button "Checkout"
 
-        select canada.name, :from => @country_css
+        select canada.name, from: @country_css
         expect(page).to have_no_css(@state_select_css)
         expect(page).to have_css("#{@state_name_css}.required")
       end
     end
 
     context "and has state" do
-      before { create(:state, :name => "Ontario", :country => canada) }
+      before { create(:state, name: "Ontario", country: canada) }
 
       it "shows the state collection selection" do
         click_button "Checkout"
 
-        select canada.name, :from => @country_css
+        select canada.name, from: @country_css
         expect(page).to have_no_css(@state_name_css)
         expect(page).to have_css("#{@state_select_css}.required")
       end
     end
 
     context "user changes to country without states required" do
-      let!(:france) { create(:country, :name => "France", :states_required => false, :iso => "FRA") }
+      let!(:france) { create(:country, name: "France", states_required: false, iso: "FRA") }
 
       it "clears the state name" do
         click_button "Checkout"
-        select canada.name, :from => @country_css
+        select canada.name, from: @country_css
         page.find(@state_name_css).set("Toscana")
 
-        select france.name, :from => @country_css
+        select france.name, from: @country_css
 
         expect(page).to have_no_css(@state_name_css)
         expect(page).to have_no_css(@state_select_css)
@@ -62,13 +62,13 @@ describe "Address", type: :feature, inaccessible: true do
     end
   end
 
-  context "country does not require state", :js => true do
-    let!(:france) { create(:country, :name => "France", :states_required => false, :iso => "FRA") }
+  context "country does not require state", js: true do
+    let!(:france) { create(:country, name: "France", states_required: false, iso: "FRA") }
 
     it "shows a disabled state input field" do
        click_button "Checkout"
 
-       select france.name, :from => @country_css
+       select france.name, from: @country_css
        expect(page).to have_no_css(@state_name_css)
        expect(page).to have_css("#{@state_select_css}[disabled]", visible: false)
     end

@@ -35,7 +35,7 @@ module Spree
     #
     # @param ability [CanCan::Ability] the ability to invoke declarations on
     # @param user [#spree_roles] the user that holds the spree_roles association.
-    def activate_permissions! ability, user
+    def activate_permissions!(ability, user)
       spree_roles = ['default'] | user.spree_roles.map(&:name)
       applicable_permissions = Set.new
 
@@ -60,7 +60,7 @@ module Spree
     # @param role_name [Symbol, String] The name of the role to associate permissions with
     # @param permission_sets [Array<Spree::PermissionSets::Base>, Set<Spree::PermissionSets::Base>]
     #   A list of permission sets to activate if the user has the role indicated by role_name
-    def assign_permissions role_name, permission_sets
+    def assign_permissions(role_name, permission_sets)
       name = role_name.to_s
 
       roles[name].permission_sets |= permission_sets

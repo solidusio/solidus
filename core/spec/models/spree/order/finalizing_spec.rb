@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Spree::Order, :type => :model do
+describe Spree::Order, type: :model do
   let(:order) { stub_model("Spree::Order") }
 
   context "#finalize!" do
@@ -35,15 +35,15 @@ describe Spree::Order, :type => :model do
       Spree::Shipment.create(order: order)
       order.shipments.reload
 
-      allow(order).to receive_messages(:paid? => true, :complete? => true)
+      allow(order).to receive_messages(paid?: true, complete?: true)
       order.finalize!
       order.reload # reload so we're sure the changes are persisted
       expect(order.shipment_state).to eq('ready')
     end
 
-    after { Spree::Config.set :track_inventory_levels => true }
+    after { Spree::Config.set track_inventory_levels: true }
     it "should not sell inventory units if track_inventory_levels is false" do
-      Spree::Config.set :track_inventory_levels => false
+      Spree::Config.set track_inventory_levels: false
       expect(Spree::InventoryUnit).not_to receive(:sell_units)
       order.finalize!
     end
@@ -62,7 +62,7 @@ describe Spree::Order, :type => :model do
     end
 
     it "should not send duplicate confirmation emails" do
-      allow(order).to receive_messages(:confirmation_delivered? => true)
+      allow(order).to receive_messages(confirmation_delivered?: true)
       expect(Spree::OrderMailer).not_to receive(:confirm_email)
       order.finalize!
     end
@@ -81,12 +81,12 @@ describe Spree::Order, :type => :model do
 
     context "order is considered risky" do
       before do
-        allow(order).to receive_messages :is_risky? => true
+        allow(order).to receive_messages is_risky?: true
       end
 
       context "and order is approved" do
         before do
-          allow(order).to receive_messages :approved? => true
+          allow(order).to receive_messages approved?: true
         end
 
         it "should leave order in complete state" do
@@ -98,7 +98,7 @@ describe Spree::Order, :type => :model do
 
     context "order is not considered risky" do
       before do
-        allow(order).to receive_messages :is_risky? => false
+        allow(order).to receive_messages is_risky?: false
       end
 
       it "should set completed_at" do

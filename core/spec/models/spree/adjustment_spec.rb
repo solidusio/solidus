@@ -3,8 +3,7 @@
 
 require 'spec_helper'
 
-describe Spree::Adjustment, :type => :model do
-
+describe Spree::Adjustment, type: :model do
   let(:order) { Spree::Order.new }
   let(:line_item) { create :line_item, order: order }
 

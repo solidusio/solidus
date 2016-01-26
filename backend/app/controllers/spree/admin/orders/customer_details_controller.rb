@@ -10,8 +10,8 @@ module Spree
 
         def edit
           country_id = Country.default.id
-          @order.build_bill_address(:country_id => country_id) if @order.bill_address.nil?
-          @order.build_ship_address(:country_id => country_id) if @order.ship_address.nil?
+          @order.build_bill_address(country_id: country_id) if @order.bill_address.nil?
+          @order.build_ship_address(country_id: country_id) if @order.ship_address.nil?
 
           @order.bill_address.country_id = country_id if @order.bill_address.country.nil?
           @order.ship_address.country_id = country_id if @order.ship_address.country.nil?
@@ -33,33 +33,32 @@ module Spree
             flash[:success] = Spree.t('customer_details_updated')
             redirect_to edit_admin_order_url(@order)
           else
-            render :action => :edit
+            render action: :edit
           end
-
         end
 
         private
-          def order_params
-            params.require(:order).permit(
-              :email,
-              :use_billing,
-              :bill_address_attributes => permitted_address_attributes,
-              :ship_address_attributes => permitted_address_attributes
-            )
-          end
 
-          def load_order
-            @order = Order.includes(:adjustments).find_by_number!(params[:order_id])
-          end
+        def order_params
+          params.require(:order).permit(
+            :email,
+            :use_billing,
+            bill_address_attributes: permitted_address_attributes,
+            ship_address_attributes: permitted_address_attributes
+          )
+        end
 
-          def model_class
-            Spree::Order
-          end
+        def load_order
+          @order = Order.includes(:adjustments).find_by_number!(params[:order_id])
+        end
 
-          def should_associate_user?
-            params[:guest_checkout] == "false" && params[:user_id] && params[:user_id].to_i != @order.user_id
-          end
+        def model_class
+          Spree::Order
+        end
 
+        def should_associate_user?
+          params[:guest_checkout] == "false" && params[:user_id] && params[:user_id].to_i != @order.user_id
+        end
       end
     end
   end

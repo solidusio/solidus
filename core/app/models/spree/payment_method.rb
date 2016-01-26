@@ -30,20 +30,20 @@ module Spree
     def self.available(display_on = 'both', store: nil)
       all.select do |p|
         p.active &&
-        (p.display_on == display_on.to_s || p.display_on.blank?) &&
-        (store.nil? || store.payment_methods.empty? || store.payment_methods.include?(p))
+          (p.display_on == display_on.to_s || p.display_on.blank?) &&
+          (store.nil? || store.payment_methods.empty? || store.payment_methods.include?(p))
       end
     end
 
     def self.active?
-      where(type: self.to_s, active: true).count > 0
+      where(type: to_s, active: true).count > 0
     end
 
     def method_type
       type.demodulize.downcase
     end
 
-    def self.find_with_destroyed *args
+    def self.find_with_destroyed(*args)
       unscoped { find(*args) }
     end
 
@@ -57,19 +57,19 @@ module Spree
 
     # Custom gateways should redefine this method. See Gateway implementation
     # as an example
-    def reusable_sources(order)
+    def reusable_sources(_order)
       []
     end
 
     def auto_capture?
-      self.auto_capture.nil? ? Spree::Config[:auto_capture] : self.auto_capture
+      auto_capture.nil? ? Spree::Config[:auto_capture] : auto_capture
     end
 
-    def supports?(source)
+    def supports?(_source)
       true
     end
 
-    def cancel(response)
+    def cancel(_response)
       raise ::NotImplementedError, 'You must implement cancel method for this payment method.'
     end
 

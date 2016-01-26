@@ -5,13 +5,15 @@ describe Spree::PromotionBuilder do
   let(:base_code) { 'abc' }
   let(:number_of_codes) { 1 }
   let(:promotion_attrs) { { name: 'some promo' } }
-  let(:builder) { Spree::PromotionBuilder.new(
-    {
-      base_code: base_code,
-      number_of_codes: number_of_codes
-    },
-    promotion_attrs,
-  ) }
+  let(:builder) {
+    Spree::PromotionBuilder.new(
+      {
+        base_code: base_code,
+        number_of_codes: number_of_codes
+      },
+    promotion_attrs
+  )
+  }
 
   describe '#initialize' do
     subject { builder }
@@ -25,7 +27,7 @@ describe Spree::PromotionBuilder do
   end
 
   describe '#valid?' do
-    subject {  builder.valid? }
+    subject { builder.valid? }
 
     it 'is true' do
       expect(subject).to be

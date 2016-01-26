@@ -3,7 +3,7 @@ module Spree
     class ProductsController < ResourceController
       helper 'spree/products'
 
-      before_filter :load_data, :except => [:index]
+      before_filter :load_data, except: [:index]
       create.before :create_before
       update.before :update_before
       helper_method :clone_object_url
@@ -25,7 +25,7 @@ module Spree
           params[:product][:option_type_ids] = params[:product][:option_type_ids].split(',')
         end
         if updating_variant_property_rules?
-          params[:product][:variant_property_rules_attributes].each do |index, param_attrs|
+          params[:product][:variant_property_rules_attributes].each do |_index, param_attrs|
             param_attrs[:option_value_ids] = param_attrs[:option_value_ids].split(',')
           end
         end
@@ -54,7 +54,7 @@ module Spree
 
         respond_with(@product) do |format|
           format.html { redirect_to collection_url }
-          format.js  { render_js_for_destroy }
+          format.js { render_js_for_destroy }
         end
       end
 
@@ -80,7 +80,7 @@ module Spree
         if updating_variant_property_rules?
           url_params = {}
           url_params[:ovi] = []
-          params[:product][:variant_property_rules_attributes].each do |index, param_attrs|
+          params[:product][:variant_property_rules_attributes].each do |_index, param_attrs|
             url_params[:ovi] += param_attrs[:option_value_ids]
           end
           spree.admin_product_product_properties_url(@product, url_params)

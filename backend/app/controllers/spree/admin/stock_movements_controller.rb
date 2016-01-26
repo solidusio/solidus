@@ -13,7 +13,7 @@ module Spree
       def collection
         super.
           recent.
-          includes(:stock_item => { :variant => :product }).
+          includes(stock_item: { variant: :product }).
           page(params[:page])
       end
     end

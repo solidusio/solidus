@@ -40,10 +40,10 @@ module Spree
     # A State zone wins over a country zone, and a zone with few members wins
     # over one with many members. If there is no match, returns nil.
     def self.match(address)
-      return unless address and matches = self.
-        with_member_ids(address.state_id, address.country_id).
-        order(:zone_members_count, :created_at, :id).
-        references(:zones)
+      return unless address && (matches =
+                                  with_member_ids(address.state_id, address.country_id).
+                                  order(:zone_members_count, :created_at, :id).
+                                  references(:zones))
 
       ['state', 'country'].each do |zone_kind|
         if match = matches.detect { |zone| zone_kind == zone.kind }
@@ -52,7 +52,6 @@ module Spree
       end
       matches.first
     end
-
 
     # Returns all zones that contain any of the zone members of the zone passed
     # in. This also includes any country zones that contain the state of the
@@ -152,24 +151,24 @@ module Spree
 
     private
 
-      def remove_defunct_members
-        if zone_members.any?
-          zone_members.where('zoneable_id IS NULL OR zoneable_type != ?', "Spree::#{kind.classify}").destroy_all
-        end
+    def remove_defunct_members
+      if zone_members.any?
+        zone_members.where('zoneable_id IS NULL OR zoneable_type != ?', "Spree::#{kind.classify}").destroy_all
       end
+    end
 
-      def remove_previous_default
-        Spree::Zone.where('id != ?', self.id).update_all(default_tax: false) if default_tax
-      end
+    def remove_previous_default
+      Spree::Zone.where('id != ?', id).update_all(default_tax: false) if default_tax
+    end
 
-      def set_zone_members(ids, type)
-        zone_members.destroy_all
-        ids.reject{ |id| id.blank? }.map do |id|
-          member = ZoneMember.new
-          member.zoneable_type = type
-          member.zoneable_id = id
-          members << member
-        end
+    def set_zone_members(ids, type)
+      zone_members.destroy_all
+      ids.reject(&:blank?).map do |id|
+        member = ZoneMember.new
+        member.zoneable_type = type
+        member.zoneable_id = id
+        members << member
       end
+    end
   end
 end

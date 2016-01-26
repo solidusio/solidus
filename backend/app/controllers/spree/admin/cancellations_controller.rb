@@ -1,7 +1,7 @@
 module Spree
   module Admin
     class CancellationsController < Spree::Admin::BaseController
-      before_filter :load_order, :only => [:index, :short_ship]
+      before_filter :load_order, only: [:index, :short_ship]
 
       def index
         @inventory_units = @order.inventory_units.cancelable

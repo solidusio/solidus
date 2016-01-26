@@ -1,11 +1,9 @@
 require 'spec_helper'
 
 describe Spree::StoreCredit do
-
   let(:currency) { "TEST" }
   let(:store_credit) { build(:store_credit, store_credit_attrs) }
   let(:store_credit_attrs) { {} }
-
 
   describe "callbacks" do
     subject { store_credit.save }
@@ -23,7 +21,7 @@ describe Spree::StoreCredit do
 
     context "category is a non-expiring type" do
       let!(:secondary_credit_type) { create(:secondary_credit_type) }
-      let(:store_credit) { build(:store_credit, credit_type: nil)}
+      let(:store_credit) { build(:store_credit, credit_type: nil) }
 
       before do
         allow(store_credit.category).to receive(:non_expiring?).and_return(true)
@@ -47,8 +45,8 @@ describe Spree::StoreCredit do
     end
 
     context "the type is set" do
-      let!(:secondary_credit_type) { create(:secondary_credit_type)}
-      let(:store_credit) { build(:store_credit, credit_type: secondary_credit_type)}
+      let!(:secondary_credit_type) { create(:secondary_credit_type) }
+      let(:store_credit) { build(:store_credit, credit_type: secondary_credit_type) }
 
       before do
         allow(store_credit.category).to receive(:non_expiring?).and_return(false)
@@ -81,7 +79,6 @@ describe Spree::StoreCredit do
         it "should be valid" do
           expect(store_credit).to be_valid
         end
-
       end
     end
 
@@ -203,7 +200,6 @@ describe Spree::StoreCredit do
       let(:originator) { nil }
 
       context "amount has not been authorized yet" do
-
         before { store_credit.update_attributes(amount_authorized: authorization_amount) }
 
         it "returns true" do
@@ -282,7 +278,7 @@ describe Spree::StoreCredit do
 
     context 'troublesome floats' do
       # 8.21.to_d < 8.21 => true
-      let(:store_credit_attrs) { {amount: 8.21} }
+      let(:store_credit_attrs) { { amount: 8.21 } }
 
       subject { store_credit.validate_authorization(store_credit_attrs[:amount], store_credit.currency) }
 
@@ -374,7 +370,6 @@ describe Spree::StoreCredit do
     end
 
     context "no event found for auth_code" do
-
       it "returns false" do
         expect(subject).to be false
       end
@@ -387,11 +382,13 @@ describe Spree::StoreCredit do
 
     context "capture event found for auth_code" do
       let(:captured_amount) { 10.0 }
-      let!(:capture_event) { create(:store_credit_auth_event,
+      let!(:capture_event) {
+        create(:store_credit_auth_event,
                                     action: Spree::StoreCredit::CAPTURE_ACTION,
                                     authorization_code: auth_code,
                                     amount: captured_amount,
-                                    store_credit: store_credit) }
+                                    store_credit: store_credit)
+      }
 
       it "returns false" do
         expect(subject).to be false
@@ -406,10 +403,12 @@ describe Spree::StoreCredit do
       let(:auth_event) { create(:store_credit_auth_event) }
 
       let(:authorized_amount) { 10.0 }
-      let!(:auth_event) { create(:store_credit_auth_event,
+      let!(:auth_event) {
+        create(:store_credit_auth_event,
                                  authorization_code: auth_code,
                                  amount: authorized_amount,
-                                 store_credit: store_credit) }
+                                 store_credit: store_credit)
+      }
 
       it "returns true" do
         expect(subject).to be true
@@ -434,11 +433,13 @@ describe Spree::StoreCredit do
     let(:event_auth_code) { "1-SC-20141111111111" }
     let(:amount_used)     { 10.0 }
     let(:store_credit)    { create(:store_credit, amount_used: amount_used) }
-    let!(:capture_event)  { create(:store_credit_auth_event,
+    let!(:capture_event)  {
+      create(:store_credit_auth_event,
                                    action: Spree::StoreCredit::CAPTURE_ACTION,
                                    authorization_code: event_auth_code,
                                    amount: captured_amount,
-                                   store_credit: store_credit) }
+                                   store_credit: store_credit)
+    }
     let(:originator) { nil }
 
     subject { store_credit.credit(credit_amount, auth_code, currency, action_originator: originator) }

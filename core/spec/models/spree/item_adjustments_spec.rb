@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 module Spree
-  describe ItemAdjustments, :type => :model do
+  describe ItemAdjustments, type: :model do
     let(:order) { create :order_with_line_items, line_items_count: 1 }
     let(:line_item) { order.line_items.first }
 
@@ -9,7 +9,7 @@ module Spree
 
     context '#update' do
       it "updates a linked adjustment" do
-        tax_rate = create(:tax_rate, :amount => 0.05)
+        tax_rate = create(:tax_rate, amount: 0.05)
         adjustment = create(:adjustment, order: order, source: tax_rate, adjustable: line_item)
         line_item.price = 10
         line_item.tax_category = tax_rate.tax_category
@@ -22,15 +22,15 @@ module Spree
 
     context "taxes and promotions" do
       let!(:tax_rate) do
-        create(:tax_rate, :amount => 0.05)
+        create(:tax_rate, amount: 0.05)
       end
 
       let!(:promotion) do
-        Spree::Promotion.create(:name => "$10 off")
+        Spree::Promotion.create(name: "$10 off")
       end
 
       let!(:promotion_action) do
-        calculator = Calculator::FlatRate.new(:preferred_amount => 10)
+        calculator = Calculator::FlatRate.new(preferred_amount: 10)
         Promotion::Actions::CreateItemAdjustments.create calculator: calculator, promotion: promotion
       end
 
@@ -44,10 +44,10 @@ module Spree
       context "tax included in price" do
         before do
           create(:adjustment,
-            :source => tax_rate,
-            :adjustable => line_item,
-            :order => order,
-            :included => true
+            source: tax_rate,
+            adjustable: line_item,
+            order: order,
+            included: true
           )
         end
 
@@ -71,10 +71,10 @@ module Spree
       context "tax excluded from price" do
         before do
           create(:adjustment,
-            :source => tax_rate,
-            :adjustable => line_item,
-            :order => order,
-            :included => false
+            source: tax_rate,
+            adjustable: line_item,
+            order: order,
+            included: false
           )
         end
 
@@ -100,7 +100,7 @@ module Spree
     context "promotion chooser customization" do
       before do
         class Spree::TestPromotionChooser
-          def initialize(adjustments)
+          def initialize(_adjustments)
             raise "Custom promotion chooser"
           end
         end
@@ -118,36 +118,36 @@ module Spree
     end
 
     context "default promotion chooser (best promotion is always applied)" do
-      let(:calculator) { Calculator::FlatRate.new(:preferred_amount => 10) }
+      let(:calculator) { Calculator::FlatRate.new(preferred_amount: 10) }
 
       let(:source) do
         Promotion::Actions::CreateItemAdjustments.create!(
           calculator: calculator,
-          promotion: promotion,
+          promotion: promotion
         )
       end
       let(:promotion) { create(:promotion) }
 
       def create_adjustment(label, amount)
-        create(:adjustment, :order      => order,
-                            :adjustable => line_item,
-                            :source     => source,
-                            :amount     => amount,
-                            :finalized  => true,
-                            :label      => label)
+        create(:adjustment, order: order,
+                            adjustable: line_item,
+                            source: source,
+                            amount: amount,
+                            finalized: true,
+                            label: label)
       end
 
       it "should make all but the most valuable promotion adjustment ineligible, leaving non promotion adjustments alone" do
         create_adjustment("Promotion A", -100)
         create_adjustment("Promotion B", -200)
         create_adjustment("Promotion C", -300)
-        create(:adjustment, :order => order,
-                            :adjustable => line_item,
-                            :source => nil,
-                            :amount => -500,
-                            :finalized => true,
-                            :label => "Some other credit")
-        line_item.adjustments.each {|a| a.update_column(:eligible, true)}
+        create(:adjustment, order: order,
+                            adjustable: line_item,
+                            source: nil,
+                            amount: -500,
+                            finalized: true,
+                            label: "Some other credit")
+        line_item.adjustments.each { |a| a.update_column(:eligible, true) }
 
         subject.update
 
@@ -161,7 +161,7 @@ module Spree
           create_adjustment("Promotion A", -200)
           create_adjustment("Promotion B", -200)
         end
-        line_item.adjustments.each {|a| a.update_column(:eligible, true)}
+        line_item.adjustments.each { |a| a.update_column(:eligible, true) }
 
         subject.update
 
@@ -175,7 +175,7 @@ module Spree
           create_adjustment("Promotion A", -200)
           create_adjustment("Promotion B", -200)
         end
-        line_item.adjustments.each {|a| a.update_column(:eligible, true)}
+        line_item.adjustments.each { |a| a.update_column(:eligible, true) }
 
         subject.update
 
@@ -186,16 +186,16 @@ module Spree
       context "when previously ineligible promotions become available" do
         let(:order_promo1) { create(:promotion, :with_order_adjustment, :with_item_total_rule, weighted_order_adjustment_amount: 5, item_total_threshold_amount: 10) }
         let(:order_promo2) { create(:promotion, :with_order_adjustment, :with_item_total_rule, weighted_order_adjustment_amount: 10, item_total_threshold_amount: 20) }
-        let(:order_promos) { [ order_promo1, order_promo2 ] }
+        let(:order_promos) { [order_promo1, order_promo2] }
         let(:line_item_promo1) { create(:promotion, :with_line_item_adjustment, :with_item_total_rule, adjustment_rate: 2.5, item_total_threshold_amount: 10, apply_automatically: true) }
         let(:line_item_promo2) { create(:promotion, :with_line_item_adjustment, :with_item_total_rule, adjustment_rate: 5, item_total_threshold_amount: 20, apply_automatically: true) }
-        let(:line_item_promos) { [ line_item_promo1, line_item_promo2 ] }
+        let(:line_item_promos) { [line_item_promo1, line_item_promo2] }
         let(:order) { create(:order_with_line_items, line_items_count: 1) }
 
         # Apply promotions in different sequences. Results should be the same.
         promo_sequences = [
-          [ 0, 1 ],
-          [ 1, 0 ]
+          [0, 1],
+          [1, 0]
         ]
 
         promo_sequences.each do |promo_sequence|

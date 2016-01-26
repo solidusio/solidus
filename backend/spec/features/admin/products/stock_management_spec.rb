@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe "Stock Management", :type => :feature do
+describe "Stock Management", type: :feature do
   stub_authorization!
 
   before(:each) do

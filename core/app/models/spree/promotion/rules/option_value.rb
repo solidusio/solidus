@@ -10,7 +10,7 @@ module Spree
           promotable.is_a?(Spree::Order)
         end
 
-        def eligible?(promotable, options = {})
+        def eligible?(promotable, _options = {})
           case preferred_match_policy
           when 'any'
             promotable.line_items.any? { |item| actionable?(item) }
@@ -18,7 +18,6 @@ module Spree
         end
 
         def actionable?(line_item)
-
           pid = line_item.product.id
           ovids = line_item.variant.option_values.pluck(:id)
 

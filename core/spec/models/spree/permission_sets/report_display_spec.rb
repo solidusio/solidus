@@ -21,4 +21,3 @@ describe Spree::PermissionSets::ReportDisplay do
     it { is_expected.not_to be_able_to(:sales_total, :reports) }
   end
 end
-

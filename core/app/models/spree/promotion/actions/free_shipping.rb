@@ -2,7 +2,7 @@ module Spree
   class Promotion
     module Actions
       class FreeShipping < Spree::PromotionAction
-        def perform(payload={})
+        def perform(payload = {})
           order = payload[:order]
           promotion_code = payload[:promotion_code]
 
@@ -13,7 +13,7 @@ module Spree
               amount: compute_amount(shipment),
               source: self,
               promotion_code: promotion_code,
-              label: label,
+              label: label
             )
             true
           end
@@ -33,7 +33,7 @@ module Spree
         private
 
         def promotion_credit_exists?(shipment)
-          shipment.adjustments.where(:source_id => self.id).exists?
+          shipment.adjustments.where(source_id: id).exists?
         end
       end
     end

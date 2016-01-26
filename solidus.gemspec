@@ -17,7 +17,7 @@ Gem::Specification.new do |s|
   s.author       = 'Solidus Team'
   s.email        = 'contact@solidus.io'
   s.homepage     = 'http://solidus.io'
-  s.license      = %q{BSD-3}
+  s.license      = 'BSD-3'
 
   s.add_dependency 'solidus_core', s.version
   s.add_dependency 'solidus_api', s.version

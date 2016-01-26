@@ -13,7 +13,7 @@ FactoryGirl.define do
 
     trait :failing do
       response_code '00000'
-      association(:source, :failing, {factory: :credit_card})
+      association(:source, :failing, { factory: :credit_card })
     end
 
     factory :payment_with_refund do

@@ -13,7 +13,6 @@ describe Spree::PermissionSets::RestrictedStockTransferDisplay do
   let!(:other_source_transfer) { create :stock_transfer, source_location: sl2 }
   let!(:dest_transfer) { create :stock_transfer, source_location: sl2, destination_location: sl1 }
 
-
   before do
     user.stock_locations << sl1
   end

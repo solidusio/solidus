@@ -12,7 +12,7 @@ module Spree
           if report_description_key.nil?
             report_description_key = "#{report_key}_description"
           end
-          @@available_reports[report_key] = {name: Spree.t(report_key), description: Spree.t(report_description_key)}
+          @@available_reports[report_key] = { name: Spree.t(report_key), description: Spree.t(report_description_key) }
         end
       end
 
@@ -31,11 +31,19 @@ module Spree
         if params[:q][:completed_at_gt].blank?
           params[:q][:completed_at_gt] = Time.current.beginning_of_month
         else
-          params[:q][:completed_at_gt] = Time.zone.parse(params[:q][:completed_at_gt]).beginning_of_day rescue Time.current.beginning_of_month
+          params[:q][:completed_at_gt] = begin
+                                           Time.zone.parse(params[:q][:completed_at_gt]).beginning_of_day
+                                         rescue
+                                           Time.current.beginning_of_month
+                                         end
         end
 
         if params[:q] && !params[:q][:completed_at_lt].blank?
-          params[:q][:completed_at_lt] = Time.zone.parse(params[:q][:completed_at_lt]).end_of_day rescue ""
+          params[:q][:completed_at_lt] = begin
+                                           Time.zone.parse(params[:q][:completed_at_lt]).end_of_day
+                                         rescue
+                                           ""
+                                         end
         end
 
         params[:q][:s] ||= "completed_at desc"

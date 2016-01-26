@@ -1,6 +1,5 @@
 module Spree
   class ReturnItem < Spree::Base
-
     INTERMEDIATE_RECEPTION_STATUSES = %i(given_to_customer lost_in_transit shipped_wrong_item short_shipped in_transit)
     COMPLETED_RECEPTION_STATUSES = INTERMEDIATE_RECEPTION_STATUSES + [:received]
 
@@ -49,8 +48,8 @@ module Spree
     scope :awaiting_return, -> { where(reception_status: 'awaiting') }
     scope :expecting_return, -> { where.not(reception_status: COMPLETED_RECEPTION_STATUSES) }
     scope :not_cancelled, -> { where.not(reception_status: 'cancelled') }
-    scope :valid, -> { where.not(reception_status: %w(cancelled expired unexchanged))}
-    scope :not_expired, -> { where.not(reception_status: 'expired')}
+    scope :valid, -> { where.not(reception_status: %w(cancelled expired unexchanged)) }
+    scope :not_expired, -> { where.not(reception_status: 'expired') }
     scope :received, -> { where(reception_status: 'received') }
     INTERMEDIATE_RECEPTION_STATUSES.each do |reception_status|
       scope reception_status, -> { where(reception_status: reception_status) }
@@ -216,7 +215,7 @@ module Spree
     private
 
     def persist_acceptance_status_errors
-      self.update_attributes(acceptance_status_errors: validator.errors)
+      update_attributes(acceptance_status_errors: validator.errors)
     end
 
     def currency
@@ -284,13 +283,13 @@ module Spree
     def validate_no_other_completed_return_items
       other_return_item = Spree::ReturnItem.where({
         inventory_unit_id: inventory_unit_id,
-        reception_status: COMPLETED_RECEPTION_STATUSES,
-      }).where.not(id: self.id).first
+        reception_status: COMPLETED_RECEPTION_STATUSES
+      }).where.not(id: id).first
 
       if other_return_item && (new_record? || COMPLETED_RECEPTION_STATUSES.include?(reception_status.to_sym))
         errors.add(:inventory_unit, :other_completed_return_item_exists, {
           inventory_unit_id: inventory_unit_id,
-          return_item_id: other_return_item.id,
+          return_item_id: other_return_item.id
         })
       end
     end
@@ -299,9 +298,7 @@ module Spree
       Spree::ReturnItem.where(inventory_unit_id: inventory_unit_id)
                        .where.not(id: id)
                        .valid
-                       .each do |return_item|
-        return_item.cancel!
-      end
+                       .each(&:cancel!)
     end
 
     def should_restock?

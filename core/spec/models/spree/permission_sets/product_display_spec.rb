@@ -57,4 +57,3 @@ describe Spree::PermissionSets::ProductDisplay do
     it { is_expected.not_to be_able_to(:edit, Spree::Product) }
   end
 end
-

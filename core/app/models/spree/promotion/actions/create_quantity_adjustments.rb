@@ -71,7 +71,7 @@ module Spree::Promotion::Actions
         line_item.quantity
       ].min
 
-      persist_quantity(usable_quantity,  line_item)
+      persist_quantity(usable_quantity, line_item)
 
       amount = adjustment_amount * usable_quantity
       [line_item.amount, amount].min * -1

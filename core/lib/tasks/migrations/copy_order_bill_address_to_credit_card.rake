@@ -65,7 +65,7 @@ namespace 'spree:migrations:copy_order_bill_address_to_credit_card' do
         postgres_sql(
           start_id: current_start_id,
           end_id: current_end_id,
-          payment_state: "not in ('failed', 'invalid')",
+          payment_state: "not in ('failed', 'invalid')"
         )
       )
 
@@ -74,7 +74,7 @@ namespace 'spree:migrations:copy_order_bill_address_to_credit_card' do
         postgres_sql(
           start_id: current_start_id,
           end_id: current_end_id,
-          payment_state: "in ('failed', 'invalid')",
+          payment_state: "in ('failed', 'invalid')"
         )
       )
 

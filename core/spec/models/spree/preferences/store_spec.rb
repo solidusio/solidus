@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Spree::Preferences::Store, :type => :model do
+describe Spree::Preferences::Store, type: :model do
   before :each do
     @store = Spree::Preferences::StoreInstance.new
   end
@@ -17,7 +17,7 @@ describe Spree::Preferences::Store, :type => :model do
   end
 
   it "will return db value when cache is emtpy and cache the db value" do
-    preference = Spree::Preference.where(:key => 'test').first_or_initialize
+    preference = Spree::Preference.where(key: 'test').first_or_initialize
     preference.value = '123'
     preference.save
 
@@ -35,5 +35,4 @@ describe Spree::Preferences::Store, :type => :model do
   it "should return nil when key can't be found and fallback value is not supplied" do
     expect(@store.get(:random_key){ nil }).to be_nil
   end
-
 end

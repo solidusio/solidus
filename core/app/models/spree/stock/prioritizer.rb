@@ -3,7 +3,7 @@ module Spree
     class Prioritizer
       attr_reader :packages, :inventory_units
 
-      def initialize(inventory_units, packages, adjuster_class=Adjuster)
+      def initialize(inventory_units, packages, adjuster_class = Adjuster)
         @inventory_units = inventory_units
         @packages = packages
         @adjuster_class = adjuster_class
@@ -17,6 +17,7 @@ module Spree
       end
 
       private
+
       def adjust_packages
         inventory_units.each do |inventory_unit|
           adjuster = @adjuster_class.new(inventory_unit, :on_hand)
@@ -40,7 +41,7 @@ module Spree
       end
 
       def prune_packages
-        packages.reject! { |pkg| pkg.empty? }
+        packages.reject!(&:empty?)
       end
     end
   end

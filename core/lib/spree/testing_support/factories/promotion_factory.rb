@@ -58,6 +58,5 @@ FactoryGirl.define do
       end
     end
     factory :promotion_with_item_total_rule, traits: [:with_item_total_rule]
-
   end
 end

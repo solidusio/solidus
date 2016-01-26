@@ -3,7 +3,7 @@ require 'spec_helper'
 class DummyShippingCalculator < Spree::ShippingCalculator
 end
 
-describe Spree::ShippingMethod, :type => :model do
+describe Spree::ShippingMethod, type: :model do
   let(:shipping_method){ create(:shipping_method) }
 
   context 'calculators' do
@@ -15,7 +15,7 @@ describe Spree::ShippingMethod, :type => :model do
         DummyShippingCalculator # included as regression test for https://github.com/spree/spree/issues/3109
       ])
 
-      expect(Spree::ShippingMethod.calculators).to eq([Spree::Calculator::Shipping::FlatPercentItemTotal, Spree::Calculator::Shipping::PriceSack, DummyShippingCalculator ])
+      expect(Spree::ShippingMethod.calculators).to eq([Spree::Calculator::Shipping::FlatPercentItemTotal, Spree::Calculator::Shipping::PriceSack, DummyShippingCalculator])
       expect(Spree::ShippingMethod.calculators).not_to eq([Spree::Calculator::DefaultTax])
     end
   end
@@ -25,7 +25,7 @@ describe Spree::ShippingMethod, :type => :model do
     let!(:shipping_method) { create(:shipping_method) }
     let!(:shipment) do
       shipment = create(:shipment)
-      shipment.shipping_rates.create!(:shipping_method => shipping_method)
+      shipment.shipping_rates.create!(shipping_method: shipping_method)
       shipment
     end
 

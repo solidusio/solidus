@@ -133,7 +133,6 @@ module Spree
                 order.logger.debug "Order #{order.number} transitioned from #{transition.from} to #{transition.to} via #{transition.event}"
               end
 
-
               after_failure do |order, transition|
                 order.logger.debug "Order #{order.number} halted transition on event #{transition.event} state #{transition.from}: #{order.errors.full_messages.join}"
               end
@@ -142,13 +141,13 @@ module Spree
             alias_method :save_state, :save
           end
 
-          def self.go_to_state(name, options={})
-            self.checkout_steps[name] = options
+          def self.go_to_state(name, options = {})
+            checkout_steps[name] = options
             previous_states.each do |state|
-              add_transition({from: state, to: name}.merge(options))
+              add_transition({ from: state, to: name }.merge(options))
             end
             if options[:if]
-              self.previous_states << name
+              previous_states << name
             else
               self.previous_states = [name]
             end
@@ -157,43 +156,43 @@ module Spree
           def self.insert_checkout_step(name, options = {})
             before = options.delete(:before)
             after = options.delete(:after) unless before
-            after = self.checkout_steps.keys.last unless before || after
+            after = checkout_steps.keys.last unless before || after
 
-            cloned_steps = self.checkout_steps.clone
-            cloned_removed_transitions = self.removed_transitions.clone
-            self.checkout_flow do
+            cloned_steps = checkout_steps.clone
+            cloned_removed_transitions = removed_transitions.clone
+            checkout_flow do
               cloned_steps.each_pair do |key, value|
-                self.go_to_state(name, options) if key == before
-                self.go_to_state(key, value)
-                self.go_to_state(name, options) if key == after
+                go_to_state(name, options) if key == before
+                go_to_state(key, value)
+                go_to_state(name, options) if key == after
               end
               cloned_removed_transitions.each do |transition|
-                self.remove_transition(transition)
+                remove_transition(transition)
               end
             end
           end
 
           def self.remove_checkout_step(name)
-            cloned_steps = self.checkout_steps.clone
-            cloned_removed_transitions = self.removed_transitions.clone
-            self.checkout_flow do
+            cloned_steps = checkout_steps.clone
+            cloned_removed_transitions = removed_transitions.clone
+            checkout_flow do
               cloned_steps.each_pair do |key, value|
-                self.go_to_state(key, value) unless key == name
+                go_to_state(key, value) unless key == name
               end
               cloned_removed_transitions.each do |transition|
-                self.remove_transition(transition)
+                remove_transition(transition)
               end
             end
           end
 
-          def self.remove_transition(options={})
-            self.removed_transitions << options
-            self.next_event_transitions.delete(find_transition(options))
+          def self.remove_transition(options = {})
+            removed_transitions << options
+            next_event_transitions.delete(find_transition(options))
           end
 
-          def self.find_transition(options={})
+          def self.find_transition(options = {})
             return nil if options.nil? || !options.include?(:from) || !options.include?(:to)
-            self.next_event_transitions.detect do |transition|
+            next_event_transitions.detect do |transition|
               transition[options[:from].to_sym] == options[:to].to_sym
             end
           end
@@ -207,11 +206,11 @@ module Spree
           end
 
           def self.checkout_step_names
-            self.checkout_steps.keys
+            checkout_steps.keys
           end
 
           def self.add_transition(options)
-            self.next_event_transitions << { options.delete(:from) => options.delete(:to) }.merge(options)
+            next_event_transitions << { options.delete(:from) => options.delete(:to) }.merge(options)
           end
 
           def checkout_steps
@@ -225,15 +224,15 @@ module Spree
           end
 
           def has_checkout_step?(step)
-            step.present? && self.checkout_steps.include?(step)
+            step.present? && checkout_steps.include?(step)
           end
 
           def passed_checkout_step?(step)
-            has_checkout_step?(step) && checkout_step_index(step) < checkout_step_index(self.state)
+            has_checkout_step?(step) && checkout_step_index(step) < checkout_step_index(state)
           end
 
           def checkout_step_index(step)
-            self.checkout_steps.index(step).to_i
+            checkout_steps.index(step).to_i
           end
 
           def self.removed_transitions
@@ -245,7 +244,7 @@ module Spree
             checkout_step_index(state) > checkout_step_index(self.state)
           end
 
-          define_callbacks :updating_from_params, terminator: ->(target, result) { result == false }
+          define_callbacks :updating_from_params, terminator: ->(_target, result) { result == false }
 
           set_callback :updating_from_params, :before, :update_params_payment_source
 
@@ -255,7 +254,7 @@ module Spree
             success = false
             @updating_params = params
             run_callbacks :updating_from_params do
-              attributes = @updating_params[:order] ? @updating_params[:order].permit(permitted_params).delete_if { |k,v| v.nil? } : {}
+              attributes = @updating_params[:order] ? @updating_params[:order].permit(permitted_params).delete_if { |_k, v| v.nil? } : {}
 
               # Set existing card after setting permitted parameters because
               # rails would slice parameters containg ruby objects, apparently
@@ -263,7 +262,7 @@ module Spree
 
               if existing_card_id.present?
                 credit_card = CreditCard.find existing_card_id
-                if credit_card.user_id != self.user_id || credit_card.user_id.blank?
+                if credit_card.user_id != user_id || credit_card.user_id.blank?
                   raise Core::GatewayError.new Spree.t(:invalid_credit_card)
                 end
 
@@ -295,35 +294,35 @@ module Spree
           end
 
           def assign_default_addresses!
-            if self.user
+            if user
               # this is one of 2 places still using User#bill_address
               self.bill_address ||= user.bill_address if user.bill_address.try!(:valid?)
               # Skip setting ship address if order doesn't have a delivery checkout step
               # to avoid triggering validations on shipping address
-              self.ship_address ||= user.ship_address if user.ship_address.try!(:valid?) && self.checkout_steps.include?("delivery")
+              self.ship_address ||= user.ship_address if user.ship_address.try!(:valid?) && checkout_steps.include?("delivery")
             end
           end
 
           def persist_user_address!
-            if !self.temporary_address && self.user && self.user.respond_to?(:persist_order_address) && self.bill_address_id
-              self.user.persist_order_address(self)
+            if !temporary_address && user && user.respond_to?(:persist_order_address) && bill_address_id
+              user.persist_order_address(self)
             end
           end
 
           def persist_user_credit_card
-            if !self.temporary_credit_card && self.user_id && self.valid_credit_cards.present?
-              default_cc = self.valid_credit_cards.first
-              # TODO target for refactoring -- why is order checkout responsible for the user -> credit_card relationship?
-              default_cc.user_id = self.user_id
+            if !temporary_credit_card && user_id && valid_credit_cards.present?
+              default_cc = valid_credit_cards.first
+              # TODO: target for refactoring -- why is order checkout responsible for the user -> credit_card relationship?
+              default_cc.user_id = user_id
               default_cc.default = true
               default_cc.save
             end
           end
 
           def assign_default_credit_card
-            if self.payments.from_credit_card.count == 0 && self.user && self.user.default_credit_card.try(:valid?)
-              cc = self.user.default_credit_card
-              self.payments.create!(payment_method_id: cc.payment_method_id, source: cc)
+            if payments.from_credit_card.count == 0 && user && user.default_credit_card.try(:valid?)
+              cc = user.default_credit_card
+              payments.create!(payment_method_id: cc.payment_method_id, source: cc)
               # this is one of 2 places still using User#bill_address
               self.bill_address ||= user.default_credit_card.address || user.bill_address
             end
@@ -361,7 +360,7 @@ module Spree
           def update_params_payment_source
             if @updating_params[:order] && (@updating_params[:order][:payments_attributes] || @updating_params[:order][:existing_card])
               @updating_params[:order][:payments_attributes] ||= [{}]
-              @updating_params[:order][:payments_attributes].first[:amount] = self.total
+              @updating_params[:order][:payments_attributes].first[:amount] = total
             end
           end
         end

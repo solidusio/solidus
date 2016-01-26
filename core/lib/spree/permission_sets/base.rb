@@ -11,7 +11,7 @@ module Spree
       # @param ability [CanCan::Ability]
       #   The ability that will be extended with the current permission set.
       #   The ability passed in must respond to #user
-      def initialize ability
+      def initialize(ability)
         @ability = ability
       end
 

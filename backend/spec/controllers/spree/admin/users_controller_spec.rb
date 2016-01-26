@@ -1,12 +1,12 @@
 require 'spec_helper'
 require 'spree/testing_support/bar_ability'
 
-describe Spree::Admin::UsersController, :type => :controller do
+describe Spree::Admin::UsersController, type: :controller do
   let(:user) { create(:user) }
   let(:mock_user) { mock_model Spree.user_class }
 
   before do
-    allow(controller).to receive_messages :spree_current_user => user
+    allow(controller).to receive_messages spree_current_user: user
     user.spree_roles.clear
   end
 
@@ -59,7 +59,7 @@ describe Spree::Admin::UsersController, :type => :controller do
     end
 
     it 'deny access to users without an admin role' do
-      allow(user).to receive_messages :has_spree_role? => false
+      allow(user).to receive_messages has_spree_role?: false
       spree_post :index
       expect(response).to redirect_to '/unauthorized'
     end
@@ -82,7 +82,7 @@ describe Spree::Admin::UsersController, :type => :controller do
 
       it "can clear roles" do
         expect(mock_user).to receive(:spree_roles=).with([])
-        spree_post :create, { id: mock_user.id, user: { first_name: "Bob"}  }
+        spree_post :create, { id: mock_user.id, user: { first_name: "Bob" } }
       end
     end
 
@@ -103,22 +103,22 @@ describe Spree::Admin::UsersController, :type => :controller do
 
       it "cannot clear roles" do
         expect(mock_user).to_not receive(:spree_roles=)
-        spree_post :create, { id: mock_user.id, user: { first_name: "Bob"}  }
+        spree_post :create, { id: mock_user.id, user: { first_name: "Bob" } }
       end
     end
 
     it "can create a shipping_address" do
       expect(Spree.user_class).to receive(:new).with(hash_including(
-        "ship_address_attributes" => { "city" => "New York" }
+                                                       "ship_address_attributes" => { "city" => "New York" }
       ))
-      spree_post :create, { :user => { :ship_address_attributes => { :city => "New York" } } }
+      spree_post :create, { user: { ship_address_attributes: { city: "New York" } } }
     end
 
     it "can create a billing_address" do
       expect(Spree.user_class).to receive(:new).with(hash_including(
-        "bill_address_attributes" => { "city" => "New York" }
+                                                       "bill_address_attributes" => { "city" => "New York" }
       ))
-      spree_post :create, { :user => { :bill_address_attributes => { :city => "New York" } } }
+      spree_post :create, { user: { bill_address_attributes: { city: "New York" } } }
     end
 
     it "can set stock locations" do
@@ -149,7 +149,7 @@ describe Spree::Admin::UsersController, :type => :controller do
 
       it "can clear roles" do
         expect(mock_user).to receive(:spree_roles=).with([])
-        spree_put :update, { id: mock_user.id, user: { first_name: "Bob" }  }
+        spree_put :update, { id: mock_user.id, user: { first_name: "Bob" } }
       end
 
       it "can change email of a user with no roles" do
@@ -171,7 +171,7 @@ describe Spree::Admin::UsersController, :type => :controller do
 
     it "cannot clear roles" do
       expect(mock_user).to_not receive(:spree_roles=)
-      spree_put :update, { id: mock_user.id, user: { first_name: "Bob" }  }
+      spree_put :update, { id: mock_user.id, user: { first_name: "Bob" } }
     end
 
     it "can change email of a user with no roles" do
@@ -187,16 +187,16 @@ describe Spree::Admin::UsersController, :type => :controller do
 
     it "allows shipping address attributes through" do
       expect(mock_user).to receive(:update_attributes).with(hash_including(
-        "ship_address_attributes" => { "city" => "New York" }
+                                                              "ship_address_attributes" => { "city" => "New York" }
       ))
-      spree_put :update, { :id => mock_user.id, :user => { :ship_address_attributes => { :city => "New York" } } }
+      spree_put :update, { id: mock_user.id, user: { ship_address_attributes: { city: "New York" } } }
     end
 
     it "allows billing address attributes through" do
       expect(mock_user).to receive(:update_attributes).with(hash_including(
-        "bill_address_attributes" => { "city" => "New York" }
+                                                              "bill_address_attributes" => { "city" => "New York" }
       ))
-      spree_put :update, { :id => mock_user.id, :user => { :bill_address_attributes => { :city => "New York" } } }
+      spree_put :update, { id: mock_user.id, user: { bill_address_attributes: { city: "New York" } } }
     end
 
     it "can set stock locations" do
@@ -215,13 +215,13 @@ describe Spree::Admin::UsersController, :type => :controller do
     end
 
     it "assigns a list of the users orders" do
-      spree_get :orders, { :id => user.id }
+      spree_get :orders, { id: user.id }
       expect(assigns[:orders].count).to eq 1
       expect(assigns[:orders].first).to eq order
     end
 
     it "assigns a ransack search for Spree::Order" do
-      spree_get :orders, { :id => user.id }
+      spree_get :orders, { id: user.id }
       expect(assigns[:search]).to be_a Ransack::Search
       expect(assigns[:search].klass).to eq Spree::Order
     end
@@ -235,13 +235,13 @@ describe Spree::Admin::UsersController, :type => :controller do
     end
 
     it "assigns a list of the users orders" do
-      spree_get :items, { :id => user.id }
+      spree_get :items, { id: user.id }
       expect(assigns[:orders].count).to eq 1
       expect(assigns[:orders].first).to eq order
     end
 
     it "assigns a ransack search for Spree::Order" do
-      spree_get :items, { :id => user.id }
+      spree_get :items, { id: user.id }
       expect(assigns[:search]).to be_a Ransack::Search
       expect(assigns[:search].klass).to eq Spree::Order
     end

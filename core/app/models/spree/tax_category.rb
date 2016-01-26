@@ -13,7 +13,7 @@ module Spree
 
     def ensure_one_default
       if is_default
-        Spree::TaxCategory.where(is_default: true).where.not(id: self.id).update_all(is_default: false, updated_at: Time.current)
+        Spree::TaxCategory.where(is_default: true).where.not(id: id).update_all(is_default: false, updated_at: Time.current)
       end
     end
   end

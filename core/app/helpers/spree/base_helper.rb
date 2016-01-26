@@ -1,11 +1,10 @@
 module Spree
   module BaseHelper
-
     def link_to_cart(text = nil)
       text = text ? h(text) : Spree.t(:cart)
       css_class = nil
 
-      if simple_current_order.nil? or simple_current_order.item_count.zero?
+      if simple_current_order.nil? || simple_current_order.item_count.zero?
         text = "#{text}: (#{Spree.t(:empty)})"
         css_class = 'empty'
       else
@@ -13,31 +12,31 @@ module Spree
         css_class = 'full'
       end
 
-      link_to text.html_safe, spree.cart_path, :class => "cart-info #{css_class}"
+      link_to text.html_safe, spree.cart_path, class: "cart-info #{css_class}"
     end
 
     # human readable list of variant options
-    def variant_options(v, options={})
+    def variant_options(v, _options = {})
       v.options_text
     end
 
     def meta_data
-      object = instance_variable_get('@'+controller_name.singularize)
+      object = instance_variable_get('@' + controller_name.singularize)
       meta = {}
 
-      if object.kind_of? ActiveRecord::Base
+      if object.is_a? ActiveRecord::Base
         meta[:keywords] = object.meta_keywords if object[:meta_keywords].present?
         meta[:description] = object.meta_description if object[:meta_description].present?
       end
 
-      if meta[:description].blank? && object.kind_of?(Spree::Product)
+      if meta[:description].blank? && object.is_a?(Spree::Product)
         meta[:description] = truncate(strip_tags(object.description), length: 160, separator: ' ')
       end
 
       meta.reverse_merge!({
         keywords: current_store.meta_keywords,
-        description: current_store.meta_description,
-      }) if meta[:keywords].blank? or meta[:description].blank?
+        description: current_store.meta_description
+      }) if meta[:keywords].blank? || meta[:description].blank?
       meta
     end
 
@@ -52,7 +51,7 @@ module Spree
       @body_class
     end
 
-    def logo(image_path=Spree::Config[:logo])
+    def logo(image_path = Spree::Config[:logo])
       link_to image_tag(image_path), spree.root_path
     end
 
@@ -67,7 +66,7 @@ module Spree
       nil
     end
 
-    def breadcrumbs(taxon, separator="&nbsp;&raquo;&nbsp;", breadcrumb_class="inline")
+    def breadcrumbs(taxon, separator = "&nbsp;&raquo;&nbsp;", breadcrumb_class = "inline")
       return "" if current_page?("/") || taxon.nil?
 
       crumbs = [[Spree.t(:home), spree.root_path]]
@@ -83,7 +82,7 @@ module Spree
       separator = raw(separator)
 
       crumbs.map! do |crumb|
-        content_tag(:li, itemscope:"itemscope", itemtype:"http://data-vocabulary.org/Breadcrumb") do
+        content_tag(:li, itemscope: "itemscope", itemtype: "http://data-vocabulary.org/Breadcrumb") do
           link_to(crumb.last, itemprop: "url") do
             content_tag(:span, crumb.first, itemprop: "title")
           end + (crumb == crumbs.last ? '' : separator)
@@ -100,7 +99,7 @@ module Spree
           css_class = (current_taxon && current_taxon.self_and_ancestors.include?(taxon)) ? 'current' : nil
           content_tag :li, class: css_class do
            link_to(taxon.name, seo_url(taxon)) +
-           taxons_tree(taxon, current_taxon, max_level - 1)
+             taxons_tree(taxon, current_taxon, max_level - 1)
           end
         end.join("\n").html_safe
       end
@@ -122,7 +121,7 @@ module Spree
     end
 
     def seo_url(taxon)
-      return spree.nested_taxons_path(taxon.permalink)
+      spree.nested_taxons_path(taxon.permalink)
     end
 
     def display_price(product_or_variant)
@@ -131,13 +130,13 @@ module Spree
 
     def pretty_time(time)
       [I18n.l(time.to_date, format: :long),
-        time.strftime("%l:%M %p")].join(" ")
+       time.strftime("%l:%M %p")].join(" ")
     end
 
     def method_missing(method_name, *args, &block)
       if image_style = image_style_from_method_name(method_name)
         define_image_method(image_style)
-        self.send(method_name, *args)
+        send(method_name, *args)
       else
         super
       end

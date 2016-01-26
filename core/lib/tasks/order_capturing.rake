@@ -5,7 +5,7 @@ namespace :order_capturing do
     orders = Spree::Order.complete.where(payment_state: 'balance_due').where('completed_at > ?', Spree::Config[:order_capturing_time_window].days.ago)
 
     orders.find_each do |order|
-      if order.inventory_units.all? {|iu| iu.canceled? || iu.shipped? }
+      if order.inventory_units.all? { |iu| iu.canceled? || iu.shipped? }
         if Spree::OrderCapturing.failure_handler
           begin
             Spree::OrderCapturing.new(order).capture_payments

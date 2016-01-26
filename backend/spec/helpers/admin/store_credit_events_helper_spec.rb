@@ -64,7 +64,7 @@ describe Spree::Admin::StoreCreditEventsHelper, type: :helper do
       let(:originator) { create(:user) }
 
       it "returns a link to the user's edit page" do
-        expect(subject).to eq %Q(<a target=\"_blank\" href=\"/admin/users/#{originator.id}/edit\">User - #{originator.email}</a>)
+        expect(subject).to eq %(<a target=\"_blank\" href=\"/admin/users/#{originator.id}/edit\">User - #{originator.email}</a>)
       end
     end
 
@@ -72,7 +72,7 @@ describe Spree::Admin::StoreCreditEventsHelper, type: :helper do
       let(:originator) { create(:payment) }
 
       it "returns a link to the order's payments page" do
-        expect(subject).to eq %Q(<a target=\"_blank\" href=\"/admin/orders/#{originator.order.number}/payments/#{originator.id}\">Payment - Order ##{originator.order.number}</a>)
+        expect(subject).to eq %(<a target=\"_blank\" href=\"/admin/orders/#{originator.order.number}/payments/#{originator.id}\">Payment - Order ##{originator.order.number}</a>)
       end
     end
 
@@ -80,7 +80,7 @@ describe Spree::Admin::StoreCreditEventsHelper, type: :helper do
       let(:originator) { create(:refund, amount: 1.0) }
 
       it "returns a link to the order's payments page" do
-        expect(subject).to eq %Q(<a target=\"_blank\" href=\"/admin/orders/#{originator.payment.order.number}/payments\">Refund - Order ##{originator.payment.order.number}</a>)
+        expect(subject).to eq %(<a target=\"_blank\" href=\"/admin/orders/#{originator.payment.order.number}/payments\">Refund - Order ##{originator.payment.order.number}</a>)
       end
     end
 

@@ -17,7 +17,7 @@ module Spree
         # Use the first order rule if you want a promotion to be applied to the first order for a user.
         # @param order [Spree::Order]
         # @option options
-        def eligible?(order, options = {})
+        def eligible?(order, _options = {})
           return false unless order.user
 
           nth_order?(order)
@@ -25,7 +25,7 @@ module Spree
 
         private
 
-        def completed_order_count order
+        def completed_order_count(order)
           order.
             user.
             orders.
@@ -34,7 +34,7 @@ module Spree
             count
         end
 
-        def nth_order? order
+        def nth_order?(order)
           count = completed_order_count(order) + 1
           count == preferred_nth_order
         end
@@ -42,4 +42,3 @@ module Spree
     end
   end
 end
-

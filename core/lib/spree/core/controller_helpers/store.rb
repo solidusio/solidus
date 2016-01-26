@@ -18,7 +18,6 @@ module Spree
           end
           helper_method :current_store
         end
-
       end
     end
   end

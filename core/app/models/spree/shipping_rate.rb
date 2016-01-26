@@ -26,7 +26,7 @@ module Spree
               amount = "#{display_tax_amount(tax_amount)} #{tax_rate.name}"
               price += " (#{Spree.t(:incl)} #{amount})"
             else
-              amount = "#{display_tax_amount(tax_amount*-1)} #{tax_rate.name}"
+              amount = "#{display_tax_amount(tax_amount * -1)} #{tax_rate.name}"
               price += " (#{Spree.t(:excl)} #{amount})"
             end
           else

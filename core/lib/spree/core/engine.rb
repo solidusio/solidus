@@ -8,12 +8,12 @@ module Spree
         load File.join(root, "lib", "tasks", "exchanges.rake")
       end
 
-      initializer "spree.environment", :before => :load_config_initializers do |app|
+      initializer "spree.environment", before: :load_config_initializers do |app|
         app.config.spree = Spree::Core::Environment.new
-        Spree::Config = app.config.spree.preferences #legacy access
+        Spree::Config = app.config.spree.preferences # legacy access
       end
 
-      initializer "spree.default_permissions" do |app|
+      initializer "spree.default_permissions" do |_app|
         Spree::RoleConfiguration.configure do |config|
           config.assign_permissions :default, [Spree::PermissionSets::DefaultCustomer]
           config.assign_permissions :admin, [Spree::PermissionSets::SuperUser]
@@ -28,8 +28,8 @@ module Spree
             Spree::Calculator::Shipping::PerItem,
             Spree::Calculator::Shipping::PriceSack]
 
-         app.config.spree.calculators.tax_rates = [
-            Spree::Calculator::DefaultTax]
+        app.config.spree.calculators.tax_rates = [
+           Spree::Calculator::DefaultTax]
       end
 
       initializer "spree.register.stock_splitters" do |app|
@@ -44,7 +44,7 @@ module Spree
             Spree::Gateway::Bogus,
             Spree::Gateway::BogusSimple,
             Spree::PaymentMethod::StoreCredit,
-            Spree::PaymentMethod::Check ]
+            Spree::PaymentMethod::Check]
       end
 
       # We need to define promotions rules here so extensions and existing apps
@@ -95,7 +95,7 @@ module Spree
           Spree::Promotion::Rules::Taxon,
           Spree::Promotion::Rules::NthOrder,
           Spree::Promotion::Rules::OptionValue,
-          Spree::Promotion::Rules::FirstRepeatPurchaseSince,
+          Spree::Promotion::Rules::FirstRepeatPurchaseSince
         ]
       end
 
@@ -116,7 +116,7 @@ module Spree
           :verification_value]
       end
 
-      initializer "spree.core.checking_migrations" do |app|
+      initializer "spree.core.checking_migrations" do |_app|
         Migrations.new(config, engine_name).check
       end
     end

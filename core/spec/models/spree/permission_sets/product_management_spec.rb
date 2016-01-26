@@ -37,4 +37,3 @@ describe Spree::PermissionSets::ProductManagement do
     it { is_expected.not_to be_able_to(:manage, Spree::Classification) }
   end
 end
-

@@ -37,4 +37,3 @@ describe Spree::PermissionSets::PromotionDisplay do
     it { is_expected.not_to be_able_to(:edit, Spree::Promotion) }
   end
 end
-

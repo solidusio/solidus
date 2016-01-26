@@ -13,4 +13,3 @@ class AddSpreeUserAddresses < ActiveRecord::Migration
     add_index :spree_user_addresses, [:user_id, :address_id], unique: true
   end
 end
-

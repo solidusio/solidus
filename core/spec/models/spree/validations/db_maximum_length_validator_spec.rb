@@ -9,7 +9,7 @@ describe Spree::Validations::DbMaximumLengthValidator, type: :model do
     end
     let(:limit) { 255 }
     let(:product) { Spree::Product.new }
-    let(:slug) { "x" * (limit + 1)}
+    let(:slug) { "x" * (limit + 1) }
 
     before do
       product.slug = slug

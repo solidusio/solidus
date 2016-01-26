@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Spree::Order, :type => :model do
+describe Spree::Order, type: :model do
   let(:order) { create(:order_with_line_items) }
 
   context "#next!" do
@@ -69,7 +69,6 @@ describe Spree::Order, :type => :model do
         expect(order).not_to be_can_cancel
       end
     end
-
   end
 
   context "#cancel" do
@@ -90,7 +89,6 @@ describe Spree::Order, :type => :model do
     end
 
     context "resets payment state" do
-
       let!(:payment) { create(:payment, order: order, amount: order.total, state: "completed") }
 
       context "without shipped items" do

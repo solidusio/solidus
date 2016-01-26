@@ -67,13 +67,14 @@ module Spree
         included_tax_total: @item.included_tax_total,
         additional_tax_total: @item.additional_tax_total,
         adjustment_total: @item.adjustment_total,
-        updated_at: Time.current,
+        updated_at: Time.current
       ) if @item.changed?
 
       @item
     end
 
     private
+
     def adjustments
       # This is done intentionally to avoid loading the association. If the
       # association is loaded, the records may become stale due to code

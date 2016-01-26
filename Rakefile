@@ -10,7 +10,7 @@ end
 task default: :test
 
 desc "Runs all tests in all Spree engines"
-task :test => :test_app do
+task test: :test_app do
   %w(api backend core frontend sample).each do |gem_name|
     Dir.chdir("#{File.dirname(__FILE__)}/#{gem_name}") do
       sh 'rspec'
@@ -70,7 +70,7 @@ namespace :gem do
   end
 
   desc "Install all solidus gems"
-  task :install => :build do
+  task install: :build do
     for_each_gem do |gem_path|
       Bundler.with_clean_env do
         sh "gem install #{gem_path}"
@@ -79,7 +79,7 @@ namespace :gem do
   end
 
   desc "Release all gems to rubygems"
-  task :release => :build do
+  task release: :build do
     sh "git tag -a -m \"Version #{version}\" v#{version}"
 
     for_each_gem do |gem_path|

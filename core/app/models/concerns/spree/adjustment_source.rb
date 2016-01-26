@@ -4,7 +4,7 @@ module Spree
 
     included do
       def deals_with_adjustments_for_deleted_source
-        adjustment_scope = self.adjustments.joins(:order)
+        adjustment_scope = adjustments.joins(:order)
 
         # For incomplete orders, remove the adjustment completely.
         adjustment_scope.where(spree_orders: { completed_at: nil }).destroy_all
