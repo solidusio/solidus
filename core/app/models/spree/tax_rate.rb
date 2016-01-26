@@ -70,6 +70,10 @@ module Spree
     scope :for_zone, ->(zone) { where(zone_id: Spree::Zone.with_shared_members(zone).pluck(:id)) }
     scope :included_in_price, -> { where(included_in_price: true) }
 
+    def applicable_for?(item)
+      tax_category == item.tax_category
+    end
+
     # Pre-tax amounts must be stored so that we can calculate
     # correct rate amounts in the future. For example:
     # https://github.com/spree/spree/issues/4318#issuecomment-34723428

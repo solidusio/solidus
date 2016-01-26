@@ -40,11 +40,11 @@ module Spree
       end
 
       def default_rates_for_item
-        rates_for_default_zone.included_in_price.select { |rate| rate.tax_category == item.tax_category }
+        rates_for_default_zone.included_in_price.select { |rate| rate.applicable_for?(item) }
       end
 
       def rates_for_item
-        @rates_for_item ||= rates_for_order_zone.select { |rate| rate.tax_category == item.tax_category }
+        @rates_for_item ||= rates_for_order_zone.select { |rate| rate.applicable_for?(item) }
       end
     end
   end
