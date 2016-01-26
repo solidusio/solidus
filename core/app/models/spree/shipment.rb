@@ -274,11 +274,15 @@ module Spree
 
     def update_amounts
       if selected_shipping_rate
-        self.update_columns(
-          cost: selected_shipping_rate.cost,
-          adjustment_total: adjustments.additional.map(&:update!).compact.sum,
-          updated_at: Time.current,
-        )
+        self.cost = selected_shipping_rate.cost
+        self.adjustment_total = adjustments.additional.map(&:update!).compact.sum
+        if changed?
+          self.update_columns(
+            cost: self.cost,
+            adjustment_total: self.adjustment_total,
+            updated_at: Time.current
+          )
+        end
       end
     end
 
@@ -318,11 +322,13 @@ module Spree
     def update!(order)
       old_state = state
       new_state = determine_state(order)
-      update_columns(
-        state: new_state,
-        updated_at: Time.current,
-      )
-      after_ship if new_state == 'shipped' and old_state != 'shipped'
+      if new_state != old_state
+        update_columns(
+          state: new_state,
+          updated_at: Time.current,
+        )
+        after_ship if new_state == 'shipped'
+      end
     end
 
     def transfer_to_location(variant, quantity, stock_location)
