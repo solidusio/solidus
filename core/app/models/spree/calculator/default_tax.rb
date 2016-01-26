@@ -10,7 +10,6 @@ module Spree
     # Orders created before Spree 2.1 had tax adjustments applied to the order, as a whole.
     # Orders created with Spree 2.2 and after, have them applied to the line items individually.
     def compute_order(order)
-
       matched_line_items = order.line_items.select do |line_item|
         line_item.tax_category == rate.tax_category
       end
@@ -52,7 +51,7 @@ module Spree
     private
 
     def rate
-      self.calculable
+      calculable
     end
 
     def round_to_two_places(amount)
@@ -62,6 +61,5 @@ module Spree
     def deduced_total_by_rate(pre_tax_amount, rate)
       round_to_two_places(pre_tax_amount * rate.amount)
     end
-
   end
 end

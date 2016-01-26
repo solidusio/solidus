@@ -15,7 +15,7 @@ describe Spree::PermissionSets::RestrictedStockTransferManagement do
   let!(:variant) { create :variant }
 
   let(:transfer_with_source) { create :stock_transfer, source_location: source_location }
-  let(:transfer_with_destination) { create :stock_transfer, source_location: destination_location  }
+  let(:transfer_with_destination) { create :stock_transfer, source_location: destination_location }
   let(:transfer_with_source_and_destination) do
     create :stock_transfer, source_location: source_location, destination_location: destination_location
   end
@@ -33,7 +33,7 @@ describe Spree::PermissionSets::RestrictedStockTransferManagement do
 
   context "when activated" do
     let(:user) { create :user, stock_locations: stock_locations }
-    let(:stock_locations) {[]}
+    let(:stock_locations) { [] }
 
     before do
       user.stock_locations = stock_locations
@@ -46,7 +46,7 @@ describe Spree::PermissionSets::RestrictedStockTransferManagement do
     end
 
     context "when the user is only associated with the source location" do
-      let(:stock_locations) {[source_location]}
+      let(:stock_locations) { [source_location] }
 
       it { is_expected.to be_able_to(:display, source_location) }
       it { is_expected.to_not be_able_to(:display, destination_location) }
@@ -85,7 +85,7 @@ describe Spree::PermissionSets::RestrictedStockTransferManagement do
     end
 
     context "when the user is only associated with the destination location" do
-      let(:stock_locations) {[destination_location]}
+      let(:stock_locations) { [destination_location] }
 
       it { is_expected.to be_able_to(:display, destination_location) }
       it { is_expected.to_not be_able_to(:display, source_location) }
@@ -124,7 +124,7 @@ describe Spree::PermissionSets::RestrictedStockTransferManagement do
     end
 
     context "when the user is associated with both locations" do
-      let(:stock_locations) {[source_location, destination_location]}
+      let(:stock_locations) { [source_location, destination_location] }
 
       it { is_expected.to be_able_to(:display, source_location) }
       it { is_expected.to be_able_to(:display, destination_location) }
@@ -163,7 +163,7 @@ describe Spree::PermissionSets::RestrictedStockTransferManagement do
     end
 
     context "when the user is associated with neither location" do
-      let(:stock_locations) {[]}
+      let(:stock_locations) { [] }
 
       it { is_expected.to_not be_able_to(:display, source_location) }
       it { is_expected.to_not be_able_to(:display, destination_location) }

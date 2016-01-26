@@ -47,29 +47,30 @@ module Spree
       end
 
       private
-        def product
-          @product ||= Spree::Product.accessible_by(current_ability, :read).friendly.find(params[:product_id]) if params[:product_id]
+
+      def product
+        @product ||= Spree::Product.accessible_by(current_ability, :read).friendly.find(params[:product_id]) if params[:product_id]
+      end
+
+      def scope
+        if @product
+          variants = @product.variants_including_master
+        else
+          variants = Variant
         end
 
-        def scope
-          if @product
-            variants = @product.variants_including_master
-          else
-            variants = Variant
-          end
-
-          if current_ability.can?(:manage, Variant) && params[:show_deleted]
-            variants = variants.with_deleted
-          end
-
-          variants = variants.accessible_by(current_ability, :read)
-          variants = variants.in_stock if params[:in_stock_only] || cannot?(:view_out_of_stock, Spree::Variant)
-          variants
+        if current_ability.can?(:manage, Variant) && params[:show_deleted]
+          variants = variants.with_deleted
         end
 
-        def variant_params
-          params.require(:variant).permit(permitted_variant_attributes)
-        end
+        variants = variants.accessible_by(current_ability, :read)
+        variants = variants.in_stock if params[:in_stock_only] || cannot?(:view_out_of_stock, Spree::Variant)
+        variants
+      end
+
+      def variant_params
+        params.require(:variant).permit(permitted_variant_attributes)
+      end
     end
   end
 end

@@ -6,10 +6,10 @@ module Spree
 
       # @param stock_location [Spree::StockLocation] the stock location this package originates from
       # @param contents [Array<Spree::Stock::ContentItem>] the contents of this package
-      def initialize(stock_location, contents=[])
+      def initialize(stock_location, contents = [])
         @stock_location = stock_location
         @contents = contents
-        @shipping_rates = Array.new
+        @shipping_rates = []
       end
 
       # Adds an inventory unit to this package.
@@ -45,7 +45,7 @@ module Spree
       def order
         # Fix regression that removed package.order.
         # Find it dynamically through an inventory_unit.
-        contents.detect {|item| !!item.try(:inventory_unit).try(:order) }.try(:inventory_unit).try(:order)
+        contents.detect { |item| !!item.try(:inventory_unit).try(:order) }.try(:inventory_unit).try(:order)
       end
 
       # @return [Float] the summed weight of the contents of this package
@@ -110,14 +110,14 @@ module Spree
       #   shipping categories + all shipping methods available to all
       #   that match the shipping categories
       def shipping_methods
-        sl_methods = stock_location.shipping_methods.select { |sm| (sm.shipping_categories - shipping_categories).empty?}
+        sl_methods = stock_location.shipping_methods.select { |sm| (sm.shipping_categories - shipping_categories).empty? }
 
         sc_methods = shipping_categories.map(&:shipping_methods).each { |cat| cat.select(&:available_to_all) }.reduce(:&).to_a
 
         # sms = (shipping_categories.map(&:shipping_methods).flatten.select(&:available_to_all) + stock_location.shipping_methods)
         # sms.select! { |sm| (shipping_categories - sm.shipping_categories).empty?}
 
-        #sms.uniq.sort_by(&:id)
+        # sms.uniq.sort_by(&:id)
         (sl_methods + sc_methods).uniq.sort_by(&:id)
       end
 

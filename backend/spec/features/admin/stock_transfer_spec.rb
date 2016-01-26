@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe 'Stock Transfers', :type => :feature, :js => true do
+describe 'Stock Transfers', type: :feature, js: true do
   stub_authorization!
 
   let(:admin_user) { create(:admin_user) }
@@ -12,8 +12,8 @@ describe 'Stock Transfers', :type => :feature, :js => true do
 
   describe 'create stock transfer' do
     it 'can create a stock transfer' do
-      source_location = create(:stock_location_with_items, :name => 'NY')
-      destination_location = create(:stock_location, :name => 'SF')
+      source_location = create(:stock_location_with_items, name: 'NY')
+      destination_location = create(:stock_location, name: 'SF')
 
       visit spree.new_admin_stock_transfer_path
       select "SF", from: 'stock_transfer[source_location_id]'
@@ -64,7 +64,7 @@ describe 'Stock Transfers', :type => :feature, :js => true do
       it 'adds tracking number' do
         visit spree.tracking_info_admin_stock_transfer_path(stock_transfer)
 
-        fill_in 'stock_transfer_tracking_number', :with => "12345"
+        fill_in 'stock_transfer_tracking_number', with: "12345"
         click_button 'Save'
 
         expect(page).to have_content('Stock Transfer has been successfully updated')

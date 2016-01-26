@@ -72,8 +72,6 @@ describe Spree::PromotionCode::CodeBuilder do
           expect(builder.promotion.codes.map(&:value).uniq.size).to eq(num_codes)
         end
       end
-
     end
   end
-
 end

@@ -15,7 +15,7 @@ module Spree
         unpaid_amount -= amount
       end
 
-      return reimbursement_list, unpaid_amount
+      [reimbursement_list, unpaid_amount]
     end
 
     def create_credits(reimbursement, unpaid_amount, simulate, reimbursement_list = [])
@@ -23,7 +23,7 @@ module Spree
       unpaid_amount -= credits.sum(&:amount)
       reimbursement_list += credits
 
-      return reimbursement_list, unpaid_amount
+      [reimbursement_list, unpaid_amount]
     end
 
     private
@@ -32,7 +32,7 @@ module Spree
       refund = reimbursement.refunds.build({
         payment: payment,
         amount: amount,
-        reason: Spree::RefundReason.return_processing_reason,
+        reason: Spree::RefundReason.return_processing_reason
       })
 
       simulate ? refund.readonly! : refund.save!

@@ -1,6 +1,5 @@
 class MovePromotionCodeToPromotionCodeValue < ActiveRecord::Migration
   def up
-
     # This is done via SQL for performance reasons. For larger stores it makes
     # a difference of minutes vs hours for completion time.
 

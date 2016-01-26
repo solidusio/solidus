@@ -3,8 +3,7 @@ module Spree
     extend ActiveSupport::Concern
 
     included do
-      has_many :user_addresses, -> { active }, {foreign_key: "user_id", class_name: "Spree::UserAddress"} do
-
+      has_many :user_addresses, -> { active }, { foreign_key: "user_id", class_name: "Spree::UserAddress" } do
         def find_first_by_address_values(address_attrs)
           detect { |ua| ua.address == Address.new(address_attrs) }
         end
@@ -13,7 +12,7 @@ module Spree
         def mark_default(user_address)
           # the checks of persisted? allow us to build a User and associate Addresses at once
           ActiveRecord::Base.transaction do
-            (self - [user_address]).each do |ua| #update_all would be nice, but it bypasses ActiveRecord callbacks
+            (self - [user_address]).each do |ua| # update_all would be nice, but it bypasses ActiveRecord callbacks
               ua.persisted? ? ua.update!(default: false) : ua.default = false
             end
             user_address.persisted? ? user_address.update!(default: true, archived: false) : user_address.default = true
@@ -97,11 +96,11 @@ module Spree
         end
 
         user_address = prepare_user_address(new_address)
-        user_addresses.mark_default(user_address) if (default || first_one)
+        user_addresses.mark_default(user_address) if default || first_one
 
         if persisted?
           user_address.save!
-          user_addresses.reset #ensures proper ordering
+          user_addresses.reset # ensures proper ordering
         end
 
         user_address.address

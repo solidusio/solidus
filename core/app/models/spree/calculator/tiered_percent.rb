@@ -24,11 +24,12 @@ module Spree
 
     def compute(object)
       order = object.is_a?(Order) ? object : object.order
-      base, percent = preferred_tiers.sort.reverse.detect{ |b,_| order.item_total >= b }
+      base, percent = preferred_tiers.sort.reverse.detect{ |b, _| order.item_total >= b }
       (object.amount * (percent || preferred_base_percent) / 100).round(2)
     end
 
     private
+
     def preferred_tiers_content
       if preferred_tiers.is_a? Hash
         unless preferred_tiers.keys.all?{ |k| k.is_a?(Numeric) && k > 0 }

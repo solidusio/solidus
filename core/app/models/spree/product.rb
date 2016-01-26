@@ -165,7 +165,7 @@ module Spree
     # @return [Hash] option_type as keys, array of variants as values.
     def categorise_variants_from_option(opt_type)
       return {} unless option_types.include?(opt_type)
-      variants.active.group_by { |v| v.option_values.detect { |o| o.option_type == opt_type} }
+      variants.active.group_by { |v| v.option_values.detect { |o| o.option_type == opt_type } }
     end
 
     # Poor man's full text search.
@@ -200,7 +200,7 @@ module Spree
     # associated with the products variants grouped by option type
     def variant_option_values_by_option_type(variant_scope = nil)
       option_value_ids = Spree::OptionValuesVariant.joins(:variant)
-        .where(spree_variants: { product_id: self.id})
+        .where(spree_variants: { product_id: id })
         .merge(variant_scope)
         .distinct.pluck(:option_value_id)
       Spree::OptionValue.where(id: option_value_ids).
@@ -327,7 +327,7 @@ module Spree
     def validate_master
       unless master.valid?
         master.errors.each do |att, error|
-          self.errors.add(att, error)
+          errors.add(att, error)
         end
       end
     end

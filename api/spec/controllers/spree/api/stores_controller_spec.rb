@@ -96,7 +96,7 @@ module Spree
           api_delete :destroy, id: store.id
           expect(response.status).to eq(422)
           expect(json_response["errors"]["base"]).to eql(
-          ["Cannot destroy the default Store."]
+            ["Cannot destroy the default Store."]
           )
         end
 
@@ -108,7 +108,6 @@ module Spree
     end
 
     context "as an user" do
-
       it "I cannot list all the stores" do
         api_get :index
         expect(response.status).to eq(401)

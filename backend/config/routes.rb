@@ -1,7 +1,7 @@
 Spree::Core::Engine.add_routes do
   namespace :admin do
     get '/search/users', to: "search#users", as: :search_users
-    get '/search/products', :to => "search#products", :as => :search_products
+    get '/search/products', to: "search#products", as: :search_products
 
     resources :dashboards, only: [] do
       collection do
@@ -49,7 +49,7 @@ Spree::Core::Engine.add_routes do
           post :update_positions
         end
       end
-      resources :variants_including_master,   only: [:update]
+      resources :variants_including_master, only: [:update]
     end
     get '/products/:product_slug/stock', to: "stock_items#index", as: :product_stock
 
@@ -165,7 +165,7 @@ Spree::Core::Engine.add_routes do
     resources :shipping_methods
     resources :shipping_categories
 
-    resources :stock_transfers, :except => [:destroy] do
+    resources :stock_transfers, except: [:destroy] do
       member do
         get :receive
         put :finalize
@@ -183,7 +183,7 @@ Spree::Core::Engine.add_routes do
       end
     end
 
-    resources :stock_items, :except => [:show, :new, :edit]
+    resources :stock_items, except: [:show, :new, :edit]
     resources :tax_rates
 
     resources :trackers

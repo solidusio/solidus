@@ -9,5 +9,4 @@ class CopyShippedShipmentsToCartons < ActiveRecord::Migration
   def down
     Rake::Task["spree:migrations:copy_shipped_shipments_to_cartons:down"].invoke
   end
-
 end

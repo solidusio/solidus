@@ -20,14 +20,15 @@ module Spree
       end
 
       private
-        def scope
-          if params[:country_id]
-            @country = Country.accessible_by(current_ability, :read).find(params[:country_id])
-            return @country.states.accessible_by(current_ability, :read)
-          else
-            return State.accessible_by(current_ability, :read)
-          end
+
+      def scope
+        if params[:country_id]
+          @country = Country.accessible_by(current_ability, :read).find(params[:country_id])
+          return @country.states.accessible_by(current_ability, :read)
+        else
+          return State.accessible_by(current_ability, :read)
         end
+      end
     end
   end
 end

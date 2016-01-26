@@ -8,7 +8,7 @@ describe "Cancelling inventory" do
       :order_ready_to_ship,
       number: "R100",
       state: "complete",
-      line_items_count: 1,
+      line_items_count: 1
     )
   end
 

@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Spree::Admin::ReportsController, :type => :controller do
+describe Spree::Admin::ReportsController, type: :controller do
   stub_authorization!
 
   describe 'ReportsController.available_reports' do
@@ -11,7 +11,6 @@ describe Spree::Admin::ReportsController, :type => :controller do
     it 'should have the proper sales total report description' do
       expect(Spree::Admin::ReportsController.available_reports[:sales_total][:description]).to eql('Sales Total For All Orders')
     end
-
   end
 
   describe 'ReportsController.add_available_report!' do
@@ -24,7 +23,6 @@ describe Spree::Admin::ReportsController, :type => :controller do
   end
 
   describe 'GET sales_total' do
-
     let!(:order_complete_start_of_month) { create(:completed_order_with_totals) }
     let!(:order_complete_mid_month) { create(:completed_order_with_totals) }
     let!(:order_non_complete) { create(:order, completed_at: nil) }
@@ -67,7 +65,7 @@ describe Spree::Admin::ReportsController, :type => :controller do
     end
 
     context 'when no dates are specified' do
-      let(:params) { { } }
+      let(:params) { {} }
 
       it_behaves_like 'sales total report' do
         let(:expected_returned_orders) { [order_complete_mid_month, order_complete_start_of_month] }
@@ -76,7 +74,7 @@ describe Spree::Admin::ReportsController, :type => :controller do
             'USD' => {
               item_total: Money.new(2000, 'USD'),
               adjustment_total: Money.new(0, 'USD'),
-              sales_total: Money.new(22000, 'USD')
+              sales_total: Money.new(22_000, 'USD')
             }
           }
         }
@@ -93,7 +91,7 @@ describe Spree::Admin::ReportsController, :type => :controller do
             'USD' => {
               item_total: Money.new(1000, 'USD'),
               adjustment_total: Money.new(0, 'USD'),
-              sales_total: Money.new(11000, 'USD')
+              sales_total: Money.new(11_000, 'USD')
             }
           }
         }
@@ -110,7 +108,7 @@ describe Spree::Admin::ReportsController, :type => :controller do
             'USD' => {
               item_total: Money.new(1000, 'USD'),
               adjustment_total: Money.new(0, 'USD'),
-              sales_total: Money.new(11000, 'USD')
+              sales_total: Money.new(11_000, 'USD')
             }
           }
         }
@@ -126,9 +124,8 @@ describe Spree::Admin::ReportsController, :type => :controller do
   end
 
   after(:each) do
-    Spree::Admin::ReportsController.available_reports.delete_if do |key, value|
+    Spree::Admin::ReportsController.available_reports.delete_if do |key, _value|
       key != :sales_total
     end
   end
-
 end

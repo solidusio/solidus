@@ -25,13 +25,13 @@ module Spree
     context 'with a new source' do
       let(:attributes) do
         {
-          :amount => 100,
-          :payment_method => payment_method,
-          :source_attributes => {
-            :expiry =>"01 / 99",
-            :number => '1234567890123',
-            :verification_value => '123',
-            :name => 'Foo Bar'
+          amount: 100,
+          payment_method: payment_method,
+          source_attributes: {
+            expiry: "01 / 99",
+            number: '1234567890123',
+            verification_value: '123',
+            name: 'Foo Bar'
           }
         }
       end
@@ -48,9 +48,8 @@ module Spree
           {
             amount: 100,
             payment_method: payment_method,
-            source_attributes: {expiry: "1 / 12"}
+            source_attributes: { expiry: "1 / 12" }
           }
-
         end
         it "errors when payment source not valid" do
           expect(new_payment).not_to be_valid
@@ -71,7 +70,7 @@ module Spree
         {
           source_attributes: {
             existing_card_id: credit_card.id,
-            verification_value: '321',
+            verification_value: '321'
           }
         }
       end
@@ -89,9 +88,9 @@ module Spree
       end
 
       context 'with request_env' do
-        let(:request_env){ {'USER_AGENT' => 'Firefox'} }
+        let(:request_env){ { 'USER_AGENT' => 'Firefox' } }
         it 'sets the request_env on the payment' do
-          expect(new_payment.request_env).to eq({'USER_AGENT' => 'Firefox'})
+          expect(new_payment.request_env).to eq({ 'USER_AGENT' => 'Firefox' })
         end
       end
 

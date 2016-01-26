@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Spree::Admin::ReturnAuthorizationsController, :type => :controller do
+describe Spree::Admin::ReturnAuthorizationsController, type: :controller do
   stub_authorization!
 
   # Regression test for https://github.com/spree/spree/issues/1370 #3
@@ -77,7 +77,7 @@ describe Spree::Admin::ReturnAuthorizationsController, :type => :controller do
       subject do
         spree_get :edit, {
           id: return_authorization.to_param,
-          order_id: order.to_param,
+          order_id: order.to_param
         }
       end
 
@@ -90,8 +90,8 @@ describe Spree::Admin::ReturnAuthorizationsController, :type => :controller do
     context '#create failed' do
       subject do
         spree_post :create, {
-          return_authorization: {stock_location_id: nil}, # return authorization requires valid stock location, so this will fail
-          order_id: order.to_param,
+          return_authorization: { stock_location_id: nil }, # return authorization requires valid stock location, so this will fail
+          order_id: order.to_param
         }
       end
 
@@ -101,9 +101,9 @@ describe Spree::Admin::ReturnAuthorizationsController, :type => :controller do
     context '#update failed' do
       subject do
         spree_put :update, {
-          return_authorization: {stock_location_id: nil}, # return authorization requires valid stock location, so this will fail
+          return_authorization: { stock_location_id: nil }, # return authorization requires valid stock location, so this will fail
           id: return_authorization.to_param,
-          order_id: order.to_param,
+          order_id: order.to_param
         }
       end
 
@@ -153,7 +153,7 @@ describe Spree::Admin::ReturnAuthorizationsController, :type => :controller do
     let(:params) do
       {
         order_id: order.to_param,
-        return_authorization: return_authorization_params,
+        return_authorization: return_authorization_params
       }
     end
 
@@ -161,7 +161,7 @@ describe Spree::Admin::ReturnAuthorizationsController, :type => :controller do
       {
         memo: "",
         stock_location_id: stock_location.id,
-        return_reason_id: return_reason.id,
+        return_reason_id: return_reason.id
       }
     end
 
@@ -178,13 +178,13 @@ describe Spree::Admin::ReturnAuthorizationsController, :type => :controller do
       {
         id: return_authorization.to_param,
         order_id: order.to_param,
-        return_authorization: return_authorization_params,
+        return_authorization: return_authorization_params
       }
     end
     let(:return_authorization_params) do
       {
         memo: "",
-        return_items_attributes: return_items_params,
+        return_items_attributes: return_items_params
       }
     end
 
@@ -193,7 +193,7 @@ describe Spree::Admin::ReturnAuthorizationsController, :type => :controller do
     context "adding an item" do
       let(:return_items_params) do
         {
-          '0' => {inventory_unit_id: inventory_unit_1.to_param}
+          '0' => { inventory_unit_id: inventory_unit_1.to_param }
         }
       end
 
@@ -208,7 +208,7 @@ describe Spree::Admin::ReturnAuthorizationsController, :type => :controller do
           create(:return_item, {
             return_authorization: return_authorization,
             inventory_unit: inventory_unit_1,
-            reception_status: 'received',
+            reception_status: 'received'
           })
         end
 
@@ -226,7 +226,7 @@ describe Spree::Admin::ReturnAuthorizationsController, :type => :controller do
 
       let(:return_items_params) do
         {
-          '0' => {id: return_item.to_param, _destroy: '1'}
+          '0' => { id: return_item.to_param, _destroy: '1' }
         }
       end
 

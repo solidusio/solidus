@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 module Spree
-  describe Api::CreditCardsController, :type => :controller do
+  describe Api::CreditCardsController, type: :controller do
     describe '#index' do
       render_views
 
@@ -13,7 +13,7 @@ module Spree
         create(:user, :with_api_key)
       end
 
-      let!(:card) { create(:credit_card, :user_id => admin_user.id, gateway_customer_profile_id: "random") }
+      let!(:card) { create(:credit_card, user_id: admin_user.id, gateway_customer_profile_id: "random") }
 
       before do
         stub_authentication!
@@ -52,7 +52,7 @@ module Spree
           normal_user
         end
 
-        let!(:card) { create(:credit_card, :user_id => normal_user.id, gateway_customer_profile_id: "random") }
+        let!(:card) { create(:credit_card, user_id: normal_user.id, gateway_customer_profile_id: "random") }
 
         it "can not view user" do
           api_get :index, user_id: admin_user.id
@@ -85,7 +85,7 @@ module Spree
 
         it 'updates the credit card' do
           expect {
-            api_put :update, id: credit_card.to_param, credit_card: {name: 'Jordan Brough'}
+            api_put :update, id: credit_card.to_param, credit_card: { name: 'Jordan Brough' }
           }.to change {
             credit_card.reload.name
           }.from('Joe Shmoe').to('Jordan Brough')
@@ -96,7 +96,7 @@ module Spree
         let(:current_api_user) { create(:user) }
 
         it 'rejects the request' do
-          api_put :update, id: credit_card.to_param, credit_card: {name: 'Jordan Brough'}
+          api_put :update, id: credit_card.to_param, credit_card: { name: 'Jordan Brough' }
           expect(response.status).to eq(401)
         end
       end

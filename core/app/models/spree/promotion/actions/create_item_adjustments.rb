@@ -23,7 +23,7 @@ module Spree
             current_result = create_adjustment(line_item, order, promotion_code)
             result ||= current_result
           end
-          return result
+          result
         end
 
         # Ensure a negative amount which does not exceed the sum of the order's
@@ -31,21 +31,21 @@ module Spree
         def compute_amount(adjustable)
           order = adjustable.is_a?(Order) ? adjustable : adjustable.order
           return 0 unless promotion.line_item_actionable?(order, adjustable)
-          promotion_amount = self.calculator.compute(adjustable).to_f.abs
+          promotion_amount = calculator.compute(adjustable).to_f.abs
           [adjustable.amount, promotion_amount].min * -1
         end
 
         private
 
         def create_adjustment(adjustable, order, promotion_code)
-          amount = self.compute_amount(adjustable)
+          amount = compute_amount(adjustable)
           return if amount == 0
-          self.adjustments.create!(
+          adjustments.create!(
             amount: amount,
             adjustable: adjustable,
             order: order,
             promotion_code: promotion_code,
-            label: "#{Spree.t(:promotion)} (#{promotion.name})",
+            label: "#{Spree.t(:promotion)} (#{promotion.name})"
           )
           true
         end
@@ -57,16 +57,16 @@ module Spree
         # Receives an adjustment +source+ (here a PromotionAction object) and tells
         # if the order has adjustments from that already
         def promotion_credit_exists?(adjustable)
-          self.adjustments.where(adjustable_id: adjustable.id).exists?
+          adjustments.where(adjustable_id: adjustable.id).exists?
         end
 
         def ensure_action_has_calculator
-          return if self.calculator
+          return if calculator
           self.calculator = Calculator::PercentOnLineItem.new
         end
 
         def line_items_to_adjust(promotion, order)
-          excluded_ids = self.adjustments.
+          excluded_ids = adjustments.
             where(adjustable_id: order.line_items.pluck(:id), adjustable_type: 'Spree::LineItem').
             pluck(:adjustable_id)
 

@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Spree::Admin::BaseHelper, :type => :helper do
+describe Spree::Admin::BaseHelper, type: :helper do
   include Spree::Admin::BaseHelper
 
   context "#datepicker_field_value" do
@@ -14,5 +14,4 @@ describe Spree::Admin::BaseHelper, :type => :helper do
       expect(datepicker_field_value(date)).to eq("2013/08/14")
     end
   end
-
 end

@@ -1,10 +1,9 @@
 require 'spec_helper'
 
-describe 'Payments', :type => :feature do
+describe 'Payments', type: :feature do
   stub_authorization!
 
   context "with a pre-existing payment" do
-
     let!(:payment) do
       create(:payment,
         order:          order,
@@ -37,7 +36,7 @@ describe 'Payments', :type => :feature do
         create(:payment,
           order:          order,
           amount:         order.outstanding_balance,
-          payment_method: create(:check_payment_method)  # Check
+          payment_method: create(:check_payment_method) # Check
         )
       end
 
@@ -54,15 +53,15 @@ describe 'Payments', :type => :feature do
     end
 
     it 'should list all captures for a payment' do
-      capture_amount = order.outstanding_balance/2 * 100
+      capture_amount = order.outstanding_balance / 2 * 100
       payment.capture!(capture_amount)
 
       visit spree.admin_order_payment_path(order, payment)
       expect(page).to have_content 'Capture events'
       # within '#capture_events' do
-        within_row(1) do
-          expect(page).to have_content(capture_amount / 100)
-        end
+      within_row(1) do
+        expect(page).to have_content(capture_amount / 100)
+      end
       # end
     end
 
@@ -170,8 +169,8 @@ describe 'Payments', :type => :feature do
   end
 
   context "with no prior payments" do
-    let(:order) { create(:order_with_line_items, :line_items_count => 1) }
-    let!(:payment_method) { create(:credit_card_payment_method)}
+    let(:order) { create(:order_with_line_items, line_items_count: 1) }
+    let!(:payment_method) { create(:credit_card_payment_method) }
 
     # Regression tests for https://github.com/spree/spree/issues/4129
     context "with a credit card payment method" do
@@ -179,11 +178,11 @@ describe 'Payments', :type => :feature do
         visit spree.admin_order_payments_path(order)
       end
 
-      it "is able to create a new credit card payment with valid information", :js => true do
-        fill_in "Card Number", :with => "4111 1111 1111 1111"
-        fill_in "Name *", :with => "Test User"
-        fill_in "Expiration", :with => "09 / #{Time.current.year + 1}"
-        fill_in "Card Code", :with => "007"
+      it "is able to create a new credit card payment with valid information", js: true do
+        fill_in "Card Number", with: "4111 1111 1111 1111"
+        fill_in "Name *", with: "Test User"
+        fill_in "Expiration", with: "09 / #{Time.current.year + 1}"
+        fill_in "Card Code", with: "007"
         # Regression test for https://github.com/spree/spree/issues/4277
         expect(page).to have_css('.ccType[value="visa"]', visible: false)
         click_button "Continue"
@@ -216,7 +215,7 @@ describe 'Payments', :type => :feature do
     end
 
     context "with a check" do
-      let(:order) { create(:completed_order_with_totals, :line_items_count => 1) }
+      let(:order) { create(:completed_order_with_totals, line_items_count: 1) }
       let!(:payment_method) { create(:check_payment_method) }
 
       before do

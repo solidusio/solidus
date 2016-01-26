@@ -3,13 +3,13 @@ require 'spec_helper'
 class FakesController < Spree::Api::BaseController
 end
 
-describe Spree::Api::BaseController, :type => :controller do
+describe Spree::Api::BaseController, type: :controller do
   render_views
   controller(Spree::Api::BaseController) do
     rescue_from Spree::Order::InsufficientStock, with: :insufficient_stock_error
 
     def index
-      render :text => { "products" => [] }.to_json
+      render text: { "products" => [] }.to_json
     end
   end
 
@@ -57,7 +57,7 @@ describe Spree::Api::BaseController, :type => :controller do
     end
 
     it "using an invalid token param" do
-      get :index, :token => "fake_key"
+      get :index, token: "fake_key"
       expect(json_response).to eq({ "error" => "Invalid API key (fake_key) specified." })
     end
   end
@@ -66,7 +66,7 @@ describe Spree::Api::BaseController, :type => :controller do
     expect(subject).to receive(:authenticate_user).and_return(true)
     expect(subject).to receive(:load_user_roles).and_return(true)
     expect(subject).to receive(:index).and_raise("no joy")
-    get :index, :token => "fake_key"
+    get :index, token: "fake_key"
     expect(json_response).to eq({ "exception" => "no joy" })
   end
 
@@ -75,7 +75,7 @@ describe Spree::Api::BaseController, :type => :controller do
     expect(subject).to receive(:load_user_roles).and_return(true)
     expect(subject).to receive(:index).and_raise(Exception.new("no joy"))
     expect {
-      get :index, :token => "fake_key"
+      get :index, token: "fake_key"
     }.to raise_error(Exception, "no joy")
   end
 
@@ -93,7 +93,7 @@ describe Spree::Api::BaseController, :type => :controller do
     end
 
     # What would be placed in config/initializers/spree.rb
-    Spree::Api::BaseController.error_notifier = Proc.new do |e, controller|
+    Spree::Api::BaseController.error_notifier = proc do |e, controller|
       MockHoneybadger.notify_or_ignore(e, rack_env: controller.request.env)
     end
 
@@ -101,7 +101,7 @@ describe Spree::Api::BaseController, :type => :controller do
     # Fake HB alert class
     class MockHoneybadger
       # https://github.com/honeybadger-io/honeybadger-ruby/blob/master/lib/honeybadger.rb#L136
-      def self.notify_or_ignore(exception, opts = {})
+      def self.notify_or_ignore(_exception, _opts = {})
       end
     end
 
@@ -125,7 +125,7 @@ describe Spree::Api::BaseController, :type => :controller do
     before do
       expect(subject).to receive(:authenticate_user).and_return(true)
       expect(subject).to receive(:index).and_raise(Spree::Order::InsufficientStock)
-      get :index, :token => "fake_key"
+      get :index, token: "fake_key"
     end
 
     it "should return a 422" do
@@ -134,7 +134,7 @@ describe Spree::Api::BaseController, :type => :controller do
 
     it "returns an error message" do
       expect(json_response).to eq(
-        {"errors" => ["Quantity is not available for items in your order"], "type" => "insufficient_stock"}
+        { "errors" => ["Quantity is not available for items in your order"], "type" => "insufficient_stock" }
       )
     end
   end
@@ -146,7 +146,7 @@ describe Spree::Api::BaseController, :type => :controller do
       around_filter :lock_order
 
       def index
-        render :text => { "products" => [] }.to_json
+        render text: { "products" => [] }.to_json
       end
     end
 
@@ -168,5 +168,4 @@ describe Spree::Api::BaseController, :type => :controller do
       end
     end
   end
-
 end

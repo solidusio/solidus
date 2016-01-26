@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Spree::Api::ShipmentsController, :type => :controller do
+describe Spree::Api::ShipmentsController, type: :controller do
   render_views
   let!(:shipment) { create(:shipment, address: create(:address), inventory_units: [build(:inventory_unit, shipment: nil)]) }
   let!(:attributes) { [:id, :tracking, :tracking_url, :number, :cost, :shipped_at, :stock_location_name, :order_id, :shipping_rates, :shipping_methods] }
@@ -68,7 +68,7 @@ describe Spree::Api::ShipmentsController, :type => :controller do
           it 'should return proper error' do
             subject
             expect(response.status).to eq(422)
-            expect(json_response['exception']).to eq("param is missing or the value is empty: #{field.to_s}")
+            expect(json_response['exception']).to eq("param is missing or the value is empty: #{field}")
           end
         end
       end
@@ -92,7 +92,7 @@ describe Spree::Api::ShipmentsController, :type => :controller do
     end
 
     it "can make a shipment ready" do
-      allow_any_instance_of(Spree::Order).to receive_messages(:paid? => true, :complete? => true)
+      allow_any_instance_of(Spree::Order).to receive_messages(paid?: true, complete?: true)
       api_put :ready
       expect(json_response).to have_attributes(attributes)
       expect(json_response["state"]).to eq("ready")
@@ -100,7 +100,7 @@ describe Spree::Api::ShipmentsController, :type => :controller do
     end
 
     it "cannot make a shipment ready if the order is unpaid" do
-      allow_any_instance_of(Spree::Order).to receive_messages(:paid? => false)
+      allow_any_instance_of(Spree::Order).to receive_messages(paid?: false)
       api_put :ready
       expect(json_response["error"]).to eq("Cannot ready shipment.")
       expect(response.status).to eq(422)
@@ -149,7 +149,6 @@ describe Spree::Api::ShipmentsController, :type => :controller do
         expect(response.status).to eq(422)
         expect(json_response['errors']['base'].join).to match /Cannot remove items/
       end
-
     end
 
     describe '#mine' do
@@ -199,7 +198,7 @@ describe Spree::Api::ShipmentsController, :type => :controller do
         end
 
         context 'with filtering' do
-          let(:params) { {q: {order_completed_at_not_null: 1}} }
+          let(:params) { { q: { order_completed_at_not_null: 1 } } }
 
           let!(:incomplete_order) { create(:order_with_line_items, user: current_api_user) }
 
@@ -219,7 +218,6 @@ describe Spree::Api::ShipmentsController, :type => :controller do
         end
       end
     end
-
   end
 
   describe "#ship" do

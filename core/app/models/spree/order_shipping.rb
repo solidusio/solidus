@@ -24,7 +24,7 @@ class Spree::OrderShipping
       # TODO: Remove the `|| shipment.tracking` once Shipment#ship! is called by
       # OrderShipping#ship rather than vice versa
       tracking_number: tracking_number || shipment.tracking,
-      suppress_mailer: suppress_mailer,
+      suppress_mailer: suppress_mailer
     )
   end
 
@@ -55,7 +55,7 @@ class Spree::OrderShipping
         inventory_units: inventory_units,
         shipped_at: shipped_at,
         external_number: external_number,
-        tracking: tracking_number,
+        tracking: tracking_number
       )
     end
 
@@ -64,12 +64,11 @@ class Spree::OrderShipping
       # TODO: Remove tracking numbers from shipments.
       shipment.update_attributes!(tracking: tracking_number)
 
-      if shipment.inventory_units(true).all? {|iu| iu.shipped? || iu.canceled? }
-        # TODO: make OrderShipping#ship_shipment call Shipment#ship! rather than
-        # having Shipment#ship! call OrderShipping#ship_shipment. We only really
-        # need this `update_columns` for the specs, until we make that change.
-        shipment.update_columns(state: 'shipped', shipped_at: Time.current)
-      end
+      next unless shipment.inventory_units(true).all? { |iu| iu.shipped? || iu.canceled? }
+      # TODO: make OrderShipping#ship_shipment call Shipment#ship! rather than
+      # having Shipment#ship! call OrderShipping#ship_shipment. We only really
+      # need this `update_columns` for the specs, until we make that change.
+      shipment.update_columns(state: 'shipped', shipped_at: Time.current)
     end
 
     send_shipment_emails(carton) if stock_location.fulfillable? && !suppress_mailer # e.g. digital gift cards that aren't actually shipped

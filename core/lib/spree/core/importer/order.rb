@@ -2,7 +2,6 @@ module Spree
   module Core
     module Importer
       class Order
-
         def self.import(user, params)
           ActiveRecord::Base.transaction do
             ensure_country_id_from_params params[:ship_address_attributes]
@@ -19,7 +18,7 @@ module Spree
             shipments_attrs = params.delete(:shipments_attributes)
 
             create_shipments_from_params(shipments_attrs, order)
-            create_line_items_from_params(params.delete(:line_items_attributes),order)
+            create_line_items_from_params(params.delete(:line_items_attributes), order)
             create_adjustments_from_params(params.delete(:adjustments_attributes), order)
             create_payments_from_params(params.delete(:payments_attributes), order)
 
@@ -89,8 +88,8 @@ module Spree
             shipment.save!
 
             shipping_method = Spree::ShippingMethod.find_by_name(s[:shipping_method]) || Spree::ShippingMethod.find_by_admin_name!(s[:shipping_method])
-            rate = shipment.shipping_rates.create!(:shipping_method => shipping_method,
-                                                   :cost => s[:cost])
+            rate = shipment.shipping_rates.create!(shipping_method: shipping_method,
+                                                   cost: s[:cost])
             shipment.selected_shipping_rate_id = rate.id
             shipment.update_amounts
           end
@@ -161,7 +160,7 @@ module Spree
         end
 
         def self.ensure_country_id_from_params(address)
-          return if address.nil? or address[:country_id].present? or address[:country].nil?
+          return if address.nil? || address[:country_id].present? || address[:country].nil?
 
           search = {}
           if name = address[:country]['name']
@@ -179,7 +178,7 @@ module Spree
         end
 
         def self.ensure_state_id_from_params(address)
-          return if address.nil? or address[:state_id].present? or address[:state].nil?
+          return if address.nil? || address[:state_id].present? || address[:state].nil?
 
           search = {}
           if name = address[:state]['name']
@@ -197,7 +196,6 @@ module Spree
             address[:state_name] = search[:name] || search[:abbr]
           end
         end
-
       end
     end
   end

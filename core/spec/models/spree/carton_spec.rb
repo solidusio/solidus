@@ -105,7 +105,7 @@ describe Spree::Carton do
     it "contains only the items in both the carton and order" do
       expect(subject.map(&:line_item)).to eq [first_line_item]
     end
-  end 
+  end
 
   describe "#any_exchanges?" do
     subject { carton.any_exchanges? }

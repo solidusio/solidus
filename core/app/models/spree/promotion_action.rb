@@ -16,7 +16,7 @@ module Spree
     # user based actions to be performed in addition to actions on the order
     #
     # @note This method should be overriden in subclassses.
-    def perform(options = {})
+    def perform(_options = {})
       raise 'perform should be implemented in a sub-class of PromotionAction'
     end
   end

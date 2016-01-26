@@ -1,16 +1,16 @@
 module Spree
   module Admin
     class PaymentsController < Spree::Admin::BaseController
-      before_filter :load_order, :only => [:create, :new, :index, :fire]
-      before_filter :load_payment, :except => [:create, :new, :index, :fire]
-      before_filter :load_payment_for_fire, :only => :fire
+      before_filter :load_order, only: [:create, :new, :index, :fire]
+      before_filter :load_payment, except: [:create, :new, :index, :fire]
+      before_filter :load_payment_for_fire, only: :fire
       before_filter :load_data
       before_filter :require_bill_address, only: [:index]
 
       respond_to :html
 
       def index
-        @payments = @order.payments.includes(:refunds => :reason)
+        @payments = @order.payments.includes(refunds: :reason)
         @refunds = @payments.flat_map(&:refunds)
         redirect_to new_admin_order_payment_url(@order) if @payments.empty?
       end
@@ -21,7 +21,7 @@ module Spree
 
       def create
         @payment = PaymentCreate.new(@order, object_params).build
-        if @payment.payment_method.source_required? && params[:card].present? and params[:card] != 'new'
+        if @payment.payment_method.source_required? && params[:card].present? && params[:card] != 'new'
           @payment.source = @payment.payment_method.payment_source_class.find_by_id(params[:card])
         end
 
@@ -43,13 +43,13 @@ module Spree
             render :new
           end
         rescue Spree::Core::GatewayError => e
-          flash[:error] = "#{e.message}"
+          flash[:error] = e.message.to_s
           redirect_to new_admin_order_payment_path(@order)
         end
       end
 
       def fire
-        return unless event = params[:e] and @payment.payment_source
+        return unless (event = params[:e]) && @payment.payment_source
 
         # Because we have a transition method also called void, we do this to avoid conflicts.
         event = "void_transaction" if event == "void"
@@ -59,7 +59,7 @@ module Spree
           flash[:error] = Spree.t(:cannot_perform_operation)
         end
       rescue Spree::Core::GatewayError => ge
-        flash[:error] = "#{ge.message}"
+        flash[:error] = ge.message.to_s
       ensure
         redirect_to admin_order_payments_path(@order)
       end
@@ -67,17 +67,17 @@ module Spree
       private
 
       def object_params
-        if params[:payment] and params[:payment_source] and source_params = params.delete(:payment_source)[params[:payment][:payment_method_id]]
+        if params[:payment] && params[:payment_source] && (source_params = params.delete(:payment_source)[params[:payment][:payment_method_id]])
           params[:payment][:source_attributes] = source_params
         end
-        
+
         params.require(:payment).permit(permitted_payment_attributes)
       end
 
       def load_data
         @amount = params[:amount] || load_order.total
         @payment_methods = PaymentMethod.available(:back_end)
-        if @payment and @payment.payment_method
+        if @payment && @payment.payment_method
           @payment_method = @payment.payment_method
         else
           @payment_method = @payment_methods.first

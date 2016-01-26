@@ -2,24 +2,26 @@
 
 require 'spec_helper'
 
-describe Spree::ShippingRate, :type => :model do
+describe Spree::ShippingRate, type: :model do
   let(:shipment) { create(:shipment) }
   let(:shipping_method) { create(:shipping_method) }
-  let(:shipping_rate) { Spree::ShippingRate.new(:shipment => shipment,
-                                                :shipping_method => shipping_method,
-                                                :cost => 10) }
+  let(:shipping_rate) {
+    Spree::ShippingRate.new(shipment: shipment,
+                                                shipping_method: shipping_method,
+                                                cost: 10)
+  }
 
   context "#display_price" do
     context "when tax included in price" do
       context "when the tax rate is from the default zone" do
         before { shipment.order.update_attributes!(ship_address_id: nil) }
-        let!(:zone) { create(:zone, :default_tax => true) }
+        let!(:zone) { create(:zone, default_tax: true) }
         let(:tax_rate) do
           create(:tax_rate,
-            :name => "VAT",
-            :amount => 0.1,
-            :included_in_price => true,
-            :zone => zone)
+            name: "VAT",
+            amount: 0.1,
+            included_in_price: true,
+            zone: zone)
         end
 
         before { shipping_rate.tax_rate = tax_rate }
@@ -40,14 +42,14 @@ describe Spree::ShippingRate, :type => :model do
       end
 
       context "when the tax rate is from a non-default zone" do
-        let!(:default_zone) { create(:zone, :default_tax => true) }
-        let!(:non_default_zone) { create(:zone, :default_tax => false) }
+        let!(:default_zone) { create(:zone, default_tax: true) }
+        let!(:non_default_zone) { create(:zone, default_tax: false) }
         let(:tax_rate) do
           create(:tax_rate,
-            :name => "VAT",
-            :amount => 0.1,
-            :included_in_price => true,
-            :zone => non_default_zone)
+            name: "VAT",
+            amount: 0.1,
+            included_in_price: true,
+            zone: non_default_zone)
         end
         before { shipping_rate.tax_rate = tax_rate }
 
@@ -68,7 +70,7 @@ describe Spree::ShippingRate, :type => :model do
     end
 
     context "when tax is additional to price" do
-      let(:tax_rate) { create(:tax_rate, :name => "Sales Tax", :amount => 0.1) }
+      let(:tax_rate) { create(:tax_rate, name: "Sales Tax", amount: 0.1) }
       before { shipping_rate.tax_rate = tax_rate }
 
       it "shows correct tax amount" do
@@ -87,9 +89,11 @@ describe Spree::ShippingRate, :type => :model do
     end
 
     context "when the currency is JPY" do
-      let(:shipping_rate) { shipping_rate = Spree::ShippingRate.new(:cost => 205)
-                            allow(shipping_rate).to receive_messages(:currency => "JPY")
-                            shipping_rate }
+      let(:shipping_rate) {
+        shipping_rate = Spree::ShippingRate.new(cost: 205)
+        allow(shipping_rate).to receive_messages(currency: "JPY")
+        shipping_rate
+      }
 
       it "displays the price in yen" do
         expect(shipping_rate.display_price.to_s).to eq("¥205")

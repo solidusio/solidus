@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Spree::CustomerReturn, :type => :model do
+describe Spree::CustomerReturn, type: :model do
   before do
     allow_any_instance_of(Spree::Order).to receive_messages(return!: true)
   end
@@ -33,7 +33,6 @@ describe Spree::CustomerReturn, :type => :model do
           subject
           expect(customer_return.errors.full_messages).to include(Spree.t(:return_items_cannot_be_associated_with_multiple_orders))
         end
-
       end
 
       context "return items are part of the same order" do
@@ -73,8 +72,8 @@ describe Spree::CustomerReturn, :type => :model do
   end
 
   describe "#total" do
-    let(:pre_tax_amount)  { 15.0 }
-    let(:tax_amount)  { 5.0 }
+    let(:pre_tax_amount) { 15.0 }
+    let(:tax_amount) { 5.0 }
     let(:customer_return) { create(:customer_return, line_items_count: 2) }
 
     before do
@@ -159,7 +158,6 @@ describe Spree::CustomerReturn, :type => :model do
     let(:return_item)     { build(:return_item, inventory_unit: inventory_unit) }
 
     context "to the initial stock location" do
-
       it "should mark the received inventory units are returned" do
         create(:customer_return_without_return_items, return_items: [return_item], stock_location_id: inventory_unit.shipment.stock_location_id)
         return_item.receive!
@@ -189,7 +187,7 @@ describe Spree::CustomerReturn, :type => :model do
     end
 
     context "to a different stock location" do
-      let(:new_stock_location) { create(:stock_location, :name => "other") }
+      let(:new_stock_location) { create(:stock_location, name: "other") }
 
       it "should update the stock item counts in new stock location" do
         expect {
@@ -213,7 +211,6 @@ describe Spree::CustomerReturn, :type => :model do
     end
 
     context "it was not received" do
-
       before do
         return_item.update_attributes!(reception_status: "lost_in_transit")
       end
@@ -243,7 +240,6 @@ describe Spree::CustomerReturn, :type => :model do
     end
 
     context 'when all return items are decided' do
-
       context 'when all return items are rejected' do
         before { customer_return.return_items.each(&:reject!) }
 

@@ -52,4 +52,3 @@ describe Spree::PermissionSets::OrderDisplay do
     it { is_expected.not_to be_able_to(:display, Spree::Refund) }
   end
 end
-

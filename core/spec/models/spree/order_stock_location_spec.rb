@@ -13,6 +13,6 @@ module Spree
         subject
         expect(order_stock_location.reload.shipment_fulfilled).to eq(true)
       end
-    end 
+    end
   end
 end

@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe "Payment Methods", :type => :feature do
+describe "Payment Methods", type: :feature do
   stub_authorization!
 
   before(:each) do
@@ -31,9 +31,9 @@ describe "Payment Methods", :type => :feature do
       click_link "Payment Methods"
       click_link "admin_new_payment_methods_link"
       expect(page).to have_content("New Payment Method")
-      fill_in "payment_method_name", :with => "check90"
-      fill_in "payment_method_description", :with => "check90 desc"
-      select "PaymentMethod::Check", :from => "gtwy-type"
+      fill_in "payment_method_name", with: "check90"
+      fill_in "payment_method_description", with: "check90 desc"
+      select "PaymentMethod::Check", from: "gtwy-type"
       click_button "Create"
       expect(page).to have_content("successfully created!")
     end
@@ -49,14 +49,14 @@ describe "Payment Methods", :type => :feature do
     end
 
     it "should be able to edit an existing payment method" do
-      fill_in "payment_method_name", :with => "Payment 99"
+      fill_in "payment_method_name", with: "Payment 99"
       click_button "Update"
       expect(page).to have_content("successfully updated!")
       expect(page).to have_field("payment_method_name", with: "Payment 99")
     end
 
     it "should display validation errors" do
-      fill_in "payment_method_name", :with => ""
+      fill_in "payment_method_name", with: ""
       click_button "Update"
       expect(page).to have_content("Name can't be blank")
     end
@@ -103,7 +103,7 @@ describe "Payment Methods", :type => :feature do
     end
 
     it "updates successfully and keeps secrets" do
-      Spree::Config.static_model_preferences.add(Spree::Gateway::Bogus, 'my_prefs', {server: 'secret'})
+      Spree::Config.static_model_preferences.add(Spree::Gateway::Bogus, 'my_prefs', { server: 'secret' })
 
       create(:credit_card_payment_method)
       click_link "Payment Methods"

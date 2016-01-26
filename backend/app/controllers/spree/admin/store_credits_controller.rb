@@ -16,7 +16,7 @@ module Spree
         @store_credit = @user.store_credits.build(
           permitted_resource_params.merge({
             created_by: try_spree_current_user,
-            action_originator: try_spree_current_user,
+            action_originator: try_spree_current_user
           })
         )
 
@@ -25,7 +25,7 @@ module Spree
           redirect_to admin_user_store_credits_path(@user)
         else
           load_categories
-          flash[:error] = "#{Spree.t("admin.store_credits.unable_to_create")} #{@store_credit.errors.full_messages}"
+          flash[:error] = "#{Spree.t('admin.store_credits.unable_to_create')} #{@store_credit.errors.full_messages}"
           render :new
         end
       end
@@ -40,7 +40,7 @@ module Spree
           end
         else
           respond_to do |format|
-            format.json { render json: { message: "#{Spree.t("admin.store_credits.unable_to_update")} #{@store_credit.errors.full_messages}" }, status: :bad_request }
+            format.json { render json: { message: "#{Spree.t('admin.store_credits.unable_to_update')} #{@store_credit.errors.full_messages}" }, status: :bad_request }
           end
         end
       end
@@ -103,7 +103,7 @@ module Spree
 
         load_update_reasons
         flash[:error] = "#{Spree.t("admin.store_credits.unable_to_#{translation_key}")}: #{@store_credit.errors.full_messages.join(', ')}"
-        render template and return
+        render(template) && return
       end
     end
   end

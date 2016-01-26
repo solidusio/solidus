@@ -10,7 +10,7 @@ class ::Spree::PromotionCode::CodeBuilder
   # +promotion+ Must be a Spree::Promotion.
   # +base_code+ Must be a String.
   # +num_codes+ Must be a positive integer greater than zero.
-  def initialize promotion, base_code, num_codes
+  def initialize(promotion, base_code, num_codes)
     @base_code = base_code
     @num_codes = num_codes
     @promotion = promotion
@@ -36,7 +36,7 @@ class ::Spree::PromotionCode::CodeBuilder
   def generate_random_codes
     valid_codes = Set.new
 
-    while valid_codes.size < num_codes do
+    while valid_codes.size < num_codes
       new_codes = num_codes.times.map { generate_random_code }.to_set
       valid_codes += get_unique_codes(new_codes)
     end

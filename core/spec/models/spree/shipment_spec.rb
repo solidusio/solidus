@@ -14,10 +14,10 @@ describe Spree::Shipment, type: :model do
       shipping_rates: [
         Spree::ShippingRate.new(
           shipping_method: shipping_method,
-          selected: true,
-        ),
+          selected: true
+        )
       ],
-      stock_location: stock_location,
+      stock_location: stock_location
     )
   end
 
@@ -47,7 +47,7 @@ describe Spree::Shipment, type: :model do
   it 'is backordered if one if its inventory_units is backordered' do
     shipment.inventory_units = [
       build(:inventory_unit, state: 'backordered', shipment: nil),
-      build(:inventory_unit, state: 'shipped', shipment: nil),
+      build(:inventory_unit, state: 'shipped', shipment: nil)
     ]
     expect(shipment).to be_backordered
   end
@@ -165,10 +165,12 @@ describe Spree::Shipment, type: :model do
     let(:shipment) { create(:shipment) }
     let(:shipping_method1) { create(:shipping_method) }
     let(:shipping_method2) { create(:shipping_method) }
-    let(:shipping_rates) { [
+    let(:shipping_rates) {
+      [
       Spree::ShippingRate.new(shipping_method: shipping_method1, cost: 10.00, selected: true),
       Spree::ShippingRate.new(shipping_method: shipping_method2, cost: 20.00)
-    ] }
+    ]
+    }
 
     it 'returns shipping_method from selected shipping_rate' do
       shipment.shipping_rates.delete_all
@@ -668,7 +670,7 @@ describe Spree::Shipment, type: :model do
   context "state changes" do
     before do
       # Must be stubbed so transition can succeed
-      allow(order).to receive_messages :paid? => true
+      allow(order).to receive_messages paid?: true
     end
 
     it "are logged to the database" do
@@ -682,13 +684,13 @@ describe Spree::Shipment, type: :model do
   end
 
   context "don't require shipment" do
-    let(:stock_location) { create(:stock_location, fulfillable: false)}
+    let(:stock_location) { create(:stock_location, fulfillable: false) }
     let(:unshippable_shipment) do
       create(
         :shipment,
         address: create(:address),
         stock_location: stock_location,
-        inventory_units: [build(:inventory_unit)],
+        inventory_units: [build(:inventory_unit)]
       )
     end
 

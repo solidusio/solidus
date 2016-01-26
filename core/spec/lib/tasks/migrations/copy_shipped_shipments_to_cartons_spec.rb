@@ -111,5 +111,4 @@ describe 'spree:migrations:copy_shipped_shipments_to_cartons' do
       expect(preexisting_carton_inventory_units.map(&:reload).map(&:carton_id)).to all(eq preexisting_carton.id)
     end
   end
-
 end

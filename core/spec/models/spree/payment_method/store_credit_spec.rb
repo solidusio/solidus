@@ -70,7 +70,7 @@ describe Spree::PaymentMethod::StoreCredit do
     let(:auth_code) { auth_event.authorization_code }
     let(:gateway_options) { super().merge(originator: originator) }
 
-    let(:authorized_amount) { capture_amount/100.0 }
+    let(:authorized_amount) { capture_amount / 100.0 }
     let(:auth_event) { create(:store_credit_auth_event, store_credit: store_credit, amount: authorized_amount) }
     let(:store_credit) { create(:store_credit, amount_authorized: authorized_amount) }
     let(:originator) { nil }
@@ -85,7 +85,7 @@ describe Spree::PaymentMethod::StoreCredit do
     end
 
     context 'when unable to authorize the amount' do
-      let(:authorized_amount) { (capture_amount-1)/100 }
+      let(:authorized_amount) { (capture_amount - 1) / 100 }
 
       before do
         allow_any_instance_of(Spree::StoreCredit).to receive_messages(authorize: true)
@@ -256,10 +256,12 @@ describe Spree::PaymentMethod::StoreCredit do
     let(:captured_amount) { 10.0 }
 
     context "capture event found" do
-      let!(:store_credit_event) { create(:store_credit_capture_event,
+      let!(:store_credit_event) {
+        create(:store_credit_capture_event,
                                         authorization_code: auth_code,
                                         amount: captured_amount,
-                                        store_credit: store_credit) }
+                                        store_credit: store_credit)
+      }
 
       it "creates a store credit for the same amount that was captured" do
         expect_any_instance_of(Spree::StoreCredit).to receive(:credit).with(captured_amount, auth_code, store_credit.currency)
@@ -269,10 +271,12 @@ describe Spree::PaymentMethod::StoreCredit do
 
     context "capture event not found" do
       context "auth event found" do
-        let!(:store_credit_event) { create(:store_credit_auth_event,
+        let!(:store_credit_event) {
+          create(:store_credit_auth_event,
                                           authorization_code: auth_code,
                                           amount: captured_amount,
-                                          store_credit: store_credit) }
+                                          store_credit: store_credit)
+        }
 
         it "creates a store credit for the same amount that was captured" do
           expect_any_instance_of(Spree::StoreCredit).to receive(:void).with(auth_code)

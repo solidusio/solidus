@@ -22,7 +22,7 @@ describe "Visiting Products", type: :feature, inaccessible: true do
 
   describe 'meta tags and title' do
     let(:jersey) { Spree::Product.find_by_name('Ruby on Rails Baseball Jersey') }
-    let(:metas) { { :meta_description => 'Brand new Ruby on Rails Jersey', :meta_title => 'Ruby on Rails Baseball Jersey Buy High Quality Geek Apparel', :meta_keywords => 'ror, jersey, ruby' } }
+    let(:metas) { { meta_description: 'Brand new Ruby on Rails Jersey', meta_title: 'Ruby on Rails Baseball Jersey Buy High Quality Geek Apparel', meta_keywords: 'ror, jersey, ruby' } }
 
     it 'should return the correct title when displaying a single product' do
       click_link jersey.name
@@ -92,7 +92,7 @@ describe "Visiting Products", type: :feature, inaccessible: true do
         end
       end
 
-      it "when adding a product to the cart", :js => true do
+      it "when adding a product to the cart", js: true do
         visit spree.product_path(product)
         click_button "Add To Cart"
         click_link "Home"
@@ -113,7 +113,7 @@ describe "Visiting Products", type: :feature, inaccessible: true do
   end
 
   it "should be able to search for a product" do
-    fill_in "keywords", :with => "shirt"
+    fill_in "keywords", with: "shirt"
     click_button "Search"
 
     expect(page.all('ul.product-listing li').size).to eq(1)
@@ -122,13 +122,13 @@ describe "Visiting Products", type: :feature, inaccessible: true do
   context "a product with variants" do
     let(:product) { Spree::Product.find_by_name("Ruby on Rails Baseball Jersey") }
     let(:option_value) { create(:option_value) }
-    let!(:variant) { product.variants.create!(:price => 5.59) }
+    let!(:variant) { product.variants.create!(price: 5.59) }
 
     before do
       # Need to have two images to trigger the error
       image = File.open(File.expand_path('../../fixtures/thinking-cat.jpg', __FILE__))
-      product.images.create!(:attachment => image)
-      product.images.create!(:attachment => image)
+      product.images.create!(attachment: image)
+      product.images.create!(attachment: image)
 
       product.option_types << option_value.option_type
       variant.option_values << option_value
@@ -177,7 +177,6 @@ describe "Visiting Products", type: :feature, inaccessible: true do
     expect(page.all('ul.product-listing li').size).to eq(0)
   end
 
-
   it "should be able to display products priced under 10 dollars" do
     within(:css, '#taxonomies') { click_link "Ruby on Rails" }
     check "Price_Range_Under_$10.00"
@@ -221,13 +220,13 @@ describe "Visiting Products", type: :feature, inaccessible: true do
     tmp = page.all('ul.product-listing li a').map(&:text).flatten.compact
     tmp.delete("")
     expect(tmp.sort!).to eq(["Ruby on Rails Bag",
-                         "Ruby on Rails Baseball Jersey",
-                         "Ruby on Rails Jr. Spaghetti",
-                         "Ruby on Rails Ringer T-Shirt"])
+                             "Ruby on Rails Baseball Jersey",
+                             "Ruby on Rails Jr. Spaghetti",
+                             "Ruby on Rails Ringer T-Shirt"])
   end
 
   it "should be able to put a product without a description in the cart" do
-    product = FactoryGirl.create(:base_product, :description => nil, :name => 'Sample', :price => '19.99')
+    product = FactoryGirl.create(:base_product, description: nil, name: 'Sample', price: '19.99')
     visit spree.product_path(product)
     expect(page).to have_content "This product has no description"
     click_button 'add-to-cart-button'
@@ -235,7 +234,7 @@ describe "Visiting Products", type: :feature, inaccessible: true do
   end
 
   it "shouldn't be able to put a product without a current price in the cart" do
-    product = FactoryGirl.create(:base_product, :description => nil, :name => 'Sample', :price => '19.99')
+    product = FactoryGirl.create(:base_product, description: nil, name: 'Sample', price: '19.99')
     Spree::Config.currency = "CAN"
     Spree::Config.show_products_without_price = true
     visit spree.product_path(product)

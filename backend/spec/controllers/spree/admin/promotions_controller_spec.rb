@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Spree::Admin::PromotionsController, :type => :controller do
+describe Spree::Admin::PromotionsController, type: :controller do
   stub_authorization!
 
   let!(:promotion1) { create(:promotion, name: "name1", code: "code1", path: "path1") }
@@ -8,7 +8,6 @@ describe Spree::Admin::PromotionsController, :type => :controller do
   let!(:category) { create :promotion_category }
 
   describe "#index" do
-
     it "succeeds" do
       spree_get :index
       expect(assigns[:promotions]).to match_array [promotion2, promotion1]
@@ -26,17 +25,17 @@ describe Spree::Admin::PromotionsController, :type => :controller do
       end
 
       it "filters by name" do
-        spree_get :index, q: {name_cont: promotion1.name}
+        spree_get :index, q: { name_cont: promotion1.name }
         expect(assigns[:promotions]).to eq [promotion1]
       end
 
       it "filters by code" do
-        spree_get :index, q: {codes_value_cont: promotion1.codes.first.value }
+        spree_get :index, q: { codes_value_cont: promotion1.codes.first.value }
         expect(assigns[:promotions]).to eq [promotion1]
       end
 
       it "filters by path" do
-        spree_get :index, q: {path_cont: promotion1.path}
+        spree_get :index, q: { path_cont: promotion1.path }
         expect(assigns[:promotions]).to eq [promotion1]
       end
     end
@@ -44,7 +43,7 @@ describe Spree::Admin::PromotionsController, :type => :controller do
 
   describe "#create" do
     subject { spree_post :create, params }
-    let(:params) { {promotion: {name: 'some promo'}} }
+    let(:params) { { promotion: { name: 'some promo' } } }
 
     context "it succeeds" do
       it "creates a promotion" do
@@ -73,7 +72,7 @@ describe Spree::Admin::PromotionsController, :type => :controller do
             }.to change { Spree::Promotion.count }.by(1)
           }.to change { Spree::PromotionCode.count }.by(1)
 
-          expect(assigns(:promotion).codes.first.value).to eq ('abc')
+          expect(assigns(:promotion).codes.first.value).to eq 'abc'
         end
       end
 
@@ -116,7 +115,5 @@ describe Spree::Admin::PromotionsController, :type => :controller do
         expect(response).to render_template :new
       end
     end
-
   end
-
 end

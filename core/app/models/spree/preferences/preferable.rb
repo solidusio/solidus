@@ -110,7 +110,7 @@ module Spree::Preferences::Preferable
       if !value ||
          value == 0 ||
          value =~ /\A(f|false|0)\Z/i ||
-         (value.respond_to? :empty? and value.empty?)
+         (value.respond_to?(:empty?) && value.empty?)
          false
       else
          true

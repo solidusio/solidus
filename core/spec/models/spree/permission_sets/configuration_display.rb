@@ -79,4 +79,3 @@ describe Spree::PermissionSets::ConfigurationDisplay do
     it { is_expected.not_to be_able_to(:admin, Spree::ReturnReason) }
   end
 end
-

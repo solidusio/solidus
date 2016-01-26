@@ -3,8 +3,7 @@ require 'spec_helper'
 module Spree
   module Stock
     module Splitter
-      describe ShippingCategory, :type => :model do
-
+      describe ShippingCategory, type: :model do
         let(:order) { create(:order_with_line_items, line_items_count: 1) }
         let(:line_item) { order.line_items.first }
         let(:variant1) { build(:variant) }
@@ -43,7 +42,6 @@ module Spree
           expect(packages[2].quantity).to eq 6
           expect(packages[3].quantity).to eq 9
         end
-
       end
     end
   end

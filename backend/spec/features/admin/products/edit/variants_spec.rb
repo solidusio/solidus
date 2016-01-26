@@ -1,13 +1,13 @@
 require 'spec_helper'
 
-describe "Product Variants", :type => :feature do
+describe "Product Variants", type: :feature do
   stub_authorization!
 
   before(:each) do
     visit spree.admin_path
   end
 
-  context "editing variant option types", :js => true do
+  context "editing variant option types", js: true do
     let!(:product) { create(:product) }
 
     it "should allow an admin to create option types for a variant" do
@@ -23,8 +23,8 @@ describe "Product Variants", :type => :feature do
       click_nav "Products"
       click_link "Option Types"
       click_link "new_option_type_link"
-      fill_in "option_type_name", :with => "shirt colors"
-      fill_in "option_type_presentation", :with => "colors"
+      fill_in "option_type_name", with: "shirt colors"
+      fill_in "option_type_presentation", with: "colors"
       click_button "Create"
       expect(page).to have_content("successfully created!")
 
@@ -39,15 +39,15 @@ describe "Product Variants", :type => :feature do
         click_icon :edit
       end
 
-      select2_search "shirt", :from => "Option Types"
+      select2_search "shirt", from: "Option Types"
       click_button "Update"
       expect(page).to have_content("successfully updated!")
 
       within('#sidebar') { click_link "Variants" }
       click_link "New Variant"
 
-      targetted_select2 "black", :from => "#s2id_variant_option_value_ids"
-      fill_in "variant_sku", :with => "A100"
+      targetted_select2 "black", from: "#s2id_variant_option_value_ids"
+      fill_in "variant_sku", with: "A100"
       click_button "Create"
       expect(page).to have_content("successfully created!")
 

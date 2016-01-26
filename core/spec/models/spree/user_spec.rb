@@ -1,9 +1,8 @@
 require 'spec_helper'
 
-describe Spree::LegacyUser, :type => :model do
+describe Spree::LegacyUser, type: :model do
   context "#last_incomplete_order" do
     let!(:user) { create(:user) }
-
 
     it "excludes orders that are not frontend_viewable" do
       order = create(:order, user: user, frontend_viewable: false)
@@ -110,7 +109,7 @@ describe Spree::LegacyUser, :type => :model do
   end
 end
 
-describe Spree.user_class, :type => :model do
+describe Spree.user_class, type: :model do
   context "reporting" do
     let(:order_value) { BigDecimal.new("80.94") }
     let(:order_count) { 4 }

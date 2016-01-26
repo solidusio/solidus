@@ -12,7 +12,7 @@ module Spree
           promotable.is_a?(Spree::Order)
         end
 
-        def eligible?(order, options = {})
+        def eligible?(order, _options = {})
           if preferred_match_policy == 'all'
             unless (taxons.to_a - taxons_in_order_including_parents(order)).empty?
               eligibility_errors.add(:base, eligibility_error_message(:missing_taxon))
@@ -44,12 +44,12 @@ module Spree
 
         # All taxons in an order
         def order_taxons(order)
-          Spree::Taxon.joins(products: {variants_including_master: :line_items}).where(spree_line_items: {order_id: order.id}).uniq
+          Spree::Taxon.joins(products: { variants_including_master: :line_items }).where(spree_line_items: { order_id: order.id }).uniq
         end
 
         # ids of taxons rules and taxons rules children
         def taxons_including_children_ids
-          taxons.inject([]){ |ids,taxon| ids += taxon.self_and_descendants.ids }
+          taxons.inject([]){ |ids, taxon| ids += taxon.self_and_descendants.ids }
         end
 
         # taxons order vs taxons rules and taxons rules children
@@ -62,7 +62,7 @@ module Spree
         end
 
         def taxon_product_ids
-          Spree::Product.joins(:taxons).where(spree_taxons: {id: taxons.pluck(:id)}).pluck(:id).uniq
+          Spree::Product.joins(:taxons).where(spree_taxons: { id: taxons.pluck(:id) }).pluck(:id).uniq
         end
       end
     end

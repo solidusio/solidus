@@ -1,7 +1,6 @@
 module Spree
   module Admin
     class AdjustmentsController < ResourceController
-
       belongs_to 'spree/order', find_by: :number
 
       create.after :update_totals
@@ -35,10 +34,10 @@ module Spree
         parent.adjustments.build(order: parent)
       end
 
-      def reasons_for(adjustment)
+      def reasons_for(_adjustment)
         [
           AdjustmentReason.active.to_a,
-          @adjustment.adjustment_reason,
+          @adjustment.adjustment_reason
         ].flatten.compact.uniq.sort_by { |r| r.name.downcase }
       end
     end

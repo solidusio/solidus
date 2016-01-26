@@ -1,6 +1,5 @@
 module Spree
   class Prototype < Spree::Base
-
     has_many :property_prototypes
     has_many :properties, through: :property_prototypes
 

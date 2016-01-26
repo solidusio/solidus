@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 module Spree
-  describe StockTransfer, :type => :model do
+  describe StockTransfer, type: :model do
     let(:destination_location) { create(:stock_location_with_items) }
     let(:source_location) { create(:stock_location_with_items) }
     let(:stock_item) { source_location.stock_items.order(:id).first }
@@ -279,7 +279,6 @@ module Spree
       subject { stock_transfer.transfer }
 
       context 'with enough stock' do
-
         it 'creates stock movements for transfer items' do
           expect{ subject }.to change{ Spree::StockMovement.count }.by(stock_transfer.transfer_items.count)
         end
@@ -303,7 +302,6 @@ module Spree
         it 'returns false' do
           expect(subject).to eq false
         end
-
       end
     end
   end

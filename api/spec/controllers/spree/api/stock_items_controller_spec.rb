@@ -1,13 +1,15 @@
 require 'spec_helper'
 
 module Spree
-  describe Api::StockItemsController, :type => :controller do
+  describe Api::StockItemsController, type: :controller do
     render_views
 
     let!(:stock_location) { create(:stock_location_with_items) }
     let!(:stock_item) { stock_location.stock_items.order(:id).first }
-    let!(:attributes) { [:id, :count_on_hand, :backorderable,
-                         :stock_location_id, :variant_id] }
+    let!(:attributes) {
+      [:id, :count_on_hand, :backorderable,
+       :stock_location_id, :variant_id]
+    }
 
     before do
       stub_authentication!
@@ -210,9 +212,9 @@ module Spree
               expect(stock_item.should_track_inventory?).to eq true
             end
 
-             it "sets the stock item's count_on_hand" do
-              subject
-              expect(assigns(:stock_item).count_on_hand).to eq 50
+            it "sets the stock item's count_on_hand" do
+             subject
+             expect(assigns(:stock_item).count_on_hand).to eq 50
             end
           end
 
@@ -246,7 +248,7 @@ module Spree
               id: stock_item.to_param,
               stock_item: {
                 count_on_hand: count_on_hand,
-                force: true,
+                force: true
               }
             }
           end

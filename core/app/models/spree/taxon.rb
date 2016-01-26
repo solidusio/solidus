@@ -78,10 +78,10 @@ module Spree
     # @return [String] this taxon's ancestors names followed by its own name,
     #   separated by arrows
     def pretty_name
-      ancestor_chain = self.ancestors.inject("") do |name, ancestor|
+      ancestor_chain = ancestors.inject("") do |name, ancestor|
         name += "#{ancestor.name} -> "
       end
-      ancestor_chain + "#{name}"
+      ancestor_chain + name.to_s
     end
 
     # @see https://github.com/spree/spree/issues/3390
@@ -92,7 +92,7 @@ module Spree
       #
       # NOTE: no :position column needed - awesom_nested_set doesn't handle the
       # reordering if you bring your own :order_column.
-      move_to_child_with_index(parent, idx.to_i) unless self.new_record?
+      move_to_child_with_index(parent, idx.to_i) unless new_record?
     end
 
     private

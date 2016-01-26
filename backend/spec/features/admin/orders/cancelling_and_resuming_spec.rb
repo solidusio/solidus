@@ -1,7 +1,6 @@
 require 'spec_helper'
 
-describe "Cancelling + Resuming", :type => :feature do
-
+describe "Cancelling + Resuming", type: :feature do
   stub_authorization!
 
   let(:user) { build_stubbed(:user, id: 123, spree_api_key: 'fake') }

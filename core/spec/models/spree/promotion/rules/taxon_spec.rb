@@ -1,11 +1,11 @@
 require 'spec_helper'
 
-describe Spree::Promotion::Rules::Taxon, :type => :model do
+describe Spree::Promotion::Rules::Taxon, type: :model do
   let(:rule) { Spree::Promotion::Rules::Taxon.create!(promotion: create(:promotion)) }
 
   context '#elegible?(order)' do
     let(:taxon){ create :taxon, name: 'first' }
-    let(:taxon2){ create :taxon, name: 'second'}
+    let(:taxon2){ create :taxon, name: 'second' }
     let(:order){ create :order_with_line_items }
 
     before do
@@ -75,7 +75,7 @@ describe Spree::Promotion::Rules::Taxon, :type => :model do
       end
 
       context "when order does not have all prefered taxons" do
-        before { rule.taxons << taxon  }
+        before { rule.taxons << taxon }
         it { expect(rule).not_to be_eligible(order) }
         it "sets an error message" do
           rule.eligible?(order)

@@ -48,11 +48,11 @@ module Spree
       return unless expiry.present?
 
       self[:month], self[:year] =
-      if expiry.match(/\d{2}\s?\/\s?\d{2,4}/) # will match mm/yy and mm / yyyy
-        expiry.delete(' ').split('/')
-      elsif match = expiry.match(/(\d{2})(\d{2,4})/) # will match mmyy and mmyyyy
-        [match[1], match[2]]
-      end
+        if expiry =~ /\d{2}\s?\/\s?\d{2,4}/ # will match mm/yy and mm / yyyy
+          expiry.delete(' ').split('/')
+        elsif match = expiry.match(/(\d{2})(\d{2,4})/) # will match mmyy and mmyyyy
+          [match[1], match[2]]
+        end
       if self[:year]
         self[:year] = "20" + self[:year] if self[:year].length == 2
         self[:year] = self[:year].to_i
@@ -64,7 +64,11 @@ module Spree
     #
     # @param num [String] the desired credit card number
     def number=(num)
-      @number = num.gsub(/[^0-9]/, '') rescue nil
+      @number = begin
+                  num.gsub(/[^0-9]/, '')
+                rescue
+                  nil
+                end
     end
 
     # Sets the credit card type, converting it to the preferred internal
@@ -75,18 +79,18 @@ module Spree
       # cc_type is set by jquery.payment, which helpfully provides different
       # types from Active Merchant. Converting them is necessary.
       self[:cc_type] = case type
-      when 'mastercard', 'maestro' then 'master'
-      when 'amex' then 'american_express'
-      when 'dinersclub' then 'diners_club'
-      when '' then try_type_from_number
+                       when 'mastercard', 'maestro' then 'master'
+                       when 'amex' then 'american_express'
+                       when 'dinersclub' then 'diners_club'
+                       when '' then try_type_from_number
       else type
       end
     end
 
     # Sets the last digits field based on the assigned credit card number.
     def set_last_digits
-      number.to_s.gsub!(/\s/,'')
-      verification_value.to_s.gsub!(/\s/,'')
+      number.to_s.gsub!(/\s/, '')
+      verification_value.to_s.gsub!(/\s/, '')
       self.last_digits ||= number.to_s.length <= 4 ? number : number.to_s.slice(-4..-1)
     end
 
@@ -94,7 +98,7 @@ module Spree
     #   number, otherwise the empty string
     def try_type_from_number
       numbers = number.delete(' ') if number
-      CARD_TYPES.find{|type, pattern| return type.to_s if numbers =~ pattern}.to_s
+      CARD_TYPES.find{ |type, pattern| return type.to_s if numbers =~ pattern }.to_s
     end
 
     # @return [Boolean] true when a verification value is present
@@ -163,24 +167,24 @@ module Spree
     #   card that represents this credit card
     def to_active_merchant
       ActiveMerchant::Billing::CreditCard.new(
-        :number => number,
-        :month => month,
-        :year => year,
-        :verification_value => verification_value,
-        :first_name => first_name,
-        :last_name => last_name,
+        number: number,
+        month: month,
+        year: year,
+        verification_value: verification_value,
+        first_name: first_name,
+        last_name: last_name
       )
     end
 
     private
 
     def require_card_numbers?
-      !self.encrypted_data.present? && !self.has_payment_profile?
+      !encrypted_data.present? && !has_payment_profile?
     end
 
     def ensure_one_default
-      if self.user_id && self.default
-        CreditCard.where(default: true).where.not(id: self.id).where(user_id: self.user_id).each do |ucc|
+      if user_id && default
+        CreditCard.where(default: true).where.not(id: id).where(user_id: user_id).each do |ucc|
           ucc.update_columns(default: false, updated_at: Time.current)
         end
       end

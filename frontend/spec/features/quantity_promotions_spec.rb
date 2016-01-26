@@ -125,4 +125,3 @@ RSpec.feature "Quantity Promotions" do
     end
   end
 end
-

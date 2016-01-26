@@ -14,13 +14,13 @@ module Spree
       payment.state != 'void'
     end
 
-    def capture(*args)
+    def capture(*_args)
       ActiveMerchant::Billing::Response.new(true, "", {}, {})
     end
 
     def cancel(response); end
 
-    def void(*args)
+    def void(*_args)
       ActiveMerchant::Billing::Response.new(true, "", {}, {})
     end
 

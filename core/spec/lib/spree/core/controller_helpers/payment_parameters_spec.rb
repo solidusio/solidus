@@ -5,8 +5,7 @@ class FakeController < ApplicationController
 end
 
 describe Spree::Core::ControllerHelpers::PaymentParameters, type: :controller do
-
-  controller(FakeController) { }
+  controller(FakeController) {}
 
   describe '#move_payment_source_into_payments_attributes' do
     subject do
@@ -17,17 +16,17 @@ describe Spree::Core::ControllerHelpers::PaymentParameters, type: :controller do
       ActionController::Parameters.new(
         payment_source: {
           payment_method_1.id.to_s => credit_card_1_params,
-          payment_method_2.id.to_s => credit_card_2_params,
+          payment_method_2.id.to_s => credit_card_2_params
         },
         order: {
           payments_attributes: [
             {
-              payment_method_id: payment_method_1.id.to_s,
-            },
+              payment_method_id: payment_method_1.id.to_s
+            }
           ],
-          other_order_param: 1,
+          other_order_param: 1
         },
-        other_param: 2,
+        other_param: 2
       )
     end
 
@@ -43,12 +42,12 @@ describe Spree::Core::ControllerHelpers::PaymentParameters, type: :controller do
             payments_attributes: [
               {
                 payment_method_id: payment_method_1.id.to_s,
-                source_attributes: credit_card_1_params,
-              },
+                source_attributes: credit_card_1_params
+              }
             ],
-            other_order_param: 1,
+            other_order_param: 1
           },
-          other_param: 2,
+          other_param: 2
         )
       )
     end
@@ -88,10 +87,10 @@ describe Spree::Core::ControllerHelpers::PaymentParameters, type: :controller do
       ActionController::Parameters.new(
         order: {
           existing_card: '123',
-          other_order_param: 1,
+          other_order_param: 1
         },
         cvc_confirm: '456',
-        other_param: 2,
+        other_param: 2
       )
     end
 
@@ -104,12 +103,12 @@ describe Spree::Core::ControllerHelpers::PaymentParameters, type: :controller do
                 source_attributes: {
                   existing_card_id: '123',
                   verification_value: '456'
-                },
-              },
+                }
+              }
             ],
-            other_order_param: 1,
+            other_order_param: 1
           },
-          other_param: 2,
+          other_param: 2
         )
       )
     end
@@ -125,13 +124,13 @@ describe Spree::Core::ControllerHelpers::PaymentParameters, type: :controller do
                 {
                   source_attributes: {
                     existing_card_id: '123',
-                    verification_value: nil,
-                  },
-                },
+                    verification_value: nil
+                  }
+                }
               ],
-              other_order_param: 1,
+              other_order_param: 1
             },
-            other_param: 2,
+            other_param: 2
           )
         )
       end
@@ -146,7 +145,6 @@ describe Spree::Core::ControllerHelpers::PaymentParameters, type: :controller do
       before { params[:order].delete(:existing_card) }
       it('returns the original hash') { expect(subject).to eq(params) }
     end
-
   end
 
   describe '#set_payment_parameters_amount' do
@@ -158,9 +156,9 @@ describe Spree::Core::ControllerHelpers::PaymentParameters, type: :controller do
       ActionController::Parameters.new(
         order: {
           payments_attributes: [{}],
-          other_order_param: 1,
+          other_order_param: 1
         },
-        other_param: 2,
+        other_param: 2
       )
     end
     let(:order) { create(:order_with_line_items, line_items_price: 101.00, line_items_count: 1, shipment_cost: 0) }
@@ -169,10 +167,10 @@ describe Spree::Core::ControllerHelpers::PaymentParameters, type: :controller do
       expect(subject).to eq(
         ActionController::Parameters.new(
           order: {
-            payments_attributes: [{amount: 101}],
-            other_order_param: 1,
+            payments_attributes: [{ amount: 101 }],
+            other_order_param: 1
           },
-          other_param: 2,
+          other_param: 2
         )
       )
     end

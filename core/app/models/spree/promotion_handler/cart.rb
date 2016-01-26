@@ -16,7 +16,7 @@ module Spree
       attr_reader :line_item, :order
       attr_accessor :error, :success
 
-      def initialize(order, line_item=nil)
+      def initialize(order, line_item = nil)
         @order, @line_item = order, line_item
       end
 
@@ -29,24 +29,25 @@ module Spree
       end
 
       private
-        def promotions
-          connected_order_promotions | sale_promotions
-        end
 
-        def connected_order_promotions
-          Promotion.active.includes(:promotion_rules).
-            joins(:order_promotions).
-            where(spree_orders_promotions: { order_id: order.id }).readonly(false).to_a
-        end
+      def promotions
+        connected_order_promotions | sale_promotions
+      end
 
-        def sale_promotions
-          Promotion.where(apply_automatically: true).active.includes(:promotion_rules)
-        end
+      def connected_order_promotions
+        Promotion.active.includes(:promotion_rules).
+          joins(:order_promotions).
+          where(spree_orders_promotions: { order_id: order.id }).readonly(false).to_a
+      end
 
-        def promotion_code(promotion)
-          order_promotion = Spree::OrderPromotion.where(order: order, promotion: promotion).first
-          order_promotion.present? ? order_promotion.promotion_code : nil
-        end
+      def sale_promotions
+        Promotion.where(apply_automatically: true).active.includes(:promotion_rules)
+      end
+
+      def promotion_code(promotion)
+        order_promotion = Spree::OrderPromotion.where(order: order, promotion: promotion).first
+        order_promotion.present? ? order_promotion.promotion_code : nil
+      end
     end
   end
 end

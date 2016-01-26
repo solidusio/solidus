@@ -12,7 +12,7 @@ module Spree
 
         def permitted_credit_card_update_attributes
           permitted_attributes.credit_card_update_attributes + [
-            address_attributes: permitted_address_attributes,
+            address_attributes: permitted_address_attributes
           ]
         end
 
@@ -24,7 +24,7 @@ module Spree
 
         def permitted_source_attributes
           permitted_attributes.source_attributes + [
-            address_attributes: permitted_address_attributes,
+            address_attributes: permitted_address_attributes
           ]
         end
 

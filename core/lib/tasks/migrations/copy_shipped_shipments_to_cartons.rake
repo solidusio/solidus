@@ -33,11 +33,9 @@ namespace 'spree:migrations:copy_shipped_shipments_to_cartons' do
     end
 
     say_with_time 'generating cartons' do
-
       last_id = Spree::Shipment.last.try!(:id) || 0
 
       in_batches(last_id: last_id) do |start_id, end_id|
-
         say_with_time "processing shipment #{start_id} to #{end_id}" do
           Spree::Carton.connection.execute(<<-SQL.strip_heredoc)
             insert into spree_cartons
@@ -48,7 +46,7 @@ namespace 'spree:migrations:copy_shipped_shipments_to_cartons' do
               )
             select
               -- create the carton number as 'C'+shipment number:
-              #{db_concat("'C'", "spree_shipments.number")}, -- number
+              #{db_concat("'C'", 'spree_shipments.number')}, -- number
               spree_shipments.id, -- imported_from_shipment_id
               spree_shipments.stock_location_id,
               spree_shipments.address_id,
@@ -80,15 +78,12 @@ namespace 'spree:migrations:copy_shipped_shipments_to_cartons' do
           SQL
         end
       end
-
     end
 
     say_with_time 'linking inventory units to cartons' do
-
       last_id = Spree::InventoryUnit.last.try!(:id) || 0
 
       in_batches(last_id: last_id) do |start_id, end_id|
-
         say_with_time "processing inventory units #{start_id} to #{end_id}" do
           Spree::InventoryUnit.connection.execute(<<-SQL.strip_heredoc)
             update spree_inventory_units
@@ -106,16 +101,13 @@ namespace 'spree:migrations:copy_shipped_shipments_to_cartons' do
           SQL
         end
       end
-
     end
-
   end
 
   task down: :environment do
     last_id = Spree::InventoryUnit.last.try!(:id) || 0
 
     say_with_time 'unlinking inventory units from cartons' do
-
       in_batches(last_id: last_id) do |start_id, end_id|
         say_with_time "processing inventory units #{start_id} to #{end_id}" do
           Spree::InventoryUnit.connection.execute(<<-SQL.strip_heredoc)
@@ -133,7 +125,6 @@ namespace 'spree:migrations:copy_shipped_shipments_to_cartons' do
           SQL
         end
       end
-
     end
 
     say_with_time "clearing carton imported_from_shipment_ids" do
@@ -176,5 +167,4 @@ namespace 'spree:migrations:copy_shipped_shipments_to_cartons' do
       start_id += batch_size
     end
   end
-
 end

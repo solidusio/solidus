@@ -1,20 +1,20 @@
 require 'spec_helper'
 
 module Spree
-  describe Admin::StockTransfersController, :type => :controller do
+  describe Admin::StockTransfersController, type: :controller do
     stub_authorization!
 
-    let(:warehouse) { StockLocation.create(name: "Warehouse")}
-    let(:ny_store) { StockLocation.create(name: "NY Store")}
-    let(:la_store) { StockLocation.create(name: "LA Store")}
+    let(:warehouse) { StockLocation.create(name: "Warehouse") }
+    let(:ny_store) { StockLocation.create(name: "NY Store") }
+    let(:la_store) { StockLocation.create(name: "LA Store") }
 
     context "#index" do
-
       let!(:stock_transfer1) {
         StockTransfer.create do |transfer|
           transfer.source_location_id = warehouse.id
           transfer.destination_location_id = ny_store.id
-        end }
+        end
+      }
 
       let!(:stock_transfer2) {
         StockTransfer.create do |transfer|
@@ -22,12 +22,13 @@ module Spree
           transfer.destination_location_id = la_store.id
           transfer.finalized_at = DateTime.current
           transfer.closed_at = DateTime.current
-        end }
+        end
+      }
 
       describe "stock location filtering" do
         let(:user) { create(:admin_user) }
         let(:ability) { Spree::Ability.new(user) }
-        let!(:sf_store) { StockLocation.create(name: "SF Store")}
+        let!(:sf_store) { StockLocation.create(name: "SF Store") }
 
         before do
           ability.cannot :manage, Spree::StockLocation
@@ -45,24 +46,24 @@ module Spree
       end
 
       it "searches by stock location" do
-        spree_get :index, :q => { :source_location_id_or_destination_location_id_eq => ny_store.id }
+        spree_get :index, q: { source_location_id_or_destination_location_id_eq: ny_store.id }
         expect(assigns(:stock_transfers).count).to eq 1
         expect(assigns(:stock_transfers)).to include(stock_transfer1)
       end
 
       it "filters the closed stock transfers" do
-        spree_get :index, :q => { :closed_at_null => '1' }
+        spree_get :index, q: { closed_at_null: '1' }
         expect(assigns(:stock_transfers)).to match_array [stock_transfer1]
       end
 
       it "doesn't filter any stock transfers" do
-        spree_get :index, :q => { :closed_at_null => '0' }
+        spree_get :index, q: { closed_at_null: '0' }
         expect(assigns(:stock_transfers)).to match_array [stock_transfer1, stock_transfer2]
       end
     end
 
     context "#create" do
-      let(:warehouse) { StockLocation.create(name: "Warehouse", active: false)}
+      let(:warehouse) { StockLocation.create(name: "Warehouse", active: false) }
 
       subject do
         spree_post :create, stock_transfer: { source_location_id: warehouse.id, description: nil }
@@ -316,7 +317,6 @@ module Spree
       end
 
       context "with transferable items" do
-
         it "marks the transfer shipped" do
           subject
 

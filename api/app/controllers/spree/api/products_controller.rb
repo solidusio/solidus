@@ -1,7 +1,6 @@
 module Spree
   module Api
     class ProductsController < Spree::Api::BaseController
-
       def index
         if params[:ids]
           ids = params[:ids].split(",").flatten
@@ -11,14 +10,14 @@ module Spree
         end
 
         @products = @products.distinct.page(params[:page]).per(params[:per_page])
-        expires_in 15.minutes, :public => true
+        expires_in 15.minutes, public: true
         headers['Surrogate-Control'] = "max-age=#{15.minutes}"
         respond_with(@products)
       end
 
       def show
         @product = find_product(params[:id])
-        expires_in 15.minutes, :public => true
+        expires_in 15.minutes, public: true
         headers['Surrogate-Control'] = "max-age=#{15.minutes}"
         headers['Surrogate-Key'] = "product_id=1"
         respond_with(@product)
@@ -90,40 +89,41 @@ module Spree
         @product = find_product(params[:id])
         authorize! :destroy, @product
         @product.destroy
-        respond_with(@product, :status => 204)
+        respond_with(@product, status: 204)
       end
 
       private
-        def product_params
-          product_params = params.require(:product).permit(permitted_product_attributes)
-          if product_params[:taxon_ids].present?
-            product_params[:taxon_ids] = product_params[:taxon_ids].split(',')
-          end
-          product_params
+
+      def product_params
+        product_params = params.require(:product).permit(permitted_product_attributes)
+        if product_params[:taxon_ids].present?
+          product_params[:taxon_ids] = product_params[:taxon_ids].split(',')
+        end
+        product_params
+      end
+
+      def variants_params
+        variants_key = if params[:product].key? :variants
+          :variants
+        else
+          :variants_attributes
         end
 
-        def variants_params
-          variants_key = if params[:product].has_key? :variants
-            :variants
-          else
-            :variants_attributes
-          end
+        params.require(:product).permit(
+          variants_key => [permitted_variant_attributes, :id]
+        ).delete(variants_key) || []
+      end
 
-          params.require(:product).permit(
-            variants_key => [permitted_variant_attributes, :id],
-          ).delete(variants_key) || []
-        end
+      def option_types_params
+        params[:product].fetch(:option_types, [])
+      end
 
-        def option_types_params
-          params[:product].fetch(:option_types, [])
+      def set_up_shipping_category
+        if shipping_category = params[:product].delete(:shipping_category)
+          id = ShippingCategory.find_or_create_by(name: shipping_category).id
+          params[:product][:shipping_category_id] = id
         end
-
-        def set_up_shipping_category
-          if shipping_category = params[:product].delete(:shipping_category)
-            id = ShippingCategory.find_or_create_by(name: shipping_category).id
-            params[:product][:shipping_category_id] = id
-          end
-        end
+      end
     end
   end
 end

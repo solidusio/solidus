@@ -3,7 +3,7 @@ module Spree
     class OrdersController < Spree::Admin::BaseController
       before_action :initialize_order_events
       before_action :load_order, only: [:edit, :update, :complete, :advance, :cancel, :resume, :approve, :resend, :unfinalize_adjustments, :finalize_adjustments, :cart, :confirm]
-      around_filter :lock_order, :only => [:update, :advance, :complete, :confirm, :cancel, :resume, :approve, :resend]
+      around_filter :lock_order, only: [:update, :advance, :complete, :confirm, :cancel, :resume, :approve, :resend]
 
       rescue_from Spree::Order::InsufficientStock, with: :insufficient_stock_error
 
@@ -25,11 +25,19 @@ module Spree
         params[:q].delete(:inventory_units_shipment_id_null) if params[:q][:inventory_units_shipment_id_null] == "0"
 
         if params[:q][:created_at_gt].present?
-          params[:q][:created_at_gt] = Time.zone.parse(params[:q][:created_at_gt]).beginning_of_day rescue ""
+          params[:q][:created_at_gt] = begin
+                                         Time.zone.parse(params[:q][:created_at_gt]).beginning_of_day
+                                       rescue
+                                         ""
+                                       end
         end
 
         if params[:q][:created_at_lt].present?
-          params[:q][:created_at_lt] = Time.zone.parse(params[:q][:created_at_lt]).end_of_day rescue ""
+          params[:q][:created_at_lt] = begin
+                                         Time.zone.parse(params[:q][:created_at_lt]).end_of_day
+                                       rescue
+                                         ""
+                                       end
         end
 
         if @show_only_completed
@@ -84,7 +92,7 @@ module Spree
         @order.contents.update_cart(params[:order])
         @order.errors.add(:line_items, Spree.t('errors.messages.blank')) if @order.line_items.empty?
         if @order.completed?
-          render :action => :edit
+          render action: :edit
         else
           redirect_to admin_order_customer_path(@order)
         end
@@ -168,39 +176,40 @@ module Spree
       end
 
       private
-        def order_params
-          {
-            created_by_id: try_spree_current_user.try(:id),
-            frontend_viewable: false,
-            store_id: current_store.try(:id)
-          }.with_indifferent_access
-        end
 
-        def load_order
-          @order = Order.includes(:adjustments).find_by_number!(params[:id])
-          authorize! action, @order
-        end
+      def order_params
+        {
+          created_by_id: try_spree_current_user.try(:id),
+          frontend_viewable: false,
+          store_id: current_store.try(:id)
+        }.with_indifferent_access
+      end
 
-        # Used for extensions which need to provide their own custom event links on the order details view.
-        def initialize_order_events
-          @order_events = %w{approve cancel resume}
-        end
+      def load_order
+        @order = Order.includes(:adjustments).find_by_number!(params[:id])
+        authorize! action, @order
+      end
 
-        def model_class
-          Spree::Order
-        end
+      # Used for extensions which need to provide their own custom event links on the order details view.
+      def initialize_order_events
+        @order_events = %w{approve cancel resume}
+      end
 
-        def insufficient_stock_error
-          flash[:error] = Spree.t(:insufficient_stock_for_order)
-          redirect_to cart_admin_order_url(@order)
-        end
+      def model_class
+        Spree::Order
+      end
 
-        def require_ship_address
-          if @order.ship_address.nil?
-            flash[:notice] = Spree.t(:fill_in_customer_info)
-            redirect_to edit_admin_order_customer_url(@order)
-          end
+      def insufficient_stock_error
+        flash[:error] = Spree.t(:insufficient_stock_for_order)
+        redirect_to cart_admin_order_url(@order)
+      end
+
+      def require_ship_address
+        if @order.ship_address.nil?
+          flash[:notice] = Spree.t(:fill_in_customer_info)
+          redirect_to edit_admin_order_customer_url(@order)
         end
+      end
     end
   end
 end

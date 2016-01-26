@@ -19,4 +19,3 @@ describe Spree::PermissionSets::DashboardDisplay do
     it { is_expected.not_to be_able_to(:home, :dashboards) }
   end
 end
-

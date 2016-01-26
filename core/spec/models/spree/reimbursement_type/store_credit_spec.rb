@@ -13,7 +13,7 @@ module Spree
     let!(:created_by_user)        { create(:user, email: Spree::StoreCredit::DEFAULT_CREATED_BY_EMAIL) }
     let!(:default_reimbursement_category) { create(:store_credit_category) }
 
-    subject { Spree::ReimbursementType::StoreCredit.reimburse(reimbursement, [return_item, return_item2], simulate)}
+    subject { Spree::ReimbursementType::StoreCredit.reimburse(reimbursement, [return_item, return_item2], simulate) }
 
     before do
       reimbursement.update!(total: reimbursement.calculated_total)

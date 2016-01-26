@@ -7,9 +7,9 @@ class OrderWalkthrough
     # Need to create a valid zone too...
     @zone = FactoryGirl.create(:zone)
     @country = FactoryGirl.create(:country)
-    @state = FactoryGirl.create(:state, :country => @country)
+    @state = FactoryGirl.create(:state, country: @country)
 
-    @zone.members << Spree::ZoneMember.create(:zoneable => @country)
+    @zone.members << Spree::ZoneMember.create(zoneable: @country)
 
     # A shipping method must exist for rates to be displayed on checkout page
     FactoryGirl.create(:shipping_method, zones: [@zone]).tap do |sm|
@@ -47,8 +47,8 @@ class OrderWalkthrough
   end
 
   def address(order)
-    order.bill_address = FactoryGirl.create(:address, :country => @country, state: @state)
-    order.ship_address = FactoryGirl.create(:address, :country => @country, state: @state)
+    order.bill_address = FactoryGirl.create(:address, country: @country, state: @state)
+    order.ship_address = FactoryGirl.create(:address, country: @country, state: @state)
     order.next!
   end
 
@@ -58,7 +58,7 @@ class OrderWalkthrough
 
   def payment(order)
     credit_card = FactoryGirl.create(:credit_card)
-    order.payments.create!(:payment_method => credit_card.payment_method, :amount => order.total, source: credit_card)
+    order.payments.create!(payment_method: credit_card.payment_method, amount: order.total, source: credit_card)
     # TODO: maybe look at some way of making this payment_state change automatic
     order.payment_state = 'paid'
     order.next!
@@ -69,11 +69,10 @@ class OrderWalkthrough
   end
 
   def complete(order)
-    #noop?
+    # noop?
   end
 
   def states
     [:address, :delivery, :payment, :confirm]
   end
-
 end

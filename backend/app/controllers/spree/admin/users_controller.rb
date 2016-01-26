@@ -12,7 +12,7 @@ module Spree
       def index
         respond_with(@collection) do |format|
           format.html
-          format.json { render :json => json_data }
+          format.json { render json: json_data }
         end
       end
 
@@ -91,89 +91,88 @@ module Spree
 
       private
 
-        def collection
-          return @collection if @collection.present?
-          if request.xhr? && params[:q].present?
-            @collection = Spree.user_class.includes(:bill_address, :ship_address)
-                              .where("spree_users.email #{LIKE} :search
-                                     OR (spree_addresses.firstname #{LIKE} :search AND spree_addresses.id = spree_users.bill_address_id)
-                                     OR (spree_addresses.lastname  #{LIKE} :search AND spree_addresses.id = spree_users.bill_address_id)
-                                     OR (spree_addresses.firstname #{LIKE} :search AND spree_addresses.id = spree_users.ship_address_id)
-                                     OR (spree_addresses.lastname  #{LIKE} :search AND spree_addresses.id = spree_users.ship_address_id)",
-                                    { :search => "#{params[:q].strip}%" })
-                              .limit(params[:limit] || 100)
-          else
-            @search = Spree.user_class.ransack(params[:q])
-            @collection = @search.result.page(params[:page]).per(Spree::Config[:admin_products_per_page])
-          end
+      def collection
+        return @collection if @collection.present?
+        if request.xhr? && params[:q].present?
+          @collection = Spree.user_class.includes(:bill_address, :ship_address)
+                            .where("spree_users.email #{LIKE} :search
+                                   OR (spree_addresses.firstname #{LIKE} :search AND spree_addresses.id = spree_users.bill_address_id)
+                                   OR (spree_addresses.lastname  #{LIKE} :search AND spree_addresses.id = spree_users.bill_address_id)
+                                   OR (spree_addresses.firstname #{LIKE} :search AND spree_addresses.id = spree_users.ship_address_id)
+                                   OR (spree_addresses.lastname  #{LIKE} :search AND spree_addresses.id = spree_users.ship_address_id)",
+                                  { search: "#{params[:q].strip}%" })
+                            .limit(params[:limit] || 100)
+        else
+          @search = Spree.user_class.ransack(params[:q])
+          @collection = @search.result.page(params[:page]).per(Spree::Config[:admin_products_per_page])
+        end
+      end
+
+      def user_params
+        attributes = permitted_user_attributes
+
+        if action_name == "create" || can?(:update_email, @user)
+          attributes |= [:email]
         end
 
-        def user_params
-          attributes = permitted_user_attributes
-
-          if action_name == "create" || can?(:update_email, @user)
-            attributes |= [:email]
-          end
-
-          if can? :manage, Spree::Role
-            attributes += [{ spree_role_ids: [] }]
-          end
-
-          params.require(:user).permit(attributes)
+        if can? :manage, Spree::Role
+          attributes += [{ spree_role_ids: [] }]
         end
 
-        # handling raise from Spree::Admin::ResourceController#destroy
-        def user_destroy_with_orders_error
-          invoke_callbacks(:destroy, :fails)
-          render :status => :forbidden, :text => Spree.t(:error_user_destroy_with_orders)
-        end
+        params.require(:user).permit(attributes)
+      end
 
-        # Allow different formats of json data to suit different ajax calls
-        def json_data
-          json_format = params[:json_format] or 'default'
-          case json_format
-          when 'basic'
-            collection.map { |u| { 'id' => u.id, 'name' => u.email } }.to_json
-          else
-            address_fields = [:firstname, :lastname, :address1, :address2, :city, :zipcode, :phone, :state_name, :state_id, :country_id, :country_iso]
-            includes = { :only => address_fields , :include => { :state => { :only => :name }, :country => { :only => :name } } }
+      # handling raise from Spree::Admin::ResourceController#destroy
+      def user_destroy_with_orders_error
+        invoke_callbacks(:destroy, :fails)
+        render status: :forbidden, text: Spree.t(:error_user_destroy_with_orders)
+      end
 
-            collection.to_json(:only => [:id, :email], :include =>
-                               { :bill_address => includes, :ship_address => includes })
-          end
-        end
+      # Allow different formats of json data to suit different ajax calls
+      def json_data
+        (json_format = params[:json_format]) || 'default'
+        case json_format
+        when 'basic'
+          collection.map { |u| { 'id' => u.id, 'name' => u.email } }.to_json
+        else
+          address_fields = [:firstname, :lastname, :address1, :address2, :city, :zipcode, :phone, :state_name, :state_id, :country_id, :country_iso]
+          includes = { only: address_fields, include: { state: { only: :name }, country: { only: :name } } }
 
-        def sign_in_if_change_own_password
-          if try_spree_current_user == @user && @user.password.present?
-            sign_in(@user, :event => :authentication, :bypass => true)
-          end
+          collection.to_json(only: [:id, :email], include:                                { bill_address: includes, ship_address: includes })
         end
+      end
 
-        def load_roles
-          @roles = Spree::Role.all
-          @user_roles = @user.spree_roles
+      def sign_in_if_change_own_password
+        if try_spree_current_user == @user && @user.password.present?
+          sign_in(@user, event: :authentication, bypass: true)
         end
+      end
 
-        def load_stock_locations
-          @stock_locations = Spree::StockLocation.all
-        end
+      def load_roles
+        @roles = Spree::Role.all
+        @user_roles = @user.spree_roles
+      end
 
-        def set_roles
-          # FIXME: user_params permits the roles that can be set, if spree_role_ids is set.
-          # when submitting a user with no roles, the param is not present. Because users can be updated
-          # with some users being able to set roles, and some users not being able to set roles, we have to check
-          # if the roles should be cleared, or unchanged again here. The roles form should probably hit a seperate
-          # action or controller to remedy this.
-          if user_params[:spree_role_ids]
-            @user.spree_roles = Spree::Role.where(id: user_params[:spree_role_ids])
-          elsif can?(:manage, Spree::Role)
-            @user.spree_roles = []
-          end
-        end
+      def load_stock_locations
+        @stock_locations = Spree::StockLocation.all
+      end
 
-        def set_stock_locations
-          @user.stock_locations = Spree::StockLocation.where(id: (params[:user][:stock_location_ids] || []))
+      def set_roles
+        # FIXME: user_params permits the roles that can be set, if spree_role_ids is set.
+        # when submitting a user with no roles, the param is not present. Because users can be updated
+        # with some users being able to set roles, and some users not being able to set roles, we have to check
+        # if the roles should be cleared, or unchanged again here. The roles form should probably hit a seperate
+        # action or controller to remedy this.
+        if user_params[:spree_role_ids]
+          @user.spree_roles = Spree::Role.where(id: user_params[:spree_role_ids])
+        elsif can?(:manage, Spree::Role)
+          @user.spree_roles = []
         end
+      end
+
+      def set_stock_locations
+        @user.stock_locations = Spree::StockLocation.where(id: (params[:user][:stock_location_ids] || []))
+      end
     end
   end
 end

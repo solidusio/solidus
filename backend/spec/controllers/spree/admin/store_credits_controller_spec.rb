@@ -38,7 +38,6 @@ describe Spree::Admin::StoreCreditsController do
   end
 
   describe "#create" do
-
     subject { spree_post :create, parameters }
 
     before  {
@@ -93,7 +92,7 @@ describe Spree::Admin::StoreCreditsController do
   end
 
   describe "#edit_amount" do
-    let!(:store_credit)      { create(:store_credit, user: user, category: a_credit_category) }
+    let!(:store_credit) { create(:store_credit, user: user, category: a_credit_category) }
 
     before { spree_get :edit_amount, user_id: user.id, id: store_credit.id }
 
@@ -105,7 +104,7 @@ describe Spree::Admin::StoreCreditsController do
   end
 
   describe "#edit_validity" do
-    let!(:store_credit)      { create(:store_credit, user: user, category: a_credit_category) }
+    let!(:store_credit) { create(:store_credit, user: user, category: a_credit_category) }
 
     before { spree_get :edit_validity, user_id: user.id, id: store_credit.id }
 
@@ -276,7 +275,7 @@ describe Spree::Admin::StoreCreditsController do
     subject { spree_put :invalidate, parameters }
 
     it "attempts to invalidate the store credit" do
-      expect { subject  }.to change { store_credit.reload.invalidated_at }.from(nil)
+      expect { subject }.to change { store_credit.reload.invalidated_at }.from(nil)
     end
 
     context "the invalidation is unsuccessful" do

@@ -29,18 +29,18 @@ describe Spree::RoleConfiguration do
 
   describe "#assign_permissions" do
     let(:name) { "thing" }
-    subject { instance.assign_permissions name, [DummyPermissionSet]}
+    subject { instance.assign_permissions name, [DummyPermissionSet] }
 
     context "when a role for the name exists" do
       before do
-        instance.roles.merge!({ name => described_class::Role.new(name, Set.new(existing_roles)) })
+        instance.roles[name] = described_class::Role.new(name, Set.new(existing_roles))
       end
 
       context "when adding duplicate permission sets" do
         let(:existing_roles) { [DummyPermissionSet] }
 
         it "does not add another role" do
-          expect{subject}.to_not change{instance.roles.count}
+          expect{ subject }.to_not change{ instance.roles.count }
         end
 
         it "does not add duplicate permission sets" do
@@ -54,7 +54,7 @@ describe Spree::RoleConfiguration do
         let(:existing_roles) { [OtherDummyPermissionSet] }
 
         it "does not add another role" do
-          expect{subject}.to_not change{instance.roles.count}
+          expect{ subject }.to_not change{ instance.roles.count }
         end
 
         it "appends the permission set to the existing role" do
@@ -67,7 +67,7 @@ describe Spree::RoleConfiguration do
 
     context "when a role for the name does not yet exist" do
       it "creates a new role" do
-        expect{subject}.to change{instance.roles.count}.from(0).to(1)
+        expect{ subject }.to change{ instance.roles.count }.from(0).to(1)
       end
 
       it "sets the roles name accordingly" do
@@ -97,27 +97,27 @@ describe Spree::RoleConfiguration do
 
     context "when the configuration has roles" do
       before do
-        instance.roles.merge!({ role_name => described_class::Role.new(role_name, [DummyPermissionSet])})
+        instance.roles[role_name] = described_class::Role.new(role_name, [DummyPermissionSet])
       end
 
       context "default_role" do
         let(:role_name) { 'default' }
 
         context "when the user has no roles" do
-          let(:user_roles) {[]}
+          let(:user_roles) { [] }
 
           it "activates the applicable permissions on the ability" do
-            expect{subject}.to change{ability.can? :manage, :things}.
+            expect{ subject }.to change{ ability.can? :manage, :things }.
               from(false).
               to(true)
           end
         end
 
         context "when the user has a different role" do
-          let(:user_roles) {[]}
+          let(:user_roles) { [] }
 
           it "activates the applicable permissions on the ability" do
-            expect{subject}.to change{ability.can? :manage, :things}.
+            expect{ subject }.to change{ ability.can? :manage, :things }.
               from(false).
               to(true)
           end
@@ -125,17 +125,17 @@ describe Spree::RoleConfiguration do
       end
 
       context "when the configuration has applicable roles" do
-        let(:user_roles) {[role_name, "someotherrandomrole"]}
+        let(:user_roles) { [role_name, "someotherrandomrole"] }
 
         it "activates the applicable permissions on the ability" do
-          expect{subject}.to change{ability.can? :manage, :things}.
+          expect{ subject }.to change{ ability.can? :manage, :things }.
             from(false).
             to(true)
         end
       end
 
       context "when the configuration does not have applicable roles" do
-        let(:user_roles) {["somerandomrole"]}
+        let(:user_roles) { ["somerandomrole"] }
 
         it "doesn't activate non matching roles" do
           subject
@@ -145,7 +145,7 @@ describe Spree::RoleConfiguration do
     end
 
     context "when the configuration does not have roles" do
-      let(:user_roles) {["somerandomrole"]}
+      let(:user_roles) { ["somerandomrole"] }
 
       it "doesnt activate any new permissions" do
         subject

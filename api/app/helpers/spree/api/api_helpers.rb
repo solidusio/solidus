@@ -40,7 +40,7 @@ module Spree
       mattr_reader *ATTRIBUTES
 
       def required_fields_for(model)
-        required_fields = model._validators.select do |field, validations|
+        required_fields = model._validators.select do |_field, validations|
           validations.any? { |v| v.is_a?(ActiveModel::Validations::PresenceValidator) }
         end.map(&:first) # get fields that are invalid
         # Permalinks presence is validated, but are really automatically generated
@@ -135,11 +135,11 @@ module Spree
       @@adjustment_attributes = [
         :id, :source_type, :source_id, :adjustable_type, :adjustable_id,
         :originator_type, :originator_id, :amount, :label, :promotion_code,
-        :locked, :eligible,  :created_at, :updated_at
+        :locked, :eligible, :created_at, :updated_at
       ]
 
       @@creditcard_attributes = [
-        :id, :month, :year, :cc_type, :last_digits, :name,
+        :id, :month, :year, :cc_type, :last_digits, :name
       ]
 
       @@payment_source_attributes = [

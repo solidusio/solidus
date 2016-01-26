@@ -35,7 +35,7 @@ module Spree
     scope :coupons, -> { where.not(code: nil) }
     scope :advertised, -> { where(advertise: true) }
     scope :active, -> do
-      table = self.arel_table
+      table = arel_table
       time = Time.current
       where(table[:starts_at].eq(nil).or(table[:starts_at].lt(time))).
         where(table[:expires_at].eq(nil).or(table[:expires_at].gt(time)))
@@ -58,7 +58,7 @@ module Spree
       raise "Attempted to call code on a Spree::Promotion. Promotions are now tied to multiple code records"
     end
 
-    def code=(val)
+    def code=(_val)
       raise "Attempted to call code= on a Spree::Promotion. Promotions are now tied to multiple code records"
     end
 
@@ -68,7 +68,7 @@ module Spree
       ).first
     end
 
-    def as_json(options={})
+    def as_json(options = {})
       options[:except] ||= :code
       super
     end
@@ -91,7 +91,7 @@ module Spree
         line_item: line_item,
         user: user,
         path: path,
-        promotion_code: promotion_code,
+        promotion_code: promotion_code
       }
 
       # Track results from actions to see if any action has been taken.
@@ -107,11 +107,11 @@ module Spree
         # connect to the order
         order_promotions.find_or_create_by!(
           order_id: order.id,
-          promotion_code_id: promotion_code.try!(:id),
+          promotion_code_id: promotion_code.try!(:id)
         )
       end
 
-      return action_taken
+      action_taken
     end
 
     # called anytime order.update! happens
@@ -218,7 +218,7 @@ module Spree
         !promotable.product.promotionable?
       when Spree::Order
         promotable.line_items.any? &&
-          promotable.line_items.joins(:product).where(spree_products: {promotionable: false}).any?
+          promotable.line_items.joins(:product).where(spree_products: { promotionable: false }).any?
       end
     end
 

@@ -1,18 +1,16 @@
 module Spree
   module Admin
     class TaxonsController < Spree::Admin::BaseController
-
       respond_to :html, :json, :js
 
       def index
-
       end
 
       def search
         if params[:ids]
-          @taxons = Spree::Taxon.where(:id => params[:ids].split(','))
+          @taxons = Spree::Taxon.where(id: params[:ids].split(','))
         else
-          @taxons = Spree::Taxon.limit(20).ransack(:name_cont => params[:q]).result
+          @taxons = Spree::Taxon.limit(20).ransack(name_cont: params[:q]).result
         end
       end
 
@@ -21,7 +19,7 @@ module Spree
         @taxon = @taxonomy.taxons.build(params[:taxon])
         if @taxon.save
           respond_with(@taxon) do |format|
-            format.json {render :json => @taxon.to_json }
+            format.json { render json: @taxon.to_json }
           end
         else
           flash[:error] = Spree.t('errors.messages.could_not_create_taxon')
@@ -66,14 +64,14 @@ module Spree
           parent_permalink += "/" unless parent_permalink.blank?
           params[:taxon][:permalink] = parent_permalink + params[:permalink_part]
         end
-        #check if we need to rename child taxons if parent name or permalink changes
+        # check if we need to rename child taxons if parent name or permalink changes
         @update_children = true if params[:taxon][:name] != @taxon.name || params[:taxon][:permalink] != @taxon.permalink
 
         if @taxon.update_attributes(taxon_params)
           flash[:success] = flash_message_for(@taxon, :successfully_updated)
         end
 
-        #rename child taxons
+        # rename child taxons
         if @update_children
           @taxon.descendants.each do |taxon|
             taxon.reload
@@ -83,21 +81,22 @@ module Spree
         end
 
         respond_with(@taxon) do |format|
-          format.html {redirect_to edit_admin_taxonomy_url(@taxonomy) }
-          format.json {render :json => @taxon.to_json }
+          format.html { redirect_to edit_admin_taxonomy_url(@taxonomy) }
+          format.json { render json: @taxon.to_json }
         end
       end
 
       def destroy
         @taxon = Taxon.find(params[:id])
         @taxon.destroy
-        respond_with(@taxon) { |format| format.json { render :json => '' } }
+        respond_with(@taxon) { |format| format.json { render json: '' } }
       end
 
       private
-        def taxon_params
-          params.require(:taxon).permit(permitted_taxon_attributes)
-        end
+
+      def taxon_params
+        params.require(:taxon).permit(permitted_taxon_attributes)
+      end
     end
   end
 end

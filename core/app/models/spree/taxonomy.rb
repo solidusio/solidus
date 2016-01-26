@@ -12,16 +12,16 @@ module Spree
     default_scope -> { order(:position) }
 
     private
-      def set_name
-        if root
-          root.update_columns(
-            name: name,
-            updated_at: Time.current,
-          )
-        else
-          self.root = Taxon.create!(taxonomy_id: id, name: name)
-        end
-      end
 
+    def set_name
+      if root
+        root.update_columns(
+          name: name,
+          updated_at: Time.current
+        )
+      else
+        self.root = Taxon.create!(taxonomy_id: id, name: name)
+      end
+    end
   end
 end

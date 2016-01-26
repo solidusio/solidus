@@ -15,9 +15,9 @@ FactoryGirl.define do
           shipment: build(
             :shipment,
             stock_location: stock_location,
-            shipping_method: shipping_method,
+            shipping_method: shipping_method
           )
-        ),
+        )
       ]
     end
   end

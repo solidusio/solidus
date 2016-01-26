@@ -1,12 +1,11 @@
 module Spree
   module Api
     class ZonesController < Spree::Api::BaseController
-
       def create
         authorize! :create, Zone
         @zone = Zone.new(zone_params)
         if @zone.save
-          respond_with(@zone, :status => 201, :default_template => :show)
+          respond_with(@zone, status: 201, default_template: :show)
         else
           invalid_resource!(@zone)
         end
@@ -15,7 +14,7 @@ module Spree
       def destroy
         authorize! :destroy, zone
         zone.destroy
-        respond_with(zone, :status => 204)
+        respond_with(zone, status: 204)
       end
 
       def index
@@ -30,7 +29,7 @@ module Spree
       def update
         authorize! :update, zone
         if zone.update_attributes(zone_params)
-          respond_with(zone, :status => 200, :default_template => :show)
+          respond_with(zone, status: 200, default_template: :show)
         else
           invalid_resource!(zone)
         end

@@ -38,4 +38,3 @@ describe Spree::PermissionSets::RestrictedStockDisplay do
     it { is_expected.to_not be_able_to(:display, item2) }
   end
 end
-

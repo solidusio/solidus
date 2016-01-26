@@ -49,7 +49,6 @@ class FixAdjustmentOrderId < ActiveRecord::Migration
                       on_update: :restrict  # handled by models
     end
 
-
     if connection.adapter_name.eql?('PostgreSQL')
       # Negated Logical implication.
       #

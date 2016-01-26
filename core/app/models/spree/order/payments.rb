@@ -32,7 +32,7 @@ module Spree
         end
 
         def unprocessed_payments
-          payments.select { |payment| payment.checkout? }
+          payments.select(&:checkout?)
         end
 
         private
@@ -54,7 +54,7 @@ module Spree
           end
         rescue Core::GatewayError => e
           result = !!Spree::Config[:allow_checkout_on_gateway_error]
-          errors.add(:base, e.message) and return result
+          errors.add(:base, e.message) && (return result)
         end
       end
     end

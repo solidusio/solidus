@@ -23,7 +23,7 @@ FactoryGirl.define do
       cost 10.0
     end
 
-    before(:create) do |shipping_method, evaluator|
+    before(:create) do |shipping_method, _evaluator|
       if shipping_method.shipping_categories.empty?
         shipping_method.shipping_categories << (Spree::ShippingCategory.first || create(:shipping_category))
       end

@@ -2,7 +2,7 @@ require 'spec_helper'
 
 module Spree
   module Admin
-    describe CustomerReturnsController, :type => :controller do
+    describe CustomerReturnsController, type: :controller do
       stub_authorization!
 
       describe "#index" do
@@ -50,7 +50,6 @@ module Spree
           let(:return_reason_3) { create(:return_reason) }
           let!(:inactive_rma_reason) { create(:return_reason, active: false) }
 
-
           let(:order) { create(:shipped_order, line_items_count: 4) }
           let(:rma) { create(:return_authorization, order: order, reason: return_reason_1) }
 
@@ -92,7 +91,7 @@ module Spree
             it "loads the possible return items" do
               rma_return_item_count = rma.return_items.count
               total_unit_count = order.inventory_units.count
-              customer_returned_count =  previous_customer_return.return_items.count
+              customer_returned_count = previous_customer_return.return_items.count
               expected_total = total_unit_count - customer_returned_count - rma_return_item_count
               expect(assigns(:new_return_items).length).to eq expected_total
             end
@@ -102,7 +101,7 @@ module Spree
             end
 
             it "loads the persisted rma return items" do
-              expect(assigns(:rma_return_items).all? { |return_item| return_item.persisted? }).to eq true
+              expect(assigns(:rma_return_items).all?(&:persisted?)).to eq true
             end
 
             it "has one rma return item" do
@@ -123,7 +122,7 @@ module Spree
         let!(:inactive_rma_reason) { create(:return_reason, active: false) }
 
         let!(:accepted_return_item)            { customer_return.return_items.order('id').first.tap(&:accept!) }
-        let!(:rejected_return_item)            { customer_return.return_items.order('id').second.tap(&:reject!)}
+        let!(:rejected_return_item)            { customer_return.return_items.order('id').second.tap(&:reject!) }
         let!(:manual_intervention_return_item) { customer_return.return_items.order('id').third.tap(&:require_manual_intervention!) }
 
         subject do
@@ -194,7 +193,7 @@ module Spree
               return_items_attributes: {
                 "0" => {
                   returned: "1",
-                  "pre_tax_amount"=>"15.99",
+                  "pre_tax_amount" => "15.99",
                   inventory_unit_id: order.inventory_units.shipped.last.id,
                   reception_status_event: reception_status_event
                 }

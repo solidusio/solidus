@@ -3,7 +3,6 @@ require 'spree/testing_support/factories/order_factory'
 require 'spree/testing_support/factories/return_item_factory'
 
 FactoryGirl.define do
-
   factory :customer_return, class: Spree::CustomerReturn do
     association(:stock_location, factory: :stock_location)
 
@@ -31,5 +30,4 @@ FactoryGirl.define do
   factory :customer_return_without_return_items, class: Spree::CustomerReturn do
     association(:stock_location, factory: :stock_location)
   end
-
 end

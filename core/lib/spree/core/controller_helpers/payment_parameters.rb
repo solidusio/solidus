@@ -44,8 +44,8 @@ module Spree
       return params if params[:payment_source].blank?
 
       payment_params = params[:order] &&
-        params[:order][:payments_attributes] &&
-        params[:order][:payments_attributes].first
+                       params[:order][:payments_attributes] &&
+                       params[:order][:payments_attributes].first
       return params if payment_params.blank?
 
       payment_method_id = payment_params[:payment_method_id]
@@ -105,9 +105,9 @@ module Spree
         {
           source_attributes: {
             existing_card_id: card_id,
-            verification_value: cvc_confirm,
+            verification_value: cvc_confirm
           }
-        },
+        }
       ]
 
       params[:order].delete(:existing_card)
@@ -161,6 +161,5 @@ module Spree
 
       params
     end
-
   end
 end

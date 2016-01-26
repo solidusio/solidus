@@ -15,7 +15,7 @@ module Spree
         # This is eligible if the user's most recently completed order is more than the preferred days ago
         # @param order [Spree::Order]
         # @option options
-        def eligible?(order, options = {})
+        def eligible?(order, _options = {})
           return false unless order.user
 
           last_order = last_completed_order(order.user)
@@ -26,11 +26,10 @@ module Spree
 
         private
 
-        def last_completed_order user
+        def last_completed_order(user)
           user.orders.complete.order(:completed_at).last
         end
       end
     end
   end
 end
-

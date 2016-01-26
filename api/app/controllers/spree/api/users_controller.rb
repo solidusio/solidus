@@ -1,10 +1,7 @@
 class Spree::Api::UsersController < Spree::Api::ResourceController
-
   private
 
-  def user
-    @user
-  end
+  attr_reader :user
 
   def model_class
     Spree.user_class

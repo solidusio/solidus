@@ -232,7 +232,7 @@ describe Spree::TransferItem do
     context "scopes" do
       let(:partially_received) { stock_transfer.transfer_items.first }
       let(:fully_received) { stock_transfer.transfer_items.last }
-      let(:variant) { create(:variant)}
+      let(:variant) { create(:variant) }
 
       before do
         fully_received.update_attributes(expected_quantity: 1, received_quantity: 1)

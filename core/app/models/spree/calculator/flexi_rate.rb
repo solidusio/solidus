@@ -11,19 +11,19 @@ module Spree
       Spree.t(:flexible_rate)
     end
 
-    def self.available?(object)
+    def self.available?(_object)
       true
     end
 
     def compute(object)
       sum = 0
-      max = self.preferred_max_items.to_i
+      max = preferred_max_items.to_i
       items_count = object.quantity
       items_count.times do |i|
         if i == 0
-          sum += self.preferred_first_item.to_f
+          sum += preferred_first_item.to_f
         elsif ((max > 0) && (i <= (max - 1))) || (max == 0)
-          sum += self.preferred_additional_item.to_f
+          sum += preferred_additional_item.to_f
         end
       end
 

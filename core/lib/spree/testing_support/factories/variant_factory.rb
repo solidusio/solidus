@@ -9,7 +9,7 @@ FactoryGirl.define do
   factory :base_variant, class: Spree::Variant do
     price 19.99
     cost_price 17.00
-    sku    { generate(:sku) }
+    sku { generate(:sku) }
     is_master 0
     track_inventory true
 
@@ -35,6 +35,5 @@ FactoryGirl.define do
         is_master 1
       end
     end
-
   end
 end

@@ -13,9 +13,9 @@ module Spree
         authorize! :update, @order, order_token
         find_address
 
-        if @order.update_attributes({"#{@order_source}_attributes" => address_params})
+        if @order.update_attributes({ "#{@order_source}_attributes" => address_params })
           @address = @order.send(@order_source)
-          respond_with(@address, :default_template => :show)
+          respond_with(@address, default_template: :show)
         else
           @address = @order.send(@order_source)
           invalid_resource!(@address)
@@ -23,6 +23,7 @@ module Spree
       end
 
       private
+
       def address_params
         params.require(:address).permit(permitted_address_attributes)
       end

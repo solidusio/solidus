@@ -11,7 +11,8 @@ class MigrateOldPreferences < ActiveRecord::Migration
   end
 
   private
-  def migrate_preferences klass
+
+  def migrate_preferences(klass)
     klass.reset_column_information
     klass.find_in_batches do |batch|
       ActiveRecord::Base.transaction do
@@ -36,7 +37,7 @@ class MigrateOldPreferences < ActiveRecord::Migration
     end
   end
 
-  def cache_key model, key
+  def cache_key(model, key)
     [
       ENV["RAILS_CACHE_ID"],
       class_underscore_cache[model.type],
@@ -46,6 +47,6 @@ class MigrateOldPreferences < ActiveRecord::Migration
   end
 
   def class_underscore_cache
-    @class_underscore_cache ||= Hash.new{ |h,k| h[k] = k.underscore }
+    @class_underscore_cache ||= Hash.new{ |h, k| h[k] = k.underscore }
   end
 end

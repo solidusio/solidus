@@ -12,7 +12,7 @@ module Spree
           promotable.is_a?(Spree::Order)
         end
 
-        def eligible?(order, options = {})
+        def eligible?(order, _options = {})
           users.include?(order.user)
         end
 

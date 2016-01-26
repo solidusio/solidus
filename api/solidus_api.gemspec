@@ -6,7 +6,7 @@ Gem::Specification.new do |gem|
   gem.email         = 'contact@solidus.io'
   gem.homepage      = 'http://solidus.io/'
 
-  gem.summary       = %q{REST API for the Solidus e-commerce framework.}
+  gem.summary       = 'REST API for the Solidus e-commerce framework.'
   gem.description   = gem.summary
 
   gem.files         = `git ls-files`.split($\)
@@ -14,7 +14,7 @@ Gem::Specification.new do |gem|
   gem.test_files    = gem.files.grep(%r{^(test|spec|features)/})
   gem.name          = "solidus_api"
   gem.require_paths = ["lib"]
-  gem.version         = Spree.solidus_version
+  gem.version = Spree.solidus_version
 
   gem.add_dependency 'solidus_core', gem.version
   gem.add_dependency 'rabl', ['>= 0.9.4.pre1', '< 0.12.0']

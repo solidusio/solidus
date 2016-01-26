@@ -24,6 +24,7 @@ module Spree
       end
 
       private
+
       def choose_default_shipping_rate(shipping_rates)
         unless shipping_rates.empty?
           default_shipping_rate = Spree::Config.shipping_rate_selector_class.new(shipping_rates).find_default
@@ -57,9 +58,9 @@ module Spree
         package.shipping_methods.select do |ship_method|
           calculator = ship_method.calculator
           ship_method.include?(order.ship_address) &&
-          calculator.available?(package) &&
-          (calculator.preferences[:currency].blank? ||
-           calculator.preferences[:currency] == currency)
+            calculator.available?(package) &&
+            (calculator.preferences[:currency].blank? ||
+             calculator.preferences[:currency] == currency)
         end
       end
     end

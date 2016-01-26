@@ -47,4 +47,3 @@ describe Spree::PermissionSets::ConfigurationManagement do
     it { is_expected.not_to be_able_to(:manage, Spree::ReturnReason) }
   end
 end
-

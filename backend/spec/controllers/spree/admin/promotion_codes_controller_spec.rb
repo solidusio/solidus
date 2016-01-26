@@ -13,6 +13,6 @@ describe Spree::Admin::PromotionCodesController do
     spree_get :index, promotion_id: promotion.id, format: 'csv'
     expect(response).to be_success
     parsed = CSV.parse(response.body, headers: true)
-    expect(parsed.entries.map(&:to_h)).to eq([{"Code" => code1.value}, {"Code" => code2.value}, {"Code" => code3.value}])
+    expect(parsed.entries.map(&:to_h)).to eq([{ "Code" => code1.value }, { "Code" => code2.value }, { "Code" => code3.value }])
   end
 end

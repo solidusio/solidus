@@ -75,7 +75,7 @@ module Spree
       inventory_units.map do |iu|
         iu.update_columns(
           pending: false,
-          updated_at: Time.current,
+          updated_at: Time.current
         )
       end
     end
@@ -115,33 +115,33 @@ module Spree
 
     private
 
-      def allow_ship?
-        self.on_hand?
+    def allow_ship?
+      on_hand?
+    end
+
+    def fulfill_order
+      reload
+      order.fulfill!
+    end
+
+    def percentage_of_line_item
+      1 / BigDecimal.new(line_item.quantity)
+    end
+
+    def current_return_item
+      return_items.not_cancelled.first
+    end
+
+    def ensure_can_destroy
+      if !backordered? && !on_hand?
+        errors.add(:state, :cannot_destroy, state: state)
+        return false
       end
 
-      def fulfill_order
-        self.reload
-        order.fulfill!
+      unless shipment.pending?
+        errors.add(:base, :cannot_destroy_shipment_state, state: shipment.state)
+        return false
       end
-
-      def percentage_of_line_item
-        1 / BigDecimal.new(line_item.quantity)
-      end
-
-      def current_return_item
-        return_items.not_cancelled.first
-      end
-
-      def ensure_can_destroy
-        if !backordered? && !on_hand?
-          errors.add(:state, :cannot_destroy, state: self.state)
-          return false
-        end
-
-        unless shipment.pending?
-          errors.add(:base, :cannot_destroy_shipment_state, state: shipment.state)
-          return false
-        end
-      end
+    end
   end
 end

@@ -1,7 +1,6 @@
 module Spree
   module Api
     class PropertiesController < Spree::Api::BaseController
-
       before_action :find_property, only: [:show, :update, :destroy]
 
       def index
@@ -9,7 +8,7 @@ module Spree
 
         if params[:ids]
           ids = params[:ids].split(",").flatten
-          @properties = @properties.where(:id => ids)
+          @properties = @properties.where(id: ids)
         else
           @properties = @properties.ransack(params[:q]).result
         end
@@ -57,15 +56,15 @@ module Spree
 
       private
 
-        def find_property
-          @property = Spree::Property.accessible_by(current_ability, :read).find(params[:id])
-        rescue ActiveRecord::RecordNotFound
-          @property = Spree::Property.accessible_by(current_ability, :read).find_by!(name: params[:id])
-        end
+      def find_property
+        @property = Spree::Property.accessible_by(current_ability, :read).find(params[:id])
+      rescue ActiveRecord::RecordNotFound
+        @property = Spree::Property.accessible_by(current_ability, :read).find_by!(name: params[:id])
+      end
 
-        def property_params
-          params.require(:property).permit(permitted_property_attributes)
-        end
+      def property_params
+        params.require(:property).permit(permitted_property_attributes)
+      end
     end
   end
 end

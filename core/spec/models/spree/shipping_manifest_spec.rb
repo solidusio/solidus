@@ -1,14 +1,14 @@
 require 'spec_helper'
 
 module Spree
-  describe ShippingManifest, :type => :model do
+  describe ShippingManifest, type: :model do
     let(:order) { Order.create! }
     let(:variant) { create :variant }
     let!(:shipment) { create(:shipment, state: 'pending', order: order) }
     let(:manifest) { described_class.new(inventory_units: inventory_units) }
 
-    def build_unit(variant, attrs={})
-      attrs = {order: order, variant: variant, shipment: shipment}.merge(attrs)
+    def build_unit(variant, attrs = {})
+      attrs = { order: order, variant: variant, shipment: shipment }.merge(attrs)
       attrs[:line_item] = attrs[:order].contents.add(attrs[:variant])
       InventoryUnit.new(attrs)
     end
@@ -30,7 +30,7 @@ module Spree
           expect(manifest.items[0]).to have_attributes(
             variant: variant,
             quantity: 1,
-            states: {"on_hand" => 1}
+            states: { "on_hand" => 1 }
           )
         end
       end
@@ -42,7 +42,7 @@ module Spree
           expect(manifest.items[0]).to have_attributes(
             variant: variant,
             quantity: 2,
-            states: {"on_hand" => 2}
+            states: { "on_hand" => 2 }
           )
         end
       end
@@ -55,12 +55,12 @@ module Spree
           expect(manifest.items[0]).to have_attributes(
             variant: variant,
             quantity: 1,
-            states: {"on_hand" => 1}
+            states: { "on_hand" => 1 }
           )
           expect(manifest.items[1]).to have_attributes(
             variant: variant2,
             quantity: 1,
-            states: {"on_hand" => 1}
+            states: { "on_hand" => 1 }
           )
         end
       end

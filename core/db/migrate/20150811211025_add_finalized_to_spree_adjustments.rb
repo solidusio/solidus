@@ -5,7 +5,7 @@ class AddFinalizedToSpreeAdjustments < ActiveRecord::Migration
   # adjustments table can become quite large.
   def change
     add_column :spree_adjustments, :finalized, :boolean
-    execute %q(UPDATE spree_adjustments SET finalized=('closed' = state))
+    execute "UPDATE spree_adjustments SET finalized=('closed' = state)"
     remove_column :spree_adjustments, :state, :string
   end
 end

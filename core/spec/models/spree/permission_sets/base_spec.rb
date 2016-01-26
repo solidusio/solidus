@@ -6,7 +6,7 @@ describe Spree::PermissionSets::Base do
 
   describe "activate!" do
     it "raises a not implemented error" do
-      expect{subject}.to raise_error(NotImplementedError)
+      expect{ subject }.to raise_error(NotImplementedError)
     end
   end
 end

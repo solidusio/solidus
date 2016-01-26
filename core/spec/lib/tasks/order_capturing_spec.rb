@@ -28,7 +28,7 @@ describe "order_capturing:capture_payments" do
 
     it "charges the order" do
       expect(order.inventory_units.any?(&:on_hand?)).to eq false
-      expect(order.inventory_units.all? {|iu| iu.canceled? || iu.shipped? }).to eq true
+      expect(order.inventory_units.all? { |iu| iu.canceled? || iu.shipped? }).to eq true
       expect {
         expect { subject.invoke }.to change { payment.reload.state }.to('completed')
       }.to change { order.reload.payment_state }.to('paid')

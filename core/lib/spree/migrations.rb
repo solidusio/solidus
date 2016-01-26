@@ -41,36 +41,37 @@ module Spree
     end
 
     private
-      def engine_migrations
-        Dir.entries(engine_dir).map do |file_name|
-          name = file_name.split("_", 2).last.split(".", 2).first
-          name.empty? ? next : name
-        end.compact! || []
-      end
 
-      def app_migrations
-        Dir.entries(app_dir).map do |file_name|
-          next if [".", ".."].include? file_name
-          name = file_name.split("_", 2).last
-          name.empty? ? next : name
-        end.compact! || []
-      end
+    def engine_migrations
+      Dir.entries(engine_dir).map do |file_name|
+        name = file_name.split("_", 2).last.split(".", 2).first
+        name.empty? ? next : name
+      end.compact! || []
+    end
 
-      def app_dir
-        "#{Rails.root}/db/migrate"
-      end
+    def app_migrations
+      Dir.entries(app_dir).map do |file_name|
+        next if [".", ".."].include? file_name
+        name = file_name.split("_", 2).last
+        name.empty? ? next : name
+      end.compact! || []
+    end
 
-      def engine_dir
-        "#{config.root}/db/migrate"
-      end
+    def app_dir
+      "#{Rails.root}/db/migrate"
+    end
 
-      def match_engine?(engine)
-        if engine_name == "spree"
-          # Avoid stores upgrading from 1.3 getting wrong warnings
-          ["spree.rb", "spree_promo.rb"].include? engine
-        else
-          engine == "#{engine_name}.rb"
-        end
+    def engine_dir
+      "#{config.root}/db/migrate"
+    end
+
+    def match_engine?(engine)
+      if engine_name == "spree"
+        # Avoid stores upgrading from 1.3 getting wrong warnings
+        ["spree.rb", "spree_promo.rb"].include? engine
+      else
+        engine == "#{engine_name}.rb"
       end
+    end
   end
 end

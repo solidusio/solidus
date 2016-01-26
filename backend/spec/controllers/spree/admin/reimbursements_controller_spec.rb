@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Spree::Admin::ReimbursementsController, :type => :controller do
+describe Spree::Admin::ReimbursementsController, type: :controller do
   stub_authorization!
 
   let!(:default_refund_reason) do
@@ -25,7 +25,7 @@ describe Spree::Admin::ReimbursementsController, :type => :controller do
   end
 
   describe '#create' do
-    let(:customer_return)  { create(:customer_return, line_items_count: 1) }
+    let(:customer_return) { create(:customer_return, line_items_count: 1) }
     let(:order) { customer_return.order }
     let(:return_item) { customer_return.return_items.first }
     let(:payment) { order.payments.first }
@@ -47,7 +47,7 @@ describe Spree::Admin::ReimbursementsController, :type => :controller do
 
     context 'when create fails' do
       before do
-        allow_any_instance_of(Spree::Reimbursement).to receive(:valid?) do |reimbursement, *args|
+        allow_any_instance_of(Spree::Reimbursement).to receive(:valid?) do |reimbursement, *_args|
           reimbursement.errors.add(:base, 'something bad happened')
           false
         end

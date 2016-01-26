@@ -17,7 +17,7 @@ module Spree
 
     before_destroy :ensure_can_destroy
 
-    # TODO remove the suppress_mailer temporary variable once we are calling 'ship'
+    # TODO: remove the suppress_mailer temporary variable once we are calling 'ship'
     # from outside of the state machine and can actually pass variables through.
     attr_accessor :special_instructions, :suppress_mailer
 
@@ -66,7 +66,7 @@ module Spree
         shipment.state_changes.create!(
           previous_state: transition.from,
           next_state:     transition.to,
-          name:           'shipment',
+          name:           'shipment'
         )
       end
     end
@@ -104,7 +104,7 @@ module Spree
     end
 
     def backordered?
-      inventory_units.any? { |inventory_unit| inventory_unit.backordered? }
+      inventory_units.any?(&:backordered?)
     end
 
     def currency
@@ -116,8 +116,7 @@ module Spree
     end
     alias discounted_amount discounted_cost
 
-
-    def editable_by?(user)
+    def editable_by?(_user)
       !shipped?
     end
 
@@ -163,7 +162,7 @@ module Spree
     end
 
     def ready_or_pending?
-      self.ready? || self.pending?
+      ready? || pending?
     end
 
     def refresh_rates
@@ -186,7 +185,7 @@ module Spree
       end
 
       self.shipping_rates = new_rates
-      self.save!
+      save!
 
       shipping_rates
     end
@@ -206,7 +205,7 @@ module Spree
     def selected_shipping_rate_id=(id)
       shipping_rates.update_all(selected: false)
       shipping_rates.update(id, selected: true)
-      self.save!
+      save!
     end
 
     # Determines the appropriate +state+ according to the following logic:
@@ -228,7 +227,7 @@ module Spree
     end
 
     def set_up_inventory(state, variant, order, line_item)
-      self.inventory_units.create(
+      inventory_units.create(
         state: state,
         variant_id: variant.id,
         order_id: order.id,
@@ -279,9 +278,9 @@ module Spree
         self.cost = selected_shipping_rate.cost
         self.adjustment_total = adjustments.additional.map(&:update!).compact.sum
         if changed?
-          self.update_columns(
-            cost: self.cost,
-            adjustment_total: self.adjustment_total,
+          update_columns(
+            cost: cost,
+            adjustment_total: adjustment_total,
             updated_at: Time.current
           )
         end
@@ -290,20 +289,20 @@ module Spree
 
     # Update Shipment and make sure Order states follow the shipment changes
     def update_attributes_and_order(params = {})
-      if self.update_attributes params
-        if params.has_key? :selected_shipping_rate_id
+      if update_attributes params
+        if params.key? :selected_shipping_rate_id
           # Changing the selected Shipping Rate won't update the cost (for now)
           # so we persist the Shipment#cost before calculating order shipment
           # total and updating payment state (given a change in shipment cost
           # might change the Order#payment_state)
-          self.update_amounts
+          update_amounts
 
           order.updater.update_shipment_total
           order.updater.update_payment_state
 
           # Update shipment state only after order total is updated because it
           # (via Order#paid?) affects the shipment state (YAY)
-          self.update_columns(
+          update_columns(
             state: determine_state(order),
             updated_at: Time.current
           )
@@ -327,7 +326,7 @@ module Spree
       if new_state != old_state
         update_columns(
           state: new_state,
-          updated_at: Time.current,
+          updated_at: Time.current
         )
         after_ship if new_state == 'shipped'
       end
@@ -341,8 +340,8 @@ module Spree
       transaction do
         new_shipment = order.shipments.create!(stock_location: stock_location)
 
-        order.contents.remove(variant, quantity, {shipment: self})
-        order.contents.add(variant, quantity, {shipment: new_shipment})
+        order.contents.remove(variant, quantity, { shipment: self })
+        order.contents.add(variant, quantity, { shipment: new_shipment })
 
         refresh_rates
         save!
@@ -351,16 +350,16 @@ module Spree
     end
 
     def transfer_to_shipment(variant, quantity, shipment_to_transfer_to)
-      quantity_already_shipment_to_transfer_to = shipment_to_transfer_to.manifest.find{|mi| mi.line_item.variant == variant}.try(:quantity) || 0
+      quantity_already_shipment_to_transfer_to = shipment_to_transfer_to.manifest.find{ |mi| mi.line_item.variant == variant }.try(:quantity) || 0
       final_quantity = quantity + quantity_already_shipment_to_transfer_to
 
-      if (quantity <= 0 || self == shipment_to_transfer_to)
+      if quantity <= 0 || self == shipment_to_transfer_to
         raise ArgumentError
       end
 
       transaction do
-        order.contents.remove(variant, quantity, {shipment: self})
-        order.contents.add(variant, quantity, {shipment: shipment_to_transfer_to})
+        order.contents.remove(variant, quantity, { shipment: self })
+        order.contents.add(variant, quantity, { shipment: shipment_to_transfer_to })
 
         refresh_rates
         save!
@@ -375,48 +374,47 @@ module Spree
 
     private
 
-      def after_ship
-        order.shipping.ship_shipment(self, suppress_mailer: suppress_mailer)
+    def after_ship
+      order.shipping.ship_shipment(self, suppress_mailer: suppress_mailer)
+    end
+
+    def can_get_rates?
+      order.ship_address && order.ship_address.valid?
+    end
+
+    def manifest_restock(item)
+      if item.states["on_hand"].to_i > 0
+       stock_location.restock item.variant, item.states["on_hand"], self
       end
 
-      def can_get_rates?
-        order.ship_address && order.ship_address.valid?
+      if item.states["backordered"].to_i > 0
+        stock_location.restock_backordered item.variant, item.states["backordered"]
       end
+    end
 
-      def manifest_restock(item)
-        if item.states["on_hand"].to_i > 0
-         stock_location.restock item.variant, item.states["on_hand"], self
-        end
+    def manifest_unstock(item)
+      stock_location.unstock item.variant, item.quantity, self
+    end
 
-        if item.states["backordered"].to_i > 0
-          stock_location.restock_backordered item.variant, item.states["backordered"]
-        end
+    def recalculate_adjustments
+      Spree::ItemAdjustments.new(self).update
+    end
+
+    def set_cost_zero_when_nil
+      self.cost = 0 unless cost
+    end
+
+    def update_adjustments
+      if cost_changed? && state != 'shipped'
+        recalculate_adjustments
       end
+    end
 
-      def manifest_unstock(item)
-        stock_location.unstock item.variant, item.quantity, self
+    def ensure_can_destroy
+      unless pending?
+        errors.add(:state, :cannot_destroy, state: state)
+        return false
       end
-
-      def recalculate_adjustments
-        Spree::ItemAdjustments.new(self).update
-      end
-
-      def set_cost_zero_when_nil
-        self.cost = 0 unless self.cost
-      end
-
-      def update_adjustments
-        if cost_changed? && state != 'shipped'
-          recalculate_adjustments
-        end
-      end
-
-
-      def ensure_can_destroy
-        unless pending?
-          errors.add(:state, :cannot_destroy, state: self.state)
-          return false
-        end
-      end
+    end
   end
 end

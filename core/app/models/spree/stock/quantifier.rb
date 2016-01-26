@@ -7,9 +7,9 @@ module Spree
         @variant = variant
         where_args = { variant_id: @variant }
         if stock_location
-          where_args.merge!(stock_location: stock_location)
+          where_args[:stock_location] = stock_location
         else
-          where_args.merge!(Spree::StockLocation.table_name => { active: true })
+          where_args[Spree::StockLocation.table_name] = { active: true }
         end
         @stock_items = Spree::StockItem.joins(:stock_location).where(where_args)
       end
@@ -41,7 +41,6 @@ module Spree
       def can_supply?(required)
         total_on_hand >= required || backorderable?
       end
-
     end
   end
 end

@@ -10,7 +10,6 @@ RSpec.describe 'order factory' do
     it_behaves_like 'a working factory'
   end
 
-
   describe 'order with totals' do
     let(:factory) { :order_with_totals }
 

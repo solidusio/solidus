@@ -70,7 +70,6 @@ describe "exchanges:charge_unreturned_items" do
     end
 
     context "more than the config allowed days have passed" do
-
       let(:travel_time) { (Spree::Config[:expedited_exchanges_days_window] + 1).days }
 
       it "creates a new completed order" do
@@ -157,7 +156,7 @@ describe "exchanges:charge_unreturned_items" do
 
       it "associates the store of the original order with the exchange order" do
         store = order.store
-        expect(Spree::Order).to receive(:create!).once.with(hash_including({store_id: store.id})).and_call_original
+        expect(Spree::Order).to receive(:create!).once.with(hash_including({ store_id: store.id })).and_call_original
         subject.invoke
       end
 

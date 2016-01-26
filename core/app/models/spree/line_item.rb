@@ -38,7 +38,6 @@ module Spree
     #   item, if there is one
     delegate :product, to: :variant
 
-
     attr_accessor :target_shipment
 
     self.whitelisted_ransackable_associations = ['variant']
@@ -99,7 +98,7 @@ module Spree
     # one passed in.
     #
     # @param options [Hash] options for this line item
-    def options=(options={})
+    def options=(options = {})
       return unless options.present?
 
       opts = options.dup # we will be deleting from the hash, so leave the caller's copy intact
@@ -109,13 +108,13 @@ module Spree
       if currency
         self.currency = currency
         self.price    = variant.price_in(currency).amount +
-                        variant.price_modifier_amount_in(currency, opts)
+        variant.price_modifier_amount_in(currency, opts)
       else
-        self.price    = variant.price +
-                        variant.price_modifier_amount(opts)
+        self.price = variant.price +
+        variant.price_modifier_amount(opts)
       end
 
-      self.assign_attributes opts
+      assign_attributes opts
     end
 
     private
@@ -137,7 +136,7 @@ module Spree
     # did more than just setting the price, hence renamed to #set_pricing_attributes
     def set_pricing_attributes
       # If the legacy method #copy_price has been overridden, handle that gracefully
-      return handle_copy_price_override if self.respond_to?(:copy_price)
+      return handle_copy_price_override if respond_to?(:copy_price)
 
       self.currency ||= variant.currency
       self.cost_price ||= variant.cost_price
@@ -146,15 +145,15 @@ module Spree
 
     def handle_copy_price_override
       copy_price
-      ActiveSupport::Deprecation.warn 'You have overridden Spree::LineItem#copy_price. ' + \
-        'This method is now called Spree::LineItem#set_pricing_attributes. ' + \
+      ActiveSupport::Deprecation.warn 'You have overridden Spree::LineItem#copy_price. ' \
+        'This method is now called Spree::LineItem#set_pricing_attributes. ' \
         'Please adjust your override.',
         caller
     end
 
     def update_inventory
-      if (changed? || target_shipment.present?) && self.order.has_checkout_step?("delivery")
-        Spree::OrderInventory.new(self.order, self).verify(target_shipment)
+      if (changed? || target_shipment.present?) && order.has_checkout_step?("delivery")
+        Spree::OrderInventory.new(order, self).verify(target_shipment)
       end
     end
 

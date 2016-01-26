@@ -41,7 +41,7 @@ FactoryGirl.define do
         evaluator.stock_location # must evaluate before creating line items
 
         evaluator.line_items_attributes.each do |attributes|
-          attributes = {order: order, price: evaluator.line_items_price}.merge(attributes)
+          attributes = { order: order, price: evaluator.line_items_price }.merge(attributes)
           create(:line_item, attributes)
         end
         order.line_items.reload
@@ -91,15 +91,14 @@ FactoryGirl.define do
               order.shipments.each do |shipment|
                 shipment.inventory_units.update_all state: 'shipped'
                 shipment.update_columns(state: 'shipped', shipped_at: Time.current)
-                if evaluator.with_cartons
-                  Spree::Carton.create!(
-                    stock_location: shipment.stock_location,
-                    address: shipment.address,
-                    shipping_method: shipment.shipping_method,
-                    inventory_units: shipment.inventory_units,
-                    shipped_at: Time.current,
-                  )
-                end
+                next unless evaluator.with_cartons
+                Spree::Carton.create!(
+                  stock_location: shipment.stock_location,
+                  address: shipment.address,
+                  shipping_method: shipment.shipping_method,
+                  inventory_units: shipment.inventory_units,
+                  shipped_at: Time.current
+                )
               end
               order.reload
             end
@@ -120,7 +119,7 @@ FactoryGirl.define do
       promotion_code = evaluator.promotion_code || promotion.codes.first
 
       promotion.actions.each do |action|
-        action.perform({order: order, promotion: promotion, promotion_code: promotion_code})
+        action.perform({ order: order, promotion: promotion, promotion_code: promotion_code })
       end
     end
   end

@@ -1,6 +1,5 @@
 module Spree
   class PaymentMethod::StoreCredit < PaymentMethod
-
     def payment_source_class
       ::Spree::StoreCredit
     end
@@ -55,7 +54,7 @@ module Spree
       end
     end
 
-    def void(auth_code, gateway_options={})
+    def void(auth_code, gateway_options = {})
       action = -> (store_credit) {
         store_credit.void(auth_code, action_originator: gateway_options[:originator])
       }
@@ -94,7 +93,7 @@ module Spree
 
     private
 
-    def handle_action_call(store_credit, action, action_name, auth_code=nil)
+    def handle_action_call(store_credit, action, action_name, auth_code = nil)
       store_credit.with_lock do
         if response = action.call(store_credit)
           # note that we only need to return the auth code on an 'auth', but it's innocuous to always return
@@ -121,7 +120,7 @@ module Spree
     def auth_or_capture_event(auth_code)
       capture_event = StoreCreditEvent.find_by(authorization_code: auth_code, action: Spree::StoreCredit::CAPTURE_ACTION)
       auth_event = StoreCreditEvent.find_by(authorization_code: auth_code, action: Spree::StoreCredit::AUTHORIZE_ACTION)
-      return capture_event || auth_event
+      capture_event || auth_event
     end
   end
 end
