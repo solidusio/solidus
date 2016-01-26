@@ -20,7 +20,7 @@ describe Spree::Promotion::Actions::FreeShipping, :type => :model do
         expect(order.shipments.first.cost).to eq(100)
         expect(order.shipments.last.cost).to eq(100)
         expect(action.perform(payload)).to be true
-        expect(promotion.usage_count).to eq(1)
+        expect(promotion.usage_counter).to eq(1)
         expect(order.shipment_adjustments.count).to eq(2)
         expect(order.shipment_adjustments.first.amount.to_i).to eq(-100)
         expect(order.shipment_adjustments.last.amount.to_i).to eq(-100)
@@ -32,7 +32,7 @@ describe Spree::Promotion::Actions::FreeShipping, :type => :model do
       it "should not create a discount" do
         expect(action.perform(payload)).to be true
         expect(action.perform(payload)).to be false
-        expect(promotion.usage_count).to eq(1)
+        expect(promotion.usage_counter).to eq(1)
         expect(order.shipment_adjustments.count).to eq(2)
       end
     end

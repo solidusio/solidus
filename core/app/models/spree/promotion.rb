@@ -163,10 +163,10 @@ module Spree
       end
     end
 
-    # Number of times the code has been used overall
+    # Calculates the number of times the code has been used overall
     #
     # @return [Integer] usage count
-    def usage_count
+    def count_usages
       Spree::Adjustment.eligible.
         promotion.
         where(source_id: actions.map(&:id)).
@@ -174,6 +174,11 @@ module Spree
         merge(Spree::Order.complete).
         distinct.
         count(:order_id)
+    end
+
+    # Updates usage_count counter cache when an order is completed
+    def update_usage_count
+      update_attribute :usage_count, count_usages
     end
 
     # TODO: specs
