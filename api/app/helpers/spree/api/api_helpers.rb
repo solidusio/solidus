@@ -104,7 +104,7 @@ module Spree
 
       @@payment_method_attributes = [:id, :name, :description]
 
-      @@shipment_attributes = [:id, :tracking, :number, :cost, :shipped_at, :state]
+      @@shipment_attributes = [:id, :tracking, :tracking_url, :number, :cost, :shipped_at, :state]
 
       @@taxonomy_attributes = [:id, :name]
 
