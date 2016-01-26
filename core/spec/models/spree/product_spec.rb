@@ -78,31 +78,6 @@ describe Spree::Product, :type => :model do
       end
     end
 
-    describe "#price" do
-      let(:master) { product.master }
-
-      context "product does not have deleted_at" do
-        it "gets the scoped default price" do
-          expect(product.price).to eq product.master.price
-        end
-      end
-
-      context "product does have deleted_at" do
-        let(:master_price) { Spree::Price.unscoped { master.price } }
-
-        before do
-          product.destroy
-          product.reload
-        end
-
-         it "gets the unscoped default price" do
-           expect(product.price).to_not be_nil
-           expect(product.price).to eq master_price
-        end
-      end
-    end
-
-
     context "product has no variants" do
       context "#destroy" do
         it "should set deleted_at value" do
