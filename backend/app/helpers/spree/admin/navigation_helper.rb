@@ -96,13 +96,6 @@ module Spree
             button(text, html_options.delete(:icon), nil, html_options)
           end
         else
-          if html_options['data-update'].nil? && html_options[:remote]
-            object_name, action = url.split('/')[-2..-1]
-            html_options['data-update'] = [action, object_name.singularize].join('_')
-          end
-
-          html_options.delete('data-update') unless html_options['data-update']
-
           html_options[:class] += ' button'
 
           if html_options[:icon]
