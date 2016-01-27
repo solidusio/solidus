@@ -22,7 +22,7 @@ module Spree
           end
 
           rescue_from CanCan::AccessDenied do
-            instance_exec &unauthorized_redirect
+            instance_exec(&unauthorized_redirect)
           end
         end
 

@@ -141,7 +141,7 @@ Spree::Auth::Engine.load_seed if defined?(Spree::Auth)
 
         cmd = lambda { rake("db:seed #{rake_options.join(' ')}") }
         if options[:auto_accept] || (options[:admin_email] && options[:admin_password])
-          quietly &cmd
+          quietly(&cmd)
         else
           cmd.call
         end

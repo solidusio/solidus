@@ -805,7 +805,7 @@ describe Spree::StoreCredit do
 
       it "sets the adjustment amount on the store credit event correctly" do
         subject
-        expect(store_credit.store_credit_events.find_by(action: Spree::StoreCredit::ADJUSTMENT_ACTION).amount).to eq -20
+        expect(store_credit.store_credit_events.find_by(action: Spree::StoreCredit::ADJUSTMENT_ACTION).amount).to eq(-20)
       end
 
       it "sets the originator on the store credit event correctly" do

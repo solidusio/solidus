@@ -28,15 +28,15 @@ module Spree::Promotion::Actions
           end
           context "and an item with a quantity of 2" do
             let(:quantity) { 2 }
-            it { is_expected.to eq -10 }
+            it { is_expected.to eq(-10) }
           end
           context "and an item with a quantity of 3" do
             let(:quantity) { 3 }
-            it { is_expected.to eq -10 }
+            it { is_expected.to eq(-10) }
           end
           context "and an item with a quantity of 4" do
             let(:quantity) { 4 }
-            it { is_expected.to eq -20 }
+            it { is_expected.to eq(-20) }
           end
         end
 
@@ -49,11 +49,11 @@ module Spree::Promotion::Actions
             before { action.perform({ order: order, promotion: promotion }) }
             describe "the adjustment for the first item" do
               let(:line_item) { item_a }
-              it { is_expected.to eq -10 }
+              it { is_expected.to eq(-10) }
             end
             describe "the adjustment for the second item" do
               let(:line_item) { item_b }
-              it { is_expected.to eq -5 }
+              it { is_expected.to eq(-5) }
             end
             describe "the adjustment for the third item" do
               let(:line_item) { item_c }
@@ -71,7 +71,7 @@ module Spree::Promotion::Actions
             FactoryGirl.create :line_item, order: other_order, quantity: 3
             action.perform({ order: other_order, promotion: promotion })
           end
-          it { is_expected.to eq -10 }
+          it { is_expected.to eq(-10) }
         end
       end
 
@@ -88,11 +88,11 @@ module Spree::Promotion::Actions
             let!(:item_b) { FactoryGirl.create :line_item, order: order, quantity: 1, price: 10 }
             describe "the adjustment for the first item" do
               let(:line_item) { item_a }
-              it { is_expected.to eq -2 }
+              it { is_expected.to eq(-2) }
             end
             describe "the adjustment for the second item" do
               let(:line_item) { item_b }
-              it { is_expected.to eq -1 }
+              it { is_expected.to eq(-1) }
             end
           end
 
@@ -101,7 +101,7 @@ module Spree::Promotion::Actions
             let!(:item_b) { FactoryGirl.create :line_item, order: order, quantity: 1, price: 20 }
             describe "the adjustment for the first item" do
               let(:line_item) { item_a }
-              it { is_expected.to eq -3 }
+              it { is_expected.to eq(-3) }
             end
             describe "the adjustment for the second item" do
               let(:line_item) { item_b }

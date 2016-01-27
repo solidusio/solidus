@@ -39,7 +39,7 @@ describe Spree::PromotionCode::CodeBuilder do
 
       it "builds codes with the same base prefix" do
         subject
-        values = builder.promotion.codes.map &:value
+        values = builder.promotion.codes.map(&:value)
         expect(values.all? { |val| val.starts_with?("#{base_code}_") }).to be true
       end
 

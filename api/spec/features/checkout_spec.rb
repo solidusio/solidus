@@ -92,7 +92,7 @@ module Spree
       expect(@order.completed_at).to be_a ActiveSupport::TimeWithZone
       expect(@order.item_total).to eq 600.00
       expect(@order.total).to eq 600.00
-      expect(@order.adjustment_total).to eq -10.00
+      expect(@order.adjustment_total).to eq(-10.00)
       expect(@order.shipment_total).to eq 10.00
       expect(@order.user).to eq @user
       expect(@order.bill_address).to eq bill_address

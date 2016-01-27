@@ -28,7 +28,7 @@ module Spree
           Rails.configuration.cache_classes ? require(c) : load(c)
         end
       end
-      config.to_prepare &method(:activate).to_proc
+      config.to_prepare(&method(:activate).to_proc)
 
       def self.root
         @root ||= Pathname.new(File.expand_path('../../../../', __FILE__))
