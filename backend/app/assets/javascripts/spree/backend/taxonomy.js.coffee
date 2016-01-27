@@ -67,16 +67,15 @@ handle_delete = (e) ->
     delete_taxon({id: el.data('taxon-id')})
     el.remove()
 
-get_create_handler = (taxonomy_id) ->
+get_create_handler = (parent_id) ->
   handle_create = (e) ->
     e.preventDefault()
     name = 'New node'
-    parent_id = taxonomy_id
     child_index = 0
     create_taxon({name, parent_id, child_index})
 
-@setup_taxonomy_tree = (taxonomy_id) ->
-  return unless taxonomy_id?
+@setup_taxonomy_tree = (parent_id) ->
+  return unless parent_id?
   taxons_template_text = $('#taxons-list-template').text()
   taxons_template = Handlebars.compile(taxons_template_text)
   Handlebars.registerPartial( 'taxons', taxons_template_text )
@@ -90,4 +89,4 @@ get_create_handler = (taxonomy_id) ->
       sortupdate: (e, ui) ->
         handle_move(ui.item) unless ui.sender?
     .on('click', '.delete-taxon-button', handle_delete)
-  $('.add-taxon-button').on('click', get_create_handler(taxonomy_id))
+  $('.add-taxon-button').on('click', get_create_handler(parent_id))
