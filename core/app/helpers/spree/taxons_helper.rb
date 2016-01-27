@@ -7,9 +7,9 @@ module Spree
       products = taxon.active_products.select("DISTINCT (spree_products.id), spree_products.*, spree_products_taxons.position").limit(max)
       if products.size < max
         products_arel = Spree::Product.arel_table
-        taxon.descendants.each do |taxon|
+        taxon.descendants.each do |descendent_taxon|
           to_get = max - products.length
-          products += taxon.active_products.select("DISTINCT (spree_products.id), spree_products.*, spree_products_taxons.position").where(products_arel[:id].not_in(products.map(&:id))).limit(to_get)
+          products += descendent_taxon.active_products.select("DISTINCT (spree_products.id), spree_products.*, spree_products_taxons.position").where(products_arel[:id].not_in(products.map(&:id))).limit(to_get)
           break if products.size >= max
         end
       end

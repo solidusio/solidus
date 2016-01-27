@@ -41,10 +41,7 @@ module Spree
       if shipment.present?
         remove_from_shipment(shipment, quantity)
       else
-        order.shipments.each do |shipment|
-          break if quantity == 0
-          quantity -= remove_from_shipment(shipment, quantity)
-        end
+        remove_from_any_shipment(quantity)
       end
     end
 
@@ -53,12 +50,12 @@ module Spree
     # first unshipped that already includes this variant
     # first unshipped that's leaving from a stock_location that stocks this variant
     def determine_target_shipment
-      shipment = order.shipments.detect do |shipment|
-        shipment.ready_or_pending? && shipment.include?(variant)
-      end
+      potential_shipments = order.shipments.select(&:ready_or_pending?)
 
-      shipment || order.shipments.detect do |shipment|
-        shipment.ready_or_pending? && variant.stock_location_ids.include?(shipment.stock_location_id)
+      potential_shipments.detect do |shipment|
+        shipment.include?(variant)
+      end || potential_shipments.detect do |shipment|
+        variant.stock_location_ids.include?(shipment.stock_location_id)
       end
     end
 
@@ -78,6 +75,13 @@ module Spree
       end
 
       quantity
+    end
+
+    def remove_from_any_shipment(quantity)
+      order.shipments.each do |shipment|
+        break if quantity == 0
+        quantity -= remove_from_shipment(shipment, quantity)
+      end
     end
 
     def remove_from_shipment(shipment, quantity)
