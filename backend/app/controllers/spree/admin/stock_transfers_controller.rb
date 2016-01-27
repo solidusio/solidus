@@ -129,8 +129,11 @@ module Spree
       end
 
       def source_location
-        @source_location ||= params.key?(:transfer_receive_stock) ? nil :
+        @source_location ||= if params.key?(:transfer_receive_stock)
+                               nil
+                             else
                                StockLocation.find(params[:transfer_source_location_id])
+                             end
       end
 
       def destination_location
