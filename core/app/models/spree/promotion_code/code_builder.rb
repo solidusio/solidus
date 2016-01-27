@@ -37,7 +37,7 @@ class ::Spree::PromotionCode::CodeBuilder
     valid_codes = Set.new
 
     while valid_codes.size < num_codes
-      new_codes = num_codes.times.map { generate_random_code }.to_set
+      new_codes = Array.new(num_codes) { generate_random_code }.to_set
       valid_codes += get_unique_codes(new_codes)
     end
 
