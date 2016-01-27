@@ -175,10 +175,6 @@ module Spree
       amount
     end
 
-    def currency
-      adjustable ? adjustable.currency : Spree::Config[:currency]
-    end
-
     private
 
     def update_adjustable_adjustment_total
