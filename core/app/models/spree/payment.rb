@@ -262,9 +262,10 @@ WARN
     # and this is it. Related to https://github.com/spree/spree/issues/1998.
     # See https://github.com/spree/spree/issues/1998#issuecomment-12869105
     def set_unique_identifier
-      begin
+      loop do
         self.number = generate_identifier
-      end while self.class.exists?(number: number)
+        break unless self.class.exists?(number: number)
+      end
     end
 
     def generate_identifier

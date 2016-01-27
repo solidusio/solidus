@@ -65,8 +65,8 @@ module Spree
     # Delegates comparison to the internal ruby money instance.
     #
     # @see http://www.rubydoc.info/gems/money/Money/Arithmetic#%3D%3D-instance_method
-    def ==(obj)
-      @money == obj.money
+    def ==(other)
+      @money == other.money
     end
   end
 end

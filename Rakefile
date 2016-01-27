@@ -4,7 +4,6 @@ begin
   require 'spree/testing_support/common_rake'
 rescue LoadError
   raise "Could not find spree/testing_support/common_rake. You need to run this command using Bundler."
-  exit
 end
 
 task default: :test

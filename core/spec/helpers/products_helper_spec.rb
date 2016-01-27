@@ -142,7 +142,7 @@ THIS IS THE BEST PRODUCT EVER!
       end
 
       it "renders a product description without any formatting based on configuration" do
-        initialDescription = %{
+        description = %{
             <p>hello world</p>
 
             <p>tihs is completely awesome and it works</p>
@@ -150,11 +150,11 @@ THIS IS THE BEST PRODUCT EVER!
             <p>why so many spaces in the code. and why some more formatting afterwards?</p>
         }
 
-        product.description = initialDescription
+        product.description = description
 
         Spree::Config[:show_raw_product_description] = true
         description = product_description(product)
-        expect(description).to eq(initialDescription)
+        expect(description).to eq(description)
       end
     end
 
