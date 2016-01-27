@@ -60,7 +60,7 @@ module Spree
 
       flash.each do |msg_type, text|
         unless ignore_types.include?(msg_type)
-          concat(content_tag :div, text, class: "flash #{msg_type}")
+          concat(content_tag(:div, text, class: "flash #{msg_type}"))
         end
       end
       nil
