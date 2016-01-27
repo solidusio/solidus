@@ -98,11 +98,10 @@ module Spree
 
           if @order.confirm?
             flash[:success] = Spree.t('order_ready_for_confirm')
-            redirect_to confirm_admin_order_url(@order)
           else
             flash[:error] = @order.errors.full_messages
-            redirect_to confirm_admin_order_url(@order)
           end
+          redirect_to confirm_admin_order_url(@order)
         end
       end
 
