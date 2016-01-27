@@ -25,8 +25,11 @@ module Spree
       @order.shipments += shipments
       @order.save!
       shipments.each do |shipment|
+        cheapest_rate = shipment.shipping_rates.min_by(&:cost)
+        shipment.selected_shipping_rate_id = cheapest_rate.id
         shipment.update!(@order)
         shipment.finalize!
+        shipment.reload
       end
     end
 

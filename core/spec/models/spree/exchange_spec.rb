@@ -50,6 +50,11 @@ module Spree
         expect(new_inventory_units.first.line_item).to eq return_item.inventory_unit.line_item
       end
 
+      it "sends exchange shipment with free shipping method" do
+        create(:free_shipping_method)
+        expect(subject.last.selected_shipping_rate.cost).to eq 0
+      end
+
       context "when it cannot create shipments for all items" do
         before do
           StockItem.where(:variant_id => return_item.exchange_variant_id).destroy_all
