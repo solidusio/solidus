@@ -179,7 +179,7 @@ describe Spree::Admin::OrdersController, type: :controller do
 
           it 'messages and redirects' do
             subject
-            expect(flash[:error]) == order.errors.full_messages
+            expect(flash[:error]).to eq order.errors.full_messages
             expect(response).to redirect_to(spree.confirm_admin_order_path(order))
           end
         end
