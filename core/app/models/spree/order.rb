@@ -154,7 +154,7 @@ module Spree
 
     # For compatiblity with Calculator::PriceSack
     def amount
-      line_items.inject(0.0) { |sum, li| sum + li.amount }
+      line_items.map(&:amount).sum
     end
 
     # Sum of all line item amounts pre-tax

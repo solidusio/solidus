@@ -91,10 +91,9 @@ module Spree
     # @return [String] this taxon's ancestors names followed by its own name,
     #   separated by arrows
     def pretty_name
-      ancestor_chain = ancestors.inject("") do |name, ancestor|
-        name += "#{ancestor.name} -> "
-      end
-      ancestor_chain + name.to_s
+      ancestor_chain = ancestors.map(&:name)
+      ancestor_chain << name
+      ancestor_chain.join(" -> ")
     end
 
     # @see https://github.com/spree/spree/issues/3390
