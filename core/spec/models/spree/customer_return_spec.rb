@@ -84,7 +84,7 @@ describe Spree::CustomerReturn, type: :model do
     subject { customer_return.total }
 
     it "returns the sum of the return item's total amount" do
-      expect(subject).to eq ((pre_tax_amount * 2) + (tax_amount * 2))
+      expect(subject).to eq((pre_tax_amount * 2) + (tax_amount * 2))
     end
   end
 
@@ -108,7 +108,7 @@ describe Spree::CustomerReturn, type: :model do
     subject { customer_return.pre_tax_total }
 
     it "returns the sum of the return item's pre_tax_amount" do
-      expect(subject).to eq (pre_tax_amount * 2)
+      expect(subject).to eq(pre_tax_amount * 2)
     end
   end
 

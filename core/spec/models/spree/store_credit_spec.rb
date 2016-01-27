@@ -165,7 +165,7 @@ describe Spree::StoreCredit do
         before { store_credit.update_attributes(amount_authorized: authorized_amount) }
 
         it "subtracts the authorized amount from the credited amount" do
-          expect(store_credit.amount_remaining).to eq (store_credit.amount - authorized_amount)
+          expect(store_credit.amount_remaining).to eq(store_credit.amount - authorized_amount)
         end
       end
     end
@@ -177,7 +177,7 @@ describe Spree::StoreCredit do
 
       context "the authorized amount is not defined" do
         it "subtracts the amount used from the credited amount" do
-          expect(store_credit.amount_remaining).to eq (store_credit.amount - amount_used)
+          expect(store_credit.amount_remaining).to eq(store_credit.amount - amount_used)
         end
       end
 
@@ -187,7 +187,7 @@ describe Spree::StoreCredit do
         before { store_credit.update_attributes(amount_authorized: authorized_amount) }
 
         it "subtracts the amount used and the authorized amount from the credited amount" do
-          expect(store_credit.amount_remaining).to eq (store_credit.amount - amount_used - authorized_amount)
+          expect(store_credit.amount_remaining).to eq(store_credit.amount - amount_used - authorized_amount)
         end
       end
     end
@@ -208,7 +208,7 @@ describe Spree::StoreCredit do
 
         it "adds the new amount to authorized amount" do
           store_credit.authorize(added_authorization_amount, store_credit.currency)
-          expect(store_credit.reload.amount_authorized).to eq (authorization_amount + added_authorization_amount)
+          expect(store_credit.reload.amount_authorized).to eq(authorization_amount + added_authorization_amount)
         end
 
         context "originator is present" do
@@ -555,7 +555,7 @@ describe Spree::StoreCredit do
 
         it "credits the passed amount to the store credit amount used" do
           subject
-          expect(store_credit.reload.amount_used).to eq (amount_used - credit_amount)
+          expect(store_credit.reload.amount_used).to eq(amount_used - credit_amount)
         end
 
         it "creates a new store credit event" do
@@ -767,7 +767,7 @@ describe Spree::StoreCredit do
           subject { create(:store_credit, user: user, amount: additional_store_credit_amount) }
 
           it "saves the user's total store credit in the event" do
-            expect(subject.store_credit_events.first.user_total_amount).to eq (store_credit_amount + additional_store_credit_amount)
+            expect(subject.store_credit_events.first.user_total_amount).to eq(store_credit_amount + additional_store_credit_amount)
           end
         end
 

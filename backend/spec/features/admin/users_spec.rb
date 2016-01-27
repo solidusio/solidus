@@ -25,9 +25,9 @@ describe 'Users', type: :feature do
         [:total_sales, :num_orders, :average_order_value, :member_since].each do |stat_name|
           expect(page).to have_content Spree.t(stat_name)
         end
-        expect(page).to have_content (order.total + order_2.total)
+        expect(page).to have_content(order.total + order_2.total)
         expect(page).to have_content orders.count
-        expect(page).to have_content (orders.sum(&:total) / orders.count)
+        expect(page).to have_content(orders.sum(&:total) / orders.count)
         expect(page).to have_content I18n.l(user_a.created_at.to_date)
       end
     end

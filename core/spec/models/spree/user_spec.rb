@@ -128,7 +128,7 @@ describe Spree.user_class, type: :model do
       context "with orders" do
         before { load_orders }
         it "returns the total of completed orders for the user" do
-          expect(subject.lifetime_value).to eq (order_count * order_value)
+          expect(subject.lifetime_value).to eq(order_count * order_value)
         end
       end
       context "without orders" do
@@ -206,13 +206,13 @@ describe Spree.user_class, type: :model do
           before { additional_store_credit.update_attributes(amount_authorized: authorized_amount) }
 
           it "returns sum of amounts minus used amount and authorized amount" do
-            expect(subject.total_available_store_credit.to_f).to eq (amount + additional_amount - amount_used - authorized_amount)
+            expect(subject.total_available_store_credit.to_f).to eq(amount + additional_amount - amount_used - authorized_amount)
           end
         end
 
         context "there are no authorized amounts on any of the store credits" do
           it "returns sum of amounts minus used amount" do
-            expect(subject.total_available_store_credit.to_f).to eq (amount + additional_amount - amount_used)
+            expect(subject.total_available_store_credit.to_f).to eq(amount + additional_amount - amount_used)
           end
         end
       end
@@ -224,20 +224,20 @@ describe Spree.user_class, type: :model do
           before { additional_store_credit.update_attributes(amount_authorized: authorized_amount) }
 
           it "returns sum of amounts minus authorized amount" do
-            expect(subject.total_available_store_credit.to_f).to eq (amount + additional_amount - authorized_amount)
+            expect(subject.total_available_store_credit.to_f).to eq(amount + additional_amount - authorized_amount)
           end
         end
 
         context "there are no authorized amounts on any of the store credits" do
           it "returns sum of amounts" do
-            expect(subject.total_available_store_credit.to_f).to eq (amount + additional_amount)
+            expect(subject.total_available_store_credit.to_f).to eq(amount + additional_amount)
           end
         end
       end
 
       context "all store credits have never been used or authorized" do
         it "returns sum of amounts" do
-          expect(subject.total_available_store_credit.to_f).to eq (amount + additional_amount)
+          expect(subject.total_available_store_credit.to_f).to eq(amount + additional_amount)
         end
       end
     end
