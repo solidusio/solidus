@@ -49,7 +49,7 @@ module Spree
 
         # ids of taxons rules and taxons rules children
         def taxons_including_children_ids
-          taxons.inject([]){ |ids, taxon| ids += taxon.self_and_descendants.ids }
+          taxons.flat_map { |taxon| taxon.self_and_descendants.ids }
         end
 
         # taxons order vs taxons rules and taxons rules children
@@ -58,7 +58,7 @@ module Spree
         end
 
         def taxons_in_order_including_parents(order)
-          order_taxons_in_taxons_and_children(order).inject([]){ |taxons, taxon| taxons << taxon.self_and_ancestors }.flatten.uniq
+          order_taxons_in_taxons_and_children(order).flat_map(&:self_and_ancestors).uniq
         end
 
         def taxon_product_ids
