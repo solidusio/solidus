@@ -127,12 +127,12 @@ describe "Orders Listing", type: :feature, js: true do
       end
     end
 
-    context 'filter on complete orders' do
+    context "when toggling the completed orders checkbox" do
       before do
         create(:order, number: 'R300', completed_at: nil, state: 'cart')
       end
 
-      it "should show both complete and incomplete orders" do
+      it "shows both complete and incomplete orders" do
         check "q_completed_at_not_null"
         click_on 'Filter'
 

@@ -1,9 +1,12 @@
 ## Solidus 1.3.0 (unreleased)
 
-* Removed Spree::BaseHelper#gem_available? and Spree::BaseHelper#current_spree_page?
+*   Removed Spree::BaseHelper#gem_available? and Spree::BaseHelper#current_spree_page?
 
-  Both these methods were untested and not appropriate code to be in core. If you need these
-  methods please pull them into your app. [#710](https://github.com/solidusio/solidus/pull/710).
+    Both these methods were untested and not appropriate code to be in core. If you need these
+    methods please pull them into your app. [#710](https://github.com/solidusio/solidus/pull/710).
+
+*   Fixed a bug where toggling 'show only complete order' on/off was not showing
+    all orders. [#749](https://github.com/solidusio/solidus/pull/749)
 
 ## Solidus 1.2.0 (unreleased)
 
