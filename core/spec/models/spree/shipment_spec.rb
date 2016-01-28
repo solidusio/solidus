@@ -5,7 +5,7 @@ describe Spree::Shipment, type: :model do
   let(:order) { create(:order_ready_to_ship, line_items_count: 1) }
   let(:shipping_method) { create(:shipping_method, name: "UPS") }
   let(:stock_location) { create(:stock_location) }
-  let(:shipment) do
+  subject(:shipment) do
     order.shipments.create!(
       state: 'pending',
       cost: 1,
@@ -23,6 +23,8 @@ describe Spree::Shipment, type: :model do
 
   let(:variant) { mock_model(Spree::Variant) }
   let(:line_item) { mock_model(Spree::LineItem, variant: variant) }
+
+  it_behaves_like "a taxable item"
 
   describe "precision of pre_tax_amount" do
     let!(:line_item) { create :line_item, pre_tax_amount: 4.2051 }
