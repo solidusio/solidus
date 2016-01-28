@@ -21,8 +21,8 @@
     </colgroup>
     <thead>
       <tr data-hook="adjustment_reasons_header">
-        <th><%= Spree.t(:name) %></th>
-        <th><%= Spree.t(:state) %></th>
+        <th><%= Spree::AdjustmentReason.human_attribute_name(:name) %></th>
+        <th><%= Spree::AdjustmentReason.human_attribute_name(:state) %></th>
         <th class="actions"></th>
       </tr>
     </thead>
