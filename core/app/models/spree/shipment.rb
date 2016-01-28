@@ -187,6 +187,8 @@ module Spree
       self.shipping_rates = new_rates
       save!
 
+      calculate_shipping_rate_taxes
+
       shipping_rates
     end
 
@@ -274,6 +276,8 @@ module Spree
     end
 
     def update_amounts
+      calculate_shipping_rate_taxes
+
       if selected_shipping_rate
         self.cost = selected_shipping_rate.cost
         self.adjustment_total = adjustments.additional.map(&:update!).compact.sum
@@ -370,6 +374,10 @@ module Spree
     end
 
     private
+
+    def calculate_shipping_rate_taxes
+      shipping_rates.map { |rate| Spree::Tax::ItemAdjuster.new(rate).adjust! }
+    end
 
     def after_ship
       order.shipping.ship_shipment(self, suppress_mailer: suppress_mailer)
