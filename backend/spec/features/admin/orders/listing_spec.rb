@@ -126,5 +126,25 @@ describe "Orders Listing", type: :feature, js: true do
         within("table#listing_orders") { expect(page).not_to have_content("R200") }
       end
     end
+
+    context "when toggling the completed orders checkbox" do
+      before do
+        create(:order, number: 'R300', completed_at: nil, state: 'cart')
+      end
+
+      it "shows both complete and incomplete orders" do
+        check "q_completed_at_not_null"
+        click_on 'Filter'
+
+        expect(page).to have_content("R200")
+        expect(page).to_not have_content("R300")
+
+        uncheck "q_completed_at_not_null"
+        click_on 'Filter Results'
+
+        expect(page).to have_content("R200")
+        expect(page).to have_content("R300")
+      end
+    end
   end
 end
