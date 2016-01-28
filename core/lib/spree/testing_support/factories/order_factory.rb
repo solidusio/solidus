@@ -18,6 +18,46 @@ FactoryGirl.define do
       line_items_price BigDecimal.new(10)
     end
 
+    trait :with_payment do
+      ignore do
+        # payment state is already defined on the order
+        payment_is 'completed'
+
+        payment_type :credit_card_payment
+
+        payment do
+          association(payment_type, amount: total, state: payment_is)
+        end
+        # Yes, we are shadowing order payments. This is done so they can be
+        # created after the order - exisiting factories add line items in
+        # before/after hooks so the total isn't available until later.
+        payments do
+          [payment]
+        end
+      end
+
+      after(:create) do |order, evaluator|
+        order.payments = evaluator.payments
+        order.save!
+        # I have no idea why this reload is nessecary but if it isn't reloaded
+        # the payment will have a total of 0 (???) in
+        # Order::Payments#process_payments_with : line 1 causing it to raise a
+        # gateway error.
+        # > spree
+        order.reload
+      end
+    end
+
+    trait :line_items_can_ship do
+      after(:create) do |order, evaluator|
+        order.shipments.each do |shipment|
+          shipment.inventory_units.update_all state: 'on_hand'
+          shipment.update_column('state', 'ready')
+        end
+        order.reload
+      end
+    end
+
     factory :order_with_totals do
       after(:create) do |order, evaluator|
         create(:line_item, order: order, price: evaluator.line_items_price)
@@ -61,27 +101,19 @@ FactoryGirl.define do
         end
 
         factory :completed_order_with_pending_payment do
-          after(:create) do |order|
-            create(:payment, amount: order.total, order: order, state: 'pending')
-          end
+          with_payment
+          payment_is 'pending'
         end
 
         factory :order_ready_to_ship do
+          with_payment
+          line_items_can_ship
+
           payment_state 'paid'
           shipment_state 'ready'
 
-          transient do
-            payment_type :credit_card_payment
-          end
-
-          after(:create) do |order, evaluator|
-            create(evaluator.payment_type, amount: order.total, order: order, state: 'completed')
-            order.shipments.each do |shipment|
-              shipment.inventory_units.update_all state: 'on_hand'
-              shipment.update_column('state', 'ready')
-            end
-            order.reload
-          end
+          payment_type :credit_card_payment
+          payment_is 'completed'
 
           factory :shipped_order do
             transient do
