@@ -1,13 +1,13 @@
 <div data-hook="admin_inside_taxon_form" class="row">
   <div class="alpha five columns">
     <%= f.field_container :name do %>
-      <%= f.label :name, Spree.t(:name) %> <span class="required">*</span><br />
+      <%= f.label :name, Spree.t(:name), class: 'required' %><br />
       <%= text_field :taxon, :name, :class => 'fullwidth' %>
       <%= error_message_on :taxon, :name, :class => 'fullwidth title' %>
     <% end %>
 
     <%= f.field_container :permalink_part do %>
-      <%= f.label :permalink_part, Spree.t(:permalink) %> <span class="required">*</span><br />
+      <%= f.label :permalink_part, Spree.t(:permalink), class: 'required' %><br />
       <%= text_field_tag :permalink_part, @permalink_part, :class => 'fullwidth' %><br />
       <span class="info" id="permalink_part_display">
         <%= @taxon.permalink.split('/')[0...-1].join('/') + '/' %>
