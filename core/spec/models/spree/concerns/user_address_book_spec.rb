@@ -238,7 +238,7 @@ module Spree
       end
 
       it "returns false if the addresses is not there" do
-        expect(user.remove_from_address_book(42)).to be false
+        expect(user.remove_from_address_book(0)).to be false
       end
     end
 
