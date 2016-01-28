@@ -4,9 +4,17 @@ module Spree
     belongs_to :shipping_method, -> { with_deleted }, class_name: 'Spree::ShippingMethod', inverse_of: :shipping_rates
     belongs_to :tax_rate, -> { with_deleted }, class_name: 'Spree::TaxRate'
 
+    has_many :adjustments, as: :adjustable, inverse_of: :adjustable, dependent: :delete_all
+
     delegate :order, :currency, to: :shipment
-    delegate :name, to: :shipping_method
+    delegate :name, :tax_category, to: :shipping_method
     delegate :code, to: :shipping_method, prefix: true
+
+    alias_attribute :amount, :cost
+
+    def discounted_amount
+      cost
+    end
 
     def display_base_price
       Spree::Money.new(cost, currency: currency)

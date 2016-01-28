@@ -5,11 +5,13 @@ require 'spec_helper'
 describe Spree::ShippingRate, type: :model do
   let(:shipment) { create(:shipment) }
   let(:shipping_method) { create(:shipping_method) }
-  let(:shipping_rate) {
+  subject(:shipping_rate) {
     Spree::ShippingRate.new(shipment: shipment,
                                                 shipping_method: shipping_method,
                                                 cost: 10)
   }
+
+  it_behaves_like 'a taxable item'
 
   context "#display_price" do
     context "when tax included in price" do
