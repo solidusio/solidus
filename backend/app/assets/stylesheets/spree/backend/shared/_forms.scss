@@ -85,6 +85,10 @@ label {
   &.block {
     display: block !important;
   }
+
+  &.required:after {
+    content: " *";
+  }
 }
 
 .label-block label { display: block }

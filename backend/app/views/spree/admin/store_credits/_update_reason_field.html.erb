@@ -1,6 +1,6 @@
 <div class="alpha twelve columns">
   <%= f.field_container :reason do %>
-    <%= f.label :reason, Spree.t(:reason) %> <span class="required">*</span><br />
+    <%= f.label :reason, Spree.t(:reason), class: 'required' %><br />
     <%= select_tag :update_reason_id, options_from_collection_for_select(@update_reasons, :id, :name),
       { include_blank: true , class: 'select2 fullwidth', placeholder: Spree.t("admin.store_credits.select_amount_update_reason") } %>
     <%= f.error_message_on :reason %>
