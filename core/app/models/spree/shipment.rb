@@ -247,7 +247,7 @@ module Spree
     end
 
     def tax_category
-      selected_shipping_rate.try(:tax_rate).try(:tax_category)
+      selected_shipping_rate.try(:tax_category)
     end
 
     # Only one of either included_tax_total or additional_tax_total is set

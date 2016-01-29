@@ -146,7 +146,6 @@ RSpec.describe "Taxation system integration tests" do
         end
 
         it 'has a shipment with 0.52 included tax' do
-          pending 'But the tax is not created'
           expect(shipment.included_tax_total).to eq(0.52)
         end
 
@@ -263,7 +262,6 @@ RSpec.describe "Taxation system integration tests" do
         end
 
         it 'has a shipment with 0.52 included tax' do
-          pending 'But the tax is not created'
           expect(shipment.included_tax_total).to eq(0.52)
         end
 
@@ -766,7 +764,6 @@ RSpec.describe "Taxation system integration tests" do
         end
 
         it 'has a shipment with additional tax of 0.40' do
-          pending "This does not work because the shipping code does not use contains? for finding zones"
           expect(shipment.additional_tax_total).to eq(0.40)
         end
 
