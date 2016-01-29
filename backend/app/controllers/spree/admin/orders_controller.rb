@@ -89,16 +89,6 @@ module Spree
         end
       end
 
-      def update
-        @order.contents.update_cart(params[:order])
-        @order.errors.add(:line_items, Spree.t('errors.messages.blank')) if @order.line_items.empty?
-        if @order.completed?
-          render action: :edit
-        else
-          redirect_to admin_order_customer_path(@order)
-        end
-      end
-
       def advance
         if @order.completed?
           flash[:notice] = Spree.t('order_already_completed')
