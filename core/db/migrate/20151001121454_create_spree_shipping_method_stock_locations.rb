@@ -4,7 +4,7 @@ class CreateSpreeShippingMethodStockLocations < ActiveRecord::Migration
       t.belongs_to :shipping_method
       t.belongs_to :stock_location
 
-      t.timestamps
+      t.timestamps null: true
     end
 
     add_index :spree_shipping_method_stock_locations, :shipping_method_id, name: "shipping_method_id_spree_sm_sl"
