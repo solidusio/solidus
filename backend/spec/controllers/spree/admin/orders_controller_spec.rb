@@ -358,18 +358,6 @@ describe Spree::Admin::OrdersController, type: :controller do
       Spree::Ability.remove_ability(BarAbility)
     end
 
-    it 'should deny access to users with an bar role' do
-      allow(order).to receive(:update_attributes).and_return true
-      allow(order).to receive(:user).and_return Spree.user_class.new
-      allow(order).to receive(:token).and_return nil
-      user.spree_roles.clear
-      user.spree_roles << Spree::Role.find_or_create_by(name: 'bar')
-      Spree::Ability.register_ability(BarAbility)
-      spree_put :update, { id: 'R123' }
-      expect(response).to redirect_to('/unauthorized')
-      Spree::Ability.remove_ability(BarAbility)
-    end
-
     it 'should deny access to users without an admin role' do
       allow(user).to receive_messages has_spree_role?: false
       spree_post :index
@@ -403,56 +391,6 @@ describe Spree::Admin::OrdersController, type: :controller do
       expect {
         spree_get :edit, id: 0
       }.to raise_error ActiveRecord::RecordNotFound
-    end
-  end
-
-  describe "#update" do
-    stub_authorization!
-
-    let(:order) { create(:order) }
-    let(:payload) do
-      {
-        id: order.number,
-        order: { email: "foo@bar.com" }
-      }
-    end
-
-    before do
-      allow(order.contents).to receive(:update_cart)
-      expect(Spree::Order).to receive(:find_by_number!) { order }
-    end
-    subject { spree_put :update, payload }
-
-    it "attempts to update the order" do
-      expect(order.contents).to receive(:update_cart).with(payload[:order])
-      subject
-    end
-
-    context "the order is already completed" do
-      before { allow(order).to receive(:completed?) { true } }
-
-      it "renders the edit route" do
-        subject
-        expect(response).to render_template(:edit)
-      end
-    end
-
-    context "the order is not completed" do
-      before { allow(order).to receive(:completed?) { false } }
-
-      it "redirects to the customer path" do
-        subject
-        expect(response).to redirect_to(spree.admin_order_customer_path(order))
-      end
-    end
-
-    context "the order has no line items" do
-      let(:order) { Spree::Order.new(number: "1234") }
-
-      it "includes an error on the order" do
-        subject
-        expect(order.errors[:line_items]).to include Spree.t('errors.messages.blank')
-      end
     end
   end
 end
