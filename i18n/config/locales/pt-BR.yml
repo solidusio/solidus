@@ -235,6 +235,8 @@ pt-BR:
         one: Promoção
         other: Promoções
       spree/promotion_category:
+        one: Categoria de Promoção
+        other: Categorias de Promoção
       spree/property:
         one: Propriedade
         other: Propriedades
@@ -405,6 +407,7 @@ pt-BR:
     admin:
       tab:
         configuration: Configurações
+        management: Gerenciar
         option_types: Tipos
         orders: Pedidos
         overview: Geral
@@ -416,6 +419,7 @@ pt-BR:
         reports: Relatórios
         taxonomies: Categorias
         taxons:  Árvores de Categorias
+        transfers: Transferências
         users: Usuários
       user:
         account: Conta
@@ -563,7 +567,7 @@ pt-BR:
     credit_card: Cartão de Crédito
     credit_cards: Cartões de Crédito
     credit_owed: Crédito Devedor
-    credits: 
+    credits:
     currency: Moeda
     currency_decimal_mark: Marca decimal da moeda
     currency_settings: Configurações de Moeda
@@ -758,6 +762,10 @@ pt-BR:
     lifetime_stats: Histórico
     line_item_adjustments:
     list: Lista
+    listing_orders: Pedidos
+    listing_products: Produtos
+    listing_users: Usuários
+    listing_reports: Relatórios
     loading: Carregando
     locale_changed: Local Alterado
     location: Local
@@ -777,6 +785,7 @@ pt-BR:
     make_sure_the_above_reimbursement_amount_is_correct:
     manage_promotion_categories: Gerenciar categoria de promoções
     manage_variants: Gerenciar variantes
+    manage_stock: Gerenciar Estoque
     manual_intervention_required: Intervenção manual necessária
     master_price: Preço Principal
     match_choices:
