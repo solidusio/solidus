@@ -4,8 +4,10 @@ FactoryGirl.define do
   factory :state, class: Spree::State do
     transient do
       country_iso 'US'
+      state_code 'AL'
       carmen_subregion do
-        Carmen::Country.coded(country_iso).subregions.sort_by(&:name).first ||
+        Carmen::Country.coded(country_iso).subregions.coded(state_code) ||
+          Carmen::Country.coded(country_iso).subregions.sort_by(&:name).first ||
           fail("Unknown country iso code or no Country has no subregions: #{country_iso.inspect}")
       end
     end
@@ -14,11 +16,8 @@ FactoryGirl.define do
     name { carmen_subregion.name }
 
     country do |country|
-      if usa = Spree::Country.find_by(iso: country_iso)
-        country = usa
-      else
+      Spree::Country.find_by(iso: country_iso) ||
         country.association(:country, iso: country_iso)
-      end
     end
   end
 end
