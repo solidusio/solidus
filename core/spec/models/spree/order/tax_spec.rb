@@ -20,8 +20,8 @@ module Spree
         before { Spree::Config.set(tax_using_ship_address: true) }
 
         it "should calculate using ship_address" do
-          expect(Spree::Zone).to receive(:match).at_least(:once).with(ship_address)
-          expect(Spree::Zone).not_to receive(:match).with(bill_address)
+          expect(ship_address).to receive(:zone)
+          expect(bill_address).not_to receive(:zone)
           order.tax_zone
         end
       end
@@ -30,8 +30,8 @@ module Spree
         before { Spree::Config.set(tax_using_ship_address: false) }
 
         it "should calculate using bill_address" do
-          expect(Spree::Zone).to receive(:match).at_least(:once).with(bill_address)
-          expect(Spree::Zone).not_to receive(:match).with(ship_address)
+          expect(bill_address).to receive(:zone)
+          expect(ship_address).not_to receive(:zone)
           order.tax_zone
         end
       end
