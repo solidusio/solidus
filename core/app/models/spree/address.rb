@@ -4,12 +4,15 @@ module Spree
 
     belongs_to :country, class_name: "Spree::Country"
     belongs_to :state, class_name: "Spree::State"
+    belongs_to :zone, class_name: "Spree::Zone"
 
     validates :firstname, :lastname, :address1, :city, :country_id, presence: true
     validates :zipcode, presence: true, if: :require_zipcode?
     validates :phone, presence: true, if: :require_phone?
 
     validate :state_validate, :postal_code_validate
+
+    before_save :update_zone
 
     alias_attribute :first_name, :firstname
     alias_attribute :last_name, :lastname
@@ -156,6 +159,10 @@ module Spree
     end
 
     private
+
+    def update_zone
+      self.zone = Spree::Zone.match(self)
+    end
 
     def state_validate
       # Skip state validation without country (also required)

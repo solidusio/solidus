@@ -368,4 +368,14 @@ describe Spree::Address, type: :model do
 
     it { is_expected.to be_require_phone }
   end
+
+  context '#zone' do
+    let(:address) { build(:address) }
+    let(:zone) { create(:zone) }
+
+    it 'finds a matching zone after creation and saves it on the address' do
+      expect(Spree::Zone).to receive(:match).and_return(zone)
+      expect { address.save }.to change { address.zone }.from(nil).to(zone)
+    end
+  end
 end
