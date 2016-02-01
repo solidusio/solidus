@@ -206,7 +206,7 @@ Spree::Core::Engine.add_routes do
       end
     end
 
-    resources :style_guide
+    resources :style_guide, only: [:index]
   end
 
   get '/admin', to: 'admin/root#index', as: :admin
