@@ -17,6 +17,9 @@ module Spree
             'building_forms',
             'validation'
           ],
+          components: [
+            'tabs'
+          ],
           messaging: [
             'loading',
             'flashes',
