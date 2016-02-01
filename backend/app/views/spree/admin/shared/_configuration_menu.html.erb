@@ -66,6 +66,10 @@
       <% if can?(:display, Spree::ReturnReason) %>
         <%= configurations_sidebar_menu_item Spree.t(:return_reasons), admin_return_reasons_path %>
       <% end %>
+
+      <% if can?(:display, Spree::AdjustmentReason) %>
+        <%= configurations_sidebar_menu_item Spree.t(:adjustment_reasons), admin_adjustment_reasons_path %>
+      <% end %>
     </ul>
   </nav>
 <% end %>
