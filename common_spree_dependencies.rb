@@ -28,13 +28,20 @@ group :test do
   gem 'rspec-activemodel-mocks', '~>1.0.2'
   gem 'rspec-collection_matchers'
   gem 'rspec-its'
-  gem 'rspec-rails', '~> 3.4.1'
+  %w[rspec-core rspec-expectations rspec-mocks rspec-rails rspec-support].each do |lib|
+    gem lib, :git => "https://github.com/rspec/#{lib}.git", :branch => 'master'
+  end
   gem 'simplecov'
   gem 'poltergeist', '~> 1.9'
   gem 'timecop'
   gem 'with_model'
   gem 'rspec_junit_formatter'
 end
+
+gem 'rails', github: 'rails/rails'
+gem 'paranoia', github: 'jhawthorn/paranoia', branch: 'rails5'
+gem 'state_machines-activerecord', github: 'state-machines/state_machines-activerecord'
+gem 'state_machines-activemodel', github: 'state-machines/state_machines-activemodel'
 
 group :test, :development do
   gem 'rubocop'
