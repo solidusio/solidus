@@ -17,9 +17,7 @@ namespace :common do
 
     puts "Setting up dummy database..."
 
-    silence_stream(STDOUT) do
-      sh "bundle exec rake db:drop db:create db:migrate"
-    end
+    sh "bundle exec rake db:drop db:create db:migrate"
 
     begin
       require "generators/#{ENV['LIB_NAME']}/install/install_generator"
@@ -33,8 +31,6 @@ namespace :common do
   task :seed do |_t, _args|
     puts "Seeding ..."
 
-    silence_stream(STDOUT) do
-      sh "bundle exec rake db:seed RAILS_ENV=test"
-    end
+    sh "bundle exec rake db:seed RAILS_ENV=test"
   end
 end
