@@ -336,31 +336,30 @@ describe Spree::Admin::OrdersController, type: :controller do
   end
 
   context '#authorize_admin' do
-    let(:user) { create(:user) }
-    let(:order) { create(:completed_order_with_totals, number: 'R987654321') }
+    let!(:user) { create(:user) }
+    let!(:order) { create(:completed_order_with_totals, number: 'R987654321') }
 
     before do
-      allow(Spree::Order).to receive_messages find_by_number!: order
       allow(controller).to receive_messages spree_current_user: user
     end
 
     it 'should grant access to users with an admin role' do
       user.spree_roles << Spree::Role.find_or_create_by(name: 'admin')
-      spree_post :index
+      spree_get :index
       expect(response).to render_template :index
     end
 
     it 'should grant access to users with an bar role' do
       user.spree_roles << Spree::Role.find_or_create_by(name: 'bar')
       Spree::Ability.register_ability(BarAbility)
-      spree_post :index
+      spree_get :index
       expect(response).to render_template :index
       Spree::Ability.remove_ability(BarAbility)
     end
 
     it 'should deny access to users without an admin role' do
       allow(user).to receive_messages has_spree_role?: false
-      spree_post :index
+      spree_get :index
       expect(response).to redirect_to('/unauthorized')
     end
 
