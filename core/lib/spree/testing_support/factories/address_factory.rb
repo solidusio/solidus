@@ -1,24 +1,35 @@
 require 'spree/testing_support/factories/state_factory'
 require 'spree/testing_support/factories/country_factory'
+require 'twitter_cldr'
 
 FactoryGirl.define do
   factory :address, class: Spree::Address do
+    transient do
+      # There's `Spree::Address#country_iso=`, prohibiting me from using `country_iso` here
+      country_iso_code 'US'
+      state_code 'AL'
+    end
+
     firstname 'John'
     lastname 'Doe'
     company 'Company'
     address1 '10 Lovely Street'
     address2 'Northwest'
     city 'Herndon'
-    zipcode '35005'
+    zipcode { TwitterCldr::Shared::PostalCodes.for_territory(country_iso_code).sample.first }
     phone '555-555-0199'
     alternative_phone '555-555-0199'
 
-    state { |address| address.association(:state) }
+    state do |address|
+      Spree::State.joins(:country).where('spree_countries.iso = (?)', country_iso_code).find_by(abbr: state_code) ||
+        address.association(:state, country_iso: country_iso_code, state_code: state_code)
+    end
+
     country do |address|
       if address.state
         address.state.country
       else
-        address.association(:country)
+        address.association(:country, iso: country_iso_code)
       end
     end
   end
