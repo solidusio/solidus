@@ -403,6 +403,7 @@ en:
     account_updated: Account updated
     action: Action
     actions:
+      add: Add
       cancel: Cancel
       continue: Continue
       create: Create
