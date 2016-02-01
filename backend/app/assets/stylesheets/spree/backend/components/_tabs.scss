@@ -1,0 +1,49 @@
+.tabs {
+  @include display(flex);
+  margin: 1em 0;
+  border-bottom: 1px solid $color-border;
+  white-space: nowrap;
+
+  &,
+  ul {
+    padding-left: 0;
+    list-style: none;
+  }
+
+  a {
+    padding: 1em;
+  }
+}
+
+.tab {
+  @include flex-grow(0);
+  @include flex-shrink(0);
+  position: relative;
+  top: 1px;
+
+  a {
+    display: block;
+    border: 1px solid $color-border;
+    border-radius: 2px 2px 0 0;
+  }
+
+  &:not(:first-child) > a {
+    border-left: none;
+  }
+
+  &:not(.active) > a {
+    background: $color-tbl-thead;
+  }
+
+  &.active a,
+  &.active:hover {
+    background: white;
+    border-bottom-color: white;
+    color: $color-body-text;
+  }
+
+  &:not(.active):hover a {
+    background: $color-link;
+    color: white;
+  }
+}
