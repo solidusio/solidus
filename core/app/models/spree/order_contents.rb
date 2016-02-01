@@ -54,7 +54,11 @@ module Spree
     end
 
     def advance
-      while @order.next; end
+      previous_state = @order.state
+      while @order.next
+        raise "Order state did not change from #{previous_state}" if previous_state == @order.state
+        previous_state = @order.state
+      end
     end
 
     def approve(user: nil, name: nil)
