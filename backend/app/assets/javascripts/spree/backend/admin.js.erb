@@ -170,18 +170,6 @@ $(document).ready(function(){
     return false;
   });
 
-  $('body').on('click', '.select_properties_from_prototype', function(){
-    $("#busy_indicator").show();
-    var clicked_link = $(this);
-    Spree.ajax({ dataType: 'script', url: clicked_link.prop("href"), type: 'get',
-        success: function(data){
-          clicked_link.parent("td").parent("tr").hide();
-          $("#busy_indicator").hide();
-        }
-    });
-    return false;
-  });
-
   // Fix sortable helper
   var fixHelper = function(e, ui) {
       ui.children().each(function() {
