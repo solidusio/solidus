@@ -50,6 +50,9 @@ en:
       spree/option_type:
         name: Name
         presentation: Presentation
+      spree/option_value:
+        name: Name
+        presentation: Presentation
       spree/order:
         checkout_complete: Checkout Complete
         completed_at: Completed At

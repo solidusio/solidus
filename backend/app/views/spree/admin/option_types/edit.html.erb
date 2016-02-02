@@ -24,8 +24,8 @@
     <table class="index sortable" data-hook data-sortable-link="<%= update_values_positions_admin_option_types_url %>">
       <thead data-hook="option_header">
         <tr>
-          <th colspan="2"><%= Spree.t(:name) %></th>
-          <th><%= Spree.t(:display) %></th>
+          <th colspan="2"><%= Spree::OptionValue.human_attribute_name(:name) %></th>
+          <th><%= Spree::OptionValue.human_attribute_name(:presentation) %></th>
           <th class="actions"></th>
         </tr>
       </thead>
