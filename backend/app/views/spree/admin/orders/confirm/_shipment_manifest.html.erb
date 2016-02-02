@@ -12,7 +12,7 @@
     <td class="item-price align-center"><%= item.line_item.single_money.to_html %></td>
     <td class="item-qty-show align-center">
         <% item.states.each do |state,count| %>
-          <%= count %> x <%= Spree.t(state).downcase %>
+          <%= count %> x <%= Spree.t(state, scope: 'inventory_states') %>
         <% end %>
     </td>
     <td class="item-total align-center"><%= line_item_shipment_price(item.line_item, item.quantity) %></td>
