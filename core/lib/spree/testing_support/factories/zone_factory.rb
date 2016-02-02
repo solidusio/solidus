@@ -8,7 +8,7 @@ FactoryGirl.define do
     zone_members do |proxy|
       zone = proxy.instance_eval { @instance }
       Spree::Country.all.map do |c|
-        zone_member = Spree::ZoneMember.create(zoneable: c, zone: zone)
+        Spree::ZoneMember.create(zoneable: c, zone: zone)
       end
     end
   end

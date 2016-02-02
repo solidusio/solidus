@@ -41,8 +41,8 @@ describe "Ransackable Attributes" do
 
   context "filtering by attributes" do
     it "most attributes are not filterable by default" do
-      product = create(:product, description: "special product")
-      other_product = create(:product)
+      create(:product, description: "special product")
+      create(:product)
 
       get "/api/products?q[description_cont]=special", token: user.spree_api_key
 

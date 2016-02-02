@@ -48,7 +48,7 @@ describe "Variant scopes", type: :model do
     end
 
     it "by mixed conditions" do
-      variants = product_variants.has_option(option_type.id, "foo", option_value_2)
+      product_variants.has_option(option_type.id, "foo", option_value_2)
     end
   end
 end

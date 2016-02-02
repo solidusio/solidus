@@ -57,7 +57,7 @@ module Spree
         shipment.ready_or_pending? && shipment.include?(variant)
       end
 
-      shipment ||= order.shipments.detect do |shipment|
+      shipment || order.shipments.detect do |shipment|
         shipment.ready_or_pending? && variant.stock_location_ids.include?(shipment.stock_location_id)
       end
     end

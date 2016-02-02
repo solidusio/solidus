@@ -50,7 +50,6 @@ module Spree
         def self.create_shipments_from_params(shipments_hash, order)
           return [] unless shipments_hash
 
-          line_items = order.line_items
           shipments_hash.each do |s|
             shipment = Shipment.new
             shipment.tracking       = s[:tracking]

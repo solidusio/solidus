@@ -99,7 +99,7 @@ module Spree
 
       context "pagination" do
         it "can select the next page of products" do
-          second_product = create(:product)
+          create(:product)
           api_get :index, page: 2, per_page: 1
           expect(json_response["products"].first).to have_attributes(show_attributes)
           expect(json_response["total_count"]).to eq(2)

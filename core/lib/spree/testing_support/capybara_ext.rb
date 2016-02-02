@@ -66,7 +66,6 @@ module CapybaraExt
     raise "Must pass a hash containing 'from'" if !options.is_a?(Hash) || !options.key?(:from)
 
     placeholder = options[:from]
-    minlength = options[:minlength] || 4
 
     click_link placeholder
 

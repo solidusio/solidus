@@ -150,7 +150,6 @@ module Spree
         api_post :create, taxonomy_id: taxonomy.id, taxon: {}
         expect(response.status).to eq(422)
         expect(json_response["error"]).to eq("Invalid resource. Please fix errors and try again.")
-        errors = json_response["errors"]
 
         expect(taxonomy.reload.root.children.count).to eq 1
       end

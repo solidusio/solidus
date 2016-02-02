@@ -134,7 +134,7 @@ module Spree
               allow(order).to receive_messages coupon_code: "10off"
               calculator = Calculator::FlatRate.new(preferred_amount: 10)
               general_promo = create(:promotion, name: "General Promo")
-              general_action = Promotion::Actions::CreateItemAdjustments.create(promotion: general_promo, calculator: calculator)
+              Promotion::Actions::CreateItemAdjustments.create(promotion: general_promo, calculator: calculator)
 
               order.contents.add create(:variant)
             end

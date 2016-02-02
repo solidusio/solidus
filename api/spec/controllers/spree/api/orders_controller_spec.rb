@@ -508,7 +508,6 @@ module Spree
         before { order.create_proposed_shipments }
 
         it "clears out all existing shipments on line item udpate" do
-          previous_shipments = order.shipments
           api_put :update, id: order.to_param, order: {
             line_items: {
               0 => { id: line_item.id, quantity: 10 }
@@ -722,7 +721,6 @@ module Spree
         it "can create an order without any parameters" do
           api_post :create
           expect(response.status).to eq(201)
-          order = Order.last
           expect(json_response["state"]).to eq("cart")
         end
 

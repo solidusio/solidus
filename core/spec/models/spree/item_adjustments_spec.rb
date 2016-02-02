@@ -10,7 +10,7 @@ module Spree
     context '#update' do
       it "updates a linked adjustment" do
         tax_rate = create(:tax_rate, amount: 0.05)
-        adjustment = create(:adjustment, order: order, source: tax_rate, adjustable: line_item)
+        create(:adjustment, order: order, source: tax_rate, adjustable: line_item)
         line_item.price = 10
         line_item.tax_category = tax_rate.tax_category
 

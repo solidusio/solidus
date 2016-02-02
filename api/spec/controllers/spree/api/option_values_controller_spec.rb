@@ -49,7 +49,7 @@ module Spree
 
       it "can retrieve a list of option types" do
         option_value_1 = create(:option_value, option_type: option_type)
-        option_value_2 = create(:option_value, option_type: option_type)
+        create(:option_value, option_type: option_type)
         api_get :index, ids: [option_value.id, option_value_1.id]
         expect(json_response.count).to eq(2)
       end
@@ -101,7 +101,6 @@ module Spree
         end
 
         it "can update an option value" do
-          original_name = option_value.name
           api_put :update, id: option_value.id, option_value: {
                                 name: "Option Value"
                               }

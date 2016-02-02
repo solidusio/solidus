@@ -12,8 +12,8 @@ describe 'Stock Transfers', type: :feature, js: true do
 
   describe 'create stock transfer' do
     it 'can create a stock transfer' do
-      source_location = create(:stock_location_with_items, name: 'NY')
-      destination_location = create(:stock_location, name: 'SF')
+      create(:stock_location_with_items, name: 'NY')
+      create(:stock_location, name: 'SF')
 
       visit spree.new_admin_stock_transfer_path
       select "SF", from: 'stock_transfer[source_location_id]'

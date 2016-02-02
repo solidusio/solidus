@@ -115,7 +115,7 @@ module Spree
 
       context "pagination" do
         it "can select the next page of variants" do
-          second_variant = create(:variant)
+          create(:variant)
           api_get :index, page: 2, per_page: 1
           expect(json_response["variants"].first).to have_attributes(show_attributes)
           expect(json_response["total_count"]).to eq(3)
