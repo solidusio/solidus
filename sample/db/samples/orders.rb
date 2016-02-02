@@ -37,6 +37,6 @@ orders.each do |order|
   order.payments.create!(payment_method: payment_method)
   order.update_attributes(store: store)
 
-  order.next! while !order.can_complete?
+  order.contents.advance
   order.complete!
 end

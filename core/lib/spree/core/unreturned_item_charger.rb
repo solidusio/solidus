@@ -37,7 +37,9 @@ module Spree
 
       # Transitions will call update_totals on the order
       until new_order.can_complete?
+        previous_state = new_order.state
         new_order.next!
+        fail "next! did not advance order state" if previous_state == new_order.state
       end
 
       new_order.contents.approve(name: self.class.name)
