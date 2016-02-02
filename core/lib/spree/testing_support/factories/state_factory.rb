@@ -5,10 +5,12 @@ FactoryGirl.define do
     transient do
       country_iso 'US'
       state_code 'AL'
+
       carmen_subregion do
-        Carmen::Country.coded(country_iso).subregions.coded(state_code) ||
-          Carmen::Country.coded(country_iso).subregions.sort_by(&:name).first ||
-          fail("Unknown country iso code or no Country has no subregions: #{country_iso.inspect}")
+        carmen_country = Carmen::Country.coded(country.iso)
+        carmen_country.subregions.coded(state_code) ||
+          carmen_country.subregions.sort_by(&:name).first ||
+          fail("Country #{country.iso} has no subregions")
       end
     end
 

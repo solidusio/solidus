@@ -15,10 +15,34 @@ RSpec.describe 'state factory' do
     end
   end
 
-  describe 'when give a country iso code' do
+  describe 'when given a country iso code' do
+    let(:state) { build(:state, country_iso: "DE") }
     it 'creates the first state for that country it finds in carmen' do
-      expect(build(:state, country_iso: "DE").abbr).to eq("BW")
-      expect(build(:state, country_iso: "DE").name).to eq("Baden-Württemberg")
+      expect(state.abbr).to eq("BW")
+      expect(state.name).to eq("Baden-Württemberg")
+    end
+
+    context 'of an existing country' do
+      let!(:country){ create(:country, iso: "DE") }
+      it 'uses the existing country in the database' do
+        expect(state.country).to eq(country)
+        expect(Spree::Country.count).to eq(1)
+      end
+    end
+  end
+
+  describe 'when given a country record' do
+    let(:country) { build(:country, iso: "DE") }
+    let(:state) { build(:state, country: country) }
+    it 'creates the first state for that country it finds in carmen' do
+      expect(state.abbr).to eq("BW")
+      expect(state.name).to eq("Baden-Württemberg")
+    end
+  end
+
+  describe 'when given an invalid country iso code' do
+    it 'raises a helpful message' do
+      expect{ build(:state, country_iso: "ZZ") }.to raise_error(RuntimeError, 'Unknown country iso code: "ZZ"')
     end
   end
 end
