@@ -39,7 +39,6 @@ group :test do
   gem 'rails-controller-testing'
 end
 
-gem 'rails', github: 'rails/rails'
 gem 'paranoia', github: 'jhawthorn/paranoia', branch: 'rails5'
 gem 'state_machines-activerecord', github: 'state-machines/state_machines-activerecord'
 gem 'state_machines-activemodel', github: 'state-machines/state_machines-activemodel'
