@@ -46,8 +46,8 @@ class Tabs
     for tab in tabs
       # Bail if things are now fitting
       return if widthDifference <= 0
-      # Skip items already in the dropdown
-      continue if $(tab).hasClass("in-dropdown")
+      # Skip items already in the dropdown or active
+      continue if $(tab).hasClass("in-dropdown") or $(tab).hasClass("active")
 
       tabWidth = tab.offsetWidth
       @totalTabsWidth -= tabWidth
