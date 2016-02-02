@@ -26,6 +26,7 @@ module Spree
               country_ids
             ).uniq
           end
+    scope :for_address, ->(address) { with_member_ids(address.try(:state_id), address.try(:country_id)) }
 
     alias :members :zone_members
     accepts_nested_attributes_for :zone_members, allow_destroy: true, reject_if: proc { |a| a['zoneable_id'].blank? }
