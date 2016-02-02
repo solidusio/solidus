@@ -141,6 +141,7 @@ module Spree
       self.currency ||= variant.currency
       self.cost_price ||= variant.cost_price
       self.price ||= variant.price
+      self.initial_price ||= price
     end
 
     def handle_copy_price_override
@@ -173,7 +174,7 @@ module Spree
     end
 
     def update_tax_charge
-      Spree::TaxRate.adjust(order.tax_zone, [self])
+      Spree::Tax::ItemAdjuster.new(self).adjust!
     end
 
     def ensure_proper_currency

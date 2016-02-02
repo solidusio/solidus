@@ -43,7 +43,7 @@ describe Spree::Order, type: :model do
       end
 
       it "adjusts tax rates when transitioning to delivery" do
-        expect(Spree::TaxRate).to receive(:adjust).once.with(order.tax_zone, order.line_items)
+        expect(Spree::Tax::OrderAdjuster).to receive(:new).once.with(order).and_call_original
         order.next!
       end
     end

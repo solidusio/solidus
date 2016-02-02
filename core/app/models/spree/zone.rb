@@ -58,6 +58,8 @@ module Spree
     # current zone, if it's a state zone. If the passed-in zone has members, it
     # will also be in the result set.
     def self.with_shared_members(zone)
+      return none unless zone
+
       states_and_state_country_ids = zone.states.pluck(:id, :country_id).to_a
       state_ids = states_and_state_country_ids.map(&:first)
       state_country_ids = states_and_state_country_ids.map(&:second)

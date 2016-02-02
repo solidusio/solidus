@@ -348,6 +348,14 @@ describe Spree::Zone, type: :model do
       end
     end
 
+    context 'when passing nil' do
+      let!(:zone) { nil }
+
+      it 'will return an empty set' do
+        expect(subject).to eq([])
+      end
+    end
+
     context "finding potential matches for a country zone" do
       let!(:zone) do
         create(:zone).tap do |z|
