@@ -4,7 +4,7 @@
   <i class="fa fa-arrow-right"></i>
   <%= Spree::Payment.model_name.human %>
   <i class="fa fa-arrow-right"></i>
-  <%= Spree.t(:log_entries) %>
+  <%= Spree::LogEntry.model_name.human(count: :other) %>
 <% end %>
 
 <% content_for :page_actions do %>
