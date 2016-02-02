@@ -36,6 +36,7 @@ group :test do
   gem 'timecop'
   gem 'with_model'
   gem 'rspec_junit_formatter'
+  gem 'rails-controller-testing'
 end
 
 gem 'rails', github: 'rails/rails'
