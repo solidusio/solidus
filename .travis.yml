@@ -3,16 +3,19 @@ before_script:
   - export DISPLAY=:99.0
 bundler_args: --without development production --quiet
 env:
-  - GEM=api DB=mysql
-  - GEM=api DB=postgres
-  - GEM=backend DB=mysql
-  - GEM=backend DB=postgres
-  - GEM=core DB=mysql
-  - GEM=core DB=postgres
-  - GEM=frontend DB=mysql
-  - GEM=frontend DB=postgres
-  - GEM=sample DB=mysql
-  - GEM=sample DB=postgres
+  global:
+    DEFAULT_MAX_WAIT_TIME: 10
+  matrix:
+    - GEM=api DB=mysql
+    - GEM=api DB=postgres
+    - GEM=backend DB=mysql
+    - GEM=backend DB=postgres
+    - GEM=core DB=mysql
+    - GEM=core DB=postgres
+    - GEM=frontend DB=mysql
+    - GEM=frontend DB=postgres
+    - GEM=sample DB=mysql
+    - GEM=sample DB=postgres
 before_install:
   - cd $GEM; export BUNDLE_GEMFILE="`pwd`/Gemfile"
 script:
