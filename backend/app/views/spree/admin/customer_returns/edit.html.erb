@@ -1,7 +1,7 @@
 <%= render :partial => 'spree/admin/shared/order_tabs', :locals => { :current => 'Customer Returns' } %>
 
 <% content_for :page_title do %>
-  <i class="fa fa-arrow-right"></i> <%= Spree.t(:customer_return) %> #<%= @customer_return.number %>
+  <i class="fa fa-arrow-right"></i> <%= Spree::CustomerReturn.model_name.human %> #<%= @customer_return.number %>
 <% end %>
 
 <% content_for :page_actions do %>
@@ -54,7 +54,7 @@
 <% end %>
 
 <fieldset data-hook="reimbursements" class="no-border-bottom align-center">
-  <legend align="center"><%= Spree.t(:reimbursements) %></legend>
+  <legend align="center"><%= Spree::Reimbursement.model_name.human(count: :other) %></legend>
   <% if @customer_return.reimbursements.any? %>
     <%= render partial: 'reimbursements_table', locals: {reimbursements: @customer_return.reimbursements} %>
   <% else %>
