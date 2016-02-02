@@ -1,5 +1,5 @@
 <% content_for :page_title do %>
-  <%= Spree.t(:option_types) %>
+  <%= Spree::OptionType.model_name.human(count: :other) %>
 <% end %>
 
 <% content_for :page_actions do %>
@@ -48,7 +48,7 @@
 </table>
 <% else %>
   <div class="alpha twelve columns no-objects-found">
-    <%= Spree.t(:no_resource_found, resource: I18n.t(:other, scope: 'activerecord.models.spree/option_type')) %>
+    <%= Spree.t(:no_resource_found, resource: Spree::OptionType.model_name.human(count: :other)) %>
     <% if can?(:create, Spree::OptionType) %>
       <%= link_to Spree.t(:add_one), spree.new_admin_option_type_path %>!
     <% end %>
