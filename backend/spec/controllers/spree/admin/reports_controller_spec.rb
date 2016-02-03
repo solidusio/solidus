@@ -16,8 +16,16 @@ describe Spree::Admin::ReportsController, type: :controller do
   describe 'ReportsController.add_available_report!' do
     context 'when adding the report name' do
       it 'should contain the report' do
+        I18n.backend.store_translations(:en, spree: {
+          some_report: 'Awesome Report',
+          some_report_description: 'This report is great!'
+        })
         Spree::Admin::ReportsController.add_available_report!(:some_report)
         expect(Spree::Admin::ReportsController.available_reports.keys.include?(:some_report)).to be true
+        expect(Spree::Admin::ReportsController.available_reports[:some_report]).to eq(
+          name: 'Awesome Report',
+          description: 'This report is great!'
+        )
       end
     end
   end
