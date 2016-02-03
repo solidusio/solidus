@@ -558,6 +558,7 @@ en:
     backordered: Backordered
     back_to_adjustments_list: Back To Adjustments List
     back_to_adjustment_reason_list: Back To Adjustment Reason List
+    back_to_countries_list: Back To Countries List
     back_to_customer_return: Back To Customer Return
     back_to_customer_return_list: Back To Customer Return List
     back_to_images_list: Back To Images List
@@ -585,6 +586,7 @@ en:
     back_to_stock_transfers_list: Back to Stock Transfers List
     back_to_store: Go Back To Store
     back_to_tax_categories_list: Back To Tax Categories List
+    back_to_tax_rates_list: Back To Tax Rates List
     back_to_taxonomies_list: Back To Taxonomies List
     back_to_trackers_list: Back To Trackers List
     back_to_users_list: Back To Users List
@@ -901,6 +903,7 @@ en:
       other: "and %{count} others"
     instructions_to_reset_password: Please enter your email on the form below
     insufficient_stock: Insufficient stock available, only %{on_hand} remaining
+    insufficient_stock_for_order: Insufficient stock for order
     insufficient_stock_lines_present: Some line items in this order have insufficient quantity.
     intercept_email_address: Intercept Email Address
     intercept_email_instructions: Override email recipient and replace with this address.
@@ -1317,6 +1320,7 @@ en:
     resend: Resend
     reset_password: Reset my password
     response_code: Response Code
+    restock_inventory: Restock Inventory
     resume: resume
     resumed: Resumed
     return: return
