@@ -15,15 +15,15 @@ module Spree
         options[:route] ||= "admin_#{args.first}"
 
         destination_url = options[:url] || spree.send("#{options[:route]}_path")
-        titleized_label = Spree.t(options[:label], default: options[:label], scope: [:admin, :tab]).titleize
+        label = Spree.t(options[:label], default: options[:label], scope: [:admin, :tab])
 
         css_classes = []
 
         if options[:icon]
-          link = link_to_with_icon(options[:icon], titleized_label, destination_url)
+          link = link_to_with_icon(options[:icon], label, destination_url)
           css_classes << 'tab-with-icon'
         else
-          link = link_to(titleized_label, destination_url)
+          link = link_to(label, destination_url)
         end
 
         selected = if options[:match_path].is_a? Regexp
