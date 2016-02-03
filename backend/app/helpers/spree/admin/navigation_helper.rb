@@ -15,7 +15,7 @@ module Spree
         options[:route] ||= "admin_#{args.first}"
 
         destination_url = options[:url] || spree.send("#{options[:route]}_path")
-        label = Spree.t(options[:label], default: options[:label], scope: [:admin, :tab])
+        label = Spree.t(options[:label], scope: [:admin, :tab])
 
         css_classes = []
 
