@@ -3,6 +3,7 @@ class Tabs
     @$tabList = $(@el)
     @$tabs = @$tabList.find(":not(.tabs-dropdown).tab")
     @tabs = @$tabs.toArray()
+    @$tabList.append("<li class='tab tabs-dropdown'><a href='#'></a><ul></ul></li>")
     @$dropdown = @$tabList.find(".tabs-dropdown")
     @setWidths()
     @initEvents()
