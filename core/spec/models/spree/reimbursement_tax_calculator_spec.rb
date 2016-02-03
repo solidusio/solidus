@@ -24,7 +24,7 @@ describe Spree::ReimbursementTaxCalculator, type: :model do
 
   context 'with additional tax' do
     let!(:tax_rate) { create(:tax_rate, name: "Sales Tax", amount: 0.10, included_in_price: false, zone: tax_zone) }
-    let(:tax_zone) { create(:zone, default_tax: true) }
+    let(:tax_zone) { create(:zone, :with_country, default_tax: true) }
 
     it 'sets additional_tax_total on the return items' do
       subject
@@ -37,13 +37,13 @@ describe Spree::ReimbursementTaxCalculator, type: :model do
 
   context 'with included tax' do
     let!(:tax_rate) { create(:tax_rate, name: "VAT Tax", amount: 0.1, included_in_price: true, zone: tax_zone) }
-    let(:tax_zone) { create(:zone, default_tax: true) }
+    let(:tax_zone) { create(:zone, :with_country, default_tax: true) }
 
     it 'sets included_tax_total on the return items' do
       subject
       return_item.reload
 
-      expect(return_item.included_tax_total).to be < 0
+      expect(return_item.included_tax_total).to be > 0
       expect(return_item.included_tax_total).to eq line_item.included_tax_total
     end
   end
