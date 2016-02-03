@@ -1,7 +1,7 @@
 <div id="<%= "shipment_#{shipment.id}" %>" data-hook="admin_shipment_form">
   <fieldset class="no-border-bottom">
     <legend align="center" class="stock-location" data-hook="stock-location">
-      <%= Spree.t(:shipment) %>
+      <%= Spree::Shipment.model_name.human %>
       <span class="shipment-number"><%= shipment.number %></span>
       <%= Spree.t(:from) %>
       <strong class="stock-location-name" data-hook="stock-location-name">"<%= shipment.stock_location.name %>"</strong>
