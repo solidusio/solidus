@@ -133,7 +133,10 @@ en:
         name: Site Name
         mail_from_address: Mail From Address
       spree/store_credit:
+        amount: Amount
         amount_used: Amount used
+        category_id: Credit Type
+        memo: Memo
       spree/tax_category:
         description: Description
         name: Name
