@@ -86,64 +86,29 @@ describe Spree::TaxRate, type: :model do
 
   context ".adjust" do
     let(:zone) { stub_model(Spree::Zone) }
-    let(:order) { stub_model(Spree::Order, tax_zone: zone) }
-    let(:tax_category_1) { stub_model(Spree::TaxCategory) }
-    let(:tax_category_2) { stub_model(Spree::TaxCategory) }
-    let(:rate_1) { stub_model(Spree::TaxRate, tax_category: tax_category_1) }
-    let(:rate_2) { stub_model(Spree::TaxRate, tax_category: tax_category_2) }
 
     context "with line items" do
-      let(:line_item) do
-        stub_model(Spree::LineItem,
-          price: 10.0,
-          quantity: 1,
-          tax_category: tax_category_1,
-          variant: stub_model(Spree::Variant),
-          order: order
-        )
-      end
+      let(:line_item) { stub_model(Spree::LineItem) }
 
-      let(:line_items) { [line_item] }
-
-      before do
-        allow(Spree::TaxRate).to receive(:for_zone).with(zone).and_return([rate_1, rate_2])
-        allow(Spree::TaxRate).to receive(:for_zone).with(Spree::Zone.default_tax).and_return([])
-        allow(order).to receive(:line_items).and_return([line_item])
-      end
-
-      it "should only apply adjustments for matching rates" do
-        expect(rate_1).to receive(:adjust)
-        expect(rate_2).not_to receive(:adjust)
-        Spree::Tax::OrderAdjuster.new(order).adjust!
+      it 'should emit a deprecation warning and call the item adjuster' do
+        expect(ActiveSupport::Deprecation).to receive(:warn)
+        expect(Spree::Tax::ItemAdjuster).to receive_message_chain(:new, :adjust!)
+        Spree::TaxRate.adjust(zone, [line_item])
       end
     end
 
     context "with shipments" do
-      let(:shipment) do
-        stub_model(
-          Spree::Shipment,
-          cost: 10.0,
-          tax_category: tax_category_1,
-          order: order
-        )
-      end
+      let(:shipment) { stub_model(Spree::Shipment) }
 
-      before do
-        allow(Spree::TaxRate).to receive(:for_zone).with(zone).and_return([rate_1, rate_2])
-        allow(Spree::TaxRate).to receive(:for_zone).with(Spree::Zone.default_tax).and_return([])
-        allow(order).to receive(:shipments).and_return([shipment])
-      end
-
-      it "should apply adjustments for matching rates" do
-        expect(rate_1).to receive(:adjust)
-        expect(rate_2).not_to receive(:adjust)
-        Spree::Tax::OrderAdjuster.new(order).adjust!
+      it 'should emit a deprecation warning and call the item adjuster' do
+        expect(ActiveSupport::Deprecation).to receive(:warn)
+        expect(Spree::Tax::ItemAdjuster).to receive_message_chain(:new, :adjust!)
+        Spree::TaxRate.adjust(zone, [shipment])
       end
     end
   end
 
-  # While the above test is nice and fast - let me tell you a story or two here.
-  context ".adjust" do
+  context "Taxation system integration tests" do
     let(:order) { create :order }
     let(:book_product) { create :product, price: 20, name: "Book", tax_category: books_category }
     let(:download_product) { create :product, price: 10, name: "Download", tax_category: digital_category }
