@@ -21,7 +21,7 @@ module Spree
 
       def cancel
         authorize! :update, @order, params[:token]
-        @order.cancel!
+        @order.canceled_by(current_api_user)
         respond_with(@order, default_template: :show)
       end
 

@@ -88,7 +88,8 @@ module Spree
         :display_additional_tax_total, :tax_total, :currency,
         :covered_by_store_credit, :display_total_applicable_store_credit,
         :order_total_after_store_credit, :display_order_total_after_store_credit,
-        :total_applicable_store_credit, :display_total_available_store_credit, :display_store_credit_remaining_after_capture
+        :total_applicable_store_credit, :display_total_available_store_credit,
+        :display_store_credit_remaining_after_capture, :canceler_id
 
       ]
 
