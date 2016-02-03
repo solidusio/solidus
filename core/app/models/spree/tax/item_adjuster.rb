@@ -1,17 +1,27 @@
 module Spree
   module Tax
+    # Adjust a single taxable item (line item or shipment)
     class ItemAdjuster
       attr_reader :item, :order
 
       include TaxHelpers
 
+      # @param [Spree::LineItem,Spree::Shipment] item to adjust
+      # @param [Hash] options like already known tax rates for the order's zone
       def initialize(item, options = {})
         @item = item
         @order = @item.order
-        # set the instance variable so `TaxRate.match` is only called when necessary
+        # set instance variable so `TaxRate.match` is only called when necessary
         @rates_for_order_zone = options[:rates_for_order_zone]
       end
 
+      # Deletes all existing tax adjustments and creates new adjustments for all
+      # (geographically and category-wise) applicable tax rates.
+      #
+      # Creating the adjustments will also run the ItemAdjustments class and
+      # persist all taxation and promotion totals on the item.
+      #
+      # @return [Array<Spree::Adjustment>] newly created adjustments
       def adjust!
         return unless order_tax_zone
         # Using .destroy_all to make sure callbacks fire
