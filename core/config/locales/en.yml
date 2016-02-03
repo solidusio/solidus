@@ -462,9 +462,14 @@ en:
         overview: Overview
         products: Products
         promotions: Promotions
+        promotion_categories: Promotion Categories
         properties: Properties
         prototypes: Prototypes
         reports: Reports
+        settings: Settings
+        stock: Stock
+        stock_items: Management
+        stock_transfers: Transfers
         taxonomies: Taxonomies
         taxons: Taxons
         users: Users
