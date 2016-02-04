@@ -137,6 +137,25 @@ en:
         amount_used: Amount used
         category_id: Credit Type
         memo: Memo
+      spree/stock_location:
+        admin_name: Internal Name
+        active: Active
+        address1: Street Address
+        address2: Street Address (cont'd)
+        backorderable_default: Backorderable default
+        check_stock_on_transfer: Check stock on transfer
+        city: City
+        code: Code
+        country_id: Country
+        default: Default
+        fulfillable: Fulfillable
+        internal_name: Internal Name
+        name: Name
+        phone: Phone
+        propagate_all_variants: Propagate all variants
+        restock_inventory: Restock Inventory
+        state_id: State
+        zipcode: Zip
       spree/tax_category:
         description: Description
         name: Name

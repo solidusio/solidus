@@ -2,19 +2,19 @@
   <div class="alpha nine columns" data-hook="stock_location_names">
     <div data-hook="stock_location_name">
       <%= f.field_container :name do %>
-        <%= f.label :name, Spree.t(:name), class: 'required' %><br />
+        <%= f.label :name, class: 'required' %><br />
         <%= f.text_field :name, class: 'fullwidth', required: true %>
       <% end %>
     </div>
     <div data-hook="stock_location_code">
       <%= f.field_container :code do %>
-        <%= f.label :code, Spree.t(:code) %>
+        <%= f.label :code %>
         <%= f.text_field :code, :class => 'fullwidth', :label => false %>
       <% end %>
     </div>
     <div data-hook="stock_location_admin_name">
       <%= f.field_container :admin_name do %>
-        <%= f.label :admin_name, Spree.t(:internal_name) %>
+        <%= f.label :admin_name %>
         <%= f.text_field :admin_name, class: 'fullwidth', label: false %>
       <% end %>
     </div>
@@ -26,69 +26,69 @@
       <ul>
         <li class="fullwidth" data-hook="stock_location_active">
           <%= f.check_box :active %>
-          <%= f.label :active, Spree.t(:active) %>
+          <%= f.label :active %>
         </li>
         <li class="fullwidth" data-hook="stock_location_default">
           <%= f.check_box :default %>
-          <%= f.label :default, Spree.t(:default) %>
+          <%= f.label :default %>
         </li>
         <li class="fullwidth" data-hook="stock_location_backorderable_default">
           <%= f.check_box :backorderable_default %>
-          <%= f.label :backorderable_default, Spree.t(:backorderable_default) %>
+          <%= f.label :backorderable_default %>
         </li>
         <li class="fullwidth" data-hook="stock_location_propagate_all_variants">
           <%= f.check_box :propagate_all_variants %>
-          <%= f.label :propagate_all_variants, Spree.t(:propagate_all_variants) %>
+          <%= f.label :propagate_all_variants %>
         </li>
         <li class="fullwidth">
-          <%= f.label :active, Spree.t(:restock_inventory) %>
           <%= f.check_box :restock_inventory %>
+          <%= f.label :restock_inventory %>
         </li>
         <li>
-          <%= f.label :active, Spree.t(:fulfillable_stock) %>
           <%= f.check_box :fulfillable %>
+          <%= f.label :fulfillable %>
         </li>
         <li class="fullwidth">
-          <%= f.label :check_stock_on_transfer, Spree.t(:check_stock_on_transfer) %>
           <%= f.check_box :check_stock_on_transfer %>
+          <%= f.label :check_stock_on_transfer %>
         </li>
       </ul>
     <% end %>
   </div>
 
   <div class="alpha six columns field" data-hook="stock_location_address1">
-    <%= f.label :address1, Spree.t(:street_address) %>
+    <%= f.label :address1 %>
     <%= f.text_field :address1, class: 'fullwidth' %>
   </div>
 
   <div class="omega six columns field" data-hook="stock_location_city">
-    <%= f.label :city, Spree.t(:city) %>
+    <%= f.label :city %>
     <%= f.text_field :city, class: 'fullwidth' %>
   </div>
 
   <div class="alpha six columns field" data-hook="stock_location_address2">
-    <%= f.label :address2, Spree.t(:street_address_2) %>
+    <%= f.label :address2 %>
     <%= f.text_field :address2, class: 'fullwidth' %>
   </div>
 
   <div class="three columns field" data-hook="stock_location_zipcode">
-    <%= f.label :zipcode, Spree.t(:zip) %>
+    <%= f.label :zipcode %>
     <%= f.text_field :zipcode, class: 'fullwidth' %>
   </div>
 
   <div class="omega three columns field" data-hook="stock_location_phone">
-    <%= f.label :phone, Spree.t(:phone) %>
+    <%= f.label :phone %>
     <%= f.phone_field :phone, class: 'fullwidth' %>
   </div>
 
   <div class="alpha six columns field" data-hook="stock_location_country">
-    <%= f.label :country_id, Spree.t(:country) %>
+    <%= f.label :country_id %>
     <span id="country"><%= f.collection_select :country_id, available_countries, :id, :name, {}, { class: 'select2 fullwidth' } %></span>
   </div>
 
   <div class="omega six columns field" data-hook="stock_location_state">
     <% if f.object.country %>
-      <%= f.label :state_id, Spree.t(:state) %>
+      <%= f.label :state_id %>
       <span id="state" class="region">
         <%= f.text_field :state_name, style: "display: #{f.object.country.states.empty? ? 'block' : 'none' };", disabled: !f.object.country.states.empty?, class: 'fullwidth state_name' %>
         <%= f.collection_select :state_id, f.object.country.states.sort, :id, :name, { include_blank: true }, {class: 'select2 fullwidth', style: "display: #{f.object.country.states.empty? ? 'none' : 'block' };", disabled: f.object.country.states.empty?} %>
