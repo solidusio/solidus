@@ -26,7 +26,7 @@ $(document).ready(function() {
           }
         },
         results: function(data, page) {
-          return { results: data }
+          return { results: data.users }
         }
       },
       dropdownCssClass: 'customer_search',
