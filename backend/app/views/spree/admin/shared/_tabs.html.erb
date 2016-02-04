@@ -13,7 +13,7 @@
 <% end %>
 
 <% if can? :admin, :general_settings %>
-  <%= tab *Spree::BackendConfiguration::CONFIGURATION_TABS, label: Spree.t(:settings), icon: 'wrench', url: spree.edit_admin_general_settings_path %>
+  <%= tab *Spree::BackendConfiguration::CONFIGURATION_TABS, label: :settings, icon: 'wrench', url: spree.edit_admin_general_settings_path %>
 <% end %>
 
 <% if can? :admin, Spree::Promotion %>
@@ -23,7 +23,7 @@
 <% end %>
 
 <% if can? :admin, Spree::StockItem %>
-  <%= tab(:stock_items, :stock_transfers, url: spree.admin_stock_items_path, label: Spree.t(:stock), icon: 'cubes', match_path: %r(^/admin/stock)) do %>
+  <%= tab(:stock_items, :stock_transfers, url: spree.admin_stock_items_path, label: :stock, icon: 'cubes', match_path: %r(^/admin/stock)) do %>
     <%- render partial: 'spree/admin/shared/stock_sub_menu' %>
   <%- end %>
 <% end %>
