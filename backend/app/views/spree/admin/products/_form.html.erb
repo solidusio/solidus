@@ -3,7 +3,7 @@
   <div class="left eight columns alpha" data-hook="admin_product_form_left">
     <div data-hook="admin_product_form_name">
       <%= f.field_container :name do %>
-        <%= f.label :name, Spree.t(:name), class: 'required' %>
+        <%= f.label :name, class: 'required' %>
         <%= f.text_field :name, :class => 'fullwidth title', :required => true %>
         <%= f.error_message_on :name %>
       <% end %>
@@ -11,7 +11,7 @@
 
     <div data-hook="admin_product_form_slug">
       <%= f.field_container :slug do %>
-        <%= f.label :slug, Spree.t(:slug), class: 'required' %>
+        <%= f.label :slug, class: 'required' %>
         <%= f.text_field :slug, :class => 'fullwidth title', :required => true %>
         <%= f.error_message_on :slug %>
       <% end %>
@@ -19,7 +19,7 @@
 
     <div data-hook="admin_product_form_description">
       <%= f.field_container :description do %>
-        <%= f.label :description, Spree.t(:description) %>
+        <%= f.label :description %>
         <%= f.text_area :description, {:rows => "#{unless @product.has_variants? then '22' else '15' end}", :class => 'fullwidth'} %>
         <%= f.error_message_on :description %>
       <% end %>
@@ -29,7 +29,7 @@
   <div class="right four columns omega" data-hook="admin_product_form_right">
     <div data-hook="admin_product_form_price">
     <%= f.field_container :price do %>
-      <%= f.label :price, Spree.t(:master_price), class: 'required' %>
+      <%= f.label :price, class: 'required' %>
       <%= f.text_field :price, :value => number_to_currency(@product.price, :unit => ''), :required => true %>
       <%= f.error_message_on :price %>
     <% end %>
@@ -37,7 +37,7 @@
 
     <div data-hook="admin_product_form_cost_price" class="alpha two columns">
       <%= f.field_container :cost_price do %>
-        <%= f.label :cost_price, Spree.t(:cost_price) %>
+        <%= f.label :cost_price %>
         <%= f.text_field :cost_price, :value => number_to_currency(@product.cost_price, :unit => '') %>
         <%= f.error_message_on :cost_price %>
       <% end %>
@@ -45,7 +45,7 @@
 
     <div data-hook="admin_product_form_cost_currency" class="omega two columns">
       <%= f.field_container :cost_currency do %>
-        <%= f.label :cost_currency, Spree.t(:cost_currency) %>
+        <%= f.label :cost_currency %>
         <%= f.text_field :cost_currency %>
         <%= f.error_message_on :cost_currency %>
       <% end %>
@@ -55,7 +55,7 @@
 
     <div data-hook="admin_product_form_available_on">
       <%= f.field_container :available_on do %>
-        <%= f.label :available_on, Spree.t(:available_on) %>
+        <%= f.label :available_on %>
         <%= f.error_message_on :available_on %>
         <%= f.text_field :available_on, :value => datepicker_field_value(@product.available_on), :class => 'datepicker' %>
       <% end %>
@@ -64,7 +64,7 @@
     <div data-hook="admin_product_form_promotionable">
       <%= f.field_container :promotionable do %>
         <%= f.label :promotionable do %>
-          <%= f.check_box :promotionable %> <%= Spree.t(:promotionable) %>
+          <%= f.check_box :promotionable %> <%= Spree::Product.human_attribute_name(:promotionable) %>
         <% end %>
       <% end %>
     </div>
@@ -92,26 +92,26 @@
     <% else %>
       <div data-hook="admin_product_form_sku">
         <%= f.field_container :sku do %>
-          <%= f.label :sku, Spree.t(:sku) %>
+          <%= f.label :sku, Spree::Variant.human_attribute_name(:sku) %>
           <%= f.text_field :sku, :size => 16 %>
         <% end %>
       </div>
 
       <ul id="shipping_specs">
         <li id="shipping_specs_weight_field" data-hook="admin_product_form_weight" class="field alpha two columns">
-          <%= f.label :weight, Spree.t(:weight) %>
+          <%= f.label :weight %>
           <%= f.text_field :weight, :size => 4 %>
         </li>
         <li id="shipping_specs_height_field" data-hook="admin_product_form_height" class="field omega two columns">
-          <%= f.label :height, Spree.t(:height) %>
+          <%= f.label :height %>
           <%= f.text_field :height, :size => 4 %>
         </li>
         <li id="shipping_specs_width_field" data-hook="admin_product_form_width" class="field alpha two columns">
-          <%= f.label :width, Spree.t(:width) %>
+          <%= f.label :width %>
           <%= f.text_field :width, :size => 4 %>
         </li>
         <li id="shipping_specs_depth_field" data-hook="admin_product_form_depth" class="field omega two columns">
-          <%= f.label :depth, Spree.t(:depth) %>
+          <%= f.label :depth %>
           <%= f.text_field :depth, :size => 4 %>
         </li>
       </ul>
@@ -119,7 +119,7 @@
 
     <div data-hook="admin_product_form_shipping_categories">
       <%= f.field_container :shipping_categories do %>
-        <%= f.label :shipping_category_id, Spree.t(:shipping_categories) %>
+        <%= f.label :shipping_category_id %>
         <%= f.collection_select(:shipping_category_id, @shipping_categories, :id, :name, { :include_blank => Spree.t('match_choices.none') }, { :class => 'select2' }) %>
         <%= f.error_message_on :shipping_category %>
       <% end %>
@@ -127,7 +127,7 @@
 
     <div data-hook="admin_product_form_tax_category">
       <%= f.field_container :tax_category do %>
-        <%= f.label :tax_category_id, Spree.t(:tax_category) %>
+        <%= f.label :tax_category_id %>
         <%= f.collection_select(:tax_category_id, @tax_categories, :id, :name, { :include_blank => Spree.t('match_choices.none') }, { :class => 'select2' }) %>
         <%= f.error_message_on :tax_category %>
       <% end %>
@@ -137,14 +137,14 @@
   <div class="twelve columns alpha omega">
     <div data-hook="admin_product_form_taxons">
       <%= f.field_container :taxons do %>
-        <%= f.label :taxon_ids, Spree.t(:taxons) %><br />
+        <%= f.label :taxon_ids, Spree::Taxon.model_name.human(count: :other) %><br />
         <%= f.hidden_field :taxon_ids, :value => @product.taxon_ids.join(',') %>
       <% end %>
     </div>
 
     <div data-hook="admin_product_form_option_types">
       <%= f.field_container :option_types do %>
-        <%= f.label :option_type_ids, Spree.t(:option_types) %>
+        <%= f.label :option_type_ids, Spree::OptionType.model_name.human(count: :other) %>
         <%= f.hidden_field :option_type_ids, :value => @product.option_type_ids.join(',') %>
       <% end %>
     </div>
@@ -153,21 +153,21 @@
   <div data-hook="admin_product_form_meta" class="alpha omega twelve columns">
     <div data-hook="admin_product_form_meta_title">
       <%= f.field_container :meta_title do %>
-        <%= f.label :meta_title, Spree.t(:meta_title) %>
+        <%= f.label :meta_title %>
         <%= f.text_field :meta_title, :class => 'fullwidth' %>
       <% end %>
     </div>
 
     <div data-hook="admin_product_form_meta_keywords">
       <%= f.field_container :meta_keywords do %>
-        <%= f.label :meta_keywords, Spree.t(:meta_keywords) %>
+        <%= f.label :meta_keywords %>
         <%= f.text_field :meta_keywords, :class => 'fullwidth' %>
       <% end %>
     </div>
 
     <div data-hook="admin_product_form_meta_description">
       <%= f.field_container :meta_description do %>
-        <%= f.label :meta_description, Spree.t(:meta_description) %>
+        <%= f.label :meta_description %>
         <%= f.text_field :meta_description, :class => 'fullwidth' %>
       <% end %>
     </div>

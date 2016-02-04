@@ -94,11 +94,24 @@ en:
         cost_currency: Cost Currency
         cost_price: Cost Price
         description: Description
+        depth: Depth
+        height: Height
         master_price: Master Price
+        meta_description: Meta Description
+        meta_keywords: Meta Keywords
+        meta_title: Meta Title
         name: Name
         on_hand: On Hand
+        price: Master Price
+        promotionable: Promotable
         shipping_category: Shipping Category
+        shipping_category_id: Shipping Category
+        slug: Slug
         tax_category: Tax Category
+        weight: Weight
+        width: Width
+      spree/product_property:
+        value: Value
       spree/promotion:
         advertise: Advertise
         code: Code
