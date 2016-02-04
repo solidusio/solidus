@@ -338,6 +338,9 @@ en:
       spree/payment:
         one: Payment
         other: Payments
+      spree/payment_capture_event:
+        one: Capture Event
+        other: Capture Events
       spree/payment_method:
         one: Payment Method
         other: Payment Methods
@@ -359,6 +362,9 @@ en:
       spree/prototype:
         one: Prototype
         other: Prototypes
+      spree/refund:
+        one: Refund
+        other: Refunds
       spree/refund_reason:
         one: Refund Reason
         other: Refund Reasons
@@ -767,7 +773,8 @@ en:
     canceled_at: Canceled at
     canceler: Canceler
     cancellation: Cancellation
-    cannot_create_payment_without_payment_methods: You cannot create a payment for an order without any payment methods defined.
+    cannot_create_payment_without_payment_methods_html: You cannot create a payment for an order without any payment methods defined. %{link}
+    cannot_create_payment_link: Please define some payment methods first.
     cannot_create_returns: Cannot create returns as this order has no shipped units.
     cannot_rebuild_shipments_order_completed: Cannot rebuild shipments for a completed order.
     cannot_rebuild_shipments_shipments_not_pending: Cannot rebuild shipments for an order with non-pending shipments.
@@ -789,6 +796,7 @@ en:
     categories: Categories
     category: Category
     charged: Charged
+    check: Check
     check_stock_on_transfer: Check stock on transfer
     checkout: Checkout
     choose_a_customer: Choose a customer

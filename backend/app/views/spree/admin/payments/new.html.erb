@@ -21,6 +21,6 @@
     </fieldset>
   <% end %>
 <% else %>
-  <%= Spree.t(:cannot_create_payment_without_payment_methods) %>
-  <%= link_to Spree.t(:please_define_payment_methods), admin_payment_methods_url %>
+  <%= Spree.t(:cannot_create_payment_without_payment_methods_html,
+              link: link_to(Spree.t(:cannot_create_payment_link), admin_payment_methods_url)) %>
 <% end %>
