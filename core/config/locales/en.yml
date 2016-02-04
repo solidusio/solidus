@@ -303,6 +303,9 @@ en:
       spree/product:
         one: Product
         other: Products
+      spree/product_property:
+        one: Product Property
+        other: Product Properties
       spree/promotion:
         one: Promotion
         other: Promotions

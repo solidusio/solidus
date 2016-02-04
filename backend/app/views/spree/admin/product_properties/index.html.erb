@@ -18,7 +18,7 @@
 
 <%= form_for @product, :url => admin_product_url(@product), :method => :put do |f| %>
   <fieldset>
-    <legend align="center"><%= Spree.t(:product_properties) %></legend>
+    <legend align="center"><%= Spree::ProductProperty.model_name.human(count: :other) %></legend>
     <div class="add_product_properties" data-hook="add_product_properties"></div>
 
     <div id="prototypes" data-hook></div>
@@ -26,8 +26,8 @@
     <table class="index sortable" data-hook data-sortable-link="<%= update_positions_admin_product_product_properties_url %>">
       <thead>
         <tr data-hook="product_properties_header">
-          <th colspan="2"><%= Spree.t(:property) %></th>
-          <th><%= Spree.t(:value) %></th>
+          <th colspan="2"><%= Spree::Property.model_name.human %></th>
+          <th><%= Spree::ProductProperty.human_attribute_name(:value) %></th>
           <th class="actions"></th>
         </tr>
       </thead>
@@ -76,8 +76,8 @@
         <table class="index sortable" data-hook data-sortable-link="<%= update_positions_admin_product_variant_property_rule_values_url %>">
           <thead>
             <tr data-hook="variant_property_values_header">
-              <th colspan="2"><%= Spree.t(:property) %></th>
-              <th><%= Spree.t(:value) %></th>
+              <th colspan="2"><%= Spree::Property.model_name.human %></th>
+              <th><%= Spree::ProductProperty.human_attribute_name(:value) %></th>
               <th class="actions"></th>
             </tr>
           </thead>
