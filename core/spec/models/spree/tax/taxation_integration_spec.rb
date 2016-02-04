@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 RSpec.describe "Taxation system integration tests" do
-  let(:order) { create :order, ship_address: shipping_address }
+  let(:order) { create :order, ship_address: shipping_address, state: "delivery" }
   let(:book_product) do
     create :product,
            price: 20,
@@ -36,6 +36,10 @@ RSpec.describe "Taxation system integration tests" do
   let(:normal_shipping_category) { create :shipping_category, name: "Normal Shipping" }
   let(:digital_shipping_category) { create :shipping_category, name: "Digital Premium Download" }
 
+  let(:line_item) { order.line_items.first }
+  let(:shipment) { order.shipments.first }
+  let(:shipping_rate) { shipment.shipping_rates.first }
+
   context 'selling from germany' do
     let(:germany) { create :country, iso: "DE" }
     # The weird default_tax boolean is what makes this context one with default included taxes
@@ -48,6 +52,7 @@ RSpec.describe "Taxation system integration tests" do
     let!(:german_book_vat) do
       create(
         :tax_rate,
+        name: "German reduced VAT",
         included_in_price: true,
         amount: 0.07,
         tax_category: books_category,
@@ -57,6 +62,7 @@ RSpec.describe "Taxation system integration tests" do
     let!(:german_normal_vat) do
       create(
         :tax_rate,
+        name: "German VAT",
         included_in_price: true,
         amount: 0.19,
         tax_category: normal_category,
@@ -66,6 +72,7 @@ RSpec.describe "Taxation system integration tests" do
     let!(:german_digital_vat) do
       create(
         :tax_rate,
+        name: "German VAT",
         included_in_price: true,
         amount: 0.19,
         tax_category: digital_category,
@@ -75,18 +82,40 @@ RSpec.describe "Taxation system integration tests" do
     let!(:romanian_digital_vat) do
       create(
         :tax_rate,
+        name: "Romanian VAT",
         included_in_price: true,
         amount: 0.24,
         tax_category: digital_category,
         zone: romania_zone
       )
     end
+    let!(:book_shipping_method) do
+      create :shipping_method,
+             cost: 8.00,
+             shipping_categories: [books_shipping_category],
+             tax_category: books_category,
+             zones: [eu_zone, world_zone]
+    end
+
+    let!(:sweater_shipping_method) do
+      create :shipping_method,
+             cost: 16.00,
+             shipping_categories: [normal_shipping_category],
+             tax_category: normal_category,
+             zones: [eu_zone, world_zone]
+    end
+
+    let!(:premium_download_shipping_method) do
+      create :shipping_method,
+             cost: 2.00,
+             shipping_categories: [digital_shipping_category],
+             tax_category: digital_category,
+             zones: [eu_zone, world_zone]
+    end
 
     before do
       order.contents.add(variant)
     end
-
-    let(:line_item) { order.line_items.first }
 
     context 'to germany' do
       let(:shipping_address) { create :address, country_iso_code: "DE" }
@@ -107,6 +136,27 @@ RSpec.describe "Taxation system integration tests" do
         end
       end
 
+      context 'an order with a book and a shipment' do
+        let(:variant) { book }
+
+        before { 2.times { order.next! } }
+
+        it 'has a shipment for 8.00 dollars' do
+          pending 'No amount method yet on the shipment'
+          expect(shipment.amount).to eq(8.00)
+        end
+
+        it 'has a shipment with 0.52 included tax' do
+          pending 'But the tax is not created'
+          expect(shipment.included_tax_total).to eq(0.52)
+        end
+
+        it 'has a shipping rate that correctly reflects the shipment' do
+          pending 'since no tax created, no correct display price'
+          expect(shipping_rate.display_price).to eq("$8.00 (incl. $0.52 German VAT)")
+        end
+      end
+
       context 'an order with a sweater' do
         let(:variant) { sweater }
 
@@ -123,6 +173,27 @@ RSpec.describe "Taxation system integration tests" do
         end
       end
 
+      context 'an order with a sweater and a shipment' do
+        let(:variant) { sweater }
+
+        before { 2.times { order.next! } }
+
+        it 'has a shipment for 16.00 dollars' do
+          pending 'No amount method yet on the shipment'
+          expect(shipment.amount).to eq(16.00)
+        end
+
+        it 'has a shipment with 2.55 included tax' do
+          pending 'But the tax is not created'
+          expect(shipment.included_tax_total).to eq(2.55)
+        end
+
+        it 'has a shipping rate that correctly reflects the shipment' do
+          pending 'since no tax created, no correct display price'
+          expect(shipping_rate.display_price).to eq("$16.00 (incl. $2.55 German VAT)")
+        end
+      end
+
       context 'an order with a download' do
         let(:variant) { download }
 
@@ -136,6 +207,25 @@ RSpec.describe "Taxation system integration tests" do
 
         it 'has 1.60 of included tax' do
           expect(line_item.included_tax_total).to eq(1.60)
+        end
+      end
+
+      context 'an order with a download and a shipment' do
+        let(:variant) { download }
+
+        before { 2.times { order.next! } }
+
+        it 'has a shipment for 4.00 dollars' do
+          pending 'No amount method yet on the shipment'
+          expect(shipment.amount).to eq(2.00)
+        end
+
+        it 'has a shipment with 0.64 included tax' do
+          expect(shipment.included_tax_total).to eq(0.32)
+        end
+
+        it 'has a shipping rate that correctly reflects the shipment' do
+          expect(shipping_rate.display_price).to eq("$2.00 (incl. $0.32 German VAT)")
         end
       end
     end
@@ -167,6 +257,27 @@ RSpec.describe "Taxation system integration tests" do
         end
       end
 
+      context 'an order with a book and a shipment' do
+        let(:variant) { book }
+
+        before { 2.times { order.next! } }
+
+        it 'has a shipment for 8.00 dollars' do
+          pending 'No amount method yet on the shipment'
+          expect(shipment.amount).to eq(8.00)
+        end
+
+        it 'has a shipment with 0.52 included tax' do
+          pending 'But the tax is not created'
+          expect(shipment.included_tax_total).to eq(0.52)
+        end
+
+        it 'has a shipping rate that correctly reflects the shipment' do
+          pending 'since no tax created, no correct display price'
+          expect(shipping_rate.display_price).to eq("$8.00 (incl. $0.52 German VAT)")
+        end
+      end
+
       context 'an order with a sweater' do
         let(:variant) { sweater }
 
@@ -184,6 +295,27 @@ RSpec.describe "Taxation system integration tests" do
 
         it 'has a constant amount pre tax' do
           expect(line_item.pre_tax_amount).to eq(25.21)
+        end
+      end
+
+      context 'an order with a sweater and a shipment' do
+        let(:variant) { sweater }
+
+        before { 2.times { order.next! } }
+
+        it 'has a shipment for 16.00 dollars' do
+          pending 'No amount method yet on the shipment'
+          expect(shipment.amount).to eq(16.00)
+        end
+
+        it 'has a shipment with 2.55 included tax' do
+          pending 'But the tax is not created'
+          expect(shipment.included_tax_total).to eq(2.55)
+        end
+
+        it 'has a shipping rate that correctly reflects the shipment' do
+          pending 'since no tax created, no correct display price'
+          expect(shipping_rate.display_price).to eq("$16.00 (incl. $2.55 German VAT)")
         end
       end
 
@@ -209,8 +341,31 @@ RSpec.describe "Taxation system integration tests" do
           expect(line_item.pre_tax_amount).to eq(8.40)
         end
       end
+
+      context 'an order with a download and a shipment' do
+        let(:variant) { download }
+
+        before { 2.times { order.next! } }
+
+        it 'it has a shipment with an adjusted price to 2.08' do
+          pending 'No amount method yet on the shipment'
+          expect(shipment.amount).to eq(2.08)
+        end
+
+        it 'has a shipment with 0.40 included tax' do
+          pending 'But the tax is not created'
+          expect(shipment.included_tax_total).to eq(0.40)
+        end
+
+        it 'has a shipping rate that correctly reflects the shipment' do
+          pending 'since no tax created, no correct display price'
+          expect(shipping_rate.display_price).to eq("$2.08 (incl. $0.40 Romanian VAT)")
+        end
+      end
     end
 
+    # Technically, this can't be the case yet as the order won't pass the shipment stage,
+    # but the taxation code shouldn't implicitly depend on the shipping code.
     context 'to an address that does not have a zone associated' do
       let(:shipping_address) { create :address, country_iso_code: "IT" }
 
@@ -280,6 +435,26 @@ RSpec.describe "Taxation system integration tests" do
         it 'has a constant amount pre tax' do
           expect(line_item.pre_tax_amount).to eq(18.69)
         end
+
+        context 'an order with a book and a shipment' do
+          let(:variant) { book }
+
+          before { 2.times { order.next! } }
+
+          it 'it has a shipment with an adjusted price to 7.47' do
+            pending 'No amount method yet on the shipment'
+            expect(shipment.amount).to eq(7.47)
+          end
+
+          it 'has a shipment with no included tax' do
+            expect(shipment.included_tax_total).to eq(0)
+          end
+
+          it 'has a shipping rate that correctly reflects the shipment' do
+            pending 'since no tax created, no correct display price'
+            expect(shipping_rate.display_price).to eq("$7.47")
+          end
+        end
       end
 
       context 'an order with a sweater' do
@@ -306,6 +481,26 @@ RSpec.describe "Taxation system integration tests" do
 
         it 'has a constant amount pre tax' do
           expect(line_item.pre_tax_amount).to eq(25.21)
+        end
+
+        context 'an order with a sweater and a shipment' do
+          let(:variant) { sweater }
+
+          before { 2.times { order.next! } }
+
+          it 'it has a shipment with an adjusted price to 13.45' do
+            pending 'No amount method yet on the shipment'
+            expect(shipment.amount).to eq(13.45)
+          end
+
+          it 'has a shipment with no included tax' do
+            expect(shipment.included_tax_total).to eq(0)
+          end
+
+          it 'has a shipping rate that correctly reflects the shipment' do
+            pending 'since no tax created, no correct display price'
+            expect(shipping_rate.display_price).to eq("$13.45")
+          end
         end
       end
 
@@ -335,6 +530,26 @@ RSpec.describe "Taxation system integration tests" do
           expect(line_item.pre_tax_amount).to eq(8.40)
         end
       end
+
+      context 'an order with a download and a shipment' do
+        let(:variant) { download }
+
+        before { 2.times { order.next! } }
+
+        it 'it has a shipment with an adjusted price to 1.68' do
+          pending 'No amount method yet on the shipment'
+          expect(shipment.amount).to eq(1.68)
+        end
+
+        it 'has a shipment with no included tax' do
+          expect(shipment.included_tax_total).to eq(0)
+        end
+
+        it 'has a shipping rate that correctly reflects the shipment' do
+          pending 'since no tax created, no correct display price'
+          expect(shipping_rate.display_price).to eq("$1.68")
+        end
+      end
     end
   end
 
@@ -343,12 +558,13 @@ RSpec.describe "Taxation system integration tests" do
     let(:new_york) { create(:state, state_code: "NY") }
     let(:united_states) { new_york.country }
     let(:new_york_zone) { create(:zone, states: [new_york]) }
-    let(:unites_states_zone) { create(:zone, countries: [united_states]) }
+    let(:united_states_zone) { create(:zone, countries: [united_states]) }
     # Creating two rates for books here to
     # mimick the existing specs
     let!(:new_york_books_tax) do
       create(
         :tax_rate,
+        name: "New York Sales Tax",
         tax_category: books_category,
         zone: new_york_zone,
         included_in_price: false,
@@ -359,8 +575,9 @@ RSpec.describe "Taxation system integration tests" do
     let!(:federal_books_tax) do
       create(
         :tax_rate,
+        name: "Federal Sales Tax",
         tax_category: books_category,
-        zone: unites_states_zone,
+        zone: united_states_zone,
         included_in_price: false,
         amount: 0.10
       )
@@ -369,18 +586,41 @@ RSpec.describe "Taxation system integration tests" do
     let!(:federal_digital_tax) do
       create(
         :tax_rate,
+        name: "Federal Sales Tax",
         tax_category: digital_category,
-        zone: unites_states_zone,
+        zone: united_states_zone,
         included_in_price: false,
         amount: 0.20
       )
     end
 
+    let!(:book_shipping_method) do
+      create :shipping_method,
+             cost: 8.00,
+             shipping_categories: [books_shipping_category],
+             tax_category: books_category,
+             zones: [united_states_zone]
+    end
+
+    let!(:sweater_shipping_method) do
+      create :shipping_method,
+             cost: 16.00,
+             shipping_categories: [normal_shipping_category],
+             tax_category: normal_category,
+             zones: [united_states_zone]
+    end
+
+    let!(:premium_download_shipping_method) do
+      create :shipping_method,
+             cost: 2.00,
+             shipping_categories: [digital_shipping_category],
+             tax_category: digital_category,
+             zones: [united_states_zone]
+    end
+
     before do
       order.contents.add(variant)
     end
-
-    let(:line_item) { order.line_items.first }
 
     context 'to new york' do
       let(:shipping_address) { create :address, state_code: "NY" }
@@ -423,6 +663,30 @@ RSpec.describe "Taxation system integration tests" do
         end
       end
 
+      context 'an order with a book and a shipment' do
+        let(:variant) { book }
+
+        before { 2.times { order.next! } }
+
+        it 'it has a shipment with a price of 8.00' do
+          pending 'No amount method yet on the shipment'
+          expect(shipment.amount).to eq(8.00)
+        end
+
+        it 'has a shipment with no included tax' do
+          expect(shipment.included_tax_total).to eq(0)
+        end
+
+        it 'has a shipment with additional tax of 1.20' do
+          expect(shipment.additional_tax_total).to eq(1.20)
+        end
+
+        it 'has a shipping rate that correctly reflects the shipment' do
+          pending 'since no tax created, no correct display price'
+          expect(shipping_rate.display_price).to eq("$8.00 (+ $0.80 Federal Sales Tax, + $0.40 New York Sales Tax)")
+        end
+      end
+
       # This is a fictional case for when no taxes apply at all.
       context 'an order with a sweater' do
         let(:variant) { sweater }
@@ -448,6 +712,29 @@ RSpec.describe "Taxation system integration tests" do
         end
       end
 
+      context 'an order with a sweater and a shipment' do
+        let(:variant) { sweater }
+
+        before { 2.times { order.next! } }
+
+        it 'it has a shipment with a price of 16.00' do
+          pending 'No amount method yet on the shipment'
+          expect(shipment.amount).to eq(16.00)
+        end
+
+        it 'has a shipment with no included tax' do
+          expect(shipment.included_tax_total).to eq(0)
+        end
+
+        it 'has a shipment with no additional tax' do
+          expect(shipment.additional_tax_total).to eq(0)
+        end
+
+        it 'has a shipping rate that correctly reflects the shipment' do
+          expect(shipping_rate.display_price).to eq("$16.00")
+        end
+      end
+
       # A fictional case with one applicable rate
       context 'an order with a download' do
         let(:variant) { download }
@@ -470,6 +757,31 @@ RSpec.describe "Taxation system integration tests" do
 
         it 'has 15% additional tax' do
           expect(line_item.additional_tax_total).to eq(2)
+        end
+      end
+
+      context 'an order with a download and a shipment' do
+        let(:variant) { download }
+
+        before { 2.times { order.next! } }
+
+        it 'it has a shipment with a price of 2.00' do
+          pending 'No amount method yet on the shipment'
+          expect(shipment.amount).to eq(2.00)
+        end
+
+        it 'has a shipment with no included tax' do
+          expect(shipment.included_tax_total).to eq(0)
+        end
+
+        it 'has a shipment with additional tax of 0.40' do
+          pending "This does not work because the shipping code does not use contains? for finding zones"
+          expect(shipment.additional_tax_total).to eq(0.40)
+        end
+
+        it 'has a shipping rate that correctly reflects the shipment' do
+          pending 'since no tax created, no correct display price'
+          expect(shipping_rate.display_price).to eq("$2.00 (+ $0.40 Federal Sales Tax)")
         end
       end
     end
