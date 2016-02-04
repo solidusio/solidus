@@ -2,15 +2,39 @@ require 'spec_helper'
 
 RSpec.describe "Taxation system integration tests" do
   let(:order) { create :order, ship_address: shipping_address }
-  let(:book_product) { create :product, price: 20, name: "Book", tax_category: books_category }
-  let(:download_product) { create :product, price: 10, name: "Download", tax_category: digital_category }
-  let(:sweater_product) { create :product, price: 30, name: "Download", tax_category: normal_category }
+  let(:book_product) do
+    create :product,
+           price: 20,
+           name: "Book",
+           tax_category: books_category,
+           shipping_category: books_shipping_category
+  end
+  let(:download_product) do
+    create :product,
+           price: 10,
+           name: "Download",
+           tax_category: digital_category,
+           shipping_category: digital_shipping_category
+  end
+  let(:sweater_product) do
+    create :product,
+           price: 30,
+           name: "Download",
+           tax_category: normal_category,
+           shipping_category: normal_shipping_category
+  end
+
   let(:book) { book_product.master }
   let(:download) { download_product.master }
   let(:sweater) { sweater_product.master }
+
   let(:books_category) { create :tax_category, name: "Books" }
   let(:normal_category) { create :tax_category, name: "Normal" }
   let(:digital_category) { create :tax_category, name: "Digital Goods" }
+
+  let(:books_shipping_category) { create :shipping_category, name: "Book Shipping" }
+  let(:normal_shipping_category) { create :shipping_category, name: "Normal Shipping" }
+  let(:digital_shipping_category) { create :shipping_category, name: "Digital Premium Download" }
 
   context 'selling from germany' do
     let(:germany) { create :country, iso: "DE" }
