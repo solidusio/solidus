@@ -60,7 +60,6 @@ RSpec.describe "Taxation system integration tests" do
 
     before do
       order.contents.add(variant)
-      Spree::Tax::OrderAdjuster.new(order).adjust!
     end
 
     let(:line_item) { order.line_items.first }
@@ -355,7 +354,6 @@ RSpec.describe "Taxation system integration tests" do
 
     before do
       order.contents.add(variant)
-      Spree::Tax::OrderAdjuster.new(order).adjust!
     end
 
     let(:line_item) { order.line_items.first }
