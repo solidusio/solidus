@@ -188,6 +188,42 @@ RSpec.describe "Taxation system integration tests" do
       end
     end
 
+    context 'to an address that does not have a zone associated' do
+      let(:shipping_address) { create :address, country_iso_code: "IT" }
+
+      context 'an order with a book' do
+        let(:variant) { book }
+
+        it 'should sell at the net price' do
+          pending "Prices have to be adjusted"
+          expect(line_item.price).to eq(18.69)
+        end
+
+        it 'is adjusted to the net price' do
+          pending 'This will turn green when the default zone is gone'
+          expect(line_item.total).to eq(18.69)
+        end
+
+        it 'has no tax adjustments' do
+          pending "Right now it gets a refund"
+          expect(line_item.adjustments.tax.count).to eq(0)
+        end
+
+        it 'has no included tax' do
+          pending 'This will turn green when the default zone is gone'
+          expect(line_item.included_tax_total).to eq(0)
+        end
+
+        it 'has no additional tax' do
+          expect(line_item.additional_tax_total).to eq(0)
+        end
+
+        it 'has a constant amount pre tax' do
+          expect(line_item.pre_tax_amount).to eq(18.69)
+        end
+      end
+    end
+
     # International delivery, no tax applies whatsoever
     context 'to anywhere else in the world' do
       let(:shipping_address) { create :address, country: world_zone.countries.first }
