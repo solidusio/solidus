@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 RSpec.describe "Taxation system integration tests" do
-  let(:order) { create :order }
+  let(:order) { create :order, ship_address: shipping_address }
   let(:book_product) { create :product, price: 20, name: "Book", tax_category: books_category }
   let(:download_product) { create :product, price: 10, name: "Download", tax_category: digital_category }
   let(:sweater_product) { create :product, price: 30, name: "Download", tax_category: normal_category }
@@ -59,7 +59,6 @@ RSpec.describe "Taxation system integration tests" do
     end
 
     before do
-      allow(order).to receive(:tax_zone) { tax_zone }
       order.contents.add(variant)
       Spree::Tax::OrderAdjuster.new(order).adjust!
     end
@@ -67,7 +66,7 @@ RSpec.describe "Taxation system integration tests" do
     let(:line_item) { order.line_items.first }
 
     context 'to germany' do
-      let(:tax_zone) { germany_zone }
+      let(:shipping_address) { create :address, country_iso_code: "DE" }
 
       context 'an order with a book' do
         let(:variant) { book }
@@ -119,7 +118,7 @@ RSpec.describe "Taxation system integration tests" do
     end
 
     context 'to romania' do
-      let(:tax_zone) { romania_zone }
+      let(:shipping_address) { create :address, country_iso_code: "RO" }
 
       context 'an order with a book' do
         let(:variant) { book }
@@ -191,7 +190,7 @@ RSpec.describe "Taxation system integration tests" do
 
     # International delivery, no tax applies whatsoever
     context 'to anywhere else in the world' do
-      let(:tax_zone) { world_zone }
+      let(:shipping_address) { create :address, country: world_zone.countries.first }
 
       context 'an order with a book' do
         let(:variant) { book }
@@ -282,8 +281,8 @@ RSpec.describe "Taxation system integration tests" do
 
   # Choosing New York here because in the US, states matter
   context 'selling from new york' do
-    let(:new_york) { create(:state) }
-    let(:united_states) { create(:country, states: [new_york]) }
+    let(:new_york) { create(:state, state_code: "NY") }
+    let(:united_states) { new_york.country }
     let(:new_york_zone) { create(:zone, states: [new_york]) }
     let(:unites_states_zone) { create(:zone, countries: [united_states]) }
     # Creating two rates for books here to
@@ -319,7 +318,6 @@ RSpec.describe "Taxation system integration tests" do
     end
 
     before do
-      allow(order).to receive(:tax_zone) { tax_zone }
       order.contents.add(variant)
       Spree::Tax::OrderAdjuster.new(order).adjust!
     end
@@ -327,7 +325,7 @@ RSpec.describe "Taxation system integration tests" do
     let(:line_item) { order.line_items.first }
 
     context 'to new york' do
-      let(:tax_zone) { new_york_zone }
+      let(:shipping_address) { create :address, state_code: "NY" }
 
       # A fictional case for an item with two applicable rates
       context 'an order with a book' do
@@ -419,7 +417,7 @@ RSpec.describe "Taxation system integration tests" do
     end
 
     context 'when no tax zone is given' do
-      let(:tax_zone) { nil }
+      let(:shipping_address) { nil }
 
       context 'and we buy a book' do
         let(:variant) { book }
