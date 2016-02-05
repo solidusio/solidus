@@ -5,14 +5,11 @@ module Spree
 
       after_action :sign_in_if_change_own_password, only: :update
 
-      # http://spreecommerce.com/blog/2010/11/02/json-hijacking-vulnerability/
-      before_action :check_json_authenticity, only: :index
       before_filter :load_roles, :load_stock_locations, only: [:edit, :new]
 
       def index
         respond_with(@collection) do |format|
           format.html
-          format.json { render json: json_data }
         end
       end
 
@@ -126,20 +123,6 @@ module Spree
       def user_destroy_with_orders_error
         invoke_callbacks(:destroy, :fails)
         render status: :forbidden, text: Spree.t(:error_user_destroy_with_orders)
-      end
-
-      # Allow different formats of json data to suit different ajax calls
-      def json_data
-        (json_format = params[:json_format]) || 'default'
-        case json_format
-        when 'basic'
-          collection.map { |u| { 'id' => u.id, 'name' => u.email } }.to_json
-        else
-          address_fields = [:firstname, :lastname, :address1, :address2, :city, :zipcode, :phone, :state_name, :state_id, :country_id, :country_iso]
-          includes = { only: address_fields, include: { state: { only: :name }, country: { only: :name } } }
-
-          collection.to_json(only: [:id, :email], include:                                { bill_address: includes, ship_address: includes })
-        end
       end
 
       def sign_in_if_change_own_password
