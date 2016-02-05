@@ -2,7 +2,15 @@ class Spree::Api::ResourceController < Spree::Api::BaseController
   before_action :load_resource, only: [:show, :update, :destroy]
 
   def index
-    @collection = model_class.accessible_by(current_ability, :read).ransack(params[:q]).result.page(params[:page]).per(params[:per_page])
+    collection_scope = model_class.accessible_by(current_ability, :read)
+    if params[:ids]
+      ids = params[:ids].split(",").flatten
+      collection_scope = collection_scope.where(id: ids)
+    else
+      collection_scope = collection_scope.ransack(params[:q]).result
+    end
+
+    @collection = collection_scope.page(params[:page]).per(params[:per_page])
     instance_variable_set("@#{controller_name}", @collection)
 
     respond_with(@collection)

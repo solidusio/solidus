@@ -59,10 +59,39 @@ module Spree
         it "returns widgets" do
           api_get :index, token: admin_user.spree_api_key
           expect(response).to be_success
-          expect(json_response['widgets']).to include(
+          expect(json_response['widgets']).to include(hash_including(
             'name' => 'a widget',
             'position' => 1
-          )
+          ))
+        end
+
+        context "specifying ids" do
+          let!(:widget2) { Widget.create!(name: "a widget") }
+
+          it "returns both widgets from comma separated string" do
+            api_get :index, ids: [widget.id, widget2.id].join(','), token: admin_user.spree_api_key
+            expect(response).to be_success
+            expect(json_response['widgets'].size).to eq 2
+          end
+
+          it "returns both widgets from multiple arguments" do
+            api_get :index, ids: [widget.id, widget2.id], token: admin_user.spree_api_key
+            expect(response).to be_success
+            expect(json_response['widgets'].size).to eq 2
+          end
+
+          it "returns one requested widgets" do
+            api_get :index, ids: widget2.id.to_s, token: admin_user.spree_api_key
+            expect(response).to be_success
+            expect(json_response['widgets'].size).to eq 1
+            expect(json_response['widgets'][0]['id']).to eq widget2.id
+          end
+
+          it "returns no widgets if empty" do
+            api_get :index, ids: '', token: admin_user.spree_api_key
+            expect(response).to be_success
+            expect(json_response['widgets']).to be_empty
+          end
         end
       end
     end
