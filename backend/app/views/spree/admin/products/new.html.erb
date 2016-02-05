@@ -7,7 +7,7 @@
     <legend align="center"><%= Spree.t(:new_product) %></legend>
 
     <%= f.field_container :name do %>
-      <%= f.label :name, Spree.t(:name), class: 'required' %><br />
+      <%= f.label :name, class: 'required' %><br />
       <%= f.text_field :name, :class => 'fullwidth title', :required => true %>
       <%= f.error_message_on :name %>
     <% end %>
@@ -25,14 +25,14 @@
 
       <div data-hook="new_product_prototype" class="four columns">
         <%= f.field_container :prototype do %>
-          <%= f.label :prototype_id, Spree.t(:prototype) %><br />
+          <%= f.label :prototype_id, Spree::Prototype.model_name.human %><br />
           <%= f.collection_select :prototype_id, Spree::Prototype.all, :id, :name, {:include_blank => true}, {:class => 'select2 fullwidth'} %>
         <% end %>
       </div>
 
       <div data-hook="new_product_price" class="four columns">
         <%= f.field_container :price do %>
-          <%= f.label :price, Spree.t(:master_price), class: 'required' %><br />
+          <%= f.label :price, class: 'required' %><br />
           <%= f.text_field :price, :value => number_to_currency(@product.price, :unit => ''), :class => 'fullwidth', :required => true %>
           <%= f.error_message_on :price %>
         <% end %>
@@ -40,7 +40,7 @@
 
       <div data-hook="new_product_available_on" class="omega four columns">
         <%= f.field_container :available_on do %>
-          <%= f.label :available_on, Spree.t(:available_on) %>
+          <%= f.label :available_on %>
           <%= f.error_message_on :available_on %>
           <%= f.text_field :available_on, :class => 'datepicker fullwidth' %>
         <% end %>
@@ -51,7 +51,7 @@
     <div class='row'>
       <div data-hook="new_product_shipping_category" class="alpha four columns">
         <%= f.field_container :shipping_category do %>
-          <%= f.label :shipping_category_id, Spree.t(:shipping_categories), class: 'required' %><br />
+          <%= f.label :shipping_category_id, class: 'required' %><br />
           <%= f.collection_select(:shipping_category_id, @shipping_categories, :id, :name, { :include_blank => Spree.t('match_choices.none') }, { :class => 'select2 fullwidth', :required => true }) %>
           <%= f.error_message_on :shipping_category_id %>
         <% end %>
