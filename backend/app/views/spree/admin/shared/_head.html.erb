@@ -24,6 +24,10 @@
     */
     .flash-wrapper { position: static; }
   </style>
+<%- elsif Rails.env.development? %>
+  <style>
+    .translation_missing { background: red; }
+  </style>
 <%- end %>
 
 

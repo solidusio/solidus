@@ -48,6 +48,8 @@ Capybara.save_and_open_page_path = ENV['CIRCLE_ARTIFACTS'] if ENV['CIRCLE_ARTIFA
 require 'capybara/poltergeist'
 Capybara.javascript_driver = :poltergeist
 
+ActionView::Base.raise_on_missing_translations = true
+
 RSpec.configure do |config|
   config.color = true
   config.infer_spec_type_from_file_location!
