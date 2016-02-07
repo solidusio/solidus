@@ -117,9 +117,14 @@ module Spree
     preference :currency, :string, default: "USD"
 
     # @!attribute [rw] default_country_id
-    #   @deprecated
+    #   @deprecated Use the default country ISO preference instead
     #   @return [Integer,nil] id of {Country} to be selected by default in dropdowns (default: nil)
     preference :default_country_id, :integer
+
+    # @!attribute [rw] default_country_iso
+    #   Default customer country
+    #   @return [String] id of {Country} to be selected by default in dropdowns (default: "US")
+    preference :default_country_iso, :string, default: 'US'
 
     # @!attribute [rw] expedited_exchanges
     #   Kicks off an exchange shipment upon return authorization save.
