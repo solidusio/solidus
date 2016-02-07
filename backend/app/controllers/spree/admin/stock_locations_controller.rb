@@ -6,15 +6,11 @@ module Spree
       private
 
       def set_country
-          if Spree::Config[:default_country_id].present?
-            @stock_location.country = Spree::Country.find(Spree::Config[:default_country_id])
-          else
-            @stock_location.country = Spree::Country.find_by!(iso: 'US')
-          end
+        @stock_location.country = Spree::Country.default
 
       rescue ActiveRecord::RecordNotFound
-          flash[:error] = Spree.t(:stock_locations_need_a_default_country)
-          redirect_to(admin_stock_locations_path) && return
+        flash[:error] = Spree.t(:stock_locations_need_a_default_country)
+        redirect_to(admin_stock_locations_path) && return
       end
     end
   end

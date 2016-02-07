@@ -13,9 +13,7 @@ module Spree
     end
 
     def self.default
-      if default_country_id = Spree::Config[:default_country_id]
-        find_by_id(default_country_id)
-      end || first
+      find_by!(iso: Spree::Config.default_country_iso)
     end
 
     def <=>(other)
