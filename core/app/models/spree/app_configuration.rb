@@ -122,8 +122,8 @@ module Spree
     preference :default_country_id, :integer
 
     # @!attribute [rw] default_country_iso
-    #   Default customer country
-    #   @return [String] id of {Country} to be selected by default in dropdowns (default: "US")
+    #   Default customer country ISO code
+    #   @return [String] Two-letter ISO code of a {Spree::Country} to assumed as the country of an unidentified customer (default: "US")
     preference :default_country_iso, :string, default: 'US'
 
     # @!attribute [rw] expedited_exchanges
