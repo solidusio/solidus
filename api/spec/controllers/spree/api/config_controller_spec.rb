@@ -2,6 +2,7 @@ require 'spec_helper'
 
 module Spree
   describe Api::ConfigController, type: :controller do
+    let!(:default_country) { create :country, iso: "US"}
     render_views
 
     before do
@@ -17,7 +18,8 @@ module Spree
     it "returns some configuration settings" do
       api_get :show
       expect(response).to be_success
-      expect(json_response["default_country_id"]).to eq(Spree::Config[:default_country_id])
+      expect(json_response["default_country_iso"]).to eq("US")
+      expect(json_response["default_country_id"]).to eq(default_country.id)
     end
   end
 end
