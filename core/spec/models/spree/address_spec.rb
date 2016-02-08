@@ -165,18 +165,20 @@ describe Spree::Address, type: :model do
 
       context 'has a default country' do
         before do
-          Spree::Config[:default_country_id] = default_country.id
+          Spree::Config[:default_country_iso] = default_country.iso
         end
 
-        it "sets up a new record with Spree::Config[:default_country_id]" do
+        it "sets up a new record with Spree::Config[:default_country_iso]" do
           expect(Spree::Address.build_default.country).to eq default_country
         end
       end
 
       # Regression test for https://github.com/spree/spree/issues/1142
-      it "uses the first available country if :default_country_id is set to an invalid value" do
-        Spree::Config[:default_country_id] = "0"
-        expect(Spree::Address.build_default.country).to eq default_country
+      it "raises ActiveRecord::RecordNotFound if :default_country_iso is set to an invalid value" do
+        Spree::Config[:default_country_iso] = "00"
+        expect {
+          Spree::Address.build_default.country
+        }.to raise_error(ActiveRecord::RecordNotFound)
       end
     end
   end
