@@ -22,7 +22,7 @@ describe "Address", type: :feature, inaccessible: true do
     let!(:canada) { create(:country, name: "Canada", states_required: true, iso: "CA") }
     let!(:uk) { create(:country, name: "United Kingdom", states_required: true, iso: "GB") }
 
-    before { Spree::Config[:default_country_id] = uk.id }
+    before { Spree::Config[:default_country_iso] = uk.iso }
 
     context "but has no state" do
       it "shows the state input field" do
@@ -47,7 +47,7 @@ describe "Address", type: :feature, inaccessible: true do
     end
 
     context "user changes to country without states required" do
-      let!(:france) { create(:country, name: "France", states_required: false, iso: "FRA") }
+      let!(:france) { create(:country, name: "France", states_required: false, iso: "FR") }
 
       it "clears the state name" do
         click_button "Checkout"
@@ -63,7 +63,7 @@ describe "Address", type: :feature, inaccessible: true do
   end
 
   context "country does not require state", js: true do
-    let!(:france) { create(:country, name: "France", states_required: false, iso: "FRA") }
+    let!(:france) { create(:country, name: "France", states_required: false, iso: "FR") }
 
     it "shows a disabled state input field" do
        click_button "Checkout"
