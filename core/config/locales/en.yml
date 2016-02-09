@@ -143,6 +143,10 @@ en:
       spree/refund:
         amount: Amount
         refund_reason_id: Reason
+      spree/refund_reason:
+        active: Active
+        name: Name
+        code: Code
       spree/return_authorization:
         amount: Amount
       spree/return_reason:

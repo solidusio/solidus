@@ -1,7 +1,7 @@
 <%= render partial: 'spree/admin/shared/configuration_menu' %>
 
 <% content_for :page_title do %>
-  <%= Spree.t(:refund_reasons) %>
+  <%= Spree::RefundReason.model_name.human(count: :other) %>
 <% end %>
 
 <% content_for :page_actions do %>
@@ -23,8 +23,8 @@
     </colgroup>
     <thead>
       <tr data-hook="named_types_header">
-        <th><%= Spree.t(:name) %></th>
-        <th><%= Spree.t(:active) %></th>
+        <th><%= Spree::RefundReason.human_attribute_name(:name) %></th>
+        <th><%= Spree::RefundReason.human_attribute_name(:active) %></th>
         <th class="actions"></th>
       </tr>
     </thead>
