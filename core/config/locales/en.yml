@@ -160,6 +160,9 @@ en:
         active: Active
         name: Name
         code: Code
+      spree/reimbursement_type:
+        name: Name
+        type: Type
       spree/return_authorization:
         amount: Amount
       spree/return_reason:
