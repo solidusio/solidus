@@ -12,7 +12,7 @@
 <%= render :partial => 'spree/admin/shared/order_tabs', :locals => { :current => 'Return Authorizations' } %>
 
 <% content_for :page_title do %>
-  <i class="fa fa-arrow-right"></i> <%= Spree.t(:return_authorization) %> <%= @return_authorization.number %> (<%= Spree.t(@return_authorization.state.downcase) %>)
+  <i class="fa fa-arrow-right"></i> <%= Spree::ReturnAuthorization.model_name.human %> <%= @return_authorization.number %> (<%= Spree.t(@return_authorization.state.downcase) %>)
 <% end %>
 
 

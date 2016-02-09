@@ -184,9 +184,12 @@ en:
         created_at: "Date/Time"
       spree/return_authorization:
         amount: Amount
+        pre_tax_total: Pre-Tax Total
       spree/return_item:
         acceptance_status: Acceptance status
         acceptance_status_errors: Acceptance errors
+        amount: Amount Before Sales Tax
+        charged: Charged
         exchange_variant: Exchange for
         inventory_unit_state: State
         item_received?: "Item Received?"
@@ -198,6 +201,10 @@ en:
       spree/return_reason:
         name: Name
         active: Active
+        created_at: "Date/Time"
+        memo: Memo
+        number: RMA Number
+        state: State
       spree/role:
         name: Name
       spree/shipping_category:
