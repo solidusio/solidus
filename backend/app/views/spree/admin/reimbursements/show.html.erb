@@ -1,7 +1,7 @@
 <%= render :partial => 'spree/admin/shared/order_tabs', :locals => { :current => 'Customer Returns' } %>
 
 <% content_for :page_title do %>
-  <i class="fa fa-arrow-right"></i> <%= Spree.t(:reimbursement) %> #<%= @reimbursement.number %>
+  <i class="fa fa-arrow-right"></i> <%= Spree::Reimbursement.model_name.human %> #<%= @reimbursement.number %>
 <% end %>
 
 <% content_for :page_actions do %>
@@ -15,12 +15,12 @@
   <table class="index reimbursement-reimbursement-items">
     <thead>
       <tr>
-        <th><%= Spree.t(:product) %></th>
-        <th><%= Spree.t(:preferred_reimbursement_type) %></th>
-        <th><%= Spree.t(:reimbursement_type_override) %></th>
-        <th><%= Spree.t(:exchange_for) %></th>
-        <th><%= Spree.t(:amount) %></th>
-        <th><%= Spree.t(:total) %></th>
+        <th><%= Spree::Product.model_name.human %></th>
+        <th><%= Spree::ReturnItem.human_attribute_name(:preferred_reimbursement_type_id) %></th>
+        <th><%= Spree::ReturnItem.human_attribute_name(:override_reimbursement_type_id) %></th>
+        <th><%= Spree::ReturnItem.human_attribute_name(:exchange_variant) %></th>
+        <th><%= Spree::ReturnItem.human_attribute_name(:amount) %></th>
+        <th><%= Spree::ReturnItem.human_attribute_name(:total) %></th>
       </tr>
     </thead>
     <tbody>
@@ -54,12 +54,12 @@
 </fieldset>
 
 <fieldset class="no-border-bottom">
-  <legend align='center'><%= Spree.t(:refunds) %></legend>
+  <legend align='center'><%= Spree::Refund.model_name.human %></legend>
   <table class="index reimbursement-refunds">
     <thead data-hook="customer_return_header">
       <tr>
-        <th><%= Spree.t(:description) %></th>
-        <th><%= Spree.t(:amount) %></th>
+        <th><%= Spree::Refund.human_attribute_name(:description) %></th>
+        <th><%= Spree::Refund.human_attribute_name(:amount) %></th>
       </tr>
     </thead>
     <tbody>
@@ -79,7 +79,7 @@
     <thead data-hook="customer_return_header">
       <tr>
         <th><%= Spree.t(:description) %></th>
-        <th><%= Spree.t(:amount) %></th>
+        <th><%= Spree::ReimbursementCredit.human_attribute_name(:amount) %></th>
       </tr>
     </thead>
     <tbody>

@@ -16,12 +16,12 @@
     <table class="index reimbursement-return-items">
       <thead>
         <tr>
-          <th><%= Spree.t(:product) %></th>
-          <th><%= Spree.t(:preferred_reimbursement_type) %></th>
-          <th><%= Spree.t(:reimbursement_type_override) %></th>
-          <th><%= Spree.t(:pre_tax_refund_amount) %></th>
-          <th><%= Spree.t(:total) %></th>
-          <th><%= Spree.t(:exchange_for) %></th>
+          <th><%= Spree::Product.model_name.human %></th>
+          <th><%= Spree::ReturnItem.human_attribute_name(:preferred_reimbursement_type_id) %></th>
+          <th><%= Spree::ReturnItem.human_attribute_name(:override_reimbursement_type_id) %></th>
+          <th><%= Spree::ReturnItem.human_attribute_name(:amount) %></th>
+          <th><%= Spree::ReturnItem.human_attribute_name(:total) %></th>
+          <th><%= Spree::ReturnItem.human_attribute_name(:exchange_variant) %></th>
         </tr>
       </thead>
       <tbody>
@@ -76,9 +76,9 @@
   <table class="index calculated-reimbursements">
     <thead data-hook="customer_return_header">
       <tr>
-        <th><%= Spree.t(:reimbursement_type) %></th>
+        <th><%= Spree::ReimbursementType.model_name.human %></th>
         <th><%= Spree.t(:description) %></th>
-        <th><%= Spree.t(:amount) %></th>
+        <th><%= Spree::Reimbursement.human_attribute_name(:total) %></th>
       </tr>
     </thead>
     <tbody>
@@ -93,7 +93,7 @@
   </table>
   <% if @order.has_non_reimbursement_related_refunds? %>
     <span class="red">
-      <%= "#{Spree.t('note')}: #{Spree.t('this_order_has_already_received_a_refund')}. #{Spree.t('make_sure_the_above_reimbursement_amount_is_correct')}." %>
+      <%= Spree.t(:note_already_received_a_refund) %>
     </span>
   <% end %>
   <div class="form-buttons filter-actions actions" data-hook="reimburse-buttons">
