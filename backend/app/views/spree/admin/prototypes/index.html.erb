@@ -1,5 +1,5 @@
 <% content_for :page_title do %>
-  <%= Spree.t(:prototypes) %>
+  <%= Spree::Prototype.model_name.human(count: :other) %>
 <% end %>
 
 <% content_for :page_actions do %>
@@ -21,7 +21,7 @@
   </colgroup>
   <thead>
     <tr data-hook="prototypes_header">
-      <th><%= Spree.t(:name) %></th>
+      <th><%= Spree::Prototype.human_attribute_name(:name) %></th>
       <th class="actions"></th>
     </tr>
   </thead>
