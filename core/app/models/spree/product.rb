@@ -199,10 +199,10 @@ module Spree
     # @return [Hash<Spree::OptionType, Array<Spree::OptionValue>>] all option types and option values
     # associated with the products variants grouped by option type
     def variant_option_values_by_option_type(variant_scope = nil)
-      option_value_ids = Spree::OptionValuesVariant.joins(:variant)
+      option_value_scope = Spree::OptionValuesVariant.joins(:variant)
         .where(spree_variants: { product_id: id })
-        .merge(variant_scope)
-        .distinct.pluck(:option_value_id)
+      option_value_scope = option_value_scope.merge(variant_scope) if variant_scope
+      option_value_ids = option_value_scope.distinct.pluck(:option_value_id)
       Spree::OptionValue.where(id: option_value_ids).
         includes(:option_type).
         order("#{Spree::OptionType.table_name}.position, #{Spree::OptionValue.table_name}.position").
