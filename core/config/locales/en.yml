@@ -190,6 +190,9 @@ en:
       spree/address:
         one: Address
         other: Addresses
+      spree/adjustment:
+        one: Adjustment
+        other: Adjustments
       spree/adjustment_reason:
         one: Adjustment Reason
         other: Adjustment Reasons
