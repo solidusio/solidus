@@ -1081,6 +1081,7 @@ en:
     no_stock_locations_found: No stock locations found
     no_tracking_present: No tracking details provided.
     no_variants_found: No variants found.
+    no_variants_found_try_again: No variants found. Try changing the search values.
     none: None
     none_selected: None Selected
     normal_amount: Normal Amount
