@@ -193,6 +193,9 @@ en:
       spree/adjustment_reason:
         one: Adjustment Reason
         other: Adjustment Reasons
+      spree/calculator:
+        one: Calculator
+        other: Calculators
       spree/country:
         one: Country
         other: Countries
