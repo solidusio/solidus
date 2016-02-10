@@ -9,10 +9,12 @@ module Spree
       end
 
       def update
-        current_store.update_attributes store_params
-
-        flash[:success] = Spree.t(:successfully_updated, resource: Spree.t(:general_settings))
-        redirect_to edit_admin_general_settings_path
+        if @store.update_attributes(store_params)
+          flash[:success] = Spree.t(:successfully_updated, resource: Spree.t(:general_settings))
+          redirect_to edit_admin_general_settings_path
+        else
+          render :edit
+        end
       end
 
       def clear_cache
