@@ -13,7 +13,12 @@ module Spree
     end
 
     def self.default
-      find_by!(iso: Spree::Config.default_country_iso)
+      if Spree::Config.default_country_id
+        ActiveSupport::Deprecation.warn("Setting your default country via its ID is deprecated. Please set your default country via the `default_country_iso` setting.", caller)
+        find_by(id: Spree::Config.default_country_id) || find_by!(iso: Spree::Config.default_country_iso)
+      else
+        find_by!(iso: Spree::Config.default_country_iso)
+      end
     end
 
     def <=>(other)
