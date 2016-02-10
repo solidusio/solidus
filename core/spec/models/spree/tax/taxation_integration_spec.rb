@@ -40,6 +40,10 @@ RSpec.describe "Taxation system integration tests" do
   let(:shipment) { order.shipments.first }
   let(:shipping_rate) { shipment.shipping_rates.first }
 
+  after do
+    Spree::Config.default_tax_address = nil
+  end
+
   context 'selling from germany' do
     let(:germany) { create :country, iso: "DE" }
     # The weird default_tax boolean is what makes this context one with default included taxes
@@ -114,6 +118,8 @@ RSpec.describe "Taxation system integration tests" do
     end
 
     before do
+      Spree::Config[:default_country_id] = germany.id
+      Spree::Config.default_tax_address = Spree::Address.build_default.freeze
       order.contents.add(variant)
     end
 
@@ -378,7 +384,6 @@ RSpec.describe "Taxation system integration tests" do
         end
 
         it 'is adjusted to the net price' do
-          pending 'This will turn green when the default zone is gone'
           expect(line_item.total).to eq(18.69)
         end
 
@@ -388,11 +393,11 @@ RSpec.describe "Taxation system integration tests" do
         end
 
         it 'has no included tax' do
-          pending 'This will turn green when the default zone is gone'
           expect(line_item.included_tax_total).to eq(0)
         end
 
         it 'has no additional tax' do
+          pending 'but right now it gets a refund'
           expect(line_item.additional_tax_total).to eq(0)
         end
 
@@ -786,7 +791,7 @@ RSpec.describe "Taxation system integration tests" do
       end
     end
 
-    context 'when no tax zone is given' do
+    context 'to a customer with no known address' do
       let(:shipping_address) { nil }
 
       context 'and we buy a book' do

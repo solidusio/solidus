@@ -156,25 +156,23 @@ describe Spree::TaxRate, type: :model do
   end
 
   context ".adjust" do
-    let(:zone) { stub_model(Spree::Zone) }
-
     context "with line items" do
-      let(:line_item) { stub_model(Spree::LineItem) }
+      let(:line_item) { build_stubbed(:line_item) }
 
       it 'should emit a deprecation warning and call the item adjuster' do
         expect(ActiveSupport::Deprecation).to receive(:warn)
         expect(Spree::Tax::ItemAdjuster).to receive_message_chain(:new, :adjust!)
-        Spree::TaxRate.adjust(zone, [line_item])
+        Spree::TaxRate.adjust(nil, [line_item])
       end
     end
 
     context "with shipments" do
-      let(:shipment) { stub_model(Spree::Shipment) }
+      let(:shipment) { build_stubbed(:shipment) }
 
       it 'should emit a deprecation warning and call the item adjuster' do
         expect(ActiveSupport::Deprecation).to receive(:warn)
         expect(Spree::Tax::ItemAdjuster).to receive_message_chain(:new, :adjust!)
-        Spree::TaxRate.adjust(zone, [shipment])
+        Spree::TaxRate.adjust(nil, [shipment])
       end
     end
   end

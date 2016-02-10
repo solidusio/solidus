@@ -49,10 +49,19 @@ describe Spree::Reimbursement, type: :model do
     let!(:adjustments)            { [] } # placeholder to ensure it gets run prior the "before" at this level
 
     let!(:tax_rate)               { nil }
-    let!(:tax_zone)               { create :zone, :with_country, default_tax: true }
+    let(:address) { create(:address) }
+    let!(:tax_zone)               { create :zone, countries: [address.country], default_tax: true }
     let(:shipping_method)         { create :shipping_method, zones: [tax_zone] }
     let(:variant)                 { create :variant }
-    let(:order)                   { create(:order_with_line_items, state: 'payment', line_items_attributes: [{ variant: variant, price: line_items_price }], shipment_cost: 0, shipping_method: shipping_method) }
+    let(:order) do
+      create(:order_with_line_items,
+        state: 'payment',
+        line_items_attributes: [{ variant: variant, price: line_items_price }],
+        shipment_cost: 0,
+        shipping_method: shipping_method,
+        ship_address: address
+        )
+    end
     let(:line_items_price)        { BigDecimal.new(10) }
     let(:line_item)               { order.line_items.first }
     let(:inventory_unit)          { line_item.inventory_units.first }
@@ -62,12 +71,13 @@ describe Spree::Reimbursement, type: :model do
     let(:return_item)             { build(:return_item, inventory_unit: inventory_unit) }
 
     let!(:default_refund_reason) { Spree::RefundReason.find_or_create_by!(name: Spree::RefundReason::RETURN_PROCESSING_REASON, mutable: false) }
-
+    let(:default_tax_address) { nil }
     let(:reimbursement) { create(:reimbursement, customer_return: customer_return, order: order, return_items: [return_item]) }
 
     subject { reimbursement.perform! }
 
     before do
+      Spree::Config.default_tax_address = default_tax_address
       order.shipments.each do |shipment|
         shipment.inventory_units.update_all state: 'shipped'
         shipment.update_column('state', 'shipped')
@@ -82,6 +92,10 @@ describe Spree::Reimbursement, type: :model do
       payment.capture!
       customer_return.save!
       return_item.accept!
+    end
+
+    after do
+      Spree::Config.default_tax_address = nil
     end
 
     it "refunds the total amount" do
@@ -112,6 +126,8 @@ describe Spree::Reimbursement, type: :model do
     end
 
     context 'with included tax' do
+      let(:default_tax_address) { address }
+
       let!(:tax_rate) { create(:tax_rate, name: "VAT Tax", amount: 0.1, included_in_price: true, zone: tax_zone) }
 
       it 'saves the included tax and refunds the total' do

@@ -25,7 +25,8 @@ describe Spree::Shipment, type: :model do
   let(:line_item) { mock_model(Spree::LineItem, variant: variant) }
 
   describe "precision of pre_tax_amount" do
-    let!(:line_item) { create :line_item, pre_tax_amount: 4.2051 }
+    let(:order) { Spree::Order.create! }
+    let(:line_item) { create :line_item, order: order, pre_tax_amount: 4.2051 }
 
     it "keeps four digits of precision even when reloading" do
       expect(line_item.reload.pre_tax_amount).to eq(4.2051)

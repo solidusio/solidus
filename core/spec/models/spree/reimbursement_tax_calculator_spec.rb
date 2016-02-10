@@ -1,11 +1,12 @@
 require 'spec_helper'
 
 describe Spree::ReimbursementTaxCalculator, type: :model do
-  let!(:tax_rate) { nil }
-
-  let(:reimbursement) { create(:reimbursement, return_items_count: 1) }
+  let(:order) { create(:shipped_order, line_items_count: 1, ship_address: address) }
+  let(:customer_return) { create(:customer_return_with_accepted_items, shipped_order: order, line_items_count: 1) }
+  let(:reimbursement) { create(:reimbursement, customer_return: customer_return, return_items_count: 1) }
   let(:return_item) { reimbursement.return_items.first }
   let(:line_item) { return_item.inventory_unit.line_item }
+  let(:address) { create(:address) }
 
   subject do
     Spree::ReimbursementTaxCalculator.call(reimbursement)
@@ -24,7 +25,7 @@ describe Spree::ReimbursementTaxCalculator, type: :model do
 
   context 'with additional tax' do
     let!(:tax_rate) { create(:tax_rate, name: "Sales Tax", amount: 0.10, included_in_price: false, zone: tax_zone) }
-    let(:tax_zone) { create(:zone, :with_country, default_tax: true) }
+    let(:tax_zone) { create(:zone, countries: [address.country], default_tax: true) }
 
     it 'sets additional_tax_total on the return items' do
       subject
@@ -37,7 +38,15 @@ describe Spree::ReimbursementTaxCalculator, type: :model do
 
   context 'with included tax' do
     let!(:tax_rate) { create(:tax_rate, name: "VAT Tax", amount: 0.1, included_in_price: true, zone: tax_zone) }
-    let(:tax_zone) { create(:zone, :with_country, default_tax: true) }
+    let(:tax_zone) { create(:zone, countries: [address.country], default_tax: true) }
+
+    before do
+      Spree::Config.default_tax_address = address
+    end
+
+    after do
+      Spree::Config.default_tax_address = nil
+    end
 
     it 'sets included_tax_total on the return items' do
       subject
