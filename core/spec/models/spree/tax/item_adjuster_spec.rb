@@ -16,10 +16,10 @@ RSpec.describe Spree::Tax::ItemAdjuster do
   end
 
   describe '#adjust!' do
-    let(:order) { Spree::Order.new(ship_address: address) }
-
     context 'when the order has no tax address' do
-      let(:address) { nil }
+      before do
+        expect(order).to receive(:tax_address).and_return(nil)
+      end
 
       it 'returns nil early' do
         expect(adjuster.adjust!).to be_nil
@@ -27,6 +27,8 @@ RSpec.describe Spree::Tax::ItemAdjuster do
     end
 
     context 'when the order has a tax address' do
+      let(:order) { Spree::Order.new(ship_address: address) }
+
       let(:item) { build_stubbed :line_item, order: order }
       let(:address) { create(:address) }
       let(:default_address) { Spree::Address.build_default }

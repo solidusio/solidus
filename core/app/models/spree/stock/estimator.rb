@@ -37,12 +37,7 @@ module Spree
           cost = shipping_method.calculator.compute(package)
           tax_category = shipping_method.tax_category
           if tax_category
-            tax_rate = tax_category.tax_rates.detect do |rate|
-              # If the rate's zone matches the order's zone, a positive adjustment will be applied.
-              # If the rate is from the default tax zone, then a negative adjustment will be applied.
-              # See the tests in shipping_rate_spec.rb for an example of this.d
-              rate.zone == order.tax_zone || rate.zone.default_tax?
-            end
+            tax_rate = tax_category.tax_rates.for_address(order.tax_address).first
           end
 
           if cost
