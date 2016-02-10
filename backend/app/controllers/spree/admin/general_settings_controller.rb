@@ -9,11 +9,6 @@ module Spree
       end
 
       def update
-        params.each do |name, value|
-          next unless Spree::Config.has_preference? name
-          Spree::Config[name] = value
-        end
-
         current_store.update_attributes store_params
 
         flash[:success] = Spree.t(:successfully_updated, resource: Spree.t(:general_settings))
