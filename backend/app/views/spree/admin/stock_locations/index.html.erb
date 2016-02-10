@@ -1,7 +1,7 @@
 <%= render :partial => 'spree/admin/shared/configuration_menu' %>
 
 <% content_for :page_title do %>
-  <%= Spree.t(:stock_locations) %>
+  <%= Spree::StockLocation.model_name.human(count: :other) %>
 <% end %>
 
 <% content_for :page_actions do %>
@@ -32,9 +32,9 @@
     <thead>
       <tr data-hook="stock_locations_header">
         <th class="no-border"></th>
-        <th><%= Spree.t(:name) %></th>
-        <th><%= Spree.t(:state) %></th>
-        <th><%= Spree.t(:stock_movements) %></th>
+        <th><%= Spree::StockLocation.human_attribute_name(:name) %></th>
+        <th><%= Spree::StockLocation.human_attribute_name(:state_id) %></th>
+        <th><%= Spree::StockMovement.model_name.human(count: :other) %></th>
         <th class="actions"></th>
       </tr>
     </thead>
@@ -53,7 +53,7 @@
           <td class="align-center"><span class="state <%= state(stock_location) %>"><%= Spree.t(state(stock_location)) %></span></td>
           <td class="align-center">
             <% if can?(:display, Spree::StockMovement) %>
-              <%= link_to Spree.t(:stock_movements), admin_stock_location_stock_movements_path(stock_location.id) %>
+              <%= link_to Spree::StockMovement.model_name.human(count: :other), admin_stock_location_stock_movements_path(stock_location.id) %>
             <% else %>
               Stock Movements
             <% end %>

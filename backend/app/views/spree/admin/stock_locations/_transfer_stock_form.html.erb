@@ -17,14 +17,14 @@
 
       <div class="five columns">
         <div class="field" id="stock_movement_variant_id_field">
-          <%= label_tag 'variant_id', Spree.t(:variant) %>
+          <%= label_tag 'variant_id', Spree::Variant.model_name.human %>
           <%= select_tag :variant_id, options_from_collection_for_select(@variants, :id, :name_and_sku), class: 'select2 fullwidth' %>
         </div>
       </div>
 
       <div class="five columns">
         <div class="field" id="stock_movement_quantity_field">
-          <%= label_tag 'quantity', Spree.t(:quantity) %>
+          <%= label_tag 'quantity', Spree::StockMovement.human_attribute_name(:quantity) %>
           <%= number_field_tag :quantity, 1, class: 'fullwidth' %>
         </div>
       </div>

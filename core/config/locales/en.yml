@@ -220,6 +220,7 @@ en:
         action: Action
         quantity: Quantity
         stock_item_id: Stock Item
+        quantity: Quantity
       spree/stock_transfer:
         created_at: Created At
         created_by_id: Created By
