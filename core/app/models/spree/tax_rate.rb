@@ -77,12 +77,16 @@ module Spree
     #
     # @deprecated Please use Spree::Tax::OrderAdjuster or Spree::Tax::ItemAdjuster instead.
     #
-    # @param [Spree::Zone] order_tax_zone is the smalles applicable zone to the order's tax address
+    # @param [Spree::Zone] _order_tax_zone will not be used
     # @param [Array<Spree::LineItem,Spree::Shipment>] items to be adjusted
-    def self.adjust(order_tax_zone, items)
+    def self.adjust(_order_tax_zone, items)
       ActiveSupport::Deprecation.warn("Please use Spree::Tax::OrderAdjuster or Spree::Tax::ItemAdjuster instead", caller)
       items.map do |item|
-        Spree::Tax::ItemAdjuster.new(item, rates_for_order_zone: for_zone(order_tax_zone)).adjust!
+        Spree::Tax::ItemAdjuster.new(
+          item,
+          order_rates: for_address(items.first.order.tax_address),
+          default_vat_rates: for_address(Spree::Address.build_default)
+        ).adjust!
       end
     end
 
@@ -104,11 +108,11 @@ module Spree
     end
 
     # Creates necessary tax adjustments for the order.
-    def adjust(order_tax_zone, item)
+    def adjust(_order_tax_zone, item)
       amount = compute_amount(item)
       return if amount == 0
 
-      included = included_in_price && default_zone_or_zone_match?(order_tax_zone)
+      included = included_in_price && !refund?(item.order.tax_address)
 
       if amount < 0
         label = Spree.t(:refund) + ' ' + create_label
@@ -125,7 +129,7 @@ module Spree
 
     # This method is used by Adjustment#update to recalculate the cost.
     def compute_amount(item)
-      if included_in_price && !default_zone_or_zone_match?(item.order.tax_zone)
+      if included_in_price && refund?(item.order.tax_address)
         # In this case, it's a refund.
         calculator.compute(item) * - 1
       else
@@ -133,11 +137,12 @@ module Spree
       end
     end
 
-    def default_zone_or_zone_match?(order_tax_zone)
-      Zone.default_tax.try!(:contains?, order_tax_zone) || zone.contains?(order_tax_zone)
-    end
-
     private
+
+    def refund?(address)
+      !(self.class.for_address(address).include?(self) &&
+      self.class.for_address(Spree::Address.build_default).include?(self))
+    end
 
     def create_label
       label = ""

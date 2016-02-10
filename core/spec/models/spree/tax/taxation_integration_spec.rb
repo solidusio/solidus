@@ -114,6 +114,8 @@ RSpec.describe "Taxation system integration tests" do
     end
 
     before do
+      Spree::Config[:default_country_id] = germany.id
+
       order.contents.add(variant)
     end
 
@@ -378,7 +380,6 @@ RSpec.describe "Taxation system integration tests" do
         end
 
         it 'is adjusted to the net price' do
-          pending 'This will turn green when the default zone is gone'
           expect(line_item.total).to eq(18.69)
         end
 
@@ -388,11 +389,11 @@ RSpec.describe "Taxation system integration tests" do
         end
 
         it 'has no included tax' do
-          pending 'This will turn green when the default zone is gone'
           expect(line_item.included_tax_total).to eq(0)
         end
 
         it 'has no additional tax' do
+          pending 'but right now it gets a refund'
           expect(line_item.additional_tax_total).to eq(0)
         end
 

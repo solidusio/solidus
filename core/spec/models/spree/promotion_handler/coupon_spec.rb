@@ -252,8 +252,9 @@ module Spree
 
         context "for an order with taxable line items" do
           before(:each) do
-            @country = create(:country)
-            @zone = create(:zone, name: "Country Zone", default_tax: true, zone_members: [])
+            @address = create(:address)
+            @country = @address.country
+            @zone = create(:zone, name: "Country Zone", countries: [@country])
             @zone.zone_members.create(zoneable: @country)
             @category = Spree::TaxCategory.create name: "Taxable Foo"
             @rate1 = Spree::TaxRate.create(
@@ -265,6 +266,7 @@ module Spree
 
             @order = Spree::Order.create!
             allow(@order).to receive_messages coupon_code: "10off"
+            allow(@order).to receive_messages tax_address: @address
           end
           context "and the product price is less than promo discount" do
             before(:each) do

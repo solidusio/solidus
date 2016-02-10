@@ -17,24 +17,20 @@ module Spree
       #
       # For further discussion, see https://github.com/spree/spree/issues/4397 and https://github.com/spree/spree/issues/4327.
       def applicable_rates
-        order_zone_tax_categories = rates_for_order_zone.map(&:tax_category)
-        default_rates_with_unmatched_tax_category = rates_for_default_zone.to_a.delete_if do |default_rate|
+        order_zone_tax_categories = order_rates.map(&:tax_category)
+        default_rates_with_unmatched_tax_category = default_vat_rates.to_a.delete_if do |default_rate|
           order_zone_tax_categories.include?(default_rate.tax_category)
         end
 
-        (rates_for_order_zone + default_rates_with_unmatched_tax_category).uniq
+        (order_rates + default_rates_with_unmatched_tax_category).uniq
       end
 
-      def rates_for_order_zone
-        @rates_for_order_zone ||= Spree::TaxRate.for_zone(order_tax_zone)
+      def order_rates
+        @order_rates ||= Spree::TaxRate.for_address(order.tax_address)
       end
 
-      def rates_for_default_zone
-        @rates_for_default_zone ||= Spree::TaxRate.for_zone(Spree::Zone.default_tax)
-      end
-
-      def order_tax_zone
-        @order_tax_zone ||= order.tax_zone
+      def default_vat_rates
+        @default_vat_rates ||= Spree::TaxRate.for_address(Spree::Address.build_default)
       end
     end
   end
