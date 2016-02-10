@@ -1,7 +1,7 @@
 <%= render 'spree/admin/shared/configuration_menu' %>
 
 <% content_for :page_title do %>
-  <%= Spree.t(:shipping_methods) %>
+  <%= Spree::ShippingMethod.model_name.human(count: :other) %>
 <% end %>
 
 <% content_for :page_actions do %>
@@ -23,10 +23,10 @@
     </colgroup>
     <thead>
       <tr data-hook="admin_shipping_methods_index_headers">
-        <th><%= Spree.t(:name) %></th>
-        <th><%= Spree.t(:zone) %></th>
-        <th><%= Spree.t(:calculator) %></th>
-        <th><%= Spree.t(:display) %></th>
+        <th><%= Spree::ShippingMethod.human_attribute_name(:name) %></th>
+        <th><%= Spree::Zone.model_name.human %></th>
+        <th><%= Spree::Calculator.model_name.human %></th>
+        <th><%= Spree::ShippingMethod.human_attribute_name(:display_on) %></th>
         <th data-hook="admin_shipping_methods_index_header_actions" class="actions"></th>
       </tr>
     </thead>
@@ -36,7 +36,7 @@
           <td class="align-center"><%= shipping_method.admin_name + ' / ' if shipping_method.admin_name.present? %><%= shipping_method.name %></td>
           <td class="align-center"><%= shipping_method.zones.collect(&:name).join(", ") if shipping_method.zones %></td>
           <td class="align-center"><%= shipping_method.calculator.description %></td>
-          <td class="align-center"><%= shipping_method.display_on.blank? ? Spree.t(:both) : Spree.t(shipping_method.display_on) %></td>
+          <td class="align-center"><%= shipping_method.display_on.blank? ? Spree.t(:both) : Spree.t(shipping_method.display_on.downcase.tr(" ", "_")) %></td>
           <td data-hook="admin_shipping_methods_index_row_actions" class="actions">
             <% if can?(:update, shipping_method) %>
               <%= link_to_edit shipping_method, :no_text => true %>
