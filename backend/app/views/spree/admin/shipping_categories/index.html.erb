@@ -1,7 +1,7 @@
 <%= render 'spree/admin/shared/configuration_menu' %>
 
 <% content_for :page_title do %>
-  <%= Spree.t(:shipping_categories) %>
+  <%= Spree::ShippingCategory.model_name.human(count: :other) %>
 <% end %>
 
 <% content_for :page_actions do %>
@@ -20,7 +20,7 @@
   </colgroup>
   <thead>
     <tr data-hook="categories_header">
-      <th><%= Spree.t(:name) %></th>
+      <th><%= Spree::ShippingCategory.human_attribute_name(:name) %></th>
       <th class="actions"></th>
     </tr>
   </thead>

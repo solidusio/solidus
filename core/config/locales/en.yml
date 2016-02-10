@@ -120,6 +120,8 @@ en:
         amount: Amount
       spree/role:
         name: Name
+      spree/shipping_category:
+        name: Name
       spree/shipping_method:
         carrier: Carrier
         service_level: Service Level
