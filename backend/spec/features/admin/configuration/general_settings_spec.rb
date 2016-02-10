@@ -14,7 +14,7 @@ describe "General Settings", type: :feature, js: true do
     click_link "General Settings"
   end
 
-  context "visiting general settings (admin)" do
+  context "visiting general settings" do
     it "should have the right content" do
       expect(page).to have_content("General Settings")
       expect(page).to have_field("store_name", with: "Test Store")
@@ -23,7 +23,7 @@ describe "General Settings", type: :feature, js: true do
     end
   end
 
-  context "editing general settings (admin)" do
+  context "editing general settings" do
     it "should be able to update the site name" do
       fill_in "store_name", with: "Spree Demo Site99"
       fill_in "store_mail_from_address", with: "spree@example.org"
@@ -32,6 +32,16 @@ describe "General Settings", type: :feature, js: true do
       assert_successful_update_message(:general_settings)
       expect(page).to have_field("store_name", with: "Spree Demo Site99")
       expect(page).to have_field("store_mail_from_address", with: "spree@example.org")
+    end
+  end
+
+  context "update fails" do
+    it "should display the error" do
+      fill_in "Site Name", with: ""
+      click_button "Update"
+
+      expect(page).to have_content("can't be blank")
+      expect(page).to have_field("Site Name", with: "")
     end
   end
 
