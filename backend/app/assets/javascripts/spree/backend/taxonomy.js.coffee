@@ -75,13 +75,12 @@ get_create_handler = (taxonomy_id) ->
     child_index = 0
     create_taxon({name, parent_id, child_index})
 
-@setup_taxonomy_tree = (taxonomy_id) ->
-  return unless taxonomy_id?
+setup_taxonomy_tree = (taxonomy_id) ->
   taxons_template_text = $('#taxons-list-template').text()
   taxons_template = Handlebars.compile(taxons_template_text)
   Handlebars.registerPartial( 'taxons', taxons_template_text )
   redraw_tree()
-  $('#taxonomy_tree').on
+  $taxonomy_tree.on
       sortstart: (e, ui) ->
         resize_placeholder(ui)
       sortover: (e, ui) ->
@@ -91,3 +90,7 @@ get_create_handler = (taxonomy_id) ->
         handle_move(ui.item) unless ui.sender?
     .on('click', '.delete-taxon-button', handle_delete)
   $('.add-taxon-button').on('click', get_create_handler(taxonomy_id))
+
+$ ->
+  if $('#taxonomy_tree').length
+    setup_taxonomy_tree($('#taxonomy_tree').data("taxonomy-id"))
