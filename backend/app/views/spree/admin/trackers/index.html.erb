@@ -1,7 +1,7 @@
 <%= render 'spree/admin/shared/configuration_menu' %>
 
 <% content_for :page_title do %>
-  <%= Spree.t(:analytics_trackers) %>
+  <%= Spree::Tracker.model_name.human(count: :other) %>
 <% end %>
 
 <% content_for :page_actions do %>
@@ -22,8 +22,8 @@
     </colgroup>
     <thead>
       <tr data-hook="admin_trackers_index_headers">
-        <th><%= Spree.t(:google_analytics_id) %></th>
-        <th><%= Spree.t(:active) %></th>
+        <th><%= Spree::Tracker.human_attribute_name(:analytics_id) %></th>
+        <th><%= Spree::Tracker.human_attribute_name(:active) %></th>
         <th class="actions"></th>
       </tr>
     </thead>
