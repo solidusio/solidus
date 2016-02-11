@@ -8,10 +8,10 @@
   </colgroup>
   <thead data-hook="bulk_variants_header">
     <tr>
-      <th><%= Spree.t('variant') %></th>
-      <th><%= Spree.t('sku') %></th>
-      <th><%= Spree.t('quantity') %></th>
-      <th><%= Spree.t('count_on_hand') %></th>
+      <th><%= Spree::Variant.model_name.human %></th>
+      <th><%= Spree::Variant.human_attribute_name(:sku) %></th>
+      <th><%= Spree::StockMovement.human_attribute_name(:quantity) %></th>
+      <th><%= Spree::StockItem.human_attribute_name(:count_on_hand) %></th>
     </tr>
   </thead>
   <tbody id="bulk_variants_tbody">

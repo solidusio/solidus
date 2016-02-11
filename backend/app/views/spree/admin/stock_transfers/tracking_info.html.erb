@@ -1,5 +1,5 @@
 <% content_for :page_title do %>
-  <%= "#{Spree.t(:ship)} #{Spree.t(:stock_transfer)} \##{@stock_transfer.number}" %>
+  <%= "#{Spree.t('actions.ship')} #{Spree::StockTransfer.model_name.human} \##{@stock_transfer.number}" %>
 <% end %>
 
 <% content_for :page_actions do %>
@@ -17,7 +17,7 @@
     <span><%= Spree.t(:you_cannot_undo_action) %></span>
   </div>
   <div class='action-consequences'>
-    <span><%= Spree.t('ship_stock_transfer.will_cause') %>:</span>
+    <span><%= Spree.t('ship_stock_transfer.will_cause') %></span>
     <ul data-hook='ship-stock-transfer-consequences'>
       <li><%= Spree.t('ship_stock_transfer.no_further_changes') %></li>
     </ul>
@@ -38,7 +38,7 @@
     </h5>
   </div>
   <div class='shipment-description'>
-    <div class='summary-field creator'><%= Spree.t(:created_by) %>: <%= @stock_transfer.created_by.email %></div>
+    <div class='summary-field creator'><%= Spree::StockTransfer.human_attribute_name(:created_by) %>: <%= @stock_transfer.created_by.email %></div>
     <div class='summary-field description'><%= @stock_transfer.description %></div>
   </div>
 </div>
@@ -48,7 +48,7 @@
     <%= form_for [:admin, @stock_transfer] do |f| %>
     <div class='field-block alpha'>
       <div class='field'>
-        <%= f.label "tracking_number", Spree.t(:tracking_number) %>
+        <%= f.label :tracking_number %>
         <%= f.text_field :tracking_number, value: @stock_transfer.tracking_number, maxlength: 255, size: 0, class: 'fullwidth' %>
       </div>
     </div>
@@ -62,6 +62,6 @@
 </fieldset>
 
 <fieldset id='stock-transfer-transfer-items'>
-  <legend align="center"><%= Spree.t(:transfer_items) %></legend>
+  <legend align="center"><%= Spree::TransferItem.model_name.human(count: :other) %></legend>
   <%= render partial: 'transfer_item_table', locals: { transfer_items: @stock_transfer.transfer_items, show_expected: true, show_received: false, show_actions: false } %>
 </fieldset>

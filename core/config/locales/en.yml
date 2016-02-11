@@ -192,6 +192,8 @@ en:
         amount_used: Amount used
         category_id: Credit Type
         memo: Memo
+      spree/stock_item:
+        count_on_hand: Count On Hand
       spree/stock_location:
         admin_name: Internal Name
         active: Active
@@ -215,6 +217,17 @@ en:
         action: Action
         quantity: Quantity
         stock_item_id: Stock Item
+      spree/stock_transfer:
+        created_at: Created At
+        created_by_id: Created By
+        description: Description
+        destination_location_id: Destination Location
+        finalized_at: Finalized At
+        finalized_by_id: Finalized By
+        number: Transfer Number
+        shipped_at: Shipped At
+        source_location_id: Source Location
+        tracking_number: Tracking Number
       spree/tax_category:
         description: Description
         name: Name
@@ -520,6 +533,7 @@ en:
       receive: Receive
       remove: Remove
       save: Save
+      ship: ship
       update: Update
       split: Split
       ship: ship
@@ -755,7 +769,7 @@ en:
     clone: Clone
     close: Close
     close_stock_transfer:
-      will_cause: Closing a stock transfer will cause the following
+      will_cause: "Closing a stock transfer will cause the following:"
       no_longer_edit: You will no longer be able to edit the stock transfer in any way
       stock_movements_created: Stock movements will be created for the received items
     code: Code
@@ -948,16 +962,12 @@ en:
     finalize: Finalize
     finalize_all_adjustments: Finalize All Adjustments
     finalize_stock_transfer:
-      will_cause: Finalizing a stock transfer will cause the following
+      will_cause: "Finalizing a stock transfer will cause the following:"
       no_longer_change_items: You will no longer be able to add or edit any transfer items
     find_a_taxon: Find a Taxon
     finalized: Finalized
     finalized_at: Finalized at
     finalized_by: Finalized by
-    close_stock_transfer:
-      will_cause: Closing a stock transfer will cause the following
-      no_longer_edit: You will no longer be able to edit the stock transfer in any way
-      stock_movements_created: Stock movements will be created for the received items
     first_item: First Item
     first_name: First Name
     first_name_begins_with: First Name Begins With
@@ -1499,7 +1509,7 @@ en:
     ship_address: Ship Address
     ship_address_required: Valid shipping address required
     ship_stock_transfer:
-      will_cause: Shipping a stock transfer will cause the following
+      will_cause: "Shipping a stock transfer will cause the following:"
       no_further_changes: You will no longer be able to make changes to the stock transfer
     ship_total: Ship Total
     shipped_at: Shipped At

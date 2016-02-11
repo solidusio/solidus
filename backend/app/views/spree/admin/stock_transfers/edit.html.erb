@@ -17,7 +17,7 @@
     <span><%= Spree.t(:you_cannot_undo_action) %></span>
   </div>
   <div class='action-consequences'>
-    <span><%= Spree.t('finalize_stock_transfer.will_cause') %>:</span>
+    <span><%= Spree.t('finalize_stock_transfer.will_cause') %></span>
     <ul data-hook='finalize-stock-transfer-consequences'>
       <li><%= Spree.t('finalize_stock_transfer.no_longer_change_items') %></li>
     </ul>
@@ -36,12 +36,12 @@
       <p><%= @stock_transfer.created_by.email %></p>
     </div>
     <%= f.field_container :description do %>
-      <%= f.label nil, Spree.t(:description) %>
+      <%= f.label :description %>
       <%= f.text_field :description, value: @stock_transfer.description, maxlength: 255, size: 0, class: 'fullwidth' %>
       <%= f.error_message_on :description %>
     <% end %>
     <%= f.field_container :destination_location do %>
-      <%= f.label nil, Spree.t(:destination_location) %>
+      <%= f.label :destination_location_id %>
       <%= f.select :destination_location_id, options_from_collection_for_select(@destination_stock_locations, :id, :name, @stock_transfer.destination_location_id), {include_blank: true}, {class: 'select2 fullwidth', "data-placeholder" => Spree.t(:select_a_stock_location)} %>
       <%= f.error_message_on :destination_location %>
     <% end %>
