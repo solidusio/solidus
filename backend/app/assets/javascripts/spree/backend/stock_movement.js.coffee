@@ -4,7 +4,7 @@ jQuery ->
     el.select2
       placeholder: "Find a stock item" # translate
       ajax:
-        url: Spree.url(Spree.routes.stock_items_api(el.data('stock-location-id')))
+        url: Spree.routes.stock_items_api(el.data('stock-location-id'))
         params: { "headers": { "X-Spree-Token": Spree.api_key } }
         data: (term, page) ->
           q:

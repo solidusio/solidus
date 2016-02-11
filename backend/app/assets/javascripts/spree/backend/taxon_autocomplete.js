@@ -6,12 +6,16 @@ var set_taxon_select = function(){
       placeholder: Spree.translations.taxon_placeholder,
       multiple: true,
       initSelection: function (element, callback) {
-        var url = Spree.url(Spree.routes.taxons_search, {
-          ids: element.val(),
-          without_children: true
-        });
-        return Spree.getJSON(url, null, function (data) {
-          return callback(data['taxons']);
+        Spree.ajax({
+          type: "GET",
+          url: Spree.routes.taxons_search,
+          data: {
+            ids: element.val(),
+            without_children: true
+          },
+          success: function (data) {
+            callback(data['taxons']);
+          }
         });
       },
       ajax: {

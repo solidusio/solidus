@@ -14,7 +14,7 @@ class window.Spree
   # Uses the JSUri library from here: https://github.com/derek-watson/jsUri
   # Thanks to Jake Moffat for the suggestion: https://twitter.com/jakeonrails/statuses/321776992221544449
   @url: (uri, query) ->
-    if Spree.env == 'development'
+    if Spree.env == 'development' || Spree.env == 'test'
       console.warn 'Spree.url is deprecated, please use Spree.ajax for your request instead.'
     if uri.path == undefined
       uri = new Uri(uri)
