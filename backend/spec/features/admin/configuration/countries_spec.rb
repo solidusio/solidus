@@ -9,7 +9,7 @@ module Spree
       click_link "New Country"
 
       fill_in "Name", with: "Brazil"
-      fill_in "Iso Name", with: "BRL"
+      fill_in "ISO Name", with: "BRL"
       click_button "Create"
 
       accept_alert do
