@@ -1,5 +1,7 @@
 # This class represents all of the actions one can take to modify an Order after it is complete
 class Spree::OrderCancellations
+  extend ActiveModel::Translation
+
   # If you need to message a third party service when an item is canceled then
   # set short_ship_tax_notifier to an object that responds to:
   #     #call(unit_cancels)

@@ -13,11 +13,11 @@
   </colgroup>
 
   <thead>
-    <th colspan="2"><%= Spree.t(:item_description) %></th>
-    <th><%= Spree.t(:quantity) %></th>
-    <th><%= Spree.t(:state) %></th>
-    <th><%= Spree.t(:shipment) %></th>
-    <th><%= Spree.t(:cancel) %></th>
+    <th colspan="2"><%= Spree::LineItem.human_attribute_name(:description) %></th>
+    <th><%= Spree::OrderCancellations.human_attribute_name(:quantity) %></th>
+    <th><%= Spree::OrderCancellations.human_attribute_name(:state) %></th>
+    <th><%= Spree::OrderCancellations.human_attribute_name(:shipment) %></th>
+    <th><%= Spree::OrderCancellations.human_attribute_name(:cancel) %></th>
   </thead>
 
   <tbody>
@@ -30,7 +30,7 @@
           <td class="inventory-unit-name">
             <%= inventory_unit.variant.product.name %><br><%= "(" + variant_options(inventory_unit.variant) + ")" unless inventory_unit.variant.option_values.empty? %>
             <% if inventory_unit.variant.sku.present? %>
-              <strong><%= Spree.t(:sku) %>:</strong> <%= inventory_unit.variant.sku %>
+              <strong><%= Spree::Variant.human_attribute_name(:sku) %>:</strong> <%= inventory_unit.variant.sku %>
             <% end %>
           </td>
           <td class="inventory-unit-quantity align-center">1</td>
