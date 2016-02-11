@@ -101,14 +101,17 @@ en:
         tax_category: Tax Category
       spree/promotion:
         advertise: Advertise
+        apply_automatically: Apply Automatically
         code: Code
         description: Description
         event_name: Event Name
-        expires_at: Expires At
+        expires_at: Expiration
         name: Name
         path: Path
-        starts_at: Starts At
-        usage_limit: Usage Limit
+        per_code_usage_limit: Per Code Usage Limit
+        promotion_category_id: Promotion Category
+        starts_at: Starts
+        usage_limit: Overall Usage Limit
       spree/promotion_category:
         name: Name
       spree/property:

@@ -72,12 +72,12 @@
     </colgroup>
     <thead>
       <tr>
-        <th><%= Spree.t(:name) %></th>
-        <th><%= Spree.t(:code) %></th>
-        <th><%= Spree.t(:description) %></th>
+        <th><%= Spree::Promotion.human_attribute_name(:name) %></th>
+        <th><%= Spree::Promotion.human_attribute_name(:code) %></th>
+        <th><%= Spree::Promotion.human_attribute_name(:description) %></th>
         <th><%= Spree.t(:usage_limit) %></th>
         <th><%= Spree.t(:promotion_uses) %></th>
-        <th><%= Spree.t(:expiration) %></th>
+        <th><%= Spree::Promotion.human_attribute_name(:expires_at) %></th>
         <th class="actions"></th>
       </tr>
     </thead>
