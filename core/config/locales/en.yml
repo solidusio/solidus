@@ -172,6 +172,7 @@ en:
         amount: Amount
         amount_used: Amount used
         category_id: Credit Type
+        created_by_id: Created By
         memo: Memo
       spree/stock_location:
         admin_name: Internal Name
@@ -549,19 +550,19 @@ en:
         user_information: User Information
       store_credits:
         add: "Add store credit"
-        new: "New store credit"
-        edit: "Editing store credit"
-        edit_amount: "Editing store credit amount"
-        invalidate_store_credit: "Invalidating store credit"
+        amount_authorized: "Amount Authorized"
+        amount_credited: "Amount Credited"
+        amount_used: "Amount Used"
         back_to_edit: "Back to edit"
         back_to_user_list: "Back to user list"
         back_to_store_credit_list: "Store credit list"
         change_amount: "Change amount"
         credit_type: "Credit type"
-        credited_html_header: "Amount Credited"
-        current_balance: "Current balance"
-        used_html_header: "Amount Used"
-        authed_html_header: "Amount Authorized"
+        current_balance: "Current balance:"
+        new: "New store credit"
+        edit: "Editing store credit"
+        edit_amount: "Editing store credit amount"
+        invalidate_store_credit: "Invalidating store credit"
         type_html_header: "Credit Type"
         created_by: "Created By"
         history: "Store credit history"
@@ -573,7 +574,7 @@ en:
         user_originator: "User - %{email}"
         select_reason: "Select a reason for this store credit"
         select_amount_update_reason: "Select a reason for updating the amount"
-        total_unused: "Total<br/>unused"
+        total_unused: "Total unused"
         unable_to_create: "Unable to create store credit"
         unable_to_update: "Unable to update store credit"
         unable_to_delete: "Unable to delete store credit"

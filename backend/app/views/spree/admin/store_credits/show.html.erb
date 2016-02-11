@@ -86,10 +86,10 @@
       <tr>
         <th><%= Spree.t(:date) %></th>
         <th><%= Spree.t(:action) %></th>
-        <th><%= Spree.t(:amount) %></th>
-        <th><%= Spree.t(:created_by) %></th>
-        <th><%= Spree.t("admin.store_credits.total_unused").html_safe %></th>
-        <th><%= Spree.t("admin.store_credits.reason_for_updating").html_safe %></th>
+        <th><%= Spree::StoreCredit.human_attribute_name(:amount) %></th>
+        <th><%= Spree::StoreCredit.human_attribute_name(:created_by_id) %></th>
+        <th><%= Spree.t("admin.store_credits.total_unused") %></th>
+        <th><%= Spree.t("admin.store_credits.reason_for_updating") %></th>
       </tr>
     </thead>
     <tbody>
