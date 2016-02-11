@@ -1,4 +1,3 @@
-taxons_template = null
 Handlebars.registerHelper 'isRootTaxon', ->
   !@parent_id?
 
@@ -32,6 +31,7 @@ delete_taxon = ({id}) ->
     error: redraw_tree
 
 draw_tree = (taxonomy) ->
+  taxons_template = HandlebarsTemplates["taxons/tree"]
   $('#taxonomy_tree')
     .html( taxons_template({ taxons: [taxonomy.root] }) )
     .find('ul')
@@ -76,11 +76,8 @@ get_create_handler = (taxonomy_id) ->
     create_taxon({name, parent_id, child_index})
 
 setup_taxonomy_tree = (taxonomy_id) ->
-  taxons_template_text = $('#taxons-list-template').text()
-  taxons_template = Handlebars.compile(taxons_template_text)
-  Handlebars.registerPartial( 'taxons', taxons_template_text )
   redraw_tree()
-  $taxonomy_tree.on
+  $("#taxonomy_tree").on
       sortstart: (e, ui) ->
         resize_placeholder(ui)
       sortover: (e, ui) ->

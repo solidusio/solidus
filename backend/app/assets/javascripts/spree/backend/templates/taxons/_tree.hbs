@@ -1,5 +1,4 @@
-<script type="text/template" id="taxons-list-template">
-  {{#each taxons}}
+{{#each taxons}}
   <li data-taxon-id="{{id}}" data-taxon-taxonomy-id="{{taxonomy_id}}">
     <div  class="sortable-handle">
       {{#if (isRootTaxon) }}{{else}}<i class="fa fa-arrows"></i>{{/if}}
@@ -10,8 +9,7 @@
       </div>
     </div>
     <ul>
-      {{> taxons}}
+      {{> taxons/_tree }}
     </ul>
   </li>
-  {{/each}}
-</script>
+{{/each}}
