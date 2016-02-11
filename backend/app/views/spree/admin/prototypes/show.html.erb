@@ -1,5 +1,5 @@
 <% if @prototype.option_types.present? %>
-  <h2><%= Spree.t(:variants) %></h2>
+  <h2><%= Spree::Variant.model_name.human(count: :other) %></h2>
 
   <ul class="product-prototype-options">
     <% @prototype.option_types.each do |ot| %>
