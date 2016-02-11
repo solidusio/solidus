@@ -1,30 +1,28 @@
 <div data-hook="admin_tax_category_form_fields" class="row">
   <div class="alpha four columns">
     <%= f.field_container :name do %>
-      <%= f.label :name, Spree.t(:name) %>
+      <%= f.label :name %>
       <%= f.text_field :name, :class => 'fullwidth' %>
     <% end %>
   </div>
 
   <div class="two columns">
     <%= f.field_container :tax_code do %>
-      <%= f.label :tax_code, Spree.t(:tax_code) %>
+      <%= f.label :tax_code %>
       <%= f.text_field :tax_code, :class => 'fullwidth' %>
     <% end %>
   </div>
 
   <div class="two columns omega">
     <%= f.field_container :is_default, :class => ['checkbox'] do %>
-      <label>
-        <%= f.check_box :is_default %>
-        <%= Spree.t(:default) %>
-      </label>
+      <%= f.check_box :is_default %>
+      <%= f.label :is_default %>
     <% end %>
   </div>
 
   <div class="alpha six columns">
     <%= f.field_container :description do %>
-      <%= f.label :description, Spree.t(:description) %><br>
+      <%= f.label :description %><br>
       <%= f.text_area :description, :class => 'fullwidth' %>
     <% end %>
   </div>
