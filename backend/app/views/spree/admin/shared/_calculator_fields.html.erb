@@ -1,9 +1,9 @@
 <fieldset id="calculator_fields" data-hook class="no-border-bottom">
-  <legend align="center"><%= Spree.t(:calculator) %></legend>
+  <legend align="center"><%= Spree::Calculator.model_name.human %></legend>
 
   <div id="preference-settings" data-hook>
     <div class="field">
-      <%= f.label(:calculator_type, Spree.t(:calculator), :for => 'calc_type') %>
+      <%= f.label(:calculator_type, Spree::Calculator.model_name.human, :for => 'calc_type') %>
       <%= f.select(:calculator_type, @calculators.map { |c| [c.description, c.name] }, {}, {:id => 'calc_type', :class => 'select2 fullwidth'}) %>
     </div>
     <% if !@object.new_record? %>
