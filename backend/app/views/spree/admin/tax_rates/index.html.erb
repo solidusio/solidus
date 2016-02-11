@@ -1,7 +1,7 @@
 <%= render 'spree/admin/shared/configuration_menu' %>
 
 <% content_for :page_title do %>
-  <%= Spree.t(:tax_rates) %>
+  <%= Spree::TaxRate.model_name.human(count: :other) %>
 <% end %>
 
 <% content_for :page_actions do %>
@@ -26,13 +26,13 @@
     </colgroup>
     <thead>
       <tr data-hook="rate_header">
-        <th><%= Spree.t(:zone) %></th>
-        <th><%= Spree.t(:name) %></th>
-        <th><%= Spree.t(:category) %></th>
-        <th><%= Spree.t(:amount) %></th>
-        <th><%= Spree.t(:included_in_price) %></th>
-        <th><%= Spree.t(:show_rate_in_label) %></th>
-        <th><%= Spree.t(:calculator) %></th>
+        <th><%= Spree::TaxRate.human_attribute_name(:zone) %></th>
+        <th><%= Spree::TaxRate.human_attribute_name(:name) %></th>
+        <th><%= Spree::TaxRate.human_attribute_name(:tax_category_id) %></th>
+        <th><%= Spree::TaxRate.human_attribute_name(:amount) %></th>
+        <th><%= Spree::TaxRate.human_attribute_name(:included_in_price) %></th>
+        <th><%= Spree::TaxRate.human_attribute_name(:show_rate_in_label) %></th>
+        <th><%= Spree::Calculator.model_name.human %></th>
         <th class="actions"></th>
       </tr>
     </thead>
