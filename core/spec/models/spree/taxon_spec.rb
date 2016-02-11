@@ -3,14 +3,16 @@
 require 'spec_helper'
 
 describe Spree::Taxon, type: :model do
-  let(:taxon) { FactoryGirl.build(:taxon, name: "Ruby on Rails") }
-
   describe '#to_param' do
+    let(:taxon) { FactoryGirl.build(:taxon, name: "Ruby on Rails") }
+
     subject { super().to_param }
     it { is_expected.to eql taxon.permalink }
   end
 
   context "set_permalink" do
+    let(:taxon) { FactoryGirl.build(:taxon, name: "Ruby on Rails") }
+
     it "should set permalink correctly when no parent present" do
       taxon.set_permalink
       expect(taxon.permalink).to eql "ruby-on-rails"
@@ -57,6 +59,56 @@ describe Spree::Taxon, type: :model do
             taxon.child_index = idx
           end
         end
+      end
+    end
+  end
+
+  context "updating permalink" do
+    let(:taxonomy) { create(:taxonomy, name: 't') }
+    let(:root) { taxonomy.root }
+    let(:taxon1) { create(:taxon, name: 't1', taxonomy: taxonomy, parent: root) }
+    let(:taxon2) { create(:taxon, name: 't2', taxonomy: taxonomy, parent: root) }
+    let(:taxon2_child) { create(:taxon, name: 't2_child', taxonomy: taxonomy, parent: taxon2) }
+
+    context "changing parent" do
+      subject do
+        -> { taxon2.update!(parent: taxon1) }
+      end
+
+      it "changes own permalink" do
+        is_expected.to change{ taxon2.reload.permalink }.from('t/t2').to('t/t1/t2')
+      end
+
+      it "changes child's permalink" do
+        is_expected.to change{ taxon2_child.reload.permalink }.from('t/t2/t2-child').to('t/t1/t2/t2-child')
+      end
+    end
+
+    context "changing own permalink" do
+      subject do
+        -> { taxon2.update!(permalink: 'foo') }
+      end
+
+      it "changes own permalink" do
+        is_expected.to change{ taxon2.reload.permalink }.from('t/t2').to('t/foo')
+      end
+
+      it "changes child's permalink" do
+        is_expected.to change{ taxon2_child.reload.permalink }.from('t/t2/t2-child').to('t/foo/t2-child')
+      end
+    end
+
+    context "changing parent and own permalink" do
+      subject do
+        -> { taxon2.update!(parent: taxon1, permalink: 'foo') }
+      end
+
+      it "changes own permalink" do
+        is_expected.to change{ taxon2.reload.permalink }.from('t/t2').to('t/t1/foo')
+      end
+
+      it "changes child's permalink" do
+        is_expected.to change{ taxon2_child.reload.permalink }.from('t/t2/t2-child').to('t/t1/foo/t2-child')
       end
     end
   end

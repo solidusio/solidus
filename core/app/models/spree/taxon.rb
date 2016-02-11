@@ -13,6 +13,7 @@ module Spree
     has_many :promotion_rules, through: :promotion_rule_taxons
 
     before_create :set_permalink
+    after_update :update_permalinks
 
     validates :name, presence: true
     validates :meta_keywords, length: { maximum: 255 }
@@ -57,10 +58,15 @@ module Spree
     # Sets this taxons permalink to a valid url encoded string based on its
     # name and its parents permalink (if present.)
     def set_permalink
-      if parent.present?
-        self.permalink = [parent.permalink, (permalink.blank? ? name.to_url : permalink.split('/').last)].join('/')
-      else
-        self.permalink = name.to_url if permalink.blank?
+      self.permalink = build_permalink
+    end
+
+    # Update the permalink for this taxon and all children (if necessary)
+    def update_permalinks
+      new_permalink = build_permalink
+      if new_permalink != permalink
+        update_columns(permalink: build_permalink)
+        children.each(&:update_permalinks)
       end
     end
 
@@ -96,6 +102,16 @@ module Spree
     end
 
     private
+
+    def build_permalink
+      permalink_tail = permalink.split('/').last if permalink.present?
+      permalink_tail ||= name.to_url
+      if parent.present?
+        [parent.permalink, permalink_tail].join('/')
+      else
+        permalink_tail
+      end
+    end
 
     def touch_ancestors_and_taxonomy
       # Touches all ancestors at once to avoid recursive taxonomy touch, and reduce queries.
