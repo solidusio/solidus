@@ -61,9 +61,9 @@ describe Spree::LineItem, type: :model do
       create(:tax_rate, zone: order.tax_zone, tax_category: variant.tax_category)
     end
 
-    context "when order has a tax zone" do
+    context "when order has a tax address" do
       before do
-        expect(order.tax_zone).to be_present
+        expect(order.tax_address).to be_present
       end
 
       it "creates a tax adjustment" do
@@ -73,12 +73,9 @@ describe Spree::LineItem, type: :model do
       end
     end
 
-    context "when order does not have a tax zone" do
+    context "when order does not have a tax address" do
       before do
-        order.bill_address = nil
-        order.ship_address = nil
-        order.save
-        expect(order.reload.tax_zone).to be_nil
+        expect(order).to receive(:tax_address).and_return(nil).at_least(:once)
       end
 
       it "does not create a tax adjustment" do
@@ -223,14 +220,6 @@ describe Spree::LineItem, type: :model do
       expect(line_item.variant).to receive(:gift_wrap_price_modifier_amount_in).with("USD", true).and_return 1.99
       line_item.options = { gift_wrap: true }
       expect(line_item.price).to eq 21.98
-    end
-  end
-
-  describe "precision of pre_tax_amount" do
-    let!(:line_item) { create :line_item, pre_tax_amount: 4.2051 }
-
-    it "keeps four digits of precision even when reloading" do
-      expect(line_item.reload.pre_tax_amount).to eq(4.2051)
     end
   end
 end

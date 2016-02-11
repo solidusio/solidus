@@ -3,6 +3,7 @@
 require 'spec_helper'
 
 describe Spree::ShippingRate, type: :model do
+  let(:order) { create(:order) }
   let(:shipment) { create(:shipment) }
   let(:shipping_method) { create(:shipping_method) }
   let(:shipping_rate) {
@@ -14,8 +15,7 @@ describe Spree::ShippingRate, type: :model do
   context "#display_price" do
     context "when tax included in price" do
       context "when the tax rate is from the default zone" do
-        before { shipment.order.update_attributes!(ship_address_id: nil) }
-        let!(:zone) { create(:zone, default_tax: true) }
+        let!(:zone) { create(:zone, default_tax: true, countries: [shipment.order.ship_address.country]) }
         let(:tax_rate) do
           create(:tax_rate,
             name: "VAT",

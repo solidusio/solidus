@@ -10,6 +10,11 @@ module Spree
       let(:order) { Spree::Order.create(ship_address: ship_address, bill_address: bill_address) }
       let(:zone) { create :zone }
 
+      it 'should emit a deprecation warning' do
+        expect(ActiveSupport::Deprecation).to receive(:warn).at_least(:once)
+        order.tax_zone
+      end
+
       context "when no zones exist" do
         it "should return nil" do
           expect(order.tax_zone).to be_nil
@@ -53,8 +58,8 @@ module Spree
         context "when there is no matching zone" do
           before { allow(Spree::Zone).to receive_messages(match: nil) }
 
-          it "should return the default tax zone" do
-            expect(order.tax_zone).to eq(@default_zone)
+          it "should return nil" do
+            expect(order.tax_zone).to eq(nil)
           end
         end
       end
