@@ -70,10 +70,11 @@ handle_delete = (e) ->
 get_create_handler = (taxonomy_id) ->
   handle_create = (e) ->
     e.preventDefault()
-    name = 'New node'
-    parent_id = taxonomy_id
-    child_index = 0
-    create_taxon({name, parent_id, child_index})
+    get_taxonomy().done (taxonomy) ->
+      name = 'New node'
+      parent_id = taxonomy.root.id
+      child_index = 0
+      create_taxon({name, parent_id, child_index})
 
 setup_taxonomy_tree = (taxonomy_id) ->
   redraw_tree()
