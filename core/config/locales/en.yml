@@ -249,6 +249,7 @@ en:
       spree/zone:
         description: Description
         name: Name
+        default_tax: Default Tax Zone
     models:
       spree/address:
         one: Address
