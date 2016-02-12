@@ -195,6 +195,8 @@ en:
       spree/tax_category:
         description: Description
         name: Name
+        is_default: Default
+        tax_code: Tax Code
       spree/tax_rate:
         amount: Rate
         included_in_price: Included in Price
