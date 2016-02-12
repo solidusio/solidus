@@ -153,13 +153,11 @@ RSpec.describe "Taxation system integration tests" do
         end
 
         it 'has a shipment with 0.52 included tax' do
-          pending 'But the tax is not created'
           expect(shipment.included_tax_total).to eq(0.52)
         end
 
         it 'has a shipping rate that correctly reflects the shipment' do
-          pending 'since no tax created, no correct display price'
-          expect(shipping_rate.display_price).to eq("$8.00 (incl. $0.52 German VAT)")
+          expect(shipping_rate.display_price).to eq("$8.00 (incl. $0.52 German reduced VAT)")
         end
       end
 
@@ -190,12 +188,11 @@ RSpec.describe "Taxation system integration tests" do
         end
 
         it 'has a shipment with 2.55 included tax' do
-          pending 'But the tax is not created'
+          pending "But there's a rounding error!"
           expect(shipment.included_tax_total).to eq(2.55)
         end
 
         it 'has a shipping rate that correctly reflects the shipment' do
-          pending 'since no tax created, no correct display price'
           expect(shipping_rate.display_price).to eq("$16.00 (incl. $2.55 German VAT)")
         end
       end
@@ -259,7 +256,7 @@ RSpec.describe "Taxation system integration tests" do
         end
 
         it 'has a constant amount pre tax' do
-          expect(line_item.pre_tax_amount).to eq(18.69)
+          expect(line_item.total - line_item.included_tax_total).to eq(18.69)
         end
       end
 
@@ -274,13 +271,11 @@ RSpec.describe "Taxation system integration tests" do
         end
 
         it 'has a shipment with 0.52 included tax' do
-          pending 'But the tax is not created'
           expect(shipment.included_tax_total).to eq(0.52)
         end
 
         it 'has a shipping rate that correctly reflects the shipment' do
-          pending 'since no tax created, no correct display price'
-          expect(shipping_rate.display_price).to eq("$8.00 (incl. $0.52 German VAT)")
+          expect(shipping_rate.display_price).to eq("$8.00 (incl. $0.52 German reduced VAT)")
         end
       end
 
@@ -300,7 +295,7 @@ RSpec.describe "Taxation system integration tests" do
         end
 
         it 'has a constant amount pre tax' do
-          expect(line_item.pre_tax_amount).to eq(25.21)
+          expect(line_item.total - line_item.included_tax_total).to eq(25.21)
         end
       end
 
@@ -315,12 +310,11 @@ RSpec.describe "Taxation system integration tests" do
         end
 
         it 'has a shipment with 2.55 included tax' do
-          pending 'But the tax is not created'
+          pending "But there's a rounding error!"
           expect(shipment.included_tax_total).to eq(2.55)
         end
 
         it 'has a shipping rate that correctly reflects the shipment' do
-          pending 'since no tax created, no correct display price'
           expect(shipping_rate.display_price).to eq("$16.00 (incl. $2.55 German VAT)")
         end
       end
@@ -344,7 +338,7 @@ RSpec.describe "Taxation system integration tests" do
 
         it 'has a constant amount pre tax' do
           pending 'but it changes to 8.06, because Spree thinks both VATs apply'
-          expect(line_item.pre_tax_amount).to eq(8.40)
+          expect(line_item.total - line_item.included_tax_total).to eq(8.40)
         end
       end
 
@@ -402,7 +396,7 @@ RSpec.describe "Taxation system integration tests" do
         end
 
         it 'has a constant amount pre tax' do
-          expect(line_item.pre_tax_amount).to eq(18.69)
+          expect(line_item.total - line_item.included_tax_total).to eq(18.69)
         end
       end
     end
@@ -438,7 +432,7 @@ RSpec.describe "Taxation system integration tests" do
         end
 
         it 'has a constant amount pre tax' do
-          expect(line_item.pre_tax_amount).to eq(18.69)
+          expect(line_item.total - line_item.included_tax_total).to eq(18.69)
         end
 
         context 'an order with a book and a shipment' do
@@ -485,7 +479,7 @@ RSpec.describe "Taxation system integration tests" do
         end
 
         it 'has a constant amount pre tax' do
-          expect(line_item.pre_tax_amount).to eq(25.21)
+          expect(line_item.total - line_item.included_tax_total).to eq(25.21)
         end
 
         context 'an order with a sweater and a shipment' do
@@ -532,7 +526,7 @@ RSpec.describe "Taxation system integration tests" do
         end
 
         it 'has a constant amount pre tax' do
-          expect(line_item.pre_tax_amount).to eq(8.40)
+          expect(line_item.total - line_item.included_tax_total).to eq(8.40)
         end
       end
 
@@ -780,12 +774,10 @@ RSpec.describe "Taxation system integration tests" do
         end
 
         it 'has a shipment with additional tax of 0.40' do
-          pending "This does not work because the shipping code does not use contains? for finding zones"
           expect(shipment.additional_tax_total).to eq(0.40)
         end
 
         it 'has a shipping rate that correctly reflects the shipment' do
-          pending 'since no tax created, no correct display price'
           expect(shipping_rate.display_price).to eq("$2.00 (+ $0.40 Federal Sales Tax)")
         end
       end

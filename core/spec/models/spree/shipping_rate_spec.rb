@@ -21,7 +21,7 @@ describe Spree::ShippingRate, type: :model do
       after { Spree::Config.default_tax_address = nil }
 
       context "when the tax rate is valid for the default address" do
-        let!(:tax_rate) do
+        let(:tax_rate) do
           create(:tax_rate,
             name: "VAT",
             amount: 0.1,
