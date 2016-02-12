@@ -205,6 +205,9 @@ en:
         position: Position
       spree/taxonomy:
         name: Name
+      spree/tracker:
+        analytics_id: Analytics ID
+        active: Active
       spree/user:
         email: Email
         password: Password
@@ -332,8 +335,8 @@ en:
         one: Taxonomy
         other: Taxonomies
       spree/tracker:
-        one: Tracker
-        other: Trackers
+        one: Analytics Tracker
+        other: Analytics Trackers
       spree/transfer_item:
         one: Transfer Item
         other: Transfer Items
