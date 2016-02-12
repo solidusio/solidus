@@ -823,6 +823,7 @@ en:
     create_a_new_account: Create a new account
     create_new_order: Create new order
     create_reimbursement: Create reimbursement
+    create_one: Create One.
     created_at: Created At
     created_by: Created by
     created_successfully: Created successfully
@@ -1173,6 +1174,7 @@ en:
     no_promotions_found: No promotions found
     no_results: No results
     no_rules_added: No rules added
+    no_resource: 'No %{resource} found.'
     no_resource_found_html: 'No %{resource} found, %{add_one_link}!'
     no_resource_found_link: Add One
     no_resource_found: ! 'No %{resource} found'

@@ -108,7 +108,7 @@
   </table>
 <% else %>
   <div class="alpha sixteen columns no-objects-found">
-    <%= Spree.t(:no_resource_found, resource: I18n.t(:other, scope: 'activerecord.models.spree/stock_transfer')) %>
+    <%= Spree.t(:no_resource, resource: Spree::StockTransfer.model_name.human(count: :other)) %>
   </div>
 <% end %>
 

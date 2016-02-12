@@ -55,9 +55,9 @@
 </table>
 <% else %>
   <div class="alpha twelve columns no-objects-found">
-    <%= Spree.t(:no_resource_found, resource: I18n.t(:other, scope: 'activerecord.models.spree/tax_category')) %>
+    <%= Spree.t(:no_resource, resource: Spree::TaxCategory.model_name.human(count: :other)) %>
     <% if can?(:create, Spree::TaxCategory) %>
-      <%= link_to Spree.t(:add_one), spree.new_admin_tax_category_path %>!
+      <%= link_to Spree.t(:create_one), spree.new_admin_tax_category_path %>
     <% end %>
   </div>
 <% end %>

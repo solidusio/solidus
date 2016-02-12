@@ -43,9 +43,9 @@
 </table>
 <% else %>
   <div class="alpha twelve columns no-objects-found">
-    <%= Spree.t(:no_resource_found, resource: I18n.t(:other, scope: 'activerecord.models.spree/prototype')) %>
+    <%= Spree.t(:no_resource, resource: Spree::Prototype.model_name.human(count: :other)) %>
     <% if can?(:create, Spree::Prototype) %>
-      <%= link_to Spree.t(:add_one), spree.new_admin_prototype_path %>!
+      <%= link_to Spree.t(:create_one), spree.new_admin_prototype_path %>
     <% end %>
   </div>
 <% end %>

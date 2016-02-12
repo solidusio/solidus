@@ -47,9 +47,9 @@
   </table>
 <% else %>
   <div class="no-objects-found">
-    <%= Spree.t(:no_resource_found, resource: I18n.t(:other, scope: 'activerecord.models.spree/tracker')) %>
+    <%= Spree.t(:no_resource, resource: Spree::Tracker.model_name.human(count: :other)) %>
     <% if can?(:create, Spree::Tracker) %>
-      <%= link_to Spree.t(:add_one), new_object_url %>!
+      <%= link_to Spree.t(:create_one), new_object_url %>
     <% end %>
   </div>
 <% end %>

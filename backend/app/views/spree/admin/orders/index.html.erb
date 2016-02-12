@@ -157,10 +157,8 @@
   </table>
 <% else %>
   <div class="alpha twelve columns no-objects-found">
-    <%= Spree.t(:no_resource_found_html,
-                resource: Spree::Order.model_name.human(count: :other),
-                add_one_link: link_to(Spree.t(:no_resource_found_link),
-                                      spree.new_admin_order_path)) %>
+    <%= Spree.t(:no_resource, resource: Spree::Order.model_name.human(count: :other)) %>
+    <%= link_to(Spree.t(:create_one), spree.new_admin_order_path) %>
   </div>
 <% end %>
 

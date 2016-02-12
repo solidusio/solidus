@@ -48,9 +48,9 @@
   </table>
 <% else %>
   <div class="alpha twelve columns no-objects-found">
-    <%= Spree.t(:no_resource_found, resource: Spree::CustomerReturn.model_name.human(count: :other)) %>
+    <%= Spree.t(:no_resource, resource: Spree::CustomerReturn.model_name.human(count: :other)) %>
     <% if can? :create, Spree::CustomerReturn %>
-      <%= link_to Spree.t(:add_one), spree.new_admin_order_customer_return_path(@order) %>!
+      <%= link_to Spree.t(:create_one), spree.new_admin_order_customer_return_path(@order) %>
     <% end %>
   </div>
 <% end %>

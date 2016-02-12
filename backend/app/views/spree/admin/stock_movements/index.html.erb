@@ -46,9 +46,9 @@
 </table>
 <% else %>
   <div class="alpha twelve columns no-objects-found">
-    <%= Spree.t(:no_resource_found, resource: I18n.t(:other, scope: 'activerecord.models.spree/stock_movement')) %>
+    <%= Spree.t(:no_resource, resource: Spree::StockMovement.model_name.human(count: :other)) %>
     <% if can?(:create, Spree::StockMovement) %>
-      <%= link_to Spree.t(:add_one), spree.new_admin_stock_location_stock_movement_path(@stock_location) %>!
+      <%= link_to Spree.t(:create_one), spree.new_admin_stock_location_stock_movement_path(@stock_location) %>
     <% end %>
   </div>
 <% end %>
