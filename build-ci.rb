@@ -90,7 +90,7 @@ class Project
     args = []
     args += %w[--format documentation --profile 10]
     if report_dir = ENV['CIRCLE_TEST_REPORTS']
-      args += %W[-r rspec_junit_formatter --format RspecJunitFormatter -o #{report_dir}/rspec/junit.xml]
+      args += %W[-r rspec_junit_formatter --format RspecJunitFormatter -o #{report_dir}/rspec/#{name}.xml]
     end
     args
   end
