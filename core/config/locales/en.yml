@@ -272,6 +272,9 @@ en:
       spree/line_item:
         one: Line Item
         other: Line Items
+      spree/log_entry:
+        one: Log Entry
+        other: Log Entries
       spree/option_type:
         one: Option Type
         other: Option Types
