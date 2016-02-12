@@ -4,7 +4,7 @@
       <th>
         <%= check_box_tag 'select-all' %>
       </th>
-      <th><%= Spree.t(:product) %></th>
+      <th><%= Spree::Product.model_name.human %></th>
       <th><%= Spree.t(:sku) %></th>
       <th><%= Spree.t(:pre_tax_amount) %></th>
       <th><%= Spree.t(:state) %></th>
