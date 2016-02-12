@@ -66,6 +66,10 @@ en:
         attachment: Filename
       spree/inventory_unit:
         state: State
+      spree/legacy_user:
+        email: Email
+        password: Password
+        password_confirmation: Password Confirmation
       spree/line_item:
         description: Item Description
         name: Name
@@ -341,6 +345,9 @@ en:
       spree/inventory_unit:
         one: Inventory Unit
         other: Inventory Units
+      spree/legacy_user:
+        one: User
+        other: Users
       spree/line_item:
         one: Line Item
         other: Line Items

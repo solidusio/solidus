@@ -17,7 +17,7 @@
   </colgroup>
   <thead>
     <tr data-hook="admin_users_index_headers">
-      <th><%= sort_link @search,:email, Spree.t(:user), {}, {:title => 'users_email_title'} %></th>
+      <th><%= sort_link @search,:email, Spree::LegacyUser.model_name.human, {}, {:title => 'users_email_title'} %></th>
       <th data-hook="admin_users_index_header_actions" class="actions"></th>
     </tr>
   </thead>
