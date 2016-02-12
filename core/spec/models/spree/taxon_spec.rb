@@ -98,6 +98,20 @@ describe Spree::Taxon, type: :model do
       end
     end
 
+    context "changing own permalink part" do
+      subject do
+        -> { taxon2.update!(permalink_part: 'foo') }
+      end
+
+      it "changes own permalink" do
+        is_expected.to change{ taxon2.reload.permalink }.from('t/t2').to('t/foo')
+      end
+
+      it "changes child's permalink" do
+        is_expected.to change{ taxon2_child.reload.permalink }.from('t/t2/t2-child').to('t/foo/t2-child')
+      end
+    end
+
     context "changing parent and own permalink" do
       subject do
         -> { taxon2.update!(parent: taxon1, permalink: 'foo') }

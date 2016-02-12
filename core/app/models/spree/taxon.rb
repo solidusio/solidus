@@ -13,7 +13,8 @@ module Spree
     has_many :promotion_rules, through: :promotion_rule_taxons
 
     before_create :set_permalink
-    after_update :update_permalinks
+    before_update :set_permalink
+    after_update :update_child_permalinks, if: :permalink_changed?
 
     validates :name, presence: true
     validates :meta_keywords, length: { maximum: 255 }
@@ -58,16 +59,22 @@ module Spree
     # Sets this taxons permalink to a valid url encoded string based on its
     # name and its parents permalink (if present.)
     def set_permalink
-      self.permalink = build_permalink
+      permalink_tail = permalink.split('/').last if permalink.present?
+      permalink_tail ||= name.to_url
+      self.permalink_part = permalink_tail
     end
 
     # Update the permalink for this taxon and all children (if necessary)
     def update_permalinks
-      new_permalink = build_permalink
-      if new_permalink != permalink
-        update_columns(permalink: build_permalink)
-        children.each(&:update_permalinks)
-      end
+      set_permalink
+
+      # This will trigger update_child_permalinks if permalink has changed
+      save!
+    end
+
+    # Update the permalinks for all children
+    def update_child_permalinks
+      children.each(&:update_permalinks)
     end
 
     # @return [String] this taxon's permalink
@@ -101,17 +108,19 @@ module Spree
       move_to_child_with_index(parent, idx.to_i) unless new_record?
     end
 
-    private
+    def permalink_part
+      permalink.split('/').last
+    end
 
-    def build_permalink
-      permalink_tail = permalink.split('/').last if permalink.present?
-      permalink_tail ||= name.to_url
+    def permalink_part=(value)
       if parent.present?
-        [parent.permalink, permalink_tail].join('/')
+        self.permalink = "#{parent.permalink}/#{value}"
       else
-        permalink_tail
+        self.permalink = value
       end
     end
+
+    private
 
     def touch_ancestors_and_taxonomy
       # Touches all ancestors at once to avoid recursive taxonomy touch, and reduce queries.
