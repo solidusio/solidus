@@ -16,7 +16,7 @@
           <%= hidden_field_tag :send_mailer, false %>
           <%= check_box_tag :send_mailer, true, true %>
           <%= label_tag :send_mailer, Spree.t(:send_mailer) %>
-          <%= submit_tag Spree.t(:ship), class: "ship-shipment-button" %>
+          <%= submit_tag Spree.t('actions.ship'), class: "ship-shipment-button" %>
         <% end %>
       <% end %>
     </fieldset>
@@ -77,7 +77,7 @@
 
             <td class="actions">
               <% if( (can? :update, shipment) and !shipment.shipped?) %>
-                <%= link_to '', '#', :class => 'edit-method fa fa-edit no-text with-tip', :data => {:action => 'edit'}, :title => Spree.t('edit') %>
+                <%= link_to '', '#', :class => 'edit-method fa fa-edit no-text with-tip', :data => {:action => 'edit'}, :title => Spree.t('actions.edit') %>
               <% end %>
             </td>
           </tr>
@@ -113,7 +113,7 @@
           </td>
           <td class="actions">
             <% if can? :update, shipment %>
-              <%= link_to '', '#', :class => 'edit-tracking fa fa-edit no-text with-tip', :data => {:action => 'edit'}, :title => Spree.t('edit') %>
+              <%= link_to '', '#', :class => 'edit-tracking fa fa-edit no-text with-tip', :data => {:action => 'edit'}, :title => Spree.t('actions.edit') %>
             <% end %>
           </td>
         </tr>
