@@ -30,4 +30,8 @@ describe Spree::AppConfiguration, type: :model do
       expect(prefs[:default_country_iso]).to eq("US")
     end
   end
+
+  it 'has no default tax address by default' do
+    expect(prefs.default_tax_address).to be_nil
+  end
 end

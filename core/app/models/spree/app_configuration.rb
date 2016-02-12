@@ -320,6 +320,19 @@ module Spree
       @stock_configuration ||= Spree::Core::StockConfiguration.new
     end
 
+    # @!attribute [rw] default_tax_address
+    #   Default Address used for taxation when no tax address present on an order
+    #   Use this when you want the following behaviour: The order is tax-adjusted
+    #   even if you don't yet know its tax_address (see also the setting `tax_using_ship_address`).
+    #   If you do not wish your order to be taxed before knowing the customer's address,
+    #   leave it at `nil`.
+    # @example Use the default country for taxing orders in cart state
+    #   Spree.config do |config|
+    #     config.default_tax_address = Spree::Address.build_default.freeze
+    #   end
+    # @return [Spree::Address,nil] default tax address
+    attr_accessor :default_tax_address
+
     # all the following can be deprecated when store prefs are no longer supported
     # @private
     DEPRECATED_STORE_PREFERENCES = {
