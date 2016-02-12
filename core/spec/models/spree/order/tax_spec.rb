@@ -24,6 +24,25 @@ module Spree
           expect(Spree::Zone).not_to receive(:match).with(bill_address)
           order.tax_zone
         end
+
+        context 'when there is a default tax address and the order has no ship address' do
+          let(:ship_address) { nil }
+          let(:default_tax_address) { build(:address).freeze }
+
+          before do
+            Spree::Config.default_tax_address = default_tax_address
+          end
+
+          after do
+            Spree::Config.default_tax_address = nil
+          end
+
+          it 'will calculate using the default tax address' do
+            expect(Spree::Zone).to receive(:match).at_least(:once).with(default_tax_address)
+            expect(Spree::Zone).not_to receive(:match).with(ship_address)
+            order.tax_zone
+          end
+        end
       end
 
       context "when :tax_using_ship_address => false" do
@@ -34,47 +53,23 @@ module Spree
           expect(Spree::Zone).not_to receive(:match).with(ship_address)
           order.tax_zone
         end
-      end
 
-      context "when there is a default tax zone" do
-        before do
-          @default_zone = create(:zone, name: "foo_zone")
-          allow(Spree::Zone).to receive_messages default_tax: @default_zone
-        end
+        context 'when there is a default tax address and the order has bill address' do
+          let(:bill_address) { nil }
+          let(:default_tax_address) { build(:address).freeze }
 
-        context "when there is a matching zone" do
-          before { allow(Spree::Zone).to receive_messages(match: zone) }
-
-          it "should return the matching zone" do
-            expect(order.tax_zone).to eq(zone)
+          before do
+            Spree::Config.default_tax_address = default_tax_address
           end
-        end
 
-        context "when there is no matching zone" do
-          before { allow(Spree::Zone).to receive_messages(match: nil) }
-
-          it "should return the default tax zone" do
-            expect(order.tax_zone).to eq(@default_zone)
+          after do
+            Spree::Config.default_tax_address = nil
           end
-        end
-      end
 
-      context "when no default tax zone" do
-        before { allow(Spree::Zone).to receive_messages default_tax: nil }
-
-        context "when there is a matching zone" do
-          before { allow(Spree::Zone).to receive_messages(match: zone) }
-
-          it "should return the matching zone" do
-            expect(order.tax_zone).to eq(zone)
-          end
-        end
-
-        context "when there is no matching zone" do
-          before { allow(Spree::Zone).to receive_messages(match: nil) }
-
-          it "should return nil" do
-            expect(order.tax_zone).to be_nil
+          it 'will calculate using the default tax address' do
+            expect(Spree::Zone).to receive(:match).at_least(:once).with(default_tax_address)
+            expect(Spree::Zone).not_to receive(:match).with(bill_address)
+            order.tax_zone
           end
         end
       end
