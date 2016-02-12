@@ -68,16 +68,23 @@ en:
         name: Name
         presentation: Presentation
       spree/order:
+        additional_tax_total: Tax
+        approved_at: Approved at
+        approver_id: Approver
+        canceled_at: Canceled at
+        canceler_id: Canceler
         checkout_complete: Checkout Complete
         completed_at: Completed At
         coupon_code: Coupon Code
         created_at: Order Date
         email: Customer E-Mail
+        included_tax_total: Tax (incl.)
         ip_address: IP Address
         item_total: Item Total
         number: Number
         payment_state: Payment State
         shipment_state: Shipment State
+        shipment_total: Ship Total
         special_instructions: Special Instructions
         state: State
         total: Total
