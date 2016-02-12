@@ -156,8 +156,13 @@ en:
       spree/role:
         name: Name
       spree/shipping_method:
+        admin_name: Internal Name
         carrier: Carrier
+        code: Code
+        display_on: Display
+        name: Name
         service_level: Service Level
+        tracking_url: Tracking URL
       spree/state:
         abbr: Abbreviation
         name: Name
