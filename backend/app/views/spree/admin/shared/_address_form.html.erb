@@ -2,51 +2,51 @@
 
 <div id="<%= type %>" data-hook="address_fields">
   <div class="field <%= "#{type}-row" %>">
-    <%= f.label :firstname, Spree.t(:first_name) %>
+    <%= f.label :firstname %>
     <%= f.text_field :firstname, :class => 'fullwidth' %>
   </div>
 
   <div class="field <%= "#{type}-row" %>">
-    <%= f.label :lastname, Spree.t(:last_name) %>
+    <%= f.label :lastname %>
     <%= f.text_field :lastname, :class => 'fullwidth' %>
   </div>
 
   <% if Spree::Config[:company] %>
     <div class="field <%= "#{type}-row" %>">
-      <%= f.label :company, Spree.t(:company) %>
+      <%= f.label :company %>
       <%= f.text_field :company, :class => 'fullwidth' %>
     </div>
   <% end %>
 
   <div class="field <%= "#{type}-row" %>">
-    <%= f.label :address1, Spree.t(:street_address) %>
+    <%= f.label :address1 %>
     <%= f.text_field :address1, :class => 'fullwidth' %>
   </div>
 
   <div class="field <%= "#{type}-row" %>">
-    <%= f.label :address2, Spree.t(:street_address_2) %>
+    <%= f.label :address2 %>
     <%= f.text_field :address2, :class => 'fullwidth' %>
   </div>
 
   <div class="field <%= "#{type}-row" %>">
-    <%= f.label :city, Spree.t(:city) %>
+    <%= f.label :city %>
     <%= f.text_field :city, :class => 'fullwidth' %>
   </div>
 
   <div class="field <%= "#{type}-row" %>">
-    <%= f.label :zipcode, Spree.t(:zip) %>
+    <%= f.label :zipcode %>
     <%= f.text_field :zipcode, :class => 'fullwidth' %>
   </div>
 
   <div class="field <%= "#{type}-row" %>">
-    <%= f.label :country_id, Spree.t(:country) %>
+    <%= f.label :country_id %>
     <span id="<%= s_or_b %>country">
       <%= f.collection_select :country_id, available_countries, :id, :name, {}, {:class => 'select2 fullwidth'} %>
     </span>
   </div>
 
   <div class="field <%= "#{type}-row" %>">
-    <%= f.label :state_id, Spree.t(:state) %>
+    <%= f.label :state_id %>
     <span id="<%= s_or_b %>state">
       <%= f.text_field :state_name,
             :style => "display: #{f.object.country.states.empty? ? 'block' : 'none' };",
@@ -56,7 +56,7 @@
   </div>
 
   <div class="field <%= "#{type}-row" %>">
-    <%= f.label :phone, Spree.t(:phone) %>
+    <%= f.label :phone %>
     <%= f.phone_field :phone, :class => 'fullwidth' %>
   </div>
 </div>

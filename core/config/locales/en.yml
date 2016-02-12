@@ -9,14 +9,15 @@ en:
   activerecord:
     attributes:
       spree/address:
-        address1: Address
-        address2: Address (contd.)
+        address1: Street Address
+        address2: Street Address (cont'd)
         city: City
-        country: Country
+        company: Company
+        country_id: Country
         firstname: First Name
         lastname: Last Name
         phone: Phone
-        state: State
+        state_id: State
         zipcode: Zip Code
       spree/adjustment:
         adjustable: Adjustable
