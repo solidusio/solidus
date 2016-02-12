@@ -192,6 +192,10 @@ en:
         restock_inventory: Restock Inventory
         state_id: State
         zipcode: Zip
+      spree/stock_movement:
+        action: Action
+        quantity: Quantity
+        stock_item_id: Stock Item
       spree/tax_category:
         description: Description
         name: Name
