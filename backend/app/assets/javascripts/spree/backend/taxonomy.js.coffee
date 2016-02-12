@@ -67,6 +67,13 @@ handle_delete = (e) ->
     delete_taxon({id: el.data('taxon-id')})
     el.remove()
 
+handle_add_child = (e) ->
+  el = $(e.target).closest('li')
+  parent_id = el.data('taxon-id')
+  name = 'New node'
+  child_index = 0
+  create_taxon({name, parent_id, child_index})
+
 get_create_handler = (taxonomy_id) ->
   handle_create = (e) ->
     e.preventDefault()
@@ -86,7 +93,8 @@ setup_taxonomy_tree = (taxonomy_id) ->
       sortstop: restore_sort_targets
       sortupdate: (e, ui) ->
         handle_move(ui.item) unless ui.sender?
-    .on('click', '.delete-taxon-button', handle_delete)
+    .on('click', '.js-taxon-delete', handle_delete)
+    .on('click', '.js-taxon-add-child', handle_add_child)
   $('.add-taxon-button').on('click', get_create_handler(taxonomy_id))
 
 $ ->
