@@ -14,6 +14,9 @@ module Spree
         respond_with(@taxons)
       end
 
+      def new
+      end
+
       def show
         @taxon = taxon
         respond_with(@taxon)

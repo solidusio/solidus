@@ -5,6 +5,9 @@ module Spree
         respond_with(taxonomies)
       end
 
+      def new
+      end
+
       def show
         respond_with(taxonomy)
       end
