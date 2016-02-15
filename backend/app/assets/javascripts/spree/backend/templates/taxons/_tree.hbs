@@ -1,0 +1,16 @@
+{{#each taxons}}
+  <li data-taxon-id="{{id}}" data-taxon-taxonomy-id="{{taxonomy_id}}">
+    <div  class="sortable-handle">
+      {{#if (isRootTaxon) }}{{else}}<i class="fa fa-arrows"></i>{{/if}}
+      {{name}}
+      <div class="actions right">
+        <a href="#" class="js-taxon-add-child fa fa-plus icon_link no-text"></a>
+        <a href="<%= spree.admin_path %>/taxonomies/{{taxonomy_id}}/taxons/{{id}}/edit" class="fa fa-edit icon_link no-text"></a>
+        <a href="#" class="js-taxon-delete fa fa-trash icon_link no-text"></a>
+      </div>
+    </div>
+    <ul>
+      {{> taxons/_tree }}
+    </ul>
+  </li>
+{{/each}}

@@ -49,40 +49,18 @@ module Spree
           @taxon.child_index = new_position.to_i
         end
 
-        @taxon.save!
-
-        # regenerate permalink
-        if parent_id
-          @taxon.reload
-          @taxon.set_permalink
-          @taxon.save!
-          @update_children = true
+        if params[:permalink_part]
+          @taxon.permalink_part = params[:permalink_part].to_s
         end
 
-        if params.key? "permalink_part"
-          parent_permalink = @taxon.permalink.split("/")[0...-1].join("/")
-          parent_permalink += "/" unless parent_permalink.blank?
-          params[:taxon][:permalink] = parent_permalink + params[:permalink_part]
-        end
-        # check if we need to rename child taxons if parent name or permalink changes
-        @update_children = true if params[:taxon][:name] != @taxon.name || params[:taxon][:permalink] != @taxon.permalink
+        @taxon.assign_attributes(taxon_params)
 
-        if @taxon.update_attributes(taxon_params)
+        if @taxon.save
           flash[:success] = flash_message_for(@taxon, :successfully_updated)
-        end
-
-        # rename child taxons
-        if @update_children
-          @taxon.descendants.each do |taxon|
-            taxon.reload
-            taxon.set_permalink
-            taxon.save!
-          end
         end
 
         respond_with(@taxon) do |format|
           format.html { redirect_to edit_admin_taxonomy_url(@taxonomy) }
-          format.json { render json: @taxon.to_json }
         end
       end
 
