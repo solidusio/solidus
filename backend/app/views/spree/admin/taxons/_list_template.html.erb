@@ -5,7 +5,7 @@
       {{#if (isRootTaxon) }}{{else}}<i class="fa fa-arrows"></i>{{/if}}
       {{name}}
       <div class="actions right">
-        <a href="/admin/taxonomies/{{taxonomy_id}}/taxons/{{id}}/edit" class="fa fa-edit icon_link with-tip no-text"></a>
+        <a href="<%= admin_path %>/taxonomies/{{taxonomy_id}}/taxons/{{id}}/edit" class="fa fa-edit icon_link with-tip no-text"></a>
         <a href="#" class="delete-taxon-button fa fa-trash icon_link with-tip no-text"></a>
       </div>
     </div>
