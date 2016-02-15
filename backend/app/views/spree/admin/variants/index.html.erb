@@ -58,8 +58,8 @@
     <thead data-hook="variants_header">
       <tr>
         <th colspan="2"><%= Spree.t(:options) %></th>
-        <th><%= Spree.t(:price) %></th>
-        <th><%= Spree.t(:sku) %></th>
+        <th><%= Spree::Variant.human_attribute_name(:price) %></th>
+        <th><%= Spree::Variant.human_attribute_name(:sku) %></th>
         <th class="actions"></th>
       </tr>
     </thead>
@@ -104,9 +104,9 @@
   <p class='first_add_option_types no-objects-found' data-hook="first_add_option_types">
     <%= Spree.t(:to_add_variants_you_must_first_define) %>
     <% if can?(:display, Spree::OptionType) %>
-      <%= link_to Spree.t(:option_types), admin_option_types_path%>
+      <%= link_to Spree::OptionType.model_name.human(count: :other), admin_option_types_path%>
     <% else %>
-      <%= Spree.t(:option_types) %>
+      <%= Spree::OptionType.model_name.human(count: :other) %>
     <% end %>
   </p>
 <% else %>
