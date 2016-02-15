@@ -248,6 +248,7 @@ module Spree
               id: stock_item.to_param,
               stock_item: {
                 count_on_hand: count_on_hand,
+                backorderable: true,
                 force: true
               }
             }

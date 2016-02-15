@@ -63,6 +63,7 @@ module Spree
       end
 
       def stock_item_params
+        params.require(:stock_item).delete(:force)
         params.require(:stock_item).permit(permitted_stock_item_attributes)
       end
 
