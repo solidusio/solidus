@@ -1,5 +1,5 @@
 <% content_for :page_title do %>
-  <%= Spree.t('stock_transfer') %> <%= @stock_transfer.number %>
+  <%= Spree::StockTransfer.model_name.human %> <%= @stock_transfer.number %>
 <% end %>
 
 <% content_for :page_actions do %>
@@ -18,37 +18,37 @@
   </div>
 
   <div>
-    <label><%= Spree.t(:description) %></label>
+    <label><%= Spree::StockTransfer.human_attribute_name(:description) %></label>
     <p><%= @stock_transfer.description %></p>
   </div>
 
   <div class='field-block alpha three columns'>
-    <label><%= Spree.t(:created_by) %></label>
+    <label><%= Spree::StockTransfer.human_attribute_name(:created_by_id) %></label>
     <p><%= @stock_transfer.created_by.email %></p>
   </div>
 
   <div class='field-block alpha three columns'>
-    <label><%= Spree.t(:created_at) %></label>
+    <label><%= Spree::StockTransfer.human_attribute_name(:created_at) %></label>
     <p><%= @stock_transfer.created_at.try(:to_date) %></p>
   </div>
 
   <div class='field-block alpha three columns'>
-    <label><%= Spree.t(:finalized_at) %></label>
+    <label><%= Spree::StockTransfer.human_attribute_name(:finalized_at) %></label>
     <p><%= @stock_transfer.finalized_at.try(:to_date) %></p>
   </div>
 
   <div class='field-block alpha three columns'>
-    <label><%= Spree.t(:finalized_by) %></label>
+    <label><%= Spree::StockTransfer.human_attribute_name(:finalized_by_id) %></label>
     <p><%= @stock_transfer.finalized_by.try(:email) %></p>
   </div>
 
   <div class='field-block alpha three columns'>
-    <label><%= Spree.t(:shipped_at) %></label>
+    <label><%= Spree::StockTransfer.human_attribute_name(:shipped_at) %></label>
     <p><%= @stock_transfer.shipped_at.try(:to_date) %></p>
   </div>
 </fieldset>
 
 <fieldset>
-  <legend><%= Spree.t(:transfer_items) %></legend>
+  <legend><%= Spree::TransferItem.model_name.human(count: :other) %></legend>
   <%= render partial: 'transfer_item_table', locals: { transfer_items: @stock_transfer.transfer_items, show_expected: true, show_received: true, show_actions: false } %>
 </fieldset>

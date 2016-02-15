@@ -1,5 +1,5 @@
 <% content_for :page_title do %>
-  <%= Spree.t(:stock_transfers) %>
+  <%= Spree::StockTransfer.model_name.human(count: :other) %>
 <% end %>
 
 <% content_for :page_actions do %>
@@ -41,7 +41,7 @@
 
       <div class="field-block alpha four columns">
         <div class="field">
-          <%= f.label nil, Spree.t(:transfer_number) %>
+          <%= f.label nil, Spree::StockTransfer.human_attribute_name(:number) %>
           <%= f.text_field :number_cont, value: params[:q][:number_cont] %>
         </div>
       </div>

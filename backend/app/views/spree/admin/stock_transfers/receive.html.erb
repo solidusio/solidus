@@ -17,7 +17,7 @@
     <span><%= Spree.t(:you_cannot_undo_action) %></span>
   </div>
   <div class='action-consequences'>
-    <span><%= Spree.t('close_stock_transfer.will_cause') %>:</span>
+    <span><%= Spree.t('close_stock_transfer.will_cause') %></span>
     <ul data-hook='close-stock-transfer-consequences'>
       <li><%= Spree.t('close_stock_transfer.no_longer_edit') %></li>
       <li><%= Spree.t('close_stock_transfer.stock_movements_created') %></li>
@@ -42,7 +42,7 @@
     <span id='total-received-quantity'><%= @stock_transfer.received_item_count %></span>
     /
     <span><%= @stock_transfer.expected_item_count %></span>
-    <span class='summary-field'>Received</span>
+    <span class='summary-field'><%= Spree.t(:received) %></span>
   </div>
 </div>
 
