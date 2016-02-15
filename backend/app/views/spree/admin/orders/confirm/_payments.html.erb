@@ -7,6 +7,7 @@
         <th><%= "#{Spree.t('date')}/#{Spree.t('time')}" %></th>
         <th><%= Spree.t(:amount) %></th>
         <th><%= Spree.t(:payment_method) %></th>
+        <th><%= Spree::PaymentMethod.model_name.human %></th>
         <th><%= Spree.t(:transaction_id) %></th>
         <th><%= Spree.t(:payment_state) %></th>
       </tr>
