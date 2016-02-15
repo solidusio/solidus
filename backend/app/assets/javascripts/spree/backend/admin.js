@@ -128,7 +128,6 @@ $(document).ready(function(){
         url: $(this).prop("href"),
         data: {
           _method: 'delete',
-          authenticity_token: AUTH_TOKEN
         },
         dataType: 'script',
         success: function(response) {
@@ -156,7 +155,6 @@ $(document).ready(function(){
         url: el.prop("href"),
         data: {
           _method: 'delete',
-          authenticity_token: AUTH_TOKEN
         },
         success: function(response) {
           el.parents("tr").fadeOut('hide');
