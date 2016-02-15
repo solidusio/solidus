@@ -36,6 +36,26 @@ feature 'Promotion with option value rule' do
     expect(first_rule.preferred_eligible_values).to eq Hash[product.id => [option_value.id]]
   end
 
+  context "with an attempted XSS" do
+    let(:xss_string) { %(<script>throw("XSS")</script>) }
+    before do
+      option_value.update!(name: xss_string)
+    end
+    scenario "adding an option value rule", js: true do
+      select2 "Option Value(s)", from: "Add rule of type"
+      within("#rules_container") { click_button "Add" }
+
+      within("#rules_container .promotion-block") do
+        click_button "Add"
+      end
+
+      within('.promo-rule-option-value') do
+        targetted_select2_search product.name, from: '.js-promo-rule-option-value-product-select'
+        targetted_select2_search option_value.name, from: '.js-promo-rule-option-value-option-values-select'
+      end
+    end
+  end
+
   context "with an existing option value rule" do
     given(:variant1) { create :variant }
     given(:variant2) { create :variant }

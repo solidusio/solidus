@@ -172,6 +172,18 @@ describe "New Order", type: :feature do
     end
   end
 
+  context "customer with attempted XSS", js: true do
+    let(:xss_string) { %(<script>throw("XSS")</script>) }
+    before do
+      user.update!(email: xss_string)
+    end
+    it "displays the user's email escaped without executing" do
+      click_on "Customer Details"
+      targetted_select2_search user.email, from: "#s2id_customer_search"
+      expect(page).to have_field("Email", with: xss_string)
+    end
+  end
+
   def fill_in_address(kind = "bill")
     fill_in "First Name",                with: "John 99"
     fill_in "Last Name",                 with: "Doe"
