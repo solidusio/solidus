@@ -151,9 +151,6 @@ describe "Order Details", type: :feature, js: true do
           select2_search_without_selection product.name, from: ".variant_autocomplete"
 
           expect(page).to have_selector('.select2-no-results')
-          within(".select2-no-results") do
-            expect(page).to have_content("NO MATCHES FOUND")
-          end
         end
       end
     end
