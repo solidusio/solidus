@@ -4,7 +4,7 @@
       <span class="carton-number"><%= carton.number %></span>
       -
       <span class="carton-state"><%= Spree.t("shipment_states.shipped") %></span>
-      <span class="carton-exchange"><%= Spree.t(:exchange) if carton.any_exchanges? %></span>
+      <span class="carton-exchange"><%= Spree::Exchange.model_name.human if carton.any_exchanges? %></span>
       <%= Spree.t(:package_from) %>
       <strong class="stock-location-name" data-hook="stock-location-name">'<%= carton.stock_location.name %>'</strong>
     </legend>
