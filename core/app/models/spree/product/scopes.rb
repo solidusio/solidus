@@ -11,9 +11,9 @@ module Spree
 
     def self.property_conditions(property)
       properties = Property.table_name
-      conditions = case property
-                   when String   then { "#{properties}.name" => property }
-                   when Property then { "#{properties}.id" => property.id }
+      case property
+      when String   then { "#{properties}.name" => property }
+      when Property then { "#{properties}.id" => property.id }
       else { "#{properties}.id" => property.to_i }
       end
     end

@@ -145,11 +145,10 @@ module Spree
       return false if zone_members.empty? || target.zone_members.empty?
 
       if kind == target.kind
-        return false if (target.zoneables.collect(&:id) - zoneables.collect(&:id)).present?
+        (target.zoneables.collect(&:id) - zoneables.collect(&:id)).empty?
       else
-        return false if (target.zoneables.collect(&:country).collect(&:id) - zoneables.collect(&:id)).present?
+        (target.zoneables.collect(&:country).collect(&:id) - zoneables.collect(&:id)).empty?
       end
-      true
     end
 
     private

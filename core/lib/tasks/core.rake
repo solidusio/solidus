@@ -18,7 +18,6 @@ use rake db:load_file[/absolute/path/to/sample/filename.rb]'
 
     ruby_files = {}
     Dir.glob(File.join(dir, '**/*.{rb}')).each do |fixture_file|
-      ext = File.extname fixture_file
       ruby_files[File.basename(fixture_file, '.*')] = fixture_file
     end
     ruby_files.sort.each do |fixture, ruby_file|

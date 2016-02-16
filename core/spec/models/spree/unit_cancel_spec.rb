@@ -12,7 +12,7 @@ describe Spree::UnitCancel do
 
       adjustment = Spree::Adjustment.last
       expect(adjustment.adjustable).to eq inventory_unit.line_item
-      expect(adjustment.amount).to eq -10.0
+      expect(adjustment.amount).to eq(-10.0)
       expect(adjustment.order).to eq inventory_unit.order
       expect(adjustment.label).to eq "Cancellation - Short Ship"
       expect(adjustment).to be_eligible
@@ -36,7 +36,7 @@ describe Spree::UnitCancel do
 
     context "all inventory on the line item are not canceled" do
       it "divides the line item total by the inventory units size" do
-        expect(subject).to eq -5.0
+        expect(subject).to eq(-5.0)
       end
     end
 
@@ -44,7 +44,7 @@ describe Spree::UnitCancel do
       before { inventory_unit2.cancel! }
 
       it "divides the line item total by the uncanceled units size" do
-        expect(subject).to eq -10.0
+        expect(subject).to eq(-10.0)
       end
     end
 

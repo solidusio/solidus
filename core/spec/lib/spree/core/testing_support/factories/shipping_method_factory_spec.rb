@@ -14,7 +14,7 @@ RSpec.describe 'shipping method factory' do
     let(:factory) { :base_shipping_method }
 
     it 'builds successfully' do
-      expect(build factory).to be_a(factory_class)
+      expect(build(factory)).to be_a(factory_class)
     end
 
     # No test for create, as that is not intended somehow

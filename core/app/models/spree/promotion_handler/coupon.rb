@@ -12,12 +12,10 @@ module Spree
         if order.coupon_code.present?
           if promotion.present? && promotion.actions.exists?
             handle_present_promotion(promotion)
+          elsif promotion_code && promotion_code.promotion.expired?
+            set_error_code :coupon_code_expired
           else
-            if promotion_code && promotion_code.promotion.expired?
-              set_error_code :coupon_code_expired
-            else
-              set_error_code :coupon_code_not_found
-            end
+            set_error_code :coupon_code_not_found
           end
         end
 
@@ -103,15 +101,13 @@ module Spree
           order.update_totals
           order.persist_totals
           set_success_code :coupon_code_applied
-        else
+        elsif order.promotions.with_coupon_code(order.coupon_code)
           # if the promotion exists on an order, but wasn't found above,
           # we've already selected a better promotion
-          if order.promotions.with_coupon_code(order.coupon_code)
-            set_error_code :coupon_code_better_exists
-          else
-            # if the promotion was created after the order
-            set_error_code :coupon_code_not_found
-          end
+          set_error_code :coupon_code_better_exists
+        else
+          # if the promotion was created after the order
+          set_error_code :coupon_code_not_found
         end
       end
     end

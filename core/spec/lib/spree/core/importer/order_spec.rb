@@ -122,7 +122,7 @@ module Spree
         params = { line_items_attributes: line_items }
 
         expect {
-          order = Importer::Order.import(user, params)
+          Importer::Order.import(user, params)
         }.to raise_error /Validation failed/
       end
 
@@ -191,8 +191,10 @@ module Spree
 
       context "state passed is not associated with country" do
         let(:params) do
-          params = { ship_address_attributes: ship_address,
-                     line_items_attributes: line_items }
+          {
+            ship_address_attributes: ship_address,
+            line_items_attributes: line_items
+          }
         end
 
         let(:other_state) { create(:state, name: "Uhuhuh", country: create(:country)) }
@@ -273,7 +275,7 @@ module Spree
 
         it 'ensures variant exists and is not deleted' do
           expect(Importer::Order).to receive(:ensure_variant_id_from_params).and_call_original
-          order = Importer::Order.import(user, params)
+          Importer::Order.import(user, params)
         end
 
         it 'builds them properly' do
@@ -300,7 +302,7 @@ module Spree
         it "raises if cant find stock location" do
           params[:shipments_attributes][0][:stock_location] = "doesnt exist"
           expect {
-            order = Importer::Order.import(user, params)
+            Importer::Order.import(user, params)
           }.to raise_error ActiveRecord::RecordNotFound
         end
 
@@ -347,7 +349,7 @@ module Spree
         order = Importer::Order.import(user, params)
         expect(order.adjustments.all?(&:finalized?)).to be true
         expect(order.adjustments.first.label).to eq 'Shipping Discount'
-        expect(order.adjustments.first.amount).to eq -4.99
+        expect(order.adjustments.first.amount).to eq(-4.99)
       end
 
       it "calculates final order total correctly" do
@@ -415,7 +417,7 @@ module Spree
                                             }] }
 
         expect {
-          order = Importer::Order.import(user, params)
+          Importer::Order.import(user, params)
         }.to raise_error /Validation failed: Credit card Month is not a number, Credit card Year is not a number/
       end
 
@@ -424,7 +426,7 @@ module Spree
           params = { payments_attributes: [{ payment_method: "XXX" }] }
           count = Order.count
 
-          expect { order = Importer::Order.import(user, params) }.to raise_error ActiveRecord::RecordNotFound
+          expect { Importer::Order.import(user, params) }.to raise_error ActiveRecord::RecordNotFound
           expect(Order.count).to eq count
         end
       end

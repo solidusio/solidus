@@ -217,7 +217,7 @@ module Spree
     def determine_state(order)
       return 'canceled' if order.canceled?
       return 'pending' unless order.can_ship?
-      return 'pending' if inventory_units.any? &:backordered?
+      return 'pending' if inventory_units.any?(&:backordered?)
       return 'shipped' if state == 'shipped'
       if order.paid? || !Spree::Config[:require_payment_to_ship]
         'ready'
@@ -350,9 +350,6 @@ module Spree
     end
 
     def transfer_to_shipment(variant, quantity, shipment_to_transfer_to)
-      quantity_already_shipment_to_transfer_to = shipment_to_transfer_to.manifest.find{ |mi| mi.line_item.variant == variant }.try(:quantity) || 0
-      final_quantity = quantity + quantity_already_shipment_to_transfer_to
-
       if quantity <= 0 || self == shipment_to_transfer_to
         raise ArgumentError
       end

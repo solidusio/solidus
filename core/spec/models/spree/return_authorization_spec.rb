@@ -151,7 +151,7 @@ describe Spree::ReturnAuthorization, type: :model do
     subject { return_authorization.pre_tax_total }
 
     it "sums it's associated return_item's pre-tax amounts" do
-      expect(subject).to eq (pre_tax_amount_1 + pre_tax_amount_2 + pre_tax_amount_3)
+      expect(subject).to eq(pre_tax_amount_1 + pre_tax_amount_2 + pre_tax_amount_3)
     end
   end
 
@@ -192,14 +192,14 @@ describe Spree::ReturnAuthorization, type: :model do
     context "no promotions" do
       let(:promo_total) { 0.0 }
       it "returns the pre-tax line item total" do
-        expect(subject).to eq (weighted_line_item_pre_tax_amount * line_item_count)
+        expect(subject).to eq(weighted_line_item_pre_tax_amount * line_item_count)
       end
     end
 
     context "promotions" do
       let(:promo_total) { -10.0 }
       it "returns the pre-tax line item total minus the order level promotion value" do
-        expect(subject).to eq (weighted_line_item_pre_tax_amount * line_item_count) + promo_total
+        expect(subject).to eq((weighted_line_item_pre_tax_amount * line_item_count) + promo_total)
       end
     end
   end

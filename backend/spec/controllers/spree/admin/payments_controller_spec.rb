@@ -128,7 +128,6 @@ module Spree
       end
 
       describe '#fire' do
-
         describe 'authorization' do
           let(:payment) { create(:payment, state: 'checkout') }
           let(:order) { payment.order }

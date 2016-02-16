@@ -5,7 +5,7 @@ describe Spree::LegacyUser, type: :model do
     let!(:user) { create(:user) }
 
     it "excludes orders that are not frontend_viewable" do
-      order = create(:order, user: user, frontend_viewable: false)
+      create(:order, user: user, frontend_viewable: false)
       expect(user.last_incomplete_spree_order).to eq nil
     end
 
@@ -17,18 +17,18 @@ describe Spree::LegacyUser, type: :model do
     it "can scope to a store" do
       store = create(:store)
       store_1_order = create(:order, user: user, store: store)
-      store_2_order = create(:order, user: user, store: create(:store))
+      create(:order, user: user, store: create(:store))
       expect(user.last_incomplete_spree_order(store: store)).to eq store_1_order
     end
 
     it "excludes completed orders" do
-      order = create(:completed_order_with_totals, user: user, created_by: user)
+      create(:completed_order_with_totals, user: user, created_by: user)
       expect(user.last_incomplete_spree_order).to eq nil
     end
 
     it "excludes orders created prior to the user's last completed order" do
-      incomplete_order = create(:order, user: user, created_by: user, created_at: 1.second.ago)
-      completed_order = create(:completed_order_with_totals, user: user, created_by: user)
+      create(:order, user: user, created_by: user, created_at: 1.second.ago)
+      create(:completed_order_with_totals, user: user, created_by: user)
       expect(user.last_incomplete_spree_order).to eq nil
     end
 
@@ -41,7 +41,7 @@ describe Spree::LegacyUser, type: :model do
       after { Spree::Config.completable_order_created_cutoff_days = @original_order_cutoff_preference }
 
       it "excludes orders updated outside of the cutoff date" do
-        incomplete_order = create(:order, user: user, created_by: user, created_at: 3.days.ago, updated_at: 2.days.ago)
+        create(:order, user: user, created_by: user, created_at: 3.days.ago, updated_at: 2.days.ago)
         expect(user.last_incomplete_spree_order).to eq nil
       end
     end
@@ -55,13 +55,13 @@ describe Spree::LegacyUser, type: :model do
       after { Spree::Config.completable_order_updated_cutoff_days = @original_order_cutoff_preference }
 
       it "excludes orders updated outside of the cutoff date" do
-        incomplete_order = create(:order, user: user, created_by: user, created_at: 3.days.ago, updated_at: 2.days.ago)
+        create(:order, user: user, created_by: user, created_at: 3.days.ago, updated_at: 2.days.ago)
         expect(user.last_incomplete_spree_order).to eq nil
       end
     end
 
     it "chooses the most recently created incomplete order" do
-      order_1 = create(:order, user: user, created_at: 1.second.ago)
+      create(:order, user: user, created_at: 1.second.ago)
       order_2 = create(:order, user: user)
       expect(user.last_incomplete_spree_order).to eq order_2
     end
@@ -128,7 +128,7 @@ describe Spree.user_class, type: :model do
       context "with orders" do
         before { load_orders }
         it "returns the total of completed orders for the user" do
-          expect(subject.lifetime_value).to eq (order_count * order_value)
+          expect(subject.lifetime_value).to eq(order_count * order_value)
         end
       end
       context "without orders" do
@@ -206,13 +206,13 @@ describe Spree.user_class, type: :model do
           before { additional_store_credit.update_attributes(amount_authorized: authorized_amount) }
 
           it "returns sum of amounts minus used amount and authorized amount" do
-            expect(subject.total_available_store_credit.to_f).to eq (amount + additional_amount - amount_used - authorized_amount)
+            expect(subject.total_available_store_credit.to_f).to eq(amount + additional_amount - amount_used - authorized_amount)
           end
         end
 
         context "there are no authorized amounts on any of the store credits" do
           it "returns sum of amounts minus used amount" do
-            expect(subject.total_available_store_credit.to_f).to eq (amount + additional_amount - amount_used)
+            expect(subject.total_available_store_credit.to_f).to eq(amount + additional_amount - amount_used)
           end
         end
       end
@@ -224,20 +224,20 @@ describe Spree.user_class, type: :model do
           before { additional_store_credit.update_attributes(amount_authorized: authorized_amount) }
 
           it "returns sum of amounts minus authorized amount" do
-            expect(subject.total_available_store_credit.to_f).to eq (amount + additional_amount - authorized_amount)
+            expect(subject.total_available_store_credit.to_f).to eq(amount + additional_amount - authorized_amount)
           end
         end
 
         context "there are no authorized amounts on any of the store credits" do
           it "returns sum of amounts" do
-            expect(subject.total_available_store_credit.to_f).to eq (amount + additional_amount)
+            expect(subject.total_available_store_credit.to_f).to eq(amount + additional_amount)
           end
         end
       end
 
       context "all store credits have never been used or authorized" do
         it "returns sum of amounts" do
-          expect(subject.total_available_store_credit.to_f).to eq (amount + additional_amount)
+          expect(subject.total_available_store_credit.to_f).to eq(amount + additional_amount)
         end
       end
     end

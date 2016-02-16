@@ -710,7 +710,7 @@ describe Spree::Payment, type: :model do
       context "when successfully connecting to the gateway" do
         it "should create a payment profile" do
           expect(payment.payment_method).to receive :create_profile
-          payment = Spree::Payment.create(
+          Spree::Payment.create(
             amount: 100,
             order: order,
             source: card,
@@ -725,7 +725,7 @@ describe Spree::Payment, type: :model do
 
       it "should not create a payment profile" do
         expect(gateway).not_to receive :create_profile
-        payment = Spree::Payment.create(
+        Spree::Payment.create(
           amount: 100,
           order: order,
           source: card,

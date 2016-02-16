@@ -43,7 +43,7 @@ module Spree
     scope :tax, -> { where(source_type: 'Spree::TaxRate') }
     scope :non_tax, -> do
       source_type = arel_table[:source_type]
-      where(source_type.not_eq('Spree::TaxRate').or source_type.eq(nil))
+      where(source_type.not_eq('Spree::TaxRate').or(source_type.eq(nil)))
     end
     scope :price, -> { where(adjustable_type: 'Spree::LineItem') }
     scope :shipping, -> { where(adjustable_type: 'Spree::Shipment') }
@@ -173,10 +173,6 @@ module Spree
         update_columns(eligible: eligible, amount: amount, updated_at: Time.current) if changed?
       end
       amount
-    end
-
-    def currency
-      adjustable ? adjustable.currency : Spree::Config[:currency]
     end
 
     private

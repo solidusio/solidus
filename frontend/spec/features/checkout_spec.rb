@@ -199,7 +199,7 @@ describe "Checkout", type: :feature, inaccessible: true do
     end
 
     it "selects first source available and customer moves on" do
-      expect(find "#use_existing_card_yes").to be_checked
+      expect(find("#use_existing_card_yes")).to be_checked
 
       expect {
         click_on "Save and Continue"

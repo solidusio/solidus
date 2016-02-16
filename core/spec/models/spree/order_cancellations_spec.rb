@@ -153,7 +153,7 @@ describe Spree::OrderCancellations do
       it "generates the correct total amount" do
         order.cancellations.short_ship([inventory_unit_1])
         order.cancellations.short_ship([inventory_unit_2])
-        expect(line_item.adjustments.non_tax.sum(:amount)).to eq -1.67
+        expect(line_item.adjustments.non_tax.sum(:amount)).to eq(-1.67)
         expect(line_item.total).to eq 0
       end
     end

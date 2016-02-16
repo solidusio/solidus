@@ -25,12 +25,10 @@ module Spree
 
         if payment_method.auto_capture?
           purchase!
+        elsif pending?
+          # do nothing. already authorized.
         else
-          if pending?
-            # do nothing. already authorized.
-          else
-            authorize!
-          end
+          authorize!
         end
       end
 
@@ -121,7 +119,7 @@ module Spree
 
       def process_purchase
         started_processing!
-        result = gateway_action(source, :purchase, :complete)
+        gateway_action(source, :purchase, :complete)
         # This won't be called if gateway_action raises a GatewayError
         capture_events.create!(amount: amount)
       end

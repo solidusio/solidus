@@ -48,70 +48,6 @@ class Project
     end
   end
 
-  private
-
-  # Check if current bundle is already usable
-  #
-  # @return [Boolean]
-  def bundle_check
-    system(%W[bundle check --path=#{VENDOR_BUNDLE}])
-  end
-
-  # Install the current bundle
-  #
-  # @return [Boolean]
-  #   the success of the installation
-  def bundle_install
-    system(%W[
-      bundle
-      install
-      --path=#{VENDOR_BUNDLE}
-      --jobs=#{BUNDLER_JOBS}
-      --retry=#{BUNDLER_RETRIES}
-    ])
-  end
-
-  # Setup the test app
-  #
-  # @return [undefined]
-  def setup_test_app
-    system(%w[bundle exec rake test_app]) || fail('Failed to setup the test app')
-  end
-
-  # Run tests for subproject
-  #
-  # @return [Boolean]
-  #   the success of the tests
-  def run_tests
-    system(%w[bundle exec rspec] + rspec_arguments)
-  end
-
-  def rspec_arguments
-    args = []
-    args += %w[--format documentation --profile 10]
-    if report_dir = ENV['CIRCLE_TEST_REPORTS']
-      args += %W[-r rspec_junit_formatter --format RspecJunitFormatter -o #{report_dir}/rspec/#{name}.xml]
-    end
-    args
-  end
-
-  # Execute system command via execve
-  #
-  # No shell interpolation gets done this way. No escapes needed.
-  #
-  # @return [Boolean]
-  #   the success of the system command
-  def system(arguments)
-    Kernel.system(*arguments)
-  end
-
-  # Change to subproject directory and execute block
-  #
-  # @return [undefined]
-  def chdir(&block)
-    Dir.chdir(ROOT.join(name), &block)
-  end
-
   # Install subprojects
   #
   # @return [self]
@@ -188,6 +124,70 @@ class Project
     else
       fail "Unknown mode: #{mode.inspect}"
     end
+  end
+
+  private
+
+  # Check if current bundle is already usable
+  #
+  # @return [Boolean]
+  def bundle_check
+    system(%W[bundle check --path=#{VENDOR_BUNDLE}])
+  end
+
+  # Install the current bundle
+  #
+  # @return [Boolean]
+  #   the success of the installation
+  def bundle_install
+    system(%W[
+      bundle
+      install
+      --path=#{VENDOR_BUNDLE}
+      --jobs=#{BUNDLER_JOBS}
+      --retry=#{BUNDLER_RETRIES}
+    ])
+  end
+
+  # Setup the test app
+  #
+  # @return [undefined]
+  def setup_test_app
+    system(%w[bundle exec rake test_app]) || fail('Failed to setup the test app')
+  end
+
+  # Run tests for subproject
+  #
+  # @return [Boolean]
+  #   the success of the tests
+  def run_tests
+    system(%w[bundle exec rspec] + rspec_arguments)
+  end
+
+  def rspec_arguments
+    args = []
+    args += %w[--format documentation --profile 10]
+    if report_dir = ENV['CIRCLE_TEST_REPORTS']
+      args += %W[-r rspec_junit_formatter --format RspecJunitFormatter -o #{report_dir}/rspec/#{name}.xml]
+    end
+    args
+  end
+
+  # Execute system command via execve
+  #
+  # No shell interpolation gets done this way. No escapes needed.
+  #
+  # @return [Boolean]
+  #   the success of the system command
+  def system(arguments)
+    Kernel.system(*arguments)
+  end
+
+  # Change to subproject directory and execute block
+  #
+  # @return [undefined]
+  def chdir(&block)
+    Dir.chdir(ROOT.join(name), &block)
   end
 end # Project
 

@@ -24,7 +24,7 @@ module Spree
 
     def compute(object)
       order = object.is_a?(Order) ? object : object.order
-      base, percent = preferred_tiers.sort.reverse.detect{ |b, _| order.item_total >= b }
+      _base, percent = preferred_tiers.sort.reverse.detect{ |b, _| order.item_total >= b }
       (object.amount * (percent || preferred_base_percent) / 100).round(2)
     end
 

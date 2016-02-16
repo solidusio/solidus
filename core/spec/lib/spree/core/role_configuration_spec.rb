@@ -139,7 +139,7 @@ describe Spree::RoleConfiguration do
 
         it "doesn't activate non matching roles" do
           subject
-          expect(ability.can? :manage, :things).to be false
+          expect(ability.can?(:manage, :things)).to be false
         end
       end
     end
@@ -149,7 +149,7 @@ describe Spree::RoleConfiguration do
 
       it "doesnt activate any new permissions" do
         subject
-        expect(ability.can? :manage, :things).to be false
+        expect(ability.can?(:manage, :things)).to be false
       end
     end
   end

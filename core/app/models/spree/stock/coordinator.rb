@@ -99,13 +99,11 @@ module Spree
         # build the final lookup hash of
         #   {<stock location> => <set of variant ids>, ...}
         # using the previous results
-        hash = location_variant_ids.each_with_object({}) do |(location_id, variant_id), hash|
+        location_variant_ids.each_with_object({}) do |(location_id, variant_id), hash|
           location = location_lookup[location_id]
           hash[location] ||= Set.new
           hash[location] << variant_id
         end
-
-        hash
       end
 
       def unallocated_inventory_units

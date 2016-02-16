@@ -29,7 +29,7 @@ RSpec.describe 'customer return factory' do
     let(:factory) { :customer_return_without_return_items }
 
     it "builds successfully" do
-      expect(build factory).to be_a(factory_class)
+      expect(build(factory)).to be_a(factory_class)
     end
 
     # No create test, because this factory is (intentionally) invalid

@@ -37,9 +37,9 @@ module Spree
 
       def scope
         if params[:product_id]
-          scope = Spree::Product.friendly.find(params[:product_id])
+          Spree::Product.friendly.find(params[:product_id])
         elsif params[:variant_id]
-          scope = Spree::Variant.find(params[:variant_id])
+          Spree::Variant.find(params[:variant_id])
         end
       end
     end

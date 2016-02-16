@@ -198,7 +198,7 @@ module Spree
           before { order.update_attributes(state: 'canceled') }
 
           it "it should be a negative amount incorporating reimbursements" do
-            expect(order.outstanding_balance).to eq -10
+            expect(order.outstanding_balance).to eq(-10)
           end
         end
 

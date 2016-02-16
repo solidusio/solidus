@@ -6,7 +6,7 @@ describe 'product filters', type: :model do
   context 'finds products filtered by brand' do
     let(:product) { create(:product) }
     before do
-      property = Spree::Property.create!(name: "brand", presentation: "brand")
+      Spree::Property.create!(name: "brand", presentation: "brand")
       product.set_property("brand", "Nike")
     end
 

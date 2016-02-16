@@ -1001,7 +1001,7 @@ describe Spree::Order, type: :model do
         subject { order }
 
         it "returns the sum of the payment amounts" do
-          expect(subject.total_applicable_store_credit).to eq (payment.amount + second_payment.amount)
+          expect(subject.total_applicable_store_credit).to eq(payment.amount + second_payment.amount)
         end
       end
 
@@ -1225,7 +1225,7 @@ describe Spree::Order, type: :model do
         let(:applicable_store_credit) { 10.0 }
 
         it "deducts the applicable store credit" do
-          expect(subject.order_total_after_store_credit).to eq (order_total - applicable_store_credit)
+          expect(subject.order_total_after_store_credit).to eq(order_total - applicable_store_credit)
         end
       end
 
@@ -1309,7 +1309,7 @@ describe Spree::Order, type: :model do
       end
 
       it "returns a negative amount" do
-        expect(subject.display_total_applicable_store_credit.money.cents).to eq (total_applicable_store_credit * -100.0)
+        expect(subject.display_total_applicable_store_credit.money.cents).to eq(total_applicable_store_credit * -100.0)
       end
     end
 
@@ -1325,7 +1325,7 @@ describe Spree::Order, type: :model do
       end
 
       it "returns the order_total_after_store_credit amount" do
-        expect(subject.display_order_total_after_store_credit.money.cents).to eq (order_total_after_store_credit * 100.0)
+        expect(subject.display_order_total_after_store_credit.money.cents).to eq(order_total_after_store_credit * 100.0)
       end
     end
 
@@ -1341,7 +1341,7 @@ describe Spree::Order, type: :model do
       end
 
       it "returns the total_available_store_credit amount" do
-        expect(subject.display_total_available_store_credit.money.cents).to eq (total_available_store_credit * 100.0)
+        expect(subject.display_total_available_store_credit.money.cents).to eq(total_available_store_credit * 100.0)
       end
     end
 
@@ -1362,7 +1362,7 @@ describe Spree::Order, type: :model do
 
       it "returns all of the user's available store credit minus what's applied to the order amount" do
         amount_remaining = total_available_store_credit - total_applicable_store_credit
-        expect(subject.display_store_credit_remaining_after_capture.money.cents).to eq (amount_remaining * 100.0)
+        expect(subject.display_store_credit_remaining_after_capture.money.cents).to eq(amount_remaining * 100.0)
       end
     end
 

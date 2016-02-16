@@ -76,7 +76,7 @@ describe Spree::Core::Search::Base do
   end
 
   it "finds products in alternate currencies" do
-    price = create(:price, currency: 'EUR', variant: @product1.master)
+    create(:price, currency: 'EUR', variant: @product1.master)
     searcher = Spree::Core::Search::Base.new({})
     searcher.current_currency = 'EUR'
     expect(searcher.retrieve_products).to eq([@product1])

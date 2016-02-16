@@ -50,7 +50,7 @@ describe Spree::Zone, type: :model do
     let(:country) do
       country = create(:country)
       # Create at least one state for this country
-      state = create(:state, country: country)
+      create(:state, country: country)
       country
     end
 
@@ -159,7 +159,7 @@ describe Spree::Zone, type: :model do
       before { @foo_zone = create(:zone, name: 'whatever', default_tax: true) }
 
       it "should be the correct zone" do
-        foo_zone = create(:zone, name: 'foo')
+        create(:zone, name: 'foo')
         expect(Spree::Zone.default_tax).to eq(@foo_zone)
       end
     end
@@ -312,7 +312,7 @@ describe Spree::Zone, type: :model do
     context "when default_tax is true" do
       it "should clear previous default tax zone" do
         zone1 = create(:zone, name: 'foo', default_tax: true)
-        zone = create(:zone, name: 'bar', default_tax: true)
+        create(:zone, name: 'bar', default_tax: true)
         expect(zone1.reload.default_tax).to be false
       end
     end

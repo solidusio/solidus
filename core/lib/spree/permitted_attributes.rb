@@ -32,7 +32,7 @@ module Spree
       :variant_attributes
     ]
 
-    mattr_reader *ATTRIBUTES
+    mattr_reader(*ATTRIBUTES)
 
     @@address_attributes = [
       :id, :firstname, :lastname, :first_name, :last_name,

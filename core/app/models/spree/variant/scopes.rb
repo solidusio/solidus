@@ -22,7 +22,7 @@ module Spree
 
         relation = joins(option_values: :option_type).where(option_type_conditions)
 
-        option_values_conditions = option_values.each do |option_value|
+        option_values.each do |option_value|
           option_value_conditions = case option_value
                                     when OptionValue then { "#{OptionValue.table_name}.name" => option_value.name }
                                     when String      then { "#{OptionValue.table_name}.name" => option_value }

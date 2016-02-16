@@ -22,7 +22,7 @@ module Spree
 
             if should_associate_user?
               requested_user = Spree.user_class.find(params[:user_id])
-              @order.associate_user!(Spree.user_class.find(params[:user_id]), @order.email.blank?)
+              @order.associate_user!(requested_user, @order.email.blank?)
             end
 
             unless @order.completed?

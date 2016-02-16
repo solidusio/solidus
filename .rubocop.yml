@@ -22,6 +22,9 @@ Style/ClassVars:
 Style/PredicateName:
   Enabled: false
 
+Style/AccessorMethodName:
+  Enabled: false
+
 # This has been used for customization
 Style/MutableConstant:
   Enabled: false
@@ -39,6 +42,20 @@ Style/ConditionalAssignment:
   Enabled: false
 
 Performance/Count:
+  Enabled: false
+
+Style/RaiseArgs:
+  Enabled: false
+
+Style/OpMethod:
+  Enabled: false
+
+# We can use good judgement here
+Style/RegexpLiteral:
+  Enabled: false
+
+# Unicode comments are useful
+Style/AsciiComments:
   Enabled: false
 
 Lint/EndAlignment:

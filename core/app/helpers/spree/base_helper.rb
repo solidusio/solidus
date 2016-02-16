@@ -60,7 +60,7 @@ module Spree
 
       flash.each do |msg_type, text|
         unless ignore_types.include?(msg_type)
-          concat(content_tag :div, text, class: "flash #{msg_type}")
+          concat(content_tag(:div, text, class: "flash #{msg_type}"))
         end
       end
       nil
@@ -174,12 +174,10 @@ module Spree
         if product.images.empty?
           if !product.is_a?(Spree::Variant) && !product.variant_images.empty?
             create_product_image_tag(product.variant_images.first, product, options, style)
+          elsif product.is_a?(Variant) && !product.product.variant_images.empty?
+            create_product_image_tag(product.product.variant_images.first, product, options, style)
           else
-            if product.is_a?(Variant) && !product.product.variant_images.empty?
-              create_product_image_tag(product.product.variant_images.first, product, options, style)
-            else
-              image_tag "noimage/#{style}.png", options
-            end
+            image_tag "noimage/#{style}.png", options
           end
         else
           create_product_image_tag(product.images.first, product, options, style)

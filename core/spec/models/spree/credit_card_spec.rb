@@ -155,7 +155,7 @@ describe Spree::CreditCard, type: :model do
     end
 
     it "should not raise an exception on non-string input" do
-      credit_card.number = Hash.new
+      credit_card.number = {}
       expect(credit_card.number).to be_nil
     end
   end

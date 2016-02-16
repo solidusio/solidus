@@ -39,7 +39,7 @@ describe "exchanges:charge_unreturned_items" do
       Spree::Shipment.last.ship!
       return_item_1.lost!
       return_item_2.give!
-      Timecop.travel (Spree::Config[:expedited_exchanges_days_window] + 1).days
+      Timecop.travel((Spree::Config[:expedited_exchanges_days_window] + 1).days)
     end
     after { Timecop.return }
     it { expect { subject.invoke }.not_to change { Spree::Order.count } }

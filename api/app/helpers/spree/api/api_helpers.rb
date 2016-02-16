@@ -37,7 +37,7 @@ module Spree
         :variant_property_attributes
       ]
 
-      mattr_reader *ATTRIBUTES
+      mattr_reader(*ATTRIBUTES)
 
       def required_fields_for(model)
         required_fields = model._validators.select do |_field, validations|

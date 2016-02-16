@@ -182,7 +182,7 @@ module Spree
 
       current_value = option_values.detect { |o| o.option_type.name == opt_name }
 
-      unless current_value.nil?
+      if current_value
         return if current_value.name == opt_value
         option_values.delete(current_value)
       else

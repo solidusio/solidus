@@ -12,8 +12,8 @@ module Spree
       payment.pending?
     end
 
-    def authorize(amount_in_cents, store_credit, gateway_options = {})
-      if store_credit.nil?
+    def authorize(amount_in_cents, provided_store_credit, gateway_options = {})
+      if provided_store_credit.nil?
         ActiveMerchant::Billing::Response.new(false, Spree.t('store_credit.unable_to_find'), {}, {})
       else
         action = -> (store_credit) {
@@ -23,7 +23,7 @@ module Spree
             action_originator: gateway_options[:originator]
           )
         }
-        handle_action_call(store_credit, action, :authorize)
+        handle_action_call(provided_store_credit, action, :authorize)
       end
     end
 

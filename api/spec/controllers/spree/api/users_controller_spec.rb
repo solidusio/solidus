@@ -40,7 +40,6 @@ module Spree
         api_post :create, user: {}, token: user.spree_api_key
         expect(response.status).to eq(422)
         expect(json_response["error"]).to eq("Invalid resource. Please fix errors and try again.")
-        errors = json_response["errors"]
       end
 
       it "can update own details" do

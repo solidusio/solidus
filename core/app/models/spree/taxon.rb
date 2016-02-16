@@ -49,7 +49,7 @@ module Spree
     # @return [String] meta_title if set otherwise a string containing the
     #   root name and taxon name
     def seo_title
-      unless meta_title.blank?
+      if meta_title.present?
         meta_title
       else
         root? ? name : "#{root.name} - #{name}"
@@ -91,10 +91,9 @@ module Spree
     # @return [String] this taxon's ancestors names followed by its own name,
     #   separated by arrows
     def pretty_name
-      ancestor_chain = ancestors.inject("") do |name, ancestor|
-        name += "#{ancestor.name} -> "
-      end
-      ancestor_chain + name.to_s
+      ancestor_chain = ancestors.map(&:name)
+      ancestor_chain << name
+      ancestor_chain.join(" -> ")
     end
 
     # @see https://github.com/spree/spree/issues/3390

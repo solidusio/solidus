@@ -32,8 +32,8 @@ class OrderWalkthrough
                           states[0..end_state_position]
                         end
 
-    states_to_process.each do |state|
-      send(state, order)
+    states_to_process.each do |state_to_process|
+      send(state_to_process, order)
     end
 
     order

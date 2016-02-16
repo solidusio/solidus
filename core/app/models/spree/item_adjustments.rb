@@ -49,7 +49,7 @@ module Spree
       #
       # We want to select the best promotion for the order, but the remainder
       # of the calculations here are done in the OrderUpdater instead.
-      return if Spree::Order === item
+      return if item.is_a?(Spree::Order)
 
       @item.promo_total = promo_total
 

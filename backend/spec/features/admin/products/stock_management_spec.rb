@@ -26,7 +26,7 @@ describe "Stock Management", type: :feature do
     context "with no stock location" do
       before do
         @product = create(:product, name: 'apache baseball cap', price: 10)
-        v = @product.variants.create!(sku: 'FOOBAR')
+        @product.variants.create!(sku: 'FOOBAR')
         Spree::StockLocation.destroy_all
         click_link "Back To Products List"
         within_row(1) do
@@ -54,7 +54,7 @@ describe "Stock Management", type: :feature do
       stock_item.reload
       expect(stock_item.count_on_hand).to eq 4
       expect(stock_item.stock_movements.count).to eq 1
-      expect(stock_item.stock_movements.first.quantity).to eq -6
+      expect(stock_item.stock_movements.first.quantity).to eq(-6)
     end
 
     def adjust_count_on_hand(count_on_hand)

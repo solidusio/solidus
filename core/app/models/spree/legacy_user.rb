@@ -8,11 +8,6 @@ module Spree
 
     self.table_name = 'spree_users'
 
-    # for url generation
-    def self.model_name
-      ActiveModel::Name.new(self, nil, "User")
-    end
-
     before_destroy :check_completed_orders
 
     def self.model_name

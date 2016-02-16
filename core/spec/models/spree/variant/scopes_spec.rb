@@ -49,6 +49,7 @@ describe "Variant scopes", type: :model do
 
     it "by mixed conditions" do
       variants = product_variants.has_option(option_type.id, "foo", option_value_2)
+      expect(variants).to be_empty
     end
   end
 end

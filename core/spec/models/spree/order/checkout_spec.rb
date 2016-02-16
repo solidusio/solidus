@@ -166,7 +166,7 @@ describe Spree::Order, type: :model do
       before do
         order.state = 'address'
         order.ship_address = ship_address
-        shipment = FactoryGirl.create(:shipment, order: order, cost: 10)
+        FactoryGirl.create(:shipment, order: order, cost: 10)
         order.email = "user@example.com"
         order.save!
       end
@@ -620,7 +620,7 @@ describe Spree::Order, type: :model do
       let(:order) { create(:order_with_line_items) }
 
       it 'can complete the order' do
-        payment = create(:payment, state: 'completed', order: order, amount: order.total)
+        create(:payment, state: 'completed', order: order, amount: order.total)
         order.update!
         expect(order.complete).to eq(true)
       end

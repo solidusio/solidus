@@ -46,7 +46,7 @@ class Spree::OrderShipping
     carton = nil
 
     Spree::InventoryUnit.transaction do
-      inventory_units.each &:ship!
+      inventory_units.each(&:ship!)
 
       carton = Spree::Carton.create!(
         stock_location: stock_location,

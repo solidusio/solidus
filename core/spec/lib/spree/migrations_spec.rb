@@ -28,7 +28,7 @@ module Spree
     context "no missing migrations" do
       it "says nothing" do
         expect(Dir).to receive(:entries).with(engine_dir).and_return engine_migrations
-        expect(Dir).to receive(:entries).with(app_dir).and_return (app_migrations + engine_migrations)
+        expect(Dir).to receive(:entries).with(app_dir).and_return(app_migrations + engine_migrations)
         expect(subject.check).to eq nil
       end
     end

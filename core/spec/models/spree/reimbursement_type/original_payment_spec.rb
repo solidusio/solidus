@@ -43,7 +43,7 @@ module Spree
 
       context 'when a payment is negative' do
         before do
-          expect_any_instance_of(Spree::Payment).to receive(:amount).and_return -100
+          expect_any_instance_of(Spree::Payment).to receive(:amount).and_return(-100)
         end
 
         it 'returns an empty array' do
