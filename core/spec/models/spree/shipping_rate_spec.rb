@@ -7,7 +7,7 @@ describe Spree::ShippingRate, type: :model do
   let(:order) { create(:order, ship_address: address) }
   let(:shipment) { create(:shipment, order: order) }
   let(:tax_category) { create :tax_category }
-  let(:zone) { create(:zone, countries: [address.country], default_tax: true) }
+  let(:zone) { create(:zone, countries: [address.country]) }
   let!(:shipping_method) { create(:shipping_method, tax_category: tax_category, zones: [zone]) }
   let(:shipping_rate) {
     Spree::ShippingRate.new(shipment: shipment,
@@ -48,8 +48,8 @@ describe Spree::ShippingRate, type: :model do
       end
 
       context "when the tax rate is from a non-default zone" do
-        let!(:default_zone) { create(:zone, default_tax: true) }
-        let!(:non_default_zone) { create(:zone, default_tax: false) }
+        let!(:default_zone) { create(:zone) }
+        let!(:non_default_zone) { create(:zone) }
         let(:tax_rate) do
           create(:tax_rate,
             name: "VAT",

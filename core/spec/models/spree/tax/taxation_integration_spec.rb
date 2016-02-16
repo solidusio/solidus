@@ -46,8 +46,7 @@ RSpec.describe "Taxation system integration tests" do
 
   context 'selling from germany' do
     let(:germany) { create :country, iso: "DE" }
-    # The weird default_tax boolean is what makes this context one with default included taxes
-    let!(:germany_zone) { create :zone, countries: [germany], default_tax: true }
+    let!(:germany_zone) { create :zone, countries: [germany] }
     let(:romania) { create(:country, iso: "RO") }
     let(:romania_zone) { create(:zone, countries: [romania] ) }
     let(:eu_zone) { create(:zone, countries: [romania, germany]) }

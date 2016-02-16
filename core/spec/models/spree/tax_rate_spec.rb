@@ -126,7 +126,7 @@ describe Spree::TaxRate, type: :model do
       end
 
       context "when there is a default tax zone" do
-        let(:default_zone) { create(:zone, :with_country, default_tax: true) }
+        let(:default_zone) { create(:zone, :with_country) }
         let(:included_in_price) { false }
         let!(:rate) do
           create(:tax_rate, zone: default_zone, included_in_price: included_in_price)

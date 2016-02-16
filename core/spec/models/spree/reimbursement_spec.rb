@@ -50,7 +50,7 @@ describe Spree::Reimbursement, type: :model do
 
     let!(:tax_rate)               { nil }
     let(:address) { create(:address) }
-    let!(:tax_zone)               { create :zone, countries: [address.country], default_tax: true }
+    let!(:tax_zone)               { create :zone, countries: [address.country] }
     let(:shipping_method)         { create :shipping_method, zones: [tax_zone] }
     let(:variant)                 { create :variant }
     let(:order) do

@@ -13,7 +13,6 @@ module Spree
 
     validates :name, presence: true, uniqueness: { allow_blank: true }
     after_save :remove_defunct_members
-    after_save :remove_previous_default
 
     scope :with_member_ids,
           ->(state_ids, country_ids) do
@@ -34,7 +33,8 @@ module Spree
     self.whitelisted_ransackable_attributes = ['description']
 
     def self.default_tax
-      where(default_tax: true).first
+      ActiveSupport::Deprecation.warn("Please do not use the default tax zone anymore, and instead use the default tax address.", caller)
+      match(Spree::Config.default_tax_address)
     end
 
     # Returns the most specific matching zone for an address. Specific means:
@@ -157,10 +157,6 @@ module Spree
       if zone_members.any?
         zone_members.where('zoneable_id IS NULL OR zoneable_type != ?', "Spree::#{kind.classify}").destroy_all
       end
-    end
-
-    def remove_previous_default
-      Spree::Zone.where('id != ?', id).update_all(default_tax: false) if default_tax
     end
 
     def set_zone_members(ids, type)

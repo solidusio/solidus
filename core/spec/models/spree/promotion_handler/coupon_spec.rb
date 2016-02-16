@@ -254,7 +254,7 @@ module Spree
           before(:each) do
             address = create(:address)
             @country = address.country
-            @zone = create(:zone, name: "Country Zone", default_tax: true, countries: [@country])
+            @zone = create(:zone, name: "Country Zone", countries: [@country])
             @category = Spree::TaxCategory.create name: "Taxable Foo"
             @rate1 = Spree::TaxRate.create(
               amount: 0.10,
