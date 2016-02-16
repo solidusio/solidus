@@ -58,6 +58,8 @@ else
   Capybara.javascript_driver = :poltergeist
 end
 
+Capybara.default_max_wait_time = ENV['DEFAULT_MAX_WAIT_TIME'].to_f if ENV['DEFAULT_MAX_WAIT_TIME'].present?
+
 RSpec.configure do |config|
   config.color = true
   config.infer_spec_type_from_file_location!

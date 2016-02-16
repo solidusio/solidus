@@ -2,6 +2,7 @@
 machine:
   environment:
     DB: postgresql
+    DEFAULT_MAX_WAIT_TIME: 10
   services:
     - postgresql
   ruby:
