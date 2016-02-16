@@ -63,7 +63,7 @@ module Spree
                     ContentItem.new(build(:inventory_unit, variant: variant3))]
 
         package = Package.new(stock_location, contents)
-        expect(package.shipping_methods).to eq([method1, method2])
+        expect(package.shipping_methods).to match_array([method1, method2])
       end
       # Contains regression test for https://github.com/spree/spree/issues/2804
       it 'builds a list of shipping methods common to all categories' do
@@ -82,7 +82,7 @@ module Spree
                     ContentItem.new(build(:inventory_unit, variant: variant3))]
 
         package = Package.new(stock_location, contents)
-        expect(package.shipping_methods).to eq([method1])
+        expect(package.shipping_methods).to match_array([method1])
       end
 
       it 'builds an empty list of shipping methods when no categories' do
