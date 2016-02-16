@@ -455,6 +455,43 @@ describe "Checkout", type: :feature, inaccessible: true do
     end
   end
 
+  context "with attempted XSS", js: true do
+    shared_examples "safe from XSS" do
+      # We need a country with states required but no states so that we have
+      # access to the state_name input
+      let!(:canada) { create(:country, name: 'Canada', iso: "CA", states_required: true) }
+      before do
+        canada.states.destroy_all
+        zone.members.create!(zoneable: canada)
+      end
+
+      it "displays the entered state name without evaluating" do
+        add_mug_to_cart
+        visit spree.checkout_state_path(:address)
+        fill_in_address
+
+        state_name_css = "order_bill_address_attributes_state_name"
+
+        select "Canada", from: "order_bill_address_attributes_country_id"
+        fill_in state_name_css, with: xss_string
+        fill_in "Zip", with: "H0H0H0"
+
+        click_on 'Save and Continue'
+        visit spree.checkout_state_path(:address)
+
+        expect(page).to have_field(state_name_css, with: xss_string)
+      end
+    end
+
+    let(:xss_string) { %(<script>throw("XSS")</script>) }
+    include_examples "safe from XSS"
+
+    context "escaped XSS string" do
+      let(:xss_string) { '\x27\x3e\x3cscript\x3ethrow(\x27XSS\x27)\x3c/script\x3e' }
+      include_examples "safe from XSS"
+    end
+  end
+
   def fill_in_address
     address = "order_bill_address_attributes"
     fill_in "#{address}_firstname", with: "Ryan"
