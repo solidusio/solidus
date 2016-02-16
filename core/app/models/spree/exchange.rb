@@ -1,6 +1,7 @@
 module Spree
   class Exchange
     class UnableToCreateShipments < StandardError; end
+    extend ActiveModel::Naming
 
     def initialize(order, reimbursement_objects)
       @order = order
@@ -37,14 +38,6 @@ module Spree
 
     def self.param_key
       "spree_exchange"
-    end
-
-    def self.model_name
-      Spree::Exchange
-    end
-
-    def model_name
-      self.class.model_name
     end
   end
 end
