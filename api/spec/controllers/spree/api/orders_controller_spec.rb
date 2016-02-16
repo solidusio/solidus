@@ -768,6 +768,7 @@ module Spree
         specify do
           api_put :cancel, id: order.to_param
           expect(json_response["state"]).to eq("canceled")
+          expect(json_response["canceler_id"]).to eq(current_api_user.id)
         end
       end
     end
