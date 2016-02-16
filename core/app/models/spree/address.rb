@@ -167,12 +167,10 @@ module Spree
       if state.present?
         if state.country == country
           self.state_name = nil # not required as we have a valid state and country combo
+        elsif state_name.present?
+          self.state = nil
         else
-          if state_name.present?
-            self.state = nil
-          else
-            errors.add(:state, :invalid)
-          end
+          errors.add(:state, :invalid)
         end
       end
 

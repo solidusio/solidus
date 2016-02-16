@@ -58,13 +58,11 @@ module Spree
 
     def reusable_sources(order)
       if order.completed?
-        sources_by_order order
+        sources_by_order(order)
+      elsif order.user_id
+        credit_cards.where(user_id: order.user_id).with_payment_profile
       else
-        if order.user_id
-          credit_cards.where(user_id: order.user_id).with_payment_profile
-        else
-          []
-        end
+        []
       end
     end
   end
