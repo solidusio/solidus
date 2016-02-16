@@ -48,6 +48,7 @@ en:
         base: ''
         cc_type: Type
         month: Month
+        name: Name
         number: Number
         verification_value: Verification Value
         year: Year
@@ -183,7 +184,7 @@ en:
         inventory_unit_state: State
         item_received?: "Item Received?"
         pre_tax_amount: Pre-Tax Amount
-        preferred_reimbursement_type: Preferred Reimbursement Type
+        preferred_reimbursement_type_id: Preferred Reimbursement Type
         reception_status: Reception Status
         resellable: "Resellable?"
         return_reason: Reason
