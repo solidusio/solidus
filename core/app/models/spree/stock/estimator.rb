@@ -55,7 +55,10 @@ module Spree
       end
 
       def shipping_methods(package)
-        package.shipping_methods.select do |ship_method|
+        package.shipping_methods
+          .includes(:calculator, zones: :zone_members, tax_category: :tax_rates)
+          .to_a
+          .select do |ship_method|
           calculator = ship_method.calculator
           ship_method.include?(order.ship_address) &&
             calculator.available?(package) &&

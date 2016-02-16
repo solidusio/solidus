@@ -18,7 +18,7 @@ module Spree
           allow_any_instance_of(ShippingMethod).to receive_message_chain(:calculator, :preferences).and_return({ currency: currency })
           allow_any_instance_of(ShippingMethod).to receive_message_chain(:calculator, :marked_for_destruction?)
 
-          allow(package).to receive_messages(shipping_methods: [shipping_method])
+          allow(package).to receive_message_chain(:shipping_methods, includes: [shipping_method])
         end
 
         let(:currency) { "USD" }
