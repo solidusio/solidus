@@ -26,6 +26,12 @@ describe Spree::Shipment, type: :model do
 
   it_behaves_like "a taxable item"
 
+  describe "#eligible?" do
+    it "is always eligible" do
+      expect(shipment.eligible?).to be(true)
+    end
+  end
+
   describe "precision of pre_tax_amount" do
     let!(:line_item) { create :line_item, pre_tax_amount: 4.2051 }
 

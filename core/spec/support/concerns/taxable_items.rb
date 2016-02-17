@@ -19,4 +19,8 @@ RSpec.shared_examples_for 'a taxable item' do
   end
   it { is_expected.to respond_to(:tax_category) }
   it { is_expected.to respond_to(:adjustments) }
+
+  # This is so that the taxation system knows whether the object in question
+  # and expecially its adjustments count towards the order total or not.
+  it { is_expected.to respond_to(:eligible?) }
 end

@@ -373,6 +373,10 @@ module Spree
       !stock_location || stock_location.fulfillable?
     end
 
+    def eligible?
+      true
+    end
+
     private
 
     def calculate_shipping_rate_taxes

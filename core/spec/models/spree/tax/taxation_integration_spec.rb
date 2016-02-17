@@ -1,5 +1,12 @@
 require 'spec_helper'
 
+shared_examples_for 'an order with a shipment' do
+  it 'does not conflate shipping rate and shipment adjustments on the total of eligible adjustments' do
+    expect(order.all_adjustments.eligible.map(&:amount).sum).to \
+      eq(line_item.adjustments.sum(:amount) + shipment.adjustments.sum(:amount))
+  end
+end
+
 RSpec.describe "Taxation system integration tests" do
   let(:order) { create :order, ship_address: shipping_address, state: "delivery" }
   let(:book_product) do
@@ -141,6 +148,8 @@ RSpec.describe "Taxation system integration tests" do
 
         before { 2.times { order.next! } }
 
+        it_behaves_like 'an order with a shipment'
+
         it 'has a shipment for 8.00 dollars' do
           expect(shipment.amount).to eq(8.00)
         end
@@ -174,6 +183,8 @@ RSpec.describe "Taxation system integration tests" do
         let(:variant) { sweater }
 
         before { 2.times { order.next! } }
+
+        it_behaves_like 'an order with a shipment'
 
         it 'has a shipment for 16.00 dollars' do
           expect(shipment.amount).to eq(16.00)
@@ -210,6 +221,8 @@ RSpec.describe "Taxation system integration tests" do
         let(:variant) { download }
 
         before { 2.times { order.next! } }
+
+        it_behaves_like 'an order with a shipment'
 
         it 'has a shipment for 4.00 dollars' do
           expect(shipment.amount).to eq(2.00)
@@ -257,6 +270,8 @@ RSpec.describe "Taxation system integration tests" do
 
         before { 2.times { order.next! } }
 
+        it_behaves_like 'an order with a shipment'
+
         it 'has a shipment for 8.00 dollars' do
           expect(shipment.amount).to eq(8.00)
         end
@@ -294,6 +309,8 @@ RSpec.describe "Taxation system integration tests" do
         let(:variant) { sweater }
 
         before { 2.times { order.next! } }
+
+        it_behaves_like 'an order with a shipment'
 
         it 'has a shipment for 16.00 dollars' do
           expect(shipment.amount).to eq(16.00)
@@ -337,6 +354,8 @@ RSpec.describe "Taxation system integration tests" do
         let(:variant) { download }
 
         before { 2.times { order.next! } }
+
+        it_behaves_like 'an order with a shipment'
 
         it 'it has a shipment with an adjusted price to 2.08' do
           pending 'But the shipment amount is not adjusted'
@@ -432,6 +451,8 @@ RSpec.describe "Taxation system integration tests" do
 
           before { 2.times { order.next! } }
 
+          it_behaves_like 'an order with a shipment'
+
           it 'it has a shipment with an adjusted price to 7.47' do
             pending "but the shipment amount is not adjusted"
             expect(shipment.amount).to eq(7.48)
@@ -478,6 +499,8 @@ RSpec.describe "Taxation system integration tests" do
           let(:variant) { sweater }
 
           before { 2.times { order.next! } }
+
+          it_behaves_like 'an order with a shipment'
 
           it 'it has a shipment with an adjusted price to 13.45' do
             pending 'but the amount is not adjusted'

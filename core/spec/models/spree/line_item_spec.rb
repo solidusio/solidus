@@ -6,6 +6,12 @@ describe Spree::LineItem, type: :model do
 
   it_behaves_like "a taxable item"
 
+  describe "#eligible?" do
+    it 'is always eligible' do
+      expect(line_item.eligible?).to eq(true)
+    end
+  end
+
   context '#destroy' do
     it "fetches deleted products" do
       line_item.product.destroy

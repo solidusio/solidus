@@ -38,6 +38,10 @@ module Spree
 
     alias_method :display_cost, :display_price
 
+    def eligible?
+      false
+    end
+
     private
 
     def tax_explain(adjustment)

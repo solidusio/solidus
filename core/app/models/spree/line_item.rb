@@ -117,6 +117,10 @@ module Spree
       assign_attributes opts
     end
 
+    def eligible?
+      true
+    end
+
     private
 
     # Sets the quantity to zero if it is nil or less than zero.

@@ -12,6 +12,12 @@ describe Spree::ShippingRate, type: :model do
 
   it_behaves_like 'a taxable item'
 
+  describe "#eligible?" do
+    it 'is never eligible' do
+      expect(shipping_rate.eligible?).to be(false)
+    end
+  end
+
   context "#display_price" do
     subject(:shipping_rate) do
       create :shipping_rate,

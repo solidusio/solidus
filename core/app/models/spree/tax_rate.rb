@@ -109,7 +109,8 @@ module Spree
         amount: amount,
         order_id: item.order_id,
         label: label || create_label,
-        included: included
+        included: included,
+        eligible: item.eligible?
       })
     end
 
