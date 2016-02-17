@@ -24,4 +24,10 @@ describe Spree::AppConfiguration, type: :model do
     subject { prefs.stock }
     it { is_expected.to be_a Spree::Core::StockConfiguration }
   end
+
+  describe '@default_country_iso_code' do
+    it 'is the USA by default' do
+      expect(prefs[:default_country_iso]).to eq("US")
+    end
+  end
 end

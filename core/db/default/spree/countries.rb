@@ -15,5 +15,3 @@ end
 ActiveRecord::Base.transaction do
   Spree::Country.create!(countries)
 end
-
-Spree::Config[:default_country_id] ||= Spree::Country.find_by(iso: "US").id
