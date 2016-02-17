@@ -108,7 +108,9 @@
   </table>
 <% else %>
   <div class="alpha sixteen columns no-objects-found">
-    <%= Spree.t(:no_resource, resource: Spree::StockTransfer.model_name.human(count: :other)) %>
+    <%= render 'spree/admin/shared/no_objects_found',
+                  resource: Spree::StockTransfer,
+                  new_resource_url: new_object_url %>
   </div>
 <% end %>
 

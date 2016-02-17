@@ -18,9 +18,8 @@
 </div>
 <% else %>
   <div class="alpha twelve columns no-objects-found">
-    <%= Spree.t(:no_resource, resource: Spree::Taxonomy.model_name.human(count: :other)) %>
-    <% if can?(:create, Spree::Taxonomy) %>
-      <%= link_to Spree.t(:create_one), spree.new_admin_taxonomy_path %>
-    <% end %>
+    <%= render 'spree/admin/shared/no_objects_found',
+                 resource: Spree::Taxonomy,
+                 new_resource_url: new_object_url %>
   </div>
 <% end %>

@@ -44,7 +44,8 @@
   </table>
 <% else %>
   <div class="alpha twelve columns no-objects-found">
-    <%= Spree.t(:no_resource, resource: Spree::AdjustmentReason.model_name.human(count: :other)) %>,
-    <%= link_to Spree.t(:create_one), new_object_url %>
+    <%= render 'spree/admin/shared/no_objects_found',
+                 resource: Spree::AdjustmentReason,
+                 new_resource_url: new_object_url %>
   </div>
 <% end %>

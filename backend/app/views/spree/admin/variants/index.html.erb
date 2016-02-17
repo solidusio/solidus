@@ -93,10 +93,9 @@
   <%= paginate @variants %>
 <% else %>
   <div class="alpha twelve columns no-objects-found">
-    <%= Spree.t(:no_resource, resource: Spree::Variant.model_name.human(count: :other)) %>
-    <% if can?(:create, Spree::Variant) %>
-      <%= link_to Spree.t(:create_one), spree.new_admin_product_variant_path(@product) %>
-    <% end %>
+    <%= render 'spree/admin/shared/no_objects_found',
+                 resource: Spree::Variant,
+                 new_resource_url: new_object_url %>
   </div>
 <% end %>
 
