@@ -1,0 +1,4 @@
+<%= Spree.t(:no_resource, resource: resource.model_name.human(count: :other)) %>
+<% if can? :create, resource %>
+  <%= link_to Spree.t(:create_one), new_resource_url %>
+<% end %>
