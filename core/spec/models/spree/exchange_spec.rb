@@ -70,9 +70,5 @@ module Spree
     describe ".param_key" do # for dom_id
       it { expect(Exchange.param_key).to eq "spree_exchange" }
     end
-
-    describe ".model_name" do # for dom_id
-      it { expect(Exchange.model_name).to eq Spree::Exchange }
-    end
   end
 end
