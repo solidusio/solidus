@@ -223,15 +223,15 @@ $(document).ready(function(){
   });
 
   window.Spree.advanceOrder = function() {
-      Spree.ajax({
-          type: "PUT",
-          async: false,
-          data: {
-            token: Spree.api_key
-          },
-          url: Spree.url(Spree.routes.checkouts_api + "/" + order_number + "/advance")
-      }).done(function() {
-          window.location.reload();
-      });
+    Spree.ajax({
+      type: "PUT",
+      async: false,
+      data: {
+        token: Spree.api_key
+      },
+      url: Spree.routes.checkouts_api + "/" + order_number + "/advance"
+    }).done(function() {
+      window.location.reload();
+    });
   }
 });

@@ -53,7 +53,7 @@ adjustLineItems = function(order_number, variant_id, quantity, stock_location_qu
 
     Spree.ajax({
         type: "POST",
-        url: Spree.url(url),
+        url: url,
         data: {
           line_item: {
             variant_id: variant_id,

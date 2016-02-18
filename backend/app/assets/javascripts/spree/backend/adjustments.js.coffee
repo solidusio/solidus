@@ -3,7 +3,7 @@ $(@).ready( ->
     return if $("#coupon_code").val().length == 0
     Spree.ajax
       type: 'PUT'
-      url: Spree.url(Spree.routes.apply_coupon_code(order_number))
+      url: Spree.routes.apply_coupon_code(order_number)
       data:
         coupon_code: $("#coupon_code").val()
         token: Spree.api_key

@@ -155,7 +155,7 @@ adjustShipmentItems = function(shipment_number, variant_id, quantity){
     if(new_quantity!=0){
       Spree.ajax({
         type: "PUT",
-        url: Spree.url(url),
+        url: url,
         data: {
           variant_id: variant_id,
           quantity: new_quantity,
@@ -175,7 +175,7 @@ deleteLineItem = function(line_item_id){
 
   Spree.ajax({
     type: "DELETE",
-    url: Spree.url(url),
+    url: url,
     success: function(response) {
       window.location.reload();
     },
