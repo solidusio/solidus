@@ -113,6 +113,7 @@ en:
         zipcode: Shipping address zipcode
       spree/payment:
         amount: Amount
+        number: Identifier
       spree/payment_method:
         name: Name
       spree/product:
@@ -171,6 +172,7 @@ en:
       spree/reimbursement_type:
         name: Name
         type: Type
+        created_at: "Date/Time"
       spree/return_authorization:
         amount: Amount
       spree/return_item:

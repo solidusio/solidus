@@ -1,11 +1,11 @@
 <table class="index" id='payments' data-order-id='<%= @order.number %>'>
   <thead>
     <tr data-hook="refunds_header">
-      <th><%= "#{Spree.t('date')}/#{Spree.t('time')}" %></th>
-      <th><%= Spree.t(:payment_identifier) %></th>
-      <th><%= Spree.t(:amount) %></th>
-      <th><%= Spree.t(:payment_method) %></th>
-      <th><%= Spree.t(:transaction_id) %></th>
+      <th><%= Spree::Refund.human_attribute_name(:created_at) %></th>
+      <th><%= Spree::Payment.human_attribute_name(:number) %></th>
+      <th><%= Spree::Refund.human_attribute_name(:amount) %></th>
+      <th><%= Spree::PaymentMethod.model_name.human %></th>
+      <th><%= Spree::Refund.human_attribute_name(:transaction_id) %></th>
       <th><%= Spree.t(:reason) %></th>
       <% if show_actions %>
         <th class="actions"></th>
