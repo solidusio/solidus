@@ -3,13 +3,12 @@
   <table class="index">
     <thead>
       <tr data-hook="payments_header">
-        <th><%= Spree.t(:identifier) %></th>
-        <th><%= "#{Spree.t('date')}/#{Spree.t('time')}" %></th>
-        <th><%= Spree.t(:amount) %></th>
-        <th><%= Spree.t(:payment_method) %></th>
+        <th><%= Spree::Payment.human_attribute_name(:number) %></th>
+        <th><%= Spree::Payment.human_attribute_name(:created_at) %></th>
+        <th><%= Spree::Payment.human_attribute_name(:amount) %></th>
         <th><%= Spree::PaymentMethod.model_name.human %></th>
-        <th><%= Spree.t(:transaction_id) %></th>
-        <th><%= Spree.t(:payment_state) %></th>
+        <th><%= Spree::Payment.human_attribute_name(:response_code) %></th>
+        <th><%= Spree::Payment.human_attribute_name(:state) %></th>
       </tr>
     </thead>
     <tbody>

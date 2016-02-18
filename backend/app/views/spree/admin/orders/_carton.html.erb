@@ -42,7 +42,7 @@
       <% if order.special_instructions.present? %>
         <tr class='special_instructions'>
           <td colspan="5">
-            <strong><%= Spree.t(:special_instructions) %>:&nbsp;</strong><%= order.special_instructions %>
+            <strong><%= Spree::Order.human_attribute_name(:special_instructions) %>:&nbsp;</strong><%= order.special_instructions %>
           </td>
         </tr>
       <% end %>
@@ -50,7 +50,7 @@
       <tr class="show-tracking total">
         <td colspan="5">
           <% if carton.tracking.present? %>
-            <strong><%= Spree.t(:tracking) %>:</strong> <%= carton.tracking %>
+            <strong><%= Spree::Carton.human_attribute_name(:tracking) %>:</strong> <%= carton.tracking %>
           <% else %>
             <%= Spree.t(:no_tracking_present) %>
           <% end %>
