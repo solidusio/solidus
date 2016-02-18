@@ -1,15 +1,10 @@
-ActiveRecord::Base.transaction do
-  Spree::Country.all.each do |country|
-    carmen_country = Carmen::Country.named(country.name)
-    @states ||= []
-    next unless carmen_country.subregions?
-    carmen_country.subregions.each do |subregion|
-      @states << {
-        name: subregion.name,
-        abbr: subregion.code,
-        country: country
-      }
-    end
+Spree::Country.all.each do |country|
+  carmen_country = Carmen::Country.coded(country.iso)
+  next unless carmen_country.subregions?
+
+  carmen_country.subregions.each do |subregion|
+    Spree::State.where(abbr: subregion.code, country: country).first_or_create(
+      name: subregion.name
+    )
   end
-  Spree::State.create!(@states)
 end
