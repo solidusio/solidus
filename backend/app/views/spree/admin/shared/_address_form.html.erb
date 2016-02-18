@@ -39,14 +39,14 @@
   </div>
 
   <div class="field <%= "#{type}-row" %>">
-    <%= f.label :country_id %>
+    <%= f.label :country_id, Spree::Country.model_name.human %>
     <span id="<%= s_or_b %>country">
       <%= f.collection_select :country_id, available_countries, :id, :name, {}, {:class => 'select2 fullwidth'} %>
     </span>
   </div>
 
   <div class="field <%= "#{type}-row" %>">
-    <%= f.label :state_id %>
+    <%= f.label :state_id, Spree::State.model_name.human %>
     <span id="<%= s_or_b %>state">
       <%= f.text_field :state_name,
             :style => "display: #{f.object.country.states.empty? ? 'block' : 'none' };",
