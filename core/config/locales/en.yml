@@ -13,11 +13,9 @@ en:
         address2: Street Address (cont'd)
         city: City
         company: Company
-        country_id: Country
         firstname: First Name
         lastname: Last Name
         phone: Phone
-        state_id: State
         zipcode: Zip Code
       spree/adjustment:
         adjustable: Adjustable
@@ -133,7 +131,6 @@ en:
         price: Master Price
         promotionable: Promotable
         shipping_category: Shipping Category
-        shipping_category_id: Shipping Category
         slug: Slug
         tax_category: Tax Category
         weight: Weight
@@ -150,7 +147,6 @@ en:
         name: Name
         path: Path
         per_code_usage_limit: Per Code Usage Limit
-        promotion_category_id: Promotion Category
         starts_at: Starts
         usage_limit: Overall Usage Limit
       spree/promotion_category:
@@ -242,8 +238,6 @@ en:
         zipcode: Zip
       spree/stock_movement:
         action: Action
-        quantity: Quantity
-        stock_item_id: Stock Item
         quantity: Quantity
       spree/stock_transfer:
         created_at: Created At
@@ -394,6 +388,9 @@ en:
         one: State
         other: States
       spree/stock: stock
+      spree/stock_item:
+        one: Stock Item
+        other: Stock Items
       spree/stock_movement:
         one: Stock Movement
         other: Stock Movements
