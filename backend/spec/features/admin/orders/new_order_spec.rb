@@ -180,7 +180,7 @@ describe "New Order", type: :feature do
     it "displays the user's email escaped without executing" do
       click_on "Customer Details"
       targetted_select2_search user.email, from: "#s2id_customer_search"
-      expect(page).to have_field("Email", with: xss_string)
+      expect(page).to have_field("Customer E-Mail", with: xss_string)
     end
   end
 

@@ -84,7 +84,7 @@
 
         <tr class="edit-tracking hidden total">
           <td colspan="5">
-            <label><%= Spree.t(:tracking_number) %>:</label>
+            <label><%= Spree::Shipment.human_attribute_name(:tracking) %>:</label>
             <%= text_field_tag :tracking, shipment.tracking %>
           </td>
           <td class="actions">
@@ -106,7 +106,7 @@
         <tr class="show-tracking total">
           <td colspan="5" class="tracking-value">
             <% if shipment.tracking.present? %>
-              <strong><%= Spree.t(:tracking) %>:</strong> <%= shipment.tracking %>
+              <strong><%= Spree::Shipment.human_attribute_name(:tracking) %>:</strong> <%= shipment.tracking %>
             <% else %>
               <%= Spree.t(:no_tracking_present) %>
             <% end %>
