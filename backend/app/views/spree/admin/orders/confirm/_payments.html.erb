@@ -1,5 +1,5 @@
 <fieldset class="no-border-bottom">
-  <legend><%= Spree.t(:payments) %></legend>
+  <legend><%= Spree::Payment.model_name.human(count: :other) %></legend>
   <table class="index">
     <thead>
       <tr data-hook="payments_header">

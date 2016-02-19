@@ -52,7 +52,7 @@
       <% end %>
 
       <% if can?(:display, Spree::Tracker) %>
-        <%= configurations_sidebar_menu_item Spree.t(:analytics_trackers), admin_trackers_path %>
+        <%= configurations_sidebar_menu_item Spree::Tracker.model_name.human(count: :other), admin_trackers_path %>
       <% end %>
 
       <% if can?(:display, Spree::RefundReason) %>
