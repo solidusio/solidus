@@ -1,4 +1,5 @@
 require 'factory_girl'
+require 'ffaker'
 
 FactoryGirl.define do
   sequence(:random_code)        { Faker::Lorem.characters(10) }
