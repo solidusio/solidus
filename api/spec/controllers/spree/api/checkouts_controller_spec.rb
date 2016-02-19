@@ -272,7 +272,7 @@ module Spree
 
           expect(response.status).to eq(422)
           cc_errors = json_response['errors']['payments.Credit Card']
-          expect(cc_errors).to include("Number can't be blank")
+          expect(cc_errors).to include("Card Number can't be blank")
           expect(cc_errors).to include("Month is not a number")
           expect(cc_errors).to include("Year is not a number")
           expect(cc_errors).to include("Verification Value can't be blank")
@@ -301,7 +301,7 @@ module Spree
 
             expect(response.status).to eq(422)
             cc_errors = json_response['errors']['payments.Credit Card']
-            expect(cc_errors).to include("Number can't be blank")
+            expect(cc_errors).to include("Card Number can't be blank")
             expect(cc_errors).to include("Month is not a number")
             expect(cc_errors).to include("Year is not a number")
             expect(cc_errors).to include("Verification Value can't be blank")

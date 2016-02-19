@@ -44,10 +44,12 @@ en:
         states_required: States Required
       spree/credit_card:
         base: ''
-        cc_type: Type
+        cc_type: Brand
+        card_code: Card Code
+        expiration: Expiration
         month: Month
         name: Name
-        number: Number
+        number: Card Number
         verification_value: Verification Value
         year: Year
       spree/customer_return:
@@ -408,6 +410,9 @@ en:
       spree/stock_transfer:
         one: Stock Transfer
         other: Stock Transfers
+      spree/store_credit_category:
+        one: Category
+        other: Categories
       spree/tax_category:
         one: Tax Category
         other: Tax Categories
