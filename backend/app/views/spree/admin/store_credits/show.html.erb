@@ -96,7 +96,7 @@
       <% @store_credit_events.each do |event| %>
         <tr>
           <td data-hook="admin_show_store_credit_date_cell">
-            <%= event.created_at %>
+            <%= pretty_time(event.created_at) %>
           </td>
           <td><%= store_credit_event_admin_action_name(event) %></td>
           <td class='align-right'><%= event.display_amount %></td>
