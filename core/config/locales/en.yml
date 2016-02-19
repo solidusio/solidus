@@ -213,10 +213,19 @@ en:
         mail_from_address: Mail From Address
       spree/store_credit:
         amount: Amount
-        amount_used: Amount used
+        amount_authorized: Amount Authorized
+        amount_credited: Amount Credited
+        amount_used: Amount Used
         category_id: Credit Type
+        created_at: Issued On
         created_by_id: Created By
+        invalidated_at: Invalidated
         memo: Memo
+      spree/store_credit_event:
+        action: Action
+        user_total_amount: Total Unused
+      spree/store_credit_update_reason:
+        name: Reason For Updating
       spree/stock_item:
         count_on_hand: Count On Hand
       spree/stock_location:

@@ -69,7 +69,7 @@ describe Spree::StoreCredit do
 
         it "should set the correct error message" do
           invalid_store_credit.valid?
-          expect(invalid_store_credit.errors.full_messages).to include("Amount used cannot be greater than the credited amount")
+          expect(invalid_store_credit.errors.full_messages).to include("Amount Used cannot be greater than the credited amount")
         end
       end
 

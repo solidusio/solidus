@@ -17,13 +17,13 @@
 
   <table>
     <thead>
-      <th><%= Spree.t("admin.store_credits.amount_credited") %></th>
-      <th><%= Spree.t("admin.store_credits.amount_used") %></th>
-      <th><%= Spree.t("admin.store_credits.amount_authorized") %></th>
-      <th><%= Spree.t("admin.store_credits.credit_type") %></th>
-      <th><%= Spree.t("admin.store_credits.created_by") %></th>
-      <th><%= Spree.t("admin.store_credits.issued_on") %></th>
-      <th><%= Spree.t("admin.store_credits.invalidated") %></th>
+      <th><%= Spree::StoreCredit.human_attribute_name(:amount_credited) %></th>
+      <th><%= Spree::StoreCredit.human_attribute_name(:amount_used) %></th>
+      <th><%= Spree::StoreCredit.human_attribute_name(:amount_authorized) %></th>
+      <th><%= Spree::StoreCredit.human_attribute_name(:category_id) %></th>
+      <th><%= Spree::StoreCredit.human_attribute_name(:created_by_id) %></th>
+      <th><%= Spree::StoreCredit.human_attribute_name(:created_at) %></th>
+      <th><%= Spree::StoreCredit.human_attribute_name(:invalidated_at) %></th>
       <th data-hook="admin_store_credits_index_header_actions" class="actions"></th>
     <thead>
     <tbody>

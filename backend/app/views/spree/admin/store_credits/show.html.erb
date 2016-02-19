@@ -21,14 +21,14 @@
   </colgroup>
   <tr>
     <td>
-      <strong><%= Spree.t(:amount) %>:</strong>
+      <strong><%= Spree::StoreCredit.human_attribute_name(:amount) %>:</strong>
     </td>
     <td><%= @store_credit.display_amount.to_html %></td>
     <td class='actions'></td>
   </tr>
   <tr>
     <td>
-      <strong><%= Spree.t(:created_by) %>:</strong>
+      <strong><%= Spree::StoreCredit.human_attribute_name(:created_by_id) %>:</strong>
     </td>
     <td><%= @store_credit.created_by_email %></td>
     <td class='actions'></td>
@@ -42,7 +42,7 @@
   </tr>
   <tr id='memo-display-row'>
     <td>
-      <strong><%= Spree.t(:memo) %>:</strong>
+      <strong><%= Spree::StoreCredit.human_attribute_name(:memo) %>:</strong>
     </td>
     <td class='js-memo-text'>
       <%= @store_credit.memo %>
@@ -55,7 +55,7 @@
   </tr>
   <tr id='memo-edit-row' class='hidden' data-original-value='<%= @store_credit.memo %>'>
     <td>
-      <strong><%= Spree.t(:memo) %>:</strong>
+      <strong><%= Spree::StoreCredit.human_attribute_name(:memo) %>:</strong>
     </td>
     <td>
       <%= form_tag admin_user_store_credit_path(@user, @store_credit), method: :put, remote: true, id: 'sc_memo_edit_form' do %>
@@ -85,18 +85,18 @@
     <thead>
       <tr>
         <th><%= Spree.t(:date) %></th>
-        <th><%= Spree.t(:action) %></th>
+        <th><%= Spree::StoreCreditEvent.human_attribute_name(:action) %></th>
         <th><%= Spree::StoreCredit.human_attribute_name(:amount) %></th>
         <th><%= Spree::StoreCredit.human_attribute_name(:created_by_id) %></th>
-        <th><%= Spree.t("admin.store_credits.total_unused") %></th>
-        <th><%= Spree.t("admin.store_credits.reason_for_updating") %></th>
+        <th><%= Spree::StoreCreditEvent.human_attribute_name(:user_total_amount) %></th>
+        <th><%= Spree::StoreCreditUpdateReason.human_attribute_name(:name) %></th>
       </tr>
     </thead>
     <tbody>
       <% @store_credit_events.each do |event| %>
         <tr>
           <td data-hook="admin_show_store_credit_date_cell">
-            <%= event.created_at %>
+            <%= pretty_time(event.created_at) %>
           </td>
           <td><%= store_credit_event_admin_action_name(event) %></td>
           <td class='align-right'><%= event.display_amount %></td>
