@@ -8,6 +8,10 @@
 *   Fixed a bug where toggling 'show only complete order' on/off was not showing
     all orders. [#749](https://github.com/solidusio/solidus/pull/749)
 
+*   ffaker has been updated to version 2.x
+
+    This version changes the namespace from Faker:: to FFaker::
+
 ## Solidus 1.2.0 (unreleased)
 
 *   Admin menu has been moved from top of the page to the left side.
