@@ -5,11 +5,11 @@
 
       <div class="alpha six columns">
         <div data-hook="name" class="field">
-          <%= f.label :name, Spree.t(:name) %>
+          <%= f.label :name %>
           <%= f.text_field :name, :class => 'fullwidth' %>
         </div>
         <div data-hook="rate" class="field">
-          <%= f.label :amount, Spree.t(:rate) %>
+          <%= f.label :amount %>
           <%= f.text_field :amount, :class => 'fullwidth' %>
           <br/><span class="info"><%= Spree.t(:tax_rate_amount_explanation) %></span>
         </div>
@@ -21,11 +21,11 @@
 
       <div class="omega six columns">
         <div data-hook="zone" class="field">
-          <%= f.label :zone, Spree.t(:zone) %>
+          <%= f.label :zone, Spree::Zone.model_name.human %>
           <%= f.collection_select(:zone_id, @available_zones, :id, :name, {}, {:class => 'select2 fullwidth'}) %>
         </div>
         <div data-hook="category" class="field">
-          <%= f.label :tax_category_id, Spree.t(:tax_category) %>
+          <%= f.label :tax_category_id, Spree::TaxCategory.model_name.human %>
           <%= f.collection_select(:tax_category_id, @available_categories,:id, :name, {}, {:class => 'select2 fullwidth'}) %>
         </div>
         <div data-hook="show_rate" class="field">
