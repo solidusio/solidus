@@ -21,6 +21,9 @@ module Spree
 
     validate :at_least_one_shipping_category
 
+    # @param shipping_category_ids [Array<Integer>] ids of desired shipping categories
+    # @return [ActiveRecord::Relation] shipping methods which are associated
+    #   with all of the provided shipping categories
     def self.with_all_shipping_category_ids(shipping_category_ids)
       # Some extra care is needed with the having clause to ensure we are
       # counting distinct records of the join table. Otherwise a join could
@@ -33,6 +36,9 @@ module Spree
         having(having)
     end
 
+    # @param stock_location [Spree::StockLocation] stock location
+    # @return [ActiveRecord::Relation] shipping methods which are available
+    #   with the stock location or are marked available_to_all
     def self.available_in_stock_location(stock_location)
       smsl_table = ShippingMethodStockLocation.arel_table
 
