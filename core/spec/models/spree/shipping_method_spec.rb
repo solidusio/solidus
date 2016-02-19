@@ -196,4 +196,26 @@ describe Spree::ShippingMethod, type: :model do
       end
     end
   end
+
+  describe ".available_for_address" do
+    let!(:included_country) { create(:country, iso: "US") }
+    let!(:excluded_country) { create(:country, iso: "CA") }
+    let!(:included_zone) { create(:zone, countries: [included_country]) }
+    let!(:excluded_zone) { create(:zone, countries: [excluded_country]) }
+    let!(:shipping_method) { create(:shipping_method, zones: [included_zone]) }
+
+    let(:matches) { described_class.available_for_address(address) }
+    subject { matches }
+
+    context "address included in zone" do
+      let!(:address) { create(:address, country_iso_code: 'US') }
+
+      it { is_expected.to include(shipping_method) }
+    end
+
+    context "address included other zone" do
+      let!(:address) { create(:address, country_iso_code: 'CA') }
+      it { is_expected.to_not include(shipping_method) }
+    end
+  end
 end

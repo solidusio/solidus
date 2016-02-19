@@ -58,6 +58,13 @@ module Spree
       joins(arel_join).where(arel_condition).uniq
     end
 
+    # @param address [Spree::Address] address to match against zones
+    # @return [ActiveRecord::Relation] shipping methods which are associated
+    #   with zones matching the provided address
+    def self.available_for_address(address)
+      joins(:zones).merge(Zone.for_address(address))
+    end
+
     def include?(address)
       return false unless address
       zones.any? do |zone|
