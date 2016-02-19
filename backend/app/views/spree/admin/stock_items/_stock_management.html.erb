@@ -13,7 +13,7 @@
     <tr>
       <th><%= Spree.t(:item) %></th>
       <th><%= Spree.t(:options) %></th>
-      <th><%= Spree.t(:stock_location) %></th>
+      <th><%= Spree::StockLocation.model_name.human %></th>
       <th><%= Spree.t(:backorderable_header) %></th>
       <th><%= Spree.t(:count_on_hand) %></th>
       <th class="actions"></th>

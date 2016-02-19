@@ -19,7 +19,7 @@
     <%= search_form_for [:admin, @search] do |f| %>
       <div class="field-block alpha four columns">
         <div class="field">
-          <%= f.label nil, Spree.t(:stock_location) %>
+          <%= f.label nil, Spree::StockLocation.model_name.human %>
           <%= f.select :source_location_id_or_destination_location_id_eq, options_from_collection_for_select(@stock_locations, :id, :name, params[:q][:source_location_id_or_destination_location_id_eq]), {include_blank: true}, {class: 'select2 fullwidth'} %>
         </div>
       </div>
