@@ -147,7 +147,6 @@ RSpec.describe "Taxation system integration tests" do
         before { 2.times { order.next! } }
 
         it 'has a shipment for 8.00 dollars' do
-          pending 'No amount method yet on the shipment'
           expect(shipment.amount).to eq(8.00)
         end
 
@@ -182,7 +181,6 @@ RSpec.describe "Taxation system integration tests" do
         before { 2.times { order.next! } }
 
         it 'has a shipment for 16.00 dollars' do
-          pending 'No amount method yet on the shipment'
           expect(shipment.amount).to eq(16.00)
         end
 
@@ -218,7 +216,6 @@ RSpec.describe "Taxation system integration tests" do
         before { 2.times { order.next! } }
 
         it 'has a shipment for 4.00 dollars' do
-          pending 'No amount method yet on the shipment'
           expect(shipment.amount).to eq(2.00)
         end
 
@@ -265,7 +262,6 @@ RSpec.describe "Taxation system integration tests" do
         before { 2.times { order.next! } }
 
         it 'has a shipment for 8.00 dollars' do
-          pending 'No amount method yet on the shipment'
           expect(shipment.amount).to eq(8.00)
         end
 
@@ -304,7 +300,6 @@ RSpec.describe "Taxation system integration tests" do
         before { 2.times { order.next! } }
 
         it 'has a shipment for 16.00 dollars' do
-          pending 'No amount method yet on the shipment'
           expect(shipment.amount).to eq(16.00)
         end
 
@@ -347,7 +342,7 @@ RSpec.describe "Taxation system integration tests" do
         before { 2.times { order.next! } }
 
         it 'it has a shipment with an adjusted price to 2.08' do
-          pending 'No amount method yet on the shipment'
+          pending 'Waiting for the MOSS refactoring'
           expect(shipment.amount).to eq(2.08)
         end
 
@@ -440,7 +435,7 @@ RSpec.describe "Taxation system integration tests" do
           before { 2.times { order.next! } }
 
           it 'it has a shipment with an adjusted price to 7.47' do
-            pending 'No amount method yet on the shipment'
+            pending 'but prices are not adjusted yet'
             expect(shipment.amount).to eq(7.47)
           end
 
@@ -487,7 +482,7 @@ RSpec.describe "Taxation system integration tests" do
           before { 2.times { order.next! } }
 
           it 'it has a shipment with an adjusted price to 13.45' do
-            pending 'No amount method yet on the shipment'
+            pending 'But prices are not adjusted yet'
             expect(shipment.amount).to eq(13.45)
           end
 
@@ -535,7 +530,7 @@ RSpec.describe "Taxation system integration tests" do
         before { 2.times { order.next! } }
 
         it 'it has a shipment with an adjusted price to 1.68' do
-          pending 'No amount method yet on the shipment'
+          pending 'but prices are not adjusted yet'
           expect(shipment.amount).to eq(1.68)
         end
 
@@ -667,7 +662,6 @@ RSpec.describe "Taxation system integration tests" do
         before { 2.times { order.next! } }
 
         it 'it has a shipment with a price of 8.00' do
-          pending 'No amount method yet on the shipment'
           expect(shipment.amount).to eq(8.00)
         end
 
@@ -717,7 +711,6 @@ RSpec.describe "Taxation system integration tests" do
         before { 2.times { order.next! } }
 
         it 'it has a shipment with a price of 16.00' do
-          pending 'No amount method yet on the shipment'
           expect(shipment.amount).to eq(16.00)
         end
 
@@ -765,7 +758,6 @@ RSpec.describe "Taxation system integration tests" do
         before { 2.times { order.next! } }
 
         it 'it has a shipment with a price of 2.00' do
-          pending 'No amount method yet on the shipment'
           expect(shipment.amount).to eq(2.00)
         end
 
