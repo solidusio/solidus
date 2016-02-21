@@ -117,7 +117,7 @@ RSpec.describe "Taxation system integration tests" do
     end
 
     before do
-      Spree::Config[:default_country_id] = germany.id
+      Spree::Config[:default_country_iso] = germany.iso
       Spree::Config.default_tax_address = Spree::Address.build_default.freeze
       order.contents.add(variant)
     end
@@ -680,8 +680,9 @@ RSpec.describe "Taxation system integration tests" do
         end
 
         it 'has a shipping rate that correctly reflects the shipment' do
-          pending 'since no tax created, no correct display price'
-          expect(shipping_rate.display_price).to eq("$8.00 (+ $0.80 Federal Sales Tax, + $0.40 New York Sales Tax)")
+          expect(shipping_rate.display_price).to include("$8.00")
+          expect(shipping_rate.display_price).to include("+ $0.80 Federal Sales Tax")
+          expect(shipping_rate.display_price).to include("+ $0.40 New York Sales Tax")
         end
       end
 

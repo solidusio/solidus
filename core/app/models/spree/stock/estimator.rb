@@ -35,17 +35,10 @@ module Spree
       def calculate_shipping_rates(package)
         shipping_methods(package).map do |shipping_method|
           cost = shipping_method.calculator.compute(package)
-          tax_category = shipping_method.tax_category
-          if tax_category
-            tax_rate = tax_category.tax_rates.for_address(order.tax_address).first
-          end
 
           if cost
-            rate = shipping_method.shipping_rates.new(cost: cost)
-            rate.tax_rate = tax_rate if tax_rate
+            shipping_method.shipping_rates.new(cost: cost)
           end
-
-          rate
         end.compact
       end
 

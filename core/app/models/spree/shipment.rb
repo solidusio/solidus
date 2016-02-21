@@ -35,6 +35,8 @@ module Spree
     scope :reverse_chronological, -> { order('coalesce(spree_shipments.shipped_at, spree_shipments.created_at) desc', id: :desc) }
     scope :by_store, ->(store) { joins(:order).merge(Spree::Order.by_store(store)) }
 
+    delegate :tax_category, to: :selected_shipping_rate
+
     # shipment state machine (see http://github.com/pluginaweek/state_machine/tree/master for details)
     state_machine initial: :pending, use_transactions: false do
       event :ready do
@@ -242,10 +244,6 @@ module Spree
 
     def shipping_method
       selected_shipping_rate.try(:shipping_method) || shipping_rates.first.try(:shipping_method)
-    end
-
-    def tax_category
-      selected_shipping_rate.try(:tax_rate).try(:tax_category)
     end
 
     # Only one of either included_tax_total or additional_tax_total is set
