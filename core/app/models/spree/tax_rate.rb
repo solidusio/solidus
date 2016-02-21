@@ -18,48 +18,6 @@ module Spree
 
     # Finds all tax rates whose zones match a given address
     scope :for_address, ->(address) { joins(:zone).merge(Spree::Zone.for_address(address)) }
-
-    # Finds geographically matching tax rates for a tax zone.
-    # We do not know if they are/aren't applicable until we attempt to apply these rates to
-    # the items contained within the Order itself.
-    # For instance, if a rate passes the criteria outlined in this method,
-    # but then has a tax category that doesn't match against any of the line items
-    # inside of the order, then that tax rate will not be applicable to anything.
-    # For instance:
-    #
-    # Zones:
-    #   - Spain (default tax zone)
-    #   - France
-    #
-    # Tax rates: (note: amounts below do not actually reflect real VAT rates)
-    #   21% inclusive - "Clothing" - Spain
-    #   18% inclusive - "Clothing" - France
-    #   10% inclusive - "Food" - Spain
-    #   8% inclusive - "Food" - France
-    #   5% inclusive - "Hotels" - Spain
-    #   2% inclusive - "Hotels" - France
-    #
-    # Order has:
-    #   Line Item #1 - Tax Category: Clothing
-    #   Line Item #2 - Tax Category: Food
-    #
-    # Tax rates that should be selected:
-    #
-    #  21% inclusive - "Clothing" - Spain
-    #  10% inclusive - "Food" - Spain
-    #
-    # If the order's address changes to one in France, then the tax will be recalculated:
-    #
-    #  18% inclusive - "Clothing" - France
-    #  8% inclusive - "Food" - France
-    #
-    # Note here that the "Hotels" tax rates will not be used at all.
-    # This is because there are no items which have the tax category of "Hotels".
-    #
-    # Under no circumstances should negative adjustments be applied for the Spanish tax rates.
-    #
-    # Those rates should never come into play at all and only the French rates should apply.
-    scope :for_zone, ->(zone) { where(zone_id: Spree::Zone.with_shared_members(zone).pluck(:id)) }
     scope :included_in_price, -> { where(included_in_price: true) }
 
     # Create tax adjustments for some items that have the same tax zone.
