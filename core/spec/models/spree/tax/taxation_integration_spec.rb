@@ -185,7 +185,6 @@ RSpec.describe "Taxation system integration tests" do
         end
 
         it 'has a shipment with 2.55 included tax' do
-          pending "But there's a rounding error!"
           expect(shipment.included_tax_total).to eq(2.55)
         end
 
@@ -304,7 +303,6 @@ RSpec.describe "Taxation system integration tests" do
         end
 
         it 'has a shipment with 2.55 included tax' do
-          pending "But there's a rounding error!"
           expect(shipment.included_tax_total).to eq(2.55)
         end
 
