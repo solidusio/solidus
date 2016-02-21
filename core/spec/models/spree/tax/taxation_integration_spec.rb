@@ -434,7 +434,7 @@ RSpec.describe "Taxation system integration tests" do
 
           it 'it has a shipment with an adjusted price to 7.47' do
             pending 'but prices are not adjusted yet'
-            expect(shipment.amount).to eq(7.47)
+            expect(shipment.amount).to eq(7.48)
           end
 
           it 'has a shipment with no included tax' do
@@ -443,7 +443,7 @@ RSpec.describe "Taxation system integration tests" do
 
           it 'has a shipping rate that correctly reflects the shipment' do
             pending 'since no tax created, no correct display price'
-            expect(shipping_rate.display_price).to eq("$7.47")
+            expect(shipping_rate.display_price).to eq("$7.48")
           end
         end
       end
