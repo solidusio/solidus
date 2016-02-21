@@ -47,6 +47,10 @@ module Spree
       item.update_column(:pre_tax_amount, pre_tax_amount)
     end
 
+    def applicable_for?(item)
+      tax_category == item.tax_category
+    end
+
     # Creates necessary tax adjustments for the order.
     def adjust(_order_tax_zone, item)
       amount = compute_amount(item)

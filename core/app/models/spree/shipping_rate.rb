@@ -19,7 +19,7 @@ module Spree
     end
 
     def tax_rates
-      applicable_rates.select { |rate| rate.tax_category == tax_category }
+      applicable_rates.select { |rate| rate.applicable_for?(self) }
     end
 
     def display_price
