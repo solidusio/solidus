@@ -148,6 +148,7 @@ en:
         name: Name
         path: Path
         per_code_usage_limit: Per Code Usage Limit
+        promotion_uses: Promotion Uses
         starts_at: Starts
         usage_limit: Overall Usage Limit
       spree/promotion_category:
