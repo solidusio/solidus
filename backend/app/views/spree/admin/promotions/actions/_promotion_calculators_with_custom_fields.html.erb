@@ -2,7 +2,7 @@
 
   <div class="field alpha four columns">
     <% field_name = "#{param_prefix}[calculator_type]" %>
-    <%= label_tag field_name, Spree.t(:calculator) %>
+    <%= label_tag field_name, Spree::Calculator.model_name.human %>
     <%= select_tag field_name,
                    options_from_collection_for_select(calculators, :to_s, :description, promotion_action.calculator.type),
                    :class => 'type-select select2 fullwidth' %>
