@@ -11,7 +11,7 @@ module Spree
                                   icon: event.to_s,
                                   data: { confirm: Spree.t(:order_sure_want_to, event: Spree.t(event)) })
         end
-        links.join('&nbsp;').html_safe
+        safe_join(links, '&nbsp;'.html_safe)
       end
 
       def line_item_shipment_price(line_item, quantity)
