@@ -1,9 +1,9 @@
 class Tabs
   constructor: (@el) ->
     @$tabList = $(@el)
-    @$tabs = @$tabList.find(":not(.tabs-dropdown).tab")
+    @$tabs = @$tabList.find("li:not(.tabs-dropdown)")
     @tabs = @$tabs.toArray()
-    @$tabList.append("<li class='tab tabs-dropdown'><a href='#'></a><ul></ul></li>")
+    @$tabList.append("<li class='tabs-dropdown'><a href='#'></a><ul></ul></li>")
     @$dropdown = @$tabList.find(".tabs-dropdown")
     @setWidths()
     @initEvents()
@@ -23,7 +23,7 @@ class Tabs
     @lastKnownWidth = containerWidth unless @lastKnownWidth
     widthDifference = @totalTabsWidth - containerWidth
     widthDifferenceWithDropdown = widthDifference + @dropdownWidth()
-    dropdownActive = @$dropdown.find(".tab").length
+    dropdownActive = @$dropdown.find("li").length
 
     if containerWidth <= @lastKnownWidth
       # The window is being sized down or we've just loaded the page
@@ -72,7 +72,7 @@ class Tabs
       $(tab).insertBefore(@$dropdown).removeClass("in-dropdown")
 
     # Reset styles if our dropdown is now empty
-    if @$dropdown.find(".tab").length is 0
+    if @$dropdown.find("li").length is 0
       @$tabList.removeClass("tabs-overflowed")
 
 window.onload = ->
