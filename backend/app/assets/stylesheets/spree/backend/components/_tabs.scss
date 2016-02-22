@@ -15,18 +15,13 @@
   }
 }
 
-.tab:not(.in-dropdown) {
+.tabs > li:not(.in-dropdown) {
   @include flex-grow(0);
   @include flex-shrink(0);
 
   // Move down one pixel to sit on top of the ul's border-bottom
   position: relative;
   top: 1px;
-
-  .tabs-overflowed &:not(.tabs-dropdown) {
-    @include flex-grow(1);
-    @include flex-shrink(1);
-  }
 
   > a {
     display: block;
@@ -54,6 +49,11 @@
     background: darken($color-tbl-thead, 5%);
     color: $color-link;
   }
+}
+
+.tabs-overflowed.tabs > li:not(.tabs-dropdown) {
+  @include flex-grow(1);
+  @include flex-shrink(1);
 }
 
 .tabs-dropdown {
@@ -91,7 +91,7 @@
   }
 }
 
-.tab.in-dropdown {
+.tabs li.in-dropdown {
   a {
     display: block;
     border: 1px solid $color-border;
