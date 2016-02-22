@@ -221,10 +221,6 @@ describe Spree::Order, type: :model do
         Spree::Config.order_merger_class = TestOrderMerger
       end
 
-      after do
-        Spree::Config.order_merger_class = Spree::PromotionChooser
-      end
-
       let(:user) { build(:user) }
 
       it 'uses the configured order merger' do

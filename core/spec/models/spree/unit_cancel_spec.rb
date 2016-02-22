@@ -68,11 +68,7 @@ describe Spree::UnitCancel do
       end
 
       before do
-        @old_expedited_exchanges_value = Spree::Config[:expedited_exchanges]
         Spree::Config[:expedited_exchanges] = true
-      end
-      after do
-        Spree::Config[:expedited_exchanges] = @old_expedited_exchanges_value
       end
 
       # This sets up an order with one shipped inventory unit, one unshipped
