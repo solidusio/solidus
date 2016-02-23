@@ -14,13 +14,43 @@ module Spree
     has_many :zones, through: :shipping_method_zones
 
     belongs_to :tax_category, -> { with_deleted }, class_name: 'Spree::TaxCategory'
-    has_many :shipping_method_stock_locations, class_name: Spree::ShippingMethodStockLocation
     has_many :shipping_method_stock_locations, dependent: :destroy, class_name: "Spree::ShippingMethodStockLocation"
     has_many :stock_locations, through: :shipping_method_stock_locations
 
     validates :name, presence: true
 
     validate :at_least_one_shipping_category
+
+    def self.with_all_shipping_category_ids(shipping_category_ids)
+      # Some extra care is needed with the having clause to ensure we are
+      # counting distinct records of the join table. Otherwise a join could
+      # cause this to return incorrect results.
+      join_table = ShippingMethodCategory.arel_table
+      having = join_table[:id].count(true).eq(shipping_category_ids.count)
+      joins(:shipping_method_categories).
+        where(spree_shipping_method_categories: {shipping_category_id: shipping_category_ids}).
+        group('spree_shipping_methods.id').
+        having(having)
+    end
+
+    def self.available_in_stock_location(stock_location)
+      smsl_table = ShippingMethodStockLocation.arel_table
+
+      # We are searching for either a matching entry in the stock location join
+      # table or available_to_all being true.
+      # We need to use an outer join otherwise a shipping method with no
+      # associated stock locations will be filtered out of the results. In
+      # rails 5 this will be easy using .left_join and .or, but for now we must
+      # use arel to achieve this.
+      arel_join =
+        arel_table.join(smsl_table, Arel::Nodes::OuterJoin).
+        on(arel_table[:id].eq(smsl_table[:shipping_method_id])).
+        join_sources
+      arel_condition =
+        arel_table[:available_to_all].eq(true).or(smsl_table[:stock_location_id].eq(stock_location.id))
+
+      joins(arel_join).where(arel_condition).uniq
+    end
 
     def include?(address)
       return false unless address
@@ -44,10 +74,6 @@ module Spree
     end
 
     private
-
-    def compute_amount(calculable)
-      calculator.compute(calculable)
-    end
 
     def at_least_one_shipping_category
       if shipping_categories.empty?

@@ -102,7 +102,7 @@ module Spree
       # @return [Array<Spree::ShippingCategory>] the shipping categories of the
       #   variants in this package
       def shipping_categories
-        contents.map { |item| item.variant.shipping_category }.compact.uniq
+        ShippingCategory.where(id: shipping_category_ids)
       end
 
       # @return [Array<Spree::ShippingMethod>] the shipping methods available
@@ -110,15 +110,9 @@ module Spree
       #   shipping categories + all shipping methods available to all
       #   that match the shipping categories
       def shipping_methods
-        sl_methods = stock_location.shipping_methods.select { |sm| (sm.shipping_categories - shipping_categories).empty? }
-
-        sc_methods = shipping_categories.map(&:shipping_methods).each { |cat| cat.select(&:available_to_all) }.reduce(:&).to_a
-
-        # sms = (shipping_categories.map(&:shipping_methods).flatten.select(&:available_to_all) + stock_location.shipping_methods)
-        # sms.select! { |sm| (shipping_categories - sm.shipping_categories).empty?}
-
-        # sms.uniq.sort_by(&:id)
-        (sl_methods + sc_methods).uniq.sort_by(&:id)
+        Spree::ShippingMethod.
+          with_all_shipping_category_ids(shipping_category_ids).
+          available_in_stock_location(stock_location)
       end
 
       # @return [Spree::Shipment] a new shipment containing this package's
@@ -135,6 +129,13 @@ module Spree
           shipping_rates: shipping_rates,
           inventory_units: contents.map(&:inventory_unit)
         )
+      end
+
+      private
+      # @return [Array<Fixnum>] the unique ids of all shipping categories of
+      #   variants in this package
+      def shipping_category_ids
+        contents.map { |item| item.variant.shipping_category_id }.compact.uniq
       end
     end
   end
