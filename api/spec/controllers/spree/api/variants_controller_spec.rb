@@ -241,6 +241,14 @@ module Spree
         expect(variant.product.variants.count).to eq(1)
       end
 
+      it "creates new variants with nested option values" do
+        option_values = create_list(:option_value, 2)
+        expect do
+          api_post :create, variant: { sku: "12345",
+                                       option_value_ids: option_values.map(&:id) }
+        end.to change { Spree::OptionValuesVariant.count }.by(2)
+      end
+
       it "can update a variant" do
         api_put :update, id: variant.to_param, variant: { sku: "12345" }
         expect(response.status).to eq(200)
