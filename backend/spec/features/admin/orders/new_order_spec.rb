@@ -29,7 +29,7 @@ describe "New Order", type: :feature do
     fill_in_quantity("table.stock-levels", "quantity_0", 2)
 
     click_icon :plus
-    click_on "Customer Details"
+    click_on "Customer"
 
     within "#select-customer" do
       targetted_select2_search user.email, from: "#s2id_customer_search"
@@ -73,7 +73,7 @@ describe "New Order", type: :feature do
         expect(page).to have_content(product.name)
       end
 
-      click_on "Customer Details"
+      click_on "Customer"
 
       within "#select-customer" do
         targetted_select2_search user.email, from: "#s2id_customer_search"
@@ -122,7 +122,7 @@ describe "New Order", type: :feature do
   # Regression test for https://github.com/spree/spree/issues/3336
   context "start by customer address" do
     it "completes order fine", js: true do
-      click_on "Customer Details"
+      click_on "Customer"
 
       within "#select-customer" do
         targetted_select2_search user.email, from: "#s2id_customer_search"
@@ -165,7 +165,7 @@ describe "New Order", type: :feature do
 
       expect(page).to have_css('.line-item')
 
-      click_link "Customer Details"
+      click_link "Customer"
       targetted_select2 user.email, from: "#s2id_customer_search"
       click_button "Update"
       expect(Spree::Order.last.state).to eq 'delivery'

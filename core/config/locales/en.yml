@@ -590,6 +590,7 @@ en:
         properties: Properties
         prototypes: Prototypes
         reports: Reports
+        rma: RMA
         settings: Settings
         stock: Stock
         stock_items: Management
