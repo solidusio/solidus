@@ -26,7 +26,6 @@ RSpec.describe Spree::Tax::ItemAdjuster do
         adjuster.adjust!
       end
       it 'returns nil early' do
-        pending "this requires an empty? method on Spree::TaxLocation"
         expect(adjuster.adjust!).to be_nil
       end
     end

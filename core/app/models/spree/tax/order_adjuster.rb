@@ -14,7 +14,7 @@ module Spree
       # Creates tax adjustments for all taxable items (shipments and line items)
       # in the given order.
       def adjust!
-        return unless order.tax_address
+        return if order.tax_address.empty?
 
         (order.line_items + order.shipments).each do |item|
           ItemAdjuster.new(item, order_wide_options).adjust!

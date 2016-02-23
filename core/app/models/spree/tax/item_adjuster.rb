@@ -24,7 +24,7 @@ module Spree
       #
       # @return [Array<Spree::Adjustment>] newly created adjustments
       def adjust!
-        return unless order.tax_address
+        return if order.tax_address.empty?
         # Using .destroy_all to make sure callbacks fire
         item.adjustments.tax.destroy_all
 
