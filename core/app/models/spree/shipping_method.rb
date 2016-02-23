@@ -34,10 +34,6 @@ module Spree
       tracking_url.gsub(/:tracking/, ERB::Util.url_encode(tracking)) # :url_encode exists in 1.8.7 through 2.1.0
     end
 
-    def self.calculators
-      spree_calculators.send(model_name_without_spree_namespace).select{ |c| c < Spree::ShippingCalculator }
-    end
-
     # Some shipping methods are only meant to be set via backend
     def frontend?
       display_on != "back_end"
