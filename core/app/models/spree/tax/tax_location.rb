@@ -26,6 +26,10 @@ module Spree
       def ==(other)
         state_id == other.state_id && country_id == other.country_id
       end
+
+      def empty?
+        country_id.nil? && state_id.nil?
+      end
     end
   end
 end

@@ -1,6 +1,9 @@
 require 'spec_helper'
 
 RSpec.describe Spree::Tax::TaxLocation do
+  let(:country) { build_stubbed(:country) }
+  let(:state) { build_stubbed(:state) }
+
   subject { described_class.new }
 
   it { is_expected.to respond_to(:state_id) }
@@ -15,9 +18,6 @@ RSpec.describe Spree::Tax::TaxLocation do
 
   describe "initialization" do
     subject { described_class.new(args) }
-
-    let(:country) { build_stubbed(:country) }
-    let(:state) { build_stubbed(:state) }
 
     context "with a country id" do
       let(:args) { {country_id: country.id} }
@@ -49,6 +49,28 @@ RSpec.describe Spree::Tax::TaxLocation do
       it "will yield a location with that state's id" do
         expect(subject.state_id).to eq(state.id)
       end
+    end
+  end
+
+  describe "#empty?" do
+    subject { described_class.new(args).empty? }
+
+    context 'with a country present' do
+      let(:args) { {country: country} }
+
+      it { is_expected.to be false }
+    end
+
+    context 'with a state present' do
+      let(:args) { {state: state} }
+
+      it { is_expected.to be false }
+    end
+
+    context 'with no region data present' do
+      let(:args) { {} }
+
+      it { is_expected.to be true }
     end
   end
 end
