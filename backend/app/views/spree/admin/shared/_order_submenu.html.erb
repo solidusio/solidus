@@ -9,9 +9,9 @@
     <% if checkout_steps.include?("address") %>
       <li class="tab <%= "active" if (current == "Customer Details") %>" data-hook='admin_order_tabs_customer_details'>
         <% if can?(:update, @order) %>
-          <%= link_to_with_icon 'user', Spree.t(:customer_details), edit_admin_order_customer_url(@order) %>
+          <%= link_to_with_icon 'user', Spree.t(:customer), edit_admin_order_customer_url(@order) %>
         <% else %>
-          <%= link_to_with_icon 'user', Spree.t(:customer_details), admin_order_customer_url(@order) %>
+          <%= link_to_with_icon 'user', Spree.t(:customer), admin_order_customer_url(@order) %>
         <% end %>
       </li>
     <% end %>
@@ -41,7 +41,7 @@
     <% if can? :display, Spree::ReturnAuthorization %>
       <% if @order.completed? %>
         <li class="tab <%= "active" if current == "Return Authorizations" %>" data-hook='admin_order_tabs_return_authorizations'>
-          <%= link_to_with_icon 'share', Spree::ReturnAuthorization.model_name.human(count: :other), admin_order_return_authorizations_url(@order) %>
+          <%= link_to_with_icon 'share', Spree.t('admin.tab.rma'), admin_order_return_authorizations_url(@order) %>
         </li>
       <% end %>
     <% end %>
