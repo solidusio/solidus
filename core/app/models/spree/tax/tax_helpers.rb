@@ -32,7 +32,7 @@ module Spree
       def default_vat_rates
         @default_vat_rates ||= Spree::TaxRate
                                 .included_in_price
-                                .for_address(Spree::Config.default_tax_address)
+                                .for_address(Spree::Config.default_tax_location)
       end
     end
   end

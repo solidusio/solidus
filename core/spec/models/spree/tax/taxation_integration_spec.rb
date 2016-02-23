@@ -40,10 +40,6 @@ RSpec.describe "Taxation system integration tests" do
   let(:shipment) { order.shipments.first }
   let(:shipping_rate) { shipment.shipping_rates.first }
 
-  after do
-    Spree::Config.default_tax_address = nil
-  end
-
   context 'selling from germany' do
     let(:germany) { create :country, iso: "DE" }
     let!(:germany_zone) { create :zone, countries: [germany] }
@@ -117,8 +113,7 @@ RSpec.describe "Taxation system integration tests" do
     end
 
     before do
-      Spree::Config[:default_country_iso] = germany.iso
-      Spree::Config.default_tax_address = Spree::Address.build_default.freeze
+      Spree::Config[:default_vat_country_iso] = germany.iso
       order.contents.add(variant)
     end
 

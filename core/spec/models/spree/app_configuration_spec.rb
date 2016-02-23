@@ -25,13 +25,21 @@ describe Spree::AppConfiguration, type: :model do
     it { is_expected.to be_a Spree::Core::StockConfiguration }
   end
 
-  describe '@default_country_iso_code' do
+  describe '@default_country_iso' do
     it 'is the USA by default' do
       expect(prefs[:default_country_iso]).to eq("US")
     end
   end
 
-  it 'has no default tax address by default' do
-    expect(prefs.default_tax_address).to be_nil
+  describe '@default_vat_country_iso' do
+    it 'is `nil` by default' do
+      expect(prefs[:default_vat_country_iso]).to eq(nil)
+    end
+  end
+
+  it 'has a default tax location with nil values by default' do
+    expect(prefs.default_tax_location).to eq(Spree::Tax::TaxLocation.new)
+    expect(prefs.default_tax_location.state_id).to eq(nil)
+    expect(prefs.default_tax_location.country_id).to eq(nil)
   end
 end

@@ -378,7 +378,7 @@ describe Spree::Order, type: :model do
         let(:tax_using_ship_address) { true }
 
         it 'returns the default tax address' do
-          expect(subject).to eq(Spree::Config.default_tax_address)
+          expect(subject).to eq(Spree::Config.default_tax_location)
         end
       end
 
@@ -386,7 +386,7 @@ describe Spree::Order, type: :model do
         let(:tax_using_ship_address) { false }
 
         it "returns the default tax address" do
-          expect(subject).to eq(Spree::Config.default_tax_address)
+          expect(subject).to eq(Spree::Config.default_tax_location)
         end
       end
     end

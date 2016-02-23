@@ -34,7 +34,7 @@ module Spree
 
     def self.default_tax
       ActiveSupport::Deprecation.warn("Please do not use the default tax zone anymore, and instead use the default tax address.", caller)
-      match(Spree::Config.default_tax_address)
+      match(Spree::Config.default_tax_location)
     end
 
     # Returns the most specific matching zone for an address. Specific means:

@@ -16,7 +16,7 @@ RSpec.describe Spree::Tax::OrderAdjuster do
     let(:line_items) { build_stubbed_list(:line_item, 2) }
     let(:order) { build_stubbed(:order, line_items: line_items, ship_address: address) }
     let(:item_adjuster) { Spree::Tax::ItemAdjuster.new(line_items.first) }
-    let(:default_address) { Spree::Config.default_tax_address }
+    let(:default_tax_location) { Spree::Config.default_tax_location }
     let(:order_wide_options) do
       {
         order_rates: [],
@@ -26,7 +26,7 @@ RSpec.describe Spree::Tax::OrderAdjuster do
 
     before do
       expect(Spree::TaxRate).to receive(:for_address).with(address).and_return([])
-      expect(Spree::TaxRate).to receive(:for_address).with(default_address).and_return([])
+      expect(Spree::TaxRate).to receive(:for_address).with(default_tax_location).and_return([])
     end
 
     it 'calls the item adjuster with all line items' do

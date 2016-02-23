@@ -32,7 +32,7 @@ module Spree
         Spree::Tax::ItemAdjuster.new(
           item,
           order_rates: for_address(items.first.order.tax_address),
-          default_vat_rates: included_in_price.for_address(Spree::Config.default_tax_address)
+          default_vat_rates: included_in_price.for_address(Spree::Config.default_tax_location)
         ).adjust!
       end
     end
@@ -86,7 +86,7 @@ module Spree
     def refund?(address)
       !(
         self.class.for_address(address).include?(self) &&
-        self.class.for_address(Spree::Config.default_tax_address).include?(self)
+        self.class.for_address(Spree::Config.default_tax_location).include?(self)
       )
     end
 

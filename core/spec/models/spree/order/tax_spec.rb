@@ -25,20 +25,14 @@ module Spree
           order.tax_zone
         end
 
-        context 'when there is a default tax address and the order has no ship address' do
+        context 'when there is a default vat country and the order has no ship address' do
           let(:ship_address) { nil }
-          let(:default_tax_address) { build(:address).freeze }
 
-          before do
-            Spree::Config.default_tax_address = default_tax_address
-          end
-
-          after do
-            Spree::Config.default_tax_address = nil
-          end
+          before { Spree::Config.default_vat_country_iso = "US" }
 
           it 'will calculate using the default tax address' do
-            expect(Spree::Zone).to receive(:match).at_least(:once).with(default_tax_address)
+            expect(Spree::Zone).to receive(:match).at_least(:once)
+                                                  .with(Spree::Config.default_tax_location)
             expect(Spree::Zone).not_to receive(:match).with(ship_address)
             order.tax_zone
           end
@@ -56,18 +50,11 @@ module Spree
 
         context 'when there is a default tax address and the order has bill address' do
           let(:bill_address) { nil }
-          let(:default_tax_address) { build(:address).freeze }
 
-          before do
-            Spree::Config.default_tax_address = default_tax_address
-          end
-
-          after do
-            Spree::Config.default_tax_address = nil
-          end
+          before { Spree::Config.default_vat_country_iso = "US" }
 
           it 'will calculate using the default tax address' do
-            expect(Spree::Zone).to receive(:match).at_least(:once).with(default_tax_address)
+            expect(Spree::Zone).to receive(:match).at_least(:once).with(Spree::Config.default_tax_location)
             expect(Spree::Zone).not_to receive(:match).with(bill_address)
             order.tax_zone
           end

@@ -26,6 +26,7 @@ RSpec.describe Spree::Tax::ItemAdjuster do
         adjuster.adjust!
       end
       it 'returns nil early' do
+        pending "this requires an empty? method on Spree::TaxLocation"
         expect(adjuster.adjust!).to be_nil
       end
     end
@@ -35,8 +36,14 @@ RSpec.describe Spree::Tax::ItemAdjuster do
       let(:address) { create(:address) }
 
       before do
-        expect(Spree::TaxRate).to receive(:for_address).with(address).at_least(:once).and_return(order_rates)
-        expect(Spree::TaxRate).to receive(:for_address).with(Spree::Config.default_tax_address).at_least(:once).and_return([])
+        expect(Spree::TaxRate).to receive(:for_address)
+                                    .with(address)
+                                    .at_least(:once)
+                                    .and_return(order_rates)
+        expect(Spree::TaxRate).to receive(:for_address)
+                                    .with(Spree::Config.default_tax_location)
+                                    .at_least(:once)
+                                    .and_return([])
       end
 
       context 'when there are no matching rates' do

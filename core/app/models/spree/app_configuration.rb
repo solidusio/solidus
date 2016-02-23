@@ -123,8 +123,17 @@ module Spree
 
     # @!attribute [rw] default_country_iso
     #   Default customer country ISO code
-    #   @return [String] Two-letter ISO code of a {Spree::Country} to assumed as the country of an unidentified customer (default: "US")
+    #   @return [String] Two-letter ISO code of a {Spree::Country} to be assumed as the default country (default: "US")
     preference :default_country_iso, :string, default: 'US'
+
+    # @!attribute [rw] default_vat_country_iso
+    #   Default Country ISO used for taxation when no tax address is present on an order.
+    #   Use this when you want the following behaviour: The order is tax-adjusted
+    #   even if you don't yet know its tax_address (see also the setting `tax_using_ship_address`).
+    #   If you do not wish your order to be taxed before knowing the customer's address,
+    #   leave it at `nil`. This setting is only necessary in VAT countries.
+    #   @return [String, nil] Two-letter ISO code of that {Spree::Country} for which prices are entered in the backend (default: nil)
+    preference :default_vat_country_iso, :string, default: nil
 
     # @!attribute [rw] expedited_exchanges
     #   Kicks off an exchange shipment upon return authorization save.
@@ -320,18 +329,18 @@ module Spree
       @stock_configuration ||= Spree::Core::StockConfiguration.new
     end
 
-    # @!attribute [rw] default_tax_address
-    #   Default Address used for taxation when no tax address present on an order
-    #   Use this when you want the following behaviour: The order is tax-adjusted
-    #   even if you don't yet know its tax_address (see also the setting `tax_using_ship_address`).
-    #   If you do not wish your order to be taxed before knowing the customer's address,
-    #   leave it at `nil`.
-    # @example Use the default country for taxing orders in cart state
-    #   Spree.config do |config|
-    #     config.default_tax_address = Spree::Address.build_default.freeze
-    #   end
-    # @return [Spree::Address,nil] default tax address
-    attr_accessor :default_tax_address
+    # Default tax location
+    #
+    # An object that responds to :state_id and :country_id so it can double as a Spree::Address in
+    # Spree::Zone.for_address
+    #
+    # @see default_vat_country_iso The default VAT country
+    # @return [Spree::Tax::TaxLocation] default tax location
+    def default_tax_location
+      @default_tax_location ||= Spree::Tax::TaxLocation.new(
+        country: Spree::Country.find_by(iso: default_vat_country_iso)
+      )
+    end
 
     # all the following can be deprecated when store prefs are no longer supported
     # @private
