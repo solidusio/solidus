@@ -7,3 +7,5 @@ Handlebars.registerHelper "t", (key)->
     console.error "No translation found for #{key}."
     key
 
+Handlebars.registerHelper "admin_url", ->
+  Spree.pathFor("admin")
