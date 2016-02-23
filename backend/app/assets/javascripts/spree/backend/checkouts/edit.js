@@ -14,17 +14,24 @@ $(document).ready(function() {
     $("#customer_search").select2({
       placeholder: Spree.translations.choose_a_customer,
       ajax: {
-        url: Spree.routes.user_search,
+        url: Spree.routes.users_api,
         params: { "headers": { "X-Spree-Token": Spree.api_key } },
         datatype: 'json',
         data: function(term, page) {
           return {
-            q: term,
-            token: Spree.api_key
+            q: {
+              m: 'or',
+              email_start: term,
+              addresses_firstname_start: term,
+              addresses_lastname_start: term
+            }
           }
         },
         results: function(data, page) {
-          return { results: data.users }
+          return {
+            results: data.users,
+            more: data.current_page < data.pages
+          }
         }
       },
       dropdownCssClass: 'customer_search',
