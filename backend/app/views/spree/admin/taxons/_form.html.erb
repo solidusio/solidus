@@ -17,6 +17,7 @@
     <%= f.field_container :icon do %>
       <%= f.label :icon %><br />
       <%= f.file_field :icon %>
+      <%= image_tag f.object.icon(:small) if f.object.icon.present? %>
     <% end %>
   </div>
 
