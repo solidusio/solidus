@@ -15,17 +15,19 @@ module Spree
     after_save :remove_defunct_members
     after_save :remove_previous_default
 
-    scope :with_member_ids,
-          ->(state_ids, country_ids) do
-            joins(:zone_members).where(
-              "(spree_zone_members.zoneable_type = 'Spree::State' AND
-                 spree_zone_members.zoneable_id IN (?))
-               OR (spree_zone_members.zoneable_type = 'Spree::Country' AND
-                 spree_zone_members.zoneable_id IN (?))",
-              state_ids,
-              country_ids
-            ).uniq
-          end
+    scope :with_member_ids, ->(state_ids, country_ids) do
+      return none if !state_ids.present? && !country_ids.present?
+
+      spree_zone_members_table = Spree::ZoneMember.arel_table
+      matching_state =
+        spree_zone_members_table[:zoneable_type].eq("Spree::State").
+        and(spree_zone_members_table[:zoneable_id].in(state_ids))
+      matching_country =
+        spree_zone_members_table[:zoneable_type].eq("Spree::Country").
+        and(spree_zone_members_table[:zoneable_id].in(country_ids))
+      joins(:zone_members).where(matching_state.or(matching_country)).uniq
+    end
+
     scope :for_address, ->(address) { with_member_ids(address.try(:state_id), address.try(:country_id)) }
 
     alias :members :zone_members
