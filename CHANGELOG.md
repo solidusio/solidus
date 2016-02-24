@@ -12,7 +12,7 @@
 
     This version changes the namespace from Faker:: to FFaker::
 
-## Solidus 1.2.0 (unreleased)
+## Solidus 1.2.0 (2016-01-26)
 
 *   Admin menu has been moved from top of the page to the left side.
 
