@@ -8,11 +8,15 @@ describe Spree::ShippingRate, type: :model do
   let(:tax_category) { create(:tax_category) }
   let(:shipment) { create(:shipment) }
   let(:shipping_method) { create(:shipping_method, tax_category: tax_category) }
-  let(:shipping_rate) {
-    Spree::ShippingRate.new(shipment: shipment,
-                                                shipping_method: shipping_method,
-                                                cost: 10)
-  }
+  subject(:shipping_rate) do
+    Spree::ShippingRate.new(
+      shipment: shipment,
+      shipping_method: shipping_method,
+      cost: 10
+    )
+  end
+
+  it { is_expected.to respond_to(:taxes) }
 
   context "#display_price" do
     context "when tax included in price" do
