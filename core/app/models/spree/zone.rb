@@ -28,7 +28,13 @@ module Spree
       joins(:zone_members).where(matching_state.or(matching_country)).uniq
     end
 
-    scope :for_address, ->(address) { with_member_ids(address.try(:state_id), address.try(:country_id)) }
+    scope :for_address, ->(address) do
+      if address
+        with_member_ids(address.state_id, address.country_id)
+      else
+        none
+      end
+    end
 
     alias :members :zone_members
     accepts_nested_attributes_for :zone_members, allow_destroy: true, reject_if: proc { |a| a['zoneable_id'].blank? }
