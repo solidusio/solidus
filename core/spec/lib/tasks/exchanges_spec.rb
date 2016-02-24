@@ -17,12 +17,9 @@ describe "exchanges:charge_unreturned_items" do
   end
 
   before do
-    @original_expedited_exchanges_pref = Spree::Config[:expedited_exchanges]
     Spree::Config[:expedited_exchanges] = true
     Spree::StockItem.update_all(count_on_hand: 10)
   end
-
-  after { Spree::Config[:expedited_exchanges] = @original_expedited_exchanges_pref }
 
   context "there are no unreturned items" do
     it { expect { subject.invoke }.not_to change { Spree::Order.count } }
@@ -119,11 +116,8 @@ describe "exchanges:charge_unreturned_items" do
 
         context "auto_capture_exchanges is true" do
           before do
-            @original_auto_capture_exchanges = Spree::Config[:auto_capture_exchanges]
             Spree::Config[:auto_capture_exchanges] = true
           end
-
-          after { Spree::Config[:auto_capture_exchanges] = @original_auto_capture_exchanges }
 
           it 'creates a pending payment' do
             expect { subject.invoke }.to change { Spree::Payment.count }.by(1)
@@ -134,11 +128,8 @@ describe "exchanges:charge_unreturned_items" do
 
         context "auto_capture_exchanges is false" do
           before do
-            @original_auto_capture_exchanges = Spree::Config[:auto_capture_exchanges]
             Spree::Config[:auto_capture_exchanges] = false
           end
-
-          after { Spree::Config[:auto_capture_exchanges] = @original_auto_capture_exchanges }
 
           it 'captures payment' do
             expect { subject.invoke }.to change { Spree::Payment.count }.by(1)

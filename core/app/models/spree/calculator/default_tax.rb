@@ -37,7 +37,7 @@ module Spree
     def compute_shipping_rate(shipping_rate)
       if rate.included_in_price
         pre_tax_amount = shipping_rate.cost / (1 + rate.amount)
-        if rate.zone == shipping_rate.shipment.order.tax_zone
+        if Spree::TaxRate.for_address(shipping_rate.order.tax_address).include?(rate)
           deduced_total_by_rate(pre_tax_amount, rate)
         else
           deduced_total_by_rate(pre_tax_amount, rate) * - 1

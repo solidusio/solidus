@@ -108,10 +108,6 @@ module Spree
         Spree::Config.promotion_chooser_class = Spree::TestPromotionChooser
       end
 
-      after do
-        Spree::Config.promotion_chooser_class = Spree::PromotionChooser
-      end
-
       it "uses the defined promotion chooser" do
         expect { subject.update }.to raise_error("Custom promotion chooser")
       end

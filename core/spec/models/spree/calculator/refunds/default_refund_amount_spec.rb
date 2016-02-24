@@ -3,8 +3,9 @@ require 'spec_helper'
 describe Spree::Calculator::Returns::DefaultRefundAmount, type: :model do
   let(:order) { create(:order) }
   let(:line_item_quantity) { 2 }
-  let(:pre_tax_amount)  { 100.0 }
-  let(:line_item)       { create(:line_item, price: 100.0, quantity: line_item_quantity, pre_tax_amount: pre_tax_amount) }
+  let(:line_item_price) { 50.0 }
+  let(:pre_tax_amount) { line_item_price * line_item_quantity }
+  let(:line_item) { create(:line_item, price: line_item_price, quantity: line_item_quantity, pre_tax_amount: pre_tax_amount) }
   let(:inventory_unit) { build(:inventory_unit, order: order, line_item: line_item) }
   let(:return_item) { build(:return_item, inventory_unit: inventory_unit ) }
   let(:calculator) { Spree::Calculator::Returns::DefaultRefundAmount.new }
@@ -54,7 +55,7 @@ describe Spree::Calculator::Returns::DefaultRefundAmount, type: :model do
   end
 
   context "pre_tax_amount is zero" do
-    let(:pre_tax_amount)  { 0.0 }
+    let(:line_item_price)  { 0.0 }
     it { is_expected.to eq 0.0 }
   end
 end

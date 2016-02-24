@@ -203,12 +203,13 @@ module Spree
     # Returns the relevant zone (if any) to be used for taxation purposes.
     # Uses default tax zone unless there is a specific match
     def tax_zone
-      @tax_zone ||= Zone.match(tax_address) || Zone.default_tax
+      @tax_zone ||= Zone.match(tax_address)
     end
 
     # Returns the address for taxation based on configuration
     def tax_address
-      Spree::Config[:tax_using_ship_address] ? ship_address : bill_address
+      (Spree::Config[:tax_using_ship_address] ? ship_address : bill_address) ||
+        Spree::Config.default_tax_location
     end
 
     def updater

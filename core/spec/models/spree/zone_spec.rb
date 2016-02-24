@@ -155,19 +155,16 @@ describe Spree::Zone, type: :model do
   end
 
   context ".default_tax" do
-    context "when there is a default tax zone specified" do
-      before { @foo_zone = create(:zone, name: 'whatever', default_tax: true) }
-
-      it "should be the correct zone" do
-        create(:zone, name: 'foo')
-        expect(Spree::Zone.default_tax).to eq(@foo_zone)
-      end
+    it 'should emit a deprecation warning' do
+      expect(ActiveSupport::Deprecation).to receive(:warn)
+      Spree::Zone.default_tax
     end
 
-    context "when there is no default tax zone specified" do
-      it "should be nil" do
-        expect(Spree::Zone.default_tax).to be_nil
-      end
+    it 'should call match with the default address' do
+      Spree::Config.default_tax_address = Object.new
+      expect(Spree::Zone).to receive(:match).with(Spree::Config.default_tax_address)
+      Spree::Zone.default_tax
+      Spree::Config.default_tax_address = nil
     end
   end
 
@@ -309,14 +306,6 @@ describe Spree::Zone, type: :model do
   end
 
   context "#save" do
-    context "when default_tax is true" do
-      it "should clear previous default tax zone" do
-        zone1 = create(:zone, name: 'foo', default_tax: true)
-        create(:zone, name: 'bar', default_tax: true)
-        expect(zone1.reload.default_tax).to be false
-      end
-    end
-
     context "when a zone member country is added to an existing zone consisting of state members" do
       it "should remove existing state members" do
         zone = create(:zone, name: 'foo', zone_members: [])

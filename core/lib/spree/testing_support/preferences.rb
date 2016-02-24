@@ -9,6 +9,7 @@ module Spree
       # end
       #
       def reset_spree_preferences(&config_block)
+        Spree::Config.instance_variables.each { |iv| Spree::Config.remove_instance_variable(iv) }
         Spree::Config.preference_store = Spree::Config.default_preferences
 
         configure_spree_preferences(&config_block) if block_given?
