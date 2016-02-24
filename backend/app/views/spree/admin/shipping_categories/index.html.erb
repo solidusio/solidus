@@ -43,9 +43,8 @@
 </table>
 <% else %>
   <div class="alpha twelve columns no-objects-found">
-    <%= Spree.t(:no_resource_found, resource: I18n.t(:other, scope: 'activerecord.models.spree/shipping_category')) %>
-    <% if can?(:create, Spree::ShippingCategory) %>
-      <%= link_to Spree.t(:add_one), spree.new_admin_shipping_category_path %>!
-    <% end %>
+    <%= render 'spree/admin/shared/no_objects_found',
+                 resource: Spree::ShippingCategory,
+                 new_resource_url: new_object_url %>
   </div>
 <% end %>

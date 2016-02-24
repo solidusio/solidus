@@ -61,9 +61,8 @@
   </table>
 <% else %>
   <div class="alpha twelve columns no-objects-found">
-    <%= Spree.t(:no_resource_found, resource: Spree.t("admin.store_credits.resource_name")) %>
-    <% if can?(:create, Spree::StoreCredit) %>
-      <%= link_to Spree.t(:add_one), spree.new_admin_user_store_credit_path(@user) %>!
-    <% end %>
+    <%= render 'spree/admin/shared/no_objects_found',
+                 resource: Spree::StoreCredit,
+                 new_resource_url: new_object_url %>
   </div>
 <% end %>

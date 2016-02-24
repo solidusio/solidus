@@ -46,10 +46,9 @@
 </table>
 <% else %>
   <div class="alpha twelve columns no-objects-found">
-    <%= Spree.t(:no_resource_found, resource: I18n.t(:other, scope: 'activerecord.models.spree/stock_movement')) %>
-    <% if can?(:create, Spree::StockMovement) %>
-      <%= link_to Spree.t(:add_one), spree.new_admin_stock_location_stock_movement_path(@stock_location) %>!
-    <% end %>
+    <%= render 'spree/admin/shared/no_objects_found',
+                 resource: Spree::StockMovement,
+                 new_resource_url: new_object_url %>
   </div>
 <% end %>
 

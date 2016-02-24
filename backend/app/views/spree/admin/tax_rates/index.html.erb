@@ -60,9 +60,8 @@
   </table>
 <% else %>
   <div class="alpha twelve columns no-objects-found">
-    <%= Spree.t(:no_resource_found, resource: I18n.t(:other, scope: 'activerecord.models.spree/tax_rate')) %>
-    <% if can?(:create, Spree::TaxRate) %>
-      <%= link_to Spree.t(:add_one), spree.new_admin_tax_rate_path %>!
-    <% end %>
+    <%= render 'spree/admin/shared/no_objects_found',
+                 resource: Spree::TaxRate,
+                 new_resource_url: new_object_url %>
   </div>
 <% end %>
