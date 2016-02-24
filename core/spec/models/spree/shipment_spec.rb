@@ -278,12 +278,7 @@ describe Spree::Shipment, type: :model do
 
     context "when payment is not required" do
       before do
-        @original_require_payment = Spree::Config[:require_payment_to_ship]
         Spree::Config[:require_payment_to_ship] = false
-      end
-
-      after do
-        Spree::Config[:require_payment_to_ship] = @original_require_payment
       end
 
       it "should result in a 'ready' state" do
@@ -340,8 +335,6 @@ describe Spree::Shipment, type: :model do
   end
 
   context "when order is completed" do
-    after { Spree::Config.set track_inventory_levels: true }
-
     before do
       allow(order).to receive_messages completed?: true
       allow(order).to receive_messages canceled?: false
