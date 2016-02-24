@@ -4,8 +4,6 @@ class DummyShippingCalculator < Spree::ShippingCalculator
 end
 
 describe Spree::ShippingMethod, type: :model do
-  let(:shipping_method){ create(:shipping_method) }
-
   # Regression test for https://github.com/spree/spree/issues/4492
   context "#shipments" do
     let!(:shipping_method) { create(:shipping_method) }
@@ -36,12 +34,6 @@ describe Spree::ShippingMethod, type: :model do
         before { subject.shipping_categories.push create(:shipping_category) }
         it { expect(subject.error_on(:base).size).to eq(0) }
       end
-    end
-  end
-
-  context 'factory' do
-    it "should set calculable correctly" do
-      expect(shipping_method.calculator.calculable).to eq(shipping_method)
     end
   end
 
