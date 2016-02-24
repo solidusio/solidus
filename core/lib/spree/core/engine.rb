@@ -8,6 +8,10 @@ module Spree
         load File.join(root, "lib", "tasks", "exchanges.rake")
       end
 
+      config.generators do |g|
+        g.test_framework :rspec
+      end
+
       initializer "spree.environment", before: :load_config_initializers do |app|
         app.config.spree = Spree::Core::Environment.new
         Spree::Config = app.config.spree.preferences # legacy access
