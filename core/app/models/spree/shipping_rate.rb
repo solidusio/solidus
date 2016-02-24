@@ -5,7 +5,7 @@ module Spree
     belongs_to :tax_rate, -> { with_deleted }, class_name: 'Spree::TaxRate'
 
     delegate :order, :currency, to: :shipment
-    delegate :name, to: :shipping_method
+    delegate :name, :tax_category, to: :shipping_method
     delegate :code, to: :shipping_method, prefix: true
 
     def display_base_price
