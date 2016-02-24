@@ -90,7 +90,7 @@ module Spree
       sum_of_included_rates = rates.select(&:included_in_price).map(&:amount).sum
       pre_tax_amount = item.discounted_amount / (1 + sum_of_included_rates)
 
-      item.update_column(:pre_tax_amount, pre_tax_amount.round(2))
+      item.update_column(:pre_tax_amount, pre_tax_amount)
     end
 
     # Creates necessary tax adjustments for the order.
