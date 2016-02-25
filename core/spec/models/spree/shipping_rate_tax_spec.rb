@@ -28,5 +28,26 @@ module Spree
 
       it { is_expected.to eq("$10.00") }
     end
+
+    describe '#currency' do
+      subject(:shipping_rate_tax) { described_class.new(amount: 10, shipping_rate: shipping_rate).currency }
+
+      context 'when we have a shipping rate' do
+        let(:shipping_rate) { build_stubbed(:shipping_rate) }
+
+        it 'delegates the call to the shipment' do
+          expect(shipping_rate).to receive(:currency)
+          subject
+        end
+      end
+
+      context "when we don't have a shipping rate" do
+        let(:shipping_rate) { nil }
+
+        it 'is nil' do
+          expect(subject).to eq(nil)
+        end
+      end
+    end
   end
 end

@@ -6,6 +6,8 @@ module Spree
     extend DisplayMoney
     money_methods :absolute_amount
 
+    delegate :currency, to: :shipping_rate, allow_nil: true
+
     def absolute_amount
       amount.abs
     end
