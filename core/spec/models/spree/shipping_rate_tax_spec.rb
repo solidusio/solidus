@@ -49,5 +49,35 @@ module Spree
         end
       end
     end
+
+    describe '#label' do
+      subject(:shipping_rate_tax) { described_class.new(amount: amount, tax_rate: tax_rate).label }
+
+      context 'with an included tax rate' do
+        let(:tax_rate) { build_stubbed(:tax_rate, included_in_price: true, name: "VAT") }
+        context 'with a negative amount' do
+          let(:amount) { -2.2 }
+          it 'labels a refund' do
+            expect(subject).to eq("excl. $2.20 VAT")
+          end
+        end
+
+        context 'with a positive amount' do
+          let(:amount) { 2.2 }
+          it 'labels an included tax' do
+            expect(subject).to eq("incl. $2.20 VAT")
+          end
+        end
+      end
+
+      context 'with an additional tax rate' do
+        let(:tax_rate) { build_stubbed(:tax_rate, included_in_price: false, name: "Sales Tax") }
+        let(:amount) { 2.2 }
+
+        it 'labels an additional tax' do
+          expect(subject).to eq("+ $2.20 Sales Tax")
+        end
+      end
+    end
   end
 end
