@@ -212,6 +212,11 @@ en:
         name: Name
         service_level: Service Level
         tracking_url: Tracking URL
+      spree/shipping_rate:
+        label: Label
+        tax_rate: Tax Rate
+        shipping_rate: Shipping Rate
+        amount: Amount
       spree/state:
         abbr: Abbreviation
         name: Name
