@@ -38,7 +38,7 @@ module Spree
               cost: cost,
               shipment: package.shipment
             )
-            Spree::Tax::ShippingRateTaxer.new.tax(rate)
+            Spree::Config.shipping_rate_taxer_class.new.tax(rate)
           end
         end.compact
       end

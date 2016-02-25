@@ -185,6 +185,24 @@ module Spree
 
           Spree::Config.shipping_rate_sorter_class = nil
         end
+
+        it 'uses the configured shipping rate taxer' do
+          class Spree::Tax::TestTaxer
+            def initialize
+            end
+
+            def tax(_)
+              Spree::ShippingRate.new
+            end
+          end
+          Spree::Config.shipping_rate_taxer_class = Spree::Tax::TestTaxer
+
+          shipping_rate = Spree::ShippingRate.new
+          allow(Spree::ShippingRate).to receive(:new).and_return(shipping_rate)
+
+          expect(Spree::Tax::TestTaxer).to receive(:new).and_call_original
+          subject.shipping_rates(package)
+        end
       end
     end
   end

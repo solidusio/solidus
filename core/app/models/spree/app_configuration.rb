@@ -301,6 +301,11 @@ module Spree
       @shipping_rate_selector_class ||= Spree::Stock::ShippingRateSelector
     end
 
+    attr_writer :shipping_rate_taxer_class
+    def shipping_rate_taxer_class
+      @shipping_rate_taxer_class ||= Spree::Tax::ShippingRateTaxer
+    end
+
     # Allows providing your own Mailer for shipped cartons.
     #
     # @!attribute [rw] carton_shipped_email_class
