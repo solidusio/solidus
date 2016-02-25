@@ -74,9 +74,9 @@
     </tbody>
   </table>
   <%= paginate @variants, theme: "solidus_admin" %>
-<% else %>
 
-  <% if @product.empty_option_values? %>
+<% else %>
+  <% if !Spree::OptionType.any? %>
     <p class='first_add_option_types no-objects-found' data-hook="first_add_option_types">
       <%= Spree.t(:to_add_variants_you_must_first_define) %>
       <% if can?(:display, Spree::OptionType) %>
@@ -85,6 +85,11 @@
         <%= Spree::OptionType.model_name.human(count: :other) %>
       <% end %>
     </p>
+  <% elsif @product.empty_option_values? %>
+    <div class="alpha twelve columns no-objects-found">
+      <%= Spree.t :no_option_values_on_product_html,
+                  link: link_to(Spree.t(:product_details), [:edit, :admin, @product]) %>
+    </div>
   <% else %>
     <div class="alpha twelve columns no-objects-found">
       <%= Spree.t(:no_resource, resource: Spree::Variant.model_name.human(count: :other)) %>
@@ -92,20 +97,18 @@
         <%= link_to Spree.t(:create_one), new_object_url, remote: true %>
       <% end %>
     </div>
-  <% end %>
-<% end %>
-
-<% content_for :page_actions do %>
-  <ul class="inline-menu" data-hook="toolbar">
-    <% if can?(:create, Spree::Variant) && !@product.empty_option_values? %>
-      <li id="new_var_link" data-hook>
-        <%= link_to_with_icon('plus',
-                              Spree.t(:new_variant),
-                              new_admin_product_variant_url(@product),
-                              :remote => :true,
-                              :class => 'button'
-                             ) %>
-      </li>
+    <% content_for :page_actions do %>
+      <ul class="inline-menu" data-hook="toolbar">
+        <% if can?(:create, Spree::Variant) %>
+          <li id="new_var_link" data-hook>
+            <%= link_to_with_icon 'plus',
+                                  Spree.t(:new_variant),
+                                  new_admin_product_variant_url(@product),
+                                  :remote => :true,
+                                  :class => 'button' %>
+          </li>
+        <% end %>
+      </ul>
     <% end %>
-  </ul>
+  <% end %>
 <% end %>
