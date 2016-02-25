@@ -88,8 +88,8 @@ module Spree
     end
 
     extend DisplayMoney
-    money_methods :cost, :discounted_cost, :final_price, :item_cost
-    alias display_amount display_cost
+    money_methods :cost, :amount, :discounted_cost, :final_price, :item_cost
+    alias_attribute :amount, :cost
 
     def add_shipping_method(shipping_method, selected = false)
       shipping_rates.create(shipping_method: shipping_method, selected: selected, cost: cost)
