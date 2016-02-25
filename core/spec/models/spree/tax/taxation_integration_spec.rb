@@ -150,8 +150,7 @@ RSpec.describe "Taxation system integration tests" do
         end
 
         it 'has a shipping rate that correctly reflects the shipment' do
-          pending 'since no tax created, no correct display price'
-          expect(shipping_rate.display_price).to eq("$8.00 (incl. $0.52 German VAT)")
+          expect(shipping_rate.display_price).to eq("$8.00 (incl. $0.52 German reduced VAT)")
         end
       end
 
@@ -185,7 +184,6 @@ RSpec.describe "Taxation system integration tests" do
         end
 
         it 'has a shipping rate that correctly reflects the shipment' do
-          pending 'since no tax created, no correct display price'
           expect(shipping_rate.display_price).to eq("$16.00 (incl. $2.55 German VAT)")
         end
       end
@@ -266,8 +264,7 @@ RSpec.describe "Taxation system integration tests" do
         end
 
         it 'has a shipping rate that correctly reflects the shipment' do
-          pending 'since no tax created, no correct display price'
-          expect(shipping_rate.display_price).to eq("$8.00 (incl. $0.52 German VAT)")
+          expect(shipping_rate.display_price).to eq("$8.00 (incl. $0.52 German reduced VAT)")
         end
       end
 
@@ -305,7 +302,6 @@ RSpec.describe "Taxation system integration tests" do
         end
 
         it 'has a shipping rate that correctly reflects the shipment' do
-          pending 'since no tax created, no correct display price'
           expect(shipping_rate.display_price).to eq("$16.00 (incl. $2.55 German VAT)")
         end
       end
@@ -349,7 +345,7 @@ RSpec.describe "Taxation system integration tests" do
         end
 
         it 'has a shipping rate that correctly reflects the shipment' do
-          pending 'since no tax created, no correct display price'
+          pending 'But the shipping rate is not adjusted'
           expect(shipping_rate.display_price).to eq("$2.08 (incl. $0.40 Romanian VAT)")
         end
       end
@@ -675,8 +671,9 @@ RSpec.describe "Taxation system integration tests" do
         end
 
         it 'has a shipping rate that correctly reflects the shipment' do
-          pending 'since no tax created, no correct display price'
-          expect(shipping_rate.display_price).to eq("$8.00 (+ $0.80 Federal Sales Tax, + $0.40 New York Sales Tax)")
+          expect(shipping_rate.display_price).to include("$8.00")
+          expect(shipping_rate.display_price).to include("+ $0.80 Federal Sales Tax")
+          expect(shipping_rate.display_price).to include("+ $0.40 New York Sales Tax")
         end
       end
 
@@ -770,7 +767,6 @@ RSpec.describe "Taxation system integration tests" do
         end
 
         it 'has a shipping rate that correctly reflects the shipment' do
-          pending 'since no tax created, no correct display price'
           expect(shipping_rate.display_price).to eq("$2.00 (+ $0.40 Federal Sales Tax)")
         end
       end

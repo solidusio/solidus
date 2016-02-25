@@ -1646,6 +1646,10 @@ en:
     shipping_method: Shipping Method
     shipping_methods: Shipping Methods
     shipping_price_sack: Price sack
+    shipping_rate:
+      display_price:
+        display_price_with_explanations: "%{price} (%{explanations})"
+        tax_label_separator: ", "
     shipping_rate_tax:
       label:
         sales_tax: "+ %{amount} %{tax_rate_name}"
