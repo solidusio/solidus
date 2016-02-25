@@ -148,7 +148,7 @@ module Spree
 
           it "links the shipping rate and the tax rate" do
             shipping_rates = subject.shipping_rates(package)
-            expect(shipping_rates.first.tax_rate).to eq(tax_rate)
+            expect(shipping_rates.first.taxes.first.tax_rate).to eq(tax_rate)
           end
         end
 

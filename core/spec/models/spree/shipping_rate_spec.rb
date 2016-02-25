@@ -170,25 +170,6 @@ describe Spree::ShippingRate, type: :model do
     end
   end
 
-  context "#tax_rate" do
-    let!(:tax_rate) { create(:tax_rate) }
-
-    before do
-      shipping_rate.tax_rate = tax_rate
-    end
-
-    it "can be retrieved" do
-      expect(shipping_rate.tax_rate.reload).to eq(tax_rate)
-    end
-
-    it "can be retrieved even when deleted" do
-      tax_rate.update_column(:deleted_at, Time.current)
-      shipping_rate.save
-      shipping_rate.reload
-      expect(shipping_rate.tax_rate).to eq(tax_rate)
-    end
-  end
-
   context "#shipping_method_code" do
     before do
       shipping_method.code = "THE_CODE"
