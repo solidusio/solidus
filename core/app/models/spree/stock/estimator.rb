@@ -49,9 +49,8 @@ module Spree
               shipment: package.shipment
             )
             rate.tax_rate = tax_rate if tax_rate
+            Spree::Tax::ShippingRateTaxer.new.tax(rate)
           end
-
-          Spree::Tax::ShippingRateTaxer.new.tax(rate)
         end.compact
       end
 
