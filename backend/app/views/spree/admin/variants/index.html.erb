@@ -68,7 +68,7 @@
     </tbody>
   </table>
   <%= paginate @variants, theme: "solidus_admin" %>
-<% else %>
+<% elsif !@product.empty_option_values? %>
   <div class="alpha twelve columns no-objects-found">
     <%= render 'spree/admin/shared/no_objects_found',
                  resource: Spree::Variant,
@@ -77,6 +77,12 @@
 <% end %>
 
 <% if @product.empty_option_values? %>
+  <div class="alpha twelve columns no-objects-found">
+    <%= Spree.t(:no_option_values_on_product_html, link: link_to(Spree.t(:product_details),
+                                                                 [:edit, :admin, @product])) %>
+  </div>
+<% end %>
+<% unless Spree::OptionType.any? %>
   <p class='first_add_option_types no-objects-found' data-hook="first_add_option_types">
     <%= Spree.t(:to_add_variants_you_must_first_define) %>
     <% if can?(:display, Spree::OptionType) %>
