@@ -22,5 +22,11 @@ module Spree
         it { is_expected.to eq(19) }
       end
     end
+
+    describe 'display_absolute_amount' do
+      subject(:shipping_rate_tax) { described_class.new(amount: 10).display_absolute_amount.to_s }
+
+      it { is_expected.to eq("$10.00") }
+    end
   end
 end
