@@ -74,6 +74,8 @@ module Spree
     self.whitelisted_ransackable_associations = ['order']
     self.whitelisted_ransackable_attributes = ['number']
 
+    delegate :tax_category, to: :selected_shipping_rate, allow_nil: true
+
     def can_transition_from_pending_to_shipped?
       !requires_shipment?
     end
@@ -242,10 +244,6 @@ module Spree
 
     def shipping_method
       selected_shipping_rate.try(:shipping_method) || shipping_rates.first.try(:shipping_method)
-    end
-
-    def tax_category
-      selected_shipping_rate.try(:tax_rate).try(:tax_category)
     end
 
     # Only one of either included_tax_total or additional_tax_total is set
