@@ -89,7 +89,7 @@ describe Spree::Payment, type: :model do
       payment.source = Spree::CreditCard.new
       expect(payment).not_to be_valid
       cc_errors = payment.errors['Credit Card']
-      expect(cc_errors).to include("Number can't be blank")
+      expect(cc_errors).to include("Card Number can't be blank")
       expect(cc_errors).to include("Month is not a number")
       expect(cc_errors).to include("Year is not a number")
       expect(cc_errors).to include("Verification Value can't be blank")

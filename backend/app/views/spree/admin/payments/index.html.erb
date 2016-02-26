@@ -10,7 +10,7 @@
 <% end %>
 
 <% content_for :page_title do %>
-  <i class="fa fa-arrow-right"></i> <%= Spree.t(:payments) %>
+  <i class="fa fa-arrow-right"></i> <%= Spree::Payment.model_name.human(count: :other) %>
 <% end %>
 
 <% if @order.outstanding_balance? %>
@@ -20,13 +20,13 @@
 <% if @payments.any? %>
 
   <fieldset data-hook="payment_list" class="no-border-bottom">
-    <legend align="center"><%= Spree.t(:payments) %></legend>
+    <legend align="center"><%= Spree::Payment.model_name.human(count: :other) %></legend>
     <%= render :partial => 'list', :locals => { :payments => @payments } %>
   </fieldset>
 
   <% if @refunds.any? %>
     <fieldset data-hook="payment_list" class="no-border-bottom">
-      <legend align="center"><%= Spree.t(:refunds) %></legend>
+      <legend align="center"><%= Spree::Refund.model_name.human(count: :other) %></legend>
       <%= render :partial => 'spree/admin/shared/refunds', :locals => { :refunds => @refunds, show_actions: true } %>
     </fieldset>
   <% end %>

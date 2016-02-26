@@ -57,7 +57,7 @@ describe 'Payments', type: :feature do
       payment.capture!(capture_amount)
 
       visit spree.admin_order_payment_path(order, payment)
-      expect(page).to have_content 'Capture events'
+      expect(page).to have_content 'Capture Events'
       # within '#capture_events' do
       within_row(1) do
         expect(page).to have_content(capture_amount / 100)

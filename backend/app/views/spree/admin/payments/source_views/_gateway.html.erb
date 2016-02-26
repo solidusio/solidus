@@ -1,5 +1,5 @@
 <fieldset data-hook="credit_card">
-  <legend align="center"><%= Spree.t(:credit_card) %></legend>
+  <legend align="center"><%= Spree::CreditCard.model_name.human %></legend>
 
   <div class="row">
     <div class="alpha six columns">
@@ -7,13 +7,13 @@
         <dt><%= Spree.t(:name_on_card) %>:</dt>
         <dd><%= payment.source.name %></dd>
 
-        <dt><%= Spree.t(:card_type) %>:</dt>
+        <dt><%= Spree::CreditCard.human_attribute_name(:cc_type) %>:</dt>
         <dd><%= payment.source.cc_type %></dd>
 
-        <dt><%= Spree.t(:card_number) %>:</dt>
+        <dt><%= Spree::CreditCard.human_attribute_name(:number) %>:</dt>
         <dd><%= payment.source.display_number %></dd>
 
-        <dt><%= Spree.t(:expiration) %>:</dt>
+        <dt><%= Spree::CreditCard.human_attribute_name(:expiration) %>:</dt>
         <dd><%= payment.source.month %>/<%= payment.source.year %></dd>
       </dl>
       <% if payment.source.address %>
