@@ -13,7 +13,7 @@ module Spree
     end
 
     def calculate_tax_amount
-      tax_rate.calculator.compute_shipping_rate(self)
+      tax_rate.compute_amount(self)
     end
 
     def display_price
