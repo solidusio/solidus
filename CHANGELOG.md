@@ -12,6 +12,13 @@
 
     This version changes the namespace from Faker:: to FFaker::
 
+*   versioncake has been updated to version 3.x
+
+    This version uses a rack middleware to determine the version, uses a
+    different header name, and has some configuration changes.
+
+    More information is available in the [VersionCake README](https://github.com/bwillis/versioncake)
+
 ## Solidus 1.2.0 (2016-01-26)
 
 *   Admin menu has been moved from top of the page to the left side.

@@ -15,6 +15,9 @@ module Spree
         respond_with(@products)
       end
 
+      def new
+      end
+
       def show
         @product = find_product(params[:id])
         expires_in 15.minutes, public: true

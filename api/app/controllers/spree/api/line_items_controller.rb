@@ -8,6 +8,9 @@ module Spree
       before_filter :load_order, only: [:create, :update, :destroy]
       around_filter :lock_order, only: [:create, :update, :destroy]
 
+      def new
+      end
+
       def create
         variant = Spree::Variant.find(params[:line_item][:variant_id])
         @line_item = @order.contents.add(
