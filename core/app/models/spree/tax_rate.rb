@@ -98,7 +98,7 @@ module Spree
       amount = compute_amount(item)
       return if amount == 0
 
-      included = included_in_price && default_zone_or_zone_match?(order_tax_zone)
+      included = included_in_price && amount > 0
 
       if amount < 0
         label = Spree.t(:refund) + ' ' + create_label
