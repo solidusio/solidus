@@ -22,13 +22,13 @@
         <div data-hook="admin_products_index_search">
           <div class="alpha nine columns">
             <div class="field">
-              <%= f.label :name_cont, Spree.t(:name) %>
+              <%= f.label :name_cont, Spree::Product.human_attribute_name(:name) %>
               <%= f.text_field :name_cont, :size => 15 %>
             </div>
           </div>
           <div class="four columns">
             <div class="field">
-              <%= f.label :variants_including_master_sku_cont, Spree.t(:sku) %>
+              <%= f.label :variants_including_master_sku_cont, Spree::Variant.human_attribute_name(:sku) %>
               <%= f.text_field :variants_including_master_sku_cont, :size => 15 %>
             </div>
           </div>
@@ -66,7 +66,7 @@
     </colgroup>
     <thead>
       <tr data-hook="admin_products_index_headers">
-        <th><%= Spree.t(:sku) %></th>
+        <th><%= Spree::Variant.human_attribute_name(:sku) %></th>
         <th colspan="2"><%= sort_link @search,:name, Spree::Product.human_attribute_name(:name), { :default_order => "desc" }, {:title => 'admin_products_listing_name_title'} %></th>
         <th><%= sort_link @search,:master_default_price_amount, Spree::Product.human_attribute_name(:price), {}, {:title => 'admin_products_listing_price_title'} %></th>
         <th data-hook="admin_products_index_header_actions" class="actions"></th>
