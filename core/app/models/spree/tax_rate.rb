@@ -123,11 +123,11 @@ module Spree
       end
     end
 
+    private
+
     def default_zone_or_zone_match?(order_tax_zone)
       Zone.default_tax.try!(:contains?, order_tax_zone) || zone.contains?(order_tax_zone)
     end
-
-    private
 
     def create_label
       label = ""
