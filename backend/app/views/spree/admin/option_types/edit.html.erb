@@ -17,7 +17,10 @@
 
 <%= form_for [:admin, @option_type] do |f| %>
 
-  <%= render :partial => 'form', :locals => { :f => f } %>
+  <fieldset class="no-border-bottom">
+    <legend><%= Spree::OptionType.model_name.human %></legend>
+    <%= render :partial => 'form', :locals => { :f => f } %>
+  </fieldset>
 
   <fieldset>
     <legend><%= Spree::OptionValue.model_name.human(count: :other) %></legend>
@@ -35,7 +38,6 @@
         <% end %>
       </tbody>
     </table>
-
     <%= render :partial => 'spree/admin/shared/edit_resource_links' %>
   </fieldset>
 <% end %>
