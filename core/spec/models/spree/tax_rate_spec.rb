@@ -179,6 +179,7 @@ describe Spree::TaxRate, :type => :model do
 
       before do
         allow(Spree::TaxRate).to receive_messages :match => [rate_1, rate_2]
+        allow(line_item).to receive_message_chain(:order, :all_adjustments, :tax, :destroy_all)
       end
 
       it "should only apply adjustments for matching rates" do
@@ -193,6 +194,7 @@ describe Spree::TaxRate, :type => :model do
 
       before do
         allow(Spree::TaxRate).to receive_messages :match => [rate_1, rate_2]
+        allow(shipments).to receive_message_chain(:first, :order, :all_adjustments, :tax, :destroy_all)
       end
 
       it "should apply adjustments for matching rates" do
