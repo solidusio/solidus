@@ -17,7 +17,8 @@ module Spree
 
     extend DisplayMoney
     money_methods pre_tax_total: { currency: Spree::Config[:currency] },
-                  total: { currency: Spree::Config[:currency] }
+                  total: { currency: Spree::Config[:currency] },
+                  amount: { currency: Spree::Config[:currency] }
 
     delegate :id, to: :order, prefix: true, allow_nil: true
 
@@ -26,7 +27,11 @@ module Spree
     end
 
     def pre_tax_total
-      return_items.sum(:pre_tax_amount)
+      return_items.map(&:pre_tax_amount).sum
+    end
+
+    def amount
+      return_items.sum(:amount)
     end
 
     # Temporarily tie a customer_return to one order

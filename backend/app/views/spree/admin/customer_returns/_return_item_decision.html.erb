@@ -3,7 +3,7 @@
     <tr>
       <th><%= Spree::Product.model_name.human %></th>
       <th><%= Spree::Variant.human_attribute_name(:sku) %></th>
-      <th><%= Spree::ReturnItem.human_attribute_name(:pre_tax_amount) %></th>
+      <th><%= Spree::ReturnItem.human_attribute_name(:amount) %></th>
       <th><%= Spree::ReturnItem.human_attribute_name(:preferred_reimbursement_type) %></th>
       <th><%= Spree::ReturnItem.human_attribute_name(:exchange_variant) %></th>
       <th><%= Spree::ReturnItem.human_attribute_name(:acceptance_status_errors) %></th>
@@ -27,7 +27,7 @@
           <%= return_item.inventory_unit.variant.sku %>
         </td>
         <td class="align-center">
-          <%= return_item.display_pre_tax_amount %>
+          <%= return_item.display_amount %>
         </td>
         <td class="align-center">
           <%= reimbursement_type_name(return_item.preferred_reimbursement_type) %>

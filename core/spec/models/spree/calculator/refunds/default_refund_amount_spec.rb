@@ -1,21 +1,19 @@
 require 'spec_helper'
 
 describe Spree::Calculator::Returns::DefaultRefundAmount, type: :model do
-  let(:order) { create(:order) }
   let(:line_item_quantity) { 2 }
-  let(:pre_tax_amount)  { 100.0 }
-  let(:line_item)       { create(:line_item, price: 100.0, quantity: line_item_quantity, pre_tax_amount: pre_tax_amount) }
+  let(:line_item_price) { 100.0 }
+  let(:line_item) { create(:line_item, price: line_item_price, quantity: line_item_quantity) }
   let(:inventory_unit) { build(:inventory_unit, order: order, line_item: line_item) }
   let(:return_item) { build(:return_item, inventory_unit: inventory_unit ) }
   let(:calculator) { Spree::Calculator::Returns::DefaultRefundAmount.new }
-
-  before { order.line_items << line_item }
+  let(:order) { line_item.order }
 
   subject { calculator.compute(return_item) }
 
   context "not an exchange" do
     context "no promotions or taxes" do
-      it { is_expected.to eq pre_tax_amount / line_item_quantity }
+      it { is_expected.to eq line_item_price }
     end
 
     context "order adjustments" do
@@ -35,7 +33,7 @@ describe Spree::Calculator::Returns::DefaultRefundAmount, type: :model do
         order.adjustments.first.update_attributes(amount: adjustment_amount)
       end
 
-      it { is_expected.to eq((pre_tax_amount - adjustment_amount.abs) / line_item_quantity) }
+      it { is_expected.to eq line_item_price - (adjustment_amount.abs / line_item_quantity) }
     end
 
     context "shipping adjustments" do
@@ -43,7 +41,7 @@ describe Spree::Calculator::Returns::DefaultRefundAmount, type: :model do
 
       before { order.shipments << Spree::Shipment.new(adjustment_total: adjustment_total) }
 
-      it { is_expected.to eq pre_tax_amount / line_item_quantity }
+      it { is_expected.to eq line_item_price }
     end
   end
 
@@ -53,8 +51,8 @@ describe Spree::Calculator::Returns::DefaultRefundAmount, type: :model do
     it { is_expected.to eq 0.0 }
   end
 
-  context "pre_tax_amount is zero" do
-    let(:pre_tax_amount)  { 0.0 }
+  context "line item amount is zero" do
+    let(:line_item_price) { 0 }
     it { is_expected.to eq 0.0 }
   end
 end

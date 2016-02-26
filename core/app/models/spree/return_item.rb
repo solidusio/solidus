@@ -72,8 +72,8 @@ module Spree
     delegate :variant, to: :inventory_unit
     delegate :shipment, to: :inventory_unit
 
-    before_create :set_default_pre_tax_amount, unless: :pre_tax_amount_changed?
-    before_save :set_exchange_pre_tax_amount
+    before_create :set_default_amount, unless: :amount_changed?
+    before_save :set_exchange_amount
 
     state_machine :reception_status, initial: :awaiting do
       after_transition to: COMPLETED_RECEPTION_STATUSES,  do: :attempt_accept
@@ -93,7 +93,7 @@ module Spree
     end
 
     extend DisplayMoney
-    money_methods :pre_tax_amount, :total
+    money_methods :pre_tax_amount, :amount, :total
 
     # @return [Boolean] true when this retur item is in a complete reception
     #   state
@@ -133,7 +133,7 @@ module Spree
     #   unit if one exists, or a new one if one does not
     def self.from_inventory_unit(inventory_unit)
       valid.find_by(inventory_unit: inventory_unit) ||
-        new(inventory_unit: inventory_unit).tap(&:set_default_pre_tax_amount)
+        new(inventory_unit: inventory_unit).tap(&:set_default_amount)
     end
 
     # @return [Boolean] true when an exchange has been requested on this return
@@ -154,10 +154,14 @@ module Spree
       exchange_requested? && !exchange_processed?
     end
 
-    # @return [BigDecimal] the cost of the item before tax, plus the included
-    #   and additional taxes
+    # @return [BigDecimal] the cost of the item after tax
     def total
-      pre_tax_amount + included_tax_total + additional_tax_total
+      amount + additional_tax_total
+    end
+
+    # @return [BigDecimal] the cost of the item before tax
+    def pre_tax_amount
+      amount - included_tax_total
     end
 
     # @note This uses the exchange_variant_engine configured on the class.
@@ -185,12 +189,12 @@ module Spree
       exchange_inventory_unit.try(:shipment)
     end
 
-    # Calculates and sets the default pre-tax amount to be refunded.
+    # Calculates and sets the default amount to be refunded.
     #
     # @note This uses the configured refund_amount_calculator configured on the
     #   class.
-    def set_default_pre_tax_amount
-      self.pre_tax_amount = refund_amount_calculator.new.compute(self)
+    def set_default_amount
+      self.amount = refund_amount_calculator.new.compute(self)
     end
 
     def potential_reception_transitions
@@ -240,7 +244,7 @@ module Spree
       original_ri = sibling_intended_for_exchange('awaiting')
       if original_ri
         original_ri.unexchange!
-        set_default_pre_tax_amount
+        set_default_amount
         save!
       end
     end
@@ -276,8 +280,8 @@ module Spree
       end
     end
 
-    def set_exchange_pre_tax_amount
-      self.pre_tax_amount = 0.0.to_d if exchange_requested?
+    def set_exchange_amount
+      self.amount = 0.0.to_d if exchange_requested?
     end
 
     def validate_no_other_completed_return_items
