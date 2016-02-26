@@ -86,8 +86,8 @@ module Spree
       rates = self.match(order_tax_zone)
       tax_categories = rates.map(&:tax_category)
       relevant_items, non_relevant_items = items.partition { |item| tax_categories.include?(item.tax_category) }
-      unless relevant_items.empty?
-        Spree::Adjustment.where(adjustable: relevant_items).tax.destroy_all # using destroy_all to ensure adjustment destroy callback fires.
+      relevant_items.group_by { |item| item.class.name }.each do |class_name, items|
+        Spree::Adjustment.where(adjustable_type: class_name, adjustable_id: items.map(&:id)).tax.destroy_all
       end
       relevant_items.each do |item|
         relevant_rates = rates.select { |rate| rate.tax_category == item.tax_category }
