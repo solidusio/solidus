@@ -7,17 +7,17 @@ module Spree
     delegate :order, :currency, to: :shipment
     delegate :name, :tax_category, to: :shipping_method
     delegate :code, to: :shipping_method, prefix: true
+    alias_attribute :amount, :cost
 
-    def display_base_price
-      Spree::Money.new(cost, currency: currency)
-    end
+    extend DisplayMoney
+    money_methods :amount
 
     def calculate_tax_amount
       tax_rate.calculator.compute_shipping_rate(self)
     end
 
     def display_price
-      price = display_base_price.to_s
+      price = display_amount.to_s
       if tax_rate
         tax_amount = calculate_tax_amount
         if tax_amount != 0
