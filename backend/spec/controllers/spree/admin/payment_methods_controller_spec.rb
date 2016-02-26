@@ -8,16 +8,22 @@ module Spree
   describe Admin::PaymentMethodsController, type: :controller do
     stub_authorization!
 
-    let(:payment_method) { GatewayWithPassword.create!(name: "Bogus", preferred_password: "haxme") }
+    context "GatewayWithPassword" do
+      let(:payment_method) { GatewayWithPassword.create!(name: "Bogus", preferred_password: "haxme") }
 
-    # regression test for https://github.com/spree/spree/issues/2094
-    it "does not clear password on update" do
-      expect(payment_method.preferred_password).to eq("haxme")
-      spree_put :update, id: payment_method.id, payment_method: { type: payment_method.class.to_s, preferred_password: "" }
-      expect(response).to redirect_to(spree.edit_admin_payment_method_path(payment_method))
+      before do
+        allow(Rails.application.config.spree).to receive(:payment_methods).and_return([GatewayWithPassword])
+      end
 
-      payment_method.reload
-      expect(payment_method.preferred_password).to eq("haxme")
+      # regression test for https://github.com/spree/spree/issues/2094
+      it "does not clear password on update" do
+        expect(payment_method.preferred_password).to eq("haxme")
+        spree_put :update, id: payment_method.id, payment_method: { type: payment_method.class.to_s, preferred_password: "" }
+        expect(response).to redirect_to(spree.edit_admin_payment_method_path(payment_method))
+
+        payment_method.reload
+        expect(payment_method.preferred_password).to eq("haxme")
+      end
     end
 
     context "tries to save invalid payment" do
