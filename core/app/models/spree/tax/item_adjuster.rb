@@ -12,7 +12,8 @@ module Spree
         @item = item
         @order = @item.order
         # set instance variable so `TaxRate.match` is only called when necessary
-        @applicable_rates = options[:applicable_rates]
+        @rates_for_order_zone = options[:rates_for_order_zone]
+        @rates_for_default_zone = options[:rates_for_default_zone]
         @order_tax_zone = options[:order_tax_zone]
       end
 
