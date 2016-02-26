@@ -35,6 +35,8 @@ en:
       spree/calculator/tiered_percent:
         preferred_base_percent: Base Percent
         preferred_tiers: Tiers
+      spree/carton:
+        tracking: Tracking
       spree/country:
         iso: ISO
         iso3: ISO3
@@ -66,6 +68,7 @@ en:
         state: State
       spree/line_item:
         description: Item Description
+        name: Name
         price: Price
         quantity: Quantity
         total: Total price
@@ -115,7 +118,10 @@ en:
         zipcode: Shipping address zipcode
       spree/payment:
         amount: Amount
+        created_at: Date/Time
         number: Identifier
+        response_code: Transaction ID
+        state: Payment State
       spree/payment_method:
         name: Name
       spree/product:
@@ -196,6 +202,8 @@ en:
         name: Name
       spree/shipping_category:
         name: Name
+      spree/shipment:
+        tracking: Tracking Number
       spree/shipping_method:
         admin_name: Internal Name
         carrier: Carrier
@@ -867,9 +875,6 @@ en:
     coupon_code_not_eligible: This coupon code is not eligible for this order
     coupon_code_not_found: The coupon code you entered doesn't exist. Please try again.
     coupon_code_unknown_error: This coupon code could not be applied to the cart at this time.
-    customer: Customer
-    customer_return: Customer Return
-    customer_returns: Customer Returns
     create: Create
     create_a_new_account: Create a new account
     create_new_order: Create new order
@@ -891,6 +896,8 @@ en:
     customer: Customer
     customer_details: Customer Details
     customer_details_updated: Customer Details Updated
+    customer_return: Customer Return
+    customer_returns: Customer Returns
     customer_search: Customer Search
     cut: Cut
     cvv_response: CVV Response
