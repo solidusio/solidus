@@ -13,6 +13,8 @@ module Spree
         @order = @item.order
         # set instance variable so `TaxRate.match` is only called when necessary
         @rates_for_order_zone = options[:rates_for_order_zone]
+        @rates_for_default_zone = options[:rates_for_default_zone]
+        @order_tax_zone = options[:order_tax_zone]
       end
 
       # Deletes all existing tax adjustments and creates new adjustments for all
@@ -23,19 +25,19 @@ module Spree
       #
       # @return [Array<Spree::Adjustment>] newly created adjustments
       def adjust!
-        return unless order_tax_zone
+        return unless order_tax_zone(order)
         # Using .destroy_all to make sure callbacks fire
         item.adjustments.tax.destroy_all
 
         TaxRate.store_pre_tax_amount(item, rates_for_item)
 
-        rates_for_item.map { |rate| rate.adjust(order_tax_zone, item) }
+        rates_for_item.map { |rate| rate.adjust(order_tax_zone(order), item) }
       end
 
       private
 
       def rates_for_item
-        @rates_for_item ||= applicable_rates.select { |rate| rate.tax_category == item.tax_category }
+        @rates_for_item ||= applicable_rates(order).select { |rate| rate.tax_category == item.tax_category }
       end
     end
   end
