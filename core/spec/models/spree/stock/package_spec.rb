@@ -54,16 +54,16 @@ module Spree
         method2   = create(:shipping_method, stock_locations: [stock_location])
         method1.shipping_categories = [category1, category2]
         method2.shipping_categories = [category1, category2]
-        variant1 = mock_model(Variant, shipping_category: category1)
-        variant2 = mock_model(Variant, shipping_category: category2)
-        variant3 = mock_model(Variant, shipping_category: nil)
+        variant1 = mock_model(Variant, shipping_category_id: category1.id)
+        variant2 = mock_model(Variant, shipping_category_id: category2.id)
+        variant3 = mock_model(Variant, shipping_category_id: nil)
         contents = [ContentItem.new(build(:inventory_unit, variant: variant1)),
                     ContentItem.new(build(:inventory_unit, variant: variant1)),
                     ContentItem.new(build(:inventory_unit, variant: variant2)),
                     ContentItem.new(build(:inventory_unit, variant: variant3))]
 
         package = Package.new(stock_location, contents)
-        expect(package.shipping_methods).to eq([method1, method2])
+        expect(package.shipping_methods).to match_array([method1, method2])
       end
       # Contains regression test for https://github.com/spree/spree/issues/2804
       it 'builds a list of shipping methods common to all categories' do
@@ -73,20 +73,20 @@ module Spree
         method2   = create(:shipping_method)
         method1.shipping_categories = [category1, category2]
         method2.shipping_categories = [category1]
-        variant1 = mock_model(Variant, shipping_category: category1)
-        variant2 = mock_model(Variant, shipping_category: category2)
-        variant3 = mock_model(Variant, shipping_category: nil)
+        variant1 = mock_model(Variant, shipping_category_id: category1.id)
+        variant2 = mock_model(Variant, shipping_category_id: category2.id)
+        variant3 = mock_model(Variant, shipping_category_id: nil)
         contents = [ContentItem.new(build(:inventory_unit, variant: variant1)),
                     ContentItem.new(build(:inventory_unit, variant: variant1)),
                     ContentItem.new(build(:inventory_unit, variant: variant2)),
                     ContentItem.new(build(:inventory_unit, variant: variant3))]
 
         package = Package.new(stock_location, contents)
-        expect(package.shipping_methods).to eq([method1])
+        expect(package.shipping_methods).to match_array([method1])
       end
 
       it 'builds an empty list of shipping methods when no categories' do
-        variant  = mock_model(Variant, shipping_category: nil)
+        variant  = mock_model(Variant, shipping_category_id: nil)
         contents = [ContentItem.new(build(:inventory_unit, variant: variant))]
         package  = Package.new(stock_location, contents)
         expect(package.shipping_methods).to be_empty
