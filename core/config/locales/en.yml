@@ -622,6 +622,16 @@ en:
     adjustable: Adjustable
     adjustment: Adjustment
     adjustment_amount: Amount
+    adjustment_labels:
+      tax_rates:
+        sales_tax: '%{name}'
+        vat: '%{name} (Included in Price)'
+        sales_tax_with_rate: '%{name} %{amount}'
+        vat_with_rate: '%{name} %{amount} (Included in Price)'
+        sales_tax_refund: 'Refund: %{name}'
+        vat_refund: 'Refund: %{name} (Included in Price)'
+        sales_tax_refund_with_rate: 'Refund: %{name} %{amount}'
+        vat_refund_with_rate: 'Refund: %{name} %{amount} (Included in Price)'
     adjustment_reasons: Adjustment Reasons
     adjustment_successfully_closed: Adjustment has been successfully closed!
     adjustment_successfully_opened: Adjustment has been successfully opened!
