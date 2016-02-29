@@ -215,7 +215,11 @@ module Spree
 
     # Returns the address for taxation based on configuration
     def tax_address
-      Spree::Config[:tax_using_ship_address] ? ship_address : bill_address
+      if Spree::Config[:tax_using_ship_address]
+        ship_address
+      else
+        bill_address
+      end || store.default_cart_tax_location
     end
 
     def updater

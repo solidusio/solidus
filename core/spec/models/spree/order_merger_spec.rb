@@ -4,6 +4,7 @@ require 'spec_helper'
 module Spree
   describe OrderMerger, type: :model do
     let(:variant) { create(:variant) }
+    let!(:store) { create(:store, default: true) }
     let(:order_1) { Spree::Order.create }
     let(:order_2) { Spree::Order.create }
     let(:user) { stub_model(Spree::LegacyUser, email: "spree@example.com") }
