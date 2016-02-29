@@ -4,8 +4,8 @@ describe Spree::Order, type: :model do
   let(:order) { stub_model("Spree::Order") }
 
   context "#finalize!" do
+    let!(:store) { create(:store) }
     let(:order) { Spree::Order.create(email: 'test@example.com', store: store) }
-    let(:store) { FactoryGirl.build(:store) }
 
     before do
       order.update_column :state, 'complete'

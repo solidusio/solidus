@@ -4,6 +4,7 @@
 require 'spec_helper'
 
 describe Spree::Adjustment, type: :model do
+  let!(:store) { create :store }
   let(:order) { Spree::Order.new }
   let(:line_item) { create :line_item, order: order }
 

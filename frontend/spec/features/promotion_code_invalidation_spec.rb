@@ -11,6 +11,7 @@ RSpec.feature "Promotion Code Invalidation" do
   end
 
   background do
+    create(:store)
     FactoryGirl.create(:product, name: "DL-44")
     FactoryGirl.create(:product, name: "E-11")
 

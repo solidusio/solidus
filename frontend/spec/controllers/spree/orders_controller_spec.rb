@@ -1,6 +1,7 @@
 require 'spec_helper'
 
 describe Spree::OrdersController, type: :controller do
+  let!(:store) { create(:store) }
   let(:user) { create(:user) }
 
   context "Order model mock" do
@@ -116,7 +117,7 @@ describe Spree::OrdersController, type: :controller do
   end
 
   context "line items quantity is 0" do
-    let(:order) { Spree::Order.create }
+    let(:order) { Spree::Order.create(store: store) }
     let(:variant) { create(:variant) }
     let!(:line_item) { order.contents.add(variant, 1) }
 

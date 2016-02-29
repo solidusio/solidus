@@ -1,6 +1,7 @@
 require 'spec_helper'
 
 describe 'current order tracking', type: :controller do
+  let!(:store) { create(:store) }
   let(:user) { create(:user) }
 
   controller(Spree::StoreController) do

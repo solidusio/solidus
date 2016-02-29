@@ -251,6 +251,7 @@ module Spree
         end
 
         context "for an order with taxable line items" do
+          let(:store) { create(:store) }
           before(:each) do
             @country = create(:country)
             @zone = create(:zone, name: "Country Zone", default_tax: true, zone_members: [])
@@ -263,7 +264,7 @@ module Spree
               zone: @zone
             )
 
-            @order = Spree::Order.create!
+            @order = Spree::Order.create!(store: store)
             allow(@order).to receive_messages coupon_code: "10off"
           end
           context "and the product price is less than promo discount" do

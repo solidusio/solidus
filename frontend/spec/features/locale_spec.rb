@@ -1,6 +1,7 @@
 require 'spec_helper'
 
 describe 'setting locale', type: :feature do
+  let!(:store) { create(:store) }
   def with_locale(locale)
     I18n.locale = locale
     Spree::Frontend::Config[:locale] = locale

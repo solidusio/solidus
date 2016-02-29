@@ -2,6 +2,7 @@ require 'spec_helper'
 
 module Spree
   describe ShippingManifest, type: :model do
+    let!(:store) { create :store }
     let(:order) { Order.create! }
     let(:variant) { create :variant }
     let!(:shipment) { create(:shipment, state: 'pending', order: order) }

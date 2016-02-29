@@ -3,6 +3,7 @@ require 'spec_helper'
 module Spree
   module Core
     describe Importer::Order do
+      let!(:store) { create(:store) }
       let!(:country) { create(:country) }
       let!(:state) { country.states.first || create(:state, country: country) }
       let!(:stock_location) { create(:stock_location, admin_name: 'Admin Name') }
