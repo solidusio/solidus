@@ -126,6 +126,12 @@ module Spree
     #   @return [String] Two-letter ISO code of a {Spree::Country} to assumed as the country of an unidentified customer (default: "US")
     preference :default_country_iso, :string, default: 'US'
 
+    # @!attribute [rw] admin_vat_country_iso
+    #   Set this if you want to enter prices in the backend including value added tax.
+    #   @return [String, nil] Two-letter ISO code of that {Spree::Country} for which
+    #      prices are entered in the backend (default: nil)
+    preference :admin_vat_country_iso, :string, default: nil
+
     # @!attribute [rw] expedited_exchanges
     #   Kicks off an exchange shipment upon return authorization save.
     #   charge customer if they do not return items within timely manner.
@@ -322,6 +328,19 @@ module Spree
 
     def stock
       @stock_configuration ||= Spree::Core::StockConfiguration.new
+    end
+
+    # Default admin VAT location
+    #
+    # An object that responds to :state_id and :country_id so it can double as a Spree::Address in
+    # Spree::Zone.for_address. Takes the `admin_vat_country_iso` as input.
+    #
+    # @see admin_vat_country_iso The admin VAT country
+    # @return [Spree::Tax::TaxLocation] default tax location
+    def admin_vat_location
+      @default_tax_location ||= Spree::Tax::TaxLocation.new(
+        country: Spree::Country.find_by(iso: admin_vat_country_iso)
+      )
     end
 
     # all the following can be deprecated when store prefs are no longer supported
