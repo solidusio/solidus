@@ -13,7 +13,9 @@
 <% end %>
 
 <% if can? :admin, :general_settings %>
-  <%= tab *Spree::BackendConfiguration::CONFIGURATION_TABS, label: :settings, icon: 'wrench', url: spree.edit_admin_general_settings_path %>
+  <%= tab *Spree::BackendConfiguration::CONFIGURATION_TABS, label: :settings, icon: 'wrench', url: spree.edit_admin_general_settings_path do %>
+    <% render partial: 'spree/admin/shared/settings_sub_menu' %>
+  <% end %>
 <% end %>
 
 <% if can? :admin, Spree::Promotion %>
