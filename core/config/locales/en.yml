@@ -647,10 +647,13 @@ en:
     adjustments: Adjustments
     admin:
       tab:
+        areas: Areas
+        checkout: Checkout
         configuration: Configuration
         option_types: Option Types
         orders: Orders
         overview: Overview
+        payments: Payments
         products: Products
         promotions: Promotions
         promotion_categories: Promotion Categories
@@ -659,9 +662,12 @@ en:
         reports: Reports
         rma: RMA
         settings: Settings
+        shipping: Shipping
         stock: Stock
         stock_items: Management
         stock_transfers: Transfers
+        store: Store
+        taxes: Taxes
         taxonomies: Taxonomies
         taxons: Taxons
         users: Users
