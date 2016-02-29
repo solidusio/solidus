@@ -7,8 +7,9 @@ describe Spree::Promotion::Rules::ItemTotal, type: :model do
       preferred_operator: preferred_operator
     )
   end
-  let(:order) { double(:order, item_total: item_total) }
+  let(:order) { double(:order, item_total: item_total, currency: order_currency) }
   let(:preferred_amount) { 50 }
+  let(:order_currency) { 'USD' }
 
   context "preferred operator set to gt" do
     let(:preferred_operator) { 'gt' }
@@ -18,6 +19,14 @@ describe Spree::Promotion::Rules::ItemTotal, type: :model do
 
       it "should be eligible when item total is greater than preferred amount" do
         expect(rule).to be_eligible(order)
+      end
+
+      context "when the order is a different currency" do
+        let(:order_currency) { "CAD" }
+
+        it "is not eligible" do
+          expect(rule).not_to be_eligible(order)
+        end
       end
     end
 
@@ -59,6 +68,14 @@ describe Spree::Promotion::Rules::ItemTotal, type: :model do
       it "should be eligible when item total is greater than preferred amount" do
         expect(rule).to be_eligible(order)
       end
+
+      context "when the order is a different currency" do
+        let(:order_currency) { "CAD" }
+
+        it "is not eligible" do
+          expect(rule).not_to be_eligible(order)
+        end
+      end
     end
 
     context "item total is equal to preferred amount" do
@@ -66,6 +83,14 @@ describe Spree::Promotion::Rules::ItemTotal, type: :model do
 
       it "should be eligible" do
         expect(rule).to be_eligible(order)
+      end
+
+      context "when the order is a different currency" do
+        let(:order_currency) { "CAD" }
+
+        it "is not eligible" do
+          expect(rule).not_to be_eligible(order)
+        end
       end
     end
 
