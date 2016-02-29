@@ -102,7 +102,7 @@ module Spree
 
       opts = options.dup # we will be deleting from the hash, so leave the caller's copy intact
 
-      currency = opts.delete(:currency) || order.try(:currency)
+      currency = opts.delete(:currency) || order.currency
 
       self.currency = currency
       self.price    = variant.price_in(currency).amount +
