@@ -62,11 +62,6 @@ describe Spree::UnreturnedItemCharger do
       end
     end
 
-    it "updates shipment cost" do
-      exchange_shipment.update_attributes!(cost: 0)
-      expect { subject }.to change { exchange_shipment.reload.cost }
-    end
-
     it "creates a new completed order" do
       expect { subject }.to change { Spree::Order.count }.by(1)
       expect(new_order).to_not eq(shipped_order)
