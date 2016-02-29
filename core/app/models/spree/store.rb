@@ -23,6 +23,11 @@ module Spree
       where(default: true).first || new
     end
 
+    def default_cart_tax_location
+      @default_cart_tax_location ||=
+        Spree::Tax::TaxLocation.new(country: Spree::Country.find_by(iso: cart_tax_country_iso))
+    end
+
     private
 
     def ensure_default_exists_and_is_unique
