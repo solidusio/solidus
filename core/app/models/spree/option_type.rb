@@ -21,7 +21,7 @@ module Spree
 
     default_scope -> { order(:position) }
 
-    accepts_nested_attributes_for :option_values, reject_if: lambda { |ov| ov[:name].blank? || ov[:presentation].blank? }, allow_destroy: true
+    accepts_nested_attributes_for :option_values, reject_if: lambda { |ov| ov[:name].blank? && ov[:presentation].blank? }, allow_destroy: true
 
     after_touch :touch_all_products
     after_save :touch_all_products
