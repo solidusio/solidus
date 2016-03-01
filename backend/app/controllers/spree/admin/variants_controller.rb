@@ -52,8 +52,6 @@ module Spree
         @option_values = @option_types.flat_map(&:option_values).uniq(&:presentation)
       end
 
-      private
-
       def load_data
         @tax_categories = TaxCategory.order(:name)
       end

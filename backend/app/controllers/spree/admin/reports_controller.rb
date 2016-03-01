@@ -67,8 +67,6 @@ module Spree
         end
       end
 
-      private
-
       @@available_reports = {}
     end
   end
