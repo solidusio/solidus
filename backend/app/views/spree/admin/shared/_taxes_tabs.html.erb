@@ -1,0 +1,13 @@
+<% content_for :tabs do %>
+  <nav>
+    <ul class="tabs" data-hook="admin_settings_taxes_tabs">
+      <% if can? :display, Spree::TaxCategory %>
+        <%= settings_tab_item Spree::TaxCategory.model_name.human(count: :other), admin_tax_categories_path %>
+      <% end %>
+
+      <% if can? :display, Spree::TaxRate %>
+        <%= settings_tab_item Spree::TaxRate.model_name.human(count: :other), admin_tax_rates_path %>
+      <% end %>
+    </ul>
+  </nav>
+<% end %>
