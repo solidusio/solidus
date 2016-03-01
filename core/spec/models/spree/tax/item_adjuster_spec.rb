@@ -42,8 +42,6 @@ RSpec.describe Spree::Tax::ItemAdjuster do
       let(:tax_zone) { build_stubbed(:zone, :with_country) }
 
       before do
-        expect(item).to receive(:update_column)
-
         expect(Spree::TaxRate).to receive(:for_zone).with(tax_zone).and_return(rates_for_order_zone)
         expect(Spree::TaxRate).to receive(:for_zone).with(Spree::Zone.default_tax).and_return([])
       end

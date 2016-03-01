@@ -83,16 +83,6 @@ module Spree
       end
     end
 
-    # Pre-tax amounts must be stored so that we can calculate
-    # correct rate amounts in the future. For example:
-    # https://github.com/spree/spree/issues/4318#issuecomment-34723428
-    def self.store_pre_tax_amount(item, rates)
-      sum_of_included_rates = rates.select(&:included_in_price).map(&:amount).sum
-      pre_tax_amount = item.discounted_amount / (1 + sum_of_included_rates)
-
-      item.update_column(:pre_tax_amount, pre_tax_amount)
-    end
-
     # Creates necessary tax adjustments for the order.
     def adjust(order_tax_zone, item)
       amount = compute_amount(item)

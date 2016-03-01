@@ -2,6 +2,8 @@ require_dependency 'spree/calculator'
 
 module Spree
   class Calculator::DefaultTax < Calculator
+    include Spree::Tax::TaxHelpers
+
     def self.description
       Spree.t(:default_tax)
     end
@@ -14,7 +16,7 @@ module Spree
         line_item.tax_category == rate.tax_category
       end
 
-      line_items_total = matched_line_items.sum(&:total)
+      line_items_total = matched_line_items.sum(&:discounted_amount)
       if rate.included_in_price
         round_to_two_places(line_items_total - ( line_items_total / (1 + rate.amount) ) )
       else
@@ -25,7 +27,7 @@ module Spree
     # When it comes to computing shipments or line items: same same.
     def compute_shipment_or_line_item(item)
       if rate.included_in_price
-        deduced_total_by_rate(item.pre_tax_amount, rate)
+        deduced_total_by_rate(item, rate)
       else
         round_to_two_places(item.discounted_amount * rate.amount)
       end
@@ -36,8 +38,7 @@ module Spree
 
     def compute_shipping_rate(shipping_rate)
       if rate.included_in_price
-        pre_tax_amount = shipping_rate.cost / (1 + rate.amount)
-        deduced_total_by_rate(pre_tax_amount, rate)
+        deduced_total_by_rate(shipping_rate, rate)
       else
         with_tax_amount = shipping_rate.cost * rate.amount
         round_to_two_places(with_tax_amount)
@@ -54,8 +55,9 @@ module Spree
       BigDecimal.new(amount.to_s).round(2, BigDecimal::ROUND_HALF_UP)
     end
 
-    def deduced_total_by_rate(pre_tax_amount, rate)
-      round_to_two_places(pre_tax_amount * rate.amount)
+    def deduced_total_by_rate(item, rate)
+      unrounded_net_amount = item.discounted_amount / (1 + sum_of_included_tax_rates(item))
+      round_to_two_places(unrounded_net_amount * rate.amount)
     end
   end
 end

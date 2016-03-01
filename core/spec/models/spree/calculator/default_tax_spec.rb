@@ -1,13 +1,13 @@
 require 'spec_helper'
 
 describe Spree::Calculator::DefaultTax, type: :model do
-  let!(:country) { create(:country) }
-  let!(:zone) { create(:zone, name: "Country Zone", default_tax: true, zone_members: []) }
-  let!(:tax_category) { create(:tax_category, tax_rates: []) }
-  let!(:rate) { create(:tax_rate, tax_category: tax_category, amount: 0.05, included_in_price: included_in_price) }
+  let!(:address) { create(:address) }
+  let!(:zone) { create(:zone, name: "Country Zone", default_tax: true, countries: [address.country]) }
+  let!(:tax_category) { create(:tax_category) }
+  let!(:rate) { create(:tax_rate, tax_category: tax_category, amount: 0.05, included_in_price: included_in_price, zone: zone) }
   let(:included_in_price) { false }
   let!(:calculator) { Spree::Calculator::DefaultTax.new(calculable: rate ) }
-  let!(:order) { create(:order) }
+  let!(:order) { create(:order, ship_address: address) }
   let!(:line_item) { create(:line_item, price: 10, quantity: 3, tax_category: tax_category) }
   let!(:shipment) { create(:shipment, cost: 15) }
 
@@ -79,7 +79,6 @@ describe Spree::Calculator::DefaultTax, type: :model do
         context "when line item is discounted" do
           before do
             line_item.promo_total = -1
-            Spree::TaxRate.store_pre_tax_amount(line_item, [rate])
           end
 
           it "should be equal to the item's discounted total * rate" do
@@ -88,7 +87,6 @@ describe Spree::Calculator::DefaultTax, type: :model do
         end
 
         it "should be equal to the item's full price * rate" do
-          Spree::TaxRate.store_pre_tax_amount(line_item, [rate])
           expect(calculator.compute(line_item)).to eql 1.43
         end
       end

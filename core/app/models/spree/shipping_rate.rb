@@ -9,6 +9,8 @@ module Spree
     delegate :code, to: :shipping_method, prefix: true
     alias_attribute :amount, :cost
 
+    alias_method :discounted_amount, :amount
+
     extend DisplayMoney
     money_methods :amount
 
