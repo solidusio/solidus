@@ -15,24 +15,8 @@ $(document).ready(function () {
     $('button.add_variant').click(addVariantFromStockLocation);
   });
 
-  //handle cancel click
-  $('a.cancel-item').click(toggleItemEdit);
-
   //handle split click
   $('a.split-item').click(startItemSplit);
-
-  //handle save click
-  $('a.save-item').click(function(){
-    var save = $(this);
-    var shipment_number = save.data('shipment-number');
-    var variant_id = save.data('variant-id');
-
-    var quantity = parseInt(save.parents('tr').find('input.line_item_quantity').val());
-
-    toggleItemEdit();
-    adjustShipmentItems(shipment_number, variant_id, quantity);
-    return false;
-  });
 
   //handle delete click
   $('a.delete-item').click(function(event){
@@ -40,7 +24,6 @@ $(document).ready(function () {
       var del = $(this);
       var line_item_id = del.data('line-item-id');
 
-      toggleItemEdit();
       deleteLineItem(line_item_id);
     }
     return false;
@@ -177,18 +160,6 @@ toggleMethodEdit = function(){
   var link = $(this);
   link.parents('tbody').find('tr.edit-method').toggle();
   link.parents('tbody').find('tr.show-method').toggle();
-
-  return false;
-}
-
-toggleItemEdit = function(){
-  var link = $(this);
-  link.parent().find('a.cancel-item').toggle();
-  link.parent().find('a.split-item').toggle();
-  link.parent().find('a.save-item').toggle();
-  link.parent().find('a.delete-item').toggle();
-  link.parents('tr').find('td.item-qty-show').toggle();
-  link.parents('tr').find('td.item-qty-edit').toggle();
 
   return false;
 }

@@ -15,9 +15,6 @@
           <%= count %> x <%= Spree.t(state, scope: 'inventory_states') %>
         <% end %>
     </td>
-    <td class="item-qty-edit hidden">
-      <%= number_field_tag :quantity, item.quantity, :min => 0, :class => "line_item_quantity", :size => 5 %>
-    </td>
     <td class="item-total align-center"><%= line_item_shipment_price(item.line_item, item.quantity) %></td>
 
     <td class="cart-item-delete actions" data-hook="cart_item_delete">
