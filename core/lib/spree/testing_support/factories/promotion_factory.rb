@@ -14,6 +14,10 @@ FactoryGirl.define do
       end
     end
 
+    trait :automatic do
+      apply_automatically true
+    end
+
     trait :with_line_item_adjustment do
       transient do
         adjustment_rate 10
