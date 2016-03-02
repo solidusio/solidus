@@ -24,110 +24,110 @@ module Spree
 
       # bill_address is only minimally used now, but we can't get rid of it without a major version release
       belongs_to :bill_address, class_name: 'Spree::Address'
+    end
 
-      def bill_address=(address)
-        # stow a copy in our address book too
-        address = save_in_address_book(address.attributes) if address
-        super(address)
+    def bill_address=(address)
+      # stow a copy in our address book too
+      address = save_in_address_book(address.attributes) if address
+      super(address)
+    end
+
+    def bill_address_attributes=(attributes)
+      self.bill_address = Address.immutable_merge(bill_address, attributes)
+    end
+
+    def default_address
+      user_addresses.default.first.try(:address)
+    end
+
+    def default_address=(address)
+      save_in_address_book(address.attributes, true) if address
+    end
+
+    def default_address_attributes=(attributes)
+      # see "Nested Attributes Examples" section of http://apidock.com/rails/ActionView/Helpers/FormHelper/fields_for
+      # this #{fieldname}_attributes= method works with fields_for in the views
+      # even without declaring accepts_nested_attributes_for
+      self.default_address = Address.immutable_merge(default_address, attributes)
+    end
+
+    alias_method :ship_address, :default_address
+    alias_method :ship_address_attributes=, :default_address_attributes=
+
+    # saves address in address book
+    # sets address to the default if automatic_default_address is set to true
+    # if address is nil, does nothing and returns nil
+    def ship_address=(address)
+      be_default = Spree::Config.automatic_default_address
+      save_in_address_book(address.attributes, be_default) if address
+    end
+
+    # saves order.ship_address and order.bill_address in address book
+    # sets ship_address to the default if automatic_default_address is set to true
+    # sets bill_address to the default if automatic_default_address is set to true and there is no ship_address
+    # if one address is nil, does not save that address
+    def persist_order_address(order)
+      save_in_address_book(
+        order.ship_address.attributes,
+        Spree::Config.automatic_default_address
+      ) if order.ship_address
+
+      save_in_address_book(
+        order.bill_address.attributes,
+        order.ship_address.nil? && Spree::Config.automatic_default_address
+      ) if order.bill_address
+    end
+
+    # Add an address to the user's list of saved addresses for future autofill
+    # @param address_attributes HashWithIndifferentAccess of attributes that will be
+    # treated as value equality to de-dup among existing Addresses
+    # @param default set whether or not this address will show up from
+    # #default_address or not
+    def save_in_address_book(address_attributes, default = false)
+      return nil unless address_attributes.present?
+      address_attributes = address_attributes.with_indifferent_access
+
+      new_address = Address.factory(address_attributes)
+      return new_address unless new_address.valid?
+
+      first_one = user_addresses.empty?
+
+      if address_attributes[:id].present? && new_address.id != address_attributes[:id]
+        remove_from_address_book(address_attributes[:id])
       end
 
-      def bill_address_attributes=(attributes)
-        self.bill_address = Address.immutable_merge(bill_address, attributes)
+      user_address = prepare_user_address(new_address)
+      user_addresses.mark_default(user_address) if default || first_one
+
+      if persisted?
+        user_address.save!
+        user_addresses.reset # ensures proper ordering
       end
 
-      def default_address
-        user_addresses.default.first.try(:address)
+      user_address.address
+    end
+
+    def mark_default_address(address)
+      user_addresses.mark_default(user_addresses.find_by(address: address))
+    end
+
+    def remove_from_address_book(address_id)
+      user_address = user_addresses.find_by(address_id: address_id)
+      if user_address
+        user_address.update_attributes(archived: true, default: false)
+      else
+        false
       end
+    end
 
-      def default_address=(address)
-        save_in_address_book(address.attributes, true) if address
-      end
+    private
 
-      def default_address_attributes=(attributes)
-        # see "Nested Attributes Examples" section of http://apidock.com/rails/ActionView/Helpers/FormHelper/fields_for
-        # this #{fieldname}_attributes= method works with fields_for in the views
-        # even without declaring accepts_nested_attributes_for
-        self.default_address = Address.immutable_merge(default_address, attributes)
-      end
-
-      alias_method :ship_address, :default_address
-      alias_method :ship_address_attributes=, :default_address_attributes=
-
-      # saves address in address book
-      # sets address to the default if automatic_default_address is set to true
-      # if address is nil, does nothing and returns nil
-      def ship_address=(address)
-        be_default = Spree::Config.automatic_default_address
-        save_in_address_book(address.attributes, be_default) if address
-      end
-
-      # saves order.ship_address and order.bill_address in address book
-      # sets ship_address to the default if automatic_default_address is set to true
-      # sets bill_address to the default if automatic_default_address is set to true and there is no ship_address
-      # if one address is nil, does not save that address
-      def persist_order_address(order)
-        save_in_address_book(
-          order.ship_address.attributes,
-          Spree::Config.automatic_default_address
-        ) if order.ship_address
-
-        save_in_address_book(
-          order.bill_address.attributes,
-          order.ship_address.nil? && Spree::Config.automatic_default_address
-        ) if order.bill_address
-      end
-
-      # Add an address to the user's list of saved addresses for future autofill
-      # @param address_attributes HashWithIndifferentAccess of attributes that will be
-      # treated as value equality to de-dup among existing Addresses
-      # @param default set whether or not this address will show up from
-      # #default_address or not
-      def save_in_address_book(address_attributes, default = false)
-        return nil unless address_attributes.present?
-        address_attributes = address_attributes.with_indifferent_access
-
-        new_address = Address.factory(address_attributes)
-        return new_address unless new_address.valid?
-
-        first_one = user_addresses.empty?
-
-        if address_attributes[:id].present? && new_address.id != address_attributes[:id]
-          remove_from_address_book(address_attributes[:id])
-        end
-
-        user_address = prepare_user_address(new_address)
-        user_addresses.mark_default(user_address) if default || first_one
-
-        if persisted?
-          user_address.save!
-          user_addresses.reset # ensures proper ordering
-        end
-
-        user_address.address
-      end
-
-      def mark_default_address(address)
-        user_addresses.mark_default(user_addresses.find_by(address: address))
-      end
-
-      def remove_from_address_book(address_id)
-        user_address = user_addresses.find_by(address_id: address_id)
-        if user_address
-          user_address.update_attributes(archived: true, default: false)
-        else
-          false
-        end
-      end
-
-      private
-
-      def prepare_user_address(new_address)
-        user_address = user_addresses.all_historical.find_first_by_address_values(new_address.attributes)
-        user_address ||= user_addresses.build
-        user_address.address = new_address
-        user_address.archived = false
-        user_address
-      end
+    def prepare_user_address(new_address)
+      user_address = user_addresses.all_historical.find_first_by_address_values(new_address.attributes)
+      user_address ||= user_addresses.build
+      user_address.address = new_address
+      user_address.archived = false
+      user_address
     end
   end
 end

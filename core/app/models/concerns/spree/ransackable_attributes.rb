@@ -6,12 +6,14 @@ module Spree::RansackableAttributes
 
     class_attribute :default_ransackable_attributes
     self.default_ransackable_attributes = %w[id name]
+  end
 
-    def self.ransackable_associations(*_args)
+  class_methods do
+    def ransackable_associations(*_args)
       whitelisted_ransackable_associations || []
     end
 
-    def self.ransackable_attributes(*_args)
+    def ransackable_attributes(*_args)
       default_ransackable_attributes | (whitelisted_ransackable_attributes || [])
     end
   end
