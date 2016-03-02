@@ -15,9 +15,6 @@ $(document).ready(function () {
     $('button.add_variant').click(addVariantFromStockLocation);
   });
 
-  //handle edit click
-  $('a.edit-item').click(toggleItemEdit);
-
   //handle cancel click
   $('a.cancel-item').click(toggleItemEdit);
 
@@ -186,7 +183,6 @@ toggleMethodEdit = function(){
 
 toggleItemEdit = function(){
   var link = $(this);
-  link.parent().find('a.edit-item').toggle();
   link.parent().find('a.cancel-item').toggle();
   link.parent().find('a.split-item').toggle();
   link.parent().find('a.save-item').toggle();
@@ -200,7 +196,6 @@ toggleItemEdit = function(){
 startItemSplit = function(event){
   event.preventDefault();
   var link = $(this);
-  link.parent().find('a.edit-item').toggle();
   link.parent().find('a.split-item').toggle();
   link.parent().find('a.delete-item').toggle();
   var variant_id = link.data('variant-id');
@@ -297,7 +292,6 @@ cancelItemSplit = function(event) {
   var link = $(this);
   var prev_row = link.closest('tr').prev();
   link.closest('tr').remove();
-  prev_row.find('a.edit-item').toggle();
   prev_row.find('a.split-item').toggle();
   prev_row.find('a.delete-item').toggle();
 }

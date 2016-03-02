@@ -462,7 +462,6 @@ describe "Order Details", type: :feature, js: true do
       # Order item actions
       expect(page).not_to have_css('.delete-item')
       expect(page).not_to have_css('.split-item')
-      expect(page).not_to have_css('.edit-item')
       expect(page).not_to have_css('.edit-tracking')
 
       expect(page).not_to have_css('#add-line-item')
@@ -486,8 +485,6 @@ describe "Order Details", type: :feature, js: true do
     it 'should not display order tabs or edit buttons without ability' do
       visit spree.edit_admin_order_path(order)
 
-      # Order Form
-      expect(page).not_to have_css('.edit-item')
       # Order Tabs
       expect(page).not_to have_link('Adjustments')
       expect(page).not_to have_link('Payments')
