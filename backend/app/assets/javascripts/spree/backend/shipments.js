@@ -9,6 +9,8 @@ $(document).ready(function () {
     var variant = _.find(window.variants, function(variant){
       return variant.id == variant_id
     })
+
+    var variantStockTemplate = HandlebarsTemplates["variants/autocomplete_stock"];
     $('#stock_details').html(variantStockTemplate({variant: variant}));
     $('#stock_details').show();
 
