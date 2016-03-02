@@ -1,5 +1,29 @@
 ## Solidus 1.3.0 (unreleased)
 
+*   Removed `pre_tax_amount` column from line item and shipment tables
+
+    This column was previously used as a caching column in the process of
+    calculating VATs. Its value should have been (but wasn't) always the same as
+    `discounted_amount - included_tax_total`. It's been replaced with a method
+    that does just that. [#941](https://github.com/solidusio/solidus/pull/941)
+
+*   Renamed return item `pre_tax_amount` column to `amount`
+
+    The naming and functioning of this column was inconsistent with how
+    shipments and line items work: In those models, the base from which we
+    calculate everything is the `amount`. The ReturnItem now works just like
+    a line item.
+
+    Usability-wise, this change entails that for VAT countries, when creating
+    a refund for an order including VAT, you now have to enter the amount
+    you want to refund including VAT. This is what a backend user working
+    with prices including tax would expect.
+
+    For a non-VAT store, nothing changes except for the form field name, which
+    now says `Amount` instead of `Pre-tax-amount`. You might want to adjust the
+    i18n translation here, depending on your circumstances.
+    [#706](https://github.com/solidusio/solidus/pull/706)
+
 *   Removed Spree::BaseHelper#gem_available? and Spree::BaseHelper#current_spree_page?
 
     Both these methods were untested and not appropriate code to be in core. If you need these
