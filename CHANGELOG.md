@@ -1,5 +1,11 @@
 ## Solidus 1.3.0 (unreleased)
 
+*   Made Spree::Order validate :store_id
+
+    All orders created since Spree v2.4 should have a store assigned. We want to build more
+    functionality onto that relation, so we need to make sure that every order has a store.
+    Please run `rake solidus:upgrade:one_point_three` to make sure your orders have a store id set.
+
 *   Removed Spree::Stock::Coordinator#packages from the public interface.
 
     This will allow us to refactor more easily.
