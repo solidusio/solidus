@@ -1,8 +1,6 @@
 # variant autocompletion
-$(document).ready ->
-  window.variantTemplate = HandlebarsTemplates["variants/autocomplete"]
-  window.variantStockTemplate = HandlebarsTemplates["variants/autocomplete_stock"]
-  window.variantLineItemTemplate = HandlebarsTemplates["variants/line_items_autocomplete_stock"]
+
+variantTemplate = HandlebarsTemplates["variants/autocomplete"]
 
 formatVariantResult = (variant) ->
   variant.image = variant.images[0].mini_url  if variant["images"][0] isnt `undefined` and variant["images"][0].mini_url isnt `undefined`
