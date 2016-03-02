@@ -46,7 +46,7 @@ module Spree
     def set_default_price
       if is_default?
         other_default_prices = variant.prices.where(currency: self.currency, is_default: true).where.not(id: id)
-        other_default_prices.each { |p| p.update_attributes!(is_default: false) }
+        other_default_prices.update_all(is_default: false)
       end
     end
   end
