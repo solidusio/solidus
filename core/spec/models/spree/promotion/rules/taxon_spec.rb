@@ -53,7 +53,7 @@ describe Spree::Promotion::Rules::Taxon, type: :model do
         before do
           taxon.children << taxon2
           order.products.first.taxons << taxon2
-          rule.taxons << taxon2
+          rule.taxons << taxon
         end
 
         it{ expect(rule).to be_eligible(order) }
