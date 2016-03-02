@@ -6,6 +6,7 @@ describe "Payment Methods", type: :feature do
   before(:each) do
     visit spree.admin_path
     click_link "Settings"
+    click_link "Payments"
   end
 
   context "admin visiting payment methods listing page" do
