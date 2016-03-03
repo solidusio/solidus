@@ -65,6 +65,10 @@ body {
   @include clearfix;
 }
 
+.content-under-header {
+  padding-top: 89px;
+}
+
 // Header
 //---------------------------------------------------
 .admin-nav-header {
@@ -106,6 +110,10 @@ body {
   padding: 15px 0;
   background-color: very-light($color-3, 4);
   border-bottom: 1px solid $color-border;
+  position: fixed;
+  left: $width-sidebar;
+  width: calc(100% - #{$width-sidebar});
+  z-index: 1;
 
   .page-title {
     font-size: 20px;
