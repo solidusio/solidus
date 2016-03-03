@@ -15,6 +15,8 @@ module Spree
         end
       end
 
+      private
+
       def packages
         packages = build_location_configured_packages
         packages = build_packages(packages)
@@ -64,8 +66,6 @@ module Spree
         end
         packages
       end
-
-      private
 
       # This finds the variants we're looking for in each active stock location.
       # It returns a hash like:
