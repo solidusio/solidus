@@ -1,6 +1,18 @@
 require 'spec_helper'
 
 describe Spree::Price, type: :model do
+  it { is_expected.to respond_to(:vat_country) }
+  it { is_expected.to respond_to(:vat_country_iso) }
+
+  describe '#vat_country' do
+    let!(:vat_country) { create(:country, iso: "DE") }
+    let(:price) { create(:price, vat_country_iso: "DE") }
+
+    it 'returns the country object' do
+      expect(price.vat_country).to eq(vat_country)
+    end
+  end
+
   describe 'validations' do
     let(:variant) { stub_model Spree::Variant }
     subject { Spree::Price.new variant: variant, amount: amount }
