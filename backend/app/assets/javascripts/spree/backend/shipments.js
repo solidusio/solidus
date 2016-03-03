@@ -204,8 +204,8 @@ addVariantFromStockLocation = function(event) {
 var ShipmentEditView = Backbone.View.extend({
   initialize: function(){
     var tbody = this.$("tbody[data-order-number][data-shipment-number]");
-    this.shipment_number = tbody.data("shipment-number")
-    this.order_number = tbody.data("order-number")
+    this.shipment_number = tbody.data("shipment-number");
+    this.order_number = tbody.data("order-number");
   },
 
   events: {
