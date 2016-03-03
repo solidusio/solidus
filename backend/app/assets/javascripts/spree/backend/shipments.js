@@ -226,15 +226,6 @@ completeItemSplit = function(event) {
   }
 }
 
-cancelItemSplit = function(event) {
-  event.preventDefault();
-  var link = $(this);
-  var prev_row = link.closest('tr').prev();
-  link.closest('tr').remove();
-  prev_row.find('a.split-item').toggle();
-  prev_row.find('a.delete-item').toggle();
-}
-
 addVariantFromStockLocation = function(event) {
   event.preventDefault();
 
@@ -288,7 +279,11 @@ var ShipmentEditView = Backbone.View.extend({
   },
 
   cancelItemSplit: function(e){
-    cancelItemSplit.bind(e.currentTarget)(e);
+    var link = $(e.currentTarget);
+    var prev_row = link.closest('tr').prev();
+    link.closest('tr').remove();
+    prev_row.find('a.split-item').show();
+    prev_row.find('a.delete-item').show();
   },
 
   completeItemSplit: function(e){
