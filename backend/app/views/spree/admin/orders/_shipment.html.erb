@@ -1,7 +1,7 @@
 <% manifest_items = Spree::ShippingManifest.new(inventory_units: shipment.inventory_units.where(carton_id: nil)).items %>
 
 <% unless manifest_items.empty? %>
-  <div id="<%= "shipment_#{shipment.id}" %>" data-hook="admin_shipment_form">
+  <div id="<%= "shipment_#{shipment.id}" %>" class="js-shipment-edit" data-hook="admin_shipment_form">
     <fieldset class="no-border-bottom">
       <legend align="center" class="stock-location" data-hook="stock-location">
         <span class="shipment-number"><%= shipment.number %></span>
