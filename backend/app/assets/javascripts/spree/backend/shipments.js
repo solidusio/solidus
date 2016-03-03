@@ -64,8 +64,6 @@ $(document).ready(function () {
       }
     }).done(function () {
       window.location.reload();
-    }).error(function (msg) {
-      console.log(msg);
     });
   });
 
@@ -281,8 +279,6 @@ addVariantFromStockLocation = function(event) {
       }
     }).done(function( msg ) {
       window.location.reload();
-    }).error(function( msg ) {
-      console.log(msg);
     });
   }else{
     //add to existing shipment
