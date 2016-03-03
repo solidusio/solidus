@@ -107,13 +107,16 @@ body {
 }
 
 #content-header {
-  padding: 15px 0;
+  padding: 15px 14px;
   background-color: very-light($color-3, 4);
   border-bottom: 1px solid $color-border;
   position: fixed;
   left: $width-sidebar;
   width: calc(100% - #{$width-sidebar});
   z-index: 1;
+  @include display(flex);
+  @include align-items(center);
+  @include justify-content(space-between);
 
   .page-title {
     font-size: 20px;
