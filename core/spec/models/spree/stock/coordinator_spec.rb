@@ -7,49 +7,39 @@ module Spree
 
       subject { Coordinator.new(order) }
 
-      context "packages" do
+      describe "#shipments" do
         it "builds, prioritizes and estimates" do
-          expect(subject).to receive(:build_location_configured_packages).ordered
-          expect(subject).to receive(:build_packages).ordered
-          expect(subject).to receive(:prioritize_packages).ordered
-          expect(subject).to receive(:estimate_packages).ordered
-          expect(subject).to receive(:validate_packages).ordered
-          subject.packages
+          expect(subject).to receive(:build_location_configured_packages).ordered.and_call_original
+          expect(subject).to receive(:build_packages).ordered.and_call_original
+          expect(subject).to receive(:prioritize_packages).ordered.and_call_original
+          expect(subject).to receive(:estimate_packages).ordered.and_call_original
+          expect(subject).to receive(:validate_packages).ordered.and_call_original
+          subject.shipments
         end
 
         it 'uses the pluggable estimator class' do
           expect(Spree::Config.stock).to receive(:estimator_class).and_call_original
-          subject.packages
+          subject.shipments
         end
-      end
 
-      describe "#shipments" do
-        let(:packages) { [build(:stock_package_fulfilled), build(:stock_package_fulfilled)] }
-
-        before { allow(subject).to receive(:packages).and_return(packages) }
-
-        it "turns packages into shipments" do
-          shipments = subject.shipments
-          expect(shipments.count).to eq packages.count
-          shipments.each { |shipment| expect(shipment).to be_a Shipment }
+        it 'builds shipments' do
+          expect(subject.shipments.size).to eq(1)
         end
 
         it "puts the order's ship address on the shipments" do
           shipments = subject.shipments
-          shipments.each { |shipment| expect(shipment.address).to eq order.ship_address }
+          expect(shipments.map(&:address)).to eq [order.ship_address]
         end
-      end
 
-      context "build packages" do
-        it "builds a package for all active stock locations" do
-          subject.packages.count == StockLocation.count
+        it "builds a shipment for all active stock locations" do
+          subject.shipments.count == StockLocation.count
         end
 
         context "missing stock items in active stock location" do
           let!(:another_location) { create(:stock_location, propagate_all_variants: false) }
 
-          it "builds packages only for valid active stock locations" do
-            expect(subject.build_packages.count).to eq(StockLocation.count - 1)
+          it "builds shipments only for valid active stock locations" do
+            expect(subject.shipments.count).to eq(StockLocation.count - 1)
           end
         end
       end
@@ -77,18 +67,18 @@ module Spree
         let!(:order) { create(:order, line_items: [create(:line_item, variant: variant_1), create(:line_item, variant: variant_2)]) }
 
         it "splits the inventory units to stock locations that they have stock items for" do
-          packages = subject.packages
+          shipments = subject.shipments
 
-          expect(subject.packages.size).to eq 2
+          expect(shipments.size).to eq 2
 
-          location_1_package = packages.detect { |p| p.stock_location == stock_location_1 }
-          location_2_package = packages.detect { |p| p.stock_location == stock_location_2 }
+          location_1_shipment = shipments.detect { |p| p.stock_location == stock_location_1 }
+          location_2_shipment = shipments.detect { |p| p.stock_location == stock_location_2 }
 
-          expect(location_1_package).to be_present
-          expect(location_2_package).to be_present
+          expect(location_1_shipment).to be_present
+          expect(location_2_shipment).to be_present
 
-          expect(location_1_package.contents.map(&:inventory_unit).map(&:variant)).to eq [variant_1]
-          expect(location_2_package.contents.map(&:inventory_unit).map(&:variant)).to eq [variant_2]
+          expect(location_1_shipment.inventory_units.map(&:variant)).to eq [variant_1]
+          expect(location_2_shipment.inventory_units.map(&:variant)).to eq [variant_2]
         end
       end
 
@@ -105,19 +95,20 @@ module Spree
         let!(:order) { create(:order) }
         let!(:line_item) { create(:line_item, order: order, variant: variant, quantity: 5) }
         before { order.reload }
-        let(:packages) { subject.packages }
+        let(:shipments) { subject.shipments }
 
         shared_examples "a fulfillable package" do
           it "packages correctly" do
-            expect(packages).not_to be_empty
-            expect(packages.map(&:quantity).sum).to eq(5)
-            expect(packages.flat_map(&:contents).map(&:inventory_unit).uniq.size).to eq(5)
+            expect(shipments).not_to be_empty
+            inventory_units = shipments.flat_map { |s| s.inventory_units }
+            expect(inventory_units.size).to eq(5)
+            expect(inventory_units.uniq.size).to eq(5)
           end
         end
 
         shared_examples "an unfulfillable package" do
           it "raises exception" do
-            expect{ packages }.to raise_error(Spree::Order::InsufficientStock)
+            expect{ shipments }.to raise_error(Spree::Order::InsufficientStock)
           end
         end
 
@@ -214,16 +205,9 @@ module Spree
             order.order_stock_locations.create(stock_location_id: stock_location_2.id, quantity: line_item_2.quantity, variant_id: line_item_2.variant_id)
           end
 
-          it "builds a package for each associated stock location" do
-            packages = subject.build_location_configured_packages
-            expect(packages.count).to eq(2)
-            expect(packages.map(&:stock_location)).to eq([stock_location, stock_location_2])
-          end
-        end
-        context "there are no configured stock locations" do
-          it "doesn't build any packages" do
-            packages = subject.build_location_configured_packages
-            expect(packages.count).to eq(0)
+          it "builds a shipment for each associated stock location" do
+            shipments = subject.shipments
+            expect(shipments.map(&:stock_location)).to match_array([stock_location, stock_location_2])
           end
         end
       end
