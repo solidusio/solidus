@@ -12,7 +12,7 @@
   <% end %>
 <% end %>
 
-<%= paginate @zones %>
+<%= paginate @zones, theme: "solidus_admin" %>
 
 <% if @zones.any? %>
   <table class="index" id='listing_zones' data-hook>
@@ -58,4 +58,4 @@
   </div>
 <% end %>
 
-<%= paginate @zones %>
+<%= paginate @zones, theme: "solidus_admin" %>

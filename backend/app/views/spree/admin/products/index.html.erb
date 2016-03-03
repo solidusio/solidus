@@ -53,7 +53,7 @@
 
 <div id="new_product_wrapper" data-hook></div>
 
-<%= paginate @collection %>
+<%= paginate @collection, theme: "solidus_admin" %>
 
 <% if @collection.any? %>
   <table class="index" id="listing_products">
@@ -98,4 +98,4 @@
   </div>
 <% end %>
 
-<%= paginate @collection %>
+<%= paginate @collection, theme: "solidus_admin" %>

@@ -44,7 +44,7 @@
 <% end %>
 
 <% if @variants.any? %>
-  <%= paginate @variants %>
+  <%= paginate @variants, theme: "solidus_admin" %>
 
   <table class="index sortable" data-sortable-link="<%= update_positions_admin_product_variants_path(@product) %>">
     <colgroup>
@@ -90,7 +90,7 @@
       <% end %>
     </tbody>
   </table>
-  <%= paginate @variants %>
+  <%= paginate @variants, theme: "solidus_admin" %>
 <% else %>
   <div class="alpha twelve columns no-objects-found">
     <%= render 'spree/admin/shared/no_objects_found',
