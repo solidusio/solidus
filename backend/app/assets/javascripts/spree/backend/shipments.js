@@ -124,14 +124,6 @@ deleteLineItem = function(line_item_id){
   });
 }
 
-toggleMethodEdit = function(){
-  var link = $(this);
-  link.parents('tbody').find('tr.edit-method').toggle();
-  link.parents('tbody').find('tr.show-method').toggle();
-
-  return false;
-}
-
 startItemSplit = function(event){
   event.preventDefault();
   var link = $(this);
@@ -258,8 +250,9 @@ var ShipmentEditView = Backbone.View.extend({
     startItemSplit.bind(e.currentTarget)(e);
   },
 
-  toggleMethodEdit: function(e){
-    toggleMethodEdit.bind(e.currentTarget)(e);
+  toggleMethodEdit: function(){
+    this.$('tr.edit-method').toggle();
+    this.$('tr.show-method').toggle();
   },
 
   cancelItemSplit: function(e){
