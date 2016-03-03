@@ -17,7 +17,7 @@ describe "Shipping Methods", type: :feature do
 
     visit spree.admin_path
     click_link "Settings"
-    click_link "Shipping Methods"
+    click_link "Shipping"
   end
 
   context "show" do

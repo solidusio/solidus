@@ -1,0 +1,21 @@
+<% content_for :tabs do %>
+  <nav>
+    <ul class="tabs" data-hook="admin_settings_checkout_tabs">
+      <% if can?(:display, Spree::RefundReason) %>
+        <%= settings_tab_item Spree::RefundReason.model_name.human(count: :other), admin_refund_reasons_path %>
+      <% end %>
+
+      <% if can?(:display, Spree::ReimbursementType) %>
+        <%= settings_tab_item Spree::ReimbursementType.model_name.human(count: :other), admin_reimbursement_types_path %>
+      <% end %>
+
+      <% if can?(:display, Spree::ReturnReason) %>
+        <%= settings_tab_item Spree::ReturnReason.model_name.human(count: :other), admin_return_reasons_path %>
+      <% end %>
+
+      <% if can?(:display, Spree::AdjustmentReason) %>
+        <%= settings_tab_item Spree::AdjustmentReason.model_name.human(count: :other), admin_adjustment_reasons_path %>
+      <% end %>
+    </ul>
+  </nav>
+<% end %>

@@ -1,0 +1,9 @@
+<% content_for :tabs do %>
+  <nav>
+    <ul class="tabs" data-hook="admin_settings_payments_tabs">
+      <% if can?(:display, Spree::PaymentMethod) %>
+        <%= settings_tab_item Spree::PaymentMethod.model_name.human(count: :other), admin_payment_methods_path %>
+      <% end %>
+    </ul>
+  </nav>
+<% end %>

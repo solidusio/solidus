@@ -8,5 +8,8 @@
 
 <% content_for :sidebar do %>
   <%= render "spree/admin/shared/order_summary", checkout_steps: @order.checkout_steps %>
+<% end %>
+
+<% content_for :tabs do %>
   <%= render "spree/admin/shared/order_submenu", current: current, checkout_steps: @order.checkout_steps %>
 <% end %>

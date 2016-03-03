@@ -22,7 +22,7 @@ describe 'Payments', type: :feature do
       within_row(1) do
         click_link order.number
       end
-      click_link 'Payments'
+      find('.tabs').click_link 'Payments'
     end
 
     def refresh_page

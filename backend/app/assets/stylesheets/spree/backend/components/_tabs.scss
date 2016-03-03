@@ -1,0 +1,108 @@
+.tabs {
+  @include display(flex);
+  margin: 1em 0;
+  border-bottom: 1px solid $color-border;
+  white-space: nowrap;
+
+  &,
+  ul {
+    padding-left: 0;
+    list-style: none;
+  }
+
+  a {
+    padding: 1em;
+  }
+}
+
+.tabs > li:not(.in-dropdown) {
+  @include flex-grow(0);
+  @include flex-shrink(0);
+
+  // Move down one pixel to sit on top of the ul's border-bottom
+  position: relative;
+  top: 1px;
+
+  > a {
+    display: block;
+    border: 1px solid $color-border;
+    border-radius: 2px 2px 0 0;
+    line-height: 1;
+  }
+
+  &:not(:first-child) > a {
+    border-left: none;
+  }
+
+  &:not(.active) > a {
+    background: $color-tbl-thead;
+  }
+
+  &.active > a,
+  &.active:hover {
+    background: white;
+    border-bottom-color: white;
+    color: $color-body-text;
+  }
+
+  &:not(.active):hover > a {
+    background: darken($color-tbl-thead, 5%);
+    color: $color-link;
+  }
+}
+
+.tabs-overflowed.tabs > li:not(.tabs-dropdown) {
+  @include flex-grow(1);
+  @include flex-shrink(1);
+}
+
+.tabs-dropdown {
+  @include flex-grow(0);
+  @include flex-shrink(0);
+  position: relative;
+
+  .tabs:not(.tabs-overflowed) & {
+    display: none;
+  }
+
+  > a {
+    position: relative;
+    background: white;
+    z-index: 1;
+
+    &:before {
+      content: "\f107";
+      font-family: FontAwesome;
+      -webkit-font-smoothing: antialiased;
+    }
+  }
+
+  &:hover > a {
+    background: white;
+  }
+
+  &:not(:hover) ul {
+    display: none;
+  }
+
+  ul {
+    @include position(absolute, calc(100% - 1px) 0 null null);
+    z-index: 1;
+  }
+}
+
+.tabs li.in-dropdown {
+  a {
+    display: block;
+    border: 1px solid $color-border;
+    background: white;
+  }
+
+  &:not(:first-child) a {
+    border-top: none;
+  }
+
+  &:last-child a {
+    border-radius: 0 0 3px 3px;
+  }
+}
