@@ -55,7 +55,9 @@ body {
 }
 
 #content-header {
-  padding: 15px 0;
+  @include display(flex);
+  @include align-items(center);
+  padding: 15px 14px;
   background-color: very-light($color-3, 4);
   border-bottom: 1px solid $color-border;
 
@@ -66,12 +68,15 @@ body {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
-  .page-actions {
-    text-align: right;
-    line-height: 38px;
-    form {
-      display: inline-block;
-    }
+}
+
+.header-actions {
+  @include flex-grow(1);
+  text-align: right;
+  line-height: 38px;
+
+  form {
+    display: inline-block;
   }
 }
 
