@@ -6,24 +6,24 @@ $(document).ready(function () {
   $('#add_variant_id').change(function(){
     var variant_id = $(this).val();
 
-    var variant = _.find(window.variants, function(variant){
-      return variant.id == variant_id
-    })
+    Spree.ajax({
+      url: Spree.routes.variants_api + "/" + variant_id,
+      success: function(variant){
+        var variantStockTemplate = HandlebarsTemplates["variants/autocomplete_stock"];
+        $('#stock_details').html(variantStockTemplate({variant: variant}));
+        $('#stock_details').show();
 
-    var variantStockTemplate = HandlebarsTemplates["variants/autocomplete_stock"];
-    $('#stock_details').html(variantStockTemplate({variant: variant}));
-    $('#stock_details').show();
+        $('button.add_variant').click(addVariantFromStockLocation);
 
-    $('button.add_variant').click(addVariantFromStockLocation);
-
-    // Add some tips
-    $('.with-tip').powerTip({
-      smartPlacement: true,
-      fadeInTime: 50,
-      fadeOutTime: 50,
-      intentPollInterval: 300
+        // Add some tips
+        $('.with-tip').powerTip({
+          smartPlacement: true,
+          fadeInTime: 50,
+          fadeOutTime: 50,
+          intentPollInterval: 300
+        });
+      }
     });
-
   });
 
   // add header to ship ujs ajax call
