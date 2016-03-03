@@ -235,15 +235,18 @@ var ShipmentEditView = Backbone.View.extend({
   },
 
   startItemSplit: function(e){
+    e.preventDefault();
     startItemSplit.apply(e.currentTarget, [e]);
   },
 
-  toggleMethodEdit: function(){
+  toggleMethodEdit: function(e){
+    e.preventDefault();
     this.$('tr.edit-method').toggle();
     this.$('tr.show-method').toggle();
   },
 
   cancelItemSplit: function(e){
+    e.preventDefault();
     var link = $(e.currentTarget);
     var prev_row = link.closest('tr').prev();
     link.closest('tr').remove();
@@ -256,6 +259,7 @@ var ShipmentEditView = Backbone.View.extend({
   },
 
   deleteItem: function(e){
+    e.preventDefault();
     if (confirm(Spree.translations.are_you_sure_delete)) {
       var del = $(e.currentTarget);
       var line_item_id = del.data('line-item-id');
@@ -264,12 +268,14 @@ var ShipmentEditView = Backbone.View.extend({
     }
   },
 
-  toggleTrackingEdit: function() {
+  toggleTrackingEdit: function(e) {
+    e.preventDefault();
     this.$("tr.edit-tracking").toggle()
     this.$("tr.show-tracking").toggle()
   },
 
-  saveMethod: function() {
+  saveMethod: function(e) {
+    e.preventDefault();
     var selected_shipping_rate_id = this.$("select#selected_shipping_rate_id").val();
     updateShipment(this.shipment_number, {
       selected_shipping_rate_id: selected_shipping_rate_id
@@ -278,8 +284,8 @@ var ShipmentEditView = Backbone.View.extend({
     });
   },
 
-  // handle tracking save
-  saveTracking: function() {
+  saveTracking: function(e) {
+    e.preventDefault();
     var tracking = this.$('input#tracking').val();
     var _this = this;
     updateShipment(this.shipment_number, {
