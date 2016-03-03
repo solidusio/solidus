@@ -24,6 +24,10 @@ module Spree
 
       # bill_address is only minimally used now, but we can't get rid of it without a major version release
       belongs_to :bill_address, class_name: 'Spree::Address'
+
+      has_one :default_user_address, ->{ default }, class_name: 'Spree::UserAddress', foreign_key: 'user_id'
+      has_one :default_address, through: :default_user_address, source: :address
+      alias_method :ship_address, :default_address
     end
 
     def bill_address=(address)
@@ -34,10 +38,6 @@ module Spree
 
     def bill_address_attributes=(attributes)
       self.bill_address = Address.immutable_merge(bill_address, attributes)
-    end
-
-    def default_address
-      user_addresses.default.first.try(:address)
     end
 
     def default_address=(address)
@@ -51,7 +51,6 @@ module Spree
       self.default_address = Address.immutable_merge(default_address, attributes)
     end
 
-    alias_method :ship_address, :default_address
     alias_method :ship_address_attributes=, :default_address_attributes=
 
     # saves address in address book
