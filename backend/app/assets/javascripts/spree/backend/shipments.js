@@ -25,37 +25,6 @@ $(document).ready(function () {
   $("form#admin-ship-shipment").on("ajax:success", function(event, xhr, settings) {
     window.location.reload();
   });
-
-  // handle shipping method save
-  $('[data-hook=admin_shipment_form] a.save-method').on('click', function (event) {
-    event.preventDefault();
-
-    var link = $(this);
-    var shipment_number = link.data('shipment-number');
-    var selected_shipping_rate_id = link.parents('tbody').find("select#selected_shipping_rate_id[data-shipment-number='" + shipment_number + "']").val();
-    updateShipment(shipment_number, {
-      selected_shipping_rate_id: selected_shipping_rate_id
-    }).done(function () {
-      window.location.reload();
-    });
-  });
-
-  // handle tracking save
-  $('[data-hook=admin_shipment_form] a.save-tracking').on('click', function (event) {
-    event.preventDefault();
-
-    var link = $(this);
-    var shipment_number = link.data('shipment-number');
-    var tracking = link.parents('tbody').find('input#tracking').val();
-
-    updateShipment(shipment_number, {tracking: tracking}).done(function (data) {
-      link.parents('tbody').find('tr.edit-tracking').toggle();
-
-      var show = link.parents('tbody').find('tr.show-tracking');
-      show.toggle();
-      show.find('.tracking-value').html($("<strong>").html(Spree.translations.tracking + ": ")).append(data.tracking);
-    });
-  });
 });
 
 updateShipment = function(shipment_number, attributes) {
@@ -239,6 +208,8 @@ var ShipmentEditView = Backbone.View.extend({
     "click a.cancel-tracking": "toggleTrackingEdit",
     "click a.cancel-split": "cancelItemSplit",
     "click a.save-split": "completeItemSplit",
+    "click a.save-method": "saveMethod",
+    "click a.save-tracking": "saveTracking",
   },
 
   startItemSplit: function(e){
@@ -274,6 +245,32 @@ var ShipmentEditView = Backbone.View.extend({
   toggleTrackingEdit: function() {
     this.$("tr.edit-tracking").toggle()
     this.$("tr.show-tracking").toggle()
+  },
+
+  saveMethod: function(e) {
+    var link = $(e.currentTarget);
+    var shipment_number = link.data('shipment-number');
+    var selected_shipping_rate_id = link.parents('tbody').find("select#selected_shipping_rate_id[data-shipment-number='" + shipment_number + "']").val();
+    updateShipment(shipment_number, {
+      selected_shipping_rate_id: selected_shipping_rate_id
+    }).done(function () {
+      window.location.reload();
+    });
+  },
+
+  // handle tracking save
+  saveTracking: function (e) {
+    var link = $(e.currentTarget);
+    var shipment_number = link.data('shipment-number');
+    var tracking = link.parents('tbody').find('input#tracking').val();
+
+    updateShipment(shipment_number, {tracking: tracking}).done(function (data) {
+      link.parents('tbody').find('tr.edit-tracking').toggle();
+
+      var show = link.parents('tbody').find('tr.show-tracking');
+      show.toggle();
+      show.find('.tracking-value').html($("<strong>").html(Spree.translations.tracking + ": ")).append(data.tracking);
+    });
   }
 });
 
