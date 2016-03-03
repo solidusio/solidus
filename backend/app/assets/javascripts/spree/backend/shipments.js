@@ -242,11 +242,9 @@ var ShipmentEditView = Backbone.View.extend({
 
   cancelItemSplit: function(e){
     e.preventDefault();
-    var link = $(e.currentTarget);
-    var prev_row = link.closest('tr').prev();
-    link.closest('tr').remove();
-    prev_row.find('a.split-item').show();
-    prev_row.find('a.delete-item').show();
+    this.$('tr.stock-item-split').remove();
+    this.$('a.split-item').show();
+    this.$('a.delete-item').show();
   },
 
   completeItemSplit: function(e){
