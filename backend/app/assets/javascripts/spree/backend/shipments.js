@@ -206,27 +206,34 @@ var ShipmentEditView = Backbone.View.extend({
   },
 
   events: {
-    "click a.split-item": "startItemSplit",
-    "click a.edit-method": "toggleMethodEdit",
-    "click a.cancel-method": "toggleMethodEdit",
     "click a.delete-item": "deleteItem",
-    "click a.edit-tracking": "toggleTrackingEdit",
-    "click a.cancel-tracking": "toggleTrackingEdit",
+
+    "click a.split-item": "startItemSplit",
     "click a.cancel-split": "cancelItemSplit",
     "click a.save-split": "completeItemSplit",
+
+    "click a.edit-method": "toggleMethodEdit",
+    "click a.cancel-method": "toggleMethodEdit",
     "click a.save-method": "saveMethod",
+
+    "click a.edit-tracking": "toggleTrackingEdit",
+    "click a.cancel-tracking": "toggleTrackingEdit",
     "click a.save-tracking": "saveTracking",
+  },
+
+  deleteItem: function(e){
+    e.preventDefault();
+    if (confirm(Spree.translations.are_you_sure_delete)) {
+      var del = $(e.currentTarget);
+      var line_item_id = del.data('line-item-id');
+
+      deleteLineItem(line_item_id);
+    }
   },
 
   startItemSplit: function(e){
     e.preventDefault();
     startItemSplit.apply(e.currentTarget, [e]);
-  },
-
-  toggleMethodEdit: function(e){
-    e.preventDefault();
-    this.$('tr.edit-method').toggle();
-    this.$('tr.show-method').toggle();
   },
 
   cancelItemSplit: function(e){
@@ -242,20 +249,10 @@ var ShipmentEditView = Backbone.View.extend({
     completeItemSplit.apply(e.currentTarget, [e]);
   },
 
-  deleteItem: function(e){
+  toggleMethodEdit: function(e){
     e.preventDefault();
-    if (confirm(Spree.translations.are_you_sure_delete)) {
-      var del = $(e.currentTarget);
-      var line_item_id = del.data('line-item-id');
-
-      deleteLineItem(line_item_id);
-    }
-  },
-
-  toggleTrackingEdit: function(e) {
-    e.preventDefault();
-    this.$("tr.edit-tracking").toggle()
-    this.$("tr.show-tracking").toggle()
+    this.$('tr.edit-method').toggle();
+    this.$('tr.show-method').toggle();
   },
 
   saveMethod: function(e) {
@@ -266,6 +263,12 @@ var ShipmentEditView = Backbone.View.extend({
     }).done(function () {
       window.location.reload();
     });
+  },
+
+  toggleTrackingEdit: function(e) {
+    e.preventDefault();
+    this.$("tr.edit-tracking").toggle()
+    this.$("tr.show-tracking").toggle()
   },
 
   saveTracking: function(e) {
