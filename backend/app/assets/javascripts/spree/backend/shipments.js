@@ -213,7 +213,7 @@ var ShipmentEditView = Backbone.View.extend({
   },
 
   startItemSplit: function(e){
-    startItemSplit.bind(e.currentTarget)(e);
+    startItemSplit.apply(e.currentTarget, [e]);
   },
 
   toggleMethodEdit: function(){
@@ -230,7 +230,7 @@ var ShipmentEditView = Backbone.View.extend({
   },
 
   completeItemSplit: function(e){
-    completeItemSplit.bind(e.currentTarget)(e);
+    completeItemSplit.apply(e.currentTarget, [e]);
   },
 
   deleteItem: function(e){
