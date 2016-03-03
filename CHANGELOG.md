@@ -48,6 +48,14 @@
 
     More information is available in the [VersionCake README](https://github.com/bwillis/versioncake)
 
+*   Bootstrap 4.0.0-alpha.2 is included into the admin.
+
+*   Pagination now uses an admin-specific kaminari theme, which uses the
+    bootstrap4 styles. If you have a custom admin page with pagination you can
+    use this style with the following.
+
+        <%= paginate @collection, theme: "solidus_admin" %>
+
 ## Solidus 1.2.0 (2016-01-26)
 
 *   Admin menu has been moved from top of the page to the left side.
