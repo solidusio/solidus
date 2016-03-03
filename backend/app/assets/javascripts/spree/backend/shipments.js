@@ -33,16 +33,8 @@ $(document).ready(function () {
     var link = $(this);
     var shipment_number = link.data('shipment-number');
     var selected_shipping_rate_id = link.parents('tbody').find("select#selected_shipping_rate_id[data-shipment-number='" + shipment_number + "']").val();
-    var url = Spree.routes.shipments_api + '/' + shipment_number + '.json';
-
-    Spree.ajax({
-      type: 'PUT',
-      url: url,
-      data: {
-        shipment: {
-          selected_shipping_rate_id: selected_shipping_rate_id,
-        }
-      }
+    updateShipment(shipment_number, {
+      selected_shipping_rate_id: selected_shipping_rate_id
     }).done(function () {
       window.location.reload();
     });
@@ -55,17 +47,8 @@ $(document).ready(function () {
     var link = $(this);
     var shipment_number = link.data('shipment-number');
     var tracking = link.parents('tbody').find('input#tracking').val();
-    var url = Spree.routes.shipments_api + '/' + shipment_number + '.json';
 
-    Spree.ajax({
-      type: 'PUT',
-      url: url,
-      data: {
-        shipment: {
-          tracking: tracking
-        }
-      }
-    }).done(function (data) {
+    updateShipment(shipment_number, {tracking: tracking}).done(function (data) {
       link.parents('tbody').find('tr.edit-tracking').toggle();
 
       var show = link.parents('tbody').find('tr.show-tracking');
@@ -74,6 +57,18 @@ $(document).ready(function () {
     });
   });
 });
+
+updateShipment = function(shipment_number, attributes) {
+  var url = Spree.routes.shipments_api + '/' + shipment_number + '.json';
+
+  return Spree.ajax({
+    type: 'PUT',
+    url: url,
+    data: {
+      shipment: attributes
+    }
+  });
+}
 
 adjustShipmentItems = function(shipment_number, variant_id, quantity){
     var shipment = _.findWhere(shipments, {number: shipment_number + ''});
