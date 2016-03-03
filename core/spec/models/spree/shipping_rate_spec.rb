@@ -3,8 +3,11 @@
 require 'spec_helper'
 
 describe Spree::ShippingRate, type: :model do
+  let(:address) { create(:address) }
+  let(:order) { create(:order, ship_address: address) }
+  let(:tax_category) { create(:tax_category) }
   let(:shipment) { create(:shipment) }
-  let(:shipping_method) { create(:shipping_method) }
+  let(:shipping_method) { create(:shipping_method, tax_category: tax_category) }
   let(:shipping_rate) {
     Spree::ShippingRate.new(shipment: shipment,
                                                 shipping_method: shipping_method,
@@ -15,13 +18,14 @@ describe Spree::ShippingRate, type: :model do
     context "when tax included in price" do
       context "when the tax rate is from the default zone" do
         before { shipment.order.update_attributes!(ship_address_id: nil) }
-        let!(:zone) { create(:zone, default_tax: true) }
+        let!(:zone) { create(:zone, default_tax: true, countries: [address.country]) }
         let(:tax_rate) do
           create(:tax_rate,
             name: "VAT",
             amount: 0.1,
             included_in_price: true,
-            zone: zone)
+            zone: zone,
+            tax_category: tax_category)
         end
 
         before { shipping_rate.tax_rate = tax_rate }
@@ -41,15 +45,16 @@ describe Spree::ShippingRate, type: :model do
         end
       end
 
-      context "when the tax rate is from a non-default zone" do
-        let!(:default_zone) { create(:zone, default_tax: true) }
-        let!(:non_default_zone) { create(:zone, default_tax: false) }
+      context "when shipping to a non-default zone" do
+        let!(:zone) { create(:zone, default_tax: true, countries: [address.country]) }
+        let!(:address) { create(:address, country_iso_code: "DE") }
         let(:tax_rate) do
           create(:tax_rate,
             name: "VAT",
             amount: 0.1,
             included_in_price: true,
-            zone: non_default_zone)
+            zone: zone,
+            tax_category: tax_category)
         end
         before { shipping_rate.tax_rate = tax_rate }
 

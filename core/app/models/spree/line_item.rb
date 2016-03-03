@@ -81,6 +81,10 @@ module Spree
     alias display_total money
     alias display_amount money
 
+    def pre_tax_amount
+      discounted_amount - included_tax_total
+    end
+
     # @return [Boolean] true when it is possible to supply the required
     #   quantity of stock of this line item's variant
     def sufficient_stock?

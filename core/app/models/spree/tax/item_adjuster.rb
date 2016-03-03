@@ -29,15 +29,7 @@ module Spree
         # Using .destroy_all to make sure callbacks fire
         item.adjustments.tax.destroy_all
 
-        TaxRate.store_pre_tax_amount(item, rates_for_item)
-
-        rates_for_item.map { |rate| rate.adjust(order_tax_zone(order), item) }
-      end
-
-      private
-
-      def rates_for_item
-        @rates_for_item ||= applicable_rates(order).select { |rate| rate.tax_category == item.tax_category }
+        rates_for_item(item).map { |rate| rate.adjust(order_tax_zone(order), item) }
       end
     end
   end

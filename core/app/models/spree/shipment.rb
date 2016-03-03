@@ -163,6 +163,10 @@ module Spree
       inventory_units.includes(:line_item).map(&:line_item).uniq
     end
 
+    def pre_tax_amount
+      discounted_amount - included_tax_total
+    end
+
     def ready_or_pending?
       ready? || pending?
     end

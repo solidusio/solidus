@@ -36,6 +36,14 @@ module Spree
       def order_tax_zone(order)
         @order_tax_zone ||= order.tax_zone
       end
+
+      def sum_of_included_tax_rates(item)
+        rates_for_item(item).map(&:amount).sum
+      end
+
+      def rates_for_item(item)
+        applicable_rates(item.order).select { |rate| rate.tax_category == item.tax_category }
+      end
     end
   end
 end
