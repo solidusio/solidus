@@ -299,10 +299,9 @@ var ShipmentEditView = Backbone.View.extend({
     }
   },
 
-  toggleTrackingEdit: function(e) {
-    var link = $(e.currentTarget);
-    link.parents('tbody').find('tr.edit-tracking').toggle();
-    link.parents('tbody').find('tr.show-tracking').toggle();
+  toggleTrackingEdit: function() {
+    this.$("tr.edit-tracking").toggle()
+    this.$("tr.show-tracking").toggle()
   }
 });
 
