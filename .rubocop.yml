@@ -187,6 +187,9 @@ Style/StringLiterals:
   Enabled: false
   StyleGuide: http://relaxed.ruby.style/#stylestringliterals
 
+Style/SymbolProc:
+  Enabled: false
+
 Style/WhileUntilModifier:
   Enabled: false
   StyleGuide: http://relaxed.ruby.style/#stylewhileuntilmodifier
