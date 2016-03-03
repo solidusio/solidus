@@ -253,11 +253,9 @@ var ShipmentEditView = Backbone.View.extend({
     this.$("tr.show-tracking").toggle()
   },
 
-  saveMethod: function(e) {
-    var link = $(e.currentTarget);
-    var shipment_number = link.data('shipment-number');
-    var selected_shipping_rate_id = link.parents('tbody').find("select#selected_shipping_rate_id[data-shipment-number='" + shipment_number + "']").val();
-    updateShipment(shipment_number, {
+  saveMethod: function() {
+    var selected_shipping_rate_id = this.$("select#selected_shipping_rate_id").val();
+    updateShipment(this.shipment_number, {
       selected_shipping_rate_id: selected_shipping_rate_id
     }).done(function () {
       window.location.reload();
@@ -265,17 +263,20 @@ var ShipmentEditView = Backbone.View.extend({
   },
 
   // handle tracking save
-  saveTracking: function (e) {
-    var link = $(e.currentTarget);
-    var shipment_number = link.data('shipment-number');
-    var tracking = link.parents('tbody').find('input#tracking').val();
+  saveTracking: function() {
+    var tracking = this.$('input#tracking').val();
+    var _this = this;
+    updateShipment(this.shipment_number, {
+      tracking: tracking
+    }).done(function (data) {
+      _this.$('tr.edit-tracking').toggle();
 
-    updateShipment(shipment_number, {tracking: tracking}).done(function (data) {
-      link.parents('tbody').find('tr.edit-tracking').toggle();
-
-      var show = link.parents('tbody').find('tr.show-tracking');
-      show.toggle();
-      show.find('.tracking-value').html($("<strong>").html(Spree.translations.tracking + ": ")).append(data.tracking);
+      var show = _this.$('tr.show-tracking');
+      show.toggle()
+          .find('.tracking-value')
+          .html($("<strong>")
+          .html(Spree.translations.tracking + ": "))
+          .append(document.createTextNode(data.tracking));
     });
   }
 });
