@@ -90,15 +90,11 @@ module Spree
 
       included = included_in_price && default_zone_or_zone_match?(order_tax_zone)
 
-      if amount < 0
-        label = Spree.t(:refund) + ' ' + create_label
-      end
-
       adjustments.create!({
         adjustable: item,
         amount: amount,
         order_id: item.order_id,
-        label: label || create_label,
+        label: adjustment_label(amount),
         included: included
       })
     end
@@ -119,12 +115,25 @@ module Spree
       Zone.default_tax.try!(:contains?, order_tax_zone) || zone.contains?(order_tax_zone)
     end
 
-    def create_label
-      label = ""
-      label << (name.present? ? name : tax_category.name) + " "
-      label << (show_rate_in_label? ? "#{amount * 100}%" : "")
-      label << " (#{Spree.t(:included_in_price)})" if included_in_price?
-      label
+    def adjustment_label(amount)
+      Spree.t translation_key(amount),
+              scope: "adjustment_labels.tax_rates",
+              name: name.presence || tax_category.name,
+              amount: amount_for_adjustment_label
+    end
+
+    def amount_for_adjustment_label
+      ActiveSupport::NumberHelper::NumberToPercentageConverter.convert(
+        amount * 100,
+        locale: I18n.locale
+      )
+    end
+
+    def translation_key(amount)
+      key = included_in_price? ? "vat" : "sales_tax"
+      key += "_refund" if amount < 0
+      key += "_with_rate" if show_rate_in_label?
+      key.to_sym
     end
   end
 end
