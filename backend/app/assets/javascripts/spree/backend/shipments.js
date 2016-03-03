@@ -199,6 +199,12 @@ addVariantFromStockLocation = function(event) {
 }
 
 var ShipmentEditView = Backbone.View.extend({
+  initialize: function(){
+    var tbody = this.$("tbody[data-order-number][data-shipment-number]");
+    this.shipment_number = tbody.data("shipment-number")
+    this.order_number = tbody.data("order-number")
+  },
+
   events: {
     "click a.split-item": "startItemSplit",
     "click a.edit-method": "toggleMethodEdit",
