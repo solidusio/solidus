@@ -59,8 +59,7 @@ $(document).ready(function () {
       data: {
         shipment: {
           selected_shipping_rate_id: selected_shipping_rate_id,
-        },
-        token: Spree.api_key
+        }
       }
     }).done(function () {
       window.location.reload();
@@ -94,8 +93,7 @@ $(document).ready(function () {
       data: {
         shipment: {
           tracking: tracking
-        },
-        token: Spree.api_key
+        }
       }
     }).done(function (data) {
       link.parents('tbody').find('tr.edit-tracking').toggle();
@@ -216,8 +214,7 @@ completeItemSplit = function(event) {
             original_shipment_number: original_shipment_number,
             variant_id: variant_id,
             quantity: quantity,
-            stock_location_id: stock_location_id,
-            token: Spree.api_key
+            stock_location_id: stock_location_id
         }
       }).error(function(msg) {
           alert(msg.responseJSON['message']);
@@ -234,8 +231,7 @@ completeItemSplit = function(event) {
                 original_shipment_number: original_shipment_number,
                 target_shipment_number: target_shipment_number,
                 variant_id: variant_id,
-                quantity: quantity,
-                token: Spree.api_key
+                quantity: quantity
             }
         }).error(function(msg) {
             alert(msg.responseJSON['message']);
