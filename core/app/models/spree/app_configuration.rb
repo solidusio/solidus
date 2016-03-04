@@ -312,6 +312,19 @@ module Spree
       @order_merger_class ||= Spree::OrderMerger
     end
 
+    # Indicats if stock management can be restricted by stock location
+    #
+    # @!attribute [rw] can_restricted_stock_management
+    # @return [Boolean] True if capability enabled, false otherwise. Default to true only when one of the restricted stock permission sets are in use
+    attr_writer :can_restrict_stock_management
+    def can_restrict_stock_management
+      return @can_restrict_stock_management if defined? @can_restrict_stock_management
+      roles = Spree::RoleConfiguration.instance.roles.values
+      permission_sets = roles.collect {|r| r.permission_sets.to_a }.flatten.uniq
+      names = permission_sets.collect {|ps| ps.name }
+      @can_restrict_stock_management = names.any? {|klass| klass =~ /\:\:RestrictedStock/}
+    end
+
     def static_model_preferences
       @static_model_preferences ||= Spree::Preferences::StaticModelPreferences.new
     end
