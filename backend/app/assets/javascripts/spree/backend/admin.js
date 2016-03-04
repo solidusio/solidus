@@ -18,18 +18,18 @@ jQuery(function($) {
   $('body').tooltip({selector: '.with-tip'})
 
   // Highlight hovered table column
-  $('table tbody tr td.actions').find('a, button').hover(function(){
+  $('body').on("mouseenter", 'td.actions a, td.actions button', function(){
     var tr = $(this).closest('tr');
     var klass = 'highlight action-' + $(this).data('action')
     tr.addClass(klass)
     tr.prev().addClass('before-' + klass);
-  }, function(){
+  });
+  $('body').on("mouseleave", 'td.actions a, td.actions button', function(){
     var tr = $(this).closest('tr');
     var klass = 'highlight action-' + $(this).data('action')
     tr.removeClass(klass)
     tr.prev().removeClass('before-' + klass);
   });
-
 });
 
 
