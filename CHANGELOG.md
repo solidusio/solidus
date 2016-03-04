@@ -1,5 +1,7 @@
 ## Solidus 1.3.0 (unreleased)
 
+*   Removed Spree::Stock::Coordinator#packages from the public interface.
+
 *   Removed Spree::BaseHelper#gem_available? and Spree::BaseHelper#current_spree_page?
 
     Both these methods were untested and not appropriate code to be in core. If you need these
