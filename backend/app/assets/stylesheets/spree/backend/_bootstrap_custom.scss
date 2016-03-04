@@ -49,7 +49,7 @@ $enable-shadows:            false !default;
 $enable-gradients:          false !default;
 $enable-transitions:        false !default;
 $enable-hover-media-query:  false !default;
-$enable-grid-classes:       true !default;
+$enable-grid-classes:       false !default;
 
 
 // Spacing
@@ -125,7 +125,7 @@ $grid-breakpoints: (
 $container-max-widths: (
   sm: 576px,
   md: 720px,
-  lg: 940px,
+  lg: 960px, /* Changed to 960 from 940 to avoid fighting with skeleton */
   xl: 1140px
 ) !default;
 
