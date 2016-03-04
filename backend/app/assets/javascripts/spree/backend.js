@@ -6,7 +6,6 @@
 //= require jquery-ui/sortable
 //= require jquery-ui/autocomplete
 //= require jquery.cookie
-//= require jquery.powertip
 //= require jquery.sticky-kit.min
 //= require underscore-min
 //= require backbone

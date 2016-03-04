@@ -6,7 +6,6 @@
  *= require normalize
  *= require jquery-ui/datepicker
  *= require jquery-ui/autocomplete
- *= require jquery.powertip
  *= require select2
  *= require prism
 
