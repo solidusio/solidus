@@ -2,14 +2,13 @@ module Spree
   module Stock
     class Package
       attr_reader :stock_location, :contents
-      attr_accessor :shipping_rates
+      attr_accessor :shipment
 
       # @param stock_location [Spree::StockLocation] the stock location this package originates from
       # @param contents [Array<Spree::Stock::ContentItem>] the contents of this package
       def initialize(stock_location, contents = [])
         @stock_location = stock_location
         @contents = contents
-        @shipping_rates = []
       end
 
       # Adds an inventory unit to this package.
@@ -124,7 +123,6 @@ module Spree
 
         Spree::Shipment.new(
           stock_location: stock_location,
-          shipping_rates: shipping_rates,
           inventory_units: contents.map(&:inventory_unit)
         )
       end

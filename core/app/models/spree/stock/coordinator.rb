@@ -10,9 +10,7 @@ module Spree
       end
 
       def shipments
-        packages.map do |package|
-          package.to_shipment.tap { |s| s.address = order.ship_address }
-        end
+        packages.map(&:shipment)
       end
 
       private
@@ -21,6 +19,9 @@ module Spree
         packages = build_location_configured_packages
         packages = build_packages(packages)
         packages = prioritize_packages(packages)
+        packages.each do |package|
+          package.shipment = package.to_shipment.tap { |s| s.address = order.ship_address }
+        end
         packages = estimate_packages(packages)
         validate_packages(packages)
         packages
@@ -122,7 +123,7 @@ module Spree
       def estimate_packages(packages)
         estimator = Spree::Config.stock.estimator_class.new(order)
         packages.each do |package|
-          package.shipping_rates = estimator.shipping_rates(package)
+          package.shipment.shipping_rates = estimator.shipping_rates(package)
         end
         packages
       end

@@ -46,7 +46,10 @@ module Spree
           end
 
           if cost
-            rate = shipping_method.shipping_rates.new(cost: cost)
+            rate = shipping_method.shipping_rates.new(
+              cost: cost,
+              shipment: package.shipment
+            )
             rate.tax_rate = tax_rate if tax_rate
           end
 
