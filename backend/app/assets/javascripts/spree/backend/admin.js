@@ -15,22 +15,7 @@ Hopefully, this will evolve into a propper class.
 **/
 
 jQuery(function($) {
-
-  // Add some tips
-  $('.with-tip').powerTip({
-    smartPlacement: true,
-    fadeInTime: 50,
-    fadeOutTime: 50,
-  });
-
-  $('body')
-    .on('powerTipPreRender', '.with-tip', function() {
-      $('#powerTip').addClass($(this).data('action'));
-      $('#powerTip').addClass($(this).data('tip-color'));
-    })
-    .on('powerTipClose', '.with-tip', function() {
-      $('#powerTip').removeClass($(this).data('action'));
-    })
+  $('body').tooltip({selector: '.with-tip'})
 
   // Highlight hovered table column
   $('table tbody tr td.actions').find('a, button').hover(function(){

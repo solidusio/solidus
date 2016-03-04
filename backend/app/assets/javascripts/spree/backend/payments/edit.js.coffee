@@ -61,10 +61,6 @@ jQuery ($) ->
             $(@).data('clicked', true)
           mouseup: =>
             @[action]()
-        .powerTip
-          smartPlacement: true
-          fadeInTime:     50
-          fadeOutTime:    50
 
     $buttons: ->
       @$actions().find(".fa-#{@action}, .fa-cancel")
