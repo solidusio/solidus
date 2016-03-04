@@ -320,9 +320,9 @@ module Spree
     def can_restrict_stock_management
       return @can_restrict_stock_management if defined? @can_restrict_stock_management
       roles = Spree::RoleConfiguration.instance.roles.values
-      permission_sets = roles.collect {|r| r.permission_sets.to_a }.flatten.uniq
-      names = permission_sets.collect {|ps| ps.name }
-      @can_restrict_stock_management = names.any? {|klass| klass =~ /\:\:RestrictedStock/}
+      permission_sets = roles.map { |r| r.permission_sets.to_a }.flatten.uniq
+      names = permission_sets.map { |ps| ps.name }
+      @can_restrict_stock_management = names.any? { |klass| klass =~ /\:\:RestrictedStock/ }
     end
 
     def static_model_preferences
