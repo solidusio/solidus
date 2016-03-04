@@ -5,11 +5,9 @@
     <% end %>
 
     <% if content_for?(:page_actions) %>
-      <div class="header-actions page-actions table-cell toolbar" data-hook="toolbar">
-        <ul class="inline-menu">
-          <%= yield :page_actions %>
-        </ul>
-      </div>
+      <ul class="header-actions page-actions inline-menu" data-hook="toolbar">
+        <%= yield :page_actions %>
+      </ul>
     <% end %>
   </div>
 <% end %>
