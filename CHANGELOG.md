@@ -1,5 +1,10 @@
 ## Solidus 1.3.0 (unreleased)
 
+*   Removed Spree::Stock::Coordinator#packages from the public interface.
+
+    This will allow us to refactor more easily.
+    https://github.com/solidusio/solidus/pull/950
+
 *   Removed `pre_tax_amount` column from line item and shipment tables
 
     This column was previously used as a caching column in the process of
