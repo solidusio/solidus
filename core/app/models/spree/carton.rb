@@ -4,8 +4,8 @@ class Spree::Carton < Spree::Base
   belongs_to :shipping_method, class_name: 'Spree::ShippingMethod', inverse_of: :cartons
 
   has_many :inventory_units, class_name: "Spree::InventoryUnit", inverse_of: :carton, dependent: :nullify
-  has_many :orders, -> { uniq }, through: :inventory_units
-  has_many :shipments, -> { uniq }, through: :inventory_units
+  has_many :orders, -> { distinct }, through: :inventory_units
+  has_many :shipments, -> { distinct }, through: :inventory_units
 
   validates :address, presence: true
   validates :stock_location, presence: true
