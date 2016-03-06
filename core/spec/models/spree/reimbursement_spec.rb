@@ -93,7 +93,7 @@ describe Spree::Reimbursement, type: :model do
       expect {
         subject
       }.to change{ Spree::Refund.count }.by(1)
-      expect(Spree::Refund.last.amount).to eq order.total
+      expect(Spree::Refund.last.amount).to eq order.item_total
     end
 
     context 'with additional tax' do
@@ -127,7 +127,7 @@ describe Spree::Reimbursement, type: :model do
     end
 
     context 'when reimbursement cannot be fully performed' do
-      let!(:non_return_refund) { create(:refund, amount: 1, payment: payment) }
+      let!(:non_return_refund) { create(:refund, amount: 1, payment: payment, reimbursement: reimbursement) }
 
       it 'raises IncompleteReimbursement error' do
         expect { subject }.to raise_error(Spree::Reimbursement::IncompleteReimbursementError)

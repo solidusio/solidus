@@ -7,49 +7,68 @@ require 'spree/testing_support/factories/payment_factory'
 
 FactoryGirl.define do
   factory :order, class: Spree::Order do
-    user
-    bill_address
-    ship_address
+    association :user, strategy: :build
+    association :bill_address, strategy: :build
+    association :ship_address, strategy: :build
     completed_at nil
-    email { user.try(:email) }
-    store
+    email { user.nil? ? "user@example.com" : user.email  }
+    association :store, strategy: :build
 
     transient do
+      line_items_count 0
       line_items_price BigDecimal.new(10)
+      line_items_attributes { [{price: line_items_price, variant: build(:variant), quantity: 1}] * line_items_count }
+      shipment_cost 100
+      shipping_method nil
+      stock_location { create(:stock_location) }
+    end
+
+    after(:build) do |order, evaluator|
+      evaluator.line_items_attributes.each do |line_item_attributes|
+        order.line_items << build(:line_item, {order: order}.merge(line_item_attributes))
+      end
+      if evaluator.shipping_method
+        order.shipments << build(
+          :shipment,
+          order: order,
+          inventory_units: order.line_items.flat_map do |line_item|
+                            inventory_units = []
+                            line_item.quantity.times do
+                              inventory_units << build(
+                                :inventory_unit,
+                                order: order,
+                                line_item: line_item,
+                                variant: line_item.variant
+                              )
+                            end
+                            inventory_units
+                          end,
+          address: order.ship_address,
+          stock_location: build(:stock_location)
+        )
+        order.shipments.each do |shipment|
+          shipment.shipping_rates.build(
+            cost: evaluator.shipment_cost,
+            shipping_method: evaluator.shipping_method
+          )
+        end
+      end
+    end
+
+    after(:create) do |order, evaluator|
+      order.update!
     end
 
     factory :order_with_totals do
-      after(:create) do |order, evaluator|
-        create(:line_item, order: order, price: evaluator.line_items_price)
-        order.line_items.reload # to ensure order.line_items is accessible after
+      transient do
+        line_items_count 1
       end
     end
 
     factory :order_with_line_items do
-      bill_address
-      ship_address
-
       transient do
         line_items_count 1
-        line_items_attributes { [{}] * line_items_count }
-        shipment_cost 100
-        shipping_method nil
-        stock_location { create(:stock_location) }
-      end
-
-      after(:create) do |order, evaluator|
-        evaluator.stock_location # must evaluate before creating line items
-
-        evaluator.line_items_attributes.each do |attributes|
-          attributes = { order: order, price: evaluator.line_items_price }.merge(attributes)
-          create(:line_item, attributes)
-        end
-        order.line_items.reload
-
-        create(:shipment, order: order, cost: evaluator.shipment_cost, shipping_method: evaluator.shipping_method, address: evaluator.ship_address, stock_location: evaluator.stock_location)
-        order.shipments.reload
-
-        order.update!
+        shipping_method { create(:shipping_method) }
       end
 
       factory :completed_order_with_totals do
