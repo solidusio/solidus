@@ -514,7 +514,7 @@ describe Spree::Product, type: :model do
     it 'should return sum of stock items count_on_hand' do
       product = create(:product)
       product.stock_items.first.set_count_on_hand 5
-      product.variants_including_master(true) # force load association
+      product.variants_including_master.reload # force load association
       expect(product.total_on_hand).to eql(5)
     end
 
