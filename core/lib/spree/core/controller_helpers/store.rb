@@ -13,10 +13,11 @@ module Spree
           class_attribute :current_store_class
           self.current_store_class = Spree::Core::CurrentStore
 
-          def current_store
-            @current_store ||= current_store_class.new(request).store
-          end
           helper_method :current_store
+        end
+
+        def current_store
+          @current_store ||= current_store_class.new(request).store
         end
       end
     end

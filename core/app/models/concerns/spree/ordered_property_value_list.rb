@@ -9,19 +9,19 @@ module Spree
       validates_with Spree::Validations::DbMaximumLengthValidator, field: :value
 
       default_scope -> { order(:position) }
+    end
 
-      # virtual attributes for use with AJAX autocompletion
-      def property_name
-        property.name if property
-      end
+    # virtual attributes for use with AJAX autocompletion
+    def property_name
+      property.name if property
+    end
 
-      def property_name=(name)
-        unless name.blank?
-          unless property = Property.find_by(name: name)
-            property = Property.create(name: name, presentation: name)
-          end
-          self.property = property
+    def property_name=(name)
+      unless name.blank?
+        unless property = Property.find_by(name: name)
+          property = Property.create(name: name, presentation: name)
         end
+        self.property = property
       end
     end
   end
