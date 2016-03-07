@@ -1,0 +1,45 @@
+<%= render :partial => 'spree/admin/shared/product_tabs', :locals => {:current => 'Prices'} %>
+<% if @prices.any? %>
+  <%= paginate @prices %>
+
+  <table>
+    <colgroup>
+      <col style="width: 10%" />
+      <col style="width: 5%" />
+      <col style="width: 5%" />
+      <col style="width: 5%" />
+      <col style="width: 15%" />
+      <col style="width: 15%" />
+    </colgroup>
+    <thead data-hook="prices_header">
+      <tr>
+        <th><%= Spree::Price.human_attribute_name(:vat_country) %></th>
+        <th><%= Spree::Price.human_attribute_name(:included_tax) %></th>
+        <th><%= Spree::Price.human_attribute_name(:currency) %></th>
+        <th><%= Spree::Price.human_attribute_name(:amount) %></th>
+        <th class="actions"></th>
+      </tr>
+    </thead>
+    <tbody>
+    <% @prices.each do |price| %>
+      <tr id="<%= spree_dom_id price %>" <%= 'style="color:red;"' if price.deleted? %> data-hook="prices_row" class="<%= cycle('odd', 'even')%>">
+        <td><%= price.vat_country.present? ? price.vat_country_name : Spree.t(:net, scope: [:prices, :index]) %></td>
+        <td class="align-center"><%= price.included_tax %></td>
+        <td class="align-center"><%= price.currency %></td>
+        <td class="align-center"><%= price.amount %></td>
+        <td class="actions">
+          <% if can?(:update, price) %>
+            <%= link_to_edit(price, :no_text => true) unless price.deleted? %>
+          <% end %>
+          <% if can?(:destroy, price) %>
+            &nbsp;
+            <%= link_to_delete(price, :no_text => true) unless price.deleted? %>
+          <% end %>
+        </td>
+      </tr>
+      <% end %>
+    </tbody>
+  </table>
+
+  <%= paginate @prices %>
+<% end %>

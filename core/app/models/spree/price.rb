@@ -39,6 +39,10 @@ module Spree
       self[:amount] = Spree::LocalizedNumber.parse(price)
     end
 
+    def included_tax
+      vat_country.present?
+    end
+
     private
 
     def check_price

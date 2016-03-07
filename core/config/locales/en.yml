@@ -357,6 +357,9 @@ en:
       spree/payment_method:
         one: Payment Method
         other: Payment Methods
+      spree/price:
+        one: Price
+        other: Prices
       spree/product:
         one: Product
         other: Products
@@ -1386,6 +1389,10 @@ en:
     presentation: Presentation
     previous: Previous
     price: Price
+    prices:
+      index:
+        title: "Prices for %{product_name}"
+        net: Nettopreis
     price_range: Price Range
     price_sack: Price Sack
     preference_source_none: '(custom)'
