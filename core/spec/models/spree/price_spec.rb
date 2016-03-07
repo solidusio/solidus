@@ -6,7 +6,7 @@ describe Spree::Price, type: :model do
 
   describe '#vat_country' do
     let!(:vat_country) { create(:country, iso: "DE") }
-    let(:price) { create(:price, vat_country_iso: "DE") }
+    let(:price) { create(:price, vat_country_iso: "DE", is_default: false) }
 
     it 'returns the country object' do
       expect(price.vat_country).to eq(vat_country)
@@ -49,6 +49,38 @@ describe Spree::Price, type: :model do
     context 'when the amount is between 0 and the maximum amount' do
       let(:amount) { Spree::Price::MAXIMUM_AMOUNT }
       it { is_expected.to be_valid }
+    end
+
+    context "with default price set" do
+      subject { Spree::Price.new(variant: variant, is_default: true, vat_country: vat_country) }
+
+      context "when there is a vat country" do
+        let(:vat_country) { create(:country) }
+
+        it { is_expected.not_to be_valid }
+      end
+
+      context "when there is no vat country" do
+        let(:vat_country) { nil }
+
+        it { is_expected.to be_valid }
+      end
+    end
+
+    context "with default price not set" do
+      subject { Spree::Price.new(variant: variant, is_default: false, vat_country: vat_country) }
+
+      context "when there is a vat country" do
+        let(:vat_country) { create(:country) }
+
+        it { is_expected.to be_valid }
+      end
+
+      context "when there is no vat country" do
+        let(:vat_country) { nil }
+
+        it { is_expected.to be_valid }
+      end
     end
   end
 end
