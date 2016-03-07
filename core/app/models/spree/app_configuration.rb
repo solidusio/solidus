@@ -264,6 +264,10 @@ module Spree
     #   @return [Boolean] Whether use of an address in checkout marks it as user's default
     preference :automatic_default_address, :boolean, default: true
 
+    # @!attribute [rw] can_restrict_stock_management
+    #   @return [Boolean] Indicates if stock management can be restricted by location
+    preference :can_restrict_stock_management, :boolean, default: false
+
     # searcher_class allows spree extension writers to provide their own Search class
     attr_writer :searcher_class
     def searcher_class
@@ -310,19 +314,6 @@ module Spree
     attr_writer :order_merger_class
     def order_merger_class
       @order_merger_class ||= Spree::OrderMerger
-    end
-
-    # Indicats if stock management can be restricted by stock location
-    #
-    # @!attribute [rw] can_restricted_stock_management
-    # @return [Boolean] True if capability enabled, false otherwise. Default to true only when one of the restricted stock permission sets are in use
-    attr_writer :can_restrict_stock_management
-    def can_restrict_stock_management
-      return @can_restrict_stock_management if defined? @can_restrict_stock_management
-      roles = Spree::RoleConfiguration.instance.roles.values
-      permission_sets = roles.map { |r| r.permission_sets.to_a }.flatten.uniq
-      names = permission_sets.map { |ps| ps.name }
-      @can_restrict_stock_management = names.any? { |klass| klass =~ /\:\:RestrictedStock/ }
     end
 
     def static_model_preferences

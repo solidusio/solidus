@@ -20,28 +20,6 @@ describe Spree::AppConfiguration, type: :model do
     expect(prefs.variant_search_class).to eq Spree::Core::Search::Variant
   end
 
-  describe '@can_restrict_stock_management' do
-    # Ensure we start with a clean configuration
-    before do
-      Spree::RoleConfiguration.instance.send :initialize
-      Spree::RoleConfiguration.configure do |config|
-        config.assign_permissions :default, [Spree::PermissionSets::DefaultCustomer]
-        config.assign_permissions :admin, [Spree::PermissionSets::SuperUser]
-      end
-    end
-
-    it 'defaults to false normally' do
-      expect( prefs.can_restrict_stock_management ).to be false
-    end
-
-    it 'defaults to true if using any of the restricted stock management permission sets' do
-      Spree::RoleConfiguration.configure do |config|
-        config.assign_permissions :test_restrict, [Spree::PermissionSets::RestrictedStockDisplay]
-      end
-      expect( prefs.can_restrict_stock_management ).to be true
-    end
-  end
-
   describe '#stock' do
     subject { prefs.stock }
     it { is_expected.to be_a Spree::Core::StockConfiguration }
