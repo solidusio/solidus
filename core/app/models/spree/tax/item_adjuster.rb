@@ -15,6 +15,7 @@ module Spree
         @rates_for_order_zone = options[:rates_for_order_zone]
         @rates_for_default_zone = options[:rates_for_default_zone]
         @order_tax_zone = options[:order_tax_zone]
+        @skip_destroy_adjustments = options[:skip_destroy_adjustments]
       end
 
       # Deletes all existing tax adjustments and creates new adjustments for all
@@ -27,7 +28,7 @@ module Spree
       def adjust!
         return unless order_tax_zone(order)
         # Using .destroy_all to make sure callbacks fire
-        item.adjustments.tax.destroy_all
+        item.adjustments.tax.destroy_all unless @skip_destroy_adjustments
 
         rates_for_item(item).map { |rate| rate.adjust(order_tax_zone(order), item) }
       end
