@@ -16,6 +16,7 @@
         <th><%= Spree::Price.human_attribute_name(:vat_country) %></th>
         <th><%= Spree::Price.human_attribute_name(:included_tax) %></th>
         <th><%= Spree::Price.human_attribute_name(:currency) %></th>
+        <th><%= Spree::Price.human_attribute_name(:variant) %></th>
         <th><%= Spree::Price.human_attribute_name(:amount) %></th>
         <th class="actions"></th>
       </tr>
@@ -26,6 +27,7 @@
         <td><%= price.vat_country.present? ? price.vat_country_name : Spree.t(:net, scope: [:prices, :index]) %></td>
         <td class="align-center"><%= price.included_tax %></td>
         <td class="align-center"><%= price.currency %></td>
+        <td class="align-center"><%= price.variant.options_text %></td>
         <td class="align-center"><%= price.amount %></td>
         <td class="actions">
           <% if can?(:update, price) %>
