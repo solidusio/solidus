@@ -48,7 +48,7 @@ module Spree
       class_name: 'Spree::Variant',
       dependent: :destroy
 
-    has_many :prices, -> { order(Spree::Variant.arel_table[:position].asc, Spree::Variant.arel_table[:id].asc, :currency) }, through: :variants
+    has_many :prices, -> { order(Spree::Variant.arel_table[:position].asc, Spree::Variant.arel_table[:id].asc, :currency) }, through: :variants_including_master
 
     has_many :stock_items, through: :variants_including_master
 
