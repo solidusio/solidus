@@ -1,8 +1,7 @@
 <div data-hook="bill_address_wrapper" class="alpha six columns">
   <fieldset class="no-border-bottom">
     <legend align="center"><%= Spree.t(:billing_address) %></legend>
-    <%= f.fields_for :bill_address, @user.bill_address do |ba_form| %>
-      <% ba_form.object ||= Spree::Address.build_default %>
+    <%= f.fields_for :bill_address, @user.bill_address || Spree::Address.build_default do |ba_form| %>
       <%= render :partial => 'spree/admin/shared/address_form', :locals => { :f => ba_form, :type => "billing" } %>
     <% end %>
   </fieldset>
@@ -11,8 +10,7 @@
 <div data-hook="ship_address_wrapper" class="alpha six columns">
   <fieldset class="no-border-bottom">
     <legend align="center"><%= Spree.t(:shipping_address) %></legend>
-    <%= f.fields_for :ship_address, @user.ship_address do |sa_form| %>
-      <% sa_form.object ||= Spree::Address.build_default  %>
+    <%= f.fields_for :ship_address, @user.ship_address || Spree::Address.build_default do |sa_form| %>
       <%= render :partial => 'spree/admin/shared/address_form', :locals => { :f => sa_form, :type => "shipping" } %>
     <% end %>
   </fieldset>

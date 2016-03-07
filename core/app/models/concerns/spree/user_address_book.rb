@@ -66,15 +66,23 @@ module Spree
     # sets bill_address to the default if automatic_default_address is set to true and there is no ship_address
     # if one address is nil, does not save that address
     def persist_order_address(order)
-      save_in_address_book(
-        order.ship_address.attributes,
-        Spree::Config.automatic_default_address
-      ) if order.ship_address
+      if order.ship_address
+        address = save_in_address_book(
+          order.ship_address.attributes,
+          Spree::Config.automatic_default_address
+        )
+        self.ship_address_id = address.id if address && address.persisted?
+      end
 
-      save_in_address_book(
-        order.bill_address.attributes,
-        order.ship_address.nil? && Spree::Config.automatic_default_address
-      ) if order.bill_address
+      if order.bill_address
+        address = save_in_address_book(
+          order.bill_address.attributes,
+          order.ship_address.nil? && Spree::Config.automatic_default_address
+        )
+        self.bill_address_id = address.id if address && address.persisted?
+      end
+
+      save! # In case the ship_address_id or bill_address_id was set
     end
 
     # Add an address to the user's list of saved addresses for future autofill
