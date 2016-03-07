@@ -272,21 +272,6 @@ fieldset {
     > * + * {
       margin-left: 2em;
     }
-
-    span.or {
-      background-color: $color-1;
-      border-width: 5px;
-      margin-left: 5px;
-      margin-right: 11px;
-      position: relative;
-      z-index: 1;
-
-      -webkit-box-shadow: 0 0 0 5px $color-1;
-         -moz-box-shadow: 0 0 0 5px $color-1;
-          -ms-box-shadow: 0 0 0 5px $color-1;
-           -o-box-shadow: 0 0 0 5px $color-1;
-              box-shadow: 0 0 0 5px $color-1;
-    }
   }
 
   &.labels-inline {

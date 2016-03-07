@@ -38,8 +38,6 @@
           <%= button Spree.t('clear_key', :scope => 'api'), 'trash' %>
         <% end %>
 
-        <span class="or"><%= Spree.t(:or)%></span>
-
         <%= form_tag spree.generate_api_key_admin_user_path(@user), :method => :put do %>
           <%= button Spree.t('regenerate_key', :scope => 'api'), 'refresh' %>
         <% end %>
