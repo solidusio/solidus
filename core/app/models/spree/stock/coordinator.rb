@@ -20,7 +20,7 @@ module Spree
         packages = build_packages(packages)
         packages = prioritize_packages(packages)
         packages.each do |package|
-          package.shipment = package.to_shipment.tap { |s| s.address = order.ship_address }
+          package.shipment = package.to_shipment
         end
         packages = estimate_packages(packages)
         validate_packages(packages)
