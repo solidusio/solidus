@@ -264,6 +264,10 @@ module Spree
     #   @return [Boolean] Whether use of an address in checkout marks it as user's default
     preference :automatic_default_address, :boolean, default: true
 
+    # @!attribute [rw] can_restrict_stock_management
+    #   @return [Boolean] Indicates if stock management can be restricted by location
+    preference :can_restrict_stock_management, :boolean, default: false
+
     # searcher_class allows spree extension writers to provide their own Search class
     attr_writer :searcher_class
     def searcher_class
