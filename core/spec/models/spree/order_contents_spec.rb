@@ -1,6 +1,7 @@
 require 'spec_helper'
 
 describe Spree::OrderContents, type: :model do
+  let!(:store) { create :store }
   let(:order) { Spree::Order.create }
   let(:variant) { create(:variant) }
   let!(:stock_location) { variant.stock_locations.first }

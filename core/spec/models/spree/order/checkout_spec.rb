@@ -2,7 +2,8 @@ require 'spec_helper'
 require 'spree/testing_support/order_walkthrough'
 
 describe Spree::Order, type: :model do
-  let(:order) { Spree::Order.new }
+  let!(:store) { create(:store) }
+  let(:order) { Spree::Order.new(store: store) }
 
   def assert_state_changed(order, from, to)
     state_change_exists = order.state_changes.where(previous_state: from, next_state: to).exists?
@@ -696,7 +697,6 @@ describe Spree::Order, type: :model do
 
     it "does not attempt to check shipping rates" do
       order.email = 'user@example.com'
-      order.store = FactoryGirl.build(:store)
       expect(order).not_to receive(:ensure_available_shipping_rates)
       order.next!
       assert_state_changed(order, 'cart', 'complete')
@@ -704,7 +704,6 @@ describe Spree::Order, type: :model do
 
     it "does not attempt to process payments" do
       order.email = 'user@example.com'
-      order.store = FactoryGirl.build(:store)
       allow(order).to receive(:ensure_promotions_eligible).and_return(true)
       allow(order).to receive(:ensure_line_item_variants_are_not_deleted).and_return(true)
       allow(order).to receive_message_chain(:line_items, :present?).and_return(true)

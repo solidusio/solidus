@@ -118,6 +118,7 @@ module Spree
       end
 
       context "order contents changed after shipments were created" do
+        let!(:store) { create(:store) }
         let!(:order) { Order.create }
         let!(:line_item) { order.contents.add(product.master) }
 

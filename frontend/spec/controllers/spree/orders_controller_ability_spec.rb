@@ -4,6 +4,7 @@ module Spree
   describe OrdersController, type: :controller do
     ORDER_TOKEN = 'ORDER_TOKEN'
 
+    let!(:store) { create(:store) }
     let(:user) { create(:user) }
     let(:guest_user) { create(:user) }
     let(:order) { Spree::Order.create }

@@ -47,8 +47,9 @@ describe Spree::Gateway, type: :model do
   end
 
   context "fetching payment sources" do
+    let(:store) { create :store }
     let(:user) { create :user }
-    let(:order) { Spree::Order.create(user: user, completed_at: completed_at) }
+    let(:order) { Spree::Order.create(user: user, completed_at: completed_at, store: store) }
 
     let(:payment_method) { create(:credit_card_payment_method) }
 

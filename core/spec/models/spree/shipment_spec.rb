@@ -532,9 +532,14 @@ describe Spree::Shipment, type: :model do
   end
 
   context "changes shipping rate via general update" do
+    let(:store) { create :store }
     let(:order) do
       Spree::Order.create(
-        payment_total: 100, payment_state: 'paid', total: 100, item_total: 100
+        payment_total: 100,
+        payment_state: 'paid',
+        total: 100,
+        item_total: 100,
+        store: store
       )
     end
 

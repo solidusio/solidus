@@ -3,6 +3,7 @@ require 'cancan'
 require 'spree/testing_support/bar_ability'
 
 describe Spree::Admin::OrdersController, type: :controller do
+  let!(:store) { create(:store) }
   context "with authorization" do
     stub_authorization!
 

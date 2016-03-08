@@ -83,6 +83,7 @@ module Spree
     accepts_nested_attributes_for :shipments
 
     # Needs to happen before save_permalink is called
+    before_validation :associate_store
     before_validation :set_currency
     before_validation :generate_order_number, on: :create
     before_validation :assign_billing_to_shipping_address, if: :use_billing?
@@ -94,6 +95,7 @@ module Spree
     validates :email, presence: true, if: :require_email
     validates :email, email: true, if: :require_email, allow_blank: true
     validates :number, presence: true, uniqueness: { allow_blank: true }
+    validates :store_id, presence: true
 
     make_permalink field: :number
 
@@ -682,6 +684,10 @@ module Spree
     end
 
     private
+
+    def associate_store
+      self.store ||= Spree::Store.default
+    end
 
     def link_by_email
       self.email = user.email if user

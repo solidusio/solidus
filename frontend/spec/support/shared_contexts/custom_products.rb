@@ -1,5 +1,6 @@
 shared_context "custom products" do
   before(:each) do
+    create(:store)
     taxonomy = FactoryGirl.create(:taxonomy, name: 'Categories')
     root = taxonomy.root
     clothing_taxon = FactoryGirl.create(:taxon, name: 'Clothing', parent_id: root.id)

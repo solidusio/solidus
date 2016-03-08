@@ -7,11 +7,37 @@ class FakeCalculator < Spree::Calculator
 end
 
 describe Spree::Order, type: :model do
+  let(:store) { build_stubbed(:store) }
   let(:user) { stub_model(Spree::LegacyUser, email: "spree@example.com") }
-  let(:order) { stub_model(Spree::Order, user: user) }
+  let(:order) { stub_model(Spree::Order, user: user, store: store) }
 
   before do
     allow(Spree::LegacyUser).to receive_messages(current: mock_model(Spree::LegacyUser, id: 123))
+  end
+
+  context '#store' do
+    it { is_expected.to respond_to(:store) }
+
+    context 'when there is no store assigned' do
+      subject { Spree::Order.new }
+
+      context 'when there is no default store' do
+        it "will not be valid" do
+          expect(subject).not_to be_valid
+        end
+      end
+
+      context "when there is a default store" do
+        let!(:store) { create(:store) }
+
+        it { is_expected.to be_valid }
+      end
+    end
+
+    context 'when a store is assigned' do
+      subject { Spree::Order.new(store: create(:store)) }
+      it { is_expected.to be_valid }
+    end
   end
 
   context "#canceled_by" do
@@ -46,6 +72,7 @@ describe Spree::Order, type: :model do
   end
 
   context "#create" do
+    let!(:store) { create :store }
     let(:order) { Spree::Order.create }
 
     it "should assign an order number" do
@@ -254,6 +281,7 @@ describe Spree::Order, type: :model do
   end
 
   context "ensure shipments will be updated" do
+    subject(:order) { create :order }
     before do
       Spree::Shipment.create!(order: order)
     end
@@ -821,6 +849,7 @@ describe Spree::Order, type: :model do
   end
 
   describe "#create_proposed_shipments" do
+    subject(:order) { create(:order) }
     it "assigns the coordinator returned shipments to its shipments" do
       shipment = build(:shipment)
       allow_any_instance_of(Spree::Stock::Coordinator).to receive(:shipments).and_return([shipment])

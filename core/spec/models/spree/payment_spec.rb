@@ -1,7 +1,8 @@
 require 'spec_helper'
 
 describe Spree::Payment, type: :model do
-  let(:order) { Spree::Order.create }
+  let(:store) { create :store }
+  let(:order) { Spree::Order.create(store: store) }
   let(:refund_reason) { create(:refund_reason) }
 
   let(:gateway) do
