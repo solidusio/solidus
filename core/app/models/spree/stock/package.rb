@@ -122,6 +122,7 @@ module Spree
         contents.each { |content_item| content_item.inventory_unit.state = content_item.state.to_s }
 
         Spree::Shipment.new(
+          order: order,
           stock_location: stock_location,
           inventory_units: contents.map(&:inventory_unit)
         )

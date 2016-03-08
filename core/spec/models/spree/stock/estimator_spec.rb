@@ -5,11 +5,15 @@ module Spree
     describe Estimator, type: :model do
       let(:shipping_rate) { 4.00 }
       let!(:shipping_method) { create(:shipping_method, cost: shipping_rate, currency: currency) }
-      let(:package) { build(:stock_package, contents: inventory_units.map { |i| ContentItem.new(i) }) }
+      let(:package) do
+        build(:stock_package, contents: inventory_units.map { |i| ContentItem.new(i) }).tap do |p|
+          p.shipment = p.to_shipment
+        end
+      end
       let(:order) { create(:order_with_line_items, shipping_method: shipping_method) }
       let(:inventory_units) { order.inventory_units }
 
-      subject { Estimator.new(order) }
+      subject { Estimator.new }
 
       context "#shipping rates" do
         before(:each) do
@@ -17,6 +21,24 @@ module Spree
         end
 
         let(:currency) { "USD" }
+
+        context 'without a shipment' do
+          before { package.shipment = nil }
+          it 'raises an error' do
+            expect {
+              subject.shipping_rates(package)
+            }.to raise_error(Spree::Stock::Estimator::ShipmentRequired)
+          end
+        end
+
+        context 'without an order' do
+          before { package.shipment.order = nil }
+          it 'raises an error' do
+            expect {
+              subject.shipping_rates(package)
+            }.to raise_error(Spree::Stock::Estimator::OrderRequired)
+          end
+        end
 
         shared_examples_for "shipping rate matches" do
           it "returns shipping rates" do

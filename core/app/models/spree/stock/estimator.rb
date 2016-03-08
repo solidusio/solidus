@@ -1,13 +1,8 @@
 module Spree
   module Stock
     class Estimator
-      attr_reader :order, :currency
-
-      # @param order [Spree::Order] the order whose shipping rates to estimate
-      def initialize(order)
-        @order = order
-        @currency = order.currency
-      end
+      class ShipmentRequired < StandardError; end
+      class OrderRequired < StandardError; end
 
       # Estimate the shipping rates for a package.
       #
@@ -17,6 +12,9 @@ module Spree
       # @return [Array<Spree::ShippingRate>] the shipping rates sorted by
       #   descending cost, with the least costly marked "selected"
       def shipping_rates(package, frontend_only = true)
+        raise ShipmentRequired if package.shipment.nil?
+        raise OrderRequired if package.shipment.order.nil?
+
         rates = calculate_shipping_rates(package)
         rates.select! { |rate| rate.shipping_method.frontend? } if frontend_only
         choose_default_shipping_rate(rates)
@@ -41,7 +39,7 @@ module Spree
               # If the rate's zone matches the order's zone, a positive adjustment will be applied.
               # If the rate is from the default tax zone, then a negative adjustment will be applied.
               # See the tests in shipping_rate_spec.rb for an example of this.d
-              rate.zone == order.tax_zone || rate.zone.default_tax?
+              rate.zone == package.shipment.order.tax_zone || rate.zone.default_tax?
             end
           end
 
@@ -59,14 +57,14 @@ module Spree
 
       def shipping_methods(package)
         package.shipping_methods
-          .available_for_address(order.ship_address)
+          .available_for_address(package.shipment.order.ship_address)
           .includes(:calculator, tax_category: :tax_rates)
           .to_a
           .select do |ship_method|
           calculator = ship_method.calculator
           calculator.available?(package) &&
             (calculator.preferences[:currency].blank? ||
-             calculator.preferences[:currency] == currency)
+             calculator.preferences[:currency] == package.shipment.order.currency)
         end
       end
     end

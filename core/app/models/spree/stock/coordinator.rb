@@ -121,7 +121,7 @@ module Spree
       end
 
       def estimate_packages(packages)
-        estimator = Spree::Config.stock.estimator_class.new(order)
+        estimator = Spree::Config.stock.estimator_class.new
         packages.each do |package|
           package.shipment.shipping_rates = estimator.shipping_rates(package)
         end
