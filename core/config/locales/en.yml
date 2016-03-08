@@ -35,6 +35,8 @@ en:
       spree/calculator/tiered_percent:
         preferred_base_percent: Base Percent
         preferred_tiers: Tiers
+      spree/carton:
+        tracking: Tracking
       spree/country:
         iso: ISO
         iso3: ISO3
@@ -66,6 +68,7 @@ en:
         state: State
       spree/line_item:
         description: Item Description
+        name: Name
         price: Price
         quantity: Quantity
         total: Total price
@@ -115,7 +118,10 @@ en:
         zipcode: Shipping address zipcode
       spree/payment:
         amount: Amount
+        created_at: Date/Time
         number: Identifier
+        response_code: Transaction ID
+        state: Payment State
       spree/payment_method:
         name: Name
       spree/product:
@@ -196,6 +202,8 @@ en:
         name: Name
       spree/shipping_category:
         name: Name
+      spree/shipment:
+        tracking: Tracking Number
       spree/shipping_method:
         admin_name: Internal Name
         carrier: Carrier
