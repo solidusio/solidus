@@ -53,6 +53,7 @@ table {
 
         &:before {
           text-align: center !important;
+          padding: 0;
           width: 27px;
           display: inline-block;
         }
@@ -134,6 +135,7 @@ table {
       border-bottom: none;
       background-color: $color-tbl-thead;
       text-transform: uppercase;
+      text-align: center;
       font-size: 85%;
       font-weight: $font-weight-bold;
     }

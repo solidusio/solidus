@@ -8,7 +8,7 @@
 <fieldset data-hook="admin_user_order_history" class="alpha twelve columns">
   <legend><%= Spree.t(:"admin.user.order_history") %></legend>
 
-  <%= paginate @orders %>
+  <%= paginate @orders, theme: "solidus_admin" %>
 
   <% if @orders.any? %>
     <%# TODO add search interface %>
@@ -60,5 +60,5 @@
     </div>
   <% end %>
 
-  <%= paginate @orders %>
+  <%= paginate @orders, theme: "solidus_admin" %>
 </fieldset>

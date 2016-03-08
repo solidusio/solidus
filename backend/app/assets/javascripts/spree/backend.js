@@ -9,6 +9,8 @@
 //= require jquery.sticky-kit.min
 //= require underscore-min
 //= require backbone
+//= require solidus_admin/tether
+//= require solidus_admin/bootstrap
 //= require prism
 //= require spree
 //= require ./backend/backbone-overrides

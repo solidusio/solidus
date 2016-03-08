@@ -96,7 +96,7 @@
   </div>
 <% end %>
 
-<%= paginate @orders %>
+<%= paginate @orders, theme: "solidus_admin" %>
 
 <% if @orders.any? %>
   <table class="index" id="listing_orders" data-hook>
@@ -163,4 +163,4 @@
   </div>
 <% end %>
 
-<%= paginate @orders %>
+<%= paginate @orders, theme: "solidus_admin" %>
