@@ -195,12 +195,6 @@ describe Spree::Preferences::Preferable, type: :model do
         @a.set_preference(:is_hash, { 1 => 2, 3 => 4 })
         expect(@a.preferences[:is_hash]).to eql({ 1 => 2, 3 => 4 })
       end
-
-      it "with ancestor of a hash" do
-        ancestor_of_hash = ActionController::Parameters.new({ key: :value })
-        @a.set_preference(:is_hash, ancestor_of_hash)
-        expect(@a.preferences[:is_hash]).to eql({ "key" => :value })
-      end
     end
 
     context "converts any preferences to any values" do
