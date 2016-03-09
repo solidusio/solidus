@@ -173,30 +173,18 @@ startItemSplit = function(event){
   link.parent().find('a.delete-item').toggle();
   var variant_id = link.data('variant-id');
 
-  var variant = {};
   Spree.ajax({
     type: "GET",
-    async: false,
-    url: Spree.routes.variants_api,
-    data: {
-      q: {
-        "id_eq": variant_id
-      },
-      token: Spree.api_key
-    }
-  }).success(function( data ) {
-    variant = data['variants'][0];
-  }).error(function( msg ) {
-    console.log(msg);
-  });
+    url: Spree.routes.variants_api + "/" + variant_id,
+  }).success(function(variant){
+    var max_quantity = link.closest('tr').data('item-quantity');
+    var split_item_template = HandlebarsTemplates['variants/split'];
+    link.closest('tr').after(split_item_template({ variant: variant, shipments: shipments, max_quantity: max_quantity }));
+    $('a.cancel-split').click(cancelItemSplit);
+    $('a.save-split').click(completeItemSplit);
 
-  var max_quantity = link.closest('tr').data('item-quantity');
-  var split_item_template = HandlebarsTemplates['variants/split'];
-  link.closest('tr').after(split_item_template({ variant: variant, shipments: shipments, max_quantity: max_quantity }));
-  $('a.cancel-split').click(cancelItemSplit);
-  $('a.save-split').click(completeItemSplit);
-
-  $('#item_stock_location').select2({ width: 'resolve', placeholder: Spree.translations.item_stock_placeholder });
+    $('#item_stock_location').select2({ width: 'resolve', placeholder: Spree.translations.item_stock_placeholder });
+  })
 }
 
 completeItemSplit = function(event) {
