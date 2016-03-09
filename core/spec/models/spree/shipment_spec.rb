@@ -197,7 +197,7 @@ describe Spree::Shipment, type: :model do
       end
 
       it "can't get rates without a shipping address" do
-        shipment.order(ship_address: nil)
+        shipment.order.update_attributes!(ship_address: nil)
         expect(shipment.refresh_rates).to eq([])
       end
 

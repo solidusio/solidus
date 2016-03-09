@@ -25,7 +25,7 @@ module Spree
       matching_country =
         spree_zone_members_table[:zoneable_type].eq("Spree::Country").
         and(spree_zone_members_table[:zoneable_id].in(country_ids))
-      joins(:zone_members).where(matching_state.or(matching_country)).uniq
+      joins(:zone_members).where(matching_state.or(matching_country)).distinct
     end
 
     scope :for_address, ->(address) do
@@ -74,7 +74,7 @@ module Spree
       state_country_ids = states_and_state_country_ids.map(&:second)
       country_ids = zone.countries.pluck(:id).to_a
 
-      with_member_ids(state_ids, country_ids + state_country_ids).uniq
+      with_member_ids(state_ids, country_ids + state_country_ids).distinct
     end
 
     def kind

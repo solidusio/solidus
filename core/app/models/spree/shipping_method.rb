@@ -55,7 +55,7 @@ module Spree
       arel_condition =
         arel_table[:available_to_all].eq(true).or(smsl_table[:stock_location_id].eq(stock_location.id))
 
-      joins(arel_join).where(arel_condition).uniq
+      joins(arel_join).where(arel_condition).distinct
     end
 
     # @param address [Spree::Address] address to match against zones

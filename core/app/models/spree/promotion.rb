@@ -40,7 +40,7 @@ module Spree
       where(table[:starts_at].eq(nil).or(table[:starts_at].lt(time))).
         where(table[:expires_at].eq(nil).or(table[:expires_at].gt(time)))
     end
-    scope :applied, -> { joins(:order_promotions).uniq }
+    scope :applied, -> { joins(:order_promotions).distinct }
 
     self.whitelisted_ransackable_associations = ['codes']
     self.whitelisted_ransackable_attributes = ['path', 'promotion_category_id']
