@@ -199,7 +199,6 @@ addVariantFromStockLocation = function(event) {
     //add to existing shipment
     adjustShipmentItems(shipment.number, variant_id, quantity);
   }
-  return 1
 }
 
 var ShipmentEditView = Backbone.View.extend({
