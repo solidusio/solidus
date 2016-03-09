@@ -33,6 +33,8 @@
 }
 
 .tooltip {
+  pointer-events: none;
+
   &.action-edit, &.action-save, &.action-capture, &.action-add {
     @include bootstrap-tooltip-color($brand-success);
   }
