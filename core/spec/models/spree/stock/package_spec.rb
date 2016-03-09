@@ -10,7 +10,7 @@ module Spree
       subject { Package.new(stock_location) }
 
       def build_inventory_unit
-        build(:inventory_unit, variant: variant)
+        build(:inventory_unit, variant: variant, order: order)
       end
 
       it 'calculates the weight of all the contents' do
@@ -97,9 +97,9 @@ module Spree
         subject.add build_inventory_unit, :backordered
 
         shipping_method = build(:shipping_method)
-        subject.shipping_rates = [Spree::ShippingRate.new(shipping_method: shipping_method, cost: 10.00, selected: true)]
 
         shipment = subject.to_shipment
+        shipment.shipping_rates = [Spree::ShippingRate.new(shipping_method: shipping_method, cost: 10.00, selected: true)]
         expect(shipment.stock_location).to eq subject.stock_location
         expect(shipment.inventory_units.size).to eq 3
 
@@ -113,6 +113,7 @@ module Spree
         expect(last_unit.state).to eq 'backordered'
 
         expect(shipment.shipping_method).to eq shipping_method
+        expect(shipment.address).to eq order.ship_address
       end
 
       it 'does not add an inventory unit to a package twice' do

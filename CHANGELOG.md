@@ -1,5 +1,15 @@
 ## Solidus 1.3.0 (unreleased)
 
+*   Changes to Spree::Stock::Estimator
+
+    * The package passed to Spree::Stock::Estimator#shipping_rates must have its
+      shipment assigned and that shipment must have its order assigned. This
+      is needed for some upcoming tax work in to calculate taxes correctly.
+    * Spree::Stock::Estimator.new no longer accepts an order argument. The order
+      will be fetched from the shipment.
+
+    https://github.com/solidusio/solidus/pull/965
+
 *   Made Spree::Order validate :store_id
 
     All orders created since Spree v2.4 should have a store assigned. We want to build more
