@@ -17,15 +17,28 @@ $(document).ready(function () {
       }
     });
   });
+});
 
-  // add header to ship ujs ajax call
-  $("form#admin-ship-shipment").on("ajax:beforeSend", function(event, xhr, settings) {
-    xhr.setRequestHeader("X-Spree-Token", Spree.api_key);
-  });
-
-  $("form#admin-ship-shipment").on("ajax:success", function(event, xhr, settings) {
-    window.location.reload();
-  });
+var ShipShipmentView = Backbone.View.extend({
+  initialize: function(options){
+    this.shipment_number = options.shipment_number;
+  },
+  events: {
+    "submit": "onSubmit"
+  },
+  onSubmit: function(e){
+    Spree.ajax({
+      type: "PUT",
+      url: Spree.routes.shipments_api + "/" + this.shipment_number + "/ship",
+      data: {
+        send_mailer: this.$("[name='send_mailer']").val()
+      },
+      success: function(){
+        window.location.reload()
+      }
+    });
+    return false;
+  }
 });
 
 updateShipment = function(shipment_number, attributes) {
@@ -202,8 +215,16 @@ addVariantFromStockLocation = function(event) {
 var ShipmentEditView = Backbone.View.extend({
   initialize: function(){
     var tbody = this.$("tbody[data-order-number][data-shipment-number]");
-    this.shipment_number = tbody.data("shipment-number");
+    var shipment_number = tbody.data("shipment-number");
+    this.shipment_number = shipment_number;
     this.order_number = tbody.data("order-number");
+
+    this.$("form.admin-ship-shipment").each(function(){
+      new ShipShipmentView({
+        el: this,
+        shipment_number: shipment_number
+      });
+    });
   },
 
   events: {
@@ -291,6 +312,6 @@ var ShipmentEditView = Backbone.View.extend({
 
 $(function(){
   $(".js-shipment-edit").each(function(){
-    new ShipmentEditView({ el: $(this) });
+    new ShipmentEditView({ el: this });
   });
 });

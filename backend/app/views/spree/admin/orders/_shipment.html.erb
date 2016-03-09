@@ -12,8 +12,7 @@
       </legend>
 
       <% if shipment.ready? && can?(:ship, shipment) %>
-        <%= form_tag(spree.ship_api_shipment_path(shipment), { method: "PUT", remote: true, id: "admin-ship-shipment" }) do %>
-          <%= hidden_field_tag :send_mailer, false %>
+        <%= form_tag("#", class: "admin-ship-shipment") do %>
           <%= check_box_tag :send_mailer, true, true %>
           <%= label_tag :send_mailer, Spree.t(:send_mailer) %>
           <%= submit_tag Spree.t('actions.ship'), class: "ship-shipment-button" %>
