@@ -38,20 +38,20 @@ updateShipment = function(shipment_number, attributes) {
       shipment: attributes
     }
   });
-}
+};
 
 adjustShipmentItems = function(shipment_number, variant_id, quantity){
-  var shipment = _.findWhere(shipments, {number: shipment_number + ''});
+  var shipment = _.findWhere(shipments, {number: shipment_number});
   var inventory_units = _.where(shipment.inventory_units, {variant_id: variant_id});
 
   var url = Spree.routes.shipments_api + "/" + shipment_number;
 
   var new_quantity = 0;
   if(inventory_units.length<quantity){
-    url += "/add"
+    url += "/add";
     new_quantity = (quantity - inventory_units.length);
   }else if(inventory_units.length>quantity){
-    url += "/remove"
+    url += "/remove";
     new_quantity = (inventory_units.length - quantity);
   }
   url += '.json';
@@ -64,15 +64,15 @@ adjustShipmentItems = function(shipment_number, variant_id, quantity){
         variant_id: variant_id,
         quantity: new_quantity,
       },
-      success: function(response) {
+      success: function() {
         window.location.reload();
       },
       error: function(response) {
-        show_flash('error', response.responseJSON.message);
+        window.show_flash('error', response.responseJSON.message);
       }
     });
   }
-}
+};
 
 deleteLineItem = function(line_item_id){
   var url = Spree.routes.line_items_api(order_number) + "/" + line_item_id + ".json";
@@ -80,14 +80,14 @@ deleteLineItem = function(line_item_id){
   Spree.ajax({
     type: "DELETE",
     url: url,
-    success: function(response) {
+    success: function() {
       window.location.reload();
     },
     error: function(response) {
       show_flash('error', response.responseJSON.message);
     }
   });
-}
+};
 
 startItemSplit = function(event){
   event.preventDefault();
@@ -105,15 +105,15 @@ startItemSplit = function(event){
     link.closest('tr').after(split_item_template({ variant: variant, shipments: shipments, max_quantity: max_quantity }));
 
     $('#item_stock_location').select2({ width: 'resolve', placeholder: Spree.translations.item_stock_placeholder });
-  })
-}
+  });
+};
 
 completeItemSplit = function(event) {
   event.preventDefault();
 
   if($('#item_stock_location').val() === ""){
-      alert('Please select the split destination.');
-      return false;
+    alert('Please select the split destination.');
+    return false;
   }
 
   var link = $(this);
@@ -135,35 +135,35 @@ completeItemSplit = function(event) {
         type: "POST",
         url: Spree.routes.shipments_api + "/transfer_to_location",
         data: {
-            original_shipment_number: original_shipment_number,
-            variant_id: variant_id,
-            quantity: quantity,
-            stock_location_id: stock_location_id
+          original_shipment_number: original_shipment_number,
+          variant_id: variant_id,
+          quantity: quantity,
+          stock_location_id: stock_location_id
         }
       }).error(function(msg) {
-          alert(msg.responseJSON['message']);
-      }).done(function(msg) {
+        alert(msg.responseJSON['message']);
+      }).done(function() {
         window.Spree.advanceOrder();
       });
     } else {
-        // TRANSFER TO AN EXISTING SHIPMENT
-        Spree.ajax({
-            type: "POST",
-            url: Spree.routes.shipments_api + "/transfer_to_shipment",
-            data: {
-                original_shipment_number: original_shipment_number,
-                target_shipment_number: target_shipment_number,
-                variant_id: variant_id,
-                quantity: quantity
-            }
-        }).error(function(msg) {
-            alert(msg.responseJSON['message']);
-        }).done(function(msg) {
-            window.Spree.advanceOrder();
-        });
+      // TRANSFER TO AN EXISTING SHIPMENT
+      Spree.ajax({
+        type: "POST",
+        url: Spree.routes.shipments_api + "/transfer_to_shipment",
+        data: {
+          original_shipment_number: original_shipment_number,
+          target_shipment_number: target_shipment_number,
+          variant_id: variant_id,
+          quantity: quantity
+        }
+      }).error(function(msg) {
+        alert(msg.responseJSON['message']);
+      }).done(function() {
+        window.Spree.advanceOrder();
+      });
     }
   }
-}
+};
 
 addVariantFromStockLocation = function(event) {
   event.preventDefault();
@@ -190,14 +190,14 @@ addVariantFromStockLocation = function(event) {
         quantity: quantity,
         stock_location_id: stock_location_id,
       }
-    }).done(function( msg ) {
+    }).done(function(){
       window.location.reload();
     });
   }else{
     //add to existing shipment
     adjustShipmentItems(shipment.number, variant_id, quantity);
   }
-}
+};
 
 var ShipmentEditView = Backbone.View.extend({
   initialize: function(){
@@ -266,8 +266,8 @@ var ShipmentEditView = Backbone.View.extend({
 
   toggleTrackingEdit: function(e) {
     e.preventDefault();
-    this.$("tr.edit-tracking").toggle()
-    this.$("tr.show-tracking").toggle()
+    this.$("tr.edit-tracking").toggle();
+    this.$("tr.show-tracking").toggle();
   },
 
   saveTracking: function(e) {
