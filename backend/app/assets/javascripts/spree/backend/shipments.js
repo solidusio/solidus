@@ -133,7 +133,6 @@ completeItemSplit = function(event) {
       // TRANSFER TO A NEW LOCATION
       Spree.ajax({
         type: "POST",
-        async: false,
         url: Spree.routes.shipments_api + "/transfer_to_location",
         data: {
             original_shipment_number: original_shipment_number,
@@ -150,7 +149,6 @@ completeItemSplit = function(event) {
         // TRANSFER TO AN EXISTING SHIPMENT
         Spree.ajax({
             type: "POST",
-            async: false,
             url: Spree.routes.shipments_api + "/transfer_to_shipment",
             data: {
                 original_shipment_number: original_shipment_number,
