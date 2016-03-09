@@ -24,13 +24,13 @@ jQuery(function($) {
   });
 
   // Highlight hovered table column
-  $('body').on("mouseenter", 'td.actions a, td.actions button', function(){
+  $('table').on("mouseenter", 'td.actions a, td.actions button', function(){
     var tr = $(this).closest('tr');
     var klass = 'highlight action-' + $(this).data('action')
     tr.addClass(klass)
     tr.prev().addClass('before-' + klass);
   });
-  $('body').on("mouseleave", 'td.actions a, td.actions button', function(){
+  $('table').on("mouseleave", 'td.actions a, td.actions button', function(){
     var tr = $(this).closest('tr');
     var klass = 'highlight action-' + $(this).data('action')
     tr.removeClass(klass)
