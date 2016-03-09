@@ -41,37 +41,37 @@ updateShipment = function(shipment_number, attributes) {
 }
 
 adjustShipmentItems = function(shipment_number, variant_id, quantity){
-    var shipment = _.findWhere(shipments, {number: shipment_number + ''});
-    var inventory_units = _.where(shipment.inventory_units, {variant_id: variant_id});
+  var shipment = _.findWhere(shipments, {number: shipment_number + ''});
+  var inventory_units = _.where(shipment.inventory_units, {variant_id: variant_id});
 
-    var url = Spree.routes.shipments_api + "/" + shipment_number;
+  var url = Spree.routes.shipments_api + "/" + shipment_number;
 
-    var new_quantity = 0;
-    if(inventory_units.length<quantity){
-      url += "/add"
-      new_quantity = (quantity - inventory_units.length);
-    }else if(inventory_units.length>quantity){
-      url += "/remove"
-      new_quantity = (inventory_units.length - quantity);
-    }
-    url += '.json';
+  var new_quantity = 0;
+  if(inventory_units.length<quantity){
+    url += "/add"
+    new_quantity = (quantity - inventory_units.length);
+  }else if(inventory_units.length>quantity){
+    url += "/remove"
+    new_quantity = (inventory_units.length - quantity);
+  }
+  url += '.json';
 
-    if(new_quantity!=0){
-      Spree.ajax({
-        type: "PUT",
-        url: url,
-        data: {
-          variant_id: variant_id,
-          quantity: new_quantity,
-        },
-        success: function(response) {
-          window.location.reload();
-        },
-        error: function(response) {
-          show_flash('error', response.responseJSON.message);
-        }
-      });
-    }
+  if(new_quantity!=0){
+    Spree.ajax({
+      type: "PUT",
+      url: url,
+      data: {
+        variant_id: variant_id,
+        quantity: new_quantity,
+      },
+      success: function(response) {
+        window.location.reload();
+      },
+      error: function(response) {
+        show_flash('error', response.responseJSON.message);
+      }
+    });
+  }
 }
 
 deleteLineItem = function(line_item_id){
