@@ -11,14 +11,4 @@ jQuery(function($) {
     new_taxon = taxon.text.replace('->', '<i class="fa fa-arrow-right">')
     return new_taxon;
   }
-
-  $("#product_taxon_ids").on({
-    change: function(e){
-      $('.select2-search-choice .with-tip').powerTip({
-        smartPlacement: true,
-        fadeInTime: 50,
-        fadeOutTime: 50
-      })
-    }
-  })
 })

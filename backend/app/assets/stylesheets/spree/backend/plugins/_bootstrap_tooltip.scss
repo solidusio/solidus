@@ -1,0 +1,47 @@
+@mixin bootstrap-tooltip-color($color) {
+  .tooltip-inner{
+    background-color: $color;
+  }
+
+  &.tooltip-top,
+  &.bs-tether-element-attached-bottom {
+    .tooltip-arrow {
+      border-top-color: $color;
+    }
+  }
+
+  &.tooltip-right,
+  &.bs-tether-element-attached-left {
+    .tooltip-arrow {
+      border-right-color: $color;
+    }
+  }
+
+  &.tooltip-bottom,
+  &.bs-tether-element-attached-top {
+    .tooltip-arrow {
+      border-bottom-color: $color;
+    }
+  }
+
+  &.tooltip-left,
+  &.bs-tether-element-attached-right {
+    .tooltip-arrow {
+      border-left-color: $color;
+    }
+  }
+}
+
+.tooltip {
+  pointer-events: none;
+
+  &.action-edit, &.action-save, &.action-capture, &.action-add {
+    @include bootstrap-tooltip-color($brand-success);
+  }
+  &.action-clone {
+    @include bootstrap-tooltip-color($brand-warning);
+  }
+  &.action-void, &.action-failure, &.action-cancel, &.action-remove {
+    @include bootstrap-tooltip-color($brand-danger);
+  }
+}

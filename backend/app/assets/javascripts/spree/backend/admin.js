@@ -15,36 +15,27 @@ Hopefully, this will evolve into a propper class.
 **/
 
 jQuery(function($) {
+  $('body').tooltip({selector: '.with-tip'})
 
-  // Add some tips
-  $('.with-tip').powerTip({
-    smartPlacement: true,
-    fadeInTime: 50,
-    fadeOutTime: 50,
+  $('body').on('inserted.bs.tooltip', function(e){
+    var $target = $(e.target);
+    var $tooltip = $("#" + $target.attr("aria-describedby"));
+    $tooltip.addClass("action-" + $target.data("action"));
   });
 
-  $('body')
-    .on('powerTipPreRender', '.with-tip', function() {
-      $('#powerTip').addClass($(this).data('action'));
-      $('#powerTip').addClass($(this).data('tip-color'));
-    })
-    .on('powerTipClose', '.with-tip', function() {
-      $('#powerTip').removeClass($(this).data('action'));
-    })
-
   // Highlight hovered table column
-  $('table tbody tr td.actions').find('a, button').hover(function(){
+  $('table').on("mouseenter", 'td.actions a, td.actions button', function(){
     var tr = $(this).closest('tr');
     var klass = 'highlight action-' + $(this).data('action')
     tr.addClass(klass)
     tr.prev().addClass('before-' + klass);
-  }, function(){
+  });
+  $('table').on("mouseleave", 'td.actions a, td.actions button', function(){
     var tr = $(this).closest('tr');
     var klass = 'highlight action-' + $(this).data('action')
     tr.removeClass(klass)
     tr.prev().removeClass('before-' + klass);
   });
-
 });
 
 
