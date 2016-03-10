@@ -1,5 +1,20 @@
 ## Solidus 1.3.0 (unreleased)
 
+*   Taxes for carts now configurable via the `Spree::Store` object
+
+    In VAT countries, carts (orders without addresses) have to be shown with
+    adjustments for the country whose taxes the cart's prices supposedly include.
+    This might differ from `Spree::Store` to `Spree::Store`. We're introducting
+    the `cart_tax_country_iso` setting on Spree::Store for this purpose.
+
+    Previously the setting for what country any prices include
+    Spree::Zone.default_tax. That, however, would *also* implicitly tag all
+    prices in Spree as including the taxes from that zone. Introducing the cart
+    tax setting on Spree::Store relieves that boolean of some of its
+    responsibilities.
+
+    https://github.com/solidusio/solidus/pull/933
+
 *   Make Spree::Product#prices association return all prices
 
     Previously, only non-master variant prices would have been returned here.
