@@ -1,5 +1,12 @@
 ## Solidus 1.3.0 (unreleased)
 
+*   Make Spree::Product#prices association return all prices
+
+    Previously, only non-master variant prices would have been returned here.
+    Now, we get all the prices, including those from the master variant.
+
+    https://github.com/solidusio/solidus/pull/969
+
 *   Changes to Spree::Stock::Estimator
 
     * The package passed to Spree::Stock::Estimator#shipping_rates must have its
