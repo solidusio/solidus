@@ -1,4 +1,9 @@
 module Spree
+  # Used to persist shipping rate tax estimations.
+  # @attr [Spree::ShippingRate] shipping_rate The shipping rate to be taxed
+  # @attr [Spree::TaxRate] tax_rate The tax rate used to calculate the tax amount
+  # @since 1.3.0
+  # @see Spree::Tax::ShippingRateTaxer
   class ShippingRateTax < ActiveRecord::Base
     belongs_to :shipping_rate, class_name: "Spree::ShippingRate"
     belongs_to :tax_rate, class_name: "Spree::TaxRate"
