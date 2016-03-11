@@ -79,6 +79,12 @@
 
         <%= paginate @collection, theme: "solidus_admin" %>
 
+*   Settings configuration menu has been replaced with groups of tabs at the top
+
+    * Settings pages were grouped into related partials as outlined in [#634](https://github.com/solidusio/solidus/issues/634)
+    * Partials are rendered on pages owned by the partials as tabs as a top bar
+    * Admin-nav has a sub-menu for the settings now
+
 ## Solidus 1.2.0 (2016-01-26)
 
 *   Admin menu has been moved from top of the page to the left side.
