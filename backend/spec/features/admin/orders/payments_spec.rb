@@ -165,7 +165,6 @@ describe 'Payments', type: :feature do
       it 'does not allow the amount to be edited' do
         within_row(1) do
           expect(page).not_to have_selector('.fa-edit')
-          expect(page).not_to have_selector('td.amount span')
         end
       end
     end
