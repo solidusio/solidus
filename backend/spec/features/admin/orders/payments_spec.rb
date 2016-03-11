@@ -116,6 +116,7 @@ describe 'Payments', type: :feature do
         within_row(1) do
           click_icon(:edit)
           fill_in('amount', with: '$1')
+          click_icon(:save)
           expect(page).to have_selector('td.amount span', text: '$1.00')
           expect(payment.reload.amount).to eq(1.00)
         end
@@ -125,6 +126,7 @@ describe 'Payments', type: :feature do
         within_row(1) do
           find('td.amount span').click
           fill_in('amount', with: '$1.01')
+          click_icon(:save)
           expect(page).to have_selector('td.amount span', text: '$1.01')
           expect(payment.reload.amount).to eq(1.01)
         end
@@ -149,6 +151,7 @@ describe 'Payments', type: :feature do
         within_row(1) do
           click_icon(:edit)
           fill_in('amount', with: 'invalid')
+          click_icon(:save)
         end
         expect(page).to have_selector('.flash.error', text: 'Invalid resource. Please fix errors and try again.')
         expect(page).to have_field('amount', with: 'invalid')

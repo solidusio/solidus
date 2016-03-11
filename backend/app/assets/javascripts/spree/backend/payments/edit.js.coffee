@@ -125,10 +125,6 @@ jQuery ($) ->
       $('<input />')
         .prop(id: 'amount', value: amount)
         .width(width)
-        .one
-          blur: =>
-            clicked = (@$buttons().filter -> $(@).data('clicked')).length
-            @save() unless clicked
         .css('text-align': 'right')
 
     $input: ->
