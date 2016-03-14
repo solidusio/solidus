@@ -214,7 +214,8 @@ module Spree
     # @param currency [String] the desired currency
     # @return [Spree::Price] the price in the desired currency
     def price_in(currency)
-      prices.detect{ |price| price.currency == currency && price.is_default } || Spree::Price.new(variant_id: id, currency: currency)
+      prices.valid_before_now.in_currency(currency).first ||
+        prices.build(currency: currency)
     end
 
     # Fetches the price amount in the specified currency.

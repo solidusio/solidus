@@ -5,7 +5,8 @@ module Spree
     MAXIMUM_AMOUNT = BigDecimal('99_999_999.99')
 
     belongs_to :variant, -> { with_deleted }, class_name: 'Spree::Variant', touch: true
-    before_save :valid_from_today!, if: -> { valid_from.blank? }
+
+    after_initialize :valid_from_today!, if: -> { valid_from.blank? }
 
     validate :check_price
     validates :amount, allow_nil: true, numericality: {
@@ -13,11 +14,11 @@ module Spree
       less_than_or_equal_to: MAXIMUM_AMOUNT
     }
 
+    scope :in_currency, -> (currency) { where(currency: currency) }
     scope :latest_valid_from_first, -> { order(valid_from: :desc) }
-    scope :valid_before, -> (date) { where("#{Spree::Price.table_name}.valid_from <= ?", date) }
+    scope :valid_before,
+          -> (date) { latest_valid_from_first.where("#{Spree::Price.table_name}.valid_from <= ?", date) }
     scope :valid_before_now, -> { valid_before(Time.current) }
-
-    after_save :set_default_price
 
     extend DisplayMoney
     money_methods :amount, :price
@@ -50,13 +51,6 @@ module Spree
 
     def check_price
       self.currency ||= Spree::Config[:currency]
-    end
-
-    def set_default_price
-      if is_default?
-        other_default_prices = variant.prices.where(currency: self.currency, is_default: true).where.not(id: id)
-        other_default_prices.update_all(is_default: false)
-      end
     end
   end
 end
