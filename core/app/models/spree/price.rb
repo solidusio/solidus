@@ -5,12 +5,17 @@ module Spree
     MAXIMUM_AMOUNT = BigDecimal('99_999_999.99')
 
     belongs_to :variant, -> { with_deleted }, class_name: 'Spree::Variant', touch: true
+    before_save :valid_from_today!, if: -> { valid_from.blank? }
 
     validate :check_price
     validates :amount, allow_nil: true, numericality: {
       greater_than_or_equal_to: 0,
       less_than_or_equal_to: MAXIMUM_AMOUNT
     }
+
+    scope :latest_valid_from_first, -> { order(valid_from: :desc) }
+    scope :valid_before, -> (date) { where("#{Spree::Price.table_name}.valid_from <= ?", date) }
+    scope :valid_before_now, -> { valid_before(Time.current) }
 
     after_save :set_default_price
 
@@ -38,6 +43,10 @@ module Spree
     end
 
     private
+
+    def valid_from_today!
+      self.valid_from = Time.current
+    end
 
     def check_price
       self.currency ||= Spree::Config[:currency]

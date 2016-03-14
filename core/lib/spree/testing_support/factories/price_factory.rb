@@ -5,5 +5,6 @@ FactoryGirl.define do
     variant
     amount 19.99
     currency 'USD'
+    valid_from { Time.current }
   end
 end
