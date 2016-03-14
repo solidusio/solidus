@@ -132,7 +132,11 @@ startItemSplit = function(event){
     var split_item_template = HandlebarsTemplates['variants/split'];
     link.closest('tr').after(split_item_template({ variant: variant, shipments: shipments, max_quantity: max_quantity }));
 
-    $('#item_stock_location').select2({ width: 'resolve', placeholder: Spree.translations.item_stock_placeholder });
+    $('#item_stock_location').select2({
+      width: 'resolve',
+      placeholder: Spree.translations.item_stock_placeholder,
+      minimumResultsForSearch: 8
+    });
   });
 };
 
