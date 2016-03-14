@@ -52,7 +52,6 @@ $ ->
         else
           stateSelect.removeClass('required')
           stateSpanRequired.hide()
-        stateSelect.removeClass('hidden')
         stateInput.removeClass('required')
       else
         stateSelect.hide().prop 'disabled', true
@@ -66,7 +65,6 @@ $ ->
           stateInput.removeClass('required')
         statePara.toggle(!!statesRequired)
         stateInput.prop('disabled', !statesRequired)
-        stateInput.removeClass('hidden')
         stateSelect.removeClass('required')
 
     $('#bcountry select').change ->
