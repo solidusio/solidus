@@ -23,6 +23,16 @@ describe Spree::Admin::NavigationHelper, type: :helper do
           allow(controller).to receive(:controller_name).and_return("bonobos")
           expect(subject).not_to include('class="selected"')
         end
+
+        it "should be selected if the current path" do
+          allow(helper).to receive(:request).and_return(double(ActionDispatch::Request, fullpath: "/admin/orders"))
+          expect(subject).to include('class="selected"')
+        end
+
+        it "should not be selected if not current path" do
+          allow(helper).to receive(:request).and_return(double(ActionDispatch::Request, fullpath: "/admin/products"))
+          expect(subject).not_to include('class="selected"')
+        end
       end
 
       context "when match_path option is supplied" do
