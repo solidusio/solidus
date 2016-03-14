@@ -1,21 +1,37 @@
 // Shipments AJAX API
-$(document).ready(function () {
-  'use strict';
 
-  // handle variant selection, show stock level.
-  $('#add_variant_id').change(function(){
-    var variant_id = $(this).val();
-
+var ShipmentAddVariantView = Backbone.View.extend({
+  events: {
+    "change #add_variant_id": "onSelect",
+    "click .add_variant": "onAdd"
+  },
+  onSelect: function(e) {
+    var variant_id = this.$("#add_variant_id").val();
+    var template = HandlebarsTemplates["variants/autocomplete_stock"];
+    var $stock_details = this.$('#stock_details');
     Spree.ajax({
       url: Spree.routes.variants_api + "/" + variant_id,
       success: function(variant){
-        var variantStockTemplate = HandlebarsTemplates["variants/autocomplete_stock"];
-        $('#stock_details').html(variantStockTemplate({variant: variant}));
-        $('#stock_details').show();
-
-        $('button.add_variant').click(addVariantFromStockLocation);
+        $stock_details.html(template({variant: variant})).show()
       }
     });
+  },
+  onAdd: function(e){
+    e.preventDefault();
+
+    this.$('#stock_details').hide();
+
+    var variant_id = this.$('input.variant_autocomplete').val();
+    var stock_location_id = $(e.target).data('stock-location-id');
+    var quantity = this.$("input.quantity[data-stock-location-id='" + stock_location_id + "']").val();
+
+    addVariantFromStockLocation(stock_location_id, variant_id, quantity)
+  }
+});
+
+$(function(){
+  $(".js-shipment-add-variant").each(function(){
+    new ShipmentAddVariantView({el: this});
   });
 });
 
@@ -177,15 +193,7 @@ completeItemSplit = function(event) {
   }
 };
 
-addVariantFromStockLocation = function(event) {
-  event.preventDefault();
-
-  $('#stock_details').hide();
-
-  var variant_id = $('input.variant_autocomplete').val();
-  var stock_location_id = $(this).data('stock-location-id');
-  var quantity = $("input.quantity[data-stock-location-id='" + stock_location_id + "']").val();
-
+addVariantFromStockLocation = function(stock_location_id, variant_id, quantity) {
   var shipment = _.find(shipments, function(shipment){
     return shipment.stock_location_id == stock_location_id && (shipment.state == 'ready' || shipment.state == 'pending');
   });
