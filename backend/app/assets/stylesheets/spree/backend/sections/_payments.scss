@@ -1,0 +1,14 @@
+/* hide and show elements based on editing */
+tr.payment {
+  .edit-payment-amount {
+    text-align: right;
+  }
+
+  &:not(.editing) .editing-show {
+    display: none;
+  }
+
+  &.editing .editing-hide {
+    display: none;
+  }
+}

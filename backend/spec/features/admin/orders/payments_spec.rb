@@ -13,20 +13,11 @@ describe 'Payments', type: :feature do
       )
     end
 
-    let(:order) { create(:completed_order_with_totals, number: 'R100', line_items_count: 5) }
+    let(:order) { create(:completed_order_with_totals, number: 'R100', line_items_price: 50) }
     let(:state) { 'checkout' }
 
     before do
-      visit spree.admin_path
-      click_link 'Orders'
-      within_row(1) do
-        click_link order.number
-      end
-      click_link 'Payments'
-    end
-
-    def refresh_page
-      visit current_path
+      visit "/admin/orders/#{order.number}/payments"
     end
 
     # Regression tests for https://github.com/spree/spree/issues/1453
@@ -116,6 +107,7 @@ describe 'Payments', type: :feature do
         within_row(1) do
           click_icon(:edit)
           fill_in('amount', with: '$1')
+          click_icon(:save)
           expect(page).to have_selector('td.amount span', text: '$1.00')
           expect(payment.reload.amount).to eq(1.00)
         end
@@ -125,6 +117,7 @@ describe 'Payments', type: :feature do
         within_row(1) do
           find('td.amount span').click
           fill_in('amount', with: '$1.01')
+          click_icon(:save)
           expect(page).to have_selector('td.amount span', text: '$1.01')
           expect(payment.reload.amount).to eq(1.01)
         end
@@ -149,6 +142,7 @@ describe 'Payments', type: :feature do
         within_row(1) do
           click_icon(:edit)
           fill_in('amount', with: 'invalid')
+          click_icon(:save)
         end
         expect(page).to have_selector('.flash.error', text: 'Invalid resource. Please fix errors and try again.')
         expect(page).to have_field('amount', with: 'invalid')
@@ -162,7 +156,6 @@ describe 'Payments', type: :feature do
       it 'does not allow the amount to be edited' do
         within_row(1) do
           expect(page).not_to have_selector('.fa-edit')
-          expect(page).not_to have_selector('td.amount span')
         end
       end
     end

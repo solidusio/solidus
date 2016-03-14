@@ -12,24 +12,36 @@
   </thead>
   <tbody>
     <% payments.each do |payment| %>
-      <tr id="<%= dom_id(payment) %>" data-hook="payments_row" class="<%= cycle('odd', 'even', name: 'payment_table_cycle')%>">
+      <tr id="<%= dom_id(payment) %>" data-hook="payments_row" class="payment <%= cycle('odd', 'even', name: 'payment_table_cycle')%>" data-payment-id="<%= payment.id %>">
         <td><%= link_to payment.number, spree.admin_order_payment_path(@order, payment) %></td>
         <td><%= pretty_time(payment.created_at) %></td>
-        <td class="align-center amount"><%= payment.display_amount.to_html %></td>
+        <td class="align-center amount">
+          <%= text_field_tag :amount, payment.amount, class: 'js-edit-amount edit-payment-amount editing-show' %>
+          <span class="js-display-amount editing-hide"><%= payment.display_amount.to_html %></span>
+        </td>
         <td class="align-center"><%= payment_method_name(payment) %></td>
         <td class="align-center"><%= payment.transaction_id %></td>
         <td class="align-center"> <span class="state <%= payment.state %>"><%= Spree.t(payment.state, :scope => :payment_states, :default => payment.state.capitalize) %></span></td>
         <td class="actions">
-          <% allowed_actions = payment.actions.select { |a| can?(a.to_sym, payment) } %>
-          <% allowed_actions.each do |action| %>
-            <% if action == 'credit' %>
-              <%= link_to_with_icon 'reply', Spree.t(:refund), new_admin_order_payment_refund_path(@order, payment), no_text: true %>
-            <% elsif action == 'capture' && !@order.completed? %>
-              <%# no capture prior to completion. payments get captured when the order completes. %>
-            <% else %>
-              <%= link_to_with_icon action, Spree.t(action), fire_admin_order_payment_path(@order, payment, :e => action), :method => :put, :no_text => true, :data => {:action => action} %>
+          <div class="editing-show">
+            <%= link_to_with_icon 'save', Spree.t('actions.save'), nil, no_text: true, class: "js-save", data: {action: 'save'} %>
+            <%= link_to_with_icon 'cancel', Spree.t('actions.cancel'), nil, no_text: true, class: "js-cancel", data: {action: 'cancel'} %>
+          </div>
+          <div class="editing-hide">
+            <% if payment.pending? %>
+              <%= link_to_with_icon 'edit', Spree.t('actions.edit'), nil, no_text: true, class: "js-edit", data: {action: 'edit'} %>
             <% end %>
-          <% end %>
+            <% allowed_actions = payment.actions.select { |a| can?(a.to_sym, payment) } %>
+            <% allowed_actions.each do |action| %>
+              <% if action == 'credit' %>
+                <%= link_to_with_icon 'reply', Spree.t(:refund), new_admin_order_payment_refund_path(@order, payment), no_text: true %>
+              <% elsif action == 'capture' && !@order.completed? %>
+                <%# no capture prior to completion. payments get captured when the order completes. %>
+              <% else %>
+                <%= link_to_with_icon action, Spree.t(action), fire_admin_order_payment_path(@order, payment, :e => action), :method => :put, :no_text => true, :data => {:action => action} %>
+              <% end %>
+            <% end %>
+          </div>
         </td>
       </tr>
     <% end %>
