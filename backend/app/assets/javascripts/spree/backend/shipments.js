@@ -42,7 +42,7 @@ var ShipShipmentView = Backbone.View.extend({
 });
 
 updateShipment = function(shipment_number, attributes) {
-  var url = Spree.routes.shipments_api + '/' + shipment_number + '.json';
+  var url = Spree.routes.shipments_api + '/' + shipment_number;
 
   return Spree.ajax({
     type: 'PUT',
@@ -67,7 +67,6 @@ adjustShipmentItems = function(shipment_number, variant_id, quantity){
     url += "/remove";
     new_quantity = (inventory_units.length - quantity);
   }
-  url += '.json';
 
   if(new_quantity!=0){
     Spree.ajax({
@@ -88,7 +87,7 @@ adjustShipmentItems = function(shipment_number, variant_id, quantity){
 };
 
 deleteLineItem = function(line_item_id){
-  var url = Spree.routes.line_items_api(order_number) + "/" + line_item_id + ".json";
+  var url = Spree.routes.line_items_api(order_number) + "/" + line_item_id;
 
   Spree.ajax({
     type: "DELETE",
