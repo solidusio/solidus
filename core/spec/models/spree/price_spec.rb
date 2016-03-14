@@ -1,6 +1,8 @@
 require 'spec_helper'
 
 describe Spree::Price, type: :model do
+  it { is_expected.to respond_to(:valid_from) }
+
   describe 'validations' do
     let(:variant) { stub_model Spree::Variant }
     subject { Spree::Price.new variant: variant, amount: amount }
