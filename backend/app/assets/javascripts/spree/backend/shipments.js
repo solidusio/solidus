@@ -271,6 +271,14 @@ var ShipmentEditView = Backbone.View.extend({
 
   cancelItemSplit: function(e){
     e.preventDefault();
+
+    /* We are removing this row including the currently hovered button, which
+     * gives no opportunity for events to fire.
+     * We must trigger them manually to ensure the tooltip is destroyed and the
+     * table colours are restored.
+     */
+    $(e.target).mouseleave().tooltip("hide");
+
     this.$('tr.stock-item-split').remove();
     this.$('a.split-item').show();
     this.$('a.delete-item').show();
