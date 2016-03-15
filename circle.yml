@@ -7,6 +7,8 @@ machine:
     - postgresql
   ruby:
     version: 2.3.0
+  pre:
+    - sudo curl --output /usr/local/bin/phantomjs https://s3.amazonaws.com/circle-downloads/phantomjs-2.1.1
 dependencies:
   override:
     - bundle check --path=vendor/bundle || bundle install --path=vendor/bundle

@@ -30,7 +30,7 @@ group :test do
   gem 'rspec-its'
   gem 'rspec-rails', '~> 3.4.1'
   gem 'simplecov'
-  gem 'poltergeist'
+  gem 'poltergeist', '~> 1.9'
   gem 'timecop'
   gem 'with_model'
   gem 'rspec_junit_formatter'
