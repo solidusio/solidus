@@ -6,7 +6,7 @@ machine:
   services:
     - postgresql
   ruby:
-    version: 2.1.5
+    version: 2.3.0
 dependencies:
   override:
     - bundle check --path=vendor/bundle || bundle install --path=vendor/bundle
