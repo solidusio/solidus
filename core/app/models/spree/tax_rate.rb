@@ -27,6 +27,9 @@ module Spree
     validates :tax_category_id, presence: true
     validates_with DefaultTaxZoneValidator
 
+    # Finds all tax rates whose zones match a given address
+    scope :for_address, ->(address) { joins(:zone).merge(Spree::Zone.for_address(address)) }
+
     # Finds geographically matching tax rates for a tax zone.
     # We do not know if they are/aren't applicable until we attempt to apply these rates to
     # the items contained within the Order itself.

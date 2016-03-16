@@ -1,6 +1,8 @@
 require 'spec_helper'
 
 describe Spree::Store, type: :model do
+  it { is_expected.to respond_to(:cart_tax_country_iso) }
+
   describe ".by_url" do
     let!(:store)    { create(:store, url: "website1.com\nwww.subdomain.com") }
     let!(:store_2)  { create(:store, url: 'freethewhales.com') }
@@ -48,6 +50,25 @@ describe Spree::Store, type: :model do
       expect(Spree::Store.where(default: true).count).to eq(1)
       expect(store_2.default).to be true
       expect(store.default).not_to be true
+    end
+  end
+
+  describe '#default_cart_tax_location' do
+    subject { described_class.new(cart_tax_country_iso: cart_tax_country_iso) }
+    context "when there is no cart_tax_country_iso set" do
+      let(:cart_tax_country_iso) { '' }
+      it "responds with an empty default_cart_tax_location" do
+        expect(subject.default_cart_tax_location).to be_empty
+      end
+    end
+
+    context "when there is a cart_tax_country_iso set" do
+      let(:country) { create(:country, iso: "DE") }
+      let(:cart_tax_country_iso) { country.iso }
+
+      it "responds with a default_cart_tax_location with that country" do
+        expect(subject.default_cart_tax_location).to eq(Spree::Tax::TaxLocation.new(country: country))
+      end
     end
   end
 end

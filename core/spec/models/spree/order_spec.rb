@@ -395,22 +395,51 @@ describe Spree::Order, type: :model do
   end
 
   describe "#tax_address" do
+    let(:order) { build(:order, ship_address: ship_address, bill_address: bill_address, store: store) }
+    let(:store) { build(:store) }
+
     before { Spree::Config[:tax_using_ship_address] = tax_using_ship_address }
     subject { order.tax_address }
 
-    context "when tax_using_ship_address is true" do
-      let(:tax_using_ship_address) { true }
+    context "when the order has no addresses" do
+      let(:ship_address) { nil }
+      let(:bill_address) { nil }
 
-      it 'returns ship_address' do
-        expect(subject).to eq(order.ship_address)
+      context "when tax_using_ship_address is true" do
+        let(:tax_using_ship_address) { true }
+
+        it 'returns the stores default cart tax location' do
+          expect(subject).to eq(store.default_cart_tax_location)
+        end
+      end
+
+      context "when tax_using_ship_address is not true" do
+        let(:tax_using_ship_address) { false }
+
+        it 'returns the stores default cart tax location' do
+          expect(subject).to eq(store.default_cart_tax_location)
+        end
       end
     end
 
-    context "when tax_using_ship_address is not true" do
-      let(:tax_using_ship_address) { false }
+    context "when the order has addresses" do
+      let(:ship_address) { build(:address) }
+      let(:bill_address) { build(:address) }
 
-      it "returns bill_address" do
-        expect(subject).to eq(order.bill_address)
+      context "when tax_using_ship_address is true" do
+        let(:tax_using_ship_address) { true }
+
+        it 'returns ship_address' do
+          expect(subject).to eq(order.ship_address)
+        end
+      end
+
+      context "when tax_using_ship_address is not true" do
+        let(:tax_using_ship_address) { false }
+
+        it "returns bill_address" do
+          expect(subject).to eq(order.bill_address)
+        end
       end
     end
   end
