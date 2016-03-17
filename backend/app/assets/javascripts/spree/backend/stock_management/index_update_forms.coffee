@@ -26,10 +26,13 @@ class IndexUpdateForms
 
       stockItem = new Spree.StockItem
         id: stockItemId
-        countOnHand: countOnHand
+        count_on_hand: countOnHand
         backorderable: backorderable
-        stockLocationId: stockLocationId
-      stockItem.update(successHandler, errorHandler)
+        stock_location_id: stockLocationId
+      options =
+        success: successHandler
+        error: errorHandler
+      stockItem.save(force: true, options)
 
   showReadOnlyElements = (stockItemId) ->
     toggleBackorderable(stockItemId, false)
@@ -52,13 +55,13 @@ class IndexUpdateForms
     checked = backorderableCheckbox.parent('td').attr('was-checked') is "true"
     backorderableCheckbox.prop('checked', checked)
 
-  successHandler = (stockItem) =>
-    toggleBackorderable(stockItem.id, false)
-    Spree.NumberFieldUpdater.successHandler(stockItem.id, stockItem.count_on_hand)
+  successHandler = (model, response, options) =>
+    toggleBackorderable(model.get('id'), false)
+    Spree.NumberFieldUpdater.successHandler(model.get('id'), model.get('count_on_hand'))
     show_flash("success", Spree.translations.updated_successfully)
 
-  errorHandler = (errorData) ->
-    show_flash("error", errorData.responseText)
+  errorHandler = (model, response, options) ->
+    show_flash("error", response.responseText)
 
 Spree.StockManagement ?= {}
 Spree.StockManagement.IndexUpdateForms = IndexUpdateForms

@@ -13,11 +13,14 @@ class IndexAddForms
       stockLocationId = locationSelect.val()
       backorderable = $("#variant-backorderable-#{variantId}").prop("checked")
       stockItem = new Spree.StockItem
-        variantId: variantId
+        variant_id: variantId
         backorderable: backorderable
-        countOnHand: countInput.val()
-        stockLocationId: stockLocationId
-      stockItem.save(successHandler, errorHandler)
+        count_on_hand: countInput.val()
+        stock_location_id: stockLocationId
+      options =
+        success: successHandler
+        error: errorHandler
+      stockItem.save(null, options)
 
   resetErrors = (locationSelectContainer, countInput) ->
     countInput.removeClass('error')
@@ -33,9 +36,9 @@ class IndexAddForms
   hasErrors = (locationSelectContainer, countInput) ->
     locationSelectContainer.hasClass('error') or countInput.hasClass('error')
 
-  successHandler = (stockItem) =>
-    variantId = stockItem.variant_id
-    stockLocationId = stockItem.stock_location_id
+  successHandler = (model, response, options) =>
+    variantId = model.get('variant_id')
+    stockLocationId = model.get('stock_location_id')
     stockLocationSelect = $("#variant-stock-location-#{variantId}")
 
     selectedStockLocationOption = stockLocationSelect.find("option[value='#{stockLocationId}']")
@@ -45,12 +48,12 @@ class IndexAddForms
     rowTemplate = HandlebarsTemplates['stock_items/stock_location_stock_item']
     $("tr[data-variant-id='#{variantId}']:last").before(
       rowTemplate
-        id: stockItem.id
+        id: model.get('id')
         variantId: variantId
         stockLocationId: stockLocationId
         stockLocationName: stockLocationName
-        countOnHand: stockItem.count_on_hand
-        backorderable: stockItem.backorderable
+        countOnHand: model.get('count_on_hand')
+        backorderable: model.get('backorderable')
     )
     resetTableRowStyling(variantId)
 
@@ -64,8 +67,8 @@ class IndexAddForms
     resetParentRowspan(variantId)
     show_flash("success", Spree.translations.created_successfully)
 
-  errorHandler = (errorData) =>
-    show_flash("error", errorData.responseText)
+  errorHandler = (model, response, options) =>
+    show_flash("error", response.responseText)
 
   resetTableRowStyling = (variantId) ->
     tableRows = $("tr[data-variant-id='#{variantId}']")
