@@ -14,6 +14,46 @@ describe Spree::Product, type: :model do
     let(:product) { create(:product) }
     let(:variant) { create(:variant, product: product) }
 
+    describe '#cache_key' do
+      context 'when price changes in a week' do
+        let!(:current_price) { variant.prices.first }
+        let!(:future_price) { create(:price, variant: variant, valid_from: 1.week.from_now) }
+
+        after { Timecop.return }
+
+        context 'tomorrow' do
+          it 'the cache key does not change' do
+            expect {
+              Timecop.travel(1.day.from_now)
+            }.not_to change { product.cache_key }
+          end
+
+          context 'when updating the price' do
+            it 'changes the cache key' do
+              expect {
+                Timecop.travel(1.day.from_now)
+                current_price.update(amount: current_price.amount + 1)
+              }.to change { product.cache_key }
+            end
+          end
+        end
+
+        context 'in a month' do
+          it 'the cache key does change' do
+            expect {
+              Timecop.travel(1.month.from_now)
+            }.to change { product.cache_key }
+          end
+
+          it 'does not change the length of the cache key' do
+            expect {
+              Timecop.travel(1.month.from_now)
+            }.not_to change { product.cache_key.length }
+          end
+        end
+      end
+    end
+
     context '#duplicate' do
       before do
         allow(product).to receive_messages taxons: [create(:taxon)]
@@ -42,8 +82,8 @@ describe Spree::Product, type: :model do
       subject { product.save! }
 
       shared_examples "a change occurred" do
-        it "should change updated_at" do
-          expect { subject }.to change{ product.updated_at }
+        it "should change the cache key" do
+          expect { subject }.to change{ product.cache_key }
         end
 
         it "should touch taxons" do
@@ -55,8 +95,8 @@ describe Spree::Product, type: :model do
       end
 
       shared_examples "no change occurred" do
-        it "should not change updated_at" do
-          expect { subject }.not_to change{ product.updated_at }
+        it "should not change the cache key" do
+          expect { subject }.not_to change{ product.cache_key }
         end
 
         it "should not touch taxons" do

@@ -20,6 +20,11 @@ module Spree
           -> (date) { latest_valid_from_first.where("#{Spree::Price.table_name}.valid_from <= ?", date) }
     scope :valid_before_now, -> { valid_before(Time.current) }
 
+    # Returns a cache key for all prices in a passed in relation
+    def self.cache_key
+      Digest::MD5.hexdigest(valid_before_now.pluck(:id, :updated_at).flatten.join("/"))
+    end
+
     extend DisplayMoney
     money_methods :amount, :price
 

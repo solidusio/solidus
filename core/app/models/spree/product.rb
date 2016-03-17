@@ -274,6 +274,10 @@ module Spree
       end
     end
 
+    def cache_key
+      super + "/prices/" + prices.cache_key
+    end
+
     private
 
     def add_associations_from_prototype
