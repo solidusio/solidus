@@ -50,16 +50,21 @@ describe "Shipments", type: :feature do
 
     it "can move a variant to a new and to an existing shipment" do
       expect(order.shipments.count).to eq(1)
+      shipment1 = order.shipments[0]
 
       within_row(1) { click_icon 'arrows-h' }
       targetted_select2 'LA', from: '#s2id_item_stock_location'
       click_icon :ok
-      expect(page).to have_css("#shipment_#{order.shipments.first.id}")
+
+      expect(page).to have_css("#shipment_#{shipment1.id} tr.stock-item", count: 4)
+      shipment2 = (order.reload.shipments.to_a - [shipment1]).first
+      expect(page).to have_css("#shipment_#{shipment2.id} tr.stock-item", count: 1)
 
       within_row(2) { click_icon 'arrows-h' }
-      targetted_select2 "LA(#{order.reload.shipments.last.number})", from: '#s2id_item_stock_location'
+      targetted_select2 "LA(#{shipment2.number})", from: '#s2id_item_stock_location'
       click_icon :ok
-      expect(page).to have_css("#shipment_#{order.reload.shipments.last.id}")
+      expect(page).to have_css("#shipment_#{shipment2.id} tr.stock-item", count: 2)
+      expect(page).to have_css("#shipment_#{shipment1.id} tr.stock-item", count: 3)
     end
   end
 end
