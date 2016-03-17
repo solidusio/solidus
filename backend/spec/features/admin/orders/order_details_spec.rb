@@ -348,7 +348,7 @@ describe "Order Details", type: :feature, js: true do
           fill_in 'item_quantity', with: 2
           click_icon :ok
 
-          wait_for_ajax
+          expect(page).to have_css("#shipment_#{@shipment2.id}", count: 1)
 
           expect(order.shipments.count).to eq(1)
           expect(order.shipments.last.inventory_units_for(product.master).count).to eq(2)
@@ -398,9 +398,10 @@ describe "Order Details", type: :feature, js: true do
             within_row(1) { click_icon 'arrows-h' }
             targetted_select2 @shipment2.number, from: '#s2id_item_stock_location'
             fill_in 'item_quantity', with: 1
+
             click_icon :ok
 
-            wait_for_ajax
+            expect(page).to have_css('.shipment', count: 2)
 
             expect(order.shipments.count).to eq(2)
             expect(order.shipments.first.inventory_units_for(product.master).count).to eq 1
