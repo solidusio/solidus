@@ -1,36 +1,3 @@
-successHandler = (model, response, options) =>
-  variantId = model.get('variant_id')
-  stockLocationId = model.get('stock_location_id')
-  stockLocationSelect = $("#variant-stock-location-#{variantId}")
-
-  selectedStockLocationOption = stockLocationSelect.find("option[value='#{stockLocationId}']")
-  stockLocationName = selectedStockLocationOption.text().trim()
-  selectedStockLocationOption.remove()
-
-  rowTemplate = HandlebarsTemplates['stock_items/stock_location_stock_item']
-  $("tr[data-variant-id='#{variantId}']:last").before(
-    rowTemplate
-      id: model.get('id')
-      variantId: variantId
-      stockLocationId: stockLocationId
-      stockLocationName: stockLocationName
-      countOnHand: model.get('count_on_hand')
-      backorderable: model.get('backorderable')
-  )
-  updateParentTable(variantId)
-
-  if stockLocationSelect.find('option').length is 1 # blank value
-    stockLocationSelect.parents('tr:first').remove()
-  else
-    stockLocationSelect.select2()
-    $("#variant-count-on-hand-#{variantId}").val("")
-    $("#variant-backorderable-#{variantId}").prop("checked", false)
-
-  show_flash("success", Spree.translations.created_successfully)
-
-errorHandler = (model, response, options) =>
-  show_flash("error", response.responseText)
-
 updateParentTable = (variantId) ->
   tableRows = $("tr[data-variant-id='#{variantId}']")
   tableRows.removeClass('even odd')
@@ -56,6 +23,35 @@ AddStockItemView = Backbone.View.extend
 
     locationSelectContainer.hasClass('error') || @$countInput.hasClass('error')
 
+  onSuccess: ->
+    variantId = @model.get('variant_id')
+    stockLocationId = @model.get('stock_location_id')
+    stockLocationSelect = $("#variant-stock-location-#{variantId}")
+
+    selectedStockLocationOption = stockLocationSelect.find("option[value='#{stockLocationId}']")
+    stockLocationName = selectedStockLocationOption.text().trim()
+    selectedStockLocationOption.remove()
+
+    rowTemplate = HandlebarsTemplates['stock_items/stock_location_stock_item']
+    $("tr[data-variant-id='#{variantId}']:last").before(
+      rowTemplate
+        id: @model.get('id')
+        variantId: variantId
+        stockLocationId: stockLocationId
+        stockLocationName: stockLocationName
+        countOnHand: @model.get('count_on_hand')
+        backorderable: @model.get('backorderable')
+    )
+
+    if stockLocationSelect.find('option').length is 1 # blank value
+      stockLocationSelect.parents('tr:first').remove()
+    else
+      stockLocationSelect.select2()
+      $("#variant-count-on-hand-#{variantId}").val("")
+      $("#variant-backorderable-#{variantId}").prop("checked", false)
+
+    updateParentTable(variantId)
+
   onSubmit: (ev) ->
     ev.preventDefault()
     return if @validate()
@@ -65,8 +61,11 @@ AddStockItemView = Backbone.View.extend
       count_on_hand: @$countInput.val()
       stock_location_id: @$locationSelect.val()
     options =
-      success: successHandler
-      error: errorHandler
+      success: =>
+        @onSuccess()
+        show_flash("success", Spree.translations.created_successfully)
+      error: (model, response, options) =>
+        show_flash("error", response.responseText)
     @model.save(null, options)
 
 $ ->
