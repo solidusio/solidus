@@ -3,10 +3,10 @@ resetErrors = (locationSelectContainer, countInput) ->
   locationSelectContainer.removeClass('error')
 
 validate = (locationSelect, locationSelectContainer, countInput) ->
-  if locationSelect.val() is ""
+  if !locationSelect.val()
     locationSelectContainer.addClass('error')
 
-  if isNaN(parseInt(countInput.val(), 10))
+  if !countInput.val()
     countInput.addClass('error')
 
 hasErrors = (locationSelectContainer, countInput) ->
