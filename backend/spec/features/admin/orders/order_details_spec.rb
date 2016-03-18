@@ -348,7 +348,7 @@ describe "Order Details", type: :feature, js: true do
           fill_in 'item_quantity', with: 2
           click_icon :ok
 
-          wait_for_ajax
+          expect(page).to have_css("#shipment_#{@shipment2.id}", count: 1)
 
           expect(order.shipments.count).to eq(1)
           expect(order.shipments.last.inventory_units_for(product.master).count).to eq(2)
@@ -398,9 +398,10 @@ describe "Order Details", type: :feature, js: true do
             within_row(1) { click_icon 'arrows-h' }
             targetted_select2 @shipment2.number, from: '#s2id_item_stock_location'
             fill_in 'item_quantity', with: 1
+
             click_icon :ok
 
-            wait_for_ajax
+            expect(page).to have_css('.shipment', count: 2)
 
             expect(order.shipments.count).to eq(2)
             expect(order.shipments.first.inventory_units_for(product.master).count).to eq 1
@@ -461,7 +462,6 @@ describe "Order Details", type: :feature, js: true do
       # Order item actions
       expect(page).not_to have_css('.delete-item')
       expect(page).not_to have_css('.split-item')
-      expect(page).not_to have_css('.edit-item')
       expect(page).not_to have_css('.edit-tracking')
 
       expect(page).not_to have_css('#add-line-item')
@@ -485,8 +485,6 @@ describe "Order Details", type: :feature, js: true do
     it 'should not display order tabs or edit buttons without ability' do
       visit spree.edit_admin_order_path(order)
 
-      # Order Form
-      expect(page).not_to have_css('.edit-item')
       # Order Tabs
       expect(page).not_to have_link('Adjustments')
       expect(page).not_to have_link('Payments')
