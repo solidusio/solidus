@@ -1,12 +1,3 @@
-storeBackorderableState = (stockItemId) ->
-  backorderableCheckbox = $("#backorderable-#{stockItemId}")
-  backorderableCheckbox.parent('td').attr('was-checked', backorderableCheckbox.prop('checked'))
-
-restoreBackorderableState = (stockItemId) ->
-  backorderableCheckbox = $("#backorderable-#{stockItemId}")
-  checked = backorderableCheckbox.parent('td').attr('was-checked') is "true"
-  backorderableCheckbox.prop('checked', checked)
-
 errorHandler = (model, response, options) ->
   show_flash("error", response.responseText)
 
@@ -19,16 +10,15 @@ EditStockItemView = Backbone.View.extend
   onEdit: (ev) ->
     ev.preventDefault()
     @$('[name=backorderable]').prop('disabled', false)
-    storeBackorderableState(stockItemId)
     stockItemId = @model.id
     Spree.NumberFieldUpdater.hideReadOnly(stockItemId)
     Spree.NumberFieldUpdater.showForm(stockItemId)
 
   onCancel: (ev) ->
     ev.preventDefault()
-    @$('[name=backorderable]').prop('disabled', true)
+    backorderableWas = @model.previous('backorderable')
+    @$('[name=backorderable]').prop('disabled', true).val(backorderableWas)
     stockItemId = @model.id
-    restoreBackorderableState(stockItemId)
     Spree.NumberFieldUpdater.hideForm(stockItemId)
     Spree.NumberFieldUpdater.showReadOnly(stockItemId)
 
