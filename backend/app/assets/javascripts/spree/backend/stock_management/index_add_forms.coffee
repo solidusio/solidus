@@ -17,7 +17,7 @@ successHandler = (model, response, options) =>
       countOnHand: model.get('count_on_hand')
       backorderable: model.get('backorderable')
   )
-  resetTableRowStyling(variantId)
+  updateParentTable(variantId)
 
   if stockLocationSelect.find('option').length is 1 # blank value
     stockLocationSelect.parents('tr:first').remove()
@@ -26,22 +26,19 @@ successHandler = (model, response, options) =>
     $("#variant-count-on-hand-#{variantId}").val("")
     $("#variant-backorderable-#{variantId}").prop("checked", false)
 
-  resetParentRowspan(variantId)
   show_flash("success", Spree.translations.created_successfully)
 
 errorHandler = (model, response, options) =>
   show_flash("error", response.responseText)
 
-resetTableRowStyling = (variantId) ->
+updateParentTable = (variantId) ->
   tableRows = $("tr[data-variant-id='#{variantId}']")
   tableRows.removeClass('even odd')
   for i in [0..tableRows.length]
     rowClass = if (i + 1) % 2 is 0 then 'even' else 'odd'
     tableRows.eq(i).addClass(rowClass)
 
-resetParentRowspan = (variantId) ->
-  newRowspan = $("tr[data-variant-id='#{variantId}']").length + 1
-  $("#spree_variant_#{variantId} > td").attr('rowspan', newRowspan)
+  $("#spree_variant_#{variantId} > td").attr('rowspan', tableRows.length + 1)
 
 AddStockItemView = Backbone.View.extend
   initialize: ->
