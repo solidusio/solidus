@@ -6,6 +6,7 @@ Spree.EditStockItemView = Backbone.View.extend
 
   initialize: (options) ->
     @stockLocationName = options.stockLocationName
+    @editing = false
     @render()
 
   events:
@@ -17,7 +18,8 @@ Spree.EditStockItemView = Backbone.View.extend
 
   render: ->
     renderAttr =
-      StockLocationName: @stockLocationName
+      stockLocationName: @stockLocationName
+      editing: @editing
     _.extend(renderAttr, @model.attributes)
 
     @$el.attr("data-variant-id", @model.get('variant_id'))
@@ -27,22 +29,18 @@ Spree.EditStockItemView = Backbone.View.extend
 
   onEdit: (ev) ->
     ev.preventDefault()
-    @$('[name=backorderable]').prop('disabled', false)
-    stockItemId = @model.id
-    Spree.NumberFieldUpdater.hideReadOnly(stockItemId)
-    Spree.NumberFieldUpdater.showForm(stockItemId)
+    @editing = true
+    @render()
 
   onCancel: (ev) ->
     ev.preventDefault()
-    backorderableWas = @model.previous('backorderable')
-    @$('[name=backorderable]').prop('disabled', true).val(backorderableWas)
-    stockItemId = @model.id
-    Spree.NumberFieldUpdater.hideForm(stockItemId)
-    Spree.NumberFieldUpdater.showReadOnly(stockItemId)
+    @model.set(@model.previousAttributes())
+    @editing = false
+    @render()
 
   onSuccess: ->
-    @$('[name=backorderable]').prop('disabled', true)
-    Spree.NumberFieldUpdater.successHandler(@model.id, @model.get('count_on_hand'))
+    @editing = false
+    @render()
     show_flash("success", Spree.translations.updated_successfully)
 
   onSubmit: (ev) ->
