@@ -136,7 +136,7 @@ module Spree
       # If the legacy method #copy_price has been overridden, handle that gracefully
       return handle_copy_price_override if respond_to?(:copy_price)
 
-      self.currency ||= variant.currency
+      self.currency ||= order.currency
       self.cost_price ||= variant.cost_price
       self.price ||= variant.price
     end
