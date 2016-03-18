@@ -7,11 +7,6 @@ restoreBackorderableState = (stockItemId) ->
   checked = backorderableCheckbox.parent('td').attr('was-checked') is "true"
   backorderableCheckbox.prop('checked', checked)
 
-successHandler = (model, response, options) =>
-  toggleBackorderable(model.get('id'), false)
-  Spree.NumberFieldUpdater.successHandler(model.id, model.get('count_on_hand'))
-  show_flash("success", Spree.translations.updated_successfully)
-
 errorHandler = (model, response, options) ->
   show_flash("error", response.responseText)
 
@@ -37,6 +32,11 @@ EditStockItemView = Backbone.View.extend
     Spree.NumberFieldUpdater.hideForm(stockItemId)
     Spree.NumberFieldUpdater.showReadOnly(stockItemId)
 
+  onSuccess: ->
+    @$('[name=backorderable]').prop('disabled', true)
+    Spree.NumberFieldUpdater.successHandler(@model.id, @model.get('count_on_hand'))
+    show_flash("success", Spree.translations.updated_successfully)
+
   onSubmit: (ev) ->
     ev.preventDefault()
     stockItemId = @model.id
@@ -48,7 +48,7 @@ EditStockItemView = Backbone.View.extend
       count_on_hand: countOnHand
       backorderable: backorderable
     options =
-      success: successHandler
+      success: => @onSuccess()
       error: errorHandler
     @model.save(force: true, options)
 
