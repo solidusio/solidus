@@ -197,8 +197,7 @@ describe Spree::LineItem, type: :model do
     context "currency different than order.currency" do
       it "is not a valid line item" do
         expect(Spree::Deprecation).to receive(:warn).at_least(:once)
-
-        line_item.currency = "no currency"
+        line_item.currency = "RUB"
         line_item.valid?
 
         expect(line_item.error_on(:currency).size).to eq(1)
@@ -221,6 +220,17 @@ describe Spree::LineItem, type: :model do
       expect(line_item.variant).to receive(:gift_wrap_price_modifier_amount_in).with("USD", true).and_return 1.99
       line_item.options = { gift_wrap: true }
       expect(line_item.price).to eq 21.98
+    end
+  end
+
+  describe 'money_price=' do
+    let(:line_item) { Spree::LineItem.new }
+    let(:new_price) { Spree::Money.new(99.00, currency: "RUB") }
+
+    it 'assigns a new price and currency' do
+      line_item.money_price = new_price
+      expect(line_item.price).to eq(new_price.cents / 100.0)
+      expect(line_item.currency).to eq(new_price.currency.iso_code)
     end
   end
 end
