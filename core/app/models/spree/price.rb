@@ -6,9 +6,9 @@ module Spree
 
     belongs_to :variant, -> { with_deleted }, class_name: 'Spree::Variant', touch: true
 
-    after_initialize :valid_from_today!, if: -> { valid_from.blank? }
+    before_save :valid_from_today!, if: -> { valid_from.blank? }
+    before_save :set_default_currency, if: -> { currency.blank? }
 
-    validate :check_price
     validates :amount, allow_nil: true, numericality: {
       greater_than_or_equal_to: 0,
       less_than_or_equal_to: MAXIMUM_AMOUNT
@@ -54,8 +54,8 @@ module Spree
       self.valid_from = Time.current
     end
 
-    def check_price
-      self.currency ||= Spree::Config[:currency]
+    def set_default_currency
+      self.currency = Spree::Config[:currency]
     end
   end
 end
