@@ -19,8 +19,8 @@ EditStockItemView = Backbone.View.extend
   onEdit: (ev) ->
     ev.preventDefault()
     @$('[name=backorderable]').prop('disabled', false)
-    stockItemId = @model.id
     storeBackorderableState(stockItemId)
+    stockItemId = @model.id
     Spree.NumberFieldUpdater.hideReadOnly(stockItemId)
     Spree.NumberFieldUpdater.showForm(stockItemId)
 
@@ -39,10 +39,8 @@ EditStockItemView = Backbone.View.extend
 
   onSubmit: (ev) ->
     ev.preventDefault()
-    stockItemId = @model.id
-    stockLocationId = $(ev.currentTarget).data('location-id')
-    backorderable = $("#backorderable-#{stockItemId}").prop("checked")
-    countOnHand = parseInt($("#number-update-#{stockItemId} input[type='number']").val(), 10)
+    backorderable = @$('[name=backorderable]').prop("checked")
+    countOnHand = parseInt($("input[name='count_on_hand']").val(), 10)
 
     @model.set
       count_on_hand: countOnHand
