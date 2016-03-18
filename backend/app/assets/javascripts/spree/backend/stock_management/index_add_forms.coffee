@@ -51,22 +51,24 @@ resetParentRowspan = (variantId) ->
   $("#spree_variant_#{variantId} > td").attr('rowspan', newRowspan)
 
 AddStockItemView = Backbone.View.extend
+  initialize: ->
+    @$countInput = @$("[name='count_on_hand']")
+    @$locationSelect = @$("[name='stock_location_id']")
+    @$backorderable = @$("[name='backorderable']")
+
   events:
     "click .fa-plus": "onSubmit"
 
   onSubmit: (ev) ->
     ev.preventDefault()
-    variantId = @model.get('variant_id')
-    countInput = @$("[name='count_on_hand']")
-    locationSelect = @$("[name='stock_location_id']")
-    locationSelectContainer = locationSelect.siblings('.select2-container')
-    validate(locationSelect, locationSelectContainer, countInput)
-    return if hasErrors(locationSelectContainer, countInput)
+    locationSelectContainer = @$locationSelect.siblings('.select2-container')
+    validate(@$locationSelect, locationSelectContainer, @$countInput)
+    return if hasErrors(locationSelectContainer, @$countInput)
 
     @model.set
-      backorderable: @$("[name='backorderable']").prop("checked")
-      count_on_hand: countInput.val()
-      stock_location_id: locationSelect.val()
+      backorderable: @$backorderable.prop("checked")
+      count_on_hand: @$countInput.val()
+      stock_location_id: @$locationSelect.val()
     options =
       success: successHandler
       error: errorHandler
