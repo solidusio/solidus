@@ -1,15 +1,3 @@
-showReadOnlyElements = (stockItemId) ->
-  toggleBackorderable(stockItemId, false)
-  Spree.NumberFieldUpdater.showReadOnly(stockItemId)
-
-showEditForm = (stockItemId) ->
-  toggleBackorderable(stockItemId, true)
-  Spree.NumberFieldUpdater.showForm(stockItemId)
-
-toggleBackorderable = (stockItemId, show) ->
-  disabledValue = if show then null else 'disabled'
-  $("#backorderable-#{stockItemId}").prop('disabled', disabledValue)
-
 storeBackorderableState = (stockItemId) ->
   backorderableCheckbox = $("#backorderable-#{stockItemId}")
   backorderableCheckbox.parent('td').attr('was-checked', backorderableCheckbox.prop('checked'))
@@ -35,17 +23,19 @@ EditStockItemView = Backbone.View.extend
 
   onEdit: (ev) ->
     ev.preventDefault()
+    @$('[name=backorderable]').prop('disabled', false)
     stockItemId = $(ev.currentTarget).data('id')
     storeBackorderableState(stockItemId)
     Spree.NumberFieldUpdater.hideReadOnly(stockItemId)
-    showEditForm(stockItemId)
+    Spree.NumberFieldUpdater.showForm(stockItemId)
 
   onCancel: (ev) ->
     ev.preventDefault()
+    @$('[name=backorderable]').prop('disabled', true)
     stockItemId = $(ev.currentTarget).data('id')
     restoreBackorderableState(stockItemId)
     Spree.NumberFieldUpdater.hideForm(stockItemId)
-    showReadOnlyElements(stockItemId)
+    Spree.NumberFieldUpdater.showReadOnly(stockItemId)
 
   onSubmit: (ev) ->
     ev.preventDefault()
