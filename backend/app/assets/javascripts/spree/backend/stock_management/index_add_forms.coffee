@@ -29,7 +29,7 @@ Spree.AddStockItemView = Backbone.View.extend
     selectedStockLocationOption.remove()
 
     rowTemplate = HandlebarsTemplates['stock_items/stock_location_stock_item']
-    newRow = @$el.before(
+    newRow = $(
       rowTemplate
         id: @model.get('id')
         variantId: @model.get('variant_id')
@@ -37,7 +37,7 @@ Spree.AddStockItemView = Backbone.View.extend
         stockLocationName: stockLocationName
         countOnHand: @model.get('count_on_hand')
         backorderable: @model.get('backorderable')
-    )
+    ).insertBefore(@$el)
 
     new Spree.EditStockItemView
       el: newRow
