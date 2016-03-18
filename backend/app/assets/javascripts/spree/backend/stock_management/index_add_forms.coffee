@@ -63,25 +63,22 @@ AddStockItemView = Backbone.View.extend
 
   onSubmit: (ev) ->
     ev.preventDefault()
-    variantId = $(ev.currentTarget).data('variant-id')
-    countInput = $("#variant-count-on-hand-#{variantId}")
-    locationSelect = $("#variant-stock-location-#{variantId}")
+    variantId = @model.get('variant_id')
+    countInput = @$("[name='count_on_hand']")
+    locationSelect = @$("[name='stock_location_id']")
     locationSelectContainer = locationSelect.siblings('.select2-container')
     resetErrors(locationSelectContainer, countInput)
     validate(locationSelect, locationSelectContainer, countInput)
     return if hasErrors(locationSelectContainer, countInput)
 
-    stockLocationId = locationSelect.val()
-    backorderable = $("#variant-backorderable-#{variantId}").prop("checked")
-    stockItem = new Spree.StockItem
-      variant_id: variantId
-      backorderable: backorderable
+    @model.set
+      backorderable: @$("[name='backorderable']").prop("checked")
       count_on_hand: countInput.val()
-      stock_location_id: stockLocationId
+      stock_location_id: locationSelect.val()
     options =
       success: successHandler
       error: errorHandler
-    stockItem.save(null, options)
+    @model.save(null, options)
 
 $ ->
   $('.js-add-stock-item').each ->
