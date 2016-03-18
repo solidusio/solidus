@@ -102,17 +102,8 @@ module Spree
     #
     # @param options [Hash] options for this line item
     def options=(options = {})
-      return unless options.present?
-
-      opts = options.dup # we will be deleting from the hash, so leave the caller's copy intact
-
-      currency = opts.delete(:currency) || order.currency
-
-      self.currency = currency
-      self.price    = variant.price_in(currency).amount +
-        variant.price_modifier_amount_in(currency, opts)
-
-      assign_attributes opts
+      Spree::Prices::LegacyLineItemPricer.set_price_for(self, options)
+      assign_attributes(options)
     end
 
     private
@@ -126,27 +117,11 @@ module Spree
     # its variant if they are nil and a variant is present.
     def set_required_attributes
       return unless variant
-      self.tax_category ||= variant.tax_category
-      set_pricing_attributes
-    end
 
-    # Set price, cost_price and currency. This method used to be called #copy_price, but actually
-    # did more than just setting the price, hence renamed to #set_pricing_attributes
-    def set_pricing_attributes
-      # If the legacy method #copy_price has been overridden, handle that gracefully
-      return handle_copy_price_override if respond_to?(:copy_price)
-
-      self.currency ||= variant.currency
       self.cost_price ||= variant.cost_price
-      self.price ||= variant.price
-    end
+      self.tax_category ||= variant.tax_category
 
-    def handle_copy_price_override
-      copy_price
-      ActiveSupport::Deprecation.warn 'You have overridden Spree::LineItem#copy_price. ' \
-        'This method is now called Spree::LineItem#set_pricing_attributes. ' \
-        'Please adjust your override.',
-        caller
+      Spree::Prices::LegacyLineItemPricer.set_price_for(self)
     end
 
     def update_inventory
