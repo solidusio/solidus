@@ -1,13 +1,6 @@
-resetErrors = (locationSelectContainer, countInput) ->
-  countInput.removeClass('error')
-  locationSelectContainer.removeClass('error')
-
 validate = (locationSelect, locationSelectContainer, countInput) ->
-  if !locationSelect.val()
-    locationSelectContainer.addClass('error')
-
-  if !countInput.val()
-    countInput.addClass('error')
+  locationSelectContainer.toggleClass('error', !locationSelect.val())
+  countInput.toggleClass('error', !countInput.val())
 
 hasErrors = (locationSelectContainer, countInput) ->
   locationSelectContainer.hasClass('error') or countInput.hasClass('error')
@@ -67,7 +60,6 @@ AddStockItemView = Backbone.View.extend
     countInput = @$("[name='count_on_hand']")
     locationSelect = @$("[name='stock_location_id']")
     locationSelectContainer = locationSelect.siblings('.select2-container')
-    resetErrors(locationSelectContainer, countInput)
     validate(locationSelect, locationSelectContainer, countInput)
     return if hasErrors(locationSelectContainer, countInput)
 
