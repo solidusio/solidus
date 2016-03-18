@@ -1,10 +1,3 @@
-validate = (locationSelect, locationSelectContainer, countInput) ->
-  locationSelectContainer.toggleClass('error', !locationSelect.val())
-  countInput.toggleClass('error', !countInput.val())
-
-hasErrors = (locationSelectContainer, countInput) ->
-  locationSelectContainer.hasClass('error') or countInput.hasClass('error')
-
 successHandler = (model, response, options) =>
   variantId = model.get('variant_id')
   stockLocationId = model.get('stock_location_id')
@@ -59,11 +52,16 @@ AddStockItemView = Backbone.View.extend
   events:
     "click .fa-plus": "onSubmit"
 
+  validate: ->
+    locationSelectContainer = @$locationSelect.siblings('.select2-container')
+    locationSelectContainer.toggleClass('error', !@$locationSelect.val())
+    @$countInput.toggleClass('error', !@$countInput.val())
+
+    locationSelectContainer.hasClass('error') || @$countInput.hasClass('error')
+
   onSubmit: (ev) ->
     ev.preventDefault()
-    locationSelectContainer = @$locationSelect.siblings('.select2-container')
-    validate(@$locationSelect, locationSelectContainer, @$countInput)
-    return if hasErrors(locationSelectContainer, @$countInput)
+    return if @validate()
 
     @model.set
       backorderable: @$backorderable.prop("checked")
