@@ -9,7 +9,7 @@ restoreBackorderableState = (stockItemId) ->
 
 successHandler = (model, response, options) =>
   toggleBackorderable(model.get('id'), false)
-  Spree.NumberFieldUpdater.successHandler(model.get('id'), model.get('count_on_hand'))
+  Spree.NumberFieldUpdater.successHandler(model.id, model.get('count_on_hand'))
   show_flash("success", Spree.translations.updated_successfully)
 
 errorHandler = (model, response, options) ->
@@ -24,7 +24,7 @@ EditStockItemView = Backbone.View.extend
   onEdit: (ev) ->
     ev.preventDefault()
     @$('[name=backorderable]').prop('disabled', false)
-    stockItemId = $(ev.currentTarget).data('id')
+    stockItemId = @model.id
     storeBackorderableState(stockItemId)
     Spree.NumberFieldUpdater.hideReadOnly(stockItemId)
     Spree.NumberFieldUpdater.showForm(stockItemId)
@@ -32,14 +32,14 @@ EditStockItemView = Backbone.View.extend
   onCancel: (ev) ->
     ev.preventDefault()
     @$('[name=backorderable]').prop('disabled', true)
-    stockItemId = $(ev.currentTarget).data('id')
+    stockItemId = @model.id
     restoreBackorderableState(stockItemId)
     Spree.NumberFieldUpdater.hideForm(stockItemId)
     Spree.NumberFieldUpdater.showReadOnly(stockItemId)
 
   onSubmit: (ev) ->
     ev.preventDefault()
-    stockItemId = $(ev.currentTarget).data('id')
+    stockItemId = @model.id
     stockLocationId = $(ev.currentTarget).data('location-id')
     backorderable = $("#backorderable-#{stockItemId}").prop("checked")
     countOnHand = parseInt($("#number-update-#{stockItemId} input[type='number']").val(), 10)
@@ -56,5 +56,8 @@ EditStockItemView = Backbone.View.extend
 
 $ ->
   $('.js-edit-stock-item').each ->
+    $el = $(this)
+    model = new Spree.StockItem($el.data('stock-item'))
     new EditStockItemView
-      el: this
+      el: $el
+      model: model

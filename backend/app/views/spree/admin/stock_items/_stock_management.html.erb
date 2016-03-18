@@ -63,7 +63,7 @@
       </tr>
       <% variant.stock_items.each do |item| %>
         <% if @stock_item_stock_locations.include?(item.stock_location) %>
-          <tr class="<%= cycle('odd', 'even', :name => 'stock_locations')%>" data-variant-id="<%= variant.id %>">
+          <tr class="js-edit-stock-item <%= cycle('odd', 'even', :name => 'stock_locations')%>" data-variant-id="<%= variant.id %>" data-stock-item="<%= item.to_json %>">
             <td class='align-center location-name-cell'><%= item.stock_location.name %></td>
             <td class='align-center'>
               <% if can?(:update, item) %>
