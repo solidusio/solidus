@@ -7,7 +7,7 @@ updateParentTable = (variantId) ->
 
   $("#spree_variant_#{variantId} > td").attr('rowspan', tableRows.length + 1)
 
-AddStockItemView = Backbone.View.extend
+Spree.AddStockItemView = Backbone.View.extend
   initialize: ->
     @$countInput = @$("[name='count_on_hand']")
     @$locationSelect = @$("[name='stock_location_id']")
@@ -24,33 +24,37 @@ AddStockItemView = Backbone.View.extend
     locationSelectContainer.hasClass('error') || @$countInput.hasClass('error')
 
   onSuccess: ->
-    variantId = @model.get('variant_id')
-    stockLocationId = @model.get('stock_location_id')
-    stockLocationSelect = $("#variant-stock-location-#{variantId}")
-
-    selectedStockLocationOption = stockLocationSelect.find("option[value='#{stockLocationId}']")
+    selectedStockLocationOption = @$locationSelect.find('option:selected')
     stockLocationName = selectedStockLocationOption.text().trim()
     selectedStockLocationOption.remove()
 
     rowTemplate = HandlebarsTemplates['stock_items/stock_location_stock_item']
-    $("tr[data-variant-id='#{variantId}']:last").before(
+    newRow = @$el.before(
       rowTemplate
         id: @model.get('id')
-        variantId: variantId
-        stockLocationId: stockLocationId
+        variantId: @model.get('variant_id')
+        stockLocationId: @model.get('stock_location_id')
         stockLocationName: stockLocationName
         countOnHand: @model.get('count_on_hand')
         backorderable: @model.get('backorderable')
     )
 
-    if stockLocationSelect.find('option').length is 1 # blank value
-      stockLocationSelect.parents('tr:first').remove()
-    else
-      stockLocationSelect.select2()
-      $("#variant-count-on-hand-#{variantId}").val("")
-      $("#variant-backorderable-#{variantId}").prop("checked", false)
+    new Spree.EditStockItemView
+      el: newRow
+      model: @model
 
-    updateParentTable(variantId)
+    @model = new Spree.StockItem
+      variant_id: @model.get('variant_id')
+      stock_location_id: @model.get('stock_location_id')
+
+    if @$locationSelect.find('option').length is 1 # blank value
+      @remove()
+    else
+      @$locationSelect.select2()
+      @$countInput.val("")
+      @$backorderable.prop("checked", false)
+
+    updateParentTable(@model.get('variant_id'))
 
   onSubmit: (ev) ->
     ev.preventDefault()
@@ -73,6 +77,6 @@ $ ->
     $el = $(this)
     model = new Spree.StockItem
       variant_id: $el.data('variant-id')
-    new AddStockItemView
+    new Spree.AddStockItemView
       el: $el
       model: model

@@ -1,7 +1,7 @@
 errorHandler = (model, response, options) ->
   show_flash("error", response.responseText)
 
-EditStockItemView = Backbone.View.extend
+Spree.EditStockItemView = Backbone.View.extend
   events:
     "click .fa-edit":  "onEdit"
     "click .fa-check": "onSubmit"
@@ -44,6 +44,6 @@ $ ->
   $('.js-edit-stock-item').each ->
     $el = $(this)
     model = new Spree.StockItem($el.data('stock-item'))
-    new EditStockItemView
+    new Spree.EditStockItemView
       el: $el
       model: model
