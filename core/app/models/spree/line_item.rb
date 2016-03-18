@@ -104,15 +104,10 @@ module Spree
     def options=(options = {})
       return unless options.present?
 
-      opts = options.dup # we will be deleting from the hash, so leave the caller's copy intact
+      self.price = variant.price_in(currency).amount +
+                   variant.price_modifier_amount_in(currency, options)
 
-      currency = opts.delete(:currency) || order.currency
-
-      self.currency = currency
-      self.price    = variant.price_in(currency).amount +
-        variant.price_modifier_amount_in(currency, opts)
-
-      assign_attributes opts
+      assign_attributes options.except(:currency)
     end
 
     private
