@@ -44,15 +44,13 @@ EditStockItemView = Backbone.View.extend
     backorderable = $("#backorderable-#{stockItemId}").prop("checked")
     countOnHand = parseInt($("#number-update-#{stockItemId} input[type='number']").val(), 10)
 
-    stockItem = new Spree.StockItem
-      id: stockItemId
+    @model.set
       count_on_hand: countOnHand
       backorderable: backorderable
-      stock_location_id: stockLocationId
     options =
       success: successHandler
       error: errorHandler
-    stockItem.save(force: true, options)
+    @model.save(force: true, options)
 
 $ ->
   $('.js-edit-stock-item').each ->
