@@ -2,10 +2,28 @@ errorHandler = (model, response, options) ->
   show_flash("error", response.responseText)
 
 Spree.EditStockItemView = Backbone.View.extend
+  tagName: 'tr'
+
+  initialize: (options) ->
+    @stockLocationName = options.stockLocationName
+    @render()
+
   events:
     "click .fa-edit":  "onEdit"
     "click .fa-check": "onSubmit"
     "click .fa-void":  "onCancel"
+
+  template: HandlebarsTemplates['stock_items/stock_location_stock_item']
+
+  render: ->
+    renderAttr =
+      StockLocationName: @stockLocationName
+    _.extend(renderAttr, @model.attributes)
+
+    @$el.attr("data-variant-id", @model.get('variant_id'))
+    @$el.html(@template(renderAttr))
+
+    return @
 
   onEdit: (ev) ->
     ev.preventDefault()
@@ -46,4 +64,5 @@ $ ->
     model = new Spree.StockItem($el.data('stock-item'))
     new Spree.EditStockItemView
       el: $el
+      stockLocationName: $el.data('stock-location-name')
       model: model
