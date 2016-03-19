@@ -5,7 +5,7 @@ Spree.AddStockItemView = Backbone.View.extend
     @$backorderable = @$("[name='backorderable']")
 
   events:
-    "click .fa-plus": "onSubmit"
+    "click .submit": "onSubmit"
 
   validate: ->
     locationSelectContainer = @$locationSelect.siblings('.select2-container')

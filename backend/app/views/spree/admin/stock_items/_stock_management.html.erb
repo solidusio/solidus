@@ -78,7 +78,7 @@
             <%= number_field_tag :count_on_hand, "", class: 'fullwidth', id: "variant-count-on-hand-#{variant.id}" %>
           </td>
           <td class="actions">
-            <%= link_to_with_icon 'plus', Spree.t('actions.create'), '#', :no_text => true, :data => {:action => 'green' } %>
+            <%= link_to_with_icon 'plus', Spree.t('actions.create'), '#', :no_text => true, :data => {:action => 'green' }, class: "submit" %>
           </td>
         </tr>
       <% end %>
