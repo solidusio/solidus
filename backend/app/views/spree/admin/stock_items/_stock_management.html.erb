@@ -64,6 +64,7 @@
       <% variant.stock_items.each do |item| %>
         <% if @stock_item_stock_locations.include?(item.stock_location) %>
           <tr class="js-edit-stock-item <%= cycle('odd', 'even', :name => 'stock_locations')%>" data-variant-id="<%= variant.id %>" data-stock-item="<%= item.to_json %>" data-stock-location-name="<%= item.stock_location.name %>">
+            <%# This is rendered in JS %>
           </tr>
         <% end %>
       <% end %>
