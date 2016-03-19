@@ -58,9 +58,13 @@ describe "Stock Management", type: :feature do
     end
 
     def adjust_count_on_hand(count_on_hand)
-      find(:css, ".fa-edit[data-id='#{stock_item.id}']").trigger('click')
-      find(:css, "[data-variant-id='#{variant.id}'] input[type='number']").set(count_on_hand)
-      find(:css, ".fa-check[data-id='#{stock_item.id}']").trigger('click')
+      within('.variant-stock-items', text: variant.sku) do
+        within('tr', text: stock_item.stock_location.name) do
+          click_icon :edit
+          find(:css, "input[type='number']").set(count_on_hand)
+          click_icon :check
+        end
+      end
       expect(page).to have_content('Updated successfully')
     end
 
@@ -71,10 +75,11 @@ describe "Stock Management", type: :feature do
 
       it "can add stock items to other stock locations", js: true do
         visit current_url
-        fill_in "variant-count-on-hand-#{variant.id}", with: '3'
-        targetted_select2_search "Other location", from: "#s2id_variant-stock-location-#{variant.id}"
-        find(:css, ".fa-plus[data-variant-id='#{variant.id}']").click
-        wait_for_ajax
+        within('.variant-stock-items', text: variant.sku) do
+          fill_in "variant-count-on-hand-#{variant.id}", with: '3'
+          targetted_select2_search "Other location", from: "#s2id_variant-stock-location-#{variant.id}"
+          click_icon(:plus)
+        end
         expect(page).to have_content('Created successfully')
       end
     end
