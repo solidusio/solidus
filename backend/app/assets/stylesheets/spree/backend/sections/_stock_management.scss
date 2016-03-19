@@ -7,17 +7,17 @@
   }
 
   > tbody {
-    > tr {
-      > td {
-        background-color: $color-tbl-odd;
-      }
-      &.even td {
+    > tr.stock-item-edit-row {
+      td {
         background-color: $color-tbl-even;
       }
-      &:first-child {
-        td {
-          border-top: none;
-        }
+      &:nth-child(2n) td {
+        background-color: $color-tbl-odd;
+      }
+    }
+    > tr {
+      &:first-child td {
+        border-top: none;
       }
     }
   }
@@ -37,4 +37,5 @@
       border: 1px solid $color-error;
     }
   }
+
 }

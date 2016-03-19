@@ -61,13 +61,13 @@
       </tr>
       <% variant.stock_items.each do |item| %>
         <% if @stock_item_stock_locations.include?(item.stock_location) %>
-          <tr class="js-edit-stock-item <%= cycle('odd', 'even', :name => 'stock_locations')%>" data-variant-id="<%= variant.id %>" data-stock-item="<%= item.to_json %>" data-stock-location-name="<%= item.stock_location.name %>">
+          <tr class="js-edit-stock-item stock-item-edit-row" data-variant-id="<%= variant.id %>" data-stock-item="<%= item.to_json %>" data-stock-location-name="<%= item.stock_location.name %>">
             <%# This is rendered in JS %>
           </tr>
         <% end %>
       <% end %>
       <% if display_add_row %>
-        <tr class="js-add-stock-item <%= cycle('odd', 'even', :name => 'stock_locations')%>" data-variant-id="<%= variant.id %>">
+        <tr class="js-add-stock-item stock-item-edit-row" data-variant-id="<%= variant.id %>">
           <td class='location-name-cell'>
             <%= select_tag :stock_location_id, options_from_collection_for_select(locations_without_items, :id, :name), { :include_blank => true, :class => 'select2', "data-placeholder" => Spree.t(:add_to_stock_location), :id => "variant-stock-location-#{variant.id}" } %>
           </td>
@@ -82,7 +82,6 @@
           </td>
         </tr>
       <% end %>
-      <% reset_cycle("stock_locations") %>
     </tbody>
   <% end %>
 </table>

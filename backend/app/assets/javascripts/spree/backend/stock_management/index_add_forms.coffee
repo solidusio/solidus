@@ -1,10 +1,3 @@
-updateParentTable = (variantId) ->
-  tableRows = $("tr[data-variant-id='#{variantId}']")
-  tableRows.removeClass('even odd')
-  for i in [0..tableRows.length]
-    rowClass = if (i + 1) % 2 is 0 then 'even' else 'odd'
-    tableRows.eq(i).addClass(rowClass)
-
 Spree.AddStockItemView = Backbone.View.extend
   initialize: ->
     @$countInput = @$("[name='count_on_hand']")
@@ -41,8 +34,6 @@ Spree.AddStockItemView = Backbone.View.extend
       @$locationSelect.select2()
       @$countInput.val("")
       @$backorderable.prop("checked", false)
-
-    updateParentTable(@model.get('variant_id'))
 
   onSubmit: (ev) ->
     ev.preventDefault()
