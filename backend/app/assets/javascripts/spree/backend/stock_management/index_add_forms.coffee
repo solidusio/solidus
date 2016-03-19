@@ -5,8 +5,6 @@ updateParentTable = (variantId) ->
     rowClass = if (i + 1) % 2 is 0 then 'even' else 'odd'
     tableRows.eq(i).addClass(rowClass)
 
-  $("#spree_variant_#{variantId} > td").attr('rowspan', tableRows.length + 1)
-
 Spree.AddStockItemView = Backbone.View.extend
   initialize: ->
     @$countInput = @$("[name='count_on_hand']")

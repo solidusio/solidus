@@ -19,13 +19,11 @@
       <th class="actions"></th>
     </tr>
   </thead>
-  <tbody>
-    <% variants.each do |variant| %>
-      <%- locations_without_items = @stock_item_stock_locations - variant.stock_items.flat_map(&:stock_location) %>
-      <%- display_add_row = locations_without_items.any? && can?(:create, Spree::StockItem) %>
-      <%- row_count = (variant.stock_items.map(&:stock_location) & @stock_item_stock_locations).size %>
-      <%- row_count += display_add_row ? 2 : 1 %>
-
+  <% variants.each do |variant| %>
+    <%- locations_without_items = @stock_item_stock_locations - variant.stock_items.flat_map(&:stock_location) %>
+    <%- display_add_row = locations_without_items.any? && can?(:create, Spree::StockItem) %>
+    <%- row_count = @stock_item_stock_locations.count + 2 %>
+    <tbody class="variant-stock-items">
       <tr id="<%= spree_dom_id variant %>">
         <td class="align-center no-padding" rowspan="<%= row_count %>">
           <div class='variant-container'>
@@ -85,8 +83,8 @@
         </tr>
       <% end %>
       <% reset_cycle("stock_locations") %>
-    <% end %>
-  </tbody>
+    </tbody>
+  <% end %>
 </table>
 
 <%= paginate @variants, theme: "solidus_admin" %>
