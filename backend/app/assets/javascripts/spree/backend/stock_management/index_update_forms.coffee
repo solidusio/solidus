@@ -10,9 +10,9 @@ Spree.EditStockItemView = Backbone.View.extend
     @render()
 
   events:
-    "click .fa-edit":  "onEdit"
-    "click .fa-check": "onSubmit"
-    "click .fa-void":  "onCancel"
+    "click .edit": "onEdit"
+    "click .submit": "onSubmit"
+    "click .cancel": "onCancel"
 
   template: HandlebarsTemplates['stock_items/stock_location_stock_item']
 
