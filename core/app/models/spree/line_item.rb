@@ -109,9 +109,10 @@ module Spree
     def options=(options = {})
       return unless options.present?
 
-      self.price = variant.price_in(currency).amount +
-                   variant.price_modifier_amount_in(currency, options)
-
+      # There's no need to call a pricer if we'll set the price directly.
+      unless options.key?(:price)
+        self.money_price = Pricers::PriceModifier.new(self, options).price
+      end
       assign_attributes options
     end
 
