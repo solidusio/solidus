@@ -1,5 +1,10 @@
 ## Solidus 1.3.0 (unreleased)
 
+*   Remove currency attribute on `Spree::LineItem`
+
+    A valid line item always has its order's currency. Therefore it is not necessary to save
+    that in the database.
+
 *   Taxes for carts now configurable via the `Spree::Store` object
 
     In VAT countries, carts (orders without addresses) have to be shown with

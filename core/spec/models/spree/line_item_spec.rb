@@ -94,6 +94,10 @@ describe Spree::LineItem, type: :model do
 
     subject(:line_item) { Spree::LineItem.new(variant: variant, order: order) }
 
+    it 'delegates currency to order' do
+      expect(line_item.currency).to eq(order.currency)
+    end
+
     # Tests for https://github.com/spree/spree/issues/3391
     context 'before validation' do
       before { line_item.valid? }
@@ -104,10 +108,6 @@ describe Spree::LineItem, type: :model do
 
       it 'copies the variants cost_price' do
         expect(line_item.cost_price).to eq(variant.cost_price)
-      end
-
-      it 'copies the variants currency' do
-        expect(line_item.currency).to eq(variant.currency)
       end
 
       # Test for https://github.com/spree/spree/issues/3481
@@ -121,7 +121,6 @@ describe Spree::LineItem, type: :model do
       before(:context) do
         Spree::LineItem.class_eval do
           def copy_price
-            self.currency = "USD"
             self.cost_price = 10
             self.price = 20
           end
@@ -164,12 +163,6 @@ describe Spree::LineItem, type: :model do
     end
   end
 
-  describe '.currency' do
-    it 'returns the globally configured currency' do
-      line_item.currency == 'USD'
-    end
-  end
-
   describe ".money" do
     before do
       line_item.price = 3.50
@@ -188,23 +181,29 @@ describe Spree::LineItem, type: :model do
     end
   end
 
-  context "currency same as order.currency" do
-    it "is a valid line item" do
-      line_item = order.line_items.first
-      line_item.currency = order.currency
-      line_item.valid?
+  context 'setting the currency' do
+    let(:line_item) { order.line_items.first }
 
-      expect(line_item.error_on(:currency).size).to eq(0)
+    before do
+      expect(Spree::Deprecation).to receive(:warn).at_least(:once)
     end
-  end
 
-  context "currency different than order.currency" do
-    it "is not a valid line item" do
-      line_item = order.line_items.first
-      line_item.currency = "no currency"
-      line_item.valid?
+    context "currency same as order.currency" do
+      it "is a valid line item" do
+        line_item.currency = order.currency
+        line_item.valid?
 
-      expect(line_item.error_on(:currency).size).to eq(1)
+        expect(line_item.error_on(:currency).size).to eq(0)
+      end
+    end
+
+    context "currency different than order.currency" do
+      it "is not a valid line item" do
+        line_item.currency = "no currency"
+        line_item.valid?
+
+        expect(line_item.error_on(:currency).size).to eq(1)
+      end
     end
   end
 

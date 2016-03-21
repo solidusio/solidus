@@ -37,6 +37,16 @@ module Spree
     #   item, if there is one
     delegate :product, to: :variant
 
+    # This is just here to invalidate the line item when a currency different to the orders currency
+    # is passed in.
+    # @deprecated The order already has a currency.
+    attr_writer :currency
+    deprecate :currency= => "Assigning a currency to a line item is deprecated. It will always take the one from the order",
+              deprecator: Spree::Deprecation
+
+    # @note Every valid line item will always have the currency of its order.
+    delegate :currency, to: :order
+
     attr_accessor :target_shipment
 
     self.whitelisted_ransackable_associations = ['variant']
@@ -104,15 +114,10 @@ module Spree
     def options=(options = {})
       return unless options.present?
 
-      opts = options.dup # we will be deleting from the hash, so leave the caller's copy intact
+      self.price = variant.price_in(currency).amount +
+                   variant.price_modifier_amount_in(currency, options)
 
-      currency = opts.delete(:currency) || order.currency
-
-      self.currency = currency
-      self.price    = variant.price_in(currency).amount +
-        variant.price_modifier_amount_in(currency, opts)
-
-      assign_attributes opts
+      assign_attributes options
     end
 
     private
@@ -136,7 +141,6 @@ module Spree
       # If the legacy method #copy_price has been overridden, handle that gracefully
       return handle_copy_price_override if respond_to?(:copy_price)
 
-      self.currency ||= variant.currency
       self.cost_price ||= variant.cost_price
       self.price ||= variant.price
     end
@@ -175,7 +179,8 @@ module Spree
     end
 
     def ensure_proper_currency
-      unless currency == order.currency
+      # Only if the deprecated setter has been called. Otherwise the check is moot.
+      if @currency && @currency != order.currency
         errors.add(:currency, :must_match_order_currency)
       end
     end
