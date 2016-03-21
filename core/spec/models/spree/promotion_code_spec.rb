@@ -142,13 +142,14 @@ RSpec.describe Spree::PromotionCode do
         :promotion,
         :with_order_adjustment,
         code: "discount",
-        per_code_usage_limit: 1
+        per_code_usage_limit: 1,
+        weighted_order_adjustment_amount: 10
       )
     end
     let(:code) { promotion.codes.first }
     let(:order) do
-      FactoryGirl.create(:order_with_line_items).tap do |order|
-        FactoryGirl.create(:payment, amount: order.total, order: order)
+      FactoryGirl.create(:order_with_line_items, line_items_price: 40, shipment_cost: 0).tap do |order|
+        FactoryGirl.create(:payment, amount: 30, order: order)
         promotion.activate(order: order, promotion_code: code)
       end
     end
@@ -156,8 +157,8 @@ RSpec.describe Spree::PromotionCode do
     before do
       order.next! until order.confirm?
 
-      FactoryGirl.create(:order_with_line_items).tap do |order|
-        FactoryGirl.create(:payment, amount: order.total, order: order)
+      FactoryGirl.create(:order_with_line_items, line_items_price: 40, shipment_cost: 0).tap do |order|
+        FactoryGirl.create(:payment, amount: 30, order: order)
         promotion.activate(order: order, promotion_code: code)
         order.next! until order.confirm?
         order.complete!
@@ -173,10 +174,10 @@ RSpec.describe Spree::PromotionCode do
         order.complete
       }.to change(order, :promo_total).by(10)
     end
-    it "adjusts the total" do
+    it "increases the total to remove the promo" do
       expect{
         order.complete
-      }.to change(order, :total).by(10)
+      }.to change(order, :total).from(30).to(40)
     end
     it "resets the state of the order" do
       expect{
