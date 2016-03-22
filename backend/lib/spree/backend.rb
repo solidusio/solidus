@@ -1,6 +1,8 @@
 require 'rails/all'
 require 'jquery-rails'
 require 'jquery-ui-rails'
+require 'coffee-rails'
+require 'sass-rails'
 require 'bourbon'
 require 'select2-rails'
 require 'handlebars_assets'
