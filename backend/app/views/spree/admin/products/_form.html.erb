@@ -97,24 +97,24 @@
         <% end %>
       </div>
 
-      <ul id="shipping_specs">
-        <li id="shipping_specs_weight_field" data-hook="admin_product_form_weight" class="field alpha two columns">
-          <%= f.label :weight %>
-          <%= f.text_field :weight, :size => 4 %>
-        </li>
-        <li id="shipping_specs_height_field" data-hook="admin_product_form_height" class="field omega two columns">
+      <div id="shipping_specs">
+        <div id="shipping_specs_height_field" data-hook="admin_product_form_height" class="field alpha two columns">
           <%= f.label :height %>
           <%= f.text_field :height, :size => 4 %>
-        </li>
-        <li id="shipping_specs_width_field" data-hook="admin_product_form_width" class="field alpha two columns">
+        </div>
+        <div id="shipping_specs_width_field" data-hook="admin_product_form_width" class="field omega two columns">
           <%= f.label :width %>
           <%= f.text_field :width, :size => 4 %>
-        </li>
-        <li id="shipping_specs_depth_field" data-hook="admin_product_form_depth" class="field omega two columns">
+        </div>
+        <div id="shipping_specs_depth_field" data-hook="admin_product_form_depth" class="field alpha two columns">
           <%= f.label :depth %>
           <%= f.text_field :depth, :size => 4 %>
-        </li>
-      </ul>
+        </div>
+        <div id="shipping_specs_weight_field" data-hook="admin_product_form_weight" class="field omega two columns">
+          <%= f.label :weight %>
+          <%= f.text_field :weight, :size => 4 %>
+        </div>
+      </div>
     <% end %>
 
     <div data-hook="admin_product_form_shipping_categories">
