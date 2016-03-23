@@ -103,16 +103,9 @@ module Spree
     # @param options [Hash] options for this line item
     def options=(options = {})
       return unless options.present?
-
-      opts = options.dup # we will be deleting from the hash, so leave the caller's copy intact
-
-      currency = opts.delete(:currency) || order.currency
-
-      self.currency = currency
-      self.price    = variant.price_in(currency).amount +
-        variant.price_modifier_amount_in(currency, opts)
-
-      assign_attributes opts
+      self.currency ||= options[:currency]
+      self.price = Spree::Pricers::PriceModifierLineItemPricer.new(self, options).price
+      assign_attributes(options)
     end
 
     private
