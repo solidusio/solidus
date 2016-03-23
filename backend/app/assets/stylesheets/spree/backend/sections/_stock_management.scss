@@ -11,7 +11,8 @@
       td {
         background-color: $color-tbl-even;
       }
-      &:nth-child(2n) td {
+      &:nth-child(even) td {
+        /* An nth-even child is actually an odd row */
         background-color: $color-tbl-odd;
       }
     }
