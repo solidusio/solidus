@@ -6,8 +6,12 @@ module Spree
 
     it "can generate an API key" do
       expect(user).to receive(:save!)
-      user.generate_spree_api_key!
-      expect(user.spree_api_key).not_to be_blank
+      expect { user.generate_spree_api_key! }.to change(user, :spree_api_key).to be_present
+    end
+
+    it "can generate an API key without persisting" do
+      expect(user).not_to receive(:save!)
+      expect { user.generate_spree_api_key }.to change(user, :spree_api_key).to be_present
     end
 
     it "can clear an API key" do
