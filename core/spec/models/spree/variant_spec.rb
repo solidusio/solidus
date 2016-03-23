@@ -19,6 +19,14 @@ describe Spree::Variant, type: :model do
     end
   end
 
+  context 'changing the currency' do
+    it 'issues a deprecation warning' do
+      expect(Spree::Deprecation).to receive(:warn)
+      variant.currency = "RUB"
+      expect(variant.currency).to eq("RUB")
+    end
+  end
+
   context "validations" do
     it "should validate price is greater than 0" do
       variant.price = -1

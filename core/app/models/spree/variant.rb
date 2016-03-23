@@ -329,6 +329,18 @@ module Spree
       end.flatten.compact
     end
 
+    # Sets a variant's default price currency.
+    # This is deprecated, as changing the default price's currency will make that price a non-default
+    # price (as the scope for that includes the scope `in_currency(Spree::Config.currency)`)
+    # @deprecated
+    # @see Spree::DefaultPrice#default_price
+    def currency=(currency)
+      Spree::Deprecation.warn "Setting a currency on a variant is unsupported behaviour." \
+                              "Create a new price object via `variant.prices.create` instead",
+                              caller
+      default_price.currency = currency
+    end
+
     private
 
     def set_master_out_of_stock
