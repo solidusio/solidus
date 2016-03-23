@@ -6,7 +6,7 @@ module Spree
       has_one :default_price,
         -> { with_deleted.where(currency: Spree::Config[:currency]).valid_before_now },
         class_name: 'Spree::Price',
-        inverse_of: :variant,
+        inverse_of: name.demodulize.underscore.to_sym,
         dependent: :destroy,
         autosave: true
     end
