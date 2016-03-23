@@ -348,9 +348,6 @@ module Spree
           self.price = product.master.price
         end
       end
-      if currency.nil?
-        self.currency = Spree::Config[:currency]
-      end
     end
 
     def set_cost_currency

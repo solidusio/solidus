@@ -7,6 +7,18 @@ describe Spree::Variant, type: :model do
 
   it_behaves_like 'default_price'
 
+  context 'changing the price' do
+    before do
+      variant.price = 1500
+      variant.save
+    end
+
+    it 'creates a new price' do
+      expect(variant.prices.with_deleted.length).to eq(2)
+      expect(variant.price).to eq(1500)
+    end
+  end
+
   context "validations" do
     it "should validate price is greater than 0" do
       variant.price = -1
