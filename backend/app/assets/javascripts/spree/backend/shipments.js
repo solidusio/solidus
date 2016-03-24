@@ -335,7 +335,7 @@ var ShipmentEditView = Backbone.View.extend({
 
   saveTracking: function(e) {
     e.preventDefault();
-    var tracking = this.$('input#tracking').val();
+    var tracking = this.$('[name="tracking"]').val();
     var _this = this;
     updateShipment(this.shipment_number, {
       tracking: tracking
