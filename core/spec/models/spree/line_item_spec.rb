@@ -106,8 +106,8 @@ describe Spree::LineItem, type: :model do
         expect(line_item.cost_price).to eq(variant.cost_price)
       end
 
-      it 'copies the variants currency' do
-        expect(line_item.currency).to eq(variant.currency)
+      it "copies the order's currency" do
+        expect(line_item.currency).to eq(order.currency)
       end
 
       # Test for https://github.com/spree/spree/issues/3481
@@ -164,12 +164,6 @@ describe Spree::LineItem, type: :model do
     end
   end
 
-  describe '.currency' do
-    it 'returns the globally configured currency' do
-      line_item.currency == 'USD'
-    end
-  end
-
   describe ".money" do
     before do
       line_item.price = 3.50
@@ -188,23 +182,27 @@ describe Spree::LineItem, type: :model do
     end
   end
 
-  context "currency same as order.currency" do
-    it "is a valid line item" do
-      line_item = order.line_items.first
-      line_item.currency = order.currency
-      line_item.valid?
+  context 'setting the currency' do
+    let(:line_item) { order.line_items.first }
 
-      expect(line_item.error_on(:currency).size).to eq(0)
+    context "currency same as order.currency" do
+      it "is a valid line item" do
+        line_item.currency = order.currency
+        line_item.valid?
+
+        expect(line_item.error_on(:currency).size).to eq(0)
+      end
     end
-  end
 
-  context "currency different than order.currency" do
-    it "is not a valid line item" do
-      line_item = order.line_items.first
-      line_item.currency = "no currency"
-      line_item.valid?
+    context "currency different than order.currency" do
+      it "is not a valid line item" do
+        expect(Spree::Deprecation).to receive(:warn).at_least(:once)
 
-      expect(line_item.error_on(:currency).size).to eq(1)
+        line_item.currency = "no currency"
+        line_item.valid?
+
+        expect(line_item.error_on(:currency).size).to eq(1)
+      end
     end
   end
 

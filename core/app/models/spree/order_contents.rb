@@ -1,6 +1,6 @@
 module Spree
   class OrderContents
-    attr_accessor :order, :currency
+    attr_accessor :order
 
     def initialize(order)
       @order = order
@@ -79,17 +79,20 @@ module Spree
     def add_to_line_item(variant, quantity, options = {})
       line_item = grab_line_item_by_variant(variant, false, options)
 
-      if line_item
-        line_item.quantity += quantity.to_i
-        line_item.currency = currency unless currency.nil?
-      else
-        opts = { currency: order.currency }.merge ActionController::Parameters.new(options).permit(PermittedAttributes.line_item_attributes).to_h
-        line_item = order.line_items.new(quantity: quantity,
-                                          variant: variant,
-                                          options: opts)
+      line_item ||= order.line_items.new(
+        quantity: 0,
+        variant: variant,
+        currency: order.currency
+      )
+
+      line_item.quantity += quantity.to_i
+      line_item.options = ActionController::Parameters.new(options).permit(PermittedAttributes.line_item_attributes)
+
+      if line_item.new_record?
         create_order_stock_locations(line_item, options[:stock_location_quantities])
       end
-      line_item.target_shipment = options[:shipment] if options.key? :shipment
+
+      line_item.target_shipment = options[:shipment]
       line_item.save!
       line_item
     end
