@@ -1,5 +1,21 @@
 ## Solidus 1.3.0 (unreleased)
 
+*   Superseding historical prices
+
+    When you change the price of a variant, from now on a new price will be created instead of
+    changing the existing one. Which price is currently valid is determined by the new `valid_from`
+    column on prices. In order to get the full price history for a variant, run
+    `Spree::Variant#prices`.
+
+    https://github.com/solidusio/solidus/pull/987
+
+*   Variant#currency= deprecated
+
+    It makes no sense to change the currency of a default price, because a price can only be the
+    default price when the currency is the default price. Spree::Price will handle that fine.
+
+    https://github.com/solidusio/solidus/pull/987
+
 *   Deprecate setting a line item's currency by hand
 
     Previously, a line item's currency could be set directly, and differently from the line item's
