@@ -35,6 +35,28 @@ describe Spree::Price, type: :model do
         end
       end
     end
+
+    describe '.default_prices' do
+      let(:current_price) { Spree::Price.new(amount: 10, valid_from: 1.month.ago) }
+      let(:past_price) { Spree::Price.new(amount: 11, valid_from: 1.year.ago) }
+      let(:future_price) { Spree::Price.new(amount: 9, valid_from: 1.month.from_now) }
+      let(:different_currency_price) { Spree::Price.new(amount: 111, currency: "RUB", valid_from: 1.month.ago) }
+
+      let!(:variant) do
+        create(
+          :master_variant,
+          price: nil,
+          default_price: current_price,
+          prices: [past_price, future_price, different_currency_price]
+        )
+      end
+
+      subject { described_class.default_prices }
+
+      it 'returns a scope where the first element is currently valid and has the right currency' do
+        expect(subject.where(variant: variant).first).to eq(current_price)
+      end
+    end
   end
 
   describe 'initialization' do
