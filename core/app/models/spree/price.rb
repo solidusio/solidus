@@ -1,5 +1,11 @@
 module Spree
   class Price < Spree::Base
+    # Because Rails destroys stale has_one records (see the Spree::DefaultPrice module for further
+    # information), we need `acts_as_paranoid` to keep historical records for us.
+    #
+    # The price relations on `Spree::Variant` are all scoped `with_deleted`, as we can not rely
+    # on the `deleted_at` accurately reflecting whether we have the right record. We rather use
+    # `valid_from` to figure out which price is the correct one to use.
     acts_as_paranoid
 
     MAXIMUM_AMOUNT = BigDecimal('99_999_999.99')

@@ -14,7 +14,7 @@ describe Spree::Variant, type: :model do
     end
 
     it 'creates a new price' do
-      expect(variant.prices.with_deleted.length).to eq(2)
+      expect(variant.prices.length).to eq(2)
       expect(variant.price).to eq(1500)
     end
   end
