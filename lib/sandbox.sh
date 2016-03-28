@@ -32,6 +32,14 @@ group :test, :development do
 end
 RUBY
 
+sed -i '/&default/a \
+  host: localhost' config/database.yml
+sed -i '/&default/a \
+  username: postgres' config/database.yml
+if [ -n "$DB_HOST" ]; then
+  sed -i "s/localhost/$DB_HOST/g" config/database.yml
+fi
+
 bundle install --gemfile Gemfile
 bundle exec rake db:drop db:create
 bundle exec rails g spree:install --auto-accept --user_class=Spree::User --enforce_available_locales=true
