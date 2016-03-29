@@ -1,0 +1,30 @@
+.main-header {
+  @include display(flex);
+  @include align-items(center);
+  margin-left: $width-sidebar;
+  padding: 15px 14px;
+  background-color: very-light($color-3, 4);
+  border-bottom: 1px solid $color-border;
+}
+
+.page-title {
+  font-size: 20px;
+  margin: 0.67em 0;
+
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  i {
+    color: $color-2;
+  }
+}
+
+.header-actions {
+  @include flex-grow(1);
+  text-align: right;
+  line-height: 38px;
+
+  form {
+    display: inline-block;
+  }
+}
