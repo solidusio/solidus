@@ -17,25 +17,6 @@ body {
   @include clearfix;
 }
 
-// Header
-//---------------------------------------------------
-.admin-nav-header {
-  padding: 15px;
-  height: 58px; // height of .page-title
-  box-sizing: content-box;
-  background-color: $color-1;
-  border-bottom: 1px solid $color-border;
-
-  a {
-    display: inline-block;
-    line-height: 58px;
-  }
-
-  img {
-    vertical-align: middle;
-  }
-}
-
 // Content
 //---------------------------------------------------
 #content {
