@@ -1,5 +1,5 @@
 <% if content_for?(:page_title) || content_for?(:page_actions) %>
-  <div id="content-header" data-hook>
+  <div id="content-header" class="main-header" data-hook>
     <% if content_for?(:page_title) %>
       <h1 class="page-title"><%= yield :page_title %></h1>
     <% end %>

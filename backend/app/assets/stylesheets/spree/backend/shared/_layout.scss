@@ -36,14 +36,6 @@ body {
   }
 }
 
-[data-hook="admin-title"] { font-size: 14px }
-
-.page-title {
-  i {
-    color: $color-2;
-  }
-}
-
 // Content
 //---------------------------------------------------
 #content {
@@ -52,32 +44,6 @@ body {
   z-index: 0;
   padding: 0;
   margin-top: 15px;
-}
-
-#content-header {
-  @include display(flex);
-  @include align-items(center);
-  padding: 15px 14px;
-  background-color: very-light($color-3, 4);
-  border-bottom: 1px solid $color-border;
-
-  .page-title {
-    font-size: 20px;
-    margin: 0.67em 0;
-
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-  }
-}
-
-.header-actions {
-  @include flex-grow(1);
-  text-align: right;
-  line-height: 38px;
-
-  form {
-    display: inline-block;
-  }
 }
 
 // Footer
