@@ -155,6 +155,11 @@ module Spree
         dom_id(record, 'spree')
       end
 
+      def admin_layout(layout = nil)
+        @admin_layout = layout if layout
+        @admin_layout
+      end
+
       private
 
       def attribute_name_for(field_name)
