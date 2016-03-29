@@ -5,6 +5,10 @@ html {
 body {
   position: relative;
   min-height: 100%;
+
+  &.new-layout {
+    padding-left: $width-sidebar;
+  }
 }
 
 .admin-nav {
@@ -12,9 +16,32 @@ body {
   width: $width-sidebar;
 }
 
-.main-content {
-  margin-left: $width-sidebar;
-  @include clearfix;
+.content-wrapper {
+  body:not(.new-layout) & {
+    margin-left: $width-sidebar;
+  }
+
+  body.new-layout & {
+    @include padding(1rem $grid-gutter-width null);
+  }
+}
+
+.content {
+  @include make-row();
+}
+
+.content-main {
+  @include make-col();
+  @include make-col-span(12);
+
+  .has-sidebar & {
+    @include make-col-span(9);
+  }
+}
+
+.content-sidebar {
+  @include make-col();
+  @include make-col-span(3);
 }
 
 #content {
