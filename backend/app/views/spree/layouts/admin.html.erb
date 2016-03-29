@@ -7,27 +7,10 @@
   <body class="admin">
     <%= render "spree/admin/shared/navigation" %>
     <%= render "spree/admin/shared/header" %>
+    <%= render "spree/admin/shared/flash" %>
+    <%= render "spree/admin/shared/spinner" %>
 
     <div class="main-content" id="wrapper" data-hook>
-      <div class="flash-wrapper js-flash-wrapper">
-        <% if flash[:error] %>
-          <div class="flash error"><%= flash[:error] %></div>
-        <% end %>
-        <% if notice %>
-          <div class="flash notice"><%= notice %></div>
-        <% end %>
-        <% if flash[:success] %>
-          <div class="flash success"><%= flash[:success] %></div>
-        <% end %>
-      </div>
-
-      <div id="progress">
-        <div class="wrapper">
-          <div id="spinner" class="spinner"></div>
-          <div class="progress-message"><%= Spree.t(:loading) %>...</div>
-        </div>
-      </div>
-
       <div class="container">
         <div class="row">
           <div class="<%= 'with-sidebar ' if content_for?(:sidebar) %>" id="content" data-hook>
