@@ -2,12 +2,9 @@ source 'https://rubygems.org'
 
 gemspec
 
-gem 'solidus', github: 'solidusio/solidus', branch: 'v1.1'
+branch = ENV.fetch('SOLIDUS_BRANCH', 'master')
+gem 'solidus', github: 'solidusio/solidus', branch: branch
 
-if ENV['DB'] == 'mysql'
-  gem 'mysql2', '~> 0.3.20'
-elsif ENV['DB'] == 'postgres'
-  gem 'pg'
-else
-  gem 'sqlite3', '~> 1.3.10'
-end
+gem 'mysql2'
+gem 'pg'
+gem 'sqlite3'
