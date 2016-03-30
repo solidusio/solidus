@@ -261,13 +261,15 @@ describe Spree::Order, :type => :model do
           order_1.merge!(order_2)
           expect(order_1.line_items.count).to eq(2)
 
-          line_item = order_1.line_items.first
-          expect(line_item.quantity).to eq(1)
-          expect(line_item.variant_id).to eq(variant.id)
+          line_items = order_1.line_items.map do |line_item|
+            { variant_id: line_item.variant_id, quantity: line_item.quantity }
+          end
 
-          line_item = order_1.line_items.last
-          expect(line_item.quantity).to eq(1)
-          expect(line_item.variant_id).to eq(variant.id)
+          expect(line_items)
+            .to eq([
+              { variant_id: variant.id, quantity: 1 },
+              { variant_id: variant.id, quantity: 1 }
+            ])
         end
       end
     end

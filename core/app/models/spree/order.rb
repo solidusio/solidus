@@ -454,6 +454,8 @@ module Spree
 
       updater.update
 
+      self.line_items.reload
+
       # So that the destroy doesn't take out line items which may have been re-assigned
       order.line_items.reload
       order.destroy
