@@ -15,6 +15,7 @@ module Spree
   # inventory level determine "on_hand" level for the product.
   class Variant < Spree::Base
     acts_as_paranoid
+    acts_as_list scope: :product
 
     include Spree::DefaultPrice
 
