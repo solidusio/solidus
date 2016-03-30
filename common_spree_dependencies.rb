@@ -38,7 +38,9 @@ end
 
 group :test, :development do
   gem 'rubocop'
+  gem 'pry'
+
   platforms :mri do
-    gem 'pry-byebug', '~> 1.0'
+    gem 'byebug'
   end
 end
