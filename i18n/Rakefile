@@ -1,29 +1,25 @@
-require 'rubygems'
-require 'rake'
-require 'rake/testtask'
-require 'rake/packagetask'
-require 'rubygems/package_task'
-require 'rspec/core/rake_task'
-require 'spree/testing_support/common_rake'
-require 'solidus_i18n'
-
+require 'bundler'
 Bundler::GemHelper.install_tasks
+
+require 'rspec/core/rake_task'
 RSpec::Core::RakeTask.new
 
-task default: :spec
-
-spec = eval(File.read('solidus_i18n.gemspec'))
-
-Gem::PackageTask.new(spec) do |p|
-  p.gem_spec = spec
+task :default do
+  if Dir["spec/dummy"].empty?
+    Rake::Task[:test_app].invoke
+    Dir.chdir("../../")
+  end
+  Rake::Task[:spec].invoke
 end
 
+require 'spree/testing_support/common_rake'
 desc 'Generates a dummy app for testing'
 task :test_app do
   ENV['LIB_NAME'] = 'solidus_i18n'
   Rake::Task['common:test_app'].invoke
 end
 
+require 'solidus_i18n'
 namespace :solidus_i18n do
   desc 'Update by retrieving the latest Solidus locale files'
   task :update_default do
