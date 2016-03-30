@@ -1,12 +1,12 @@
-language: ruby
-rvm:
-  - 2.1
-  - 2.2
-env:
-  - DB=mysql
-  - DB=postgres
 sudo: false
 cache: bundler
-before_script:
-  - bundle exec rake test_app
-script: bundle exec rspec spec
+language: ruby
+env:
+  - SOLIDUS_BRANCH=v1.1   DB=mysql
+  - SOLIDUS_BRANCH=v1.2   DB=mysql
+  - SOLIDUS_BRANCH=master DB=mysql
+  - SOLIDUS_BRANCH=v1.1   DB=postgres
+  - SOLIDUS_BRANCH=v1.2   DB=postgres
+  - SOLIDUS_BRANCH=master DB=postgres
+rvm:
+  - 2.3.0
