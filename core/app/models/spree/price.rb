@@ -5,8 +5,10 @@ module Spree
     MAXIMUM_AMOUNT = BigDecimal('99_999_999.99')
 
     belongs_to :variant, -> { with_deleted }, class_name: 'Spree::Variant', touch: true
+    belongs_to :vat_country, class_name: "Spree::Country", foreign_key: "vat_country_iso", primary_key: "iso"
 
     validate :check_price
+    validates :vat_country, absence: true, if: :is_default?
     validates :amount, allow_nil: true, numericality: {
       greater_than_or_equal_to: 0,
       less_than_or_equal_to: MAXIMUM_AMOUNT
@@ -35,6 +37,10 @@ module Spree
     # @param price [String, #to_d] a new amount
     def price=(price)
       self[:amount] = Spree::LocalizedNumber.parse(price)
+    end
+
+    def included_tax
+      vat_country.present?
     end
 
     private

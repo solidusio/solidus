@@ -7,7 +7,7 @@ module Spree
                             :customer_returns, :adjustments, :customer_details]
     PRODUCT_TABS       ||= [:products, :option_types, :properties, :prototypes,
                             :variants, :product_properties, :taxonomies,
-                            :taxons]
+                            :taxons, :prices]
     REPORT_TABS        ||= [:reports]
     CONFIGURATION_TABS ||= [:configurations, :general_settings, :tax_categories,
                             :tax_rates, :zones, :countries, :states,
