@@ -1,5 +1,12 @@
 ## Solidus 1.3.0 (unreleased)
 
+*   Deprecate setting a line item's currency by hand
+
+    Previously, a line item's currency could be set directly, and differently from the line item's
+    order's currency. This would result in an error. It still does, but is also now explicitly
+    deprecated. In the future, we might delete the line item's `currency` column and just delegate
+    to the line item's order.
+
 *   Taxes for carts now configurable via the `Spree::Store` object
 
     In VAT countries, carts (orders without addresses) have to be shown with

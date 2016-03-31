@@ -104,15 +104,10 @@ module Spree
     def options=(options = {})
       return unless options.present?
 
-      opts = options.dup # we will be deleting from the hash, so leave the caller's copy intact
+      self.price = variant.price_in(currency).amount +
+                   variant.price_modifier_amount_in(currency, options)
 
-      currency = opts.delete(:currency) || order.currency
-
-      self.currency = currency
-      self.price    = variant.price_in(currency).amount +
-        variant.price_modifier_amount_in(currency, opts)
-
-      assign_attributes opts
+      assign_attributes options
     end
 
     private
@@ -136,7 +131,7 @@ module Spree
       # If the legacy method #copy_price has been overridden, handle that gracefully
       return handle_copy_price_override if respond_to?(:copy_price)
 
-      self.currency ||= variant.currency
+      self.currency ||= order.currency
       self.cost_price ||= variant.cost_price
       self.price ||= variant.price
     end
@@ -175,7 +170,10 @@ module Spree
     end
 
     def ensure_proper_currency
-      unless currency == order.currency
+      if currency != order.currency
+        Spree::Deprecation.warn "The line items currency is different from it's order currency. " \
+                                "This behavior is not supported anymore and will be deleted soon.",
+                                caller
         errors.add(:currency, :must_match_order_currency)
       end
     end
