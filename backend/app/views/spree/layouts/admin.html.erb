@@ -11,7 +11,7 @@
     <%= render "spree/admin/shared/spinner" %>
 
     <div class="content-wrapper <%= @admin_layout.presence %> <%= "has-sidebar" if content_for?(:sidebar) %>" id="wrapper" data-hook>
-      <% if @admin_layout == "full-width" %>
+      <% if @admin_layout %>
         <div class="content">
           <div class="content-main">
             <%= yield :tabs %>

@@ -24,6 +24,11 @@ body {
   body.new-layout & {
     @include padding(1rem $grid-gutter-width null);
   }
+
+  &.centered {
+    @include margin(null auto);
+    max-width: map-get($container-max-widths, "xl");
+  }
 }
 
 .content {
