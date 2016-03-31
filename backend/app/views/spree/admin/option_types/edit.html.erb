@@ -16,11 +16,14 @@
 <%= render :partial => 'spree/shared/error_messages', :locals => { :target => @option_type } %>
 
 <%= form_for [:admin, @option_type] do |f| %>
-  <fieldset>
-    <legend align="center"><%= Spree::OptionValue.model_name.human(count: :other) %></legend>
 
+  <fieldset class="no-border-bottom">
+    <legend><%= Spree::OptionType.model_name.human %></legend>
     <%= render :partial => 'form', :locals => { :f => f } %>
+  </fieldset>
 
+  <fieldset>
+    <legend><%= Spree::OptionValue.model_name.human(count: :other) %></legend>
     <table class="index sortable" data-hook data-sortable-link="<%= update_values_positions_admin_option_types_url %>">
       <thead data-hook="option_header">
         <tr>
@@ -35,7 +38,6 @@
         <% end %>
       </tbody>
     </table>
-
     <%= render :partial => 'spree/admin/shared/edit_resource_links' %>
   </fieldset>
 <% end %>
