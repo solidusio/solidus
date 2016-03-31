@@ -1,0 +1,19 @@
+<% content_for :tabs do %>
+  <nav>
+    <ul class="tabs" data-hook="admin_settings_areas_tabs">
+      <% if can? :display, Spree::Zone %>
+        <%= settings_tab_item Spree::Zone.model_name.human(count: :other), admin_zones_path %>
+      <% end %>
+
+      <% if can? :display, Spree::Country %>
+        <%= settings_tab_item Spree::Country.model_name.human(count: :other), admin_countries_path %>
+      <% end %>
+
+      <% if can?(:display, Spree::State) %>
+        <% if country = Spree::Country.find_by(iso: Spree::Config[:default_country_iso]) || Spree::Country.first %>
+          <%= settings_tab_item Spree::State.model_name.human(count: :other), admin_country_states_path(country) %>
+        <% end %>
+      <% end %>
+    </ul>
+  </nav>
+<% end %>

@@ -7,6 +7,7 @@ describe "Stock Locations", type: :feature do
     create(:country)
     visit spree.admin_path
     click_link "Settings"
+    click_link "Shipping"
     click_link "Stock Locations"
   end
 

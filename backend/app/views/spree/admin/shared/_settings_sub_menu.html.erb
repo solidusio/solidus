@@ -1,0 +1,26 @@
+<ul class="admin-subnav" data-hook="admin_settings_sub_tabs">
+  <% if can?(:edit, :general_settings) || can?(:display, Spree::Tracker) || can?(:display, Spree::Taxonomy) %>
+    <%= tab :general_settings, label: :store, url: spree.edit_admin_general_settings_path %>
+  <% end %>
+
+  <% if can?(:display, Spree::PaymentMethod) %>
+    <%= tab :payments, url: admin_payment_methods_path %>
+  <% end %>
+
+  <% if can?(:display, Spree::Zone) || can?(:display, Spree::Country) || can?(:display, Spree::State) %>
+    <%= tab :areas, url: admin_zones_path %>
+  <% end %>
+
+  <% if can?(:display, Spree::TaxCategory) || can?(:display, Spree::TaxRate) %>
+    <%= tab :taxes, url: admin_tax_categories_path %>
+  <% end %>
+
+  <% if can?(:display, Spree::RefundReason) || can?(:display, Spree::ReimbursementType) ||
+     can?(:display, Spree::ReturnReason) || can?(:display, Spree::AdjustmentReason) %>
+    <%= tab :checkout, url: admin_refund_reasons_path %>
+  <% end %>
+
+  <% if can?(:display, Spree::ShippingMethod) || can?(:display, Spree::ShippingCategory) || can?(:display, Spree::StockLocation) %>
+    <%= tab :shipping, url: admin_shipping_methods_path %>
+  <% end %>
+</ul>

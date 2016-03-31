@@ -122,6 +122,18 @@ module Spree
           link_to(link_text, url)
         end
       end
+
+      def settings_tab_item(link_text, url, options = {})
+        is_active = url.ends_with?(controller.controller_name) ||
+                    url.ends_with?("#{controller.controller_name}/edit") ||
+                    url.ends_with?("#{controller.controller_name.singularize}/edit")
+        options[:class] = 'fa'
+        options[:class] += ' active' if is_active
+        options[:datahook] = "admin_settings_#{link_text.downcase.tr(' ', '_')}"
+        content_tag(:li, options) do
+          link_to(link_text, url)
+        end
+      end
     end
   end
 end
