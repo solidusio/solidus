@@ -725,7 +725,7 @@ en:
         new:
           new_variant: New variant
         edit:
-          edit_variant: Edit variant
+          edit_variant: "Edit variant - %{options_text}"
         form:
           dimensions: Dimensions
           pricing: Pricing

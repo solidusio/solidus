@@ -11,22 +11,24 @@
       <% end %>
     </div>
   </fieldset>
-  <fieldset class="no-border-top no-border-bottom">
-    <% @product.option_types.each_with_index do |option_type, index| %>
-      <div class="field four columns <%= 'alpha' if index % 3 == 0 %><%= 'omega' if index % 3 == 2 %>" data-hook="presentation">
-        <%= label :new_variant, option_type.presentation %>
-        <%= f.collection_select 'option_value_ids',
-                                option_type.option_values,
-                                :id,
-                                :presentation,
-                                { include_blank: true },
-                                {
-                                  name: 'variant[option_value_ids][]',
-                                  class: "select2 fullwidth"
-                                } %>
-      </div>
-    <% end %>
-  </fieldset>
+  <% if f.object.new_record? %>
+    <fieldset class="no-border-top no-border-bottom">
+      <% @product.option_types.each_with_index do |option_type, index| %>
+        <div class="field four columns <%= 'alpha' if index % 3 == 0 %><%= 'omega' if index % 3 == 2 %>" data-hook="presentation">
+          <%= label :new_variant, option_type.presentation %>
+          <%= f.collection_select 'option_value_ids',
+                                  option_type.option_values,
+                                  :id,
+                                  :presentation,
+                                  { include_blank: true },
+                                  {
+                                    name: 'variant[option_value_ids][]',
+                                    class: "select2 fullwidth"
+                                  } %>
+        </div>
+      <% end %>
+    </fieldset>
+  <% end %>
 </div>
 
 <div data-hook="admin_variant_form_additional_fields">
