@@ -31,7 +31,8 @@ module Spree
         elsif options[:match_path]
           request.fullpath.starts_with?("#{admin_path}#{options[:match_path]}")
         else
-          args.include?(controller.controller_name.to_sym)
+          request.fullpath.starts_with?(destination_url) ||
+            args.include?(controller.controller_name.to_sym)
         end
         css_classes << 'selected' if selected
 
