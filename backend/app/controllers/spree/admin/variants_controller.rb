@@ -31,12 +31,10 @@ module Spree
       end
 
       def collection
-        @deleted = (params.key?(:deleted) && params[:deleted] == "on") ? "checked" : ""
-
-        if @deleted.blank?
-          base_variant_scope ||= super
-        else
+        if params[:deleted] == "on"
           base_variant_scope ||= Variant.only_deleted.where(product_id: parent.id)
+        else
+          base_variant_scope ||= super
         end
 
         search = Spree::Config.variant_search_class.new(params[:variant_search_term], scope: base_variant_scope)

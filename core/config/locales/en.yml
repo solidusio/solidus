@@ -723,6 +723,8 @@ en:
           amount_used_not_zero: "is greater than zero. Can not delete store credit"
           update_reason_required: "A reason for the change must be selected"
       variants:
+        index:
+          show_deleted: Show deleted variants
         new:
           new_variant: New variant
         edit:

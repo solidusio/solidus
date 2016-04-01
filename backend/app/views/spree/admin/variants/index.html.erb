@@ -12,6 +12,15 @@
         <%= text_field_tag :variant_search_term, params[:variant_search_term], :class => "fullwidth", :placeholder => Spree.t(:variant_search_placeholder) %>
       </div>
 
+      <% if @product.variants.only_deleted.any? %>
+        <div class="checkbox">
+          <%= label_tag :deleted do %>
+            <%= check_box_tag :deleted, "on", params[:deleted] == "on" %>
+            <%= t('.show_deleted') %>
+          <% end %>
+        </div>
+      <% end %>
+
       <div class="actions filter-actions">
         <%= f.button :search %>
       </div>
@@ -84,9 +93,7 @@
       <% end %>
     </div>
   <% end %>
-
 <% end %>
-
 
 <% content_for :page_actions do %>
   <ul class="inline-menu" data-hook="toolbar">
@@ -99,10 +106,6 @@
                               :class => 'button'
                              ) %>
       </li>
-    <% end %>
-
-    <% if @product.variants.only_deleted.any? %>
-      <li><%= link_to_with_icon('filter', @deleted.blank? ? Spree.t(:show_deleted) : Spree.t(:show_active), admin_product_variants_url(@product, :deleted => @deleted.blank? ? "on" : "off"), :class => 'button') %></li>
     <% end %>
   </ul>
 <% end %>
