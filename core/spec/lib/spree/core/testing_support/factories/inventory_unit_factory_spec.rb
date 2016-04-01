@@ -9,4 +9,12 @@ RSpec.describe 'inventory unit factory' do
 
     it_behaves_like 'a working factory'
   end
+
+  describe 'with passed in variant' do
+    let(:variant) { build(:variant) }
+    subject { build(:inventory_unit, variant: variant) }
+    it "has a line_item with proper price" do
+      expect(subject.line_item.price).to eq(variant.price)
+    end
+  end
 end
