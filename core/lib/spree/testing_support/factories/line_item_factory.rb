@@ -12,5 +12,6 @@ FactoryGirl.define do
     variant do
       (product || create(:product)).master
     end
+    currency { order.currency }
   end
 end

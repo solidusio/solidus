@@ -69,10 +69,19 @@ module Spree
     alias total final_amount
 
     # @return [Spree::Money] the price of this line item
-    def single_money
+    def money_price
       Spree::Money.new(price, { currency: currency })
     end
-    alias single_display_amount single_money
+    alias single_display_amount money_price
+    alias single_money money_price
+
+    # Sets price and currency from a `Spree::Money` object
+    #
+    # @param [Spree::Money] money - the money object to obtain price and currency from
+    def money_price=(money)
+      self.price = money.to_d
+      self.currency = money.currency.iso_code
+    end
 
     # @return [Spree::Moeny] the amount of this line item
     def money
@@ -133,7 +142,8 @@ module Spree
 
       self.currency ||= order.currency
       self.cost_price ||= variant.cost_price
-      self.price ||= variant.price
+      self.money_price = Pricers::Conservative.new(self).price
+      true
     end
 
     def handle_copy_price_override
