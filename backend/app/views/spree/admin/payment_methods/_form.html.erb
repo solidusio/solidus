@@ -5,12 +5,12 @@
     <div class="alpha four columns">
       <div id="preference-settings">
         <div class="field">
-          <%= f.label :type, Spree.t(:provider) %>
+          <%= f.label :type %>
           <%= collection_select(:payment_method, :type, @providers, :to_s, :name, {}, {:id => 'gtwy-type', :class => 'select2 fullwidth js-gateway-type'}) %>
         </div>
 
         <div class="field js-preference-source-wrapper">
-          <%= label_tag :preference_source, 'Preference Source' %>
+          <%= f.label :preference_source %>
           <%= f.select(:preference_source, [[Spree.t(:preference_source_none), nil]] + @object.class.available_preference_sources, {}, class: 'select2 fullwidth js-preference-source') %>
         </div>
 
@@ -25,15 +25,15 @@
         <div class="info warning js-gateway-settings-warning"><%= Spree.t(:provider_settings_warning) %></div>
       </div>
       <div data-hook="display" class="field">
-        <%= label_tag :payment_method_display_on, Spree.t(:display) %>
+        <%= f.label :display_on %>
         <%= select(:payment_method, :display_on, Spree::PaymentMethod::DISPLAY.collect { |display| [Spree.t(display), display == :both ? nil : display.to_s] }, {}, {:class => 'select2 fullwidth'}) %>
       </div>
       <div data-hook="auto_capture" class="field">
-        <%= label_tag :payment_method_auto_capture, Spree.t(:auto_capture) %>
+        <%= f.label :auto_capture %>
         <%= select(:payment_method, :auto_capture, [["#{Spree.t(:use_app_default)} (#{Spree::Config[:auto_capture]})", ''], [Spree.t(:say_yes), true], [Spree.t(:say_no), false]], {}, {:class => 'select2 fullwidth'}) %>
       </div>
       <div data-hook="active" class="field">
-        <%= label_tag nil, Spree.t(:active) %>
+        <%= label_tag nil, Spree::PaymentMethod.human_attribute_name(:active) %>
         <ul>
           <li>
             <%= radio_button :payment_method, :active, true %>
@@ -49,15 +49,14 @@
 
     <div class="omega eight columns">
       <div data-hook="name" class="field">
-        <%= label_tag :payment_method_name, Spree.t(:name) %>
-        <%= text_field :payment_method, :name, :class => 'fullwidth' %>
+        <%= f.label :name %>
+        <%= f.text_field :name, :class => 'fullwidth' %>
       </div>
       <div data-hook="description" class="field">
-        <%= label_tag :payment_method_description, Spree.t(:description) %>
-        <%= text_area :payment_method, :description, {:cols => 60, :rows => 6, :class => 'fullwidth'} %>
+        <%= f.label :description %>
+        <%= f.text_area :description, {:cols => 60, :rows => 6, :class => 'fullwidth'} %>
       </div>
     </div>
-
   </div>
 </div>
 

@@ -115,7 +115,13 @@ en:
         amount: Amount
         number: Identifier
       spree/payment_method:
+        active: Active
+        auto_capture: Auto Capture
+        description: Description
+        display_on: Display
         name: Name
+        preference_source: Preference Source
+        type: Provider
       spree/product:
         available_on: Available On
         cost_currency: Cost Currency

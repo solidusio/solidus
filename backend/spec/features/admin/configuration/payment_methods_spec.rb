@@ -49,14 +49,14 @@ describe "Payment Methods", type: :feature do
     end
 
     it "should be able to edit an existing payment method" do
-      fill_in "payment_method_name", with: "Payment 99"
+      fill_in "payment_method_check_name", with: "Payment 99"
       click_button "Update"
       expect(page).to have_content("successfully updated!")
-      expect(page).to have_field("payment_method_name", with: "Payment 99")
+      expect(page).to have_field("payment_method_check_name", with: "Payment 99")
     end
 
     it "should display validation errors" do
-      fill_in "payment_method_name", with: ""
+      fill_in "payment_method_check_name", with: ""
       click_button "Update"
       expect(page).to have_content("Name can't be blank")
     end
