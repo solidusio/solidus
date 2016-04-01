@@ -307,6 +307,7 @@ en:
         height: Height
         price: Price
         sku: SKU
+        tax_category: Variant tax category
         weight: Weight
         width: Width
       spree/zone:
@@ -728,6 +729,7 @@ en:
           edit_variant: "Edit variant - %{options_text}"
         form:
           dimensions: Dimensions
+          use_product_tax_category: Use Product Tax Category
           pricing: Pricing
           pricing_hint: These values are populated from the product details page and can be overridden below
     administration: Administration

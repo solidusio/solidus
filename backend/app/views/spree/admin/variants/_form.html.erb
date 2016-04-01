@@ -59,8 +59,13 @@
     </div>
 
     <div class="field four columns omega" data-hook="tax_category">
-      <%= f.label :tax_category_id, Spree::TaxCategory.model_name.human %>
-      <%= f.collection_select(:tax_category_id, @tax_categories, :id, :name, { :include_blank => Spree.t('match_choices.none') }, { :class => 'select2 fullwidth' }) %>
+      <%= f.label :tax_category %>
+      <%= f.collection_select :tax_category_id,
+                              @tax_categories,
+                              :id,
+                              :name,
+                              { :include_blank => t('.use_product_tax_category') },
+                              { :class => 'select2 fullwidth' } %>
     </div>
   </fieldset>
 </div>
