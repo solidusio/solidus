@@ -1,10 +1,6 @@
 <%= render :partial => 'spree/admin/shared/product_tabs', :locals => {:current => 'Variants'} %>
 
-<%# Place for new variant form %>
-<div id="new_variant" data-hook></div>
-
 <% if @variants.any? || @product.variants.only_deleted.any?%>
-
   <% content_for :table_filter_title do %>
     <%= Spree.t(:search) %>
   <% end %>
