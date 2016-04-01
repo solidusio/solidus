@@ -3,24 +3,25 @@
 <%# Place for new variant form %>
 <div id="new_variant" data-hook></div>
 
-<% content_for :table_filter_title do %>
-  <%= Spree.t(:search) %>
-<% end %>
+<% if @variants.any? || @product.variants.only_deleted.any?%>
 
-<% content_for :table_filter do %>
-  <%= form_for :variant_search, url: spree.admin_product_variants_path(@product), method: :get do |f| %>
-    <div data-hook="admin_variants_index_search" class="field fullwidth">
-      <%= f.label :variant_search_term, Spree.t(:variant_search_placeholder) %>
-      <%= text_field_tag :variant_search_term, params[:variant_search_term], :class => "fullwidth", :placeholder => Spree.t(:variant_search_placeholder) %>
-    </div>
-
-    <div class="actions filter-actions">
-      <%= f.button :search %>
-    </div>
+  <% content_for :table_filter_title do %>
+    <%= Spree.t(:search) %>
   <% end %>
-<% end %>
 
-<% if @variants.any? %>
+  <% content_for :table_filter do %>
+    <%= form_for :variant_search, url: spree.admin_product_variants_path(@product), method: :get do |f| %>
+      <div data-hook="admin_variants_index_search" class="field fullwidth">
+        <%= f.label :variant_search_term, Spree.t(:variant_search_placeholder) %>
+        <%= text_field_tag :variant_search_term, params[:variant_search_term], :class => "fullwidth", :placeholder => Spree.t(:variant_search_placeholder) %>
+      </div>
+
+      <div class="actions filter-actions">
+        <%= f.button :search %>
+      </div>
+    <% end %>
+  <% end %>
+
   <%= paginate @variants, theme: "solidus_admin" %>
 
   <table class="index sortable" data-sortable-link="<%= update_positions_admin_product_variants_path(@product) %>">
@@ -62,43 +63,50 @@
         </td>
       </tr>
       <% end %>
-      <% unless @product.has_variants? %>
-        <tr><td colspan="5"><%= Spree.t(:none) %></td></tr>
+      <% if @variants.empty? %>
+        <tr><td colspan="4"><%= Spree.t(:none) %></td></tr>
       <% end %>
     </tbody>
   </table>
   <%= paginate @variants, theme: "solidus_admin" %>
 <% else %>
-  <div class="alpha twelve columns no-objects-found">
-    <%= render 'spree/admin/shared/no_objects_found',
-                 resource: Spree::Variant,
-                 new_resource_url: new_object_url %>
-  </div>
+
+  <% if @product.empty_option_values? %>
+    <p class='first_add_option_types no-objects-found' data-hook="first_add_option_types">
+      <%= Spree.t(:to_add_variants_you_must_first_define) %>
+      <% if can?(:display, Spree::OptionType) %>
+        <%= link_to Spree::OptionType.model_name.human(count: :other), admin_option_types_path%>
+      <% else %>
+        <%= Spree::OptionType.model_name.human(count: :other) %>
+      <% end %>
+    </p>
+  <% else %>
+    <div class="alpha twelve columns no-objects-found">
+      <%= Spree.t(:no_resource, resource: Spree::Variant.model_name.human(count: :other)) %>
+      <% if can? :create, Spree::Variant %>
+        <%= link_to Spree.t(:create_one), new_object_url, remote: true %>
+      <% end %>
+    </div>
+  <% end %>
+
 <% end %>
 
-<% if @product.empty_option_values? %>
-  <p class='first_add_option_types no-objects-found' data-hook="first_add_option_types">
-    <%= Spree.t(:to_add_variants_you_must_first_define) %>
-    <% if can?(:display, Spree::OptionType) %>
-      <%= link_to Spree::OptionType.model_name.human(count: :other), admin_option_types_path%>
-    <% else %>
-      <%= Spree::OptionType.model_name.human(count: :other) %>
+
+<% content_for :page_actions do %>
+  <ul class="inline-menu" data-hook="toolbar">
+    <% if can?(:create, Spree::Variant) && !@product.empty_option_values? %>
+      <li id="new_var_link" data-hook>
+        <%= link_to_with_icon('plus',
+                              Spree.t(:new_variant),
+                              new_admin_product_variant_url(@product),
+                              :remote => :true,
+                              :class => 'button'
+                             ) %>
+      </li>
     <% end %>
-  </p>
-<% else %>
-  <% content_for :page_actions do %>
-    <ul class="inline-menu" data-hook="toolbar">
-      <% if can?(:create, Spree::Variant) %>
-        <li id="new_var_link" data-hook>
-          <%= link_to_with_icon('plus',
-                                Spree.t(:new_variant),
-                                new_admin_product_variant_url(@product),
-                                :remote => :true,
-                                :class => 'button'
-                               ) %>
-        </li>
-      <% end %>
+
+    <% if @product.variants.only_deleted.any? %>
       <li><%= link_to_with_icon('filter', @deleted.blank? ? Spree.t(:show_deleted) : Spree.t(:show_active), admin_product_variants_url(@product, :deleted => @deleted.blank? ? "on" : "off"), :class => 'button') %></li>
-    </ul>
-  <% end %>
+    <% end %>
+  </ul>
 <% end %>

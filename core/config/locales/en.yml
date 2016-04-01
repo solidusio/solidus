@@ -721,6 +721,15 @@ en:
           amount_authorized_exceeds_total_credit: " exceeds the available credit"
           amount_used_not_zero: "is greater than zero. Can not delete store credit"
           update_reason_required: "A reason for the change must be selected"
+      variants:
+        new:
+          new_variant: New variant
+        edit:
+          edit_variant: Edit variant
+        form:
+          dimensions: Dimensions
+          pricing: Pricing
+          pricing_hint: These values are populated from the product details page and can be overridden below
     administration: Administration
     agree_to_privacy_policy: Agree to Privacy Policy
     agree_to_terms_of_service: Agree to Terms of Service
