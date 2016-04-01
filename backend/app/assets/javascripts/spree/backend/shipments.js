@@ -197,9 +197,12 @@ var ShipmentSplitItemView = Backbone.View.extend({
   template: HandlebarsTemplates['variants/split'],
 
   render: function() {
+    /* Only display other shipments */
+    var shipments = _.reject(this.shipments, _.matcher({'number': this.shipment_number}))
+
     var renderAttr = {
       variant: this.variant,
-      shipments: this.shipments,
+      shipments: shipments,
       max_quantity: this.max_quantity
     };
     this.$el.html(this.template(renderAttr));

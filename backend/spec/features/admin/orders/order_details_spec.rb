@@ -384,12 +384,11 @@ describe "Order Details", type: :feature, js: true do
 
           it 'should not allow a shipment to split stock to itself' do
             within_row(1) { click_icon 'arrows-h' }
-            complete_split_to(order.shipments.first, quantity: 1)
-
-            wait_for_ajax
-
-            expect(order.shipments.count).to eq(2)
-            expect(order.shipments.first.inventory_units_for(product.master).count).to eq(2)
+            click_on 'Choose location'
+            within '.select2-results' do
+              expect(page).to have_content(@shipment2.number)
+              expect(page).not_to have_content(order.shipments[0].number)
+            end
           end
 
           it 'should split fine if more than one line_item is in the receiving shipment' do
