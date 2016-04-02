@@ -11,11 +11,6 @@ module Spree
       CreditCard
     end
 
-    # instantiates the selected gateway and configures with the options stored in the database
-    def self.current
-      super
-    end
-
     def provider
       gateway_options = options
       gateway_options.delete :login if gateway_options.key?(:login) && gateway_options[:login].nil?

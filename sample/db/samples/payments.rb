@@ -1,13 +1,6 @@
 # create payments based on the totals since they can't be known in YAML (quantities are random)
 method = Spree::PaymentMethod.where(name: 'Credit Card', active: true).first
 
-# Hack the current method so we're able to return a gateway without a RAILS_ENV
-Spree::Gateway.class_eval do
-  def self.current
-    Spree::Gateway::Bogus.new
-  end
-end
-
 # This table was previously called spree_creditcards, and older migrations
 # reference it as such. Make it explicit here that this table has been renamed.
 Spree::CreditCard.table_name = 'spree_credit_cards'
