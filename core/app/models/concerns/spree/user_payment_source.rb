@@ -15,7 +15,7 @@ module Spree
     end
 
     def drop_payment_source(source)
-      ActiveSupport::Deprecation.warn("User#drop_payment_source is deprecated")
+      ActiveSupport::Deprecation.warn("User#drop_payment_source is deprecated", caller)
       gateway = source.payment_method
       gateway.disable_customer_profile(source)
     end
