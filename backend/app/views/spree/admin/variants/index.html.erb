@@ -8,39 +8,16 @@
 <% end %>
 
 <% content_for :table_filter do %>
-  <div data-hook="admin_variants_sidebar">
+  <%= form_for :variant_search, url: spree.admin_product_variants_path(@product), method: :get do |f| %>
+    <div data-hook="admin_variants_index_search" class="field fullwidth">
+      <%= f.label :variant_search_term, Spree.t(:variant_search_placeholder) %>
+      <%= text_field_tag :variant_search_term, params[:variant_search_term], :class => "fullwidth", :placeholder => Spree.t(:variant_search_placeholder) %>
+    </div>
 
-    <%= search_form_for [:admin, @search], url: admin_product_variants_url(product: @product) do |f| %>
-
-      <%- locals = {:f => f} %>
-
-      <div class="three columns">
-        <div class="field">
-          <%= f.label :sku_cont, Spree.t(:sku) %>
-          <%= f.text_field :sku_cont, :size => 15 %>
-        </div>
-      </div>
-
-      <% @option_types.each do |option_type| %>
-        <div data-hook="admin_variants_index_search">
-          <div class="three columns">
-            <div class="field">
-              <% option_values = @option_values.select { |ov| ov.option_type_id == option_type.id } %>
-              <%= f.label :option_values_presentation_in, option_type.presentation %>
-              <br />
-              <%= f.collection_select :option_values_presentation_in, option_values.sort_by(&:presentation), :presentation, :presentation, { :include_blank => Spree.t('match_choices.none') }, { class: "select2 fullwidth" } %>
-            </div>
-          </div>
-        </div>
-      <% end %>
-
-      <div class="clear"></div>
-
-      <div class="form-buttons actions filter-actions" data-hook="admin_products_index_search_buttons">
-        <%= button Spree.t(:search), 'search' %>
-      </div>
-    <% end %>
-  </div>
+    <div class="actions filter-actions">
+      <%= f.button :search %>
+    </div>
+  <% end %>
 <% end %>
 
 <% if @variants.any? %>

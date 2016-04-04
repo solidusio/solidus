@@ -35,16 +35,13 @@ module Spree
         @deleted = (params.key?(:deleted) && params[:deleted] == "on") ? "checked" : ""
 
         if @deleted.blank?
-          @collection ||= super
+          base_variant_scope ||= super
         else
-          @collection ||= Variant.only_deleted.where(product_id: parent.id)
+          base_variant_scope ||= Variant.only_deleted.where(product_id: parent.id)
         end
 
-        params[:q] ||= {}
-
-        # @search needs to be defined as this is passed to search_form_for
-        @search = @collection.ransack(params[:q])
-        @collection = @search.result.includes(variant_includes).page(params[:page]).per(Spree::Config[:admin_variants_per_page])
+        search = Spree::Config.variant_search_class.new(params[:variant_search_term], scope: base_variant_scope)
+        @collection = search.results.includes(variant_includes).page(params[:page]).per(Spree::Config[:admin_variants_per_page])
       end
 
       def load_option_types_values
