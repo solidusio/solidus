@@ -2,13 +2,9 @@
   <%= Spree.t(:editing_product) %> &ldquo;<%= @product.name %>&rdquo;
 <% end %>
 
-<% content_for :sidebar_title do %>
-  <span class="sku"><%= @product.sku %></span>
-<% end %>
-
-<% content_for :sidebar do %>
-  <nav class="menu">
-    <ul data-hook="admin_product_tabs">
+<% content_for :tabs do %>
+  <nav>
+    <ul class="tabs" data-hook="admin_product_tabs">
       <%= content_tag :li, :class => ('active' if current == 'Product Details') do %>
         <%= link_to_with_icon 'edit', Spree.t(:product_details), edit_admin_product_url(@product) %>
       <% end if can?(:admin, Spree::Product) %>
@@ -26,5 +22,4 @@
       <% end if can?(:admin, Spree::StockItem) %>
     </ul>
   </nav>
-
 <% end %>

@@ -15,7 +15,7 @@ describe "Product Variants", type: :feature do
 
       within_row(1) { click_icon :edit }
 
-      within('#sidebar') { click_link "Variants" }
+      within('nav > ul.tabs') { click_link "Variants" }
       expect(page).to have_content("TO ADD VARIANTS, YOU MUST FIRST DEFINE")
     end
 
@@ -43,7 +43,7 @@ describe "Product Variants", type: :feature do
       click_button "Update"
       expect(page).to have_content("successfully updated!")
 
-      within('#sidebar') { click_link "Variants" }
+      within('nav > ul.tabs') { click_link "Variants" }
       click_link "New Variant"
 
       targetted_select2 "black", from: "#s2id_variant_option_value_ids"
