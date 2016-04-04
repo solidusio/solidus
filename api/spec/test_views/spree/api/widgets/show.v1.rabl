@@ -1,2 +1,2 @@
 object @object
-attributes :name, :position
+attributes :id, :name, :position
