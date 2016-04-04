@@ -7,6 +7,26 @@ describe Spree::Variant, type: :model do
 
   it_behaves_like 'default_price'
 
+  context 'changing the price' do
+    before do
+      variant.price = 1500
+      variant.save
+    end
+
+    it 'creates a new price' do
+      expect(variant.prices.length).to eq(2)
+      expect(variant.price).to eq(1500)
+    end
+  end
+
+  context 'changing the currency' do
+    it 'issues a deprecation warning' do
+      expect(Spree::Deprecation).to receive(:warn)
+      variant.currency = "RUB"
+      expect(variant.currency).to eq("RUB")
+    end
+  end
+
   context "validations" do
     it "should validate price is greater than 0" do
       variant.price = -1
@@ -167,10 +187,9 @@ describe Spree::Variant, type: :model do
   context "#default_price" do
     context "when multiple prices are present in addition to a default price" do
       before do
-        variant.prices << create(:price, variant: variant, currency: "USD", amount: 12.12, is_default: false)
-        variant.prices << create(:price, variant: variant, currency: "EUR", amount: 29.99)
-        variant.prices << create(:price, variant: variant, currency: "EUR", amount: 10.00, is_default: false)
-        variant.reload
+        variant.prices.create(currency: "USD", amount: 12.12, valid_from: "2010-10-10")
+        variant.prices.create(currency: "EUR", amount: 29.99)
+        variant.prices.create(currency: "EUR", amount: 10.00, valid_from: "2010-10-10")
       end
 
       it "the default stays the same" do
@@ -186,7 +205,7 @@ describe Spree::Variant, type: :model do
     context "when adding multiple prices" do
       it "it can reassign a default price" do
         expect(variant.default_price.amount).to eq(19.99)
-        variant.prices << create(:price, variant: variant, currency: "USD", amount: 12.12)
+        variant.prices.create(currency: "USD", amount: 12.12)
         expect(variant.reload.default_price.amount).to eq(12.12)
       end
     end
@@ -194,7 +213,7 @@ describe Spree::Variant, type: :model do
 
   describe '.price_in' do
     before do
-      variant.prices << create(:price, variant: variant, currency: "EUR", amount: 33.33)
+      variant.prices.create(currency: "EUR", amount: 33.33)
     end
     subject { variant.price_in(currency).display_amount }
 

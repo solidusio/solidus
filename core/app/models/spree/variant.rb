@@ -39,6 +39,7 @@ module Spree
     has_many :images, -> { order(:position) }, as: :viewable, dependent: :destroy, class_name: "Spree::Image"
 
     has_many :prices,
+      -> { with_deleted },
       class_name: 'Spree::Price',
       dependent: :destroy,
       inverse_of: :variant
@@ -214,7 +215,8 @@ module Spree
     # @param currency [String] the desired currency
     # @return [Spree::Price] the price in the desired currency
     def price_in(currency)
-      prices.detect{ |price| price.currency == currency && price.is_default } || Spree::Price.new(variant_id: id, currency: currency)
+      prices.valid_before_now.in_currency(currency).first ||
+        prices.build(currency: currency)
     end
 
     # Fetches the price amount in the specified currency.
@@ -328,6 +330,18 @@ module Spree
       end.flatten.compact
     end
 
+    # Sets a variant's default price currency.
+    # This is deprecated, as changing the default price's currency will make that price a non-default
+    # price (as the scope for that includes the scope `in_currency(Spree::Config.currency)`)
+    # @deprecated
+    # @see Spree::DefaultPrice#default_price
+    def currency=(currency)
+      Spree::Deprecation.warn "Setting a currency on a variant is unsupported behaviour." \
+                              "Create a new price object via `variant.prices.create` instead",
+                              caller
+      default_price.currency = currency
+    end
+
     private
 
     def set_master_out_of_stock
@@ -346,9 +360,6 @@ module Spree
           raise 'No master variant found to infer price' unless product && product.master
           self.price = product.master.price
         end
-      end
-      if currency.nil?
-        self.currency = Spree::Config[:currency]
       end
     end
 

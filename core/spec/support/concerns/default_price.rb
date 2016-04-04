@@ -16,6 +16,30 @@ shared_examples_for "default_price" do
     it 'should have the class name of Spree::Price' do
       expect(default_price_association.options[:class_name]).to eql 'Spree::Price'
     end
+
+    context 'when used inside the Spree namespace' do
+      let(:model) { Spree::Variant }
+
+      it 'should have an inverse option without the Spree namespace' do
+        expect(default_price_association.options[:inverse_of]).to eq(:variant)
+      end
+    end
+
+    context 'when used outside of the Spree namespace' do
+      before do
+        module MyStore
+          class Bicycle < ActiveRecord::Base
+            include Spree::DefaultPrice
+          end
+        end
+      end
+
+      let(:model) { MyStore::Bicycle }
+
+      it 'should have an inverse option without its namespace' do
+        expect(default_price_association.options[:inverse_of]).to eq(:bicycle)
+      end
+    end
   end
 
   describe '#default_price' do

@@ -274,6 +274,15 @@ module Spree
       end
     end
 
+    # Takes the product's cache key and adds a cache key for the current prices relation.
+    #
+    # This way, we expire the cache every time a new price becomes valid via its `valid_from`
+    # property.
+    #
+    def cache_key
+      super + "/prices/" + prices.cache_key
+    end
+
     private
 
     def add_associations_from_prototype

@@ -72,20 +72,19 @@ module Spree
       end
     end
 
-    context "#variant_price_full" do
+    context "#variant_full_price" do
+      let(:product) { create(:product, price: 10) }
+      let!(:variant1) { create(:variant, price: 15, product: product) }
+      let!(:variant2) { create(:variant, price: 20, product: product) }
+
       before do
         Spree::Config[:show_variant_full_price] = true
-        @variant1 = create(:variant, product: product)
-        @variant2 = create(:variant, product: product)
       end
 
       context "when currency is default" do
         it "should return the variant price if the price is different than master" do
-          product.price = 10
-          @variant1.price = 15
-          @variant2.price = 20
-          expect(helper.variant_price(@variant1)).to eq("$15.00")
-          expect(helper.variant_price(@variant2)).to eq("$20.00")
+          expect(helper.variant_price(variant1)).to eq("$15.00")
+          expect(helper.variant_price(variant2)).to eq("$20.00")
         end
       end
 
@@ -103,17 +102,17 @@ module Spree
 
         it "should return the variant price if the price is different than master" do
           product.price = 100
-          @variant1.price = 150
-          expect(helper.variant_price(@variant1)).to eq("&#x00A5;150")
+          variant1.price = 150
+          expect(helper.variant_price(variant1)).to eq("&#x00A5;150")
         end
       end
 
       it "should be nil when all variant prices are equal" do
         product.price = 10
-        @variant1.default_price.update_column(:amount, 10)
-        @variant2.default_price.update_column(:amount, 10)
-        expect(helper.variant_price(@variant1)).to be_nil
-        expect(helper.variant_price(@variant2)).to be_nil
+        variant1.default_price.update_column(:amount, 10)
+        variant2.default_price.update_column(:amount, 10)
+        expect(helper.variant_price(variant1)).to be_nil
+        expect(helper.variant_price(variant2)).to be_nil
       end
     end
 
