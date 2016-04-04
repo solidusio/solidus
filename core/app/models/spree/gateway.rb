@@ -39,8 +39,8 @@ module Spree
 
     def supports?(source)
       return true unless provider_class.respond_to? :supports?
-      return false unless source.brand
-      provider_class.supports?(source.brand)
+      return true if source.brand && provider_class.supports?(source.brand)
+      source.has_payment_profile?
     end
 
     def disable_customer_profile(source)
