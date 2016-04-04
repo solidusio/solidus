@@ -33,7 +33,7 @@ module Spree
     has_many :stock_locations, through: :stock_items
     has_many :stock_movements, through: :stock_items
 
-    has_many :option_values_variants, dependent: :destroy
+    has_many :option_values_variants
     has_many :option_values, through: :option_values_variants
 
     has_many :images, -> { order(:position) }, as: :viewable, dependent: :destroy, class_name: "Spree::Image"
@@ -56,6 +56,8 @@ module Spree
     after_create :set_master_out_of_stock, unless: :is_master?
 
     after_touch :clear_in_stock_cache
+
+    after_real_destroy :destroy_option_values_variants
 
     # Returns variants that are in stock. When stock locations are provided as
     # a parameter, the scope is limited to variants that are in stock in the
@@ -372,6 +374,10 @@ module Spree
 
     def clear_in_stock_cache
       Rails.cache.delete(in_stock_cache_key)
+    end
+
+    def destroy_option_values_variants
+      option_values_variants.destroy_all
     end
   end
 end
