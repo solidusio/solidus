@@ -9,8 +9,6 @@ module Spree
         inverse_of: :variant,
         dependent: :destroy,
         autosave: true
-
-      after_save :save_default_price
     end
 
     def find_or_build_default_price
@@ -27,16 +25,6 @@ module Spree
 
     def has_default_price?
       !default_price.nil?
-    end
-
-    private
-
-    def default_price_changed?
-      default_price && (default_price.changed? || default_price.new_record?)
-    end
-
-    def save_default_price
-      default_price.save if default_price_changed?
     end
   end
 end
