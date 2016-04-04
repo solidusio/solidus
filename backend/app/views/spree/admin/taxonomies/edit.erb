@@ -18,7 +18,6 @@
     <%= render :partial => 'form', :locals => { :f => f } %>
     <div class="filter-actions actions">
       <%= button Spree.t('actions.update'), 'refresh' %>
-      <span class="or"><%= Spree.t(:or) %></span>
       <%= button_link_to Spree.t('actions.cancel'), admin_taxonomies_path, :icon => 'remove' %>
     </div>
   </fieldset>

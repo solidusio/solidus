@@ -78,7 +78,6 @@
       <% if can? :update, :general_settings %>
         <div class="form-buttons filter-actions actions" data-hook="buttons">
           <%= button Spree.t('actions.update'), 'refresh' %>
-          <span class="or"><%= Spree.t(:or) %></span>
           <%= link_to_with_icon 'remove', Spree.t('actions.cancel'), edit_admin_general_settings_url, :class => 'button' %>
         </div>
       <% end %>

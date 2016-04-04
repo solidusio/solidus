@@ -15,7 +15,6 @@
     </div>
     <div class="form-buttons filter-actions actions" data-hook="buttons">
       <%= button Spree.t('store_credit.actions.invalidate'), 'ban' %>
-      <span class="or"><%= Spree.t(:or) %></span>
       <%= button_link_to Spree.t('actions.cancel'), admin_user_store_credit_path(@user, @store_credit), icon: 'remove' %>
     </div>
   </fieldset>

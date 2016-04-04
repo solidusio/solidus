@@ -59,7 +59,6 @@
       <div class="form-buttons filter-actions actions">
         <%= button Spree.t(:filter_results) %>
         <% if @option_value_ids.present? %>
-          <span class="or"><%= Spree.t(:or) %></span>
           <%= link_to_add_fields Spree.t(:add_variant_properties), 'tbody#variant_property_values', class: 'plus button' %>
         <% end %>
       </div>
