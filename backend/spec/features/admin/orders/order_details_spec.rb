@@ -348,6 +348,8 @@ describe "Order Details", type: :feature, js: true do
           fill_in 'item_quantity', with: 2
           click_icon :ok
 
+          expect(page).not_to have_content(/Move .* to/)
+
           expect(page).to have_css("#shipment_#{@shipment2.id}", count: 1)
 
           expect(order.shipments.count).to eq(1)
@@ -359,11 +361,14 @@ describe "Order Details", type: :feature, js: true do
 
           it 'should not allow a split if the receiving shipment qty plus the incoming is greater than the count_on_hand' do
             expect(order.shipments.count).to eq(2)
+            expect(page).to have_css('.item-name', text: product.name, count: 1)
 
             within_row(1) { click_icon 'arrows-h' }
             targetted_select2 @shipment2.number, from: '#s2id_item_stock_location'
             fill_in 'item_quantity', with: 1
             click_icon :ok
+
+            expect(page).to have_css('.item-name', text: product.name, count: 2)
 
             within(all('.stock-contents', count: 2).first) do
               within_row(1) { click_icon 'arrows-h' }
@@ -401,6 +406,7 @@ describe "Order Details", type: :feature, js: true do
 
             click_icon :ok
 
+            expect(page).not_to have_content(/Move .* to/)
             expect(page).to have_css('.shipment', count: 2)
 
             expect(order.shipments.count).to eq(2)
