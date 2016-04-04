@@ -7,7 +7,7 @@
 //= require jquery-ui/autocomplete
 //= require jquery.cookie
 //= require jquery.sticky-kit.min
-//= require underscore-min
+//= require solidus_admin/lodash.core
 //= require backbone
 //= require solidus_admin/tether
 //= require solidus_admin/bootstrap
