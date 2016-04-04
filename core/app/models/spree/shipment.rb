@@ -81,7 +81,8 @@ module Spree
     end
 
     def can_transition_from_pending_to_ready?
-      order.can_ship? && !inventory_units.any?(&:backordered?) &&
+      order.can_ship? &&
+        inventory_units.all? { |iu| iu.allow_ship? || iu.canceled? } &&
         (order.paid? || !Spree::Config[:require_payment_to_ship])
     end
 
@@ -222,10 +223,9 @@ module Spree
     # ready      all other cases
     def determine_state(order)
       return 'canceled' if order.canceled?
+      return 'shipped' if shipped?
       return 'pending' unless order.can_ship?
-      return 'pending' if inventory_units.any?(&:backordered?)
-      return 'shipped' if state == 'shipped'
-      if order.paid? || !Spree::Config[:require_payment_to_ship]
+      if can_transition_from_pending_to_ready?
         'ready'
       else
         'pending'

@@ -56,7 +56,7 @@ describe Spree::Shipment, type: :model do
     end
 
     it 'returns pending if backordered' do
-      allow(shipment).to receive_messages inventory_units: [mock_model(Spree::InventoryUnit, backordered?: true)]
+      allow(shipment).to receive_messages inventory_units: [mock_model(Spree::InventoryUnit, allow_ship?: false, canceled?: false)]
       expect(shipment.determine_state(order)).to eq 'pending'
     end
 
@@ -246,7 +246,7 @@ describe Spree::Shipment, type: :model do
         # Set as ready so we can test for change
         shipment.update_attributes!(state: 'ready')
 
-        allow(shipment).to receive_messages(inventory_units: [mock_model(Spree::InventoryUnit, backordered?: true)])
+        allow(shipment).to receive_messages(inventory_units: [mock_model(Spree::InventoryUnit, allow_ship?: false, canceled?: false)])
         expect(shipment).to receive(:update_columns).with(state: 'pending', updated_at: kind_of(Time))
         shipment.update!(order)
       end
@@ -422,7 +422,7 @@ describe Spree::Shipment, type: :model do
     end
 
     context "when any inventory is backordered" do
-      before { allow_any_instance_of(Spree::InventoryUnit).to receive(:backordered?).and_return(true) }
+      before { allow_any_instance_of(Spree::InventoryUnit).to receive(:allow_ship?).and_return(false) }
       it "should result in a 'ready' state" do
         shipment.resume!
         expect(shipment.state).to eq 'pending'
@@ -433,7 +433,7 @@ describe Spree::Shipment, type: :model do
       before do
         allow(order).to receive_messages(can_ship?: true)
         allow(order).to receive_messages(paid?: true)
-        allow_any_instance_of(Spree::InventoryUnit).to receive(:backordered?).and_return(false)
+        allow_any_instance_of(Spree::InventoryUnit).to receive(:allow_ship?).and_return(true)
       end
 
       it "should result in a 'ready' state" do

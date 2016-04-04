@@ -113,11 +113,11 @@ module Spree
       return_items.not_expired.any?(&:exchange_requested?)
     end
 
-    private
-
     def allow_ship?
       on_hand?
     end
+
+    private
 
     def fulfill_order
       reload
