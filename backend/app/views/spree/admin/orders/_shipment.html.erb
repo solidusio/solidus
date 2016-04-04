@@ -74,7 +74,7 @@
           <% end %>
 
           <td class="actions">
-            <% if( (can? :update, shipment) and !shipment.shipped?) %>
+            <% if can?(:update, shipment) && !shipment.shipped? %>
               <%= link_to '', '#', :class => 'edit-method fa fa-edit no-text with-tip', :data => {:action => 'edit'}, :title => Spree.t('actions.edit') %>
             <% end %>
           </td>
