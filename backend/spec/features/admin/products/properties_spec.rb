@@ -117,7 +117,7 @@ describe "Properties", type: :feature do
     end
 
     def fill_in_property
-      expect(page).to have_content('Editing Product')
+      expect(page).to have_content('Products')
       fill_in "product_product_properties_attributes_0_property_name", with: "A Property"
       fill_in "product_product_properties_attributes_0_value", with: "A Value"
       click_button "Update"

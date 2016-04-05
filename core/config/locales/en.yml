@@ -728,7 +728,7 @@ en:
         new:
           new_variant: New variant
         edit:
-          edit_variant: "Edit variant - %{options_text}"
+          edit_variant: Edit Variant
         form:
           dimensions: Dimensions
           use_product_tax_category: Use Product Tax Category
