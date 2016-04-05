@@ -1,64 +1,66 @@
-class IndexUpdateForms
-  @beginListening: ->
-    # Edit
-    $('body').on 'click', '#listing_product_stock .fa-edit', (ev) =>
-      ev.preventDefault()
-      stockItemId = $(ev.currentTarget).data('id')
-      storeBackorderableState(stockItemId)
-      Spree.NumberFieldUpdater.hideReadOnly(stockItemId)
-      showEditForm(stockItemId)
+errorHandler = (model, response, options) ->
+  show_flash("error", response.responseText)
 
-    # Cancel
-    $('body').on 'click', '#listing_product_stock .fa-void', (ev) =>
-      ev.preventDefault()
-      stockItemId = $(ev.currentTarget).data('id')
-      restoreBackorderableState(stockItemId)
-      Spree.NumberFieldUpdater.hideForm(stockItemId)
-      showReadOnlyElements(stockItemId)
+Spree.EditStockItemView = Backbone.View.extend
+  tagName: 'tr'
 
-    # Submit
-    $('body').on 'click', '#listing_product_stock .fa-check', (ev) =>
-      ev.preventDefault()
-      stockItemId = $(ev.currentTarget).data('id')
-      stockLocationId = $(ev.currentTarget).data('location-id')
-      backorderable = $("#backorderable-#{stockItemId}").prop("checked")
-      countOnHand = parseInt($("#number-update-#{stockItemId} input[type='number']").val(), 10)
+  initialize: (options) ->
+    @stockLocationName = options.stockLocationName
+    @editing = false
+    @render()
 
-      stockItem = new Spree.StockItem
-        id: stockItemId
-        countOnHand: countOnHand
-        backorderable: backorderable
-        stockLocationId: stockLocationId
-      stockItem.update(successHandler, errorHandler)
+  events:
+    "click .edit": "onEdit"
+    "click .submit": "onSubmit"
+    "click .cancel": "onCancel"
 
-  showReadOnlyElements = (stockItemId) ->
-    toggleBackorderable(stockItemId, false)
-    Spree.NumberFieldUpdater.showReadOnly(stockItemId)
+  template: HandlebarsTemplates['stock_items/stock_location_stock_item']
 
-  showEditForm = (stockItemId) ->
-    toggleBackorderable(stockItemId, true)
-    Spree.NumberFieldUpdater.showForm(stockItemId)
+  render: ->
+    renderAttr =
+      stockLocationName: @stockLocationName
+      editing: @editing
+    _.extend(renderAttr, @model.attributes)
 
-  toggleBackorderable = (stockItemId, show) ->
-    disabledValue = if show then null else 'disabled'
-    $("#backorderable-#{stockItemId}").prop('disabled', disabledValue)
+    @$el.attr("data-variant-id", @model.get('variant_id'))
+    @$el.html(@template(renderAttr))
 
-  storeBackorderableState = (stockItemId) ->
-    backorderableCheckbox = $("#backorderable-#{stockItemId}")
-    backorderableCheckbox.parent('td').attr('was-checked', backorderableCheckbox.prop('checked'))
+    return @
 
-  restoreBackorderableState = (stockItemId) ->
-    backorderableCheckbox = $("#backorderable-#{stockItemId}")
-    checked = backorderableCheckbox.parent('td').attr('was-checked') is "true"
-    backorderableCheckbox.prop('checked', checked)
+  onEdit: (ev) ->
+    ev.preventDefault()
+    @editing = true
+    @render()
 
-  successHandler = (stockItem) =>
-    toggleBackorderable(stockItem.id, false)
-    Spree.NumberFieldUpdater.successHandler(stockItem.id, stockItem.count_on_hand)
+  onCancel: (ev) ->
+    ev.preventDefault()
+    @model.set(@model.previousAttributes())
+    @editing = false
+    @render()
+
+  onSuccess: ->
+    @editing = false
+    @render()
     show_flash("success", Spree.translations.updated_successfully)
 
-  errorHandler = (errorData) ->
-    show_flash("error", errorData.responseText)
+  onSubmit: (ev) ->
+    ev.preventDefault()
+    backorderable = @$('[name=backorderable]').prop("checked")
+    countOnHand = parseInt($("input[name='count_on_hand']").val(), 10)
 
-Spree.StockManagement ?= {}
-Spree.StockManagement.IndexUpdateForms = IndexUpdateForms
+    @model.set
+      count_on_hand: countOnHand
+      backorderable: backorderable
+    options =
+      success: => @onSuccess()
+      error: errorHandler
+    @model.save(force: true, options)
+
+$ ->
+  $('.js-edit-stock-item').each ->
+    $el = $(this)
+    model = new Spree.StockItem($el.data('stock-item'))
+    new Spree.EditStockItemView
+      el: $el
+      stockLocationName: $el.data('stock-location-name')
+      model: model

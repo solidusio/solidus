@@ -1,6 +1,6 @@
 <%= paginate @variants, theme: "solidus_admin" %>
 
-<table class="index stock-table number-field-update-table" id="listing_product_stock">
+<table class="index stock-table" id="listing_product_stock">
   <colgroup>
     <col style="width: 50%" />
     <col style="width: 20%" />
@@ -19,13 +19,11 @@
       <th class="actions"></th>
     </tr>
   </thead>
-  <tbody>
-    <% variants.each do |variant| %>
-      <%- locations_without_items = @stock_item_stock_locations - variant.stock_items.flat_map(&:stock_location) %>
-      <%- display_add_row = locations_without_items.any? && can?(:create, Spree::StockItem) %>
-      <%- row_count = (variant.stock_items.map(&:stock_location) & @stock_item_stock_locations).size %>
-      <%- row_count += display_add_row ? 2 : 1 %>
-
+  <% variants.each do |variant| %>
+    <%- locations_without_items = @stock_item_stock_locations - variant.stock_items.flat_map(&:stock_location) %>
+    <%- display_add_row = locations_without_items.any? && can?(:create, Spree::StockItem) %>
+    <%- row_count = @stock_item_stock_locations.count + 2 %>
+    <tbody class="variant-stock-items">
       <tr id="<%= spree_dom_id variant %>">
         <td class="align-center no-padding" rowspan="<%= row_count %>">
           <div class='variant-container'>
@@ -63,22 +61,13 @@
       </tr>
       <% variant.stock_items.each do |item| %>
         <% if @stock_item_stock_locations.include?(item.stock_location) %>
-          <tr class="<%= cycle('odd', 'even', :name => 'stock_locations')%>" data-variant-id="<%= variant.id %>">
-            <td class='align-center location-name-cell'><%= item.stock_location.name %></td>
-            <td class='align-center'>
-              <% if can?(:update, item) %>
-                <%= check_box_tag :backorderable, 'backorderable', item.backorderable?, id: "backorderable-#{item.id}", disabled: "disabled" %>
-              <% end %>
-            </td>
-            <%= render partial: 'spree/admin/shared/number_field_update_cell', locals: { resource_id: item.id, field_tag: :count_on_hand, number_value: item.count_on_hand } %>
-            <td class="actions">
-              <%= render partial: 'spree/admin/shared/number_field_update_actions', locals: { resource: item, update_data: { location_id: item.stock_location_id } } %>
-            </td>
+          <tr class="js-edit-stock-item stock-item-edit-row" data-variant-id="<%= variant.id %>" data-stock-item="<%= item.to_json %>" data-stock-location-name="<%= item.stock_location.name %>">
+            <%# This is rendered in JS %>
           </tr>
         <% end %>
       <% end %>
       <% if display_add_row %>
-        <tr class="<%= cycle('odd', 'even', :name => 'stock_locations')%>" data-variant-id="<%= variant.id %>">
+        <tr class="js-add-stock-item stock-item-edit-row" data-variant-id="<%= variant.id %>">
           <td class='location-name-cell'>
             <%= select_tag :stock_location_id, options_from_collection_for_select(locations_without_items, :id, :name), { :include_blank => true, :class => 'select2', "data-placeholder" => Spree.t(:add_to_stock_location), :id => "variant-stock-location-#{variant.id}" } %>
           </td>
@@ -89,13 +78,12 @@
             <%= number_field_tag :count_on_hand, "", class: 'fullwidth', id: "variant-count-on-hand-#{variant.id}" %>
           </td>
           <td class="actions">
-            <%= link_to_with_icon 'plus', Spree.t('actions.create'), '#', :no_text => true, :data => {:action => 'green', :variant_id => variant.id } if can?(:create, Spree::StockItem) %>
+            <%= link_to_with_icon 'plus', Spree.t('actions.create'), '#', :no_text => true, :data => {:action => 'green' }, class: "submit" %>
           </td>
         </tr>
       <% end %>
-      <% reset_cycle("stock_locations") %>
-    <% end %>
-  </tbody>
+    </tbody>
+  <% end %>
 </table>
 
 <%= paginate @variants, theme: "solidus_admin" %>

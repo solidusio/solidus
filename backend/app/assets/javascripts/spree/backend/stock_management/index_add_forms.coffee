@@ -1,82 +1,61 @@
-class IndexAddForms
-  @beginListening: ->
-    $('body').on 'click', '#listing_product_stock .fa-plus', (ev) =>
-      ev.preventDefault()
-      variantId = $(ev.currentTarget).data('variant-id')
-      countInput = $("#variant-count-on-hand-#{variantId}")
-      locationSelect = $("#variant-stock-location-#{variantId}")
-      locationSelectContainer = locationSelect.siblings('.select2-container')
-      resetErrors(locationSelectContainer, countInput)
-      validate(locationSelect, locationSelectContainer, countInput)
-      return if hasErrors(locationSelectContainer, countInput)
+Spree.AddStockItemView = Backbone.View.extend
+  initialize: ->
+    @$countInput = @$("[name='count_on_hand']")
+    @$locationSelect = @$("[name='stock_location_id']")
+    @$backorderable = @$("[name='backorderable']")
 
-      stockLocationId = locationSelect.val()
-      backorderable = $("#variant-backorderable-#{variantId}").prop("checked")
-      stockItem = new Spree.StockItem
-        variantId: variantId
-        backorderable: backorderable
-        countOnHand: countInput.val()
-        stockLocationId: stockLocationId
-      stockItem.save(successHandler, errorHandler)
+  events:
+    "click .submit": "onSubmit"
 
-  resetErrors = (locationSelectContainer, countInput) ->
-    countInput.removeClass('error')
-    locationSelectContainer.removeClass('error')
+  validate: ->
+    locationSelectContainer = @$locationSelect.siblings('.select2-container')
+    locationSelectContainer.toggleClass('error', !@$locationSelect.val())
+    @$countInput.toggleClass('error', !@$countInput.val())
 
-  validate = (locationSelect, locationSelectContainer, countInput) ->
-    if locationSelect.val() is ""
-      locationSelectContainer.addClass('error')
+    locationSelectContainer.hasClass('error') || @$countInput.hasClass('error')
 
-    if isNaN(parseInt(countInput.val(), 10))
-      countInput.addClass('error')
-
-  hasErrors = (locationSelectContainer, countInput) ->
-    locationSelectContainer.hasClass('error') or countInput.hasClass('error')
-
-  successHandler = (stockItem) =>
-    variantId = stockItem.variant_id
-    stockLocationId = stockItem.stock_location_id
-    stockLocationSelect = $("#variant-stock-location-#{variantId}")
-
-    selectedStockLocationOption = stockLocationSelect.find("option[value='#{stockLocationId}']")
+  onSuccess: ->
+    selectedStockLocationOption = @$locationSelect.find('option:selected')
     stockLocationName = selectedStockLocationOption.text().trim()
     selectedStockLocationOption.remove()
 
-    rowTemplate = HandlebarsTemplates['stock_items/stock_location_stock_item']
-    $("tr[data-variant-id='#{variantId}']:last").before(
-      rowTemplate
-        id: stockItem.id
-        variantId: variantId
-        stockLocationId: stockLocationId
-        stockLocationName: stockLocationName
-        countOnHand: stockItem.count_on_hand
-        backorderable: stockItem.backorderable
-    )
-    resetTableRowStyling(variantId)
+    editView = new Spree.EditStockItemView
+      model: @model
+      stockLocationName: stockLocationName
+    editView.$el.insertBefore(@$el)
 
-    if stockLocationSelect.find('option').length is 1 # blank value
-      stockLocationSelect.parents('tr:first').remove()
+    @model = new Spree.StockItem
+      variant_id: @model.get('variant_id')
+      stock_location_id: @model.get('stock_location_id')
+
+    if @$locationSelect.find('option').length is 1 # blank value
+      @remove()
     else
-      stockLocationSelect.select2()
-      $("#variant-count-on-hand-#{variantId}").val("")
-      $("#variant-backorderable-#{variantId}").prop("checked", false)
+      @$locationSelect.select2()
+      @$countInput.val("")
+      @$backorderable.prop("checked", false)
 
-    resetParentRowspan(variantId)
-    show_flash("success", Spree.translations.created_successfully)
+  onSubmit: (ev) ->
+    ev.preventDefault()
+    return if @validate()
 
-  errorHandler = (errorData) =>
-    show_flash("error", errorData.responseText)
+    @model.set
+      backorderable: @$backorderable.prop("checked")
+      count_on_hand: @$countInput.val()
+      stock_location_id: @$locationSelect.val()
+    options =
+      success: =>
+        @onSuccess()
+        show_flash("success", Spree.translations.created_successfully)
+      error: (model, response, options) =>
+        show_flash("error", response.responseText)
+    @model.save(null, options)
 
-  resetTableRowStyling = (variantId) ->
-    tableRows = $("tr[data-variant-id='#{variantId}']")
-    tableRows.removeClass('even odd')
-    for i in [0..tableRows.length]
-      rowClass = if (i + 1) % 2 is 0 then 'even' else 'odd'
-      tableRows.eq(i).addClass(rowClass)
-
-  resetParentRowspan = (variantId) ->
-    newRowspan = $("tr[data-variant-id='#{variantId}']").length + 1
-    $("#spree_variant_#{variantId} > td").attr('rowspan', newRowspan)
-
-Spree.StockManagement ?= {}
-Spree.StockManagement.IndexAddForms = IndexAddForms
+$ ->
+  $('.js-add-stock-item').each ->
+    $el = $(this)
+    model = new Spree.StockItem
+      variant_id: $el.data('variant-id')
+    new Spree.AddStockItemView
+      el: $el
+      model: model
