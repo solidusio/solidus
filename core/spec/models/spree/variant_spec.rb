@@ -477,10 +477,19 @@ describe Spree::Variant, type: :model do
   end
 
   describe "deleted_at scope" do
-    before { variant.destroy && variant.reload }
-    it "should have a price if deleted" do
-      variant.price = 10
-      expect(variant.price).to eq(10)
+    let!(:previous_variant_price) { variant.display_price }
+
+    before { variant.destroy }
+
+    it "should keep its price if deleted" do
+      expect(variant.display_price).to eq(previous_variant_price)
+    end
+
+    context 'when loading with pre-fetching of default_price' do
+      it 'also keeps the previous price' do
+        reloaded_variant = Spree::Variant.with_deleted.includes(:default_price).find_by(id: variant.id)
+        expect(reloaded_variant.display_price).to eq(previous_variant_price)
+      end
     end
   end
 
