@@ -84,6 +84,27 @@ describe Spree::Variant, type: :model do
           multi_variant.set_option_value('coolness_type', 'awesome')
         }.to change(multi_variant.option_values, :count).by(1)
       end
+
+      context "and a variant is soft-deleted" do
+        let!(:old_options_text) { variant.options_text }
+
+        before { variant.destroy }
+
+        it "still keeps the option values for that variant" do
+          expect(variant.reload.options_text).to eq(old_options_text)
+        end
+      end
+
+      context "and a variant is really deleted" do
+        let!(:old_option_values_variant_ids) { variant.option_values_variants.pluck(:id) }
+
+        before { variant.really_destroy! }
+
+        it "leaves no stale records behind" do
+          expect(old_option_values_variant_ids).to be_present
+          expect(Spree::OptionValuesVariant.where(id: old_option_values_variant_ids)).to be_empty
+        end
+      end
     end
   end
 
