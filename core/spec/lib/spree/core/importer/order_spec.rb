@@ -167,7 +167,7 @@ module Spree
       end
 
       context "with a different currency" do
-        before { variant.price_in("GBP").update_attribute(:price, 18.99) }
+        before { variant.prices.create(currency: "GBP", amount: 18.99) }
 
         it "sets the order currency" do
           params = {

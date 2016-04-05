@@ -184,13 +184,13 @@ describe Spree::Variant, type: :model do
     before do
       variant.prices << create(:price, variant: variant, currency: "EUR", amount: 33.33)
     end
-    subject { variant.price_in(currency).display_amount }
+    subject { variant.price_in(currency) }
 
     context "when currency is not specified" do
       let(:currency) { nil }
 
-      it "returns 0" do
-        expect(subject.to_s).to eql "$0.00"
+      it "returns nil" do
+        expect(subject).to be_nil
       end
     end
 
@@ -198,7 +198,7 @@ describe Spree::Variant, type: :model do
       let(:currency) { 'EUR' }
 
       it "returns the value in the EUR" do
-        expect(subject.to_s).to eql "€33.33"
+        expect(subject.display_price.to_s).to eql "€33.33"
       end
     end
 
@@ -206,7 +206,7 @@ describe Spree::Variant, type: :model do
       let(:currency) { 'USD' }
 
       it "returns the value in the USD" do
-        expect(subject.to_s).to eql "$19.99"
+        expect(subject.display_price.to_s).to eql "$19.99"
       end
     end
   end
@@ -221,7 +221,7 @@ describe Spree::Variant, type: :model do
     context "when currency is not specified" do
       let(:currency) { nil }
 
-      it "returns nil" do
+      it "returns the amount in the default currency" do
         expect(subject).to be_nil
       end
     end
