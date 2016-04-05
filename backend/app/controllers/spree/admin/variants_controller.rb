@@ -4,7 +4,6 @@ module Spree
       belongs_to 'spree/product', find_by: :slug
       new_action.before :new_before
       before_action :load_data, only: [:new, :create, :edit, :update]
-      before_action :load_option_types_values, only: [:index]
 
       # override the destroy method to set deleted_at value
       # instead of actually deleting the product.
@@ -35,21 +34,13 @@ module Spree
         @deleted = (params.key?(:deleted) && params[:deleted] == "on") ? "checked" : ""
 
         if @deleted.blank?
-          @collection ||= super
+          base_variant_scope ||= super
         else
-          @collection ||= Variant.only_deleted.where(product_id: parent.id)
+          base_variant_scope ||= Variant.only_deleted.where(product_id: parent.id)
         end
 
-        params[:q] ||= {}
-
-        # @search needs to be defined as this is passed to search_form_for
-        @search = @collection.ransack(params[:q])
-        @collection = @search.result.includes(variant_includes).page(params[:page]).per(Spree::Config[:admin_variants_per_page])
-      end
-
-      def load_option_types_values
-        @option_types = parent.option_types.includes(:option_values)
-        @option_values = @option_types.flat_map(&:option_values).uniq(&:presentation)
+        search = Spree::Config.variant_search_class.new(params[:variant_search_term], scope: base_variant_scope)
+        @collection = search.results.includes(variant_includes).page(params[:page]).per(Spree::Config[:admin_variants_per_page])
       end
 
       def load_data
@@ -57,7 +48,7 @@ module Spree
       end
 
       def variant_includes
-        [{ option_values: :option_type }, :default_price, :stock_items]
+        [{ option_values: :option_type }, :default_price]
       end
     end
   end
