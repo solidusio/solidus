@@ -104,19 +104,10 @@ module Spree
 
     # This method is used by Adjustment#update to recalculate the cost.
     def compute_amount(item)
-      if included_in_price && !default_zone_or_zone_match?(item.order.tax_zone)
-        # In this case, it's a refund.
-        calculator.compute(item) * - 1
-      else
-        calculator.compute(item)
-      end
+      calculator.compute(item)
     end
 
     private
-
-    def default_zone_or_zone_match?(order_tax_zone)
-      Zone.default_tax.try!(:contains?, order_tax_zone) || zone.contains?(order_tax_zone)
-    end
 
     def adjustment_label(amount)
       Spree.t translation_key(amount),
