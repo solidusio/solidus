@@ -102,8 +102,10 @@ module Spree
       !sufficient_stock?
     end
 
-    # Sets the options on the line item according to the order's currency or
-    # one passed in.
+    # Sets options on the line item.
+    #
+    # The option can be arbitrary attributes on the LineItem. If no price is given in the options,
+    # this will call the legacy `PriceModifier` line item pricer.
     #
     # @param options [Hash] options for this line item
     def options=(options = {})
