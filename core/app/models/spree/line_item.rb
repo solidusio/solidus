@@ -55,12 +55,6 @@ module Spree
       amount + promo_total
     end
 
-    # @return [Spree::Money] the amount of this line item, taking into
-    #   consideration line item promotions.
-    def discounted_money
-      Spree::Money.new(discounted_amount, { currency: currency })
-    end
-
     # @return [BigDecimal] the amount of this line item, taking into
     #   consideration all its adjustments.
     def final_amount
@@ -68,12 +62,25 @@ module Spree
     end
     alias total final_amount
 
-    # @return [Spree::Money] the price of this line item
-    def money_price
-      Spree::Money.new(price, { currency: currency })
+    # @return [BigDecimal] the amount of this line item before included tax
+    # @note just like `amount`, this does not include any additional tax
+    def pre_tax_amount
+      discounted_amount - included_tax_total
     end
-    alias single_display_amount money_price
-    alias single_money money_price
+
+    extend Spree::DisplayMoney
+    money_methods :amount, :discounted_amount, :final_amount, :pre_tax_amount, :price,
+                  :included_tax_total, :additional_tax_total
+    alias discounted_money display_discounted_amount
+
+    # @return [Spree::Money] the price of this line item
+    alias money_price display_price
+    alias single_display_amount display_price
+    alias single_money display_price
+
+    # @return [Spree::Money] the amount of this line item
+    alias money display_amount
+    alias display_total display_amount
 
     # Sets price and currency from a `Spree::Money` object
     #
@@ -81,17 +88,6 @@ module Spree
     def money_price=(money)
       self.price = money.to_d
       self.currency = money.currency.iso_code
-    end
-
-    # @return [Spree::Moeny] the amount of this line item
-    def money
-      Spree::Money.new(amount, { currency: currency })
-    end
-    alias display_total money
-    alias display_amount money
-
-    def pre_tax_amount
-      discounted_amount - included_tax_total
     end
 
     # @return [Boolean] true when it is possible to supply the required
