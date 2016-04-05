@@ -32,7 +32,7 @@ module Spree
 
       def collection
         if params[:deleted] == "on"
-          base_variant_scope ||= Variant.only_deleted.where(product_id: parent.id)
+          base_variant_scope ||= super.with_deleted
         else
           base_variant_scope ||= super
         end
