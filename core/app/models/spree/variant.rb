@@ -230,6 +230,7 @@ module Spree
     # Calculates the sum of the specified price modifiers in the specified
     # currency.
     #
+    # @deprecated This is a very complex way of modifying prices, please write a pricer instead
     # @param currency [String] (see #price)
     # @param options (see #price_modifier_amount)
     # @return (see #price_modifier_amount)
@@ -245,6 +246,7 @@ module Spree
         end
       }.sum
     end
+    deprecate :price_modifier_amount_in, deprecator: Spree::Deprecation
 
     # Calculates the sum of the specified price modifiers.
     #

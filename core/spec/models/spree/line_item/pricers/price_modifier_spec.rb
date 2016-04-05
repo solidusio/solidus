@@ -28,6 +28,10 @@ RSpec.describe Spree::LineItem::Pricers::PriceModifier do
   end
 
   shared_examples_for 'it prices the line item no matter what' do
+    before do
+      expect(Spree::Deprecation).to receive(:warn)
+    end
+
     it 'returns the variant price in USD' do
       expect(subject).to eq(variant.default_price.money)
     end
