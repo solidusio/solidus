@@ -8,10 +8,6 @@
       <% if can?(:display, Spree::Tracker) %>
         <%= settings_tab_item Spree.t(:analytics_trackers), admin_trackers_path %>
       <% end %>
-
-      <% if can?(:display, Spree::Taxonomy) %>
-        <%= settings_tab_item Spree::Taxonomy.model_name.human(count: :other), admin_taxonomies_path %>
-      <% end %>
     </ul>
   </nav>
 <% end %>

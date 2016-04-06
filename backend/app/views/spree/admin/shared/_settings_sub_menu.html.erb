@@ -1,5 +1,5 @@
 <ul class="admin-subnav" data-hook="admin_settings_sub_tabs">
-  <% if can?(:edit, :general_settings) || can?(:display, Spree::Tracker) || can?(:display, Spree::Taxonomy) %>
+  <% if can?(:edit, :general_settings) || can?(:display, Spree::Tracker) %>
     <%= tab :general_settings, label: :store, url: spree.edit_admin_general_settings_path %>
   <% end %>
 
