@@ -131,7 +131,9 @@ describe Spree::Variant, type: :model do
 
   context "#currency" do
     it "returns the globally configured currency" do
-      expect(variant.currency).to eql "USD"
+      Spree::Deprecation.silence do
+        expect(variant.currency).to eql "USD"
+      end
     end
   end
 

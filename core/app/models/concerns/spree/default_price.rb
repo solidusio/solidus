@@ -17,6 +17,7 @@ module Spree
 
     delegate :display_price, :display_amount, :price, :currency, to: :find_or_build_default_price
     delegate :price=, :currency=, to: :find_or_build_default_price
+    deprecate :currency=, :currency, deprecator: Spree::Deprecation
 
     def has_default_price?
       !default_price.nil?
