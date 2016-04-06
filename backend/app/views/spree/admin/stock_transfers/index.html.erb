@@ -1,5 +1,6 @@
 <% content_for :page_title do %>
-  <%= plural_resource_name(Spree::StockTransfer) %>
+  <%= link_to Spree.t(:stock), spree.admin_stock_items_path %> &#x2f;
+  <%= Spree::StockTransfer.model_name.human(count: :other) %>
 <% end %>
 
 <% content_for :page_actions do %>

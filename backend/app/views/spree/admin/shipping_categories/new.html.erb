@@ -1,13 +1,13 @@
 <%= render 'spree/admin/shared/shipping_tabs' %>
 
 <% content_for :page_title do %>
+  <%= Spree.t(:settings) %> &#x2f;
+  <%= Spree.t('admin.tab.shipping') %> &#x2f;
+  <%= link_to Spree::ShippingCategory.model_name.human(count: :other), spree.admin_shipping_categories_path %> &#x2f;
   <%= Spree.t(:new_shipping_category) %>
 <% end %>
 
 <% content_for :page_actions do %>
-  <li>
-    <%= button_link_to Spree.t(:back_to_shipping_categories_list), spree.admin_shipping_categories_path, :icon => 'arrow-left' %>
-  </li>
 <% end %>
 
 <%= render :partial => 'spree/shared/error_messages', :locals => { :target => @shipping_category } %>

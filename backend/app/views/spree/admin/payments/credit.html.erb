@@ -1,7 +1,8 @@
 <%= render :partial => 'spree/admin/shared/order_tabs', :locals => { :current => 'Creditcards' } %>
 
 <% content_for :page_title do %>
-  <i class="fa fa-arrow-right"></i> <%= Spree::Refund.model_name.human %>
+  &#x2f; <%= link_to Spree::Payment.model_name.human(count: :other), spree.admin_order_payments_path(@order) %>
+  &#x2f; <%= Spree::Refund.model_name.human %>
 <% end %>
 
 <%= form_tag do %>

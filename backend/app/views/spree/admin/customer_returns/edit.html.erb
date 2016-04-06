@@ -1,11 +1,11 @@
 <%= render :partial => 'spree/admin/shared/order_tabs', :locals => { :current => 'Customer Returns' } %>
 
 <% content_for :page_title do %>
-  <i class="fa fa-arrow-right"></i> <%= Spree::CustomerReturn.model_name.human %> #<%= @customer_return.number %>
+  &#x2f; <%= link_to Spree::CustomerReturn.model_name.human(count: :other), spree.admin_order_customer_returns_url(@order) %>
+  &#x2f;  &#35;<%= @customer_return.number %>
 <% end %>
 
 <% content_for :page_actions do %>
-  <li><%= button_link_to Spree.t(:back_to_customer_return_list), spree.admin_order_customer_returns_url(@order), :icon => 'arrow-left' %></li>
 <% end %>
 
 <% if @manual_intervention_return_items.any? %>

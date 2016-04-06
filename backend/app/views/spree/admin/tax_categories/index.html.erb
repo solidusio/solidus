@@ -1,7 +1,9 @@
 <%= render 'spree/admin/shared/taxes_tabs' %>
 
 <% content_for :page_title do %>
-  <%= Spree.t(:listing_tax_categories) %>
+  <%= Spree.t(:settings) %> &#x2f;
+  <%= Spree.t('admin.tab.taxes') %> &#x2f;
+  <%= Spree::TaxCategory.model_name.human(count: :other) %>
 <% end %>
 
 <% content_for :page_actions do %>

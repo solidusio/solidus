@@ -2,6 +2,11 @@
 
 <%= render :partial => 'spree/shared/error_messages', :locals => { :target => @image } %>
 
+<% content_for :page_title do %>
+  &#x2f; <%= link_to Spree::Image.model_name.human(count: :other), admin_product_images_path(@product) %>
+&#x2f; <%= @image.attachment_file_name %>
+<% end %>
+
 <% content_for :page_actions do %>
   <li><%= button_link_to Spree.t(:back_to_images_list), admin_product_images_url(@product), :icon => 'arrow-left' %></li>
 <% end %>

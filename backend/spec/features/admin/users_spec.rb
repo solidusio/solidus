@@ -33,7 +33,7 @@ describe 'Users', type: :feature do
     end
 
     it 'can go back to the users list' do
-      expect(page).to have_link Spree.t(:back_to_users_list), href: spree.admin_users_path
+      expect(page).to have_link Spree::LegacyUser.model_name.human(count: :other), href: spree.admin_users_path
     end
 
     it 'can navigate to the account page' do
@@ -120,7 +120,7 @@ describe 'Users', type: :feature do
 
     it 'can edit user roles' do
       Spree::Role.create name: "admin"
-      click_link user_a.email
+      click_link 'Account'
 
       check 'user_spree_role_admin'
       click_button 'Update'

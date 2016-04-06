@@ -1,11 +1,10 @@
 <% content_for :page_title do %>
+  <%= link_to Spree::Product.model_name.human(count: :other), spree.admin_products_path  %> &#x2f; 
+  <%= link_to Spree::Taxonomy.model_name.human(count: :other), spree.admin_taxonomies_path %> &#x2f;
   <%= Spree.t(:new_taxonomy) %>
 <% end %>
 
 <% content_for :page_actions do %>
-  <li>
-    <%= button_link_to Spree.t(:back_to_taxonomies_list), spree.admin_taxonomies_path, :icon => 'arrow-left' %>
-  </li>
 <% end %>
 
 <%= form_for [:admin, @taxonomy] do |f| %>

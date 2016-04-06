@@ -1,13 +1,13 @@
 <%= render 'spree/admin/shared/shipping_tabs' %>
 
 <% content_for :page_title do %>
+  <%= Spree.t(:settings) %> &#x2f;
+  <%= Spree.t('admin.tab.shipping') %> &#x2f;
+  <%= link_to Spree::ShippingMethod.model_name.human(count: :other), spree.admin_shipping_methods_path %> &#x2f;
   <%= Spree.t(:new_shipping_method) %>
 <% end %>
 
 <% content_for :page_actions do %>
-  <li>
-    <%= button_link_to Spree.t(:back_to_shipping_methods_list), spree.admin_shipping_methods_path, :icon => 'arrow-left' %>
-  </li>
 <% end %>
 
 <div data-hook="admin_shipping_method_new_form_header">

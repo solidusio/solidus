@@ -1,9 +1,7 @@
 <% content_for :page_title do %>
-  <%= Spree.t(:editing_property) %>
-<% end %>
-
-<% content_for :page_actions do %>
-  <li><%= button_link_to Spree.t(:back_to_properties_list), admin_properties_url, :icon => 'arrow-left'%></li>
+  <%= link_to Spree::Product.model_name.human(count: :other), spree.admin_products_path  %> &#x2f;
+  <%= link_to Spree::Property.model_name.human(count: :other), spree.admin_properties_path %> &#x2f;
+  <%= @property.name %>
 <% end %>
 
 <%= render :partial => 'spree/shared/error_messages', :locals => { :target => @property } %>

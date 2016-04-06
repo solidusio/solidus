@@ -5,7 +5,7 @@
   <nav>
     <ul class="tabs" data-hook="admin_configurations_sidebar_menu">
       <% if can?(:edit, :general_settings) %>
-        <%= settings_tab_item Spree.t(:general_settings), spree.edit_admin_general_settings_path %>
+        <%= settings_tab_item Spree.t(:general), edit_admin_general_settings_path %>
       <% end %>
 
       <% if can?(:display, Spree::Tracker) %>

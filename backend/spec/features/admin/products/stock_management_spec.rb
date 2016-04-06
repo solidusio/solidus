@@ -28,7 +28,7 @@ describe "Product Stock", type: :feature do
         @product = create(:product, name: 'apache baseball cap', price: 10)
         @product.variants.create!(sku: 'FOOBAR')
         Spree::StockLocation.destroy_all
-        click_link "Back To Products List"
+        find_by_id('content-header').click_link('Products')
         within_row(1) do
           click_icon :edit
         end

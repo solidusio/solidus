@@ -6,11 +6,10 @@
       <%= button_link_to Spree.t(:new_customer_return), spree.new_admin_order_customer_return_path(@order), icon: 'plus' %>
     </li>
   <% end %>
-  <li><%= button_link_to Spree.t(:back_to_orders_list), spree.admin_orders_path, :icon => 'arrow-left' %></li>
 <% end %>
 
 <% content_for :page_title do %>
-  <i class="fa fa-arrow-right"></i> <%= plural_resource_name(Spree::CustomerReturn) %>
+  &#x2f; <%= Spree::CustomerReturn.model_name.human(count: :other) %>
 <% end %>
 
 <% if @customer_returns.any? %>

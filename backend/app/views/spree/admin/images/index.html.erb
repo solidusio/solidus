@@ -1,5 +1,9 @@
 <%= render :partial => 'spree/admin/shared/product_tabs', :locals => {:current => 'Images'} %>
 
+<% content_for :page_title do %>
+  &#x2f; <%= Spree::Image.model_name.human(count: :other) %>
+<% end %>
+
 <% content_for :page_actions do %>
   <% if can?(:create, Spree::Image) %>
     <li><%= link_to_with_icon('plus', Spree.t(:new_image), new_admin_product_image_url(@product), :id => 'new_image_link', :class => 'button') %></li>

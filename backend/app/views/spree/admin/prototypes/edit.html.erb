@@ -1,11 +1,10 @@
 <% content_for :page_title do %>
-  <%= Spree.t(:editing_prototype) %>
+  <%= link_to Spree::Product.model_name.human(count: :other), spree.admin_products_path  %> &#x2f; 
+  <%= link_to Spree::Prototype.model_name.human(count: :other), spree.admin_prototypes_path %> &#x2f;
+  <%= @prototype.name %>
 <% end %>
 
 <% content_for :page_actions do %>
-  <li>
-    <%= button_link_to Spree.t(:back_to_prototypes_list), spree.admin_prototypes_path, :icon => 'arrow-left' %>
-  </li>
 <% end %>
 
 <%= render :partial => 'spree/shared/error_messages', :locals => { :target => @prototype } %>

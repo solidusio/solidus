@@ -1,4 +1,10 @@
+<%= render :partial => 'spree/admin/shared/product_tabs', :locals => { :current => 'Variants' } %>
 <%= render :partial => 'spree/shared/error_messages', :locals => { :target => @variant } %>
+
+<% content_for :page_title do %>
+  &#x2f; <%= link_to Spree::Variant.model_name.human(count: :other), admin_product_variants_path(@product) %>
+&#x2f; <%= Spree.t(:new_variant) %>
+<% end %>
 
 <%= form_for [:admin, @product, @variant] do |f| %>
   <fieldset data-hook="admin_variant_new_form">

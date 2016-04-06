@@ -1,11 +1,13 @@
 <%= render 'spree/admin/shared/taxes_tabs' %>
 
 <% content_for :page_title do %>
+  <%= Spree.t(:settings) %> &#x2f;
+  <%= Spree.t('admin.tab.taxes') %> &#x2f;
+  <%= link_to Spree::TaxCategory.model_name.human(count: :other), spree.admin_tax_categories_path %> &#x2f;
   <%= Spree.t(:new_tax_category) %>
 <% end %>
 
 <% content_for :page_actions do %>
-  <li><%= link_to_with_icon 'arrow-left', Spree.t(:back_to_tax_categories_list), admin_tax_categories_path, :class => 'button' %></li>
 <% end %>
 
 

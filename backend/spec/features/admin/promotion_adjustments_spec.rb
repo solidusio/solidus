@@ -15,7 +15,7 @@ describe "Promotion Adjustments", type: :feature do
       fill_in "Base code", with: "order"
       fill_in "Number of codes", with: "1"
       click_button "Create"
-      expect(page).to have_content("Editing Promotion")
+      expect(page).to have_content("Promotions / Promotion")
 
       select2 "Item total", from: "Add rule of type"
       within('#rule_fields') { click_button "Add" }
@@ -51,7 +51,7 @@ describe "Promotion Adjustments", type: :feature do
       fill_in "Base code", with: "single_use"
       fill_in "Number of codes", with: "1"
       click_button "Create"
-      expect(page).to have_content("Editing Promotion")
+      expect(page).to have_content("Promotions / Promotion")
 
       select2 "Create whole-order adjustment", from: "Add action of type"
       within('#action_fields') { click_button "Add" }
@@ -74,7 +74,7 @@ describe "Promotion Adjustments", type: :feature do
     it "should allow an admin to create an automatic promo with flat percent discount" do
       fill_in "Name", with: "Promotion"
       click_button "Create"
-      expect(page).to have_content("Editing Promotion")
+      expect(page).to have_content("Promotions / Promotion")
 
       select2 "Item total", from: "Add rule of type"
       within('#rule_fields') { click_button "Add" }
@@ -108,7 +108,7 @@ describe "Promotion Adjustments", type: :feature do
 
       fill_in "Name", with: "Promotion"
       click_button "Create"
-      expect(page).to have_content("Editing Promotion")
+      expect(page).to have_content("Promotions / Promotion")
 
       select2 "Product(s)", from: "Add rule of type"
       within("#rule_fields") { click_button "Add" }
@@ -139,7 +139,7 @@ describe "Promotion Adjustments", type: :feature do
     it "should allow an admin to create an automatic promotion with free shipping (no code)" do
       fill_in "Name", with: "Promotion"
       click_button "Create"
-      expect(page).to have_content("Editing Promotion")
+      expect(page).to have_content("Promotions / Promotion")
 
       select2 "Item total", from: "Add rule of type"
       within('#rule_fields') { click_button "Add" }
@@ -160,7 +160,7 @@ describe "Promotion Adjustments", type: :feature do
       fill_in "Name", with: "Promotion"
       fill_in "Path", with: "content/cvv"
       click_button "Create"
-      expect(page).to have_content("Editing Promotion")
+      expect(page).to have_content("Promotions / Promotion")
 
       select2 "Create whole-order adjustment", from: "Add action of type"
       within('#action_fields') { click_button "Add" }
@@ -184,7 +184,7 @@ describe "Promotion Adjustments", type: :feature do
     it "ceasing to be eligible for a promotion with item total rule then becoming eligible again" do
       fill_in "Name", with: "Promotion"
       click_button "Create"
-      expect(page).to have_content("Editing Promotion")
+      expect(page).to have_content("Promotions / Promotion")
 
       select2 "Item total", from: "Add rule of type"
       within('#rule_fields') { click_button "Add" }

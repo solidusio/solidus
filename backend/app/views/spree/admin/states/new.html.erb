@@ -3,6 +3,9 @@
 <%= render :partial => 'spree/shared/error_messages', :locals => { :target => @state } %>
 
 <% content_for :page_title do %>
+  <%= Spree.t(:settings) %> &#x2f;
+  <%= Spree.t('admin.tab.areas') %> &#x2f;
+  <%= link_to Spree::State.model_name.human(count: :other), spree.admin_states_path %> &#x2f;
   <%= Spree.t(:new_state) %>
 <% end %>
 

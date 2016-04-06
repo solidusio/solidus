@@ -1,5 +1,6 @@
 <% content_for :page_title do %>
-  <%= plural_resource_name(Spree::Prototype) %>
+  <%= link_to Spree::Product.model_name.human(count: :other), spree.admin_products_path  %> &#x2f; 
+  <%= Spree::Prototype.model_name.human(count: :other) %>
 <% end %>
 
 <% content_for :page_actions do %>

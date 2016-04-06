@@ -1,13 +1,13 @@
 <%= render 'spree/admin/shared/areas_tabs' %>
 
 <% content_for :page_title do %>
-  <%= Spree.t(:editing_state) %> <i class="fa fa-arrow-right"></i> <%= @state.name %>
+  <%= Spree.t(:settings) %> &#x2f;
+  <%= Spree.t('admin.tab.areas') %> &#x2f;
+  <%= link_to Spree::State.model_name.human(count: :other), spree.admin_states_path %> &#x2f;
+  <%= @state.name %>
 <% end %>
 
 <% content_for :page_actions do %>
-  <li>
-    <%= button_link_to Spree.t(:back_to_states_list), spree.admin_country_states_url(@country), :icon => 'arrow-left' %>
-  </li>
 <% end %>
 
 <%= render :partial => 'spree/shared/error_messages', :locals => { :target => @state } %>

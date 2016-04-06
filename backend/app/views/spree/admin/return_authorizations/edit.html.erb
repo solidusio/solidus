@@ -4,15 +4,13 @@
       <%= button_link_to Spree.t('actions.cancel'), fire_admin_order_return_authorization_url(@order, @return_authorization, e: 'cancel'), method: :put, data: { confirm: Spree.t(:are_you_sure) }, icon: 'remove' %>
     </li>
   <% end %>
-  <li>
-    <%= button_link_to Spree.t(:back), spree.admin_order_return_authorizations_url(@order), icon: 'arrow-left' %>
-  </li>
 <% end %>
 
 <%= render :partial => 'spree/admin/shared/order_tabs', :locals => { :current => 'Return Authorizations' } %>
 
 <% content_for :page_title do %>
-  <i class="fa fa-arrow-right"></i> <%= Spree::ReturnAuthorization.model_name.human %> <%= @return_authorization.number %> (<%= Spree.t(@return_authorization.state.downcase) %>)
+  &#x2f; <%= link_to Spree::ReturnAuthorization.model_name.human(count: :other), spree.admin_order_return_authorizations_url %>
+  &#x2f; <%= @return_authorization.number %> &#40;<%= Spree.t(@return_authorization.state.downcase) %>&#41;
 <% end %>
 
 

@@ -1,12 +1,13 @@
 <%= render 'spree/admin/shared/shipping_tabs' %>
 
 <% content_for :page_title do %>
-  <%= Spree.t(:editing_stock_location) %> <i class="fa fa-arrow-right"></i>
+  <%= Spree.t(:settings) %> &#x2f;
+  <%= Spree.t('admin.tab.shipping') %> &#x2f;
+  <%= link_to Spree::StockLocation.model_name.human(count: :other), spree.admin_stock_locations_path %> &#x2f;
   <%= @stock_location.name %>
 <% end %>
 
 <% content_for :page_actions do %>
-  <li><%= link_to_with_icon 'arrow-left', Spree.t(:back_to_stock_locations_list), admin_stock_locations_path, :class => 'button' %></li>
 <% end %>
 
 <%= render :partial => 'spree/shared/error_messages', :locals => { :target => @stock_location } %>

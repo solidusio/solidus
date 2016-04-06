@@ -1,3 +1,7 @@
+<% content_for :page_title do %>
+  &#x2f; <%= Spree::Shipment.model_name.human(count: :other) %>
+<% end %>
+
 <% manifest_items = Spree::ShippingManifest.new(inventory_units: shipment.inventory_units.where(carton_id: nil)).items %>
 
 <div id="<%= "shipment_#{shipment.id}" %>" class="js-shipment-edit" data-hook="admin_shipment_form">

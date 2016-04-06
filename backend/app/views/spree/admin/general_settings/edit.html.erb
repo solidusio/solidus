@@ -1,7 +1,9 @@
 <%= render 'spree/admin/shared/general_tabs' %>
 
 <% content_for :page_title do %>
-  <%= Spree.t(:general_settings) %>
+  <%= Spree.t(:settings) %> &#x2f;
+  <%= Spree.t(:general) %> &#x2f;
+  <%= Spree.t(:settings) %>
 <% end %>
 
 <%= form_tag admin_general_settings_path, method: :put do %>

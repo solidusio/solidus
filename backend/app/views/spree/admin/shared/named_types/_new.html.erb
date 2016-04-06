@@ -1,11 +1,13 @@
 <%= render 'spree/admin/shared/settings_checkout_tabs' %>
 
 <% content_for :page_title do %>
-  <%= page_title %>
+  <%= root_tab %> &#x2f;
+  <%= sub_tab %> &#x2f;
+  <%= index_link %> &#x2f;
+  <%= new_object %>
 <% end %>
 
 <% content_for :page_actions do %>
-  <li><%= link_to_with_icon 'arrow-left', back_button_text, collection_url, :class => 'button' %></li>
 <% end %>
 
 <%= render :partial => 'spree/shared/error_messages', :locals => { :target => @object } %>

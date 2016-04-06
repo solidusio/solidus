@@ -1,10 +1,11 @@
 <%content_for :page_title do %>
-  <%= "#{Spree.t(:editing_stock_transfer)} #{@stock_transfer.number}" %>
+  <%= link_to Spree.t(:stock), spree.admin_stock_items_path %> &#x2f;
+  <%= link_to Spree::StockTransfer.model_name.human(count: :other), spree.admin_stock_transfers_path %> &#x2f;
+  <%= "#{@stock_transfer.number}" %>
 <% end %>
 
 <% content_for :page_actions do %>
   <li>
-    <%= button_link_to Spree.t(:back_to_stock_transfers_list), admin_stock_transfers_path, icon: 'arrow-left' %>
   </li>
   <li>
     <%= button_link_to Spree.t(:ready_to_ship),

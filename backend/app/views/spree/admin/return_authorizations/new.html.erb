@@ -1,11 +1,11 @@
 <%= render :partial => 'spree/admin/shared/order_tabs', :locals => { :current => 'Return Authorizations' } %>
 
 <% content_for :page_title do %>
-  <i class="fa fa-arrow-right"></i> <%= Spree.t(:new_return_authorization) %>
+  &#x2f; <%= link_to Spree::ReturnAuthorization.model_name.human(count: :other), spree.admin_order_return_authorizations_url %>
+  &#x2f; <%= Spree.t(:new_return_authorization) %>
 <% end %>
 
 <% content_for :page_actions do %>
-  <li><%= button_link_to Spree.t(:back_to_return_authorizations_list), spree.admin_order_return_authorizations_url, :icon => 'arrow-left' %></li>
 <% end %>
 
 <%= render :partial => 'spree/shared/error_messages', :locals => { :target => @return_authorization } %>

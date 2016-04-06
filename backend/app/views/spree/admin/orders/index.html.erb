@@ -1,5 +1,5 @@
 <% content_for :page_title do %>
-  <%= Spree.t(:listing_orders) %>
+  <%= Spree::Order.model_name.human(count: :other) %>
 <% end %>
 
 <% content_for :page_actions do %>

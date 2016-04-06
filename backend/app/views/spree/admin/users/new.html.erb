@@ -1,11 +1,8 @@
 <% content_for :page_title do %>
+  <%= link_to Spree::LegacyUser.model_name.human(count: :other), spree.admin_users_path %> &#x2f;
   <%= Spree.t(:new_user) %>
 <% end %>
-
 <% content_for :page_actions do %>
-  <li>
-    <%= button_link_to Spree.t(:back_to_users_list), spree.admin_users_path, :icon => 'arrow-left' %>
-  </li>
 <% end %>
 
 <div data-hook="admin_user_new_form_header">

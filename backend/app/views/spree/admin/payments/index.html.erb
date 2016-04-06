@@ -6,11 +6,10 @@
       <%= button_link_to Spree.t(:new_payment), new_admin_order_payment_url(@order), :icon => 'plus' %>
     </li>
   <% end %>
-  <li><%= button_link_to Spree.t(:back_to_orders_list), admin_orders_path, :icon => 'arrow-left' %></li>
 <% end %>
 
 <% content_for :page_title do %>
-  <i class="fa fa-arrow-right"></i> <%= plural_resource_name(Spree::Payment) %>
+  &#x2f; <%= Spree::Payment.model_name.human(count: :other) %>
 <% end %>
 
 <% if @order.outstanding_balance? %>

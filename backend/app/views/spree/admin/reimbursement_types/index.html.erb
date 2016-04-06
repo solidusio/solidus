@@ -1,7 +1,9 @@
 <%= render 'spree/admin/shared/settings_checkout_tabs' %>
 
 <% content_for :page_title do %>
-  <%= plural_resource_name(Spree::ReimbursementType) %>
+  <%= Spree.t(:settings) %> &#x2f;
+  <%= Spree.t('admin.tab.checkout') %> &#x2f;
+  <%= Spree::ReimbursementType.model_name.human(count: :other) %>
 <% end %>
 
 <table class="index" id='listing_reimbursement_types' data-hook>
