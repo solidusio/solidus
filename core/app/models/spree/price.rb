@@ -16,13 +16,9 @@ module Spree
 
     extend DisplayMoney
     money_methods :amount, :price
+    alias_method :money, :display_amount
 
     self.whitelisted_ransackable_attributes = ['amount']
-
-    # @return [Spree::Money] this price as a Spree::Money object
-    def money
-      Spree::Money.new(amount || 0, { currency: currency })
-    end
 
     # An alias for #amount
     def price
