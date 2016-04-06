@@ -37,7 +37,7 @@
             <span class="price selling" itemprop="price">
               <%= display_price(@product) %>
             </span>
-            <span itemprop="priceCurrency" content="<%= @product.currency %>"></span>
+            <span itemprop="priceCurrency" content="<%= current_currency %>"></span>
           </div>
 
           <% if @product.master.can_supply? %>
