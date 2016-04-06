@@ -16,6 +16,8 @@ describe Spree::CreditCard, type: :model do
 
   let(:credit_card) { Spree::CreditCard.new }
 
+  it_behaves_like 'a payment source'
+
   before(:each) do
     @order = create(:order)
     @payment = Spree::Payment.create(amount: 100, order: @order)
@@ -35,38 +37,7 @@ describe Spree::CreditCard, type: :model do
     allow(@payment).to receive_messages payment_method: @payment_gateway
   end
 
-  describe "#can_capture?" do
-    it "should be true if payment is pending" do
-      payment = mock_model(Spree::Payment, pending?: true, created_at: Time.current)
-      expect(credit_card.can_capture?(payment)).to be true
-    end
-
-    it "should be true if payment is checkout" do
-      payment = mock_model(Spree::Payment, pending?: false, checkout?: true, created_at: Time.current)
-      expect(credit_card.can_capture?(payment)).to be true
-    end
-  end
-
-  describe "#can_void?" do
-    it "should be true if payment is not void" do
-      payment = mock_model(Spree::Payment, failed?: false, void?: false)
-      expect(credit_card.can_void?(payment)).to be true
-    end
-  end
-
-  describe "#can_credit?" do
-    it "should be false if payment is not completed" do
-      payment = mock_model(Spree::Payment, completed?: false)
-      expect(credit_card.can_credit?(payment)).to be false
-    end
-
-    it "should be false when credit_allowed is zero" do
-      payment = mock_model(Spree::Payment, completed?: true, credit_allowed: 0, order: mock_model(Spree::Order, payment_state: 'credit_owed'))
-      expect(credit_card.can_credit?(payment)).to be false
-    end
-  end
-
-  describe "#valid?" do
+  context "#valid?" do
     it "should validate presence of number" do
       credit_card.attributes = valid_credit_card_attributes.except(:number)
       expect(credit_card).not_to be_valid
@@ -283,33 +254,7 @@ describe Spree::CreditCard, type: :model do
     end
   end
 
-  describe "#associations" do
-    it "should be able to access its payments" do
-      credit_card.payments.to_a
-    end
-  end
-
-  describe "#first_name" do
-    before do
-      credit_card.name = "Ludwig van Beethoven"
-    end
-
-    it "extracts the first name" do
-      expect(credit_card.first_name).to eq "Ludwig"
-    end
-  end
-
-  describe "#last_name" do
-    before do
-      credit_card.name = "Ludwig van Beethoven"
-    end
-
-    it "extracts the last name" do
-      expect(credit_card.last_name).to eq "van Beethoven"
-    end
-  end
-
-  describe "#to_active_merchant" do
+  context "#to_active_merchant" do
     before do
       credit_card.number = "4111111111111111"
       credit_card.year = Time.current.year
