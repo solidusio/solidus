@@ -11,7 +11,7 @@
   <% if can? :admin, Spree::Prototype %>
     <%= tab :prototypes %>
   <% end %>
-  <% if can? :admin, Spree::Taxonomy %>
+  <% if can? :display, Spree::Taxonomy %>
     <%= tab :taxonomies %>
   <% end %>
   <% if can? :admin, Spree::Taxon %>
