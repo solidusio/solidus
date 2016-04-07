@@ -102,63 +102,6 @@ adjustShipmentItems = function(shipment_number, variant_id, quantity){
   }
 };
 
-completeItemSplit = function(event) {
-  event.preventDefault();
-
-  if($('#item_stock_location').val() === ""){
-    alert('Please select the split destination.');
-    return false;
-  }
-
-  var link = $(this);
-  var stock_item_row = link.closest('tr');
-  var variant_id = stock_item_row.data('variant-id');
-  var quantity = stock_item_row.find('#item_quantity').val();
-
-  var stock_location_id = stock_item_row.find('#item_stock_location').val();
-  var original_shipment_number = link.closest('tbody').data('shipment-number');
-
-  var selected_shipment = stock_item_row.find($('#item_stock_location').select2('data').element);
-  var target_shipment_number = selected_shipment.data('shipment-number');
-  var new_shipment = selected_shipment.data('new-shipment');
-
-  if (stock_location_id != 'new_shipment') {
-    if (new_shipment != undefined) {
-      // TRANSFER TO A NEW LOCATION
-      Spree.ajax({
-        type: "POST",
-        url: Spree.routes.shipments_api + "/transfer_to_location",
-        data: {
-          original_shipment_number: original_shipment_number,
-          variant_id: variant_id,
-          quantity: quantity,
-          stock_location_id: stock_location_id
-        }
-      }).error(function(msg) {
-        alert(msg.responseJSON['message']);
-      }).done(function() {
-        window.Spree.advanceOrder();
-      });
-    } else {
-      // TRANSFER TO AN EXISTING SHIPMENT
-      Spree.ajax({
-        type: "POST",
-        url: Spree.routes.shipments_api + "/transfer_to_shipment",
-        data: {
-          original_shipment_number: original_shipment_number,
-          target_shipment_number: target_shipment_number,
-          variant_id: variant_id,
-          quantity: quantity
-        }
-      }).error(function(msg) {
-        alert(msg.responseJSON['message']);
-      }).done(function() {
-        window.Spree.advanceOrder();
-      });
-    }
-  }
-};
-
 addVariantFromStockLocation = function(stock_location_id, variant_id, quantity) {
   var shipment = _.find(shipments, function(shipment){
     return shipment.stock_location_id == stock_location_id && (shipment.state == 'ready' || shipment.state == 'pending');
@@ -192,9 +135,9 @@ var ShipmentSplitItemView = Backbone.View.extend({
   initialize: function(options) {
     this.variant = options.variant;
     this.shipments = options.shipments;
+    this.shipment_number = options.shipment_number;
     this.max_quantity = options.max_quantity;
     this.shipmentItemView = options.shipmentItemView;
-    this.$el.data("variant-id", this.variant.id);
     this.render()
   },
 
@@ -211,7 +154,44 @@ var ShipmentSplitItemView = Backbone.View.extend({
   },
 
   completeItemSplit: function(e){
-    completeItemSplit.apply(e.currentTarget, [e]);
+    e.preventDefault();
+
+    var quantity = this.$('.quantity').val();
+    var target = this.$('[name="item_stock_location"]').val().split(':');
+    var target_type = target[0];
+    var target_id = target[1];
+
+    var split_attr = {
+      original_shipment_number: this.shipment_number,
+      variant_id: this.variant.id,
+      quantity: quantity
+    };
+    var jqXHR;
+    if (target_type == 'stock_location') {
+      // transfer to a new location
+      split_attr.stock_location_id = target_id;
+      jqXHR = Spree.ajax({
+        type: "POST",
+        url: Spree.routes.shipments_api + "/transfer_to_location",
+        data: split_attr
+      });
+    } else if (target_type == 'shipment') {
+      // transfer to an existing shipment
+      split_attr.target_shipment_number = target_id;
+      jqXHR = Spree.ajax({
+        type: "POST",
+        url: Spree.routes.shipments_api + "/transfer_to_shipment",
+        data: split_attr
+      });
+    } else {
+      alert('Please select the split destination.');
+      return false;
+    }
+    jqXHR.error(function(msg) {
+      alert(msg.responseJSON['message']);
+    }).done(function() {
+      window.Spree.advanceOrder();
+    });
   },
 
   template: HandlebarsTemplates['variants/split'],
@@ -262,6 +242,7 @@ var ShipmentItemView = Backbone.View.extend({
     }).success(function(variant){
       var split = new ShipmentSplitItemView({
         shipmentItemView: _this,
+        shipment_number: _this.shipment_number,
         variant: variant,
         shipments: shipments,
         max_quantity: _this.quantity
