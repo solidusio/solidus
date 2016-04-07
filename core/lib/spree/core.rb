@@ -43,6 +43,23 @@ module Spree
     yield(Spree::Config)
   end
 
+  # constant-time comparison algorithm to prevent timing attacks
+  #
+  # @param a [String] the first string you would like to compare.
+  # @param b [String] the second string you would like to compare.
+  # @return [TrueClass, FalseClass] the result of comparing the strings
+  def self.secure_compare(a, b)
+    return false if [a, b].any?(&:nil?)
+    return false if [a, b].any?(&:empty?)
+    return false if a.bytesize != b.bytesize
+
+    l = a.unpack "C#{a.bytesize}"
+
+    result = 0
+    b.each_byte { |byte| result |= byte ^ l.shift }
+    result == 0
+  end
+
   module Core
     autoload :ProductFilters, "spree/core/product_filters"
 

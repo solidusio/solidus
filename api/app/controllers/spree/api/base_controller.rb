@@ -41,7 +41,8 @@ module Spree
       end
 
       def load_user
-        @current_api_user ||= Spree.user_class.find_by(spree_api_key: api_key.to_s)
+        user = Spree.user_class.find_by(spree_api_key: api_key.to_s)
+        @current_api_user ||= user if Spree.secure_compare(user.spree_api_key, api_key)
       end
 
       def authenticate_user
