@@ -102,28 +102,6 @@ adjustShipmentItems = function(shipment_number, variant_id, quantity){
   }
 };
 
-startItemSplit = function(event){
-  event.preventDefault();
-  var link = $(this);
-  link.parent().find('a.split-item').toggle();
-  link.parent().find('a.delete-item').toggle();
-  var variant_id = link.data('variant-id');
-
-  Spree.ajax({
-    type: "GET",
-    url: Spree.routes.variants_api + "/" + variant_id,
-  }).success(function(variant){
-    var max_quantity = link.closest('tr').data('item-quantity');
-    var split = new ShipmentSplitItemView({
-      variant: variant,
-      shipments: shipments,
-      max_quantity: max_quantity
-    });
-
-    link.closest('tr').after(split.$el);
-  });
-};
-
 completeItemSplit = function(event) {
   event.preventDefault();
 
@@ -237,26 +215,69 @@ var ShipmentSplitItemView = Backbone.View.extend({
   }
 });
 
+var ShipmentItemView = Backbone.View.extend({
+  initialize: function(options) {
+    this.shipment_number = options.shipment_number
+    this.order_number = options.order_number
+    this.quantity = this.$el.data('item-quantity')
+    this.variant_id = this.$el.data('variant-id')
+  },
+
+  events: {
+    "click .delete-item": "onDelete",
+    "click .split-item": "onSplit",
+  },
+
+  onSplit: function(e) {
+    e.preventDefault();
+    this.$('.split-item').toggle();
+    this.$('.delete-item').toggle();
+
+    Spree.ajax({
+      type: "GET",
+      url: Spree.routes.variants_api + "/" + this.variant_id,
+    }).success(function(variant){
+      var split = new ShipmentSplitItemView({
+        variant: variant,
+        shipments: shipments,
+        max_quantity: this.quantity
+      });
+
+      this.$el.after(split.$el);
+    });
+  },
+
+  onDelete: function(e){
+    e.preventDefault();
+    if (confirm(Spree.translations.are_you_sure_delete)) {
+      adjustShipmentItems(this.shipment_number, this.variant_id, 0);
+    }
+  },
+});
 
 var ShipmentEditView = Backbone.View.extend({
   initialize: function(){
     var tbody = this.$("tbody[data-order-number][data-shipment-number]");
-    var shipment_number = tbody.data("shipment-number");
-    this.shipment_number = shipment_number;
+    this.shipment_number = tbody.data("shipment-number");
     this.order_number = tbody.data("order-number");
 
-    this.$("form.admin-ship-shipment").each(function(){
+    var shipmentView = this;
+    this.$("form.admin-ship-shipment").each(function(el){
       new ShipShipmentView({
         el: this,
-        shipment_number: shipment_number
+        shipment_number: shipmentView.shipment_number
+      });
+    });
+    this.$(".stock-item").each(function(){
+      new ShipmentItemView({
+        el: this,
+        shipment_number: shipmentView.shipment_number,
+        order_number: shipmentView.order_number
       });
     });
   },
 
   events: {
-    "click a.delete-item": "deleteItem",
-
-    "click a.split-item": "startItemSplit",
     "click a.cancel-split": "cancelItemSplit",
     "click a.save-split": "completeItemSplit",
 
@@ -267,21 +288,6 @@ var ShipmentEditView = Backbone.View.extend({
     "click a.edit-tracking": "toggleTrackingEdit",
     "click a.cancel-tracking": "toggleTrackingEdit",
     "click a.save-tracking": "saveTracking",
-  },
-
-  deleteItem: function(e){
-    e.preventDefault();
-    if (confirm(Spree.translations.are_you_sure_delete)) {
-      var del = $(e.currentTarget);
-      var variant_id = del.data('variant-id');
-
-      adjustShipmentItems(this.shipment_number, variant_id, 0);
-    }
-  },
-
-  startItemSplit: function(e){
-    e.preventDefault();
-    startItemSplit.apply(e.currentTarget, [e]);
   },
 
   cancelItemSplit: function(e){
