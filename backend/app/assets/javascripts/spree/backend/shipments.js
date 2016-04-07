@@ -102,21 +102,6 @@ adjustShipmentItems = function(shipment_number, variant_id, quantity){
   }
 };
 
-deleteLineItem = function(line_item_id){
-  var url = Spree.routes.line_items_api(order_number) + "/" + line_item_id;
-
-  Spree.ajax({
-    type: "DELETE",
-    url: url,
-    success: function() {
-      window.location.reload();
-    },
-    error: function(response) {
-      show_flash('error', response.responseJSON.message);
-    }
-  });
-};
-
 startItemSplit = function(event){
   event.preventDefault();
   var link = $(this);
@@ -258,9 +243,9 @@ var ShipmentEditView = Backbone.View.extend({
     e.preventDefault();
     if (confirm(Spree.translations.are_you_sure_delete)) {
       var del = $(e.currentTarget);
-      var line_item_id = del.data('line-item-id');
+      var variant_id = del.data('variant-id');
 
-      deleteLineItem(line_item_id);
+      adjustShipmentItems(this.shipment_number, variant_id, 0);
     }
   },
 

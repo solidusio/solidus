@@ -334,6 +334,22 @@ describe "Order Details", type: :feature, js: true do
         end
       end
 
+      context 'removing an item' do
+        it "removes only the one item" do
+          @shipment2 = order.shipments.create(stock_location_id: stock_location2.id)
+          order.line_items[0].inventory_units[0].update!(shipment: @shipment2)
+          visit spree.edit_admin_order_path(order)
+
+          expect(page).to have_css('.stock-item', count: 2)
+
+          within '[data-hook=admin_shipment_form]', text: @shipment2.number do
+            click_icon :trash
+          end
+
+          expect(page).to have_css('.stock-item', count: 1)
+        end
+      end
+
       context 'splitting to shipment' do
         before do
           @shipment2 = order.shipments.create(stock_location_id: stock_location2.id)
