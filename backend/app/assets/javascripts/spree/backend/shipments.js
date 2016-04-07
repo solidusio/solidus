@@ -114,14 +114,13 @@ startItemSplit = function(event){
     url: Spree.routes.variants_api + "/" + variant_id,
   }).success(function(variant){
     var max_quantity = link.closest('tr').data('item-quantity');
-    var split_item_template = HandlebarsTemplates['variants/split'];
-    link.closest('tr').after(split_item_template({ variant: variant, shipments: shipments, max_quantity: max_quantity }));
-
-    $('#item_stock_location').select2({
-      width: 'resolve',
-      placeholder: Spree.translations.item_stock_placeholder,
-      minimumResultsForSearch: 8
+    var split = new ShipmentSplitItemView({
+      variant: variant,
+      shipments: shipments,
+      max_quantity: max_quantity
     });
+
+    link.closest('tr').after(split.$el);
   });
 };
 
@@ -207,6 +206,37 @@ addVariantFromStockLocation = function(stock_location_id, variant_id, quantity) 
     adjustShipmentItems(shipment.number, variant_id, quantity);
   }
 };
+
+var ShipmentSplitItemView = Backbone.View.extend({
+  tagName: 'tr',
+  className: 'stock-item-split',
+
+  initialize: function(options) {
+    this.variant = options.variant;
+    this.shipments = options.shipments;
+    this.max_quantity = options.max_quantity;
+    this.$el.data("variant-id", this.variant.id);
+    this.render()
+  },
+
+  template: HandlebarsTemplates['variants/split'],
+
+  render: function() {
+    var renderAttr = {
+      variant: this.variant,
+      shipments: this.shipments,
+      max_quantity: this.max_quantity
+    };
+    this.$el.html(this.template(renderAttr));
+
+    this.$('[name="item_stock_location"]').select2({
+      width: 'resolve',
+      placeholder: Spree.translations.item_stock_placeholder,
+      minimumResultsForSearch: 8
+    });
+  }
+});
+
 
 var ShipmentEditView = Backbone.View.extend({
   initialize: function(){
