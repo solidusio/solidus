@@ -25,18 +25,21 @@
         <%= link_to Spree.t(:create_one), new_object_url, remote: true %>
       <% end %>
     </div>
-    <% content_for :page_actions do %>
-      <ul class="inline-menu" data-hook="toolbar">
-        <% if can?(:create, Spree::Variant) %>
-          <li id="new_var_link" data-hook>
-            <%= link_to_with_icon 'plus',
-                                  Spree.t(:new_variant),
-                                  new_admin_product_variant_url(@product),
-                                  :remote => :true,
-                                  :class => 'button' %>
-          </li>
-        <% end %>
-      </ul>
-    <% end %>
+  <% end %>
+<% end %>
+
+<% if !@product.empty_option_values? %>
+  <% content_for :page_actions do %>
+    <ul class="inline-menu" data-hook="toolbar">
+      <% if can?(:create, Spree::Variant) %>
+        <li id="new_var_link" data-hook>
+          <%= link_to_with_icon 'plus',
+                                Spree.t(:new_variant),
+                                new_admin_product_variant_url(@product),
+                                :remote => :true,
+                                :class => 'button' %>
+        </li>
+      <% end %>
+    </ul>
   <% end %>
 <% end %>
