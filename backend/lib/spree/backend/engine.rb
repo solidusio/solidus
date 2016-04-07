@@ -11,15 +11,6 @@ module Spree
       initializer "spree.params.filter" do |app|
         app.config.filter_parameters += [:password, :password_confirmation, :number]
       end
-
-      # sets the manifests / assets to be precompiled, even when initialize_on_precompile is false
-      initializer "spree.assets.precompile", group: :all do |app|
-        app.config.assets.precompile += %w[
-          spree/backend/all*
-          fontawesome-webfont*
-          select2_locale*
-        ]
-      end
     end
   end
 end
