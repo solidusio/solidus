@@ -81,7 +81,8 @@ ul {
 ul.text_list {
   border-top: none;
   margin: 0;
-  list-style: disc inside none;
+  list-style-type: none;
+  padding-left: 0;
 }
 
 dl {
