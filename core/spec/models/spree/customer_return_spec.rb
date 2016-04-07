@@ -89,11 +89,20 @@ describe Spree::CustomerReturn, type: :model do
   end
 
   describe "#display_total" do
-    let(:customer_return) { Spree::CustomerReturn.new }
+    let(:customer_return) { stub_model(Spree::CustomerReturn, total: 21.22, currency: "GBP") }
 
     it "returns a Spree::Money" do
-      allow(customer_return).to receive_messages(total: 21.22)
-      expect(customer_return.display_total).to eq(Spree::Money.new(21.22))
+      expect(customer_return.display_total).to eq(Spree::Money.new(21.22, currency: "GBP"))
+    end
+  end
+
+  describe "#currency" do
+    let(:order) { stub_model(Spree::Order, currency: "GBP") }
+    let(:customer_return) { stub_model(Spree::CustomerReturn, order: order) }
+
+    it 'returns the order currency' do
+      expect(Spree::Config.currency).to eq("USD")
+      expect(customer_return.currency).to eq("GBP")
     end
   end
 
@@ -113,11 +122,10 @@ describe Spree::CustomerReturn, type: :model do
   end
 
   describe "#display_amount" do
-    let(:customer_return) { Spree::CustomerReturn.new }
+    let(:customer_return) { stub_model(Spree::CustomerReturn, amount: 21.22, currency: "RUB") }
 
     it "returns a Spree::Money" do
-      allow(customer_return).to receive_messages(amount: 21.22)
-      expect(customer_return.display_amount).to eq(Spree::Money.new(21.22))
+      expect(customer_return.display_amount).to eq(Spree::Money.new(21.22, currency: "RUB"))
     end
   end
 
