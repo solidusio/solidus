@@ -16,8 +16,6 @@ module Spree
       initializer "spree.assets.precompile", group: :all do |app|
         app.config.assets.precompile += %w[
           spree/backend/all*
-          spree/backend/address_states.js
-          spree/backend/images/new.js
           fontawesome-webfont*
           select2_locale*
         ]
