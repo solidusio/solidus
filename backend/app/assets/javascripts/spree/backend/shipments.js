@@ -113,7 +113,7 @@ addVariantFromStockLocation = function(stock_location_id, variant_id, quantity) 
       url: Spree.routes.shipments_api,
       data: {
         shipment: {
-          order_id: order_number
+          order_id: window.order_number
         },
         variant_id: variant_id,
         quantity: quantity,
@@ -244,7 +244,7 @@ var ShipmentItemView = Backbone.View.extend({
         shipmentItemView: _this,
         shipment_number: _this.shipment_number,
         variant: variant,
-        shipments: shipments,
+        shipments: window.shipments,
         max_quantity: _this.quantity
       });
 
