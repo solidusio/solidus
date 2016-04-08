@@ -21,10 +21,10 @@
       </colgroup>
       <thead>
         <tr data-hook="admin_orders_index_headers">
-          <th><%= sort_link @search, :completed_at,   I18n.t(:completed_at, :scope => 'activerecord.attributes.spree/order'), {}, {:title => 'orders_completed_at_title'} %></th>
-          <th><%= sort_link @search, :number,         I18n.t(:number, :scope => 'activerecord.attributes.spree/order'), {}, {:title => 'orders_number_title'} %></th>
-          <th><%= sort_link @search, :state,          I18n.t(:state, :scope => 'activerecord.attributes.spree/order'), {}, {:title => 'orders_state_title'} %></th>
-          <th><%= sort_link @search, :total,          I18n.t(:total, :scope => 'activerecord.attributes.spree/order'), {}, {:title => 'orders_total_title'} %></th>
+          <th><%= sort_link @search, :completed_at,   Spree::Order.human_attribute_name(:completed_at), {}, {:title => 'orders_completed_at_title'} %></th>
+          <th><%= sort_link @search, :number,         Spree::Order.human_attribute_name(:number), {}, {:title => 'orders_number_title'} %></th>
+          <th><%= sort_link @search, :state,          Spree::Order.human_attribute_name(:state), {}, {:title => 'orders_state_title'} %></th>
+          <th><%= sort_link @search, :total,          Spree::Order.human_attribute_name(:total), {}, {:title => 'orders_total_title'} %></th>
         </tr>
       </thead>
       <tbody>

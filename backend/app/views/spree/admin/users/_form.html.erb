@@ -1,7 +1,7 @@
 <div data-hook="admin_user_form_fields" class="row">
   <div class="alpha six columns">
     <%= f.field_container :email do %>
-      <%= f.label :email, Spree.t(:email) %>
+      <%= f.label :email %>
       <% if can?(:update_email, @user) %>
         <%= f.email_field :email, :class => 'fullwidth' %>
       <% else %>
@@ -13,7 +13,7 @@
 
     <% if can? :display, Spree::Role %>
       <div data-hook="admin_user_form_roles" class="field">
-        <%= label_tag nil, Spree.t(:roles) %>
+        <%= label_tag nil, Spree::Role.model_name.human(count: :other) %>
         <ul>
           <% if can? :manage, Spree::Role %>
             <% @roles.each do |role| %>
@@ -33,7 +33,7 @@
 
     <% if Spree::Config[:can_restrict_stock_management] && can?(:display, Spree::StockLocation) %>
       <div data-hook="admin_user_form_stock_locations" class="field">
-        <%= label_tag nil, Spree.t(:stock_locations) %>
+        <%= label_tag nil, Spree::StockLocation.model_name.human(count: :other) %>
         <ul>
           <% if can?(:manage, Spree::UserStockLocation) %>
             <% @stock_locations.each do |stock_location| %>
@@ -55,13 +55,13 @@
 
   <div data-hook="admin_user_form_password_fields" class="omega six columns">
     <%= f.field_container :password do %>
-      <%= f.label :password, Spree.t(:password) %>
+      <%= f.label :password %>
       <%= f.password_field :password, :class => 'fullwidth' %>
       <%= f.error_message_on :password %>
     <% end %>
 
     <%= f.field_container :password do %>
-      <%= f.label :password_confirmation, Spree.t(:confirm_password) %>
+      <%= f.label :password_confirmation %>
       <%= f.password_field :password_confirmation, :class => 'fullwidth' %>
       <%= f.error_message_on :password_confirmation %>
     <% end %>
