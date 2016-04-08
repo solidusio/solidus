@@ -12,17 +12,17 @@
 <% end %>
 
 <% content_for :page_title do %>
-  <i class="fa fa-arrow-right"></i> <%= Spree.t(:return_authorizations) %>
+  <i class="fa fa-arrow-right"></i> <%= Spree::ReturnAuthorization.model_name.human(count: :other) %>
 <% end %>
 
 <% if @order.shipments.any?(&:shipped?) || @order.return_authorizations.any? %>
   <table class="index">
     <thead data-hook="rma_header">
       <tr>
-        <th><%= Spree.t(:rma_number) %></th>
-        <th><%= Spree.t(:status) %></th>
-        <th><%= Spree.t(:pre_tax_total) %></th>
-        <th><%= "#{Spree.t('date')}/#{Spree.t('time')}" %></th>
+        <th><%= Spree::ReturnAuthorization.human_attribute_name(:number) %></th>
+        <th><%= Spree::ReturnAuthorization.human_attribute_name(:state) %></th>
+        <th><%= Spree::ReturnAuthorization.human_attribute_name(:pre_tax_total) %></th>
+        <th><%= Spree::ReturnAuthorization.human_attribute_name(:created_at) %></th>
         <th class="actions"></th>
       </tr>
     </thead>

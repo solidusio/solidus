@@ -9,13 +9,13 @@
             <%= check_box_tag 'select-all' %>
           <% end %>
         </th>
-        <th class="return-item-product"><%= Spree.t(:product) %></th>
-        <th class="return-item-state"><%= Spree.t(:state) %></th>
-        <th class="return-item-charged"><%= Spree.t(:charged) %></th>
-        <th class="return-item-pre-tax-refund-amount"><%= Spree.t(:pre_tax_refund_amount) %></th>
-        <th class="return-item-reimbursement-type"><%= Spree.t(:reimbursement_type) %></th>
-        <th class="return-item-exchange-for"><%= Spree.t(:exchange_for) %></th>
-        <th class="return-item-reason"><%= Spree.t(:reason) %></th>
+        <th class="return-item-product"><%= Spree::Product.model_name.human %></th>
+        <th class="return-item-state"><%= Spree::ReturnAuthorization.human_attribute_name(:state) %></th>
+        <th class="return-item-charged"><%= Spree::ReturnItem.human_attribute_name(:charged) %></th>
+        <th class="return-item-pre-tax-refund-amount"><%= Spree::ReturnItem.human_attribute_name(:amount) %></th>
+        <th class="return-item-reimbursement-type"><%= Spree::ReimbursementType.model_name.human %></th>
+        <th class="return-item-exchange-for"><%= Spree::ReturnItem.human_attribute_name(:exchange_variant) %></th>
+        <th class="return-item-reason"><%= Spree::ReturnItem.human_attribute_name(:return_reason) %></th>
       </tr>
     </thead>
     <tbody>
@@ -82,7 +82,7 @@
   <% end %>
 
   <%= f.field_container :memo do %>
-    <%= f.label :memo, Spree.t(:memo) %>
+    <%= f.label :memo %>
     <%= f.text_area :memo, {:style => 'height:100px;', :class => 'fullwidth'} %>
     <%= f.error_message_on :memo %>
   <% end %>
