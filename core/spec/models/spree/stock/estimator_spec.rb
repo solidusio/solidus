@@ -148,12 +148,12 @@ module Spree
 
           it "links the shipping rate and the tax rate" do
             shipping_rates = subject.shipping_rates(package)
-            expect(shipping_rates.first.tax_rate).to eq(tax_rate)
+            expect(shipping_rates.first.taxes.first.tax_rate).to eq(tax_rate)
           end
         end
 
         it 'uses the configured shipping rate selector' do
-          shipping_rate = Spree::ShippingRate.new
+          shipping_rate = build(:shipping_rate)
           allow(Spree::ShippingRate).to receive(:new).and_return(shipping_rate)
 
           selector_class = Class.new do
@@ -184,6 +184,24 @@ module Spree
           expect(sorter).to have_received(:sort)
 
           Spree::Config.shipping_rate_sorter_class = nil
+        end
+
+        it 'uses the configured shipping rate taxer' do
+          class Spree::Tax::TestTaxer
+            def initialize
+            end
+
+            def tax(_)
+              Spree::ShippingRate.new
+            end
+          end
+          Spree::Config.shipping_rate_taxer_class = Spree::Tax::TestTaxer
+
+          shipping_rate = Spree::ShippingRate.new
+          allow(Spree::ShippingRate).to receive(:new).and_return(shipping_rate)
+
+          expect(Spree::Tax::TestTaxer).to receive(:new).and_call_original
+          subject.shipping_rates(package)
         end
       end
     end

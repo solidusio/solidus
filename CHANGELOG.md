@@ -1,5 +1,20 @@
 ## Solidus 1.3.0 (unreleased)
 
+*   Persist tax estimations on shipping rates
+
+    Previously, shipping rate taxes were calculated on the fly every time
+    a shipping rate would be displayed. Now, shipping rate taxes are stored
+    on a dedicated table to look up.
+
+    There is a new model Spree::ShippingRateTax where the taxes are stored,
+    and a new Spree::Tax::ShippingRateTaxer that builds those taxes from within
+    Spree::Stock::Estimator.
+
+    The shipping rate taxer class can be exchanged for a custom estimator class
+    using the new Spree::Appconfiguration.shipping_rate_taxer_class preference.
+
+    https://github.com/solidusio/solidus/pull/904
+
 *   Deprecate setting a line item's currency by hand
 
     Previously, a line item's currency could be set directly, and differently from the line item's

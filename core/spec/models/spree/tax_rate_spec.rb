@@ -1,6 +1,8 @@
 require 'spec_helper'
 
 describe Spree::TaxRate, type: :model do
+  it { is_expected.to respond_to(:shipping_rate_taxes) }
+
   context '.for_address' do
     let(:germany) { create(:country, iso: "DE") }
     let(:germany_zone) { create(:zone, countries: [germany]) }
