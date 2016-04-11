@@ -11,7 +11,7 @@ module Spree
     has_many :store_payment_methods, inverse_of: :payment_method
     has_many :payment_methods, through: :store_payment_methods
 
-    default_scope -> { order(:position) }
+    scope :ordered_by_position, -> { order(:position) }
 
     include Spree::Preferences::StaticallyConfigurable
 
