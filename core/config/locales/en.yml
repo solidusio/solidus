@@ -746,7 +746,6 @@ en:
     approved_at: Approved at
     are_you_sure: Are you sure?
     are_you_sure_delete: Are you sure you want to delete this record?
-    are_you_sure_close_stock_transfer: Are you sure you want to close this stock transfer?
     are_you_sure_finalize_stock_transfer: Are you sure you want to finalize this stock transfer?
     are_you_sure_ship_stock_transfer: Are you sure you want to ship this stock transfer?
     authorization_failure: Authorization Failure
@@ -852,9 +851,7 @@ en:
     clone: Clone
     close: Close
     close_stock_transfer:
-      will_cause: "Closing a stock transfer will cause the following:"
-      no_longer_edit: You will no longer be able to edit the stock transfer in any way
-      stock_movements_created: Stock movements will be created for the received items
+      confirm: "Are you sure you want to close this stock transfer?\n\nStock levels will be changed for the received items and you will no longer be able to edit the stock transfer."
     code: Code
     company: Company
     complete: complete
