@@ -45,6 +45,10 @@ module Spree
 
       private
 
+      def collection
+        super.ordered_by_position
+      end
+
       def load_providers
         @providers = PaymentMethod.providers.sort_by(&:name)
       end

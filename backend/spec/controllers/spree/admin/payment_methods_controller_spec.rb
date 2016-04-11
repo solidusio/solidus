@@ -49,5 +49,24 @@ module Spree
       expect(response).to be_redirect
       expect(response).to redirect_to spree.new_admin_payment_method_path
     end
+
+    describe "GET index" do
+      subject { spree_get :index }
+
+      let!(:first_method) { GatewayWithPassword.create! name: "First", preferred_password: "1235" }
+      let!(:second_method) { GatewayWithPassword.create! name: "Second", preferred_password: "1235" }
+
+      before do
+        second_method.move_to_top
+      end
+
+      it { is_expected.to be_success }
+      it { is_expected.to render_template "index"  }
+
+      it "respects the order of payment methods by position" do
+        subject
+        expect(assigns(:payment_methods).to_a).to eql([second_method, first_method])
+      end
+    end
   end
 end
