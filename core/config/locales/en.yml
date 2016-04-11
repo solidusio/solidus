@@ -1232,9 +1232,6 @@ en:
     new_zone: New Zone
     next: Next
     no_actions_added: No actions added
-    no_dont_close: No, don't close
-    no_dont_finalize: No, don't finalize
-    no_dont_ship: No, don't ship
     no_images_found: No images found
     no_inventory_selected: No inventory selected
     no_orders_found: No orders found
@@ -1594,8 +1591,7 @@ en:
     ship_address: Ship Address
     ship_address_required: Valid shipping address required
     ship_stock_transfer:
-      will_cause: "Shipping a stock transfer will cause the following:"
-      no_further_changes: You will no longer be able to make changes to the stock transfer
+      confirm: "Are you sure you want to mark this stock transfer as shipping?\n\nYou will no longer be able to make changes to the stock transfer"
     ship_total: Ship Total
     shipped_at: Shipped At
     shipment: Shipment
@@ -1830,9 +1826,6 @@ en:
     what_is_this: What's This?
     width: Width
     year: Year
-    yes_close: Yes, close
-    yes_finalize: Yes, finalize
-    yes_ship: Yes, ship
     you_have_no_orders_yet: You have no orders yet
     you_cannot_undo_action: You will not be able to undo this action
     your_cart_is_empty: Your cart is empty
