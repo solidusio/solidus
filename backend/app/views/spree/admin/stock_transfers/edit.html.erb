@@ -7,27 +7,14 @@
     <%= button_link_to Spree.t(:back_to_stock_transfers_list), admin_stock_transfers_path, icon: 'arrow-left' %>
   </li>
   <li>
-    <%= button_link_to Spree.t(:ready_to_ship), '#', icon: 'truck', id: 'ready-to-ship-transfer-button' %>
+    <%= button_link_to Spree.t(:ready_to_ship),
+      finalize_admin_stock_transfer_path(@stock_transfer),
+      icon: 'truck',
+      method: 'put',
+      data: { confirm: Spree.t('finalize_stock_transfer.confirm') }
+    %>
   </li>
 <% end %>
-
-<div id="finalize-stock-transfer-warning">
-  <div class='warning-title'>
-    <i class='fa fa-warning'></i>
-    <span><%= Spree.t(:you_cannot_undo_action) %></span>
-  </div>
-  <div class='action-consequences'>
-    <span><%= Spree.t('finalize_stock_transfer.will_cause') %></span>
-    <ul data-hook='finalize-stock-transfer-consequences'>
-      <li><%= Spree.t('finalize_stock_transfer.no_longer_change_items') %></li>
-    </ul>
-  </div>
-  <span><%= Spree.t(:are_you_sure_finalize_stock_transfer) %></span>
-  <div class='actions'>
-    <%= link_to Spree.t(:no_dont_finalize), '#', :id => 'cancel-finalize-link' %>
-    <%= link_to Spree.t(:yes_finalize), finalize_admin_stock_transfer_path(@stock_transfer), { method: 'put' } %>
-  </div>
-</div>
 
 <%= form_for [:admin, @stock_transfer] do |f| %>
   <fieldset class="no-border-top">

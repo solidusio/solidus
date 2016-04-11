@@ -28,7 +28,6 @@ describe 'Stock Transfers', type: :feature, js: true do
       end
 
       expect(page).to have_content('Stock Transfer has been successfully updated')
-      expect(page).to have_css(:div, '#finalize-stock-transfer-warning')
       expect(page).to have_content("NY")
     end
   end
