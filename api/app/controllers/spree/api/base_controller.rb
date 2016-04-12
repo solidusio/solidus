@@ -8,6 +8,7 @@ module Spree
 
       include CanCan::ControllerAdditions
       include Spree::Core::ControllerHelpers::Store
+      include Spree::Core::ControllerHelpers::Pricing
       include Spree::Core::ControllerHelpers::StrongParameters
 
       class_attribute :admin_line_item_attributes
@@ -92,11 +93,6 @@ module Spree
       def current_ability
         Spree::Ability.new(current_api_user)
       end
-
-      def current_currency
-        Spree::Config[:currency]
-      end
-      helper_method :current_currency
 
       def invalid_resource!(resource)
         Rails.logger.error "invalid_resouce_errors=#{resource.errors.full_messages}"

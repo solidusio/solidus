@@ -13,6 +13,7 @@ describe Spree::Core::ControllerHelpers::Order, type: :controller do
 
   before do
     allow(controller).to receive_messages(current_store: store)
+    allow(controller).to receive_messages(current_currency: Spree::Config.currency)
     allow(controller).to receive_messages(try_spree_current_user: user)
   end
 
@@ -74,13 +75,6 @@ describe Spree::Core::ControllerHelpers::Order, type: :controller do
         expect(order).to receive(:merge!).with(incomplete_order, user)
         controller.set_current_order
       end
-    end
-  end
-
-  describe '#current_currency' do
-    it 'returns current currency' do
-      Spree::Config[:currency] = 'USD'
-      expect(controller.current_currency).to eq 'USD'
     end
   end
 
