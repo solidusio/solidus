@@ -207,15 +207,18 @@ describe Spree::LineItem, type: :model do
 
   describe "#options=" do
     it "can handle updating a blank line item with no order" do
+      expect(Spree::Deprecation).not_to receive(:warn)
       line_item.options = { price: 123 }
     end
 
     it "updates the data provided in the options" do
+      expect(Spree::Deprecation).not_to receive(:warn)
       line_item.options = { price: 123 }
       expect(line_item.price).to eq 123
     end
 
     it "updates the price based on the options provided" do
+      expect(Spree::Deprecation).to receive(:warn)
       expect(line_item).to receive(:gift_wrap=).with(true)
       expect(line_item.variant).to receive(:gift_wrap_price_modifier_amount_in).with("USD", true).and_return 1.99
       line_item.options = { gift_wrap: true }
