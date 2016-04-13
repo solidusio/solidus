@@ -7,27 +7,14 @@
     <%= button_link_to Spree.t(:back_to_stock_transfers_list), admin_stock_transfers_path, icon: 'arrow-left' %>
   </li>
   <li>
-    <%= button_link_to Spree.t('actions.ship'), '#', icon: 'check', id: 'confirm-ship-transfer-button' %>
+    <%= button_link_to Spree.t('actions.ship'),
+      ship_admin_stock_transfer_path(@stock_transfer),
+      icon: 'check',
+      method: 'put',
+      data: { confirm: Spree.t('ship_stock_transfer.confirm') }
+      %>
   </li>
 <% end %>
-
-<div id="ship-stock-transfer-warning" >
-  <div class='warning-title'>
-    <i class='fa fa-warning'></i>
-    <span><%= Spree.t(:you_cannot_undo_action) %></span>
-  </div>
-  <div class='action-consequences'>
-    <span><%= Spree.t('ship_stock_transfer.will_cause') %></span>
-    <ul data-hook='ship-stock-transfer-consequences'>
-      <li><%= Spree.t('ship_stock_transfer.no_further_changes') %></li>
-    </ul>
-  </div>
-  <span><%= Spree.t(:are_you_sure_ship_stock_transfer) %></span>
-  <div class='actions'>
-    <%= link_to Spree.t(:no_dont_ship), '#', :id => 'cancel-ship-link' %>
-    <%= link_to Spree.t(:yes_ship), ship_admin_stock_transfer_path(@stock_transfer), { :method => 'PUT', :id => 'confirm-ship-link'} %>
-  </div>
-</div>
 
 <div id='stock_transfer_summary' class='fullwidth'>
   <div class='location'>
