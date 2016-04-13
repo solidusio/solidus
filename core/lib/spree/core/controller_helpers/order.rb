@@ -1,8 +1,11 @@
+require 'spree/core/controller_helpers/pricing'
+
 module Spree
   module Core
     module ControllerHelpers
       module Order
         extend ActiveSupport::Concern
+        include ControllerHelpers::Pricing
 
         included do
           before_filter :set_current_order
