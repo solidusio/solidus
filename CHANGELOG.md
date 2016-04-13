@@ -20,6 +20,10 @@
     The shipping rate taxer class can be exchanged for a custom estimator class
     using the new Spree::Appconfiguration.shipping_rate_taxer_class preference.
 
+    Shipping rates for completed orders before this change will, unfortunately, not be shown
+    with their taxes from Solidus 1.3 onwards. If you do change the shipping rate on an
+    old order, its taxes will be calculated correctly, though.
+
     https://github.com/solidusio/solidus/pull/904
 
 *   Deprecate setting a line item's currency by hand
