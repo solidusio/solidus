@@ -1,0 +1,16 @@
+<%# This file holds the tabs for the "General" settings area. It has this
+    filename to maintain compatibility with extensions which add their own menu
+    entires through deface. %>
+<% content_for :tabs do %>
+  <nav>
+    <ul class="tabs" data-hook="admin_configurations_sidebar_menu">
+      <% if can?(:edit, :general_settings) %>
+        <%= settings_tab_item Spree.t(:general_settings), edit_admin_general_settings_path %>
+      <% end %>
+
+      <% if can?(:display, Spree::Tracker) %>
+        <%= settings_tab_item Spree.t(:analytics_trackers), admin_trackers_path %>
+      <% end %>
+    </ul>
+  </nav>
+<% end %>
