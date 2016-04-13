@@ -1,5 +1,12 @@
 ## Solidus 1.3.0 (unreleased)
 
+*   Respect `Spree::Store#default_currency`
+
+    Previously, the `current_currency` helper in both the `core` and `api` gems
+    would always return the globally configured default currency rather than the
+    current store's one. With Solidus 1.3, we respect that setting without having
+    to install the `spree_multi_domain` extension.
+
 *   Persist tax estimations on shipping rates
 
     Previously, shipping rate taxes were calculated on the fly every time
