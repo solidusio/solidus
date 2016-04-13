@@ -670,6 +670,7 @@ en:
         areas: Areas
         checkout: Checkout
         configuration: Configuration
+        general: General
         option_types: Option Types
         orders: Orders
         overview: Overview
@@ -686,7 +687,6 @@ en:
         stock: Stock
         stock_items: Management
         stock_transfers: Transfers
-        store: Store
         taxes: Taxes
         taxonomies: Taxonomies
         taxons: Taxons
