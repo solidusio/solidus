@@ -323,6 +323,7 @@ en:
         height: Height
         price: Price
         sku: SKU
+        tax_category: Variant tax category
         weight: Weight
         width: Width
       spree/zone:
@@ -740,6 +741,18 @@ en:
           amount_authorized_exceeds_total_credit: " exceeds the available credit"
           amount_used_not_zero: "is greater than zero. Can not delete store credit"
           update_reason_required: "A reason for the change must be selected"
+      variants:
+        index:
+          show_deleted: Show deleted variants
+        new:
+          new_variant: New variant
+        edit:
+          edit_variant: Edit Variant
+        form:
+          dimensions: Dimensions
+          use_product_tax_category: Use Product Tax Category
+          pricing: Pricing
+          pricing_hint: These values are populated from the product details page and can be overridden below
     administration: Administration
     agree_to_privacy_policy: Agree to Privacy Policy
     agree_to_terms_of_service: Agree to Terms of Service
@@ -1262,6 +1275,7 @@ en:
     no_images_found: No images found
     no_inventory_selected: No inventory selected
     no_orders_found: No orders found
+    no_option_values_on_product_html: "This product has no associated option values. Add some to it through Option Types in the %{link}."
     no_payment_methods_found: No payment methods found
     no_payment_found: No payment found
     no_pending_payments: No pending payments

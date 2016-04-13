@@ -24,6 +24,7 @@ module Spree
     delegate :name, :description, :slug, :available_on, :shipping_category_id,
              :meta_description, :meta_keywords, :shipping_category,
              to: :product
+    delegate :tax_category, to: :product, prefix: true
 
     has_many :inventory_units, inverse_of: :variant
     has_many :line_items, inverse_of: :variant
@@ -86,12 +87,12 @@ module Spree
     end
 
     # @return [Spree::TaxCategory] the variant's tax category
+    #
+    # This returns the product's tax category if the tax category ID on the variant is nil. It looks
+    # like an association, but really is an override.
+    #
     def tax_category
-      if self[:tax_category_id].nil?
-        product.tax_category
-      else
-        TaxCategory.find(self[:tax_category_id])
-      end
+      super || product_tax_category
     end
 
     # Sets the cost_price for the variant.

@@ -1,9 +1,14 @@
 <%= render :partial => 'spree/admin/shared/product_tabs', :locals => { :current => 'Variants' } %>
 
+<% content_for :page_title do %>
+  &#x2f; <%= @variant.options_text %>
+<% end %>
+
 <%= render :partial => 'spree/shared/error_messages', :locals => { :target => @variant } %>
 
 <%= form_for [:admin, @product, @variant] do |f| %>
-  <fieldset class="no-border-top">
+  <fieldset>
+    <legend><%= t('.edit_variant') %></legend>
     <div data-hook="admin_variant_edit_form">
       <%= render :partial => 'form', :locals => { :f => f } %>
     </div>

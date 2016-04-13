@@ -1,5 +1,5 @@
 <% content_for :page_title do %>
-  <%= Spree.t(:editing_product) %> &ldquo;<%= @product.name %>&rdquo;
+  <%= Spree::Product.model_name.human(count: :other) %> &#x2f; <%= @product.name %>
 <% end %>
 
 <% content_for :tabs do %>

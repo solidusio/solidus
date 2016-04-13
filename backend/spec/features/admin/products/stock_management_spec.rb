@@ -36,7 +36,7 @@ describe "Stock Management", type: :feature do
       end
 
       it "renders" do
-        expect(page).to have_content(Spree.t(:editing_product))
+        expect(page).to have_content('Products / apache baseball cap')
         expect(page.current_url).to match("admin/products/apache-baseball-cap/stock")
       end
     end
