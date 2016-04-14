@@ -232,6 +232,14 @@ module Spree
       @pricer ||= pricer_class.new(self)
     end
 
+    def price_difference_from_master(pricing_options = self.class.default_pricing_options)
+      price_for(pricing_options) - product.master.price_for(pricing_options)
+    end
+
+    def price_same_as_master?(pricing_options = self.class.default_pricing_options)
+      price_difference_from_master(pricing_options) == Spree::Money.new(0, currency: pricing_options.desired_attributes[:currency])
+    end
+
     # Converts the variant's price to the given currency.
     #
     # @param currency [String] the desired currency
