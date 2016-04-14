@@ -5,6 +5,29 @@ describe "Variant scopes", type: :model do
   let!(:variant_1) { create(:variant, product: product) }
   let!(:variant_2) { create(:variant, product: product) }
 
+  context ".with_prices" do
+    context "when searching for the default pricing options" do
+      it "finds all variants" do
+        expect(Spree::Variant.with_prices).to contain_exactly(product.master, variant_1, variant_2)
+      end
+    end
+
+    context "when searching for different pricing options" do
+      let(:pricing_options) { Spree::Config.pricing_options_class.new(currency: "EUR") }
+      context "when only one variant has price in Euro" do
+        before do
+          variant_1.prices.create(amount: 99.00, currency: "EUR")
+        end
+
+        context "and we search for variants with only prices in Euro" do
+          it "finds the one variant with a price in Euro" do
+            expect(Spree::Variant.with_prices(pricing_options)).to contain_exactly(variant_1)
+          end
+        end
+      end
+    end
+  end
+
   it ".descend_by_popularity" do
     # Requires a product with at least two variants, where one has a higher number of
     # orders than the other

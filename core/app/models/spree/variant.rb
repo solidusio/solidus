@@ -88,6 +88,14 @@ module Spree
       joins(:prices).where(deleted_at: nil).where('spree_prices.currency' => currency || Spree::Config[:currency]).where('spree_prices.amount IS NOT NULL')
     end
 
+    # Returns variants that have a price for the given pricing options
+    #
+    # @param pricing_options A Pricing Options object as defined on the pricer class
+    # @return [ActiveRecord::Relation]
+    def self.with_prices(pricing_options = Spree::Config.default_pricing_options)
+      joins(:prices).merge(Spree::Price.currently_valid.where(pricing_options.desired_attributes))
+    end
+
     # @return [Spree::TaxCategory] the variant's tax category
     #
     # This returns the product's tax category if the tax category ID on the variant is nil. It looks
