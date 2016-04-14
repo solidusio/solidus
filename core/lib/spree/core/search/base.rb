@@ -4,12 +4,19 @@ module Spree
       class Base
         attr_accessor :properties
         attr_accessor :current_user
-        attr_accessor :current_currency
+        attr_reader :current_currency
+        attr_accessor :price_options
 
         def initialize(params)
-          self.current_currency = Spree::Config[:currency]
+          self.price_options = Spree::Variant.default_pricing_options
           @properties = {}
           prepare(params)
+        end
+
+        def current_currency=(currency)
+          self.price_options = Spree::Variant.pricer_class.pricing_options_class.new(
+            price_options.desired_attributes.merge(currency: currency)
+          )
         end
 
         def retrieve_products
@@ -17,7 +24,7 @@ module Spree
           curr_page = page || 1
 
           unless Spree::Config.show_products_without_price
-            @products = @products.where("spree_prices.amount IS NOT NULL").where("spree_prices.currency" => current_currency)
+            @products = @products.joins(:prices).merge(Spree::Price.where(price_options.desired_attributes)).uniq
           end
           @products = @products.page(curr_page).per(per_page)
         end
