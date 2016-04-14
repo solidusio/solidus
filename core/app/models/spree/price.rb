@@ -12,6 +12,8 @@ module Spree
       less_than_or_equal_to: MAXIMUM_AMOUNT
     }
 
+    scope :currently_valid, -> { where(is_default: true) }
+
     after_save :set_default_price
 
     extend DisplayMoney

@@ -219,7 +219,7 @@ module Spree
     # @param currency [String] the desired currency
     # @return [Spree::Price] the price in the desired currency
     def price_in(currency)
-      prices.find_by(currency: currency, is_default: true)
+      prices.currently_valid.find_by(currency: currency)
     end
 
     # Fetches the price amount in the specified currency.
