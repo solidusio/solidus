@@ -68,6 +68,7 @@ module Spree
     # @param stock_locations [Array<Spree::StockLocation>] the stock locations to check
     # @return [ActiveRecord::Relation]
     def self.in_stock(stock_locations = nil)
+      return all unless Spree::Config.track_inventory_levels
       in_stock_variants = joins(:stock_items).where(Spree::StockItem.arel_table[:count_on_hand].gt(0).or(arel_table[:track_inventory].eq(false)))
       if stock_locations.present?
         in_stock_variants = in_stock_variants.where(spree_stock_items: { stock_location_id: stock_locations.map(&:id) })

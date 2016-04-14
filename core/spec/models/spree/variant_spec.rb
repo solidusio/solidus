@@ -504,6 +504,7 @@ describe Spree::Variant, type: :model do
   end
 
   describe "in_stock scope" do
+    subject { Spree::Variant.in_stock }
     let!(:in_stock_variant) { create(:variant) }
     let!(:out_of_stock_variant) { create(:variant) }
     let!(:stock_location) { create(:stock_location) }
@@ -534,14 +535,21 @@ describe Spree::Variant, type: :model do
     end
 
     context "a stock location is not provided" do
-      subject { Spree::Variant.in_stock }
-
       before do
         in_stock_variant.stock_items.first.update_column(:count_on_hand, 10)
       end
 
       it "returns all in stock variants" do
         expect(subject).to eq [in_stock_variant]
+      end
+    end
+
+    context "inventory levels globally not tracked" do
+      before { Spree::Config.track_inventory_levels = false }
+      after { Spree::Config.track_inventory_levels = true }
+
+      it 'includes items without inventory' do
+        expect( subject ).to include out_of_stock_variant
       end
     end
   end
