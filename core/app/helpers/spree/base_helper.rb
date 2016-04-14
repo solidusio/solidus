@@ -126,7 +126,7 @@ module Spree
     end
 
     def display_price(product_or_variant)
-      product_or_variant.price_in(current_currency).display_price.to_html
+      product_or_variant.price_for(current_pricing_options).to_html
     end
 
     def pretty_time(time)
