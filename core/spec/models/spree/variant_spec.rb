@@ -5,6 +5,20 @@ require 'spec_helper'
 describe Spree::Variant, type: :model do
   let!(:variant) { create(:variant) }
 
+  context "class attributes" do
+    describe ".pricer_class" do
+      it 'defaults to the configured variant pricer class' do
+        expect(described_class.pricer_class).to eq(Spree::Config.variant_pricer_class)
+      end
+    end
+
+    describe ".default_pricing_options" do
+      it 'returns the configured default price options' do
+        expect(described_class.default_pricing_options).to be_a(Spree::Config.variant_pricer_class.pricing_options_class)
+      end
+    end
+  end
+
   it_behaves_like 'default_price'
 
   context "validations" do
@@ -179,6 +193,34 @@ describe Spree::Variant, type: :model do
         variant.prices << create(:price, variant: variant, currency: "USD", amount: 12.12)
         expect(variant.reload.default_price.amount).to eq(12.12)
       end
+    end
+  end
+
+  context "#pricer" do
+    subject { variant.pricer }
+
+    it "returns an instance of a pricer" do
+      expect(variant.pricer).to be_a(Spree::Config.variant_pricer_class)
+    end
+
+    it "is instacached" do
+      expect(variant.pricer.object_id).to eq(variant.pricer.object_id)
+    end
+  end
+
+  context "#price_for(price_options)" do
+    let(:price_options) { Spree::Config.variant_pricer_class.pricing_options_class.new }
+
+    it "calls the pricer with the given options object" do
+      expect(variant.pricer).to receive(:price_for).with(price_options)
+      variant.price_for(price_options)
+    end
+  end
+
+  context "#default_price_options" do
+    it "calls the pricer with the given options object" do
+      expect(described_class).to receive(:default_pricing_options)
+      variant.default_pricing_options
     end
   end
 

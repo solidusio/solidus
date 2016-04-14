@@ -17,6 +17,10 @@ module Spree
     acts_as_paranoid
     acts_as_list scope: :product
 
+    class_attribute :default_pricing_options, :pricer_class
+    self.pricer_class = Spree::Config.variant_pricer_class
+    self.default_pricing_options = pricer_class.pricing_options_class.new
+
     include Spree::DefaultPrice
 
     belongs_to :product, -> { with_deleted }, touch: true, class_name: 'Spree::Product', inverse_of: :variants
@@ -26,6 +30,9 @@ module Spree
              :meta_description, :meta_keywords, :shipping_category,
              to: :product
     delegate :tax_category, to: :product, prefix: true
+
+    delegate :pricer_class, :default_pricing_options, to: :class
+    delegate :price_for, to: :pricer
 
     has_many :inventory_units, inverse_of: :variant
     has_many :line_items, inverse_of: :variant
@@ -211,6 +218,10 @@ module Spree
     # @return [String] the option value
     def option_value(opt_name)
       option_values.detect { |o| o.option_type.name == opt_name }.try(:presentation)
+    end
+
+    def pricer
+      @pricer ||= pricer_class.new(self)
     end
 
     # Converts the variant's price to the given currency.
