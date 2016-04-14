@@ -161,12 +161,16 @@ module Spree
 
     # Groups variants by the specified option type.
     #
+    # @deprecated This method is not called in the Solidus codebase
     # @param opt_type [String] the name of the option type to group by
+    # @param pricing_options [Spree::Config.pricing_options_class] the pricing options to search
+    #   for, default: the default pricing options
     # @return [Hash] option_type as keys, array of variants as values.
-    def categorise_variants_from_option(opt_type)
+    def categorise_variants_from_option(opt_type, pricing_options = Spree::Config.default_pricing_options)
       return {} unless option_types.include?(opt_type)
-      variants.active.group_by { |v| v.option_values.detect { |o| o.option_type == opt_type } }
+      variants.with_prices(pricing_options).group_by { |v| v.option_values.detect { |o| o.option_type == opt_type } }
     end
+    deprecate :categorise_variants_from_option, deprecator: Spree::Deprecation
 
     # Poor man's full text search.
     #
