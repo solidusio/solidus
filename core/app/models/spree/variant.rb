@@ -222,6 +222,34 @@ module Spree
       option_values.detect { |o| o.option_type.name == opt_name }.try(:presentation)
     end
 
+    # Returns an instance of the globally configured variant pricer class for this variant.
+    # It's cached so we don't create too many objects.
+    #
+    # @return [Spree::Variant::Pricer] The default pricer class
+    def pricer
+      @pricer ||= Spree::Config.variant_pricer_class.new(self)
+    end
+
+    # Chooses an appropriate price for the given pricing options
+    #
+    # @see Spree::Variant::Pricer#price_for
+    # @param [Spree::Config.pricing_options_class] An instance of pricing options
+    # @return [Spree::Money] The chosen price as a Money object
+    delegate :price_for, to: :pricer
+
+    # Returns the difference in price from the master variant
+    def price_difference_from_master(pricing_options = Spree::Config.default_pricing_options)
+      master_price = product.master.price_for(pricing_options)
+      variant_price = price_for(pricing_options)
+      return unless master_price && variant_price
+      variant_price - master_price
+    end
+
+    def price_same_as_master?(pricing_options = Spree::Config.default_pricing_options)
+      diff = price_difference_from_master(pricing_options)
+      diff && diff.zero?
+    end
+
     # Converts the variant's price to the given currency.
     #
     # @param currency [String] the desired currency

@@ -182,6 +182,118 @@ describe Spree::Variant, type: :model do
     end
   end
 
+  context "#pricer" do
+    subject { variant.pricer }
+
+    it "returns an instance of a pricer" do
+      expect(variant.pricer).to be_a(Spree::Config.variant_pricer_class)
+    end
+
+    it "is instacached" do
+      expect(variant.pricer.object_id).to eq(variant.pricer.object_id)
+    end
+  end
+
+  context "#price_for(price_options)" do
+    let(:price_options) { Spree::Config.variant_pricer_class.pricing_options_class.new }
+
+    it "calls the pricer with the given options object" do
+      expect(variant.pricer).to receive(:price_for).with(price_options)
+      variant.price_for(price_options)
+    end
+  end
+
+  context "#price_difference_from_master" do
+    let(:pricing_options) { Spree::Config.default_pricing_options }
+
+    subject { variant.price_difference_from_master(pricing_options) }
+
+    it "can be called without pricing options" do
+      expect(variant.price_difference_from_master).to eq(Spree::Money.new(0))
+    end
+
+    context "for the master variant" do
+      let(:variant) { create(:product).master }
+
+      it { is_expected.to eq(Spree::Money.new(0, currency: Spree::Config.currency)) }
+    end
+
+    context "when both variants have a price" do
+      let(:product) { create(:product, price: 25) }
+      let(:variant) { create(:variant, product: product, price: 35) }
+
+      it { is_expected.to eq(Spree::Money.new(10, currency: Spree::Config.currency)) }
+    end
+
+    context "when the master variant does not have a price" do
+      let(:product) { create(:product, price: 25) }
+      let(:variant) { create(:variant, product: product, price: 35) }
+
+      before do
+        allow(product.master).to receive(:price_for).and_return(nil)
+      end
+
+      it { is_expected.to be_nil }
+    end
+
+    context "when the variant does not have a price" do
+      let(:product) { create(:product, price: 25) }
+      let(:variant) { create(:variant, product: product, price: 35) }
+
+      before do
+        allow(variant).to receive(:price_for).and_return(nil)
+      end
+
+      it { is_expected.to be_nil }
+    end
+  end
+
+  context "#price_same_as_master?" do
+    context "when the price is the same as the master price" do
+      let(:master) { create(:product, price: 10).master }
+      let(:variant) { create(:variant, price: 10, product: master.product) }
+
+      subject { variant.price_same_as_master? }
+
+      it { is_expected.to be true }
+    end
+
+    context "when the price is different from the master price" do
+      let(:master) { create(:product, price: 11).master }
+      let(:variant) { create(:variant, price: 10, product: master.product) }
+
+      subject { variant.price_same_as_master? }
+
+      it { is_expected.to be false }
+    end
+
+    context "when the master variant does not have a price" do
+      let(:master) { create(:product).master }
+      let(:variant) { create(:variant, price: 10, product: master.product) }
+
+      before do
+        allow(master).to receive(:price_for).and_return(nil)
+      end
+
+      subject { variant.price_same_as_master? }
+
+      it { is_expected.to be_falsey }
+    end
+
+    context "when the variant itself does not have a price" do
+      let(:master) { create(:product).master }
+      let(:variant) { create(:variant, price: 10, product: master.product) }
+
+      before do
+        allow(variant).to receive(:price_for).and_return(nil)
+      end
+
+      subject { variant.price_same_as_master? }
+
+      it { is_expected.to be_falsey }
+    end
+  end
+
   describe '.price_in' do
     before do
       variant.prices << create(:price, variant: variant, currency: "EUR", amount: 33.33)
