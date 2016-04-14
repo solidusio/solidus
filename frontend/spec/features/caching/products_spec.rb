@@ -11,7 +11,7 @@ describe 'products', type: :feature, caching: true do
     # warm up the cache
     visit spree.root_path
     assert_written_to_cache("views/en/USD/true/spree/products/all--#{product.updated_at.utc.to_s(:number)}")
-    assert_written_to_cache("views/en/USD/spree/products/#{product.id}-#{product.updated_at.utc.to_s(:number)}")
+    assert_written_to_cache("views/en/USD/true/spree/products/#{product.id}-#{product.updated_at.utc.to_s(:number)}")
     assert_written_to_cache("views/en/spree/taxonomies/#{taxonomy.id}")
     assert_written_to_cache("views/en/taxons/#{taxon.updated_at.utc.to_i}")
 
@@ -27,7 +27,7 @@ describe 'products', type: :feature, caching: true do
     product.update_column(:updated_at, 1.day.from_now)
     visit spree.root_path
     assert_written_to_cache("views/en/USD/true/spree/products/all--#{product.updated_at.utc.to_s(:number)}")
-    assert_written_to_cache("views/en/USD/spree/products/#{product.id}-#{product.updated_at.utc.to_s(:number)}")
+    assert_written_to_cache("views/en/USD/true/spree/products/#{product.id}-#{product.updated_at.utc.to_s(:number)}")
     expect(cache_writes.count).to eq(2)
   end
 

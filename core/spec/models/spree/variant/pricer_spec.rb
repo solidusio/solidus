@@ -39,10 +39,8 @@ describe Spree::Variant::Pricer do
       end
 
       context "when there is no price for that currency" do
-        it "errors out with a Price Not Found error" do
-          expect do
-            subject.price_for(pricing_options)
-          end.to raise_error(described_class::PriceNotFound)
+        it "returns nil" do
+          expect(subject.price_for(pricing_options)).to eq(nil)
         end
       end
     end
