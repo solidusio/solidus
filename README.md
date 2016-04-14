@@ -15,19 +15,20 @@ is a fork of Spree.
 Solidus actually consists of several different gems, each of which are maintained
 in a single repository and documented in a single set of
 [online documentation](http://docs.solidus.io/). By requiring the
-solidus gem you automatically require all of the necessary gem dependencies which are:
+[`solidus`](https://rubygems.org/gems/solidus) gem you automatically require all
+of the necessary gem dependencies which are:
 
-* solidus\_api (RESTful API)
-* solidus\_frontend (Cart and storefront)
-* solidus\_backend (Admin area)
-* solidus\_core (Essential models, mailers, and classes)
-* solidus\_sample (Sample data)
+* [`solidus_api`](https://rubygems.org/gems/solidus_api) (RESTful API)
+* [`solidus_frontend`](https://rubygems.org/gems/solidus_frontend) (Cart and storefront)
+* [`solidus_backend`](https://rubygems.org/gems/solidus_backend) (Admin area)
+* [`solidus_core`](https://rubygems.org/gems/solidus_core) (Essential models, mailers, and classes)
+* [`solidus_sample`](https://rubygems.org/gems/solidus_sample) (Sample data)
 
 All of the gems are designed to work together to provide a fully functional
 e-commerce platform. It is also possible, however, to use only the pieces you
-are interested in. For example, you could use just the barebones solidus\_core
-gem and perhaps combine it with your own custom frontend instead of using
-solidus\_frontend.
+are interested in. For example, you could use just the barebones
+[`solidus_core`](https://rubygems.org/gems/solidus_core) gem and perhaps combine it with your own
+custom frontend instead of using [`solidus_frontend`](https://rubygems.org/gems/solidus_frontend).
 
 [![Circle CI](https://circleci.com/gh/solidusio/solidus/tree/master.svg?style=shield)](https://circleci.com/gh/solidusio/solidus/tree/master)
 [![Gem](https://img.shields.io/gem/v/solidus.svg)](https://rubygems.org/gems/solidus)
