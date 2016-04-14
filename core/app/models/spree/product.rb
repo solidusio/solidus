@@ -195,6 +195,15 @@ module Spree
       end
     end
 
+    # @param pricing_options [Spree::Variant::PricingOptions] the pricing options to search
+    #   for, default: the default pricing options
+    # @return [Array<Spree::Variant>] all variants with at least one option value
+    def variants_and_option_values_for(pricing_options = Spree::Config.default_pricing_options)
+      variants.includes(:option_values).with_prices(pricing_options).select do |variant|
+        variant.option_values.any?
+      end
+    end
+
     # Groups all of the option values that are associated to the product's variants, grouped by
     # option type.
     #
