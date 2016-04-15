@@ -7,26 +7,28 @@ end
 describe Spree::Core::ControllerHelpers::Pricing, type: :controller do
   controller(FakesController) {}
 
-  before { allow(controller).to receive(:current_store).and_return(store) }
+  before do
+    allow(controller).to receive(:current_store).and_return(store)
+  end
 
   describe '#current_currency' do
     subject { controller.current_currency }
 
     context "when store default_currency is nil" do
       let(:store) { nil }
-      it { is_expected.to eq('USD') }
+      it { Spree::Deprecation.silence { is_expected.to eq('USD') } }
     end
 
     context "when the current store default_currency empty" do
       let(:store) { FactoryGirl.create :store, default_currency: '' }
 
-      it { is_expected.to eq('USD') }
+      it { Spree::Deprecation.silence { is_expected.to eq('USD') } }
     end
 
     context "when the current store default_currency is a currency" do
       let(:store) { FactoryGirl.create :store, default_currency: 'EUR' }
 
-      it { is_expected.to eq('EUR') }
+      it { Spree::Deprecation.silence { is_expected.to eq('EUR') } }
     end
   end
 

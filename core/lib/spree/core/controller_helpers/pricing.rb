@@ -1,3 +1,5 @@
+require 'spree/deprecation'
+
 module Spree
   module Core
     module ControllerHelpers
@@ -16,8 +18,9 @@ module Spree
         end
 
         def current_currency
-          current_store.try!(:default_currency).presence || Spree::Config[:currency]
+          current_pricing_options.currency
         end
+        deprecate current_currency: :current_pricing_options, deprecator: Spree::Deprecation
       end
     end
   end
