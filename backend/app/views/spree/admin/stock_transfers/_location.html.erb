@@ -1,0 +1,7 @@
+<div class='location'>
+  <h5>
+    <span><%= admin_stock_location_display_name(stock_transfer.source_location) %></span>
+    <span class='arrow'>&rarr;</span>
+    <span><%= admin_stock_location_display_name(stock_transfer.destination_location) if stock_transfer.destination_location %></span>
+  </h5>
+</div>
