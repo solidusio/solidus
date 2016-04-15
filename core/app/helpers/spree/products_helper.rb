@@ -22,8 +22,8 @@ module Spree
       return if variant.price_same_as_master?(current_pricing_options)
       difference = variant.price_difference_from_master(current_pricing_options)
       absolute_amount = Spree::Money.new(difference.to_d.abs, currency: difference.currency.iso_code)
-      label = difference.to_d > 0 ? :add : :subtract
-      "(#{Spree.t(label)}: #{absolute_amount.to_html})".html_safe
+      i18n_key = difference.to_d > 0 ? :price_diff_add_html : :price_diff_subtract_html
+      Spree.t(i18n_key, scope: [:helpers, :products], amount_html: absolute_amount.to_html)
     end
 
     # Returns the formatted full price for the variant, if at least one variant
