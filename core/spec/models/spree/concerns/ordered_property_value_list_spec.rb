@@ -5,9 +5,34 @@ describe Spree::OrderedPropertyValueList do
   # Using ProductProperty as a subject
   # since it includes OrderedPropertyValueList
   #
-  let(:product_property) { create(:product_property) }
+
+  context 'positioning' do
+    let(:product_1) { create(:product) }
+    let!(:property_1) { create(:product_property, product: product_1) }
+    let!(:property_2) { create(:product_property, product: product_1) }
+
+    let(:product_2) { create(:product) }
+    let!(:property_3) { create(:product_property, product: product_2) }
+    let!(:property_4) { create(:product_property, product: product_2) }
+
+    before do
+      property_1.update_attribute(:position, 0)
+      property_2.update_attribute(:position, 1)
+      property_3.update_attribute(:position, 0)
+      property_4.update_attribute(:position, 1)
+    end
+
+    it 'scopes position to the product' do
+      expect(property_1.reload.position).to eq(0)
+      expect(property_2.reload.position).to eq(1)
+      expect(property_3.reload.position).to eq(0)
+      expect(property_4.reload.position).to eq(1)
+    end
+  end
 
   context "validations" do
+    let(:product_property) { create(:product_property) }
+
     # Only MySQL stores or stores that were migrated prior to the Rails 4.2
     # upgrade have length limitations on "value":
     # > The PostgreSQL and SQLite adapters no longer add a default limit of 255
