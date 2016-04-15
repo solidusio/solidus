@@ -188,7 +188,9 @@ describe Spree::Product, type: :model do
       before { high.option_values.destroy_all }
 
       it "returns only variants with option values" do
-        expect(product.variants_and_option_values).to eq([low])
+        Spree::Deprecation.silence do
+          expect(product.variants_and_option_values).to eq([low])
+        end
       end
     end
 
