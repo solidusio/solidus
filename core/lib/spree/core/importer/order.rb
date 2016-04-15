@@ -153,7 +153,7 @@ module Spree
         def self.ensure_variant_id_from_params(hash)
           sku = hash.delete(:sku)
           unless hash[:variant_id].present?
-            hash[:variant_id] = Spree::Variant.active.find_by_sku!(sku).id
+            hash[:variant_id] = Spree::Variant.with_prices.find_by_sku!(sku).id
           end
           hash
         end

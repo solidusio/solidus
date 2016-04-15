@@ -192,6 +192,33 @@ describe Spree::Product, type: :model do
       end
     end
 
+    context "variants_and_option_values_for" do
+      let!(:high) { create(:variant, product: product) }
+      let!(:low) { create(:variant, product: product) }
+
+      context "when one product does not have option values" do
+        before { high.option_values.destroy_all }
+
+        it "returns only variants with option values" do
+          expect(product.variants_and_option_values_for).to eq([low])
+        end
+      end
+
+      context "when asking with different pricing options" do
+        let(:pricing_options_class) { Spree::Config.variant_pricer_class.pricing_options_class }
+        let(:pricing_options) { pricing_options_class.new(currency: "EUR") }
+
+        before do
+          low.prices.create(amount: 99.00, currency: "EUR")
+        end
+
+        it "returns only variants which have matching prices" do
+          expect(product.variants_and_option_values_for).to contain_exactly(low, high)
+          expect(product.variants_and_option_values_for(pricing_options)).to contain_exactly(low)
+        end
+      end
+    end
+
     describe "#variant_option_values_by_option_type" do
       let(:size) { create(:option_type, name: 'size') }
       let(:length) { create(:option_type, name: 'length') }
@@ -557,6 +584,73 @@ describe Spree::Product, type: :model do
       it "initializes the variant with the correct attributes" do
         expect(product.master.sku).to eq 'FOO'
         expect(product.sku).to eq 'FOO'
+      end
+    end
+  end
+
+  describe "#categorise_variants_from_option" do
+    let(:product) { create(:product, option_types: [size_type, color_type]) }
+    let(:size_type) { create(:option_type) }
+    let(:color_type) { create(:option_type) }
+    let(:size_m) { create(:option_value, option_type: size_type, presentation: "M") }
+    let(:size_l) { create(:option_value, option_type: size_type, presentation: "L") }
+    let(:color_red) { create(:option_value, option_type: color_type, presentation: "Red") }
+    let(:color_blue) { create(:option_value, option_type: color_type, presentation: "Blue") }
+
+    let!(:blue_m) { create(:variant, product: product, option_values: [size_m, color_blue]) }
+    let!(:red_m) { create(:variant, product: product, option_values: [size_m, color_red]) }
+    let!(:blue_l) { create(:variant, product: product, option_values: [size_l, color_blue]) }
+    let!(:red_l) { create(:variant, product: product, option_values: [size_l, color_red]) }
+
+    subject { product.categorise_variants_from_option(option_type) }
+
+    context "with no pricing arguments given" do
+      context "grouping by color" do
+        let(:option_type) { color_type }
+
+        it "returns all variants grouped by color" do
+          expect(subject[color_red]).to contain_exactly(red_m, red_l)
+          expect(subject[color_blue]).to contain_exactly(blue_m, blue_l)
+        end
+      end
+
+      context "grouping by size" do
+        let(:option_type) { size_type }
+
+        it "returns all variants grouped by color" do
+          expect(subject[size_m]).to contain_exactly(red_m, blue_m)
+          expect(subject[size_l]).to contain_exactly(red_l, blue_l)
+        end
+      end
+    end
+
+    context "with another currency given in the pricing options" do
+      let(:pricing_options_class) { Spree::Config.variant_pricer_class.pricing_options_class }
+      let(:pricing_options) { pricing_options_class.new(currency: "EUR") }
+
+      subject { product.categorise_variants_from_option(option_type, pricing_options) }
+
+      before do
+        red_m.prices.create(amount: 99.00, currency: "EUR")
+        blue_m.prices.create(amount: 99.00, currency: "EUR")
+      end
+
+      context "grouping by color" do
+        let(:option_type) { color_type }
+
+        it "only returns the variants available in the given currency" do
+          expect(subject[color_red]).to contain_exactly(red_m)
+          expect(subject[color_blue]).to contain_exactly(blue_m)
+        end
+      end
+
+      context "grouping by size" do
+        let(:option_type) { size_type }
+
+        it "only returns the variants available in the given currency" do
+          expect(subject[size_m]).to contain_exactly(red_m, blue_m)
+          expect(subject[size_l]).to be_blank
+        end
       end
     end
   end

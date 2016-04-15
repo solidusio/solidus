@@ -17,6 +17,10 @@ module Spree
     acts_as_paranoid
     acts_as_list scope: :product
 
+    class_attribute :default_pricing_options, :pricer_class
+    self.pricer_class = Spree::Config.variant_pricer_class
+    self.default_pricing_options = pricer_class.pricing_options_class.new
+
     include Spree::DefaultPrice
 
     belongs_to :product, -> { with_deleted }, touch: true, class_name: 'Spree::Product', inverse_of: :variants
@@ -26,6 +30,9 @@ module Spree
              :meta_description, :meta_keywords, :shipping_category,
              to: :product
     delegate :tax_category, to: :product, prefix: true
+
+    delegate :pricer_class, :default_pricing_options, to: :class
+    delegate :price_for, to: :pricer
 
     has_many :inventory_units, inverse_of: :variant
     has_many :line_items, inverse_of: :variant
@@ -86,6 +93,14 @@ module Spree
     # @return [ActiveRecord::Relation]
     def self.active(currency = nil)
       joins(:prices).where(deleted_at: nil).where('spree_prices.currency' => currency || Spree::Config[:currency]).where('spree_prices.amount IS NOT NULL')
+    end
+
+    # Returns variants that have a price for the given pricing options
+    #
+    # @param pricing_options A Pricing Options object as defined on the pricer class
+    # @return [ActiveRecord::Relation]
+    def self.with_prices(pricing_options = default_pricing_options)
+      joins(:prices).merge(Spree::Price.where(pricing_options.desired_attributes))
     end
 
     # @return [Spree::TaxCategory] the variant's tax category
@@ -212,6 +227,18 @@ module Spree
     # @return [String] the option value
     def option_value(opt_name)
       option_values.detect { |o| o.option_type.name == opt_name }.try(:presentation)
+    end
+
+    def pricer
+      @pricer ||= pricer_class.new(self)
+    end
+
+    def price_difference_from_master(pricing_options = self.class.default_pricing_options)
+      price_for(pricing_options) - product.master.price_for(pricing_options)
+    end
+
+    def price_same_as_master?(pricing_options = self.class.default_pricing_options)
+      price_difference_from_master(pricing_options) == Spree::Money.new(0, currency: pricing_options.desired_attributes[:currency])
     end
 
     # Converts the variant's price to the given currency.

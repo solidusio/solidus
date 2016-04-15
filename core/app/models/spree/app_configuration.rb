@@ -280,6 +280,15 @@ module Spree
       @searcher_class ||= Spree::Core::Search::Base
     end
 
+    # Allows implementing custom pricing for variants
+    # @!attribute [rw] variant_pricer_class
+    # @return [Spree::Variant::Pricer] an object that conforms to the API of
+    #   the standard variant pricer class.
+    attr_writer :variant_pricer_class
+    def variant_pricer_class
+      @variant_pricer_class ||= Spree::Variant::Pricer
+    end
+
     attr_writer :variant_search_class
     def variant_search_class
       @variant_search_class ||= Spree::Core::Search::Variant
