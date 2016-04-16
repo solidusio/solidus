@@ -3,8 +3,6 @@ module Spree
     extend ActiveSupport::Concern
 
     included do
-      acts_as_list
-
       validates :property, presence: true
       validates_with Spree::Validations::DbMaximumLengthValidator, field: :value
 
