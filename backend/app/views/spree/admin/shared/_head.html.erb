@@ -23,6 +23,12 @@
     as it must, which means a bottom of page notification will obstruct interactions.
     */
     .flash-wrapper { position: static; }
+
+    /* Capybara doesn't know how to use dropdowns */
+    .tabs-dropdown ul {
+      display: block !important;
+      position: static;
+    }
   </style>
 <%- elsif Rails.env.development? %>
   <style>
