@@ -9,6 +9,10 @@ module Spree
         new(currency: line_item.order.currency)
       end
 
+      def self.from_price(price)
+        new(currency: price.currency)
+      end
+
       attr_reader :desired_attributes
 
       def initialize(desired_attributes = {})

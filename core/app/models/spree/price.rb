@@ -13,7 +13,7 @@ module Spree
     }
 
     scope :currently_valid, -> { where(is_default: true) }
-
+    scope :with_default_attributes, -> { where(Spree::Config.default_pricing_options.desired_attributes) }
     after_save :set_default_price
 
     extend DisplayMoney
@@ -43,9 +43,13 @@ module Spree
 
     def set_default_price
       if is_default?
-        other_default_prices = variant.prices.where(currency: self.currency, is_default: true).where.not(id: id)
+        other_default_prices = variant.prices.currently_valid.where(pricing_options.desired_attributes).where.not(id: id)
         other_default_prices.update_all(is_default: false)
       end
+    end
+
+    def pricing_options
+      Spree::Config.pricing_options_class.from_price(self)
     end
   end
 end
