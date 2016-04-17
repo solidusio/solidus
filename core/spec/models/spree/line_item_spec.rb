@@ -236,4 +236,16 @@ describe Spree::LineItem, type: :model do
       expect(line_item.currency).to eq(new_price.currency.iso_code)
     end
   end
+
+  describe "#pricing_options" do
+    let(:line_item) { Spree::LineItem.new(currency: "RUB") }
+
+    subject { line_item.pricing_options }
+
+    it { is_expected.to be_a(Spree::Config.pricing_options_class) }
+
+    it "holds the line items's currency" do
+      expect(subject.currency).to eq("RUB")
+    end
+  end
 end

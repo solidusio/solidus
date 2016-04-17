@@ -6,7 +6,7 @@ module Spree
       end
 
       def self.from_line_item(line_item)
-        new(currency: line_item.order.currency)
+        new(currency: line_item.order.try(:currency) || line_item.currency || Spree::Config.currency )
       end
 
       def self.from_price(price)

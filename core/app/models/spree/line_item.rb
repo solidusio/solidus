@@ -118,6 +118,10 @@ module Spree
       assign_attributes options
     end
 
+    def pricing_options
+      Spree::Config.pricing_options_class.from_line_item(self)
+    end
+
     private
 
     # Sets the quantity to zero if it is nil or less than zero.
@@ -141,7 +145,7 @@ module Spree
 
       self.currency ||= order.currency
       self.cost_price ||= variant.cost_price
-      self.money_price = Pricers::Conservative.new(self).price
+      self.money_price = variant.price_for(pricing_options) if price.nil?
       true
     end
 
