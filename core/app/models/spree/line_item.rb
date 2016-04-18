@@ -110,12 +110,12 @@ module Spree
     # @param options [Hash] options for this line item
     def options=(options = {})
       return unless options.present?
-
-      # There's no need to call a pricer if we'll set the price directly.
-      unless options.key?(:price)
-        self.money_price = Pricers::PriceModifier.new(self, options).price
-      end
       assign_attributes options
+
+      # There's no need to call a pricer if we've set the price directly.
+      unless options.key?(:price)
+        self.money_price = variant.price_for(pricing_options)
+      end
     end
 
     def pricing_options
