@@ -124,4 +124,44 @@ describe Spree::Money do
       expect(money.as_json(options)).to eq("$10.00")
     end
   end
+
+  describe 'subtraction' do
+    context "for money objects with same currency" do
+      let(:money_1) { Spree::Money.new(32.00, currency: "USD") }
+      let(:money_2) { Spree::Money.new(15.00, currency: "USD") }
+
+      it "subtracts correctly" do
+        expect(money_1 - money_2).to eq(Spree::Money.new(17.00, currency: "USD"))
+      end
+    end
+
+    context "when trying to subtract money objects in different currencies" do
+      let(:money_1) { Spree::Money.new(32.00, currency: "EUR") }
+      let(:money_2) { Spree::Money.new(15.00, currency: "USD") }
+
+      it "will not work" do
+        expect { money_1 - money_2 }.to raise_error(Money::Bank::UnknownRate)
+      end
+    end
+  end
+
+  describe 'addition' do
+    context "for money objects with same currency" do
+      let(:money_1) { Spree::Money.new(37.00, currency: "USD") }
+      let(:money_2) { Spree::Money.new(15.00, currency: "USD") }
+
+      it "subtracts correctly" do
+        expect(money_1 + money_2).to eq(Spree::Money.new(52.00, currency: "USD"))
+      end
+    end
+
+    context "when trying to subtract money objects in different currencies" do
+      let(:money_1) { Spree::Money.new(32.00, currency: "EUR") }
+      let(:money_2) { Spree::Money.new(15.00, currency: "USD") }
+
+      it "will not work" do
+        expect { money_1 + money_2 }.to raise_error(Money::Bank::UnknownRate)
+      end
+    end
+  end
 end
