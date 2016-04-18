@@ -70,14 +70,17 @@ module Spree
     #
     # @see http://www.rubydoc.info/gems/money/Money/Arithmetic#%3D%3D-instance_method
     def ==(other)
+      raise TypeError, "Can't compare #{other.class} to Spree::Money" if !other.respond_to?(:money)
       @money == other.money
     end
 
     def -(other)
+      raise TypeError, "Can't subtract #{other.class} to Spree::Money" if !other.respond_to?(:money)
       self.class.from_money(@money - other.money)
     end
 
     def +(other)
+      raise TypeError, "Can't add #{other.class} to Spree::Money" if !other.respond_to?(:money)
       self.class.from_money(@money + other.money)
     end
   end

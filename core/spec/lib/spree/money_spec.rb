@@ -143,6 +143,15 @@ describe Spree::Money do
         expect { money_1 - money_2 }.to raise_error(Money::Bank::UnknownRate)
       end
     end
+
+    context "if other does not respond to .money" do
+      let(:money_1) { Spree::Money.new(32.00, currency: "EUR") }
+      let(:money_2) { ::Money.new(1500) }
+
+      it 'raises a TypeError' do
+        expect { money_1 - money_2 }.to raise_error(TypeError)
+      end
+    end
   end
 
   describe 'addition' do
@@ -161,6 +170,26 @@ describe Spree::Money do
 
       it "will not work" do
         expect { money_1 + money_2 }.to raise_error(Money::Bank::UnknownRate)
+      end
+    end
+
+    context "if other does not respond to .money" do
+      let(:money_1) { Spree::Money.new(32.00, currency: "EUR") }
+      let(:money_2) { ::Money.new(1500) }
+
+      it 'raises a TypeError' do
+        expect { money_1 + money_2 }.to raise_error(TypeError)
+      end
+    end
+  end
+
+  describe 'equality checks' do
+    context "if other does not respond to .money" do
+      let(:money_1) { Spree::Money.new(32.00, currency: "EUR") }
+      let(:money_2) { ::Money.new(1500) }
+
+      it 'raises a TypeError' do
+        expect { money_1 == money_2 }.to raise_error(TypeError)
       end
     end
   end
