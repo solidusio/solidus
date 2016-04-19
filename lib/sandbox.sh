@@ -3,14 +3,14 @@
 
 case "$DB" in
 postgres|postgresql)
-	RAILSDB="postgresql"
-	;;
+  RAILSDB="postgresql"
+  ;;
 mysql)
-	RAILSDB="mysql"
-	;;
+  RAILSDB="mysql"
+  ;;
 *)
-	RAILSDB="sqlite3"
-	;;
+  RAILSDB="sqlite3"
+  ;;
 esac
 
 rm -rf ./sandbox
