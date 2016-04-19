@@ -22,7 +22,17 @@ module Spree
     end
 
     def update_cart(params)
+
+      old_tax_address = order.tax_address
+
       if order.update_attributes(params)
+
+        new_tax_address = order.tax_address
+
+        unless new_tax_address.== old_tax_address
+          order.create_tax_charge!
+        end
+
         unless order.completed?
           order.line_items = order.line_items.select { |li| li.quantity > 0 }
           # Update totals, then check if the order is eligible for any cart promotions.
