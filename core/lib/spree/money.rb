@@ -12,6 +12,15 @@ module Spree
       def from_money(money)
         new(money)
       end
+
+      def parse(amount, currency = Spree::Config[:currency])
+        new(parse_to_money(amount, currency))
+      end
+
+      # @api private
+      def parse_to_money(amount, currency)
+        ::Monetize.parse(amount, currency)
+      end
     end
     self.default_formatting_rules = {
       # Ruby money currently has this as false, which is wrong for the vast
@@ -29,7 +38,16 @@ module Spree
       if amount.is_a?(::Money)
         @money = amount
       else
-        @money = Monetize.parse(amount, (options[:currency] || Spree::Config[:currency]))
+        currency = (options[:currency] || Spree::Config[:currency])
+        if amount.to_s =~ /\A-?\d+(\.\d+)?\z/
+          @money = Monetize.from_string(amount, currency)
+        else
+          @money = Spree::Money.parse_to_money(amount, currency)
+          Spree::Deprecation.warn <<-WARN.squish, caller
+            Spree::Money was initialized with #{amount.inspect}, which will not be supported in the future.
+            Instead use Spree::Money.new(#{@money.to_s.inspect}, options) or Spree::Money.parse(#{amount.inspect})
+          WARN
+        end
       end
       @options = Spree::Money.default_formatting_rules.merge(options)
     end
@@ -53,7 +71,7 @@ module Spree
     #   currency symbol
     # @return [String] the value of this money object formatted according to
     #   its options
-    def format(options={})
+    def format(options = {})
       @money.format(@options.merge(options))
     end
 
