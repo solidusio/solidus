@@ -52,7 +52,7 @@ production:
 <% unless db_host.blank? %>
   host: <%= db_host %>
 <% end %>
-<% else %>
+<% when 'sqlite', '', nil %>
 development:
   adapter: sqlite3
   database: db/spree_development.sqlite3
@@ -62,4 +62,6 @@ test:
 production:
   adapter: sqlite3
   database: db/spree_production.sqlite3
+<% else %>
+  <% raise "Invalid DB specified: #{ENV['DB']}" %>
 <% end %>

@@ -8,8 +8,12 @@ postgres|postgresql)
 mysql)
   RAILSDB="mysql"
   ;;
-*)
+sqlite|'')
   RAILSDB="sqlite3"
+  ;;
+*)
+  echo "Invalid DB specified: $DB"
+  exit 1
   ;;
 esac
 
