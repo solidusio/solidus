@@ -15,6 +15,7 @@ module Spree
     alias_attribute :last_name, :lastname
 
     DB_ONLY_ATTRS = %w(id updated_at created_at)
+    TAX_ZONE_ONLY_ATTRS = %w(state_id country_id zipcode)
 
     self.whitelisted_ransackable_attributes = %w[firstname lastname]
 
@@ -73,9 +74,14 @@ module Spree
       base.except!(*DB_ONLY_ATTRS)
     end
 
+
     # @return [Hash] hash of attributes contributing to value equality
     def value_attributes
       self.class.value_attributes(attributes)
+    end
+
+    def tax_zone_attributes
+      self.class.value_attributes(attributes.slice(*TAX_ZONE_ONLY_ATTRS))
     end
 
     # @return [String] the full name on this address
