@@ -8,6 +8,76 @@ describe Spree::Money do
     end
   end
 
+  describe '#initialize' do
+    subject { described_class.new(amount, currency: currency, with_currency: true).to_s }
+    context 'with no currency' do
+      let(:currency) { nil }
+      let(:amount){ 10 }
+      it { should == "$10.00 USD" }
+    end
+
+    context 'with currency' do
+      let(:currency){ 'USD' }
+
+      context "CAD" do
+        let(:amount){ '10.00' }
+        let(:currency){ 'CAD' }
+        it { should == "$10.00 CAD" }
+      end
+
+      context "with string amount" do
+        let(:amount){ '10.00' }
+        it { should == "$10.00 USD" }
+      end
+
+      context "with no decimal point" do
+        let(:amount){ '10' }
+        it { should == "$10.00 USD" }
+      end
+
+      context "with symbol" do
+        let(:amount){ '$10.00' }
+        it { should == "$10.00 USD" }
+      end
+
+      context "with extra currency" do
+        let(:amount){ '$10.00 USD' }
+        it { should == "$10.00 USD" }
+      end
+
+      context "with different currency" do
+        let(:currency){ 'USD' }
+        let(:amount){ '$10.00 CAD' }
+        it { should == "$10.00 CAD" }
+      end
+
+      context "with commas" do
+        let(:amount){ '1,000.00' }
+        it { should == "$1,000.00 USD" }
+      end
+
+      context "with comma for decimal point" do
+        let(:amount){ '10,00' }
+        it { should == "$10.00 USD" }
+      end
+
+      context 'with fixnum' do
+        let(:amount){ 10 }
+        it { should == "$10.00 USD" }
+      end
+
+      context 'with float' do
+        let(:amount){ 10.00 }
+        it { should == "$10.00 USD" }
+      end
+
+      context 'with BigDecimal' do
+        let(:amount){ BigDecimal.new('10.00') }
+        it { should == "$10.00 USD" }
+      end
+    end
+  end
+
   it "formats correctly" do
     money = Spree::Money.new(10)
     expect(money.to_s).to eq("$10.00")
