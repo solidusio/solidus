@@ -225,13 +225,19 @@ describe Spree::OrderContents, type: :model do
     end
 
     context "submits an address in a different tax zone than the current address" do
-      let(:shipping_address) { create :address, state_code: "NY" }
+      let(:default_address) { create :address, state_code: "NY" }
+      let(:updated_address) { create :address, state_code: "AL" }
+
+      let(:order_with_address ) { create :order, ship_address: default_address, bill_address: default_address}
+
+      subject { described_class.new(order_with_address) }
 
       let(:params) do
-        { ship_address: shipping_address}
+        { :ship_address_attributes => updated_address.value_attributes, bill_address_attributes: updated_address.value_attributes}
       end
 
       it "updates tax adjustments" do
+        puts params.inspect
         expect(subject.order).to receive(:create_tax_charge!)
         subject.update_cart params
       end
@@ -240,12 +246,12 @@ describe Spree::OrderContents, type: :model do
     context "submits an address in the same tax zone than the current address" do
 
       let(:default_address) { create :address, state_code: "NY", zipcode: "17402" }
-      let(:updated_address) { create :address, state_code: "NY", zipcode: "17402"}
+      let(:updated_address) { create :address, state_code: "NY", zipcode: "17402" }
 
       before { order.update_attributes(ship_address: default_address, bill_address: default_address) }
 
       let(:params) do
-        { ship_address: updated_address}
+        { ship_address: updated_address, bill_address: updated_address}
       end
 
       it "does not updates tax adjustments" do
