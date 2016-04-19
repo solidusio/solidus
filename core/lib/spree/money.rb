@@ -10,7 +10,7 @@ module Spree
       attr_accessor :default_formatting_rules
 
       def from_money(money)
-        new(money.to_d, currency: money.currency.iso_code)
+        new(money)
       end
     end
     self.default_formatting_rules = {
@@ -23,7 +23,7 @@ module Spree
 
     delegate :cents, :currency, :to_d, :zero?, to: :money
 
-    # @param amount [#to_s] the value of the money object
+    # @param amount [Money, #to_s] the value of the money object
     # @param options [Hash] the options for creating the money object
     # @option options [String] currency the currency for the money object
     # @option options [Boolean] with_currency when true, show the currency
@@ -37,7 +37,11 @@ module Spree
     # @option options [:before, :after] symbol_position the position of the
     #   currency symbol
     def initialize(amount, options = {})
-      @money = Monetize.parse(amount, (options[:currency] || Spree::Config[:currency]))
+      if amount.is_a?(::Money)
+        @money = amount
+      else
+        @money = Monetize.parse(amount, (options[:currency] || Spree::Config[:currency]))
+      end
       @options = Spree::Money.default_formatting_rules.merge(options)
     end
 
