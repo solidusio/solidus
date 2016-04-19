@@ -172,6 +172,7 @@ en:
         name: Name
       spree/refund:
         amount: Amount
+        description: Description
         refund_reason_id: Reason
       spree/refund_reason:
         active: Active
@@ -182,6 +183,8 @@ en:
         number: Number
         reimbursement_status: Status
         total: Total
+      spree/reimbursement_credit:
+        amount: Amount
       spree/reimbursement_type:
         name: Name
         type: Type
@@ -197,11 +200,12 @@ en:
         exchange_variant: Exchange for
         inventory_unit_state: State
         item_received?: "Item Received?"
-        pre_tax_amount: Amount before sales tax
+        override_reimbursement_type_id: Reimbursement Type Override
         preferred_reimbursement_type_id: Preferred Reimbursement Type
         reception_status: Reception Status
         resellable: "Resellable?"
         return_reason: Reason
+        total: Total
       spree/return_reason:
         name: Name
         active: Active
@@ -1118,6 +1122,7 @@ en:
       this_file_language: English (US)
       translations: Translations
     icon: Icon
+    id: ID
     identifier: Identifier
     image: Image
     images: Images
@@ -1294,6 +1299,7 @@ en:
     not_enough_stock: There is not enough inventory at the source location to complete this transfer.
     not_found: ! '%{resource} is not found'
     note: Note
+    note_already_received_a_refund: "Note: This order has already received a refund.  Make sure the above reimbursement amount is correct."
     notice_messages:
       product_cloned: Product has been cloned
       product_deleted: Product has been deleted
