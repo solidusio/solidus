@@ -518,6 +518,21 @@ describe Spree::Order, type: :model do
       expect(order.available_payment_methods).to include(payment_method)
     end
 
+    context "with more than one payment method" do
+      subject { order.available_payment_methods }
+
+      let!(:first_method) { FactoryGirl.create(:payment_method, display_on: :both) }
+      let!(:second_method) { FactoryGirl.create(:payment_method, display_on: :both) }
+
+      before do
+        second_method.move_to_top
+      end
+
+      it "respects the order of methods based on position" do
+        expect(subject).to eql([second_method, first_method])
+      end
+    end
+
     context 'when the order has a store' do
       let(:order) { create(:order) }
 
