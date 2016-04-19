@@ -15,14 +15,6 @@ Hopefully, this will evolve into a propper class.
 **/
 
 jQuery(function($) {
-  $('body').tooltip({selector: '.with-tip'})
-
-  $('body').on('inserted.bs.tooltip', function(e){
-    var $target = $(e.target);
-    var $tooltip = $("#" + $target.attr("aria-describedby"));
-    $tooltip.addClass("action-" + $target.data("action"));
-  });
-
   // Highlight hovered table column
   $('table').on("mouseenter", 'td.actions a, td.actions button', function(){
     var tr = $(this).closest('tr');
