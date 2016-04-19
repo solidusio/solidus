@@ -26,4 +26,8 @@ class Spree::Base < ActiveRecord::Base
   end
 
   self.abstract_class = true
+
+  def self.display_includes
+    where(nil)
+  end
 end
