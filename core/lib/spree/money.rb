@@ -24,18 +24,7 @@ module Spree
     delegate :cents, :currency, :to_d, :zero?, to: :money
 
     # @param amount [Money, #to_s] the value of the money object
-    # @param options [Hash] the options for creating the money object
-    # @option options [String] currency the currency for the money object
-    # @option options [Boolean] with_currency when true, show the currency
-    # @option options [Boolean] no_cents when true, round to the closest dollar
-    # @option options [String] decimal_mark the mark for delimiting the
-    #   decimals
-    # @option options [String, false, nil] thousands_separator the character to
-    #   delimit powers of 1000, if one is desired, otherwise false or nil
-    # @option options [Boolean] sign_before_symbol when true the sign of the
-    #   value comes before the currency symbol
-    # @option options [:before, :after] symbol_position the position of the
-    #   currency symbol
+    # @param options [Hash] the default options for formatting the money object See #format
     def initialize(amount, options = {})
       if amount.is_a?(::Money)
         @money = amount
@@ -48,7 +37,24 @@ module Spree
     # @return [String] the value of this money object formatted according to
     #   its options
     def to_s
-      @money.format(@options)
+      format
+    end
+
+    # @param options [Hash, String] the options for formatting the money object
+    # @option options [Boolean] with_currency when true, show the currency
+    # @option options [Boolean] no_cents when true, round to the closest dollar
+    # @option options [String] decimal_mark the mark for delimiting the
+    #   decimals
+    # @option options [String, false, nil] thousands_separator the character to
+    #   delimit powers of 1000, if one is desired, otherwise false or nil
+    # @option options [Boolean] sign_before_symbol when true the sign of the
+    #   value comes before the currency symbol
+    # @option options [:before, :after] symbol_position the position of the
+    #   currency symbol
+    # @return [String] the value of this money object formatted according to
+    #   its options
+    def format(options={})
+      @money.format(@options.merge(options))
     end
 
     # @note If you pass in options, ensure you pass in the html: true as well.
@@ -56,7 +62,7 @@ module Spree
     # @return [String] the value of this money object formatted according to
     #   its options and any additional options, by default as html.
     def to_html(options = { html: true })
-      output = @money.format(@options.merge(options))
+      output = format(options)
       if options[:html]
         # 1) prevent blank, breaking spaces
         # 2) prevent escaping of HTML character entities
