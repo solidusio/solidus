@@ -22,6 +22,10 @@ module Spree
     end
 
     def update_cart(params)
+      # We need old_tax_address / new_tax_address because we can't rely on methods
+      # offered by ActiveRecord::Dirty to determine if tax_address was updated
+      # because if we update the address, a new record will be created
+      # by the Address.factory instead of the old record being updated
 
       old_tax_address = order.tax_address
 
@@ -29,7 +33,7 @@ module Spree
 
         new_tax_address = order.tax_address
 
-        unless new_tax_address.== old_tax_address
+        if should_recalculate_taxes?(old_tax_address, new_tax_address)
           order.create_tax_charge!
         end
 
@@ -66,6 +70,20 @@ module Spree
     end
 
     private
+
+    def should_recalculate_taxes?(old_address, new_address)
+      # Possible cases:
+      # [Old_address is a TaxLocation, New_address is a TaxLocation ]:
+      # NON-VAT order before Address state : we don't compute taxes.
+      # [Old_address is a TaxLocation, New_address is an Adress ]:
+      # Order who passed Address state : we compute taxes.
+      # [Old_address is an Adress, New_address is a TaxLocation ]:
+      # Should not happen, TaxLocation can be replaced by an Address but not the other way around.
+      # Order is a weird state and we do nothing because it should not happen.
+      return if old_address.is_a?(Spree::Tax::TaxLocation) || new_address.is_a?(Spree::Tax::TaxLocation)
+
+      old_address.try(:taxation_attributes) != new_address.try(:taxation_attributes)
+    end
 
     def after_add_or_remove(line_item, options = {})
       reload_totals
