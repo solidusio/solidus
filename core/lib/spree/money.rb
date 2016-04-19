@@ -37,7 +37,7 @@ module Spree
     # @option options [:before, :after] symbol_position the position of the
     #   currency symbol
     def initialize(amount, options = {})
-      @money = Monetize.parse([amount, (options[:currency] || Spree::Config[:currency])].join)
+      @money = Monetize.parse(amount, (options[:currency] || Spree::Config[:currency]))
       @options = Spree::Money.default_formatting_rules.merge(options)
     end
 
