@@ -345,6 +345,10 @@ en:
         name: Name
         default_tax: Default Tax Zone
     models:
+      # LegacyUser maps to this model_name so we want to provide translations for it
+      user:
+        one: User
+        other: Users
       spree/address:
         one: Address
         other: Addresses
