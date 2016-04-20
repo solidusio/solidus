@@ -310,21 +310,24 @@ module Spree
           end
 
           def persist_user_credit_card
-            if !temporary_credit_card && user_id && valid_credit_cards.present?
-              default_cc = valid_credit_cards.first
-              # TODO: target for refactoring -- why is order checkout responsible for the user -> credit_card relationship?
-              default_cc.user_id = user_id
-              default_cc.default = true
-              default_cc.save
-            end
+            Spree::Config.
+              wallet_add_after_order_complete_class.new(self).
+              add_to_wallet
           end
 
           def assign_default_credit_card
-            if payments.from_credit_card.count == 0 && user && user.default_credit_card.try(:valid?)
-              cc = user.default_credit_card
-              payments.create!(payment_method_id: cc.payment_method_id, source: cc)
-              # this is one of 2 places still using User#bill_address
-              self.bill_address ||= user.default_credit_card.address || user.bill_address
+            payment = Spree::Config.
+              add_default_payment_class.new(self).
+              build_payment
+
+            if payment
+              payments << payment
+
+              if bill_address.nil?
+                # this is one of 2 places still using User#bill_address
+                self.bill_address = payment.source.try(:address) ||
+                                    user.bill_address
+              end
             end
           end
 

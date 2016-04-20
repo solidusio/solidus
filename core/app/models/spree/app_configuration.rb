@@ -349,6 +349,28 @@ module Spree
       @order_merger_class ||= Spree::OrderMerger
     end
 
+    # Allows providing your own class for adding default payments to a user's
+    # order from their "wallet".
+    #
+    # @!attribute [rw] add_default_payment_class
+    # @return [Class] a class with the same public interfaces
+    #   as Spree::Wallet::AddDefaultPayment.
+    attr_writer :add_default_payment_class
+    def add_default_payment_class
+      @add_default_payment_class ||= Spree::Wallet::AddDefaultPayment
+    end
+
+    # Allows providing your own class for adding payment sources to a user's
+    # "wallet" after an order moves to the complete state.
+    #
+    # @!attribute [rw] wallet_add_after_order_complete_class
+    # @return [Class] a class with the same public interfaces
+    #   as Spree::Wallet::AddAfterOrderComplete.
+    attr_writer :wallet_add_after_order_complete_class
+    def wallet_add_after_order_complete_class
+      @wallet_add_after_order_complete_class ||= Spree::Wallet::AddAfterOrderComplete
+    end
+
     def static_model_preferences
       @static_model_preferences ||= Spree::Preferences::StaticModelPreferences.new
     end
