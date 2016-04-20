@@ -22,14 +22,14 @@ module Spree
         if respond_to?(:preference_source) && preference_source
           self.class.preference_sources[preference_source] || {}
         else
-          super
+          self[:preferences]
         end
       end
 
       def preferences=(val)
         if respond_to?(:preference_source) && preference_source
         else
-          super
+          self[:preferences] = val
         end
       end
     end
