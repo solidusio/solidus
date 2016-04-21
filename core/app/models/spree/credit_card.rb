@@ -1,11 +1,9 @@
 module Spree
   # The default `source` of a `Spree::Payment`.
   #
-  class CreditCard < Spree::Base
-    belongs_to :payment_method
+  class CreditCard < Spree::PaymentSource
     belongs_to :user, class_name: Spree::UserClassHandle.new, foreign_key: 'user_id'
     belongs_to :address
-    has_many :payments, as: :source
 
     before_save :set_last_digits
 
@@ -13,8 +11,8 @@ module Spree
 
     accepts_nested_attributes_for :address
 
-    attr_reader :number, :verification_value
-    attr_accessor :encrypted_data, :imported
+    attr_reader :number
+    attr_accessor :encrypted_data, :verification_value
 
     validates :month, :year, numericality: { only_integer: true }, if: :require_card_numbers?, on: :create
     validates :number, presence: true, if: :require_card_numbers?, on: :create, unless: :imported
@@ -121,33 +119,6 @@ module Spree
     #   with "X", as in "XXXX-XXXX-XXXX-4338"
     def display_number
       "XXXX-XXXX-XXXX-#{last_digits}"
-    end
-
-    # @return [Array<String>] the actions available on this credit card
-    def actions
-      %w{capture void credit}
-    end
-
-    # @param payment [Spree::Payment] the payment we want to know if can be captured
-    # @return [Boolean] true when the payment is in the pending or checkout states
-    def can_capture?(payment)
-      payment.pending? || payment.checkout?
-    end
-
-    # @param payment [Spree::Payment] the payment we want to know if can be voided
-    # @return [Boolean] true when the payment is not failed or voided
-    def can_void?(payment)
-      !payment.failed? && !payment.void?
-    end
-
-    # Indicates whether its possible to credit the payment.  Note that most
-    # gateways require that the payment be settled first which generally
-    # happens within 12-24 hours of the transaction.
-    #
-    # @param payment [Spree::Payment] the payment we want to know if can be credited
-    # @return [Boolean] true when the payment is completed and can be credited
-    def can_credit?(payment)
-      payment.completed? && payment.credit_allowed > 0
     end
 
     # @return [Boolean] true when there is a gateway customer or payment
