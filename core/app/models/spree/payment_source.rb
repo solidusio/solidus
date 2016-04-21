@@ -35,5 +35,11 @@ module Spree
     def can_credit?(payment)
       payment.completed? && payment.credit_allowed > 0
     end
+
+    # Indicates whether this payment source can be used more than once. E.g. a
+    # credit card with a 'payment profile'.
+    def reusable?
+      false
+    end
   end
 end

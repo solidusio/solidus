@@ -121,6 +121,10 @@ module Spree
       "XXXX-XXXX-XXXX-#{last_digits}"
     end
 
+    def reusable?
+      has_payment_profile?
+    end
+
     # @return [Boolean] true when there is a gateway customer or payment
     #   profile id present
     def has_payment_profile?
