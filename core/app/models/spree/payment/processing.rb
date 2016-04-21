@@ -134,7 +134,7 @@ module Spree
 
         if source
           if !processing?
-            if payment_method.supports?(source) || token_based?
+            if payment_method.supports?(source)
               yield
             else
               invalidate!
@@ -212,10 +212,6 @@ module Spree
       # The unique identifier to be passed in to the payment gateway
       def gateway_order_id
         "#{order.number}-#{number}"
-      end
-
-      def token_based?
-        source.gateway_customer_profile_id.present? || source.gateway_payment_profile_id.present?
       end
     end
   end
