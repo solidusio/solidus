@@ -51,7 +51,9 @@ module Spree
       if source_attributes.present? && payment_method.try(:payment_source_class)
         payment.source = payment_method.payment_source_class.new(source_attributes)
         payment.source.payment_method_id = payment_method.id
-        payment.source.user_id = order.user_id if order
+        if order && payment.source.respond_to?(:user=)
+          payment.source.user = order.user
+        end
       end
     end
 
