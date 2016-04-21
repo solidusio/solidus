@@ -5,8 +5,6 @@ module Spree
 
     before_save :set_last_digits
 
-    after_save :ensure_one_default
-
     accepts_nested_attributes_for :address
 
     attr_reader :number
@@ -18,7 +16,11 @@ module Spree
     validates :verification_value, presence: true, if: :require_card_numbers?, on: :create, unless: :imported
 
     scope :with_payment_profile, -> { where('gateway_customer_profile_id IS NOT NULL') }
-    scope :default, -> { where(default: true) }
+
+    def self.default
+      ActiveSupport::Deprecation.warn("CreditCard.default is deprecated. Please use Spree::Wallet instead.")
+      joins(:wallet_sources).where(spree_wallet_sources: { default: true })
+    end
 
     # needed for some of the ActiveMerchant gateways (eg. SagePay)
     alias_attribute :brand, :cc_type
@@ -31,6 +33,25 @@ module Spree
       discover: /^6(?:011|5[0-9]{2})[0-9]{12}$/,
       jcb: /^(?:2131|1800|35\d{3})\d{11}$/
     }
+
+    def default
+      ActiveSupport::Deprecation.warn("CreditCard.default is deprecated. Please use user.wallet.default instead.", caller)
+      user.wallet.default.source == self
+    end
+
+    def default=(set_as_default)
+      ActiveSupport::Deprecation.warn("CreditCard.default= is deprecated. Please use user.wallet.default= instead.", caller)
+      if set_as_default # setting this card as default
+        user.wallet.add(self)
+        user.wallet.default = self
+        true
+      else # removing this card as default
+        if user.wallet.default.try!(:source) == self
+          user.wallet.default = nil
+        end
+        false
+      end
+    end
 
     def address_attributes=(attributes)
       self.address = Address.immutable_merge(address, attributes)
@@ -153,14 +174,6 @@ module Spree
 
     def require_card_numbers?
       !encrypted_data.present? && !has_payment_profile?
-    end
-
-    def ensure_one_default
-      if user_id && default
-        CreditCard.where(default: true).where.not(id: id).where(user_id: user_id).each do |ucc|
-          ucc.update_columns(default: false, updated_at: Time.current)
-        end
-      end
     end
   end
 end
