@@ -79,7 +79,7 @@
     <thead data-hook="customer_return_header">
       <tr>
         <th><%= Spree.t(:description) %></th>
-        <th><%= Spree::ReimbursementCredit.human_attribute_name(:amount) %></th>
+        <th><%= Spree::Reimbursement::Credit.human_attribute_name(:amount) %></th>
       </tr>
     </thead>
     <tbody>
