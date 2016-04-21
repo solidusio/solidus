@@ -11,15 +11,25 @@ class Spree::Wallet::AddPaymentSourcesToWallet
   #
   # @return [void]
   def add_to_wallet
-    if !order.temporary_credit_card &&
-       order.user_id &&
-       order.valid_credit_cards.present?
-      # arbitrarily pick the first one for the default
-      default_cc = order.valid_credit_cards.first
-      # TODO: target for refactoring -- why is order checkout responsible for the user -> credit_card relationship?
-      default_cc.user_id = order.user_id
-      default_cc.default = true
-      default_cc.save
+    if !order.temporary_payment_source && order.user
+      # select valid sources
+      sources = order.payments.valid.map(&:source).uniq.compact.select(&:reusable?)
+
+      # add valid sources to wallet and optionally set a default
+      if sources.any?
+        sources.each do |source|
+          order.user.wallet.add(source)
+        end
+
+        # arbitrarily pick the last one for the default
+        default_source = sources.sort_by(&:id).last
+        order.user.wallet.default = default_source
+
+        # TODO: Remove this code after fully migrating defaults to the wallet
+        if default_source.is_a?(Spree::CreditCard)
+          default_source.update!(user: order.user, default: true)
+        end
+      end
     end
   end
 
