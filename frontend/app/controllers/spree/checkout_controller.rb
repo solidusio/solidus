@@ -191,8 +191,13 @@ module Spree
         end
       end
 
-      if try_spree_current_user && try_spree_current_user.respond_to?(:payment_sources)
-        @payment_sources = try_spree_current_user.payment_sources
+      if try_spree_current_user && try_spree_current_user.respond_to?(:wallet)
+        @wallet_sources = try_spree_current_user.wallet.wallet_sources
+        @default_wallet_source = @wallet_sources.detect(&:default) ||
+                                 @wallet_sources.first
+        # TODO: How can we deprecate this instance variable?  We could try
+        # wrapping it in a delegating object that produces deprecation warnings.
+        @payment_sources = try_spree_current_user.wallet.wallet_sources.map(&:source).select { |ws| ws.is_a?(Spree::CreditCard) }
       end
     end
 
