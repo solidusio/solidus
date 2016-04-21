@@ -1,5 +1,35 @@
 ## Solidus 1.3.0 (unreleased)
 
+*   Allow more options than `current_currency` to select prices
+
+    Previously, availability of products/variants, caching and pricing was dependent
+    only on a `current_currency` string. This has been changed to a `current_pricing_options`
+    object. For now, this object (`Spree::Variant::PricingOptions`) only holds the
+    currency. It is used for caching instead of the deprecated `current_currency` helper.
+
+    Additionally, your pricing can be customized using a `VariantPricer` object, a default
+    implementation of which can be found in `Spree::Variant::Pricer`. It is responsible for
+    finding the right price for variant, be it for front-end display or for adding it to the
+    cart. You can set it through the new `Spree::Config.variant_pricer_class` setting. This
+    class also knows which `PricingOptions` class it cooperates with.
+
+    #### Deprecated methods:
+
+    * `current_currency` helper
+    * `Spree::Variant#categorise_variants_from_option`
+    * `Spree::Variant#variants_and_option_values` (Use `Spree::Variant#variants_and_option_values#for` instead)
+    * `Spree::Core::Search::Base#current_currency`
+    * `Spree::Core::Search::Base#current_currency=`
+
+    #### Extracted Functionality:
+
+    There was a strange way of setting prices for line items depending on additional attributes
+    being present on the line item (`gift_wrap: true`, for example). It also needed
+    `Spree::Variant` to be patched with methods like `Spree::Variant#gift_wrap_price_modifier_in`
+    and is generally deemed a non-preferred way of modifying pricing.
+    This functionality has now been moved into a [Gem of its own](https://github.com/solidusio-contrib/solidus_price_modifier)
+    to ease the transition to the new `Variant::Pricer` system.
+
 *   Respect `Spree::Store#default_currency`
 
     Previously, the `current_currency` helper in both the `core` and `api` gems
