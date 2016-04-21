@@ -18,6 +18,10 @@ module Spree
     end
 
     def payment_sources
+      ActiveSupport::Deprecation.warn(
+        "user.payment_sources is deprecated. Please use user.wallet.wallet_sources instead.",
+        caller
+      )
       credit_cards.with_payment_profile
     end
   end
