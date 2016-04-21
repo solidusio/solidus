@@ -98,6 +98,7 @@ module Spree
 
       move_payment_source_into_payments_attributes(massaged_params)
       move_existing_card_into_payments_attributes(massaged_params)
+      move_wallet_source_id_into_payments_attributes(massaged_params)
       set_payment_parameters_amount(massaged_params, @order)
 
       massaged_params

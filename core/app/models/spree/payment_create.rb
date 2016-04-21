@@ -6,6 +6,7 @@ module Spree
     #   * :payment_method_id Id of payment method used for this payment
     #   * :source_attributes Attributes used to build the source of this payment. Usually a {CreditCard}
     #     * :existing_card_id (Integer) The id of an existing {CreditCard} object to use
+    #     * :wallet_source_id (Integer): The id of a {WalletSource} to use
     # @param request_env [Hash] rack env of user creating the payment
     # @param payment [Payment] Internal use only. Instead of making a new payment, change the attributes for an existing one.
     def initialize(order, attributes, payment: nil, request_env: {})
@@ -28,6 +29,8 @@ module Spree
 
       if source_attributes[:existing_card_id].present?
         build_existing_card
+      elsif source_attributes[:wallet_source_id].present?
+        build_from_wallet_source
       else
         build_source
       end
@@ -48,16 +51,27 @@ module Spree
       end
     end
 
+    def build_from_wallet_source
+      wallet_source_id = source_attributes.fetch(:wallet_source_id)
+      raise(ActiveRecord::RecordNotFound) if order.user.nil?
+      wallet_source = order.user.wallet.find(wallet_source_id)
+      raise(ActiveRecord::RecordNotFound) if wallet_source.nil?
+      build_from_source(wallet_source.source)
+    end
+
     def build_existing_card
       credit_card = available_cards.find(source_attributes[:existing_card_id])
+      build_from_source(credit_card)
+    end
 
+    def build_from_source(source)
       # FIXME: does this work?
       if source_attributes[:verification_value]
-        credit_card.verification_value = source_attributes[:verification_value]
+        source.verification_value = source_attributes[:verification_value]
       end
 
-      payment.source = credit_card
-      payment.payment_method_id = credit_card.payment_method_id
+      payment.source = source
+      payment.payment_method_id = source.payment_method_id
     end
 
     def available_cards
