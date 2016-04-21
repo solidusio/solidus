@@ -1,3 +1,4 @@
+# TODO: Have StoreCredit inherit from Spree::PaymentSource
 class Spree::StoreCredit < Spree::Base
   acts_as_paranoid
 
@@ -38,6 +39,11 @@ class Spree::StoreCredit < Spree::Base
 
   extend Spree::DisplayMoney
   money_methods :amount, :amount_used, :amount_authorized
+
+  # TODO: Remove after StoreCredit inherits from PaymentSource
+  def reusable?
+    false
+  end
 
   def amount_remaining
     return 0.0.to_d if invalidated?
