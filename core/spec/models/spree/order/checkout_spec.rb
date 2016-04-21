@@ -564,8 +564,8 @@ describe Spree::Order, type: :model do
         expect(order.user.reload.default_credit_card.try(:id)).to eq(order.credit_cards.first.id)
       end
 
-      it "does not assign a default credit card if temporary_credit_card is set" do
-        order.temporary_credit_card = true
+      it "does not assign a default credit card if temporary_payment_source is set" do
+        order.temporary_payment_source = true
         order.complete!
         expect(order.user.reload.default_credit_card).to be_nil
       end
