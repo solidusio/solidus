@@ -720,7 +720,7 @@ module Spree
     alias_method :persist_user_credit_card, :add_payment_sources_to_wallet
     deprecate :persist_user_credit_card
 
-    def assign_default_credit_card
+    def add_default_payment_from_wallet
       builder = Spree::Config.default_payment_builder_class.new(self)
 
       if payment = builder.build
@@ -733,6 +733,8 @@ module Spree
         end
       end
     end
+    alias_method :assign_default_credit_card, :add_default_payment_from_wallet
+    deprecate :assign_default_credit_card
 
     private
 

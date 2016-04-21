@@ -362,8 +362,9 @@ describe Spree::Order, type: :model do
       let(:default_credit_card) { create(:credit_card) }
 
       before do
-        user = Spree::LegacyUser.new(email: 'spree@example.org', bill_address: user_bill_address)
-        allow(user).to receive(:default_credit_card) { default_credit_card }
+        user = create(:user, email: 'spree@example.org', bill_address: user_bill_address)
+        user.wallet.add(default_credit_card)
+        user.wallet.default = default_credit_card
         order.user = user
 
         allow(order).to receive_messages(payment_required?: true)
