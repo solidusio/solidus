@@ -68,7 +68,7 @@ module Spree
       end
     end
 
-    context 'with an existing credit card' do
+    context 'with the deprecated existing_card_id attribute' do
       let(:user) { create(:user) }
       let!(:credit_card) { create(:credit_card, user: order.user) }
 
@@ -79,6 +79,10 @@ module Spree
             verification_value: '321'
           }
         }
+      end
+
+      around do |example|
+        ActiveSupport::Deprecation.silence { example.run }
       end
 
       it 'sets the existing card as the source for the new payment' do

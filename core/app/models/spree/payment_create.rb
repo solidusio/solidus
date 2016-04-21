@@ -5,7 +5,7 @@ module Spree
     # @param attributes [Hash,ActionController::Parameters] attributes which are assigned to the new payment
     #   * :payment_method_id Id of payment method used for this payment
     #   * :source_attributes Attributes used to build the source of this payment. Usually a {CreditCard}
-    #     * :existing_card_id (Integer) The id of an existing {CreditCard} object to use
+    #     * :existing_card_id (Integer) Deprecated: The id of an existing {CreditCard} object to use
     #     * :wallet_source_id (Integer): The id of a {WalletSource} to use
     # @param request_env [Hash] rack env of user creating the payment
     # @param payment [Payment] Internal use only. Instead of making a new payment, change the attributes for an existing one.
@@ -28,6 +28,10 @@ module Spree
       @payment.attributes = @attributes
 
       if source_attributes[:existing_card_id].present?
+        ActiveSupport::Deprecation.warn(
+          "Passing existing_card_id to PaymentCreate is deprecated. Use wallet_source_id instead.",
+          caller,
+        )
         build_existing_card
       elsif source_attributes[:wallet_source_id].present?
         build_from_wallet_source
