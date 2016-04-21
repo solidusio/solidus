@@ -188,6 +188,7 @@ describe "Checkout", type: :feature, inaccessible: true do
     end
 
     before do
+      user.wallet.add(credit_card)
       order = OrderWalkthrough.up_to(:delivery)
       allow(order).to receive_messages(available_payment_methods: [bogus])
 
