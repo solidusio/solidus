@@ -168,9 +168,12 @@ describe "New Order", type: :feature do
 
   # Regression test for https://github.com/spree/spree/issues/5327
   context "customer with default credit card", js: true do
+    let!(:credit_card) { create(:credit_card, user: user) }
+
     before do
-      create(:credit_card, default: true, user: user)
+      user.wallet.add(credit_card)
     end
+
     it "transitions to delivery not to complete" do
       click_on 'Cart'
 

@@ -24,11 +24,6 @@ class Spree::Wallet::AddPaymentSourcesToWallet
         # arbitrarily pick the last one for the default
         default_source = sources.sort_by(&:id).last
         order.user.wallet.default = default_source
-
-        # TODO: Remove this code after fully migrating defaults to the wallet
-        if default_source.is_a?(Spree::CreditCard)
-          default_source.update!(user: order.user, default: true)
-        end
       end
     end
   end

@@ -274,44 +274,40 @@ describe Spree::CreditCard, type: :model do
     end
   end
 
-  it 'ensures only one credit card per user is default at a time' do
-    user = FactoryGirl.create(:user)
-    first = FactoryGirl.create(:credit_card, user: user, default: true)
-    second = FactoryGirl.create(:credit_card, user: user, default: true)
+  describe 'default' do
+    around do |example|
+      ActiveSupport::Deprecation.silence { example.run }
+    end
 
-    expect(first.reload.default).to eq false
-    expect(second.reload.default).to eq true
+    it 'ensures only one credit card per user is default at a time' do
+      user = FactoryGirl.create(:user)
+      first = FactoryGirl.create(:credit_card, user: user, default: true)
+      second = FactoryGirl.create(:credit_card, user: user, default: true)
 
-    first.default = true
-    first.save!
+      expect(first.reload.default).to eq false
+      expect(second.reload.default).to eq true
 
-    expect(first.reload.default).to eq true
-    expect(second.reload.default).to eq false
-  end
+      first.default = true
 
-  it 'allows default credit cards for different users' do
-    first = FactoryGirl.create(:credit_card, user: FactoryGirl.create(:user), default: true)
-    second = FactoryGirl.create(:credit_card, user: FactoryGirl.create(:user), default: true)
+      expect(first.reload.default).to eq true
+      expect(second.reload.default).to eq false
+    end
 
-    expect(first.reload.default).to eq true
-    expect(second.reload.default).to eq true
-  end
+    it 'allows default credit cards for different users' do
+      first = FactoryGirl.create(:credit_card, user: FactoryGirl.create(:user), default: true)
+      second = FactoryGirl.create(:credit_card, user: FactoryGirl.create(:user), default: true)
 
-  it 'allows this card to save even if the previously default card has expired' do
-    user = FactoryGirl.create(:user)
-    first = FactoryGirl.create(:credit_card, user: user, default: true)
-    second = FactoryGirl.create(:credit_card, user: user, default: false)
-    first.update_columns(year: DateTime.current.year, month: 1.month.ago.month)
+      expect(first.reload.default).to eq true
+      expect(second.reload.default).to eq true
+    end
 
-    second.update_attributes!(default: true)
-  end
+    it 'allows this card to save even if the previously default card has expired' do
+      user = FactoryGirl.create(:user)
+      first = FactoryGirl.create(:credit_card, user: user, default: true)
+      second = FactoryGirl.create(:credit_card, user: user, default: false)
+      first.update_columns(year: DateTime.current.year, month: 1.month.ago.month)
 
-  it 'allows this card to save even if the previously default card has expired' do
-    user = FactoryGirl.create(:user)
-    first = FactoryGirl.create(:credit_card, user: user, default: true)
-    second = FactoryGirl.create(:credit_card, user: user, default: false)
-    first.update_columns(year: DateTime.current.year, month: 1.month.ago.month)
-
-    second.update_attributes!(default: true)
+      second.update_attributes!(default: true)
+    end
   end
 end
