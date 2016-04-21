@@ -362,8 +362,9 @@ describe Spree::Order, type: :model do
       let(:default_credit_card) { create(:credit_card) }
 
       before do
-        user = Spree::LegacyUser.new(email: 'spree@example.org', bill_address: user_bill_address)
-        allow(user).to receive(:default_credit_card) { default_credit_card }
+        user = create(:user, email: 'spree@example.org', bill_address: user_bill_address)
+        user.wallet.add(default_credit_card)
+        user.wallet.default = default_credit_card
         order.user = user
 
         allow(order).to receive_messages(payment_required?: true)
@@ -576,13 +577,13 @@ describe Spree::Order, type: :model do
       it "makes the current credit card a user's default credit card" do
         order.complete!
         expect(order.state).to eq 'complete'
-        expect(order.user.reload.default_credit_card.try(:id)).to eq(order.credit_cards.first.id)
+        expect(order.user.reload.wallet.default.source).to eq(order.credit_cards.first)
       end
 
       it "does not assign a default credit card if temporary_payment_source is set" do
         order.temporary_payment_source = true
         order.complete!
-        expect(order.user.reload.default_credit_card).to be_nil
+        expect(order.user.reload.wallet.default).to be_nil
       end
     end
 

@@ -7,7 +7,14 @@ module Spree
     end
 
     def default_credit_card
-      credit_cards.default.first
+      ActiveSupport::Deprecation.warn(
+        "user.default_credit_card is deprecated. Please use user.wallet.default.source instead.",
+        caller
+      )
+      default = wallet.default
+      if default && default.source.is_a?(Spree::CreditCard)
+        default.source
+      end
     end
 
     def payment_sources
