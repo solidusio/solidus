@@ -76,7 +76,7 @@
           <%= Spree.t(:info_product_has_multiple_skus, count: @product.variants.count) %>
           <ul class="text_list">
             <% @product.variants.first(5).each do |variant| %>
-              <li><%= variant.sku %></li>
+              <li><%= link_to variant.sku, spree.edit_admin_product_variant_path(@product, variant) %></li>
             <% end %>
           </ul>
           <% if @product.variants.count > 5 %>
