@@ -178,6 +178,7 @@ module Spree
     search_scopes << :available
 
     def self.active(currency = nil)
+      Spree::Deprecation.warn("This scope is deprecated, please use .available instead", caller)
       not_deleted.available(nil, currency)
     end
     search_scopes << :active

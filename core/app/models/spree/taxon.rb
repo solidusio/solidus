@@ -85,7 +85,7 @@ module Spree
     # @return [ActiveRecord::Relation<Spree::Product>] the active products the
     #   belong to this taxon
     def active_products
-      products.active
+      products.not_deleted.available
     end
 
     # @return [String] this taxon's ancestors names followed by its own name,

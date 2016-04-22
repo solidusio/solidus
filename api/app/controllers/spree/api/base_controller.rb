@@ -123,7 +123,7 @@ module Spree
             scope = scope.not_deleted
           end
         else
-          scope = Product.accessible_by(current_ability, :read).active.includes(*product_includes)
+          scope = Product.accessible_by(current_ability, :read).available.includes(*product_includes)
         end
 
         scope
