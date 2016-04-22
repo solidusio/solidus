@@ -6,19 +6,19 @@
   <nav>
     <ul class="tabs" data-hook="admin_product_tabs">
       <%= content_tag :li, :class => ('active' if current == 'Product Details') do %>
-        <%= link_to_with_icon 'edit', Spree.t(:product_details), edit_admin_product_url(@product) %>
+        <%= link_to_with_icon 'edit', Spree.t(:product_details), spree.edit_admin_product_url(@product) %>
       <% end if can?(:admin, Spree::Product) %>
       <%= content_tag :li, :class => ('active' if current == 'Images') do %>
-        <%= link_to_with_icon 'picture-o', Spree.t(:images), admin_product_images_url(@product) %>
+        <%= link_to_with_icon 'picture-o', Spree.t(:images), spree.admin_product_images_url(@product) %>
       <% end if can?(:admin, Spree::Image) %>
       <%= content_tag :li, :class => ('active' if current == 'Variants') do %>
-        <%= link_to_with_icon 'th-large', Spree::Variant.model_name.human(count: :other),  admin_product_variants_url(@product) %>
+        <%= link_to_with_icon 'th-large', Spree::Variant.model_name.human(count: :other),  spree.admin_product_variants_url(@product) %>
       <% end if can?(:admin, Spree::Variant) %>
       <%= content_tag :li, :class => ('active' if current == 'Product Properties') do %>
-        <%= link_to_with_icon 'tasks', Spree::ProductProperty.model_name.human(count: :other), admin_product_product_properties_url(@product) %>
+        <%= link_to_with_icon 'tasks', Spree::ProductProperty.model_name.human(count: :other), spree.admin_product_product_properties_url(@product) %>
       <% end if can?(:admin, Spree::ProductProperty) %>
       <%= content_tag :li, :class => ('active' if current == 'Stock Management') do %>
-        <%= link_to_with_icon 'cubes', Spree.t(:stock_management), admin_product_stock_url(@product) %>
+        <%= link_to_with_icon 'cubes', Spree.t(:stock_management), spree.admin_product_stock_url(@product) %>
       <% end if can?(:admin, Spree::StockItem) %>
     </ul>
   </nav>
