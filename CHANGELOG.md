@@ -1,3 +1,7 @@
+## Solidus 1.4.0 (master, unreleased)
+
+
+
 ## Solidus 1.3.0 (unreleased)
 
 *   Allow more options than `current_currency` to select prices
