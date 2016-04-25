@@ -9,7 +9,12 @@ describe Spree::Money do
   end
 
   describe '#initialize' do
-    subject { described_class.new(amount, currency: currency, with_currency: true).to_s }
+    subject do
+      Spree::Deprecation.silence do
+        described_class.new(amount, currency: currency, with_currency: true).to_s
+      end
+    end
+
     context 'with no currency' do
       let(:currency) { nil }
       let(:amount){ 10 }
