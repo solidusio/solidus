@@ -6,6 +6,8 @@ module Spree
   # Spree::Money is a relatively thin wrapper around Monetize which handles
   # formatting via Spree::Config.
   class Money
+    RUBY_NUMERIC_STRING = /\A-?\d+(\.\d+)?\z/
+
     class <<self
       attr_accessor :default_formatting_rules
 
@@ -39,7 +41,7 @@ module Spree
         @money = amount
       else
         currency = (options[:currency] || Spree::Config[:currency])
-        if amount.to_s =~ /\A-?\d+(\.\d+)?\z/
+        if amount.to_s =~ RUBY_NUMERIC_STRING
           @money = Monetize.from_string(amount, currency)
         else
           @money = Spree::Money.parse_to_money(amount, currency)
