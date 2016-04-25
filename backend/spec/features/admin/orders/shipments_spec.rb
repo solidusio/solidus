@@ -1,6 +1,8 @@
 require 'spec_helper'
 
 describe "Shipments", type: :feature do
+  include OrderFeatureHelper
+
   stub_authorization!
 
   let!(:order) { create(:order_ready_to_ship, number: "R100", state: "complete", line_items_count: 5) }
@@ -53,16 +55,14 @@ describe "Shipments", type: :feature do
       shipment1 = order.shipments[0]
 
       within_row(1) { click_icon 'arrows-h' }
-      targetted_select2 'LA', from: '#s2id_item_stock_location'
-      click_icon :ok
+      complete_split_to('LA')
 
       expect(page).to have_css("#shipment_#{shipment1.id} tr.stock-item", count: 4)
       shipment2 = (order.reload.shipments.to_a - [shipment1]).first
       expect(page).to have_css("#shipment_#{shipment2.id} tr.stock-item", count: 1)
 
       within_row(2) { click_icon 'arrows-h' }
-      targetted_select2 "LA(#{shipment2.number})", from: '#s2id_item_stock_location'
-      click_icon :ok
+      complete_split_to("LA(#{shipment2.number})")
       expect(page).to have_css("#shipment_#{shipment2.id} tr.stock-item", count: 2)
       expect(page).to have_css("#shipment_#{shipment1.id} tr.stock-item", count: 3)
     end

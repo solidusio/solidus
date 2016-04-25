@@ -1,5 +1,8 @@
 <% shipment_manifest.each do |item| %>
-  <tr class="stock-item" data-item-quantity="<%= item.quantity %>">
+  <tr class="stock-item"
+      data-item-quantity="<%= item.quantity %>"
+      data-variant-id="<%= item.variant.id %>"
+      >
     <td class="item-image">
       <%= image_tag item.variant.display_image.attachment(:mini) %>
     </td>
