@@ -1,6 +1,7 @@
-# solidus\_frontend
+# solidus\_core
 
-Frontend contains controllers and views implementing a storefront and cart for Solidus.
+Core contains all the models and the majority of the logic for the Solidus
+ecommerce system.
 
 
 ## Testing
