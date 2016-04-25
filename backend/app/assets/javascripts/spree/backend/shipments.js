@@ -193,8 +193,25 @@ var ShipmentSplitItemView = Backbone.View.extend({
     this.variant = options.variant;
     this.shipments = options.shipments;
     this.max_quantity = options.max_quantity;
+    this.shipmentItemView = options.shipmentItemView;
     this.$el.data("variant-id", this.variant.id);
     this.render()
+  },
+
+  events: {
+    "click .cancel-split": "cancelItemSplit",
+    "click .save-split": "completeItemSplit",
+  },
+
+  cancelItemSplit: function(e){
+    e.preventDefault();
+
+    this.shipmentItemView.removeSplit();
+    this.remove();
+  },
+
+  completeItemSplit: function(e){
+    completeItemSplit.apply(e.currentTarget, [e]);
   },
 
   template: HandlebarsTemplates['variants/split'],
@@ -228,22 +245,29 @@ var ShipmentItemView = Backbone.View.extend({
     "click .split-item": "onSplit",
   },
 
+  removeSplit: function() {
+    this.$('.split-item').show();
+    this.$('.delete-item').show();
+  },
+
   onSplit: function(e) {
     e.preventDefault();
     this.$('.split-item').toggle();
     this.$('.delete-item').toggle();
 
+    var _this = this;
     Spree.ajax({
       type: "GET",
       url: Spree.routes.variants_api + "/" + this.variant_id,
     }).success(function(variant){
       var split = new ShipmentSplitItemView({
+        shipmentItemView: _this,
         variant: variant,
         shipments: shipments,
-        max_quantity: this.quantity
+        max_quantity: _this.quantity
       });
 
-      this.$el.after(split.$el);
+      _this.$el.after(split.$el);
     });
   },
 
@@ -278,9 +302,6 @@ var ShipmentEditView = Backbone.View.extend({
   },
 
   events: {
-    "click a.cancel-split": "cancelItemSplit",
-    "click a.save-split": "completeItemSplit",
-
     "click a.edit-method": "toggleMethodEdit",
     "click a.cancel-method": "toggleMethodEdit",
     "click a.save-method": "saveMethod",
@@ -288,18 +309,6 @@ var ShipmentEditView = Backbone.View.extend({
     "click a.edit-tracking": "toggleTrackingEdit",
     "click a.cancel-tracking": "toggleTrackingEdit",
     "click a.save-tracking": "saveTracking",
-  },
-
-  cancelItemSplit: function(e){
-    e.preventDefault();
-
-    this.$('tr.stock-item-split').remove();
-    this.$('a.split-item').show();
-    this.$('a.delete-item').show();
-  },
-
-  completeItemSplit: function(e){
-    completeItemSplit.apply(e.currentTarget, [e]);
   },
 
   toggleMethodEdit: function(e){
