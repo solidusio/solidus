@@ -188,7 +188,35 @@ describe Spree::Product, type: :model do
       before { high.option_values.destroy_all }
 
       it "returns only variants with option values" do
-        expect(product.variants_and_option_values).to eq([low])
+        Spree::Deprecation.silence do
+          expect(product.variants_and_option_values).to eq([low])
+        end
+      end
+    end
+
+    context "variants_and_option_values_for" do
+      let!(:high) { create(:variant, product: product) }
+      let!(:low) { create(:variant, product: product) }
+
+      context "when one product does not have option values" do
+        before { high.option_values.destroy_all }
+
+        it "returns only variants with option values" do
+          expect(product.variants_and_option_values_for).to eq([low])
+        end
+      end
+
+      context "when asking with different pricing options" do
+        let(:pricing_options) { Spree::Config.pricing_options_class.new(currency: "EUR") }
+
+        before do
+          low.prices.create(amount: 99.00, currency: "EUR")
+        end
+
+        it "returns only variants which have matching prices" do
+          expect(product.variants_and_option_values_for).to contain_exactly(low, high)
+          expect(product.variants_and_option_values_for(pricing_options)).to contain_exactly(low)
+        end
       end
     end
 

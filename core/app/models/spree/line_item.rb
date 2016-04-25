@@ -104,18 +104,16 @@ module Spree
 
     # Sets options on the line item.
     #
-    # The option can be arbitrary attributes on the LineItem. If no price is given in the options,
-    # this will call the legacy `PriceModifier` line item pricer.
+    # The options can be arbitrary attributes on the LineItem.
     #
     # @param options [Hash] options for this line item
     def options=(options = {})
       return unless options.present?
-
-      # There's no need to call a pricer if we'll set the price directly.
-      unless options.key?(:price)
-        self.money_price = Pricers::PriceModifier.new(self, options).price
-      end
       assign_attributes options
+    end
+
+    def pricing_options
+      Spree::Config.pricing_options_class.from_line_item(self)
     end
 
     private
@@ -141,7 +139,7 @@ module Spree
 
       self.currency ||= order.currency
       self.cost_price ||= variant.cost_price
-      self.money_price = Pricers::Conservative.new(self).price
+      self.money_price = variant.price_for(pricing_options) if price.nil?
       true
     end
 

@@ -88,6 +88,14 @@ module Spree
       joins(:prices).where(deleted_at: nil).where('spree_prices.currency' => currency || Spree::Config[:currency]).where('spree_prices.amount IS NOT NULL')
     end
 
+    # Returns variants that have a price for the given pricing options
+    #
+    # @param pricing_options A Pricing Options object as defined on the pricer class
+    # @return [ActiveRecord::Relation]
+    def self.with_prices(pricing_options = Spree::Config.default_pricing_options)
+      joins(:prices).merge(Spree::Price.currently_valid.where(pricing_options.desired_attributes))
+    end
+
     # @return [Spree::TaxCategory] the variant's tax category
     #
     # This returns the product's tax category if the tax category ID on the variant is nil. It looks
@@ -214,12 +222,40 @@ module Spree
       option_values.detect { |o| o.option_type.name == opt_name }.try(:presentation)
     end
 
+    # Returns an instance of the globally configured variant pricer class for this variant.
+    # It's cached so we don't create too many objects.
+    #
+    # @return [Spree::Variant::Pricer] The default pricer class
+    def pricer
+      @pricer ||= Spree::Config.variant_pricer_class.new(self)
+    end
+
+    # Chooses an appropriate price for the given pricing options
+    #
+    # @see Spree::Variant::Pricer#price_for
+    # @param [Spree::Config.pricing_options_class] An instance of pricing options
+    # @return [Spree::Money] The chosen price as a Money object
+    delegate :price_for, to: :pricer
+
+    # Returns the difference in price from the master variant
+    def price_difference_from_master(pricing_options = Spree::Config.default_pricing_options)
+      master_price = product.master.price_for(pricing_options)
+      variant_price = price_for(pricing_options)
+      return unless master_price && variant_price
+      variant_price - master_price
+    end
+
+    def price_same_as_master?(pricing_options = Spree::Config.default_pricing_options)
+      diff = price_difference_from_master(pricing_options)
+      diff && diff.zero?
+    end
+
     # Converts the variant's price to the given currency.
     #
     # @param currency [String] the desired currency
     # @return [Spree::Price] the price in the desired currency
     def price_in(currency)
-      prices.find_by(currency: currency, is_default: true)
+      prices.currently_valid.find_by(currency: currency)
     end
 
     # Fetches the price amount in the specified currency.
@@ -229,46 +265,6 @@ module Spree
     def amount_in(currency)
       price_in(currency).try(:amount)
     end
-
-    # Calculates the sum of the specified price modifiers in the specified
-    # currency.
-    #
-    # @deprecated This is a very complex way of modifying prices, please write a pricer instead
-    # @param currency [String] (see #price)
-    # @param options (see #price_modifier_amount)
-    # @return (see #price_modifier_amount)
-    def price_modifier_amount_in(currency, options = {})
-      return 0 unless options.present?
-
-      options.keys.map { |key|
-        m = "#{key}_price_modifier_amount_in".to_sym
-        if respond_to? m
-          send(m, currency, options[key])
-        else
-          0
-        end
-      }.sum
-    end
-    deprecate :price_modifier_amount_in, deprecator: Spree::Deprecation
-
-    # Calculates the sum of the specified price modifiers.
-    #
-    # @deprecated This method does not handle currencies
-    # @param options [Hash] for specifying keys, eg: `{keys: ['key_1', 'key_2']}`
-    # @return [Fixnum] the sum
-    def price_modifier_amount(options = {})
-      return 0 unless options.present?
-
-      options.keys.map { |key|
-        m = "#{options[key]}_price_modifier_amount".to_sym
-        if respond_to? m
-          send(m, options[key])
-        else
-          0
-        end
-      }.sum
-    end
-    deprecate :price_modifier_amount, deprecator: Spree::Deprecation
 
     # Generates a friendly name and sku string.
     #

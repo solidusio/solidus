@@ -1112,6 +1112,10 @@ en:
     guest_user_account: Checkout as a Guest
     has_no_shipped_units: has no shipped units
     height: Height
+    helpers:
+      products:
+        price_diff_add_html: "(Add: %{amount_html})"
+        price_diff_subtract_html: "(Subtract: %{amount_html})"
     hidden: hidden
     hide_out_of_stock: Hide out of stock
     home: Home

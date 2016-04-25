@@ -19,13 +19,11 @@ module Spree
     # @param variant [Spree::Variant] the variant
     # @return [String] formatted string with label and amount
     def variant_price_diff(variant)
-      variant_amount = variant.amount_in(current_currency)
-      product_amount = variant.product.amount_in(current_currency)
-      return if variant_amount == product_amount || product_amount.nil?
-      diff   = variant.amount_in(current_currency) - product_amount
-      amount = Spree::Money.new(diff.abs, currency: current_currency).to_html
-      label  = diff > 0 ? :add : :subtract
-      "(#{Spree.t(label)}: #{amount})".html_safe
+      return if variant.price_same_as_master?(current_pricing_options)
+      difference = variant.price_difference_from_master(current_pricing_options)
+      absolute_amount = Spree::Money.new(difference.to_d.abs, currency: difference.currency.iso_code)
+      i18n_key = difference.to_d > 0 ? :price_diff_add_html : :price_diff_subtract_html
+      Spree.t(i18n_key, scope: [:helpers, :products], amount_html: absolute_amount.to_html)
     end
 
     # Returns the formatted full price for the variant, if at least one variant
@@ -34,10 +32,10 @@ module Spree
     # @param variant [Spree::Variant] the variant
     # @return [Spree::Money] the full price
     def variant_full_price(variant)
-      product = variant.product
-      unless product.variants.active(current_currency).all? { |v| v.price == product.price }
-        Spree::Money.new(variant.price, { currency: current_currency }).to_html
-      end
+      return if variant.product.variants
+                  .with_prices(current_pricing_options)
+                  .all? { |v| v.price_same_as_master?(current_pricing_options) }
+      variant.price_for(current_pricing_options).to_html
     end
 
     # Converts line breaks in product description into <p> tags.
@@ -68,7 +66,7 @@ module Spree
     def cache_key_for_products
       count = @products.count
       max_updated_at = (@products.maximum(:updated_at) || Date.today).to_s(:number)
-      "#{I18n.locale}/#{current_currency}/spree/products/all-#{params[:page]}-#{max_updated_at}-#{count}"
+      "#{I18n.locale}/#{current_pricing_options.cache_key}/spree/products/all-#{params[:page]}-#{max_updated_at}-#{count}"
     end
   end
 end

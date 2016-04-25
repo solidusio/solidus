@@ -59,7 +59,7 @@ module Spree
       master || build_master
     end
 
-    MASTER_ATTRIBUTES = [:sku, :price, :currency, :display_amount, :display_price, :weight, :height, :width, :depth, :cost_currency, :price_in, :amount_in, :cost_price]
+    MASTER_ATTRIBUTES = [:sku, :price, :currency, :display_amount, :display_price, :weight, :height, :width, :depth, :cost_currency, :price_in, :price_for, :amount_in, :cost_price]
     MASTER_ATTRIBUTES.each do |attr|
       delegate :"#{attr}", :"#{attr}=", to: :find_or_build_master
     end
@@ -161,12 +161,16 @@ module Spree
 
     # Groups variants by the specified option type.
     #
+    # @deprecated This method is not called in the Solidus codebase
     # @param opt_type [String] the name of the option type to group by
+    # @param pricing_options [Spree::Config.pricing_options_class] the pricing options to search
+    #   for, default: the default pricing options
     # @return [Hash] option_type as keys, array of variants as values.
-    def categorise_variants_from_option(opt_type)
+    def categorise_variants_from_option(opt_type, pricing_options = Spree::Config.default_pricing_options)
       return {} unless option_types.include?(opt_type)
-      variants.active.group_by { |v| v.option_values.detect { |o| o.option_type == opt_type } }
+      variants.with_prices(pricing_options).group_by { |v| v.option_values.detect { |o| o.option_type == opt_type } }
     end
+    deprecate :categorise_variants_from_option, deprecator: Spree::Deprecation
 
     # Poor man's full text search.
     #
@@ -184,9 +188,21 @@ module Spree
     end
 
     # @param current_currency [String] currency to filter variants by; defaults to Spree's default
+    # @deprecated This method can only handle prices for currencies
     # @return [Array<Spree::Variant>] all variants with at least one option value
     def variants_and_option_values(current_currency = nil)
       variants.includes(:option_values).active(current_currency).select do |variant|
+        variant.option_values.any?
+      end
+    end
+    deprecate variants_and_option_values: :variants_and_option_values_for,
+              deprecator: Spree::Deprecation
+
+    # @param pricing_options [Spree::Variant::PricingOptions] the pricing options to search
+    #   for, default: the default pricing options
+    # @return [Array<Spree::Variant>] all variants with at least one option value
+    def variants_and_option_values_for(pricing_options = Spree::Config.default_pricing_options)
+      variants.includes(:option_values).with_prices(pricing_options).select do |variant|
         variant.option_values.any?
       end
     end
