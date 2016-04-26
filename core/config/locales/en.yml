@@ -189,7 +189,7 @@ en:
         number: Number
         reimbursement_status: Status
         total: Total
-      spree/reimbursement_credit:
+      spree/reimbursement/credit:
         amount: Amount
       spree/reimbursement_type:
         name: Name
