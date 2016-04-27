@@ -34,10 +34,9 @@
       <% if can?(:create, Spree::Variant) %>
         <li id="new_var_link" data-hook>
           <%= link_to_with_icon 'plus',
-                                Spree.t(:new_variant),
-                                new_admin_product_variant_url(@product),
-                                :remote => :true,
-                                :class => 'button' %>
+              Spree.t(:new_variant),
+              new_admin_product_variant_url(@product),
+              class: 'button' %>
         </li>
       <% end %>
     </ul>

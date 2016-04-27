@@ -31,7 +31,7 @@
                   <%= yield :tabs %>
                 </div>
               <% end %>
-              <div class="js-content-below-tabs <%= if content_for?(:sidebar) then 'twelve' else 'sixteen' end %> columns">
+              <div class="<%= if content_for?(:sidebar) then 'twelve' else 'sixteen' end %> columns">
                 <%= render :partial => 'spree/admin/shared/table_filter' %>
                 <%= yield %>
               </div>
