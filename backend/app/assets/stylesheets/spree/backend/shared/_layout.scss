@@ -38,6 +38,7 @@ body {
 .content-main {
   @include make-col();
   @include make-col-span(12);
+  overflow-x: hidden; // makes sure that the tabs are able to resize
 
   .has-sidebar & {
     @include make-col-span(9);
