@@ -97,6 +97,18 @@ module Spree
           expect(assigns(:stock_transfer).created_by).to eq(user)
         end
       end
+
+      # Regression spec for Solidus issue #1087
+      context "missing source_stock_location parameter" do
+        subject do
+          spree_post :create, stock_transfer: { source_location_id: nil, description: nil }
+        end
+
+        it "sets a flash error" do
+          subject
+          expect(flash[:error]).to eq assigns(:stock_transfer).errors.full_messages.join(', ')
+        end
+      end
     end
 
     context "#receive" do

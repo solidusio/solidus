@@ -30,6 +30,17 @@ describe 'Stock Transfers', type: :feature, js: true do
       expect(page).to have_content('Stock Transfer has been successfully updated')
       expect(page).to have_content("NY")
     end
+
+    # Regression spec for Solidus issue #1087
+    it 'displays an error if no source location is selected' do
+      create(:stock_location_with_items, name: 'NY')
+      create(:stock_location, name: 'SF')
+      visit spree.new_admin_stock_transfer_path
+      fill_in 'stock_transfer_description', with: description
+      click_button 'Continue'
+
+      expect(page).to have_content("Source location can't be blank")
+    end
   end
 
   describe 'view a stock transfer' do
