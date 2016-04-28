@@ -82,7 +82,7 @@ module Spree
       end
 
       def render_after_create_error
-        load_stock_locations
+        load_source_stock_locations
         super
       end
 
