@@ -9,6 +9,10 @@ module Spree
         def initialize
           @preferences = { color: 'blue' }
         end
+
+        def [](key)
+          return @preferences if key == :preferences
+        end
       end
     end
     let(:klass) do
