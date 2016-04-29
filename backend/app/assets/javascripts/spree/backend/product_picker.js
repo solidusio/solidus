@@ -28,9 +28,9 @@ $.fn.productAutocomplete = function (options) {
         return {
           q: {
             name_cont: term,
-            sku_cont: term
+            master_sku_cont: term,
+            m: 'or'
           },
-          m: 'OR',
           token: Spree.api_key,
           page: page
         };
