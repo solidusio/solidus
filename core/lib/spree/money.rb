@@ -6,11 +6,18 @@ module Spree
   # Spree::Money is a relatively thin wrapper around Monetize which handles
   # formatting via Spree::Config.
   class Money
+    RUBY_NUMERIC_STRING = /\A-?\d+(\.\d+)?\z/
+
     class <<self
       attr_accessor :default_formatting_rules
 
-      def from_money(money)
-        new(money.to_d, currency: money.currency.iso_code)
+      def parse(amount, currency = Spree::Config[:currency])
+        new(parse_to_money(amount, currency))
+      end
+
+      # @api private
+      def parse_to_money(amount, currency)
+        ::Monetize.parse(amount, currency)
       end
     end
     self.default_formatting_rules = {
@@ -23,9 +30,33 @@ module Spree
 
     delegate :cents, :currency, :to_d, :zero?, to: :money
 
-    # @param amount [#to_s] the value of the money object
-    # @param options [Hash] the options for creating the money object
-    # @option options [String] currency the currency for the money object
+    # @param amount [Money, #to_s] the value of the money object
+    # @param options [Hash] the default options for formatting the money object See #format
+    def initialize(amount, options = {})
+      if amount.is_a?(::Money)
+        @money = amount
+      else
+        currency = (options[:currency] || Spree::Config[:currency])
+        if amount.to_s =~ RUBY_NUMERIC_STRING
+          @money = Monetize.from_string(amount, currency)
+        else
+          @money = Spree::Money.parse_to_money(amount, currency)
+          Spree::Deprecation.warn <<-WARN.squish, caller
+            Spree::Money was initialized with #{amount.inspect}, which will not be supported in the future.
+            Instead use Spree::Money.new(#{@money.to_s.inspect}, options) or Spree::Money.parse(#{amount.inspect})
+          WARN
+        end
+      end
+      @options = Spree::Money.default_formatting_rules.merge(options)
+    end
+
+    # @return [String] the value of this money object formatted according to
+    #   its options
+    def to_s
+      format
+    end
+
+    # @param options [Hash, String] the options for formatting the money object
     # @option options [Boolean] with_currency when true, show the currency
     # @option options [Boolean] no_cents when true, round to the closest dollar
     # @option options [String] decimal_mark the mark for delimiting the
@@ -36,15 +67,10 @@ module Spree
     #   value comes before the currency symbol
     # @option options [:before, :after] symbol_position the position of the
     #   currency symbol
-    def initialize(amount, options = {})
-      @money = Monetize.parse([amount, (options[:currency] || Spree::Config[:currency])].join)
-      @options = Spree::Money.default_formatting_rules.merge(options)
-    end
-
     # @return [String] the value of this money object formatted according to
     #   its options
-    def to_s
-      @money.format(@options)
+    def format(options = {})
+      @money.format(@options.merge(options))
     end
 
     # @note If you pass in options, ensure you pass in the html: true as well.
@@ -52,7 +78,7 @@ module Spree
     # @return [String] the value of this money object formatted according to
     #   its options and any additional options, by default as html.
     def to_html(options = { html: true })
-      output = @money.format(@options.merge(options))
+      output = format(options)
       if options[:html]
         # 1) prevent blank, breaking spaces
         # 2) prevent escaping of HTML character entities
@@ -76,12 +102,12 @@ module Spree
 
     def -(other)
       raise TypeError, "Can't subtract #{other.class} to Spree::Money" if !other.respond_to?(:money)
-      self.class.from_money(@money - other.money)
+      self.class.new(@money - other.money)
     end
 
     def +(other)
       raise TypeError, "Can't add #{other.class} to Spree::Money" if !other.respond_to?(:money)
-      self.class.from_money(@money + other.money)
+      self.class.new(@money + other.money)
     end
   end
 end
