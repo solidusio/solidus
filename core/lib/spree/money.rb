@@ -11,10 +11,6 @@ module Spree
     class <<self
       attr_accessor :default_formatting_rules
 
-      def from_money(money)
-        new(money)
-      end
-
       def parse(amount, currency = Spree::Config[:currency])
         new(parse_to_money(amount, currency))
       end
@@ -106,12 +102,12 @@ module Spree
 
     def -(other)
       raise TypeError, "Can't subtract #{other.class} to Spree::Money" if !other.respond_to?(:money)
-      self.class.from_money(@money - other.money)
+      self.class.new(@money - other.money)
     end
 
     def +(other)
       raise TypeError, "Can't add #{other.class} to Spree::Money" if !other.respond_to?(:money)
-      self.class.from_money(@money + other.money)
+      self.class.new(@money + other.money)
     end
   end
 end
