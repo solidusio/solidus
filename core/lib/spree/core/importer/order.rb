@@ -97,15 +97,8 @@ module Spree
         def self.create_line_items_from_params(line_items_hash, order)
           return {} unless line_items_hash
           line_items_hash.each_key do |k|
-            extra_params = line_items_hash[k].except(:variant_id, :quantity, :sku)
             line_item = ensure_variant_id_from_params(line_items_hash[k])
-            line_item = order.contents.add(Spree::Variant.find(line_item[:variant_id]), line_item[:quantity])
-            # Raise any errors with saving to prevent import succeeding with line items failing silently.
-            if extra_params.present?
-              line_item.update_attributes!(extra_params)
-            else
-              line_item.save!
-            end
+            order.contents.add(Spree::Variant.find(line_item[:variant_id]), line_item[:quantity], line_item[:options] || {})
           end
         end
 

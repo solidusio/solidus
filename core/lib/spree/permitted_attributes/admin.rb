@@ -2,6 +2,7 @@ module Spree
   module PermittedAttributes
     module Admin
       ATTRIBUTES = [
+        :line_item_option_attributes,
         :line_item_attributes,
         :order_attributes,
         :shipment_attributes
@@ -9,7 +10,9 @@ module Spree
 
       mattr_reader(*ATTRIBUTES)
 
-      @@line_item_attributes = [:price, :variant_id, :sku] + PermittedAttributes.line_item_attributes
+      @@line_item_option_attributes = [:price]
+
+      @@line_item_attributes = [:sku] + PermittedAttributes.line_item_attributes
 
       @@order_attributes = [:import, :number, :completed_at, :locked_at, :channel, :user_id, :created_at]
 
