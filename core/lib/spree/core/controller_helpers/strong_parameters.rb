@@ -34,7 +34,7 @@ module Spree
 
         def permitted_admin_line_item_attributes
           base_attributes.line_item_attributes + admin_attributes.line_item_attributes + [
-            options: base_attributes.line_item_option_attributes
+            options: base_attributes.line_item_option_attributes + admin_attributes.line_item_option_attributes
           ]
         end
 
