@@ -26,8 +26,16 @@ module Spree
           ]
         end
 
+        def permitted_line_item_attributes
+          base_attributes.line_item_attributes + [
+            options: base_attributes.line_item_option_attributes
+          ]
+        end
+
         def permitted_admin_line_item_attributes
-          base_attributes.line_item_attributes + admin_attributes.line_item_attributes
+          base_attributes.line_item_attributes + admin_attributes.line_item_attributes + [
+            options: base_attributes.line_item_option_attributes
+          ]
         end
 
         def permitted_payment_attributes

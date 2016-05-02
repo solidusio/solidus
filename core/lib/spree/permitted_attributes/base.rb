@@ -12,6 +12,7 @@ module Spree
         :customer_return_attributes,
         :image_attributes,
         :inventory_unit_attributes,
+        :line_item_option_attributes,
         :line_item_attributes,
         :option_type_attributes,
         :option_value_attributes,
@@ -58,6 +59,8 @@ module Spree
       @@image_attributes = [:alt, :attachment, :position, :viewable_type, :viewable_id]
 
       @@inventory_unit_attributes = [:shipment, :variant_id]
+
+      @@line_item_option_attributes = []
 
       @@line_item_attributes = [:id, :variant_id, :quantity]
 
