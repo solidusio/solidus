@@ -12,6 +12,7 @@ module Spree
       :image_attributes,
       :inventory_unit_attributes,
       :line_item_attributes,
+      :line_item_option_attributes,
       :option_type_attributes,
       :option_value_attributes,
       :payment_attributes,
@@ -59,6 +60,8 @@ module Spree
     @@inventory_unit_attributes = [:shipment, :variant_id]
 
     @@line_item_attributes = [:id, :variant_id, :quantity]
+
+    @@line_item_option_attributes = []
 
     @@option_type_attributes = [:name, :presentation, :option_values_attributes]
 
