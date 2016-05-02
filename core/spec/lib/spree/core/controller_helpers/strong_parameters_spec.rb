@@ -43,6 +43,18 @@ describe Spree::Core::ControllerHelpers::StrongParameters, type: :controller do
     end
   end
 
+  describe '#permitted_line_item_attributes' do
+    it 'returns Array class' do
+      expect(controller.permitted_line_item_attributes.class).to eq Array
+    end
+  end
+
+  describe '#permitted_admin_line_item_attributes' do
+    it 'returns Array class' do
+      expect(controller.permitted_admin_line_item_attributes.class).to eq Array
+    end
+  end
+
   describe '#permitted_admin_order_attributes' do
     it 'returns Array class' do
       expect(controller.permitted_admin_order_attributes.class).to eq Array

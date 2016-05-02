@@ -2,15 +2,12 @@ require 'spec_helper'
 
 module Spree
   PermittedAttributes::Base.module_eval do
-    mattr_writer :line_item_attributes
+    mattr_writer :line_item_option_attributes
   end
 
-  unless PermittedAttributes::Base.line_item_attributes.include? :some_option
-    PermittedAttributes::Base.line_item_attributes += [:some_option]
+  unless PermittedAttributes::Base.line_item_option_attributes.include? :some_option
+    PermittedAttributes::Base.line_item_option_attributes += [:some_option]
   end
-
-  # This should go in an initializer
-  Spree::Api::LineItemsController.line_item_options += [:some_option]
 
   describe Api::LineItemsController, type: :controller do
     render_views
