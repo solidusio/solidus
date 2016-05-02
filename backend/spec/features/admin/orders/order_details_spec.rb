@@ -13,7 +13,7 @@ describe "Order Details", type: :feature, js: true do
   let!(:shipping_method) { create(:shipping_method, name: "Default") }
 
   before do
-    order.shipments.create(stock_location_id: stock_location.id)
+    @shipment1 = order.shipments.create(stock_location_id: stock_location.id)
     order.contents.add(product.master, 2)
   end
 
@@ -387,7 +387,7 @@ describe "Order Details", type: :feature, js: true do
             click_on 'Choose location'
             within '.select2-results' do
               expect(page).to have_content(@shipment2.number)
-              expect(page).not_to have_content(order.shipments[0].number)
+              expect(page).not_to have_content(@shipment1.number)
             end
           end
 
