@@ -10,7 +10,9 @@ module Spree
 
       mattr_reader(*ATTRIBUTES)
 
-      @@line_item_attributes = [:price, :variant_id, :sku]
+      @@line_item_attributes = [:sku]
+
+      @@line_item_option_attributes = [:price]
 
       @@line_item_option_attributes = []
 

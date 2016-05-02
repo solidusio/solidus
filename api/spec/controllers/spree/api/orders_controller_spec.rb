@@ -2,6 +2,14 @@ require 'spec_helper'
 require 'spree/testing_support/bar_ability'
 
 module Spree
+  PermittedAttributes.module_eval do
+    mattr_writer :line_item_option_attributes
+  end
+
+  unless PermittedAttributes.line_item_option_attributes.include? :some_option
+    PermittedAttributes.line_item_option_attributes += [:some_option]
+  end
+
   describe Api::OrdersController, type: :controller do
     render_views
     let!(:order) { create(:order) }
@@ -121,7 +129,7 @@ module Spree
         end
 
         it "updates the otherwise forbidden attributes" do
-          expect{ subject }.to change{ order.reload.number }.
+          expect { subject }.to change { order.reload.number }.
             to("anothernumber")
         end
       end
@@ -133,7 +141,7 @@ module Spree
         end
 
         it "does not change forbidden attributes" do
-          expect{ subject }.to_not change{ order.reload.number }
+          expect { subject }.to_not change { order.reload.number }
         end
       end
     end
@@ -353,17 +361,12 @@ module Spree
     end
 
     # Regression test for https://github.com/spree/spree/issues/3404
-    it "can specify additional parameters for a line item" do
-      expect(Order).to receive(:create!).and_return(order = Spree::Order.new)
-      allow(order).to receive(:associate_user!)
-      allow(order).to receive_message_chain(:contents, :add).and_return(line_item = double('LineItem'))
-      expect(line_item).to receive(:update_attributes!).with("special" => true)
-
-      allow(controller).to receive_messages(permitted_line_item_attributes: [:id, :variant_id, :quantity, :special])
+    it "can specify additional parameters via options for a line item" do
+      expect_any_instance_of(LineItem).to receive(:some_option=).with(4)
       api_post :create, order: {
         line_items: {
           "0" => {
-            variant_id: variant.to_param, quantity: 5, special: true
+            variant_id: variant.to_param, quantity: 5, options: { some_option: 4 }
           }
         }
       }
@@ -374,7 +377,7 @@ module Spree
       api_post :create, order: {
         line_items: {
           "0" => {
-            price: 33.0, variant_id: variant.to_param, quantity: 5
+            variant_id: variant.to_param, quantity: 5, options: { price: 33.0 }
           }
         }
       }
@@ -407,13 +410,13 @@ module Spree
       let(:address_params) { { country_id: country.id } }
       let(:billing_address) {
         { firstname: "Tiago", lastname: "Motta", address1: "Av Paulista",
-                                city: "Sao Paulo", zipcode: "01310-300", phone: "12345678",
-                                country_id: country.id }
+          city: "Sao Paulo", zipcode: "01310-300", phone: "12345678",
+          country_id: country.id }
       }
       let(:shipping_address) {
         { firstname: "Tiago", lastname: "Motta", address1: "Av Paulista",
-                                 city: "Sao Paulo", zipcode: "01310-300", phone: "12345678",
-                                 country_id: country.id }
+          city: "Sao Paulo", zipcode: "01310-300", phone: "12345678",
+          country_id: country.id }
       }
       let(:country) { create(:country, { name: "Brazil", iso_name: "BRAZIL", iso: "BR", iso3: "BRA", numcode: 76 }) }
 
@@ -450,7 +453,7 @@ module Spree
       it "cannot change the price of an existing line item" do
         api_put :update, id: order.to_param, order: {
           line_items: {
-            0 => { id: line_item.id, price: 0 }
+            0 => { id: line_item.id, options: { price: 0 } }
           }
         }
 
@@ -728,7 +731,7 @@ module Spree
           api_post :create, order: {
             line_items: {
               "0" => {
-                price: 33.0, variant_id: variant.to_param, quantity: 5
+                variant_id: variant.to_param, quantity: 5, options: { price: 33.0 }
               }
             }
           }
