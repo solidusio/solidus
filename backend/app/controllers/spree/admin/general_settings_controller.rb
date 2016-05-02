@@ -30,7 +30,7 @@ module Spree
       end
 
       def permitted_params
-        Spree::PermittedAttributes.store_attributes
+        Spree::PermittedAttributes::Base.store_attributes
       end
 
       def set_store

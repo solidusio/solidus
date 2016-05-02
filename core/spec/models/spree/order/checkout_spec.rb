@@ -810,8 +810,8 @@ describe Spree::Order, type: :model do
 
     context "passing a credit card" do
       let(:permitted_params) do
-        Spree::PermittedAttributes.checkout_attributes +
-          [payments_attributes: Spree::PermittedAttributes.payment_attributes]
+        Spree::PermittedAttributes::Base.checkout_attributes +
+          [payments_attributes: Spree::PermittedAttributes::Base.payment_attributes]
       end
 
       let(:credit_card) { create(:credit_card, user_id: order.user_id) }

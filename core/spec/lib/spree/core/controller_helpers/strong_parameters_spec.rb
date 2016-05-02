@@ -7,9 +7,15 @@ end
 describe Spree::Core::ControllerHelpers::StrongParameters, type: :controller do
   controller(FakesController) {}
 
-  describe '#permitted_attributes' do
-    it 'returns Spree::PermittedAttributes module' do
-      expect(controller.permitted_attributes).to eq Spree::PermittedAttributes
+  describe '#base_attributes' do
+    it 'returns Spree::PermittedAttributes::Base module' do
+      expect(controller.base_attributes).to eq Spree::PermittedAttributes::Base
+    end
+  end
+
+  describe '#admin_attributes' do
+    it 'returns Spree::PermittedAttributes::Admin module' do
+      expect(controller.admin_attributes).to eq Spree::PermittedAttributes::Admin
     end
   end
 
@@ -34,6 +40,24 @@ describe Spree::Core::ControllerHelpers::StrongParameters, type: :controller do
   describe '#permitted_product_attributes' do
     it 'returns Array class' do
       expect(controller.permitted_product_attributes.class).to eq Array
+    end
+  end
+
+  describe '#permitted_line_item_attributes' do
+    it 'returns Array class' do
+      expect(controller.permitted_line_item_attributes.class).to eq Array
+    end
+  end
+
+  describe '#permitted_admin_line_item_attributes' do
+    it 'returns Array class' do
+      expect(controller.permitted_admin_line_item_attributes.class).to eq Array
+    end
+  end
+
+  describe '#permitted_admin_order_attributes' do
+    it 'returns Array class' do
+      expect(controller.permitted_admin_order_attributes.class).to eq Array
     end
   end
 end
