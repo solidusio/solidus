@@ -1,12 +1,12 @@
 require 'spec_helper'
 
 module Spree
-  PermittedAttributes.module_eval do
+  PermittedAttributes::Base.module_eval do
     mattr_writer :line_item_attributes
   end
 
-  unless PermittedAttributes.line_item_attributes.include? :some_option
-    PermittedAttributes.line_item_attributes += [:some_option]
+  unless PermittedAttributes::Base.line_item_attributes.include? :some_option
+    PermittedAttributes::Base.line_item_attributes += [:some_option]
   end
 
   # This should go in an initializer

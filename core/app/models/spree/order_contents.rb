@@ -86,7 +86,7 @@ module Spree
       )
 
       line_item.quantity += quantity.to_i
-      line_item.options = ActionController::Parameters.new(options).permit(PermittedAttributes.line_item_attributes)
+      line_item.options = ActionController::Parameters.new(options).permit(PermittedAttributes::Base.line_item_attributes)
 
       if line_item.new_record?
         create_order_stock_locations(line_item, options[:stock_location_quantities])

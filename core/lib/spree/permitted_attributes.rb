@@ -102,7 +102,7 @@ module Spree
       :quantity, :stock_item, :stock_item_id, :originator, :action]
 
     @@store_attributes = [:name, :url, :seo_title, :meta_keywords,
-                          :meta_description, :default_currency, :mail_from_address]
+      :meta_description, :default_currency, :mail_from_address]
 
     @@taxonomy_attributes = [:name]
 
@@ -125,3 +125,5 @@ module Spree
       :weight, :height, :width, :depth, :sku, :cost_currency, option_value_ids: [], options: [:name, :value]]
   end
 end
+
+require 'spree/permitted_attributes/admin'

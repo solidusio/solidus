@@ -2,34 +2,42 @@ module Spree
   module Core
     module ControllerHelpers
       module StrongParameters
-        def permitted_attributes
+        def base_attributes
           Spree::PermittedAttributes
         end
 
         delegate(*Spree::PermittedAttributes::ATTRIBUTES,
-                 to: :permitted_attributes,
+                 to: :base_attributes,
                  prefix: :permitted)
 
+        def admin_attributes
+          Spree::PermittedAttributes::Admin
+        end
+
+        delegate(*Spree::PermittedAttributes::Admin::ATTRIBUTES,
+                 to: :admin_attributes,
+                 prefix: :permitted_admin)
+
         def permitted_credit_card_update_attributes
-          permitted_attributes.credit_card_update_attributes + [
+          base_attributes.credit_card_update_attributes + [
             address_attributes: permitted_address_attributes
           ]
         end
 
         def permitted_payment_attributes
-          permitted_attributes.payment_attributes + [
+          base_attributes.payment_attributes + [
             source_attributes: permitted_source_attributes
           ]
         end
 
         def permitted_source_attributes
-          permitted_attributes.source_attributes + [
+          base_attributes.source_attributes + [
             address_attributes: permitted_address_attributes
           ]
         end
 
         def permitted_checkout_attributes
-          permitted_attributes.checkout_attributes + [
+          base_attributes.checkout_attributes + [
             bill_address_attributes: permitted_address_attributes,
             ship_address_attributes: permitted_address_attributes,
             payments_attributes: permitted_payment_attributes,
@@ -43,14 +51,20 @@ module Spree
           ]
         end
 
+        def permitted_admin_order_attributes
+          permitted_checkout_attributes + admin_attributes.order_attributes + [
+            line_items_attributes: permitted_admin_line_item_attributes
+          ]
+        end
+
         def permitted_product_attributes
-          permitted_attributes.product_attributes + [
+          base_attributes.product_attributes + [
             product_properties_attributes: permitted_product_properties_attributes
           ]
         end
 
         def permitted_user_attributes
-          permitted_attributes.user_attributes + [
+          base_attributes.user_attributes + [
             bill_address_attributes: permitted_address_attributes,
             ship_address_attributes: permitted_address_attributes
           ]
