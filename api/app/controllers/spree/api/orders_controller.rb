@@ -1,12 +1,6 @@
 module Spree
   module Api
     class OrdersController < Spree::Api::BaseController
-      class_attribute :admin_shipment_attributes
-      self.admin_shipment_attributes = [:shipping_method, :stock_location, inventory_units: [:variant_id, :sku]]
-
-      class_attribute :admin_order_attributes
-      self.admin_order_attributes = [:import, :number, :completed_at, :locked_at, :channel, :user_id, :created_at]
-
       skip_before_action :authenticate_user, only: :apply_coupon_code
 
       before_action :find_order, except: [:create, :mine, :current, :index]
@@ -119,15 +113,11 @@ module Spree
       end
 
       def permitted_order_attributes
-        can?(:admin, Spree::Order) ? (super + admin_order_attributes) : super
+        can?(:admin, Spree::Order) ? permitted_admin_order_attributes : super
       end
 
       def permitted_shipment_attributes
-        if can?(:admin, Spree::Shipment)
-          super + admin_shipment_attributes
-        else
-          super
-        end
+        can?(:admin, Spree::Shipment) ? (super + permitted_admin_shipment_attributes) : super
       end
 
       def find_order(_lock = false)

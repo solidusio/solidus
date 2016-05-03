@@ -1,10 +1,6 @@
 module Spree
   module Api
     class LineItemsController < Spree::Api::BaseController
-      class_attribute :line_item_options
-
-      self.line_item_options = []
-
       before_filter :load_order, only: [:create, :update, :destroy]
       around_filter :lock_order, only: [:create, :update, :destroy]
 
@@ -66,11 +62,7 @@ module Spree
       end
 
       def line_item_params
-        params.require(:line_item).permit(
-          :quantity,
-            :variant_id,
-            options: line_item_options
-        )
+        params.require(:line_item).permit(permitted_line_item_attributes)
       end
     end
   end
