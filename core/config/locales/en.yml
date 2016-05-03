@@ -1044,6 +1044,7 @@ en:
     eligibility_errors:
       messages:
         has_excluded_product: Your cart contains a product that prevents this coupon code from being applied.
+        has_excluded_taxon: Your cart contains a product from an excluded category that prevents this coupon code from being applied.
         item_total_less_than: This coupon code can't be applied to orders less than %{amount}.
         item_total_less_than_or_equal: This coupon code can't be applied to orders less than or equal to %{amount}.
         limit_once_per_user: This coupon code can only be used once per user.
@@ -1054,6 +1055,7 @@ en:
         no_user_or_email_specified: You need to login or provide your email before applying this coupon code.
         no_user_specified: You need to login before applying this coupon code.
         not_first_order: This coupon code can only be applied to your first order.
+        software_error: Something went wrong. This coupon code can not be applied.
     email: Email
     empty: Empty
     empty_cart: Empty Cart
@@ -1817,6 +1819,7 @@ en:
       label: Order must contain %{select} of these taxons
       match_all: all
       match_any: at least one
+      match_none: none
     taxonomies: Taxonomies
     taxonomy: Taxonomy
     taxonomy_edit: Edit taxonomy
