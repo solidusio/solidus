@@ -134,6 +134,10 @@ en:
         name: Name
         preference_source: Preference Source
         type: Provider
+      spree/price:
+        currency: Currency
+        amount: Price
+        is_default: Currently Valid
       spree/product:
         available_on: Available On
         cost_currency: Cost Currency
@@ -395,6 +399,9 @@ en:
       spree/payment_method:
         one: Payment Method
         other: Payment Methods
+      spree/price:
+        one: Price
+        other: Prices
       spree/product:
         one: Product
         other: Products
@@ -767,6 +774,18 @@ en:
           use_product_tax_category: Use Product Tax Category
           pricing: Pricing
           pricing_hint: These values are populated from the product details page and can be overridden below
+      prices:
+        table:
+          master_variant: Master Variant
+        index:
+          master_variant: Master Variant
+          amount_greater_than: Amount greater than
+          amount_less_than: Amount less than
+          new_price: New Price
+        edit:
+          edit_price: Edit Price
+        new:
+          new_price: New Price
     administration: Administration
     agree_to_privacy_policy: Agree to Privacy Policy
     agree_to_terms_of_service: Agree to Terms of Service

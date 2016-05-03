@@ -14,6 +14,9 @@
       <%= content_tag :li, :class => ('active' if current == 'Variants') do %>
         <%= link_to_with_icon 'th-large', Spree::Variant.model_name.human(count: :other),  spree.admin_product_variants_url(@product) %>
       <% end if can?(:admin, Spree::Variant) %>
+      <%= content_tag :li, :class => ('active' if current == 'Prices') do %>
+        <%= link_to_with_icon 'money', Spree::Price.model_name.human(count: :other),  spree.admin_product_prices_url(@product) %>
+      <% end if can?(:admin, Spree::Price) %>
       <%= content_tag :li, :class => ('active' if current == 'Product Properties') do %>
         <%= link_to_with_icon 'tasks', Spree::ProductProperty.model_name.human(count: :other), spree.admin_product_product_properties_url(@product) %>
       <% end if can?(:admin, Spree::ProductProperty) %>

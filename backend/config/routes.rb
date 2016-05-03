@@ -50,6 +50,7 @@ Spree::Core::Engine.routes.draw do
         end
       end
       resources :variants_including_master, only: [:update]
+      resources :prices, only: [:index, :edit, :update, :new, :create]
     end
     get '/products/:product_slug/stock', to: "stock_items#index", as: :product_stock
 

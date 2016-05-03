@@ -5,6 +5,7 @@ module Spree
     MAXIMUM_AMOUNT = BigDecimal('99_999_999.99')
 
     belongs_to :variant, -> { with_deleted }, class_name: 'Spree::Variant', touch: true
+    has_one :product, class_name: 'Spree::Product', through: :variant
 
     validate :check_price
     validates :amount, allow_nil: true, numericality: {
@@ -22,7 +23,7 @@ module Spree
     money_methods :amount, :price
     alias_method :money, :display_amount
 
-    self.whitelisted_ransackable_attributes = ['amount']
+    self.whitelisted_ransackable_attributes = %w( amount variant_id currency )
 
     # An alias for #amount
     def price
