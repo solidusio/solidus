@@ -920,7 +920,7 @@ p[data-hook="use_billing"] {
   &.success {
     color: $c_green;
   }
-  &.error {
+  &.error, &.alert {
     color: $c_red;
   }
 }

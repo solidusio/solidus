@@ -4,8 +4,8 @@ Spree.onCouponCodeApply = (e) ->
   return if couponCode == ''
 
   couponStatus = $("#coupon_status")
-  successClass = couponStatus.data('success-class') || 'success'
-  errorClass = couponStatus.data('error-class') || 'error'
+  successClass = 'success'
+  errorClass = 'alert'
   url = Spree.url(Spree.routes.apply_coupon_code(Spree.current_order_id),
     {
       order_token: Spree.current_order_token,
