@@ -110,9 +110,16 @@ module Spree
       move_to_child_with_index(parent, idx.to_i) unless new_record?
     end
 
+    # @author Gharbi Mohammed
+    #
+    # @see Spree::Taxon.child_index=
+    #
+    # @param [Spree::Taxon] node the parent node where we want to append.
+    # @param [Integer] index the position where to append the self node.
+    #
+    # @note closure_tree does not provide any method that move nodes regarding position
+    #   this method does the same approach of move_to_child_with_index offered by awesome_nested_set
     def move_to_child_with_index(node, index)
-      # closure_tree does not provide any method that move nodes regarding position
-      # this method overrides move_to_child_with_index offered by awesome_nested_set
       if node.children.empty? || node.children.count == index
         node.append_child(self)
       else
