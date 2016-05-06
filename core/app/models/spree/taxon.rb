@@ -2,7 +2,7 @@ module Spree
   class Taxon < Spree::Base
     has_closure_tree hierarchy_class_name: 'Spree::TaxonHierarchy',
                      hierarchy_table_name: 'spree_taxon_hierarchies',
-                     order: 'position',
+                     order: :position,
                      dependent: :destroy
 
     belongs_to :taxonomy, class_name: 'Spree::Taxonomy', inverse_of: :taxons
@@ -110,18 +110,6 @@ module Spree
       move_to_child_with_index(parent, idx.to_i) unless new_record?
     end
 
-    def permalink_part
-      permalink.split('/').last
-    end
-
-    def permalink_part=(value)
-      if parent.present?
-        self.permalink = "#{parent.permalink}/#{value}"
-      else
-        self.permalink = value
-      end
-    end
-
     def move_to_child_with_index(node, index)
       # closure_tree does not provide any method that move nodes regarding position
       # this method overrides move_to_child_with_index offered by awesome_nested_set
@@ -136,6 +124,18 @@ module Spree
         else
           node.children[index].prepend_sibling(self)
         end
+      end
+    end
+
+    def permalink_part
+      permalink.split('/').last
+    end
+
+    def permalink_part=(value)
+      if parent.present?
+        self.permalink = "#{parent.permalink}/#{value}"
+      else
+        self.permalink = value
       end
     end
 

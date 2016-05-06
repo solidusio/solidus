@@ -140,7 +140,7 @@ module Spree
 
       it "can update the position in the list" do
         taxonomy.root.children << taxon2
-        api_put :update, taxonomy_id: taxonomy.id, id: taxon.id, taxon: { parent_id: taxon.parent_id, child_index: 2 }
+        api_put :update, taxonomy_id: taxonomy.id, id: taxon.id, taxon: { parent_id: taxon.parent_id, child_index: 1 }
         expect(response.status).to eq(200)
         expect(taxonomy.reload.root.children[0]).to eql taxon2
         expect(taxonomy.reload.root.children[1]).to eql taxon
