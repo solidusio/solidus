@@ -176,8 +176,9 @@ module Spree
         count(:order_id)
     end
 
-    # TODO: specs
     def line_item_actionable?(order, line_item, promotion_code: nil)
+      return false if blacklisted?(line_item)
+
       if eligible?(order, promotion_code: promotion_code)
         rules = eligible_rules(order)
         if rules.blank?
