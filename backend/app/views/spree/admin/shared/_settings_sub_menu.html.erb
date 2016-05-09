@@ -21,6 +21,6 @@
   <% end %>
 
   <% if can?(:display, Spree::ShippingMethod) || can?(:display, Spree::ShippingCategory) || can?(:display, Spree::StockLocation) %>
-    <%= tab :shipping, url: admin_shipping_methods_path %>
+    <%= tab :shipping, url: admin_shipping_methods_path, match_path: %r(shipping_methods|shipping_categories|stock_locations) %>
   <% end %>
 </ul>

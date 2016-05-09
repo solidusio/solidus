@@ -25,7 +25,11 @@
 <% end %>
 
 <% if can? :admin, Spree::StockItem %>
-  <%= tab(*Spree::BackendConfiguration::STOCK_TABS, url: spree.admin_stock_items_path, label: :stock, icon: 'cubes', match_path: %r(^/admin/stock)) do %>
+  <%= tab(
+    *Spree::BackendConfiguration::STOCK_TABS,
+    url: spree.admin_stock_items_path,
+    label: :stock, icon: 'cubes',
+    match_path: %r(^/admin/stock(?!_locations))) do %>
     <%- render partial: 'spree/admin/shared/stock_sub_menu' %>
   <%- end %>
 <% end %>
