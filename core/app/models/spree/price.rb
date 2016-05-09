@@ -5,13 +5,16 @@ module Spree
     MAXIMUM_AMOUNT = BigDecimal('99_999_999.99')
 
     belongs_to :variant, -> { with_deleted }, class_name: 'Spree::Variant', touch: true
-    has_one :product, class_name: 'Spree::Product', through: :variant
+    belongs_to :country, class_name: "Spree::Country", foreign_key: "country_iso", primary_key: "iso"
+
+    delegate :product, to: :variant
 
     validate :check_price
     validates :amount, allow_nil: true, numericality: {
       greater_than_or_equal_to: 0,
       less_than_or_equal_to: MAXIMUM_AMOUNT
     }
+    validates :country, presence: true, if: -> { country_iso.present? }
 
     validates :currency, inclusion: { in: ::Money::Currency.all.map(&:iso_code), message: :invalid_code }
 
