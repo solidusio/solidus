@@ -9,7 +9,11 @@ module Spree
       end
 
       def self.from_line_item(line_item)
-        new(currency: line_item.order.try(:currency) || line_item.currency || Spree::Config.currency )
+        tax_address = line_item.order.try!(:tax_address)
+        new(
+          currency: line_item.order.try(:currency) || line_item.currency || Spree::Config.currency,
+          country_iso: tax_address && tax_address.country.try!(:iso)
+        )
       end
 
       def self.from_price(price)
