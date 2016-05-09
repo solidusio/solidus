@@ -1,5 +1,8 @@
 module Spree
   class Store < Spree::Base
+    has_many :store_shipping_methods, inverse_of: :store
+    has_many :shipping_methods, through: :store_shipping_methods
+
     has_many :store_payment_methods, inverse_of: :store
     has_many :payment_methods, through: :store_payment_methods
     has_many :orders, class_name: "Spree::Order"

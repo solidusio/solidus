@@ -4,6 +4,9 @@ module Spree
     include Spree::CalculatedAdjustments
     DISPLAY = [:both, :front_end, :back_end]
 
+    has_many :store_shipping_methods, inverse_of: :shipping_method
+    has_many :stores, through: :store_shipping_methods
+
     has_many :shipping_method_categories, dependent: :destroy
     has_many :shipping_categories, through: :shipping_method_categories
     has_many :shipping_rates, inverse_of: :shipping_method
