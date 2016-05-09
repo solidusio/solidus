@@ -14,11 +14,12 @@ module Spree
       greater_than_or_equal_to: 0,
       less_than_or_equal_to: MAXIMUM_AMOUNT
     }
-    validates :country, presence: true, if: -> { country_iso.present? }
+    validates :country, presence: true, unless: -> { for_any_country? }
 
     validates :currency, inclusion: { in: ::Money::Currency.all.map(&:iso_code), message: :invalid_code }
 
     scope :currently_valid, -> { where(is_default: true) }
+    scope :for_any_country, -> { where(country: nil) }
     scope :with_default_attributes, -> { where(Spree::Config.default_pricing_options.desired_attributes) }
     after_save :set_default_price
 
@@ -42,6 +43,10 @@ module Spree
     end
 
     private
+
+    def for_any_country?
+      country_iso.nil?
+    end
 
     def check_price
       self.currency ||= Spree::Config[:currency]

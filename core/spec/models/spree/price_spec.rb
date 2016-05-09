@@ -102,4 +102,16 @@ describe Spree::Price, type: :model do
       end
     end
   end
+
+  describe 'scopes' do
+    describe '.for_any_country' do
+      let(:country) { create(:country) }
+      let!(:fallback_price) { create(:price, country_iso: nil) }
+      let!(:country_price) { create(:price, country: country) }
+
+      subject { described_class.for_any_country }
+
+      it { is_expected.to include(fallback_price) }
+    end
+  end
 end
