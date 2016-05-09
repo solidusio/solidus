@@ -93,7 +93,7 @@ module Spree
     # @param pricing_options A Pricing Options object as defined on the pricer class
     # @return [ActiveRecord::Relation]
     def self.with_prices(pricing_options = Spree::Config.default_pricing_options)
-      joins(:prices).merge(Spree::Price.currently_valid.where(pricing_options.desired_attributes))
+      joins(:prices).merge(Spree::Price.currently_valid.where(pricing_options.search_arguments))
     end
 
     # @return [Spree::TaxCategory] the variant's tax category

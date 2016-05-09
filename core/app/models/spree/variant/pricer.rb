@@ -12,7 +12,12 @@ module Spree
       end
 
       def price_for(price_options)
-        variant.prices.currently_valid.find_by(price_options.desired_attributes).try!(:money)
+        variant.prices
+          .currently_valid
+          .order("country_iso IS NULL") # Make sure the nils come last
+          .find_by(
+            price_options.search_arguments
+          ).try!(:money)
       end
     end
   end
