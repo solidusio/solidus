@@ -67,6 +67,17 @@ describe Spree::Variant::PricingOptions do
     end
   end
 
+  context ".from_price" do
+    let(:country) { create(:country) }
+    let(:price) { create(:price, country: country) }
+
+    subject { described_class.from_price(price) }
+    it "gets the currency from the previous price" do
+      expect(subject.currency).to eq(price.currency)
+      expect(subject.country_iso).to eq(country.iso)
+    end
+  end
+
   describe '#desired_attributes' do
     context "when called with no arguments" do
       it "returns the default pricing options" do

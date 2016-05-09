@@ -17,7 +17,7 @@ module Spree
       end
 
       def self.from_price(price)
-        new(currency: price.currency)
+        new(currency: price.currency, country_iso: price.country_iso)
       end
 
       attr_reader :desired_attributes
