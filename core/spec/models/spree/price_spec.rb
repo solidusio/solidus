@@ -45,6 +45,38 @@ describe Spree::Price, type: :model do
       let(:amount) { Spree::Price::MAXIMUM_AMOUNT }
       it { is_expected.to be_valid }
     end
+
+    context '#country_iso' do
+      subject(:price) { build(:price, country_iso: country_iso) }
+
+      context 'when country iso is nil' do
+        let(:country_iso) { nil }
+
+        it { is_expected.to be_valid }
+      end
+
+      context 'when country iso is a country code' do
+        let!(:country) { create(:country, iso: "DE") }
+        let(:country_iso) { "DE" }
+
+        it { is_expected.to be_valid }
+      end
+
+      context 'when country iso is not a country code' do
+        let(:country_iso) { "ZZ" }
+
+        it { is_expected.not_to be_valid }
+      end
+    end
+
+    describe '#country' do
+      let!(:country) { create(:country, iso: "DE") }
+      let(:price) { create(:price, country_iso: "DE", is_default: false) }
+
+      it 'returns the country object' do
+        expect(price.country).to eq(country)
+      end
+    end
   end
 
   describe "#currency" do
