@@ -2,6 +2,7 @@ module Spree
   class Country < Spree::Base
     has_many :states, -> { order(:name) }, dependent: :destroy
     has_many :addresses, dependent: :nullify
+    has_many :prices, class_name: "Spree::Price", foreign_key: "country_iso", primary_key: "iso"
 
     validates :name, :iso_name, presence: true
 
