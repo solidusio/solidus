@@ -1,3 +1,3 @@
-eval_gemfile File.expand_path('../common_spree_dependencies.rb', __FILE__)
+eval(File.read(File.dirname(__FILE__) + '/common_spree_dependencies.rb'))
 
 gemspec
