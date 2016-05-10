@@ -48,7 +48,7 @@ module Spree
       end
 
       describe "#shipping_methods" do
-        let(:store) { FactoryGirl.build(:store) }
+        let(:store) { FactoryGirl.create(:store) }
         let(:order) { FactoryGirl.build(:order, store: store) }
 
         let(:categories) { FactoryGirl.build_pair(:shipping_category) }
@@ -84,6 +84,25 @@ module Spree
           end
 
           it { is_expected.to match_array [first_method, second_method] }
+        end
+
+        context "when the method is available to all stores" do
+          let!(:method) do
+            FactoryGirl.create(
+              :shipping_method,
+              shipping_categories: categories,
+              available_to_all_stores: true
+            )
+          end
+          let!(:other_method) do
+            FactoryGirl.create(
+              :shipping_method,
+              shipping_categories: categories,
+              available_to_all_stores: false
+            )
+          end
+
+          it { is_expected.to match_array [method] }
         end
 
         context "based on categories" do

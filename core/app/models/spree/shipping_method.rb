@@ -68,6 +68,20 @@ module Spree
       joins(:zones).merge(Zone.for_address(address))
     end
 
+    def self.available_for_store(store = nil)
+      methods = ShippingMethod.arel_table
+      store_methods = StoreShippingMethod.arel_table
+
+      join_condition = methods.join(store_methods, Arel::Nodes::OuterJoin).
+        on(methods[:id].eq(store_methods[:shipping_method_id])).
+        join_sources
+
+      conditions = [methods[:available_to_all_stores].eq(true)]
+      conditions << store_methods[:store_id].eq(store.id) if store
+
+      joins(join_condition).where(conditions.inject(&:or)).distinct
+    end
+
     def include?(address)
       return false unless address
       zones.any? do |zone|
