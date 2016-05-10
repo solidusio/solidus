@@ -46,6 +46,10 @@ module Spree
       amount / (1 + sum_of_included_vats)
     end
 
+    def for_any_country?
+      country_iso.nil?
+    end
+
     private
 
     def sum_of_included_vats
@@ -53,10 +57,6 @@ module Spree
       variant.tax_category.tax_rates.for_address(
         Spree::Tax::TaxLocation.new(country: country)
       ).sum(:amount)
-    end
-
-    def for_any_country?
-      country_iso.nil?
     end
 
     def check_price
