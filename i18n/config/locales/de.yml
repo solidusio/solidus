@@ -37,7 +37,7 @@ de:
         card_code: Kartenprüfnummer
         expiration: Verfallsdatum
       spree/inventory_unit:
-        state: Bundesland
+        state: Status
       spree/line_item:
         price: Preis
         quantity: Menge
@@ -75,7 +75,7 @@ de:
         firstname: Rechnungsanschrift Name
         lastname: Rechnungsanschrift Nachname
         phone: Rechnungsanschrift Telefon
-        state: Rechnungsanschrift Bundesland\n
+        state: Rechnungsanschrift Bundesland
         zipcode: Rechnungsanschrift Postleitzahl
       spree/order/ship_address:
         address1: Lieferanschrift Straße
@@ -204,13 +204,13 @@ de:
         amount: Summe
         label: Beschreibung
         name: Name
-        state: Bundesland
+        state: Status
         adjustment_reason_id: Grund
       spree/adjustment_reason:
         active: Aktiv
         code: Code
         name: Name
-        state: Bundesland
+        state: Status
       spree/carton:
         tracking: Tracking
       spree/customer_return:
@@ -253,7 +253,7 @@ de:
         acceptance_status_errors: Akzeptanzfehler
         charged: Berechnet
         exchange_variant: Tauschen mit
-        inventory_unit_state: Bundesland
+        inventory_unit_state: Status
         override_reimbursement_type_id: Vergütungstyp überschreiben
         preferred_reimbursement_type_id: Bevorzugter Vergütungstyp
         reception_status: Empfangsstatus
@@ -264,7 +264,7 @@ de:
         active: Aktiv
         memo: Notiz
         number: Rücksendungsnummer
-        state: Bundesland
+        state: Status
       spree/shipping_category:
         name: Name
       spree/shipping_method:
@@ -1442,9 +1442,7 @@ de:
     shipment_details: Versendungsdetails
     shipment_mailer:
       shipped_email:
-        dear_customer: 'Sehr geehrte/r Kunde/in,
-
-'
+        dear_customer: 'Sehr geehrte/r Kunde/in,'
         instructions: Ihre Bestellung wurde versandt.
         shipment_summary: Versandzusammenfassung
         subject: Versand-Benachrichtigung
@@ -1682,6 +1680,6 @@ de:
     attributes:
       spree/order_cancellations:
         quantity: Anzahl
-        state: Bundesland
+        state: Status
         shipment: Sendung
         cancel: abbrechen
