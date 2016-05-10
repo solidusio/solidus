@@ -114,4 +114,18 @@ describe Spree::Price, type: :model do
       it { is_expected.to include(fallback_price) }
     end
   end
+
+  describe 'net_amount' do
+    let(:country) { create(:country, iso: "DE") }
+    let(:zone) { create(:zone, countries: [country]) }
+    let!(:tax_rate) { create(:tax_rate, included_in_price: true, zone: zone, tax_category: variant.tax_category) }
+
+    let(:variant) { create(:product).master }
+
+    let(:price) { variant.prices.create(amount: 20, country: country) }
+
+    subject { price.net_amount }
+
+    it { is_expected.to eq(BigDecimal.new(20) / 1.1) }
+  end
 end
