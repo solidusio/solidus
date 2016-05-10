@@ -85,6 +85,23 @@ module Spree
       display_on != "back_end"
     end
 
+    def available_to_all=(val)
+      ActiveSupport::Deprecation.warn <<-EOS.squish, caller
+        ShippingMethod#available_to_all= has been deprecated. The column has
+        been renamed to available_to_all_stock_locations.
+      EOS
+      self.available_to_all_stock_locations = val
+    end
+
+    def available_to_all
+      ActiveSupport::Deprecation.warn <<-EOS.squish, caller
+        ShippingMethod#available_to_all has been deprecated. The column has
+        been renamed to available_to_all_stock_locations.
+      EOS
+      available_to_all_stock_locations
+    end
+    alias_method :available_to_all?, :available_to_all
+
     private
 
     def at_least_one_shipping_category
