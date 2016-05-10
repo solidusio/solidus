@@ -107,7 +107,7 @@ module Spree
       # @return [ActiveRecord::Relation] the [Spree::ShippingMethod]s available
       #   for this pacakge based on the stock location and shipping categories.
       def shipping_methods
-        Spree::ShippingMethod.
+        order.store.shipping_methods.
           with_all_shipping_category_ids(shipping_category_ids).
           available_in_stock_location(stock_location)
       end

@@ -48,38 +48,42 @@ module Spree
       end
 
       it 'builds the correct list of shipping methods based on stock location and categories' do
+        store = create(:store)
+        order = mock_model(Spree::Order, store: store)
         category1 = create(:shipping_category)
         category2 = create(:shipping_category)
-        method1   = create(:shipping_method, available_to_all: true)
-        method2   = create(:shipping_method, stock_locations: [stock_location])
+        method1   = create(:shipping_method, available_to_all: true, stores: [store])
+        method2   = create(:shipping_method, stock_locations: [stock_location], stores: [store])
         method1.shipping_categories = [category1, category2]
         method2.shipping_categories = [category1, category2]
         variant1 = mock_model(Variant, shipping_category_id: category1.id)
         variant2 = mock_model(Variant, shipping_category_id: category2.id)
         variant3 = mock_model(Variant, shipping_category_id: nil)
-        contents = [ContentItem.new(build(:inventory_unit, variant: variant1)),
-                    ContentItem.new(build(:inventory_unit, variant: variant1)),
-                    ContentItem.new(build(:inventory_unit, variant: variant2)),
-                    ContentItem.new(build(:inventory_unit, variant: variant3))]
+        contents = [ContentItem.new(build(:inventory_unit, variant: variant1, order: order)),
+                    ContentItem.new(build(:inventory_unit, variant: variant1, order: order)),
+                    ContentItem.new(build(:inventory_unit, variant: variant2, order: order)),
+                    ContentItem.new(build(:inventory_unit, variant: variant3, order: order))]
 
         package = Package.new(stock_location, contents)
         expect(package.shipping_methods).to match_array([method1, method2])
       end
       # Contains regression test for https://github.com/spree/spree/issues/2804
       it 'builds a list of shipping methods common to all categories' do
+        store = create(:store)
+        order = mock_model(Spree::Order, store: store)
         category1 = create(:shipping_category)
         category2 = create(:shipping_category)
-        method1   = create(:shipping_method)
-        method2   = create(:shipping_method)
+        method1   = create(:shipping_method, stores: [store])
+        method2   = create(:shipping_method, stores: [store])
         method1.shipping_categories = [category1, category2]
         method2.shipping_categories = [category1]
         variant1 = mock_model(Variant, shipping_category_id: category1.id)
         variant2 = mock_model(Variant, shipping_category_id: category2.id)
         variant3 = mock_model(Variant, shipping_category_id: nil)
-        contents = [ContentItem.new(build(:inventory_unit, variant: variant1)),
-                    ContentItem.new(build(:inventory_unit, variant: variant1)),
-                    ContentItem.new(build(:inventory_unit, variant: variant2)),
-                    ContentItem.new(build(:inventory_unit, variant: variant3))]
+        contents = [ContentItem.new(build(:inventory_unit, variant: variant1, order: order)),
+                    ContentItem.new(build(:inventory_unit, variant: variant1, order: order)),
+                    ContentItem.new(build(:inventory_unit, variant: variant2, order: order)),
+                    ContentItem.new(build(:inventory_unit, variant: variant3, order: order))]
 
         package = Package.new(stock_location, contents)
         expect(package.shipping_methods).to match_array([method1])
