@@ -42,7 +42,18 @@ module Spree
       self[:amount] = Spree::LocalizedNumber.parse(price)
     end
 
+    def net_amount
+      amount / (1 + sum_of_included_vats)
+    end
+
     private
+
+    def sum_of_included_vats
+      return 0 unless variant.tax_category
+      variant.tax_category.tax_rates.for_address(
+        Spree::Tax::TaxLocation.new(country: country)
+      ).sum(:amount)
+    end
 
     def for_any_country?
       country_iso.nil?
