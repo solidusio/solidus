@@ -21,11 +21,6 @@ module Spree
       end
 
       def create
-        # TODO: Can remove conditional here once deprecated #find_order is removed.
-        unless @order.present?
-          @order = Spree::Order.find_by!(number: params[:shipment][:order_id])
-          authorize! :read, @order
-        end
         authorize! :create, Shipment
         quantity = params[:quantity].to_i
         @shipment = @order.shipments.create(stock_location_id: params.fetch(:stock_location_id))
