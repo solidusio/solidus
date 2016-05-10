@@ -46,7 +46,7 @@ FactoryGirl.define do
         end
         order.line_items.reload
 
-        create(:shipment, order: order, cost: evaluator.shipment_cost, shipping_method: evaluator.shipping_method, address: evaluator.ship_address, stock_location: evaluator.stock_location)
+        create(:shipment, order: order, cost: evaluator.shipment_cost, shipping_method: evaluator.shipping_method, stock_location: evaluator.stock_location)
         order.shipments.reload
 
         order.update!
@@ -94,7 +94,7 @@ FactoryGirl.define do
                 next unless evaluator.with_cartons
                 Spree::Carton.create!(
                   stock_location: shipment.stock_location,
-                  address: shipment.address,
+                  address: order.ship_address,
                   shipping_method: shipment.shipping_method,
                   inventory_units: shipment.inventory_units,
                   shipped_at: Time.current
