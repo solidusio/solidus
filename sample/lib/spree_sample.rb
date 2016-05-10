@@ -25,6 +25,8 @@ module SpreeSample
 
       Spree::Sample.load_sample("orders")
       Spree::Sample.load_sample("payments")
+
+      Spree::Sample.load_sample("reimbursements")
     end
   end
 end
