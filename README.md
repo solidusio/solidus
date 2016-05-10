@@ -37,6 +37,8 @@ custom frontend instead of using [`solidus_frontend`](https://github.com/solidus
 Getting started
 ---------------
 
+[![Deploy](https://www.herokucdn.com/deploy/button.png)](https://heroku.com/deploy?template=https://github.com/solidusio/sandbox-demo)
+
 To add solidus, begin with a rails 4.2 application. Add the following to your
 Gemfile.
 
