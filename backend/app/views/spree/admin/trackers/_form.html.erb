@@ -1,11 +1,11 @@
 <div data-hook="admin_tracker_form_fields" class="row">
-  <div class="alpha four columns">
+  <div class="alpha eight columns">
     <div data-hook="analytics_id" class="field">
       <%= f.label :analytics_id %>
       <%= f.text_field :analytics_id, :class => 'fullwidth' %>
     </div>
   </div>
-  <div class="omega four columns">
+  <div class="four columns">
     <div data-hook="active" class="field">
       <%= f.label :active %>
       <ul>
@@ -18,6 +18,14 @@
           <%= label_tag :tracker_active_false, Spree.t(:say_no) %>
         </li>
       </ul>
+    </div>
+  </div>
+  <div class="omega four columns">
+    <div class="field">
+      <%= f.label :store %>
+      <%= collection_select(
+        :tracker, :store_id, Spree::Store.all, :id, :name,
+        {}, {class: "select2 fullwidth"}) %>
     </div>
   </div>
 
