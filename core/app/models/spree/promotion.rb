@@ -125,7 +125,7 @@ module Spree
 
     # called anytime order.update! happens
     def eligible?(promotable, promotion_code: nil)
-      return false if expired?
+      return false if inactive?
       return false if usage_limit_exceeded?
       return false if promotion_code && promotion_code.usage_limit_exceeded?
       return false if blacklisted?(promotable)

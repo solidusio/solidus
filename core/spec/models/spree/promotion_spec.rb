@@ -294,35 +294,35 @@ describe Spree::Promotion, type: :model do
     end
   end
 
-  context "#expired" do
+  context "#inactive" do
     it "should not be exipired" do
-      expect(promotion).not_to be_expired
+      expect(promotion).not_to be_inactive
     end
 
-    it "should be expired if it hasn't started yet" do
+    it "should be inactive if it hasn't started yet" do
       promotion.starts_at = Time.current + 1.day
-      expect(promotion).to be_expired
+      expect(promotion).to be_inactive
     end
 
-    it "should be expired if it has already ended" do
+    it "should be inactive if it has already ended" do
       promotion.expires_at = Time.current - 1.day
-      expect(promotion).to be_expired
+      expect(promotion).to be_inactive
     end
 
-    it "should not be expired if it has started already" do
+    it "should not be inactive if it has started already" do
       promotion.starts_at = Time.current - 1.day
-      expect(promotion).not_to be_expired
+      expect(promotion).not_to be_inactive
     end
 
-    it "should not be expired if it has not ended yet" do
+    it "should not be inactive if it has not ended yet" do
       promotion.expires_at = Time.current + 1.day
-      expect(promotion).not_to be_expired
+      expect(promotion).not_to be_inactive
     end
 
-    it "should not be expired if current time is within starts_at and expires_at range" do
+    it "should not be inactive if current time is within starts_at and expires_at range" do
       promotion.starts_at = Time.current - 1.day
       promotion.expires_at = Time.current + 1.day
-      expect(promotion).not_to be_expired
+      expect(promotion).not_to be_inactive
     end
   end
 

@@ -256,7 +256,7 @@ module Spree
     # @return [Array] all advertised and not-rejected promotions
     def possible_promotions
       promotion_ids = promotion_rules.map(&:promotion_id).uniq
-      Spree::Promotion.advertised.where(id: promotion_ids).reject(&:expired?)
+      Spree::Promotion.advertised.where(id: promotion_ids).reject(&:inactive?)
     end
 
     # The number of on-hand stock items; Infinity if any variant does not track
