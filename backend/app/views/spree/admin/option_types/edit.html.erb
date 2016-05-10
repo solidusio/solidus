@@ -1,8 +1,7 @@
-<% content_for :page_title do %>
-  <%= link_to Spree::Product.model_name.human(count: :other), spree.admin_products_path  %> &#x2f; 
-  <%= link_to Spree::OptionType.model_name.human(count: :other), spree.admin_option_types_path %> &#x2f;
-  <%= @option_type.name %>
-<% end %>
+<% add_breadcrumb(link_to Spree::Product.model_name.human(count: :other), spree.admin_products_path) %>
+<% add_breadcrumb(link_to Spree::OptionType.model_name.human(count: :other), spree.admin_option_types_path) %>
+<% add_breadcrumb(@option_type.name) %>
+
 
 <% content_for :page_actions do %>
   <li>

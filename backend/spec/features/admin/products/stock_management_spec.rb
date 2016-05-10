@@ -36,7 +36,7 @@ describe "Product Stock", type: :feature do
       end
 
       it "renders" do
-        expect(page).to have_content('Products / apache baseball cap')
+        expect(page).to have_content('Productsapache baseball cap')
         expect(page.current_url).to match("admin/products/apache-baseball-cap/stock")
       end
     end

@@ -1,6 +1,5 @@
-<% content_for :page_title do %>
-  <%= Spree::Order.model_name.human(count: :other) %>
-<% end %>
+<% add_breadcrumb(Spree::Order.model_name.human(count: :other)) %>
+
 
 <% content_for :page_actions do %>
   <li>

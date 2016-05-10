@@ -1,8 +1,7 @@
-<% content_for :page_title do %>
-  <%= link_to Spree::Product.model_name.human(count: :other), spree.admin_products_path  %> &#x2f; 
-  <%= link_to Spree::Taxonomy.model_name.human(count: :other), spree.admin_taxonomies_path %> &#x2f;
-  <%= Spree.t(:new_taxonomy) %>
-<% end %>
+<% add_breadcrumb(link_to Spree::Product.model_name.human(count: :other), spree.admin_products_path) %>
+<% add_breadcrumb(link_to Spree::Taxonomy.model_name.human(count: :other), spree.admin_taxonomies_path) %>
+<% add_breadcrumb(Spree.t(:new_taxonomy)) %>
+
 
 <% content_for :page_actions do %>
 <% end %>

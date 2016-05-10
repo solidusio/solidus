@@ -1,11 +1,10 @@
 <%= render 'spree/admin/shared/shipping_tabs' %>
 
-<% content_for :page_title do %>
-  <%= Spree.t(:settings) %> &#x2f;
-  <%= Spree.t('admin.tab.shipping') %> &#x2f;
-  <%= link_to Spree::StockLocation.model_name.human(count: :other), spree.admin_stock_locations_path %> &#x2f;
-  <%= @stock_location.name %>
-<% end %>
+<% add_breadcrumb(Spree.t(:settings)) %>
+<% add_breadcrumb(Spree.t('admin.tab.shipping')) %>
+<% add_breadcrumb(link_to Spree::StockLocation.model_name.human(count: :other), spree.admin_stock_locations_path) %>
+<% add_breadcrumb(@stock_location.name) %>
+
 
 <% content_for :page_actions do %>
 <% end %>

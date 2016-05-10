@@ -1,10 +1,7 @@
 <%= render 'spree/admin/shared/general_tabs' %>
 
-<% content_for :page_title do %>
-  <%= Spree.t(:settings) %> &#x2f;
-  <%= Spree.t(:general) %> &#x2f;
-  <%= Spree.t(:settings) %>
-<% end %>
+<% add_breadcrumb(Spree.t(:settings)) %>
+<% add_breadcrumb(Spree.t(:general_settings)) %>
 
 <%= form_tag admin_general_settings_path, method: :put do %>
   <div id="preferences" data-hook>

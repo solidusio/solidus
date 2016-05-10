@@ -1,9 +1,8 @@
-<% content_for :page_title do %>
-  <%= link_to Spree::LegacyUser.model_name.human(count: :other), spree.admin_users_path %> &#x2f;
-  <%= link_to @user.email, edit_admin_user_url(@user) %> &#x2f;
-  <%= link_to Spree::StoreCredit.model_name.human, spree.admin_user_store_credits_path(@user) %> &#x2f;
-  <%= @store_credit.display_amount.to_html %>
-<% end %>
+<% add_breadcrumb(link_to Spree::LegacyUser.model_name.human(count: :other), spree.admin_users_path) %>
+<% add_breadcrumb(link_to @user.email, edit_admin_user_url(@user)) %>
+<% add_breadcrumb(link_to Spree::StoreCredit.model_name.human, spree.admin_user_store_credits_path(@user)) %>
+<% add_breadcrumb(@store_credit.display_amount.to_html) %>
+
 
 <%= render 'spree/admin/users/sidebar' %>
 <%= render 'spree/admin/users/tabs', current: :store_credits %>

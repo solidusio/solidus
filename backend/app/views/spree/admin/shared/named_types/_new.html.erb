@@ -1,11 +1,10 @@
 <%= render 'spree/admin/shared/settings_checkout_tabs' %>
 
-<% content_for :page_title do %>
-  <%= root_tab %> &#x2f;
-  <%= sub_tab %> &#x2f;
-  <%= index_link %> &#x2f;
-  <%= new_object %>
-<% end %>
+<% add_breadcrumb(root_tab) %>
+<% add_breadcrumb(sub_tab) %>
+<% add_breadcrumb(index_link) %>
+<% add_breadcrumb(new_object) %>
+
 
 <% content_for :page_actions do %>
 <% end %>

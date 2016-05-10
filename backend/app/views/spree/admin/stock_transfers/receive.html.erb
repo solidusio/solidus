@@ -1,6 +1,5 @@
-<% content_for :page_title do %>
-  <%= "#{Spree.t(:receiving)} #{@stock_transfer.number}" %>
-<% end %>
+<% add_breadcrumb("#{Spree.t(:receiving)} #{@stock_transfer.number}") %>
+
 
 <% content_for :page_actions do %>
   <li>

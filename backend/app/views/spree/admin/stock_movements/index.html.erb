@@ -1,8 +1,7 @@
 <%= render 'spree/admin/shared/shipping_tabs' %>
 
-<% content_for :page_title do %>
-  <%= Spree.t(:stock_movements_for_stock_location, stock_location_name: @stock_location.name) %>
-<% end %>
+<% add_breadcrumb(Spree.t(:stock_movements_for_stock_location, stock_location_name: @stock_location.name)) %>
+
 
 <% content_for :page_actions do %>
   <% if can?(:create, Spree::StockMovement) %>

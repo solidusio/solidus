@@ -9,9 +9,8 @@
 <%= render :partial => 'spree/admin/shared/product_tabs', :locals => { :current => 'Product Details' } %>
 <%= render :partial => 'spree/shared/error_messages', :locals => { :target => @product } %>
 
-<% content_for :page_title do %>
-  &#x2f; <%= Spree.t(:product_details) %>
-<% end %>
+<% add_breadcrumb(Spree.t(:product_details)) %>
+
 <%= form_for [:admin, @product], :method => :put, :html => { :multipart => true } do |f| %>
   <fieldset class="no-border-top">
     <%= render :partial => 'form', :locals => { :f => f } %>

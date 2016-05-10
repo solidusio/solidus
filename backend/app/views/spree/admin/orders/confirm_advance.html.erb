@@ -1,8 +1,7 @@
 <%= render partial: 'spree/admin/shared/order_tabs', locals: {current: 'Confirm'} %>
 
-<% content_for :page_title do %>
-  &#x2f; <%= Spree.t(:confirm_order) %>
-<% end %>
+<% add_breadcrumb(Spree.t(:confirm_order)) %>
+
 
 <div class="form-buttons filter-actions actions" data-hook="complete-order-button">
   <div><%= Spree.t(:order_please_refresh) %></div><br/>

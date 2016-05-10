@@ -1,10 +1,8 @@
 <%= render partial: 'spree/admin/shared/order_tabs', locals: {current: 'Payments'} %>
 
-<% content_for :page_title do %>
-  &#x2f; <%= link_to Spree::Payment.model_name.human(count: :other), spree.admin_order_payments_path(@order) %>
-  &#x2f; <%= link_to "#{Spree::Payment.model_name.human} #{@refund.payment.id}", admin_order_payment_path(@refund.payment.order, @refund.payment) %>
-  &#x2f; <%= Spree.t(:editing_refund) %> <%= @refund.id %>
-<% end %>
+<% add_breadcrumb(link_to Spree::Payment.model_name.human(count: :other), spree.admin_order_payments_path(@order)) %>
+<% add_breadcrumb(link_to "#{Spree::Payment.model_name.human} #{@refund.payment.id}", admin_order_payment_path(@refund.payment.order, @refund.payment)) %>
+<% add_breadcrumb("#{Spree.t(:editing_refund)} #{@refund.id}") %>
 
 <%= form_for [:admin, @refund.payment.order, @refund.payment, @refund] do |f| %>
   <fieldset class="no-border-top">

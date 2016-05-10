@@ -9,9 +9,8 @@
 
 <%= render :partial => 'spree/admin/shared/order_tabs', :locals => { :current => 'Cart' } %>
 
-<% content_for :page_title do %>
-  &#x2f; <%= Spree.t(:cart) %>
-<% end %>
+<% add_breadcrumb(Spree.t(:cart)) %>
+
 
 <div data-hook="admin_order_edit_header">
   <%= render :partial => 'spree/shared/error_messages', :locals => { :target => @order } %>

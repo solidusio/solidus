@@ -10,9 +10,8 @@
   <% end %>
 <% end %>
 
-<% content_for :page_title do %>
-  &#x2f; <%= Spree::ReturnAuthorization.model_name.human(count: :other) %>
-<% end %>
+<% add_breadcrumb(Spree::ReturnAuthorization.model_name.human(count: :other)) %>
+
 
 <% if @order.shipments.any?(&:shipped?) || @order.return_authorizations.any? %>
   <table class="index">

@@ -8,9 +8,7 @@
   <% end %>
 <% end %>
 
-<% content_for :page_title do %>
-  &#x2f; <%= Spree::Payment.model_name.human(count: :other) %>
-<% end %>
+<% add_breadcrumb(Spree::Payment.model_name.human(count: :other)) %>
 
 <% if @order.outstanding_balance? %>
   <h5 class="outstanding-balance"><%= @order.outstanding_balance < 0 ? Spree.t(:credit_owed) : Spree.t(:balance_due) %>: <strong><%= @order.display_outstanding_balance %></strong></h5>

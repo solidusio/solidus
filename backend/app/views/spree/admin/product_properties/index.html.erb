@@ -1,9 +1,7 @@
 <%= render 'spree/admin/shared/product_tabs', :current => 'Product Properties' %>
 <%= render 'spree/shared/error_messages', :target => @product %>
 
-<% content_for :page_title do %>
-  &#x2f; <%= Spree::ProductProperty.model_name.human(count: :other) %>
-<% end %>
+<% add_breadcrumb(Spree::ProductProperty.model_name.human(count: :other)) %>
 
 <% content_for :page_actions do %>
   <% if can?(:create, Spree::ProductProperty) %>

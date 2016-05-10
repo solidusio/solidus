@@ -8,10 +8,8 @@
 
 <%= render :partial => 'spree/admin/shared/order_tabs', :locals => { :current => 'Return Authorizations' } %>
 
-<% content_for :page_title do %>
-  &#x2f; <%= link_to Spree::ReturnAuthorization.model_name.human(count: :other), spree.admin_order_return_authorizations_url %>
-  &#x2f; <%= @return_authorization.number %> &#40;<%= Spree.t(@return_authorization.state.downcase) %>&#41;
-<% end %>
+<% add_breadcrumb(link_to Spree::ReturnAuthorization.model_name.human(count: :other), spree.admin_order_return_authorizations_url) %>
+<% add_breadcrumb("#{@return_authorization.number} (#{Spree.t(@return_authorization.state.downcase)})") %>
 
 
 <%= render :partial => 'spree/shared/error_messages', :locals => { :target => @return_authorization } %>

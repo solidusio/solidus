@@ -8,9 +8,7 @@
   <% end %>
 <% end %>
 
-<% content_for :page_title do %>
-  &#x2f; <%= Spree::CustomerReturn.model_name.human(count: :other) %>
-<% end %>
+<% add_breadcrumb(Spree::CustomerReturn.model_name.human(count: :other)) %>
 
 <% if @customer_returns.any? %>
   <table class="index">

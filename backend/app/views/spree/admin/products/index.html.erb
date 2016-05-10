@@ -1,8 +1,6 @@
 <% admin_layout "full-width" %>
 
-<% content_for :page_title do %>
-  <%= Spree::Product.model_name.human(count: :other) %>
-<% end %>
+<% add_breadcrumb(Spree::Product.model_name.human(count: :other)) %>
 
 <% content_for :page_actions do %>
   <li id="new_product_link">
