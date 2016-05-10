@@ -11,9 +11,6 @@ module Spree
       # TODO: Remove this after deprecated usage in #update is removed
       include Spree::Core::ControllerHelpers::PaymentParameters
 
-      # This before_action comes from Spree::Core::ControllerHelpers::Order
-      skip_before_action :set_current_order
-
       def next
         if @order.confirm?
           Spree::Deprecation.warn "Using Spree::Api::CheckoutsController#next to transition to complete is deprecated. Please use #complete instead of #next.", caller
