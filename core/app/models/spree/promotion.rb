@@ -41,6 +41,9 @@ module Spree
         where(table[:expires_at].eq(nil).or(table[:expires_at].gt(time)))
     end
     scope :applied, -> { joins(:order_promotions).distinct }
+    scope :scheduled_after, -> (time) do
+      where(arel_table[:starts_at].gt(time))
+    end
 
     self.whitelisted_ransackable_associations = ['codes']
     self.whitelisted_ransackable_attributes = ['path', 'promotion_category_id']

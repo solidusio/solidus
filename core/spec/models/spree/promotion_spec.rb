@@ -36,6 +36,18 @@ describe Spree::Promotion, type: :model do
     end
   end
 
+  describe ".scheduled_after" do
+    let(:old_promotion) { create(:promotion, starts_at: 1.week.ago) }
+    let(:new_promotion) { create(:promotion, starts_at: 1.week.from_now) }
+
+    subject { Spree::Promotion.scheduled_after(Time.current) }
+
+    it "scopes promotions that are scheduled to start after the given time" do
+      expect(subject).to include(new_promotion)
+      expect(subject).not_to include(old_promotion)
+    end
+  end
+
   describe ".advertised" do
     let(:promotion) { create(:promotion) }
     let(:advertised_promotion) { create(:promotion, advertise: true) }
