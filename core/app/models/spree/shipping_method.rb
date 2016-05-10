@@ -41,12 +41,12 @@ module Spree
 
     # @param stock_location [Spree::StockLocation] stock location
     # @return [ActiveRecord::Relation] shipping methods which are available
-    #   with the stock location or are marked available_to_all
+    #   with the stock location or are marked available_to_all_stock_locations
     def self.available_in_stock_location(stock_location)
       smsl_table = ShippingMethodStockLocation.arel_table
 
       # We are searching for either a matching entry in the stock location join
-      # table or available_to_all being true.
+      # table or available_to_all_stock_locations being true.
       # We need to use an outer join otherwise a shipping method with no
       # associated stock locations will be filtered out of the results. In
       # rails 5 this will be easy using .left_join and .or, but for now we must
@@ -56,7 +56,7 @@ module Spree
         on(arel_table[:id].eq(smsl_table[:shipping_method_id])).
         join_sources
       arel_condition =
-        arel_table[:available_to_all].eq(true).or(smsl_table[:stock_location_id].eq(stock_location.id))
+        arel_table[:available_to_all_stock_locations].eq(true).or(smsl_table[:stock_location_id].eq(stock_location.id))
 
       joins(arel_join).where(arel_condition).distinct
     end

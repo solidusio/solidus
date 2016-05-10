@@ -70,7 +70,7 @@ module Spree
 
         context "based on stock location and categories" do
           let(:first_method) do
-            FactoryGirl.create(:shipping_method, available_to_all: true)
+            FactoryGirl.create(:shipping_method, available_to_all_stock_locations: true)
           end
           let(:second_method) do
             FactoryGirl.create(:shipping_method, stock_locations: [stock_location])
