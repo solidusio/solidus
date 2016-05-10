@@ -22,6 +22,18 @@ module Spree
         end
       end
 
+      def page_title
+        if content_for?(:title)
+          content_for(:title)
+        elsif content_for?(:page_title)
+          content_for(:page_title)
+        elsif breadcrumbs.any?
+          strip_tags(breadcrumbs.last)
+        else
+          Spree.t(controller.controller_name, default: controller.controller_name.titleize)
+        end
+      end
+
       # Make an admin tab that coveres one or more resources supplied by symbols
       # Option hash may follow. Valid options are
       #   * :label to override link text, otherwise based on the first resource name (translated)
