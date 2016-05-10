@@ -1,6 +1,27 @@
 module Spree
   module Admin
     module NavigationHelper
+      # Add items to current page breadcrumb heirarchy
+      def add_breadcrumb(*ancestors, &block)
+        breadcrumbs.concat(ancestors) if ancestors.present?
+        breadcrumbs.push(capture(&block)) if block_given?
+      end
+
+      def add_page_title_to_breadcrumbs
+        ActiveSupport::Deprecation.warn('content_for(:page_title) is deprecated, use add_breadcrumb')
+        add_breadcrumb(content_for(:page_title))
+      end
+
+      # Render Bootstrap style breadcrumbs
+      def render_breadcrumbs
+        add_page_title_to_breadcrumbs if content_for?(:page_title)
+        content_tag :ol, class: 'breadcrumb' do
+          safe_join breadcrumbs.collect { |level|
+            content_tag(:li, level, class: "separator #{level == breadcrumbs.last ? 'active' : ''}")
+          }
+        end
+      end
+
       # Make an admin tab that coveres one or more resources supplied by symbols
       # Option hash may follow. Valid options are
       #   * :label to override link text, otherwise based on the first resource name (translated)
@@ -135,6 +156,12 @@ module Spree
         content_tag(:li, options) do
           link_to(link_text, url)
         end
+      end
+
+      private
+
+      def breadcrumbs
+        @breadcrumbs ||= []
       end
     end
   end
