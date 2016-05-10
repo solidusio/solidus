@@ -3,8 +3,6 @@ module Spree
     include Spree::Core::ControllerHelpers::Pricing
     include Spree::Core::ControllerHelpers::Order
 
-    skip_before_action :set_current_order, only: :cart_link
-
     def unauthorized
       render 'spree/shared/unauthorized', layout: Spree::Config[:layout], status: 401
     end
