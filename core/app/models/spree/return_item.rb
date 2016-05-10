@@ -72,6 +72,13 @@ module Spree
     delegate :variant, to: :inventory_unit
     delegate :shipment, to: :inventory_unit
 
+    delegate :sku, to: :variant, prefix: true
+    delegate :name, to: :variant, prefix: true
+    delegate :options_text, to: :variant, prefix: true
+    delegate :sku, to: :exchange_variant, prefix: true
+    delegate :name, to: :exchange_variant, prefix: true
+    delegate :options_text, to: :exchange_variant, prefix: true
+
     before_create :set_default_amount, unless: :amount_changed?
     before_save :set_exchange_amount
 
