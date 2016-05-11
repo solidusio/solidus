@@ -16,62 +16,6 @@ describe Spree::ReturnItem, type: :model do
     allow_any_instance_of(Spree::Order).to receive(:return!).and_return(true)
   end
 
-  context 'delegate' do
-    let(:order)                   { create(:shipped_order) }
-    let(:inventory_unit)          { create(:inventory_unit, order: order, state: 'shipped') }
-    let(:exchange_inventory_unit) { create(:inventory_unit, order: order, state: 'shipped') }
-    let(:exchange_variant)        { exchange_inventory_unit.variant }
-    let(:return_item)             { build(:return_item, inventory_unit: inventory_unit, exchange_inventory_unit: exchange_inventory_unit, exchange_variant: exchange_variant) }
-
-    describe '#variant_sku' do
-      subject { return_item.variant_sku }
-
-      it 'returns variant sku' do
-        expect(subject).to eq inventory_unit.variant.sku
-      end
-    end
-
-    describe '#variant_name' do
-      subject { return_item.variant_name }
-
-      it 'returns variant name' do
-        expect(subject).to eq inventory_unit.variant.name
-      end
-    end
-
-    describe '#variant_options_text' do
-      subject { return_item.variant_options_text }
-
-      it 'returns variant option type' do
-        expect(subject).to eq inventory_unit.variant.options_text
-      end
-    end
-
-    describe '#exchange_variant_sku' do
-      subject { return_item.exchange_variant_sku }
-
-      it 'returns exchange variant sku' do
-        expect(subject).to eq exchange_variant.sku
-      end
-    end
-
-    describe '#exchange_variant_name' do
-      subject { return_item.exchange_variant_name }
-
-      it 'returns exchange variant name' do
-        expect(subject).to eq exchange_variant.name
-      end
-    end
-
-    describe '#exchange_variant_options_text' do
-      subject { return_item.exchange_variant_options_text }
-
-      it 'returns exchange variant option type' do
-        expect(subject).to eq exchange_variant.options_text
-      end
-    end
-  end
-
   describe '#receive!' do
     let(:now)            { Time.current }
     let(:order)          { create(:shipped_order) }
