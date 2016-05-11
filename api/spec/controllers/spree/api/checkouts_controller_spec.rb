@@ -136,7 +136,7 @@ module Spree
 
       it "can update shipping method and transition from delivery to payment" do
         order.update_column(:state, "delivery")
-        shipment = create(:shipment, order: order, address: order.ship_address)
+        shipment = create(:shipment, order: order)
         shipment.refresh_rates
         shipping_rate = shipment.shipping_rates.where(selected: false).first
         api_put :update, id: order.to_param, order_token: order.guest_token,
