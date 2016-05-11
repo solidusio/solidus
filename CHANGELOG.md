@@ -183,6 +183,7 @@
     * JavaScript for it has been moved from address.js into its own `spree/frontend/checkout/coupon-code`
     * Numerous small nuisances have been fixed [#1090](https://github.com/solidusio/solidus/pull/1090)
 
+<<<<<<< 356ed069e972d5bae6275b433e17b98f885b3fc4
 *   Allow filtering orders by store when multiple stores are present. [#1149](https://github.com/solidusio/solidus/pull/1140)
 
 *   Remove unused `user_id` column from PromotionRule. [#1259](https://github.com/solidusio/solidus/pull/1259)
@@ -194,6 +195,9 @@
     Previously adjustments and total columns were updated after saving a Shipment or LineItem.
     This was unnecessary since it didn't update the order totals, and running
     order.update! would recalculate the adjustments and totals again.
+
+*   Filter orders by store when more than a single store is present. [#1149](https://github.com/solidusio/solidus/pull/1140)
+
 
 ## Solidus 1.3.0 (2016-06-22)
 
