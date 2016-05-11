@@ -30,7 +30,7 @@ describe Spree::ReimbursementMailer, type: :mailer do
 
         specify do
           reimbursement_email = Spree::ReimbursementMailer.reimbursement_email(reimbursement)
-          expect(reimbursement_email.body).to include("Caro Cliente,")
+          expect(reimbursement_email).to have_body_text("Caro Cliente,")
         end
       end
     end
