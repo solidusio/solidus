@@ -45,105 +45,132 @@ describe "Orders Listing", type: :feature, js: true do
   end
 
   context "searching orders" do
-    it "should be able to search orders" do
-      click_on 'Filter'
-      fill_in "q_number_cont", with: "R200"
-      click_on 'Filter Results'
-      within_row(1) do
-        expect(page).to have_content("R200")
-      end
+    context "when there are multiple stores" do
+      let(:stores) { FactoryGirl.create_pair(:store) }
 
-      # Ensure that the other order doesn't show up
-      within("table#listing_orders") { expect(page).not_to have_content("R100") }
-    end
-
-    it "should be able to filter on variant_id" do
-      click_on 'Filter'
-      select2_search @order1.products.first.sku, from: Spree.t(:variant)
-      click_on 'Filter Results'
-
-      within_row(1) do
-        expect(page).to have_content(@order1.number)
-      end
-
-      expect(page).not_to have_content(@order2.number)
-    end
-
-    context "when pagination is really short" do
       before do
-        @old_per_page = Spree::Config[:orders_per_page]
-        Spree::Config[:orders_per_page] = 1
-      end
-
-      after do
-        Spree::Config[:orders_per_page] = @old_per_page
-      end
-
-      # Regression test for https://github.com/spree/spree/issues/4004
-      it "should be able to go from page to page for incomplete orders" do
-        10.times { Spree::Order.create email: "incomplete@example.com" }
-        click_on 'Filter'
-        uncheck "q_completed_at_not_null"
-        click_on 'Filter Results'
-        within(".pagination", match: :first) do
-          click_link "2"
+        stores.each do |store|
+          FactoryGirl.create(:completed_order_with_totals, number: "R#{store.id}999", store: store)
         end
-        expect(page).to have_content("incomplete@example.com")
-        click_on 'Filter'
-        expect(find("#q_completed_at_not_null")).not_to be_checked
+      end
+
+      it "can find the orders belonging to a specific store" do
+        main_store, other_store = stores
+
+        click_on "Filter"
+        select2 main_store.name, from: Spree.t(:store)
+        click_on "Filter Results"
+
+        within_row(1) do
+          expect(page).to have_content("R#{main_store.id}999")
+        end
+
+        # Ensure that the other order doesn't show up
+        within("table#listing_orders") { expect(page).not_to have_content("R#{other_store.id}999") }
       end
     end
 
-    it "should be able to search orders using only completed at input" do
-      click_on 'Filter'
-      fill_in "q_created_at_gt", with: Date.current
+    context "when there's a single store" do
+      it "should be able to search orders" do
+        click_on 'Filter'
+        fill_in "q_number_cont", with: "R200"
+        click_on 'Filter Results'
+        within_row(1) do
+          expect(page).to have_content("R200")
+        end
 
-      # Just so the datepicker gets out of poltergeists way.
-      page.execute_script("$('#q_created_at_gt').datepicker('widget').hide();")
-
-      click_on 'Filter Results'
-      within_row(1) { expect(page).to have_content("R100") }
-
-      # Ensure that the other order doesn't show up
-      within("table#listing_orders") { expect(page).not_to have_content("R200") }
-    end
-
-    context "filter on promotions" do
-      before(:each) do
-        @order1.order_promotions.build(
-          promotion: promotion,
-          promotion_code: promotion_code
-        )
-        @order1.save
-        visit spree.admin_orders_path
+        # Ensure that the other order doesn't show up
+        within("table#listing_orders") { expect(page).not_to have_content("R100") }
       end
 
-      it "only shows the orders with the selected promotion" do
+      it "should be able to filter on variant_id" do
         click_on 'Filter'
-        fill_in "q_promotions_codes_value_cont", with: promotion.codes.first.value
+        select2_search @order1.products.first.sku, from: Spree.t(:variant)
+        click_on 'Filter Results'
+
+        within_row(1) do
+          expect(page).to have_content(@order1.number)
+        end
+
+        expect(page).not_to have_content(@order2.number)
+      end
+
+      context "when pagination is really short" do
+        before do
+          @old_per_page = Spree::Config[:orders_per_page]
+          Spree::Config[:orders_per_page] = 1
+        end
+
+        after do
+          Spree::Config[:orders_per_page] = @old_per_page
+        end
+
+        # Regression test for https://github.com/spree/spree/issues/4004
+        it "should be able to go from page to page for incomplete orders" do
+          10.times { Spree::Order.create email: "incomplete@example.com" }
+          click_on 'Filter'
+          uncheck "q_completed_at_not_null"
+          click_on 'Filter Results'
+          within(".pagination", match: :first) do
+            click_link "2"
+          end
+          expect(page).to have_content("incomplete@example.com")
+          click_on 'Filter'
+          expect(find("#q_completed_at_not_null")).not_to be_checked
+        end
+      end
+
+      it "should be able to search orders using only completed at input" do
+        click_on 'Filter'
+        fill_in "q_created_at_gt", with: Date.current
+
+        # Just so the datepicker gets out of poltergeists way.
+        page.execute_script("$('#q_created_at_gt').datepicker('widget').hide();")
+
         click_on 'Filter Results'
         within_row(1) { expect(page).to have_content("R100") }
+
+        # Ensure that the other order doesn't show up
         within("table#listing_orders") { expect(page).not_to have_content("R200") }
       end
-    end
 
-    context "when toggling the completed orders checkbox" do
-      before do
-        create(:order, number: 'R300', completed_at: nil, state: 'cart')
+      context "filter on promotions" do
+        before(:each) do
+          @order1.order_promotions.build(
+            promotion: promotion,
+            promotion_code: promotion_code
+          )
+          @order1.save
+          visit spree.admin_orders_path
+        end
+
+        it "only shows the orders with the selected promotion" do
+          click_on 'Filter'
+          fill_in "q_promotions_codes_value_cont", with: promotion.codes.first.value
+          click_on 'Filter Results'
+          within_row(1) { expect(page).to have_content("R100") }
+          within("table#listing_orders") { expect(page).not_to have_content("R200") }
+        end
       end
 
-      it "shows both complete and incomplete orders" do
-        check "q_completed_at_not_null"
-        click_on 'Filter'
+      context "when toggling the completed orders checkbox" do
+        before do
+          create(:order, number: 'R300', completed_at: nil, state: 'cart')
+        end
 
-        expect(page).to have_content("R200")
-        expect(page).to_not have_content("R300")
+        it "shows both complete and incomplete orders" do
+          check "q_completed_at_not_null"
+          click_on 'Filter'
 
-        uncheck "q_completed_at_not_null"
-        click_on 'Filter Results'
+          expect(page).to have_content("R200")
+          expect(page).to_not have_content("R300")
 
-        expect(page).to have_content("R200")
-        expect(page).to have_content("R300")
+          uncheck "q_completed_at_not_null"
+          click_on 'Filter Results'
+
+          expect(page).to have_content("R200")
+          expect(page).to have_content("R300")
+        end
       end
     end
   end
