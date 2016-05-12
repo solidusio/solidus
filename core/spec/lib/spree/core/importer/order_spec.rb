@@ -1,6 +1,14 @@
 require 'spec_helper'
 
 module Spree
+  PermittedAttributes.module_eval do
+    mattr_writer :line_item_option_attributes
+  end
+
+  unless PermittedAttributes.line_item_option_attributes.include? :some_option
+    PermittedAttributes.line_item_option_attributes += [:price, :currency]
+  end
+
   module Core
     describe Importer::Order do
       let!(:store) { create(:store) }
@@ -119,7 +127,7 @@ module Spree
       end
 
       it 'handles line_item updating exceptions' do
-        line_items['0'][:currency] = 'GBP'
+        line_items['0'][:options] = { currency: 'GBP' }
         params = { line_items_attributes: line_items }
 
         expect {
@@ -182,7 +190,7 @@ module Spree
             currency: "GBP",
             line_items_attributes: line_items
           }
-          line_items["0"].merge! currency: "GBP", price: 1.99
+          line_items["0"][:options] = { currency: "GBP", price: 1.99 }
           order = Importer::Order.import(user, params)
           expect(order.currency).to eq "GBP"
           expect(order.line_items.first.price).to eq 1.99

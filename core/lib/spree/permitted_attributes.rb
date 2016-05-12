@@ -12,6 +12,7 @@ module Spree
       :image_attributes,
       :inventory_unit_attributes,
       :line_item_attributes,
+      :line_item_option_attributes,
       :option_type_attributes,
       :option_value_attributes,
       :payment_attributes,
@@ -60,6 +61,8 @@ module Spree
 
     @@line_item_attributes = [:id, :variant_id, :quantity]
 
+    @@line_item_option_attributes = []
+
     @@option_type_attributes = [:name, :presentation, :option_values_attributes]
 
     @@option_value_attributes = [:name, :presentation]
@@ -101,8 +104,9 @@ module Spree
     @@stock_movement_attributes = [
       :quantity, :stock_item, :stock_item_id, :originator, :action]
 
-    @@store_attributes = [:name, :url, :seo_title, :meta_keywords,
-                          :meta_description, :default_currency, :mail_from_address]
+    @@store_attributes = [
+      :name, :url, :seo_title, :meta_keywords,
+      :meta_description, :default_currency, :mail_from_address]
 
     @@taxonomy_attributes = [:name]
 
@@ -125,3 +129,5 @@ module Spree
       :weight, :height, :width, :depth, :sku, :cost_currency, option_value_ids: [], options: [:name, :value]]
   end
 end
+
+require 'spree/permitted_attributes/admin'

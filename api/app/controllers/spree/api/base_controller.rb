@@ -11,9 +11,6 @@ module Spree
       include Spree::Core::ControllerHelpers::Pricing
       include Spree::Core::ControllerHelpers::StrongParameters
 
-      class_attribute :admin_line_item_attributes
-      self.admin_line_item_attributes = [:price, :variant_id, :sku]
-
       attr_accessor :current_api_user
 
       class_attribute :error_notifier
@@ -34,11 +31,7 @@ module Spree
 
       # users should be able to set price when importing orders via api
       def permitted_line_item_attributes
-        if can?(:admin, Spree::LineItem)
-          super + admin_line_item_attributes
-        else
-          super
-        end
+        can?(:admin, Spree::LineItem) ? permitted_admin_line_item_attributes : super
       end
 
       def load_user
