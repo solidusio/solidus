@@ -34,13 +34,22 @@ RSpec.describe Spree::Tax::TaxLocation do
         expect(subject.country_id).to eq(country.id)
       end
     end
+  end
 
-    context 'with a state object' do
-      let(:args) { { state: state } }
+  describe "#country" do
+    let(:country) { create(:country) }
+    subject { described_class.new(args).country }
 
-      it "will yield a location with that state's id" do
-        expect(subject.state_id).to eq(state.id)
-      end
+    context 'with a country object' do
+      let(:args) { { country: country } }
+
+      it { is_expected.to eq(country) }
+    end
+
+    context 'with no country object' do
+      let(:args) { { country: nil } }
+
+      it { is_expected.to be nil }
     end
   end
 
