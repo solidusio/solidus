@@ -3,7 +3,7 @@ uk:
     attributes:
       spree/address:
         address1: "Адреса"
-        address2: "Адреса (2ий рядок)"
+        address2: "Адреса (2-й рядок)"
         city: "Місто"
         country: "Країна"
         firstname: "Ім’я"
@@ -43,17 +43,17 @@ uk:
         checkout_complete: "Оформлення замовлення завершено"
         completed_at: "Завершено в"
         considered_risky: "Вважається ризикованим"
-        coupon_code: "Код купону"
+        coupon_code: "Код купона"
         created_at: "Дата замовлення"
         email: E-Mail клієнта
         ip_address: IP адреса
-        item_total: "Разом"
+        item_total: "Разом без знижки"
         number: "Номер"
         payment_state: "Стан оплати"
-        shipment_state: "Стан доставки"
+        shipment_state: "Стан відправлення"
         special_instructions: "Додаткові інструкції"
         state: "Стан"
-        total: "Загалом"
+        total: "Разом"
       spree/order/bill_address:
         address1: "Платіжна адреса. Вулиця"
         city: "Платіжна адреса. Місто"
@@ -75,13 +75,13 @@ uk:
       spree/payment_method:
         name: "Назва"
       spree/product:
-        available_on: "Доступно з"
+        available_on: "Доступний на"
         cost_currency: "Валюта"
         cost_price: "Собівартість"
         description: "Опис"
-        master_price: "Основна ціна"
+        master_price: "Ціна за замовчуванням"
         name: "Назва"
-        on_hand: "В наявності"
+        on_hand: "Вільний залишок"
         shipping_category: "Категорія доставки"
         tax_category: "Податкова категорія"
       spree/promotion:
@@ -89,11 +89,11 @@ uk:
         code: "Код купона"
         description: "Опис"
         event_name: "Назва події"
-        expires_at: "Дата завершення промо-акції"
+        expires_at: "Дата завершення"
         name: "Назва"
         path: "Шлях"
-        starts_at: "Дата початку промо-акції"
-        usage_limit: "Максимальна кількість використань"
+        starts_at: "Дата початку"
+        usage_limit: "Ліміт використань"
       spree/promotion_category:
         name: "Назва"
       spree/property:
@@ -108,16 +108,8 @@ uk:
       spree/state:
         abbr: "Абревіатура"
         name: "Назва"
-      spree/state_change:
-        state_changes:
-        state_from:
-        state_to:
-        timestamp:
-        type:
-        updated:
-        user:
       spree/store:
-        mail_from_address: e-mail в полі Від
+        mail_from_address: "E-mail адреса в полі 'Від кого'"
         meta_description: Meta Description
         meta_keywords: Meta Keywords
         name: "Назва сайту"
@@ -157,13 +149,13 @@ uk:
         spree/calculator/tiered_flat_rate:
           attributes:
             base:
-              keys_should_be_positive_number: "Ключі рівнів повинні бути числами, більшими 0"
+              keys_should_be_positive_number: "Ключі рівнів повинні бути числами, більшими за 0"
             preferred_tiers:
               should_be_hash: "повинно бути хешем"
         spree/calculator/tiered_percent:
           attributes:
             base:
-              keys_should_be_positive_number: "Ключі рівнів повинні бути числами, більшими 0"
+              keys_should_be_positive_number: "Ключі рівнів повинні бути числами, більшими за 0"
               values_should_be_percent: "Значення рівнів починні бути процентами між 0% та 100%"
             preferred_tiers:
               should_be_hash: "повинно бути хешем"
@@ -191,13 +183,13 @@ uk:
         spree/return_item:
           attributes:
             inventory_unit:
-              other_completed_return_item_exists: "%{inventory_unit_id} уже зайняте позицією повернення %{return_item_id}"
+              other_completed_return_item_exists: "%{inventory_unit_id} уже має повернення %{return_item_id}"
             reimbursement:
               cannot_be_associated_unless_accepted: "не можна прив’язати до позиції, яка не була прийнята."
         spree/store:
           attributes:
             base:
-              cannot_destroy_default_store:
+              cannot_destroy_default_store: "неможливо видалити магазин за замовчуванням"
     models:
       spree/address:
         few: "Адреси"
@@ -215,20 +207,20 @@ uk:
         one: "Кредитна картка"
         other: "Кредитних карток"
       spree/customer_return:
-        few: "Повернення покупця"
-        many: "Повернень покупця"
-        one: "Повернення покупця"
-        other: "Повернень покупця"
+        few: "Повернення від покупця"
+        many: "Повернень від покупця"
+        one: "Повернення від покупця"
+        other: "Повернень від покупця"
       spree/inventory_unit:
-        few: "Одиниці обліку"
-        many: "Одиниць обліку"
-        one: "Одиниця обліку"
-        other: "Одиниць обліку"
+        few: "Розміщення позиції замовлення"
+        many: "Розміщень позиції замовлення"
+        one: "Розміщення позиції замовлення"
+        other: "Розміщень позиції замовлення"
       spree/line_item:
-        few: "Позиції"
-        many: "Позицій"
-        one: "Позиція"
-        other: "Позицій"
+        few: "Позиції замовлення"
+        many: "Позицій замовлення"
+        one: "Позиція замовлення"
+        other: "Позицій замовлення"
       spree/option_type:
         few: "Характеристики"
         many: "Характеристик"
@@ -260,15 +252,15 @@ uk:
         one: "Товар"
         other: "Товарів"
       spree/promotion:
-        few: "Акції"
-        many: "Акцій"
-        one: "Акція"
-        other: "Акцій"
+        few: "Промоакції"
+        many: "Промоакцій"
+        one: "Промоакція"
+        other: "Промоакцій"
       spree/promotion_category:
-        few: "Категорії акцій"
-        many: "Категорій акцій"
-        one: "Категорія акцій"
-        other: "Категорій акцій"
+        few: "Категорії промоакцій"
+        many: "Категорій промоакцій"
+        one: "Категорія промоакцій"
+        other: "Категорій промоакцій"
       spree/property:
         few: "Властивості"
         many: "Властивостей"
@@ -280,10 +272,10 @@ uk:
         one: "Прототип"
         other: "Прототипів"
       spree/refund_reason:
-        few: "Причини повернення"
-        many: "Причин повернення"
-        one: "Причина повернення"
-        other: "Причин повернення"
+        few: "Підстави повернення грошей"
+        many: "Підстав повернення грошей"
+        one: "Підстава повернення грошей"
+        other: "Підстав повернення грошей"
       spree/reimbursement:
         few: "Відшкодування"
         many: "Відшкодувань"
@@ -295,15 +287,15 @@ uk:
         one: "Тип відшкодування"
         other: "Типів відшкодування"
       spree/return_authorization:
-        few: "Дозволи на повернення"
-        many: "Дозволів на повернення"
-        one: "Дозвіл на повернення"
-        other: "Дозволів на повернення"
+        few: "Дозволи на повернення товару"
+        many: "Дозволів на повернення товару"
+        one: "Дозвіл на повернення товару"
+        other: "Дозволів на повернення товару"
       spree/return_authorization_reason:
-        few: "Підстави дозволу на повернення"
-        many: "Підстав дозволу на повернення"
-        one: "Підстава дозволу на повернення"
-        other: "Підстав дозволу на повернення"
+        few: "Підстави дозволу на повернення товару"
+        many: "Підстав дозволу на повернення товару"
+        one: "Підстава дозволу на повернення товару"
+        other: "Підстав дозволу на повернення товару"
       spree/role:
         few: "Ролі"
         many: "Ролей"
@@ -326,25 +318,25 @@ uk:
         other: "Способів доставки"
       spree/state:
         few: "Регіони/Області"
-        many: "Ре��іонів/Областей"
+        many: "Регіонів/Областей"
         one: "Регіон/Область"
         other: "Регіонів/Областей"
-      spree/state_change:
+      spree/stock: Залишок
       spree/stock_location:
         few: "Склади"
         many: "Складів"
         one: "Склад"
         other: "Складів"
       spree/stock_movement:
-        few: "Переміщення товару"
-        many: "Переміщень товару"
-        one: "Переміщення товару"
-        other: "Переміщень товару"
+        few: "Рухи залишків"
+        many: "Рухів залишків"
+        one: "Рух залишків"
+        other: "Рухів залишків"
       spree/stock_transfer:
-        few: "Переміщення товарів"
-        many: "Переміщень товарів"
-        one: "Переміщення товарів"
-        other: "Переміщень товарів"
+        few: "Переміщеня залишків"
+        many: "Переміщень залишків"
+        one: "Переміщення залишків"
+        other: "Переміщення залишків"
       spree/tax_category:
         few: "Податкові категорії"
         many: "Податкових категорій"
@@ -412,9 +404,9 @@ uk:
       unlocked: "Ваш акаунт розблоковано. Тепер ви успішно увійшли в систему."
     user_passwords:
       user:
-        cannot_be_blank:
-        send_instructions:
-        updated:
+        cannot_be_blank: "Ваш пароль не може бути пустим"
+        send_instructions: "Ви отримаєте лист з інструкціями щодо скидання вашого пароля впродовж декількох хвилин"
+        updated: "Ваш пароль було успішно змінений"
     user_registrations:
       destroyed: "До побачення! Ваш акаунт знищено, але ми сподіваємося побачити вас знову найближчим часом."
       inactive_signed_up: "Ви успішно зареєструвались, проте ви не змогли увійти в систему тому що ваш обліковий запис %{reason}."
@@ -429,6 +421,8 @@ uk:
       not_found: "не знайдено"
       not_locked: "не було заблоковано"
       not_saved:
+        few: "%{count} помилки перешкоджають збереженню %{resource}:"
+        many: "%{count} помилок перешкоджають збереженню %{resource}:"
         one: '1 помилка перешкоджає збереженню %{resource}:'
         other: "%{count} помилок перешкоджають збереженню %{resource}:"
   spree:
@@ -449,7 +443,7 @@ uk:
       list: "Показати"
       listing: "Список"
       new: "Новий"
-      refund: "Відшкодувати"
+      refund: "Повернути гроші"
       save: "Зберегти"
       update: "Змінити"
     activate: "Активувати"
@@ -466,7 +460,7 @@ uk:
     add_product_properties: "Додати властивості товару"
     add_rule_of_type: "Додати правило типу"
     add_state: "Додати регіон/область"
-    add_stock: "Додати склад"
+    add_stock: "Додати залишок"
     add_stock_management: "Додати управління запасами"
     add_to_cart: "Додати в кошик"
     add_variant: "Додати варіант"
@@ -478,7 +472,7 @@ uk:
     adjustment_amount: "Загалом"
     adjustment_successfully_closed: "Коригування було успішно закрите!"
     adjustment_successfully_opened: "Коригування було успішно відкрите!"
-    adjustment_total: "Разом (коригування)"
+    adjustment_total: "Разом коригувань"
     adjustments: "Коригування"
     admin:
       tab:
@@ -487,8 +481,8 @@ uk:
         orders: "Замовлення"
         overview: "Перегляд"
         products: "Товари"
-        promotions: "Промо-акції"
-        promotion_categories:
+        promotions: "Промоакції"
+        promotion_categories: "Категорії промоакцій"
         properties: "Властивості"
         prototypes: "Прототипи"
         reports: "Звіти"
@@ -522,7 +516,7 @@ uk:
     amount: "Сума"
     analytics_desc_header_1: "Аналітика Spree"
     analytics_desc_header_2: "Аналітика в прямому ефірі додана на Spree dashboard"
-    analytics_desc_list_1: "Отримувати інформацію про продажі в режимі реального часу"
+    analytics_desc_list_1: "Отримати інформацію про продажі в режимі реального часу"
     analytics_desc_list_2: "Безкоштовний аккаунт Spree необхідний для активації"
     analytics_desc_list_3: "Відсутній код для встановлення"
     analytics_desc_list_4: "Повністю безкоштовний!"
@@ -537,19 +531,19 @@ uk:
     at_symbol: '@'
     authorization_failure: "Помилка авторизації"
     authorized: "Авторизовано"
-    auto_capture: "Автозахоплення"
+    auto_capture: "Автоматично проводити оплату"
     available_on: "Доступно з"
     average_order_value: "Середнє значення замовлень"
     avs_response: "Відповідь AVS"
     back: "Назад"
     back_end: "в адміністративному інтерфейсі"
     back_to_payment: "Назад до оплати"
-    back_to_resource_list:
-    back_to_rma_reason_list:
+    back_to_resource_list: "Назад до списку ресурсів"
+    back_to_rma_reason_list: "Назад до списку підстав дозволів на повернення товару"
     back_to_store: "Повернутися до магазину"
     back_to_users_list: "Назад до списку користувачів"
     backorderable: "Можливий продаж під замовлення"
-    backorderable_default:
+    backorderable_default: "Можливий продаж під замовлення за замовчуванням"
     backordered: "Під замовлення"
     backorders_allowed: "Продаж під замовлення дозволено"
     balance_due: "Дебетове сальдо"
@@ -563,15 +557,15 @@ uk:
     calculator: "Калькулятор"
     calculator_settings_warning: "При зміні типу калькулятора, ви повинні зберегти зміни, перш ніж ви зможете змінювати його налаштування."
     cancel: "Скасувати"
-    canceled_at:
-    canceler:
+    canceled_at: "Скасовано в"
+    canceler: "Скасував(ла)"
     cannot_create_customer_returns: "Неможливо створити повернення покупця, оскільки це замовлення не має відправлених одиниць."
     cannot_create_payment_without_payment_methods: "Неможливо створити оплату без визначення методів оплати."
     cannot_create_returns: "Неможливо оформити повернення, тому що це замовлення ще не відправлено."
     cannot_perform_operation: "Неможливо виконати необхідну операцію"
-    cannot_set_shipping_method_without_address: "Неможливо обрати спосіб доставки, поки дані користувача не вказані."
-    capture: "Провести платіж"
-    capture_events: "Події"
+    cannot_set_shipping_method_without_address: "Неможливо обрати спосіб доставки, доки дані користувача не вказані."
+    capture: "Провести оплати"
+    capture_events: "Проводки по оплаті"
     card_code: "Код карти"
     card_number: "Номер карти"
     card_type: "Тип карти"
@@ -589,11 +583,11 @@ uk:
     choose_a_taxon_to_sort_products_for: "Виберіть таксон для сортування товарів"
     choose_currency: "Виберіть валюту"
     choose_dashboard_locale: "Вибрати мову панелі управління"
-    choose_location:
+    choose_location: "Виберіть склад"
     city: "Місто"
-    clear_cache:
-    clear_cache_ok:
-    clear_cache_warning:
+    clear_cache: Очистити кеш
+    clear_cache_ok: Кеш очищено
+    clear_cache_warning: Очищення кешу тимчасово знизить швидкодію вашого магазину
     click_and_drag_on_the_products_to_sort_them: "Перетягуйте товари, щоб відсортувати."
     clone: "Клонувати"
     close: "Закрити"
@@ -602,7 +596,7 @@ uk:
     company: "Компанія"
     complete: "Завершено"
     configuration: "Конфігурація"
-    configurations: "Конфігурація"
+    configurations: "Конфігурації"
     confirm: "Підтвердити"
     confirm_delete: "Підтвердження видалення"
     confirm_password: "Підтвердження пароля"
@@ -611,9 +605,9 @@ uk:
     cost_currency: "Валюта"
     cost_price: "Собівартість"
     could_not_connect_to_jirafe: "Неможливо синхонізуватись з Jirafe. Повторна спроба відбудеться пізніше."
-    could_not_create_customer_return: "Не вдалось створити повернення покупця"
-    could_not_create_stock_movement: "Виникла проблема при збереженні переміщення запасів. Будь ласка, спробуйте ще раз."
-    count_on_hand: "У наявності"
+    could_not_create_customer_return: "Не вдалось створити повернення від покупця"
+    could_not_create_stock_movement: "Не вдалось створити рух залишків. Будь ласка, спробуйте ще раз."
+    count_on_hand: "Вільний залишок"
     countries: "Країни"
     country: "Країна"
     country_based: "Країна"
@@ -626,12 +620,12 @@ uk:
     coupon: "Купон"
     coupon_code: "Код купона"
     coupon_code_already_applied: "Цей код купона вже було використано у цьому замовленні"
-    coupon_code_applied: "Купон успішно застосований до вашого замовлен��я."
+    coupon_code_applied: "Купон успішно застосований до вашого замовлення."
     coupon_code_better_exists: "Попередньо застосований купон є вигіднішим"
     coupon_code_expired: "Термін дії купону минув"
     coupon_code_max_usage: "Ліміт використання купону вичерпано"
-    coupon_code_not_eligible: "Цей купон не відповідає умовам вашого замовлення"
-    coupon_code_not_found: "Введений код купону не існує. Будь ласка, спробуйте ще раз."
+    coupon_code_not_eligible: "Цей купон не може бути застосований до вашого замовлення"
+    coupon_code_not_found: "Введений код купона не існує. Будь ласка, спробуйте ще раз."
     coupon_code_unknown_error: "Введений купон не можна застосувати цього разу."
     create: "Створити"
     create_a_new_account: "Створити новий обліковий запис"
@@ -651,10 +645,10 @@ uk:
     current: "Поточний"
     current_promotion_usage: "Використано: %{count}"
     customer: "Клієнт"
-    customer_details: "Реквізити клієнта"
-    customer_details_updated: "Дані замовника успішно оновлено"
-    customer_return: "Повернення покупця"
-    customer_returns: "Повернення покупців"
+    customer_details: "Докладно про клієнта"
+    customer_details_updated: "Реквізити покупця успішно оновлено"
+    customer_return: "Повернення від покупця"
+    customer_returns: "Повернення від покупця"
     customer_search: "Пошук клієнта"
     cut: "Вирізати"
     cvv_response: "Відповідь CVV"
@@ -676,7 +670,7 @@ uk:
       js_format: dd/mm/yy
     date_range: "Період часу"
     default: "За замовчуванням"
-    default_refund_amount: "Сума повернення за замовчуванням"
+    default_refund_amount: "Сума повернення грошей за замовчуванням"
     default_tax: "Податок за замовчуванням"
     default_tax_zone: "Податковий регіон за замовчуванням"
     delete: "Видалити"
@@ -684,21 +678,20 @@ uk:
     delivery: "Доставка"
     depth: "Глибина"
     description: "Опис"
-    destination: "Призначення"
+    destination_location: "Склад-отримувач"
     destroy: "Видалити"
-    details:
+    details: "Докладно"
     discount_amount: "Сума знижки"
     dismiss_banner: "Ні, дякую! Більше не показувати це повідомлення"
     display: "Показати"
     display_currency: "Показувати валюту"
-    doesnt_track_inventory:
     edit: "Редагувати"
-    editing_resource:
-    editing_rma_reason:
+    editing_resource: "Редагування ресурсу"
+    editing_rma_reason: "Редагування підстав дозволів на повернення товару"
     editing_user: "Редагування користувача"
     eligibility_errors:
       messages:
-        has_excluded_product: "В кошику є товар, який не дозволяє застосувати код купону."
+        has_excluded_product: "В кошику є товар, який не дозволяє застосувати код купона."
         item_total_less_than: "Цей код купона не можна застосувати до замовлень на суму до %{amount}."
         item_total_less_than_or_equal: "Цей купон не можна застосувати до замовлень на суму включно до %{amount}."
         item_total_more_than: "Цей код купона не можна застосувати до замовлень на суму понад %{amount}."
@@ -721,9 +714,14 @@ uk:
     error: "помилка"
     errors:
       messages:
+        cannot_modify_transfer_item_closed_stock_transfer: "Позиції закритого складського переміщення не можуть бути змінені."
+        cannot_delete_finalized_stock_transfer: "Зафіксовані складські переміщення не можуть бути видалені."
+        cannot_delete_transfer_item_with_finalized_stock_transfer: "Позиції зафіксованого складського переміщення не можуть бути видалені."
+        cannot_update_expected_transfer_item_with_finalized_stock_transfer: "Кількість позицій зафіксованого складського переміщення не можу бути змінена."
         could_not_create_taxon: "Неможливо створити таксон"
+        transfer_item_insufficient_stock: "Позиція складського переміщення немає достатньо залишку на складі"
         no_payment_methods_available: "Для зазначеної зміни оточення відсутні методи оплати"
-        no_shipping_methods_available: "Для зазначеного місця розташування відсутні способи доставки, будь ласка, змініть адресу та спробуйте знову."
+        no_shipping_methods_available: "Для зазначеного складу відсутні способи доставки, будь ласка, змініть адресу та спробуйте знову."
     errors_prohibited_this_record_from_being_saved:
       few: "%{count} помилки не дозволяють зберегти запис у базі"
       many: "%{count} помилок не дозволяють зберегти запис у базі"
@@ -745,18 +743,18 @@ uk:
           signup: "Новий користувач"
     exceptions:
       count_on_hand_setter: "Неможливо встановити значення count_on_hand вручну, оскільки воно встановлюється автоматично за допомогою recalculate_count_on_hand callback'у. Замість цього використовуйте, будь ласка, `update_column(:count_on_hand, value)`"
-    exchange_for: "Обміняти на"
+    exchange_for: "Замінити на"
     excl: "викл."
     existing_shipments: "Існуючі відправлення"
-    expedited_exchanges_warning: "Будь-яка вказана заміна буде відправлена покупцеві негайно після збереження. З покупця буде стягнуто повну суму за заміну, якщо оригінальна покупка не буде повернута за %{days_window} днів."
+    expedited_exchanges_warning: "Будь-яка вказана заміна буде відправлена покупцеві негайно після збереження. З покупця буде стягнуто повну суму за заміну, якщо оригінальна покупка не буде повернута протягом %{days_window} днів."
     expiration: "Закінчення дії"
     extension: "Розширення"
     failed_payment_attempts: "Невдалих спроб проведення платежу"
     filename: "Ім’я файлу"
     fill_in_customer_info: "Заповніть інформацію про клієнта"
     filter_results: "Фільтрувати"
-    finalize: "Завершити"
-    finalized: "Завершено"
+    finalize: "Зафіксувати"
+    finalized: "Зафіксовано"
     find_a_taxon: "Знайти таксон"
     first_item: "Початкова ставка"
     first_name: "Ім’я"
@@ -766,8 +764,7 @@ uk:
     flexible_rate: "Гнучка ставка"
     forgot_password: "Забули пароль?"
     free_shipping: "Безкоштовна доставка"
-    free_shipping_amount:
-    -
+    free_shipping_amount: "-"
     front_end: "в публічному інтерфейсі"
     gateway: "Платіжний шлюз"
     gateway_config_unavailable: "Шлюз не доступний для даного оточення"
@@ -778,7 +775,7 @@ uk:
     google_analytics_id: Google Analytics ID
     guest_checkout: "Гостьове замовлення"
     guest_user_account: "Оформити покупку як гість"
-    has_no_shipped_units: "не має відправлених одиниць обліку"
+    has_no_shipped_units: "Немає відправлених позицій"
     height: "Висота"
     hide_cents: "Сховати копійки"
     home: "Додому"
@@ -791,8 +788,8 @@ uk:
     identifier: "Ідентифікатор"
     image: "Зображення"
     images: "Зображення"
-    implement_eligible_for_return:
-    implement_requires_manual_intervention:
+    implement_eligible_for_return: "Необхідно реалізувати #eligible_for_return? у вашому EligibilityValidator."
+    implement_requires_manual_intervention: "Необхідно реалізувати #requires_manual_intervention? у вашому EligibilityValidator."
     inactive: "Неактивний"
     incl: "вкл."
     included_in_price: "Включено в ціну"
@@ -803,25 +800,25 @@ uk:
       other: "та %{count} інших"
     info_product_has_multiple_skus: "Цей товар має %{count} варіантів"
     instructions_to_reset_password: "Щоб скинути пароль, заповніть форму нижче. Новий пароль буде відправлений вам по зазначеному email"
-    insufficient_stock: "Недостатньо товару на складі, тільки %{on_hand} в наявності"
+    insufficient_stock: "Недостатньо вільного залишку, в наявності %{on_hand}"
     insufficient_stock_lines_present: "Деякі позиції цього замовлення мають недостатню кількість."
     intercept_email_address: "Перехоплення листів"
     intercept_email_instructions: "Замінити email одержувача на цю адресу."
     internal_name: "Внутрішнє ім’я"
     invalid_credit_card: "Невірна кредитна карта."
-    invalid_exchange_variant:
+    invalid_exchange_variant: "Невірний варіант на заміну"
     invalid_payment_provider: "Невірно вказано спосіб оплати"
-    invalid_promotion_action: "Невірна промо-акція"
-    invalid_promotion_rule: "Невірно вказано принцип рекламної кампанії"
-    inventory: "Номенклатура"
-    inventory_adjustment: "Коригування"
+    invalid_promotion_action: "Невірна промоакція"
+    invalid_promotion_rule: "Невірно вказано правило промоакції"
+    inventory: "Запаси"
+    inventory_adjustment: "Коригування запасів"
     inventory_error_flash_for_insufficient_quantity: "Один з товарів вашої корзини став недоступним."
     inventory_state: "Доступність"
-    is_not_available_to_shipment_address: "не може бути застосований до вказаною адресою доставки"
+    is_not_available_to_shipment_address: "не може бути застосований до вказаної адреси доставки"
     iso_name: "Ім’я згідно ISO"
     item: "Найменування"
     item_description: "Опис товару"
-    item_total: "Разом (товари)"
+    item_total: "Разом без знижки"
     item_total_rule:
       operators:
         gt: "більше"
@@ -829,7 +826,7 @@ uk:
         lt: "менше"
         lte: "менше або дорівнює"
     items_cannot_be_shipped: "На жаль ми не можемо доставити ваш товар на вказану адресу. Будь ласка, введіть іншу адресу."
-    items_in_rmas: "Позиції в дозволах на повернення"
+    items_in_rmas: "Позиції в дозволах на повернення товару"
     items_reimbursed: "Відшкодовані позиції"
     items_to_be_reimbursed: "Позиції на відшкодування"
     jirafe: Jirafe
@@ -839,11 +836,11 @@ uk:
     last_name_begins_with: "Прізвище починається з"
     learn_more: "Дізнатися більше"
     lifetime_stats: "Статистика"
-    line_item_adjustments: "Коригування позиції"
+    line_item_adjustments: "Коригування позиції замовлення"
     list: "Список"
     loading: "Завантажується"
     locale_changed: "Мова змінена"
-    location: "Локація"
+    location: "Склад"
     lock: Lock
     log_entries: "Записи журналу"
     logged_in_as: "Користувач"
@@ -856,12 +853,12 @@ uk:
     logout: "Вийти"
     logs: "Журнали"
     look_for_similar_items: "Подивіться схожі товари"
-    make_refund: "Зробити повернення"
+    make_refund: "Зробити повернення грошей"
     make_sure_the_above_reimbursement_amount_is_correct: "Переконайтесь, що сума відшкодування правильна"
-    manage_promotion_categories: "Керувати категоріями промо-акцій"
+    manage_promotion_categories: "Керувати категоріями промоакцій"
     manage_variants: "Керувати варіантами"
     manual_intervention_required: "Потрібне людське втручання"
-    master_price: "Основна ціна"
+    master_price: "Ціна за замовчуванням"
     match_choices:
       all: "Всі"
       none: "Жодного"
@@ -875,7 +872,7 @@ uk:
     minimal_amount: "Мінімальна сума"
     month: "Місяць"
     more: "Більше"
-    move_stock_between_locations: "Переміщення товарів між складами"
+    move_stock_between_locations: "Перемістити залишки між складами"
     my_account: "Мій обліковий запис"
     my_orders: "Мої замовлення"
     name: "Назва"
@@ -885,7 +882,7 @@ uk:
     new_adjustment: "Нове коригування"
     new_country: "Нова країна"
     new_customer: "Для нових користувачів"
-    new_customer_return: "Нове повернення покупця"
+    new_customer_return: "Нове повернення від покупця"
     new_image: "Нове зображення"
     new_option_type: "Нова характеристика"
     new_order: "Нове замовлення"
@@ -893,21 +890,21 @@ uk:
     new_payment: "Новий платіж"
     new_payment_method: "Новий спосіб оплати"
     new_product: "Новий товар"
-    new_promotion: "Нова акція"
-    new_promotion_category: "Нова категорія акцій"
+    new_promotion: "Нова промоакція"
+    new_promotion_category: "Нова категорія промоакцій"
     new_property: "Нова властивість"
     new_prototype: "Новий прототип"
-    new_refund: "Нове повернення"
-    new_refund_reason: "Нова причина повернення"
-    new_return_authorization: "Новий дозвіл на повернення"
-    new_rma_reason: "Нова підстава дозволу на повернення"
+    new_refund: "Нове повернення грошей"
+    new_refund_reason: "Нова підстава повернення грошей"
+    new_return_authorization: "Новий дозвіл на повернення товару"
+    new_rma_reason: "Нова підстава дозволу на повернення товару"
     new_shipment_at_location: "Нове відправлення на склад"
     new_shipping_category: "Нова категорія доставки"
     new_shipping_method: "Новий спосіб доставки"
     new_state: "Новий регіон/область"
-    new_stock_location: "Додати новий склад"
-    new_stock_movement: "Додати рух товару"
-    new_stock_transfer: "Додати переміщення по складу"
+    new_stock_location: "Новий склад"
+    new_stock_movement: "Новий рух залишків"
+    new_stock_transfer: "Нове переміщення залишків"
     new_tax_category: "Нова категорія податків"
     new_tax_rate: "Нова ставка податку"
     new_taxon: "Новий таксон"
@@ -923,17 +920,17 @@ uk:
     no_products_found: "Не знайдено жодного товару"
     no_resource_found: "%{resource} не знайдено"
     no_results: "Нічого не знайдено"
-    no_returns_found:
+    no_returns_found: "Не знайдено жодного повернення"
     no_rules_added: "Жодного правила не задано"
-    no_shipping_method_selected: "Не вибраний спосіб доставки."
+    no_shipping_method_selected: "Не вибрано спосіб доставки."
     no_state_changes:
-    no_tracking_present: "Відсутні деталі відслідковування"
+    no_tracking_present: "Відсутні деталі відстеження"
     none: "Жодного"
     none_selected: "Не вибрано"
     normal_amount: "Звичайна сума"
     not: "не"
     not_available: "Н/д"
-    not_enough_stock: "Недостатньо позицій в вихідному розташуванні для завершення руху"
+    not_enough_stock: "Недостатньо залишку на складі-відправнику для завершення переміщення"
     not_found: "%{resource} не знайдено"
     note: "Нотатка"
     notice_messages:
@@ -944,7 +941,7 @@ uk:
       variant_deleted: "Варіант успішно видалено"
       variant_not_deleted: "Варіант не може бути видалений"
     num_orders: "К-сть замовлень"
-    on_hand: "В наявності"
+    on_hand: "Вільний залишок"
     open: "Відкрити"
     open_all_adjustments: "Відкрити всі коригування"
     option_type: "Характеристика"
@@ -961,32 +958,32 @@ uk:
     order_already_updated:
     order_approved: "Замовлення прийняте"
     order_canceled: "Замовлення скасоване"
-    order_details: "Деталі замовлення"
+    order_details: "Докладно про замовлення"
     order_email_resent: "Лист з описом замовлення надіслано повторно"
     order_information: "Інформація стосовно замовлення"
     order_mailer:
       cancel_email:
         dear_customer: "Шановний покупцю,\\n"
         instructions: "Ваше замовлення СКАСОВАНО. Збережіть цю інформацію в історії."
-        order_summary_canceled: "Стан замовленн [СКАСОВАНО]"
+        order_summary_canceled: "Коротко про замовлення [СКАСОВАНО]"
         subject: "Скасування замовлення"
-        subtotal:
-        total:
+        subtotal: Проміжний підсумок
+        total: Разом
       confirm_email:
         dear_customer: "Шановний покупцю,\\n"
         instructions: "Перегляньте інформацію про ваше замовлення."
-        order_summary: "Всього"
+        order_summary: "Коротко про замовлення"
         subject: "Підтвердження замовлення"
-        subtotal:
+        subtotal: Проміжний підсумок
         thanks: "Дякуємо за замовлення."
-        total:
+        total: Разом
     order_not_found: "Ми не змогли знайти Ваше замовлення. Спробуйте ще раз."
     order_number: "Замовлення %{number}"
     order_processed_successfully: "Ваше замовлення було успішно опрацьоване"
     order_resumed: "Замовлення продовжене"
     order_state:
       address: "адреса"
-      awaiting_return: "чекає повернення"
+      awaiting_return: "чекає на повернення"
       canceled: "скасовано"
       cart: "кошик"
       complete: "завершення"
@@ -996,13 +993,13 @@ uk:
       payment: "оплата"
       resumed: "відновлено"
       returned: "повернено"
-    order_summary: "Зведення за замовленням"
+    order_summary: "Коротко про замовлення"
     order_sure_want_to: "Ви впевнені, що хочете %{event} це замовлення?"
-    order_total: "Загалом замовлення"
+    order_total: "Разом"
     order_updated: "Замовлення оновлене"
     orders: "Замовлення"
     other_items_in_other: "Інші позиції в замовленні"
-    out_of_stock: "Немає в наявності"
+    out_of_stock: "Немає на залишку"
     overview: "Огляд"
     package_from: "Пакунок з"
     pagination:
@@ -1020,7 +1017,7 @@ uk:
     payment_method: "Спосіб оплати"
     payment_method_not_supported: "Цей спосіб оплати не підтримується"
     payment_methods: "Способи оплати"
-    payment_processing_failed: "Немодливо здійснити платіж. Перевірте ведену інформацію"
+    payment_processing_failed: "Неможливо здійснити платіж. Перевірте введену інформацію"
     payment_processor_choose_banner_text: "Якщо вам потрібна допомога у виборі інструменту оплати, відвідайте"
     payment_processor_choose_link: "нашу сторінку оплати"
     payment_state: "Стан платежу"
@@ -1046,24 +1043,23 @@ uk:
     populate_get_error: "Щось трапилось. Спробуйте додати товар пізніше."
     powered_by: "Працює на"
     pre_tax_amount: "Сума без податків"
-    pre_tax_refund_amount: "Сума повернення без податків"
-    pre_tax_total: "Усього без податків"
+    pre_tax_refund_amount: "Сума повернення грошей без податків"
+    pre_tax_total: "Разом без податків"
     preferred_reimbursement_type: "Зручніший тип відшкодування"
     presentation: "Відображати як"
     previous: "поперед."
-    previous_state_missing:
     price: "Ціна"
     price_range: "Ціновий діапазон"
-    price_sack: "Ціновий мішок"
+    price_sack: "Сума позицій"
     process: "Обробити"
     product: "Товар"
-    product_details: "Опис товару"
+    product_details: "Докладно про товар"
     product_has_no_description: "У даного товару немає опису."
     product_not_available_in_this_currency: "Даний товар недоступний в вибраній валюті."
     product_properties: "Властивості товару"
     product_rule:
       choose_products: "Вибрані товари"
-      label:
+      label: "Замовлення має містити %{select} цих товарів"
       match_all: "все"
       match_any: "хоча б один"
       match_none: "жодного"
@@ -1071,82 +1067,95 @@ uk:
         group: "Із групи товарів"
         manual: "Обрати вручну"
     products: "Товари"
-    promotion: "Промо-акція"
-    promotion_action: "Промо акція"
+    promotion: "Промоакція"
+    promotion_action: "Вид промоакції"
     promotion_action_types:
       create_adjustment:
-        description: "Створити коригування для замовлення"
-        name: "Створити коригування"
+        description: "Створює промоакцію зі знижкою для замовлення"
+        name: "Створити коригування для замовлення"
       create_item_adjustments:
-        description: "Створює кредитне коригування на позицію замовлення"
-        name: "Створити коригування на позицію"
-      create_line_items:
-        description: "Заповняє корзину вказаною коількістю варіантів"
-        name: "Створити елемент замовлення"
+        description: "Створює промоакцію зі знижкою для позиції замовлення"
+        name: "Створити коригування для позиції замовлення"
+      create_quantity_adjustments:
+        description: "Створює коригування по кількості для позиції замовлення"
+        name: "Створити коригування по кількості"
       free_shipping:
-        description: "Робить доставку замовлення безкоштовною"
+        description: "Робить всі доставки безкоштовними"
         name: "Безкоштовна доставка"
-    promotion_actions: "Дії"
+    promotion_actions: "Види промоакцій"
     promotion_form:
       match_policies:
         all: "Відповідає всім цим правилам"
         any: "Відповідає хоча б одному правилу"
-    promotion_rule: "Правило"
+    promotion_rule: "Правило промоакції"
     promotion_rule_types:
       first_order:
-        description: "Повинен бути першим замовленням покупця"
+        description: "Повинно бути першим замовленням покупця"
         name: "Перше замовлення"
       item_total:
         description: "Сума замовлення відповідає таким критеріям"
         name: "Сума замовлення"
       landing_page:
-        description: "Покупець повинен відвідати вказану сторіну"
-        name: "Промо сторінки"
+        description: "Покупець повинен відвідати вказану сторінку"
+        name: "Промо-сторінка"
       one_use_per_user:
-        description: "Тільки одна на користувача"
-        name: "Одна на користувача"
+        description: "Тільки одне використання на користувача"
+        name: "Одне використання на користувача"
       option_value:
-        description:
-        name:
+        description: "Замовлення включає вказані товари з відповідними значеннями характеристик"
+        name: "Значення характеристики"
       product:
         description: "Замовлення включає зазначені товари"
-        name: "Товари"
-      taxon:
-        description: "У замовленні є товари із вказаними таксонами"
-        name: "Таксон(и)"
+        name: "Товар"
       user:
         description: "Доступно тільки для зазначених користувачів"
-        name: "Користувачі"
+        name: "Користувач"
       user_logged_in:
-        description: "Тільки для користувачів які ввійшли"
-        name: "Користувач ввійшов"
-    promotion_uses: "Застосування промо-акцій"
-    promotionable: "Акційний товар"
-    promotions: "Промо-акції"
-    propagate_all_variants:
+        description: "Тільки для користувачів, які увійшли"
+        name: "Користувач, який увійшов"
+      taxon:
+        description: "У замовленні є товари із вказаними таксонами"
+        name: "Таксон"
+      nth_order:
+        description: Застовувати акцію до кожного N-ого замовлення, яке користувач завершив.
+        name: N-е замовлення
+        form_text: "Застосувати цю акцію для N-ого замовлення користувача: "
+      first_repeat_purchase_since:
+        description: Доступне тільки для користувача, який не купляв останнім часом
+        name: Перша повторна купівля, починаючи з
+        form_text: "Застосувати цю акцію до користувачів, чиє останнє замовлення було більше, ніж X днів тому: "
+    promotions: Промоакції
+    promotion_successfully_created: "Промоакцію успішно створено!"
+    promotion_total_changed_before_complete: "Одна або кілька промоакцій не можуть бути застосовані до вашого замовлення і будуть видалені. Будь ласка, перевірте суми в новому замовленні і спробуйте знову."
+    promotion_uses: "Застосування промоакцій"
+    propagate_all_variants: "Застосувати до всіх варіантів"
     properties: "Властивості"
     property: "Властивість"
     prototype: "Прототип"
     prototypes: "Прототипи"
-    provider: "Провайдер"
-    provider_settings_warning: "Якщо ви змінюєте провайдера, ви повинні зберегти цю зміну, перш ніж ви зможете змінити його налаштування."
+    provider: "Постачальник"
+    provider_settings_warning: "Якщо ви змінюєте тип постачальника, ви повинні зберегти цю зміну, перш ніж ви зможете редагувати його налаштування."
     qty: "Кількість"
     quantity: "Кількість"
-    quantity_returned: "Кількість повернення"
-    quantity_shipped: "Кількість доставлених"
-    quick_search:
+    quantity_returned: "Кількість повернених"
+    quantity_shipped: "Кількість відправлених"
     rate: "Ставка"
-    reason: "Причина"
+    ready_to_ship: "Готовий до відправлення"
+    reason: "Підстава"
     receive: "Отримати"
-    receive_stock: "Отримати товар"
     received: "Отримано"
-    reception_status: "Стан одержання"
+    receive_stock: "Отримати залишок"
+    receive_items: "Отримати позиції"
+    received_successfully: "Отримано успішно"
+    receiving: Отримання
+    receiving_match: "Отримання співпадінь"
+    reception_status: "Статус прийому"
     reference: "Посилання"
-    refund: "Повернення"
-    refund_amount_must_be_greater_than_zero: "Сума повернення має бути більшою нуля"
-    refund_reasons: "Причини повернення"
-    refunded_amount: "Повернена сума"
-    refunds: "Повернення"
+    refund: "Повернення грошей"
+    refund_amount_must_be_greater_than_zero: "Сума повернення грошей має бути більшою нуля"
+    refund_reasons: "Підстави повернення грошей"
+    refunded_amount: "Повернена сума грошей"
+    refunds: "Повернення грошей"
     register: "Зареєструватися як новий користувач"
     registration: "Реєстрація"
     reimburse: "Відшкодувати"
@@ -1155,13 +1164,13 @@ uk:
     reimbursement_mailer:
       reimbursement_email:
         days_to_send: "Ви можете повернути для обміну будь-які товари протягом %{days} днів."
-        dear_customer: "Шановний покупець,\\n"
-        exchange_summary: "Коротко про обмін"
+        dear_customer: "Шановний покупцю,\\n"
+        exchange_summary: "Коротко про заміну"
         for: "на"
         instructions: "Ваше відшкодування було оброблене."
-        refund_summary: "Коротко про повернення"
+        refund_summary: "Коротко про повернення грошей"
         subject: "Повідомлення про відшкодування"
-        total_refunded: "Усього повернено: %{total}"
+        total_refunded: "Разом повернуто грошей: %{total}"
     reimbursement_perform_failed: "Неможливо провести відшкодування. Помилка %{error}"
     reimbursement_status: "Стан відшкодування"
     reimbursement_type: "Тип відшкодування"
@@ -1173,7 +1182,6 @@ uk:
     remember_me: "Запам’ятати мене"
     remove: "Видалити"
     rename: "Переіменувати"
-    report:
     reports: "Звіти"
     resend: "Відправити повторно"
     reset_password: "Скинути мій пароль"
@@ -1181,33 +1189,34 @@ uk:
     resume: "відновити"
     resumed: "Відновлено"
     return: "повернути"
-    return_authorization: "Дозвіл на повернення"
-    return_authorization_reasons: "Підстава для дозволу на повернення"
-    return_authorization_updated: "Дозвіл на повернення оновлено"
-    return_authorizations: "Дозволи на повернення"
-    return_item_inventory_unit_ineligible:
-    return_item_inventory_unit_reimbursed:
-    return_item_rma_ineligible: "Повернення вимагає дозволу продавця"
+    return_authorization: "Дозвіл на повернення товару"
+    return_reasons: Підстави повернення
+    return_authorization_updated: "Дозвіл на повернення товару оновлено"
+    return_authorizations: "Дозволи на повернення товару"
+    return_item_inventory_unit_ineligible: "Позиція, що повертається, має бути доставлена"
+    return_item_inventory_unit_reimbursed: "Позиція, що повертається, уже відшкодована"
+    return_item_order_not_completed: "Замовлення позиції, що повертається, має бути завершено"
+    return_item_rma_ineligible: "Повернення позиції вимагає дозволу продавця"
     return_item_time_period_ineligible: "Термін повернення товару збіг"
-    return_items: "Повернені товари"
-    return_items_cannot_be_associated_with_multiple_orders: "Повернені товари не можуть належати до різних замовлень."
+    return_items: "Повернені позиції"
+    return_items_cannot_be_associated_with_multiple_orders: "Повернені позиції не можуть належати до різних замовлень."
+    return_items_cannot_be_created_for_inventory_units_that_are_already_awaiting_exchange: "Не можна створити повернення для позицій, які очікують на заміну."
     return_number: "Номер повернення"
     return_quantity: "повернена кількість"
     returned: "Повернуті"
-    returns:
+    returns: "Повернення"
     review: "Огляд"
     risk: "Ризик"
     risk_analysis: "Аналіз ризиків"
     risky: "Ризиковано"
-    rma_credit: RMA Кредит
-    rma_number: "Номер RMA"
-    rma_value: "Сума RMA"
+    rma_credit: "Кредит дозволу на повернення товару"
+    rma_number: "Номер дозволу на повернення товару"
+    rma_value: "Сума дозволу на повернення товару"
     roles: "Ролі"
     rules: "Правила"
-    safe:
-    sales_total: "Разом (продаж)"
-    sales_total_description: "Загальний обсяг продажів за всіма замовленнями"
-    sales_totals: "Продажі загалом"
+    sales_total: "Разом продажі"
+    sales_total_description: "Разом продано за всіма замовленнями"
+    sales_totals: "Разом продажі"
     save_and_continue: "Зберегти і продовжити"
     save_my_address: "Зберегти мою адресу"
     say_no: "Ні"
@@ -1219,55 +1228,65 @@ uk:
     secure_connection_type: "Тип захищеного з’єднання"
     security_settings: "Налаштування безпеки"
     select: "Обрати"
-    select_a_return_authorization_reason: "Виберіть підставу для дозволу на повернення"
-    select_a_stock_location: "Вибрати розташування складу"
     select_from_prototype: "Вибрати з прототипів"
-    select_stock: "Вибрати склад"
+    select_a_reason: Вибрати підставу
+    select_a_stock_location: "Вибрати склад"
+    select_stock: "Вибрати залишок"
+    selected_quantity_not_available: "Вибрана кількість %{item} недоступна."
     send_copy_of_all_mails_to: "Надсилати копії всіх листів на"
-    send_mails_as: "Надсилати пошту як"
+    send_mailer: "Надіслати пошту"
+    send_mails_as: "Надіслати пошту як"
     server: "Сервер"
     server_error: "На сервері сталася помилка"
     settings: "Налаштування"
     ship: "доставка"
     ship_address: "Адреса доставки"
-    ship_total: "Всього до доставки"
-    shipment: "Відправки"
-    shipment_adjustments: "Коригування доставки"
-    shipment_details: "Від %{stock_location} через %{shipping_method}"
+    ship_address_required: Необхідна дійсна адреса доставки
+    ship_stock_transfer:
+      will_cause: Доставка переміщення запасів призведе до наступного
+      no_further_changes: Відтепер Ви не зможете вносити зміни в переміщення запасів
+    ship_total: "Разом доставка"
+    shipped_at: "Відправлено в"
+    shipment: "Відправлення"
+    shipment_adjustments: "Коригування відправлення"
+    shipment_details: "З %{stock_location} способом %{shipping_method}"
     shipment_mailer:
       shipped_email:
         dear_customer: "Шановний покупцю,\\n"
         instructions: "Ваше замовлення відправлено"
-        shipment_summary: "Звіт про доставку"
+        shipment_summary: "Коротко про відправлення"
         subject: "Повідомлення про доставку"
         thanks: "Дякуємо за замовлення."
-        track_information: "Відслідкувати замовлення: %{tracking}"
-        track_link: "Адреса відслідковування: %{url}"
+        track_information: "Інформація про відстеження: %{tracking}"
+        track_link: "Посилання на відстеження: %{url}"
+    shipment_date: Дата відправлення
+    shipment_number: Номер відправлення
+    shipment_numbers: Номера відправлень
     shipment_state: "Статус відправки"
     shipment_states:
-      backorder: "затримується"
-      canceled: "скасований"
+      backorder: "нерозміщене"
+      canceled: "скасоване"
       partial: "частково"
       pending: "очікує"
-      ready: "готовий"
-      shipped: "відправлений"
-    shipment_transfer_error: "Сталась помилка при перенесенні варіантів"
-    shipment_transfer_success: "Варіанти успішно перенесено"
-    shipments: "Відправки"
+      ready: "готове"
+      shipped: "відправлене"
+    shipment_transfer_error: "Сталась помилка при переміщенні"
+    shipment_transfer_success: "Варіанти успішно переміщено"
+    shipments: "Відправлення"
     shipped: "Відправлено"
     shipping: "Доставка"
     shipping_address: "Адреса доставки"
     shipping_categories: "Категорії доставки"
     shipping_category: "Категорія доставки"
-    shipping_flat_rate_per_item: "Фіксована ставка за одиницю товару"
+    shipping_flat_rate_per_item: "Фіксована ставка за позицію пакунку"
     shipping_flat_rate_per_order: "Фіксована ставка"
-    shipping_flexible_rate: "Гнучка ставка за одиницю товару"
+    shipping_flexible_rate: "Гнучка ставка за позицію пакунку"
     shipping_instructions: "Іструкції щодо доставки"
-    shipping_method: "Спосіб"
+    shipping_method: "Спосіб доставки"
     shipping_methods: "Способи доставки"
-    shipping_price_sack: "Підрахунок вартості доставки"
-    shipping_total: "Усього за доставку"
-    shop_by_taxonomy: "%{taxonomy}"
+    shipping_price_sack: "Сума відправлених позицій"
+    shipping_total: "Разом доставка"
+    shop_by_taxonomy: "Переглянути за %{taxonomy}"
     shopping_cart: "Кошик"
     show: "Показати"
     show_active: "Показати активні"
@@ -1279,157 +1298,173 @@ uk:
     skus: "Артикули"
     slug: "Заголовок в URL"
     source: "Джерело"
+    source_location: "Склад-відправник"
     special_instructions: "Додаткові інструкції"
     split: "Розділити"
-    spree_gateway_error_flash_for_checkout: "Виникли проблеми з Вашими реквізитами. Будь ласка, перевірте їх та спробуйте ще раз."
+    spree_gateway_error_flash_for_checkout: "Виникли проблеми з Вашими реквізитами платежу. Будь ласка, перевірте їх та спробуйте ще раз."
     ssl:
       change_protocol: "Змініть протокол на HTTP (замість HTTPS) та повторіть запит."
     start: "Початок"
     state: "Регіон/Область"
     state_based: "Є області"
-    state_machine_states:
-      accepted:
-      address:
-      authorized:
-      awaiting:
-      awaiting_return:
-      backordered:
-      canceled:
-      cart:
-      checkout:
-      closed:
-      complete:
-      completed:
-      confirm:
-      delivery:
-      errored:
-      failed:
-      given_to_customer:
-      invalid:
-      manual_intervention_required:
-      on_hand:
-      open:
-      order:
-      payment:
-      pending:
-      processing:
-      ready:
-      reimbursed:
-      resumed:
-      returned:
-      shipped:
-      void:
     states: "Регіони/Області"
     states_required: "Регіони/Області обов’язкові"
     status: "Статус"
-    stock:
-    stock_location: "Розташування складу"
-    stock_location_info: "Подробиці про розташування складу"
+    stock: "Залишок"
+    stock_location: "Склад"
+    stock_location_info: "Інформація про склад"
     stock_locations: "Склади"
-    stock_locations_need_a_default_country: "Спершу створіть країну за замовчуванням, перш ніж вказувати розташування складу."
+    stock_locations_need_a_default_country: "Перед створенням складу створіть країну за замовчуванням."
     stock_management: "Управління запасами"
-    stock_management_requires_a_stock_location: "Будь ласка, додайте розташування складу для управління запасами."
-    stock_movements: "Переміщення товарів"
-    stock_movements_for_stock_location: "Переміщення товарів для %{stock_location_name}"
-    stock_successfully_transferred: "Товари успішно переміщені з одного складу на інший."
-    stock_transfer: "Переміщення товарів"
-    stock_transfers: "Переміщення товарів"
+    stock_management_requires_a_stock_location: "Будь-ласка, додайте склад для управління запасами."
+    stock_movements: "Рух залишків"
+    stock_movements_for_stock_location: "Рух залишків для %{stock_location_name}"
+    stock_not_below_zero: Залишок не може бути менше, ніж 0.
+    stock_successfully_transferred: "Залишок успішно переміщений між місцями зберігання."
+    stock_transfer: "Переміщення залишків"
+    stock_transfer_cannot_be_finalized: "Переміщення залишків не може бути зафіксовано"
+    stock_transfer_complete: "Переміщення залишків завершене"
+    stock_transfer_must_be_receivable: "Переміщення залишків має бути закрите та доставлене"
+    stock_transfers: "Переміщення залишків"
     stop: "Кінець"
     store: "До магазину"
+    store_credit:
+      actions:
+        invalidate: "Зробити недійсним"
+      credit_allocation_memo: "Це кредит з кредиту магазину ID %{id}"
+      currency_mismatch: "Валюта кредиту магазину не співпадає з валютою замовлення"
+      display_action:
+        adjustment: Коригування
+        allocation: Додано
+        capture: Використано
+        credit: Кредит
+        invalidate: Недійсне
+        void: Кредит
+        admin:
+          authorize: "Авторизувати"
+          eligible: "Допустимість перевірено"
+          void: "Анульовано"
+      errors:
+        unable_to_fund: "Неможливо заплатити за замовлення з кредитів магазину"
+        cannot_invalidate_uncaptured_authorization: "Неможливо зробити недійсним кредит магазину з невикористаним дозволом"
+      expiring: Термін дії закінчується
+      insufficient_authorized_amount: "Неможливо використати більше, ніж дозволена сума"
+      insufficient_funds: "Залишка кредиту магазину недостатньо"
+      non_expiring: Термін дії не закінчується
+      select_one_store_credit: Виберіть кредит магазину для переходу до балансу"
+      store_credit: "Кредит магазину"
+      successful_action: "Успішна подія кредиту магазину — %{action}"
+      unable_to_credit: "Неможливо надати кредит за кодом: %{auth_code}"
+      unable_to_void: "Неможливо анулювати код: %{auth_code}"
+      unable_to_find: "Неможливо знайти кредит магазину"
+      unable_to_find_for_action: "Неможливо знайти кредит магазину для коду авторизації: %{auth_code} та події: %{action}"
+      user_has_no_store_credits: "У користувача немає доступних кредитів магазину"
+    store_credit_category:
+      default: За замовчуванням
     street_address: "Адреса"
     street_address_2: "Адреса (рядок 2)"
-    subtotal: "Проміжна сума"
+    subtotal: "Проміжний підсумок"
     subtract: "Відрахування"
     success: "Успішно"
-    successfully_created: "%{resource} був успішно створений!"
+    successfully_created: "%{resource} був успішно створено!"
     successfully_refunded: "%{resource} успішно повернено!"
-    successfully_removed: "%{resource} був успішно знищений!"
+    successfully_removed: "%{resource} був успішно знищено!"
     successfully_signed_up_for_analytics: "Авторизація в Spree Analytics пройшла успішно"
     successfully_updated: "%{resource} було успішно оновлено!"
-    summary:
     tax: "Податок"
+    tax_included: "Податок (вкл.)"
     tax_categories: "Категорії податків"
     tax_category: "Категорія податків"
-    tax_code:
-    tax_included: "Податок (вкл.)"
-    tax_rate_amount_explanation: "Податкові ставки вводяться як десяткові значення (наприклад якщо податок 5%, то вводьте 0.05)"
+    tax_code: Код податку
+    tax_rate_amount_explanation: "Податкові ставки вводяться як десяткові значення (наприклад, якщо податок 5%, то введіть 0.05)"
     tax_rates: "Податкові ставки"
     taxon: "Таксон"
     taxon_edit: "Редагувати таксон"
     taxon_placeholder: "Додати таксон"
     taxon_rule:
       choose_taxons: "Виберіть таксони"
-      label:
+      label: "Замовлення має містити %{select} з цих таксонів"
       match_all: "всі"
       match_any: "щонайменше один"
     taxonomies: "Таксономії"
     taxonomy: "Таксономія"
     taxonomy_edit: "Редагування таксономії"
-    taxonomy_tree_error: "Операцію не виконано і дерево повернуто у попередній стан. Будь ласка, спробуйте знову."
-    taxonomy_tree_instruction: "* Клацніть правою кнопкою миші на елементі дерева для додавання, видалення або сортування таксономій."
+    taxonomy_tree_error: "Зміни не прийняті і дерево повернуто у попередній стан. Будь ласка, спробуйте знову."
+    taxonomy_tree_instruction: "* Клацніть правою кнопкою миші на дочірньому елементі дерева для додавання, видалення або сортування цього елементу."
     taxons: "Таксони"
-    test: Test
+    test: Тест
     test_mailer:
       test_email:
         greeting: "Наші вітання!"
-        message: "Якщо ви отримали це повідомлення тоді ваші поштові налаштування коректні."
+        message: "Якщо ви отримали це повідомлення, тоді ваші поштові налаштування правильні."
         subject: "Тестове повідомлення"
     test_mode: "Тестовий режим"
     thank_you_for_your_order: "Дякуємо за покупку!"
-    there_are_no_items_for_this_order: "В цьому замовленні немає товарів. Будь ласка, додайте товари, щоби продовжити."
-    there_were_problems_with_the_following_fields: "Виникли деякі проблеми з наступними полями"
-    this_order_has_already_received_a_refund: "Це замовлення вже повернуто"
+    there_are_no_items_for_this_order: "В цьому замовленні немає позицій. Будь ласка, додайте товари, щоби продовжити."
+    there_were_problems_with_the_following_fields: "Виникли проблеми з наступними полями"
+    this_order_has_already_received_a_refund: "За цим замовленням уже отримано повернення грошей"
     thumbnail: "Мініатюра"
     tiered_flat_rate: "Багаторівнева фіксована ставка"
     tiered_percent: "Багаторівневий відсоток"
     tiers: "Рівні"
     time: "Час"
-    to_add_variants_you_must_first_define: "Перед додаванням варіантів, ви повинні визначити"
+    to: "До"
+    to_add_variants_you_must_first_define: "Перед тим, як додати варіанти, ви повинні визначити"
     total: "Разом"
-    total_per_item: "Усього за одиницю"
-    total_pre_tax_refund: "Усього повернення без податків"
-    total_price: "Ціна усього"
-    total_sales: "Усього продажів"
-    track_inventory: "Обліковувати залишки"
-    tracking: "Відслідковування"
-    tracking_number: "Трекінговий номер"
-    tracking_url: "Трекінговий URL"
-    tracking_url_placeholder: "наприклад - http://quickship.com/package?num=:tracking"
-    transaction_id: ID транзакції
-    transfer_from_location: "Перевести з"
-    transfer_stock: "Перевести товар"
-    transfer_to_location: "Перевести на"
+    total_per_item: "Разом позиція"
+    total_pre_tax_refund: "Разом повернення грошей без податків"
+    total_price: "Сума"
+    total_sales: "Разом продажі"
+    track_inventory: "Вести облік залишків"
+    tracking: "Відстеження"
+    tracking_number: "Номер відстеження"
+    tracking_url: "URL відстеження"
+    tracking_url_placeholder: "наприклад, http://quickship.com/package?num=:tracking"
+    transaction_id: "ID транзакції"
+    transfer_items: "Позиції переміщення"
+    transfer_from_location: "Переміщення зі складу"
+    transfer_stock: "Перемістити залишки"
+    transfer_to_location: "Переміщення на склад"
+    transfer_number: "Номер переміщення"
     tree: "Дерево"
     type: "Тип"
-    type_to_search: "Почніть друкувати щоб активувати пошук"
+    type_to_search: "Почніть друкувати, щоб активувати пошук"
+    unable_to_find_all_inventory_units: "Неможливо знайти всі розміщення позицій замовлення"
     unable_to_connect_to_gateway: "Не вдалося підключитися до платіжного шлюзу."
     unable_to_create_reimbursements: "Неможливо створити відшкодування, оскільки деякі позиції очікують людського втручання."
+    unfinalize_all_adjustments: "Розфіксувати всі коригування"
     under_price: "Дешевше %{price}"
     unlock: "Розблокувати"
     unrecognized_card_type: "Невідомий тип карти"
-    unshippable_items: "Товари, що не відправляються"
-    update: "Змінити"
+    unshippable_items: "Товари, що не можуть доставлятися"
+    update: "Оновити"
+    updated_successfully: "Успішно оновлено"
     updating: "Оновлення"
-    usage_limit: "Максимальна кількість використань"
-    use_app_default: "Взяти значення за замовчуванням"
+    usage_limit: "Ліміт використань"
+    use_app_default: "Використовувати значення за замовчуванням"
     use_billing_address: "Використовувати платіжну адресу"
     use_new_cc: "Використовувати нову карту"
-    use_s3: "Використоувати S3 для зображень"
+    use_s3: "Використоувати Amazon S3 для зображень"
     user: "Користувач"
     user_rule:
       choose_users: "Обрати користувачів"
     users: "Користувачі"
     validation:
-      cannot_be_less_than_shipped_units: "не може бути менше, ніж кількість відвантажених одиниць"
-      cannot_destroy_line_item_as_inventory_units_have_shipped:
-      exceeds_available_stock: "перевищує кількість на складі. Будь ласка перевірте кількість товару."
-      is_too_large: "занадто багато - кількість на складі менше запитаної кількості!"
+      unpaid_amount_not_zero: "Сума неповністю відшкодована. Залишок %{amount}"
+      cannot_be_less_than_shipped_units: "не може бути менше, ніж кількість відправлених одиниць"
+      cannot_destroy_line_item_as_inventory_units_have_shipped: "Неможливо видалити позицію замовлення, оскільки деякі одиниці були відправлені."
+      exceeds_available_stock: "перевищує доступний залишок. Будь ласка, перевірте чи позиція має допустиму кількість."
+      is_too_large: "занадто багато — вільного залишку недостатньо для покриття необхідної кількість!"
       must_be_int: "має бути цілим числом"
       must_be_non_negative: "має бути невід’ємним числом"
-      unpaid_amount_not_zero: "Сума неповністю відшкодована. Залишок %{amount}"
     value: "Значення"
     variant: "Варіант"
     variant_placeholder: "Виберіть варіант"
+    variant_properties: "Властивості варіантів"
+    variant_search: "Пошук варіантів"
+    variant_search_placeholder: "Артикул або значення характеристики"
+    variant_to_add: "Додати варіант"
+    variant_to_be_received: "Отримати варіант"
     variants: "Варіанти"
     version: "Версія"
     void: "Анулювати"
@@ -1438,9 +1473,11 @@ uk:
     what_is_this: "Що це?"
     width: "Ширина"
     year: "Рік"
+    yes_close: Так, закрити
+    yes_finalize: Так, зафіксувати
     you_have_no_orders_yet: "У Вас ще немає замовлень."
     your_cart_is_empty: "Ваш кошик порожній"
-    your_order_is_empty_add_product: "Ваша корзина порожня. Будь ласка, виберіть та додайте до корзини товари"
+    your_order_is_empty_add_product: "Ваш кошик порожній. Будь ласка, знайдіть та додайте до кошика товар"
     zip: "Індекс"
     zipcode: "Поштовий індекс"
     zone: "Торгова зона"
