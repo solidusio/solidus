@@ -20,6 +20,10 @@ describe Spree::AppConfiguration, type: :model do
     expect(prefs.variant_search_class).to eq Spree::Core::Search::Variant
   end
 
+  it "uses product filter class by default" do
+    expect(prefs.search_filter_presenter_class).to eq Spree::Core::Search::ProductFilter
+  end
+
   it "uses variant pricer class by default" do
     expect(prefs.variant_pricer_class).to eq Spree::Variant::Pricer
   end

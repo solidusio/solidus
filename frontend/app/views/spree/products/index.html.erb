@@ -1,7 +1,7 @@
 <% content_for :sidebar do %>
   <div data-hook="homepage_sidebar_navigation">
     <% if "spree/products" == params[:controller] && @taxon %>
-      <%= render :partial => 'spree/shared/filters' %>
+      <%= render partial: Spree::Config.search_filter_presenter_class.partial_path %>
     <% else %>
       <%= render :partial => 'spree/shared/taxonomies' %>
     <% end %>
