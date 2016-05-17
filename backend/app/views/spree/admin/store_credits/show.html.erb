@@ -2,7 +2,8 @@
   <%= link_to "#{Spree.t(:editing_user)} #{@user.email}", edit_admin_user_url(@user) %>
 <% end %>
 
-<%= render :partial => 'spree/admin/users/sidebar', :locals => { :current => :store_credits } %>
+<%= render 'spree/admin/users/sidebar' %>
+<%= render 'spree/admin/users/tabs', current: :store_credits %>
 <% content_for :page_actions do %>
   <li><%= link_to_with_icon 'arrow-left', Spree.t("admin.store_credits.back_to_store_credit_list"), admin_user_store_credits_path(@user), class: 'button' %></li>
   <% if @store_credit.editable? && can?(:edit, @store_credit) %>
