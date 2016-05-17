@@ -24,7 +24,7 @@ it:
         iso_name: Nome ISO
         name: Nome
         numcode: Codice ISO
-        states_required: Stati Necessari
+        states_required: Province o Stati Necessari
       spree/credit_card:
         base: ''
         cc_type: Tipologia
@@ -66,7 +66,7 @@ it:
         approver_id: Approvatore
         canceled_at: Annullato il
         canceler_id: Annullatore
-        included_tax_total: Tassa (incl.)
+        included_tax_total: Tasse (incl.)
         shipment_total: Totale Spedizione
       spree/order/bill_address:
         address1: Indirizzo di fatturazione
@@ -112,7 +112,7 @@ it:
         meta_title: Meta Title
         price: Prezzo principale
         promotionable: Promuovibile
-        slug: Slug
+        slug: Permalink
         weight: Peso
         width: Larghezza
       spree/promotion:
@@ -201,7 +201,7 @@ it:
         label: Descrizione
         name: Nome
         state: Stato
-        adjustment_reason_id: Ragione
+        adjustment_reason_id: Motivazione
       spree/adjustment_reason:
         active: Attivo
         code: Codice
@@ -230,7 +230,7 @@ it:
       spree/refund:
         amount: Quantità
         description: Descrizione
-        refund_reason_id: Ragione
+        refund_reason_id: Motivazione
       spree/refund_reason:
         active: Attivo
         name: Nome
@@ -253,7 +253,7 @@ it:
         override_reimbursement_type_id: Override Tipologia Rimborso
         preferred_reimbursement_type_id: Tipologia di rimborso preferita
         reception_status:
-        return_reason: Ragione
+        return_reason: Motivazione
         total: Totale
       spree/return_reason:
         name: Nome
@@ -403,8 +403,8 @@ it:
         one: Prototipo
         other: Prototipi
       spree/refund_reason:
-        one: Ragione Rimborso
-        other: Ragioni Rimborso
+        one: Motivazione Rimborso
+        other: Motivazioni Rimborso
       spree/reimbursement:
         one: Rimborso
         other: Rimborsi
@@ -1180,7 +1180,7 @@ it:
         subtotal: 'Subtotale:'
         total: 'Totale Ordine:'
       confirm_email:
-        dear_customer: 'Caro Cliente,
+        dear_customer: 'Gentile Cliente,
 
 '
         instructions: Per favore rivedi queste informazioni e conservale come riferimento.
@@ -1350,7 +1350,7 @@ it:
     quantity_shipped: Quantità Spedita
     quick_search: Ricerca Veloce
     rate: Percentuale
-    reason: Ragione
+    reason: Motivazione
     receive: ricevi
     receive_stock: Ricevi Scorte
     received: Ricevuto
