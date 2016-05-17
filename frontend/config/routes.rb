@@ -1,4 +1,4 @@
-Spree::Core::Engine.add_routes do
+Spree::Core::Engine.routes.draw do
   root to: 'home#index'
 
   resources :products, only: [:index, :show]
