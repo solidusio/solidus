@@ -7,7 +7,7 @@ module Spree
         params[:q] ||= {}
 
         @search = @product.prices.accessible_by(current_ability, :index).ransack(params[:q])
-        @prices = @search.result
+        @prices = @search.result.page(params[:page]).per(10)
       end
 
       def edit
