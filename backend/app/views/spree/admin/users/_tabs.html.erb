@@ -11,7 +11,7 @@
       <% end %>
       <% if can?(:orders, @user) %>
         <li<%== ' class="active"' if current == :orders %>>
-          <%= link_to_with_icon 'shopping-cart', Spree.t(:"admin.user.orders"), spree.orders_admin_user_path(@user) %>
+          <%= link_to_with_icon 'shopping-cart', Spree.t(:"admin.user.order_history"), spree.orders_admin_user_path(@user) %>
         </li>
       <% end %>
       <% if can?(:items, @user) %>
