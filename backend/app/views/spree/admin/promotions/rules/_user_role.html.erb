@@ -1,0 +1,9 @@
+<div class="panel-body">
+  <div class="form-group no-marginb">
+    <%= label_tag Spree.t('user_role_rule.choose_roles') %>
+    <%= select_tag "#{param_prefix}[role_ids]",
+      options_from_collection_for_select(
+        Spree::Role.all, :id, :name, promotion_rule.role_ids
+      ), class: 'select2', multiple: true %>
+  </div>
+</div>

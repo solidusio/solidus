@@ -95,6 +95,7 @@ module Spree
           Spree::Promotion::Rules::NthOrder
           Spree::Promotion::Rules::OptionValue
           Spree::Promotion::Rules::FirstRepeatPurchaseSince
+          Spree::Promotion::Rules::UserRole
         ]
       end
 
