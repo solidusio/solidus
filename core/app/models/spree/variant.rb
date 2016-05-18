@@ -48,6 +48,7 @@ module Spree
     before_validation :set_cost_currency
 
     validate :check_price
+    validate :build_vat_prices
 
     validates :cost_price, numericality: { greater_than_or_equal_to: 0, allow_nil: true }
     validates :price,      numericality: { greater_than_or_equal_to: 0, allow_nil: true }
@@ -360,6 +361,10 @@ module Spree
       StockLocation.where(propagate_all_variants: true).each do |stock_location|
         stock_location.propagate_variant(self)
       end
+    end
+
+    def build_vat_prices
+      PriceGenerator.new(self).run
     end
 
     def set_position

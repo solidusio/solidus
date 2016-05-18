@@ -52,6 +52,33 @@ describe Spree::Variant, type: :model do
         it { expect(product.master).to_not be_in_stock }
       end
     end
+
+    context "when several countries have VAT" do
+      let(:germany) { create(:country, iso: "DE") }
+      let(:denmark) { create(:country, iso: "DK") }
+      let(:france) { create(:country, iso: "FR") }
+
+      let(:high_vat_zone) { create(:zone, countries: [germany, denmark]) }
+      let(:low_vat_zone) { create(:zone, countries: [france]) }
+
+      let(:tax_category) { create(:tax_category) }
+
+      let!(:high_vat) { create(:tax_rate, included_in_price: true, amount: 0.25, zone: high_vat_zone, tax_category: tax_category) }
+      let!(:low_vat) { create(:tax_rate, included_in_price: true, amount: 0.15, zone: low_vat_zone, tax_category: tax_category) }
+
+      let(:product) { create(:product, tax_category: tax_category) }
+
+      subject(:new_variant) { create(:variant, price: 15, product: product) }
+
+      it "creates the appropriate prices for them" do
+        # default price + FR, DE, DK
+        expect { new_variant }.to change { Spree::Price.count }.by(4)
+        expect(new_variant.prices.find_by(country_iso: "FR").amount).to eq(17.25)
+        expect(new_variant.prices.find_by(country_iso: "DE").amount).to eq(18.75)
+        expect(new_variant.prices.find_by(country_iso: "DK").amount).to eq(18.75)
+        expect(new_variant.prices.find_by(country_iso: nil).amount).to eq(15.00)
+      end
+    end
   end
 
   context "product has other variants" do

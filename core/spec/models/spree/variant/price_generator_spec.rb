@@ -3,14 +3,14 @@ require "spec_helper"
 describe Spree::Variant::PriceGenerator do
   let(:tax_category) { create(:tax_category) }
   let(:product) { variant.product }
-  let(:variant) { create(:variant, price: 10) }
-  let(:germany) { create(:country, iso: "DE") }
-  let(:germany_zone) { create(:zone, countries: [germany]) }
-  let!(:german_vat) { create(:tax_rate, included_in_price: true, amount: 0.19, zone: germany_zone, tax_category: tax_category) }
+  let(:variant) { create(:variant, price: 10, tax_category: tax_category) }
 
   subject { described_class.new(variant).run }
 
   context "with Germany as default admin country" do
+    let(:germany) { create(:country, iso: "DE") }
+    let(:germany_zone) { create(:zone, countries: [germany]) }
+    let!(:german_vat) { create(:tax_rate, included_in_price: true, amount: 0.19, zone: germany_zone, tax_category: tax_category) }
     let(:france) { create(:country, iso: "FR") }
     let(:france_zone) { create(:zone, countries: [france]) }
     let!(:french_vat) { create(:tax_rate, included_in_price: true, amount: 0.20, zone: france_zone, tax_category: tax_category) }
@@ -21,9 +21,11 @@ describe Spree::Variant::PriceGenerator do
 
     it "builds a correct price including VAT for all VAT countries" do
       subject
+      variant.save
+      variant.reload
       expect(variant.default_price.for_any_country?).to be false
       expect(variant.prices.detect { |p| p.country_iso == "DE" }.try!(:amount)).to eq(10.00)
-      expect(variant.prices.detect { |p| p.country_iso == "FR"}.try!(:amount)).to eq(10.08)
+      expect(variant.prices.detect { |p| p.country_iso == "FR" }.try!(:amount)).to eq(10.08)
       expect(variant.prices.detect { |p| p.country_iso.nil? }.try!(:amount)).to eq(8.40)
     end
 
@@ -35,16 +37,34 @@ describe Spree::Variant::PriceGenerator do
   end
 
   context "with no default admin country" do
+    let(:germany) { create(:country, iso: "DE") }
+    let(:germany_zone) { create(:zone, countries: [germany]) }
+    let!(:german_vat) { create(:tax_rate, included_in_price: true, amount: 0.19, zone: germany_zone, tax_category: tax_category) }
     let(:france) { create(:country, iso: "FR") }
     let(:france_zone) { create(:zone, countries: [france]) }
     let!(:french_vat) { create(:tax_rate, included_in_price: true, amount: 0.20, zone: france_zone, tax_category: tax_category) }
 
     it "builds a correct price including VAT for all VAT countries" do
       subject
+      variant.save
+      variant.reload
       expect(variant.default_price.for_any_country?).to be true
       expect(variant.prices.detect { |p| p.country_iso == "DE" }.try!(:amount)).to eq(11.90)
       expect(variant.prices.detect { |p| p.country_iso == "FR" }.try!(:amount)).to eq(12.00)
       expect(variant.prices.detect { |p| p.country_iso.nil? }.try!(:amount)).to eq(10.00)
+    end
+  end
+
+  context "for a variant with not tax category" do
+    let(:tax_category) { nil }
+
+    before do
+      product.update(tax_category: nil)
+    end
+
+    it "creates no addditional prices" do
+      subject
+      expect(variant.prices.length).to eq(0)
     end
   end
 end
