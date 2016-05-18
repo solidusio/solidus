@@ -72,17 +72,33 @@ module Spree
     private
 
     def should_recalculate_taxes?(old_address, new_address)
+      # Related to Solidus issue #894
+      # This is needed because if you update the shipping_address
+      # from the backend on an order that completed checkout,
+      # Taxes were not being recalculated if the Order tax zone
+      # was updated
+      #
       # Possible cases:
-      # [Old_address is a TaxLocation, New_address is a TaxLocation ]:
-      # NON-VAT order before Address state : we don't compute taxes.
-      # [Old_address is a TaxLocation, New_address is an Adress ]:
-      # Order who passed Address state : we compute taxes.
-      # [Old_address is an Adress, New_address is a TaxLocation ]:
-      # Should not happen, TaxLocation can be replaced by an Address but not the other way around.
-      # Order is a weird state and we do nothing because it should not happen.
+      #
+      # Case 1:
+      #
+      # If old_address is a TaxLocation it means that the order has not passed
+      # the address checkout state so taxes will be computed by the Order
+      # state machine, so we do not calculate taxes here.
+      #
+      # Case 2 :
+      # If new_address is a TaxLocation, but old_address is not, it means that
+      # an order has somehow lost his TaxAddress. Since it's not supposed to happen,
+      # we do not compute taxes.
+      #
+      # Case 3
+      # Both old_address and new_address are Spree::Address so the order
+      # has completed the checkout or that a registered user has updated his
+      # default addresses. We need to recalculate the taxes.
+
       return if old_address.is_a?(Spree::Tax::TaxLocation) || new_address.is_a?(Spree::Tax::TaxLocation)
 
-      old_address.try(:taxation_attributes) != new_address.try(:taxation_attributes)
+      old_address.try!(:taxation_attributes) != new_address.try!(:taxation_attributes)
     end
 
     def after_add_or_remove(line_item, options = {})
