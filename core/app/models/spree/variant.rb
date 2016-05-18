@@ -26,6 +26,7 @@ module Spree
              :meta_description, :meta_keywords, :shipping_category,
              to: :product
     delegate :tax_category, to: :product, prefix: true
+    delegate :tax_rates, to: :tax_category
 
     has_many :inventory_units, inverse_of: :variant
     has_many :line_items, inverse_of: :variant
