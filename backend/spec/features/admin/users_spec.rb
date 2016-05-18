@@ -41,7 +41,7 @@ describe 'Users', type: :feature do
     end
 
     it 'can navigate to the order history' do
-      expect(page).to have_link Spree.t(:"admin.user.orders"), href: spree.orders_admin_user_path(user_a)
+      expect(page).to have_link Spree.t(:"admin.user.order_history"), href: spree.orders_admin_user_path(user_a)
     end
 
     it 'can navigate to the items purchased' do
@@ -201,7 +201,7 @@ describe 'Users', type: :feature do
     before do
       orders
       click_link user_a.email
-      within("#sidebar") { click_link Spree.t(:"admin.user.orders") }
+      within(".tabs") { click_link Spree.t(:"admin.user.order_history") }
     end
 
     it_behaves_like 'a user page'
@@ -231,7 +231,7 @@ describe 'Users', type: :feature do
     before do
       orders
       click_link user_a.email
-      within("#sidebar") { click_link Spree.t(:"admin.user.items") }
+      within(".tabs") { click_link Spree.t(:"admin.user.items") }
     end
 
     it_behaves_like 'a user page'
