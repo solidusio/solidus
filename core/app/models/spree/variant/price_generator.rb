@@ -43,9 +43,7 @@ module Spree
 
       def vat_for_country_iso(country_iso)
         return 0 unless variant.tax_category
-        variant_vat_rates.for_address(
-          Spree::Tax::TaxLocation.new(country: Spree::Country.find_by(iso: country_iso))
-        ).sum(:amount)
+        variant_vat_rates.for_country(Spree::Country.find_by(iso: country_iso)).sum(:amount)
       end
 
       def variant_vat_rates

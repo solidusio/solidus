@@ -8,15 +8,15 @@ module Spree
     belongs_to :country, class_name: "Spree::Country", foreign_key: "country_iso", primary_key: "iso"
 
     delegate :product, to: :variant
+    delegate :tax_rates, to: :variant
 
     validate :check_price
     validates :amount, allow_nil: true, numericality: {
       greater_than_or_equal_to: 0,
       less_than_or_equal_to: MAXIMUM_AMOUNT
     }
-    validates :country, presence: true, unless: -> { for_any_country? }
-
     validates :currency, inclusion: { in: ::Money::Currency.all.map(&:iso_code), message: :invalid_code }
+    validates :country, presence: true, unless: -> { for_any_country? }
 
     scope :currently_valid, -> { where(is_default: true) }
     scope :for_any_country, -> { where(country: nil) }
@@ -43,7 +43,7 @@ module Spree
     end
 
     def net_amount
-      amount / (1 + sum_of_included_vats)
+      amount / (1 + sum_of_vat_amounts)
     end
 
     def for_any_country?
@@ -52,11 +52,9 @@ module Spree
 
     private
 
-    def sum_of_included_vats
+    def sum_of_vat_amounts
       return 0 unless variant.tax_category
-      variant.tax_category.tax_rates.for_address(
-        Spree::Tax::TaxLocation.new(country: country)
-      ).sum(:amount)
+      tax_rates.included_in_price.for_country(country).sum(:amount)
     end
 
     def check_price
