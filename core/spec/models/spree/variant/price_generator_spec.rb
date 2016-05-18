@@ -26,6 +26,12 @@ describe Spree::Variant::PriceGenerator do
       expect(variant.prices.detect { |p| p.country_iso == "FR"}.try!(:amount)).to eq(10.08)
       expect(variant.prices.detect { |p| p.country_iso.nil? }.try!(:amount)).to eq(8.40)
     end
+
+    it "will not build prices that are already present" do
+      variant.prices.build(amount: 11, country_iso: "FR")
+      variant.prices.build(amount: 11, country_iso: nil)
+      expect { subject }.not_to change { variant.prices.length }
+    end
   end
 
   context "with no default admin country" do
