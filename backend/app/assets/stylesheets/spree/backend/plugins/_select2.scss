@@ -134,6 +134,14 @@
       min-height: 22px;
       clear: both;
       overflow: auto;
+
+      .variant-autocomplete-item {
+        .media-content {
+          dd {
+            margin: 0;
+          }
+        }
+      }
     }
 
     &.select2-no-results, &.select2-searching {
