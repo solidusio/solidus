@@ -3,6 +3,7 @@
   position: fixed;
   top: 0;
   right: 0;
+  bottom: 0;
   z-index: 1000;
   opacity: 0.8;
   @include calc(width, "100% - #{$width-sidebar}");
@@ -10,9 +11,12 @@
   .wrapper {
     border-radius: 10px;
     position: absolute;
+    top: 50%;
     left: 50%;
     width: 200px;
+    height: 100px;
     margin-left: -100px;
+    margin-top: -50px;
     padding: 11px 0;
     background-color: $color-3;
     color: $color-1;
