@@ -59,7 +59,13 @@
     <p class='field' data-hook='coupon_code'>
       <%= form.label :coupon_code %><br />
       <%= form.text_field :coupon_code %>
+      <button type="button" class="button" id="coupon-code-apply-button">
+        <%= Spree.t(:apply_code) %>
+      </button>
+
     </p>
+    <div id='coupon_status'></div>
+
   </div>
 </fieldset>
 

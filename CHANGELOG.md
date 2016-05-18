@@ -170,6 +170,11 @@
     * Partials are rendered on pages owned by the partials as tabs as a top bar
     * Admin-nav has a sub-menu for the settings now
 
+*   Coupon code application has been separated from the Continue button on the Payment checkout page
+
+    * JavaScript for it has been moved from address.js into its own `spree/frontend/checkout/coupon-code`
+    * Numerous small nuisances have been fixed [#1090](https://github.com/solidusio/solidus/pull/1090)
+
 ## Solidus 1.2.0 (2016-01-26)
 
 *   Admin menu has been moved from top of the page to the left side.

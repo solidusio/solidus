@@ -317,7 +317,7 @@ describe "Checkout", type: :feature, inaccessible: true do
     end
   end
 
-  context "in coupon promotion, submits coupon along with payment", js: true do
+  context "Coupon promotions", js: true do
     let!(:promotion) { create(:promotion, name: "Huhuhu", code: "huhu") }
     let!(:calculator) { Spree::Calculator::FlatPercentItemTotal.create(preferred_flat_percent: "10") }
     let!(:action) { Spree::Promotion::Actions::CreateItemAdjustments.create(calculator: calculator) }
@@ -336,20 +336,19 @@ describe "Checkout", type: :feature, inaccessible: true do
       expect(page).to have_current_path(spree.checkout_state_path("payment"))
     end
 
-    it "makes sure payment reflects order total with discounts" do
+    it "applies them & refreshes the page on user clicking the Apply Code button" do
       fill_in "Coupon Code", with: promotion.codes.first.value
-      click_on "Save and Continue"
+      click_on "Apply Code"
 
       expect(page).to have_content(promotion.name)
-      expect(Spree::Payment.first.amount.to_f).to eq Spree::Order.last.total.to_f
+      expect(page).to have_content("-$2.00")
     end
 
-    context "invalid coupon" do
-      it "doesnt create a payment record" do
+    context "with invalid coupon" do
+      it "doesnt apply the promotion" do
         fill_in "Coupon Code", with: 'invalid'
-        click_on "Save and Continue"
+        click_on "Apply Code"
 
-        expect(Spree::Payment.count).to eq 0
         expect(page).to have_content(Spree.t(:coupon_code_not_found))
       end
     end
