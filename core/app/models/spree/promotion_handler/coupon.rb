@@ -12,7 +12,7 @@ module Spree
         if order.coupon_code.present?
           if promotion.present? && promotion.actions.exists?
             handle_present_promotion(promotion)
-          elsif promotion_code && promotion_code.promotion.expired?
+          elsif promotion_code && promotion_code.promotion.inactive?
             set_error_code :coupon_code_expired
           else
             set_error_code :coupon_code_not_found

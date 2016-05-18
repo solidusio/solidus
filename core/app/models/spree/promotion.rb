@@ -73,13 +73,22 @@ module Spree
       super
     end
 
-    def expired?
-      !active?
-    end
-
     def active?
       (starts_at.nil? || starts_at < Time.current) &&
         (expires_at.nil? || expires_at > Time.current)
+    end
+
+    def inactive?
+      !active?
+    end
+
+    def expired?
+      Spree::Deprecation.warn <<-WARN.squish, caller
+        #expired? is deprecated, and will be removed in Solidus 2.0.
+        Please use #inactive? instead.
+      WARN
+
+      inactive?
     end
 
     def activate(order:, line_item: nil, user: nil, path: nil, promotion_code: nil)
@@ -116,7 +125,7 @@ module Spree
 
     # called anytime order.update! happens
     def eligible?(promotable, promotion_code: nil)
-      return false if expired?
+      return false if inactive?
       return false if usage_limit_exceeded?
       return false if promotion_code && promotion_code.usage_limit_exceeded?
       return false if blacklisted?(promotable)
