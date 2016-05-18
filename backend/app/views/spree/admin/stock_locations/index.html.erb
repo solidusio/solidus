@@ -49,8 +49,14 @@
               <span class="handle"></span>
             <% end %>
           </td>
-          <td class="align-center"><%= display_name(stock_location) %></td>
-          <td class="align-center"><span class="state <%= state(stock_location) %>"><%= Spree.t(state(stock_location)) %></span></td>
+          <td class="align-center"><%= admin_stock_location_display_name(stock_location) %></td>
+          <td class="align-center">
+            <% if stock_location.active? %>
+              <span class="state active"><%= Spree.t('active') %></span>
+            <% else %>
+              <span class="state inactive"><%= Spree.t('inactive') %></span>
+            <% end %>
+          </td>
           <td class="align-center">
             <% if can?(:display, Spree::StockMovement) %>
               <%= link_to Spree::StockMovement.model_name.human(count: :other), admin_stock_location_stock_movements_path(stock_location.id) %>
