@@ -44,7 +44,7 @@ describe Spree::Variant::Pricer do
         context "with no price for that country present" do
           context "and no fallback price for the variant present" do
             before do
-              variant.prices.update_all(country_iso: "US")
+              variant.prices.delete_all
             end
 
             it "returns nil" do
