@@ -123,7 +123,7 @@
 
     &.select2-highlighted {
       .select2-result-label {
-        &, h6 {
+        &, .media-heading, .media-content {
           color: $color-1 !important;
         }
       }
