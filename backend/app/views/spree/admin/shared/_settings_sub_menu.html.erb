@@ -4,23 +4,23 @@
   <% end %>
 
   <% if can?(:display, Spree::PaymentMethod) %>
-    <%= tab :payments, url: admin_payment_methods_path %>
+    <%= tab :payments, url: spree.admin_payment_methods_path %>
   <% end %>
 
   <% if can?(:display, Spree::Zone) || can?(:display, Spree::Country) || can?(:display, Spree::State) %>
-    <%= tab :areas, url: admin_zones_path %>
+    <%= tab :areas, url: spree.admin_zones_path %>
   <% end %>
 
   <% if can?(:display, Spree::TaxCategory) || can?(:display, Spree::TaxRate) %>
-    <%= tab :taxes, url: admin_tax_categories_path %>
+    <%= tab :taxes, url: spree.admin_tax_categories_path %>
   <% end %>
 
   <% if can?(:display, Spree::RefundReason) || can?(:display, Spree::ReimbursementType) ||
      can?(:display, Spree::ReturnReason) || can?(:display, Spree::AdjustmentReason) %>
-    <%= tab :checkout, url: admin_refund_reasons_path %>
+    <%= tab :checkout, url: spree.admin_refund_reasons_path %>
   <% end %>
 
   <% if can?(:display, Spree::ShippingMethod) || can?(:display, Spree::ShippingCategory) || can?(:display, Spree::StockLocation) %>
-    <%= tab :shipping, url: admin_shipping_methods_path, match_path: %r(shipping_methods|shipping_categories|stock_locations) %>
+    <%= tab :shipping, url: spree.admin_shipping_methods_path, match_path: %r(shipping_methods|shipping_categories|stock_locations) %>
   <% end %>
 </ul>
