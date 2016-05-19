@@ -1568,8 +1568,8 @@ en:
         name: First Repeat Purchase Since
         form_text: "Apply this promotion to users whose last order was more than X days ago: "
       user_role:
-        description: User roles meets these criteria
-        name: User Roles
+        description: Order includes User with specified Role(s)
+        name: User Role(s)
     promotions: Promotions
     promotion_successfully_created: Promotion has been successfully created!
     promotion_total_changed_before_complete: "One or more of the promotions on your order have become ineligible and were removed. Please check the new order amounts and try again."
@@ -1911,6 +1911,9 @@ en:
       choose_users: Choose users
     user_role_rule:
       choose_roles: Choose Roles
+      label: User must contain %{select} of these roles
+      match_all: all
+      match_any: at least one
     users: Users
     validation:
       unpaid_amount_not_zero: "Amount was not fully reimbursed. Still due: %{amount}"
