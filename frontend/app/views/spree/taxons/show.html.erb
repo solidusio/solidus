@@ -3,7 +3,12 @@
 <% content_for :sidebar do %>
   <div data-hook="taxon_sidebar_navigation">
     <%= render partial: 'spree/shared/taxonomies' %>
-    <%= render partial: Spree::Config.search_filter_presenter_class.partial_path if @taxon.children.empty? %>
+
+    <% if @taxon.children.empty? %>
+      <% Spree::Config.search_filter_presenter_class.new(taxon: @taxon).tap do |presenter| %>
+        <%= render presenter.partial_path, filters: presenter.all %>
+      <% end %>
+    <% end %>
   </div>
 <% end %>
 
