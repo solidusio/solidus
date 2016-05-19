@@ -1,39 +1,62 @@
 require 'spec_helper'
 
 describe Spree::Promotion::Rules::UserRole, type: :model do
-  let(:rule) { Spree::Promotion::Rules::UserRole.new }
-  let(:special_role) { create(:role, name: :special) }
-  let(:roles) { create_list(:role, 3) }
-  let(:user) { create(:user, spree_roles: [special_role]) }
+  let(:rule) { described_class.new(preferred_role_ids: roles_for_rule) }
+  let(:user) { create(:user, spree_roles: roles_for_user) }
+  let(:roles_for_rule) { [] }
+  let(:roles_for_user) { [] }
+
+  subject { rule }
 
   context '#eligible?(order)' do
-    let(:order) { Spree::Order.new }
+    context 'order with no user' do
+      let(:order) { Spree::Order.new }
 
-    it 'should not be eligible if order don\'t have a user' do
-      allow(rule).to receive_messages(roles: roles.append(special_role))
-
-      expect(rule).not_to be_eligible(order)
+      it 'should not be eligible' do
+        expect(rule).to_not be_eligible(order)
+      end
     end
 
-    it 'should not be eligible if roles are not provided' do
-      allow(rule).to receive_messages(roles: [])
-      allow(order).to receive_messages(user: user)
+    context 'order with user' do
+      let(:order) { Spree::Order.new(user: user) }
+      context 'no roles on rule' do
+        let(:roles_for_user) { [create(:role)] }
+        it 'should not be eligible' do
+          expect(rule).to_not be_eligible(order)
+        end
+      end
 
-      expect(rule).not_to be_eligible(order)
-    end
+      context 'no roles on user' do
+        let(:roles_for_rule) { [create(:role)] }
+        it 'should not be eligible' do
+          expect(rule).to_not be_eligible(order)
+        end
+      end
 
-    it 'should be eligible if roles include almost one role of user placing the order' do
-      allow(rule).to receive_messages(roles: roles.append(special_role))
-      allow(order).to receive_messages(user: user)
+      context 'mismatched roles' do
+        let(:roles_for_user) { [create(:role)] }
+        let(:roles_for_rule) { [create(:role)] }
+        it 'should not be eligible' do
+          expect(rule).to_not be_eligible(order)
+        end
+      end
 
-      expect(rule).to be_eligible(order)
-    end
+      context 'matching roles' do
+        let(:roles_for_user) { [create(:role)] }
+        let(:roles_for_rule) { roles_for_user }
+        it 'should be eligible' do
+          expect(rule).to be_eligible(order)
+        end
+      end
 
-    it 'should not be eligible if user placing the order not have almost one listed role' do
-      allow(rule).to receive_messages(roles: roles)
-      allow(order).to receive_messages(user: user)
-
-      expect(rule).to_not be_eligible(order)
+      context 'one shared role' do
+        let(:shared_role) { create(:role) }
+        let(:roles_for_user) { [create(:role), shared_role] }
+        let(:roles_for_rule) { [create(:role), shared_role] }
+        it 'should be eligible' do
+          expect(rule).to be_eligible(order)
+        end
+      end
     end
   end
 end
