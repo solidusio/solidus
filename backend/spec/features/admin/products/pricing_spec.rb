@@ -59,5 +59,31 @@ describe 'Pricing' do
         expect(page).to_not have_content("49.99")
       end
     end
+
+    context "deleting", js: true do
+      let(:product) { create(:product, price: 65.43) }
+      let!(:variant) { product.master }
+      let!(:other_price) { product.master.prices.create(amount: 34.56, is_default: false) }
+
+      it "will delete the non-default price" do
+        within "#spree_price_#{other_price.id}" do
+          accept_alert do
+            click_icon :trash
+          end
+        end
+        expect(page).to have_content("Price has been successfully removed")
+      end
+
+      it "does not break when default price is deleted" do
+        within "#spree_price_#{variant.default_price.id}" do
+          accept_alert do
+            click_icon :trash
+          end
+        end
+        expect(page).to have_content("Price has been successfully removed")
+        visit spree.admin_products_path
+        expect(page).to have_selector("#spree_product_#{product.id}")
+      end
+    end
   end
 end
