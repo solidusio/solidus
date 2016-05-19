@@ -334,19 +334,16 @@ RSpec.describe "Taxation system integration tests" do
 
         before { 2.times { order.next! } }
 
-        it 'it has a shipment with an adjusted price to 2.08' do
-          pending 'Waiting for the MOSS refactoring'
-          expect(shipment.amount).to eq(2.08)
+        it 'it has a shipment with worth 2.00' do
+          expect(shipment.amount).to eq(2.00)
         end
 
         it 'has a shipment with 0.40 included tax' do
-          pending 'But the tax is not created'
-          expect(shipment.included_tax_total).to eq(0.40)
+          expect(shipment.included_tax_total).to eq(0.39)
         end
 
         it 'has a shipping rate that correctly reflects the shipment' do
-          pending 'But the shipping rate is not adjusted'
-          expect(shipping_rate.display_price).to eq("$2.08 (incl. $0.40 Romanian VAT)")
+          expect(shipping_rate.display_price).to eq("$2.00 (incl. $0.39 Romanian VAT)")
         end
       end
     end
@@ -429,9 +426,8 @@ RSpec.describe "Taxation system integration tests" do
 
           before { 2.times { order.next! } }
 
-          it 'it has a shipment with an adjusted price to 7.47' do
-            pending 'but prices are not adjusted yet'
-            expect(shipment.amount).to eq(7.47)
+          it 'it has a shipment that costs $8.00' do
+            expect(shipment.amount).to eq(8.00)
           end
 
           it 'has a shipment with no included tax' do
@@ -439,8 +435,8 @@ RSpec.describe "Taxation system integration tests" do
           end
 
           it 'has a shipping rate that correctly reflects the shipment' do
-            pending 'since no tax created, no correct display price'
-            expect(shipping_rate.display_price).to eq("$7.47")
+            pending "But solidus tries refunding taxes"
+            expect(shipping_rate.display_price).to eq("$8.00")
           end
         end
       end
@@ -477,9 +473,8 @@ RSpec.describe "Taxation system integration tests" do
 
           before { 2.times { order.next! } }
 
-          it 'it has a shipment with an adjusted price to 13.45' do
-            pending 'But prices are not adjusted yet'
-            expect(shipment.amount).to eq(13.45)
+          it 'it has a shipment costing $16.00' do
+            expect(shipment.amount).to eq(16.00)
           end
 
           it 'has a shipment with no included tax' do
@@ -487,8 +482,8 @@ RSpec.describe "Taxation system integration tests" do
           end
 
           it 'has a shipping rate that correctly reflects the shipment' do
-            pending 'since no tax created, no correct display price'
-            expect(shipping_rate.display_price).to eq("$13.45")
+            pending "but solidus tries refunding taxes"
+            expect(shipping_rate.display_price).to eq("$16.00")
           end
         end
       end
@@ -526,9 +521,8 @@ RSpec.describe "Taxation system integration tests" do
 
         before { 2.times { order.next! } }
 
-        it 'it has a shipment with an adjusted price to 1.68' do
-          pending 'but prices are not adjusted yet'
-          expect(shipment.amount).to eq(1.68)
+        it 'it has a shipment costing 2.00' do
+          expect(shipment.amount).to eq(2.00)
         end
 
         it 'has a shipment with no included tax' do
@@ -536,8 +530,8 @@ RSpec.describe "Taxation system integration tests" do
         end
 
         it 'has a shipping rate that correctly reflects the shipment' do
-          pending 'since no tax created, no correct display price'
-          expect(shipping_rate.display_price).to eq("$1.68")
+          pending 'but solidus wants to refund part of the shipment amount'
+          expect(shipping_rate.display_price).to eq("$2.00")
         end
       end
     end
