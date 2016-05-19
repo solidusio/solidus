@@ -2,9 +2,10 @@
 
 <table class="index prices">
   <colgroup>
+    <col style="width: 40%" />
     <col style="width: 15%" />
-    <col style="width: 35%" />
-    <col style="width: 35%" />
+    <col style="width: 15%" />
+    <col style="width: 15%" />
     <col style="width: 15%" />
   </colgroup>
 
@@ -20,7 +21,7 @@
 
   <tbody>
   <% prices.each do |price| %>
-    <tr data-hook="prices_row" class="<%= "deleted" if price.deleted? %> <%= cycle('odd', 'even')%>">
+    <tr id="<%= spree_dom_id price %>" data-hook="prices_row" class="<%= "deleted" if price.deleted? %> <%= cycle('odd', 'even')%>">
       <td class="align-center">
         <% if price.variant.is_master? %>
           <%= t(".master_variant") %>
@@ -42,7 +43,7 @@
         <% end %>
         <% if can?(:destroy, price) %>
           &nbsp;
-          <%#= link_to_delete(price, :no_text => true) unless price.deleted? %>
+          <%= link_to_delete(price, :no_text => true) unless price.deleted? %>
         <% end %>
       </td>
     </tr>
