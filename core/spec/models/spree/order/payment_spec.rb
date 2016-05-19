@@ -45,7 +45,6 @@ module Spree
       it "does not use failed payments" do
         payment_1 = create(:payment, amount: 50)
         payment_2 = create(:payment, amount: 50, state: 'failed')
-        allow(order).to receive(:pending_payments).and_return([payment_1])
 
         expect(payment_2).not_to receive(:process!)
 
