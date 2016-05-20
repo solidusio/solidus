@@ -1,14 +1,6 @@
 <%= paginate prices, theme: "solidus_admin" %>
 
 <table class="index prices">
-  <colgroup>
-    <col style="width: 40%" />
-    <col style="width: 15%" />
-    <col style="width: 15%" />
-    <col style="width: 15%" />
-    <col style="width: 15%" />
-  </colgroup>
-
   <thead data-hook="prices_header">
     <tr>
       <th><%= Spree::Variant.model_name.human %> </th>
