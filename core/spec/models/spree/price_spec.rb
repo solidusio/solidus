@@ -39,4 +39,28 @@ describe Spree::Price, type: :model do
       it { is_expected.to be_valid }
     end
   end
+
+  describe "#currency" do
+    let(:variant) { stub_model Spree::Variant }
+    subject { Spree::Price.new variant: variant, amount: 10, currency: currency }
+
+    describe "validation" do
+      context "with an invalid currency" do
+        let(:currency) { "XYZ" }
+
+        it { is_expected.to be_invalid }
+
+        it "has an understandable error message" do
+          subject.valid?
+          expect(subject.errors.messages[:currency].first).to eq("is not a valid currency code")
+        end
+      end
+
+      context "with a valid currency" do
+        let(:currency) { "USD" }
+
+        it { is_expected.to be_valid }
+      end
+    end
+  end
 end
