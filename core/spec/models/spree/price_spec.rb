@@ -1,6 +1,13 @@
 require 'spec_helper'
 
 describe Spree::Price, type: :model do
+  describe 'searchable columns' do
+    subject { described_class.whitelisted_ransackable_attributes }
+    it 'allows searching by variant_id' do
+      expect(subject).to include("variant_id")
+    end
+  end
+
   describe 'validations' do
     let(:variant) { stub_model Spree::Variant }
     subject { Spree::Price.new variant: variant, amount: amount }
