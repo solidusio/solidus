@@ -43,6 +43,8 @@ Try out Solidus with one-click on Heroku:
 Getting started
 ---------------
 
+[![Deploy](https://www.herokucdn.com/deploy/button.png)](https://heroku.com/deploy?template=https://github.com/solidusio/sandbox-demo)
+
 To add solidus, begin with a rails 4.2 application. Add the following to your
 Gemfile.
 
