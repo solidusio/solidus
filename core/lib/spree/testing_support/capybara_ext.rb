@@ -26,11 +26,16 @@ module CapybaraExt
   end
 
   def select2_search(value, options)
+    options = {
+      search: value, # by default search for the value
+      select: true
+    }.merge(options)
     label = find_label_by_text(options[:from])
     within label.first(:xpath, ".//..") do
       options[:from] = "##{find('.select2-container')['id']}"
     end
-    targetted_select2_search(value, options)
+    select2_search_without_selection(options[:search], from: options[:from])
+    select_select2_result(value) if options[:select]
   end
 
   def select2_search_without_selection(value, options)
