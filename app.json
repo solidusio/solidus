@@ -1,0 +1,29 @@
+{
+  "name": "Solidus Sandbox",
+  "description": "A demonstration store using Solidus with some test data.",
+  "repository": "https://github.com/solidusio/solidus",
+  "logo": "http://solidus.io/favicon.ico",
+  "keywords": [
+    "solidus",
+    "demo"
+  ],
+  "buildpacks": [
+    {"url": "https://github.com/solidusio/heroku-buildpack-solidus-demo.git"}
+  ],
+  "addons": [
+    "heroku-postgresql:hobby-dev"
+  ],
+  "scripts": {
+    "postdeploy": "rake db:migrate && rake db:seed spree_sample:load && rails runner Spree::Image.destroy_all"
+  },
+  "env": {
+    "ADMIN_EMAIL": {
+      "description": "We will create an admin user with this email.",
+      "value": "admin@example.com"
+    },
+    "ADMIN_PASSWORD": {
+      "description": "We will create an admin user with this password.",
+      "value": "test123"
+    }
+  }
+}
