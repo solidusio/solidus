@@ -34,6 +34,12 @@ custom frontend instead of using [`solidus_frontend`](https://github.com/solidus
 [![Gem](https://img.shields.io/gem/v/solidus.svg)](https://rubygems.org/gems/solidus)
 [![License](http://img.shields.io/badge/license-BSD-yellowgreen.svg)](LICENSE.md)
 
+Demo
+----
+Try out Solidus with one-click on Heroku:
+
+[![Deploy](https://www.herokucdn.com/deploy/button.png)](https://heroku.com/deploy?template=https://github.com/solidusio/solidus)
+
 Getting started
 ---------------
 
