@@ -14,7 +14,10 @@
     <div class="four columns alpha" data-hook="admin_product_price_form_currency">
       <%= f.field_container :currency do %>
         <%= f.label :currency %>
-        <%= f.text_field :currency, class: 'fullwidth title', disabled: !f.object.new_record? %>
+        <%= f.select :currency,
+                     Money::Currency.all.map { |c| ["#{c.iso_code} (#{c.name})", c.iso_code] },
+                     {},
+                     class: "select2 fullwidth", disabled: !f.object.new_record? %>
       <% end %>
     </div>
 
