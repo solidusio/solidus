@@ -34,7 +34,7 @@ describe 'Pricing' do
         expect(page).to have_content("USD")
         expect(page).to have_content("34.56 ₽")
         expect(page).to have_content("RUB")
-        expect(page).to have_content("Master Variant")
+        expect(page).to have_content("Master")
       end
     end
 
