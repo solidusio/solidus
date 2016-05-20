@@ -12,6 +12,8 @@ module Spree
       less_than_or_equal_to: MAXIMUM_AMOUNT
     }
 
+    validates :currency, inclusion: { in: ::Money::Currency.all.map(&:iso_code), message: :invalid_code }
+
     scope :currently_valid, -> { where(is_default: true) }
     scope :with_default_attributes, -> { where(Spree::Config.default_pricing_options.desired_attributes) }
     after_save :set_default_price

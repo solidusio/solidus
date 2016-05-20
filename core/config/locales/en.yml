@@ -523,6 +523,10 @@ en:
           attributes:
             currency:
               must_match_order_currency: "Must match order currency"
+        spree/price:
+          attributes:
+            currency:
+              invalid_code: "is not a valid currency code"
         spree/promotion:
           attributes:
             apply_automatically:
