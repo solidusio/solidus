@@ -18,7 +18,7 @@
     <div class="field" data-hook="sku-select">
       <%= label_tag :q_variant_id_eq, Spree::Variant.model_name.human %>
       <%= f.select :variant_id_eq,
-                   @product.variants_including_master.map { |v| [v.options_text.presence || t(".master_variant"), v.id] },
+                   @product.variants_including_master.map { |v| [v.descriptive_name, v.id] },
                    {include_blank: true},
                    class: "select2 fullwidth" %>
     </div>

@@ -775,10 +775,7 @@ en:
           pricing: Pricing
           pricing_hint: These values are populated from the product details page and can be overridden below
       prices:
-        table:
-          master_variant: Master Variant
         index:
-          master_variant: Master Variant
           amount_greater_than: Amount greater than
           amount_less_than: Amount less than
           new_price: New Price

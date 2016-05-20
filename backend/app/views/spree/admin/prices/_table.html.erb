@@ -23,11 +23,8 @@
   <% prices.each do |price| %>
     <tr id="<%= spree_dom_id price %>" data-hook="prices_row" class="<%= "deleted" if price.deleted? %> <%= cycle('odd', 'even')%>">
       <td class="align-center">
-        <% if price.variant.is_master? %>
-          <%= t(".master_variant") %>
-        <% else %>
-          <%= price.variant.options_text %> </td>
-        <% end %>
+        <%= price.variant.descriptive_name %>
+      </td>
       <td class="align-center">
         <% if price.is_default? %>
           <span class="state complete"> <%= Spree.t(:say_yes) %> </span>

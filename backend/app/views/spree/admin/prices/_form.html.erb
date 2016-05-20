@@ -5,7 +5,7 @@
       <%= f.field_container :variant do %>
         <%= f.label :variant %>
         <%= f.select :variant_id,
-                     @product.variants_including_master.map { |v| [v.options_text.presence || t(".master_variant"), v.id] },
+                     @product.variants_including_master.map { |v| [v.descriptive_name, v.id] },
                      {},
                      class: "select2 fullwidth", disabled: !f.object.new_record? %>
       <% end %>
