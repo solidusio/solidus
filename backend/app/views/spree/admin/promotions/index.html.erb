@@ -3,7 +3,7 @@
 <% content_for :page_actions do %>
   <% if can? :create, Spree::Promotion %>
     <li>
-      <%= button_link_to Spree.t(:new_promotion), spree.new_admin_promotion_path, :icon => 'plus' %>
+      <%= button_link_to Spree.t(:new_promotion), spree.new_admin_promotion_path %>
     </li>
   <% end %>
 <% end %>

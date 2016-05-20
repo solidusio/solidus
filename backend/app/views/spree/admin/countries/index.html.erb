@@ -8,7 +8,7 @@
   <ul class="actions inline-menu">
     <% if can?(:create, Spree::Country) %>
       <li>
-        <%= button_link_to Spree.t(:new_country), new_object_url, { :icon => 'plus', :id => 'admin_new_country' } %>
+        <%= button_link_to Spree.t(:new_country), new_object_url, { :id => 'admin_new_country' } %>
       </li>
     <% end %>
   </ul>
