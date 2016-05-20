@@ -1,21 +1,36 @@
 module Spree
   module TestingSupport
-    # Use this module to easily test Spree actions within Spree components or
-    # inside your application to test routes for the mounted Spree engine.
+    # A module providing convenience methods to test Solidus controllers
+    # in Rails controller/functional tests. Possibly from inside an
+    # application with a mounted Solidus engine.
     #
-    # Inside your spec_helper.rb, include this module inside the
-    # RSpec.configure block by doing this:
+    # *There is generaly no need* to use this module. Instead, in
+    # a functional/controller test against a Spree controller, just
+    # use standard Rails functionality by including:
+    #
+    #   routes { Spree::Core::Engine.routes }
+    #
+    # And then use standard Rails test `get`, `post` etc methods.
+    #
+    # But some legacy code uses this ControllerRequests helper. It must
+    # be included only in tests against Spree controllers, it will interfere
+    # with tests against local app or other engine controllers, resulting
+    # in ActionController::UrlGenerationError.
+    #
+    # To use this module, inside your spec_helper.rb, include this module inside
+    # the RSpec.configure block by:
     #
     #   require 'spree/testing_support/controller_requests'
     #   RSpec.configure do |c|
-    #     c.include Spree::TestingSupport::ControllerRequests, :type => :controller
+    #     c.include Spree::TestingSupport::ControllerRequests, spree_controller: true
     #   end
     #
-    # Then, in your controller tests, you can access spree routes like this:
+    # Then, in your controller tests against spree controllers, you can access
+    # tag to use this module, and access spree routes like this:
     #
     #   require 'spec_helper'
     #
-    #   describe Spree::ProductsController do
+    #   describe Spree::ProductsController, :spree_controller do
     #     it "can see all the products" do
     #       spree_get :index
     #     end
