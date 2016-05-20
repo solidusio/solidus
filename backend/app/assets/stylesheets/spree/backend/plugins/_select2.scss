@@ -111,7 +111,8 @@
 }
 
 .select2-results {
-  padding-left: 0 !important;
+  margin: 4px 0;
+  padding: 0 4px;
 
   li {
     font-size: 85% !important;
@@ -123,7 +124,7 @@
 
     &.select2-highlighted {
       .select2-result-label {
-        &, h6 {
+        &, .media-heading, .media-content, .customer-email {
           color: $color-1 !important;
         }
       }
@@ -134,6 +135,14 @@
       min-height: 22px;
       clear: both;
       overflow: auto;
+
+      .variant-autocomplete-item {
+        .media-content {
+          dd {
+            margin: 0;
+          }
+        }
+      }
     }
 
     &.select2-no-results, &.select2-searching {
