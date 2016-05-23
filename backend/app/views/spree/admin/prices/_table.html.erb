@@ -5,8 +5,9 @@
     <tr>
       <th><%= Spree::Variant.model_name.human %> </th>
       <th><%= Spree::Price.human_attribute_name(:is_default) %></th>
-      <th><%= Spree::Price.human_attribute_name(:amount) %></th>
+      <th><%= Spree::Price.human_attribute_name(:country) %></th>
       <th><%= Spree::Price.human_attribute_name(:currency) %></th>
+      <th><%= Spree::Price.human_attribute_name(:amount) %></th>
       <th class="actions"></th>
     </tr>
   </thead>
@@ -24,8 +25,9 @@
           <span class="state canceled"> <%= Spree.t(:say_no) %> </span>
         <% end %>
       </td>
-      <td class="align-center"><%= price.money.to_html %></td>
+      <td class="align-center"><%= price.country.try(:name) || t(:any_country, scope: [:spree, :admin, :prices]) %>
       <td class="align-center"><%= price.currency %></td>
+      <td class="align-center"><%= price.money.to_html %></td>
       <td class="actions">
         <% if can?(:update, price) %>
           <%= link_to_edit(price, :no_text => true) unless price.deleted? %>

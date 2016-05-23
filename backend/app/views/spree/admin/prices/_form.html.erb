@@ -11,7 +11,7 @@
       <% end %>
     </div>
 
-    <div class="four columns alpha" data-hook="admin_product_price_form_currency">
+    <div class="three columns alpha" data-hook="admin_product_price_form_currency">
       <%= f.field_container :currency do %>
         <%= f.label :currency %>
         <%= f.select :currency,
@@ -21,14 +21,26 @@
       <% end %>
     </div>
 
-    <div class="four columns alpha" data-hook="admin_product_price_form_amount">
+    <div class="three columns" data-hook="admin_product_price_form_country">
+      <%= f.field_container :country do %>
+        <%= f.label :country %>
+        <%= f.collection_select :country_iso, available_countries, :iso, :name,
+                                {
+                                  include_blank: t(:any_country, scope: [:spree, :admin, :prices]),
+                                  selected: Spree::Config.admin_vat_country_iso
+                                },
+                                { class: 'select2 fullwidth', disabled: !f.object.new_record? } %>
+      <% end %>
+    </div>
+
+    <div class="three columns" data-hook="admin_product_price_form_amount">
       <%= f.field_container :price do %>
         <%= f.label :price %>
         <%= f.text_field :price, value: f.object.money.format, class: 'fullwidth title' %>
       <% end %>
     </div>
 
-    <div class="field four columns checkbox omega" data-hook="is_default_price">
+    <div class="field three columns checkbox omega" data-hook="is_default_price">
       <%= f.label :is_default do %>
         <%= f.check_box :is_default %>
         <%= Spree::Price.human_attribute_name(:is_default) %>
