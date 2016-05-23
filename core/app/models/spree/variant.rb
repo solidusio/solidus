@@ -93,7 +93,7 @@ module Spree
 
     # Returns variants that have a price for the given pricing options
     #
-    # @param pricing_options A Pricing Options object as defined on the pricer class
+    # @param pricing_options A Pricing Options object as defined on the price selector class
     # @return [ActiveRecord::Relation]
     def self.with_prices(pricing_options = Spree::Config.default_pricing_options)
       joins(:prices).merge(Spree::Price.currently_valid.where(pricing_options.search_arguments))
@@ -225,20 +225,20 @@ module Spree
       option_values.detect { |o| o.option_type.name == opt_name }.try(:presentation)
     end
 
-    # Returns an instance of the globally configured variant pricer class for this variant.
+    # Returns an instance of the globally configured variant price selector class for this variant.
     # It's cached so we don't create too many objects.
     #
-    # @return [Spree::Variant::Pricer] The default pricer class
-    def pricer
-      @pricer ||= Spree::Config.variant_pricer_class.new(self)
+    # @return [Spree::Variant::PriceSelector] The default price selector class
+    def price_selector
+      @price_selector ||= Spree::Config.variant_price_selector_class.new(self)
     end
 
     # Chooses an appropriate price for the given pricing options
     #
-    # @see Spree::Variant::Pricer#price_for
+    # @see Spree::Variant::PriceSelector#price_for
     # @param [Spree::Config.pricing_options_class] An instance of pricing options
     # @return [Spree::Money] The chosen price as a Money object
-    delegate :price_for, to: :pricer
+    delegate :price_for, to: :price_selector
 
     # Returns the difference in price from the master variant
     def price_difference_from_master(pricing_options = Spree::Config.default_pricing_options)
@@ -368,7 +368,7 @@ module Spree
     end
 
     def build_vat_prices
-      PriceGenerator.new(self).run
+      VatPriceGenerator.new(self).run
     end
 
     def set_position

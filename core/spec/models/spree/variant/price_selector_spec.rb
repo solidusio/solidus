@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Spree::Variant::Pricer do
+describe Spree::Variant::PriceSelector do
   let(:variant) { build_stubbed(:variant) }
 
   subject { described_class.new(variant) }

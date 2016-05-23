@@ -20,16 +20,16 @@ describe Spree::AppConfiguration, type: :model do
     expect(prefs.variant_search_class).to eq Spree::Core::Search::Variant
   end
 
-  it "uses variant pricer class by default" do
-    expect(prefs.variant_pricer_class).to eq Spree::Variant::Pricer
+  it "uses variant price selector class by default" do
+    expect(prefs.variant_price_selector_class).to eq Spree::Variant::PriceSelector
   end
 
-  it "has a getter for the pricing options class provided by the variant pricer class" do
-    expect(prefs.pricing_options_class).to eq Spree::Variant::Pricer.pricing_options_class
+  it "has a getter for the pricing options class provided by the variant price selector class" do
+    expect(prefs.pricing_options_class).to eq Spree::Variant::PriceSelector.pricing_options_class
   end
 
   it "has an instacached getter for the default pricing options" do
-    expect(prefs.default_pricing_options).to be_a Spree::Variant::Pricer.pricing_options_class
+    expect(prefs.default_pricing_options).to be_a Spree::Variant::PriceSelector.pricing_options_class
     expect(prefs.default_pricing_options.object_id).to eq prefs.default_pricing_options.object_id
   end
 
