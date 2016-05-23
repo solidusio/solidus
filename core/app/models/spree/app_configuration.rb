@@ -281,22 +281,22 @@ module Spree
     end
 
     # Allows implementing custom pricing for variants
-    # @!attribute [rw] variant_pricer_class
-    # @see Spree::Variant::Pricer
+    # @!attribute [rw] variant_price_selector_class
+    # @see Spree::Variant::PriceSelector
     # @return [Class] an object that conforms to the API of
-    #   the standard variant pricer class Spree::Variant::Pricer.
-    attr_writer :variant_pricer_class
-    def variant_pricer_class
-      @variant_pricer_class ||= Spree::Variant::Pricer
+    #   the standard variant price selector class Spree::Variant::PriceSelector.
+    attr_writer :variant_price_selector_class
+    def variant_price_selector_class
+      @variant_price_selector_class ||= Spree::Variant::PriceSelector
     end
 
-    # Shortcut for getting the variant pricer's pricing options class
+    # Shortcut for getting the variant price selector's pricing options class
     #
     # @return [Class] The pricing options class to be used
-    delegate :pricing_options_class, to: :variant_pricer_class
+    delegate :pricing_options_class, to: :variant_price_selector_class
 
     # Shortcut for the default pricing options
-    # @return [variant_pricer_class] An instance of the pricing options class with default desired
+    # @return [variant_price_selector_class] An instance of the pricing options class with default desired
     #   attributes
     def default_pricing_options
       @default_pricing_options ||= pricing_options_class.new

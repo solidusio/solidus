@@ -209,23 +209,23 @@ describe Spree::Variant, type: :model do
     end
   end
 
-  context "#pricer" do
-    subject { variant.pricer }
+  context "#price_selector" do
+    subject { variant.price_selector }
 
-    it "returns an instance of a pricer" do
-      expect(variant.pricer).to be_a(Spree::Config.variant_pricer_class)
+    it "returns an instance of a price selector" do
+      expect(variant.price_selector).to be_a(Spree::Config.variant_price_selector_class)
     end
 
     it "is instacached" do
-      expect(variant.pricer.object_id).to eq(variant.pricer.object_id)
+      expect(variant.price_selector.object_id).to eq(variant.price_selector.object_id)
     end
   end
 
   context "#price_for(price_options)" do
-    let(:price_options) { Spree::Config.variant_pricer_class.pricing_options_class.new }
+    let(:price_options) { Spree::Config.variant_price_selector_class.pricing_options_class.new }
 
-    it "calls the pricer with the given options object" do
-      expect(variant.pricer).to receive(:price_for).with(price_options)
+    it "calls the price selector with the given options object" do
+      expect(variant.price_selector).to receive(:price_for).with(price_options)
       variant.price_for(price_options)
     end
   end

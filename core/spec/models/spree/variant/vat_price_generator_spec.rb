@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe Spree::Variant::PriceGenerator do
+describe Spree::Variant::VatPriceGenerator do
   let(:tax_category) { create(:tax_category) }
   let(:product) { variant.product }
   let(:variant) { create(:variant, price: 10, tax_category: tax_category) }
@@ -63,8 +63,7 @@ describe Spree::Variant::PriceGenerator do
     end
 
     it "creates no addditional prices" do
-      subject
-      expect(variant.prices.length).to eq(0)
+      expect { subject }.not_to change { variant.prices.length }
     end
   end
 end

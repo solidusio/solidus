@@ -1,13 +1,13 @@
 module Spree
   class Variant
-    # This class is responsible for assigning a price to a variant.
+    # This class is responsible for selecting a price for a variant given certain pricing options.
     # A variant can have multiple or even dynamic prices. The `price_for`
     # method determines which price applies under the given circumstances.
     #
-    class Pricer
+    class PriceSelector
       # The pricing options represent "given circumstances" for a price: The currency
       # we need and the country that the price applies to.
-      # Every pricer is designed to work with a particular set of pricing options
+      # Every price selector is designed to work with a particular set of pricing options
       # embodied in it's pricing options class.
       #
       def self.pricing_options_class

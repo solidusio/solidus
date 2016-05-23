@@ -1,17 +1,19 @@
 module Spree
   class Variant
-    # This class generates prices for all countries that have VAT configured.
+    # This class generates gross prices for all countries that have VAT configured.
     # The prices will include their respective VAT rates. It will also generate an
     # export (net) price for any country that doesn't have VAT.
     # @example
-    #   The admin views German gross prices (Spree::Config.admin_vat_country_iso == "DE")
+    #   The admin is configured to show German gross prices
+    #   (Spree::Config.admin_vat_country_iso == "DE")
+    #
     #   There is VATs configured for Germany (19%) and Finland (24%).
-    #   The price generator is run on a variant with a base (German) price of 10.00.
+    #   The VAT price generator is run on a variant with a base (German) price of 10.00.
     #   The Price Generator will generate:
     #     - A price for Finland (country_id == "FI"): 10.42
-    #     - A price for export (country_id == nil): 8.40
+    #     - A price for any other country (country_id == nil): 8.40
     #
-    class PriceGenerator
+    class VatPriceGenerator
       attr_reader :variant
 
       def initialize(variant)
@@ -19,6 +21,9 @@ module Spree
       end
 
       def run
+        # Early return if there is no VAT rates in the current store.
+        return if !variant.tax_category || variant_vat_rates.empty?
+
         country_isos_requiring_price.each do |country_iso|
           # If there is a price for this country/variant combination already, don't create a new one
           next if variant.prices.map(&:country_iso).include?(country_iso)
@@ -47,7 +52,7 @@ module Spree
       end
 
       def variant_vat_rates
-        variant.tax_category.tax_rates.where(included_in_price: true)
+        @variant_vat_rates ||= variant.tax_category.tax_rates.where(included_in_price: true)
       end
     end
   end

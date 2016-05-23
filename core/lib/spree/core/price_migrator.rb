@@ -4,7 +4,7 @@ module Spree
   class PriceMigrator
     # Migrate all variant's prices.
     def self.migrate_default_vat_prices
-      # We need to tag the exisiting prices as "default", so that the PriceGenerator knows
+      # We need to tag the exisiting prices as "default", so that the VatPriceGenerator knows
       # that they include the default zone's VAT.
       Spree::Config.admin_vat_country_iso = Spree::Zone.default_tax.countries.first.iso
       # If we don't remove this ivar, the above line stays without effect because of caching.
@@ -25,7 +25,7 @@ module Spree
     def migrate_vat_prices
       # With a default tax zone, all prices include VAT by default. Let's tell them which one!
       variant.prices.update_all(country_iso: Spree::Config.admin_vat_country_iso)
-      Spree::Variant::PriceGenerator.new(variant).run
+      Spree::Variant::VatPriceGenerator.new(variant).run
       variant.save
     end
   end
