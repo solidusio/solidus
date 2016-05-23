@@ -505,7 +505,7 @@ module Spree
       else
         adjustments.shipping.destroy_all
         shipments.destroy_all
-        self.shipments = Spree::Stock::Coordinator.new(self).shipments
+        self.shipments = Spree::Config.stock.coordinator_class.new(self).shipments
       end
     end
 
