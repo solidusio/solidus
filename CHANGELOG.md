@@ -1,5 +1,10 @@
 ## Solidus 1.4.0 (master, unreleased)
 
+*   Fix default value for Spree::Promotion::Rules::Taxon preferred_match_policy.
+
+    Previously this was defaulting to nil, which was sometimes interpreted as
+    'none'.
+
 *   Deprecate `Spree::Shipment#address` (column renamed)
 
     `Spree::Shipment#address` was not actually being used for anything in
