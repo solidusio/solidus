@@ -27,13 +27,18 @@
   </div>
 
   <div class="right four columns omega" data-hook="admin_product_form_right">
-    <div data-hook="admin_product_form_price">
-    <%= f.field_container :price do %>
-      <%= f.label :price, class: 'required' %>
-      <%= f.text_field :price, :value => number_to_currency(@product.price, :unit => ''), :required => true %>
-      <%= f.error_message_on :price %>
-    <% end %>
+    <div data-hook="admin_product_form_price" class="alpha omega four columns">
+      <%= f.field_container :price do %>
+        <%= f.label :price, class: 'required' %>
+        <%= f.text_field :price, :value => number_to_currency(@product.price, :unit => ''), :required => true %>
+        <%= f.error_message_on :price %>
+      <% end %>
     </div>
+
+    <% if show_rebuild_vat_checkbox? %>
+      <%= render "spree/admin/shared/rebuild_vat_prices_checkbox", form: f, model_name: "product", wrapper_class: "alpha omega field four columns" %>
+      <div class="clearfix"></div>
+    <% end %>
 
     <div data-hook="admin_product_form_cost_price" class="alpha two columns">
       <%= f.field_container :cost_price do %>

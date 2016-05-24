@@ -17,6 +17,7 @@ module Spree
     acts_as_paranoid
     acts_as_list scope: :product
 
+    attr_writer :rebuild_vat_prices
     include Spree::DefaultPrice
 
     belongs_to :product, -> { with_deleted }, touch: true, class_name: 'Spree::Product', inverse_of: :variants
@@ -44,11 +45,12 @@ module Spree
     has_many :prices,
       class_name: 'Spree::Price',
       dependent: :destroy,
-      inverse_of: :variant
+      inverse_of: :variant,
+      autosave: true
 
     before_validation :set_cost_currency
     before_validation :set_price
-    before_validation :build_vat_prices, if: :new_record?
+    before_validation :build_vat_prices, if: -> { rebuild_vat_prices? || new_record? }
 
     validate :check_price
 
@@ -335,6 +337,10 @@ module Spree
     end
 
     private
+
+    def rebuild_vat_prices?
+      @rebuild_vat_prices != "0" && @rebuild_vat_prices
+    end
 
     def set_master_out_of_stock
       if product.master && product.master.in_stock?

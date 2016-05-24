@@ -25,15 +25,15 @@ module Spree
         return if !variant.tax_category || variant_vat_rates.empty?
 
         country_isos_requiring_price.each do |country_iso|
-          # If there is a price for this country/variant combination already, don't create a new one
-          next if variant.prices.map(&:country_iso).include?(country_iso)
-          # Also don't re-create the default price
+          # Don't re-create the default price
           next if variant.default_price && variant.default_price.country_iso == country_iso
-          variant.prices.build(
+
+          foreign_price = variant.prices.find_or_initialize_by(
             country_iso: country_iso,
-            amount: variant.default_price.net_amount * (1 + vat_for_country_iso(country_iso)),
             currency: variant.default_price.currency,
           )
+
+          foreign_price.amount = variant.default_price.net_amount * (1 + vat_for_country_iso(country_iso))
         end
       end
 

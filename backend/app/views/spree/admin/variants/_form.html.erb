@@ -53,6 +53,10 @@
       <%= f.text_field :price, :value => number_to_currency(@variant.price, :unit => ''), :class => 'fullwidth' %>
     </div>
 
+    <% if show_rebuild_vat_checkbox? %>
+      <%= render "spree/admin/shared/rebuild_vat_prices_checkbox", form: f, model_name: "variant", wrapper_class: "field four columns" %>
+    <% end %>
+
     <div class="field four columns" data-hook="cost_price">
       <%= f.label :cost_price %>
       <%= f.text_field :cost_price, :value => number_to_currency(@variant.cost_price, :unit => ''), :class => 'fullwidth' %>
