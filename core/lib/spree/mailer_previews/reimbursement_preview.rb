@@ -2,7 +2,9 @@ module Spree
   class MailerPreviews
     class ReimbursementPreview < ActionMailer::Preview
       def reimbursement
-        ReimbursementMailer.reimbursement_email(Reimbursement.first)
+        reimbursement = Reimbursement.last
+        raise "Your database needs at least one Reimbursement to render this preview" unless reimbursement
+        ReimbursementMailer.reimbursement_email(reimbursement)
       end
     end
   end
