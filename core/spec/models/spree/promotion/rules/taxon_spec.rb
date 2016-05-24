@@ -1,20 +1,18 @@
 require 'spec_helper'
 
 describe Spree::Promotion::Rules::Taxon, type: :model do
-  let(:rule) { Spree::Promotion::Rules::Taxon.create!(promotion: create(:promotion)) }
+  let(:rule) do
+    Spree::Promotion::Rules::Taxon.create!(promotion: create(:promotion))
+  end
 
-  context '#elegible?(order)' do
+  context '#eligible?(order)' do
     let(:taxon){ create :taxon, name: 'first' }
     let(:taxon2){ create :taxon, name: 'second' }
     let(:order){ create :order_with_line_items }
 
-    before do
-      rule.save
-    end
-
     context 'with any match policy' do
       before do
-        rule.preferred_match_policy = 'any'
+        rule.update!(preferred_match_policy: 'any')
       end
 
       it 'is eligible if order does have any prefered taxon' do
@@ -62,7 +60,7 @@ describe Spree::Promotion::Rules::Taxon, type: :model do
 
     context 'with all match policy' do
       before do
-        rule.preferred_match_policy = 'all'
+        rule.update!(preferred_match_policy: 'all')
       end
 
       it 'is eligible order has all prefered taxons' do
