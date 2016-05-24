@@ -18,7 +18,7 @@
 
 <%= form_for @product, :url => admin_product_url(@product), :method => :put do |f| %>
   <fieldset>
-    <legend align="center"><%= Spree::ProductProperty.model_name.human(count: :other) %></legend>
+    <legend align="center"><%= plural_resource_name(Spree::ProductProperty) %></legend>
     <div class="add_product_properties" data-hook="add_product_properties"></div>
 
     <div id="prototypes" data-hook></div>

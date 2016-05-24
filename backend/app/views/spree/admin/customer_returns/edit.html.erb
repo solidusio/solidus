@@ -54,7 +54,7 @@
 <% end %>
 
 <fieldset data-hook="reimbursements" class="no-border-bottom align-center">
-  <legend align="center"><%= Spree::Reimbursement.model_name.human(count: :other) %></legend>
+  <legend align="center"><%= plural_resource_name(Spree::Reimbursement) %></legend>
   <% if @customer_return.reimbursements.any? %>
     <%= render partial: 'reimbursements_table', locals: {reimbursements: @customer_return.reimbursements} %>
   <% else %>

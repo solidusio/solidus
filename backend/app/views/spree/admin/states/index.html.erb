@@ -1,7 +1,7 @@
 <%= render 'spree/admin/shared/areas_tabs' %>
 
 <% content_for :page_title do %>
-  <%= Spree::State.model_name.human(count: :other) %>
+  <%= plural_resource_name(Spree::State) %>
 <% end %>
 
 <% content_for :page_actions do %>

@@ -63,7 +63,7 @@
 <div class="alpha six columns">
   <div data-hook="admin_shipping_method_form_availability_fields" class="alpha six columns">
     <fieldset class="categories no-border-bottom">
-      <legend align="center"><%= Spree::ShippingCategory.model_name.human(count: :other) %></legend>
+      <legend align="center"><%= plural_resource_name(Spree::ShippingCategory) %></legend>
       <%= f.field_container :categories do %>
         <% Spree::ShippingCategory.all.each do |category| %>
           <%= label_tag do %>
@@ -78,7 +78,7 @@
 
   <div class="alpha six columns">
     <fieldset class="no-border-bottom">
-      <legend align="center"><%= Spree::Zone.model_name.human(count: :other) %></legend>
+      <legend align="center"><%= plural_resource_name(Spree::Zone) %></legend>
       <%= f.field_container :zones do %>
         <% shipping_method_zones = @shipping_method.zones.to_a %>
         <% Spree::Zone.all.each do |zone| %>
