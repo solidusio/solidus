@@ -117,6 +117,11 @@ describe Spree::Preferences::Preferable, type: :model do
         @a.set_preference(:is_integer, '')
         expect(@a.preferences[:is_integer]).to eq(0)
       end
+
+      it 'does not convert if value is nil' do
+        @a.set_preference(:is_integer, nil)
+        expect(@a.preferences[:is_integer]).to be_nil
+      end
     end
 
     context "converts decimal preferences to BigDecimal values" do
