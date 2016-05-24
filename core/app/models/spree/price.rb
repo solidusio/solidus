@@ -15,9 +15,9 @@ module Spree
 
     validates :currency, inclusion: { in: ::Money::Currency.all.map(&:iso_code), message: :invalid_code }
 
-    scope :currently_valid, -> { where(is_default: true) }
+    # This scope can and will be enhanced in the future
+    scope :currently_valid, -> { order(updated_at: :desc) }
     scope :with_default_attributes, -> { where(Spree::Config.default_pricing_options.desired_attributes) }
-    after_save :set_default_price
 
     extend DisplayMoney
     money_methods :amount, :price
@@ -42,13 +42,6 @@ module Spree
 
     def check_price
       self.currency ||= Spree::Config[:currency]
-    end
-
-    def set_default_price
-      if is_default?
-        other_default_prices = variant.prices.currently_valid.where(pricing_options.desired_attributes).where.not(id: id)
-        other_default_prices.update_all(is_default: false)
-      end
     end
 
     def pricing_options
