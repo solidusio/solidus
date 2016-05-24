@@ -17,14 +17,14 @@ module Spree
         Spree::Config = app.config.spree.preferences # legacy access
       end
 
-      initializer "spree.default_permissions" do |_app|
+      initializer "spree.default_permissions", before: :load_config_initializers do |_app|
         Spree::RoleConfiguration.configure do |config|
           config.assign_permissions :default, [Spree::PermissionSets::DefaultCustomer]
           config.assign_permissions :admin, [Spree::PermissionSets::SuperUser]
         end
       end
 
-      initializer "spree.register.calculators" do |app|
+      initializer "spree.register.calculators", before: :load_config_initializers do |app|
         app.config.spree.calculators.shipping_methods = [
             Spree::Calculator::Shipping::FlatPercentItemTotal,
             Spree::Calculator::Shipping::FlatRate,
@@ -36,14 +36,14 @@ module Spree
            Spree::Calculator::DefaultTax]
       end
 
-      initializer "spree.register.stock_splitters" do |app|
+      initializer "spree.register.stock_splitters", before: :load_config_initializers do |app|
         app.config.spree.stock_splitters = [
           Spree::Stock::Splitter::ShippingCategory,
           Spree::Stock::Splitter::Backordered
         ]
       end
 
-      initializer "spree.register.payment_methods" do |app|
+      initializer "spree.register.payment_methods", before: :load_config_initializers do |app|
         app.config.spree.payment_methods = [
             Spree::Gateway::Bogus,
             Spree::Gateway::BogusSimple,
@@ -53,13 +53,13 @@ module Spree
 
       # We need to define promotions rules here so extensions and existing apps
       # can add their custom classes on their initializer files
-      initializer 'spree.promo.environment' do |app|
+      initializer 'spree.promo.environment', before: :load_config_initializers do |app|
         app.config.spree.add_class('promotions')
         app.config.spree.promotions = Spree::Promo::Environment.new
         app.config.spree.promotions.rules = []
       end
 
-      initializer 'spree.promo.register.promotion.calculators' do |app|
+      initializer 'spree.promo.register.promotion.calculators', before: :load_config_initializers do |app|
         app.config.spree.calculators.add_class('promotion_actions_create_adjustments')
         app.config.spree.calculators.promotion_actions_create_adjustments = [
           Spree::Calculator::FlatPercentItemTotal,
@@ -103,7 +103,7 @@ module Spree
         ]
       end
 
-      initializer 'spree.promo.register.promotions.actions' do |app|
+      initializer 'spree.promo.register.promotions.actions', before: :load_config_initializers do |app|
         app.config.spree.promotions.actions = [
           Promotion::Actions::CreateAdjustment,
           Promotion::Actions::CreateItemAdjustments,
@@ -112,7 +112,7 @@ module Spree
       end
 
       # filter sensitive information during logging
-      initializer "spree.params.filter" do |app|
+      initializer "spree.params.filter", before: :load_config_initializers do |app|
         app.config.filter_parameters += [
           :password,
           :password_confirmation,
@@ -120,7 +120,7 @@ module Spree
           :verification_value]
       end
 
-      initializer "spree.core.checking_migrations" do |_app|
+      initializer "spree.core.checking_migrations", before: :load_config_initializers do |_app|
         Migrations.new(config, engine_name).check
       end
     end
