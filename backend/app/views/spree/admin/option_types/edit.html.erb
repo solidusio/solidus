@@ -23,7 +23,7 @@
   </fieldset>
 
   <fieldset>
-    <legend><%= Spree::OptionValue.model_name.human(count: :other) %></legend>
+    <legend><%= plural_resource_name(Spree::OptionValue) %></legend>
     <table class="index sortable" data-hook data-sortable-link="<%= update_values_positions_admin_option_types_url %>">
       <thead data-hook="option_header">
         <tr>

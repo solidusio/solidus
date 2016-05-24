@@ -13,7 +13,7 @@
 
     <% if can? :display, Spree::Role %>
       <div data-hook="admin_user_form_roles" class="field">
-        <%= label_tag nil, Spree::Role.model_name.human(count: :other) %>
+        <%= label_tag nil, plural_resource_name(Spree::Role) %>
         <ul>
           <% if can? :manage, Spree::Role %>
             <% @roles.each do |role| %>
@@ -33,7 +33,7 @@
 
     <% if Spree::Config[:can_restrict_stock_management] && can?(:display, Spree::StockLocation) %>
       <div data-hook="admin_user_form_stock_locations" class="field">
-        <%= label_tag nil, Spree::StockLocation.model_name.human(count: :other) %>
+        <%= label_tag nil, plural_resource_name(Spree::StockLocation) %>
         <ul>
           <% if can?(:manage, Spree::UserStockLocation) %>
             <% @stock_locations.each do |stock_location| %>

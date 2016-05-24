@@ -1,7 +1,7 @@
 <%= render 'spree/admin/shared/settings_checkout_tabs' %>
 
 <% content_for :page_title do %>
-  <%= Spree::AdjustmentReason.model_name.human(count: :other) %>
+  <%= plural_resource_name(Spree::AdjustmentReason) %>
 <% end %>
 
 <% content_for :page_actions do %>

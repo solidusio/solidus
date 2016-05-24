@@ -17,18 +17,18 @@
     <% end %>
 
     <li class="<%= "active" if current == "Shipments" %>" data-hook='admin_order_tabs_order_details'>
-      <%= link_to_with_icon 'edit', Spree::Shipment.model_name.human(count: :other), edit_admin_order_url(@order) %>
+      <%= link_to_with_icon 'edit', plural_resource_name(Spree::Shipment), edit_admin_order_url(@order) %>
     </li>
 
     <% if can? :display, Spree::Adjustment %>
       <li class="<%= "active" if current == "Adjustments" %>" data-hook='admin_order_tabs_adjustments'>
-        <%= link_to_with_icon 'cogs', Spree::Adjustment.model_name.human(count: :other), admin_order_adjustments_url(@order) %>
+        <%= link_to_with_icon 'cogs', plural_resource_name(Spree::Adjustment), admin_order_adjustments_url(@order) %>
       </li>
     <% end %>
 
     <% if can?(:display, Spree::Payment) %>
       <li class="<%= "active" if current == "Payments" %>" data-hook='admin_order_tabs_payments'>
-        <%= link_to_with_icon 'credit-card', Spree::Payment.model_name.human(count: :other), admin_order_payments_url(@order) %>
+        <%= link_to_with_icon 'credit-card', plural_resource_name(Spree::Payment), admin_order_payments_url(@order) %>
       </li>
     <% end %>
 
@@ -49,7 +49,7 @@
     <% if can? :display, Spree::CustomerReturn %>
       <% if @order.completed? %>
         <li class="<%= "active" if current == "Customer Returns" %>">
-          <%= link_to_with_icon 'download', Spree::CustomerReturn.model_name.human(count: :other), admin_order_customer_returns_url(@order) %>
+          <%= link_to_with_icon 'download', plural_resource_name(Spree::CustomerReturn), admin_order_customer_returns_url(@order) %>
         </li>
       <% end %>
     <% end %>

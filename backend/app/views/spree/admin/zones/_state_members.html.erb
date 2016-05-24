@@ -1,9 +1,9 @@
 <div id="state_members" data-hook="member" class="omega six columns">
   <fieldset class="no-border-bottom">
-    <legend align="center"><%= Spree::State.model_name.human(count: :other) %></legend>
+    <legend align="center"><%= plural_resource_name(Spree::State) %></legend>
 
     <%= zone_form.field_container :state_ids do %>
-      <%= zone_form.label :state_ids, Spree::State.model_name.human(count: :other) %><br>
+      <%= zone_form.label :state_ids, plural_resource_name(Spree::State) %><br>
       <%= zone_form.collection_select :state_ids, @states, :id, :name, {}, { :multiple => true, :class => "select2 fullwidth" } %>
     <% end %>
   </fieldset>

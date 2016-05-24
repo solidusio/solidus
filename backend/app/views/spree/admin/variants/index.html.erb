@@ -8,9 +8,9 @@
     <p class='first_add_option_types no-objects-found' data-hook="first_add_option_types">
       <%= Spree.t(:to_add_variants_you_must_first_define) %>
       <% if can?(:display, Spree::OptionType) %>
-        <%= link_to Spree::OptionType.model_name.human(count: :other), admin_option_types_path%>
+        <%= link_to plural_resource_name(Spree::OptionType), admin_option_types_path%>
       <% else %>
-        <%= Spree::OptionType.model_name.human(count: :other) %>
+        <%= plural_resource_name(Spree::OptionType) %>
       <% end %>
     </p>
   <% elsif @product.empty_option_values? %>
@@ -20,7 +20,7 @@
     </div>
   <% else %>
     <div class="alpha twelve columns no-objects-found">
-      <%= Spree.t(:no_resource, resource: Spree::Variant.model_name.human(count: :other)) %>
+      <%= Spree.t(:no_resource, resource: plural_resource_name(Spree::Variant)) %>
       <% if can? :create, Spree::Variant %>
         <%= link_to Spree.t(:create_one), new_object_url, remote: true %>
       <% end %>
