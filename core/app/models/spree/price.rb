@@ -18,10 +18,9 @@ module Spree
     validates :currency, inclusion: { in: ::Money::Currency.all.map(&:iso_code), message: :invalid_code }
     validates :country, presence: true, unless: -> { for_any_country? }
 
-    scope :currently_valid, -> { where(is_default: true).order("country_iso IS NULL") }
+    scope :currently_valid, -> { order("country_iso IS NULL, updated_at DESC") }
     scope :for_any_country, -> { where(country: nil) }
     scope :with_default_attributes, -> { where(Spree::Config.default_pricing_options.desired_attributes) }
-    after_save :set_default_price
 
     extend DisplayMoney
     money_methods :amount, :price
@@ -67,13 +66,6 @@ module Spree
 
     def check_price
       self.currency ||= Spree::Config[:currency]
-    end
-
-    def set_default_price
-      if is_default?
-        other_default_prices = variant.prices.currently_valid.where(pricing_options.desired_attributes).where.not(id: id)
-        other_default_prices.update_all(is_default: false)
-      end
     end
 
     def pricing_options

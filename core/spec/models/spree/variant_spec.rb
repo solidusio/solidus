@@ -208,9 +208,7 @@ describe Spree::Variant, type: :model do
       let(:pricing_options_germany) { Spree::Config.pricing_options_class.new(currency: "EUR") }
       let(:pricing_options_united_states) { Spree::Config.pricing_options_class.new(currency: "USD") }
       before do
-        variant.prices << create(:price, variant: variant, currency: "USD", amount: 12.12, is_default: false)
-        variant.prices << create(:price, variant: variant, currency: "EUR", amount: 29.99)
-        variant.prices << create(:price, variant: variant, currency: "EUR", amount: 10.00, is_default: false)
+        variant.prices.create(currency: "EUR", amount: 29.99)
         variant.reload
       end
 
@@ -227,7 +225,7 @@ describe Spree::Variant, type: :model do
     context "when adding multiple prices" do
       it "it can reassign a default price" do
         expect(variant.default_price.amount).to eq(19.99)
-        variant.prices << create(:price, variant: variant, currency: "USD", amount: 12.12)
+        variant.prices.create(currency: "USD", amount: 12.12)
         expect(variant.reload.default_price.amount).to eq(12.12)
       end
     end
