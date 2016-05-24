@@ -78,6 +78,28 @@ describe Spree::Variant, type: :model do
         expect(new_variant.prices.find_by(country_iso: "DK").amount).to eq(18.75)
         expect(new_variant.prices.find_by(country_iso: nil).amount).to eq(15.00)
       end
+
+      context "when the products price changes" do
+        context "and rebuild_vat_prices is set to true" do
+          subject { variant.update(price: 99, rebuild_vat_prices: true, tax_category: tax_category) }
+
+          it "creates new appropriate prices for this variant" do
+            expect { subject }.to change { Spree::Price.count }.by(3)
+            expect(variant.prices.find_by(country_iso: "FR").amount).to eq(113.85)
+            expect(variant.prices.find_by(country_iso: "DE").amount).to eq(123.75)
+            expect(variant.prices.find_by(country_iso: "DK").amount).to eq(123.75)
+            expect(variant.prices.find_by(country_iso: nil).amount).to eq(99.00)
+          end
+        end
+
+        context "and rebuild_vat_prices is not set" do
+          subject { variant.update(price: 99, tax_category: tax_category) }
+
+          it "does not create new prices" do
+            expect { subject }.not_to change { Spree::Price.count }
+          end
+        end
+      end
     end
   end
 

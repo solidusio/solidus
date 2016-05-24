@@ -24,6 +24,10 @@ module Spree
         end
         safe_join(options)
       end
+
+      def show_rebuild_vat_checkbox?
+        Spree::TaxRate.included_in_price.exists?
+      end
     end
   end
 end
