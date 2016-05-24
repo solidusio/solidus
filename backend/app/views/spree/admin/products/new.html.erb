@@ -49,12 +49,20 @@
     </div>
 
     <div class='row'>
-      <div data-hook="new_product_shipping_category" class="alpha four columns">
+      <div data-hook="new_product_shipping_category" class="alpha field four columns">
         <%= f.field_container :shipping_category do %>
           <%= f.label :shipping_category_id, Spree::ShippingCategory.
                 model_name.human, class: 'required' %><br />
           <%= f.collection_select(:shipping_category_id, @shipping_categories, :id, :name, { :include_blank => Spree.t('match_choices.none') }, { :class => 'select2 fullwidth' }) %>
           <%= f.error_message_on :shipping_category_id %>
+        <% end %>
+      </div>
+
+      <div data-hook="new_product_tax_category" class="field four columns">
+        <%= f.field_container :tax_category do %>
+          <%= f.label :tax_category_id, Spree::TaxCategory.model_name.human %>
+          <%= f.collection_select(:tax_category_id, @tax_categories, :id, :name, { :include_blank => Spree.t('match_choices.none') }, { :class => 'select2 fullwidth' }) %>
+          <%= f.error_message_on :tax_category %>
         <% end %>
       </div>
     </div>
