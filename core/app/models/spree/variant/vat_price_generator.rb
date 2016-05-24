@@ -33,7 +33,6 @@ module Spree
             country_iso: country_iso,
             amount: variant.default_price.net_amount * (1 + vat_for_country_iso(country_iso)),
             currency: variant.default_price.currency,
-            is_default: true
           )
         end
       end

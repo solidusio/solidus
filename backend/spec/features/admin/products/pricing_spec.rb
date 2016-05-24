@@ -66,7 +66,7 @@ describe 'Pricing' do
     context "deleting", js: true do
       let(:product) { create(:product, price: 65.43) }
       let!(:variant) { product.master }
-      let!(:other_price) { product.master.prices.create(amount: 34.56, is_default: false) }
+      let!(:other_price) { product.master.prices.create(amount: 34.56, currency: "EUR") }
 
       it "will delete the non-default price" do
         within "#spree_price_#{other_price.id}" do
