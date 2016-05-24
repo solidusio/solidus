@@ -1,5 +1,5 @@
 <% if @prototype.option_types.present? %>
-  <h2><%= Spree::Variant.model_name.human(count: :other) %></h2>
+  <h2><%= plural_resource_name(Spree::Variant) %></h2>
 
   <ul class="product-prototype-options">
     <% @prototype.option_types.each do |ot| %>
@@ -7,7 +7,7 @@
         <b>
           <%= check_box_tag "option_types[]", ot.id, (params[:option_types] || []).include?(ot.id.to_s), :id => "option_type_#{ot.id}", :class => "option-type" %>
           <%= label_tag "option_type_#{ot.id}", ot.presentation %>
-        </b>      
+        </b>
         <ul class="option-type-values">
         <% ot.option_values.each do |ov| %>
           <li>

@@ -3,7 +3,7 @@
   <%= form_tag spree.admin_promotion_promotion_actions_path(@promotion), :remote => true, :id => 'new_promotion_action_form' do %>
     <% options = options_for_select(  Rails.application.config.spree.promotions.actions.map(&:name).map {|name| [ Spree.t("promotion_action_types.#{name.demodulize.underscore}.name"), name] } ) %>
     <fieldset>
-      <legend align="center"><%= Spree::PromotionAction.model_name.human(count: :other) %></legend>
+      <legend align="center"><%= plural_resource_name(Spree::PromotionAction) %></legend>
       <% if can?(:update, @promotion) %>
         <div class="field">
           <%= label_tag :action_type, Spree.t(:add_action_of_type)%>

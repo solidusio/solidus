@@ -7,7 +7,7 @@
 <%= render :partial => 'spree/admin/users/user_page_actions' %>
 
 <fieldset data-hook="admin_user_addresses" id="admin_user_edit_addresses" class="alpha twelve columns">
-  <legend><%= Spree::Address.model_name.human(count: :other) %></legend>
+  <legend><%= plural_resource_name(Spree::Address) %></legend>
 
   <div data-hook="admin_user_edit_form_header">
     <%= render :partial => 'spree/shared/error_messages', :locals => { :target => @user } %>
