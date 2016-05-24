@@ -85,6 +85,12 @@ Style/IndentHash:
 Style/AlignHash:
   Enabled: false
 
+Style/TrailingCommaInArguments:
+  Enabled: false
+
+Style/TrailingCommaInLiteral:
+  Enabled: false
+
 # From http://relaxed.ruby.style/
 
 Style/Alias:
