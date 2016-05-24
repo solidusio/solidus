@@ -50,6 +50,14 @@ module Spree
       country_iso.nil?
     end
 
+    def display_country
+      if country_iso
+        "#{country_iso} (#{country.name})"
+      else
+        I18n.t(:any_country, scope: [:spree, :admin, :prices])
+      end
+    end
+
     private
 
     def sum_of_vat_amounts

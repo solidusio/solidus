@@ -7,7 +7,10 @@ module Spree
         params[:q] ||= {}
 
         @search = @product.prices.accessible_by(current_ability, :index).ransack(params[:q])
-        @prices = @search.result.page(params[:page]).per(10)
+        @prices = @search.result
+          .currently_valid
+          .order(:variant_id, :country_iso, :currency)
+          .page(params[:page]).per(Spree::Config.admin_variants_per_page)
       end
 
       def edit
