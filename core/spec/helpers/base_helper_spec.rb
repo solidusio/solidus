@@ -167,4 +167,20 @@ describe Spree::BaseHelper, type: :helper do
       expect(pretty_time(DateTime.new(2012, 5, 6, 13, 33))).to eq "May 06, 2012  1:33 PM"
     end
   end
+
+  context "plural_resource_name" do
+    let(:plural_config) { Spree::I18N_GENERIC_PLURAL }
+    let(:base_class) { Spree::Product }
+
+    subject { plural_resource_name(base_class) }
+
+    it "should use ActiveModel::Naming module to pluralize model names" do
+      expect(subject).to eq base_class.model_name.human(count: plural_config)
+    end
+
+    it "should use the Spree::I18N_GENERIC_PLURAL constant" do
+      expect(base_class.model_name).to receive(:human).with(hash_including(count: plural_config))
+      subject
+    end
+  end
 end
