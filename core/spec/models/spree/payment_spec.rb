@@ -1160,4 +1160,18 @@ describe Spree::Payment, type: :model do
       end
     end
   end
+
+  describe "#payment_method" do
+    context 'with a soft-deleted payment method' do
+      before do
+        gateway.save!
+        payment.save!
+        gateway.destroy
+      end
+
+      it "works with a soft deleted payment method" do
+        expect(payment.reload.payment_method).to eq(gateway)
+      end
+    end
+  end
 end
