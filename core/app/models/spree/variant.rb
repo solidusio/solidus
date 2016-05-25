@@ -48,6 +48,13 @@ module Spree
       inverse_of: :variant,
       autosave: true
 
+    has_many :currently_valid_prices,
+      -> { currently_valid },
+      class_name: 'Spree::Price',
+      dependent: :destroy,
+      inverse_of: :variant,
+      autosave: true
+
     before_validation :set_cost_currency
     before_validation :set_price
     before_validation :build_vat_prices, if: -> { rebuild_vat_prices? || new_record? }
