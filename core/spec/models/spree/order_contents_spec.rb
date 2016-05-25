@@ -224,6 +224,54 @@ describe Spree::OrderContents, type: :model do
       }.to change { subject.order.total }
     end
 
+    context "given an order with existing addresses" do
+      let(:default_address) { create :address, state_code: "NY", zipcode: "17402" }
+      let(:order_with_address ) { create :order, ship_address: default_address, bill_address: default_address }
+
+      subject { described_class.new(order_with_address) }
+
+      context "when an address in a potentially different tax zone is supplied " do
+        let(:updated_address) { build :address, state_code: "AL",  zipcode: "64092" }
+
+        let(:params) do
+          { ship_address_attributes: updated_address.value_attributes, bill_address_attributes: updated_address.value_attributes }
+        end
+
+        it "updates tax adjustments" do
+          expect(subject.order).to receive(:create_tax_charge!)
+          subject.update_cart params
+        end
+      end
+
+      context "when an address in potentially the same tax zone is supplied" do
+        let(:updated_address) { build :address, state_code: "NY", zipcode: "17402", firstname: 'Robert' }
+
+        let(:params) do
+          { ship_address_attributes: updated_address.value_attributes, bill_address_attributes: updated_address.value_attributes }
+        end
+
+        it "does not updates tax adjustments" do
+          expect(subject.order).not_to receive(:create_tax_charge!)
+          subject.update_cart params
+        end
+      end
+    end
+
+    context "given an order with no existing addresses" do
+      context "when an address is supplied" do
+        let(:updated_address) { build :address, state_code: "CA", zipcode: "14902" }
+
+        let(:params) do
+          { ship_address_attributes: updated_address.attributes, bill_address_attributes: updated_address.value_attributes }
+        end
+
+        it "does not updates tax adjustments" do
+          expect(subject.order).not_to receive(:create_tax_charge!)
+          subject.update_cart params
+        end
+      end
+    end
+
     context "submits item quantity 0" do
       let(:params) do
         { line_items_attributes: {

@@ -308,6 +308,28 @@ describe Spree::Address, type: :model do
     end
   end
 
+  describe '.taxation_attributes' do
+    context 'both taxation and non-taxation attributes are present ' do
+      let(:address) { stub_model(Spree::Address, firstname: 'Michael', lastname: 'Jackson', state_id: 1, country_id: 2, zipcode: '12345') }
+
+      it 'removes the non-taxation attributes' do
+        expect(address.taxation_attributes).not_to eq('firstname' => 'Michael', 'lastname' => 'Jackson')
+      end
+
+      it 'returns only the taxation attributes' do
+        expect(address.taxation_attributes).to eq('state_id' => 1, 'country_id' => 2, 'zipcode' => '12345')
+      end
+    end
+
+    context 'taxation attributes are blank' do
+      let(:address) { stub_model(Spree::Address, firstname: 'Michael', lastname: 'Jackson') }
+
+      it 'returns a subset of the attributes with the correct keys and nil values' do
+        expect(address.taxation_attributes).to eq('state_id' => nil, 'country_id' => nil, 'zipcode' => nil)
+      end
+    end
+  end
+
   context '#country_iso=' do
     let(:address) { build(:address, country_id: nil) }
     let(:country) { create(:country, iso: 'ZW') }
