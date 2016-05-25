@@ -222,29 +222,5 @@ describe 'Payments', type: :feature do
         expect(page).to have_content("Payment Updated")
       end
     end
-
-    context 'with a soft-deleted payment method' do
-      let(:order) { create(:completed_order_with_totals, line_items_count: 1) }
-      let!(:payment_method) { create(:check_payment_method) }
-      let!(:payment) do
-        create(:payment,
-          order:          order,
-          amount:         order.outstanding_balance,
-          payment_method: payment_method
-        )
-      end
-
-      before do
-        payment_method.destroy
-        visit spree.admin_order_payments_path(order.reload)
-      end
-
-      it "can list and view the payment" do
-        expect(page).to have_content(payment.number)
-        click_on payment.number
-        expect(page).to have_current_path("/admin/orders/#{order.number}/payments/#{payment.id}")
-        expect(page).to have_content(payment.number)
-      end
-    end
   end
 end
