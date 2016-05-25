@@ -18,7 +18,7 @@ module Spree
     validates :currency, inclusion: { in: ::Money::Currency.all.map(&:iso_code), message: :invalid_code }
     validates :country, presence: true, unless: -> { for_any_country? }
 
-    scope :currently_valid, -> { where(is_default: true) }
+    scope :currently_valid, -> { where(is_default: true).order("country_iso IS NULL") }
     scope :for_any_country, -> { where(country: nil) }
     scope :with_default_attributes, -> { where(Spree::Config.default_pricing_options.desired_attributes) }
     after_save :set_default_price
