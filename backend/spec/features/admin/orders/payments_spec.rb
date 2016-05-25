@@ -223,4 +223,25 @@ describe 'Payments', type: :feature do
       end
     end
   end
+
+  # Previously this would fail unless the method was named "Credit Card"
+  context "with an differently named payment method" do
+    let(:order) { create(:order_with_line_items, line_items_count: 1) }
+    let!(:chequing_payment_method) { create(:check_payment_method) }
+    let!(:payment_method) { create(:credit_card_payment_method, name: "Multipass!") }
+
+    before do
+      visit spree.admin_order_payments_path(order.reload)
+    end
+
+    it "is able to create a new payment", js: true do
+      choose payment_method.name
+      fill_in "Card Number", with: "4111 1111 1111 1111"
+      fill_in "Name", with: "Test User"
+      fill_in "Expiration", with: "09 / #{Time.current.year + 1}"
+      fill_in "Card Code", with: "007"
+      click_button "Continue"
+      expect(page).to have_content("Payment has been successfully created!")
+    end
+  end
 end
