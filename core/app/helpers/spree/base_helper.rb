@@ -153,6 +153,10 @@ module Spree
       end
     end
 
+    def plural_resource_name(resource_class)
+      resource_class.model_name.human(count: Spree::I18N_GENERIC_PLURAL)
+    end
+
     private
 
     # Returns style of image or nil

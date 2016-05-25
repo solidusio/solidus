@@ -43,6 +43,6 @@
 </fieldset>
 
 <fieldset id='stock-transfer-transfer-items'>
-  <legend align="center"><%= Spree::TransferItem.model_name.human(count: :other) %></legend>
+  <legend align="center"><%= plural_resource_name(Spree::TransferItem) %></legend>
   <%= render partial: 'transfer_item_table', locals: { transfer_items: @stock_transfer.transfer_items, show_expected: true, show_received: false, show_actions: false } %>
 </fieldset>

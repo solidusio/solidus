@@ -137,14 +137,14 @@
   <div class="twelve columns alpha omega">
     <div data-hook="admin_product_form_taxons">
       <%= f.field_container :taxons do %>
-        <%= f.label :taxon_ids, Spree::Taxon.model_name.human(count: :other) %><br />
+        <%= f.label :taxon_ids, plural_resource_name(Spree::Taxon) %><br />
         <%= f.hidden_field :taxon_ids, :value => @product.taxon_ids.join(',') %>
       <% end %>
     </div>
 
     <div data-hook="admin_product_form_option_types">
       <%= f.field_container :option_types do %>
-        <%= f.label :option_type_ids, Spree::OptionType.model_name.human(count: :other) %>
+        <%= f.label :option_type_ids, plural_resource_name(Spree::OptionType) %>
         <%= f.hidden_field :option_type_ids, :value => @product.option_type_ids.join(',') %>
       <% end %>
     </div>

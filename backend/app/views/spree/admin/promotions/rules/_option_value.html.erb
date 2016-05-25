@@ -1,7 +1,7 @@
 <div class="field alpha omega eight columns promo-rule-option-values">
   <div class="param-prefix hidden" data-param-prefix="<%= param_prefix %>"></div>
   <div class="four columns alpha"><%= label_tag nil, Spree::Product.model_name.human %></div>
-  <div class="three columns omega"><%= label_tag nil, Spree::OptionValue.model_name.human(count: :other) %></div>
+  <div class="three columns omega"><%= label_tag nil, plural_resource_name(Spree::OptionValue) %></div>
   <div class="clear"></div>
 
   <div class="js-promo-rule-option-values"></div>

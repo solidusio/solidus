@@ -40,6 +40,10 @@ describe "i18n" do
     expect(Spree.t(:missing_entry)).to include("<span")
   end
 
+  it "should have a Spree::I18N_GENERIC_PLURAL constant" do
+    expect(Spree::I18N_GENERIC_PLURAL).to eq 2.1
+  end
+
   context "missed + unused translations" do
     def key_with_locale(key)
       "#{key} (#{I18n.locale})"

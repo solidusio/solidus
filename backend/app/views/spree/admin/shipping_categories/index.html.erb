@@ -1,7 +1,7 @@
 <%= render 'spree/admin/shared/shipping_tabs' %>
 
 <% content_for :page_title do %>
-  <%= Spree::ShippingCategory.model_name.human(count: :other) %>
+  <%= plural_resource_name(Spree::ShippingCategory) %>
 <% end %>
 
 <% content_for :page_actions do %>
