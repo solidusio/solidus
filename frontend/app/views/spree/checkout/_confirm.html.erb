@@ -6,6 +6,13 @@
 
 <br />
 
+<% if Spree::Config[:require_terms_and_conditions] %>
+  <p class="field" style='clear: both'>
+    <%= form.checkbox :terms_and_conditions %>
+    <%= form.label :terms_and_conditions, Spree.t(:accept_terms_and_conditions) %>
+  </p>
+<% end %>
+
 <div class="form-buttons" data-hook="buttons">
   <%= submit_tag Spree.t(:place_order), :class => 'continue button primary' %>
   <script>Spree.disableSaveOnClick();</script>
