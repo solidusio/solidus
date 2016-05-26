@@ -244,6 +244,23 @@ describe Spree::CheckoutController, type: :controller do
           expect(assigns(:current_order)).to be_nil
           expect(assigns(:order)).to eql controller.current_order
         end
+
+        context 'when terms_and_conditions_required' do
+          before { Spree::Config[:require_terms_and_conditions] = true }
+
+          it "should populate the flash message" do
+            spree_post :update, { state: "confirm", order: { terms_and_conditions: true } }
+            expect(flash.notice).to eq(Spree.t(:order_processed_successfully))
+          end
+
+          context 'but not accepted' do
+
+            it "" do
+              spree_post :update, { state: "confirm", order: { terms_and_conditions: false } }
+              expect(assigns(:order).errors[:terms_and_conditions]).to include(Spree.t(:must_accept_terms_and_conditions))
+            end
+          end
+        end
       end
     end
 
