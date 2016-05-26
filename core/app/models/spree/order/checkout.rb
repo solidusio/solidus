@@ -117,11 +117,9 @@ module Spree
               before_transition to: :complete, do: :ensure_line_item_variants_are_not_deleted
               before_transition to: :complete, do: :ensure_inventory_units, unless: :unreturned_exchange?
 
-              if states[Spree::Config[:terms_and_conditions_on_step].to_sym]
-                before_transition from: Spree::Config[:terms_and_conditions_on_step].to_sym,
-                                  do: :ensure_terms_and_conditions,
-                                  if: ->{ Spree::Config[:require_terms_and_conditions] }
-              end
+              before_transition to: :complete,
+                                do: :ensure_terms_and_conditions,
+                                if: ->{ Spree::Config[:require_terms_and_conditions] }
 
               if states[:payment]
                 before_transition to: :complete, do: :process_payments_before_complete

@@ -208,7 +208,6 @@ module Spree
     # @!attribute [rw] require_terms_and_conditions
     #   @return [Boolean] Requires terms and conditions to be accepted during checkout flow (default: +false+)
     preference :require_terms_and_conditions, :boolean, default: false
-    preference :terms_and_conditions_on_step, :string, default: 'confirm'
 
     # @!attribute [rw] return_eligibility_number_of_days
     #   @return [Integer] default: 365

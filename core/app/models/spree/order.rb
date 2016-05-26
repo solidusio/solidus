@@ -705,8 +705,6 @@ module Spree
     end
 
     def ensure_terms_and_conditions
-      return unless has_step?(Spree::Config[:terms_and_conditions_on_step])
-
       unless terms_and_conditions_accepted?
         errors.add(:terms_and_conditions, Spree.t(:must_accept_terms_and_conditions))
       end
