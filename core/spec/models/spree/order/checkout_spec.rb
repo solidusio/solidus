@@ -558,9 +558,19 @@ describe Spree::Order, type: :model do
       end
 
       it "transitions to complete" do
-        expect(order).to receive(:ensure_terms_and_conditions)
         order.complete!
         assert_state_changed(order, 'confirm', 'complete')
+      end
+
+      context 'but not accepted' do
+        before do
+          order.terms_and_conditions = false
+        end
+
+        it 'will not complete' do
+          expect { order.complete! }.to raise_error(StateMachines::InvalidTransition)
+          expect(order.reload.state).to eq('confirm')
+        end
       end
     end
 
