@@ -4,6 +4,18 @@
 
 ## Solidus 1.3.0 (unreleased)
 
+*   Deprecate `Spree::TaxRate.adjust`, remove `Spree::TaxRate.match`
+
+    The functionality of `Spree::TaxRate.adjust` is now contained in the new
+    `Spree::Tax::OrderAdjuster` class.
+
+    Wherever you called `Spree::TaxRate.adjust(items, order_tax_zone)`, instead call
+    `Spree::Tax::OrderAdjuster.new(order).adjust!`.
+
+    `Spree::TaxRate.match` was an implementation detail of `Spree::TaxRate.adjust`. It has been
+    removed, and its functionality is now contained in the private method
+    `Spree::Tax::TaxHelpers#applicable_rates(order)`.
+
 *   Allow more options than `current_currency` to select prices
 
     Previously, availability of products/variants, caching and pricing was dependent
