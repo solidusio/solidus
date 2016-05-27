@@ -516,6 +516,16 @@ module Spree
                   expect(response.status).to eq(200)
                 end
               end
+
+              context 'when terms are not accepted' do
+                let(:accepted) { false }
+
+                it 'will prevent the order completing and return errors' do
+                  subject
+                  expect(response.status).to eq(422)
+                  expect(json_response['errors']['terms_and_conditions']).to include(Spree.t(:must_accept_terms_and_conditions))
+                end
+              end
             end
           end
         end
