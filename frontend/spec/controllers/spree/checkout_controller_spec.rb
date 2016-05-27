@@ -254,8 +254,7 @@ describe Spree::CheckoutController, type: :controller do
           end
 
           context 'but not accepted' do
-
-            it "" do
+            it "will show an error" do
               spree_post :update, { state: "confirm", order: { terms_and_conditions: false } }
               expect(assigns(:order).errors[:terms_and_conditions]).to include(Spree.t(:must_accept_terms_and_conditions))
             end
