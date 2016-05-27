@@ -14,10 +14,15 @@ module Spree
           self.current_store_class = Spree::Core::CurrentStore
 
           helper_method :current_store
+          helper_method :current_tracker
         end
 
         def current_store
           @current_store ||= current_store_class.new(request).store
+        end
+
+        def current_tracker
+          @current_tracker ||= Spree::Tracker.current(current_store)
         end
       end
     end

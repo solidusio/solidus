@@ -4,6 +4,8 @@ module Spree
     has_many :payment_methods, through: :store_payment_methods
     has_many :orders, class_name: "Spree::Order"
 
+    has_one :tracker
+
     validates :code, presence: true, uniqueness: { allow_blank: true }
     validates :name, presence: true
     validates :url, presence: true
