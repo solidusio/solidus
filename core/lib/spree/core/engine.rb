@@ -86,12 +86,8 @@ module Spree
         ]
       end
 
-      # Promotion rules need to be evaluated on after initialize otherwise
-      # Spree.user_class would be nil and users might experience errors related
-      # to malformed model associations (Spree.user_class is only defined on
-      # the app initializer)
-      config.after_initialize do
-        Rails.application.config.spree.promotions.rules.concat %w[
+      initializer 'spree.promo.register.promotion.rules', before: :load_config_initializers do |app|
+        app.config.spree.promotions.rules = %w[
           Spree::Promotion::Rules::ItemTotal
           Spree::Promotion::Rules::Product
           Spree::Promotion::Rules::User
