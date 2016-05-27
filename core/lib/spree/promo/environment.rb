@@ -3,7 +3,8 @@ module Spree
     class Environment
       include Core::EnvironmentExtension
 
-      attr_accessor :rules, :actions
+      add_class_set :rules
+      add_class_set :actions
     end
   end
 end

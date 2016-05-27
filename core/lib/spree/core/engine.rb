@@ -54,7 +54,6 @@ module Spree
       # We need to define promotions rules here so extensions and existing apps
       # can add their custom classes on their initializer files
       initializer 'spree.promo.environment', before: :load_config_initializers do |app|
-        app.config.spree.add_class('promotions')
         app.config.spree.promotions = Spree::Promo::Environment.new
         app.config.spree.promotions.rules = []
       end

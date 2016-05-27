@@ -4,7 +4,8 @@ module Spree
       class Calculators
         include EnvironmentExtension
 
-        attr_accessor :shipping_methods, :tax_rates
+        add_class_set :shipping_methods
+        add_class_set :tax_rates
       end
     end
   end

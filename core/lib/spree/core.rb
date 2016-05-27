@@ -63,6 +63,7 @@ end
 
 require 'spree/core/version'
 
+require 'spree/core/class_constantizer'
 require 'spree/core/environment_extension'
 require 'spree/core/environment/calculators'
 require 'spree/core/environment'
