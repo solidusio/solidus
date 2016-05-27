@@ -495,6 +495,28 @@ module Spree
               expect(response.status).to eq(400)
               expect(json_response['errors']['expected_total']).to include(Spree.t(:expected_total_mismatch, scope: 'api.order'))
             end
+
+            context "when terms_and_conditions are required" do
+              let(:params) do
+                { id: order.to_param,
+                  order_token: order.guest_token,
+                  order: { terms_and_conditions: accepted } }
+              end
+
+              before do
+                Spree::Config[:require_terms_and_conditions] = true
+                allow_any_instance_of(Spree::Order).to receive_messages(payment_required?: false)
+              end
+
+              context 'when they are accepted' do
+                let(:accepted) { true }
+
+                it 'the order will complete' do
+                  subject
+                  expect(response.status).to eq(200)
+                end
+              end
+            end
           end
         end
       end
