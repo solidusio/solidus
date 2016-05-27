@@ -62,7 +62,6 @@ module Spree
       end
 
       initializer 'spree.promo.register.promotion.calculators', before: :load_config_initializers do |app|
-        app.config.spree.calculators.add_class('promotion_actions_create_adjustments')
         app.config.spree.calculators.promotion_actions_create_adjustments = %w[
           Spree::Calculator::FlatPercentItemTotal
           Spree::Calculator::FlatRate
@@ -71,7 +70,6 @@ module Spree
           Spree::Calculator::TieredFlatRate
         ]
 
-        app.config.spree.calculators.add_class('promotion_actions_create_item_adjustments')
         app.config.spree.calculators.promotion_actions_create_item_adjustments = %w[
           Spree::Calculator::PercentOnLineItem
           Spree::Calculator::FlatRate
@@ -79,7 +77,6 @@ module Spree
           Spree::Calculator::TieredPercent
         ]
 
-        app.config.spree.calculators.add_class('promotion_actions_create_quantity_adjustments')
         app.config.spree.calculators.promotion_actions_create_quantity_adjustments = %w[
           Spree::Calculator::PercentOnLineItem
           Spree::Calculator::FlatRate
