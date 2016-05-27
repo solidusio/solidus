@@ -152,6 +152,31 @@ describe 'Users', type: :feature do
       expect(user_a.reload.bill_address.address1).to eq "1313 Mockingbird Ln"
     end
 
+    context 'invalid entry' do
+      around do |example|
+        ::AlwaysInvalidUser = Class.new(Spree.user_class) do
+          validate :always_invalid_email
+          def always_invalid_email
+            errors.add(:email, "is invalid")
+          end
+        end
+        orig_class = Spree.user_class
+        Spree.user_class = "AlwaysInvalidUser"
+
+        example.run
+
+        Spree.user_class = orig_class.name
+        Object.send(:remove_const, "AlwaysInvalidUser")
+      end
+
+      it 'should show validation errors' do
+        fill_in 'user_email', with: 'something'
+        click_button 'Update'
+
+        expect(page).to have_content("Email is invalid")
+      end
+    end
+
     context 'no api key exists' do
       it 'can generate a new api key' do
         within("#admin_user_edit_api_key") do
