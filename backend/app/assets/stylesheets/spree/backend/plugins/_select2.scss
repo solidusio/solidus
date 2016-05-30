@@ -6,3 +6,17 @@
     color: $color-1;
   }
 }
+
+.select2-container--default .select2-selection--single {
+  border-color: $color-border;
+  border-radius: $border-radius;
+  height: $input-height-sm;
+
+  .select2-selection__rendered {
+    color: $color-txt-text;
+  }
+
+  .select2-selection__placeholder {
+    font-size: 90%;
+  }
+}
