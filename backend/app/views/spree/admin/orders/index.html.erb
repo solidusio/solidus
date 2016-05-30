@@ -81,7 +81,11 @@
       <div class="omega eight columns">
         <div class="field" data-hook="sku-select">
           <%= label_tag :q_line_items_variant_id_in, Spree.t(:variant) %>
-          <%= f.text_field :line_items_variant_id_in, class: "variant_autocomplete fullwidth" %>
+          <%= f.select :line_items_variant_id_in,
+                       orders_filter_variant_opts(@search.line_items_variant_id_in),
+                       {},
+                       {class: "variant_autocomplete fullwidth"}
+          %>
         </div>
       </div>
 

@@ -59,6 +59,13 @@ module Spree
           ""  => "Transaction failed because wrong CVV2 number was entered or no CVV2 number was entered"
         }
       end
+
+      def orders_filter_variant_opts(variant_id)
+        return [] if variant_id.nil?
+        variant = Spree::Variant.find_by(id: variant_id)
+        variant_str = variant.options_text.blank? ? variant.name : "#{variant.name} (#{variant.options_text})"
+        options_for_select([[variant_str, variant_id]], variant_id)
+      end
     end
   end
 end

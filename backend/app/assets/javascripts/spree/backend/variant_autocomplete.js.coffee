@@ -3,6 +3,7 @@
 variantTemplate = HandlebarsTemplates["variants/autocomplete"]
 
 formatVariantResult = (variant) ->
+  return variant.text if variant.loading
   variant.image = variant.images[0].mini_url  if variant["images"][0] isnt `undefined` and variant["images"][0].mini_url isnt `undefined`
   variantTemplate variant: variant
 
@@ -10,29 +11,26 @@ $.fn.variantAutocomplete = (searchOptions = {}) ->
   @select2
     placeholder: Spree.translations.variant_placeholder
     minimumInputLength: 3
-    initSelection: (element, callback) ->
-      Spree.ajax
-        url: Spree.routes.variants_api + "/" + element.val()
-        success: callback
+    escapeMarkup: (markup) -> markup
+    templateResult: formatVariantResult
     ajax:
       url: Spree.routes.variants_api
       datatype: "json"
-      quietMillis: 500
-      params: { "headers": { "X-Spree-Token": Spree.api_key } }
-      data: (term, page) =>
+      delay: 500
+      data: (params) ->
         searchData =
           q:
-            product_name_or_sku_cont: term
+            product_name_or_sku_cont: params.term
           token: Spree.api_key
         _.extend(searchData, searchOptions)
-
-      results: (data, page) ->
+      processResults: (data, params) ->
         window.variants = data["variants"]
         results: data["variants"]
-
-    formatResult: formatVariantResult
-    formatSelection: (variant, container, escapeMarkup) ->
-      if !!variant.options_text
-        Select2.util.escapeMarkup("#{variant.name} (#{variant.options_text}")
+    templateSelection: (variant) ->
+      if variant.name?
+        if !!variant.options_text
+          "#{variant.name} (#{variant.options_text})"
+        else
+          variant.name
       else
-        Select2.util.escapeMarkup(variant.name)
+        variant.text
