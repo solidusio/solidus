@@ -1,7 +1,12 @@
 $ ->
   if $('.new_payment').is('*')
-    $('.payment-method-settings fieldset').addClass('hidden').first().removeClass('hidden')
-    $('input[name="payment[payment_method_id]"]').click ()->
-      $('.payment-method-settings fieldset').addClass('hidden')
-      id = $(this).parents('li').data('id')
-      $("fieldset[data-id='#{id}']").removeClass('hidden')
+    $input = $('input[name="payment[payment_method_id]"]')
+    $paymentMethods = $('.payment-method-settings .payment-methods')
+
+    updateSelected = ->
+      id = $input.filter(":checked").val()
+      $paymentMethods.addClass('hidden')
+      $paymentMethods.filter("#payment_method_#{id}").removeClass('hidden')
+
+    $input.on('click', updateSelected)
+    updateSelected()
