@@ -17,6 +17,7 @@
 #
 require "spree/core/search/base"
 require "spree/core/search/variant"
+require "spree/core/search/product_filters"
 
 module Spree
   class AppConfiguration < Preferences::Configuration
@@ -278,6 +279,12 @@ module Spree
     attr_writer :searcher_class
     def searcher_class
       @searcher_class ||= Spree::Core::Search::Base
+    end
+
+    # search_filter_presenter_class make it possible to override search filters for the searcher_class
+    attr_writer :search_filter_presenter_class
+    def search_filter_presenter_class
+      @search_filter_presenter_class ||= Spree::Core::Search::ProductFilters
     end
 
     # Allows implementing custom pricing for variants

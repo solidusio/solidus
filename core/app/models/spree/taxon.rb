@@ -35,6 +35,7 @@ module Spree
       content_type: { content_type: ["image/jpg", "image/jpeg", "image/png", "image/gif"] }
 
     # @note This method is meant to be overridden on a store by store basis.
+    # @deprecated - use Spree::Config.search_filter_presenter_class instead
     # @return [Array] filters that should be used for a taxon
     def applicable_filters
       fs = []
@@ -45,6 +46,8 @@ module Spree
       fs << Spree::Core::ProductFilters.brand_filter if Spree::Core::ProductFilters.respond_to?(:brand_filter)
       fs
     end
+    deprecate applicable_filters: "Please use Spree::Config.search_filter_presenter_class to manage filters",
+              deprecator: Spree::Deprecation
 
     # @return [String] meta_title if set otherwise a string containing the
     #   root name and taxon name
