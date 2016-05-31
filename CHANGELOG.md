@@ -187,6 +187,11 @@
     * JavaScript for it has been moved from address.js into its own `spree/frontend/checkout/coupon-code`
     * Numerous small nuisances have been fixed [#1090](https://github.com/solidusio/solidus/pull/1090)
 
+*   Lists of classes in configuration (`config.spree.calculators`, `spree.spree.calculators`, etc.) are
+    now stored internally as strings and constantized when accessed. This allows these classes to be
+    reloaded in development mode and loaded later in the boot process.
+    [#1203](https://github.com/solidusio/solidus/pull/1203)
+
 ## Solidus 1.2.0 (2016-01-26)
 
 *   Admin menu has been moved from top of the page to the left side.
