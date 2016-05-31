@@ -71,11 +71,8 @@ RSpec.configure do |config|
     DatabaseCleaner.clean_with :truncation
   end
 
-  config.before(:each) do
-    Rails.cache.clear
-    reset_spree_preferences
+  config.prepend_before(:each) do
     if RSpec.current_example.metadata[:js]
-      page.driver.browser.url_blacklist = ['http://fonts.googleapis.com']
       DatabaseCleaner.strategy = :truncation
     else
       DatabaseCleaner.strategy = :transaction
@@ -83,10 +80,15 @@ RSpec.configure do |config|
     DatabaseCleaner.start
   end
 
-  config.after(:each) do
-    # Ensure js requests finish processing before advancing to the next test
-    wait_for_ajax if RSpec.current_example.metadata[:js]
+  config.before do
+    Rails.cache.clear
+    reset_spree_preferences
+    if RSpec.current_example.metadata[:js]
+      page.driver.browser.url_blacklist = ['http://fonts.googleapis.com']
+    end
+  end
 
+  config.append_after(:each) do
     DatabaseCleaner.clean
   end
 
