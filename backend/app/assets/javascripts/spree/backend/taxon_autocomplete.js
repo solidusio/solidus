@@ -1,12 +1,7 @@
-'use strict';
+$.fn.taxonAutocomplete = function () {
+  'use strict';
 
-var set_taxon_select = function(){
-  function formatTaxon(taxon) {
-    return Select2.util.escapeMarkup(taxon.pretty_name);
-  }
-
-  if ($('#product_taxon_ids').length > 0) {
-    $('#product_taxon_ids').select2({
+  this.select2({
       placeholder: Spree.translations.taxon_placeholder,
       multiple: true,
       initSelection: function (element, callback) {
@@ -24,7 +19,6 @@ var set_taxon_select = function(){
       },
       ajax: {
         url: Spree.routes.taxons_search,
-        params: { "headers": { "X-Spree-Token": Spree.api_key } },
         datatype: 'json',
         data: function (term, page) {
           return {
@@ -45,12 +39,20 @@ var set_taxon_select = function(){
           };
         }
       },
-      formatResult: formatTaxon,
-      formatSelection: formatTaxon
+      formatResult: function (taxon, container, query, escapeMarkup) {
+        return escapeMarkup(taxon.pretty_name);
+      },
+      formatSelection: function (taxon, container, escapeMarkup) {
+        return escapeMarkup(taxon.pretty_name);
+      }
     });
-  }
-}
+};
 
 $(document).ready(function () {
-  set_taxon_select()
+  $('#product_taxon_ids, .taxon_picker').taxonAutocomplete();
 });
+
+// for backwards compat...
+var set_taxon_select = function() {
+  $('#product_taxon_ids, .taxon_picker').taxonAutocomplete();
+}
