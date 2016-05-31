@@ -31,19 +31,27 @@ module CapybaraExt
       select: true
     }.merge(options)
     label = find_label_by_text(options[:from])
-    within label.first(:xpath, ".//..") do
-      options[:from] = "##{find('.select2-container')['id']}"
-    end
-    select2_search_without_selection(options[:search], from: options[:from])
+    select2 = find_sibling_select2(label)
+    select2.click
+    select2_enter_search(options[:search])
     select_select2_result(value) if options[:select]
   end
 
-  def select2_search_without_selection(value, options)
-    find("#{options[:from]}:not(.select2-container-disabled):not(.select2-offscreen)").click
+  def find_sibling_select2(element)
+    element.first(:xpath, ".//..").find('.select2-container:not(.select2-container--disabled)')
+  end
 
+  def select2_enter_search(value)
     within_entire_page do
-      find("input.select2-input.select2-focused").set(value)
+      find(".select2-container--open .select2-search__field").set(value)
     end
+  end
+
+  def select2_search_without_selection(value, options)
+    original_select = find(options[:from], visible: false)
+    select2 = find_sibling_select2(original_select)
+    select2.click
+    select2_enter_search(value)
   end
 
   def targetted_select2_search(value, options)
@@ -62,9 +70,9 @@ module CapybaraExt
     label = find_label_by_text(options[:from])
 
     within label.first(:xpath, ".//..") do
-      options[:from] = "##{find('.select2-container')['id']}"
+      find('.select2-container').click
     end
-    targetted_select2(value, options)
+    select_select2_result(value)
   end
 
   def select2_no_label(value, options = {})
@@ -86,7 +94,7 @@ module CapybaraExt
   def select_select2_result(value)
     # results are in a div appended to the end of the document
     within_entire_page do
-      page.find("div.select2-result-label", text: /#{Regexp.escape(value)}/i, match: :prefer_exact).click
+      page.find(".select2-results__option", text: /#{Regexp.escape(value)}/i, match: :prefer_exact).click
     end
   end
 
