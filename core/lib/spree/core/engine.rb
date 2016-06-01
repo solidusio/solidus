@@ -25,90 +25,86 @@ module Spree
       end
 
       initializer "spree.register.calculators", before: :load_config_initializers do |app|
-        app.config.spree.calculators.shipping_methods = [
-            Spree::Calculator::Shipping::FlatPercentItemTotal,
-            Spree::Calculator::Shipping::FlatRate,
-            Spree::Calculator::Shipping::FlexiRate,
-            Spree::Calculator::Shipping::PerItem,
-            Spree::Calculator::Shipping::PriceSack]
+        app.config.spree.calculators.shipping_methods = %w[
+          Spree::Calculator::Shipping::FlatPercentItemTotal
+          Spree::Calculator::Shipping::FlatRate
+          Spree::Calculator::Shipping::FlexiRate
+          Spree::Calculator::Shipping::PerItem
+          Spree::Calculator::Shipping::PriceSack
+        ]
 
-        app.config.spree.calculators.tax_rates = [
-           Spree::Calculator::DefaultTax]
+        app.config.spree.calculators.tax_rates = %w[
+          Spree::Calculator::DefaultTax
+        ]
       end
 
       initializer "spree.register.stock_splitters", before: :load_config_initializers do |app|
-        app.config.spree.stock_splitters = [
-          Spree::Stock::Splitter::ShippingCategory,
+        app.config.spree.stock_splitters = %w[
+          Spree::Stock::Splitter::ShippingCategory
           Spree::Stock::Splitter::Backordered
         ]
       end
 
       initializer "spree.register.payment_methods", before: :load_config_initializers do |app|
-        app.config.spree.payment_methods = [
-            Spree::Gateway::Bogus,
-            Spree::Gateway::BogusSimple,
-            Spree::PaymentMethod::StoreCredit,
-            Spree::PaymentMethod::Check]
+        app.config.spree.payment_methods = %w[
+          Spree::Gateway::Bogus
+          Spree::Gateway::BogusSimple
+          Spree::PaymentMethod::StoreCredit
+          Spree::PaymentMethod::Check
+        ]
       end
 
       # We need to define promotions rules here so extensions and existing apps
       # can add their custom classes on their initializer files
       initializer 'spree.promo.environment', before: :load_config_initializers do |app|
-        app.config.spree.add_class('promotions')
         app.config.spree.promotions = Spree::Promo::Environment.new
         app.config.spree.promotions.rules = []
       end
 
       initializer 'spree.promo.register.promotion.calculators', before: :load_config_initializers do |app|
-        app.config.spree.calculators.add_class('promotion_actions_create_adjustments')
-        app.config.spree.calculators.promotion_actions_create_adjustments = [
-          Spree::Calculator::FlatPercentItemTotal,
-          Spree::Calculator::FlatRate,
-          Spree::Calculator::FlexiRate,
-          Spree::Calculator::TieredPercent,
+        app.config.spree.calculators.promotion_actions_create_adjustments = %w[
+          Spree::Calculator::FlatPercentItemTotal
+          Spree::Calculator::FlatRate
+          Spree::Calculator::FlexiRate
+          Spree::Calculator::TieredPercent
           Spree::Calculator::TieredFlatRate
         ]
 
-        app.config.spree.calculators.add_class('promotion_actions_create_item_adjustments')
-        app.config.spree.calculators.promotion_actions_create_item_adjustments = [
-          Spree::Calculator::PercentOnLineItem,
-          Spree::Calculator::FlatRate,
-          Spree::Calculator::FlexiRate,
+        app.config.spree.calculators.promotion_actions_create_item_adjustments = %w[
+          Spree::Calculator::PercentOnLineItem
+          Spree::Calculator::FlatRate
+          Spree::Calculator::FlexiRate
           Spree::Calculator::TieredPercent
         ]
 
-        app.config.spree.calculators.add_class('promotion_actions_create_quantity_adjustments')
-        app.config.spree.calculators.promotion_actions_create_quantity_adjustments = [
-          Spree::Calculator::PercentOnLineItem,
+        app.config.spree.calculators.promotion_actions_create_quantity_adjustments = %w[
+          Spree::Calculator::PercentOnLineItem
           Spree::Calculator::FlatRate
         ]
       end
 
-      # Promotion rules need to be evaluated on after initialize otherwise
-      # Spree.user_class would be nil and users might experience errors related
-      # to malformed model associations (Spree.user_class is only defined on
-      # the app initializer)
-      config.after_initialize do
-        Rails.application.config.spree.promotions.rules.concat [
-          Spree::Promotion::Rules::ItemTotal,
-          Spree::Promotion::Rules::Product,
-          Spree::Promotion::Rules::User,
-          Spree::Promotion::Rules::FirstOrder,
-          Spree::Promotion::Rules::UserLoggedIn,
-          Spree::Promotion::Rules::OneUsePerUser,
-          Spree::Promotion::Rules::Taxon,
-          Spree::Promotion::Rules::NthOrder,
-          Spree::Promotion::Rules::OptionValue,
+      initializer 'spree.promo.register.promotion.rules', before: :load_config_initializers do |app|
+        app.config.spree.promotions.rules = %w[
+          Spree::Promotion::Rules::ItemTotal
+          Spree::Promotion::Rules::Product
+          Spree::Promotion::Rules::User
+          Spree::Promotion::Rules::FirstOrder
+          Spree::Promotion::Rules::UserLoggedIn
+          Spree::Promotion::Rules::OneUsePerUser
+          Spree::Promotion::Rules::Taxon
+          Spree::Promotion::Rules::NthOrder
+          Spree::Promotion::Rules::OptionValue
           Spree::Promotion::Rules::FirstRepeatPurchaseSince
         ]
       end
 
       initializer 'spree.promo.register.promotions.actions', before: :load_config_initializers do |app|
-        app.config.spree.promotions.actions = [
-          Promotion::Actions::CreateAdjustment,
-          Promotion::Actions::CreateItemAdjustments,
-          Promotion::Actions::CreateQuantityAdjustments,
-          Promotion::Actions::FreeShipping]
+        app.config.spree.promotions.actions = %w[
+          Spree::Promotion::Actions::CreateAdjustment
+          Spree::Promotion::Actions::CreateItemAdjustments
+          Spree::Promotion::Actions::CreateQuantityAdjustments
+          Spree::Promotion::Actions::FreeShipping
+        ]
       end
 
       # filter sensitive information during logging
