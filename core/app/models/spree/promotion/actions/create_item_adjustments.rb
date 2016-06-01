@@ -68,10 +68,12 @@ module Spree
         def line_items_to_adjust(promotion, order)
           excluded_ids = adjustments.
             where(adjustable_id: order.line_items.pluck(:id), adjustable_type: 'Spree::LineItem').
-            pluck(:adjustable_id)
+            pluck(:adjustable_id).
+            to_set
 
-          order.line_items.where.not(id: excluded_ids).select do |line_item|
-            promotion.line_item_actionable? order, line_item
+          order.line_items.select do |line_item|
+            !excluded_ids.include?(line_item.id) &&
+              promotion.line_item_actionable?(order, line_item)
           end
         end
       end

@@ -5,8 +5,9 @@ module Spree
     module Actions
       describe CreateItemAdjustments, type: :model do
         let(:order) { create(:order) }
-        let(:promotion) { create(:promotion) }
-        let(:action) { CreateItemAdjustments.new }
+        let(:promotion) { create(:promotion, :with_line_item_adjustment, adjustment_rate: adjustment_amount) }
+        let(:adjustment_amount) { 10 }
+        let(:action) { promotion.actions.first! }
         let!(:line_item) { create(:line_item, order: order) }
         let(:payload) { { order: order, promotion: promotion } }
 
@@ -18,9 +19,7 @@ module Spree
         context "#perform" do
           # Regression test for https://github.com/spree/spree/issues/3966
           context "when calculator computes 0" do
-            before do
-              allow(action).to receive_messages compute_amount: 0
-            end
+            let(:adjustment_amount) { 0 }
 
             it "does not create an adjustment when calculator returns 0" do
               action.perform(payload)
@@ -29,20 +28,23 @@ module Spree
           end
 
           context "when calculator returns a non-zero value" do
-            before do
-              promotion.promotion_actions = [action]
-              allow(action).to receive_messages compute_amount: 10
-            end
+            let(:adjustment_amount) { 10 }
 
             it "creates adjustment with item as adjustable" do
               action.perform(payload)
               expect(action.adjustments.count).to eq(1)
-              expect(line_item.reload.adjustments).to eq(action.adjustments)
+              expect(line_item.adjustments).to eq(action.adjustments)
             end
 
             it "creates adjustment with self as source" do
               action.perform(payload)
-              expect(line_item.reload.adjustments.first.source).to eq action
+              expect(line_item.adjustments.first.source).to eq action
+            end
+
+            it "updates cached order line items" do
+              order.line_items.to_a
+              action.perform(payload)
+              expect(order.line_items.map(&:adjustment_total)).to eq([-10])
             end
 
             it "does not perform twice on the same item" do
@@ -83,8 +85,7 @@ module Spree
             end
 
             context "when a promotion code is used" do
-              let(:promotion_code) { create(:promotion_code) }
-              let(:promotion) { promotion_code.promotion }
+              let!(:promotion_code) { create(:promotion_code, promotion: promotion) }
               let(:payload) { { order: order, promotion: promotion, promotion_code: promotion_code } }
 
               it "should connect the adjustment to the promotion_code" do
