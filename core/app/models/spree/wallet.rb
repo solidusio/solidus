@@ -27,7 +27,7 @@ class Spree::Wallet
     user.wallet_sources.find_or_create_by!(source: source)
   end
 
-  # Remove a PaymentSource to the wallet.
+  # Remove a PaymentSource from the wallet.
   #
   # @param source [PaymentSource] The payment source to remove from the wallet
   # @raise [ActiveRecord::RecordNotFound] if the source is not in the wallet.
