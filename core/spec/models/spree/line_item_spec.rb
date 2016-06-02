@@ -214,6 +214,12 @@ describe Spree::LineItem, type: :model do
       line_item.options = { price: 123 }
       expect(line_item.price).to eq 123
     end
+
+    it "updates the price based on the options provided" do
+      expect(line_item).to receive(:gift_wrap=).with(true)
+      expect(line_item).to receive(:money_price=)
+      line_item.options = { gift_wrap: true }
+    end
   end
 
   describe 'money_price=' do

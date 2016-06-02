@@ -102,14 +102,20 @@ module Spree
       !sufficient_stock?
     end
 
-    # Sets options on the line item.
+    # Sets options on the line item and updates the price.
     #
     # The options can be arbitrary attributes on the LineItem.
     #
     # @param options [Hash] options for this line item
     def options=(options = {})
       return unless options.present?
+
       assign_attributes options
+
+      # There's no need to call a pricer if we'll set the price directly.
+      unless options.key?(:price) || options.key?('price')
+        self.money_price = variant.price_for(pricing_options)
+      end
     end
 
     def pricing_options
