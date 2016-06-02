@@ -166,6 +166,9 @@
     This version uses a rack middleware to determine the version, uses a
     different header name, and has some configuration changes.
 
+    You probably need to add [this](https://github.com/solidusio/solidus/commit/076f56f#diff-fd13b465e9d1fded7e03629bde800c9eR64)
+    to your controller specs.
+
     More information is available in the [VersionCake README](https://github.com/bwillis/versioncake)
 
 *   Bootstrap 4.0.0-alpha.2 is included into the admin.
