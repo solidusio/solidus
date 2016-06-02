@@ -4,4 +4,4 @@ child(@collection => :widgets) do
 end
 node(:count) { @collection.count }
 node(:current_page) { params[:page] || 1 }
-node(:pages) { @collection.num_pages }
+node(:pages) { @collection.total_pages }
