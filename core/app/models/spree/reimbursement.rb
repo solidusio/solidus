@@ -160,7 +160,7 @@ module Spree
     end
 
     def send_reimbursement_email
-      Spree::ReimbursementMailer.reimbursement_email(id).deliver_later
+      NotificationDispatch.new(:reimbursement_processed).deliver(id)
     end
 
     # If there are multiple different reimbursement types for a single
