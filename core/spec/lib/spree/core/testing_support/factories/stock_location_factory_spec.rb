@@ -21,4 +21,13 @@ RSpec.describe 'stock location factory' do
 
     it_behaves_like 'a working factory'
   end
+
+  describe 'stock location for a country without subregions' do
+    let(:country) { create(:country, iso: 'HK') }
+    it 'succeeds' do
+      expect(
+        create(:stock_location, country: country)
+      ).to be_a(Spree::StockLocation)
+    end
+  end
 end
