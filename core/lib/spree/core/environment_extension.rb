@@ -9,7 +9,7 @@ module Spree
         def add_class_set(name)
           define_method(name) do
             set = instance_variable_get("@#{name}")
-            send("#{name}=", []) unless set
+            set = send("#{name}=", []) unless set
             set
           end
 
