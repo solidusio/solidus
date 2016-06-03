@@ -17,6 +17,7 @@ module Spree
     acts_as_paranoid
     acts_as_list scope: :product
 
+    attr_writer :rebuild_vat_prices
     include Spree::DefaultPrice
 
     belongs_to :product, -> { with_deleted }, touch: true, class_name: 'Spree::Product', inverse_of: :variants
@@ -26,6 +27,7 @@ module Spree
              :meta_description, :meta_keywords, :shipping_category,
              to: :product
     delegate :tax_category, to: :product, prefix: true
+    delegate :tax_rates, to: :tax_category
 
     has_many :inventory_units, inverse_of: :variant
     has_many :line_items, inverse_of: :variant
@@ -43,9 +45,19 @@ module Spree
     has_many :prices,
       class_name: 'Spree::Price',
       dependent: :destroy,
-      inverse_of: :variant
+      inverse_of: :variant,
+      autosave: true
+
+    has_many :currently_valid_prices,
+      -> { currently_valid },
+      class_name: 'Spree::Price',
+      dependent: :destroy,
+      inverse_of: :variant,
+      autosave: true
 
     before_validation :set_cost_currency
+    before_validation :set_price
+    before_validation :build_vat_prices, if: -> { rebuild_vat_prices? || new_record? }
 
     validate :check_price
 
@@ -90,10 +102,10 @@ module Spree
 
     # Returns variants that have a price for the given pricing options
     #
-    # @param pricing_options A Pricing Options object as defined on the pricer class
+    # @param pricing_options A Pricing Options object as defined on the price selector class
     # @return [ActiveRecord::Relation]
     def self.with_prices(pricing_options = Spree::Config.default_pricing_options)
-      joins(:prices).merge(Spree::Price.currently_valid.where(pricing_options.desired_attributes))
+      joins(:prices).merge(Spree::Price.currently_valid.where(pricing_options.search_arguments))
     end
 
     # @return [Spree::TaxCategory] the variant's tax category
@@ -222,20 +234,20 @@ module Spree
       option_values.detect { |o| o.option_type.name == opt_name }.try(:presentation)
     end
 
-    # Returns an instance of the globally configured variant pricer class for this variant.
+    # Returns an instance of the globally configured variant price selector class for this variant.
     # It's cached so we don't create too many objects.
     #
-    # @return [Spree::Variant::Pricer] The default pricer class
-    def pricer
-      @pricer ||= Spree::Config.variant_pricer_class.new(self)
+    # @return [Spree::Variant::PriceSelector] The default price selector class
+    def price_selector
+      @price_selector ||= Spree::Config.variant_price_selector_class.new(self)
     end
 
     # Chooses an appropriate price for the given pricing options
     #
-    # @see Spree::Variant::Pricer#price_for
+    # @see Spree::Variant::PriceSelector#price_for
     # @param [Spree::Config.pricing_options_class] An instance of pricing options
     # @return [Spree::Money] The chosen price as a Money object
-    delegate :price_for, to: :pricer
+    delegate :price_for, to: :price_selector
 
     # Returns the difference in price from the master variant
     def price_difference_from_master(pricing_options = Spree::Config.default_pricing_options)
@@ -333,6 +345,10 @@ module Spree
 
     private
 
+    def rebuild_vat_prices?
+      @rebuild_vat_prices != "0" && @rebuild_vat_prices
+    end
+
     def set_master_out_of_stock
       if product.master && product.master.in_stock?
         product.master.stock_items.update_all(backorderable: false)
@@ -341,14 +357,16 @@ module Spree
     end
 
     # Ensures a new variant takes the product master price when price is not supplied
+    def set_price
+      if price.nil? && Spree::Config[:require_master_price] && !is_master?
+        raise 'No master variant found to infer price' unless product && product.master
+        self.price = product.master.price
+      end
+    end
+
     def check_price
-      if price.nil? && Spree::Config[:require_master_price]
-        if is_master?
-          errors.add :price, 'Must supply price for variant or master.price for product.'
-        else
-          raise 'No master variant found to infer price' unless product && product.master
-          self.price = product.master.price
-        end
+      if price.nil? && Spree::Config[:require_master_price] && is_master?
+        errors.add :price, 'Must supply price for variant or master.price for product.'
       end
     end
 
@@ -360,6 +378,10 @@ module Spree
       StockLocation.where(propagate_all_variants: true).each do |stock_location|
         stock_location.propagate_variant(self)
       end
+    end
+
+    def build_vat_prices
+      VatPriceGenerator.new(self).run
     end
 
     def set_position

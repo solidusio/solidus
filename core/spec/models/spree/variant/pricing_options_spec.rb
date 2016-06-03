@@ -4,15 +4,20 @@ describe Spree::Variant::PricingOptions do
   subject { described_class.new }
 
   context '.default_price_attributes' do
+    subject { described_class.default_price_attributes }
+
+    it { is_expected.to have_key(:currency) }
+    it { is_expected.to have_key(:country_iso) }
+
     it 'can be passed into a WHERE clause on Spree::Prices' do
-      expect(Spree::Price.where(described_class.default_price_attributes).to_a).to eq([])
+      expect(Spree::Price.where(subject).to_a).to eq([])
     end
 
     context "with a matching price present" do
       let!(:price) { create(:price) }
 
       it 'returns a matching price' do
-        expect(Spree::Price.where(described_class.default_price_attributes).to_a).to include(price)
+        expect(Spree::Price.where(subject).to_a).to include(price)
       end
     end
   end
@@ -25,9 +30,13 @@ describe Spree::Variant::PricingOptions do
       expect(subject.desired_attributes[:currency]).to eq("USD")
     end
 
+    it "takes the orders tax address country" do
+      expect(subject.desired_attributes[:country_iso]).to eq("US")
+    end
+
     context "if line item has no order" do
       before do
-        expect(line_item).to receive(:order).and_return(nil)
+        expect(line_item).to receive(:order).at_least(:once).and_return(nil)
       end
 
       it "returns the line item's currency" do
@@ -48,13 +57,24 @@ describe Spree::Variant::PricingOptions do
     context "if neither order nor line item have a currency" do
       before do
         expect(line_item).to receive(:currency).and_return(nil)
-        expect(line_item).to receive(:order).and_return(nil)
+        expect(line_item).to receive(:order).at_least(:once).and_return(nil)
         expect(Spree::Config).to receive(:currency).at_least(:once).and_return("RUB")
       end
 
       it "returns the configured default currency" do
         expect(subject.desired_attributes[:currency]).to eq("RUB")
       end
+    end
+  end
+
+  context ".from_price" do
+    let(:country) { create(:country) }
+    let(:price) { create(:price, country: country) }
+
+    subject { described_class.from_price(price) }
+    it "gets the currency from the previous price" do
+      expect(subject.currency).to eq(price.currency)
+      expect(subject.country_iso).to eq(country.iso)
     end
   end
 
@@ -70,6 +90,14 @@ describe Spree::Variant::PricingOptions do
 
       it "returns a Hash with the correct currency" do
         expect(subject.desired_attributes[:currency]).to eq("EUR")
+      end
+    end
+
+    context "when called with a different country_iso" do
+      subject { described_class.new(country_iso: "DE") }
+
+      it "returns a Hash with the correct country" do
+        expect(subject.desired_attributes[:country_iso]).to eq("DE")
       end
     end
   end
@@ -91,6 +119,23 @@ describe Spree::Variant::PricingOptions do
     end
   end
 
+  describe "#country_iso" do
+    context "when initialized with no country_iso" do
+      it "returns the default country_iso" do
+        expect(Spree::Config).to receive(:admin_vat_country_iso).and_return("US")
+        expect(subject.country_iso).to eq("US")
+      end
+    end
+
+    context "when initialized with a different country_iso" do
+      subject { described_class.new(country_iso: "DE") }
+
+      it "returns that country_iso" do
+        expect(subject.country_iso).to eq("DE")
+      end
+    end
+  end
+
   describe "#cache_key" do
     it 'creates a cache key out of the values of the attributes hash' do
       expect(subject.cache_key).to eq("USD")
@@ -98,8 +143,46 @@ describe Spree::Variant::PricingOptions do
 
     context "with another currency" do
       subject { described_class.new(currency: "EUR") }
+
       it 'creates the correct cache key' do
         expect(subject.cache_key).to eq("EUR")
+      end
+
+      context "and another country" do
+        subject { described_class.new(currency: "EUR", country_iso: "DE") }
+
+        it 'creates the correct cache key' do
+          expect(subject.cache_key).to eq("EUR/DE")
+        end
+      end
+    end
+  end
+
+  describe "#search_arguments" do
+    let!(:price) { create(:price, currency: "EUR") }
+    let(:options) { {} }
+
+    subject { described_class.new(options).search_arguments }
+
+    context "with a currency given" do
+      let(:options) { { currency: "EUR" } }
+
+      it 'can be passed into a `where` clause' do
+        expect(Spree::Price.where(subject)).to eq([price])
+      end
+    end
+
+    context "with no country given" do
+      it "is an array with only nil inside" do
+        expect(subject[:country_iso]).to eq([nil])
+      end
+    end
+
+    context "with a country given" do
+      let(:options) { { country_iso: "DE" } }
+
+      it "is an array with the country and nil" do
+        expect(subject[:country_iso]).to eq(["DE", nil])
       end
     end
   end

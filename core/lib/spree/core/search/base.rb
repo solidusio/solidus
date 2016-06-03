@@ -30,7 +30,7 @@ module Spree
           curr_page = page || 1
 
           unless Spree::Config.show_products_without_price
-            @products = @products.joins(:prices).merge(Spree::Price.where(pricing_options.desired_attributes)).uniq
+            @products = @products.joins(:prices).merge(Spree::Price.where(pricing_options.search_arguments)).uniq
           end
           @products = @products.page(curr_page).per(per_page)
         end
@@ -70,7 +70,7 @@ module Spree
           # separate queries most of the time but opt for a join as soon as any
           # `where` constraints affecting joined tables are added to the search;
           # which is the case as soon as a taxon is added to the base scope.
-          scope = scope.preload(master: :prices)
+          scope = scope.preload(master: :currently_valid_prices)
           scope = scope.preload(master: :images) if include_images
           scope
         end

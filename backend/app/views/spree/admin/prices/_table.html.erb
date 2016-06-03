@@ -4,9 +4,9 @@
   <thead data-hook="prices_header">
     <tr>
       <th><%= Spree::Variant.model_name.human %> </th>
-      <th><%= Spree::Price.human_attribute_name(:is_default) %></th>
-      <th><%= Spree::Price.human_attribute_name(:amount) %></th>
+      <th><%= Spree::Price.human_attribute_name(:country) %></th>
       <th><%= Spree::Price.human_attribute_name(:currency) %></th>
+      <th><%= Spree::Price.human_attribute_name(:amount) %></th>
       <th class="actions"></th>
     </tr>
   </thead>
@@ -14,18 +14,10 @@
   <tbody>
   <% prices.each do |price| %>
     <tr id="<%= spree_dom_id price %>" data-hook="prices_row" class="<%= "deleted" if price.deleted? %> <%= cycle('odd', 'even')%>">
-      <td class="align-center">
-        <%= price.variant.descriptive_name %>
-      </td>
-      <td class="align-center">
-        <% if price.is_default? %>
-          <span class="state complete"> <%= Spree.t(:say_yes) %> </span>
-        <% else %>
-          <span class="state canceled"> <%= Spree.t(:say_no) %> </span>
-        <% end %>
-      </td>
-      <td class="align-center"><%= price.money.to_html %></td>
-      <td class="align-center"><%= price.currency %></td>
+      <td><%= price.variant.descriptive_name %></td>
+      <td><%= price.display_country %>
+      <td><%= price.currency %></td>
+      <td class="align-right"><%= price.money.to_html %></td>
       <td class="actions">
         <% if can?(:update, price) %>
           <%= link_to_edit(price, :no_text => true) unless price.deleted? %>

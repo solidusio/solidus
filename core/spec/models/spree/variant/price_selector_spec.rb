@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Spree::Variant::Pricer do
+describe Spree::Variant::PriceSelector do
   let(:variant) { build_stubbed(:variant) }
 
   subject { described_class.new(variant) }
@@ -22,6 +22,46 @@ describe Spree::Variant::Pricer do
 
       it "returns the correct (default) price as a Spree::Money object" do
         expect(subject.price_for(pricing_options)).to eq(Spree::Money.new(12.34, currency: "USD"))
+      end
+
+      context "with the another country iso" do
+        let(:country) { create(:country, iso: "DE") }
+
+        let(:pricing_options) do
+          described_class.pricing_options_class.new(currency: "USD", country_iso: "DE")
+        end
+
+        context "with a price for that country present" do
+          before do
+            variant.prices.create(amount: 44.44, country: country, currency: Spree::Config.currency)
+          end
+
+          it "returns the correct price" do
+            expect(subject.price_for(pricing_options)).to eq(Spree::Money.new(44.44, currency: "USD"))
+          end
+        end
+
+        context "with no price for that country present" do
+          context "and no fallback price for the variant present" do
+            before do
+              variant.prices.delete_all
+            end
+
+            it "returns nil" do
+              expect(subject.price_for(pricing_options)).to be_nil
+            end
+          end
+
+          context "and a fallback price for the variant present" do
+            before do
+              variant.prices.create(amount: 55.44, country: nil, currency: Spree::Config.currency)
+            end
+
+            it "returns the fallback price" do
+              expect(subject.price_for(pricing_options)).to eq(Spree::Money.new(55.44, currency: "USD"))
+            end
+          end
+        end
       end
     end
 

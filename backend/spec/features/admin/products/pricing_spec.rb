@@ -16,8 +16,9 @@ describe 'Pricing' do
   end
 
   context "in the prices tab" do
+    let!(:country) { create :country, iso: "DE" }
     let(:master_price) { product.master.default_price }
-    let!(:other_price) { product.master.prices.create(amount: 34.56, currency: "RUB") }
+    let!(:other_price) { product.master.prices.create(amount: 34.56, currency: "RUB", country_iso: "DE") }
 
     before do
       visit spree.admin_product_prices_path(product)
@@ -35,6 +36,8 @@ describe 'Pricing' do
         expect(page).to have_content("34.56 ₽")
         expect(page).to have_content("RUB")
         expect(page).to have_content("Master")
+        expect(page).to have_content("Any Country")
+        expect(page).to have_content("Germany")
       end
     end
 
@@ -63,7 +66,7 @@ describe 'Pricing' do
     context "deleting", js: true do
       let(:product) { create(:product, price: 65.43) }
       let!(:variant) { product.master }
-      let!(:other_price) { product.master.prices.create(amount: 34.56, is_default: false) }
+      let!(:other_price) { product.master.prices.create(amount: 34.56, currency: "EUR") }
 
       it "will delete the non-default price" do
         within "#spree_price_#{other_price.id}" do

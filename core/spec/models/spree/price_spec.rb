@@ -45,6 +45,38 @@ describe Spree::Price, type: :model do
       let(:amount) { Spree::Price::MAXIMUM_AMOUNT }
       it { is_expected.to be_valid }
     end
+
+    context '#country_iso' do
+      subject(:price) { build(:price, country_iso: country_iso) }
+
+      context 'when country iso is nil' do
+        let(:country_iso) { nil }
+
+        it { is_expected.to be_valid }
+      end
+
+      context 'when country iso is a country code' do
+        let!(:country) { create(:country, iso: "DE") }
+        let(:country_iso) { "DE" }
+
+        it { is_expected.to be_valid }
+      end
+
+      context 'when country iso is not a country code' do
+        let(:country_iso) { "ZZ" }
+
+        it { is_expected.not_to be_valid }
+      end
+    end
+
+    describe '#country' do
+      let!(:country) { create(:country, iso: "DE") }
+      let(:price) { create(:price, country_iso: "DE", is_default: false) }
+
+      it 'returns the country object' do
+        expect(price.country).to eq(country)
+      end
+    end
   end
 
   describe "#currency" do
@@ -69,5 +101,31 @@ describe Spree::Price, type: :model do
         it { is_expected.to be_valid }
       end
     end
+  end
+
+  describe 'scopes' do
+    describe '.for_any_country' do
+      let(:country) { create(:country) }
+      let!(:fallback_price) { create(:price, country_iso: nil) }
+      let!(:country_price) { create(:price, country: country) }
+
+      subject { described_class.for_any_country }
+
+      it { is_expected.to include(fallback_price) }
+    end
+  end
+
+  describe 'net_amount' do
+    let(:country) { create(:country, iso: "DE") }
+    let(:zone) { create(:zone, countries: [country]) }
+    let!(:tax_rate) { create(:tax_rate, included_in_price: true, zone: zone, tax_category: variant.tax_category) }
+
+    let(:variant) { create(:product).master }
+
+    let(:price) { variant.prices.create(amount: 20, country: country) }
+
+    subject { price.net_amount }
+
+    it { is_expected.to eq(BigDecimal.new(20) / 1.1) }
   end
 end

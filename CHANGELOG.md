@@ -23,10 +23,10 @@
     object. For now, this object (`Spree::Variant::PricingOptions`) only holds the
     currency. It is used for caching instead of the deprecated `current_currency` helper.
 
-    Additionally, your pricing can be customized using a `VariantPricer` object, a default
-    implementation of which can be found in `Spree::Variant::Pricer`. It is responsible for
+    Additionally, your pricing can be customized using a `VariantPriceSelector` object, a default
+    implementation of which can be found in `Spree::Variant::PriceSelector`. It is responsible for
     finding the right price for variant, be it for front-end display or for adding it to the
-    cart. You can set it through the new `Spree::Config.variant_pricer_class` setting. This
+    cart. You can set it through the new `Spree::Config.variant_price_selector_class` setting. This
     class also knows which `PricingOptions` class it cooperates with.
 
     #### Deprecated methods:
@@ -44,7 +44,7 @@
     `Spree::Variant` to be patched with methods like `Spree::Variant#gift_wrap_price_modifier_in`
     and is generally deemed a non-preferred way of modifying pricing.
     This functionality has now been moved into a [Gem of its own](https://github.com/solidusio-contrib/solidus_price_modifier)
-    to ease the transition to the new `Variant::Pricer` system.
+    to ease the transition to the new `Variant::PriceSelector` system.
 
 *   Respect `Spree::Store#default_currency`
 

@@ -775,6 +775,7 @@ en:
           pricing: Pricing
           pricing_hint: These values are populated from the product details page and can be overridden below
       prices:
+        any_country: "Any Country"
         index:
           amount_greater_than: Amount greater than
           amount_less_than: Amount less than

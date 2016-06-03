@@ -5,17 +5,21 @@ module Spree
     MAXIMUM_AMOUNT = BigDecimal('99_999_999.99')
 
     belongs_to :variant, -> { with_deleted }, class_name: 'Spree::Variant', touch: true
-    has_one :product, class_name: 'Spree::Product', through: :variant
+    belongs_to :country, class_name: "Spree::Country", foreign_key: "country_iso", primary_key: "iso"
+
+    delegate :product, to: :variant
+    delegate :tax_rates, to: :variant
 
     validate :check_price
     validates :amount, allow_nil: true, numericality: {
       greater_than_or_equal_to: 0,
       less_than_or_equal_to: MAXIMUM_AMOUNT
     }
-
     validates :currency, inclusion: { in: ::Money::Currency.all.map(&:iso_code), message: :invalid_code }
+    validates :country, presence: true, unless: -> { for_any_country? }
 
-    scope :currently_valid, -> { where(is_default: true) }
+    scope :currently_valid, -> { where(is_default: true).order("country_iso IS NULL") }
+    scope :for_any_country, -> { where(country: nil) }
     scope :with_default_attributes, -> { where(Spree::Config.default_pricing_options.desired_attributes) }
     after_save :set_default_price
 
@@ -23,7 +27,7 @@ module Spree
     money_methods :amount, :price
     alias_method :money, :display_amount
 
-    self.whitelisted_ransackable_attributes = %w( amount variant_id currency )
+    self.whitelisted_ransackable_attributes = %w( amount variant_id currency country_iso )
 
     # An alias for #amount
     def price
@@ -38,7 +42,28 @@ module Spree
       self[:amount] = Spree::LocalizedNumber.parse(price)
     end
 
+    def net_amount
+      amount / (1 + sum_of_vat_amounts)
+    end
+
+    def for_any_country?
+      country_iso.nil?
+    end
+
+    def display_country
+      if country_iso
+        "#{country_iso} (#{country.name})"
+      else
+        I18n.t(:any_country, scope: [:spree, :admin, :prices])
+      end
+    end
+
     private
+
+    def sum_of_vat_amounts
+      return 0 unless variant.tax_category
+      tax_rates.included_in_price.for_country(country).sum(:amount)
+    end
 
     def check_price
       self.currency ||= Spree::Config[:currency]
