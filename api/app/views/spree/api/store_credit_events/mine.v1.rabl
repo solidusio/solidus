@@ -7,4 +7,4 @@ end
 
 node(:count) { @store_credit_events.count }
 node(:current_page) { params[:page] || 1 }
-node(:pages) { @store_credit_events.num_pages }
+node(:pages) { @store_credit_events.total_pages }
