@@ -17,6 +17,7 @@ RSpec.describe 'state factory' do
 
   describe 'when given a country iso code' do
     let(:state) { build(:state, country_iso: "DE") }
+
     it 'creates the first state for that country it finds in carmen' do
       expect(state.abbr).to eq("BW")
       expect(state.name).to eq("Baden-Württemberg")
@@ -43,6 +44,14 @@ RSpec.describe 'state factory' do
   describe 'when given an invalid country iso code' do
     it 'raises a helpful message' do
       expect{ build(:state, country_iso: "ZZ") }.to raise_error(RuntimeError, 'Unknown country iso code: "ZZ"')
+    end
+  end
+
+  context 'with a country that does not have subregions' do
+    it 'raises an exception' do
+      expect {
+        create(:state, country_iso: 'HK')
+      }.to raise_error('Country HK has no subregions')
     end
   end
 end
