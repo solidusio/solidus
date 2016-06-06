@@ -49,7 +49,7 @@ describe 'spree:migrations:copy_shipped_shipments_to_cartons' do
 
       expect(carton.number).to eq "C#{shipped_shipment.number}"
       expect(carton.stock_location).to eq shipped_shipment.stock_location
-      expect(carton.address).to eq shipped_shipment.address
+      expect(carton.address).to eq shipped_shipment.order.ship_address
       expect(carton.shipping_method).to eq shipped_shipment.shipping_method
       expect(carton.tracking).to eq shipped_shipment.tracking
       expect(carton.shipped_at).to eq shipped_shipment.shipped_at
