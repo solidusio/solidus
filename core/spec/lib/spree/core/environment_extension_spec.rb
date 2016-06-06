@@ -26,8 +26,8 @@ describe Spree::Core::EnvironmentExtension do
   describe '#setter' do
     before { subject.random_name = [C1, C2]; @set = subject.random_name.to_a }
 
-    it { expect(@set).to include(C1)}
-    it { expect(@set).to include(C2)}
-    it { expect(@set).not_to include(C3)}
+    it { expect(@set).to include(C1) }
+    it { expect(@set).to include(C2) }
+    it { expect(@set).not_to include(C3) }
   end
 end
