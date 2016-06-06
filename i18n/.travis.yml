@@ -4,9 +4,11 @@ language: ruby
 env:
   - SOLIDUS_BRANCH=v1.1   DB=mysql
   - SOLIDUS_BRANCH=v1.2   DB=mysql
+  - SOLIDUS_BRANCH=v1.3   DB=mysql
   - SOLIDUS_BRANCH=master DB=mysql
   - SOLIDUS_BRANCH=v1.1   DB=postgres
   - SOLIDUS_BRANCH=v1.2   DB=postgres
+  - SOLIDUS_BRANCH=v1.3   DB=postgres
   - SOLIDUS_BRANCH=master DB=postgres
 rvm:
   - 2.3.0
