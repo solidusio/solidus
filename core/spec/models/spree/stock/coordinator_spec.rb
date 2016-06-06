@@ -42,6 +42,15 @@ module Spree
             expect(subject.shipments.count).to eq(StockLocation.count - 1)
           end
         end
+
+        it "does not unintentionally add shipments to the order" do
+          subject.shipments
+          expect {
+            order.update!
+          }.not_to change {
+            order.shipments.count
+          }
+        end
       end
 
       # regression spec
