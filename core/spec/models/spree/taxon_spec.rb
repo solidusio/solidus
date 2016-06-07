@@ -66,9 +66,14 @@ describe Spree::Taxon, type: :model do
   context "updating permalink" do
     let(:taxonomy) { create(:taxonomy, name: 't') }
     let(:root) { taxonomy.root }
-    let(:taxon1) { create(:taxon, name: 't1', taxonomy: taxonomy, parent: root) }
-    let(:taxon2) { create(:taxon, name: 't2', taxonomy: taxonomy, parent: root) }
-    let(:taxon2_child) { create(:taxon, name: 't2_child', taxonomy: taxonomy, parent: taxon2) }
+    let(:taxon1) { create(:taxon, name: 't1', taxonomy: taxonomy) }
+    let(:taxon2) { create(:taxon, name: 't2', taxonomy: taxonomy) }
+    let(:taxon2_child) { create(:taxon, name: 't2_child', taxonomy: taxonomy) }
+
+    before :each do
+      root.children << [taxon1, taxon2]
+      taxon2.children << taxon2_child
+    end
 
     context "changing parent" do
       subject do
