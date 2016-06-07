@@ -1,16 +1,13 @@
 require 'spec_helper'
 
 describe 'spree:migrations:copy_shipped_shipments_to_cartons' do
-  before do
-    Rails.application.load_tasks
-    task.reenable
-  end
+  include_context(
+    'rake',
+    task_name: 'spree:migrations:copy_shipped_shipments_to_cartons:up',
+    task_path: Spree::Core::Engine.root.join('lib/tasks/migrations/copy_shipped_shipments_to_cartons.rake'),
+  )
 
   describe 'up' do
-    let(:task) do
-      Rake::Task['spree:migrations:copy_shipped_shipments_to_cartons:up']
-    end
-
     # should generate a carton
     let!(:shipped_shipment) { shipped_order.shipments.first }
     # should not generate a carton because it's not shipped

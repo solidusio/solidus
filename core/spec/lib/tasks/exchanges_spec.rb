@@ -1,14 +1,11 @@
 require 'spec_helper'
 
 describe "exchanges:charge_unreturned_items" do
-  let(:task) do
-    Rake::Task['exchanges:charge_unreturned_items']
-  end
-
-  before do
-    Rails.application.load_tasks
-    task.reenable
-  end
+  include_context(
+    'rake',
+    task_name: 'exchanges:charge_unreturned_items',
+    task_path: Spree::Core::Engine.root.join('lib/tasks/exchanges.rake'),
+  )
 
   subject { task }
 
