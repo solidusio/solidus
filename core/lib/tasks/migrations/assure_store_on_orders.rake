@@ -25,7 +25,7 @@ namespace :solidus do
           TEXT
         end
 
-        default_store = Store.where(default: true).first
+        default_store = Spree::Store.where(default: true).first
         unless default_store
           abort "Your store is not marked as default. Please mark your one store as the default store and run this task again."
         end
