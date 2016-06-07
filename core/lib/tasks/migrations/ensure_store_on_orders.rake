@@ -1,6 +1,6 @@
 namespace :solidus do
   namespace :migrations do
-    namespace :assure_store_on_orders do
+    namespace :ensure_store_on_orders do
       desc "Makes sure every order in the system has a store attached"
       task up: :environment do
 

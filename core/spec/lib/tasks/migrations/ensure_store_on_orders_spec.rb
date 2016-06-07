@@ -1,11 +1,11 @@
 require 'spec_helper'
 
-describe 'solidus:migrations:assure_store_on_orders' do
+describe 'solidus:migrations:ensure_store_on_orders' do
   describe 'up' do
     include_context(
       'rake',
-      task_path: Spree::Core::Engine.root.join('lib/tasks/migrations/assure_store_on_orders.rake'),
-      task_name: 'solidus:migrations:assure_store_on_orders:up',
+      task_path: Spree::Core::Engine.root.join('lib/tasks/migrations/ensure_store_on_orders.rake'),
+      task_name: 'solidus:migrations:ensure_store_on_orders:up',
     )
 
     context 'with no orders' do
