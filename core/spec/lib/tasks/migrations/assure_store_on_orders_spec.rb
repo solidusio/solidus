@@ -42,6 +42,39 @@ describe 'solidus:migrations:assure_store_on_orders' do
           "All orders updated with the default store.\n"
         ).to_stdout
       end
+
+      context 'when there are no stores' do
+        before do
+          order_with_store.update_columns(store_id: nil)
+          # due to a before_validation that adds a store when one is missing,
+          # we can't simply specify `store: nil`
+          store.destroy
+        end
+
+        it 'raises' do
+          expect { task.invoke }.to raise_error(/You do not have a store set up/)
+        end
+      end
+
+      context 'when there are multiple stores' do
+        let!(:extra_store) { create(:store) }
+
+        it 'raises' do
+          expect { task.invoke }.to raise_error(/You have more than one store set up/)
+        end
+      end
+
+      context 'when there is no default store' do
+        before do
+          # The before_save 'ensure_default_exists_and_is_unique' means that we
+          # need to use update_columns to set up this scenario.
+          store.update_columns(default: false)
+        end
+
+        it 'raises' do
+          expect { task.invoke }.to raise_error(/Your store is not marked as default/)
+        end
+      end
     end
   end
 end
