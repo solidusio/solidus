@@ -160,22 +160,6 @@ describe Spree::ReturnAuthorization, type: :model do
     end
   end
 
-  context "can_receive?" do
-    before do
-      pending "TODO: get this method into our fork"
-    end
-
-    it "should allow_receive when inventory units assigned" do
-      allow(return_authorization).to receive_messages(inventory_units: [1, 2, 3])
-      expect(return_authorization.can_receive?).to be true
-    end
-
-    it "should not allow_receive with no inventory units" do
-      allow(return_authorization).to receive_messages(inventory_units: [])
-      expect(return_authorization.can_receive?).to be false
-    end
-  end
-
   describe "#refundable_amount" do
     let(:line_item_price) { 5.0 }
     let(:line_item_count) { return_authorization.order.line_items.count }
