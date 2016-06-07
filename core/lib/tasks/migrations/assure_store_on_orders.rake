@@ -16,9 +16,9 @@ namespace :solidus do
 
         spree_store_count = Spree::Store.count
         if spree_store_count == 0
-          abort "You do not have a store set up. Please create a store instance for your installation."
+          raise "You do not have a store set up. Please create a store instance for your installation."
         elsif spree_store_count > 1
-          abort(<<-TEXT.squish)
+          raise(<<-TEXT.squish)
             You have more than one store set up. We can not be sure which store to attach your
             orders to. Please attach store ids to all your orders, and run this task again
             when you're finished.
@@ -27,7 +27,7 @@ namespace :solidus do
 
         default_store = Spree::Store.where(default: true).first
         unless default_store
-          abort "Your store is not marked as default. Please mark your one store as the default store and run this task again."
+          raise "Your store is not marked as default. Please mark your one store as the default store and run this task again."
         end
 
         Spree::Order.where(store_id: nil).update_all(store_id: Spree::Store.default.id)
