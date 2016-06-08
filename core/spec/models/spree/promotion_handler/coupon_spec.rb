@@ -128,7 +128,7 @@ module Spree
           end
 
           context "coexists with a non coupon code promo" do
-            let!(:order) { Order.create }
+            let!(:order) { create(:order) }
 
             before do
               allow(order).to receive_messages coupon_code: "10off"

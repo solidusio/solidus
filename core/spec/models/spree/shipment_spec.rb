@@ -135,7 +135,7 @@ describe Spree::Shipment, type: :model do
   end
 
   context "manifest" do
-    let(:order) { Spree::Order.create }
+    let(:order) { create(:order) }
     let(:variant) { create(:variant) }
     let!(:line_item) { order.contents.add variant }
     let!(:shipment) { order.create_proposed_shipments.first }
