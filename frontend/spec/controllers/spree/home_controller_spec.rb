@@ -1,6 +1,8 @@
 require 'spec_helper'
 
 describe Spree::HomeController, type: :controller do
+  let!(:store) { create(:store) }
+
   it "provides current user to the searcher class" do
     user = mock_model(Spree.user_class, last_incomplete_spree_order: nil, spree_api_key: 'fake')
     allow(controller).to receive_messages try_spree_current_user: user

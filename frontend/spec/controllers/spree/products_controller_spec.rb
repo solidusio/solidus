@@ -1,6 +1,7 @@
 require 'spec_helper'
 
 describe Spree::ProductsController, type: :controller do
+  let!(:store) { create(:store) }
   let!(:product) { create(:product, available_on: 1.year.from_now) }
 
   # Regression test for https://github.com/spree/spree/issues/1390
