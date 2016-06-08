@@ -37,19 +37,28 @@ describe Spree::Store, type: :model do
   end
 
   describe ".default" do
-    let!(:store)    { create(:store) }
-    let!(:store_2)  { create(:store, default: true) }
+    it "should ensure saved store becomes default if one doesn't exist yet" do
+      expect(Spree::Store.where(default: true).count).to eq(0)
+      store = build(:store)
+      expect(store.default).not_to be true
 
-    it "should ensure there is a default if one doesn't exist yet" do
-      expect(store_2.default).to be true
+      store.save!
+
+      expect(store.default).to be true
     end
 
     it "should ensure there is only one default" do
-      [store, store_2].each(&:reload)
+      orig_default_store = create(:store, default: true)
+      expect(orig_default_store.reload.default).to be true
+
+      new_default_store = create(:store, default: true)
 
       expect(Spree::Store.where(default: true).count).to eq(1)
-      expect(store_2.default).to be true
-      expect(store.default).not_to be true
+
+      [orig_default_store, new_default_store].each(&:reload)
+
+      expect(new_default_store.default).to be true
+      expect(orig_default_store.default).not_to be true
     end
   end
 
