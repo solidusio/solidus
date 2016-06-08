@@ -38,9 +38,13 @@ module Spree
           set_roles
           set_stock_locations
           flash[:success] = Spree.t(:account_updated)
-        end
+          redirect_to edit_admin_user_url(@user)
+        else
+          load_roles
+          load_stock_locations
 
-        redirect_to edit_admin_user_url(@user)
+          render :edit, status: :unprocessable_entity
+        end
       end
 
       def addresses
