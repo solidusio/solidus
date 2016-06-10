@@ -8,6 +8,14 @@
 
 ## Solidus 1.3.0 (unreleased)
 
+*   Order now requires a `store_id` in validations
+
+    All orders created since Spree v2.4 should have a store assigned. A
+    migration exists to assign all orders without a store to the default store.
+
+    If you are seeing spec failures related to this, you may have to add
+    `let!(:store) { create(:store) }` to some test cases.
+
 *   Deprecate `Spree::TaxRate.adjust`, remove `Spree::TaxRate.match`
 
     The functionality of `Spree::TaxRate.adjust` is now contained in the new
@@ -117,12 +125,6 @@
       will be fetched from the shipment.
 
     https://github.com/solidusio/solidus/pull/965
-
-*   Made Spree::Order validate :store_id
-
-    All orders created since Spree v2.4 should have a store assigned. We want to build more
-    functionality onto that relation, so we need to make sure that every order has a store.
-    Please run `rake solidus:upgrade:one_point_three` to make sure your orders have a store id set.
 
 *   Removed Spree::Stock::Coordinator#packages from the public interface.
 
