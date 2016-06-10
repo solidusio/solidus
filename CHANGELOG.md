@@ -1,5 +1,9 @@
 ## Solidus 1.4.0 (master, unreleased)
 
+*   Coupon code application has been separated from the Continue button on the Payment checkout page
+
+    * JavaScript for it has been moved from address.js into its own `spree/frontend/checkout/coupon-code`
+    * Numerous small nuisances have been fixed [#1090](https://github.com/solidusio/solidus/pull/1090)
 
 
 ## Solidus 1.3.0 (unreleased)
@@ -184,11 +188,6 @@
     * Settings pages were grouped into related partials as outlined in [#634](https://github.com/solidusio/solidus/issues/634)
     * Partials are rendered on pages owned by the partials as tabs as a top bar
     * Admin-nav has a sub-menu for the settings now
-
-*   Coupon code application has been separated from the Continue button on the Payment checkout page
-
-    * JavaScript for it has been moved from address.js into its own `spree/frontend/checkout/coupon-code`
-    * Numerous small nuisances have been fixed [#1090](https://github.com/solidusio/solidus/pull/1090)
 
 *   Lists of classes in configuration (`config.spree.calculators`, `spree.spree.calculators`, etc.) are
     now stored internally as strings and constantized when accessed. This allows these classes to be
