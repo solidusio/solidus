@@ -25,7 +25,6 @@ describe Spree::Store, type: :model do
 
     context "with no argument" do
       it 'should return default' do
-        pending "This returns an arbitrary store"
         expect(current).to eql(store_default)
       end
     end
