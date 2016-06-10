@@ -25,7 +25,9 @@ describe Spree::Store, type: :model do
 
     context "with no argument" do
       it 'should return default' do
-        expect(current).to eql(store_default)
+        Spree::Deprecation.silence do
+          expect(current).to eql(store_default)
+        end
       end
     end
 

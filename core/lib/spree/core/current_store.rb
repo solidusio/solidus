@@ -13,7 +13,11 @@ module Spree
       # looking up by the requesting server's name.
       # @return [Spree::Store]
       def store
-        Spree::Store.current(store_key)
+        if store_key
+          Spree::Store.current(store_key)
+        else
+          Spree::Store.default
+        end
       end
 
       private
