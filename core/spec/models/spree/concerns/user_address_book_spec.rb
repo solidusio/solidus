@@ -336,4 +336,21 @@ module Spree
       expect(subject.default_address).to eq ship_address
     end
   end
+
+  describe "ship_address=" do
+    let!(:user) { create(:user) }
+    let!(:address) { create(:address) }
+
+    # https://github.com/solidusio/solidus/issues/1241
+    it "resets the association and persists" do
+      # Load (which will cache) the has_one association
+      expect(user.ship_address).to be_nil
+
+      user.update!(ship_address: address)
+      expect(user.ship_address).to eq(address)
+
+      user.reload
+      expect(user.ship_address).to eq(address)
+    end
+  end
 end
