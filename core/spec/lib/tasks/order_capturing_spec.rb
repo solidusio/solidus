@@ -1,14 +1,11 @@
 require 'spec_helper'
 
 describe "order_capturing:capture_payments" do
-  let(:task) do
-    Rake::Task['order_capturing:capture_payments']
-  end
-
-  before do
-    Rails.application.load_tasks
-    task.reenable
-  end
+  include_context(
+    'rake',
+    task_name: 'order_capturing:capture_payments',
+    task_path: Spree::Core::Engine.root.join('lib/tasks/order_capturing.rake'),
+  )
 
   subject { task }
 
