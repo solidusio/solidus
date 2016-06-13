@@ -6,4 +6,8 @@ RSpec.shared_examples_for 'a working factory' do
   it "creates successfully" do
     expect(create(factory)).to be_a(factory_class)
   end
+
+  it "is creates a valid record" do
+    expect(create(factory)).to be_valid
+  end
 end
