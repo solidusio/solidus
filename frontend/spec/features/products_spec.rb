@@ -66,7 +66,6 @@ describe "Visiting Products", type: :feature, inaccessible: true do
   context "using Russian Rubles as a currency" do
     before do
       Spree::Config[:currency] = "RUB"
-      Spree::Config.remove_instance_variable(:@default_pricing_options)
     end
 
     let!(:product) do
