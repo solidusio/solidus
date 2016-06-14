@@ -299,7 +299,7 @@ module Spree
     # @return [variant_price_selector_class] An instance of the pricing options class with default desired
     #   attributes
     def default_pricing_options
-      @default_pricing_options ||= pricing_options_class.new
+      pricing_options_class.new
     end
 
     attr_writer :variant_search_class

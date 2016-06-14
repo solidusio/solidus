@@ -28,11 +28,6 @@ describe Spree::AppConfiguration, type: :model do
     expect(prefs.pricing_options_class).to eq Spree::Variant::PriceSelector.pricing_options_class
   end
 
-  it "has an instacached getter for the default pricing options" do
-    expect(prefs.default_pricing_options).to be_a Spree::Variant::PriceSelector.pricing_options_class
-    expect(prefs.default_pricing_options.object_id).to eq prefs.default_pricing_options.object_id
-  end
-
   describe '#stock' do
     subject { prefs.stock }
     it { is_expected.to be_a Spree::Core::StockConfiguration }
