@@ -13,9 +13,6 @@ describe 'solidus:upgrade:one_point_three' do
     load Spree::Core::Engine.root.join('lib/tasks/migrations/create_vat_prices.rake')
   end
 
-  # TODO: Update 'create_vat_prices' to work if this is missing
-  let!(:zone) { create(:zone, :with_country, default_tax: true) }
-
   it 'runs' do
     expect { task.invoke }.to output(
       /Your Solidus install is ready for Solidus 1.3./
