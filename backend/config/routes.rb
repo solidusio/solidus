@@ -1,4 +1,4 @@
-Spree::Core::Engine.routes.draw do
+Spree::Core::Engine.add_routes do
   namespace :admin do
     get '/search/users', to: "search#users", as: :search_users
     get '/search/products', to: "search#products", as: :search_products
@@ -151,10 +151,12 @@ Spree::Core::Engine.routes.draw do
       end
     end
 
-    resources :reports, only: [:index] do
+    resources :reports, only: :index do
       collection do
-        get :sales_total
-        post :sales_total
+        Rails.application.config.spree.reports.each do |report|
+          get report.to_s.demodulize.underscore.to_sym
+          post report.to_s.demodulize.underscore.to_sym
+        end
       end
     end
 
