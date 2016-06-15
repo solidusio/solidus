@@ -266,19 +266,23 @@ module Spree
 
     # Converts the variant's price to the given currency.
     #
+    # @deprecated Please use #price_for(pricing_options) instead
     # @param currency [String] the desired currency
     # @return [Spree::Price] the price in the desired currency
     def price_in(currency)
       prices.currently_valid.find_by(currency: currency)
     end
+    deprecate price_in: :price_for, deprecator: Spree::Deprecation
 
     # Fetches the price amount in the specified currency.
     #
+    # @deprecated Please use #price_for instead and use a money object rathern than a BigDecimal.
     # @param currency (see #price)
     # @return [Float] the amount in the specified currency.
     def amount_in(currency)
       price_in(currency).try(:amount)
     end
+    deprecate amount_in: :price_for, deprecator: Spree::Deprecation
 
     # Generates a friendly name and sku string.
     #
