@@ -8,7 +8,9 @@ module Spree
       # that they include the default zone's VAT.
       Spree::Config.admin_vat_country_iso = Spree::Zone.default_tax.countries.first.iso
       # If we don't remove this ivar, the above line stays without effect because of caching.
-      Spree::Config.remove_instance_variable(:@default_pricing_options)
+      if Spree::Config.instance_variables.include?(:@default_pricing_options)
+        Spree::Config.remove_instance_variable(:@default_pricing_options)
+      end
       Spree::Variant.find_each do |variant|
         new(variant).migrate_vat_prices
       end
