@@ -23,12 +23,6 @@ RSpec.describe Spree::Order, type: :model do
     context 'when there is no store assigned' do
       subject { Spree::Order.new }
 
-      context 'when there is no default store' do
-        it "will not be valid" do
-          expect(subject).not_to be_valid
-        end
-      end
-
       context "when there is a default store" do
         let!(:store) { create(:store) }
 
