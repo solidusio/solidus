@@ -4,10 +4,6 @@ module Spree
     class OutOfStockVariants
       include ActionView::Helpers::UrlHelper
 
-      def self.title
-        Spree.t("reports.out_of_stock_variants")
-      end
-
       def self.description
         Spree.t("reports.out_of_stock_variants_description")
       end
