@@ -3,11 +3,11 @@ module Spree
     # Sales total for all orders in a given period
     class SalesTotal
       def self.title
-        Spree.t(:sales_total)
+        Spree.t("reports.sales_total")
       end
 
       def self.description
-        Spree.t(:sales_total_description)
+        Spree.t("reports.sales_total_description")
       end
 
       def self.template

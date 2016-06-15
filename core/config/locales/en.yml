@@ -1621,6 +1621,12 @@ en:
         refund_summary: Refund Summary
         subject: Reimbursement Notification
         total_refunded: ! 'Total refunded: %{total}'
+    reports:
+      out_of_stock_variants_description: Variants that are out of stock
+      out_of_stock_variants: Out of Stock Variants
+      sales_total_description: Sales Total For All Orders
+      sales_total: Sales Total
+      sales_totals: Sales Totals
     return_number: Return Number
     return_quantity: Return Quantity
     returned: Returned
@@ -1633,9 +1639,6 @@ en:
     rma_value: RMA Value
     roles: Roles
     rules: Rules
-    sales_total: Sales Total
-    sales_total_description: Sales Total For All Orders
-    sales_totals: Sales Totals
     save_and_continue: Save and Continue
     save_my_address: Save my address
     say_no: 'No'

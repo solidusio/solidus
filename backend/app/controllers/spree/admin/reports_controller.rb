@@ -8,11 +8,14 @@ module Spree
           @@available_reports
         end
 
-        def add_available_report!(report_key, report_description_key = nil)
+        def add_available_report!(report_key, report_description_key = nil, report_title = nil)
           if report_description_key.nil?
             report_description_key = "#{report_key}_description"
           end
-          @@available_reports[report_key] = { name: Spree.t(report_key), description: report_description_key }
+          if report_title.nil?
+            report_title = Spree.t("reports.#{report_key}")
+          end
+          @@available_reports[report_key] = { name: Spree.t(report_key), description: report_description_key, title: report_title }
         end
       end
 
