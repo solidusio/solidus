@@ -123,8 +123,10 @@ module Spree
         params = { line_items_attributes: line_items }
 
         expect {
-          Importer::Order.import(user, params)
-        }.to raise_error /Validation failed/
+          Spree::Deprecation.silence do
+            Importer::Order.import(user, params)
+          end
+        }.to raise_exception ActiveRecord::RecordInvalid
       end
 
       it 'can build an order from API with variant sku' do
