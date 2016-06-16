@@ -94,9 +94,11 @@ module Spree
     # Returns variants that are not deleted and have a price in the given
     # currency.
     #
+    # @deprecated Please use the .with_prices scope instead
     # @param currency [String] the currency to filter by; defaults to Spree's default
     # @return [ActiveRecord::Relation]
     def self.active(currency = nil)
+      Spree::Deprecation.warn("`Variant.active(currency)` is deprecated. Please use `Variant.with_prices(pricing_options)` instead.", caller)
       joins(:prices).where(deleted_at: nil).where('spree_prices.currency' => currency || Spree::Config[:currency]).where('spree_prices.amount IS NOT NULL')
     end
 
@@ -264,19 +266,23 @@ module Spree
 
     # Converts the variant's price to the given currency.
     #
+    # @deprecated Please use #price_for(pricing_options) instead
     # @param currency [String] the desired currency
     # @return [Spree::Price] the price in the desired currency
     def price_in(currency)
       prices.currently_valid.find_by(currency: currency)
     end
+    deprecate price_in: :price_for, deprecator: Spree::Deprecation
 
     # Fetches the price amount in the specified currency.
     #
+    # @deprecated Please use #price_for instead and use a money object rathern than a BigDecimal.
     # @param currency (see #price)
     # @return [Float] the amount in the specified currency.
     def amount_in(currency)
       price_in(currency).try(:amount)
     end
+    deprecate amount_in: :price_for, deprecator: Spree::Deprecation
 
     # Generates a friendly name and sku string.
     #

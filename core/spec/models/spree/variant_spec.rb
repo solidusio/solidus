@@ -205,6 +205,8 @@ describe Spree::Variant, type: :model do
 
   context "#default_price" do
     context "when multiple prices are present in addition to a default price" do
+      let(:pricing_options_germany) { Spree::Config.pricing_options_class.new(currency: "EUR") }
+      let(:pricing_options_united_states) { Spree::Config.pricing_options_class.new(currency: "USD") }
       before do
         variant.prices << create(:price, variant: variant, currency: "USD", amount: 12.12, is_default: false)
         variant.prices << create(:price, variant: variant, currency: "EUR", amount: 29.99)
@@ -217,8 +219,8 @@ describe Spree::Variant, type: :model do
       end
 
       it "displays default price" do
-        expect(variant.price_in("USD").display_amount.to_s).to eq("$19.99")
-        expect(variant.price_in("EUR").display_amount.to_s).to eq("€29.99")
+        expect(variant.price_for(pricing_options_united_states).to_s).to eq("$19.99")
+        expect(variant.price_for(pricing_options_germany).to_s).to eq("€29.99")
       end
     end
 
@@ -347,7 +349,10 @@ describe Spree::Variant, type: :model do
     before do
       variant.prices << create(:price, variant: variant, currency: "EUR", amount: 33.33)
     end
-    subject { variant.price_in(currency) }
+
+    subject do
+      Spree::Deprecation.silence { variant.price_in(currency) }
+    end
 
     context "when currency is not specified" do
       let(:currency) { nil }
@@ -379,7 +384,9 @@ describe Spree::Variant, type: :model do
       variant.prices << create(:price, variant: variant, currency: "EUR", amount: 33.33)
     end
 
-    subject { variant.amount_in(currency) }
+    subject do
+      Spree::Deprecation.silence { variant.amount_in(currency) }
+    end
 
     context "when currency is not specified" do
       let(:currency) { nil }
