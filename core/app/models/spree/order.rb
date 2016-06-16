@@ -590,7 +590,7 @@ module Spree
     end
 
     def token
-      ActiveSupport::Deprecation.warn("Spree::Order#token is DEPRECATED, please use #guest_token instead.", caller)
+      Spree::Deprecation.warn("Spree::Order#token is DEPRECATED, please use #guest_token instead.", caller)
       guest_token
     end
 

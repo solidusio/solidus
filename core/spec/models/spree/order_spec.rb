@@ -1021,7 +1021,7 @@ describe Spree::Order, type: :model do
     let(:payment) { Spree::Payment.new(amount: 10) }
 
     around do |example|
-      ActiveSupport::Deprecation.silence do
+      Spree::Deprecation.silence do
         example.run
       end
     end

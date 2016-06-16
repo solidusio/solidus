@@ -135,13 +135,13 @@ describe Spree::LineItem, type: :model do
       end
 
       it 'should display a deprecation warning' do
-        expect(ActiveSupport::Deprecation).to receive(:warn)
+        expect(Spree::Deprecation).to receive(:warn)
         Spree::LineItem.new(variant: variant, order: order)
       end
 
       it 'should run the user-defined copy_price method' do
         expect_any_instance_of(Spree::LineItem).to receive(:copy_price).and_call_original
-        ActiveSupport::Deprecation.silence do
+        Spree::Deprecation.silence do
           Spree::LineItem.new(variant: variant, order: order)
         end
       end

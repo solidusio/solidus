@@ -30,6 +30,5 @@ Dummy::Application.configure do
   ActionMailer::Base.default :from => "spree@example.com"
 
   # Raise on deprecation warnings
-  ActiveSupport::Deprecation.behavior = :raise
   Spree::Deprecation.behavior = :raise
 end

@@ -31,12 +31,12 @@ module Spree
 
     scope :not_finalized, -> { where(finalized: false) }
     scope :open, -> do
-      ActiveSupport::Deprecation.warn "Adjustment.open is deprecated. Instead use Adjustment.not_finalized", caller
+      Spree::Deprecation.warn "Adjustment.open is deprecated. Instead use Adjustment.not_finalized", caller
       where(finalized: false)
     end
     scope :finalized, -> { where(finalized: true) }
     scope :closed, -> do
-      ActiveSupport::Deprecation.warn "Adjustment.closed is deprecated. Instead use Adjustment.finalized", caller
+      Spree::Deprecation.warn "Adjustment.closed is deprecated. Instead use Adjustment.finalized", caller
       where(finalized: true)
     end
     scope :cancellation, -> { where(source_type: 'Spree::UnitCancel') }
@@ -78,12 +78,12 @@ module Spree
 
     # Deprecated methods
     def state
-      ActiveSupport::Deprecation.warn "Adjustment#state is deprecated. Instead use Adjustment#finalized?", caller
+      Spree::Deprecation.warn "Adjustment#state is deprecated. Instead use Adjustment#finalized?", caller
       finalized? ? "closed" : "open"
     end
 
     def state=(new_state)
-      ActiveSupport::Deprecation.warn "Adjustment#state= is deprecated. Instead use Adjustment#finalized=", caller
+      Spree::Deprecation.warn "Adjustment#state= is deprecated. Instead use Adjustment#finalized=", caller
       case new_state
       when "open"
         self.finalized = false
@@ -95,32 +95,32 @@ module Spree
     end
 
     def open?
-      ActiveSupport::Deprecation.warn "Adjustment#open? is deprecated. Instead use Adjustment#finalized?", caller
+      Spree::Deprecation.warn "Adjustment#open? is deprecated. Instead use Adjustment#finalized?", caller
       !closed?
     end
 
     def closed?
-      ActiveSupport::Deprecation.warn "Adjustment#closed? is deprecated. Instead use Adjustment#finalized?", caller
+      Spree::Deprecation.warn "Adjustment#closed? is deprecated. Instead use Adjustment#finalized?", caller
       finalized?
     end
 
     def open
-      ActiveSupport::Deprecation.warn "Adjustment#open is deprecated. Instead use Adjustment#unfinalize", caller
+      Spree::Deprecation.warn "Adjustment#open is deprecated. Instead use Adjustment#unfinalize", caller
       unfinalize
     end
 
     def open!
-      ActiveSupport::Deprecation.warn "Adjustment#open! is deprecated. Instead use Adjustment#unfinalize!", caller
+      Spree::Deprecation.warn "Adjustment#open! is deprecated. Instead use Adjustment#unfinalize!", caller
       unfinalize!
     end
 
     def close
-      ActiveSupport::Deprecation.warn "Adjustment#close is deprecated. Instead use Adjustment#finalize", caller
+      Spree::Deprecation.warn "Adjustment#close is deprecated. Instead use Adjustment#finalize", caller
       finalize
     end
 
     def close!
-      ActiveSupport::Deprecation.warn "Adjustment#close! is deprecated. Instead use Adjustment#finalize!", caller
+      Spree::Deprecation.warn "Adjustment#close! is deprecated. Instead use Adjustment#finalize!", caller
       finalize!
     end
     # End deprecated methods
@@ -154,7 +154,7 @@ module Spree
     # @return [BigDecimal] New amount of this adjustment
     def update!(target = nil)
       if target
-        ActiveSupport::Deprecation.warn("Passing a target to Adjustment#update! is deprecated. The adjustment will use the correct target from it's adjustable association.", caller)
+        Spree::Deprecation.warn("Passing a target to Adjustment#update! is deprecated. The adjustment will use the correct target from it's adjustable association.", caller)
       end
       return amount if finalized?
 

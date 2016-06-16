@@ -229,7 +229,7 @@ describe Spree::StockItem, type: :model do
     context "when deprecated binary_inventory_cache is used" do
       before do
         Spree::Config.binary_inventory_cache = binary_inventory_cache
-        allow(ActiveSupport::Deprecation).to receive(:warn)
+        allow(Spree::Deprecation).to receive(:warn)
         subject.set_count_on_hand(9)
       end
 
@@ -237,7 +237,7 @@ describe Spree::StockItem, type: :model do
         let(:binary_inventory_cache) { true }
 
         it "logs a deprecation warning" do
-          expect(ActiveSupport::Deprecation).to have_received(:warn)
+          expect(Spree::Deprecation).to have_received(:warn)
         end
       end
 
@@ -248,7 +248,7 @@ describe Spree::StockItem, type: :model do
         end
 
         it "does not log a deprecation warning" do
-          expect(ActiveSupport::Deprecation).not_to have_received(:warn)
+          expect(Spree::Deprecation).not_to have_received(:warn)
         end
       end
     end

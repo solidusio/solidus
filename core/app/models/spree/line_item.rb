@@ -151,7 +151,7 @@ module Spree
 
     def handle_copy_price_override
       copy_price
-      ActiveSupport::Deprecation.warn 'You have overridden Spree::LineItem#copy_price. ' \
+      Spree::Deprecation.warn 'You have overridden Spree::LineItem#copy_price. ' \
         'This method is now called Spree::LineItem#set_pricing_attributes. ' \
         'Please adjust your override.',
         caller

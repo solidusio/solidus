@@ -15,11 +15,11 @@ describe Spree::Country, type: :model do
       end
 
       subject(:default_country) do
-        ActiveSupport::Deprecation.silence { described_class.default }
+        Spree::Deprecation.silence { described_class.default }
       end
 
       it 'emits a deprecation warning' do
-        expect(ActiveSupport::Deprecation).to receive(:warn)
+        expect(Spree::Deprecation).to receive(:warn)
         default_country
       end
 
@@ -34,7 +34,7 @@ describe Spree::Country, type: :model do
       end
 
       subject(:default_country) do
-        ActiveSupport::Deprecation.silence { described_class.default }
+        Spree::Deprecation.silence { described_class.default }
       end
 
       it 'loads the country configured by the ISO code' do
