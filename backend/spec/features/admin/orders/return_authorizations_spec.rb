@@ -17,9 +17,9 @@ describe "ReturnAuthorizations", type: :feature do
       visit spree.edit_admin_order_return_authorization_path(order, return_authorization)
     end
 
-    it "return authorizations edit page has a data hook for extensions to add content at the bottom of the screen" do
+    it "return authorizations edit page has a data hook for extensions to add content above, below or within the RA form" do
       visit spree.edit_admin_order_return_authorization_path(order, return_authorization)
-      expect(page).to have_selector("[data-hook=below-return-authorization-form]")
+      expect(page).to have_selector("[data-hook=return-authorization-form-wrapper]")
     end
   end
 end
