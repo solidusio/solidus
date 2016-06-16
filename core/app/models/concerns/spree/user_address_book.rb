@@ -108,7 +108,14 @@ module Spree
 
       if persisted?
         user_address.save!
-        user_addresses.reset # ensures proper ordering
+
+        # If these associations have already been accessed, they will be
+        # caching the existing values.
+        # user_addresses need to be reset to get the new ordering based on any changes
+        # {default_,}user_address needs to be reset as its result is likely to have changed.
+        user_addresses.reset
+        association(:default_user_address).reset
+        association(:default_address).reset
       end
 
       user_address.address
