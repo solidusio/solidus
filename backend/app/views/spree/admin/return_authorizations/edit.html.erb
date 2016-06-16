@@ -13,15 +13,16 @@
 
 
 <%= render :partial => 'spree/shared/error_messages', :locals => { :target => @return_authorization } %>
-<%= form_for [:admin, @order, @return_authorization] do |f| %>
-  <fieldset class="no-border-top">
-    <%= render :partial => 'form', :locals => { :f => f } %>
 
-    <div class="form-buttons filter-actions actions" data-hook="buttons">
-      <%= button Spree.t('actions.update') %>
-      <%= button_link_to Spree.t('actions.cancel'), admin_order_return_authorizations_url(@order) %>
-    </div>
-  </fieldset>
-<% end %>
+<div data-hook="return-authorization-form-wrapper">
+	<%= form_for [:admin, @order, @return_authorization] do |f| %>
+	  <fieldset class="no-border-top">
+	    <%= render :partial => 'form', :locals => { :f => f } %>
 
-<div data-hook="below-return-authorization-form"></div>
+      <div class="form-buttons filter-actions actions" data-hook="buttons">
+        <%= button Spree.t('actions.update') %>
+        <%= button_link_to Spree.t('actions.cancel'), admin_order_return_authorizations_url(@order) %>
+      </div>
+    </fieldset>
+	<% end %>
+</div>
