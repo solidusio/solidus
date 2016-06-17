@@ -1,8 +1,20 @@
 ## Solidus 1.4.0 (master, unreleased)
 
+*   Coupon code application has been separated from the Continue button on the Payment checkout page
+
+    * JavaScript for it has been moved from address.js into its own `spree/frontend/checkout/coupon-code`
+    * Numerous small nuisances have been fixed [#1090](https://github.com/solidusio/solidus/pull/1090)
 
 
 ## Solidus 1.3.0 (unreleased)
+
+*   Order now requires a `store_id` in validations
+
+    All orders created since Spree v2.4 should have a store assigned. A
+    migration exists to assign all orders without a store to the default store.
+
+    If you are seeing spec failures related to this, you may have to add
+    `let!(:store) { create(:store) }` to some test cases.
 
 *   Deprecate `Spree::TaxRate.adjust`, remove `Spree::TaxRate.match`
 
@@ -114,12 +126,6 @@
 
     https://github.com/solidusio/solidus/pull/965
 
-*   Made Spree::Order validate :store_id
-
-    All orders created since Spree v2.4 should have a store assigned. We want to build more
-    functionality onto that relation, so we need to make sure that every order has a store.
-    Please run `rake solidus:upgrade:one_point_three` to make sure your orders have a store id set.
-
 *   Removed Spree::Stock::Coordinator#packages from the public interface.
 
     This will allow us to refactor more easily.
@@ -184,11 +190,6 @@
     * Settings pages were grouped into related partials as outlined in [#634](https://github.com/solidusio/solidus/issues/634)
     * Partials are rendered on pages owned by the partials as tabs as a top bar
     * Admin-nav has a sub-menu for the settings now
-
-*   Coupon code application has been separated from the Continue button on the Payment checkout page
-
-    * JavaScript for it has been moved from address.js into its own `spree/frontend/checkout/coupon-code`
-    * Numerous small nuisances have been fixed [#1090](https://github.com/solidusio/solidus/pull/1090)
 
 *   Lists of classes in configuration (`config.spree.calculators`, `spree.spree.calculators`, etc.) are
     now stored internally as strings and constantized when accessed. This allows these classes to be
