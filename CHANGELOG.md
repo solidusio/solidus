@@ -18,6 +18,8 @@
 
 *   Remove unused `user_id` column from PromotionRule. [#1259](https://github.com/solidusio/solidus/pull/1259)
 
+*   Removed "Clear cache" button from the admin [#1275](https://github.com/solidusio/solidus/pull/1275)
+
 ## Solidus 1.3.0 (unreleased)
 
 *   Order now requires a `store_id` in validations
