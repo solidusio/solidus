@@ -108,7 +108,7 @@ FactoryGirl.define do
     end
   end
 
-  factory :completed_order_with_promotion, parent: :completed_order_with_totals, class: "Spree::Order" do
+  factory :completed_order_with_promotion, parent: :order_with_line_items, class: "Spree::Order" do
     transient do
       promotion nil
     end
@@ -118,6 +118,11 @@ FactoryGirl.define do
       promotion_code = promotion.codes.first || create(:promotion_code, promotion: promotion)
 
       promotion.activate(order: order, promotion_code: promotion_code)
+
+      # Complete the order after the promotion has been activated
+      order.refresh_shipment_rates
+      order.update_column(:completed_at, Time.current)
+      order.update_column(:state, "complete")
     end
   end
 end
