@@ -45,4 +45,10 @@ RSpec.describe 'order factory' do
 
     it_behaves_like 'a working factory'
   end
+
+  describe 'completed order with promotion' do
+    let(:factory) { :completed_order_with_promotion }
+
+    it_behaves_like 'a working factory'
+  end
 end
