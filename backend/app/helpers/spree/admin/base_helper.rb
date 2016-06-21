@@ -22,6 +22,12 @@ module Spree
         end
       end
 
+      def admin_hint(title, text)
+        content_tag(:span, class: 'hint-tooltip', title: title, data: { content: text }) do
+          content_tag(:i, '', class: 'fa fa-info-circle')
+        end
+      end
+
       def datepicker_field_value(date)
         unless date.blank?
           l(date, format: Spree.t('date_picker.format', default: '%Y/%m/%d'))
