@@ -33,7 +33,7 @@ module Spree
           report = report_class.new(params)
           respond_to do |format|
             format.html do
-              report.locals.each do |key, value|
+              report.content.each do |key, value|
                 instance_variable_set("@#{key}", value)
               end
               render report_class.template

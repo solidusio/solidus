@@ -12,50 +12,54 @@ module Spree
 
       def initialize(params)
         params[:q] = {} unless params[:q]
-
-        if params[:q][:completed_at_gt].blank?
-          params[:q][:completed_at_gt] = Time.current.beginning_of_month
-        else
-          params[:q][:completed_at_gt] = begin
-                                           Time.zone.parse(params[:q][:completed_at_gt]).beginning_of_day
-                                         rescue
-                                           Time.current.beginning_of_month
-                                         end
-        end
-
+        params[:q][:completed_at_gt] = parse_start_time(params[:q][:completed_at_gt])
         if params[:q] && !params[:q][:completed_at_lt].blank?
-          params[:q][:completed_at_lt] = begin
-                                           Time.zone.parse(params[:q][:completed_at_lt]).end_of_day
-                                         rescue
-                                           ""
-                                         end
+          params[:q][:completed_at_lt] = parse_end_time(params[:q][:completed_at_lt])
         end
-
         params[:q][:s] ||= "completed_at desc"
-
-        @search = Order.complete.ransack(params[:q])
-        @orders = @search.result
-
-        @totals = {}
-        @orders.each do |order|
-          unless @totals[order.currency]
-            @totals[order.currency] = {
-              item_total: ::Money.new(0, order.currency),
-              adjustment_total: ::Money.new(0, order.currency),
-              sales_total: ::Money.new(0, order.currency)
-            }
-          end
-
-          @totals[order.currency][:item_total] += order.display_item_total.money
-          @totals[order.currency][:adjustment_total] += order.display_adjustment_total.money
-          @totals[order.currency][:sales_total] += order.display_total.money
-        end
+        @ransack_query = params[:q]
       end
 
-      def locals
+      def content
+        search = Order.complete.ransack(@ransack_query)
         {
-          search: @search,
-          totals: @totals
+          search: search,
+          totals: totals(search.result)
+        }
+      end
+
+      private
+
+      def parse_start_time(start_time)
+        return Time.current.beginning_of_month if start_time.blank?
+        Time.zone.parse(start_time).beginning_of_day
+      rescue
+        Time.current.beginning_of_month
+      end
+
+      def parse_end_time(end_time)
+        Time.zone.parse(params[:q][:completed_at_lt]).end_of_day
+      rescue
+        ""
+      end
+
+      def totals(orders)
+        totals = {}
+        orders.each do |order|
+          currency = order.currency
+          totals[currency] ||= zero_currency_total(currency)
+          totals[currency][:item_total] += order.display_item_total.money
+          totals[currency][:adjustment_total] += order.display_adjustment_total.money
+          totals[currency][:sales_total] += order.display_total.money
+        end
+        totals
+      end
+
+      def zero_currency_total(currency)
+        {
+          item_total: ::Money.new(0, currency),
+          adjustment_total: ::Money.new(0, currency),
+          sales_total: ::Money.new(0, currency)
         }
       end
     end
