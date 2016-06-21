@@ -1098,6 +1098,9 @@ en:
     expiration: Expiration
     extension: Extension
     existing_shipments: Existing shipments
+    hints:
+      spree/product:
+        promotionable: "This determines whether or not promotions can apply to this product.<br/>Default: checked"
     failed_payment_attempts: Failed Payment Attempts
     failure: Failure
     filename: Filename
