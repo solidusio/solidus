@@ -8,7 +8,7 @@
   <% end %>
 <% end %>
 
-<% add_breadcrumb(Spree::CustomerReturn.model_name.human(count: :other)) %>
+<% add_breadcrumb(plural_resource_name(Spree::CustomerReturn)) %>
 
 <% if @customer_returns.any? %>
   <table class="index">

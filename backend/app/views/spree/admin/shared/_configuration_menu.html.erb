@@ -9,7 +9,7 @@
       <% end %>
 
       <% if can?(:display, Spree::Tracker) %>
-        <%= settings_tab_item Spree::Tracker.model_name.human(count: :other), admin_trackers_path %>
+        <%= settings_tab_item plural_resource_name(Spree::Tracker), admin_trackers_path %>
       <% end %>
     </ul>
   </nav>

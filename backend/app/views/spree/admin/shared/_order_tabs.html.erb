@@ -1,4 +1,4 @@
-<% add_breadcrumb(link_to Spree::Order.model_name.human(count: :other), spree.admin_orders_path) %>
+<% add_breadcrumb(link_to plural_resource_name(Spree::Order), spree.admin_orders_path) %>
 <% add_breadcrumb(link_to "##{@order.number}", spree.edit_admin_order_path(@order)) %>
 
 

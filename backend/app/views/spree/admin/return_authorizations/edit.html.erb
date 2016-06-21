@@ -8,7 +8,7 @@
 
 <%= render :partial => 'spree/admin/shared/order_tabs', :locals => { :current => 'Return Authorizations' } %>
 
-<% add_breadcrumb(link_to Spree::ReturnAuthorization.model_name.human(count: :other), spree.admin_order_return_authorizations_url) %>
+<% add_breadcrumb(link_to plural_resource_name(Spree::ReturnAuthorization), spree.admin_order_return_authorizations_url) %>
 <% add_breadcrumb("#{@return_authorization.number} (#{Spree.t(@return_authorization.state.downcase)})") %>
 
 

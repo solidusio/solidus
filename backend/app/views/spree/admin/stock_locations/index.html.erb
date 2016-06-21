@@ -2,7 +2,7 @@
 
 <% add_breadcrumb(Spree.t(:settings)) %>
 <% add_breadcrumb(Spree.t('admin.tab.shipping')) %>
-<% add_breadcrumb(Spree::StockLocation.model_name.human(count: :other)) %>
+<% add_breadcrumb(plural_resource_name(Spree::StockLocation)) %>
 
 
 <% content_for :page_actions do %>

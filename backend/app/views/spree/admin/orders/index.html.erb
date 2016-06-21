@@ -1,4 +1,4 @@
-<% add_breadcrumb(Spree::Order.model_name.human(count: :other)) %>
+<% add_breadcrumb(plural_resource_name(Spree::Order)) %>
 
 
 <% content_for :page_actions do %>

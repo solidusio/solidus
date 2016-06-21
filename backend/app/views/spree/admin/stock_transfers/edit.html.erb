@@ -1,5 +1,5 @@
 <% add_breadcrumb(link_to Spree.t(:stock), spree.admin_stock_items_path) %>
-<% add_breadcrumb(link_to Spree::StockTransfer.model_name.human(count: :other), spree.admin_stock_transfers_path) %>
+<% add_breadcrumb(link_to plural_resource_name(Spree::StockTransfer), spree.admin_stock_transfers_path) %>
 <% add_breadcrumb(@stock_transfer.number) %>
 
 

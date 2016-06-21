@@ -1,4 +1,4 @@
-<% add_breadcrumb(Spree::Promotion.model_name.human(count: :other)) %>
+<% add_breadcrumb(plural_resource_name(Spree::Promotion)) %>
 
 <% content_for :page_actions do %>
   <% if can? :create, Spree::Promotion %>

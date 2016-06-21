@@ -2,7 +2,7 @@
 
 <%= render :partial => 'spree/shared/error_messages', :locals => { :target => @image } %>
 
-<% add_breadcrumb(link_to Spree::Image.model_name.human(count: :other), admin_product_images_path(@product)) %>
+<% add_breadcrumb(link_to plural_resource_name(Spree::Image), admin_product_images_path(@product)) %>
 <% add_breadcrumb(@image.attachment_file_name) %>
 
 

@@ -1,6 +1,6 @@
 <%= render :partial => 'spree/admin/shared/order_tabs', :locals => { :current => 'Adjustments' } %>
 
-<% add_breadcrumb(Spree::Adjustment.model_name.human(count: :other)) %>
+<% add_breadcrumb(plural_resource_name(Spree::Adjustment)) %>
 
 <% content_for :page_actions do %>
   <% if can? :create, Spree::Adjustment %>

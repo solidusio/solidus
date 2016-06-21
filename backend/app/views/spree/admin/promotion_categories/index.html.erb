@@ -1,4 +1,4 @@
-<% add_breadcrumb(link_to Spree::Promotion.model_name.human(count: :other), spree.admin_promotions_path) %>
+<% add_breadcrumb(link_to plural_resource_name(Spree::Promotion), spree.admin_promotions_path) %>
 <% add_breadcrumb(Spree::PromotionCategory.model_name.human(count: :many)) %>
 
 
