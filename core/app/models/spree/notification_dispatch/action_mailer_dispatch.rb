@@ -44,7 +44,7 @@ class Spree::NotificationDispatch::ActionMailerDispatch
     mailer_class = if message == :carton_shipped &&
                       Spree::Config.carton_shipped_email_class &&
                       Spree::Config.carton_shipped_email_class.name != mailer_class_name
-                    Spree::Deprecation.warn(":carton_shipped_email_class on Spree::Config is deprecated, please customize the #{self.class.name}.dispatch_table instead.")
+                    Spree::Deprecation.warn(":carton_shipped_email_class on Spree::Config is deprecated, please customize the #{self.class.name}.mailer_dispatch_table instead.")
                     Spree::Config.carton_shipped_email_class
                   else
                     mailer_class_name.constantize
