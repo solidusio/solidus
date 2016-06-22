@@ -23,7 +23,7 @@ class Spree::NotificationDispatch::ActionMailerDispatch
   def initialize(init_message)
     @message = init_message.to_sym
     unless mailer_dispatch_table.key?(message)
-      raise ArgumentError.new("Spree::NotificationDisaptcher::ActionMailerDispatcher: no dispatch found for message `#{message}`. Do you need to configure `#{self.class.name}.dispatch_table`?")
+      raise ArgumentError.new("Spree::NotificationDisaptcher::ActionMailerDispatch: no dispatch found for message `#{message}`. Do you need to configure `#{self.class.name}.dispatch_table`?")
     end
   end
 

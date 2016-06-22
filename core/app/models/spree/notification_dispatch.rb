@@ -2,7 +2,7 @@ module Spree
   # This class is responsible for sending 'transactional' emails to users,
   # carton shipped, order confirmed, etc.
   #
-  # By default it uses the NotificationDispatch::ActionMailerDispatcher to
+  # By default it uses the NotificationDispatch::ActionMailerDispatch to
   # send emails with ActionMailer. You can change the actual delivery method
   # by changing `Spree::NotificationDispatch.delivery_class_name` to the name
   # of a custom class, that sends email with a different API, or even sends
@@ -13,7 +13,7 @@ module Spree
   #    SenderClass.new(message_type_symbol).deliver(messsage, arg1, arg2)
   #
   # To add a new notification message, edit NotificationDispatch.signatures
-  # to add the signature, and if using the ActionMailerDispatcher, edit
+  # to add the signature, and if using the ActionMailerDispatch, edit
   # mailer_dispatch_table there so it knows how to handle it.
   #
   # All messages will be suppressed if Spree::Config[:send_core_emails] is false.
