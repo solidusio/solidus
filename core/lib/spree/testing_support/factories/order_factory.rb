@@ -52,6 +52,25 @@ FactoryGirl.define do
         order.update!
       end
 
+      factory :order_ready_to_complete do
+        state 'confirm'
+        payment_state 'checkout'
+
+        transient do
+          payment_type :credit_card_payment
+        end
+
+        after(:create) do |order, evaluator|
+          create(evaluator.payment_type, {
+            amount: order.total,
+            order: order,
+            state: order.payment_state
+          })
+
+          order.payments.reload
+        end
+      end
+
       factory :completed_order_with_totals do
         state 'complete'
 
