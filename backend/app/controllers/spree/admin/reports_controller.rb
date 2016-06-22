@@ -34,7 +34,7 @@ module Spree
       end
 
       def show
-        report_class = "Spree::Reports::#{params[:id].camelize}".constantize
+        report_class = "Spree::Report::#{params[:id].camelize}".constantize
         report = report_class.new(params)
         respond_to do |format|
           format.html do

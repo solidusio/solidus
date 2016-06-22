@@ -1,5 +1,5 @@
 module Spree
-  module Reports
+  module Report
     # Variants that are out of stock
     class OutOfStockVariants < Base
       def initialize(params)

@@ -1,5 +1,5 @@
 module Spree
-  module Reports
+  module Report
     # Parent class for reports
     class Base
       include ActionView::Helpers::UrlHelper

@@ -1,5 +1,5 @@
 module Spree
-  module Reports
+  module Report
     # Sales total for all orders in a given period
     class SalesTotal < Base
       def self.template
