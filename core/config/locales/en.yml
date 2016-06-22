@@ -1627,6 +1627,8 @@ en:
       sales_total_description: Sales Total For All Orders
       sales_total: Sales Total
       sales_totals: Sales Totals
+      implement_initialize: "Must implement #initialize for your Report."
+      implement_content: "Must implement #content for your Report."
     return_number: Return Number
     return_quantity: Return Quantity
     returned: Returned

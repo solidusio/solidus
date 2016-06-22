@@ -27,23 +27,21 @@ module Spree
         end
       end
 
-      # Generate a method for each registered report
-      Rails.application.config.spree.reports.each do |report_class|
-        define_method(report_class.name.demodulize.underscore) do
-          report = report_class.new(params)
-          respond_to do |format|
-            format.html do
-              report.content.each do |key, value|
-                instance_variable_set("@#{key}", value)
-              end
-              render report_class.template
-            end
-          end
-        end
-      end
-
       def index
         @reports = ReportsController.available_reports
+      end
+
+      def show
+        report_class = "Spree::Reports::#{params[:id].camelize}".constantize
+        report = report_class.new(params)
+        respond_to do |format|
+          format.html do
+            report.content.each do |key, value|
+              instance_variable_set("@#{key}", value)
+            end
+            render report_class.template
+          end
+        end
       end
 
       @@available_reports = {}

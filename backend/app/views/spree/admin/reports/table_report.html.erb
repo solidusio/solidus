@@ -28,11 +28,6 @@
 <div class="report orders-report">
   <%= paginate @rows %>
   <table style="table-layout: fixed">
-    <colgroup>
-      <% @headers.each do |header| %>
-        <col style="width: <%= header.values.first.length * 0.8 %>em">
-      <% end %>
-    </colgroup>
     <thead>
       <tr>
         <% @headers.each do |header| %>

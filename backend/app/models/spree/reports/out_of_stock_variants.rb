@@ -1,17 +1,7 @@
 module Spree
   module Reports
     # Variants that are out of stock
-    class OutOfStockVariants
-      include ActionView::Helpers::UrlHelper
-
-      def self.description
-        Spree.t("reports.out_of_stock_variants_description")
-      end
-
-      def self.template
-        "spree/admin/reports/table_report"
-      end
-
+    class OutOfStockVariants < Base
       def initialize(params)
         @page = params[:page]
         now = Time.zone.now
@@ -61,8 +51,8 @@ module Spree
       def row(variant)
         product = variant.product
         sku = variant.is_master? ? variant.sku : product.sku
-        product_link = link_to(product.name, Spree::Core::Engine.routes.url_helpers.edit_admin_product_path(product))
-        variant_link = variant.is_master? ? nil : link_to(variant.options_text, Spree::Core::Engine.routes.url_helpers.edit_admin_product_variant_path(product, variant))
+        product_link = link_to(product.name, spree_routes.edit_admin_product_path(product))
+        variant_link = variant.is_master? ? nil : link_to(variant.options_text, spree_routes.edit_admin_product_variant_path(product, variant))
         {
           sku: sku,
           product_link: product_link,

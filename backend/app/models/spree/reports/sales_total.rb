@@ -1,11 +1,7 @@
 module Spree
   module Reports
     # Sales total for all orders in a given period
-    class SalesTotal
-      def self.description
-        Spree.t("reports.sales_total_description")
-      end
-
+    class SalesTotal < Base
       def self.template
         "spree/admin/reports/sales_total"
       end

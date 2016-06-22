@@ -1,4 +1,4 @@
-Spree::Core::Engine.add_routes do
+Spree::Core::Engine.routes.draw do
   namespace :admin do
     get '/search/users', to: "search#users", as: :search_users
     get '/search/products', to: "search#products", as: :search_products
@@ -151,14 +151,7 @@ Spree::Core::Engine.add_routes do
       end
     end
 
-    resources :reports, only: :index do
-      collection do
-        Rails.application.config.spree.reports.each do |report|
-          get report.to_s.demodulize.underscore.to_sym
-          post report.to_s.demodulize.underscore.to_sym
-        end
-      end
-    end
+    resources :reports, only: [:index, :show]
 
     resources :reimbursement_types, only: [:index]
     resources :adjustment_reasons, except: [:show, :destroy]
