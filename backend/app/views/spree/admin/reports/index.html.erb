@@ -11,10 +11,10 @@
   </thead>
   <tbody>
     <% @reports.each do |key, value| %>
-    <tr data-hook="reports_row">
-      <td class="align-center"><%= link_to value[:title], admin_report_path(key) %></td>
-      <td style="padding-left:1em"><%= value[:description] %></td>
-    </tr>
+      <tr data-hook="reports_row">
+        <td class="align-center"><%= link_to value[:name], admin_report_path(key) %></td>
+        <td style="padding-left:1em"><%= value[:description] %></td>
+      </tr>
     <% end %>
   </tbody>
 </table>

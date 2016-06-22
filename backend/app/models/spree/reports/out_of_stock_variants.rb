@@ -12,7 +12,7 @@ module Spree
         @end_time = !end_date.blank? ? parse_date_param(end_date) : now
       end
 
-      def content(format = :html)
+      def content(_format = :html)
         {
           start_time: @start_time,
           end_time: @end_time,

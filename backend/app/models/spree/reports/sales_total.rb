@@ -34,7 +34,7 @@ module Spree
       end
 
       def parse_end_time(end_time)
-        Time.zone.parse(params[:q][:completed_at_lt]).end_of_day
+        Time.zone.parse(end_time).end_of_day
       rescue
         ""
       end

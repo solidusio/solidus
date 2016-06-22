@@ -17,8 +17,10 @@ describe Spree::Admin::ReportsController, type: :controller do
     context 'when adding the report name' do
       it 'should contain the report' do
         I18n.backend.store_translations(:en, spree: {
-          some_report: 'Awesome Report',
-          some_report_description: 'This report is great!'
+          reports: {
+            some_report: 'Awesome Report',
+            some_report_description: 'This report is great!'
+          }
         })
         Spree::Admin::ReportsController.add_available_report!(:some_report)
         expect(Spree::Admin::ReportsController.available_reports.keys.include?(:some_report)).to be true
@@ -30,7 +32,7 @@ describe Spree::Admin::ReportsController, type: :controller do
     end
   end
 
-  describe 'GET sales_total' do
+  describe 'GET show/sales_total' do
     let!(:order_complete_start_of_month) { create(:completed_order_with_totals) }
     let!(:order_complete_mid_month) { create(:completed_order_with_totals) }
     let!(:order_non_complete) { create(:order, completed_at: nil) }
@@ -44,7 +46,7 @@ describe Spree::Admin::ReportsController, type: :controller do
       order_complete_mid_month.save!
     end
 
-    subject { spree_get :sales_total, params }
+    subject { spree_get :show, { id: :sales_total }.merge(params) }
 
     shared_examples 'sales total report' do
       it 'should respond with success' do
