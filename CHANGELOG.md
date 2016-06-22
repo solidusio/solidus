@@ -1,4 +1,4 @@
-## Solidus 1.3.0 (unreleased)
+## Solidus 1.3.0 (2016-06-22)
 
 *   Order now requires a `store_id` in validations
 
