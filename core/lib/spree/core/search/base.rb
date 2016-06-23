@@ -30,7 +30,7 @@ module Spree
           curr_page = page || 1
 
           unless Spree::Config.show_products_without_price
-            @products = @products.joins(:prices).merge(Spree::Price.where(pricing_options.search_arguments)).uniq
+            @products = @products.joins(:prices).merge(Spree::Price.where(pricing_options.search_arguments)).distinct
           end
           @products = @products.page(curr_page).per(per_page)
         end
