@@ -33,7 +33,7 @@ module Spree
               @payment.process! if @payment.checkout?
             else
               # Transition order as far as it will go.
-              while @order.next; end
+              @order.contents.advance
             end
 
             flash[:success] = flash_message_for(@payment, :successfully_created)
