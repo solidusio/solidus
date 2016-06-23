@@ -50,10 +50,7 @@ module Spree
       template "initializers/custom_user.rb", "#{dummy_path}/config/initializers/custom_user.rb", force: true
 
       # FIXME: We aren't ready for rails 5 defaults
-      inside "#{dummy_path}/config/initializers" do
-        remove_file "active_record_belongs_to_required_by_default.rb"
-        remove_file "callback_terminator.rb"
-      end
+      remove_file "#{dummy_path}/config/initializers/new_framework_defaults.rb"
     end
 
     def test_dummy_inject_extension_requirements
