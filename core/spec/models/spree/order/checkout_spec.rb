@@ -628,27 +628,6 @@ describe Spree::Order, type: :model do
     end
   end
 
-  context "subclassed order" do
-    # This causes another test above to fail, but fixing this test should make
-    #   the other test pass
-    class SubclassedOrder < Spree::Order
-      checkout_flow do
-        go_to_state :payment
-        go_to_state :complete
-      end
-    end
-
-    skip "should only call default transitions once when checkout_flow is redefined" do
-      order = SubclassedOrder.new
-      allow(order).to receive_messages payment_required?: true
-      expect(order).to receive(:process_payments!).once
-      order.state = "payment"
-      order.next!
-      assert_state_changed(order, 'payment', 'complete')
-      expect(order.state).to eq("complete")
-    end
-  end
-
   context "re-define checkout flow" do
     before do
       @old_checkout_flow = Spree::Order.checkout_flow
