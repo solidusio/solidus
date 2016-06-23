@@ -1,4 +1,6 @@
 $(function(){
+  $('body').popover({selector: '.hint-tooltip', html: true, trigger: 'hover', placement: 'top'});
+
   $('body').tooltip({selector: '.with-tip'});
 
   /*
