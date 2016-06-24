@@ -1101,6 +1101,7 @@ en:
     hints:
       spree/product:
         promotionable: "This determines whether or not promotions can apply to this product.<br/>Default: checked"
+        tax_category: "This determines what kind of taxation is applied to this product.<br/> Default: None"
       spree/variant:
         tax_category: "This determines what kind of taxation is applied to this variant.<br/> Default: Use tax category of the product associated with this variant"
     failed_payment_attempts: Failed Payment Attempts

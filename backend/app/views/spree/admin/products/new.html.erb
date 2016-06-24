@@ -61,6 +61,7 @@
       <div data-hook="new_product_tax_category" class="field four columns">
         <%= f.field_container :tax_category do %>
           <%= f.label :tax_category_id, Spree::TaxCategory.model_name.human %>
+          <%= f.field_hint :tax_category %>
           <%= f.collection_select(:tax_category_id, @tax_categories, :id, :name, { :include_blank => Spree.t('match_choices.none') }, { :class => 'select2 fullwidth' }) %>
           <%= f.error_message_on :tax_category %>
         <% end %>
