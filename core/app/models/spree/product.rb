@@ -132,10 +132,7 @@ module Spree
     def ensure_option_types_exist_for_values_hash
       return if option_values_hash.nil?
       required_option_type_ids = option_values_hash.keys.map(&:to_i)
-      missing_option_type_ids = required_option_type_ids - option_type_ids
-      missing_option_type_ids.each do |id|
-        product_option_types.create(option_type_id: id)
-      end
+      self.option_type_ids |= required_option_type_ids
     end
 
     # Creates a new product with the same attributes, variants, etc.
