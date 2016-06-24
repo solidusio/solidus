@@ -1,10 +1,13 @@
 .main-header {
   @include display(flex);
   @include align-items(center);
-  margin-left: $width-sidebar;
-  padding: 15px 14px;
+  padding: 15px $grid-gutter-width;
   background-color: very-light($color-3, 4);
   border-bottom: 1px solid $color-border;
+
+  body:not(.new-layout) & {
+    margin-left: $width-sidebar;
+  }
 }
 
 .page-title {
