@@ -18,30 +18,27 @@ module Spree
             unless (taxons.to_a - order_taxons).empty?
               eligibility_errors.add(:base, eligibility_error_message(:missing_taxon))
             end
-          elsif preferred_match_policy == 'any'
-            unless taxons.any?{ |taxon| order_taxons.include? taxon }
-              eligibility_errors.add(:base, eligibility_error_message(:no_matching_taxons))
-            end
           elsif preferred_match_policy == 'none'
             unless taxons.none?{ |taxon| order_taxons.include? taxon }
               eligibility_errors.add(:base, eligibility_error_message(:has_excluded_taxon))
             end
-          else
-            eligibility_errors.add(:base, eligibility_error_message(:software_error))
-            logger.error "#{self.class.name} has unexpected match policy #{preferred_match_policy.inspect} and is not eligible. #{inspect}"
+          else # nil or unrecognized match_policy treated like 'any' for legacy compat.
+            unless taxons.any?{ |taxon| order_taxons.include? taxon }
+              eligibility_errors.add(:base, eligibility_error_message(:no_matching_taxons))
+            end
+            if preferred_match_policy != 'any'
+              logger.error "#{self.class.name} has unexpected match policy #{preferred_match_policy.inspect} and is not eligible. #{inspect}"
+            end
           end
 
           eligibility_errors.empty?
         end
 
         def actionable?(line_item)
-          case preferred_match_policy
-          when 'any', 'all'
-            taxon_product_ids.include? line_item.variant.product_id
-          when 'none'
+          if preferred_match_policy == 'none'
             taxon_product_ids.exclude? line_item.variant.product_id
           else
-            raise "unexpected match policy: #{preferred_match_policy.inspect}"
+            taxon_product_ids.include? line_item.variant.product_id
           end
         end
 

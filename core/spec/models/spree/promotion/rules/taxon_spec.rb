@@ -12,11 +12,7 @@ describe Spree::Promotion::Rules::Taxon, type: :model do
       rule.save
     end
 
-    context 'with any match policy' do
-      before do
-        rule.preferred_match_policy = 'any'
-      end
-
+    shared_examples_for 'any match policy' do
       it 'is eligible if order does have any prefered taxon' do
         order.products.first.taxons << taxon
         rule.taxons << taxon
@@ -58,6 +54,22 @@ describe Spree::Promotion::Rules::Taxon, type: :model do
 
         it{ expect(rule).to be_eligible(order) }
       end
+    end
+
+    context 'with any match policy' do
+      before do
+        rule.preferred_match_policy = 'any'
+      end
+
+      it_behaves_like 'any match policy'
+    end
+
+    context "with nil (unexpected) match policy" do
+      before do
+        rule.preferred_match_policy = nil
+      end
+
+      it_behaves_like 'any match policy'
     end
 
     context 'with all match policy' do
@@ -122,24 +134,6 @@ describe Spree::Promotion::Rules::Taxon, type: :model do
           expect(rule.eligibility_errors.full_messages.first).
             to eq "Your cart contains a product from an excluded category that prevents this coupon code from being applied."
         end
-      end
-    end
-
-    context "with nil (unexpected) match policy" do
-      before do
-        rule.preferred_match_policy = nil
-      end
-      it "should not be eligible" do
-        expect(rule).not_to be_eligible(order)
-      end
-      it "sets an error message" do
-        rule.eligible?(order)
-        expect(rule.eligibility_errors.full_messages.first).
-          to eq "Something went wrong. This coupon code can not be applied."
-      end
-      it "logs to error" do
-        expect(rule.logger).to receive(:error)
-        rule.eligible?(order)
       end
     end
   end
