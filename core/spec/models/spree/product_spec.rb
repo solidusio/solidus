@@ -47,7 +47,7 @@ describe Spree::Product, type: :model do
         end
 
         it "should touch taxons" do
-          taxon = create(:taxon, products: [product])
+          taxon = create(:taxon, product_ids: [product.id])
           taxon.update_columns(updated_at: 1.day.ago)
           product.taxons.reload
           expect { subject }.to change{ taxon.reload.updated_at }
