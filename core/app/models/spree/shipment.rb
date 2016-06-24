@@ -36,7 +36,7 @@ module Spree
     scope :by_store, ->(store) { joins(:order).merge(Spree::Order.by_store(store)) }
 
     # shipment state machine (see http://github.com/pluginaweek/state_machine/tree/master for details)
-    state_machine initial: :pending, use_transactions: false do
+    state_machine initial: :pending, use_transactions: true do
       event :ready do
         transition from: :pending, to: :shipped, if: :can_transition_from_pending_to_shipped?
         transition from: :pending, to: :ready, if: :can_transition_from_pending_to_ready?
