@@ -1099,6 +1099,8 @@ en:
     extension: Extension
     existing_shipments: Existing shipments
     hints:
+      spree/price:
+        country: "This determines in what country the price is valid.<br/>Default: Any Country"
       spree/product:
         promotionable: "This determines whether or not promotions can apply to this product.<br/>Default: checked"
         shipping_category: "This determines what kind of shipping this product requires.<br/> Default: Default"
