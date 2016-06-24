@@ -30,6 +30,7 @@ Dir[File.dirname(__FILE__) + "/support/**/*.rb"].each { |f| require f }
 
 require 'spree/testing_support/factories'
 require 'spree/testing_support/preferences'
+require 'spree/testing_support/authorization_helpers'
 
 require 'spree/api/testing_support/caching'
 require 'spree/api/testing_support/helpers'
