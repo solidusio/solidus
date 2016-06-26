@@ -39,6 +39,7 @@ as a `Spree::Gateway`.
 intended to provide a base for extension. See
 https://github.com/solidusio/solidus_gateway/ for offically supported payment
 gateway implementations.
+* `Spree::CreditCard` - The default `source` of a `Spree::Payment`.
 
 Developer Notes
 ---------------
