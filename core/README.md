@@ -28,7 +28,13 @@ permenent record of the transaction.
 An offical, more robust implementation of a User class with Devise
 integration.
 
-# Developer Notes
+## The Payment Sub-System
+* `Spree::Payment` - Manage and process a payment for an order, from a specific
+source (e.g. `Spree::CreditCard`) using a specific payment method (e.g
+`Solidus::Gateway::Braintree`).
+
+Developer Notes
+---------------
 ## Testing
 
 Create the test site
