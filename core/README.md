@@ -19,11 +19,10 @@ Currently, these models remain in the Spree namespace as part of the legacy of
 * `Spree::Store` - Records store specific configuration such as store name and URL.
 * `Spree::Order` - The customers cart until completed, then acts as
 permenent record of the transaction.
-* `Spree::LineItem` - Items placed in the cart at a particular price.
+* `Spree::LineItem` - Variants placed in the order at a particular price.
 
 ## The User Sub-System
-* `Spree::LegacyUser` - Default, non-production implementation of User class
-intended to be extended or replaced.
+* `Spree::LegacyUser` - Default implementation of User.
 * `Spree::UserClassHandle` - Configuration point for User model implementation.
 * [solidus_auth_devise](https://github.com/solidusio/solidus_auth_devise) -
 An offical, more robust implementation of a User class with Devise
