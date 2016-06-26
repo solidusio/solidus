@@ -1,6 +1,10 @@
 require 'twitter_cldr'
 
 module Spree
+  # `Spree::Address` provides the foundational ActiveRecord model for recording and
+  # validating address information for `Spree::Order`, `Spree::Shipment`,
+  # `Spree::UserAddress`, and `Spree::Carton`.
+  #
   class Address < Spree::Base
     extend ActiveModel::ForbiddenAttributesProtection
 

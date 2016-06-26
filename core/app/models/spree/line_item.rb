@@ -1,4 +1,10 @@
 module Spree
+  # `Spree::LineItem` is an ActiveRecord model which records which `Spree::Variant`
+  # a customer has chosen to place in their order. It also acts as the permenent
+  # record of the customer's order by recording relevant price, taxation, and inventory
+  # concerns. Line items can also have adjustments placed on them as part of the
+  # promotion system.
+  #
   class LineItem < Spree::Base
     belongs_to :order, class_name: "Spree::Order", inverse_of: :line_items, touch: true
     belongs_to :variant, -> { with_deleted }, class_name: "Spree::Variant", inverse_of: :line_items

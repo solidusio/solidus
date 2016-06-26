@@ -1,4 +1,7 @@
 module Spree
+  # `Spree::UserClassHandle` allows you to configure your own implementation of a
+  # User class or use an extnesion like `solidus_auth_devise`.
+  #
   # Placeholder for name of Spree.user_class to ensure later evaluation at
   # runtime.
   #
