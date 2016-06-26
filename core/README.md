@@ -13,6 +13,7 @@ Currently, these models remain in the Spree namespace as part of the legacy of
 
 * [The Order Sub-System](https://github.com/bbuchalter/solidus/blob/core-readme/core/README.md#the-order-sub-system)
 * [The User Sub-System](https://github.com/bbuchalter/solidus/blob/core-readme/core/README.md#the-user-sub-system)
+* [The Payment Sub-System](https://github.com/bbuchalter/solidus/blob/core-readme/core/README.md#the-payment-sub-system)
 
 
 ## The Order Sub-System
