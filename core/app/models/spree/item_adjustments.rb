@@ -58,7 +58,7 @@ module Spree
       @item.included_tax_total = tax.select(&:included?).map(&:update!).compact.sum
       @item.additional_tax_total = tax.reject(&:included?).map(&:update!).compact.sum
 
-      adjustments.select(&:cancellation?).map(&:update!)
+      adjustments.select(&:cancellation?).each(&:update!)
 
       @item.adjustment_total = @item.adjustments.
         select(&:eligible?).
