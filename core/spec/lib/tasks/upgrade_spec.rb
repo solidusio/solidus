@@ -8,7 +8,6 @@ describe 'solidus:upgrade:one_point_three' do
   )
 
   before do
-    load Spree::Core::Engine.root.join('lib/tasks/migrations/ensure_store_on_orders.rake')
     load Spree::Core::Engine.root.join('lib/tasks/migrations/migrate_shipping_rate_taxes.rake')
     load Spree::Core::Engine.root.join('lib/tasks/migrations/create_vat_prices.rake')
   end
