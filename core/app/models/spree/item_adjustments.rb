@@ -60,7 +60,7 @@ module Spree
 
       adjustments.select(&:cancellation?).each(&:update!)
 
-      @item.adjustment_total = @item.adjustments.
+      @item.adjustment_total = adjustments.
         select(&:eligible?).
         reject(&:included?).
         sum(&:amount)
