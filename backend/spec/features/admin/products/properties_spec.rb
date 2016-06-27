@@ -12,7 +12,7 @@ describe "Properties", type: :feature do
     before do
       create(:property, name: 'shirt size', presentation: 'size')
       create(:property, name: 'shirt fit', presentation: 'fit')
-      click_link "Properties"
+      click_link "Property Types"
     end
 
     context "listing product properties" do
@@ -42,7 +42,7 @@ describe "Properties", type: :feature do
 
   context "creating a property" do
     it "should allow an admin to create a new product property", js: true do
-      click_link "Properties"
+      click_link "Property Types"
       click_link "new_property_link"
       within('#new_property') { expect(page).to have_content("NEW PROPERTY") }
 
@@ -53,10 +53,10 @@ describe "Properties", type: :feature do
     end
   end
 
-  context "editing a property" do
+  context "editing a property type" do
     before(:each) do
       create(:property)
-      click_link "Properties"
+      click_link "Property Types"
       within_row(1) { click_icon :edit }
     end
 
