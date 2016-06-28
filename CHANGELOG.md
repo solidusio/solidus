@@ -1,5 +1,14 @@
 ## Solidus 1.4.0 (master, unreleased)
 
+*   Deprecate `Spree::Shipment#address` (column renamed)
+
+    `Spree::Shipment#address` was not actually being used for anything in
+    particular, so the association has been deprecated and delegated to
+    `Spree::Order#ship_address` instead. The database column has been renamed
+    `spree_shipments.deprecated_address_id`.
+
+    https://github.com/solidusio/solidus/pull/1138
+
 *   Coupon code application has been separated from the Continue button on the Payment checkout page
 
     * JavaScript for it has been moved from address.js into its own `spree/frontend/checkout/coupon-code`
