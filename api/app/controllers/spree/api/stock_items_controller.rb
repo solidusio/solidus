@@ -1,7 +1,7 @@
 module Spree
   module Api
     class StockItemsController < Spree::Api::BaseController
-      before_filter :load_stock_location, only: [:index, :show, :create]
+      before_action :load_stock_location, only: [:index, :show, :create]
 
       def index
         @stock_items = scope.ransack(params[:q]).result.page(params[:page]).per(params[:per_page])

@@ -143,7 +143,7 @@ describe Spree::Api::BaseController, type: :controller do
     let!(:order) { create :order }
 
     controller(Spree::Api::BaseController) do
-      around_filter :lock_order
+      around_action :lock_order
 
       def index
         render text: { "products" => [] }.to_json

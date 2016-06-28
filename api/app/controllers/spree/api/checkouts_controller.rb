@@ -1,9 +1,9 @@
 module Spree
   module Api
     class CheckoutsController < Spree::Api::BaseController
-      before_filter :load_order, only: [:next, :advance, :update, :complete]
-      around_filter :lock_order, only: [:next, :advance, :update, :complete]
-      before_filter :update_order_state, only: [:next, :advance, :update, :complete]
+      before_action :load_order, only: [:next, :advance, :update, :complete]
+      around_action :lock_order, only: [:next, :advance, :update, :complete]
+      before_action :update_order_state, only: [:next, :advance, :update, :complete]
 
       rescue_from Spree::Order::InsufficientStock, with: :insufficient_stock_error
 
@@ -11,7 +11,7 @@ module Spree
       # TODO: Remove this after deprecated usage in #update is removed
       include Spree::Core::ControllerHelpers::PaymentParameters
 
-      # This before_filter comes from Spree::Core::ControllerHelpers::Order
+      # This before_action comes from Spree::Core::ControllerHelpers::Order
       skip_before_action :set_current_order
 
       def next

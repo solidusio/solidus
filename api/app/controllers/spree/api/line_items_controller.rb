@@ -5,8 +5,8 @@ module Spree
 
       self.line_item_options = []
 
-      before_filter :load_order, only: [:create, :update, :destroy]
-      around_filter :lock_order, only: [:create, :update, :destroy]
+      before_action :load_order, only: [:create, :update, :destroy]
+      around_action :lock_order, only: [:create, :update, :destroy]
 
       def new
       end
