@@ -32,7 +32,7 @@ module Spree
     end
 
     def self.default
-      where(default: true).first || new
+      where(default: true).first || raise("No matching or default store found.")
     end
 
     def default_cart_tax_location
