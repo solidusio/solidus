@@ -4,9 +4,9 @@ module Spree
   # checkout which has nothing to do with updating an order that this approach
   # is warranted.
   class CheckoutController < Spree::StoreController
-    before_filter :load_order
-    around_filter :lock_order
-    before_filter :set_state_if_present
+    before_action :load_order
+    around_action :lock_order
+    before_action :set_state_if_present
 
     before_action :ensure_order_not_completed
     before_action :ensure_checkout_allowed

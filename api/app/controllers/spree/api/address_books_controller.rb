@@ -2,7 +2,7 @@ module Spree
   module Api
     class AddressBooksController < Spree::Api::BaseController
       # Note: the AddressBook is the resource to think about here, not individual addresses
-      before_filter :load_user_addresses
+      before_action :load_user_addresses
 
       def show
         authorize! :show, address_book_user

@@ -8,7 +8,7 @@ module Spree
         include ControllerHelpers::Pricing
 
         included do
-          before_filter :set_current_order
+          before_action :set_current_order
 
           helper_method :current_order
           helper_method :simple_current_order

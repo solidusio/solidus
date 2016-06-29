@@ -12,7 +12,7 @@ module Spree
         #   @return [Proc] action to take when access denied error is raised.
 
         included do
-          before_filter :set_guest_token
+          before_action :set_guest_token
           helper_method :try_spree_current_user
 
           class_attribute :unauthorized_redirect
