@@ -16,6 +16,8 @@
 
 *   Allow filtering orders by store when multiple stores are present. [#1149](https://github.com/solidusio/solidus/pull/1140)
 
+*   Remove unused `user_id` column from PromotionRule. [#1259](https://github.com/solidusio/solidus/pull/1259)
+
 ## Solidus 1.3.0 (unreleased)
 
 *   Order now requires a `store_id` in validations
