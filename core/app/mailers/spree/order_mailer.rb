@@ -30,7 +30,7 @@ module Spree
       if order.respond_to?(:id)
         order
       else
-        ActiveSupport::Deprecation.warn("Calling OrderMailer with an id is deprecated. Pass the Spree::Order object instead.")
+        Spree::Deprecation.warn("Calling OrderMailer with an id is deprecated. Pass the Spree::Order object instead.")
         Spree::Order.find(order)
       end
     end

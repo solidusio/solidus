@@ -96,7 +96,7 @@ describe Spree::LegacyUser, type: :model do
       end
 
       it "drops payment source" do
-        ActiveSupport::Deprecation.silence do
+        Spree::Deprecation.silence do
           user.drop_payment_source cc
         end
         expect(cc.gateway_customer_profile_id).to be_nil

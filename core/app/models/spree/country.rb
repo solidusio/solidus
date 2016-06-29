@@ -7,7 +7,7 @@ module Spree
     validates :name, :iso_name, presence: true
 
     def self.states_required_by_country_id
-      ActiveSupport::Deprecation.warn "Spree::Country.states_required_by_country_id is deprecated and will be removed from future releases, Implement it yourself.", caller
+      Spree::Deprecation.warn "Spree::Country.states_required_by_country_id is deprecated and will be removed from future releases, Implement it yourself.", caller
       states_required = Hash.new(true)
       all.each { |country| states_required[country.id.to_s] = country.states_required }
       states_required
@@ -15,7 +15,7 @@ module Spree
 
     def self.default
       if Spree::Config.default_country_id
-        ActiveSupport::Deprecation.warn("Setting your default country via its ID is deprecated. Please set your default country via the `default_country_iso` setting.", caller)
+        Spree::Deprecation.warn("Setting your default country via its ID is deprecated. Please set your default country via the `default_country_iso` setting.", caller)
         find_by(id: Spree::Config.default_country_id) || find_by!(iso: Spree::Config.default_country_iso)
       else
         find_by!(iso: Spree::Config.default_country_iso)

@@ -18,7 +18,7 @@ describe Spree::CartonMailer do
 
   context "deprecated signature" do
     it do
-      ActiveSupport::Deprecation.silence do
+      Spree::Deprecation.silence do
         mail = Spree::CartonMailer.shipped_email(carton.id)
         expect(mail.subject).to include "Shipment Notification"
       end

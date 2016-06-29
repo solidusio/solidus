@@ -16,7 +16,7 @@ module Spree
 
       def next
         if @order.confirm?
-          ActiveSupport::Deprecation.warn "Using Spree::Api::CheckoutsController#next to transition to complete is deprecated. Please use #complete instead of #next.", caller
+          Spree::Deprecation.warn "Using Spree::Api::CheckoutsController#next to transition to complete is deprecated. Please use #complete instead of #next.", caller
           complete
           return
         end
@@ -94,12 +94,12 @@ module Spree
         massaged_params = params.deep_dup
 
         if params[:payment_source].present?
-          ActiveSupport::Deprecation.warn("Passing payment_source is deprecated. Send source parameters inside payments_attributes[:source_attributes].", caller)
+          Spree::Deprecation.warn("Passing payment_source is deprecated. Send source parameters inside payments_attributes[:source_attributes].", caller)
           move_payment_source_into_payments_attributes(massaged_params)
         end
 
         if params[:order] && params[:order][:existing_card].present?
-          ActiveSupport::Deprecation.warn("Passing order[:existing_card] is deprecated. Send existing_card_id inside of payments_attributes[:source_attributes].", caller)
+          Spree::Deprecation.warn("Passing order[:existing_card] is deprecated. Send existing_card_id inside of payments_attributes[:source_attributes].", caller)
           move_existing_card_into_payments_attributes(massaged_params)
         end
 

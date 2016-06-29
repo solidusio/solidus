@@ -8,7 +8,7 @@ module Spree
   class DelegateBelongsToStubModel < Spree::Base
     self.table_name = "spree_payment_methods"
     belongs_to :product
-    ActiveSupport::Deprecation.silence do
+    Spree::Deprecation.silence do
       delegate_belongs_to :product, :name
     end
   end

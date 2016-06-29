@@ -49,7 +49,7 @@ module Spree
     def self.const_missing(name)
       case name
       when :AdjustmentSource, :CalculatedAdjustments, :UserAddress, :UserPaymentSource
-        ActiveSupport::Deprecation.warn("Spree::Core::#{name} is deprecated! Use Spree::#{name} instead.", caller)
+        Spree::Deprecation.warn("Spree::Core::#{name} is deprecated! Use Spree::#{name} instead.", caller)
         Spree.const_get(name)
       else
         super

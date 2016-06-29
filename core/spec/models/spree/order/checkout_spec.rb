@@ -794,7 +794,7 @@ describe Spree::Order, type: :model do
     let(:params) { {} }
 
     around do |example|
-      ActiveSupport::Deprecation.silence { example.run }
+      Spree::Deprecation.silence { example.run }
     end
 
     it 'calls update_atributes without order params' do
