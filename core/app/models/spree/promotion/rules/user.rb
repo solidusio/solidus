@@ -3,7 +3,8 @@ module Spree
     module Rules
       class User < PromotionRule
         has_many :promotion_rule_users, class_name: 'Spree::PromotionRuleUser',
-                                        foreign_key: :promotion_rule_id
+                                        foreign_key: :promotion_rule_id,
+                                        dependent: :destroy
         has_many :users, through: :promotion_rule_users, class_name: Spree::UserClassHandle.new
 
         def applicable?(promotable)
