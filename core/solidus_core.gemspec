@@ -32,7 +32,7 @@ Gem::Specification.new do |s|
   s.add_dependency 'paperclip', '~> 4.2'
   s.add_dependency 'paranoia', '~> 2.2.0.pre'
   s.add_dependency 'premailer-rails'
-  s.add_dependency 'rails', '~> 4.2.5'
+  s.add_dependency 'rails', '~> 5.0.0'
   s.add_dependency 'ransack', '~> 1.8'
   s.add_dependency 'responders'
   s.add_dependency 'state_machines-activerecord', '~> 0.4'
