@@ -17,6 +17,6 @@ Gem::Specification.new do |gem|
   gem.version = Spree.solidus_version
 
   gem.add_dependency 'solidus_core', gem.version
-  gem.add_dependency 'rabl', ['>= 0.9.4.pre1', '< 0.12.0']
+  gem.add_dependency 'rabl', '0.13.0' # FIXME: update for proper rails 5 support
   gem.add_dependency 'versioncake', '~> 3.0'
 end
