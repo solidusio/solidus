@@ -9,7 +9,7 @@ describe "checkout with unshippable items", type: :feature, inaccessible: true d
     order.reload
     line_item = order.line_items.last
     stock_item = stock_location.stock_item(line_item.variant)
-    stock_item.adjust_count_on_hand(-999)
+    stock_item.adjust_count_on_hand(0)
     stock_item.backorderable = false
     stock_item.save!
 

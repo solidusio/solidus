@@ -8,7 +8,7 @@ module Spree
 
     validates :stock_location, :variant, presence: true
     validates :variant_id, uniqueness: { scope: [:stock_location_id, :deleted_at] }, allow_blank: true, unless: :deleted_at
-    validates :count_on_hand, numericality: { greater_than_or_equal_to: 0 }, if: :verify_count_on_hand?
+    validates :count_on_hand, numericality: { greater_than_or_equal_to: 0 }, unless: :backorderable?
 
     delegate :weight, :should_track_inventory?, to: :variant
 
@@ -82,10 +82,6 @@ module Spree
     end
 
     private
-
-    def verify_count_on_hand?
-      count_on_hand_changed? && !backorderable? && (count_on_hand < count_on_hand_was) && (count_on_hand < 0)
-    end
 
     def count_on_hand=(value)
       write_attribute(:count_on_hand, value)
