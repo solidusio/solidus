@@ -1114,12 +1114,6 @@ describe Spree::Order, type: :model do
           end
         end
 
-        context "there are no other payments" do
-          it "adds an error to the model" do
-            expect(subject).to be false
-            expect(order.errors.full_messages).to include(Spree.t("store_credit.errors.unable_to_fund"))
-          end
-        end
       end
 
       context "there is enough store credit to pay for the entire order" do

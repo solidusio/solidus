@@ -618,6 +618,9 @@ module Spree
     end
 
     def add_store_credit_payments
+      return if user.nil?
+      return if payments.store_credits.checkout.empty? && user.total_available_store_credit.zero?
+
       payments.store_credits.checkout.each(&:invalidate!)
 
       # this can happen when multiple payments are present, auto_capture is
@@ -627,7 +630,7 @@ module Spree
 
       remaining_total = outstanding_balance - authorized_total
 
-      if user && user.store_credits.any?
+      if user.store_credits.any?
         payment_method = Spree::PaymentMethod::StoreCredit.first
 
         user.store_credits.order_by_priority.each do |credit|
