@@ -8,6 +8,12 @@ RSpec.describe 'payment factory' do
     let(:factory) { :payment }
 
     it_behaves_like 'a working factory'
+
+    it "assigns the Order's user to the created Credit Card" do
+      payment = create(factory)
+      expect(payment.source.user).to be_present
+      expect(payment.source.user).to eq payment.order.user
+    end
   end
 
   describe 'check payment' do
