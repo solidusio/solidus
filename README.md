@@ -58,6 +58,7 @@ configuration files and migrations.
 
 ```
 bundle exec rails g spree:install
+bundle exec rails g solidus:auth:install
 bundle exec rake railties:install:migrations
 ```
 
