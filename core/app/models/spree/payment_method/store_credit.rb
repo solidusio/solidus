@@ -61,7 +61,7 @@ module Spree
       handle_action(action, :void, auth_code)
     end
 
-    def credit(amount_in_cents, auth_code, gateway_options)
+    def credit(amount_in_cents, auth_code, gateway_options = {})
       action = -> (store_credit) do
         currency = gateway_options[:currency] || store_credit.currency
         originator = gateway_options[:originator]
