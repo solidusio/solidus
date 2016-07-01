@@ -77,13 +77,13 @@ module Spree
       store_credit = store_credit_event.try(:store_credit)
 
       if store_credit_event.nil? || store_credit.nil?
-        return false
+        ActiveMerchant::Billing::Response.new(false, '', {}, {})
       elsif store_credit_event.capture_action?
         store_credit.credit(store_credit_event.amount, auth_code, store_credit.currency)
       elsif store_credit_event.authorization_action?
         store_credit.void(auth_code)
       else
-        return false
+        ActiveMerchant::Billing::Response.new(false, '', {}, {})
       end
     end
 

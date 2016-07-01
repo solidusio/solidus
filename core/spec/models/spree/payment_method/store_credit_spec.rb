@@ -255,6 +255,12 @@ describe Spree::PaymentMethod::StoreCredit do
     let(:auth_code)    { "1-SC-20141111111111" }
     let(:captured_amount) { 10.0 }
 
+    shared_examples "a spree payment method" do
+      it "returns an ActiveMerchant::Billing::Response" do
+        expect(subject).to be_instance_of(ActiveMerchant::Billing::Response)
+      end
+    end
+
     context "capture event found" do
       let!(:store_credit_event) {
         create(:store_credit_capture_event,
@@ -289,9 +295,9 @@ describe Spree::PaymentMethod::StoreCredit do
           Spree::PaymentMethod::StoreCredit.new.cancel('INVALID')
         end
 
-        it "returns false" do
-          expect(subject).to be false
-        end
+        it_behaves_like "a spree payment method"
+
+        it { expect(subject.success?).to be(false) }
       end
     end
   end
