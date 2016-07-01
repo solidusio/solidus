@@ -251,8 +251,9 @@ describe Spree::PaymentMethod::StoreCredit do
       Spree::PaymentMethod::StoreCredit.new.cancel(auth_code)
     end
 
-    let(:store_credit) { create(:store_credit, amount_used: captured_amount) }
+    let(:store_credit) { create(:store_credit, amount: original_amount, amount_used: captured_amount) }
     let(:auth_code)    { "1-SC-20141111111111" }
+    let(:original_amount) { 100.0 }
     let(:captured_amount) { 10.0 }
 
     shared_examples "a spree payment method" do
@@ -269,9 +270,10 @@ describe Spree::PaymentMethod::StoreCredit do
                                         store_credit: store_credit)
       }
 
-      it "creates a store credit for the same amount that was captured" do
-        expect_any_instance_of(Spree::StoreCredit).to receive(:credit).with(captured_amount, auth_code, store_credit.currency)
-        subject
+      it "refunds the capture amount" do
+        expect { subject }.to change{ store_credit.reload.amount_remaining }.
+                              from(original_amount - captured_amount).
+                              to(original_amount)
       end
     end
 
@@ -284,9 +286,10 @@ describe Spree::PaymentMethod::StoreCredit do
                                           store_credit: store_credit)
         }
 
-        it "creates a store credit for the same amount that was captured" do
-          expect_any_instance_of(Spree::StoreCredit).to receive(:void).with(auth_code)
-          subject
+        it "refunds the capture amount" do
+          expect { subject }.to change{ store_credit.reload.amount_remaining }.
+                                from(original_amount - captured_amount).
+                                to(original_amount)
         end
       end
 
