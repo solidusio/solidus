@@ -40,7 +40,7 @@ describe Spree::Order, type: :model do
     end
   end
 
-  describe "#cancel!", pending: true do
+  describe "#cancel!" do
     context "with captured store credit" do
       let!(:store_credit_payment_method) { create(:store_credit_payment_method) }
       let(:order_total) { 500.00 }

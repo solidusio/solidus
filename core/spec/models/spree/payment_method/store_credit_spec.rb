@@ -270,6 +270,8 @@ describe Spree::PaymentMethod::StoreCredit do
                                         store_credit: store_credit)
       }
 
+      it_behaves_like "a spree payment method"
+
       it "refunds the capture amount" do
         expect { subject }.to change{ store_credit.reload.amount_remaining }.
                               from(original_amount - captured_amount).
