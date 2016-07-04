@@ -2,7 +2,7 @@ module Spree
   class TransferItem < Spree::Base
     acts_as_paranoid
     belongs_to :stock_transfer, inverse_of: :transfer_items
-    belongs_to :variant
+    belongs_to :variant, -> { with_deleted }
 
     validate :stock_availability, if: :check_stock?
     validates :stock_transfer, :variant, presence: true
