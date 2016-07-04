@@ -1,6 +1,8 @@
 #!/bin/sh
 # Used in the sandbox rake task in Rakefile
 
+set -e
+
 case "$DB" in
 postgres|postgresql)
   RAILSDB="postgresql"
