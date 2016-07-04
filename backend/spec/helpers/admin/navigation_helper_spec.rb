@@ -72,4 +72,43 @@ describe Spree::Admin::NavigationHelper, type: :helper do
       expect(admin_tab).to end_with("foo</li>")
     end
   end
+
+  describe "#link_to_delete" do
+    let!(:item) { create(:stock_item) }
+    let(:options) { {} }
+    let(:link) { subject }
+
+    subject { helper.link_to_delete(item, options) }
+
+    # object_url is provided by the ResourceController abstract controller.
+    # as we cannot set a custom controller for helper tests, we need to fake it
+    before do
+      allow(helper).to receive(:object_url) do |o|
+        "/stock_items/#{o.to_param}"
+      end
+    end
+
+    it "generates a deletion link for the resource" do
+      expect(link).to include("href=\"/stock_items/#{item.to_param}\"")
+      expect(link).to include("data-action=\"remove\"")
+      expect(link).to include("data-confirm=\"Are you sure?\"")
+      expect(link).to include("<span class=\"text\">Delete</span>")
+    end
+
+    it "allows customization of the url" do
+      options[:url] = "/test/url"
+      expect(link).to include("href=\"/test/url\"")
+    end
+
+    it "allows customization of the link name" do
+      options[:name] = "Delete Item"
+      expect(link).to include("name=\"Delete Item\"")
+      expect(link).to include("<span class=\"text\">Delete Item</span>")
+    end
+
+    it "allows customization of the confirmation message" do
+      options[:confirm] = "Please confirm."
+      expect(link).to include("data-confirm=\"Please confirm.\"")
+    end
+  end
 end
