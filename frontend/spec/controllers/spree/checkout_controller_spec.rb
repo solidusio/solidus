@@ -144,10 +144,7 @@ describe Spree::CheckoutController, type: :controller do
         end
 
         context "with a billing and shipping address" do
-          before do
-            @expected_bill_address_id = order.bill_address.id
-            @expected_ship_address_id = order.ship_address.id
-
+          subject do
             post :update, {
                 state: "address",
                 order: {
@@ -156,13 +153,18 @@ describe Spree::CheckoutController, type: :controller do
                     use_billing: false
                 }
             }
-
-            order.reload
           end
 
-          it "unchanged address data does not change Address instances" do
-            expect(order.bill_address.id).to eq(@expected_bill_address_id)
-            expect(order.ship_address.id).to eq(@expected_ship_address_id)
+          it "doesn't change bill address" do
+            expect {
+              subject
+            }.not_to change { order.reload.ship_address.id }
+          end
+
+          it "doesn't change ship address" do
+            expect {
+              subject
+            }.not_to change { order.reload.bill_address.id }
           end
         end
       end
