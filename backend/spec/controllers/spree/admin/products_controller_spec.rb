@@ -120,7 +120,7 @@ describe Spree::Admin::ProductsController, type: :controller do
     end
 
     it "replaces the rule's condition" do
-      expect { subject }.to change { rule.option_value_ids }.from([original_option_value.id]).to([option_value.id])
+      expect { subject }.to change { rule.reload.option_value_ids }.from([original_option_value.id]).to([option_value.id])
     end
 
     it "adds two values to the rule" do
