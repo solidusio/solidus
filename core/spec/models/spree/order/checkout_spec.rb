@@ -163,8 +163,10 @@ describe Spree::Order, type: :model do
 
     context "from address" do
       let(:ship_address) { FactoryGirl.create(:ship_address) }
+      let(:line_item) { FactoryGirl.create(:line_item, price: 10, adjustment_total: 10) }
 
       before do
+        order.line_items << line_item
         order.state = 'address'
         order.ship_address = ship_address
         FactoryGirl.create(:shipment, order: order, cost: 10)
@@ -181,8 +183,6 @@ describe Spree::Order, type: :model do
       end
 
       it "updates totals" do
-        line_item = FactoryGirl.create(:line_item, price: 10, adjustment_total: 10)
-        order.line_items << line_item
         tax_rate = create(:tax_rate, tax_category: line_item.tax_category, amount: 0.05)
         allow(Spree::TaxRate).to receive_messages match: [tax_rate]
         FactoryGirl.create(:tax_adjustment, adjustable: line_item, source: tax_rate, order: order)
@@ -195,16 +195,12 @@ describe Spree::Order, type: :model do
       end
 
       it "transitions to delivery" do
-        allow(order).to receive_messages(ensure_available_shipping_rates: true)
         order.next!
         assert_state_changed(order, 'address', 'delivery')
         expect(order.state).to eq("delivery")
       end
 
       it "does not call persist_order_address if there is no address on the order" do
-        # otherwise, it will crash
-        allow(order).to receive_messages(ensure_available_shipping_rates: true)
-
         order.user = FactoryGirl.create(:user)
         order.save!
 
@@ -213,8 +209,6 @@ describe Spree::Order, type: :model do
       end
 
       it "calls persist_order_address on the order's user" do
-        allow(order).to receive_messages(ensure_available_shipping_rates: true)
-
         order.user = FactoryGirl.create(:user)
         order.ship_address = FactoryGirl.create(:address)
         order.bill_address = FactoryGirl.create(:address)
@@ -225,8 +219,6 @@ describe Spree::Order, type: :model do
       end
 
       it "does not call persist_order_address on the order's user for a temporary address" do
-        allow(order).to receive_messages(ensure_available_shipping_rates: true)
-
         order.user = FactoryGirl.create(:user)
         order.temporary_address = true
         order.save!
