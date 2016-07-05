@@ -1,23 +1,31 @@
 require 'spec_helper'
 
 describe Spree::Validations::DbMaximumLengthValidator, type: :model do
-  context 'when Spree::Product' do
-    Spree::Product.class_eval do
-      attribute :slug, ActiveRecord::Type::String.new(limit: 255)
-      # Slug currently has no validation for maximum length
+  with_model 'LimitedProduct', scope: :all do
+    table do |t|
+      t.string :slug, limit: 255
+    end
+
+    model do
       validates_with Spree::Validations::DbMaximumLengthValidator, field: :slug
     end
-    let(:limit) { 255 }
-    let(:product) { Spree::Product.new }
-    let(:slug) { "x" * (limit + 1) }
+  end
 
-    before do
-      product.slug = slug
+  let(:record) { LimitedProduct.new(slug: slug) }
+
+  context "when slug is below limit" do
+    let(:slug) { 'a' * 255 }
+    it 'should be valid' do
+      expect(record).to be_valid
+      expect(record.errors).to be_empty
     end
+  end
 
-    it 'should maximum validate slug' do
-      product.valid?
-      expect(product.errors[:slug]).to include(I18n.t("errors.messages.too_long", count: limit))
+  context "when slug is too long" do
+    let(:slug) { 'a' * 256 }
+    it 'should be invalid and set error' do
+      expect(record).not_to be_valid
+      expect(record.errors[:slug]).to include(I18n.t("errors.messages.too_long", count: 255))
     end
   end
 end
