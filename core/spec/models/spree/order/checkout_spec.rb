@@ -162,12 +162,14 @@ describe Spree::Order, type: :model do
     end
 
     context "from address" do
-      let(:ship_address) { FactoryGirl.create(:ship_address) }
+      let(:ship_address) { create(:ship_address) }
+      let!(:line_item) { create(:line_item, order: order, price: 10) }
+      let!(:shipping_method) { create(:shipping_method) }
 
       before do
+        order.line_items.reload
         order.state = 'address'
         order.ship_address = ship_address
-        FactoryGirl.create(:shipment, order: order, cost: 10)
         order.email = "user@example.com"
         order.save!
       end
@@ -180,31 +182,24 @@ describe Spree::Order, type: :model do
         end
       end
 
-      it "updates totals" do
-        line_item = FactoryGirl.create(:line_item, price: 10, adjustment_total: 10)
-        order.line_items << line_item
-        tax_rate = create(:tax_rate, tax_category: line_item.tax_category, amount: 0.05)
-        allow(Spree::TaxRate).to receive_messages match: [tax_rate]
-        FactoryGirl.create(:tax_adjustment, adjustable: line_item, source: tax_rate, order: order)
-        order.email = "user@example.com"
+      it "recalculates tax and updates totals" do
+        create(:tax_rate, tax_category: line_item.tax_category, amount: 0.05, zone: order.tax_zone)
         order.next!
-        expect(order.adjustment_total).to eq(0.5)
-        expect(order.additional_tax_total).to eq(0.5)
-        expect(order.included_tax_total).to eq(0)
-        expect(order.total).to eq(20.5)
+        expect(order).to have_attributes(
+          adjustment_total: 0.5,
+          additional_tax_total: 0.5,
+          included_tax_total: 0,
+          total: 20.5
+        )
       end
 
       it "transitions to delivery" do
-        allow(order).to receive_messages(ensure_available_shipping_rates: true)
         order.next!
         assert_state_changed(order, 'address', 'delivery')
         expect(order.state).to eq("delivery")
       end
 
       it "does not call persist_order_address if there is no address on the order" do
-        # otherwise, it will crash
-        allow(order).to receive_messages(ensure_available_shipping_rates: true)
-
         order.user = FactoryGirl.create(:user)
         order.save!
 
@@ -213,8 +208,6 @@ describe Spree::Order, type: :model do
       end
 
       it "calls persist_order_address on the order's user" do
-        allow(order).to receive_messages(ensure_available_shipping_rates: true)
-
         order.user = FactoryGirl.create(:user)
         order.ship_address = FactoryGirl.create(:address)
         order.bill_address = FactoryGirl.create(:address)
@@ -225,8 +218,6 @@ describe Spree::Order, type: :model do
       end
 
       it "does not call persist_order_address on the order's user for a temporary address" do
-        allow(order).to receive_messages(ensure_available_shipping_rates: true)
-
         order.user = FactoryGirl.create(:user)
         order.temporary_address = true
         order.save!
