@@ -261,4 +261,15 @@ describe Spree::TransferItem do
       end
     end
   end
+
+  describe "variant association" do
+    context "variant has been soft-deleted" do
+      before do
+        subject.variant.destroy
+      end
+      it "still returns the variant" do
+        expect(subject.variant).not_to be_nil
+      end
+    end
+  end
 end
