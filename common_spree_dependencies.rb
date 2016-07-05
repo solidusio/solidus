@@ -43,7 +43,7 @@ gem 'paranoia', github: 'jhawthorn/paranoia', branch: 'rails5'
 gem 'state_machines-activerecord', github: 'state-machines/state_machines-activerecord'
 gem 'state_machines-activemodel', github: 'state-machines/state_machines-activemodel'
 gem 'ransack', github: 'activerecord-hackery/ransack'
-gem 'rabl', github: 'nesquena/rabl'
+gem 'rabl', github: 'jhawthorn/rabl', branch: 'rails5'
 
 group :test, :development do
   gem 'rubocop'
