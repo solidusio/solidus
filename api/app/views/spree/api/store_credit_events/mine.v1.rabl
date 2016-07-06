@@ -6,5 +6,5 @@ child(@store_credit_events => :store_credit_events) do
 end
 
 node(:count) { @store_credit_events.count }
-node(:current_page) { params[:page] || 1 }
+node(:current_page) { @store_credit_events.current_page }
 node(:pages) { @store_credit_events.total_pages }

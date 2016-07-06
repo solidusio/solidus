@@ -9,6 +9,6 @@ end
 
 if @states.respond_to?(:total_pages)
   node(:count) { @states.count }
-  node(:current_page) { params[:page] || 1 }
+  node(:current_page) { @states.current_page }
   node(:pages) { @states.total_pages }
 end
