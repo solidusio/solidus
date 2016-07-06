@@ -1,4 +1,4 @@
-class CreateTransferItems < ActiveRecord::Migration
+class CreateTransferItems < ActiveRecord::Migration[4.2]
   def change
     create_table :spree_transfer_items do |t|
       t.integer :variant_id, null: false

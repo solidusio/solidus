@@ -1,4 +1,4 @@
-class RemoveCreditCardAddressId < ActiveRecord::Migration
+class RemoveCreditCardAddressId < ActiveRecord::Migration[4.2]
   def change
     # This hasn't been accessible for a long time:
     # https://github.com/bonobos/spree/commit/0b58afc#diff-b3d9a7a18a30a5fb3372cfcf3f925a3dL4

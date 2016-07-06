@@ -224,7 +224,7 @@ describe Spree::Preferences::Preferable, type: :model do
 
   describe "persisted preferables" do
     before(:all) do
-      class CreatePrefTest < ActiveRecord::Migration
+      class CreatePrefTest < ActiveRecord::Migration[4.2]
         def self.up
           create_table :pref_tests do |t|
             t.string :col
@@ -237,8 +237,8 @@ describe Spree::Preferences::Preferable, type: :model do
         end
       end
 
-      @migration_verbosity = ActiveRecord::Migration.verbose
-      ActiveRecord::Migration.verbose = false
+      @migration_verbosity = ActiveRecord::Migration[4.2].verbose
+      ActiveRecord::Migration[4.2].verbose = false
       CreatePrefTest.migrate(:up)
 
       class PrefTest < Spree::Base
@@ -249,7 +249,7 @@ describe Spree::Preferences::Preferable, type: :model do
 
     after(:all) do
       CreatePrefTest.migrate(:down)
-      ActiveRecord::Migration.verbose = @migration_verbosity
+      ActiveRecord::Migration[4.2].verbose = @migration_verbosity
     end
 
     before(:each) do

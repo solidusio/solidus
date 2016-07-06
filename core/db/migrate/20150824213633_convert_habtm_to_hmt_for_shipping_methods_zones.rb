@@ -1,4 +1,4 @@
-class ConvertHabtmToHmtForShippingMethodsZones < ActiveRecord::Migration
+class ConvertHabtmToHmtForShippingMethodsZones < ActiveRecord::Migration[4.2]
   def up
     add_column :spree_shipping_methods_zones, :id, :primary_key
     add_column :spree_shipping_methods_zones, :created_at, :datetime

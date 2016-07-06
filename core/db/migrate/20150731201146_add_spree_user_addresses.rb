@@ -1,4 +1,4 @@
-class AddSpreeUserAddresses < ActiveRecord::Migration
+class AddSpreeUserAddresses < ActiveRecord::Migration[4.2]
   def change
     create_table :spree_user_addresses do |t|
       t.integer :user_id, null: false

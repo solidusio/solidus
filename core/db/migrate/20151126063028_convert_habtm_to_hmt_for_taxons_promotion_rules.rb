@@ -1,4 +1,4 @@
-class ConvertHabtmToHmtForTaxonsPromotionRules < ActiveRecord::Migration
+class ConvertHabtmToHmtForTaxonsPromotionRules < ActiveRecord::Migration[4.2]
   def up
     add_column :spree_taxons_promotion_rules, :created_at, :datetime
     add_column :spree_taxons_promotion_rules, :updated_at, :datetime

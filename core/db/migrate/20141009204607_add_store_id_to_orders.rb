@@ -1,4 +1,4 @@
-class AddStoreIdToOrders < ActiveRecord::Migration
+class AddStoreIdToOrders < ActiveRecord::Migration[4.2]
   class Store < ActiveRecord::Base
     self.table_name = 'spree_stores'
   end

@@ -1,4 +1,4 @@
-class AddStockItemUniqueIndex < ActiveRecord::Migration
+class AddStockItemUniqueIndex < ActiveRecord::Migration[4.2]
   def change
     # Add a database-level uniqueness constraint for databases that support it
     # (postgres and sqlite > 3.8)

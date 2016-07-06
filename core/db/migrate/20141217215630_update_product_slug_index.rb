@@ -1,4 +1,4 @@
-class UpdateProductSlugIndex < ActiveRecord::Migration
+class UpdateProductSlugIndex < ActiveRecord::Migration[4.2]
   include Spree::MigrationHelpers
 
   def change

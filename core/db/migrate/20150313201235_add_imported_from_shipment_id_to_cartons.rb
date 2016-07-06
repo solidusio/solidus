@@ -1,4 +1,4 @@
-class AddImportedFromShipmentIdToCartons < ActiveRecord::Migration
+class AddImportedFromShipmentIdToCartons < ActiveRecord::Migration[4.2]
   def change
     # Temporarily add this column until we're sure that this migration and the
     # upcoming code changes are working correctly

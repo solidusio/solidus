@@ -1,4 +1,4 @@
-class RemoveUserIdFromPromotionRules < ActiveRecord::Migration
+class RemoveUserIdFromPromotionRules < ActiveRecord::Migration[4.2]
   def up
     remove_index :spree_promotion_rules, name: 'index_promotion_rules_on_user_id'
     remove_column :spree_promotion_rules, :user_id

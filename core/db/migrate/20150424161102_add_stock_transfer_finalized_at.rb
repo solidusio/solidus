@@ -1,4 +1,4 @@
-class AddStockTransferFinalizedAt < ActiveRecord::Migration
+class AddStockTransferFinalizedAt < ActiveRecord::Migration[4.2]
   def change
     add_column :spree_stock_transfers, :finalized_at, :datetime
     add_column :spree_stock_transfers, :finalized_by_id, :integer

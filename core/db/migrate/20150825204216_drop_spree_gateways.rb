@@ -1,4 +1,4 @@
-class DropSpreeGateways < ActiveRecord::Migration
+class DropSpreeGateways < ActiveRecord::Migration[4.2]
   def up
     drop_table :spree_gateways
   end
