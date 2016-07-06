@@ -1,4 +1,4 @@
-class ConvertHabtmToHmtForTaxonPrototypes < ActiveRecord::Migration
+class ConvertHabtmToHmtForTaxonPrototypes < ActiveRecord::Migration[4.2]
   def up
     add_column :spree_taxons_prototypes, :created_at, :datetime
     add_column :spree_taxons_prototypes, :updated_at, :datetime

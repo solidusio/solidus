@@ -1,4 +1,4 @@
-class DowncasePromotionCodesValues < ActiveRecord::Migration
+class DowncasePromotionCodesValues < ActiveRecord::Migration[4.2]
   def up
     Spree::PromotionCode.update_all("value = lower(value)")
     Spree::Promotion.where.not(code: nil).update_all("code = lower(code)")

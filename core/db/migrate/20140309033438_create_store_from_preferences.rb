@@ -1,4 +1,4 @@
-class CreateStoreFromPreferences < ActiveRecord::Migration
+class CreateStoreFromPreferences < ActiveRecord::Migration[4.2]
   class Store < ActiveRecord::Base
     self.table_name = 'spree_stores'
   end

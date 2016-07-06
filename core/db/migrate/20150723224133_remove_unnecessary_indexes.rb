@@ -3,7 +3,7 @@
 # However, most are necessary and were removed from that migration. This
 # migration deletes any of the indexes left around in stores using the
 # out-dated version of that migration
-class RemoveUnnecessaryIndexes < ActiveRecord::Migration
+class RemoveUnnecessaryIndexes < ActiveRecord::Migration[4.2]
   include Spree::MigrationHelpers
 
   def up
