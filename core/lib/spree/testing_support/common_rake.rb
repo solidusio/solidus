@@ -24,7 +24,7 @@ namespace :common do
       puts 'Running extension installation generator...'
       "#{ENV['LIB_NAME'].camelize}::Generators::InstallGenerator".constantize.start(["--auto-run-migrations"])
     rescue LoadError
-      puts 'Skipping installation no generator to run...'
+      # No extension generator to run
     end
   end
 
