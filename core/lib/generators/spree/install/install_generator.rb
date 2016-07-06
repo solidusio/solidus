@@ -108,7 +108,7 @@ Spree::Auth::Engine.load_seed if defined?(Spree::Auth)
 
     def install_migrations
       say_status :copying, "migrations"
-      rake 'railties:install:migrations'
+      `rake railties:install:migrations`
     end
 
     def create_database
@@ -119,7 +119,8 @@ Spree::Auth::Engine.load_seed if defined?(Spree::Auth)
     def run_migrations
       if @run_migrations
         say_status :running, "migrations"
-        rake 'db:migrate'
+
+        rake 'db:migrate VERBOSE=false'
       else
         say_status :skipping, "migrations (don't forget to run rake db:migrate)"
       end
