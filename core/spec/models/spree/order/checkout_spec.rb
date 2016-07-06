@@ -182,7 +182,7 @@ describe Spree::Order, type: :model do
         end
       end
 
-      it "updates totals" do
+      it "updates totals", pending: true do
         tax_rate = create(:tax_rate, tax_category: line_item.tax_category, amount: 0.05)
         FactoryGirl.create(:tax_adjustment, adjustable: line_item, source: tax_rate, order: order)
         order.email = "user@example.com"
