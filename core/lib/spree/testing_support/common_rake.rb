@@ -17,6 +17,7 @@ namespace :common do
 
     puts "Setting up dummy database..."
 
+    ENV['VERBOSE'] = 'false'
     sh "bundle exec rake db:drop db:create db:migrate"
 
     begin
