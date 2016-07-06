@@ -1,4 +1,4 @@
-class EnsureDefaultStore < ActiveRecord::Migration
+class EnsureDefaultStore < ActiveRecord::Migration[4.2]
   class Store < ActiveRecord::Base
     self.table_name = 'spree_stores'
   end

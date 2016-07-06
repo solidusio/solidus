@@ -1,4 +1,4 @@
-class MigrateDeletedStoreCreditsToInvalidated < ActiveRecord::Migration
+class MigrateDeletedStoreCreditsToInvalidated < ActiveRecord::Migration[4.2]
   def up
     Spree::StoreCredit.only_deleted.find_each do |store_credit|
       say "Marking deleted store credit #{store_credit.id} for #{store_credit.user.try(:email)} as invalidated"

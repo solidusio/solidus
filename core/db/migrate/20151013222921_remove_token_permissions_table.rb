@@ -1,6 +1,6 @@
 # This is named the same as the migration in spree 3.0 so it will not be copied
 # if that has already been run.
-class RemoveTokenPermissionsTable < ActiveRecord::Migration
+class RemoveTokenPermissionsTable < ActiveRecord::Migration[4.2]
   def up
     drop_table :spree_tokenized_permissions
   end

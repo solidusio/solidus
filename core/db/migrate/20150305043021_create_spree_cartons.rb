@@ -1,4 +1,4 @@
-class CreateSpreeCartons < ActiveRecord::Migration
+class CreateSpreeCartons < ActiveRecord::Migration[4.2]
   def change
     create_table "spree_cartons" do |t|
       t.string "number"

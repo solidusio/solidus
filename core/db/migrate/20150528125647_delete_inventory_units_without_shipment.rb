@@ -1,4 +1,4 @@
-class DeleteInventoryUnitsWithoutShipment < ActiveRecord::Migration
+class DeleteInventoryUnitsWithoutShipment < ActiveRecord::Migration[4.2]
   # Prevent everything from running in one giant transaction in postrgres.
   disable_ddl_transaction!
 

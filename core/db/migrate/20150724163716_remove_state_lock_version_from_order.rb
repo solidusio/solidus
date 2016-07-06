@@ -1,4 +1,4 @@
-class RemoveStateLockVersionFromOrder < ActiveRecord::Migration
+class RemoveStateLockVersionFromOrder < ActiveRecord::Migration[4.2]
   def up
     if column_exists? :spree_orders, :state_lock_version
       remove_column :spree_orders, :state_lock_version

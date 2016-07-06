@@ -1,4 +1,4 @@
-class CreateDefaultStock < ActiveRecord::Migration
+class CreateDefaultStock < ActiveRecord::Migration[4.2]
   class Variant < ActiveRecord::Base
     self.table_name = 'spree_variants'
   end
