@@ -11,7 +11,7 @@ namespace 'spree:migrations:copy_order_bill_address_to_credit_card' do
   # This task should be safe to run multiple times.
 
   task up: :environment do
-    puts "Copying order bill addresses to credit cards"
+    say "Copying order bill addresses to credit cards"
 
     if Spree::CreditCard.connection.adapter_name =~ /postgres/i
       postgres_copy
@@ -41,7 +41,7 @@ namespace 'spree:migrations:copy_order_bill_address_to_credit_card' do
       next if payment.nil?
 
       cc.update_column(:address_id, payment.order.bill_address_id)
-      puts "Successfully associated billing address (#{payment.order.bill_address_id}) with credit card (#{cc.id})"
+      say "Successfully associated billing address (#{payment.order.bill_address_id}) with credit card (#{cc.id})"
     end
   end
 
@@ -52,13 +52,13 @@ namespace 'spree:migrations:copy_order_bill_address_to_credit_card' do
   def postgres_copy
     batch_size = 10_000
 
-    puts "last id: #{last_credit_card_id}"
+    say "last id: #{last_credit_card_id}"
 
     current_start_id = 1
 
     while current_start_id <= last_credit_card_id
       current_end_id = current_start_id + batch_size
-      puts "updating #{current_start_id} to #{current_end_id}"
+      say "updating #{current_start_id} to #{current_end_id}"
 
       # first try to find a valid payment for each credit card
       Spree::CreditCard.connection.execute(
