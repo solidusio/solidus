@@ -30,14 +30,14 @@ describe Spree::OrderMailer, type: :mailer do
 
   it "confirm_email accepts an order id as an alternative to an Order object" do
     expect(Spree::Order).to receive(:find).with(order.id).and_return(order)
-    ActiveSupport::Deprecation.silence do
+    Spree::Deprecation.silence do
       Spree::OrderMailer.confirm_email(order.id).body
     end
   end
 
   it "cancel_email accepts an order id as an alternative to an Order object" do
     expect(Spree::Order).to receive(:find).with(order.id).and_return(order)
-    ActiveSupport::Deprecation.silence do
+    Spree::Deprecation.silence do
       Spree::OrderMailer.cancel_email(order.id).body
     end
   end

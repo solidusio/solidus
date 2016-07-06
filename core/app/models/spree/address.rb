@@ -28,7 +28,7 @@ module Spree
     end
 
     def self.default(user = nil, kind = "bill")
-      ActiveSupport::Deprecation.warn("Address.default is deprecated. Use User.default_address or Address.build_default", caller)
+      Spree::Deprecation.warn("Address.default is deprecated. Use User.default_address or Address.build_default", caller)
       if user
         user.send(:"#{kind}_address") || build_default
       else
@@ -106,12 +106,12 @@ module Spree
     end
 
     def same_as?(other_address)
-      ActiveSupport::Deprecation.warn("Address.same_as? is deprecated. It's equivalent to Address.==", caller)
+      Spree::Deprecation.warn("Address.same_as? is deprecated. It's equivalent to Address.==", caller)
       self == other_address
     end
 
     def same_as(other_address)
-      ActiveSupport::Deprecation.warn("Address.same_as is deprecated. It's equivalent to Address.==", caller)
+      Spree::Deprecation.warn("Address.same_as is deprecated. It's equivalent to Address.==", caller)
       self == other_address
     end
 

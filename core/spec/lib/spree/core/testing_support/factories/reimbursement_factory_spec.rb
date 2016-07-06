@@ -9,4 +9,10 @@ RSpec.describe 'reimbursement factory' do
 
     it_behaves_like 'a working factory'
   end
+
+  describe 'total' do
+    subject { FactoryGirl.create(:reimbursement).total }
+
+    it { is_expected.to be_present }
+  end
 end

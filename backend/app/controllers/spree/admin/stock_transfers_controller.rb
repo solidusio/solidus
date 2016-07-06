@@ -7,12 +7,12 @@ module Spree
         { translation_key: :name, attr_name: :name }
       ]
 
-      before_filter :load_viewable_stock_locations, only: :index
-      before_filter :load_variant_display_attributes, only: [:receive, :edit, :show, :tracking_info]
-      before_filter :load_source_stock_locations, only: :new
-      before_filter :load_destination_stock_locations, only: :edit
-      before_filter :ensure_access_to_stock_location, only: :create
-      before_filter :ensure_receivable_stock_transfer, only: :receive
+      before_action :load_viewable_stock_locations, only: :index
+      before_action :load_variant_display_attributes, only: [:receive, :edit, :show, :tracking_info]
+      before_action :load_source_stock_locations, only: :new
+      before_action :load_destination_stock_locations, only: :edit
+      before_action :ensure_access_to_stock_location, only: :create
+      before_action :ensure_receivable_stock_transfer, only: :receive
 
       create.before :authorize_transfer_attributes!
 

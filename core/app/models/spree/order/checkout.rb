@@ -250,7 +250,7 @@ module Spree
 
           # @deprecated Use {OrderUpdateAttributes} instead
           def update_from_params(params, permitted_params, request_env = {})
-            ActiveSupport::Deprecation.warn "update_from_params is deprecated. Use the OrderUpdateAttributes class instead", caller
+            Spree::Deprecation.warn "update_from_params is deprecated. Use the OrderUpdateAttributes class instead", caller
             success = false
             @updating_params = params
             run_callbacks :updating_from_params do

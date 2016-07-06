@@ -8,7 +8,7 @@ module Spree
 
     validates :stock_location, :variant, presence: true
     validates :variant_id, uniqueness: { scope: [:stock_location_id, :deleted_at] }, allow_blank: true, unless: :deleted_at
-    validates :count_on_hand, numericality: { greater_than_or_equal_to: 0 }, if: :verify_count_on_hand?
+    validates :count_on_hand, numericality: { greater_than_or_equal_to: 0 }, unless: :backorderable?
 
     delegate :weight, :should_track_inventory?, to: :variant
 
@@ -83,10 +83,6 @@ module Spree
 
     private
 
-    def verify_count_on_hand?
-      count_on_hand_changed? && !backorderable? && (count_on_hand < count_on_hand_was) && (count_on_hand < 0)
-    end
-
     def count_on_hand=(value)
       write_attribute(:count_on_hand, value)
     end
@@ -114,7 +110,7 @@ module Spree
     def inventory_cache_threshold
       # only warn if store is setting binary_inventory_cache (default = false)
       @cache_threshold ||= if Spree::Config.binary_inventory_cache
-        ActiveSupport::Deprecation.warn "Spree::Config.binary_inventory_cache=true is DEPRECATED. Instead use Spree::Config.inventory_cache_threshold=1"
+        Spree::Deprecation.warn "Spree::Config.binary_inventory_cache=true is DEPRECATED. Instead use Spree::Config.inventory_cache_threshold=1"
         1
       else
         Spree::Config.inventory_cache_threshold

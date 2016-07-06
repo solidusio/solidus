@@ -123,7 +123,6 @@ module Spree
 
         Spree::Shipment.new(
           order: order,
-          address: order.ship_address,
           stock_location: stock_location,
           inventory_units: contents.map(&:inventory_unit)
         )

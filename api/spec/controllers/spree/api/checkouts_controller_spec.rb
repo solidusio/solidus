@@ -136,7 +136,7 @@ module Spree
 
       it "can update shipping method and transition from delivery to payment" do
         order.update_column(:state, "delivery")
-        shipment = create(:shipment, order: order, address: order.ship_address)
+        shipment = create(:shipment, order: order)
         shipment.refresh_rates
         shipping_rate = shipment.shipping_rates.where(selected: false).first
         api_put :update, id: order.to_param, order_token: order.guest_token,
@@ -237,7 +237,7 @@ module Spree
           end
 
           it "succeeds" do
-            ActiveSupport::Deprecation.silence do
+            Spree::Deprecation.silence do
               api_put(:update, params)
             end
             expect(response.status).to eq(200)
@@ -295,7 +295,7 @@ module Spree
           end
 
           it 'returns errors' do
-            ActiveSupport::Deprecation.silence do
+            Spree::Deprecation.silence do
               api_put(:update, params)
             end
 
@@ -369,7 +369,7 @@ module Spree
               receive(:verification_value=).with('456').and_call_original
             )
 
-            ActiveSupport::Deprecation.silence do
+            Spree::Deprecation.silence do
               api_put(:update, params)
             end
 
@@ -458,7 +458,7 @@ module Spree
         context "with order in confirm state" do
           subject do
             if action == :next
-              ActiveSupport::Deprecation.silence do
+              Spree::Deprecation.silence do
                 api_put action, params
               end
             else
