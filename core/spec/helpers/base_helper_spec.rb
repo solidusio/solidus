@@ -60,7 +60,7 @@ describe Spree::BaseHelper, type: :helper do
     end
 
     it "should not raise errors when style exists" do
-      ActiveSupport::Deprecation.silence do
+      Spree::Deprecation.silence do
         very_strange_image(product)
       end
     end
@@ -152,7 +152,7 @@ describe Spree::BaseHelper, type: :helper do
     end
 
     it "should not raise errors when helper method called" do
-      ActiveSupport::Deprecation.silence do
+      Spree::Deprecation.silence do
         foobar_image(product)
       end
     end

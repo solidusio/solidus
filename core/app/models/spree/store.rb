@@ -15,7 +15,8 @@ module Spree
     scope :by_url, lambda { |url| where("url like ?", "%#{url}%") }
 
     def self.current(store_key = nil)
-      current_store = Store.find_by(code: store_key) || Store.by_url(store_key).first
+      Spree::Deprecation.warn "Spree::Store.current needs a code or URL as an argument. If you want the default store use Spree::Store.default", caller if !store_key
+      current_store = Store.find_by(code: store_key) || Store.by_url(store_key).first if store_key
       current_store || Store.default
     end
 

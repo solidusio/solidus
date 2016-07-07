@@ -4,7 +4,7 @@ module Spree
       if store
         store.mail_from_address
       else
-        ActiveSupport::Deprecation.warn "A Spree::Store should be provided to determine the from address.", caller
+        Spree::Deprecation.warn "A Spree::Store should be provided to determine the from address.", caller
         Spree::Config[:mails_from]
       end
     end

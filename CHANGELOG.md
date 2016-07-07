@@ -1,12 +1,24 @@
 ## Solidus 1.4.0 (master, unreleased)
 
+*   Deprecate `Spree::Shipment#address` (column renamed)
+
+    `Spree::Shipment#address` was not actually being used for anything in
+    particular, so the association has been deprecated and delegated to
+    `Spree::Order#ship_address` instead. The database column has been renamed
+    `spree_shipments.deprecated_address_id`.
+
+    https://github.com/solidusio/solidus/pull/1138
+
 *   Coupon code application has been separated from the Continue button on the Payment checkout page
 
     * JavaScript for it has been moved from address.js into its own `spree/frontend/checkout/coupon-code`
     * Numerous small nuisances have been fixed [#1090](https://github.com/solidusio/solidus/pull/1090)
 
-*   Filter orders by store when more than a single store is present. [#1149](https://github.com/solidusio/solidus/pull/1140)
+*   Allow filtering orders by store when multiple stores are present. [#1149](https://github.com/solidusio/solidus/pull/1140)
 
+*   Remove unused `user_id` column from PromotionRule. [#1259](https://github.com/solidusio/solidus/pull/1259)
+
+*   Removed "Clear cache" button from the admin [#1275](https://github.com/solidusio/solidus/pull/1275)
 
 ## Solidus 1.3.0 (unreleased)
 

@@ -30,14 +30,14 @@ module Spree
       if order.respond_to?(:id)
         order
       else
-        ActiveSupport::Deprecation.warn("Calling OrderMailer with an id is deprecated. Pass the Spree::Order object instead.")
+        Spree::Deprecation.warn("Calling OrderMailer with an id is deprecated. Pass the Spree::Order object instead.")
         Spree::Order.find(order)
       end
     end
 
     def build_subject(subject_text, resend)
       resend_text = (resend ? "[#{Spree.t(:resend).upcase}] " : '')
-      "#{resend_text}#{Spree::Store.current.name} #{subject_text} ##{@order.number}"
+      "#{resend_text}#{@order.store.name} #{subject_text} ##{@order.number}"
     end
   end
 end

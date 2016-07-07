@@ -17,7 +17,7 @@ class Spree::OrderShipping
     ship(
       inventory_units: shipment.inventory_units.shippable,
       stock_location: shipment.stock_location,
-      address: shipment.address,
+      address: shipment.order.ship_address,
       shipping_method: shipment.shipping_method,
       shipped_at: Time.current,
       external_number: external_number,

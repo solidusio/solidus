@@ -29,6 +29,6 @@ Dummy::Application.configure do
   config.action_mailer.delivery_method = :test
   ActionMailer::Base.default :from => "spree@example.com"
 
-  # Print deprecation notices to the stderr
-  config.active_support.deprecation = :stderr
+  # Raise on deprecation warnings
+  Spree::Deprecation.behavior = :raise
 end

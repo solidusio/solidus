@@ -45,7 +45,7 @@ module Spree
 
       def shipping_methods(package)
         package.shipping_methods
-          .available_for_address(package.shipment.address)
+          .available_for_address(package.shipment.order.ship_address)
           .includes(:calculator, tax_category: :tax_rates)
           .to_a
           .select do |ship_method|

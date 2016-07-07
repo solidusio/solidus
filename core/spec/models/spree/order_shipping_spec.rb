@@ -57,7 +57,7 @@ describe Spree::OrderShipping do
     let(:shipment) { order.shipments.to_a.first }
     let(:inventory_units) { shipment.inventory_units }
     let(:stock_location) { shipment.stock_location }
-    let(:address) { shipment.address }
+    let(:address) { order.ship_address }
     let(:shipping_method) { shipment.shipping_method }
 
     it_behaves_like 'shipment shipping'
@@ -190,7 +190,7 @@ describe Spree::OrderShipping do
         order.shipping.ship(
           inventory_units: shipped_inventory,
           stock_location: shipment.stock_location,
-          address: shipment.address,
+          address: order.ship_address,
           shipping_method: shipment.shipping_method
         )
       end
@@ -223,8 +223,7 @@ describe Spree::OrderShipping do
       let(:shipment) do
         FactoryGirl.create(
           :shipment,
-          order: order,
-          address: FactoryGirl.create(:address)
+          order: order
         )
       end
 

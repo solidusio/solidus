@@ -1,11 +1,11 @@
 module Spree
   module Admin
     class PaymentsController < Spree::Admin::BaseController
-      before_filter :load_order, only: [:create, :new, :index, :fire]
-      before_filter :load_payment, except: [:create, :new, :index, :fire]
-      before_filter :load_payment_for_fire, only: :fire
-      before_filter :load_data
-      before_filter :require_bill_address, only: [:index]
+      before_action :load_order, only: [:create, :new, :index, :fire]
+      before_action :load_payment, except: [:create, :new, :index, :fire]
+      before_action :load_payment_for_fire, only: :fire
+      before_action :load_data
+      before_action :require_bill_address, only: [:index]
 
       respond_to :html
 

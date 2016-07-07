@@ -130,11 +130,7 @@ Spree::Core::Engine.routes.draw do
       end
     end
 
-    resource :general_settings, only: [:edit, :update] do
-      collection do
-        post :clear_cache
-      end
-    end
+    resource :general_settings, only: [:edit, :update]
 
     resources :return_items, only: [:update]
 

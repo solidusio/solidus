@@ -687,7 +687,7 @@ describe Spree::Payment, type: :model do
       context "with multiple payment attempts" do
         let(:attributes) { attributes_for(:credit_card) }
         around do |example|
-          ActiveSupport::Deprecation.silence{ example.run }
+          Spree::Deprecation.silence{ example.run }
         end
 
         it "should not try to create profiles on old failed payment attempts" do
@@ -748,7 +748,7 @@ describe Spree::Payment, type: :model do
   describe "#apply_source_attributes" do
     # This method is deprecated
     around do |example|
-      ActiveSupport::Deprecation.silence do
+      Spree::Deprecation.silence do
         example.run
       end
     end
