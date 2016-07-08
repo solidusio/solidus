@@ -33,7 +33,7 @@ describe Spree::Core::ControllerHelpers::Auth, type: :controller do
     controller(FakesController) do
       def index
         set_guest_token
-        render text: 'index'
+        render plain: 'index'
       end
     end
     it 'sends cookie header' do
