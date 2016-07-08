@@ -29,7 +29,7 @@ fi
 cd ./sandbox
 cat <<RUBY >> Gemfile
 gem 'solidus', :path => '..'
-gem 'solidus_auth_devise', path: '../../solidus_auth_devise'
+gem 'solidus_auth_devise', github: 'solidusio/solidus_auth_devise'
 
 gem 'paranoia', github: 'jhawthorn/paranoia', branch: 'rails5'
 gem 'state_machines-activerecord', github: 'state-machines/state_machines-activerecord'
