@@ -24,27 +24,14 @@ module Spree
     end
 
     context "pagination" do
-      before do
-        expect(State).to receive(:accessible_by).and_return(@scope = double)
-        allow(@scope).to receive_message_chain(:ransack, :result, :includes, :order).and_return(@scope)
-      end
+      it "can select the next page and control page size" do
+        create(:state)
+        api_get :index, page: 2, per_page: 1
 
-      it "does not paginate states results when asked not to do so" do
-        expect(@scope).not_to receive(:page)
-        expect(@scope).not_to receive(:per)
-        api_get :index
-      end
-
-      it "paginates when page parameter is passed through" do
-        expect(@scope).to receive(:page).with(1).and_return(@scope)
-        expect(@scope).to receive(:per).with(nil)
-        api_get :index, page: 1
-      end
-
-      it "paginates when per_page parameter is passed through" do
-        expect(@scope).to receive(:page).with(nil).and_return(@scope)
-        expect(@scope).to receive(:per).with(25)
-        api_get :index, per_page: 25
+        expect(json_response["states"].size).to eq(1)
+        expect(json_response["pages"]).to eq(2)
+        expect(json_response["current_page"]).to eq(2)
+        expect(json_response["count"]).to eq(1)
       end
     end
 
