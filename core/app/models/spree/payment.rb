@@ -220,7 +220,9 @@ WARN
           errors.add(Spree.t(source.class.to_s.demodulize.underscore), "#{field_name} #{error}")
         end
       end
-      !errors.present?
+      if errors.any?
+        throw :abort
+      end
     end
 
     def source_required?

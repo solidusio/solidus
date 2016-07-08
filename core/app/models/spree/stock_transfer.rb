@@ -103,7 +103,7 @@ module Spree
     def ensure_not_finalized
       if finalized?
         errors.add(:base, Spree.t('errors.messages.cannot_delete_finalized_stock_transfer'))
-        return false
+        throw :abort
       end
     end
   end
