@@ -34,19 +34,34 @@ module Spree
       end
 
       def show
-        report_class = "Spree::Report::#{params[:id].camelize}".constantize
-        report = report_class.new(params)
-        respond_to do |format|
-          format.html do
-            report.content.each do |key, value|
-              instance_variable_set("@#{key}", value)
+        report_class = "Spree::Report::#{params[:id].camelize}".safe_constantize
+        if report_class.present?
+          report = report_class.new(params_for_report)
+          respond_to do |format|
+            format.html do
+              report.content.each do |key, value|
+                instance_variable_set("@#{key}", value)
+              end
+              render report_class.template
             end
-            render report_class.template
           end
+        else
+          report_not_found params[:id]
         end
       end
 
       @@available_reports = {}
+
+      private
+
+      def params_for_report
+        params.except(:id, :controller, :action)
+      end
+
+      def report_not_found(report_id)
+        flash[:error] = Spree.t(:report_not_found, report: report_id)
+        redirect_to admin_reports_path
+      end
     end
   end
 end

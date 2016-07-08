@@ -14,13 +14,19 @@ module Spree
         end
         params[:q][:s] ||= "completed_at desc"
         @ransack_query = params[:q]
+        @completed_at_gt = params[:q][:completed_at_gt]
+        @completed_at_lt = params[:q][:completed_at_lt]
       end
 
       def content
         search = Order.complete.ransack(@ransack_query)
+        orders = search.result
         {
+          completed_at_gt: @completed_at_gt,
+          completed_at_lt: @completed_at_lt,
           search: search,
-          totals: totals(search.result)
+          orders: orders.to_a,
+          totals: totals(orders)
         }
       end
 

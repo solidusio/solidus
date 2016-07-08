@@ -1592,6 +1592,7 @@ en:
     remove: Remove
     rename: Rename
     reports: Reports
+    report_not_found: Report doesn't exist.
     resend: Resend
     reset_password: Reset my password
     response_code: Response Code
