@@ -409,7 +409,7 @@ module Spree
     def ensure_can_destroy
       unless pending?
         errors.add(:state, :cannot_destroy, state: state)
-        return false
+        throw :abort
       end
     end
   end
