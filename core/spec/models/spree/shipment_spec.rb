@@ -717,7 +717,7 @@ describe Spree::Shipment, type: :model do
     it 'does not send a confirmation email' do
       expect {
         unshippable_shipment.ready!
-        unshippable_shipment.inventory_units(true).each do |unit|
+        unshippable_shipment.inventory_units.reload.each do |unit|
           expect(unit.state).to eq('shipped')
         end
       }.not_to change{ ActionMailer::Base.deliveries.count }
