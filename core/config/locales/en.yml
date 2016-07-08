@@ -763,7 +763,7 @@ en:
           amount_used_not_zero: "is greater than zero. Can not delete store credit"
           update_reason_required: "A reason for the change must be selected"
       variants:
-        index:
+        table_filter:
           show_deleted: Show deleted variants
         new:
           new_variant: New variant
@@ -1098,6 +1098,9 @@ en:
     expiration: Expiration
     extension: Extension
     existing_shipments: Existing shipments
+    hints:
+      spree/product:
+        promotionable: "This determines whether or not promotions can apply to this product.<br/>Default: checked"
     failed_payment_attempts: Failed Payment Attempts
     failure: Failure
     filename: Filename

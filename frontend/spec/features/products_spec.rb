@@ -20,6 +20,21 @@ describe "Visiting Products", type: :feature, inaccessible: true do
     expect(page).to have_content("Shopping Cart")
   end
 
+  # Regression spec for Spree [PR#7442](https://github.com/spree/spree/pull/7442)
+  context "when generating product links" do
+    let(:product) { Spree::Product.available.first }
+
+    it "should not use the *_url helper to generate the product links" do
+      visit spree.root_path
+      expect(page).not_to have_xpath(".//a[@href='#{spree.product_url(product, host: current_host)}']")
+    end
+
+    it "should use *_path helper to generate the product links" do
+     visit spree.root_path
+     expect(page).to have_xpath(".//a[@href='#{spree.product_path(product)}']")
+    end
+  end
+
   describe 'meta tags and title' do
     let(:jersey) { Spree::Product.find_by_name('Ruby on Rails Baseball Jersey') }
     let(:metas) { { meta_description: 'Brand new Ruby on Rails Jersey', meta_title: 'Ruby on Rails Baseball Jersey Buy High Quality Geek Apparel', meta_keywords: 'ror, jersey, ruby' } }

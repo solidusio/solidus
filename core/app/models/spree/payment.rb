@@ -155,7 +155,7 @@ module Spree
       return unless new_record?
       return if source_attributes.blank?
 
-      ActiveSupport::Deprecation.warn(<<WARN.squish)
+      Spree::Deprecation.warn(<<WARN.squish)
 Building payment sources by assigning source_attributes on payments is
 deprecated. Instead use either the PaymentCreate class or the
 OrderUpdateAttributes class.

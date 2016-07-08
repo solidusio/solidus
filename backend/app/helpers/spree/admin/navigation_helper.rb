@@ -29,7 +29,7 @@ module Spree
         selected = if options[:match_path].is_a? Regexp
           request.fullpath =~ options[:match_path]
         elsif options[:match_path]
-          request.fullpath.starts_with?("#{admin_path}#{options[:match_path]}")
+          request.fullpath.starts_with?("#{spree.admin_path}#{options[:match_path]}")
         else
           request.fullpath.starts_with?(destination_url) ||
             args.include?(controller.controller_name.to_sym)
@@ -66,8 +66,9 @@ module Spree
       def link_to_delete(resource, options = {})
         url = options[:url] || object_url(resource)
         name = options[:name] || Spree.t('actions.delete')
+        confirm = options[:confirm] || Spree.t(:are_you_sure)
         options[:class] = "delete-resource"
-        options[:data] = { confirm: Spree.t(:are_you_sure), action: 'remove' }
+        options[:data] = { confirm: confirm, action: 'remove' }
         link_to_with_icon 'trash', name, url, options
       end
 

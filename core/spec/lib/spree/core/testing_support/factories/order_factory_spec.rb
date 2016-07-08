@@ -22,6 +22,20 @@ RSpec.describe 'order factory' do
     it_behaves_like 'a working factory'
   end
 
+  describe 'order ready to complete' do
+    let(:factory) { :order_ready_to_complete }
+
+    it_behaves_like 'a working factory'
+
+    it "is completable" do
+      order = create(factory)
+
+      expect { order.complete! }.to change {
+        order.complete?
+      }.from(false).to(true)
+    end
+  end
+
   describe 'completed order with totals' do
     let(:factory) { :completed_order_with_totals }
 
@@ -42,6 +56,12 @@ RSpec.describe 'order factory' do
 
   describe 'shipped order' do
     let(:factory) { :shipped_order }
+
+    it_behaves_like 'a working factory'
+  end
+
+  describe 'completed order with promotion' do
+    let(:factory) { :completed_order_with_promotion }
 
     it_behaves_like 'a working factory'
   end

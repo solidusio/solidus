@@ -72,7 +72,7 @@ module Spree
     # @param [Spree::Zone] order_tax_zone is the smalles applicable zone to the order's tax address
     # @param [Array<Spree::LineItem,Spree::Shipment>] items to be adjusted
     def self.adjust(order_tax_zone, items)
-      ActiveSupport::Deprecation.warn("Please use Spree::Tax::OrderAdjuster or Spree::Tax::ItemAdjuster instead", caller)
+      Spree::Deprecation.warn("Please use Spree::Tax::OrderAdjuster or Spree::Tax::ItemAdjuster instead", caller)
       items.map do |item|
         Spree::Tax::ItemAdjuster.new(item, rates_for_order_zone: for_zone(order_tax_zone)).adjust!
       end

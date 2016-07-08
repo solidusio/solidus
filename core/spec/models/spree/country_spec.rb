@@ -14,8 +14,12 @@ describe Spree::Country, type: :model do
         Spree::Config[:default_country_id] = 2
       end
 
+      subject(:default_country) do
+        Spree::Deprecation.silence { described_class.default }
+      end
+
       it 'emits a deprecation warning' do
-        expect(ActiveSupport::Deprecation).to receive(:warn)
+        expect(Spree::Deprecation).to receive(:warn)
         default_country
       end
 
@@ -27,6 +31,10 @@ describe Spree::Country, type: :model do
     context 'with the configuration setting a non-existing legacy default country ID' do
       before do
         Spree::Config[:default_country_id] = 0
+      end
+
+      subject(:default_country) do
+        Spree::Deprecation.silence { described_class.default }
       end
 
       it 'loads the country configured by the ISO code' do

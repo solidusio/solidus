@@ -71,6 +71,7 @@
         <%= f.label :promotionable do %>
           <%= f.check_box :promotionable %> <%= Spree::Product.human_attribute_name(:promotionable) %>
         <% end %>
+        <%= f.field_hint :promotionable %>
       <% end %>
     </div>
 
