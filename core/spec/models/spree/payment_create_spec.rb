@@ -126,5 +126,56 @@ module Spree
         end
       end
     end
+
+    context "with strong params" do
+      let(:valid_attributes) do
+        {
+          amount: 100,
+          payment_method: payment_method,
+          source_attributes: {
+            expiry: "01 / 99",
+            number: '1234567890123',
+            verification_value: '123',
+            name: 'Foo Bar'
+          }
+        }
+      end
+
+      context "unpermitted" do
+        let(:attributes) { ActionController::Parameters.new(valid_attributes) }
+
+        it "raises ForbiddenAttributesError" do
+          expect { new_payment }.to raise_error(ActiveModel::ForbiddenAttributesError)
+        end
+      end
+
+      context "partially permitted" do
+        let(:attributes) do
+          ActionController::Parameters.new(valid_attributes).permit(:amount)
+        end
+
+        it "only uses permitted attributes" do
+          expect(new_payment).to have_attributes(
+            amount: 100, # permitted
+            payment_method: nil, # unpermitted
+            source: nil # unpermitted
+          )
+        end
+      end
+
+      context "all permitted" do
+        let(:attributes) do
+          ActionController::Parameters.new(valid_attributes).permit!
+        end
+
+        it "creates a payment with all attributes" do
+          expect(new_payment).to have_attributes(
+            amount: 100,
+            payment_method: payment_method,
+            source: kind_of(CreditCard)
+          )
+        end
+      end
+    end
   end
 end
