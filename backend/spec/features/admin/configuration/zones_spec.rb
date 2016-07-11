@@ -6,7 +6,7 @@ describe "Zones", type: :feature do
   before(:each) do
     Spree::Zone.delete_all
     visit spree.admin_path
-    click_link "Areas"
+    click_link "Locations"
   end
 
   context "show" do

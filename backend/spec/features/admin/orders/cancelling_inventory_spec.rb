@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe "Cancelling inventory" do
+describe "Cancel items" do
   stub_authorization!
 
   let!(:order) do
@@ -20,29 +20,29 @@ describe "Cancelling inventory" do
     end
   end
 
-  context "when some inventory is cancelable" do
-    it "can cancel the inventory" do
+  context "when some items are cancelable" do
+    it "can cancel the item" do
       visit_order
 
-      click_link 'Cancel Inventory'
+      click_link 'Cancel Items'
 
       within_row(1) do
         check 'inventory_unit_ids[]'
       end
 
-      click_button "Cancel Inventory"
+      click_button "Cancel Items"
       expect(page).to have_content("Inventory canceled")
       expect(page).to have_content("1 x canceled")
     end
   end
 
-  context "when all inventory is not cancelable" do
+  context "when all items are not cancelable" do
     before { order.inventory_units.each(&:cancel!) }
 
-    it "does not display the link to cancel inventory" do
+    it "does not display the link to cancel items" do
       visit_order
 
-      expect(page).to have_no_content('Cancel Inventory')
+      expect(page).to have_no_content('Cancel Items')
     end
   end
 end

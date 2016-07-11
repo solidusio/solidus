@@ -14,7 +14,7 @@
   <% if can? :display, Spree::Taxonomy %>
     <%= tab :taxonomies %>
   <% end %>
-  <% if can? :admin, Spree::Taxon %>
-    <%= tab :taxons %>
+  <% if can? :display, Spree::Taxon %>
+    <%= tab :taxons, label: :display_order %>
   <% end %>
 </ul>

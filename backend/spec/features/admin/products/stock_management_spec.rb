@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe "Stock Management", type: :feature do
+describe "Product Stock", type: :feature do
   stub_authorization!
 
   before(:each) do
@@ -18,7 +18,7 @@ describe "Stock Management", type: :feature do
 
       click_nav "Products"
       within_row(1) { click_icon :edit }
-      click_link "Stock Management"
+      click_link "Product Stock"
     end
 
     # Regression test for https://github.com/spree/spree/issues/3304
@@ -32,7 +32,7 @@ describe "Stock Management", type: :feature do
         within_row(1) do
           click_icon :edit
         end
-        click_link "Stock Management"
+        click_link "Product Stock"
       end
 
       it "renders" do
