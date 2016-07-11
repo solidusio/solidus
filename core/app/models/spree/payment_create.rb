@@ -2,7 +2,7 @@ module Spree
   # Service object for creating new payments on an Order
   class PaymentCreate
     # @param order [Order] The order for the new payment
-    # @param attributes [Hash] attributes which are assigned to the new payment
+    # @param attributes [Hash,ActionController::Parameters] attributes which are assigned to the new payment
     #   * :payment_method_id Id of payment method used for this payment
     #   * :source_attributes Attributes used to build the source of this payment. Usually a {CreditCard}
     #     * :existing_card_id (Integer) The id of an existing {CreditCard} object to use
@@ -11,7 +11,10 @@ module Spree
     def initialize(order, attributes, payment: nil, request_env: {})
       @order = order
       @payment = payment
-      @attributes = attributes.dup.with_indifferent_access
+
+      # If AC::Params are passed in, attributes.to_h gives us a hash of only
+      # the permitted attributes.
+      @attributes = attributes.to_h.with_indifferent_access
       @source_attributes = @attributes.delete(:source_attributes) || {}
       @request_env = request_env
     end

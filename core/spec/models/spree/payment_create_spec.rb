@@ -150,8 +150,12 @@ module Spree
       context "unpermitted" do
         let(:attributes) { ActionController::Parameters.new(valid_attributes) }
 
-        it "raises ForbiddenAttributesError" do
-          expect { new_payment }.to raise_error(ActiveModel::ForbiddenAttributesError)
+        it "ignores all attributes" do
+          expect(new_payment).to have_attributes(
+            amount: 0,
+            payment_method: nil,
+            source: nil
+          )
         end
       end
 
