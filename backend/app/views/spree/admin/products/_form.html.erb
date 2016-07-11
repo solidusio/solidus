@@ -85,7 +85,7 @@
           <%=
             admin_hint(
               Spree.t(:skus),
-                product.variants.order("sku ASC").map{ |variant| variant.sku }.join(", ")
+                @product.variants.order("sku ASC").map{ |variant| variant.sku }.join(", ")
               )
           %>
           <div class="info-actions">
