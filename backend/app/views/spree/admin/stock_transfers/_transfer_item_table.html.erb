@@ -32,10 +32,7 @@
                       <tr>
                         <td colspan="2">
                           <%= I18n.t(:deleted, scope: [:spree, :hints, "spree/variant"]) %>
-                          <% hint_text = I18n.t(:deleted_explanation, scope: [:spree, :hints, "spree/variant"], date: variant.deleted_at) %>
-                          <% newer_variant_with_same_sku = Spree::Variant.find_by(sku: variant.sku) %>
-                          <% hint_text += " #{I18n.t(:replaced, scope: [:spree, :hints, "spree/variant"])}" if newer_variant_with_same_sku.present? %>
-                          <%= admin_hint(I18n.t(:deleted, scope: [:spree, :hints, "spree/variant"]), hint_text) %>
+                          <%= deleted_variant_admin_hint(variant) %>
                         </td>
                       </tr>
                     <% end %>

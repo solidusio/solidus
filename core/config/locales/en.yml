@@ -1104,7 +1104,7 @@ en:
       spree/variant:
         deleted: "Deleted Variant"
         deleted_explanation: "This variant was deleted on %{date}."
-        replaced: "It has since been replaced by another with the same SKU."
+        deleted_explanation_with_replacement: "This variant was deleted on %{date}. It has since been replaced by another with the same SKU."
     failed_payment_attempts: Failed Payment Attempts
     failure: Failure
     filename: Filename
