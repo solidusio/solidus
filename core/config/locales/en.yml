@@ -1101,6 +1101,10 @@ en:
     hints:
       spree/product:
         promotionable: "This determines whether or not promotions can apply to this product.<br/>Default: checked"
+      spree/variant:
+        deleted: "Deleted Variant"
+        deleted_explanation: "This variant was deleted on %{date}."
+        replaced: "It has since been replaced by another with the same SKU."
     failed_payment_attempts: Failed Payment Attempts
     failure: Failure
     filename: Filename
