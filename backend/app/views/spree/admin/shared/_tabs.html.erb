@@ -1,39 +1,14 @@
-<% if can? :admin, Spree::Order %>
-  <%= tab *Spree::BackendConfiguration::ORDER_TABS, icon: 'shopping-cart' %>
-<% end %>
-
-<% if can? :admin, Spree::Product %>
-  <%= tab *Spree::BackendConfiguration::PRODUCT_TABS, icon: 'th-large' do %>
-    <%- render partial: 'spree/admin/shared/product_sub_menu' %>
-  <%- end %>
-<% end %>
-
-<% if can? :admin, :reports %>
-  <%= tab *Spree::BackendConfiguration::REPORT_TABS, icon: 'file'  %>
-<% end %>
-
-<% if can? :admin, :general_settings %>
-  <%= tab *Spree::BackendConfiguration::CONFIGURATION_TABS, label: :settings, icon: 'wrench', url: spree.edit_admin_general_settings_path do %>
-    <% render partial: 'spree/admin/shared/settings_sub_menu' %>
+<% Spree::Backend::Config.menu_items.each do |menu_item| %>
+  <% if instance_exec(&menu_item.condition) %>
+    <%=
+      tab(
+        *menu_item.sections,
+        icon: menu_item.icon,
+        label: menu_item.label,
+        url: menu_item.url.is_a?(Symbol) ? spree.public_send(menu_item.url) : menu_item.url
+      ) do
+    %>
+      <%- render partial: menu_item.partial if menu_item.partial %>
+    <%- end %>
   <% end %>
-<% end %>
-
-<% if can? :admin, Spree::Promotion %>
-  <%= tab *Spree::BackendConfiguration::PROMOTION_TABS, url: spree.admin_promotions_path, icon: 'bullhorn' do %>
-    <%- render partial: 'spree/admin/shared/promotion_sub_menu' %>
-  <%- end %>
-<% end %>
-
-<% if can? :admin, Spree::StockItem %>
-  <%= tab(
-    *Spree::BackendConfiguration::STOCK_TABS,
-    url: spree.admin_stock_items_path,
-    label: :stock, icon: 'cubes',
-    match_path: %r(^/admin/stock(?!_locations))) do %>
-    <%- render partial: 'spree/admin/shared/stock_sub_menu' %>
-  <%- end %>
-<% end %>
-
-<% if Spree.user_class && can?(:admin, Spree.user_class) %>
-  <%= tab *Spree::BackendConfiguration::USER_TABS, url: spree.admin_users_path, icon: 'user' %>
 <% end %>
