@@ -43,6 +43,12 @@ module Spree
         expect(new_payment.source.payment_method_id).to eq payment_method.id
       end
 
+      it "doesn't modify passed-in hash" do
+        original = attributes.dup
+        new_payment
+        expect(original).to eq(attributes)
+      end
+
       context "when payment source not valid" do
         let(:attributes) do
           {
