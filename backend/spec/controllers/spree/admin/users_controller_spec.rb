@@ -71,7 +71,9 @@ describe Spree::Admin::UsersController, type: :controller do
     let(:dummy_role) { Spree::Role.create(name: "dummyrole") }
 
     # The created user
-    let(:user) { Spree.user_class.last }
+    def user
+      Spree.user_class.last
+    end
 
     stub_authorization! do |_user|
       can :manage, Spree.user_class
