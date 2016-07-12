@@ -35,7 +35,7 @@ module Spree
 
       def show
         report_class = "Spree::Report::#{params[:id].camelize}".safe_constantize
-        if report_class.present?
+        if report_class
           report = report_class.new(params_for_report)
           respond_to do |format|
             format.html do

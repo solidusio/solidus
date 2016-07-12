@@ -48,17 +48,26 @@ describe Spree::Admin::ReportsController, type: :controller do
   end
 
   describe 'GET show' do
-    it 'shows a report' do
-      spree_get :show, id: :sales_total
-      expect(response).to be_ok
+    context 'report exists' do
+      it 'shows a report' do
+        spree_get :show, id: :sales_total
+        expect(response).to be_ok
+      end
+      it 'passes params to the report' do
+        expect_any_instance_of(Spree::Report::SalesTotal).to receive(:initialize).with("foo" => "bar")
+        spree_get :show, { id: :sales_total, foo: :bar }
+      end
     end
-    it 'passes params to the report' do
-      expect_any_instance_of(Spree::Report::SalesTotal).to receive(:initialize).with("foo" => "bar")
-      spree_get :show, { id: :sales_total, foo: :bar }
-    end
-    it "returns an error if there's no such report" do
-      spree_get :show, id: :some_report
-      expect(response).to redirect_to spree.admin_reports_path
+    context 'no such report exists' do
+      before do
+        spree_get :show, id: :some_report
+      end
+      it "returns an error" do
+        expect(response).to redirect_to spree.admin_reports_path
+      end
+      it "sets the flash error" do
+        expect(flash[:error]).to eq Spree.t(:report_not_found)
+      end
     end
   end
 
