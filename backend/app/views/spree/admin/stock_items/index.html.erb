@@ -1,11 +1,11 @@
 <% if @product %>
   <%= render :partial => 'spree/admin/shared/product_tabs', :locals => { :current => 'Stock Management' } %>
   <%= render :partial => 'spree/shared/error_messages', :locals => { :target => @product } %>
-  <% add_breadcrumb(Spree.t(:manage_stock)) %>
+  <% admin_breadcrumb(Spree.t(:manage_stock)) %>
 
 <% else %>
 
-  <% add_breadcrumb(Spree.t(:stock)) %>
+  <% admin_breadcrumb(Spree.t(:stock)) %>
 
 <% end %>
 

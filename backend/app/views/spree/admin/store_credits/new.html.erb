@@ -1,7 +1,7 @@
-<% add_breadcrumb(link_to plural_resource_name(Spree::LegacyUser), spree.admin_users_path) %>
-<% add_breadcrumb(link_to @user.email, edit_admin_user_url(@user)) %>
-<% add_breadcrumb(link_to Spree::StoreCredit.model_name.human, spree.admin_user_store_credits_path(@user)) %>
-<% add_breadcrumb(Spree.t(:new_store_credit)) %>
+<% admin_breadcrumb(link_to plural_resource_name(Spree::LegacyUser), spree.admin_users_path) %>
+<% admin_breadcrumb(link_to @user.email, edit_admin_user_url(@user)) %>
+<% admin_breadcrumb(link_to Spree::StoreCredit.model_name.human, spree.admin_user_store_credits_path(@user)) %>
+<% admin_breadcrumb(Spree.t(:new_store_credit)) %>
 
 
 <%= render 'spree/admin/users/sidebar' %>

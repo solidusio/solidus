@@ -1,5 +1,5 @@
-<% add_breadcrumb(link_to plural_resource_name(Spree::Promotion), spree.admin_promotions_path) %>
-<% add_breadcrumb(Spree.t(:new_promotion)) %>
+<% admin_breadcrumb(link_to plural_resource_name(Spree::Promotion), spree.admin_promotions_path) %>
+<% admin_breadcrumb(Spree.t(:new_promotion)) %>
 
 
 <%= form_for :promotion, :url => collection_url do |f| %>

@@ -1,8 +1,8 @@
 <%= render 'spree/admin/shared/shipping_tabs' %>
 
-<% add_breadcrumb(Spree.t(:settings)) %>
-<% add_breadcrumb(Spree.t('admin.tab.shipping')) %>
-<% add_breadcrumb(plural_resource_name(Spree::ShippingCategory)) %>
+<% admin_breadcrumb(Spree.t(:settings)) %>
+<% admin_breadcrumb(Spree.t('admin.tab.shipping')) %>
+<% admin_breadcrumb(plural_resource_name(Spree::ShippingCategory)) %>
 
 
 <% content_for :page_actions do %>

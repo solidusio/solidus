@@ -1,5 +1,5 @@
-<% add_breadcrumb(link_to plural_resource_name(Spree::Product), spree.admin_products_path) %>
-<% add_breadcrumb(link_to @product.name, spree.admin_product_path(@product)) %>
+<% admin_breadcrumb(link_to plural_resource_name(Spree::Product), spree.admin_products_path) %>
+<% admin_breadcrumb(link_to @product.name, spree.admin_product_path(@product)) %>
 
 <% content_for :tabs do %>
   <nav>

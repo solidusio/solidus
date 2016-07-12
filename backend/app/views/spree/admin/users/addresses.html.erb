@@ -1,6 +1,6 @@
-<% add_breadcrumb(link_to plural_resource_name(Spree::LegacyUser), spree.admin_users_path) %>
-<% add_breadcrumb(link_to @user.email, edit_admin_user_url(@user)) %>
-<% add_breadcrumb(plural_resource_name(Spree::Address)) %>
+<% admin_breadcrumb(link_to plural_resource_name(Spree::LegacyUser), spree.admin_users_path) %>
+<% admin_breadcrumb(link_to @user.email, edit_admin_user_url(@user)) %>
+<% admin_breadcrumb(plural_resource_name(Spree::Address)) %>
 
 
 <%= render 'spree/admin/users/sidebar' %>

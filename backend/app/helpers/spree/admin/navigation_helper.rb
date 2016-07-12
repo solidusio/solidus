@@ -2,7 +2,7 @@ module Spree
   module Admin
     module NavigationHelper
       # Add items to current page breadcrumb heirarchy
-      def add_breadcrumb(*ancestors, &block)
+      def admin_breadcrumb(*ancestors, &block)
         breadcrumbs.concat(ancestors) if ancestors.present?
         breadcrumbs.push(capture(&block)) if block_given?
       end
@@ -10,8 +10,8 @@ module Spree
       # Render Bootstrap style breadcrumbs
       def render_breadcrumbs
         if content_for?(:page_title)
-          ActiveSupport::Deprecation.warn('content_for(:page_title) is deprecated, use add_breadcrumb')
-          add_breadcrumb(content_for(:page_title))
+          ActiveSupport::Deprecation.warn('content_for(:page_title) is deprecated, use admin_breadcrumb')
+          admin_breadcrumb(content_for(:page_title))
         end
 
         content_tag :ol, class: 'breadcrumb' do

@@ -1,9 +1,9 @@
 <%= render 'spree/admin/shared/general_tabs' %>
 
-<% add_breadcrumb(Spree.t(:settings)) %>
-<% add_breadcrumb(Spree.t(:general_settings)) %>
-<% add_breadcrumb(link_to plural_resource_name(Spree::Tracker), spree.admin_trackers_path) %>
-<% add_breadcrumb(Spree.t(:new_tracker)) %>
+<% admin_breadcrumb(Spree.t(:settings)) %>
+<% admin_breadcrumb(Spree.t(:general_settings)) %>
+<% admin_breadcrumb(link_to plural_resource_name(Spree::Tracker), spree.admin_trackers_path) %>
+<% admin_breadcrumb(Spree.t(:new_tracker)) %>
 
 <% content_for :page_actions do %>
 <% end %>

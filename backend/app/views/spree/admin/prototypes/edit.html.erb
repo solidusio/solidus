@@ -1,6 +1,6 @@
-<% add_breadcrumb(link_to plural_resource_name(Spree::Product), spree.admin_products_path) %>
-<% add_breadcrumb(link_to plural_resource_name(Spree::Prototype), spree.admin_prototypes_path) %>
-<% add_breadcrumb(@prototype.name) %>
+<% admin_breadcrumb(link_to plural_resource_name(Spree::Product), spree.admin_products_path) %>
+<% admin_breadcrumb(link_to plural_resource_name(Spree::Prototype), spree.admin_prototypes_path) %>
+<% admin_breadcrumb(@prototype.name) %>
 
 <% content_for :page_actions do %>
 <% end %>

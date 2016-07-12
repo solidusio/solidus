@@ -1,6 +1,6 @@
-<% add_breadcrumb(link_to plural_resource_name(Spree::Product), spree.admin_products_path) %>
-<% add_breadcrumb(link_to plural_resource_name(Spree::Property), spree.admin_properties_path) %>
-<% add_breadcrumb(@property.name) %>
+<% admin_breadcrumb(link_to plural_resource_name(Spree::Product), spree.admin_products_path) %>
+<% admin_breadcrumb(link_to plural_resource_name(Spree::Property), spree.admin_properties_path) %>
+<% admin_breadcrumb(@property.name) %>
 
 
 <%= render :partial => 'spree/shared/error_messages', :locals => { :target => @property } %>

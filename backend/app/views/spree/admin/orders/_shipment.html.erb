@@ -1,4 +1,4 @@
-<% add_breadcrumb(plural_resource_name(Spree::Shipment)) %>
+<% admin_breadcrumb(plural_resource_name(Spree::Shipment)) %>
 
 
 <% manifest_items = Spree::ShippingManifest.new(inventory_units: shipment.inventory_units.where(carton_id: nil)).items %>

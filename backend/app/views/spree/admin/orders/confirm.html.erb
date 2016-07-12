@@ -1,6 +1,6 @@
 <%= render partial: 'spree/admin/shared/order_tabs', locals: {current: 'Confirm'} %>
 
-<% add_breadcrumb(Spree.t(:confirm_order)) %>
+<% admin_breadcrumb(Spree.t(:confirm_order)) %>
 
 
 <%= render partial: 'spree/admin/orders/confirm/customer_details', locals: {order: @order} %>
