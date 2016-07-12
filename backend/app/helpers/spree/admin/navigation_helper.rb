@@ -1,10 +1,14 @@
 module Spree
   module Admin
     module NavigationHelper
+      def admin_breadcrumbs
+        @admin_breadcrumbs ||= []
+      end
+
       # Add items to current page breadcrumb heirarchy
       def admin_breadcrumb(*ancestors, &block)
-        breadcrumbs.concat(ancestors) if ancestors.present?
-        breadcrumbs.push(capture(&block)) if block_given?
+        admin_breadcrumbs.concat(ancestors) if ancestors.present?
+        admin_breadcrumbs.push(capture(&block)) if block_given?
       end
 
       # Render Bootstrap style breadcrumbs
@@ -15,8 +19,8 @@ module Spree
         end
 
         content_tag :ol, class: 'breadcrumb' do
-          safe_join breadcrumbs.map { |level|
-            content_tag(:li, level, class: "separator #{level == breadcrumbs.last ? 'active' : ''}")
+          safe_join admin_breadcrumbs.map { |level|
+            content_tag(:li, level, class: "separator #{level == admin_breadcrumbs.last ? 'active' : ''}")
           }
         end
       end
@@ -26,8 +30,8 @@ module Spree
           content_for(:title)
         elsif content_for?(:page_title)
           content_for(:page_title)
-        elsif breadcrumbs.any?
-          strip_tags(breadcrumbs.last)
+        elsif admin_breadcrumbs.any?
+          strip_tags(admin_breadcrumbs.last)
         else
           Spree.t(controller.controller_name, default: controller.controller_name.titleize)
         end
@@ -169,11 +173,6 @@ module Spree
         end
       end
 
-      private
-
-      def breadcrumbs
-        @breadcrumbs ||= []
-      end
     end
   end
 end
