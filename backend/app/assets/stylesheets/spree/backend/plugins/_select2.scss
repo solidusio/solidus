@@ -30,6 +30,7 @@
     .select2-search-choice-close {
       @extend .fa;
       @extend .fa-times;
+      display: none;
       margin-top: 2px;
       font-size: 100% !important;
       background-image: none !important;
