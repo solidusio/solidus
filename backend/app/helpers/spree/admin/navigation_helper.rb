@@ -22,7 +22,7 @@ module Spree
         end
       end
 
-      def page_title
+      def admin_page_title
         if content_for?(:title)
           content_for(:title)
         elsif content_for?(:page_title)
