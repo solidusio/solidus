@@ -45,10 +45,12 @@ gateway implementations.
 ## The Inventory Sub-System
 * `Spree::ReturnAuthorization` - Models the return of Inventory Units to
 a Stock Location for an Order.
+* `Spree::StockLocation` - Records the name and addresses from which stock items
+are fulfilled in cartons.
 
 ## The Shipments Sub-System
 * `Spree::Shipment` - An order's planned shipments including
-tracking and cost.
+tracking and cost. Shipments are fulfilled from Stock Locations.
 
 Developer Notes
 ---------------
