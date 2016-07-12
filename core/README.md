@@ -15,7 +15,7 @@ Currently, these models remain in the Spree namespace as part of the legacy of
 * [The User Sub-System](#the-user-sub-system)
 * [The Payment Sub-System](#the-payment-sub-system)
 * [The Inventory Sub-System](#the-inventory-sub-system)
-
+* [The Shipments Sub-System](#the-shipments-sub-system)
 
 ## The Order Sub-System
 * `Spree::Store` - Records store specific configuration such as store name and URL.
@@ -45,6 +45,10 @@ gateway implementations.
 ## The Inventory Sub-System
 * `Spree::ReturnAuthorization` - Models the return of Inventory Units to
 a Stock Location for an Order.
+
+## The Shipments Sub-System
+* `Spree::Shipment` - An order's planned shipments including
+tracking and cost.
 
 Developer Notes
 ---------------
