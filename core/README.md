@@ -47,6 +47,7 @@ gateway implementations.
 a Stock Location for an Order.
 * `Spree::StockLocation` - Records the name and addresses from which stock items
 are fulfilled in cartons.
+* `Spree::InventoryUnit` - Tracks the state of line items' fulfillment.
 
 ## The Shipments Sub-System
 * `Spree::Shipment` - An order's planned shipments including
