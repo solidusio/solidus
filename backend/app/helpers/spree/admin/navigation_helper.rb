@@ -16,7 +16,7 @@ module Spree
       def render_breadcrumbs
         add_page_title_to_breadcrumbs if content_for?(:page_title)
         content_tag :ol, class: 'breadcrumb' do
-          safe_join breadcrumbs.collect { |level|
+          safe_join breadcrumbs.map { |level|
             content_tag(:li, level, class: "separator #{level == breadcrumbs.last ? 'active' : ''}")
           }
         end
