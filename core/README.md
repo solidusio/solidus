@@ -50,6 +50,8 @@ are fulfilled in cartons.
 * `Spree::InventoryUnit` - Tracks the state of line items' fulfillment.
 * `Spree::ShippingRate` - Records the costs of different shipping methods for a
 shipment and which method has been selected to deliver the shipment.
+* `Spree::ShippingMethod` - Represents a means of having a shipment delivered,
+such as FedEx or UPS.
 
 ## The Shipments Sub-System
 * `Spree::Shipment` - An order's planned shipments including
