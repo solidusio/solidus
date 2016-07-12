@@ -5,9 +5,8 @@ body:not(.new-layout) #sidebar {
 
   .sidebar-title {
     color: $color-2;
-    text-transform: uppercase;
     text-align: center;
-    font-size: 14px;
+    font-size: 16px;
     font-weight: $font-weight-bold;
 
     > span {

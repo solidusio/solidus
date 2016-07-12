@@ -32,7 +32,7 @@ describe "Stock Locations", type: :feature do
     # Wait for API request to complete.
     wait_for_ajax
     visit current_path
-    expect(page).to have_content("NO STOCK LOCATIONS FOUND")
+    expect(page).to have_content("No Stock Locations found")
   end
 
   it "can update an existing stock location" do
