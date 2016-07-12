@@ -7,14 +7,13 @@ module Spree
         breadcrumbs.push(capture(&block)) if block_given?
       end
 
-      def add_page_title_to_breadcrumbs
-        ActiveSupport::Deprecation.warn('content_for(:page_title) is deprecated, use add_breadcrumb')
-        add_breadcrumb(content_for(:page_title))
-      end
-
       # Render Bootstrap style breadcrumbs
       def render_breadcrumbs
-        add_page_title_to_breadcrumbs if content_for?(:page_title)
+        if content_for?(:page_title)
+          ActiveSupport::Deprecation.warn('content_for(:page_title) is deprecated, use add_breadcrumb')
+          add_breadcrumb(content_for(:page_title))
+        end
+
         content_tag :ol, class: 'breadcrumb' do
           safe_join breadcrumbs.map { |level|
             content_tag(:li, level, class: "separator #{level == breadcrumbs.last ? 'active' : ''}")
