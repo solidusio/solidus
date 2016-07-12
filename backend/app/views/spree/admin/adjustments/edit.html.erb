@@ -1,11 +1,9 @@
 <%= render :partial => 'spree/admin/shared/order_tabs', :locals => { :current => 'Adjustments' } %>
 
-<% content_for :page_title do %>
-  <i class="fa fa-arrow-right"></i> <%= Spree.t('actions.edit') %> <%= Spree.t(:adjustment) %>
-<% end %>
+<% add_breadcrumb(link_to plural_resource_name(Spree::Adjustment), spree.admin_order_adjustments_path(@order)) %>
+<% add_breadcrumb("#{Spree.t('actions.edit')} #{Spree::Adjustment.model_name.human}") %>
 
 <% content_for :page_actions do %>
-  <li><%= button_link_to Spree.t(:back_to_adjustments_list), spree.admin_order_adjustments_url(@order), :icon => 'arrow-left' %></li>
 <% end %>
 
 <%= render :partial => 'spree/shared/error_messages', :locals => { :target => @adjustment } %>

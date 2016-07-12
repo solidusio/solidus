@@ -1,6 +1,6 @@
-<% content_for :page_title do %>
-  <%= plural_resource_name(Spree::Taxonomy) %>
-<% end %>
+<% add_breadcrumb(link_to plural_resource_name(Spree::Product), spree.admin_products_path) %>
+<% add_breadcrumb(plural_resource_name(Spree::Taxonomy)) %>
+
 
 <% content_for :page_actions do %>
   <% if can?(:create, Spree::Taxonomy) %>

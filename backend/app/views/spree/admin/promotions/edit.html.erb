@@ -1,10 +1,9 @@
-<% content_for :page_title do %>
-  <%= Spree.t(:editing_promotion) %>
-<% end %>
+<% add_breadcrumb(link_to plural_resource_name(Spree::Promotion), spree.admin_promotions_path) %>
+<% add_breadcrumb(@promotion.name) %>
+
 
 <% content_for :page_actions do %>
   <li>
-    <%= button_link_to Spree.t(:back_to_promotions_list), admin_promotions_path, :icon => 'arrow-left' %>
     <% if can?(:display, Spree::PromotionCode) %>
       <%= button_link_to Spree.t(:download_promotion_code_list), admin_promotion_promotion_codes_path(promotion_id: @promotion.id, format: :csv), :icon => 'arrow-down' %>
     <% end %>

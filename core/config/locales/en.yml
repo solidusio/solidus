@@ -345,6 +345,10 @@ en:
         name: Name
         default_tax: Default Tax Zone
     models:
+      # LegacyUser maps to this model_name so we want to provide translations for it
+      user:
+        one: User
+        other: Users
       spree/address:
         one: Address
         other: Addresses
@@ -369,6 +373,9 @@ en:
       spree/exchange:
         one: Exchange
         other: Exchanges
+      spree/image:
+        one: Image
+        other: Images
       spree/inventory_unit:
         one: Inventory Unit
         other: Inventory Units
@@ -466,6 +473,9 @@ en:
       spree/stock_transfer:
         one: Stock Transfer
         other: Stock Transfers
+      spree/store_credit:
+        one: Store Credit
+        other: Store Credits
       spree/store_credit_category:
         one: Category
         other: Categories
@@ -1297,6 +1307,7 @@ en:
     new_stock_location: New Stock Location
     new_stock_movement: New Stock Movement
     new_stock_transfer: New Stock Transfer
+    new_store_credit: New Store Credit
     new_tax_category: New Tax Category
     new_tax_rate: New Tax Rate
     new_taxon: New Taxon

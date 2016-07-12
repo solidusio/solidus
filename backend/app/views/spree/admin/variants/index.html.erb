@@ -1,5 +1,8 @@
 <%= render 'spree/admin/shared/product_tabs', current: 'Variants' %>
 
+<% add_breadcrumb(plural_resource_name(Spree::Variant)) %>
+
+
 <% if @variants.any? || @product.variants.only_deleted.any?%>
   <%= render "table_filter", product: @product %>
   <%= render "table", variants: @variants %>

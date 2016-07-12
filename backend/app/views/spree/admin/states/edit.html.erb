@@ -1,13 +1,12 @@
 <%= render 'spree/admin/shared/areas_tabs' %>
 
-<% content_for :page_title do %>
-  <%= Spree.t(:editing_state) %> <i class="fa fa-arrow-right"></i> <%= @state.name %>
-<% end %>
+<% add_breadcrumb(Spree.t(:settings)) %>
+<% add_breadcrumb(Spree.t('admin.tab.areas')) %>
+<% add_breadcrumb(link_to plural_resource_name(Spree::State), spree.admin_states_path) %>
+<% add_breadcrumb(@state.name) %>
+
 
 <% content_for :page_actions do %>
-  <li>
-    <%= button_link_to Spree.t(:back_to_states_list), spree.admin_country_states_url(@country), :icon => 'arrow-left' %>
-  </li>
 <% end %>
 
 <%= render :partial => 'spree/shared/error_messages', :locals => { :target => @state } %>

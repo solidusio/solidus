@@ -28,7 +28,7 @@ describe "Product Stock", type: :feature do
         @product = create(:product, name: 'apache baseball cap', price: 10)
         @product.variants.create!(sku: 'FOOBAR')
         Spree::StockLocation.destroy_all
-        click_link "Back To Products List"
+        find_by_id('content-header').click_link('Products')
         within_row(1) do
           click_icon :edit
         end
@@ -36,7 +36,7 @@ describe "Product Stock", type: :feature do
       end
 
       it "renders" do
-        expect(page).to have_content('Products / apache baseball cap')
+        expect(page).to have_content('Productsapache baseball cap')
         expect(page.current_url).to match("admin/products/apache-baseball-cap/stock")
       end
     end

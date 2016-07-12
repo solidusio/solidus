@@ -9,7 +9,7 @@ describe "Reports", type: :feature do
       click_link "Reports"
       click_link "Sales Total"
 
-      expect(page).to have_content("Sales Totals")
+      expect(page).to have_content("ReportsSales Total")
       expect(page).to have_content("Item Total")
       expect(page).to have_content("Adjustment Total")
       expect(page).to have_content("Sales Total")

@@ -141,7 +141,7 @@ describe Spree::Admin::StoreCreditsController do
       it "returns a success message" do
         subject
         expect(response).to have_http_status(:ok)
-        expect(JSON.parse(response.body)['message']).to match("Store credit has been successfully updated!")
+        expect(JSON.parse(response.body)['message']).to match("Store Credit has been successfully updated!")
       end
     end
 
@@ -226,7 +226,7 @@ describe Spree::Admin::StoreCreditsController do
       context "the store credit has not been used" do
         it "sets a success message in the flash" do
           subject
-          expect(flash.now[:success]).to match "Store credit has been successfully updated!"
+          expect(flash.now[:success]).to match "Store Credit has been successfully updated!"
         end
 
         it "does not create a new store credit" do

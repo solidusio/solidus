@@ -5,11 +5,11 @@
   <nav>
     <ul class="tabs" data-hook="admin_configurations_sidebar_menu">
       <% if can?(:edit, :general_settings) %>
-        <%= settings_tab_item Spree.t(:general_settings), spree.edit_admin_general_settings_path %>
+        <%= settings_tab_item Spree.t(:settings), edit_admin_general_settings_path %>
       <% end %>
 
       <% if can?(:display, Spree::Tracker) %>
-        <%= settings_tab_item Spree.t(:analytics_trackers), spree.admin_trackers_path %>
+        <%= settings_tab_item plural_resource_name(Spree::Tracker), admin_trackers_path %>
       <% end %>
     </ul>
   </nav>

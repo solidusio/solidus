@@ -7,6 +7,7 @@
 
       <% if can?(:display, Spree::ShippingCategory) %>
         <%= settings_tab_item plural_resource_name(Spree::ShippingCategory), spree.admin_shipping_categories_path %>
+
       <% end %>
 
       <% if can?(:display, Spree::StockLocation) %>

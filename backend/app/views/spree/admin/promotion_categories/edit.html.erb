@@ -1,6 +1,7 @@
-<% content_for :page_title do %>
-  <%= Spree.t(:editing_promotion_category) %>
-<% end %>
+<% add_breadcrumb(link_to plural_resource_name(Spree::Promotion), spree.admin_promotions_path) %>
+<% add_breadcrumb(link_to plural_resource_name(Spree::PromotionCategory), spree.admin_promotion_categories_path) %>
+<% add_breadcrumb(@promotion_category.name) %>
+
 
 <%= form_for @promotion_category, :url => object_url, :method => :put do |f| %>
   <fieldset class="no-border-top">

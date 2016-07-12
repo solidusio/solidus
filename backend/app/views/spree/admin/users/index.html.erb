@@ -1,6 +1,5 @@
-<% content_for :page_title do %>
-  <%= Spree.t(:listing_users) %>
-<% end %>
+<% add_breadcrumb(plural_resource_name(Spree::LegacyUser)) %>
+
 
 <% content_for :page_actions do %>
   <% if can?(:admin, Spree.user_class) && can?(:create, Spree.user_class) %>

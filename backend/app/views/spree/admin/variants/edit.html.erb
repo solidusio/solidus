@@ -1,10 +1,11 @@
 <%= render :partial => 'spree/admin/shared/product_tabs', :locals => { :current => 'Variants' } %>
 
-<% content_for :page_title do %>
-  &#x2f; <%= @variant.options_text %>
-<% end %>
+<% add_breadcrumb(link_to plural_resource_name(Spree::Variant), admin_product_variants_path(@product)) %>
+<% add_breadcrumb(@variant.options_text) %>
+
 
 <%= render :partial => 'spree/shared/error_messages', :locals => { :target => @variant } %>
+
 
 <%= form_for [:admin, @product, @variant] do |f| %>
   <fieldset>

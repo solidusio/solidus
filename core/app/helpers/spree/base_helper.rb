@@ -66,7 +66,7 @@ module Spree
       nil
     end
 
-    def breadcrumbs(taxon, separator = "&nbsp;&raquo;&nbsp;", breadcrumb_class = "inline")
+    def taxon_breadcrumbs(taxon, separator = "&nbsp;&raquo;&nbsp;", breadcrumb_class = "inline")
       return "" if current_page?("/") || taxon.nil?
 
       crumbs = [[Spree.t(:home), spree.root_path]]

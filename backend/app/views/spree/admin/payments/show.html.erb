@@ -1,19 +1,16 @@
 <%= render :partial => 'spree/admin/shared/order_tabs', :locals => { :current => 'Payments' } %>
 
-<% content_for :page_title do %>
-  <i class="fa fa-arrow-right"></i>
-  <%= Spree::Payment.model_name.human %>
-  <i class="fa fa-arrow-right"></i>
+<% add_breadcrumb(link_to plural_resource_name(Spree::Payment), spree.admin_order_payments_path(@order)) %>
+<% add_breadcrumb do %>
   <%= payment_method_name(@payment) %>
-  &nbsp;
   <span class="state <%= @payment.state %>">
     <%= Spree.t(@payment.state, :scope => :payment_states, :default => @payment.state.capitalize) %>
   </span>
 <% end %>
 
+
 <% content_for :page_actions do %>
   <li><%= button_link_to Spree.t(:logs), spree.admin_order_payment_log_entries_url(@order, @payment), :icon => 'archive' %></li>
-  <li><%= button_link_to Spree.t(:back_to_payments_list), spree.admin_order_payments_url(@order), :icon => 'arrow-left' %></li>
 <% end %>
 
 <%= render :partial => "spree/admin/payments/source_views/#{@payment.payment_method.method_type}", :locals => { :payment => @payment.source.is_a?(Spree::Payment) ? @payment.source : @payment } %>

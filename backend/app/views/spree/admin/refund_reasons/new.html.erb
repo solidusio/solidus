@@ -1,11 +1,12 @@
 <%= render 'spree/admin/shared/settings_checkout_tabs' %>
 
-<% content_for :page_title do %>
-  <%= Spree.t(:new_refund_reason) %>
-<% end %>
+<% add_breadcrumb(Spree.t(:settings)) %>
+<% add_breadcrumb(Spree.t('admin.tab.checkout')) %>
+<% add_breadcrumb(link_to plural_resource_name(Spree::RefundReason), spree.admin_refund_reasons_path) %>
+<% add_breadcrumb(Spree.t(:new_refund_reason)) %>
+
 
 <% content_for :page_actions do %>
-  <li><%= link_to_with_icon 'arrow-left', Spree.t(:back_to_refund_reason_list), collection_url, :class => 'button' %></li>
 <% end %>
 
 <%= render :partial => 'spree/shared/error_messages', :locals => { :target => @object } %>
