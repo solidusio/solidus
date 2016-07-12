@@ -3,16 +3,24 @@ require 'spree/testing_support/bar_ability'
 
 describe Spree::Admin::UsersController, type: :controller do
   let(:user) { create(:user) }
-  let(:mock_user) { mock_model Spree.user_class }
 
-  before do
-    allow(controller).to receive_messages spree_current_user: user
-    user.spree_roles.clear
+  let(:state) { create(:state, state_code: 'NY') }
+  let(:valid_address_attributes) do
+    {
+      firstname: 'Foo',
+      lastname: 'Bar',
+      city: "New York",
+      country_id: state.country.id,
+      state_id: state.id,
+      phone: '555-555-5555',
+      address1: '123 Fake St.',
+      zipcode: '10001',
+    }
   end
 
   context "#show" do
-    before do
-      user.spree_roles << Spree::Role.find_or_create_by(name: 'admin')
+    stub_authorization! do |_user|
+      can [:admin, :manage], Spree.user_class
     end
 
     it "redirects to edit" do
@@ -22,197 +30,194 @@ describe Spree::Admin::UsersController, type: :controller do
   end
 
   context '#authorize_admin' do
-    before { use_mock_user }
+    context "with ability to admin users" do
+      stub_authorization! do |_user|
+        can [:manage], Spree.user_class
+      end
 
-    it 'grant access to users with an admin role' do
-      user.spree_roles << Spree::Role.find_or_create_by(name: 'admin')
-      spree_post :index
-      expect(response).to render_template :index
+      it 'can visit index' do
+        spree_post :index
+        expect(response).to be_success
+      end
+
+      it "allows admins to update a user's API key" do
+        expect {
+          spree_put :generate_api_key, id: user.id
+        }.to change { user.reload.spree_api_key }
+        expect(response).to redirect_to(spree.edit_admin_user_path(user))
+      end
+
+      it "allows admins to clear a user's API key" do
+        user.generate_spree_api_key!
+        expect {
+          spree_put :clear_api_key, id: user.id
+        }.to change{ user.reload.spree_api_key }.to(nil)
+        expect(response).to redirect_to(spree.edit_admin_user_path(user))
+      end
     end
 
-    it "allows admins to update a user's API key" do
-      user.spree_roles << Spree::Role.find_or_create_by(name: 'admin')
-      expect(mock_user).to receive(:generate_spree_api_key!).and_return(true)
-      spree_put :generate_api_key, id: mock_user.id
-      expect(response).to redirect_to(spree.edit_admin_user_path(mock_user))
-    end
+    context "without ability to admin users" do
+      stub_authorization! do |_user|
+      end
 
-    it "allows admins to clear a user's API key" do
-      user.spree_roles << Spree::Role.find_or_create_by(name: 'admin')
-      expect(mock_user).to receive(:clear_spree_api_key!).and_return(true)
-      spree_put :clear_api_key, id: mock_user.id
-      expect(response).to redirect_to(spree.edit_admin_user_path(mock_user))
-    end
-
-    it 'deny access to users with an bar role' do
-      user.spree_roles << Spree::Role.find_or_create_by(name: 'bar')
-      Spree::Ability.register_ability(BarAbility)
-      spree_post :index
-      expect(response).to redirect_to '/unauthorized'
-    end
-
-    it 'deny access to users with an bar role' do
-      user.spree_roles << Spree::Role.find_or_create_by(name: 'bar')
-      Spree::Ability.register_ability(BarAbility)
-      spree_post :update, { id: '9' }
-      expect(response).to redirect_to '/unauthorized'
-    end
-
-    it 'deny access to users without an admin role' do
-      allow(user).to receive_messages has_spree_role?: false
-      spree_post :index
-      expect(response).to redirect_to '/unauthorized'
+      it 'denies access' do
+        spree_post :index
+        expect(response).to redirect_to '/unauthorized'
+      end
     end
   end
 
   describe "#create" do
     let(:dummy_role) { Spree::Role.create(name: "dummyrole") }
 
-    before do
-      use_mock_user
-      allow(mock_user).to receive_messages(:spree_roles= => true, :stock_locations= => true)
-      user.spree_roles << Spree::Role.find_or_create_by(name: 'admin')
+    # The created user
+    def user
+      Spree.user_class.last
+    end
+
+    stub_authorization! do |_user|
+      can :manage, Spree.user_class
     end
 
     context "when the user can manage roles" do
-      it "can set roles" do
-        expect(mock_user).to receive(:spree_roles=).with([dummy_role])
-        spree_post :create, { id: mock_user.id, user: { first_name: "Bob", spree_role_ids: [dummy_role.id] } }
+      stub_authorization! do |_user|
+        can :manage, Spree.user_class
+        can :manage, Spree::Role
       end
 
-      it "can clear roles" do
-        expect(mock_user).to receive(:spree_roles=).with([])
-        spree_post :create, { id: mock_user.id, user: { first_name: "Bob" } }
+      it "can create user with roles" do
+        spree_post :create, { user: { first_name: "Bob", spree_role_ids: [dummy_role.id] } }
+        expect(user.spree_roles).to eq([dummy_role])
+      end
+
+      it "can create user without roles" do
+        spree_post :create, { user: { first_name: "Bob" } }
+        expect(user.spree_roles).to eq([])
       end
     end
 
     context "when the user cannot manage roles" do
-      before do
-        user.spree_roles = [Spree::Role.find_or_create_by(name: "user_management")]
+      it "cannot assign users roles" do
+        spree_post :create, { user: { first_name: "Bob", spree_role_ids: [dummy_role.id] } }
+        expect(user.spree_roles).to eq([])
       end
 
-      it "cannot set roles" do
-        expect(mock_user).to_not receive(:spree_roles=)
-        spree_post :create, { user: { spree_role_ids: [dummy_role.id] } }
-      end
-
-      it "cannot set roles" do
-        expect(mock_user).to_not receive(:spree_roles=)
-        spree_post :create, { id: mock_user.id, user: { first_name: "Bob", spree_role_ids: [dummy_role.id] } }
-      end
-
-      it "cannot clear roles" do
-        expect(mock_user).to_not receive(:spree_roles=)
-        spree_post :create, { id: mock_user.id, user: { first_name: "Bob" } }
+      it "can create user without roles" do
+        spree_post :create, { user: { first_name: "Bob" } }
+        expect(user.spree_roles).to eq([])
       end
     end
 
     it "can create a shipping_address" do
-      expect(Spree.user_class).to receive(:new).with(hash_including(
-                                                       "ship_address_attributes" => { "city" => "New York" }
-      ))
-      spree_post :create, { user: { ship_address_attributes: { city: "New York" } } }
+      spree_post :create, { user: { ship_address_attributes: valid_address_attributes } }
+      expect(user.reload.ship_address.city).to eq('New York')
     end
 
     it "can create a billing_address" do
-      expect(Spree.user_class).to receive(:new).with(hash_including(
-                                                       "bill_address_attributes" => { "city" => "New York" }
-      ))
-      spree_post :create, { user: { bill_address_attributes: { city: "New York" } } }
+      spree_post :create, { user: { bill_address_attributes: valid_address_attributes } }
+      expect(user.reload.bill_address.city).to eq('New York')
     end
 
     it "can set stock locations" do
       location = Spree::StockLocation.create(name: "my_location")
       location_2 = Spree::StockLocation.create(name: "my_location_2")
-      expect(mock_user).to receive(:stock_locations=).with([location, location_2])
       spree_post :create, { user: { stock_location_ids: [location.id, location_2.id] } }
+      expect(user.stock_locations).to match_array([location, location_2])
     end
   end
 
   describe "#update" do
     let(:dummy_role) { Spree::Role.create(name: "dummyrole") }
     let(:ability) { Spree::Ability.new(user) }
-    before do
-      use_mock_user
-      allow(mock_user).to receive_messages(:spree_roles= => true, :stock_locations= => true)
-      allow(controller).to receive(:current_ability) { ability }
-      Spree::PermissionSets::UserManagement.new(ability).activate!
+
+    stub_authorization! do |_user|
+      can :manage, Spree.user_class
     end
 
-    context "as a superuser" do
-      before { Spree::PermissionSets::SuperUser.new(ability).activate! }
+    context "when the user can manage roles" do
+      stub_authorization! do |_user|
+        can :manage, Spree.user_class
+        can :manage, Spree::Role
+      end
 
       it "can set roles" do
-        expect(mock_user).to receive(:spree_roles=).with([dummy_role])
-        spree_put :update, { id: mock_user.id, user: { first_name: "Bob", spree_role_ids: [dummy_role.id] } }
+        expect {
+          spree_put :update, { id: user.id, user: { first_name: "Bob", spree_role_ids: [dummy_role.id] } }
+        }.to change { user.reload.spree_roles.to_a }.to([dummy_role])
       end
 
       it "can clear roles" do
-        expect(mock_user).to receive(:spree_roles=).with([])
-        spree_put :update, { id: mock_user.id, user: { first_name: "Bob" } }
-      end
-
-      it "can change email of a user with no roles" do
-        expect(mock_user).to receive(:update_attributes).with({ email: "bob@example.com" })
-        spree_put :update, { id: mock_user.id, user: { email: "bob@example.com" } }
-      end
-
-      it "can change email of a user with roles" do
-        allow(mock_user).to receive(:spree_roles) { [dummy_role] }
-        expect(mock_user).to receive(:update_attributes).with({ email: "bob@example.com" })
-        spree_put :update, { id: mock_user.id, user: { email: "bob@example.com" } }
+        user.spree_roles << dummy_role
+        expect {
+          spree_put :update, { id: user.id, user: { first_name: "Bob", spree_role_ids: [] } }
+        }.to change { user.reload.spree_roles.to_a }.to([])
       end
     end
 
-    it "cannot set roles" do
-      expect(mock_user).to_not receive(:spree_roles=)
-      spree_put :update, { id: mock_user.id, user: { first_name: "Bob", spree_role_ids: [dummy_role.id] } }
+    context "when the user cannot manage roles" do
+      it "cannot set roles" do
+        expect {
+          spree_put :update, { id: user.id, user: { first_name: "Bob", spree_role_ids: [dummy_role.id] } }
+        }.not_to change { user.reload.spree_roles.to_a }
+      end
+
+      it "cannot clear roles" do
+        user.spree_roles << dummy_role
+        expect {
+          spree_put :update, { id: user.id, user: { first_name: "Bob" } }
+        }.not_to change { user.reload.spree_roles.to_a }
+      end
     end
 
-    it "cannot clear roles" do
-      expect(mock_user).to_not receive(:spree_roles=)
-      spree_put :update, { id: mock_user.id, user: { first_name: "Bob" } }
+    context "allowed to update email" do
+      stub_authorization! do |_user|
+        can [:admin, :update, :update_email], Spree.user_class
+      end
+
+      it "can change email of a user" do
+        expect {
+          spree_put :update, { id: user.id, user: { email: "bob@example.com" } }
+        }.to change { user.reload.email }.to("bob@example.com")
+      end
     end
 
-    it "can change email of a user with no roles" do
-      expect(mock_user).to receive(:update_attributes).with({ email: "bob@example.com" })
-      spree_put :update, { id: mock_user.id, user: { email: "bob@example.com" } }
+    context "not allowed to update email" do
+      stub_authorization! do |_user|
+        can [:admin, :update], Spree.user_class
+      end
+
+      it "cannot change email of a user" do
+        expect {
+          spree_put :update, { id: user.id, user: { email: "bob@example.com" } }
+        }.not_to change { user.reload.email }
+      end
     end
 
-    it "cannot change email of a user with roles" do
-      allow(mock_user).to receive(:spree_roles) { [dummy_role] }
-      expect(mock_user).to receive(:update_attributes).with({})
-      spree_put :update, { id: mock_user.id, user: { email: "bob@example.com" } }
+    it "can update ship_address attributes" do
+      spree_post :update, { id: user.id, user: { ship_address_attributes: valid_address_attributes } }
+      expect(user.reload.ship_address.city).to eq('New York')
     end
 
-    it "allows shipping address attributes through" do
-      expect(mock_user).to receive(:update_attributes).with(hash_including(
-                                                              "ship_address_attributes" => { "city" => "New York" }
-      ))
-      spree_put :update, { id: mock_user.id, user: { ship_address_attributes: { city: "New York" } } }
-    end
-
-    it "allows billing address attributes through" do
-      expect(mock_user).to receive(:update_attributes).with(hash_including(
-                                                              "bill_address_attributes" => { "city" => "New York" }
-      ))
-      spree_put :update, { id: mock_user.id, user: { bill_address_attributes: { city: "New York" } } }
+    it "can update bill_address attributes" do
+      spree_post :update, { id: user.id, user: { bill_address_attributes: valid_address_attributes } }
+      expect(user.reload.bill_address.city).to eq('New York')
     end
 
     it "can set stock locations" do
       location = Spree::StockLocation.create(name: "my_location")
       location_2 = Spree::StockLocation.create(name: "my_location_2")
-      expect(mock_user).to receive(:stock_locations=).with([location, location_2])
-      spree_put :update, { id: mock_user.id, user: { stock_location_ids: [location.id, location_2.id] } }
+      spree_post :update, { id: user.id, user: { stock_location_ids: [location.id, location_2.id] } }
+      expect(user.stock_locations).to match_array([location, location_2])
     end
   end
 
   describe "#orders" do
-    let(:order) { create(:order) }
-    before do
-      user.orders << order
-      user.spree_roles << Spree::Role.find_or_create_by(name: 'admin')
+    stub_authorization! do |_user|
+      can :manage, Spree.user_class
     end
+
+    let(:order) { create(:order) }
+    before { user.orders << order }
 
     it "assigns a list of the users orders" do
       spree_get :orders, { id: user.id }
@@ -228,11 +233,12 @@ describe Spree::Admin::UsersController, type: :controller do
   end
 
   describe "#items" do
-    let(:order) { create(:order) }
-    before do
-      user.orders << order
-      user.spree_roles << Spree::Role.find_or_create_by(name: 'admin')
+    stub_authorization! do |_user|
+      can :manage, Spree.user_class
     end
+
+    let(:order) { create(:order) }
+    before { user.orders << order }
 
     it "assigns a list of the users orders" do
       spree_get :items, { id: user.id }
@@ -246,12 +252,4 @@ describe Spree::Admin::UsersController, type: :controller do
       expect(assigns[:search].klass).to eq Spree::Order
     end
   end
-end
-
-def use_mock_user
-  allow(mock_user).to receive(:save).and_return(true)
-  allow(mock_user).to receive(:update_attributes).and_return(true)
-  allow(mock_user).to receive(:spree_roles).and_return([])
-  allow(Spree.user_class).to receive(:find).with(mock_user.id.to_s).and_return(mock_user)
-  allow(Spree.user_class).to receive(:new).and_return(mock_user)
 end
