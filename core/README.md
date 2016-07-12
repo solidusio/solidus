@@ -11,10 +11,10 @@ let's take a quick look at the fundamental models upon which all else depend.
 Currently, these models remain in the Spree namespace as part of the legacy of
 [forking Spree](https://solidus.io/blog/2015/10/28/future-of-spree.html).
 
-* [The Order Sub-System](https://github.com/bbuchalter/solidus/blob/core-readme/core/README.md#the-order-sub-system)
-* [The User Sub-System](https://github.com/bbuchalter/solidus/blob/core-readme/core/README.md#the-user-sub-system)
-* [The Payment Sub-System](https://github.com/bbuchalter/solidus/blob/core-readme/core/README.md#the-payment-sub-system)
-* [The Inventory Sub-System](https://github.com/bbuchalter/solidus/blob/core-readme/core/README.md#the-inventory-sub-system)
+* [The Order Sub-System](#the-order-sub-system)
+* [The User Sub-System](#the-user-sub-system)
+* [The Payment Sub-System](#the-payment-sub-system)
+* [The Inventory Sub-System](#the-inventory-sub-system)
 
 
 ## The Order Sub-System
