@@ -14,7 +14,6 @@ module Spree
       # Render Bootstrap style breadcrumbs
       def render_admin_breadcrumbs
         if content_for?(:page_title)
-          ActiveSupport::Deprecation.warn('content_for(:page_title) is deprecated, use admin_breadcrumb')
           admin_breadcrumb(content_for(:page_title))
         end
 
