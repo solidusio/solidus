@@ -1,4 +1,7 @@
 module Spree
+  # Records the costs of different shipping methods for a shipment and which
+  # method has been selected to deliver the shipment.
+  #
   class ShippingRate < Spree::Base
     belongs_to :shipment, class_name: 'Spree::Shipment'
     belongs_to :shipping_method, -> { with_deleted }, class_name: 'Spree::ShippingMethod', inverse_of: :shipping_rates
