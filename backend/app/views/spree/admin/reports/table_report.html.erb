@@ -1,0 +1,53 @@
+<% content_for :page_title do %>
+  <%= title %>
+  <p>
+    <small>
+      <%= "#{@start_time.strftime "%Y-%m-%d"} - #{@end_time.strftime "%Y-%m-%d"}" %>
+    </small>
+  </p>
+<% end %>
+<% content_for :page_actions do %>
+  <li>
+    <%= link_to_with_icon 'arrow-left', Spree.t(:back_to_reports_list), spree.admin_reports_url, :class => 'button' %>
+  </li>
+<% end %>
+<% content_for :table_filter_title do %>
+  <%= Spree.t(:date_range) %>
+<% end %>
+<% content_for :table_filter do %>
+  <%= form_tag(@report_url, method: :get) do %>
+    <%= label_tag "From" %>
+    <%= text_field_tag :start_date, params[:start_date], class: 'datepicker' %>
+    <%= label_tag "To" %>
+    <%= text_field_tag :end_date, params[:end_date], class: 'datepicker' %>
+    <div class="actions filter-actions">
+      <%= submit_tag "Filter" %>
+    </div>
+  <% end %>
+<% end %>
+<div class="report orders-report">
+  <%= paginate @rows %>
+  <table style="table-layout: fixed">
+    <thead>
+      <tr>
+        <% @headers.each do |header| %>
+          <th>
+            <%= header.values.first %>
+          </th>
+        <% end %>
+      </tr>
+    </thead>
+    <tbody>
+      <% @rows.each do |row| %>
+        <tr>
+          <% @headers.map{|h| h.keys.first}.each do |field| %>
+            <td>
+              <%= render_field(row[field]) %>
+            </td>
+          <% end %>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+  <%= paginate @rows %>
+</div>

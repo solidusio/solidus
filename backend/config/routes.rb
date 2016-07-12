@@ -147,12 +147,7 @@ Spree::Core::Engine.routes.draw do
       end
     end
 
-    resources :reports, only: [:index] do
-      collection do
-        get :sales_total
-        post :sales_total
-      end
-    end
+    resources :reports, only: [:index, :show]
 
     resources :reimbursement_types, only: [:index]
     resources :adjustment_reasons, except: [:show, :destroy]
