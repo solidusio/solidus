@@ -13,7 +13,7 @@ describe Spree::Admin::SearchController, type: :controller do
   end
 
   describe 'GET #users' do
-    subject { spree_xhr_get :users, params }
+    subject { get :users, { format: :json }.merge(params) }
 
     shared_examples_for 'user found by search' do
       it "should include users matching query" do
