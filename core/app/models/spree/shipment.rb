@@ -208,8 +208,13 @@ module Spree
     end
 
     def selected_shipping_rate_id=(id)
-      shipping_rates.update_all(selected: false)
-      shipping_rates.update(id, selected: true)
+      selected_shipping_rate.update(selected: false) if selected_shipping_rate
+      new_rate = shipping_rates.detect { |rate| rate.id == id.to_i }
+      fail(
+        ArgumentError,
+        "Could not find shipping rate id #{id} for shipment #{number}"
+      ) unless new_rate
+      new_rate.update(selected: true)
       save!
     end
 

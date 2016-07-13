@@ -810,13 +810,13 @@ describe Spree::Shipment, type: :model do
       it 'sets the new shipping rate as selected' do
         expect {
           shipment.selected_shipping_rate_id = new_rate.id
-        }.to change { new_rate.reload.selected }.from(false).to(true)
+        }.to change { new_rate.selected }.from(false).to(true)
       end
 
       it 'sets the old shipping rate as not selected' do
         expect {
           shipment.selected_shipping_rate_id = new_rate.id
-        }.to change { shipping_rate.reload.selected }.from(true).to(false)
+        }.to change { shipping_rate.selected }.from(true).to(false)
       end
     end
 
@@ -824,7 +824,7 @@ describe Spree::Shipment, type: :model do
       it 'raises a RecordNotFound error' do
         expect {
           shipment.selected_shipping_rate_id = -1
-        }.to raise_error(ActiveRecord::RecordNotFound)
+        }.to raise_error(ArgumentError)
       end
     end
   end
