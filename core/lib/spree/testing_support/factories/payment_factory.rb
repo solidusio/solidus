@@ -6,7 +6,7 @@ require 'spree/testing_support/factories/store_credit_factory'
 FactoryGirl.define do
   factory :payment, aliases: [:credit_card_payment], class: Spree::Payment do
     association(:payment_method, factory: :credit_card_payment_method)
-    association(:source, factory: :credit_card)
+    source { create(:credit_card, user: order.user) }
     order
     state 'checkout'
     response_code '12345'
