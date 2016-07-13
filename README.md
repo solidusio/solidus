@@ -76,6 +76,9 @@ bundle exec rails s
 The [`solidus_frontend`](https://github.com/solidusio/solidus/tree/master/frontend) storefront will be accessible at [http://localhost:3000/](http://localhost:3000/)
 and the admin can be found at [http://localhost:3000/admin/](http://localhost:3000/admin/).
 
+### Default Username/Password
+
+As part of running the above installation steps, you will be asked to set an admin email/password combination. The default values are `admin@example.com` and `test123`, respectively.
 
 Installation options
 --------------------
