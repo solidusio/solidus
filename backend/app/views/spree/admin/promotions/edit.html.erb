@@ -1,5 +1,5 @@
-<% add_breadcrumb(link_to plural_resource_name(Spree::Promotion), spree.admin_promotions_path) %>
-<% add_breadcrumb(@promotion.name) %>
+<% admin_breadcrumb(link_to plural_resource_name(Spree::Promotion), spree.admin_promotions_path) %>
+<% admin_breadcrumb(@promotion.name) %>
 
 
 <% content_for :page_actions do %>

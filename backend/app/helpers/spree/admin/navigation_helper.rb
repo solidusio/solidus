@@ -1,34 +1,36 @@
 module Spree
   module Admin
     module NavigationHelper
-      # Add items to current page breadcrumb heirarchy
-      def add_breadcrumb(*ancestors, &block)
-        breadcrumbs.concat(ancestors) if ancestors.present?
-        breadcrumbs.push(capture(&block)) if block_given?
+      def admin_breadcrumbs
+        @admin_breadcrumbs ||= []
       end
 
-      def add_page_title_to_breadcrumbs
-        ActiveSupport::Deprecation.warn('content_for(:page_title) is deprecated, use add_breadcrumb')
-        add_breadcrumb(content_for(:page_title))
+      # Add items to current page breadcrumb heirarchy
+      def admin_breadcrumb(*ancestors, &block)
+        admin_breadcrumbs.concat(ancestors) if ancestors.present?
+        admin_breadcrumbs.push(capture(&block)) if block_given?
       end
 
       # Render Bootstrap style breadcrumbs
-      def render_breadcrumbs
-        add_page_title_to_breadcrumbs if content_for?(:page_title)
+      def render_admin_breadcrumbs
+        if content_for?(:page_title)
+          admin_breadcrumb(content_for(:page_title))
+        end
+
         content_tag :ol, class: 'breadcrumb' do
-          safe_join breadcrumbs.collect { |level|
-            content_tag(:li, level, class: "separator #{level == breadcrumbs.last ? 'active' : ''}")
+          safe_join admin_breadcrumbs.map { |level|
+            content_tag(:li, level, class: "separator #{level == admin_breadcrumbs.last ? 'active' : ''}")
           }
         end
       end
 
-      def page_title
+      def admin_page_title
         if content_for?(:title)
           content_for(:title)
         elsif content_for?(:page_title)
           content_for(:page_title)
-        elsif breadcrumbs.any?
-          strip_tags(breadcrumbs.last)
+        elsif admin_breadcrumbs.any?
+          strip_tags(admin_breadcrumbs.last)
         else
           Spree.t(controller.controller_name, default: controller.controller_name.titleize)
         end
@@ -170,11 +172,6 @@ module Spree
         end
       end
 
-      private
-
-      def breadcrumbs
-        @breadcrumbs ||= []
-      end
     end
   end
 end

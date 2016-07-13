@@ -8,7 +8,7 @@
   <% end %>
 <% end %>
 
-<% add_breadcrumb(plural_resource_name(Spree::Payment)) %>
+<% admin_breadcrumb(plural_resource_name(Spree::Payment)) %>
 
 <% if @order.outstanding_balance? %>
   <h5 class="outstanding-balance"><%= @order.outstanding_balance < 0 ? Spree.t(:credit_owed) : Spree.t(:balance_due) %>: <strong><%= @order.display_outstanding_balance %></strong></h5>

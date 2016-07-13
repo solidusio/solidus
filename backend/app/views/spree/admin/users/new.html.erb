@@ -1,5 +1,5 @@
-<% add_breadcrumb(link_to plural_resource_name(Spree::LegacyUser), spree.admin_users_path) %>
-<% add_breadcrumb(Spree.t(:new_user)) %>
+<% admin_breadcrumb(link_to plural_resource_name(Spree::LegacyUser), spree.admin_users_path) %>
+<% admin_breadcrumb(Spree.t(:new_user)) %>
 
 <div data-hook="admin_user_new_form_header">
   <%= render :partial => 'spree/shared/error_messages', :locals => { :target => @user } %>

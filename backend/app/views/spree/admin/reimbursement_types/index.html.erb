@@ -1,8 +1,8 @@
 <%= render 'spree/admin/shared/settings_checkout_tabs' %>
 
-<% add_breadcrumb(Spree.t(:settings)) %>
-<% add_breadcrumb(Spree.t('admin.tab.checkout')) %>
-<% add_breadcrumb(plural_resource_name(Spree::ReimbursementType)) %>
+<% admin_breadcrumb(Spree.t(:settings)) %>
+<% admin_breadcrumb(Spree.t('admin.tab.checkout')) %>
+<% admin_breadcrumb(plural_resource_name(Spree::ReimbursementType)) %>
 
 
 <table class="index" id='listing_reimbursement_types' data-hook>

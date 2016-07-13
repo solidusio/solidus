@@ -1,7 +1,7 @@
 <%= render :partial => 'spree/admin/shared/order_tabs', :locals => { :current => 'Creditcards' } %>
 
-<% add_breadcrumb(link_to plural_resource_name(Spree::Payment), spree.admin_order_payments_path(@order)) %>
-<% add_breadcrumb(Spree::Refund.model_name.human) %>
+<% admin_breadcrumb(link_to plural_resource_name(Spree::Payment), spree.admin_order_payments_path(@order)) %>
+<% admin_breadcrumb(Spree::Refund.model_name.human) %>
 
 
 <%= form_tag do %>

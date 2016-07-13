@@ -1,9 +1,9 @@
 <%= render 'spree/admin/shared/settings_checkout_tabs' %>
 
-<% add_breadcrumb Spree.t(:settings) %>
-<% add_breadcrumb Spree.t('admin.tab.checkout') %>
-<% add_breadcrumb link_to plural_resource_name(Spree::AdjustmentReason), spree.admin_adjustment_reasons_path %>
-<% add_breadcrumb @object.name %>
+<% admin_breadcrumb Spree.t(:settings) %>
+<% admin_breadcrumb Spree.t('admin.tab.checkout') %>
+<% admin_breadcrumb link_to plural_resource_name(Spree::AdjustmentReason), spree.admin_adjustment_reasons_path %>
+<% admin_breadcrumb @object.name %>
 
 <%= render :partial => 'spree/shared/error_messages', :locals => { :target => @object } %>
 
