@@ -80,6 +80,10 @@ and the admin can be found at [http://localhost:3000/admin/](http://localhost:30
 
 As part of running the above installation steps, you will be asked to set an admin email/password combination. The default values are `admin@example.com` and `test123`, respectively.
 
+### Questions?
+
+The best way to ask questions is via the [#support channel on the Solidus Slack](https://solidusio.slack.com/messages/support/details/).
+
 Installation options
 --------------------
 
