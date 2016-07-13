@@ -66,6 +66,17 @@ module Spree
         # Products#index does not do the sorting.
         taxon = Spree::Taxon.find(params[:id])
         @products = paginate(taxon.products.ransack(params[:q]).result)
+        @products = @products.includes(master: :default_price)
+
+        if params[:simple]
+          @exclude_data = {
+            variants: true,
+            option_types: true,
+            product_properties: true,
+            classifications: true
+          }
+          @product_attributes = %i(id name display_price)
+        end
         render "spree/api/products/index"
       end
 
