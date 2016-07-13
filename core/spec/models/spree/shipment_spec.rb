@@ -10,13 +10,14 @@ describe Spree::Shipment, type: :model do
       state: 'pending',
       cost: 1,
       inventory_units: order.inventory_units,
-      shipping_rates: [
-        Spree::ShippingRate.new(
-          shipping_method: shipping_method,
-          selected: true
-        )
-      ],
+      shipping_rates: [shipping_rate],
       stock_location: stock_location
+    )
+  end
+  let(:shipping_rate) do
+    Spree::ShippingRate.create!(
+      shipping_method: shipping_method,
+      selected: true
     )
   end
 
@@ -798,6 +799,33 @@ describe Spree::Shipment, type: :model do
       expect(Spree::Shipment.count).to eq(2)
       expect(shipments.count).to eq(1)
       expect(shipments.first).to eq(wizard_shipment)
+    end
+  end
+
+  describe '#selected_shipping_rate_id=' do
+    let!(:air_shipping_method) { create(:shipping_method, name: "Air") }
+    let(:new_rate) { shipment.add_shipping_method(air_shipping_method) }
+
+    context 'when the id exists' do
+      it 'sets the new shipping rate as selected' do
+        expect {
+          shipment.selected_shipping_rate_id = new_rate.id
+        }.to change { new_rate.reload.selected }.from(false).to(true)
+      end
+
+      it 'sets the old shipping rate as not selected' do
+        expect {
+          shipment.selected_shipping_rate_id = new_rate.id
+        }.to change { shipping_rate.reload.selected }.from(true).to(false)
+      end
+    end
+
+    context 'when the id does not exist' do
+      it 'raises a RecordNotFound error' do
+        expect {
+          shipment.selected_shipping_rate_id = -1
+        }.to raise_error(ActiveRecord::RecordNotFound)
+      end
     end
   end
 end
