@@ -617,6 +617,7 @@ en:
   spree:
     abbreviation: Abbreviation
     accept: Accept
+    accept_terms_and_conditions: I accept the Terms and Conditions
     acceptance_status: Acceptance status
     acceptance_errors: Acceptance errors
     accepted: Accepted
@@ -1256,6 +1257,7 @@ en:
     month: Month
     more: More
     move_stock_between_locations: Move Stock Between Locations
+    must_accept_terms_and_conditions: You must accept the Terms and Conditions
     my_account: My Account
     my_orders: My Orders
     name: Name

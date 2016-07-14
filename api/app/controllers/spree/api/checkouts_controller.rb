@@ -45,6 +45,7 @@ module Spree
         if !expected_total_ok?(params[:expected_total])
           respond_with(@order, default_template: 'spree/api/orders/expected_total_mismatch', status: 400)
         else
+          accept_terms_and_conditions
           @order.complete!
           respond_with(@order, default_template: 'spree/api/orders/show', status: 200)
         end
@@ -126,6 +127,12 @@ module Spree
       def state_callback(before_or_after = :before)
         method_name = :"#{before_or_after}_#{@order.state}"
         send(method_name) if respond_to?(method_name, true)
+      end
+
+      def accept_terms_and_conditions
+        return unless Spree::Config[:require_terms_and_conditions]
+
+        @order.terms_and_conditions = update_params[:terms_and_conditions]
       end
 
       def after_update_attributes

@@ -30,7 +30,7 @@ module Spree
     self.whitelisted_ransackable_attributes = %w[completed_at created_at email number state payment_state shipment_state total]
 
     attr_reader :coupon_code
-    attr_accessor :temporary_address, :temporary_credit_card
+    attr_accessor :temporary_address, :temporary_credit_card, :terms_and_conditions
 
     belongs_to :user, class_name: Spree::UserClassHandle.new
     belongs_to :created_by, class_name: Spree::UserClassHandle.new
@@ -704,6 +704,14 @@ module Spree
       true unless new_record? || ['cart', 'address'].include?(state)
     end
 
+    def ensure_terms_and_conditions
+      unless terms_and_conditions_accepted?
+        errors.add(:terms_and_conditions, Spree.t(:must_accept_terms_and_conditions))
+      end
+
+      errors.empty?
+    end
+
     def ensure_inventory_units
       if has_step?("delivery")
         inventory_validator = Spree::Stock::InventoryValidator.new
@@ -761,6 +769,10 @@ module Spree
 
     def use_billing?
       use_billing.in?([true, 'true', '1'])
+    end
+
+    def terms_and_conditions_accepted?
+      terms_and_conditions.in?([true, 'true', '1'])
     end
 
     def set_currency

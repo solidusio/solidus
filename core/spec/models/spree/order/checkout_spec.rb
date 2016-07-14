@@ -546,6 +546,34 @@ describe Spree::Order, type: :model do
       end
     end
 
+    context "with terms_and_conditions required" do
+      before do
+        Spree::Config[:require_terms_and_conditions] = true
+        order.terms_and_conditions = true
+        order.email = 'spree@example.org'
+        order.payments << FactoryGirl.create(:payment)
+        order.shipments.create!
+        allow(order).to receive_messages(payment_required?: true)
+        allow(order).to receive(:ensure_available_shipping_rates).and_return(true)
+      end
+
+      it "transitions to complete" do
+        order.complete!
+        assert_state_changed(order, 'confirm', 'complete')
+      end
+
+      context 'but not accepted' do
+        before do
+          order.terms_and_conditions = false
+        end
+
+        it 'will not complete' do
+          expect { order.complete! }.to raise_error(StateMachines::InvalidTransition)
+          expect(order.reload.state).to eq('confirm')
+        end
+      end
+    end
+
     context "default credit card" do
       before do
         order.user = FactoryGirl.create(:user)

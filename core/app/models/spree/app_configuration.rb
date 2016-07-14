@@ -205,6 +205,10 @@ module Spree
     #   @return [Boolean] Allows shipments to be ready to ship regardless of the order being paid if false (default: +true+)
     preference :require_payment_to_ship, :boolean, default: true # Allows shipments to be ready to ship regardless of the order being paid if false
 
+    # @!attribute [rw] require_terms_and_conditions
+    #   @return [Boolean] Requires terms and conditions to be accepted during checkout flow (default: +false+)
+    preference :require_terms_and_conditions, :boolean, default: false
+
     # @!attribute [rw] return_eligibility_number_of_days
     #   @return [Integer] default: 365
     preference :return_eligibility_number_of_days, :integer, default: 365
