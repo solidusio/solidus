@@ -105,7 +105,7 @@
 
       <div id="shipping_specs">
         <% [:height, :width, :depth, :weight].each_with_index do |field, index| %>
-          <div id="shipping_specs_<%= field %>_field" data-hook="admin_product_form_<%= field %>" class="field two columns <%= index.even? ? 'alpha' : 'omega' %>">
+          <div id="shipping_specs_<%= field %>_field" class="field two columns <%= index.even? ? 'alpha' : 'omega' %>">
             <%= f.label field %>
             <%= f.text_field field, value: number_with_precision(@product.send(field), precision: 2) %>
           </div>
