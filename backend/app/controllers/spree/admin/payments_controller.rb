@@ -16,7 +16,7 @@ module Spree
       end
 
       def new
-        @payment = @order.payments.build
+        @payment = Spree::Payment.new
       end
 
       def create
