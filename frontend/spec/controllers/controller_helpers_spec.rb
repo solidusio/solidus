@@ -18,7 +18,7 @@ describe Spree::ProductsController, type: :controller do
   # Regression test for https://github.com/spree/spree/issues/1184
   it "sets the default locale based off Spree::Frontend::Config[:locale]" do
     expect(I18n.locale).to eq(:en)
-    spree_get :index
+    get :index
     expect(I18n.locale).to eq(:de)
   end
 end
