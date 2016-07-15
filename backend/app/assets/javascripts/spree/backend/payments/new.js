@@ -1,6 +1,6 @@
 //= require jquery.payment
 $(document).ready(function() {
-  if ($("#new_payment").is("*")) {
+  if ($(".edit_payment").is("*")) {
     $(".cardNumber").payment('formatCardNumber');
     $(".cardExpiry").payment('formatCardExpiry');
     $(".cardCode").payment('formatCardCVC');
