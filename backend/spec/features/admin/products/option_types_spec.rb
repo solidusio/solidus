@@ -27,7 +27,7 @@ describe "Option Types", type: :feature do
     it "should allow an admin to create a new option type", js: true do
       click_link "Option Types"
       click_link "new_option_type_link"
-      expect(page).to have_content("NEW OPTION TYPE")
+      expect(page).to have_content("New Option Type")
       fill_in "option_type_name", with: "shirt colors"
       fill_in "option_type_presentation", with: "colors"
       click_button "Create"

@@ -148,7 +148,7 @@ describe "Promotion Adjustments", type: :feature do
 
       select2 "Free shipping", from: "Add action of type"
       within('#action_fields') { click_button "Add" }
-      expect(page).to have_content('MAKES ALL SHIPMENTS FOR THE ORDER FREE')
+      expect(page).to have_content('Makes all shipments for the order free')
 
       promotion = Spree::Promotion.find_by_name("Promotion")
       expect(promotion.codes).to be_empty

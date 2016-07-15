@@ -63,7 +63,7 @@ describe "Order Details", type: :feature, js: true do
           end
         end
 
-        expect(page).to have_content("YOUR ORDER IS EMPTY") # wait for page refresh
+        expect(page).to have_content("Your order is empty") # wait for page refresh
         expect(page).not_to have_content("spree t-shirt")
       end
 
@@ -154,7 +154,7 @@ describe "Order Details", type: :feature, js: true do
 
           expect(page).to have_selector('.select2-no-results')
           within(".select2-no-results") do
-            expect(page).to have_content("NO MATCHES FOUND")
+            expect(page).to have_content("No matches found")
           end
         end
       end
@@ -197,7 +197,7 @@ describe "Order Details", type: :feature, js: true do
             within_row(1) { click_icon 'arrows-h' }
             complete_split_to(stock_location2, quantity: 2)
 
-            expect(page).to have_content("PENDING PACKAGE FROM 'CLARKSVILLE'")
+            expect(page).to have_content("pending package from 'Clarksville'")
 
             expect(order.shipments.count).to eq(1)
             expect(order.shipments.last.backordered?).to eq(false)
@@ -211,7 +211,7 @@ describe "Order Details", type: :feature, js: true do
             within_row(1) { click_icon 'arrows-h' }
             complete_split_to(stock_location2, quantity: 5)
 
-            expect(page).to have_content("PENDING PACKAGE FROM 'CLARKSVILLE'")
+            expect(page).to have_content("pending package from 'Clarksville'")
 
             expect(order.shipments.count).to eq(1)
             expect(order.shipments.last.backordered?).to eq(false)
@@ -294,7 +294,7 @@ describe "Order Details", type: :feature, js: true do
               within_row(1) { click_icon 'arrows-h' }
               complete_split_to(stock_location2, quantity: 2)
 
-              expect(page).to have_content("PENDING PACKAGE FROM 'CLARKSVILLE'")
+              expect(page).to have_content("pending package from 'Clarksville'")
 
               expect(order.shipments.count).to eq(1)
               expect(order.shipments.first.inventory_units_for(product.master).count).to eq(2)
@@ -507,7 +507,7 @@ describe "Order Details", type: :feature, js: true do
       wait_for_ajax
 
       within '.carton-state' do
-        expect(page).to have_content('SHIPPED')
+        expect(page).to have_content('shipped')
       end
     end
   end
