@@ -40,6 +40,28 @@ describe Spree::Order, type: :model do
     end
   end
 
+  describe "#cancel!" do
+    context "with captured store credit" do
+      let!(:store_credit_payment_method) { create(:store_credit_payment_method) }
+      let(:order_total) { 500.00 }
+      let(:store_credit) { create(:store_credit, amount: order_total) }
+      let(:order) { create(:order_with_line_items, user: store_credit.user, line_items_price: order_total) }
+
+      before do
+        order.add_store_credit_payments
+        order.finalize!
+        order.capture_payments!
+      end
+
+      subject { order.cancel! }
+
+      it "cancels the order" do
+        expect{ subject }.to change{ order.can_cancel? }.from(true).to(false)
+        expect(order).to be_canceled
+      end
+    end
+  end
+
   context "#canceled_by" do
     let(:admin_user) { create :admin_user }
     let(:order) { create :order }
