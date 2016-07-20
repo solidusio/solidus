@@ -1,5 +1,16 @@
 ## Solidus 1.4.0 (master, unreleased)
 
+*   Update Rules::Taxon/Product handling of invalid match policies
+
+    Rules::Taxon and Rules::Product now require valid match_policy values.
+    Please ensure that all your Taxon and Product Rules have valid match_policy
+    values.
+
+*   Fix default value for Spree::Promotion::Rules::Taxon preferred_match_policy.
+
+    Previously this was defaulting to nil, which was sometimes interpreted as
+    'none'.
+
 *   Deprecate `Spree::Shipment#address` (column renamed)
 
     `Spree::Shipment#address` was not actually being used for anything in
