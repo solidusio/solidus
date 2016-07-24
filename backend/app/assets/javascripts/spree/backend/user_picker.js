@@ -25,10 +25,12 @@ $.fn.userAutocomplete = function () {
       params: { "headers": { "X-Spree-Token": Spree.api_key } },
       data: function (term) {
         return {
-          m: 'or',
-          email_start: term,
-          addresses_firstname_start: term,
-          addresses_lastname_start: term
+          q: {
+            m: 'or',
+            email_start: term,
+            addresses_firstname_start: term,
+            addresses_lastname_start: term
+          }
         };
       },
       results: function (data) {
