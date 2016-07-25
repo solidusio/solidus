@@ -12,7 +12,8 @@ $.fn.userAutocomplete = function () {
       Spree.ajax({
         url: Spree.routes.users_api,
         data: {
-          ids: element.val()
+          ids: element.val(),
+          token: Spree.api_key
         },
         success: function(data) {
           callback(data.users);
