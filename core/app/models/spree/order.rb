@@ -852,7 +852,7 @@ module Spree
 
     def after_cancel
       shipments.each(&:cancel!)
-      payments.completed.each(&:cancel!)
+      payments.completed.each { |payment| payment.cancel! unless payment.fully_refunded? }
       payments.store_credits.pending.each(&:void_transaction!)
 
       send_cancel_email
