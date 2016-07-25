@@ -123,7 +123,7 @@ module Spree
     #
     #  {
     #    order: {
-    #      wallet_source_id: '123',
+    #      wallet_payment_source_id: '123',
     #      ...other params...
     #    },
     #    cvc_confirm: '456', # optional
@@ -137,7 +137,7 @@ module Spree
     #      payments_attributes: [
     #        {
     #          source_attributes: {
-    #            wallet_source_id: '123',
+    #            wallet_payment_source_id: '123',
     #            verification_value: '456',
     #          },
     #        },
@@ -147,24 +147,24 @@ module Spree
     #    ...other params...
     #  }
     #
-    def move_wallet_source_id_into_payments_attributes(params)
+    def move_wallet_payment_source_id_into_payments_attributes(params)
       return params if params[:order].blank?
 
-      wallet_source_id = params[:order][:wallet_source_id].presence
+      wallet_payment_source_id = params[:order][:wallet_payment_source_id].presence
       cvc_confirm = params[:cvc_confirm].presence
 
-      return params if wallet_source_id.nil?
+      return params if wallet_payment_source_id.nil?
 
       params[:order][:payments_attributes] = [
         {
           source_attributes: {
-            wallet_source_id: wallet_source_id,
+            wallet_payment_source_id: wallet_payment_source_id,
             verification_value: cvc_confirm
           }
         }
       ]
 
-      params[:order].delete(:wallet_source_id)
+      params[:order].delete(:wallet_payment_source_id)
       params.delete(:cvc_confirm)
 
       params

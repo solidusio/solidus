@@ -21,7 +21,7 @@ module Spree
 
     def self.default
       ActiveSupport::Deprecation.warn("CreditCard.default is deprecated. Please use Spree::Wallet instead.")
-      joins(:wallet_sources).where(spree_wallet_sources: { default: true })
+      joins(:wallet_payment_sources).where(spree_wallet_payment_sources: { default: true })
     end
 
     # needed for some of the ActiveMerchant gateways (eg. SagePay)
@@ -46,7 +46,7 @@ module Spree
 
     def default
       ActiveSupport::Deprecation.warn("CreditCard.default is deprecated. Please use user.wallet.default instead.", caller)
-      user.wallet.default.source == self
+      user.wallet.default.payment_source == self
     end
 
     def default=(set_as_default)
@@ -56,7 +56,7 @@ module Spree
         user.wallet.default = self
         true
       else # removing this card as default
-        if user.wallet.default.try!(:source) == self
+        if user.wallet.default.try!(:payment_source) == self
           user.wallet.default = nil
         end
         false

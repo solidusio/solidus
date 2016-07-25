@@ -1,7 +1,7 @@
 <fieldset id="payment" data-hook>
   <legend align="center"><%= Spree.t(:payment_information) %></legend>
   <div data-hook="checkout_payment_step">
-    <% if @wallet_sources.present? %>
+    <% if @wallet_payment_sources.present? %>
       <div class="card_options">
         <%= radio_button_tag 'use_existing_card', 'yes', true %>
         <label for="use_existing_card_yes">
@@ -18,13 +18,13 @@
         <p class="field" data-hook="existing_cards">
           <table class="existing-credit-card-list">
             <tbody>
-              <% @wallet_sources.each do |wallet_source| %>
+              <% @wallet_payment_sources.each do |wallet_payment_source| %>
                 <%=
                   render(
-                    partial: "spree/checkout/existing_payment/#{wallet_source.source.payment_method.method_type}",
+                    partial: "spree/checkout/existing_payment/#{wallet_payment_source.payment_source.payment_method.method_type}",
                     locals: {
-                      wallet_source: wallet_source,
-                      default: wallet_source == @default_wallet_source,
+                      wallet_payment_source: wallet_payment_source,
+                      default: wallet_payment_source == @default_wallet_payment_source,
                     }
                   )
                 %>
