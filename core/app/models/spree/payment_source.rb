@@ -5,7 +5,7 @@ module Spree
     belongs_to :payment_method
 
     has_many :payments, as: :source
-    has_many :wallet_sources, class_name: 'Spree::WalletSource', as: :source, inverse_of: :source
+    has_many :wallet_payment_sources, class_name: 'Spree::WalletPaymentSource', as: :payment_source, inverse_of: :payment_source
 
     attr_accessor :imported
 

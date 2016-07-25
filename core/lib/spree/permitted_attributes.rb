@@ -88,7 +88,7 @@ module Spree
       :number, :month, :year, :expiry, :verification_value,
       :first_name, :last_name, :cc_type, :gateway_customer_profile_id,
       :gateway_payment_profile_id, :last_digits, :name, :encrypted_data,
-      :existing_card_id, :wallet_source_id
+      :existing_card_id, :wallet_payment_source_id
     ]
 
     @@stock_item_attributes = [:variant, :stock_location, :backorderable, :variant_id]

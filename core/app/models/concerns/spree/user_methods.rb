@@ -23,7 +23,7 @@ module Spree
       has_many :store_credit_events, through: :store_credits
       money_methods :total_available_store_credit
 
-      has_many :wallet_sources, foreign_key: 'user_id', class_name: 'Spree::WalletSource', inverse_of: :user
+      has_many :wallet_payment_sources, foreign_key: 'user_id', class_name: 'Spree::WalletPaymentSource', inverse_of: :user
 
       after_create :auto_generate_spree_api_key
 

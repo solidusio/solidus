@@ -12,8 +12,8 @@ class Spree::Wallet::DefaultPaymentBuilder
   def build
     if default = order.user.try!(:wallet).try!(:default)
       Spree::Payment.new(
-        payment_method: default.source.payment_method,
-        source: default.source,
+        payment_method: default.payment_source.payment_method,
+        source: default.payment_source,
       )
     end
   end

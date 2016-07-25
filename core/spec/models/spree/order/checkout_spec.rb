@@ -562,7 +562,7 @@ describe Spree::Order, type: :model do
       it "makes the current credit card a user's default credit card" do
         order.complete!
         expect(order.state).to eq 'complete'
-        expect(order.user.reload.wallet.default.source).to eq(order.credit_cards.first)
+        expect(order.user.reload.wallet.default.payment_source).to eq(order.credit_cards.first)
       end
 
       it "does not assign a default credit card if temporary_payment_source is set" do
