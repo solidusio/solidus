@@ -1112,8 +1112,14 @@ en:
     extension: Extension
     existing_shipments: Existing shipments
     hints:
+      spree/price:
+        country: "This determines in what country the price is valid.<br/>Default: Any Country"
       spree/product:
-        promotionable: "This determines whether or not promotions can apply to this product.<br/>Default: checked"
+        promotionable: "This determines whether or not promotions can apply to this product.<br/>Default: Checked"
+        shipping_category: "This determines what kind of shipping this product requires.<br/> Default: Default"
+        tax_category: "This determines what kind of taxation is applied to this product.<br/> Default: None"
+      spree/variant:
+        tax_category: "This determines what kind of taxation is applied to this variant.<br/> Default: Use tax category of the product associated with this variant"
     failed_payment_attempts: Failed Payment Attempts
     failure: Failure
     filename: Filename
