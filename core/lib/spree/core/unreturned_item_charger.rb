@@ -75,7 +75,7 @@ module Spree
       unless new_order.payments.present?
         source_to_reuse = @original_order.payments.valid.map(&:source).detect(&:reusable?)
         if !source_to_reuse && @original_order.user
-          source_to_reuse = @original_order.user.wallet.default.try!(:source)
+          source_to_reuse = @original_order.user.wallet.default.try!(:payment_source)
         end
         new_order.payments.create!(
           payment_method_id: source_to_reuse.try(:payment_method_id),
