@@ -22,13 +22,6 @@ module Spree
     # engine name on the file name
     def check
       if File.directory?(app_dir)
-        engine_in_app = app_migrations.map do |file_name|
-          name, engine = file_name.split(".", 2)
-          next unless match_engine?(engine)
-          name
-        end.compact
-
-        missing_migrations = engine_migrations.sort - engine_in_app.sort
         unless missing_migrations.empty?
           puts "[#{engine_name.capitalize} WARNING] Missing migrations."
           missing_migrations.each do |migration|
@@ -38,6 +31,19 @@ module Spree
           true
         end
       end
+    end
+
+    def missing_migrations
+      @missing_migrations ||=
+        begin
+          engine_in_app = app_migrations.map do |file_name|
+            name, engine = file_name.split(".", 2)
+            next unless match_engine?(engine)
+            name
+          end.compact
+
+          engine_migrations.sort - engine_in_app.sort
+        end
     end
 
     private
