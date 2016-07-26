@@ -26,7 +26,6 @@ module Spree
     after_create :update_tax_charge
 
     after_save :update_inventory
-    after_save :update_adjustments
 
     before_destroy :update_inventory
     before_destroy :destroy_inventory_units
@@ -165,17 +164,6 @@ module Spree
 
     def destroy_inventory_units
       inventory_units.destroy_all
-    end
-
-    def update_adjustments
-      if quantity_changed?
-        update_tax_charge # Called to ensure pre_tax_amount is updated.
-        recalculate_adjustments
-      end
-    end
-
-    def recalculate_adjustments
-      Spree::ItemAdjustments.new(self).update
     end
 
     def update_tax_charge

@@ -585,32 +585,6 @@ describe Spree::Shipment, type: :model do
     end
   end
 
-  context "after_save" do
-    context "line item changes" do
-      before do
-        shipment.cost = shipment.cost + 10
-      end
-
-      it "triggers adjustment total recalculation" do
-        expect(shipment).to receive(:recalculate_adjustments)
-        shipment.save
-      end
-
-      it "does not trigger adjustment recalculation if shipment has shipped" do
-        shipment.state = 'shipped'
-        expect(shipment).not_to receive(:recalculate_adjustments)
-        shipment.save
-      end
-    end
-
-    context "line item does not change" do
-      it "does not trigger adjustment total recalculation" do
-        expect(shipment).not_to receive(:recalculate_adjustments)
-        shipment.save
-      end
-    end
-  end
-
   context "currency" do
     it "returns the order currency" do
       expect(shipment.currency).to eq(order.currency)
