@@ -52,13 +52,6 @@ module Spree
       end
     end
 
-    context "with no payments" do
-      it "should return falsy" do
-        expect(order).to receive_messages total: 100
-        expect(order.process_payments!).to be_falsy
-      end
-    end
-
     context "with payments completed" do
       it "should not fail transitioning to complete when paid" do
         expect(order).to receive_messages total: 100, payment_total: 100
@@ -115,13 +108,6 @@ module Spree
       it "should process the payments" do
         expect(payment).to receive(:process!)
         expect(order.process_payments!).to be_truthy
-      end
-
-      # Regression spec for https://github.com/spree/spree/issues/5436
-      it 'should raise an error if there are no payments to process' do
-        allow(order).to receive_messages unprocessed_payments: []
-        expect(payment).to_not receive(:process!)
-        expect(order.process_payments!).to be_falsey
       end
 
       context "when a payment raises a GatewayError" do
