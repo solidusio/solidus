@@ -316,11 +316,9 @@ module Spree
           end
 
           def assign_default_credit_card
-            payment = Spree::Config.
-              add_default_payment_class.new(self).
-              build_payment
+            builder = Spree::Config.default_payment_builder_class.new(self)
 
-            if payment
+            if payment = builder.build
               payments << payment
 
               if bill_address.nil?

@@ -1,4 +1,4 @@
-class Spree::Wallet::AddDefaultPayment
+class Spree::Wallet::DefaultPaymentBuilder
   def initialize(order)
     @order = order
   end
@@ -7,7 +7,7 @@ class Spree::Wallet::AddDefaultPayment
   # state.
   #
   # @return [Payment] the unsaved payment to be added, or nil if none.
-  def build_payment
+  def build
     credit_card = order.user.try!(:default_credit_card)
 
     if credit_card.try!(:valid?) && order.payments.from_credit_card.count == 0
