@@ -65,7 +65,11 @@ module Spree
       massaged_params = params.deep_dup
 
       move_payment_source_into_payments_attributes(massaged_params)
-      move_existing_card_into_payments_attributes(massaged_params)
+      if massaged_params[:order] && massaged_params[:order][:existing_card].present?
+        ActiveSupport::Deprecation.warn("Passing order[:existing_card] is deprecated. Send order[:wallet_payment_source_id] instead.", caller)
+        move_existing_card_into_payments_attributes(massaged_params) # deprecated
+      end
+      move_wallet_payment_source_id_into_payments_attributes(massaged_params)
       set_payment_parameters_amount(massaged_params, @order)
 
       massaged_params
@@ -157,8 +161,13 @@ module Spree
         end
       end
 
-      if try_spree_current_user && try_spree_current_user.respond_to?(:payment_sources)
-        @payment_sources = try_spree_current_user.payment_sources
+      if try_spree_current_user && try_spree_current_user.respond_to?(:wallet)
+        @wallet_payment_sources = try_spree_current_user.wallet.wallet_payment_sources
+        @default_wallet_payment_source = @wallet_payment_sources.detect(&:default) ||
+                                         @wallet_payment_sources.first
+        # TODO: How can we deprecate this instance variable?  We could try
+        # wrapping it in a delegating object that produces deprecation warnings.
+        @payment_sources = try_spree_current_user.wallet.wallet_payment_sources.map(&:payment_source).select { |wps| wps.is_a?(Spree::CreditCard) }
       end
     end
 

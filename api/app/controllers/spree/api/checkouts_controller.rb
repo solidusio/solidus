@@ -99,7 +99,7 @@ module Spree
         end
 
         if params[:order] && params[:order][:existing_card].present?
-          ActiveSupport::Deprecation.warn("Passing order[:existing_card] is deprecated. Send existing_card_id inside of payments_attributes[:source_attributes].", caller)
+          ActiveSupport::Deprecation.warn("Passing order[:existing_card] is deprecated. Send wallet_payment_source_id inside of payments_attributes[:source_attributes].", caller)
           move_existing_card_into_payments_attributes(massaged_params)
         end
 

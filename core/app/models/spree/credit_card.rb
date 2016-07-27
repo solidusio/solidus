@@ -1,20 +1,14 @@
 module Spree
-  class CreditCard < Spree::Base
-    belongs_to :payment_method
+  class CreditCard < Spree::PaymentSource
     belongs_to :user, class_name: Spree.user_class, foreign_key: 'user_id'
     belongs_to :address
-    has_many :payments, as: :source
 
     before_save :set_last_digits
-
-    after_save :ensure_one_default
 
     accepts_nested_attributes_for :address
 
     attr_reader :number
-    attr_accessor :encrypted_data,
-                    :imported,
-                    :verification_value
+    attr_accessor :encrypted_data, :verification_value
 
     validates :month, :year, numericality: { only_integer: true }, if: :require_card_numbers?, on: :create
     validates :number, presence: true, if: :require_card_numbers?, on: :create, unless: :imported
@@ -22,7 +16,11 @@ module Spree
     validates :verification_value, presence: true, if: :require_card_numbers?, on: :create, unless: :imported
 
     scope :with_payment_profile, -> { where('gateway_customer_profile_id IS NOT NULL') }
-    scope :default, -> { where(default: true) }
+
+    def self.default
+      ActiveSupport::Deprecation.warn("CreditCard.default is deprecated. Please use Spree::Wallet instead.")
+      joins(:wallet_payment_sources).where(spree_wallet_payment_sources: { default: true })
+    end
 
     # needed for some of the ActiveMerchant gateways (eg. SagePay)
     alias_attribute :brand, :cc_type
@@ -35,6 +33,25 @@ module Spree
       discover: /^6(?:011|5[0-9]{2})[0-9]{12}$/,
       jcb: /^(?:2131|1800|35\d{3})\d{11}$/
     }
+
+    def default
+      ActiveSupport::Deprecation.warn("CreditCard.default is deprecated. Please use user.wallet.default instead.", caller)
+      user.wallet.default.payment_source == self
+    end
+
+    def default=(set_as_default)
+      ActiveSupport::Deprecation.warn("CreditCard.default= is deprecated. Please use user.wallet.default= instead.", caller)
+      if set_as_default # setting this card as default
+        user.wallet.add(self)
+        user.wallet.default = self
+        true
+      else # removing this card as default
+        if user.wallet.default.try!(:payment_source) == self
+          user.wallet.default = nil
+        end
+        false
+      end
+    end
 
     def address_attributes=(attributes)
       self.address = Address.immutable_merge(address, attributes)
@@ -112,31 +129,8 @@ module Spree
       "XXXX-XXXX-XXXX-#{last_digits}"
     end
 
-    # @return [Array<String>] the actions available on this credit card
-    def actions
-      %w{capture void credit}
-    end
-
-    # @param payment [Spree::Payment] the payment we want to know if can be captured
-    # @return [Boolean] true when the payment is in the pending or checkout states
-    def can_capture?(payment)
-      payment.pending? || payment.checkout?
-    end
-
-    # @param payment [Spree::Payment] the payment we want to know if can be voided
-    # @return [Boolean] true when the payment is not failed or voided
-    def can_void?(payment)
-      !payment.failed? && !payment.void?
-    end
-
-    # Indicates whether its possible to credit the payment.  Note that most
-    # gateways require that the payment be settled first which generally
-    # happens within 12-24 hours of the transaction.
-    #
-    # @param payment [Spree::Payment] the payment we want to know if can be credited
-    # @return [Boolean] true when the payment is completed and can be credited
-    def can_credit?(payment)
-      payment.completed? && payment.credit_allowed > 0
+    def reusable?
+      has_payment_profile?
     end
 
     # @return [Boolean] true when there is a gateway customer or payment
@@ -180,14 +174,6 @@ module Spree
 
     def require_card_numbers?
       !encrypted_data.present? && !has_payment_profile?
-    end
-
-    def ensure_one_default
-      if user_id && default
-        CreditCard.where(default: true).where.not(id: id).where(user_id: user_id).each do |ucc|
-          ucc.update_columns(default: false, updated_at: Time.current)
-        end
-      end
     end
   end
 end

@@ -1,4 +1,4 @@
-class Spree::StoreCredit < Spree::Base
+class Spree::StoreCredit < Spree::PaymentSource
   acts_as_paranoid
 
   VOID_ACTION       = 'void'

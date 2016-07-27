@@ -76,10 +76,10 @@ module Spree
                   transition to: :payment, from: :confirm
                 end
 
-                after_transition to: :complete, do: :persist_user_credit_card
+                after_transition to: :complete, do: :add_payment_sources_to_wallet
                 before_transition to: :payment, do: :set_shipments_cost
                 before_transition to: :payment, do: :create_tax_charge!
-                before_transition to: :payment, do: :assign_default_credit_card
+                before_transition to: :payment, do: :add_default_payment_from_wallet
 
                 before_transition to: :confirm, do: :add_store_credit_payments
 
@@ -309,13 +309,15 @@ module Spree
             end
           end
 
-          def persist_user_credit_card
+          def add_payment_sources_to_wallet
             Spree::Config.
               wallet_add_after_order_complete_class.new(self).
               add_to_wallet
           end
+          alias_method :persist_user_credit_card, :add_payment_sources_to_wallet
+          deprecate :persist_user_credit_card
 
-          def assign_default_credit_card
+          def add_default_payment_from_wallet
             payment = Spree::Config.
               add_default_payment_class.new(self).
               build_payment
@@ -330,6 +332,8 @@ module Spree
               end
             end
           end
+          alias_method :assign_default_credit_card, :add_default_payment_from_wallet
+          deprecate :assign_default_credit_card
 
           private
 
