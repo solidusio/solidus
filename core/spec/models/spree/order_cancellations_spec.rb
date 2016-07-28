@@ -95,6 +95,27 @@ describe Spree::OrderCancellations do
       expect { subject }.to change { order.total }.by(-10.0)
     end
 
+    it 'adjusts the order tax_total', pending: 'community discussion' do
+      # set up required for tax adjustments on the line item
+      # Should probably me moved to apply to the whole spec if this is a
+      # change that is accepted
+      line_item = order.line_items.first
+      create :tax_rate, zone: order.tax_zone, tax_category: line_item.tax_category
+      line_item.send :update_tax_charge
+      order.update!
+
+      expect { subject }.to change { order.tax_total }.from(1).to(0)
+    end
+
+    it 'adjusts the order item total', pending: 'community discussion' do
+      # set up required for tax adjustments on the line item
+      # Should probably me moved to apply to the whole spec if this is a
+      # change that is accepted
+      order.update!
+
+      expect { subject }.to change { order.tax_total }.from(10).to(0)
+    end
+
     it "sends a cancellation email" do
       mail_double = double
       expect(Spree::OrderMailer).to receive(:inventory_cancellation_email).with(order, [inventory_unit]).and_return(mail_double)
