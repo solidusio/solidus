@@ -16,20 +16,25 @@ describe "Customer Details", type: :feature, js: true do
   let!(:user) { create(:user, email: 'foobar@example.com', ship_address: ship_address, bill_address: bill_address) }
 
   context "brand new order" do
-    # Regression test for https://github.com/spree/spree/issues/3335 and https://github.com/spree/spree/issues/5317
-    it "associates a user when not using guest checkout" do
+    let(:quantity) { 1 }
+
+    before do
       visit spree.admin_path
       click_link "Orders"
       click_link "New Order"
       click_on 'Cart'
       select2_search product.name, from: Spree.t(:name_or_sku)
       within("table.stock-levels") do
-        find('.variant_quantity').set(1)
+        find('.variant_quantity').set(quantity)
       end
       click_icon :plus
       expect(page).to have_css('.line-item')
       click_link "Customer"
       targetted_select2 "foobar@example.com", from: "#s2id_customer_search"
+    end
+
+    # Regression test for https://github.com/spree/spree/issues/3335 and https://github.com/spree/spree/issues/5317
+    it "associates a user when not using guest checkout" do
       # 5317 - Address prefills using user's default.
       expect(page).to have_field('First Name', with: user.bill_address.firstname)
       expect(page).to have_field('Last Name', with: user.bill_address.lastname)
@@ -42,6 +47,16 @@ describe "Customer Details", type: :feature, js: true do
       expect(page).to have_field('Phone', with: user.bill_address.phone)
       click_button "Update"
       expect(Spree::Order.last.user).not_to be_nil
+    end
+
+    context "when required quantity is more than available" do
+      let(:quantity) { 11 }
+      let!(:product) { create(:product_not_backorderable) }
+
+      it "displays an error" do
+        click_button "Update"
+        expect(page).to have_content Spree.t(:insufficient_stock_for_order)
+      end
     end
   end
 

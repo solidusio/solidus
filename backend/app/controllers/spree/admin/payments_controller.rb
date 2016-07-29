@@ -1,6 +1,8 @@
 module Spree
   module Admin
     class PaymentsController < Spree::Admin::BaseController
+      rescue_from Spree::Order::InsufficientStock, with: :insufficient_stock_error
+
       before_action :load_order, only: [:create, :new, :index, :fire]
       before_action :load_payment, except: [:create, :new, :index, :fire]
       before_action :load_payment_for_fire, only: :fire
@@ -108,6 +110,11 @@ module Spree
           flash[:notice] = Spree.t(:fill_in_customer_info)
           redirect_to edit_admin_order_customer_url(@order)
         end
+      end
+
+      def insufficient_stock_error
+        flash[:error] = Spree.t(:insufficient_stock_for_order)
+        redirect_to new_admin_order_payment_url(@order)
       end
     end
   end

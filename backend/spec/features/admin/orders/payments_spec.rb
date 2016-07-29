@@ -268,4 +268,33 @@ describe 'Payments', type: :feature do
       expect(page).to have_content("Payment has been successfully created!")
     end
   end
+
+  context "when required quantity is more than available" do
+    let(:product) { create(:product_not_backorderable) }
+
+    let(:order) do
+      create(:order_with_line_items, {
+        line_items_count: 1,
+        line_items_attributes: [{ quantity: 11, product: product }],
+        stock_location: product.master.stock_locations.first
+      })
+    end
+
+    let!(:chequing_payment_method) { create(:check_payment_method) }
+    let!(:payment_method) { create(:credit_card_payment_method, name: "Multipass!") }
+
+    before do
+      visit spree.admin_order_payments_path(order.reload)
+    end
+
+    it "displays an error" do
+      choose payment_method.name
+      fill_in "Card Number", with: "4111 1111 1111 1111"
+      fill_in "Name", with: "Test User"
+      fill_in "Expiration", with: "09 / #{Time.current.year + 1}"
+      fill_in "Card Code", with: "007"
+      click_button "Continue"
+      expect(page).to have_content Spree.t(:insufficient_stock_for_order)
+    end
+  end
 end

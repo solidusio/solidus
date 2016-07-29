@@ -32,6 +32,12 @@ FactoryGirl.define do
         after :create do |product|
           product.master.stock_items.first.adjust_count_on_hand(10)
         end
+
+        factory :product_not_backorderable do
+          after :create do |product|
+            product.master.stock_items.first.update_column(:backorderable, false)
+          end
+        end
       end
 
       factory :product_with_option_types do
