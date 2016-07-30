@@ -9,7 +9,6 @@
   <li>
     <%= button_link_to Spree.t(:ready_to_ship),
       finalize_admin_stock_transfer_path(@stock_transfer),
-      icon: 'truck',
       method: 'put',
       data: { confirm: Spree.t('finalize_stock_transfer.confirm') }
     %>
@@ -33,7 +32,7 @@
       <%= f.error_message_on :destination_location %>
     <% end %>
     <div class="filter-actions actions" data-hook="buttons">
-      <%= button Spree.t('actions.save'), 'ok' %>
+      <%= button Spree.t('actions.save') %>
     </div>
   </fieldset>
 <% end %>

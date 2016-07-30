@@ -19,8 +19,8 @@
       <%= f.error_message_on :description %>
     <% end %>
     <div class="filter-actions actions" data-hook="buttons">
-      <%= button Spree.t(:continue), 'arrow-right' %>
-      <%= link_to_with_icon 'remove', Spree.t('actions.cancel'), admin_stock_transfers_path, class: 'button' %>
+      <%= button Spree.t(:continue) %>
+      <%= link_to Spree.t('actions.cancel'), admin_stock_transfers_path, class: 'button' %>
     </div>
   </fieldset>
 <% end %>

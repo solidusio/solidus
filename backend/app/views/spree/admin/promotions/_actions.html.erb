@@ -10,7 +10,7 @@
           <%= select_tag 'action_type', options, :class => 'select2 fullwidth' %>
         </div>
         <div class="filter-actions actions">
-          <%= button Spree.t('actions.add'), 'plus' %>
+          <%= button Spree.t('actions.add') %>
         </div>
       <% end %>
     </fieldset>
@@ -28,7 +28,7 @@
     </div>
     <% if can?(:update, @promotion) %>
       <div class="filter-actions actions promotion-update">
-        <%= button Spree.t('actions.update'), 'refresh' %>
+        <%= button Spree.t('actions.update') %>
       </div>
     <% end %>
   <% end %>

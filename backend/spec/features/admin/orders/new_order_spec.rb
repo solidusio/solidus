@@ -28,7 +28,7 @@ describe "New Order", type: :feature do
 
     fill_in_quantity("table.stock-levels", "quantity_0", 2)
 
-    click_icon :plus
+    click_button 'Add'
     click_on "Customer"
 
     within "#select-customer" do
@@ -65,8 +65,8 @@ describe "New Order", type: :feature do
     select2_search product.name, from: Spree.t(:name_or_sku)
 
     fill_in_quantity("table.stock-levels", "quantity_0", 2)
-    click_icon :plus
 
+    click_button 'Add'
     click_on "Customer"
 
     within "#select-customer" do
@@ -96,7 +96,7 @@ describe "New Order", type: :feature do
 
       fill_in_quantity('table.stock-levels', 'quantity_0', 2)
 
-      click_icon :plus
+      click_button 'Add'
 
       within(".line-items") do
         expect(page).to have_content(product.name)
@@ -132,7 +132,7 @@ describe "New Order", type: :feature do
 
       fill_in_quantity('table.stock-levels', 'quantity_0', 1)
 
-      click_icon :plus
+      click_button 'Add'
 
       within(".line-items") do
         within(".line-item-name") do
@@ -190,7 +190,7 @@ describe "New Order", type: :feature do
         find('.variant_quantity').set(1)
       end
 
-      click_icon :plus
+      click_button 'Add'
 
       expect(page).to have_css('.line-item')
 

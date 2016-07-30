@@ -13,8 +13,8 @@
     <%= render :partial => 'form', :locals => { :f => f } %>
 
     <div class="form-buttons filter-actions actions" data-hook="buttons">
-      <%= button Spree.t(:'actions.create'), 'ok' %>
-      <%= button_link_to Spree.t('actions.cancel'), admin_order_return_authorizations_url(@order), :icon => 'remove' %>
+      <%= button Spree.t(:'actions.create') %>
+      <%= button_link_to Spree.t('actions.cancel'), admin_order_return_authorizations_url(@order) %>
     </div>
   </fieldset>
 <% end %>

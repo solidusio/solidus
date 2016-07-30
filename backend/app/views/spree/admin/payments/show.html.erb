@@ -10,7 +10,7 @@
 
 
 <% content_for :page_actions do %>
-  <li><%= button_link_to Spree.t(:logs), spree.admin_order_payment_log_entries_url(@order, @payment), :icon => 'archive' %></li>
+  <li><%= button_link_to Spree.t(:logs), spree.admin_order_payment_log_entries_url(@order, @payment) %></li>
 <% end %>
 
 <%= render :partial => "spree/admin/payments/source_views/#{@payment.payment_method.method_type}", :locals => { :payment => @payment.source.is_a?(Spree::Payment) ? @payment.source : @payment } %>

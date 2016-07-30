@@ -15,7 +15,7 @@
 <% if @order.can_add_coupon? %>
   <div data-hook="adjustments_new_coupon_code">
     <%= text_field_tag "coupon_code", "", :placeholder => Spree.t(:coupon_code) %>
-    <%= button Spree.t(:add_coupon_code), 'plus', 'submit', :id => "add_coupon_code" %>
+    <%= button Spree.t(:add_coupon_code), nil, 'submit', :id => "add_coupon_code" %>
   </div>
 <% end %>
 <%= javascript_tag do -%>

@@ -6,7 +6,7 @@
 <% content_for :page_actions do %>
   <% if can?(:create, Spree::StockMovement) %>
     <li>
-      <%= button_link_to Spree.t(:new_stock_movement), new_admin_stock_location_stock_movement_path(@stock_location),  icon: 'plus', id: 'admin_new_stock_movement_link' %>
+      <%= button_link_to Spree.t(:new_stock_movement), new_admin_stock_location_stock_movement_path(@stock_location), id: 'admin_new_stock_movement_link' %>
     </li>
   <% end %>
 
