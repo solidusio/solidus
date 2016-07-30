@@ -1,5 +1,9 @@
 ## Solidus 1.4.0 (master, unreleased)
 
+*   Backend: UI, Remove icons from buttons and tabs
+
+*   Backend: Deprecate args/options that add icons to buttons
+
 *   Update Rules::Taxon/Product handling of invalid match policies
 
     Rules::Taxon and Rules::Product now require valid match_policy values.
