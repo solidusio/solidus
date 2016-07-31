@@ -267,5 +267,34 @@ module Spree
         expect(line_item.adjustments.promotion.eligible.first.amount.to_i).to eq(-200)
       end
     end
+
+    context "multiple updates" do
+      let(:adjustment) { create(:tax_adjustment, amount: -10) }
+      let(:item) { adjustment.adjustable }
+
+      def update
+        described_class.new(item).update
+      end
+
+      # "fresh" record from the DB
+      def db_record
+        Spree::LineItem.find(item.id)
+      end
+
+      it "persists each change", pending: true do
+        adjustment.source.update_attributes!(amount: 0.1)
+        update
+        expect(db_record).to have_attributes(adjustment_total: 1)
+
+        adjustment.source.update_attributes!(amount: 0.20)
+        item.reload
+        update
+        expect(db_record).to have_attributes(adjustment_total: 2)
+
+        adjustment.source.update_attributes!(amount: 0.10)
+        update
+        expect(db_record).to have_attributes(adjustment_total: 1)
+      end
+    end
   end
 end
