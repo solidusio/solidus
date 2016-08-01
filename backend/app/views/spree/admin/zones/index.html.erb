@@ -8,7 +8,7 @@
 <% content_for :page_actions do %>
   <% if can?(:create, Spree::Zone) %>
     <li>
-      <%= button_link_to Spree.t(:new_zone), new_object_url, :icon => 'plus', :id => 'admin_new_zone_link' %>
+      <%= button_link_to Spree.t(:new_zone), new_object_url, :id => 'admin_new_zone_link' %>
     </li>
   <% end %>
 <% end %>

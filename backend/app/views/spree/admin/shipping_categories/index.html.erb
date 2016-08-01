@@ -8,7 +8,7 @@
 <% content_for :page_actions do %>
   <% if can?(:create, Spree::ShippingCategory) %>
     <li>
-      <%= button_link_to Spree.t(:new_shipping_category), new_object_url, :icon => 'plus' %>
+      <%= button_link_to Spree.t(:new_shipping_category), new_object_url %>
     </li>
   <% end %>
 <% end %>

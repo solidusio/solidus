@@ -17,8 +17,8 @@
       <%= render partial: 'update_reason_field', locals: { f: f } %>
     </div>
     <div class="form-buttons filter-actions actions" data-hook="buttons">
-      <%= button Spree.t('store_credit.actions.invalidate'), 'ban' %>
-      <%= button_link_to Spree.t('actions.cancel'), admin_user_store_credit_path(@user, @store_credit), icon: 'remove' %>
+      <%= button Spree.t('store_credit.actions.invalidate') %>
+      <%= button_link_to Spree.t('actions.cancel'), admin_user_store_credit_path(@user, @store_credit) %>
     </div>
   </fieldset>
 <% end %>

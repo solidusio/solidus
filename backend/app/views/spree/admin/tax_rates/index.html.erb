@@ -8,7 +8,7 @@
 <% content_for :page_actions do %>
   <% if can?(:create, Spree::TaxRate) %>
     <li>
-      <%= button_link_to Spree.t(:new_tax_rate), new_object_url, :icon => 'plus' %>
+      <%= button_link_to Spree.t(:new_tax_rate), new_object_url %>
     </li>
   <% end %>
 <% end %>

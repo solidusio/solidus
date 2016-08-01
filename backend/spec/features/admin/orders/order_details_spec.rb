@@ -47,7 +47,7 @@ describe "Order Details", type: :feature, js: true do
           fill_in "quantity_0", with: 2
         end
 
-        click_icon :plus
+        click_button "Add"
 
         within("#order_total") do
           expect(page).to have_content("$80.00")
@@ -135,7 +135,7 @@ describe "Order Details", type: :feature, js: true do
             fill_in "variant_quantity", with: 1
           end
 
-          click_icon :plus
+          click_button 'Add'
 
           within(".line-items") do
             expect(page).to have_content(tote.name)

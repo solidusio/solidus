@@ -26,7 +26,7 @@ describe "Customer Details", type: :feature, js: true do
       within("table.stock-levels") do
         find('.variant_quantity').set(1)
       end
-      click_icon :plus
+      click_button 'Add'
       expect(page).to have_css('.line-item')
       click_link "Customer"
       targetted_select2 "foobar@example.com", from: "#s2id_customer_search"

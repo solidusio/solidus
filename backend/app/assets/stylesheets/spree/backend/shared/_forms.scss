@@ -96,13 +96,14 @@ input[type="submit"],
 input[type="button"],
 button, .button {
   display: inline-block;
-  padding: 8px 15px;
+  padding: 6px 15px;
   border: none;
   border-radius: $border-radius;
   background-color: $color-btn-bg;
   color: $color-btn-text;
   font-weight: $font-weight-bold !important;
   white-space: nowrap;
+  line-height: $line-height;
 
   &:before {
     font-weight: normal !important;

@@ -22,8 +22,8 @@
     </div>
 
     <div class="form-buttons filter-actions actions" data-hook="buttons">
-      <%= button Spree.t('actions.save'), 'ok' %>
-      <%= button_link_to Spree.t('actions.cancel'), admin_order_payments_url(@refund.payment.order), icon: 'remove' %>
+      <%= button Spree.t('actions.save') %>
+      <%= button_link_to Spree.t('actions.cancel'), admin_order_payments_url(@refund.payment.order) %>
     </div>
   </fieldset>
 <% end %>

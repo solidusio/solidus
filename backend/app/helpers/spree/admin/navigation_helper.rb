@@ -121,7 +121,12 @@ module Spree
       end
 
       def button(text, icon_name = nil, button_type = 'submit', options = {})
-        button_tag(text, options.merge(type: button_type, class: "fa fa-#{icon_name} button"))
+        class_names = "button"
+        if icon_name
+          Spree::Deprecation.warn "Using icon_name arg is deprecated. Icons could not be visible in future versions.", caller
+          class_names.prepend "fa fa-#{icon_name} "
+        end
+        button_tag(text, options.merge(type: button_type, class: class_names))
       end
 
       def button_link_to(text, url, html_options = {})
@@ -136,6 +141,7 @@ module Spree
           html_options[:class] += ' button'
 
           if html_options[:icon]
+            Spree::Deprecation.warn "Using :icon option is deprecated. Icons could not be visible in future versions.", caller
             html_options[:class] += " fa fa-#{html_options[:icon]}"
           end
           link_to(text, url, html_options)

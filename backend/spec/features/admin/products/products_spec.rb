@@ -80,11 +80,11 @@ describe "Products", type: :feature do
         expect(page).to have_content("zomg shirt")
         expect(page).not_to have_content("apache baseball cap")
         check "Show Deleted"
-        click_icon :search
+        click_button 'Search'
         expect(page).to have_content("zomg shirt")
         expect(page).to have_content("apache baseball cap")
         uncheck "Show Deleted"
-        click_icon :search
+        click_button 'Search'
         expect(page).to have_content("zomg shirt")
         expect(page).not_to have_content("apache baseball cap")
       end
@@ -96,13 +96,13 @@ describe "Products", type: :feature do
 
         click_nav "Products"
         fill_in "q_name_cont", with: "ap"
-        click_icon :search
+        click_button 'Search'
         expect(page).to have_content("apache baseball cap")
         expect(page).to have_content("apache baseball cap2")
         expect(page).not_to have_content("zomg shirt")
 
         fill_in "q_variants_including_master_sku_cont", with: "A1"
-        click_icon :search
+        click_button "Search"
         expect(page).to have_content("apache baseball cap")
         expect(page).not_to have_content("apache baseball cap2")
         expect(page).not_to have_content("zomg shirt")
@@ -349,7 +349,7 @@ describe "Products", type: :feature do
 
         # This will show our deleted product
         check "Show Deleted"
-        click_icon :search
+        click_button "Search"
         click_link product.name
         expect(page).to have_field('Master Price', with: product.price.to_f)
       end

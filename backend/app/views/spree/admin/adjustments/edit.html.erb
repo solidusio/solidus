@@ -12,8 +12,8 @@
     <%= render :partial => 'form', :locals => { :f => f } %>
 
     <div class="filter-actions actions" data-hook="buttons">
-      <%= button Spree.t(:continue), 'arrow-right' %>
-      <%= link_to_with_icon 'remove', Spree.t('actions.cancel'), admin_order_adjustments_url(@order), :class => 'button' %>
+      <%= button Spree.t(:continue) %>
+      <%= link_to Spree.t('actions.cancel'), admin_order_adjustments_url(@order), :class => 'button' %>
     </div>
   </fieldset>
 <% end %>
