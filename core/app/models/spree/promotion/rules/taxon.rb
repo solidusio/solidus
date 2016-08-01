@@ -64,8 +64,7 @@ module Spree
         def warn_invalid_match_policy(assume:)
           Spree::Deprecation.warn(
             "#{self.class.name} id=#{id} has unexpected match policy #{preferred_match_policy.inspect}. "\
-            "Interpreting it as '#{assume}'." \
-            "In future versions of Solidus this will be an error."
+            "Interpreting it as '#{assume}'."
           )
         end
 
