@@ -9,7 +9,7 @@ describe Spree::Api::BaseController, type: :controller do
     rescue_from Spree::Order::InsufficientStock, with: :insufficient_stock_error
 
     def index
-      render text: { "products" => [] }.to_json
+      render plain: { "products" => [] }.to_json
     end
   end
 
@@ -146,7 +146,7 @@ describe Spree::Api::BaseController, type: :controller do
       around_action :lock_order
 
       def index
-        render text: { "products" => [] }.to_json
+        render plain: { "products" => [] }.to_json
       end
     end
 
