@@ -281,18 +281,21 @@ module Spree
         Spree::LineItem.find(item.id)
       end
 
-      it "persists each change", pending: true do
+      it "persists each change" do
         adjustment.source.update_attributes!(amount: 0.1)
         update
+        expect(item).not_to be_changed
         expect(db_record).to have_attributes(adjustment_total: 1)
 
         adjustment.source.update_attributes!(amount: 0.20)
         item.reload
         update
+        expect(item).not_to be_changed
         expect(db_record).to have_attributes(adjustment_total: 2)
 
         adjustment.source.update_attributes!(amount: 0.10)
         update
+        expect(item).not_to be_changed
         expect(db_record).to have_attributes(adjustment_total: 1)
       end
     end

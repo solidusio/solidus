@@ -70,6 +70,13 @@ module Spree
         updated_at: Time.current
       ) if @item.changed?
 
+      # In rails 4.2 update_columns isn't reflected in the changed_attributes hash,
+      # which means that multiple updates on the same in-memory model will
+      # behave incorrectly.
+      # In rails 5.0 changed_attributes works with update_columns and this is
+      # unnecessary.
+      item.attributes_changed_by_setter.except!(:promo_total, :included_tax_total, :additional_tax_total, :adjustment_total)
+
       @item
     end
 
