@@ -2,7 +2,7 @@ require 'spec_helper'
 
 class FakesController < ApplicationController
   include Spree::Core::ControllerHelpers::Auth
-  def index; render text: 'index'; end
+  def index; render plain: 'index'; end
 end
 
 describe Spree::Core::ControllerHelpers::Auth, type: :controller do
