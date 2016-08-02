@@ -148,7 +148,7 @@ module Spree
       def lock_order
         OrderMutex.with_lock!(@order) { yield }
       rescue Spree::OrderMutex::LockFailed => e
-        render text: e.message, status: 409
+        render plain: e.message, status: 409
       end
 
       def insufficient_stock_error(exception)
