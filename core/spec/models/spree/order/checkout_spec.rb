@@ -506,6 +506,23 @@ describe Spree::Order, type: :model do
       end
     end
 
+    context "with a payment in the pending state" do
+      let(:order) { create :order_ready_to_complete }
+      let(:payment) { create :payment, state: "pending", amount: order.total }
+
+      before do
+        order.payments = [payment]
+        order.save!
+      end
+
+      it "allows the order to complete" do
+        expect { order.complete! }.
+          to change { order.state }.
+          from("confirm").
+          to("complete")
+      end
+    end
+
     context "exchange order completion" do
       before do
         order.email = 'spree@example.org'
