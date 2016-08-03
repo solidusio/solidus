@@ -5,7 +5,7 @@
 
     <% if @order.user.present? %>
       <dt data-hook='admin_order_user_link'><%= Spree.t(:user) %>:</dt>
-      <dd id='order_user_link'><%= link_to @order.user.email, edit_admin_user_path(@order.user) %></dd>
+      <dd id='order_user_link'><%= link_to @order.user.email, spree.edit_admin_user_path(@order.user) %></dd>
     <% end %>
 
     <dt data-hook='admin_order_tab_subtotal_title'><%= Spree::Order.human_attribute_name(:item_total) %>:</dt>
