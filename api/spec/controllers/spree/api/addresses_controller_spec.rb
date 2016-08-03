@@ -37,15 +37,6 @@ module Spree
           expect(json_response['errors']['address1'].first).to eq "can't be blank"
         end
       end
-
-      it "receives the errors object if address is invalid" do
-        api_put :update, id: @address.id, order_id: @order.number,
-                         address: { address1: "" }
-
-        expect(json_response['error']).not_to be_nil
-        expect(json_response['errors']).not_to be_nil
-        expect(json_response['errors']['address1'].first).to eq "can't be blank"
-      end
     end
 
     context "on an address that does not belong to this order" do
