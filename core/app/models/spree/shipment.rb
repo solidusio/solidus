@@ -6,6 +6,7 @@ module Spree
     has_many :adjustments, as: :adjustable, inverse_of: :adjustable, dependent: :delete_all
     has_many :inventory_units, dependent: :destroy, inverse_of: :shipment
     has_many :shipping_rates, -> { order(:cost) }, dependent: :delete_all
+    has_one :selected_shipping_rate, -> { where(selected: true).order(:cost) }, class_name: Spree::ShippingRate
     has_many :shipping_methods, through: :shipping_rates
     has_many :state_changes, as: :stateful
     has_many :cartons, -> { uniq }, through: :inventory_units
@@ -193,10 +194,6 @@ module Spree
       save!
 
       shipping_rates
-    end
-
-    def selected_shipping_rate
-      shipping_rates.detect(&:selected?)
     end
 
     def manifest
