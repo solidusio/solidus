@@ -58,7 +58,7 @@ describe Spree::Admin::WidgetsController, type: :controller do
     let(:widget) { Widget.create!(name: 'a widget') }
 
     subject do
-      get :edit, id: widget.to_param
+      get :edit, params: { id: widget.to_param }
     end
 
     it 'succeeds' do
@@ -72,7 +72,7 @@ describe Spree::Admin::WidgetsController, type: :controller do
       { widget: { name: 'a widget' } }
     end
 
-    subject { post :create, params }
+    subject { post :create, params: params }
 
     it 'creates the resource' do
       expect { subject }.to change { Widget.count }.by(1)
@@ -112,7 +112,7 @@ describe Spree::Admin::WidgetsController, type: :controller do
       }
     end
 
-    subject { put :update, params }
+    subject { put :update, params: params }
 
     it 'updates the resource' do
       expect { subject }.to change { widget.reload.name }.from('a widget').to('widget renamed')
@@ -138,7 +138,7 @@ describe Spree::Admin::WidgetsController, type: :controller do
     let(:params) { { id: widget.id } }
 
     subject {
-      delete :destroy, params
+      delete :destroy, params: params
     }
 
     it 'destroys the resource' do
@@ -151,8 +151,8 @@ describe Spree::Admin::WidgetsController, type: :controller do
     let(:widget_2) { Widget.create!(name: 'widget 2', position: 2) }
 
     subject do
-      post :update_positions, id: widget_1.to_param,
-        positions: { widget_1.id => '2', widget_2.id => '1' }, format: 'js'
+      post :update_positions, params: { id: widget_1.to_param,
+        positions: { widget_1.id => '2', widget_2.id => '1' }, format: 'js' }
     end
 
     it 'updates the position of widget 1' do

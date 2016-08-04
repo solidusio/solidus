@@ -24,7 +24,7 @@ describe Spree::Admin::UsersController, type: :controller do
     end
 
     it "redirects to edit" do
-      get :show, id: user.id
+      get :show, params: { id: user.id }
       expect(response).to redirect_to spree.edit_admin_user_path(user)
     end
   end
@@ -42,7 +42,7 @@ describe Spree::Admin::UsersController, type: :controller do
 
       it "allows admins to update a user's API key" do
         expect {
-          put :generate_api_key, id: user.id
+          put :generate_api_key, params: { id: user.id }
         }.to change { user.reload.spree_api_key }
         expect(response).to redirect_to(spree.edit_admin_user_path(user))
       end
@@ -50,7 +50,7 @@ describe Spree::Admin::UsersController, type: :controller do
       it "allows admins to clear a user's API key" do
         user.generate_spree_api_key!
         expect {
-          put :clear_api_key, id: user.id
+          put :clear_api_key, params: { id: user.id }
         }.to change{ user.reload.spree_api_key }.to(nil)
         expect(response).to redirect_to(spree.edit_admin_user_path(user))
       end
@@ -86,42 +86,42 @@ describe Spree::Admin::UsersController, type: :controller do
       end
 
       it "can create user with roles" do
-        post :create, { user: { first_name: "Bob", spree_role_ids: [dummy_role.id] } }
+        post :create, params: { user: { first_name: "Bob", spree_role_ids: [dummy_role.id] } }
         expect(user.spree_roles).to eq([dummy_role])
       end
 
       it "can create user without roles" do
-        post :create, { user: { first_name: "Bob" } }
+        post :create, params: { user: { first_name: "Bob" } }
         expect(user.spree_roles).to eq([])
       end
     end
 
     context "when the user cannot manage roles" do
       it "cannot assign users roles" do
-        post :create, { user: { first_name: "Bob", spree_role_ids: [dummy_role.id] } }
+        post :create, params: { user: { first_name: "Bob", spree_role_ids: [dummy_role.id] } }
         expect(user.spree_roles).to eq([])
       end
 
       it "can create user without roles" do
-        post :create, { user: { first_name: "Bob" } }
+        post :create, params: { user: { first_name: "Bob" } }
         expect(user.spree_roles).to eq([])
       end
     end
 
     it "can create a shipping_address" do
-      post :create, { user: { ship_address_attributes: valid_address_attributes } }
+      post :create, params: { user: { ship_address_attributes: valid_address_attributes } }
       expect(user.reload.ship_address.city).to eq('New York')
     end
 
     it "can create a billing_address" do
-      post :create, { user: { bill_address_attributes: valid_address_attributes } }
+      post :create, params: { user: { bill_address_attributes: valid_address_attributes } }
       expect(user.reload.bill_address.city).to eq('New York')
     end
 
     it "can set stock locations" do
       location = Spree::StockLocation.create(name: "my_location")
       location_2 = Spree::StockLocation.create(name: "my_location_2")
-      post :create, { user: { stock_location_ids: [location.id, location_2.id] } }
+      post :create, params: { user: { stock_location_ids: [location.id, location_2.id] } }
       expect(user.stock_locations).to match_array([location, location_2])
     end
   end
@@ -142,14 +142,14 @@ describe Spree::Admin::UsersController, type: :controller do
 
       it "can set roles" do
         expect {
-          put :update, { id: user.id, user: { first_name: "Bob", spree_role_ids: [dummy_role.id] } }
+          put :update, params: { id: user.id, user: { first_name: "Bob", spree_role_ids: [dummy_role.id] } }
         }.to change { user.reload.spree_roles.to_a }.to([dummy_role])
       end
 
       it "can clear roles" do
         user.spree_roles << dummy_role
         expect {
-          put :update, { id: user.id, user: { first_name: "Bob", spree_role_ids: [] } }
+          put :update, params: { id: user.id, user: { first_name: "Bob", spree_role_ids: [] } }
         }.to change { user.reload.spree_roles.to_a }.to([])
       end
     end
@@ -157,14 +157,14 @@ describe Spree::Admin::UsersController, type: :controller do
     context "when the user cannot manage roles" do
       it "cannot set roles" do
         expect {
-          put :update, { id: user.id, user: { first_name: "Bob", spree_role_ids: [dummy_role.id] } }
+          put :update, params: { id: user.id, user: { first_name: "Bob", spree_role_ids: [dummy_role.id] } }
         }.not_to change { user.reload.spree_roles.to_a }
       end
 
       it "cannot clear roles" do
         user.spree_roles << dummy_role
         expect {
-          put :update, { id: user.id, user: { first_name: "Bob" } }
+          put :update, params: { id: user.id, user: { first_name: "Bob" } }
         }.not_to change { user.reload.spree_roles.to_a }
       end
     end
@@ -176,7 +176,7 @@ describe Spree::Admin::UsersController, type: :controller do
 
       it "can change email of a user" do
         expect {
-          put :update, { id: user.id, user: { email: "bob@example.com" } }
+          put :update, params: { id: user.id, user: { email: "bob@example.com" } }
         }.to change { user.reload.email }.to("bob@example.com")
       end
     end
@@ -188,25 +188,25 @@ describe Spree::Admin::UsersController, type: :controller do
 
       it "cannot change email of a user" do
         expect {
-          put :update, { id: user.id, user: { email: "bob@example.com" } }
+          put :update, params: { id: user.id, user: { email: "bob@example.com" } }
         }.not_to change { user.reload.email }
       end
     end
 
     it "can update ship_address attributes" do
-      post :update, { id: user.id, user: { ship_address_attributes: valid_address_attributes } }
+      post :update, params: { id: user.id, user: { ship_address_attributes: valid_address_attributes } }
       expect(user.reload.ship_address.city).to eq('New York')
     end
 
     it "can update bill_address attributes" do
-      post :update, { id: user.id, user: { bill_address_attributes: valid_address_attributes } }
+      post :update, params: { id: user.id, user: { bill_address_attributes: valid_address_attributes } }
       expect(user.reload.bill_address.city).to eq('New York')
     end
 
     it "can set stock locations" do
       location = Spree::StockLocation.create(name: "my_location")
       location_2 = Spree::StockLocation.create(name: "my_location_2")
-      post :update, { id: user.id, user: { stock_location_ids: [location.id, location_2.id] } }
+      post :update, params: { id: user.id, user: { stock_location_ids: [location.id, location_2.id] } }
       expect(user.stock_locations).to match_array([location, location_2])
     end
   end
@@ -220,13 +220,13 @@ describe Spree::Admin::UsersController, type: :controller do
     before { user.orders << order }
 
     it "assigns a list of the users orders" do
-      get :orders, { id: user.id }
+      get :orders, params: { id: user.id }
       expect(assigns[:orders].count).to eq 1
       expect(assigns[:orders].first).to eq order
     end
 
     it "assigns a ransack search for Spree::Order" do
-      get :orders, { id: user.id }
+      get :orders, params: { id: user.id }
       expect(assigns[:search]).to be_a Ransack::Search
       expect(assigns[:search].klass).to eq Spree::Order
     end
@@ -241,13 +241,13 @@ describe Spree::Admin::UsersController, type: :controller do
     before { user.orders << order }
 
     it "assigns a list of the users orders" do
-      get :items, { id: user.id }
+      get :items, params: { id: user.id }
       expect(assigns[:orders].count).to eq 1
       expect(assigns[:orders].first).to eq order
     end
 
     it "assigns a ransack search for Spree::Order" do
-      get :items, { id: user.id }
+      get :items, params: { id: user.id }
       expect(assigns[:search]).to be_a Ransack::Search
       expect(assigns[:search].klass).to eq Spree::Order
     end

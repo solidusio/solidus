@@ -9,7 +9,7 @@ describe Spree::Admin::PricesController do
     context "when only given a product" do
       let(:product) { create(:product) }
 
-      subject { get :index, product_id: product.slug }
+      subject { get :index, params: { product_id: product.slug } }
 
       it { is_expected.to be_success }
 
@@ -25,7 +25,7 @@ describe Spree::Admin::PricesController do
       let(:variant) { create(:variant) }
       let(:product) { variant.product }
 
-      subject { get :index, product_id: product.slug, variant_id: variant.id }
+      subject { get :index, params: { product_id: product.slug, variant_id: variant.id } }
 
       it { is_expected.to be_success }
 
