@@ -73,8 +73,7 @@ module Spree
 
         error_notifier.call(exception, self) if error_notifier
 
-        render text: { exception: exception.message }.to_json,
-          status: 422
+        render json: { exception: exception.message }, status: 422
       end
 
       def gateway_error(exception)
