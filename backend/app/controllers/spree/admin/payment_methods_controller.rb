@@ -25,8 +25,7 @@ module Spree
         @payment_method = @payment_method.becomes(@payment_method_type)
         invoke_callbacks(:update, :before)
 
-        update_params = params[ActiveModel::Naming.param_key(@payment_method)] || {}
-        attributes = payment_method_params.merge(update_params)
+        attributes = payment_method_params
         attributes.each do |k, _v|
           if k.include?("password") && attributes[k].blank?
             attributes.delete(k)
@@ -65,7 +64,13 @@ module Spree
       end
 
       def payment_method_params
-        params.require(:payment_method).permit!
+        superclass_params = params.require(:payment_method).permit!
+        subclass_params = params[ActiveModel::Naming.param_key(@payment_method_type)] || ActionController::Parameters.new
+
+        superclass_params = superclass_params.permit!
+        subclass_params = subclass_params.permit!
+
+        superclass_params.to_h.merge(subclass_params.to_h)
       end
     end
   end
