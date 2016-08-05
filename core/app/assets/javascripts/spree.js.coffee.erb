@@ -1,7 +1,10 @@
 #= require jsuri
 class window.Spree
   @ready: (callback) ->
-    jQuery(document).ready(callback)
+    if typeof Turbolinks isnt 'undefined' and Turbolinks.supported
+      jQuery(document).on 'turbolinks:load', -> callback(jQuery)
+    else
+      jQuery(document).ready(callback)
 
   @mountedAt: ->
     "<%= Rails.application.routes.url_helpers.spree_path(trailing_slash: true) %>"
