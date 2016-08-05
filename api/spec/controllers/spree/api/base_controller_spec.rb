@@ -51,13 +51,13 @@ describe Spree::Api::BaseController, type: :controller do
 
     it "with an invalid API key" do
       request.headers["X-Spree-Token"] = "fake_key"
-      get :index, {}
+      get :index, params: {}
       expect(json_response).to eq({ "error" => "Invalid API key (fake_key) specified." })
       expect(response.status).to eq(401)
     end
 
     it "using an invalid token param" do
-      get :index, token: "fake_key"
+      get :index, params: { token: "fake_key" }
       expect(json_response).to eq({ "error" => "Invalid API key (fake_key) specified." })
     end
   end
@@ -66,7 +66,7 @@ describe Spree::Api::BaseController, type: :controller do
     expect(subject).to receive(:authenticate_user).and_return(true)
     expect(subject).to receive(:load_user_roles).and_return(true)
     expect(subject).to receive(:index).and_raise("no joy")
-    get :index, token: "fake_key"
+    get :index, params: { token: "fake_key" }
     expect(json_response).to eq({ "exception" => "no joy" })
     expect(response.content_type).to eq("application/json")
   end
@@ -76,7 +76,7 @@ describe Spree::Api::BaseController, type: :controller do
     expect(subject).to receive(:load_user_roles).and_return(true)
     expect(subject).to receive(:index).and_raise(Exception.new("no joy"))
     expect {
-      get :index, token: "fake_key"
+      get :index, params: { token: "fake_key" }
     }.to raise_error(Exception, "no joy")
   end
 
@@ -126,7 +126,7 @@ describe Spree::Api::BaseController, type: :controller do
     before do
       expect(subject).to receive(:authenticate_user).and_return(true)
       expect(subject).to receive(:index).and_raise(Spree::Order::InsufficientStock)
-      get :index, token: "fake_key"
+      get :index, params: { token: "fake_key" }
     end
 
     it "should return a 422" do
