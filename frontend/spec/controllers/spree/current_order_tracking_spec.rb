@@ -6,7 +6,7 @@ describe 'current order tracking', type: :controller do
 
   controller(Spree::StoreController) do
     def index
-      render nothing: true
+      head :ok
     end
   end
 
