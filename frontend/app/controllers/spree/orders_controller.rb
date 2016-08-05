@@ -48,7 +48,7 @@ module Spree
       # 2,147,483,647 is crazy. See issue https://github.com/spree/spree/issues/2695.
       if quantity.between?(1, 2_147_483_647)
         begin
-          order.contents.add(variant, quantity)
+          order.contents.add(variant, quantity, order_contents_add_options)
         rescue ActiveRecord::RecordInvalid => e
           error = e.record.errors.full_messages.join(", ")
         end
@@ -114,6 +114,12 @@ module Spree
         flash[:error] = Spree.t(:order_not_found)
         redirect_to(root_path) && return
       end
+    end
+
+    # Override this method if you wish to pass more options into the
+    # OrderContents#add call from #populate
+    def order_contents_add_options
+      {}
     end
   end
 end
