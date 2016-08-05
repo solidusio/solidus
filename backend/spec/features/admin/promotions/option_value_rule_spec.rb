@@ -31,7 +31,7 @@ feature 'Promotion with option value rule' do
 
     within('#rules_container') { click_button "Update" }
 
-    first_rule = promotion.rules(true).first
+    first_rule = promotion.rules.reload.first
     expect(first_rule.class).to eq Spree::Promotion::Rules::OptionValue
     expect(first_rule.preferred_eligible_values).to eq Hash[product.id => [option_value.id]]
   end
@@ -78,7 +78,7 @@ feature 'Promotion with option value rule' do
 
       within('#rules_container') { click_button "Update" }
 
-      first_rule = promotion.rules(true).first
+      first_rule = promotion.rules.reload.first
       expect(first_rule.preferred_eligible_values).to eq Hash[variant1.product_id => variant1.option_values.pluck(:id)]
     end
   end
