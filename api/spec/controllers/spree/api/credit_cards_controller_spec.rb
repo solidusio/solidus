@@ -14,7 +14,18 @@ module Spree
         create(:user, :with_api_key)
       end
 
+      let!(:second_normal_user) do
+        create(:user, :with_api_key)
+      end
+
+      let!(:third_normal_user) do
+        create(:user, :with_api_key)
+      end
+
       let!(:card) { create(:credit_card, user_id: admin_user.id, gateway_customer_profile_id: "random") }
+
+      let!(:card_for_successful_delete_attempt) { create(:credit_card, user_id: second_normal_user.id, gateway_customer_profile_id: "randomsecond") }
+      let!(:card_for_unsuccessful_delete_attempt) { create(:credit_card, user_id: third_normal_user.id, gateway_customer_profile_id: "randomthird") }
 
       before do
         stub_authentication!
@@ -160,7 +171,7 @@ module Spree
         end
 
         it "can not create credit cards for other users" do
-          api_post :create, user_id: admin_user.id, credit_card: {
+          api_post :create, user_id: second_normal_user.id, credit_card: {
             name: "Art Vanderlay",
             cc_type: "discover",
             last_digits: "7890",
@@ -185,45 +196,27 @@ module Spree
 
         end
 
+      end
+
+      context "calling user is not in admin role" do
+        let(:current_api_user) do
+          second_normal_user
+        end
+
         it "can delete own credit cards" do
-          api_post :create, user_id: normal_user.id, credit_card: {
-            name: "George Constanza",
-            cc_type: "discover",
-            last_digits: "7890",
-            month: 3,
-            year: 2086,
-            payment_method_id: 1,
-            gateway_customer_profile_id: "12345678",
-            gateway_payment_profile_id: "abc123",
-            address_attributes: {
-              firstname: "George",
-              lastname: "Costanza",
-              address1: "100 Ravine Ln NE",
-              address2: "Suite 310",
-              city: "Bainbridge Island",
-              state_name: "Washington",
-              zipcode: "98110",
-              country_iso: "US",
-              phone: "867-5309"
-            }
-          }
-          expect(json_response).to have_attributes(creditcard_base_attributes)
-          expect(response.status).to eq(201)
-
-          freshly_created_credit_card_id = json_response["id"]
-
-          api_delete :destroy, id: freshly_created_credit_card_id
+          api_delete :destroy, id: card_for_successful_delete_attempt.id
           expect(response.status).to eq(204)
-
         end
 
         it "can not delete other user's credit cards" do
-          api_delete :destroy, id: 1
+          api_delete :destroy, id: card_for_unsuccessful_delete_attempt.id
           expect(response.status).to eq(401)
         end
 
       end
+
     end
+
 
     describe '#update' do
       let(:credit_card) { create(:credit_card, name: 'Joe Shmoe', user: credit_card_user) }
