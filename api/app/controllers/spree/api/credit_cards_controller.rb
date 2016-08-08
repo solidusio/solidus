@@ -21,6 +21,17 @@ module Spree
         end
       end
 
+      def create
+        @credit_card = Core::Importer::CreditCard.import(user, credit_card_create_params)
+        respond_with(@credit_card, status: 201, default_template: :show)
+      end
+
+      def destroy
+        @credit_card = find_credit_card
+        @credit_card.destroy
+        respond_with(@credit_card, status: 204)
+      end
+
       private
 
       def user
@@ -34,9 +45,14 @@ module Spree
         authorize! :update, @credit_card
       end
 
+      def credit_card_create_params
+        params.require(:credit_card).permit(permitted_credit_card_create_attributes)
+      end
+
       def credit_card_update_params
         params.require(:credit_card).permit(permitted_credit_card_update_attributes)
       end
+
     end
   end
 end

@@ -110,7 +110,7 @@ Spree::Core::Engine.routes.draw do
       resource :address_book, only: [:show, :update, :destroy]
     end
 
-    resources :credit_cards, only: [:update]
+    resources :credit_cards, only: [:create, :update, :destroy]
 
     resources :properties
     resources :stock_locations do
