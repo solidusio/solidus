@@ -6,6 +6,19 @@ module Spree
       @order = order
     end
 
+    # Add a line items to the order if there is inventory to do so
+    # and populate Promotions
+    #
+    # @params [Spree::Variant] :variant The variant the line_item should
+    #   be associated with
+    # @params [Integer] :quantity The line_item quantity
+    # @param [Hash] :options Options for the adding proccess
+    #   Valid options:
+    #     shipment: [Spree::Shipment] LineItem target shipment
+    #     stock_location_quantities:
+    #       stock_location_id: The stock location to source from
+    #
+    # @return [Spree::LineItem]
     def add(variant, quantity = 1, options = {})
       line_item = add_to_line_item(variant, quantity, options)
       after_add_or_remove(line_item, options)
