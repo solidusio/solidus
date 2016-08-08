@@ -21,6 +21,19 @@ module Spree
         end
       end
 
+      def create
+        # @credit_card = Core::Importer::CreditCard.new(nil, @_params[:user_id], @_params[:credit_card]).create
+        @credit_card = Core::Importer::CreditCard.new(nil, @_params[:user_id], credit_card_create_params)
+        credit_card = @credit_card.create
+
+        if credit_card.persisted?
+          # Returning: 201: {"address"=>{"country"=>{}, "state"=>{}}}   ????
+          respond_with(credit_card, status: 201, default_template: :show)
+        else
+          invalid_resource!(credit_card)
+        end
+      end
+
       private
 
       def user
@@ -34,8 +47,16 @@ module Spree
         authorize! :update, @credit_card
       end
 
+      def credit_card_create_params
+        params.require(:credit_card).permit(permitted_credit_card_create_attributes)
+      end
+
       def credit_card_update_params
         params.require(:credit_card).permit(permitted_credit_card_update_attributes)
+      end
+
+      def credit_card_create_params
+        params.require(:credit_card).permit(permitted_credit_card_create_attributes)
       end
     end
   end

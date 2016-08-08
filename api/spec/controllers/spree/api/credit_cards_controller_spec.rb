@@ -2,6 +2,7 @@ require 'spec_helper'
 
 module Spree
   describe Api::CreditCardsController, type: :controller do
+    let(:creditcard_base_attributes) { Api::ApiHelpers.creditcard_attributes }
     describe '#index' do
       render_views
 
@@ -45,6 +46,27 @@ module Spree
           expect(json_response["credit_cards"].length).to eq(1)
           expect(json_response["credit_cards"].first["id"]).to eq(card.id)
         end
+
+        it "can create credit cards for other users" do
+          api_post :create, user_id: normal_user.id, credit_card: {
+            name: "Art Vanderlay",
+            cc_type: "discover",
+            last_digits: "7890",
+            month: 3,
+            year: 2086,
+            payment_method_id: 1,
+            gateway_customer_profile_id: "12345678",
+            gateway_payment_profile_id: "abc123"
+          }
+          expect(json_response).to have_attributes(creditcard_base_attributes)
+          expect(response.status).to eq(201)
+
+        end
+
+        it "can delete credit cards for other users" do
+
+        end
+
       end
 
       context "calling user is not in admin role" do
@@ -69,6 +91,23 @@ module Spree
           expect(json_response["credit_cards"].length).to eq(1)
           expect(json_response["credit_cards"].first["id"]).to eq(card.id)
         end
+
+        it "can create own credit cards" do
+
+        end
+
+        it "can not create credit cards for other users" do
+
+        end
+
+        it "can delete own credit cards" do
+
+        end
+
+        it "can not delete other user's credit cards" do
+
+        end
+
       end
     end
 
@@ -101,5 +140,10 @@ module Spree
         end
       end
     end
+
+    # describe '#destroy' do
+    #   it ""
+    # end
+
   end
 end
