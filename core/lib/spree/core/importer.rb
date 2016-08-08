@@ -7,3 +7,4 @@ end
 
 require 'spree/core/importer/order'
 require 'spree/core/importer/product'
+require 'spree/core/importer/creditcard'
