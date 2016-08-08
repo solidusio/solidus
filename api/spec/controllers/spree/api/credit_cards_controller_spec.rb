@@ -56,15 +56,55 @@ module Spree
             year: 2086,
             payment_method_id: 1,
             gateway_customer_profile_id: "12345678",
-            gateway_payment_profile_id: "abc123"
+            gateway_payment_profile_id: "abc123",
+            address_attributes: {
+              firstname: "Art",
+              lastname: "Vanderlay",
+              address1: "100 Ravine Ln NE",
+              address2: "Suite 310",
+              city: "Bainbridge Island",
+              state_name: "Washington",
+              zipcode: "98110",
+              country_iso: "US",
+              phone: "867-5309"
+            }
           }
+
           expect(json_response).to have_attributes(creditcard_base_attributes)
           expect(response.status).to eq(201)
 
         end
 
         it "can delete credit cards for other users" do
+          # Create a credit card to delete and capture its id.
+          api_post :create, user_id: normal_user.id, credit_card: {
+            name: "George Costanza",
+            cc_type: "discover",
+            last_digits: "7890",
+            month: 3,
+            year: 2086,
+            payment_method_id: 1,
+            gateway_customer_profile_id: "12345678",
+            gateway_payment_profile_id: "abc123",
+            address_attributes: {
+              firstname: "George",
+              lastname: "Costanza",
+              address1: "100 Ravine Ln NE",
+              address2: "Suite 310",
+              city: "Bainbridge Island",
+              state_name: "Washington",
+              zipcode: "98110",
+              country_iso: "US",
+              phone: "867-5309"
+            }
+          }
+          expect(json_response).to have_attributes(creditcard_base_attributes)
+          expect(response.status).to eq(201)
 
+          freshly_created_credit_card_id = json_response["id"]
+
+          api_delete :destroy, id: freshly_created_credit_card_id
+          expect(response.status).to eq(204)
         end
 
       end
@@ -93,19 +133,93 @@ module Spree
         end
 
         it "can create own credit cards" do
+          api_post :create, user_id: normal_user.id, credit_card: {
+            name: "George Constanza",
+            cc_type: "discover",
+            last_digits: "7890",
+            month: 3,
+            year: 2086,
+            payment_method_id: 1,
+            gateway_customer_profile_id: "12345678",
+            gateway_payment_profile_id: "abc123",
+            address_attributes: {
+              firstname: "George",
+              lastname: "Costanza",
+              address1: "100 Ravine Ln NE",
+              address2: "Suite 310",
+              city: "Bainbridge Island",
+              state_name: "Washington",
+              zipcode: "98110",
+              country_iso: "US",
+              phone: "867-5309"
+            }
+          }
+          expect(json_response).to have_attributes(creditcard_base_attributes)
+          expect(response.status).to eq(201)
 
         end
 
         it "can not create credit cards for other users" do
+          api_post :create, user_id: admin_user.id, credit_card: {
+            name: "Art Vanderlay",
+            cc_type: "discover",
+            last_digits: "7890",
+            month: 3,
+            year: 2086,
+            payment_method_id: 1,
+            gateway_customer_profile_id: "12345678",
+            gateway_payment_profile_id: "abc123",
+            address_attributes: {
+              firstname: "Art",
+              lastname: "Vanderlay",
+              address1: "100 Ravine Ln NE",
+              address2: "Suite 310",
+              city: "Bainbridge Island",
+              state_name: "Washington",
+              zipcode: "98110",
+              country_iso: "US",
+              phone: "867-5309"
+            }
+          }
+          expect(response.status).to eq(401)
 
         end
 
         it "can delete own credit cards" do
+          api_post :create, user_id: normal_user.id, credit_card: {
+            name: "George Constanza",
+            cc_type: "discover",
+            last_digits: "7890",
+            month: 3,
+            year: 2086,
+            payment_method_id: 1,
+            gateway_customer_profile_id: "12345678",
+            gateway_payment_profile_id: "abc123",
+            address_attributes: {
+              firstname: "George",
+              lastname: "Costanza",
+              address1: "100 Ravine Ln NE",
+              address2: "Suite 310",
+              city: "Bainbridge Island",
+              state_name: "Washington",
+              zipcode: "98110",
+              country_iso: "US",
+              phone: "867-5309"
+            }
+          }
+          expect(json_response).to have_attributes(creditcard_base_attributes)
+          expect(response.status).to eq(201)
+
+          freshly_created_credit_card_id = json_response["id"]
+
+          api_delete :destroy, id: freshly_created_credit_card_id
+          expect(response.status).to eq(204)
 
         end
 
         it "can not delete other user's credit cards" do
-
+          api_delete :destroy, id: 1
+          expect(response.status).to eq(401)
         end
 
       end

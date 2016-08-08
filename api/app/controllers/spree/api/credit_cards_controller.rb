@@ -22,16 +22,16 @@ module Spree
       end
 
       def create
-        # @credit_card = Core::Importer::CreditCard.new(nil, @_params[:user_id], @_params[:credit_card]).create
-        @credit_card = Core::Importer::CreditCard.new(nil, @_params[:user_id], credit_card_create_params)
-        credit_card = @credit_card.create
+        authorize! :create, CreditCard
+        @credit_card = Core::Importer::CreditCard.import(user, credit_card_create_params)
+        respond_with(@credit_card, status: 201, default_template: :show)
+      end
 
-        if credit_card.persisted?
-          # Returning: 201: {"address"=>{"country"=>{}, "state"=>{}}}   ????
-          respond_with(credit_card, status: 201, default_template: :show)
-        else
-          invalid_resource!(credit_card)
-        end
+      def destroy
+        @credit_card = find_credit_card
+        authorize! :destroy, @credit_card
+        @credit_card.destroy
+        respond_with(@credit_card, status: 204)
       end
 
       private
