@@ -311,7 +311,7 @@ describe Spree::Admin::OrdersController, type: :controller do
 
       it "redirects back" do
         post :unfinalize_adjustments, params: { id: order.number }
-        expect(response).to redirect_to(:back)
+        expect(response).to redirect_to(spree.admin_order_adjustments_path(order))
       end
     end
 
@@ -331,7 +331,7 @@ describe Spree::Admin::OrdersController, type: :controller do
 
       it "redirects back" do
         post :finalize_adjustments, params: { id: order.number }
-        expect(response).to redirect_to(:back)
+        expect(response).to redirect_to(spree.admin_order_adjustments_path(order))
       end
     end
   end

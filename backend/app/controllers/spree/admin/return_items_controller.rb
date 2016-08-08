@@ -8,7 +8,8 @@ module Spree
       end
 
       def render_after_update_error
-        redirect_to :back, flash: { error: @object.errors.full_messages.join(', ') }
+        redirect_back(fallback_location: location_after_save,
+                    flash: { error: @object.errors.full_messages.join(', ') })
       end
     end
   end
