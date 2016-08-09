@@ -1,11 +1,9 @@
 require 'spec_helper'
 
-class FakeController < ApplicationController
-  include Spree::Core::ControllerHelpers::PaymentParameters
-end
-
 describe Spree::Core::ControllerHelpers::PaymentParameters, type: :controller do
-  controller(FakeController) {}
+  controller(ApplicationController) do
+    include Spree::Core::ControllerHelpers::PaymentParameters
+  end
 
   describe '#move_payment_source_into_payments_attributes' do
     subject do
