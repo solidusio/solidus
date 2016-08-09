@@ -7,8 +7,6 @@ module Spree
           ActiveRecord::Base.transaction do
             credit_card = Spree::CreditCard.create! create_params
             credit_card.associate_user!(user)
-            #address = Spree::Address.create! create_params.address
-            # credit_card.associate_address!(address)
             credit_card.save!
 
             credit_card.reload
