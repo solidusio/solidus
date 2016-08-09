@@ -18,7 +18,7 @@ module Spree
           params[:line_item][:quantity] || 1,
           {
             stock_location_quantities: params[:line_item][:stock_location_quantities]
-          }.merge(line_item_params[:options] || {})
+          }.merge(line_item_params[:options].to_h || {})
         )
 
         if @line_item.errors.empty?
