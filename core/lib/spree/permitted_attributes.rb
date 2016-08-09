@@ -55,7 +55,7 @@ module Spree
 
     @@credit_card_create_attributes = [
       :month, :year, :name, :cc_type, :last_digits, :payment_method_id, :gateway_customer_profile_id,
-      :gateway_payment_profile_id
+      :gateway_payment_profile_id, :default
     ]
 
     @@customer_return_attributes = [:stock_location_id, return_items_attributes: [:id, :inventory_unit_id, :return_authorization_id, :returned, :amount, :reception_status_event, :acceptance_status, :exchange_variant_id, :resellable]]
