@@ -22,14 +22,12 @@ module Spree
       end
 
       def create
-        authorize! :create, CreditCard
         @credit_card = Core::Importer::CreditCard.import(user, credit_card_create_params)
         respond_with(@credit_card, status: 201, default_template: :show)
       end
 
       def destroy
         @credit_card = find_credit_card
-        authorize! :destroy, @credit_card
         @credit_card.destroy
         respond_with(@credit_card, status: 204)
       end
