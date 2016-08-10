@@ -1,5 +1,19 @@
 ## Solidus 1.4.0 (master, unreleased)
 
+*   Make some 'wallet' behavior configurable
+
+    NOTE: `Order#persist_user_credit_card` has been renamed to
+    `Order#add_payment_sources_to_wallet`. If you are overriding
+    `persist_user_credit_card` you need to update your code.
+
+    The following extension points have been added for customizing 'wallet'
+    behavior.
+
+    * Spree::Config.add_payment_sources_to_wallet_class
+    * Spree::Config.default_payment_builder_class
+
+    https://github.com/solidusio/solidus/pull/1086
+
 *   Backend: UI, Remove icons from buttons and tabs
 
 *   Backend: Deprecate args/options that add icons to buttons
