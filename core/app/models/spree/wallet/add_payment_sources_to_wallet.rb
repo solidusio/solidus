@@ -1,11 +1,15 @@
+# This class is responsible for saving payment sources in the user's "wallet"
+# for future use.  You can substitute your own class via
+# `Spree::Config.add_payment_sources_to_wallet_class`.
 class Spree::Wallet::AddPaymentSourcesToWallet
   def initialize(order)
     @order = order
   end
 
-  # AddPaymentSourcesToWallet is called after an order transitions to complete.
-  # It is responsible for saving payment sources in the user's "wallet" for
-  # future use.
+  # This is called after an order transistions to complete and should save the
+  # order's payment source/s in the user's "wallet" for future use.
+  #
+  # @return [undefined]
   def add_to_wallet
     if !order.temporary_credit_card &&
        order.user_id &&
