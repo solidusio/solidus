@@ -16,7 +16,7 @@ describe Spree::OrdersController, type: :controller do
 
     context "#populate" do
       it "should create a new order when none specified" do
-        post :populate, {}, {}
+        post :populate
         expect(cookies.signed[:guest_token]).not_to be_blank
         expect(Spree::Order.find_by_guest_token(cookies.signed[:guest_token])).to be_persisted
       end
@@ -24,7 +24,7 @@ describe Spree::OrdersController, type: :controller do
       context "with Variant" do
         it "should handle population" do
           expect do
-            post :populate, variant_id: variant.id, quantity: 5
+            post :populate, params: { variant_id: variant.id, quantity: 5 }
           end.to change { user.orders.count }.by(1)
           order = user.orders.last
           expect(response).to redirect_to spree.cart_path
@@ -44,7 +44,7 @@ describe Spree::OrdersController, type: :controller do
               and_return(["Order population failed"])
           )
 
-          post :populate, variant_id: variant.id, quantity: 5
+          post :populate, params: { variant_id: variant.id, quantity: 5 }
 
           expect(response).to redirect_to(spree.root_path)
           expect(flash[:error]).to eq("Order population failed")
@@ -55,7 +55,7 @@ describe Spree::OrdersController, type: :controller do
 
           post(
             :populate,
-            variant_id: variant.id, quantity: -1
+            params: { variant_id: variant.id, quantity: -1 }
           )
 
           expect(response).to redirect_to(spree.root_path)
@@ -76,13 +76,13 @@ describe Spree::OrdersController, type: :controller do
         it "should render the edit view (on failure)" do
           # email validation is only after address state
           order.update_column(:state, "delivery")
-          put :update, { order: { email: "" } }, { order_id: order.id }
+          put :update, params: { order: { email: "" } }, session: { order_id: order.id }
           expect(response).to render_template :edit
         end
 
         it "should redirect to cart path (on success)" do
           allow(order).to receive(:update_attributes).and_return true
-          put :update, {}, { order_id: 1 }
+          put :update, session: { order_id: 1 }
           expect(response).to redirect_to(spree.cart_path)
         end
       end
@@ -109,7 +109,7 @@ describe Spree::OrdersController, type: :controller do
       end
 
       it "cannot update a blank order" do
-        put :update, order: { email: "foo" }
+        put :update, params: { order: { email: "foo" } }
         expect(flash[:error]).to eq(Spree.t(:order_not_found))
         expect(response).to redirect_to(spree.root_path)
       end
@@ -128,7 +128,7 @@ describe Spree::OrdersController, type: :controller do
 
     it "removes line items on update" do
       expect(order.line_items.count).to eq 1
-      put :update, order: { line_items_attributes: { "0" => { id: line_item.id, quantity: 0 } } }
+      put :update, params: { order: { line_items_attributes: { "0" => { id: line_item.id, quantity: 0 } } } }
       expect(order.reload.line_items.count).to eq 0
     end
   end
