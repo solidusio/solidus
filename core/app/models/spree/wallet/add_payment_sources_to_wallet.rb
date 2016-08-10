@@ -1,11 +1,11 @@
-class Spree::Wallet::AddAfterOrderComplete
+class Spree::Wallet::AddPaymentSourcesToWallet
   def initialize(order)
     @order = order
   end
 
-  # AddAfterOrderComplete is called after an order transitions to complete. It
-  # is responsible for saving payment sources in the user's "wallet" for future
-  # use.
+  # AddPaymentSourcesToWallet is called after an order transitions to complete.
+  # It is responsible for saving payment sources in the user's "wallet" for
+  # future use.
   def add_to_wallet
     if !order.temporary_credit_card &&
        order.user_id &&

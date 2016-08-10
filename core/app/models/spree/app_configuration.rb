@@ -363,12 +363,12 @@ module Spree
     # Allows providing your own class for adding payment sources to a user's
     # "wallet" after an order moves to the complete state.
     #
-    # @!attribute [rw] wallet_add_after_order_complete_class
+    # @!attribute [rw] add_payment_sources_to_wallet_class
     # @return [Class] a class with the same public interfaces
-    #   as Spree::Wallet::AddAfterOrderComplete.
-    attr_writer :wallet_add_after_order_complete_class
-    def wallet_add_after_order_complete_class
-      @wallet_add_after_order_complete_class ||= Spree::Wallet::AddAfterOrderComplete
+    #   as Spree::Wallet::AddPaymentSourcesToWallet.
+    attr_writer :add_payment_sources_to_wallet_class
+    def add_payment_sources_to_wallet_class
+      @add_payment_sources_to_wallet_class ||= Spree::Wallet::AddPaymentSourcesToWallet
     end
 
     def static_model_preferences

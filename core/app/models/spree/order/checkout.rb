@@ -311,7 +311,7 @@ module Spree
 
           def persist_user_credit_card
             Spree::Config.
-              wallet_add_after_order_complete_class.new(self).
+              add_payment_sources_to_wallet_class.new(self).
               add_to_wallet
           end
 
