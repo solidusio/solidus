@@ -248,10 +248,5 @@ module Spree
         end
       end
     end
-
-    # describe '#destroy' do
-    #   it ""
-    # end
-
   end
 end
