@@ -71,11 +71,11 @@ module Spree
             address_attributes: {
               firstname: "Art",
               lastname: "Vanderlay",
-              address1: "100 Ravine Ln NE",
-              address2: "Suite 310",
-              city: "Bainbridge Island",
-              state_name: "Washington",
-              zipcode: "98110",
+              address1: "1344 Queens Boulevard",
+              address2: "",
+              city: "Queens",
+              state_name: "New York",
+              zipcode: "11375",
               country_iso: "US",
               phone: "867-5309"
             }
@@ -100,11 +100,11 @@ module Spree
             address_attributes: {
               firstname: "George",
               lastname: "Costanza",
-              address1: "100 Ravine Ln NE",
-              address2: "Suite 310",
-              city: "Bainbridge Island",
-              state_name: "Washington",
-              zipcode: "98110",
+              address1: "1344 Queens Boulevard",
+              address2: "",
+              city: "Queens",
+              state_name: "New York",
+              zipcode: "11375",
               country_iso: "US",
               phone: "867-5309"
             }
@@ -156,11 +156,11 @@ module Spree
             address_attributes: {
               firstname: "George",
               lastname: "Costanza",
-              address1: "100 Ravine Ln NE",
-              address2: "Suite 310",
-              city: "Bainbridge Island",
-              state_name: "Washington",
-              zipcode: "98110",
+              address1: "1344 Queens Boulevard",
+              address2: "",
+              city: "Queens",
+              state_name: "New York",
+              zipcode: "11375",
               country_iso: "US",
               phone: "867-5309"
             }
@@ -183,11 +183,11 @@ module Spree
             address_attributes: {
               firstname: "Art",
               lastname: "Vanderlay",
-              address1: "100 Ravine Ln NE",
-              address2: "Suite 310",
-              city: "Bainbridge Island",
-              state_name: "Washington",
-              zipcode: "98110",
+              address1: "1344 Queens Boulevard",
+              address2: "",
+              city: "Queens",
+              state_name: "New York",
+              zipcode: "11375",
               country_iso: "US",
               phone: "867-5309"
             }
