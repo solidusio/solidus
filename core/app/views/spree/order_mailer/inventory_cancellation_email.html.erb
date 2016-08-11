@@ -14,8 +14,8 @@
         <% @inventory_units.each do |item| %>
           <tr>
             <td><%= item.variant.sku %></td>
-            <td><%= raw(item.variant.product.name) %></td>
-            <td><%= raw(item.variant.options_text) -%></td>
+            <td><%= item.variant.product.name %></td>
+            <td><%= item.variant.options_text -%></td>
           </tr>
         <% end %>
       </table>
