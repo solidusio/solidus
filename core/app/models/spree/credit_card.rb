@@ -176,6 +176,19 @@ module Spree
       )
     end
 
+    # Associates the specified user with the credit card.
+    def associate_user!(user)
+      self.user = user
+      attrs_to_set = { user_id: user.try(:id) }
+
+      if persisted?
+        # immediately persist the changes we just made, but don't use save since we might have an invalid address associated
+        self.class.unscoped.where(id: id).update_all(attrs_to_set)
+      end
+
+      assign_attributes(attrs_to_set)
+    end
+
     private
 
     def require_card_numbers?
