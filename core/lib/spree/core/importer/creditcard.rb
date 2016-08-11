@@ -2,7 +2,6 @@ module Spree
   module Core
     module Importer
       class CreditCard
-
         def self.import(user, create_params)
           ActiveRecord::Base.transaction do
             credit_card = Spree::CreditCard.create! create_params
@@ -13,7 +12,6 @@ module Spree
           end
 
         end
-
       end
     end
   end

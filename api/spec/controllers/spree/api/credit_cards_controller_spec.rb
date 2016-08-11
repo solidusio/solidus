@@ -83,7 +83,6 @@ module Spree
 
           expect(json_response).to have_attributes(creditcard_base_attributes)
           expect(response.status).to eq(201)
-
         end
 
         it "can delete credit cards for other users" do
@@ -117,7 +116,6 @@ module Spree
           api_delete :destroy, id: freshly_created_credit_card_id
           expect(response.status).to eq(204)
         end
-
       end
 
       context "calling user is not in admin role" do
@@ -167,7 +165,6 @@ module Spree
           }
           expect(json_response).to have_attributes(creditcard_base_attributes)
           expect(response.status).to eq(201)
-
         end
 
         it "can not create credit cards for other users" do
@@ -196,7 +193,6 @@ module Spree
           expect(response.status).to eq(404)
 
         end
-
       end
 
       context "calling user is not in admin role" do
@@ -213,11 +209,8 @@ module Spree
           api_delete :destroy, id: card_for_unsuccessful_delete_attempt.id
           expect(response.status).to eq(401)
         end
-
       end
-
     end
-
 
     describe '#update' do
       let(:credit_card) { create(:credit_card, name: 'Joe Shmoe', user: credit_card_user) }
