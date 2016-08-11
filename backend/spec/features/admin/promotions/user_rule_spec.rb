@@ -9,6 +9,21 @@ feature 'Promotion with user rule', js: true do
     visit spree.edit_admin_promotion_path(promotion)
   end
 
+  context "multiple users" do
+    let!(:user) { create(:user, email: 'foo@example.com') }
+    let!(:other_user) { create(:user, email: 'bar@example.com') }
+
+    scenario "searching a user" do
+      select2 "User", from: "Add rule of type"
+      within("#rules_container") { click_button "Add" }
+
+      select2_search "foo", from: "Choose users", select: false
+
+      expect(page).to have_content('foo@example.com')
+      expect(page).not_to have_content('bar@example.com')
+    end
+  end
+
   context "with an attempted XSS" do
     let(:xss_string) { %(<script>throw("XSS")</script>) }
     given!(:user) { create(:user, email: xss_string) }

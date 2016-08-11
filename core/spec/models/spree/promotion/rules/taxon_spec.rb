@@ -106,7 +106,7 @@ describe Spree::Promotion::Rules::Taxon, type: :model do
       end
 
       it 'logs a warning and uses "any" policy' do
-        expect(ActiveSupport::Deprecation).to(
+        expect(Spree::Deprecation).to(
           receive(:warn).
           with(/has unexpected match policy "invalid"/)
         )
@@ -132,7 +132,7 @@ describe Spree::Promotion::Rules::Taxon, type: :model do
 
     context 'with an invalid match policy' do
       it 'logs a warning and uses "any" policy' do
-        expect(ActiveSupport::Deprecation).to(
+        expect(Spree::Deprecation).to(
           receive(:warn).
           with(/has unexpected match policy "invalid"/)
         )
