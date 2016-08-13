@@ -42,7 +42,11 @@ module Spree
       end
 
       def load_user
-        @current_api_user ||= Spree.user_class.find_by(spree_api_key: api_key.to_s)
+        if use_json_web_tokens?
+          @current_api_user ||= Spree.user_class.find_by(id: @token['id']) if valid_token?
+        else
+          @current_api_user ||= Spree.user_class.find_by(spree_api_key: api_key.to_s)
+        end
       end
 
       def authenticate_user
@@ -60,6 +64,13 @@ module Spree
           @current_api_user.spree_roles.pluck(:name)
         else
           []
+        end
+      end
+
+      def valid_token?
+        begin
+          @token ||= JWT.decode(api_key, signing_token, true, { algorithm: 'HS256' }).first
+        rescue
         end
       end
 
@@ -86,6 +97,10 @@ module Spree
         Spree::Api::Config[:requires_authentication]
       end
 
+      def use_json_web_tokens?
+        Spree::Api::Config[:use_json_web_tokens]
+      end
+
       def not_found
         render "spree/api/errors/not_found", status: 404
       end
@@ -107,6 +122,10 @@ module Spree
 
       def order_token
         request.headers["X-Spree-Order-Token"] || params[:order_token]
+      end
+
+      def signing_token
+        Rails.application.secrets.secret_key_base
       end
 
       def find_product(id)
