@@ -68,10 +68,8 @@ module Spree
       end
 
       def valid_token?
-        begin
-          @token ||= JWT.decode(api_key, signing_token, true, { algorithm: 'HS256' }).first
-        rescue
-        end
+        @token ||= JWT.decode(api_key,
+          signing_token, true, { algorithm: 'HS256' }).first rescue nil
       end
 
       def unauthorized
