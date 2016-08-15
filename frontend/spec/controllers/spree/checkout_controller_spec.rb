@@ -146,12 +146,12 @@ describe Spree::CheckoutController, type: :controller do
         context "with a billing and shipping address" do
           subject do
             post :update, {
-                state: "address",
-                order: {
-                    bill_address_attributes: order.bill_address.attributes.except("created_at", "updated_at"),
-                    ship_address_attributes: order.ship_address.attributes.except("created_at", "updated_at"),
-                    use_billing: false
-                }
+              state: "address",
+              order: {
+                bill_address_attributes: order.bill_address.attributes.except("created_at", "updated_at").compact,
+                ship_address_attributes: order.ship_address.attributes.except("created_at", "updated_at").compact,
+                use_billing: false
+              }
             }
           end
 
