@@ -56,6 +56,9 @@ module Spree
       end
 
       it "update order adjustments" do
+        # TODO: Make this into a more valid test, so that stubbing
+        # `recalculate_adjustments` isn't necessary.
+        #
         # A line item will not have both additional and included tax,
         # so please just humour me for now.
         order.line_items.first.update_columns({
@@ -63,6 +66,7 @@ module Spree
           additional_tax_total: 0.05,
           included_tax_total: 0.05
         })
+        allow(updater).to receive(:recalculate_adjustments)
         updater.update_adjustment_total
         expect(order.adjustment_total).to eq(10.05)
         expect(order.additional_tax_total).to eq(0.05)
@@ -275,6 +279,26 @@ module Spree
         allow(updater).to receive(:update_totals) # Otherwise this gets called and causes a scene
         expect(updater).not_to receive(:update_shipments).with(order)
         updater.update
+      end
+    end
+
+    describe 'updating in-memory items' do
+      let(:order) do
+        create(:order_with_line_items, line_items_count: 1, line_items_price: 10)
+      end
+      let(:line_item) { order.line_items.first }
+      let(:promotion) { create(:promotion, :with_line_item_adjustment, adjustment_rate: 1) }
+
+      it 'updates in-memory items' do
+        promotion.activate(order: order)
+
+        expect(line_item.promo_total).to eq(0)
+        expect(order.promo_total).to eq(0)
+
+        order.update!
+
+        expect(line_item.promo_total).to eq(-1)
+        expect(order.promo_total).to eq(-1)
       end
     end
   end
