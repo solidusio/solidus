@@ -155,7 +155,7 @@ describe Spree::OrderCancellations do
         inventory_unit_2.line_item.reload # UnitCancel#compute_amount needs updated amounts
         order.cancellations.short_ship([inventory_unit_2])
         line_item.reload
-        expect(line_item.adjustments.non_tax.sum(:amount)).to eq(-1.67)
+        expect(line_item.adjustments.map(&:amount)).to match_array([0.01, -0.83, -0.84])
         expect(line_item.total).to eq 0
       end
     end
