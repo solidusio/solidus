@@ -1,6 +1,8 @@
+require 'twitter_cldr'
+
 module Spree
   class Address < Spree::Base
-    require 'twitter_cldr'
+    extend ActiveModel::ForbiddenAttributesProtection
 
     belongs_to :country, class_name: "Spree::Country"
     belongs_to :state, class_name: "Spree::State"
@@ -45,6 +47,9 @@ module Spree
     # @return [Address] address from existing address plus new_attributes as diff
     # @note, this may return existing_address if there are no changes to value equality
     def self.immutable_merge(existing_address, new_attributes)
+      # Ensure new_attributes is a sanitized hash
+      new_attributes = sanitize_for_mass_assignment(new_attributes)
+
       return factory(new_attributes) if existing_address.nil?
 
       merged_attributes = value_attributes(existing_address.attributes, new_attributes)

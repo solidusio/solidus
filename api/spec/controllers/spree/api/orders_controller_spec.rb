@@ -31,46 +31,36 @@ module Spree
 
     describe "POST create" do
       let(:target_user) { create :user }
-      let(:date_override) { 3.days.ago }
-
-      before do
-        allow_any_instance_of(Spree::Ability).to receive(:can?).
-          and_return(true)
-
-        allow_any_instance_of(Spree::Ability).to receive(:can?).
-          with(:admin, Spree::Order).
-          and_return(can_admin)
-
-        allow(Spree.user_class).to receive(:find).
-          with(target_user.id).
-          and_return(target_user)
-      end
+      let(:date_override) { Time.parse('2015-01-01') }
 
       subject { api_post :create, order: { user_id: target_user.id, created_at: date_override, email: target_user.email } }
 
       context "when the current user cannot administrate the order" do
-        let(:can_admin) { false }
+        stub_authorization! do |_|
+          can :create, Spree::Order
+        end
 
         it "does not include unpermitted params, or allow overriding the user", focus: true do
-          expect(Spree::Core::Importer::Order).to receive(:import).
-            once.
-            with(current_api_user, { "email" => target_user.email }).
-            and_call_original
           subject
+          order = Spree::Order.last
+          expect(order.user).to eq current_api_user
+          expect(order.email).to eq target_user.email
         end
 
         it { is_expected.to be_success }
       end
 
       context "when the current user can administrate the order" do
-        let(:can_admin) { true }
+        stub_authorization! do |_|
+          can [:admin, :create], Spree::Order
+        end
 
         it "it permits all params and allows overriding the user" do
-          expect(Spree::Core::Importer::Order).to receive(:import).
-            once.
-            with(target_user, { "user_id" => target_user.id, "created_at" => date_override, "email" => target_user.email }).
-            and_call_original
           subject
+          order = Spree::Order.last
+          expect(order.user).to eq target_user
+          expect(order.email).to eq target_user.email
+          expect(order.created_at).to eq date_override
         end
 
         it { is_expected.to be_success }
@@ -83,57 +73,46 @@ module Spree
       let(:can_admin) { false }
       subject { api_put :update, id: order.to_param, order: order_params }
 
-      before do
-        allow_any_instance_of(Spree::Ability).to receive(:can?).
-          and_return(true)
+      context "when the user cannot administer the order" do
+        stub_authorization! do |_|
+          can [:update], Spree::Order
+        end
 
-        allow(Spree::Order).to receive(:find_by!).
-          with(number: order.number).
-          and_return(order)
+        it "updates the user's email" do
+          expect {
+            subject
+          }.to change { order.reload.email }.to("foo@foobar.com")
+        end
 
-        allow(Spree.user_class).to receive(:find).
-          with(user.id).
-          and_return(user)
+        it { is_expected.to be_success }
 
-        allow_any_instance_of(Spree::Ability).to receive(:can?).
-          with(:admin, Spree::Order).
-          and_return(can_admin)
+        it "does not associate users" do
+          expect {
+            subject
+          }.not_to change { order.reload.user }
+        end
+
+        it "does not change forbidden attributes" do
+          expect {
+            subject
+          }.to_not change{ order.reload.number }
+        end
       end
-
-      it "updates the cart contents" do
-        expect(order.contents).to receive(:update_cart).
-          once.
-          with({ "email" => "foo@foobar.com" })
-        subject
-      end
-
-      it { is_expected.to be_success }
 
       context "when the user can administer the order" do
-        let(:can_admin) { true }
+        stub_authorization! do |_|
+          can [:admin, :update], Spree::Order
+        end
 
         it "will associate users" do
-          expect(order).to receive(:associate_user!).
-            once.
-            with(user)
-
-          subject
+          expect {
+            subject
+          }.to change { order.reload.user }.to(user)
         end
 
         it "updates the otherwise forbidden attributes" do
           expect{ subject }.to change{ order.reload.number }.
             to("anothernumber")
-        end
-      end
-
-      context "when the user cannot administer the order" do
-        it "does not associate users" do
-          expect(order).to_not receive(:associate_user!)
-          subject
-        end
-
-        it "does not change forbidden attributes" do
-          expect{ subject }.to_not change{ order.reload.number }
         end
       end
     end
