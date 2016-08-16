@@ -302,5 +302,16 @@ module Spree
         expect(order.promo_total).to eq(-1)
       end
     end
+
+    context "with item with no adjustment and incorrect totals" do
+      let!(:line_item) { create(:line_item, order: order, price: 10) }
+
+      it "updates the totals" do
+        line_item.update!(adjustment_total: 100)
+        expect {
+          order.update!
+        }.to change { line_item.reload.adjustment_total }.from(100).to(0)
+      end
+    end
   end
 end
