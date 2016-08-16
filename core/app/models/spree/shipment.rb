@@ -376,7 +376,7 @@ module Spree
     end
 
     def address
-      ActiveSupport::Deprecation.warn("Calling Shipment#address is deprecated. Use Order#ship_address instead", caller)
+      Spree::Deprecation.warn("Calling Shipment#address is deprecated. Use Order#ship_address instead", caller)
       order.ship_address if order
     end
 
