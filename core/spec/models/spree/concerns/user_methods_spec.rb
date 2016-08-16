@@ -38,4 +38,14 @@ describe Spree::UserMethods do
       it { is_expected.to be_nil }
     end
   end
+
+  describe "#on_sign_in" do
+    let(:guest_token) { "dummy_guest_token" }
+    let!(:guest_order) { create(:order, user: nil, guest_token: guest_token) }
+
+    it "associates guest orders" do
+      test_user.on_sign_in(guest_token: guest_token)
+      expect(guest_order.reload.user).to eq(test_user)
+    end
+  end
 end
