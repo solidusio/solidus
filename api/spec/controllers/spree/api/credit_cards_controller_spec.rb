@@ -225,6 +225,22 @@ module Spree
           expect(response.status).to eq(401)
         end
       end
+
+      context "calling user is not in admin role" do
+        let(:current_api_user) do
+          second_normal_user
+        end
+
+        it "can delete own credit cards" do
+          api_delete :destroy, id: card_for_successful_delete_attempt.id
+          expect(response.status).to eq(204)
+        end
+
+        it "can not delete other user's credit cards" do
+          api_delete :destroy, id: card_for_unsuccessful_delete_attempt.id
+          expect(response.status).to eq(401)
+        end
+      end
     end
 
     describe '#update' do
