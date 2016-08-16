@@ -135,9 +135,7 @@ module Spree
     # @api private
     # @return [void]
     def persist_merge
-      updater.update_item_count
-      updater.update_item_total
-      updater.persist_totals
+      updater.update
     end
   end
 end
