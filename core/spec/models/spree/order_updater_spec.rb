@@ -47,6 +47,7 @@ module Spree
           updater.update
           create(:adjustment, source: promotion_action, adjustable: order, order: order)
           create(:line_item, order: order, price: 10) # in addition to the two already created
+          order.line_items.reload # need to pick up the extra line item
           updater.update
         end
 
