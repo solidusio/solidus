@@ -130,7 +130,6 @@ module Spree
 
     def reload_totals
       order_updater.update
-      order.reload
     end
 
     def add_to_line_item(variant, quantity, options = {})
@@ -160,7 +159,7 @@ module Spree
       line_item.target_shipment = options[:shipment]
 
       if line_item.quantity == 0
-        line_item.destroy
+        order.line_items.destroy(line_item)
       else
         line_item.save!
       end

@@ -126,6 +126,7 @@ module Spree
 
       it "should create errors with invalid line items" do
         variant_2.really_destroy!
+        order_2.line_items.to_a.first.reload # so that it registers as invalid
         subject.merge!(order_2)
         expect(order_1.errors.full_messages).not_to be_empty
       end
