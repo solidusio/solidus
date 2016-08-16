@@ -60,10 +60,13 @@
       <%= f.error_message_on :password %>
     <% end %>
 
-    <%= f.field_container :password do %>
-      <%= f.label :password_confirmation %>
-      <%= f.password_field :password_confirmation, :class => 'fullwidth' %>
-      <%= f.error_message_on :password_confirmation %>
+
+    <% if f.object.respond_to?(:password_confirmation) %>
+      <%= f.field_container :password do %>
+        <%= f.label :password_confirmation %>
+        <%= f.password_field :password_confirmation, :class => 'fullwidth' %>
+        <%= f.error_message_on :password_confirmation %>
+      <% end %>
     <% end %>
   </div>
 </div>
