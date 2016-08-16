@@ -26,25 +26,6 @@ describe Spree::LineItem, type: :model do
   end
 
   context "#save" do
-    context "line item changes" do
-      before do
-        line_item.quantity = line_item.quantity + 1
-      end
-
-      it "triggers adjustment total recalculation" do
-        expect(line_item).to receive(:update_tax_charge) # Regression test for https://github.com/spree/spree/issues/4671
-        expect(line_item).to receive(:recalculate_adjustments)
-        line_item.save
-      end
-    end
-
-    context "line item does not change" do
-      it "does not trigger adjustment total recalculation" do
-        expect(line_item).not_to receive(:recalculate_adjustments)
-        line_item.save
-      end
-    end
-
     context "target_shipment is provided" do
       it "verifies inventory" do
         line_item.target_shipment = Spree::Shipment.new

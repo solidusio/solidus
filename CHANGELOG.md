@@ -49,6 +49,12 @@
 
 *   Removed "Clear cache" button from the admin [#1275](https://github.com/solidusio/solidus/pull/1275)
 
+*   Adjustments and totals are no longer updated when saving a Shipment or LineItem.
+
+    Previously adjustments and total columns were updated after saving a Shipment or LineItem.
+    This was unnecessary since it didn't update the order totals, and running
+    order.update! would recalculate the adjustments and totals again.
+
 ## Solidus 1.3.0 (unreleased)
 
 *   Order now requires a `store_id` in validations

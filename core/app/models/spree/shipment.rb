@@ -10,8 +10,6 @@ module Spree
     has_many :state_changes, as: :stateful
     has_many :cartons, -> { uniq }, through: :inventory_units
 
-    after_save :update_adjustments
-
     before_validation :set_cost_zero_when_nil
 
     before_destroy :ensure_can_destroy
@@ -404,18 +402,8 @@ module Spree
       stock_location.unstock item.variant, item.quantity, self
     end
 
-    def recalculate_adjustments
-      Spree::ItemAdjustments.new(self).update
-    end
-
     def set_cost_zero_when_nil
       self.cost = 0 unless cost
-    end
-
-    def update_adjustments
-      if cost_changed? && state != 'shipped'
-        recalculate_adjustments
-      end
     end
 
     def ensure_can_destroy
