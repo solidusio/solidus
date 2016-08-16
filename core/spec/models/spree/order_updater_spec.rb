@@ -57,21 +57,13 @@ module Spree
       end
 
       it "update order adjustments" do
-        # TODO: Make this into a more valid test, so that stubbing
-        # `recalculate_adjustments` isn't necessary.
-        #
-        # A line item will not have both additional and included tax,
-        # so please just humour me for now.
-        order.line_items.first.update_columns({
-          adjustment_total: 10.05,
-          additional_tax_total: 0.05,
-          included_tax_total: 0.05
-        })
-        allow(updater).to receive(:recalculate_adjustments)
-        updater.update_adjustment_total
-        expect(order.adjustment_total).to eq(10.05)
-        expect(order.additional_tax_total).to eq(0.05)
-        expect(order.included_tax_total).to eq(0.05)
+        create(:adjustment, adjustable: order, order: order, source: nil, amount: 10)
+
+        expect {
+          updater.update_adjustment_total
+        }.to change {
+          order.adjustment_total
+        }.from(0).to(10)
       end
     end
 
