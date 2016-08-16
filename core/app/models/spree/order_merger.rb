@@ -111,7 +111,7 @@ module Spree
         current_line_item.quantity += other_order_line_item.quantity
         handle_error(current_line_item) unless current_line_item.save
       else
-        other_order_line_item.order_id = order.id
+        order.line_items << other_order_line_item
         handle_error(other_order_line_item) unless other_order_line_item.save
       end
     end
