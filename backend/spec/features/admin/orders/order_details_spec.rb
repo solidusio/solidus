@@ -318,7 +318,8 @@ describe "Order Details", type: :feature, js: true do
         end
 
         context 'multiple items in cart' do
-          it 'should have no problem splitting if multiple items are in the from shipment' do
+          10.times do |i|
+          it "should have no problem splitting if multiple items are in the from shipment #{i}" do
             order.contents.add(create(:variant), 2)
             expect(order.shipments.count).to eq(1)
             expect(order.shipments.first.manifest.count).to eq(2)
@@ -334,6 +335,7 @@ describe "Order Details", type: :feature, js: true do
             expect(order.shipments.last.backordered?).to eq(false)
             expect(order.shipments.first.inventory_units_for(product.master).count).to eq(1)
             expect(order.shipments.last.inventory_units_for(product.master).count).to eq(1)
+          end
           end
         end
       end
@@ -412,7 +414,8 @@ describe "Order Details", type: :feature, js: true do
             end
           end
 
-          it 'should split fine if more than one line_item is in the receiving shipment' do
+          10.times do |i|
+          it "should split fine if more than one line_item is in the receiving shipment #{i}" do
             variant2 = create(:variant)
             order.contents.add(variant2, 2, shipment: @shipment2)
 
@@ -429,6 +432,7 @@ describe "Order Details", type: :feature, js: true do
             expect(order.shipments.last.inventory_units_for(product.master).count).to eq 1
             expect(order.shipments.first.inventory_units_for(variant2).count).to eq 0
             expect(order.shipments.last.inventory_units_for(variant2).count).to eq 2
+          end
           end
         end
 
