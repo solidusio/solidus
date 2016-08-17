@@ -93,7 +93,7 @@ module Spree
     before_create :link_by_email
 
     validates :email, presence: true, if: :require_email
-    validates :email, email: true, if: :require_email, allow_blank: true
+    validates :email, email: true, allow_blank: true
     validates :number, presence: true, uniqueness: { allow_blank: true }
     validates :store_id, presence: true
 
