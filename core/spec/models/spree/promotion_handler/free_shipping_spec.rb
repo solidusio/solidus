@@ -6,40 +6,39 @@ module Spree
       let(:order) { create(:order) }
       let(:shipment) { create(:shipment, order: order ) }
 
-      let(:promotion) { Promotion.create!(name: "Free Shipping") }
-      let(:calculator) { Calculator::FlatPercentItemTotal.new(preferred_flat_percent: 10) }
-      let!(:action) { Promotion::Actions::FreeShipping.create(promotion: promotion) }
+      let(:action) { Spree::Promotion::Actions::FreeShipping.new }
 
       subject { Spree::PromotionHandler::FreeShipping.new(order) }
 
-      context "activates in Shipment level" do
+      context 'with apply_automatically' do
+        let!(:promotion) { create(:promotion, apply_automatically: true, promotion_actions: [action]) }
+
         it "creates the adjustment" do
           expect { subject.activate }.to change { shipment.adjustments.count }.by(1)
         end
       end
 
-      context "if promo has a code" do
-        let!(:promotion_code) { create(:promotion_code, promotion: promotion) }
+      context 'with a code' do
+        let!(:promotion) { create(:promotion, code: 'freeshipping', promotion_actions: [action]) }
 
-        it "does adjust the shipment when applied to order" do
-          pending "broken by 2-2-dev merge"
-          order.order_promotions.create!(promotion: promotion, promotion_code: promotion_code)
+        context 'when already applied' do
+          before do
+            order.order_promotions.create!(promotion: promotion, promotion_code: promotion.codes.first)
+          end
 
-          expect { subject.activate }.to change { shipment.adjustments.count }
+          it 'adjusts the shipment' do
+            expect {
+              subject.activate
+            }.to change { shipment.adjustments.count }
+          end
         end
 
-        it "does not adjust the shipment when not applied to order" do
-          expect { subject.activate }.to_not change { shipment.adjustments.count }
-        end
-      end
-
-      context "if promo has a path" do
-        before do
-          promotion.update_column(:path, "path")
-        end
-
-        it "does not adjust the shipment" do
-          expect { subject.activate }.to_not change { shipment.adjustments.count }
+        context 'when not already applied' do
+          it 'does not adjust the shipment' do
+            expect {
+              subject.activate
+            }.to_not change { shipment.adjustments.count }
+          end
         end
       end
     end
