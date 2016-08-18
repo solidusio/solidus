@@ -235,3 +235,5 @@ Metrics/ParameterLists:
 Metrics/PerceivedComplexity:
   Enabled: false
 
+Style/MethodName:
+  Enabled: false
