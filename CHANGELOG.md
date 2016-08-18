@@ -1,4 +1,4 @@
-## Solidus 1.4.0 (master, unreleased)
+## Solidus 1.4.0 (unreleased)
 
 *   Make some 'wallet' behavior configurable
 
@@ -55,7 +55,7 @@
     This was unnecessary since it didn't update the order totals, and running
     order.update! would recalculate the adjustments and totals again.
 
-## Solidus 1.3.0 (unreleased)
+## Solidus 1.3.0 (2016-06-22)
 
 *   Order now requires a `store_id` in validations
 
