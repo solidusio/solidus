@@ -15,6 +15,10 @@ describe "Order Details", type: :feature, js: true do
   before do
     @shipment1 = order.shipments.create(stock_location_id: stock_location.id)
     order.contents.add(product.master, 2)
+    # order.contents.add causes things (like line items & shipments) to get
+    # cached, and these are going to change during this spec so we go ahead and
+    # reload now
+    order.reload
   end
 
   context 'as Admin' do
@@ -185,8 +189,6 @@ describe "Order Details", type: :feature, js: true do
 
             expect(page).to have_css('.shipment', count: 2)
 
-            order.shipments.reload
-
             expect(order.shipments.count).to eq(2)
             expect(order.shipments.last.backordered?).to eq(false)
             expect(order.shipments.first.inventory_units_for(product.master).count).to eq(1)
@@ -200,8 +202,6 @@ describe "Order Details", type: :feature, js: true do
             complete_split_to(stock_location2, quantity: 2)
 
             expect(page).to have_content("pending package from 'Clarksville'")
-
-            order.shipments.reload
 
             expect(order.shipments.count).to eq(1)
             expect(order.shipments.last.backordered?).to eq(false)
@@ -217,8 +217,6 @@ describe "Order Details", type: :feature, js: true do
 
             expect(page).to have_content("pending package from 'Clarksville'")
 
-            order.shipments.reload
-
             expect(order.shipments.count).to eq(1)
             expect(order.shipments.last.backordered?).to eq(false)
             expect(order.shipments.first.inventory_units_for(product.master).count).to eq(5)
@@ -233,8 +231,6 @@ describe "Order Details", type: :feature, js: true do
 
             wait_for_ajax
 
-            order.shipments.reload
-
             expect(order.shipments.count).to eq(1)
             expect(order.shipments.first.inventory_units_for(product.master).count).to eq(2)
             expect(order.shipments.first.stock_location.id).to eq(stock_location.id)
@@ -247,8 +243,6 @@ describe "Order Details", type: :feature, js: true do
             complete_split_to(stock_location2, quantity: 0)
 
             wait_for_ajax
-
-            order.shipments.reload
 
             expect(order.shipments.count).to eq(1)
             expect(order.shipments.first.inventory_units_for(product.master).count).to eq(2)
@@ -290,8 +284,6 @@ describe "Order Details", type: :feature, js: true do
 
               wait_for_ajax
 
-              order.shipments.reload
-
               expect(order.shipments.count).to eq(1)
               expect(order.shipments.first.inventory_units_for(product.master).count).to eq(2)
               expect(order.shipments.first.stock_location.id).to eq(stock_location.id)
@@ -308,8 +300,6 @@ describe "Order Details", type: :feature, js: true do
 
               expect(page).to have_content("pending package from 'Clarksville'")
 
-              order.shipments.reload
-
               expect(order.shipments.count).to eq(1)
               expect(order.shipments.first.inventory_units_for(product.master).count).to eq(2)
               expect(order.shipments.first.stock_location.id).to eq(stock_location2.id)
@@ -320,6 +310,8 @@ describe "Order Details", type: :feature, js: true do
         context 'multiple items in cart' do
           it 'should have no problem splitting if multiple items are in the from shipment' do
             order.contents.add(create(:variant), 2)
+            order.reload
+
             expect(order.shipments.count).to eq(1)
             expect(order.shipments.first.manifest.count).to eq(2)
 
@@ -327,8 +319,6 @@ describe "Order Details", type: :feature, js: true do
             complete_split_to(stock_location2)
 
             expect(page).to have_css('.shipment', count: 2)
-
-            order.shipments.reload
 
             expect(order.shipments.count).to eq(2)
             expect(order.shipments.last.backordered?).to eq(false)
@@ -341,7 +331,6 @@ describe "Order Details", type: :feature, js: true do
       context 'removing an item' do
         it "removes only the one item" do
           @shipment2 = order.shipments.create(stock_location_id: stock_location2.id)
-          order.line_items.reload # inventory units are outdated
           order.line_items[0].inventory_units[0].update!(shipment: @shipment2)
           visit spree.edit_admin_order_path(order)
 
@@ -371,8 +360,6 @@ describe "Order Details", type: :feature, js: true do
 
           expect(page).to have_css("#shipment_#{@shipment2.id}", count: 1)
 
-          order.shipments.reload
-
           expect(order.shipments.count).to eq(1)
           expect(order.shipments.last.inventory_units_for(product.master).count).to eq(2)
         end
@@ -396,8 +383,6 @@ describe "Order Details", type: :feature, js: true do
 
             wait_for_ajax
 
-            order.shipments.reload
-
             expect(order.shipments.count).to eq(2)
             expect(order.shipments.first.inventory_units_for(product.master).count).to eq(1)
             expect(order.shipments.last.inventory_units_for(product.master).count).to eq(1)
@@ -415,14 +400,13 @@ describe "Order Details", type: :feature, js: true do
           it 'should split fine if more than one line_item is in the receiving shipment' do
             variant2 = create(:variant)
             order.contents.add(variant2, 2, shipment: @shipment2)
+            order.reload
 
             within_row(1) { click_icon 'arrows-h' }
             complete_split_to(@shipment2, quantity: 1)
 
             expect(page).not_to have_content(/Move .* to/)
             expect(page).to have_css('.shipment', count: 2)
-
-            order.shipments.reload
 
             expect(order.shipments.count).to eq(2)
             expect(order.shipments.first.inventory_units_for(product.master).count).to eq 1
