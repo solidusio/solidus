@@ -20,7 +20,7 @@ describe Spree::Admin::StoreCreditsController do
     let!(:store_credit) { create(:store_credit, user: user, category: a_credit_category) }
     let!(:event)        { create(:store_credit_auth_event, store_credit: store_credit, created_at: 5.days.ago) }
 
-    before { get :show, user_id: user.id, id: store_credit.id }
+    before { get :show, params: { user_id: user.id, id: store_credit.id  } }
 
     it "sets the store_credit variable to a new store credit model" do
       expect(assigns(:store_credit)).to eq store_credit
@@ -33,12 +33,12 @@ describe Spree::Admin::StoreCreditsController do
   end
 
   describe "#new" do
-    before { get :new, user_id: create(:user).id }
+    before { get :new, params: { user_id: create(:user).id } }
     it { expect(assigns(:credit_categories)).to eq [a_credit_category, b_credit_category] }
   end
 
   describe "#create" do
-    subject { post :create, parameters }
+    subject { post :create, params: parameters }
 
     before  {
       allow(controller).to receive_messages(try_spree_current_user: admin_user)
@@ -94,7 +94,7 @@ describe Spree::Admin::StoreCreditsController do
   describe "#edit_amount" do
     let!(:store_credit) { create(:store_credit, user: user, category: a_credit_category) }
 
-    before { get :edit_amount, user_id: user.id, id: store_credit.id }
+    before { get :edit_amount, params: { user_id: user.id, id: store_credit.id } }
 
     it_behaves_like "update reason loader"
 
@@ -106,7 +106,7 @@ describe Spree::Admin::StoreCreditsController do
   describe "#edit_validity" do
     let!(:store_credit) { create(:store_credit, user: user, category: a_credit_category) }
 
-    before { get :edit_validity, user_id: user.id, id: store_credit.id }
+    before { get :edit_validity, params: { user_id: user.id, id: store_credit.id } }
 
     it_behaves_like "update reason loader"
 
@@ -119,7 +119,7 @@ describe Spree::Admin::StoreCreditsController do
     let(:memo)          { "New memo" }
     let!(:store_credit) { create(:store_credit, user: user) }
 
-    subject { put :update, parameters.merge(format: :json) }
+    subject { put :update, params: parameters.merge(format: :json) }
 
     before  { allow(controller).to receive_messages(try_spree_current_user: admin_user) }
 
@@ -182,7 +182,7 @@ describe Spree::Admin::StoreCreditsController do
       }
     end
 
-    subject { put :update_amount, parameters }
+    subject { put :update_amount, params: parameters }
 
     before  { allow(controller).to receive_messages(try_spree_current_user: admin_user) }
 
@@ -272,7 +272,7 @@ describe Spree::Admin::StoreCreditsController do
       }
     end
 
-    subject { put :invalidate, parameters }
+    subject { put :invalidate, params: parameters }
 
     it "attempts to invalidate the store credit" do
       expect { subject }.to change { store_credit.reload.invalidated_at }.from(nil)

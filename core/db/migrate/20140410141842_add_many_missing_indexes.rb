@@ -1,4 +1,4 @@
-class AddManyMissingIndexes < ActiveRecord::Migration
+class AddManyMissingIndexes < ActiveRecord::Migration[4.2]
   include Spree::MigrationHelpers
 
   def change

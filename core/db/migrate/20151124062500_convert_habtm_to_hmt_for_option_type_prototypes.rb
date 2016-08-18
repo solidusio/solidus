@@ -1,4 +1,4 @@
-class ConvertHabtmToHmtForOptionTypePrototypes < ActiveRecord::Migration
+class ConvertHabtmToHmtForOptionTypePrototypes < ActiveRecord::Migration[4.2]
   def up
     add_column :spree_option_types_prototypes, :id, :primary_key
     add_column :spree_option_types_prototypes, :created_at, :datetime

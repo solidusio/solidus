@@ -1,4 +1,4 @@
-class ChangeReturnItemPreTaxAmountToAmount < ActiveRecord::Migration
+class ChangeReturnItemPreTaxAmountToAmount < ActiveRecord::Migration[4.2]
   def up
     execute(<<-SQL)
       UPDATE spree_return_items

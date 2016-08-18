@@ -3,6 +3,7 @@ module Spree
     module Importer
       class Order
         def self.import(user, params)
+          params = params.to_h
           ActiveRecord::Base.transaction do
             ensure_country_id_from_params params[:ship_address_attributes]
             ensure_state_id_from_params params[:ship_address_attributes]

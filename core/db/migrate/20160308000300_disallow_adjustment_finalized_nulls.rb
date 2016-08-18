@@ -1,4 +1,4 @@
-class DisallowAdjustmentFinalizedNulls < ActiveRecord::Migration
+class DisallowAdjustmentFinalizedNulls < ActiveRecord::Migration[4.2]
   def up
     execute <<-SQL
       update spree_adjustments

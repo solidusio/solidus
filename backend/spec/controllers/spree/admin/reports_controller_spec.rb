@@ -44,7 +44,7 @@ describe Spree::Admin::ReportsController, type: :controller do
       order_complete_mid_month.save!
     end
 
-    subject { get :sales_total, params }
+    subject { get :sales_total, params: params }
 
     shared_examples 'sales total report' do
       it 'should respond with success' do

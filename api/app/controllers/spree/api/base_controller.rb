@@ -73,8 +73,7 @@ module Spree
 
         error_notifier.call(exception, self) if error_notifier
 
-        render text: { exception: exception.message }.to_json,
-          status: 422
+        render json: { exception: exception.message }, status: 422
       end
 
       def gateway_error(exception)
@@ -149,7 +148,7 @@ module Spree
       def lock_order
         OrderMutex.with_lock!(@order) { yield }
       rescue Spree::OrderMutex::LockFailed => e
-        render text: e.message, status: 409
+        render plain: e.message, status: 409
       end
 
       def insufficient_stock_error(exception)

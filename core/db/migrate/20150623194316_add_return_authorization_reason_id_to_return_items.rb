@@ -1,4 +1,4 @@
-class AddReturnAuthorizationReasonIdToReturnItems < ActiveRecord::Migration
+class AddReturnAuthorizationReasonIdToReturnItems < ActiveRecord::Migration[4.2]
   def change
     rename_table :spree_return_authorization_reasons, :spree_return_reasons
     rename_column :spree_return_authorizations, :return_authorization_reason_id, :return_reason_id

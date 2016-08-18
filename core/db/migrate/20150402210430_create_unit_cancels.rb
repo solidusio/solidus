@@ -1,4 +1,4 @@
-class CreateUnitCancels < ActiveRecord::Migration
+class CreateUnitCancels < ActiveRecord::Migration[4.2]
   def change
     create_table :spree_unit_cancels do |t|
       t.references :inventory_unit, index: true, null: false

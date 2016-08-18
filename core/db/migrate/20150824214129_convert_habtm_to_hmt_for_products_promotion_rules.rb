@@ -1,4 +1,4 @@
-class ConvertHabtmToHmtForProductsPromotionRules < ActiveRecord::Migration
+class ConvertHabtmToHmtForProductsPromotionRules < ActiveRecord::Migration[4.2]
   def up
     add_column :spree_products_promotion_rules, :id, :primary_key
     add_column :spree_products_promotion_rules, :created_at, :datetime

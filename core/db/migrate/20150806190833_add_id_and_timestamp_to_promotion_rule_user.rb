@@ -1,4 +1,4 @@
-class AddIdAndTimestampToPromotionRuleUser < ActiveRecord::Migration
+class AddIdAndTimestampToPromotionRuleUser < ActiveRecord::Migration[4.2]
   def up
     add_column :spree_promotion_rules_users, :id, :primary_key
     add_column :spree_promotion_rules_users, :created_at, :datetime

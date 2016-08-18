@@ -135,12 +135,12 @@ module Spree
     def ensure_can_destroy
       if !backordered? && !on_hand?
         errors.add(:state, :cannot_destroy, state: state)
-        return false
+        throw :abort
       end
 
       unless shipment.pending?
         errors.add(:base, :cannot_destroy_shipment_state, state: shipment.state)
-        return false
+        throw :abort
       end
     end
   end

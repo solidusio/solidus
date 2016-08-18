@@ -1,4 +1,4 @@
-class CorrectSomePolymorphicIndexAndAddMoreMissing < ActiveRecord::Migration
+class CorrectSomePolymorphicIndexAndAddMoreMissing < ActiveRecord::Migration[4.2]
   include Spree::MigrationHelpers
 
   def change

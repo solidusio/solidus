@@ -90,7 +90,8 @@ module Spree
         if action == :create
           edit_admin_stock_transfer_path(@stock_transfer)
         else
-          :back
+          # redirect back, or to fallback if referer not provided
+          request.headers["Referer"] || admin_stock_transfers_path
         end
       end
 

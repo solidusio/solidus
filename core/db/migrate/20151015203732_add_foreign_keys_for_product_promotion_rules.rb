@@ -1,4 +1,4 @@
-class AddForeignKeysForProductPromotionRules < ActiveRecord::Migration
+class AddForeignKeysForProductPromotionRules < ActiveRecord::Migration[4.2]
   def change
     add_foreign_key :spree_product_promotion_rules, :spree_products,
                     column: :product_id

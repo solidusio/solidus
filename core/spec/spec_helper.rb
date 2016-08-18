@@ -37,6 +37,8 @@ require 'spree/testing_support/factories'
 require 'spree/testing_support/preferences'
 require 'cancan/matchers'
 
+ActiveJob::Base.queue_adapter = :inline
+
 RSpec.configure do |config|
   config.color = true
   config.infer_spec_type_from_file_location!

@@ -48,6 +48,9 @@ module Spree
       template "rails/test.rb", "#{dummy_path}/config/environments/test.rb", force: true
       template "rails/script/rails", "#{dummy_path}/spec/dummy/script/rails", force: true
       template "initializers/custom_user.rb", "#{dummy_path}/config/initializers/custom_user.rb", force: true
+
+      # FIXME: We aren't ready for rails 5 defaults
+      remove_file "#{dummy_path}/config/initializers/new_framework_defaults.rb"
     end
 
     def test_dummy_inject_extension_requirements

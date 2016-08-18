@@ -1,4 +1,4 @@
-class AddMissingTimestampColumns < ActiveRecord::Migration
+class AddMissingTimestampColumns < ActiveRecord::Migration[4.2]
   def change
     # Missing updated_at
     add_column :friendly_id_slugs, :updated_at, :datetime, null: true
