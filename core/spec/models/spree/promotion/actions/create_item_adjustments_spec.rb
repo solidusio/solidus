@@ -41,12 +41,6 @@ module Spree
               expect(line_item.adjustments.first.source).to eq action
             end
 
-            it "updates cached order line items" do
-              order.line_items.to_a
-              action.perform(payload)
-              expect(order.line_items.map(&:adjustment_total)).to eq([-10])
-            end
-
             it "does not perform twice on the same item" do
               2.times { action.perform(payload) }
               expect(action.adjustments.count).to eq(1)

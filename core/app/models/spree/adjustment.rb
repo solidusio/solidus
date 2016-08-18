@@ -26,9 +26,6 @@ module Spree
     validates :amount, numericality: true
     validates :promotion_code, presence: true, if: :require_promotion_code?
 
-    after_create :update_adjustable_adjustment_total
-    after_destroy :update_adjustable_adjustment_total
-
     scope :not_finalized, -> { where(finalized: false) }
     scope :open, -> do
       Spree::Deprecation.warn "Adjustment.open is deprecated. Instead use Adjustment.not_finalized", caller
@@ -176,11 +173,6 @@ module Spree
     end
 
     private
-
-    def update_adjustable_adjustment_total
-      # Cause adjustable's total to be recalculated
-      ItemAdjustments.new(adjustable).update
-    end
 
     def require_promotion_code?
       promotion? && source.promotion.codes.any?

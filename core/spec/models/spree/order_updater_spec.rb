@@ -47,6 +47,7 @@ module Spree
           updater.update
           create(:adjustment, source: promotion_action, adjustable: order, order: order)
           create(:line_item, order: order, price: 10) # in addition to the two already created
+          order.line_items.reload # need to pick up the extra line item
           updater.update
         end
 
@@ -56,17 +57,13 @@ module Spree
       end
 
       it "update order adjustments" do
-        # A line item will not have both additional and included tax,
-        # so please just humour me for now.
-        order.line_items.first.update_columns({
-          adjustment_total: 10.05,
-          additional_tax_total: 0.05,
-          included_tax_total: 0.05
-        })
-        updater.update_adjustment_total
-        expect(order.adjustment_total).to eq(10.05)
-        expect(order.additional_tax_total).to eq(0.05)
-        expect(order.included_tax_total).to eq(0.05)
+        create(:adjustment, adjustable: order, order: order, source: nil, amount: 10)
+
+        expect {
+          updater.update_adjustment_total
+        }.to change {
+          order.adjustment_total
+        }.from(0).to(10)
       end
     end
 
@@ -275,6 +272,37 @@ module Spree
         allow(updater).to receive(:update_totals) # Otherwise this gets called and causes a scene
         expect(updater).not_to receive(:update_shipments).with(order)
         updater.update
+      end
+    end
+
+    describe 'updating in-memory items' do
+      let(:order) do
+        create(:order_with_line_items, line_items_count: 1, line_items_price: 10)
+      end
+      let(:line_item) { order.line_items.first }
+      let(:promotion) { create(:promotion, :with_line_item_adjustment, adjustment_rate: 1) }
+
+      it 'updates in-memory items' do
+        promotion.activate(order: order)
+
+        expect(line_item.promo_total).to eq(0)
+        expect(order.promo_total).to eq(0)
+
+        order.update!
+
+        expect(line_item.promo_total).to eq(-1)
+        expect(order.promo_total).to eq(-1)
+      end
+    end
+
+    context "with item with no adjustment and incorrect totals" do
+      let!(:line_item) { create(:line_item, order: order, price: 10) }
+
+      it "updates the totals" do
+        line_item.update!(adjustment_total: 100)
+        expect {
+          order.update!
+        }.to change { line_item.reload.adjustment_total }.from(100).to(0)
       end
     end
   end

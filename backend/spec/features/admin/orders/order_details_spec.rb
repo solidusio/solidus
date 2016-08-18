@@ -15,6 +15,10 @@ describe "Order Details", type: :feature, js: true do
   before do
     @shipment1 = order.shipments.create(stock_location_id: stock_location.id)
     order.contents.add(product.master, 2)
+    # order.contents.add causes things (like line items & shipments) to get
+    # cached, and these are going to change during this spec so we go ahead and
+    # reload now
+    order.reload
   end
 
   context 'as Admin' do
@@ -306,6 +310,8 @@ describe "Order Details", type: :feature, js: true do
         context 'multiple items in cart' do
           it 'should have no problem splitting if multiple items are in the from shipment' do
             order.contents.add(create(:variant), 2)
+            order.reload
+
             expect(order.shipments.count).to eq(1)
             expect(order.shipments.first.manifest.count).to eq(2)
 
@@ -394,6 +400,7 @@ describe "Order Details", type: :feature, js: true do
           it 'should split fine if more than one line_item is in the receiving shipment' do
             variant2 = create(:variant)
             order.contents.add(variant2, 2, shipment: @shipment2)
+            order.reload
 
             within_row(1) { click_icon 'arrows-h' }
             complete_split_to(@shipment2, quantity: 1)

@@ -200,6 +200,7 @@ module Spree
             order_promos[promo_sequence[0]].activate order: order
             order_promos[promo_sequence[1]].activate order: order
 
+            order.update!
             order.reload
             expect(order.all_adjustments.count).to eq(2), "Expected two adjustments (using sequence #{promo_sequence})"
             expect(order.all_adjustments.eligible.count).to eq(1), "Expected one elegible adjustment (using sequence #{promo_sequence})"

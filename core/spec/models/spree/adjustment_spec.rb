@@ -10,16 +10,6 @@ describe Spree::Adjustment, type: :model do
 
   let(:adjustment) { Spree::Adjustment.create!(label: 'Adjustment', adjustable: order, order: order, amount: 5) }
 
-  context '#create & #destroy' do
-    let(:adjustment) { Spree::Adjustment.new(label: "Adjustment", amount: 5, order: order, adjustable: line_item) }
-
-    it 'calls #update_adjustable_adjustment_total' do
-      expect(adjustment).to receive(:update_adjustable_adjustment_total).twice
-      adjustment.save
-      adjustment.destroy
-    end
-  end
-
   context '#save' do
     let(:adjustment) { Spree::Adjustment.create(label: "Adjustment", amount: 5, order: order, adjustable: line_item) }
 
