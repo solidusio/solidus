@@ -1,3 +1,7 @@
+## Solidus 2.0.0 (unreleased)
+
+*   Upgrade to rails 5.0
+
 ## Solidus 1.4.0 (unreleased)
 
 *   Make some 'wallet' behavior configurable
