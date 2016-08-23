@@ -11,6 +11,10 @@ let's take a quick look at the fundamental models upon which all else depend.
 Currently, these models remain in the Spree namespace as part of the legacy of
 [forking Spree](https://solidus.io/blog/2015/10/28/future-of-spree.html).
 
+## NOTE: Documentation is a work in progress
+The documentation of Solidus Core is still in progress. Contributions following
+this form are welcome and encouraged!
+
 * [The Order Sub-System](#the-order-sub-system)
 * [The User Sub-System](#the-user-sub-system)
 * [The Payment Sub-System](#the-payment-sub-system)
