@@ -1,4 +1,3 @@
-require 'sass/rails'
 require 'rails-i18n'
 require 'solidus_core'
 require 'solidus_i18n/engine'
