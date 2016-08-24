@@ -272,6 +272,9 @@ module Spree
     context "multiple updates" do
       let(:adjustment) { create(:tax_adjustment, amount: -10) }
       let(:item) { adjustment.adjustable }
+      # we need to get this from the line item so that we're modifying the same
+      # tax rate that is cached by line_item.adjustments
+      let(:source) { item.adjustments.to_a.first.source }
 
       def update
         described_class.new(item).update
@@ -283,18 +286,17 @@ module Spree
       end
 
       it "persists each change" do
-        adjustment.source.update_attributes!(amount: 0.1)
+        source.update_attributes!(amount: 0.1)
         update
         expect(item).not_to be_changed
         expect(db_record).to have_attributes(adjustment_total: 1)
 
-        adjustment.source.update_attributes!(amount: 0.20)
-        item.reload
+        source.update_attributes!(amount: 0.20)
         update
         expect(item).not_to be_changed
         expect(db_record).to have_attributes(adjustment_total: 2)
 
-        adjustment.source.update_attributes!(amount: 0.10)
+        source.update_attributes!(amount: 0.10)
         update
         expect(item).not_to be_changed
         expect(db_record).to have_attributes(adjustment_total: 1)
