@@ -17,7 +17,7 @@ module Spree
         return unless order_tax_zone(order)
 
         [order, *order.line_items, *order.shipments].each do |item|
-          item.adjustments.tax.destroy_all
+          item.adjustments.destroy(item.adjustments.select(&:tax?))
         end
 
         (order.line_items + order.shipments).each do |item|
