@@ -185,16 +185,14 @@ module Spree
 
     def repair_adjustments_associations_on_create
       if adjustable.adjustments.loaded? && !adjustable.adjustments.include?(self)
-        # Note: I will update this to a deprecation once I've gotten rid of all the occurrences in Solidus
-        puts("Adjustment was not added to #{adjustable.class}. Add adjustments via `adjustable.adjustments.create!`. Partial call stack: #{caller.select { |line| line =~ %r(/(app|spec)/) }}.", caller)
+        Spree::Deprecation.warn("Adjustment was not added to #{adjustable.class}. Add adjustments via `adjustable.adjustments.create!`. Partial call stack: #{caller.select { |line| line =~ %r(/(app|spec)/) }}.", caller)
         adjustable.adjustments.proxy_association.add_to_target(self)
       end
     end
 
     def repair_adjustments_associations_on_destroy
       if adjustable.adjustments.loaded? && adjustable.adjustments.include?(self)
-        # Note: I will update this to a deprecation once I've gotten rid of all the occurrences in Solidus
-        puts("Adjustment was not removed from #{adjustable.class}. Remove adjustments via `adjustable.adjustments.destroy`. Partial call stack: #{caller.select { |line| line =~ %r(/(app|spec)/) }}.", caller)
+        Spree::Deprecation.warn("Adjustment was not removed from #{adjustable.class}. Remove adjustments via `adjustable.adjustments.destroy`. Partial call stack: #{caller.select { |line| line =~ %r(/(app|spec)/) }}.", caller)
         adjustable.adjustments.proxy_association.target.delete(self)
       end
     end
