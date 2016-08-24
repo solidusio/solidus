@@ -12,6 +12,13 @@ FactoryGirl.define do
     label 'Shipping'
     association(:source, factory: :tax_rate)
     eligible true
+
+    after(:build) do |adjustment|
+      adjustments = adjustment.adjustable.adjustments
+      if adjustments.loaded? && !adjustments.include?(adjustment)
+        adjustments.proxy_association.add_to_target(adjustment)
+      end
+    end
   end
 
   factory :tax_adjustment, class: Spree::Adjustment do
@@ -21,6 +28,13 @@ FactoryGirl.define do
     label 'VAT 5%'
     association(:source, factory: :tax_rate)
     eligible true
+
+    after(:build) do |adjustment|
+      adjustments = adjustment.adjustable.adjustments
+      if adjustments.loaded? && !adjustments.include?(adjustment)
+        adjustments.proxy_association.add_to_target(adjustment)
+      end
+    end
 
     after(:create) do |adjustment|
       # Set correct tax category, so that adjustment amount is not 0
