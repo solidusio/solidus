@@ -6,18 +6,18 @@ class Spree::UnitCancel < Spree::Base
   DEFAULT_REASON = 'Cancel'
 
   belongs_to :inventory_unit
-  has_one :adjustment, as: :source, dependent: :destroy
+  has_many :adjustments, as: :source, dependent: :destroy
 
   validates :inventory_unit, presence: true
 
   # Creates necessary cancel adjustments for the line item.
   def adjust!
-    raise "Adjustment is already created" if adjustment
+    raise "Adjustment is already created" if adjustments.exists?
 
     amount = compute_amount(inventory_unit.line_item)
 
-    create_adjustment!(
-      adjustable: inventory_unit.line_item,
+    inventory_unit.line_item.adjustments.create!(
+      source: self,
       amount: amount,
       order: inventory_unit.order,
       label: "#{Spree.t(:cancellation)} - #{reason}",
