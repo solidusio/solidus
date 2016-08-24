@@ -22,10 +22,9 @@ module Spree
           return if promotion_credit_exists?(order)
 
           amount = compute_amount(order)
-          Spree::Adjustment.create!(
+          order.adjustments.create!(
             amount: amount,
             order: order,
-            adjustable: order,
             source: self,
             promotion_code: options[:promotion_code],
             label: "#{Spree.t(:promotion)} (#{promotion.name})"
