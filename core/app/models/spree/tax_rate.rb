@@ -85,13 +85,13 @@ module Spree
 
       included = included_in_price && amount > 0
 
-      adjustments.create!({
-        adjustable: item,
+      item.adjustments.create!(
+        source: self,
         amount: amount,
         order_id: item.order_id,
         label: adjustment_label(amount),
         included: included
-      })
+      )
     end
 
     # This method is used by Adjustment#update to recalculate the cost.

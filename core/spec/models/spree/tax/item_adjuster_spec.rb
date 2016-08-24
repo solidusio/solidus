@@ -2,7 +2,7 @@ require 'spec_helper'
 
 RSpec.describe Spree::Tax::ItemAdjuster do
   subject(:adjuster) { described_class.new(item) }
-  let(:order) { Spree::Order.new }
+  let(:order) { create(:order) }
   let(:item) { Spree::LineItem.new(order: order) }
 
   before do
@@ -64,7 +64,6 @@ RSpec.describe Spree::Tax::ItemAdjuster do
           before { allow(item).to receive(:tax_category).and_return(item_tax_category) }
 
           it 'creates an adjustment for every matching rate' do
-            expect(rate_1).to receive_message_chain(:adjustments, :create!)
             expect(adjuster.adjust!.length).to eq(1)
           end
         end
