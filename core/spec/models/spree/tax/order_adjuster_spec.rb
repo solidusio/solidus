@@ -31,7 +31,6 @@ RSpec.describe Spree::Tax::OrderAdjuster do
                                               rates_for_order_zone: rates_for_order_zone,
                                               rates_for_default_zone: [],
                                               order_tax_zone: zone,
-                                              skip_destroy_adjustments: true
                                             ).and_return(item_adjuster)
       expect(Spree::Tax::ItemAdjuster).to receive(:new).
                                             with(
@@ -39,7 +38,6 @@ RSpec.describe Spree::Tax::OrderAdjuster do
                                               rates_for_order_zone: rates_for_order_zone,
                                               rates_for_default_zone: [],
                                               order_tax_zone: zone,
-                                              skip_destroy_adjustments: true
                                             ).and_return(item_adjuster)
 
       expect(item_adjuster).to receive(:adjust!).twice

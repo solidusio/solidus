@@ -16,10 +16,6 @@ module Spree
       def adjust!
         return unless order_tax_zone(order)
 
-        [order, *order.line_items, *order.shipments].each do |item|
-          item.adjustments.destroy(item.adjustments.select(&:tax?))
-        end
-
         (order.line_items + order.shipments).each do |item|
           ItemAdjuster.new(item, order_wide_options).adjust!
         end
@@ -32,7 +28,6 @@ module Spree
           rates_for_order_zone: rates_for_order_zone(order),
           rates_for_default_zone: rates_for_default_zone,
           order_tax_zone: order_tax_zone(order),
-          skip_destroy_adjustments: true
         }
       end
     end
