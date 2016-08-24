@@ -83,11 +83,7 @@ module Spree
     private
 
     def adjustments
-      # This is done intentionally to avoid loading the association. If the
-      # association is loaded, the records may become stale due to code
-      # elsewhere in spree. When that is remedied, this should be changed to
-      # just item.adjustments
-      @adjustments ||= item.adjustments.all.to_a
+      @adjustments ||= item.adjustments.to_a
     end
   end
 end
