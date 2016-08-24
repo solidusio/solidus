@@ -503,7 +503,6 @@ module Spree
       elsif shipments.any? { |s| !s.pending? }
         raise CannotRebuildShipments.new(Spree.t(:cannot_rebuild_shipments_shipments_not_pending))
       else
-        adjustments.shipping.destroy_all
         shipments.destroy_all
         self.shipments = Spree::Config.stock.coordinator_class.new(self).shipments
       end
