@@ -5,11 +5,15 @@ $.fn.taxonAutocomplete = function () {
       placeholder: Spree.translations.taxon_placeholder,
       multiple: true,
       initSelection: function (element, callback) {
+        var ids = element.val(),
+            count = ids.split(",").length;
+
         Spree.ajax({
           type: "GET",
           url: Spree.routes.taxons_search,
           data: {
-            ids: element.val(),
+            ids: ids,
+            per_page: count,
             without_children: true
           },
           success: function (data) {
