@@ -15,7 +15,6 @@ class Spree::PromotionBuilder
 
   # @param promotion_attrs [Hash] The desired attributes for the newly promotion
   # @param attributes [Hash] The desired attributes for this builder
-  # @param user [Spree::User] The user who triggered this promotion build
   def initialize(attributes = {}, promotion_attributes = {})
     @promotion = Spree::Promotion.new(promotion_attributes)
     super(attributes)
