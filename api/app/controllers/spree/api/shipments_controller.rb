@@ -14,7 +14,9 @@ module Spree
             .joins(:order)
             .where(spree_orders: { user_id: current_api_user.id })
             .includes(mine_includes)
-            .ransack(params[:q]).result.page(params[:page]).per(params[:per_page])
+            .ransack(params[:q]).result
+
+          @shipments = paginate(@shipments)
         else
           render "spree/api/errors/unauthorized", status: :unauthorized
         end

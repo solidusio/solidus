@@ -24,9 +24,15 @@ module Spree
 
       def index
         authorize! :admin, ReturnAuthorization
-        @return_authorizations = @order.return_authorizations.accessible_by(current_ability, :read).
-                                 ransack(params[:q]).result.
-                                 page(params[:page]).per(params[:per_page])
+
+        @return_authorizations = @order.
+          return_authorizations.
+          accessible_by(current_ability, :read).
+          ransack(params[:q]).
+          result
+
+        @return_authorizations = paginate(@return_authorizations)
+
         respond_with(@return_authorizations)
       end
 

@@ -9,7 +9,9 @@ module Spree
           .credit_cards
           .accessible_by(current_ability, :read)
           .with_payment_profile
-          .ransack(params[:q]).result.page(params[:page]).per(params[:per_page])
+          .ransack(params[:q]).result
+
+        @credit_cards = paginate(@credit_cards)
         respond_with(@credit_cards)
       end
 
