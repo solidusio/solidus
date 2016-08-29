@@ -73,5 +73,23 @@ describe Spree::PromotionCode::CodeBuilder do
         end
       end
     end
+
+    describe "with existing promotion with code" do
+      let(:num_codes) { 1 }
+      before do
+        builder.promotion.promotion_codes <<
+          Spree::PromotionCode.create(
+            promotion: builder.promotion,
+            value: "#{base_code}_abcdef")
+      end
+      it "uses suffix even for one new code" do
+        builder.build_promotion_codes
+
+        expect(builder.promotion.codes.size).to eq(num_codes + 1)
+        values = builder.promotion.codes.map(&:value)
+        base = "#{base_code}_"
+        expect(values.all? { |val| val.starts_with?(base) && val.size > base.size }).to be true
+      end
+    end
   end
 end
