@@ -112,6 +112,11 @@ describe Spree::PromotionBuilder do
         expect(builder.promotion).to be_persisted
       end
 
+      it "saves base_code in promotion" do
+        subject
+        expect(builder.promotion.base_code).to eq(base_code)
+      end
+
       it "returns true on success" do
         expect(subject).to be true
       end
