@@ -28,7 +28,7 @@ module Spree
 
       def load_bulk_code_information
         @promotion_builder = Spree::PromotionBuilder.new(
-          base_code: @promotion.codes.first.try!(:value),
+          base_code: @promotion.base_code || @promotion.codes.first.try!(:value),
           number_of_codes: @promotion.codes.count
         )
       end
