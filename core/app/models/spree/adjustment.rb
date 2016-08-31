@@ -26,6 +26,11 @@ module Spree
     validates :amount, numericality: true
     validates :promotion_code, presence: true, if: :require_promotion_code?
 
+    # We need to use `after_commit` here because otherwise it's too early to
+    # tell if any repair is needed.
+    after_commit :repair_adjustments_associations_on_create, on: [:create]
+    after_commit :repair_adjustments_associations_on_destroy, on: [:destroy]
+
     scope :not_finalized, -> { where(finalized: false) }
     scope :open, -> do
       Spree::Deprecation.warn "Adjustment.open is deprecated. Instead use Adjustment.not_finalized", caller
@@ -176,6 +181,20 @@ module Spree
 
     def require_promotion_code?
       promotion? && source.promotion.codes.any?
+    end
+
+    def repair_adjustments_associations_on_create
+      if adjustable.adjustments.loaded? && !adjustable.adjustments.include?(self)
+        Spree::Deprecation.warn("Adjustment was not added to #{adjustable.class}. Add adjustments via `adjustable.adjustments.create!`. Partial call stack: #{caller.select { |line| line =~ %r(/(app|spec)/) }}.", caller)
+        adjustable.adjustments.proxy_association.add_to_target(self)
+      end
+    end
+
+    def repair_adjustments_associations_on_destroy
+      if adjustable.adjustments.loaded? && adjustable.adjustments.include?(self)
+        Spree::Deprecation.warn("Adjustment was not removed from #{adjustable.class}. Remove adjustments via `adjustable.adjustments.destroy`. Partial call stack: #{caller.select { |line| line =~ %r(/(app|spec)/) }}.", caller)
+        adjustable.adjustments.proxy_association.target.delete(self)
+      end
     end
   end
 end

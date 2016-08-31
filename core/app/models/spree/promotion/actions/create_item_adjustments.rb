@@ -40,9 +40,9 @@ module Spree
         def create_adjustment(adjustable, order, promotion_code)
           amount = compute_amount(adjustable)
           return if amount == 0
-          adjustments.create!(
+          adjustable.adjustments.create!(
+            source: self,
             amount: amount,
-            adjustable: adjustable,
             order: order,
             promotion_code: promotion_code,
             label: "#{Spree.t(:promotion)} (#{promotion.name})"
