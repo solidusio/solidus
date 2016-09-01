@@ -47,7 +47,7 @@ module Spree
     belongs_to :store, class_name: 'Spree::Store'
     has_many :state_changes, as: :stateful
     has_many :line_items, -> { order(:created_at, :id) }, dependent: :destroy, inverse_of: :order
-    has_many :payments, dependent: :destroy
+    has_many :payments, dependent: :destroy, inverse_of: :order
     has_many :return_authorizations, dependent: :destroy, inverse_of: :order
     has_many :reimbursements, inverse_of: :order
     has_many :adjustments, -> { order(:created_at) }, as: :adjustable, inverse_of: :adjustable, dependent: :destroy
@@ -503,7 +503,6 @@ module Spree
       elsif shipments.any? { |s| !s.pending? }
         raise CannotRebuildShipments.new(Spree.t(:cannot_rebuild_shipments_shipments_not_pending))
       else
-        adjustments.shipping.destroy_all
         shipments.destroy_all
         self.shipments = Spree::Config.stock.coordinator_class.new(self).shipments
       end
@@ -511,9 +510,7 @@ module Spree
 
     def apply_free_shipping_promotions
       Spree::PromotionHandler::FreeShipping.new(self).activate
-      shipments.each { |shipment| ItemAdjustments.new(shipment).update }
-      updater.update_shipment_total
-      persist_totals
+      update!
     end
 
     # Clean shipments and make order back to address state

@@ -16,8 +16,8 @@ class Spree::UnitCancel < Spree::Base
 
     amount = compute_amount(inventory_unit.line_item)
 
-    create_adjustment!(
-      adjustable: inventory_unit.line_item,
+    self.adjustment = inventory_unit.line_item.adjustments.create!(
+      source: self,
       amount: amount,
       order: inventory_unit.order,
       label: "#{Spree.t(:cancellation)} - #{reason}",

@@ -4,6 +4,46 @@
 
 ## Solidus 1.4.0 (unreleased)
 
+*   Use in-memory objects in OrderUpdater and related areas.
+
+    Solidus now uses in-memory data for updating orders in and around
+    OrderUpdater.  E.g. if an order already has `order.line_items` loaded into
+    memory when OrderUpdater is run then it will use that information rather
+    than requerying the database for it. This should help performance and makes
+    some upcoming refactoring easier.
+
+    Warning:  If you bypass ActiveRecord while making updates to your orders you
+    run the risk of generating invalid data.  Example:
+
+        order.line_items.to_a
+        order.line_items.update_all(price: ...)
+        order.update!
+
+    Will now result in incorrect calculations in OrderUpdater because the line
+    items will not be refetched.
+
+    In particular, when creating adjustments, you should always create the
+    adjustment using the adjustable relationship.
+
+    Good example:
+
+        line_item.adjustments.create!(source: tax_rate, ...)
+
+    Bad examples:
+
+        tax_rate.adjustments.create!(adjustable: line_item, ...)
+        Spree::Adjustment.create!(adjustable: line_item, source: tax_rate, ...)
+
+    We try to detect the latter examples and repair the in-memory objects (with
+    a deprecation warning) but you should ensure that your code is keeping the
+    adjustable's in-memory associations up to date. Custom promotion actions are
+    an area likely to have this issue.
+
+    https://github.com/solidusio/solidus/pull/1356
+    https://github.com/solidusio/solidus/pull/1389
+    https://github.com/solidusio/solidus/pull/1400
+    https://github.com/solidusio/solidus/pull/1401
+
 *   Make some 'wallet' behavior configurable
 
     NOTE: `Order#persist_user_credit_card` has been renamed to
