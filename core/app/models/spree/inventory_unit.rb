@@ -1,4 +1,6 @@
 module Spree
+  # Tracks the state of line items' fulfillment.
+  #
   class InventoryUnit < Spree::Base
     PRE_SHIPMENT_STATES = %w(backordered on_hand)
     POST_SHIPMENT_STATES = %w(returned)
