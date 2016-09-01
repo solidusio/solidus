@@ -35,7 +35,7 @@ module Spree
         reason: Spree::RefundReason.return_processing_reason
       })
 
-      simulate ? refund.readonly! : refund.save!
+      simulate ? refund.readonly! : refund.perform!
       refund
     end
 
