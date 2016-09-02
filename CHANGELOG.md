@@ -4,6 +4,8 @@
 
 - Extract stock transfers to the [solidus_stock_transfers](https://github.com/solidusio-contrib/solidus_stock_transfers) gem. [#2379](https://github.com/solidusio/solidus/pull/2379) ([jhawthorn](https://github.com/jhawthorn))
 
+- Remove `#perform!` callback from refund model. Refunds can be created without performing the transaction implicitly; `#perform!` must be called for the transaction to be processed. [#1415](https://github.com/solidusio/solidus/pull/1415) ([swively](https:/github.com/swively))
+
 ## Solidus 2.4.0 (unreleased)
 
 ### Major changes
