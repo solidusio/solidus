@@ -10,6 +10,21 @@ module Spree
 
       rescue_from Spree::Core::GatewayError, with: :spree_core_gateway_error
 
+      def create
+        @refund.attributes = refund_params.merge(perform_after_creation: false)
+        if @refund.save && @refund.perform!
+          flash[:success] = flash_message_for(@refund, :successfully_created)
+          respond_with(@refund) do |format|
+            format.html { redirect_to location_after_save }
+          end
+        else
+          flash.now[:error] = @refund.errors.full_messages.join(", ")
+          respond_with(@refund) do |format|
+            format.html { render action: 'new' }
+          end
+        end
+      end
+
       private
 
       def location_after_save
@@ -23,6 +38,10 @@ module Spree
 
       def refund_reasons
         @refund_reasons ||= Spree::RefundReason.active.all
+      end
+
+      def refund_params
+        params.require(:refund).permit!
       end
 
       def build_resource
