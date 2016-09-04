@@ -30,7 +30,14 @@ module Spree
 
       def update
         @line_item = find_line_item
-        if @order.contents.update_cart(line_items_attributes)
+        options = {
+          variant_stock_location_quantities: {
+            @line_item.variant_id => {
+              @line_item.variant.stock_locations.first.id => line_items_attributes[:line_items_attributes][:quantity]
+            }
+          }
+        }
+        if @order.contents.update_cart(line_items_attributes, options)
           @line_item.reload
           respond_with(@line_item, default_template: :show)
         else

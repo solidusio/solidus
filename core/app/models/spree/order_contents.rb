@@ -34,7 +34,7 @@ module Spree
       after_add_or_remove(line_item, options)
     end
 
-    def update_cart(params)
+    def update_cart(params, options = {})
       # We need old_tax_address / new_tax_address because we can't rely on methods
       # offered by ActiveRecord::Dirty to determine if tax_address was updated
       # because if we update the address, a new record will be created
@@ -43,6 +43,7 @@ module Spree
       old_tax_address = order.tax_address
 
       if order.update_attributes(params)
+        update_variant_stock_locations(order.line_items, options[:variant_stock_location_quantities])
 
         new_tax_address = order.tax_address
 
@@ -143,9 +144,7 @@ module Spree
       line_item.quantity += quantity.to_i
       line_item.options = ActionController::Parameters.new(options).permit(PermittedAttributes.line_item_attributes).to_h
 
-      if line_item.new_record?
-        create_order_stock_locations(line_item, options[:stock_location_quantities])
-      end
+      create_or_update_order_stock_locations(line_item, options[:stock_location_quantities])
 
       line_item.target_shipment = options[:shipment]
       line_item.save!
@@ -157,7 +156,7 @@ module Spree
       line_item.quantity -= quantity
       line_item.target_shipment = options[:shipment]
 
-      if line_item.quantity == 0
+      if line_item.quantity.zero?
         order.line_items.destroy(line_item)
       else
         line_item.save!
@@ -176,11 +175,41 @@ module Spree
       line_item
     end
 
-    def create_order_stock_locations(line_item, stock_location_quantities)
+    def update_variant_stock_locations(line_items, variant_stock_location_quantities)
+      return unless variant_stock_location_quantities.present?
+      line_items.each do |line_item|
+        update_order_stock_locations(line_item, variant_stock_location_quantities[line_item.variant_id])
+      end
+    end
+
+    def correct_order_stock_location_quantity(line_item, stock_location_quantities)
       return unless stock_location_quantities.present?
       order = line_item.order
       stock_location_quantities.each do |stock_location_id, quantity|
-        order.order_stock_locations.create!(stock_location_id: stock_location_id, quantity: quantity, variant_id: line_item.variant_id) unless quantity.to_i.zero?
+        next if quantity.to_i.zero?
+
+        order_stock_location = order.order_stock_locations.find_or_create_by(
+          stock_location_id: stock_location_id,
+          variant_id: line_item.variant_id
+        )
+
+        if block_given?
+          quantity = yield(order_stock_location, quantity.to_i)
+        else
+          quantity = quantity.to_i
+        end
+
+        order_stock_location.update_attributes(quantity: quantity)
+      end
+    end
+
+    def update_order_stock_locations(line_item, stock_location_quantities)
+      correct_order_stock_location_quantity(line_item, stock_location_quantities)
+    end
+
+    def create_or_update_order_stock_locations(line_item, stock_location_quantities)
+      correct_order_stock_location_quantity(line_item, stock_location_quantities) do |order_stock_location, quantity|
+        quantity + (order_stock_location.quantity || 0)
       end
     end
   end
