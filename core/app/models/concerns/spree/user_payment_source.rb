@@ -12,8 +12,8 @@ module Spree
         caller
       )
       default = wallet.default
-      if default && default.source.is_a?(Spree::CreditCard)
-        default.source
+      if default && default.payment_source.is_a?(Spree::CreditCard)
+        default.payment_source
       end
     end
 
