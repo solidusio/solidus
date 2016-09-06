@@ -43,10 +43,6 @@ module Spree
           break if payment_total >= total
 
           payment.public_send(method)
-
-          if payment.completed?
-            self.payment_total += payment.amount
-          end
         end
       rescue Core::GatewayError => e
         result = !!Spree::Config[:allow_checkout_on_gateway_error]
