@@ -1,4 +1,4 @@
-class MoveCreditCardDefaultToWalletPaymentSource < ActiveRecord::Migration
+class MoveCreditCardDefaultToWalletPaymentSource < ActiveRecord::Migration[4.2]
   def up
     credit_cards = Spree::CreditCard.
       where(default: true).
