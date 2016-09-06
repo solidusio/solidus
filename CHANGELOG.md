@@ -183,7 +183,6 @@
     * JavaScript for it has been moved from address.js into its own `spree/frontend/checkout/coupon-code`
     * Numerous small nuisances have been fixed [#1090](https://github.com/solidusio/solidus/pull/1090)
 
-<<<<<<< 356ed069e972d5bae6275b433e17b98f885b3fc4
 *   Allow filtering orders by store when multiple stores are present. [#1149](https://github.com/solidusio/solidus/pull/1140)
 
 *   Remove unused `user_id` column from PromotionRule. [#1259](https://github.com/solidusio/solidus/pull/1259)
