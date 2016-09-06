@@ -1,4 +1,4 @@
-class CreateSpreeWalletPaymentSources < ActiveRecord::Migration
+class CreateSpreeWalletPaymentSources < ActiveRecord::Migration[4.2]
   def change
     create_table :spree_wallet_payment_sources do |t|
       t.references :user, index: true, null: false
