@@ -10,8 +10,6 @@ class Spree::Wallet::DefaultPaymentBuilder
   #
   # @return [Payment] the unsaved payment to be added, or nil if none.
   def build
-    credit_card = order.user.try!(:default_credit_card)
-
     if default = order.user.try!(:wallet).try!(:default)
       Spree::Payment.new(
         payment_method: default.payment_source.payment_method,
