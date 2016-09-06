@@ -3,7 +3,7 @@ module Spree
     acts_as_paranoid
 
     # Need to deal with adjustments before calculator is destroyed.
-    before_destroy :deals_with_adjustments_for_deleted_source
+    before_destroy :remove_adjustments_from_incomplete_orders
 
     include Spree::CalculatedAdjustments
     include Spree::AdjustmentSource
