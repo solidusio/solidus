@@ -10,7 +10,7 @@ module Spree
         delegate :eligible?, to: :promotion
 
         before_validation :ensure_action_has_calculator
-        before_destroy :deals_with_adjustments_for_deleted_source
+        before_destroy :remove_adjustments_from_incomplete_orders
 
         def perform(payload = {})
           order = payload[:order]

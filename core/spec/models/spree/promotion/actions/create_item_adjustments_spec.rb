@@ -137,13 +137,18 @@ module Spree
             }.to change { Adjustment.count }.by(-1)
           end
 
-          it "nullifies adjustments for completed orders" do
+          it "does not change adjustments for completed orders" do
             order = Order.create(completed_at: Time.current)
             adjustment = action.adjustments.create!(label: "Check", amount: 0, order: order, adjustable: order)
 
             expect {
-              action.destroy
-            }.to change { adjustment.reload.source_id }.from(action.id).to nil
+              expect {
+                action.destroy
+              }.not_to change { adjustment.reload.source_id }
+            }.not_to change { Spree::Adjustment.count }
+
+            expect(adjustment.source).to eq(nil)
+            expect(Spree::PromotionAction.with_deleted.find(adjustment.source_id)).to be_present
           end
 
           it "doesnt mess with unrelated adjustments" do

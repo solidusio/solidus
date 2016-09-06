@@ -1,19 +1,25 @@
 module Spree
   module AdjustmentSource
     def deals_with_adjustments_for_deleted_source
-      adjustment_scope = adjustments.joins(:order)
+      Spree::Deprecation.warn "AdjustmentSource#deals_with_adjustments_for_deleted_source is deprecated. Please use AdjustmentSource#remove_adjustments_from_incomplete_orders instead."
 
-      # For incomplete orders, remove the adjustment completely.
-      adjustment_scope.where(spree_orders: { completed_at: nil }).destroy_all
+      remove_adjustments_from_incomplete_orders
 
-      # For complete orders, the source will be invalid.
-      # Therefore we nullify the source_id, leaving the adjustment in place.
-      # This would mean that the order's total is not altered at all.
-      attrs = {
-        source_id: nil,
-        updated_at: Time.current
-      }
-      adjustment_scope.where.not(spree_orders: { completed_at: nil }).update_all(attrs)
+      # The following is deprecated. As source_type without a source_id isn't
+      # much better than a source_id that doesn't exist.  In Solidus itself the
+      # relevant classes use `acts_as_paranoid` so it is useful to keep the
+      # source_id around.
+      adjustments.
+        joins(:order).
+        merge(Spree::Order.complete).
+        update_all(source_id: nil, updated_at: Time.current)
+    end
+
+    def remove_adjustments_from_incomplete_orders
+      adjustments.
+        joins(:order).
+        merge(Spree::Order.incomplete).
+        destroy_all
     end
   end
 end
