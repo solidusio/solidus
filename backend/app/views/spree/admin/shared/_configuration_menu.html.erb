@@ -7,10 +7,6 @@
       <% if can?(:edit, :general_settings) %>
         <%= settings_tab_item Spree.t(:settings), edit_admin_general_settings_path %>
       <% end %>
-
-      <% if can?(:display, Spree::Tracker) %>
-        <%= settings_tab_item plural_resource_name(Spree::Tracker), admin_trackers_path %>
-      <% end %>
     </ul>
   </nav>
 <% end %>
