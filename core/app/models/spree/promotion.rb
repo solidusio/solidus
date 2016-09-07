@@ -7,10 +7,10 @@ module Spree
 
     belongs_to :promotion_category
 
-    has_many :promotion_rules, autosave: true, dependent: :destroy
+    has_many :promotion_rules, autosave: true, dependent: :destroy, inverse_of: :promotion
     alias_method :rules, :promotion_rules
 
-    has_many :promotion_actions, autosave: true, dependent: :destroy
+    has_many :promotion_actions, autosave: true, dependent: :destroy, inverse_of: :promotion
     alias_method :actions, :promotion_actions
 
     has_many :order_promotions, class_name: "Spree::OrderPromotion"
