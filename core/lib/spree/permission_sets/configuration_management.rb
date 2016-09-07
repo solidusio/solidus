@@ -14,7 +14,6 @@ module Spree
         can :manage, Spree::ShippingCategory
         can :manage, Spree::StockLocation
         can :manage, Spree::StockMovement
-        can :manage, Spree::Tracker
         can :manage, Spree::RefundReason
         can :manage, Spree::ReimbursementType
         can :manage, Spree::ReturnReason

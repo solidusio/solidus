@@ -22,7 +22,6 @@ describe Spree::PermissionSets::ConfigurationManagement do
     it { is_expected.to be_able_to(:manage, Spree::ShippingCategory) }
     it { is_expected.to be_able_to(:manage, Spree::StockLocation) }
     it { is_expected.to be_able_to(:manage, Spree::StockMovement) }
-    it { is_expected.to be_able_to(:manage, Spree::Tracker) }
     it { is_expected.to be_able_to(:manage, Spree::RefundReason) }
     it { is_expected.to be_able_to(:manage, Spree::ReimbursementType) }
     it { is_expected.to be_able_to(:manage, Spree::ReturnReason) }
@@ -41,7 +40,6 @@ describe Spree::PermissionSets::ConfigurationManagement do
     it { is_expected.not_to be_able_to(:manage, Spree::ShippingCategory) }
     it { is_expected.not_to be_able_to(:manage, Spree::StockLocation) }
     it { is_expected.not_to be_able_to(:manage, Spree::StockMovement) }
-    it { is_expected.not_to be_able_to(:manage, Spree::Tracker) }
     it { is_expected.not_to be_able_to(:manage, Spree::RefundReason) }
     it { is_expected.not_to be_able_to(:manage, Spree::ReimbursementType) }
     it { is_expected.not_to be_able_to(:manage, Spree::ReturnReason) }
