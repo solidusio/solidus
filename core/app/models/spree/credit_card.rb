@@ -91,7 +91,6 @@ module Spree
 
     # Sets the last digits field based on the assigned credit card number.
     def set_last_digits
-      number.to_s.gsub!(/\s/, '')
       verification_value.to_s.gsub!(/\s/, '')
       self.last_digits ||= number.to_s.length <= 4 ? number : number.to_s.slice(-4..-1)
     end
