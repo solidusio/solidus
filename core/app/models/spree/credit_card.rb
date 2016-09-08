@@ -66,11 +66,10 @@ module Spree
     #
     # @param num [String] the desired credit card number
     def number=(num)
-      @number = begin
-                  num.gsub(/[^0-9]/, '')
-                rescue
-                  nil
-                end
+      @number =
+        if num.is_a?(String)
+          num.gsub(/[^0-9]/, '')
+        end
     end
 
     # Sets the credit card type, converting it to the preferred internal
