@@ -112,13 +112,11 @@ module Spree
       # If an action has been taken, report back to whatever activated this promotion.
       action_taken = results.include?(true)
 
-      if action_taken
-        # connect to the order
-        order_promotions.find_or_create_by!(
-          order_id: order.id,
-          promotion_code_id: promotion_code.try!(:id)
-        )
-      end
+      # connect to the order
+      order_promotions.find_or_create_by!(
+        order_id: order.id,
+        promotion_code_id: promotion_code.try!(:id)
+      )
 
       action_taken
     end
