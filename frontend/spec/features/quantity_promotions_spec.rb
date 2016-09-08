@@ -23,23 +23,24 @@ RSpec.feature "Quantity Promotions" do
   end
 
   scenario "adding and removing items from the cart" do
-    # Attempt to use the code with too few items.
+    # Add the code with too few items.
     fill_in "Coupon code", with: "PROMO"
     click_button "Update"
-    expect(page).to have_content("This coupon code could not be applied to the cart at this time")
+    expect(page).to have_content("The coupon code was successfully applied to your order")
 
     # Add another item to our cart.
     visit spree.root_path
     click_link "DL-44"
     click_button "Add To Cart"
-
-    # Using the code should now succeed.
-    fill_in "Coupon code", with: "PROMO"
-    click_button "Update"
-    expect(page).to have_content("The coupon code was successfully applied to your order")
     within("#cart_adjustments") do
       expect(page).to have_content("-$10.00")
     end
+
+    # Applying the code again should fail.
+    fill_in "Coupon code", with: "PROMO"
+    click_button "Update"
+    expect(page).to have_content("The coupon code has already been applied to this order")
+    fill_in "Coupon code", with: "" # clear the failed code
 
     # Reduce quantity by 1, making promotion not apply.
     fill_in "order_line_items_attributes_0_quantity", with: 1

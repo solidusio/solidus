@@ -63,6 +63,9 @@ module Spree
         result = promotion.activate(order: order, promotion_code: promotion_code)
         if result
           determine_promotion_application_result
+        elsif promotion_exists_on_order?(order, promotion)
+          # the order wasn't connected and is now, but it isn't actionable yet.
+          set_success_code :coupon_code_applied
         else
           set_error_code :coupon_code_unknown_error
         end

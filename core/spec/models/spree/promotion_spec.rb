@@ -92,16 +92,15 @@ describe Spree::Promotion, type: :model do
   end
 
   describe "#activate" do
-    let(:promotion) { create(:promotion) }
+    let(:promotion) do
+      create(:promotion, promotion_actions: [action1, action2], created_at: 2.days.ago)
+    end
+    let(:action1) { Spree::Promotion::Actions::CreateAdjustment.create! }
+    let(:action2) { Spree::Promotion::Actions::CreateAdjustment.create! }
 
     before do
-      @action1 = Spree::Promotion::Actions::CreateAdjustment.create!
-      @action2 = Spree::Promotion::Actions::CreateAdjustment.create!
-      allow(@action1).to receive_messages perform: true
-      allow(@action2).to receive_messages perform: true
-
-      promotion.promotion_actions = [@action1, @action2]
-      promotion.created_at = 2.days.ago
+      allow(action1).to receive_messages perform: true
+      allow(action2).to receive_messages perform: true
 
       @user = create(:user)
       @order = create(:order, user: @user, created_at: DateTime.current)
@@ -111,13 +110,13 @@ describe Spree::Promotion, type: :model do
     it "should check path if present" do
       promotion.path = 'content/cvv'
       @payload[:path] = 'content/cvv'
-      expect(@action1).to receive(:perform).with(hash_including(@payload))
-      expect(@action2).to receive(:perform).with(hash_including(@payload))
+      expect(action1).to receive(:perform).with(hash_including(@payload))
+      expect(action2).to receive(:perform).with(hash_including(@payload))
       promotion.activate(@payload)
     end
 
     it "does not perform actions against an order in a finalized state" do
-      expect(@action1).not_to receive(:perform)
+      expect(action1).not_to receive(:perform)
 
       @order.state = 'complete'
       promotion.activate(@payload)
@@ -130,7 +129,7 @@ describe Spree::Promotion, type: :model do
     end
 
     it "does activate if newer then order" do
-      expect(@action1).to receive(:perform).with(hash_including(@payload))
+      expect(action1).to receive(:perform).with(hash_including(@payload))
       promotion.created_at = DateTime.current + 2
       expect(promotion.activate(@payload)).to be true
     end
@@ -187,11 +186,23 @@ describe Spree::Promotion, type: :model do
           expect(promotion.orders.reload.to_a).to eql [@order]
         end
       end
+      context 'when no action is taken' do
+        let(:promotion) do
+          create(:promotion, :with_line_item_adjustment)
+        end
+
+        it 'assigns the order' do
+          expect(
+            promotion.activate(@payload)
+          ).to eq(false)
+
+          expect(promotion.orders.reload.to_a).to eq([@order])
+        end
+      end
     end
 
     context "when there is a code" do
-      let(:promotion_code) { create(:promotion_code) }
-      let(:promotion) { promotion_code.promotion }
+      let(:promotion_code) { create(:promotion_code, promotion: promotion) }
 
       it "assigns the code" do
         expect(promotion.activate(order: @order, promotion_code: promotion_code)).to be true

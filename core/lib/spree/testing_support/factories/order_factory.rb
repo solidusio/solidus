@@ -66,7 +66,6 @@ FactoryGirl.define do
           promotion_code = promotion.codes.first || create(:promotion_code, promotion: promotion)
 
           promotion.activate(order: order, promotion_code: promotion_code)
-          order.order_promotions.create!(promotion: promotion, promotion_code: promotion_code)
 
           # Complete the order after the promotion has been activated
           order.update_column(:completed_at, Time.current)
