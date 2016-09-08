@@ -192,18 +192,6 @@ module Spree
           end
         end
 
-        def assign_default_addresses!
-          if user
-            bill_address = (user.bill_address || user.default_address)
-            ship_address = (user.ship_address || user.default_address)
-            # this is one of 2 places still using User#bill_address
-            self.bill_address ||= bill_address if bill_address.try!(:valid?)
-            # Skip setting ship address if order doesn't have a delivery checkout step
-            # to avoid triggering validations on shipping address
-            self.ship_address ||= ship_address if ship_address.try!(:valid?) && checkout_steps.include?("delivery")
-          end
-        end
-
         def next_event_transitions
           @next_event_transitions ||= []
         end
