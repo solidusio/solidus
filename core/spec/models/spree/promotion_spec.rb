@@ -162,6 +162,19 @@ describe Spree::Promotion, type: :model do
           expect(promotion.orders.reload.to_a).to eql [@order]
         end
       end
+      context 'when no action is taken' do
+        let(:promotion) do
+          create(:promotion, :with_line_item_adjustment)
+        end
+
+        it 'assigns the order' do
+          expect(
+            promotion.activate(@payload)
+          ).to eq(false)
+
+          expect(promotion.orders.reload.to_a).to eq([@order])
+        end
+      end
     end
 
     context "when there is a code" do

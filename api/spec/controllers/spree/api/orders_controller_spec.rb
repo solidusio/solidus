@@ -776,7 +776,8 @@ module Spree
       end
 
       context 'when unsuccessful' do
-        let(:order) { create(:order) } # no line items to apply the code to
+        let(:order) { create(:order) }
+        let!(:rule) { Spree::Promotion::Rules::NthOrder.create!(preferred_nth_order: 10, promotion: promo) }
 
         it 'returns an error' do
           api_put :apply_coupon_code, id: order.to_param, coupon_code: promo_code.value
@@ -785,9 +786,9 @@ module Spree
           expect(order.reload.promotions).to eq []
           expect(json_response).to eq({
             "success" => nil,
-            "error" => Spree.t(:coupon_code_unknown_error),
+            "error" => Spree.t(:coupon_code_not_eligible),
             "successful" => false,
-            "status_code" => "coupon_code_unknown_error"
+            "status_code" => "coupon_code_not_eligible"
           })
         end
       end
