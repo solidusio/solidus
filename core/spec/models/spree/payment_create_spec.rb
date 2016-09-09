@@ -187,36 +187,5 @@ module Spree
         end
       end
     end
-
-    describe "invalidating payments doesn't update in memory objects" do
-      let(:order) { Spree::Order.create! store: create(:store) }
-
-      before do
-        Spree::PaymentCreate.new(order, amount: 1).build.save!
-        expect(order.payments.map(&:state)).to contain_exactly(
-          'checkout'
-        )
-        Spree::PaymentCreate.new(order, amount: 2).build.save!
-      end
-
-      context 'without reload', pending: 'failing spec' do
-        it 'should not have stale payments' do
-          expect(order.payments.map(&:state)).to contain_exactly(
-            'invalid',
-            'checkout'
-          )
-        end
-      end
-
-      context 'with reload' do
-        it 'should not have stale payments' do
-          order.payments.reload
-          expect(order.payments.map(&:state)).to contain_exactly(
-            'invalid',
-            'checkout'
-          )
-        end
-      end
-    end
   end
 end

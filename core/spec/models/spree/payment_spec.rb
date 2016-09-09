@@ -743,6 +743,23 @@ describe Spree::Payment, type: :model do
       invalid_payment.save
       expect(payment.reload.state).to eq('checkout')
     end
+
+    describe "invalidating payments updates in memory objects" do
+      before do
+        Spree::PaymentCreate.new(order, amount: 1).build.save!
+        expect(order.payments.map(&:state)).to contain_exactly(
+          'checkout'
+        )
+        Spree::PaymentCreate.new(order, amount: 2).build.save!
+      end
+
+      it 'should not have stale payments' do
+        expect(order.payments.map(&:state)).to contain_exactly(
+          'invalid',
+          'checkout'
+        )
+      end
+    end
   end
 
   describe "#apply_source_attributes" do
