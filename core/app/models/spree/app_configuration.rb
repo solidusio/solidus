@@ -408,6 +408,16 @@ module Spree
       @order_number_generator ||= Spree::Order::NumberGenerator.new
     end
 
+    attr_writer :promotions_to_remove_from_order_class
+    def promotions_to_remove_from_order_class
+      @promotions_to_remove_from_order_class ||= Spree::Promotion::PromotionsToRemoveFromOrder
+    end
+
+    attr_writer :automatic_promotion_decision_class
+    def automatic_promotion_decision_class
+      @automatic_promotion_decision_class ||= Spree::Promotion::AutomaticPromotionDecision
+    end
+
     def static_model_preferences
       @static_model_preferences ||= Spree::Preferences::StaticModelPreferences.new
     end

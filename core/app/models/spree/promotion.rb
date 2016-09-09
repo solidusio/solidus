@@ -110,6 +110,11 @@ module Spree
         promotion: self,
         promotion_code: promotion_code,
       )
+      Spree::Config.promotions_to_remove_from_order_class.new(order).
+        promotions_to_remove.
+        each do |promotion|
+          promotion.remove_from(order)
+        end
       order.promotions.reset
       order_promotions.reset
       orders.reset
