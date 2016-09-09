@@ -21,27 +21,54 @@ module Spree
       end
 
       def activate
-        promotions.each do |promotion|
-          if (line_item && promotion.eligible?(line_item, promotion_code: promotion_code(promotion))) || promotion.eligible?(order, promotion_code: promotion_code(promotion))
-            promotion.activate(line_item: line_item, order: order, promotion_code: promotion_code(promotion))
-          end
+        connected_order_promotions.each do |promotion|
+          activate_promotion(promotion)
+        end
+
+        sale_promotions.each do |promotion|
+          activate_promotion(promotion)
         end
       end
 
       private
 
-      def promotions
-        connected_order_promotions | sale_promotions
+      def activate_promotion(promotion)
+        if line_item_eligible?(promotion) || order_eligible?(promotion)
+          promotion.activate(line_item: line_item, order: order, promotion_code: promotion_code(promotion))
+        end
+      end
+
+      def line_item_eligible?(promotion)
+        line_item &&
+          promotion.eligible?(
+            line_item,
+            promotion_code: promotion_code(promotion),
+          )
+      end
+
+      def order_eligible?(promotion)
+        promotion.eligible?(
+          order,
+          promotion_code: promotion_code(promotion),
+        )
       end
 
       def connected_order_promotions
-        Promotion.active.includes(:promotion_rules).
+        @connected_order_promotions ||= Promotion.
+          active.
+          includes(:promotion_rules).
           joins(:order_promotions).
-          where(spree_orders_promotions: { order_id: order.id }).readonly(false).to_a
+          where(spree_orders_promotions: { order_id: order.id }).
+          readonly(false).
+          to_a
       end
 
       def sale_promotions
-        Promotion.where(apply_automatically: true).active.includes(:promotion_rules)
+        @sale_promotions ||= Promotion.
+          where(apply_automatically: true).
+          active.
+          includes(:promotion_rules).
+          to_a
       end
 
       def promotion_code(promotion)
