@@ -38,6 +38,15 @@ module Spree
         end
       end
 
+      def apply_sale_promotions?
+        if Spree::Config.only_allow_most_recent_promotion &&
+           connected_order_promotions.any?
+          false
+        else
+          true
+        end
+      end
+
       def line_item_eligible?(promotion)
         line_item &&
           promotion.eligible?(

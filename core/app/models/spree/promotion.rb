@@ -118,6 +118,10 @@ module Spree
           order_id: order.id,
           promotion_code_id: promotion_code.try!(:id)
         )
+
+        if Spree::Config.only_allow_most_recent_promotion
+          remove_other_promotions_from_order(order)
+        end
       end
 
       action_taken
@@ -244,6 +248,12 @@ module Spree
       return unless apply_automatically
       errors.add(:apply_automatically, :disallowed_with_code) if codes.any?
       errors.add(:apply_automatically, :disallowed_with_path) if path.present?
+    end
+
+    def remove_other_promotions_from_order(order)
+      (order.promotions - [self]).each do |promotion|
+        order.remove_promotion(promotion)
+      end
     end
   end
 end

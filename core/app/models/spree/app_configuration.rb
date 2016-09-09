@@ -274,6 +274,12 @@ module Spree
     #   @return [Boolean] Indicates if stock management can be restricted by location
     preference :can_restrict_stock_management, :boolean, default: false
 
+    # @!attribute [rw] only_allow_most_recent_promotion
+    #   @return [Boolean] When this is set to true then previous promotions will
+    #     be removed from an order when a new promotion is activate on the
+    #     order. (default: +false+)
+    preference :only_allow_most_recent_promotion, :boolean, default: false
+
     # searcher_class allows spree extension writers to provide their own Search class
     attr_writer :searcher_class
     def searcher_class
