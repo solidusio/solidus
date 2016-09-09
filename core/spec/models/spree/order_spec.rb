@@ -1,11 +1,5 @@
 require 'spec_helper'
 
-class FakeCalculator < Spree::Calculator
-  def compute(_computable)
-    5
-  end
-end
-
 describe Spree::Order, type: :model do
   let(:store) { build_stubbed(:store) }
   let(:user) { stub_model(Spree::LegacyUser, email: "spree@example.com") }
