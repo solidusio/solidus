@@ -252,8 +252,16 @@ module Spree
 
     def remove_other_promotions_from_order(order)
       (order.promotions - [self]).each do |promotion|
-        order.remove_promotion(promotion)
+        promotion.remove_from(order)
       end
+    end
+
+    def remove_from(order)
+      actions.each do |action|
+        action.remove_from(order)
+      end
+      # note: this destroys the join table entry, not the promotion itself
+      order.promotions.destroy(self)
     end
   end
 end

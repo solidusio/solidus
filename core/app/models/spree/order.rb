@@ -706,22 +706,6 @@ module Spree
       Spree::Money.new(total_available_store_credit - total_applicable_store_credit, { currency: currency })
     end
 
-    # Remove a promotion from this order along with any associated adjustments
-    # Note: OrderUpdater will need to be invoked after this is called
-    # @param promotion [Spree::Promotion] the promotion to remove
-    # @return [undefined]
-    def remove_promotion(promotion)
-      [self, *line_items, *shipments].each do |item|
-        item.adjustments.each do |adjustment|
-          if promotion.actions.include?(adjustment.source)
-            item.adjustments.destroy(adjustment)
-          end
-        end
-      end
-      # note: this destroys the join table entry, not the promotion itself
-      promotions.destroy(promotion)
-    end
-
     private
 
     def associate_store

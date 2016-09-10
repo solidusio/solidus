@@ -19,5 +19,22 @@ module Spree
     def perform(_options = {})
       raise 'perform should be implemented in a sub-class of PromotionAction'
     end
+
+    # Removes the action from an order
+    #
+    # @note A PromotionAction subclass should override this method if it does
+    # something other than add adjustments.
+    #
+    # @param order [Spree::Order] the order to remove the action from
+    # @return [undefined]
+    def remove_from(order)
+      [order, *order.line_items, *order.shipments].each do |item|
+        item.adjustments.each do |adjustment|
+          if adjustment.source == self
+            item.adjustments.destroy(adjustment)
+          end
+        end
+      end
+    end
   end
 end
