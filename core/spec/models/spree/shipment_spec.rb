@@ -530,30 +530,6 @@ describe Spree::Shipment, type: :model do
         shipment.update_amounts
       }.to change { shipment.cost }.to(5)
     end
-
-    it "factors in additional adjustments to adjustment total" do
-      shipment.adjustments.create!(
-        order:    order,
-        label:    "Additional",
-        amount:   5,
-        included: false,
-        finalized: true
-      )
-      shipment.update_amounts
-      expect(shipment.reload.adjustment_total).to eq(5)
-    end
-
-    it "does not factor in included adjustments to adjustment total" do
-      shipment.adjustments.create!(
-        order:    order,
-        label:    "Included",
-        amount:   5,
-        included: true,
-        finalized: true
-      )
-      shipment.update_amounts
-      expect(shipment.reload.adjustment_total).to eq(0)
-    end
   end
 
   context "changes shipping rate via general update" do
