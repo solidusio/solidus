@@ -26,7 +26,9 @@ module Spree
         end
 
         sale_promotions.each do |promotion|
-          activate_promotion(promotion)
+          if apply_sale_promotion?(promotion)
+            activate_promotion(promotion)
+          end
         end
       end
 
@@ -36,6 +38,12 @@ module Spree
         if line_item_eligible?(promotion) || order_eligible?(promotion)
           promotion.activate(line_item: line_item, order: order, promotion_code: promotion_code(promotion))
         end
+      end
+
+      def apply_sale_promotion?(promotion)
+        Spree::Config.automatic_promotion_decision_class.
+          new(order: order, promotion: promotion).
+          attempt_to_apply?
       end
 
       def line_item_eligible?(promotion)

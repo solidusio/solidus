@@ -109,6 +109,12 @@ module Spree
           order_id: order.id,
           promotion_code_id: promotion_code.try!(:id)
         )
+
+        Spree::Config.promotions_to_remove_from_order_class.new(order).
+          promotions_to_remove.
+          each do |promotion|
+            promotion.remove_from(order)
+          end
       end
 
       action_taken
