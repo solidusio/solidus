@@ -523,12 +523,12 @@ describe Spree::Shipment, type: :model do
 
   context "updates cost when selected shipping rate is present" do
     let(:shipment) { create(:shipment) }
-
-    before { allow(shipment).to receive_message_chain :selected_shipping_rate, cost: 5 }
+    before { shipment.selected_shipping_rate.update!(cost: 5) }
 
     it "updates shipment totals" do
-      shipment.update_amounts
-      expect(shipment.reload.cost).to eq(5)
+      expect {
+        shipment.update_amounts
+      }.to change { shipment.cost }.to(5)
     end
 
     it "factors in additional adjustments to adjustment total" do
