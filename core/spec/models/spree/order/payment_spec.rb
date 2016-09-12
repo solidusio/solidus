@@ -22,8 +22,8 @@ module Spree
         expect(order.payment_state).to eq('paid')
         expect(order.payment_total).to eq(100)
 
-        expect(payment_1.reload).to be_completed
-        expect(payment_2.reload).to be_completed
+        expect(payment_1).to be_completed
+        expect(payment_2).to be_completed
       end
 
       it 'does not go over total for order' do
@@ -37,18 +37,17 @@ module Spree
         expect(order.payment_state).to eq('paid')
         expect(order.payment_total).to eq(100)
 
-        expect(payment_1.reload).to be_completed
-        expect(payment_2.reload).to be_completed
-        expect(payment_3.reload).to be_checkout
+        expect(payment_1).to be_completed
+        expect(payment_2).to be_completed
+        expect(payment_3).to be_checkout
       end
 
       it "does not use failed payments" do
-        create(:payment, order: order, amount: 50)
-        create(:payment, order: order, amount: 50, state: 'failed')
-        order.payments.reload
+        payment1 = create(:payment, order: order, amount: 50)
+        payment2 = create(:payment, order: order, amount: 50, state: 'failed')
 
-        expect(order.payments[0]).to receive(:process!).and_call_original
-        expect(order.payments[1]).not_to receive(:process!)
+        expect(payment1).to receive(:process!).and_call_original
+        expect(payment2).not_to receive(:process!)
 
         order.process_payments!
 
