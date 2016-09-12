@@ -1,3 +1,12 @@
+## Solidus 2.1.0 (master, unreleased)
+
+*   Promotions can now be connected to an order before they are actionable, as
+    long as they meet the promotion's rule requirements.  Previously a promotion
+    would not get attached to an order unless it was immediately actionable,
+    even if it was eligible.
+
+    https://github.com/solidusio/solidus/pull/1428
+
 ## Solidus 2.0.0 (unreleased)
 
 *   Upgrade to rails 5.0
