@@ -1,4 +1,4 @@
-class CreateSpreeShippingRateTaxes < ActiveRecord::Migration
+class CreateSpreeShippingRateTaxes < ActiveRecord::Migration[4.2]
   def change
     create_table :spree_shipping_rate_taxes do |t|
       t.decimal :amount, precision: 8, scale: 2, default: 0.0, null: false

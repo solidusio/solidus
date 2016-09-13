@@ -1,13 +1,14 @@
 <%= render 'spree/admin/shared/areas_tabs' %>
 
-<% content_for :page_title do %>
-  <%= plural_resource_name(Spree::State) %>
-<% end %>
+<% admin_breadcrumb(Spree.t(:settings)) %>
+<% admin_breadcrumb(Spree.t('admin.tab.areas')) %>
+<% admin_breadcrumb(plural_resource_name(Spree::State)) %>
+
 
 <% content_for :page_actions do %>
   <% if can?(:create, Spree::State) %>
     <li>
-      <%= button_link_to Spree.t(:new_state), new_admin_country_state_url(@country), { :icon => 'plus', :id => 'new_state_link' } %>
+      <%= button_link_to Spree.t(:new_state), new_admin_country_state_url(@country), { :id => 'new_state_link' } %>
     </li>
   <% end %>
 <% end %>

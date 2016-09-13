@@ -6,7 +6,7 @@ module Spree
       stub_authorization!
 
       describe "#index" do
-        subject { spree_get :index, parameters }
+        subject { get :index, params: parameters }
 
         context "no option values are provided" do
           let(:product) { create(:product) }

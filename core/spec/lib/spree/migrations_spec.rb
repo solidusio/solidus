@@ -12,24 +12,18 @@ module Spree
 
     subject { described_class.new(config, "spree") }
 
-    before do
-      expect(File).to receive(:directory?).with(app_dir).and_return true
-    end
-
-    it "warns about missing migrations" do
+    it "detects missing migrations" do
       expect(Dir).to receive(:entries).with(app_dir).and_return app_migrations
       expect(Dir).to receive(:entries).with(engine_dir).and_return engine_migrations
 
-      silence_stream(STDOUT) {
-        expect(subject.check).to eq true
-      }
+      expect(subject.missing_migrations.size).to eq 2
     end
 
     context "no missing migrations" do
       it "says nothing" do
         expect(Dir).to receive(:entries).with(engine_dir).and_return engine_migrations
         expect(Dir).to receive(:entries).with(app_dir).and_return(app_migrations + engine_migrations)
-        expect(subject.check).to eq nil
+        expect(subject.missing_migrations.size).to eq 0
       end
     end
   end

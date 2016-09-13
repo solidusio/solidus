@@ -26,17 +26,19 @@ module Spree
     validates :amount, numericality: true
     validates :promotion_code, presence: true, if: :require_promotion_code?
 
-    after_create :update_adjustable_adjustment_total
-    after_destroy :update_adjustable_adjustment_total
+    # We need to use `after_commit` here because otherwise it's too early to
+    # tell if any repair is needed.
+    after_commit :repair_adjustments_associations_on_create, on: [:create]
+    after_commit :repair_adjustments_associations_on_destroy, on: [:destroy]
 
     scope :not_finalized, -> { where(finalized: false) }
     scope :open, -> do
-      ActiveSupport::Deprecation.warn "Adjustment.open is deprecated. Instead use Adjustment.not_finalized", caller
+      Spree::Deprecation.warn "Adjustment.open is deprecated. Instead use Adjustment.not_finalized", caller
       where(finalized: false)
     end
     scope :finalized, -> { where(finalized: true) }
     scope :closed, -> do
-      ActiveSupport::Deprecation.warn "Adjustment.closed is deprecated. Instead use Adjustment.finalized", caller
+      Spree::Deprecation.warn "Adjustment.closed is deprecated. Instead use Adjustment.finalized", caller
       where(finalized: true)
     end
     scope :cancellation, -> { where(source_type: 'Spree::UnitCancel') }
@@ -78,12 +80,12 @@ module Spree
 
     # Deprecated methods
     def state
-      ActiveSupport::Deprecation.warn "Adjustment#state is deprecated. Instead use Adjustment#finalized?", caller
+      Spree::Deprecation.warn "Adjustment#state is deprecated. Instead use Adjustment#finalized?", caller
       finalized? ? "closed" : "open"
     end
 
     def state=(new_state)
-      ActiveSupport::Deprecation.warn "Adjustment#state= is deprecated. Instead use Adjustment#finalized=", caller
+      Spree::Deprecation.warn "Adjustment#state= is deprecated. Instead use Adjustment#finalized=", caller
       case new_state
       when "open"
         self.finalized = false
@@ -95,32 +97,32 @@ module Spree
     end
 
     def open?
-      ActiveSupport::Deprecation.warn "Adjustment#open? is deprecated. Instead use Adjustment#finalized?", caller
+      Spree::Deprecation.warn "Adjustment#open? is deprecated. Instead use Adjustment#finalized?", caller
       !closed?
     end
 
     def closed?
-      ActiveSupport::Deprecation.warn "Adjustment#closed? is deprecated. Instead use Adjustment#finalized?", caller
+      Spree::Deprecation.warn "Adjustment#closed? is deprecated. Instead use Adjustment#finalized?", caller
       finalized?
     end
 
     def open
-      ActiveSupport::Deprecation.warn "Adjustment#open is deprecated. Instead use Adjustment#unfinalize", caller
+      Spree::Deprecation.warn "Adjustment#open is deprecated. Instead use Adjustment#unfinalize", caller
       unfinalize
     end
 
     def open!
-      ActiveSupport::Deprecation.warn "Adjustment#open! is deprecated. Instead use Adjustment#unfinalize!", caller
+      Spree::Deprecation.warn "Adjustment#open! is deprecated. Instead use Adjustment#unfinalize!", caller
       unfinalize!
     end
 
     def close
-      ActiveSupport::Deprecation.warn "Adjustment#close is deprecated. Instead use Adjustment#finalize", caller
+      Spree::Deprecation.warn "Adjustment#close is deprecated. Instead use Adjustment#finalize", caller
       finalize
     end
 
     def close!
-      ActiveSupport::Deprecation.warn "Adjustment#close! is deprecated. Instead use Adjustment#finalize!", caller
+      Spree::Deprecation.warn "Adjustment#close! is deprecated. Instead use Adjustment#finalize!", caller
       finalize!
     end
     # End deprecated methods
@@ -154,7 +156,7 @@ module Spree
     # @return [BigDecimal] New amount of this adjustment
     def update!(target = nil)
       if target
-        ActiveSupport::Deprecation.warn("Passing a target to Adjustment#update! is deprecated. The adjustment will use the correct target from it's adjustable association.", caller)
+        Spree::Deprecation.warn("Passing a target to Adjustment#update! is deprecated. The adjustment will use the correct target from it's adjustable association.", caller)
       end
       return amount if finalized?
 
@@ -177,13 +179,22 @@ module Spree
 
     private
 
-    def update_adjustable_adjustment_total
-      # Cause adjustable's total to be recalculated
-      ItemAdjustments.new(adjustable).update
-    end
-
     def require_promotion_code?
       promotion? && source.promotion.codes.any?
+    end
+
+    def repair_adjustments_associations_on_create
+      if adjustable.adjustments.loaded? && !adjustable.adjustments.include?(self)
+        Spree::Deprecation.warn("Adjustment was not added to #{adjustable.class}. Add adjustments via `adjustable.adjustments.create!`. Partial call stack: #{caller.select { |line| line =~ %r(/(app|spec)/) }}.", caller)
+        adjustable.adjustments.proxy_association.add_to_target(self)
+      end
+    end
+
+    def repair_adjustments_associations_on_destroy
+      if adjustable.adjustments.loaded? && adjustable.adjustments.include?(self)
+        Spree::Deprecation.warn("Adjustment was not removed from #{adjustable.class}. Remove adjustments via `adjustable.adjustments.destroy`. Partial call stack: #{caller.select { |line| line =~ %r(/(app|spec)/) }}.", caller)
+        adjustable.adjustments.proxy_association.target.delete(self)
+      end
     end
   end
 end

@@ -1,11 +1,11 @@
 <%= render 'spree/admin/shared/settings_checkout_tabs' %>
 
-<% content_for :page_title do %>
-  <%= Spree.t(:new_adjustment_reason) %>
-<% end %>
+<% admin_breadcrumb(Spree.t(:settings)) %>
+<% admin_breadcrumb(Spree.t('admin.tab.checkout')) %>
+<% admin_breadcrumb(link_to plural_resource_name(Spree::AdjustmentReason), spree.admin_adjustment_reasons_path) %>
+<% admin_breadcrumb(Spree.t(:new_adjustment_reason)) %>
 
 <% content_for :page_actions do %>
-  <li><%= link_to_with_icon 'arrow-left', Spree.t(:back_to_adjustment_reason_list), collection_url, :class => 'button' %></li>
 <% end %>
 
 <%= render :partial => 'spree/shared/error_messages', :locals => { :target => @object } %>

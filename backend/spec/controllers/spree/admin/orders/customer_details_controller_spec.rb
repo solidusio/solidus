@@ -15,13 +15,13 @@ describe Spree::Admin::Orders::CustomerDetailsController, type: :controller do
         expect(order).to receive(:update_attributes) { true }
         expect(order).to receive(:next) { false }
         attributes = { order_id: order.number, order: { email: "" } }
-        spree_put :update, attributes
+        put :update, params: attributes
       end
 
       it "does refresh the shipment rates with all shipping methods" do
         expect(order).to receive(:refresh_shipment_rates)
         attributes = { order_id: order.number, order: { email: "" } }
-        spree_put :update, attributes
+        put :update, params: attributes
       end
 
       # Regression spec
@@ -37,7 +37,7 @@ describe Spree::Admin::Orders::CustomerDetailsController, type: :controller do
         end
 
         it 'allows the updating of an email address' do
-          expect { spree_put :update, attributes }.to change { order.reload.email }.to eq 'foo@bar.com'
+          expect { put :update, params: attributes }.to change { order.reload.email }.to eq 'foo@bar.com'
           expect(response).to be_redirect
         end
       end
@@ -53,7 +53,7 @@ describe Spree::Admin::Orders::CustomerDetailsController, type: :controller do
           }
 
           expect {
-            spree_put :update, attributes
+            put :update, params: attributes
           }.to change{ order.reload.user }.to(assigned_user)
         end
       end
@@ -70,7 +70,7 @@ describe Spree::Admin::Orders::CustomerDetailsController, type: :controller do
           }
 
           expect {
-            spree_put :update, attributes
+            put :update, params: attributes
           }.not_to change{ order.reload.user }
         end
       end

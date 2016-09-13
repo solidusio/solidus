@@ -1,13 +1,14 @@
 <%= render 'spree/admin/shared/shipping_tabs' %>
 
-<% content_for :page_title do %>
-  <%= plural_resource_name(Spree::ShippingCategory) %>
-<% end %>
+<% admin_breadcrumb(Spree.t(:settings)) %>
+<% admin_breadcrumb(Spree.t('admin.tab.shipping')) %>
+<% admin_breadcrumb(plural_resource_name(Spree::ShippingCategory)) %>
+
 
 <% content_for :page_actions do %>
   <% if can?(:create, Spree::ShippingCategory) %>
     <li>
-      <%= button_link_to Spree.t(:new_shipping_category), new_object_url, :icon => 'plus' %>
+      <%= button_link_to Spree.t(:new_shipping_category), new_object_url %>
     </li>
   <% end %>
 <% end %>

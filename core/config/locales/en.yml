@@ -345,6 +345,10 @@ en:
         name: Name
         default_tax: Default Tax Zone
     models:
+      # LegacyUser maps to this model_name so we want to provide translations for it
+      user:
+        one: User
+        other: Users
       spree/address:
         one: Address
         other: Addresses
@@ -369,6 +373,9 @@ en:
       spree/exchange:
         one: Exchange
         other: Exchanges
+      spree/image:
+        one: Image
+        other: Images
       spree/inventory_unit:
         one: Inventory Unit
         other: Inventory Units
@@ -415,8 +422,8 @@ en:
         one: Promotion Category
         other: Promotion Categories
       spree/property:
-        one: Property
-        other: Properties
+        one: Property Type
+        other: Property Types
       spree/prototype:
         one: Prototype
         other: Prototypes
@@ -436,8 +443,8 @@ en:
         one: Return Authorization
         other: Return Authorizations
       spree/return_reason:
-        one: Return Reason
-        other: Return Reasons
+        one: RMA Reason
+        other: RMA Reasons
       spree/role:
         one: Roles
         other: Roles
@@ -466,6 +473,9 @@ en:
       spree/stock_transfer:
         one: Stock Transfer
         other: Stock Transfers
+      spree/store_credit:
+        one: Store Credit
+        other: Store Credits
       spree/store_credit_category:
         one: Category
         other: Categories
@@ -688,10 +698,11 @@ en:
     adjustments: Adjustments
     admin:
       tab:
-        areas: Areas
-        checkout: Checkout
+        areas: Locations
+        checkout: Refunds and Returns
         configuration: Configuration
-        general: General
+        display_order: Display Order
+        general: Store
         option_types: Option Types
         orders: Orders
         overview: Overview
@@ -699,15 +710,15 @@ en:
         products: Products
         promotions: Promotions
         promotion_categories: Promotion Categories
-        properties: Properties
+        properties: Property Types
         prototypes: Prototypes
         reports: Reports
         rma: RMA
         settings: Settings
         shipping: Shipping
         stock: Stock
-        stock_items: Management
-        stock_transfers: Transfers
+        stock_items: Store Stock
+        stock_transfers: Stock Transfers
         taxes: Taxes
         taxonomies: Taxonomies
         taxons: Taxons
@@ -762,8 +773,10 @@ en:
           amount_authorized_exceeds_total_credit: " exceeds the available credit"
           amount_used_not_zero: "is greater than zero. Can not delete store credit"
           update_reason_required: "A reason for the change must be selected"
+      taxons:
+        display_order: Display Order
       variants:
-        index:
+        table_filter:
           show_deleted: Show deleted variants
         new:
           new_variant: New variant
@@ -835,12 +848,12 @@ en:
     back_to_products_list: Back To Products List
     back_to_promotions_list: Back To Promotions List
     back_to_promotion_categories_list: Back To Promotions Categories List
-    back_to_properties_list: Back To Properties List
+    back_to_properties_list: Back To Property Types List
     back_to_prototypes_list: Back To Prototypes List
     back_to_reports_list: Back To Reports List
     back_to_refund_reason_list: Back To Refund Reason List
     back_to_reimbursement_type_list: Back To Reimbursement Type List
-    back_to_return_authorizations_list: Back To Return Authorizations List
+    back_to_return_authorizations_list: Back To RMA List
     back_to_rma_reason_list: Back To RMA Reason List
     back_to_shipping_categories: Back To Shipping Categories
     back_to_shipping_categories_list: Back To Shipping Categories List
@@ -871,7 +884,7 @@ en:
     calculator: Calculator
     calculator_settings_warning: If you are changing the calculator type or preference source, you must save first before you can edit the calculator settings
     cancel: cancel
-    cancel_inventory: 'Cancel Inventory'
+    cancel_inventory: 'Cancel Items'
     canceled: canceled
     canceled_at: Canceled at
     canceler: Canceler
@@ -1022,7 +1035,7 @@ en:
     editing_product: Editing Product
     editing_promotion: Editing Promotion
     editing_promotion_category: Editing Promotion Category
-    editing_property: Editing Property
+    editing_property: Editing Property Type
     editing_prototype: Editing Prototype
     edit_refund_reason: Edit Refund Reason
     editing_refund: Editing Refund
@@ -1100,8 +1113,14 @@ en:
     extension: Extension
     existing_shipments: Existing shipments
     hints:
+      spree/price:
+        country: "This determines in what country the price is valid.<br/>Default: Any Country"
       spree/product:
-        promotionable: "This determines whether or not promotions can apply to this product.<br/>Default: checked"
+        promotionable: "This determines whether or not promotions can apply to this product.<br/>Default: Checked"
+        shipping_category: "This determines what kind of shipping this product requires.<br/> Default: Default"
+        tax_category: "This determines what kind of taxation is applied to this product.<br/> Default: None"
+      spree/variant:
+        tax_category: "This determines what kind of taxation is applied to this variant.<br/> Default: Use tax category of the product associated with this variant"
     failed_payment_attempts: Failed Payment Attempts
     failure: Failure
     filename: Filename
@@ -1130,7 +1149,7 @@ en:
     gateway_config_unavailable: Gateway unavailable for environment
     gateway_error: Gateway Error
     general: General
-    general_settings: General Settings
+    general_settings: Store
     google_analytics: Google Analytics
     google_analytics_id: Analytics ID
     group_size: Group size
@@ -1189,6 +1208,7 @@ en:
     inventory_adjustment: Inventory Adjustment
     inventory_canceled: Inventory canceled
     inventory_error_flash_for_insufficient_quantity: An item in your cart has become unavailable.
+    inventory_not_available: Inventory not available for %{item}.
     inventory_state: Inventory State
     inventory_states:
       backordered: backordered
@@ -1207,7 +1227,7 @@ en:
         gt: greater than
         gte: greater than or equal to
     items_cannot_be_shipped: We are unable to calculate shipping rates for the selected items.
-    items_in_rmas: Items in Return Authorizations
+    items_in_rmas: Items in RMA's (Return Merchandise Authorizations)
     items_to_be_reimbursed: Items to be reimbursed
     items_reimbursed: Items reimbursed
     jirafe: Jirafe
@@ -1219,12 +1239,12 @@ en:
     lifetime_stats: Lifetime Stats
     line_item_adjustments: "Line item adjustments"
     list: List
-    listing_countries: Listing Countries
-    listing_orders: Listing Orders
-    listing_products: Listing Products
-    listing_reports: Listing Reports
-    listing_tax_categories: Listing Tax Categories
-    listing_users: Listing Users
+    listing_countries: Countries
+    listing_orders: Orders
+    listing_products: Products
+    listing_reports: Reports
+    listing_tax_categories: Tax Categories
+    listing_users: Users
     loading: Loading
     locale_changed: Locale Changed
     location: Location
@@ -1243,7 +1263,7 @@ en:
     make_refund: Make refund
     make_sure_the_above_reimbursement_amount_is_correct: Make sure the above reimbursement amount is correct
     manage_promotion_categories: Manage Promotion Categories
-    manage_stock: Manage Stock
+    manage_stock: Store Stock
     manual_intervention_required: Manual intervention required
     manage_variants: Manage Variants
     master_price: Master Price
@@ -1282,12 +1302,12 @@ en:
     new_product: New Product
     new_promotion: New Promotion
     new_promotion_category: New Promotion Category
-    new_property: New Property
+    new_property: New Property Type
     new_prototype: New Prototype
     new_refund: New Refund
     new_refund_reason: New Refund Reason
     new_rma_reason: New RMA Reason
-    new_return_authorization: New Return Authorization
+    new_return_authorization: New RMA
     new_shipping_category: New Shipping Category
     new_shipping_method: New Shipping Method
     new_shipment_at_location: New shipment at location
@@ -1295,11 +1315,12 @@ en:
     new_stock_location: New Stock Location
     new_stock_movement: New Stock Movement
     new_stock_transfer: New Stock Transfer
+    new_store_credit: New Store Credit
     new_tax_category: New Tax Category
     new_tax_rate: New Tax Rate
     new_taxon: New Taxon
     new_taxonomy: New Taxonomy
-    new_tracker: New Tracker
+    new_tracker: New Analytics Tracker
     new_user: New User
     new_variant: New Variant
     new_zone: New Zone
@@ -1551,8 +1572,8 @@ en:
     promotion_total_changed_before_complete: "One or more of the promotions on your order have become ineligible and were removed. Please check the new order amounts and try again."
     promotion_uses: Promotion uses
     propagate_all_variants: Propagate all variants
-    properties: Properties
-    property: Property
+    properties: Property Types
+    property: Property Type
     prototype: Prototype
     prototypes: Prototypes
     provider: Provider
@@ -1603,10 +1624,9 @@ en:
     resume: resume
     resumed: Resumed
     return: return
-    return_authorization: Return Authorization
-    return_reasons: Return Reasons
-    return_authorization_updated: Return authorization updated
-    return_authorizations: Return Authorizations
+    return_authorization: Return Merchandise Authorization
+    return_authorizations: Return Merchandise Authorizations
+    return_authorization_updated: Return merchandise authorization updated
     return_item_inventory_unit_ineligible: Return item's inventory unit must be shipped
     return_item_inventory_unit_reimbursed: Return item's inventory unit is already reimbursed
     return_item_order_not_completed: Return item's order must be completed
@@ -1627,6 +1647,7 @@ en:
         total_refunded: ! 'Total refunded: %{total}'
     return_number: Return Number
     return_quantity: Return Quantity
+    return_reasons: Return Reasons
     returned: Returned
     review: Review
     risk: Risk
@@ -1746,7 +1767,7 @@ en:
     stock_location_info: Stock location info
     stock_locations: Stock Locations
     stock_locations_need_a_default_country: You must create a default country before creating a stock location.
-    stock_management: Stock Management
+    stock_management: Product Stock
     stock_management_requires_a_stock_location: Please create a stock location in order to manage stock.
     stock_movements: Stock Movements
     stock_movements_for_stock_location: Stock Movements for %{stock_location_name}

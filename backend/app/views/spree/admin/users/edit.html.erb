@@ -1,6 +1,6 @@
-<% content_for :page_title do %>
-  <%= link_to "#{Spree.t(:editing_user)} #{@user.email}", edit_admin_user_url(@user) %>
-<% end %>
+<% admin_breadcrumb(link_to plural_resource_name(Spree::LegacyUser), spree.admin_users_path) %>
+<% admin_breadcrumb(@user.email) %>
+
 
 <%= render 'spree/admin/users/sidebar' %>
 <%= render 'spree/admin/users/tabs', current: :account %>
@@ -36,11 +36,11 @@
       </div>
       <div class="filter-actions actions">
         <%= form_tag spree.clear_api_key_admin_user_path(@user), :method => :put do %>
-          <%= button Spree.t('clear_key', :scope => 'api'), 'trash' %>
+          <%= button Spree.t('clear_key', :scope => 'api') %>
         <% end %>
 
         <%= form_tag spree.generate_api_key_admin_user_path(@user), :method => :put do %>
-          <%= button Spree.t('regenerate_key', :scope => 'api'), 'refresh' %>
+          <%= button Spree.t('regenerate_key', :scope => 'api') %>
         <% end %>
       </div>
 
@@ -50,7 +50,7 @@
 
       <div class="filter-actions actions">
         <%= form_tag spree.generate_api_key_admin_user_path(@user), :method => :put do %>
-          <%= button Spree.t('generate_key', :scope => 'api'), 'key' %>
+          <%= button Spree.t('generate_key', :scope => 'api') %>
         <% end %>
       </div>
     <% end %>

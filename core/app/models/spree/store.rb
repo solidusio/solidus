@@ -1,4 +1,11 @@
 module Spree
+  # Records store specific configuration such as store name and URL.
+  #
+  # `Spree::Store` provides the foundational ActiveRecord model for recording information
+  # specific to your store such as its name, URL, and tax location. This model will
+  # provide the foundation upon which [support for multiple stores](https://github.com/solidusio/solidus/issues/112)
+  # hosted by a single Solidus implementation can be built.
+  #
   class Store < Spree::Base
     has_many :store_payment_methods, inverse_of: :store
     has_many :payment_methods, through: :store_payment_methods
@@ -15,7 +22,8 @@ module Spree
     scope :by_url, lambda { |url| where("url like ?", "%#{url}%") }
 
     def self.current(store_key = nil)
-      current_store = Store.find_by(code: store_key) || Store.by_url(store_key).first
+      Spree::Deprecation.warn "Spree::Store.current needs a code or URL as an argument. If you want the default store use Spree::Store.default", caller if !store_key
+      current_store = Store.find_by(code: store_key) || Store.by_url(store_key).first if store_key
       current_store || Store.default
     end
 

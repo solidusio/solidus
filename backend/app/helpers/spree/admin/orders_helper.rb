@@ -8,7 +8,6 @@ module Spree
           next unless @order.send("can_#{event}?")
           links << button_link_to(Spree.t(event), [event, :admin, @order],
                                   method: :put,
-                                  icon: event.to_s,
                                   data: { confirm: Spree.t(:order_sure_want_to, event: Spree.t(event)) })
         end
         safe_join(links, '&nbsp;'.html_safe)

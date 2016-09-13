@@ -2,6 +2,23 @@ require 'spree/core/validators/email'
 require 'spree/order/checkout'
 
 module Spree
+  # The customers cart until completed, then acts as permenent record of the transaction.
+  #
+  # `Spree::Order` is the heart of the Solidus system, as it acts as the customer's
+  # cart as they shop. Once an order is complete, it serves as the
+  # permenent record of their purchase. It has many responsibilities:
+  #
+  # * Records and validates attributes like `total` and relationships like
+  # `Spree::LineItem` as an ActiveRecord model.
+  #
+  # * Implements a customizable state machine to manage the lifecycle of an order.
+  #
+  # * Implements business logic to provide a single interface for quesitons like
+  # `checkout_allowed?` or `payment_required?`.
+  #
+  #  * Implements an interface for mutating the order with methods like
+  # `create_tax_charge!` and `fulfill!`.
+  #
   class Order < Spree::Base
     ORDER_NUMBER_LENGTH  = 9
     ORDER_NUMBER_LETTERS = false
@@ -47,7 +64,7 @@ module Spree
     belongs_to :store, class_name: 'Spree::Store'
     has_many :state_changes, as: :stateful
     has_many :line_items, -> { order(:created_at, :id) }, dependent: :destroy, inverse_of: :order
-    has_many :payments, dependent: :destroy
+    has_many :payments, dependent: :destroy, inverse_of: :order
     has_many :return_authorizations, dependent: :destroy, inverse_of: :order
     has_many :reimbursements, inverse_of: :order
     has_many :adjustments, -> { order(:created_at) }, as: :adjustable, inverse_of: :adjustable, dependent: :destroy
@@ -93,7 +110,7 @@ module Spree
     before_create :link_by_email
 
     validates :email, presence: true, if: :require_email
-    validates :email, email: true, if: :require_email, allow_blank: true
+    validates :email, email: true, allow_blank: true
     validates :number, presence: true, uniqueness: { allow_blank: true }
     validates :store_id, presence: true
 
@@ -503,7 +520,6 @@ module Spree
       elsif shipments.any? { |s| !s.pending? }
         raise CannotRebuildShipments.new(Spree.t(:cannot_rebuild_shipments_shipments_not_pending))
       else
-        adjustments.shipping.destroy_all
         shipments.destroy_all
         self.shipments = Spree::Config.stock.coordinator_class.new(self).shipments
       end
@@ -511,9 +527,7 @@ module Spree
 
     def apply_free_shipping_promotions
       Spree::PromotionHandler::FreeShipping.new(self).activate
-      shipments.each { |shipment| ItemAdjustments.new(shipment).update }
-      updater.update_shipment_total
-      persist_totals
+      update!
     end
 
     # Clean shipments and make order back to address state
@@ -590,7 +604,7 @@ module Spree
     end
 
     def token
-      ActiveSupport::Deprecation.warn("Spree::Order#token is DEPRECATED, please use #guest_token instead.", caller)
+      Spree::Deprecation.warn("Spree::Order#token is DEPRECATED, please use #guest_token instead.", caller)
       guest_token
     end
 
@@ -618,6 +632,9 @@ module Spree
     end
 
     def add_store_credit_payments
+      return if user.nil?
+      return if payments.store_credits.checkout.empty? && user.total_available_store_credit.zero?
+
       payments.store_credits.checkout.each(&:invalidate!)
 
       # this can happen when multiple payments are present, auto_capture is
@@ -627,7 +644,7 @@ module Spree
 
       remaining_total = outstanding_balance - authorized_total
 
-      if user && user.store_credits.any?
+      if user.store_credits.any?
         payment_method = Spree::PaymentMethod::StoreCredit.first
 
         user.store_credits.order_by_priority.each do |credit|

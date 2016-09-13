@@ -162,12 +162,14 @@ describe Spree::Order, type: :model do
     end
 
     context "from address" do
-      let(:ship_address) { FactoryGirl.create(:ship_address) }
+      let(:ship_address) { create(:ship_address) }
+      let!(:line_item) { create(:line_item, order: order, price: 10) }
+      let!(:shipping_method) { create(:shipping_method) }
 
       before do
+        order.line_items.reload
         order.state = 'address'
         order.ship_address = ship_address
-        FactoryGirl.create(:shipment, order: order, cost: 10)
         order.email = "user@example.com"
         order.save!
       end
@@ -180,31 +182,24 @@ describe Spree::Order, type: :model do
         end
       end
 
-      it "updates totals" do
-        line_item = FactoryGirl.create(:line_item, price: 10, adjustment_total: 10)
-        order.line_items << line_item
-        tax_rate = create(:tax_rate, tax_category: line_item.tax_category, amount: 0.05)
-        allow(Spree::TaxRate).to receive_messages match: [tax_rate]
-        FactoryGirl.create(:tax_adjustment, adjustable: line_item, source: tax_rate, order: order)
-        order.email = "user@example.com"
+      it "recalculates tax and updates totals" do
+        create(:tax_rate, tax_category: line_item.tax_category, amount: 0.05, zone: order.tax_zone)
         order.next!
-        expect(order.adjustment_total).to eq(0.5)
-        expect(order.additional_tax_total).to eq(0.5)
-        expect(order.included_tax_total).to eq(0)
-        expect(order.total).to eq(20.5)
+        expect(order).to have_attributes(
+          adjustment_total: 0.5,
+          additional_tax_total: 0.5,
+          included_tax_total: 0,
+          total: 20.5
+        )
       end
 
       it "transitions to delivery" do
-        allow(order).to receive_messages(ensure_available_shipping_rates: true)
         order.next!
         assert_state_changed(order, 'address', 'delivery')
         expect(order.state).to eq("delivery")
       end
 
       it "does not call persist_order_address if there is no address on the order" do
-        # otherwise, it will crash
-        allow(order).to receive_messages(ensure_available_shipping_rates: true)
-
         order.user = FactoryGirl.create(:user)
         order.save!
 
@@ -213,8 +208,6 @@ describe Spree::Order, type: :model do
       end
 
       it "calls persist_order_address on the order's user" do
-        allow(order).to receive_messages(ensure_available_shipping_rates: true)
-
         order.user = FactoryGirl.create(:user)
         order.ship_address = FactoryGirl.create(:address)
         order.bill_address = FactoryGirl.create(:address)
@@ -225,8 +218,6 @@ describe Spree::Order, type: :model do
       end
 
       it "does not call persist_order_address on the order's user for a temporary address" do
-        allow(order).to receive_messages(ensure_available_shipping_rates: true)
-
         order.user = FactoryGirl.create(:user)
         order.temporary_address = true
         order.save!
@@ -506,6 +497,23 @@ describe Spree::Order, type: :model do
       end
     end
 
+    context "with a payment in the pending state" do
+      let(:order) { create :order_ready_to_complete }
+      let(:payment) { create :payment, state: "pending", amount: order.total }
+
+      before do
+        order.payments = [payment]
+        order.save!
+      end
+
+      it "allows the order to complete" do
+        expect { order.complete! }.
+          to change { order.state }.
+          from("confirm").
+          to("complete")
+      end
+    end
+
     context "exchange order completion" do
       before do
         order.email = 'spree@example.org'
@@ -625,27 +633,6 @@ describe Spree::Order, type: :model do
         order.update!
         expect(order.complete).to eq(true)
       end
-    end
-  end
-
-  context "subclassed order" do
-    # This causes another test above to fail, but fixing this test should make
-    #   the other test pass
-    class SubclassedOrder < Spree::Order
-      checkout_flow do
-        go_to_state :payment
-        go_to_state :complete
-      end
-    end
-
-    skip "should only call default transitions once when checkout_flow is redefined" do
-      order = SubclassedOrder.new
-      allow(order).to receive_messages payment_required?: true
-      expect(order).to receive(:process_payments!).once
-      order.state = "payment"
-      order.next!
-      assert_state_changed(order, 'payment', 'complete')
-      expect(order.state).to eq("complete")
     end
   end
 
@@ -794,7 +781,7 @@ describe Spree::Order, type: :model do
     let(:params) { {} }
 
     around do |example|
-      ActiveSupport::Deprecation.silence { example.run }
+      Spree::Deprecation.silence { example.run }
     end
 
     it 'calls update_atributes without order params' do
@@ -868,7 +855,7 @@ describe Spree::Order, type: :model do
       let(:params) { ActionController::Parameters.new(order: { bad_param: 'okay' } ) }
 
       it 'does not let through unpermitted attributes' do
-        expect(order).to receive(:assign_attributes).with({})
+        expect(order).to receive(:assign_attributes).with(ActionController::Parameters.new.permit!)
         order.update_from_params(params, permitted_params)
       end
 
@@ -876,14 +863,27 @@ describe Spree::Order, type: :model do
         let(:params) { ActionController::Parameters.new(order: { good_param: 'okay' } ) }
 
         it 'accepts permitted attributes' do
-          expect(order).to receive(:assign_attributes).with({ "good_param" => 'okay' })
+          expect(order).to receive(:assign_attributes).with(ActionController::Parameters.new("good_param" => 'okay').permit!)
           order.update_from_params(params, permitted_params)
         end
       end
 
-      context 'callbacks halt' do
+      context 'callback returns false' do
         before do
           expect(order).to receive(:update_params_payment_source).and_return false
+        end
+        it 'does not let through unpermitted attributes' do
+          expect(order).not_to receive(:assign_attributes)
+          expect(order).not_to receive(:save)
+          ActiveSupport::Deprecation.silence do
+            order.update_from_params(params, permitted_params)
+          end
+        end
+      end
+
+      context 'callback throws abort' do
+        before do
+          expect(order).to receive(:update_params_payment_source).and_throw :abort
         end
         it 'does not let through unpermitted attributes' do
           expect(order).not_to receive(:assign_attributes)

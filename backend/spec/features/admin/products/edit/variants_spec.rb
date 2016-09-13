@@ -16,7 +16,7 @@ describe "Product Variants", type: :feature do
       within_row(1) { click_icon :edit }
 
       within('nav > ul.tabs') { click_link "Variants" }
-      expect(page).to have_content("TO ADD VARIANTS, YOU MUST FIRST DEFINE")
+      expect(page).to have_content("To add variants, you must first define")
     end
 
     it "allows admin to create a variant if there are option types" do

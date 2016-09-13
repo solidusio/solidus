@@ -104,28 +104,19 @@
       </div>
 
       <div id="shipping_specs">
-        <div id="shipping_specs_height_field" data-hook="admin_product_form_height" class="field alpha two columns">
-          <%= f.label :height %>
-          <%= f.text_field :height, :size => 4 %>
-        </div>
-        <div id="shipping_specs_width_field" data-hook="admin_product_form_width" class="field omega two columns">
-          <%= f.label :width %>
-          <%= f.text_field :width, :size => 4 %>
-        </div>
-        <div id="shipping_specs_depth_field" data-hook="admin_product_form_depth" class="field alpha two columns">
-          <%= f.label :depth %>
-          <%= f.text_field :depth, :size => 4 %>
-        </div>
-        <div id="shipping_specs_weight_field" data-hook="admin_product_form_weight" class="field omega two columns">
-          <%= f.label :weight %>
-          <%= f.text_field :weight, :size => 4 %>
-        </div>
+        <% [:height, :width, :depth, :weight].each_with_index do |field, index| %>
+          <div id="shipping_specs_<%= field %>_field" class="field two columns <%= index.even? ? 'alpha' : 'omega' %>">
+            <%= f.label field %>
+            <%= f.text_field field, value: number_with_precision(@product.send(field), precision: 2) %>
+          </div>
+        <% end %>
       </div>
     <% end %>
 
     <div data-hook="admin_product_form_shipping_categories">
       <%= f.field_container :shipping_categories do %>
         <%= f.label :shipping_category_id, Spree::ShippingCategory.model_name.human %>
+        <%= f.field_hint :shipping_category %>
         <%= f.collection_select(:shipping_category_id, @shipping_categories, :id, :name, { :include_blank => Spree.t('match_choices.none') }, { :class => 'select2' }) %>
         <%= f.error_message_on :shipping_category %>
       <% end %>
@@ -134,6 +125,7 @@
     <div data-hook="admin_product_form_tax_category">
       <%= f.field_container :tax_category do %>
         <%= f.label :tax_category_id, Spree::TaxCategory.model_name.human %>
+        <%= f.field_hint :tax_category %>
         <%= f.collection_select(:tax_category_id, @tax_categories, :id, :name, { :include_blank => Spree.t('match_choices.none') }, { :class => 'select2' }) %>
         <%= f.error_message_on :tax_category %>
       <% end %>

@@ -1,4 +1,4 @@
-class EnsureStoreOnOrders < ActiveRecord::Migration
+class EnsureStoreOnOrders < ActiveRecord::Migration[4.2]
   class Store < ActiveRecord::Base
     self.table_name = 'spree_stores'
   end

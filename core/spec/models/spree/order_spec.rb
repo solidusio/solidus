@@ -1,11 +1,5 @@
 require 'spec_helper'
 
-class FakeCalculator < Spree::Calculator
-  def compute(_computable)
-    5
-  end
-end
-
 describe Spree::Order, type: :model do
   let(:store) { build_stubbed(:store) }
   let(:user) { stub_model(Spree::LegacyUser, email: "spree@example.com") }
@@ -37,6 +31,28 @@ describe Spree::Order, type: :model do
     context 'when a store is assigned' do
       subject { Spree::Order.new(store: create(:store)) }
       it { is_expected.to be_valid }
+    end
+  end
+
+  describe "#cancel!" do
+    context "with captured store credit" do
+      let!(:store_credit_payment_method) { create(:store_credit_payment_method) }
+      let(:order_total) { 500.00 }
+      let(:store_credit) { create(:store_credit, amount: order_total) }
+      let(:order) { create(:order_with_line_items, user: store_credit.user, line_items_price: order_total) }
+
+      before do
+        order.add_store_credit_payments
+        order.finalize!
+        order.capture_payments!
+      end
+
+      subject { order.cancel! }
+
+      it "cancels the order" do
+        expect{ subject }.to change{ order.can_cancel? }.from(true).to(false)
+        expect(order).to be_canceled
+      end
     end
   end
 
@@ -569,16 +585,12 @@ describe Spree::Order, type: :model do
 
   context "#apply_free_shipping_promotions" do
     it "calls out to the FreeShipping promotion handler" do
-      shipment = double('Shipment')
-      allow(order).to receive_messages shipments: [shipment]
-      expect(Spree::PromotionHandler::FreeShipping).to receive(:new).and_return(handler = double)
-      expect(handler).to receive(:activate)
+      expect_any_instance_of(Spree::PromotionHandler::FreeShipping).to(
+        receive(:activate)
+      ).and_call_original
 
-      expect(Spree::ItemAdjustments).to receive(:new).with(shipment).and_return(adjuster = double)
-      expect(adjuster).to receive(:update)
+      expect(order.updater).to receive(:update).and_call_original
 
-      expect(order.updater).to receive(:update_shipment_total)
-      expect(order.updater).to receive(:persist_totals)
       order.apply_free_shipping_promotions
     end
   end
@@ -1021,7 +1033,7 @@ describe Spree::Order, type: :model do
     let(:payment) { Spree::Payment.new(amount: 10) }
 
     around do |example|
-      ActiveSupport::Deprecation.silence do
+      Spree::Deprecation.silence do
         example.run
       end
     end
@@ -1114,12 +1126,6 @@ describe Spree::Order, type: :model do
           end
         end
 
-        context "there are no other payments" do
-          it "adds an error to the model" do
-            expect(subject).to be false
-            expect(order.errors.full_messages).to include(Spree.t("store_credit.errors.unable_to_fund"))
-          end
-        end
       end
 
       context "there is enough store credit to pay for the entire order" do

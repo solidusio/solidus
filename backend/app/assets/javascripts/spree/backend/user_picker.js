@@ -9,10 +9,14 @@ $.fn.userAutocomplete = function () {
     minimumInputLength: 1,
     multiple: true,
     initSelection: function (element, callback) {
-      $.get(Spree.routes.users_api, {
-        ids: element.val()
-      }, function (data) {
-        callback(data.users);
+      Spree.ajax({
+        url: Spree.routes.users_api,
+        data: {
+          ids: element.val()
+        },
+        success: function(data) {
+          callback(data.users);
+        }
       });
     },
     ajax: {
@@ -21,10 +25,12 @@ $.fn.userAutocomplete = function () {
       params: { "headers": { "X-Spree-Token": Spree.api_key } },
       data: function (term) {
         return {
-          m: 'or',
-          email_start: term,
-          addresses_firstname_start: term,
-          addresses_lastname_start: term
+          q: {
+            m: 'or',
+            email_start: term,
+            addresses_firstname_start: term,
+            addresses_lastname_start: term
+          }
         };
       },
       results: function (data) {

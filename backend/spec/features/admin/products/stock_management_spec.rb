@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe "Stock Management", type: :feature do
+describe "Product Stock", type: :feature do
   stub_authorization!
 
   before(:each) do
@@ -18,7 +18,7 @@ describe "Stock Management", type: :feature do
 
       click_nav "Products"
       within_row(1) { click_icon :edit }
-      click_link "Stock Management"
+      click_link "Product Stock"
     end
 
     # Regression test for https://github.com/spree/spree/issues/3304
@@ -28,15 +28,15 @@ describe "Stock Management", type: :feature do
         @product = create(:product, name: 'apache baseball cap', price: 10)
         @product.variants.create!(sku: 'FOOBAR')
         Spree::StockLocation.destroy_all
-        click_link "Back To Products List"
+        find_by_id('content-header').click_link('Products')
         within_row(1) do
           click_icon :edit
         end
-        click_link "Stock Management"
+        click_link "Product Stock"
       end
 
       it "renders" do
-        expect(page).to have_content('Products / apache baseball cap')
+        expect(page).to have_content('Productsapache baseball cap')
         expect(page.current_url).to match("admin/products/apache-baseball-cap/stock")
       end
     end

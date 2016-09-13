@@ -1,11 +1,9 @@
-<% content_for :page_title do %>
-  <%= Spree.t(:new_stock_transfer) %>
-<% end %>
+<% admin_breadcrumb(link_to Spree.t(:stock), spree.admin_stock_items_path) %>
+<% admin_breadcrumb(link_to plural_resource_name(Spree::StockTransfer), spree.admin_stock_transfers_path) %>
+<% admin_breadcrumb(Spree.t(:new_stock_transfer)) %>
+
 
 <% content_for :page_actions do %>
-  <li>
-    <%= button_link_to Spree.t(:back_to_stock_transfers_list), admin_stock_transfers_path, icon: 'arrow-left' %>
-  </li>
 <% end %>
 
 <%= form_for [:admin, @stock_transfer] do |f| %>
@@ -21,8 +19,8 @@
       <%= f.error_message_on :description %>
     <% end %>
     <div class="filter-actions actions" data-hook="buttons">
-      <%= button Spree.t(:continue), 'arrow-right' %>
-      <%= link_to_with_icon 'remove', Spree.t('actions.cancel'), admin_stock_transfers_path, class: 'button' %>
+      <%= button Spree.t(:continue) %>
+      <%= link_to Spree.t('actions.cancel'), admin_stock_transfers_path, class: 'button' %>
     </div>
   </fieldset>
 <% end %>

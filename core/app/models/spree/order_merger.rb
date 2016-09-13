@@ -111,7 +111,7 @@ module Spree
         current_line_item.quantity += other_order_line_item.quantity
         handle_error(current_line_item) unless current_line_item.save
       else
-        other_order_line_item.order_id = order.id
+        order.line_items << other_order_line_item
         handle_error(other_order_line_item) unless other_order_line_item.save
       end
     end
@@ -135,9 +135,7 @@ module Spree
     # @api private
     # @return [void]
     def persist_merge
-      updater.update_item_count
-      updater.update_item_total
-      updater.persist_totals
+      updater.update
     end
   end
 end

@@ -6,11 +6,11 @@ module Spree
 
     respond_to :html
 
-    before_filter :assign_order, only: :update
+    before_action :assign_order, only: :update
     # note: do not lock the #edit action because that's where we redirect when we fail to acquire a lock
-    around_filter :lock_order, only: :update
-    before_filter :apply_coupon_code, only: :update
-    skip_before_filter :verify_authenticity_token, only: [:populate]
+    around_action :lock_order, only: :update
+    before_action :apply_coupon_code, only: :update
+    skip_before_action :verify_authenticity_token, only: [:populate]
 
     def show
       @order = Order.find_by_number!(params[:id])
@@ -64,6 +64,11 @@ module Spree
           format.html { redirect_to cart_path }
         end
       end
+    end
+
+    def populate_redirect
+      flash[:error] = Spree.t(:populate_get_error)
+      redirect_to('/cart')
     end
 
     def empty

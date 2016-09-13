@@ -18,7 +18,7 @@ module Spree
       # regression test for https://github.com/spree/spree/issues/2094
       it "does not clear password on update" do
         expect(payment_method.preferred_password).to eq("haxme")
-        spree_put :update, id: payment_method.id, payment_method: { type: payment_method.class.to_s, preferred_password: "" }
+        put :update, params: { id: payment_method.id, payment_method: { type: payment_method.class.to_s, preferred_password: "" } }
         expect(response).to redirect_to(spree.edit_admin_payment_method_path(payment_method))
 
         payment_method.reload
@@ -28,13 +28,13 @@ module Spree
 
     context "tries to save invalid payment" do
       it "doesn't break, responds nicely" do
-        spree_post :create, payment_method: { name: "", type: "Spree::Gateway::Bogus" }
+        post :create, params: { payment_method: { name: "", type: "Spree::Gateway::Bogus" } }
       end
     end
 
     it "can create a payment method of a valid type" do
       expect {
-        spree_post :create, payment_method: { name: "Test Method", type: "Spree::Gateway::Bogus" }
+        post :create, params: { payment_method: { name: "Test Method", type: "Spree::Gateway::Bogus" } }
       }.to change(Spree::PaymentMethod, :count).by(1)
 
       expect(response).to be_redirect
@@ -43,7 +43,7 @@ module Spree
 
     it "can not create a payment method of an invalid type" do
       expect {
-        spree_post :create, payment_method: { name: "Invalid Payment Method", type: "Spree::InvalidType" }
+        post :create, params: { payment_method: { name: "Invalid Payment Method", type: "Spree::InvalidType" } }
       }.to change(Spree::PaymentMethod, :count).by(0)
 
       expect(response).to be_redirect
@@ -51,7 +51,7 @@ module Spree
     end
 
     describe "GET index" do
-      subject { spree_get :index }
+      subject { get :index }
 
       let!(:first_method) { GatewayWithPassword.create! name: "First", preferred_password: "1235" }
       let!(:second_method) { GatewayWithPassword.create! name: "Second", preferred_password: "1235" }

@@ -5,5 +5,5 @@ child(@orders => :orders) do
 end
 
 node(:count) { @orders.count }
-node(:current_page) { params[:page] || 1 }
+node(:current_page) { @orders.current_page }
 node(:pages) { @orders.total_pages }

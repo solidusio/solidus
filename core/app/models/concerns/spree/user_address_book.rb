@@ -92,7 +92,7 @@ module Spree
     # #default_address or not
     def save_in_address_book(address_attributes, default = false)
       return nil unless address_attributes.present?
-      address_attributes = address_attributes.with_indifferent_access
+      address_attributes = address_attributes.to_h.with_indifferent_access
 
       new_address = Address.factory(address_attributes)
       return new_address unless new_address.valid?

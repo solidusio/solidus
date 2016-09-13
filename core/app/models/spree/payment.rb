@@ -1,4 +1,8 @@
 module Spree
+  # Manage and process a payment for an order, from a specific
+  # source (e.g. `Spree::CreditCard`) using a specific payment method (e.g
+  # `Solidus::Gateway::Braintree`).
+  #
   class Payment < Spree::Base
     include Spree::Payment::Processing
 
@@ -155,7 +159,7 @@ module Spree
       return unless new_record?
       return if source_attributes.blank?
 
-      ActiveSupport::Deprecation.warn(<<WARN.squish)
+      Spree::Deprecation.warn(<<WARN.squish)
 Building payment sources by assigning source_attributes on payments is
 deprecated. Instead use either the PaymentCreate class or the
 OrderUpdateAttributes class.
@@ -220,7 +224,9 @@ WARN
           errors.add(Spree.t(source.class.to_s.demodulize.underscore), "#{field_name} #{error}")
         end
       end
-      !errors.present?
+      if errors.any?
+        throw :abort
+      end
     end
 
     def source_required?

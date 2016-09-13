@@ -5,7 +5,7 @@ module Spree
 
       after_action :sign_in_if_change_own_password, only: :update
 
-      before_filter :load_roles, :load_stock_locations, only: [:edit, :new]
+      before_action :load_roles, :load_stock_locations, only: [:edit, :new]
 
       def index
         respond_with(@collection) do |format|

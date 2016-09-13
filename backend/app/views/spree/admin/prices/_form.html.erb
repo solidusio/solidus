@@ -24,6 +24,7 @@
     <div class="three columns" data-hook="admin_product_price_form_country">
       <%= f.field_container :country do %>
         <%= f.label :country %>
+        <%= f.field_hint :country %>
         <%= f.collection_select :country_iso, available_countries, :iso, :name,
                                 {
                                   include_blank: t(:any_country, scope: [:spree, :admin, :prices]),

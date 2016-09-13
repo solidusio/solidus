@@ -14,7 +14,7 @@ describe Spree::Admin::ReimbursementsController, type: :controller do
     let!(:inactive_stock_location) { create(:stock_location, active: false) }
 
     subject do
-      spree_get :edit, order_id: order.to_param, id: reimbursement.to_param
+      get :edit, params: { order_id: order.to_param, id: reimbursement.to_param }
     end
 
     it "loads all the active stock locations" do
@@ -32,7 +32,7 @@ describe Spree::Admin::ReimbursementsController, type: :controller do
     before { return_item.receive! }
 
     subject do
-      spree_post :create, order_id: order.to_param, build_from_customer_return_id: customer_return.id
+      post :create, params: { order_id: order.to_param, build_from_customer_return_id: customer_return.id }
     end
 
     it 'creates the reimbursement' do
@@ -59,7 +59,7 @@ describe Spree::Admin::ReimbursementsController, type: :controller do
         it 'redirects to the referer' do
           request.env["HTTP_REFERER"] = referer
           expect {
-            spree_post :create, order_id: order.to_param
+            post :create, params: { order_id: order.to_param }
           }.to_not change { Spree::Reimbursement.count }
           expect(response).to redirect_to(referer)
           expect(flash[:error]).to eq("something bad happened")
@@ -69,7 +69,7 @@ describe Spree::Admin::ReimbursementsController, type: :controller do
       context 'when a referer header is not present' do
         it 'redirects to the admin root' do
           expect {
-            spree_post :create, order_id: order.to_param
+            post :create, params: { order_id: order.to_param }
           }.to_not change { Spree::Reimbursement.count }
           expect(response).to redirect_to(spree.admin_path)
           expect(flash[:error]).to eq("something bad happened")
@@ -86,7 +86,7 @@ describe Spree::Admin::ReimbursementsController, type: :controller do
     let(:payment) { order.payments.first }
 
     subject do
-      spree_post :perform, order_id: order.to_param, id: reimbursement.to_param
+      post :perform, params: { order_id: order.to_param, id: reimbursement.to_param }
     end
 
     it 'redirects to customer return page' do

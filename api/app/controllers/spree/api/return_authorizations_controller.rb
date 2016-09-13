@@ -1,8 +1,8 @@
 module Spree
   module Api
     class ReturnAuthorizationsController < Spree::Api::BaseController
-      before_filter :load_order
-      around_filter :lock_order, only: [:create, :update, :destroy, :add, :receive, :cancel]
+      before_action :load_order
+      around_action :lock_order, only: [:create, :update, :destroy, :add, :receive, :cancel]
 
       rescue_from Spree::Order::InsufficientStock, with: :insufficient_stock_error
 
@@ -24,9 +24,15 @@ module Spree
 
       def index
         authorize! :admin, ReturnAuthorization
-        @return_authorizations = @order.return_authorizations.accessible_by(current_ability, :read).
-                                 ransack(params[:q]).result.
-                                 page(params[:page]).per(params[:per_page])
+
+        @return_authorizations = @order.
+          return_authorizations.
+          accessible_by(current_ability, :read).
+          ransack(params[:q]).
+          result
+
+        @return_authorizations = paginate(@return_authorizations)
+
         respond_with(@return_authorizations)
       end
 

@@ -6,7 +6,7 @@ describe 'current order tracking', type: :controller do
 
   controller(Spree::StoreController) do
     def index
-      render nothing: true
+      head :ok
     end
   end
 
@@ -24,7 +24,7 @@ describe 'current order tracking', type: :controller do
 
     it "doesn't create a new order out of the blue" do
       expect {
-        spree_get :index
+        get :index
       }.not_to change { Spree::Order.count }
     end
   end
@@ -38,7 +38,7 @@ describe Spree::OrdersController, type: :controller do
   describe Spree::OrdersController do
     it "doesn't create a new order out of the blue" do
       expect {
-        spree_get :edit
+        get :edit
       }.not_to change { Spree::Order.count }
     end
   end

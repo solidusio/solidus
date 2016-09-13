@@ -1,11 +1,11 @@
 module Spree
   module Api
     class ShipmentsController < Spree::Api::BaseController
-      before_filter :find_order_on_create, only: :create
-      before_filter :find_shipment, only: [:update, :ship, :ready, :add, :remove]
+      before_action :find_order_on_create, only: :create
+      before_action :find_shipment, only: [:update, :ship, :ready, :add, :remove]
       before_action :load_transfer_params, only: [:transfer_to_location, :transfer_to_shipment]
-      around_filter :lock_order, except: [:mine]
-      before_filter :update_shipment, only: [:ship, :ready, :add, :remove]
+      around_action :lock_order, except: [:mine]
+      before_action :update_shipment, only: [:ship, :ready, :add, :remove]
 
       def mine
         if current_api_user
@@ -14,7 +14,9 @@ module Spree
             .joins(:order)
             .where(spree_orders: { user_id: current_api_user.id })
             .includes(mine_includes)
-            .ransack(params[:q]).result.page(params[:page]).per(params[:per_page])
+            .ransack(params[:q]).result
+
+          @shipments = paginate(@shipments)
         else
           render "spree/api/errors/unauthorized", status: :unauthorized
         end

@@ -10,7 +10,7 @@ module Spree
       skip_before_action :authenticate_user, only: :apply_coupon_code
 
       before_action :find_order, except: [:create, :mine, :current, :index]
-      around_filter :lock_order, except: [:create, :mine, :current, :index]
+      around_action :lock_order, except: [:create, :mine, :current, :index]
 
       # Dynamically defines our stores checkout steps to ensure we check authorization on each step.
       Order.checkout_steps.keys.each do |step|
@@ -34,12 +34,12 @@ module Spree
       def empty
         authorize! :update, @order, order_token
         @order.empty!
-        render text: nil, status: 204
+        render plain: nil, status: 204
       end
 
       def index
         authorize! :index, Order
-        @orders = Order.ransack(params[:q]).result.page(params[:page]).per(params[:per_page])
+        @orders = paginate(Order.ransack(params[:q]).result)
         respond_with(@orders)
       end
 
@@ -72,7 +72,8 @@ module Spree
 
       def mine
         if current_api_user
-          @orders = current_api_user.orders.by_store(current_store).reverse_chronological.ransack(params[:q]).result.page(params[:page]).per(params[:per_page])
+          @orders = current_api_user.orders.by_store(current_store).reverse_chronological.ransack(params[:q]).result
+          @orders = paginate(@orders)
         else
           render "spree/api/errors/unauthorized", status: :unauthorized
         end

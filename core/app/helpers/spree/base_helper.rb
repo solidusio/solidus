@@ -66,7 +66,7 @@ module Spree
       nil
     end
 
-    def breadcrumbs(taxon, separator = "&nbsp;&raquo;&nbsp;", breadcrumb_class = "inline")
+    def taxon_breadcrumbs(taxon, separator = "&nbsp;&raquo;&nbsp;", breadcrumb_class = "inline")
       return "" if current_page?("/") || taxon.nil?
 
       crumbs = [[Spree.t(:home), spree.root_path]]
@@ -174,7 +174,7 @@ module Spree
 
     def define_image_method(style)
       self.class.send :define_method, "#{style}_image" do |product, *options|
-        ActiveSupport::Deprecation.warn "Spree image helpers will be deprecated in the near future. Use the provided resource to access the intendend image directly.", caller
+        Spree::Deprecation.warn "Spree image helpers will be deprecated in the near future. Use the provided resource to access the intendend image directly.", caller
         options = options.first || {}
         if product.images.empty?
           if !product.is_a?(Spree::Variant) && !product.variant_images.empty?

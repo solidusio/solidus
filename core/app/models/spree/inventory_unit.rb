@@ -1,4 +1,6 @@
 module Spree
+  # Tracks the state of line items' fulfillment.
+  #
   class InventoryUnit < Spree::Base
     PRE_SHIPMENT_STATES = %w(backordered on_hand)
     POST_SHIPMENT_STATES = %w(returned)
@@ -135,12 +137,12 @@ module Spree
     def ensure_can_destroy
       if !backordered? && !on_hand?
         errors.add(:state, :cannot_destroy, state: state)
-        return false
+        throw :abort
       end
 
       unless shipment.pending?
         errors.add(:base, :cannot_destroy_shipment_state, state: shipment.state)
-        return false
+        throw :abort
       end
     end
   end

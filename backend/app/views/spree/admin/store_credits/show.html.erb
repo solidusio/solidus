@@ -1,11 +1,12 @@
-<% content_for :page_title do %>
-  <%= link_to "#{Spree.t(:editing_user)} #{@user.email}", edit_admin_user_url(@user) %>
-<% end %>
+<% admin_breadcrumb(link_to plural_resource_name(Spree::LegacyUser), spree.admin_users_path) %>
+<% admin_breadcrumb(link_to @user.email, edit_admin_user_url(@user)) %>
+<% admin_breadcrumb(link_to Spree::StoreCredit.model_name.human, spree.admin_user_store_credits_path(@user)) %>
+<% admin_breadcrumb(@store_credit.display_amount.to_html) %>
+
 
 <%= render 'spree/admin/users/sidebar' %>
 <%= render 'spree/admin/users/tabs', current: :store_credits %>
 <% content_for :page_actions do %>
-  <li><%= link_to_with_icon 'arrow-left', Spree.t("admin.store_credits.back_to_store_credit_list"), admin_user_store_credits_path(@user), class: 'button' %></li>
   <% if @store_credit.editable? && can?(:edit, @store_credit) %>
     <li><%= link_to_with_icon 'dollar', Spree.t("admin.store_credits.change_amount"), edit_amount_admin_user_store_credit_path(@user, @store_credit), class: 'button' %></li>
   <% end %>

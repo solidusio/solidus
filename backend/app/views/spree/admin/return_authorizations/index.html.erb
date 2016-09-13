@@ -4,16 +4,14 @@
   <% if @order.shipments.any? &:shipped? %>
     <li>
       <% if can? :create, Spree::ReturnAuthorization %>
-        <%= button_link_to Spree.t(:new_return_authorization), new_admin_order_return_authorization_url(@order), :icon => 'plus' %>
+        <%= button_link_to Spree.t(:new_return_authorization), new_admin_order_return_authorization_url(@order) %>
       <% end %>
     </li>
   <% end %>
-  <li><%= button_link_to Spree.t(:back_to_orders_list), spree.admin_orders_path, :icon => 'arrow-left' %></li>
 <% end %>
 
-<% content_for :page_title do %>
-  <i class="fa fa-arrow-right"></i> <%= plural_resource_name(Spree::ReturnAuthorization) %>
-<% end %>
+<% admin_breadcrumb(plural_resource_name(Spree::ReturnAuthorization)) %>
+
 
 <% if @order.shipments.any?(&:shipped?) || @order.return_authorizations.any? %>
   <table class="index">

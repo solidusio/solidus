@@ -38,7 +38,8 @@ module Spree
           user.save_in_address_book(harry_address_attributes, true)
           user.save_in_address_book(ron_address_attributes, false)
 
-          get "/api/users/#{user.id}/address_book", nil, { 'X-SPREE-TOKEN' => 'galleon' }
+          get "/api/users/#{user.id}/address_book",
+            headers: { 'X-SPREE-TOKEN' => 'galleon' }
 
           json_response = JSON.parse(response.body)
           expect(response.status).to eq(200)
@@ -55,7 +56,9 @@ module Spree
           harry_address_attributes['firstname'] = 'Ron'
 
           expect {
-            put "/api/users/#{user.id}/address_book", { address_book: harry_address_attributes.merge('id' => address.id) }, { 'X-SPREE-TOKEN' => 'galleon' }
+            put "/api/users/#{user.id}/address_book",
+              params:  { address_book: harry_address_attributes.merge('id' => address.id) },
+              headers: { 'X-SPREE-TOKEN' => 'galleon' }
           }.to change { UserAddress.count }.from(1).to(2)
 
           expect(response.status).to eq(200)
@@ -67,7 +70,9 @@ module Spree
             user = create(:user, spree_api_key: 'galleon')
 
             expect {
-              put "/api/users/#{user.id}/address_book", { address_book: harry_address_attributes }, { 'X-SPREE-TOKEN' => 'galleon' }
+              put "/api/users/#{user.id}/address_book",
+                params:  { address_book: harry_address_attributes },
+                headers: { 'X-SPREE-TOKEN' => 'galleon' }
             }.to change { UserAddress.count }.by(1)
 
             user_address = UserAddress.last
@@ -84,7 +89,9 @@ module Spree
             address = user.save_in_address_book(harry_address_attributes, true)
 
             expect {
-              put "/api/users/#{user.id}/address_book", { address_book: harry_address_attributes }, { 'X-SPREE-TOKEN' => 'galleon' }
+              put "/api/users/#{user.id}/address_book",
+                params:  { address_book: harry_address_attributes },
+                headers: { 'X-SPREE-TOKEN' => 'galleon' }
             }.to_not change { UserAddress.count }
 
             expect(response.status).to eq(200)
@@ -99,7 +106,9 @@ module Spree
           user.save_in_address_book(address.attributes, false)
 
           expect {
-            delete "/api/users/#{user.id}/address_book", { address_id: address.id }, { 'X-SPREE-TOKEN' => 'galleon' }
+            delete "/api/users/#{user.id}/address_book",
+              params:  { address_id: address.id },
+              headers: { 'X-SPREE-TOKEN' => 'galleon' }
           }.to change { user.reload.user_addresses.count }.from(1).to(0)
 
           expect(response.status).to eq(200)
@@ -121,7 +130,8 @@ module Spree
           other_user.save_in_address_book(harry_address_attributes, true)
           other_user.save_in_address_book(ron_address_attributes, false)
 
-          get "/api/users/#{other_user.id}/address_book", nil, { 'X-SPREE-TOKEN' => 'galleon' }
+          get "/api/users/#{other_user.id}/address_book",
+          headers: { 'X-SPREE-TOKEN' => 'galleon' }
 
           json_response = JSON.parse(response.body)
           expect(response.status).to eq(200)
@@ -138,7 +148,9 @@ module Spree
           updated_harry_address = harry_address_attributes.merge('firstname' => 'Ron')
 
           expect {
-            put "/api/users/#{other_user.id}/address_book", { address_book: updated_harry_address.merge('id' => address.id) }, { 'X-SPREE-TOKEN' => 'galleon' }
+            put "/api/users/#{other_user.id}/address_book",
+            params:  { address_book: updated_harry_address.merge('id' => address.id) },
+            headers: { 'X-SPREE-TOKEN' => 'galleon' }
           }.to change { UserAddress.count }.from(1).to(2)
 
           expect(response.status).to eq(200)
@@ -151,7 +163,9 @@ module Spree
           other_user.save_in_address_book(address.attributes, false)
 
           expect {
-            delete "/api/users/#{other_user.id}/address_book", { address_id: address.id }, { 'X-SPREE-TOKEN' => 'galleon' }
+            delete "/api/users/#{other_user.id}/address_book",
+              params:  { address_id: address.id },
+              headers: { 'X-SPREE-TOKEN' => 'galleon' }
           }.to change { other_user.reload.user_addresses.count }.from(1).to(0)
 
           expect(response.status).to eq(200)
@@ -164,7 +178,8 @@ module Spree
           other_user = create(:user)
           other_user.save_in_address_book(harry_address_attributes, true)
 
-          get "/api/users/#{other_user.id}/address_book", nil, { 'X-SPREE-TOKEN' => 'galleon' }
+          get "/api/users/#{other_user.id}/address_book",
+            headers: { 'X-SPREE-TOKEN' => 'galleon' }
 
           expect(response.status).to eq(401)
         end
@@ -176,7 +191,9 @@ module Spree
           create(:user, spree_api_key: 'galleon')
 
           expect {
-            put "/api/users/#{other_user.id}/address_book", { address_book: other_user_address.attributes.merge('address1' => 'Hogwarts') }, { 'X-SPREE-TOKEN' => 'galleon' }
+            put "/api/users/#{other_user.id}/address_book",
+            params:  { address_book: other_user_address.attributes.merge('address1' => 'Hogwarts') },
+            headers: { 'X-SPREE-TOKEN' => 'galleon' }
           }.not_to change { UserAddress.count }
 
           expect(response.status).to eq(401)
@@ -189,7 +206,9 @@ module Spree
           create(:user, spree_api_key: 'galleon')
 
           expect {
-            delete "/api/users/#{other_user.id}/address_book", { address_id: address.id }, { 'X-SPREE-TOKEN' => 'galleon' }
+            delete "/api/users/#{other_user.id}/address_book",
+              params:  { address_id: address.id },
+              headers: { 'X-SPREE-TOKEN' => 'galleon' }
           }.not_to change { other_user.user_addresses.count }
 
           expect(response.status).to eq(401)

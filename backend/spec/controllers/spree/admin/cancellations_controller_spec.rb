@@ -4,7 +4,7 @@ describe Spree::Admin::CancellationsController do
   stub_authorization!
 
   describe "#index" do
-    subject { spree_get :index, order_id: order.number }
+    subject { get :index, params: { order_id: order.number } }
 
     let(:order) { create(:order_ready_to_ship, line_items_count: 1) }
 
@@ -18,13 +18,13 @@ describe Spree::Admin::CancellationsController do
   end
 
   describe "#cancel" do
-    subject { spree_post :short_ship, order_id: order.number, inventory_unit_ids: inventory_units.map(&:id) }
+    subject { post :short_ship, params: { order_id: order.number, inventory_unit_ids: inventory_units.map(&:id) } }
 
     let(:order) { create(:order_ready_to_ship, number: "R100", state: "complete", line_items_count: 1) }
     let(:referer) { "order_admin_page" }
 
     context "no inventory unit ids are provided" do
-      subject { spree_post :short_ship, order_id: order.number }
+      subject { post :short_ship, params: { order_id: order.number } }
 
       it "redirects back" do
         subject

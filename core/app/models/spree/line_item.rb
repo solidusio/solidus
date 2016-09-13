@@ -1,4 +1,12 @@
 module Spree
+  # Variants placed in the Order at a particular price.
+  #
+  # `Spree::LineItem` is an ActiveRecord model which records which `Spree::Variant`
+  # a customer has chosen to place in their order. It also acts as the permenent
+  # record of the customer's order by recording relevant price, taxation, and inventory
+  # concerns. Line items can also have adjustments placed on them as part of the
+  # promotion system.
+  #
   class LineItem < Spree::Base
     belongs_to :order, class_name: "Spree::Order", inverse_of: :line_items, touch: true
     belongs_to :variant, -> { with_deleted }, class_name: "Spree::Variant", inverse_of: :line_items
@@ -26,7 +34,6 @@ module Spree
     after_create :update_tax_charge
 
     after_save :update_inventory
-    after_save :update_adjustments
 
     before_destroy :update_inventory
     before_destroy :destroy_inventory_units
@@ -151,7 +158,7 @@ module Spree
 
     def handle_copy_price_override
       copy_price
-      ActiveSupport::Deprecation.warn 'You have overridden Spree::LineItem#copy_price. ' \
+      Spree::Deprecation.warn 'You have overridden Spree::LineItem#copy_price. ' \
         'This method is now called Spree::LineItem#set_pricing_attributes. ' \
         'Please adjust your override.',
         caller
@@ -165,17 +172,6 @@ module Spree
 
     def destroy_inventory_units
       inventory_units.destroy_all
-    end
-
-    def update_adjustments
-      if quantity_changed?
-        update_tax_charge # Called to ensure pre_tax_amount is updated.
-        recalculate_adjustments
-      end
-    end
-
-    def recalculate_adjustments
-      Spree::ItemAdjustments.new(self).update
     end
 
     def update_tax_charge

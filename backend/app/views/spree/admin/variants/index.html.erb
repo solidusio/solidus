@@ -1,5 +1,8 @@
 <%= render 'spree/admin/shared/product_tabs', current: 'Variants' %>
 
+<% admin_breadcrumb(plural_resource_name(Spree::Variant)) %>
+
+
 <% if @variants.any? || @product.variants.only_deleted.any?%>
   <%= render "table_filter", product: @product %>
   <%= render "table", variants: @variants %>
@@ -33,11 +36,10 @@
     <ul class="inline-menu" data-hook="toolbar">
       <% if can?(:create, Spree::Variant) %>
         <li id="new_var_link" data-hook>
-          <%= link_to_with_icon 'plus',
-                                Spree.t(:new_variant),
-                                new_admin_product_variant_url(@product),
-                                :remote => :true,
-                                :class => 'button' %>
+          <%= link_to Spree.t(:new_variant),
+                      new_admin_product_variant_url(@product),
+                      remote: :true,
+                      class: 'button' %>
         </li>
       <% end %>
     </ul>

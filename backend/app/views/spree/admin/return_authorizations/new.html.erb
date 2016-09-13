@@ -1,11 +1,10 @@
 <%= render :partial => 'spree/admin/shared/order_tabs', :locals => { :current => 'Return Authorizations' } %>
 
-<% content_for :page_title do %>
-  <i class="fa fa-arrow-right"></i> <%= Spree.t(:new_return_authorization) %>
-<% end %>
+<% admin_breadcrumb(link_to plural_resource_name(Spree::ReturnAuthorization), spree.admin_order_return_authorizations_url) %>
+<% admin_breadcrumb(Spree.t(:new_return_authorization)) %>
+
 
 <% content_for :page_actions do %>
-  <li><%= button_link_to Spree.t(:back_to_return_authorizations_list), spree.admin_order_return_authorizations_url, :icon => 'arrow-left' %></li>
 <% end %>
 
 <%= render :partial => 'spree/shared/error_messages', :locals => { :target => @return_authorization } %>
@@ -14,8 +13,8 @@
     <%= render :partial => 'form', :locals => { :f => f } %>
 
     <div class="form-buttons filter-actions actions" data-hook="buttons">
-      <%= button Spree.t(:'actions.create'), 'ok' %>
-      <%= button_link_to Spree.t('actions.cancel'), admin_order_return_authorizations_url(@order), :icon => 'remove' %>
+      <%= button Spree.t(:'actions.create') %>
+      <%= button_link_to Spree.t('actions.cancel'), admin_order_return_authorizations_url(@order) %>
     </div>
   </fieldset>
 <% end %>

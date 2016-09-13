@@ -1,9 +1,9 @@
 module Spree
   module Api
     class CheckoutsController < Spree::Api::BaseController
-      before_filter :load_order, only: [:next, :advance, :update, :complete]
-      around_filter :lock_order, only: [:next, :advance, :update, :complete]
-      before_filter :update_order_state, only: [:next, :advance, :update, :complete]
+      before_action :load_order, only: [:next, :advance, :update, :complete]
+      around_action :lock_order, only: [:next, :advance, :update, :complete]
+      before_action :update_order_state, only: [:next, :advance, :update, :complete]
 
       rescue_from Spree::Order::InsufficientStock, with: :insufficient_stock_error
 
@@ -11,12 +11,12 @@ module Spree
       # TODO: Remove this after deprecated usage in #update is removed
       include Spree::Core::ControllerHelpers::PaymentParameters
 
-      # This before_filter comes from Spree::Core::ControllerHelpers::Order
+      # This before_action comes from Spree::Core::ControllerHelpers::Order
       skip_before_action :set_current_order
 
       def next
         if @order.confirm?
-          ActiveSupport::Deprecation.warn "Using Spree::Api::CheckoutsController#next to transition to complete is deprecated. Please use #complete instead of #next.", caller
+          Spree::Deprecation.warn "Using Spree::Api::CheckoutsController#next to transition to complete is deprecated. Please use #complete instead of #next.", caller
           complete
           return
         end
@@ -94,12 +94,12 @@ module Spree
         massaged_params = params.deep_dup
 
         if params[:payment_source].present?
-          ActiveSupport::Deprecation.warn("Passing payment_source is deprecated. Send source parameters inside payments_attributes[:source_attributes].", caller)
+          Spree::Deprecation.warn("Passing payment_source is deprecated. Send source parameters inside payments_attributes[:source_attributes].", caller)
           move_payment_source_into_payments_attributes(massaged_params)
         end
 
         if params[:order] && params[:order][:existing_card].present?
-          ActiveSupport::Deprecation.warn("Passing order[:existing_card] is deprecated. Send existing_card_id inside of payments_attributes[:source_attributes].", caller)
+          Spree::Deprecation.warn("Passing order[:existing_card] is deprecated. Send existing_card_id inside of payments_attributes[:source_attributes].", caller)
           move_existing_card_into_payments_attributes(massaged_params)
         end
 

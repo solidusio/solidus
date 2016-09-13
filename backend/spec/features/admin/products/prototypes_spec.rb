@@ -48,7 +48,7 @@ describe "Prototypes", type: :feature do
       click_link "Prototypes"
       click_link "new_prototype_link"
       within('#new_prototype') do
-        expect(page).to have_content("NEW PROTOTYPE")
+        expect(page).to have_content("New Prototype")
       end
       fill_in "prototype_name", with: "male shirts"
       click_button "Create"

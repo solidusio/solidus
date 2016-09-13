@@ -1,6 +1,12 @@
+require 'twitter_cldr'
+
 module Spree
+  # `Spree::Address` provides the foundational ActiveRecord model for recording and
+  # validating address information for `Spree::Order`, `Spree::Shipment`,
+  # `Spree::UserAddress`, and `Spree::Carton`.
+  #
   class Address < Spree::Base
-    require 'twitter_cldr'
+    extend ActiveModel::ForbiddenAttributesProtection
 
     belongs_to :country, class_name: "Spree::Country"
     belongs_to :state, class_name: "Spree::State"
@@ -28,7 +34,7 @@ module Spree
     end
 
     def self.default(user = nil, kind = "bill")
-      ActiveSupport::Deprecation.warn("Address.default is deprecated. Use User.default_address or Address.build_default", caller)
+      Spree::Deprecation.warn("Address.default is deprecated. Use User.default_address or Address.build_default", caller)
       if user
         user.send(:"#{kind}_address") || build_default
       else
@@ -45,6 +51,9 @@ module Spree
     # @return [Address] address from existing address plus new_attributes as diff
     # @note, this may return existing_address if there are no changes to value equality
     def self.immutable_merge(existing_address, new_attributes)
+      # Ensure new_attributes is a sanitized hash
+      new_attributes = sanitize_for_mass_assignment(new_attributes)
+
       return factory(new_attributes) if existing_address.nil?
 
       merged_attributes = value_attributes(existing_address.attributes, new_attributes)
@@ -106,12 +115,12 @@ module Spree
     end
 
     def same_as?(other_address)
-      ActiveSupport::Deprecation.warn("Address.same_as? is deprecated. It's equivalent to Address.==", caller)
+      Spree::Deprecation.warn("Address.same_as? is deprecated. It's equivalent to Address.==", caller)
       self == other_address
     end
 
     def same_as(other_address)
-      ActiveSupport::Deprecation.warn("Address.same_as is deprecated. It's equivalent to Address.==", caller)
+      Spree::Deprecation.warn("Address.same_as is deprecated. It's equivalent to Address.==", caller)
       self == other_address
     end
 

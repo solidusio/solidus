@@ -1,11 +1,11 @@
-<% content_for :page_title do %>
-  <%= plural_resource_name(Spree::StockTransfer) %>
-<% end %>
+<% admin_breadcrumb(link_to Spree.t(:stock), spree.admin_stock_items_path) %>
+<% admin_breadcrumb(plural_resource_name(Spree::StockTransfer)) %>
+
 
 <% content_for :page_actions do %>
   <% if can? :create, Spree::StockTransfer %>
     <li>
-      <%= button_link_to Spree.t(:new_stock_transfer), new_admin_stock_transfer_path, icon: 'plus' %>
+      <%= button_link_to Spree.t(:new_stock_transfer), new_admin_stock_transfer_path %>
     </li>
   <% end %>
 <% end %>
@@ -59,7 +59,7 @@
 
       <div class="actions filter-actions">
         <div data-hook="admin_stock_transfers_index_search_buttons">
-          <%= button Spree.t(:filter_results), 'search' %>
+          <%= button Spree.t(:filter_results) %>
         </div>
       </div>
     <% end %>

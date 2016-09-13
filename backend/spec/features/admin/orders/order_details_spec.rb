@@ -15,6 +15,10 @@ describe "Order Details", type: :feature, js: true do
   before do
     @shipment1 = order.shipments.create(stock_location_id: stock_location.id)
     order.contents.add(product.master, 2)
+    # order.contents.add causes things (like line items & shipments) to get
+    # cached, and these are going to change during this spec so we go ahead and
+    # reload now
+    order.reload
   end
 
   context 'as Admin' do
@@ -47,7 +51,7 @@ describe "Order Details", type: :feature, js: true do
           fill_in "quantity_0", with: 2
         end
 
-        click_icon :plus
+        click_button "Add"
 
         within("#order_total") do
           expect(page).to have_content("$80.00")
@@ -63,7 +67,7 @@ describe "Order Details", type: :feature, js: true do
           end
         end
 
-        expect(page).to have_content("YOUR ORDER IS EMPTY") # wait for page refresh
+        expect(page).to have_content("Your order is empty") # wait for page refresh
         expect(page).not_to have_content("spree t-shirt")
       end
 
@@ -135,7 +139,7 @@ describe "Order Details", type: :feature, js: true do
             fill_in "variant_quantity", with: 1
           end
 
-          click_icon :plus
+          click_button 'Add'
 
           within(".line-items") do
             expect(page).to have_content(tote.name)
@@ -154,7 +158,7 @@ describe "Order Details", type: :feature, js: true do
 
           expect(page).to have_selector('.select2-no-results')
           within(".select2-no-results") do
-            expect(page).to have_content("NO MATCHES FOUND")
+            expect(page).to have_content("No matches found")
           end
         end
       end
@@ -197,7 +201,7 @@ describe "Order Details", type: :feature, js: true do
             within_row(1) { click_icon 'arrows-h' }
             complete_split_to(stock_location2, quantity: 2)
 
-            expect(page).to have_content("PENDING PACKAGE FROM 'CLARKSVILLE'")
+            expect(page).to have_content("pending package from 'Clarksville'")
 
             expect(order.shipments.count).to eq(1)
             expect(order.shipments.last.backordered?).to eq(false)
@@ -211,7 +215,7 @@ describe "Order Details", type: :feature, js: true do
             within_row(1) { click_icon 'arrows-h' }
             complete_split_to(stock_location2, quantity: 5)
 
-            expect(page).to have_content("PENDING PACKAGE FROM 'CLARKSVILLE'")
+            expect(page).to have_content("pending package from 'Clarksville'")
 
             expect(order.shipments.count).to eq(1)
             expect(order.shipments.last.backordered?).to eq(false)
@@ -294,7 +298,7 @@ describe "Order Details", type: :feature, js: true do
               within_row(1) { click_icon 'arrows-h' }
               complete_split_to(stock_location2, quantity: 2)
 
-              expect(page).to have_content("PENDING PACKAGE FROM 'CLARKSVILLE'")
+              expect(page).to have_content("pending package from 'Clarksville'")
 
               expect(order.shipments.count).to eq(1)
               expect(order.shipments.first.inventory_units_for(product.master).count).to eq(2)
@@ -306,6 +310,8 @@ describe "Order Details", type: :feature, js: true do
         context 'multiple items in cart' do
           it 'should have no problem splitting if multiple items are in the from shipment' do
             order.contents.add(create(:variant), 2)
+            order.reload
+
             expect(order.shipments.count).to eq(1)
             expect(order.shipments.first.manifest.count).to eq(2)
 
@@ -394,6 +400,7 @@ describe "Order Details", type: :feature, js: true do
           it 'should split fine if more than one line_item is in the receiving shipment' do
             variant2 = create(:variant)
             order.contents.add(variant2, 2, shipment: @shipment2)
+            order.reload
 
             within_row(1) { click_icon 'arrows-h' }
             complete_split_to(@shipment2, quantity: 1)
@@ -507,7 +514,7 @@ describe "Order Details", type: :feature, js: true do
       wait_for_ajax
 
       within '.carton-state' do
-        expect(page).to have_content('SHIPPED')
+        expect(page).to have_content('shipped')
       end
     end
   end

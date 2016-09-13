@@ -1,11 +1,9 @@
-<% content_for :page_title do %>
-  <%= Spree.t(:new_taxonomy) %>
-<% end %>
+<% admin_breadcrumb(link_to plural_resource_name(Spree::Product), spree.admin_products_path) %>
+<% admin_breadcrumb(link_to plural_resource_name(Spree::Taxonomy), spree.admin_taxonomies_path) %>
+<% admin_breadcrumb(Spree.t(:new_taxonomy)) %>
+
 
 <% content_for :page_actions do %>
-  <li>
-    <%= button_link_to Spree.t(:back_to_taxonomies_list), spree.admin_taxonomies_path, :icon => 'arrow-left' %>
-  </li>
 <% end %>
 
 <%= form_for [:admin, @taxonomy] do |f| %>
@@ -14,7 +12,7 @@
   <fieldset class="no-border-top">
     <br>
     <div class="filter-actions actions" data-hook="buttons">
-      <%= button Spree.t('actions.create'), 'ok' %>
+      <%= button Spree.t('actions.create') %>
     </div>
   </fieldset>
 <% end %>

@@ -119,7 +119,7 @@ describe "Adjustments", type: :feature do
         end
       end
 
-      expect(page).to have_content(/TOTAL: ?\$170\.00/)
+      expect(page).to have_content(/Total: ?\$170\.00/)
     end
   end
 end

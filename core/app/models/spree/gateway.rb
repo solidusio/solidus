@@ -1,4 +1,8 @@
 module Spree
+  # A concrete implementation of `Spree::PaymentMethod` intended to provide a
+  # base for extension. See https://github.com/solidusio/solidus_gateway/ for
+  # offically supported payment gateway implementations.
+  #
   class Gateway < PaymentMethod
     delegate :authorize, :purchase, :capture, :void, :credit, to: :provider
 
@@ -39,7 +43,7 @@ module Spree
     end
 
     def disable_customer_profile(source)
-      ActiveSupport::Deprecation.warn("Gateway#disable_customer_profile is deprecated")
+      Spree::Deprecation.warn("Gateway#disable_customer_profile is deprecated")
       if source.is_a? CreditCard
         source.update_column :gateway_customer_profile_id, nil
       else

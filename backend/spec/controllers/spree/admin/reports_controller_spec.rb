@@ -44,7 +44,7 @@ describe Spree::Admin::ReportsController, type: :controller do
       order_complete_mid_month.save!
     end
 
-    subject { spree_get :sales_total, params }
+    subject { get :sales_total, params: params }
 
     shared_examples 'sales total report' do
       it 'should respond with success' do
@@ -126,7 +126,7 @@ describe Spree::Admin::ReportsController, type: :controller do
 
   describe 'GET index' do
     it 'should be ok' do
-      spree_get :index
+      get :index
       expect(response).to be_ok
     end
   end

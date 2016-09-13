@@ -2,7 +2,8 @@ module Spree
   module Api
     class TaxonomiesController < Spree::Api::BaseController
       def index
-        respond_with(taxonomies)
+        @taxonomies = paginate(taxonomies)
+        respond_with(@taxonomies)
       end
 
       def new
@@ -45,9 +46,12 @@ module Spree
       private
 
       def taxonomies
-        @taxonomies = Taxonomy.accessible_by(current_ability, :read).order('name').includes(root: :children).
-                      ransack(params[:q]).result.
-                      page(params[:page]).per(params[:per_page])
+        @taxonomies = Taxonomy.
+          accessible_by(current_ability, :read).
+          order('name').
+          includes(root: :children).
+          ransack(params[:q]).
+          result
       end
 
       def taxonomy

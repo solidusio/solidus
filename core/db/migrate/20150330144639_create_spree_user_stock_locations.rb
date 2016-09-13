@@ -1,4 +1,4 @@
-class CreateSpreeUserStockLocations < ActiveRecord::Migration
+class CreateSpreeUserStockLocations < ActiveRecord::Migration[4.2]
   def change
     create_table :spree_user_stock_locations do |t|
       t.integer :user_id

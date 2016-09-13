@@ -1,12 +1,12 @@
 module Spree
   module Api
     class PaymentsController < Spree::Api::BaseController
-      before_filter :find_order
-      around_filter :lock_order, only: [:create, :update, :destroy, :authorize, :capture, :purchase, :void, :credit]
-      before_filter :find_payment, only: [:update, :show, :authorize, :purchase, :capture, :void, :credit]
+      before_action :find_order
+      around_action :lock_order, only: [:create, :update, :destroy, :authorize, :capture, :purchase, :void, :credit]
+      before_action :find_payment, only: [:update, :show, :authorize, :purchase, :capture, :void, :credit]
 
       def index
-        @payments = @order.payments.ransack(params[:q]).result.page(params[:page]).per(params[:per_page])
+        @payments = paginate(@order.payments.ransack(params[:q]).result)
         respond_with(@payments)
       end
 

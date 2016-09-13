@@ -1,12 +1,5 @@
-<% content_for :page_title do %>
-  <%= Spree.t(:new_user) %>
-<% end %>
-
-<% content_for :page_actions do %>
-  <li>
-    <%= button_link_to Spree.t(:back_to_users_list), spree.admin_users_path, :icon => 'arrow-left' %>
-  </li>
-<% end %>
+<% admin_breadcrumb(link_to plural_resource_name(Spree::LegacyUser), spree.admin_users_path) %>
+<% admin_breadcrumb(Spree.t(:new_user)) %>
 
 <div data-hook="admin_user_new_form_header">
   <%= render :partial => 'spree/shared/error_messages', :locals => { :target => @user } %>

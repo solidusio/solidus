@@ -14,7 +14,7 @@ module Spree
 
         context "deleted is not requested" do
           it "does not assign deleted variants for a requested product" do
-            spree_get :index, product_id: product.slug
+            get :index, params: { product_id: product.slug }
             expect(assigns(:collection)).to include variant_1
             expect(assigns(:collection)).not_to include variant_2
           end
@@ -22,7 +22,7 @@ module Spree
 
         context "deleted is requested" do
           it "assigns deleted along with non-deleted variants for a requested product" do
-            spree_get :index, product_id: product.slug, deleted: "on"
+            get :index, params: { product_id: product.slug, deleted: "on" }
             expect(assigns(:collection)).to include variant_1
             expect(assigns(:collection)).to include variant_2
           end

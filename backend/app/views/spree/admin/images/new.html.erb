@@ -3,10 +3,10 @@
     <legend align="center"><%= Spree.t(:new_image) %></legend>
 
       <%= render :partial => 'form', :locals => { :f => f } %>
-    
+
       <div class="form-buttons filter-actions actions" data-hook="buttons">
-        <%= button Spree.t('actions.update'), 'refresh' %>
-        <%= link_to_with_icon 'remove', Spree.t('actions.cancel'), admin_product_images_url(@product), :id => 'cancel_link', :class => 'button' %>
+        <%= button Spree.t('actions.update') %>
+        <%= link_to Spree.t('actions.cancel'), admin_product_images_url(@product), :id => 'cancel_link', :class => 'button' %>
       </div>
   </fieldset>
 <% end %>

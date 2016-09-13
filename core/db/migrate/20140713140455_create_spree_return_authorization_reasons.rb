@@ -1,4 +1,4 @@
-class CreateSpreeReturnAuthorizationReasons < ActiveRecord::Migration
+class CreateSpreeReturnAuthorizationReasons < ActiveRecord::Migration[4.2]
   class ReturnAuthorizationReason < ActiveRecord::Base
     self.table_name = 'spree_return_authorization_reasons'
   end

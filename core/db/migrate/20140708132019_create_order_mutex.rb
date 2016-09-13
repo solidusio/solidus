@@ -1,4 +1,4 @@
-class CreateOrderMutex < ActiveRecord::Migration
+class CreateOrderMutex < ActiveRecord::Migration[4.2]
   def change
     create_table :spree_order_mutexes do |t|
       t.integer :order_id, null: false

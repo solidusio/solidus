@@ -1,13 +1,14 @@
 <%= render 'spree/admin/shared/payments_tabs' %>
 
-<% content_for :page_title do %>
-  <%= plural_resource_name(Spree::PaymentMethod) %>
-<% end %>
+<% admin_breadcrumb(Spree.t(:settings)) %>
+<% admin_breadcrumb(plural_resource_name(Spree::Payment)) %>
+<% admin_breadcrumb(plural_resource_name(Spree::PaymentMethod)) %>
+
 
 <% content_for :page_actions do %>
   <% if can?(:create, Spree::PaymentMethod) %>
     <li>
-      <%= button_link_to Spree.t(:new_payment_method), new_object_url, :icon => 'plus', :id => 'admin_new_payment_methods_link' %>
+      <%= button_link_to Spree.t(:new_payment_method), new_object_url, :id => 'admin_new_payment_methods_link' %>
     </li>
   <% end %>
 <% end %>
@@ -25,7 +26,7 @@
     </colgroup>
     <thead>
       <tr data-hook="admin_payment_methods_index_headers">
-        <th></th>
+        <th class="no-border"></th>
         <th><%= Spree::PaymentMethod.human_attribute_name(:name) %></th>
         <th><%= Spree::PaymentMethod.human_attribute_name(:type) %></th>
         <th><%= Spree::PaymentMethod.human_attribute_name(:display_on) %></th>

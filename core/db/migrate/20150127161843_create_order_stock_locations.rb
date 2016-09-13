@@ -1,4 +1,4 @@
-class CreateOrderStockLocations < ActiveRecord::Migration
+class CreateOrderStockLocations < ActiveRecord::Migration[4.2]
   def change
     create_table :spree_order_stock_locations do |t|
       t.integer :order_id

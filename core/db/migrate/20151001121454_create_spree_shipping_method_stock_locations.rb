@@ -1,4 +1,4 @@
-class CreateSpreeShippingMethodStockLocations < ActiveRecord::Migration
+class CreateSpreeShippingMethodStockLocations < ActiveRecord::Migration[4.2]
   def change
     create_table :spree_shipping_method_stock_locations do |t|
       t.belongs_to :shipping_method

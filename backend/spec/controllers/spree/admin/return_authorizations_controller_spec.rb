@@ -19,7 +19,7 @@ describe Spree::Admin::ReturnAuthorizationsController, type: :controller do
       let(:return_authorization) { return_item.return_authorization }
 
       it "loads all the active rma reasons" do
-        spree_get :edit, id: return_authorization.to_param, order_id: return_authorization.order.to_param
+        get :edit, params: { id: return_authorization.to_param, order_id: return_authorization.order.to_param }
         expect(assigns(:reasons)).to include(return_reason)
         expect(assigns(:reasons)).to include(inactive_rma_reason)
         expect(assigns(:reasons)).not_to include(other_inactive_rma_reason)
@@ -30,14 +30,14 @@ describe Spree::Admin::ReturnAuthorizationsController, type: :controller do
       let(:return_authorization) { create(:return_authorization, reason: return_reason) }
 
       it "loads all the active rma reasons" do
-        spree_get :edit, id: return_authorization.to_param, order_id: return_authorization.order.to_param
+        get :edit, params: { id: return_authorization.to_param, order_id: return_authorization.order.to_param }
         expect(assigns(:reasons)).to eq [return_reason]
       end
     end
 
     context "return authorization doesn't have an associated reason" do
       it "loads all the active rma reasons" do
-        spree_get :new, order_id: order.to_param
+        get :new, params: { order_id: order.to_param }
         expect(assigns(:reasons)).to eq [return_reason]
       end
     end
@@ -68,14 +68,14 @@ describe Spree::Admin::ReturnAuthorizationsController, type: :controller do
     end
 
     context '#new' do
-      subject { spree_get :new, order_id: order.to_param }
+      subject { get :new, params: { order_id: order.to_param } }
 
       include_context 'without existing return items'
     end
 
     context '#edit' do
       subject do
-        spree_get :edit, {
+        get :edit, params: {
           id: return_authorization.to_param,
           order_id: order.to_param
         }
@@ -89,7 +89,7 @@ describe Spree::Admin::ReturnAuthorizationsController, type: :controller do
 
     context '#create failed' do
       subject do
-        spree_post :create, {
+        post :create, params: {
           return_authorization: { stock_location_id: nil }, # return authorization requires valid stock location, so this will fail
           order_id: order.to_param
         }
@@ -100,7 +100,7 @@ describe Spree::Admin::ReturnAuthorizationsController, type: :controller do
 
     context '#update failed' do
       subject do
-        spree_put :update, {
+        put :update, params: {
           return_authorization: { stock_location_id: nil }, # return authorization requires valid stock location, so this will fail
           id: return_authorization.to_param,
           order_id: order.to_param
@@ -121,7 +121,7 @@ describe Spree::Admin::ReturnAuthorizationsController, type: :controller do
     let!(:second_active_reimbursement_type) { create(:reimbursement_type) }
 
     before do
-      spree_get :new, order_id: order.to_param
+      get :new, params: { order_id: order.to_param }
     end
 
     it "loads all the active reimbursement types" do
@@ -136,7 +136,7 @@ describe Spree::Admin::ReturnAuthorizationsController, type: :controller do
     let!(:inactive_stock_location) { create(:stock_location, active: false) }
 
     before do
-      spree_get :new, order_id: order.to_param
+      get :new, params: { order_id: order.to_param }
     end
 
     it "loads all the active stock locations" do
@@ -148,7 +148,7 @@ describe Spree::Admin::ReturnAuthorizationsController, type: :controller do
   context '#create' do
     let(:stock_location) { create(:stock_location) }
 
-    subject { spree_post :create, params }
+    subject { post :create, params: params }
 
     let(:params) do
       {
@@ -188,7 +188,7 @@ describe Spree::Admin::ReturnAuthorizationsController, type: :controller do
       }
     end
 
-    subject { spree_put :update, params }
+    subject { put :update, params: params }
 
     context "adding an item" do
       let(:return_items_params) do

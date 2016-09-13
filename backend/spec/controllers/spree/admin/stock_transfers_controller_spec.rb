@@ -40,24 +40,24 @@ module Spree
         end
 
         it "doesn't display stock locations the user doesn't have access to" do
-          spree_get :index
+          get :index
           expect(assigns(:stock_locations)).to match_array [warehouse, ny_store, la_store]
         end
       end
 
       it "searches by stock location" do
-        spree_get :index, q: { source_location_id_or_destination_location_id_eq: ny_store.id }
+        get :index, params: { q: { source_location_id_or_destination_location_id_eq: ny_store.id } }
         expect(assigns(:stock_transfers).count).to eq 1
         expect(assigns(:stock_transfers)).to include(stock_transfer1)
       end
 
       it "filters the closed stock transfers" do
-        spree_get :index, q: { closed_at_null: '1' }
+        get :index, params: { q: { closed_at_null: '1' } }
         expect(assigns(:stock_transfers)).to match_array [stock_transfer1]
       end
 
       it "doesn't filter any stock transfers" do
-        spree_get :index, q: { closed_at_null: '0' }
+        get :index, params: { q: { closed_at_null: '0' } }
         expect(assigns(:stock_transfers)).to match_array [stock_transfer1, stock_transfer2]
       end
     end
@@ -66,7 +66,7 @@ module Spree
       let(:warehouse) { StockLocation.create(name: "Warehouse", active: false) }
 
       subject do
-        spree_post :create, stock_transfer: { source_location_id: warehouse.id, description: nil }
+        post :create, params: { stock_transfer: { source_location_id: warehouse.id, description: nil } }
       end
 
       context "user doesn't have read access to the selected stock location" do
@@ -101,7 +101,7 @@ module Spree
       # Regression spec for Solidus issue #1087
       context "missing source_stock_location parameter" do
         subject do
-          spree_post :create, stock_transfer: { source_location_id: nil, description: nil }
+          post :create, params: { stock_transfer: { source_location_id: nil, description: nil } }
         end
 
         it "sets a flash error" do
@@ -118,7 +118,7 @@ module Spree
       let(:parameters)           { { id: transfer_with_items.to_param } }
 
       subject do
-        spree_get :receive, parameters
+        get :receive, params: parameters
       end
 
       context 'stock transfer is not receivable' do
@@ -171,7 +171,7 @@ module Spree
       end
 
       subject do
-        spree_put :finalize, id: transfer_with_items.to_param
+        put :finalize, params: { id: transfer_with_items.to_param }
       end
 
       context 'stock transfer is not finalizable' do
@@ -229,7 +229,7 @@ module Spree
       end
 
       subject do
-        spree_put :close, id: transfer_with_items.to_param
+        put :close, params: { id: transfer_with_items.to_param }
       end
 
       context 'stock transfer is not receivable' do
@@ -321,7 +321,7 @@ module Spree
       let(:warehouse_stock_item) { warehouse.stock_items.find_by(variant: transfer_variant) }
       let(:ny_stock_item) { ny_store.stock_items.find_by(variant: transfer_variant) }
 
-      subject { spree_put :ship, id: stock_transfer.number }
+      subject { put :ship, params: { id: stock_transfer.number } }
 
       before do
         warehouse_stock_item.set_count_on_hand(1)

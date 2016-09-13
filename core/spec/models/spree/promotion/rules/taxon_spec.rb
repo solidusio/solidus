@@ -1,18 +1,20 @@
 require 'spec_helper'
 
 describe Spree::Promotion::Rules::Taxon, type: :model do
-  let(:rule) { Spree::Promotion::Rules::Taxon.create!(promotion: create(:promotion)) }
+  let(:rule) do
+    Spree::Promotion::Rules::Taxon.create!(promotion: create(:promotion))
+  end
 
-  context '#elegible?(order)' do
+  context '#eligible?(order)' do
     let(:taxon){ create :taxon, name: 'first' }
     let(:taxon2){ create :taxon, name: 'second' }
     let(:order){ create :order_with_line_items }
 
-    before do
-      rule.save
-    end
+    context 'with any match policy' do
+      before do
+        rule.update!(preferred_match_policy: 'any')
+      end
 
-    shared_examples_for 'any match policy' do
       it 'is eligible if order does have any prefered taxon' do
         order.products.first.taxons << taxon
         rule.taxons << taxon
@@ -56,25 +58,9 @@ describe Spree::Promotion::Rules::Taxon, type: :model do
       end
     end
 
-    context 'with any match policy' do
-      before do
-        rule.preferred_match_policy = 'any'
-      end
-
-      it_behaves_like 'any match policy'
-    end
-
-    context "with nil (unexpected) match policy" do
-      before do
-        rule.preferred_match_policy = nil
-      end
-
-      it_behaves_like 'any match policy'
-    end
-
     context 'with all match policy' do
       before do
-        rule.preferred_match_policy = 'all'
+        rule.update!(preferred_match_policy: 'all')
       end
 
       it 'is eligible order has all prefered taxons' do
@@ -134,6 +120,52 @@ describe Spree::Promotion::Rules::Taxon, type: :model do
           expect(rule.eligibility_errors.full_messages.first).
             to eq "Your cart contains a product from an excluded category that prevents this coupon code from being applied."
         end
+      end
+    end
+
+    context 'with an invalid match policy' do
+      before do
+        order.products.first.taxons << taxon
+        rule.taxons << taxon
+        rule.preferred_match_policy = 'invalid'
+        rule.save!(validate: false)
+      end
+
+      it 'logs a warning and uses "any" policy' do
+        expect(Spree::Deprecation).to(
+          receive(:warn).
+          with(/has unexpected match policy "invalid"/)
+        )
+
+        expect(
+          rule.eligible?(order)
+        ).to be_truthy
+      end
+    end
+  end
+
+  describe '#actionable?' do
+    let(:line_item) { order.line_items.first! }
+    let(:order) { create :order_with_line_items }
+    let(:taxon) { create :taxon, name: 'first' }
+
+    before do
+      rule.preferred_match_policy = 'invalid'
+      rule.save!(validate: false)
+      line_item.product.taxons << taxon
+      rule.taxons << taxon
+    end
+
+    context 'with an invalid match policy' do
+      it 'logs a warning and uses "any" policy' do
+        expect(Spree::Deprecation).to(
+          receive(:warn).
+          with(/has unexpected match policy "invalid"/)
+        )
+
+        expect(
+          rule.actionable?(line_item)
+        ).to be_truthy
       end
     end
   end

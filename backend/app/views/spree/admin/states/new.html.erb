@@ -2,9 +2,11 @@
 
 <%= render :partial => 'spree/shared/error_messages', :locals => { :target => @state } %>
 
-<% content_for :page_title do %>
-  <%= Spree.t(:new_state) %>
-<% end %>
+<% admin_breadcrumb(Spree.t(:settings)) %>
+<% admin_breadcrumb(Spree.t('admin.tab.areas')) %>
+<% admin_breadcrumb(link_to plural_resource_name(Spree::State), spree.admin_states_path) %>
+<% admin_breadcrumb(Spree.t(:new_state)) %>
+
 
 <%= form_for [:admin, @country, @state] do |f| %>
   <fieldset>

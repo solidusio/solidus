@@ -64,6 +64,7 @@
 
     <div class="field four columns omega" data-hook="tax_category">
       <%= f.label :tax_category %>
+      <%= f.field_hint :tax_category %>
       <%= f.collection_select :tax_category_id,
                               @tax_categories,
                               :id,

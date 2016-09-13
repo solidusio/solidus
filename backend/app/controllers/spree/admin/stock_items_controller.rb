@@ -12,14 +12,6 @@ module Spree
 
       private
 
-      def location_after_destroy
-        :back
-      end
-
-      def location_after_save
-        :back
-      end
-
       def build_resource
         variant = Variant.accessible_by(current_ability, :read).find(params[:variant_id])
         stock_location = StockLocation.accessible_by(current_ability, :read).find(params[:stock_location_id])

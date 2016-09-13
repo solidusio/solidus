@@ -2,32 +2,40 @@ module Spree
   class Promotion
     module Rules
       class Taxon < PromotionRule
-        has_many :promotion_rule_taxons, class_name: 'Spree::PromotionRuleTaxon', foreign_key: :promotion_rule_id
+        has_many :promotion_rule_taxons, class_name: 'Spree::PromotionRuleTaxon', foreign_key: :promotion_rule_id,
+          dependent: :destroy
         has_many :taxons, through: :promotion_rule_taxons, class_name: 'Spree::Taxon'
 
         MATCH_POLICIES = %w(any all none)
-        preference :match_policy, default: MATCH_POLICIES.first
 
+        validates_inclusion_of :preferred_match_policy, in: MATCH_POLICIES
+
+        preference :match_policy, :string, default: MATCH_POLICIES.first
         def applicable?(promotable)
           promotable.is_a?(Spree::Order)
         end
 
         def eligible?(order, _options = {})
           order_taxons = taxons_in_order_including_parents(order)
-          if preferred_match_policy == 'all'
+
+          case preferred_match_policy
+          when 'all'
             unless (taxons.to_a - order_taxons).empty?
               eligibility_errors.add(:base, eligibility_error_message(:missing_taxon))
             end
-          elsif preferred_match_policy == 'none'
-            unless taxons.none?{ |taxon| order_taxons.include? taxon }
-              eligibility_errors.add(:base, eligibility_error_message(:has_excluded_taxon))
-            end
-          else # nil or unrecognized match_policy treated like 'any' for legacy compat.
+          when 'any'
             unless taxons.any?{ |taxon| order_taxons.include? taxon }
               eligibility_errors.add(:base, eligibility_error_message(:no_matching_taxons))
             end
-            if preferred_match_policy != 'any'
-              logger.error "#{self.class.name} has unexpected match policy #{preferred_match_policy.inspect} and is not eligible. #{inspect}"
+          when 'none'
+            unless taxons.none?{ |taxon| order_taxons.include? taxon }
+              eligibility_errors.add(:base, eligibility_error_message(:has_excluded_taxon))
+            end
+          else
+            # Change this to an exception in a future version of Solidus
+            warn_invalid_match_policy(assume: 'any')
+            unless taxons.any? { |taxon| order_taxons.include? taxon }
+              eligibility_errors.add(:base, eligibility_error_message(:no_matching_taxons))
             end
           end
 
@@ -35,10 +43,15 @@ module Spree
         end
 
         def actionable?(line_item)
-          if preferred_match_policy == 'none'
+          case preferred_match_policy
+          when 'any', 'all'
+            taxon_product_ids.include?(line_item.variant.product_id)
+          when 'none'
             taxon_product_ids.exclude? line_item.variant.product_id
           else
-            taxon_product_ids.include? line_item.variant.product_id
+            # Change this to an exception in a future version of Solidus
+            warn_invalid_match_policy(assume: 'any')
+            taxon_product_ids.include?(line_item.variant.product_id)
           end
         end
 
@@ -52,6 +65,13 @@ module Spree
         end
 
         private
+
+        def warn_invalid_match_policy(assume:)
+          Spree::Deprecation.warn(
+            "#{self.class.name} id=#{id} has unexpected match policy #{preferred_match_policy.inspect}. "\
+            "Interpreting it as '#{assume}'."
+          )
+        end
 
         # All taxons in an order
         def order_taxons(order)

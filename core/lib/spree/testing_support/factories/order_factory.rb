@@ -46,10 +46,29 @@ FactoryGirl.define do
         end
         order.line_items.reload
 
-        create(:shipment, order: order, cost: evaluator.shipment_cost, shipping_method: evaluator.shipping_method, address: evaluator.ship_address, stock_location: evaluator.stock_location)
+        create(:shipment, order: order, cost: evaluator.shipment_cost, shipping_method: evaluator.shipping_method, stock_location: evaluator.stock_location)
         order.shipments.reload
 
         order.update!
+      end
+
+      factory :order_ready_to_complete do
+        state 'confirm'
+        payment_state 'checkout'
+
+        transient do
+          payment_type :credit_card_payment
+        end
+
+        after(:create) do |order, evaluator|
+          create(evaluator.payment_type, {
+            amount: order.total,
+            order: order,
+            state: order.payment_state
+          })
+
+          order.payments.reload
+        end
       end
 
       factory :completed_order_with_totals do
@@ -94,7 +113,7 @@ FactoryGirl.define do
                 next unless evaluator.with_cartons
                 Spree::Carton.create!(
                   stock_location: shipment.stock_location,
-                  address: shipment.address,
+                  address: order.ship_address,
                   shipping_method: shipment.shipping_method,
                   inventory_units: shipment.inventory_units,
                   shipped_at: Time.current
@@ -108,19 +127,22 @@ FactoryGirl.define do
     end
   end
 
-  factory :completed_order_with_promotion, parent: :completed_order_with_totals, class: "Spree::Order" do
+  factory :completed_order_with_promotion, parent: :order_with_line_items, class: "Spree::Order" do
     transient do
       promotion nil
-      promotion_code nil
     end
 
     after(:create) do |order, evaluator|
       promotion = evaluator.promotion || create(:promotion, code: "test")
-      promotion_code = evaluator.promotion_code || promotion.codes.first
+      promotion_code = promotion.codes.first || create(:promotion_code, promotion: promotion)
 
-      promotion.actions.each do |action|
-        action.perform({ order: order, promotion: promotion, promotion_code: promotion_code })
-      end
+      promotion.activate(order: order, promotion_code: promotion_code)
+      order.order_promotions.create!(promotion: promotion, promotion_code: promotion_code)
+
+      # Complete the order after the promotion has been activated
+      order.refresh_shipment_rates
+      order.update_column(:completed_at, Time.current)
+      order.update_column(:state, "complete")
     end
   end
 end

@@ -2,14 +2,7 @@
 
 <%= csrf_meta_tags %>
 
-<title>
-  <% if content_for? :title %>
-    <%= yield :title %>
-  <% else %>
-    <%= "Solidus #{Spree.t('administration')}: " %>
-    <%= Spree.t(controller.controller_name, :default => controller.controller_name.titleize) %>
-  <% end %>
-</title>
+<title><%= admin_page_title %></title>
 
 <!-- Get "Open Sans" font from Google -->
 <link href='//fonts.googleapis.com/css?family=Open+Sans:400italic,600italic,400,600&subset=latin,cyrillic,greek,vietnamese' rel='stylesheet' type='text/css'>

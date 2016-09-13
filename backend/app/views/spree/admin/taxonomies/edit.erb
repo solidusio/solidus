@@ -1,13 +1,11 @@
-<% content_for :page_title do %>
-  <%= Spree.t(:taxonomy_edit) %>
-<% end %>
+<% admin_breadcrumb(link_to plural_resource_name(Spree::Product), spree.admin_products_path) %>
+<% admin_breadcrumb(link_to plural_resource_name(Spree::Taxonomy), spree.admin_taxonomies_path) %>
+<% admin_breadcrumb(@taxonomy.name) %>
+
 
 <% content_for :page_actions do %>
   <li>
-    <%= button_link_to Spree.t(:back_to_taxonomies_list), spree.admin_taxonomies_path, :icon => 'arrow-left' %>
-  </li>
-  <li>
-    <%= button_link_to Spree.t(:add_taxon), spree.admin_taxonomies_path, { icon: 'plus', class: 'add-taxon-button' } %>
+    <%= button_link_to Spree.t(:add_taxon), spree.admin_taxonomies_path, { class: 'add-taxon-button' } %>
   </li>
 <% end %>
 
@@ -15,8 +13,8 @@
   <fieldset class="no-border-top">
     <%= render :partial => 'form', :locals => { :f => f } %>
     <div class="filter-actions actions">
-      <%= button Spree.t('actions.update'), 'refresh' %>
-      <%= button_link_to Spree.t('actions.cancel'), admin_taxonomies_path, :icon => 'remove' %>
+      <%= button Spree.t('actions.update') %>
+      <%= button_link_to Spree.t('actions.cancel'), admin_taxonomies_path %>
     </div>
   </fieldset>
 

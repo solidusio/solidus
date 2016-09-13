@@ -36,7 +36,7 @@ module Spree
             # To avoid multiple occurrences of the same transition being defined
             # On first definition, state_machines will not be defined
             state_machines.clear if respond_to?(:state_machines)
-            state_machine :state, initial: :cart, use_transactions: false, action: :save_state do
+            state_machine :state, initial: :cart, use_transactions: false do
               klass.next_event_transitions.each { |t| transition(t.merge(on: :next)) }
 
               # Persist the state on the order
@@ -76,7 +76,7 @@ module Spree
                   transition to: :payment, from: :confirm
                 end
 
-                after_transition to: :complete, do: :persist_user_credit_card
+                after_transition to: :complete, do: :add_payment_sources_to_wallet
                 before_transition to: :payment, do: :set_shipments_cost
                 before_transition to: :payment, do: :create_tax_charge!
                 before_transition to: :payment, do: :assign_default_credit_card
@@ -244,13 +244,13 @@ module Spree
             checkout_step_index(state) > checkout_step_index(self.state)
           end
 
-          define_callbacks :updating_from_params, terminator: ->(_target, result) { result == false }
+          define_callbacks :updating_from_params, terminator: deprecated_false_terminator
 
           set_callback :updating_from_params, :before, :update_params_payment_source
 
           # @deprecated Use {OrderUpdateAttributes} instead
           def update_from_params(params, permitted_params, request_env = {})
-            ActiveSupport::Deprecation.warn "update_from_params is deprecated. Use the OrderUpdateAttributes class instead", caller
+            Spree::Deprecation.warn "update_from_params is deprecated. Use the OrderUpdateAttributes class instead", caller
             success = false
             @updating_params = params
             run_callbacks :updating_from_params do
@@ -309,22 +309,25 @@ module Spree
             end
           end
 
-          def persist_user_credit_card
-            if !temporary_credit_card && user_id && valid_credit_cards.present?
-              default_cc = valid_credit_cards.first
-              # TODO: target for refactoring -- why is order checkout responsible for the user -> credit_card relationship?
-              default_cc.user_id = user_id
-              default_cc.default = true
-              default_cc.save
-            end
+          def add_payment_sources_to_wallet
+            Spree::Config.
+              add_payment_sources_to_wallet_class.new(self).
+              add_to_wallet
           end
+          alias_method :persist_user_credit_card, :add_payment_sources_to_wallet
+          deprecate :persist_user_credit_card
 
           def assign_default_credit_card
-            if payments.from_credit_card.count == 0 && user && user.default_credit_card.try(:valid?)
-              cc = user.default_credit_card
-              payments.create!(payment_method_id: cc.payment_method_id, source: cc)
-              # this is one of 2 places still using User#bill_address
-              self.bill_address ||= user.default_credit_card.address || user.bill_address
+            builder = Spree::Config.default_payment_builder_class.new(self)
+
+            if payment = builder.build
+              payments << payment
+
+              if bill_address.nil?
+                # this is one of 2 places still using User#bill_address
+                self.bill_address = payment.source.try(:address) ||
+                                    user.bill_address
+              end
             end
           end
 

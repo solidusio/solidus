@@ -113,7 +113,6 @@ module Spree
         expect(last_unit.state).to eq 'backordered'
 
         expect(shipment.shipping_method).to eq shipping_method
-        expect(shipment.address).to eq order.ship_address
       end
 
       it 'does not add an inventory unit to a package twice' do

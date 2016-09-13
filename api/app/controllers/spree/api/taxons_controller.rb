@@ -10,7 +10,7 @@ module Spree
           @taxons = Spree::Taxon.accessible_by(current_ability, :read).order(:taxonomy_id, :lft).ransack(params[:q]).result
         end
 
-        @taxons = @taxons.page(params[:page]).per(params[:per_page])
+        @taxons = paginate(@taxons)
         respond_with(@taxons)
       end
 
@@ -33,7 +33,7 @@ module Spree
         taxonomy = Spree::Taxonomy.find_by(id: params[:taxonomy_id])
 
         if taxonomy.nil?
-          @taxon.errors[:taxonomy_id] = I18n.t(:invalid_taxonomy_id, scope: 'spree.api')
+          @taxon.errors.add(:taxonomy_id, I18n.t('spree.api.invalid_taxonomy_id'))
           invalid_resource!(@taxon) && return
         end
 
@@ -65,12 +65,15 @@ module Spree
         # Returns the products sorted by their position with the classification
         # Products#index does not do the sorting.
         taxon = Spree::Taxon.find(params[:id])
-        @products = taxon.products.ransack(params[:q]).result
-        @products = @products.page(params[:page]).per(params[:per_page] || 500)
+        @products = paginate(taxon.products.ransack(params[:q]).result)
         render "spree/api/products/index"
       end
 
       private
+
+      def default_per_page
+        500
+      end
 
       def taxonomy
         if params[:taxonomy_id].present?

@@ -1,4 +1,4 @@
-class ConvertSalePromotions < ActiveRecord::Migration
+class ConvertSalePromotions < ActiveRecord::Migration[4.2]
   def up
     sale_promotions.update_all(apply_automatically: true)
   end

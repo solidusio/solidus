@@ -11,6 +11,9 @@ module Spree
         has_many :products, class_name: 'Spree::Product', through: :product_promotion_rules
 
         MATCH_POLICIES = %w(any all none)
+
+        validates_inclusion_of :preferred_match_policy, in: MATCH_POLICIES
+
         preference :match_policy, :string, default: MATCH_POLICIES.first
 
         # scope/association that is used to test eligibility
@@ -25,18 +28,21 @@ module Spree
         def eligible?(order, _options = {})
           return true if eligible_products.empty?
 
-          if preferred_match_policy == 'all'
+          case preferred_match_policy
+          when 'all'
             unless eligible_products.all? { |p| order.products.include?(p) }
               eligibility_errors.add(:base, eligibility_error_message(:missing_product))
             end
-          elsif preferred_match_policy == 'any'
+          when 'any'
             unless order.products.any? { |p| eligible_products.include?(p) }
               eligibility_errors.add(:base, eligibility_error_message(:no_applicable_products))
             end
-          else
+          when 'none'
             unless order.products.none? { |p| eligible_products.include?(p) }
               eligibility_errors.add(:base, eligibility_error_message(:has_excluded_product))
             end
+          else
+            raise "unexpected match policy: #{preferred_match_policy.inspect}"
           end
 
           eligibility_errors.empty?

@@ -6,6 +6,19 @@ module Spree
       @order = order
     end
 
+    # Add a line items to the order if there is inventory to do so
+    # and populate Promotions
+    #
+    # @params [Spree::Variant] :variant The variant the line_item should
+    #   be associated with
+    # @params [Integer] :quantity The line_item quantity
+    # @param [Hash] :options Options for the adding proccess
+    #   Valid options:
+    #     shipment: [Spree::Shipment] LineItem target shipment
+    #     stock_location_quantities:
+    #       stock_location_id: The stock location to source from
+    #
+    # @return [Spree::LineItem]
     def add(variant, quantity = 1, options = {})
       line_item = add_to_line_item(variant, quantity, options)
       after_add_or_remove(line_item, options)
@@ -17,7 +30,7 @@ module Spree
     end
 
     def remove_line_item(line_item, options = {})
-      line_item.destroy!
+      order.line_items.destroy(line_item)
       after_add_or_remove(line_item, options)
     end
 
@@ -106,7 +119,6 @@ module Spree
       shipment = options[:shipment]
       shipment.present? ? shipment.update_amounts : order.ensure_updated_shipments
       PromotionHandler::Cart.new(order, line_item).activate
-      ItemAdjustments.new(line_item).update
       reload_totals
       line_item
     end
@@ -117,7 +129,6 @@ module Spree
 
     def reload_totals
       order_updater.update
-      order.reload
     end
 
     def add_to_line_item(variant, quantity, options = {})
@@ -130,7 +141,7 @@ module Spree
       )
 
       line_item.quantity += quantity.to_i
-      line_item.options = ActionController::Parameters.new(options).permit(PermittedAttributes.line_item_attributes)
+      line_item.options = ActionController::Parameters.new(options).permit(PermittedAttributes.line_item_attributes).to_h
 
       if line_item.new_record?
         create_order_stock_locations(line_item, options[:stock_location_quantities])
@@ -147,7 +158,7 @@ module Spree
       line_item.target_shipment = options[:shipment]
 
       if line_item.quantity == 0
-        line_item.destroy
+        order.line_items.destroy(line_item)
       else
         line_item.save!
       end

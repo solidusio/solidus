@@ -12,7 +12,7 @@ describe "Properties", type: :feature do
     before do
       create(:property, name: 'shirt size', presentation: 'size')
       create(:property, name: 'shirt fit', presentation: 'fit')
-      click_link "Properties"
+      click_link "Property Types"
     end
 
     context "listing product properties" do
@@ -32,7 +32,7 @@ describe "Properties", type: :feature do
     context "searching properties" do
       it 'should list properties matching search query', js: true do
         fill_in "q_name_cont", with: "size"
-        click_icon :search
+        click_button 'Search'
 
         expect(page).to have_content("shirt size")
         expect(page).not_to have_content("shirt fit")
@@ -42,9 +42,9 @@ describe "Properties", type: :feature do
 
   context "creating a property" do
     it "should allow an admin to create a new product property", js: true do
-      click_link "Properties"
+      click_link "Property Types"
       click_link "new_property_link"
-      within('#new_property') { expect(page).to have_content("NEW PROPERTY") }
+      within('#new_property') { expect(page).to have_content("New Property Type") }
 
       fill_in "property_name", with: "color of band"
       fill_in "property_presentation", with: "color"
@@ -53,10 +53,10 @@ describe "Properties", type: :feature do
     end
   end
 
-  context "editing a property" do
+  context "editing a property type" do
     before(:each) do
       create(:property)
-      click_link "Properties"
+      click_link "Property Types"
       within_row(1) { click_icon :edit }
     end
 

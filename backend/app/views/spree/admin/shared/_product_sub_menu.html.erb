@@ -11,10 +11,10 @@
   <% if can? :admin, Spree::Prototype %>
     <%= tab :prototypes %>
   <% end %>
-  <% if can? :display, Spree::Taxonomy %>
+  <% if can? :admin, Spree::Taxonomy %>
     <%= tab :taxonomies %>
   <% end %>
   <% if can? :admin, Spree::Taxon %>
-    <%= tab :taxons %>
+    <%= tab :taxons, label: :display_order %>
   <% end %>
 </ul>

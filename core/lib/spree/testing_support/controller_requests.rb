@@ -49,37 +49,45 @@ module Spree
       def spree_get(action, parameters = nil, session = nil, flash = nil)
         process_spree_action(action, parameters, session, flash, "GET")
       end
+      deprecate spree_get: :get, deprecator: Spree::Deprecation
 
       # Executes a request simulating POST HTTP method and set/volley the response
       def spree_post(action, parameters = nil, session = nil, flash = nil)
         process_spree_action(action, parameters, session, flash, "POST")
       end
+      deprecate spree_post: :post, deprecator: Spree::Deprecation
 
       # Executes a request simulating PUT HTTP method and set/volley the response
       def spree_put(action, parameters = nil, session = nil, flash = nil)
         process_spree_action(action, parameters, session, flash, "PUT")
       end
+      deprecate spree_put: :put, deprecator: Spree::Deprecation
 
       # Executes a request simulating DELETE HTTP method and set/volley the response
       def spree_delete(action, parameters = nil, session = nil, flash = nil)
         process_spree_action(action, parameters, session, flash, "DELETE")
       end
+      deprecate spree_delete: :delete, deprecator: Spree::Deprecation
 
       def spree_xhr_get(action, parameters = nil, session = nil, flash = nil)
         process_spree_xhr_action(action, parameters, session, flash, :get)
       end
+      deprecate spree_xhr_get: :get, deprecator: Spree::Deprecation
 
       def spree_xhr_post(action, parameters = nil, session = nil, flash = nil)
         process_spree_xhr_action(action, parameters, session, flash, :post)
       end
+      deprecate spree_xhr_post: :post, deprecator: Spree::Deprecation
 
       def spree_xhr_put(action, parameters = nil, session = nil, flash = nil)
         process_spree_xhr_action(action, parameters, session, flash, :put)
       end
+      deprecate spree_xhr_put: :put, deprecator: Spree::Deprecation
 
       def spree_xhr_delete(action, parameters = nil, session = nil, flash = nil)
         process_spree_xhr_action(action, parameters, session, flash, :delete)
       end
+      deprecate spree_xhr_delete: :delete, deprecator: Spree::Deprecation
 
       private
 

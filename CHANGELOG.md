@@ -1,14 +1,105 @@
-## Solidus 1.4.0 (master, unreleased)
+## Solidus 2.0.0 (unreleased)
+
+*   Upgrade to rails 5.0
+
+## Solidus 1.4.0 (unreleased)
+
+*   Use in-memory objects in OrderUpdater and related areas.
+
+    Solidus now uses in-memory data for updating orders in and around
+    OrderUpdater.  E.g. if an order already has `order.line_items` loaded into
+    memory when OrderUpdater is run then it will use that information rather
+    than requerying the database for it. This should help performance and makes
+    some upcoming refactoring easier.
+
+    Warning:  If you bypass ActiveRecord while making updates to your orders you
+    run the risk of generating invalid data.  Example:
+
+        order.line_items.to_a
+        order.line_items.update_all(price: ...)
+        order.update!
+
+    Will now result in incorrect calculations in OrderUpdater because the line
+    items will not be refetched.
+
+    In particular, when creating adjustments, you should always create the
+    adjustment using the adjustable relationship.
+
+    Good example:
+
+        line_item.adjustments.create!(source: tax_rate, ...)
+
+    Bad examples:
+
+        tax_rate.adjustments.create!(adjustable: line_item, ...)
+        Spree::Adjustment.create!(adjustable: line_item, source: tax_rate, ...)
+
+    We try to detect the latter examples and repair the in-memory objects (with
+    a deprecation warning) but you should ensure that your code is keeping the
+    adjustable's in-memory associations up to date. Custom promotion actions are
+    an area likely to have this issue.
+
+    https://github.com/solidusio/solidus/pull/1356
+    https://github.com/solidusio/solidus/pull/1389
+    https://github.com/solidusio/solidus/pull/1400
+    https://github.com/solidusio/solidus/pull/1401
+
+*   Make some 'wallet' behavior configurable
+
+    NOTE: `Order#persist_user_credit_card` has been renamed to
+    `Order#add_payment_sources_to_wallet`. If you are overriding
+    `persist_user_credit_card` you need to update your code.
+
+    The following extension points have been added for customizing 'wallet'
+    behavior.
+
+    * Spree::Config.add_payment_sources_to_wallet_class
+    * Spree::Config.default_payment_builder_class
+
+    https://github.com/solidusio/solidus/pull/1086
+
+*   Backend: UI, Remove icons from buttons and tabs
+
+*   Backend: Deprecate args/options that add icons to buttons
+
+*   Update Rules::Taxon/Product handling of invalid match policies
+
+    Rules::Taxon and Rules::Product now require valid match_policy values.
+    Please ensure that all your Taxon and Product Rules have valid match_policy
+    values.
+
+*   Fix default value for Spree::Promotion::Rules::Taxon preferred_match_policy.
+
+    Previously this was defaulting to nil, which was sometimes interpreted as
+    'none'.
+
+*   Deprecate `Spree::Shipment#address` (column renamed)
+
+    `Spree::Shipment#address` was not actually being used for anything in
+    particular, so the association has been deprecated and delegated to
+    `Spree::Order#ship_address` instead. The database column has been renamed
+    `spree_shipments.deprecated_address_id`.
+
+    https://github.com/solidusio/solidus/pull/1138
 
 *   Coupon code application has been separated from the Continue button on the Payment checkout page
 
     * JavaScript for it has been moved from address.js into its own `spree/frontend/checkout/coupon-code`
     * Numerous small nuisances have been fixed [#1090](https://github.com/solidusio/solidus/pull/1090)
 
-*   Filter orders by store when more than a single store is present. [#1149](https://github.com/solidusio/solidus/pull/1140)
+*   Allow filtering orders by store when multiple stores are present. [#1149](https://github.com/solidusio/solidus/pull/1140)
 
+*   Remove unused `user_id` column from PromotionRule. [#1259](https://github.com/solidusio/solidus/pull/1259)
 
-## Solidus 1.3.0 (unreleased)
+*   Removed "Clear cache" button from the admin [#1275](https://github.com/solidusio/solidus/pull/1275)
+
+*   Adjustments and totals are no longer updated when saving a Shipment or LineItem.
+
+    Previously adjustments and total columns were updated after saving a Shipment or LineItem.
+    This was unnecessary since it didn't update the order totals, and running
+    order.update! would recalculate the adjustments and totals again.
+
+## Solidus 1.3.0 (2016-06-22)
 
 *   Order now requires a `store_id` in validations
 

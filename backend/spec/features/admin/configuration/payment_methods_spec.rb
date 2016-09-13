@@ -73,16 +73,16 @@ describe "Payment Methods", type: :feature do
       create(:credit_card_payment_method)
       click_link "Payment Methods"
       click_icon :edit
-      expect(page).to have_content('TEST MODE')
+      expect(page).to have_content('Test Mode')
 
       select2_search 'Spree::PaymentMethod::Check', from: 'Provider'
       expect(page).to have_content('you must save first')
-      expect(page).to have_no_content('TEST MODE')
+      expect(page).to have_no_content('Test Mode')
 
       # change back
       select2_search 'Spree::Gateway::Bogus', from: 'Provider'
       expect(page).to have_no_content('you must save first')
-      expect(page).to have_content('TEST MODE')
+      expect(page).to have_content('Test Mode')
     end
 
     it "displays message when changing preference source" do
@@ -91,16 +91,16 @@ describe "Payment Methods", type: :feature do
       create(:credit_card_payment_method)
       click_link "Payment Methods"
       click_icon :edit
-      expect(page).to have_content('TEST MODE')
+      expect(page).to have_content('Test Mode')
 
       select2_search 'my_prefs', from: 'Preference Source'
       expect(page).to have_content('you must save first')
-      expect(page).to have_no_content('TEST MODE')
+      expect(page).to have_no_content('Test Mode')
 
       # change back
       select2_search 'Custom', from: 'Preference Source'
       expect(page).to have_no_content('you must save first')
-      expect(page).to have_content('TEST MODE')
+      expect(page).to have_content('Test Mode')
     end
 
     it "updates successfully and keeps secrets" do
@@ -118,7 +118,7 @@ describe "Payment Methods", type: :feature do
       # change back
       select2_search 'Custom', from: 'Preference Source'
       click_on 'Update'
-      expect(page).to have_content('TEST MODE')
+      expect(page).to have_content('Test Mode')
       expect(page).to have_no_content('secret')
     end
   end

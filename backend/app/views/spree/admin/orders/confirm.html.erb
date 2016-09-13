@@ -1,8 +1,7 @@
 <%= render partial: 'spree/admin/shared/order_tabs', locals: {current: 'Confirm'} %>
 
-<% content_for :page_title do %>
-  <i class="fa fa-arrow-right"></i> <%= Spree.t(:confirm_order) %>
-<% end %>
+<% admin_breadcrumb(Spree.t(:confirm_order)) %>
+
 
 <%= render partial: 'spree/admin/orders/confirm/customer_details', locals: {order: @order} %>
 
@@ -55,7 +54,7 @@
 <%= render partial: 'spree/admin/orders/confirm/payments', locals: {payments: @order.payments} %>
 
 <div class="form-buttons filter-actions actions" data-hook="complete-order-button">
-  <%= button_to [:complete, :admin, @order], {class: 'button fa fa-rocket', method: 'put'} do %>
+  <%= button_to [:complete, :admin, @order], { class: 'button', method: 'put' } do %>
     <%= Spree.t(:complete_order) %>
   <% end %>
 </div>

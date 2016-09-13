@@ -200,6 +200,7 @@ module Spree
             order_promos[promo_sequence[0]].activate order: order
             order_promos[promo_sequence[1]].activate order: order
 
+            order.update!
             order.reload
             expect(order.all_adjustments.count).to eq(2), "Expected two adjustments (using sequence #{promo_sequence})"
             expect(order.all_adjustments.eligible.count).to eq(1), "Expected one elegible adjustment (using sequence #{promo_sequence})"
@@ -265,6 +266,40 @@ module Spree
 
         expect(line_item.adjustments.promotion.eligible.count).to eq(1)
         expect(line_item.adjustments.promotion.eligible.first.amount.to_i).to eq(-200)
+      end
+    end
+
+    context "multiple updates" do
+      let(:adjustment) { create(:tax_adjustment, amount: -10) }
+      let(:item) { adjustment.adjustable }
+      # we need to get this from the line item so that we're modifying the same
+      # tax rate that is cached by line_item.adjustments
+      let(:source) { item.adjustments.to_a.first.source }
+
+      def update
+        described_class.new(item).update
+      end
+
+      # "fresh" record from the DB
+      def db_record
+        Spree::LineItem.find(item.id)
+      end
+
+      it "persists each change" do
+        source.update_attributes!(amount: 0.1)
+        update
+        expect(item).not_to be_changed
+        expect(db_record).to have_attributes(adjustment_total: 1)
+
+        source.update_attributes!(amount: 0.20)
+        update
+        expect(item).not_to be_changed
+        expect(db_record).to have_attributes(adjustment_total: 2)
+
+        source.update_attributes!(amount: 0.10)
+        update
+        expect(item).not_to be_changed
+        expect(db_record).to have_attributes(adjustment_total: 1)
       end
     end
   end

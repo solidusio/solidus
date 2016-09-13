@@ -5,8 +5,8 @@ module Spree
 
       self.line_item_options = []
 
-      before_filter :load_order, only: [:create, :update, :destroy]
-      around_filter :lock_order, only: [:create, :update, :destroy]
+      before_action :load_order, only: [:create, :update, :destroy]
+      around_action :lock_order, only: [:create, :update, :destroy]
 
       def new
       end
@@ -18,7 +18,7 @@ module Spree
           params[:line_item][:quantity] || 1,
           {
             stock_location_quantities: params[:line_item][:stock_location_quantities]
-          }.merge(line_item_params[:options] || {})
+          }.merge(line_item_params[:options].to_h || {})
         )
 
         if @line_item.errors.empty?

@@ -3,7 +3,7 @@ module Spree
     class OrdersController < Spree::Admin::BaseController
       before_action :initialize_order_events
       before_action :load_order, only: [:edit, :update, :complete, :advance, :cancel, :resume, :approve, :resend, :unfinalize_adjustments, :finalize_adjustments, :cart, :confirm]
-      around_filter :lock_order, only: [:update, :advance, :complete, :confirm, :cancel, :resume, :approve, :resend]
+      around_action :lock_order, only: [:update, :advance, :complete, :confirm, :cancel, :resume, :approve, :resend]
 
       rescue_from Spree::Order::InsufficientStock, with: :insufficient_stock_error
 
@@ -127,26 +127,26 @@ module Spree
       def cancel
         @order.canceled_by(try_spree_current_user)
         flash[:success] = Spree.t(:order_canceled)
-        redirect_to :back
+        redirect_to(spree.edit_admin_order_path(@order))
       end
 
       def resume
         @order.resume!
         flash[:success] = Spree.t(:order_resumed)
-        redirect_to :back
+        redirect_to(spree.edit_admin_order_path(@order))
       end
 
       def approve
         @order.contents.approve(user: try_spree_current_user)
         flash[:success] = Spree.t(:order_approved)
-        redirect_to :back
+        redirect_to(spree.edit_admin_order_path(@order))
       end
 
       def resend
         OrderMailer.confirm_email(@order.id, true).deliver_later
         flash[:success] = Spree.t(:order_email_resent)
 
-        redirect_to :back
+        redirect_to(spree.edit_admin_order_path(@order))
       end
 
       def unfinalize_adjustments
@@ -154,7 +154,7 @@ module Spree
         adjustments.each(&:unfinalize!)
         flash[:success] = Spree.t(:all_adjustments_unfinalized)
 
-        respond_with(@order) { |format| format.html { redirect_to :back } }
+        respond_with(@order) { |format| format.html { redirect_to(spree.admin_order_adjustments_path(@order)) } }
       end
 
       def finalize_adjustments
@@ -162,7 +162,7 @@ module Spree
         adjustments.each(&:finalize!)
         flash[:success] = Spree.t(:all_adjustments_finalized)
 
-        respond_with(@order) { |format| format.html { redirect_to :back } }
+        respond_with(@order) { |format| format.html { redirect_to(spree.admin_order_adjustments_path(@order)) } }
       end
 
       private

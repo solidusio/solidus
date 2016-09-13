@@ -17,12 +17,6 @@ module Spree
         end
       end
 
-      def clear_cache
-        Rails.cache.clear
-        invoke_callbacks(:clear_cache, :after)
-        head :no_content
-      end
-
       private
 
       def store_params

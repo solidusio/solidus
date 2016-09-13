@@ -1,13 +1,13 @@
 <%= render 'spree/admin/shared/general_tabs' %>
 
-<% content_for :page_title do %>
-  <%= plural_resource_name(Spree::Tracker) %>
-<% end %>
+<% admin_breadcrumb(Spree.t(:settings)) %>
+<% admin_breadcrumb(Spree.t(:general_settings)) %>
+<% admin_breadcrumb(plural_resource_name(Spree::Tracker)) %>
 
 <% content_for :page_actions do %>
   <% if can?(:create, Spree::Tracker) %>
     <li>
-      <%= button_link_to Spree.t(:new_tracker), new_object_url, :icon => 'plus', :id => 'admin_new_tracker_link' %>
+      <%= button_link_to Spree.t(:new_tracker), new_object_url, :id => 'admin_new_tracker_link' %>
     </li>
   <% end %>
 <% end %>

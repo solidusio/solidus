@@ -43,6 +43,12 @@ module Spree
         expect(new_payment.source.payment_method_id).to eq payment_method.id
       end
 
+      it "doesn't modify passed-in hash" do
+        original = attributes.dup
+        new_payment
+        expect(original).to eq(attributes)
+      end
+
       context "when payment source not valid" do
         let(:attributes) do
           {
@@ -123,6 +129,61 @@ module Spree
         end
         it 'errors' do
           expect { new_payment }.to raise_error(ActiveRecord::RecordNotFound)
+        end
+      end
+    end
+
+    context "with strong params" do
+      let(:valid_attributes) do
+        {
+          amount: 100,
+          payment_method: payment_method,
+          source_attributes: {
+            expiry: "01 / 99",
+            number: '1234567890123',
+            verification_value: '123',
+            name: 'Foo Bar'
+          }
+        }
+      end
+
+      context "unpermitted" do
+        let(:attributes) { ActionController::Parameters.new(valid_attributes) }
+
+        it "ignores all attributes" do
+          expect(new_payment).to have_attributes(
+            amount: 0,
+            payment_method: nil,
+            source: nil
+          )
+        end
+      end
+
+      context "partially permitted" do
+        let(:attributes) do
+          ActionController::Parameters.new(valid_attributes).permit(:amount)
+        end
+
+        it "only uses permitted attributes" do
+          expect(new_payment).to have_attributes(
+            amount: 100, # permitted
+            payment_method: nil, # unpermitted
+            source: nil # unpermitted
+          )
+        end
+      end
+
+      context "all permitted" do
+        let(:attributes) do
+          ActionController::Parameters.new(valid_attributes).permit!
+        end
+
+        it "creates a payment with all attributes" do
+          expect(new_payment).to have_attributes(
+            amount: 100,
+            payment_method: payment_method,
+            source: kind_of(CreditCard)
+          )
         end
       end
     end

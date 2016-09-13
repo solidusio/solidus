@@ -3,14 +3,14 @@
         <li><%= event_links %></li>
     <% end %>
     <% if can?(:resend, @order) && @order.completed? %>
-        <li><%= button_link_to Spree.t(:resend), resend_admin_order_url(@order), :method => :post, :icon => 'email' %></li>
-    <% end %>
-    <% if can?(:admin, Spree::Order) %>
-        <li><%= button_link_to Spree.t(:back_to_orders_list), admin_orders_path, :icon => 'arrow-left' %></li>
+        <li><%= button_link_to Spree.t(:resend), resend_admin_order_url(@order), :method => :post %></li>
     <% end %>
 <% end %>
 
 <%= render :partial => 'spree/admin/shared/order_tabs', :locals => { :current => 'Cart' } %>
+
+<% admin_breadcrumb(Spree.t(:cart)) %>
+
 
 <div data-hook="admin_order_edit_header">
   <%= render :partial => 'spree/shared/error_messages', :locals => { :target => @order } %>
@@ -35,7 +35,3 @@
     <%= render :partial => 'line_items_edit_form', :locals => { :order => @order } %>
   </div>
 </div>
-
-<% content_for :head do %>
-  <%= javascript_tag 'var expand_variants = true;' %>
-<% end %>

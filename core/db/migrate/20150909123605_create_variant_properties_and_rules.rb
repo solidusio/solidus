@@ -1,4 +1,4 @@
-class CreateVariantPropertiesAndRules < ActiveRecord::Migration
+class CreateVariantPropertiesAndRules < ActiveRecord::Migration[4.2]
   def change
     create_table :spree_variant_property_rules do |t|
       t.references :product

@@ -1,15 +1,12 @@
-// Sidebar
-//---------------------------------------------------
-#sidebar {
+body:not(.new-layout) #sidebar {
   overflow: visible;
   border-top: 1px solid $color-border;
   margin-top: 17px;
 
   .sidebar-title {
     color: $color-2;
-    text-transform: uppercase;
     text-align: center;
-    font-size: 14px;
+    font-size: 16px;
     font-weight: $font-weight-bold;
 
     > span {
@@ -29,4 +26,16 @@
       min-height: 3em;
     }
   }
+}
+
+body.new-layout .content-sidebar {
+  ul {
+    padding-left: 0;
+  }
+}
+
+body.new-layout .sidebar-title {
+  @include line-through();
+  color: $color-2;
+  font-size: 14px;
 }

@@ -1,4 +1,6 @@
 module Spree
+  # An abstract class which is implemented most commonly as a `Spree::Gateway`.
+  #
   class PaymentMethod < Spree::Base
     acts_as_paranoid
     acts_as_list

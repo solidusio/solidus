@@ -72,8 +72,7 @@ textarea {
 
 label {
   font-weight: $font-weight-bold;
-  text-transform: uppercase;
-  font-size: 85%;
+  font-size: 90%;
   display: inline;
   margin-bottom: 5px;
   color: $color-4;
@@ -97,14 +96,14 @@ input[type="submit"],
 input[type="button"],
 button, .button {
   display: inline-block;
-  padding: 8px 15px;
+  padding: 6px 15px;
   border: none;
   border-radius: $border-radius;
   background-color: $color-btn-bg;
   color: $color-btn-text;
-  text-transform: uppercase;
   font-weight: $font-weight-bold !important;
   white-space: nowrap;
+  line-height: $line-height;
 
   &:before {
     font-weight: normal !important;
@@ -228,9 +227,8 @@ fieldset {
   legend {
     background-color: $color-1;
     color: $color-2;
-    font-size: 14px;
+    font-size: 16px;
     font-weight: $font-weight-bold;
-    text-transform: uppercase;
     text-align: center;
     padding: 8px 15px;
     width: auto;

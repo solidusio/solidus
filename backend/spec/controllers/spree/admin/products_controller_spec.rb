@@ -9,7 +9,7 @@ describe Spree::Admin::ProductsController, type: :controller do
     # Regression test for https://github.com/spree/spree/issues/1259
     it "can find a product by SKU" do
       product = create(:product, sku: "ABC123")
-      spree_get :index, q: { sku_start: "ABC123" }
+      get :index, params: { q: { sku_start: "ABC123" } }
       expect(assigns[:collection]).not_to be_empty
       expect(assigns[:collection]).to include(product)
     end
@@ -19,7 +19,7 @@ describe Spree::Admin::ProductsController, type: :controller do
   context "adding properties to a product" do
     let!(:product) { create(:product) }
     specify do
-      spree_put :update, id: product.to_param, product: { product_properties_attributes: { "1" => { property_name: "Foo", value: "bar" } } }
+      put :update, params: { id: product.to_param, product: { product_properties_attributes: { "1" => { property_name: "Foo", value: "bar" } } } }
       expect(flash[:success]).to eq("Product #{product.name.inspect} has been successfully updated!")
     end
   end
@@ -53,7 +53,7 @@ describe Spree::Admin::ProductsController, type: :controller do
       }
     end
 
-    subject { spree_put :update, payload }
+    subject { put :update, params: payload }
 
     it "creates a variant property rule" do
       expect { subject }.to change { product.variant_property_rules.count }.by(1)
@@ -113,14 +113,14 @@ describe Spree::Admin::ProductsController, type: :controller do
       }
     end
 
-    subject { spree_put :update, payload }
+    subject { put :update, params: payload }
 
     it "does not create any new rules" do
       expect { subject }.to_not change { Spree::VariantPropertyRule.count }
     end
 
     it "replaces the rule's condition" do
-      expect { subject }.to change { rule.option_value_ids }.from([original_option_value.id]).to([option_value.id])
+      expect { subject }.to change { rule.reload.option_value_ids }.from([original_option_value.id]).to([option_value.id])
     end
 
     it "adds two values to the rule" do
@@ -152,7 +152,7 @@ describe Spree::Admin::ProductsController, type: :controller do
     end
 
     it "deletes all the variants (including master) for the product" do
-      spree_delete :destroy, id: product
+      delete :destroy, params: { id: product }
       expect(product.reload.deleted_at).not_to be_nil
       product.variants_including_master.each do |variant|
         expect(variant.reload.deleted_at).not_to be_nil

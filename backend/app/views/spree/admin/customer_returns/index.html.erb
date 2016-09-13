@@ -3,15 +3,12 @@
 <% content_for :page_actions do %>
   <% if can? :create, Spree::CustomerReturn %>
     <li>
-      <%= button_link_to Spree.t(:new_customer_return), spree.new_admin_order_customer_return_path(@order), icon: 'plus' %>
+      <%= button_link_to Spree.t(:new_customer_return), spree.new_admin_order_customer_return_path(@order) %>
     </li>
   <% end %>
-  <li><%= button_link_to Spree.t(:back_to_orders_list), spree.admin_orders_path, :icon => 'arrow-left' %></li>
 <% end %>
 
-<% content_for :page_title do %>
-  <i class="fa fa-arrow-right"></i> <%= plural_resource_name(Spree::CustomerReturn) %>
-<% end %>
+<% admin_breadcrumb(plural_resource_name(Spree::CustomerReturn)) %>
 
 <% if @customer_returns.any? %>
   <table class="index">

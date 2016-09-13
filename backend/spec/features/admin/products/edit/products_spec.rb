@@ -15,7 +15,7 @@ describe 'Product Details', type: :feature do
 
       click_link 'Product Details'
 
-      expect(page).to have_css('.page-title', text: 'Products / Bún thịt nướng')
+      expect(page).to have_content('ProductsBún thịt nướng')
       expect(page).to have_field('product_name', with: 'Bún thịt nướng')
       expect(page).to have_field('product_slug', with: 'bun-th-t-n-ng')
       expect(page).to have_field('product_description', with: 'lorem ipsum')

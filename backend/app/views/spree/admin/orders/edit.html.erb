@@ -3,10 +3,7 @@
     <li><%= event_links %></li>
   <% end %>
   <% if can?(:resend, @order) && @order.completed? %>
-    <li><%= button_link_to Spree.t(:resend), resend_admin_order_url(@order), method: :post, icon: 'email' %></li>
-  <% end %>
-  <% if can?(:admin, Spree::Order) %>
-    <li><%= button_link_to Spree.t(:back_to_orders_list), admin_orders_path, icon: 'arrow-left' %></li>
+    <li><%= button_link_to Spree.t(:resend), resend_admin_order_url(@order), method: :post %></li>
   <% end %>
 <% end %>
 
@@ -35,7 +32,3 @@
     <%= render partial: 'form', locals: { order: @order } %>
   </div>
 </div>
-
-<% content_for :head do %>
-  <%= javascript_tag 'var expand_variants = true;' %>
-<% end %>

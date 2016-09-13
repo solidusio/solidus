@@ -1,11 +1,9 @@
 <%= render :partial => 'spree/admin/shared/order_tabs', :locals => { :current => 'Customer Returns' } %>
 
-<% content_for :page_title do %>
-  <i class="fa fa-arrow-right"></i> <%= Spree::CustomerReturn.model_name.human %> #<%= @customer_return.number %>
-<% end %>
+<% admin_breadcrumb(link_to plural_resource_name(Spree::CustomerReturn), spree.admin_order_customer_returns_url(@order)) %>
+<% admin_breadcrumb(@customer_return.number) %>
 
 <% content_for :page_actions do %>
-  <li><%= button_link_to Spree.t(:back_to_customer_return_list), spree.admin_order_customer_returns_url(@order), :icon => 'arrow-left' %></li>
 <% end %>
 
 <% if @manual_intervention_return_items.any? %>
@@ -41,7 +39,7 @@
     <% if @customer_return.completely_decided? %>
       <%= form_for [:admin, @order, Spree::Reimbursement.new] do |f| %>
         <%= hidden_field_tag :build_from_customer_return_id, @customer_return.id %>
-        <%= f.button class: 'button fa fa-reply' do %>
+        <%= f.button class: 'button' do %>
           <%= Spree.t(:create_reimbursement) %>
         <% end %>
       <% end %>

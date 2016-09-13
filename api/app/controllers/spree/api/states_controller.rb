@@ -8,7 +8,7 @@ module Spree
                     includes(:country).order('name ASC')
 
         if params[:page] || params[:per_page]
-          @states = @states.page(params[:page]).per(params[:per_page])
+          @states = paginate(@states)
         end
 
         respond_with(@states)

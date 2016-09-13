@@ -9,40 +9,40 @@ describe Spree::Admin::PromotionsController, type: :controller do
 
   describe "#index" do
     it "succeeds" do
-      spree_get :index
+      get :index
       expect(assigns[:promotions]).to match_array [promotion2, promotion1]
     end
 
     it "assigns promotion categories" do
-      spree_get :index
+      get :index
       expect(assigns[:promotion_categories]).to match_array [category]
     end
 
     context "search" do
       it "pages results" do
-        spree_get :index, per_page: '1'
+        get :index, params: { per_page: '1' }
         expect(assigns[:promotions]).to eq [promotion2]
       end
 
       it "filters by name" do
-        spree_get :index, q: { name_cont: promotion1.name }
+        get :index, params: { q: { name_cont: promotion1.name } }
         expect(assigns[:promotions]).to eq [promotion1]
       end
 
       it "filters by code" do
-        spree_get :index, q: { codes_value_cont: promotion1.codes.first.value }
+        get :index, params: { q: { codes_value_cont: promotion1.codes.first.value } }
         expect(assigns[:promotions]).to eq [promotion1]
       end
 
       it "filters by path" do
-        spree_get :index, q: { path_cont: promotion1.path }
+        get :index, params: { q: { path_cont: promotion1.path } }
         expect(assigns[:promotions]).to eq [promotion1]
       end
     end
   end
 
   describe "#create" do
-    subject { spree_post :create, params }
+    subject { post :create, params: params }
     let(:params) { { promotion: { name: 'some promo' } } }
 
     context "it succeeds" do

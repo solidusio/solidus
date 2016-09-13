@@ -49,13 +49,15 @@ namespace 'spree:migrations:copy_shipped_shipments_to_cartons' do
               #{db_concat("'C'", 'spree_shipments.number')}, -- number
               spree_shipments.id, -- imported_from_shipment_id
               spree_shipments.stock_location_id,
-              spree_shipments.address_id,
+              spree_orders.ship_address_id,
               spree_shipping_rates.shipping_method_id,
               spree_shipments.tracking,
               spree_shipments.shipped_at,
               '#{Time.current.to_s(:db)}', -- created_at
               '#{Time.current.to_s(:db)}' -- updated_at
             from spree_shipments
+            left join spree_orders
+              on spree_orders.id = spree_shipments.order_id
             left join spree_shipping_rates
               on spree_shipping_rates.shipment_id = spree_shipments.id
               and spree_shipping_rates.selected = #{Spree::Carton.connection.quoted_true}

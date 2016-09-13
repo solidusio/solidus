@@ -1,15 +1,13 @@
-<% content_for :page_title do %>
-  <%= "#{Spree.t('actions.ship')} #{Spree::StockTransfer.model_name.human} \##{@stock_transfer.number}" %>
-<% end %>
+<% admin_breadcrumb("#{Spree.t('actions.ship')} #{Spree::StockTransfer.model_name.human} \##{@stock_transfer.number}") %>
+
 
 <% content_for :page_actions do %>
   <li>
-    <%= button_link_to Spree.t(:back_to_stock_transfers_list), admin_stock_transfers_path, icon: 'arrow-left' %>
+    <%= button_link_to Spree.t(:back_to_stock_transfers_list), admin_stock_transfers_path %>
   </li>
   <li>
     <%= button_link_to Spree.t('actions.ship'),
       ship_admin_stock_transfer_path(@stock_transfer),
-      icon: 'check',
       method: 'put',
       data: { confirm: Spree.t('ship_stock_transfer.confirm') }
       %>

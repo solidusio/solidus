@@ -1,20 +1,21 @@
 <%= render 'spree/admin/shared/shipping_tabs' %>
 
-<% content_for :page_title do %>
-  <%= plural_resource_name(Spree::StockLocation) %>
-<% end %>
+<% admin_breadcrumb(Spree.t(:settings)) %>
+<% admin_breadcrumb(Spree.t('admin.tab.shipping')) %>
+<% admin_breadcrumb(plural_resource_name(Spree::StockLocation)) %>
+
 
 <% content_for :page_actions do %>
   <ul class="actions inline-menu">
     <% if can?(:create, Spree::StockLocation) %>
       <li>
-        <%= button_link_to Spree.t(:new_stock_location), new_object_url, { :icon => 'plus', :id => 'admin_new_stock_location' } %>
+        <%= button_link_to Spree.t(:new_stock_location), new_object_url, { :id => 'admin_new_stock_location' } %>
       </li>
     <% end %>
 
     <% if can?(:create, Spree::StockTransfer) %>
       <li>
-        <%= button_link_to Spree.t(:new_stock_transfer), new_admin_stock_transfer_path, { :icon => 'forward' } %>
+        <%= button_link_to Spree.t(:new_stock_transfer), new_admin_stock_transfer_path %>
       </li>
     <% end %>
   </ul>

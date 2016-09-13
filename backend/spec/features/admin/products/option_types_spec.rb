@@ -27,7 +27,7 @@ describe "Option Types", type: :feature do
     it "should allow an admin to create a new option type", js: true do
       click_link "Option Types"
       click_link "new_option_type_link"
-      expect(page).to have_content("NEW OPTION TYPE")
+      expect(page).to have_content("New Option Type")
       fill_in "option_type_name", with: "shirt colors"
       fill_in "option_type_presentation", with: "colors"
       click_button "Create"
@@ -61,7 +61,7 @@ describe "Option Types", type: :feature do
     create(:option_value)
     click_link "Option Types"
     within('table#listing_option_types') { click_icon :edit }
-    expect(page).to have_content("Editing Option Type")
+    expect(page).to have_content("ProductsOption Typesfoo-size-")
     expect(page).to have_css("tbody#option_values tr", count: 1)
     within("tbody#option_values") do
       find('.spree_remove_fields').click

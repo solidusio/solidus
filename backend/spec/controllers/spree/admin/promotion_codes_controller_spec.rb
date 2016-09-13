@@ -10,7 +10,7 @@ describe Spree::Admin::PromotionCodesController do
   let!(:code3) { create(:promotion_code, promotion: promotion) }
 
   it "can create a promotion rule of a valid type" do
-    spree_get :index, promotion_id: promotion.id, format: 'csv'
+    get :index, params: { promotion_id: promotion.id, format: 'csv' }
     expect(response).to be_success
     parsed = CSV.parse(response.body, headers: true)
     expect(parsed.entries.map(&:to_h)).to eq([{ "Code" => code1.value }, { "Code" => code2.value }, { "Code" => code3.value }])
