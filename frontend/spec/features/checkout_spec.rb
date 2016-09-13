@@ -491,6 +491,47 @@ describe "Checkout", type: :feature, inaccessible: true do
     end
   end
 
+  context "using credit card" do
+    let!(:payment_method) { create(:credit_card_payment_method) }
+
+    # Regression test for https://github.com/solidusio/solidus/issues/1421
+    it "works with card number 1", js: true do
+      add_mug_to_cart
+
+      click_on "Checkout"
+      fill_in "order_email", with: "test@example.com"
+      fill_in_address
+      click_on "Save and Continue"
+      click_on "Save and Continue"
+
+      fill_in_credit_card(number: "1")
+      click_on "Save and Continue"
+
+      expect(page).to have_current_path("/checkout/confirm")
+    end
+
+    it "works with card number 4111111111111111", js: true do
+      add_mug_to_cart
+
+      click_on "Checkout"
+      fill_in "order_email", with: "test@example.com"
+      fill_in_address
+      click_on "Save and Continue"
+      click_on "Save and Continue"
+
+      fill_in_credit_card(number: "4111111111111111")
+      click_on "Save and Continue"
+
+      expect(page).to have_current_path("/checkout/confirm")
+    end
+  end
+
+  def fill_in_credit_card(number:)
+    fill_in "Card Number", with: number
+    fill_in "Expiration", with: "1224"
+    fill_in "Card Code", with: "123"
+  end
+
   def fill_in_address
     address = "order_bill_address_attributes"
     fill_in "#{address}_firstname", with: "Ryan"
