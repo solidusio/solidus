@@ -166,13 +166,13 @@ module Spree
       end
 
       it "returns orders in reverse chronological order by completed_at" do
-        order.update_columns completed_at: Time.current
+        order.update_columns completed_at: Time.current, created_at: 3.days.ago
 
-        order2 = Order.create user: order.user, completed_at: Time.current - 1.day, store: store
+        order2 = Order.create user: order.user, completed_at: Time.current - 1.day, created_at: 2.day.ago, store: store
         expect(order2.created_at).to be > order.created_at
-        order3 = Order.create user: order.user, completed_at: nil, store: store
+        order3 = Order.create user: order.user, completed_at: nil, created_at: 1.day.ago, store: store
         expect(order3.created_at).to be > order2.created_at
-        order4 = Order.create user: order.user, completed_at: nil, store: store
+        order4 = Order.create user: order.user, completed_at: nil, created_at: 0.days.ago, store: store
         expect(order4.created_at).to be > order3.created_at
 
         request.env['SERVER_NAME'] = store.url
