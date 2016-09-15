@@ -97,6 +97,7 @@ describe Spree::Product, type: :model do
           master = product.master
           master.default_price.price = 11
           master.save!
+          product.update_columns(updated_at: 1.day.ago)
           product.master.default_price.price = 12
         end
 
@@ -342,19 +343,27 @@ describe Spree::Product, type: :model do
 
     context "associations" do
       describe "product_option_types" do
-        it "touches the product instance when an option type is added" do
-          expect {
-            product.product_option_types.create(option_type: create(:option_type, name: 'new-option-type'))
-            product.reload
-          }.to change { product.updated_at }
+        context "with no existing option types" do
+          before { product.update_columns(updated_at: 1.day.ago) }
+
+          it "touches the product instance when an option type is added" do
+            expect {
+              product.product_option_types.create(option_type: create(:option_type, name: 'new-option-type'))
+            }.to change { product.reload.updated_at }
+          end
         end
 
-        it "touches product instance when an option type is removed" do
-          product.product_option_types.create(option_type: create(:option_type, name: 'new-option-type'))
-          expect {
-            product.product_option_types = []
-            product.reload
-          }.to change { product.updated_at }
+        context "with an existing option type" do
+          before do
+            product.product_option_types.create(option_type: create(:option_type, name: 'new-option-type'))
+            product.update_columns(updated_at: 1.day.ago)
+          end
+
+          it "touches product instance when an option type is removed" do
+            expect {
+              product.product_option_types = []
+            }.to change { product.reload.updated_at }
+          end
         end
       end
     end
