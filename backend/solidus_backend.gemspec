@@ -12,7 +12,7 @@ Gem::Specification.new do |s|
   s.author      = 'Solidus Team'
   s.email       = 'contact@solidus.io'
   s.homepage    = 'http://solidus.io'
-  s.rubyforge_project = 'solidus_backend'
+  s.license     = 'BSD-3-Clause'
 
   s.files        = `git ls-files`.split("\n")
   s.require_path = 'lib'

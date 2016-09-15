@@ -5,6 +5,7 @@ Gem::Specification.new do |gem|
   gem.author        = 'Solidus Team'
   gem.email         = 'contact@solidus.io'
   gem.homepage      = 'http://solidus.io/'
+  gem.license       = 'BSD-3-Clause'
 
   gem.summary       = 'REST API for the Solidus e-commerce framework.'
   gem.description   = gem.summary
