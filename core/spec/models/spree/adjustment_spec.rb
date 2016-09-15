@@ -14,7 +14,8 @@ describe Spree::Adjustment, type: :model do
     let(:adjustment) { Spree::Adjustment.create(label: "Adjustment", amount: 5, order: order, adjustable: line_item) }
 
     it 'touches the adjustable' do
-      expect { adjustment.save }.to change { line_item.updated_at }
+      line_item.update_columns(updated_at: 1.day.ago)
+      expect { adjustment.save! }.to change { line_item.updated_at }
     end
   end
 
