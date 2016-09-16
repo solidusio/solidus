@@ -95,6 +95,16 @@ describe Spree::OrderCancellations do
       expect { subject }.to change { order.total }.by(-10.0)
     end
 
+    context 'with line_item adjustments association loaded' do
+      before do
+        order.line_items.each {|item| item.adjustments.to_a }
+      end
+
+      it "adjusts the order" do
+        expect { subject }.to change { order.total }.by(-10.0)
+      end
+    end
+
     it "sends a cancellation email" do
       mail_double = double
       expect(Spree::OrderMailer).to receive(:inventory_cancellation_email).with(order, [inventory_unit]).and_return(mail_double)
