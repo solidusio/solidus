@@ -58,9 +58,12 @@ module Spree
       @item.included_tax_total = tax.select(&:included?).map(&:update!).compact.sum
       @item.additional_tax_total = tax.reject(&:included?).map(&:update!).compact.sum
 
-      item_cancellation_total = adjustments.select(&:cancellation?).map(&:update!).compact.sum
+      adjustments.select(&:cancellation?).each(&:update!)
 
-      @item.adjustment_total = @item.promo_total + @item.additional_tax_total + item_cancellation_total
+      @item.adjustment_total = adjustments.
+        select(&:eligible?).
+        reject(&:included?).
+        sum(&:amount)
 
       @item.update_columns(
         promo_total: @item.promo_total,
