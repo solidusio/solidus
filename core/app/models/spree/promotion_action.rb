@@ -19,5 +19,22 @@ module Spree
     def perform(_options = {})
       raise 'perform should be implemented in a sub-class of PromotionAction'
     end
+
+    # Removes the action from an order
+    #
+    # @note This method should be overriden in subclassses.
+    #
+    # @param order [Spree::Order] the order to remove the action from
+    # @return [undefined]
+    def remove_from(order)
+      Spree::Deprecation.warn("#{self.class.name.inspect} does not define #remove_from. The default behavior may be incorrect and will be removed in a future version of Solidus.", caller)
+      [order, *order.line_items, *order.shipments].each do |item|
+        item.adjustments.each do |adjustment|
+          if adjustment.source == self
+            item.adjustments.destroy(adjustment)
+          end
+        end
+      end
+    end
   end
 end

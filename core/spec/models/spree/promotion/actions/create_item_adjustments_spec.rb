@@ -122,6 +122,24 @@ module Spree
           end
         end
 
+        describe '#remove_from' do
+          # this adjustment should not get removed
+          let!(:other_adjustment) { create(:adjustment, adjustable: line_item, order: order, source: nil) }
+
+          before do
+            action.perform(payload)
+            @action_adjustment = line_item.adjustments.where(source: action).first!
+          end
+
+          it 'removes the action adjustment' do
+            expect(line_item.adjustments).to match_array([other_adjustment, @action_adjustment])
+
+            action.remove_from(order)
+
+            expect(line_item.adjustments).to eq([other_adjustment])
+          end
+        end
+
         context "#destroy" do
           let!(:action) { promotion.actions.first }
           let(:other_action) { other_promotion.actions.first }
