@@ -18,10 +18,11 @@ module Spree
 
     def update
       if @order.contents.update_cart(order_params)
+        @order.next if params.key?(:checkout) && @order.cart?
+
         respond_with(@order) do |format|
           format.html do
             if params.key?(:checkout)
-              @order.next if @order.cart?
               redirect_to checkout_state_path(@order.checkout_steps.first)
             else
               redirect_to cart_path

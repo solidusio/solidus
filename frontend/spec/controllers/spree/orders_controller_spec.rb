@@ -90,6 +90,13 @@ describe Spree::OrdersController, type: :controller do
           put :update, session: { order_id: 1 }
           expect(response).to redirect_to(spree.cart_path)
         end
+
+        it "should advance the order if :checkout button is pressed" do
+          allow(order).to receive(:update_attributes).and_return true
+          expect(order).to receive(:next)
+          put :update, { checkout: true }, { order_id: 1 }
+          expect(response).to redirect_to checkout_state_path('address')
+        end
       end
     end
 
