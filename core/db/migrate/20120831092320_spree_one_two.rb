@@ -413,13 +413,6 @@ class SpreeOneTwo < ActiveRecord::Migration[4.2]
 
     add_index :spree_tokenized_permissions, [:permissable_id, :permissable_type], name: 'index_tokenized_name_and_type'
 
-    create_table :spree_trackers do |t|
-      t.string     :environment
-      t.string     :analytics_id
-      t.boolean    :active, default: true
-      t.timestamps null: true
-    end
-
     create_table :spree_users do |t|
       t.string     :encrypted_password,     limit: 128
       t.string     :password_salt,          limit: 128

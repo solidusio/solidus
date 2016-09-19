@@ -22,7 +22,6 @@ describe Spree::PermissionSets::ConfigurationDisplay do
     it { is_expected.to be_able_to(:display, Spree::ShippingCategory) }
     it { is_expected.to be_able_to(:display, Spree::StockLocation) }
     it { is_expected.to be_able_to(:display, Spree::StockMovement) }
-    it { is_expected.to be_able_to(:display, Spree::Tracker) }
     it { is_expected.to be_able_to(:display, Spree::RefundReason) }
     it { is_expected.to be_able_to(:display, Spree::ReimbursementType) }
     it { is_expected.to be_able_to(:display, Spree::ReturnReason) }
@@ -38,7 +37,6 @@ describe Spree::PermissionSets::ConfigurationDisplay do
     it { is_expected.to be_able_to(:admin, Spree::ShippingCategory) }
     it { is_expected.to be_able_to(:admin, Spree::StockLocation) }
     it { is_expected.to be_able_to(:admin, Spree::StockMovement) }
-    it { is_expected.to be_able_to(:admin, Spree::Tracker) }
     it { is_expected.to be_able_to(:admin, Spree::RefundReason) }
     it { is_expected.to be_able_to(:admin, Spree::ReimbursementType) }
     it { is_expected.to be_able_to(:admin, Spree::ReturnReason) }
@@ -57,7 +55,6 @@ describe Spree::PermissionSets::ConfigurationDisplay do
     it { is_expected.not_to be_able_to(:display, Spree::ShippingCategory) }
     it { is_expected.not_to be_able_to(:display, Spree::StockLocation) }
     it { is_expected.not_to be_able_to(:display, Spree::StockMovement) }
-    it { is_expected.not_to be_able_to(:display, Spree::Tracker) }
     it { is_expected.not_to be_able_to(:display, Spree::RefundReason) }
     it { is_expected.not_to be_able_to(:display, Spree::ReimbursementType) }
     it { is_expected.not_to be_able_to(:display, Spree::ReturnReason) }
@@ -73,7 +70,6 @@ describe Spree::PermissionSets::ConfigurationDisplay do
     it { is_expected.not_to be_able_to(:admin, Spree::ShippingCategory) }
     it { is_expected.not_to be_able_to(:admin, Spree::StockLocation) }
     it { is_expected.not_to be_able_to(:admin, Spree::StockMovement) }
-    it { is_expected.not_to be_able_to(:admin, Spree::Tracker) }
     it { is_expected.not_to be_able_to(:admin, Spree::RefundReason) }
     it { is_expected.not_to be_able_to(:admin, Spree::ReimbursementType) }
     it { is_expected.not_to be_able_to(:admin, Spree::ReturnReason) }

@@ -1,3 +1,8 @@
+## Solidus 2.1.0 (unreleased)
+
+*   Analytics trackers were removed from the admin panel; the extension
+    `solidus_trackers` provides the same functionality
+
 ## Solidus 2.0.0 (unreleased)
 
 *   Upgrade to rails 5.0
