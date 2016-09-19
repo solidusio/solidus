@@ -223,7 +223,7 @@ module Spree
     # Removes a promotion and any adjustments or other side effects from an
     # order.
     # @param order [Spree::Order] the order to remove the promotion from.
-    # @return [undefined]
+    # @return [void]
     def remove_from(order)
       actions.each do |action|
         action.remove_from(order)
