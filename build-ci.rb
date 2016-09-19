@@ -99,7 +99,7 @@ class Project
   #
   # @param [String] message
   #
-  # @return [undefined]
+  # @return [void]
   def self.log(message)
     $stderr.puts(message)
   end
@@ -151,7 +151,7 @@ class Project
 
   # Setup the test app
   #
-  # @return [undefined]
+  # @return [void]
   def setup_test_app
     system(%w[bundle exec rake test_app]) || fail('Failed to setup the test app')
   end
@@ -185,7 +185,7 @@ class Project
 
   # Change to subproject directory and execute block
   #
-  # @return [undefined]
+  # @return [void]
   def chdir(&block)
     Dir.chdir(ROOT.join(name), &block)
   end
