@@ -97,6 +97,32 @@ describe Spree::Promotion::Rules::Taxon, type: :model do
       end
     end
 
+    context 'with none match policy' do
+      before do
+        rule.preferred_match_policy = 'none'
+      end
+
+      context "none of the order's products are in listed taxon" do
+        before { rule.taxons << taxon2 }
+        it { expect(rule).to be_eligible(order) }
+      end
+
+      context "one of the order's products is in a listed taxon" do
+        before do
+          order.products.first.taxons << taxon
+          rule.taxons << taxon
+        end
+        it "should not be eligible" do
+          expect(rule).not_to be_eligible(order)
+        end
+        it "sets an error message" do
+          rule.eligible?(order)
+          expect(rule.eligibility_errors.full_messages.first).
+            to eq "Your cart contains a product from an excluded category that prevents this coupon code from being applied."
+        end
+      end
+    end
+
     context 'with an invalid match policy' do
       before do
         order.products.first.taxons << taxon
