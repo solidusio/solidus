@@ -119,6 +119,8 @@ module Spree
           promotion_code: promotion_code,
         )
         order.promotions.reset
+        order_promotions.reset
+        orders.reset
       end
 
       action_taken
