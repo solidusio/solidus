@@ -14,11 +14,6 @@
 
     <% if respond_to? :spree_logout_path %>
       <li data-hook="user-logout-link">
-
-      <% unless Spree::Admin::OrdersController.instance_methods.include? :spree_logout_path
-        byebug
-      end %>
-
         <%= link_to spree_logout_path do %>
           <i class='fa fa-sign-out'></i>
           <%= Spree.t(:logout) %>
