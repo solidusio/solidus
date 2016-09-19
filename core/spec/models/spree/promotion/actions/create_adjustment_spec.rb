@@ -62,8 +62,7 @@ describe Spree::Promotion::Actions::CreateAdjustment, type: :model do
     let(:action) { promotion.actions.first! }
     let(:promotion) { create(:promotion, :with_order_adjustment) }
 
-    # this adjustment should not get removed
-    let!(:other_adjustment) { create(:adjustment, order: order, source: nil) }
+    let!(:unrelated_adjustment) { create(:adjustment, order: order, source: nil) }
 
     before do
       action.perform(payload)
@@ -71,11 +70,11 @@ describe Spree::Promotion::Actions::CreateAdjustment, type: :model do
     end
 
     it 'removes the action adjustment' do
-      expect(order.adjustments).to match_array([other_adjustment, @action_adjustment])
+      expect(order.adjustments).to match_array([unrelated_adjustment, @action_adjustment])
 
       action.remove_from(order)
 
-      expect(order.adjustments).to eq([other_adjustment])
+      expect(order.adjustments).to eq([unrelated_adjustment])
     end
   end
 
