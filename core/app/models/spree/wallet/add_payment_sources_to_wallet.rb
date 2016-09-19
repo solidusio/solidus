@@ -9,7 +9,7 @@ class Spree::Wallet::AddPaymentSourcesToWallet
   # This is called after an order transistions to complete and should save the
   # order's payment source/s in the user's "wallet" for future use.
   #
-  # @return [undefined]
+  # @return [void]
   def add_to_wallet
     if !order.temporary_credit_card &&
        order.user_id &&
