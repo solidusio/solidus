@@ -31,11 +31,10 @@ module Spree
     end
 
     def recalculate_adjustments
-      adjustables = [*line_items, *shipments, order]
-
-      adjustables.each do |adjustable|
-        Spree::ItemAdjustments.new(adjustable).update
-      end
+      update_promotions
+      update_taxes
+      update_cancellations
+      update_item_totals
     end
 
     # Updates the following Order total values:
@@ -163,6 +162,52 @@ module Spree
 
     def round_money(n)
       (n * 100).round / 100.0
+    end
+
+    def update_promotions
+      [*line_items, *shipments, order].each do |item|
+        promotion_adjustments = item.adjustments.select(&:promotion?)
+
+        promotion_adjustments.each(&:update!)
+        Spree::Config.promotion_chooser_class.new(promotion_adjustments).update
+        item.promo_total = promotion_adjustments.select(&:eligible?).sum(&:amount)
+      end
+    end
+
+    def update_taxes
+      [*line_items, *shipments].each do |item|
+        tax_adjustments = item.adjustments.select(&:tax?)
+
+        tax_adjustments.each(&:update!)
+        item.included_tax_total   = tax_adjustments.select(&:included?).sum(&:amount)
+        item.additional_tax_total = tax_adjustments.reject(&:included?).sum(&:amount)
+      end
+    end
+
+    def update_cancellations
+      [*line_items, *shipments].each do |item|
+        item.adjustments.select(&:cancellation?).each(&:update!)
+      end
+    end
+
+    def update_item_totals
+      [*line_items, *shipments].each do |item|
+        item_cancellation_total = item.adjustments.select(&:cancellation?).sum(&:amount)
+
+        item.adjustment_total = item.promo_total +
+                                item.additional_tax_total +
+                                item_cancellation_total
+
+        if item.changed?
+          item.update_columns(
+            promo_total:          item.promo_total,
+            included_tax_total:   item.included_tax_total,
+            additional_tax_total: item.additional_tax_total,
+            adjustment_total:     item.adjustment_total,
+            updated_at:           Time.current,
+          )
+        end
+      end
     end
   end
 end
