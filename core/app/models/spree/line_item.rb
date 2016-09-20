@@ -88,6 +88,7 @@ module Spree
     # @return [Spree::Money] the amount of this line item
     alias money display_amount
     alias display_total display_amount
+    deprecate display_total: :display_amount, deprecator: Spree::Deprecation
 
     # Sets price and currency from a `Spree::Money` object
     #
