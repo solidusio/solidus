@@ -1,3 +1,7 @@
+# @api private
+# @note This is a helper class for Tax::OrderAdjuster.  It is marked as api
+#   private because taxes should always be calculated on the entire order, so
+#   external code should call Tax::OrderAdjuster instead of Tax::ItemAdjuster.
 module Spree
   module Tax
     # Adjust a single taxable item (line item or shipment)

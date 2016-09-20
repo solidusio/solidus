@@ -1,5 +1,12 @@
 ## Solidus 2.1.0 (master, unreleased)
 
+*   Remove callback `Spree::LineItem.after_create :update_tax_charge`
+
+    Any code that creates `LineItem`s outside the context of OrderContents
+    should ensure that it calls `order.create_tax_charge!` after doing so.
+
+*   Mark `Spree::Tax::ItemAdjuster` as api-private
+
 *   Analytics trackers were removed from the admin panel; the extension
     `solidus_trackers` provides the same functionality
 

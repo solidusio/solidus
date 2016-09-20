@@ -24,6 +24,7 @@ module Spree
       new_order.associate_user!(@original_order.user) if @original_order.user
 
       add_exchange_variants_to_order
+      new_order.create_tax_charge!
       set_shipment_for_new_order
 
       new_order.update!
