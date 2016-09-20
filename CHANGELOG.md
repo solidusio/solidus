@@ -1,4 +1,4 @@
-## Solidus 2.1.0 (unreleased)
+## Solidus 2.1.0 (master, unreleased)
 
 *   Analytics trackers were removed from the admin panel; the extension
     `solidus_trackers` provides the same functionality
