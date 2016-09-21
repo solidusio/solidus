@@ -82,15 +82,6 @@ module Spree
       !active?
     end
 
-    def expired?
-      Spree::Deprecation.warn <<-WARN.squish, caller
-        #expired? is deprecated, and will be removed in Solidus 2.0.
-        Please use #inactive? instead.
-      WARN
-
-      inactive?
-    end
-
     def activate(order:, line_item: nil, user: nil, path: nil, promotion_code: nil)
       return unless self.class.order_activatable?(order)
 
