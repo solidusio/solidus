@@ -199,30 +199,41 @@ describe Spree::StockItem, type: :model do
 
       let(:inventory_cache_threshold) { 5 }
 
-      it "count on hand falls below threshold" do
-        expect do
-          subject.set_count_on_hand(3)
-        end.to change { subject.variant.updated_at }
+      before do
+        subject.set_count_on_hand(existing_count_on_hand)
+        subject.variant.update_column(:updated_at, 1.day.ago)
       end
 
-      it "count on hand rises above threshold" do
-        subject.set_count_on_hand(2)
-        expect do
-          subject.set_count_on_hand(7)
-        end.to change { subject.variant.updated_at }
+      context "beginning above threshold" do
+        let(:existing_count_on_hand) { 10 }
+
+        it "count on hand falls below threshold" do
+          expect do
+            subject.set_count_on_hand(3)
+          end.to change { subject.variant.updated_at }
+        end
+
+        it "count on hand stays above threshold" do
+          expect do
+            subject.set_count_on_hand(8)
+          end.not_to change { subject.variant.updated_at }
+        end
       end
 
-      it "count on hand stays below threshold" do
-        subject.set_count_on_hand(2)
-        expect do
-          subject.set_count_on_hand(3)
-        end.to change { subject.variant.updated_at }
-      end
+      context "beginning below threshold" do
+        let(:existing_count_on_hand) { 2 }
 
-      it "count on hand stays above threshold" do
-        expect do
-          subject.set_count_on_hand(8)
-        end.not_to change { subject.variant.updated_at }
+        it "count on hand rises above threshold" do
+          expect do
+            subject.set_count_on_hand(7)
+          end.to change { subject.variant.updated_at }
+        end
+
+        it "count on hand stays below threshold" do
+          expect do
+            subject.set_count_on_hand(3)
+          end.to change { subject.variant.updated_at }
+        end
       end
     end
 
@@ -255,6 +266,8 @@ describe Spree::StockItem, type: :model do
   end
 
   describe "#after_touch" do
+    before { subject.variant.update_column(:updated_at, 1.day.ago) }
+
     it "touches its variant" do
       expect do
         subject.touch
