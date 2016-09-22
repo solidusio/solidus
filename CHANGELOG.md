@@ -3,6 +3,11 @@
 *   Analytics trackers were removed from the admin panel; the extension
     `solidus_trackers` provides the same functionality
 
+*   Removals
+
+    * Removed deprecated method `Promotion#expired?` in favor of
+      `Promotion#inactive?`
+
 ## Solidus 2.0.0 (unreleased)
 
 *   Upgrade to rails 5.0
