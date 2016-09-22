@@ -3,6 +3,11 @@
 *   Analytics trackers were removed from the admin panel; the extension
     `solidus_trackers` provides the same functionality
 
+*   Removals
+
+    * Removed deprecated method `Spree::TaxRate.adjust` (not to be confused with
+      Spree::TaxRate#adjust) in favor of `Spree::Tax::OrderAdjuster`.
+
 ## Solidus 2.0.0 (unreleased)
 
 *   Upgrade to rails 5.0

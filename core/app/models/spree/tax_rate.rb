@@ -65,19 +65,6 @@ module Spree
     scope :for_zone, ->(zone) { where(zone_id: Spree::Zone.with_shared_members(zone).pluck(:id)) }
     scope :included_in_price, -> { where(included_in_price: true) }
 
-    # Create tax adjustments for some items that have the same tax zone.
-    #
-    # @deprecated Please use Spree::Tax::OrderAdjuster or Spree::Tax::ItemAdjuster instead.
-    #
-    # @param [Spree::Zone] order_tax_zone is the smalles applicable zone to the order's tax address
-    # @param [Array<Spree::LineItem,Spree::Shipment>] items to be adjusted
-    def self.adjust(order_tax_zone, items)
-      Spree::Deprecation.warn("Please use Spree::Tax::OrderAdjuster or Spree::Tax::ItemAdjuster instead", caller)
-      items.map do |item|
-        Spree::Tax::ItemAdjuster.new(item, rates_for_order_zone: for_zone(order_tax_zone)).adjust!
-      end
-    end
-
     # Creates necessary tax adjustments for the order.
     def adjust(order_tax_zone, item)
       amount = compute_amount(item)
