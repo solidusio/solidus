@@ -35,6 +35,9 @@ Style/ClassAndModuleChildren:
 Style/GuardClause:
   Enabled: false
 
+Style/Next:
+  Enabled: false
+
 Style/WordArray:
   Enabled: false
 
