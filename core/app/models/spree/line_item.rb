@@ -31,8 +31,6 @@ module Spree
     validates :price, numericality: true
     validate :ensure_proper_currency
 
-    after_create :update_tax_charge
-
     after_save :update_inventory
 
     before_destroy :update_inventory
@@ -172,10 +170,6 @@ module Spree
 
     def destroy_inventory_units
       inventory_units.destroy_all
-    end
-
-    def update_tax_charge
-      Spree::Tax::ItemAdjuster.new(self).adjust!
     end
 
     def ensure_proper_currency

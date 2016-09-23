@@ -35,41 +35,6 @@ describe Spree::LineItem, type: :model do
     end
   end
 
-  context "#create" do
-    let(:variant) { create(:variant) }
-
-    before do
-      create(:tax_rate, zone: order.tax_zone, tax_category: variant.tax_category)
-    end
-
-    context "when order has a tax zone" do
-      before do
-        expect(order.tax_zone).to be_present
-      end
-
-      it "creates a tax adjustment" do
-        order.contents.add(variant)
-        line_item = order.find_line_item_by_variant(variant)
-        expect(line_item.adjustments.tax.count).to eq(1)
-      end
-    end
-
-    context "when order does not have a tax zone" do
-      before do
-        order.bill_address = nil
-        order.ship_address = nil
-        order.save
-        expect(order.reload.tax_zone).to be_nil
-      end
-
-      it "does not create a tax adjustment" do
-        order.contents.add(variant)
-        line_item = order.find_line_item_by_variant(variant)
-        expect(line_item.adjustments.tax.count).to eq(0)
-      end
-    end
-  end
-
   describe 'line item creation' do
     let(:variant) { create :variant }
 

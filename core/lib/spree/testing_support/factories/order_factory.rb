@@ -45,6 +45,7 @@ FactoryGirl.define do
           create(:line_item, attributes)
         end
         order.line_items.reload
+        order.create_tax_charge!
 
         create(:shipment, order: order, cost: evaluator.shipment_cost, shipping_method: evaluator.shipping_method, stock_location: evaluator.stock_location)
         order.shipments.reload

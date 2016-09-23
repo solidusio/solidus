@@ -2,12 +2,12 @@ require 'spec_helper'
 
 describe Spree::OrderContents, type: :model do
   let!(:store) { create :store }
-  let(:order) { Spree::Order.create }
+  let(:order) { create(:order) }
   let(:variant) { create(:variant) }
   let!(:stock_location) { variant.stock_locations.first }
   let(:stock_location_2) { create(:stock_location) }
 
-  subject { described_class.new(order) }
+  subject(:order_contents) { described_class.new(order) }
 
   context "#add" do
     context 'given quantity is not explicitly provided' do
@@ -94,6 +94,38 @@ describe Spree::OrderContents, type: :model do
         end
 
         include_context "discount changes order total"
+      end
+    end
+
+    describe 'tax calculations' do
+      let!(:zone) { create(:global_zone) }
+      let!(:tax_rate) do
+        create(:tax_rate, zone: zone, tax_category: variant.tax_category)
+      end
+
+      context 'when the order has a tax zone' do
+        before do
+          expect(order.tax_zone).to be_present
+        end
+
+        it 'creates a tax adjustment' do
+          order_contents.add(variant)
+          line_item = order.find_line_item_by_variant(variant)
+          expect(line_item.adjustments.tax.count).to eq(1)
+        end
+      end
+
+      context 'when the order does not have a tax zone' do
+        before do
+          order.update_attributes!(ship_address: nil, bill_address: nil)
+          expect(order.tax_zone).to be_nil
+        end
+
+        it 'creates a tax adjustment' do
+          order_contents.add(variant)
+          line_item = order.find_line_item_by_variant(variant)
+          expect(line_item.adjustments.tax.count).to eq(0)
+        end
       end
     end
   end
@@ -224,52 +256,9 @@ describe Spree::OrderContents, type: :model do
       }.to change { subject.order.total }
     end
 
-    context "given an order with existing addresses" do
-      let(:default_address) { create :address, state_code: "NY", zipcode: "17402" }
-      let(:order_with_address ) { create :order, ship_address: default_address, bill_address: default_address }
-
-      subject { described_class.new(order_with_address) }
-
-      context "when an address in a potentially different tax zone is supplied " do
-        let(:updated_address) { build :address, state_code: "AL",  zipcode: "64092" }
-
-        let(:params) do
-          { ship_address_attributes: updated_address.value_attributes, bill_address_attributes: updated_address.value_attributes }
-        end
-
-        it "updates tax adjustments" do
-          expect(subject.order).to receive(:create_tax_charge!)
-          subject.update_cart params
-        end
-      end
-
-      context "when an address in potentially the same tax zone is supplied" do
-        let(:updated_address) { build :address, state_code: "NY", zipcode: "17402", firstname: 'Robert' }
-
-        let(:params) do
-          { ship_address_attributes: updated_address.value_attributes, bill_address_attributes: updated_address.value_attributes }
-        end
-
-        it "does not updates tax adjustments" do
-          expect(subject.order).not_to receive(:create_tax_charge!)
-          subject.update_cart params
-        end
-      end
-    end
-
-    context "given an order with no existing addresses" do
-      context "when an address is supplied" do
-        let(:updated_address) { build :address, state_code: "CA", zipcode: "14902" }
-
-        let(:params) do
-          { ship_address_attributes: updated_address.attributes, bill_address_attributes: updated_address.value_attributes }
-        end
-
-        it "does not updates tax adjustments" do
-          expect(subject.order).not_to receive(:create_tax_charge!)
-          subject.update_cart params
-        end
-      end
+    it "updates tax adjustments" do
+      expect(subject.order).to receive(:create_tax_charge!)
+      subject.update_cart params
     end
 
     context "submits item quantity 0" do
