@@ -65,6 +65,20 @@ describe Spree::OrderContents, type: :model do
       expect(order_stock_locations.map(&:stock_location_id)).to eq([stock_location.id, stock_location_2.id])
     end
 
+    context "order with variant" do
+      before do
+        subject.add(variant, 3, stock_location_quantities: { stock_location.id => 1, stock_location_2.id => 2 })
+      end
+
+      it "should update stock location associations if already exists" do
+        line_item = subject.add(variant, 2, stock_location_quantities: { stock_location.id => 1, stock_location_2.id => 1 })
+        order_stock_locations = line_item.order.order_stock_locations
+        expect(order_stock_locations.count).to eq(2)
+        expect(order_stock_locations.map(&:quantity)).to eq([2, 3])
+        expect(order_stock_locations.map(&:stock_location_id)).to eq([stock_location.id, stock_location_2.id])
+      end
+    end
+
     context "running promotions" do
       let(:promotion) { create(:promotion, apply_automatically: true) }
       let(:calculator) { Spree::Calculator::FlatRate.new(preferred_amount: 10) }
@@ -205,12 +219,27 @@ describe Spree::OrderContents, type: :model do
   end
 
   context "update cart" do
-    let!(:shirt) { subject.add variant, 1 }
+    let!(:shirt) { subject.add variant, 1, stock_location_quantities: { stock_location.id => 1 } }
 
     let(:params) do
       { line_items_attributes: {
         "0" => { id: shirt.id, quantity: 3 }
       } }
+    end
+
+    let(:options) do
+      {
+        variant_stock_location_quantities: {
+          shirt.variant_id => { stock_location.id => 3 }
+        }
+      }
+    end
+
+    let(:order_stock_location) do
+      order.order_stock_locations.where(
+        variant_id: shirt.variant_id,
+        stock_location_id: stock_location.id
+      ).first
     end
 
     it "changes item quantity" do
@@ -222,6 +251,14 @@ describe Spree::OrderContents, type: :model do
       expect {
         subject.update_cart params
       }.to change { subject.order.total }
+    end
+
+    context "provide stock location" do
+      it "update stock location" do
+        expect {
+          subject.update_cart params, options
+        }.to change { order_stock_location.reload.quantity }
+      end
     end
 
     context "given an order with existing addresses" do
