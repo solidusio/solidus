@@ -185,8 +185,8 @@ module Spree
     end
 
     def update_cancellations
-      [*line_items, *shipments].each do |item|
-        item.adjustments.select(&:cancellation?).each(&:update!)
+      line_items.each do |line_item|
+        line_item.adjustments.select(&:cancellation?).each(&:update!)
       end
     end
 
