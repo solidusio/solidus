@@ -213,11 +213,7 @@ module Spree
                   expect(order.all_adjustments.eligible.count).to eq(1), 'Expected one elegible adjustment'
                   expect(order.all_adjustments.eligible.first.source.promotion).to eq(order_promo2), 'Expected promo2 to be used'
                 end
-              end
-            end
 
-            promo_sequences.each do |promo_sequence|
-              context 'with promo sequence #{promo_sequence}' do
                 it 'should pick the best line-item-level promo according to current eligibility' do
                   # apply both promos to the order, even though only promo1 is eligible
                   line_item_promos[promo_sequence[0]].activate order: order
