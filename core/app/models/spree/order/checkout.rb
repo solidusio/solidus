@@ -78,7 +78,6 @@ module Spree
 
                 after_transition to: :complete, do: :add_payment_sources_to_wallet
                 before_transition to: :payment, do: :set_shipments_cost
-                before_transition to: :payment, do: :create_tax_charge!
                 before_transition to: :payment, do: :assign_default_credit_card
 
                 before_transition to: :confirm, do: :add_store_credit_payments
@@ -90,7 +89,6 @@ module Spree
               before_transition from: :cart, do: :ensure_line_items_present
 
               if states[:address]
-                before_transition from: :address, do: :create_tax_charge!
                 before_transition to: :address, do: :assign_default_addresses!
                 before_transition from: :address, do: :persist_user_address!
               end

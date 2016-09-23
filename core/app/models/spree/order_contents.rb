@@ -36,8 +36,6 @@ module Spree
 
     def update_cart(params)
       if order.update_attributes(params)
-        order.create_tax_charge!
-
         unless order.completed?
           order.line_items = order.line_items.select { |li| li.quantity > 0 }
           # Update totals, then check if the order is eligible for any cart promotions.
@@ -77,7 +75,6 @@ module Spree
       shipment = options[:shipment]
       shipment.present? ? shipment.update_amounts : order.ensure_updated_shipments
       PromotionHandler::Cart.new(order, line_item).activate
-      order.create_tax_charge!
       reload_totals
       line_item
     end

@@ -197,10 +197,10 @@ module Spree
     end
 
     def update_taxes
+      Spree::Tax::OrderAdjuster.new(order).adjust!
+
       [*line_items, *shipments].each do |item|
         tax_adjustments = item.adjustments.select(&:tax?)
-
-        tax_adjustments.each(&:update!)
         # Tax adjustments come in not one but *two* exciting flavours:
         # Included & additional
 

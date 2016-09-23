@@ -17,7 +17,7 @@ module Spree
   # `checkout_allowed?` or `payment_required?`.
   #
   #  * Implements an interface for mutating the order with methods like
-  # `create_tax_charge!` and `fulfill!`.
+  # `empty!` and `fulfill!`.
   #
   class Order < Spree::Base
     ORDER_NUMBER_LENGTH  = 9
@@ -348,9 +348,11 @@ module Spree
 
     # Creates new tax charges if there are any applicable rates. If prices already
     # include taxes then price adjustments are created instead.
+    # @deprecated This now happens during #update!
     def create_tax_charge!
       Spree::Tax::OrderAdjuster.new(self).adjust!
     end
+    deprecate create_tax_charge!: :update!, deprecator: Spree::Deprecation
 
     def outstanding_balance
       # If reimbursement has happened add it back to total to prevent balance_due payment state

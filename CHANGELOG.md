@@ -18,7 +18,7 @@
 *   Remove callback `Spree::LineItem.after_create :update_tax_charge`
 
     Any code that creates `LineItem`s outside the context of OrderContents
-    should ensure that it calls `order.create_tax_charge!` after doing so.
+    should ensure that it calls `order.update!` after doing so.
 
 *   Mark `Spree::Tax::ItemAdjuster` as api-private
 
