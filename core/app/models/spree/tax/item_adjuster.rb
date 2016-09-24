@@ -24,9 +24,6 @@ module Spree
       # Deletes all existing tax adjustments and creates new adjustments for all
       # (geographically and category-wise) applicable tax rates.
       #
-      # Creating the adjustments will also run the ItemAdjustments class and
-      # persist all taxation and promotion totals on the item.
-      #
       # @return [Array<Spree::Adjustment>] newly created adjustments
       def adjust!
         return unless order_tax_zone(order)
