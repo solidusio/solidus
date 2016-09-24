@@ -188,7 +188,7 @@ module Spree
 
     # Update and select the best promotion adjustment for the order.
     # We don't update the order.promo_total yet. Order totals are updated later
-    # in #update_adjustment_total since they include the totals from the ordre's
+    # in #update_adjustment_total since they include the totals from the order's
     # line items and/or shipments.
     def update_order_promotions
       promotion_adjustments = order.adjustments.select(&:promotion?)
