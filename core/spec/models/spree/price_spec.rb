@@ -55,6 +55,12 @@ describe Spree::Price, type: :model do
         it { is_expected.to be_valid }
       end
 
+      context 'when country iso is an empty string' do
+        let(:country_iso) { "" }
+
+        it { is_expected.to be_valid }
+      end
+
       context 'when country iso is a country code' do
         let!(:country) { create(:country, iso: "DE") }
         let(:country_iso) { "DE" }
@@ -66,6 +72,15 @@ describe Spree::Price, type: :model do
         let(:country_iso) { "ZZ" }
 
         it { is_expected.not_to be_valid }
+      end
+    end
+
+    describe "country_iso=" do
+      let(:price) { Spree::Price.new(country_iso: "de") }
+
+      it "assigns nil if passed nil" do
+        price.country_iso = nil
+        expect(price.country_iso).to be_nil
       end
     end
 
