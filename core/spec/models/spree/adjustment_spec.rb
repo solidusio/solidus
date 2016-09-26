@@ -157,4 +157,130 @@ describe Spree::Adjustment, type: :model do
       end
     end
   end
+
+  describe 'repairing adjustment associations' do
+    context 'on create' do
+      let(:adjustable) { order }
+      let(:adjustment_source) { promotion.actions[0] }
+      let(:order) { create(:order) }
+      let(:promotion) { create(:promotion, :with_line_item_adjustment) }
+
+      def expect_deprecation_warning
+        expect(Spree::Deprecation).to(
+          receive(:warn).
+          with(
+            /Adjustment \d+ was not added to #{adjustable.class} #{adjustable.id}/,
+            instance_of(Array),
+          )
+        )
+      end
+
+      context 'when adding adjustments via the wrong association' do
+        def create_adjustment
+          adjustment_source.adjustments.create!(
+            amount: 10,
+            adjustable: adjustable,
+            order: order,
+            label: 'some label',
+          )
+        end
+
+        context 'when adjustable.adjustments is loaded' do
+          before { adjustable.adjustments.to_a }
+
+          it 'repairs adjustable.adjustments' do
+            expect_deprecation_warning
+            adjustment = create_adjustment
+            expect(adjustable.adjustments).to include(adjustment)
+          end
+        end
+
+        context 'when adjustable.adjustments is not loaded' do
+          it 'does repair' do
+            expect(Spree::Deprecation).not_to receive(:warn)
+            create_adjustment
+          end
+        end
+      end
+
+      context 'when adding adjustments via the correct association' do
+        def create_adjustment
+          adjustable.adjustments.create!(
+            amount: 10,
+            source: adjustment_source,
+            order: order,
+            label: 'some label',
+          )
+        end
+
+        context 'when adjustable.adjustments is loaded' do
+          before { adjustable.adjustments.to_a }
+
+          it 'does not repair' do
+            expect(Spree::Deprecation).not_to receive(:warn)
+            create_adjustment
+          end
+        end
+
+        context 'when adjustable.adjustments is not loaded' do
+          it 'does not repair' do
+            expect(Spree::Deprecation).not_to receive(:warn)
+            create_adjustment
+          end
+        end
+      end
+    end
+
+    context 'on destroy' do
+      let(:adjustment) { create(:adjustment) }
+      let(:adjustable) { adjustment.adjustable }
+
+      def expect_deprecation_warning(adjustable)
+        expect(Spree::Deprecation).to(
+          receive(:warn).
+          with(
+            /Adjustment #{adjustment.id} was not removed from #{adjustable.class} #{adjustable.id}/,
+            instance_of(Array),
+          )
+        )
+      end
+
+      context 'when destroying adjustments not via association' do
+        context 'when adjustable.adjustments is loaded' do
+          before { adjustable.adjustments.to_a }
+
+          it 'repairs adjustable.adjustments' do
+            expect_deprecation_warning(adjustable)
+            adjustment.destroy!
+            expect(adjustable.adjustments).not_to include(adjustment)
+          end
+        end
+
+        context 'when adjustable.adjustments is not loaded' do
+          it 'does repair' do
+            expect(Spree::Deprecation).not_to receive(:warn)
+            adjustment.destroy!
+          end
+        end
+      end
+
+      context 'when destroying adjustments via the association' do
+        context 'when adjustable.adjustments is loaded' do
+          before { adjustable.adjustments.to_a }
+
+          it 'does not repair' do
+            expect(Spree::Deprecation).not_to receive(:warn)
+            adjustable.adjustments.destroy(adjustment)
+          end
+        end
+
+        context 'when adjustable.adjustments is not loaded' do
+          it 'does not repair' do
+            expect(Spree::Deprecation).not_to receive(:warn)
+            adjustable.adjustments.destroy(adjustment)
+          end
+        end
+      end
+    end
+  end
 end
