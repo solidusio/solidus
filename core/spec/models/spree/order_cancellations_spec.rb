@@ -134,17 +134,19 @@ describe Spree::OrderCancellations do
       let(:line_item) { order.line_items.to_a.first }
       let(:inventory_unit_1) { line_item.inventory_units[0] }
       let(:inventory_unit_2) { line_item.inventory_units[1] }
+      let(:promotion) { create(:promotion, :with_line_item_adjustment) }
+      let(:promotion_action) { promotion.actions[0] }
 
       before do
         order.contents.add(line_item.variant)
 
         # make the total $1.67 so it divides unevenly
         line_item.adjustments.create!(
-          source_type: 'Spree::TaxRate',
           order: order,
           amount: 0.01,
-          label: 'some fake tax',
-          finalized: true
+          label: 'some promo',
+          source: promotion_action,
+          finalized: true,
         )
         order.update!
       end
@@ -154,7 +156,7 @@ describe Spree::OrderCancellations do
         order.cancellations.short_ship([inventory_unit_2])
         expect(line_item.adjustments.map(&:amount)).to match_array(
           [
-            0.01, # tax adjustment
+            0.01,  # promo adjustment
             -0.84, # short ship 1
             -0.83, # short ship 2
           ]

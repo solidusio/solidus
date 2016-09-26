@@ -276,7 +276,6 @@ module Spree
         let(:order) do
           create(
             :order_with_line_items,
-            line_items_count: 1,
             line_items_attributes: [{ price: 10, variant: variant }],
             ship_address: ship_address,
           )

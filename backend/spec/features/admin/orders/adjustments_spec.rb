@@ -3,29 +3,26 @@ require 'spec_helper'
 describe "Adjustments", type: :feature do
   stub_authorization!
 
-  let!(:order) { create(:completed_order_with_totals, line_items_count: 5) }
-  let!(:line_item) do
-    line_item = order.line_items.first
-    # so we can be sure of a determinate price in our assertions
-    line_item.update_column(:price, 10)
-    line_item
-  end
+  let!(:ship_address) { create(:address) }
+  let!(:tax_zone) { create(:global_zone) } # will include the above address
+  let!(:tax_rate) { create(:tax_rate, amount: 0.20, zone: tax_zone, tax_category: tax_category) }
 
-  let!(:tax_adjustment) do
-    create(:tax_adjustment,
-      adjustable: line_item,
-      finalized: true,
-      order: order,
-      label: "VAT 5%",
-      amount: 10)
+  let!(:order) do
+    create(
+      :completed_order_with_totals,
+      line_items_attributes: [{ price: 10, variant: variant }] * 5,
+      ship_address: ship_address,
+    )
   end
+  let!(:line_item) { order.line_items[0] }
+
+  let(:tax_category) { create(:tax_category) }
+  let(:variant) { create(:variant, tax_category: tax_category) }
 
   let!(:adjustment) { order.adjustments.create!(order: order, label: 'Rebate', amount: 10) }
 
   before(:each) do
-    # To ensure the order totals are correct
-    order.update_totals
-    order.persist_totals
+    order.update!
 
     visit spree.admin_path
     click_link "Orders"
@@ -35,9 +32,9 @@ describe "Adjustments", type: :feature do
 
   context "admin managing adjustments" do
     it "should display the correct values for existing order adjustments" do
-      within_row(1) do
-        expect(column_text(2)).to eq("VAT 5%")
-        expect(column_text(3)).to eq("$10.00")
+      within first('table tr', text: 'Tax') do
+        expect(column_text(2)).to match(/TaxCategory - \d+ 20\.000%/)
+        expect(column_text(3)).to eq("$2.00")
       end
     end
 
@@ -76,7 +73,9 @@ describe "Adjustments", type: :feature do
 
   context "admin editing an adjustment" do
     before(:each) do
-      within_row(2) { click_icon :edit }
+      within('table tr', text: 'Rebate') do
+        click_icon :edit
+      end
     end
 
     context "successfully" do
@@ -106,15 +105,19 @@ describe "Adjustments", type: :feature do
   end
 
   context "deleting an adjustment" do
-    it "should not be possible if adjustment is closed" do
-      within_row(1) do
-        expect(page).not_to have_css('.fa-trash')
+    context 'when the adjustment is finalized' do
+      let!(:adjustment) { super().tap(&:finalize!) }
+
+      it 'should not be possible' do
+        within('table tr', text: 'Rebate') do
+          expect(page).not_to have_css('.fa-trash')
+        end
       end
     end
 
     it "should update the total", js: true do
       accept_alert do
-        within_row(2) do
+        within('table tr', text: 'Rebate') do
           click_icon(:trash)
         end
       end
