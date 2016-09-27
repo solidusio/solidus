@@ -71,7 +71,7 @@ describe Spree::Price, type: :model do
 
     describe '#country' do
       let!(:country) { create(:country, iso: "DE") }
-      let(:price) { create(:price, country_iso: "DE", is_default: false) }
+      let(:price) { create(:price, country_iso: "DE") }
 
       it 'returns the country object' do
         expect(price.country).to eq(country)

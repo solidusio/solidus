@@ -1,5 +1,11 @@
 ## Solidus 2.1.0 (master, unreleased)
 
+*   Remove `is_default` boolean from `Spree::Price` model
+
+    This boolean used to mean "the price to be used". With the new
+    pricing architecture introduced in 1.3, it is now redundant and can be
+    reduced to an order clause in the currently valid prices scope.
+
 *   Remove callback `Spree::LineItem.after_create :update_tax_charge`
 
     Any code that creates `LineItem`s outside the context of OrderContents
