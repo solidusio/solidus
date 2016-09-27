@@ -184,7 +184,7 @@ module Spree
     end
 
     def repair_adjustments_associations_on_create
-      if adjustable.adjustments.loaded? && !adjustable.adjustments.include?(self)
+      if adjustable.adjustments.loaded? && !adjustable.adjustments.include?(self) && Spree::Adjustment.exists?(id)
         Spree::Deprecation.warn("Adjustment #{id} was not added to #{adjustable.class} #{adjustable.id}. Add adjustments via `adjustable.adjustments.create!`. Partial call stack: #{caller.select { |line| line =~ %r(/(app|spec)/) }}.", caller)
         adjustable.adjustments.proxy_association.add_to_target(self)
       end

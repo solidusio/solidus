@@ -193,6 +193,16 @@ describe Spree::Adjustment, type: :model do
             adjustment = create_adjustment
             expect(adjustable.adjustments).to include(adjustment)
           end
+
+          context 'when the adjustment is destroyed before after_commit runs' do
+            it 'does not repair' do
+              expect(Spree::Deprecation).not_to receive(:warn)
+              Spree::Adjustment.transaction do
+                adjustment = create_adjustment
+                adjustment.destroy!
+              end
+            end
+          end
         end
 
         context 'when adjustable.adjustments is not loaded' do
