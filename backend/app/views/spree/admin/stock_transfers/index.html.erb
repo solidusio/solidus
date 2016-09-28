@@ -17,41 +17,43 @@
 <% content_for :table_filter do %>
   <div data-hook="admin_stock_transfers_index_search">
     <%= search_form_for [:admin, @search] do |f| %>
-      <div class="field-block alpha four columns">
-        <div class="field">
-          <%= f.label nil, Spree::StockLocation.model_name.human %>
-          <%= f.select :source_location_id_or_destination_location_id_eq, options_from_collection_for_select(@stock_locations, :id, :name, params[:q][:source_location_id_or_destination_location_id_eq]), {include_blank: true}, {class: 'select2 fullwidth'} %>
-        </div>
-      </div>
-
-      <div class="field-block alpha four columns">
-        <div class="date-range-filter field">
-          <%= f.label nil, Spree.t(:date_range) %>
-          <div class="date-range-fields">
-            <%= f.text_field :created_at_gt, class: 'datepicker datepicker-from', include_blank: true, value: params[:q][:created_at_gt], placeholder: Spree.t(:start) %>
-
-            <span class="range-divider">
-              <i class="fa fa-arrow-right"></i>
-            </span>
-
-            <%= f.text_field :created_at_lt, class: 'datepicker datepicker-to', include_blank: true, value: params[:q][:created_at_lt], placeholder: Spree.t(:stop) %>
+      <div class="row">
+        <div class="field-block col-xs-3">
+          <div class="field">
+            <%= f.label nil, Spree::StockLocation.model_name.human %>
+            <%= f.select :source_location_id_or_destination_location_id_eq, options_from_collection_for_select(@stock_locations, :id, :name, params[:q][:source_location_id_or_destination_location_id_eq]), {include_blank: true}, {class: 'select2 fullwidth'} %>
           </div>
         </div>
-      </div>
 
-      <div class="field-block alpha four columns">
-        <div class="field">
-          <%= f.label nil, Spree::StockTransfer.human_attribute_name(:number) %>
-          <%= f.text_field :number_cont, value: params[:q][:number_cont] %>
+        <div class="field-block col-xs-3">
+          <div class="date-range-filter field">
+            <%= f.label nil, Spree.t(:date_range) %>
+            <div class="date-range-fields">
+              <%= f.text_field :created_at_gt, class: 'datepicker datepicker-from', include_blank: true, value: params[:q][:created_at_gt], placeholder: Spree.t(:start) %>
+
+              <span class="range-divider">
+                <i class="fa fa-arrow-right"></i>
+              </span>
+
+              <%= f.text_field :created_at_lt, class: 'datepicker datepicker-to', include_blank: true, value: params[:q][:created_at_lt], placeholder: Spree.t(:stop) %>
+            </div>
+          </div>
         </div>
-      </div>
 
-      <div class="field-block alpha four columns">
-        <div class="field checkbox">
-          <label>
-            <%= f.check_box :closed_at_null, { checked: @show_only_open }, '1', '0' %>
-            <%= Spree.t(:show_only_open_transfers) %>
-          </label>
+        <div class="field-block col-xs-3">
+          <div class="field">
+            <%= f.label nil, Spree::StockTransfer.human_attribute_name(:number) %>
+            <%= f.text_field :number_cont, value: params[:q][:number_cont] %>
+          </div>
+        </div>
+
+        <div class="field-block col-xs-3">
+          <div class="field checkbox">
+            <label>
+              <%= f.check_box :closed_at_null, { checked: @show_only_open }, '1', '0' %>
+              <%= Spree.t(:show_only_open_transfers) %>
+            </label>
+          </div>
         </div>
       </div>
 
@@ -107,7 +109,7 @@
     </tbody>
   </table>
 <% else %>
-  <div class="alpha sixteen columns no-objects-found">
+  <div class="col-xs-9 no-objects-found">
     <%= render 'spree/admin/shared/no_objects_found',
                   resource: Spree::StockTransfer,
                   new_resource_url: new_object_url %>

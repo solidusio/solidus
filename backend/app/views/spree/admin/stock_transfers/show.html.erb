@@ -16,30 +16,32 @@
     <p><%= @stock_transfer.description %></p>
   </div>
 
-  <div class='field-block alpha three columns'>
-    <label><%= Spree::StockTransfer.human_attribute_name(:created_by_id) %></label>
-    <p><%= @stock_transfer.created_by.email %></p>
-  </div>
+  <div class="row">
+    <div class='field-block col-xs-3'>
+      <label><%= Spree::StockTransfer.human_attribute_name(:created_by_id) %></label>
+      <p><%= @stock_transfer.created_by.email %></p>
+    </div>
 
-  <div class='field-block alpha three columns'>
-    <label><%= Spree::StockTransfer.human_attribute_name(:created_at) %></label>
-    <p><%= @stock_transfer.created_at.try(:to_date) %></p>
-  </div>
+    <div class='field-block col-xs-2'>
+      <label><%= Spree::StockTransfer.human_attribute_name(:created_at) %></label>
+      <p><%= @stock_transfer.created_at.try(:to_date) %></p>
+    </div>
 
-  <div class='field-block alpha three columns'>
-    <label><%= Spree::StockTransfer.human_attribute_name(:finalized_at) %></label>
-    <p><%= @stock_transfer.finalized_at.try(:to_date) %></p>
-  </div>
+    <div class='field-block col-xs-2'>
+      <label><%= Spree::StockTransfer.human_attribute_name(:finalized_at) %></label>
+      <p><%= @stock_transfer.finalized_at.try(:to_date) %></p>
+    </div>
 
-  <div class='field-block alpha three columns'>
-    <label><%= Spree::StockTransfer.human_attribute_name(:finalized_by_id) %></label>
-    <p><%= @stock_transfer.finalized_by.try(:email) %></p>
-  </div>
+    <div class='field-block col-xs-3'>
+      <label><%= Spree::StockTransfer.human_attribute_name(:finalized_by_id) %></label>
+      <p><%= @stock_transfer.finalized_by.try(:email) %></p>
+    </div>
 
-  <div class='field-block alpha three columns'>
-    <label><%= Spree::StockTransfer.human_attribute_name(:shipped_at) %></label>
-    <p><%= @stock_transfer.shipped_at.try(:to_date) %></p>
-  </div>
+    <div class='field-block col-xs-2'>
+      <label><%= Spree::StockTransfer.human_attribute_name(:shipped_at) %></label>
+      <p><%= @stock_transfer.shipped_at.try(:to_date) %></p>
+    </div>
+  </div> 
 </fieldset>
 
 <fieldset>
