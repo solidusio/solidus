@@ -105,7 +105,10 @@ module Spree
     # @return [String] the credit card type if it can be determined from the
     #   number, otherwise the empty string
     def try_type_from_number
-      CARD_TYPES.find{ |type, pattern| return type.to_s if number =~ pattern }.to_s
+      CARD_TYPES.each do |type, pattern|
+        return type.to_s if number =~ pattern
+      end
+      ''
     end
 
     # @return [Boolean] true when a verification value is present
