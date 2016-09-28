@@ -2,9 +2,11 @@
   <fieldset class="no-border-bottom">
     <legend align="center"><%= Spree.t(:add_product) %></legend>
 
-    <div data-hook="add_product_name" class="field twelve columns alpha">
-      <%= label_tag :add_variant_id, Spree.t(:name_or_sku) %>
-      <%= text_field_tag :add_variant_id, "", :class => "variant_autocomplete fullwidth" %>
+    <div class="col-xs-9">
+      <div data-hook="add_product_name" class="field">
+        <%= label_tag :add_variant_id, Spree.t(:name_or_sku) %>
+        <%= text_field_tag :add_variant_id, "", :class => "variant_autocomplete fullwidth" %>
+      </div>
     </div>
 
   </fieldset>
