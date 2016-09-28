@@ -112,8 +112,10 @@
         <div id="shipping_specs" class="row">
           <% [:height, :width, :depth, :weight].each_with_index do |field, index| %>
             <div id="shipping_specs_<%= field %>_field" class="col-xs-6">
-              <%= f.label field %>
-              <%= f.text_field field, value: number_with_precision(@product.send(field), precision: 2) %>
+              <div class="field">
+                <%= f.label field %>
+                <%= f.text_field field, value: number_with_precision(@product.send(field), precision: 2) %>
+              </div>
             </div>
           <% end %>
         </div>
