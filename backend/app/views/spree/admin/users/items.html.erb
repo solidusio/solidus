@@ -7,7 +7,7 @@
 <%= render 'spree/admin/users/tabs', current: :items %>
 <%= render :partial => 'spree/admin/users/user_page_actions' %>
 
-<fieldset data-hook="admin_user_items_purchased" class="alpha twelve columns">
+<fieldset data-hook="admin_user_items_purchased" class="col-xs-9">
   <legend><%= Spree.t(:"admin.user.items_purchased") %></legend>
 
   <%= paginate @orders, theme: "solidus_admin" %>
@@ -73,7 +73,7 @@
         <% end %>
     </table>
   <% else %>
-    <div class="alpha twelve columns no-objects-found">
+    <div class="col-xs-9 no-objects-found">
       <%= render 'spree/admin/shared/no_objects_found',
                    resource: Spree::Order,
                    new_resource_url: spree.new_admin_order_path %>

@@ -1,17 +1,21 @@
-<div data-hook="bill_address_wrapper" class="alpha six columns">
-  <fieldset class="no-border-bottom">
-    <legend align="center"><%= Spree.t(:billing_address) %></legend>
-    <%= f.fields_for :bill_address, @user.bill_address || Spree::Address.build_default do |ba_form| %>
-      <%= render :partial => 'spree/admin/shared/address_form', :locals => { :f => ba_form, :type => "billing" } %>
-    <% end %>
-  </fieldset>
-</div>
+<div class="row">
+    
+  <div data-hook="bill_address_wrapper" class="col-xs-6">
+    <fieldset class="no-border-bottom">
+      <legend align="center"><%= Spree.t(:billing_address) %></legend>
+      <%= f.fields_for :bill_address, @user.bill_address || Spree::Address.build_default do |ba_form| %>
+        <%= render :partial => 'spree/admin/shared/address_form', :locals => { :f => ba_form, :type => "billing" } %>
+      <% end %>
+    </fieldset>
+  </div>
 
-<div data-hook="ship_address_wrapper" class="alpha six columns">
-  <fieldset class="no-border-bottom">
-    <legend align="center"><%= Spree.t(:shipping_address) %></legend>
-    <%= f.fields_for :ship_address, @user.ship_address || Spree::Address.build_default do |sa_form| %>
-      <%= render :partial => 'spree/admin/shared/address_form', :locals => { :f => sa_form, :type => "shipping" } %>
-    <% end %>
-  </fieldset>
+  <div data-hook="ship_address_wrapper" class="col-xs-6">
+    <fieldset class="no-border-bottom">
+      <legend align="center"><%= Spree.t(:shipping_address) %></legend>
+      <%= f.fields_for :ship_address, @user.ship_address || Spree::Address.build_default do |sa_form| %>
+        <%= render :partial => 'spree/admin/shared/address_form', :locals => { :f => sa_form, :type => "shipping" } %>
+      <% end %>
+    </fieldset>
+  </div>
+
 </div>
