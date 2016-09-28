@@ -1,20 +1,3 @@
-[data-hook="admin_products_index_search"] {
-  @include make-row();
-
-  > * {
-    @include make-col();
-    @include padding(0 null); // override the padding on .field
-  }
-}
-
-.product-search-field-name {
-  @include make-col-span(6);
-}
-
-.product-search-field-sku {
-  @include make-col-span(4);
-}
-
 .product-search-field-show-deleted.field.checkbox {
   // extra specificity to override styles
   @include make-col-span(2);
