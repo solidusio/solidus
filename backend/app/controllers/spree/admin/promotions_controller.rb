@@ -4,8 +4,6 @@ module Spree
       before_action :load_data
       before_action :load_bulk_code_information, only: [:edit]
 
-      create.before :build_promotion_codes
-
       helper 'spree/promotion_rules'
 
       def create
