@@ -197,7 +197,7 @@ module Spree
     end
 
     def update_taxes
-      Spree::Tax::OrderAdjuster.new(order).adjust!
+      Spree::Config.tax_adjuster_class.new(order).adjust!
 
       [*line_items, *shipments].each do |item|
         tax_adjustments = item.adjustments.select(&:tax?)

@@ -298,6 +298,23 @@ module Spree
             }.from(1).to(2)
           end
         end
+
+        context 'with a custom tax_adjuster_class' do
+          let(:custom_adjuster_class) { double }
+          let(:custom_adjuster_instance) { double }
+
+          before do
+            order # generate this first so we can expect it
+            Spree::Config.tax_adjuster_class = custom_adjuster_class
+          end
+
+          it 'uses the configured class' do
+            expect(custom_adjuster_class).to receive(:new).with(order).at_least(:once).and_return(custom_adjuster_instance)
+            expect(custom_adjuster_instance).to receive(:adjust!).at_least(:once)
+
+            order.update!
+          end
+        end
       end
     end
 

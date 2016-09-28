@@ -371,6 +371,16 @@ module Spree
       @add_payment_sources_to_wallet_class ||= Spree::Wallet::AddPaymentSourcesToWallet
     end
 
+    # Allows providing your own class for calculating taxes on an order.
+    #
+    # @!attribute [rw] tax_adjuster_class
+    # @return [Class] a class with the same public interfaces as
+    #   Spree::Tax::OrderAdjuster
+    attr_writer :tax_adjuster_class
+    def tax_adjuster_class
+      @tax_adjuster_class ||= Spree::Tax::OrderAdjuster
+    end
+
     def static_model_preferences
       @static_model_preferences ||= Spree::Preferences::StaticModelPreferences.new
     end
