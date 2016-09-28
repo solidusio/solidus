@@ -57,6 +57,10 @@ module Spree
       end
     end
 
+    def country_iso=(country_iso)
+      self[:country_iso] = country_iso.presence
+    end
+
     private
 
     def sum_of_vat_amounts
