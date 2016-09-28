@@ -14,7 +14,7 @@
   <fieldset>
     <legend align="center"><%= Spree.t("admin.store_credits.edit_amount") %></legend>
     <div data-hook="admin_store_credit_form_fields" class="row">
-      <div class="alpha twelve columns">
+      <div class="col-xs-9">
         <%= f.field_container :amount do %>
           <%= f.label :amount, class: 'required' %><br />
           <%= f.number_field :amount, min: 0.00, step: :any %>
