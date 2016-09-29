@@ -1,4 +1,4 @@
-<div class="promotion_rule promotion-block alpha omega eight columns" id="<%= dom_id promotion_rule %>">
+<div class="promotion_rule promotion-block col-xs-12" id="<%= dom_id promotion_rule %>">
   <% type_name = promotion_rule.class.name.demodulize.underscore %>
   <h6 class='promotion-title <%= 'no-text' if type_name == 'user_logged_in' || type_name == 'first_order'%>'><%= Spree.t("promotion_rule_types.#{type_name}.description") %></h6>
   <% if can?(:destroy, promotion_rule) %>

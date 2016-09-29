@@ -1,12 +1,16 @@
-<div class="field alpha omega eight columns promo-rule-option-values">
-  <div class="param-prefix hidden" data-param-prefix="<%= param_prefix %>"></div>
-  <div class="four columns alpha"><%= label_tag nil, Spree::Product.model_name.human %></div>
-  <div class="three columns omega"><%= label_tag nil, plural_resource_name(Spree::OptionValue) %></div>
-  <div class="clear"></div>
+<div class="col-xs-12">
+  <div class="field promo-rule-option-values">
+    <div class="param-prefix hidden" data-param-prefix="<%= param_prefix %>"></div>
+    <div class="row">
+      <div class="col-xs-6"><%= label_tag nil, Spree::Product.model_name.human %></div>
+      <div class="col-xs-6"><%= label_tag nil, plural_resource_name(Spree::OptionValue) %></div>
+    </div>
+    <div class="clear"></div>
 
-  <div class="js-promo-rule-option-values"></div>
+    <div class="js-promo-rule-option-values"></div>
 
-  <button class="button js-add-promo-rule-option-value"><%= Spree.t('actions.add') %></button>
+    <button class="button js-add-promo-rule-option-value"><%= Spree.t('actions.add') %></button>
+  </div>
 </div>
 
 <%= content_tag :div, nil, class: "hidden js-original-promo-rule-option-values",

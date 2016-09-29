@@ -1,7 +1,13 @@
-<div class="field alpha four columns">
-  <%= Spree.t(:form_text, scope: "promotion_rule_types.first_repeat_purchase_since")  %>
-</div>
+<div class="row">
+  <div class="col-xs-6">
+    <div class="field">
+      <%= Spree.t(:form_text, scope: "promotion_rule_types.first_repeat_purchase_since")  %>
+    </div>
+  </div>
 
-<div class="field omega four columns">
-  <%= number_field_tag "#{param_prefix}[preferred_days_ago]", promotion_rule.preferred_days_ago, :class => 'fullwidth' %>
+  <div class="col-xs-6">
+    <div class="field">
+      <%= number_field_tag "#{param_prefix}[preferred_days_ago]", promotion_rule.preferred_days_ago, :class => 'fullwidth' %>
+    </div>
+  </div>
 </div>
