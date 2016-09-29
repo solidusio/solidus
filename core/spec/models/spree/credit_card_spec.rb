@@ -160,6 +160,28 @@ describe Spree::CreditCard, type: :model do
     end
   end
 
+  describe "#verification_value=" do
+    it "accepts a valid 3-digit value" do
+      credit_card.verification_value = "123"
+      expect(credit_card.verification_value).to eq("123")
+    end
+
+    it "accepts a valid 4-digit value" do
+      credit_card.verification_value = "1234"
+      expect(credit_card.verification_value).to eq("1234")
+    end
+
+    it "stringifies an integer" do
+      credit_card.verification_value = 123
+      expect(credit_card.verification_value).to eq("123")
+    end
+
+    it "strips any whitespace" do
+      credit_card.verification_value = ' 1 2  3 '
+      expect(credit_card.verification_value).to eq('123')
+    end
+  end
+
   # Regression test for https://github.com/spree/spree/issues/3847 and https://github.com/spree/spree/issues/3896
   describe "#expiry=" do
     it "can set with a 2-digit month and year" do
@@ -299,7 +321,7 @@ describe Spree::CreditCard, type: :model do
       expect(am_card.month).to eq(Time.current.month)
       expect(am_card.first_name).to eq("Ludwig")
       expect(am_card.last_name).to eq("van Beethoven")
-      expect(am_card.verification_value).to eq(123)
+      expect(am_card.verification_value).to eq("123")
     end
   end
 

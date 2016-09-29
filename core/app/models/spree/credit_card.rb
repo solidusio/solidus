@@ -13,10 +13,8 @@ module Spree
 
     accepts_nested_attributes_for :address
 
-    attr_reader :number
-    attr_accessor :encrypted_data,
-                    :imported,
-                    :verification_value
+    attr_reader :number, :verification_value
+    attr_accessor :encrypted_data, :imported
 
     validates :month, :year, numericality: { only_integer: true }, if: :require_card_numbers?, on: :create
     validates :number, presence: true, if: :require_card_numbers?, on: :create, unless: :imported
@@ -72,6 +70,10 @@ module Spree
         end
     end
 
+    def verification_value=(value)
+      @verification_value = value.to_s.gsub(/\s/, '')
+    end
+
     # Sets the credit card type, converting it to the preferred internal
     # representation from jquery.payment's representation when appropriate.
     #
@@ -90,7 +92,6 @@ module Spree
 
     # Sets the last digits field based on the assigned credit card number.
     def set_last_digits
-      verification_value.to_s.gsub!(/\s/, '')
       self.last_digits ||= number.to_s.length <= 4 ? number : number.to_s.slice(-4..-1)
     end
 
