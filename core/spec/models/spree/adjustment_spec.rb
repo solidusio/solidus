@@ -267,7 +267,7 @@ describe Spree::Adjustment, type: :model do
         end
 
         context 'when adjustable.adjustments is not loaded' do
-          it 'does repair' do
+          it 'does not repair' do
             expect(Spree::Deprecation).not_to receive(:warn)
             adjustment.destroy!
           end
