@@ -211,6 +211,20 @@ module Spree
       end
     end
 
+    # Removes a promotion and any adjustments or other side effects from an
+    # order.
+    # @param order [Spree::Order] the order to remove the promotion from.
+    # @return [void]
+    def remove_from(order)
+      actions.each do |action|
+        action.remove_from(order)
+      end
+      # note: this destroys the join table entry, not the promotion itself
+      order.promotions.destroy(self)
+      order.order_promotions.reset
+      order_promotions.reset
+    end
+
     private
 
     def blacklisted?(promotable)

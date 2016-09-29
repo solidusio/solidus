@@ -1,5 +1,14 @@
 ## Solidus 2.1.0 (master, unreleased)
 
+*   Add `Spree::Promotion#remove_from` and `Spree::PromotionAction#remove_from`
+
+    This will allow promotions to be removed from orders and allows promotion
+    actions to define how to reverse their side effects on an order.
+
+    For now `PromotionAction` provides a default remove_from method, with a
+    deprecation warning that subclasses should define their own remove_from
+    method.
+
 *   Remove `is_default` boolean from `Spree::Price` model
 
     This boolean used to mean "the price to be used". With the new

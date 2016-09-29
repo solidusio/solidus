@@ -4,11 +4,11 @@ module Spree
   class Promotion
     module Actions
       describe CreateItemAdjustments, type: :model do
-        let(:order) { create(:order) }
+        let(:order) { create(:order_with_line_items, line_items_count: 1) }
         let(:promotion) { create(:promotion, :with_line_item_adjustment, adjustment_rate: adjustment_amount) }
         let(:adjustment_amount) { 10 }
         let(:action) { promotion.actions.first! }
-        let!(:line_item) { create(:line_item, order: order) }
+        let(:line_item) { order.line_items.to_a.first }
         let(:payload) { { order: order, promotion: promotion } }
 
         before do
@@ -122,32 +122,56 @@ module Spree
           end
         end
 
+        describe '#remove_from' do
+          # this adjustment should not get removed
+          let!(:other_adjustment) { create(:adjustment, adjustable: line_item, order: order, source: nil) }
+
+          before do
+            action.perform(payload)
+            @action_adjustment = line_item.adjustments.where(source: action).first!
+          end
+
+          it 'removes the action adjustment' do
+            expect(line_item.adjustments).to match_array([other_adjustment, @action_adjustment])
+
+            action.remove_from(order)
+
+            expect(line_item.adjustments).to eq([other_adjustment])
+          end
+        end
+
         context "#destroy" do
           let!(:action) { promotion.actions.first }
           let(:other_action) { other_promotion.actions.first }
           let(:promotion) { create(:promotion, :with_line_item_adjustment) }
           let(:other_promotion) { create(:promotion, :with_line_item_adjustment) }
 
-          it "destroys adjustments for incompleted orders" do
-            order = Order.create
-            action.adjustments.create!(label: "Check", amount: 0, order: order, adjustable: order)
+          context 'with incomplete orders' do
+            let(:order) { create(:order) }
 
-            expect {
-              action.destroy
-            }.to change { Adjustment.count }.by(-1)
+            it 'destroys adjustments' do
+              order.adjustments.create!(label: 'Check', amount: 0, order: order, source: action)
+
+              expect {
+                action.destroy
+              }.to change { Adjustment.count }.by(-1)
+            end
           end
 
-          it "nullifies adjustments for completed orders" do
-            order = Order.create(completed_at: Time.current)
-            adjustment = action.adjustments.create!(label: "Check", amount: 0, order: order, adjustable: order)
+          context 'with complete orders' do
+            let(:order) { create(:completed_order_with_totals) }
 
-            expect {
-              action.destroy
-            }.to change { adjustment.reload.source_id }.from(action.id).to nil
+            it 'nullifies adjustments for completed orders' do
+              adjustment = order.adjustments.create!(label: 'Check', amount: 0, order: order, source: action)
+
+              expect {
+                action.destroy
+              }.to change { adjustment.reload.source_id }.from(action.id).to nil
+            end
           end
 
           it "doesnt mess with unrelated adjustments" do
-            other_action.adjustments.create!(label: "Check", amount: 0, order: order, adjustable: order)
+            order.adjustments.create!(label: "Check", amount: 0, order: order, source: action)
 
             expect {
               action.destroy

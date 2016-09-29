@@ -176,6 +176,25 @@ describe Spree::Promotion, type: :model do
     end
   end
 
+  describe '#remove_from' do
+    let(:promotion) { create(:promotion, :with_line_item_adjustment) }
+    let(:order) { create(:order_with_line_items) }
+
+    before do
+      promotion.activate(order: order)
+    end
+
+    it 'removes the promotion' do
+      expect(order.promotions).to include(promotion)
+      expect(order.line_items.flat_map(&:adjustments)).to be_present
+
+      promotion.remove_from(order)
+
+      expect(order.promotions).to be_empty
+      expect(order.line_items.flat_map(&:adjustments)).to be_empty
+    end
+  end
+
   describe "#usage_limit_exceeded?" do
     subject { promotion.usage_limit_exceeded? }
 
