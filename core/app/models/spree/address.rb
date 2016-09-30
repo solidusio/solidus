@@ -11,7 +11,7 @@ module Spree
     belongs_to :country, class_name: "Spree::Country"
     belongs_to :state, class_name: "Spree::State"
 
-    validates :firstname, :address1, :city, :country_id, presence: true
+    validates :firstname, :lastname, :address1, :city, :country_id, presence: true
     validates :zipcode, presence: true, if: :require_zipcode?
     validates :phone, presence: true, if: :require_phone?
 
