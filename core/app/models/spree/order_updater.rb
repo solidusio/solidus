@@ -30,12 +30,22 @@ module Spree
       update_hooks.each { |hook| order.send hook }
     end
 
+    # This will update and select the best promotion adjustment, update tax
+    # adjustments, update cancellation adjustments, and then update the total
+    # fields (promo_total, included_tax_total, additional_tax_total, and
+    # adjustment_total) on the item.
+    # @return [void]
     def recalculate_adjustments
-      adjustables = [*line_items, *shipments, order]
-
-      adjustables.each do |adjustable|
-        Spree::ItemAdjustments.new(adjustable).update
-      end
+      # Promotion adjustments must be applied first, then tax adjustments.
+      # This fits the criteria for VAT tax as outlined here:
+      # http://www.hmrc.gov.uk/vat/managing/charging/discounts-etc.htm#1
+      # It also fits the criteria for sales tax as outlined here:
+      # http://www.boe.ca.gov/formspubs/pub113/
+      update_item_promotions
+      update_order_promotions
+      update_taxes
+      update_cancellations
+      update_item_totals
     end
 
     # Updates the following Order total values:
@@ -163,6 +173,72 @@ module Spree
 
     def round_money(n)
       (n * 100).round / 100.0
+    end
+
+    def update_item_promotions
+      [*line_items, *shipments].each do |item|
+        promotion_adjustments = item.adjustments.select(&:promotion?)
+
+        promotion_adjustments.each(&:update!)
+        Spree::Config.promotion_chooser_class.new(promotion_adjustments).update
+
+        item.promo_total = promotion_adjustments.select(&:eligible?).sum(&:amount)
+      end
+    end
+
+    # Update and select the best promotion adjustment for the order.
+    # We don't update the order.promo_total yet. Order totals are updated later
+    # in #update_adjustment_total since they include the totals from the order's
+    # line items and/or shipments.
+    def update_order_promotions
+      promotion_adjustments = order.adjustments.select(&:promotion?)
+      promotion_adjustments.each(&:update!)
+      Spree::Config.promotion_chooser_class.new(promotion_adjustments).update
+    end
+
+    def update_taxes
+      [*line_items, *shipments].each do |item|
+        tax_adjustments = item.adjustments.select(&:tax?)
+
+        tax_adjustments.each(&:update!)
+        # Tax adjustments come in not one but *two* exciting flavours:
+        # Included & additional
+
+        # Included tax adjustments are those which are included in the price.
+        # These ones should not affect the eventual total price.
+        #
+        # Additional tax adjustments are the opposite, affecting the final total.
+        item.included_tax_total   = tax_adjustments.select(&:included?).sum(&:amount)
+        item.additional_tax_total = tax_adjustments.reject(&:included?).sum(&:amount)
+      end
+    end
+
+    def update_cancellations
+      line_items.each do |line_item|
+        line_item.adjustments.select(&:cancellation?).each(&:update!)
+      end
+    end
+
+    def update_item_totals
+      [*line_items, *shipments].each do |item|
+        # The cancellation_total isn't persisted anywhere but is included in
+        # the adjustment_total
+        item_cancellation_total = item.adjustments.select(&:cancellation?).sum(&:amount)
+
+        item.adjustment_total = item.promo_total +
+                                item.additional_tax_total +
+                                item_cancellation_total
+
+        if item.changed?
+          item.update_columns(
+            promo_total:          item.promo_total,
+            included_tax_total:   item.included_tax_total,
+            additional_tax_total: item.additional_tax_total,
+            adjustment_total:     item.adjustment_total,
+            updated_at:           Time.current,
+          )
+        end
+      end
     end
   end
 end
