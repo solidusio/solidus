@@ -46,7 +46,7 @@ Spree.EditStockItemView = Backbone.View.extend
   onSubmit: (ev) ->
     ev.preventDefault()
     backorderable = @$('[name=backorderable]').prop("checked")
-    countOnHand = parseInt($("input[name='count_on_hand']").val(), 10)
+    countOnHand = parseInt(@$("input[name='count_on_hand']").val(), 10)
 
     @model.set
       count_on_hand: countOnHand
