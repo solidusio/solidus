@@ -1,5 +1,12 @@
 ## Solidus 2.1.0 (master, unreleased)
 
+*   Added Spree::Config.tax_adjuster_class
+
+    To allow easier customization of tax calculation in extensions or
+    applications.
+
+    https://github.com/solidusio/solidus/pull/1479
+
 *   Add `Spree::Promotion#remove_from` and `Spree::PromotionAction#remove_from`
 
     This will allow promotions to be removed from orders and allows promotion
@@ -39,7 +46,7 @@
 *   Removals
 
     * Removed deprecated method `Spree::TaxRate.adjust` (not to be confused with
-      Spree::TaxRate#adjust) in favor of `Spree::Tax::OrderAdjuster`.
+      Spree::TaxRate#adjust) in favor of `Spree::Config.tax_adjuster_class`.
 
       https://github.com/solidusio/solidus/pull/1462
 
