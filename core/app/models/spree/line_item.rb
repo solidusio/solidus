@@ -29,7 +29,6 @@ module Spree
       greater_than: -1
     }
     validates :price, numericality: true
-    validate :ensure_proper_currency
 
     after_save :update_inventory
 
@@ -88,12 +87,11 @@ module Spree
     alias display_total display_amount
     deprecate display_total: :display_amount, deprecator: Spree::Deprecation
 
-    # Sets price and currency from a `Spree::Money` object
+    # Sets price from a `Spree::Money` object
     #
-    # @param [Spree::Money] money - the money object to obtain price and currency from
+    # @param [Spree::Money] money - the money object to obtain price from
     def money_price=(money)
-      self.price = money.to_d
-      self.currency = money.currency.iso_code
+      self.price = money.to_d if money
     end
 
     # @return [Boolean] true when it is possible to supply the required
@@ -118,7 +116,10 @@ module Spree
 
       assign_attributes options
 
-      # There's no need to call a pricer if we'll set the price directly.
+      # When price is part of the options we are not going to fetch
+      # it from the variant. Please note that this always allows to set
+      # a price for this line item, even if there is no existing price
+      # for the associated line item in the order currency.
       unless options.key?(:price) || options.key?('price')
         self.money_price = variant.price_for(pricing_options)
       end
@@ -126,6 +127,16 @@ module Spree
 
     def pricing_options
       Spree::Config.pricing_options_class.from_line_item(self)
+    end
+
+    def currency=(_currency)
+      Spree::Deprecation.warn 'Spree::LineItem#currency= is deprecated ' \
+        'and will take no effect.',
+        caller
+    end
+
+    def currency
+      order.currency if order
     end
 
     private
@@ -149,7 +160,6 @@ module Spree
       # If the legacy method #copy_price has been overridden, handle that gracefully
       return handle_copy_price_override if respond_to?(:copy_price)
 
-      self.currency ||= order.currency
       self.cost_price ||= variant.cost_price
       self.money_price = variant.price_for(pricing_options) if price.nil?
       true
@@ -171,15 +181,6 @@ module Spree
 
     def destroy_inventory_units
       inventory_units.destroy_all
-    end
-
-    def ensure_proper_currency
-      if currency != order.currency
-        Spree::Deprecation.warn "The line items currency is different from it's order currency. " \
-                                "This behavior is not supported anymore and will be deleted soon.",
-                                caller
-        errors.add(:currency, :must_match_order_currency)
-      end
     end
   end
 end

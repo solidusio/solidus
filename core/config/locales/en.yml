@@ -538,8 +538,8 @@ en:
               cannot_destroy_shipment_state: "Cannot destroy an inventory unit for a %{state} shipment"
         spree/line_item:
           attributes:
-            currency:
-              must_match_order_currency: "Must match order currency"
+            price:
+              not_a_number: "is not valid"
         spree/price:
           attributes:
             currency:
