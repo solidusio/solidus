@@ -173,7 +173,13 @@ describe 'Users', type: :feature do
         fill_in 'user_email', with: 'something'
         click_button 'Update'
 
-        expect(page).to have_content("Email is invalid")
+        within('#errorExplanation') do
+          expect(page).to have_content("Email is invalid")
+        end
+
+        within('.flash.error') do
+          expect(page).to have_content("Email is invalid")
+        end
       end
     end
 

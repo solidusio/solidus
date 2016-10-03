@@ -29,6 +29,7 @@ module Spree
           load_roles
           load_stock_locations
 
+          flash.now[:error] = @user.errors.full_messages.join(", ")
           render :new, status: :unprocessable_entity
         end
       end
@@ -37,12 +38,14 @@ module Spree
         if @user.update_attributes(user_params)
           set_roles
           set_stock_locations
+
           flash[:success] = Spree.t(:account_updated)
           redirect_to edit_admin_user_url(@user)
         else
           load_roles
           load_stock_locations
 
+          flash.now[:error] = @user.errors.full_messages.join(", ")
           render :edit, status: :unprocessable_entity
         end
       end
