@@ -25,6 +25,17 @@
 *   Analytics trackers were removed from the admin panel; the extension
     `solidus_trackers` provides the same functionality
 
+*   Updated Credit Card brand server-side detection regex to support more
+    brands and MasterCard's new BIN range. [#1477](https://github.com/solidusio/solidus/pull/1477)
+
+    Note: Most stores will be using client-side detection which was updated in
+    Solidus 1.2
+
+*   `CreditCard`'s `verification_value` field is now converted to a string and
+    has whitespace removed on assignment instead of before validations.
+
+*   The `lastname` field on `Address` is now optional. [#1369](https://github.com/solidusio/solidus/pull/1369)
+
 *   Removals
 
     * Removed deprecated method `Spree::TaxRate.adjust` (not to be confused with
