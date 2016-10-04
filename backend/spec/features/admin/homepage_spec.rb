@@ -47,9 +47,6 @@ describe "Homepage", type: :feature do
         within('.selected .admin-subnav') { page.find_link("Property Types")['/admin/properties'] }
       end
 
-      it "should have a link to prototypes" do
-        within('.selected .admin-subnav') { page.find_link("Prototypes")['/admin/prototypes'] }
-      end
     end
   end
 
