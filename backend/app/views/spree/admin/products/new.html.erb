@@ -23,13 +23,6 @@
         </div>
       <% end %>
 
-      <div data-hook="new_product_prototype" class="col-xs-3">
-        <%= f.field_container :prototype do %>
-          <%= f.label :prototype_id, Spree::Prototype.model_name.human %><br />
-          <%= f.collection_select :prototype_id, Spree::Prototype.all, :id, :name, {:include_blank => true}, {:class => 'select2 fullwidth'} %>
-        <% end %>
-      </div>
-
       <div data-hook="new_product_price" class="col-xs-3">
         <%= f.field_container :price do %>
           <%= f.label :price, class: 'required' %><br />
