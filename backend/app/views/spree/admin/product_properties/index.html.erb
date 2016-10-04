@@ -9,11 +9,6 @@
       <li>
         <%= link_to_add_fields Spree.t(:add_product_properties), 'tbody#product_properties', :class => 'plus button' %>
       </li>
-      <li>
-        <span id="new_ptype_link">
-          <%= link_to Spree.t(:select_from_prototype), available_admin_prototypes_url, :remote => true, :class => 'button fa fa-copy' %>
-        </span>
-      </li>
     </ul>
   <% end %>
 <% end %>
