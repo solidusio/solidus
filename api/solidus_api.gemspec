@@ -17,6 +17,9 @@ Gem::Specification.new do |gem|
   gem.require_paths = ["lib"]
   gem.version = Spree.solidus_version
 
+  gem.required_ruby_version = '>= 2.2.2'
+  gem.required_rubygems_version = '>= 1.8.23'
+
   gem.add_dependency 'solidus_core', gem.version
   gem.add_dependency 'rabl', '0.13.0' # FIXME: update for proper rails 5 support
   gem.add_dependency 'versioncake', '~> 3.0'

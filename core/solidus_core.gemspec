@@ -17,7 +17,8 @@ Gem::Specification.new do |s|
   s.files        = `git ls-files`.split("\n")
   s.require_path = 'lib'
 
-  s.required_ruby_version = '>= 2.1.0'
+  s.required_ruby_version     = '>= 2.2.2'
+  s.required_rubygems_version = '>= 1.8.23'
 
   s.add_dependency 'activemerchant', '~> 1.48'
   s.add_dependency 'acts_as_list', '~> 0.3'
