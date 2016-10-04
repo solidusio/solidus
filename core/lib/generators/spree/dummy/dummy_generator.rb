@@ -30,7 +30,6 @@ module Spree
       opts[:database] = 'sqlite3' if opts[:database].blank?
       opts[:force] = true
       opts[:skip_bundle] = true
-      opts[:old_style_hash] = true
 
       puts "Generating dummy Rails application..."
       invoke Rails::Generators::AppGenerator,
