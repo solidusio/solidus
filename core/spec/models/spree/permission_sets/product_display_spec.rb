@@ -17,7 +17,6 @@ describe Spree::PermissionSets::ProductDisplay do
     it { is_expected.to be_able_to(:display, Spree::ProductProperty) }
     it { is_expected.to be_able_to(:display, Spree::OptionType) }
     it { is_expected.to be_able_to(:display, Spree::Property) }
-    it { is_expected.to be_able_to(:display, Spree::Prototype) }
     it { is_expected.to be_able_to(:display, Spree::Taxonomy) }
     it { is_expected.to be_able_to(:display, Spree::Taxon) }
     it { is_expected.to be_able_to(:admin, Spree::Product) }
@@ -27,7 +26,6 @@ describe Spree::PermissionSets::ProductDisplay do
     it { is_expected.to be_able_to(:admin, Spree::ProductProperty) }
     it { is_expected.to be_able_to(:admin, Spree::OptionType) }
     it { is_expected.to be_able_to(:admin, Spree::Property) }
-    it { is_expected.to be_able_to(:admin, Spree::Prototype) }
     it { is_expected.to be_able_to(:admin, Spree::Taxonomy) }
     it { is_expected.to be_able_to(:admin, Spree::Taxon) }
     it { is_expected.to be_able_to(:edit, Spree::Product) }
@@ -41,7 +39,6 @@ describe Spree::PermissionSets::ProductDisplay do
     it { is_expected.not_to be_able_to(:display, Spree::ProductProperty) }
     it { is_expected.not_to be_able_to(:display, Spree::OptionType) }
     it { is_expected.not_to be_able_to(:display, Spree::Property) }
-    it { is_expected.not_to be_able_to(:display, Spree::Prototype) }
     it { is_expected.not_to be_able_to(:display, Spree::Taxonomy) }
     it { is_expected.not_to be_able_to(:display, Spree::Taxon) }
     it { is_expected.not_to be_able_to(:admin, Spree::Product) }
@@ -51,7 +48,6 @@ describe Spree::PermissionSets::ProductDisplay do
     it { is_expected.not_to be_able_to(:admin, Spree::ProductProperty) }
     it { is_expected.not_to be_able_to(:admin, Spree::OptionType) }
     it { is_expected.not_to be_able_to(:admin, Spree::Property) }
-    it { is_expected.not_to be_able_to(:admin, Spree::Prototype) }
     it { is_expected.not_to be_able_to(:admin, Spree::Taxonomy) }
     it { is_expected.not_to be_able_to(:admin, Spree::Taxon) }
     it { is_expected.not_to be_able_to(:edit, Spree::Product) }
