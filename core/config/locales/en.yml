@@ -178,8 +178,6 @@ en:
       spree/property:
         name: Name
         presentation: Presentation
-      spree/prototype:
-        name: Name
       spree/refund:
         amount: Amount
         description: Description
@@ -424,9 +422,6 @@ en:
       spree/property:
         one: Property Type
         other: Property Types
-      spree/prototype:
-        one: Prototype
-        other: Prototypes
       spree/refund:
         one: Refund
         other: Refunds
@@ -711,7 +706,6 @@ en:
         promotions: Promotions
         promotion_categories: Promotion Categories
         properties: Property Types
-        prototypes: Prototypes
         reports: Reports
         rma: RMA
         settings: Settings
@@ -849,7 +843,6 @@ en:
     back_to_promotions_list: Back To Promotions List
     back_to_promotion_categories_list: Back To Promotions Categories List
     back_to_properties_list: Back To Property Types List
-    back_to_prototypes_list: Back To Prototypes List
     back_to_reports_list: Back To Reports List
     back_to_refund_reason_list: Back To Refund Reason List
     back_to_reimbursement_type_list: Back To Reimbursement Type List
@@ -1036,7 +1029,6 @@ en:
     editing_promotion: Editing Promotion
     editing_promotion_category: Editing Promotion Category
     editing_property: Editing Property Type
-    editing_prototype: Editing Prototype
     edit_refund_reason: Edit Refund Reason
     editing_refund: Editing Refund
     editing_refund_reason: Editing Refund Reason
@@ -1306,7 +1298,6 @@ en:
     new_promotion: New Promotion
     new_promotion_category: New Promotion Category
     new_property: New Property Type
-    new_prototype: New Prototype
     new_refund: New Refund
     new_refund_reason: New Refund Reason
     new_rma_reason: New RMA Reason
@@ -1580,8 +1571,6 @@ en:
     propagate_all_variants: Propagate all variants
     properties: Property Types
     property: Property Type
-    prototype: Prototype
-    prototypes: Prototypes
     provider: Provider
     provider_settings_warning: If you are changing the provider type, you must save first before you can edit the provider settings
     qty: Qty
@@ -1678,7 +1667,6 @@ en:
     secure_connection_type: Secure Connection Type
     security_settings: Security Settings
     select: Select
-    select_from_prototype: Select From Prototype
     select_a_reason: Select a reason
     select_a_stock_location: Select a stock location
     select_stock: Select stock
