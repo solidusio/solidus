@@ -9,7 +9,6 @@ module Spree
         can [:display, :admin], Spree::ProductProperty
         can [:display, :admin], Spree::OptionType
         can [:display, :admin], Spree::Property
-        can [:display, :admin], Spree::Prototype
         can [:display, :admin], Spree::Taxonomy
         can [:display, :admin], Spree::Taxon
       end
