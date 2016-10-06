@@ -13,6 +13,19 @@
     Warning: this change also deletes the `currency` database field (String)
     from the line items table, since it will not be used anymore.
 
+*   Add `Spree::StoreCreditLedgerEntry`
+
+    This will allow tracking of all financial changes to a `Spree::StoreCredit`.
+
+    All `Spree::StoreCredit` amount changes that are pending (authorize, void)
+    and all changes that are liability changes (initialize, capture, update_amount, refund, invalidate) will have a `StoreCreditLedgerEntry` that will be
+    the complete financial history for the `Spree::StoreCredit`.
+
+    Added a migration for all available `Spree::StoreCredit` that will
+    create initial `Spree::StoreCreditLedgerEntry` records for the pending
+    and liability opening balances. This ensures the correct output for
+    `Spree::StoreCreditLedgerEntry#balance` and `Spree::StoreCreditLedgerEntry#liability_balance`  
+
 *   Add `Spree::Promotion#remove_from` and `Spree::PromotionAction#remove_from`
 
     This will allow promotions to be removed from orders and allows promotion

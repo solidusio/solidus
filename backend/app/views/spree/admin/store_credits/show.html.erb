@@ -102,11 +102,50 @@
           </td>
           <td><%= store_credit_event_admin_action_name(event) %></td>
           <td class='align-right'><%= event.display_amount %></td>
-          <td><%= store_credit_event_originator_link(event) %></td>
+          <td><%= store_credit_originator_link(event) %></td>
           <td class='align-right'><%= event.display_user_total_amount %></td>
           <td><%= event.update_reason.try!(:name) %></td>
         </tr>
       <% end %>
+    </tbody>
+  </table>
+</fieldset>
+
+<fieldset>
+  <legend align='center'><%= Spree.t("admin.store_credits.ledger_entries") %></legend>
+  <table id='sc-ledger-table'>
+    <thead>
+      <tr>
+        <th><%= Spree::StoreCreditLedgerEntry.human_attribute_name(:amount) %></th>
+        <th><%= Spree::StoreCreditLedgerEntry.human_attribute_name(:originator) %></th>
+        <th><%= Spree::StoreCreditLedgerEntry.human_attribute_name(:liability) %></th>
+        <th><%= Spree.t(:date) %></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @store_credit.store_credit_ledger_entries.each do |entry| %>
+        <tr>
+          <td><%= Spree::Money.new(entry.amount) %></td>
+          <td><%= store_credit_originator_link(entry) %></td>
+          <td><%= entry.liability %></td>
+          <td><%= pretty_time(entry.created_at) %></td>
+        </tr>
+      <% end %>
+
+      <tr>
+        <td colspan="3">
+          <strong>
+            Current Liability Balance: <%= Spree::Money.new(@store_credit.liability_balance) %>
+          </strong>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="3">
+          <strong>
+            Available for user: <%= Spree::Money.new(@store_credit.balance) %>
+          </strong>
+        </td>
+      </tr>
     </tbody>
   </table>
 </fieldset>
