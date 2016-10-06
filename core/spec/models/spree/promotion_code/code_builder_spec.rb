@@ -80,7 +80,8 @@ describe Spree::PromotionCode::CodeBuilder do
         builder.promotion.promotion_codes <<
           Spree::PromotionCode.create(
             promotion: builder.promotion,
-            value: "#{base_code}_abcdef")
+            value: "#{base_code}_abcdef"
+          )
       end
       it "uses suffix even for one new code" do
         builder.build_promotion_codes
