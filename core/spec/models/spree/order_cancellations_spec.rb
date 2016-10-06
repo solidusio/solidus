@@ -139,9 +139,9 @@ describe Spree::OrderCancellations do
         order.contents.add(line_item.variant)
 
         # make the total $1.67 so it divides unevenly
-        Spree::Adjustment.tax.create!(
+        line_item.adjustments.create!(
+          source_type: 'Spree::TaxRate',
           order: order,
-          adjustable: line_item,
           amount: 0.01,
           label: 'some fake tax',
           finalized: true

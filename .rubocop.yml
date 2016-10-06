@@ -32,7 +32,13 @@ Style/MutableConstant:
 Style/ClassAndModuleChildren:
   Enabled: false
 
+Style/EmptyElse:
+  Enabled: false
+
 Style/GuardClause:
+  Enabled: false
+
+Style/Next:
   Enabled: false
 
 Style/WordArray:

@@ -18,7 +18,12 @@ describe Spree::OrdersController, type: :controller do
       it "should create a new order when none specified" do
         post :populate
         expect(cookies.signed[:guest_token]).not_to be_blank
-        expect(Spree::Order.find_by_guest_token(cookies.signed[:guest_token])).to be_persisted
+
+        order_by_token = Spree::Order.find_by_guest_token(cookies.signed[:guest_token])
+        assigned_order = assigns[:order]
+
+        expect(assigned_order).to eq order_by_token
+        expect(assigned_order).to be_persisted
       end
 
       context "with Variant" do
@@ -84,6 +89,13 @@ describe Spree::OrdersController, type: :controller do
           allow(order).to receive(:update_attributes).and_return true
           put :update, session: { order_id: 1 }
           expect(response).to redirect_to(spree.cart_path)
+        end
+
+        it "should advance the order if :checkout button is pressed" do
+          allow(order).to receive(:update_attributes).and_return true
+          expect(order).to receive(:next)
+          put :update, { checkout: true }, { order_id: 1 }
+          expect(response).to redirect_to checkout_state_path('address')
         end
       end
     end

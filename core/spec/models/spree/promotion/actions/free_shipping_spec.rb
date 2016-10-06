@@ -2,10 +2,11 @@ require 'spec_helper'
 
 describe Spree::Promotion::Actions::FreeShipping, type: :model do
   let(:order) { create(:completed_order_with_totals) }
-  let(:promotion_code) { create(:promotion_code, value: 'somecode') }
-  let(:promotion) { promotion_code.promotion }
-  let(:action) { Spree::Promotion::Actions::FreeShipping.create }
+  let(:shipment) { order.shipments.to_a.first }
+  let(:promotion) { create(:promotion, code: 'somecode', promotion_actions: [action]) }
+  let(:action) { Spree::Promotion::Actions::FreeShipping.new }
   let(:payload) { { order: order, promotion_code: promotion_code } }
+  let(:promotion_code) { promotion.codes.first! }
 
   # From promotion spec:
   context "#perform" do
@@ -35,6 +36,24 @@ describe Spree::Promotion::Actions::FreeShipping, type: :model do
         expect(promotion.usage_count).to eq(1)
         expect(order.shipment_adjustments.count).to eq(2)
       end
+    end
+  end
+
+  describe '#remove_from' do
+    # this adjustment should not get removed
+    let!(:other_adjustment) { create(:adjustment, adjustable: shipment, order: order, source: nil) }
+
+    before do
+      action.perform(payload)
+      @action_adjustment = shipment.adjustments.where(source: action).first!
+    end
+
+    it 'removes the action adjustment' do
+      expect(shipment.adjustments).to match_array([other_adjustment, @action_adjustment])
+
+      action.remove_from(order)
+
+      expect(shipment.adjustments).to eq([other_adjustment])
     end
   end
 end

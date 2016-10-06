@@ -1,4 +1,8 @@
 module Spree
+  # Manage and process a payment for an order, from a specific
+  # source (e.g. `Spree::CreditCard`) using a specific payment method (e.g
+  # `Solidus::Gateway::Braintree`).
+  #
   class Payment < Spree::Base
     include Spree::Payment::Processing
 
@@ -248,7 +252,11 @@ WARN
 
     def invalidate_old_payments
       if !store_credit? && !['invalid', 'failed'].include?(state)
-        order.payments.checkout.where(payment_method: payment_method).where("id != ?", id).each(&:invalidate!)
+        order.payments.select do |payment|
+          payment.state == 'checkout' &&
+            payment.payment_method_id == payment_method.try!(:id) &&
+            payment.id != id
+        end.each(&:invalidate!)
       end
     end
 

@@ -2,6 +2,23 @@ require 'spree/core/validators/email'
 require 'spree/order/checkout'
 
 module Spree
+  # The customers cart until completed, then acts as permenent record of the transaction.
+  #
+  # `Spree::Order` is the heart of the Solidus system, as it acts as the customer's
+  # cart as they shop. Once an order is complete, it serves as the
+  # permenent record of their purchase. It has many responsibilities:
+  #
+  # * Records and validates attributes like `total` and relationships like
+  # `Spree::LineItem` as an ActiveRecord model.
+  #
+  # * Implements a customizable state machine to manage the lifecycle of an order.
+  #
+  # * Implements business logic to provide a single interface for quesitons like
+  # `checkout_allowed?` or `payment_required?`.
+  #
+  #  * Implements an interface for mutating the order with methods like
+  # `create_tax_charge!` and `fulfill!`.
+  #
   class Order < Spree::Base
     ORDER_NUMBER_LENGTH  = 9
     ORDER_NUMBER_LETTERS = false

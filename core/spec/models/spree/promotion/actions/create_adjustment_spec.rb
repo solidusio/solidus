@@ -58,6 +58,26 @@ describe Spree::Promotion::Actions::CreateAdjustment, type: :model do
     end
   end
 
+  describe '#remove_from' do
+    let(:action) { promotion.actions.first! }
+    let(:promotion) { create(:promotion, :with_order_adjustment) }
+
+    let!(:unrelated_adjustment) { create(:adjustment, order: order, source: nil) }
+
+    before do
+      action.perform(payload)
+      @action_adjustment = order.adjustments.where(source: action).first!
+    end
+
+    it 'removes the action adjustment' do
+      expect(order.adjustments).to match_array([unrelated_adjustment, @action_adjustment])
+
+      action.remove_from(order)
+
+      expect(order.adjustments).to eq([unrelated_adjustment])
+    end
+  end
+
   context "#destroy" do
     before(:each) do
       action.calculator = Spree::Calculator::FlatRate.new(preferred_amount: 10)

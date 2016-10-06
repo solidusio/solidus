@@ -39,7 +39,7 @@ module Spree
 
       def index
         authorize! :index, Order
-        @orders = Order.ransack(params[:q]).result.page(params[:page]).per(params[:per_page])
+        @orders = paginate(Order.ransack(params[:q]).result)
         respond_with(@orders)
       end
 
@@ -72,7 +72,8 @@ module Spree
 
       def mine
         if current_api_user
-          @orders = current_api_user.orders.by_store(current_store).reverse_chronological.ransack(params[:q]).result.page(params[:page]).per(params[:per_page])
+          @orders = current_api_user.orders.by_store(current_store).reverse_chronological.ransack(params[:q]).result
+          @orders = paginate(@orders)
         else
           render "spree/api/errors/unauthorized", status: :unauthorized
         end

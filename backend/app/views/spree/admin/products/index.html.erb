@@ -16,22 +16,28 @@
   <div data-hook="admin_products_sidebar">
     <%= search_form_for [:admin, @search] do |f| %>
         <%- locals = {:f => f} %>
-        <div data-hook="admin_products_index_search">
-          <div class="product-search-field-name field">
-            <%= f.label :name_cont, Spree::Product.human_attribute_name(:name) %>
-            <%= f.text_field :name_cont, :size => 15 %>
+        <div class="row" data-hook="admin_products_index_search" >
+          <div class="col-xs-6">
+            <div class="field">
+              <%= f.label :name_cont, Spree::Product.human_attribute_name(:name) %>
+              <%= f.text_field :name_cont, :size => 15 %>
+            </div>
           </div>
 
-          <div class="product-search-field-sku field">
-            <%= f.label :variants_including_master_sku_cont, Spree::Variant.human_attribute_name(:sku) %>
-            <%= f.text_field :variants_including_master_sku_cont, :size => 15 %>
+          <div class="col-xs-4">
+            <div class="field">
+              <%= f.label :variants_including_master_sku_cont, Spree::Variant.human_attribute_name(:sku) %>
+              <%= f.text_field :variants_including_master_sku_cont, :size => 15 %>
+            </div>
           </div>
 
-          <div class="product-search-field-show-deleted field checkbox">
-            <label>
-              <%= f.check_box :deleted_at_null, {:checked => params[:q][:deleted_at_null] == '0'}, '0', '1' %>
-              <%= Spree.t(:show_deleted) %>
-            </label>
+          <div class="col-xs-2">
+            <div class="field checkbox">
+              <label>
+                <%= f.check_box :deleted_at_null, {:checked => params[:q][:deleted_at_null] == '0'}, '0', '1' %>
+                <%= Spree.t(:show_deleted) %>
+              </label>
+            </div>
           </div>
         </div>
 
@@ -82,7 +88,7 @@
     </tbody>
   </table>
 <% else %>
-  <div class="alpha twelve columns no-objects-found">
+  <div class="col-xs-9 no-objects-found">
     <%= render 'spree/admin/shared/no_objects_found',
                   resource: Spree::Product,
                   new_resource_url: new_object_url %>

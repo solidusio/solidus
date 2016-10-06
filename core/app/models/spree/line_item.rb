@@ -1,4 +1,12 @@
 module Spree
+  # Variants placed in the Order at a particular price.
+  #
+  # `Spree::LineItem` is an ActiveRecord model which records which `Spree::Variant`
+  # a customer has chosen to place in their order. It also acts as the permenent
+  # record of the customer's order by recording relevant price, taxation, and inventory
+  # concerns. Line items can also have adjustments placed on them as part of the
+  # promotion system.
+  #
   class LineItem < Spree::Base
     belongs_to :order, class_name: "Spree::Order", inverse_of: :line_items, touch: true
     belongs_to :variant, -> { with_deleted }, class_name: "Spree::Variant", inverse_of: :line_items
@@ -22,8 +30,6 @@ module Spree
     }
     validates :price, numericality: true
     validate :ensure_proper_currency
-
-    after_create :update_tax_charge
 
     after_save :update_inventory
 
@@ -80,6 +86,7 @@ module Spree
     # @return [Spree::Money] the amount of this line item
     alias money display_amount
     alias display_total display_amount
+    deprecate display_total: :display_amount, deprecator: Spree::Deprecation
 
     # Sets price and currency from a `Spree::Money` object
     #
@@ -164,10 +171,6 @@ module Spree
 
     def destroy_inventory_units
       inventory_units.destroy_all
-    end
-
-    def update_tax_charge
-      Spree::Tax::ItemAdjuster.new(self).adjust!
     end
 
     def ensure_proper_currency

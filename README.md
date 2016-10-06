@@ -43,7 +43,7 @@ Try out Solidus with one-click on Heroku:
 Getting started
 ---------------
 
-To add solidus, begin with a rails 4.2 application. Add the following to your
+To add solidus, begin with a Rails 5 application. Add the following to your
 Gemfile.
 
 ```ruby

@@ -97,8 +97,4 @@ require 'spree/core/stock_configuration'
 require 'spree/permission_sets'
 require 'spree/deprecation'
 
-require 'spree/mailer_previews/order_preview'
-require 'spree/mailer_previews/carton_preview'
-require 'spree/mailer_previews/reimbursement_preview'
-
 require 'spree/core/price_migrator'

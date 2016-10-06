@@ -28,7 +28,6 @@ class RemoveUnnecessaryIndexes < ActiveRecord::Migration[4.2]
     safe_remove_index :spree_tax_categories, :deleted_at
     safe_remove_index :spree_tax_rates, :show_rate_in_label
     safe_remove_index :spree_tax_rates, :included_in_price
-    safe_remove_index :spree_trackers, :active
     safe_remove_index :spree_variants, :is_master
     safe_remove_index :spree_variants, :deleted_at
     safe_remove_index :spree_zones, :default_tax
@@ -56,7 +55,6 @@ class RemoveUnnecessaryIndexes < ActiveRecord::Migration[4.2]
     safe_add_index :spree_tax_categories, :deleted_at
     safe_add_index :spree_tax_rates, :show_rate_in_label
     safe_add_index :spree_tax_rates, :included_in_price
-    safe_add_index :spree_trackers, :active
     safe_add_index :spree_variants, :is_master
     safe_add_index :spree_variants, :deleted_at
     safe_add_index :spree_zones, :default_tax

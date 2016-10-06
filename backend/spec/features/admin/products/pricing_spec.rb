@@ -63,6 +63,22 @@ describe 'Pricing' do
       end
     end
 
+    context "editing" do
+      let(:variant) { create(:variant, price: 20) }
+      let(:product) { variant.product }
+
+      before do
+        product.master.update(price: 49.99)
+      end
+
+      it 'has a working edit page' do
+        within "#spree_price_#{product.master.prices.first.id}" do
+          click_icon :edit
+        end
+        expect(page).to have_content("Edit Price")
+      end
+    end
+
     context "deleting", js: true do
       let(:product) { create(:product, price: 65.43) }
       let!(:variant) { product.master }

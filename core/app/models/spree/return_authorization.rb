@@ -1,4 +1,6 @@
 module Spree
+  # Models the return of Inventory Units to a Stock Location for an Order.
+  #
   class ReturnAuthorization < Spree::Base
     belongs_to :order, class_name: 'Spree::Order', inverse_of: :return_authorizations
 

@@ -11,7 +11,7 @@ FactoryGirl.define do
     end
 
     firstname 'John'
-    lastname 'Doe'
+    lastname nil
     company 'Company'
     address1 '10 Lovely Street'
     address2 'Northwest'

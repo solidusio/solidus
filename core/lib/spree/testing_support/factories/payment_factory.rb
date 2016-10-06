@@ -27,6 +27,10 @@ FactoryGirl.define do
 
       refunds { build_list :refund, 1, amount: refund_amount }
     end
+
+    initialize_with do
+      order.payments.new(attributes)
+    end
   end
 
   factory :check_payment, class: Spree::Payment do

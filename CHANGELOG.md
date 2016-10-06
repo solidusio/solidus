@@ -1,8 +1,98 @@
+## Solidus 2.1.0 (master, unreleased)
+
+*   Add `Spree::Promotion#remove_from` and `Spree::PromotionAction#remove_from`
+
+    This will allow promotions to be removed from orders and allows promotion
+    actions to define how to reverse their side effects on an order.
+
+    For now `PromotionAction` provides a default remove_from method, with a
+    deprecation warning that subclasses should define their own remove_from
+    method.
+
+*   Remove `is_default` boolean from `Spree::Price` model
+
+    This boolean used to mean "the price to be used". With the new
+    pricing architecture introduced in 1.3, it is now redundant and can be
+    reduced to an order clause in the currently valid prices scope.
+
+*   Remove callback `Spree::LineItem.after_create :update_tax_charge`
+
+    Any code that creates `LineItem`s outside the context of OrderContents
+    should ensure that it calls `order.create_tax_charge!` after doing so.
+
+*   Mark `Spree::Tax::ItemAdjuster` as api-private
+
+*   Analytics trackers were removed from the admin panel; the extension
+    `solidus_trackers` provides the same functionality
+
+*   Updated Credit Card brand server-side detection regex to support more
+    brands and MasterCard's new BIN range. [#1477](https://github.com/solidusio/solidus/pull/1477)
+
+    Note: Most stores will be using client-side detection which was updated in
+    Solidus 1.2
+
+*   `CreditCard`'s `verification_value` field is now converted to a string and
+    has whitespace removed on assignment instead of before validations.
+
+*   The `lastname` field on `Address` is now optional. [#1369](https://github.com/solidusio/solidus/pull/1369)
+
+*   Removals
+
+    * Removed deprecated method `Spree::TaxRate.adjust` (not to be confused with
+      Spree::TaxRate#adjust) in favor of `Spree::Tax::OrderAdjuster`.
+
+      https://github.com/solidusio/solidus/pull/1462
+
+    * Removed deprecated method `Promotion#expired?` in favor of
+      `Promotion#inactive?`
+
+      https://github.com/solidusio/solidus/pull/1461
+
 ## Solidus 2.0.0 (unreleased)
 
 *   Upgrade to rails 5.0
 
 ## Solidus 1.4.0 (unreleased)
+
+*   Use in-memory objects in OrderUpdater and related areas.
+
+    Solidus now uses in-memory data for updating orders in and around
+    OrderUpdater.  E.g. if an order already has `order.line_items` loaded into
+    memory when OrderUpdater is run then it will use that information rather
+    than requerying the database for it. This should help performance and makes
+    some upcoming refactoring easier.
+
+    Warning:  If you bypass ActiveRecord while making updates to your orders you
+    run the risk of generating invalid data.  Example:
+
+        order.line_items.to_a
+        order.line_items.update_all(price: ...)
+        order.update!
+
+    Will now result in incorrect calculations in OrderUpdater because the line
+    items will not be refetched.
+
+    In particular, when creating adjustments, you should always create the
+    adjustment using the adjustable relationship.
+
+    Good example:
+
+        line_item.adjustments.create!(source: tax_rate, ...)
+
+    Bad examples:
+
+        tax_rate.adjustments.create!(adjustable: line_item, ...)
+        Spree::Adjustment.create!(adjustable: line_item, source: tax_rate, ...)
+
+    We try to detect the latter examples and repair the in-memory objects (with
+    a deprecation warning) but you should ensure that your code is keeping the
+    adjustable's in-memory associations up to date. Custom promotion actions are
+    an area likely to have this issue.
+
+    https://github.com/solidusio/solidus/pull/1356
+    https://github.com/solidusio/solidus/pull/1389
+    https://github.com/solidusio/solidus/pull/1400
+    https://github.com/solidusio/solidus/pull/1401
 
 *   Make some 'wallet' behavior configurable
 

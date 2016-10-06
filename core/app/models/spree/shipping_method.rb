@@ -1,4 +1,6 @@
 module Spree
+  # Represents a means of having a shipment delivered, such as FedEx or UPS.
+  #
   class ShippingMethod < Spree::Base
     acts_as_paranoid
     include Spree::CalculatedAdjustments

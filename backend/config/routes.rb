@@ -183,7 +183,6 @@ Spree::Core::Engine.routes.draw do
     resources :stock_items, except: [:show, :new, :edit]
     resources :tax_rates
 
-    resources :trackers
     resources :payment_methods do
       collection do
         post :update_positions

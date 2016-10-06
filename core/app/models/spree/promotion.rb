@@ -7,10 +7,10 @@ module Spree
 
     belongs_to :promotion_category
 
-    has_many :promotion_rules, autosave: true, dependent: :destroy
+    has_many :promotion_rules, autosave: true, dependent: :destroy, inverse_of: :promotion
     alias_method :rules, :promotion_rules
 
-    has_many :promotion_actions, autosave: true, dependent: :destroy
+    has_many :promotion_actions, autosave: true, dependent: :destroy, inverse_of: :promotion
     alias_method :actions, :promotion_actions
 
     has_many :order_promotions, class_name: "Spree::OrderPromotion"
@@ -80,15 +80,6 @@ module Spree
 
     def inactive?
       !active?
-    end
-
-    def expired?
-      Spree::Deprecation.warn <<-WARN.squish, caller
-        #expired? is deprecated, and will be removed in Solidus 2.0.
-        Please use #inactive? instead.
-      WARN
-
-      inactive?
     end
 
     def activate(order:, line_item: nil, user: nil, path: nil, promotion_code: nil)
@@ -218,6 +209,20 @@ module Spree
           id: excluded_orders.map(&:id)
         ).any?
       end
+    end
+
+    # Removes a promotion and any adjustments or other side effects from an
+    # order.
+    # @param order [Spree::Order] the order to remove the promotion from.
+    # @return [void]
+    def remove_from(order)
+      actions.each do |action|
+        action.remove_from(order)
+      end
+      # note: this destroys the join table entry, not the promotion itself
+      order.promotions.destroy(self)
+      order.order_promotions.reset
+      order_promotions.reset
     end
 
     private

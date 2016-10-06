@@ -30,7 +30,7 @@ describe Spree::OrderShipping do
 
     it "updates shipment.shipped_at" do
       Timecop.freeze do |now|
-        expect { subject }.to change { shipment.shipped_at }.from(nil).to(now)
+        expect { subject }.to change { shipment.shipped_at }.from(nil).to be_within(1.second).of(now)
       end
     end
 
@@ -40,7 +40,7 @@ describe Spree::OrderShipping do
         Timecop.freeze(future) do
           subject
         end
-      end.to change { order.updated_at }.from(order.updated_at).to(future)
+      end.to change { order.updated_at }.to be_within(1.second).of(future)
     end
   end
 

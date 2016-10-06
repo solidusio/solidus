@@ -5,9 +5,14 @@ module Spree
       before_action :product_property, only: [:show, :update, :destroy]
 
       def index
-        @product_properties = @product.product_properties.accessible_by(current_ability, :read).
-                              ransack(params[:q]).result.
-                              page(params[:page]).per(params[:per_page])
+        @product_properties = @product.
+          product_properties.
+          accessible_by(current_ability, :read).
+          ransack(params[:q]).
+          result
+
+        @product_properties = paginate(@product_properties)
+
         respond_with(@product_properties)
       end
 

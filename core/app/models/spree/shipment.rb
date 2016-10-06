@@ -1,4 +1,6 @@
 module Spree
+  # An order's planned shipments including tracking and cost.
+  #
   class Shipment < Spree::Base
     belongs_to :order, class_name: 'Spree::Order', touch: true, inverse_of: :shipments
     belongs_to :stock_location, class_name: 'Spree::StockLocation'
@@ -280,11 +282,9 @@ module Spree
     def update_amounts
       if selected_shipping_rate
         self.cost = selected_shipping_rate.cost
-        self.adjustment_total = adjustments.additional.map(&:update!).compact.sum
         if changed?
           update_columns(
             cost: cost,
-            adjustment_total: adjustment_total,
             updated_at: Time.current
           )
         end

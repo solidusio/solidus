@@ -14,7 +14,6 @@ module Spree
           can [:display, :admin], Spree::ShippingCategory
           can [:display, :admin], Spree::StockLocation
           can [:display, :admin], Spree::StockMovement
-          can [:display, :admin], Spree::Tracker
           can [:display, :admin], Spree::RefundReason
           can [:display, :admin], Spree::ReimbursementType
           can [:display, :admin], Spree::ReturnReason

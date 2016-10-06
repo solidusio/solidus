@@ -29,12 +29,11 @@ Spree.ready ($) ->
         ($ '#payment_method_' + @value).show() if @checked
       )
 
-      ($ document).on('click', '#cvv_link', (event) ->
+      ($ '#cvv_link').on 'click', (event) ->
         windowName = 'cvv_info'
         windowOptions = 'left=20,top=20,width=500,height=500,toolbar=0,resizable=0,scrollbars=1'
         window.open(($ this).attr('href'), windowName, windowOptions)
         event.preventDefault()
-      )
 
       # Activate already checked payment method if form is re-rendered
       # i.e. if user enters invalid data

@@ -6,12 +6,11 @@ module Spree
           dependent: :destroy
         has_many :taxons, through: :promotion_rule_taxons, class_name: 'Spree::Taxon'
 
-        MATCH_POLICIES = %w(any all)
+        MATCH_POLICIES = %w(any all none)
 
         validates_inclusion_of :preferred_match_policy, in: MATCH_POLICIES
 
         preference :match_policy, :string, default: MATCH_POLICIES.first
-
         def applicable?(promotable)
           promotable.is_a?(Spree::Order)
         end
@@ -28,6 +27,10 @@ module Spree
             unless taxons.any?{ |taxon| order_taxons.include? taxon }
               eligibility_errors.add(:base, eligibility_error_message(:no_matching_taxons))
             end
+          when 'none'
+            unless taxons.none?{ |taxon| order_taxons.include? taxon }
+              eligibility_errors.add(:base, eligibility_error_message(:has_excluded_taxon))
+            end
           else
             # Change this to an exception in a future version of Solidus
             warn_invalid_match_policy(assume: 'any')
@@ -43,6 +46,8 @@ module Spree
           case preferred_match_policy
           when 'any', 'all'
             taxon_product_ids.include?(line_item.variant.product_id)
+          when 'none'
+            taxon_product_ids.exclude? line_item.variant.product_id
           else
             # Change this to an exception in a future version of Solidus
             warn_invalid_match_policy(assume: 'any')
