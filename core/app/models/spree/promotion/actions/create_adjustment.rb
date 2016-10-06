@@ -27,7 +27,7 @@ module Spree
             order: order,
             source: self,
             promotion_code: options[:promotion_code],
-            label: "#{Spree.t(:promotion)} (#{promotion.name})"
+            label: Spree.t('adjustment_labels.order', promotion: Spree::Promotion.model_name.human, promotion_name: promotion.name)
           )
           true
         end
