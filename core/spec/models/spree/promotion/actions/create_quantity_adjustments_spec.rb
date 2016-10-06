@@ -110,6 +110,83 @@ module Spree::Promotion::Actions
           end
         end
       end
+
+      context "with a tiered percentage based adjustment" do
+        let(:tiers) do
+          {
+            20 => 20,
+            40 => 30
+          }
+        end
+        let(:calculator) do
+          Spree::Calculator::TieredPercent.create(preferred_base_percent: 10, preferred_tiers: tiers)
+        end
+
+        context "with a quantity group of 3" do
+          before do
+            action.preferred_group_size = 3
+            action.perform({ order: order, promotion: promotion })
+          end
+
+          context "and 2x item A and 1x item B" do
+            let(:quantity) { 2 }
+            let!(:item_b) { FactoryGirl.create :line_item, order: order, quantity: 1, price: 10 }
+
+            context "when amount falls within the first tier" do
+
+              before do
+                order.reload.updater.update
+              end
+
+              describe "the adjustment for the first item" do
+                let(:line_item) { item_a }
+                it { is_expected.to eq(-4) }
+              end
+              describe "the adjustment for the second item" do
+                let(:line_item) { item_b }
+                it { is_expected.to eq(-2) }
+              end
+            end
+
+            context "when amount falls within the second tier" do
+              let!(:item_b) { FactoryGirl.create :line_item, order: order, quantity: 1, price: 20 }
+
+              before do
+                order.reload.updater.update
+              end
+
+              describe "the adjustment for the first item" do
+                let(:line_item) { item_a }
+                it { is_expected.to eq (-6) }
+              end
+
+              describe "the adjustment for the second item" do
+                let(:line_item) { item_b }
+                it { is_expected.to eq (-6) }
+              end
+            end
+          end
+        end
+      end
+    end
+
+    describe Spree::Promotion::Actions::CreateQuantityAdjustments::PartialLineItem do
+      let!(:item) { FactoryGirl.create :line_item, order: order, quantity: quantity, price: 10 }
+      let(:quantity) { 5 }
+
+      subject { described_class.new(item) }
+
+      it "has a reference to the parent order" do
+        expect(subject.order.id).to eq order.id
+      end
+
+      it "uses the `line_item.price` as a `line_item.amount`" do
+        expect(subject.amount).to eq item.price
+      end
+
+      it "has a currency" do
+        expect(subject.currency).to eq item.currency
+      end
     end
   end
 end
