@@ -1121,6 +1121,9 @@ en:
         tax_category: "This determines what kind of taxation is applied to this product.<br/> Default: None"
       spree/variant:
         tax_category: "This determines what kind of taxation is applied to this variant.<br/> Default: Use tax category of the product associated with this variant"
+        deleted: "Deleted Variant"
+        deleted_explanation: "This variant was deleted on %{date}."
+        deleted_explanation_with_replacement: "This variant was deleted on %{date}. It has since been replaced by another with the same SKU."
     failed_payment_attempts: Failed Payment Attempts
     failure: Failure
     filename: Filename

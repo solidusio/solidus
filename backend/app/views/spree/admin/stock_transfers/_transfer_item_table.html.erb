@@ -18,15 +18,24 @@
     <tbody>
       <% transfer_items.each do |item| %>
         <%- variant = item.variant %>
-        <tr data-transfer-item-id="<%= item.id %>">
+        <tr data-transfer-item-id="<%= item.id %>" class='<%= "deleted" if variant.deleted? %>'>
           <td class="align-center no-padding">
             <div class='variant-container' data-variant-id="<%= variant.id %>">
               <div class='variant-image'>
                 <%= image_tag(variant.display_image(fallback: false).attachment(:small)) %>
               </div>
               <div class='variant-details'>
+
                 <table class='stock-variant-field-table'>
                   <tbody>
+                    <% if variant.deleted? %>
+                      <tr>
+                        <td colspan="2">
+                          <%= I18n.t(:deleted, scope: [:spree, :hints, "spree/variant"]) %>
+                          <%= deleted_variant_admin_hint(variant) %>
+                        </td>
+                      </tr>
+                    <% end %>
                     <% @variant_display_attributes.each do |display_attribute| %>
                       <tr>
                         <td><%= Spree.t(display_attribute[:translation_key]) %></td>
