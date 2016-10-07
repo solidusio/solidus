@@ -48,6 +48,10 @@
 
       https://github.com/solidusio/solidus/pull/1461
 
+    * Removed nested attribute helpers `generate_template`, `generate_html`,
+      and `remove_nested`. Also removes some javascript bound to selectors
+      `.remove`, `a[id*=nested]`.
+
 ## Solidus 2.0.0 (unreleased)
 
 *   Upgrade to rails 5.0
