@@ -1177,6 +1177,8 @@ en:
     hints:
       spree/price:
         country: "This determines in what country the price is valid.<br/>Default: Any Country"
+        master_variant: "Changing master variant prices will not change variant prices below, but will be used to populate all new variants"
+        options: "These options are used to create variants in the variants table. They can be changed in the variants tab"
       spree/product:
         promotionable: "This determines whether or not promotions can apply to this product.<br/>Default: Checked"
         shipping_category: "This determines what kind of shipping this product requires.<br/> Default: Default"
@@ -1337,6 +1339,7 @@ en:
     manual_intervention_required: Manual intervention required
     manage_variants: Manage Variants
     master_price: Master Price
+    master_variant: Master Variant
     match_choices:
       all: All
       none: None
@@ -1992,6 +1995,7 @@ en:
     value: Value
     variant: Variant
     variant_placeholder: Choose a variant
+    variant_pricing: Variant Pricing
     variant_properties: Variant Properties
     variant_search: Variant Search
     variant_search_placeholder: "SKU or Option Value"
