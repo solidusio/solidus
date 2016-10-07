@@ -1,4 +1,41 @@
-<%= paginate prices, theme: "solidus_admin" %>
+<%= paginate variant_prices, theme: "solidus_admin" %>
+
+<div class="row">
+  <div class="col-xs-8">
+    <table class="index master_prices">
+      <thead data-hook="master_prices_header">
+        <tr>
+          <th colspan="3">Master Variant</th>
+        </tr>
+        <tr>
+          <th><%= Spree::Price.human_attribute_name(:country) %></th>
+          <th><%= Spree::Price.human_attribute_name(:currency) %></th>
+          <th><%= Spree::Price.human_attribute_name(:amount) %></th>
+          <th class="actions"></th>
+        </tr>
+      </thead>
+      <% master_prices.each do |price| %>
+        <tr id="<%= spree_dom_id price %>" data-hook="prices_row" class="<%= "deleted" if price.deleted? %> <%= cycle('odd', 'even')%>">
+          <td><%= price.display_country %></td>
+          <td><%= price.currency %></td>
+          <td class="align-right"><%= price.money.to_html %></td>
+          <td class="actions">
+            <% if can?(:update, price) %>
+              <%= link_to_edit(price, :no_text => true) unless price.deleted? %>
+            <% end %>
+            <% if can?(:destroy, price) %>
+              &nbsp;
+              <%= link_to_delete(price, :no_text => true) unless price.deleted? %>
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+    </table>
+  </div>
+  <div class="col-xs-4">
+    
+  </div>
+</div>
 
 <table class="index prices">
   <thead data-hook="prices_header">
@@ -10,12 +47,11 @@
       <th class="actions"></th>
     </tr>
   </thead>
-
   <tbody>
-  <% prices.each do |price| %>
+  <% variant_prices.each do |price| %>
     <tr id="<%= spree_dom_id price %>" data-hook="prices_row" class="<%= "deleted" if price.deleted? %> <%= cycle('odd', 'even')%>">
       <td><%= price.variant.descriptive_name %></td>
-      <td><%= price.display_country %>
+      <td><%= price.display_country %></td>
       <td><%= price.currency %></td>
       <td class="align-right"><%= price.money.to_html %></td>
       <td class="actions">
@@ -32,4 +68,4 @@
   </tbody>
 </table>
 
-<%= paginate prices, theme: "solidus_admin" %>
+<%= paginate variant_prices, theme: "solidus_admin" %>
