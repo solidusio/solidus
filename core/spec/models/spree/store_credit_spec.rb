@@ -414,7 +414,7 @@ describe Spree::StoreCredit do
         expect(subject).to be true
       end
 
-      it "returns the capture amount to the store credit" do
+      it "returns the authorized amount to the store credit" do
         expect { subject }.to change{ store_credit.amount_authorized.to_f }.by(-authorized_amount)
       end
 
