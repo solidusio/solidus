@@ -19,6 +19,8 @@ module Spree
     validates :country, presence: true, unless: -> { for_any_country? }
 
     scope :currently_valid, -> { order("country_iso IS NULL, updated_at DESC") }
+    scope :for_master, -> { joins(:variant).where(spree_variants: { is_master: true }) }
+    scope :for_variant, -> { joins(:variant).where(spree_variants: { is_master: false }) }
     scope :for_any_country, -> { where(country: nil) }
     scope :with_default_attributes, -> { where(Spree::Config.default_pricing_options.desired_attributes) }
 
