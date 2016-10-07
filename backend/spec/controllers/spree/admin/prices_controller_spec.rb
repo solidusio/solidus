@@ -16,7 +16,8 @@ describe Spree::Admin::PricesController do
       it 'assigns usable instance variables' do
         subject
         expect(assigns(:search)).to be_a(Ransack::Search)
-        expect(assigns(:prices)).to eq(product.prices)
+        expect(assigns(:variant_prices)).to eq(product.prices.for_variant)
+        expect(assigns(:master_prices)).to eq(product.prices.for_master)
         expect(assigns(:product)).to eq(product)
       end
     end
@@ -32,8 +33,9 @@ describe Spree::Admin::PricesController do
       it 'assigns usable instance variables' do
         subject
         expect(assigns(:search)).to be_a(Ransack::Search)
-        expect(assigns(:prices)).to eq(product.prices)
-        expect(assigns(:prices)).to include(variant.default_price)
+        expect(assigns(:variant_prices)).to eq(product.prices.for_variant)
+        expect(assigns(:master_prices)).to eq(product.prices.for_master)
+        expect(assigns(:variant_prices)).to include(variant.default_price)
         expect(assigns(:product)).to eq(product)
       end
     end
