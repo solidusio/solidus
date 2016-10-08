@@ -40,6 +40,7 @@ module Spree
     # @return [Spree::Product, nil] the product associated with this line
     #   item, if there is one
     delegate :product, to: :variant
+    delegate :currency, to: :order, allow_nil: true
 
     attr_accessor :target_shipment
 
@@ -133,10 +134,6 @@ module Spree
       Spree::Deprecation.warn 'Spree::LineItem#currency= is deprecated ' \
         'and will take no effect.',
         caller
-    end
-
-    def currency
-      order.currency if order
     end
 
     private
