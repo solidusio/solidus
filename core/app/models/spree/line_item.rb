@@ -8,6 +8,8 @@ module Spree
   # promotion system.
   #
   class LineItem < Spree::Base
+    class CurrencyMismatch < StandardError; end
+
     belongs_to :order, class_name: "Spree::Order", inverse_of: :line_items, touch: true
     belongs_to :variant, -> { with_deleted }, class_name: "Spree::Variant", inverse_of: :line_items
     belongs_to :tax_category, class_name: "Spree::TaxCategory"
@@ -92,7 +94,9 @@ module Spree
     #
     # @param [Spree::Money] money - the money object to obtain price from
     def money_price=(money)
-      self.price = money.to_d if money
+      return unless money
+      raise CurrencyMismatch, "Line item price currency must match order currency!" if money.currency.iso_code != currency
+      self.price = money.to_d
     end
 
     # @return [Boolean] true when it is possible to supply the required

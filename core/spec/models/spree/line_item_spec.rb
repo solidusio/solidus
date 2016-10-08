@@ -181,11 +181,22 @@ describe Spree::LineItem, type: :model do
   end
 
   describe 'money_price=' do
-    let(:new_price) { Spree::Money.new(99.00, currency: "RUB") }
+    let(:currency) { "USD" }
+    let(:new_price) { Spree::Money.new(99.00, currency: currency) }
 
     it 'assigns a new price' do
       line_item.money_price = new_price
       expect(line_item.price).to eq(new_price.cents / 100.0)
+    end
+
+    context 'when the price has a currency different from the order currency' do
+      let(:currency) { "RUB" }
+
+      it 'raises an exception' do
+        expect {
+          line_item.money_price = new_price
+        }.to raise_exception Spree::LineItem::CurrencyMismatch
+      end
     end
   end
 
