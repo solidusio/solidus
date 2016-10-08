@@ -119,13 +119,11 @@ module Spree
       end
 
       it 'handles line_item updating exceptions' do
-        line_items['0'][:currency] = 'GBP'
+        line_items['0'][:price] = 'an invalid price'
         params = { line_items_attributes: line_items }
 
         expect {
-          Spree::Deprecation.silence do
-            Importer::Order.import(user, params)
-          end
+          Importer::Order.import(user, params)
         }.to raise_exception ActiveRecord::RecordInvalid
       end
 
@@ -169,26 +167,37 @@ module Spree
       end
 
       context "with a different currency" do
-        before { variant.prices.create(currency: "GBP", amount: 18.99) }
+        let(:params) { { currency: "GBP" } }
 
         it "sets the order currency" do
-          params = {
-            currency: "GBP"
-          }
           order = Importer::Order.import(user, params)
           expect(order.currency).to eq "GBP"
         end
 
-        it "can handle it when a line order price is specified" do
-          params = {
-            currency: "GBP",
-            line_items_attributes: line_items
-          }
-          line_items["0"].merge! currency: "GBP", price: 1.99
-          order = Importer::Order.import(user, params)
-          expect(order.currency).to eq "GBP"
-          expect(order.line_items.first.price).to eq 1.99
-          expect(order.line_items.first.currency).to eq "GBP"
+        context "when a line item price is specified" do
+          let(:params) { { currency: "GBP", line_items_attributes: line_items } }
+
+          before { line_items["0"][:price] = 1.99 }
+
+          context "and price is present in the order currency" do
+            before { variant.prices.create(currency: "GBP", amount: 18.99) }
+
+            it "assigns a price correctly" do
+              order = Importer::Order.import(user, params)
+
+              expect(order.currency).to eq "GBP"
+              expect(order.line_items.first.price).to eq 1.99
+              expect(order.line_items.first.currency).to eq "GBP"
+            end
+          end
+
+          context "and no price is present in the order currency" do
+            it "raises an exception" do
+              expect {
+                Importer::Order.import(user, params)
+              }.to raise_exception ActiveRecord::RecordInvalid
+            end
+          end
         end
       end
 
