@@ -38,7 +38,7 @@ describe Spree::StoreCredit do
         allow(store_credit.category).to receive(:non_expiring?).and_return(false)
       end
 
-      it "sets the credit type to non-expiring" do
+      it "sets the credit type to expiring" do
         subject
         expect(store_credit.credit_type.name).to eq "Expiring"
       end
