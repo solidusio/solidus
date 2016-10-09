@@ -94,9 +94,13 @@ module Spree
     #
     # @param [Spree::Money] money - the money object to obtain price from
     def money_price=(money)
-      return unless money
-      raise CurrencyMismatch, "Line item price currency must match order currency!" if money.currency.iso_code != currency
-      self.price = money.to_d
+      if !money
+        self.price = nil
+      elsif money.currency.iso_code != currency
+        raise CurrencyMismatch, "Line item price currency must match order currency!"
+      else
+        self.price = money.to_d
+      end
     end
 
     # @return [Boolean] true when it is possible to supply the required

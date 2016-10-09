@@ -189,6 +189,15 @@ describe Spree::LineItem, type: :model do
       expect(line_item.price).to eq(new_price.cents / 100.0)
     end
 
+    context 'when the new price is nil' do
+      let(:new_price) { nil }
+
+      it 'makes the line item price empty' do
+        line_item.money_price = new_price
+        expect(line_item.price).to be_nil
+      end
+    end
+
     context 'when the price has a currency different from the order currency' do
       let(:currency) { "RUB" }
 
