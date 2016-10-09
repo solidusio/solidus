@@ -1,5 +1,16 @@
 ## Solidus 2.1.0 (master, unreleased)
 
+*   Remove `currency` from line items.
+
+    It's no more allowed to have line items with different currencies on the
+    same order. This makes storing the currency on line items redundant, since
+    it will always be considered the same as the order currency.
+
+    It will raise an exception if a line item with the wrong currency is added.
+
+    Warning: this change also deletes the `currency` database field (String)
+    from the line items table, since it will not be used anymore.
+
 *   Add `Spree::Promotion#remove_from` and `Spree::PromotionAction#remove_from`
 
     This will allow promotions to be removed from orders and allows promotion
