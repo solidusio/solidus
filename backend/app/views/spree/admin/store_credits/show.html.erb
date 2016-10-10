@@ -83,6 +83,7 @@
         <th><%= t('spree.admin.store_credits.amount_credited') %></th>
         <th><%= t('spree.admin.store_credits.created_by') %></th>
         <th><%= Spree::StoreCreditEvent.human_attribute_name(:user_total_amount) %></th>
+        <th><%= Spree::StoreCreditEvent.human_attribute_name(:amount_remaining) %></th>
         <th><%= Spree::StoreCreditUpdateReason.human_attribute_name(:name) %></th>
       </tr>
     </thead>
@@ -96,6 +97,7 @@
           <td><%= event.display_amount %></td>
           <td><%= store_credit_event_originator_link(event) %></td>
           <td><%= event.display_user_total_amount %></td>
+          <td><%= event.display_remaining_amount %></td>
           <td><%= event.update_reason.try!(:name) %></td>
         </tr>
       <% end %>

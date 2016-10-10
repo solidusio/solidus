@@ -220,6 +220,20 @@ RSpec.describe Spree::StoreCreditEvent do
     end
   end
 
+  describe "#display_remaining_amount" do
+    let(:amount_remaining) { 300.0 }
+
+    subject { create(:store_credit_auth_event, amount_remaining: amount_remaining) }
+
+    it "returns a Spree::Money instance" do
+      expect(subject.display_remaining_amount).to be_instance_of(Spree::Money)
+    end
+
+    it "uses the events amount_remaining attribute" do
+      expect(subject.display_remaining_amount).to eq Spree::Money.new(amount_remaining, { currency: subject.currency })
+    end
+  end
+
   describe "#display_event_date" do
     let(:date) { Time.parse("2014-06-01") }
 
