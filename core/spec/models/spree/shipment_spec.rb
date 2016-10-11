@@ -546,32 +546,41 @@ describe Spree::Shipment, type: :model do
   end
 
   context "changes shipping rate via general update" do
-    let(:store) { create :store }
     let(:order) do
-      Spree::Order.create(
-        payment_total: 100,
-        payment_state: 'paid',
-        total: 100,
-        item_total: 100,
-        store: store
+      create(
+        :order_ready_to_ship,
+        shipment_cost: 10,
+        shipping_method: ten_dollar_shipping_method,
+        line_items_count: 1,
+        line_items_price: 100,
       )
     end
 
-    let(:shipment) { Spree::Shipment.create order_id: order.id }
+    let(:ten_dollar_shipping_method)    { create(:shipping_method, cost: 10) }
+    let(:twenty_dollar_shipping_method) { create(:shipping_method, cost: 20) }
 
-    let(:shipping_rate) do
-      Spree::ShippingRate.create shipment_id: shipment.id, cost: 10
-    end
+    let(:shipment) { order.shipments[0] }
 
-    before do
-      shipment.update_attributes_and_order selected_shipping_rate_id: shipping_rate.id
+    let(:twenty_dollar_shipping_rate) do
+      create(:shipping_rate, cost: 20, shipment: shipment, shipping_method: twenty_dollar_shipping_method)
     end
 
     it "updates everything around order shipment total and state" do
-      expect(shipment.cost.to_f).to eq 10
+      expect(shipment.state).to eq 'ready'
+      expect(shipment.cost).to eq 10
+
+      expect(order.shipment_total).to eq 10
+      expect(order.total).to eq 110 # shipment: 10 + line item: 100
+      expect(order.payment_state).to eq 'paid'
+
+      shipment.update_attributes_and_order selected_shipping_rate_id: twenty_dollar_shipping_rate.id
+
       expect(shipment.state).to eq 'pending'
-      expect(shipment.order.total.to_f).to eq 110
-      expect(shipment.order.payment_state).to eq 'balance_due'
+      expect(shipment.cost).to eq 20
+
+      expect(order.shipment_total).to eq 20
+      expect(order.total).to eq 120 # shipment: 20 + line item: 100
+      expect(order.payment_state).to eq 'balance_due'
     end
   end
 
