@@ -546,9 +546,15 @@ describe Spree::Shipment, type: :model do
   end
 
   context "changes shipping rate via general update" do
+    let!(:ship_address) { create(:address) }
+    let!(:tax_zone) { create(:global_zone) } # will include the above address
+    let!(:tax_rate) { create(:tax_rate, amount: 0.10, zone: tax_zone, tax_category: tax_category) }
+    let(:tax_category) { create(:tax_category) }
+
     let(:order) do
       create(
         :order_ready_to_ship,
+        ship_address: ship_address,
         shipment_cost: 10,
         shipping_method: ten_dollar_shipping_method,
         line_items_count: 1,
@@ -556,8 +562,8 @@ describe Spree::Shipment, type: :model do
       )
     end
 
-    let(:ten_dollar_shipping_method)    { create(:shipping_method, cost: 10) }
-    let(:twenty_dollar_shipping_method) { create(:shipping_method, cost: 20) }
+    let(:ten_dollar_shipping_method)    { create(:shipping_method, tax_category: tax_category, zones: [tax_zone], cost: 10) }
+    let(:twenty_dollar_shipping_method) { create(:shipping_method, tax_category: tax_category, zones: [tax_zone], cost: 20) }
 
     let(:shipment) { order.shipments[0] }
 
@@ -568,18 +574,20 @@ describe Spree::Shipment, type: :model do
     it "updates everything around order shipment total and state" do
       expect(shipment.state).to eq 'ready'
       expect(shipment.cost).to eq 10
+      expect(shipment.additional_tax_total).to eq 1
 
       expect(order.shipment_total).to eq 10
-      expect(order.total).to eq 110 # shipment: 10 + line item: 100
+      expect(order.total).to eq 121 # shipment: 10 + 1 (tax) + line item: 100 + 10 (tax)
       expect(order.payment_state).to eq 'paid'
 
       shipment.update_attributes_and_order selected_shipping_rate_id: twenty_dollar_shipping_rate.id
 
       expect(shipment.state).to eq 'pending'
       expect(shipment.cost).to eq 20
+      expect(shipment.additional_tax_total).to eq 2
 
       expect(order.shipment_total).to eq 20
-      expect(order.total).to eq 120 # shipment: 20 + line item: 100
+      expect(order.total).to eq 132 # shipment: 20 + 2 (tax) + line item: 100 + 10 (tax)
       expect(order.payment_state).to eq 'balance_due'
     end
   end
