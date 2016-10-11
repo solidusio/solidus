@@ -2,20 +2,75 @@
 
 <div class="row">
   <div class="col-xs-8">
-    <table class="index master_prices">
-      <thead data-hook="master_prices_header">
-        <tr>
-          <th colspan="3"><%= I18n.t(:master_variant, scope: :spree) %> <%= admin_hint I18n.t(:master_variant, scope: :spree), I18n.t(:master_variant, scope: [:spree, :hints, "spree/price"]) %></th>
-        </tr>
-        <tr>
-          <th><%= Spree::Price.human_attribute_name(:country) %></th>
-          <th><%= Spree::Price.human_attribute_name(:currency) %></th>
-          <th><%= Spree::Price.human_attribute_name(:amount) %></th>
-          <th class="actions"></th>
-        </tr>
-      </thead>
-      <% master_prices.each do |price| %>
+    <fieldset class="no-border-bottom">
+      <legend align="center"><%= I18n.t(:master_variant, scope: :spree) %> <%= admin_hint I18n.t(:master_variant, scope: :spree), I18n.t(:master_variant, scope: [:spree, :hints, "spree/price"]) %></legend>
+      <table class="index master_prices">
+        <thead data-hook="master_prices_header">
+          <tr>
+            <th><%= Spree::Price.human_attribute_name(:country) %></th>
+            <th><%= Spree::Price.human_attribute_name(:currency) %></th>
+            <th><%= Spree::Price.human_attribute_name(:amount) %></th>
+            <th class="actions"></th>
+          </tr>
+        </thead>
+        <% master_prices.each do |price| %>
+          <tr id="<%= spree_dom_id price %>" data-hook="prices_row" class="<%= "deleted" if price.deleted? %> <%= cycle('odd', 'even')%>">
+            <td><%= price.display_country %></td>
+            <td><%= price.currency %></td>
+            <td class="align-right"><%= price.money.to_html %></td>
+            <td class="actions">
+              <% if can?(:update, price) %>
+                <%= link_to_edit(price, :no_text => true) unless price.deleted? %>
+              <% end %>
+              <% if can?(:destroy, price) %>
+                &nbsp;
+                <%= link_to_delete(price, :no_text => true) unless price.deleted? %>
+              <% end %>
+            </td>
+          </tr>
+        <% end %>
+      </table>
+    </fieldset>
+  </div>
+  <div class="col-xs-4">
+    <fieldset class="no-border-bottom">
+      <legend align="center"><%= I18n.t(:options, scope: :spree) %> <%= admin_hint I18n.t(:options, scope: :spree), I18n.t(:options, scope: [:spree, :hints, "spree/price"]) %></legend>
+      <table class="index options">
+        <thead data-hook="options_header">
+          <tr>
+            <th><%= Spree::Price.human_attribute_name(:option_type) %></th>
+            <th><%= Spree::Price.human_attribute_name(:option_values) %></th>
+          </tr>
+        </thead>
+        <tbody>
+          <% option_types.each do |option_type| %>
+            <tr>
+              <td><%= option_type.presentation %></td>
+              <td><%= option_type.option_values.map {|option_value| option_value.presentation}.join(", ") %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </fieldset>
+  </div>
+</div>
+
+<fieldset class="no-border-bottom">
+  <legend align="center"><%= I18n.t(:variant_pricing, scope: :spree) %></legend>
+  <table class="index prices">
+    <thead data-hook="prices_header">
+      <tr>
+        <th><%= Spree::Variant.model_name.human %> </th>
+        <th><%= Spree::Price.human_attribute_name(:country) %></th>
+        <th><%= Spree::Price.human_attribute_name(:currency) %></th>
+        <th><%= Spree::Price.human_attribute_name(:amount) %></th>
+        <th class="actions"></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% variant_prices.each do |price| %>
         <tr id="<%= spree_dom_id price %>" data-hook="prices_row" class="<%= "deleted" if price.deleted? %> <%= cycle('odd', 'even')%>">
+          <td><%= price.variant.descriptive_name %></td>
           <td><%= price.display_country %></td>
           <td><%= price.currency %></td>
           <td class="align-right"><%= price.money.to_html %></td>
@@ -30,60 +85,8 @@
           </td>
         </tr>
       <% end %>
-    </table>
-  </div>
-  <div class="col-xs-4">
-    <table class="index options">
-      <thead data-hook="options_header">
-        <tr>
-          <th colspan="2"><%= I18n.t(:options, scope: :spree) %> <%= admin_hint I18n.t(:options, scope: :spree), I18n.t(:options, scope: [:spree, :hints, "spree/price"]) %></th>
-        </tr>
-        <tr>
-          <th><%= Spree::Price.human_attribute_name(:option_type) %></th>
-          <th><%= Spree::Price.human_attribute_name(:option_values) %></th>
-        </tr>
-      </thead>
-      <tbody>
-        <% option_types.each do |option_type| %>
-          <tr>
-            <td><%= option_type.presentation %></td>
-            <td><%= option_type.option_values.map {|option_value| option_value.presentation}.join(", ") %></td>
-          </tr>
-        <% end %>
-      </tbody>
-    </table>
-  </div>
-</div>
-
-<table class="index prices">
-  <thead data-hook="prices_header">
-    <tr>
-      <th><%= Spree::Variant.model_name.human %> </th>
-      <th><%= Spree::Price.human_attribute_name(:country) %></th>
-      <th><%= Spree::Price.human_attribute_name(:currency) %></th>
-      <th><%= Spree::Price.human_attribute_name(:amount) %></th>
-      <th class="actions"></th>
-    </tr>
-  </thead>
-  <tbody>
-  <% variant_prices.each do |price| %>
-    <tr id="<%= spree_dom_id price %>" data-hook="prices_row" class="<%= "deleted" if price.deleted? %> <%= cycle('odd', 'even')%>">
-      <td><%= price.variant.descriptive_name %></td>
-      <td><%= price.display_country %></td>
-      <td><%= price.currency %></td>
-      <td class="align-right"><%= price.money.to_html %></td>
-      <td class="actions">
-        <% if can?(:update, price) %>
-          <%= link_to_edit(price, :no_text => true) unless price.deleted? %>
-        <% end %>
-        <% if can?(:destroy, price) %>
-          &nbsp;
-          <%= link_to_delete(price, :no_text => true) unless price.deleted? %>
-        <% end %>
-      </td>
-    </tr>
-    <% end %>
-  </tbody>
-</table>
+    </tbody>
+  </table>
+</fieldset>
 
 <%= paginate variant_prices, theme: "solidus_admin" %>
