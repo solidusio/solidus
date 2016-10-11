@@ -6,7 +6,7 @@
   </p>
   <p class="field" id=<%="#{address_id}lastname" %>>
     <%= form.label :lastname, Spree.t(:last_name) %><span class="required">*</span><br />
-    <%= form.text_field :lastname, :class => 'required' %>
+    <%= form.text_field :lastname %>
   </p>
   <% if Spree::Config[:company] %>
     <p class="field" id=<%="#{address_id}company" %>>

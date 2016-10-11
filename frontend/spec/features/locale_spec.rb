@@ -40,7 +40,7 @@ describe 'setting locale', type: :feature do
         visit '/checkout/address'
         find('.form-buttons input[type=submit]').click
 
-        %w(firstname lastname address1 city).each do |attr|
+        %w(firstname address1 city).each do |attr|
           expect(find(".field#b#{attr} label.error")).to have_text(message)
         end
       end
