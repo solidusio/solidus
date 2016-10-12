@@ -105,10 +105,13 @@ module Spree
 
       if action_taken
         # connect to the order
-        order_promotions.find_or_create_by!(
-          order_id: order.id,
-          promotion_code_id: promotion_code.try!(:id)
+        order.order_promotions.find_or_create_by!(
+          promotion: self,
+          promotion_code: promotion_code,
         )
+        order.promotions.reset
+        order_promotions.reset
+        orders.reset
       end
 
       action_taken

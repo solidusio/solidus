@@ -142,6 +142,30 @@ describe Spree::Promotion, type: :model do
           expect(promotion.activate(@payload)).to be true
           expect(promotion.orders.first).to eql @order
         end
+
+        it 'keeps in-memory associations updated' do
+          # load all the relevant associations into memory
+          promotion.order_promotions.to_a
+          promotion.orders.to_a
+          @order.order_promotions.to_a
+          @order.promotions.to_a
+
+          expect(promotion.order_promotions.size).to eq(0)
+          expect(promotion.orders.size).to eq(0)
+          expect(@order.order_promotions.size).to eq(0)
+          expect(@order.promotions.size).to eq(0)
+
+          expect(
+            promotion.activate(@payload)
+          ).to eq(true)
+
+          aggregate_failures do
+            expect(promotion.order_promotions.size).to eq(1)
+            expect(promotion.orders.size).to eq(1)
+            expect(@order.order_promotions.size).to eq(1)
+            expect(@order.promotions.size).to eq(1)
+          end
+        end
       end
       context "when not activated" do
         it "will not assign the order" do
