@@ -99,7 +99,7 @@ module Spree
           PROMOTION_TABS,
           'bullhorn',
           condition: -> { can?(:admin, Spree::Promotion) },
-          url: :admin_promotions_path
+          partial: 'spree/admin/shared/promotion_sub_menu'
         ),
         MenuItem.new(
           STOCK_TABS,
