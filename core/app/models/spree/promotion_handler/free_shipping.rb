@@ -2,19 +2,21 @@ module Spree
   module PromotionHandler
     # Used for activating promotions with shipping rules
     class FreeShipping
-      attr_reader :order, :order_promo_ids
+      attr_reader :order
       attr_accessor :error, :success
 
       def initialize(order)
         @order = order
-        @order_promo_ids = order.promotions.pluck(:id)
       end
 
       def activate
         promotions.each do |promotion|
-          next if promotion.codes.any? && !order_promo_ids.include?(promotion.id)
-
-          if promotion.eligible?(order)
+          if order_promotion = existing_order_promotion(promotion)
+            promotion.activate(
+              order: order,
+              promotion_code: order_promotion.promotion_code,
+            )
+          elsif promotion.apply_automatically?
             promotion.activate(order: order)
           end
         end
@@ -23,20 +25,23 @@ module Spree
       private
 
       def promotions
-        promo_table = Promotion.arel_table
-        code_table  = PromotionCode.arel_table
+        Spree::Promotion.
+          active.
+          joins(:promotion_actions).
+          merge(
+            Spree::PromotionAction.of_type(
+              Spree::Promotion::Actions::FreeShipping
+            )
+          ).
+          distinct
+      end
 
-        promotion_code_join = promo_table.join(code_table, Arel::Nodes::OuterJoin).on(
-          promo_table[:id].eq(code_table[:promotion_id])
-        ).join_sources
+      def existing_order_promotion(promotion)
+        @lookup ||= order.order_promotions.map do |order_promotion|
+          [order_promotion.promotion_id, order_promotion]
+        end.to_h
 
-        Spree::Promotion.active.
-          joins(promotion_code_join).
-          where({
-            id: Spree::Promotion::Actions::FreeShipping.pluck(:promotion_id), # This would probably be more efficient by joining instead
-            spree_promotion_codes: { id: nil },
-            path: nil
-          })
+        @lookup[promotion.id]
       end
     end
   end
